@@ -44,7 +44,7 @@ export function QuizClient() {
 	const [showFeedback, setShowFeedback] = useState(false);
 	const [results, setResults] = useState<QuizResults[]>([]);
 	const [elapsedTime, setElapsedTime] = useState(0);
-	const [isTimerRunning, setIsTimerRunning] = useState(false);
+	const [_isTimerRunning, setIsTimerRunning] = useState(false);
 
 	const subjectToFetch = selectedSubject.toLowerCase();
 
@@ -60,7 +60,7 @@ export function QuizClient() {
 		isLoading === false && questions?.length ? questions : [];
 	const currentQuestion = questionsToUse[currentQuestionIndex];
 
-	const startQuiz = useCallback(() => {
+	const _startQuiz = useCallback(() => {
 		setIsQuizActive(true);
 		setCurrentQuestionIndex(0);
 		setSelectedAnswer(null);
@@ -123,7 +123,7 @@ export function QuizClient() {
 		}
 	}, [currentQuestionIndex, questionsToUse.length, stopQuiz]);
 
-	const handlePrevious = useCallback(() => {
+	const _handlePrevious = useCallback(() => {
 		if (currentQuestionIndex > 0) {
 			setCurrentQuestionIndex((prev) => prev - 1);
 			setSelectedAnswer(null);

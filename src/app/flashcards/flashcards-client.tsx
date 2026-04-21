@@ -96,18 +96,6 @@ export function FlashcardsClient({}: FlashcardsClientProps) {
 		setIsFlipped((prev) => !prev);
 	}, []);
 
-	const handleKnown = useCallback(() => {
-		if (!currentCard) return;
-		setKnownCards((prev) => new Set(prev).add(currentCard.id));
-		nextCard();
-	}, [currentCard]);
-
-	const handleReview = useCallback(() => {
-		if (!currentCard) return;
-		setReviewCards((prev) => new Set(prev).add(currentCard.id));
-		nextCard();
-	}, [currentCard]);
-
 	const nextCard = useCallback(() => {
 		if (currentIndex < cards.length - 1) {
 			setCurrentIndex((prev) => prev + 1);
@@ -116,6 +104,18 @@ export function FlashcardsClient({}: FlashcardsClientProps) {
 		}
 		setIsFlipped(false);
 	}, [currentIndex, cards.length]);
+
+	const handleKnown = useCallback(() => {
+		if (!currentCard) return;
+		setKnownCards((prev) => new Set(prev).add(currentCard.id));
+		nextCard();
+	}, [currentCard, nextCard]);
+
+	const handleReview = useCallback(() => {
+		if (!currentCard) return;
+		setReviewCards((prev) => new Set(prev).add(currentCard.id));
+		nextCard();
+	}, [currentCard, nextCard]);
 
 	const previousCard = useCallback(() => {
 		if (currentIndex > 0) {

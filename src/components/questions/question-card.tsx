@@ -56,7 +56,6 @@ export function QuestionCard({
 	const showFeedback = isControlled
 		? externalShowFeedback
 		: internalState.isSubmitted;
-	const isSubmitted = showFeedback;
 
 	const state = isControlled
 		? { ...internalState, isSubmitted: externalShowFeedback ?? false }
