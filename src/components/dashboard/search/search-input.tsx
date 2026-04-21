@@ -4,6 +4,15 @@ import { Book, Car, Mic, Plus } from "lucide-react";
 import { useState } from "react";
 import { VoiceWaveIcon } from "@/components/icons";
 import { Drawer, DrawerTrigger } from "@/components/ui/drawer";
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from "@/components/ui/dialog";
+import { VoiceRecorder } from "@/components/ui/voice-recorder";
 import { cn } from "@/lib/utils";
 import { SubjectsDrawer } from "../drawers/subjects-drawer";
 
@@ -55,12 +64,31 @@ export function SearchInput({ value, onChange }: SearchInputProps) {
 					>
 						<Car className="w-5 h-5 text-muted-foreground toolbutton-icon" />
 					</button>
-					<button
-						className="w-9 h-9 rounded-full bg-muted/80 flex items-center justify-center hover:bg-muted transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background toolbutton"
-						aria-label="Mute"
-					>
-						<Mic className="w-5 h-5 text-muted-foreground toolbutton-icon" />
-					</button>
+					<Dialog>
+						<DialogTrigger>
+							<button
+								className="w-9 h-9 rounded-full bg-muted/80 flex items-center justify-center hover:bg-muted transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background toolbutton"
+								aria-label="Voice settings"
+							>
+								<Mic className="w-5 h-5 text-muted-foreground toolbutton-icon" />
+							</button>
+						</DialogTrigger>
+						<DialogContent className="sm:max-w-md">
+							<DialogHeader>
+								<DialogTitle>Voice Recording</DialogTitle>
+								<DialogDescription>
+									Record your voice message and send it.
+								</DialogDescription>
+							</DialogHeader>
+							<VoiceRecorder
+								onRecordingComplete={(blob) => {
+									if (blob) {
+										console.log("Recording ready:", blob);
+									}
+								}}
+							/>
+						</DialogContent>
+					</Dialog>
 					<button
 						className={cn(
 							"w-10 h-10 rounded-full bg-primary flex items-center justify-center hover:opacity-90 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background voice-btn",
