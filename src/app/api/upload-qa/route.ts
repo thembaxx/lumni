@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
 
 	try {
 		const result = await utapi.uploadFiles(utFileObj);
-		const uploadedFile = result[0];
+		const uploadedFile = Array.isArray(result) ? result[0] : result;
 
 		return NextResponse.json({
 			success: true,

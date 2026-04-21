@@ -22,10 +22,12 @@ export function QuickActions() {
 				<li key={action.label}>
 					<Button
 						variant="outline"
-						className="rounded-full bg-secondary border-transparent text-foreground hover:bg-accent h-8 px-4 flex items-center gap-2 transition-transform duration-200 btn-ghost-hover"
+						className="rounded-full bg-secondary border-transparent text-foreground hover:bg-accent h-8 px-4 flex items-center gap-2 quick-action-btn"
 						style={{ animationDelay: `${450 + index * 50}ms` }}
 					>
-						<action.icon className="w-4 h-4 transition-transform duration-200 group-hover/button:scale-110" />
+						<span className="quick-action-icon">
+							<action.icon className="w-4 h-4" />
+						</span>
 						<span className="text-sm">{action.label}</span>
 					</Button>
 				</li>

@@ -1,16 +1,45 @@
 "use client";
 
-import { ChevronLeft, ChevronRight, Play, Square } from "lucide-react";
+import {
+	ChevronLeft,
+	ChevronRight,
+	Play,
+	Square,
+	Timer,
+	Target,
+	Zap,
+} from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
-import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
 import { QuestionCard } from "@/components/questions/question-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+	Progress,
+	ProgressIndicator,
+	ProgressValue,
+} from "@/components/ui/progress";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
 import { useSubjectQuestions } from "@/lib/hooks/use-subject-questions";
 import type { QAQuestion } from "@/lib/types/questions";
 import { cn } from "@/lib/utils";
 
 const MAX_TIME = 90 * 60;
+
+const SUBJECTS = [
+	"Random",
+	"Physics",
+	"Chemistry",
+	"Biology",
+	"Mathematics",
+	"History",
+	"Geography",
+];
 
 const DEMO_QUESTIONS: QAQuestion[] = [
 	{
@@ -107,6 +136,7 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 	const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 	const [correctAnswers, setCorrectAnswers] = useState(0);
 	const [questionCount] = useState(10);
+	const [isTransitioning, setIsTransitioning] = useState(false);
 
 	const subjectToFetch =
 		selectedSubject === "Random" ? "physics" : selectedSubject.toLowerCase();
@@ -123,8 +153,8 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 		isLoading === false && questions?.length ? questions : DEMO_QUESTIONS;
 	const currentQuestion = questionsToUse?.[currentQuestionIndex];
 
-	const handleSubjectSelect = useCallback((subject: string) => {
-		setSelectedSubject(subject);
+	const handleSubjectSelect = useCallback((value: string) => {
+		setSelectedSubject(value);
 	}, []);
 
 	const formatTime = useCallback((seconds: number) => {
@@ -132,6 +162,11 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 		const secs = seconds % 60;
 		return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
 	}, []);
+
+	const calculateAccuracy = useCallback(() => {
+		if (currentQuestionIndex === 0) return 0;
+		return Math.round((correctAnswers / currentQuestionIndex) * 100);
+	}, [correctAnswers, currentQuestionIndex]);
 
 	const generatePoints = useCallback(() => {
 		return Math.floor(Math.random() * 101);
@@ -159,7 +194,11 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 
 	const handleNext = useCallback(() => {
 		if (questionsToUse && currentQuestionIndex < questionsToUse.length - 1) {
-			setCurrentQuestionIndex((prev) => prev + 1);
+			setIsTransitioning(true);
+			setTimeout(() => {
+				setCurrentQuestionIndex((prev) => prev + 1);
+				setIsTransitioning(false);
+			}, 200);
 		} else {
 			handleStop();
 		}
@@ -167,7 +206,11 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 
 	const handlePrevious = useCallback(() => {
 		if (currentQuestionIndex > 0) {
-			setCurrentQuestionIndex((prev) => prev - 1);
+			setIsTransitioning(true);
+			setTimeout(() => {
+				setCurrentQuestionIndex((prev) => prev - 1);
+				setIsTransitioning(false);
+			}, 200);
 		}
 	}, [currentQuestionIndex]);
 
@@ -191,53 +234,90 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 	}, [isRunning, elapsedTime, onHeaderChange]);
 
 	if (isRunning && currentQuestion) {
+		const progressValue =
+			((currentQuestionIndex + 1) / (questionsToUse?.length || questionCount)) *
+			100;
+
 		return (
-			<div className="w-full max-w-2xl px-4 pb-6 space-y-6">
-				<div className="flex items-center justify-between">
-					<Button
-						variant="ghost"
-						size="sm"
-						onClick={handleStop}
-						className="text-muted-foreground"
-					>
-						Quit
-					</Button>
-					<div className="flex items-center gap-2">
-						<span className="text-sm font-medium tabular-nums">
-							{formatTime(elapsedTime)}
-						</span>
-						<span className="text-muted-foreground">|</span>
-						<Badge variant="secondary">
-							{currentQuestionIndex + 1}/
-							{questionsToUse?.length || questionCount}
-						</Badge>
+			<div className="w-full max-w-2xl px-4 pb-6 space-y-4">
+				<div className="animate-fade-in space-y-4">
+					<div className="flex items-center justify-between">
+						<Button
+							variant="ghost"
+							size="sm"
+							onClick={handleStop}
+							className="font-medium hover:text-foreground hover:bg-destructive/10"
+						>
+							Quit
+						</Button>
+						<div className="flex items-center gap-3">
+							<div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-muted/50">
+								<Timer className="size-3.5 text-muted-foreground" />
+								<span className="text-sm font-medium tabular-nums font-mono">
+									{formatTime(elapsedTime)}
+								</span>
+							</div>
+							<span className="text-muted-foreground">|</span>
+							<Badge variant="secondary" className="font-mono">
+								{currentQuestionIndex + 1}/
+								{questionsToUse?.length || questionCount}
+							</Badge>
+						</div>
+						<div className="flex items-center gap-1.5">
+							<Target className="size-3.5 text-green-500" />
+							<span className="text-sm font-semibold tabular-nums font-mono text-green-500">
+								{calculateAccuracy()}%
+							</span>
+						</div>
 					</div>
-					<Badge variant="outline" className="text-green-600">
-						{correctAnswers} pts
-					</Badge>
+
+					<Progress value={progressValue} className="h-1.5">
+						<ProgressIndicator
+							className={cn(
+								"h-full bg-linear-to-r from-primary to-green-500 transition-all duration-300",
+								progressValue === 100 && "to-green-500",
+							)}
+						/>
+						<ProgressValue className="sr-only">{progressValue}</ProgressValue>
+					</Progress>
 				</div>
 
-				<QuestionCard
-					question={currentQuestion}
-					questionNumber={currentQuestionIndex + 1}
-					totalQuestions={questionsToUse?.length || questionCount}
-					onAnswer={handleAnswer}
-				/>
+				<div
+					className={cn(
+						"transition-all duration-200",
+						isTransitioning
+							? "opacity-0 translate-x-2"
+							: "opacity-100 translate-x-0",
+					)}
+				>
+					<QuestionCard
+						question={currentQuestion}
+						questionNumber={currentQuestionIndex + 1}
+						totalQuestions={questionsToUse?.length || questionCount}
+						onAnswer={handleAnswer}
+					/>
+				</div>
 
-				<div className="flex items-center justify-between">
+				<div
+					className={cn(
+						"flex items-center justify-between gap-3",
+						isTransitioning && "opacity-0",
+					)}
+				>
 					<Button
 						variant="outline"
 						onClick={handlePrevious}
 						disabled={currentQuestionIndex === 0}
+						className="gap-2"
 					>
-						<ChevronLeft className="size-4 mr-1" />
+						<ChevronLeft className="size-4" />
 						Previous
 					</Button>
-					<Button onClick={handleNext}>
+					<Button onClick={handleNext} className="gap-2">
 						{currentQuestionIndex < (questions?.length || questionCount) - 1
 							? "Next"
 							: "Finish"}
-						<ChevronRight className="size-4 ml-1" />
+						<ChevronRight className="size-4" />
 					</Button>
 				</div>
 			</div>
@@ -245,35 +325,49 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 	}
 
 	return (
-		<div className={cn("flex items-center gap-4", className)}>
-			<div className="flex items-center justify-between gap-6 w-full max-w-md px-2 py-2 rounded-full bg-secondary/40 border border-muted">
-				<SubjectsDrawer onSelect={handleSubjectSelect}>
-					<Button
-						variant="ghost"
-						className="w-28 h-9 rounded-full text-xs font-normal border bg-zinc-700"
-						disabled={isRunning}
-					>
-						<p className="grow truncate">{selectedSubject}</p>
-					</Button>
-				</SubjectsDrawer>
+		<div className={cn("flex items-center gap-3 px-6!", className)}>
+			<Select
+				value={selectedSubject}
+				onValueChange={(value) => handleSubjectSelect(value || "Random")}
+			>
+				<SelectTrigger
+					className="w-32 h-9 rounded-full border-muted bg-muted/50"
+					disabled={isRunning}
+				>
+					<SelectValue placeholder="Subject" />
+				</SelectTrigger>
+				<SelectContent align="center">
+					{SUBJECTS.map((subject) => (
+						<SelectItem key={subject} value={subject}>
+							{subject}
+						</SelectItem>
+					))}
+				</SelectContent>
+			</Select>
 
-				<div className="flex items-center gap-2">
-					<span className="text-lg font-semibold tabular-nums tracking-tight font-mono min-w-14 text-center">
+			<div className="flex items-center gap-3 pl-4 py-2 rounded-full bg-muted/30 border border-muted">
+				<div className="flex items-center gap-2 min-w-16">
+					<Timer className="size-4 text-muted-foreground" />
+					<span className="text-sm font-medium -mb-0.5 tabular-nums font-mono tracking-tight">
 						{formatTime(elapsedTime)}
 					</span>
 				</div>
 
-				<div className="flex items-center gap-3">
-					<span className="text-xs font-medium tabular-nums min-w-12 text-center">
-						{points} pts
+				<div className="w-px h-4 bg-muted" />
+
+				<div className="flex items-center gap-2 min-w-14">
+					<Zap className="size-4 text-yellow-500" />
+					<span className="text-sm font-semibold tabular-nums font-mono">
+						{points}
 					</span>
 				</div>
 			</div>
+
 			{isRunning ? (
 				<Button
 					size="icon"
 					onClick={handleStop}
-					className="size-11 rounded-full"
+					className="size-11 rounded-full bg-destructive hover:bg-destructive/90"
 				>
 					<Square className="size-4 fill-current" />
 				</Button>
@@ -281,7 +375,7 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 				<Button
 					size="icon"
 					onClick={handleStart}
-					className="size-11 rounded-full"
+					className="size-11 rounded-full bg-primary hover:bg-primary/90"
 				>
 					<Play className="size-4 ml-0.5 fill-current" />
 				</Button>

@@ -19,9 +19,22 @@ export interface QAOption {
 }
 
 export interface QADiagram {
-	type: "force-vector" | "circuit" | "wave" | "motion";
+	type: "force-vector" | "circuit" | "wave" | "motion" | "node-flow" | "node";
 	title: string;
-	data: Record<string, unknown>;
+	data: Record<string, unknown> & {
+		nodes?: Array<{
+			id: string;
+			type?: string;
+			label: string;
+			x?: number;
+			y?: number;
+		}>;
+		edges?: Array<{
+			id: string;
+			source: string;
+			target: string;
+		}>;
+	};
 }
 
 export interface QAMetadata {

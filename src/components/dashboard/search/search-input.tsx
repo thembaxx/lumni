@@ -36,33 +36,36 @@ export function SearchInput({ value, onChange }: SearchInputProps) {
 			<div className="flex items-center justify-between">
 				<div className="flex items-center gap-2">
 					<button
-						className="w-9 h-9 rounded-full bg-muted/80 flex items-center justify-center hover:bg-muted transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background btn-ghost-hover"
+						className="w-9 h-9 rounded-full bg-muted/80 flex items-center justify-center hover:bg-muted transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background toolbutton"
 						aria-label="Add attachment"
 					>
-						<Plus className="w-5 h-5 text-muted-foreground transition-transform duration-200 group-hover:scale-110" />
+						<Plus className="w-5 h-5 text-muted-foreground toolbutton-icon" />
 					</button>
 					<SubjectsDrawer>
-						<button className="w-9 h-9 rounded-full bg-muted/80 flex items-center justify-center hover:bg-muted transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background btn-ghost-hover">
-							<Book className="w-5 h-5 text-muted-foreground transition-transform duration-200 group-hover:scale-110" />
+						<button className="w-9 h-9 rounded-full bg-muted/80 flex items-center justify-center hover:bg-muted transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background toolbutton">
+							<Book className="w-5 h-5 text-muted-foreground toolbutton-icon" />
 						</button>
 					</SubjectsDrawer>
 				</div>
 
 				<div className="flex items-center gap-2">
 					<button
-						className="w-9 h-9 rounded-full bg-muted/80 flex items-center justify-center hover:bg-muted transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background btn-ghost-hover"
+						className="w-9 h-9 rounded-full bg-muted/80 flex items-center justify-center hover:bg-muted transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background toolbutton"
 						aria-label="Settings"
 					>
-						<Car className="w-5 h-5 text-muted-foreground transition-transform duration-200 group-hover:scale-110" />
+						<Car className="w-5 h-5 text-muted-foreground toolbutton-icon" />
 					</button>
 					<button
-						className="w-9 h-9 rounded-full bg-muted/80 flex items-center justify-center hover:bg-muted transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background btn-ghost-hover"
+						className="w-9 h-9 rounded-full bg-muted/80 flex items-center justify-center hover:bg-muted transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background toolbutton"
 						aria-label="Mute"
 					>
-						<Mic className="w-5 h-5 text-muted-foreground transition-transform duration-200 group-hover:scale-110" />
+						<Mic className="w-5 h-5 text-muted-foreground toolbutton-icon" />
 					</button>
 					<button
-						className="w-10 h-10 rounded-full bg-primary flex items-center justify-center hover:opacity-90 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background animate-breathe btn-ghost-hover"
+						className={cn(
+							"w-10 h-10 rounded-full bg-primary flex items-center justify-center hover:opacity-90 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background voice-btn",
+							voicePressed && "voice-btn-pressed",
+						)}
 						aria-label="Voice input"
 						onClick={() => {
 							setVoicePressed(true);
@@ -71,7 +74,7 @@ export function SearchInput({ value, onChange }: SearchInputProps) {
 					>
 						<VoiceWaveIcon
 							className={cn(
-								"w-5 h-5 text-primary-foreground transition-all duration-200",
+								"w-5 h-5 text-primary-foreground voice-btn-icon",
 								voicePressed && "scale-125",
 							)}
 						/>

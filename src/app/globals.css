@@ -411,6 +411,33 @@
 	transform: scale(0.97);
 }
 
+/* Quick action button with icon lift animation */
+.quick-action-btn {
+	transition:
+		transform var(--duration-fast) var(--ease-out-quart),
+		background-color var(--duration-normal) var(--ease-out-quart),
+		box-shadow var(--duration-fast) var(--ease-out-quart);
+}
+
+.quick-action-btn:hover {
+	transform: translateY(-1px);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.quick-action-btn:active {
+	transform: translateY(0) scale(0.97);
+	box-shadow: none;
+}
+
+.quick-action-icon {
+	display: flex;
+	transition: transform var(--duration-fast) var(--ease-out-quart);
+}
+
+.quick-action-btn:hover .quick-action-icon {
+	transform: scale(1.1) rotate(3deg);
+}
+
 /* Focus ring animation */
 .focus-ring {
 	transition: box-shadow var(--duration-fast) var(--ease-out-quart);
@@ -422,16 +449,299 @@
 		0 0 0 4px var(--ring);
 }
 
+/* Tool button with icon micro-interaction */
+.toolbutton {
+	transition:
+		transform var(--duration-fast) var(--ease-out-quart),
+		background-color var(--duration-normal) var(--ease-out-quart),
+		box-shadow var(--duration-fast) var(--ease-out-quart);
+}
+
+.toolbutton:hover {
+	transform: scale(1.05);
+	background-color: var(--muted);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.toolbutton:active {
+	transform: scale(0.95);
+}
+
+.toolbutton-icon {
+	transition: transform var(--duration-fast) var(--ease-out-quart);
+}
+
+.toolbutton:hover .toolbutton-icon {
+	transform: scale(1.15);
+}
+
+/* Voice button with glow pulse when ready, press feedback when active */
+.voice-btn {
+	transition:
+		transform var(--duration-fast) var(--ease-out-quart),
+		box-shadow var(--duration-normal) var(--ease-out-quart);
+	animation: voiceGlow 2s ease-in-out infinite;
+}
+
+.voice-btn:hover {
+	transform: scale(1.05);
+}
+
+.voice-btn:active {
+	animation: none;
+}
+
+.voice-btn-pressed {
+	transform: scale(0.9) !important;
+}
+
+.voice-btn-icon {
+	transition: transform var(--duration-fast) var(--ease-out-expo);
+}
+
+@keyframes voiceGlow {
+	0%,
+	100% {
+		box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+	}
+	50% {
+		box-shadow: 0 0 12px 2px rgba(255, 255, 255, 0.15);
+	}
+}
+
 /* Input focus animation */
 .input-focus {
 	transition:
 		border-color var(--duration-fast) var(--ease-out-quart),
-		box-shadow var(--duration-fast) var(--ease-out-quart);
+		box-shadow var(--duration-fast) var(--ease-out-quart),
+		background-color var(--duration-fast) var(--ease-out-quart);
 }
 
 .input-focus:focus {
 	border-color: var(--ring);
 	box-shadow: 0 0 0 3px var(--ring) / 20;
+	background-color: var(--secondary);
+}
+
+/* Quiz option button micro-interaction */
+.quiz-option-btn {
+	transition:
+		transform var(--duration-fast) var(--ease-out-quart),
+		background-color var(--duration-normal) var(--ease-out-quart),
+		border-color var(--duration-fast) var(--ease-out-quart),
+		box-shadow var(--duration-fast) var(--ease-out-quart);
+}
+
+.quiz-option-btn:hover:not(:disabled) {
+	transform: translateY(-1px) scale(1.01);
+	background-color: var(--accent);
+	border-color: oklch(0.5 0 0);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.quiz-option-btn:active:not(:disabled) {
+	transform: translateY(0) scale(0.99);
+	box-shadow: none;
+}
+
+/* Option letter badge animation */
+.quiz-option-btn .quiz-option-letter {
+	transition: transform var(--duration-fast) var(--ease-out-quart);
+}
+
+.quiz-option-btn:hover:not(:disabled) .quiz-option-letter {
+	transform: scale(1.1);
+}
+
+/* Correct celebration pulse */
+@keyframes correctPulse {
+	0% {
+		box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
+	}
+	50% {
+		box-shadow: 0 0 0 8px rgba(34, 197, 94, 0);
+	}
+	100% {
+		box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+	}
+}
+
+.animate-correct-pulse {
+	animation: correctPulse 600ms var(--ease-out-expo) forwards;
+}
+
+/* Tab trigger item animations */
+.tab-trigger-item {
+	transition:
+		transform var(--duration-fast) var(--ease-out-quart),
+		background-color var(--duration-fast) var(--ease-out-quart);
+}
+
+.tab-trigger-item:hover:not(.data-\[selected\]) {
+	transform: scale(1.02);
+}
+
+.tab-trigger-item:active {
+	transform: scale(0.97);
+}
+
+.tab-icon-active {
+	animation: tabIconBounce 300ms var(--ease-out-quint);
+}
+
+@keyframes tabIconBounce {
+	0% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.2);
+	}
+	100% {
+		transform: scale(1.1);
+	}
+}
+
+/* View Transition CSS - Directional Slides */
+@keyframes vt-slide-from-right {
+	from {
+		transform: translateX(100%);
+		opacity: 0;
+	}
+}
+
+@keyframes vt-slide-to-left {
+	to {
+		transform: translateX(-100%);
+		opacity: 0;
+	}
+}
+
+@keyframes vt-slide-from-left {
+	from {
+		transform: translateX(-100%);
+		opacity: 0;
+	}
+}
+
+@keyframes vt-slide-to-right {
+	to {
+		transform: translateX(100%);
+		opacity: 0;
+	}
+}
+
+/* Fade animations */
+@keyframes vt-fade-in {
+	from {
+		opacity: 0;
+	}
+}
+
+@keyframes vt-fade-out {
+	to {
+		opacity: 0;
+	}
+}
+
+/* Slide Up reveals */
+@keyframes vt-slide-up-in {
+	from {
+		transform: translateY(20px);
+		opacity: 0;
+	}
+}
+
+@keyframes vt-slide-down-out {
+	to {
+		transform: translateY(20px);
+		opacity: 0;
+	}
+}
+
+/* View Transition Classes */
+::view-transition-old(vt-slide-from-right) {
+	animation: vt-slide-from-right 300ms var(--ease-out-quart) both;
+}
+
+::view-transition-new(vt-slide-from-right) {
+	animation: vt-fade-in 300ms var(--ease-out-quart) both;
+}
+
+::view-transition-old(vt-slide-to-left) {
+	animation: vt-slide-to-left 300ms var(--ease-out-quart) both;
+}
+
+::view-transition-new(vt-slide-to-left) {
+	animation: vt-fade-in 300ms var(--ease-out-quart) both;
+}
+
+::view-transition-old(vt-slide-from-left) {
+	animation: vt-slide-from-left 300ms var(--ease-out-quart) both;
+}
+
+::view-transition-new(vt-slide-from-left) {
+	animation: vt-fade-in 300ms var(--ease-out-quart) both;
+}
+
+::view-transition-old(vt-slide-to-right) {
+	animation: vt-slide-to-right 300ms var(--ease-out-quart) both;
+}
+
+::view-transition-new(vt-slide-to-right) {
+	animation: vt-fade-in 300ms var(--ease-out-quart) both;
+}
+
+/* Fade enter/exit */
+::view-transition-old(vt-fade-out) {
+	animation: vt-fade-out 200ms var(--ease-out-quart) both;
+}
+
+::view-transition-new(vt-fade-in) {
+	animation: vt-fade-in 200ms var(--ease-out-quart) both;
+}
+
+/* Slide Up/Down for Suspense reveals */
+::view-transition-old(vt-slide-down-out) {
+	animation: vt-slide-down-out 200ms var(--ease-out-quart) both;
+}
+
+::view-transition-new(vt-slide-up-in) {
+	animation: vt-slide-up-in 300ms var(--ease-out-quart) both;
+}
+
+/* Morph for shared elements */
+@keyframes vt-morph-forward {
+	from {
+		clip-path: inset(0 100% 0 0);
+	}
+	to {
+		clip-path: inset(0 0 0 0);
+	}
+}
+
+@keyframes vt-morph-back {
+	from {
+		clip-path: inset(0 0 0 100%);
+	}
+	to {
+		clip-path: inset(0 0 0 0);
+	}
+}
+
+::view-transition-old(vt-morph-forward) {
+	animation: vt-slide-to-left 300ms var(--ease-out-quart) both;
+}
+
+::view-transition-new(vt-morph-forward) {
+	animation: vt-fade-in 300ms var(--ease-out-quart) both;
+}
+
+::view-transition-old(vt-morph-back) {
+	animation: vt-slide-to-right 300ms var(--ease-out-quart) both;
+}
+
+::view-transition-new(vt-morph-back) {
+	animation: vt-fade-in 300ms var(--ease-out-quart) both;
 }
 
 /* Reduced motion support */
@@ -447,5 +757,25 @@
 	.animate-breathe,
 	.animate-gentle-pulse {
 		animation: none;
+	}
+
+	/* Disable view transitions on reduced motion */
+	::view-transition-old(vt-slide-from-right),
+	::view-transition-new(vt-slide-from-right),
+	::view-transition-old(vt-slide-to-left),
+	::view-transition-new(vt-slide-to-left),
+	::view-transition-old(vt-slide-from-left),
+	::view-transition-new(vt-slide-from-left),
+	::view-transition-old(vt-slide-to-right),
+	::view-transition-new(vt-slide-to-right),
+	::view-transition-old(vt-fade-out),
+	::view-transition-new(vt-fade-in),
+	::view-transition-old(vt-slide-down-out),
+	::view-transition-new(vt-slide-up-in),
+	::view-transition-old(vt-morph-forward),
+	::view-transition-new(vt-morph-forward),
+	::view-transition-old(vt-morph-back),
+	::view-transition-new(vt-morph-back) {
+		animation: none !important;
 	}
 }

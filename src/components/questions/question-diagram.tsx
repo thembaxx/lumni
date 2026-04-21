@@ -1,8 +1,17 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import {
+	Arrow,
+	Circle,
+	Group,
+	Layer,
+	Line,
+	Rect,
+	Stage,
+	Text,
+} from "react-konva";
 import type { QADiagram } from "@/lib/types/questions";
-import { cn } from "@/lib/utils";
 
 interface ForceVectorData {
 	showForces?: Array<{
@@ -99,221 +108,206 @@ function getDirectionVector(direction: string): {
 }
 
 function ForceVectorDiagram({ data }: { data: ForceVectorData }) {
-	const canvasRef = useRef<HTMLCanvasElement>(null);
-
-	useEffect(() => {
-		const canvas = canvasRef.current;
-		if (!canvas) return;
-
-		const ctx = canvas.getContext("2d");
-		if (!ctx) return;
-
-		const dpr = window.devicePixelRatio || 1;
-		const rect = canvas.getBoundingClientRect();
-		canvas.width = rect.width * dpr;
-		canvas.height = rect.height * dpr;
-		ctx.scale(dpr, dpr);
-
-		ctx.clearRect(0, 0, rect.width, rect.height);
-
-		if (data.objects) {
-			data.objects.forEach((obj) => {
-				if (obj.type === "rectangle") {
-					ctx.fillStyle = obj.fill;
-					ctx.fillRect(obj.x, obj.y, obj.width || 50, obj.height || 30);
-					if (obj.label) {
-						ctx.fillStyle = "#fff";
-						ctx.font = "12px sans-serif";
-						ctx.textAlign = "center";
-						ctx.fillText(
-							obj.label,
-							obj.x + (obj.width || 50) / 2,
-							obj.y + (obj.height || 30) / 2 + 4,
-						);
-					}
-				} else if (obj.type === "circle") {
-					ctx.beginPath();
-					ctx.arc(obj.x, obj.y, obj.radius || 15, 0, Math.PI * 2);
-					ctx.fillStyle = obj.fill;
-					ctx.fill();
-					if (obj.label) {
-						ctx.fillStyle = "#fff";
-						ctx.font = "10px sans-serif";
-						ctx.textAlign = "center";
-						ctx.fillText(obj.label, obj.x, obj.y + 3);
-					}
-				}
-			});
-		}
-
-		if (data.showForces) {
-			data.showForces.forEach((force, index) => {
-				const dir = getDirectionVector(force.direction);
-				const startX = 150 + index * 20;
-				const startY = 90;
-				const length = 40;
-
-				ctx.strokeStyle = force.color;
-				ctx.lineWidth = 2;
-				ctx.beginPath();
-				ctx.moveTo(startX, startY);
-				ctx.lineTo(startX + dir.x * length, startY + dir.y * length);
-				ctx.stroke();
-
-				const arrowSize = 8;
-				const angle = Math.atan2(dir.y, dir.x);
-				ctx.beginPath();
-				ctx.moveTo(startX + dir.x * length, startY + dir.y * length);
-				ctx.lineTo(
-					startX + dir.x * length - arrowSize * Math.cos(angle - Math.PI / 6),
-					startY + dir.y * length - arrowSize * Math.sin(angle - Math.PI / 6),
+	const objects = useMemo(() => {
+		if (!data.objects) return [];
+		return data.objects.map((obj) => {
+			if (obj.type === "rectangle") {
+				return (
+					<Group key={obj.label} x={obj.x} y={obj.y}>
+						<Rect
+							width={obj.width || 50}
+							height={obj.height || 30}
+							fill={obj.fill}
+							cornerRadius={4}
+						/>
+						<Text
+							text={obj.label}
+							x={(obj.width || 50) / 2}
+							y={(obj.height || 30) / 2}
+							fill="#fff"
+							fontSize={12}
+							offsetX={(obj.label?.length || 0) * 5}
+							offsetY={4}
+						/>
+					</Group>
 				);
-				ctx.lineTo(
-					startX + dir.x * length - arrowSize * Math.cos(angle + Math.PI / 6),
-					startY + dir.y * length - arrowSize * Math.sin(angle + Math.PI / 6),
+			}
+			if (obj.type === "circle") {
+				return (
+					<Group key={obj.label} x={obj.x} y={obj.y}>
+						<Circle radius={obj.radius || 15} fill={obj.fill} />
+						<Text
+							text={obj.label}
+							fill="#fff"
+							fontSize={10}
+							offsetX={(obj.label?.length || 0) * 4}
+							offsetY={3}
+						/>
+					</Group>
 				);
-				ctx.closePath();
-				ctx.fillStyle = force.color;
-				ctx.fill();
+			}
+			return null;
+		});
+	}, [data.objects]);
 
-				ctx.fillStyle = force.color;
-				ctx.font = "bold 11px sans-serif";
-				ctx.textAlign = "center";
-				ctx.fillText(
-					force.label,
-					startX + dir.x * (length + 15),
-					startY + dir.y * (length + 15),
-				);
-			});
-		}
+	const forceArrows = useMemo(() => {
+		if (!data.showForces) return [];
+		return data.showForces.map((force, index) => {
+			const dir = getDirectionVector(force.direction);
+			const startX = 150 + index * 20;
+			const startY = 90;
+			const length = 40;
+			const endX = startX + dir.x * length;
+			const endY = startY + dir.y * length;
+			return (
+				<Group key={force.label}>
+					<Arrow
+						points={[startX, startY, endX, endY]}
+						stroke={force.color}
+						fill={force.color}
+						strokeWidth={2}
+						pointerLength={8}
+						pointerWidth={8}
+					/>
+					<Text
+						text={force.label}
+						x={endX + dir.x * 15}
+						y={endY + dir.y * 15}
+						fill={force.color}
+						fontSize={11}
+						fontStyle="bold"
+					/>
+				</Group>
+			);
+		});
+	}, [data.showForces]);
 
-		if (data.angle) {
-			ctx.strokeStyle = "#6b7280";
-			ctx.lineWidth = 1;
-			ctx.setLineDash([4, 4]);
-			ctx.beginPath();
-			ctx.moveTo(150, 140);
-			ctx.lineTo(250, 140);
-			ctx.stroke();
-			ctx.setLineDash([]);
-
-			ctx.fillStyle = "#6b7280";
-			ctx.font = "italic 12px sans-serif";
-			ctx.fillText(`${data.angle}°`, 200, 155);
-		}
-	}, [data]);
+	const angleLine = useMemo(() => {
+		if (!data.angle) return null;
+		return (
+			<Group>
+				<Line
+					points={[150, 140, 250, 140]}
+					stroke="#6b7280"
+					strokeWidth={1}
+					dash={[4, 4]}
+				/>
+				<Text
+					text={`${data.angle}°`}
+					x={200}
+					y={155}
+					fill="#6b7280"
+					fontSize={12}
+					fontStyle="italic"
+				/>
+			</Group>
+		);
+	}, [data.angle]);
 
 	return (
-		<canvas
-			ref={canvasRef}
+		<Stage
+			width={300}
+			height={200}
 			className="w-full rounded-2xl border bg-background/40"
-		/>
+		>
+			<Layer>{objects}</Layer>
+			<Layer>{forceArrows}</Layer>
+			<Layer>{angleLine}</Layer>
+		</Stage>
 	);
 }
 
 function CircuitDiagram({ data }: { data: CircuitData }) {
-	const canvasRef = useRef<HTMLCanvasElement>(null);
+	const wireColor = "#374151";
+	const componentColor = "#6366f1";
+	const batteryColor = "#ef4444";
+	const x = 80;
 
-	useEffect(() => {
-		const canvas = canvasRef.current;
-		if (!canvas) return;
+	const wires = useMemo(
+		() => (
+			<Group>
+				<Line points={[x, 60, x, 180]} stroke={wireColor} strokeWidth={2} />
+				<Line points={[220, 60, 220, 180]} stroke={wireColor} strokeWidth={2} />
+				<Line points={[x, 60, 220, 60]} stroke={wireColor} strokeWidth={2} />
+				<Line points={[x, 180, 220, 180]} stroke={wireColor} strokeWidth={2} />
+				<Rect x={x} y={100} width={8} height={20} fill={batteryColor} />
+				<Rect x={x + 8} y={108} width={4} height={4} fill={wireColor} />
+			</Group>
+		),
+		[],
+	);
 
-		const ctx = canvas.getContext("2d");
-		if (!ctx) return;
-
-		const dpr = window.devicePixelRatio || 1;
-		const rect = canvas.getBoundingClientRect();
-		canvas.width = rect.width * dpr;
-		canvas.height = rect.height * dpr;
-		ctx.scale(dpr, dpr);
-
-		ctx.clearRect(0, 0, rect.width, rect.height);
-
-		const wireColor = "#374151";
-		const componentColor = "#6366f1";
-		const batteryColor = "#ef4444";
-
-		[80].forEach((x) => {
-			ctx.strokeStyle = wireColor;
-			ctx.lineWidth = 2;
-
-			ctx.beginPath();
-			ctx.moveTo(x, 60);
-			ctx.lineTo(x, 180);
-			ctx.stroke();
-
-			ctx.beginPath();
-			ctx.moveTo(220, 60);
-			ctx.lineTo(220, 180);
-			ctx.stroke();
-
-			ctx.beginPath();
-			ctx.moveTo(x, 60);
-			ctx.lineTo(220, 60);
-			ctx.stroke();
-
-			ctx.beginPath();
-			ctx.moveTo(x, 180);
-			ctx.lineTo(220, 180);
-			ctx.stroke();
-
-			ctx.fillStyle = batteryColor;
-			ctx.fillRect(x, 100, 8, 20);
-			ctx.fillStyle = wireColor;
-			ctx.fillRect(x + 8, 108, 4, 4);
-
-			if (data.components) {
-				data.components.forEach((comp) => {
-					if (comp.type === "resistor") {
-						ctx.strokeStyle = componentColor;
-						ctx.lineWidth = 3;
-						ctx.beginPath();
-						const rx = comp.x || 200;
-						const ry = comp.y || 120;
-						ctx.moveTo(rx - 20, ry);
-						for (let i = 0; i < 4; i++) {
-							ctx.lineTo(rx - 15 + i * 10, ry - 5);
-							ctx.lineTo(rx - 10 + i * 10, ry + 5);
-						}
-						ctx.lineTo(rx + 20, ry);
-						ctx.stroke();
-
-						if (comp.label) {
-							ctx.fillStyle = "#374151";
-							ctx.font = "10px sans-serif";
-							ctx.textAlign = "center";
-							ctx.fillText(comp.label, rx, ry + 25);
-						}
-					}
-
-					if (comp.label?.includes("ε") || comp.label?.includes("V")) {
-						ctx.fillStyle = "#374151";
-						ctx.font = "bold 12px sans-serif";
-						ctx.textAlign = "left";
-						ctx.fillText(comp.label, x + 20, 95);
-					}
-				});
+	const components = useMemo(() => {
+		if (!data.components) return [];
+		return data.components.map((comp, index) => {
+			if (comp.type === "resistor") {
+				const rx = comp.x || 200;
+				const ry = comp.y || 120;
+				const points: number[] = [];
+				points.push(rx - 20, ry);
+				for (let i = 0; i < 4; i++) {
+					points.push(rx - 15 + i * 10, ry - 5);
+					points.push(rx - 10 + i * 10, ry + 5);
+				}
+				points.push(rx + 20, ry);
+				return (
+					<Group key={index}>
+						<Line
+							points={points}
+							stroke={componentColor}
+							strokeWidth={3}
+							tension={0.5}
+						/>
+						{comp.label && (
+							<Text
+								text={comp.label}
+								x={rx}
+								y={ry + 25}
+								fill={wireColor}
+								fontSize={10}
+								offsetX={(comp.label.length || 0) * 4}
+							/>
+						)}
+					</Group>
+				);
 			}
+			if (comp.label?.includes("ε") || comp.label?.includes("V")) {
+				return (
+					<Text
+						key={index}
+						text={comp.label}
+						x={x + 20}
+						y={95}
+						fill={wireColor}
+						fontSize={12}
+						fontStyle="bold"
+					/>
+				);
+			}
+			return null;
 		});
-	}, [data]);
+	}, [data.components]);
 
 	return (
-		<canvas
-			ref={canvasRef}
+		<Stage
+			width={300}
+			height={200}
 			className="w-full rounded-2xl border bg-background/40"
-		/>
+		>
+			<Layer>{wires}</Layer>
+			<Layer>{components}</Layer>
+		</Stage>
 	);
 }
 
 function WaveDiagram({ data }: { data: WaveData }) {
-	const canvasRef = useRef<HTMLCanvasElement>(null);
 	const [phase, setPhase] = useState(0);
 
 	useEffect(() => {
 		let animationId: number;
 		if (data.showWaves) {
 			const animate = () => {
-				setPhase((p) => p + 0.1);
+				setPhase((p) => (p + 0.1) % 100);
 				animationId = requestAnimationFrame(animate);
 			};
 			animationId = requestAnimationFrame(animate);
@@ -321,78 +315,73 @@ function WaveDiagram({ data }: { data: WaveData }) {
 		return () => cancelAnimationFrame(animationId);
 	}, [data.showWaves]);
 
-	useEffect(() => {
-		const canvas = canvasRef.current;
-		if (!canvas) return;
+	const waveLines = useMemo(() => {
+		if (!data.showWaves) return [];
+		const amplitude = 30;
+		const wavelength = data.waveLength || 50;
+		const lines = [];
+		const numWaves = 5;
 
-		const ctx = canvas.getContext("2d");
-		if (!ctx) return;
-
-		const dpr = window.devicePixelRatio || 1;
-		const rect = canvas.getBoundingClientRect();
-		canvas.width = rect.width * dpr;
-		canvas.height = rect.height * dpr;
-		ctx.scale(dpr, dpr);
-
-		ctx.clearRect(0, 0, rect.width, rect.height);
-
-		if (data.showWaves) {
-			const amplitude = 30;
-			// const frequency = data.frequency || 400;
-			const wavelength = data.waveLength || 50;
-
-			const numWaves = 5;
-			for (let w = 0; w < numWaves; w++) {
-				ctx.beginPath();
-				ctx.strokeStyle = data.sourceMoving ? "#ef4444" : "#3b82f6";
-				ctx.lineWidth = 2;
-
-				for (let x = 0; x < rect.width; x++) {
-					const y =
-						rect.height / 2 +
-						amplitude *
-							Math.sin(
-								((x + phase) * 2 * Math.PI) / wavelength - (w * Math.PI) / 2,
-							);
-					if (x === 0) ctx.moveTo(x, y);
-					else ctx.lineTo(x, y);
-				}
-				ctx.stroke();
+		for (let w = 0; w < numWaves; w++) {
+			const points: number[] = [];
+			for (let x = 0; x < 300; x++) {
+				const y =
+					100 +
+					amplitude *
+						Math.sin(
+							((x + phase) * 2 * Math.PI) / wavelength - (w * Math.PI) / 2,
+						);
+				points.push(x, y);
 			}
-
-			if (data.sourceMoving) {
-				ctx.fillStyle = "#ef4444";
-				ctx.beginPath();
-				ctx.arc(30 + phase * 0.5, rect.height / 2, 15, 0, Math.PI * 2);
-				ctx.fill();
-			}
-
-			if (data.waveType === "photon") {
-				for (let i = 0; i < 3; i++) {
-					const yOffset = (i - 1) * 15;
-					ctx.beginPath();
-					ctx.strokeStyle = "#fbbf24";
-					ctx.lineWidth = 3;
-					ctx.setLineDash([5, 5]);
-					ctx.moveTo(0, rect.height / 2 + yOffset);
-					ctx.lineTo(rect.width, rect.height / 2 + yOffset);
-					ctx.stroke();
-					ctx.setLineDash([]);
-				}
-			}
+			lines.push(
+				<Line
+					key={w}
+					points={points}
+					stroke={data.sourceMoving ? "#ef4444" : "#3b82f6"}
+					strokeWidth={2}
+				/>,
+			);
 		}
-	}, [data, phase]);
+		return lines;
+	}, [data.showWaves, data.sourceMoving, phase, data.waveLength]);
+
+	const source = useMemo(() => {
+		if (!data.sourceMoving) return null;
+		return <Circle x={30 + phase * 0.5} y={100} radius={15} fill="#ef4444" />;
+	}, [data.sourceMoving, phase]);
+
+	const photon = useMemo(() => {
+		if (data.waveType !== "photon") return null;
+		const lines = [];
+		for (let i = 0; i < 3; i++) {
+			const yOffset = (i - 1) * 15;
+			lines.push(
+				<Line
+					key={i}
+					points={[0, 100 + yOffset, 300, 100 + yOffset]}
+					stroke="#fbbf24"
+					strokeWidth={3}
+					dash={[5, 5]}
+				/>,
+			);
+		}
+		return lines;
+	}, [data.waveType]);
 
 	return (
-		<canvas
-			ref={canvasRef}
+		<Stage
+			width={300}
+			height={200}
 			className="w-full rounded-2xl border bg-background/40"
-		/>
+		>
+			<Layer>{waveLines}</Layer>
+			<Layer>{source}</Layer>
+			<Layer>{photon}</Layer>
+		</Stage>
 	);
 }
 
 function MotionDiagram({ data }: { data: MotionData }) {
-	const canvasRef = useRef<HTMLCanvasElement>(null);
 	const [animationFrame, setAnimationFrame] = useState(0);
 
 	useEffect(() => {
@@ -407,132 +396,222 @@ function MotionDiagram({ data }: { data: MotionData }) {
 		return () => cancelAnimationFrame(animationId);
 	}, [data.showMotion]);
 
-	useEffect(() => {
-		const canvas = canvasRef.current;
-		if (!canvas) return;
+	const objects = useMemo(() => {
+		if (!data.objects) return [];
+		return data.objects.map((obj, index) => {
+			let x = obj.x;
+			let y = obj.y;
 
-		const ctx = canvas.getContext("2d");
-		if (!ctx) return;
+			if (obj.type === "rectangle") {
+				x =
+					data.motionType === "free-fall"
+						? obj.x
+						: obj.x + (animationFrame / 100) * 50;
+				y =
+					data.motionType === "vertical-up"
+						? obj.y - (animationFrame / 100) * 80
+						: data.motionType === "free-fall"
+							? obj.y + (animationFrame / 100) * 80
+							: obj.y;
 
-		const dpr = window.devicePixelRatio || 1;
-		const rect = canvas.getBoundingClientRect();
-		canvas.width = rect.width * dpr;
-		canvas.height = rect.height * dpr;
-		ctx.scale(dpr, dpr);
-
-		ctx.clearRect(0, 0, rect.width, rect.height);
-
-		if (data.objects) {
-			data.objects.forEach((obj) => {
-				if (obj.type === "rectangle") {
-					const x =
-						data.motionType === "free-fall"
-							? obj.x
-							: obj.x + (animationFrame / 100) * 50;
-					const y =
-						data.motionType === "vertical-up"
-							? obj.y - (animationFrame / 100) * 80
-							: data.motionType === "free-fall"
-								? obj.y + (animationFrame / 100) * 80
-								: obj.y;
-
-					ctx.fillStyle = obj.fill;
-					ctx.fillRect(x, y, obj.width || 50, obj.height || 30);
-					if (obj.label) {
-						ctx.fillStyle = "#fff";
-						ctx.font = "10px sans-serif";
-						ctx.textAlign = "center";
-						ctx.fillText(
-							obj.label,
-							x + (obj.width || 50) / 2,
-							y + (obj.height || 30) / 2 + 3,
-						);
-					}
-				} else if (obj.type === "circle") {
-					const baseY =
-						data.motionType === "vertical-up"
-							? obj.y - (animationFrame / 100) * 80
-							: data.motionType === "free-fall"
-								? obj.y + (animationFrame / 100) * 80
-								: obj.y;
-					const y =
-						data.motionType === "vertical-up"
-							? Math.max(40, baseY)
-							: data.motionType === "free-fall"
-								? Math.min(rect.height - 30, baseY)
-								: baseY;
-
-					ctx.beginPath();
-					ctx.arc(obj.x, y, obj.radius || 15, 0, Math.PI * 2);
-					ctx.fillStyle = obj.fill;
-					ctx.fill();
-					if (obj.label) {
-						ctx.fillStyle = "#fff";
-						ctx.font = "10px sans-serif";
-						ctx.textAlign = "center";
-						ctx.fillText(obj.label, obj.x, y + 3);
-					}
-				}
-			});
-		}
-
-		if (data.motionType === "vertical-up" && data.initialVelocity) {
-			ctx.fillStyle = "#3b82f6";
-			ctx.font = "bold 12px sans-serif";
-			ctx.textAlign = "left";
-			ctx.fillText(`v₀ = ${data.initialVelocity} m/s`, 20, 30);
-			ctx.fillText("↑", 80, 35);
-		}
-
-		if (data.trajectory) {
-			ctx.beginPath();
-			ctx.strokeStyle = "#6366f1";
-			ctx.lineWidth = 1;
-			ctx.setLineDash([4, 4]);
-			ctx.moveTo(150, 180);
-			ctx.quadraticCurveTo(150, 40, 150, 40);
-			ctx.stroke();
-			ctx.setLineDash([]);
-
-			if (data.trajectory.apex) {
-				ctx.fillStyle = "#6366f1";
-				ctx.beginPath();
-				ctx.arc(
-					data.trajectory.apex.x,
-					data.trajectory.apex.y,
-					4,
-					0,
-					Math.PI * 2,
+				return (
+					<Group key={index} x={x} y={y}>
+						<Rect
+							width={obj.width || 50}
+							height={obj.height || 30}
+							fill={obj.fill}
+							cornerRadius={4}
+						/>
+						{obj.label && (
+							<Text
+								text={obj.label}
+								x={(obj.width || 50) / 2}
+								y={(obj.height || 30) / 2}
+								fill="#fff"
+								fontSize={10}
+								offsetX={(obj.label.length || 0) * 4}
+								offsetY={3}
+							/>
+						)}
+					</Group>
 				);
-				ctx.fill();
 			}
-		}
 
-		if (data.angle) {
-			ctx.strokeStyle = "#6b7280";
-			ctx.lineWidth = 1;
-			ctx.setLineDash([4, 4]);
-			ctx.beginPath();
-			ctx.moveTo(80, 130);
-			ctx.lineTo(180, 130);
-			ctx.stroke();
-			ctx.setLineDash([]);
+			if (obj.type === "circle") {
+				const baseY =
+					data.motionType === "vertical-up"
+						? obj.y - (animationFrame / 100) * 80
+						: data.motionType === "free-fall"
+							? obj.y + (animationFrame / 100) * 80
+							: obj.y;
+				y =
+					data.motionType === "vertical-up"
+						? Math.max(40, baseY)
+						: data.motionType === "free-fall"
+							? Math.min(170, baseY)
+							: baseY;
 
-			ctx.fillStyle = "#6b7280";
-			ctx.font = "italic 11px sans-serif";
-			ctx.fillText(`${data.angle}°`, 130, 145);
+				return (
+					<Group key={index} x={x} y={y}>
+						<Circle radius={obj.radius || 15} fill={obj.fill} />
+						{obj.label && (
+							<Text
+								text={obj.label}
+								fill="#fff"
+								fontSize={10}
+								offsetX={(obj.label.length || 0) * 4}
+								offsetY={3}
+							/>
+						)}
+					</Group>
+				);
+			}
+			return null;
+		});
+	}, [data.objects, data.motionType, animationFrame]);
+
+	const velocityLabel = useMemo(() => {
+		if (data.motionType === "vertical-up" && data.initialVelocity) {
+			return (
+				<Group>
+					<Text
+						text={`v₀ = ${data.initialVelocity} m/s`}
+						x={20}
+						y={30}
+						fill="#3b82f6"
+						fontSize={12}
+						fontStyle="bold"
+					/>
+					<Text text="↑" x={80} y={35} fill="#3b82f6" fontSize={12} />
+				</Group>
+			);
 		}
-	}, [data, animationFrame]);
+		return null;
+	}, [data.motionType, data.initialVelocity]);
+
+	const trajectory = useMemo(() => {
+		if (!data.trajectory) return null;
+		return (
+			<Group>
+				<Line
+					points={[150, 180, 150, 40]}
+					stroke="#6366f1"
+					strokeWidth={1}
+					dash={[4, 4]}
+				/>
+				{data.trajectory.apex && (
+					<Circle
+						x={data.trajectory.apex.x}
+						y={data.trajectory.apex.y}
+						radius={4}
+						fill="#6366f1"
+					/>
+				)}
+			</Group>
+		);
+	}, [data.trajectory]);
+
+	const angleLine = useMemo(() => {
+		if (!data.angle) return null;
+		return (
+			<Group>
+				<Line
+					points={[80, 130, 180, 130]}
+					stroke="#6b7280"
+					strokeWidth={1}
+					dash={[4, 4]}
+				/>
+				<Text
+					text={`${data.angle}°`}
+					x={130}
+					y={145}
+					fill="#6b7280"
+					fontSize={11}
+					fontStyle="italic"
+				/>
+			</Group>
+		);
+	}, [data.angle]);
 
 	return (
-		<canvas
-			ref={canvasRef}
+		<Stage
+			width={300}
+			height={200}
 			className="w-full rounded-2xl border bg-background/40"
-		/>
+		>
+			<Layer>{objects}</Layer>
+			<Layer>{velocityLabel}</Layer>
+			<Layer>{trajectory}</Layer>
+			<Layer>{angleLine}</Layer>
+		</Stage>
+	);
+}
+
+import { Background, Controls, MiniMap, ReactFlow } from "@xyflow/react";
+
+function NodeDiagramFlow({
+	data,
+}: {
+	data: {
+		nodes?: Array<{
+			id: string;
+			type?: string;
+			label: string;
+			x?: number;
+			y?: number;
+		}>;
+		edges?: Array<{ id: string; source: string; target: string }>;
+	};
+}) {
+	const initialNodes =
+		data.nodes?.map((n) => ({
+			id: n.id,
+			position: {
+				x: n.x || Math.random() * 200,
+				y: n.y || Math.random() * 200,
+			},
+			data: { label: n.label },
+			type: n.type || "default",
+		})) || [];
+	const initialEdges =
+		data.edges?.map((e) => ({
+			id: e.id,
+			source: e.source,
+			target: e.target,
+			type: "smoothstep",
+		})) || [];
+
+	return (
+		<div className="h-[300px] w-full rounded-2xl border bg-background/40 overflow-hidden">
+			<ReactFlow nodes={initialNodes} edges={initialEdges} fitView>
+				<Background />
+				<Controls />
+				<MiniMap />
+			</ReactFlow>
+		</div>
 	);
 }
 
 export function QuestionDiagram({ diagram }: { diagram: QADiagram }) {
+	if (diagram.type === "node-flow" || diagram.type === "node") {
+		return (
+			<NodeDiagramFlow
+				data={
+					diagram.data as {
+						nodes?: Array<{
+							id: string;
+							type?: string;
+							label: string;
+							x?: number;
+							y?: number;
+						}>;
+						edges?: Array<{ id: string; source: string; target: string }>;
+					}
+				}
+			/>
+		);
+	}
+
 	return (
 		<div className="space-y-2">
 			{diagram.type === "force-vector" && (

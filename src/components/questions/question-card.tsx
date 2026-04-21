@@ -179,15 +179,14 @@ export function QuestionCard({
 								disabled={state.isSubmitted}
 								onClick={() => handleSelect(option.id)}
 								className={cn(
-									"flex w-full items-center gap-3 rounded-lg border border-border bg-card p-4 text-left transition-all duration-200 hover:bg-accent",
+									"quiz-option-btn flex w-full items-center gap-3 rounded-lg border border-border bg-card p-4 text-left",
 									"disabled:cursor-not-allowed disabled:opacity-50",
-									"transform-cpu",
 									optionClass,
 								)}
 							>
 								<span
 									className={cn(
-										"flex h-6 w-6 items-center justify-center rounded-full border text-sm font-medium",
+										"quiz-option-letter flex h-6 w-6 items-center justify-center rounded-full border text-sm font-medium",
 										isSelected
 											? "border-primary bg-primary text-primary-foreground"
 											: "border-muted-foreground/30",
@@ -217,9 +216,9 @@ export function QuestionCard({
 				{state.showExplanation && (
 					<div
 						className={cn(
-							"animate-slide-in-bottom rounded-lg p-4",
+							"animate-scale-in rounded-lg p-4",
 							state.isCorrect
-								? "bg-green-500/10 text-green-700"
+								? "bg-green-500/10 text-green-700 animate-correct-pulse"
 								: "bg-red-500/10 text-red-700",
 						)}
 					>
