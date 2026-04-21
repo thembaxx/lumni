@@ -5,7 +5,6 @@ import { Suspense } from "react";
 import { extractRouterConfig } from "uploadthing/server";
 
 import "./globals.css";
-import { Menu } from "@/components/menu";
 import { Providers } from "@/components/providers";
 import { ourFileRouter } from "./api/uploadthing/core";
 import { fontMono, fontSans } from "./fonts";
@@ -63,7 +62,9 @@ export default function RootLayout({
 			lang="en"
 			className={`${fontSans.variable} ${fontMono.variable} h-full antialiased`}
 		>
-			<body className="min-h-full flex flex-col font-body">
+			<body
+				className={`${fontSans.variable} ${fontMono.variable} h-full antialiased min-h-full flex flex-col font-body`}
+			>
 				<Suspense fallback={null}>
 					<UTSSR />
 				</Suspense>

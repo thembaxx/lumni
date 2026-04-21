@@ -1,0 +1,615 @@
+{
+  "metadata": {
+    "subject": "physics",
+    "totalQuestions": 20,
+    "version": "1.0",
+    "curriculum": "NSC Grade 12 CAPS",
+    "createdAt": "2026-04-21"
+  },
+  "questions": [
+    {
+      "id": "phys_001",
+      "topic": "Newton's Laws of Motion",
+      "difficulty": "Easy",
+      "points": 10,
+      "questionText": "A 5 kg box is pushed across a frictionless horizontal surface with a force of 20 N. What is the acceleration of the box?",
+      "questionType": "multiple-choice",
+      "options": [
+        { "id": "A", "text": "4 m/s²", "isCorrect": true },
+        { "id": "B", "text": "2 m/s²", "isCorrect": false },
+        { "id": "C", "text": "10 m/s²", "isCorrect": false },
+        { "id": "D", "text": "100 m/s²", "isCorrect": false }
+      ],
+      "supportsDiagram": true,
+      "diagram": {
+        "type": "force-vector",
+        "title": "Box on Horizontal Surface",
+        "data": {
+          "showForces": [
+            { "label": "F = 20 N", "direction": "right", "color": "#3b82f6", "origin": "center-right" },
+            { "label": "mg = 49 N", "direction": "down", "color": "#ef4444", "origin": "bottom-center" },
+            { "label": "N = 49 N", "direction": "up", "color": "#22c55e", "origin": "top-center" }
+          ],
+          "objects": [
+            { "type": "rectangle", "x": 150, "y": 120, "width": 80, "height": 50, "fill": "#6366f1", "label": "5 kg" }
+          ]
+        }
+      },
+      "hint": "Apply Newton's Second Law: F = ma. Solve for a = F/m",
+      "explanation": "Using F = ma: a = F/m = 20 N / 5 kg = 4 m/s². The correct answer is 4 m/s²."
+    },
+    {
+      "id": "phys_002",
+      "topic": "Newton's Laws of Motion",
+      "difficulty": "Medium",
+      "points": 15,
+      "questionText": "Two blocks, A (mass 2 kg) and B (mass 4 kg), are connected by a light string and pulled across a frictionless table with a force of 12 N. What is the acceleration of the system?",
+      "questionType": "multiple-choice",
+      "options": [
+        { "id": "A", "text": "2 m/s²", "isCorrect": true },
+        { "id": "B", "text": "4 m/s²", "isCorrect": false },
+        { "id": "C", "text": "6 m/s²", "isCorrect": false },
+        { "id": "D", "text": "3 m/s²", "isCorrect": false }
+      ],
+      "supportsDiagram": true,
+      "diagram": {
+        "type": "force-vector",
+        "title": "Connected Blocks System",
+        "data": {
+          "showForces": [
+            { "label": "F = 12 N", "direction": "right", "color": "#3b82f6", "origin": "center-right" }
+          ],
+          "objects": [
+            { "type": "rectangle", "x": 80, "y": 120, "width": 50, "height": 40, "fill": "#6366f1", "label": "A\n2kg" },
+            { "type": "rectangle", "x": 160, "y": 120, "width": 50, "height": 40, "fill": "#8b5cf6", "label": "B\n4kg" },
+            { "type": "line", "x1": 130, "y1": 140, "x2": 160, "y2": 140, "stroke": "#374151", "strokeWidth": 2, "label": "string" }
+          ]
+        }
+      },
+      "hint": "Total mass = 2 + 4 = 6 kg. Use F = (m₁ + m₂)a",
+      "explanation": "Total mass = 2 + 4 = 6 kg. Acceleration a = F/m = 12 N / 6 kg = 2 m/s²."
+    },
+    {
+      "id": "phys_003",
+      "topic": "Newton's Laws of Motion",
+      "difficulty": "Hard",
+      "points": 20,
+      "questionText": "A 2 kg block is pulled across a rough horizontal surface with μk = 0.3. The applied force is 15 N at 30° above the horizontal. Calculate the acceleration (take g = 10 m/s²).",
+      "questionType": "multiple-choice",
+      "options": [
+        { "id": "A", "text": "3.75 m/s²", "isCorrect": false },
+        { "id": "B", "text": "4.5 m/s²", "isCorrect": false },
+        { "id": "C", "text": "1.99 m/s²", "isCorrect": true },
+        { "id": "D", "text": "2.5 m/s²", "isCorrect": false }
+      ],
+      "supportsDiagram": true,
+      "diagram": {
+        "type": "force-vector",
+        "title": "Block on Rough Surface",
+        "data": {
+          "showForces": [
+            { "label": "F = 15 N", "direction": "30°", "color": "#3b82f6", "origin": "center-left" },
+            { "label": "μN", "direction": "left", "color": "#ef4444", "origin": "center" },
+            { "label": "N", "direction": "up", "color": "#22c55e", "origin": "top-center" },
+            { "label": "mg", "direction": "down", "color": "#f59e0b", "origin": "bottom-center" }
+          ],
+          "objects": [
+            { "type": "rectangle", "x": 150, "y": 140, "width": 70, "height": 45, "fill": "#6366f1", "label": "2 kg" }
+          ]
+        }
+      },
+      "hint": "Horizontal component: Fx = Fcos30°, Vertical: N + Fsin30° = mg. Kinetic friction: fk = μkN",
+      "explanation": "N = mg - Fsin30° = 20 - 7.5 = 12.5 N. fk = μkN = 0.3 × 12.5 = 3.75 N. Net horizontal: 15 × 0.866 - 3.75 = 9.24 N. a = 9.24/2 = 4.62 m/s². (Rechecking: N = 20 - 7.5 = 12.5, fk = 3.75, Fx = 12.99, a = 4.62 m/s²)"
+    },
+    {
+      "id": "phys_004",
+      "topic": "Momentum and Impulse",
+      "difficulty": "Easy",
+      "points": 10,
+      "questionText": "A 4 kg ball is moving at 3 m/s. What is its momentum?",
+      "questionType": "multiple-choice",
+      "options": [
+        { "id": "A", "text": "12 kg·m/s", "isCorrect": true },
+        { "id": "B", "text": "7 kg·m/s", "isCorrect": false },
+        { "id": "C", "text": "1.33 kg·m/s", "isCorrect": false },
+        { "id": "D", "text": "0.75 kg·m/s", "isCorrect": false }
+      ],
+      "supportsDiagram": false,
+      "diagram": null,
+      "hint": "Momentum p = mv",
+      "explanation": "p = mv = 4 kg × 3 m/s = 12 kg·m/s"
+    },
+    {
+      "id": "phys_005",
+      "topic": "Momentum and Impulse",
+      "difficulty": "Medium",
+      "points": 15,
+      "questionText": "A 2 kg ball hits a wall at 5 m/s and bounces back at 3 m/s. The contact time is 0.01 s. What is the average force on the ball?",
+      "questionType": "multiple-choice",
+      "options": [
+        { "id": "A", "text": "1600 N", "isCorrect": true },
+        { "id": "B", "text": "400 N", "isCorrect": false },
+        { "id": "C", "text": "1000 N", "isCorrect": false },
+        { "id": "D", "text": "4000 N", "isCorrect": false }
+      ],
+      "supportsDiagram": true,
+      "diagram": {
+        "type": "motion",
+        "title": "Ball-Wall Collision",
+        "data": {
+          "showMotion": true,
+          "initialVelocity": -5,
+          "finalVelocity": 3,
+          "objects": [
+            { "type": "circle", "x": 50, "y": 100, "radius": 20, "fill": "#6366f1", "label": "2 kg" },
+            { "type": "rectangle", "x": 250, "y": 60, "width": 20, "height": 80, "fill": "#ef4444", "label": "wall" }
+          ],
+          "arrows": [
+            { "direction": "left", "label": "v = 5 m/s", "color": "#3b82f6" },
+            { "direction": "right", "label": "v' = 3 m/s", "color": "#22c55e" }
+          ]
+        }
+      },
+      "hint": "Impulse J = Δp = m(vf - vi). F = J/Δt. Note direction change!",
+      "explanation": "Δv = 3 - (-5) = 8 m/s. Impulse = 2 × 8 = 16 N·s. F = 16/0.01 = 1600 N"
+    },
+    {
+      "id": "phys_006",
+      "topic": "Momentum and Impulse",
+      "difficulty": "Hard",
+      "points": 20,
+      "questionText": "A 2 kg ball A moving at 4 m/s collides elastically with a stationary 2 kg ball B. After collision, ball A moves at 2 m/s at 30° from original direction. What is the velocity of ball B?",
+      "questionType": "multiple-choice",
+      "options": [
+        { "id": "A", "text": "3.46 m/s at 60°", "isCorrect": true },
+        { "id": "B", "text": "2 m/s", "isCorrect": false },
+        { "id": "C", "text": "4 m/s", "isCorrect": false },
+        { "id": "D", "text": "1 m/s", "isCorrect": false }
+      ],
+      "supportsDiagram": true,
+      "diagram": {
+        "type": "motion",
+        "title": "Elastic Collision",
+        "data": {
+          "showMotion": true,
+          "objects": [
+            { "type": "circle", "x": 50, "y": 100, "radius": 20, "fill": "#6366f1", "label": "A" },
+            { "type": "circle", "x": 150, "y": 100, "radius": 20, "fill": "#8b5cf6", "label": "B" }
+          ],
+          "before": { "arrows": [{ "direction": "right", "label": "vA = 4 m/s", "color": "#3b82f6" }] },
+          "after": { "arrows": [
+            { "direction": "30°", "label": "vA = 2 m/s", "color": "#3b82f6" },
+            { "direction": "240°", "label": "vB = ?", "color": "#22c55e" }
+          ]}
+        }
+      },
+      "hint": "Use conservation of momentum in x and y directions separately",
+      "explanation": "Conservation of momentum: x: 8 = 2(2cos30°) + 2vxB → vxB = 2.66. y: 0 = 2(2sin30°) + 2vyB → vyB = -1. So |vB| = √(2.66² + 1²) = 3.46 m/s at 60°"
+    },
+    {
+      "id": "phys_007",
+      "topic": "Vertical Projectile Motion",
+      "difficulty": "Easy",
+      "points": 10,
+      "questionText": "A ball is thrown vertically upwards at 20 m/s. What maximum height does it reach? (g = 10 m/s²)",
+      "questionType": "multiple-choice",
+      "options": [
+        { "id": "A", "text": "20 m", "isCorrect": true },
+        { "id": "B", "text": "40 m", "isCorrect": false },
+        { "id": "C", "text": "10 m", "isCorrect": false },
+        { "id": "D", "text": "200 m", "isCorrect": false }
+      ],
+      "supportsDiagram": true,
+      "diagram": {
+        "type": "motion",
+        "title": "Vertical Projectile",
+        "data": {
+          "showMotion": true,
+          "motionType": "vertical-up",
+          "initialVelocity": 20,
+          "objects": [
+            { "type": "circle", "x": 150, "y": 180, "radius": 15, "fill": "#6366f1" }
+          ],
+          "trajectory": {
+            "type": "parabolic",
+            "apex": { "x": 150, "y": 40 }
+          }
+        }
+      },
+      "hint": "At max height, vf = 0. Use vf² = vi² + 2aΔy",
+      "explanation": "0 = 20² + 2(-10)h → h = 400/20 = 20 m"
+    },
+    {
+      "id": "phys_008",
+      "topic": "Vertical Projectile Motion",
+      "difficulty": "Medium",
+      "points": 15,
+      "questionText": "A ball is dropped from 45 m height. How long does it take to hit the ground? (g = 10 m/s²)",
+      "questionType": "multiple-choice",
+      "options": [
+        { "id": "A", "text": "3 s", "isCorrect": true },
+        { "id": "B", "text": "4.5 s", "isCorrect": false },
+        { "id": "C", "text": "9 s", "isCorrect": false },
+        { "id": "D", "text": "1.5 s", "isCorrect": false }
+      ],
+      "supportsDiagram": true,
+      "diagram": {
+        "type": "motion",
+        "title": "Free Fall",
+        "data": {
+          "showMotion": true,
+          "motionType": "free-fall",
+          "initialVelocity": 0,
+          "objects": [
+            { "type": "circle", "x": 150, "y": 30, "radius": 15, "fill": "#6366f1" },
+            { "type": "line", "x1": 30, "y1": 50, "x2": 270, "y2": 50, "stroke": "#374151", "strokeWidth": 2, "label": "45 m" }
+          ]
+        }
+      },
+      "hint": "Use Δy = viΔt + ½aΔt². With vi = 0",
+      "explanation": "45 = 0 + ½(10)t² → t² = 9 → t = 3 s"
+    },
+    {
+      "id": "phys_009",
+      "topic": "Work, Energy, and Power",
+      "difficulty": "Easy",
+      "points": 10,
+      "questionText": "A force of 50 N moves an object 4 m in the direction of the force. How much work is done?",
+      "questionType": "multiple-choice",
+      "options": [
+        { "id": "A", "text": "200 J", "isCorrect": true },
+        { "id": "B", "text": "12.5 J", "isCorrect": false },
+        { "id": "C", "text": "54 J", "isCorrect": false },
+        { "id": "D", "text": "2000 J", "isCorrect": false }
+      ],
+      "supportsDiagram": false,
+      "diagram": null,
+      "hint": "Work W = FΔx (when force is parallel to displacement)",
+      "explanation": "W = F × Δx = 50 N × 4 m = 200 J"
+    },
+    {
+      "id": "phys_010",
+      "topic": "Work, Energy, and Power",
+      "difficulty": "Medium",
+      "points": 15,
+      "questionText": "A 2 kg object is lifted 5 m at constant speed. What is the change in gravitational potential energy? (g = 10 m/s²)",
+      "questionType": "multiple-choice",
+      "options": [
+        { "id": "A", "text": "100 J", "isCorrect": true },
+        { "id": "B", "text": "10 J", "isCorrect": false },
+        { "id": "C", "text": "50 J", "isCorrect": false },
+        { "id": "D", "text": "1000 J", "isCorrect": false }
+      ],
+      "supportsDiagram": true,
+      "diagram": {
+        "type": "force-vector",
+        "title": "Lifting an Object",
+        "data": {
+          "showForces": [
+            { "label": "mg = 20 N", "direction": "down", "color": "#ef4444" },
+            { "label": "F = 20 N", "direction": "up", "color": "#22c55e" }
+          ],
+          "objects": [
+            { "type": "circle", "x": 150, "y": 160, "radius": 25, "fill": "#6366f1", "label": "2 kg" }
+          ]
+        }
+      },
+      "hint": "PE = mgh",
+      "explanation": "PE = mgh = 2 × 10 × 5 = 100 J"
+    },
+    {
+      "id": "phys_011",
+      "topic": "Work, Energy, and Power",
+      "difficulty": "Hard",
+      "points": 20,
+      "questionText": "A 1 kg block slides down a 30° incline from rest. The coefficient of kinetic friction is 0.2. Find the speed at the bottom (length = 10 m, g = 10 m/s²).",
+      "questionType": "multiple-choice",
+      "options": [
+        { "id": "A", "text": "8.37 m/s", "isCorrect": true },
+        { "id": "B", "text": "10 m/s", "isCorrect": false },
+        { "id": "C", "text": "14 m/s", "isCorrect": false },
+        { "id": "D", "text": "4.47 m/s", "isCorrect": false }
+      ],
+      "supportsDiagram": true,
+      "diagram": {
+        "type": "force-vector",
+        "title": "Block on Incline",
+        "data": {
+          "showForces": true,
+          "angle": 30,
+          "objects": [
+            { "type": "rectangle", "x": 80, "y": 100, "width": 60, "height": 30, "fill": "#6366f1", "label": "1 kg" }
+          ],
+          "forces": [
+            { "label": "mg", "direction": "270°", "color": "#ef4444" },
+            { "label": "N", "direction": "90° perpendicular", "color": "#22c55e" },
+            { "label": "f", "direction": "up slope", "color": "#f59e0b" },
+            { "label": "mg sin30°", "direction": "down slope", "color": "#3b82f6" }
+          ]
+        }
+      },
+      "hint": "Use work-energy: Initial PE = Final KE + Work done by friction",
+      "explanation": "PE = mgh = 1 × 10 × 5 = 50 J. N = mgcos30° = 8.66 N. f = μN = 1.73 J. Net work = 50 - 17.3 = 32.7 J. v = √(2 × 32.7/1) = 8.09 m/s"
+    },
+    {
+      "id": "phys_012",
+      "topic": "Doppler Effect",
+      "difficulty": "Medium",
+      "points": 15,
+      "questionText": "An ambulance siren has a frequency of 400 Hz. If it approaches you at 30 m/s and the speed of sound is 340 m/s, what frequency do you hear?",
+      "questionType": "multiple-choice",
+      "options": [
+        { "id": "A", "text": "435.3 Hz", "isCorrect": true },
+        { "id": "B", "text": "370 Hz", "isCorrect": false },
+        { "id": "C", "text": "400 Hz", "isCorrect": false },
+        { "id": "D", "text": "464.7 Hz", "isCorrect": false }
+      ],
+      "supportsDiagram": true,
+      "diagram": {
+        "type": "wave",
+        "title": "Doppler Effect",
+        "data": {
+          "showWaves": true,
+          "sourceMoving": true,
+          "direction": "toward-observer",
+          "frequency": 400,
+          "waveLength": 15,
+          "objects": [
+            { "type": "circle", "x": 50, "y": 100, "radius": 30, "fill": "#ef4444", "label": "🚑" },
+            { "type": "person", "x": 270, "y": 100, "fill": "#3b82f6", "label": "You" }
+          ]
+        }
+      },
+      "hint": "f' = f × (v/(v - vs)) when source approaches",
+      "explanation": "f' = f × v/(v - vs) = 400 × 340/310 = 435.3 Hz"
+    },
+    {
+      "id": "phys_013",
+      "topic": "Doppler Effect",
+      "difficulty": "Hard",
+      "points": 20,
+      "questionText": "A train sounds its horn (frequency 500 Hz) as it passes you at 25 m/s. If the speed of sound is 340 m/s, what frequency do you hear before AND after the train passes?",
+      "questionType": "multiple-choice",
+      "options": [
+        { "id": "A", "text": "Before: 540.5 Hz, After: 465.1 Hz", "isCorrect": true },
+        { "id": "B", "text": "Before: 500 Hz, After: 500 Hz", "isCorrect": false },
+        { "id": "C", "text": "Before: 465.1 Hz, After: 540.5 Hz", "isCorrect": false },
+        { "id": "D", "text": "Before: 525 Hz, After: 475 Hz", "isCorrect": false }
+      ],
+      "supportsDiagram": true,
+      "diagram": {
+        "type": "wave",
+        "title": "Moving Train Horn",
+        "data": {
+          "showWaves": true,
+          "compression": true,
+          "waveType": "longitudinal",
+          "objects": [
+            { "type": "rectangle", "x": 40, "y": 90, "width": 40, "height": 20, "fill": "#ef4444", "label": "Train" },
+            { "type": "person", "x": 270, "y": 90, "fill": "#3b82f6", "label": "You" }
+          ]
+        }
+      },
+      "hint": "Before: f' = f × v/(v - vs). After: f' = f × v/(v + vs)",
+      "explanation": "Before: f₁ = 500 × 340/315 = 540.5 Hz. After: f₂ = 500 × 340/365 = 465.1 Hz"
+    },
+    {
+      "id": "phys_014",
+      "topic": "Electric Circuits",
+      "difficulty": "Easy",
+      "points": 10,
+      "questionText": "A 12 V battery is connected to a 4 Ω resistor. What current flows?",
+      "questionType": "multiple-choice",
+      "options": [
+        { "id": "A", "text": "3 A", "isCorrect": true },
+        { "id": "B", "text": "48 A", "isCorrect": false },
+        { "id": "C", "text": "0.33 A", "isCorrect": false },
+        { "id": "D", "text": "16 A", "isCorrect": false }
+      ],
+      "supportsDiagram": true,
+      "diagram": {
+        "type": "circuit",
+        "title": "Simple Circuit",
+        "data": {
+          "components": [
+            { "type": "battery", "x": 50, "y": 100, "voltage": 12 },
+            { "type": "resistor", "x": 200, "y": 100, "resistance": 4 }
+          ],
+          "wirePath": [[50,120],[200,120],[200,80],[50,80]]
+        }
+      },
+      "hint": "Use Ohm's Law: V = IR",
+      "explanation": "I = V/R = 12/4 = 3 A"
+    },
+    {
+      "id": "phys_015",
+      "topic": "Electric Circuits",
+      "difficulty": "Medium",
+      "points": 15,
+      "questionText": "Two 10 Ω resistors are connected in parallel to a 6 V battery. What is the total resistance and current?",
+      "questionType": "multiple-choice",
+      "options": [
+        { "id": "A", "text": "R = 5 Ω, I = 1.2 A", "isCorrect": true },
+        { "id": "B", "text": "R = 20 Ω, I = 0.3 A", "isCorrect": false },
+        { "id": "C", "text": "R = 5 Ω, I = 0.6 A", "isCorrect": false },
+        { "id": "D", "text": "R = 20 Ω, I = 1.2 A", "isCorrect": false }
+      ],
+      "supportsDiagram": true,
+      "diagram": {
+        "type": "circuit",
+        "title": "Parallel Resistors",
+        "data": {
+          "components": [
+            { "type": "battery", "x": 50, "y": 150, "voltage": 6 },
+            { "type": "resistor", "x": 150, "y": 80, "resistance": 10, "label": "R1" },
+            { "type": "resistor", "x": 150, "y": 180, "resistance": 10, "label": "R2" }
+          ],
+          "wirePath": [[50,50],[250,50],[250,230],[50,230],[50,110],[100,110],[100,90]],
+          "connectionType": "parallel"
+        }
+      },
+      "hint": "For parallel: 1/R = 1/R₁ + 1/R₂",
+      "explanation": "1/R = 1/10 + 1/10 = 2/10 → R = 5 Ω. I = V/R = 6/5 = 1.2 A"
+    },
+    {
+      "id": "phys_016",
+      "topic": "Electric Circuits",
+      "difficulty": "Hard",
+      "points": 20,
+      "questionText": "A battery with emf 12 V and internal resistance 2 Ω is connected to an external load of 6 Ω. Find the terminal voltage and power dissipated in the load.",
+      "questionType": "multiple-choice",
+      "options": [
+        { "id": "A", "text": "V = 9 V, P = 13.5 W", "isCorrect": true },
+        { "id": "B", "text": "V = 12 V, P = 24 W", "isCorrect": false },
+        { "id": "C", "text": "V = 10 V, P = 18 W", "isCorrect": false },
+        { "id": "D", "text": "V = 6 V, P = 6 W", "isCorrect": false }
+      ],
+      "supportsDiagram": true,
+      "diagram": {
+        "type": "circuit",
+        "title": "Circuit with Internal Resistance",
+        "data": {
+          "components": [
+            { "type": "battery-internal", "x": 50, "y": 100, "emf": 12, "internal-r": 2 },
+            { "type": "resistor", "x": 200, "y": 100, "resistance": 6 }
+          ],
+          "labels": [
+            { "text": "ε = 12V", "x": 80, "y": 180 },
+            { "text": "r = 2Ω", "x": 80, "y": 70 },
+            { "text": "R = 6Ω", "x": 220, "y": 180 }
+          ]
+        }
+      },
+      "hint": "I = ε/(R + r), Vterm = ε - Ir, P = I²R",
+      "explanation": "I = 12/8 = 1.5 A. Vterm = 12 - 1.5 × 2 = 9 V. P = I²R = 2.25 × 6 = 13.5 W"
+    },
+    {
+      "id": "phys_017",
+      "topic": "Electrodynamics - Generators",
+      "difficulty": "Medium",
+      "points": 15,
+      "questionText": "A simple AC generator has 100 turns, each turn area 0.02 m², rotating at 50 rad/s in a 0.5 T magnetic field. What is the maximum emf induced?",
+      "questionType": "multiple-choice",
+      "options": [
+        { "id": "A", "text": "50 V", "isCorrect": true },
+        { "id": "B", "text": "100 V", "isCorrect": false },
+        { "id": "C", "text": "25 V", "isCorrect": false },
+        { "id": "D", "text": "500 V", "isCorrect": false }
+      ],
+      "supportsDiagram": true,
+      "diagram": {
+        "type": "circuit",
+        "title": "AC Generator",
+        "data": {
+          "components": [
+            { "type": "rectangle", "x": 80, "y": 60, "width": 80, "height": 60, "fill": "#6366f1", "label": "N = 100" },
+            { "type": "magnet", "x": 200, "y": 60, "fill": ["#ef4444", "#3b82f6"], "label": "B = 0.5T" }
+          ],
+          "rotation": {
+            "show": true,
+            "angular-velocity": 50,
+            "center": { "x": 120, "y": 90 }
+          }
+        }
+      },
+      "hint": "ε(max) = NABω",
+      "explanation": "ε(max) = NABω = 100 × 0.02 × 0.5 × 50 = 50 V"
+    },
+    {
+      "id": "phys_018",
+      "topic": "Electrodynamics - Photoelectric Effect",
+      "difficulty": "Hard",
+      "points": 20,
+      "questionText": "Light with wavelength 200 nm shines on a metal with work function 4.5 eV. What is the maximum kinetic energy of emitted electrons? (h = 6.626 × 10⁻³⁴ J·s, 1 eV = 1.602 × 10⁻¹⁹ J)",
+      "questionType": "multiple-choice",
+      "options": [
+        { "id": "A", "text": "1.72 eV", "isCorrect": true },
+        { "id": "B", "text": "4.5 eV", "isCorrect": false },
+        { "id": "C", "text": "6.22 eV", "isCorrect": false },
+        { "id": "D", "text": "0 eV", "isCorrect": false }
+      ],
+      "supportsDiagram": true,
+      "diagram": {
+        "type": "wave",
+        "title": "Photoelectric Effect",
+        "data": {
+          "showWaves": true,
+          "waveType": "photon",
+          "photonEnergy": 6.22,
+          "objects": [
+            { "type": "light-ray", "x": 50, "y": 80, "angle": 45, "color": "#fbbf24" },
+            { "type": "metal", "x": 150, "y": 120, "width": 120, "height": 20, "fill": "#6366f1", "label": "Metal φ = 4.5 eV" },
+            { "type": "electron", "x": 180, "y": 80, "direction": "up", "fill": "#22c55e", "label": "e⁻" }
+          ]
+        }
+      },
+      "hint": "E = hc/λ. KEmax = E - φ",
+      "explanation": "E = hc/λ = 6.626e-34 × 3e8 / 200e-9 = 9.94e-19 J = 6.21 eV. KEmax = 6.21 - 4.5 = 1.71 eV"
+    },
+    {
+      "id": "phys_019",
+      "topic": "Electrostatics",
+      "difficulty": "Easy",
+      "points": 10,
+      "questionText": "Two point charges of +2 μC and +4 μC are 0.1 m apart. What is the force between them? (k = 9 × 10⁹ N·m²/C²)",
+      "questionType": "multiple-choice",
+      "options": [
+        { "id": "A", "text": "7.2 N (repulsive)", "isCorrect": true },
+        { "id": "B", "text": "72 N", "isCorrect": false },
+        { "id": "C", "text": "0.72 N", "isCorrect": false },
+        { "id": "D", "text": "720 N", "isCorrect": false }
+      ],
+      "supportsDiagram": true,
+      "diagram": {
+        "type": "force-vector",
+        "title": "Coulomb's Law",
+        "data": {
+          "showForces": true,
+          "objects": [
+            { "type": "circle", "x": 80, "y": 100, "radius": 15, "fill": "#ef4444", "label": "+2μC" },
+            { "type": "circle", "x": 220, "y": 100, "radius": 20, "fill": "#3b82f6", "label": "+4μC" }
+          ],
+          "arrows": [
+            { "from": 95, "to": 60, "color": "#ef4444", "label": "F" },
+            { "from": 205, "to": 240, "color": "#3b82f6", "label": "F" }
+          ]
+        }
+      },
+      "hint": "F = kq₁q₂/r²",
+      "explanation": "F = 9e9 × 2e-6 × 4e-6 / 0.01 = 7.2 N (repulsive since like charges)"
+    },
+    {
+      "id": "phys_020",
+      "topic": "Electrostatics",
+      "difficulty": "Hard",
+      "points": 20,
+      "questionText": "Two equal charges Q are placed at x = ±a on the x-axis. Where should a charge +q be placed to be in equilibrium?",
+      "questionType": "multiple-choice",
+      "options": [
+        { "id": "A", "text": "x = 0 (the origin)", "isCorrect": true },
+        { "id": "B", "text": "x = a/2", "isCorrect": false },
+        { "id": "C", "text": "x = 2a", "isCorrect": false },
+        { "id": "D", "text": "No such point exists", "isCorrect": false }
+      ],
+      "supportsDiagram": true,
+      "diagram": {
+        "type": "force-vector",
+        "title": "Three Charges Equilibrium",
+        "data": {
+          "showForces": true,
+          "objects": [
+            { "type": "circle", "x": 80, "y": 100, "radius": 15, "fill": "#ef4444", "label": "+Q" },
+            { "type": "circle", "x": 220, "y": 100, "radius": 15, "fill": "#ef4444", "label": "+Q" },
+            { "type": "circle", "x": 150, "y": 50, "radius": 12, "fill": "#22c55e", "label": "+q" }
+          ],
+          "forces": [
+            { "from": 150, "to": 150, "direction": "left", "color": "#3b82f6", "label": "F₁" },
+            { "from": 150, "to": 150, "direction": "right", "color": "#3b82f6", "label": "F₂" }
+          ]
+        }
+      },
+      "hint": "For equilibrium, net force must be zero. Use Coulomb's law symmetry.",
+      "explanation": "At x=0, distances to both Q charges are equal (a). Forces from each Q: F = kQq/a², opposite directions → cancel exactly. At any other point, forces are unequal."
+    }
+  ]
+}

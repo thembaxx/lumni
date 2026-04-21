@@ -35,6 +35,19 @@ export const ourFileRouter = {
 			console.log("file url", file.ufsUrl);
 			return { uploadedBy: metadata.userId };
 		}),
+	qaUploader: f({
+		"application/json": { maxFileSize: "1MB", maxFileCount: 20 },
+	})
+		.middleware(async ({ req }) => {
+			const user = await auth(req);
+			if (!user) throw new UploadThingError("Unauthorized");
+			return { userId: user.id };
+		})
+		.onUploadComplete(async ({ metadata, file }) => {
+			console.log("QA Upload complete for userId:", metadata.userId);
+			console.log("file url", file.ufsUrl);
+			return { uploadedBy: metadata.userId };
+		}),
 } satisfies FileRouter;
 
 export type OurFileRouter = typeof ourFileRouter;

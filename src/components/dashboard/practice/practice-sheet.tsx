@@ -1,17 +1,18 @@
 "use client";
 
 import { Bookmark } from "lucide-react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
 	Sheet,
 	SheetContent,
-	SheetDescription,
 	SheetHeader,
 	SheetTitle,
 	SheetTrigger,
 } from "@/components/ui/sheet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FocusTab } from "../focus/focus-tab";
+import { QuizTab } from "./quiz-tab";
 
 interface PracticeSheetProps {
 	open: boolean;
@@ -19,6 +20,8 @@ interface PracticeSheetProps {
 }
 
 export function PracticeSheet({ open, onOpenChange }: PracticeSheetProps) {
+	const [showQuizHeader, setShowQuizHeader] = useState(true);
+
 	return (
 		<Sheet open={open} onOpenChange={onOpenChange}>
 			<SheetTrigger asChild>
@@ -31,17 +34,19 @@ export function PracticeSheet({ open, onOpenChange }: PracticeSheetProps) {
 				</Button>
 			</SheetTrigger>
 			<SheetContent className="min-h-[95dvh] flex flex-col max-h-[95dvh] mx-auto mt-0 rounded-t-4xl animate-fade-in-scale">
-				<SheetHeader className="flex flex-col items-center">
+				<SheetHeader
+					className={`flex flex-col items-center transition-opacity duration-300 ${
+						showQuizHeader
+							? "opacity-100"
+							: "opacity-0 pointer-events-none absolute"
+					}`}
+				>
 					<SheetTitle>Practice</SheetTitle>
-					<SheetDescription className="max-w-70 text-center text-pretty">
-						Practice makes progress. Sharpen your skills with real-world
-						scenarios and improve your performance over time.
-					</SheetDescription>
 				</SheetHeader>
-				<div className="px-4 py-2 grow flex flex-col items-center overflow-y-auto">
+				<div className="px-4 py-2 w-full grow flex flex-col items-center overflow-y-auto">
 					<Tabs
 						defaultValue="quiz"
-						className="flex flex-col items-center gow h-full"
+						className="flex flex-col items-center gow w-full h-full"
 					>
 						<TabsList className="h-11">
 							<TabsTrigger value="quiz" className="px-4">
@@ -53,10 +58,19 @@ export function PracticeSheet({ open, onOpenChange }: PracticeSheetProps) {
 							<TabsTrigger value="focus" className="px-4">
 								Focus
 							</TabsTrigger>
+							<TabsTrigger value="lab" className="px-4">
+								Lab
+							</TabsTrigger>
 						</TabsList>
 						<TabsContent
+							value="quiz"
+							className="mt-12 grow flex w-full items-center justify-center"
+						>
+							<QuizTab onHeaderChange={setShowQuizHeader} />
+						</TabsContent>
+						<TabsContent
 							value="focus"
-							className="mt-12 grow flex items-center justify-center"
+							className="mt-12 grow w-full flex items-center justify-center"
 						>
 							<FocusTab />
 						</TabsContent>

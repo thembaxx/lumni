@@ -1,9 +1,10 @@
 "use client";
 
 import { Search } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
 	Drawer,
+	DrawerClose,
 	DrawerContent,
 	DrawerDescription,
 	DrawerHeader,
@@ -14,16 +15,24 @@ import { useFilteredSubjects } from "@/lib/hooks/use-subjects";
 
 type SubjectsDrawerProps = {
 	children: React.ReactNode;
+	onSelect?: (subject: string) => void;
 };
 
-export function SubjectsDrawer({ children }: SubjectsDrawerProps) {
+export function SubjectsDrawer({ children, onSelect }: SubjectsDrawerProps) {
 	const [searchQuery, setSearchQuery] = useState("");
 	const { data: subjects, isLoading, error } = useFilteredSubjects(searchQuery);
+	const drawerCloseRef = useRef<HTMLButtonElement>(null);
+
+	const handleSelect = (subjectName: string) => {
+		onSelect?.(subjectName);
+		drawerCloseRef.current?.click();
+	};
 
 	return (
 		<Drawer direction="bottom">
 			<DrawerTrigger asChild>{children}</DrawerTrigger>
 			<DrawerContent className="mx-auto max-w-lg mt-0 rounded-b-2xl min-h-[60dvh] animate-fade-in-scale">
+				<DrawerClose ref={drawerCloseRef} className="hidden" />
 				<DrawerHeader className="text-left">
 					<DrawerTitle className="text-left">Select Subject</DrawerTitle>
 					<DrawerDescription className="text-left">
@@ -63,6 +72,7 @@ export function SubjectsDrawer({ children }: SubjectsDrawerProps) {
 								<button
 									key={subject.id + subject.name}
 									className="w-full text-left p-3 rounded-lg hover:bg-secondary transition-colors duration-200"
+									onClick={() => handleSelect(subject.name)}
 								>
 									<p className="font-medium text-foreground">{subject.name}</p>
 									<p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">

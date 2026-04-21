@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { Menu } from "@/components/menu";
-import { PracticeSheet } from "../practice/practice-sheet";
 import { TabNav } from "../navigation/tab-nav";
+import { PracticeSheet } from "../practice/practice-sheet";
 import type { TabValue } from "../types";
 
 export type { TabValue };
