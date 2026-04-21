@@ -1,6 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
+import { useUploadStore } from "@/lib/store";
 import type { QAFile, QAQuestion } from "@/lib/types/questions";
 
 const UPLOADTHING_BASE_URL = process.env.NEXT_PUBLIC_UPLOADTHING_BASE_URL!;
@@ -40,8 +41,21 @@ export async function fetchSubjectQuestions(
 	subject: string,
 	numberOfQuestions: number,
 ): Promise<QAQuestion[]> {
+	const store = useUploadStore.getState();
+	const normalizedSubject = subject.toLowerCase();
+
+	const cached = store.getCachedQuestions(normalizedSubject);
+	if (cached && cached.length >= numberOfQuestions) {
+		const shuffled = [...cached].sort(() => Math.random() - 0.5);
+		return shuffled.slice(0, numberOfQuestions);
+	}
+
 	const fileNames = generateFileNames(subject, numberOfQuestions);
 	const allQuestions: QAQuestion[] = [];
+
+	if (cached && cached.length > 0) {
+		allQuestions.push(...cached);
+	}
 
 	for (const fileName of fileNames) {
 		try {
@@ -53,7 +67,11 @@ export async function fetchSubjectQuestions(
 	}
 
 	const shuffled = [...allQuestions].sort(() => Math.random() - 0.5);
-	return shuffled.slice(0, numberOfQuestions);
+	const result = shuffled.slice(0, numberOfQuestions);
+
+	store.setCachedQuestions(normalizedSubject, result);
+
+	return result;
 }
 
 interface UseSubjectQuestionsOptions {

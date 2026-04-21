@@ -1,15 +1,15 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
 import {
+	Check,
 	Mic,
 	MicOff,
 	Pause,
 	Play,
 	RotateCcw,
 	SendHorizontal,
-	Check,
 } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { LiveWaveform } from "@/components/ui/live-waveform";
 import { cn } from "@/lib/utils";
 

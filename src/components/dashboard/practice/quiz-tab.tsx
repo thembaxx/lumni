@@ -28,20 +28,11 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { useSubjectQuestions } from "@/lib/hooks/use-subject-questions";
+import { useUploadStore } from "@/lib/store";
 import type { QAQuestion } from "@/lib/types/questions";
 import { cn } from "@/lib/utils";
 
 const MAX_TIME = 90 * 60;
-
-const SUBJECTS = [
-	"Random",
-	"Physics",
-	"Chemistry",
-	"Biology",
-	"Mathematics",
-	"History",
-	"Geography",
-];
 
 const DEMO_QUESTIONS: QAQuestion[] = [
 	{
@@ -139,6 +130,20 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 	const [correctAnswers, setCorrectAnswers] = useState(0);
 	const [questionCount] = useState(10);
 	const [isTransitioning, setIsTransitioning] = useState(false);
+
+	const { subjects } = useUploadStore();
+	const storeSubjects =
+		subjects.length > 0
+			? subjects.map((s) => s.displayName)
+			: [
+					"Random",
+					"Physics",
+					"Chemistry",
+					"Biology",
+					"Mathematics",
+					"History",
+					"Geography",
+				];
 
 	const subjectToFetch =
 		selectedSubject === "Random" ? "physics" : selectedSubject.toLowerCase();
@@ -353,7 +358,7 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 					<SelectValue placeholder="Subject" />
 				</SelectTrigger>
 				<SelectContent align="center">
-					{SUBJECTS.map((subject) => (
+					{storeSubjects.map((subject) => (
 						<SelectItem key={subject} value={subject}>
 							{subject}
 						</SelectItem>

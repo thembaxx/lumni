@@ -15,7 +15,9 @@ interface AnimatedDialogContentProps {
 	children?: React.ReactNode;
 }
 
-export function AnimatedDialogContent({ children }: AnimatedDialogContentProps) {
+export function AnimatedDialogContent({
+	children,
+}: AnimatedDialogContentProps) {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>{children}</DialogTrigger>
