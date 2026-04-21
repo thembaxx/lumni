@@ -28,6 +28,11 @@ export const auth = betterAuth({
 	advanced: {
 		useSecureCookies: process.env.NODE_ENV === "production",
 	},
+	trustedOrigins: [
+		process.env.BETTER_AUTH_URL || "http://localhost:3000",
+		"http://localhost:3000",
+		"https://lumni.ai",
+	],
 });
 
 export type Auth = typeof auth;

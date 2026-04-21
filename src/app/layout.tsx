@@ -38,11 +38,20 @@ export const metadata: Metadata = {
 		type: "website",
 		locale: "en_US",
 		siteName: "Lumni",
+		images: [
+			{
+				url: "/og-image.png",
+				width: 1200,
+				height: 630,
+				alt: "Lumni - AI Study Companion",
+			},
+		],
 	},
 	twitter: {
 		card: "summary_large_image",
 		title: "Lumni",
 		description: "Your AI assistant",
+		images: ["/og-image.png"],
 	},
 };
 

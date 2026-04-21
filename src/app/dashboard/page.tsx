@@ -1,25 +1,5 @@
-"use client";
-
-import { useState } from "react";
-import {
-	DashboardHeader,
-	DashboardHero,
-	QuickActions,
-	SearchInput,
-} from "@/components/dashboard";
+import { DashboardClient } from "@/components/dashboard/dashboard-client";
 
 export default function DashboardPage() {
-	const [query, setQuery] = useState("");
-	const [activeTab, setActiveTab] = useState<"ai" | "spaces">("ai");
-
-	return (
-		<div className="min-h-screen flex flex-col bg-background">
-			<DashboardHeader activeTab={activeTab} onTabChange={setActiveTab} />
-			<DashboardHero />
-			<div className="px-4 pb-6 space-y-3">
-				<QuickActions />
-				<SearchInput value={query} onChange={setQuery} />
-			</div>
-		</div>
-	);
+	return <DashboardClient initialTab="ai" />;
 }

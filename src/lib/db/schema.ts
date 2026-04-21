@@ -1,5 +1,11 @@
 import { relations, sql } from "drizzle-orm";
-import { index, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import {
+	index,
+	integer,
+	sqliteTable,
+	text,
+	unique,
+} from "drizzle-orm/sqlite-core";
 
 export const user = sqliteTable("user", {
 	id: text("id").primaryKey(),
@@ -83,39 +89,47 @@ export const subject = sqliteTable("subject", {
 		.notNull(),
 });
 
-export const topic = sqliteTable("topic", {
-	id: text("id").primaryKey(),
-	subjectId: text("subject_id")
-		.notNull()
-		.references(() => subject.id, { onDelete: "cascade" }),
-	name: text("name").notNull(),
-	description: text("description"),
-	unitNumber: integer("unit_number"),
-	orderIndex: integer("order_index").default(0),
-	createdAt: integer("created_at", { mode: "timestamp_ms" })
-		.default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-		.notNull(),
-});
+export const topic = sqliteTable(
+	"topic",
+	{
+		id: text("id").primaryKey(),
+		subjectId: text("subject_id")
+			.notNull()
+			.references(() => subject.id, { onDelete: "cascade" }),
+		name: text("name").notNull(),
+		description: text("description"),
+		unitNumber: integer("unit_number"),
+		orderIndex: integer("order_index").default(0),
+		createdAt: integer("created_at", { mode: "timestamp_ms" })
+			.default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
+			.notNull(),
+	},
+	(table) => [index("topic_subjectId_idx").on(table.subjectId)],
+);
 
-export const question = sqliteTable("question", {
-	id: text("id").primaryKey(),
-	topicId: text("topic_id")
-		.notNull()
-		.references(() => topic.id, { onDelete: "cascade" }),
-	type: text("type").notNull().default("multiple_choice"),
-	questionText: text("question_text").notNull(),
-	options: text("options"),
-	correctAnswer: text("correct_answer").notNull(),
-	explanation: text("explanation"),
-	difficulty: text("difficulty").default("medium"),
-	hasImage: integer("has_image", { mode: "boolean" }).default(false),
-	imageUrl: text("image_url"),
-	imageData: text("image_data"),
-	orderIndex: integer("order_index").default(0),
-	createdAt: integer("created_at", { mode: "timestamp_ms" })
-		.default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-		.notNull(),
-});
+export const question = sqliteTable(
+	"question",
+	{
+		id: text("id").primaryKey(),
+		topicId: text("topic_id")
+			.notNull()
+			.references(() => topic.id, { onDelete: "cascade" }),
+		type: text("type").notNull().default("multiple_choice"),
+		questionText: text("question_text").notNull(),
+		options: text("options"),
+		correctAnswer: text("correct_answer").notNull(),
+		explanation: text("explanation"),
+		difficulty: text("difficulty").default("medium"),
+		hasImage: integer("has_image", { mode: "boolean" }).default(false),
+		imageUrl: text("image_url"),
+		imageData: text("image_data"),
+		orderIndex: integer("order_index").default(0),
+		createdAt: integer("created_at", { mode: "timestamp_ms" })
+			.default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
+			.notNull(),
+	},
+	(table) => [index("question_topicId_idx").on(table.topicId)],
+);
 
 export const userSubject = sqliteTable(
 	"user_subject",
@@ -134,6 +148,10 @@ export const userSubject = sqliteTable(
 	(table) => [
 		index("user_subject_userId_idx").on(table.userId),
 		index("user_subject_subjectId_idx").on(table.subjectId),
+		unique("user_subject_userId_subjectId_unique").on(
+			table.userId,
+			table.subjectId,
+		),
 	],
 );
 

@@ -8,8 +8,7 @@ export const appConfig = {
 		current: "1.0.0",
 		build: process.env.NEXT_PUBLIC_BUILD_VERSION || "dev",
 		commit: process.env.NEXT_PUBLIC_COMMIT_HASH || "unknown",
-		timestamp:
-			process.env.NEXT_PUBLIC_BUILD_TIMESTAMP || new Date().toISOString(),
+		timestamp: process.env.NEXT_PUBLIC_BUILD_TIMESTAMP || "",
 	},
 	links: {
 		website: "https://lumni.ai",
