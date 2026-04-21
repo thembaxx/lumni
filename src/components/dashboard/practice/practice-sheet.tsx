@@ -1,17 +1,8 @@
 "use client";
 
-import { IconCloud } from "@tabler/icons-react";
 import { Bookmark } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import {
-	Empty,
-	EmptyContent,
-	EmptyDescription,
-	EmptyHeader,
-	EmptyMedia,
-	EmptyTitle,
-} from "@/components/ui/empty";
 import {
 	Sheet,
 	SheetContent,
@@ -85,26 +76,6 @@ export function PracticeSheet({ open, onOpenChange }: PracticeSheetProps) {
 							className="mt-8 grow flex flex-col w-full items-center justify-center"
 						>
 							<QuizTab onHeaderChange={setShowQuizHeader} />
-							{showQuizHeader && (
-								<Empty className="border border-dashed mt-24">
-									<EmptyHeader>
-										<EmptyMedia variant="icon">
-											<IconCloud />
-										</EmptyMedia>
-										<EmptyTitle>Quiz has not started</EmptyTitle>
-										<EmptyDescription>
-											Practice quizzes you start will be saved here for easy
-											access later. You can also view and manage your past quiz
-											attempts here.
-										</EmptyDescription>
-									</EmptyHeader>
-									<EmptyContent>
-										<Button variant="outline" size="sm">
-											Start quiz
-										</Button>
-									</EmptyContent>
-								</Empty>
-							)}
 						</TabsContent>
 						<TabsContent
 							value="focus"

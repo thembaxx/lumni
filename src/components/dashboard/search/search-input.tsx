@@ -56,12 +56,9 @@ export function SearchInput({ value, onChange }: SearchInputProps) {
 						<Car className="w-5 h-5 text-muted-foreground toolbutton-icon" />
 					</button>
 					<AnimatedDialogContent>
-						<button
-							className="w-9 h-9 rounded-full bg-muted/80 flex items-center justify-center hover:bg-muted transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background toolbutton"
-							aria-label="Voice settings"
-						>
+						<span className="w-9 h-9 rounded-full bg-muted/80 flex items-center justify-center hover:bg-muted transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background toolbutton cursor-pointer">
 							<Mic className="w-5 h-5 text-muted-foreground toolbutton-icon" />
-						</button>
+						</span>
 					</AnimatedDialogContent>
 					<button
 						className={cn(

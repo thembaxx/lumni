@@ -4,6 +4,7 @@ import {
 	ChevronLeft,
 	ChevronRight,
 	Play,
+	PuzzleIcon,
 	Square,
 	Target,
 	Timer,
@@ -19,6 +20,14 @@ import {
 import { QuestionCard } from "@/components/questions/question-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+	Empty,
+	EmptyContent,
+	EmptyDescription,
+	EmptyHeader,
+	EmptyMedia,
+	EmptyTitle,
+} from "@/components/ui/empty";
 import { Progress } from "@/components/ui/progress";
 import {
 	Select,
@@ -122,7 +131,7 @@ interface QuizTabProps {
 }
 
 export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
-	const [selectedSubject, setSelectedSubject] = useState<string>("Random");
+	const [selectedSubject, setSelectedSubject] = useState<string>("");
 	const [elapsedTime, setElapsedTime] = useState(0);
 	const [isRunning, setIsRunning] = useState(false);
 	const [points, setPoints] = useState(() => Math.floor(Math.random() * 101));
@@ -346,61 +355,86 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 	}
 
 	return (
-		<div className={cn("flex items-center gap-3 px-6!", className)}>
-			<Select
-				value={selectedSubject}
-				onValueChange={(value) => handleSubjectSelect(value || "Random")}
-			>
-				<SelectTrigger
-					className="w-32 h-9 rounded-full border-muted bg-muted/50"
-					disabled={isRunning}
+		<div>
+			<div className={cn("flex items-center gap-3 px-6!", className)}>
+				<Select
+					value={selectedSubject}
+					onValueChange={(value) => handleSubjectSelect(value || "Random")}
 				>
-					<SelectValue placeholder="Subject" />
-				</SelectTrigger>
-				<SelectContent align="center">
-					{storeSubjects.map((subject) => (
-						<SelectItem key={subject} value={subject}>
-							{subject}
-						</SelectItem>
-					))}
-				</SelectContent>
-			</Select>
+					<SelectTrigger
+						className="w-32 h-9 rounded-full border-muted bg-muted/50"
+						disabled={isRunning}
+					>
+						<SelectValue placeholder="Subject" />
+					</SelectTrigger>
+					<SelectContent align="center">
+						{storeSubjects.map((subject) => (
+							<SelectItem key={subject} value={subject}>
+								{subject}
+							</SelectItem>
+						))}
+					</SelectContent>
+				</Select>
 
-			<div className="flex items-center gap-3 pl-4 py-2 rounded-full bg-muted/30 border border-muted">
-				<div className="flex items-center gap-2 min-w-16">
-					<Timer className="size-4 text-muted-foreground" />
-					<span className="text-sm font-medium -mb-0.5 tabular-nums font-mono tracking-tight">
-						{formatTime(elapsedTime)}
-					</span>
+				<div className="flex items-center gap-3 pl-4 py-2 rounded-full bg-muted/30 border border-muted">
+					<div className="flex items-center gap-2 min-w-16">
+						<Timer className="size-4 text-muted-foreground" />
+						<span className="text-sm font-medium -mb-0.5 tabular-nums font-mono tracking-tight">
+							{formatTime(elapsedTime)}
+						</span>
+					</div>
+
+					<div className="w-px h-4 bg-muted" />
+
+					<div className="flex items-center gap-2 min-w-14">
+						<Zap className="size-4 text-yellow-500" />
+						<span className="text-sm font-semibold tabular-nums font-mono">
+							{points}
+						</span>
+					</div>
 				</div>
 
-				<div className="w-px h-4 bg-muted" />
-
-				<div className="flex items-center gap-2 min-w-14">
-					<Zap className="size-4 text-yellow-500" />
-					<span className="text-sm font-semibold tabular-nums font-mono">
-						{points}
-					</span>
-				</div>
+				{isRunning ? (
+					<Button
+						size="icon"
+						onClick={handleStop}
+						className="size-11 rounded-full bg-destructive hover:bg-destructive/90"
+					>
+						<Square className="size-4 fill-current" />
+					</Button>
+				) : (
+					<Button
+						size="icon"
+						onClick={handleStart}
+						className="size-11 rounded-full bg-primary hover:bg-primary/90"
+					>
+						<Play className="size-4 ml-0.5 fill-current" />
+					</Button>
+				)}
 			</div>
 
-			{isRunning ? (
-				<Button
-					size="icon"
-					onClick={handleStop}
-					className="size-11 rounded-full bg-destructive hover:bg-destructive/90"
-				>
-					<Square className="size-4 fill-current" />
-				</Button>
-			) : (
-				<Button
-					size="icon"
-					onClick={handleStart}
-					className="size-11 rounded-full bg-primary hover:bg-primary/90"
-				>
-					<Play className="size-4 ml-0.5 fill-current" />
-				</Button>
-			)}
+			<Empty className="border border-dashed mt-24">
+				<EmptyHeader>
+					<EmptyMedia variant="icon">
+						<PuzzleIcon />
+					</EmptyMedia>
+					<EmptyTitle>Quiz not started</EmptyTitle>
+					<EmptyDescription>
+						Practice quizzes you start will be saved here for easy access later.
+						You can also view and manage your past quiz attempts here.
+					</EmptyDescription>
+				</EmptyHeader>
+				<EmptyContent>
+					<Button
+						variant="outline"
+						size="sm"
+						disabled={selectedSubject === "" || !selectedSubject}
+						onClick={handleStart}
+					>
+						Start quiz
+					</Button>
+				</EmptyContent>
+			</Empty>
 		</div>
 	);
 }

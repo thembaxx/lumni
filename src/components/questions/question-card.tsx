@@ -1,6 +1,6 @@
 "use client";
 
-import { Eye, EyeOff, MinusIcon, PlusIcon } from "lucide-react";
+import { MinusIcon, PlusIcon } from "lucide-react";
 import { useCallback, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -235,7 +235,7 @@ export function QuestionCard({
 					onClick={handleCheck}
 					disabled={!state.selectedOption || state.isSubmitted}
 					className="flex-1"
-					disableRipple={state.isSubmitted}
+					// disableRipple={state.isSubmitted}
 				>
 					{state.isSubmitted
 						? state.isCorrect

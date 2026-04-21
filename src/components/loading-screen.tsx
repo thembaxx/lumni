@@ -15,12 +15,17 @@ export function LoadingScreen({
 	redirectTo = "/dashboard",
 }: LoadingScreenProps) {
 	const [progress, setProgress] = useState(0);
+	const [isVisible, setIsVisible] = useState(false);
 	const router = useRouter();
+
 	const handleRedirect = useCallback(() => {
-		router.replace(redirectTo);
+		setIsVisible(false);
+		setTimeout(() => router.replace(redirectTo), 300);
 	}, [router, redirectTo]);
 
 	useEffect(() => {
+		setIsVisible(true);
+
 		const totalSteps = 100;
 		const intervalMs = duration / totalSteps;
 
@@ -44,12 +49,19 @@ export function LoadingScreen({
 	};
 
 	return (
-		<div className="flex flex-col items-center gap-6">
-			<Progress value={progress} />
+		<div
+			className={`flex flex-col items-center gap-6 transition-all duration-500 ease-out-quart ${
+				isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+			}`}
+		>
+			<Progress
+				value={progress}
+				className="transition-all duration-150 ease-out-quart"
+			/>
 			<Button
 				onClick={handleManualEnter}
 				disabled={progress === 100}
-				className="rounded-full bg-primary text-primary-foreground hover:bg-primary/80 h-10 px-8"
+				className="rounded-full bg-primary text-primary-foreground hover:scale-105 active:scale-95 transition-all duration-150 h-10 px-8"
 			>
 				Dashboard
 			</Button>
