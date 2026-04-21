@@ -4,8 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useUploadStore } from "@/lib/store";
 import type { QAFile, QAQuestion } from "@/lib/types/questions";
 
-const UPLOADTHING_BASE_URL = process.env.NEXT_PUBLIC_UPLOADTHING_BASE_URL!;
 const MAX_QUESTIONS_PER_FILE = 20;
+const FETCH_TIMEOUT = 5000;
 
 function calculateFileCount(totalQuestions: number): number {
 	return Math.ceil(totalQuestions / MAX_QUESTIONS_PER_FILE);
@@ -25,16 +25,49 @@ function generateFileNames(
 	return fileNames;
 }
 
-async function fetchSingleFile(fileName: string): Promise<QAQuestion[]> {
-	const url = `${UPLOADTHING_BASE_URL}/${fileName}`;
-	const response = await fetch(url);
+async function fetchSingleFile(
+	url: string,
+	signal: AbortSignal,
+): Promise<QAQuestion[]> {
+	const response = await fetch(url, { signal });
 
 	if (!response.ok) {
-		throw new Error(`Failed to fetch ${fileName}: ${response.statusText}`);
+		throw new Error(`Failed to fetch: ${response.statusText}`);
 	}
 
 	const data: QAFile = await response.json();
 	return data.questions;
+}
+
+async function discoverQAFileUrls(
+	subject: string,
+	numberOfQuestions: number,
+): Promise<string[]> {
+	const controller = new AbortController();
+	const timeout = setTimeout(() => controller.abort(), FETCH_TIMEOUT);
+
+	try {
+		const normalized = subject.toLowerCase();
+		const url = `/api/list-qa-files?subject=${encodeURIComponent(normalized)}&n=${numberOfQuestions}`;
+		const response = await fetch(url, { signal: controller.signal });
+
+		if (!response.ok) {
+			throw new Error(`Discovery failed: ${response.statusText}`);
+		}
+
+		const result = await response.json();
+
+		if (result.error && (!result.urls || result.urls.length === 0)) {
+			return generateFileNames(subject, numberOfQuestions).map(
+				(name) =>
+					`/api/list-qa-files?subject=${encodeURIComponent(normalized)}&file=${encodeURIComponent(name)}`,
+			);
+		}
+
+		return result.urls || [];
+	} finally {
+		clearTimeout(timeout);
+	}
 }
 
 export async function fetchSubjectQuestions(
@@ -50,21 +83,29 @@ export async function fetchSubjectQuestions(
 		return shuffled.slice(0, numberOfQuestions);
 	}
 
-	const fileNames = generateFileNames(subject, numberOfQuestions);
+	const fileUrls = await discoverQAFileUrls(subject, numberOfQuestions);
 	const allQuestions: QAQuestion[] = [];
 
 	if (cached && cached.length > 0) {
 		allQuestions.push(...cached);
 	}
 
-	for (const fileName of fileNames) {
+	const controller = new AbortController();
+	const timeout = setTimeout(
+		() => controller.abort(),
+		FETCH_TIMEOUT * fileUrls.length,
+	);
+
+	for (const fileUrl of fileUrls) {
 		try {
-			const questions = await fetchSingleFile(fileName);
+			const questions = await fetchSingleFile(fileUrl, controller.signal);
 			allQuestions.push(...questions);
 		} catch {
-			console.warn(`Could not fetch ${fileName}, skipping...`);
+			console.warn(`Could not fetch ${fileUrl}, skipping...`);
 		}
 	}
+
+	clearTimeout(timeout);
 
 	const shuffled = [...allQuestions].sort(() => Math.random() - 0.5);
 	const result = shuffled.slice(0, numberOfQuestions);
@@ -86,8 +127,8 @@ export function useSubjectQuestions(
 	return useQuery({
 		queryKey: ["subjectQuestions", subject, numberOfQuestions],
 		queryFn: () => fetchSubjectQuestions(subject, numberOfQuestions),
-		staleTime: 1000 * 60 * 30,
-		retry: 2,
+		staleTime: 1000 * 60 * 60,
+		retry: 1,
 		enabled: options?.enabled ?? numberOfQuestions > 0,
 	});
 }

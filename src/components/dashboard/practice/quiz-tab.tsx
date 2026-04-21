@@ -333,6 +333,8 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 		);
 	}
 
+	const hasSubject = selectedSubject !== "";
+
 	return (
 		<div className="w-full">
 			<div
@@ -347,11 +349,16 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 						className="h-9 rounded-full border-muted bg-muted/50"
 						disabled={isRunning}
 					>
-						{selectedSubject !== "" ? selectedSubject : "Subject..."}
+						{hasSubject ? selectedSubject : "Subject..."}
 					</Button>
 				</SubjectsDrawer>
 
-				<div className="flex items-center gap-3 pl-4 py-2 rounded-full bg-muted/30 border border-muted">
+				<div
+					className={cn(
+						"flex items-center gap-3 pl-4 py-2 rounded-full bg-muted/30 border border-muted transition-opacity duration-300",
+						!hasSubject && "opacity-30 pointer-events-none",
+					)}
+				>
 					<div className="flex items-center gap-2 min-w-16">
 						<Timer className="size-4 text-muted-foreground" />
 						<span className="text-sm font-medium -mb-0.5 tabular-nums font-mono tracking-tight">
@@ -381,35 +388,66 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 					<Button
 						size="icon"
 						onClick={handleStart}
-						className="size-11 rounded-full bg-primary hover:bg-primary/90"
+						disabled={!hasSubject}
+						className={cn(
+							"size-11 rounded-full",
+							hasSubject
+								? "bg-primary hover:bg-primary/90 animate-fade-in-scale"
+								: "bg-muted cursor-not-allowed",
+						)}
 					>
 						<Play className="size-4 ml-0.5 fill-current" />
 					</Button>
 				)}
 			</div>
 
-			<Empty className="border border-dashed mt-24">
-				<EmptyHeader>
-					<EmptyMedia variant="icon">
-						<PuzzleIcon />
-					</EmptyMedia>
-					<EmptyTitle>Quiz not started</EmptyTitle>
-					<EmptyDescription>
-						Practice quizzes you start will be saved here for easy access later.
-						You can also view and manage your past quiz attempts here.
-					</EmptyDescription>
-				</EmptyHeader>
-				<EmptyContent>
-					<Button
-						variant="outline"
-						size="sm"
-						disabled={selectedSubject === "" || !selectedSubject}
-						onClick={handleStart}
-					>
-						Start quiz
-					</Button>
-				</EmptyContent>
-			</Empty>
+			{hasSubject ? (
+				<Empty className="border border-dashed mt-24">
+					<EmptyHeader>
+						<EmptyMedia variant="icon">
+							<PuzzleIcon />
+						</EmptyMedia>
+						<EmptyTitle>Quiz not started</EmptyTitle>
+						<EmptyDescription>
+							Practice quizzes you start will be saved here for easy access
+							later. You can also view and manage your past quiz attempts here.
+						</EmptyDescription>
+					</EmptyHeader>
+					<EmptyContent>
+						<Button variant="outline" size="sm" onClick={handleStart}>
+							Start quiz
+						</Button>
+					</EmptyContent>
+				</Empty>
+			) : (
+				<div className="mt-24 flex flex-col items-center gap-4 animate-fade-in-scale">
+					<div className="relative flex items-center justify-center">
+						<div className="absolute size-20 rounded-full bg-muted/40 animate-pulse" />
+						<div className="relative flex items-center justify-center size-20 rounded-full border border-dashed border-muted-foreground/20 bg-muted/20">
+							<PuzzleIcon className="size-8 text-muted-foreground/40" />
+						</div>
+					</div>
+					<div className="text-center space-y-1.5">
+						<p className="text-sm font-medium text-muted-foreground">
+							Select a subject to begin
+						</p>
+						<p className="text-xs text-muted-foreground/60">
+							Choose a subject above to start your quiz
+						</p>
+					</div>
+					<div className="flex items-center gap-1.5">
+						<span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/40 animate-bounce" />
+						<span
+							className="h-1.5 w-1.5 rounded-full bg-muted-foreground/40 animate-bounce"
+							style={{ animationDelay: "150ms" }}
+						/>
+						<span
+							className="h-1.5 w-1.5 rounded-full bg-muted-foreground/40 animate-bounce"
+							style={{ animationDelay: "300ms" }}
+						/>
+					</div>
+				</div>
+			)}
 		</div>
 	);
 }

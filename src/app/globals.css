@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@custom-variant dark (&:is(.dark *));
+
 :root {
 	/* Animation Timing - Playful & Responsive */
 	--ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);

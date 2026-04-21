@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
-import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { getDb } from "@/lib/db/client";
 import {
@@ -22,10 +22,7 @@ export async function GET(request: NextRequest) {
 	});
 
 	if (!session) {
-		return NextResponse.json(
-			{ subjects },
-			{ status: 200 },
-		);
+		return NextResponse.json({ subjects }, { status: 200 });
 	}
 
 	const authenticatedUserId = session.user.id;
