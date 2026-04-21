@@ -1,8 +1,7 @@
-const fs = require("fs");
-const path = require("path");
+import { readFileSync } from "node:fs";
 
-const UPLOADTHING_API_KEY = "sk_live_1b8a5c20c50736beef5d7d6f61459ad91d202aabc361d1bc62628cb52ebacb35";
-const APP_ID = "sxo07lk073";
+const _UPLOADTHING_API_KEY = process.env.UPLOADTHING_API_KEY;
+const _APP_ID = process.env.APP_ID;
 
 function formatSubjectName(subject) {
 	return subject.replace(/\s+/g, "_").toLowerCase();
@@ -15,7 +14,7 @@ function generateFileName(subject, number) {
 
 async function uploadFile(filePath, subject, fileNumber = 1) {
 	const fileName = generateFileName(subject, fileNumber);
-	const fileContent = fs.readFileSync(filePath);
+	const fileContent = readFileSync(filePath);
 	const fileSize = fileContent.length;
 
 	console.log(`Uploading ${fileName} (${fileSize} bytes)...`);
@@ -27,12 +26,14 @@ async function uploadFile(filePath, subject, fileNumber = 1) {
 		},
 		body: JSON.stringify({
 			route: "qaUploader",
-			files: [{
-				name: fileName,
-				type: "application/json",
-				size: fileSize,
-				content: fileContent.toString("base64"),
-			}],
+			files: [
+				{
+					name: fileName,
+					type: "application/json",
+					size: fileSize,
+					content: fileContent.toString("base64"),
+				},
+			],
 		}),
 	});
 

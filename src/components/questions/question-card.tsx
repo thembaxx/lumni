@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { Eye, EyeOff, MinusIcon, PlusIcon } from "lucide-react";
+import { useCallback, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Eye, EyeOff, MinusIcon, PlusIcon } from "lucide-react";
 import {
 	Card,
 	CardContent,
@@ -12,8 +12,8 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
 import type { QAQuestion, QuestionState } from "@/lib/types/questions";
+import { cn } from "@/lib/utils";
 import { QuestionDiagram } from "./question-diagram";
 
 interface QuestionCardProps {
@@ -78,7 +78,7 @@ export function QuestionCard({
 		setState((prev) => ({ ...prev, showDiagram: !prev.showDiagram }));
 	}, []);
 
-	const handleNext = useCallback(() => {
+	const _handleNext = useCallback(() => {
 		setState({
 			selectedOption: null,
 			isCorrect: null,
@@ -146,7 +146,14 @@ export function QuestionCard({
 			)}
 
 			<CardContent className="space-y-3">
-				<div className="grid gap-2">
+				<div
+					className={cn(
+						"grid gap-2",
+						question.options.every((opt) => opt.text.length <= 30)
+							? "grid-cols-2"
+							: "grid-cols-1",
+					)}
+				>
 					{question.options.map((option) => {
 						const isSelected = state.selectedOption === option.id;
 						const isCorrectOption = option.isCorrect;
@@ -156,9 +163,10 @@ export function QuestionCard({
 
 						if (showResult) {
 							if (isCorrectOption) {
-								optionClass = "border-green-500 bg-green-500/10";
+								optionClass =
+									"border-green-500 bg-green-500/10 animate-checkmark";
 							} else if (isSelected && !isCorrectOption) {
-								optionClass = "border-red-500 bg-red-500/10";
+								optionClass = "border-red-500 bg-red-500/10 animate-shake";
 							}
 						} else if (isSelected) {
 							optionClass = "border-primary bg-primary/10";
@@ -171,8 +179,9 @@ export function QuestionCard({
 								disabled={state.isSubmitted}
 								onClick={() => handleSelect(option.id)}
 								className={cn(
-									"flex w-full items-center gap-3 rounded-lg border border-border bg-card p-4 text-left transition-all hover:bg-accent",
+									"flex w-full items-center gap-3 rounded-lg border border-border bg-card p-4 text-left transition-all duration-200 hover:bg-accent",
 									"disabled:cursor-not-allowed disabled:opacity-50",
+									"transform-cpu",
 									optionClass,
 								)}
 							>
@@ -199,7 +208,7 @@ export function QuestionCard({
 				</div>
 
 				{state.showHint && (
-					<div className="rounded-lg bg-amber-500/10 p-4 text-amber-700">
+					<div className="animate-slide-in-bottom rounded-lg bg-amber-500/10 p-4 text-amber-700">
 						<p className="font-medium">Hint:</p>
 						<p>{question.hint}</p>
 					</div>
@@ -208,7 +217,7 @@ export function QuestionCard({
 				{state.showExplanation && (
 					<div
 						className={cn(
-							"rounded-lg p-4",
+							"animate-slide-in-bottom rounded-lg p-4",
 							state.isCorrect
 								? "bg-green-500/10 text-green-700"
 								: "bg-red-500/10 text-red-700",
@@ -227,10 +236,25 @@ export function QuestionCard({
 					onClick={handleCheck}
 					disabled={!state.selectedOption || state.isSubmitted}
 					className="flex-1"
+					disableRipple={state.isSubmitted}
 				>
-					Check Answer
+					{state.isSubmitted
+						? state.isCorrect
+							? "✓ Correct!"
+							: "✗ Try Again"
+						: "Check Answer"}
 				</Button>
-				<Button variant="outline" onClick={handleHint} className="gap-2">
+				<Button
+					variant="outline"
+					onClick={handleHint}
+					className={cn("gap-2", state.showHint && "animate-icon-pop")}
+				>
+					<MinusIcon
+						className={cn(
+							"h-4 w-4 transition-transform duration-200",
+							state.showHint && "rotate-180",
+						)}
+					/>
 					Hint
 				</Button>
 			</CardFooter>

@@ -66,7 +66,4 @@ export async function fetchSubjectQuestionsFiles(
 	return files;
 }
 
-export {
-	formatSubjectName,
-	generateFileName,
-};
+export { formatSubjectName, generateFileName };

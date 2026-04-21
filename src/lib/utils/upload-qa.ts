@@ -2,7 +2,7 @@ function formatSubjectName(subject: string): string {
 	return subject.replace(/\s+/g, "_").toLowerCase();
 }
 
-function generateFileName(subject: string, number: number): string {
+function _generateFileName(subject: string, number: number): string {
 	const formattedSubject = formatSubjectName(subject);
 	return `${formattedSubject}_qa_${number}.json`;
 }
@@ -11,9 +11,15 @@ export async function uploadQAFile(
 	jsonContent: string,
 	subject: string,
 	fileNumber: number = 1,
-): Promise<{ success: boolean; url?: string; fileName?: string; error?: string }> {
+): Promise<{
+	success: boolean;
+	url?: string;
+	fileName?: string;
+	error?: string;
+}> {
 	try {
-		const fileName = generateFileName(subject, fileNumber);
+		// Generate filename for reference (not used in API call)
+		_generateFileName(subject, fileNumber);
 
 		const response = await fetch("/api/upload-qa", {
 			method: "POST",
@@ -53,10 +59,15 @@ export async function uploadQAFileFromPath(
 	filePath: string,
 	subject: string,
 	fileNumber: number = 1,
-): Promise<{ success: boolean; url?: string; fileName?: string; error?: string }> {
+): Promise<{
+	success: boolean;
+	url?: string;
+	fileName?: string;
+	error?: string;
+}> {
 	const fs = await import("fs");
 	const fileContent = fs.readFileSync(filePath, "utf-8");
 	return uploadQAFile(fileContent, subject, fileNumber);
 }
 
-export { formatSubjectName, generateFileName };
+export { _generateFileName, formatSubjectName };

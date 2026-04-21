@@ -3,14 +3,17 @@
 import { useQuery } from "@tanstack/react-query";
 import type { QAFile, QAQuestion } from "@/lib/types/questions";
 
-const UPLOADTHING_BASE_URL = "https://sxo07lk073.uds.sh/f";
+const UPLOADTHING_BASE_URL = process.env.NEXT_PUBLIC_UPLOADTHING_BASE_URL!;
 const MAX_QUESTIONS_PER_FILE = 20;
 
 function calculateFileCount(totalQuestions: number): number {
 	return Math.ceil(totalQuestions / MAX_QUESTIONS_PER_FILE);
 }
 
-function generateFileNames(subject: string, numberOfQuestions: number): string[] {
+function generateFileNames(
+	subject: string,
+	numberOfQuestions: number,
+): string[] {
 	const fileCount = calculateFileCount(numberOfQuestions);
 	const fileNames: string[] = [];
 

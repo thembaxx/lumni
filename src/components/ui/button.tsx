@@ -1,10 +1,13 @@
+"use client";
+
 import { Button as ButtonPrimitive } from "@base-ui/react/button";
 import { cva, type VariantProps } from "class-variance-authority";
+import { useCallback, useRef, useState } from "react";
 
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-	"group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all duration-200 outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+	"group/button relative inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:scale-[0.96] disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
 	{
 		variants: {
 			variant: {
@@ -40,18 +43,79 @@ const buttonVariants = cva(
 	},
 );
 
+interface ButtonProps
+	extends ButtonPrimitive.Props,
+		VariantProps<typeof buttonVariants> {
+	disableRipple?: boolean;
+}
+
 function Button({
 	className,
 	variant = "default",
 	size = "default",
+	disableRipple = false,
 	...props
-}: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) {
+}: ButtonProps) {
+	const [ripples, setRipples] = useState<
+		Array<{ id: number; x: number; y: number }>
+	>([]);
+	const rippleIdRef = useRef(0);
+
+	const handleClick = useCallback(
+		(e: React.MouseEvent<HTMLButtonElement>) => {
+			if (disableRipple || props.disabled) return;
+
+			const button = e.currentTarget.getBoundingClientRect();
+			const x = e.clientX - button.left;
+			const y = e.clientY - button.top;
+
+			const newRipple = { id: rippleIdRef.current++, x, y };
+			setRipples((prev) => [...prev, newRipple]);
+
+			setTimeout(() => {
+				setRipples((prev) => prev.filter((r) => r.id !== newRipple.id));
+			}, 600);
+		},
+		[disableRipple, props.disabled],
+	);
+
+	// const handleKeyDown = useCallback(
+	// 	(e: React.KeyboardEvent<HTMLButtonElement>) => {
+	// 		if (e.key === " " || e.key === "Enter") {
+	// 			(e.target as HTMLElement).click();
+	// 		}
+	// 	},
+	// 	[],
+	// );
+
 	return (
 		<ButtonPrimitive
 			data-slot="button"
+			onClick={handleClick}
 			className={cn(buttonVariants({ variant, size, className }))}
 			{...props}
-		/>
+		>
+			{props.children}
+			{!disableRipple &&
+				!props.disabled &&
+				ripples.map((ripple) => (
+					<span
+						key={ripple.id}
+						className="absolute inset-0 pointer-events-none overflow-hidden rounded-[inherit]"
+					>
+						<span
+							className="absolute origin-center animate-ripple-full rounded-full opacity-30 bg-current"
+							style={{
+								width: "200%",
+								height: "200%",
+								left: `${ripple.x}%`,
+								top: `${ripple.y}%`,
+								transform: "translate(-50%, -50%)",
+							}}
+						/>
+					</span>
+				))}
+		</ButtonPrimitive>
 	);
 }
 

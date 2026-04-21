@@ -1,6 +1,6 @@
 "use server";
 
-import { writeFile, unlink } from "fs/promises";
+import { unlink, writeFile } from "fs/promises";
 import { join } from "path";
 
 function formatSubjectName(subject: string): string {
@@ -16,7 +16,12 @@ export async function uploadQAFile(
 	file: File,
 	subject: string,
 	fileNumber: number = 1,
-): Promise<{ success: boolean; url?: string; fileName?: string; error?: string }> {
+): Promise<{
+	success: boolean;
+	url?: string;
+	fileName?: string;
+	error?: string;
+}> {
 	try {
 		const fileName = generateFileName(subject, fileNumber);
 		const tempPath = join(process.cwd(), "tmp", fileName);
@@ -60,11 +65,18 @@ export async function uploadQAFileFromPath(
 	filePath: string,
 	subject: string,
 	fileNumber: number = 1,
-): Promise<{ success: boolean; url?: string; fileName?: string; error?: string }> {
+): Promise<{
+	success: boolean;
+	url?: string;
+	fileName?: string;
+	error?: string;
+}> {
 	try {
 		const fs = await import("fs/promises");
 		const fileContent = await fs.readFile(filePath, "utf-8");
-		const file = new File([fileContent], "temp.json", { type: "application/json" });
+		const file = new File([fileContent], "temp.json", {
+			type: "application/json",
+		});
 		return uploadQAFile(file, subject, fileNumber);
 	} catch (error) {
 		return {

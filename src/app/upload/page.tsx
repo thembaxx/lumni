@@ -8,13 +8,13 @@ function formatSubjectName(subject: string): string {
 	return subject.replace(/\s+/g, "_").toLowerCase();
 }
 
-function generateFileName(subject: string, number: number): string {
+function _generateFileName(subject: string, number: number): string {
 	const formattedSubject = formatSubjectName(subject);
 	return `${formattedSubject}_qa_${number}.json`;
 }
 
 export default function UploadPage() {
-	const [uploadedUrls, setUploadedUrls] = useState<string[]>([]);
+	const [_uploadedUrls, setUploadedUrls] = useState<string[]>([]);
 	const [lastUpload, setLastUpload] = useState<string | null>(null);
 
 	const handleUploadComplete = (files: { url: string; name: string }[]) => {

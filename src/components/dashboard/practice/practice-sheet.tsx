@@ -1,8 +1,17 @@
 "use client";
 
+import { IconCloud } from "@tabler/icons-react";
 import { Bookmark } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import {
+	Empty,
+	EmptyContent,
+	EmptyDescription,
+	EmptyHeader,
+	EmptyMedia,
+	EmptyTitle,
+} from "@/components/ui/empty";
 import {
 	Sheet,
 	SheetContent,
@@ -29,6 +38,7 @@ export function PracticeSheet({ open, onOpenChange }: PracticeSheetProps) {
 					variant="secondary"
 					size="icon"
 					className="rounded-xl h-10 w-10"
+					aria-label="Open practice sheet"
 				>
 					<Bookmark className="w-5 h-5 text-muted-foreground" />
 				</Button>
@@ -43,12 +53,20 @@ export function PracticeSheet({ open, onOpenChange }: PracticeSheetProps) {
 				>
 					<SheetTitle>Practice</SheetTitle>
 				</SheetHeader>
-				<div className="px-4 py-2 w-full grow flex flex-col items-center overflow-y-auto">
+				<div
+					className={`px-4 py-2 w-full grow flex flex-col items-center overflow-y-auto`}
+				>
 					<Tabs
 						defaultValue="quiz"
-						className="flex flex-col items-center gow w-full h-full"
+						className="flex flex-col items-center w-full h-full"
 					>
-						<TabsList className="h-11">
+						<TabsList
+							className={`h-11 transition-opacity duration-300 ${
+								showQuizHeader
+									? "opacity-100"
+									: "opacity-0 pointer-events-none absolute"
+							}`}
+						>
 							<TabsTrigger value="quiz" className="px-4">
 								Quiz
 							</TabsTrigger>
@@ -64,13 +82,33 @@ export function PracticeSheet({ open, onOpenChange }: PracticeSheetProps) {
 						</TabsList>
 						<TabsContent
 							value="quiz"
-							className="mt-12 grow flex w-full items-center justify-center"
+							className="mt-8 grow flex flex-col w-full items-center justify-center"
 						>
 							<QuizTab onHeaderChange={setShowQuizHeader} />
+							{showQuizHeader && (
+								<Empty className="border border-dashed mt-24">
+									<EmptyHeader>
+										<EmptyMedia variant="icon">
+											<IconCloud />
+										</EmptyMedia>
+										<EmptyTitle>Quiz has not started</EmptyTitle>
+										<EmptyDescription>
+											Practice quizzes you start will be saved here for easy
+											access later. You can also view and manage your past quiz
+											attempts here.
+										</EmptyDescription>
+									</EmptyHeader>
+									<EmptyContent>
+										<Button variant="outline" size="sm">
+											Start quiz
+										</Button>
+									</EmptyContent>
+								</Empty>
+							)}
 						</TabsContent>
 						<TabsContent
 							value="focus"
-							className="mt-12 grow w-full flex items-center justify-center"
+							className="mt-12 grow flex w-full items-center justify-center"
 						>
 							<FocusTab />
 						</TabsContent>

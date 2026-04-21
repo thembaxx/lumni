@@ -2,10 +2,10 @@
 
 import { ChevronLeft, ChevronRight, Play, Square } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
 import { QuestionCard } from "@/components/questions/question-card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { useSubjectQuestions } from "@/lib/hooks/use-subject-questions";
 import type { QAQuestion } from "@/lib/types/questions";
 import { cn } from "@/lib/utils";
@@ -258,13 +258,13 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 				</SubjectsDrawer>
 
 				<div className="flex items-center gap-2">
-					<span className="text-lg font-semibold tabular-nums tracking-tight font-mono min-w-[3.5rem] text-center">
+					<span className="text-lg font-semibold tabular-nums tracking-tight font-mono min-w-14 text-center">
 						{formatTime(elapsedTime)}
 					</span>
 				</div>
 
 				<div className="flex items-center gap-3">
-					<span className="text-xs font-medium tabular-nums min-w-[3rem] text-center">
+					<span className="text-xs font-medium tabular-nums min-w-12 text-center">
 						{points} pts
 					</span>
 				</div>
