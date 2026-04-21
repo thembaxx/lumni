@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import {
 	Card,
 	CardContent,
-	CardDescription,
 	CardFooter,
 	CardHeader,
 	CardTitle,
@@ -31,8 +30,8 @@ const difficultyColors = {
 
 export function QuestionCard({
 	question,
-	questionNumber,
-	totalQuestions,
+	// questionNumber,
+	// totalQuestions,
 	onAnswer,
 }: QuestionCardProps) {
 	const [state, setState] = useState<QuestionState>({
