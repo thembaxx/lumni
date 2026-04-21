@@ -537,7 +537,7 @@ function MotionDiagram({ data }: { data: MotionData }) {
 		<Stage
 			width={300}
 			height={200}
-			className="w-full rounded-2xl border bg-background/40"
+			className="w-full rounded-2xl border bg-background/20"
 		>
 			<Layer>{objects}</Layer>
 			<Layer>{velocityLabel}</Layer>
@@ -582,7 +582,7 @@ function NodeDiagramFlow({
 		})) || [];
 
 	return (
-		<div className="h-[300px] w-full rounded-2xl border bg-background/40 overflow-hidden">
+		<div className="h-75 w-full rounded-2xl border bg-background/20 overflow-hidden">
 			<ReactFlow nodes={initialNodes} edges={initialEdges} fitView>
 				<Background />
 				<Controls />

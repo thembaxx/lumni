@@ -5,19 +5,21 @@ import {
 	ChevronRight,
 	Play,
 	Square,
-	Timer,
 	Target,
+	Timer,
 	Zap,
 } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import {
+	startTransition,
+	useCallback,
+	useEffect,
+	useState,
+	ViewTransition,
+} from "react";
 import { QuestionCard } from "@/components/questions/question-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-	Progress,
-	ProgressIndicator,
-	ProgressValue,
-} from "@/components/ui/progress";
+import { Progress } from "@/components/ui/progress";
 import {
 	Select,
 	SelectContent,
@@ -193,12 +195,17 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 	}, []);
 
 	const handleNext = useCallback(() => {
-		if (questionsToUse && currentQuestionIndex < questionsToUse.length - 1) {
-			setIsTransitioning(true);
-			setTimeout(() => {
-				setCurrentQuestionIndex((prev) => prev + 1);
-				setIsTransitioning(false);
-			}, 200);
+		if (!questionsToUse) return;
+
+		const maxIndex = questionsToUse.length - 1;
+		if (currentQuestionIndex < maxIndex) {
+			startTransition(() => {
+				setIsTransitioning(true);
+				setTimeout(() => {
+					setCurrentQuestionIndex((prev) => prev + 1);
+					setIsTransitioning(false);
+				}, 150);
+			});
 		} else {
 			handleStop();
 		}
@@ -206,11 +213,13 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 
 	const handlePrevious = useCallback(() => {
 		if (currentQuestionIndex > 0) {
-			setIsTransitioning(true);
-			setTimeout(() => {
-				setCurrentQuestionIndex((prev) => prev - 1);
-				setIsTransitioning(false);
-			}, 200);
+			startTransition(() => {
+				setIsTransitioning(true);
+				setTimeout(() => {
+					setCurrentQuestionIndex((prev) => prev - 1);
+					setIsTransitioning(false);
+				}, 150);
+			});
 		}
 	}, [currentQuestionIndex]);
 
@@ -272,31 +281,38 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 					</div>
 
 					<Progress value={progressValue} className="h-1.5">
-						<ProgressIndicator
+						{/* <ProgressIndicator
 							className={cn(
 								"h-full bg-linear-to-r from-primary to-green-500 transition-all duration-300",
 								progressValue === 100 && "to-green-500",
 							)}
 						/>
-						<ProgressValue className="sr-only">{progressValue}</ProgressValue>
+						<ProgressValue className="sr-only">{progressValue}</ProgressValue> */}
 					</Progress>
 				</div>
 
-				<div
-					className={cn(
-						"transition-all duration-200",
-						isTransitioning
-							? "opacity-0 translate-x-2"
-							: "opacity-100 translate-x-0",
-					)}
+				<ViewTransition
+					default="none"
+					enter="vt-slide-up-in"
+					exit="vt-slide-down-out"
 				>
-					<QuestionCard
-						question={currentQuestion}
-						questionNumber={currentQuestionIndex + 1}
-						totalQuestions={questionsToUse?.length || questionCount}
-						onAnswer={handleAnswer}
-					/>
-				</div>
+					<div
+						className={cn(
+							"transition-all duration-200",
+							isTransitioning
+								? "opacity-0 translate-x-2"
+								: "opacity-100 translate-x-0",
+						)}
+					>
+						<QuestionCard
+							key={currentQuestion.id}
+							question={currentQuestion}
+							questionNumber={currentQuestionIndex + 1}
+							totalQuestions={questionsToUse?.length || questionCount}
+							onAnswer={handleAnswer}
+						/>
+					</div>
+				</ViewTransition>
 
 				<div
 					className={cn(
@@ -314,7 +330,7 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 						Previous
 					</Button>
 					<Button onClick={handleNext} className="gap-2">
-						{currentQuestionIndex < (questions?.length || questionCount) - 1
+						{questionsToUse && currentQuestionIndex < questionsToUse.length - 1
 							? "Next"
 							: "Finish"}
 						<ChevronRight className="size-4" />

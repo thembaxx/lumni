@@ -1,9 +1,8 @@
 "use client";
 
 import { LayoutGrid, Snowflake } from "lucide-react";
-import { startTransition } from "react";
+import { startTransition, ViewTransition } from "react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ViewTransition } from "react";
 import { cn } from "@/lib/utils";
 import type { TabValue } from "../types";
 
@@ -37,10 +36,10 @@ export function TabNav({ activeTab, onTabChange }: TabNavProps) {
 			onValueChange={handleTabChange}
 		>
 			<ViewTransition default="none" enter="vt-fade-in" exit="vt-fade-out">
-				<TabsList className="bg-secondary/50 backdrop-blur-xl p-1 grid grid-cols-2 rounded-2xl h-11 relative">
+				<TabsList className="bg-secondary/50 backdrop-blur-xl p-1 grid grid-cols-2 rounded-3xl h-11 relative">
 					<span
 						className={cn(
-							"absolute top-1 bottom-1 bg-primary/10 rounded-md shadow-sm transition-all duration-300 ease-out-quart",
+							"absolute top-1 bottom-1 bg-primary/10 rounded-[20px] shadow-sm transition-all duration-300 ease-out-quart",
 							activeTab === "ai"
 								? "left-1 w-[calc(50%-4px)]"
 								: "left-1/2 w-[calc(50%-4px)]",
@@ -51,7 +50,7 @@ export function TabNav({ activeTab, onTabChange }: TabNavProps) {
 							key={tab.value}
 							value={tab.value}
 							className={cn(
-								"relative z-10 px-5 h-9 rounded-xl text-sm font-medium transition-all duration-200 data-selected:text-primary-foreground tab-trigger-item",
+								"relative z-10 px-5 h-9 rounded-[20px] text-sm font-medium transition-all duration-200 data-selected:text-primary-foreground tab-trigger-item",
 							)}
 						>
 							<tab.icon

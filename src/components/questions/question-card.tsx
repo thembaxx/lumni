@@ -164,7 +164,7 @@ export function QuestionCard({
 						if (showResult) {
 							if (isCorrectOption) {
 								optionClass =
-									"border-green-500 bg-green-500/10 animate-checkmark";
+									"border-green-500/40 ring-2 ring-green-500 bg-green-500/10 animate-checkmark";
 							} else if (isSelected && !isCorrectOption) {
 								optionClass = "border-red-500 bg-red-500/10 animate-shake";
 							}
@@ -207,7 +207,7 @@ export function QuestionCard({
 				</div>
 
 				{state.showHint && (
-					<div className="animate-slide-in-bottom rounded-lg bg-amber-500/10 p-4 text-amber-700">
+					<div className="animate-slide-in-bottom rounded-lg bg-amber-500/3 p-4 text-amber-700">
 						<p className="font-medium">Hint:</p>
 						<p>{question.hint}</p>
 					</div>
