@@ -76,9 +76,7 @@ export default function StatsTab() {
 					<QuizEngine
 						subjectIds={selectedSubjects}
 						userId={userId}
-						onComplete={(results) => {
-							console.log("Quiz completed:", results);
-						}}
+						onComplete={() => {}}
 					/>
 				</div>
 			)}

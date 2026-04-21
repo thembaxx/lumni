@@ -54,13 +54,7 @@ export function AnimatedDialogContent({
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ delay: 0.2, duration: 0.4 }}
 					>
-						<VoiceRecorder
-							onRecordingComplete={(blob) => {
-								if (blob) {
-									console.log("Recording ready:", blob);
-								}
-							}}
-						/>
+						<VoiceRecorder onRecordingComplete={() => {}} />
 					</motion.div>
 				</motion.div>
 			</DialogContent>
