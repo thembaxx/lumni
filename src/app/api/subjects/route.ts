@@ -1,5 +1,7 @@
-import { and, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { auth } from "@/lib/auth";
 import { getDb } from "@/lib/db/client";
 import {
 	studySession,
@@ -8,28 +10,46 @@ import {
 	userSubject,
 } from "@/lib/db/schema";
 
-export async function GET(request: Request) {
-	const { searchParams } = new URL(request.url);
-	const userId = searchParams.get("userId");
-
+export async function GET(request: NextRequest) {
 	const db = getDb();
 	const subjects = await db.select().from(subject);
 
-	if (!userId) {
-		return NextResponse.json({ subjects });
+	const { searchParams } = new URL(request.url);
+	const requestedUserId = searchParams.get("userId");
+
+	const session = await auth.api.getSession({
+		headers: request.headers,
+	});
+
+	if (!session) {
+		return NextResponse.json(
+			{ subjects },
+			{ status: 200 },
+		);
+	}
+
+	const authenticatedUserId = session.user.id;
+
+	const targetUserId = requestedUserId ?? authenticatedUserId;
+
+	if (targetUserId !== authenticatedUserId) {
+		return NextResponse.json(
+			{ error: "Unauthorized: Cannot access another user's data" },
+			{ status: 403 },
+		);
 	}
 
 	const selectedUserSubjects = await db
 		.select()
 		.from(userSubject)
-		.where(eq(userSubject.userId, userId));
+		.where(eq(userSubject.userId, targetUserId));
 
 	const selectedIds = selectedUserSubjects.map((us) => us.subjectId);
 
 	const progressArr = await db
 		.select()
 		.from(userProgress)
-		.where(eq(userProgress.userId, userId))
+		.where(eq(userProgress.userId, targetUserId))
 		.limit(1);
 
 	const progress = progressArr[0] || null;
@@ -37,7 +57,7 @@ export async function GET(request: Request) {
 	const sessions = await db
 		.select()
 		.from(studySession)
-		.where(eq(studySession.userId, userId));
+		.where(eq(studySession.userId, targetUserId));
 
 	const totalAnswered = sessions.reduce(
 		(sum, s) => sum + (s.questionsAnswered || 0),
