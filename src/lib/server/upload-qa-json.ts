@@ -21,10 +21,16 @@ export async function uploadQAFileSubject(
 		const utapi = new UTApi();
 		const result = await utapi.uploadFiles(file);
 
+		if (!result || typeof result !== "object") {
+			return { success: false, error: "Upload failed - no result" };
+		}
+
+		const uploadResult = result as unknown as { url?: string; key?: string };
+
 		return {
 			success: true,
-			url: result[0].url,
-			key: result[0].key,
+			url: uploadResult.url,
+			key: uploadResult.key,
 		};
 	} catch (error) {
 		console.error("Upload error:", error);

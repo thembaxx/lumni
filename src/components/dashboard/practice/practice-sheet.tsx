@@ -1,6 +1,7 @@
 "use client";
 
-import { Bookmark } from "lucide-react";
+import { More01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,6 +14,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FocusTab } from "../focus/focus-tab";
 import { QuizTab } from "./quiz-tab";
+import StatsTab from "./stats-tab";
 
 interface PracticeSheetProps {
 	open: boolean;
@@ -31,10 +33,16 @@ export function PracticeSheet({ open, onOpenChange }: PracticeSheetProps) {
 					className="rounded-xl h-10 w-10"
 					aria-label="Open practice sheet"
 				>
-					<Bookmark className="w-5 h-5 text-muted-foreground" />
+					<HugeiconsIcon
+						icon={More01Icon}
+						className="w-4 h-4 transition-transform duration-200"
+					/>
 				</Button>
 			</SheetTrigger>
-			<SheetContent className="min-h-[95dvh] flex flex-col max-h-[95dvh] mx-auto mt-0 rounded-t-4xl animate-fade-in-scale">
+			<SheetContent
+				side="bottom"
+				className="min-h-[95dvh] flex flex-col max-h-[95dvh] mx-auto mt-0 rounded-t-4xl animate-fade-in-scale"
+			>
 				<SheetHeader
 					className={`flex flex-col items-center transition-opacity duration-300 ${
 						showQuizHeader
@@ -67,8 +75,8 @@ export function PracticeSheet({ open, onOpenChange }: PracticeSheetProps) {
 							<TabsTrigger value="focus" className="px-4">
 								Focus
 							</TabsTrigger>
-							<TabsTrigger value="lab" className="px-4">
-								Lab
+							<TabsTrigger value="stats" className="px-4">
+								Stats
 							</TabsTrigger>
 						</TabsList>
 						<TabsContent
@@ -82,6 +90,12 @@ export function PracticeSheet({ open, onOpenChange }: PracticeSheetProps) {
 							className="mt-12 grow flex w-full items-center justify-center"
 						>
 							<FocusTab />
+						</TabsContent>
+						<TabsContent
+							value="stats"
+							className="mt-12 grow flex w-full items-center justify-center"
+						>
+							<StatsTab />
 						</TabsContent>
 					</Tabs>
 				</div>

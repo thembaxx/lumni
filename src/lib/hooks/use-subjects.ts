@@ -5,18 +5,21 @@ import { useQuery } from "@tanstack/react-query";
 export interface Subject {
 	id: string;
 	name: string;
+	code: string;
 	description: string;
+	icon: string;
+	category: string;
+	color: string;
+	createdAt?: string;
 }
 
-const SUBJECTS_URL =
-	"https://sxo07lk073.ufs.sh/f/yddsZUgag8v0rbO31IeUiGpNZwDsqvnL0PV8y54a6ftQoFd9";
-
 async function fetchSubjects(): Promise<Subject[]> {
-	const response = await fetch(SUBJECTS_URL);
+	const response = await fetch("/api/subjects");
 	if (!response.ok) {
 		throw new Error("Failed to fetch subjects");
 	}
-	return response.json();
+	const data = await response.json();
+	return data.subjects;
 }
 
 export function useSubjects() {

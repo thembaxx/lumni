@@ -14,11 +14,20 @@ import {
 import { useFilteredSubjects } from "@/lib/hooks/use-subjects";
 
 type SubjectsDrawerProps = {
-	children: React.ReactNode;
+	children?: React.ReactNode;
 	onSelect?: (subject: string) => void;
+	userId?: string;
+	selectedSubjects?: string[];
+	onSelectionChange?: (newSelection: string[]) => void;
 };
 
-export function SubjectsDrawer({ children, onSelect }: SubjectsDrawerProps) {
+export function SubjectsDrawer({
+	children,
+	onSelect,
+	userId,
+	selectedSubjects = [],
+	onSelectionChange,
+}: SubjectsDrawerProps) {
 	const [searchQuery, setSearchQuery] = useState("");
 	const { data: subjects, isLoading, error } = useFilteredSubjects(searchQuery);
 	const drawerCloseRef = useRef<HTMLButtonElement>(null);
@@ -87,3 +96,5 @@ export function SubjectsDrawer({ children, onSelect }: SubjectsDrawerProps) {
 		</Drawer>
 	);
 }
+
+export const SubjectDrawer = SubjectsDrawer;

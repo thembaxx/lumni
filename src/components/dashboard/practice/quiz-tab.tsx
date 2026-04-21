@@ -17,6 +17,7 @@ import {
 	useState,
 	ViewTransition,
 } from "react";
+import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
 import { QuestionCard } from "@/components/questions/question-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -29,15 +30,7 @@ import {
 	EmptyTitle,
 } from "@/components/ui/empty";
 import { Progress } from "@/components/ui/progress";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
 import { useSubjectQuestions } from "@/lib/hooks/use-subject-questions";
-import { useUploadStore } from "@/lib/store";
 import type { QAQuestion } from "@/lib/types/questions";
 import { cn } from "@/lib/utils";
 
@@ -139,20 +132,6 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 	const [correctAnswers, setCorrectAnswers] = useState(0);
 	const [questionCount] = useState(10);
 	const [isTransitioning, setIsTransitioning] = useState(false);
-
-	const { subjects } = useUploadStore();
-	const storeSubjects =
-		subjects.length > 0
-			? subjects.map((s) => s.displayName)
-			: [
-					"Random",
-					"Physics",
-					"Chemistry",
-					"Biology",
-					"Mathematics",
-					"History",
-					"Geography",
-				];
 
 	const subjectToFetch =
 		selectedSubject === "Random" ? "physics" : selectedSubject.toLowerCase();
@@ -355,26 +334,22 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 	}
 
 	return (
-		<div>
-			<div className={cn("flex items-center gap-3 px-6!", className)}>
-				<Select
-					value={selectedSubject}
-					onValueChange={(value) => handleSubjectSelect(value || "Random")}
-				>
-					<SelectTrigger
-						className="w-32 h-9 rounded-full border-muted bg-muted/50"
+		<div className="w-full">
+			<div
+				className={cn(
+					"flex items-center gap-3 justify-between w-full",
+					className,
+				)}
+			>
+				<SubjectsDrawer onSelect={handleSubjectSelect}>
+					<Button
+						variant="outline"
+						className="h-9 rounded-full border-muted bg-muted/50"
 						disabled={isRunning}
 					>
-						<SelectValue placeholder="Subject" />
-					</SelectTrigger>
-					<SelectContent align="center">
-						{storeSubjects.map((subject) => (
-							<SelectItem key={subject} value={subject}>
-								{subject}
-							</SelectItem>
-						))}
-					</SelectContent>
-				</Select>
+						{selectedSubject !== "" ? selectedSubject : "Subject..."}
+					</Button>
+				</SubjectsDrawer>
 
 				<div className="flex items-center gap-3 pl-4 py-2 rounded-full bg-muted/30 border border-muted">
 					<div className="flex items-center gap-2 min-w-16">

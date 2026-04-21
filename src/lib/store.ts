@@ -6,7 +6,7 @@ export interface UploadSubject {
 	fileTypes: string[];
 	maxFileSize: string;
 	maxFileCount: number;
-	displayName: string;
+	name: string;
 }
 
 interface UploadStore {

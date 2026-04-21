@@ -24,7 +24,7 @@ function transformToSubjects(config: UploadThingConfig): UploadSubject[] {
 			? routeConfig[firstKey]
 			: { maxFileSize: "0", maxFileCount: 0 };
 
-		const displayName = routeKey
+		const name = routeKey
 			.split(/(?=[A-Z])|[_-]/)
 			.map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
 			.join(" ");
@@ -34,7 +34,7 @@ function transformToSubjects(config: UploadThingConfig): UploadSubject[] {
 			fileTypes,
 			maxFileSize: (firstConfig as UTFileConfig).maxFileSize,
 			maxFileCount: (firstConfig as UTFileConfig).maxFileCount,
-			displayName,
+			name,
 		};
 	});
 }

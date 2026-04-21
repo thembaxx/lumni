@@ -6,3 +6,7 @@ const sqlite = new Database("./local.db");
 const db = drizzle(sqlite);
 
 export { db, schema, sqlite };
+
+export function getDb() {
+	return db;
+}

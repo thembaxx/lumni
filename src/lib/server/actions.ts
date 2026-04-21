@@ -1,89 +1,116 @@
 "use server";
 
-import { unlink, writeFile } from "fs/promises";
-import { join } from "path";
+import { and, eq } from "drizzle-orm";
+import { getDb } from "@/lib/db/client";
+import {
+	studySession,
+	subject,
+	user,
+	userProgress,
+	userSubject,
+} from "@/lib/db/schema";
 
-function formatSubjectName(subject: string): string {
-	return subject.replace(/\s+/g, "_").toLowerCase();
-}
+const DEFAULT_USER_ID = "demo-user";
 
-function generateFileName(subject: string, number: number): string {
-	const formattedSubject = formatSubjectName(subject);
-	return `${formattedSubject}_qa_${number}.json`;
-}
+async function ensureDemoUser() {
+	const db = getDb();
 
-export async function uploadQAFile(
-	file: File,
-	subject: string,
-	fileNumber: number = 1,
-): Promise<{
-	success: boolean;
-	url?: string;
-	fileName?: string;
-	error?: string;
-}> {
-	try {
-		const fileName = generateFileName(subject, fileNumber);
-		const tempPath = join(process.cwd(), "tmp", fileName);
+	const existingUser = await db
+		.select()
+		.from(user)
+		.where(eq(user.id, DEFAULT_USER_ID))
+		.limit(1);
 
-		const arrayBuffer = await file.arrayBuffer();
-		const buffer = Buffer.from(arrayBuffer);
-
-		await writeFile(tempPath, buffer);
-
-		const formData = new FormData();
-		formData.append("file", new File([buffer], fileName));
-
-		const response = await fetch("http://localhost:3000/api/uploadthing", {
-			method: "POST",
-			body: formData,
+	if (existingUser.length === 0) {
+		await db.insert(user).values({
+			id: DEFAULT_USER_ID,
+			name: "Demo User",
+			email: "demo@lumni.ai",
+			emailVerified: true,
 		});
+	}
 
-		await unlink(tempPath);
+	return DEFAULT_USER_ID;
+}
 
-		if (!response.ok) {
-			const error = await response.text();
-			return { success: false, error };
-		}
+export async function fetchSubjects(userId?: string) {
+	const db = getDb();
+	const targetUserId = userId || (await ensureDemoUser());
 
-		const result = await response.json();
-		return {
-			success: true,
-			url: result[0]?.url,
-			fileName,
-		};
-	} catch (error) {
-		console.error("Upload error:", error);
-		return {
-			success: false,
-			error: error instanceof Error ? error.message : "Upload failed",
-		};
+	const subjects = await db.select().from(subject);
+
+	const selectedUserSubjects = await db
+		.select()
+		.from(userSubject)
+		.where(eq(userSubject.userId, targetUserId));
+
+	const selectedIds = selectedUserSubjects.map((us) => us.subjectId);
+
+	return { subjects, selectedSubjectIds: selectedIds };
+}
+
+export async function fetchUserProgress(userId?: string) {
+	const db = getDb();
+	const targetUserId = userId || (await ensureDemoUser());
+
+	const progressArr = await db
+		.select()
+		.from(userProgress)
+		.where(eq(userProgress.userId, targetUserId))
+		.limit(1);
+
+	const progress = progressArr[0] || null;
+
+	const sessions = await db
+		.select()
+		.from(studySession)
+		.where(eq(studySession.userId, targetUserId));
+
+	const totalAnswered = sessions.reduce(
+		(sum, s) => sum + (s.questionsAnswered || 0),
+		0,
+	);
+	const totalCorrect = sessions.reduce(
+		(sum, s) => sum + (s.correctCount || 0),
+		0,
+	);
+	const accuracy =
+		totalAnswered > 0 ? Math.round((totalCorrect / totalAnswered) * 100) : 0;
+
+	return {
+		questionsAnswered: totalAnswered,
+		accuracy,
+		streak: progress?.currentStreak ?? 0,
+	};
+}
+
+export async function toggleUserSubject(userId: string, subjectId: string) {
+	const db = getDb();
+
+	const existing = await db
+		.select()
+		.from(userSubject)
+		.where(
+			and(eq(userSubject.userId, userId), eq(userSubject.subjectId, subjectId)),
+		)
+		.then((res) => res[0]);
+
+	if (existing) {
+		await db
+			.delete(userSubject)
+			.where(
+				and(
+					eq(userSubject.userId, userId),
+					eq(userSubject.subjectId, subjectId),
+				),
+			);
+		return false;
+	} else {
+		await db.insert(userSubject).values({
+			id: `${userId}-${subjectId}`,
+			userId,
+			subjectId,
+		});
+		return true;
 	}
 }
-
-export async function uploadQAFileFromPath(
-	filePath: string,
-	subject: string,
-	fileNumber: number = 1,
-): Promise<{
-	success: boolean;
-	url?: string;
-	fileName?: string;
-	error?: string;
-}> {
-	try {
-		const fs = await import("fs/promises");
-		const fileContent = await fs.readFile(filePath, "utf-8");
-		const file = new File([fileContent], "temp.json", {
-			type: "application/json",
-		});
-		return uploadQAFile(file, subject, fileNumber);
-	} catch (error) {
-		return {
-			success: false,
-			error: error instanceof Error ? error.message : "Upload failed",
-		};
-	}
-}
-
-export { formatSubjectName, generateFileName };

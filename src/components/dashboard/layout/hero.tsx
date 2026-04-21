@@ -1,12 +1,20 @@
 "use client";
 
 import { IconChevronRight } from "@tabler/icons-react";
+import Image from "next/image";
 import Link from "next/link";
 import { appConfig } from "../../../../app.config";
 
 export function DashboardHero() {
 	return (
 		<main className="flex-1 flex flex-col items-center justify-center px-4">
+			<Image
+				src="/logo.png"
+				alt="Hero Image"
+				width={48}
+				height={48}
+				className="mb-6 animate-fade-in-up delay-50"
+			/>
 			<h1 className="text-3xl font-semibold tracking-tight text-center animate-fade-in-up delay-100 text-balance">
 				{appConfig.name}
 			</h1>

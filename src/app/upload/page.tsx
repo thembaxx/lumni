@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { UploadButton } from "@/lib/uploadthing";
-import type { OurFileRouter } from "../api/uploadthing/core";
 
 function formatSubjectName(subject: string): string {
 	return subject.replace(/\s+/g, "_").toLowerCase();
@@ -39,7 +38,7 @@ export default function UploadPage() {
 				</p>
 			</div>
 
-			<UploadButton<OurFileRouter>
+			<UploadButton
 				endpoint="qaUploader"
 				onClientUploadComplete={handleUploadComplete}
 				onUploadError={(error: Error) => {
