@@ -1,5 +1,7 @@
 "use client";
 
+import { ArrowDown01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import {
 	ChevronLeft,
 	ChevronRight,
@@ -34,8 +36,6 @@ import { DEMO_QUESTIONS } from "@/lib/data/demo-questions";
 import { useSubjectQuestions } from "@/lib/hooks/use-subject-questions";
 import { cn } from "@/lib/utils";
 import { formatTime } from "@/lib/utils/time";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { ArrowDown01Icon } from "@hugeicons/core-free-icons";
 
 const MAX_TIME = 90 * 60;
 

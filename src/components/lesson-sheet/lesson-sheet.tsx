@@ -1,26 +1,39 @@
 "use client";
 
-import { useState } from "react";
+import { ArrowDown01FreeIcons } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import type { Variants } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import { Search } from "lucide-react";
+import { useState } from "react";
+import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
 import { LessonCard } from "@/components/lesson-card";
 import type { LessonCardData } from "@/components/lesson-card/lesson-card";
+import { LessonCardProvider } from "@/components/lesson-card/lesson-card-context";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
 	Sheet,
 	SheetClose,
 	SheetContent,
+	SheetDescription,
 	SheetHeader,
 	SheetTitle,
-	SheetDescription,
 	SheetTrigger,
 } from "@/components/ui/sheet";
-import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
 import { useFilteredSubjects } from "@/lib/hooks/use-subjects";
-import { Badge } from "@/components/ui/badge";
-import { Search } from "lucide-react";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { ArrowDown01FreeIcons } from "@hugeicons/core-free-icons";
+
+const containerVariants: Variants = {
+	hidden: { opacity: 0 },
+	show: { opacity: 1 },
+};
+
+const itemVariants = {
+	hidden: { opacity: 0, y: 20 },
+	show: { opacity: 1, y: 0 },
+};
 
 export function LessonSheet() {
 	const [isOpen, setIsOpen] = useState(false);
@@ -51,7 +64,7 @@ export function LessonSheet() {
 				</Button>
 			</SheetTrigger>
 			<SheetContent
-				className="sm:max-w-135 w-full max-h-[95dvh] px-6"
+				className="sm:max-w-135 w-full h-dvh px-4 rounded-t-none"
 				side="bottom"
 			>
 				<SheetHeader className="text-left">
@@ -110,13 +123,25 @@ export function LessonSheet() {
 						</div>
 					)}
 
-					{!isLoading &&
-						data?.lessons?.map((lesson: LessonCardData) => (
-							<LessonCard key={lesson.id} {...lesson} />
-						))}
+					{!isLoading && data?.lessons && data.lessons.length > 0 && (
+						<LessonCardProvider>
+							<motion.div
+								variants={containerVariants}
+								initial="hidden"
+								animate="show"
+								className="space-y-4"
+							>
+								{data.lessons.map((lesson: LessonCardData) => (
+									<motion.div key={lesson.id} variants={itemVariants}>
+										<LessonCard {...lesson} />
+									</motion.div>
+								))}
+							</motion.div>
+						</LessonCardProvider>
+					)}
 				</div>
 
-				<SheetClose asChild>
+				<SheetClose className="py-4" asChild>
 					<Button variant="ghost" className="w-full">
 						Close
 					</Button>

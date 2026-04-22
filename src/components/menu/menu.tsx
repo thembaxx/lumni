@@ -2,6 +2,7 @@
 
 import { Menu09Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { ThemeSwitcher } from "@/components/theme";
 import {
 	Drawer,
 	DrawerContent,
@@ -10,7 +11,6 @@ import {
 	DrawerTitle,
 	DrawerTrigger,
 } from "@/components/ui/drawer";
-import { ThemeSwitcher } from "@/components/theme";
 
 interface MenuProps {
 	children?: React.ReactNode;

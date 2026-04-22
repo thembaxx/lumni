@@ -1,14 +1,14 @@
 "use client";
 
 import {
+	IconBook,
 	IconBulb,
 	IconFileDescription,
 	IconPlane,
 	IconSparkles,
-	IconBook,
 } from "@tabler/icons-react";
-import { Button } from "@/components/ui/button";
 import { LessonsButton } from "@/components/lesson-sheet";
+import { Button } from "@/components/ui/button";
 
 const quickActions = [
 	{ icon: IconFileDescription, label: "Exam papers" },
