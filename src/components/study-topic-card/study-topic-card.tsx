@@ -1,13 +1,15 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { Dice5 } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { AnimatePresence, motion } from "framer-motion";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { Badge } from "../ui/badge";
 import {
-	TopicData,
-	getRandomTopic,
 	getDifficultyColor,
+	getRandomTopic,
+	TopicData,
 } from "./study-topic-card.data";
 
 interface StudyTopicCardProps {
@@ -25,7 +27,6 @@ const variants = {
 export function StudyTopicCard({
 	className,
 	initialTopic,
-	onLearnMore,
 	onPractice,
 }: StudyTopicCardProps) {
 	const [topic, setTopic] = useState<TopicData | null>(null);
@@ -36,6 +37,8 @@ export function StudyTopicCard({
 
 	const synthRef = useRef<SpeechSynthesis | null>(null);
 	const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
+	const audioRef = useRef<HTMLAudioElement | null>(null);
+	const [useCustomVoice, setUseCustomVoice] = useState(false);
 
 	const initializeTopic = useCallback(() => {
 		const randomTopic = initialTopic || getRandomTopic();
@@ -52,11 +55,13 @@ export function StudyTopicCard({
 		}
 	}, [initializeTopic]);
 
-	const handleListen = () => {
+	const handleListen = async () => {
 		if (!topic) return;
 
 		if (isPlaying) {
 			synthRef.current?.cancel();
+			audioRef.current?.pause();
+			audioRef.current = null;
 			setIsPlaying(false);
 			setCurrentWordIndex(-1);
 			return;
@@ -64,7 +69,47 @@ export function StudyTopicCard({
 
 		synthRef.current?.cancel();
 
-		const utterance = new SpeechSynthesisUtterance(topic.summary);
+		setIsPlaying(true);
+
+		try {
+			const response = await fetch("/api/tts", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					text: topic.summary,
+					voice: "en_us_guy",
+					lang: "en",
+				}),
+			});
+
+			if (response.ok) {
+				const data = await response.json();
+				if (data.audio) {
+					setUseCustomVoice(true);
+					const audio = new Audio(`data:audio/mp3;base64,${data.audio}`);
+					audioRef.current = audio;
+
+					audio.onended = () => {
+						setIsPlaying(false);
+						setCurrentWordIndex(-1);
+					};
+					audio.onerror = () => {
+						setUseCustomVoice(false);
+						playBrowserVoice(topic.summary);
+					};
+					await audio.play();
+					return;
+				}
+			}
+		} catch (error) {
+			console.error("TTS API error, falling back to browser:", error);
+		}
+
+		playBrowserVoice(topic.summary);
+	};
+
+	const playBrowserVoice = (text: string) => {
+		const utterance = new SpeechSynthesisUtterance(text);
 		utterance.lang = "en-ZA";
 		utterance.rate = 0.9;
 		utterance.pitch = 1;
@@ -72,9 +117,7 @@ export function StudyTopicCard({
 
 		utterance.onboundary = (event) => {
 			if (event.name === "word") {
-				const wordsSoFar = topic.summary
-					.substring(0, event.charIndex)
-					.split(" ");
+				const wordsSoFar = text.substring(0, event.charIndex).split(" ");
 				setCurrentWordIndex(wordsSoFar.length - 1);
 			}
 		};
@@ -91,12 +134,13 @@ export function StudyTopicCard({
 
 		utteranceRef.current = utterance;
 		synthRef.current?.speak(utterance);
-		setIsPlaying(true);
 	};
 
 	const handleRefresh = () => {
 		if (isPlaying) {
 			synthRef.current?.cancel();
+			audioRef.current?.pause();
+			audioRef.current = null;
 			setIsPlaying(false);
 			setCurrentWordIndex(-1);
 		}
@@ -200,7 +244,13 @@ export function StudyTopicCard({
 						))}
 					</p>
 				</motion.div>
-				<div className="flex items-center gap-2">
+
+				{/* Action buttons with scale on press */}
+				<motion.div
+					variants={variants}
+					transition={{ delay: 0.2 }}
+					className="flex gap-2 justify-between items-center pt-1"
+				>
 					<Button
 						size="sm"
 						variant="outline"
@@ -212,7 +262,11 @@ export function StudyTopicCard({
 						)}
 					>
 						<span className="mr-1.5">{isPlaying ? "■" : "▶"}</span>
-						{isPlaying ? "Stop listening..." : "Listen to this lesson"}
+						{isPlaying
+							? "Stop listening..."
+							: useCustomVoice
+								? "Listen (AI)"
+								: "Listen to lesson"}
 					</Button>
 					<Button
 						size="sm"
@@ -226,44 +280,18 @@ export function StudyTopicCard({
 					>
 						Practice
 					</Button>
-				</div>
-
-				{/* Action buttons with scale on press */}
-				<motion.div
-					variants={variants}
-					transition={{ delay: 0.2 }}
-					className="flex gap-2 justify-between items-center pt-1"
-				>
-					<div className="flex gap-2">
-						<Button
-							size="sm"
-							variant="ghost"
-							onClick={handleRefresh}
-							className={cn(
-								"h-8 px-3 text-xs rounded-lg",
-								"active:scale-[0.96] transition-transform",
-								"transition-colors duration-150 ease-out-quart",
-							)}
-						>
-							<span className="mr-1.5">↻</span>
-							New
-						</Button>
-					</div>
-
-					<div className="flex gap-2">
-						<Button
-							size="sm"
-							variant="ghost"
-							onClick={onLearnMore}
-							className={cn(
-								"h-8 px-3 text-xs rounded-lg",
-								"active:scale-[0.96] transition-transform",
-								"transition-colors duration-150 ease-out-quart",
-							)}
-						>
-							Learn More
-						</Button>
-					</div>
+					<Button
+						size="sm"
+						variant="ghost"
+						onClick={handleRefresh}
+						className={cn(
+							"h-8 px-3 text-xs rounded-lg",
+							"active:scale-[0.96] transition-transform",
+							"transition-colors duration-150 ease-out-quart",
+						)}
+					>
+						<HugeiconsIcon icon={Dice5} className="h-5 w-5" />
+					</Button>
 				</motion.div>
 			</motion.div>
 		</AnimatePresence>
