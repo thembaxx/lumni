@@ -1,4 +1,6 @@
+import fs from "fs";
 import { NextResponse } from "next/server";
+import path from "path";
 
 export const dynamic = "force-dynamic";
 
@@ -10,7 +12,8 @@ export async function GET(request: Request) {
 		const difficulty = searchParams.get("difficulty");
 
 		// Filter logic
-		const lessonsData = require("../../../../lessons.json");
+		const filePath = path.join(process.cwd(), "lessons.json");
+		const lessonsData = JSON.parse(fs.readFileSync(filePath, "utf-8"));
 		let filteredLessons = lessonsData.lessons;
 
 		if (subject && subject !== "") {
