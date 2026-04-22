@@ -181,7 +181,9 @@ export function VoiceRecorder({
 	};
 
 	return (
-		<div className={cn("flex flex-col items-center gap-6 w-full", className)}>
+		<div
+			className={cn("flex flex-col items-center gap-6 w-full mt-4", className)}
+		>
 			<div className="w-full relative overflow-hidden rounded-lg bg-muted/20 p-2">
 				<LiveWaveform
 					active={isRecording}
@@ -228,7 +230,7 @@ export function VoiceRecorder({
 					onClick={resetRecording}
 					disabled={(!audioBlob && !isRecording) || isSending}
 					className={cn(
-						"flex h-10 w-10 items-center justify-center rounded-full transition-all duration-200 active:scale-95",
+						"flex h-10 w-10 items-center justify-center rounded-lg transition-all duration-200 active:scale-95",
 						audioBlob || isRecording
 							? "bg-muted/80 hover:bg-muted text-muted-foreground hover:text-foreground hover:scale-105"
 							: "bg-muted/30 text-muted-foreground/30 cursor-not-allowed",
@@ -279,7 +281,7 @@ export function VoiceRecorder({
 					onClick={togglePlayback}
 					disabled={!audioBlob || isRecording || isSending}
 					className={cn(
-						"flex h-10 w-10 items-center justify-center rounded-full transition-all duration-200 active:scale-95",
+						"flex h-10 w-10 items-center justify-center rounded-lg transition-all duration-200 active:scale-95",
 						audioBlob && !isRecording
 							? "bg-primary text-primary-foreground hover:scale-105 hover:shadow-xl hover:shadow-primary/20"
 							: "bg-muted/30 text-muted-foreground/30 cursor-not-allowed",
