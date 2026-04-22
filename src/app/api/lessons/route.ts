@@ -4,6 +4,12 @@ import path from "path";
 
 export const dynamic = "force-dynamic";
 
+interface Lesson {
+	subject: string;
+	title: string;
+	difficulty: string;
+}
+
 export async function GET(request: Request) {
 	try {
 		const { searchParams } = new URL(request.url);
@@ -14,23 +20,23 @@ export async function GET(request: Request) {
 		// Filter logic
 		const filePath = path.join(process.cwd(), "lessons.json");
 		const lessonsData = JSON.parse(fs.readFileSync(filePath, "utf-8"));
-		let filteredLessons = lessonsData.lessons;
+		let filteredLessons: Lesson[] = lessonsData.lessons;
 
 		if (subject && subject !== "") {
 			filteredLessons = filteredLessons.filter(
-				(l) => l.subject.toLowerCase() === subject.toLowerCase(),
+				(l: Lesson) => l.subject.toLowerCase() === subject.toLowerCase(),
 			);
 		}
 
 		if (search && search !== "") {
-			filteredLessons = filteredLessons.filter((l) =>
+			filteredLessons = filteredLessons.filter((l: Lesson) =>
 				l.title.toLowerCase().includes(search.toLowerCase()),
 			);
 		}
 
 		if (difficulty && difficulty !== "") {
 			filteredLessons = filteredLessons.filter(
-				(l) => l.difficulty === difficulty,
+				(l: Lesson) => l.difficulty === difficulty,
 			);
 		}
 
