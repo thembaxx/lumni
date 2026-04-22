@@ -87,7 +87,7 @@ export function PracticeSheet({ open, onOpenChange }: PracticeSheetProps) {
 						</TabsContent>
 						<TabsContent
 							value="focus"
-							className="mt-12 grow flex w-full items-center justify-center"
+							className="mt-12 grow flex w-full items-center justify-center animate-fade-in-up"
 						>
 							<FocusTab />
 						</TabsContent>

@@ -101,6 +101,10 @@ export function StudyTopicCard({
 					return;
 				}
 			}
+			const errorData = await response.json().catch(() => ({}));
+			if (errorData.error) {
+				console.warn("TTS API error, falling back to browser:", errorData.error);
+			}
 		} catch (error) {
 			console.error("TTS API error, falling back to browser:", error);
 		}
