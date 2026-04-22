@@ -94,24 +94,24 @@ export function QuizClient() {
 		[showFeedback],
 	);
 
-	const handleSubmit = useCallback(() => {
-		if (!selectedAnswer || !currentQuestion) return;
+	// const handleSubmit = useCallback(() => {
+	// 	if (!selectedAnswer || !currentQuestion) return;
 
-		const selectedOption = currentQuestion.options.find(
-			(o) => o.id === selectedAnswer,
-		);
-		const isCorrect = selectedOption?.isCorrect || false;
+	// 	const selectedOption = currentQuestion.options.find(
+	// 		(o) => o.id === selectedAnswer,
+	// 	);
+	// 	const isCorrect = selectedOption?.isCorrect || false;
 
-		setResults((prev) => [
-			...prev,
-			{
-				questionId: currentQuestion.id,
-				selectedAnswer,
-				isCorrect,
-			},
-		]);
-		setShowFeedback(true);
-	}, [selectedAnswer, currentQuestion]);
+	// 	setResults((prev) => [
+	// 		...prev,
+	// 		{
+	// 			questionId: currentQuestion.id,
+	// 			selectedAnswer,
+	// 			isCorrect,
+	// 		},
+	// 	]);
+	// 	setShowFeedback(true);
+	// }, [selectedAnswer, currentQuestion]);
 
 	const handleNext = useCallback(() => {
 		if (currentQuestionIndex < questionsToUse.length - 1) {
@@ -123,13 +123,13 @@ export function QuizClient() {
 		}
 	}, [currentQuestionIndex, questionsToUse.length, stopQuiz]);
 
-	const _handlePrevious = useCallback(() => {
-		if (currentQuestionIndex > 0) {
-			setCurrentQuestionIndex((prev) => prev - 1);
-			setSelectedAnswer(null);
-			setShowFeedback(false);
-		}
-	}, [currentQuestionIndex]);
+	// const _handlePrevious = useCallback(() => {
+	// 	if (currentQuestionIndex > 0) {
+	// 		setCurrentQuestionIndex((prev) => prev - 1);
+	// 		setSelectedAnswer(null);
+	// 		setShowFeedback(false);
+	// 	}
+	// }, [currentQuestionIndex]);
 
 	const handleRestart = useCallback(() => {
 		setCurrentQuestionIndex(0);
@@ -296,20 +296,12 @@ export function QuizClient() {
 				question={currentQuestion}
 				questionNumber={currentQuestionIndex + 1}
 				totalQuestions={questionsToUse.length}
-				selectedAnswer={showFeedback ? selectedAnswer : undefined}
+				selectedAnswer={selectedAnswer}
 				showFeedback={showFeedback}
 				onSelectAnswer={handleSelectAnswer}
 			/>
 
-			{!showFeedback ? (
-				<Button
-					className="w-full"
-					onClick={handleSubmit}
-					disabled={!selectedAnswer}
-				>
-					Check Answer
-				</Button>
-			) : (
+			{showFeedback && (
 				<div className="space-y-2">
 					<div
 						className={cn(

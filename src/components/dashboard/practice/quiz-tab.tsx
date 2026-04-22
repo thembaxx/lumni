@@ -32,9 +32,10 @@ import {
 import { Progress } from "@/components/ui/progress";
 import { DEMO_QUESTIONS } from "@/lib/data/demo-questions";
 import { useSubjectQuestions } from "@/lib/hooks/use-subject-questions";
-import type { QAQuestion } from "@/lib/types/questions";
 import { cn } from "@/lib/utils";
 import { formatTime } from "@/lib/utils/time";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { ArrowDown01Icon } from "@hugeicons/core-free-icons";
 
 const MAX_TIME = 90 * 60;
 
@@ -52,6 +53,8 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 	const [correctAnswers, setCorrectAnswers] = useState(0);
 	const [questionCount] = useState(10);
 	const [isTransitioning, setIsTransitioning] = useState(false);
+	const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+	const [showFeedback, setShowFeedback] = useState(false);
 
 	const subjectToFetch =
 		selectedSubject === "Random" ? "physics" : selectedSubject.toLowerCase();
@@ -96,10 +99,19 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 	}, [generatePoints, onHeaderChange]);
 
 	const handleAnswer = useCallback((_optionId: string, isCorrect: boolean) => {
+		setShowFeedback(true);
 		if (isCorrect) {
 			setCorrectAnswers((prev) => prev + 1);
 		}
 	}, []);
+
+	const handleSelectAnswer = useCallback(
+		(optionId: string) => {
+			if (showFeedback) return;
+			setSelectedAnswer(optionId);
+		},
+		[showFeedback],
+	);
 
 	const handleNext = useCallback(() => {
 		if (!questionsToUse) return;
@@ -110,6 +122,8 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 				setIsTransitioning(true);
 				setTimeout(() => {
 					setCurrentQuestionIndex((prev) => prev + 1);
+					setSelectedAnswer(null);
+					setShowFeedback(false);
 					setIsTransitioning(false);
 				}, 150);
 			});
@@ -198,27 +212,17 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 					</Progress>
 				</div>
 
-				<ViewTransition
-					default="none"
-					enter="vt-slide-up-in"
-					exit="vt-slide-down-out"
-				>
-					<div
-						className={cn(
-							"transition-all duration-200",
-							isTransitioning
-								? "opacity-0 translate-x-2"
-								: "opacity-100 translate-x-0",
-						)}
-					>
-						<QuestionCard
-							key={currentQuestion.id}
-							question={currentQuestion}
-							questionNumber={currentQuestionIndex + 1}
-							totalQuestions={questionsToUse?.length || questionCount}
-							onAnswer={handleAnswer}
-						/>
-					</div>
+				<ViewTransition>
+					<QuestionCard
+						key={currentQuestion.id}
+						question={currentQuestion}
+						questionNumber={currentQuestionIndex + 1}
+						totalQuestions={questionsToUse?.length || questionCount}
+						selectedAnswer={selectedAnswer}
+						showFeedback={showFeedback}
+						onSelectAnswer={handleSelectAnswer}
+						onAnswer={handleAnswer}
+					/>
 				</ViewTransition>
 
 				<div
@@ -236,7 +240,11 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 						<ChevronLeft className="size-4" />
 						Previous
 					</Button>
-					<Button onClick={handleNext} className="gap-2">
+					<Button
+						onClick={handleNext}
+						disabled={!showFeedback}
+						className="gap-2"
+					>
 						{questionsToUse && currentQuestionIndex < questionsToUse.length - 1
 							? "Next"
 							: "Finish"}
@@ -259,11 +267,14 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 			>
 				<SubjectsDrawer onSelect={handleSubjectSelect}>
 					<Button
-						variant="outline"
-						className="h-9 rounded-full border-muted bg-muted/50"
+						variant="secondary"
+						className="h-9 rounded-md pl-3 border-muted bg-muted/50"
 						disabled={isRunning}
 					>
-						{hasSubject ? selectedSubject : "Subject..."}
+						<div className="flex items-center gap-3">
+							{hasSubject ? selectedSubject : "Subject"}
+							<HugeiconsIcon icon={ArrowDown01Icon} />
+						</div>
 					</Button>
 				</SubjectsDrawer>
 

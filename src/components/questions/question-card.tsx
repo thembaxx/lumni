@@ -254,7 +254,7 @@ export function QuestionCard({
 			<CardFooter className="flex gap-3">
 				<Button
 					onClick={handleCheck}
-					disabled={!selectedOption || !showFeedback}
+					disabled={!selectedOption}
 					className="flex-1"
 				>
 					{showFeedback
