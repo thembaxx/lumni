@@ -201,7 +201,7 @@ export function VoiceRecorder({
 				/>
 			</div>
 
-			<div className="flex flex-col items-center gap-1 min-h-[3.5rem]">
+			<div className="flex flex-col items-center gap-1 min-h-14">
 				<span
 					className={cn(
 						"text-xs uppercase tracking-widest font-medium transition-all duration-200",

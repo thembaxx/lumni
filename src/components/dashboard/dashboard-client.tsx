@@ -3,10 +3,11 @@
 import { useState } from "react";
 import {
 	DashboardHeader,
-	DashboardHero,
+	// DashboardHero,
 	QuickActions,
 	SearchInput,
 } from "@/components/dashboard";
+import StudyTopicCardExample from "../study-topic-card/example";
 import type { TabValue } from "./types";
 
 interface DashboardClientProps {
@@ -20,7 +21,10 @@ export function DashboardClient({ initialTab = "ai" }: DashboardClientProps) {
 	return (
 		<div className="min-h-screen flex flex-col bg-background">
 			<DashboardHeader activeTab={activeTab} onTabChange={setActiveTab} />
-			<DashboardHero />
+			{/* <DashboardHero /> */}
+			<div className="grow">
+				<StudyTopicCardExample />
+			</div>
 			<div className="px-4 pb-6 space-y-3">
 				<QuickActions />
 				<SearchInput value={query} onChange={setQuery} />

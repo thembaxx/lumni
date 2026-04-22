@@ -26,7 +26,13 @@ interface QuizResultProps {
 	onClose?: () => void;
 }
 
-function AnimatedCounter({ value, delay = 0 }: { value: number; delay?: number }) {
+function AnimatedCounter({
+	value,
+	delay = 0,
+}: {
+	value: number;
+	delay?: number;
+}) {
 	const spring = useSpring(0, { stiffness: 100, damping: 20 });
 	const display = useTransform(spring, (current) => Math.round(current));
 
@@ -82,9 +88,12 @@ export function QuizResult({ results, onRestart, onClose }: QuizResultProps) {
 		results;
 
 	const getMessage = () => {
-		if (accuracy >= 90) return { title: "Outstanding!", emoji: "🎉", celebration: true };
-		if (accuracy >= 70) return { title: "Great job!", emoji: "👏", celebration: false };
-		if (accuracy >= 50) return { title: "Good effort!", emoji: "👍", celebration: false };
+		if (accuracy >= 90)
+			return { title: "Outstanding!", emoji: "🎉", celebration: true };
+		if (accuracy >= 70)
+			return { title: "Great job!", emoji: "👏", celebration: false };
+		if (accuracy >= 50)
+			return { title: "Good effort!", emoji: "👍", celebration: false };
 		return { title: "Keep practicing!", emoji: "💪", celebration: false };
 	};
 
@@ -135,7 +144,10 @@ export function QuizResult({ results, onRestart, onClose }: QuizResultProps) {
 						transition={{ delay: 0.5 }}
 					>
 						<p className="text-3xl font-bold text-red-500">
-							<AnimatedCounter value={totalQuestions - correctAnswers} delay={600} />
+							<AnimatedCounter
+								value={totalQuestions - correctAnswers}
+								delay={600}
+							/>
 						</p>
 						<p className="text-xs text-muted-foreground">Incorrect</p>
 					</motion.div>
@@ -163,7 +175,11 @@ export function QuizResult({ results, onRestart, onClose }: QuizResultProps) {
 							}}
 							style={{
 								backgroundColor:
-									accuracy >= 70 ? "#22c55e" : accuracy >= 50 ? "#eab308" : "#ef4444",
+									accuracy >= 70
+										? "#22c55e"
+										: accuracy >= 50
+											? "#eab308"
+											: "#ef4444",
 							}}
 						/>
 					</div>

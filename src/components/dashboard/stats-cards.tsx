@@ -2,9 +2,9 @@
 
 "use client";
 
-import { useEffect, useState } from "react";
 import { IconFlame, IconTarget, IconTrendingUp } from "@tabler/icons-react";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 
 interface StatsCardsProps {
@@ -13,7 +13,13 @@ interface StatsCardsProps {
 	accuracy: number;
 }
 
-function AnimatedNumber({ value, suffix = "" }: { value: number; suffix?: string }) {
+function AnimatedNumber({
+	value,
+	suffix = "",
+}: {
+	value: number;
+	suffix?: string;
+}) {
 	const [displayValue, setDisplayValue] = useState(0);
 
 	useEffect(() => {
@@ -40,7 +46,9 @@ function AnimatedNumber({ value, suffix = "" }: { value: number; suffix?: string
 	return (
 		<span>
 			{displayValue}
-			{suffix && <span className="text-xs text-muted-foreground ml-1">{suffix}</span>}
+			{suffix && (
+				<span className="text-xs text-muted-foreground ml-1">{suffix}</span>
+			)}
 		</span>
 	);
 }
@@ -94,7 +102,11 @@ export function StatsCards({
 							className={`p-2 rounded-full ${stat.bg}`}
 							initial={{ scale: 0 }}
 							animate={{ scale: 1 }}
-							transition={{ delay: index * 0.1 + 0.2, type: "spring", stiffness: 200 }}
+							transition={{
+								delay: index * 0.1 + 0.2,
+								type: "spring",
+								stiffness: 200,
+							}}
 						>
 							<stat.icon className={`w-5 h-5 ${stat.color}`} />
 						</motion.div>
