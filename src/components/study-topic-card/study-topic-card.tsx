@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { Badge } from "../ui/badge";
+import { ListenButton } from "./listen-button";
+import { PracticeButton } from "./practice-button";
 import {
 	getDifficultyColor,
 	getRandomTopic,
@@ -103,7 +105,10 @@ export function StudyTopicCard({
 			}
 			const errorData = await response.json().catch(() => ({}));
 			if (errorData.error) {
-				console.warn("TTS API error, falling back to browser:", errorData.error);
+				console.warn(
+					"TTS API error, falling back to browser:",
+					errorData.error,
+				);
 			}
 		} catch (error) {
 			console.error("TTS API error, falling back to browser:", error);
@@ -203,7 +208,7 @@ export function StudyTopicCard({
 				>
 					<Badge
 						variant="outline"
-						className="px-3 py-0.5 text-[xs] font-medium rounded-full"
+						className="px-3 py-0.5 text-[xs] font-medium bg-primary/10 rounded-full"
 					>
 						{topic.subject}
 					</Badge>
@@ -269,21 +274,10 @@ export function StudyTopicCard({
 						{isPlaying
 							? "Stop listening..."
 							: useCustomVoice
-								? "Listen (AI)"
+								? "Listen to lesson"
 								: "Listen to lesson"}
 					</Button>
-					<Button
-						size="sm"
-						variant="default"
-						onClick={onPractice}
-						className={cn(
-							"h-8 px-3 text-xs rounded-lg",
-							"active:scale-[0.96] transition-transform",
-							"transition-colors duration-150 ease-out-quart",
-						)}
-					>
-						Practice
-					</Button>
+					<PracticeButton onClick={onPractice} />
 					<Button
 						size="sm"
 						variant="ghost"

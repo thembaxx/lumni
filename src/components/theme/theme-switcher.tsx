@@ -7,8 +7,8 @@ import {
 } from "@hugeicons/core-free-icons";
 
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useTheme } from "./theme-provider";
-import { Button } from "./ui/button";
+import { useTheme } from "@/components/theme";
+import { Button } from "@/components/ui/button";
 
 type Theme = "system" | "dark" | "light";
 

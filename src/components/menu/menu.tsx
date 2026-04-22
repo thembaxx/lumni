@@ -10,7 +10,7 @@ import {
 	DrawerTitle,
 	DrawerTrigger,
 } from "@/components/ui/drawer";
-import { ThemeSwitcher } from "./theme-switcher";
+import { ThemeSwitcher } from "@/components/theme";
 
 interface MenuProps {
 	children?: React.ReactNode;

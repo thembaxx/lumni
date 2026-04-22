@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { LoadingScreen } from "@/components/loading-screen";
+import { LoadingScreen } from "@/components/loading";
 import { appConfig } from "../../app.config";
 
 export const metadata: Metadata = {
