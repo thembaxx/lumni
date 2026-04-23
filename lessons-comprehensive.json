@@ -1,0 +1,2127 @@
+{
+	"metadata": {
+		"version": 2,
+		"lastUpdated": "2026-04-23T00:00:00.000Z",
+		"subjects": [
+			"Mathematics",
+			"Physical Science",
+			"Life Sciences",
+			"Geography",
+			"History",
+			"English Home Language",
+			"Afrikaans Home Language",
+			"Sepedi Home Language",
+			"Business Studies",
+			"Information Technology"
+		]
+	},
+	"lessons": [
+		{
+			"id": "m-001",
+			"subject": "Mathematics",
+			"difficulty": "easy",
+			"title": "Algebraic Expressions and Exponents",
+			"summary": "Understanding exponents, laws of exponents, simplifying algebraic expressions with exponents, and applying these concepts to solve exponential equations in Grade 10 mathematics."
+		},
+		{
+			"id": "m-002",
+			"subject": "Mathematics",
+			"difficulty": "easy",
+			"title": "Number Patterns and Sequences",
+			"summary": "Exploring arithmetic and geometric sequences, finding the nth term, investigating patterns in numbers, and using inductive reasoning to discover algebraic rules governing sequences."
+		},
+		{
+			"id": "m-003",
+			"subject": "Mathematics",
+			"difficulty": "medium",
+			"title": "Linear Equations and Inequalities",
+			"summary": "Solving linear equations, linear inequalities, and literal equations; graphing solutions on number lines; and applying to real-world context problems."
+		},
+		{
+			"id": "m-004",
+			"subject": "Mathematics",
+			"difficulty": "medium",
+			"title": "Quadratic Equations",
+			"summary": "Solving quadratic equations by factoring, completing the square, and using the quadratic formula; analyzing the discriminant to determine the nature of roots."
+		},
+		{
+			"id": "m-005",
+			"subject": "Mathematics",
+			"difficulty": "medium",
+			"title": "Quadratic Functions and Graphs",
+			"summary": "Understanding quadratic functions, their properties, graphing parabolic curves, analyzing intercepts with axes, and determining the domain and range."
+		},
+		{
+			"id": "m-006",
+			"subject": "Mathematics",
+			"difficulty": "medium",
+			"title": "Trigonometry - Right Angled Triangles",
+			"summary": "Defining trigonometric ratios (sine, cosine, tangent), calculating angles and sides in right-angled triangles, and applying to practical measurement problems."
+		},
+		{
+			"id": "m-007",
+			"subject": "Mathematics",
+			"difficulty": "hard",
+			"title": "Trigonometry - Non-Right Angled Triangles",
+			"summary": "Applying the sine rule, cosine rule, and area rule to solve complex triangles; calculating unknown angles and sides in oblique triangles in various contexts."
+		},
+		{
+			"id": "m-008",
+			"subject": "Mathematics",
+			"difficulty": "hard",
+			"title": "Trigonometric Identities",
+			"summary": "Proving and applying trigonometric identities including Pythagorean identities, sum and difference formulas, and double angle formulas."
+		},
+		{
+			"id": "m-009",
+			"subject": "Mathematics",
+			"difficulty": "medium",
+			"title": "Euclidean Geometry",
+			"summary": "Understanding and proving geometric theorems about circles, triangles, and quadrilaterals; investigating collinearity and congruence in geometric figures."
+		},
+		{
+			"id": "m-010",
+			"subject": "Mathematics",
+			"difficulty": "hard",
+			"title": "Euclidean Geometry - Circle Theorems",
+			"summary": "Proving theorems about angles in circles, tangents, chords, and arcs; applying the tangent-chord angle and cyclic quadrilateral theorems."
+		},
+		{
+			"id": "m-011",
+			"subject": "Mathematics",
+			"difficulty": "medium",
+			"title": "Analytical Geometry",
+			"summary": "Calculating distance between points, midpoint formulas, gradient of lines, and equations of lines; analyzing parallelism and perpendicularity."
+		},
+		{
+			"id": "m-012",
+			"subject": "Mathematics",
+			"difficulty": "hard",
+			"title": "Analytical Geometry - Conic Sections",
+			"summary": "Understanding circles, parabolas, ellipses, and hyperbolas as loci of points; deriving equations and analyzing properties of conic sections."
+		},
+		{
+			"id": "m-013",
+			"subject": "Mathematics",
+			"difficulty": "medium",
+			"title": "Finance and Growth",
+			"summary": "Understanding simple and compound interest, depreciation, inflation, and financial applications including investment and loan calculations."
+		},
+		{
+			"id": "m-014",
+			"subject": "Mathematics",
+			"difficulty": "hard",
+			"title": "Financial Modelling",
+			"summary": "Analyzing complex financial scenarios using exponential functions; modelling population growth, decay, and economic applications with mathematical precision."
+		},
+		{
+			"id": "m-015",
+			"subject": "Mathematics",
+			"difficulty": "medium",
+			"title": "Statistics - Data Handling",
+			"summary": "Collecting, organizing, and representing data; calculating measures of central tendency (mean, median, mode) and spread (variance, standard deviation)."
+		},
+		{
+			"id": "m-016",
+			"subject": "Mathematics",
+			"difficulty": "hard",
+			"title": "Statistics - Regression Analysis",
+			"summary": "Analyzing bivariate data using scatter plots, determining lines of best fit, calculating correlation coefficients, and interpreting statistical relationships."
+		},
+		{
+			"id": "m-017",
+			"subject": "Mathematics",
+			"difficulty": "medium",
+			"title": "Probability - Counting Principles",
+			"summary": "Understanding the fundamental counting principle, permutations, combinations, and applying these to solve probability problems."
+		},
+		{
+			"id": "m-018",
+			"subject": "Mathematics",
+			"difficulty": "hard",
+			"title": "Probability - Independent Events",
+			"summary": "Analyzing independent and dependent events, conditional probability, Venn diagrams, and tree diagrams in probability calculations."
+		},
+		{
+			"id": "m-019",
+			"subject": "Mathematics",
+			"difficulty": "easy",
+			"title": "Functions and Inverse Functions",
+			"summary": "Understanding functions, determining domains and ranges, graphing functions, and finding inverse functions through reflection across y=x line."
+		},
+		{
+			"id": "m-020",
+			"subject": "Mathematics",
+			"difficulty": "medium",
+			"title": "Exponential and Logarithmic Functions",
+			"summary": "Understanding exponential functions, logarithmic functions, properties of logs, and solving exponential and logarithmic equations."
+		},
+		{
+			"id": "m-021",
+			"subject": "Mathematics",
+			"difficulty": "hard",
+			"title": "Calculus - Limits and Continuity",
+			"summary": "Understanding limits of functions, continuity, and the epsilon-delta definition of limits in mathematical analysis."
+		},
+		{
+			"id": "m-022",
+			"subject": "Mathematics",
+			"difficulty": "hard",
+			"title": "Calculus - Differential Calculus",
+			"summary": "Understanding derivatives, rules of differentiation (product, quotient, chain rules), and applying derivatives to curve sketching and optimization."
+		},
+		{
+			"id": "m-023",
+			"subject": "Mathematics",
+			"difficulty": "hard",
+			"title": "Calculus - Applications of Derivatives",
+			"summary": "Applying derivatives to solve rate-of-change problems, inflection points, curve sketching, and practical optimization problems."
+		},
+		{
+			"id": "m-024",
+			"subject": "Mathematics",
+			"difficulty": "hard",
+			"title": "Calculus - Integration",
+			"summary": "Understanding integration as the reverse process of differentiation; calculating indefinite integrals and definite integrals for area calculation."
+		},
+		{
+			"id": "m-025",
+			"subject": "Mathematics",
+			"difficulty": "medium",
+			"title": "Number Systems",
+			"summary": "Understanding different number systems including natural numbers, integers, rational numbers, irrational numbers, and real numbers."
+		},
+		{
+			"id": "m-026",
+			"subject": "Mathematics",
+			"difficulty": "medium",
+			"title": "Rational Expressions",
+			"summary": "Simplifying rational expressions, adding, subtracting, multiplying, and dividing rational algebraic fractions with unlike denominators."
+		},
+		{
+			"id": "m-027",
+			"subject": "Mathematics",
+			"difficulty": "medium",
+			"title": "Simultaneous Equations",
+			"summary": "Solving simultaneous linear equations using substitution, elimination, and graphical methods; applying to word problems."
+		},
+		{
+			"id": "m-028",
+			"subject": "Mathematics",
+			"difficulty": "hard",
+			"title": "Simultaneous Equations with Quadratics",
+			"summary": "Solving simultaneous equations where one is linear and one is quadratic; graphical interpretation and applications."
+		},
+		{
+			"id": "m-029",
+			"subject": "Mathematics",
+			"difficulty": "medium",
+			"title": "Measurement",
+			"summary": "Calculating perimeter, area, and volume of various geometric shapes and solids; applying conversion between units."
+		},
+		{
+			"id": "m-030",
+			"subject": "Mathematics",
+			"difficulty": "hard",
+			"title": "Advanced Measurement Problems",
+			"summary": "Solving complex measurement problems involving composite shapes, surface area of combined solids, and practical applications."
+		},
+		{
+			"id": "m-031",
+			"subject": "Mathematics",
+			"difficulty": "easy",
+			"title": "Mathematical Modelling",
+			"summary": "Translating real-world problems into mathematical models; creating equations and functions to represent practical situations."
+		},
+		{
+			"id": "ps-001",
+			"subject": "Physical Science",
+			"difficulty": "easy",
+			"title": "Units and Measurement",
+			"summary": "Understanding SI units, scientific notation, significant figures, and accuracy and precision in scientific measurements."
+		},
+		{
+			"id": "ps-002",
+			"subject": "Physical Science",
+			"difficulty": "easy",
+			"title": "Kinematics - Motion in One Dimension",
+			"summary": "Understanding displacement, velocity, acceleration, and the equations of motion for uniformly accelerated motion in straight lines."
+		},
+		{
+			"id": "ps-003",
+			"subject": "Physical Science",
+			"difficulty": "medium",
+			"title": "Kinematics - Motion in Two Dimensions",
+			"summary": "Analyzing projectile motion, calculating trajectories, vector components, and solving problems involving motion at an angle."
+		},
+		{
+			"id": "ps-004",
+			"subject": "Physical Science",
+			"difficulty": "medium",
+			"title": "Newton's First Law - Inertia",
+			"summary": "Understanding the concept of inertia, mass, and the tendency of objects to resist changes in their state of motion."
+		},
+		{
+			"id": "ps-005",
+			"subject": "Physical Science",
+			"difficulty": "medium",
+			"title": "Newton's Second Law",
+			"summary": "Understanding the relationship between force, mass, and acceleration (F=ma); applying to solve dynamics problems involving net forces."
+		},
+		{
+			"id": "ps-006",
+			"subject": "Physical Science",
+			"difficulty": "medium",
+			"title": "Newton's Third Law",
+			"summary": "Understanding action-reaction pairs, analyzing forces in interactions between objects, and applying to problems involving multiple bodies."
+		},
+		{
+			"id": "ps-007",
+			"subject": "Physical Science",
+			"difficulty": "medium",
+			"title": "Force Diagrams and Free Body Diagrams",
+			"summary": "Drawing and interpreting free body diagrams, resolving forces into components, and analyzing equilibrium situations."
+		},
+		{
+			"id": "ps-008",
+			"subject": "Physical Science",
+			"difficulty": "hard",
+			"title": "Friction and Inclined Planes",
+			"summary": "Analyzing forces on inclined planes, calculating coefficients of friction, and solving problems involving static and kinetic friction."
+		},
+		{
+			"id": "ps-009",
+			"subject": "Physical Science",
+			"difficulty": "hard",
+			"title": "Newton's Law of Universal Gravitation",
+			"summary": "Understanding gravitational attraction, calculating gravitational force between masses, and applying to problems involving gravitational fields."
+		},
+		{
+			"id": "ps-010",
+			"subject": "Physical Science",
+			"difficulty": "hard",
+			"title": "Momentum and Impulse",
+			"summary": "Understanding linear momentum, impulse, conservation of momentum, and analyzing elastic and inelastic collisions."
+		},
+		{
+			"id": "ps-011",
+			"subject": "Physical Science",
+			"difficulty": "hard",
+			"title": "Work, Energy, and Power",
+			"summary": "Calculating work done by forces, understanding kinetic and potential energy, conservation of mechanical energy, and power."
+		},
+		{
+			"id": "ps-012",
+			"subject": "Physical Science",
+			"difficulty": "medium",
+			"title": "Wave Properties",
+			"summary": "Understanding transverse and longitudinal waves, wave parameters (amplitude, frequency, period, wavelength), and wave equations."
+		},
+		{
+			"id": "ps-013",
+			"subject": "Physical Science",
+			"difficulty": "medium",
+			"title": "Sound Waves",
+			"summary": "Understanding the nature of sound, speed of sound, resonance, beats, and the Doppler effect in sound waves."
+		},
+		{
+			"id": "ps-014",
+			"subject": "Physical Science",
+			"difficulty": "medium",
+			"title": "Light - Reflection and Refraction",
+			"summary": "Understanding laws of reflection, refraction, index of refraction, Snell's law, and total internal reflection in optical phenomena."
+		},
+		{
+			"id": "ps-015",
+			"subject": "Physical Science",
+			"difficulty": "hard",
+			"title": "Lenses and Optical Instruments",
+			"summary": "Understanding convex and concave lenses, image formation, magnification, and applications in optical instruments like microscopes and telescopes."
+		},
+		{
+			"id": "ps-016",
+			"subject": "Physical Science",
+			"difficulty": "hard",
+			"title": "Interference and Diffraction",
+			"summary": "Understanding wave interference, diffraction patterns, Young's double slit experiment, and diffraction gratings in wave optics."
+		},
+		{
+			"id": "ps-017",
+			"subject": "Physical Science",
+			"difficulty": "easy",
+			"title": "Electrostatics - Electric Charge",
+			"summary": "Understanding electric charge, conservation of charge, Coulomb's law, and the quantum nature of charge in matter."
+		},
+		{
+			"id": "ps-018",
+			"subject": "Physical Science",
+			"difficulty": "medium",
+			"title": "Electric Fields",
+			"summary": "Understanding electric fields, field lines, electric potential, potential difference, and the relationship between electric fields and forces."
+		},
+		{
+			"id": "ps-019",
+			"subject": "Physical Science",
+			"difficulty": "medium",
+			"title": "Electric Circuits - Resistance",
+			"summary": "Understanding resistance, Ohm's law, resistivity, and temperature dependence of resistance in conductors."
+		},
+		{
+			"id": "ps-020",
+			"subject": "Physical Science",
+			"difficulty": "medium",
+			"title": "Series and Parallel Circuits",
+			"summary": "Analyzing series and parallel circuits, calculating equivalent resistance, current distribution, and voltage in circuits."
+		},
+		{
+			"id": "ps-021",
+			"subject": "Physical Science",
+			"difficulty": "hard",
+			"title": "Magnetic Fields",
+			"summary": "Understanding magnetic fields, magnetic force on moving charges, right-hand rule, and magnetic field around current-carrying conductors."
+		},
+		{
+			"id": "ps-022",
+			"subject": "Physical Science",
+			"difficulty": "hard",
+			"title": "Electromagnetic Induction",
+			"summary": "Understanding Faraday's law, Lenz's law, induced EMF, generators, and the principle of electromagnetic induction."
+		},
+		{
+			"id": "ps-023",
+			"subject": "Physical Science",
+			"difficulty": "hard",
+			"title": "Alternating Current",
+			"summary": "Understanding AC circuits, RMS values, transformers, and the generation and transmission of alternating current."
+		},
+		{
+			"id": "ps-024",
+			"subject": "Physical Science",
+			"difficulty": "easy",
+			"title": "Modern Physics - Photoelectric Effect",
+			"summary": "Understanding the photoelectric effect, photon energy, work function, and Einstein's explanation of light as quanta."
+		},
+		{
+			"id": "ps-025",
+			"subject": "Physical Science",
+			"difficulty": "hard",
+			"title": "Atomic Structure",
+			"summary": "Understanding atomic models, Bohr model, energy levels, and the emission and absorption spectra of atoms."
+		},
+		{
+			"id": "ps-026",
+			"subject": "Physical Science",
+			"difficulty": "hard",
+			"title": "Radioactivity",
+			"summary": "Understanding alpha, beta, and gamma radiation, nuclear decay equations, half-life, and applications in medicine and dating."
+		},
+		{
+			"id": "ps-027",
+			"subject": "Physical Science",
+			"difficulty": "easy",
+			"title": "Matter - States and Kinetic Theory",
+			"summary": "Understanding the three states of matter, kinetic theory, phase changes, and the behavior of gases (pressure, volume, temperature)."
+		},
+		{
+			"id": "ps-028",
+			"subject": "Physical Science",
+			"difficulty": "medium",
+			"title": "Ideal Gases and Gas Laws",
+			"summary": "Understanding ideal gas law, Boyle's law, Charles's law, Avogadro's law, and the kinetic molecular theory of gases."
+		},
+		{
+			"id": "ps-029",
+			"subject": "Physical Science",
+			"difficulty": "medium",
+			"title": "Heat and Temperature",
+			"summary": "Understanding heat transfer, specific heat capacity, calorimetry, and the first law of thermodynamics in energy conservation."
+		},
+		{
+			"id": "ps-030",
+			"subject": "Physical Science",
+			"difficulty": "hard",
+			"title": "Thermodynamics",
+			"summary": "Understanding heat engines, entropy, the second and third laws of thermodynamics, and the efficiency of heat engines."
+		},
+		{
+			"id": "ls-001",
+			"subject": "Life Sciences",
+			"difficulty": "easy",
+			"title": "Chemistry of Life - Biomolecules",
+			"summary": "Understanding carbohydrates, proteins, lipids, and nucleic acids as the building blocks of life with their molecular structures and functions."
+		},
+		{
+			"id": "ls-002",
+			"subject": "Life Sciences",
+			"difficulty": "easy",
+			"title": "Water and Inorganic Compounds",
+			"summary": "Understanding the role of water, minerals, and ions in biological systems; their importance in cellular processes."
+		},
+		{
+			"id": "ls-003",
+			"subject": "Life Sciences",
+			"difficulty": "easy",
+			"title": "Cell Structure and Function",
+			"summary": "Understanding the structure and function of organelles in prokaryotic and eukaryotic cells; the cell as the basic unit of life."
+		},
+		{
+			"id": "ls-004",
+			"subject": "Life Sciences",
+			"difficulty": "medium",
+			"title": "Cell Membrane Structure",
+			"summary": "Understanding the fluid mosaic model of the cell membrane, transport proteins, and membrane transport mechanisms."
+		},
+		{
+			"id": "ls-005",
+			"subject": "Life Sciences",
+			"difficulty": "medium",
+			"title": "Movement Across Cell Membranes",
+			"summary": "Understanding diffusion, osmosis, facilitated diffusion, active transport, and endocytosis/exocytosis across membranes."
+		},
+		{
+			"id": "ls-006",
+			"subject": "Life Sciences",
+			"difficulty": "medium",
+			"title": "Cell Division - Mitosis",
+			"summary": "Understanding the cell cycle, phases of mitosis, chromosome structure, and the process of cell division in somatic cells."
+		},
+		{
+			"id": "ls-007",
+			"subject": "Life Sciences",
+			"difficulty": "medium",
+			"title": "Cell Division - Meiosis",
+			"summary": "Understanding meiosis, reduction division, gamete formation, and the processes that generate genetic diversity through crossing over."
+		},
+		{
+			"id": "ls-008",
+			"subject": "Life Sciences",
+			"difficulty": "easy",
+			"title": "Plant and Animal Tissues",
+			"summary": "Understanding epithelial, connective, muscle, and nerve tissues in animals; and meristematic, permanent tissues in plants."
+		},
+		{
+			"id": "ls-009",
+			"subject": "Life Sciences",
+			"difficulty": "medium",
+			"title": "Plant Organs and Systems",
+			"summary": "Understanding roots, stems, leaves as organs; understanding plant transport systems (xylem and phloem) and their functions."
+		},
+		{
+			"id": "ls-010",
+			"subject": "Life Sciences",
+			"difficulty": "medium",
+			"title": "Animal Support Systems",
+			"summary": "Understanding the human skeletal system, types of joints, muscles, and the mechanics of movement in animals."
+		},
+		{
+			"id": "ls-011",
+			"subject": "Life Sciences",
+			"difficulty": "medium",
+			"title": "Nutrition in Plants",
+			"summary": "Understanding photosynthesis, light-dependent and light-independent reactions, factors affecting photosynthesis, and plant nutrition."
+		},
+		{
+			"id": "ls-012",
+			"subject": "Life Sciences",
+			"difficulty": "medium",
+			"title": "Animal Nutrition",
+			"summary": "Understanding the human digestive system, mechanical and chemical digestion, nutrient absorption, and the alimentary canal."
+		},
+		{
+			"id": "ls-013",
+			"subject": "Life Sciences",
+			"difficulty": "medium",
+			"title": "Energy - Cellular Respiration",
+			"summary": "Understanding glycolysis, Krebs cycle, electron transport chain, anaerobic respiration, and the ATP production in cells."
+		},
+		{
+			"id": "ls-014",
+			"subject": "Life Sciences",
+			"difficulty": "medium",
+			"title": "Gas Exchange in Plants",
+			"summary": "Understanding stomatal structure, gas exchange through stomata, and the mechanisms of transpiration and photosynthesis in plants."
+		},
+		{
+			"id": "ls-015",
+			"subject": "Life Sciences",
+			"difficulty": "medium",
+			"title": "Gas Exchange in Animals",
+			"summary": "Understanding the respiratory system in humans, gas exchange in lungs, partial pressures, and oxygen transport in blood."
+		},
+		{
+			"id": "ls-016",
+			"subject": "Life Sciences",
+			"difficulty": "medium",
+			"title": "Excretion in Humans",
+			"summary": "Understanding the excretory system, kidney function, urine formation, dialysis, and homeostasis of water and salts."
+		},
+		{
+			"id": "ls-017",
+			"subject": "Life Sciences",
+			"difficulty": "easy",
+			"title": "Transport Systems in Plants",
+			"summary": "Understanding transpiration pull, cohesion-tension theory, root pressure, and the transport of water and minerals in plants."
+		},
+		{
+			"id": "ls-018",
+			"subject": "Life Sciences",
+			"difficulty": "medium",
+			"title": "Circulatory System in Animals",
+			"summary": "Understanding the heart, blood vessels, blood composition, double circulation, and the closed circulatory system."
+		},
+		{
+			"id": "ls-019",
+			"subject": "Life Sciences",
+			"difficulty": "medium",
+			"title": "Diversity and Classification",
+			"summary": "Understanding the five kingdoms, taxonomic hierarchy, binomial nomenclature, and the principles of biological classification."
+		},
+		{
+			"id": "ls-020",
+			"subject": "Life Sciences",
+			"difficulty": "easy",
+			"title": "Biodiversity - Microorganisms",
+			"summary": "Understanding viruses, bacteria, fungi, their structure, reproduction, and roles in decomposition and disease."
+		},
+		{
+			"id": "ls-021",
+			"subject": "Life Sciences",
+			"difficulty": "easy",
+			"title": "Biodiversity - Plants",
+			"summary": "Understanding seedless plants, gymnosperms, angiosperms, and the evolution of reproductive structures in plants."
+		},
+		{
+			"id": "ls-022",
+			"subject": "Life Sciences",
+			"difficulty": "easy",
+			"title": "Reproduction in Plants",
+			"summary": "Understanding sexual and asexual reproduction in plants, flower structure, pollination, and seed dispersal."
+		},
+		{
+			"id": "ls-023",
+			"subject": "Life Sciences",
+			"difficulty": "medium",
+			"title": "Human Reproduction",
+			"summary": "Understanding the reproductive system, gamete production, fertilization, embryonic development, and birth."
+		},
+		{
+			"id": "ls-024",
+			"subject": "Life Sciences",
+			"difficulty": "medium",
+			"title": "Population Ecology",
+			"summary": "Understanding population dynamics, carrying capacity, density-dependent and independent factors, and population growth."
+		},
+		{
+			"id": "ls-025",
+			"subject": "Life Sciences",
+			"difficulty": "medium",
+			"title": "Ecosystems and Communities",
+			"summary": "Understanding biotic and abiotic factors, food webs, energy flow, trophic levels, and ecosystem dynamics."
+		},
+		{
+			"id": "ls-026",
+			"subject": "Life Sciences",
+			"difficulty": "hard",
+			"title": "DNA Structure and Replication",
+			"summary": "Understanding the double helix structure of DNA, base pairing rules, and the process of DNA replication."
+		},
+		{
+			"id": "ls-027",
+			"subject": "Life Sciences",
+			"difficulty": "hard",
+			"title": "Protein Synthesis",
+			"summary": "Understanding transcription, translation, genetic code, and the process of protein synthesis in cells (DNA to RNA to protein)."
+		},
+		{
+			"id": "ls-028",
+			"subject": "Life Sciences",
+			"difficulty": "hard",
+			"title": "Genetics and Inheritance",
+			"summary": "Understanding Mendel's laws, dominant and recessive alleles, Punnett squares, and patterns of inheritance in families."
+		},
+		{
+			"id": "ls-029",
+			"subject": "Life Sciences",
+			"difficulty": "hard",
+			"title": "Evolution - Theory of Natural Selection",
+			"summary": "Understanding Darwin's theory of evolution, natural selection, adaptation, speciation, and evidence for evolution."
+		},
+		{
+			"id": "ls-030",
+			"subject": "Life Sciences",
+			"difficulty": "hard",
+			"title": "Human Evolution",
+			"summary": "Understanding Homo species, hominid evolution, the fossil record, and the timeline of human evolutionary history."
+		},
+		{
+			"id": "g-001",
+			"subject": "Geography",
+			"difficulty": "easy",
+			"title": "Geographical Skills and Techniques",
+			"summary": "Understanding map reading, contour patterns, scale, distance calculation, and the interpretation of topographic maps."
+		},
+		{
+			"id": "g-002",
+			"subject": "Geography",
+			"difficulty": "easy",
+			"title": "The Atmosphere - Composition and Structure",
+			"summary": "Understanding the layers of the atmosphere, composition of air, atmospheric pressure, and the structure of the atmosphere."
+		},
+		{
+			"id": "g-003",
+			"subject": "Geography",
+			"difficulty": "medium",
+			"title": "Earth's Energy Balance",
+			"summary": "Understanding incoming solar radiation, outgoing terrestrial radiation, the greenhouse effect, and global energy balance."
+		},
+		{
+			"id": "g-004",
+			"subject": "Geography",
+			"difficulty": "medium",
+			"title": "Global Air Circulation",
+			"summary": "Understanding Hadley cells, Ferrel cells, polar cells, trade winds, westerlies, and the general circulation of the atmosphere."
+		},
+		{
+			"id": "g-005",
+			"subject": "Geography",
+			"difficulty": "medium",
+			"title": "Africa's Weather and Climate",
+			"summary": "Understanding Africa's climatic regions, seasonal weather patterns, tropical climate, and subtropical climate zones."
+		},
+		{
+			"id": "g-006",
+			"subject": "Geography",
+			"difficulty": "medium",
+			"title": "Droughts and Desertification",
+			"summary": "Understanding causes of drought, desertification processes, impacts on agriculture, and mitigation strategies."
+		},
+		{
+			"id": "g-007",
+			"subject": "Geography",
+			"difficulty": "medium",
+			"title": "Geomorphology - Rocks and Landforms",
+			"summary": "Understanding rock types (igneous, sedimentary, metamorphic), geological time, and the formation of landforms."
+		},
+		{
+			"id": "g-008",
+			"subject": "Geography",
+			"difficulty": "medium",
+			"title": "Plate Tectonics",
+			"summary": "Understanding plate boundaries, continental drift, sea-floor spreading, earthquakes, volcanoes, and tectonic activity."
+		},
+		{
+			"id": "g-009",
+			"subject": "Geography",
+			"difficulty": "hard",
+			"title": "Folding and Faulting",
+			"summary": "Understanding compressional and tensional forces, types of folds, faults, and the formation of mountain ranges."
+		},
+		{
+			"id": "g-010",
+			"subject": "Geography",
+			"difficulty": "hard",
+			"title": "Slopes and Mass Movements",
+			"summary": "Understanding slope formation, mass movement processes (landslides, rockfalls, mudflows), and slope stability factors."
+		},
+		{
+			"id": "g-011",
+			"subject": "Geography",
+			"difficulty": "medium",
+			"title": "Population - Structure and Growth",
+			"summary": "Understanding population composition, age and sex structure, population growth, demographic transition, and population pyramids."
+		},
+		{
+			"id": "g-012",
+			"subject": "Geography",
+			"difficulty": "medium",
+			"title": "Population Movement",
+			"summary": "Understanding migration patterns, push and pull factors, rural-urban migration, and impacts on settlements."
+		},
+		{
+			"id": "g-013",
+			"subject": "Geography",
+			"difficulty": "medium",
+			"title": "Urbanization",
+			"summary": "Understanding urban growth, settlement hierarchy, urban functions, and the development of urban areas in South Africa."
+		},
+		{
+			"id": "g-014",
+			"subject": "Geography",
+			"difficulty": "easy",
+			"title": "Water Resources",
+			"summary": "Understanding water distribution, freshwater resources, water scarcity, and the global water cycle."
+		},
+		{
+			"id": "g-015",
+			"subject": "Geography",
+			"difficulty": "medium",
+			"title": "Oceans and Coasts",
+			"summary": "Understanding ocean currents, wave dynamics, coastal erosion, ocean resources, and marine conservation."
+		},
+		{
+			"id": "g-016",
+			"subject": "Geography",
+			"difficulty": "medium",
+			"title": "Flooding and Water Management",
+			"summary": "Understanding flood causes, floodplains, flood management strategies, and the impact of flooding on human settlement."
+		},
+		{
+			"id": "g-017",
+			"subject": "Geography",
+			"difficulty": "medium",
+			"title": "Development Geography",
+			"summary": "Understanding development indicators, development theories, factors affecting development, and global inequalities."
+		},
+		{
+			"id": "g-018",
+			"subject": "Geography",
+			"difficulty": "hard",
+			"title": "Resources and Sustainability",
+			"summary": "Understanding renewable and non-renewable resources, sustainable resource use, and environmental impact assessment."
+		},
+		{
+			"id": "g-019",
+			"subject": "Geography",
+			"difficulty": "hard",
+			"title": "Soil and Soil Erosion",
+			"summary": "Understanding soil formation, soil profiles, soil erosion causes, and soil conservation strategies."
+		},
+		{
+			"id": "g-020",
+			"subject": "Geography",
+			"difficulty": "hard",
+			"title": "Energy Sources",
+			"summary": "Understanding conventional energy (coal, oil, gas), renewable energy (solar, wind, hydro), and energy transitions."
+		},
+		{
+			"id": "g-021",
+			"subject": "Geography",
+			"difficulty": "medium",
+			"title": "Geographical Information Systems (GIS)",
+			"summary": "Understanding GIS technology, spatial data, remote sensing, and the application of GIS in geographical analysis."
+		},
+		{
+			"id": "g-022",
+			"subject": "Geography",
+			"difficulty": "medium",
+			"title": "Mapwork and Photo Interpretation",
+			"summary": "Understanding aerial photograph interpretation, orthophoto maps, map symbols, and grid references."
+		},
+		{
+			"id": "g-023",
+			"subject": "Geography",
+			"difficulty": "easy",
+			"title": "Rural Settlement Patterns",
+			"summary": "Understanding dispersed, nucleated, and linear settlement patterns; factors influencing rural settlement location."
+		},
+		{
+			"id": "g-024",
+			"subject": "Geography",
+			"difficulty": "medium",
+			"title": "Urban Settlement Patterns",
+			"summary": "Understanding urban morphology, residential areas, CBD, industrial zones, and the spatial organization of cities."
+		},
+		{
+			"id": "g-025",
+			"subject": "Geography",
+			"difficulty": "medium",
+			"title": "Economic Geography of South Africa",
+			"summary": "Understanding South Africa's economic sectors, agriculture, mining, manufacturing, and tertiary sector."
+		},
+		{
+			"id": "g-026",
+			"subject": "Geography",
+			"difficulty": "medium",
+			"title": "Climate Change",
+			"summary": "Understanding global warming, causes and consequences, climate change evidence, and international responses."
+		},
+		{
+			"id": "g-027",
+			"subject": "Geography",
+			"difficulty": "hard",
+			"title": "Urban Heat Islands",
+			"summary": "Understanding urban microclimates, causes and effects of heat islands, and strategies to reduce heat island effects."
+		},
+		{
+			"id": "g-028",
+			"subject": "Geography",
+			"difficulty": "hard",
+			"title": "Drainage Systems",
+			"summary": "Understanding drainage basins, river systems, fluvial processes, and the relationship between landscape and water flow."
+		},
+		{
+			"id": "g-029",
+			"subject": "Geography",
+			"difficulty": "medium",
+			"title": "Weather Maps and Synoptic Charts",
+			"summary": "Understanding weather symbols, reading synoptic charts, fronts, and weather forecasting techniques."
+		},
+		{
+			"id": "g-030",
+			"subject": "Geography",
+			"difficulty": "hard",
+			"title": "Environmental Management",
+			"summary": "Understanding environmental impact assessment, conservation strategies, protected areas, and sustainable development."
+		},
+		{
+			"id": "h-001",
+			"subject": "History",
+			"difficulty": "easy",
+			"title": "The World Around 1600",
+			"summary": "Understanding global societies around 1600, including European, African, Asian, and American civilizations and their interactions."
+		},
+		{
+			"id": "h-002",
+			"subject": "History",
+			"difficulty": "easy",
+			"title": "European Expansion 15th-18th Century",
+			"summary": "Understanding European exploration, the age of discovery, colonization motives, and the impact on indigenous populations."
+		},
+		{
+			"id": "h-003",
+			"subject": "History",
+			"difficulty": "medium",
+			"title": "The French Revolution",
+			"summary": "Understanding the causes, events, and consequences of the French Revolution; the rise of nationalism and democracy."
+		},
+		{
+			"id": "h-004",
+			"subject": "History",
+			"difficulty": "medium",
+			"title": "Transformed Southern Africa 1750-1850",
+			"summary": "Understanding shifts in Southern Africa, the Trek, changing power relations, and the impact of colonial expansion."
+		},
+		{
+			"id": "h-005",
+			"subject": "History",
+			"difficulty": "medium",
+			"title": "Colonial Expansion After 1750",
+			"summary": "Understanding British colonial ambitions, the Anglo-Zulu War, mineral discoveries, and the scramble for Africa."
+		},
+		{
+			"id": "h-006",
+			"subject": "History",
+			"difficulty": "medium",
+			"title": "The South African War 1899-1902",
+			"summary": "Understanding the causes, events, and consequences of the South African War; concentration camps and the path to Union."
+		},
+		{
+			"id": "h-007",
+			"subject": "History",
+			"difficulty": "medium",
+			"title": "Union of South Africa 1910",
+			"summary": "Understanding the formation of the Union of South Africa, the composition of provinces, and the politics of the new state."
+		},
+		{
+			"id": "h-008",
+			"subject": "History",
+			"difficulty": "medium",
+			"title": "Communism in Russia 1900-1940",
+			"summary": "Understanding the Russian Revolution, the rise of Bolshevism, Lenin's policies, and Stalin's consolidation of power."
+		},
+		{
+			"id": "h-009",
+			"subject": "History",
+			"difficulty": "medium",
+			"title": "Capitalism in the USA 1900-1940",
+			"summary": "Understanding American industrialization, the Great Depression, New Deal policies, and the rise of consumer culture."
+		},
+		{
+			"id": "h-010",
+			"subject": "History",
+			"difficulty": "medium",
+			"title": "Ideas of Race in the 20th Century",
+			"summary": "Understanding the evolution of racial ideologies, scientific racism, segregation, and the global impact of racial theories."
+		},
+		{
+			"id": "h-011",
+			"subject": "History",
+			"difficulty": "medium",
+			"title": "Nationalism in South Africa",
+			"summary": "Understanding the rise of Afrikaner nationalism, African nationalism, and the political movements shaping South Africa."
+		},
+		{
+			"id": "h-012",
+			"subject": "History",
+			"difficulty": "hard",
+			"title": "Apartheid in South Africa 1948-1960s",
+			"summary": "Understanding the codification of apartheid, pass laws, Group Areas Act, and the machinery of apartheid legislation."
+		},
+		{
+			"id": "h-013",
+			"subject": "History",
+			"difficulty": "hard",
+			"title": "Resistance to Apartheid",
+			"summary": "Understanding resistance movements, ANC, PAC, Sharpeville, and the armed struggle against apartheid."
+		},
+		{
+			"id": "h-014",
+			"subject": "History",
+			"difficulty": "medium",
+			"title": "The Cold War",
+			"summary": "Understanding the Cold War origins, nuclear weapons, proxy wars, and the ideological conflict between East and West."
+		},
+		{
+			"id": "h-015",
+			"subject": "History",
+			"difficulty": "medium",
+			"title": "Independent Africa",
+			"summary": "Understanding African independence movements, decolonization, the end of colonial rule, and post-colonial challenges."
+		},
+		{
+			"id": "h-016",
+			"subject": "History",
+			"difficulty": "hard",
+			"title": "Civil Society Protests 1950s-1990s",
+			"summary": "Understanding global civil rights movements, anti-apartheid movements, transnational activism, and people's power."
+		},
+		{
+			"id": "h-017",
+			"subject": "History",
+			"difficulty": "hard",
+			"title": "Civil Resistance in South Africa 1970s-1980s",
+			"summary": "Understanding the 1976 Soweto uprising, consumer boycotts, the death of Hendrik Verwoerd, and mass mobilization."
+		},
+		{
+			"id": "h-018",
+			"subject": "History",
+			"difficulty": "hard",
+			"title": "The Coming of Democracy",
+			"summary": "Understanding Negotiated Settlement, CODESA, the interim constitution, and the transition to democracy in South Africa."
+		},
+		{
+			"id": "h-019",
+			"subject": "History",
+			"difficulty": "hard",
+			"title": "Dealing with the Past",
+			"summary": "Understanding the Truth and Reconciliation Commission, amnesty, reparations, and reconciliation processes in post-apartheid South Africa."
+		},
+		{
+			"id": "h-020",
+			"subject": "History",
+			"difficulty": "hard",
+			"title": "The New Global Order 1989-Present",
+			"summary": "Understanding the end of the Cold War, 9/11, the War on Terror, and contemporary global geopolitics."
+		},
+		{
+			"id": "h-021",
+			"subject": "History",
+			"difficulty": "easy",
+			"title": "Nationalism in the Middle East",
+			"summary": "Understanding the rise of nationalism in the Middle East, the fall of the Ottoman Empire, and modern Middle Eastern politics."
+		},
+		{
+			"id": "h-022",
+			"subject": "History",
+			"difficulty": "medium",
+			"title": "Pan-Africanism",
+			"summary": "Understanding Pan-African movements, the back-toAfrica movement, and the development of African unity ideology."
+		},
+		{
+			"id": "h-023",
+			"subject": "History",
+			"difficulty": "medium",
+			"title": "World War I",
+			"summary": "Understanding the causes, events, and consequences of the First World War; trench warfare and the Treaty of Versailles."
+		},
+		{
+			"id": "h-024",
+			"subject": "History",
+			"difficulty": "medium",
+			"title": "World War II",
+			"summary": "Understanding the causes, events, and consequences of the Second World War; the Holocaust and post-war order."
+		},
+		{
+			"id": "h-025",
+			"subject": "History",
+			"difficulty": "easy",
+			"title": "Historiography and Sources",
+			"summary": "Understanding historical methodology, primary and secondary sources, and the interpretation of history."
+		},
+		{
+			"id": "h-026",
+			"subject": "History",
+			"difficulty": "medium",
+			"title": "Oral History",
+			"summary": "Understanding oral traditions, memory and testimony in history, and the preservation of community memory."
+		},
+		{
+			"id": "h-027",
+			"subject": "History",
+			"difficulty": "medium",
+			"title": "Heritage and Conservation",
+			"summary": "Understanding heritage sites, museums, the preservation of history, and the commemoration of historical events."
+		},
+		{
+			"id": "h-028",
+			"subject": "History",
+			"difficulty": "hard",
+			"title": "The United Nations",
+			"summary": "Understanding the formation, structure, and role of the UN in international relations and conflict resolution."
+		},
+		{
+			"id": "h-029",
+			"subject": "History",
+			"difficulty": "easy",
+			"title": "Media and History",
+			"summary": "Understanding the role of media in shaping historical narratives, propaganda, and the representation of history."
+		},
+		{
+			"id": "h-030",
+			"subject": "History",
+			"difficulty": "hard",
+			"title": "Human Rights in History",
+			"summary": "Understanding the evolution of human rights discourse, declarations, and the global human rights movement."
+		},
+		{
+			"id": "ehl-001",
+			"subject": "English Home Language",
+			"difficulty": "easy",
+			"title": "Listening and Speaking Skills",
+			"summary": "Developing active listening skills, effective verbal communication, oral presentations, and public speaking techniques."
+		},
+		{
+			"id": "ehl-002",
+			"subject": "English Home Language",
+			"difficulty": "easy",
+			"title": "Reading for Comprehension",
+			"summary": "Developing strategies for understanding, interpreting, and analyzing written texts across various genres and formats."
+		},
+		{
+			"id": "ehl-003",
+			"subject": "English Home Language",
+			"difficulty": "medium",
+			"title": "Summary Writing",
+			"summary": "Understanding how to identify main ideas, condense information, and write clear, coherent summaries."
+		},
+		{
+			"id": "ehl-004",
+			"subject": "English Home Language",
+			"difficulty": "medium",
+			"title": "Essay Writing - Types and Structure",
+			"summary": "Understanding argumentative, discursive, reflective, and narrative essay types; planning and structuring essays effectively."
+		},
+		{
+			"id": "ehl-005",
+			"subject": "English Home Language",
+			"difficulty": "medium",
+			"title": "Transactional Writing",
+			"summary": "Writing formal letters, emails, curriculum vitae, application letters, and other transactional text types."
+		},
+		{
+			"id": "ehl-006",
+			"subject": "English Home Language",
+			"difficulty": "medium",
+			"title": "Language Structures - Parts of Speech",
+			"summary": "Understanding noun types, verb forms, adjectives, adverbs, prepositions, conjunctions, and their functions in sentences."
+		},
+		{
+			"id": "ehl-007",
+			"subject": "English Home Language",
+			"difficulty": "medium",
+			"title": "Sentence Construction",
+			"summary": "Understanding simple, compound, complex, and compound-complex sentences; sentence combining and varying sentence structure."
+		},
+		{
+			"id": "ehl-008",
+			"subject": "English Home Language",
+			"difficulty": "medium",
+			"title": "Punctuation and Mechanics",
+			"summary": "Understanding comma rules, colon and semicolon usage, apostrophes, quotation marks, and punctuation for clarity."
+		},
+		{
+			"id": "ehl-009",
+			"subject": "English Home Language",
+			"difficulty": "easy",
+			"title": "Poetry Analysis - Form",
+			"summary": "Understanding poetic forms, stanza structure, line and stanza breaks, and the formal features of poetry."
+		},
+		{
+			"id": "ehl-010",
+			"subject": "English Home Language",
+			"difficulty": "medium",
+			"title": "Poetry Analysis - Figurative Language",
+			"summary": "Understanding metaphor, simile, personification, symbolism, and other figurative language devices in poetry."
+		},
+		{
+			"id": "ehl-011",
+			"subject": "English Home Language",
+			"difficulty": "medium",
+			"title": "Novel Study - Themes",
+			"summary": "Identifying, analyzing, and discussing thematic concerns in novels, including social, political, and personal themes."
+		},
+		{
+			"id": "ehl-012",
+			"subject": "English Home Language",
+			"difficulty": "medium",
+			"title": "Novel Study - Character",
+			"summary": "Analyzing character development, flat vs. round characters, static vs. dynamic characters, and character motivation."
+		},
+		{
+			"id": "ehl-013",
+			"subject": "English Home Language",
+			"difficulty": "medium",
+			"title": "Drama Analysis",
+			"summary": "Understanding dramatic structure, stage directions, dramatic conventions, and the analysis of plays."
+		},
+		{
+			"id": "ehl-014",
+			"subject": "English Home Language",
+			"difficulty": "hard",
+			"title": "Literature - Critical Approaches",
+			"summary": "Applying literary theories including feminist, Marxist, and post-colonial criticism to literary analysis."
+		},
+		{
+			"id": "ehl-015",
+			"subject": "English Home Language",
+			"difficulty": "easy",
+			"title": "Vocabulary Development",
+			"summary": "Building academic and subject-specific vocabulary through context clues, word roots, prefixes, and suffixes."
+		},
+		{
+			"id": "ehl-016",
+			"subject": "English Home Language",
+			"difficulty": "medium",
+			"title": "Spelling and Proofreading",
+			"summary": "Developing spelling strategies, common spelling rules, and effective proofreading techniques."
+		},
+		{
+			"id": "ehl-017",
+			"subject": "English Home Language",
+			"difficulty": "medium",
+			"title": "Active and Passive Voice",
+			"summary": "Understanding the differences between active and passive voice; when to use each for clarity and emphasis."
+		},
+		{
+			"id": "ehl-018",
+			"subject": "English Home Language",
+			"difficulty": "medium",
+			"title": "Direct and Indirect Speech",
+			"summary": "Converting between direct and indirect speech; understanding reporting verbs and tense changes in reported speech."
+		},
+		{
+			"id": "ehl-019",
+			"subject": "English Home Language",
+			"difficulty": "medium",
+			"title": "Antonyms and Synonyms",
+			"summary": "Understanding word relationships, expanding vocabulary through synonyms, and using antonyms for contrast."
+		},
+		{
+			"id": "ehl-020",
+			"subject": "English Home Language",
+			"difficulty": "medium",
+			"title": "Idioms and Phrases",
+			"summary": "Understanding common English idioms, colloquial expressions, and their appropriate use in context."
+		},
+		{
+			"id": "ehl-021",
+			"subject": "English Home Language",
+			"difficulty": "hard",
+			"title": "Critical Language Awareness",
+			"summary": "Analyzing language for bias, propaganda, stereotyping, and the power of language to influence."
+		},
+		{
+			"id": "ehl-022",
+			"subject": "English Home Language",
+			"difficulty": "easy",
+			"title": "Visual Literacy",
+			"summary": "Analyzing advertisements, photographs, cartoons, and other visual texts for meaning and persuasive techniques."
+		},
+		{
+			"id": "ehl-023",
+			"subject": "English Home Language",
+			"difficulty": "medium",
+			"title": "Media Studies - News Reporting",
+			"summary": "Understanding news values, objectivity, bias, and the role of media in shaping public opinion."
+		},
+		{
+			"id": "ehl-024",
+			"subject": "English Home Language",
+			"difficulty": "medium",
+			"title": "Advertising and Persuasion",
+			"summary": "Understanding advertising techniques, persuasion strategies, and the rhetoric of advertising."
+		},
+		{
+			"id": "ehl-025",
+			"subject": "English Home Language",
+			"difficulty": "medium",
+			"title": "Writing Process",
+			"summary": "Understanding the stages of writing - planning, drafting, revising, editing, and publishing for effective communication."
+		},
+		{
+			"id": "ehl-026",
+			"subject": "English Home Language",
+			"difficulty": "hard",
+			"title": "Creative Writing",
+			"summary": "Developing original creative writing including short stories, poetry, and personal narratives with creative techniques."
+		},
+		{
+			"id": "ehl-027",
+			"subject": "English Home Language",
+			"difficulty": "hard",
+			"title": "Literary Terms and Devices",
+			"summary": "Mastering essential literary terminology including allegory, irony, symbolism, archetype, and narrative techniques."
+		},
+		{
+			"id": "ehl-028",
+			"subject": "English Home Language",
+			"difficulty": "medium",
+			"title": "Text Types - Informative",
+			"summary": "Writing factual, informative texts including reports, articles, and explanations with clarity and accuracy."
+		},
+		{
+			"id": "ehl-029",
+			"subject": "English Home Language",
+			"difficulty": "medium",
+			"title": "Text Types - Persuasive",
+			"summary": "Writing persuasive texts including advertisements, speeches, and opinion pieces with effective rhetoric."
+		},
+		{
+			"id": "ehl-030",
+			"subject": "English Home Language",
+			"difficulty": "hard",
+			"title": "Comprehensive Literature Preparation",
+			"summary": "Integrating all literary analysis skills to prepare for Grade 12 literature examination across poetry, prose, and drama."
+		},
+		{
+			"id": "afl-001",
+			"subject": "Afrikaans Home Language",
+			"difficulty": "easy",
+			"title": "Luister en Praat Vaardighede",
+			"summary": "Ontwikkel aktiewe luistervaardighede, effektiewe mondelinge kommunikasie, en openbare praatjies."
+		},
+		{
+			"id": "afl-002",
+			"subject": "Afrikaans Home Language",
+			"difficulty": "easy",
+			"title": "Lees vir Begrip",
+			"summary": "Ontwikkel strategieë vir die verstaan, interpretasie, en analise van geskrewe tekste in verskillende genres."
+		},
+		{
+			"id": "afl-003",
+			"subject": "Afrikaans Home Language",
+			"difficulty": "medium",
+			"title": "Opsomming Skryf",
+			"summary": "Leer hoe om hoofidees te identifiseer, inligting saam te trek, en duidelike opsomminge te skryf."
+		},
+		{
+			"id": "afl-004",
+			"subject": "Afrikaans Home Language",
+			"difficulty": "medium",
+			"title": "Opstel Skrywing",
+			"summary": "Begrip van argumentatiewe, diskursiewe, reflektiewe, en narratiewe opstel tipes; beplanning en struktuur."
+		},
+		{
+			"id": "afl-005",
+			"subject": "Afrikaans Home Language",
+			"difficulty": "medium",
+			"title": "Transaksionele Skryfwerk",
+			"summary": "Skryf formele briewe, e-pos, aansoekbriewe, en ander transaksionele teks tipes."
+		},
+		{
+			"id": "afl-006",
+			"subject": "Afrikaans Home Language",
+			"difficulty": "medium",
+			"title": "Woordsoorte",
+			"summary": "Begrip van selfstandige naamwoorde, werkwoorde, byvoeglike naamwoorde, bywoorde, en hul funksies."
+		},
+		{
+			"id": "afl-007",
+			"subject": "Afrikaans Home Language",
+			"difficulty": "medium",
+			"title": "Sin Konstruksie",
+			"summary": "Begrip van enkelvoudige, saamgestelde, en kompleks sinne; sinstruktuur variasie vir effektiewe skryfwerk."
+		},
+		{
+			"id": "afl-008",
+			"subject": "Afrikaans Home Language",
+			"difficulty": "medium",
+			"title": "Leestekens",
+			"summary": "Begrip van kommareëls, kolon en kommagebruik, aanhalingstekens, en leestekens vir duidelikheid."
+		},
+		{
+			"id": "afl-009",
+			"subject": "Afrikaans Home Language",
+			"difficulty": "easy",
+			"title": "Poësie Analise - Vorm",
+			"summary": "Begrip vanpoëtiese vorme, strofes struktuur, en die formele kenmerke van poësie."
+		},
+		{
+			"id": "afl-010",
+			"subject": "Afrikaans Home Language",
+			"difficulty": "medium",
+			"title": "Poësie Analise - Figuurlike Taal",
+			"summary": "Begrip van metafoor, simbool, personifikasie, en ander figuurlike taalwyses in poësie."
+		},
+		{
+			"id": "afl-011",
+			"subject": "Afrikaans Home Language",
+			"difficulty": "medium",
+			"title": "Roman Studie - Temas",
+			"summary": "Identifiseer, analiseer, en bespreek tematiese kwessies in romans, insluitend sosiale en persoonlike temas."
+		},
+		{
+			"id": "afl-012",
+			"subject": "Afrikaans Home Language",
+			"difficulty": "medium",
+			"title": "Roman Studie - Karakter",
+			"summary": "Analise van karakter ontwikkeling, plat vs. ronde karakters, en karakter motivering."
+		},
+		{
+			"id": "afl-013",
+			"subject": "Afrikaans Home Language",
+			"difficulty": "medium",
+			"title": "Drama Analise",
+			"summary": "Begrip van dramatisese struktuur, verhoogaanwysings, en die analise van dramas."
+		},
+		{
+			"id": "afl-014",
+			"subject": "Afrikaans Home Language",
+			"difficulty": "hard",
+			"title": "Kritiese Benaderings",
+			"summary": "Toepassing van literêre teorieë insluitend feministiese en post-koloniale kritiek."
+		},
+		{
+			"id": "afl-015",
+			"subject": "Afrikaans Home Language",
+			"difficulty": "easy",
+			"title": "Woordeskat Ontwikkeling",
+			"summary": "Bou akademiese en vakspesifieke woordeskat deur konteks leidrade, woordwortels, en voorvoegsels."
+		},
+		{
+			"id": "afl-016",
+			"subject": "Afrikaans Home Language",
+			"difficulty": "medium",
+			"title": "Spelling en Proeflees",
+			"summary": "Ontwikkel spellingstrategieë, algemene reëls, en effektiewe proefleestegnieke."
+		},
+		{
+			"id": "afl-017",
+			"subject": "Afrikaans Home Language",
+			"difficulty": "medium",
+			"title": "Aktief en Passief",
+			"summary": "Begrip van die verskille tussen aktief en passief; wanneer om elk te gebruik vir duidelikheid."
+		},
+		{
+			"id": "afl-018",
+			"subject": "Afrikaans Home Language",
+			"difficulty": "medium",
+			"title": "Direkte en Indirekte Rede",
+			"summary": "Omskakeling tussen direkte en indirekte rede; verbandhoudende werkwoorde en tyd veranderinge."
+		},
+		{
+			"id": "afl-019",
+			"subject": "Afrikaans Home Language",
+			"difficulty": "medium",
+			"title": "Sinonieme en Antonieme",
+			"summary": "Begrip van woordverwantskappe, sinonieme vir variasie, en antonieme vir kontras."
+		},
+		{
+			"id": "afl-020",
+			"subject": "Afrikaans Home Language",
+			"difficulty": "medium",
+			"title": "Idiome en Spreekwoorde",
+			"summary": "Begrip van algemene Afrikaanse idiome, spreekwoorde, en hul gepaste gebruik."
+		},
+		{
+			"id": "afl-021",
+			"subject": "Afrikaans Home Language",
+			"difficulty": "hard",
+			"title": "Kritiese Taalbewustheid",
+			"summary": "Analiseer taal vir vooroordeel, propaganda, stereotipering, en die mag van taal."
+		},
+		{
+			"id": "afl-022",
+			"subject": "Afrikaans Home Language",
+			"difficulty": "easy",
+			"title": "Visuele Geletterdheid",
+			"summary": "Analiseer advertensies, foto's, spotprente, en ander visuele tekste vir betekenis."
+		},
+		{
+			"id": "afl-023",
+			"subject": "Afrikaans Home Language",
+			"difficulty": "medium",
+			"title": "Media Studies",
+			"summary": "Begrip van nuuswaardes, objektiwiteit, die rol van media in die vorming van publieke mening."
+		},
+		{
+			"id": "afl-024",
+			"subject": "Afrikaans Home Language",
+			"difficulty": "medium",
+			"title": "Advertensie en Oreding",
+			"summary": "Begrip van advertensietegnieke, oorredingstrategieë, en die retorika van advertensies."
+		},
+		{
+			"id": "afl-025",
+			"subject": "Afrikaans Home Language",
+			"difficulty": "medium",
+			"title": "Skryfproses",
+			"summary": "Begrip van die stadiums van skryf - beplanning, parafrasering, hersiening, en publikasie."
+		},
+		{
+			"id": "afl-026",
+			"subject": "Afrikaans Home Language",
+			"difficulty": "hard",
+			"title": "Kreatiewe Skryfwerk",
+			"summary": "Ontwikkel oorspronklike kreatiewe skryfwerk insluitend kortverhale, poësie, en persoonlike narratiewe."
+		},
+		{
+			"id": "afl-027",
+			"subject": "Afrikaans Home Language",
+			"difficulty": "hard",
+			"title": "Literêre Terme en Tegnieke",
+			"summary": "Beheersing van wesentlike literêre terminologie insluitend allegorie, ironie, simboliek, en narratiewe tegnieke."
+		},
+		{
+			"id": "afl-028",
+			"subject": "Afrikaans Home Language",
+			"difficulty": "medium",
+			"title": "Teks Tipes - Inligtend",
+			"summary": "Skryf feitelike, inligtende tekste insluitend verslae, artikels, en verduidelikings."
+		},
+		{
+			"id": "afl-029",
+			"subject": "Afrikaans Home Language",
+			"difficulty": "medium",
+			"title": "Teks Tipes - Oorredend",
+			"summary": "Skryf oorredende tekste insluitend advertensies, redes, en meningstukke."
+		},
+		{
+			"id": "afl-030",
+			"subject": "Afrikaans Home Language",
+			"difficulty": "hard",
+			"title": "Taalverskynsels",
+			"summary": "Begrip van Afrikaanse taalverskynsels insluitend klankverskynsels, morfologie, en sinsbou."
+		},
+		{
+			"id": "spl-001",
+			"subject": "Sepedi Home Language",
+			"difficulty": "easy",
+			"title": "Go tlie le go swana ka mo",
+			"summary": "Nkgo yeo e swanetšego goba tliego ya malebana, le go swana ka mo goba k戈戈。"
+		},
+		{
+			"id": "spl-002",
+			"subject": "Sepedi Home Language",
+			"difficulty": "easy",
+			"title": "Go balela ka go humanegana",
+			"summary": "Tliego yeo e humanegana ya maatla a go balela, go ama sekgala sa go balela."
+		},
+		{
+			"id": "spl-003",
+			"subject": "Sepedi Home Language",
+			"difficulty": "medium",
+			"title": "Mokg wa go hlagisa",
+			"summary": "Go šoma diphošo tša malebana, go balela diphošong, le go šoma ka ga diphošo."
+		},
+		{
+			"id": "spl-004",
+			"subject": "Sepedi Home Language",
+			"difficulty": "medium",
+			"title": "Go ngwala dikgatišo",
+			"summary": "Mokg wa go ngwala maatla a go ngwal a dikgatišo, mekg ya ditirelo."
+		},
+		{
+			"id": "spl-005",
+			"subject": "Sepedi Home Language",
+			"difficulty": "medium",
+			"title": "Go ngwala taba yeo e fetšeganago",
+			"summary": "Go ngwala diteng tša go ikgapanya, diokhelwana, le mašongwana a go ngwalela."
+		},
+		{
+			"id": "spl-006",
+			"subject": "Sepedi Home Language",
+			"difficulty": "medium",
+			"title": "Mokg wa medirišo",
+			"summary": "Go humanegana le medirišo ya mafelelano, mokg wa medirišo le tšhupatšo."
+		},
+		{
+			"id": "spl-007",
+			"subject": "Sepedi Home Language",
+			"difficulty": "medium",
+			"title": "Mokg wa mafoko a mantšu",
+			"summary": "Go humanegana le mafoko a mantšu, dipotlo, le mokg wa mafoko a mantšu."
+		},
+		{
+			"id": "spl-008",
+			"subject": "Sepedi Home Language",
+			"difficulty": "medium",
+			"title": "Kakaretšo ya disentense",
+			"summary": "Go aka sentense ya go fihlela sentense yeo e hlophišitšwego le go fihlela ka mafelelano."
+		},
+		{
+			"id": "spl-009",
+			"subject": "Sepedi Home Language",
+			"difficulty": "easy",
+			"title": "Thutapalo ya thul介",
+			"summary": "Go humanegana le fomo ya thul介, le mekg ya disatŠ, le go šoma ka thul介."
+		},
+		{
+			"id": "spl-010",
+			"subject": "Sepedi Home Language",
+			"difficulty": "medium",
+			"title": "Thutapalo ya go šomiša mafoko",
+			"summary": "Go humanegana le methopo yeo e šomago, letsogo, le sefef sa ka thul介."
+		},
+		{
+			"id": "spl-011",
+			"subject": "Sepedi Home Language",
+			"difficulty": "medium",
+			"title": "Thalare ya puku - Dintlha",
+			"summary": "Go identifika le go anke dintlha tša dipholi, tše di belong ka goba lepolotika."
+		},
+		{
+			"id": "spl-012",
+			"subject": "Sepedi Home Language",
+			"difficulty": "medium",
+			"title": "Thalare ya puku - Batho",
+			"summary": "Go anala batho ba go aga, batho ba goba ba ntšhwa, le go humana magato a batho."
+		},
+		{
+			"id": "spl-013",
+			"subject": "Sepedi Home Language",
+			"difficulty": "medium",
+			"title": "Thalare ya tša go bapala",
+			"summary": "Go humanegana le moeno wa dramata, dithalare tša setŠhaba, le go humanegana le dipapadi."
+		},
+		{
+			"id": "spl-014",
+			"subject": "Sepedi Home Language",
+			"difficulty": "hard",
+			"title": "Tohlwaya ya ka go sepetela",
+			"summary": "Go šomiša ditlwaelo tša go sepetelana goba tša mokg wa basadi le baeng."
+		},
+		{
+			"id": "spl-015",
+			"subject": "Sepedi Home Language",
+			"difficulty": "easy",
+			"title": "Tlhagišo ya mantšu",
+			"summary": "Go aga mantšu a sekole, dipolelano tše di ratego, le go ��oma mantšu a sekole."
+		},
+		{
+			"id": "spl-016",
+			"subject": "Sepedi Home Language",
+			"difficulty": "medium",
+			"title": "Go ngwala le go proofa",
+			"summary": "Go humana mekg ya go ngwala, melawana ya go ngwala, le go šoma diproofeteko tše di ntle."
+		},
+		{
+			"id": "spl-017",
+			"subject": "Sepedi Home Language",
+			"difficulty": "medium",
+			"title": "Mokg wa batho ba lego gona",
+			"summary": "Go humanegana le phapano magareng ga mokg wa batho ba lego gona le oo wa batho ba hlwago."
+		},
+		{
+			"id": "spl-018",
+			"subject": "Sepedi Home Language",
+			"difficulty": "medium",
+			"title": "Poledišwana ya malebana",
+			"summary": "Go fetolela magareng ga poledišwana ya malebana le ya batho ba go tšweletša malebana."
+		},
+		{
+			"id": "spl-019",
+			"subject": "Sepedi Home Language",
+			"difficulty": "medium",
+			"title": "Mantšu a polelano",
+			"summary": "Go humana mpihlelano ya mantšu, mantšu a polelano bakeng sa go humana diphapano."
+		},
+		{
+			"id": "spl-020",
+			"subject": "Sepedi Home Language",
+			"difficulty": "medium",
+			"title": "Medirišo le ditalwana",
+			"summary": "Go humana ditšh Elišwana tša Sepedi, ditalwana, le go šomiša moepel ka mokg wa malebana."
+		},
+		{
+			"id": "spl-021",
+			"subject": "Sepedi Home Language",
+			"difficulty": "hard",
+			"title": "Kgetholl ya ya tlwaelano",
+			"summary": "Go anala tlwaelano bakeng sa bofene, propagente, le go humana mekg ya tlwaelano."
+		},
+		{
+			"id": "spl-022",
+			"subject": "Sepedi Home Language",
+			"difficulty": "easy",
+			"title": "Tetla ya diswanana",
+			"summary": "Go anala diswanana, diswantswana, le ditšh Elišwana tša diswanana tša go humanegana le mogolo."
+		},
+		{
+			"id": "spl-023",
+			"subject": "Sepedi Home Language",
+			"difficulty": "medium",
+			"title": "Dithutunkulu tša Media",
+			"summary": "Go humana ditlhagišo tša mogolo, go humana bathamo, le mokg wa media goba mothopo wa mogolo wa bathamoso."
+		},
+		{
+			"id": "spl-024",
+			"subject": "Sepedi Home Language",
+			"difficulty": "medium",
+			"title": "Tirelo le go kgotpša",
+			"summary": "Go humana ditirelotlhagišo, mekg ya tirelo le go kgotpša, le tirelo ya tirelo goba mekg."
+		},
+		{
+			"id": "spl-025",
+			"subject": "Sepedi Home Language",
+			"difficulty": "medium",
+			"title": "Prophase ya go ngwala",
+			"summary": "Go humana magareng a go ngwala - tshwayopelection, phase, go phetheka phase, phase ya go prooffetša."
+		},
+		{
+			"id": "spl-026",
+			"subject": "Sepedi Home Language",
+			"difficulty": "hard",
+			"title": "Go ngwala ga ga bjalo",
+			"summary": "Go aga bjalo bjalo ya go ngwala ga dikgatišo, dip舒勒, le dip舒勒 tša gag."
+		},
+		{
+			"id": "spl-027",
+			"subject": "Sepedi Home Language",
+			"difficulty": "hard",
+			"title": "Medirišo ya Literary le Dithieke",
+			"summary": "Go humana medirišo ya Sepedi yeo e nyakegago yeo ekare ke allegorie, irony, symbolism."
+		},
+		{
+			"id": "spl-028",
+			"subject": "Sepedi Home Language",
+			"difficulty": "medium",
+			"title": "Dipukutlane tše di humanegana",
+			"summary": "Go ngwala tše di humanegana tše di fatanago disetwantšh, disetwantšh, le dipatakarolo."
+		},
+		{
+			"id": "spl-029",
+			"subject": "Sepedi Home Language",
+			"difficulty": "medium",
+			"title": "Dipukutlane tše di lego gona",
+			"summary": "Go ngwala dip舒勒 tše di lego gona goba ditlhagišo, mašongwana, le mogolo."
+		},
+		{
+			"id": "spl-030",
+			"subject": "Sepedi Home Language",
+			"difficulty": "hard",
+			"title": "Mokg wa Sepedi",
+			"summary": "Go humana medirišo ya Sepedi yeo e akaretšago dip舒勒 goba kathš ya Sepedi ya malebana."
+		},
+		{
+			"id": "bs-001",
+			"subject": "Business Studies",
+			"difficulty": "easy",
+			"title": "Business Environment - Micro Environment",
+			"summary": "Understanding the immediate business environment including suppliers, customers, competitors, and their impact on business."
+		},
+		{
+			"id": "bs-002",
+			"subject": "Business Studies",
+			"difficulty": "easy",
+			"title": "Market Environment",
+			"summary": "Understanding market forces, demand and supply, market segmentation, and target markets for businesses."
+		},
+		{
+			"id": "bs-003",
+			"subject": "Business Studies",
+			"difficulty": "medium",
+			"title": "Macro Environment",
+			"summary": "Understanding PESTEL analysis, economic, social, technological, environmental, legal, and political factors affecting business."
+		},
+		{
+			"id": "bs-004",
+			"subject": "Business Studies",
+			"difficulty": "medium",
+			"title": "Business Sectors",
+			"summary": "Understanding primary, secondary, and tertiary sectors; their interrelationships and contributions to the economy."
+		},
+		{
+			"id": "bs-005",
+			"subject": "Business Studies",
+			"difficulty": "medium",
+			"title": "Contemporary Socioeconomic Issues",
+			"summary": "Understanding inequality, poverty, unemployment, and their impact on business operations and strategies."
+		},
+		{
+			"id": "bs-006",
+			"subject": "Business Studies",
+			"difficulty": "easy",
+			"title": "Entrepreneurship Qualities",
+			"summary": "Understanding the qualities and characteristics of successful entrepreneurs including innovation and risk-taking."
+		},
+		{
+			"id": "bs-007",
+			"subject": "Business Studies",
+			"difficulty": "medium",
+			"title": "Business Opportunity",
+			"summary": "Identifying business opportunities, market gaps, and feasibility analysis for new ventures."
+		},
+		{
+			"id": "bs-008",
+			"subject": "Business Studies",
+			"difficulty": "medium",
+			"title": "Business Plan",
+			"summary": "Developing comprehensive business plans including executive summary, market analysis, and financial projections."
+		},
+		{
+			"id": "bs-009",
+			"subject": "Business Studies",
+			"difficulty": "medium",
+			"title": "Forms of Ownership",
+			"summary": "Understanding sole proprietorship, partnership, company, and cooperative; advantages and disadvantages."
+		},
+		{
+			"id": "bs-010",
+			"subject": "Business Studies",
+			"difficulty": "medium",
+			"title": "Business Location",
+			"summary": "Factors influencing business location decisions, market proximity, infrastructure, and legal requirements."
+		},
+		{
+			"id": "bs-011",
+			"subject": "Business Studies",
+			"difficulty": "medium",
+			"title": "Legal Requirements",
+			"summary": "Understanding registration requirements, licenses, permits, and regulatory compliance for businesses."
+		},
+		{
+			"id": "bs-012",
+			"subject": "Business Studies",
+			"difficulty": "medium",
+			"title": "Business Contracts",
+			"summary": "Understanding valid contracts, essential elements, breach of contract, and legal remedies for businesses."
+		},
+		{
+			"id": "bs-013",
+			"subject": "Business Studies",
+			"difficulty": "medium",
+			"title": "Management and Leadership",
+			"summary": "Understanding management functions, leadership styles, decision-making, and authority structures in business."
+		},
+		{
+			"id": "bs-014",
+			"subject": "Business Studies",
+			"difficulty": "medium",
+			"title": "Creative Thinking and Problem Solving",
+			"summary": "Applying creative thinking techniques, problem identification, and innovative solutions in business."
+		},
+		{
+			"id": "bs-015",
+			"subject": "Business Studies",
+			"difficulty": "medium",
+			"title": "Self-Management",
+			"summary": "Developing self-management skills, time management, goal setting, and professional development for entrepreneurs."
+		},
+		{
+			"id": "bs-016",
+			"subject": "Business Studies",
+			"difficulty": "medium",
+			"title": "Professionalism and Ethics",
+			"summary": "Understanding business ethics, professional conduct, code of conduct, and ethical decision-making in business."
+		},
+		{
+			"id": "bs-017",
+			"subject": "Business Studies",
+			"difficulty": "medium",
+			"title": "Human Rights and Inclusivity",
+			"summary": "Understanding employment equity, fair labour practices, discrimination prevention, and workplace diversity."
+		},
+		{
+			"id": "bs-018",
+			"subject": "Business Studies",
+			"difficulty": "medium",
+			"title": "Social Responsibility",
+			"summary": "Understanding corporate social responsibility, CSI initiatives, and social investment strategies."
+		},
+		{
+			"id": "bs-019",
+			"subject": "Business Studies",
+			"difficulty": "hard",
+			"title": "Stress and Crisis Management",
+			"summary": "Identifying stressors, developing coping strategies, crisis response plans, and business continuity."
+		},
+		{
+			"id": "bs-020",
+			"subject": "Business Studies",
+			"difficulty": "hard",
+			"title": "Change Management",
+			"summary": "Managing organizational change, change models, resistance to change, and implementing change successfully."
+		},
+		{
+			"id": "bs-021",
+			"subject": "Business Studies",
+			"difficulty": "hard",
+			"title": "Conflict Management",
+			"summary": "Understanding conflict sources, conflict resolution strategies, negotiation, and mediation in the workplace."
+		},
+		{
+			"id": "bs-022",
+			"subject": "Business Studies",
+			"difficulty": "medium",
+			"title": "Team Dynamics",
+			"summary": "Understanding team development stages, group behavior, team performance evaluation, and team leadership."
+		},
+		{
+			"id": "bs-023",
+			"subject": "Business Studies",
+			"difficulty": "medium",
+			"title": "Business Functions - Production",
+			"summary": "Understanding the production function, production planning, quality control, and inventory management."
+		},
+		{
+			"id": "bs-024",
+			"subject": "Business Studies",
+			"difficulty": "medium",
+			"title": "Business Functions - Marketing",
+			"summary": "Understanding the marketing function, marketing mix, market research, and customer relationship management."
+		},
+		{
+			"id": "bs-025",
+			"subject": "Business Studies",
+			"difficulty": "medium",
+			"title": "Business Functions - Financial",
+			"summary": "Understanding financial management, financial statements, budgeting, and cash flow management."
+		},
+		{
+			"id": "bs-026",
+			"subject": "Business Studies",
+			"difficulty": "medium",
+			"title": "Business Functions - Human Resources",
+			"summary": "Understanding human resource management, recruitment, selection, and performance management."
+		},
+		{
+			"id": "bs-027",
+			"subject": "Business Studies",
+			"difficulty": "medium",
+			"title": "Quality of Performance",
+			"summary": "Understanding quality management systems, TQM principles, benchmarks, and continuous improvement."
+		},
+		{
+			"id": "bs-028",
+			"subject": "Business Studies",
+			"difficulty": "hard",
+			"title": "Presentation of Business Information",
+			"summary": "Creating effective business presentations, reports, graphs, and visual aids for stakeholders."
+		},
+		{
+			"id": "bs-029",
+			"subject": "Business Studies",
+			"difficulty": "hard",
+			"title": "Investment Securities",
+			"summary": "Understanding shares, debentures, unit trusts, and investment vehicles for business and personal investment."
+		},
+		{
+			"id": "bs-030",
+			"subject": "Business Studies",
+			"difficulty": "hard",
+			"title": "Insurance",
+			"summary": "Understanding business insurance types, risk assessment, premiums, and insurance contracts for business protection."
+		},
+		{
+			"id": "it-001",
+			"subject": "Information Technology",
+			"difficulty": "easy",
+			"title": "Computer Hardware - Input Devices",
+			"summary": "Understanding input devices including keyboard, mouse, scanner, digital camera, and their functions in data capture."
+		},
+		{
+			"id": "it-002",
+			"subject": "Information Technology",
+			"difficulty": "easy",
+			"title": "Computer Hardware - Output Devices",
+			"summary": "Understanding output devices including monitor, printer, speaker, and plotter; their functions and specifications."
+		},
+		{
+			"id": "it-003",
+			"subject": "Information Technology",
+			"difficulty": "easy",
+			"title": "Computer Hardware - Storage Devices",
+			"summary": "Understanding storage devices including HDD, SSD, USB drive, optical media, and their storage capacities."
+		},
+		{
+			"id": "it-004",
+			"subject": "Information Technology",
+			"difficulty": "easy",
+			"title": "System Software",
+			"summary": "Understanding operating systems, system software functions, device drivers, and utility programs."
+		},
+		{
+			"id": "it-005",
+			"subject": "Information Technology",
+			"difficulty": "medium",
+			"title": "Operating System Functions",
+			"summary": "Understanding process management, memory management, file management, and device management in operating systems."
+		},
+		{
+			"id": "it-006",
+			"subject": "Information Technology",
+			"difficulty": "medium",
+			"title": "Word Processing",
+			"summary": "Creating and formatting documents, using word processing software, styles, mail merge, and document templates."
+		},
+		{
+			"id": "it-007",
+			"subject": "Information Technology",
+			"difficulty": "medium",
+			"title": "Spreadsheets",
+			"summary": "Creating spreadsheets, formulas, functions, charts, and data analysis using spreadsheet software."
+		},
+		{
+			"id": "it-008",
+			"subject": "Information Technology",
+			"difficulty": "medium",
+			"title": "Databases",
+			"summary": "Understanding database concepts, creating tables, queries, forms, and reports using database management systems."
+		},
+		{
+			"id": "it-009",
+			"subject": "Information Technology",
+			"difficulty": "medium",
+			"title": "Networks - Types and Components",
+			"summary": "Understanding LAN, WAN, PAN, network hardware, topologies, and network infrastructure."
+		},
+		{
+			"id": "it-010",
+			"subject": "Information Technology",
+			"difficulty": "medium",
+			"title": "Network Protocols",
+			"summary": "Understanding TCP/IP, HTTP, FTP, and other protocols governing network communication."
+		},
+		{
+			"id": "it-011",
+			"subject": "Information Technology",
+			"difficulty": "medium",
+			"title": "Internet and WWW",
+			"summary": "Understanding the Internet, World Wide Web, URLs, web browsers, and web technologies."
+		},
+		{
+			"id": "it-012",
+			"subject": "Information Technology",
+			"difficulty": "medium",
+			"title": "Electronic Communication",
+			"summary": "Understanding email, instant messaging, video conferencing, and social media for communication."
+		},
+		{
+			"id": "it-013",
+			"subject": "Information Technology",
+			"difficulty": "hard",
+			"title": "Algorithm Development",
+			"summary": "Developing algorithms using pseudocode, flowcharts, and structured English for problem solving."
+		},
+		{
+			"id": "it-014",
+			"subject": "Information Technology",
+			"difficulty": "hard",
+			"title": "Programming Basics",
+			"summary": "Understanding programming concepts, variables, data types, control structures, and modular programming."
+		},
+		{
+			"id": "it-015",
+			"subject": "Information Technology",
+			"difficulty": "hard",
+			"title": "Object-Oriented Programming",
+			"summary": "Understanding classes, objects, encapsulation, inheritance, and polymorphism in OOP."
+		},
+		{
+			"id": "it-016",
+			"subject": "Information Technology",
+			"difficulty": "hard",
+			"title": "GUI Programming",
+			"summary": "Creating graphical user interfaces using event-driven programming and GUI components."
+		},
+		{
+			"id": "it-017",
+			"subject": "Information Technology",
+			"difficulty": "hard",
+			"title": "Database Programming",
+			"summary": "Connecting to databases, executing SQL queries, and creating database-driven applications."
+		},
+		{
+			"id": "it-018",
+			"subject": "Information Technology",
+			"difficulty": "easy",
+			"title": "Data Representation",
+			"summary": "Understanding binary, hexadecimal, ASCII, and Unicode for data representation in computers."
+		},
+		{
+			"id": "it-019",
+			"subject": "Information Technology",
+			"difficulty": "easy",
+			"title": "File Management",
+			"summary": "Understanding file types, file organization, folder structures, and file management best practices."
+		},
+		{
+			"id": "it-020",
+			"subject": "Information Technology",
+			"difficulty": "medium",
+			"title": "Data Management",
+			"summary": "Understanding data, information, knowledge hierarchy, and data management principles."
+		},
+		{
+			"id": "it-021",
+			"subject": "Information Technology",
+			"difficulty": "medium",
+			"title": "Social Implications - Privacy",
+			"summary": "Understanding privacy concerns, data protection, identity theft, and privacy legislation."
+		},
+		{
+			"id": "it-022",
+			"subject": "Information Technology",
+			"difficulty": "medium",
+			"title": "Social Implications - Security",
+			"summary": "Understanding cybersecurity threats, viruses, phishing, and security measures to protect systems."
+		},
+		{
+			"id": "it-023",
+			"subject": "Information Technology",
+			"difficulty": "medium",
+			"title": "Social Implications - Ethics",
+			"summary": "Understanding software piracy, plagiarism, cyber ethics, and responsible IT use."
+		},
+		{
+			"id": "it-024",
+			"subject": "Information Technology",
+			"difficulty": "medium",
+			"title": "Environmental Impact",
+			"summary": "Understanding green computing, e-waste, energy consumption, and environmental responsibility."
+		},
+		{
+			"id": "it-025",
+			"subject": "Information Technology",
+			"difficulty": "medium",
+			"title": "Legal Issues",
+			"summary": "Understanding IT laws, copyright, intellectual property, and compliance requirements."
+		},
+		{
+			"id": "it-026",
+			"subject": "Information Technology",
+			"difficulty": "hard",
+			"title": "Web Development Basics",
+			"summary": "Understanding HTML, CSS, web page structure, and basic web development technologies."
+		},
+		{
+			"id": "it-027",
+			"subject": "Information Technology",
+			"difficulty": "hard",
+			"title": "Software Engineering",
+			"summary": "Understanding software development life cycle, requirements, design, implementation, testing, and maintenance."
+		},
+		{
+			"id": "it-028",
+			"subject": "Information Technology",
+			"difficulty": "hard",
+			"title": "Systems Development",
+			"summary": "Understanding systems analysis, systems design, prototyping, and project management for IT projects."
+		},
+		{
+			"id": "it-029",
+			"subject": "Information Technology",
+			"difficulty": "hard",
+			"title": "Integrated Development Environment",
+			"summary": "Using IDEs for coding, debugging, testing, and deploying software applications."
+		},
+		{
+			"id": "it-030",
+			"subject": "Information Technology",
+			"difficulty": "hard",
+			"title": "Application Development Project",
+			"summary": "Planning and executing a complete application development project from concept to delivery."
+		}
+	]
+}

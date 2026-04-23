@@ -1,0 +1,565 @@
+{
+	"metadata": {
+		"subject": "mathematics",
+		"totalQuestions": 30,
+		"version": "1.0.0",
+		"curriculum": "General Mathematics",
+		"createdAt": "2026-04-23"
+	},
+	"questions": [
+		{
+			"id": "math_001",
+			"topic": "Algebra",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Solve for x: 2x + 5 = 15",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "x = 5", "isCorrect": true },
+				{ "id": "B", "text": "x = 10", "isCorrect": false },
+				{ "id": "C", "text": "x = 7.5", "isCorrect": false },
+				{ "id": "D", "text": "x = 4", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Isolate x",
+			"explanation": "2x = 15 - 5 = 10, so x = 10/2 = 5"
+		},
+		{
+			"id": "math_002",
+			"topic": "Quadratic Equations",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Factor: x² - 5x + 6 = 0. What are the solutions?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "x = 2 or 3", "isCorrect": true },
+				{ "id": "B", "text": "x = -2 or -3", "isCorrect": false },
+				{ "id": "C", "text": "x = 1 or 6", "isCorrect": false },
+				{ "id": "D", "text": "x = -1 or -6", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Find factors that multiply to 6 and add to 5",
+			"explanation": "(x - 2)(x - 3) = 0, so x = 2 or 3"
+		},
+		{
+			"id": "math_003",
+			"topic": "Linear Equations",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Find the slope of y = 3x + 7",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "3", "isCorrect": true },
+				{ "id": "B", "text": "7", "isCorrect": false },
+				{ "id": "C", "text": "0", "isCorrect": false },
+				{ "id": "D", "text": "undefined", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "y = mx + b form",
+			"explanation": "In y = mx + b, m is the slope = 3"
+		},
+		{
+			"id": "math_004",
+			"topic": "Geometry",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "What is the area of a circle with radius 3? (π ≈ 3.14)",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "28.26", "isCorrect": true },
+				{ "id": "B", "text": "9.42", "isCorrect": false },
+				{ "id": "C", "text": "18.84", "isCorrect": false },
+				{ "id": "D", "text": "12.56", "isCorrect": false }
+			],
+			"supportsDiagram": true,
+			"diagram": {
+				"type": "node",
+				"title": "Circle",
+				"data": {
+					"nodes": [
+						{
+							"id": "circle",
+							"type": "shape",
+							"label": "r=3",
+							"x": 150,
+							"y": 100
+						}
+					]
+				}
+			},
+			"hint": "A = πr²",
+			"explanation": "A = π × 3² = 9π ≈ 28.26"
+		},
+		{
+			"id": "math_005",
+			"topic": "Trigonometry",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "What is sin(90°)?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "1", "isCorrect": true },
+				{ "id": "B", "text": "0", "isCorrect": false },
+				{ "id": "C", "text": "√2/2", "isCorrect": false },
+				{ "id": "D", "text": "√3/2", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Unit circle",
+			"explanation": "At 90°, the y-coordinate = 1, so sin(90°) = 1"
+		},
+		{
+			"id": "math_006",
+			"topic": "Statistics",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What is the mean of 4, 8, 6, 5, 3?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "5.2", "isCorrect": true },
+				{ "id": "B", "text": "6", "isCorrect": false },
+				{ "id": "C", "text": "5", "isCorrect": false },
+				{ "id": "D", "text": "4", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Sum divided by count",
+			"explanation": "Mean = (4+8+6+5+3)/5 = 26/5 = 5.2"
+		},
+		{
+			"id": "math_007",
+			"topic": "Probability",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "A coin is flipped, probability of heads?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "1/2", "isCorrect": true },
+				{ "id": "B", "text": "1/4", "isCorrect": false },
+				{ "id": "C", "text": "1", "isCorrect": false },
+				{ "id": "D", "text": "0", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "One outcome out of two equally likely",
+			"explanation": "P(heads) = 1/2 for a fair coin"
+		},
+		{
+			"id": "math_008",
+			"topic": "Exponents",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Simplify: x³ × x⁴",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "x⁷", "isCorrect": true },
+				{ "id": "B", "text": "x¹²", "isCorrect": false },
+				{ "id": "C", "text": "x⁵", "isCorrect": false },
+				{ "id": "D", "text": "x⁶", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Add exponents with same base",
+			"explanation": "x³ × x⁴ = x^(3+4) = x⁷"
+		},
+		{
+			"id": "math_009",
+			"topic": "Factoring",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Factor: x² - 9",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "(x+3)(x-3)", "isCorrect": true },
+				{ "id": "B", "text": "(x-3)²", "isCorrect": false },
+				{ "id": "C", "text": "(x+3)²", "isCorrect": false },
+				{ "id": "D", "text": "x² - 9", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Difference of squares",
+			"explanation": "x² - 9 = (x+3)(x-3)"
+		},
+		{
+			"id": "math_010",
+			"topic": "Logarithms",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "If 2ˣ = 8, what is x?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "3", "isCorrect": true },
+				{ "id": "B", "text": "2", "isCorrect": false },
+				{ "id": "C", "text": "4", "isCorrect": false },
+				{ "id": "D", "text": "1", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "2³ = 8",
+			"explanation": "2³ = 8, so x = 3"
+		},
+		{
+			"id": "math_011",
+			"topic": "Graphing",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What is the y-intercept of y = 2x - 4?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "-4", "isCorrect": true },
+				{ "id": "B", "text": "2", "isCorrect": false },
+				{ "id": "C", "text": "4", "isCorrect": false },
+				{ "id": "D", "text": "0", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Where x = 0",
+			"explanation": "In y = mx + b, b = y-intercept = -4"
+		},
+		{
+			"id": "math_012",
+			"topic": "Distance Formula",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Distance between (0,0) and (3,4)?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "5", "isCorrect": true },
+				{ "id": "B", "text": "7", "isCorrect": false },
+				{ "id": "C", "text": "25", "isCorrect": false },
+				{ "id": "D", "text": "√7", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "√[(x₂-x₁)² + (y₂-y₁)²]",
+			"explanation": "d = √[(3-0)² + (4-0)²] = √(9+16) = √25 = 5"
+		},
+		{
+			"id": "math_013",
+			"topic": "Circles",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Circumference of circle with radius 2?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "4π", "isCorrect": true },
+				{ "id": "B", "text": "2π", "isCorrect": false },
+				{ "id": "C", "text": "π", "isCorrect": false },
+				{ "id": "D", "text": "8π", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "C = 2πr",
+			"explanation": "C = 2π × 2 = 4π"
+		},
+		{
+			"id": "math_014",
+			"topic": "Triangles",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Interior angles of triangle sum to?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "180°", "isCorrect": true },
+				{ "id": "B", "text": "360°", "isCorrect": false },
+				{ "id": "C", "text": "90°", "isCorrect": false },
+				{ "id": "D", "text": "270°", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Triangle angle sum",
+			"explanation": "Interior angles of any triangle sum to 180°"
+		},
+		{
+			"id": "math_015",
+			"topic": "Pythagorean Theorem",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "In right triangle with legs 3 and 4, hypotenuse = ?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "5", "isCorrect": true },
+				{ "id": "B", "text": "7", "isCorrect": false },
+				{ "id": "C", "text": "12", "isCorrect": false },
+				{ "id": "D", "text": "√7", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "a² + b² = c²",
+			"explanation": "c = √(3² + 4²) = √(9+16) = √25 = 5"
+		},
+		{
+			"id": "math_016",
+			"topic": "Systems of Equations",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "Solve: x + y = 5, x - y = 1. What is x?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "3", "isCorrect": true },
+				{ "id": "B", "text": "2", "isCorrect": false },
+				{ "id": "C", "text": "4", "isCorrect": false },
+				{ "id": "D", "text": "1", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Add equations",
+			"explanation": "Adding: 2x = 6, so x = 3"
+		},
+		{
+			"id": "math_017",
+			"topic": "Matrices",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "What is the determinant of [2,1;1,1]?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "1", "isCorrect": true },
+				{ "id": "B", "text": "3", "isCorrect": false },
+				{ "id": "C", "text": "2", "isCorrect": false },
+				{ "id": "D", "text": "0", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "ad - bc",
+			"explanation": "det = (2)(1) - (1)(1) = 2 - 1 = 1"
+		},
+		{
+			"id": "math_018",
+			"topic": "Sequences",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "2, 4, 8, 16,... what comes next?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "32", "isCorrect": true },
+				{ "id": "B", "text": "24", "isCorrect": false },
+				{ "id": "C", "text": "20", "isCorrect": false },
+				{ "id": "D", "text": "18", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Each term × 2",
+			"explanation": "Geometric sequence with ratio 2: 16 × 2 = 32"
+		},
+		{
+			"id": "math_019",
+			"topic": "Quadratic Formula",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "x² - 4 = 0, what are roots?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "±2", "isCorrect": true },
+				{ "id": "B", "text": "2", "isCorrect": false },
+				{ "id": "C", "text": "4", "isCorrect": false },
+				{ "id": "D", "text": "±4", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "x² = 4",
+			"explanation": "x² = 4, so x = ±2"
+		},
+		{
+			"id": "math_020",
+			"topic": "Differentiation",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "Derivative of x³?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "3x²", "isCorrect": true },
+				{ "id": "B", "text": "x²", "isCorrect": false },
+				{ "id": "C", "text": "3x", "isCorrect": false },
+				{ "id": "D", "text": "x³", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Power rule",
+			"explanation": "d/dx(xⁿ) = nxⁿ⁻¹, so d/dx(x³) = 3x²"
+		},
+		{
+			"id": "math_021",
+			"topic": "Integration",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "Integral of 2x?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "x² + C", "isCorrect": true },
+				{ "id": "B", "text": "2x² + C", "isCorrect": false },
+				{ "id": "C", "text": "x + C", "isCorrect": false },
+				{ "id": "D", "text": "2 + C", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Reverse power rule",
+			"explanation": "∫xⁿ dx = xⁿ⁺¹/(n+1), so ∫2x dx = x² + C"
+		},
+		{
+			"id": "math_022",
+			"topic": "Area",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Area of triangle with base 6 and height 4?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "12", "isCorrect": true },
+				{ "id": "B", "text": "24", "isCorrect": false },
+				{ "id": "C", "text": "10", "isCorrect": false },
+				{ "id": "D", "text": "48", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "A = ½bh",
+			"explanation": "A = ½ × 6 × 4 = 12"
+		},
+		{
+			"id": "math_023",
+			"topic": "Volume",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Volume of cube with side 3?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "27", "isCorrect": true },
+				{ "id": "B", "text": "9", "isCorrect": false },
+				{ "id": "C", "text": "12", "isCorrect": false },
+				{ "id": "D", "text": "6", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "V = s³",
+			"explanation": "V = 3³ = 27"
+		},
+		{
+			"id": "math_024",
+			"topic": "Rational Expressions",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "Simplify: (x²-4)/(x-2), x ≠ 2",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "x+2", "isCorrect": true },
+				{ "id": "B", "text": "x-2", "isCorrect": false },
+				{ "id": "C", "text": "x", "isCorrect": false },
+				{ "id": "D", "text": "1", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Factor and cancel",
+			"explanation": "(x²-4)/(x-2) = (x+2)(x-2)/(x-2) = x+2"
+		},
+		{
+			"id": "math_025",
+			"topic": "Inequalities",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Solve: 2x > 6. What is x?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "x > 3", "isCorrect": true },
+				{ "id": "B", "text": "x < 3", "isCorrect": false },
+				{ "id": "C", "text": "x > 6", "isCorrect": false },
+				{ "id": "D", "text": "x = 3", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Divide by positive number",
+			"explanation": "x > 6/2 = 3"
+		},
+		{
+			"id": "math_026",
+			"topic": "Trigonometry",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What is tan(45°)?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "1", "isCorrect": true },
+				{ "id": "B", "text": "0", "isCorrect": false },
+				{ "id": "C", "text": "√3", "isCorrect": false },
+				{ "id": "D", "text": "undefined", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "tan = sin/cos",
+			"explanation": "tan(45°) = 1 (opposite/adjacent equal)"
+		},
+		{
+			"id": "math_027",
+			"topic": "Absolute Value",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "What is |-3|?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "3", "isCorrect": true },
+				{ "id": "B", "text": "-3", "isCorrect": false },
+				{ "id": "C", "text": "0", "isCorrect": false },
+				{ "id": "D", "text": "9", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Distance from zero",
+			"explanation": "Absolute value is the distance from zero: |-3| = 3"
+		},
+		{
+			"id": "math_028",
+			"topic": "Complex Numbers",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "Simplify: i² where i = √(-1)",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "-1", "isCorrect": true },
+				{ "id": "B", "text": "1", "isCorrect": false },
+				{ "id": "C", "text": "i", "isCorrect": false },
+				{ "id": "D", "text": "-i", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "i² = -1",
+			"explanation": "By definition, i = √(-1), so i² = -1"
+		},
+		{
+			"id": "math_029",
+			"topic": "Prime Numbers",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Which is NOT prime?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "9", "isCorrect": true },
+				{ "id": "B", "text": "2", "isCorrect": false },
+				{ "id": "C", "text": "3", "isCorrect": false },
+				{ "id": "D", "text": "5", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Only factors 1 and itself",
+			"explanation": "9 = 3 × 3, not prime; 2, 3, 5 are prime"
+		},
+		{
+			"id": "math_030",
+			"topic": "Percentages",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "20% of 80 = ?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "16", "isCorrect": true },
+				{ "id": "B", "text": "8", "isCorrect": false },
+				{ "id": "C", "text": "24", "isCorrect": false },
+				{ "id": "D", "text": "4", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "0.20 × 80",
+			"explanation": "20% = 0.20, so 0.20 × 80 = 16"
+		}
+	]
+}

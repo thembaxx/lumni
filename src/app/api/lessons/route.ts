@@ -5,8 +5,10 @@ import path from "path";
 export const dynamic = "force-dynamic";
 
 interface Lesson {
+	id: string;
 	subject: string;
 	title: string;
+	summary: string;
 	difficulty: string;
 }
 
@@ -18,7 +20,7 @@ export async function GET(request: Request) {
 		const difficulty = searchParams.get("difficulty");
 
 		// Filter logic
-		const filePath = path.join(process.cwd(), "lessons.json");
+		const filePath = path.join(process.cwd(), "lessons-comprehensive.json");
 		const lessonsData = JSON.parse(fs.readFileSync(filePath, "utf-8"));
 		let filteredLessons: Lesson[] = lessonsData.lessons;
 

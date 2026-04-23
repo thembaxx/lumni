@@ -38,7 +38,7 @@ export function useFilteredSubjects(searchQuery: string) {
 		?.filter((subject) =>
 			subject.name.toLowerCase().includes(searchQuery.toLowerCase()),
 		)
-		.sort((a, b) => a.name.localeCompare(b.name));
+		.toSorted((a, b) => a.name.localeCompare(b.name));
 
 	return {
 		...rest,

@@ -1,0 +1,669 @@
+{
+	"metadata": {
+		"subject": "physical-science",
+		"totalQuestions": 35,
+		"version": "1.0.0",
+		"curriculum": "Physical Science",
+		"createdAt": "2026-04-23"
+	},
+	"questions": [
+		{
+			"id": "ps_001",
+			"topic": "Newton's Laws",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "According to Newton's First Law, an object at rest will stay at rest unless acted upon by what?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "An external force", "isCorrect": true },
+				{ "id": "B", "text": "Gravity", "isCorrect": false },
+				{ "id": "C", "text": "Friction", "isCorrect": false },
+				{ "id": "D", "text": "Inertia", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Objects resist changes in motion",
+			"explanation": "Newton's First Law (Law of Inertia): an object at rest stays at rest unless acted by external force"
+		},
+		{
+			"id": "ps_002",
+			"topic": "Force and Motion",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "What is the formula for Newton's Second Law?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "F = ma", "isCorrect": true },
+				{ "id": "B", "text": "F = mv", "isCorrect": false },
+				{ "id": "C", "text": "F = m/a", "isCorrect": false },
+				{ "id": "D", "text": "F = m + a", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Force equals mass times acceleration",
+			"explanation": "F = ma where F is force, m is mass, a is acceleration"
+		},
+		{
+			"id": "ps_003",
+			"topic": "Velocity and Acceleration",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "A car accelerates from 0 to 60 m/s in 10 seconds. What is its acceleration?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "6 m/s²", "isCorrect": true },
+				{ "id": "B", "text": "60 m/s²", "isCorrect": false },
+				{ "id": "C", "text": "0.6 m/s²", "isCorrect": false },
+				{ "id": "D", "text": "10 m/s²", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "a = Δv/Δt",
+			"explanation": "a = (60 - 0)/10 = 60/10 = 6 m/s²"
+		},
+		{
+			"id": "ps_004",
+			"topic": "Gravity",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What is the acceleration due to gravity on Earth?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "9.8 m/s²", "isCorrect": true },
+				{ "id": "B", "text": "9.8 m/s", "isCorrect": false },
+				{ "id": "C", "text": "98 m/s²", "isCorrect": false },
+				{ "id": "D", "text": "1 m/s²", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Standard value",
+			"explanation": "g = 9.8 m/s² (approximately 10 m/s² for simplified calculations)"
+		},
+		{
+			"id": "ps_005",
+			"topic": "Momentum",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "A 2 kg object moving at 3 m/s has what momentum?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "6 kg·m/s", "isCorrect": true },
+				{ "id": "B", "text": "1.5 kg·m/s", "isCorrect": false },
+				{ "id": "C", "text": "5 kg·m/s", "isCorrect": false },
+				{ "id": "D", "text": "9 kg·m/s", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "p = mv",
+			"explanation": "p = 2 × 3 = 6 kg·m/s"
+		},
+		{
+			"id": "ps_006",
+			"topic": "Kinetic Energy",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "The kinetic energy equation is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "KE = ½mv²", "isCorrect": true },
+				{ "id": "B", "text": "KE = mv²", "isCorrect": false },
+				{ "id": "C", "text": "KE = ½m²v", "isCorrect": false },
+				{ "id": "D", "text": "KE = 2mv²", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Energy of motion",
+			"explanation": "KE = ½mv² where m is mass, v is velocity"
+		},
+		{
+			"id": "ps_007",
+			"topic": "Work",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "A force of 50 N moves an object 4 m. How much work is done?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "200 J", "isCorrect": true },
+				{ "id": "B", "text": "12.5 J", "isCorrect": false },
+				{ "id": "C", "text": "2000 J", "isCorrect": false },
+				{ "id": "D", "text": "54 J", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "W = Fd",
+			"explanation": "W = 50 × 4 = 200 J"
+		},
+		{
+			"id": "ps_008",
+			"topic": "Power",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "A machine does 500 J of work in 10 seconds. What is its power?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "50 W", "isCorrect": true },
+				{ "id": "B", "text": "5000 W", "isCorrect": false },
+				{ "id": "C", "text": "5 W", "isCorrect": false },
+				{ "id": "D", "text": "500 W", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "P = W/t",
+			"explanation": "P = 500/10 = 50 W"
+		},
+		{
+			"id": "ps_009",
+			"topic": "Friction",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "A 10 N box slides on a surface with μ = 0.3. What is the frictional force?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "3 N", "isCorrect": true },
+				{ "id": "B", "text": "30 N", "isCorrect": false },
+				{ "id": "C", "text": "0.3 N", "isCorrect": false },
+				{ "id": "D", "text": "13 N", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "f = μN",
+			"explanation": "f = 0.3 × 10 = 3 N"
+		},
+		{
+			"id": "ps_010",
+			"topic": "Vectors",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "A vector has both:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Magnitude and direction", "isCorrect": true },
+				{ "id": "B", "text": "Only magnitude", "isCorrect": false },
+				{ "id": "C", "text": "Only direction", "isCorrect": false },
+				{ "id": "D", "text": "Length and width", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Scalars vs vectors",
+			"explanation": "Vectors have both magnitude and direction; scalars have only magnitude"
+		},
+		{
+			"id": "ps_011",
+			"topic": "Free Body Diagrams",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "A book sitting on a table has how many forces acting on it?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "2", "isCorrect": true },
+				{ "id": "B", "text": "1", "isCorrect": false },
+				{ "id": "C", "text": "3", "isCorrect": false },
+				{ "id": "D", "text": "4", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Consider weight and normal force",
+			"explanation": "Weight (downward) and normal force from table (upward) = 2 forces"
+		},
+		{
+			"id": "ps_012",
+			"topic": "Projectile Motion",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "A ball thrown horizontally from a height will land:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "At the same time as if dropped",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Before the dropped ball", "isCorrect": false },
+				{ "id": "C", "text": "After the dropped ball", "isCorrect": false },
+				{ "id": "D", "text": "Depends on direction", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Horizontal and vertical motion are independent",
+			"explanation": "Both have same vertical motion, so hit ground simultaneously"
+		},
+		{
+			"id": "ps_013",
+			"topic": "Circular Motion",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "The force keeping a satellite in orbit is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Gravity", "isCorrect": true },
+				{ "id": "B", "text": "Friction", "isCorrect": false },
+				{ "id": "C", "text": "Magnetic force", "isCorrect": false },
+				{ "id": "D", "text": "Electric force", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "What attracts objects toward Earth?",
+			"explanation": "Gravity provides centripetal force to keep satellite in orbit"
+		},
+		{
+			"id": "ps_014",
+			"topic": "Density",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Density is calculated as:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Mass/Volume", "isCorrect": true },
+				{ "id": "B", "text": "Volume/Mass", "isCorrect": false },
+				{ "id": "C", "text": "Mass × Volume", "isCorrect": false },
+				{ "id": "D", "text": "Mass + Volume", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Mass per unit volume",
+			"explanation": "ρ = m/V"
+		},
+		{
+			"id": "ps_015",
+			"topic": "Pressure",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Pressure is defined as:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Force/Area", "isCorrect": true },
+				{ "id": "B", "text": "Force × Area", "isCorrect": false },
+				{ "id": "C", "text": "Area/Force", "isCorrect": false },
+				{ "id": "D", "text": "Force + Area", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Force per unit area",
+			"explanation": "P = F/A"
+		},
+		{
+			"id": "ps_016",
+			"topic": "Waves",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Sound is what type of wave?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Mechanical longitudinal", "isCorrect": true },
+				{ "id": "B", "text": "Electromagnetic", "isCorrect": false },
+				{ "id": "C", "text": "Mechanical transverse", "isCorrect": false },
+				{
+					"id": "D",
+					"text": "Electromagnetic longitudinal",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Needs a medium to travel",
+			"explanation": "Sound needs a medium (mechanical) and vibrates parallel to direction (longitudinal)"
+		},
+		{
+			"id": "ps_017",
+			"topic": "Light",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Light travels fastest in:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Vacuum", "isCorrect": true },
+				{ "id": "B", "text": "Air", "isCorrect": false },
+				{ "id": "C", "text": "Water", "isCorrect": false },
+				{ "id": "D", "text": "Glass", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Light doesn't need a medium",
+			"explanation": "Light travels fastest in vacuum (c = 3×10⁸ m/s)"
+		},
+		{
+			"id": "ps_018",
+			"topic": "Reflection",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Angle of incidence equals:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Angle of reflection", "isCorrect": true },
+				{ "id": "B", "text": "Angle of refraction", "isCorrect": false },
+				{
+					"id": "C",
+					"text": "90° minus angle of reflection",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "180° minus angle of reflection",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Law of reflection",
+			"explanation": "θᵢ = θᵣ (angle of incidence equals angle of reflection)"
+		},
+		{
+			"id": "ps_019",
+			"topic": "Refraction",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "When light enters water from air, it:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Slows down and bends toward normal",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Speeds up and bends toward normal",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "No change in speed", "isCorrect": false },
+				{ "id": "D", "text": "Reflects back", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Water is denser than air",
+			"explanation": "Light slows in denser medium and bends toward the normal"
+		},
+		{
+			"id": "ps_020",
+			"topic": "Heat Transfer",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Heat transfer by convection occurs in:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Fluids (liquids and gases)", "isCorrect": true },
+				{ "id": "B", "text": "Solids only", "isCorrect": false },
+				{ "id": "C", "text": "Vacuum only", "isCorrect": false },
+				{ "id": "D", "text": "Metals only", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Convection involves movement of particles",
+			"explanation": "Convection transfers heat through fluid motion (liquids and gases)"
+		},
+		{
+			"id": "ps_021",
+			"topic": "Conduction",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Conduction transfers heat best through:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Metals", "isCorrect": true },
+				{ "id": "B", "text": "Gases", "isCorrect": false },
+				{ "id": "C", "text": "Vacuum", "isCorrect": false },
+				{ "id": "D", "text": "Plastics", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Good conductors",
+			"explanation": "Metals are good conductors due to free electrons"
+		},
+		{
+			"id": "ps_022",
+			"topic": "Thermal Expansion",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "When heated, most materials:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Expand", "isCorrect": true },
+				{ "id": "B", "text": "Contract", "isCorrect": false },
+				{ "id": "C", "text": "Stay the same", "isCorrect": false },
+				{ "id": "D", "text": "Change to liquid", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Particle motion increases",
+			"explanation": "Heat increases particle motion, causing expansion"
+		},
+		{
+			"id": "ps_023",
+			"topic": "States of Matter",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Particles are closest together in:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Solid", "isCorrect": true },
+				{ "id": "B", "text": "Liquid", "isCorrect": false },
+				{ "id": "C", "text": "Gas", "isCorrect": false },
+				{ "id": "D", "text": "Plasma", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Fixed arrangement",
+			"explanation": "Solids have closely packed particles in fixed arrangement"
+		},
+		{
+			"id": "ps_024",
+			"topic": "Electric Fields",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "Electric field lines point away from:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Positive charges", "isCorrect": true },
+				{ "id": "B", "text": "Negative charges", "isCorrect": false },
+				{ "id": "C", "text": "Neutral objects", "isCorrect": false },
+				{ "id": "D", "text": "Both positive and negative", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Field direction is test charge direction",
+			"explanation": "Field lines point from positive to negative"
+		},
+		{
+			"id": "ps_025",
+			"topic": "Circuits",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Current in a series circuit is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Same throughout", "isCorrect": true },
+				{ "id": "B", "text": "Different at each point", "isCorrect": false },
+				{ "id": "C", "text": "Zero", "isCorrect": false },
+				{ "id": "D", "text": "Half at each point", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "One path for current",
+			"explanation": "In series, same current flows through all components"
+		},
+		{
+			"id": "ps_026",
+			"topic": "Resistance",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Ohm's Law states:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "V = IR", "isCorrect": true },
+				{ "id": "B", "text": "V = I/R", "isCorrect": false },
+				{ "id": "C", "text": "V = R/I", "isCorrect": false },
+				{ "id": "D", "text": "V = I + R", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Voltage equals current times resistance",
+			"explanation": "V = IR (Voltage = Current × Resistance)"
+		},
+		{
+			"id": "ps_027",
+			"topic": "Magnetism",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Magnetic field lines outside a magnet go from:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "North to South", "isCorrect": true },
+				{ "id": "B", "text": "South to North", "isCorrect": false },
+				{ "id": "C", "text": "Nowhere", "isCorrect": false },
+				{ "id": "D", "text": "In circles", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "External direction",
+			"explanation": "Lines go from North pole to South pole externally"
+		},
+		{
+			"id": "ps_028",
+			"topic": "Electromagnetic Induction",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "Current is induced when a magnet moves through a coil because:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Magnetic field changes", "isCorrect": true },
+				{ "id": "B", "text": "Magnet is metal", "isCorrect": false },
+				{ "id": "C", "text": "Coil is wire", "isCorrect": false },
+				{ "id": "D", "text": "Coil has resistance", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Faraday's Law",
+			"explanation": "Changing magnetic flux induces EMF/current"
+		},
+		{
+			"id": "ps_029",
+			"topic": "Atomic Structure",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Most of an atom's mass is in the:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Nucleus", "isCorrect": true },
+				{ "id": "B", "text": "Electrons", "isCorrect": false },
+				{ "id": "C", "text": "Empty space", "isCorrect": false },
+				{ "id": "D", "text": "Cloud", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Protons and neutrons",
+			"explanation": "Nucleus contains protons and neutrons (most of atomic mass)"
+		},
+		{
+			"id": "ps_030",
+			"topic": "Radioactivity",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "Alpha radiation consists of:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Helium nuclei", "isCorrect": true },
+				{ "id": "B", "text": "Electrons", "isCorrect": false },
+				{ "id": "C", "text": "Photons", "isCorrect": false },
+				{ "id": "D", "text": "Neutrons", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "2 protons + 2 neutrons",
+			"explanation": "Alpha particles are helium nuclei (₂He⁴)"
+		},
+		{
+			"id": "ps_031",
+			"topic": "Half-life",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "A sample has half-life of 10 years. After 30 years, fraction remaining is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "1/8", "isCorrect": true },
+				{ "id": "B", "text": "1/4", "isCorrect": false },
+				{ "id": "C", "text": "1/2", "isCorrect": false },
+				{ "id": "D", "text": "3/4", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Half-life halves each period",
+			"explanation": "After 10 yrs: 1/2, 20 yrs: 1/4, 30 yrs: 1/8"
+		},
+		{
+			"id": "ps_032",
+			"topic": "Simple Machines",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "A lever provides mechanical advantage by:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Rotating around a fulcrum", "isCorrect": true },
+				{ "id": "B", "text": "Reducing friction", "isCorrect": false },
+				{ "id": "C", "text": "Changing energy", "isCorrect": false },
+				{ "id": "D", "text": "Increasing distance", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Lever principle",
+			"explanation": "Lever rotates around fulcrum to multiply force"
+		},
+		{
+			"id": "ps_033",
+			"topic": "Acceleration",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "A falling object near Earth has approximately what acceleration?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "9.8 m/s²", "isCorrect": true },
+				{ "id": "B", "text": "9.8 m/s", "isCorrect": false },
+				{ "id": "C", "text": "1 m/s²", "isCorrect": false },
+				{ "id": "D", "text": "98 m/s²", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "g = 9.8 m/s²",
+			"explanation": "All objects near Earth accelerate at g = 9.8 m/s² (ignoring air resistance)"
+		},
+		{
+			"id": "ps_034",
+			"topic": "Pendulums",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "The period of a pendulum depends on:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Length and gravity", "isCorrect": true },
+				{ "id": "B", "text": "Mass", "isCorrect": false },
+				{ "id": "C", "text": "Initial amplitude", "isCorrect": false },
+				{ "id": "D", "text": "Air resistance", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "T = 2π√(L/g)",
+			"explanation": "Period T depends on length L and gravity g, not mass"
+		},
+		{
+			"id": "ps_035",
+			"topic": "Energy Conservation",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "Energy can be:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Converted but not created/destroyed",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Created", "isCorrect": false },
+				{ "id": "C", "text": "Destroyed", "isCorrect": false },
+				{ "id": "D", "text": "Lost in a closed system", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Conservation of energy",
+			"explanation": "Law of Conservation: energy converted but total stays constant"
+		}
+	]
+}

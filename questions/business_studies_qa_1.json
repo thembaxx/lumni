@@ -1,0 +1,571 @@
+{
+	"metadata": {
+		"subject": "business_studies",
+		"totalQuestions": 30,
+		"version": "1.0.0",
+		"curriculum": "General Business Studies",
+		"createdAt": "2026-04-23"
+	},
+	"questions": [
+		{
+			"id": "bus_001",
+			"topic": "Nature of Management",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Management is an example of which of the following?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Science", "isCorrect": false },
+				{ "id": "B", "text": "Art", "isCorrect": false },
+				{ "id": "C", "text": "Both Science and Art", "isCorrect": true },
+				{ "id": "D", "text": "Neither", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It requires both technical skill and creativity",
+			"explanation": "Management is both a science (systematic knowledge) and an art (practical skill)"
+		},
+		{
+			"id": "bus_002",
+			"topic": "Management Levels",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Which level of management is responsible for implementing strategic plans?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Top management", "isCorrect": true },
+				{ "id": "B", "text": "Middle management", "isCorrect": false },
+				{ "id": "C", "text": "Lower management", "isCorrect": false },
+				{ "id": "D", "text": "All levels", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Think about strategic decision making",
+			"explanation": "Top management sets strategic direction and long-term plans"
+		},
+		{
+			"id": "bus_003",
+			"topic": "Principles of Management",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Who is credited with developing the 14 principles of management?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Henri Fayol", "isCorrect": true },
+				{ "id": "B", "text": "Frederick Taylor", "isCorrect": false },
+				{ "id": "C", "text": "Peter Drucker", "isCorrect": false },
+				{ "id": "D", "text": "Michael Porter", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "He was a French mining engineer",
+			"explanation": "Henri Fayol developed the 14 principles of management"
+		},
+		{
+			"id": "bus_004",
+			"topic": "Business Environment",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Which of the following is a component of the economic environment?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Monetary policy", "isCorrect": true },
+				{ "id": "B", "text": "Company culture", "isCorrect": false },
+				{ "id": "C", "text": "Employee morale", "isCorrect": false },
+				{ "id": "D", "text": "Management style", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It's related to government economic decisions",
+			"explanation": "Monetary policy is part of the economic business environment"
+		},
+		{
+			"id": "bus_005",
+			"topic": "Planning",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What is the first step in the planning process?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Identifying objectives", "isCorrect": true },
+				{ "id": "B", "text": "Formulating plans", "isCorrect": false },
+				{ "id": "C", "text": "Evaluating alternatives", "isCorrect": false },
+				{ "id": "D", "text": "Implementing plans", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Start with what you want to achieve",
+			"explanation": "Planning begins with identifying goals and objectives"
+		},
+		{
+			"id": "bus_006",
+			"topic": "Organizing",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Delegation involves assigning responsibility along with:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Authority and accountability",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Only authority", "isCorrect": false },
+				{ "id": "C", "text": "Only accountability", "isCorrect": false },
+				{ "id": "D", "text": "Salary", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It's about transferring decision making",
+			"explanation": "Delegation requires authority to act and accountability for results"
+		},
+		{
+			"id": "bus_007",
+			"topic": "Staffing",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Which function involves recruiting and developing employees?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Staffing", "isCorrect": true },
+				{ "id": "B", "text": "Planning", "isCorrect": false },
+				{ "id": "C", "text": "Directing", "isCorrect": false },
+				{ "id": "D", "text": "Controlling", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It's about human resources",
+			"explanation": "Staffing involves recruiting, selecting, and developing employees"
+		},
+		{
+			"id": "bus_008",
+			"topic": "Directing",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Which management function involves motivating employees?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Directing", "isCorrect": true },
+				{ "id": "B", "text": "Planning", "isCorrect": false },
+				{ "id": "C", "text": "Organizing", "isCorrect": false },
+				{ "id": "D", "text": "Controlling", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It's about guiding and inspiring people",
+			"explanation": "Directing involves guiding, motivating, and leading employees"
+		},
+		{
+			"id": "bus_009",
+			"topic": "Controlling",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What is the final step in the controlling process?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Taking corrective action", "isCorrect": true },
+				{ "id": "B", "text": "Measuring performance", "isCorrect": false },
+				{ "id": "C", "text": "Setting standards", "isCorrect": false },
+				{ "id": "D", "text": "Comparing performance", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It's what you do after comparing",
+			"explanation": "Corrective action is taken when there are deviations from standards"
+		},
+		{
+			"id": "bus_010",
+			"topic": "Financial Management",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What is the primary objective of financial management?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Maximize shareholder wealth", "isCorrect": true },
+				{ "id": "B", "text": "Maximize profits", "isCorrect": false },
+				{ "id": "C", "text": "Minimize costs", "isCorrect": false },
+				{ "id": "D", "text": "Maximize dividends", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Think about long-term value",
+			"explanation": "Financial management aims to maximize shareholder wealth through stock price"
+		},
+		{
+			"id": "bus_011",
+			"topic": "Capital Structure",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Which is a component of capital structure?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Debt and Equity", "isCorrect": true },
+				{ "id": "B", "text": "Cash only", "isCorrect": false },
+				{ "id": "C", "text": "Inventory", "isCorrect": false },
+				{ "id": "D", "text": "Accounts receivable", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It's about financing sources",
+			"explanation": "Capital structure refers to the mix of debt and equity financing"
+		},
+		{
+			"id": "bus_012",
+			"topic": "Financial Markets",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Which market deals with newly issued securities?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Primary market", "isCorrect": true },
+				{ "id": "B", "text": "Secondary market", "isCorrect": false },
+				{ "id": "C", "text": "Money market", "isCorrect": false },
+				{ "id": "D", "text": "Capital market", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It's for new issuances",
+			"explanation": "The primary market is for new securities IPOs and issuances"
+		},
+		{
+			"id": "bus_013",
+			"topic": "Marketing",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Which of the following is part of the marketing mix (4 Ps)?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Product", "isCorrect": true },
+				{ "id": "B", "text": "People", "isCorrect": false },
+				{ "id": "C", "text": "Process", "isCorrect": false },
+				{ "id": "D", "text": "Physical evidence", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "The basic marketing mix",
+			"explanation": "Product, Price, Place, and Promotion are the 4 Ps"
+		},
+		{
+			"id": "bus_014",
+			"topic": "Consumer Protection",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Under consumer protection laws, a consumer has the right to:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Safety of products", "isCorrect": true },
+				{ "id": "B", "text": "Unlimited free products", "isCorrect": false },
+				{ "id": "C", "text": "Products at any price", "isCorrect": false },
+				{ "id": "D", "text": "No product recalls", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It's about protection from harm",
+			"explanation": "Consumers have the right to safety from harmful products"
+		},
+		{
+			"id": "bus_015",
+			"topic": "SEBI Functions",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "SEBI primarily regulates:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Stock markets", "isCorrect": true },
+				{ "id": "B", "text": "Banks", "isCorrect": false },
+				{ "id": "C", "text": "Insurance companies", "isCorrect": false },
+				{ "id": "D", "text": "Manufacturing", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It protects investors",
+			"explanation": "SEBI regulates securities markets and protects investor interests"
+		},
+		{
+			"id": "bus_016",
+			"topic": "Control System",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Which is an essential element of an effective control system?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Flexible", "isCorrect": true },
+				{ "id": "B", "text": "Rigid", "isCorrect": false },
+				{ "id": "C", "text": "Complex", "isCorrect": false },
+				{ "id": "D", "text": "Inflexible", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It should adapt to changes",
+			"explanation": "An effective control system must be flexible to adapt to changes"
+		},
+		{
+			"id": "bus_017",
+			"topic": "Decentralization",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Decentralization leads to:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Faster decision-making", "isCorrect": true },
+				{ "id": "B", "text": "Slower decision-making", "isCorrect": false },
+				{ "id": "C", "text": "More central control", "isCorrect": false },
+				{ "id": "D", "text": "Higher costs", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Decisions are pushed down to lower levels",
+			"explanation": "Decentralization empowers lower levels for quicker decisions"
+		},
+		{
+			"id": "bus_018",
+			"topic": "Money Market",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Which market contributes to capital formation?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Money market", "isCorrect": true },
+				{ "id": "B", "text": "Stock market", "isCorrect": false },
+				{ "id": "C", "text": "Bond market", "isCorrect": false },
+				{ "id": "D", "text": "Commodity market", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It's for short-term funds",
+			"explanation": "Money markets facilitate short-term capital formation"
+		},
+		{
+			"id": "bus_019",
+			"topic": "Sensex",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Sensex is dependent on how many companies?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "30", "isCorrect": true },
+				{ "id": "B", "text": "50", "isCorrect": false },
+				{ "id": "C", "text": "100", "isCorrect": false },
+				{ "id": "D", "text": "500", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It's a stock market index",
+			"explanation": "Sensex tracks 30 major companies on BSE"
+		},
+		{
+			"id": "bus_020",
+			"topic": "Distribution Channel",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "A manufacturer sells to a retailer, who sells to customers. What channel is this?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "One level channel", "isCorrect": true },
+				{ "id": "B", "text": "Direct channel", "isCorrect": false },
+				{ "id": "C", "text": "Two level channel", "isCorrect": false },
+				{ "id": "D", "text": "Three level channel", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Count the intermediaries",
+			"explanation": "One intermediary (retailer) makes it a one-level channel"
+		},
+		{
+			"id": "bus_021",
+			"topic": "Training",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "The aim of training is to make employees efficient in:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "A particular field", "isCorrect": true },
+				{ "id": "B", "text": "All fields", "isCorrect": false },
+				{ "id": "C", "text": "Two fields", "isCorrect": false },
+				{ "id": "D", "text": "Three fields", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Focus on job-specific skills",
+			"explanation": "Training focuses on specific job-related skills"
+		},
+		{
+			"id": "bus_022",
+			"topic": "Recruitment",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Which comes first: Recruitment or Selection?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Recruitment", "isCorrect": true },
+				{ "id": "B", "text": "Selection", "isCorrect": false },
+				{ "id": "C", "text": "They happen together", "isCorrect": false },
+				{
+					"id": "D",
+					"text": "Neither, training comes first",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "You attract candidates first",
+			"explanation": "Recruitment attracts candidates, then selection chooses the best"
+		},
+		{
+			"id": "bus_023",
+			"topic": "Marketing Mix",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "The 'Place' in marketing mix refers to:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Distribution channels", "isCorrect": true },
+				{ "id": "B", "text": "Product location", "isCorrect": false },
+				{ "id": "C", "text": "Office location", "isCorrect": false },
+				{ "id": "D", "text": "Price location", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It's about getting products to customers",
+			"explanation": "Place refers to distribution channels and location strategies"
+		},
+		{
+			"id": "bus_024",
+			"topic": "Brand",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "A brand name is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Protected by law", "isCorrect": true },
+				{ "id": "B", "text": "Not protected", "isCorrect": false },
+				{ "id": "C", "text": "Automatic for 50 years", "isCorrect": false },
+				{ "id": "D", "text": "Only for products", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Think about trademark",
+			"explanation": "Brand names can be trademarked for legal protection"
+		},
+		{
+			"id": "bus_025",
+			"topic": "Leadership",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Which leadership style involves employee participation in decision-making?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Democratic", "isCorrect": true },
+				{ "id": "B", "text": "Autocratic", "isCorrect": false },
+				{ "id": "C", "text": "Laissez-faire", "isCorrect": false },
+				{ "id": "D", "text": "Transactional", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Employees share ideas",
+			"explanation": "Democratic leadership involves employees in decisions"
+		},
+		{
+			"id": "bus_026",
+			"topic": "Motivation",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Maslow's hierarchy has how many levels?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "5", "isCorrect": true },
+				{ "id": "B", "text": "4", "isCorrect": false },
+				{ "id": "C", "text": "6", "isCorrect": false },
+				{ "id": "D", "text": "3", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Start from basic needs upward",
+			"explanation": "Maslow's hierarchy has 5 levels: physiological, safety, social, esteem, self-actualization"
+		},
+		{
+			"id": "bus_027",
+			"topic": "Business Combination",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "When two companies combine to form a new company, this is called:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Merger", "isCorrect": false },
+				{ "id": "B", "text": "Consolidation", "isCorrect": true },
+				{ "id": "C", "text": "Acquisition", "isCorrect": false },
+				{ "id": "D", "text": "Takeover", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "A new entity is created",
+			"explanation": "Consolidation creates an entirely new company from the combination"
+		},
+		{
+			"id": "bus_028",
+			"topic": "Dividend Policy",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Dividends are usually paid from:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Profits after tax", "isCorrect": true },
+				{ "id": "B", "text": "Gross revenue", "isCorrect": false },
+				{ "id": "C", "text": "Capital", "isCorrect": false },
+				{ "id": "D", "text": "Assets", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Think after-tax income",
+			"explanation": "Dividends are paid from after-tax profits (retained earnings)"
+		},
+		{
+			"id": "bus_029",
+			"topic": "Working Capital",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Working Capital =",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Current Assets - Current Liabilities",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Total Assets - Total Liabilities",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Fixed Assets - Current Assets",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Revenue - Expenses", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It's about short-term financing",
+			"explanation": "Working capital measures short-term liquidity"
+		},
+		{
+			"id": "bus_030",
+			"topic": "Market Segmentation",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Dividing a market into distinct groups is called:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Market segmentation", "isCorrect": true },
+				{ "id": "B", "text": "Market targeting", "isCorrect": false },
+				{ "id": "C", "text": "Market positioning", "isCorrect": false },
+				{ "id": "D", "text": "Market mix", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It's the first step in target marketing",
+			"explanation": "Market segmentation divides customers into distinct groups"
+		}
+	]
+}

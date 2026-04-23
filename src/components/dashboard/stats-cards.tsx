@@ -1,10 +1,14 @@
 "use client";
 
-"use client";
-
 import { IconFlame, IconTarget, IconTrendingUp } from "@tabler/icons-react";
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import {
+	domAnimation,
+	LazyMotion,
+	m,
+	useSpring,
+	useTransform,
+} from "framer-motion";
+import { useEffect } from "react";
 import { Card } from "@/components/ui/card";
 
 interface StatsCardsProps {
@@ -13,44 +17,22 @@ interface StatsCardsProps {
 	accuracy: number;
 }
 
-function AnimatedNumber({
-	value,
-	suffix = "",
+function AnimatedValue({
+	target,
+	delay = 0,
 }: {
-	value: number;
-	suffix?: string;
+	target: number;
+	delay?: number;
 }) {
-	const [displayValue, setDisplayValue] = useState(0);
+	const spring = useSpring(0, { stiffness: 100, damping: 20 });
+	const display = useTransform(spring, (v) => Math.round(v));
 
 	useEffect(() => {
-		const duration = 800;
-		const steps = 30;
-		const stepDuration = duration / steps;
-		let currentStep = 0;
+		const t = setTimeout(() => spring.set(target), delay);
+		return () => clearTimeout(t);
+	}, [target, spring, delay]);
 
-		const interval = setInterval(() => {
-			currentStep++;
-			const progress = currentStep / steps;
-			const easeOut = 1 - Math.pow(1 - progress, 3);
-			setDisplayValue(Math.round(value * easeOut));
-
-			if (currentStep >= steps) {
-				setDisplayValue(value);
-				clearInterval(interval);
-			}
-		}, stepDuration);
-
-		return () => clearInterval(interval);
-	}, [value]);
-
-	return (
-		<span>
-			{displayValue}
-			{suffix && (
-				<span className="text-xs text-muted-foreground ml-1">{suffix}</span>
-			)}
-		</span>
-	);
+	return <m.span>{display}</m.span>;
 }
 
 export function StatsCards({
@@ -62,65 +44,64 @@ export function StatsCards({
 		{
 			label: "Current Streak",
 			value: streak,
-			unit: streak === 1 ? "day" : "days",
 			icon: IconFlame,
 			color: "text-orange-500",
 			bg: "bg-orange-500/10",
-			suffix: null,
 		},
 		{
 			label: "Questions",
 			value: questionsAnswered,
-			unit: "answered",
 			icon: IconTarget,
 			color: "text-blue-500",
 			bg: "bg-blue-500/10",
-			suffix: null,
 		},
 		{
 			label: "Accuracy",
 			value: accuracy,
-			unit: "%",
 			icon: IconTrendingUp,
 			color: "text-green-500",
 			bg: "bg-green-500/10",
-			suffix: "%",
 		},
 	];
 
 	return (
-		<div className="grid grid-cols-3 gap-3">
-			{stats.map((stat, index) => (
-				<motion.div
-					key={stat.label}
-					initial={{ opacity: 0, y: 20 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ delay: index * 0.1, duration: 0.4 }}
-				>
-					<Card className="p-4 flex flex-col h-full items-center justify-center gap-2">
-						<motion.div
-							className={`p-2 rounded-full ${stat.bg}`}
-							initial={{ scale: 0 }}
-							animate={{ scale: 1 }}
-							transition={{
-								delay: index * 0.1 + 0.2,
-								type: "spring",
-								stiffness: 200,
-							}}
-						>
-							<stat.icon className={`w-5 h-5 ${stat.color}`} />
-						</motion.div>
-						<div className="text-center">
-							<p className="text-2xl font-bold">
-								<AnimatedNumber value={stat.value} />
-							</p>
-							<p className="text-xs text-muted-foreground line-clamp-2">
-								{stat.label}
-							</p>
-						</div>
-					</Card>
-				</motion.div>
-			))}
-		</div>
+		<LazyMotion features={domAnimation}>
+			<div className="grid grid-cols-3 gap-3">
+				{stats.map((stat, index) => (
+					<m.div
+						key={stat.label}
+						initial={{ opacity: 0, y: 20 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ delay: index * 0.1, duration: 0.4 }}
+					>
+						<Card className="p-4 flex flex-col h-full items-center justify-center gap-2">
+							<m.div
+								className={`p-2 rounded-full ${stat.bg}`}
+								initial={{ scale: 0.95, opacity: 0 }}
+								animate={{ scale: 1, opacity: 1 }}
+								transition={{
+									delay: index * 0.1 + 0.2,
+									type: "spring",
+									stiffness: 200,
+								}}
+							>
+								<stat.icon className={`w-5 h-5 ${stat.color}`} />
+							</m.div>
+							<div className="text-center">
+								<p className="text-2xl font-bold">
+									<AnimatedValue
+										target={stat.value}
+										delay={index * 100 + 400}
+									/>
+								</p>
+								<p className="text-xs text-muted-foreground line-clamp-2">
+									{stat.label}
+								</p>
+							</div>
+						</Card>
+					</m.div>
+				))}
+			</div>
+		</LazyMotion>
 	);
 }

@@ -9,9 +9,9 @@ import {
 	Timer,
 	Zap,
 } from "lucide-react";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
-import { QuestionCard } from "@/components/questions/question-card";
+import { QuestionCard } from "@/components/quiz/question-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -44,7 +44,18 @@ export function QuizClient() {
 	const [showFeedback, setShowFeedback] = useState(false);
 	const [results, setResults] = useState<QuizResults[]>([]);
 	const [elapsedTime, setElapsedTime] = useState(0);
-	const [_isTimerRunning, setIsTimerRunning] = useState(false);
+	const [isTimerRunning, setIsTimerRunning] = useState(false);
+
+	// Timer logic
+	useEffect(() => {
+		if (!isTimerRunning || !isQuizActive) return;
+
+		const interval = setInterval(() => {
+			setElapsedTime((prev) => prev + 1);
+		}, 1000);
+
+		return () => clearInterval(interval);
+	}, [isTimerRunning, isQuizActive]);
 
 	const subjectToFetch = selectedSubject.toLowerCase();
 
@@ -94,6 +105,21 @@ export function QuizClient() {
 		[showFeedback],
 	);
 
+	const handleAnswer = useCallback(
+		(optionId: string, isCorrect: boolean) => {
+			setResults((prev) => [
+				...prev,
+				{
+					questionId: currentQuestion.id,
+					selectedAnswer: optionId,
+					isCorrect,
+				},
+			]);
+			setShowFeedback(true);
+		},
+		[currentQuestion],
+	);
+
 	// const handleSubmit = useCallback(() => {
 	// 	if (!selectedAnswer || !currentQuestion) return;
 
@@ -123,13 +149,23 @@ export function QuizClient() {
 		}
 	}, [currentQuestionIndex, questionsToUse.length, stopQuiz]);
 
-	// const _handlePrevious = useCallback(() => {
-	// 	if (currentQuestionIndex > 0) {
-	// 		setCurrentQuestionIndex((prev) => prev - 1);
-	// 		setSelectedAnswer(null);
-	// 		setShowFeedback(false);
-	// 	}
-	// }, [currentQuestionIndex]);
+	const handlePrevious = useCallback(() => {
+		if (currentQuestionIndex > 0) {
+			setCurrentQuestionIndex((prev) => prev - 1);
+			setSelectedAnswer(null);
+			setShowFeedback(false);
+		}
+	}, [currentQuestionIndex]);
+
+	const handleSkip = useCallback(() => {
+		if (currentQuestionIndex < questionsToUse.length - 1) {
+			setCurrentQuestionIndex((prev) => prev + 1);
+			setSelectedAnswer(null);
+			setShowFeedback(false);
+		} else {
+			stopQuiz();
+		}
+	}, [currentQuestionIndex, questionsToUse.length, stopQuiz]);
 
 	const handleRestart = useCallback(() => {
 		setCurrentQuestionIndex(0);
@@ -299,27 +335,29 @@ export function QuizClient() {
 				selectedAnswer={selectedAnswer}
 				showFeedback={showFeedback}
 				onSelectAnswer={handleSelectAnswer}
+				onAnswer={handleAnswer}
 			/>
+
+			{!showFeedback && (
+				<div className="flex gap-2">
+					<Button
+						variant="outline"
+						onClick={handlePrevious}
+						disabled={currentQuestionIndex === 0}
+						className="flex-1"
+					>
+						<ChevronLeft className="size-4 mr-2" />
+						Previous
+					</Button>
+					<Button variant="outline" onClick={handleSkip} className="flex-1">
+						Skip
+						<ChevronRight className="size-4 ml-2" />
+					</Button>
+				</div>
+			)}
 
 			{showFeedback && (
 				<div className="space-y-2">
-					<div
-						className={cn(
-							"p-4 rounded-lg text-center font-medium",
-							results[currentQuestionIndex]?.isCorrect
-								? "bg-green-500/20 text-green-500"
-								: "bg-red-500/20 text-red-500",
-						)}
-					>
-						{results[currentQuestionIndex]?.isCorrect
-							? "Correct!"
-							: "Incorrect"}
-					</div>
-					{currentQuestion.explanation && (
-						<Card className="p-4 bg-muted">
-							<p className="text-sm">{currentQuestion.explanation}</p>
-						</Card>
-					)}
 					<Button className="w-full" onClick={handleNext}>
 						{currentQuestionIndex < questionsToUse.length - 1
 							? "Next Question"
@@ -329,9 +367,9 @@ export function QuizClient() {
 			)}
 
 			<div className="flex justify-center gap-1">
-				{questionsToUse.map((_, idx) => (
+				{questionsToUse.map((q, idx) => (
 					<div
-						key={idx}
+						key={q.id || `question-${idx}`}
 						className={cn(
 							"h-1.5 w-1.5 rounded-full",
 							idx === currentQuestionIndex

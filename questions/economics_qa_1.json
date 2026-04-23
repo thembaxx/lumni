@@ -1,0 +1,627 @@
+{
+	"metadata": {
+		"subject": "economics",
+		"totalQuestions": 30,
+		"version": "1.0.0",
+		"curriculum": "General Economics",
+		"createdAt": "2026-04-23"
+	},
+	"questions": [
+		{
+			"id": "econ_001",
+			"topic": "National Income",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "If money value of final goods and services produced by normal residents of a country in a year is measured at current year prices, this is called:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Nominal GDP", "isCorrect": true },
+				{ "id": "B", "text": "Real GDP", "isCorrect": false },
+				{ "id": "C", "text": "GNPs", "isCorrect": false },
+				{ "id": "D", "text": "GNP", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It's measured at current prices",
+			"explanation": "Nominal GDP measures GDP at current market prices"
+		},
+		{
+			"id": "econ_002",
+			"topic": "Depreciation",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Depreciation means:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Loss of value due to wear and tear",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Increase in asset value", "isCorrect": false },
+				{ "id": "C", "text": "Asset revaluation", "isCorrect": false },
+				{ "id": "D", "text": "Capital gains", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It's about capital consumption",
+			"explanation": "Depreciation is the decline in asset value due to wear"
+		},
+		{
+			"id": "econ_003",
+			"topic": "National Income",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Domestic income is greater than National Income if:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Net factor income from abroad is negative",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Net factor income from abroad is positive",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Exports exceed imports", "isCorrect": false },
+				{
+					"id": "D",
+					"text": "Government spending increases",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Use the formula: NNI = Domestic Income - Net factor income from abroad",
+			"explanation": "When NFIA is negative, domestic income exceeds national income"
+		},
+		{
+			"id": "econ_004",
+			"topic": "Foreign Aid",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Medicine supplied to earthquake victims in India by the British Government is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Transfer payment", "isCorrect": true },
+				{ "id": "B", "text": "Export", "isCorrect": false },
+				{ "id": "C", "text": "Import", "isCorrect": false },
+				{ "id": "D", "text": "Investment", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "No good is exchanged, only aid given",
+			"explanation": "Foreign aid is a transfer payment with no goods exchanged"
+		},
+		{
+			"id": "econ_005",
+			"topic": "GDP",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "What is Real GDP?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "GDP adjusted for inflation", "isCorrect": true },
+				{ "id": "B", "text": "GDP at current prices", "isCorrect": false },
+				{ "id": "C", "text": "Total goods produced", "isCorrect": false },
+				{ "id": "D", "text": "National income", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It removes price changes",
+			"explanation": "Real GDP adjusts for inflation to show true growth"
+		},
+		{
+			"id": "econ_006",
+			"topic": "Law of Demand",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Which of the following defines the law of demand?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "inverse relationship between price and quantity demanded",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "direct relationship between price and quantity demanded",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "price has no effect on demand",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "positive relationship", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "As price falls, demand rises",
+			"explanation": "Law of demand states price and quantity have an inverse relationship"
+		},
+		{
+			"id": "econ_007",
+			"topic": "GNP",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What does Gross National Product represent?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Total goods produced by nationals",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Total goods produced in the country",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Government spending", "isCorrect": false },
+				{ "id": "D", "text": "Exports minus imports", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It includes citizens working abroad",
+			"explanation": "GNP includes output by nationals whether domestic or abroad"
+		},
+		{
+			"id": "econ_008",
+			"topic": "Unemployment",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Why is unemployment rate usually low in developed countries?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Better education and training",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "More population", "isCorrect": false },
+				{ "id": "C", "text": "Higher taxes", "isCorrect": false },
+				{ "id": "D", "text": "Lower wages", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Human capital matters",
+			"explanation": "Better education and skills training reduce unemployment"
+		},
+		{
+			"id": "econ_009",
+			"topic": "Agricultural Price Support",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Which is an example of an agricultural price support program?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Minimum support price", "isCorrect": true },
+				{ "id": "B", "text": "Price ceiling", "isCorrect": false },
+				{ "id": "C", "text": "Price floor", "isCorrect": false },
+				{ "id": "D", "text": "Subsidy", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Government ensures minimum price",
+			"explanation": "Minimum support price is a price support program"
+		},
+		{
+			"id": "econ_010",
+			"topic": "Indian Planning",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Which is the name of Indian planning?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Five Year Plans", "isCorrect": true },
+				{ "id": "B", "text": "Ten Year Plans", "isCorrect": false },
+				{ "id": "C", "text": "Three Year Plans", "isCorrect": false },
+				{ "id": "D", "text": "Annual Plans", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "India follows Soviet model",
+			"explanation": "India follows Five Year Plans for economic development"
+		},
+		{
+			"id": "econ_011",
+			"topic": "Stock Changes",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Change in stock will be negative when:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Stock decreases", "isCorrect": true },
+				{ "id": "B", "text": "Stock increases", "isCorrect": false },
+				{ "id": "C", "text": "Stock remains same", "isCorrect": false },
+				{ "id": "D", "text": "Sales increase", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It's about inventory changes",
+			"explanation": "Negative change in stock means inventory has decreased"
+		},
+		{
+			"id": "econ_012",
+			"topic": "Economy Type",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "What type of economy does India have?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Mixed economy", "isCorrect": true },
+				{ "id": "B", "text": "Pure capitalist", "isCorrect": false },
+				{ "id": "C", "text": "Pure socialist", "isCorrect": false },
+				{ "id": "D", "text": "Command economy", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Both sectors exist",
+			"explanation": "India has a mixed economy with public and private sectors"
+		},
+		{
+			"id": "econ_013",
+			"topic": "Agriculture",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Which of the following significantly contributes to capital formation in agriculture?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Market yards", "isCorrect": false },
+				{ "id": "B", "text": "Warehouse receipts", "isCorrect": true },
+				{ "id": "C", "text": "Export duties", "isCorrect": false },
+				{ "id": "D", "text": "Import duties", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It helps farmers access credit - warehouse receipts enable farmers to use produce as collateral for credit",
+			"explanation": "Warehouse receipts enable farmers to use produce as collateral for credit"
+		},
+		{
+			"id": "econ_014",
+			"topic": "HYV",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What is the correct expansion for HYV?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "High Yielding Variety", "isCorrect": true },
+				{ "id": "B", "text": "High Yearly Value", "isCorrect": false },
+				{ "id": "C", "text": "Hybrid Yearly Variety", "isCorrect": false },
+				{ "id": "D", "text": "High Yield Value", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It's related to Green Revolution",
+			"explanation": "HYV refers to High Yielding Variety seeds"
+		},
+		{
+			"id": "econ_015",
+			"topic": "Subsidies",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Which is NOT true about subsidies in agriculture in India?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "All farmers benefit equally", "isCorrect": true },
+				{
+					"id": "B",
+					"text": "Fertilizer subsidy is provided",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Power subsidy is given", "isCorrect": false },
+				{ "id": "D", "text": "Irrigation subsidy exists", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Think about distribution",
+			"explanation": "Subsidies often favor larger farmers, not equally distributed"
+		},
+		{
+			"id": "econ_016",
+			"topic": "National Income",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Which is included in national income?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Wages and salaries", "isCorrect": true },
+				{ "id": "B", "text": "Pension", "isCorrect": false },
+				{ "id": "C", "text": "Unemployment allowance", "isCorrect": false },
+				{ "id": "D", "text": "Capital gains", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It's Factor Income",
+			"explanation": "Wages and salaries are included in national income"
+		},
+		{
+			"id": "econ_017",
+			"topic": "Circular Flow",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "In the circular flow model, households provide to the resource market:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Factors of production", "isCorrect": true },
+				{ "id": "B", "text": "Goods and services", "isCorrect": false },
+				{ "id": "C", "text": "Money", "isCorrect": false },
+				{ "id": "D", "text": "Taxes", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Resources that firms need",
+			"explanation": "Households provide factors of production (labor, capital)"
+		},
+		{
+			"id": "econ_018",
+			"topic": "Economic Problems",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "The three fundamental economic problems are:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "What, how, for whom to produce",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Where, when, who to produce",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Production, distribution, consumption",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Supply, demand, price", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Every economy must answer these",
+			"explanation": "The basic economic problems are what, how, and for whom to produce"
+		},
+		{
+			"id": "econ_019",
+			"topic": "Opportunity Cost",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What is opportunity cost?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Value of next best alternative foregone",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Total cost of production", "isCorrect": false },
+				{ "id": "C", "text": "Money spent", "isCorrect": false },
+				{ "id": "D", "text": "Price of good", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It's about sacrifice",
+			"explanation": "Opportunity cost is the value of what you give up"
+		},
+		{
+			"id": "econ_020",
+			"topic": "Scarcity",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "When economists say resources are scarce, it means:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Resources are limited relative to wants",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Resources are exhausted", "isCorrect": false },
+				{ "id": "C", "text": "Resources are free", "isCorrect": false },
+				{ "id": "D", "text": "Resources are abundant", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It's about unlimited wants vs limited resources",
+			"explanation": "Scarcity exists when wants exceed available resources"
+		},
+		{
+			"id": "econ_021",
+			"topic": "Macroeconomics",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Which is an example of macroeconomics?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Aggregate demand of the economy",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Saving of an individual", "isCorrect": false },
+				{ "id": "C", "text": "Consumption of a household", "isCorrect": false },
+				{ "id": "D", "text": "Price level of a firm", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It studies the whole economy",
+			"explanation": "Macroeconomics studies economy-wide aggregates"
+		},
+		{
+			"id": "econ_022",
+			"topic": "Unemployment",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Deficiency of aggregate demand leads to what type of unemployment?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Involuntary unemployment", "isCorrect": true },
+				{ "id": "B", "text": "Voluntary unemployment", "isCorrect": false },
+				{ "id": "C", "text": "Seasonal unemployment", "isCorrect": false },
+				{ "id": "D", "text": "Frictional unemployment", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "People want jobs but can't find",
+			"explanation": "Cyclical unemployment occurs due to lack of demand"
+		},
+		{
+			"id": "econ_023",
+			"topic": "Price Determination",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Market price and factor cost would be equal when there is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "No indirect tax and no subsidy",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "No direct tax", "isCorrect": false },
+				{ "id": "C", "text": "No subsidy", "isCorrect": false },
+				{ "id": "D", "text": "No tax", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Market price = Factor cost + Indirect tax - Subsidy",
+			"explanation": "Without taxes and subsidies, market price equals factor cost"
+		},
+		{
+			"id": "econ_024",
+			"topic": "GDP deflator",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "GDP deflator is a measure of:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Price inflation", "isCorrect": true },
+				{ "id": "B", "text": "Real output", "isCorrect": false },
+				{ "id": "C", "text": "Unemployment", "isCorrect": false },
+				{ "id": "D", "text": "Population", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It converts nominal to real",
+			"explanation": "GDP deflator measures price changes in the economy"
+		},
+		{
+			"id": "econ_025",
+			"topic": "Flow Variable",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Which is a flow variable?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Income", "isCorrect": true },
+				{ "id": "B", "text": "Wealth", "isCorrect": false },
+				{ "id": "C", "text": "Capital stock", "isCorrect": false },
+				{ "id": "D", "text": "Land", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It has time dimension",
+			"explanation": "Income is a flow measured over a period of time"
+		},
+		{
+			"id": "econ_026",
+			"topic": "Inflation",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "What causes demand-pull inflation?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Increase in aggregate demand",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Increase in supply", "isCorrect": false },
+				{ "id": "C", "text": "Decreased money supply", "isCorrect": false },
+				{ "id": "D", "text": "Fixed wages", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Too much money chasing too few goods",
+			"explanation": "Demand-pull inflation occurs when demand exceeds supply"
+		},
+		{
+			"id": "econ_027",
+			"topic": "Fiscal Policy",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Fiscal policy involves government decisions on:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Taxation and spending", "isCorrect": true },
+				{ "id": "B", "text": "Money supply", "isCorrect": false },
+				{ "id": "C", "text": "Exchange rates", "isCorrect": false },
+				{ "id": "D", "text": "Trade barriers", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Government budget decisions",
+			"explanation": "Fiscal policy deals with government revenue and expenditure"
+		},
+		{
+			"id": "econ_028",
+			"topic": "Monetary Policy",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Monetary policy is controlled by:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Central Bank", "isCorrect": true },
+				{ "id": "B", "text": "Finance Ministry", "isCorrect": false },
+				{ "id": "C", "text": "Parliament", "isCorrect": false },
+				{ "id": "D", "text": "Supreme Court", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It controls money supply",
+			"explanation": "The Central Bank controls monetary policy"
+		},
+		{
+			"id": "econ_029",
+			"topic": "Balance of Payments",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Current account includes:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Trade and transfers", "isCorrect": true },
+				{ "id": "B", "text": "Foreign investment", "isCorrect": false },
+				{ "id": "C", "text": "Loans", "isCorrect": false },
+				{ "id": "D", "text": "Currency flows", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It's about current transactions",
+			"explanation": "Current account covers trade in goods, services, and transfers"
+		},
+		{
+			"id": "econ_030",
+			"topic": "Exchange Rate",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "When the rupee depreciates, what happens to imports?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Imports become expensive", "isCorrect": true },
+				{ "id": "B", "text": "Imports become cheap", "isCorrect": false },
+				{ "id": "C", "text": "Exports decrease", "isCorrect": false },
+				{ "id": "D", "text": "No change", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "More rupees needed to buy foreign currency",
+			"explanation": "Rupee depreciation makes foreign goods more expensive"
+		}
+	]
+}

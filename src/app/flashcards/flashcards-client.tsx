@@ -1,7 +1,7 @@
 "use client";
 
 import { IconCheck, IconX } from "@tabler/icons-react";
-import { motion } from "framer-motion";
+import { domAnimation, LazyMotion, m } from "framer-motion";
 import {
 	ChevronLeft,
 	ChevronRight,
@@ -276,16 +276,22 @@ export function FlashcardsClient({}: FlashcardsClientProps) {
 			</div>
 
 			<div className="flex-1 flex items-center justify-center">
-				<div
-					className="perspective-1000 cursor-pointer w-full max-w-md"
-					onClick={handleFlip}
-				>
-					<motion.div
-						className="relative w-full preserve-3d transition-transform duration-500"
-						style={{
-							transformStyle: "preserve-3d",
-							transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
+				<LazyMotion features={domAnimation}>
+					<m.div
+						className="perspective-1000 cursor-pointer w-full max-w-md"
+						onClick={handleFlip}
+						onKeyDown={(e) => {
+							if (e.key === "Enter" || e.key === " ") {
+								e.preventDefault();
+								handleFlip();
+							}
 						}}
+						role="button"
+						tabIndex={0}
+						aria-label="Flip flashcard"
+						initial={{ rotateY: 0 }}
+						animate={{ rotateY: isFlipped ? 180 : 0 }}
+						transition={{ duration: 0.5 }}
 					>
 						<Card
 							className={cn(
@@ -328,8 +334,8 @@ export function FlashcardsClient({}: FlashcardsClientProps) {
 								</div>
 							)}
 						</Card>
-					</motion.div>
-				</div>
+					</m.div>
+				</LazyMotion>
 			</div>
 
 			{isFlipped && (

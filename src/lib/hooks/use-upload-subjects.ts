@@ -49,20 +49,10 @@ async function fetchUploadSubjects(): Promise<UploadSubject[]> {
 }
 
 export function useUploadSubjects() {
-	const { setSubjects, setLoading, setError } = useUploadStore();
-
 	return useQuery({
 		queryKey: ["upload-subjects"],
 		queryFn: async () => {
-			setLoading(true);
-			try {
-				const data = await fetchUploadSubjects();
-				setSubjects(data);
-				return data;
-			} catch (error) {
-				setError(error as Error);
-				throw error;
-			}
+			return fetchUploadSubjects();
 		},
 		staleTime: 1000 * 60 * 5,
 		retry: 2,
@@ -80,10 +70,4 @@ export async function prefetchUploadSubjects(queryClient: QueryClient) {
 		queryFn: fetchUploadSubjects,
 		staleTime: 1000 * 60 * 5,
 	});
-
-	const data = queryClient.getQueryData<UploadSubject[]>(["upload-subjects"]);
-	if (data) {
-		const store = useUploadStore.getState();
-		store.setSubjects(data);
-	}
 }

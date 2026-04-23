@@ -20,7 +20,7 @@ import {
 	ViewTransition,
 } from "react";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
-import { QuestionCard } from "@/components/questions/question-card";
+import { QuestionCard } from "@/components/quiz/question-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -361,14 +361,17 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 						</p>
 					</div>
 					<div className="flex items-center gap-1.5">
-						<span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/40 animate-bounce" />
 						<span
-							className="h-1.5 w-1.5 rounded-full bg-muted-foreground/40 animate-bounce"
-							style={{ animationDelay: "150ms" }}
+							className="h-1.5 w-1.5 rounded-full bg-muted-foreground/40"
+							style={{ animation: "pulse-dot 1s ease-out infinite" }}
 						/>
 						<span
-							className="h-1.5 w-1.5 rounded-full bg-muted-foreground/40 animate-bounce"
-							style={{ animationDelay: "300ms" }}
+							className="h-1.5 w-1.5 rounded-full bg-muted-foreground/40"
+							style={{ animation: "pulse-dot 1s ease-out infinite 150ms" }}
+						/>
+						<span
+							className="h-1.5 w-1.5 rounded-full bg-muted-foreground/40"
+							style={{ animation: "pulse-dot 1s ease-out infinite 300ms" }}
 						/>
 					</div>
 				</div>

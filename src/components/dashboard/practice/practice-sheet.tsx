@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/sheet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FocusTab } from "../focus/focus-tab";
+import ExamTab from "./exam-tab";
 import { QuizTab } from "./quiz-tab";
 import StatsTab from "./stats-tab";
 
@@ -84,6 +85,12 @@ export function PracticeSheet({ open, onOpenChange }: PracticeSheetProps) {
 							className="mt-8 grow flex flex-col w-full items-center justify-center"
 						>
 							<QuizTab onHeaderChange={setShowQuizHeader} />
+						</TabsContent>
+						<TabsContent
+							value="exam"
+							className="mt-8 grow flex flex-col w-full items-center justify-center"
+						>
+							<ExamTab />
 						</TabsContent>
 						<TabsContent
 							value="focus"

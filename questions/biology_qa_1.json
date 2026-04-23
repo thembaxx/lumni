@@ -1,0 +1,567 @@
+{
+	"metadata": {
+		"subject": "biology",
+		"totalQuestions": 30,
+		"version": "1.0.0",
+		"curriculum": "General Biology",
+		"createdAt": "2026-04-23"
+	},
+	"questions": [
+		{
+			"id": "bio_001",
+			"topic": "Cell Biology",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "What is the basic unit of life?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "The cell", "isCorrect": true },
+				{ "id": "B", "text": "The atom", "isCorrect": false },
+				{ "id": "C", "text": "The molecule", "isCorrect": false },
+				{ "id": "D", "text": "The tissue", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Smallest living unit",
+			"explanation": "The cell is the basic structural and functional unit of all living organisms"
+		},
+		{
+			"id": "bio_002",
+			"topic": "Cell Organelles",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Which organelle produces ATP?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Mitochondria", "isCorrect": true },
+				{ "id": "B", "text": "Nucleus", "isCorrect": false },
+				{ "id": "C", "text": "Ribosome", "isCorrect": false },
+				{ "id": "D", "text": "Golgi apparatus", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Powerhouse of the cell",
+			"explanation": "Mitochondria produce ATP through cellular respiration"
+		},
+		{
+			"id": "bio_003",
+			"topic": "Photosynthesis",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Which pigment is essential for photosynthesis?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Chlorophyll", "isCorrect": true },
+				{ "id": "B", "text": "Carotene", "isCorrect": false },
+				{ "id": "C", "text": "Melanin", "isCorrect": false },
+				{ "id": "D", "text": "Hemoglobin", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Green pigment in plants",
+			"explanation": "Chlorophyll absorbs light energy for photosynthesis"
+		},
+		{
+			"id": "bio_004",
+			"topic": "Gas Exchange",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "What gas do plants release during photosynthesis?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Oxygen", "isCorrect": true },
+				{ "id": "B", "text": "Carbon dioxide", "isCorrect": false },
+				{ "id": "C", "text": "Nitrogen", "isCorrect": false },
+				{ "id": "D", "text": "Hydrogen", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Product of photosynthesis",
+			"explanation": "Plants release O₂ as a byproduct of photosynthesis"
+		},
+		{
+			"id": "bio_005",
+			"topic": "DNA",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "What macromolecule carries genetic instructions?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "DNA", "isCorrect": true },
+				{ "id": "B", "text": "Proteins", "isCorrect": false },
+				{ "id": "C", "text": "Lipids", "isCorrect": false },
+				{ "id": "D", "text": "Carbohydrates", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Genetic material",
+			"explanation": "DNA (deoxyribonucleic acid) carries hereditary information"
+		},
+		{
+			"id": "bio_006",
+			"topic": "Cell Division",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "What process divides one cell into two identical daughter cells?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Mitosis", "isCorrect": true },
+				{ "id": "B", "text": "Meiosis", "isCorrect": false },
+				{ "id": "C", "text": "Osmosis", "isCorrect": false },
+				{ "id": "D", "text": "Binary fission", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Somatic cell division",
+			"explanation": "Mitosis produces two genetically identical daughter cells"
+		},
+		{
+			"id": "bio_007",
+			"topic": "Classification",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Which kingdom includes algae and amoebas?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Protista", "isCorrect": true },
+				{ "id": "B", "text": "Animalia", "isCorrect": false },
+				{ "id": "C", "text": "Fungi", "isCorrect": false },
+				{ "id": "D", "text": "Plantae", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Mostly unicellular eukaryotes",
+			"explanation": "Kingdom Protista contains mostly unicellular eukaryotes like algae and amoebas"
+		},
+		{
+			"id": "bio_008",
+			"topic": "Cell Structure",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What structure surrounds and protects plant cells?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Cell wall", "isCorrect": true },
+				{ "id": "B", "text": "Cell membrane", "isCorrect": false },
+				{ "id": "C", "text": "Cytoplasm", "isCorrect": false },
+				{ "id": "D", "text": "Nucleus", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Rigid outer layer",
+			"explanation": "Plant cells have a rigid cell wall made of cellulose"
+		},
+		{
+			"id": "bio_009",
+			"topic": "Protein Synthesis",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What cellular organelle makes proteins?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Ribosome", "isCorrect": true },
+				{ "id": "B", "text": "Lysosome", "isCorrect": false },
+				{ "id": "C", "text": "Vacuole", "isCorrect": false },
+				{ "id": "D", "text": "Centriole", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Site of protein synthesis",
+			"explanation": "Ribosomes are the sites of protein synthesis in cells"
+		},
+		{
+			"id": "bio_010",
+			"topic": "Enzymes",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What do enzymes do?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Lower activation energy", "isCorrect": true },
+				{ "id": "B", "text": "Increase activation energy", "isCorrect": false },
+				{ "id": "C", "text": "Produce DNA", "isCorrect": false },
+				{ "id": "D", "text": "Store energy", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Biological catalysts",
+			"explanation": "Enzymes lower the activation energy for reactions"
+		},
+		{
+			"id": "bio_011",
+			"topic": "Cell Membrane",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "The cell membrane is described by what model?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Fluid mosaic model", "isCorrect": true },
+				{ "id": "B", "text": "Sandwich model", "isCorrect": false },
+				{ "id": "C", "text": "Lock and key model", "isCorrect": false },
+				{ "id": "D", "text": "Structure model", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Lipid bilayer with proteins",
+			"explanation": "The fluid mosaic model describes the cell membrane structure"
+		},
+		{
+			"id": "bio_012",
+			"topic": "Diffusion",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Diffusion is movement of particles from:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "High to low concentration", "isCorrect": true },
+				{ "id": "B", "text": "Low to high concentration", "isCorrect": false },
+				{ "id": "C", "text": "Equal to equal", "isCorrect": false },
+				{ "id": "D", "text": "No pattern", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Along gradient",
+			"explanation": "Particles move from high to low concentration (down gradient)"
+		},
+		{
+			"id": "bio_013",
+			"topic": "Osmosis",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Osmosis is diffusion of:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Water across membrane", "isCorrect": true },
+				{ "id": "B", "text": "Salts across membrane", "isCorrect": false },
+				{ "id": "C", "text": "Gases across membrane", "isCorrect": false },
+				{ "id": "D", "text": "Proteins across membrane", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Selective membrane",
+			"explanation": "Osmosis is water diffusion across a selectively permeable membrane"
+		},
+		{
+			"id": "bio_014",
+			"topic": "Mendelian Genetics",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Who discovered the laws of inheritance?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Gregor Mendel", "isCorrect": true },
+				{ "id": "B", "text": "Charles Darwin", "isCorrect": false },
+				{ "id": "C", "text": "James Watson", "isCorrect": false },
+				{ "id": "D", "text": "Louis Pasteur", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Father of genetics",
+			"explanation": "Gregor Mendel discovered inheritance patterns in pea plants"
+		},
+		{
+			"id": "bio_015",
+			"topic": "DNA Structure",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "What is the shape of DNA?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Double helix", "isCorrect": true },
+				{ "id": "B", "text": "Single strand", "isCorrect": false },
+				{ "id": "C", "text": "Triple helix", "isCorrect": false },
+				{ "id": "D", "text": "Linear", "isCorrect": false }
+			],
+			"supportsDiagram": true,
+			"diagram": {
+				"type": "node",
+				"title": "DNA Structure",
+				"data": {
+					"nodes": [
+						{ "id": "base1", "type": "pair", "label": "A-T", "x": 80, "y": 80 },
+						{
+							"id": "base2",
+							"type": "pair",
+							"label": "G-C",
+							"x": 80,
+							"y": 120
+						},
+						{ "id": "base3", "type": "pair", "label": "T-A", "x": 80, "y": 160 }
+					]
+				}
+			},
+			"hint": "Watson and Crick",
+			"explanation": "DNA has a double helix structure discovered by Watson and Crick"
+		},
+		{
+			"id": "bio_016",
+			"topic": "Mutations",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What term describes a change in DNA sequence?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Mutation", "isCorrect": true },
+				{ "id": "B", "text": "Crossing over", "isCorrect": false },
+				{ "id": "C", "text": "Inversion", "isCorrect": false },
+				{ "id": "D", "text": "Translocation", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Change in genetic material",
+			"explanation": "A mutation is any change in the DNA sequence"
+		},
+		{
+			"id": "bio_017",
+			"topic": "Meiosis",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What process creates gametes?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Meiosis", "isCorrect": true },
+				{ "id": "B", "text": "Mitosis", "isCorrect": false },
+				{ "id": "C", "text": "Binary fission", "isCorrect": false },
+				{ "id": "D", "text": "Budding", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Sex cell division",
+			"explanation": "Meiosis produces haploid gametes for reproduction"
+		},
+		{
+			"id": "bio_018",
+			"topic": "Transcription",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "What molecule transcribes DNA into proteins?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "RNA", "isCorrect": true },
+				{ "id": "B", "text": "DNA", "isCorrect": false },
+				{ "id": "C", "text": "Lipid", "isCorrect": false },
+				{ "id": "D", "text": "Carbohydrate", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Genetic messenger",
+			"explanation": "RNA carries genetic information from DNA to ribosomes"
+		},
+		{
+			"id": "bio_019",
+			"topic": "Evolution",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Who proposed evolution by natural selection?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Charles Darwin", "isCorrect": true },
+				{ "id": "B", "text": "Alfred Wallace", "isCorrect": false },
+				{ "id": "C", "text": "Gregor Mendel", "isCorrect": false },
+				{ "id": "D", "text": "Thomas Hunt Morgan", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Theory of evolution",
+			"explanation": "Charles Darwin proposed the theory of evolution by natural selection"
+		},
+		{
+			"id": "bio_020",
+			"topic": "Mitochondrial DNA",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "What genetic material is inherited only from the mother?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Mitochondrial DNA", "isCorrect": true },
+				{ "id": "B", "text": "Nuclear DNA", "isCorrect": false },
+				{ "id": "C", "text": "Y chromosome", "isCorrect": false },
+				{ "id": "D", "text": "X chromosome", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Not from father",
+			"explanation": "Mitochondrial DNA is maternally inherited"
+		},
+		{
+			"id": "bio_021",
+			"topic": "Ecology",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "What is the primary source of energy for ecosystems?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Sunlight", "isCorrect": true },
+				{ "id": "B", "text": "Water", "isCorrect": false },
+				{ "id": "C", "text": "Soil", "isCorrect": false },
+				{ "id": "D", "text": "Air", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Photosynthesis input",
+			"explanation": "Sunlight is the primary energy source for most ecosystems"
+		},
+		{
+			"id": "bio_022",
+			"topic": "Greenhouse Gases",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Which gas contributes most significantly to global warming?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Carbon dioxide", "isCorrect": true },
+				{ "id": "B", "text": "Nitrogen", "isCorrect": false },
+				{ "id": "C", "text": "Oxygen", "isCorrect": false },
+				{ "id": "D", "text": "Hydrogen", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Fossil fuel combustion",
+			"explanation": "CO₂ from burning fossil fuels is the main greenhouse gas"
+		},
+		{
+			"id": "bio_023",
+			"topic": "Plant Biology",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What term describes water loss from plants into the atmosphere?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Transpiration", "isCorrect": true },
+				{ "id": "B", "text": "Respiration", "isCorrect": false },
+				{ "id": "C", "text": "Evaporation", "isCorrect": false },
+				{ "id": "D", "text": "Condensation", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Through stomata",
+			"explanation": "Transpiration is water vapor loss through stomata"
+		},
+		{
+			"id": "bio_024",
+			"topic": "Chemosynthesis",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "What are organisms that produce food using chemical energy instead of sunlight called?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Chemoautotrophs", "isCorrect": true },
+				{ "id": "B", "text": "Phototrophs", "isCorrect": false },
+				{ "id": "C", "text": "Heterotrophs", "isCorrect": false },
+				{ "id": "D", "text": "Decomposers", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Chemical energy instead of light",
+			"explanation": "Chemoautotrophs use chemical reactions for energy (e.g., deep sea bacteria)"
+		},
+		{
+			"id": "bio_025",
+			"topic": "Eutrophication",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "Which chemical element is primarily responsible for eutrophication in lakes?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Phosphorus", "isCorrect": true },
+				{ "id": "B", "text": "Nitrogen", "isCorrect": false },
+				{ "id": "C", "text": "Potassium", "isCorrect": false },
+				{ "id": "D", "text": "Calcium", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "From fertilizers",
+			"explanation": "Phosphorus from runoff causes algal blooms and eutrophication"
+		},
+		{
+			"id": "bio_026",
+			"topic": "Food Chains",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "In a food chain, producers are eaten by:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Primary consumers", "isCorrect": true },
+				{ "id": "B", "text": "Secondary consumers", "isCorrect": false },
+				{ "id": "C", "text": "Tertiary consumers", "isCorrect": false },
+				{ "id": "D", "text": "Decomposers", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "First level above producers",
+			"explanation": "Primary consumers (herbivores) eat producers"
+		},
+		{
+			"id": "bio_027",
+			"topic": "Trophic Levels",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Approximately what percentage of energy transfers between trophic levels?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "10%", "isCorrect": true },
+				{ "id": "B", "text": "50%", "isCorrect": false },
+				{ "id": "C", "text": "100%", "isCorrect": false },
+				{ "id": "D", "text": "1%", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Second law of thermodynamics",
+			"explanation": "Only about 10% of energy transfers to next level; rest is lost as heat"
+		},
+		{
+			"id": "bio_028",
+			"topic": "Nitrogen Cycle",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "Bacteria converting N₂ to NH₃ are called:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Nitrogen-fixing bacteria", "isCorrect": true },
+				{ "id": "B", "text": "Denitrifying bacteria", "isCorrect": false },
+				{ "id": "C", "text": "Nitrifying bacteria", "isCorrect": false },
+				{ "id": "D", "text": "Decomposers", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Make nitrogen usable",
+			"explanation": "Nitrogen-fixing bacteria convert atmospheric N₂ to ammonia"
+		},
+		{
+			"id": "bio_029",
+			"topic": "Homeostasis",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What maintains internal balance in organisms?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Homeostasis", "isCorrect": true },
+				{ "id": "B", "text": "Metabolism", "isCorrect": false },
+				{ "id": "C", "text": "Growth", "isCorrect": false },
+				{ "id": "D", "text": "Response", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Internal balance",
+			"explanation": "Homeostasis maintains stable internal conditions"
+		},
+		{
+			"id": "bio_030",
+			"topic": "Immune System",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "Which blood cells fight infections?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "White blood cells", "isCorrect": true },
+				{ "id": "B", "text": "Red blood cells", "isCorrect": false },
+				{ "id": "C", "text": "Platelets", "isCorrect": false },
+				{ "id": "D", "text": "Plasma", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Immune response",
+			"explanation": "White blood cells fight pathogens and infections"
+		}
+	]
+}
