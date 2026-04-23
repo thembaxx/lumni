@@ -11,11 +11,12 @@ export default function StudyTopicCardExample({
 	className,
 }: StudyTopicCardExampleProps) {
 	const handleLearnMore = () => {
-		console.log("Learn More clicked");
+		// Navigate to lesson detail or expand content
 	};
 
 	const handlePractice = () => {
-		console.log("Practice clicked");
+		// Start practice session for this topic
+		window.location.href = "/quiz";
 	};
 
 	return (

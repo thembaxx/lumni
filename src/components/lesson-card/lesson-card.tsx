@@ -103,7 +103,9 @@ export function LessonCard({
 											onWordIndexChange={setCurrentWordIndex}
 										/>
 									</div>
-									<PracticeButton onClick={console.log} />
+									<PracticeButton
+										onClick={() => (window.location.href = "/quiz")}
+									/>
 								</div>
 
 								<Button
@@ -169,7 +171,9 @@ export function LessonCard({
 										onWordIndexChange={setCurrentWordIndex}
 									/>
 								</div>
-								<PracticeButton onClick={console.log} />
+								<PracticeButton
+									onClick={() => (window.location.href = "/quiz")}
+								/>
 							</div>
 						</motion.div>
 					</Card>
