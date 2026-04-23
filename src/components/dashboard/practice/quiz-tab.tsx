@@ -1,215 +1,105 @@
 "use client";
 
-import { ArrowDown01Icon } from "@hugeicons/core-free-icons";
+import { ArrowDown01Icon, Play, Square } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import {
-	ChevronLeft,
-	ChevronRight,
-	Play,
-	PuzzleIcon,
-	Square,
-	Target,
-	Timer,
-	Zap,
-} from "lucide-react";
-import {
-	startTransition,
-	useCallback,
-	useEffect,
-	useState,
-	ViewTransition,
-} from "react";
+import { Timer, Zap } from "lucide-react";
+import { useCallback, useState, ViewTransition } from "react";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
-import { QuestionCard } from "@/components/quiz/question-card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
-	Empty,
-	EmptyContent,
-	EmptyDescription,
-	EmptyHeader,
-	EmptyMedia,
-	EmptyTitle,
-} from "@/components/ui/empty";
-import { Progress } from "@/components/ui/progress";
-import { DEMO_QUESTIONS } from "@/lib/data/demo-questions";
-import { useSubjectQuestions } from "@/lib/hooks/use-subject-questions";
+	QuizControls,
+	QuizHeader,
+	QuizStartState,
+	QuizSubjectPrompt,
+} from "@/components/quiz";
+import { QuestionCard } from "@/components/quiz/question-card";
+import { Button } from "@/components/ui/button";
+import { useQuizSession } from "@/lib/hooks/use-quiz-session";
 import { cn } from "@/lib/utils";
 import { formatTime } from "@/lib/utils/time";
-
-const MAX_TIME = 90 * 60;
 
 interface QuizTabProps {
 	className?: string;
 	onHeaderChange?: (show: boolean) => void;
 }
 
+const MAX_TIME = 90 * 60;
+const DEFAULT_QUESTION_COUNT = 10;
+
 export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
-	const [selectedSubject, setSelectedSubject] = useState<string>("");
-	const [elapsedTime, setElapsedTime] = useState(0);
-	const [isRunning, setIsRunning] = useState(false);
-	const [points, setPoints] = useState(() => Math.floor(Math.random() * 101));
-	const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-	const [correctAnswers, setCorrectAnswers] = useState(0);
-	const [questionCount] = useState(10);
 	const [isTransitioning, setIsTransitioning] = useState(false);
-	const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
-	const [showFeedback, setShowFeedback] = useState(false);
 
-	const subjectToFetch =
-		selectedSubject === "Random" ? "physics" : selectedSubject.toLowerCase();
+	const { state, actions } = useQuizSession({
+		questionCount: DEFAULT_QUESTION_COUNT,
+		maxTime: MAX_TIME,
+		onFinish: useCallback(() => {
+			onHeaderChange?.(true);
+		}, [onHeaderChange]),
+	});
 
-	const { data: questions, isLoading } = useSubjectQuestions(
-		subjectToFetch,
-		questionCount,
-		{
-			enabled: isRunning,
-		},
-	);
+	const {
+		isRunning,
+		elapsedTime,
+		currentQuestionIndex,
+		selectedAnswer,
+		showFeedback,
+		correctAnswers,
+		currentQuestion,
+		hasSubject,
+		selectedSubject,
+		totalQuestions,
+		points,
+	} = state;
 
-	const questionsToUse =
-		isLoading === false && questions?.length ? questions : DEMO_QUESTIONS;
-	const currentQuestion = questionsToUse?.[currentQuestionIndex];
+	const {
+		handleStartWithSubject,
+		handleStop,
+		handleSelectSubject,
+		handleSelectAnswer,
+		handleAnswer,
+	} = actions;
 
-	const handleSubjectSelect = useCallback((value: string) => {
-		setSelectedSubject(value);
-	}, []);
-
-	const calculateAccuracy = useCallback(() => {
-		if (currentQuestionIndex === 0) return 0;
-		return Math.round((correctAnswers / currentQuestionIndex) * 100);
-	}, [correctAnswers, currentQuestionIndex]);
-
-	const generatePoints = useCallback(() => {
-		return Math.floor(Math.random() * 101);
-	}, []);
-
-	const handleStart = useCallback(() => {
-		setIsRunning(true);
-		setCurrentQuestionIndex(0);
-		setCorrectAnswers(0);
-		onHeaderChange?.(false);
-	}, [onHeaderChange]);
-
-	const handleStop = useCallback(() => {
-		setIsRunning(false);
-		setElapsedTime(0);
-		setPoints(generatePoints());
-		onHeaderChange?.(true);
-	}, [generatePoints, onHeaderChange]);
-
-	const handleAnswer = useCallback((_optionId: string, isCorrect: boolean) => {
-		setShowFeedback(true);
-		if (isCorrect) {
-			setCorrectAnswers((prev) => prev + 1);
+	const doStart = useCallback(() => {
+		if (hasSubject) {
+			handleStartWithSubject(selectedSubject);
+			onHeaderChange?.(false);
 		}
-	}, []);
-
-	const handleSelectAnswer = useCallback(
-		(optionId: string) => {
-			if (showFeedback) return;
-			setSelectedAnswer(optionId);
-		},
-		[showFeedback],
-	);
+	}, [hasSubject, handleStartWithSubject, selectedSubject, onHeaderChange]);
 
 	const handleNext = useCallback(() => {
-		if (!questionsToUse) return;
-
-		const maxIndex = questionsToUse.length - 1;
+		const maxIndex = totalQuestions - 1;
 		if (currentQuestionIndex < maxIndex) {
-			startTransition(() => {
-				setIsTransitioning(true);
-				setTimeout(() => {
-					setCurrentQuestionIndex((prev) => prev + 1);
-					setSelectedAnswer(null);
-					setShowFeedback(false);
-					setIsTransitioning(false);
-				}, 150);
-			});
+			setIsTransitioning(true);
+			setTimeout(() => {
+				actions.handleNext();
+				setIsTransitioning(false);
+			}, 150);
 		} else {
 			handleStop();
 		}
-	}, [questionsToUse, currentQuestionIndex, handleStop]);
+	}, [currentQuestionIndex, totalQuestions, actions, handleStop]);
 
 	const handlePrevious = useCallback(() => {
 		if (currentQuestionIndex > 0) {
-			startTransition(() => {
-				setIsTransitioning(true);
-				setTimeout(() => {
-					setCurrentQuestionIndex((prev) => prev - 1);
-					setIsTransitioning(false);
-				}, 150);
-			});
+			setIsTransitioning(true);
+			setTimeout(() => {
+				actions.handlePrevious();
+				setIsTransitioning(false);
+			}, 150);
 		}
-	}, [currentQuestionIndex]);
+	}, [currentQuestionIndex, actions]);
 
-	useEffect(() => {
-		let interval: NodeJS.Timeout;
-
-		if (isRunning && elapsedTime < MAX_TIME) {
-			interval = setInterval(() => {
-				setElapsedTime((prev) => {
-					if (prev >= MAX_TIME) {
-						setIsRunning(false);
-						onHeaderChange?.(true);
-						return MAX_TIME;
-					}
-					return prev + 1;
-				});
-			}, 1000);
-		}
-
-		return () => clearInterval(interval);
-	}, [isRunning, elapsedTime, onHeaderChange]);
-
+	// Active quiz state
 	if (isRunning && currentQuestion) {
-		const progressValue =
-			((currentQuestionIndex + 1) / (questionsToUse?.length || questionCount)) *
-			100;
-
 		return (
 			<div className="w-full max-w-2xl px-4 pb-6 space-y-4">
 				<div className="animate-fade-in space-y-4">
-					<div className="flex items-center justify-between">
-						<Button
-							variant="ghost"
-							size="sm"
-							onClick={handleStop}
-							className="font-medium hover:text-foreground hover:bg-destructive/10"
-						>
-							Quit
-						</Button>
-						<div className="flex items-center gap-3">
-							<div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-muted/50">
-								<Timer className="size-3.5 text-muted-foreground" />
-								<span className="text-sm font-medium tabular-nums font-mono">
-									{formatTime(elapsedTime)}
-								</span>
-							</div>
-							<span className="text-muted-foreground">|</span>
-							<Badge variant="secondary" className="font-mono">
-								{currentQuestionIndex + 1}/
-								{questionsToUse?.length || questionCount}
-							</Badge>
-						</div>
-						<div className="flex items-center gap-1.5">
-							<Target className="size-3.5 text-green-500" />
-							<span className="text-sm font-semibold tabular-nums font-mono text-green-500">
-								{calculateAccuracy()}%
-							</span>
-						</div>
-					</div>
-
-					<Progress value={progressValue} className="h-1.5">
-						{/* <ProgressIndicator
-							className={cn(
-								"h-full bg-linear-to-r from-primary to-green-500 transition-all duration-300",
-								progressValue === 100 && "to-green-500",
-							)}
-						/>
-						<ProgressValue className="sr-only">{progressValue}</ProgressValue> */}
-					</Progress>
+					<QuizHeader
+						elapsedTime={elapsedTime}
+						currentQuestionIndex={currentQuestionIndex}
+						totalQuestions={totalQuestions}
+						correctAnswers={correctAnswers}
+						onQuit={handleStop}
+					/>
 				</div>
 
 				<ViewTransition>
@@ -217,7 +107,7 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 						key={currentQuestion.id}
 						question={currentQuestion}
 						questionNumber={currentQuestionIndex + 1}
-						totalQuestions={questionsToUse?.length || questionCount}
+						totalQuestions={totalQuestions}
 						selectedAnswer={selectedAnswer}
 						showFeedback={showFeedback}
 						onSelectAnswer={handleSelectAnswer}
@@ -231,32 +121,20 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 						isTransitioning && "opacity-0",
 					)}
 				>
-					<Button
-						variant="outline"
-						onClick={handlePrevious}
-						disabled={currentQuestionIndex === 0}
-						className="gap-2"
-					>
-						<ChevronLeft className="size-4" />
-						Previous
-					</Button>
-					<Button
-						onClick={handleNext}
-						disabled={!showFeedback}
-						className="gap-2"
-					>
-						{questionsToUse && currentQuestionIndex < questionsToUse.length - 1
-							? "Next"
-							: "Finish"}
-						<ChevronRight className="size-4" />
-					</Button>
+					<QuizControls
+						currentQuestionIndex={currentQuestionIndex}
+						totalQuestions={totalQuestions}
+						hasSelected={!!selectedAnswer}
+						showFeedback={showFeedback}
+						onPrevious={handlePrevious}
+						onNext={handleNext}
+					/>
 				</div>
 			</div>
 		);
 	}
 
-	const hasSubject = selectedSubject !== "";
-
+	// Subject selection + timer + play UI
 	return (
 		<div className="w-full">
 			<div
@@ -265,7 +143,7 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 					className,
 				)}
 			>
-				<SubjectsDrawer onSelect={handleSubjectSelect}>
+				<SubjectsDrawer onSelect={handleSelectSubject}>
 					<Button
 						variant="secondary"
 						className="h-9 rounded-md pl-3 border-muted bg-muted/50"
@@ -307,12 +185,12 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 						onClick={handleStop}
 						className="size-11 rounded-full bg-destructive hover:bg-destructive/90"
 					>
-						<Square className="size-4 fill-current" />
+						<HugeiconsIcon icon={Square} className="size-4" />
 					</Button>
 				) : (
 					<Button
 						size="icon"
-						onClick={handleStart}
+						onClick={doStart}
 						disabled={!hasSubject}
 						className={cn(
 							"size-11 rounded-full",
@@ -321,60 +199,15 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 								: "bg-muted cursor-not-allowed",
 						)}
 					>
-						<Play className="size-4 ml-0.5 fill-current" />
+						<HugeiconsIcon icon={Play} className="size-4 ml-0.5" />
 					</Button>
 				)}
 			</div>
 
 			{hasSubject ? (
-				<Empty className="border border-dashed mt-24">
-					<EmptyHeader>
-						<EmptyMedia variant="icon">
-							<PuzzleIcon />
-						</EmptyMedia>
-						<EmptyTitle>Quiz not started</EmptyTitle>
-						<EmptyDescription>
-							Practice quizzes you start will be saved here for easy access
-							later. You can also view and manage your past quiz attempts here.
-						</EmptyDescription>
-					</EmptyHeader>
-					<EmptyContent>
-						<Button variant="outline" size="sm" onClick={handleStart}>
-							Start quiz
-						</Button>
-					</EmptyContent>
-				</Empty>
+				<QuizStartState onSelect={doStart} />
 			) : (
-				<div className="mt-24 flex flex-col items-center gap-4 animate-fade-in-scale">
-					<div className="relative flex items-center justify-center">
-						<div className="absolute size-20 rounded-full bg-muted/40 animate-pulse" />
-						<div className="relative flex items-center justify-center size-20 rounded-full border border-dashed border-muted-foreground/20 bg-muted/20">
-							<PuzzleIcon className="size-8 text-muted-foreground/40" />
-						</div>
-					</div>
-					<div className="text-center space-y-1.5">
-						<p className="text-sm font-medium text-muted-foreground">
-							Select a subject to begin
-						</p>
-						<p className="text-xs text-muted-foreground/60">
-							Choose a subject above to start your quiz
-						</p>
-					</div>
-					<div className="flex items-center gap-1.5">
-						<span
-							className="h-1.5 w-1.5 rounded-full bg-muted-foreground/40"
-							style={{ animation: "pulse-dot 1s ease-out infinite" }}
-						/>
-						<span
-							className="h-1.5 w-1.5 rounded-full bg-muted-foreground/40"
-							style={{ animation: "pulse-dot 1s ease-out infinite 150ms" }}
-						/>
-						<span
-							className="h-1.5 w-1.5 rounded-full bg-muted-foreground/40"
-							style={{ animation: "pulse-dot 1s ease-out infinite 300ms" }}
-						/>
-					</div>
-				</div>
+				<QuizSubjectPrompt onSelect={() => {}} hasSubject={false} />
 			)}
 		</div>
 	);
