@@ -12,7 +12,18 @@ import {
 
 export async function GET(request: NextRequest) {
 	const db = getDb();
-	const subjects = await db.select().from(subject);
+
+	let allSubjects;
+	try {
+		allSubjects = await db.select().from(subject);
+	} catch (dbError: unknown) {
+		const err = dbError as Error;
+		console.error("Database error:", err.message);
+		return NextResponse.json(
+			{ subjects: [], error: "Database unavailable" },
+			{ status: 503 },
+		);
+	}
 
 	const { searchParams } = new URL(request.url);
 	const requestedUserId = searchParams.get("userId");
@@ -22,7 +33,7 @@ export async function GET(request: NextRequest) {
 	});
 
 	if (!session) {
-		return NextResponse.json({ subjects }, { status: 200 });
+		return NextResponse.json({ subjects: allSubjects }, { status: 200 });
 	}
 
 	const authenticatedUserId = session.user.id;
@@ -68,7 +79,7 @@ export async function GET(request: NextRequest) {
 		totalAnswered > 0 ? Math.round((totalCorrect / totalAnswered) * 100) : 0;
 
 	return NextResponse.json({
-		subjects,
+		subjects: allSubjects,
 		selectedSubjectIds: selectedIds,
 		progress: {
 			questionsAnswered: totalAnswered,

@@ -1,6 +1,8 @@
 "use client";
 
+import { Database, Loader2 } from "lucide-react";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
 import { UploadButton } from "@/lib/uploadthing";
 
 function formatSubjectName(subject: string): string {
@@ -26,6 +28,27 @@ export default function UploadPage() {
 	const [syncStatus, setSyncStatus] = useState<
 		"idle" | "syncing" | "done" | "error"
 	>("idle");
+	const [seedStatus, setSeedStatus] = useState<
+		"idle" | "seeding" | "done" | "error"
+	>("idle");
+
+	const handleSeedDatabase = async () => {
+		setSeedStatus("seeding");
+		try {
+			const res = await fetch("/api/seed", { method: "POST" });
+			const data = await res.json();
+			if (data.success) {
+				setSeedStatus("done");
+				alert("Database seeded successfully!");
+			} else {
+				setSeedStatus("error");
+				alert(`Seed failed: ${data.error}`);
+			}
+		} catch {
+			setSeedStatus("error");
+			alert("Seed failed: Network error");
+		}
+	};
 
 	const handleUploadComplete = async (
 		files: { url: string; name: string }[],
@@ -71,14 +94,33 @@ export default function UploadPage() {
 				</p>
 			</div>
 
-			<UploadButton
-				endpoint="qaUploader"
-				onClientUploadComplete={handleUploadComplete}
-				onUploadError={(error: Error) => {
-					console.error("Upload error:", error);
-					alert(`Error: ${error.message}`);
-				}}
-			/>
+			<div className="flex gap-4">
+				<UploadButton
+					endpoint="qaUploader"
+					onClientUploadComplete={handleUploadComplete}
+					onUploadError={(error: Error) => {
+						console.error("Upload error:", error);
+						alert(`Error: ${error.message}`);
+					}}
+				/>
+
+				<Button
+					variant="outline"
+					onClick={handleSeedDatabase}
+					disabled={seedStatus === "seeding"}
+				>
+					{seedStatus === "seeding" ? (
+						<Loader2 className="mr-2 h-4 w-4 animate-spin" />
+					) : (
+						<Database className="mr-2 h-4 w-4" />
+					)}
+					{seedStatus === "seeding"
+						? "Seeding..."
+						: seedStatus === "done"
+							? "Seeded!"
+							: "Seed Database"}
+				</Button>
+			</div>
 
 			{lastUpload && (
 				<div className="mt-8 p-4 bg-green-500/10 rounded-lg">

@@ -1,5 +1,5 @@
-import { eq } from "drizzle-orm";
-import { db } from "./db";
+import { eq, sql } from "drizzle-orm";
+import { db } from "./db/client";
 import {
 	question,
 	studySession,
@@ -85,6 +85,36 @@ const nscSubjects = [
 		icon: "book-open",
 		category: "humanities",
 		color: "#dc2626",
+	},
+	{
+		id: "isiXhosa-home-language",
+		name: "IsiXhosa Home Language",
+		code: "4061",
+		description:
+			"CAPS IsiXhosa Home Language Grade 12 - Literature and language",
+		icon: "languages",
+		category: "languages",
+		color: "#22c55e",
+	},
+	{
+		id: "english-home-language",
+		name: "English Home Language",
+		code: "4062",
+		description:
+			"CAPS English Home Language Grade 12 - Literature and language",
+		icon: "languages",
+		category: "languages",
+		color: "#3b82f6",
+	},
+	{
+		id: "mathematical-literacy",
+		name: "Mathematical Literacy",
+		code: "4051",
+		description:
+			"CAPS Mathematical Literacy Grade 12 - Practical math for everyday life",
+		icon: "calculator",
+		category: "sciences",
+		color: "#f97316",
 	},
 ];
 

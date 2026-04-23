@@ -1,2 +1,2 @@
-export { db, schema, sqlite } from "./client";
+export { db, schema } from "./client";
 export * from "./schema";

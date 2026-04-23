@@ -1,41 +1,32 @@
 import { relations, sql } from "drizzle-orm";
 import {
+	boolean,
 	index,
 	integer,
-	sqliteTable,
+	pgTable,
 	text,
+	timestamp,
 	unique,
-} from "drizzle-orm/sqlite-core";
+} from "drizzle-orm/pg-core";
 
-export const user = sqliteTable("user", {
+export const user = pgTable("user", {
 	id: text("id").primaryKey(),
 	name: text("name").notNull(),
 	email: text("email").notNull().unique(),
-	emailVerified: integer("email_verified", { mode: "boolean" })
-		.default(false)
-		.notNull(),
+	emailVerified: boolean("email_verified").default(false).notNull(),
 	image: text("image"),
-	createdAt: integer("created_at", { mode: "timestamp_ms" })
-		.default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-		.notNull(),
-	updatedAt: integer("updated_at", { mode: "timestamp_ms" })
-		.default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-		.$onUpdate(() => /* @__PURE__ */ new Date())
-		.notNull(),
+	createdAt: timestamp("created_at").default(sql`now()`).notNull(),
+	updatedAt: timestamp("updated_at").default(sql`now()`).notNull(),
 });
 
-export const session = sqliteTable(
+export const session = pgTable(
 	"session",
 	{
 		id: text("id").primaryKey(),
-		expiresAt: integer("expires_at", { mode: "timestamp_ms" }).notNull(),
+		expiresAt: timestamp("expires_at").notNull(),
 		token: text("token").notNull().unique(),
-		createdAt: integer("created_at", { mode: "timestamp_ms" })
-			.default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-			.notNull(),
-		updatedAt: integer("updated_at", { mode: "timestamp_ms" })
-			.$onUpdate(() => /* @__PURE__ */ new Date())
-			.notNull(),
+		createdAt: timestamp("created_at").default(sql`now()`).notNull(),
+		updatedAt: timestamp("updated_at").default(sql`now()`).notNull(),
 		ipAddress: text("ip_address"),
 		userAgent: text("user_agent"),
 		userId: text("user_id")
@@ -45,7 +36,7 @@ export const session = sqliteTable(
 	(table) => [index("session_userId_idx").on(table.userId)],
 );
 
-export const account = sqliteTable(
+export const account = pgTable(
 	"account",
 	{
 		id: text("id").primaryKey(),
@@ -57,26 +48,17 @@ export const account = sqliteTable(
 		accessToken: text("access_token"),
 		refreshToken: text("refresh_token"),
 		idToken: text("id_token"),
-		accessTokenExpiresAt: integer("access_token_expires_at", {
-			mode: "timestamp_ms",
-		}),
-		refreshTokenExpiresAt: integer("refresh_token_expires_at", {
-			mode: "timestamp_ms",
-		}),
+		accessTokenExpiresAt: timestamp("access_token_expires_at"),
+		refreshTokenExpiresAt: timestamp("refresh_token_expires_at"),
 		scope: text("scope"),
 		password: text("password"),
-		createdAt: integer("created_at", { mode: "timestamp_ms" })
-			.default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-			.notNull(),
-		updatedAt: integer("updated_at", { mode: "timestamp_ms" })
-			.default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-			.$onUpdate(() => /* @__PURE__ */ new Date())
-			.notNull(),
+		createdAt: timestamp("created_at").default(sql`now()`).notNull(),
+		updatedAt: timestamp("updated_at").default(sql`now()`).notNull(),
 	},
 	(table) => [index("account_userId_idx").on(table.userId)],
 );
 
-export const subject = sqliteTable("subject", {
+export const subject = pgTable("subject", {
 	id: text("id").primaryKey(),
 	name: text("name").notNull(),
 	code: text("code").notNull(),
@@ -86,12 +68,10 @@ export const subject = sqliteTable("subject", {
 	color: text("color"),
 	sourceUrl: text("source_url"),
 	sourceVersion: text("source_version"),
-	createdAt: integer("created_at", { mode: "timestamp_ms" })
-		.default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-		.notNull(),
+	createdAt: timestamp("created_at").default(sql`now()`).notNull(),
 });
 
-export const topic = sqliteTable(
+export const topic = pgTable(
 	"topic",
 	{
 		id: text("id").primaryKey(),
@@ -102,14 +82,12 @@ export const topic = sqliteTable(
 		description: text("description"),
 		unitNumber: integer("unit_number"),
 		orderIndex: integer("order_index").default(0),
-		createdAt: integer("created_at", { mode: "timestamp_ms" })
-			.default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-			.notNull(),
+		createdAt: timestamp("created_at").default(sql`now()`).notNull(),
 	},
 	(table) => [index("topic_subjectId_idx").on(table.subjectId)],
 );
 
-export const question = sqliteTable(
+export const question = pgTable(
 	"question",
 	{
 		id: text("id").primaryKey(),
@@ -122,18 +100,16 @@ export const question = sqliteTable(
 		correctAnswer: text("correct_answer").notNull(),
 		explanation: text("explanation"),
 		difficulty: text("difficulty").default("medium"),
-		hasImage: integer("has_image", { mode: "boolean" }).default(false),
+		hasImage: boolean("has_image").default(false),
 		imageUrl: text("image_url"),
 		imageData: text("image_data"),
 		orderIndex: integer("order_index").default(0),
-		createdAt: integer("created_at", { mode: "timestamp_ms" })
-			.default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-			.notNull(),
+		createdAt: timestamp("created_at").default(sql`now()`).notNull(),
 	},
 	(table) => [index("question_topicId_idx").on(table.topicId)],
 );
 
-export const userSubject = sqliteTable(
+export const userSubject = pgTable(
 	"user_subject",
 	{
 		id: text("id").primaryKey(),
@@ -143,9 +119,7 @@ export const userSubject = sqliteTable(
 		subjectId: text("subject_id")
 			.notNull()
 			.references(() => subject.id, { onDelete: "cascade" }),
-		selectedAt: integer("selected_at", { mode: "timestamp_ms" })
-			.default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-			.notNull(),
+		selectedAt: timestamp("selected_at").default(sql`now()`).notNull(),
 	},
 	(table) => [
 		index("user_subject_userId_idx").on(table.userId),
@@ -157,7 +131,7 @@ export const userSubject = sqliteTable(
 	],
 );
 
-export const userProgress = sqliteTable(
+export const userProgress = pgTable(
 	"user_progress",
 	{
 		id: text("id").primaryKey(),
@@ -171,19 +145,14 @@ export const userProgress = sqliteTable(
 		correctCount: integer("correct_count").default(0),
 		currentStreak: integer("current_streak").default(0),
 		longestStreak: integer("longest_streak").default(0),
-		lastAttemptAt: integer("last_attempt_at", { mode: "timestamp_ms" }),
-		createdAt: integer("created_at", { mode: "timestamp_ms" })
-			.default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-			.notNull(),
-		updatedAt: integer("updated_at", { mode: "timestamp_ms" })
-			.default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-			.$onUpdate(() => /* @__PURE__ */ new Date())
-			.notNull(),
+		lastAttemptAt: timestamp("last_attempt_at"),
+		createdAt: timestamp("created_at").default(sql`now()`).notNull(),
+		updatedAt: timestamp("updated_at").default(sql`now()`).notNull(),
 	},
 	(table) => [index("user_progress_userId_idx").on(table.userId)],
 );
 
-export const studySession = sqliteTable(
+export const studySession = pgTable(
 	"study_session",
 	{
 		id: text("id").primaryKey(),
@@ -196,28 +165,21 @@ export const studySession = sqliteTable(
 		questionsAnswered: integer("questions_answered").default(0),
 		correctCount: integer("correct_count").default(0),
 		duration: integer("duration"),
-		startedAt: integer("started_at", { mode: "timestamp_ms" })
-			.default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-			.notNull(),
-		endedAt: integer("ended_at", { mode: "timestamp_ms" }),
+		startedAt: timestamp("started_at").default(sql`now()`).notNull(),
+		endedAt: timestamp("ended_at"),
 	},
 	(table) => [index("study_session_userId_idx").on(table.userId)],
 );
 
-export const verification = sqliteTable(
+export const verification = pgTable(
 	"verification",
 	{
 		id: text("id").primaryKey(),
 		identifier: text("identifier").notNull(),
 		value: text("value").notNull(),
-		expiresAt: integer("expires_at", { mode: "timestamp_ms" }).notNull(),
-		createdAt: integer("created_at", { mode: "timestamp_ms" })
-			.default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-			.notNull(),
-		updatedAt: integer("updated_at", { mode: "timestamp_ms" })
-			.default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-			.$onUpdate(() => /* @__PURE__ */ new Date())
-			.notNull(),
+		expiresAt: timestamp("expires_at").notNull(),
+		createdAt: timestamp("created_at").default(sql`now()`).notNull(),
+		updatedAt: timestamp("updated_at").default(sql`now()`).notNull(),
 	},
 	(table) => [index("verification_identifier_idx").on(table.identifier)],
 );

@@ -1,15 +1,19 @@
 import { drizzleAdapter } from "@better-auth/drizzle-adapter";
+import { neon } from "@neondatabase/serverless";
 import { betterAuth } from "better-auth";
-import Database from "better-sqlite3";
-import { drizzle } from "drizzle-orm/better-sqlite3";
+import { drizzle } from "drizzle-orm/neon-http";
 import * as schema from "./db/schema";
 
-const sqlite = new Database("./local.db");
-const db = drizzle(sqlite);
+if (!process.env.POSTGRES_URL) {
+	throw new Error("POSTGRES_URL is not set");
+}
+
+const sql = neon(process.env.POSTGRES_URL);
+const db = drizzle(sql, { schema });
 
 export const auth = betterAuth({
 	database: drizzleAdapter(db, {
-		provider: "sqlite",
+		provider: "pg",
 		schema,
 	}),
 	session: {
@@ -32,6 +36,7 @@ export const auth = betterAuth({
 		process.env.BETTER_AUTH_URL || "http://localhost:3000",
 		"http://localhost:3000",
 		"https://lumni.ai",
+		"https://lumni-psi.vercel.app",
 	],
 });
 
