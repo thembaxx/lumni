@@ -1,0 +1,563 @@
+{
+	"metadata": {
+		"subject": "History",
+		"totalQuestions": 600,
+		"version": "1.0",
+		"curriculum": "CAPS",
+		"createdAt": "2026-04-23T00:00:00.000Z"
+	},
+	"questions": [
+		{
+			"id": "h021_001",
+			"topic": "Nationalism in the Middle East",
+			"lessonId": "h-021",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What led to the fall of the Ottoman Empire?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "WWI defeat and nationalist movements",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Economic prosperity", "isCorrect": false },
+				{ "id": "C", "text": "Religious unity", "isCorrect": false },
+				{ "id": "D", "text": "Alliance with Britain", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Post-WWI dissolution.",
+			"explanation": "Ottoman Empire collapsed after WWI, with victorious powers dividing territories."
+		},
+		{
+			"id": "h021_002",
+			"topic": "Nationalism in the Middle East",
+			"lessonId": "h-021",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Who was Lawrence of Arabia?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "British officer supporting Arab revolt against Ottomans",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Ottoman general", "isCorrect": false },
+				{ "id": "C", "text": "Arab nationalist leader", "isCorrect": false },
+				{
+					"id": "D",
+					"text": "French colonial administrator",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Arab Revolt support.",
+			"explanation": "Lawrence organized and supported Arab tribes fighting Ottoman rule during WWI."
+		},
+		{
+			"id": "h021_003",
+			"topic": "Nationalism in the Middle East",
+			"lessonId": "h-021",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What was the Sykes-Picot Agreement?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Secret deal dividing Ottoman lands between Britain and France",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Arab independence treaty", "isCorrect": false },
+				{ "id": "C", "text": "Ottoman-British alliance", "isCorrect": false },
+				{ "id": "D", "text": "Trade agreement", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "1916 secret agreement.",
+			"explanation": "Sykes-Picot divided Ottoman territories into British and French spheres of influence."
+		},
+		{
+			"id": "h021_004",
+			"topic": "Nationalism in the Middle East",
+			"lessonId": "h-021",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What is Zionism?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Movement for Jewish homeland in Palestine",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Arab nationalist movement", "isCorrect": false },
+				{ "id": "C", "text": "Ottoman reform movement", "isCorrect": false },
+				{
+					"id": "D",
+					"text": "Christian religious movement",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Jewish national movement.",
+			"explanation": "Zionism emerged in late 19th century advocating Jewish return to ancestral homeland."
+		},
+		{
+			"id": "h021_005",
+			"topic": "Nationalism in the Middle East",
+			"lessonId": "h-021",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Who was Gamal Abdel Nasser?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Egyptian leader promoting Arab nationalism",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Ottoman sultan", "isCorrect": false },
+				{
+					"id": "C",
+					"text": "British colonial administrator",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Iranian leader", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "1952 revolution leader.",
+			"explanation": "Nasser led Egyptian revolution, became president, and championed pan-Arab nationalism."
+		},
+		{
+			"id": "h021_006",
+			"topic": "Nationalism in the Middle East",
+			"lessonId": "h-021",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What was the Balfour Declaration?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "British support for Jewish homeland in Palestine",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Arab independence promise", "isCorrect": false },
+				{ "id": "C", "text": "Ottoman reform document", "isCorrect": false },
+				{ "id": "D", "text": "French territorial claim", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "1917 British statement.",
+			"explanation": "Balfour Declaration expressed British support for 'national home for the Jewish people' in Palestine."
+		},
+		{
+			"id": "h021_007",
+			"topic": "Nationalism in the Middle East",
+			"lessonId": "h-021",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What was pan-Arabism?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Movement for Arab unity across national boundaries",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Ottoman restoration", "isCorrect": false },
+				{ "id": "C", "text": "Turkish nationalism", "isCorrect": false },
+				{ "id": "D", "text": "Economic cooperation only", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Arab unity ideology.",
+			"explanation": "Pan-Arabism promoted solidarity among Arab nations, especially during Cold War era."
+		},
+		{
+			"id": "h021_008",
+			"topic": "Nationalism in the Middle East",
+			"lessonId": "h-021",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "How did WWI and its aftermath shape the Middle East?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Colonial borders, new states, and ongoing conflicts",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Immediate peace and stability",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Preservation of Ottoman unity",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Arab dominance over region", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Mandate system and borders.",
+			"explanation": "WWI settlement created artificial borders, mandate systems, and conflicts that persist today."
+		},
+		{
+			"id": "h021_009",
+			"topic": "Nationalism in the Middle East",
+			"lessonId": "h-021",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What was the role of oil in Middle Eastern politics?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Major driver of foreign intervention and regional power",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Had no significant political impact",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Only affected internal economics",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Benefited only local populations",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Strategic resource.",
+			"explanation": "Oil wealth attracted colonial powers and later shaped regional alliances and conflicts."
+		},
+		{
+			"id": "h021_010",
+			"topic": "Nationalism in the Middle East",
+			"lessonId": "h-021",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What led to the creation of Israel in 1948?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Zionist movement, Balfour Declaration, and UN partition plan",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Arab vote in UN", "isCorrect": false },
+				{ "id": "C", "text": "Ottoman invitation", "isCorrect": false },
+				{ "id": "D", "text": "British departure only", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "End of British Mandate.",
+			"explanation": "Israel declared independence in 1948 after UN partition plan and British Mandate end."
+		},
+		{
+			"id": "h021_011",
+			"topic": "Nationalism in the Middle East",
+			"lessonId": "h-021",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "How did Nasser influence Arab nationalism?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Radio broadcasts and pan-Arab ideology inspired movements",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Reduced Arab nationalism", "isCorrect": false },
+				{ "id": "C", "text": "Only affected Egypt", "isCorrect": false },
+				{ "id": "D", "text": "Opposed all nationalism", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Voice of the Arab nation.",
+			"explanation": "Nasser's Voice of the Arabs radio reached millions, promoting anti-colonial pan-Arabism."
+		},
+		{
+			"id": "h021_012",
+			"topic": "Nationalism in the Middle East",
+			"lessonId": "h-021",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What was the Suez Crisis (1956)?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Egypt nationalized canal, Britain/France/Israel invaded",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Trade dispute resolution", "isCorrect": false },
+				{ "id": "C", "text": "UN peacekeeping operation", "isCorrect": false },
+				{ "id": "D", "text": "Arab alliance formation", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Nasser and canal nationalization.",
+			"explanation": "Nasser's nationalization led to invasion, but US/USSR pressure forced withdrawal."
+		},
+		{
+			"id": "h021_013",
+			"topic": "Nationalism in the Middle East",
+			"lessonId": "h-021",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What role did the Cold War play in Middle East conflicts?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Superpowers armed sides, prolonging regional conflicts",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Had no influence on Middle East",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Prevented all conflicts", "isCorrect": false },
+				{ "id": "D", "text": "Only affected economics", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Proxy conflicts.",
+			"explanation": "US and USSR armed different sides, turning local conflicts into Cold War battlegrounds."
+		},
+		{
+			"id": "h021_014",
+			"topic": "Nationalism in the Middle East",
+			"lessonId": "h-021",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "How did colonial powers divide the Middle East?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Drawing borders without regard for ethnic/religious communities",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Respected all indigenous boundaries",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Created natural state boundaries",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Left region without any divisions",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Artificial borders.",
+			"explanation": "Colonial powers drew borders creating states with mixed populations and conflicting claims."
+		},
+		{
+			"id": "h021_015",
+			"topic": "Nationalism in the Middle East",
+			"lessonId": "h-021",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Analyze the impact of colonial borders on Middle Eastern conflicts.",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Created disputed territories, ethnic tensions, and cross-border conflicts",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Had no lasting impact", "isCorrect": false },
+				{
+					"id": "C",
+					"text": "Only affected oil distribution",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Resolved all ethnic tensions",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Kurdish, Israeli-Palestinian disputes.",
+			"explanation": "Borders ignored ethnic groups, creating minorities, disputed territories, and irredentist claims."
+		},
+		{
+			"id": "h021_016",
+			"topic": "Nationalism in the Middle East",
+			"lessonId": "h-021",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Evaluate the success of pan-Arabism as a political movement.",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Achieved some unity but ultimately failed due to internal divisions",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Completely succeeded", "isCorrect": false },
+				{ "id": "C", "text": "Never existed as movement", "isCorrect": false },
+				{ "id": "D", "text": "Still dominates Middle East", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "United Arab Republic failure.",
+			"explanation": "Pan-Arabism united temporarily but failed due to nationalism, coups, and foreign intervention."
+		},
+		{
+			"id": "h021_017",
+			"topic": "Nationalism in the Middle East",
+			"lessonId": "h-021",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "How have religious and nationalist movements competed in the Middle East?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Secular nationalism gave way to religious movements like political Islam",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Always remained separate", "isCorrect": false },
+				{
+					"id": "C",
+					"text": "Religion has no political role",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Only religious movements exist",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Iranian Revolution and Brotherhood.",
+			"explanation": "Secular nationalism weakened; movements like MB and Hezbollah combined religion with politics."
+		},
+		{
+			"id": "h021_018",
+			"topic": "Nationalism in the Middle East",
+			"lessonId": "h-021",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Analyze the relationship between Western intervention and Middle Eastern nationalism.",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Western intervention often fueled anti-Western nationalism",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Intervention reduced nationalism",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "No relationship exists", "isCorrect": false },
+				{
+					"id": "D",
+					"text": "Intervention always supported nationalists",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Colonialism and resource control.",
+			"explanation": "Western support for authoritarian regimes and oil interests bred resentment and nationalist backlash."
+		},
+		{
+			"id": "h021_019",
+			"topic": "Nationalism in the Middle East",
+			"lessonId": "h-021",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "To what extent has the Israeli-Palestinian conflict shaped regional politics?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Central to Arab politics, shaping alliances and conflicts for decades",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Has no regional significance",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Only affects Israel and Palestine",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Was resolved in 1948", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Arab summit agenda and funding.",
+			"explanation": "Conflict drives regional politics, influences elections, policies, and diplomatic relations."
+		},
+		{
+			"id": "h021_020",
+			"topic": "Nationalism in the Middle East",
+			"lessonId": "h-021",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Evaluate the legacy of colonial-era agreements on contemporary conflicts.",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Borders, resource rights, and minority issues remain disputed today",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "All colonial agreements were fair",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Agreements had no lasting effect",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Conflict only about religion",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Ongoing territorial disputes.",
+			"explanation": "Sykes-Picot, oil rights, and border agreements continue to shape disputes and regional relations."
+		}
+	]
+}

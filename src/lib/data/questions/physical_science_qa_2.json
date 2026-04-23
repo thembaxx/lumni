@@ -1,0 +1,395 @@
+{
+	"metadata": {
+		"subject": "Physical Science",
+		"totalQuestions": 600,
+		"version": "1.0",
+		"curriculum": "CAPS",
+		"createdAt": "2026-04-23T00:00:00.000Z"
+	},
+	"questions": [
+		{
+			"id": "ps002_001",
+			"topic": "Kinematics - Motion in One Dimension",
+			"lessonId": "ps-002",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "A car moves with a constant velocity of 20 m/s. What is its acceleration?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "20 m/s²", "isCorrect": false },
+				{ "id": "B", "text": "0 m/s²", "isCorrect": true },
+				{ "id": "C", "text": "1 m/s²", "isCorrect": false },
+				{ "id": "D", "text": "-20 m/s²", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Constant velocity means no change in speed or direction.",
+			"explanation": "Constant velocity means zero acceleration."
+		},
+		{
+			"id": "ps002_002",
+			"topic": "Kinematics - Motion in One Dimension",
+			"lessonId": "ps-002",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "A runner completes 100m in 10s. What is their average velocity?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "10 m/s", "isCorrect": true },
+				{ "id": "B", "text": "1000 m/s", "isCorrect": false },
+				{ "id": "C", "text": "0.1 m/s", "isCorrect": false },
+				{ "id": "D", "text": "1 m/s", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Velocity = displacement/time",
+			"explanation": "v = 100m/10s = 10 m/s"
+		},
+		{
+			"id": "ps002_003",
+			"topic": "Kinematics - Motion in One Dimension",
+			"lessonId": "ps-002",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Which of the following is a vector quantity?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Speed", "isCorrect": false },
+				{ "id": "B", "text": "Mass", "isCorrect": false },
+				{ "id": "C", "text": "Distance", "isCorrect": false },
+				{ "id": "D", "text": "Displacement", "isCorrect": true }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Vectors have magnitude AND direction.",
+			"explanation": "Displacement is a vector (has direction); speed, mass, and distance are scalars."
+		},
+		{
+			"id": "ps002_004",
+			"topic": "Kinematics - Motion in One Dimension",
+			"lessonId": "ps-002",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "An object starts from rest and accelerates at 2 m/s² for 5 seconds. What is its final velocity?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "10 m/s", "isCorrect": true },
+				{ "id": "B", "text": "2.5 m/s", "isCorrect": false },
+				{ "id": "C", "text": "7 m/s", "isCorrect": false },
+				{ "id": "D", "text": "0 m/s", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Use v = u + at, where u = 0",
+			"explanation": "v = 0 + (2)(5) = 10 m/s"
+		},
+		{
+			"id": "ps002_005",
+			"topic": "Kinematics - Motion in One Dimension",
+			"lessonId": "ps-002",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Distance traveled is always:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Equal to displacement", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "Greater than or equal to displacement",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Less than displacement", "isCorrect": false },
+				{ "id": "D", "text": "Zero", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Think about a round trip.",
+			"explanation": "Distance is the total path length; displacement is straight-line from start."
+		},
+		{
+			"id": "ps002_006",
+			"topic": "Kinematics - Motion in One Dimension",
+			"lessonId": "ps-002",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "A car accelerates from 10 m/s to 30 m/s in 5s. Find the acceleration.",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "4 m/s²", "isCorrect": true },
+				{ "id": "B", "text": "2 m/s²", "isCorrect": false },
+				{ "id": "C", "text": "20 m/s²", "isCorrect": false },
+				{ "id": "D", "text": "8 m/s²", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "a = (v - u)/t",
+			"explanation": "a = (30 - 10)/5 = 4 m/s²"
+		},
+		{
+			"id": "ps002_007",
+			"topic": "Kinematics - Motion in One Dimension",
+			"lessonId": "ps-002",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Using v² = u² + 2as, find displacement if v = 20 m/s, u = 0, a = 5 m/s².",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "40 m", "isCorrect": true },
+				{ "id": "B", "text": "20 m", "isCorrect": false },
+				{ "id": "C", "text": "80 m", "isCorrect": false },
+				{ "id": "D", "text": "100 m", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "s = v²/(2a)",
+			"explanation": "s = 400/(10) = 40 m"
+		},
+		{
+			"id": "ps002_008",
+			"topic": "Kinematics - Motion in One Dimension",
+			"lessonId": "ps-002",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "A ball is thrown vertically upward with 30 m/s. What maximum height does it reach? (g = 10 m/s²)",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "45 m", "isCorrect": true },
+				{ "id": "B", "text": "90 m", "isCorrect": false },
+				{ "id": "C", "text": "30 m", "isCorrect": false },
+				{ "id": "D", "text": "15 m", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "At max height, v = 0. Use v² = u² - 2gh",
+			"explanation": "0 = 900 - 2(10)h, h = 45 m"
+		},
+		{
+			"id": "ps002_009",
+			"topic": "Kinematics - Motion in One Dimension",
+			"lessonId": "ps-002",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "An object falls 80m freely. Find time taken. (g = 10 m/s²)",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "4 s", "isCorrect": true },
+				{ "id": "B", "text": "8 s", "isCorrect": false },
+				{ "id": "C", "text": "2 s", "isCorrect": false },
+				{ "id": "D", "text": "16 s", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "s = ½gt²",
+			"explanation": "80 = ½(10)t², t = 4s"
+		},
+		{
+			"id": "ps002_010",
+			"topic": "Kinematics - Motion in One Dimension",
+			"lessonId": "ps-002",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "A car travels 100m in 5s at constant velocity. What is the velocity?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "20 m/s", "isCorrect": true },
+				{ "id": "B", "text": "500 m/s", "isCorrect": false },
+				{ "id": "C", "text": "5 m/s", "isCorrect": false },
+				{ "id": "D", "text": "0.05 m/s", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "v = s/t for constant velocity",
+			"explanation": "v = 100/5 = 20 m/s"
+		},
+		{
+			"id": "ps002_011",
+			"topic": "Kinematics - Motion in One Dimension",
+			"lessonId": "ps-002",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "A car accelerates at 2 m/s² from rest. What distance in 6 seconds?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "36 m", "isCorrect": true },
+				{ "id": "B", "text": "12 m", "isCorrect": false },
+				{ "id": "C", "text": "72 m", "isCorrect": false },
+				{ "id": "D", "text": "18 m", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "s = ut + ½at²",
+			"explanation": "s = 0 + ½(2)(36) = 36 m"
+		},
+		{
+			"id": "ps002_012",
+			"topic": "Kinematics - Motion in One Dimension",
+			"lessonId": "ps-002",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Two trains start 200m apart, moving toward each other at 20 m/s and 30 m/s. Time to meet?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "4 s", "isCorrect": true },
+				{ "id": "B", "text": "10 s", "isCorrect": false },
+				{ "id": "C", "text": "6.7 s", "isCorrect": false },
+				{ "id": "D", "text": "2 s", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Relative speed = 20 + 30 = 50 m/s",
+			"explanation": "t = 200/50 = 4 s"
+		},
+		{
+			"id": "ps002_013",
+			"topic": "Kinematics - Motion in One Dimension",
+			"lessonId": "ps-002",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "A car decelerates from 40 m/s to rest in 80m. Find deceleration.",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "10 m/s²", "isCorrect": true },
+				{ "id": "B", "text": "20 m/s²", "isCorrect": false },
+				{ "id": "C", "text": "5 m/s²", "isCorrect": false },
+				{ "id": "D", "text": "40 m/s²", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "v² = u² + 2as, where v = 0",
+			"explanation": "0 = 1600 + 2a(80), a = -10 m/s²"
+		},
+		{
+			"id": "ps002_014",
+			"topic": "Kinematics - Motion in One Dimension",
+			"lessonId": "ps-002",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Object A passes point X at 15 m/s, B passes at 10 m/s going same direction. After 5s, A is 25m ahead. What's A's acceleration?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "0.2 m/s²", "isCorrect": true },
+				{ "id": "B", "text": "1 m/s²", "isCorrect": false },
+				{ "id": "C", "text": "0.5 m/s²", "isCorrect": false },
+				{ "id": "D", "text": "0.1 m/s²", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Relative displacement = 25m in 5s",
+			"explanation": "Initial separation 0, final separation 25m. Relative acceleration = 0.2 m/s²"
+		},
+		{
+			"id": "ps002_015",
+			"topic": "Kinematics - Motion in One Dimension",
+			"lessonId": "ps-002",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "A ball thrown up returns to thrower in 2s. What max height? (g = 10 m/s²)",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "5 m", "isCorrect": true },
+				{ "id": "B", "text": "10 m", "isCorrect": false },
+				{ "id": "C", "text": "20 m", "isCorrect": false },
+				{ "id": "D", "text": "2.5 m", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Time up = time down = 1s each",
+			"explanation": "u = g × 1 = 10 m/s. h = ut - ½gt² = 10(1) - 5(1) = 5 m"
+		},
+		{
+			"id": "ps002_016",
+			"topic": "Kinematics - Motion in One Dimension",
+			"lessonId": "ps-002",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Which quantity is scalar?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Velocity", "isCorrect": false },
+				{ "id": "B", "text": "Acceleration", "isCorrect": false },
+				{ "id": "C", "text": "Speed", "isCorrect": true },
+				{ "id": "D", "text": "Force", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Scalars have only magnitude.",
+			"explanation": "Speed is scalar; velocity, acceleration, force are vectors."
+		},
+		{
+			"id": "ps002_017",
+			"topic": "Kinematics - Motion in One Dimension",
+			"lessonId": "ps-002",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Velocity is the rate of change of:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Distance", "isCorrect": false },
+				{ "id": "B", "text": "Mass", "isCorrect": false },
+				{ "id": "C", "text": "Displacement", "isCorrect": true },
+				{ "id": "D", "text": "Time", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Velocity = displacement/time",
+			"explanation": "Velocity is the rate of change of displacement with time."
+		},
+		{
+			"id": "ps002_018",
+			"topic": "Kinematics - Motion in One Dimension",
+			"lessonId": "ps-002",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "An object in free fall experiences:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Zero acceleration", "isCorrect": false },
+				{ "id": "B", "text": "Constant acceleration g", "isCorrect": true },
+				{ "id": "C", "text": "Increasing acceleration", "isCorrect": false },
+				{ "id": "D", "text": "Decreasing velocity", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Objects in free fall accelerate at g. (g ≈ 10 m/s²)",
+			"explanation": "Free fall acceleration is constant g downward."
+		},
+		{
+			"id": "ps002_019",
+			"topic": "Kinematics - Motion in One Dimension",
+			"lessonId": "ps-002",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "A car has velocity graph straight line from origin to (5s, 50m/s). Acceleration = ?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "10 m/s²", "isCorrect": true },
+				{ "id": "B", "text": "5 m/s²", "isCorrect": false },
+				{ "id": "C", "text": "50 m/s²", "isCorrect": false },
+				{ "id": "D", "text": "250 m/s²", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Gradient of velocity-time graph = acceleration",
+			"explanation": "a = Δv/Δt = 50/5 = 10 m/s²"
+		},
+		{
+			"id": "ps002_020",
+			"topic": "Kinematics - Motion in One Dimension",
+			"lessonId": "ps-002",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Displacement-time graph is parabola opening up. Acceleration is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Constant zero", "isCorrect": false },
+				{ "id": "B", "text": "Constant positive", "isCorrect": true },
+				{ "id": "C", "text": "Increasing", "isCorrect": false },
+				{ "id": "D", "text": "Decreasing", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "s-t parabola means constant acceleration.",
+			"explanation": "Parabolic s-t graph means constant acceleration (positive)."
+		}
+	]
+}

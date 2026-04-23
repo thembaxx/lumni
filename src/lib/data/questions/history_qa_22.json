@@ -1,0 +1,515 @@
+{
+	"metadata": {
+		"subject": "History",
+		"totalQuestions": 600,
+		"version": "1.0",
+		"curriculum": "CAPS",
+		"createdAt": "2026-04-23T00:00:00.000Z"
+	},
+	"questions": [
+		{
+			"id": "h025_001",
+			"topic": "Historiography and Sources",
+			"lessonId": "h-025",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What is historiography?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "The study of how history is written",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Historical facts only", "isCorrect": false },
+				{ "id": "C", "text": "Ancient history", "isCorrect": false },
+				{ "id": "D", "text": "Museum studies", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Study of history writing.",
+			"explanation": "Historiography examines how historical narratives are constructed and interpreted."
+		},
+		{
+			"id": "h025_002",
+			"topic": "Historiography and Sources",
+			"lessonId": "h-025",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What is a primary source?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Original document from the time being studied",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "History textbook", "isCorrect": false },
+				{ "id": "C", "text": "Modern analysis", "isCorrect": false },
+				{ "id": "D", "text": "Secondary interpretation", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "First-hand evidence.",
+			"explanation": "Primary sources are original records created during the period being studied."
+		},
+		{
+			"id": "h025_003",
+			"topic": "Historiography and Sources",
+			"lessonId": "h-025",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What is a secondary source?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Analysis written after events by someone not present",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Original documents", "isCorrect": false },
+				{ "id": "C", "text": "Eye-witness accounts", "isCorrect": false },
+				{ "id": "D", "text": "Artifacts from the period", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Later interpretations.",
+			"explanation": "Secondary sources analyze primary sources and provide later interpretations of events."
+		},
+		{
+			"id": "h025_004",
+			"topic": "Historiography and Sources",
+			"lessonId": "h-025",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Why is source criticism important?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "To evaluate reliability and bias of sources",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "To memorize facts", "isCorrect": false },
+				{ "id": "C", "text": "To find errors only", "isCorrect": false },
+				{ "id": "D", "text": "To confirm opinions", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Evaluating evidence.",
+			"explanation": "Source criticism evaluates reliability, perspective, and potential biases in historical evidence."
+		},
+		{
+			"id": "h025_005",
+			"topic": "Historiography and Sources",
+			"lessonId": "h-025",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What is bias in historical sources?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Prejudice or one-sided perspective in sources",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Historical accuracy", "isCorrect": false },
+				{ "id": "C", "text": "Source verification", "isCorrect": false },
+				{ "id": "D", "text": "Complete objectivity", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "One-sided perspective.",
+			"explanation": "Bias refers to perspectives that favor particular views, affecting source objectivity."
+		},
+		{
+			"id": "h025_006",
+			"topic": "Historiography and Sources",
+			"lessonId": "h-025",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What is an oral history source?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Record of spoken accounts from participants",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Written documents only", "isCorrect": false },
+				{ "id": "C", "text": "Ancient artifacts", "isCorrect": false },
+				{ "id": "D", "text": "Published books", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Spoken testimonies.",
+			"explanation": "Oral history preserves personal testimonies and memories through recorded interviews."
+		},
+		{
+			"id": "h025_007",
+			"topic": "Historiography and Sources",
+			"lessonId": "h-025",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What are archaeological sources?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Physical remains and artifacts from past societies",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Written documents", "isCorrect": false },
+				{ "id": "C", "text": "Oral testimonies", "isCorrect": false },
+				{ "id": "D", "text": "Modern photographs", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Material evidence.",
+			"explanation": "Archaeological sources include artifacts, structures, and physical remains of past societies."
+		},
+		{
+			"id": "h025_008",
+			"topic": "Historiography and Sources",
+			"lessonId": "h-025",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "How do historians determine source reliability?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Cross-referencing multiple sources and considering author perspective",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Accepting all sources equally",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Only using official documents",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Ignoring contradictions", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Triangulation method.",
+			"explanation": "Historians verify sources by comparing multiple accounts and analyzing author motivations."
+		},
+		{
+			"id": "h025_009",
+			"topic": "Historiography and Sources",
+			"lessonId": "h-025",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What is the difference between history and the past?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "History is our interpretation of the past",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "They are exactly the same", "isCorrect": false },
+				{ "id": "C", "text": "The past is more important", "isCorrect": false },
+				{ "id": "D", "text": "History is always accurate", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Interpretation vs. events.",
+			"explanation": "The past is what actually happened; history is our constructed interpretation of those events."
+		},
+		{
+			"id": "h025_010",
+			"topic": "Historiography and Sources",
+			"lessonId": "h-025",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Why do historical interpretations change over time?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "New sources emerge, perspectives shift, and values change",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "History never changes", "isCorrect": false },
+				{ "id": "C", "text": "Only political reasons", "isCorrect": false },
+				{ "id": "D", "text": "Facts are fixed", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Reinterpretation.",
+			"explanation": "New evidence, changing perspectives, and evolving values lead to revised historical interpretations."
+		},
+		{
+			"id": "h025_011",
+			"topic": "Historiography and Sources",
+			"lessonId": "h-025",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What is meant by 'history is written by the victors'?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Dominant perspectives often shape historical narratives",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Only winners write history", "isCorrect": false },
+				{ "id": "C", "text": "Losers never contribute", "isCorrect": false },
+				{ "id": "D", "text": "Victors always tell truth", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Power and narrative.",
+			"explanation": "Those in power often control historical narratives, potentially marginalizing other perspectives."
+		},
+		{
+			"id": "h025_012",
+			"topic": "Historiography and Sources",
+			"lessonId": "h-025",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What is a historical argument?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Claim supported by evidence and analysis",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Random historical facts", "isCorrect": false },
+				{ "id": "C", "text": "Personal opinion only", "isCorrect": false },
+				{ "id": "D", "text": "Simple statement of fact", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Evidence-based claim.",
+			"explanation": "Historical arguments make claims backed by evidence and analytical reasoning."
+		},
+		{
+			"id": "h025_013",
+			"topic": "Historiography and Sources",
+			"lessonId": "h-025",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "How do archivists preserve historical sources?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Through careful storage, conservation, and cataloging",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "By destroying old documents",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Only digitizing everything", "isCorrect": false },
+				{ "id": "D", "text": "By limiting access", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Preservation methods.",
+			"explanation": "Archivists maintain, conserve, organize, and provide access to historical documents."
+		},
+		{
+			"id": "h025_014",
+			"topic": "Historiography and Sources",
+			"lessonId": "h-025",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What is provenance in archival terms?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Origin and chain of custody of sources",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Value of documents", "isCorrect": false },
+				{ "id": "C", "text": "Physical location only", "isCorrect": false },
+				{ "id": "D", "text": "Author identification", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Origin tracking.",
+			"explanation": "Provenance tracks where sources came from and how they were handled, affecting authenticity."
+		},
+		{
+			"id": "h025_015",
+			"topic": "Historiography and Sources",
+			"lessonId": "h-025",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Analyze how perspective affects historical interpretation.",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Who tells story shapes what story is told, including biases and blind spots",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Perspective never affects history",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Only objective facts matter",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "All historians agree", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Subjectivity in history.",
+			"explanation": "Historians' backgrounds, contexts, and purposes inevitably shape their interpretations."
+		},
+		{
+			"id": "h025_016",
+			"topic": "Historiography and Sources",
+			"lessonId": "h-025",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Evaluate challenges in writing history of marginalized groups.",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Limited sources, oral traditions, and mainstream bias create difficulties",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "No challenges exist", "isCorrect": false },
+				{
+					"id": "C",
+					"text": "They are always well-documented",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Only political challenges", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Documenting the undocumented.",
+			"explanation": "Marginalized groups often lack formal records, requiring creative source use and community input."
+		},
+		{
+			"id": "h025_017",
+			"topic": "Historiography and Sources",
+			"lessonId": "h-025",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "How do competing interpretations enrich historical understanding?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Multiple viewpoints reveal complexities and encourage critical thinking",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "They cause confusion only", "isCorrect": false },
+				{
+					"id": "C",
+					"text": "Only one interpretation is valid",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Should be eliminated", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Multi-perspective analysis.",
+			"explanation": "Competing interpretations reveal complexity and prompt deeper analysis of historical events."
+		},
+		{
+			"id": "h025_018",
+			"topic": "Historiography and Sources",
+			"lessonId": "h-025",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Analyze the role of memory in historical construction.",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Memory is selective and shapes how people understand the past",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Memory is always accurate", "isCorrect": false },
+				{
+					"id": "C",
+					"text": "Memory has no role in history",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Official records trump memory",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Collective memory.",
+			"explanation": "Collective memory shapes what societies remember and forget, influencing historical narratives."
+		},
+		{
+			"id": "h025_019",
+			"topic": "Historiography and Sources",
+			"lessonId": "h-025",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Evaluate the impact of digital archives on historiography.",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Increased access but raises issues of preservation and authenticity",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "No significant impact", "isCorrect": false },
+				{
+					"id": "C",
+					"text": "Solves all archival problems",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Eliminates need for historians",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Technology and history.",
+			"explanation": "Digital archives democratize access but create new challenges for authentication and sustainability."
+		},
+		{
+			"id": "h025_020",
+			"topic": "Historiography and Sources",
+			"lessonId": "h-025",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "How does present context influence historical writing?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Current concerns shape what questions are asked and how sources are interpreted",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Present has no influence", "isCorrect": false },
+				{ "id": "C", "text": "Only past matters", "isCorrect": false },
+				{ "id": "D", "text": "Historians are neutral", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Present-mindedness.",
+			"explanation": "Contemporary concerns drive historical questions and influence how evidence is interpreted."
+		}
+	]
+}

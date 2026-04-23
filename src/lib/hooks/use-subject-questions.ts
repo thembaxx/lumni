@@ -93,25 +93,32 @@ async function discoverQAFileUrls(
 export async function fetchSubjectQuestions(
 	subject: string,
 	numberOfQuestions: number,
+	topic?: string,
 ): Promise<QAQuestion[]> {
 	const store = useUploadStore.getState();
 	const normalizedSubject = subject.toLowerCase();
+	const cacheKey = topic
+		? `${normalizedSubject}-${topic.toLowerCase()}`
+		: normalizedSubject;
 
-	const cached = store.getCachedQuestions(normalizedSubject);
+	const cached = store.getCachedQuestions(cacheKey);
 	if (cached && cached.length >= numberOfQuestions) {
 		const shuffled = [...cached].sort(() => Math.random() - 0.5);
 		return shuffled.slice(0, numberOfQuestions);
 	}
 
 	try {
-		const questionsUrl = `/api/questions?subject=${encodeURIComponent(normalizedSubject)}`;
+		const urlParams = new URLSearchParams();
+		urlParams.set("subject", normalizedSubject);
+		if (topic) urlParams.set("topic", topic);
+		const questionsUrl = `/api/questions?${urlParams.toString()}`;
 		const response = await fetch(questionsUrl);
 
 		if (response.ok) {
 			const data = await response.json();
 			if (data.questions && Array.isArray(data.questions)) {
 				const questions = data.questions as QAQuestion[];
-				store.setCachedQuestions(normalizedSubject, questions);
+				store.setCachedQuestions(cacheKey, questions);
 				const shuffled = [...questions].sort(() => Math.random() - 0.5);
 				return shuffled.slice(0, numberOfQuestions);
 			}
@@ -136,7 +143,7 @@ export async function fetchSubjectQuestions(
 	const shuffled = [...allQuestions].sort(() => Math.random() - 0.5);
 	const result = shuffled.slice(0, numberOfQuestions);
 
-	store.setCachedQuestions(normalizedSubject, result);
+	store.setCachedQuestions(cacheKey, result);
 
 	return result;
 }
@@ -148,11 +155,12 @@ interface UseSubjectQuestionsOptions {
 export function useSubjectQuestions(
 	subject: string,
 	numberOfQuestions: number,
+	topic?: string,
 	options?: UseSubjectQuestionsOptions,
 ) {
 	return useQuery({
-		queryKey: ["subjectQuestions", subject, numberOfQuestions],
-		queryFn: () => fetchSubjectQuestions(subject, numberOfQuestions),
+		queryKey: ["subjectQuestions", subject, topic, numberOfQuestions],
+		queryFn: () => fetchSubjectQuestions(subject, numberOfQuestions, topic),
 		staleTime: 1000 * 60 * 60,
 		retry: 1,
 		enabled: options?.enabled ?? numberOfQuestions > 0,
@@ -163,11 +171,13 @@ export function useSubjectQuestionsByDifficulty(
 	subject: string,
 	numberOfQuestions: number,
 	difficulty?: "Easy" | "Medium" | "Hard",
+	topic?: string,
 	options?: UseSubjectQuestionsOptions,
 ) {
 	const { data: allQuestions, ...rest } = useSubjectQuestions(
 		subject,
 		numberOfQuestions,
+		topic,
 		options,
 	);
 

@@ -1,0 +1,467 @@
+{
+	"metadata": {
+		"subject": "History",
+		"totalQuestions": 600,
+		"version": "1.0",
+		"curriculum": " "CAPS",
+		"createdAt": "2026-04-23T00:00:00.000Z"
+	},
+	"questions": [
+		{
+			"id": "h019_001",
+			"topic": "Dealing with the Past",
+			"lessonId": "h-019",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What was the Truth and Reconciliation Commission (TRC)?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Body investigating apartheid crimes and granting amnesty",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Court prosecuting apartheid criminals",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Truth commission only", "isCorrect": false },
+				{ "id": "D", "text": "Memorial organization", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Justice through forgiveness.",
+			"explanation": "TRC (1995-1998) heard testimony about apartheid crimes, granted amnesty, and documented violations."
+		},
+		{
+			"id": "h019_002",
+			"topic": "Dealing with the Past",
+			"lessonId": "h-019",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Who chaired the TRC?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Desmond Tutu", "isCorrect": true },
+				{ "id": "B", "text": "Nelson Mandela", "isCorrect": false },
+				{ "id": "C", "text": "F.W. de Klerk", "isCorrect": false },
+				{ "id": "D", "text": "Steve Biko", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Anglican Archbishop.",
+			"explanation": "Desmond Tutu, Anglican Archbishop, chaired the TRC with compassion and moral authority."
+		},
+		{
+			"id": "h019_003",
+			"topic": "Dealing with the Past",
+			"lessonId": "h-019",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What was amnesty?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Protection from prosecution for confessed crimes", "isCorrect": true },
+				{ "id": "B", "text": "Monetary compensation", "isCorrect": false },
+				{ "id": "C", "text": "Public apology", "isCorrect": false },
+				{ "id": "D", "text": "Memorial building", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Full disclosure for forgiveness.",
+			"explanation": "Amnesty was granted to those who fully disclosed politically motivated crimes during apartheid."
+		},
+		{
+			"id": "h019_004",
+			"topic": "Dealing with the Past",
+			"lessonId": "h-019",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What were reparations?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Compensation to victims of apartheid", "isCorrect": true },
+				{ "id": "B", "text": "Punishment for perpetrators", "isCorrect": false },
+				{ "id": "C", "text": "Amnesty conditions", "isCorrect": false },
+				{ "id": "D", "text": "Property restitution only", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Financial reparations to victims.",
+			"explanation": "Reparations included individual payments, community rehabilitation, and institutional reforms."
+		},
+		{
+			"id": "h019_005",
+			"topic": "Dealing with the Past",
+			"lessonId": "h-019",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What was the Promotion of National Unity and Reconciliation Act?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Law establishing the TRC", "isCorrect": true },
+				{ "id": "B", "text": "Economic policy", "isCorrect": false },
+				{ "id": "C", "text": "Education reform", "isCorrect": false },
+				{ "id": "D", "text": "Election regulation", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "TRC legal foundation.",
+			"explanation": "This Act (1995) created the TRC to promote healing and reconciliation through truth-telling."
+		},
+		{
+			"id": "h019_006",
+			"topic": "Dealing with the Past",
+			"lessonId": "h-019",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What were the three TRC committees?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Human Rights Violations, Amnesty, and Reparation", "isCorrect": true },
+				{ "id": "B", "text": "Education, Health, and Housing", "isCorrect": false },
+				{ "id": "C", "text": "Police, Military, and Intelligence", "isCorrect": false },
+				{ "id": "D", "text": "Victims, Witnesses, and Perpetrators", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Three-part mandate.",
+			"explanation": "TRC had committees investigating violations, processing amnesty applications, and recommending reparations."
+		},
+		{
+			"id": "h019_007",
+			"topic": "Dealing with the Past",
+			"lessonId": "h-019",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What is restorative justice?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Focus on repair and reconciliation rather than punishment",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Punishing all criminals", "isCorrect": false },
+				{ "id": "C", "text": "Retrospective trials only", "isCorrect": false },
+				{ "id": "D", "text": "Economic compensation only", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Healing vs. punishment.",
+			"explanation": "Restorative justice prioritizes victim participation, perpetrator accountability, and community healing."
+		},
+		{
+			"id": "h019_008",
+			"topic": "Dealing with the Past",
+			"lessonId": "h-019",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Why was amnesty controversial?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Critics argued it let perpetrators escape justice",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "It was universally praised", "isCorrect": false },
+				{ "id": "C", "text": "It only affected victims", "isCorrect": false },
+				{ "id": "D", "text": "Had no controversy", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Justice vs. peace debate.",
+			"explanation": "Many victims argued amnesty meant perpetrators escaped justice without accountability."
+		},
+		{
+			"id": "h019_009",
+			"topic": "Dealing with the Past",
+			"lessonId": "h-019",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "How did testimony affect victims?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Provided catharsis and official recognition of suffering", "isCorrect": true },
+				{ "id": "B", "text": "Had no psychological effect", "isCorrect": false },
+				{ "id": "C", "text": "Caused additional trauma only", "isCorrect": false },
+				{ "id": "D", "text": "Was only for legal purposes", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Dignity through testimony.",
+			"explanation": "For many, testifying before TRC provided first official recognition of their suffering and dignity restoration."
+		},
+		{
+			"id": "h019_010",
+			"topic": "Dealing with the Past",
+			"lessonId": "h-019",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What role did churches play in reconciliation?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Provided moral framework, facilitated dialogue, and supported victims", "isCorrect": true },
+				{ "id": "B", "text": "Had no role in reconciliation", "isCorrect": false },
+				{ "id": "C", "text": "Only supported government", "isCorrect": false },
+				{ "id": "D", "text": "Focused only on spiritual matters", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Churches as moral guides.",
+			"explanation": "Religious leaders provided theological grounding for reconciliation and supported TRC process."
+		},
+		{
+			"id": "h019_011",
+			"topic": "Dealing with the Past",
+			"lessonId": "h-019",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "How did TRC findings compare to international truth commissions?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Unique amnesty provisions but similar victim-centered approach", "isCorrect": true },
+				{ "id": "B", "text": "Was completely different from all others", "isCorrect": false },
+				{ "id": "C", "text": "Was less effective than others", "isCorrect": false },
+				{ "id": "D", "text": "Had no international context", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Latin American influence.",
+			"explanation": "TRC drew on Latin American experiences but innovated with unique amnesty-for-truth approach."
+		},
+		{
+			"id": "h019_012",
+			"topic": "Dealing with the Past",
+			"lessonId": "h-019",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What was the TRC's Final Report (1998)?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Comprehensive documentation of apartheid violations and recommendations", "isCorrect": true },
+				{ "id": "B", "text": "Only a summary of amnesty grants", "isCorrect": false },
+				{ "id": "C", "text": "Prosecution recommendations", "isCorrect": false },
+				{ "id": "D", "text": "Economic analysis", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Comprehensive findings.",
+			"explanation": "Final Report documented 20,000 statements, 7,000 amnesty applications, and extensive recommendations."
+		},
+		{
+			"id": "h019_013",
+			"topic": "Dealing with the Past",
+			"lessonId": "h-019",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What was the difference between gross violations and ordinary crimes?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Gross violations were politically motivated; ordinary crimes had personal motives",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "No legal difference existed",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Only murder counted", "isCorrect": false },
+				{ "id": "D", "text": "They were the same", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Political vs. personal crimes.",
+			"explanation": "TRC focused on violations linked to political struggle, excluding common crimes during apartheid."
+		},
+		{
+			"id": "h019_014",
+			"topic": "Dealing with the Past",
+			"lessonId": "h-019",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What were symbolic reparations?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Memorials, official apologies, and education programs", "isCorrect": true },
+				{ "id": "B", "text": "Only cash payments", "isCorrect": false },
+				{ "id": "C", "text": "Prison sentences", "isCorrect": false },
+				{ "id": "D", "text": "Land restitution only", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Non-financial recognition.",
+			"explanation": "Symbolic reparations included memorials, renaming of places, and public apologies to victims."
+		},
+		{
+			"id": "h019_015",
+			"topic": "Dealing with the Past",
+			"lessonId": "h-019",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Analyze the effectiveness of the TRC in achieving reconciliation.",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Provided truth and healing but reconciliation remains incomplete",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Fully reconciled all South Africans",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Had no effect on reconciliation",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Only served legal purposes", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Ongoing debate on TRC success.",
+			"explanation": "TRC succeeded in documenting truth and enabling catharsis, but economic reconciliation remains contested."
+		},
+		{
+			"id": "h019_016",
+			"topic": "Dealing with the Past",
+			"lessonId": "h-019",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Evaluate the TRC's treatment of liberation movement violence.",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Applied same standards to ANC as government, angering some supporters",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Only prosecuted liberation movement",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Ignored liberation violence",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Fully exonerated liberation movement",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "ANC attacks like Umkhonto we Sizwe.",
+			"explanation": "TRC's even-handed approach documented ANC atrocities, causing controversy among liberation supporters."
+		},
+		{
+			"id": "h019_017",
+			"topic": "Dealing with the Past",
+			"lessonId": "h-019",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "How do restorative and retributive justice differ?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Restorative focuses on healing and relationships; retributive on punishment", "isCorrect": true },
+				{ "id": "B", "text": "They are essentially identical", "isCorrect": false },
+				{ "id": "C", "text": "Restorative is more punitive", "isCorrect": false },
+				{ "id": "D", "text": "Only retributive justice exists", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Two models of justice.",
+			"explanation": "TRC prioritized victim healing and societal reconciliation over perpetrator punishment."
+		},
+		{
+			"id": "h019_018",
+			"topic": "Dealing with the Past",
+			"lessonId": "h-019",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Analyze why some victims rejected the TRC process.",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Wanted prosecution rather than forgiveness; felt betrayed by amnesty",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "All victims supported TRC fully",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Victims had no complaints", "isCorrect": false },
+				{
+					"id": "D",
+					"text": "Only perpetrators rejected the process",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Victims vs. amnesty debate.",
+			"explanation": "Many victims, especially from 1960s-80s, felt amnesty meant no justice regardless of truth-telling."
+		},
+		{
+			"id": "h019_019",
+			"topic": "Dealing with the Past",
+			"lessonId": "h-019",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Compare South Africa's approach to other post-conflict societies.",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Unique amnesty-for-truth model vs. prosecutions in Rwanda and Nuremberg", "isCorrect": true },
+				{ "id": "B", "text": "South Africa copied Rwanda exactly", "isCorrect": false },
+				{ "id": "C", "text": "Had no international comparison", "isCorrect": false },
+				{ "id": "D", "text": "Was least successful approach", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Different justice models.",
+			"explanation": "South Africa's amnesty was unique; others used tribunals or prosecutions for similar past atrocities."
+		},
+		{
+			"id": "h019_020",
+			"topic": "Dealing with the Past",
+			"lessonId": "h-019",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "What is the TRC's legacy for transitional justice globally?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Influenced truth commission design worldwide, especially in Latin America",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Had no global influence", "isCorrect": false },
+				{
+					"id": "C",
+					"text": "Only influenced African commissions",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Discouraged future truth commissions",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Model for conflict resolution.",
+			"explanation": "TRC became the model for truth commissions globally, demonstrating restorative justice at scale."
+		}
+	]
+}

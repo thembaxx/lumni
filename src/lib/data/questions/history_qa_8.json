@@ -1,0 +1,399 @@
+{
+	"metadata": {
+		"subject": "History",
+		"totalQuestions": 600,
+		"version": "1.0",
+		"curriculum": "CAPS",
+		"createdAt": "2026-04-23T00:00:00.000Z"
+	},
+	"questions": [
+		{
+			"id": "h009_001",
+			"topic": "Capitalism in the USA 1900-1940",
+			"lessonId": "h-009",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What was the main characteristic of the American economy in the 1920s?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Rapid industrialization and consumerism",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Agricultural depression", "isCorrect": false },
+				{
+					"id": "C",
+					"text": "Government regulation of industry",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Economic isolationism only", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Roaring Twenties prosperity.",
+			"explanation": "The 1920s saw massive industrial growth, stock market speculation, and rising consumer culture."
+		},
+		{
+			"id": "h009_002",
+			"topic": "Capitalism in the USA 1900-1940",
+			"lessonId": "h-009",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What event triggered the Great Depression?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Stock market crash in 1929", "isCorrect": true },
+				{ "id": "B", "text": "World War I", "isCorrect": false },
+				{ "id": "C", "text": "Industrial accidents", "isCorrect": false },
+				{ "id": "D", "text": "Natural disasters", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Black Tuesday.",
+			"explanation": "The October 1929 stock market crash wiped out investments and triggered widespread economic collapse."
+		},
+		{
+			"id": "h009_003",
+			"topic": "Capitalism in the USA 1900-1940",
+			"lessonId": "h-009",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Who was the US President during the early Great Depression?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Herbert Hoover", "isCorrect": true },
+				{ "id": "B", "text": "Franklin Roosevelt", "isCorrect": false },
+				{ "id": "C", "text": "Woodrow Wilson", "isCorrect": false },
+				{ "id": "D", "text": "Calvin Coolidge", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Before the New Deal.",
+			"explanation": "Hoover served as president when the Depression began but was blamed for inadequate response."
+		},
+		{
+			"id": "h009_004",
+			"topic": "Capitalism in the USA 1900-1940",
+			"lessonId": "h-009",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What was the New Deal?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Roosevelt's economic recovery programs", "isCorrect": true },
+				{ "id": "B", "text": "Military strategy", "isCorrect": false },
+				{ "id": "C", "text": "Trade agreement with Europe", "isCorrect": false },
+				{ "id": "D", "text": "Tax reduction plan", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "1930s recovery programs.",
+			"explanation": "The New Deal was FDR's comprehensive program of relief, recovery, and reform to address the Depression."
+		},
+		{
+			"id": "h009_005",
+			"topic": "Capitalism in the USA 1900-1940",
+			"lessonId": "h-009",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What was Prohibition in the USA?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Ban on alcohol production and sale", "isCorrect": true },
+				{ "id": "B", "text": "Restriction on immigration", "isCorrect": false },
+				{ "id": "C", "text": "Labor regulations", "isCorrect": false },
+				{ "id": "D", "text": "War-time restriction", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "18th Amendment (1920-1933).",
+			"explanation": "Prohibition (1920-1933) banned alcohol, leading to speakeasies and organized crime growth."
+		},
+		{
+			"id": "h009_006",
+			"topic": "Capitalism in the USA 1900-1940",
+			"lessonId": "h-009",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Who were the 'Robber Barons'?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Wealthy industrialists accused of unethical business practices", "isCorrect": true },
+				{ "id": "B", "text": "Labor union leaders", "isCorrect": false },
+				{ "id": "C", "text": "Government officials", "isCorrect": false },
+				{ "id": "D", "text": "Organized criminals", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Late 19th-century tycoons.",
+			"explanation": "Robber Barons were industrialists like Rockefeller and Carnegie who built monopolies through ruthless tactics."
+		},
+		{
+			"id": "h009_007",
+			"topic": "Capitalism in the USA 1900-1940",
+			"lessonId": "h-009",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What was the Dust Bowl?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Severe drought and dust storms in the Great Plains", "isCorrect": true },
+				{ "id": "B", "text": "Industrial pollution disaster", "isCorrect": false },
+				{ "id": "C", "text": "Mining catastrophe", "isCorrect": false },
+				{ "id": "D", "text": "Flood disaster", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "1930s agricultural crisis.",
+			"explanation": "The Dust Bowl (1930s) destroyed farms and displaced millions of farmers in the Great Plains."
+		},
+		{
+			"id": "h009_008",
+			"topic": "Capitalism in the USA 1900-1940",
+			"lessonId": "h-009",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What were the main features of the New Deal?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Relief programs, financial reform, and industrial recovery", "isCorrect": true },
+				{ "id": "B", "text": "Military buildup and foreign intervention", "isCorrect": false },
+				{ "id": "C", "text": "Agricultural exports only", "isCorrect": false },
+				{ "id": "D", "text": "Laissez-faire policies", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Three Rs: Relief, Recovery, Reform.",
+			"explanation": "The New Deal included relief for unemployed, recovery for economy, and reforms to prevent future crises."
+		},
+		{
+			"id": "h009_009",
+			"topic": "Capitalism in the USA 1900-1940",
+			"lessonId": "h-009",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What was the Tennessee Valley Authority (TVA)?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Federal program for regional development and electrification", "isCorrect": true },
+				{ "id": "B", "text": "Private corporation", "isCorrect": false },
+				{ "id": "C", "text": "Military project", "isCorrect": false },
+				{ "id": "D", "text": "Agricultural subsidy program", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "New Deal regional planning.",
+			"explanation": "TVA brought electricity, flood control, and economic development to one of America's poorest regions."
+		},
+		{
+			"id": "h009_010",
+			"topic": "Capitalism in the USA 1900-1940",
+			"lessonId": "h-009",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "How did mass production change American industry?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Made goods affordable through assembly line techniques", "isCorrect": true },
+				{ "id": "B", "text": "Reduced total output", "isCorrect": false },
+				{ "id": "C", "text": "Increased skilled labor demands", "isCorrect": false },
+				{ "id": "D", "text": "Had no significant impact", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Henry Ford's innovations.",
+			"explanation": "Assembly line production reduced costs and made consumer goods like automobiles accessible to millions."
+		},
+		{
+			"id": "h009_011",
+			"topic": "Capitalism in the USA 1900-1940",
+			"lessonId": "h-009",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What role did installment buying play in the 1920s economy?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Fueled consumer spending and contributed to debt bubble", "isCorrect": true },
+				{ "id": "B", "text": "Had no economic significance", "isCorrect": false },
+				{ "id": "C", "text": "Was illegal under federal law", "isCorrect": false },
+				{ "id": "D", "text": "Only affected wealthy consumers", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Credit-based consumption.",
+			"explanation": "Installment plans allowed Americans to buy consumer goods on credit, creating artificial demand."
+		},
+		{
+			"id": "h009_012",
+			"topic": "Capitalism in the USA 1900-1940",
+			"lessonId": "h-009",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What was the Social Security Act of 1935?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Provided pensions and unemployment benefits", "isCorrect": true },
+				{ "id": "B", "text": "Free healthcare for all", "isCorrect": false },
+				{ "id": "C", "text": "Universal basic income", "isCorrect": false },
+				{ "id": "D", "text": "Labor union protection", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "New Deal reform legislation.",
+			"explanation": "Social Security established retirement pensions and unemployment insurance, creating America's safety net."
+		},
+		{
+			"id": "h009_013",
+			"topic": "Capitalism in the USA 1900-1940",
+			"lessonId": "h-009",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "How did the Great Depression affect American workers?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Mass unemployment, poverty, and labor unrest", "isCorrect": true },
+				{ "id": "B", "text": "Only minor economic adjustments", "isCorrect": false },
+				{ "id": "C", "text": "Increased wages for all", "isCorrect": false },
+				{ "id": "D", "text": "No significant impact", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Unemployment reached 25%.",
+			"explanation": "Unemployment peaked at 25%, banks failed, farms were foreclosed, and families lost everything."
+		},
+		{
+			"id": "h009_014",
+			"topic": "Capitalism in the USA 1900-1940",
+			"lessonId": "h-009",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What was the Works Progress Administration (WPA)?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Federal jobs program employing millions on public works", "isCorrect": true },
+				{ "id": "B", "text": "Private employment agency", "isCorrect": false },
+				{ "id": "C", "text": "Military service program", "isCorrect": false },
+				{ "id": "D", "text": "Agricultural subsidy program", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "New Deal employment relief.",
+			"explanation": "WPA employed 8 million workers on construction projects, theaters, and arts during the Depression."
+		},
+		{
+			"id": "h009_015",
+			"topic": "Capitalism in the USA 1900-1940",
+			"lessonId": "h-009",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Analyze the causes of the Great Depression.",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Overproduction, speculation, banking failures, and global factors", "isCorrect": true },
+				{ "id": "B", "text": "Single cause like stock market crash", "isCorrect": false },
+				{ "id": "C", "text": "Foreign policies only", "isCorrect": false },
+				{ "id": "D", "text": "Natural economic cycle only", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Multiple interconnected factors.",
+			"explanation": "The Depression resulted from overproduction, unequal wealth distribution, stock speculation, bank failures, and Smoot-Hawley tariffs."
+		},
+		{
+			"id": "h009_016",
+			"topic": "Capitalism in the USA 1900-1940",
+			"lessonId": "h-009",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Evaluate the effectiveness of the New Deal in resolving the Depression.",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Provided relief but full recovery came with WWII", "isCorrect": true },
+				{ "id": "B", "text": "Immediately ended the Depression", "isCorrect": false },
+				{ "id": "C", "text": "Had no impact on recovery", "isCorrect": false },
+				{ "id": "D", "text": "Made conditions worse", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Relief vs. recovery debate.",
+			"explanation": "New Deal relief programs helped millions survive, but full economic recovery required wartime mobilization."
+		},
+		{
+			"id": "h009_017",
+			"topic": "Capitalism in the USA 1900-1940",
+			"lessonId": "h-009",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "To what extent did the New Deal transform American government?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Established permanent federal role in economy and social welfare", "isCorrect": true },
+				{ "id": "B", "text": "Left government unchanged", "isCorrect": false },
+				{ "id": "C", "text": "Reduced federal government power", "isCorrect": false },
+				{ "id": "D", "text": "Only affected state governments", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Expanded federal authority.",
+			"explanation": "New Deal created regulatory agencies, social programs, and expanded federal government responsibility for welfare."
+		},
+		{
+			"id": "h009_018",
+			"topic": "Capitalism in the USA 1900-1940",
+			"lessonId": "h-009",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Analyze the impact of capitalism on American society during this period.",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Created wealth divide with boom for some and poverty for others", "isCorrect": true },
+				{ "id": "B", "text": "Benefited all equally", "isCorrect": false },
+				{ "id": "C", "text": "Had no societal impact", "isCorrect": false },
+				{ "id": "D", "text": "Only affected the wealthy", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Class and race divisions.",
+			"explanation": "Capitalist growth created a wealthy elite while many workers faced poverty, with disproportionate impact on minorities."
+		},
+		{
+			"id": "h009_019",
+			"topic": "Capitalism in the USA 1900-1940",
+			"lessonId": "h-009",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "How did the Great Depression affect racial minorities in America?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Disproportionate poverty and discrimination in New Deal programs", "isCorrect": true },
+				{ "id": "B", "text": "Provided equal economic opportunities", "isCorrect": false },
+				{ "id": "C", "text": "Had no special impact on minorities", "isCorrect": false },
+				{ "id": "D", "text": "Only affected white workers", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "African American and Hispanic workers.",
+			"explanation": "Black Americans faced 'last hired, first fired' discrimination and exclusion from many New Deal benefits."
+		},
+		{
+			"id": "h009_020",
+			"topic": "Capitalism in the USA 1900-1940",
+			"lessonId": "h-009",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Evaluate the legacy of 1920s prosperity and Depression-era reforms.",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Shaped modern consumer economy and regulatory state", "isCorrect": true },
+				{ "id": "B", "text": "Had no lasting legacy", "isCorrect": false },
+				{ "id": "C", "text": "Only affected the 1930s", "isCorrect": false },
+				{ "id": "D", "text": "Reversed all economic development", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Long-term institutional changes.",
+			"explanation": "The era established patterns of consumer credit, labor rights, financial regulation, and social security that persist today."
+		}
+	]
+}

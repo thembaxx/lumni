@@ -1,0 +1,455 @@
+{
+	"metadata": {
+		"subject": "Life Sciences",
+		"totalQuestions": 20,
+		"version": "1.0",
+		"curriculum": "CAPS",
+		"createdAt": "2026-04-23T00:00:00.000Z"
+	},
+	"questions": [
+		{
+			"id": "ls030_001",
+			"topic": "Human Evolution",
+			"lessonId": "ls-030",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What distinguishes hominids from other primates?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Living in trees", "isCorrect": false },
+				{ "id": "B", "text": "Walking upright", "isCorrect": true },
+				{ "id": "C", "text": "Eating meat", "isCorrect": false },
+				{ "id": "D", "text": "Large brains", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Bipedal locomotion.",
+			"explanation": "Bipedal walking (upright) distinguishes hominids."
+		},
+		{
+			"id": "ls030_002",
+			"topic": "Human Evolution",
+			"lessonId": "ls-030",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Which hominin species is known as 'Lucy'?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Homo habilis", "isCorrect": false },
+				{ "id": "B", "text": "Australopithecus afarensis", "isCorrect": true },
+				{ "id": "C", "text": "Homo erectus", "isCorrect": false },
+				{ "id": "D", "text": "Homo sapiens", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Famous fossil from Ethiopia.",
+			"explanation": "Lucy is the famous Australopithecus afarensis fossil."
+		},
+		{
+			"id": "ls030_003",
+			"topic": "Human Evolution",
+			"lessonId": "ls-030",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What is a key feature of Homo habilis?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Large face", "isCorrect": false },
+				{ "id": "B", "text": "Tool use", "isCorrect": true },
+				{ "id": "C", "text": "Small brain", "isCorrect": false },
+				{ "id": "D", "text": "No bipedalism", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Handy man.",
+			"explanation": "Homo habilis (handy man) made stone tools."
+		},
+		{
+			"id": "ls030_004",
+			"topic": "Human Evolution",
+			"lessonId": "ls-030",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "When did Homo sapiens first appear?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "1 million years ago", "isCorrect": false },
+				{ "id": "B", "text": "200,000 years ago", "isCorrect": true },
+				{ "id": "C", "text": "3 million years ago", "isCorrect": false },
+				{ "id": "D", "text": "500,000 years ago", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Relatively recent.",
+			"explanation": "Homo sapiens appeared about 200,000 years ago."
+		},
+		{
+			"id": "ls030_005",
+			"topic": "Human Evolution",
+			"lessonId": "ls-030",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What is the Savanna hypothesis?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Forest living led to bipedalism",
+					"isCorrect": false
+				},
+				{
+					"id": "B",
+					"text": "Climate change to open grassland drove bipedalism",
+					"isCorrect": true
+				},
+				{
+					"id": "C",
+					"text": "Tree climbing led to opposable thumbs",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Meat eating led to bigger brains",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Open habitats.",
+			"explanation": "Savanna hypothesis: climate change drove bipedalism."
+		},
+		{
+			"id": "ls030_006",
+			"topic": "Human Evolution",
+			"lessonId": "ls-030",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Where did modern humans originate?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Europe", "isCorrect": false },
+				{ "id": "B", "text": "Africa", "isCorrect": true },
+				{ "id": "C", "text": "Asia", "isCorrect": false },
+				{ "id": "D", "text": "Middle East", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Out of Africa.",
+			"explanation": "Modern humans originated in Africa (Out of Africa theory)."
+		},
+		{
+			"id": "ls030_007",
+			"topic": "Human Evolution",
+			"lessonId": "ls-030",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What does the mitochondrial Eve concept suggest?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "All humans descended from one female",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Eve was the first human", "isCorrect": false },
+				{ "id": "C", "text": "Women evolved first", "isCorrect": false },
+				{
+					"id": "D",
+					"text": "Mitochondria cause evolution",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Common female ancestor.",
+			"explanation": "Mitochondrial Eve is the common maternal ancestor."
+		},
+		{
+			"id": "ls030_008",
+			"topic": "Human Evolution",
+			"lessonId": "ls-030",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Which species was the first to leave Africa?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Homo sapiens", "isCorrect": false },
+				{ "id": "B", "text": "Homo erectus", "isCorrect": true },
+				{ "id": "C", "text": "Homo habilis", "isCorrect": false },
+				{ "id": "D", "text": "Australopithecus", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Upright man.",
+			"explanation": "Homo erectus was first to migrate from Africa."
+		},
+		{
+			"id": "ls030_009",
+			"topic": "Human Evolution",
+			"lessonId": "ls-030",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What is a key difference between Homo erectus and Homo sapiens?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Brain size", "isCorrect": true },
+				{ "id": "B", "text": "Tool use", "isCorrect": false },
+				{ "id": "C", "text": "Bipedalism", "isCorrect": false },
+				{ "id": "D", "text": "Teeth size", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Homo sapiens has larger brain.",
+			"explanation": "Homo sapiens has a larger brain (~1400cc vs ~1000cc)."
+		},
+		{
+			"id": "ls030_010",
+			"topic": "Human Evolution",
+			"lessonId": "ls-030",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What is the multiregional hypothesis?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Humans evolved only in Africa",
+					"isCorrect": false
+				},
+				{
+					"id": "B",
+					"text": "Humans evolved simultaneously worldwide",
+					"isCorrect": true
+				},
+				{
+					"id": "C",
+					"text": "Humans replaced other species",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Humans never left Africa", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Parallel evolution.",
+			"explanation": "Multiregional: Homo erectus evolved into Homo sapiens worldwide."
+		},
+		{
+			"id": "ls030_011",
+			"topic": "Human Evolution",
+			"lessonId": "ls-030",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What evidence supports the Out of Africa theory?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Fossils only", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "Genetic evidence from living populations",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Tool evidence only", "isCorrect": false },
+				{ "id": "D", "text": "Climate evidence", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "DNA studies.",
+			"explanation": "Genetic evidence shows African origin of modern humans."
+		},
+		{
+			"id": "ls030_012",
+			"topic": "Human Evolution",
+			"lessonId": "ls-030",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What was the Neanderthal contribution to human evolution?",
+			"questionType": "Multiple-choice",
+			"options": [
+				{ "id": "A", "text": "They are our ancestors", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "They interbred with Homo sapiens",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "They replaced Homo sapiens", "isCorrect": false },
+				{ "id": "D", "text": "They had no role", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Interbreeding evidence.",
+			"explanation": "Neanderthals interbred with Homo sapiens (1-4% DNA)."
+		},
+		{
+			"id": "ls030_013",
+			"topic": "Human Evolution",
+			"lessonId": "ls-030",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What is the 'gracile' feature in hominins?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Heavy boned", "isCorrect": false },
+				{ "id": "B", "text": "Lightly built", "isCorrect": true },
+				{ "id": "C", "text": "Large jawed", "isCorrect": false },
+				{ "id": "D", "text": "Small eyed", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "More derived features.",
+			"explanation": "Gracile = lightly built with refined features."
+		},
+		{
+			"id": "ls030_014",
+			"topic": "Human Evolution",
+			"lessonId": "ls-030",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What cranial feature increased in Homo lineage?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Brow ridge", "isCorrect": false },
+				{ "id": "B", "text": "Forehead", "isCorrect": true },
+				{ "id": "C", "text": "Jaw size", "isCorrect": false },
+				{ "id": "D", "text": "Teeth size", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Brain expansion.",
+			"explanation": "Forehead height increased with brain expansion."
+		},
+		{
+			"id": "ls030_015",
+			"topic": "Human Evolution",
+			"lessonId": "ls-030",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "What is the 'robustic' feature in hominins?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Lightly built", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "Heavily built with robust features",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Small featured", "isCorrect": false },
+				{ "id": "D", "text": "Small brained", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "More primitive features.",
+			"explanation": "Robustic = heavily built with robust (strong) features."
+		},
+		{
+			"id": "ls030_016",
+			"topic": "Human Evolution",
+			"lessonId": "ls-030",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Why is the sagittal crest important in hominin classification?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "It indicates large temporal muscles",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "It indicates large brain", "isCorrect": false },
+				{ "id": "C", "text": "It indicates bipedalism", "isCorrect": false },
+				{ "id": "D", "text": "It indicates tool use", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Jaw muscle attachment.",
+			"explanation": "Sagittal crest = large jaw muscles for tough diet."
+		},
+		{
+			"id": "ls030_017",
+			"topic": "Human Evolution",
+			"lessonId": "ls-030",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "What is the taxonomic relationship between Homo and Pan?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Same genus", "isCorrect": false },
+				{ "id": "B", "text": "Same family", "isCorrect": true },
+				{ "id": "C", "text": "Same order", "isCorrect": false },
+				{ "id": "D", "text": "Different families", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Common ancestor with chimpanzees.",
+			"explanation": "Humans (Homo) and chimpanzees (Pan) share family Hominidae."
+		},
+		{
+			"id": "ls030_018",
+			"topic": "Human Evolution",
+			"lessonId": "ls-030",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "What is the 'mosaic evolution' concept in human evolution?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "All traits evolved together",
+					"isCorrect": false
+				},
+				{
+					"id": "B",
+					"text": "Different traits evolved at different rates",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Traits reversed over time", "isCorrect": false },
+				{ "id": "D", "text": "Traits stayed the same", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Not all changes at once.",
+			"explanation": "Mosaic evolution: different traits evolved independently."
+		},
+		{
+			"id": "ls030_019",
+			"topic": "Human Evolution",
+			"lessonId": "ls-030",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "What is the 'selective pressure' for larger brains in Homo?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Cold climate", "isCorrect": false },
+				{ "id": "B", "text": "Complex social living", "isCorrect": true },
+				{ "id": "C", "text": "Walking upright", "isCorrect": false },
+				{ "id": "D", "text": "Diet change only", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Social brain hypothesis.",
+			"explanation": "Complex social living selected for larger brains."
+		},
+		{
+			"id": "ls030_020",
+			"topic": "Human Evolution",
+			"lessonId": "ls-030",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "What is the 'timing' of bipedalism in human evolution?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "After large brain", "isCorrect": false },
+				{ "id": "B", "text": "Before large brain", "isCorrect": true },
+				{
+					"id": "C",
+					"text": "At same time as large brain",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Never in Homo", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "First major adaptation.",
+			"explanation": "Bipedalism evolved before large brain expansion."
+		}
+	]
+}

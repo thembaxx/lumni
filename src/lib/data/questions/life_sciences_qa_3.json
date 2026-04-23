@@ -1,0 +1,475 @@
+{
+	"metadata": {
+		"subject": "Life Sciences",
+		"totalQuestions": 20,
+		"version": "1.0",
+		"curriculum": "CAPS",
+		"createdAt": "2026-04-23T00:00:00.000Z"
+	},
+	"questions": [
+		{
+			"id": "ls003_001",
+			"topic": "Cell Structure and Function",
+			"lessonId": "ls-003",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Which organelle is the control centre of the cell?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Mitochondria", "isCorrect": false },
+				{ "id": "B", "text": "Nucleus", "isCorrect": true },
+				{ "id": "C", "text": "Ribosome", "isCorrect": false },
+				{ "id": "D", "text": "Golgi body", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Contains genetic material.",
+			"explanation": "The nucleus contains DNA and controls cell activities by regulating gene expression."
+		},
+		{
+			"id": "ls003_002",
+			"topic": "Cell Structure and Function",
+			"lessonId": "ls-003",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Which organelle is responsible for producing energy (ATP) in the cell?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Nucleus", "isCorrect": false },
+				{ "id": "B", "text": "Mitochondria", "isCorrect": true },
+				{ "id": "C", "text": "Vacuole", "isCorrect": false },
+				{ "id": "D", "text": "Lysosome", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Powerhouse of the cell.",
+			"explanation": "Mitochondria produce ATP through cellular respiration, earning the title 'powerhouse of the cell'."
+		},
+		{
+			"id": "ls003_003",
+			"topic": "Cell Structure and Function",
+			"lessonId": "ls-003",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Which organelle is the site of protein synthesis?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Golgi apparatus", "isCorrect": false },
+				{ "id": "B", "text": "Ribosome", "isCorrect": true },
+				{ "id": "C", "text": "Lysosome", "isCorrect": false },
+				{ "id": "D", "text": "Centriole", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Found free in cytoplasm or on ER.",
+			"explanation": "Ribosomes translate mRNA into polypeptide chains, making them the site of protein synthesis."
+		},
+		{
+			"id": "ls003_004",
+			"topic": "Cell Structure and Function",
+			"lessonId": "ls-003",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Prokaryotic cells differ from eukaryotic cells in that they:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Have a cell membrane", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "Lack a membrane-bound nucleus",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Have DNA", "isCorrect": false },
+				{ "id": "D", "text": "Have ribosomes", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Pro means before, karyon means nucleus.",
+			"explanation": "Prokaryotes have their DNA in a region called the nucleoid, not enclosed by a membrane."
+		},
+		{
+			"id": "ls003_005",
+			"topic": "Cell Structure and Function",
+			"lessonId": "ls-003",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Which organelle contains digestive enzymes?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Mitochondria", "isCorrect": false },
+				{ "id": "B", "text": "Vacuole", "isCorrect": false },
+				{ "id": "C", "text": "Lysosome", "isCorrect": true },
+				{ "id": "D", "text": "Ribosome", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Suicide bags of the cell.",
+			"explanation": "Lysosomes contain hydrolytic enzymes that digest worn-out organelles and foreign materials."
+		},
+		{
+			"id": "ls003_006",
+			"topic": "Cell Structure and Function",
+			"lessonId": "ls-003",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Which organelle is responsible for photosynthesis in plant cells?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Mitochondria", "isCorrect": false },
+				{ "id": "B", "text": "Chloroplast", "isCorrect": true },
+				{ "id": "C", "text": "Vacuole", "isCorrect": false },
+				{ "id": "D", "text": "Nucleus", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Green organelle in plants.",
+			"explanation": "Chloroplasts contain chlorophyll and are the sites of photosynthesis, converting light energy to chemical energy."
+		},
+		{
+			"id": "ls003_007",
+			"topic": "Cell Structure and Function",
+			"lessonId": "ls-003",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The cell wall in plant cells is primarily made of:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Chitin", "isCorrect": false },
+				{ "id": "B", "text": "Cellulose", "isCorrect": true },
+				{ "id": "C", "text": "Starch", "isCorrect": false },
+				{ "id": "D", "text": "Peptidoglycan", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Fibre in plant cell walls.",
+			"explanation": "Cellulose is a polysaccharide that provides structural strength to plant cell walls."
+		},
+		{
+			"id": "ls003_008",
+			"topic": "Cell Structure and Function",
+			"lessonId": "ls-003",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The rough endoplasmic reticulum appears rough because of:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Its folded membrane structure",
+					"isCorrect": false
+				},
+				{
+					"id": "B",
+					"text": "Ribosomes attached to its surface",
+					"isCorrect": true
+				},
+				{
+					"id": "C",
+					"text": "Its connection to the nucleus",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "The presence of Golgi vesicles",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Site of protein synthesis and modification.",
+			"explanation": "Ribosomes stud the outer surface of rough ER, giving it a rough appearance and making it the site of protein synthesis for export."
+		},
+		{
+			"id": "ls003_009",
+			"topic": "Cell Structure and Function",
+			"lessonId": "ls-003",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Which pair of organelles both contain DNA?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Nucleus and ribosome", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "Mitochondria and chloroplast",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Golgi and lysosome", "isCorrect": false },
+				{ "id": "D", "text": "ER and vacuole", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Endosymbiont theory.",
+			"explanation": "Both mitochondria and chloroplasts have their own DNA and ribosomes, supporting the endosymbiont theory of their origin."
+		},
+		{
+			"id": "ls003_010",
+			"topic": "Cell Structure and Function",
+			"lessonId": "ls-003",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What is the function of the Golgi apparatus?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Protein synthesis", "isCorrect": false },
+				{ "id": "B", "text": "Lipid synthesis", "isCorrect": false },
+				{
+					"id": "C",
+					"text": "Modifying, packaging and transporting proteins",
+					"isCorrect": true
+				},
+				{ "id": "D", "text": "DNA replication", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Post office of the cell.",
+			"explanation": "The Golgi apparatus modifies proteins received from ER, sorts them, packages them into vesicles, and directs them to their destinations."
+		},
+		{
+			"id": "ls003_011",
+			"topic": "Cell Structure and Function",
+			"lessonId": "ls-003",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Which structure is found in plant cells but NOT in animal cells?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Mitochondria", "isCorrect": false },
+				{ "id": "B", "text": "Nucleus", "isCorrect": false },
+				{ "id": "C", "text": "Large central vacuole", "isCorrect": true },
+				{ "id": "D", "text": "Ribosome", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Stores water and provides turgor pressure.",
+			"explanation": "The large central vacuole stores water, nutrients, and waste products, and maintains turgor pressure in plant cells."
+		},
+		{
+			"id": "ls003_012",
+			"topic": "Cell Structure and Function",
+			"lessonId": "ls-003",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The nucleolus is the site of:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "ATP production", "isCorrect": false },
+				{ "id": "B", "text": "Ribosomal RNA synthesis", "isCorrect": true },
+				{ "id": "C", "text": "DNA replication", "isCorrect": false },
+				{ "id": "D", "text": "Protein synthesis", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Inside the nucleus.",
+			"explanation": "The nucleolus produces and assembles ribosomal RNA (rRNA), which combines with proteins to form ribosomal subunits."
+		},
+		{
+			"id": "ls003_013",
+			"topic": "Cell Structure and Function",
+			"lessonId": "ls-003",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Cilia and flagella are made primarily of which protein?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Actin", "isCorrect": false },
+				{ "id": "B", "text": "Myosin", "isCorrect": false },
+				{ "id": "C", "text": "Tubulin", "isCorrect": true },
+				{ "id": "D", "text": "Keratin", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Part of the cytoskeleton.",
+			"explanation": "Cilia and flagella contain microtubules made of tubulin proteins arranged in a 9+2 arrangement."
+		},
+		{
+			"id": "ls003_014",
+			"topic": "Cell Structure and Function",
+			"lessonId": "ls-003",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The smooth endoplasmic reticulum is involved in:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Protein synthesis", "isCorrect": false },
+				{ "id": "B", "text": "DNA replication", "isCorrect": false },
+				{
+					"id": "C",
+					"text": "Lipid and steroid hormone synthesis",
+					"isCorrect": true
+				},
+				{ "id": "D", "text": "Photosynthesis", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "No ribosomes attached.",
+			"explanation": "Smooth ER lacks ribosomes and synthesises lipids, including steroid hormones, and metabolises carbohydrates."
+		},
+		{
+			"id": "ls003_015",
+			"topic": "Cell Structure and Function",
+			"lessonId": "ls-003",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The fluid mosaic model describes the structure of the:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Cytoplasm", "isCorrect": false },
+				{ "id": "B", "text": "Cell wall", "isCorrect": false },
+				{ "id": "C", "text": "Plasma membrane", "isCorrect": true },
+				{ "id": "D", "text": "Nuclear envelope", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Phospholipid bilayer model.",
+			"explanation": "The fluid mosaic model describes the plasma membrane as a fluid phospholipid bilayer with embedded proteins that move laterally."
+		},
+		{
+			"id": "ls003_016",
+			"topic": "Cell Structure and Function",
+			"lessonId": "ls-003",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Peroxisomes are involved in:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "ATP production via respiration",
+					"isCorrect": false
+				},
+				{
+					"id": "B",
+					"text": "Breaking down fatty acids and detoxifying harmful substances",
+					"isCorrect": true
+				},
+				{
+					"id": "C",
+					"text": "Synthesising lipids for export",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Storing excess glucose as glycogen",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Contain catalase enzyme.",
+			"explanation": "Peroxisomes contain enzymes like catalase that break down hydrogen peroxide, fatty acids, and detoxify harmful substances."
+		},
+		{
+			"id": "ls003_017",
+			"topic": "Cell Structure and Function",
+			"lessonId": "ls-003",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "What is the primary role of the cytoskeleton?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Energy production", "isCorrect": false },
+				{ "id": "B", "text": "Protein synthesis", "isCorrect": false },
+				{
+					"id": "C",
+					"text": "Providing structural support and intracellular transport",
+					"isCorrect": true
+				},
+				{ "id": "D", "text": "Storing genetic information", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Network of protein fibres inside cell.",
+			"explanation": "The cytoskeleton (microfilaments, intermediate filaments, microtubules) provides structural support, shape, and enables intracellular transport."
+		},
+		{
+			"id": "ls003_018",
+			"topic": "Cell Structure and Function",
+			"lessonId": "ls-003",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The plasma membrane is described as 'fluid' because:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Phospholipids are constantly moving laterally within the layer",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "The membrane contains water",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Proteins are always floating in the cytoplasm",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "The membrane can change shape easily",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Temperature affects this property.",
+			"explanation": "The phospholipid bilayer is fluid because phospholipids move laterally, rotate, and flex, making the membrane flexible and dynamic."
+		},
+		{
+			"id": "ls003_019",
+			"topic": "Cell Structure and Function",
+			"lessonId": "ls-003",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Which organelle is most likely involved in the synthesis of ATP in photosynthetic cells?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Mitochondria", "isCorrect": false },
+				{ "id": "B", "text": "Chloroplast", "isCorrect": true },
+				{ "id": "C", "text": "Ribosome", "isCorrect": false },
+				{ "id": "D", "text": "Vacuole", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Photosynthetic cells have both mitochondria and chloroplasts.",
+			"explanation": "Chloroplasts produce ATP during the light-dependent reactions of photosynthesis (photophosphorylation), separate from mitochondrial respiration."
+		},
+		{
+			"id": "ls003_020",
+			"topic": "Cell Structure and Function",
+			"lessonId": "ls-003",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The difference between chromatin and chromosomes is that:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Chromatin is condensed DNA; chromosomes are uncondensed",
+					"isCorrect": false
+				},
+				{
+					"id": "B",
+					"text": "Chromatin is the relaxed form of DNA; chromosomes are condensed for cell division",
+					"isCorrect": true
+				},
+				{
+					"id": "C",
+					"text": "Chromosomes contain RNA; chromatin contains DNA",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Chromatin is found only in prokaryotes",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Think about cell division stages.",
+			"explanation": "Chromatin is the dispersed form of DNA wrapped around histones during interphase. Chromosomes form when chromatin condenses during cell division."
+		}
+	]
+}

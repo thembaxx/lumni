@@ -1,0 +1,399 @@
+{
+	"metadata": {
+		"subject": "Life Sciences",
+		"totalQuestions": 20,
+		"version": "1.0",
+		"curriculum": "CAPS",
+		"createdAt": "2026-04-23T00:00:00.000Z"
+	},
+	"questions": [
+		{
+			"id": "ls018_001",
+			"topic": "Circulatory System in Animals",
+			"lessonId": "ls-018",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The heart's right ventricle pumps blood to the:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Body (systemic circulation)",
+					"isCorrect": false
+				},
+				{
+					"id": "B",
+					"text": "Lungs (pulmonary circulation)",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Heart muscle itself", "isCorrect": false },
+				{ "id": "D", "text": "Liver", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Deoxygenated blood route.",
+			"explanation": "The right ventricle pumps deoxygenated blood through the pulmonary artery to the lungs for gas exchange."
+		},
+		{
+			"id": "ls018_002",
+			"topic": "Circulatory System in Animals",
+			"lessonId": "ls-018",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Blood returning from the lungs to the heart enters the:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Right atrium", "isCorrect": false },
+				{ "id": "B", "text": "Left atrium", "isCorrect": true },
+				{ "id": "C", "text": "Right ventricle", "isCorrect": false },
+				{ "id": "D", "text": "Left ventricle", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Oxygenated blood from lungs.",
+			"explanation": "Oxygenated blood from the lungs returns via pulmonary veins to the left atrium of the heart."
+		},
+		{
+			"id": "ls018_003",
+			"topic": "Circulatory System in Animals",
+			"lessonId": "ls-018",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The heartbeat is initiated by the:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Brain", "isCorrect": false },
+				{ "id": "B", "text": "Sinoatrial (SA) node", "isCorrect": true },
+				{ "id": "C", "text": "Vagus nerve", "isCorrect": false },
+				{ "id": "D", "text": "Spinal cord", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Natural pacemaker.",
+			"explanation": "The sinoatrial (SA) node in the right atrium is the heart's natural pacemaker, generating electrical impulses that initiate each heartbeat."
+		},
+		{
+			"id": "ls018_004",
+			"topic": "Circulatory System in Animals",
+			"lessonId": "ls-018",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Blood in arteries is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Always oxygenated", "isCorrect": false },
+				{ "id": "B", "text": "Always moving away from the heart", "isCorrect": true },
+				{ "id": "C", "text": "Always under low pressure", "isCorrect": false },
+				{ "id": "D", "text": "Found only in veins", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Definition of arteries.",
+			"explanation": "By definition, arteries carry blood away from the heart. The pulmonary artery is the exception, carrying deoxygenated blood to the lungs."
+		},
+		{
+			"id": "ls018_005",
+			"topic": "Circulatory System in Animals",
+			"lessonId": "ls-018",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "White blood cells are important for:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Transporting oxygen", "isCorrect": false },
+				{ "id": "B", "text": "Defence and immunity", "isCorrect": true },
+				{ "id": "C", "text": "Blood clotting", "isCorrect": false },
+				{ "id": "D", "text": "Carrying nutrients", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Fighting infection.",
+			"explanation": "White blood cells (leucocytes) defend the body against pathogens through phagocytosis and antibody production."
+		},
+		{
+			"id": "ls018_006",
+			"topic": "Circulatory System in Animals",
+			"lessonId": "ls-018",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Platelets are essential for:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Carrying oxygen", "isCorrect": false },
+				{ "id": "B", "text": "Fighting infection", "isCorrect": false },
+				{ "id": "C", "text": "Blood clotting (coagulation)", "isCorrect": true },
+				{ "id": "D", "text": "Transporting hormones", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Stopping bleeding.",
+			"explanation": "Platelets (thrombocytes) are cell fragments that cluster at injury sites and release clotting factors to form blood clots."
+		},
+		{
+			"id": "ls018_007",
+			"topic": "Circulatory System in Animals",
+			"lessonId": "ls-018",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The largest artery in the human body is the:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Carotid artery", "isCorrect": false },
+				{ "id": "B", "text": "Pulmonary artery", "isCorrect": false },
+				{ "id": "C", "text": "Aorta", "isCorrect": true },
+				{ "id": "D", "text": "Vena cava", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "From left ventricle to body.",
+			"explanation": "The aorta is the largest artery, carrying oxygenated blood from the left ventricle to all parts of the body."
+		},
+		{
+			"id": "ls018_008",
+			"topic": "Circulatory System in Animals",
+			"lessonId": "ls-018",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Double circulation means that blood:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Passes through the heart twice per circuit of the body", "isCorrect": true },
+				{ "id": "B", "text": "Contains red and white cells", "isCorrect": false },
+				{ "id": "C", "text": "Flows through two arteries", "isCorrect": false },
+				{ "id": "D", "text": "Is pumped by both ventricles at once", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Pulmonary and systemic circuits.",
+			"explanation": "In double circulation, blood goes through the heart twice: once for pulmonary circulation (to lungs) and once for systemic circulation (to body)."
+		},
+		{
+			"id": "ls018_009",
+			"topic": "Circulatory System in Animals",
+			"lessonId": "ls-018",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The atrioventricular (AV) node:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Is the heart's natural pacemaker", "isCorrect": false },
+				{ "id": "B", "text": "Delays the impulse briefly before passing it to the ventricles", "isCorrect": true },
+				{ "id": "C", "text": "Is found in arteries only", "isCorrect": false },
+				{ "id": "D", "text": "Controls heart rate", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Between atria and ventricles.",
+			explanation: "The AV node creates a brief delay after the SA node fires, allowing atria to finish contracting before ventricles begin contracting."
+		},
+		{
+			"id": "ls018_010",
+			"topic": "Circulatory System in Animals",
+			"lessonId": "ls-018",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The first sound of the heartbeat (lub) is caused by:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Ventricular relaxation", "isCorrect": false },
+				{ "id": "B", "text": "Closing of atrioventricular valves", "isCorrect": true },
+				{ "id": "C", "text": "Closing of semilunar valves", "isCorrect": false },
+				{ "id": "D", "text": "Blood rushing into atria", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "First heart sound.",
+			"explanation": "The first heart sound (S1, lub) occurs when AV valves (tricuspid and bicuspid) close at the start of ventricular systole, preventing backflow."
+		},
+		{
+			"id": "ls018_011",
+			"topic": "Circulatory System in Animals",
+			"lessonId": "ls-018",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Blood pressure is highest in the:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Vena cava", "isCorrect": false },
+				{ "id": "B", "text": "Aorta", "isCorrect": true },
+				{ "id": "C", "text": "Pulmonary artery", "isCorrect": false },
+				{ "id": "D", "text": "Capillaries", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Leaving the left ventricle.",
+			"explanation": "Blood pressure is highest in the aorta immediately after the left ventricle contracts (systolic pressure ~120 mmHg)."
+		},
+		{
+			"id": "ls018_012",
+			"topic": "Circulatory System in Animals",
+			"lessonId": "ls-018",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The tricuspid valve is located between the:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Right atrium and right ventricle", "isCorrect": true },
+				{ "id": "B", "text": "Left atrium and left ventricle", "isCorrect": false },
+				{ "id": "C", "text": "Left and right ventricles", "isCorrect": false },
+				{ "id": "D", "text": "Right ventricle and pulmonary artery", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Right side of heart.",
+			"explanation": "The tricuspid valve (with three cusps) is located between the right atrium and right ventricle, preventing backflow during ventricular contraction."
+		},
+		{
+			"id": "ls018_013",
+			"topic": "Circulatory System in Animals",
+			"lessonId": "ls-018",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "A person with blood type AB can receive blood from:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Type A only", "isCorrect": false },
+				{ "id": "B", "text": "Type B only", "isCorrect": false },
+				{ "id": "C", "text": "All blood types (universal recipient)", "isCorrect": true },
+				{ "id": "D", "text": "Type O only", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "No anti-A or anti-B antibodies.",
+			explanation: "People with AB blood type have neither anti-A nor anti-B antibodies, so they can receive blood from any ABO group (but still prefer matching)."
+		},
+		{
+			"id": "ls018_014",
+			"topic": "Circulatory System in Animals",
+			"lessonId": "ls-018",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The left ventricle has a thicker wall than the right ventricle because it:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Pumps blood to the lungs which are nearby", "isCorrect": false },
+				{ "id": "B", "text": "Pumps blood to the entire body against higher resistance", "isCorrect": true },
+				{ "id": "C", "text": "Is closer to the lungs", "isCorrect": false },
+				{ "id": "D", "text": "Needs more oxygen", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Systemic vs pulmonary pumping.",
+			explanation": "The left ventricle pumps blood through systemic circulation to the whole body against higher resistance, requiring more muscular walls than the right ventricle."
+		},
+		{
+			"id": "ls018_015",
+			"topic": "Circulatory System in Animals",
+			"lessonId": "ls-018",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The second heart sound (dubb) is caused by the closing of the:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Atrioventricular valves", "isCorrect": false },
+				{ "id": "B", "text": "Semilunar valves (aortic and pulmonary)", "isCorrect": true },
+				{ "id": "C", "text": "SA and AV nodes", "isCorrect": false },
+				{ "id": "D", "text": "Tricuspid and bicuspid valves", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "At start of ventricular diastole.",
+			explanation: "The second heart sound (S2, dubb) occurs when semilunar valves (aortic and pulmonary) close at the start of ventricular diastole."
+		},
+		{
+			"id": "ls018_016",
+			"topic": "Circulatory System in Animals",
+			"lessonId": "ls-018",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The bundle of His:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Is located in the atria", "isCorrect": false },
+				{ "id": "B", "text": "Transmits electrical impulses from AV node to ventricles", "isCorrect": true },
+				{ "id": "C", "text": "Is the natural pacemaker", "isCorrect": false },
+				{ "id": "D", "text": "Controls the SA node", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Between AV node and ventricles.",
+			explanation": "The bundle of His carries electrical impulses from the AV node through the interventricular septum to the Purkinje fibres, coordinating ventricular contraction."
+		},
+		{
+			"id": "ls018_017",
+			"topic": "Circulatory System in Animals",
+			"lessonId": "ls-018",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "A person with blood type O is a universal donor because type O blood:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Contains all antibodies", "isCorrect": false },
+				{ "id": "B", "text": "Has no A or B antigens that would trigger a reaction", "isCorrect": true },
+				{ "id": "C", "text": "Has no antibodies", "isCorrect": false },
+				{ "id": "D", "text": "Contains only plasma", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "No surface antigens.",
+			"explanation": "Type O blood lacks A and B surface antigens, so it cannot trigger an immune reaction in recipients with any ABO blood type."
+		},
+		{
+			"id": "ls018_018",
+			"topic": "Circulatory System in Animals",
+			"lessonId": "ls-018",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "In coronary artery disease, the lumen of arteries narrows due to:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Blood clot formation only", "isCorrect": false },
+				{ "id": "B", "text": "Atherosclerosis (plaque buildup)", "isCorrect": true },
+				{ "id": "C", "text": "Enzyme degradation of vessel walls", "isCorrect": false },
+				{ "id": "D", "text": "Excessive vasodilation", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Fatty deposits in artery walls.",
+			explanation: "Atherosclerosis involves buildup of fatty plaques (cholesterol, calcium) in artery walls, narrowing the lumen and reducing blood flow to the heart muscle."
+		},
+		{
+			"id": "ls018_019",
+			"topic": "Circulatory System in Animals",
+			"lessonId": "ls-018",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "A heartbeat rate of 100 bpm or more at rest is called:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Bradycardia", "isCorrect": false },
+				{ "id": "B", "text": "Tachycardia", "isCorrect": true },
+				{ "id": "C", "text": "Arrhythmia", "isCorrect": false },
+				{ "id": "D", "text": "Fibrillation", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Fast heart rate.",
+			explanation: "Tachycardia is an abnormally fast resting heart rate (>100 bpm). Bradycardia is slow heart rate (<60 bpm). Arrhythmia is an irregular rhythm."
+		},
+		{
+			"id": "ls018_020",
+			"topic": "Circulatory System in Animals",
+			"lessonId": "ls-018",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The normal blood pressure reading of 120/80 mmHg represents:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Systolic/diastolic pressures", "isCorrect": true },
+				{ "id": "B", "text": "Diastolic/systolic pressures", "isCorrect": false },
+				{ "id": "C", "text": "Maximum/minimum pressures in veins", "isCorrect": false },
+				{ "id": "D", "text": "Atrial/ventricular pressures", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Top and bottom numbers.",
+			explanation": "120 mmHg (systolic) is the peak pressure when ventricles contract. 80 mmHg (diastolic) is the resting pressure when ventricles relax."
+		}
+	]
+}

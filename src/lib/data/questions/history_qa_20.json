@@ -1,0 +1,527 @@
+{
+	"metadata": {
+		"subject": "History",
+		"totalQuestions": 600,
+		"version": "1.0",
+		"curriculum": "CAPS",
+		"createdAt": "2026-04-23T00:00:00.000Z"
+	},
+	"questions": [
+		{
+			"id": "h023_001",
+			"topic": "World War I",
+			"lessonId": "h-023",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "When did World War I begin and end?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "1914-1918", "isCorrect": true },
+				{ "id": "B", "text": "1916-1920", "isCorrect": false },
+				{ "id": "C", "text": "1912-1916", "isCorrect": false },
+				{ "id": "D", "text": "1939-1945", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Early 20th century.",
+			"explanation": "WWI began in 1914 with assassination of Archduke Franz Ferdinand and ended in 1918."
+		},
+		{
+			"id": "h023_002",
+			"topic": "World War I",
+			"lessonId": "h-023",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What triggered WWI?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Assassination of Archduke Franz Ferdinand",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Trade war between nations", "isCorrect": false },
+				{ "id": "C", "text": "Religious conflicts", "isCorrect": false },
+				{ "id": "D", "text": "Colonial disputes in Africa", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Sarajevo assassination.",
+			"explanation": "Gavrilo Princip assassinated Austrian Archduke Franz Ferdinand in Sarajevo, triggering alliance system."
+		},
+		{
+			"id": "h023_003",
+			"topic": "World War I",
+			"lessonId": "h-023",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What were the Allied Powers?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Britain, France, Russia, US and others",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Germany, Austria-Hungary, Ottoman Empire",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Neutral nations only", "isCorrect": false },
+				{ "id": "D", "text": "Asian nations", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Opposed Central Powers.",
+			"explanation": "Allied Powers (Triple Entente plus later US) opposed Central Powers in WWI."
+		},
+		{
+			"id": "h023_004",
+			"topic": "World War I",
+			"lessonId": "h-023",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What was trench warfare?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Digging networks of trenches for protection",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Naval warfare", "isCorrect": false },
+				{ "id": "C", "text": "Aerial combat", "isCorrect": false },
+				{ "id": "D", "text": "Mobile cavalry warfare", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Western Front stalemate.",
+			"explanation": "Trench warfare dominated Western Front, creating stalemate with massive casualties."
+		},
+		{
+			"id": "h023_005",
+			"topic": "World War I",
+			"lessonId": "h-023",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What was the Treaty of Versailles?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Peace treaty ending WWI with harsh terms for Germany",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Alliance between Britain and France",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Trade agreement", "isCorrect": false },
+				{ "id": "D", "text": "Secret military treaty", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "1919 peace settlement.",
+			"explanation": "Treaty of Versailles ended WWI, requiring Germany to accept guilt, pay reparations, and lose territory."
+		},
+		{
+			"id": "h023_006",
+			"topic": "World War I",
+			"lessonId": "h-023",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What were the Central Powers?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Germany, Austria-Hungary, Ottoman Empire",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Britain, France, Russia", "isCorrect": false },
+				{ "id": "C", "text": "Japan, China, Korea", "isCorrect": false },
+				{ "id": "D", "text": "Neutral European nations", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Defeated alliance.",
+			"explanation": "Central Powers (Germany, Austria-Hungary, Ottoman Empire) lost WWI."
+		},
+		{
+			"id": "h023_007",
+			"topic": "World War I",
+			"lessonId": "h-023",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What was total war?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "War involving entire populations and economies",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Complete destruction of cities",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "War between two nations only",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Religious warfare", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Complete national mobilization.",
+			"explanation": "Total war mobilized entire societies, economies, and populations for war effort."
+		},
+		{
+			"id": "h023_008",
+			"topic": "World War I",
+			"lessonId": "h-023",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What were the main causes of WWI?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Militarism, alliances, imperialism, nationalism",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Only economic disputes", "isCorrect": false },
+				{ "id": "C", "text": "Religious conflicts", "isCorrect": false },
+				{ "id": "D", "text": "Colonial expansion only", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Four main causes.",
+			"explanation": "Militarism, alliance systems, imperial competition, and aggressive nationalism combined to cause WWI."
+		},
+		{
+			"id": "h023_009",
+			"topic": "World War I",
+			"lessonId": "h-023",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "How did new technology change warfare?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Machine guns, poison gas, tanks, aircraft",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Only swords and horses", "isCorrect": false },
+				{
+					"id": "C",
+					"text": "Had no technological impact",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Only naval changes", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Industrial warfare.",
+			"explanation": "Industrial technology made WWI far more deadly than previous wars."
+		},
+		{
+			"id": "h023_010",
+			"topic": "World War I",
+			"lessonId": "h-023",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Why did the Ottoman Empire join the Central Powers?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Enemies with Russia, economic ties with Germany",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Allied with Britain", "isCorrect": false },
+				{ "id": "C", "text": "Religious alliance", "isCorrect": false },
+				{
+					"id": "D",
+					"text": "Economic dependence on France",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Weakness and enemies.",
+			"explanation": "Ottoman Empire joined Central Powers due to Russian rivalry and weakness after Balkan wars."
+		},
+		{
+			"id": "h023_011",
+			"topic": "World War I",
+			"lessonId": "h-023",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What role did colonies play in WWI?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Provided troops, resources, and labor for European powers",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Had no role in war", "isCorrect": false },
+				{ "id": "C", "text": "Remained neutral", "isCorrect": false },
+				{
+					"id": "D",
+					"text": "Fought against European powers",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Imperial troops.",
+			"explanation": "Colonial subjects served as soldiers, laborers, and suppliers for European armies."
+		},
+		{
+			"id": "h023_012",
+			"topic": "World War I",
+			"lessonId": "h-023",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What was the Zimmerman Telegram?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "German proposal to Mexico for alliance against US",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Trade agreement", "isCorrect": false },
+				{ "id": "C", "text": "Peace proposal", "isCorrect": false },
+				{ "id": "D", "text": "Alliance with Britain", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "US entry into war.",
+			"explanation": "Intercepted telegram proposing German-Mexican alliance helped convince US to enter WWI."
+		},
+		{
+			"id": "h023_013",
+			"topic": "World War I",
+			"lessonId": "h-023",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What were the 14 Points?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Wilson's peace terms and vision for post-war world",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Military demands", "isCorrect": false },
+				{ "id": "C", "text": "Economic requirements", "isCorrect": false },
+				{ "id": "D", "text": "Alliance conditions", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "League of Nations foundation.",
+			"explanation": "Wilson's 14 Points outlined principles for peace and established League of Nations."
+		},
+		{
+			"id": "h023_014",
+			"topic": "World War I",
+			"lessonId": "h-023",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "How did the war affect Africa?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "German colonies taken, troops recruited, exploitation increased",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Had no impact on Africa", "isCorrect": false },
+				{ "id": "C", "text": "Africa gained independence", "isCorrect": false },
+				{ "id": "D", "text": "Only economic benefits", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Colonial consequences.",
+			"explanation": "African colonies participated as troops, laborers, and saw territorial changes after German defeat."
+		},
+		{
+			"id": "h023_015",
+			"topic": "World War I",
+			"lessonId": "h-023",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Analyze the long-term impact of the Treaty of Versailles.",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Created conditions for WWII and reshaped global politics",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Brought lasting peace to Europe",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Only affected Germany", "isCorrect": false },
+				{
+					"id": "D",
+					"text": "Was a fair and balanced treaty",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Carthaginian peace.",
+			"explanation": "Harsh Versailles terms humiliated Germany, created economic problems, and embittered population."
+		},
+		{
+			"id": "h023_016",
+			"topic": "World War I",
+			"lessonId": "h-023",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Evaluate the impact of propaganda during WWI.",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Shaped public opinion, demonized enemies, mobilized support",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Had no effect on populations",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Only affected soldiers", "isCorrect": false },
+				{ "id": "D", "text": "Promoted peace only", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Mass media influence.",
+			"explanation": "Governments used posters, newspapers, and films to build support and dehumanize enemies."
+		},
+		{
+			"id": "h023_017",
+			"topic": "World War I",
+			"lessonId": "h-023",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "How did WWI affect colonial populations?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Provided military service experience that fueled independence movements",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Had no lasting impact", "isCorrect": false },
+				{ "id": "C", "text": "Strengthened colonial rule", "isCorrect": false },
+				{
+					"id": "D",
+					"text": "Only affected European colonies",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "War veterans and disillusionment.",
+			"explanation": "Colonial troops fighting for 'freedom' saw hypocrisy of colonial rule, sparking independence ideas."
+		},
+		{
+			"id": "h023_018",
+			"topic": "World War I",
+			"lessonId": "h-023",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Analyze the social changes caused by WWI.",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Expanded women's roles, challenged aristocracy, increased state power",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "No social changes occurred", "isCorrect": false },
+				{ "id": "C", "text": "Only affected military", "isCorrect": false },
+				{
+					"id": "D",
+					"text": "Strengthened traditional roles",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Women in workforce.",
+			"explanation": "Women entered workforce, class structures shifted, and governments gained unprecedented powers."
+		},
+		{
+			"id": "h023_019",
+			"topic": "World War I",
+			"lessonId": "h-023",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "To what extent did WWI lead to the Russian Revolution?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "War losses and economic collapse created conditions for revolution",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Had no connection to Russian Revolution",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Russia won WWI causing revolution",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Only economic factors mattered",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Bread, peace, land.",
+			"explanation": "Military defeats, food shortages, and casualties made revolution inevitable in Russia."
+		},
+		{
+			"id": "h023_020",
+			"topic": "World War I",
+			"lessonId": "h-023",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Evaluate the legacy of WWI for the modern world.",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Redrew maps, created ethnic conflicts, led to WWII, established modern state system",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Had no lasting impact", "isCorrect": false },
+				{ "id": "C", "text": "Only affected Europe", "isCorrect": false },
+				{ "id": "D", "text": "Created lasting peace", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Foundations of modern world.",
+			"explanation": "WWI ended empires, created new nations, planted seeds of WWII, and established League of Nations."
+		}
+	]
+}

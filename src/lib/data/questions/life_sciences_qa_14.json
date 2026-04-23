@@ -1,0 +1,407 @@
+{
+	"metadata": {
+		"subject": "Life Sciences",
+		"totalQuestions": 20,
+		"version": "1.0",
+		"curriculum": "CAPS",
+		"createdAt": "2026-04-23T00:00:00.000Z"
+	},
+	"questions": [
+		{
+			"id": "ls014_001",
+			"topic": "Gas Exchange in Plants",
+			"lessonId": "ls-014",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Gas exchange in plants occurs through:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Roots", "isCorrect": false },
+				{ "id": "B", "text": "Stomata", "isCorrect": true },
+				{ "id": "C", "text": "Xylem", "isCorrect": false },
+				{ "id": "D", "text": "Phloem", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Pores on leaf surface.",
+			"explanation": "Stomata are tiny pores mainly on the lower surface of leaves that allow gas exchange (CO2 in, O2 out) and water vapour (transpiration) out."
+		},
+		{
+			"id": "ls014_002",
+			"topic": "Gas Exchange in Plants",
+			"lessonId": "ls-014",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "During photosynthesis, plants:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Absorb CO2 and release O2", "isCorrect": true },
+				{ "id": "B", "text": "Absorb O2 and release CO2", "isCorrect": false },
+				{ "id": "C", "text": "Absorb both equally", "isCorrect": false },
+				{ "id": "D", "text": "Absorb neither", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Opposite of respiration.",
+			"explanation": "During photosynthesis, plants absorb carbon dioxide from air and release oxygen as a by-product of water splitting."
+		},
+		{
+			"id": "ls014_003",
+			"topic": "Gas Exchange in Plants",
+			"lessonId": "ls-014",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Transpiration is the:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Uptake of water by roots", "isCorrect": false },
+				{ "id": "B", "text": "Loss of water vapour from plant surfaces", "isCorrect": true },
+				{ "id": "C", "text": "Absorption of CO2", "isCorrect": false },
+				{ "id": "D", "text": "Exchange of gases in roots", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Water loss from leaves.",
+			"explanation": "Transpiration is the loss of water vapour from plant leaves through stomata, which creates the driving force for water uptake."
+		},
+		{
+			"id": "ls014_004",
+			"topic": "Gas Exchange in Plants",
+			"lessonId": "ls-014",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Stomata are most abundant on the:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Upper surface of leaves", "isCorrect": false },
+				{ "id": "B", "text": "Lower surface of leaves", "isCorrect": true },
+				{ "id": "C", "text": "Stem", "isCorrect": false },
+				{ "id": "D", "text": "Roots", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Lower epidermis.",
+			explanation: "Stomata are more abundant on the lower surface of leaves to minimise water loss from direct exposure to sunlight."
+		},
+		{
+			"id": "ls014_005",
+			"topic": "Gas Exchange in Plants",
+			"lessonId": "ls-014",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The function of guard cells is to:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Store water", "isCorrect": false },
+				{ "id": "B", "text": "Open and close stomata", "isCorrect": true },
+				{ "id": "C", "text": "Conduct water", "isCorrect": false },
+				{ "id": "D", "text": "Produce sugars", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Control gas exchange.",
+			"explanation": "Guard cells control the opening and closing of stomata by changing their turgor pressure in response to light and water conditions."
+		},
+		{
+			"id": "ls014_006",
+			"topic": "Gas Exchange in Plants",
+			"lessonId": "ls-014",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "At night, plants:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Release only CO2", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "Perform only respiration, releasing CO2 and absorbing O2",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Stop all gas exchange", "isCorrect": false },
+				{ "id": "D", "text": "Release only O2", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "No photosynthesis at night.",
+			"explanation": "Without light for photosynthesis, plants respire continuously, taking in O2 and releasing CO2 through stomata."
+		},
+		{
+			"id": "ls014_007",
+			"topic": "Gas Exchange in Plants",
+			"lessonId": "ls-014",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The spongy mesophyll layer of a leaf contains:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Many chloroplasts for photosynthesis",
+					"isCorrect": false
+				},
+				{
+					"id": "B",
+					"text": "Large air spaces for gas circulation",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Only xylem vessels", "isCorrect": false },
+				{ "id": "D", "text": "A waxy cuticle", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Loosely arranged cells.",
+			"explanation": "Spongy mesophyll has loosely packed cells with large air spaces that facilitate the diffusion of CO2 and O2 between stomata and palisade cells."
+		},
+		{
+			"id": "ls014_008",
+			"topic": "Gas Exchange in Plants",
+			"lessonId": "ls-014",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "When stomata close, the rate of transpiration:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Increases", "isCorrect": false },
+				{ "id": "B", "text": "Decreases significantly", "isCorrect": true },
+				{ "id": "C", "text": "Remains constant", "isCorrect": false },
+				{ "id": "D", "text": "Doubles", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Water loss pathway blocked.",
+			"explanation": "When stomata close, the main pathway for water vapour loss is blocked, reducing transpiration and conserving water."
+		},
+		{
+			"id": "ls014_009",
+			"topic": "Gas Exchange in Plants",
+			"lessonId": "ls-014",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Which environmental factor increases the rate of transpiration?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "High humidity", "isCorrect": false },
+				{ "id": "B", "text": "Low atmospheric pressure", "isCorrect": true },
+				{ "id": "C", "text": "Still air", "isCorrect": false },
+				{ "id": "D", "text": "Darkness", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "At high altitude or low pressure.",
+			"explanation": "Low atmospheric pressure reduces the boiling point of water and increases the diffusion rate of water vapour, accelerating transpiration."
+		},
+		{
+			"id": "ls014_010",
+			"topic": "Gas Exchange in Plants",
+			"lessonId": "ls-014",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Light causes stomata to open because:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Guard cells perform photosynthesis and produce ATP", "isCorrect": true },
+				{ "id": "B", "text": "Light kills guard cells", "isCorrect": false },
+				{ "id": "C", "text": "Light heats the leaf surface", "isCorrect": false },
+				{ "id": "D", "text": "Light reduces water loss", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Photosynthesis in guard cells.",
+			explanation: "Guard cells contain chlorophyll and photosynthesise in light, producing ATP that actively pumps H+ out, causing K+ and water to enter, making guard cells turgid and opening the stoma."
+		},
+		{
+			"id": "ls014_011",
+			"topic": "Gas Exchange in Plants",
+			"lessonId": "ls-014",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The cohesion-tension theory explains how:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Water is pulled up through xylem due to transpiration", "isCorrect": true },
+				{ "id": "B", "text": "Sugars are transported in phloem", "isCorrect": false },
+				{ "id": "C", "text": "Stomata open during the day", "isCorrect": false },
+				{ "id": "D", "text": "CO2 enters the leaf", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Water column in xylem.",
+			"explanation": "Cohesion (water molecules attract each other) and tension (negative pressure from transpiration) together maintain a continuous water column in xylem."
+		},
+		{
+			"id": "ls014_012",
+			"topic": "Gas Exchange in Plants",
+			"lessonId": "ls-014",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Cactus plants have modified stems rather than leaves primarily to:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Increase photosynthesis", "isCorrect": false },
+				{ "id": "B", "text": "Reduce surface area and minimise water loss", "isCorrect": true },
+				{ "id": "C", "text": "Store more chlorophyll", "isCorrect": false },
+				{ "id": "D", "text": "Absorb more CO2", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Xerophyte adaptation.",
+			"explanation": "In xerophytes like cacti, leaves are reduced to spines, and green stems perform photosynthesis, greatly reducing surface area and water loss."
+		},
+		{
+			"id": "ls014_013",
+			"topic": "Gas Exchange in Plants",
+			"lessonId": "ls-014",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The net effect of transpiration is that it:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Cools the plant", "isCorrect": false },
+				{ "id": "B", "text": "Creates negative pressure that pulls water up from roots", "isCorrect": true },
+				{ "id": "C", "text": "Closes stomata", "isCorrect": false },
+				{ "id": "D", "text": "Stops photosynthesis", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Draws water upward.",
+			explanation: "Transpiration creates a pulling force (negative pressure) in the xylem that draws water upward from roots to replace lost water."
+		},
+		{
+			"id": "ls014_014",
+			"topic": "Gas Exchange in Plants",
+			"lessonId": "ls-014",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Which gas diffuses into the leaf through stomata during the day?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Oxygen", "isCorrect": false },
+				{ "id": "B", "text": "Nitrogen", "isCorrect": false },
+				{ "id": "C", "text": "Carbon dioxide", "isCorrect": true },
+				{ "id": "D", "text": "Hydrogen", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Needed for photosynthesis.",
+			explanation: "Carbon dioxide diffuses into the leaf through stomata during the day for use in photosynthesis (light-independent reactions)."
+		},
+		{
+			"id": "ls014_015",
+			"topic": "Gas Exchange in Plants",
+			"lessonId": "ls-014",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "During drought conditions, abscisic acid causes:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Stomata to open", "isCorrect": false },
+				{ "id": "B", "text": "Stomata to close to conserve water", "isCorrect": true },
+				{ "id": "C", "text": "Leaves to fall off", "isCorrect": false },
+				{ "id": "D", "text": "Roots to grow longer", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Stress hormone.",
+			"explanation": "Abscisic acid (ABA) is a stress hormone that triggers stomatal closure during drought by stimulating K+ efflux from guard cells, reducing turgor."
+		},
+		{
+			"id": "ls014_016",
+			"topic": "Gas Exchange in Plants",
+			"lessonId": "ls-014",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The lenticels on plant stems allow:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Water absorption", "isCorrect": false },
+				{ "id": "B", "text": "Gas exchange between internal tissues and the atmosphere", "isCorrect": true },
+				{ "id": "C", "text": "Light to enter", "isCorrect": false },
+				{ "id": "D", "text": "Nutrient transport", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "On woody stems and roots.",
+			"explanation": "Lenticels are loose, aerenchyma tissue openings on woody stems and roots that allow oxygen to diffuse in and CO2 to diffuse out for cell respiration."
+		},
+		{
+			"id": "ls014_017",
+			"topic": "Gas Exchange in Plants",
+			"lessonId": "ls-014",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "A plant that has stomata open only at night and closed during the day is described as:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "A CAM plant", "isCorrect": true },
+				{ "id": "B", "text": "A C3 plant", "isCorrect": false },
+				{ "id": "C", "text": "A C4 plant", "isCorrect": false },
+				{ "id": "D", "text": "A xerophyte only", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Crassulacean Acid Metabolism.",
+			"explanation": "CAM plants (e.g., succulents) open stomata at night to minimise water loss, storing CO2 as malate, then using it for photosynthesis during the day with closed stomata."
+		},
+		{
+			"id": "ls014_018",
+			"topic": "Gas Exchange in Plants",
+			"lessonId": "ls-014",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The rate of diffusion of gases through stomata is directly proportional to:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "The square of the pore diameter",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "The temperature only", "isCorrect": false },
+				{ "id": "C", "text": "The number of stomata", "isCorrect": false },
+				{ "id": "D", "text": "Light intensity only", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Graham's law of diffusion.",
+			"explanation": "According to Graham's law, the rate of diffusion through a pore is proportional to the square of its diameter, so small changes in aperture size significantly affect diffusion rates."
+		},
+		{
+			"id": "ls014_019",
+			"topic": "Gas Exchange in Plants",
+			"lessonId": "ls-014",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Root pressure is important for:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Pulling water up the xylem", "isCorrect": false },
+				{ "id": "B", "text": "Pushing water up the xylem, especially at night", "isCorrect": true },
+				{ "id": "C", "text": "Opening stomata", "isCorrect": false },
+				{ "id": "D", "text": "Photosynthesis", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Active mineral transport into xylem.",
+			explanation: "Root pressure develops from active transport of minerals into xylem, drawing water osmotically and pushing sap upward, particularly important at night when transpiration is low."
+		},
+		{
+			"id": "ls014_020",
+			"topic": "Gas Exchange in Plants",
+			"lessonId": "ls-014",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The role of the cuticle in gas exchange is to:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Allow gases to pass through freely", "isCorrect": false },
+				{ "id": "B", "text": "Form a waterproof barrier, directing gas exchange through stomata", "isCorrect": true },
+				{ "id": "C", "text": "Absorb light for photosynthesis", "isCorrect": false },
+				{ "id": "D", "text": "Release oxygen from the leaf", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Waxy layer on epidermis.",
+			explanation: "The waxy cuticle covers the epidermis and is impermeable to gases, forcing all gas exchange to occur through stomata for regulated control."
+		}
+	]
+}

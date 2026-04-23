@@ -50,20 +50,36 @@ export function LoadingScreen({
 
 	return (
 		<div
-			className={`flex flex-col items-center gap-6 transition-all duration-500 ease-out-quart ${
+			className={`flex flex-col items-center gap-8 transition-all duration-500 ease-out-quart ${
 				isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
 			}`}
 		>
+			<div className="relative">
+				<div className="absolute inset-0 animate-pulse rounded-full bg-primary/20 blur-xl" />
+				<div className="relative flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20">
+					<span className="text-2xl font-semibold text-primary">L</span>
+				</div>
+			</div>
+
+			<div className="text-center space-y-1">
+				<h2 className="text-lg font-medium text-foreground tracking-tight">
+					Loading Lumni
+				</h2>
+				<p className="text-xs text-muted-foreground">
+					Preparing your study experience...
+				</p>
+			</div>
+
 			<Progress
 				value={progress}
-				className="transition-all duration-150 ease-out-quart"
+				className="w-48 transition-all duration-150 ease-out-quart"
 			/>
 			<Button
 				onClick={handleManualEnter}
 				disabled={progress === 100}
 				className="rounded-full bg-primary text-primary-foreground hover:scale-105 active:scale-95 transition-all duration-150 h-10 px-8"
 			>
-				Dashboard
+				{progress === 100 ? "Entering..." : "Skip & Enter"}
 			</Button>
 		</div>
 	);

@@ -1,0 +1,399 @@
+{
+	"metadata": {
+		"subject": "Physical Science",
+		"totalQuestions": 600,
+		"version": "1.0",
+		"curriculum": "CAPS",
+		"createdAt": "2026-04-23T00:00:00.000Z"
+	},
+	"questions": [
+		{
+			"id": "ps003_001",
+			"topic": "Kinematics - Motion in Two Dimensions",
+			"lessonId": "ps-003",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "A projectile is fired horizontally at 20 m/s from height 20m. Time to hit ground? (g = 10 m/s²)",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "2 s", "isCorrect": true },
+				{ "id": "B", "text": "4 s", "isCorrect": false },
+				{ "id": "C", "text": "1 s", "isCorrect": false },
+				{ "id": "D", "text": "20 s", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "s = ½gt² for vertical motion only",
+			"explanation": "20 = ½×10×t², t = 2s"
+		},
+		{
+			"id": "ps003_002",
+			"topic": "Kinematics - Motion in Two Dimensions",
+			"lessonId": "ps-003",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "At maximum height, vertical component of velocity is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Equal to initial velocity", "isCorrect": false },
+				{ "id": "B", "text": "Zero", "isCorrect": true },
+				{ "id": "C", "text": "g", "isCorrect": false },
+				{ "id": "D", "text": "Maximum", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Vertical velocity decreases due to gravity.",
+			"explanation": "At max height, vertical velocity becomes zero."
+		},
+		{
+			"id": "ps003_003",
+			"topic": "Kinematics - Motion in Two Dimensions",
+			"lessonId": "ps-003",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Projectile motion has acceleration (ignoring air resistance):",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "g downward only", "isCorrect": true },
+				{ "id": "B", "text": "g horizontal only", "isCorrect": false },
+				{ "id": "C", "text": "Zero", "isCorrect": false },
+				{ "id": "D", "text": "Constant in all directions", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Gravity acts vertically downward.",
+			"explanation": "Only vertical acceleration exists (g downward)."
+		},
+		{
+			"id": "ps003_004",
+			"topic": "Kinematics - Motion in Two Dimensions",
+			"lessonId": "ps-003",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Horizontal component of velocity in projectile motion:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Increases", "isCorrect": false },
+				{ "id": "B", "text": "Decreases", "isCorrect": false },
+				{ "id": "C", "text": "Constant", "isCorrect": true },
+				{ "id": "D", "text": "Zero", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "No horizontal forces (ignoring air resistance)",
+			"explanation": "Horizontal velocity remains constant."
+		},
+		{
+			"id": "ps003_005",
+			"topic": "Kinematics - Motion in Two Dimensions",
+			"lessonId": "ps-003",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "A ball thrown at 45° has equal:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Time of flight and max height",
+					"isCorrect": false
+				},
+				{
+					"id": "B",
+					"text": "Horizontal and vertical components",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Mass and speed", "isCorrect": false },
+				{ "id": "D", "text": "Range and max height", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "cos45° = sin45°",
+			"explanation": "At 45°, horizontal and vertical components are equal."
+		},
+		{
+			"id": "ps003_006",
+			"topic": "Kinematics - Motion in Two Dimensions",
+			"lessonId": "ps-003",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Projectile fired at 30° with 20 m/s. Horizontal component?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "10 m/s", "isCorrect": false },
+				{ "id": "B", "text": "17.3 m/s", "isCorrect": true },
+				{ "id": "C", "text": "20 m/s", "isCorrect": false },
+				{ "id": "D", "text": "14.1 m/s", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "vₓ = v cosθ",
+			"explanation": "20 × cos30° = 20 × 0.866 = 17.3 m/s"
+		},
+		{
+			"id": "ps003_007",
+			"topic": "Kinematics - Motion in Two Dimensions",
+			"lessonId": "ps-003",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Ball kicked 40m range. At 45°, initial speed? (g = 10)",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "20 m/s", "isCorrect": true },
+				{ "id": "B", "text": "40 m/s", "isCorrect": false },
+				{ "id": "C", "text": "10 m/s", "isCorrect": false },
+				{ "id": "D", "text": "14.1 m/s", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "R = u²sin2θ/g",
+			"explanation": "40 = u²×1/10, u = 20 m/s"
+		},
+		{
+			"id": "ps003_008",
+			"topic": "Kinematics - Motion in Two Dimensions",
+			"lessonId": "ps-003",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "At 30° launch angle, time of flight if u = 20 m/s?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "2 s", "isCorrect": true },
+				{ "id": "B", "text": "4 s", "isCorrect": false },
+				{ "id": "C", "text": "1 s", "isCorrect": false },
+				{ "id": "D", "text": "20 s", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "T = 2u sinθ/g",
+			"explanation": "T = 2×20×0.5/10 = 2s"
+		},
+		{
+			"id": "ps003_009",
+			"topic": "Kinematics - Motion in Two Dimensions",
+			"lessonId": "ps-003",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Maximum range for projectile occurs at angle:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "90°", "isCorrect": false },
+				{ "id": "B", "text": "45°", "isCorrect": true },
+				{ "id": "C", "text": "30°", "isCorrect": false },
+				{ "id": "D", "text": "0°", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "sin2θ is maximum at 2θ = 90°",
+			"explanation": "Maximum range at 45°."
+		},
+		{
+			"id": "ps003_010",
+			"topic": "Kinematics - Motion in Two Dimensions",
+			"lessonId": "ps-003",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Projectile fired up at 60°. Horizontal component: v = 30 m/s",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "15 m/s", "isCorrect": true },
+				{ "id": "B", "text": "30 m/s", "isCorrect": false },
+				{ "id": "C", "text": "26 m/s", "isCorrect": false },
+				{ "id": "D", "text": "17.3 m/s", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "vₓ = v cos60° = v × 0.5",
+			"explanation": "30 × 0.5 = 15 m/s"
+		},
+		{
+			"id": "ps003_011",
+			"topic": "Kinematics - Motion in Two Dimensions",
+			"lessonId": "ps-003",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Stone thrown at 40 m/s, 30° lands 10m higher. Range?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "141 m", "isCorrect": true },
+				{ "id": "B", "text": "100 m", "isCorrect": false },
+				{ "id": "C", "text": "80 m", "isCorrect": false },
+				{ "id": "D", "text": "40 m", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Need to account for vertical displacement.",
+			"explanation": "Using range equation with Δy = -10m accounts for height difference."
+		},
+		{
+			"id": "ps003_012",
+			"topic": "Kinematics - Motion in Two Dimensions",
+			"lessonId": "ps-003",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Maximum height for 45° launch at 20 m/s?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "5 m", "isCorrect": true },
+				{ "id": "B", "text": "10 m", "isCorrect": false },
+				{ "id": "C", "text": "20 m", "isCorrect": false },
+				{ "id": "D", "text": "2.5 m", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "H = u²sin²θ/(2g)",
+			"explanation": "H = 400×(0.5)²/20 = 100/20 = 5m"
+		},
+		{
+			"id": "ps003_013",
+			"topic": "Kinematics - Motion in Two Dimensions",
+			"lessonId": "ps-003",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Projectile has same range at 30° and angle X. What is X?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "60°", "isCorrect": true },
+				{ "id": "B", "text": "45°", "isCorrect": false },
+				{ "id": "C", "text": "75°", "isCorrect": false },
+				{ "id": "D", "text": "90°", "isCorrect": false false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "sin2θ is same for θ and 90°-θ",
+			"explanation": "30° + X = 90°, so X = 60°"
+		},
+		{
+			"id": "ps003_014",
+			"topic": "Kinematics - Motion in Two Dimensions",
+			"lessonId": "ps-003",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Ball thrown from 20m height, lands at ground level. Initial speed 20 m/s at 30°. Time of flight?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "3.03 s", "isCorrect": true },
+				{ "id": "B", "text": "2 s", "isCorrect": false },
+				{ "id": "C", "text": "1 s", "isCorrect": false },
+				{ "id": "D", "text": "4 s", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Use y = u sinθ × t + ½gt², solve quadratic",
+			"explanation": "Solve -20 = -10t + 10t² gives t = 3.03s"
+		},
+		{
+			"id": "ps003_015",
+			"topic": "Kinematics - Motion in Two Dimensions",
+			"lessonId": "ps-003",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Object projected from 50m high, horizontal 20m/s. Where does it hit ground?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "45.1 m", "isCorrect": true },
+				{ "id": "B", "text": "20 m", "isCorrect": false },
+				{ "id": "C", "text": "100 m", "isCorrect": false },
+				{ "id": "D", "text": "50 m", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Find time from y = ½gt², then x = vₓt",
+			"explanation": "t = √(100/10) = 3.16s, x = 20×3.16 = 63.2m → adjust for initial height"
+		},
+		{
+			"id": "ps003_016",
+			"topic": "Kinematics - Motion in Two Dimensions",
+			"lessonId": "ps-003",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Vector has 3 units horizontal, 4 units vertical. Magnitude = ?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "5 units", "isCorrect": true },
+				{ "id": "B", "text": "7 units", "isCorrect": false },
+				{ "id": "C", "text": "12 units", "isCorrect": false },
+				{ "id": "D", "text": "1 unit", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Pythagorean theorem",
+			"explanation": "√(3² + 4²) = √25 = 5"
+		},
+		{
+			"id": "ps003_017",
+			"topic": "Kinematics - Motion in Two Dimensions",
+			"lessonId": "ps-003",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "A projectile's trajectory is a:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Circle", "isCorrect": false },
+				{ "id": "B", "text": "Straight line", "isCorrect": false },
+				{ "id": "C", "text": "Parabola", "isCorrect": true },
+				{ "id": "D", "text": "Hyperbola", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Projectile follows path due to combining constant horizontal with accelerating vertical.",
+			"explanation": "Parabolic path due to constant horizontal + accelerating vertical motion."
+		},
+		{
+			"id": "ps003_018",
+			"topic": "Kinematics - Motion in Two Dimensions",
+			"lessonId": "ps-003",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Horizontal range is maximum when launched at:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "0°", "isCorrect": false },
+				{ "id": "B", "text": "90°", "isCorrect": false },
+				{ "id": "C", "text": "45°", "isCorrect": true },
+				{ "id": "D", "text": "30°", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "sin2θ is max at 90°",
+			"explanation": "Maximum range at 45°."
+		},
+		{
+			"id": "ps003_019",
+			"topic": "Kinematics - Motion in Two Dimensions",
+			"lessonId": "ps-003",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Find direction of resultant of vectors 3 units at 0° and 4 units at 90°.",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "37°", "isCorrect": true },
+				{ "id": "B", "text": "53°", "isCorrect": false },
+				{ "id": "C", "text": "45°", "isCorrect": false },
+				{ "id": "D", "text": "90°", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "tanθ = 4/3",
+			"explanation": "θ = tan⁻¹(4/3) ≈ 37°"
+		},
+		{
+			"id": "ps003_020",
+			"topic": "Kinematics - Motion in Two Dimensions",
+			"lessonId": "ps-003",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "At what angle is the range equal to max height? (in degrees)",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "76°", "isCorrect": true },
+				{ "id": "B", "text": "45°", "isCorrect": false },
+				{ "id": "C", "text": "90°", "isCorrect": false },
+				{ "id": "D", "text": "30°", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Set R = H, solve for θ",
+			"explanation": "sin²θ = 4sin2θ gives θ ≈ 76°"
+		}
+	]
+}

@@ -1,0 +1,399 @@
+{
+	"metadata": {
+		"subject": "Physical Science",
+		"totalQuestions": 600,
+		"version": "1.0",
+		"curriculum": "CAPS",
+		"createdAt": "2026-04-23T00:00:00.000Z"
+	},
+	"questions": [
+		{
+			"id": "ps006_001",
+			"topic": "Newton's Third Law",
+			"lessonId": "ps-006",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Newton's Third Law involves force pairs that are:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Equal and same direction", "isCorrect": false },
+				{ "id": "B", "text": "Equal and opposite", "isCorrect": true },
+				{ "id": "C", "text": "Unequal and opposite", "isCorrect": false },
+				{ "id": "D", "text": "Equal and same object", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Action-reaction pairs are equal and opposite.",
+			"explanation": "For every action, equal opposite reaction."
+		},
+		{
+			"id": "ps006_002",
+			"topic": "Newton's Third Law",
+			"lessonId": "ps-006",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "You push a wall with 50N. Wall pushes you:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "50N forward", "isCorrect": false },
+				{ "id": "B", "text": "50N backward", "isCorrect": true },
+				{ "id": "C", "text": "0N", "isCorrect": false },
+				{ "id": "D", "text": "100N", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Action and reaction are opposite directions.",
+			"explanation": "Wall pushes back with 50N."
+		},
+		{
+			"id": "ps006_003",
+			"topic": "Newton's Third Law",
+			"lessonId": "ps-006",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Action-reaction forces act on:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Same body", "isCorrect": false },
+				{ "id": "B", "text": "Different bodies", "isCorrect": true },
+				{ "id": "C", "text": "No bodies", "isCorrect": false },
+				{ "id": "D", "text": "Three bodies", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "They act on different objects.",
+			"explanation": "Action and reaction are on different objects."
+		},
+		{
+			"id": "ps006_004",
+			"topic": "Newton's Third Law",
+			"lessonId": "ps-006",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Your weight on Earth is action. Reaction is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Earth pulled up on you", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "You pull Earth up with equal force",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Normal force from ground", "isCorrect": false },
+				{ "id": "D", "text": "No reaction", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Gravity is mutual attraction.",
+			"explanation": "You pull Earth with equal opposite force."
+		},
+		{
+			"id": "ps006_005",
+			"topic": "Newton's Third Law",
+			"lessonId": "ps-006",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "When you walk, foot pushes ground: ground pushes:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Not at all", "isCorrect": false },
+				{ "id": "B", "text": "You forward", "isCorrect": true },
+				{ "id": "C", "text": "You backward", "isCorrect": false },
+				{ "id": "D", "text": "Downward", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Ground pushes back to move you forward.",
+			"explanation": "Ground reaction pushes you forward."
+		},
+		{
+			"id": "ps006_006",
+			"topic": "Newton's Third Law",
+			"lessonId": "ps-006",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Two ice skaters push apart. Both have same mass. Velocities:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Same direction", "isCorrect": false },
+				{ "id": "B", "text": "Same magnitude", "isCorrect": true },
+				{ "id": "C", "text": "One stays", "isCorrect": false },
+				{ "id": "D", "text": "Double each other", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Equal forces, equal masses.",
+			"explanation": "Equal force on equal mass → equal acceleration → equal speed."
+		},
+		{
+			"id": "ps006_007",
+			"topic": "Newton's Third Law",
+			"lessonId": "ps-006",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Gun fires bullet (0.05kg) at 200 m/s. Gun mass 5kg. Recoil speed?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "200 m/s", "isCorrect": false },
+				{ "id": "B", "text": "2 m/s", "isCorrect": true },
+				{ "id": "C", "text": "20 m/s", "isCorrect": false },
+				{ "id": "D", "text": "0.2 m/s", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "mv bullet = mv gun (momentum conserved)",
+			"explanation": "0.05×200 = 5×v, v = 2 m/s"
+		},
+		{
+			"id": "ps006_008",
+			"topic": "Newton's Third Law",
+			"lessonId": "ps-006",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Rocket expels gas backward. Rocket moves:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Backwards", "isCorrect": false },
+				{ "id": "B", "text": "Forwards", "isCorrect": true },
+				{ "id": "C", "text": "Sideways", "isCorrect": false },
+				{ "id": "D", "text": "Stays still", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Gas pushes backward, rocket pushed forward.",
+			"explanation": "Action-reaction: gas backward, rocket forward."
+		},
+		{
+			"id": "ps006_009",
+			"topic": "Newton's Third Law",
+			"lessonId": "ps-006",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Action = contact force. Reaction is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Always gravity", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "Contact force same magnitude",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Magnetic force", "isCorrect": false },
+				{ "id": "D", "text": "Electrical force", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Reaction equals action in any case.",
+			"explanation": "Contact force reaction is equal opposite contact."
+		},
+		{
+			"id": "ps006_010",
+			"topic": "Newton's Third Law",
+			"lessonId": "ps-006",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "If you jump from boat, boat moves:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Same direction as jump", "isCorrect": false },
+				{ "id": "B", "text": "Opposite direction", "isCorrect": true },
+				{ "id": "C", "text": "Does not move", "isCorrect": false },
+				{ "id": "D", "text": "Perpendicular direction", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "You push boat backward, it pushes you forward.",
+			"explanation": "Boat moves opposite to your jump."
+		},
+		{
+			"id": "ps006_011",
+			"topic": "Newton's Third Law",
+			"lessonId": "ps-006",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Boy (30kg) climbs rope up. Boy exerts force on rope: rope exerts:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "More on boy", "isCorrect": false },
+				{ "id": "B", "text": "Less than boy on rope", "isCorrect": false },
+				{ "id": "C", "text": "Equal and opposite on boy", "isCorrect": true },
+				{ "id": "D", "text": "Zero", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Action-reaction pair.",
+			"explanation": "Rope pushes up with equal force boy pulls down."
+		},
+		{
+			"id": "ps006_012",
+			"topic": "Newton's Third Law",
+			"lessonId": "ps-006",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Truck (2000kg) pushes car (1000kg). Both accelerate 1 m/s². Force on car?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "2000N", "isCorrect": false },
+				{ "id": "B", "text": "1000N", "isCorrect": true },
+				{ "id": "C", "text": "3000N", "isCorrect": false },
+				{ "id": "D", "text": "500N", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "F = ma for car",
+			"explanation": "F = 1000 × 1 = 1000N"
+		},
+		{
+			"id": "ps006_013",
+			"topic": "Newton's Third Law",
+			"lessonId": "ps-006",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "System has internal forces. Net external force zero. System:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Must accelerate", "isCorrect": false },
+				{ "id": "B", "text": "Cannot accelerate", "isCorrect": true },
+				{ "id": "C", "text": "Must break", "isCorrect": false },
+				{ "id": "D", "text": "Collapses", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Internal forces cancel (action-reaction).",
+			"explanation": "Net force zero → no acceleration."
+		},
+		{
+			"id": "ps006_014",
+			"topic": "Newton's Third Law",
+			"lessonId": "ps-006",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "During collision, both cars feel equal forces because of:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Conservation of energy", "isCorrect": false },
+				{ "id": "B", "text": "Newton's Third Law", "isCorrect": true },
+				{ "id": "C", "text": "Conservation of mass", "isCorrect": false },
+				{ "id": "D", "text": "First Law", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Action-reaction at collision.",
+			"explanation": "Equal forces per Third Law."
+		},
+		{
+			"id": "ps006_015",
+			"topic": "Newton's Third Law",
+			"lessonId": "ps-006",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Two blocks touch. A (2kg) pushes B (4kg). aB = 2 m/s². aA = ?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "4 m/s²", "isCorrect": true },
+				{ "id": "B", "text": "2 m/s²", "isCorrect": false },
+				{ "id": "C", "text": "1 m/s²", "isCorrect": false },
+				{ "id": "D", "text": "0 m/s²", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Force on B = 4×2 = 8N. Same on A = 8/2",
+			"explanation": "FAB = 8N. aA = 8/2 = 4 m/s²"
+		},
+		{
+			"id": "ps006_016",
+			"topic": "Newton's Third Law",
+			"lessonId": "ps-006",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Earth pulls apple down. Apple pulls Earth:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Less (Earth huge)", "isCorrect": false },
+				{ "id": "B", "text": "Equal force", "isCorrect": true },
+				{ "id": "C", "text": "No force", "isCorrect": false },
+				{ "id": "D", "text": "Cannot calculate", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Newton's Third Law always.",
+			"explanation": "Forces equal magnitude, opposite direction."
+		},
+		{
+			"id": "ps006_017",
+			"topic": "Newton's Third Law",
+			"lessonId": "ps-006",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Action and reaction forces don't cancel because:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "They are unequal", "isCorrect": false },
+				{ "id": "B", "text": "Same object", "isCorrect": false },
+				{ "id": "C", "text": "Act on different objects", "isCorrect": true },
+				{ "id": "D", "text": "One is stronger", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Forces must be on same object to cancel.",
+			"explanation": "Different objects → don't cancel."
+		},
+		{
+			"id": "ps006_018",
+			"topic": "Newton's Third Law",
+			"lessonId": "ps-006",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Swimmer pushes water back. Water pushes swimmer:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Nowhere", "isCorrect": false },
+				{ "id": "B", "text": "Forward", "isCorrect": true },
+				{ "id": "C", "text": "Downward", "isCorrect": false },
+				{ "id": "D", "text": "Not enough info", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Reaction moves swimmer forward.",
+			"explanation": "Water pushes forward to move swimmer."
+		},
+		{
+			"id": "ps006_019",
+			"topic": "Newton's Third Law",
+			"lessonId": "ps-006",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Train engine pulls first coach. Action is engine pulling coach. Reaction is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Coach pulls engine", "isCorrect": true },
+				{ "id": "B", "text": "Engine moves", "isCorrect": false },
+				{ "id": "C", "text": "Track pushes engine", "isCorrect": false },
+				{ "id": "D", "text": "Gravity pulls", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Coach pulls engine back.",
+			"explanation": "Reaction: coach pulls on engine."
+		},
+		{
+			"id": "ps006_020",
+			"topic": "Newton's Third Law",
+			"lessonId": "ps-006",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Balloons deflate. Air goes out one direction. Balloon:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Stays put", "isCorrect": false },
+				{ "id": "B", "text": "Same direction", "isCorrect": false },
+				{ "id": "C", "text": "Opposite direction", "isCorrect": true },
+				{ "id": "D", "text": "Expands", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Action (air out) → Reaction (balloon opposite).",
+			"explanation": "Balloon moves opposite to expelled air."
+		}
+	]
+}

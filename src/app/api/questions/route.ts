@@ -6,10 +6,23 @@ function sanitizeFileName(name: string): string {
 	return name.replace(/[^a-zA-Z0-9_\-.]/g, "");
 }
 
+function matchesTopic(question: { topic?: string }, topic: string): boolean {
+	if (!question.topic) return false;
+	const normalizedQuestionTopic = question.topic
+		.toLowerCase()
+		.replace(/\s+/g, "-");
+	const normalizedFilterTopic = topic.toLowerCase().replace(/\s+/g, "-");
+	return (
+		normalizedQuestionTopic.includes(normalizedFilterTopic) ||
+		normalizedFilterTopic.includes(normalizedQuestionTopic)
+	);
+}
+
 export async function GET(req: NextRequest) {
 	const { searchParams } = new URL(req.url);
 	const subject = searchParams.get("subject") || "";
 	const file = searchParams.get("file");
+	const topic = searchParams.get("topic");
 
 	try {
 		const questionsDir = path.join(process.cwd(), "questions");
@@ -59,6 +72,12 @@ export async function GET(req: NextRequest) {
 			return NextResponse.json(
 				{ error: "Invalid JSON in questions file" },
 				{ status: 500 },
+			);
+		}
+
+		if (topic && data.questions) {
+			data.questions = data.questions.filter((q: { topic?: string }) =>
+				matchesTopic(q, topic),
 			);
 		}
 

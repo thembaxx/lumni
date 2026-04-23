@@ -1,0 +1,391 @@
+{
+	"metadata": {
+		"subject": "Business Studies",
+		"totalQuestions": 600,
+		"version": "1.0",
+		"curriculum": "CAPS",
+		"createdAt": "2026-04-23T00:00:00.000Z"
+	},
+	"questions": [
+		{
+			"id": "bs001_001",
+			"topic": "Introduction to Business",
+			"lessonId": "bs-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The main goal of a business is to:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Make profit", "isCorrect": true },
+				{ "id": "B", "text": "Employ people", "isCorrect": false },
+				{ "id": "C", "text": "Produce goods", "isCorrect": false },
+				{ "id": "D", "text": "Pay taxes", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Primary business objective.",
+			"explanation": "A business's primary goal is to make profit by providing goods or services."
+		},
+		{
+			"id": "bs001_002",
+			"topic": "Introduction to Business",
+			"lessonId": "bs-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Stakeholders in a business include:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Only shareholders", "isCorrect": false },
+				{ "id": "B", "text": "Customers, employees, owners", "isCorrect": true },
+				{ "id": "C", "text": "Only competitors", "isCorrect": false },
+				{ "id": "D", "text": "Only government", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "All parties interested in business.",
+			explanation: "Stakeholders are all parties affected by or affecting the business."
+		},
+		{
+			"id": "bs001_003",
+			"topic": "Introduction to Business",
+			"lessonId": "bs-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "A sole proprietorship is owned by:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Two or more people", "isCorrect": false },
+				{ "id": "B", "text": "One person", "isCorrect": true },
+				{ "id": "C", "text": "The state", "isCorrect": false },
+				{ "id": "D", "text": "Shareholders", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Single owner.",
+			explanation: "A sole proprietorship is owned and operated by one person."
+		},
+		{
+			"id": "bs001_004",
+			"topic": "Introduction to Business",
+			"lessonId": "bs-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The micro environment of a business includes:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Economy", "isCorrect": false },
+				{ "id": "B", "text": "Suppliers", "isCorrect": true },
+				{ "id": "C", "text": "Technology", "isCorrect": false },
+				{ "id": "D", "text": "Government policies", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Immediate factors affecting business.",
+			explanation": "The micro environment includes immediate factors like suppliers, customers, and competitors."
+		},
+		{
+			"id": "bs001_005",
+			"topic": "Introduction to Business",
+			"lessonId": "bs-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Business ethics refers to:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Making maximum profit", "isCorrect": false },
+				{ "id": "B", "text": "Moral principles in business", "isCorrect": true },
+				{ "id": "C", "text": "Following laws only", "isCorrect": false },
+				{ "id": "D", "text": "Tax compliance", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Right vs wrong in business.",
+			explanation": "Business ethics involves moral principles guiding business conduct."
+		},
+		{
+			"id": "bs001_006",
+			"topic": "Introduction to Business",
+			"lessonId": "bs-001",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Social responsibility means businesses should:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Only maximize profits", "isCorrect": false },
+				{ "id": "B", "text": "Consider community and environment", "isCorrect": true },
+				{ "id": "C", "text": "Ignore stakeholders", "isCorrect": false },
+				{ "id": "D", "text": "Pay minimum wages", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Beyond profit-making.",
+			explanation": "Social responsibility means considering impact on society and environment."
+		},
+		{
+			"id": "bs001_007",
+			"topic": "Introduction to Business",
+			"lessonId": "bs-001",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Which is part of the macro environment?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Competitors", "isCorrect": false },
+				{ "id": "B", "text": "Technology", "isCorrect": true },
+				{ "id": "C", "text": "Suppliers", "isCorrect": false },
+				{ "id": "D", "text": "Customers", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Broad external factors.",
+			explanation: "Technology is a macro-environmental factor affecting all businesses."
+		},
+		{
+			"id": "bs001_008",
+			topic: "Introduction to Business",
+			lessonId: "bs-001",
+			difficulty: "Medium",
+			points: 10,
+			questionText: "A partnership ends when:",
+			questionType: "multiple-choice",
+			options: [
+				{ "id": "A", text: "One partner retires", isCorrect: false },
+				{ "id": "B", "text": "Any partner withdraws or dies", "isCorrect": true },
+				{ "id": "C", "text": "Business grows", "isCorrect": false },
+				{ "id": "D", "text": "Profits increase", "isCorrect": false }
+			],
+			supportsDiagram: false,
+			diagram: null,
+			hint: "Changes in partners.",
+			explanation: "Partnerships dissolve when partners leave, die, or become insolvent."
+		},
+		{
+			"id": "bs001_009",
+			topic: "Introduction to Business",
+			lessonId: "bs-001",
+			difficulty: "Medium",
+			points: 10,
+			questionText: "The BBBEE aims to:",
+			questionType: "multiple-choice",
+			options: [
+				{ "id": "A", text: "Increase prices", isCorrect: false },
+				{ "id": "B", "text": "Promote equal opportunity", "isCorrect": true },
+				{ "id": "C", "text": "Reduce competition", "isCorrect": false },
+				{ "id": "D", "text": "Limit imports", "isCorrect": false }
+			],
+			supportsDiagram: false,
+			diagram: null,
+			hint: "Broad-based black economic empowerment.",
+			explanation: "BBBEE promotes economic transformation in South Africa."
+		},
+		{
+			"id": "bs001_010",
+			topic: "Introduction to Business",
+			lessonId: "bs-001",
+			difficulty: "Medium",
+			points: 10,
+			questionText: "Primary sector businesses are involved in:",
+			questionType: "multiple-choice",
+			options: [
+				{ "id": "A", text: "Manufacturing", isCorrect: false },
+				{ "id": "B", "text": "Extraction of natural resources", "isCorrect": true },
+				{ "id": "C", "text": "Services", "isCorrect": false },
+				{ "id": "D", "text": "Retail", "isCorrect": false }
+			],
+			supportsDiagram: false,
+			diagram: null,
+			hint: "Raw materials.",
+			explanation: "Primary sector involves mining, agriculture, and resource extraction."
+		},
+		{
+			"id": "bs001_011",
+			topic: "Introduction to Business",
+			lessonId: "bs-001",
+			difficulty: "Hard",
+			points: 15,
+			questionText: "The mission statement should include:",
+			questionType: "multiple-choice",
+			options: [
+				{ "id": "A", text: "Only profit targets", isCorrect: false },
+				{ "id": "B", "text": "Purpose, values, and goals", "isCorrect": true },
+				{ "id": "C", "text": "Employee salaries", "isCorrect": false },
+				{ "id": "D", "text": "Competitor information", "isCorrect": false }
+			],
+			supportsDiagram": false,
+			diagram: null,
+			hint: "Why the business exists.",
+			explanation: "Mission statements define purpose, values, and strategic goals."
+		},
+		{
+			"id": "bs001_012",
+			topic: "Introduction to Business",
+			lessonId: "bs-001",
+			difficulty: "Hard",
+			points": 15,
+			questionText: "Liability in a partnership is:",
+			questionType": "multiple-choice",
+			options: [
+				{ "id": "A", "text": "Limited to investment", "isCorrect": false },
+				{ "id": "B", "text": "Unlimited and joint", "isCorrect": true },
+				{ "id": "C", "text": "Only to creditors", "isCorrect": false },
+				{ "id": "D", "text": "Limited to partners", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Partners are responsible.",
+			explanation": "Partners have unlimited joint liability for partnership debts."
+		},
+		{
+			"id": "bs001_013",
+			topic: "Introduction to Business",
+			lessonId: "bs-001",
+			difficulty: "Hard",
+			points": 15,
+			questionText: "A close corporation has:",
+			questionType": "multiple-choice",
+			options": [
+				{ "id": "A", "text": "Unlimited members", "isCorrect": false },
+				{ "id": "B", "text": "Maximum 10 members", "isCorrect": true },
+				{ "id": "C", "text": "No legal identity", "isCorrect": false },
+				{ "id": "D", "text": "No registration", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Small business structure.",
+			explanation: "Close corporations in South Africa have a maximum of 10 members."
+		},
+		{
+			"id": "bs001_014",
+			topic: "Introduction to Business",
+			lessonId: "bs-001",
+			difficulty: "Hard",
+			points": 15,
+			questionText: "Corporate governance ensures:",
+			questionType": "multiple-choice",
+			options": [
+				{ "id": "A", "text": "Maximum profits", "isCorrect": false },
+				{ "id": "B", "text": "Ethical management and accountability", "isCorrect": true },
+				{ "id": "C", "text": "Low prices", "isCorrect": false },
+				{ "id": "D", "text": "No competition", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "How businesses are managed.",
+			explanation: "Corporate governance promotes transparency and ethical management."
+		},
+		{
+			"id": "bs001_015",
+			topic: "Introduction to Business",
+			lessonId: "bs-001",
+			difficulty: "Hard",
+			points": 15,
+			questionText": "The King IV Report focuses on:",
+			questionType": "multiple-choice",
+			options": [
+				{ "id": "A", "text": "Profit maximization", "isCorrect": false },
+				{ "id": "B", "text": "Integrated reporting and ethics", "isCorrect": true },
+				{ "id": "C", "text": "Tax avoidance", "isCorrect": false },
+				{ "id": "D", "text": "Exclusive ownership", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "South African governance code.",
+			explanation": "King IV promotes ethical and effective leadership."
+		},
+		{
+			"id": "bs001_016",
+			topic: "Introduction to Business",
+			lessonId: "bs-001",
+			difficulty: "Easy",
+			points": 5,
+			questionText: "The tertiary sector is also called:",
+			questionType": "multiple-choice",
+			options": [
+				{ "id": "A", "text": "Extraction sector", "isCorrect": false },
+				{ "id": "B", "text": "Manufacturing sector", "isCorrect": false },
+				{ "id": "C", "text": "Service sector", "isCorrect": true },
+				{ "id": "D", "text": "Agricultural sector", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Providing services.",
+			explanation": "Tertiary sector provides services rather than goods."
+		},
+		{
+			"id": "bs001_017",
+			topic: "Introduction to Business",
+			lessonId: "bs-001",
+			difficulty": "Easy",
+			points": 5,
+			questionText: "A public company can:",
+			questionType": "multiple-choice",
+			options: [
+				{ "id": "A", "text": "Have unlimited shares", "isCorrect": true },
+				{ "id": "B", "text": "Only have 50 shares", "isCorrect": false },
+				{ "id": "C", "text": "Not sell to public", "isCorrect": false },
+				{ "id": "D", "text": "Not be listed", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Can be JSE listed.",
+			explanation: "Public companies can list on stock exchanges and have unlimited shares."
+		},
+		{
+			"id": "bs001_018",
+			topic: "Introduction to Business",
+			lessonId": "bs-001",
+			difficulty": "Medium",
+			points": 10,
+			questionText: "The CIPC registers:",
+			questionType": "multiple-choice",
+			options: [
+				{ "id": "A", "text": "Only companies", "isCorrect": false },
+				{ "id": "B", "text": "Companies and close corporations", "isCorrect": true },
+				{ "id": "C", "text": "Only partnerships", "isCorrect": false },
+				{ "id": "D", "text": "Only trademarks", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Companies and Intellectual Property Commission.",
+			explanation": "CIPC registers companies, CCs and handles intellectual property."
+		},
+		{
+			"id": "bs001_019",
+			topic: "Introduction to Business",
+			lessonId: "bs-001",
+			difficulty": "Easy",
+			points": 5,
+			questionText: "Secondary sector includes:",
+			questionType": "multiple-choice",
+			options": [
+				{ "id": "A", "text": "Mining", "isCorrect": false },
+				{ "id": "B", "text": "Manufacturing", "isCorrect": true },
+				{ "id": "C", "text": "Banking", "isCorrect": false },
+				{ "id": "D", "text": "Teaching", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Processing raw materials.",
+			explanation": "Secondary sector transforms raw materials into finished goods."
+		},
+		{
+			"id": "bs001_020",
+			topic: "Introduction to Business",
+			lessonId: "bs-001",
+			difficulty": "Medium",
+			points": 10,
+			questionText: "Capital in a business is used for:",
+			questionType": "multiple-choice",
+			options: [
+				{ "id": "A", "text": "Entertainment", "isCorrect": false },
+				{ "id": "B", "text": "Starting and growing operations", "isCorrect": true },
+				{ "id": "C", "text": "Paying personal expenses", "isCorrect": false },
+				{ "id": "D", "text": "Gambling", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Financial resources for business.",
+			explanation": "Capital funds business activities and expansion."
+		}
+	]
+}

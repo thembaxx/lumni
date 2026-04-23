@@ -3,7 +3,6 @@
 import { useState } from "react";
 import {
 	DashboardHeader,
-	// DashboardHero,
 	QuickActions,
 	SearchInput,
 } from "@/components/dashboard";
@@ -21,7 +20,6 @@ export function DashboardClient({ initialTab = "ai" }: DashboardClientProps) {
 	return (
 		<div className="min-h-screen flex flex-col bg-background">
 			<DashboardHeader activeTab={activeTab} onTabChange={setActiveTab} />
-			{/* <DashboardHero /> */}
 			<div className="grow">
 				<StudyTopicCardExample />
 			</div>
