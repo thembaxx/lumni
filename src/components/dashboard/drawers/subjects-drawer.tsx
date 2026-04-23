@@ -70,6 +70,11 @@ export function SubjectsDrawer({
 					) : error ? (
 						<p className="text-center text-destructive py-8 text-sm">
 							Failed to load subjects.
+							{error instanceof Error && error.message.includes("readonly") && (
+								<span className="block mt-2 text-xs">
+									Database is read-only. Please contact support.
+								</span>
+							)}
 						</p>
 					) : subjects?.length === 0 ? (
 						<p className="text-center text-muted-foreground py-8 text-sm">

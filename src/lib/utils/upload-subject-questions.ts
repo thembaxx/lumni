@@ -46,7 +46,7 @@ export function getQuestionFileUrl(
 	baseUrl?: string,
 ): string {
 	const fileName = generateFileName(subject, number);
-	const base = baseUrl || "https://sxo07lk073.ufs.sh/f";
+	const base = baseUrl || "";
 	return `${base}/${fileName}`;
 }
 

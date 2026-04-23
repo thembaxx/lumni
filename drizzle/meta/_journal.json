@@ -1,13 +1,13 @@
 {
-	"version": "7",
-	"dialect": "sqlite",
-	"entries": [
-		{
-			"idx": 0,
-			"version": "6",
-			"when": 1776784282059,
-			"tag": "0000_lucky_bloodstrike",
-			"breakpoints": true
-		}
-	]
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1776974552213,
+      "tag": "0000_crazy_medusa",
+      "breakpoints": true
+    }
+  ]
 }

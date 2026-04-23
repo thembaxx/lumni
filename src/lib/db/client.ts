@@ -1,11 +1,15 @@
-import Database from "better-sqlite3";
-import { drizzle } from "drizzle-orm/better-sqlite3";
+import { neon } from "@neondatabase/serverless";
+import { drizzle } from "drizzle-orm/neon-http";
 import * as schema from "./schema";
 
-const sqlite = new Database("./local.db");
-const db = drizzle(sqlite);
+if (!process.env.POSTGRES_URL) {
+	throw new Error("POSTGRES_URL is not set in environment variables");
+}
 
-export { db, schema, sqlite };
+const sql = neon(process.env.POSTGRES_URL);
+const db = drizzle(sql, { schema });
+
+export { db, schema, sql };
 
 export function getDb() {
 	return db;
