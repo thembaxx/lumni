@@ -84,6 +84,8 @@ export const subject = sqliteTable("subject", {
 	icon: text("icon"),
 	category: text("category").notNull(),
 	color: text("color"),
+	sourceUrl: text("source_url"),
+	sourceVersion: text("source_version"),
 	createdAt: integer("created_at", { mode: "timestamp_ms" })
 		.default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
 		.notNull(),

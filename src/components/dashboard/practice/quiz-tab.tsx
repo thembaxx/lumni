@@ -1,5 +1,7 @@
 "use client";
 
+import { ArrowDown01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import {
 	ChevronLeft,
 	ChevronRight,
@@ -30,93 +32,12 @@ import {
 	EmptyTitle,
 } from "@/components/ui/empty";
 import { Progress } from "@/components/ui/progress";
+import { DEMO_QUESTIONS } from "@/lib/data/demo-questions";
 import { useSubjectQuestions } from "@/lib/hooks/use-subject-questions";
-import type { QAQuestion } from "@/lib/types/questions";
 import { cn } from "@/lib/utils";
+import { formatTime } from "@/lib/utils/time";
 
 const MAX_TIME = 90 * 60;
-
-const DEMO_QUESTIONS: QAQuestion[] = [
-	{
-		id: "demo_001",
-		topic: "Newton's Laws",
-		difficulty: "Easy",
-		points: 10,
-		questionText:
-			"A 5 kg box is pushed with 20 N force. What is the acceleration?",
-		questionType: "multiple-choice",
-		options: [
-			{ id: "A", text: "4 m/s²", isCorrect: true },
-			{ id: "B", text: "2 m/s²", isCorrect: false },
-			{ id: "C", text: "10 m/s²", isCorrect: false },
-			{ id: "D", text: "100 m/s²", isCorrect: false },
-		],
-		supportsDiagram: true,
-		diagram: {
-			type: "force-vector",
-			title: "Box on Surface",
-			data: {
-				objects: [
-					{
-						type: "rectangle",
-						x: 100,
-						y: 100,
-						width: 80,
-						height: 50,
-						fill: "#6366f1",
-						label: "5 kg",
-					},
-				],
-				showForces: [
-					{
-						label: "F = 20N",
-						direction: "right",
-						color: "#3b82f6",
-						origin: "center-right",
-					},
-				],
-			},
-		},
-		hint: "Use F = ma → a = F/m",
-		explanation: "a = 20N / 5kg = 4 m/s²",
-	},
-	{
-		id: "demo_002",
-		topic: "Momentum",
-		difficulty: "Easy",
-		points: 10,
-		questionText: "A 4 kg ball moves at 3 m/s. What is its momentum?",
-		questionType: "multiple-choice",
-		options: [
-			{ id: "A", text: "12 kg·m/s", isCorrect: true },
-			{ id: "B", text: "7 kg·m/s", isCorrect: false },
-			{ id: "C", text: "1.33 kg·m/s", isCorrect: false },
-			{ id: "D", text: "0.75 kg·m/s", isCorrect: false },
-		],
-		supportsDiagram: false,
-		diagram: null,
-		hint: "p = mv",
-		explanation: "p = 4 × 3 = 12 kg·m/s",
-	},
-	{
-		id: "demo_003",
-		topic: "Work & Energy",
-		difficulty: "Easy",
-		points: 10,
-		questionText: "A force of 50 N moves an object 4 m. How much work is done?",
-		questionType: "multiple-choice",
-		options: [
-			{ id: "A", text: "200 J", isCorrect: true },
-			{ id: "B", text: "12.5 J", isCorrect: false },
-			{ id: "C", text: "54 J", isCorrect: false },
-			{ id: "D", text: "2000 J", isCorrect: false },
-		],
-		supportsDiagram: false,
-		diagram: null,
-		hint: "W = F × Δx",
-		explanation: "W = 50 × 4 = 200 J",
-	},
-];
 
 interface QuizTabProps {
 	className?: string;
@@ -132,6 +53,8 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 	const [correctAnswers, setCorrectAnswers] = useState(0);
 	const [questionCount] = useState(10);
 	const [isTransitioning, setIsTransitioning] = useState(false);
+	const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+	const [showFeedback, setShowFeedback] = useState(false);
 
 	const subjectToFetch =
 		selectedSubject === "Random" ? "physics" : selectedSubject.toLowerCase();
@@ -150,12 +73,6 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 
 	const handleSubjectSelect = useCallback((value: string) => {
 		setSelectedSubject(value);
-	}, []);
-
-	const formatTime = useCallback((seconds: number) => {
-		const mins = Math.floor(seconds / 60);
-		const secs = seconds % 60;
-		return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
 	}, []);
 
 	const calculateAccuracy = useCallback(() => {
@@ -182,10 +99,19 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 	}, [generatePoints, onHeaderChange]);
 
 	const handleAnswer = useCallback((_optionId: string, isCorrect: boolean) => {
+		setShowFeedback(true);
 		if (isCorrect) {
 			setCorrectAnswers((prev) => prev + 1);
 		}
 	}, []);
+
+	const handleSelectAnswer = useCallback(
+		(optionId: string) => {
+			if (showFeedback) return;
+			setSelectedAnswer(optionId);
+		},
+		[showFeedback],
+	);
 
 	const handleNext = useCallback(() => {
 		if (!questionsToUse) return;
@@ -196,6 +122,8 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 				setIsTransitioning(true);
 				setTimeout(() => {
 					setCurrentQuestionIndex((prev) => prev + 1);
+					setSelectedAnswer(null);
+					setShowFeedback(false);
 					setIsTransitioning(false);
 				}, 150);
 			});
@@ -284,27 +212,17 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 					</Progress>
 				</div>
 
-				<ViewTransition
-					default="none"
-					enter="vt-slide-up-in"
-					exit="vt-slide-down-out"
-				>
-					<div
-						className={cn(
-							"transition-all duration-200",
-							isTransitioning
-								? "opacity-0 translate-x-2"
-								: "opacity-100 translate-x-0",
-						)}
-					>
-						<QuestionCard
-							key={currentQuestion.id}
-							question={currentQuestion}
-							questionNumber={currentQuestionIndex + 1}
-							totalQuestions={questionsToUse?.length || questionCount}
-							onAnswer={handleAnswer}
-						/>
-					</div>
+				<ViewTransition>
+					<QuestionCard
+						key={currentQuestion.id}
+						question={currentQuestion}
+						questionNumber={currentQuestionIndex + 1}
+						totalQuestions={questionsToUse?.length || questionCount}
+						selectedAnswer={selectedAnswer}
+						showFeedback={showFeedback}
+						onSelectAnswer={handleSelectAnswer}
+						onAnswer={handleAnswer}
+					/>
 				</ViewTransition>
 
 				<div
@@ -322,7 +240,11 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 						<ChevronLeft className="size-4" />
 						Previous
 					</Button>
-					<Button onClick={handleNext} className="gap-2">
+					<Button
+						onClick={handleNext}
+						disabled={!showFeedback}
+						className="gap-2"
+					>
 						{questionsToUse && currentQuestionIndex < questionsToUse.length - 1
 							? "Next"
 							: "Finish"}
@@ -332,6 +254,8 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 			</div>
 		);
 	}
+
+	const hasSubject = selectedSubject !== "";
 
 	return (
 		<div className="w-full">
@@ -343,15 +267,23 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 			>
 				<SubjectsDrawer onSelect={handleSubjectSelect}>
 					<Button
-						variant="outline"
-						className="h-9 rounded-full border-muted bg-muted/50"
+						variant="secondary"
+						className="h-9 rounded-md pl-3 border-muted bg-muted/50"
 						disabled={isRunning}
 					>
-						{selectedSubject !== "" ? selectedSubject : "Subject..."}
+						<div className="flex items-center gap-3">
+							{hasSubject ? selectedSubject : "Subject"}
+							<HugeiconsIcon icon={ArrowDown01Icon} />
+						</div>
 					</Button>
 				</SubjectsDrawer>
 
-				<div className="flex items-center gap-3 pl-4 py-2 rounded-full bg-muted/30 border border-muted">
+				<div
+					className={cn(
+						"flex items-center gap-3 pl-4 py-2 rounded-full bg-muted/30 border border-muted transition-opacity duration-300",
+						!hasSubject && "opacity-30 pointer-events-none",
+					)}
+				>
 					<div className="flex items-center gap-2 min-w-16">
 						<Timer className="size-4 text-muted-foreground" />
 						<span className="text-sm font-medium -mb-0.5 tabular-nums font-mono tracking-tight">
@@ -381,35 +313,66 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 					<Button
 						size="icon"
 						onClick={handleStart}
-						className="size-11 rounded-full bg-primary hover:bg-primary/90"
+						disabled={!hasSubject}
+						className={cn(
+							"size-11 rounded-full",
+							hasSubject
+								? "bg-primary hover:bg-primary/90 animate-fade-in-scale"
+								: "bg-muted cursor-not-allowed",
+						)}
 					>
 						<Play className="size-4 ml-0.5 fill-current" />
 					</Button>
 				)}
 			</div>
 
-			<Empty className="border border-dashed mt-24">
-				<EmptyHeader>
-					<EmptyMedia variant="icon">
-						<PuzzleIcon />
-					</EmptyMedia>
-					<EmptyTitle>Quiz not started</EmptyTitle>
-					<EmptyDescription>
-						Practice quizzes you start will be saved here for easy access later.
-						You can also view and manage your past quiz attempts here.
-					</EmptyDescription>
-				</EmptyHeader>
-				<EmptyContent>
-					<Button
-						variant="outline"
-						size="sm"
-						disabled={selectedSubject === "" || !selectedSubject}
-						onClick={handleStart}
-					>
-						Start quiz
-					</Button>
-				</EmptyContent>
-			</Empty>
+			{hasSubject ? (
+				<Empty className="border border-dashed mt-24">
+					<EmptyHeader>
+						<EmptyMedia variant="icon">
+							<PuzzleIcon />
+						</EmptyMedia>
+						<EmptyTitle>Quiz not started</EmptyTitle>
+						<EmptyDescription>
+							Practice quizzes you start will be saved here for easy access
+							later. You can also view and manage your past quiz attempts here.
+						</EmptyDescription>
+					</EmptyHeader>
+					<EmptyContent>
+						<Button variant="outline" size="sm" onClick={handleStart}>
+							Start quiz
+						</Button>
+					</EmptyContent>
+				</Empty>
+			) : (
+				<div className="mt-24 flex flex-col items-center gap-4 animate-fade-in-scale">
+					<div className="relative flex items-center justify-center">
+						<div className="absolute size-20 rounded-full bg-muted/40 animate-pulse" />
+						<div className="relative flex items-center justify-center size-20 rounded-full border border-dashed border-muted-foreground/20 bg-muted/20">
+							<PuzzleIcon className="size-8 text-muted-foreground/40" />
+						</div>
+					</div>
+					<div className="text-center space-y-1.5">
+						<p className="text-sm font-medium text-muted-foreground">
+							Select a subject to begin
+						</p>
+						<p className="text-xs text-muted-foreground/60">
+							Choose a subject above to start your quiz
+						</p>
+					</div>
+					<div className="flex items-center gap-1.5">
+						<span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/40 animate-bounce" />
+						<span
+							className="h-1.5 w-1.5 rounded-full bg-muted-foreground/40 animate-bounce"
+							style={{ animationDelay: "150ms" }}
+						/>
+						<span
+							className="h-1.5 w-1.5 rounded-full bg-muted-foreground/40 animate-bounce"
+							style={{ animationDelay: "300ms" }}
+						/>
+					</div>
+				</div>
+			)}
 		</div>
 	);
 }

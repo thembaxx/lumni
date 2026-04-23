@@ -12,7 +12,7 @@ const nextConfig: NextConfig = {
 			},
 		],
 	},
-	cacheComponents: true,
+	cacheComponents: false,
 };
 
 export default nextConfig;

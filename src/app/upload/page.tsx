@@ -12,15 +12,48 @@ function _generateFileName(subject: string, number: number): string {
 	return `${formattedSubject}_qa_${number}.json`;
 }
 
+function extractSubjectFromFileName(fileName: string): string {
+	const match = fileName.match(/^([a-z_-]+)_qa_\d+\.json$/i);
+	if (match) {
+		return match[1].replace(/_/g, "-").toLowerCase();
+	}
+	return "";
+}
+
 export default function UploadPage() {
 	const [_uploadedUrls, setUploadedUrls] = useState<string[]>([]);
 	const [lastUpload, setLastUpload] = useState<string | null>(null);
+	const [syncStatus, setSyncStatus] = useState<
+		"idle" | "syncing" | "done" | "error"
+	>("idle");
 
-	const handleUploadComplete = (files: { url: string; name: string }[]) => {
+	const handleUploadComplete = async (
+		files: { url: string; name: string }[],
+	) => {
 		const urls = files.map((f) => f.url);
 		setUploadedUrls(urls);
 		setLastUpload(urls[0] || null);
-		alert(`Uploaded successfully!\n\nFile: ${files[0]?.name}\nURL: ${urls[0]}`);
+
+		const fileName = files[0]?.name || "";
+		const subject = extractSubjectFromFileName(fileName);
+
+		if (subject) {
+			setSyncStatus("syncing");
+			try {
+				await fetch("/api/sync", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({ subject, action: "sync" }),
+				});
+				setSyncStatus("done");
+			} catch {
+				setSyncStatus("error");
+			}
+		}
+
+		alert(
+			`Uploaded successfully!\n\nFile: ${files[0]?.name}\nURL: ${urls[0]}${subject ? `\nSynced: ${syncStatus}` : ""}`,
+		);
 	};
 
 	return (

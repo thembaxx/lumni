@@ -4,21 +4,26 @@ import { useEffect } from "react";
 import { onCLS, onFCP, onINP, onLCP, onTTFB } from "web-vitals";
 
 function report(metric: { name: string; value: number }) {
+	if (process.env.NODE_ENV !== "development") return;
+
+	const shouldLog = Math.random() < 0.1;
+	if (!shouldLog) return;
+
 	switch (metric.name) {
 		case "FCP":
-			console.log("First Contentful Paint:", metric.value);
+			console.debug("First Contentful Paint:", metric.value);
 			break;
 		case "LCP":
-			console.log("Largest Contentful Paint:", metric.value);
+			console.debug("Largest Contentful Paint:", metric.value);
 			break;
 		case "CLS":
-			console.log("Cumulative Layout Shift:", metric.value);
+			console.debug("Cumulative Layout Shift:", metric.value);
 			break;
 		case "INP":
-			console.log("Interaction to Next Paint:", metric.value);
+			console.debug("Interaction to Next Paint:", metric.value);
 			break;
 		case "TTFB":
-			console.log("Time to First Byte:", metric.value);
+			console.debug("Time to First Byte:", metric.value);
 			break;
 		default:
 			break;

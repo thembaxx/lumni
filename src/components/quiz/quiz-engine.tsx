@@ -109,31 +109,6 @@ export function QuizEngine({
 		setSelectedAnswer(answer);
 	}
 
-	async function handleSubmitAnswer() {
-		if (!selectedAnswer || !currentQuestion) return;
-
-		const isCorrect = selectedAnswer === currentQuestion.correctAnswer;
-		const newResults = { ...results };
-
-		if (isCorrect) {
-			newResults.correctAnswers++;
-		} else {
-			newResults.incorrectAnswers.push({
-				questionId: currentQuestion.id,
-				selectedAnswer,
-				correctAnswer: currentQuestion.correctAnswer,
-			});
-		}
-
-		newResults.totalQuestions = currentIndex + 1;
-		newResults.accuracy = Math.round(
-			(newResults.correctAnswers / newResults.totalQuestions) * 100,
-		);
-
-		setResults(newResults);
-		setShowFeedback(true);
-	}
-
 	function handleNext() {
 		if (currentIndex < questions.length - 1) {
 			setCurrentIndex((prev) => prev + 1);
@@ -221,15 +196,7 @@ export function QuizEngine({
 				</motion.div>
 			</AnimatePresence>
 
-			{!showFeedback ? (
-				<Button
-					className="w-full"
-					onClick={handleSubmitAnswer}
-					disabled={!selectedAnswer}
-				>
-					Check Answer
-				</Button>
-			) : (
+			{showFeedback && (
 				<div className="space-y-2">
 					<div
 						className={`p-4 rounded-lg ${

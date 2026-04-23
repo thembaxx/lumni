@@ -1,3 +1,4 @@
+export { useAutoSync, useSyncAll, useSyncSubject } from "./use-question-sync";
 export {
 	useSubjectQuestions,
 	useSubjectQuestionsByDifficulty,

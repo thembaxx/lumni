@@ -17,8 +17,11 @@ import { QuestionDiagram } from "./question-diagram";
 
 interface QuestionCardProps {
 	question: QAQuestion;
-	questionNumber: number;
-	totalQuestions: number;
+	questionNumber?: number;
+	totalQuestions?: number;
+	selectedAnswer?: string | null;
+	showFeedback?: boolean;
+	onSelectAnswer?: (optionId: string) => void;
 	onAnswer?: (optionId: string, isCorrect: boolean) => void;
 }
 
@@ -30,11 +33,14 @@ const difficultyColors = {
 
 export function QuestionCard({
 	question,
-	// questionNumber,
-	// totalQuestions,
+	questionNumber,
+	totalQuestions,
+	selectedAnswer: externalSelectedAnswer,
+	showFeedback: externalShowFeedback,
+	onSelectAnswer,
 	onAnswer,
 }: QuestionCardProps) {
-	const [state, setState] = useState<QuestionState>({
+	const [internalState, setInternalState] = useState<QuestionState>({
 		selectedOption: null,
 		isCorrect: null,
 		showHint: false,
@@ -43,42 +49,58 @@ export function QuestionCard({
 		showDiagram: true,
 	});
 
+	const isControlled = externalSelectedAnswer !== undefined;
+	const selectedOption = isControlled
+		? externalSelectedAnswer
+		: internalState.selectedOption;
+	const showFeedback = isControlled
+		? externalShowFeedback
+		: internalState.isSubmitted;
+
+	const state = isControlled
+		? { ...internalState, isSubmitted: externalShowFeedback ?? false }
+		: internalState;
+
 	const handleSelect = useCallback(
 		(optionId: string) => {
-			if (state.isSubmitted) return;
-			setState((prev) => ({ ...prev, selectedOption: optionId }));
+			if (showFeedback) return;
+			if (onSelectAnswer) {
+				onSelectAnswer(optionId);
+			} else {
+				setInternalState((prev) => ({ ...prev, selectedOption: optionId }));
+			}
 		},
-		[state.isSubmitted],
+		[showFeedback, onSelectAnswer],
 	);
 
 	const handleCheck = useCallback(() => {
-		if (!state.selectedOption) return;
+		if (!selectedOption) return;
 
-		const selectedOption = question.options.find(
-			(opt) => opt.id === state.selectedOption,
+		const selectedOpt = question.options.find(
+			(opt) => opt.id === selectedOption,
 		);
-		const isCorrect = selectedOption?.isCorrect ?? false;
+		const isCorrect = selectedOpt?.isCorrect ?? false;
 
-		setState((prev) => ({
+		setInternalState((prev) => ({
 			...prev,
 			isCorrect,
 			showExplanation: true,
 			isSubmitted: true,
 		}));
 
-		onAnswer?.(state.selectedOption, isCorrect);
-	}, [state.selectedOption, question.options, onAnswer]);
+		onAnswer?.(selectedOption, isCorrect);
+	}, [selectedOption, question.options, onAnswer]);
 
 	const handleHint = useCallback(() => {
-		setState((prev) => ({ ...prev, showHint: !prev.showHint }));
+		setInternalState((prev) => ({ ...prev, showHint: !prev.showHint }));
 	}, []);
 
 	const handleToggleDiagram = useCallback(() => {
-		setState((prev) => ({ ...prev, showDiagram: !prev.showDiagram }));
+		setInternalState((prev) => ({ ...prev, showDiagram: !prev.showDiagram }));
 	}, []);
 
 	const _handleNext = useCallback(() => {
-		setState({
+		setInternalState({
 			selectedOption: null,
 			isCorrect: null,
 			showHint: false,
@@ -154,9 +176,9 @@ export function QuestionCard({
 					)}
 				>
 					{question.options.map((option) => {
-						const isSelected = state.selectedOption === option.id;
+						const isSelected = selectedOption === option.id;
 						const isCorrectOption = option.isCorrect;
-						const showResult = state.isSubmitted;
+						const showResult = showFeedback;
 
 						let optionClass = "border-muted hover:border-primary/50";
 
@@ -232,12 +254,12 @@ export function QuestionCard({
 			<CardFooter className="flex gap-3">
 				<Button
 					onClick={handleCheck}
-					disabled={!state.selectedOption || state.isSubmitted}
+					disabled={!selectedOption}
 					className="flex-1"
-					// disableRipple={state.isSubmitted}
 				>
-					{state.isSubmitted
-						? state.isCorrect
+					{showFeedback
+						? selectedOption &&
+							question.options.find((o) => o.id === selectedOption)?.isCorrect
 							? "✓ Correct!"
 							: "✗ Try Again"
 						: "Check Answer"}
