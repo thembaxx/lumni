@@ -64,7 +64,7 @@ function Confetti() {
 						top: "50%",
 						backgroundColor: p.color,
 					}}
-					initial={{ scale: 0, opacity: 1 }}
+					initial={{ scale: 0.95, opacity: 0 }}
 					animate={{
 						scale: [0, 1, 0],
 						opacity: [1, 1, 0],
@@ -109,8 +109,8 @@ export function QuizResult({ results, onRestart, onClose }: QuizResultProps) {
 			<Card className="p-8 flex flex-col items-center text-center gap-4 relative overflow-visible">
 				{message.celebration && <Confetti />}
 				<motion.div
-					initial={{ scale: 0 }}
-					animate={{ scale: 1 }}
+					initial={{ scale: 0.95, opacity: 0 }}
+					animate={{ scale: 1, opacity: 1 }}
 					transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
 					className="text-5xl"
 				>
@@ -195,7 +195,10 @@ export function QuizResult({ results, onRestart, onClose }: QuizResultProps) {
 						<p className="text-sm font-medium mb-2">Review:</p>
 						<div className="space-y-1 text-left">
 							{incorrectAnswers.slice(0, 3).map((item, idx) => (
-								<p key={idx} className="text-xs text-muted-foreground">
+								<p
+									key={`review-${item.questionId || idx}`}
+									className="text-xs text-muted-foreground"
+								>
 									Q{idx + 1}: You answered {item.selectedAnswer}, correct was{" "}
 									{item.correctAnswer}
 								</p>

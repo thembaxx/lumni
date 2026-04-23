@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { fetchQuestions } from "@/lib/server/quiz-actions";
-import { QuizQuestion } from "./question-card";
+import { QuizQuestion } from "./quiz-question";
 import { QuizResult } from "./quiz-result";
 
 const questionSchema = z.object({
@@ -223,9 +223,9 @@ export function QuizEngine({
 			)}
 
 			<div className="flex justify-center gap-1">
-				{questions.map((_, idx) => (
+				{questions.map((q, idx) => (
 					<div
-						key={idx}
+						key={q.id || `q-${idx}`}
 						className={`h-1.5 w-1.5 rounded-full ${
 							idx === currentIndex
 								? "bg-primary"

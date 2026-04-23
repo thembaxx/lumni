@@ -7,7 +7,7 @@ import {
 	QuickActions,
 	SearchInput,
 } from "@/components/dashboard";
-import StudyTopicCardExample from "../study-topic-card/example";
+import StudyTopicCardExample from "../study/example";
 import type { TabValue } from "./types";
 
 interface DashboardClientProps {

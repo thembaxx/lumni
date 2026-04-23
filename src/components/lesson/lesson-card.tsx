@@ -1,12 +1,12 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { getDifficultyColor } from "@/components/study-topic-card/study-topic-card.data";
+import { getDifficultyColor } from "@/components/study/study-topic-card.data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { ListenToLesson } from "../listen-to-lesson";
-import { PracticeButton } from "../study-topic-card/practice-button";
+import { PracticeButton } from "../study/practice-button";
 import { useLessonCardContext } from "./lesson-card-context";
 
 export interface LessonCardData {

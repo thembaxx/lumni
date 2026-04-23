@@ -279,6 +279,15 @@ export function FlashcardsClient({}: FlashcardsClientProps) {
 				<div
 					className="perspective-1000 cursor-pointer w-full max-w-md"
 					onClick={handleFlip}
+					onKeyDown={(e) => {
+						if (e.key === "Enter" || e.key === " ") {
+							e.preventDefault();
+							handleFlip();
+						}
+					}}
+					role="button"
+					tabIndex={0}
+					aria-label="Flip flashcard"
 				>
 					<motion.div
 						className="relative w-full preserve-3d transition-transform duration-500"

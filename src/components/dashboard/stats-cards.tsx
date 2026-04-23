@@ -100,8 +100,8 @@ export function StatsCards({
 					<Card className="p-4 flex flex-col h-full items-center justify-center gap-2">
 						<motion.div
 							className={`p-2 rounded-full ${stat.bg}`}
-							initial={{ scale: 0 }}
-							animate={{ scale: 1 }}
+							initial={{ scale: 0.95, opacity: 0 }}
+							animate={{ scale: 1, opacity: 1 }}
 							transition={{
 								delay: index * 0.1 + 0.2,
 								type: "spring",

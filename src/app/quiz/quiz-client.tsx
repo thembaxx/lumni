@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { useCallback, useState } from "react";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
-import { QuestionCard } from "@/components/questions/question-card";
+import { QuestionCard } from "@/components/quiz/question-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -329,9 +329,9 @@ export function QuizClient() {
 			)}
 
 			<div className="flex justify-center gap-1">
-				{questionsToUse.map((_, idx) => (
+				{questionsToUse.map((q, idx) => (
 					<div
-						key={idx}
+						key={q.id || `question-${idx}`}
 						className={cn(
 							"h-1.5 w-1.5 rounded-full",
 							idx === currentQuestionIndex

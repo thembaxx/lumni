@@ -7,7 +7,7 @@ import {
 	IconPlane,
 	IconSparkles,
 } from "@tabler/icons-react";
-import { LessonsButton } from "@/components/lesson-sheet";
+import { LessonsButton } from "@/components/lesson";
 import { Button } from "@/components/ui/button";
 
 const quickActions = [
