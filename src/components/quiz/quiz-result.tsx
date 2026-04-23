@@ -6,7 +6,13 @@ import {
 	IconRefresh,
 	IconTrophy,
 } from "@tabler/icons-react";
-import { motion, useSpring, useTransform } from "framer-motion";
+import {
+	AnimatePresence,
+	LazyMotion,
+	m,
+	useSpring,
+	useTransform,
+} from "framer-motion";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -43,7 +49,7 @@ function AnimatedCounter({
 		return () => clearTimeout(timeout);
 	}, [value, spring, delay]);
 
-	return <motion.span>{display}</motion.span>;
+	return <m.span>{display}</m.span>;
 }
 
 function Confetti() {
@@ -56,7 +62,7 @@ function Confetti() {
 	return (
 		<div className="absolute inset-0 pointer-events-none overflow-hidden">
 			{particles.map((p) => (
-				<motion.div
+				<m.div
 					key={p.id}
 					className="absolute w-2 h-2 rounded-full"
 					style={{
@@ -100,7 +106,7 @@ export function QuizResult({ results, onRestart, onClose }: QuizResultProps) {
 	const message = getMessage();
 
 	return (
-		<motion.div
+		<m.div
 			initial={{ opacity: 0, scale: 0.9 }}
 			animate={{ opacity: 1, scale: 1 }}
 			transition={{ duration: 0.4, ease: [0.25, 1, 0.5, 1] }}
@@ -108,25 +114,25 @@ export function QuizResult({ results, onRestart, onClose }: QuizResultProps) {
 		>
 			<Card className="p-8 flex flex-col items-center text-center gap-4 relative overflow-visible">
 				{message.celebration && <Confetti />}
-				<motion.div
+				<m.div
 					initial={{ scale: 0.95, opacity: 0 }}
 					animate={{ scale: 1, opacity: 1 }}
 					transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
 					className="text-5xl"
 				>
 					{message.emoji}
-				</motion.div>
-				<motion.h2
+				</m.div>
+				<m.h2
 					className="text-2xl font-bold"
 					initial={{ opacity: 0, y: 10 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ delay: 0.3 }}
 				>
 					{message.title}
-				</motion.h2>
+				</m.h2>
 
 				<div className="grid grid-cols-2 gap-6 w-full max-w-xs">
-					<motion.div
+					<m.div
 						className="flex flex-col items-center"
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
@@ -136,8 +142,8 @@ export function QuizResult({ results, onRestart, onClose }: QuizResultProps) {
 							<AnimatedCounter value={correctAnswers} delay={500} />
 						</p>
 						<p className="text-xs text-muted-foreground">Correct</p>
-					</motion.div>
-					<motion.div
+					</m.div>
+					<m.div
 						className="flex flex-col items-center"
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
@@ -150,10 +156,10 @@ export function QuizResult({ results, onRestart, onClose }: QuizResultProps) {
 							/>
 						</p>
 						<p className="text-xs text-muted-foreground">Incorrect</p>
-					</motion.div>
+					</m.div>
 				</div>
 
-				<motion.div
+				<m.div
 					className="w-full"
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
@@ -164,7 +170,7 @@ export function QuizResult({ results, onRestart, onClose }: QuizResultProps) {
 						<span className="text-sm font-medium">{accuracy}%</span>
 					</div>
 					<div className="h-2 bg-muted rounded-full overflow-hidden">
-						<motion.div
+						<m.div
 							className="h-full rounded-full"
 							initial={{ width: 0 }}
 							animate={{ width: `${accuracy}%` }}
@@ -183,10 +189,10 @@ export function QuizResult({ results, onRestart, onClose }: QuizResultProps) {
 							}}
 						/>
 					</div>
-				</motion.div>
+				</m.div>
 
 				{incorrectAnswers.length > 0 && (
-					<motion.div
+					<m.div
 						className="w-full pt-4 border-t"
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
@@ -204,11 +210,11 @@ export function QuizResult({ results, onRestart, onClose }: QuizResultProps) {
 								</p>
 							))}
 						</div>
-					</motion.div>
+					</m.div>
 				)}
 			</Card>
 
-			<motion.div
+			<m.div
 				className="flex gap-2"
 				initial={{ opacity: 0, y: 20 }}
 				animate={{ opacity: 1, y: 0 }}
@@ -224,7 +230,7 @@ export function QuizResult({ results, onRestart, onClose }: QuizResultProps) {
 						Dashboard
 					</Button>
 				)}
-			</motion.div>
-		</motion.div>
+			</m.div>
+		</m.div>
 	);
 }

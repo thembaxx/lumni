@@ -1,12 +1,6 @@
 "use client";
 
-import {
-	IconBook,
-	IconBulb,
-	IconFileDescription,
-	IconPlane,
-	IconSparkles,
-} from "@tabler/icons-react";
+import { IconBook, IconBulb, IconFileDescription } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { LessonsButton } from "@/components/lesson";
 import { Button } from "@/components/ui/button";
@@ -15,8 +9,6 @@ const quickActions = [
 	{ icon: IconFileDescription, label: "Exam papers" },
 	{ icon: IconBulb, label: "Practice" },
 	{ icon: IconBook, label: "Lessons" },
-	{ icon: IconSparkles, label: "Books" },
-	{ icon: IconPlane, label: "Travel" },
 ];
 
 export function QuickActions() {

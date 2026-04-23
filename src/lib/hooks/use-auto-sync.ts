@@ -59,7 +59,8 @@ export function useAutoSync(subject: string) {
 		},
 	});
 
-	const needsSync = query.data && !query.data.isFresh && query.data.version;
+	const needsSync =
+		query.data && query.data.isFresh === false && Boolean(query.data.version);
 
 	return {
 		...query,

@@ -39,6 +39,26 @@ async function fetchSingleFile(
 	return data.questions;
 }
 
+async function fetchFilesInParallel(
+	fileUrls: string[],
+	totalTimeout: number,
+): Promise<QAQuestion[]> {
+	if (fileUrls.length === 0) return [];
+
+	const controller = new AbortController();
+	const overallTimeout = setTimeout(() => controller.abort(), totalTimeout);
+
+	try {
+		const fetchPromises = fileUrls.map((url) =>
+			fetchSingleFile(url, controller.signal).catch(() => []),
+		);
+		const results = await Promise.all(fetchPromises);
+		return results.flat();
+	} finally {
+		clearTimeout(overallTimeout);
+	}
+}
+
 async function discoverQAFileUrls(
 	subject: string,
 	numberOfQuestions: number,
@@ -107,22 +127,11 @@ export async function fetchSubjectQuestions(
 		allQuestions.push(...cached);
 	}
 
-	const controller = new AbortController();
-	const timeout = setTimeout(
-		() => controller.abort(),
+	const fetchedQuestions = await fetchFilesInParallel(
+		fileUrls,
 		FETCH_TIMEOUT * fileUrls.length,
 	);
-
-	for (const fileUrl of fileUrls) {
-		try {
-			const questions = await fetchSingleFile(fileUrl, controller.signal);
-			allQuestions.push(...questions);
-		} catch {
-			console.warn(`Could not fetch ${fileUrl}, skipping...`);
-		}
-	}
-
-	clearTimeout(timeout);
+	allQuestions.push(...fetchedQuestions);
 
 	const shuffled = [...allQuestions].sort(() => Math.random() - 0.5);
 	const result = shuffled.slice(0, numberOfQuestions);

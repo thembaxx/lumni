@@ -2,20 +2,45 @@ import * as fs from "fs";
 import { NextRequest, NextResponse } from "next/server";
 import * as path from "path";
 
+function sanitizeFileName(name: string): string {
+	return name.replace(/[^a-zA-Z0-9_\-.]/g, "");
+}
+
 export async function GET(req: NextRequest) {
 	const { searchParams } = new URL(req.url);
 	const subject = searchParams.get("subject") || "";
 	const file = searchParams.get("file");
 
 	try {
+		const questionsDir = path.join(process.cwd(), "questions");
+
+		if (!fs.existsSync(questionsDir)) {
+			return NextResponse.json(
+				{ error: "Questions directory not found" },
+				{ status: 500 },
+			);
+		}
+
 		let filePath = "";
 
 		if (file) {
-			const questionsDir = path.join(process.cwd(), "questions");
-			filePath = path.join(questionsDir, file);
+			const sanitized = sanitizeFileName(file);
+			if (!sanitized || sanitized !== file) {
+				return NextResponse.json(
+					{ error: "Invalid file name" },
+					{ status: 400 },
+				);
+			}
+			filePath = path.join(questionsDir, sanitized);
+			const resolved = path.resolve(filePath);
+			if (!resolved.startsWith(path.resolve(questionsDir))) {
+				return NextResponse.json(
+					{ error: "Invalid file path" },
+					{ status: 400 },
+				);
+			}
 		} else if (subject) {
 			const formattedSubject = subject.toLowerCase().replace(/\s+/g, "-");
-			const questionsDir = path.join(process.cwd(), "questions");
 			filePath = path.join(questionsDir, `${formattedSubject}_qa_1.json`);
 		}
 
@@ -27,7 +52,15 @@ export async function GET(req: NextRequest) {
 		}
 
 		const content = fs.readFileSync(filePath, "utf-8");
-		const data = JSON.parse(content);
+		let data;
+		try {
+			data = JSON.parse(content);
+		} catch {
+			return NextResponse.json(
+				{ error: "Invalid JSON in questions file" },
+				{ status: 500 },
+			);
+		}
 
 		return NextResponse.json(data);
 	} catch (error) {

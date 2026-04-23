@@ -1,7 +1,6 @@
 "use client";
 
-import { IconCheck, IconRotate, IconX } from "@tabler/icons-react";
-import { motion } from "framer-motion";
+import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -53,6 +52,16 @@ export function Flashcard({ cards, onKnown, onReview }: FlashcardProps) {
 		setIsFlipped(false);
 	}
 
+	function handleKeyDown(e: React.KeyboardEvent) {
+		if (e.key === " " || e.key === "Enter") {
+			handleFlip();
+		} else if (e.key === "ArrowRight" && isFlipped) {
+			handleKnown();
+		} else if (e.key === "ArrowLeft" && isFlipped) {
+			handleReview();
+		}
+	}
+
 	if (cards.length === 0) {
 		return (
 			<Card className="p-8 flex flex-col items-center justify-center gap-4">
@@ -62,66 +71,75 @@ export function Flashcard({ cards, onKnown, onReview }: FlashcardProps) {
 	}
 
 	return (
-		<div className="space-y-4">
-			<div className="flex items-center justify-between text-sm text-muted-foreground">
-				<span>
-					Card {currentIndex + 1} of {cards.length}
-				</span>
-				<span className="text-xs">
-					{cards.length - currentIndex - 1} remaining
-				</span>
-			</div>
+		<LazyMotion features={domAnimation}>
+			<div className="space-y-4" onKeyDown={handleKeyDown} tabIndex={0}>
+				<div className="flex items-center justify-between text-sm text-muted-foreground">
+					<span>
+						Card {currentIndex + 1} of {cards.length}
+					</span>
+					<span className="text-xs">
+						{cards.length - currentIndex - 1} remaining
+					</span>
+				</div>
 
-			<div
-				className="perspective-1000 cursor-pointer min-h-[300px]"
-				onClick={handleFlip}
-			>
-				<motion.div
-					className="relative w-full h-full preserve-3d transition-transform duration-500"
-					style={{
-						transformStyle: "preserve-3d",
-						transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
-					}}
+				<div
+					className="perspective-1000 cursor-pointer min-h-[300px]"
+					onClick={handleFlip}
+					role="button"
+					tabIndex={-1}
+					aria-label={isFlipped ? "Flip card to front" : "Flip card to back"}
 				>
-					<Card className="absolute inset-0 backface-hidden p-6 flex flex-col items-center justify-center">
-						<p className="text-lg font-medium text-center">
-							{currentCard.front}
-						</p>
-						{currentCard.hint && (
-							<p className="text-xs text-muted-foreground mt-4">
-								Hint: {currentCard.hint}
-							</p>
-						)}
-						<p className="text-xs text-muted-foreground mt-8">Tap to flip</p>
-					</Card>
-
-					<Card
-						className="absolute inset-0 backface-hidden p-6 flex flex-col items-center justify-center"
-						style={{ transform: "rotateY(180deg)" }}
+					<m.div
+						className="relative w-full h-full preserve-3d transition-transform duration-500"
+						style={{
+							transformStyle: "preserve-3d",
+							transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
+						}}
 					>
-						<p className="text-lg font-medium text-center">
-							{currentCard.back}
-						</p>
-					</Card>
-				</motion.div>
-			</div>
+						<Card
+							className="absolute inset-0 backface-hidden p-6 flex flex-col items-center justify-center"
+							style={{ backfaceVisibility: "hidden" }}
+						>
+							<p className="text-lg font-medium text-center">
+								{currentCard.front}
+							</p>
+							{currentCard.hint && (
+								<p className="text-xs text-muted-foreground mt-4">
+									Hint: {currentCard.hint}
+								</p>
+							)}
+							<p className="text-xs text-muted-foreground mt-8">Tap to flip</p>
+						</Card>
 
-			<div className="flex gap-2">
-				<Button variant="outline" className="flex-1" onClick={handleReview}>
-					<IconX className="w-4 h-4 mr-2" />
-					Review Later
-				</Button>
-				<Button className="flex-1" onClick={handleKnown}>
-					<IconCheck className="w-4 h-4 mr-2" />I Know This
-				</Button>
-			</div>
+						<Card
+							className="absolute inset-0 backface-hidden p-6 flex flex-col items-center justify-center"
+							style={{
+								transform: "rotateY(180deg)",
+								backfaceVisibility: "hidden",
+							}}
+						>
+							<p className="text-lg font-medium text-center">
+								{currentCard.back}
+							</p>
+						</Card>
+					</m.div>
+				</div>
 
-			<div className="flex justify-center">
-				<Button variant="ghost" size="sm" onClick={handleRestart}>
-					<IconRotate className="w-4 h-4 mr-2" />
-					Restart
-				</Button>
+				<div className="flex gap-2">
+					<Button variant="outline" className="flex-1" onClick={handleReview}>
+						Review Later
+					</Button>
+					<Button className="flex-1" onClick={handleKnown}>
+						I Know This
+					</Button>
+				</div>
+
+				<div className="flex justify-center">
+					<Button variant="ghost" size="sm" onClick={handleRestart}>
+						Restart
+					</Button>
+				</div>
 			</div>
-		</div>
+		</LazyMotion>
 	);
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getDifficultyColor } from "@/components/study/study-topic-card.data";
@@ -39,22 +39,23 @@ export function LessonCard({
 	}, [summary]);
 
 	return (
-		<>
+		<LazyMotion features={domAnimation}>
 			<AnimatePresence>
 				{isCardOpen && (
-					<motion.div
+					<m.div
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0 }}
 						className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm"
 						onClick={() => setOpenId(null)}
+						role="presentation"
 					/>
 				)}
 			</AnimatePresence>
 
 			<AnimatePresence mode="popLayout">
 				{isCardOpen ? (
-					<motion.div
+					<m.div
 						key={`lesson-${id}-open`}
 						layoutId={`lesson-${id}`}
 						className="fixed left-1/2 top-1/2 z-50 w-[calc(100%-2rem)] max-w-sm -translate-x-1/2 -translate-y-1/2"
@@ -85,7 +86,7 @@ export function LessonCard({
 									<p className="text-sm text-muted-foreground leading-relaxed text-pretty">
 										{words.map((word, index) => (
 											<span
-												key={index}
+												key={`open-${index}`}
 												className={cn(
 													"transition-colors duration-150 ease-out-quart",
 													index === currentWordIndex &&
@@ -119,66 +120,69 @@ export function LessonCard({
 								</Button>
 							</div>
 						</Card>
-					</motion.div>
+					</m.div>
 				) : (
-					<Card
-						key={`lesson-${id}-closed`}
-						onClick={() => setOpenId(id)}
-						className="p-5 rounded-2xl border bg-card text-card-foreground shadow-sm hover:border-primary/20 transition-all duration-200 cursor-pointer"
-					>
-						<motion.div layoutId={`lesson-${id}`} className="space-y-3">
-							<div className="flex justify-between items-start">
-								<Badge
-									variant="outline"
-									className="px-3 py-0.5 text-xs font-medium bg-primary/10 rounded-full"
-								>
-									{subject}
-								</Badge>
-								<Badge
-									className={cn(
-										"px-3 py-0.5 text-[10px] uppercase font-medium bg-primary/10 rounded-full",
-										getDifficultyColor(difficulty),
-									)}
-								>
-									{difficulty}
-								</Badge>
-							</div>
-
-							<div className="space-y-1">
-								<h3 className="text-md font-semibold leading-tight text-foreground text-wrap balance">
-									{title}
-								</h3>
-								<p className="text-[13px] text-muted-foreground leading-relaxed text-pretty line-clamp-2">
-									{words.map((word, index) => (
-										<span
-											key={index}
-											className={cn(
-												"transition-colors duration-150 ease-out-quart",
-												index === currentWordIndex &&
-													"text-primary font-medium bg-primary/10 rounded px-0.5 -mx-0.5",
-											)}
-										>
-											{word}
-											{index < words.length - 1 && " "}
-										</span>
-									))}
-								</p>
-							</div>
-
-							<div className="flex gap-2 items-center">
-								<div className={isPlaying ? "animate-pulse" : ""}>
-									<ListenToLesson
-										text={summary}
-										onPlayingChange={setIsPlaying}
-										onWordIndexChange={setCurrentWordIndex}
-									/>
+					<m.div key={`lesson-${id}-closed`} layoutId={`lesson-${id}`}>
+						<button
+							type="button"
+							onClick={() => setOpenId(id)}
+							className="p-5 rounded-2xl border bg-card text-card-foreground shadow-sm hover:border-primary/20 transition-all duration-200 cursor-pointer w-full text-left"
+							aria-label={`${title} - ${difficulty} lesson`}
+						>
+							<div className="space-y-3">
+								<div className="flex justify-between items-start">
+									<Badge
+										variant="outline"
+										className="px-3 py-0.5 text-xs font-medium bg-primary/10 rounded-full"
+									>
+										{subject}
+									</Badge>
+									<Badge
+										className={cn(
+											"px-3 py-0.5 text-[10px] uppercase font-medium bg-primary/10 rounded-full",
+											getDifficultyColor(difficulty),
+										)}
+									>
+										{difficulty}
+									</Badge>
 								</div>
-								<PracticeButton onClick={() => router.push("/quiz")} />
+
+								<div className="space-y-1">
+									<h3 className="text-md font-semibold leading-tight text-foreground text-wrap balance">
+										{title}
+									</h3>
+									<p className="text-[13px] text-muted-foreground leading-relaxed text-pretty line-clamp-2">
+										{words.map((word, index) => (
+											<span
+												key={`closed-${index}`}
+												className={cn(
+													"transition-colors duration-150 ease-out-quart",
+													index === currentWordIndex &&
+														"text-primary font-medium bg-primary/10 rounded px-0.5 -mx-0.5",
+												)}
+											>
+												{word}
+												{index < words.length - 1 && " "}
+											</span>
+										))}
+									</p>
+								</div>
+
+								<div className="flex gap-2 items-center">
+									<div className={isPlaying ? "animate-pulse" : ""}>
+										<ListenToLesson
+											text={summary}
+											onPlayingChange={setIsPlaying}
+											onWordIndexChange={setCurrentWordIndex}
+										/>
+									</div>
+									<PracticeButton onClick={() => router.push("/quiz")} />
+								</div>
 							</div>
-						</motion.div>
-					</Card>
+						</button>
+					</m.div>
 				)}
 			</AnimatePresence>
-		</>
+		</LazyMotion>
 	);
 }

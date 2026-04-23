@@ -2,7 +2,7 @@
 
 import { Dice5 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { ListenToLesson } from "@/components/listen-to-lesson";
@@ -54,10 +54,7 @@ export function StudyTopicCard({
 		setIsPlaying(false);
 		setCurrentWordIndex(-1);
 		setIsLoading(true);
-
-		setTimeout(() => {
-			initializeTopic();
-		}, 150);
+		initializeTopic();
 	};
 
 	if (isLoading || !topic) {
@@ -85,102 +82,101 @@ export function StudyTopicCard({
 	}
 
 	return (
-		<AnimatePresence mode="wait" initial={false}>
-			<motion.div
-				key={topic.topicTitle}
-				variants={variants}
-				initial="hidden"
-				animate="visible"
-				exit="hidden"
-				transition={{ duration: 0.2, ease: [0.2, 0, 0, 1] }}
-				className={cn(
-					"p-6 rounded-2xl border bg-transparent text-card-foreground shadow-sm",
-					"space-y-5",
-					className,
-				)}
-			>
-				{/* Header with badges - staggered entrance */}
-				<motion.div
+		<LazyMotion features={domAnimation}>
+			<AnimatePresence mode="wait" initial={false}>
+				<m.div
+					key={topic.topicTitle}
 					variants={variants}
-					transition={{ delay: 0.05 }}
-					className="flex justify-between items-start"
+					initial="hidden"
+					animate="visible"
+					exit="hidden"
+					transition={{ duration: 0.2, ease: [0.2, 0, 0, 1] }}
+					className={cn(
+						"p-6 rounded-2xl border bg-transparent text-card-foreground shadow-sm",
+						"space-y-5",
+						className,
+					)}
 				>
-					<Badge
-						variant="outline"
-						className="px-3 py-0.5 text-[xs] font-medium bg-primary/10 rounded-full"
+					<m.div
+						variants={variants}
+						transition={{ delay: 0.05 }}
+						className="flex justify-between items-start"
 					>
-						{topic.subject}
-					</Badge>
-					<Badge
-						className={cn(
-							"px-3 py-0.5 text-[10px] uppercase font-medium rounded-full",
-							getDifficultyColor(topic.difficulty),
-						)}
+						<Badge
+							variant="outline"
+							className="px-3 py-0.5 text-[xs] font-medium bg-primary/10 rounded-full"
+						>
+							{topic.subject}
+						</Badge>
+						<Badge
+							className={cn(
+								"px-3 py-0.5 text-[10px] uppercase font-medium rounded-full",
+								getDifficultyColor(topic.difficulty),
+							)}
+						>
+							{topic.difficulty}
+						</Badge>
+					</m.div>
+
+					<m.h3
+						variants={variants}
+						transition={{ delay: 0.1 }}
+						className="text-xl font-semibold leading-tight text-foreground text-wrap balance"
 					>
-						{topic.difficulty}
-					</Badge>
-				</motion.div>
+						{topic.topicTitle}
+					</m.h3>
 
-				{/* Topic title with text-wrap balance */}
-				<motion.h3
-					variants={variants}
-					transition={{ delay: 0.1 }}
-					className="text-xl font-semibold leading-tight text-foreground text-wrap balance"
-				>
-					{topic.topicTitle}
-				</motion.h3>
-
-				{/* Summary with word highlighting */}
-				<motion.div
-					variants={variants}
-					transition={{ delay: 0.15 }}
-					className="space-y-1"
-				>
-					<p className="text-sm text-muted-foreground leading-relaxed text-pretty">
-						{words.map((word, index) => (
-							<span
-								key={index}
-								className={cn(
-									"transition-colors duration-150 ease-out-quart",
-									index === currentWordIndex &&
-										"text-primary font-medium bg-primary/10 rounded px-0.5 -mx-0.5",
-								)}
-							>
-								{word}
-								{index < words.length - 1 && " "}
-							</span>
-						))}
-					</p>
-				</motion.div>
-
-				{/* Action buttons with scale on press */}
-				<motion.div
-					variants={variants}
-					transition={{ delay: 0.2 }}
-					className="flex gap-2 justify-between items-center pt-1"
-				>
-					<div className={isPlaying ? "animate-pulse" : ""}>
-						<ListenToLesson
-							text={topic.summary}
-							onPlayingChange={setIsPlaying}
-							onWordIndexChange={setCurrentWordIndex}
-						/>
-					</div>
-					<PracticeButton onClick={() => router.push("/quiz")} />
-					<Button
-						size="sm"
-						variant="ghost"
-						onClick={handleRefresh}
-						className={cn(
-							"h-8 px-3 text-xs rounded-lg",
-							"active:scale-[0.96] transition-transform",
-							"transition-colors duration-150 ease-out-quart",
-						)}
+					<m.div
+						variants={variants}
+						transition={{ delay: 0.15 }}
+						className="space-y-1"
 					>
-						<HugeiconsIcon icon={Dice5} className="h-5 w-5" />
-					</Button>
-				</motion.div>
-			</motion.div>
-		</AnimatePresence>
+						<p className="text-sm text-muted-foreground leading-relaxed text-pretty">
+							{words.map((word, index) => (
+								<span
+									key={`word-${index}`}
+									className={cn(
+										"transition-colors duration-150 ease-out-quart",
+										index === currentWordIndex &&
+											"text-primary font-medium bg-primary/10 rounded px-0.5 -mx-0.5",
+									)}
+								>
+									{word}
+									{index < words.length - 1 && " "}
+								</span>
+							))}
+						</p>
+					</m.div>
+
+					<m.div
+						variants={variants}
+						transition={{ delay: 0.2 }}
+						className="flex gap-2 justify-between items-center pt-1"
+					>
+						<div className={isPlaying ? "animate-pulse" : ""}>
+							<ListenToLesson
+								text={topic.summary}
+								onPlayingChange={setIsPlaying}
+								onWordIndexChange={setCurrentWordIndex}
+							/>
+						</div>
+						<PracticeButton onClick={() => router.push("/quiz")} />
+						<Button
+							size="sm"
+							variant="ghost"
+							onClick={handleRefresh}
+							className={cn(
+								"h-8 px-3 text-xs rounded-lg",
+								"active:scale-[0.96] transition-transform",
+								"transition-colors duration-150 ease-out-quart",
+							)}
+							aria-label="Get new topic"
+						>
+							<HugeiconsIcon icon={Dice5} className="h-5 w-5" />
+						</Button>
+					</m.div>
+				</m.div>
+			</AnimatePresence>
+		</LazyMotion>
 	);
 }

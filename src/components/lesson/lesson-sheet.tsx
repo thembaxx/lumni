@@ -4,7 +4,7 @@ import { ArrowDown01FreeIcons } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import type { Variants } from "framer-motion";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
 import { Search } from "lucide-react";
 import { useState } from "react";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
@@ -63,90 +63,96 @@ export function LessonSheet() {
 					Lessons
 				</Button>
 			</SheetTrigger>
-			<SheetContent
-				className="sm:max-w-135 w-full h-dvh px-4 rounded-t-none"
-				side="bottom"
-			>
-				<SheetHeader className="text-left">
-					<SheetTitle>Lessons</SheetTitle>
-					<SheetDescription>
-						Explore lessons across all subjects
-					</SheetDescription>
-				</SheetHeader>
+			<LazyMotion features={domAnimation}>
+				<SheetContent
+					className="sm:max-w-135 w-full h-dvh px-4 rounded-t-none"
+					side="bottom"
+				>
+					<SheetHeader className="text-left">
+						<SheetTitle>Lessons</SheetTitle>
+						<SheetDescription>
+							Explore lessons across all subjects
+						</SheetDescription>
+					</SheetHeader>
 
-				<div className="flex items-center gap-2 px-4 pb-6 grow">
-					{/* Search Input */}
-					<div className="relative">
-						<Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-						<Input
-							placeholder="Filter by title..."
-							value={searchQuery}
-							onChange={(e) => setSearchQuery(e.target.value)}
-							className="pl-10"
-						/>
-					</div>
-					<SubjectsDrawer
-						onSelect={(subject) => {
-							setSelectedSubject(subject);
-						}}
-					>
-						<Button
-							variant="outline"
-							size="sm"
-							className="flex items-center gap-3 h-8"
+					<div className="flex items-center gap-2 px-4 pb-6 grow">
+						<div className="relative">
+							<Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+							<Input
+								placeholder="Filter by title..."
+								value={searchQuery}
+								onChange={(e) => setSearchQuery(e.target.value)}
+								className="pl-10"
+							/>
+						</div>
+						<SubjectsDrawer
+							onSelect={(subject) => {
+								setSelectedSubject(subject);
+							}}
 						>
-							{selectedSubject ? selectedSubject : "All subjects"}
-							<HugeiconsIcon icon={ArrowDown01FreeIcons} className="h-5 w-5" />
-						</Button>
-					</SubjectsDrawer>
-				</div>
-
-				{/* Lessons List */}
-				<div className="px-4 pb-4 grow max-h-[95dvh] overflow-y-auto space-y-4">
-					{isLoading && (
-						<div className="animate-pulse space-y-2">
-							{[...Array(5)].map((_, i) => (
-								<div key={i} className="h-20 bg-muted rounded-xl" />
-							))}
-						</div>
-					)}
-
-					{error && (
-						<div className="text-center text-destructive py-8 text-sm">
-							Failed to load lessons.
-						</div>
-					)}
-
-					{!isLoading && !error && data?.lessons?.length === 0 && (
-						<div className="text-center text-muted-foreground py-8 text-sm">
-							No lessons found.
-						</div>
-					)}
-
-					{!isLoading && data?.lessons && data.lessons.length > 0 && (
-						<LessonCardProvider>
-							<motion.div
-								variants={containerVariants}
-								initial="hidden"
-								animate="show"
-								className="space-y-4"
+							<Button
+								variant="outline"
+								size="sm"
+								className="flex items-center gap-3 h-8"
 							>
-								{data.lessons.map((lesson: LessonCardData) => (
-									<motion.div key={lesson.id} variants={itemVariants}>
-										<LessonCard {...lesson} />
-									</motion.div>
-								))}
-							</motion.div>
-						</LessonCardProvider>
-					)}
-				</div>
+								{selectedSubject ? selectedSubject : "All subjects"}
+								<HugeiconsIcon
+									icon={ArrowDown01FreeIcons}
+									className="h-5 w-5"
+								/>
+							</Button>
+						</SubjectsDrawer>
+					</div>
 
-				<SheetClose className="py-4" asChild>
-					<Button variant="ghost" className="w-full">
-						Close
-					</Button>
-				</SheetClose>
-			</SheetContent>
+					<div className="px-4 pb-4 grow max-h-[95dvh] overflow-y-auto space-y-4">
+						{isLoading && (
+							<div className="animate-pulse space-y-2">
+								{[...Array(5)].map((_, i) => (
+									<div key={i} className="h-20 bg-muted rounded-xl" />
+								))}
+							</div>
+						)}
+
+						{error && (
+							<div
+								className="text-center text-destructive py-8 text-sm"
+								role="alert"
+							>
+								Failed to load lessons.
+							</div>
+						)}
+
+						{!isLoading && !error && data?.lessons?.length === 0 && (
+							<div className="text-center text-muted-foreground py-8 text-sm">
+								No lessons found.
+							</div>
+						)}
+
+						{!isLoading && data?.lessons && data.lessons.length > 0 && (
+							<LessonCardProvider>
+								<m.div
+									variants={containerVariants}
+									initial="hidden"
+									animate="show"
+									className="space-y-4"
+								>
+									{data.lessons.map((lesson: LessonCardData) => (
+										<m.div key={lesson.id} variants={itemVariants}>
+											<LessonCard {...lesson} />
+										</m.div>
+									))}
+								</m.div>
+							</LessonCardProvider>
+						)}
+					</div>
+
+					<SheetClose className="py-4" asChild>
+						<Button variant="ghost" className="w-full">
+							Close
+						</Button>
+					</SheetClose>
+				</SheetContent>
+			</LazyMotion>
 		</Sheet>
 	);
 }

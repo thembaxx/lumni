@@ -18,19 +18,20 @@ export async function uploadQAFile(
 	error?: string;
 }> {
 	try {
-		// Generate filename for reference (not used in API call)
-		_generateFileName(subject, fileNumber);
+		const fileName = _generateFileName(subject, fileNumber);
+
+		const formData = new FormData();
+		formData.append(
+			"file",
+			new Blob([jsonContent], { type: "application/json" }),
+			fileName,
+		);
+		formData.append("subject", subject);
+		formData.append("number", String(fileNumber));
 
 		const response = await fetch("/api/upload-qa", {
 			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				jsonContent,
-				subject,
-				number: fileNumber,
-			}),
+			body: formData,
 		});
 
 		const result = await response.json();

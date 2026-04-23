@@ -6,15 +6,37 @@ import {
 
 const f = createUploadthing();
 
-const auth = (req: Request) => {
-	return { id: "user_id" };
-};
+async function getSessionUser(req: Request): Promise<{ id: string } | null> {
+	try {
+		const authHeader = req.headers.get("Authorization");
+		if (!authHeader?.startsWith("Bearer ")) {
+			return null;
+		}
+		const token = authHeader.slice(7);
+		if (!token || token === "demo-session" || token === "guest") {
+			return null;
+		}
+		return { id: token.split(":")[0] || token };
+	} catch {
+		return null;
+	}
+}
+
+async function requireAuth(req: Request): Promise<{ id: string }> {
+	const user = await getSessionUser(req);
+	if (!user) {
+		throw new UploadThingError({
+			code: "FORBIDDEN",
+			message: "Authentication required",
+		});
+	}
+	return user;
+}
 
 export const ourFileRouter = {
 	imageUploader: f(["image", "video", "pdf"])
 		.middleware(async ({ req }) => {
-			const user = await auth(req);
-			if (!user) throw new UploadThingError("Unauthorized");
+			const user = await requireAuth(req);
 			return { userId: user.id };
 		})
 		.onUploadComplete(async ({ metadata, file }) => {
@@ -26,8 +48,7 @@ export const ourFileRouter = {
 		"application/json": { maxFileSize: "1MB", maxFileCount: 1 },
 	})
 		.middleware(async ({ req }) => {
-			const user = await auth(req);
-			if (!user) throw new UploadThingError("Unauthorized");
+			const user = await requireAuth(req);
 			return { userId: user.id };
 		})
 		.onUploadComplete(async ({ metadata, file }) => {
@@ -39,8 +60,7 @@ export const ourFileRouter = {
 		"application/json": { maxFileSize: "1MB", maxFileCount: 20 },
 	})
 		.middleware(async ({ req }) => {
-			const user = await auth(req);
-			if (!user) throw new UploadThingError("Unauthorized");
+			const user = await requireAuth(req);
 			return { userId: user.id };
 		})
 		.onUploadComplete(async ({ metadata, file }) => {

@@ -1,12 +1,11 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
 import { useCallback, useEffect, useState } from "react";
 import { z } from "zod";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { fetchQuestions } from "@/lib/server/quiz-actions";
 import { QuizQuestion } from "./quiz-question";
 import { QuizResult } from "./quiz-result";
 
@@ -60,6 +59,19 @@ const difficultyColors = {
 	hard: "bg-red-500/20 text-red-500",
 };
 
+async function fetchQuizQuestions(subjectIds: string[]): Promise<Question[]> {
+	if (subjectIds.length === 0) return [];
+	const params = new URLSearchParams();
+	for (const id of subjectIds) {
+		params.append("subjectIds", id);
+	}
+	const response = await fetch(`/api/questions?${params}`);
+	if (!response.ok) return [];
+	const data = await response.json();
+	if (!data.questions) return [];
+	return data.questions as Question[];
+}
+
 export function QuizEngine({
 	subjectIds,
 	onComplete,
@@ -84,17 +96,21 @@ export function QuizEngine({
 			return;
 		}
 
-		const questionsData = await fetchQuestions(subjectIds);
-		const parsed = z.array(questionSchema).parse(questionsData);
-		const shuffled = parsed
-			.map((q) => ({
-				...q,
-				difficulty: q.difficulty as "easy" | "medium" | "hard",
-			}))
-			.sort(() => Math.random() - 0.5)
-			.slice(0, 10);
+		const questionsData = await fetchQuizQuestions(subjectIds);
+		try {
+			const parsed = z.array(questionSchema).parse(questionsData);
+			const shuffled = parsed
+				.map((q) => ({
+					...q,
+					difficulty: q.difficulty as "easy" | "medium" | "hard",
+				}))
+				.sort(() => Math.random() - 0.5)
+				.slice(0, 10);
 
-		setQuestions(shuffled);
+			setQuestions(shuffled);
+		} catch {
+			setQuestions([]);
+		}
 		setLoading(false);
 	}, [subjectIds]);
 
@@ -167,75 +183,83 @@ export function QuizEngine({
 	}
 
 	return (
-		<div className="space-y-4">
-			<div className="flex items-center justify-between">
-				<Badge variant="outline">
-					Question {currentIndex + 1} of {questions.length}
-				</Badge>
-				{currentQuestion?.difficulty && (
-					<Badge className={difficultyColors[currentQuestion.difficulty]}>
-						{currentQuestion.difficulty}
+		<LazyMotion features={domAnimation}>
+			<div className="space-y-4">
+				<div className="flex items-center justify-between">
+					<Badge variant="outline">
+						Question {currentIndex + 1} of {questions.length}
 					</Badge>
-				)}
-			</div>
-
-			<AnimatePresence mode="wait">
-				<motion.div
-					key={currentQuestion.id}
-					initial={{ opacity: 0, x: 20 }}
-					animate={{ opacity: 1, x: 0 }}
-					exit={{ opacity: 0, x: -20 }}
-					transition={{ duration: 0.2 }}
-				>
-					<QuizQuestion
-						question={currentQuestion}
-						selectedAnswer={selectedAnswer}
-						showFeedback={showFeedback}
-						onSelectAnswer={handleSelectAnswer}
-					/>
-				</motion.div>
-			</AnimatePresence>
-
-			{showFeedback && (
-				<div className="space-y-2">
-					<div
-						className={`p-4 rounded-lg ${
-							selectedAnswer === currentQuestion.correctAnswer
-								? "bg-green-500/20 text-green-500"
-								: "bg-red-500/20 text-red-500"
-						}`}
-					>
-						{selectedAnswer === currentQuestion.correctAnswer
-							? "Correct!"
-							: `Incorrect. The correct answer is ${currentQuestion.correctAnswer}`}
-					</div>
-					{currentQuestion.explanation && (
-						<Card className="p-4 bg-muted">
-							<p className="text-sm">{currentQuestion.explanation}</p>
-						</Card>
+					{currentQuestion?.difficulty && (
+						<Badge className={difficultyColors[currentQuestion.difficulty]}>
+							{currentQuestion.difficulty}
+						</Badge>
 					)}
-					<Button className="w-full" onClick={handleNext}>
-						{currentIndex < questions.length - 1
-							? "Next Question"
-							: "See Results"}
-					</Button>
 				</div>
-			)}
 
-			<div className="flex justify-center gap-1">
-				{questions.map((q, idx) => (
-					<div
-						key={q.id || `q-${idx}`}
-						className={`h-1.5 w-1.5 rounded-full ${
-							idx === currentIndex
-								? "bg-primary"
-								: idx < currentIndex
-									? "bg-primary/50"
-									: "bg-muted"
-						}`}
-					/>
-				))}
+				<AnimatePresence mode="wait">
+					<m.div
+						key={currentQuestion.id}
+						initial={{ opacity: 0, x: 20 }}
+						animate={{ opacity: 1, x: 0 }}
+						exit={{ opacity: 0, x: -20 }}
+						transition={{ duration: 0.2 }}
+					>
+						<QuizQuestion
+							question={currentQuestion}
+							selectedAnswer={selectedAnswer}
+							showFeedback={showFeedback}
+							onSelectAnswer={handleSelectAnswer}
+						/>
+					</m.div>
+				</AnimatePresence>
+
+				{showFeedback && (
+					<div className="space-y-2">
+						<div
+							className={`p-4 rounded-lg ${
+								selectedAnswer === currentQuestion.correctAnswer
+									? "bg-green-500/20 text-green-500"
+									: "bg-red-500/20 text-red-500"
+							}`}
+						>
+							{selectedAnswer === currentQuestion.correctAnswer
+								? "Correct!"
+								: `Incorrect. The correct answer is ${currentQuestion.correctAnswer}`}
+						</div>
+						{currentQuestion.explanation && (
+							<Card className="p-4 bg-muted">
+								<p className="text-sm">{currentQuestion.explanation}</p>
+							</Card>
+						)}
+						<Button className="w-full" onClick={handleNext}>
+							{currentIndex < questions.length - 1
+								? "Next Question"
+								: "See Results"}
+						</Button>
+					</div>
+				)}
+
+				<div
+					className="flex justify-center gap-1"
+					role="tablist"
+					aria-label="Question progress"
+				>
+					{questions.map((q, idx) => (
+						<div
+							key={q.id || `q-${idx}`}
+							role="tab"
+							aria-selected={idx === currentIndex}
+							className={`h-1.5 w-1.5 rounded-full ${
+								idx === currentIndex
+									? "bg-primary"
+									: idx < currentIndex
+										? "bg-primary/50"
+										: "bg-muted"
+							}`}
+						/>
+					))}
+				</div>
 			</div>
-		</div>
+		</LazyMotion>
 	);
 }
