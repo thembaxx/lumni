@@ -1,6 +1,9 @@
+"use client";
+
 import { Dice5 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { ListenToLesson } from "@/components/listen-to-lesson";
 import { Button } from "@/components/ui/button";
@@ -18,7 +21,6 @@ interface StudyTopicCardProps {
 	className?: string;
 	initialTopic?: TopicData;
 	onLearnMore?: () => void;
-	onPractice?: () => void;
 }
 
 const variants = {
@@ -29,8 +31,8 @@ const variants = {
 export function StudyTopicCard({
 	className,
 	initialTopic,
-	onPractice,
 }: StudyTopicCardProps) {
+	const router = useRouter();
 	const [topic, setTopic] = useState<TopicData | null>(null);
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [currentWordIndex, setCurrentWordIndex] = useState(-1);
@@ -164,7 +166,7 @@ export function StudyTopicCard({
 							onWordIndexChange={setCurrentWordIndex}
 						/>
 					</div>
-					<PracticeButton onClick={onPractice} />
+					<PracticeButton onClick={() => router.push("/quiz")} />
 					<Button
 						size="sm"
 						variant="ghost"

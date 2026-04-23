@@ -1,4 +1,7 @@
+"use client";
+
 import { AnimatePresence, motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getDifficultyColor } from "@/components/study/study-topic-card.data";
 import { Badge } from "@/components/ui/badge";
@@ -24,6 +27,7 @@ export function LessonCard({
 	title,
 	summary,
 }: LessonCardData) {
+	const router = useRouter();
 	const { setOpenId, isOpen } = useLessonCardContext();
 	const isCardOpen = isOpen(id);
 	const [isPlaying, setIsPlaying] = useState(false);
@@ -103,9 +107,7 @@ export function LessonCard({
 											onWordIndexChange={setCurrentWordIndex}
 										/>
 									</div>
-									<PracticeButton
-										onClick={() => (window.location.href = "/quiz")}
-									/>
+									<PracticeButton onClick={() => router.push("/quiz")} />
 								</div>
 
 								<Button
@@ -171,9 +173,7 @@ export function LessonCard({
 										onWordIndexChange={setCurrentWordIndex}
 									/>
 								</div>
-								<PracticeButton
-									onClick={() => (window.location.href = "/quiz")}
-								/>
+								<PracticeButton onClick={() => router.push("/quiz")} />
 							</div>
 						</motion.div>
 					</Card>
