@@ -1,0 +1,555 @@
+{
+	"metadata": {
+		"subject": "life_sciences",
+		"totalQuestions": 30,
+		"version": "1.0.0",
+		"curriculum": "General Life Sciences",
+		"createdAt": "2026-04-23"
+	},
+	"questions": [
+		{
+			"id": "life_001",
+			"topic": "Cell Division",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Which type of cell division produces gametes?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Meiosis", "isCorrect": true },
+				{ "id": "B", "text": "Mitosis", "isCorrect": false },
+				{ "id": "C", "text": "Binary fission", "isCorrect": false },
+				{ "id": "D", "text": "Budding", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It reduces chromosome number by half",
+			"explanation": "Meiosis produces sex cells (gametes) with half the chromosome number"
+		},
+		{
+			"id": "life_002",
+			"topic": "DNA Structure",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "What is the shape of DNA?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Double helix", "isCorrect": true },
+				{ "id": "B", "text": "Single strand", "isCorrect": false },
+				{ "id": "C", "text": "Triple helix", "isCorrect": false },
+				{ "id": "D", "text": "Linear", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Think of a twisted ladder",
+			"explanation": "DNA has a double helix structure discovered by Watson and Crick"
+		},
+		{
+			"id": "life_003",
+			"topic": "Protein Synthesis",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Where does translation occur in the cell?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Ribosome", "isCorrect": true },
+				{ "id": "B", "text": "Nucleus", "isCorrect": false },
+				{ "id": "C", "text": "Mitochondria", "isCorrect": false },
+				{ "id": "D", "text": "Cytoplasm", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It's where amino acids are assembled",
+			"explanation": "Translation occurs at ribosomes where proteins are synthesized"
+		},
+		{
+			"id": "life_004",
+			"topic": "Enzymes",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "What do enzymes do?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Speed up reactions", "isCorrect": true },
+				{ "id": "B", "text": "Slow down reactions", "isCorrect": false },
+				{ "id": "C", "text": "Stop reactions", "isCorrect": false },
+				{ "id": "D", "text": "Have no effect on reactions", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "They are biological catalysts",
+			"explanation": "Enzymes are catalysts that speed up biochemical reactions"
+		},
+		{
+			"id": "life_005",
+			"topic": "Mitosis",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "In which phase of mitosis do chromosomes align at the equator?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Metaphase", "isCorrect": true },
+				{ "id": "B", "text": "Prophase", "isCorrect": false },
+				{ "id": "C", "text": "Anaphase", "isCorrect": false },
+				{ "id": "D", "text": "Telophase", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "The 'meta' means middle",
+			"explanation": "In metaphase, chromosomes align at the cell equator (metaphase plate)"
+		},
+		{
+			"id": "life_006",
+			"topic": "Genetics",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "If a heterozygous tall plant (Tt) is crossed with a short plant (tt), what phenotypic ratio is expected?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "1:1 tall to short", "isCorrect": true },
+				{ "id": "B", "text": "All tall", "isCorrect": false },
+				{ "id": "C", "text": "3:1 tall to short", "isCorrect": false },
+				{ "id": "D", "text": "All short", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Use a Punnett square",
+			"explanation": "Tt x tt gives 50% Tt (tall) and 50% tt (short)"
+		},
+		{
+			"id": "life_007",
+			"topic": "Evolution",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Who proposed the theory of evolution by natural selection?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Charles Darwin", "isCorrect": true },
+				{ "id": "B", "text": "Gregor Mendel", "isCorrect": false },
+				{ "id": "C", "text": "Louis Pasteur", "isCorrect": false },
+				{ "id": "D", "text": "Rosalind Franklin", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "He sailed on HMS Beagle",
+			"explanation": "Darwin proposed evolution through natural selection"
+		},
+		{
+			"id": "life_008",
+			"topic": "Human Reproduction",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Where does fertilization normally occur?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Fallopian tube", "isCorrect": true },
+				{ "id": "B", "text": "Uterus", "isCorrect": false },
+				{ "id": "C", "text": "Ovary", "isCorrect": false },
+				{ "id": "D", "text": "Vagina", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It's between ovary and uterus",
+			"explanation": "Fertilization occurs in the fallopian tube"
+		},
+		{
+			"id": "life_009",
+			"topic": "Human Nervous System",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What is the largest part of the human brain?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Cerebrum", "isCorrect": true },
+				{ "id": "B", "text": "Cerebellum", "isCorrect": false },
+				{ "id": "C", "text": "Medulla", "isCorrect": false },
+				{ "id": "D", "text": "Hypothalamus", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It's responsible for thinking",
+			"explanation": "The cerebrum is the largest brain part, for thought and memory"
+		},
+		{
+			"id": "life_010",
+			"topic": "Blood",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "What is the function of white blood cells?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Fight infection", "isCorrect": true },
+				{ "id": "B", "text": "Carry oxygen", "isCorrect": false },
+				{ "id": "C", "text": "Clot blood", "isCorrect": false },
+				{ "id": "D", "text": "Transport nutrients", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "They're part of the immune system",
+			"explanation": "WBCs are immune cells that fight pathogens"
+		},
+		{
+			"id": "life_011",
+			"topic": "Plant Hormones",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Which hormone promotes cell elongation in plants?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Auxin", "isCorrect": true },
+				{ "id": "B", "text": "Gibberellin", "isCorrect": false },
+				{ "id": "C", "text": "Cytokinin", "isCorrect": false },
+				{ "id": "D", "text": "Abscisic acid", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Remember: 'Auxin makes plants grow in'",
+			"explanation": "Auxin promotes cell elongation and phototropism"
+		},
+		{
+			"id": "life_012",
+			"topic": "Photosynthesis",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "What is the primary product of photosynthesis?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Glucose", "isCorrect": true },
+				{ "id": "B", "text": "Oxygen", "isCorrect": false },
+				{ "id": "C", "text": "Carbon dioxide", "isCorrect": false },
+				{ "id": "D", "text": "Water", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Plants make their own food",
+			"explanation": "Photosynthesis produces glucose (food) and oxygen"
+		},
+		{
+			"id": "life_013",
+			"topic": "Cellular Respiration",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Where does cellular respiration primarily occur?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Mitochondria", "isCorrect": true },
+				{ "id": "B", "text": "Ribosome", "isCorrect": false },
+				{ "id": "C", "text": "Nucleus", "isCorrect": false },
+				{ "id": "D", "text": "Chloroplast", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "The powerhouses of the cell",
+			"explanation": "Mitochondria produce ATP through respiration"
+		},
+		{
+			"id": "life_014",
+			"topic": "Immune System",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Which blood type is the universal donor?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "O negative", "isCorrect": true },
+				{ "id": "B", "text": "AB positive", "isCorrect": false },
+				{ "id": "C", "text": "A positive", "isCorrect": false },
+				{ "id": "D", "text": "B positive", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It has no A, B, or Rh antigens",
+			"explanation": "O negative can be given to anyone"
+		},
+		{
+			"id": "life_015",
+			"topic": "Heart",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "How many chambers does the human heart have?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "4", "isCorrect": true },
+				{ "id": "B", "text": "2", "isCorrect": false },
+				{ "id": "C", "text": "3", "isCorrect": false },
+				{ "id": "D", "text": "1", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Two atria and two ventricles",
+			"explanation": "The heart has 4 chambers: 2 atria and 2 ventricles"
+		},
+		{
+			"id": "life_016",
+			"topic": "DNA Replication",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "During DNA replication, what enzyme joins nucleotides?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "DNA polymerase", "isCorrect": true },
+				{ "id": "B", "text": "Helicase", "isCorrect": false },
+				{ "id": "C", "text": "Ligase", "isCorrect": false },
+				{ "id": "D", "text": "Primase", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It builds the new strand",
+			"explanation": "DNA polymerase adds nucleotides to form the new strand"
+		},
+		{
+			"id": "life_017",
+			"topic": "Inheritance",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "If a trait shows in the phenotype but gene is heterozygous, the trait is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Dominant", "isCorrect": true },
+				{ "id": "B", "text": "Recessive", "isCorrect": false },
+				{ "id": "C", "text": "Co-dominant", "isCorrect": false },
+				{ "id": "D", "text": "Incomplete dominant", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It masks the recessive allele",
+			"explanation": "Dominant traits express in heterozygous individuals"
+		},
+		{
+			"id": "life_018",
+			"topic": "Mendel's Laws",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Which law states that alleles separate during gamete formation?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Law of Segregation", "isCorrect": true },
+				{
+					"id": "B",
+					"text": "Law of Independent Assortment",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Law of Dominance", "isCorrect": false },
+				{ "id": "D", "text": "Law of Uniformity", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It's about allele separation",
+			"explanation": "The Law of Segregation states alleles separate during meiosis"
+		},
+		{
+			"id": "life_019",
+			"topic": "Blood Vessels",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Which vessels carry blood away from the heart?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Arteries", "isCorrect": true },
+				{ "id": "B", "text": "Veins", "isCorrect": false },
+				{ "id": "C", "text": "Capillaries", "isCorrect": false },
+				{ "id": "D", "text": "Venules", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "They have thick, elastic walls",
+			"explanation": "Arteries carry blood away from the heart"
+		},
+		{
+			"id": "life_020",
+			"topic": "Respiratory System",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Where does gas exchange occur in the lungs?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Alveoli", "isCorrect": true },
+				{ "id": "B", "text": "Bronchi", "isCorrect": false },
+				{ "id": "C", "text": "Trachea", "isCorrect": false },
+				{ "id": "D", "text": "Bronchioles", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "They're tiny air sacs",
+			"explanation": "Gas exchange occurs in the alveoli (air sacs)"
+		},
+		{
+			"id": "life_021",
+			"topic": "Nutrients",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Which nutrient provides the most energy per gram?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Fats", "isCorrect": true },
+				{ "id": "B", "text": "Proteins", "isCorrect": false },
+				{ "id": "C", "text": "Carbohydrates", "isCorrect": false },
+				{ "id": "D", "text": "Vitamins", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "They're energy-dense",
+			"explanation": "Fats provide 9 kcal/gram, more than carbs or proteins (4 kcal/g)"
+		},
+		{
+			"id": "life_022",
+			"topic": "Hormones",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Which hormone regulates blood sugar levels?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Insulin", "isCorrect": true },
+				{ "id": "B", "text": "Adrenaline", "isCorrect": false },
+				{ "id": "C", "text": "Cortisol", "isCorrect": false },
+				{ "id": "D", "text": "Thyroxin", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It's from the pancreas",
+			"explanation": "Insulin lowers blood glucose levels"
+		},
+		{
+			"id": "life_023",
+			"topic": "Skeletal System",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "What is the hardest substance in the human body?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Enamel", "isCorrect": true },
+				{ "id": "B", "text": "Bone", "isCorrect": false },
+				{ "id": "C", "text": "Cartilage", "isCorrect": false },
+				{ "id": "D", "text": "Dentin", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It's on your teeth",
+			"explanation": "Tooth enamel is the hardest substance in the body"
+		},
+		{
+			"id": "life_024",
+			"topic": "Mitochondria",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Mitochondria are the sites of:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "ATP production", "isCorrect": true },
+				{ "id": "B", "text": "Protein synthesis", "isCorrect": false },
+				{ "id": "C", "text": "DNA replication", "isCorrect": false },
+				{ "id": "D", "text": "RNA synthesis", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "They produce energy currency",
+			"explanation": "Mitochondria produce ATP through cellular respiration"
+		},
+		{
+			"id": "life_025",
+			"topic": "Viruses",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Viruses can only reproduce by:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Using host cell machinery", "isCorrect": true },
+				{ "id": "B", "text": "Binary fission", "isCorrect": false },
+				{ "id": "C", "text": "Mitosis", "isCorrect": false },
+				{ "id": "D", "text": "Meiosis", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "They're obligate intracellular parasites",
+			"explanation": "Viruses require host cells to replicate"
+		},
+		{
+			"id": "life_026",
+			"topic": "Ecology",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What is the primary source of energy in ecosystems?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Sun", "isCorrect": true },
+				{ "id": "B", "text": "Producers", "isCorrect": false },
+				{ "id": "C", "text": "Decomposers", "isCorrect": false },
+				{ "id": "D", "text": "Chemicals", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "All energy flows from here",
+			"explanation": "The sun is the primary energy source for ecosystems"
+		},
+		{
+			"id": "life_027",
+			"topic": "Food Chain",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Which organism is a producer?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Plants", "isCorrect": true },
+				{ "id": "B", "text": "Herbivores", "isCorrect": false },
+				{ "id": "C", "text": "Carnivores", "isCorrect": false },
+				{ "id": "D", "text": "Decomposers", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "They make their own food",
+			"explanation": "Plants are producers that conduct photosynthesis"
+		},
+		{
+			"id": "life_028",
+			"topic": "Meiosis",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "How many daughter cells does meiosis produce?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "4", "isCorrect": true },
+				{ "id": "B", "text": "2", "isCorrect": false },
+				{ "id": "C", "text": "1", "isCorrect": false },
+				{ "id": "D", "text": "3", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Meiosis I and Meiosis II",
+			"explanation": "Meiosis produces 4 haploid daughter cells"
+		},
+		{
+			"id": "life_029",
+			"topic": "Chromosomes",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Humans have how many chromosomes?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "46", "isCorrect": true },
+				{ "id": "B", "text": "23", "isCorrect": false },
+				{ "id": "C", "text": "44", "isCorrect": false },
+				{ "id": "D", "text": "48", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "23 pairs",
+			"explanation": "Humans have 46 chromosomes in 23 pairs"
+		},
+		{
+			"id": "life_030",
+			"topic": "Homeostasis",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Which system maintains body temperature?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Nervous system", "isCorrect": true },
+				{ "id": "B", "text": "Digestive system", "isCorrect": false },
+				{ "id": "C", "text": "Skeletal system", "isCorrect": false },
+				{ "id": "D", "text": "Muscular system", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It controls automatic functions",
+			"explanation": "The nervous system helps maintain homeostasis"
+		}
+	]
+}

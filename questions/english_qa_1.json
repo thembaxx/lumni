@@ -1,0 +1,599 @@
+{
+	"metadata": {
+		"subject": "english",
+		"totalQuestions": 30,
+		"version": "1.0.0",
+		"curriculum": "English Literature",
+		"createdAt": "2026-04-23"
+	},
+	"questions": [
+		{
+			"id": "eng_001",
+			"topic": "Literary Devices",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "A metaphor is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Direct comparison without like/as",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Comparison using like or as",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Exaggeration for emphasis", "isCorrect": false },
+				{ "id": "D", "text": "Repeated sounds", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Figurative language",
+			"explanation": "Metaphor is direct comparison (e.g., 'Life is a journey'); simile uses like/as"
+		},
+		{
+			"id": "eng_002",
+			"topic": "Literary Devices",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "A simile uses:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Like or as in comparison", "isCorrect": true },
+				{ "id": "B", "text": "Direct identification", "isCorrect": false },
+				{ "id": "C", "text": "Extreme exaggeration", "isCorrect": false },
+				{ "id": "D", "text": "Sound words", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Like/as comparison",
+			"explanation": "Simile uses 'like' or 'as' for comparison (e.g., 'brave as a lion')"
+		},
+		{
+			"id": "eng_003",
+			"topic": "Literary Devices",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Personification gives:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Human qualities to non-human things",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Animal qualities to humans", "isCorrect": false },
+				{ "id": "C", "text": "Emotionless description", "isCorrect": false },
+				{ "id": "D", "text": "Numbers to ideas", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Human traits to objects",
+			"explanation": "Personification gives human traits to non-human things (e.g., 'the wind whispered')"
+		},
+		{
+			"id": "eng_004",
+			"topic": "Literary Devices",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Foreshadowing is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Hints about future events", "isCorrect": true },
+				{
+					"id": "B",
+					"text": "Looking back at past events",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Sound at end of lines", "isCorrect": false },
+				{ "id": "D", "text": "Repeated words", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Future hints",
+			"explanation": "Foreshadowing gives hints/clues about what will happen later in story"
+		},
+		{
+			"id": "eng_005",
+			"topic": "Literary Devices",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Alliteration is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Repeated consonant sounds", "isCorrect": true },
+				{ "id": "B", "text": "Repeated vowel sounds", "isCorrect": false },
+				{ "id": "C", "text": "Opposite meanings", "isCorrect": false },
+				{ "id": "D", "text": "Emotional words", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Sound device",
+			"explanation": "Alliteration is repetition of consonant sounds (e.g., 'Sally sells seashells')"
+		},
+		{
+			"id": "eng_006",
+			"topic": "Literary Devices",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Hyperbole is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Extreme exaggeration", "isCorrect": true },
+				{ "id": "B", "text": "Understatement", "isCorrect": false },
+				{ "id": "C", "text": "Literal description", "isCorrect": false },
+				{ "id": "D", "text": "Hidden meaning", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Overstatement",
+			"explanation": "Hyperbole is extreme exaggeration for effect (not meant to be taken literally)"
+		},
+		{
+			"id": "eng_007",
+			"topic": "Poetry",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "A stanza in poetry is like a:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Paragraph", "isCorrect": true },
+				{ "id": "B", "text": "Sentence", "isCorrect": false },
+				{ "id": "C", "text": "Word", "isCorrect": false },
+				{ "id": "D", "text": "Book chapter", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Verse grouping",
+			"explanation": "Stanza is grouping of lines, like paragraph in prose"
+		},
+		{
+			"id": "eng_008",
+			"topic": "Poetry",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Rhyming words at the end of lines create:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "End rhyme", "isCorrect": true },
+				{ "id": "B", "text": "Internal rhyme", "isCorrect": false },
+				{ "id": "C", "text": "Slant rhyme", "isCorrect": false },
+				{ "id": "D", "text": "Half rhyme", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Rhyme position",
+			"explanation": "End rhyme is rhyme at end of lines; internal rhyme is within line"
+		},
+		{
+			"id": "eng_009",
+			"topic": "Poetry",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "A haiku has:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "5-7-5 syllable pattern", "isCorrect": true },
+				{ "id": "B", "text": "8-10-8 syllable pattern", "isCorrect": false },
+				{ "id": "C", "text": "10-12-10 pattern", "isCorrect": false },
+				{ "id": "D", "text": "Equal syllable lines", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Japanese form",
+			"explanation": "Haiku is 3-line Japanese form with 5-7-5 syllables (total 17)"
+		},
+		{
+			"id": "eng_010",
+			"topic": "Shakespeare",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Shakespeare wrote approximately:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "37-39 plays", "isCorrect": true },
+				{ "id": "B", "text": "20 plays", "isCorrect": false },
+				{ "id": "C", "text": "50 plays", "isCorrect": false },
+				{ "id": "D", "text": "10 plays", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Plays total",
+			"explanation": "Shakespeare wrote approximately 37-39 plays (histories, comedies, tragedies)"
+		},
+		{
+			"id": "eng_011",
+			"topic": "Shakespeare",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "'To be, or not to be' is from:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Hamlet", "isCorrect": true },
+				{ "id": "B", "text": "Macbeth", "isCorrect": false },
+				{ "id": "C", "text": "Romeo and Juliet", "isCorrect": false },
+				{ "id": "D", "text": "Othello", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Famous soliloquy",
+			"explanation": "Famous 'To be, or not to be' soliloquy is from Shakespeare's Hamlet"
+		},
+		{
+			"id": "eng_012",
+			"topic": "Shakespeare",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Shakespeare's tragedies include:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Hamlet, Macbeth, Othello", "isCorrect": true },
+				{ "id": "B", "text": "A Midsummer Night's Dream", "isCorrect": false },
+				{ "id": "C", "text": "Much Ado About Nothing", "isCorrect": false },
+				{ "id": "D", "text": "The Taming of the Shrew", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Genre classification",
+			"explanation": "Tragedies: Hamlet, Macbeth, Othello, King Lear, Romeo and Juliet"
+		},
+		{
+			"id": "eng_013",
+			"topic": "Grammar",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "A noun is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Person, place, thing, or idea",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Action word", "isCorrect": false },
+				{ "id": "C", "text": "Describes a verb", "isCorrect": false },
+				{ "id": "D", "text": "Connects nouns", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Parts of speech",
+			"explanation": "Nouns name people, places, things, or ideas (called 'naming words')"
+		},
+		{
+			"id": "eng_014",
+			"topic": "Grammar",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "A verb is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Action or state of being", "isCorrect": true },
+				{ "id": "B", "text": "Describes a noun", "isCorrect": false },
+				{ "id": "C", "text": "Shows possession", "isCorrect": false },
+				{ "id": "D", "text": "Replaces a noun", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Action words",
+			"explanation": "Verbs express action or state of being (e.g., 'run', 'be', 'think')"
+		},
+		{
+			"id": "eng_015",
+			"topic": "Grammar",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "An adjective modifies a:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Noun", "isCorrect": true },
+				{ "id": "B", "text": "Verb", "isCorrect": false },
+				{ "id": "C", "text": "Adverb", "isCorrect": false },
+				{ "id": "D", "text": "Conjunction", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Describes what?",
+			"explanation": "Adjectives describe or modify nouns (e.g., 'blue sky', 'happy child')"
+		},
+		{
+			"id": "eng_016",
+			"topic": "Grammar",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "A pronoun takes the place of:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "A noun", "isCorrect": true },
+				{ "id": "B", "text": "A verb", "isCorrect": false },
+				{ "id": "C", "text": "An adjective", "isCorrect": false },
+				{ "id": "D", "text": "An adverb", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Replacement word",
+			"explanation": "Pronouns replace nouns (e.g., 'he', 'she', 'it', 'they', 'this')"
+		},
+		{
+			"id": "eng_017",
+			"topic": "Shakespeare",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Romeo and Juliet is a:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Tragedy", "isCorrect": true },
+				{ "id": "B", "text": "Comedy", "isCorrect": false },
+				{ "id": "C", "text": "History", "isCorrect": false },
+				{ "id": "D", "text": "Romance", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Play type",
+			"explanation": "Romeo and Juliet is a tragedy (young lovers' deaths due to family feud)"
+		},
+		{
+			"id": "eng_018",
+			"topic": "Story Elements",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "The setting of a story is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Time and place", "isCorrect": true },
+				{ "id": "B", "text": "Main character", "isCorrect": false },
+				{ "id": "C", "text": "Problem in plot", "isCorrect": false },
+				{ "id": "D", "text": "Story theme", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "When and where",
+			"explanation": "Setting is when and where the story takes place"
+		},
+		{
+			"id": "eng_019",
+			"topic": "Story Elements",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "The main character is the:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Protagonist", "isCorrect": true },
+				{ "id": "B", "text": "Antagonist", "isCorrect": false },
+				{ "id": "C", "text": "Supporting character", "isCorrect": false },
+				{ "id": "D", "text": "Narrator only", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Main figure",
+			"explanation": "Protagonist is main character; antagonist opposes (creates conflict)"
+		},
+		{
+			"id": "eng_020",
+			"topic": "Story Elements",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "The climax is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Turning point of highest tension",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Beginning of story", "isCorrect": false },
+				{ "id": "C", "text": "Resolution at end", "isCorrect": false },
+				{ "id": "D", "text": "Character introduction", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Peak moment",
+			"explanation": "Climax is turning point where main conflict reaches highest tension"
+		},
+		{
+			"id": "eng_021",
+			"topic": "Literary Analysis",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "A first-person narrator is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Part of the story", "isCorrect": true },
+				{ "id": "B", "text": "Outside watching", "isCorrect": false },
+				{ "id": "C", "text": "All-knowing", "isCorrect": false },
+				{ "id": "D", "text": "Inanimate object", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Narrative voice",
+			"explanation": "First-person narrator uses 'I' and is part of story (e.g., narrator in Great Gatsby)"
+		},
+		{
+			"id": "eng_022",
+			"topic": "Literary Analysis",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Third-person omniscient narrator:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Knows all characters' thoughts",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Knows only one character's mind",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Is part of story", "isCorrect": false },
+				{ "id": "D", "text": "Is the author", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "All-knowing perspective",
+			"explanation": "Omniscient narrator knows thoughts/feelings of all characters"
+		},
+		{
+			"id": "eng_023",
+			"topic": "Literary Terms",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "A motif is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Repeating idea or image", "isCorrect": true },
+				{ "id": "B", "text": "Main theme", "isCorrect": false },
+				{ "id": "C", "text": "One-time reference", "isCorrect": false },
+				{ "id": "D", "text": "Symbol only", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Recurring element",
+			"explanation": "Motif is recurring idea/image that develops theme (e.g., darkness in Macbeth)"
+		},
+		{
+			"id": "eng_024",
+			"topic": "Literary Terms",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "Irony is when:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Meaning differs from expectation",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Words sound alike", "isCorrect": false },
+				{ "id": "C", "text": "Exaggeration is clear", "isCorrect": false },
+				{ "id": "D", "text": "Speaker means what says", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Expected vs actual",
+			"explanation": "Irony is contrast between expectation and reality (situational, verbal, dramatic)"
+		},
+		{
+			"id": "eng_025",
+			"topic": "Poetry Analysis",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": " meter in poetry is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Rhythmic pattern of stressed/unstressed",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Number of lines", "isCorrect": false },
+				{ "id": "C", "text": "Rhyme scheme", "isCorrect": false },
+				{ "id": "D", "text": "Theme of poem", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Rhythm patterns",
+			"explanation": "Meter is pattern of stressed and unstressed syllables creating rhythm"
+		},
+		{
+			"id": "eng_026",
+			"topic": "Poetry Analysis",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "Blank verse is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Unrhymed iambic pentameter", "isCorrect": true },
+				{ "id": "B", "text": "Free verse", "isCorrect": false },
+				{ "id": "C", "text": "Rhymed couplets", "isCorrect": false },
+				{ "id": "D", "text": "Sonnet form", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Shakespeare's form",
+			"explanation": "Blank verse is unrhymed iambic pentameter ( Shakespeare's plays use this)"
+		},
+		{
+			"id": "eng_027",
+			"topic": "Symbolism",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "In literature, a symbol:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Represents something beyond itself",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Is always obvious", "isCorrect": false },
+				{
+					"id": "C",
+					"text": "Does not require interpretation",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Is the literal meaning only", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Beyond literal",
+			"explanation": "Symbol represents something larger/abstract (e.g., 'dove' = peace)"
+		},
+		{
+			"id": "eng_028",
+			"topic": "Figurative Language",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "'The world is my oyster' is an example of:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Idiom", "isCorrect": true },
+				{ "id": "B", "text": "Simile", "isCorrect": false },
+				{ "id": "C", "text": "Metaphor", "isCorrect": false },
+				{ "id": "D", "text": "Personification", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Fixed expression",
+			"explanation": "Idiom is expression whose meaning isn't literal (e.g., 'break a leg')"
+		},
+		{
+			"id": "eng_029",
+			"topic": "Point of View",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Second person point of view uses:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "'You' to address reader", "isCorrect": true },
+				{ "id": "B", "text": "'I' narrator", "isCorrect": false },
+				{ "id": "C", "text": "He/she/they", "isCorrect": false },
+				{ "id": "D", "text": "No pronouns", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "You as protagonist",
+			"explanation": "Second person ('you') addresses reader as protagonist, common in how-to books"
+		},
+		{
+			"id": "eng_030",
+			"topic": "Rhetoric",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "Ethos is appeal to:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Credibility/character", "isCorrect": true },
+				{ "id": "B", "text": "Emotion", "isCorrect": false },
+				{ "id": "C", "text": "Logic", "isCorrect": false },
+				{ "id": "D", "text": "Sympathy", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Three appeals",
+			"explanation": "Rhetorical appeals: ethos (credibility), pathos (emotion), logos (logic)"
+		}
+	]
+}

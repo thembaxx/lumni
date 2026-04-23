@@ -1,0 +1,595 @@
+{
+	"metadata": {
+		"subject": "geography",
+		"totalQuestions": 30,
+		"version": "1.0.0",
+		"curriculum": "Geography",
+		"createdAt": "2026-04-23"
+	},
+	"questions": [
+		{
+			"id": "geo_001",
+			"topic": "Weather vs Climate",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Weather refers to:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Short-term atmospheric conditions",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Long-term patterns over 30 years",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Average annual temperature", "isCorrect": false },
+				{ "id": "D", "text": "Climate zones", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Daily conditions",
+			"explanation": "Weather is short-term (today, this week); climate is long-term"
+		},
+		{
+			"id": "geo_002",
+			"topic": "Latitude and Climate",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Regions near the equator are warmer because:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Direct sunlight year-round", "isCorrect": true },
+				{ "id": "B", "text": "They're closer to the sun", "isCorrect": false },
+				{ "id": "C", "text": "More land at equator", "isCorrect": false },
+				{ "id": "D", "text": "Ocean currents", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Sun angle",
+			"explanation": "Equator gets direct sunlight year-round, concentrating heat"
+		},
+		{
+			"id": "geo_003",
+			"topic": "Ocean Currents",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Warm ocean currents flow:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "From equator toward poles", "isCorrect": true },
+				{ "id": "B", "text": "From poles toward equator", "isCorrect": false },
+				{ "id": "C", "text": "In random patterns", "isCorrect": false },
+				{ "id": "D", "text": "Parallel to continents", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Heat distribution",
+			"explanation": "Warm currents move warm water from equator toward poles"
+		},
+		{
+			"id": "geo_004",
+			"topic": "Atmospheric Layers",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Weather occurs in which atmospheric layer?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Troposphere", "isCorrect": true },
+				{ "id": "B", "text": "Stratosphere", "isCorrect": false },
+				{ "id": "C", "text": "Mesosphere", "isCorrect": false },
+				{ "id": "D", "text": "Thermosphere", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Where we live",
+			"explanation": "Weather occurs in troposphere (lowest layer, 0-12 km)"
+		},
+		{
+			"id": "geo_005",
+			"topic": "Humidity",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "High humidity makes summer feel hotter because:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Sweat doesn't evaporate easily",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "More heat from sun", "isCorrect": false },
+				{ "id": "C", "text": "Less oxygen in air", "isCorrect": false },
+				{ "id": "D", "text": "Air is denser", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Evaporation and cooling",
+			"explanation": "High humidity prevents sweat evaporation, reducing cooling"
+		},
+		{
+			"id": "geo_006",
+			"topic": "Wind Patterns",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Coriolis effect causes winds in Northern Hemisphere to:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Deflect to the right", "isCorrect": true },
+				{ "id": "B", "text": "Deflect to the left", "isCorrect": false },
+				{ "id": "C", "text": "Go straight", "isCorrect": false },
+				{ "id": "D", "text": "Spiral upward", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Earth's rotation",
+			"explanation": "Earth's rotation deflects moving air/objects to the right (N. Hemisphere)"
+		},
+		{
+			"id": "geo_007",
+			"topic": "Hurricanes",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Hurricanes need warm ocean water (at least) to form:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "26°C", "isCorrect": true },
+				{ "id": "B", "text": "10°C", "isCorrect": false },
+				{ "id": "C", "text": "0°C", "isCorrect": false },
+				{ "id": "D", "text": "40°C", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Tropical cyclones",
+			"explanation": "Hurricanes need ocean water at least 26°C to provide energy"
+		},
+		{
+			"id": "geo_008",
+			"topic": "Climate Zones",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Tropical rainforests have:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "High rainfall year-round", "isCorrect": true },
+				{ "id": "B", "text": "No rainfall", "isCorrect": false },
+				{ "id": "C", "text": "Seasonal rain only", "isCorrect": false },
+				{ "id": "D", "text": "Snow year-round", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Rainforest climate",
+			"explanation": "Tropical rainforests have high rainfall and humidity year-round"
+		},
+		{
+			"id": "geo_009",
+			"topic": "Plate Tectonics",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Earth's lithosphere is broken into:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Tectonic plates", "isCorrect": true },
+				{ "id": "B", "text": "Single piece", "isCorrect": false },
+				{ "id": "C", "text": "Continents only", "isCorrect": false },
+				{ "id": "D", "text": "Oceans only", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Crustal movement",
+			"explanation": "Lithosphere broken into 7 major and many smaller tectonic plates"
+		},
+		{
+			"id": "geo_010",
+			"topic": "Volcanoes",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Most volcanoes form at:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Plate boundaries", "isCorrect": true },
+				{ "id": "B", "text": "Plate centers", "isCorrect": false },
+				{ "id": "C", "text": "Mid-ocean only", "isCorrect": false },
+				{ "id": "D", "text": "Continents only", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Where magma escapes",
+			"explanation": "Volcanoes form at convergent and divergent plate boundaries"
+		},
+		{
+			"id": "geo_011",
+			"topic": "Earthquake",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Earthquake focus is the:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Point where shaking starts", "isCorrect": true },
+				{ "id": "B", "text": "Location on surface above", "isCorrect": false },
+				{ "id": "C", "text": "Deepest point in Earth", "isCorrect": false },
+				{ "id": "D", "text": "Location on Surface below", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Hypocenter vs epicenter",
+			"explanation": "Focus (hypocenter) is underground origin; epicenter is above on surface"
+		},
+		{
+			"id": "geo_012",
+			"topic": "Rocks",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Igneous rock forms from:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Cooled magma/lava", "isCorrect": true },
+				{ "id": "B", "text": "Sediment compaction", "isCorrect": false },
+				{ "id": "C", "text": "Heat and pressure", "isCorrect": false },
+				{ "id": "D", "text": "Dead organisms", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Three rock types",
+			"explanation": "Igneous forms from cooled magma (volcanic) or lava (extrusive)"
+		},
+		{
+			"id": "geo_013",
+			"topic": "Rock Cycle",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Sedimentary rock forms from:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Compacted sediments", "isCorrect": true },
+				{ "id": "B", "text": "Cooled lava", "isCorrect": false },
+				{ "id": "C", "text": "Metamorphic rocks", "isCorrect": false },
+				{ "id": "D", "text": "Magma", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Sediment accumulation",
+			"explanation": "Sedimentary rock forms from layers of sediment compacted over time"
+		},
+		{
+			"id": "geo_014",
+			"topic": "Rivers",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "A watershed is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Area draining into a river", "isCorrect": true },
+				{ "id": "B", "text": "A river channel", "isCorrect": false },
+				{ "id": "C", "text": "River delta", "isCorrect": false },
+				{ "id": "D", "text": "Area of flooding", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Drainage basin",
+			"explanation": "Watershed (drainage basin) is area feeding into single river system"
+		},
+		{
+			"id": "geo_015",
+			"topic": "Groundwater",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "An aquifer is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Underground water storage", "isCorrect": true },
+				{ "id": "B", "text": "Surface river", "isCorrect": false },
+				{ "id": "C", "text": "Lake", "isCorrect": false },
+				{ "id": "D", "text": "Glacier", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Porous rock containing water",
+			"explanation": "Aquifer is underground layer of porous rock that holds water"
+		},
+		{
+			"id": "geo_016",
+			"topic": "Erosion",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Which is NOT an agent of erosion?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Living organisms (correct answer)",
+					"isCorrect": false
+				},
+				{ "id": "B", "text": "Wind", "isCorrect": true },
+				{ "id": "C", "text": "Water", "isCorrect": true },
+				{ "id": "D", "text": "Ice", "isCorrect": true }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Moving agents",
+			"explanation": "Erosion agents: water, wind, ice, waves. (Living organisms cause weathering)"
+		},
+		{
+			"id": "geo_017",
+			"topic": "Coastal Features",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Sea stacks are formed by:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Wave erosion of headlands", "isCorrect": true },
+				{ "id": "B", "text": "River deposition", "isCorrect": false },
+				{ "id": "C", "text": "Volcanic activity", "isCorrect": false },
+				{ "id": "D", "text": "Glacial movement", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Coastal erosion",
+			"explanation": "Sea stacks form when waves erode headlands, leaving isolated pillars"
+		},
+		{
+			"id": "geo_018",
+			"topic": "Glaciers",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Glaciers cause erosion by:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Freezing and moving ice", "isCorrect": true },
+				{ "id": "B", "text": "Melting snow", "isCorrect": false },
+				{ "id": "C", "text": "Gravity only", "isCorrect": false },
+				{ "id": "D", "text": "Wind", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Ice erosion",
+			"explanation": "Glaciers freeze to rock and move, plucking and abrading bedrock"
+		},
+		{
+			"id": "geo_019",
+			"topic": "Population",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Population density is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "People per unit area", "isCorrect": true },
+				{ "id": "B", "text": "Total number of people", "isCorrect": false },
+				{ "id": "C", "text": "Area of a country", "isCorrect": false },
+				{ "id": "D", "text": "Growth rate", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Measure of crowding",
+			"explanation": "Population density = number of people / area (e.g., per km²)"
+		},
+		{
+			"id": "geo_020",
+			"topic": "Urbanization",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Urbanization is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Growth of cities", "isCorrect": true },
+				{
+					"id": "B",
+					"text": "Decrease in city population",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Movement to rural areas", "isCorrect": false },
+				{ "id": "D", "text": "City decline", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "City growth",
+			"explanation": "Urbanization is increase in percentage of population living in cities"
+		},
+		{
+			"id": "geo_021",
+			"topic": "Time Zones",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Earth has approximately how many time zones?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "24", "isCorrect": true },
+				{ "id": "B", "text": "12", "isCorrect": false },
+				{ "id": "C", "text": "365", "isCorrect": false },
+				{ "id": "D", "text": "360", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "One per 15° of longitude",
+			"explanation": "24 time zones (15° each) = 360°/15° = 24 zones"
+		},
+		{
+			"id": "geo_022",
+			"topic": "Map Projections",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "Mercator projection distorts:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Area/shape near poles", "isCorrect": true },
+				{ "id": "B", "text": "Lines of latitude only", "isCorrect": false },
+				{ "id": "C", "text": "Distance everywhere", "isCorrect": false },
+				{ "id": "D", "text": "Rivers only", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Preserves direction",
+			"explanation": "Mercator distorts area (especially polar regions) while preserving direction"
+		},
+		{
+			"id": "geo_023",
+			"topic": "Climate Change",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Greenhouse gases trap:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Infrared radiation", "isCorrect": true },
+				{ "id": "B", "text": "Visible light", "isCorrect": false },
+				{ "id": "C", "text": "Ultraviolet radiation", "isCorrect": false },
+				{ "id": "D", "text": "X-rays", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Heat radiation",
+			"explanation": "Greenhouse gases trap infrared (heat) radiation, warming Earth"
+		},
+		{
+			"id": "geo_024",
+			"topic": "Biomes",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Tundra is characterized by:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Extremely cold, treeless", "isCorrect": true },
+				{ "id": "B", "text": "Hot and wet", "isCorrect": false },
+				{ "id": "C", "text": "Dry with some trees", "isCorrect": false },
+				{ "id": "D", "text": "Moderate temperatures", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Arctic ecosystem",
+			"explanation": "Tundra is cold, treeless biome with permafrost (permanently frozen ground)"
+		},
+		{
+			"id": "geo_025",
+			"topic": "Natural Resources",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "A renewable resource:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Can regenerate naturally", "isCorrect": true },
+				{ "id": "B", "text": "Once used, gone forever", "isCorrect": false },
+				{ "id": "C", "text": "Cannot be used again", "isCorrect": false },
+				{ "id": "D", "text": "Takes millions of years", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Natural replenishment",
+			"explanation": "Renewable resources (like sunlight) can be replenished; nonrenewable (fossil fuels) take millions of years"
+		},
+		{
+			"id": "geo_026",
+			"topic": "Renewable Energy",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Solar energy comes from:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "The Sun", "isCorrect": true },
+				{ "id": "B", "text": "Earth's core", "isCorrect": false },
+				{ "id": "C", "text": "Fossil fuels", "isCorrect": false },
+				{ "id": "D", "text": "Nuclear reactions", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Solar power",
+			"explanation": "Solar energy originates from nuclear fusion in the Sun"
+		},
+		{
+			"id": "geo_027",
+			"topic": "Agriculture",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Commercial agriculture is characterized by:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Large-scale production for sale",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Subsistence farming", "isCorrect": false },
+				{ "id": "C", "text": "Growing for family only", "isCorrect": false },
+				{ "id": "D", "text": "Organic methods only", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Market-oriented",
+			"explanation": "Commercial agriculture produces crops for sale in markets (vs subsistence)"
+		},
+		{
+			"id": "geo_028",
+			"topic": "Migration",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Rural-urban migration is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Movement from country to city",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Movement from city to country",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Between two cities", "isCorrect": false },
+				{ "id": "D", "text": "Between two countries", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Urbanization driver",
+			"explanation": "Rural-urban migration is people moving to cities for opportunity"
+		},
+		{
+			"id": "geo_029",
+			"topic": "GIS",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "GIS stands for:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Geographic Information System",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Global Internet Service", "isCorrect": false },
+				{
+					"id": "C",
+					"text": "General International System",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Ground Imaging System", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Mapping technology",
+			"explanation": "GIS uses computer systems to capture, store, and analyze geographic data"
+		},
+		{
+			"id": "geo_030",
+			"topic": "Globalization",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Globalization has been accelerated by:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Technology and trade", "isCorrect": true },
+				{
+					"id": "B",
+					"text": "Reduced international travel",
+					"isClosed": false
+				},
+				{ "id": "C", "text": "Less communication", "isCorrect": false },
+				{ "id": "D", "text": "Borders closing", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "World connection",
+			"explanation": "Technology, transportation, and trade agreements have sped up globalization"
+		}
+	]
+}

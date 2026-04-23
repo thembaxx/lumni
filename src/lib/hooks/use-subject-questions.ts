@@ -83,6 +83,23 @@ export async function fetchSubjectQuestions(
 		return shuffled.slice(0, numberOfQuestions);
 	}
 
+	try {
+		const questionsUrl = `/api/questions?subject=${encodeURIComponent(normalizedSubject)}`;
+		const response = await fetch(questionsUrl);
+
+		if (response.ok) {
+			const data = await response.json();
+			if (data.questions && Array.isArray(data.questions)) {
+				const questions = data.questions as QAQuestion[];
+				store.setCachedQuestions(normalizedSubject, questions);
+				const shuffled = [...questions].sort(() => Math.random() - 0.5);
+				return shuffled.slice(0, numberOfQuestions);
+			}
+		}
+	} catch {
+		console.warn("Local questions not found, trying API...");
+	}
+
 	const fileUrls = await discoverQAFileUrls(subject, numberOfQuestions);
 	const allQuestions: QAQuestion[] = [];
 

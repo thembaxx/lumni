@@ -1,0 +1,555 @@
+{
+	"metadata": {
+		"subject": "chemistry",
+		"totalQuestions": 30,
+		"version": "1.0.0",
+		"curriculum": "General Chemistry",
+		"createdAt": "2026-04-23"
+	},
+	"questions": [
+		{
+			"id": "chem_001",
+			"topic": "Atomic Structure",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "What is the atomic number of carbon?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "6", "isCorrect": true },
+				{ "id": "B", "text": "12", "isCorrect": false },
+				{ "id": "C", "text": "8", "isCorrect": false },
+				{ "id": "D", "text": "4", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Atomic number = number of protons",
+			"explanation": "Carbon has 6 protons, so its atomic number is 6"
+		},
+		{
+			"id": "chem_002",
+			"topic": "Periodic Table",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Which group contains the noble gases?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Group 18", "isCorrect": true },
+				{ "id": "B", "text": "Group 1", "isCorrect": false },
+				{ "id": "C", "text": "Group 17", "isCorrect": false },
+				{ "id": "D", "text": "Group 2", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Noble gases have complete valence shells",
+			"explanation": "Group 18 (or Group 0/VIII) contains noble gases: He, Ne, Ar, Kr, Xe, Rn"
+		},
+		{
+			"id": "chem_003",
+			"topic": "Chemical Bonding",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "What type of bond involves the sharing of electron pairs between atoms?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Covalent bond", "isCorrect": true },
+				{ "id": "B", "text": "Ionic bond", "isCorrect": false },
+				{ "id": "C", "text": "Metallic bond", "isCorrect": false },
+				{ "id": "D", "text": "Hydrogen bond", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Sharing electrons between nonmetals",
+			"explanation": "Covalent bonds form when atoms share electrons, typically between nonmetals"
+		},
+		{
+			"id": "chem_004",
+			"topic": "Ionic Bonding",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "What type of bond is formed by the transfer of electrons from one atom to another?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Ionic bond", "isCorrect": true },
+				{ "id": "B", "text": "Covalent bond", "isCorrect": false },
+				{ "id": "C", "text": "Van der Waals", "isCorrect": false },
+				{ "id": "D", "text": "Peptide bond", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Transfer of electrons forms ions",
+			"explanation": "Ionic bonds form when electrons are transferred from metal to nonmetal atoms"
+		},
+		{
+			"id": "chem_005",
+			"topic": "Electronegativity",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Which element has the highest electronegativity?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Fluorine", "isCorrect": true },
+				{ "id": "B", "text": "Chlorine", "isCorrect": false },
+				{ "id": "C", "text": "Oxygen", "isCorrect": false },
+				{ "id": "D", "text": "Nitrogen", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Electronegativity increases across a period",
+			"explanation": "Fluorine has the highest electronegativity value (3.98) on the Pauling scale"
+		},
+		{
+			"id": "chem_006",
+			"topic": "Electron Configuration",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What is the electron configuration of oxygen (atomic number 8)?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "1s² 2s² 2p⁴", "isCorrect": true },
+				{ "id": "B", "text": "1s² 2s⁴", "isCorrect": false },
+				{ "id": "C", "text": "1s² 2s² 2p³", "isCorrect": false },
+				{ "id": "D", "text": "1s² 2s² 2p⁵", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Oxygen has 8 electrons",
+			"explanation": "8 electrons fill: 1s² (2) + 2s² (2) + 2p⁴ (4) = 8 total"
+		},
+		{
+			"id": "chem_007",
+			"topic": "Moles and Molar Mass",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What is the molar mass of water (H₂O)? (H = 1, O = 16)",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "18 g/mol", "isCorrect": true },
+				{ "id": "B", "text": "17 g/mol", "isCorrect": false },
+				{ "id": "C", "text": "20 g/mol", "isCorrect": false },
+				{ "id": "D", "text": "16 g/mol", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Molar mass = sum of atomic masses",
+			"explanation": "H₂O = 2(1) + 16 = 18 g/mol"
+		},
+		{
+			"id": "chem_008",
+			"topic": "Avogadro's Number",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "What is the value of Avogadro's number?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "6.022 × 10²³", "isCorrect": true },
+				{ "id": "B", "text": "6.022 × 10²⁰", "isCorrect": false },
+				{ "id": "C", "text": "3.14", "isCorrect": false },
+				{ "id": "D", "text": "9.8 × 10³¹", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Particles per mole",
+			"explanation": "Avogadro's number is 6.022 × 10²³ particles per mole"
+		},
+		{
+			"id": "chem_009",
+			"topic": "Acids and Bases",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "What is the pH of a neutral solution at 25°C?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "7", "isCorrect": true },
+				{ "id": "B", "text": "0", "isCorrect": false },
+				{ "id": "C", "text": "14", "isCorrect": false },
+				{ "id": "D", "text": "1", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Neutral means equal [H⁺] and [OH⁻]",
+			"explanation": "pH 7 is neutral at 25°C; pH < 7 is acidic, pH > 7 is basic"
+		},
+		{
+			"id": "chem_010",
+			"topic": "Lewis Structures",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "How many valence electrons are in carbon?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "4", "isCorrect": true },
+				{ "id": "B", "text": "6", "isCorrect": false },
+				{ "id": "C", "text": "2", "isCorrect": false },
+				{ "id": "D", "text": "8", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Carbon is in Group 14",
+			"explanation": "Carbon has 4 valence electrons (Group 14 or IVA)"
+		},
+		{
+			"id": "chem_011",
+			"topic": "Chemical Equations",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Balance: ___H₂ + ___O₂ → ___H₂O. What coefficients balance this equation?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "2, 1, 2", "isCorrect": true },
+				{ "id": "B", "text": "1, 1, 1", "isCorrect": false },
+				{ "id": "C", "text": "1, 2, 2", "isCorrect": false },
+				{ "id": "D", "text": "2, 2, 1", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Count atoms on each side",
+			"explanation": "2H₂ + O₂ → 2H₂O gives 4 H and 2 O on each side"
+		},
+		{
+			"id": "chem_012",
+			"topic": "Periodic Trends",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Atomic size generally _____ across a period (left to right).",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "decreases", "isCorrect": true },
+				{ "id": "B", "text": "increases", "isCorrect": false },
+				{ "id": "C", "text": "stays the same", "isCorrect": false },
+				{ "id": "D", "text": "doubles", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "More protons = stronger attraction",
+			"explanation": "Across a period, increasing nuclear charge pulls electrons closer"
+		},
+		{
+			"id": "chem_013",
+			"topic": "Ionization Energy",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What happens to ionization energy down a group?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "It decreases", "isCorrect": true },
+				{ "id": "B", "text": "It increases", "isCorrect": false },
+				{ "id": "C", "text": "It stays the same", "isCorrect": false },
+				{ "id": "D", "text": "It doubles", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Electrons are farther from nucleus",
+			"explanation": "Down a group, valence electrons are farther from the nucleus and easier to remove"
+		},
+		{
+			"id": "chem_014",
+			"topic": "Molecular Geometry",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What is the molecular shape of methane (CH₄)?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Tetrahedral", "isCorrect": true },
+				{ "id": "B", "text": "Linear", "isCorrect": false },
+				{ "id": "C", "text": "Trigonal planar", "isCorrect": false },
+				{ "id": "D", "text": "Bent", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "4 bonding pairs, 0 lone pairs",
+			"explanation": "CH₄ has 4 bonded atoms with no lone pairs, giving tetrahedral geometry"
+		},
+		{
+			"id": "chem_015",
+			"topic": "Oxidation Numbers",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What is the oxidation number of oxygen in most compounds?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "-2", "isCorrect": true },
+				{ "id": "B", "text": "-1", "isCorrect": false },
+				{ "id": "C", "text": "+2", "isCorrect": false },
+				{ "id": "D", "text": "0", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Oxygen is highly electronegative except with fluorine",
+			"explanation": "Oxygen is usually -2; exceptions include peroxides (-1) and with fluorine"
+		},
+		{
+			"id": "chem_016",
+			"topic": "Reaction Rates",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "What happens to reaction rate when temperature increases?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "It increases", "isCorrect": true },
+				{ "id": "B", "text": "It decreases", "isCorrect": false },
+				{ "id": "C", "text": "It stays the same", "isCorrect": false },
+				{ "id": "D", "text": "It doubles", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "More kinetic energy = more collisions",
+			"explanation": "Higher temperature increases particle kinetic energy, causing more effective collisions"
+		},
+		{
+			"id": "chem_017",
+			"topic": "Equilibrium",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "Le Chatelier's principle states the system will:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Oppose any change applied", "isCorrect": true },
+				{ "id": "B", "text": "Increase all rates", "isCorrect": false },
+				{ "id": "C", "text": "Favor reactants", "isCorrect": false },
+				{ "id": "D", "text": "Favor products", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "System responds to stress",
+			"explanation": "Le Chatelier: system responds to counteract any stress applied to re-establish equilibrium"
+		},
+		{
+			"id": "chem_018",
+			"topic": "Thermodynamics",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "A negative ΔG indicates:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Process is spontaneous", "isCorrect": true },
+				{ "id": "B", "text": "Process is endothermic", "isCorrect": false },
+				{ "id": "C", "text": "Process requires catalyst", "isCorrect": false },
+				{ "id": "D", "text": "Process is nonspontaneous", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "ΔG = ΔH - TΔS",
+			"explanation": "Negative ΔG means the process proceeds spontaneously in the forward direction"
+		},
+		{
+			"id": "chem_019",
+			"topic": "pH Calculations",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "If [H⁺] = 10⁻³ M, what is the pH?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "3", "isCorrect": true },
+				{ "id": "B", "text": "-3", "isCorrect": false },
+				{ "id": "C", "text": "11", "isCorrect": false },
+				{ "id": "D", "text": "10", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "pH = -log[H⁺]",
+			"explanation": "pH = -log(10⁻³) = 3"
+		},
+		{
+			"id": "chem_020",
+			"topic": "Strong vs Weak Acids",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Which is a strong acid?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "HCl", "isCorrect": true },
+				{ "id": "B", "text": "CH₃COOH", "isCorrect": false },
+				{ "id": "C", "text": "H₂CO₃", "isCorrect": false },
+				{ "id": "D", "text": "HF", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Completely dissociates",
+			"explanation": "HCl is a strong acid, completely dissociating in water; others are weak acids"
+		},
+		{
+			"id": "chem_021",
+			"topic": "Spectroscopy",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "In IR spectroscopy, what region shows O-H stretch?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "3200-3600 cm⁻¹", "isCorrect": true },
+				{ "id": "B", "text": "500-1000 cm���¹", "isCorrect": false },
+				{ "id": "C", "text": "1400-1600 cm⁻¹", "isCorrect": false },
+				{ "id": "D", "text": "2800-3000 cm⁻¹", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Light molecule, strong bond",
+			"explanation": "O-H stretch appears around 3200-3600 cm⁻¹ as a broad peak"
+		},
+		{
+			"id": "chem_022",
+			"topic": "Gas Laws",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "A gas occupies 2 L at 1 atm. What volume at 2 atm (constant temperature)?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "1 L", "isCorrect": true },
+				{ "id": "B", "text": "4 L", "isCorrect": false },
+				{ "id": "C", "text": "2 L", "isCorrect": false },
+				{ "id": "D", "text": "0.5 L", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "P₁V₁ = P₂V₂ (Boyle's Law)",
+			"explanation": "V₂ = P₁V₁/P₂ = 1×2/2 = 1 L"
+		},
+		{
+			"id": "chem_023",
+			"topic": "Solubility",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Which compound is most soluble in water?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "NaCl", "isCorrect": true },
+				{ "id": "B", "text": "C₆H₁₄", "isCorrect": false },
+				{ "id": "C", "text": "CCl₄", "isCorrect": false },
+				{ "id": "D", "text": "I₂", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Like dissolves like",
+			"explanation": "NaCl is ionic and soluble in polar water; others are nonpolar"
+		},
+		{
+			"id": "chem_024",
+			"topic": "Electrochemistry",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "At the cathode in electrolysis:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Reduction occurs", "isCorrect": true },
+				{ "id": "B", "text": "Oxidation occurs", "isCorrect": false },
+				{ "id": "C", "text": "Neutralization", "isCorrect": false },
+				{ "id": "D", "text": "No change", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Cathode = negative electrode",
+			"explanation": "Reduction (gain of electrons) occurs at the cathode in both electrolytic and galvanic cells"
+		},
+		{
+			"id": "chem_025",
+			"topic": "Atomic Radius Trend",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Which atom is largest: Na, Mg, Si, P?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Na", "isCorrect": true },
+				{ "id": "B", "text": "Mg", "isCorrect": false },
+				{ "id": "C", "text": "Si", "isCorrect": false },
+				{ "id": "D", "text": "P", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Atomic size decreases across period",
+			"explanation": "Na (Group 1) is largest; atomic radius decreases across period"
+		},
+		{
+			"id": "chem_026",
+			"topic": "Isotopes",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Isotopes differ in number of:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Neutrons", "isCorrect": true },
+				{ "id": "B", "text": "Protons", "isCorrect": false },
+				{ "id": "C", "text": "Electrons", "isCorrect": false },
+				{ "id": "D", "text": "All of the above", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Same atomic number, different mass",
+			"explanation": "Isotopes have same protons but different neutrons affecting mass number"
+		},
+		{
+			"id": "chem_027",
+			"topic": "VSEPR Theory",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": " ammonia (NH₃) has what geometry?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Trigonal pyramidal", "isCorrect": true },
+				{ "id": "B", "text": "Trigonal planar", "isCorrect": false },
+				{ "id": "C", "text": "Tetrahedral", "isCorrect": false },
+				{ "id": "D", "text": "Linear", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "3 bonded, 1 lone pair",
+			"explanation": "NH₃ has 3 bonds + 1 lone pair, giving trigonal pyramidal shape"
+		},
+		{
+			"id": "chem_028",
+			"topic": "Redox Reactions",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "In 2Mg + O₂ → 2MgO, Mg is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Oxidized", "isCorrect": true },
+				{ "id": "B", "text": "Reduced", "isCorrect": false },
+				{ "id": "C", "text": "Both oxidized and reduced", "isCorrect": false },
+				{ "id": "D", "text": "Spectator", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Loses electrons = oxidized",
+			"explanation": "Mg loses electrons (0 to +2), so it is oxidized"
+		},
+		{
+			"id": "chem_029",
+			"topic": "Buffers",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "A buffer resists pH change when:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Small amounts of acid/base added",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Large amounts added", "isCorrect": false },
+				{ "id": "C", "text": "Only acid added", "isCorrect": false },
+				{ "id": "D", "text": "Temperature changes", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Contains weak acid and conjugate base",
+			"explanation": "Buffers work within their capacity to neutralize small amounts of acid/base"
+		},
+		{
+			"id": "chem_030",
+			"topic": "Crystal Structures",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "NaCl (rocksalt) structure has coordination number:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "6:6", "isCorrect": true },
+				{ "id": "B", "text": "4:4", "isCorrect": false },
+				{ "id": "C", "text": "8:8", "isCorrect": false },
+				{ "id": "D", "text": "12:12", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Each ion surrounded by 6 opposite",
+			"explanation": "Each Na⁺ is surrounded by 6 Cl⁻ ions and vice versa in octahedral coordination"
+		}
+	]
+}

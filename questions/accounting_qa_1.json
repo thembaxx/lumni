@@ -1,0 +1,719 @@
+{
+	"metadata": {
+		"subject": "accounting",
+		"totalQuestions": 30,
+		"version": "1.0.0",
+		"curriculum": "General Accounting",
+		"createdAt": "2026-04-23"
+	},
+	"questions": [
+		{
+			"id": "acc_001",
+			"topic": "Financial Statements",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "What does MD&A stand for in annual reports?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Management Discussion and Analysis",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Money Depreciation Account", "isCorrect": false },
+				{ "id": "C", "text": "Monthly Data Assessment", "isCorrect": false },
+				{ "id": "D", "text": "Market Development Analysis", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It's found in annual reports explaining company performance",
+			"explanation": "MD&A stands for Management Discussion and Analysis, which provides context for financial performance"
+		},
+		{
+			"id": "acc_002",
+			"topic": "Types of Accounts",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "What type of account is unearned revenue?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Asset account", "isCorrect": false },
+				{ "id": "B", "text": "Liability account", "isCorrect": true },
+				{ "id": "C", "text": "Revenue account", "isCorrect": false },
+				{ "id": "D", "text": "Expense account", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "This represents money received for services not yet provided",
+			"explanation": "Unearned revenue is a liability because the company owes services to customers"
+		},
+		{
+			"id": "acc_003",
+			"topic": "Accrued Expenses",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Which of the following best describes an accrued expense?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Expense incurred but not yet paid",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Expense paid but not yet incurred",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Expense that was prepaid", "isCorrect": false },
+				{ "id": "D", "text": "Expense that is disputed", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It relates to the timing of recognition",
+			"explanation": "Accrued expenses are costs incurred during a period but not yet paid"
+		},
+		{
+			"id": "acc_004",
+			"topic": "General Ledger",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "What is the purpose of the general ledger?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "To record all financial transactions",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "To prepare tax returns", "isCorrect": false },
+				{ "id": "C", "text": "To pay suppliers", "isCorrect": false },
+				{ "id": "D", "text": "To hire employees", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It's the main accounting record",
+			"explanation": "The general ledger contains all financial transactions of the business"
+		},
+		{
+			"id": "acc_005",
+			"topic": "Transactions vs Adjustments",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Which of the following is a TRANSACTION, not an ADJUSTMENT?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Recording depreciation", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "Recording prepaid rent expired",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Recording cash received from customer",
+					"isCorrect": true
+				},
+				{ "id": "D", "text": "Recording accrued salaries", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "This involves actual cash movement",
+			"explanation": "Recording cash received is a transaction, while depreciation and accruals are adjustments"
+		},
+		{
+			"id": "acc_006",
+			"topic": "Accounting Cycle",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Which of the following lists the steps of the accounting cycle in the correct order?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Journal, Ledger, Trial Balance, Financial Statements",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Ledger, Journal, Trial Balance, Financial Statements",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Trial Balance, Journal, Ledger, Financial Statements",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Financial Statements, Trial Balance, Ledger, Journal",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Start with recording, then classify, then summarize",
+			"explanation": "The correct order is: Journalize transactions, post to ledger, prepare trial balance, prepare financial statements"
+		},
+		{
+			"id": "acc_007",
+			"topic": "Auditor's Report",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "What is the best type of auditor's report a company can earn?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Unqualified (Clean) Opinion", "isCorrect": true },
+				{ "id": "B", "text": "Qualified Opinion", "isCorrect": false },
+				{ "id": "C", "text": "Adverse Opinion", "isCorrect": false },
+				{ "id": "D", "text": "Disclaimer of Opinion", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "This opinion states financial statements are fairly presented",
+			"explanation": "An unqualified opinion means the financial statements are free from material misstatements"
+		},
+		{
+			"id": "acc_008",
+			"topic": "Annual Report",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Which of the following lists the sections of an annual report from MOST GENERAL to MOST SPECIFIC?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Company Overview, Financial Statements, Notes",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Notes, Financial Statements, Company Overview",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Financial Statements, Company Overview, Notes",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Notes, Company Overview, Financial Statements",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Start with the big picture, then details",
+			"explanation": "Annual reports go from general overview to specific notes"
+		},
+		{
+			"id": "acc_009",
+			"topic": "Accrued Revenue",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Which of the following is an adjustment for an accrued revenue?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Debit Accounts Receivable, Credit Service Revenue",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Debit Service Revenue, Credit Accounts Receivable",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Debit Cash, Credit Service Revenue",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Debit Unearned Revenue, Credit Revenue",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Revenue earned but not yet received",
+			"explanation": "Accrued revenue requires recognizing revenue and an asset"
+		},
+		{
+			"id": "acc_010",
+			"topic": "Accrual Accounting",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "When does ACCRUAL accounting record revenues and expenses?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "When earned or incurred", "isCorrect": true },
+				{
+					"id": "B",
+					"text": "When cash is received or paid",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "At the end of the year", "isCorrect": false },
+				{ "id": "D", "text": "When invoices are sent", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It's about timing of recognition, not cash flow",
+			"explanation": "Accrual accounting records revenues when earned and expenses when incurred"
+		},
+		{
+			"id": "acc_011",
+			"topic": "Partnership Interest",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "In the absence of a Partnership Deed, the rate of interest on a partner's loan to the firm is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "6% per annum", "isCorrect": true },
+				{ "id": "B", "text": "8% per annum", "isCorrect": false },
+				{ "id": "C", "text": "10% per annum", "isCorrect": false },
+				{ "id": "D", "text": "No interest is allowed", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It's set by the Indian Partnership Act",
+			"explanation": "Under the Indian Partnership Act, in the absence of a deed, interest is allowed at 6% p.a."
+		},
+		{
+			"id": "acc_012",
+			"topic": "Goodwill",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Goodwill is a/an:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Fictitious asset", "isCorrect": true },
+				{ "id": "B", "text": "Tangible asset", "isCorrect": false },
+				{ "id": "C", "text": "Current asset", "isCorrect": false },
+				{ "id": "D", "text": "Liability", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It can't be physically touched or seen",
+			"explanation": "Goodwill is an intangible/fictitious asset that represents reputation"
+		},
+		{
+			"id": "acc_013",
+			"topic": "Partnership Admission",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "On the admission of a new partner, the balance of General Reserve in the Balance Sheet is transferred to:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Old Partners' Capital Accounts",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "New Partner's Capital Account",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Profit and Loss Account", "isCorrect": false },
+				{ "id": "D", "text": "Revaluation Account", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It belongs to existing partners",
+			"explanation": "General Reserve is distributed among old partners before admission"
+		},
+		{
+			"id": "acc_014",
+			"topic": "Revaluation",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Revaluation Account is a:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Real Account", "isCorrect": true },
+				{ "id": "B", "text": "Nominal Account", "isCorrect": false },
+				{ "id": "C", "text": "Personal Account", "isCorrect": false },
+				{ "id": "D", "text": "Capital Account", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It follows the principle of debit what comes in",
+			"explanation": "Revaluation Account is a Real Account used to revalue assets"
+		},
+		{
+			"id": "acc_015",
+			"topic": "Partnership",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "The maximum number of partners allowed in a firm as per the Companies Act, 2013 is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "50", "isCorrect": true },
+				{ "id": "B", "text": "20", "isCorrect": false },
+				{ "id": "C", "text": "100", "isCorrect": false },
+				{ "id": "D", "text": "No limit", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "There's a specific number mentioned in the Act",
+			"explanation": "The Companies Act 2013 limits partnerships to 50 members"
+		},
+		{
+			"id": "acc_016",
+			"topic": "Withdrawal of Capital",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Interest on a partner's drawing is charged at:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Simple Interest rate", "isCorrect": true },
+				{ "id": "B", "text": "Compound Interest rate", "isCorrect": false },
+				{ "id": "C", "text": "No interest", "isCorrect": false },
+				{ "id": "D", "text": "Market rate", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It's calculated on the amount withdrawn",
+			"explanation": "Interest on drawings is charged at simple interest rate"
+		},
+		{
+			"id": "acc_017",
+			"topic": "Securities Premium",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Securities Premium Reserve can be used for:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Issue of fully paid-up bonus shares",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Payment of dividends", "isCorrect": false },
+				{ "id": "C", "text": "Payment of expenses", "isCorrect": false },
+				{ "id": "D", "text": "Purchase of assets", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It can be utilized for specific purposes under the Act",
+			"explanation": "Securities Premium can be used for issuing bonus shares under Section 78"
+		},
+		{
+			"id": "acc_018",
+			"topic": "Share Forfeiture",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "When shares are forfeited, the Share Forfeiture Account is credited with:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Amount received on shares", "isCorrect": false },
+				{ "id": "B", "text": "Amount called-up on shares", "isCorrect": true },
+				{ "id": "C", "text": "Calls in arrears", "isCorrect": false },
+				{ "id": "D", "text": "Securities premium", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It's the difference between called-up and received",
+			"explanation": "Share Forfeiture Account is credited with the amount called-up but not received"
+		},
+		{
+			"id": "acc_019",
+			"topic": "Financial Analysis",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Analysis of Financial Statements is a tool for:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Assessing financial health", "isCorrect": true },
+				{ "id": "B", "text": "Calculating taxes", "isCorrect": false },
+				{ "id": "C", "text": "Hiring employees", "isCorrect": false },
+				{ "id": "D", "text": "Marketing products", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It helps evaluate performance",
+			"explanation": "Financial statement analysis assesses the financial health of a business"
+		},
+		{
+			"id": "acc_020",
+			"topic": "Calls in Arrears",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Calls in Arrears are:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Current assets", "isCorrect": false },
+				{ "id": "B", "text": "Called-up Capital", "isCorrect": true },
+				{ "id": "C", "text": "Revaluation Account", "isCorrect": false },
+				{ "id": "D", "text": "Calls in Advance", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It represents unpaid calls",
+			"explanation": "Calls in Arrears represent called-up capital not yet paid by shareholders"
+		},
+		{
+			"id": "acc_021",
+			"topic": "Liabilities",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "What are liabilities?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Costs of selling products", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "Distributions to stockholders",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Owners' claims to resources",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Amounts owed", "isCorrect": true }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It's what the business owes",
+			"explanation": "Liabilities are amounts owed to others (creditors)"
+		},
+		{
+			"id": "acc_022",
+			"topic": "Accounts Receivable",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "A credit to the accounts receivable account indicates:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "A sale to customers on account has occurred",
+					"isCorrect": false
+				},
+				{
+					"id": "B",
+					"text": "A payment from customers on their account has been received",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "An error has occurred", "isCorrect": false },
+				{
+					"id": "D",
+					"text": "A liability has been incurred",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Think about what decreases accounts receivable",
+			"explanation": "Credit to AR indicates payment received, reducing the amount owed"
+		},
+		{
+			"id": "acc_023",
+			"topic": "Normal Balance",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "A debit is the normal balance for which account?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Capital account", "isCorrect": false },
+				{ "id": "B", "text": "Service Revenue account", "isCorrect": false },
+				{ "id": "C", "text": "Accounts Payable account", "isCorrect": false },
+				{ "id": "D", "text": "Accounts Receivable account", "isCorrect": true }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Asset accounts have debit balances",
+			"explanation": "Accounts Receivable is an asset with a debit balance"
+		},
+		{
+			"id": "acc_024",
+			"topic": "Revenue",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "What is revenue?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Costs of selling products", "isCorrect": false },
+				{ "id": "B", "text": "Expense to run business", "isCorrect": false },
+				{
+					"id": "C",
+					"text": "Sales of products or services",
+					"isCorrect": true
+				},
+				{
+					"id": "D",
+					"text": "Distributions to stockholders",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It's income from business activities",
+			"explanation": "Revenue is income from sales of goods or services"
+		},
+		{
+			"id": "acc_025",
+			"topic": "Expenses",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "What are expenses?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Cost of selling products or services",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Amounts owed", "isCorrect": false },
+				{
+					"id": "C",
+					"text": "Distributions to stockholders",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Owners' claims to resources", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "They reduce profit",
+			"explanation": "Expenses are costs incurred to generate revenue"
+		},
+		{
+			"id": "acc_026",
+			"topic": "Owner's Equity",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "Owner's equity is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Assets minus liabilities", "isCorrect": true },
+				{
+					"id": "B",
+					"text": "Owners' claims to resources",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Resources owned", "isCorrect": false },
+				{ "id": "D", "text": "Amounts owed", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Use the accounting equation",
+			"explanation": "Owner's equity = Assets - Liabilities"
+		},
+		{
+			"id": "acc_027",
+			"topic": "Transactions",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "A business paid its supplier $1,000 to satisfy an accounts payable balance. How should this be recorded?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Debit accounts payable and credit cash for $1,000",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Debit cash and credit accounts payable for $1,000",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Debit supplies expense and credit cash for $1,000",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Debit accounts receivable and credit cash for $1,000",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Both asset and liability decrease",
+			"explanation": "Paying AP decreases both cash and accounts payable"
+		},
+		{
+			"id": "acc_028",
+			"topic": "Bank Loan",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "A business borrowed $1,000 from the bank and debited its cash account. What else is needed?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Credit Notes Payable for $1,000",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Credit Revenue for $1,000", "isCorrect": false },
+				{
+					"id": "C",
+					"text": "Credit another asset account for $1,000",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Nothing further is required", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "There's a new liability created",
+			"explanation": "Borrowing creates a liability (Notes Payable) that must be credited"
+		},
+		{
+			"id": "acc_029",
+			"topic": "Accounting Equation",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "During a period, total assets increase by $500 and total liabilities decrease by $200. By how much does owner's equity change?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Increase by $700", "isCorrect": true },
+				{ "id": "B", "text": "Decrease by $300", "isCorrect": false },
+				{ "id": "C", "text": "Increase by $300", "isCorrect": false },
+				{ "id": "D", "text": "Decrease by $700", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Use A = L + OE",
+			"explanation": "ΔAssets = ΔLiabilities + ΔOE, so 500 = -200 + ΔOE, therefore ΔOE = 700"
+		},
+		{
+			"id": "acc_030",
+			"topic": "Accounting Equation",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What is the accounting equation?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Assets = Liabilities + Owner's Equity",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Assets + Liabilities = Owner's Equity",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Assets = Revenue - Expenses",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Liabilities = Assets + Owner's Equity",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "The basic foundation of accounting",
+			"explanation": "Assets = Liabilities + Owner's Equity is the fundamental accounting equation"
+		}
+	]
+}

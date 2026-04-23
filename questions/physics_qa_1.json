@@ -1,0 +1,802 @@
+{
+	"metadata": {
+		"subject": "physics",
+		"totalQuestions": 35,
+		"version": "1.0.0",
+		"curriculum": "General Physics",
+		"createdAt": "2026-04-23"
+	},
+	"questions": [
+		{
+			"id": "phys_001",
+			"topic": "Newton's Laws",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "A 5 kg box is pushed with 20 N force on a frictionless surface. What is the acceleration?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "4 m/s²", "isCorrect": true },
+				{ "id": "B", "text": "2 m/s²", "isCorrect": false },
+				{ "id": "C", "text": "10 m/s²", "isCorrect": false },
+				{ "id": "D", "text": "100 m/s²", "isCorrect": false }
+			],
+			"supportsDiagram": true,
+			"diagram": {
+				"type": "force-vector",
+				"title": "Box on Surface",
+				"data": {
+					"objects": [
+						{
+							"type": "rectangle",
+							"x": 100,
+							"y": 100,
+							"width": 80,
+							"height": 50,
+							"fill": "#6366f1",
+							"label": "5 kg"
+						}
+					],
+					"showForces": [
+						{
+							"label": "F = 20N",
+							"direction": "right",
+							"color": "#3b82f6",
+							"origin": "center-right"
+						}
+					]
+				}
+			},
+			"hint": "Use F = ma → a = F/m",
+			"explanation": "a = 20N / 5kg = 4 m/s²"
+		},
+		{
+			"id": "phys_002",
+			"topic": "Momentum",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "A 4 kg ball moves at 3 m/s. What is its momentum?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "12 kg·m/s", "isCorrect": true },
+				{ "id": "B", "text": "7 kg·m/s", "isCorrect": false },
+				{ "id": "C", "text": "1.33 kg·m/s", "isCorrect": false },
+				{ "id": "D", "text": "0.75 kg·m/s", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "p = mv",
+			"explanation": "p = 4 × 3 = 12 kg·m/s"
+		},
+		{
+			"id": "phys_003",
+			"topic": "Work & Energy",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "A force of 50 N moves an object 4 m in the direction of the force. How much work is done?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "200 J", "isCorrect": true },
+				{ "id": "B", "text": "12.5 J", "isCorrect": false },
+				{ "id": "C", "text": "54 J", "isCorrect": false },
+				{ "id": "D", "text": "2000 J", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "W = F × Δx",
+			"explanation": "W = 50 × 4 = 200 J"
+		},
+		{
+			"id": "phys_004",
+			"topic": "Force and Motion",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "A 2 kg object accelerates from rest to 10 m/s in 5 seconds. What is the net force applied?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "4 N", "isCorrect": true },
+				{ "id": "B", "text": "20 N", "isCorrect": false },
+				{ "id": "C", "text": "10 N", "isCorrect": false },
+				{ "id": "D", "text": "2 N", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "First find acceleration: a = Δv/Δt",
+			"explanation": "a = (10-0)/5 = 2 m/s², F = ma = 2 × 2 = 4 N"
+		},
+		{
+			"id": "phys_005",
+			"topic": "Kinetic Energy",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "A car with mass 1000 kg is traveling at 20 m/s. What is its kinetic energy?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "200,000 J", "isCorrect": true },
+				{ "id": "B", "text": "20,000 J", "isCorrect": false },
+				{ "id": "C", "text": "400,000 J", "isCorrect": false },
+				{ "id": "D", "text": "10,000 J", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "KE = ½mv²",
+			"explanation": "KE = ½ × 1000 × 20² = 200,000 J"
+		},
+		{
+			"id": "phys_006",
+			"topic": "Potential Energy",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "A 5 kg object is lifted to a height of 10 m. What is its gravitational potential energy? (g = 10 m/s²)",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "500 J", "isCorrect": true },
+				{ "id": "B", "text": "50 J", "isCorrect": false },
+				{ "id": "C", "text": "5000 J", "isCorrect": false },
+				{ "id": "D", "text": "5 J", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "PE = mgh",
+			"explanation": "PE = 5 × 10 × 10 = 500 J"
+		},
+		{
+			"id": "phys_007",
+			"topic": "Conservation of Momentum",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "A 2 kg ball moving at 3 m/s collides with a stationary 2 kg ball. They stick together. What is their final velocity?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "1.5 m/s", "isCorrect": true },
+				{ "id": "B", "text": "3 m/s", "isCorrect": false },
+				{ "id": "C", "text": "0.75 m/s", "isCorrect": false },
+				{ "id": "D", "text": "6 m/s", "isCorrect": false }
+			],
+			"supportsDiagram": true,
+			"diagram": {
+				"type": "motion",
+				"title": "Collision Before",
+				"data": {
+					"objects": [
+						{
+							"id": "ball1",
+							"type": "circle",
+							"label": "2kg, 3m/s",
+							"x": 80,
+							"y": 120,
+							"fill": "#ef4444"
+						},
+						{
+							"id": "ball2",
+							"type": "circle",
+							"label": "2kg, 0m/s",
+							"x": 200,
+							"y": 120,
+							"fill": "#6366f1"
+						}
+					]
+				}
+			},
+			"hint": "Conservation of momentum: m1v1 + m2v2 = (m1+m2)vf",
+			"explanation": "(2×3) + (2×0) = (2+2)×vf → 6 = 4vf → vf = 1.5 m/s"
+		},
+		{
+			"id": "phys_008",
+			"topic": "Power",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "A motor lifts 500 N weight 10 m in 20 seconds. What is the power output?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "250 W", "isCorrect": true },
+				{ "id": "B", "text": "500 W", "isCorrect": false },
+				{ "id": "C", "text": "100 W", "isCorrect": false },
+				{ "id": "D", "text": "1000 W", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Power = Work/Time = Force × distance/Time",
+			"explanation": "W = 500 × 10 = 5000 J, P = 5000/20 = 250 W"
+		},
+		{
+			"id": "phys_009",
+			"topic": "Friction",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "A 10 kg block slides on a horizontal surface with coefficient of friction 0.3. What is the frictional force? (g = 10 m/s²)",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "30 N", "isCorrect": true },
+				{ "id": "B", "text": "3 N", "isCorrect": false },
+				{ "id": "C", "text": "300 N", "isCorrect": false },
+				{ "id": "D", "text": "0.3 N", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "f = μN = μmg",
+			"explanation": "f = 0.3 × 10 × 10 = 30 N"
+		},
+		{
+			"id": "phys_010",
+			"topic": "Acceleration",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "An object increases its velocity from 0 to 20 m/s in 4 seconds. What is its acceleration?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "5 m/s²", "isCorrect": true },
+				{ "id": "B", "text": "80 m/s²", "isCorrect": false },
+				{ "id": "C", "text": "0.2 m/s²", "isCorrect": false },
+				{ "id": "D", "text": "20 m/s²", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "a = Δv/Δt",
+			"explanation": "a = (20-0)/4 = 5 m/s²"
+		},
+		{
+			"id": "phys_011",
+			"topic": "Work Done by Force",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "A person pushes a box with 100 N force at an angle of 30° above the horizontal, moving it 5 m. How much work is done?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "433 J", "isCorrect": true },
+				{ "id": "B", "text": "500 J", "isCorrect": false },
+				{ "id": "C", "text": "250 J", "isCorrect": false },
+				{ "id": "D", "text": "100 J", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "W = F × d × cos(θ)",
+			"explanation": "W = 100 × 5 × cos(30°) = 100 × 5 × 0.866 = 433 J"
+		},
+		{
+			"id": "phys_012",
+			"topic": "Impulse",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "A 0.5 kg ball hits a wall at 10 m/s and rebounds at 5 m/s. What is the impulse?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "7.5 kg·m/s", "isCorrect": true },
+				{ "id": "B", "text": "2.5 kg·m/s", "isCorrect": false },
+				{ "id": "C", "text": "5 kg·m/s", "isCorrect": false },
+				{ "id": "D", "text": "10 kg·m/s", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Impulse = Δp = m(vf - vi)",
+			"explanation": "J = 0.5(5 - (-10)) = 0.5 × 15 = 7.5 kg·m/s (taking direction change into account)"
+		},
+		{
+			"id": "phys_013",
+			"topic": "Projectile Motion",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "A ball is thrown horizontally at 10 m/s from a 45 m tall building. How long does it take to fall? (g = 10 m/s²)",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "3 s", "isCorrect": true },
+				{ "id": "B", "text": "4.5 s", "isCorrect": false },
+				{ "id": "C", "text": "1.5 s", "isCorrect": false },
+				{ "id": "D", "text": "2 s", "isCorrect": false }
+			],
+			"supportsDiagram": true,
+			"diagram": {
+				"type": "motion",
+				"title": "Projectile Drop",
+				"data": {
+					"objects": [
+						{
+							"id": "building",
+							"type": "rectangle",
+							"x": 50,
+							"y": 30,
+							"width": 40,
+							"height": 100,
+							"fill": "#6b7280"
+						},
+						{
+							"id": "ball",
+							"type": "circle",
+							"x": 80,
+							"y": 35,
+							"fill": "#ef4444"
+						}
+					]
+				}
+			},
+			"hint": "h = ½gt² for horizontal projection",
+			"explanation": "45 = ½ × 10 × t² → 9 = t² → t = 3 s"
+		},
+		{
+			"id": "phys_014",
+			"topic": "Elastic Potential Energy",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "A spring with k = 200 N/m is compressed by 0.1 m. What is the elastic potential energy?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "1 J", "isCorrect": true },
+				{ "id": "B", "text": "2 J", "isCorrect": false },
+				{ "id": "C", "text": "20 J", "isCorrect": false },
+				{ "id": "D", "text": "0.5 J", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "PE = ½kx²",
+			"explanation": "PE = ½ × 200 × 0.1² = ½ × 200 × 0.01 = 1 J"
+		},
+		{
+			"id": "phys_015",
+			"topic": "Gravity",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What is the weight of a 5 kg object on Earth? (g = 10 m/s²)",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "50 N", "isCorrect": true },
+				{ "id": "B", "text": "5 N", "isCorrect": false },
+				{ "id": "C", "text": "500 N", "isCorrect": false },
+				{ "id": "D", "text": "0.5 N", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "W = mg",
+			"explanation": "W = 5 × 10 = 50 N"
+		},
+		{
+			"id": "phys_016",
+			"topic": "Circular Motion",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "A 2 kg object moves in a circle of radius 0.5 m at 4 m/s. What is the centripetal force?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "64 N", "isCorrect": true },
+				{ "id": "B", "text": "16 N", "isCorrect": false },
+				{ "id": "C", "text": "8 N", "isCorrect": false },
+				{ "id": "D", "text": "32 N", "isCorrect": false }
+			],
+			"supportsDiagram": true,
+			"diagram": {
+				"type": "node-flow",
+				"title": "Circular Motion",
+				"data": {
+					"nodes": [
+						{
+							"id": "center",
+							"type": "center",
+							"label": "Center",
+							"x": 150,
+							"y": 100
+						},
+						{
+							"id": "mass",
+							"type": "moving",
+							"label": "2kg",
+							"x": 225,
+							"y": 100
+						}
+					],
+					"edges": [{ "id": "fc", "source": "center", "target": "mass" }]
+				}
+			},
+			"hint": "Fc = mv²/r",
+			"explanation": "Fc = 2 × 4² / 0.5 = 2 × 16 / 0.5 = 64 N"
+		},
+		{
+			"id": "phys_017",
+			"topic": "Newton's Second Law",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "A net force of 15 N acts on a 3 kg object. What is the acceleration?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "5 m/s²", "isCorrect": true },
+				{ "id": "B", "text": "45 m/s²", "isCorrect": false },
+				{ "id": "C", "text": "0.2 m/s²", "isCorrect": false },
+				{ "id": "D", "text": "18 m/s²", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "F = ma → a = F/m",
+			"explanation": "a = 15 / 3 = 5 m/s²"
+		},
+		{
+			"id": "phys_018",
+			"topic": "Momentum Conservation",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "A 1 kg ball at 6 m/s collides elastically with a stationary 1 kg ball. What is the velocity of each ball after?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "0 and 6 m/s", "isCorrect": true },
+				{ "id": "B", "text": "3 and 3 m/s", "isCorrect": false },
+				{ "id": "C", "text": "6 and 0 m/s", "isCorrect": false },
+				{ "id": "D", "text": "2 and 4 m/s", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "In elastic collision, velocities swap for equal masses",
+			"explanation": "In elastic collision with equal masses, velocities are exchanged: first ball stops, second moves at 6 m/s"
+		},
+		{
+			"id": "phys_019",
+			"topic": "Wave Motion",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "A wave has frequency 5 Hz and wavelength 2 m. What is its speed?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "10 m/s", "isCorrect": true },
+				{ "id": "B", "text": "2.5 m/s", "isCorrect": false },
+				{ "id": "C", "text": "7 m/s", "isCorrect": false },
+				{ "id": "D", "text": "3 m/s", "isCorrect": false }
+			],
+			"supportsDiagram": true,
+			"diagram": {
+				"type": "wave",
+				"title": "Wave Properties",
+				"data": {
+					"amplitude": 30,
+					"wavelength": 100,
+					"frequency": 5
+				}
+			},
+			"hint": "v = fλ",
+			"explanation": "v = 5 × 2 = 10 m/s"
+		},
+		{
+			"id": "phys_020",
+			"topic": "Electric Force",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "Two charges of 2μC each are 0.1 m apart in vacuum. What is the force between them? (k = 9×10⁹ N·m²/C²)",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "3.6 N", "isCorrect": true },
+				{ "id": "B", "text": "36 N", "isCorrect": false },
+				{ "id": "C", "text": "0.36 N", "isCorrect": false },
+				{ "id": "D", "text": "360 N", "isCorrect": false }
+			],
+			"supportsDiagram": true,
+			"diagram": {
+				"type": "node",
+				"title": "Coulomb Force",
+				"data": {
+					"nodes": [
+						{
+							"id": "q1",
+							"type": "charge",
+							"label": "+2μC",
+							"x": 100,
+							"y": 100
+						},
+						{
+							"id": "q2",
+							"type": "charge",
+							"label": "+2μC",
+							"x": 200,
+							"y": 100
+						}
+					],
+					"edges": [{ "id": "force", "source": "q1", "target": "q2" }]
+				}
+			},
+			"hint": "F = kq₁q₂/r²",
+			"explanation": "F = 9×10⁹ × (2×10⁻⁶)² / 0.1² = 9×10⁹ × 4×10⁻¹² / 0.01 = 3.6 N"
+		},
+		{
+			"id": "phys_021",
+			"topic": "Pressure",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "A force of 200 N acts on an area of 0.04 m². What is the pressure?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "5000 Pa", "isCorrect": true },
+				{ "id": "B", "text": "500 Pa", "isCorrect": false },
+				{ "id": "C", "text": "50,000 Pa", "isCorrect": false },
+				{ "id": "D", "text": "500 Pa", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "P = F/A",
+			"explanation": "P = 200 / 0.04 = 5000 Pa"
+		},
+		{
+			"id": "phys_022",
+			"topic": "Density",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "A cube of side 0.1 m has mass 2 kg. What is its density?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "2000 kg/m³", "isCorrect": true },
+				{ "id": "B", "text": "200 kg/m³", "isCorrect": false },
+				{ "id": "C", "text": "20,000 kg/m³", "isCorrect": false },
+				{ "id": "D", "text": "2 kg/m³", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "ρ = m/V",
+			"explanation": "V = 0.1³ = 0.001 m³, ρ = 2 / 0.001 = 2000 kg/m³"
+		},
+		{
+			"id": "phys_023",
+			"topic": "Simple Harmonic Motion",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "A mass-spring system oscillates with period 0.4 s. What is the frequency?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "2.5 Hz", "isCorrect": true },
+				{ "id": "B", "text": "0.4 Hz", "isCorrect": false },
+				{ "id": "C", "text": "4 Hz", "isCorrect": false },
+				{ "id": "D", "text": "0.1 Hz", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "f = 1/T",
+			"explanation": "f = 1 / 0.4 = 2.5 Hz"
+		},
+		{
+			"id": "phys_024",
+			"topic": "Thermodynamics",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "A gas occupies 0.02 m³ at 100 kPa. What volume at 200 kPa at constant temperature?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "0.01 m³", "isCorrect": true },
+				{ "id": "B", "text": "0.04 m³", "isCorrect": false },
+				{ "id": "C", "text": "0.005 m³", "isCorrect": false },
+				{ "id": "D", "text": "0.02 m³", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "P₁V₁ = P₂V₂ (Boyle's Law)",
+			"explanation": "V₂ = P₁V₁/P₂ = 100 × 0.02 / 200 = 0.01 m³"
+		},
+		{
+			"id": "phys_025",
+			"topic": "Resistance",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "A wire has resistance 10 Ω. If its length is doubled, what is the new resistance?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "20 Ω", "isCorrect": true },
+				{ "id": "B", "text": "5 Ω", "isCorrect": false },
+				{ "id": "C", "text": "40 Ω", "isCorrect": false },
+				{ "id": "D", "text": "10 Ω", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "R ∝ L (directly proportional to length)",
+			"explanation": "If length doubles, resistance doubles: R = 10 × 2 = 20 Ω"
+		},
+		{
+			"id": "phys_026",
+			"topic": "Ohm's Law",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "A 12 V battery is connected to a 6 Ω resistor. What is the current?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "2 A", "isCorrect": true },
+				{ "id": "B", "text": "0.5 A", "isCorrect": false },
+				{ "id": "C", "text": "72 A", "isCorrect": false },
+				{ "id": "D", "text": "18 A", "isCorrect": false }
+			],
+			"supportsDiagram": true,
+			"diagram": {
+				"type": "circuit",
+				"title": "Ohm's Law Circuit",
+				"data": {
+					"nodes": [
+						{
+							"id": "battery",
+							"type": "source",
+							"label": "12V",
+							"x": 80,
+							"y": 100
+						},
+						{
+							"id": "resistor",
+							"type": "resistor",
+							"label": "6Ω",
+							"x": 200,
+							"y": 100
+						}
+					]
+				}
+			},
+			"hint": "I = V/R",
+			"explanation": "I = 12 / 6 = 2 A"
+		},
+		{
+			"id": "phys_027",
+			"topic": "Heat Transfer",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "How much heat is needed to raise 1 kg of water by 10°C? (c = 4200 J/kg·°C)",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "42,000 J", "isCorrect": true },
+				{ "id": "B", "text": "420 J", "isCorrect": false },
+				{ "id": "C", "text": "4,200 J", "isCorrect": false },
+				{ "id": "D", "text": "420,000 J", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Q = mcΔT",
+			"explanation": "Q = 1 × 4200 × 10 = 42,000 J"
+		},
+		{
+			"id": "phys_028",
+			"topic": "Optics",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "Light refracts from air into water with angle of incidence 45°. What is the angle of refraction? (nwater = 1.33)",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "32°", "isCorrect": true },
+				{ "id": "B", "text": "45°", "isCorrect": false },
+				{ "id": "C", "text": "58°", "isCorrect": false },
+				{ "id": "D", "text": "13°", "isCorrect": false }
+			],
+			"supportsDiagram": true,
+			"diagram": {
+				"type": "wave",
+				"title": "Refraction",
+				"data": {
+					"waves": [
+						{ "direction": "horizontal", "from": "air" },
+						{ "direction": "refracted", "to": "water" }
+					]
+				}
+			},
+			"hint": "n₁ sin(θ₁) = n₂ sin(θ₂)",
+			"explanation": "1 × sin(45°) = 1.33 × sin(θ₂) → 0.707 = 1.33 × sin(θ₂) → θ₂ ≈ 32°"
+		},
+		{
+			"id": "phys_029",
+			"topic": "Sound Waves",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "A siren has frequency 500 Hz. If it moves toward you at 20 m/s, what frequency do you hear? (speed of sound = 340 m/s)",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "529 Hz", "isCorrect": true },
+				{ "id": "B", "text": "471 Hz", "isCorrect": false },
+				{ "id": "C", "text": "500 Hz", "isCorrect": false },
+				{ "id": "D", "text": "520 Hz", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "f' = f × (v/(v-vs))",
+			"explanation": "f' = 500 × (340/(340-20)) = 500 × 340/320 = 529 Hz"
+		},
+		{
+			"id": "phys_030",
+			"topic": "Gravitational Potential",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "What is the escape velocity from Earth's surface? (g = 10 m/s², RE = 6.4×10⁶ m)",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "11.2 km/s", "isCorrect": true },
+				{ "id": "B", "text": "9.8 km/s", "isCorrect": false },
+				{ "id": "C", "text": "7.9 km/s", "isCorrect": false },
+				{ "id": "D", "text": "12 km/s", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "vesc = √(2gRE)",
+			"explanation": "vesc = √(2 × 10 × 6.4×10⁶) = √(128×10⁶) ≈ 11,320 m/s = 11.32 km/s"
+		},
+		{
+			"id": "phys_031",
+			"topic": "Vectors",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Two forces 6 N and 8 N act at right angles. What is the resultant force?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "10 N", "isCorrect": true },
+				{ "id": "B", "text": "14 N", "isCorrect": false },
+				{ "id": "C", "text": "2 N", "isCorrect": false },
+				{ "id": "D", "text": "48 N", "isCorrect": false }
+			],
+			"supportsDiagram": true,
+			"diagram": {
+				"type": "force-vector",
+				"title": "Vector Addition",
+				"data": {
+					"vectors": [
+						{ "label": "6N", "direction": "right", "color": "#3b82f6" },
+						{ "label": "8N", "direction": "up", "color": "#ef4444" }
+					]
+				}
+			},
+			"hint": "R = √(6² + 8²)",
+			"explanation": "R = √(36 + 64) = √100 = 10 N"
+		},
+		{
+			"id": "phys_032",
+			"topic": "Angular Momentum",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "A 2 kg mass rotates at 3 m/s in a circle of radius 0.5 m. What is its angular momentum?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "3 kg·m²/s", "isCorrect": true },
+				{ "id": "B", "text": "6 kg·m²/s", "isCorrect": false },
+				{ "id": "C", "text": "1.5 kg·m²/s", "isCorrect": false },
+				{ "id": "D", "text": "12 kg·m²/s", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "L = mvr = mr²ω",
+			"explanation": "L = 2 × 3 × 0.5 = 3 kg·m²/s"
+		},
+		{
+			"id": "phys_033",
+			"topic": "Young's Modulus",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "A wire of length 1 m stretches 0.001 m under 100 N load. Cross-section = 0.0001 m². What is Young's modulus?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "10⁹ Pa", "isCorrect": true },
+				{ "id": "B", "text": "10⁶ Pa", "isCorrect": false },
+				{ "id": "C", "text": "10¹² Pa", "isCorrect": false },
+				{ "id": "D", "text": "10³ Pa", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "E = (FL)/(AΔL)",
+			"explanation": "E = (100 × 1) / (0.0001 × 0.001) = 100 / 10⁻⁷ = 10⁹ Pa"
+		},
+		{
+			"id": "phys_034",
+			"topic": "Doppler Effect",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "An ambulance siren at 400 Hz approaches at 30 m/s. What frequency does a stationary person hear? (v = 340 m/s)",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "435 Hz", "isCorrect": true },
+				{ "id": "B", "text": "365 Hz", "isCorrect": false },
+				{ "id": "C", "text": "400 Hz", "isCorrect": false },
+				{ "id": "D", "text": "470 Hz", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "f' = f × v/(v-vs)",
+			"explanation": "f' = 400 × 340/(340-30) = 400 �� 340/310 = 435 Hz"
+		},
+		{
+			"id": "phys_035",
+			"topic": "Nuclear Physics",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "A radioactive sample decays from 1000 atoms to 125 atoms in 30 days. What is its half-life?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "10 days", "isCorrect": true },
+				{ "id": "B", "text": "15 days", "isCorrect": false },
+				{ "id": "C", "text": "5 days", "isCorrect": false },
+				{ "id": "D", "text": "20 days", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "N = N₀(1/2)^(t/t½)",
+			"explanation": "125 = 1000 × (1/2)^(30/t½) → 1/8 = (1/2)^(30/t½) → t½ = 10 days"
+		}
+	]
+}
