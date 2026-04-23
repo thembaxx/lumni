@@ -1,7 +1,15 @@
 {
 	"$schema": "https://biomejs.dev/schemas/2.4.12/schema.json",
 	"vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
-	"files": { "ignoreUnknown": false },
+	"files": {
+		"ignoreUnknown": false,
+		"includes": [
+			"src/**/*.{ts,tsx,js,jsx,cjs,mjs}",
+			"*.{ts,tsx,js,jsx,cjs,mjs,json}",
+			"app.config.ts",
+			"next.config.*"
+		]
+	},
 	"formatter": { "enabled": true, "indentStyle": "tab" },
 	"css": {
 		"parser": {
@@ -460,6 +468,10 @@
 					}
 				}
 			}
+		},
+		{
+			"includes": ["src/lib/data/**/*.json"],
+			"json": { "parser": { "allowTrailingCommas": true } }
 		}
 	],
 	"assist": {

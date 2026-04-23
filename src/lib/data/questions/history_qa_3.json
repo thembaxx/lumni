@@ -1,0 +1,567 @@
+{
+	"metadata": {
+		"subject": "History",
+		"totalQuestions": 600,
+		"version": "1.0",
+		"curriculum": "CAPS",
+		"createdAt": "2026-04-23T00:00:00.000Z"
+	},
+	"questions": [
+		{
+			"id": "h004_001",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What was the Great Trek?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "A migration of Dutch settlers inland",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "A war between tribes", "isCorrect": false },
+				{ "id": "C", "text": "A trade expedition", "isCorrect": false },
+				{ "id": "D", "text": "A religious movement", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Boers moved away from British rule.",
+			"explanation": "The Great Trek (1835-1854) was the mass migration of Afrikaner Boers away from British-controlled Cape Colony into the interior."
+		},
+		{
+			"id": "h004_002",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Who founded the Zulu Kingdom?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Shaka Zulu", "isCorrect": true },
+				{ "id": "B", "text": "Napoleon", "isCorrect": false },
+				{ "id": "C", "text": "Jan van Riebeeck", "isCorrect": false },
+				{ "id": "D", "text": "David Livingstone", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "He united Zulu clans in early 1800s.",
+			"explanation": "Shaka Zulu (c.1787-1828) established the Zulu Kingdom through military conquest and diplomacy."
+		},
+		{
+			"id": "h004_003",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What impact did Shaka Zulu have on Southern Africa?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Created a powerful Zulu kingdom",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Ended British colonization", "isCorrect": false },
+				{ "id": "C", "text": "Started the gold rush", "isCorrect": false },
+				{ "id": "D", "text": "Founded Johannesburg", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Military and political organization.",
+			"explanation": "Shaka created a centralized Zulu state with innovative military tactics, fundamentally reshaping the political landscape."
+		},
+		{
+			"id": "h004_004",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What event led to the mfecane (crushing)?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Shaka's military campaigns", "isCorrect": true },
+				{ "id": "B", "text": "European colonization", "isCorrect": false },
+				{ "id": "C", "text": "Drought conditions", "isCorrect": false },
+				{ "id": "D", "text": "Trade disputes", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Forced relocation of many groups.",
+			"explanation": "The mfecane was caused by Shaka's aggressive expansion, forcing populations to flee and reshaping the region."
+		},
+		{
+			"id": "h004_005",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Who established a refreshment station at the Cape in 1652?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Jan van Riebeeck", "isCorrect": true },
+				{ "id": "B", "text": "Shaka Zulu", "isCorrect": false },
+				{ "id": "C", "text": "David Livingstone", "isCorrect": false },
+				{ "id": "D", "text": "Paul Kruger", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Dutch East India Company official.",
+			"explanation": "Van Riebeeck was tasked by the VOC to establish a refreshment station for ships traveling to the East."
+		},
+		{
+			"id": "h004_006",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What was the result of British victory in the Anglo-Zulu War of 1879?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Annexation of Zulu territories",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Zulu independence guaranteed",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "End of British expansion", "isCorrect": false },
+				{ "id": "D", "text": "Zulu-Boer alliance", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Colonial conquest followed.",
+			"explanation": "Despite Zulu victories at Isandlwana, ultimate British victory led to annexation and colonial rule."
+		},
+		{
+			"id": "h004_007",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What were the Trekboers?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Semi-nomadic white farmers", "isCorrect": true },
+				{ "id": "B", "text": "Zulu warriors", "isCorrect": false },
+				{ "id": "C", "text": "British colonial soldiers", "isCorrect": false },
+				{ "id": "D", "text": "Indian traders", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Moved with their herds.",
+			"explanation": "Trekboers were descendants of Dutch settlers who migrated inland with their livestock, establishing farms."
+		},
+		{
+			"id": "h004_008",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "How did the British abolition of slavery (1833) affect the Cape Colony?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Prompted many Boers to join the Great Trek",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Ended all colonial activities",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Strengthened Boer-Dutch relations",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Led to immediate independence",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Many Boers felt British policies were against their interests.",
+			"explanation": "The emancipation of slaves and compensation schemes were key grievances that drove Boers to migrate during the Great Trek."
+		},
+		{
+			"id": "h004_009",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What was the significance of the Battle of Blood River (1838)?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Decisive Voortrekker victory over Zulu forces",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "British victory over the Zulu",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Zulu victory over Boers", "isCorrect": false },
+				{ "id": "D", "text": "Signing of a peace treaty", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Led to Zulu defeat and Trekker settlement.",
+			"explanation": "The battle resulted in Zulu defeat, allowing Trekkers to establish republics and marking a turning point in regional power."
+		},
+		{
+			"id": "h004_010",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What were the main reasons for the Great Trek?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "British policies, lack of land, and desire for independence",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Gold discoveries and economic opportunity",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Escape from disease outbreaks",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Religious persecution", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Multiple political and economic factors.",
+			"explanation": "Grievances included British abolition of slavery, equitable land access issues, and cultural clashes over governance."
+		},
+		{
+			"id": "h004_011",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What impact did European diseases have on indigenous populations?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Caused devastating population decline",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Had no significant effect", "isCorrect": false },
+				{
+					"id": "C",
+					"text": "Improved immunity worldwide",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Only affected Europeans", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Smallpox was particularly deadly.",
+			"explanation": "Diseases like smallpox devastated indigenous populations who had no prior exposure or immunity to European diseases."
+		},
+		{
+			"id": "h004_012",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What Republics did the Voortrekkers establish?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "South African Republic (Transvaal) and Orange Free State",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Natal and Cape Republic", "isCorrect": false },
+				{ "id": "C", "text": "Zulu Republic and Boerland", "isCorrect": false },
+				{ "id": "D", "text": "Rhodesia and Botswana", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Two major independent republics.",
+			"explanation": "The South African Republic (Transvaal) and Orange Free State were established as independent Boer republics."
+		},
+		{
+			"id": "h004_013",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "How did the discovery of diamonds (1867) change Southern Africa?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Triggered rush of Europeans and colonial expansion", "isCorrect": true },
+				{ "id": "B", "text": "Ended all conflicts immediately", "isCorrect": false },
+				{ "id": "C", "text": "Reduced European interest in the region", "isCorrect": false },
+				{ "id": "D", "text": "Only benefited indigenous groups", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Kimberley became a key center.",
+			"explanation": "Diamond discoveries at Kimberley attracted thousands, intensifying colonial scramble and conflicts over territory."
+		},
+		{
+			"id": "h004_014",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What role did missionaries play in Southern Africa during this period?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Spread Christianity and acted as intermediaries",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Only recruited soldiers for colonial armies",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Opposed all forms of colonization",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Were primarily focused on trade",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Prominent missionaries included Robert Moffat.",
+			"explanation": "Missionaries like Moffat and Livingstone spread Christianity and often mediated between indigenous groups and colonial authorities."
+		},
+		{
+			"id": "h004_015",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Evaluate the extent to which the mfecane transformed social structures in Southern Africa.",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "It caused widespread displacement and created new states while disrupting existing ones",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "It had minimal impact on social structures",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "It only affected the Zulu kingdom",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "It was primarily an economic phenomenon",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Consider both local and regional impacts.",
+			"explanation": "The mfecane led to population movements, formation of new states like Lesotho and Swaziland, while destroying or transforming existing power structures."
+		},
+		{
+			"id": "h004_016",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "To what extent did British and Boer interests diverge in the Cape Colony?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Diverged significantly over slavery, governance, and land policy",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Never differed as they had shared interests",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Differed only over religious matters",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Diverged only after the gold rush",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Slavery and self-governance were key issues.",
+			"explanation": "Fundamental differences over slavery, British legal authority, and access to land ownership created irreconcilable tensions leading to the Great Trek."
+		},
+		{
+			"id": "h004_017",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Analyze the causes and consequences of Shaka's military reforms.",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Reforms created a powerful state but caused widespread warfare and displacement",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Had no significant military impact",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Only affected neighboring Zulu groups",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Were copied by Europeans immediately",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Consider short and long-term impacts.",
+			"explanation": "Shaka's innovations like the bull horn formation and centralized army created a dominant state but also triggered conflicts that reshaped the region."
+		},
+		{
+			"id": "h004_018",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "How did the Great Trek represent both a rejection of British authority and a continuation of colonial expansion?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Boers sought independence from Britain while continuing territorial expansion into indigenous lands",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "It was purely anti-colonial movement",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "It ended all colonial activities",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "It was solely about economic opportunities",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Consider the nature of Voortrekker settlement.",
+			"explanation": "The Trek represented resistance to British liberal values while simultaneously replicating colonial patterns of expansion into indigenous territories."
+		},
+		{
+			"id": "h004_019",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Evaluate the long-term consequences of European-African interactions for indigenous power structures.",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Indigenous polities lost sovereignty and were gradually incorporated into colonial systems",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Indigenous power structures remained unchanged",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Indigenous groups successfully resisted all European influence",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Only economic structures changed",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Consider political, economic, and social dimensions.",
+			"explanation": "Interactions led to diminished indigenous sovereignty, loss of land, and gradual subordination to colonial political and economic systems."
+		},
+		{
+			"id": "h004_020",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "To what extent was the Scramble for Africa in this region a continuation of earlier patterns of expansion?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Early migrations set precedents for territorial claims later formalized during the Scramble",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "The Scramble was entirely unrelated to earlier events",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Earlier patterns had no influence on later expansion",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "The Scramble was primarily economic, not territorial",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Connect earlier Trek events to later Scramble.",
+			"explanation": "Voortrekker settlement patterns and territorial claims provided foundations for later European Scramble for Africa, especially after diamond discoveries."
+		}
+	]
+}

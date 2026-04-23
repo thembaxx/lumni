@@ -1,0 +1,391 @@
+{
+	"metadata": {
+		"subject": "Life Sciences",
+		"totalQuestions": 20,
+		"version": "1.0",
+		"curriculum": "CAPS",
+		"createdAt": "2026-04-23T00:00:00.000Z"
+	},
+	"questions": [
+		{
+			"id": "ls016_001",
+			"topic": "Excretion in Humans",
+			"lessonId": "ls-016",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The main excretory organ in humans is the:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Liver", "isCorrect": false },
+				{ "id": "B", "text": "Kidney", "isCorrect": true },
+				{ "id": "C", "text": "Lungs", "isCorrect": false },
+				{ "id": "D", "text": "Skin", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Paired, bean-shaped organs.",
+			"explanation": "The kidneys are the primary excretory organs, filtering blood and producing urine to remove nitrogenous wastes and regulate water and salt balance."
+		},
+		{
+			"id": "ls016_002",
+			"topic": "Excretion in Humans",
+			"lessonId": "ls-016",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Urea is formed in the:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Kidneys", "isCorrect": false },
+				{ "id": "B", "text": "Liver", "isCorrect": true },
+				{ "id": "C", "text": "Bladder", "isCorrect": false },
+				{ "id": "D", "text": "Lungs", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "From ammonia and CO2.",
+			"explanation": "Urea is formed in the liver via the Ornithine cycle (urea cycle), where ammonia (toxic) is combined with CO2 to form less toxic urea for excretion."
+		},
+		{
+			"id": "ls016_003",
+			"topic": "Excretion in Humans",
+			"lessonId": "ls-016",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The functional unit of the kidney is the:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Nephron", "isCorrect": true },
+				{ "id": "B", "text": "Glomerulus", "isCorrect": false },
+				{ "id": "C", "text": "Alveolus", "isCorrect": false },
+				{ "id": "D", "text": "Neuron", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Each kidney has about 1 million.",
+			"explanation": "Each kidney contains about one million nephrons, which filter blood, reabsorb useful substances, and form urine."
+		},
+		{
+			"id": "ls016_004",
+			"topic": "Excretion in Humans",
+			"lessonId": "ls-016",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Urine is stored in the:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Kidney", "isCorrect": false },
+				{ "id": "B", "text": "Ureter", "isCorrect": false },
+				{ "id": "C", "text": "Bladder", "isCorrect": true },
+				{ "id": "D", "text": "Urethra", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Muscular sac.",
+			"explanation": "The urinary bladder is a muscular sac that stores urine until it is expelled from the body through the urethra."
+		},
+		{
+			"id": "ls016_005",
+			"topic": "Excretion in Humans",
+			"lessonId": "ls-016",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The liver produces urea from:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Excess amino acids", "isCorrect": true },
+				{ "id": "B", "text": "Excess glucose", "isCorrect": false },
+				{ "id": "C", "text": "Excess fats", "isCorrect": false },
+				{ "id": "D", "text": "Excess water", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Deamination of amino acids.",
+			"explanation": "When amino acids are deaminated (removal of amino group) in the liver, the ammonia is converted to urea for safe excretion."
+		},
+		{
+			"id": "ls016_006",
+			"topic": "Excretion in Humans",
+			"lessonId": "ls-016",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The kidneys regulate:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Only blood pH", "isCorrect": false },
+				{ "id": "B", "text": "Blood water and salt balance", "isCorrect": true },
+				{ "id": "C", "text": "Only blood glucose levels", "isCorrect": false },
+				{ "id": "D", "text": "Body temperature only", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Homeostasis of blood composition.",
+			"explanation": "The kidneys maintain homeostasis by regulating water and salt balance, blood pH, blood pressure, and removing metabolic wastes."
+		},
+		{
+			"id": "ls016_007",
+			"topic": "Excretion in Humans",
+			"lessonId": "ls-016",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Dialysis is used when:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "The heart fails", "isCorrect": false },
+				{ "id": "B", "text": "Kidney function is severely reduced", "isCorrect": true },
+				{ "id": "C", "text": "The liver fails", "isCorrect": false },
+				{ "id": "D", "text": "Blood pressure is too high", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Kidney replacement therapy.",
+			"explanation": "Dialysis mechanically filters blood when kidneys can no longer function adequately, removing wastes and excess water."
+		},
+		{
+			"id": "ls016_008",
+			"topic": "Excretion in Humans",
+			"lessonId": "ls-016",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The first stage of urine formation is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Reabsorption", "isCorrect": false },
+				{ "id": "B", "text": "Ultrafiltration in the glomerulus", "isCorrect": true },
+				{ "id": "C", "text": "Secretion", "isCorrect": false },
+				{ "id": "D", "text": "Osmoregulation", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Blood filtering under pressure.",
+			"explanation": "Ultrafiltration occurs when blood pressure forces water and small molecules from the glomerulus into Bowman's capsule, forming filtrate."
+		},
+		{
+			"id": "ls016_009",
+			"topic": "Excretion in Humans",
+			"lessonId": "ls-016",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The reabsorption of water in the kidney is controlled by:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Insulin", "isCorrect": false },
+				{ "id": "B", "text": "Antidiuretic hormone (ADH)", "isCorrect": true },
+				{ "id": "C", "text": "Adrenaline", "isCorrect": false },
+				{ "id": "D", "text": "Thyroxine", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Pituitary hormone.",
+			"explanation": "ADH from the posterior pituitary controls water reabsorption in the collecting duct. More ADH = more water reabsorption = concentrated urine."
+		},
+		{
+			"id": "ls016_010",
+			"topic": "Excretion in Humans",
+			"lessonId": "ls-016",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The Bowman's capsule surrounds the:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Loop of Henle", "isCorrect": false },
+				{ "id": "B", "text": "Glomerulus", "isCorrect": true },
+				{ "id": "C", "text": "Renal tubule", "isCorrect": false },
+				{ "id": "D", "text": "Collecting duct", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Start of nephron.",
+			"explanation": "Bowman's capsule surrounds the glomerulus, collecting the filtrate from the capillary network where blood filtering begins."
+		},
+		{
+			"id": "ls016_011",
+			"topic": "Excretion in Humans",
+			"lessonId": "ls-016",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The Loop of Henle is responsible for:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Filtration of blood", "isCorrect": false },
+				{ "id": "B", "text": "Concentrating or diluting urine", "isCorrect": true },
+				{ "id": "C", "text": "Producing urea", "isCorrect": false },
+				{ "id": "D", "text": "Storing urine", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Countercurrent mechanism.",
+			explanation: "The Loop of Henle uses countercurrent multiplication to create a concentration gradient in the medulla, allowing the kidney to produce concentrated urine."
+		},
+		{
+			"id": "ls016_012",
+			"topic": "Excretion in Humans",
+			"lessonId": "ls-016",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The hormone that increases blood calcium levels is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Insulin", "isCorrect": false },
+				{ "id": "B", "text": "Calcitonin", "isCorrect": true },
+				{ "id": "C", "text": "ADH", "isCorrect": false },
+				{ "id": "D", "text": "Aldosterone", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "From thyroid gland.",
+			"explanation": "Calcitonin from the thyroid gland lowers blood calcium levels by promoting calcium deposition in bones and increasing renal excretion."
+		},
+		{
+			"id": "ls016_013",
+			"topic": "Excretion in Humans",
+			"lessonId": "ls-016",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "When the body is dehydrated, ADH levels:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Decrease", "isCorrect": false },
+				{ "id": "B", "text": "Increase", "isCorrect": true },
+				{ "id": "C", "text": "Remain the same", "isCorrect": false },
+				{ "id": "D", "text": "Are converted to urea", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Conservation of water.",
+			"explanation": "When dehydrated, osmoreceptors detect high blood solute concentration, triggering increased ADH release to increase water reabsorption."
+		},
+		{
+			"id": "ls016_014",
+			"topic": "Excretion in Humans",
+			"lessonId": "ls-016",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Aldosterone is produced by the:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Pituitary gland", "isCorrect": false },
+				{ "id": "B", "text": "Adrenal cortex", "isCorrect": true },
+				{ "id": "C", "text": "Kidney", "isCorrect": false },
+				{ "id": "D", "text": "Pancreas", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "On top of kidney.",
+			"explanation": "Aldosterone is a mineralocorticoid from the adrenal cortex that promotes sodium reabsorption and potassium excretion, regulating blood pressure."
+		},
+		{
+			"id": "ls016_015",
+			"topic": "Excretion in Humans",
+			"lessonId": "ls-016",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "In the Loop of Henle, the descending limb is permeable to:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Sodium ions only", "isCorrect": false },
+				{ "id": "B", "text": "Water", "isCorrect": true },
+				{ "id": "C", "text": "Urea", "isCorrect": false },
+				{ "id": "D", "text": "Neither water nor salts", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Thin descending, thick ascending.",
+			"explanation": "The descending limb is permeable to water (which leaves by osmosis, concentrating the filtrate) but not to salts. The ascending limb is permeable to salts but not water."
+		},
+		{
+			"id": "ls016_016",
+			"topic": "Excretion in Humans",
+			"lessonId": "ls-016",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Glomerular filtration rate (GFR) is primarily determined by:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Blood osmotic pressure", "isCorrect": false },
+				{ "id": "B", "text": "Net filtration pressure (blood hydrostatic minus filtrate pressure)", "isCorrect": true },
+				{ "id": "C", "text": "ADH levels", "isCorrect": false },
+				{ "id": "D", "text": "Urine concentration", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Forces at the glomerulus.",
+			explanation: "GFR depends on net filtration pressure: glomerular capillary hydrostatic pressure (favours filtration) minus Bowman's capsule pressure and blood colloid osmotic pressure."
+		},
+		{
+			"id": "ls016_017",
+			"topic": "Excretion in Humans",
+			"lessonId": "ls-016",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The renin-angiotensin-aldosterone system (RAAS) functions to:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Increase urine production", "isCorrect": false },
+				{ "id": "B", "text": "Raise blood pressure by increasing water and sodium reabsorption", "isCorrect": true },
+				{ "id": "C", "text": "Lower blood pH", "isCorrect": false },
+				{ "id": "D", "text": "Break down urea", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Regulates blood pressure.",
+			explanation: "RAAS is activated when blood pressure is low. Renin leads to angiotensin II formation, which causes vasoconstriction and aldosterone release, increasing blood pressure."
+		},
+		{
+			"id": "ls016_018",
+			"topic": "Excretion in Humans",
+			"lessonId": "ls-016",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Tubular reabsorption differs from tubular secretion in that tubular reabsorption:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Occurs from blood to tubule, while secretion occurs from tubule to blood", "isCorrect": false },
+				{ "id": "B", "text": "Moves substances from tubule back into blood; secretion moves substances from blood into tubule", "isCorrect": true },
+				{ "id": "C", "text": "Only occurs in the Loop of Henle", "isCorrect": false },
+				{ "id": "D", "text": "Requires no energy", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Recovery vs elimination.",
+			explanation: "Tubular reabsorption recovers useful substances (glucose, water, salts) from filtrate back into blood. Secretion moves wastes (H+, drugs, K+) from blood into filtrate."
+		},
+		{
+			"id": "ls016_019",
+			"topic": "Excretion in Humans",
+			"lessonId": "ls-016",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Which condition results from kidney failure where nitrogenous waste accumulates in the blood?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Uraemia", "isCorrect": true },
+				{ "id": "B", "text": "Glycosuria", "isCorrect": false },
+				{ "id": "C", "text": "Diuresis", "isCorrect": false },
+				{ "id": "D", "text": "Haematuria", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Toxic buildup in blood.",
+			"explanation": "Uraemia is a condition where urea and other nitrogenous wastes accumulate in the blood due to kidney failure, causing symptoms like nausea, fatigue, and confusion."
+		},
+		{
+			"id": "ls016_020",
+			"topic": "Excretion in Humans",
+			"lessonId": "ls-016",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Selective reabsorption of glucose occurs in the:",
+			questionType: "multiple-choice",
+			options: [
+				{ id: "A", text: "Bowman's capsule", isCorrect: false },
+				{ id: "B", text: "Proximal convoluted tubule", isCorrect: true },
+				{ id: "C", text: "Loop of Henle", isCorrect: false },
+				{ id: "D", text: "Collecting duct", isCorrect: false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Near complete reabsorption.",
+			explanation: "The proximal convoluted tubule nearly completely reabsorbs glucose (and other nutrients) through active transport, so normal urine contains no glucose."
+		}
+	]
+}

@@ -1,0 +1,583 @@
+{
+	"metadata": {
+		"subject": "History",
+		"totalQuestions": 600,
+		"version": "1.0",
+		"curriculum": "CAPS",
+		"createdAt": "2026-04-23T00:00:00.000Z"
+	},
+	"questions": [
+		{
+			"id": "h007_001",
+			"topic": "Union of South Africa 1910",
+			"lessonId": "h-007",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "When was the Union of South Africa established?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "1910", "isCorrect": true },
+				{ "id": "B", "text": "1902", "isCorrect": false },
+				{ "id": "C", "text": "1918", "isCorrect": false },
+				{ "id": "D", "text": "1920", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Following the South African War.",
+			"explanation": "Union of South Africa was created on 31 May 1910 by uniting the Cape Colony, Natal, Transvaal, and Orange River Colony."
+		},
+		{
+			"id": "h007_002",
+			"topic": "Union of South Africa 1910",
+			"lessonId": "h-007",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Which four colonies were united to form South Africa?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Cape Colony, Natal, Transvaal, and Orange River Colony",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Zululand, Swaziland, Lesotho, Botswana",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Rhodesia, Mozambique, Angola, Namibia",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Griqualand, Bechuanaland, Namaqualand, Kalahari",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Former British territories.",
+			"explanation": "The Union united four British colonies: Cape Colony, Natal, Transvaal, and Orange River Colony under one government."
+		},
+		{
+			"id": "h007_003",
+			"topic": "Union of South Africa 1910",
+			"lessonId": "h-007",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Who became the first Prime Minister of South Africa?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Louis Botha", "isCorrect": true },
+				{ "id": "B", "text": "Jan Smuts", "isCorrect": false },
+				{ "id": "C", "text": "J.B.M. Hertzog", "isCorrect": false },
+				{ "id": "D", "text": "Paul Kruger", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Former Boer general.",
+			"explanation": "Louis Botha, a former Boer War general, became the first Prime Minister in 1910."
+		},
+		{
+			"id": "h007_004",
+			"topic": "Union of South Africa 1910",
+			"lessonId": "h-007",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What type of government did the Union have?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Parliamentary system under British dominion",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Independent republic", "isCorrect": false },
+				{ "id": "C", "text": "Absolute monarchy", "isCorrect": false },
+				{ "id": "D", "text": "Military dictatorship", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "British constitutional framework.",
+			"explanation": "The Union operated as a British dominion with parliamentary democracy and Westminster system."
+		},
+		{
+			"id": "h007_005",
+			"topic": "Union of South Africa 1910",
+			"lessonId": "h-007",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Which provinces were created in the Union?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Cape of Good Hope, Natal, Transvaal, Orange Free State",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Johannesburg, Pretoria, Durban, Cape Town",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "West, East, North, South provinces",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Northern, Southern, Eastern, Western provinces",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Based on former colonies.",
+			"explanation": "Four provinces were established: Cape of Good Hope, Natal, Transvaal, and Orange Free State."
+		},
+		{
+			"id": "h007_006",
+			"topic": "Union of South Africa 1910",
+			"lessonId": "h-007",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Who was the British monarch during the formation of the Union?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "King Edward VII", "isCorrect": true },
+				{ "id": "B", "text": "Queen Victoria", "isCorrect": false },
+				{ "id": "C", "text": "King George V", "isCorrect": false },
+				{ "id": "D", "text": "King George VI", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Early 20th century monarch.",
+			"explanation": "King Edward VII was on the British throne when South Africa was formed, though he died in 1910."
+		},
+		{
+			"id": "h007_007",
+			"topic": "Union of South Africa 1910",
+			"lessonId": "h-007",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What was Natives Land Act of 1913?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Restricted African land ownership to specific areas",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Granted Africans equal land rights",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Divided land equally between all groups",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Ended all land restrictions", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Segregation legislation.",
+			"explanation": "The Natives Land Act restricted African land ownership to only 7% of South Africa's land area."
+		},
+		{
+			"id": "h007_008",
+			"topic": "Union of South Africa 1910",
+			"lessonId": "h-007",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What were the main motivations for creating the Union?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Economic unity, defense coordination, and post-war reconciliation",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "African political demands", "isCorrect": false },
+				{
+					"id": "C",
+					"text": "International pressure only",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Religious unification", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Post-Boer War context.",
+			"explanation": "The Union was driven by economic integration needs, military coordination, and reconciliation between British and Boers."
+		},
+		{
+			"id": "h007_009",
+			"topic": "Union of South Africa 1910",
+			"lessonId": "h-007",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What was the role of Jan Smuts in early Union politics?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Served as Prime Minister and key policy architect",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Led African resistance movements",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Opposed Union formation", "isCorrect": false },
+				{
+					"id": "D",
+					"text": "Had no significant political role",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Second Prime Minister.",
+			"explanation": "Jan Smuts served as Prime Minister from 1919-1924 and played crucial role in drafting Union policies."
+		},
+		{
+			"id": "h007_010",
+			"topic": "Union of South Africa 1910",
+			"lessonId": "h-007",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What was the Native Affairs Act of 1920?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Established separate representative bodies for Africans",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Granted Africans voting rights",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Ended segregation", "isCorrect": false },
+				{
+					"id": "D",
+					"text": "Integrated African representation in Parliament",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Segregation policies.",
+			"explanation": "The Act created advisory Native Representatives selected by the government rather than elected by Africans."
+		},
+		{
+			"id": "h007_011",
+			"topic": "Union of South Africa 1910",
+			"lessonId": "h-007",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "How were black South Africans excluded from political power in the Union?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Through property qualifications and separate voter rolls",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "They were given full voting rights",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "No exclusion measures existed",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "They chose not to participate",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Cape Qualified Franchise.",
+			"explanation": "While Cape Africans could vote under property qualifications, other provinces had no African representation and later unified exclusion was implemented."
+		},
+		{
+			"id": "h007_012",
+			"topic": "Union of South Africa 1910",
+			"lessonId": "h-007",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What was the impact of the 1913 Natives Land Act on Africans?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Displacement and forced labor systems",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Economic prosperity", "isCorrect": false },
+				{ "id": "C", "text": "Land ownership equality", "isCorrect": false },
+				{ "id": "D", "text": "Political empowerment", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Territorial segregation.",
+			"explanation": "The Act confined Africans to limited areas, disrupting communities and forcing many into labor markets."
+		},
+		{
+			"id": "h007_013",
+			"topic": "Union of South Africa 1910",
+			"lessonId": "h-007",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What was the relationship between the Union government and British imperial policy?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Semi-autonomous but aligned with British interests",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Fully independent from Britain",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Completely controlled by Britain",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Opposed all British policies",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Dominion status.",
+			"explanation": "As a British dominion, the Union controlled domestic affairs but followed British foreign policy, including WWI participation."
+		},
+		{
+			"id": "h007_014",
+			"topic": "Union of South Africa 1910",
+			"lessonId": "h-007",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "How did South Africa participate in World War I?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Campaigns against German colonies in Africa",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Refused to participate", "isCorrect": false },
+				{ "id": "C", "text": "Fought against Britain", "isCorrect": false },
+				{ "id": "D", "text": "Only provided supplies", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "German South West Africa.",
+			"explanation": "South Africa captured German South West Africa and supported British war effort, with Botha and Smuts commanding campaigns."
+		},
+		{
+			"id": "h007_015",
+			"topic": "Union of South Africa 1910",
+			"lessonId": "h-007",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Evaluate the extent to which the Union of South Africa represented reconciliation between Boers and British.",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Reconciliation was limited to white groups while excluding Africans",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Full reconciliation included all groups",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "No reconciliation occurred", "isCorrect": false },
+				{
+					"id": "D",
+					"text": "Reconciliation was only symbolic",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Racial dimensions of 'unity'.",
+			"explanation": "White unity was achieved at the expense of African rights, consolidating white supremacy across all groups."
+		},
+		{
+			"id": "h007_016",
+			"topic": "Union of South Africa 1910",
+			"lessonId": "h-007",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Analyze how the Union's founding documents institutionalized racial discrimination.",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Through exclusion clauses and delegated segregation powers",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "No discrimination was institutionalized",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Only economic discrimination existed",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Discrimination was temporary",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Section 35 and provincial powers.",
+			"explanation": "The South Africa Act allowed provinces to maintain separate franchise rules, enabling systematic racial exclusion."
+		},
+		{
+			"id": "h007_017",
+			"topic": "Union of South Africa 1910",
+			"lessonId": "h-007",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "To what extent was the Union a compromise between British and Boer interests?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Compromise maintained white unity but marginalized Africans",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Fully represented Boer interests only",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Fully represented British interests only",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Was not a compromise at all", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Power-sharing arrangements.",
+			"explanation": "Botha-Smuts faction and Hertzog's Nationalists shared power, creating a unified white political framework."
+		},
+		{
+			"id": "h007_018",
+			"topic": "Union of South Africa 1910",
+			"lessonId": "h-007",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Analyze the economic policies of the early Union government.",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Mining-based economy with labor policies favoring white workers",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Agricultural focus benefiting all farmers",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Industrial development for all groups",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Trade-focused economy without internal policies",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Minerals-energy complex.",
+			"explanation": "Government policies supported mining capital while using tariffs and labor laws to maintain white employment."
+		},
+		{
+			"id": "h007_019",
+			"topic": "Union of South Africa 1910",
+			"lessonId": "h-007",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Evaluate the legacy of Union-era racial policies for later apartheid legislation.",
+			questionType: "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Established precedents for later segregation and apartheid laws", "isCorrect": true },
+				{ "id": "B", "text": "Had no connection to apartheid", "isCorrect": false },
+				{ "id": "C", "text": "Promoted racial equality", "isCorrect": false },
+				{ "id": "D", "text": "Only affected political representation", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Building blocks of apartheid.",
+			"explanation": "The Natives Land Act, pass laws, and discrimination provided legal framework that apartheid would expand."
+		},
+		{
+			"id": "h007_020",
+			"topic": "Union of South Africa 1910",
+			"lessonId": "h-007",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "How did the formation of the Union affect South Africa's international position?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Created a significant regional power with imperial ties",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Made South Africa irrelevant internationally",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Isolated South Africa from Britain",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Reduced South Africa's influence",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Colonial administration and League of Nations.",
+			"explanation": "The Union gained control over South West Africa and became a founding member of the League of Nations."
+		}
+	]
+}

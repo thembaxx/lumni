@@ -1,0 +1,1255 @@
+{
+	"metadata": {
+		"subject": "History",
+		"totalQuestions": 600,
+		"version": "1.0",
+		"curriculum": "CAPS",
+		"createdAt": "2026-04-23T00:00:00.000Z"
+	},
+	"questions": [
+		{
+			"id": "h002_001",
+			"topic": "European Expansion 15th-18th Century",
+			"lessonId": "h-002",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The main motive for European exploration was:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Spreading Christianity", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "Finding trade routes to Asia",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Mapping the world", "isCorrect": false },
+				{ "id": "D", "text": "Scientific research", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Spice trade was the main driver.",
+			"explanation": "Europeans sought direct trade routes to Asia to access spices and silks."
+		},
+		{
+			"id": "h002_002",
+			"topic": "European Expansion 15th-18th Century",
+			"lessonId": "h-002",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Portuguese explorer Vasco da Gama reached:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "India", "isCorrect": true },
+				{ "id": "B", "text": "Brazil", "isCorrect": false },
+				{ "id": "C", "text": "Australia", "isCorrect": false },
+				{ "id": "D", "text": "North America", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "1498 voyage to the East.",
+			"explanation": "Vasco da Gama reached Calicut, India in 1498."
+		},
+		{
+			"id": "h002_003",
+			"topic": "European Expansion 15th-18th Century",
+			"lessonId": "h-002",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The Dutch East India Company was called:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "VOC", "isCorrect": true },
+				{ "id": "B", "text": "EIC", "isCorrect": false },
+				{ "id": "C", "text": "EIC", "isCorrect": false },
+				{ "id": "D", "text": "Dutch VA", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Abbreviation in Dutch.",
+			"explanation": "VOC stands for Vereenigde Oost-Indische Compagnie."
+		},
+		{
+			"id": "h002_004",
+			"topic": "European Expansion 15th-18th Century",
+			"lessonId": "h-002",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The Dutch established a refreshment station at the Cape in:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "1652", "isCorrect": true },
+				{ "id": "B", "text": "1488", "isCorrect": false },
+				{ "id": "C", "text": "1806", "isCorrect": false },
+				{ "id": "D", "text": "1602", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Mid-17th century.",
+			"explanation": "Jan van Riebeeck established the station in 1652."
+		},
+		{
+			"id": "h002_005",
+			"topic": "European Expansion 15th-18th Century",
+			"lessonId": "h-002",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The Portuguese named the tip of Africa:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Cape of Good Hope", "isCorrect": true },
+				{ "id": "B", "text": "Cape Agulhas", "isCorrect": false },
+				{ "id": "C", "text": "Cape Town", "isCorrect": false },
+				{ "id": "D", "text": "Cape Recife", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Hope for trade to the East.",
+			"explanation": "Bartolomeu Dias named it Cabo da Boa Esperança (Cape of Good Hope)."
+		},
+		{
+			"id": "h002_006",
+			"topic": "European Expansion 15th-18th Century",
+			"lessonId": "h-002",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The impact on indigenous populations included:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Only economic benefits", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "Land dispossession and disease",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Preservation of cultures", "isCorrect": false },
+				{ "id": "D", "text": "No significant impact", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Negative consequences.",
+			"explanation": "Colonization led to land loss, disease, and cultural destruction."
+		},
+		{
+			"id": "h002_007",
+			"topic": "European Expansion 15th-18th Century",
+			"lessonId": "h-002",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The triangular trade involved:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Europe, Africa, Americas", "isCorrect": true },
+				{ "id": "B", "text": "Europe, Asia, Australia", "isCorrect": false },
+				{ "id": "C", "text": "Africa, Asia, Europe", "isCorrect": false },
+				{ "id": "D", "text": "Americas, Asia, Africa", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Atlantic trade route.",
+			"explanation": "Triangular trade connected Europe, Africa, and the Americas."
+		},
+		{
+			"id": "h002_008",
+			"topic": "European Expansion 15th-18th Century",
+			"lessonId": "h-002",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Mercantilism promoted:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Free trade", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "Accumulation of precious metals",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Colonial independence", "isCorrect": false },
+				{ "id": "D", "text": "Self-sufficiency", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Wealth in gold and silver.",
+			"explanation": "Mercantilism aimed to accumulate wealth through exports exceeding imports."
+		},
+		{
+			"id": "h002_009",
+			"topic": "European Expansion 15th-18th Century",
+			"lessonId": "h-002",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The Portuguese colonized parts of Africa mainly for:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Permanent settlement", "isCorrect": false },
+				{ "id": "B", "text": "Trade and resources", "isCorrect": true },
+				{ "id": "C", "text": "Agriculture", "isCorrect": false },
+				{ "id": "D", "text": "Missionary work only", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Coastal trading posts.",
+			"explanation": "Portugal established trading posts along African coasts."
+		},
+		{
+			"id": "h002_010",
+			"topic": "European Expansion 15th-18th Century",
+			"lessonId": "h-002",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The Treaty of Tordesillas divided:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Europe", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "New lands between Spain and Portugal",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Africa", "isCorrect": false },
+				{ "id": "D", "text": "Asia", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "1494 agreement.",
+			"explanation": "The 1494 treaty divided non-Christian lands between Spain and Portugal."
+		},
+		{
+			"id": "h002_011",
+			"topic": "European Expansion 15th-18th Century",
+			"lessonId": "h-002",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Columbian Exchange refers to:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Trade between Europe and Asia",
+					"isCorrect": false
+				},
+				{
+					"id": "B",
+					"text": "Transfer of plants, animals, diseases between hemispheres",
+					"isCorrect": true
+				},
+				{
+					"id": "C",
+					"text": "Exchange of gold and silver",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Slave trade routes", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Post-1492 biological exchanges.",
+			"explanation": "The Columbian Exchange transformed ecosystems and societies globally."
+		},
+		{
+			"id": "h002_012",
+			"topic": "European Expansion 15th-18th Century",
+			"lessonId": "h-002",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The Navigation Acts (1651) were passed by:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Portugal", "isCorrect": false },
+				{ "id": "B", "text": "England", "isCorrect": true },
+				{ "id": "C", "text": "France", "isCorrect": false },
+				{ "id": "D", "text": "Netherlands", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Cromwell's Parliament.",
+			"explanation": "England's Navigation Acts restricted colonial trade to English ships."
+		},
+		{
+			"id": "h002_013",
+			"topic": "European Expansion 15th-18th Century",
+			"lessonId": "h-002",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The trans-Atlantic slave trade peaked in:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "15th century", "isCorrect": false },
+				{ "id": "B", "text": "18th century", "isCorrect": true },
+				{ "id": "C", "text": "19th century", "isCorrect": false },
+				{ "id": "D", "text": "16th century", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Peak period of triangular trade.",
+			"explanation": "Around 12 million Africans were transported in the 18th century."
+		},
+		{
+			"id": "h002_014",
+			"topic": "European Expansion 15th-18th Century",
+			"lessonId": "h-002",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The Middle Passage refers to:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Journey from Africa to Europe",
+					"isCorrect": false
+				},
+				{
+					"id": "B",
+					"text": "Journey across the Atlantic for slaves",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Trade route to Asia", "isCorrect": false },
+				{ "id": "D", "text": "European coastal voyage", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Slave trade journey.",
+			"explanation": "The Middle Passage was the brutal journey across the Atlantic."
+		},
+		{
+			"id": "h002_015",
+			"topic": "European Expansion 15th-18th Century",
+			"lessonId": "h-002",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The encomienda system was:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "A trading company", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "Labor system granting rights over indigenous people",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "A religious order", "isCorrect": false },
+				{ "id": "D", "text": "A navigation technique", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Spanish colonial labor system.",
+			"explanation": "Encomienda gave settlers rights to indigenous labor in the Americas."
+		},
+		{
+			"id": "h002_016",
+			"topic": "European Expansion 15th-18th Century",
+			"lessonId": "h-002",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The first European to round the Cape of Good Hope was:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Vasco da Gama", "isCorrect": false },
+				{ "id": "B", "text": "Bartolomeu Dias", "isCorrect": true },
+				{ "id": "C", "text": "Prince Henry", "isCorrect": false },
+				{ "id": "D", "text": "Christopher Columbus", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "1488 voyage.",
+			"explanation": "Bartolomeu Dias reached the Cape in 1488."
+		},
+		{
+			"id": "h002_017",
+			"topic": "European Expansion 15th-18th Century",
+			"lessonId": "h-002",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The Atlantic slave trade was abolished by Britain in:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "1807", "isCorrect": true },
+				{ "id": "B", "text": "1700", "isCorrect": false },
+				{ "id": "C", "text": "1900", "isCorrect": false },
+				{ "id": "D", "text": "1750", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Early 19th century.",
+			"explanation": "Britain abolished the slave trade in 1807."
+		},
+		{
+			"id": "h002_018",
+			"topic": "European Expansion 15th-18th Century",
+			"lessonId": "h-002",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The Portuguese colony in Mozambique was mainly focused on:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Gold mining", "isCorrect": false },
+				{ "id": "B", "text": "Trade in ivory and slaves", "isCorrect": true },
+				{ "id": "C", "text": "Agriculture", "isCorrect": false },
+				{ "id": "D", "text": "Fishing", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Coastal trading.",
+			"explanation": "Portugal established trading posts for ivory and slaves in Mozambique."
+		},
+		{
+			"id": "h002_019",
+			"topic": "European Expansion 15th-18th Century",
+			"lessonId": "h-002",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The slave trade had devastating effects on:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Only economies", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "African societies and populations",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Only European nations", "isCorrect": false },
+				{ "id": "D", "text": "Only Asian countries", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Demographic impact.",
+			"explanation": "The slave trade devastated African communities and populations."
+		},
+		{
+			"id": "h002_020",
+			"topic": "European Expansion 15th-18th Century",
+			"lessonId": "h-002",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The Dutch gained control of the Cape from the Portuguese primarily through:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Military conquest", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "Settling and establishing a base",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Treaty agreement", "isCorrect": false },
+				{ "id": "D", "text": "Purchase", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Gradual settlement.",
+			"explanation": "The Dutch VOC established a refreshment station, displacing Portuguese influence."
+		},
+		{
+			"id": "h003_001",
+			"topic": "The French Revolution",
+			"lessonId": "h-003",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The French Revolution began in:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "1776", "isCorrect": false },
+				{ "id": "B", "text": "1789", "isCorrect": true },
+				{ "id": "C", "text": "1799", "isCorrect": false },
+				{ "id": "D", "text": "1804", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Storming of the Bastille.",
+			"explanation": "The French Revolution began with the storming of the Bastille in 1789."
+		},
+		{
+			"id": "h003_002",
+			"topic": "The French Revolution",
+			"lessonId": "h-003",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The storming of the Bastille symbolized:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Victory over foreigners", "isCorrect": false },
+				{ "id": "B", "text": "Start of the revolution", "isCorrect": true },
+				{ "id": "C", "text": "Peaceful transition", "isCorrect": false },
+				{ "id": "D", "text": "End of monarchy", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Symbolic prison attack.",
+			"explanation": "The Bastille attack marked the beginning of popular revolution."
+		},
+		{
+			"id": "h003_003",
+			"topic": "The French Revolution",
+			"lessonId": "h-003",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The Declaration of the Rights of Man and Citizen was declared in:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "1776", "isCorrect": false },
+				{ "id": "B", "text": "1789", "isCorrect": true },
+				{ "id": "C", "text": "1793", "isCorrect": false },
+				{ "id": "D", "text": "1804", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Same year as revolution start.",
+			"explanation": "It was adopted in August 1789."
+		},
+		{
+			"id": "h003_004",
+			"topic": "The French Revolution",
+			"lessonId": "h-003",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The French monarchy was abolished in:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "1789", "isCorrect": false },
+				{ "id": "B", "text": "1792", "isCorrect": true },
+				{ "id": "C", "text": "1799", "isCorrect": false },
+				{ "id": "D", "text": "1804", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "During the Reign of Terror.",
+			"explanation": "France was declared a republic in 1792."
+		},
+		{
+			"id": "h003_005",
+			"topic": "The French Revolution",
+			"lessonId": "h-003",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Marie Antoinette was:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Leader of the revolution", "isCorrect": false },
+				{ "id": "B", "text": "Queen of France", "isCorrect": true },
+				{ "id": "C", "text": "French military general", "isCorrect": false },
+				{ "id": "D", "text": "Leader of the Church", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Wife of Louis XVI.",
+			"explanation": "She was the wife of King Louis XVI, executed in 1793."
+		},
+		{
+			"id": "h003_006",
+			"topic": "The French Revolution",
+			"lessonId": "h-003",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The three estates in pre-revolution France were:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Nobles, merchants, peasants",
+					"isCorrect": false
+				},
+				{ "id": "B", "text": "Clergy, nobility, commoners", "isCorrect": true },
+				{ "id": "C", "text": "King, church, people", "isCorrect": false },
+				{ "id": "D", "text": "Army, navy, church", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Traditional social structure.",
+			"explanation": "The Estates system divided French society into three groups."
+		},
+		{
+			"id": "h003_007",
+			"topic": "The French Revolution",
+			"lessonId": "h-003",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The Reign of Terror was led by:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Louis XVI", "isCorrect": false },
+				{ "id": "B", "text": "Robespierre", "isCorrect": true },
+				{ "id": "C", "text": "Napoleon", "isCorrect": false },
+				{ "id": "D", "text": "Marat", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Committee of Public Safety.",
+			"explanation": "Robespierre led the Committee during the Terror (1793-1794)."
+		},
+		{
+			"id": "h003_008",
+			"topic": "The French Revolution",
+			"lessonId": "h-003",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The guillotine was used to:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Imprison revolutionaries", "isCorrect": false },
+				{ "id": "B", "text": "Execute people", "isCorrect": true },
+				{ "id": "C", "text": "Hold public meetings", "isCorrect": false },
+				{ "id": "D", "text": "Sign documents", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Method of execution.",
+			"explanation": "The guillotine was the method of execution during the Terror."
+		},
+		{
+			"id": "h003_009",
+			"topic": "The French Revolution",
+			"lessonId": "h-003",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Causes of the French Revolution included:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Economic prosperity", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "Financial crisis and inequality",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Too much democracy", "isCorrect": false },
+				{ "id": "D", "text": "Lack of taxation", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Social and economic problems.",
+			"explanation": "Debt, inequality, and food shortages fueled revolution."
+		},
+		{
+			"id": "h003_010",
+			"topic": "The French Revolution",
+			"lessonId": "h-003",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Napoleon Bonaparte came to power through:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Democratic election", "isCorrect": false },
+				{ "id": "B", "text": "Military coup d'état", "isCorrect": true },
+				{ "id": "C", "text": "Inheritance", "isCorrect": false },
+				{ "id": "D", "text": "Church appointment", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "1799 takeover.",
+			"explanation": "Napoleon staged a coup in 1799, becoming First Consul."
+		},
+		{
+			"id": "h003_011",
+			"topic": "The French Revolution",
+			"lessonId": "h-003",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The revolutionary slogan 'Liberté, égalité, fraternité' means:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Peace, order, progress", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "Freedom, equality, brotherhood",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Unity, justice, liberty", "isCorrect": false },
+				{ "id": "D", "text": "Power, wealth, fame", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Core revolutionary values.",
+			"explanation": "These three words encapsulated revolutionary ideals."
+		},
+		{
+			"id": "h003_012",
+			"topic": "The French Revolution",
+			"lessonId": "h-003",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The Tennis Court Oath was:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "A sports event", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "A vow not to disband until constitution established",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Treaty with Britain", "isCorrect": false },
+				{ "id": "D", "text": "King's declaration", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "June 1789 event.",
+			"explanation": "The Third Estate vowed to create a constitution."
+		},
+		{
+			"id": "h003_013",
+			"topic": "The French Revolution",
+			"lessonId": "h-003",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The Directory was:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "A government led by five directors",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "A type of prison", "isCorrect": false },
+				{ "id": "C", "text": "A military formation", "isCorrect": false },
+				{ "id": "D", "text": "A revolutionary song", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "1795-1799 government.",
+			"explanation": "The Directory was France's government from 1795-1799."
+		},
+		{
+			"id": "h003_014",
+			"topic": "The French Revolution",
+			"lessonId": "h-003",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The storming of the Tuileries occurred in:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "July 1789", "isCorrect": false },
+				{ "id": "B", "text": "August 1792", "isCorrect": true },
+				{ "id": "C", "text": "October 1789", "isCorrect": false },
+				{ "id": "D", "text": "January 1793", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "During the monarchy's fall.",
+			"explanation": "This event led to the suspension of the monarchy."
+		},
+		{
+			"id": "h003_015",
+			"topic": "The French Revolution",
+			"lessonId": "h-003",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The Civil Constitution of the Clergy (1790) was controversial because it:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Made clergy government employees",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Banned all religion", "isCorrect": false },
+				{ "id": "C", "text": "Created new holidays", "isCorrect": false },
+				{ "id": "D", "text": "Increased church wealth", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "State control of church.",
+			"explanation": "It made priests salaried officials of the state."
+		},
+		{
+			"id": "h003_016",
+			"topic": "The French Revolution",
+			"lessonId": "h-003",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Napoleon became Emperor in:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "1799", "isCorrect": false },
+				{ "id": "B", "text": "1804", "isCorrect": true },
+				{ "id": "C", "text": "1815", "isCorrect": false },
+				{ "id": "D", "text": "1812", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Crowned at Notre Dame.",
+			"explanation": "Napoleon crowned himself Emperor in 1804."
+		},
+		{
+			"id": "h003_017",
+			"topic": "The French Revolution",
+			"lessonId": "h-003",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The French Revolution spread ideals of:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Monarchy and tradition", "isCorrect": false },
+				{ "id": "B", "text": "Democracy and human rights", "isCorrect": true },
+				{ "id": "C", "text": "Colonialism", "isCorrect": false },
+				{ "id": "D", "text": "Feudalism", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Revolutionary values.",
+			"explanation": "Revolutionary ideals influenced democratic movements worldwide."
+		},
+		{
+			"id": "h003_018",
+			"topic": "The French Revolution",
+			"lessonId": "h-003",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The Great Fear (1789) was:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "A military defeat", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "Rural panic and rumors of aristocratic plots",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "A plague epidemic", "isCorrect": false },
+				{ "id": "D", "text": "King's illness", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Peasant uprising.",
+			"explanation": "Rural panic led to attacks on châteaux and grain hoarding."
+		},
+		{
+			"id": "h003_019",
+			"topic": "The French Revolution",
+			"lessonId": "h-003",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Louis XVI was executed by:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Hanging", "isCorrect": false },
+				{ "id": "B", "text": "Guillotine", "isCorrect": true },
+				{ "id": "C", "text": "Firing squad", "isCorrect": false },
+				{ "id": "D", "text": "Poison", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Revolutionary method.",
+			"explanation": "Louis XVI was guillotined in January 1793."
+		},
+		{
+			"id": "h003_020",
+			"topic": "The French Revolution",
+			"lessonId": "h-003",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The Constitution of 1791 established:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Absolute monarchy", "isCorrect": false },
+				{ "id": "B", "text": "Constitutional monarchy", "isCorrect": true },
+				{ "id": "C", "text": "Republic", "isCorrect": false },
+				{ "id": "D", "text": "Military dictatorship", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Limited monarchy.",
+			"explanation": "It created a constitutional monarchy with limited royal powers."
+		},
+		{
+			"id": "h004_001",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The Great Trek involved:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "British conquest", "isCorrect": false },
+				{ "id": "B", "text": "Afrikaner migration inland", "isCorrect": true },
+				{ "id": "C", "text": "Native uprising", "isCorrect": false },
+				{ "id": "D", "text": "Portuguese exploration", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "1830s migration.",
+			"explanation": "Afrikaners migrated inland seeking independence from British rule."
+		},
+		{
+			"id": "h004_002",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The Groot Trek occurred mainly during:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "1750-1770", "isCorrect": false },
+				{ "id": "B", "text": "1830s-1850s", "isCorrect": true },
+				{ "id": "C", "text": "1800-1810", "isCorrect": false },
+				{ "id": "D", "text": "1860-1880", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Mid-19th century.",
+			"explanation": "The Great Trek took place primarily during the 1830s and 1840s."
+		},
+		{
+			"id": "h004_003",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The British took control of the Cape from the Dutch in:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "1652", "isCorrect": false },
+				{ "id": "B", "text": "1795", "isCorrect": true },
+				{ "id": "C", "text": "1806", "isCorrect": false },
+				{ "id": "D", "text": "1814", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "During Napoleonic Wars.",
+			"explanation": "Britain occupied the Cape in 1795, formally annexed in 1806."
+		},
+		{
+			"id": "h004_004",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Zwide and Ngcayecibele were:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "British generals", "isCorrect": false },
+				{ "id": "B", "text": "Xhosa chiefs", "isCorrect": true },
+				{ "id": "C", "text": "Dutch explorers", "isCorrect": false },
+				{ "id": "D", "text": "Missionaries", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Xhosa leaders.",
+			"explanation": "These were prominent Xhosa chiefs during the frontier wars."
+		},
+		{
+			"id": "h004_005",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Mfecane refers to:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "British colonization", "isCorrect": false },
+				{ "id": "B", "text": "Shaka's wars and migrations", "isCorrect": true },
+				{ "id": "C", "text": "Missionary activities", "isCorrect": false },
+				{ "id": "D", "text": "Gold discovery", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Zulu expansion period.",
+			"explanation": "The Mfecane was the period of Shaka's military expansion."
+		},
+		{
+			"id": "h004_006",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The 1820 Settlers were:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Dutch colonists", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "British immigrants to the Eastern Cape",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Portuguese traders", "isCorrect": false },
+				{ "id": "D", "text": "French Huguenots", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "British colonial scheme.",
+			"explanation": "About 4,000 British settlers arrived in 1820."
+		},
+		{
+			"id": "h004_007",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Slavery was abolished at the Cape in:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "1807", "isCorrect": false },
+				{ "id": "B", "text": "1834", "isCorrect": true },
+				{ "id": "C", "text": "1866", "isCorrect": false },
+				{ "id": "D", "text": "1795", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "British emancipation.",
+			"explanation": "Slavery ended in 1834, with a 4-year apprenticeship period."
+		},
+		{
+			"id": "h004_008",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The Anglo-Xhosa Wars were fought over:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Religion", "isCorrect": false },
+				{ "id": "B", "text": "Land and cattle", "isCorrect": true },
+				{ "id": "C", "text": "Trade routes only", "isCorrect": false },
+				{ "id": "D", "text": "Marriage alliances", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Frontier conflicts.",
+			"explanation": "The wars were primarily about territorial control and resources."
+		},
+		{
+			"id": "h004_009",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Dingane was:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "A British governor", "isCorrect": false },
+				{ "id": "B", "text": "Zulu king after Shaka", "isCorrect": true },
+				{ "id": "C", "text": "Xhosa chief", "isCorrect": false },
+				{ "id": "D", "text": "Dutch missionary", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Shaka's successor.",
+			"explanation": "Dingane became Zulu king in 1828 after Shaka's assassination."
+		},
+		{
+			"id": "h004_010",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The Voortrekkers were:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "British settlers", "isCorrect": false },
+				{ "id": "B", "text": "Afrikaners who migrated inland", "isCorrect": true },
+				{ "id": "C", "text": "Xhosa warriors", "isCorrect": false },
+				{ "id": "D", "text": "Portuguese traders", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Trekking settlers.",
+			"explanation": "The Voortrekkers were Afrikaners who migrated inland during the Great Trek."
+		},
+		{
+			"id": "h004_011",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The Sandile was:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Leader of the 1820 Settlers",
+					"isCorrect": false
+				},
+				{ "id": "B", "text": "Last great Xhosa chief", "isCorrect": true },
+				{ "id": "C", "text": "Zulu king", "isCorrect": false },
+				{ "id": "D", "text": "British governor", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Xhosa resistance leader.",
+			"explanation": "Sandile led Xhosa resistance during the 8th Frontier War."
+		},
+		{
+			"id": "h004_012",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The Slagtersnek Rebellion (1815-1816) was:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Xhosa uprising", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "Afrikaner protest against British rule",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Zulu expansion", "isCorrect": false },
+				{ "id": "D", "text": "Missionary conference", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Early Afrikaner resistance.",
+			"explanation": "It was an Afrikaner rebellion against British authority."
+		},
+		{
+			"id": "h004_013",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The displacement of peoples during the Mfecane resulted in:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Increased agricultural production",
+					"isCorrect": false
+				},
+				{
+					"id": "B",
+					"text": "Creation of new states and migrations",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Decreased population", "isCorrect": false },
+				{ "id": "D", "text": "Peace and stability", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Widespread disruption.",
+			"explanation": "Mfecane led to the creation of new states like the Ndebele."
+		},
+		{
+			"id": "h004_014",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The British policy of annexation in the 1840s led to:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Afrikaner independence", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "Creation of independent Boer republics",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Peace with Xhosa", "isCorrect": false },
+				{ "id": "D", "text": "End of slavery", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Boer republics established.",
+			"explanation": "The Orange Free State and South African Republic were founded."
+		},
+		{
+			"id": "h004_015",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The Taung (Tswana) were defeated by the Griqua at:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Blood River", "isCorrect": false },
+				{ "id": "B", "text": "Difaqane", "isCorrect": true },
+				{ "id": "C", "text": "Mosega", "isCorrect": false },
+				{ "id": "D", "text": "Isandlwana", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Mfecane battle.",
+			"explanation": "The Battle of Difaqane involved the Taung and Griqua."
+		},
+		{
+			"id": "h004_016",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The first British settlement in Natal was in:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "1824", "isCorrect": true },
+				{ "id": "B", "text": "1815", "isCorrect": false },
+				{ "id": "C", "text": "1835", "isCorrect": false },
+				{ "id": "D", "text": "1845", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Early 1820s.",
+			"explanation": "British settlers established Durban in 1824."
+		},
+		{
+			"id": "h004_017",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Andries Pretorius was a:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "British governor", "isCorrect": false },
+				{ "id": "B", "text": "Voortrekker leader", "isCorrect": true },
+				{ "id": "C", "text": "Xhosa chief", "isCorrect": false },
+				{ "id": "D", "text": "Missionary", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Great Trek leader.",
+			"explanation": "Pretorius led the Great Trek and founded the South African Republic."
+		},
+		{
+			"id": "h004_018",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The Battle of Blood River (1838) was between:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "British and Xhosa", "isCorrect": false },
+				{ "id": "B", "text": "Voortrekkers and Zulu", "isCorrect": true },
+				{ "id": "C", "text": "Griqua and Tswana", "isCorrect": false },
+				{ "id": "D", "text": "Dutch and Portuguese", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Zulu-Voortrekker conflict.",
+			"explanation": "Dingane's Zulu forces were defeated by Voortrekkers."
+		},
+		{
+			"id": "h004_019",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Shaka founded the Zulu Kingdom in the early:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "1790s", "isCorrect": false },
+				{ "id": "B", "text": "1810s", "isCorrect": true },
+				{ "id": "C", "text": "1830s", "isCorrect": false },
+				{ "id": "D", "text": "1850s", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Early 19th century.",
+			"explanation": "Shaka united the Zulu and created a military state around 1816."
+		},
+		{
+			"id": "h004_020",
+			"topic": "Transformed Southern Africa 1750-1850",
+			"lessonId": "h-004",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The Orange River Sovereignty was:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "British territory that became Orange Free State",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Zulu kingdom", "isCorrect": false },
+				{ "id": "C", "text": "Portuguese colony", "isCorrect": false },
+				{ "id": "D", "text": "Mission station", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "1840s British territory.",
+			"explanation": "It became the Orange Free State after Britain withdrew in 1854."
+		}
+	]
+}

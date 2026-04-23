@@ -1,0 +1,391 @@
+{
+	"metadata": {
+		"subject": "Geography",
+		"totalQuestions": 600,
+		"version": "1.0",
+		"curriculum": "CAPS",
+		"createdAt": "2026-04-23T00:00:00.000Z"
+	},
+	"questions": [
+		{
+			"id": "g001_001",
+			"topic": "Geographical Skills and Techniques",
+			"lessonId": "g-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What type of lines show elevation on a topographic map?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Contour lines", "isCorrect": true },
+				{ "id": "B", "text": "Latitude lines", "isCorrect": false },
+				{ "id": "C", "text": "Longitude lines", "isCorrect": false },
+				{ "id": "D", "text": "Meridian lines", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Lines connecting points of equal elevation.",
+			"explanation": "Contour lines connect points of equal elevation above sea level."
+		},
+		{
+			"id": "g001_002",
+			"topic": "Geographical Skills and Techniques",
+			"lessonId": "g-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "When contour lines are close together, the slope is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Gentle", "isCorrect": false },
+				{ "id": "B", "text": "Steep", "isCorrect": true },
+				{ "id": "C", "text": "Flat", "isCorrect": false },
+				{ "id": "D", "text": "Concave", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Rapid change in elevation.",
+			"explanation": "Close contour lines indicate steep slopes with rapid elevation change."
+		},
+		{
+			"id": "g001_003",
+			topic: "Geographical Skills and Techniques",
+			lessonId: "g-001",
+			difficulty: "Easy",
+			points: 5,
+			questionText: "Scale 1:50 000 means 1 cm on map equals:",
+			questionType: "multiple-choice",
+			options: [
+				{ "id": "A", "text": "500 m", isCorrect: true },
+				{ "id": "B", "text": "50 m", isCorrect: false },
+				{ "id": "C", "text": "5 km", isCorrect": false },
+				{ "id": "D", "text": "5000 m", isCorrect": false }
+			],
+			supportsDiagram: false,
+			diagram: null,
+			hint: "Convert map distance to real distance.",
+			explanation: "1 cm × 50000 cm = 500 m"
+		},
+		{
+			"id": "g001_004",
+			"topic": "Geographical Skills and Techniques",
+			"lessonId": "g-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "A magnetic compass points towards:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "True North", "isCorrect": false },
+				{ "id": "B", "text": "Magnetic North", "isCorrect": true },
+				{ "id": "C", "text": "South", "isCorrect": false },
+				{ "id": "D", "text": "East", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "The north pole of a magnet.",
+			"explanation": "A compass needle aligns with Earth's magnetic field pointing to Magnetic North."
+		},
+		{
+			"id": "g001_005",
+			"topic": "Geographical Skills and Techniques",
+			"lessonId": "g-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Longitude is measured east and west of:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Equator", "isCorrect": false },
+				{ "id": "B", "text": "Prime Meridian", "isCorrect": true },
+				{ "id": "C", "text": "Tropic of Cancer", "isCorrect": false },
+				{ "id": "D", "text": "International Date Line", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Greenwich, London.",
+			"explanation": "The Prime Meridian (0°) runs through Greenwich, London."
+		},
+		{
+			"id": "g001_006",
+			"topic": "Geographical Skills and Techniques",
+			"lessonId": "g-001",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "A topographic map showing 30m contour interval means:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Each line represents 30 m elevation", "isCorrect": true },
+				{ "id": "B", "text": "Total height is 30m", "isCorrect": false },
+				{ "id": "C", "text": "Distance between lines is 30m", "isCorrect": false },
+				{ "id": "D", "text": "30 contour lines total", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Vertical interval between contours.",
+			explanation: "Contour interval is the vertical difference between consecutive contour lines."
+		},
+		{
+			"id": "g001_007",
+			"topic": "Geographical Skills and Techniques",
+			"lessonId": "g-001",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "A ridge on a topographic map shows as:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "V-shaped contour pointing downhill", "isCorrect": false },
+				{ "id": "B", "text": "V-shaped contour pointing uphill", "isCorrect": true },
+				{ "id": "C", "text": "Circular contours", "isCorrect": false },
+				{ "id": "D", "text": "Parallel lines", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Ridges run along high ground.",
+			explanation: "Ridges show V-shapes pointing uphill on contour maps."
+		},
+		{
+			"id": "g001_008",
+			topic: "Geographical Skills and Techniques",
+			lessonId: "g-001",
+			difficulty: "Medium",
+			points: 10,
+			questionText: "The angle between true north and magnetic north is called:",
+			questionType: "multiple-choice",
+			options: [
+				{ "id": "A", text: "Declination", isCorrect: true },
+				{ "id": "B", "text": "Inclination", "isCorrect": false },
+				{ "id": "C", "text": "Deviation", "isCorrect": false },
+				{ "id": "D", "text": "Variation", "isCorrect": false }
+			],
+			supportsDiagram: false,
+			diagram: null,
+			hint: "Angle between two norths.",
+			explanation: "Magnetic declination is the angle between True North and Magnetic North."
+		},
+		{
+			"id": "g001_009",
+			"topic": "Geographical Skills and Techniques",
+			"lessonId": "g-001",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Grid reference 34°15'S 19°30'E indicates:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Cape Town", "isCorrect": true },
+				{ "id": "B", "text": "Johannesburg", "isCorrect": false },
+				{ "id": "C", "text": "Durban", "isCorrect": false },
+				{ "id": "D", "text": "Port Elizabeth", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Western Cape location.",
+			explanation": "Cape Town is located at approximately 34°S, 19°E."
+		},
+		{
+			"id": "g001_010",
+			topic: "Geographical Skills and Techniques",
+			lessonId: "g-001",
+			difficulty: "Medium",
+			points: 10,
+			questionText: "Direction of 135° on a compass is:",
+			questionType: "multiple-choice",
+			options: [
+				{ id: "A", text: "North East", isCorrect: false },
+				{ id: "B", text: "South East", isCorrect: true },
+				{ id: "C", text: "North West", isCorrect: false },
+				{ id: "D", text: "South West", isCorrect: false }
+			],
+			supportsDiagram: false,
+			diagram: null,
+			hint: "180° would be South. 90° is East.",
+			explanation: "SE quadrant is between 90° (E) and 180° (S), so 135° is SE."
+		},
+		{
+			"id": "g001_011",
+			"topic": "Geographical Skills and Techniques",
+			"lessonId": "g-001",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "A conical hill would show on a topographic map as:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Concentric circles getting larger upwards", "isCorrect": false },
+				{ "id": "B", "text": "Concentric circles getting larger downwards", "isCorrect": true },
+				{ "id": "C", "text": "Parallel lines", "isCorrect": false },
+				{ "id": "D", "text": "Irregular patterns", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Peak at top, wider at base.",
+			explanation": "A conical hill has narrower contours near the top, wider at the base."
+		},
+		{
+			"id": "g001_012",
+			"topic": "Geographical Skills and Techniques",
+			"lessonId": "g-001",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "When calculating gradient, the formula is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Rise ÷ Run × 100", "isCorrect": true },
+				{ "id": "B", "text": "Run ÷ Rise × 100", "isCorrect": false },
+				{ "id": "C", "text": "Rise × Run × 100", "isCorrect": false },
+				{ "id": "D", "text": "Rise + Run × 100", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Vertical change over horizontal change.",
+			explanation": "Gradient = (Vertical Interval / Horizontal Distance) × 100"
+		},
+		{
+			"id": "g001_013",
+			"topic": "Geographical Skills and Techniques",
+			"lessonId": "g-001",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Afferent v-shaped contours indicate:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Ridge", "isCorrect": false },
+				{ "id": "B", "text": "Valley", "isCorrect": true },
+				{ "id": "C", "text": "Cliff", "isCorrect": false },
+				{ "id": "D", "text": "Plateau", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Water flows downhill through it.",
+			explanation": "V-shapes pointing upstream (uphill) indicate valleys where streams flow."
+		},
+		{
+			"id": "g001_014",
+			"topic": "Geographical Skills and Techniques",
+			"lessonId": "g-001",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "True bearing is measured from:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Magnetic North", "isCorrect": false },
+				{ "id": "B", "text": "True North", "isCorrect": true },
+				{ "id": "C", "text": "Grid North", "isCorrect": false },
+				{ "id": "D", "text": "South", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Geographic North Pole.",
+			explanation: "True bearing is measured clockwise from True (Geographic) North."
+		},
+		{
+			"id": "g001_015",
+			"topic": "Geographical Skills and Techniques",
+			"lessonId": "g-001",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Difference between magnetic bearing and true bearing accounts for:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Scale", "isCorrect": false },
+				{ "id": "B", "text": "Magnetic declination", "isCorrect": true },
+				{ "id": "C", "text": "Contour interval", "isCorrect": false },
+				{ "id": "D", "text": "Map projection", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Location-dependent difference.",
+			explanation: "Magnetic declination is the angular difference between true and magnetic north."
+		},
+		{
+			"id": "g001_016",
+			"topic": "Geographical Skills and Techniques",
+			"lessonId": "g-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "A valley on a topographic map shows contours that:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Are circular", "isCorrect": false },
+				{ "id": "B", "text": "Form V-shapes pointing upstream", "isCorrect": true },
+				{ "id": "C", "text": "Are straight", "isCorrect": false },
+				{ "id": "D", "text": "Form closed loops", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Contours bend upstream.",
+			explanation": "Valley contours show V-shapes pointing in the upstream direction."
+		},
+		{
+			"id": "g001_017",
+			"topic": "Geographical Skills and Techniques",
+			"lessonId": "g-001",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Which map type shows Earth's curved surface on flat paper?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Topographic map", "isCorrect": false },
+				{ "id": "B", "text": "Plan survey", "isCorrect": false },
+				{ "id": "C", "text": "Projection map", "isCorrect": true },
+				{ "id": "D", "text": "Cadastral map", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Converting sphere to flat surface.",
+			explanation": "Map projections convert Earth's spherical surface to a flat plane."
+		},
+		{
+			"id": "g001_018",
+			"topic": "Geographical Skills and Techniques",
+			"lessonId": "g-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The equator is at:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "0° longitude", "isCorrect": false },
+				{ "id": "B", "text": "0° latitude", "isCorrect": true },
+				{ "id": "C", "text": "90° longitude", "isCorrect": false },
+				{ "id": "D", "text": "90° latitude", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Halfway between poles.",
+			explanation": "The equator is the circle around Earth at 0° latitude."
+		},
+		{
+			"id": "g001_019",
+			"topic": "Geographical Skills and Techniques",
+			"lessonId": "g-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Altitude refers to:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Distance from equator", "isCorrect": false },
+				{ "id": "B", "text": "Height above sea level", "isCorrect": true },
+				{ "id": "C", "text": "Distance from prime meridian", "isCorrect": false },
+				{ "id": "D", "text": "Compass direction", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Vertical distance measurement.",
+			explanation": "Altitude is the vertical height above mean sea level."
+		},
+		{
+			"id": "g001_020",
+			"topic": "Geographical Skills and Techniques",
+			"lessonId": "g-001",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Representative fraction 1:100 000 means:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "1 cm = 100000 cm on ground", "isCorrect": true },
+				{ "id": "B", "text": "1 cm = 100000 km on ground", "isCorrect": false },
+				{ "id": "C", "text": "1 m = 100000 m on ground", "isCorrect": false },
+				{ "id": "D", "text": "100000 cm = 1 m on ground", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Unit stays the same.",
+			explanation": "RF of 1:100000 means 1 unit on map = 100000 same units on ground."
+		}
+	]
+}

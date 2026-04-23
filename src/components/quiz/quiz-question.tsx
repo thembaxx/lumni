@@ -58,6 +58,25 @@ export function QuizQuestion({
 					className="space-y-2"
 					role="radiogroup"
 					aria-label="Answer options"
+					onKeyDown={(e) => {
+						const optionKeys = Object.keys(options);
+						if (!optionKeys.length) return;
+						const currentIndex = optionKeys.indexOf(selectedAnswer || "");
+						let nextIndex = currentIndex;
+
+						if (e.key === "ArrowDown" || e.key === "ArrowRight") {
+							e.preventDefault();
+							nextIndex = (currentIndex + 1) % optionKeys.length;
+						} else if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
+							e.preventDefault();
+							nextIndex =
+								currentIndex <= 0 ? optionKeys.length - 1 : currentIndex - 1;
+						}
+
+						if (nextIndex !== currentIndex && nextIndex >= 0) {
+							onSelectAnswer(optionKeys[nextIndex]);
+						}
+					}}
 				>
 					{Object.entries(options).map(([key, value]) => {
 						const isSelected = selectedAnswer === key;

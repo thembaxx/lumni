@@ -1,0 +1,415 @@
+{
+	"metadata": {
+		"subject": "Sepedi Home Language",
+		"totalQuestions": 600,
+		"version": "1.0",
+		"curriculum": "CAPS",
+		"createdAt": "2026-04-23T00:00:00.000Z"
+	},
+	"questions": [
+		{
+			"id": "spl001_001",
+			"topic": "Goanelwa le go bolela",
+			"lessonId": "spl-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Goanelwa ka moanelwa etšaša e ama:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Poledišano ka molomo", "isCorrect": false },
+				{ "id": "B", "text": "Kokwana le moetši", "isCorrect": true },
+				{ "id": "C", "text": "Go ngwala ka mošomong", "isCorrect": false },
+				{ "id": "D", "text": "Goela feela", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Ka moanelwa wo mongwe.",
+			"explanation": "Goanelwa go akaretša go theelefa le go arabela."
+		},
+		{
+			"id": "spl001_002",
+			"topic": "Goanelwa le go bolela",
+			"lessonId": "spl-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Mokgwea wo mongwe o tšwa go:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Bophelong bjoo ka mehla", "isCorrect": true },
+				{ "id": "B", "text": "Dipropoše", "isCorrect": false },
+				{ "id": "C", "text": "Tshedimošo ya kgwirinyana", "isCorrect": false },
+				{ "id": "D", "text": "Mokgwa wo o šomišwago", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Mokgwea wa mothomo.",
+			explanation: "Mokgwea wo mongwe o tšwa go mogwe wa semolao."
+		},
+		{
+			"id": "spl001_003",
+			"topic": "Goanelwa le go bolela",
+			"lessonId": "spl-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Molaetša wo o se nago le bothata wo o bitšwago:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Molaetša wo o rego", "isCorrect": true },
+				{ "id": "B", "text": "Molaetša wo o ngwaldago", "isCorrect": false },
+				{ "id": "C", "text": "Molaetša wo o šupago", "isCorrect": false },
+				{ "id": "D", "text": "Molaetša wo o hlalosago", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Ga se bothata.",
+			explanation: "Molaetša wo o se nago le bothata ke wo o theilwego ka noši."
+		},
+		{
+			"id": "spl001_004",
+			"topic": "Goanelwa le go bolela",
+			"lessonId": "spl-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Mokaalo o šupša ka:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Mokgwa wo o rego", "isCorrect": false },
+				{ "id": "B", "text": "Bothata bjoo bo tšwago", "isCorrect": true },
+				{ "id": "C", "text": "Molaetša wo se nago le mohla", "isCorrect": false },
+				{ "id": "D", "text": "Tshedimošo ya mehla", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Molaetša wa bothata.",
+			explanation: "Mokaalo o tšweletša bothata bjoo bo nyewago."
+		},
+		{
+			"id": "spl001_005",
+			"topic": "Goanelwa le go bolela",
+			"lessonId": "spl-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Mogolo o šupetša:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Mogolo wo mogolo", "isCorrect": true },
+				{ "id": "B", "text": "Mogolo wo monnyane", "isCorrect": false },
+				{ "id": "C", "text": "Mogolo wo se nago mohlala", "isCorrect": false },
+				{ "id": "D", "text": "Mogolo wo o fapanego", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Mogolo wo o latelago.",
+			explanation": "Mogolo ke sekaetiri sa gagwe mohlala."
+		},
+		{
+			"id": "spl001_006",
+			"topic": "Goanelwa le go bolela",
+			"lessonId": "spl-001",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Mafokhe a ka tšwa:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Mafokhe a mathomo", "isCorrect": true },
+				{ "id": "B", "text": "Mafokhe a mafelelo", "isCorrect": false },
+				{ "id": "C", "text": "Mafokhe a gagwe", "isCorrect": false },
+				{ "id": "D", "text": "Mafokhe a maeto", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "A šupetšha maemo a pele.",
+			"explanation": "Mafokhe a mathomo a šupetša maemo a pele a ditaba."
+		},
+		{
+			"id": "spl001_007",
+			"topic": "Goanelwa le go bolela",
+			"lessonId": "spl-001",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Poledišano ya maemo e kwišišwa:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Ka go theelefatša", "isCorrect": false },
+				{ "id": "B", "text": "Ka go latela ka thaloganyo", "isCorrect": true },
+				{ "id": "C", "text": "Ka go tšwela ka go ela", "isCorrect": false },
+				{ "id": "D", "text": "Ka go se rate", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Go latela morišo.",
+			explanation: "Poledišano e latelwa ka thaloganyo."
+		},
+		{
+			"id": "spl001_008",
+			"topic": "Goanelwa le go bolela",
+			"lessonId": "spl-001",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Molaetša wo o šupago thaloganyo e:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Molaetša wo o rego", "isCorrect": false },
+				{ "id": "B", "text": "Molaetša wo o latelago", "isCorrect": true },
+				{
+					"id": "C",
+					"text": "Molaetša wo se nago motswanao",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Molaetša wo o tlogago", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Ka morago ga seo.",
+			"explanation": "Molaetša wo latelago wo latela thaloganyo."
+		},
+		{
+			"id": "spl001_009",
+			"topic": "Goanelwa le go bolela",
+			"lessonId": "spl-001",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Mokgwea wo o šupago bothata ke:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Mokgwea wo mongwe", "isCorrect": false },
+				{ "id": "B", "text": "Mokgwea wo o tšwago", "isCorrect": true },
+				{
+					"id": "C",
+					"text": "Mokgwea wo o se nago mohlala",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Mokgwea wo o fetotšego", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Mokgwea wa thaloganyo.",
+			"explanation": "Mokgwea wo o tšwago wo tšweletša bothata."
+		},
+		{
+			"id": "spl001_010",
+			"topic": "Goanelwa le go bolela",
+			"lessonId": "spl-001",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Poledišano ya maemo e ngwalwa ka:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Mantšutšu", "isCorrect": false },
+				{ "id": "B", "text": "Maemo a mafelelo", "isCorrect": true },
+				{ "id": "C", "text": "Maemo a mathomo", "isCorrect": false },
+				{ "id": "D", "text": "Maemo a go fapana", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Maemo a ka fase.",
+			explanation: "Maemo a mafelelo ke seo se latelago poledišanong."
+		},
+		{
+			"id": "spl001_011",
+			"topic": "Goanelwa le go bolela",
+			"lessonId": "spl-001",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Mokgwea wo o tšwago o šupša:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Se se tšwelago pele", "isCorrect": false },
+				{ "id": "B", "text": "Bothata bjoo bo tlangego", "isCorrect": true },
+				{ "id": "C", "text": "Se se sego se yo", "isCorrect": false },
+				{ "id": "D", "text": "Se se sego se nngwe", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Mokgwea wa thalo.",
+			"explanation": "Mokgwea wo o tšwago wo šupša bothata bjo bo tlangego."
+		},
+		{
+			"id": "spl001_012",
+			"topic": "Goanelwa le go bolela",
+			"lessonId": "spl-001",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Molaetša wo o tlogo e le:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Molaetša wo o rego", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "Molaetša wo o latelago thaloganyo",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Molaetša wo o tlogo e latelago",
+					"isCorrect": true
+				},
+				{ "id": "D", "text": "Molaetša wo o fetotšego", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Molaetša wo latelago.",
+			"explanation": "Molaetša wo latelago o tlogo e latela thaloganyo."
+		},
+		{
+			"id": "spl001_013",
+			"topic": "Goanelwa le go bolela",
+			"lessonId": "spl-001",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Poledišano e thoma ka:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Mafokhe a mafelelo", "isCorrect": false },
+				{ "id": "B", "text": "Mafokhe a mathomo", "isCorrect": true },
+				{ "id": "C", "text": "Mafokhe a godimo", "isCorrect": false },
+				{ "id": "D", "text": "Mafokhe a tlase", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Thomo ya ditaba.",
+			"explanation": "Poledišano e thoma ka mafokhe a mathomo."
+		},
+		{
+			"id": "spl001_014",
+			"topic": "Goanelwa le go bolela",
+			"lessonId": "spl-001",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Mokgwea wo o se nago le thaloganyo ke:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Mokgwea wo o sego wo mongwe", "isCorrect": true },
+				{ "id": "B", "text": "Mokgwea wo mongwe", "isCorrect": false },
+				{ "id": "C", "text": "Mokgwea wo o tšwago", "isCorrect": false },
+				{ "id": "D", "text": "Mokgwea wo fetotšego", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Ga se thaloganyo.",
+			explanation: "Mokgwea wo se nago le thaloganyo ga se mokgwea wa semolao."
+		},
+		{
+			"id": "spl001_015",
+			"topic": "Goanelwa le go bolela",
+			"lessonId": "spl-001",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Maemo a go fapana a šupša:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Poledišano e se nngwe", "isCorrect": false },
+				{ "id": "B", "text": "Maemo a go fapana ka mo go latelago", "isCorrect": true },
+				{ "id": "C", "text": "Maemo a tshwanelo", "isCorrect": false },
+				{ "id": "D", "text": "Maemo a se nago mohlala", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Maemo a go feta.",
+			explanation": "Maemo a fapana a latela thaloganyo."
+		},
+		{
+			"id": "spl001_016",
+			"topic": "Goanelwa le go bolela",
+			"lessonId": "spl-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Molaetša wo o ngwago o šupša:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Mokgwea wo mongwe", "isCorrect": true },
+				{ "id": "B", "text": "Mokgwea wo o se nago thaloganyo", "isCorrect": false },
+				{ "id": "C", "text": "Molaetša wo o fetotšego", "isCorrect": false },
+				{ "id": "D", "text": "Molaetša wo se nago mohlala", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Mokgwea wo tšwago.",
+			explanation": "Molaetša wo ngwago wo šupša mokgwea wo mongwe."
+		},
+		{
+			"id": "spl001_017",
+			"topic": "Goanelwa le go bolela",
+			"lessonId": "spl-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Poledišano e thomelo ke:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Mafokhe a mathomo", "isCorrect": true },
+				{ "id": "B", "text": "Mafokhe a mafelelo", "isCorrect": false },
+				{ "id": "C", "text": "Mafokhe a godimo", "isCorrect": false },
+				{ "id": "D", "text": "Mafokhe a tlase", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Thomo ya ditaba.",
+			"explanation": "Mafokhe a mathomo ke mafokhe ao poledišano e thomago ka ona."
+		},
+		{
+			"id": "spl001_018",
+			"topic": "Goanelwa le go bolela",
+			"lessonId": "spl-001",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Mokgwea wo fetotšego o šupša:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Bothata bjo bo tlogo", "isCorrect": false },
+				{ "id": "B", "text": "Mokgwea wo mongwe", "isCorrect": true },
+				{
+					"id": "C",
+					"text": "Mokgwea wo o sego wo mongwe",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Mokgwea wo se nago thaloganyo",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Mokgwea wo latelago.",
+			"explanation": "Mokgwea wo fetotšego wo latela mokgwea wo mongwe."
+		},
+		{
+			"id": "spl001_019",
+			"topic": "Goanelwa le go bolela",
+			"lessonId": "spl-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Molaetša wo rego o šupša:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Mokgwea wo mongwe", "isCorrect": false },
+				{ "id": "B", "text": "Molaetša wo se nago bothata", "isCorrect": true },
+				{ "id": "C", "text": "Molaetša wo fetotšego", "isCorrect": false },
+				{ "id": "D", "text": "Molaetša wo latelago", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Ga se bothata.",
+			explanation": "Molaetša wo rego ke wo o se nago le bothata."
+		},
+		{
+			"id": "spl001_020",
+			"topic": "Goanelwa le go bolela",
+			"lessonId": "spl-001",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Maemo a godimo a latela:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Maemo a tlase", "isCorrect": false },
+				{ "id": "B", "text": "Thaloganyo", "isCorrect": true },
+				{ "id": "C", "text": "Mokgwea wo o se nago thaloganyo", "isCorrect": false },
+				{ "id": "D", "text": "Molaetša wo mongwe", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Maemo a go latela.",
+			explanation": "Maemo a godimo a latela thaloganyo."
+		}
+	]
+}

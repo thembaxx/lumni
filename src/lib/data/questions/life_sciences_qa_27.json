@@ -1,0 +1,419 @@
+{
+	"metadata": {
+		"subject": "Life Sciences",
+		"totalQuestions": 20,
+		"version": "1.0",
+		"curriculum": "CAPS",
+		"createdAt": "2026-04-23T00:00:00.000Z"
+	},
+	"questions": [
+		{
+			"id": "ls027_001",
+			"topic": "Protein Synthesis",
+			"lessonId": "ls-027",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What is the process of making RNA from DNA called?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Translation", "isCorrect": false },
+				{ "id": "B", "text": "Transcription", "isCorrect": true },
+				{ "id": "C", "text": "Replication", "isCorrect": false },
+				{ "id": "D", "text": "Mutation", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "DNA → RNA.",
+			"explanation": "Transcription makes RNA from DNA template."
+		},
+		{
+			"id": "ls027_002",
+			"topic": "Protein Synthesis",
+			"lessonId": "ls-027",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Where does transcription occur in eukaryotes?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Cytoplasm", "isCorrect": false },
+				{ "id": "B", "text": "Nucleus", "isCorrect": true },
+				{ "id": "C", "text": "Ribosome", "isCorrect": false },
+				{ "id": "D", "text": "Mitochondria", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "In the nucleus.",
+			"explanation": "Transcription occurs in the nucleus in eukaryotes."
+		},
+		{
+			"id": "ls027_003",
+			"topic": "Protein Synthesis",
+			"lessonId": "ls-027",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What is the process of making protein from RNA called?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Transcription", "isCorrect": false },
+				{ "id": "B", "text": "Translation", "isCorrect": true },
+				{ "id": "C", "text": "Replication", "isCorrect": false },
+				{ "id": "D", "text": "Synthesis", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "RNA → Protein.",
+			"explanation": "Translation makes protein from RNA."
+		},
+		{
+			"id": "ls027_004",
+			"topic": "Protein Synthesis",
+			"lessonId": "ls-027",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Where does translation occur?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Nucleus", "isCorrect": false },
+				{ "id": "B", "text": "Ribosome", "isCorrect": true },
+				{ "id": "C", "text": "Cytoplasm only", "isCorrect": false },
+				{ "id": "D", "text": "Cell membrane", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "The protein-making machine.",
+			"explanation": "Translation occurs on ribosomes."
+		},
+		{
+			"id": "ls027_005",
+			"topic": "Protein Synthesis",
+			"lessonId": "ls-027",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What type of RNA carries amino acids?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "mRNA", "isCorrect": false },
+				{ "id": "B", "text": "rRNA", "isCorrect": false },
+				{ "id": "C", "text": "tRNA", "isCorrect": true },
+				{ "id": "D", "text": "DNA", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Transfer RNA.",
+			"explanation": "tRNA transfers amino acids during translation."
+		},
+		{
+			"id": "ls027_006",
+			"topic": "Protein Synthesis",
+			"lessonId": "ls-027",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What is the template for protein synthesis?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "DNA", "isCorrect": false },
+				{ "id": "B", "text": "mRNA", "isCorrect": true },
+				{ "id": "C", "text": "tRNA", "isCorrect": false },
+				{ "id": "D", "text": "Protein", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "The messenger.",
+			"explanation": "mRNA serves as template for translation."
+		},
+		{
+			"id": "ls027_007",
+			"topic": "Protein Synthesis",
+			"lessonId": "ls-027",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "How many nucleotides code for one amino acid?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "1", "isCorrect": false },
+				{ "id": "B", "text": "2", "isCorrect": false },
+				{ "id": "C", "text": "3", "isCorrect": true },
+				{ "id": "D", "text": "4", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "A codon.",
+			"explanation": "Three nucleotides ( codon) code for one amino acid."
+		},
+		{
+			"id": "ls027_008",
+			"topic": "Protein Synthesis",
+			"lessonId": "ls-027",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What is the start codon?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "UAA", "isCorrect": false },
+				{ "id": "B", "text": "AUG", "isCorrect": true },
+				{ "id": "C", "text": "UGA", "isCorrect": false },
+				{ "id": "D", "text": "UAG", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Codes for methionine.",
+			"explanation": "AUG is the start codon, codes for methionine."
+		},
+		{
+			"id": "ls027_009",
+			"topic": "Protein Synthesis",
+			"lessonId": "ls-027",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What are stop codons?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "UAA, UAG, UGA", "isCorrect": true },
+				{ "id": "B", "text": "AUG, UGG", "isCorrect": false },
+				{ "id": "C", "text": "AAA, GGG", "isCorrect": false },
+				{ "id": "D", "text": " AUG, AUA", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Three stop codons.",
+			"explanation": "UAA, UAG, UGA are stop codons."
+		},
+		{
+			"id": "ls027_010",
+			"topic": "Protein Synthesis",
+			"lessonId": "ls-027",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What is the 'central dogma' of molecular biology?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "DNA → RNA → Protein", "isCorrect": true },
+				{ "id": "B", "text": "Protein → RNA → DNA", "isCorrect": false },
+				{ "id": "C", "text": "RNA → DNA → Protein", "isCorrect": false },
+				{ "id": "D", "text": "DNA → Protein → RNA", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Information flow.",
+			"explanation": "DNA to RNA to Protein is the central dogma."
+		},
+		{
+			"id": "ls027_011",
+			"topic": "Protein Synthesis",
+			"lessonId": "ls-027",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What is RNA processing in eukaryotes?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Removal of introns and splicing",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Adding a 5' cap only", "isCorrect": false },
+				{ "id": "C", "text": "Making multiple copies", "isCorrect": false },
+				{ "id": "D", "text": "Attaching to ribosome", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "RNA is modified before leaving nucleus.",
+			"explanation": "Introns are removed, exons are spliced together."
+		},
+		{
+			"id": "ls027_012",
+			"topic": "Protein Synthesis",
+			"lessonId": "ls-027",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What is the 5' cap on mRNA?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Modified guanine nucleotide", "isCorrect": true },
+				{ "id": "B", "text": "Poly-A tail", "isCorrect": false },
+				{ "id": "C", "text": "Start codon marker", "isCorrect": false },
+				{ "id": "D", "text": "Promoter sequence", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Protects and aids translation.",
+			"explanation": "5' cap is a modified guanine for protection and translation."
+		},
+		{
+			"id": "ls027_013",
+			"topic": "Protein Synthesis",
+			"lessonId": "ls-027",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What is the poly-A tail?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Series of adenine nucleotides",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Series of uracil nucleotides",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Start of mRNA", "isCorrect": false },
+				{ "id": "D", "text": "Stop codon region", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "At the 3' end.",
+			"explanation": "Poly-A tail is a series of adenines at 3' end."
+		},
+		{
+			"id": "ls027_014",
+			"topic": "Protein Synthesis",
+			"lessonId": "ls-027",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What is an intron?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Coding region", "isCorrect": false },
+				{ "id": "B", "text": "Non-coding region", "isCorrect": true },
+				{ "id": "C", "text": "Part of ribosome", "isCorrect": false },
+				{ "id": "D", "text": "A type of mutation", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Removed during processing.",
+			"explanation": "Introns are non-coding regions removed in splicing."
+		},
+		{
+			"id": "ls027_015",
+			"topic": "Protein Synthesis",
+			"lessonId": "ls-027",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "What is the 'anticodon'?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Three-base sequence on mRNA",
+					"isCorrect": false
+				},
+				{ "id": "B", "text": "Three-base sequence on tRNA", "isCorrect": true },
+				{ "id": "C", "text": "Start codon sequence", "isCorrect": false },
+				{ "id": "D", "text": "Stop codon sequence", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "On tRNA that pairs with codon.",
+			"explanation": "Anticodon on tRNA pairs with codon on mRNA."
+		},
+		{
+			"id": "ls027_016",
+			"topic": "Protein Synthesis",
+			"lessonId": "ls-027",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "How does tRNA recognize the correct amino acid?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "By its shape", "isCorrect": false },
+				{ "id": "B", "text": "Aminoacyl-tRNA synthetase", "isCorrect": true },
+				{ "id": "C", "text": "By the ribosome", "isCorrect": false },
+				{ "id": "D", "text": "By the anticodon", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Specific enzyme for each tRNA.",
+			"explanation": "Aminoacyl-tRNA synthetase charges each tRNA with the correct amino acid."
+		},
+		{
+			"id": "ls027_017",
+			"topic": "Protein Synthesis",
+			"lessonId": "ls-027",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "What is the reading frame in translation?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "How mRNA is read", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "Grouping of nucleotides in sets of three",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Speed of translation", "isCorrect": false },
+				{ "id": "D", "text": "Direction of translation", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Sets of three matter.",
+			"explanation": "Reading frame is the grouping of codons in sets of three."
+		},
+		{
+			"id": "ls027_018",
+			"topic": "Protein Synthesis",
+			"lessonId": "ls-027",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "What is a frameshift mutation?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Base is inserted or deleted", "isCorrect": true },
+				{ "id": "B", "text": "Base is substituted", "isCorrect": false },
+				{ "id": "C", "text": "Gene is duplicated", "isCorrect": false },
+				{ "id": "D", "text": "Chromosome breaks", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Changes the reading frame.",
+			"explanation": "Frameshift from insertion/deletion shifts the reading frame."
+		},
+		{
+			"id": "ls027_019",
+			"topic": "Protein Synthesis",
+			"lessonId": "ls-027",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "What is the role of the promoter in transcription?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Codes for the protein", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "Binding site for RNA polymerase",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Stops transcription", "isCorrect": false },
+				{ "id": "D", "text": "Makes the 5' cap", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Where transcription starts.",
+			"explanation": "Promoter is where RNA polymerase binds to start transcription."
+		},
+		{
+			"id": "ls027_020",
+			"topic": "Protein Synthesis",
+			"lessonId": "ls-027",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Why is alternative splicing important?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "It speeds up translation", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "One gene can make multiple proteins",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "It removes all introns", "isCorrect": false },
+				{ "id": "D", "text": "It prevents mutations", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "More proteins from fewer genes.",
+			"explanation": "Alternative splicing creates different mRNAs from one gene."
+		}
+	]
+}

@@ -1,0 +1,543 @@
+{
+	"metadata": {
+		"subject": "History",
+		"totalQuestions": 600,
+		"version": "1.0",
+		"curriculum": "CAPS",
+		"createdAt": "2026-04-23T00:00:00.000Z"
+	},
+	"questions": [
+		{
+			"id": "h022_001",
+			"topic": "Pan-Africanism",
+			"lessonId": "h-022",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What was Pan-Africanism?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Movement for African unity and solidarity",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Anti-colonial military movement",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Religious movement", "isCorrect": false },
+				{ "id": "D", "text": "Trade organization", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "African unity ideology.",
+			"explanation": "Pan-Africanism promoted political, cultural, and economic solidarity among African peoples worldwide."
+		},
+		{
+			"id": "h022_002",
+			"topic": "Pan-Africanism",
+			"lessonId": "h-022",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Who was Marcus Garvey?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Back-to-Africa movement leader",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "African independence leader",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "British colonial official", "isCorrect": false },
+				{ "id": "D", "text": "South African activist", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "UNIA founder.",
+			"explanation": "Garvey led UNIA, promoting black pride, economic independence, and return to Africa."
+		},
+		{
+			"id": "h022_003",
+			"topic": "Pan-Africanism",
+			"lessonId": "h-022",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What were the Pan-African Congresses?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Meetings promoting African diaspora solidarity",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Business conferences", "isCorrect": false },
+				{ "id": "C", "text": "Religious assemblies", "isCorrect": false },
+				{ "id": "D", "text": "Military gatherings", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Early 20th century gatherings.",
+			"explanation": "Congresses from 1900-1945 brought together activists to discuss African diaspora rights."
+		},
+		{
+			"id": "h022_004",
+			"topic": "Pan-Africanism",
+			"lessonId": "h-022",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What was the African National Congress?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "South African liberation organization",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Pan-African world organization",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Trade union federation", "isCorrect": false },
+				{ "id": "D", "text": "Religious organization", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Founded 1912.",
+			"explanation": "ANC fought apartheid, inspired by Pan-African unity ideals, led by Mandela and others."
+		},
+		{
+			"id": "h022_005",
+			"topic": "Pan-Africanism",
+			"lessonId": "h-022",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What was the Back-to-Africa movement?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Garvey's call for African Americans to return to Africa",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Migration from Europe to Africa",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Religious pilgrimage", "isCorrect": false },
+				{ "id": "D", "text": "Trade route revival", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Black nationalism.",
+			"explanation": "Back-to-Africa movement advocated return of African descendants to ancestral homeland."
+		},
+		{
+			"id": "h022_006",
+			"topic": "Pan-Africanism",
+			"lessonId": "h-022",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Who was Kwame Nkrumah?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Ghana's first leader promoting African unity",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "South African nationalist", "isCorrect": false },
+				{
+					"id": "C",
+					"text": "British colonial administrator",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Pan-Arab leader", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "1960 independence leader.",
+			"explanation": "Nkrumah led Ghana to independence and championed pan-African political unity."
+		},
+		{
+			"id": "h022_007",
+			"topic": "Pan-Africanism",
+			"lessonId": "h-022",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What was the Organization of African Unity (OAU)?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Continental organization promoting African cooperation",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Trade organization only", "isCorrect": false },
+				{ "id": "C", "text": "Military alliance", "isCorrect": false },
+				{ "id": "D", "text": "Religious federation", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Founded 1963.",
+			"explanation": "OAU (now AU) united African nations for political and economic cooperation."
+		},
+		{
+			"id": "h022_008",
+			"topic": "Pan-Africanism",
+			"lessonId": "h-022",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "How did Pan-Africanism influence independence movements?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Provided ideological framework and solidarity networks",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Had no influence on independence",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Only affected cultural matters",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Was rejected by independence leaders",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Shared strategies and support.",
+			"explanation": "Pan-Africanism connected independence leaders, shared strategies, and provided international legitimacy."
+		},
+		{
+			"id": "h022_009",
+			"topic": "Pan-Africanism",
+			"lessonId": "h-022",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What role did diaspora Africans play in Pan-Africanism?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Provided leadership, resources, and international pressure",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Had no role in movement", "isCorrect": false },
+				{ "id": "C", "text": "Only observed from afar", "isCorrect": false },
+				{
+					"id": "D",
+					"text": "Opposed continental Africans",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Diaspora contribution.",
+			"explanation": "Diaspora Africans like Du Bois and Garvey led movements, raised funds, and lobbied governments."
+		},
+		{
+			"id": "h022_010",
+			"topic": "Pan-Africanism",
+			"lessonId": "h-022",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What was the Bandung Conference (1955)?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Asian-African conference promoting non-alignment",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Military alliance meeting", "isCorrect": false },
+				{ "id": "C", "text": "Trade agreement conference", "isCorrect": false },
+				{ "id": "D", "text": "Religious summit", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Non-aligned movement foundation.",
+			"explanation": "Bandung Conference united recently independent Asian-African nations and influenced Cold War politics."
+		},
+		{
+			"id": "h022_011",
+			"topic": "Pan-Africanism",
+			"lessonId": "h-022",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "How did colonialism affect Pan-African thought?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Colonial oppression united Africans against common enemy",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Had no connection to Pan-Africanism",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Prevented any unity", "isCorrect": false },
+				{ "id": "D", "text": "Only affected economics", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Common struggle.",
+			"explanation": "Shared colonial experience forged Pan-African identity and resistance to domination."
+		},
+		{
+			"id": "h022_012",
+			"topic": "Pan-Africanism",
+			"lessonId": "h-022",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What was Nkrumah's vision for African unity?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Continental federation with unified government",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Cultural exchange only", "isCorrect": false },
+				{ "id": "C", "text": "Economic cooperation only", "isCorrect": false },
+				{ "id": "D", "text": "Religious union", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Political union ideal.",
+			"explanation": "Nkrumah advocated political federation to accelerate development and resist imperialism."
+		},
+		{
+			"id": "h022_013",
+			"topic": "Pan-Africanism",
+			"lessonId": "h-022",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What challenges did Pan-Africanism face?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Colonial borders, tribal divisions, and Cold War pressures",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "No significant challenges", "isCorrect": false },
+				{ "id": "C", "text": "Only external opposition", "isCorrect": false },
+				{ "id": "D", "text": "Lack of popular support", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Internal and external obstacles.",
+			"explanation": "National interests, colonial divisions, and foreign interference undermined unity efforts."
+		},
+		{
+			"id": "h022_014",
+			"topic": "Pan-Africanism",
+			"lessonId": "h-022",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What is the African Union?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Successor to OAU with greater integration focus",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Economic organization only", "isCorrect": false },
+				{ "id": "C", "text": "Military alliance", "isCorrect": false },
+				{ "id": "D", "text": "New Pan-African movement", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Founded 2002.",
+			"explanation": "AU succeeded OAU with more integration goals, peace mechanisms, and development programs."
+		},
+		{
+			"id": "h022_015",
+			"topic": "Pan-Africanism",
+			"lessonId": "h-022",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Analyze the evolution from Pan-African Congresses to the OAU.",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Movement grew from diaspora discussions to continental political organization",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "No connection existed", "isCorrect": false },
+				{ "id": "C", "text": "Ideas remained unchanged", "isCorrect": false },
+				{
+					"id": "D",
+					"text": "OAU replaced all earlier efforts",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "From diaspora to continent.",
+			"explanation": "Pan-Africanism evolved from intellectual discussions to institutional continental organization."
+		},
+		{
+			"id": "h022_016",
+			"topic": "Pan-Africanism",
+			"lessonId": "h-022",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Evaluate the extent to which Pan-Africanism achieved its goals.",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Succeeded in decolonization but failed in political unity",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Completely achieved all goals",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Had no impact", "isCorrect": false },
+				{
+					"id": "D",
+					"text": "Only achieved cultural goals",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Independence vs. unity.",
+			"explanation": "Pan-Africanism inspired independence but political integration remains limited."
+		},
+		{
+			"id": "h022_017",
+			"topic": "Pan-Africanism",
+			"lessonId": "h-022",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "How did the Cold War affect Pan-African unity?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Superpower competition divided African nations",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Strengthened Pan-African bonds",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Had no effect on Africa", "isCorrect": false },
+				{ "id": "D", "text": "Ended Pan-Africanism", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Non-aligned movement challenges.",
+			"explanation": "Both blocs courted African states, creating divisions over ideology and allegiances."
+		},
+		{
+			"id": "h022_018",
+			"topic": "Pan-Africanism",
+			"lessonId": "h-022",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Analyze the relationship between Pan-Africanism and African nationalism.",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Pan-Africanism inspired national movements while national interests challenged it",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "They were identical", "isCorrect": false },
+				{ "id": "C", "text": "Had no relationship", "isCorrect": false },
+				{
+					"id": "D",
+					"text": "Nationalism opposed Pan-Africanism",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Global vs. local.",
+			"explanation": "National independence movements drew on Pan-Africanism but prioritized national interests."
+		},
+		{
+			"id": "h022_019",
+			"topic": "Pan-Africanism",
+			"lessonId": "h-022",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "How has Pan-Africanism influenced contemporary Africa?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Shaped AU, trade agreements, and regional integration efforts",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Has no contemporary relevance",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Only affects diaspora communities",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Has been completely replaced",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Continental integration.",
+			"explanation": "Pan-African ideals continue in AU, AfCFTA, and regional blocs aiming for integration."
+		},
+		{
+			"id": "h022_020",
+			"topic": "Pan-Africanism",
+			"lessonId": "h-022",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Evaluate the legacy of Pan-Africanism for global anti-colonial movements.",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Provided model for solidarity, shared strategies, and post-colonial cooperation",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Had no global influence", "isCorrect": false },
+				{ "id": "C", "text": "Only influenced Africa", "isCorrect": false },
+				{ "id": "D", "text": "Was unique to Africa alone", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Model for other movements.",
+			"explanation": "Pan-Africanism inspired Black Power, solidarity movements, and decolonization struggles globally."
+		}
+	]
+}

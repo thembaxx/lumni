@@ -6,6 +6,7 @@ import { z } from "zod";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { QuizQuestion } from "./quiz-question";
 import { QuizResult } from "./quiz-result";
 
@@ -155,8 +156,18 @@ export function QuizEngine({
 
 	if (loading) {
 		return (
-			<Card className="p-8 flex items-center justify-center">
-				<p className="text-muted-foreground">Loading questions...</p>
+			<Card className="p-6 space-y-4">
+				<div className="flex items-center justify-between">
+					<Skeleton className="h-5 w-32" />
+					<Skeleton className="h-5 w-16" />
+				</div>
+				<Skeleton className="h-6 w-full" />
+				<Skeleton className="h-24 w-full rounded-lg" />
+				<div className="space-y-2">
+					{[1, 2, 3, 4].map((i) => (
+						<Skeleton key={i} className="h-12 w-full rounded-lg" />
+					))}
+				</div>
 			</Card>
 		);
 	}

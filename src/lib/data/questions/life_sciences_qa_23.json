@@ -1,0 +1,463 @@
+{
+	"metadata": {
+		"subject": "Life Sciences",
+		"totalQuestions": 20,
+		"version": "1.0",
+		"curriculum": "CAPS",
+		"createdAt": "2026-04-23T00:00:00.000Z"
+	},
+	"questions": [
+		{
+			"id": "ls023_001",
+			"topic": "Human Reproduction",
+			"lessonId": "ls-023",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Where are sperm cells produced in the male reproductive system?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Prostate gland", "isCorrect": false },
+				{ "id": "B", "text": "Testes", "isCorrect": true },
+				{ "id": "C", "text": "Seminal vesicles", "isCorrect": false },
+				{ "id": "D", "text": "Epididymis", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Think about the male gonads.",
+			"explanation": "The testes are the male gonads that produce sperm and testosterone."
+		},
+		{
+			"id": "ls023_002",
+			"topic": "Human Reproduction",
+			"lessonId": "ls-023",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Where does fertilization normally occur in the female reproductive system?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Uterus", "isCorrect": false },
+				{ "id": "B", "text": "Cervix", "isCorrect": false },
+				{ "id": "C", "text": "Fallopian tube", "isCorrect": true },
+				{ "id": "D", "text": "Vagina", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Where does the egg travel after ovulation?",
+			"explanation": "Fertilization occurs in the Fallopian tube (oviduct)."
+		},
+		{
+			"id": "ls023_003",
+			"topic": "Human Reproduction",
+			"lessonId": "ls-023",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What is the function of the placenta during pregnancy?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Produces hormones only", "isCorrect": false },
+				{ "id": "B", "text": "Protects the embryo", "isCorrect": false },
+				{
+					"id": "C",
+					"text": "Transports nutrients and oxygen to the fetus",
+					"isCorrect": true
+				},
+				{ "id": "D", "text": "Produces blood cells", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Consider what the fetus needs from the mother's blood.",
+			"explanation": "The placenta allows exchange of gases, nutrients, and waste products between mother and fetus."
+		},
+		{
+			"id": "ls023_004",
+			"topic": "Human Reproduction",
+			"lessonId": "ls-023",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "How many chromosomes does a normal human somatic cell contain?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "23", "isCorrect": false },
+				{ "id": "B", "text": "46", "isCorrect": true },
+				{ "id": "C", "text": "44", "isCorrect": false },
+				{ "id": "D", "text": "48", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Think 23 pairs.",
+			"explanation": "Human somatic cells have 46 chromosomes (23 pairs)."
+		},
+		{
+			"id": "ls023_005",
+			"topic": "Human Reproduction",
+			"lessonId": "ls-023",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What is the main hormone that regulates the menstrual cycle?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Testosterone", "isCorrect": false },
+				{ "id": "B", "text": "Progesterone", "isCorrect": false },
+				{ "id": "C", "text": "Estrogen", "isCorrect": true },
+				{ "id": "D", "text": "Insulin", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Which female hormone is produced by the ovaries?",
+			"explanation": "Estrogen, produced by the ovaries, regulates the menstrual cycle."
+		},
+		{
+			"id": "ls023_006",
+			"topic": "Human Reproduction",
+			"lessonId": "ls-023",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Which part of the sperm cell contains enzymes to penetrate the egg?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Head", "isCorrect": true },
+				{ "id": "B", "text": "Tail", "isCorrect": false },
+				{ "id": "C", "text": "Middle piece", "isCorrect": false },
+				{ "id": "D", "text": "acrosome", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "The tip of the sperm head contains digestive enzymes.",
+			"explanation": "The acrosome in the head of sperm contains enzymes to dissolve the egg's outer membrane."
+		},
+		{
+			"id": "ls023_007",
+			"topic": "Human Reproduction",
+			"lessonId": "ls-023",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What is the average length of the menstrual cycle?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "21 days", "isCorrect": false },
+				{ "id": "B", "text": "28 days", "isCorrect": true },
+				{ "id": "C", "text": "35 days", "isCorrect": false },
+				{ "id": "D", "text": "30 days", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Think about a typical monthly cycle.",
+			"explanation": "The average menstrual cycle is 28 days, from day 1 of one period to day 1 of the next."
+		},
+		{
+			"id": "ls023_008",
+			"topic": "Human Reproduction",
+			"lessonId": "ls-023",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "During which phase of the menstrual cycle does ovulation occur?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Menstrual phase", "isCorrect": false },
+				{ "id": "B", "text": "Follicular phase", "isCorrect": true },
+				{ "id": "C", "text": "Luteal phase", "isCorrect": false },
+				{ "id": "D", "text": "Proliferative phase", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Ovulation occurs around day 14 of a 28-day cycle.",
+			"explanation": "Ovulation occurs at the end of the follicular phase, around day 14."
+		},
+		{
+			"id": "ls023_009",
+			"topic": "Human Reproduction",
+			"lessonId": "ls-023",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What is the function of luteinizing hormone (LH) in reproduction?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Stimulates follicle development",
+					"isCorrect": false
+				},
+				{ "id": "B", "text": "Triggers ovulation", "isCorrect": true },
+				{
+					"id": "C",
+					"text": "Maintains the corpus luteum",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Stimulates estrogen production",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Which hormone causes the mature follicle to rupture?",
+			"explanation": " LH surge triggers ovulation, releasing the egg from the follicle."
+		},
+		{
+			"id": "ls023_010",
+			"topic": "Human Reproduction",
+			"lessonId": "ls-023",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What happens to the corpus luteum if fertilization does not occur?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "It continues to produce progesterone",
+					"isCorrect": false
+				},
+				{
+					"id": "B",
+					"text": "It degenerates into the corpus albicans",
+					"isCorrect": true
+				},
+				{
+					"id": "C",
+					"text": "It is expelled during menstruation",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "It becomes part of the placenta",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Without pregnancy, the temporary endocrine structure breaks down.",
+			"explanation": "The corpus luteum degenerates into the corpus albicans if no pregnancy occurs."
+		},
+		{
+			"id": "ls023_011",
+			"topic": "Human Reproduction",
+			"lessonId": "ls-023",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Which structure develops from the inner cell mass of the blastocyst?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Placenta", "isCorrect": false },
+				{ "id": "B", "text": "Embryo", "isCorrect": true },
+				{ "id": "C", "text": "Chorion", "isCorrect": false },
+				{ "id": "D", "text": "Amnion", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "The inner cell mass becomes the baby.",
+			"explanation": "The inner cell mass develops into the embryo (baby)."
+		},
+		{
+			"id": "ls023_012",
+			"topic": "Human Reproduction",
+			"lessonId": "ls-023",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What is the gestation period of a normal human pregnancy?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "36 weeks", "isCorrect": false },
+				{ "id": "B", "text": "38 weeks", "isCorrect": true },
+				{ "id": "C", "text": "40 weeks", "isCorrect": false },
+				{ "id": "D", "text": "42 weeks", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Count from conception to birth.",
+			"explanation": "Normal gestation is about 38 weeks from conception."
+		},
+		{
+			"id": "ls023_013",
+			"topic": "Human Reproduction",
+			"lessonId": "ls-023",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What is the role of human chorionic gonadotropin (hCG)?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Stimulates milk production", "isCorrect": false },
+				{ "id": "B", "text": "Maintains the corpus luteum", "isCorrect": true },
+				{
+					"id": "C",
+					"text": "Causes uterine contractions",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Stimulates follicle development",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "This hormone signals pregnancy to the body.",
+			"explanation": "hCG maintains the corpus luteum to continue producing progesterone early in pregnancy."
+		},
+		{
+			"id": "ls023_014",
+			"topic": "Human Reproduction",
+			"lessonId": "ls-023",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Which week marks the end of the embryonic period in development?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Week 4", "isCorrect": false },
+				{ "id": "B", "text": "Week 8", "isCorrect": true },
+				{ "id": "C", "text": "Week 12", "isCorrect": false },
+				{ "id": "D", "text": "Week 16", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "When do major organs finish forming?",
+			"explanation": "The embryonic period ends at week 8 when all major organs are formed."
+		},
+		{
+			"id": "ls023_015",
+			"topic": "Human Reproduction",
+			"lessonId": "ls-023",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "During the follicular phase, rising levels of estrogen cause what effect on FSH?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "FSH continues to increase", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "FSH decreases due to negative feedback",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "FSH has no change", "isCorrect": false },
+				{ "id": "D", "text": "FSH converts to LH", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Consider the feedback relationship between estrogen and FSH.",
+			"explanation": "Rising estrogen inhibits FSH secretion through negative feedback."
+		},
+		{
+			"id": "ls023_016",
+			"topic": "Human Reproduction",
+			"lessonId": "ls-023",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "What determines the sex of the offspring in humans?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "The mother's egg chromosome",
+					"isCorrect": false
+				},
+				{
+					"id": "B",
+					"text": "The father's sperm chromosome",
+					"isCorrect": true
+				},
+				{
+					"id": "C",
+					"text": "The number of eggs fertilized",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Hormonal balance during pregnancy",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Who carries the X or Y chromosome?",
+			"explanation": "The sperm carries either X or Y chromosome; the egg always carries X."
+		},
+		{
+			"id": "ls023_017",
+			"topic": "Human Reproduction",
+			"lessonId": "ls-023",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "In meiosis, what prevents Down syndrome in the offspring?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Independent assortment", "isCorrect": false },
+				{ "id": "B", "text": "Crossing over", "isCorrect": false },
+				{
+					"id": "C",
+					"text": "Chromosome separation in meiosis I",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Nothing - errors can occur causing non-disjunction",
+					"isCorrect": true
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Down syndrome is caused by an extra chromosome 21.",
+			"explanation": "Nothing actively prevents it; errors in meiosis (non-disjunction) can cause Down syndrome."
+		},
+		{
+			"id": "ls023_018",
+			"topic": "Human Reproduction",
+			"lessonId": "ls-023",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The progesterone rise during the luteal phase causes what reproductive response?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Thickening of uterine lining",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Shedding of uterine lining", "isCorrect": false },
+				{ "id": "C", "text": "Stimulation of ovulation", "isCorrect": false },
+				{ "id": "D", "text": "Growth of uterine muscle", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Progesterone prepares the uterus for implantation.",
+			"explanation": "Progesterone maintains and thickens the uterine lining for potential implantation."
+		},
+		{
+			"id": "ls023_019",
+			"topic": "Human Reproduction",
+			"lessonId": "ls-023",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "What prevents polyspermy after one sperm enters the egg?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Fast block to polyspermy", "isCorrect": false },
+				{ "id": "B", "text": "Slow block to polyspermy", "isCorrect": true },
+				{ "id": "C", "text": "The zona pellucida hardens", "isCorrect": false },
+				{ "id": "D", "text": "Cortical granules activate", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Multiple mechanisms prevent additional sperm entry.",
+			"explanation": "The slow block (depolarization) and cortical reaction prevent polyspermy."
+		},
+		{
+			"id": "ls023_020",
+			"topic": "Human Reproduction",
+			"lessonId": "ls-023",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Which event in labor is triggered by oxytocin?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Cervical softening", "isCorrect": false },
+				{ "id": "B", "text": "Uterine contractions", "isCorrect": true },
+				{ "id": "C", "text": "Water breaking", "isCorrect": false },
+				{ "id": "D", "text": "Placental expulsion", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "What hormone causes the uterus to contract during labor?",
+			"explanation": "Oxytocin stimulates powerful uterine contractions during labor and delivery."
+		}
+	]
+}

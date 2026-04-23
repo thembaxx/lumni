@@ -1,0 +1,423 @@
+{
+	"metadata": {
+		"subject": "Life Sciences",
+		"totalQuestions": 20,
+		"version": "1.0",
+		"curriculum": "CAPS",
+		"createdAt": "2026-04-23T00:00:00.000Z"
+	},
+	"questions": [
+		{
+			"id": "ls019_001",
+			"topic": "Diversity and Classification",
+			"lessonId": "ls-019",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The two-part scientific name of an organism is called:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Common name", "isCorrect": false },
+				{ "id": "B", "text": "Binomial nomenclature", "isCorrect": true },
+				{ "id": "C", "text": "Taxonomic rank", "isCorrect": false },
+				{ "id": "D", "text": "Genus name only", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Genus and species.",
+			"explanation": "Binomial nomenclature (two-part name) gives each species a unique scientific name consisting of genus (capitalised) and species (lowercase) names."
+		},
+		{
+			"id": "ls019_002",
+			"topic": "Diversity and Classification",
+			"lessonId": "ls-019",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The five kingdoms of classification are:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Animalia, Plantae, Fungi, Protista, Monera",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Animalia, Plantae, Fungi, Bacteria, Archaea",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Animalia, Plantae, Fungi, Virus, Protista",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Mammalia, Aves, Reptilia, Amphibia, Pisces",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "From most complex to simplest.",
+			"explanation": "The five-kingdom system (Whittaker) classifies all organisms into Animalia, Plantae, Fungi, Protista, and Monera based on cell type and nutrition."
+		},
+		{
+			"id": "ls019_003",
+			"topic": "Diversity and Classification",
+			"lessonId": "ls-019",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The correct order of taxonomic hierarchy from broad to specific is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Kingdom, Phylum, Class, Order, Family, Genus, Species", "isCorrect": true },
+				{ "id": "B", "text": "Species, Genus, Family, Order, Class, Phylum, Kingdom", "isCorrect": false },
+				{ "id": "C", "text": "Kingdom, Class, Order, Phylum, Family, Genus, Species", "isCorrect": false },
+				{ "id": "D", "text": "Family, Order, Class, Phylum, Kingdom, Genus, Species", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "King Philip Came Out For Great Science.",
+			explanation: "The hierarchical classification system goes Kingdom (broadest) → Phylum → Class → Order → Family → Genus → Species (most specific)."
+		},
+		{
+			"id": "ls019_004",
+			"topic": "Diversity and Classification",
+			"lessonId": "ls-019",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Which kingdom includes organisms that are multicellular and heterotrophic?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Plantae", "isCorrect": false },
+				{ "id": "B", "text": "Fungi", "isCorrect": false },
+				{ "id": "C", "text": "Animalia", "isCorrect": true },
+				{ "id": "D", "text": "Protista", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Consumer kingdom.",
+			explanation": "Kingdom Animalia consists of multicellular, eukaryotic, heterotrophic organisms that digest food internally."
+		},
+		{
+			"id": "ls019_005",
+			"topic": "Diversity and Classification",
+			"lessonId": "ls-019",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Prokaryotes lack:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Cell wall", "isCorrect": false },
+				{ "id": "B", "text": "Membrane-bound nucleus", "isCorrect": true },
+				{ "id": "C", "text": "DNA", "isCorrect": false },
+				{ "id": "D", "text": "Ribosomes", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "No nuclear membrane.",
+			"explanation": "Prokaryotes (bacteria and archaea) have no membrane-bound nucleus. Their DNA is in a region called the nucleoid."
+		},
+		{
+			"id": "ls019_006",
+			"topic": "Diversity and Classification",
+			"lessonId": "ls-019",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "A species can be defined as:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Any group of similar organisms", "isCorrect": false },
+				{ "id": "B", "text": "A group of organisms that can interbreed and produce fertile offspring", "isCorrect": true },
+				{ "id": "C", "text": "Only animals", "isCorrect": false },
+				{ "id": "D", "text": "Only plants", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Biological species concept.",
+			"explanation": "A biological species is a group of actually or potentially interbreeding natural populations that are reproductively isolated from other such groups."
+		},
+		{
+			"id": "ls019_007",
+			"topic": "Diversity and Classification",
+			"lessonId": "ls-019",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Which kingdom includes organisms that obtain nutrients by absorption?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Plantae", "isCorrect": false },
+				{ "id": "B", "text": "Fungi", "isCorrect": true },
+				{ "id": "C", "text": "Animalia", "isCorrect": false },
+				{ "id": "D", "text": "Protista", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Saprotrophic nutrition.",
+			explanation: "Kingdom Fungi includes saprotrophic organisms that secrete enzymes externally and absorb digested nutrients."
+		},
+		{
+			"id": "ls019_008",
+			"topic": "Diversity and Classification",
+			"lessonId": "ls-019",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The three domains of life are:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Bacteria, Archaea, Eukarya", "isCorrect": true },
+				{ "id": "B", "text": "Monera, Protista, Fungi", "isCorrect": false },
+				{ "id": "C", "text": "Animalia, Plantae, Fungi", "isCorrect": false },
+				{ "id": "D", "text": "Prokaryote, Eukaryote, Archaea", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Carl Woese classification.",
+			explanation: "The three-domain system (Woese) classifies all life into Bacteria, Archaea, and Eukarya based on rRNA sequencing differences."
+		},
+		{
+			"id": "ls019_009",
+			"topic": "Diversity and Classification",
+			"lessonId": "ls-019",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Viruses are classified as neither prokaryotic nor eukaryotic because they:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Are multicellular", "isCorrect": false },
+				{ "id": "B", "text": "Are acellular and require a host cell to reproduce", "isCorrect": true },
+				{ "id": "C", "text": "Have a cell wall", "isCorrect": false },
+				{ "id": "D", "text": "Are plants", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Not truly alive.",
+			"explanation": "Viruses are acellular particles containing DNA or RNA that can only replicate inside living host cells, placing them outside the cell-based classification system."
+		},
+		{
+			"id": "ls019_010",
+			"topic": "Diversity and Classification",
+			"lessonId": "ls-019",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Organisms in the genus Panthera (lion, tiger, jaguar) share the same:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Species", "isCorrect": false },
+				{ "id": "B", "text": "Genus", "isCorrect": true },
+				{ "id": "C", "text": "Kingdom", "isCorrect": false },
+				{ "id": "D", "text": "Family and order", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "First part of binomial name.",
+			"explanation": "All three cats share the genus name Panthera (genus is always the first word in binomial nomenclature), but each has a unique species name."
+		},
+		{
+			"id": "ls019_011",
+			"topic": "Diversity and Classification",
+			"lessonId": "ls-019",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Which characteristic places organisms in the same order?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Cannot interbreed", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "Share more specific characteristics than members of the same family",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Are all plants", "isCorrect": false },
+				{ "id": "D", "text": "Live in the same habitat", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Taxonomic grouping.",
+			"explanation": "Organisms in the same order share more specific characteristics than those grouped at the family level, reflecting closer evolutionary relationships."
+		},
+		{
+			"id": "ls019_012",
+			"topic": "Diversity and Classification",
+			"lessonId": "ls-019",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Bacteria differ from archaea in that bacteria:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Have membrane lipids with ester bonds", "isCorrect": true },
+				{ "id": "B", "text": "Live in extreme environments", "isCorrect": false },
+				{ "id": "C", "text": "Have introns in their DNA", "isCorrect": false },
+				{ "id": "D", "text": "Are all pathogens", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Membrane lipid difference.",
+			"explanation": "Bacteria have membrane lipids with ester bonds and peptidoglycan cell walls. Archaea have ether-linked lipids and lack peptidoglycan."
+		},
+		{
+			"id": "ls019_013",
+			"topic": "Diversity and Classification",
+			"lessonId": "ls-019",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The scientific name for humans is Homo sapiens. The word 'Homo' represents the:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Species name", "isCorrect": false },
+				{ "id": "B", "text": "Genus name", "isCorrect": true },
+				{ "id": "C", "text": "Family name", "isCorrect": false },
+				{ "id": "D", "text": "Order name", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "First word in the binomial.",
+			"explanation": "In binomial nomenclature, the first word is the genus (capitalised) and the second is the species (lowercase). Homo sapiens = genus Homo, species sapiens."
+		},
+		{
+			"id": "ls019_014",
+			"topic": "Diversity and Classification",
+			"lessonId": "ls-019",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "A dichotomous key is used to:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Determine evolutionary relationships",
+					"isCorrect": false
+				},
+				{
+					"id": "B",
+					"text": "Identify organisms by selecting between pairs of contrasting characteristics",
+					"isCorrect": true
+				},
+				{
+					"id": "C",
+					"text": "Count the number of species",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Name new species", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Two-choice identification tool.",
+			"explanation": "A dichotomous key is a tool for identifying organisms by presenting a series of paired choices (either/or) of characteristics, leading to identification."
+		},
+		{
+			"id": "ls019_015",
+			"topic": "Diversity and Classification",
+			"lessonId": "ls-019",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The correct format for writing a scientific name is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "homo sapiens (both lower case)", "isCorrect": false },
+				{ "id": "B", "text": "Homo sapiens (genus capitalised, species lower case, italicised)", "isCorrect": true },
+				{ "id": "C", "text": "HOMO SAPIENS (all capitals)", "isCorrect": false },
+				{ "id": "D", "text": "Homo Sapiens (both capitalised)", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Linnaean conventions.",
+			"explanation": "Scientific names are italicised (or underlined in handwriting), with genus capitalised and species lower case. Written in Latin or Latinised form."
+		},
+		{
+			"id": "ls019_016",
+			"topic": "Diversity and Classification",
+			"lessonId": "ls-019",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Convergent evolution produces organisms that:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Are closely related but evolved similar traits independently", "isCorrect": false },
+				{ "id": "B", "text": "Look similar but are not closely related due to similar environmental pressures", "isCorrect": true },
+				{ "id": "C", "text": "Are genetically identical", "isCorrect": false },
+				{ "id": "D", "text": "Share a common ancestor", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Analogous structures, not homologous.",
+			"explanation": "Convergent evolution produces analogous structures (e.g., wings of bats and insects) where unrelated organisms evolve similar traits in similar environments."
+		},
+		{
+			"id": "ls019_017",
+			"topic": "Diversity and Classification",
+			"lessonId": "ls-019",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Molecular phylogeny uses which molecule to determine evolutionary relationships?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "ATP only", "isCorrect": false },
+				{ "id": "B", "text": "DNA, RNA, and proteins", "isCorrect": true },
+				{ "id": "C", "text": "Lipids only", "isCorrect": false },
+				{ "id": "D", "text": "Carbohydrates", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Genetic material comparison.",
+			"explanation": "Molecular phylogeny compares DNA, RNA, or protein sequences to determine evolutionary relationships between organisms based on genetic similarity."
+		},
+		{
+			"id": "ls019_018",
+			"topic": "Diversity and Classification",
+			"lessonId": "ls-019",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "A phylogenetic tree represents:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "The physical location of organisms", "isCorrect": false },
+				{ "id": "B", "text": "Evolutionary history and common ancestry of organisms", "isCorrect": true },
+				{ "id": "C", "text": "Only physical traits of organisms", "isCorrect": false },
+				{ "id": "D", "text": "The diet of organisms", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Tree of life diagram.",
+			explanation: "A phylogenetic tree (cladogram) is a branching diagram showing evolutionary relationships and common ancestry among organisms."
+		},
+		{
+			"id": "ls019_019",
+			"topic": "Diversity and Classification",
+			"lessonId": "ls-019",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Homologous structures are those that:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Have the same function but different evolutionary origins", "isCorrect": false },
+				{ "id": "B", "text": "Have the same evolutionary origin but may have different functions", "isCorrect": true },
+				{ "id": "C", "text": "Are found only in plants", "isCorrect": false },
+				{ "id": "D", "text": "Are always external", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Common ancestry evidence.",
+			explanation": "Homologous structures (e.g., forelimb bones in humans, bats, whales) share common ancestry but may serve different functions (arms, wings, flippers)."
+		},
+		{
+			"id": "ls019_020",
+			"topic": "Diversity and Classification",
+			"lessonId": "ls-019",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Which group contains organisms with cell walls made of chitin?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Plantae", "isCorrect": false },
+				{ "id": "B", "text": "Fungi", "isCorrect": true },
+				{ "id": "C", "text": "Animalia", "isCorrect": false },
+				{ "id": "D", "text": "Protista", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Not cellulose.",
+			"explanation": "Fungi have cell walls made of chitin (also found in insect exoskeletons). Plants have cellulose cell walls, and animals lack cell walls."
+		}
+	]
+}

@@ -1,0 +1,407 @@
+{
+	"metadata": {
+		"subject": "Physical Science",
+		"totalQuestions": 600,
+		"version": "1.0",
+		"curriculum": "CAPS",
+		"createdAt": "2026-04-23T00:00:00.000Z"
+	},
+	"questions": [
+		{
+			"id": "ps004_001",
+			"topic": "Newton's First Law - Inertia",
+			"lessonId": "ps-004",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Newton's First Law is also known as:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Law of acceleration", "isCorrect": false },
+				{ "id": "B", "text": "Law of inertia", "isCorrect": true },
+				{ "id": "C", "text": "Law of action-reaction", "isCorrect": false },
+				{ "id": "D", "text": "Law of gravity", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It deals with tendency to resist change.",
+			"explanation": "First Law = Law of Inertia."
+		},
+		{
+			"id": "ps004_002",
+			"topic": "Newton's First Law - Inertia",
+			"lessonId": "ps-004",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "A Book on a table is at rest. Forces:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Only weight downward", "isCorrect": false },
+				{ "id": "B", "text": "Weight down, normal up", "isCorrect": true },
+				{ "id": "C", "text": "No forces", "isCorrect": false },
+				{ "id": "D", "text": "Only normal force", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "At rest means balanced forces.",
+			"explanation": "Weight (mg) downward, normal force from table upward."
+		},
+		{
+			"id": "ps004_003",
+			"topic": "Newton's First Law - Inertia",
+			"lessonId": "ps-004",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Inertia is property that resists:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Motion", "isCorrect": false },
+				{ "id": "B", "text": "Change in motion", "isCorrect": true },
+				{ "id": "C", "text": "Gravity", "isCorrect": false },
+				{ "id": "D", "text": "Friction", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Inertia resists change in velocity.",
+			"explanation": "Inertia resists any change in state of motion."
+		},
+		{
+			"id": "ps004_004",
+			"topic": "Newton's First Law - Inertia",
+			"lessonId": "ps-004",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Car accelerates forward, passengers feel thrown back because:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "They pull backward", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "Their inertia resists change",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Seat belts push", "isCorrect": false },
+				{ "id": "D", "text": "Air pushes them", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Seat moves forward, body tries to stay at rest.",
+			"explanation": "Due to inertia, body resists change in motion."
+		},
+		{
+			"id": "ps004_005",
+			"topic": "Newton's First Law - Inertia",
+			"lessonId": "ps-004",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Which has more inertia: 1kg rock or 1kg wool?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Rock", "isCorrect": false },
+				{ "id": "B", "text": "Wool", "isCorrect": false },
+				{ "id": "C", "text": "Same", "isCorrect": true },
+				{ "id": "D", "text": "Cannot tell", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Inertia proportional to mass.",
+			"explanation": "Same mass = same inertia."
+		},
+		{
+			"id": "ps004_006",
+			"topic": "Newton's First Law - Inertia",
+			"lessonId": "ps-004",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Object slides on frictionless surface at 10 m/s. What happens?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Stops immediately", "isCorrect": false },
+				{ "id": "B", "text": "Slows gradually", "isCorrect": false },
+				{ "id": "C", "text": "Keeps moving at 10 m/s", "isCorrect": true },
+				{ "id": "D", "text": "Speeds up", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "No unbalanced force = no change in motion.",
+			"explanation": "Continues at constant velocity."
+		},
+		{
+			"id": "ps004_007",
+			"topic": "Newton's First Law - Inertia",
+			"lessonId": "ps-004",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "A 2kg object requires 10N to accelerate at 5 m/s². What friction force?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "0N", "isCorrect": false },
+				{ "id": "B", "text": "10N", "isCorrect": false },
+				{ "id": "C", "text": "Information incomplete", "isCorrect": true },
+				{ "id": "D", "text": "20N", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Need to know net force direction.",
+			"explanation": "Cannot determine without more info."
+		},
+		{
+			"id": "ps004_008",
+			"topic": "Newton's First Law - Inertia",
+			"lessonId": "ps-004",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "An object in equilibrium has:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "No forces acting", "isCorrect": false },
+				{ "id": "B", "text": "Constant velocity or rest", "isCorrect": true },
+				{ "id": "C", "text": "Zero mass", "isCorrect": false },
+				{ "id": "D", "text": "Accelerating", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Equilibrium = net force zero.",
+			"explanation": "Zero net force → constant velocity or at rest."
+		},
+		{
+			"id": "ps004_009",
+			"topic": "Newton's First Law - Inertia",
+			"lessonId": "ps-004",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "When car stops suddenly, passenger lurches forward. Why?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Car pulls them", "isCorrect": false },
+				{ "id": "B", "text": "Inertia keeps them moving", "isCorrect": true },
+				{ "id": "C", "text": "Gravity pulls", "isCorrect": false },
+				{ "id": "D", "text": "Seat belt releases", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Car stops, body tries to keep moving.",
+			"explanation": "Due to inertia, body continues at original velocity."
+		},
+		{
+			"id": "ps004_010",
+			"topic": "Newton's First Law - Inertia",
+			"lessonId": "ps-004",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "An object at rest on frictionless surface will:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Start moving without force", "isCorrect": false },
+				{ "id": "B", "text": "Stay at rest forever", "isCorrect": true },
+				{ "id": "C", "text": "Move with decreasing speed", "isCorrect": false },
+				{ "id": "D", "text": "Start rotating", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "No force to cause change.",
+			"explanation": "Object remains at rest without unbalanced forces."
+		},
+		{
+			"id": "ps004_011",
+			"topic": "Newton's First Law - Inertia",
+			"lessonId": "ps-004",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "A spacecraft in deep space (no gravity, no friction) has engine off. It:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Stops", "isCorrect": false },
+				{ "id": "B", "text": "Speeds up gradually", "isCorrect": false },
+				{ "id": "C", "text": "Maintains constant velocity", "isCorrect": true },
+				{ "id": "D", "text": "Slows to stop", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "No external forces.",
+			"explanation": "Continues at constant velocity (zero if at rest)."
+		},
+		{
+			"id": "ps004_012",
+			"topic": "Newton's First Law - Inertia",
+			"lessonId": "ps-004",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Two objects, 1kg and 4kg, same initial velocity. Which more difficult to stop?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "1kg", "isCorrect": false },
+				{ "id": "B", "text": "4kg", "isCorrect": true },
+				{ "id": "C", "text": "Same", "isCorrect": false },
+				{ "id": "D", "text": "Cannot determine", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "More mass = more inertia = harder to change motion.",
+			"explanation": "4kg has 4x inertia, harder to stop."
+		},
+		{
+			"id": "ps004_013",
+			"topic": "Newton's First Law - Inertia",
+			"lessonId": "ps-004",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "A hockey puck slides at 5 m/s on ice (μ=0.03). Time to stop?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "17 s", "isCorrect": true },
+				{ "id": "B", "text": "5 s", "isCorrect": false },
+				{ "id": "C", "text": "0.03 s", "isCorrect": false },
+				{ "id": "D", "text": "167 s", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "F = μmg = ma; a = μg",
+			"explanation": "a = 0.03×10 = 0.3 m/s²; t = 5/0.3 ≈ 17s"
+		},
+		{
+			"id": "ps004_014",
+			"topic": "Newton's First Law - Inertia",
+			"lessonId": "ps-004",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Why do you feel jerk when elevator starts moving up?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Gravity changes", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "Inertia resists acceleration",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Elevator is fast", "isCorrect": false },
+				{ "id": "D", "text": "Air pressure", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Floor accelerates, body resists.",
+			"explanation": "Inertia resists acceleration, feels opposite force."
+		},
+		{
+			"id": "ps004_015",
+			"topic": "Newton's First Law - Inertia",
+			"lessonId": "ps-004",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Mass on Moon is 10kg. Weight on Earth: (g=10)",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "10N", "isCorrect": false },
+				{ "id": "B", "text": "16.3N", "isCorrect": false },
+				{ "id": "C", "text": "100N", "isCorrect": true },
+				{ "id": "D", "text": "1.67N", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "W = mg",
+			"explanation": "W = 10×10 = 100N on Earth."
+		},
+		{
+			"id": "ps004_016",
+			"topic": "Newton's First Law - Inertia",
+			"lessonId": "ps-004",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Galileo's experiment showed ball rolls same distance on inclined planes because:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Inertia", "isCorrect": true },
+				{ "id": "B", "text": "Friction", "isCorrect": false },
+				{ "id": "C", "text": "Gravity", "isCorrect": false },
+				{ "id": "D", "text": "Air resistance", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Object continues due to inertia.",
+			"explanation": "Inertia causes motion to continue."
+		},
+		{
+			"id": "ps004_017",
+			"topic": "Newton's First Law - Inertia",
+			"lessonId": "ps-004",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "At equilibrium, acceleration is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Increasing", "isCorrect": false },
+				{ "id": "B", "text": "Zero", "isCorrect": true },
+				{ "id": "C", "text": "Constant non-zero", "isCorrect": false },
+				{ "id": "D", "text": "Decreasing", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "No net force = no acceleration.",
+			"explanation": "Equilibrium → zero acceleration."
+		},
+		{
+			"id": "ps004_018",
+			"topic": "Newton's First Law - Inertia",
+			"lessonId": "ps-004",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Seat belt prevents forward motion because:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Seat belt pushes forward", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "Applies force to overcome inertia",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Car doesn't slow", "isCorrect": false },
+				{ "id": "D", "text": "Gravity increases", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Seat belt accelerates body with car.",
+			"explanation": "Seat belt provides force to change motion."
+		},
+		{
+			"id": "ps004_019",
+			"topic": "Newton's First Law - Inertia",
+			"lessonId": "ps-004",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "If all external forces cancel, object:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Must accelerate", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "May move at constant velocity",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Must be at rest", "isCorrect": false },
+				{ "id": "D", "text": "Must decelerate", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Could be at rest OR constant velocity.",
+			"explanation": "Either rest OR constant velocity."
+		},
+		{
+			"id": "ps004_020",
+			"topic": "Newton's First Law - Inertia",
+			"lessonId": "ps-004",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Inertia depends on:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Shape only", "isCorrect": false },
+				{ "id": "B", "text": "Mass only", "isCorrect": true },
+				{ "id": "C", "text": "Volume only", "isCorrect": false },
+				{ "id": "D", "text": "Color only", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Inertia is property of matter.",
+			"explanation": "Inertia proportional to mass."
+		}
+	]
+}

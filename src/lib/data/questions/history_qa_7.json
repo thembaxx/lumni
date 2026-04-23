@@ -1,0 +1,571 @@
+{
+	"metadata": {
+		"subject": "History",
+		"totalQuestions": 600,
+		"version": "1.0",
+		"curriculum": "CAPS",
+		"createdAt": "2026-04-23T00:00:00.000Z"
+	},
+	"questions": [
+		{
+			"id": "h008_001",
+			"topic": "Communism in Russia 1900-1940",
+			"lessonId": "h-008",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Who led the Bolshevik Revolution in Russia?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Vladimir Lenin", "isCorrect": true },
+				{ "id": "B", "text": "Joseph Stalin", "isCorrect": false },
+				{ "id": "C", "text": "Nicholas II", "isCorrect": false },
+				{ "id": "D", "text": "Leon Trotsky", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "1917 revolution leader.",
+			"explanation": "Lenin led the Bolsheviks to power in the October Revolution of 1917."
+		},
+		{
+			"id": "h008_002",
+			"topic": "Communism in Russia 1900-1940",
+			"lessonId": "h-008",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What was the name of Lenin's revolutionary party?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Bolsheviks", "isCorrect": true },
+				{ "id": "B", "text": "Mensheviks", "isCorrect": false },
+				{ "id": "C", "text": "Whites", "isCorrect": false },
+				{ "id": "D", "text": "Cadets", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "The majority faction.",
+			"explanation": "The Bolsheviks (majority) were Lenin's Marxist revolutionary party that seized power."
+		},
+		{
+			"id": "h008_003",
+			"topic": "Communism in Russia 1900-1940",
+			"lessonId": "h-008",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What event ended Tsarist rule in Russia?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "The February Revolution of 1917",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "The Crimean War", "isCorrect": false },
+				{ "id": "C", "text": "The Great War ended", "isCorrect": false },
+				{ "id": "D", "text": "Napoleon's invasion", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "March 1917.",
+			"explanation": "The February Revolution in 1917 overthrew Tsar Nicholas II and ended centuries of Romanov rule."
+		},
+		{
+			"id": "h008_004",
+			"topic": "Communism in Russia 1900-1940",
+			"lessonId": "h-008",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Who became the first Soviet leader after Lenin's death?",
+			questionType: "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Joseph Stalin", "isCorrect": true },
+				{ "id": "B", "text": "Leon Trotsky", "isCorrect": false },
+				{ "id": "C", "text": "Nikita Khrushchev", "isCorrect": false },
+				{ "id": "D", "text": "Mikhail Gorbachev", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Won power struggle after Lenin's death.",
+			"explanation": "Stalin consolidated power after Lenin's death in 1924, eliminating rivals like Trotsky."
+		},
+		{
+			"id": "h008_005",
+			"topic": "Communism in Russia 1900-1940",
+			"lessonId": "h-008",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What was the New Economic Policy (NEP)?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Temporary return to some market economics",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Full privatization of industry",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Military-focused policy", "isCorrect": false },
+				{
+					"id": "D",
+					"text": "Agricultural collectivization immediately",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Post-civil war compromise.",
+			"explanation": "The NEP (1921-1928) allowed limited private enterprise to rebuild the war-devastated economy."
+		},
+		{
+			"id": "h008_006",
+			"topic": "Communism in Russia 1900-1940",
+			"lessonId": "h-008",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What was the Russian Civil War?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Conflict between Bolsheviks and anti-communist forces",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "War with Germany", "isCorrect": false },
+				{ "id": "C", "text": "War with Japan", "isCorrect": false },
+				{ "id": "D", "text": "Peasant uprising only", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "1918-1922 conflict.",
+			"explanation": "The Civil War (1918-1922) saw Red Army fight Whites, interventionists, and other factions."
+		},
+		{
+			"id": "h008_007",
+			"topic": "Communism in Russia 1900-1940",
+			"lessonId": "h-008",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What did Stalin's Five-Year Plans focus on?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Rapid industrialization and collectivization",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Democratic reforms", "isCorrect": false },
+				{ "id": "C", "text": "Military expansion only", "isCorrect": false },
+				{ "id": "D", "text": "Agricultural exports", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Modernization drive.",
+			"explanation": "Stalin's Five-Year Plans prioritized heavy industry development and agricultural collectivization."
+		},
+		{
+			"id": "h008_008",
+			"topic": "Communism in Russia 1900-1940",
+			"lessonId": "h-008",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What were the causes of the Russian Revolution of 1917?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "War hardships, food shortages, and autocratic rule",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Religious conflicts", "isCorrect": false },
+				{
+					"id": "C",
+					"text": "Democratic election results",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Foreign invasion", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Multiple factors led to revolution.",
+			"explanation": "WWI casualties, economic collapse, food shortages, and popular anger at autocracy fueled revolution."
+		},
+		{
+			"id": "h008_009",
+			"topic": "Communism in Russia 1900-1940",
+			"lessonId": "h-008",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What was the purpose of the Red Terror?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Eliminate opposition to Bolshevik rule",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Spread communist ideology abroad",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Reform the economy", "isCorrect": false },
+				{
+					"id": "D",
+					"text": "Defend against foreign invasion",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Political repression campaign.",
+			"explanation": "The Red Terror (1918-1922) involved mass executions and imprisonment of perceived enemies of the state."
+		},
+		{
+			"id": "h008_010",
+			"topic": "Communism in Russia 1900-1940",
+			"lessonId": "h-008",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "How did Stalin consolidate power after Lenin's death?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Eliminated rivals and established totalitarian control",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Held democratic elections", "isCorrect": false },
+				{
+					"id": "C",
+					"text": "Shared power with other leaders",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Retreated from politics", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Purge of rivals.",
+			"explanation": "Stalin outmaneuvered rivals, exiled Trotsky, and built a cult of personality with absolute control."
+		},
+		{
+			"id": "h008_011",
+			"topic": "Communism in Russia 1900-1940",
+			"lessonId": "h-008",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What was the Great Purge (1936-1938)?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Systematic elimination of perceived enemies",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Economic reform period", "isCorrect": false },
+				{
+					"id": "C",
+					"text": "Agricultural reorganization",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Military modernization", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Show trials and executions.",
+			"explanation": "The Great Purge saw millions arrested, executed, or sent to labor camps in Stalin's paranoid campaign."
+		},
+		{
+			"id": "h008_012",
+			"topic": "Communism in Russia 1900-1940",
+			"lessonId": "h-008",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What were the effects of Stalin's collectivization policies?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Mass famine and forced labor",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Agricultural prosperity", "isCorrect": false },
+				{ "id": "C", "text": "Voluntary cooperation", "isCorrect": false },
+				{ "id": "D", "text": "No significant effects", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Ukrainian Holodomor.",
+			"explanation": "Collectivization caused resistance, grain seizures, and catastrophic famine, especially in Ukraine."
+		},
+		{
+			"id": "h008_013",
+			"topic": "Communism in Russia 1900-1940",
+			"lessonId": "h-008",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What was the USSR's role in early international affairs?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Promoted world revolution and opposed Western powers",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Fully cooperated with Western democracies",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Remained completely isolated",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Only focused on internal development",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Comintern and isolation.",
+			"explanation": "The USSR supported communist movements worldwide through Comintern while being diplomatically isolated."
+		},
+		{
+			"id": "h008_014",
+			"topic": "Communism in Russia 1900-1940",
+			"lessonId": "h-008",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What was the Treaty of Brest-Litovsk?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Russia's withdrawal from WWI",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Alliance with Germany", "isCorrect": false },
+				{
+					"id": "C",
+					"text": "Trade agreement with Britain",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Peace treaty ending all conflicts",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "March 1918 settlement.",
+			"explanation": "Bolsheviks signed treaty with Central Powers to exit WWI, surrendering territory for peace."
+		},
+		{
+			"id": "h008_015",
+			"topic": "Communism in Russia 1900-1940",
+			"lessonId": "h-008",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Evaluate the impact of communist rule on Russian society.",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Transformed society through industrialization but at tremendous human cost",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Improved living standards immediately",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Had minimal impact on society",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Only affected political structures",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Modernization vs. human suffering.",
+			"explanation": "Communism rapidly industrialized Russia but caused famines, purges, and massive loss of life."
+		},
+		{
+			"id": "h008_016",
+			"topic": "Communism in Russia 1900-1940",
+			"lessonId": "h-008",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Analyze the causes and consequences of the Holodomor.",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Collectivization led to famine killing millions in Ukraine",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Natural drought caused the famine",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Was not a significant event",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Only affected Russia proper", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "1932-1933 Ukrainian famine.",
+			"explanation": "Stalin's grain requisitions and export policies caused artificial famine killing 3-7 million Ukrainians."
+		},
+		{
+			"id": "h008_017",
+			"topic": "Communism in Russia 1900-1940",
+			"lessonId": "h-008",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "To what extent did Soviet policies influence global politics?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Created ideological conflict and shaped 20th-century geopolitics",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Had no international impact",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Only influenced neighboring countries",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Was welcomed by all nations", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Cold War origins.",
+			"explanation": "Soviet revolutionary ideology and state power created global ideological conflict leading to Cold War."
+		},
+		{
+			"id": "h008_018",
+			"topic": "Communism in Russia 1900-1940",
+			"lessonId": "h-008",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Analyze the nature of Stalin's totalitarian regime.",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Complete state control over all aspects of life",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Limited government intervention",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Allowed some private enterprise",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Tolerated political opposition",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Secret police, propaganda, terror.",
+			"explanation": "Stalin established one-party rule, secret police terror, propaganda, and complete economic control."
+		},
+		{
+			"id": "h008_019",
+			"topic": "Communism in Russia 1900-1940",
+			"lessonId": "h-008",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Evaluate the legacy of the Russian Revolution for communist movements worldwide.",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Inspired revolutions and shaped political movements globally",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Had no influence on other countries",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Discouraged revolutionary movements",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Only affected Eastern Europe",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Comintern and inspiration.",
+			"explanation": "The revolution became a model for communist movements from China to Cuba throughout the 20th century."
+		},
+		{
+			"id": "h008_020",
+			"topic": "Communism in Russia 1900-1940",
+			"lessonId": "h-008",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "How did Soviet foreign policy evolve from Lenin to Stalin?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "From revolutionary adventurism to pragmatic state power",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Remained unchanged throughout",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Moved toward Western alignment",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Became increasingly isolated",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "From world revolution to 'socialism in one country'.",
+			"explanation": "Stalin abandoned world revolution for 'socialism in one country', focusing on building Soviet power."
+		}
+	]
+}

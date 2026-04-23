@@ -36,7 +36,10 @@ export function TabNav({ activeTab, onTabChange }: TabNavProps) {
 			onValueChange={handleTabChange}
 		>
 			<ViewTransition default="none" enter="vt-fade-in" exit="vt-fade-out">
-				<TabsList className="bg-secondary/50 backdrop-blur-xl p-1 grid grid-cols-2 rounded-3xl h-11 relative">
+				<TabsList
+					className="bg-secondary/50 backdrop-blur-xl p-1 grid grid-cols-2 rounded-3xl h-11 relative"
+					aria-label="Navigation tabs"
+				>
 					<span
 						className={cn(
 							"absolute top-1 bottom-1 bg-primary/10 rounded-[20px] shadow-sm transition-all duration-300 ease-out-quart",

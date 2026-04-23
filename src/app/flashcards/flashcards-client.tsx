@@ -54,6 +54,7 @@ export function FlashcardsClient({}: FlashcardsClientProps) {
 	const { data: questions, isLoading } = useSubjectQuestions(
 		subjectToFetch,
 		20,
+		undefined,
 		{
 			enabled: isActive && !!selectedSubject,
 		},

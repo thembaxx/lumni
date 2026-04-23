@@ -1,0 +1,391 @@
+{
+	"metadata": {
+		"subject": "Mathematics",
+		"totalQuestions": 620,
+		"version": "1.0",
+		"curriculum": "CAPS",
+		"createdAt": "2026-04-23T00:00:00.000Z"
+	},
+	"questions": [
+		{
+			"id": "m001_001",
+			"topic": "Algebraic Expressions and Exponents",
+			"lessonId": "m-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Simplify: x⁵ × x³",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "x⁸", "isCorrect": true },
+				{ "id": "B", "text": "x¹⁵", "isCorrect": false },
+				{ "id": "C", "text": "x²", "isCorrect": false },
+				{ "id": "D", "text": "2x⁸", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "When multiplying powers with the same base, add the exponents.",
+			"explanation": "According to the laws of exponents: x⁵ × x³ = x⁵⁺³ = x⁸"
+		},
+		{
+			"id": "m001_002",
+			"topic": "Algebraic Expressions and Exponents",
+			"lessonId": "m-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Simplify: (x²)⁴",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "x⁶", "isCorrect": false },
+				{ "id": "B", "text": "x¹⁶", "isCorrect": false },
+				{ "id": "C", "text": "x⁸", "isCorrect": true },
+				{ "id": "D", "text": "2x⁶", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "When raising a power to a power, multiply the exponents.",
+			"explanation": "(x²)⁴ = x²ˣ⁴ = x⁸"
+		},
+		{
+			"id": "m001_003",
+			"topic": "Algebraic Expressions and Exponents",
+			"lessonId": "m-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Simplify: 2³ × 2⁴",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "2⁷", "isCorrect": true },
+				{ "id": "B", "text": "4⁷", "isCorrect": false },
+				{ "id": "C", "text": "2¹²", "isCorrect": false },
+				{ "id": "D", "text": "2⁷", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Add exponents when multiplying powers with the same base.",
+			"explanation": "2³ × 2⁴ = 2³⁺⁴ = 2⁷ = 128"
+		},
+		{
+			"id": "m001_004",
+			"topic": "Algebraic Expressions and Exponents",
+			"lessonId": "m-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Simplify: x⁶ ÷ x²",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "x⁸", "isCorrect": false },
+				{ "id": "B", "text": "x³", "isCorrect": false },
+				{ "id": "C", "text": "x⁴", "isCorrect": true },
+				{ "id": "D", "text": "x³", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "When dividing powers with the same base, subtract the exponents.",
+			"explanation": "x⁶ ÷ x² = x⁶⁻² = x⁴"
+		},
+		{
+			"id": "m001_005",
+			"topic": "Algebraic Expressions and Exponents",
+			"lessonId": "m-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Simplify: (3x)²",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "6x²", "isCorrect": false },
+				{ "id": "B", "text": "9x", "isCorrect": false },
+				{ "id": "C", "text": "9x²", "isCorrect": true },
+				{ "id": "D", "text": "3x²", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Square both the coefficient and the variable.",
+			"explanation": "(3x)² = 3² × x² = 9x²"
+		},
+		{
+			"id": "m001_006",
+			"topic": "Algebraic Expressions and Exponents",
+			"lessonId": "m-001",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Simplify: (2x³y²)³",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "6x⁹y⁶", "isCorrect": false },
+				{ "id": "B", "text": "8x⁹y⁶", "isCorrect": true },
+				{ "id": "C", "text": "2x⁹y⁶", "isCorrect": false },
+				{ "id": "D", "text": "8x⁶y⁵", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Raise each factor to the power of 3.",
+			"explanation": "(2x³y²)³ = 2³ × x³ˣ³ × y²ˣ³ = 8x⁹y⁶"
+		},
+		{
+			"id": "m001_007",
+			"topic": "Algebraic Expressions and Exponents",
+			"lessonId": "m-001",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Simplify: x⁰",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "0", "isCorrect": false },
+				{ "id": "B", "text": "x", "isCorrect": false },
+				{ "id": "C", "text": "1", "isCorrect": true },
+				{ "id": "D", "text": "Undefined", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Any non-zero base raised to the power of 0 equals 1.",
+			"explanation": "For any x ≠ 0, x⁰ = 1"
+		},
+		{
+			"id": "m001_008",
+			"topic": "Algebraic Expressions and Exponents",
+			"lessonId": "m-001",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Simplify: x⁻³",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "−x³", "isCorrect": false },
+				{ "id": "B", "text": "3/x", "isCorrect": false },
+				{ "id": "C", "text": "1/x³", "isCorrect": true },
+				{ "id": "D", "text": "−1/x³", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "A negative exponent means reciprocal.",
+			"explanation": "x⁻³ = 1/x³"
+		},
+		{
+			"id": "m001_009",
+			"topic": "Algebraic Expressions and Exponents",
+			"lessonId": "m-001",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Simplify: (x²/y³)⁴",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "x⁸/y¹²", "isCorrect": true },
+				{ "id": "B", "text": "x⁶/y⁷", "isCorrect": false },
+				{ "id": "C", "text": "x⁸/y³", "isCorrect": false },
+				{ "id": "D", "text": "x⁸/y⁸", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Raise both numerator and denominator to the power.",
+			"explanation": "(x²/y³)⁴ = x²ˣ⁴/y³ˣ⁴ = x⁸/y¹²"
+		},
+		{
+			"id": "m001_010",
+			"topic": "Algebraic Expressions and Exponents",
+			"lessonId": "m-001",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Simplify: 4⁻²",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "−8", "isCorrect": false },
+				{ "id": "B", "text": "1/16", "isCorrect": true },
+				{ "id": "C", "text": "16", "isCorrect": false },
+				{ "id": "D", "text": "−16", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Negative exponent means reciprocal of positive exponent.",
+			"explanation": "4⁻² = 1/4² = 1/16"
+		},
+		{
+			"id": "m001_011",
+			"topic": "Algebraic Expressions and Exponents",
+			"lessonId": "m-001",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "If 2ˣ = 32, find the value of x.",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "3", "isCorrect": false },
+				{ "id": "B", "text": "4", "isCorrect": false },
+				{ "id": "C", "text": "5", "isCorrect": true },
+				{ "id": "D", "text": "6", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Express 32 as a power of 2.",
+			"explanation": "32 = 2⁵, therefore x = 5"
+		},
+		{
+			"id": "m001_012",
+			"topic": "Algebraic Expressions and Exponents",
+			"lessonId": "m-001",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Simplify: (x²y⁻¹)³ × (xy²)⁻²",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "x⁴/y³", "isCorrect": false },
+				{ "id": "B", "text": "x³/y⁷", "isCorrect": false },
+				{ "id": "C", "text": "x³/y⁷", "isCorrect": true },
+				{ "id": "D", "text": "x⁴/y⁶", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Apply laws of exponents to each factor.",
+			"explanation": "(x²y⁻¹)³ × (xy²)⁻² = x⁶y⁻³ × x⁻²y⁻⁴ = x⁴y⁻⁷ = x⁴/y⁷"
+		},
+		{
+			"id": "m001_013",
+			"topic": "Algebraic Expressions and Exponents",
+			"lessonId": "m-001",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Simplify: (2⁵ × 3³) ÷ (2² × 3²)",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "2³ × 3", "isCorrect": true },
+				{ "id": "B", "text": "2³ × 3²", "isCorrect": false },
+				{ "id": "C", "text": "2² × 3", "isCorrect": false },
+				{ "id": "D", "text": "2⁷ × 3⁵", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Subtract exponents for same bases.",
+			"explanation": "2⁵⁻² × 3³⁻² = 2³ × 3¹ = 8 × 3 = 24"
+		},
+		{
+			"id": "m001_014",
+			"topic": "Algebraic Expressions and Exponents",
+			"lessonId": "m-001",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "If 5ˣ = 1/125, find x.",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "−2", "isCorrect": false },
+				{ "id": "B", "text": "−3", "isCorrect": true },
+				{ "id": "C", "text": "3", "isCorrect": false },
+				{ "id": "D", "text": "−1/3", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Write 1/125 as a power of 5.",
+			"explanation": "125 = 5³, therefore 1/125 = 5⁻³, so x = −3"
+		},
+		{
+			"id": "m001_015",
+			"topic": "Algebraic Expressions and Exponents",
+			"lessonId": "m-001",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Simplify: √(16x⁸y⁴)",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "4x⁴y²", "isCorrect": true },
+				{ "id": "B", "text": "8x⁴y²", "isCorrect": false },
+				{ "id": "C", "text": "4x⁴y⁴", "isCorrect": false },
+				{ "id": "D", "text": "4x⁸y²", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Take square root of each factor.",
+			"explanation": "√16 = 4, √x⁸ = x⁴, √y⁴ = y², so answer is 4x⁴y²"
+		},
+		{
+			"id": "m001_016",
+			"topic": "Algebraic Expressions and Exponents",
+			"lessonId": "m-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Simplify: x⁴ × x⁵ × x²",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "x¹¹", "isCorrect": true },
+				{ "id": "B", "text": "x⁴⁰", "isCorrect": false },
+				{ "id": "C", "text": "x²⁰", "isCorrect": false },
+				{ "id": "D", "text": "x⁴⁰", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Add all exponents together.",
+			"explanation": "x⁴ × x⁵ × x² = x⁴⁺⁵⁺² = x¹¹"
+		},
+		{
+			"id": "m001_017",
+			"topic": "Algebraic Expressions and Exponents",
+			"lessonId": "m-001",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Simplify: (a³b²)⁴(a²b³)⁻²",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "a⁸/b²", "isCorrect": true },
+				{ "id": "B", "text": "a⁸/b⁴", "isCorrect": false },
+				{ "id": "C", "text": "a⁸b⁸", "isCorrect": false },
+				{ "id": "D", "text": "a¹²/b²", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Apply power to each factor first.",
+			"explanation": "(a³b²)⁴ = a¹²b⁸, (a²b³)⁻² = a⁻⁴b⁻⁶, product = a¹²⁻⁴ × b⁸⁻⁶ = a⁸b² = a⁸/b²"
+		},
+		{
+			"id": "m001_018",
+			"topic": "Algebraic Expressions and Exponents",
+			"lessonId": "m-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Write 0.00032 in scientific notation.",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "3.2 × 10⁻⁴", "isCorrect": false },
+				{ "id": "B", "text": "3.2 × 10⁻⁵", "isCorrect": true },
+				{ "id": "C", "text": "3.2 × 10⁴", "isCorrect": false },
+				{ "id": "D", "text": "3.2 × 10⁵", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Move decimal point 5 places left.",
+			"explanation": "0.00032 = 3.2 × 10⁻⁵"
+		},
+		{
+			"id": "m001_019",
+			"topic": "Algebraic Expressions and Exponents",
+			"lessonId": "m-001",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Simplify: (2/3)⁻²",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "4/9", "isCorrect": false },
+				{ "id": "B", "text": "9/4", "isCorrect": true },
+				{ "id": "C", "text": "−4/9", "isCorrect": false },
+				{ "id": "D", "text": "−9/4", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Flip the fraction and square.",
+			"explanation": "(2/3)⁻² = (3/2)² = 9/4"
+		},
+		{
+			"id": "m001_020",
+			"topic": "Algebraic Expressions and Exponents",
+			"lessonId": "m-001",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "If 4ˣ⁺¹ = 64, find x.",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "1.5", "isCorrect": false },
+				{ "id": "B", "text": "2", "isCorrect": false },
+				{ "id": "C", "text": "2.5", "isCorrect": false },
+				{ "id": "D", "text": "1.5", "isCorrect": true }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Express 64 as a power of 4.",
+			"explanation": "64 = 4³, so 4ˣ⁺¹ = 4³, therefore x+1 = 3, x = 2"
+		}
+	]
+}

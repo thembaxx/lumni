@@ -1,0 +1,380 @@
+{
+	"metadata": {
+		"subject": "Geography",
+		"totalQuestions": 600,
+		"version": "1.0",
+		"curriculum": "CAPS",
+		"createdAt": "2026-04-23T00:00:00.000Z"
+	},
+	"questions": [
+		{
+			"id": "g004_001",
+			"topic": "Global Air Circulation",
+			"lessonId": "g-004",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Trade winds blow from:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Poles to equator", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "Sub-tropical high to equator",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Equator to poles", "isCorrect": false },
+				{ "id": "D", "text": "Sea to land", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Horse latitudes to equator.",
+			"explanation": "Trade winds blow from sub-tropical high-pressure areas toward the equator."
+		},
+		{
+			"id": "g004_002",
+			"topic": "Global Air Circulation",
+			"lessonId": "g-004",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The Inter-Tropical Convergence Zone (ITCZ) is located:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "At the poles", "isCorrect": false },
+				{ "id": "B", "text": "Near the equator", "isCorrect": true },
+				{ "id": "C", "text": "At 60° latitude", "isCorrect": false },
+				{ "id": "D", "text": "At 30° latitude", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Where trade winds meet.",
+			"explanation": "The ITCZ is where northern and southern trade winds converge near the equator."
+		},
+		{
+			"id": "g004_003",
+			"topic": "Global Air Circulation",
+			"lessonId": "g-004",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Westerlies blow from:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "East to west", "isCorrect": false },
+				{ "id": "B", "text": "West to east", "isCorrect": true },
+				{ "id": "C", "text": "North to south", "isCorrect": false },
+				{ "id": "D", "text": "South to north", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Prevailing mid-latitude winds.",
+			"explanation": "Westerlies flow from west to east between 30° and 60° latitude."
+		},
+		{
+			"id": "g004_004",
+			"topic": "Global Air Circulation",
+			"lessonId": "g-004",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Hadley cells are located between:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "30°S and 60°S", "isCorrect": false },
+				{ "id": "B", "text": "0° and 30°", "isCorrect": true },
+				{ "id": "C", "text": "60° and 90°", "isCorrect": false },
+				{ "id": "D", "text": "Equator and South Pole", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Tropical circulation.",
+			"explanation": "Hadley cells operate between the equator and approximately 30° latitude."
+		},
+		{
+			"id": "g004_005",
+			"topic": "Global Air Circulation",
+			"lessonId": "g-004",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Coriolis effect deflects winds to the right in:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Southern Hemisphere", "isCorrect": false },
+				{ "id": "B", "text": "Northern Hemisphere", "isCorrect": true },
+				{ "id": "C", "text": "Both hemispheres", "isCorrect": false },
+				{ "id": "D", "text": "Equator only", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Earth's rotation effect.",
+			"explanation": "Coriolis deflects moving objects right in the Northern Hemisphere."
+		},
+		{
+			"id": "g004_006",
+			"topic": "Global Air Circulation",
+			"lessonId": "g-004",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Sub-tropical high-pressure zones are found at:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Equator", "isCorrect": false },
+				{ "id": "B", "text": "Around 30° latitude", "isCorrect": true },
+				{ "id": "C", "text": "Poles", "isCorrect": false },
+				{ "id": "D", "text": "60° latitude", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Horse latitudes.",
+			"explanation": "Sub-tropical highs (horse latitudes) exist around 30°N and 30°S."
+		},
+		{
+			"id": "g004_007",
+			"topic": "Global Air Circulation",
+			"lessonId": "g-004",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Polar easterlies blow from:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "West to east", "isCorrect": false },
+				{ "id": "B", "text": "East to west", "isCorrect": true },
+				{ "id": "C", "text": "North to south", "isCorrect": false },
+				{ "id": "D", "text": "South to north", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Cold polar regions.",
+			"explanation": "Polar easterlies flow from polar high to sub-polar low pressure."
+		},
+		{
+			"id": "g004_008",
+			"topic": "Global Air Circulation",
+			"lessonId": "g-004",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The Coriolis effect is strongest at:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Equator", "isCorrect": false },
+				{ "id": "B", "text": "Poles", "isCorrect": true },
+				{ "id": "C", "text": "30° latitude", "isCorrect": false },
+				{ "id": "D", "text": "Sea level only", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Increases with latitude.",
+			"explanation": "Coriolis effect is zero at equator and maximum at the poles."
+		},
+		{
+			"id": "g004_009",
+			"topic": "Global Air Circulation",
+			"lessonId": "g-004",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "In a Hadley cell, air rises at the:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Equator", "isCorrect": true },
+				{ "id": "B", "text": "30° latitude", "isCorrect": false },
+				{ "id": "C", "text": "Pole", "isCorrect": false },
+				{ "id": "D", "text": "60° latitude", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Convergence zone.",
+			"explanation": "Warm air rises at the equator (ITCZ) where trade winds converge."
+		},
+		{
+			"id": "g004_010",
+			"topic": "Global Air Circulation",
+			"lessonId": "g-004",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Subsiding air in Hadley cells creates:",
+			questionType: "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Low pressure", "isCorrect": false },
+				{ "id": "B", "text": "High pressure", "isCorrect": true },
+				{ "id": "C", "text": "Precipitation", "isCorrect": false },
+				{ "id": "D", "text": "Convergence", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Descending air.",
+			"explanation": "Descending air compresses and warms, creating sub-tropical high pressure."
+		},
+		{
+			"id": "g004_011",
+			"topic": "Global Air Circulation",
+			"lessonId": "g-004",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The jet stream flows:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "West to east", "isCorrect": true },
+				{ "id": "B", "text": "East to west", "isCorrect": false },
+				{ "id": "C", "text": "North to south", "isCorrect": false },
+				{ "id": "D", "text": "South to north", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Following Earth's rotation.",
+			"explanation": "Jet streams flow west to east following the general circulation pattern."
+		},
+		{
+			"id": "g004_012",
+			"topic": "Global Air Circulation",
+			"lessonId": "g-004",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Sub-polar low pressure exists around:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "30° latitude", "isCorrect": false },
+				{ "id": "B", "text": "Equator", "isCorrect": false },
+				{ "id": "C", "text": "60° latitude", "isCorrect": true },
+				{ "id": "D", "text": "Poles", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Polar front zone.",
+			"explanation": "Sub-polar lows form at approximately 60° where westerlies meet polar easterlies."
+		},
+		{
+			"id": "g004_013",
+			"topic": "Global Air Circulation",
+			"lessonId": "g-004",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Monsoons are caused mainly by:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Ocean currents", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "Seasonal temperature differences between land and sea",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Coriolis effect", "isCorrect": false },
+				{ "id": "D", "text": "Volcanic activity", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Continental heating.",
+			"explanation": "Differential heating between continents and oceans creates seasonal pressure changes."
+		},
+		{
+			"id": "g004_014",
+			"topic": "Global Air Circulation",
+			"lessonId": "g-004",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Ferrel cells exist between:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Equator and 30°", "isCorrect": false },
+				{ "id": "B", "text": "30° and 60°", "isCorrect": true },
+				{ "id": "C", "text": "60° and poles", "isCorrect": false },
+				{ "id": "D", "text": "Equator and 60°", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Mid-latitude cells.",
+			"explanation": "Ferrel cells operate between 30° and 60° latitude in each hemisphere."
+		},
+		{
+			"id": "g004_015",
+			"topic": "Global Air Circulation",
+			"lessonId": "g-004",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The strength of the Hadley cell is greatest when:",
+			questionType: "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Pole-to-equator temperature gradient is weak", "isCorrect": false },
+				{ "id": "B", "text": "Pole-to-equator temperature gradient is strong", "isCorrect": true },
+				{ "id": "C", "text": "Equator and poles have same temperature", "isCorrect": false },
+				{ "id": "D", "text": "ITCZ is at 30° latitude", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Temperature contrast drives circulation.",
+			"explanation": "Strong temperature gradients intensify Hadley circulation cells."
+		},
+		{
+			"id": "g004_016",
+			"topic": "Global Air Circulation",
+			"lessonId": "g-004",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Walker circulation affects:",
+			questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Global temperature", "isCorrect": false },
+				{ "id": "B", "text": "Pacific Ocean weather patterns", "isCorrect": true },
+				{ "id": "C", "text": "Polar regions only", "isCorrect": false },
+				{ "id": "D", "text": "European climate", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Zonal east-west circulation.",
+			"explanation": "Walker circulation is an east-west circulation over the Pacific Ocean."
+		},
+		{
+			"id": "g004_017",
+			"topic": "Global Air Circulation",
+			"lessonId": "g-004",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "ENSO events (El Niño-Southern Oscillation) affect:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Only Atlantic Ocean", "isCorrect": false },
+				{ "id": "B", "text": "Global atmospheric and oceanic patterns", "isCorrect": true },
+				{ "id": "C", "text": "Only South America", "isCorrect": false },
+				{ "id": "D", "text": "Only weather in summer", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Major climate phenomenon.",
+			"explanation": "ENSO has global impacts on temperature and precipitation patterns."
+		},
+		{
+			"id": "g004_018",
+			"topic": "Global Air Circulation",
+			"lessonId": "g-004",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The quasi-biennial oscillation describes:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Ocean temperature cycles", "isCorrect": false },
+				{ "id": "B", "text": "Stratospheric wind reversal", "isCorrect": true },
+				{ "id": "C", "text": "Solar cycles", "isCorrect": false },
+				{ "id": "D", "text": "Tidal patterns", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "About 28-month cycle.",
+			"explanation": "QBO is a ~28-month cycle of stratospheric equatorial wind reversal."
+		},
+		{
+			"id": "g004_019",
+			"topic": "Global Air Circulation",
+			"lessonId": "g-004",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Rossby waves in the atmosphere are caused by:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Solar flares", "isCorrect": false },
+				{ "id": "B", "text": "Mountain barriers and Coriolis effect", "isCorrect": true },
+				{ "id": "C", "text": "Ocean tides", "isCorrect": false },
+				{ "id": "D", "text": "Volcanic eruptions", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Large-scale planetary waves.",
+			"explanation": "Rossby waves form due to Coriolis and topographic forcing in mid-latitudes."
+		}
+	]
+}

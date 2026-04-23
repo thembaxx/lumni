@@ -1,0 +1,423 @@
+{
+	"metadata": {
+		"subject": "Life Sciences",
+		"totalQuestions": 20,
+		"version": "1.0",
+		"curriculum": "CAPS",
+		"createdAt": "2026-04-23T00:00:00.000Z"
+	},
+	"questions": [
+		{
+			"id": "ls012_001",
+			"topic": "Animal Nutrition",
+			"lessonId": "ls-012",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Which organ produces bile?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Stomach", "isCorrect": false },
+				{ "id": "B", "text": "Pancreas", "isCorrect": false },
+				{ "id": "C", "text": "Liver", "isCorrect": true },
+				{ "id": "D", "text": "Small intestine", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Largest internal organ.",
+			"explanation": "The liver produces bile, which emulsifies fats (breaks them into smaller droplets) to increase surface area for lipase action."
+		},
+		{
+			"id": "ls012_002",
+			"topic": "Animal Nutrition",
+			"lessonId": "ls-012",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Mechanical digestion begins in the:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Stomach", "isCorrect": false },
+				{ "id": "B", "text": "Small intestine", "isCorrect": false },
+				{ "id": "C", "text": "Mouth", "isCorrect": true },
+				{ "id": "D", "text": "Oesophagus", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Chewing.",
+			"explanation": "Mechanical digestion begins in the mouth through chewing (mastication), which breaks food into smaller pieces."
+		},
+		{
+			"id": "ls012_003",
+			"topic": "Animal Nutrition",
+			"lessonId": "ls-012",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Amylase is an enzyme that digests:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Proteins", "isCorrect": false },
+				{ "id": "B", "text": "Fats", "isCorrect": false },
+				{ "id": "C", "text": "Starch", "isCorrect": true },
+				{ "id": "D", "text": "Fiber", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Salivary and pancreatic amylase.",
+			"explanation": "Amylase breaks down starch (a polysaccharide) into maltose (disaccharide). It is found in saliva and pancreatic juice."
+		},
+		{
+			"id": "ls012_004",
+			"topic": "Animal Nutrition",
+			"lessonId": "ls-012",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The stomach's main function is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Absorbing nutrients", "isCorrect": false },
+				{ "id": "B", "text": "Churning food and starting protein digestion", "isCorrect": true },
+				{ "id": "C", "text": "Producing bile", "isCorrect": false },
+				{ "id": "D", "text": "Absorbing water", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "HCl and pepsin.",
+			"explanation": "The stomach mechanically churns food and begins protein digestion with hydrochloric acid (HCl) and pepsin enzyme."
+		},
+		{
+			"id": "ls012_005",
+			"topic": "Animal Nutrition",
+			"lessonId": "ls-012",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The semi-liquid mixture of food and gastric juices is called:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Bolus", "isCorrect": false },
+				{ "id": "B", "text": "Chyme", "isCorrect": true },
+				{ "id": "C", "text": "Chyle", "isCorrect": false },
+				{ "id": "D", "text": "Faece", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "What leaves the stomach.",
+			"explanation": "Chyme is the semi-liquid mixture of partially digested food and gastric juices produced in the stomach before entering the small intestine."
+		},
+		{
+			"id": "ls012_006",
+			"topic": "Animal Nutrition",
+			"lessonId": "ls-012",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The main function of the large intestine is to:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Digest proteins", "isCorrect": false },
+				{ "id": "B", "text": "Absorb water and form faeces", "isCorrect": true },
+				{ "id": "C", "text": "Absorb nutrients", "isCorrect": false },
+				{ "id": "D", "text": "Produce bile", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Water reabsorption.",
+			"explanation": "The large intestine absorbs water and electrolytes from undigested material, converting it into solid faeces for elimination."
+		},
+		{
+			"id": "ls012_007",
+			"topic": "Animal Nutrition",
+			"lessonId": "ls-012",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Villi in the small intestine:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Produce digestive enzymes", "isCorrect": false },
+				{ "id": "B", "text": "Increase surface area for absorption", "isCorrect": true },
+				{ "id": "C", "text": "Produce bile", "isCorrect": false },
+				{ "id": "D", "text": "Store glycogen", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Finger-like projections.",
+			"explanation": "Villi are finger-like projections that massively increase the absorptive surface area of the small intestine for nutrient uptake."
+		},
+		{
+			"id": "ls012_008",
+			"topic": "Animal Nutrition",
+			"lessonId": "ls-012",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Lipase digests:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Carbohydrates", "isCorrect": false },
+				{ "id": "B", "text": "Proteins", "isCorrect": false },
+				{
+					"id": "C",
+					"text": "Fats into fatty acids and glycerol",
+					"isCorrect": true
+				},
+				{ "id": "D", "text": "Starch", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Fat-digesting enzyme.",
+			"explanation": "Lipase breaks down triglycerides (fats) into fatty acids and glycerol, which can then be absorbed by intestinal cells."
+		},
+		{
+			"id": "ls012_009",
+			"topic": "Animal Nutrition",
+			"lessonId": "ls-012",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The pancreas produces:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Only insulin", "isCorrect": false },
+				{ "id": "B", "text": "Digestive enzymes and hormones", "isCorrect": true },
+				{ "id": "C", "text": "Only digestive enzymes", "isCorrect": false },
+				{ "id": "D", "text": "Only bile", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Both endocrine and exocrine.",
+			"explanation": "The pancreas is both an exocrine gland (producing digestive enzymes and bicarbonate) and an endocrine gland (producing insulin and glucagon)."
+		},
+		{
+			"id": "ls012_010",
+			"topic": "Animal Nutrition",
+			"lessonId": "ls-012",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Peristalsis is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Opening and closing of sphincters",
+					"isCorrect": false
+				},
+				{
+					"id": "B",
+					"text": "Wave-like contractions that move food through the gut",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Absorption of nutrients", "isCorrect": false },
+				{
+					"id": "D",
+					"text": "Production of digestive enzymes",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Involuntary muscle movement.",
+			"explanation": "Peristalsis is the rhythmic, wave-like contraction of smooth muscles that propels food through the alimentary canal."
+		},
+		{
+			"id": "ls012_011",
+			"topic": "Animal Nutrition",
+			"lessonId": "ls-012",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The pH of the stomach is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Neutral (7)", "isCorrect": false },
+				{ "id": "B", "text": "Slightly alkaline", "isCorrect": false },
+				{ "id": "C", "text": "Highly acidic (1-2)", "isCorrect": true },
+				{ "id": "D", "text": "Slightly acidic (5-6)", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Very acidic environment.",
+			"explanation": "The stomach has a highly acidic pH of 1-2 due to hydrochloric acid (HCl), which activates pepsin and kills bacteria."
+		},
+		{
+			"id": "ls012_012",
+			"topic": "Animal Nutrition",
+			"lessonId": "ls-012",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Trypsin is produced by the:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Liver", "isCorrect": false },
+				{ "id": "B", "text": "Stomach", "isCorrect": false },
+				{ "id": "C", "text": "Pancreas", "isCorrect": true },
+				{ "id": "D", "text": "Large intestine", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Protein-digesting enzyme.",
+			"explanation": "Trypsin is a protein-digesting enzyme secreted by the pancreas into the small intestine, where it continues protein breakdown."
+		},
+		{
+			"id": "ls012_013",
+			"topic": "Animal Nutrition",
+			"lessonId": "ls-012",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The ileum is the:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "First part of the small intestine",
+					"isCorrect": false
+				},
+				{
+					"id": "B",
+					"text": "Middle part of the small intestine",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Last part of the small intestine",
+					"isCorrect": true
+				},
+				{
+					"id": "D",
+					"text": "First part of the large intestine",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Duodenum, jejunum, ileum.",
+			"explanation": "The small intestine has three regions: duodenum (first), jejunum (middle), and ileum (last), where most nutrient absorption occurs."
+		},
+		{
+			"id": "ls012_014",
+			"topic": "Animal Nutrition",
+			"lessonId": "ls-012",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The function of the appendix is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Digestion of fats", "isCorrect": false },
+				{ "id": "B", "text": "A reservoir for beneficial bacteria", "isCorrect": true },
+				{ "id": "C", "text": "Production of bile", "isCorrect": false },
+				{ "id": "D", "text": "Absorption of water", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Vestigial organ with immune role.",
+			"explanation": "The appendix may serve as a reservoir for beneficial gut bacteria that can help repopulate the intestines after severe illness."
+		},
+		{
+			"id": "ls012_015",
+			"topic": "Animal Nutrition",
+			"lessonId": "ls-012",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The gastric glands produce HCl and pepsinogen. Pepsinogen is secreted as an inactive enzyme because:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "It needs bile to activate it", "isCorrect": false },
+				{ "id": "B", "text": "Active pepsin would digest the gland cells themselves", "isCorrect": true },
+				{ "id": "C", "text": "It works better at low pH", "isCorrect": false },
+				{ "id": "D", "text": "It needs to be transported", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Self-digestion prevention.",
+			"explanation": "Pepsinogen is secreted in inactive form to prevent the activated enzyme from digesting the stomach's own protein cells."
+		},
+		{
+			"id": "ls012_016",
+			"topic": "Animal Nutrition",
+			"lessonId": "ls-012",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Bile salts emulsify fats by:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Breaking fats into glycerol and fatty acids", "isCorrect": false },
+				{ "id": "B", "text": "Reducing surface tension and breaking fats into droplets", "isCorrect": true },
+				{ "id": "C", "text": "Neutralising stomach acid", "isCorrect": false },
+				{ "id": "D", "text": "Killing bacteria", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Mechanical digestion of fats.",
+			"explanation": "Bile salts emulsify fats by surrounding fat droplets, reducing surface tension and preventing them from re-coalescing, increasing lipase surface area."
+		},
+		{
+			"id": "ls012_017",
+			"topic": "Animal Nutrition",
+			"lessonId": "ls-012",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The hepatic portal vein carries:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Oxygenated blood from the heart to the liver", "isCorrect": false },
+				{ "id": "B", "text": "Nutrient-rich blood from the intestine to the liver", "isCorrect": true },
+				{ "id": "C", "text": "Blood from the liver to the heart", "isCorrect": false },
+				{ "id": "D", "text": "Blood from the stomach to the intestines", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "First organ to receive absorbed nutrients.",
+			"explanation": "The hepatic portal vein carries blood directly from the small intestine to the liver, allowing the liver to process and store absorbed nutrients."
+		},
+		{
+			"id": "ls012_018",
+			"topic": "Animal Nutrition",
+			"lessonId": "ls-012",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The innermost layer of the alimentary canal is the:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Muscularis externa", "isCorrect": false },
+				{ "id": "B", "text": "Serosa", "isCorrect": false },
+				{ "id": "C", "text": "Mucosa", "isCorrect": true },
+				{ "id": "D", "text": "Submucosa", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Lines the lumen.",
+			"explanation": "The mucosa (innermost layer) consists of epithelium, lamina propria, and muscularis mucosae, and is involved in secretion and absorption."
+		},
+		{
+			"id": "ls012_019",
+			"topic": "Animal Nutrition",
+			"lessonId": "ls-012",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Lacteals are specialised lymph capillaries in villi that absorb:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Amino acids and glucose", "isCorrect": false },
+				{ "id": "B", "text": "Fatty acids and glycerol", "isCorrect": false },
+				{ "id": "C", "text": "Emulsified fats (chyle)", "isCorrect": true },
+				{ "id": "D", "text": "Water and minerals", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Fat absorption into lymphatic system.",
+			"explanation": "Lacteals absorb digested fats (as chyle, a milky fluid) into the lymphatic system, bypassing the liver portal system."
+		},
+		{
+			"id": "ls012_020",
+			"topic": "Animal Nutrition",
+			"lessonId": "ls-012",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The sphincter of Oddi controls:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Entry of food into the stomach", "isCorrect": false },
+				{ "id": "B", "text": "Exit of bile and pancreatic juice into the duodenum", "isCorrect": true },
+				{ "id": "C", "text": "Closure of the oesophagus", "isCorrect": false },
+				{ "id": "D", "text": "Movement of faeces in the large intestine", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "At the duodenum entry.",
+			"explanation": "The sphincter of Oddi regulates the flow of bile and pancreatic juice into the duodenum, preventing backflow and controlling digestion timing."
+		}
+	]
+}

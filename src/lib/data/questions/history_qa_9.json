@@ -1,0 +1,519 @@
+{
+	"metadata": {
+		"subject": "History",
+		"totalQuestions": 600,
+		"version": "1.0",
+		"curriculum": "CAPS",
+		"createdAt": "2026-04-23T00:00:00.000Z"
+	},
+	"questions": [
+		{
+			"id": "h010_001",
+			"topic": "Ideas of Race in the 20th Century",
+			"lessonId": "h-010",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What was scientific racism?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Using pseudoscience to justify racial hierarchies",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Accurate scientific classification of races",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Medical treatment based on race",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Anti-racist scientific research",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "False scientific claims about race.",
+			"explanation": "Scientific racism misused biology and anthropology to claim certain races were superior or more intelligent."
+		},
+		{
+			"id": "h010_002",
+			"topic": "Ideas of Race in the 20th Century",
+			"lessonId": "h-010",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What was segregation?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Legal separation of races in public facilities",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Integration of different groups",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Religious separation", "isCorrect": false },
+				{ "id": "D", "text": "Economic class division", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Jim Crow laws in the USA.",
+			"explanation": "Segregation enforced separate schools, water fountains, seating, and facilities for different races."
+		},
+		{
+			"id": "h010_003",
+			"topic": "Ideas of Race in the 20th Century",
+			"lessonId": "h-010",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What was the Nazi concept of racial purity?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Belief in pure Aryan race superiority",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Equal treatment of all races",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Mixing of different ethnic groups",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Scientific classification of humans",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Nazi racial ideology.",
+			"explanation": "Nazis promoted Aryan racial purity and persecuted Jews, Roma, and others deemed 'inferior'."
+		},
+		{
+			"id": "h010_004",
+			"topic": "Ideas of Race in the 20th Century",
+			"lessonId": "h-010",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What was apartheid in South Africa?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "System of institutionalized racial segregation",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "African independence movement",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Economic development plan", "isCorrect": false },
+				{ "id": "D", "text": "Religious tradition", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "1948-1994 racial policy.",
+			"explanation": "Apartheid was a comprehensive system of racial segregation enforced by the National Party government."
+		},
+		{
+			"id": "h010_005",
+			"topic": "Ideas of Race in the 20th Century",
+			"lessonId": "h-010",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What was eugenics?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Pseudo-science promoting breeding of 'desirable' races",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Educational system", "isCorrect": false },
+				{ "id": "C", "text": "Medical treatment", "isCorrect": false },
+				{ "id": "D", "text": "Religious belief", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Hereditarian science.",
+			"explanation": "Eugenics promoted controlled breeding and forced sterilization of those deemed 'unfit'."
+		},
+		{
+			"id": "h010_006",
+			"topic": "Ideas of Race in the 20th Century",
+			"lessonId": "h-010",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What was the Nuremberg Laws?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "German laws defining Jewish status and stripping rights",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "International trade agreements",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Military conscription laws", "isCorrect": false },
+				{ "id": "D", "text": "Religious freedom laws", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "1935 Nazi legislation.",
+			"explanation": "The Nuremberg Laws (1935) legally defined Jews as non-citizens and prohibited marriage between Jews and Germans."
+		},
+		{
+			"id": "h010_007",
+			"topic": "Ideas of Race in the 20th Century",
+			"lessonId": "h-010",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Who were the main targets of Nazi racial persecution?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Jews, Roma, disabled people, and Slavic peoples",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Only political opponents", "isCorrect": false },
+				{ "id": "C", "text": "Wealthy industrialists", "isCorrect": false },
+				{ "id": "D", "text": "Foreign soldiers only", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Multiple victim groups.",
+			"explanation": "Nazis persecuted Jews, Roma, disabled individuals, homosexuals, Slavic peoples, and other groups."
+		},
+		{
+			"id": "h010_008",
+			"topic": "Ideas of Race in the 20th Century",
+			"lessonId": "h-010",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "How did colonialism spread racial ideologies?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Through justifying conquest, slavery, and exploitation",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "By promoting racial equality",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Through educational exchanges",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Had no connection to racial ideas",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "White man's burden ideology.",
+			"explanation": "Colonial powers used racial hierarchies to justify domination, resource extraction, and forced labor systems."
+		},
+		{
+			"id": "h010_009",
+			"topic": "Ideas of Race in the 20th Century",
+			"lessonId": "h-010",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What role did Darwin's theories play in racial thinking?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Misapplied to justify racism and Social Darwinism",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Promoted racial equality", "isCorrect": false },
+				{
+					"id": "C",
+					"text": "Had no influence on racial ideas",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Only affected scientific biology",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Social Darwinism misinterpretation.",
+			"explanation": "Social Darwinists misapplied 'survival of the fittest' to human societies, arguing some races were more evolved."
+		},
+		{
+			"id": "h010_010",
+			"topic": "Ideas of Race in the 20th Century",
+			"lessonId": "h-010",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What was the Holocaust?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Genocide of six million Jews and millions of others",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "German military campaign", "isCorrect": false },
+				{ "id": "C", "text": "Economic recovery program", "isCorrect": false },
+				{ "id": "D", "text": "Religious movement", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Nazi genocide 1941-1945.",
+			"explanation": "The Holocaust was the systematic murder of 6 million Jews and millions of others in Nazi concentration camps."
+		},
+		{
+			"id": "h010_011",
+			"topic": "Ideas of Race in the 20th Century",
+			"lessonId": "h-010",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "How did the USA's immigration laws reflect racial attitudes?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Restricted non-Northern European immigration",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Allowed unlimited immigration from all countries",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Were based purely on economic needs",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Promoted diversity", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "1924 Immigration Act.",
+			"explanation": "Laws like the Johnson-Reed Act (1924) used quotas to limit Southern/Eastern European and Asian immigration."
+		},
+		{
+			"id": "h010_012",
+			"topic": "Ideas of Race in the 20th Century",
+			"lessonId": "h-010",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What was the Ku Klux Klan?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "White supremacist terrorist organization",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Religious organization", "isCorrect": false },
+				{ "id": "C", "text": "Political party", "isCorrect": false },
+				{ "id": "D", "text": "Labor union", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "American hate group.",
+			"explanation": "KKK used violence and intimidation against African Americans, Jews, and immigrants to maintain white supremacy."
+		},
+		{
+			"id": "h010_013",
+			"topic": "Ideas of Race in the 20th Century",
+			"lessonId": "h-010",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "How did the concept of 'whiteness' evolve in America?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Expanded to include previously excluded European groups", "isCorrect": true },
+				{ "id": "B", "text": "Remained constant definition", "isCorrect": false },
+				{ "id": "C", "text": "Narrowed over time", "isCorrect": false },
+				{ "id": "D", "text": "Had no social significance", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Irish, Italians, Jews gaining 'whiteness'.",
+			"explanation": "Groups like Irish, Italians, and Jews were initially excluded from 'white' but gained status through racial solidarity."
+		},
+		{
+			"id": "h010_014",
+			"topic": "Ideas of Race in the 20th Century",
+			"lessonId": "h-010",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What was the Universal Declaration of Human Rights?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Post-WWII document affirming equal rights for all", "isCorrect": true },
+				{ "id": "B", "text": "Trade agreement", "isCorrect": false },
+				{ "id": "C", "text": "Military alliance", "isCorrect": false },
+				{ "id": "D", "text": "Religious charter", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "1948 UN document.",
+			"explanation": "The UDHR (1948) established universal human rights principles after WWII, rejecting racial hierarchies."
+		},
+		{
+			"id": "h010_015",
+			"topic": "Ideas of Race in the 20th Century",
+			"lessonId": "h-010",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Analyze the relationship between colonialism and racial theories.",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Colonialism created and reinforced racial hierarchies to justify domination",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Colonialism had no connection to racial theories",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Colonialism opposed racial discrimination",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Racial theories developed independently",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Ideological justifications for conquest.",
+			"explanation": "Colonial powers developed elaborate racial theories to legitimize conquest, resource extraction, and exploitation."
+		},
+		{
+			"id": "h010_016",
+			"topic": "Ideas of Race in the 20th Century",
+			"lessonId": "h-010",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Evaluate the impact of racial ideologies on the Holocaust.",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Provided ideological foundation for genocide", "isCorrect": true },
+				{ "id": "B", "text": "Had no role in the Holocaust", "isCorrect": false },
+				{ "id": "C", "text": "Only economic factors mattered", "isCorrect": false },
+				{ "id": "D", "text": "Was only about religion", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Nazi racial worldview.",
+			"explanation": "Nazi racial ideology depicted Jews as an existential threat, providing justification for extermination."
+		},
+		{
+			"id": "h010_017",
+			"topic": "Ideas of Race in the 20th Century",
+			"lessonId": "h-010",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "To what extent did the civil rights movement challenge racial ideologies?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Provided scientific and moral rebuttal to racial discrimination", "isCorrect": true },
+				{ "id": "B", "text": "Had no impact on racial thinking", "isCorrect": false },
+				{ "id": "C", "text": "Only addressed economic issues", "isCorrect": false },
+				{ "id": "D", "text": "Accepted existing racial hierarchies", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Legal and moral challenges.",
+			"explanation": "Civil rights activism and research demonstrated the social construction of race and moral bankruptcy of racism."
+		},
+		{
+			"id": "h010_018",
+			"topic": "Ideas of Race in the 20th Century",
+			"lessonId": "h-010",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Analyze how racial theories affected indigenous populations globally.",
+			questionType: "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Provided justification for dispossession, forced assimilation, and genocide", "isCorrect": true },
+				{ "id": "B", "text": "Protected indigenous rights", "isCorrect": false },
+				{ "id": "C", "text": "Had no global impact", "isCorrect": false },
+				{ "id": "D", "text": "Only affected African populations", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Australia, Americas, Africa.",
+			"explanation": "From Australia to the Americas, racial theories justified colonial policies of displacement and cultural destruction."
+		},
+		{
+			"id": "h010_019",
+			"topic": "Ideas of Race in the 20th Century",
+			"lessonId": "h-010",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Evaluate the legacy of 20th-century racial ideologies.",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Created lasting racial hierarchies and ongoing discrimination", "isCorrect": true },
+				{ "id": "B", "text": "Had no lasting impact", "isCorrect": false },
+				{ "id": "C", "text": "Only affected historical events", "isCorrect": false },
+				{ "id": "D", "text": "Were completely eliminated after WWII", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Ongoing effects.",
+			"explanation": "Racial ideologies shaped laws, institutions, and attitudes that continue to affect societies today."
+		},
+		{
+			"id": "h010_020",
+			"topic": "Ideas of Race in the 20th Century",
+			"lessonId": "h-010",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "How did genetic research challenge racial categories?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Demonstrated genetic similarity across 'races' and exposed racial categories as social constructs", "isCorrect": true },
+				{ "id": "B", "text": "Confirmed biological reality of races", "isCorrect": false },
+				{ "id": "C", "text": "Had no impact on racial thinking", "isCorrect": false },
+				{ "id": "D", "text": "Only affected scientific communities", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Human genome project findings.",
+			"explanation": "Modern genetics shows more variation within than between groups, undermining biological basis for race."
+		}
+	]
+}

@@ -160,7 +160,14 @@ export function StudyTopicCard({
 								onWordIndexChange={setCurrentWordIndex}
 							/>
 						</div>
-						<PracticeButton onClick={() => router.push("/quiz")} />
+						<PracticeButton
+							onClick={() =>
+								topic &&
+								router.push(
+									`/quiz?subject=${encodeURIComponent(topic.subject)}&topic=${encodeURIComponent(topic.topicTitle)}`,
+								)
+							}
+						/>
 						<Button
 							size="sm"
 							variant="ghost"

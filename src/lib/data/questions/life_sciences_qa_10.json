@@ -1,0 +1,391 @@
+{
+	"metadata": {
+		"subject": "Life Sciences",
+		"totalQuestions": 20,
+		"version": "1.0",
+		"curriculum": "CAPS",
+		"createdAt": "2026-04-23T00:00:00.000Z"
+	},
+	"questions": [
+		{
+			"id": "ls010_001",
+			"topic": "Animal Support Systems",
+			"lessonId": "ls-010",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The human skeleton consists of two main parts:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Axial and appendicular", "isCorrect": true },
+				{ "id": "B", "text": "Long and short", "isCorrect": false },
+				{ "id": "C", "text": "Internal and external", "isCorrect": false },
+				{ "id": "D", "text": "Cartilage and bone", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Axis and appendages.",
+			"explanation": "The axial skeleton (skull, vertebral column, ribs, sternum) forms the central axis; the appendicular skeleton (limbs, pectoral and pelvic girdles) connects to it."
+		},
+		{
+			"id": "ls010_002",
+			"topic": "Animal Support Systems",
+			"lessonId": "ls-010",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Which type of joint allows the greatest range of movement?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Hinge joint", "isCorrect": false },
+				{ "id": "B", "text": "Pivot joint", "isCorrect": false },
+				{ "id": "C", "text": "Ball and socket joint", "isCorrect": true },
+				{ "id": "D", "text": "Saddle joint", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Hip and shoulder.",
+			"explanation": "Ball and socket joints (e.g., hip and shoulder) allow movement in all directions due to the spherical head fitting into a cup-shaped cavity."
+		},
+		{
+			"id": "ls010_003",
+			"topic": "Animal Support Systems",
+			"lessonId": "ls-010",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Ligaments connect:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Muscle to bone", "isCorrect": false },
+				{ "id": "B", "text": "Bone to bone at joints", "isCorrect": true },
+				{ "id": "C", "text": "Cartilage to bone", "isCorrect": false },
+				{ "id": "D", "text": "Tendon to muscle", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Joint stability.",
+			"explanation": "Ligaments are strong, fibrous connective tissues that bind bones together at joints, providing stability and limiting excessive movement."
+		},
+		{
+			"id": "ls010_004",
+			"topic": "Animal Support Systems",
+			"lessonId": "ls-010",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Tendons attach:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Bone to bone", "isCorrect": false },
+				{ "id": "B", "text": "Muscle to bone", "isCorrect": true },
+				{ "id": "C", "text": "Muscle to muscle", "isCorrect": false },
+				{ "id": "D", "text": "Bone to cartilage", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Pulling structures.",
+			"explanation": "Tendons are tough connective tissue bands that attach muscles to bones, transmitting the force of muscle contraction to produce movement."
+		},
+		{
+			"id": "ls010_005",
+			"topic": "Animal Support Systems",
+			"lessonId": "ls-010",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "An example of a hinge joint is the:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Hip", "isCorrect": false },
+				{ "id": "B", "text": "Shoulder", "isCorrect": false },
+				{ "id": "C", "text": "Knee", "isCorrect": true },
+				{ "id": "D", "text": "Wrist", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Works like a door.",
+			"explanation": "The knee is a hinge joint that allows movement in one plane (bending and straightening), similar to a door hinge."
+		},
+		{
+			"id": "ls010_006",
+			"topic": "Animal Support Systems",
+			"lessonId": "ls-010",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Cartilage differs from bone in that it:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Is hard and mineralised", "isCorrect": false },
+				{ "id": "B", "text": "Is flexible and lacks blood vessels", "isCorrect": true },
+				{ "id": "C", "text": "Contains more collagen", "isCorrect": false },
+				{ "id": "D", "text": "Is only found in the skeleton", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Smooth, flexible tissue.",
+			"explanation": "Cartilage is a flexible, avascular connective tissue with fewer cells and no blood supply, found in joints, ears, and nose."
+		},
+		{
+			"id": "ls010_007",
+			"topic": "Animal Support Systems",
+			"lessonId": "ls-010",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The vertebral column consists of:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "23 vertebrae", "isCorrect": false },
+				{ "id": "B", "text": "33 vertebrae", "isCorrect": true },
+				{ "id": "C", "text": "30 vertebrae", "isCorrect": false },
+				{ "id": "D", "text": "26 vertebrae", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Cervical, thoracic, lumbar, sacrum, coccyx.",
+			"explanation": "The vertebral column has 33 vertebrae divided into 5 regions: 7 cervical, 12 thoracic, 5 lumbar, 5 sacral (fused), and 4 coccygeal (fused)."
+		},
+		{
+			"id": "ls010_008",
+			"topic": "Animal Support Systems",
+			"lessonId": "ls-010",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Antagonistic muscles work in pairs. When one contracts, the other:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Also contracts", "isCorrect": false },
+				{ "id": "B", "text": "Relaxes", "isCorrect": true },
+				{ "id": "C", "text": "Disappears", "isCorrect": false },
+				{ "id": "D", "text": "Calcifies", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Biceps and triceps example.",
+			"explanation": "Antagonistic muscle pairs (like biceps and triceps) work opposite each other - when one contracts and shortens, the other relaxes and lengthens to produce smooth movement."
+		},
+		{
+			"id": "ls010_009",
+			"topic": "Animal Support Systems",
+			"lessonId": "ls-010",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Red blood cells are produced in the:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Yellow marrow", "isCorrect": false },
+				{ "id": "B", "text": "Spongey bone", "isCorrect": false },
+				{ "id": "C", "text": "Red marrow", "isCorrect": true },
+				{ "id": "D", "text": "Periosteum", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Inside bones, makes blood cells.",
+			"explanation": "Red bone marrow, found in the medullary cavity of long bones, produces red blood cells, white blood cells, and platelets (haematopoiesis)."
+		},
+		{
+			"id": "ls010_010",
+			"topic": "Animal Support Systems",
+			"lessonId": "ls-010",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The function of the synovial fluid in a joint is to:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Hold bones together", "isCorrect": false },
+				{ "id": "B", "text": "Lubricate and cushion the joint", "isCorrect": true },
+				{ "id": "C", "text": "Form new cartilage", "isCorrect": false },
+				{ "id": "D", "text": "Connect muscles to bones", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Within the joint cavity.",
+			"explanation": "Synovial fluid is a thick, viscous lubricant secreted by the synovial membrane that reduces friction and absorbs shock in synovial joints."
+		},
+		{
+			"id": "ls010_011",
+			"topic": "Animal Support Systems",
+			"lessonId": "ls-010",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "A pivot joint allows:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Side-to-side movement", "isCorrect": false },
+				{ "id": "B", "text": "Rotational movement", "isCorrect": true },
+				{ "id": "C", "text": "Back-and-forth movement", "isCorrect": false },
+				{ "id": "D", "text": "Circular movement", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Atlas and axis example.",
+			"explanation": "Pivot joints (e.g., between atlas and axis vertebrae) allow rotational movement, enabling the head to turn from side to side."
+		},
+		{
+			"id": "ls010_012",
+			"topic": "Animal Support Systems",
+			"lessonId": "ls-010",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The humerus is an example of a:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Short bone", "isCorrect": false },
+				{ "id": "B", "text": "Flat bone", "isCorrect": false },
+				{ "id": "C", "text": "Long bone", "isCorrect": true },
+				{ "id": "D", "text": "Sesamoid bone", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Longer than wide, with shaft and ends.",
+			"explanation": "The humerus (upper arm bone) is a long bone with a diaphysis (shaft) and two epiphyses (ends), typical of limb bones."
+		},
+		{
+			"id": "ls010_013",
+			"topic": "Animal Support Systems",
+			"lessonId": "ls-010",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Bones are living tissues because they:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Are made of calcium only", "isCorrect": false },
+				{ "id": "B", "text": "Contain blood vessels, nerves, and bone cells", "isCorrect": true },
+				{ "id": "C", "text": "Never change after birth", "isCorrect": false },
+				{ "id": "D", "text": "Have no living cells", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Can heal and grow.",
+			"explanation": "Bone is living tissue with blood vessels, nerves, and bone cells (osteocytes, osteoblasts, osteoclasts) that allow growth, repair, and remodelling."
+		},
+		{
+			"id": "ls010_014",
+			"topic": "Animal Support Systems",
+			"lessonId": "ls-010",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "When you bend your arm, the biceps muscle:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Relaxes", "isCorrect": false },
+				{ "id": "B", "text": "Contracts and shortens", "isCorrect": true },
+				{ "id": "C", "text": "Does nothing", "isCorrect": false },
+				{ "id": "D", "text": "Stretches", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Agonist muscle.",
+			explanation: "The biceps brachii is the agonist (prime mover) when flexing the arm, contracting and pulling the forearm up against the resistance of gravity."
+		},
+		{
+			"id": "ls010_015",
+			"topic": "Animal Support Systems",
+			"lessonId": "ls-010",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Osteoporosis is a condition where bones:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Become longer than normal", "isCorrect": false },
+				{ "id": "B", "text": "Lose density and become porous and fragile", "isCorrect": true },
+				{ "id": "C", "text": "Have too much calcium deposited", "isCorrect": false },
+				{ "id": "D", "text": "Stop growing completely", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Common in elderly, especially women.",
+			explanation: "Osteoporosis results from imbalanced bone remodelling where bone resorption by osteoclasts exceeds bone formation by osteoblasts, reducing bone density."
+		},
+		{
+			"id": "ls010_016",
+			"topic": "Animal Support Systems",
+			"lessonId": "ls-010",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The thoracic cage protects:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Brain and spinal cord", "isCorrect": false },
+				{ "id": "B", "text": "Heart and lungs", "isCorrect": true },
+				{ "id": "C", "text": "Stomach and intestines", "isCorrect": false },
+				{ "id": "D", "text": "Liver and kidneys", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Rib cage components.",
+			"explanation": "The thoracic cage (ribs, sternum, thoracic vertebrae) protects the vital organs of the thoracic cavity - the heart and both lungs."
+		},
+		{
+			"id": "ls010_017",
+			"topic": "Animal Support Systems",
+			"lessonId": "ls-010",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "When the biceps contracts and the triceps relaxes during arm flexion, the triceps is acting as a:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Prime mover", "isCorrect": false },
+				{ "id": "B", "text": "Fixator", "isCorrect": false },
+				{ "id": "C", "text": "Antagonist", "isCorrect": true },
+				{ "id": "D", "text": "Synergist", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Opposes the movement.",
+			explanation: "The triceps is the antagonist, resisting the biceps' action by remaining relaxed. It becomes the agonist when extending the arm."
+		},
+		{
+			"id": "ls010_018",
+			"topic": "Animal Support Systems",
+			"lessonId": "ls-010",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The fontanelle in a baby's skull is important because it:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Allows skull growth after birth", "isCorrect": true },
+				{ "id": "B", "text": "Makes the skull heavier", "isCorrect": false },
+				{ "id": "C", "text": "Connects to the spinal cord", "isCorrect": false },
+				{ "id": "D", "text": "Produces cerebrospinal fluid", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Soft spots on baby's head.",
+			explanation: "Fontanelles are soft membrane-covered spaces between skull bones that allow the skull to compress during birth and permit brain growth after birth."
+		},
+		{
+			"id": "ls010_019",
+			"topic": "Animal Support Systems",
+			"lessonId": "ls-010",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The pelvic girdle in females is wider than in males to:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Support larger leg muscles", "isCorrect": false },
+				{ "id": "B", "text": "Accommodate pregnancy and childbirth", "isCorrect": true },
+				{ "id": "C", "text": "Carry more weight when walking", "isCorrect": false },
+				{ "id": "D", "text": "Allow faster running", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Reproductive function.",
+			explanation": "The wider female pelvis provides a larger pelvic cavity to accommodate the uterus during pregnancy and the birth canal during childbirth."
+		},
+		{
+			"id": "ls010_020",
+			"topic": "Animal Support Systems",
+			"lessonId": "ls-010",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Arthritis is characterised by:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Loss of bone density", "isCorrect": false },
+				{ "id": "B", "text": "Inflammation and degeneration of joints", "isCorrect": true },
+				{ "id": "C", "text": "Overgrowth of cartilage", "isCorrect": false },
+				{ "id": "D", "text": "Rupture of ligaments", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Joint disease causing pain and stiffness.",
+			explanation": "Arthritis involves inflammation, stiffness, and degeneration of joint cartilage and bone, causing pain and reduced mobility."
+		}
+	]
+}

@@ -1,0 +1,479 @@
+{
+	"metadata": {
+		"subject": "Life Sciences",
+		"totalQuestions": 20,
+		"version": "1.0",
+		"curriculum": "CAPS",
+		"createdAt": "2026-04-23T00:00:00.000Z"
+	},
+	"questions": [
+		{
+			"id": "ls024_001",
+			"topic": "Population Ecology",
+			"lessonId": "ls-024",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What is the maximum number of individuals an environment can support called?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Population size", "isCorrect": false },
+				{ "id": "B", "text": "Growth rate", "isCorrect": false },
+				{ "id": "C", "text": "Carrying capacity", "isCorrect": true },
+				{ "id": "D", "text": "Biotic potential", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Symbolized as 'K' in ecological models.",
+			"explanation": "Carrying capacity (K) is the maximum population size an environment can support."
+		},
+		{
+			"id": "ls024_002",
+			"topic": "Population Ecology",
+			"lessonId": "ls-024",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Which factor affects population size regardless of population density?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Predation", "isCorrect": false },
+				{ "id": "B", "text": "Disease", "isCorrect": false },
+				{ "id": "C", "text": "Weather", "isCorrect": true },
+				{ "id": "D", "text": "Competition", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "These factors don't depend on how many individuals are present.",
+			"explanation": "Density-independent factors affect populations regardless of density, like weather and natural disasters."
+		},
+		{
+			"id": "ls024_003",
+			"topic": "Population Ecology",
+			"lessonId": "ls-024",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What type of growth shows rapid initial growth then levels off?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Exponential growth", "isCorrect": false },
+				{ "id": "B", "text": "Logistic growth", "isCorrect": true },
+				{ "id": "C", "text": "Arithmetic growth", "isCorrect": false },
+				{ "id": "D", "text": "Geometric growth", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "This growth considers carrying capacity.",
+			"explanation": "Logistic growth shows rapid growth that levels off as the population reaches carrying capacity."
+		},
+		{
+			"id": "ls024_004",
+			"topic": "Population Ecology",
+			"lessonId": "ls-024",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What is the term for the number of individuals added per unit time?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Birth rate", "isCorrect": true },
+				{ "id": "B", "text": "Population density", "isCorrect": false },
+				{ "id": "C", "text": "Growth rate", "isCorrect": false },
+				{ "id": "D", "text": "Fecundity", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Think about new individuals appearing.",
+			"explanation": "Birth rate is the number of individuals born per unit time."
+		},
+		{
+			"id": "ls024_005",
+			"topic": "Population Ecology",
+			"lessonId": "ls-024",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Which is a density-dependent factor?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Fire", "isCorrect": false },
+				{ "id": "B", "text": "Competition", "isCorrect": true },
+				{ "id": "C", "text": "Flood", "isCorrect": false },
+				{ "id": "D", "text": "Temperature", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "This factor becomes more intense as population increases.",
+			"explanation": "Competition is density-dependent - its impact increases with population density."
+		},
+		{
+			"id": "ls024_006",
+			"topic": "Population Ecology",
+			"lessonId": "ls-024",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What is r-selected species strategy?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Many offspring, high parental care",
+					"isCorrect": false
+				},
+				{
+					"id": "B",
+					"text": "Few offspring, high parental care",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Many offspring, low parental care",
+					"isCorrect": true
+				},
+				{
+					"id": "D",
+					"text": "Few offspring, no parental care",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Think 'r' for reproduction - quantity over quality.",
+			"explanation": "r-selected species produce many offspring with little parental investment."
+		},
+		{
+			"id": "ls024_007",
+			"topic": "Population Ecology",
+			"lessonId": "ls-024",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What happens in the exponential phase of population growth?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Population growth slows down",
+					"isCorrect": false
+				},
+				{
+					"id": "B",
+					"text": "Population grows at maximum rate",
+					"isCorrect": true
+				},
+				{
+					"id": "C",
+					"text": "Population size stays constant",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Population declines", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Resources are unlimited in this phase.",
+			"explanation": "In exponential growth, the population grows at its maximum biotic potential with unlimited resources."
+		},
+		{
+			"id": "ls024_008",
+			"topic": "Population Ecology",
+			"lessonId": "ls-024",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "In the population equation dN/dt = rN, what does r represent?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Carrying capacity", "isCorrect": false },
+				{ "id": "B", "text": "Population size", "isCorrect": false },
+				{ "id": "C", "text": "Intrinsic growth rate", "isCorrect": true },
+				{ "id": "D", "text": "Death rate", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "This is the difference between birth and death rates.",
+			"explanation": "r is the intrinsic rate of increase (birth rate minus death rate)."
+		},
+		{
+			"id": "ls024_009",
+			"topic": "Population Ecology",
+			"lessonId": "ls-024",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "If a population has a negative growth rate, what happens to the population?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "It increases", "isCorrect": false },
+				{ "id": "B", "text": "It decreases", "isCorrect": true },
+				{ "id": "C", "text": "It stays the same", "isCorrect": false },
+				{ "id": "D", "text": "It oscillates", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Negative growth means more deaths than births.",
+			"explanation": "Negative growth rate means the population is declining."
+		},
+		{
+			"id": "ls024_010",
+			"topic": "Population Ecology",
+			"lessonId": "ls-024",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What life history strategy is typical of K-selected species?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Early reproduction", "isCorrect": false },
+				{ "id": "B", "text": "Many small offspring", "isCorrect": false },
+				{ "id": "C", "text": "Delayed reproduction", "isCorrect": true },
+				{ "id": "D", "text": "Short lifespan", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "K-selected species invest heavily in each offspring.",
+			"explanation": "K-selected species delay reproduction to invest more time in each offspring."
+		},
+		{
+			"id": "ls024_011",
+			"topic": "Population Ecology",
+			"lessonId": "ls-024",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What is the age structure diagram shape for a growing population?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Narrow pyramid base", "isCorrect": false },
+				{ "id": "B", "text": "Wide pyramid base", "isCorrect": true },
+				{ "id": "C", "text": "Column shape", "isCorrect": false },
+				{ "id": "D", "text": "Inverted pyramid", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "A growing population has more young people.",
+			"explanation": "A growing population has a broad base of young individuals."
+		},
+		{
+			"id": "ls024_012",
+			"topic": "Population Ecology",
+			"lessonId": "ls-024",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Which factor limits population growth in a logistic model?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Unlimited resources", "isCorrect": false },
+				{ "id": "B", "text": "Carrying capacity", "isCorrect": true },
+				{ "id": "C", "text": "Zero population growth", "isCorrect": false },
+				{ "id": "D", "text": "Constant death rate", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "The logistic equation includes (K-N)/K.",
+			"explanation": "Carrying capacity (K) limits population growth in logistic models."
+		},
+		{
+			"id": "ls024_013",
+			"topic": "Population Ecology",
+			"lessonId": "ls-024",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What is 'environmental resistance'?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "The population's ability to survive",
+					"isCorrect": false
+				},
+				{
+					"id": "B",
+					"text": "Biotic and abiotic factors limiting growth",
+					"isCorrect": true
+				},
+				{
+					"id": "C",
+					"text": "Competition within a species",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "The carrying capacity alone", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "This is everything that opposes exponential growth.",
+			"explanation": "Environmental resistance includes all factors that limit population growth."
+		},
+		{
+			"id": "ls024_014",
+			"topic": "Population Ecology",
+			"lessonId": "ls-024",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What type of survivorship curve shows high infant mortality then survivors live long?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Type I", "isCorrect": false },
+				{ "id": "B", "text": "Type II", "isCorrect": false },
+				{ "id": "C", "text": "Type III", "isCorrect": true },
+				{ "id": "D", "text": "Type IV", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Many fish and insects show this pattern.",
+			"explanation": "Type III shows high early mortality but survivors live long if they reach adulthood."
+		},
+		{
+			"id": "ls024_015",
+			"topic": "Population Ecology",
+			"lessonId": "ls-024",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "In a population with a Type I survivorship curve, when is mortality highest?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "At birth", "isCorrect": false },
+				{ "id": "B", "text": "Throughout life equally", "isCorrect": false },
+				{ "id": "C", "text": "At old age", "isCorrect": true },
+				{ "id": "D", "text": "In adolescence", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Think of humans and elephants.",
+			"explanation": "Type I species survive well until old age, then mortality increases (humans, elephants)."
+		},
+		{
+			"id": "ls024_016",
+			"topic": "Population Ecology",
+			"lessonId": "ls-024",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "What causes population cycles in predator-prey relationships?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Direct predation only", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "Time lag in response to changing numbers",
+					"isCorrect": true
+				},
+				{
+					"id": "C",
+					"text": "Random environmental changes",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Competition between predators",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "The predator response lags behind prey population changes.",
+			"explanation": "Time lags cause oscillating predator-prey populations (Lotka-Volterra model)."
+		},
+		{
+			"id": "ls024_017",
+			"topic": "Population Ecology",
+			"lessonId": "ls-024",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Source-sink population dynamics describe what?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "One population replacing another",
+					"isCorrect": false
+				},
+				{
+					"id": "B",
+					"text": "High-quality habitat supporting populations",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Migration between habitats", "isCorrect": false },
+				{
+					"id": "D",
+					"text": "Extinction and recolonization",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Sources produce excess individuals; sinks receive them.",
+			"explanation": "Source habitats produce more individuals than needed; sinks receive dispersers."
+		},
+		{
+			"id": "ls024_018",
+			"topic": "Population Ecology",
+			"lessonId": "ls-024",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "How does habitat fragmentation affect population density?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Increases it", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "Decreases it in habitat patches",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Has no effect", "isCorrect": false },
+				{ "id": "D", "text": "Randomizes it", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Smaller patches hold fewer individuals.",
+			"explanation": "Fragmentation reduces total habitat area, increasing density in remaining patches."
+		},
+		{
+			"id": "ls024_019",
+			"topic": "Population Ecology",
+			"lessonId": "ls-024",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Allee effect occurs when:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Population is at carrying capacity",
+					"isCorrect": false
+				},
+				{
+					"id": "B",
+					"text": "Small populations have reduced growth",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Competition is intense", "isCorrect": false },
+				{ "id": "D", "text": "Resources are unlimited", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Some species need group living to survive.",
+			"explanation": "Allee effect = reduced per capita growth at low population sizes."
+		},
+		{
+			"id": "ls024_020",
+			"topic": "Population Ecology",
+			"lessonId": "ls-024",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "What demographic transition occurs as countries develop?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "High birth/death to low birth/death",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Low birth/death to high birth/death",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "High birth/low death to low birth/low death",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Constant rates", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Industrialization changes mortality and fertility.",
+			"explanation": "Demographic transition: high birth/death → low birth/death as development occurs."
+		}
+	]
+}

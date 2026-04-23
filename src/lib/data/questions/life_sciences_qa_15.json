@@ -1,0 +1,407 @@
+{
+	"metadata": {
+		"subject": "Life Sciences",
+		"totalQuestions": 20,
+		"version": "1.0",
+		"curriculum": "CAPS",
+		"createdAt": "2026-04-23T00:00:00.000Z"
+	},
+	"questions": [
+		{
+			"id": "ls015_001",
+			"topic": "Gas Exchange in Animals",
+			"lessonId": "ls-015",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "In humans, gas exchange occurs in the:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Trachea", "isCorrect": false },
+				{ "id": "B", "text": "Bronchi", "isCorrect": false },
+				{ "id": "C", "text": "Alveoli", "isCorrect": true },
+				{ "id": "D", "text": "Bronchioles", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Tiny air sacs in lungs.",
+			"explanation": "Alveoli are tiny, thin-walled air sacs surrounded by capillaries where gas exchange (O2 into blood, CO2 out) occurs by diffusion."
+		},
+		{
+			"id": "ls015_002",
+			"topic": "Gas Exchange in Animals",
+			"lessonId": "ls-015",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The voice box is called the:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Trachea", "isCorrect": false },
+				{ "id": "B", "text": "Larynx", "isCorrect": true },
+				{ "id": "C", "text": "Pharynx", "isCorrect": false },
+				{ "id": "D", "text": "Epiglottis", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Contains vocal cords.",
+			"explanation": "The larynx (voice box) contains the vocal cords and connects the pharynx to the trachea, producing sound."
+		},
+		{
+			"id": "ls015_003",
+			"topic": "Gas Exchange in Animals",
+			"lessonId": "ls-015",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Which gas is mostly carried in the plasma of blood?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Oxygen", "isCorrect": false },
+				{ "id": "B", "text": "Carbon dioxide", "isCorrect": true },
+				{ "id": "C", "text": "Nitrogen", "isCorrect": false },
+				{ "id": "D", "text": "Helium", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Most CO2 is carried this way.",
+			"explanation": "Most CO2 (about 70%) is carried in plasma as bicarbonate ions (HCO3-), dissolved CO2, or bound to haemoglobin."
+		},
+		{
+			"id": "ls015_004",
+			"topic": "Gas Exchange in Animals",
+			"lessonId": "ls-015",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Oxygen is mainly carried in the blood by:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "White blood cells", "isCorrect": false },
+				{ "id": "B", "text": "Platelets", "isCorrect": false },
+				{ "id": "C", "text": "Haemoglobin in red blood cells", "isCorrect": true },
+				{ "id": "D", "text": "Plasma", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Iron-containing protein.",
+			"explanation": "Haemoglobin is the iron-containing protein in red blood cells that binds oxygen (forming oxyhaemoglobin) for transport throughout the body."
+		},
+		{
+			"id": "ls015_005",
+			"topic": "Gas Exchange in Animals",
+			"lessonId": "ls-015",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The diaphragm is a muscle that:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Contracts to push air out of the lungs", "isCorrect": false },
+				{ "id": "B", "text": "Contracts and flattens to draw air into the lungs", "isCorrect": true },
+				{ "id": "C", "text": "Controls the opening of the larynx", "isCorrect": false },
+				{ "id": "D", "text": "Produces mucus in the airways", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Primary muscle of breathing.",
+			"explanation": "When the diaphragm contracts and flattens, it increases the volume of the thoracic cavity, reducing pressure and drawing air into the lungs."
+		},
+		{
+			"id": "ls015_006",
+			"topic": "Gas Exchange in Animals",
+			"lessonId": "ls-015",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The pleural membranes surround the:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Heart", "isCorrect": false },
+				{ "id": "B", "text": "Lungs", "isCorrect": true },
+				{ "id": "C", "text": "Trachea", "isCorrect": false },
+				{ "id": "D", "text": "Diaphragm", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Fluid-filled sac around lungs.",
+			"explanation": "The pleural membranes form a double sac around each lung, with pleural fluid that reduces friction during breathing."
+		},
+		{
+			"id": "ls015_007",
+			"topic": "Gas Exchange in Animals",
+			"lessonId": "ls-015",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Oxygen moves from alveoli into blood because:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "The blood has less oxygen than the alveoli", "isCorrect": true },
+				{ "id": "B", "text": "Active transport pumps it in", "isCorrect": false },
+				{ "id": "C", "text": "The lungs breathe it in", "isCorrect": false },
+				{ "id": "D", "text": "Blood pressure pushes it", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "From high to low concentration.",
+			"explanation": "Oxygen diffuses from alveoli (high concentration) into blood (low concentration) down a concentration gradient across the thin alveolar wall."
+		},
+		{
+			"id": "ls015_008",
+			"topic": "Gas Exchange in Animals",
+			"lessonId": "ls-015",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The cartilage that prevents food from entering the trachea is the:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Epiglottis", "isCorrect": true },
+				{ "id": "B", "text": "Thyroid cartilage", "isCorrect": false },
+				{ "id": "C", "text": "Cricoid cartilage", "isCorrect": false },
+				{ "id": "D", "text": "Tracheal rings", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Flap at top of larynx.",
+			"explanation": "The epiglottis is a flap of cartilage that covers the larynx during swallowing, preventing food from entering the airway."
+		},
+		{
+			"id": "ls015_009",
+			"topic": "Gas Exchange in Animals",
+			"lessonId": "ls-015",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "When the diaphragm relaxes, it:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Draws air into the lungs", "isCorrect": false },
+				{ "id": "B", "text": "Moves upward, decreasing thoracic volume and forcing air out", "isCorrect": true },
+				{ "id": "C", "text": "Stops breathing completely", "isCorrect": false },
+				{ "id": "D", "text": "Contracts further", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Passive exhalation.",
+			"explanation": "When the diaphragm relaxes and moves upward, thoracic volume decreases, pressure increases, and air is passively pushed out of the lungs."
+		},
+		{
+			"id": "ls015_010",
+			"topic": "Gas Exchange in Animals",
+			"lessonId": "ls-015",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Carbon dioxide is mainly carried in the blood as:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Dissolved gas in plasma only", "isCorrect": false },
+				{ "id": "B", "text": "Bicarbonate ions (HCO3-)", "isCorrect": true },
+				{ "id": "C", "text": "Oxyhaemoglobin", "isCorrect": false },
+				{ "id": "D", "text": "Carboxyhaemoglobin", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Buffer system reaction.",
+			"explanation": "CO2 combines with water in red blood cells to form carbonic acid, which dissociates into H+ and HCO3-. The bicarbonate ions diffuse into plasma."
+		},
+		{
+			"id": "ls015_011",
+			"topic": "Gas Exchange in Animals",
+			"lessonId": "ls-015",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The respiratory centre in the brain is located in the:",
+			questionType: "multiple-choice",
+			options: [
+				{ id: "A", text: "Cerebrum", isCorrect: false },
+				{ id: "B", text: "Cerebellum", isCorrect: false },
+				{ id: "C", text: "Medulla oblongata", isCorrect: true },
+				{ id: "D", text: "Hypothalamus", isCorrect: false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Brain stem.",
+			"explanation": "The medulla oblongata contains the respiratory centre that automatically regulates breathing rate and depth based on CO2 levels in blood."
+		},
+		{
+			"id": "ls015_012",
+			"topic": "Gas Exchange in Animals",
+			"lessonId": "ls-015",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Each haemoglobin molecule can carry up to:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "1 oxygen molecule", "isCorrect": false },
+				{ "id": "B", "text": "2 oxygen molecules", "isCorrect": false },
+				{ "id": "C", "text": "4 oxygen molecules", "isCorrect": true },
+				{ "id": "D", "text": "8 oxygen molecules", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Four haem groups.",
+			"explanation": "Each haemoglobin has four haem groups, each containing an iron that can bind one O2 molecule, allowing each haemoglobin to carry 4 O2 molecules."
+		},
+		{
+			"id": "ls015_013",
+			"topic": "Gas Exchange in Animals",
+			"lessonId": "ls-015",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The right lung has how many lobes?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "2", "isCorrect": false },
+				{ "id": "B", "text": "3", "isCorrect": true },
+				{ "id": "C", "text": "4", "isCorrect": false },
+				{ "id": "D", "text": "1", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Heart occupies space on left.",
+			explanation: "The right lung has 3 lobes (upper, middle, lower) while the left lung has 2 lobes, accommodating space for the heart."
+		},
+		{
+			"id": "ls015_014",
+			"topic": "Gas Exchange in Animals",
+			"lessonId": "ls-015",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The bronchial tree consists of:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Trachea only", "isCorrect": false },
+				{ "id": "B", "text": "Bronchi, bronchioles, and terminal bronchioles", "isCorrect": true },
+				{ "id": "C", "text": "Alveoli and blood vessels", "isCorrect": false },
+				{ "id": "D", "text": "Nasal cavity and pharynx", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Branching airways.",
+			explanation": "The bronchial tree consists of the branching airways: bronchi divide into bronchioles, which end in terminal bronchioles leading to alveoli."
+		},
+		{
+			"id": "ls015_015",
+			"topic": "Gas Exchange in Animals",
+			"lessonId": "ls-015",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The Haldane effect describes:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Oxygen binding to haemoglobin in the lungs", "isCorrect": false },
+				{ "id": "B", "text": "Deoxygenated haemoglobin carrying more CO2", "isCorrect": true },
+				{ "id": "C", "text": "CO2 binding to haemoglobin in tissues", "isCorrect": false },
+				{ "id": "D", "text": "Haemoglobin releasing O2 in tissues", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Interaction between O2 and CO2.",
+			explanation": "The Haldane effect states that deoxygenated haemoglobin has a higher affinity for CO2, facilitating CO2 transport from tissues to lungs."
+		},
+		{
+			"id": "ls015_016",
+			"topic": "Gas Exchange in Animals",
+			"lessonId": "ls-015",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The Bohr effect describes how:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Low pH (high H+) reduces oxygen affinity of haemoglobin", "isCorrect": true },
+				{ "id": "B", "text": "CO2 is carried in the blood", "isCorrect": false },
+				{ "id": "C", "text": "Oxygen binds to haemoglobin in the lungs", "isCorrect": false },
+				{ "id": "D", "text": "Haemoglobin releases CO2", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "pH affects O2 affinity.",
+			"explanation": "The Bohr effect states that increased H+ (lower pH) and increased CO2 in metabolically active tissues shifts the oxygen-haemoglobin dissociation curve right, releasing more O2."
+		},
+		{
+			"id": "ls015_017",
+			"topic": "Gas Exchange in Animals",
+			"lessonId": "ls-015",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "During forceful expiration, which muscles contract?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "External intercostal muscles", "isCorrect": false },
+				{ "id": "B", "text": "Internal intercostal muscles and abdominal muscles", "isCorrect": true },
+				{ "id": "C", "text": "Diaphragm only", "isCorrect": false },
+				{ "id": "D", "text": "Diaphragm and external intercostals", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Forced exhalation muscles.",
+			"explanation": "Forced expiration involves internal intercostal muscles (pull ribs down) and abdominal muscles (compress abdominal contents, pushing diaphragm up)."
+		},
+		{
+			"id": "ls015_018",
+			"topic": "Gas Exchange in Animals",
+			"lessonId": "ls-015",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The average tidal volume (volume of air breathed in or out at rest) is approximately:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "100 mL", "isCorrect": false },
+				{ "id": "B", "text": "500 mL", "isCorrect": true },
+				{ "id": "C", "text": "1500 mL", "isCorrect": false },
+				{ "id": "D", "text": "2500 mL", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Normal resting breath.",
+			"explanation": "Tidal volume is the volume of air inhaled or exhaled during normal resting breathing, approximately 500 mL in healthy adults."
+		},
+		{
+			"id": "ls015_019",
+			"topic": "Gas Exchange in Animals",
+			"lessonId": "ls-015",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Vital capacity is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "The maximum amount of air that can be exhaled after a maximal inhale",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "The amount of air remaining in lungs after normal exhalation",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "The amount of air breathed per minute",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "The maximum amount of air that can be inhaled",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Total lung capacity measure.",
+			"explanation": "Vital capacity is the maximum volume of air that can be expelled after a maximal inspiration, representing the total usable lung capacity."
+		},
+		{
+			"id": "ls015_020",
+			"topic": "Gas Exchange in Animals",
+			"lessonId": "ls-015",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Carbon monoxide poisoning is dangerous because CO:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Blocks the trachea", "isCorrect": false },
+				{ "id": "B", "text": "Binds to haemoglobin with higher affinity than O2, preventing O2 transport", "isCorrect": true },
+				{ "id": "C", "text": "Destroys red blood cells", "isCorrect": false },
+				{ "id": "D", "text": "Reduces lung volume", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Binds to iron in haem.",
+			"explanation": "Carbon monoxide binds to haemoglobin with 200-250 times greater affinity than oxygen, forming carboxyhaemoglobin and preventing oxygen transport, causing hypoxia."
+		}
+	]
+}

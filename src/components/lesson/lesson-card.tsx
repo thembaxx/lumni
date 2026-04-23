@@ -108,7 +108,13 @@ export function LessonCard({
 											onWordIndexChange={setCurrentWordIndex}
 										/>
 									</div>
-									<PracticeButton onClick={() => router.push("/quiz")} />
+									<PracticeButton
+										onClick={() =>
+											router.push(
+												`/quiz?subject=${encodeURIComponent(subject)}&topic=${encodeURIComponent(title)}`,
+											)
+										}
+									/>
 								</div>
 
 								<Button
@@ -123,10 +129,17 @@ export function LessonCard({
 					</m.div>
 				) : (
 					<m.div key={`lesson-${id}-closed`} layoutId={`lesson-${id}`}>
-						<button
-							type="button"
+						<div
 							onClick={() => setOpenId(id)}
 							className="p-5 rounded-2xl border bg-card text-card-foreground shadow-sm hover:border-primary/20 transition-all duration-200 cursor-pointer w-full text-left"
+							role="button"
+							tabIndex={0}
+							onKeyDown={(e) => {
+								if (e.key === "Enter" || e.key === " ") {
+									e.preventDefault();
+									setOpenId(id);
+								}
+							}}
 							aria-label={`${title} - ${difficulty} lesson`}
 						>
 							<div className="space-y-3">
@@ -176,10 +189,16 @@ export function LessonCard({
 											onWordIndexChange={setCurrentWordIndex}
 										/>
 									</div>
-									<PracticeButton onClick={() => router.push("/quiz")} />
+									<PracticeButton
+										onClick={() =>
+											router.push(
+												`/quiz?subject=${encodeURIComponent(subject)}&topic=${encodeURIComponent(title)}`,
+											)
+										}
+									/>
 								</div>
 							</div>
-						</button>
+						</div>
 					</m.div>
 				)}
 			</AnimatePresence>

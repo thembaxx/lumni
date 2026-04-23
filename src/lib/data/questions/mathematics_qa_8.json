@@ -1,0 +1,399 @@
+{
+	"metadata": {
+		"subject": "Mathematics",
+		"totalQuestions": 620,
+		"version": "1.0",
+		"curriculum": "CAPS",
+		"createdAt": "2026-04-23T00:00:00.000Z"
+	},
+	"questions": [
+		{
+			"id": "m009_001",
+			"topic": "Euclidean Geometry",
+			"lessonId": "m-009",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Sum of angles in a triangle equals:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "180°", "isCorrect": true },
+				{ "id": "B", "text": "360°", "isCorrect": false },
+				{ "id": "C", "text": "90°", "isCorrect": false },
+				{ "id": "D", "text": "270°", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Triangle angle sum theorem.",
+			"explanation": "Angles in a triangle sum to 180°."
+		},
+		{
+			"id": "m009_002",
+			"topic": "Euclidean Geometry",
+			"lessonId": "m-009",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "An exterior angle of a triangle equals:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Sum of two interior opposite angles",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Difference of interior angles",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Interior angle", "isCorrect": false },
+				{ "id": "D", "text": "Half of interior angle", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Exterior angle theorem.",
+			"explanation": "Exterior angle equals sum of two opposite interior angles."
+		},
+		{
+			"id": "m009_003",
+			"topic": "Euclidean Geometry",
+			"lessonId": "m-009",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "A midpoint divides a segment into:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Two equal segments", "isCorrect": true },
+				{ "id": "B", "text": "Three equal parts", "isCorrect": false },
+				{ "id": "C", "text": "Half and quarter", "isCorrect": false },
+				{ "id": "D", "text": "Any ratio", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Definition of midpoint.",
+			"explanation": "Midpoint divides segment into two equal segments."
+		},
+		{
+			"id": "m009_004",
+			"topic": "Euclidean Geometry",
+			"lessonId": "m-009",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Given ΔABC ≅ ΔDEF, if AB = 5 and DE = 5, this is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Congruence", "isCorrect": true },
+				{ "id": "B", "text": "Similarity", "isCorrect": false },
+				{ "id": "C", "text": "Parallel", "isCorrect": false },
+				{ "id": "D", "text": "Equal", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Corresponding sides equal shows congruence.",
+			"explanation": "Equal corresponding sides indicate congruence."
+		},
+		{
+			"id": "m009_005",
+			"topic": "Euclidean Geometry",
+			"lessonId": "m-009",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "A line parallel to one side of a triangle divides the other two sides proportionally. This is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Midpoint theorem", "isCorrect": true },
+				{ "id": "B", "text": "Pythagoras", "isCorrect": false },
+				{ "id": "C", "text": "Centroid", "isCorrect": false },
+				{ "id": "D", "text": "Altitudes", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Proportional segments theorem.",
+			"explanation": "Midsegment is parallel and half length."
+		},
+		{
+			"id": "m009_006",
+			"topic": "Euclidean Geometry",
+			"lessonId": "m-009",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "In isosceles triangle with equal sides 5,5 and base 6, altitude to base equals:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "4", "isCorrect": true },
+				{ "id": "B", "text": "5", "isCorrect": false },
+				{ "id": "C", "text": "3", "isCorrect": false },
+				{ "id": "D", "text": "6", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Altitude bisects base in isosceles.",
+			"explanation": "Height from apex bisects base forming 3-4-5 right triangle → height = 4"
+		},
+		{
+			"id": "m009_007",
+			"topic": "Euclidean Geometry",
+			"lessonId": "m-009",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "A quadrilateral with all sides equal and angles equal (90°) is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Square", "isCorrect": true },
+				{ "id": "B", "text": "Rhombus", "isCorrect": false },
+				{ "id": "C", "text": "Rectangle", "isCorrect": false },
+				{ "id": "D", "text": "Kite", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Equal sides and 90° angles describes which shape?",
+			"explanation": "All sides and angles equal → square"
+		},
+		{
+			"id": "m009_008",
+			"topic": "Euclidean Geometry",
+			"lessonId": "m-009",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "If line through triangle divides sides proportionally, it is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Parallel to third side", "isCorrect": true },
+				{ "id": "B", "text": "Perpendicular", "isCorrect": false },
+				{ "id": "C", "text": "Angle bisector", "isCorrect": false },
+				{ "id": "D", "text": "Median", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Midsegment theorem converse.",
+			"explanation": "Divides sides proportionally → line is parallel to third side."
+		},
+		{
+			"id": "m009_009",
+			"topic": "Euclidean Geometry",
+			"lessonId": "m-009",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Centroid is intersection of:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Medians", "isCorrect": true },
+				{ "id": "B", "text": "Altitudes", "isCorrect": false },
+				{ "id": "C", "text": "Angle bisectors", "isCorrect": false },
+				{ "id": "D", "text": "Perpendicular bisectors", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Centroid definition.",
+			"explanation": "Centroid is intersection of medians."
+		},
+		{
+			"id": "m009_010",
+			"topic": "Euclidean Geometry",
+			"lessonId": "m-009",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Circumcenter is intersection of:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Perpendicular bisectors", "isCorrect": true },
+				{ "id": "B", "text": "Medians", "isCorrect": false },
+				{ "id": "C", "text": "Altitudes", "isCorrect": false },
+				{ "id": "D", "text": "Angle bisectors", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Circumcenter definition.",
+			"explanation": "Circumcenter = perpendicular bisectors intersection."
+		},
+		{
+			"id": "m009_011",
+			"topic": "Euclidean Geometry",
+			"lessonId": "m-009",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Incenter is inside at intersection of:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Angle bisectors", "isCorrect": true },
+				{ "id": "B", "text": "Medians", "isCorrect": false },
+				{ "id": "C", "text": "Altitudes", "isCorrect": false },
+				{ "id": "D", "text": "Perpendicular bisectors", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Incenter definition.",
+			"explanation": "Incenter = angle bisectors intersection."
+		},
+		{
+			"id": "m009_012",
+			"topic": "Euclidean Geometry",
+			"lessonId": "m-009",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Orthocenter is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Altitudes intersection", "isCorrect": true },
+				{ "id": "B", "text": "Medians intersection", "isCorrect": false },
+				{ "id": "C", "text": "Angle bisectors", "isCorrect": false },
+				{ "id": "D", "text": "Perpendicular bisectors", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Orthocenter definition.",
+			"explanation": "Orthocenter = alt"
+		},
+		{
+			"id": "m009_013",
+			"topic": "Euclidean Geometry",
+			"lessonId": "m-009",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "If one angle of triangle is 60° and another is 50°, third angle is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "70°", "isCorrect": true },
+				{ "id": "B", "text": "110°", "isCorrect": false },
+				{ "id": "C", "text": "90°", "isCorrect": false },
+				{ "id": "D", "text": "180°", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Use triangle sum = 180°.",
+			"explanation": "Third angle = 180 - (60+50) = 70°"
+		},
+		{
+			"id": "m009_014",
+			"topic": "Euclidean Geometry",
+			"lessonId": "m-009",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Two triangles have equal corresponding sides and included angle. They are:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Congruent by SAS", "isCorrect": true },
+				{ "id": "B", "text": "Similar by SAS", "isCorrect": false },
+				{ "id": "C", "text": "Similar by AA", "isCorrect": false },
+				{ "id": "D", "text": "Cannot determine", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "SAS congruence criterion.",
+			"explanation": "Two sides and included angle equal = SAS congruence."
+		},
+		{
+			"id": "m009_015",
+			"topic": "Euclidean Geometry",
+			"lessonId": "m-009",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Medians divide each other in ratio:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "2:1 from vertex", "isCorrect": true },
+				{ "id": "B", "text": "1:1", "isCorrect": false },
+				{ "id": "C", "text": "3:1", "isCorrect": false },
+				{ "id": "D", "text": "4:1", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Centroid divides medians in 2:1 ratio.",
+			"explanation": "From vertex to centroid: centroid to midpoint = 2:1"
+		},
+		{
+			"id": "m009_016",
+			"topic": "Euclidean Geometry",
+			"lessonId": "m-009",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "If triangle has sides 3,4,5, what type?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Right", "isCorrect": true },
+				{ "id": "B", "text": "Acute", "isCorrect": false },
+				{ "id": "C", "text": "Obtuse", "isCorrect": false },
+				{ "id": "D", "text": "Equilateral", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Check Pythagorean relationship.",
+			"explanation": "3²+4²=5² (9+16=25), so right triangle."
+		},
+		{
+			"id": "m009_017",
+			"topic": "Euclidean Geometry",
+			"lessonId": "m-009",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "In similar triangles with ratio 2:1, areas relate as:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "4:1", "isCorrect": true },
+				{ "id": "B", "text": "2:1", "isCorrect": false },
+				{ "id": "C", "text": "8:1", "isCorrect": false },
+				{ "id": "D", "text": "1:4", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Area scales with square of linear ratio.",
+			"explanation": "Area ratio = (2:1)² = 4:1"
+		},
+		{
+			"id": "m009_018",
+			"topic": "Euclidean Geometry",
+			"lessonId": "m-009",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Prove ∠ABC = ∠DEF. If ΔABC has angles 30°,60°,90° and one matching angle in ΔDEF, then similarity:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "AA", "isCorrect": true },
+				{ "id": "B", "text": "SAS", "isCorrect": false },
+				{ "id": "C", "text": "SSS", "isCorrect": false },
+				{ "id": "D", "text": "RHS", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Two corresponding angles equal shows AA.",
+			"explanation": "Two angles equal → AA similarity"
+		},
+		{
+			"id": "m009_019",
+			"topic": "Euclidean Geometry",
+			"lessonId": "m-009",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "In parallelogram ABCD, diagonal property:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Bisect each other", "isCorrect": true },
+				{ "id": "B", "text": "Equal", "isCorrect": false },
+				{ "id": "C", "text": "Perpendicular", "isCorrect": false },
+				{ "id": "D", "text": "Parallel", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Parallelogram diagonal property.",
+			"explanation": "Diagonals in a parallelogram bisect each other."
+		},
+		{
+			"id": "m009_020",
+			"topic": "Euclidean Geometry",
+			"lessonId": "m-009",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "If equilateral triangle side = 6, area equals:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "9√3", "isCorrect": true },
+				{ "id": "B", "text": "36", "isCorrect": false },
+				{ "id": "C", "text": "18√3", "isCorrect": false },
+				{ "id": "D", "text": "12", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Equilateral triangle area formula: (√3/4)a²",
+			"explanation": "Area = (√3/4)(36) = 9√3"
+		}
+	]
+}

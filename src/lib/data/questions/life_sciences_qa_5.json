@@ -1,0 +1,503 @@
+{
+	"metadata": {
+		"subject": "Life Sciences",
+		"totalQuestions": 20,
+		"version": "1.0",
+		"curriculum": "CAPS",
+		"createdAt": "2026-04-23T00:00:00.000Z"
+	},
+	"questions": [
+		{
+			"id": "ls005_001",
+			"topic": "Movement Across Cell Membranes",
+			"lessonId": "ls-005",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Which process requires energy from ATP?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Diffusion", "isCorrect": false },
+				{ "id": "B", "text": "Osmosis", "isCorrect": false },
+				{ "id": "C", "text": "Active transport", "isCorrect": true },
+				{ "id": "D", "text": "Facilitated diffusion", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Movement against concentration gradient.",
+			"explanation": "Active transport moves molecules against their concentration gradient and requires ATP energy and carrier proteins."
+		},
+		{
+			"id": "ls005_002",
+			"topic": "Movement Across Cell Membranes",
+			"lessonId": "ls-005",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Osmosis is the movement of:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Solutes from high to low concentration",
+					"isCorrect": false
+				},
+				{
+					"id": "B",
+					"text": "Water from high to low water potential",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Gases across membranes", "isCorrect": false },
+				{ "id": "D", "text": "Ions against gradient", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Net movement of water.",
+			"explanation": "Osmosis is the net movement of water across a selectively permeable membrane from an area of higher water potential to lower water potential."
+		},
+		{
+			"id": "ls005_003",
+			"topic": "Movement Across Cell Membranes",
+			"lessonId": "ls-005",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "In a hypertonic solution, a plant cell will:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Burst", "isCorrect": false },
+				{ "id": "B", "text": "Remain the same", "isCorrect": false },
+				{ "id": "C", "text": "Become plasmolysed", "isCorrect": true },
+				{ "id": "D", "text": "Undergo crenation", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Water leaves the cell.",
+			"explanation": "In a hypertonic solution, water leaves the plant cell by osmosis, causing the protoplast to shrink away from the cell wall (plasmolysis)."
+		},
+		{
+			"id": "ls005_004",
+			"topic": "Movement Across Cell Membranes",
+			"lessonId": "ls-005",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Simple diffusion does not require:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "A concentration gradient", "isCorrect": false },
+				{ "id": "B", "text": "ATP energy", "isCorrect": true },
+				{ "id": "C", "text": "A permeable membrane", "isCorrect": false },
+				{ "id": "D", "text": "Small non-polar molecules", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Passive process.",
+			"explanation": "Simple diffusion is a passive process that moves molecules down the concentration gradient without requiring energy."
+		},
+		{
+			"id": "ls005_005",
+			"topic": "Movement Across Cell Membranes",
+			"lessonId": "ls-005",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Which type of transport uses carrier proteins?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Simple diffusion", "isCorrect": false },
+				{ "id": "B", "text": "Osmosis", "isCorrect": false },
+				{ "id": "C", "text": "Facilitated diffusion", "isCorrect": true },
+				{ "id": "D", "text": "Bulk transport", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Specific molecules need help.",
+			"explanation": "Facilitated diffusion uses channel or carrier proteins to help large or polar molecules cross the membrane without ATP."
+		},
+		{
+			"id": "ls005_006",
+			"topic": "Movement Across Cell Membranes",
+			"lessonId": "ls-005",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "An isotonic solution has:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Higher solute concentration than the cell",
+					"isCorrect": false
+				},
+				{
+					"id": "B",
+					"text": "Lower solute concentration than the cell",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Equal solute concentration to the cell",
+					"isCorrect": true
+				},
+				{ "id": "D", "text": "No solutes at all", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "No net water movement.",
+			"explanation": "In isotonic solutions, water moves equally in both directions, so there is no net change in cell volume."
+		},
+		{
+			"id": "ls005_007",
+			"topic": "Movement Across Cell Membranes",
+			"lessonId": "ls-005",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Endocytosis is used to:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Export materials from the cell",
+					"isCorrect": false
+				},
+				{
+					"id": "B",
+					"text": "Bring large particles into the cell",
+					"isCorrect": true
+				},
+				{
+					"id": "C",
+					"text": "Diffuse gases across the membrane",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Transport water through channels",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Taking material IN.",
+			"explanation": "Endocytosis brings materials into the cell by forming a vesicle from the plasma membrane, including phagocytosis and pinocytosis."
+		},
+		{
+			"id": "ls005_008",
+			"topic": "Movement Across Cell Membranes",
+			"lessonId": "ls-005",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "In an animal cell placed in a hypotonic solution, the cell will:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Shrivel and crenate", "isCorrect": false },
+				{ "id": "B", "text": "Burst due to osmotic lysis", "isCorrect": true },
+				{ "id": "C", "text": "Undergo plasmolysis", "isCorrect": false },
+				{ "id": "D", "text": "Remain unchanged", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "No cell wall in animal cells.",
+			"explanation": "Without a cell wall, animal cells in hypotonic solutions swell and burst (osmotic lysis) as water rushes in."
+		},
+		{
+			"id": "ls005_009",
+			"topic": "Movement Across Cell Membranes",
+			"lessonId": "ls-005",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Which of the following is an example of active transport?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Oxygen diffusing into cells",
+					"isCorrect": false
+				},
+				{ "id": "B", "text": "Sodium-potassium pump", "isCorrect": true },
+				{
+					"id": "C",
+					"text": "Water moving through aquaporins",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "CO2 diffusing out of cells", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Pump using ATP to move ions.",
+			"explanation": "The sodium-potassium pump uses ATP to actively transport 3 Na+ out and 2 K+ in against their gradients."
+		},
+		{
+			"id": "ls005_010",
+			"topic": "Movement Across Cell Membranes",
+			"lessonId": "ls-005",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Facilitated diffusion differs from simple diffusion because it:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Requires ATP", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "Uses carrier or channel proteins for large/polar molecules",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Only moves gases", "isCorrect": false },
+				{
+					"id": "D",
+					"text": "Moves against the concentration gradient",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Specific proteins assist.",
+			"explanation": "Facilitated diffusion uses specific transport proteins to help large, polar molecules cross the membrane without energy input."
+		},
+		{
+			"id": "ls005_011",
+			"topic": "Movement Across Cell Membranes",
+			"lessonId": "ls-005",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The sodium-potassium pump exchanges:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "3 Na+ for 2 K+", "isCorrect": true },
+				{ "id": "B", "text": "2 Na+ for 3 K+", "isCorrect": false },
+				{ "id": "C", "text": "1 Na+ for 1 K+", "isCorrect": false },
+				{ "id": "D", "text": "Na+ for H+", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Creates membrane potential.",
+			"explanation": "For every ATP used, the sodium-potassium pump transports 3 sodium ions out and 2 potassium ions in, establishing the resting membrane potential."
+		},
+		{
+			"id": "ls005_012",
+			"topic": "Movement Across Cell Membranes",
+			"lessonId": "ls-005",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Phagocytosis specifically refers to:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Uptake of dissolved fluids", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "Uptake of large solid particles",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Release of waste products", "isCorrect": false },
+				{ "id": "D", "text": "Transport of oxygen", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Cell eating.",
+			"explanation": "Phagocytosis (cell eating) engulfs large solid particles like bacteria into phagosomes for digestion."
+		},
+		{
+			"id": "ls005_013",
+			"topic": "Movement Across Cell Membranes",
+			"lessonId": "ls-005",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Aquaporins are:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Channels for water molecules",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Carriers for glucose", "isCorrect": false },
+				{ "id": "C", "text": "Pumps for sodium ions", "isCorrect": false },
+				{ "id": "D", "text": "Receptors for hormones", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Water channel proteins.",
+			"explanation": "Aquaporins are specialised channel proteins that facilitate the rapid diffusion of water across membranes."
+		},
+		{
+			"id": "ls005_014",
+			"topic": "Movement Across Cell Membranes",
+			"lessonId": "ls-005",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Pinocytosis is important for:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Killing bacteria", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "Uptake of extracellular fluids and dissolved nutrients",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Protein synthesis", "isCorrect": false },
+				{ "id": "D", "text": "DNA replication", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Cell drinking.",
+			"explanation": "Pinocytosis (cell drinking) engulfs extracellular fluids and dissolved solutes into vesicles for cellular intake."
+		},
+		{
+			"id": "ls005_015",
+			"topic": "Movement Across Cell Membranes",
+			"lessonId": "ls-005",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Turgor pressure in plant cells is maintained by:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Cytolysis", "isCorrect": false },
+				{ "id": "B", "text": "Plasmolysis", "isCorrect": false },
+				{
+					"id": "C",
+					"text": "Water moving into the vacuole by osmosis",
+					"isCorrect": true
+				},
+				{
+					"id": "D",
+					"text": "Active transport of minerals out of the cell",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Pressure against cell wall.",
+			"explanation": "Water enters the central vacuole by osmosis, creating turgor pressure that pushes the protoplast against the rigid cell wall."
+		},
+		{
+			"id": "ls005_016",
+			"topic": "Movement Across Cell Membranes",
+			"lessonId": "ls-005",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "In the sodium-potassium pump, phosphorylation of the pump protein:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Is caused by binding of sodium ions",
+					"isCorrect": false
+				},
+				{
+					"id": "B",
+					"text": "Causes a conformational change that releases Na+",
+					"isCorrect": true
+				},
+				{
+					"id": "C",
+					"text": "Happens only when potassium binds",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Is the first step in the cycle",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "ATP provides phosphate group.",
+			"explanation": "ATP hydrolysis adds a phosphate group to the pump protein, causing it to change shape and release Na+ before binding K+."
+		},
+		{
+			"id": "ls005_017",
+			"topic": "Movement Across Cell Membranes",
+			"lessonId": "ls-005",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Receptor-mediated endocytosis is highly specific because:",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Only one type of molecule can fit into any vesicle",
+					"isCorrect": false
+				},
+				{
+					"id": "B",
+					"text": "Specific receptor proteins on the membrane bind only target ligands",
+					"isCorrect": true
+				},
+				{
+					"id": "C",
+					"text": "The process always uses ATP",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Vesicles are always the same size",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Ligand-receptor specificity.",
+			"explanation": "Specific transmembrane receptors bind only their target ligands (e.g., LDL, transferrin), ensuring selective and efficient uptake."
+		},
+		{
+			"id": "ls005_018",
+			"topic": "Movement Across Cell Membranes",
+			"lessonId": "ls-005",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Why do plant cells not burst in hypotonic solutions while animal cells do?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Plant cells have smaller vacuoles", "isCorrect": false },
+				{ "id": "B", "text": "Plant cells have a rigid cell wall that resists expansion", "isCorrect": true },
+				{ "id": "C", "text": "Plant cell membranes are stronger", "isCorrect": false },
+				{ "id": "D", "text": "Plant cells have less water", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "External rigid structure.",
+			"explanation": "The rigid cell wall prevents the plant cell from expanding beyond its limit, so instead of bursting, it becomes turgid."
+		},
+		{
+			"id": "ls005_019",
+			"topic": "Movement Across Cell Membranes",
+			"lessonId": "ls-005",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The rate of diffusion is affected by all of the following EXCEPT:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Temperature", "isCorrect": false },
+				{ "id": "B", "text": "Molecular size", "isCorrect": false },
+				{ "id": "C", "text": "The colour of the molecule", "isCorrect": true },
+				{ "id": "D", "text": "Concentration gradient", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Physical properties affect diffusion.",
+			"explanation": "Diffusion rate depends on temperature, concentration gradient, surface area, distance, and molecular size. Colour does not affect diffusion rate."
+		},
+		{
+			"id": "ls005_020",
+			"topic": "Movement Across Cell Membranes",
+			"lessonId": "ls-005",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Exocytosis and endocytosis are both:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Passive processes", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "Forms of bulk transport requiring energy",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "Limited to plant cells", "isCorrect": false },
+				{
+					"id": "D",
+					"text": "Types of facilitated diffusion",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Both involve vesicle formation.",
+			"explanation": "Both endocytosis and exocytosis require ATP energy to form and move vesicles, making them forms of active bulk transport."
+		}
+	]
+}

@@ -58,7 +58,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
 	width: "device-width",
 	initialScale: 1,
-	maximumScale: 1,
+	maximumScale: 5,
 };
 
 export default function RootLayout({
@@ -74,6 +74,10 @@ export default function RootLayout({
 			<body
 				className={`${fontSans.variable} ${fontMono.variable} h-full antialiased min-h-full flex flex-col font-body`}
 			>
+				<div
+					className="noise-overlay hidden dark:hidden sm:block"
+					aria-hidden="true"
+				/>
 				<Suspense fallback={null}>
 					<UTSSR />
 				</Suspense>

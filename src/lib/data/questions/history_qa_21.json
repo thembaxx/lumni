@@ -1,0 +1,503 @@
+{
+	"metadata": {
+		"subject": "History",
+		"totalQuestions": 600,
+		"version": "1.0",
+		"curriculum": "CAPS",
+		"createdAt": "2026-04-23T00:00:00.000Z"
+	},
+	"questions": [
+		{
+			"id": "h024_001",
+			"topic": "World War II",
+			"lessonId": "h-024",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "When did World War II begin and end?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "1939-1945", "isCorrect": true },
+				{ "id": "B", "text": "1914-1918", "isCorrect": false },
+				{ "id": "C", "text": "1940-1945", "isCorrect": false },
+				{ "id": "D", "text": "1936-1945", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Mid-20th century.",
+			"explanation": "WWII began with German invasion of Poland in 1939 and ended with Japanese surrender in 1945."
+		},
+		{
+			"id": "h024_002",
+			"topic": "World War II",
+			"lessonId": "h-024",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What was the Holocaust?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Nazi genocide of six million Jews",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "German military campaign", "isCorrect": false },
+				{ "id": "C", "text": "Economic policy", "isCorrect": false },
+				{ "id": "D", "text": "Allied strategy", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Systematic genocide.",
+			"explanation": "Holocaust was Nazi systematic murder of 6 million Jews and millions of others in death camps."
+		},
+		{
+			"id": "h024_003",
+			"topic": "World War II",
+			"lessonId": "h-024",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Who were the Allied Powers in WWII?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Britain, USSR, US, and others",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Germany, Italy, Japan", "isCorrect": false },
+				{ "id": "C", "text": "Neutral nations only", "isCorrect": false },
+				{ "id": "D", "text": "African nations only", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Opposed Axis Powers.",
+			"explanation": "Allied Powers (Britain, Soviet Union, US, China, Free French) defeated Axis Powers."
+		},
+		{
+			"id": "h024_004",
+			"topic": "World War II",
+			"lessonId": "h-024",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What was the D-Day invasion?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Allied landing in Normandy to open Western Front",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "German invasion of France", "isCorrect": false },
+				{ "id": "C", "text": "Battle of Britain", "isCorrect": false },
+				{ "id": "D", "text": "Pacific naval battle", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "June 6, 1944.",
+			"explanation": "D-Day (June 6, 1944) was largest amphibious invasion, opening second front in Europe."
+		},
+		{
+			"id": "h024_005",
+			"topic": "World War II",
+			"lessonId": "h-024",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Who was Winston Churchill?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "British Prime Minister leading war effort",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "German military commander", "isCorrect": false },
+				{ "id": "C", "text": "American president", "isCorrect": false },
+				{ "id": "D", "text": "Soviet leader", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "British wartime leader.",
+			"explanation": "Churchill led Britain throughout WWII, inspiring resistance against Nazi Germany."
+		},
+		{
+			"id": "h024_006",
+			"topic": "World War II",
+			"lessonId": "h-024",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What was the Battle of Stalingrad?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Decisive Soviet victory turning point in Eastern Front",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "German victory ending Eastern Front",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Naval battle in Atlantic", "isCorrect": false },
+				{ "id": "D", "text": "Pacific island campaign", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "1942-1943 turning point.",
+			"explanation": "Stalingrad was brutal urban warfare culminating in German surrender, marking Eastern Front turning point."
+		},
+		{
+			"id": "h024_007",
+			"topic": "World War II",
+			"lessonId": "h-024",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "What were Axis Powers?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Germany, Italy, Japan and allies",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Britain, France, US", "isCorrect": false },
+				{
+					"id": "C",
+					"text": "Soviet Union and satellites",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Neutral European nations", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Rome-Berlin-Tokyo Axis.",
+			"explanation": "Axis Powers united under fascist ideology, conquered much of Europe and Asia before defeat."
+		},
+		{
+			"id": "h024_008",
+			"topic": "World War II",
+			"lessonId": "h-024",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What were the main causes of WWII?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Treaty of Versailles, rise of fascism, appeasement failure",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Only economic factors", "isCorrect": false },
+				{ "id": "C", "text": "Religious conflicts", "isCorrect": false },
+				{ "id": "D", "text": "Only colonial disputes", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "From Versailles to invasion.",
+			"explanation": "WWI Treaty harshness, Nazi aggression, fascist expansion, and failed appeasement caused WWII."
+		},
+		{
+			"id": "h024_009",
+			"topic": "World War II",
+			"lessonId": "h-024",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What was the Blitzkrieg strategy?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Lightning fast military offensive using tanks and aircraft",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Defensive trench warfare", "isCorrect": false },
+				{ "id": "C", "text": "Naval blockade strategy", "isCorrect": false },
+				{ "id": "D", "text": "Guerrilla warfare", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Lightning war.",
+			"explanation": "Blitzkrieg combined fast-moving armor, air support, and communications to achieve rapid victories."
+		},
+		{
+			"id": "h024_010",
+			"topic": "World War II",
+			"lessonId": "h-024",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What was the Battle of Britain?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "German air campaign against Britain, defeated by RAF",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Naval battle in Atlantic", "isCorrect": false },
+				{ "id": "C", "text": "British invasion of France", "isCorrect": false },
+				{ "id": "D", "text": "German ground offensive", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "1940 air battle.",
+			"explanation": "Battle of Britain (1940) saw Luftwaffe defeated by RAF, preventing German invasion of Britain."
+		},
+		{
+			"id": "h024_011",
+			"topic": "World War II",
+			"lessonId": "h-024",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What was Pearl Harbor?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Japanese surprise attack on US naval base bringing US into war",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Allied landing in Pacific", "isCorrect": false },
+				{ "id": "C", "text": "German naval base", "isCorrect": false },
+				{ "id": "D", "text": "British colony", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "December 7, 1941.",
+			"explanation": "Pearl Harbor attack (Dec 7, 1941) destroyed US Pacific Fleet and brought America into WWII."
+		},
+		{
+			"id": "h024_012",
+			"topic": "World War II",
+			"lessonId": "h-024",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What were concentration camps?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Nazi detention and extermination facilities",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Refugee camps", "isCorrect": false },
+				{
+					"id": "C",
+					"text": "Military prisoner facilities",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Labor camps only", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Holocaust infrastructure.",
+			"explanation": "Nazi camps imprisoned and murdered millions including Jews, Roma, political prisoners, and others."
+		},
+		{
+			"id": "h024_013",
+			"topic": "World War II",
+			"lessonId": "h-024",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What was the United Nations?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Post-war international organization replacing League of Nations",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "WWII military alliance", "isCorrect": false },
+				{ "id": "C", "text": "Economic organization", "isCorrect": false },
+				{ "id": "D", "text": "Religious organization", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Founded 1945.",
+			"explanation": "UN created in 1945 to maintain international peace and prevent future wars."
+		},
+		{
+			"id": "h024_014",
+			"topic": "World War II",
+			"lessonId": "h-024",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "What role did atomic bombs play in ending WWII?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "US bombings of Hiroshima and Nagasaki forced Japanese surrender",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Had no effect on ending war",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Destroyed European Axis", "isCorrect": false },
+				{ "id": "D", "text": "Were never used", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "August 1945.",
+			"explanation": "Atomic bombs on Hiroshima (Aug 6) and Nagasaki (Aug 9) led to Japanese surrender."
+		},
+		{
+			"id": "h024_015",
+			"topic": "World War II",
+			"lessonId": "h-024",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Analyze the impact of WWII on African colonies.",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Colonial troops gained experience, saw contradictions, accelerated independence",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Had no impact on colonies", "isCorrect": false },
+				{ "id": "C", "text": "Strengthened colonial rule", "isCorrect": false },
+				{ "id": "D", "text": "Only affected economics", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "War veterans and independence.",
+			"explanation": "African troops fought for freedom they saw denied at home, sparking independence movements."
+		},
+		{
+			"id": "h024_016",
+			"topic": "World War II",
+			"lessonId": "h-024",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Evaluate the moral implications of the atomic bombings.",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Debated as necessary vs. unjust targeting of civilians",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Universally condemned as war crime",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Were clearly justified without debate",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Had no significance", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Just war theory debate.",
+			"explanation": "Atomic bombings remain controversial - some argue necessity, others condemn civilian targeting."
+		},
+		{
+			"id": "h024_017",
+			"topic": "World War II",
+			"lessonId": "h-024",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "How did WWII change the global balance of power?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Europe weakened, US and USSR emerged as superpowers, decolonization accelerated",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "No change in global power", "isCorrect": false },
+				{ "id": "C", "text": "Europe emerged stronger", "isCorrect": false },
+				{ "id": "D", "text": "Only Asia gained power", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "End of European dominance.",
+			"explanation": "WWII devastated Europe, making US and USSR dominant while inspiring colonial independence."
+		},
+		{
+			"id": "h024_018",
+			"topic": "World War II",
+			"lessonId": "h-024",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Analyze the role of women in WWII.",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Entered workforce, supported military, challenged traditional gender roles",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Had no significant role", "isCorrect": false },
+				{
+					"id": "C",
+					"text": "Only served in domestic roles",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Fought directly on front lines",
+					"isCorrect": false
+				}
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Rosie the Riveter.",
+			"explanation": "Women filled factory jobs, supported war efforts, and gained economic independence."
+		},
+		{
+			"id": "h024_019",
+			"topic": "World War II",
+			"lessonId": "h-024",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Evaluate the legacy of the Holocaust.",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Created international human rights law, Israel's founding, memorial culture",
+					"isCorrect": true
+				},
+				{ "id": "B", "text": "Had no lasting legacy", "isCorrect": false },
+				{ "id": "C", "text": "Only affected Germany", "isCorrect": false },
+				{ "id": "D", "text": "Was quickly forgotten", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Never Again.",
+			"explanation": "Holocaust led to Genocide Convention, human rights frameworks, and global memory culture."
+		},
+		{
+			"id": "h024_020",
+			"topic": "World War II",
+			"lessonId": "h-024",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "How did WWII influence civil rights movements?",
+			"questionType": "multiple-choice",
+			"options": [
+				{
+					"id": "A",
+					"text": "Highlighted hypocrisy of fighting fascism while segregating at home",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Had no connection to civil rights",
+					"isCorrect": false
+				},
+				{ "id": "C", "text": "Delayed civil rights", "isCorrect": false },
+				{ "id": "D", "text": "Only affected Europe", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Double V campaign.",
+			"explanation": "African Americans pointed out irony of fighting Nazi racism while facing American segregation."
+		}
+	]
+}

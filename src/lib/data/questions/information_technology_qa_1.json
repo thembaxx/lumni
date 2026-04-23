@@ -1,0 +1,391 @@
+{
+	"metadata": {
+		"subject": "Information Technology",
+		"totalQuestions": 600,
+		"version": "1.0",
+		"curriculum": "CAPS",
+		"createdAt": "2026-04-23T00:00:00.000Z"
+	},
+	"questions": [
+		{
+			"id": "it001_001",
+			"topic": "Computer Hardware",
+			"lessonId": "it-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Which is an input device?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Monitor", "isCorrect": false },
+				{ "id": "B", "text": "Keyboard", "isCorrect": true },
+				{ "id": "C", "text": "Printer", "isCorrect": false },
+				{ "id": "D", "text": "Speaker", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Sends data to computer.",
+			"explanation": "A keyboard is an input device that sends data to the computer."
+		},
+		{
+			"id": "it001_002",
+			"topic": "Computer Hardware",
+			"lessonId": "it-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The CPU is also known as the:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Brain of the computer", "isCorrect": true },
+				{ "id": "B", "text": "Memory", "isCorrect": false },
+				{ "id": "C", "text": "Hard drive", "isCorrect": false },
+				{ "id": "D", "text": "Monitor", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Processes instructions.",
+			explanation: "CPU (Central Processing Unit) processes all instructions."
+		},
+		{
+			"id": "it001_003",
+			"topic": "Computer Hardware",
+			"lessonId": "it-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "RAM stands for:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Read Access Memory", "isCorrect": false },
+				{ "id": "B", "text": "Random Access Memory", "isCorrect": true },
+				{ "id": "C", "text": "Run Always Memory", "isCorrect": false },
+				{ "id": "D", "text": "Rapid Access Memory", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Temporary storage.",
+			explanation: "RAM is temporary memory that loses data when power is off."
+		},
+		{
+			"id": "it001_004",
+			"topic": "Computer Hardware",
+			"lessonId": "it-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Which stores data permanently?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "RAM", "isCorrect": false },
+				{ "id": "B", "text": "Cache", "isCorrect": false },
+				{ "id": "C", "text": "Hard Drive", "isCorrect": true },
+				{ "id": "D", "text": "Register", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Non-volatile storage.",
+			explanation: "Hard drives store data permanently even when power is off."
+		},
+		{
+			"id": "it001_005",
+			"topic": "Computer Hardware",
+			"lessonId": "it-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Which is an output device?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Mouse", "isCorrect": false },
+				{ "id": "B", "text": "Scanner", "isCorrect": false },
+				{ "id": "C", "text": "Printer", "isCorrect": true },
+				{ "id": "D", "text": "Keyboard", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Produces output from computer.",
+			explanation": "A printer produces hard copy output from the computer."
+		},
+		{
+			"id": "it001_006",
+			"topic": "Computer Hardware",
+			"lessonId": "it-001",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The speed of a CPU is measured in:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Bytes", "isCorrect": false },
+				{ "id": "B", "text": "Gigahertz", "isCorrect": true },
+				{ "id": "C", "text": "Volts", "isCorrect": false },
+				{ "id": "D", "text": "Amperes", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Clock speed unit.",
+			explanation": "CPU speed is measured in GHz (gigahertz)."
+		},
+		{
+			"id": "it001_007",
+			"topic": "Computer Hardware",
+			"lessonId": "it-001",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Cache memory is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Slower than RAM", "isCorrect": false },
+				{ "id": "B", "text": "Located between CPU and RAM", "isCorrect": true },
+				{ "id": "C", "text": "Used for permanent storage", "isCorrect": false },
+				{ "id": "D", "text": "An input device", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Speeds up CPU access.",
+			explanation: "Cache is fast memory between CPU and main memory."
+		},
+		{
+			"id": "it001_008",
+			"topic": "Computer Hardware",
+			"lessonId": "it-001",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "A motherboard connects:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Only monitors", "isCorrect": false },
+				{ "id": "B", "text": "All internal components", "isCorrect": true },
+				{ "id": "C", "text": "Only input devices", "isCorrect": false },
+				{ "id": "D", "text": "Only printers", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Main circuit board.",
+			explanation": "The motherboard connects all computer components."
+		},
+		{
+			"id": "it001_009",
+			"topic": "Computer Hardware",
+			"lessonId": "it-001",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "USB stands for:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Universal Serial Bus", "isCorrect": true },
+				{ "id": "B", "text": "United System Backup", "isCorrect": false },
+				{ "id": "C", "text": "User System Buffer", "isCorrect": false },
+				{ "id": "D", "text": "Universal Storage Block", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Connection standard.",
+			explanation": "USB is the Universal Serial Bus for device connection."
+		},
+		{
+			"id": "it001_010",
+			"topic": "Computer Hardware",
+			"lessonId": "it-001",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Which storage is fastest?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Hard Drive", "isCorrect": false },
+				{ "id": "B", "text": "SSD", "isCorrect": true },
+				{ "id": "C", "text": "DVD", "isCorrect": false },
+				{ "id": "D", "text": "USB flash drive", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "No moving parts.",
+			explanation": "SSD (Solid State Drive) is faster than HDD."
+		},
+		{
+			"id": "it001_011",
+			"topic": "Computer Hardware",
+			"lessonId": "it-001",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The ALU in a CPU performs:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Memory management", "isCorrect": false },
+				{ "id": "B", "text": "Arithmetic and logic operations", "isCorrect": true },
+				{ "id": "C", "text": "Display rendering", "isCorrect": false },
+				{ "id": "D", "text": "Sound processing", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Calculations and decisions.",
+			explanation": "ALU (Arithmetic Logic Unit) handles calculations."
+		},
+		{
+			"id": "it001_012",
+			"topic": "Computer Hardware",
+			"lessonId": "it-001",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "A 64-bit processor can handle:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Less data than 32-bit", "isCorrect": false },
+				{ "id": "B", "text": "More memory addresses", "isCorrect": true },
+				{ "id": "C", "text": "Only 64 MB RAM", "isCorrect": false },
+				{ "id": "D", "text": "Smaller numbers", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Memory addressing capability.",
+			explanation": "64-bit processors can address much more memory than 32-bit."
+		},
+		{
+			"id": "it001_013",
+			"topic": "Computer Hardware",
+			"lessonId": "it-001",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "DMA allows:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "CPU to do all processing", "isCorrect": false },
+				{ "id": "B", "text": "Devices direct memory access", "isCorrect": true },
+				{ "id": "C", "text": "Only input operations", "isCorrect": false },
+				{ "id": "D", "text": "Serial processing", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Direct Memory Access.",
+			explanation": "DMA lets devices transfer data without CPU intervention."
+		},
+		{
+			"id": "it001_014",
+			"topic": "Computer Hardware",
+			"lessonId": "it-001",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The northbridge chip handles:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "USB connections", "isCorrect": false },
+				{ "id": "B", "text": "CPU, RAM, and graphics", "isCorrect": true },
+				{ "id": "C", "text": "Sound only", "isCorrect": false },
+				{ "id": "D", "text": "Network only", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "High-speed connections.",
+			explanation": "Northbridge connects fast components like CPU, RAM, and GPU."
+		},
+		{
+			"id": "it001_015",
+			"topic": "Computer Hardware",
+			"lessonId": "it-001",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Multi-core processors improve:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Single task speed", "isCorrect": false },
+				{ "id": "B", "text": "Parallel processing", "isCorrect": true },
+				{ "id": "C", "text": "Memory capacity", "isCorrect": false },
+				{ "id": "D", "text": "Power consumption only", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Multiple execution units.",
+			explanation": "Multi-core allows running multiple tasks simultaneously."
+		},
+		{
+			"id": "it001_016",
+			"topic": "Computer Software",
+			"lessonId": "it-003",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "System software includes:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Word processors", "isCorrect": false },
+				{ "id": "B", "text": "Operating systems", "isCorrect": true },
+				{ "id": "C", "text": "Games", "isCorrect": false },
+				{ "id": "D", "text": "Web browsers", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Manages hardware.",
+			explanation": "Operating systems are system software that manages hardware."
+		},
+		{
+			"id": "it001_017",
+			"topic": "Computer Software",
+			"lessonId": "it-003",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "An example of application software is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Windows", "isCorrect": false },
+				{ "id": "B", "text": "Microsoft Word", "isCorrect": true },
+				{ "id": "C", "text": "BIOS", "isCorrect": false },
+				{ "id": "D", "text": "Device drivers", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "User applications.",
+			explanation": "Microsoft Word is application software for word processing."
+		},
+		{
+			"id": "it001_018",
+			"topic": "Computer Software",
+			"lessonId": "it-003",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Open source software:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Has free source code", "isCorrect": true },
+				{ "id": "B", "text": "Cannot be modified", "isCorrect": false },
+				{ "id": "C", "text": "Is always free of charge", "isCorrect": false },
+				{ "id": "D", "text": "Only runs on Windows", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint": "Code is publicly available.",
+			explanation": "Open source allows viewing and modifying source code."
+		},
+		{
+			"id": "it001_019",
+			"topic": "Computer Software",
+			"lessonId": "it-003",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "A device driver is:",
+			questionType: "multiple-choice",
+			options: [
+				{ "id": "A", "text": "A game", "isCorrect": false },
+				{ "id": "B", "text": "Software for hardware communication", "isCorrect": true },
+				{ "id": "C", "text": "An operating system", "isCorrect": false },
+				{ "id": "D", "text": "Application software", "isCorrect": false }
+			],
+			supportsDiagram: false,
+			diagram: null,
+			hint: "Hardware interface.",
+			explanation: "Drivers allow OS to communicate with hardware devices."
+		},
+		{
+			"id": "it001_020",
+			topic: "Computer Software",
+			lessonId: "it-003",
+			difficulty: "Medium",
+			points: 10,
+			questionText: "Firmware is:",
+			questionType: "multiple-choice",
+			options: [
+				{ "id": "A", "text": "Always changeable", "isCorrect": false },
+				{ "id": "B", "text": "Permanently stored software", "isCorrect": true },
+				{ "id": "C", "text": "Only on computers", "isCorrect": false },
+				{ "id": "D", "text": "Application software", "isCorrect": false }
+			],
+			supportsDiagram: false,
+			diagram: null,
+			hint: "ROM based.",
+			explanation: "Firmware is permanently programmed into hardware."
+		}
+	]
+}

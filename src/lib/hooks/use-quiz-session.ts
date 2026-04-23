@@ -51,13 +51,14 @@ export function useQuizSession({
 		useState<string>(initialSubject);
 	const [points, setPoints] = useState(() => Math.floor(Math.random() * 101));
 
-	const normalizedTopic =
-		topic ||
+	const normalizedSubject =
+		initialSubject ||
 		(selectedSubject === "Random" ? "physics" : selectedSubject.toLowerCase());
 
 	const { data: questions, isLoading } = useSubjectQuestions(
-		normalizedTopic,
+		normalizedSubject,
 		questionCount,
+		topic,
 		{
 			enabled: enabled && selectedSubject !== "",
 		},

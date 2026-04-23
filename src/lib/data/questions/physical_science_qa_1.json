@@ -1,0 +1,399 @@
+{
+	"metadata": {
+		"subject": "Physical Science",
+		"totalQuestions": 600,
+		"version": "1.0",
+		"curriculum": "CAPS",
+		"createdAt": "2026-04-23T00:00:00.000Z"
+	},
+	"questions": [
+		{
+			"id": "ps001_001",
+			"topic": "Units and Measurement",
+			"lessonId": "ps-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Which of the following is the SI unit for mass?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Newton", "isCorrect": false },
+				{ "id": "B", "text": "Kilogram", "isCorrect": true },
+				{ "id": "C", "text": "Joule", "isCorrect": false },
+				{ "id": "D", "text": "Watt", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "The SI unit for mass is based on a standard platinum-iridium cylinder kept in France.",
+			"explanation": "The kilogram (kg) is the SI base unit for mass."
+		},
+		{
+			"id": "ps001_002",
+			"topic": "Units and Measurement",
+			"lessonId": "ps-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Convert 2500 g to kilograms.",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "0.25 kg", "isCorrect": false },
+				{ "id": "B", "text": "2.5 kg", "isCorrect": true },
+				{ "id": "C", "text": "250 kg", "isCorrect": false },
+				{ "id": "D", "text": "25 kg", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "1 kg = 1000 g",
+			"explanation": "2500 g ÷ 1000 = 2.5 kg"
+		},
+		{
+			"id": "ps001_003",
+			"topic": "Units and Measurement",
+			"lessonId": "ps-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Express 0.00056 in scientific notation.",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "5.6 × 10⁻⁴", "isCorrect": true },
+				{ "id": "B", "text": "5.6 × 10⁴", "isCorrect": false },
+				{ "id": "C", "text": "56 × 10⁻⁵", "isCorrect": false },
+				{ "id": "D", "text": "5.6 × 10³", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Move the decimal point 4 places to the right.",
+			"explanation": "0.00056 = 5.6 × 10⁻⁴"
+		},
+		{
+			"id": "ps001_004",
+			"topic": "Units and Measurement",
+			"lessonId": "ps-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "How many significant figures are in 0.00308 m?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "2", "isCorrect": false },
+				{ "id": "B", "text": "3", "isCorrect": true },
+				{ "id": "C", "text": "4", "isCorrect": false },
+				{ "id": "D", "text": "5", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Leading zeros are not significant.",
+			"explanation": "The significant figures are 3, 0, and 8 = 3 significant figures."
+		},
+		{
+			"id": "ps001_005",
+			"topic": "Units and Measurement",
+			"lessonId": "ps-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "The SI unit of length is the:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Centimeter", "isCorrect": false },
+				{ "id": "B", "text": "Meter", "isCorrect": true },
+				{ "id": "C", "text": "Inch", "isCorrect": false },
+				{ "id": "D", "text": "Foot", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It's a base SI unit.",
+			"explanation": "The meter (m) is the SI base unit for length."
+		},
+		{
+			"id": "ps001_006",
+			"topic": "Units and Measurement",
+			"lessonId": "ps-001",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Round 7.856 to 3 significant figures.",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "7.86", "isCorrect": false },
+				{ "id": "B", "text": "7.85", "isCorrect": true },
+				{ "id": "C", "text": "7.856", "isCorrect": false },
+				{ "id": "D", "text": "7.8", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Look at the 4th decimal place.",
+			"explanation": "7.856 rounded to 3 sf = 7.86"
+		},
+		{
+			"id": "ps001_007",
+			"topic": "Units and Measurement",
+			"lessonId": "ps-001",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Convert 72 km/h to m/s.",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "720 m/s", "isCorrect": false },
+				{ "id": "B", "text": "20 m/s", "isCorrect": true },
+				{ "id": "C", "text": "7.2 m/s", "isCorrect": false },
+				{ "id": "D", "text": "12 m/s", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Divide by 3.6",
+			"explanation": "72 km/h ÷ 3.6 = 20 m/s"
+		},
+		{
+			"id": "ps001_008",
+			"topic": "Units and Measurement",
+			"lessonId": "ps-001",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "Which has the same dimension as work?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Power", "isCorrect": false },
+				{ "id": "B", "text": "Force", "isCorrect": false },
+				{ "id": "C", "text": "Energy", "isCorrect": true },
+				{ "id": "D", "text": "Momentum", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			diagram": null,
+			"hint": "Work and energy have the same units.",
+			"explanation": "Work and energy both have the unit Joule (J)."
+		},
+		{
+			"id": "ps001_009",
+			"topic": "Units and Measurement",
+			"lessonId": "ps-001",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The prefix 'mega-' represents:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "10⁻⁶", "isCorrect": false },
+				{ "id": "B", "text": "10⁶", "isCorrect": true },
+				{ "id": "C", "text": "10⁹", "isCorrect": false },
+				{ "id": "D", "text": "10³", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Mega = million",
+			"explanation": "1 Mega (M) = 10⁶"
+		},
+		{
+			"id": "ps001_010",
+			"topic": "Units and Measurement",
+			"lessonId": "ps-001",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "How many significant figures in 1500?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "1", "isCorrect": false },
+				{ "id": "B", "text": "2", "isCorrect": false },
+				{ "id": "C", "text": "4", "isCorrect": false },
+				{ "id": "D", "text": "Ambiguous - could be 2 or 4", "isCorrect": true }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Trailing zeros without decimal point are ambiguous.",
+			explanation: "1500 could be 2 sf (1.5 × 10³) or 4 sf depending on context."
+		},
+		{
+			"id": "ps001_011",
+			"topic": "Units and Measurement",
+			"lessonId": "ps-001",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The density of a metal is 8.9 g/cm³. Express in kg/m³.",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "8900 kg/m³", "isCorrect": false },
+				{ "id": "B", "text": "890 kg/m³", "isCorrect": false },
+				{ "id": "C", "text": "8900 kg/m³", "isCorrect": true },
+				{ "id": "D", "text": "0.0089 kg/m³", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "1 g/cm³ = 1000 kg/m³",
+			"explanation": "8.9 g/cm³ × 1000 = 8900 kg/m³"
+		},
+		{
+			"id": "ps001_012",
+			"topic": "Units and Measurement",
+			"lessonId": "ps-001",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "Calculate: (3.2 × 10⁸) × (4.5 × 10⁻³) in scientific notation.",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "1.44 × 10⁶", "isCorrect": true },
+				{ "id": "B", "text": "14.4 × 10⁵", "isCorrect": false },
+				{ "id": "C", "text": "1.44 × 10⁵", "isCorrect": false },
+				{ "id": "D", "text": "144 × 10⁴", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Multiply coefficients and add exponents.",
+			"explanation": "3.2 × 4.5 = 14.4, 10⁸ × 10⁻³ = 10⁵, 14.4 × 10⁵ = 1.44 × 10⁶"
+		},
+		{
+			"id": "ps001_013",
+			"topic": "Units and Measurement",
+			"lessonId": "ps-001",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "A measurement is recorded as 45.00 g. How many significant figures?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "2", "isCorrect": false },
+				{ "id": "B", "text": "3", "isCorrect": false },
+				{ "id": "C", "text": "4", "isCorrect": true },
+				{ "id": "D", "text": "5", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Trailing zeros after decimal are significant.",
+			"explanation": "45.00 has 4 significant figures - the trailing zeros indicate precision."
+		},
+		{
+			"id": "ps001_014",
+			"topic": "Units and Measurement",
+			"lessonId": "ps-001",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "The relative density of a substance is 2.7. What does this mean?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "It weighs 2.7 kg", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "It is 2.7 times denser than water",
+					"isCorrect": true
+				},
+				{ "id": "C", "text": "It has 2.7 times more mass", "isCorrect": false },
+				{ "id": "D", "text": "It occupies 2.7 m³", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Relative density compares to water.",
+			"explanation": "Relative density of 2.7 means the substance is 2.7 times denser than water (density = 1000 kg/m³)."
+		},
+		{
+			"id": "ps001_015",
+			"topic": "Units and Measurement",
+			"lessonId": "ps-001",
+			"difficulty": "Hard",
+			"points": 15,
+			"questionText": "If precision of a measurement is ±0.05 cm and value is 15.25 cm, the absolute uncertainty is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "±0.05 cm", "isCorrect": true },
+				{ "id": "B", "text": "±0.5 cm", "isCorrect": false },
+				{ "id": "C", "text": "±0.005 cm", "isCorrect": false },
+				{ "id": "D", "text": "±15.25 cm", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Absolute uncertainty is given directly.",
+			"explanation": "The absolute uncertainty is the precision value: ±0.05 cm."
+		},
+		{
+			"id": "ps001_016",
+			"topic": "Units and Measurement",
+			"lessonId": "ps-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Which is NOT an SI base unit?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Kelvin", "isCorrect": false },
+				{ "id": "B", "text": "Mole", "isCorrect": false },
+				{ "id": "C", "text": "Litre", "isCorrect": true },
+				{ "id": "D", "text": "Candela", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Litre is a derived unit, not a base unit.",
+			"explanation": "There are 7 SI base units. Litre (L) is not one of them."
+		},
+		{
+			"id": "ps001_017",
+			"topic": "Units and Measurement",
+			"lessonId": "ps-001",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "The percentage uncertainty in mass of 50.0 g measured to ±0.1 g is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "0.1%", "isCorrect": false },
+				{ "id": "B", "text": "0.2%", "isCorrect": true },
+				{ "id": "C", "text": "0.5%", "isCorrect": false },
+				{ "id": "D", "text": "1%", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "% uncertainty = (uncertainty/measurement) × 100",
+			"explanation": "(0.1/50.0) × 100 = 0.2%"
+		},
+		{
+			"id": "ps001_018",
+			"topic": "Units and Measurement",
+			"lessonId": "ps-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Convert 5.3 cm to meters.",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "0.053 m", "isCorrect": false },
+				{ "id": "B", "text": "0.53 m", "isCorrect": false },
+				{ "id": "C", "text": "0.053 m", "isCorrect": true },
+				{ "id": "D", "text": "53 m", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Divide by 100 to convert cm to m.",
+			"explanation": "5.3 cm ÷ 100 = 0.053 m"
+		},
+		{
+			"id": "ps001_019",
+			"topic": "Units and Measurement",
+			"lessonId": "ps-001",
+			"difficulty": "Easy",
+			"points": 5,
+			"questionText": "Accuracy refers to:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "How repeatable results are", "isCorrect": false },
+				{ "id": "B", "text": "How close to true value", "isCorrect": true },
+				{
+					"id": "C",
+					"text": "Number of significant figures",
+					"isCorrect": false
+				},
+				{ "id": "D", "text": "Size of measurement", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Accuracy vs precision - which is closeness to true value?",
+			"explanation": "Accuracy measures how close a measurement is to the true/accepted value."
+		},
+		{
+			"id": "ps001_020",
+			"topic": "Units and Measurement",
+			"lessonId": "ps-001",
+			"difficulty": "Medium",
+			"points": 10,
+			"questionText": "When adding 12.4 cm and 8.95 cm, answer should be to:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "1 decimal place", "isCorrect": true },
+				{ "id": "B", "text": "2 decimal places", "isCorrect": false },
+				{ "id": "C", "text": "3 decimal places", "isCorrect": false },
+				{ "id": "D", "text": "Whole numbers", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Round to least precise decimal place.",
+			explanation: "12.4 has 1 dp, 8.95 has 2 dp. Answer to 1 dp: 21.35 cm → 21.4 cm"
+		}
+	]
+}
