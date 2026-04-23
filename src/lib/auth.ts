@@ -1,8 +1,8 @@
+import { drizzleAdapter } from "@better-auth/drizzle-adapter";
 import { neon } from "@neondatabase/serverless";
+import { betterAuth } from "better-auth";
 import { drizzle } from "drizzle-orm/neon-http";
 import * as schema from "./db/schema";
-import { betterAuth } from "better-auth";
-import { drizzleAdapter } from "@better-auth/drizzle-adapter";
 
 if (!process.env.POSTGRES_URL) {
 	throw new Error("POSTGRES_URL is not set");

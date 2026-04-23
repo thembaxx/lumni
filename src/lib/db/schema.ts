@@ -1,12 +1,12 @@
 import { relations, sql } from "drizzle-orm";
 import {
+	boolean,
 	index,
 	integer,
 	pgTable,
 	text,
-	unique,
-	boolean,
 	timestamp,
+	unique,
 } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {

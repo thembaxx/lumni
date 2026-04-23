@@ -17,7 +17,9 @@ async function fetchSubjects(): Promise<Subject[]> {
 	const response = await fetch("/api/subjects");
 	if (!response.ok) {
 		const errorText = await response.text();
-		throw new Error(`Failed to fetch subjects: ${response.status} - ${errorText}`);
+		throw new Error(
+			`Failed to fetch subjects: ${response.status} - ${errorText}`,
+		);
 	}
 	const data = await response.json();
 	if (!data.subjects) {

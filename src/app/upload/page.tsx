@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { UploadButton } from "@/lib/uploadthing";
-import { Button } from "@/components/ui/button";
 import { Database, Loader2 } from "lucide-react";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { UploadButton } from "@/lib/uploadthing";
 
 function formatSubjectName(subject: string): string {
 	return subject.replace(/\s+/g, "_").toLowerCase();
