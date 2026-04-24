@@ -1,0 +1,115 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { Upload } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { cn } from "@/lib/utils";
+import { AdminActionButton } from "./admin-action-button";
+
+interface SubjectFormData {
+	name: string;
+	code: string;
+	description: string;
+	category: string;
+}
+
+interface SubjectFormProps {
+	editSubject: {
+		name: string;
+		code: string;
+		description?: string;
+		category: string;
+	} | null;
+	formData: SubjectFormData;
+	onFormDataChange: (data: SubjectFormData) => void;
+	onSave: () => void;
+	onCancel: () => void;
+	onPreload: () => void;
+	isSaving: boolean;
+	isPreloading: boolean;
+}
+
+export function SubjectForm({
+	editSubject,
+	formData,
+	onFormDataChange,
+	onSave,
+	onCancel,
+	onPreload,
+	isSaving,
+	isPreloading,
+}: SubjectFormProps) {
+	return (
+		<Card>
+			<CardHeader className="pb-3">
+				<div className="flex items-center justify-between">
+					<CardTitle className="text-base text-foreground">
+						{editSubject ? "Edit" : "Add Subject"}
+					</CardTitle>
+					<AdminActionButton
+						onClick={onPreload}
+						loading={isPreloading}
+						variant="outline"
+						icon={<Upload className="w-3 h-3" />}
+					>
+						Preload
+					</AdminActionButton>
+				</div>
+			</CardHeader>
+			<CardContent className="space-y-4">
+				<div className="grid grid-cols-2 gap-4">
+					<div className="space-y-2">
+						<Label className="text-sm font-medium text-foreground">Name</Label>
+						<motion.div whileFocus={{ scale: 1.01 }}>
+							<Input
+								placeholder="Accounting"
+								value={editSubject?.name || formData.name}
+								onChange={(e) =>
+									onFormDataChange({ ...formData, name: e.target.value })
+								}
+							/>
+						</motion.div>
+					</div>
+					<div className="space-y-2">
+						<Label className="text-sm font-medium text-foreground">Code</Label>
+						<motion.div whileFocus={{ scale: 1.01 }}>
+							<Input
+								placeholder="accounting"
+								value={editSubject?.code || formData.code}
+								onChange={(e) =>
+									onFormDataChange({ ...formData, code: e.target.value })
+								}
+							/>
+						</motion.div>
+					</div>
+				</div>
+				<div className="space-y-2">
+					<Label className="text-sm font-medium text-foreground">
+						Description
+					</Label>
+					<motion.div whileFocus={{ scale: 1.01 }}>
+						<Input
+							placeholder="Brief description"
+							value={editSubject?.description || formData.description}
+							onChange={(e) =>
+								onFormDataChange({ ...formData, description: e.target.value })
+							}
+						/>
+					</motion.div>
+				</div>
+				<div className="flex gap-2 pt-2">
+					<AdminActionButton onClick={onSave} loading={isSaving}>
+						{editSubject ? "Update" : "Add"}
+					</AdminActionButton>
+					{editSubject && (
+						<AdminActionButton onClick={onCancel} variant="outline">
+							Cancel
+						</AdminActionButton>
+					)}
+				</div>
+			</CardContent>
+		</Card>
+	);
+}

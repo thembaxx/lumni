@@ -3,11 +3,11 @@
 import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getDifficultyColor } from "@/components/study/study-topic-card.data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { getDifficultyColor } from "@/lib/utils/colors";
 import { ListenToLesson } from "../listen-to-lesson";
 import { PracticeButton } from "../study/practice-button";
 import { useLessonCardContext } from "./lesson-card-context";
