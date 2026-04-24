@@ -1,6 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
+import subjectsData from "@/lib/data/subjects.json";
 
 export interface Subject {
 	id: string;
@@ -14,18 +15,19 @@ export interface Subject {
 }
 
 async function fetchSubjects(): Promise<Subject[]> {
-	const response = await fetch("/api/subjects");
-	if (!response.ok) {
-		const errorText = await response.text();
-		throw new Error(
-			`Failed to fetch subjects: ${response.status} - ${errorText}`,
-		);
+	try {
+		const response = await fetch("/api/subjects");
+		if (!response.ok) {
+			throw new Error(`Failed to fetch subjects: ${response.status}`);
+		}
+		const data = await response.json();
+		if (!data.subjects) {
+			throw new Error("Invalid response: missing subjects data");
+		}
+		return data.subjects;
+	} catch {
+		return subjectsData as Subject[];
 	}
-	const data = await response.json();
-	if (!data.subjects) {
-		throw new Error("Invalid response: missing subjects data");
-	}
-	return data.subjects;
 }
 
 export function useSubjects() {
@@ -34,6 +36,7 @@ export function useSubjects() {
 		queryFn: fetchSubjects,
 		staleTime: 1000 * 60 * 60,
 		retry: 2,
+		initialData: subjectsData as Subject[],
 	});
 }
 

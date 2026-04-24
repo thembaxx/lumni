@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { generateWithSystem, initAI, isAIConfigured } from "@/lib/ai";
+import type { AIResponse } from "@/lib/ai/types";
 import type { QAQuestion } from "@/lib/types/questions";
 
 export const dynamic = "force-dynamic";
@@ -46,11 +47,13 @@ Example format:
 		maxTokens: count > 10 ? 12000 : 6000,
 	});
 
-	if (!result.available) {
-		throw new Error(`AI generation failed: ${result.error}`);
+	if ("available" in result && !result.available) {
+		const errorMsg = "error" in result ? result.error : "Unknown error";
+		throw new Error(`AI generation failed: ${errorMsg}`);
 	}
 
-	const cleanedContent = result.content
+	const response = result as AIResponse;
+	const cleanedContent = response.content
 		.replace(/```json/g, "")
 		.replace(/```/g, "")
 		.trim();

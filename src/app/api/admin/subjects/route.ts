@@ -6,9 +6,29 @@ import { subject } from "@/lib/db/schema";
 export async function GET() {
 	try {
 		const db = getDb();
-		const allSubjects = await db.select().from(subject);
-		return NextResponse.json({ subjects: allSubjects });
+		try {
+			const allSubjects = await db.select().from(subject);
+			return NextResponse.json({ subjects: allSubjects });
+		} catch (dbError) {
+			console.error("Database query error:", dbError);
+			const errMsg =
+				dbError instanceof Error ? dbError.message : "Unknown database error";
+			if (errMsg.includes("does not exist")) {
+				return NextResponse.json(
+					{
+						error: "Database table not found. Please run migrations.",
+						details: errMsg,
+					},
+					{ status: 500 },
+				);
+			}
+			return NextResponse.json(
+				{ error: "Database query failed", details: errMsg },
+				{ status: 500 },
+			);
+		}
 	} catch (error) {
+		console.error("Server error:", error);
 		return NextResponse.json(
 			{
 				error:

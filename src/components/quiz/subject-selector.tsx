@@ -64,7 +64,9 @@ export function SubjectSelector({ onSelect, className }: SubjectSelectorProps) {
 								className="size-10 rounded-lg flex items-center justify-center mb-3"
 								style={{ backgroundColor: subject.color + "20" }}
 							>
-								<Icon className="size-5" style={{ color: subject.color }} />
+								<span style={{ color: subject.color }}>
+									<Icon className="size-5" />
+								</span>
 							</div>
 							<h3 className="font-medium text-sm">{subject.name}</h3>
 							<p className="text-xs text-muted-foreground mt-1 line-clamp-2">

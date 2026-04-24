@@ -120,12 +120,24 @@ export async function uploadExamPaper(
 		throw new Error("subjectId is required");
 	}
 
-	const content = fileContent || Bun.file(filePath!).slice();
-	const buffer = await content.arrayBuffer();
-	const bufferObj = Buffer.from(buffer);
+	let fileBuffer: Buffer;
+	if (fileContent) {
+		fileBuffer = fileContent;
+	} else {
+		const fs = await import("fs/promises");
+		fileBuffer = await fs.readFile(filePath!);
+	}
 
+	const bufferObj = Buffer.from(
+		fileBuffer.buffer.slice(
+			fileBuffer.byteOffset,
+			fileBuffer.byteOffset + fileBuffer.byteLength,
+		),
+	);
+
+	const uint8Array = new Uint8Array(bufferObj);
 	const fileName = originalFileName || `exam_paper_${Date.now()}.pdf`;
-	const utFile = new UTFile([bufferObj], fileName);
+	const utFile = new UTFile([uint8Array], fileName);
 
 	const uploadResult = await utapi.uploadFiles(utFile);
 

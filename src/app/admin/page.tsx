@@ -1,9 +1,11 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { Database, Loader2 } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
 import { AdminDashboard } from "@/components/admin/admin-dashboard";
 import { LoginForm } from "@/components/admin/login-form";
+import { Button } from "@/components/ui/button";
 
 function Preloader({ onComplete }: { onComplete: () => void }) {
 	const [progress, setProgress] = useState(0);
@@ -46,13 +48,40 @@ function Preloader({ onComplete }: { onComplete: () => void }) {
 export default function AdminPage() {
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
 	const [showPreloader, setShowPreloader] = useState(true);
+	const [isSeeding, setIsSeeding] = useState(false);
+	const [seedStatus, setSeedStatus] = useState<"idle" | "success" | "error">(
+		"idle",
+	);
+
+	const checkAuth = useCallback(() => {
+		const session = localStorage.getItem("admin_session");
+		setIsAuthenticated(!!session);
+	}, []);
 
 	useEffect(() => {
-		const session = localStorage.getItem("admin_session");
-		if (session) {
-			setIsAuthenticated(true);
+		checkAuth();
+		window.addEventListener("storage", checkAuth);
+		return () => window.removeEventListener("storage", checkAuth);
+	}, [checkAuth]);
+
+	const handleSeed = async () => {
+		setIsSeeding(true);
+		setSeedStatus("idle");
+		try {
+			const res = await fetch("/api/seed", { method: "POST" });
+			const data = await res.json();
+			if (data.success) {
+				setSeedStatus("success");
+			} else {
+				setSeedStatus("error");
+			}
+		} catch {
+			setSeedStatus("error");
+		} finally {
+			setIsSeeding(false);
+			setTimeout(() => setSeedStatus("idle"), 3000);
 		}
-	}, []);
+	};
 
 	const handlePreloaderComplete = () => {
 		setShowPreloader(false);
@@ -82,7 +111,34 @@ export default function AdminPage() {
 				animate={{ opacity: 1 }}
 				transition={{ duration: 0.3 }}
 				initial={false}
+				className="relative min-h-screen"
 			>
+				<motion.div
+					whileHover={{ scale: 1.05 }}
+					whileTap={{ scale: 0.95 }}
+					className="fixed bottom-6 right-6 z-50"
+				>
+					<Button
+						size="icon-lg"
+						variant={
+							seedStatus === "success"
+								? "secondary"
+								: seedStatus === "error"
+									? "destructive"
+									: "default"
+						}
+						onClick={handleSeed}
+						disabled={isSeeding}
+						className="shadow-lg shadow-shadow/20 rounded-full h-14 w-14"
+						title="Seed Database"
+					>
+						{isSeeding ? (
+							<Loader2 className="size-5 animate-spin" />
+						) : (
+							<Database className="size-5" />
+						)}
+					</Button>
+				</motion.div>
 				<AdminDashboard />
 			</motion.div>
 		</AnimatePresence>

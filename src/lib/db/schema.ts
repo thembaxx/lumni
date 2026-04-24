@@ -193,10 +193,8 @@ export const examPaper = pgTable(
 			.references(() => subject.id, { onDelete: "cascade" }),
 		year: integer("year").notNull(),
 		paperNumber: integer("paper_number").notNull(),
-		type: text("type").notNull(), // 'paper' | 'memo'
-		memoId: text("memo_id").references(() => examPaper.id, {
-			onDelete: "set null",
-		}),
+		type: text("type").notNull(),
+		memoId: text("memo_id"),
 		fileUrl: text("file_url").notNull(),
 		fileKey: text("file_key").notNull(),
 		originalFileName: text("original_file_name"),
@@ -290,13 +288,5 @@ export const examPaperRelations = relations(examPaper, ({ one, many }) => ({
 	subject: one(subject, {
 		fields: [examPaper.subjectId],
 		references: [subject.id],
-	}),
-	memo: one(examPaper, {
-		fields: [examPaper.memoId],
-		references: [examPaper.id],
-	}),
-	memos: many(examPaper, {
-		fields: [examPaper.id],
-		references: [examPaper.memoId],
 	}),
 }));

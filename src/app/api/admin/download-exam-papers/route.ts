@@ -9,7 +9,7 @@ import { examPaper, subject } from "@/lib/db/schema";
 
 interface DownloadRequest {
 	year: number;
-	examType: string;
+	examTypes: string[];
 	includeMemo: boolean;
 	subjectIds: string[];
 }
@@ -193,9 +193,7 @@ async function saveToDatabase(
 export async function POST(request: NextRequest) {
 	try {
 		const body: DownloadRequest = await request.json();
-		const { year, examType, includeMemo, subjectIds } = body;
-
-		const session = examType === "november" ? "november" : "may-june";
+		const { year, examTypes, includeMemo, subjectIds } = body;
 
 		const db = getDb();
 
@@ -208,72 +206,32 @@ export async function POST(request: NextRequest) {
 		const errors: string[] = [];
 		const results: { subject: string; papers: number; status: string }[] = [];
 
-		for (const subj of subjects) {
-			const paperNumbers = examType === "november" ? [1, 2] : [1];
-			let subjectPapersDownloaded = 0;
+		for (const examType of examTypes) {
+			const session = examType === "november" ? "november" : "may-june";
 
-			for (const paperNum of paperNumbers) {
-				const fileName = `${year}_${subj.code}_p${paperNum}.pdf`;
-				const memoFileName = `${year}_${subj.code}_p${paperNum}_memo.pdf`;
+			for (const subj of subjects) {
+				const paperNumbers = examType === "november" ? [1, 2] : [1];
+				let subjectPapersDownloaded = 0;
 
-				const examInfo = await findExamPaperUrl(
-					subj.name,
-					year,
-					paperNum,
-					"paper",
-					session,
-				);
+				for (const paperNum of paperNumbers) {
+					const fileName = `${year}_${examType}_${subj.code}_p${paperNum}.pdf`;
+					const memoFileName = `${year}_${examType}_${subj.code}_p${paperNum}_memo.pdf`;
 
-				if (examInfo) {
-					const pdfData = await downloadPdf(examInfo.url);
-
-					if (pdfData) {
-						const uploadResult = await uploadToUploadThing(
-							pdfData.buffer,
-							fileName,
-						);
-
-						if (uploadResult) {
-							const saved = await saveToDatabase(
-								subj.id,
-								year,
-								paperNum,
-								"paper",
-								uploadResult.url,
-								uploadResult.key,
-								fileName,
-							);
-
-							if (saved) {
-								downloaded++;
-								subjectPapersDownloaded++;
-							}
-						} else {
-							errors.push(`${subj.name} P${paperNum}: Upload to server failed`);
-						}
-					} else {
-						errors.push(`${subj.name} P${paperNum}: Could not download PDF`);
-					}
-				} else {
-					errors.push(`${subj.name} P${paperNum}: No source URL found`);
-				}
-
-				if (includeMemo) {
-					const memoInfo = await findExamPaperUrl(
+					const examInfo = await findExamPaperUrl(
 						subj.name,
 						year,
 						paperNum,
-						"memo",
+						"paper",
 						session,
 					);
 
-					if (memoInfo) {
-						const memoData = await downloadPdf(memoInfo.url);
+					if (examInfo) {
+						const pdfData = await downloadPdf(examInfo.url);
 
-						if (memoData) {
+						if (pdfData) {
 							const uploadResult = await uploadToUploadThing(
-								memoData.buffer,
-								memoFileName,
+								pdfData.buffer,
+								fileName,
 							);
 
 							if (uploadResult) {
@@ -281,26 +239,76 @@ export async function POST(request: NextRequest) {
 									subj.id,
 									year,
 									paperNum,
-									"memo",
+									"paper",
 									uploadResult.url,
 									uploadResult.key,
-									memoFileName,
+									fileName,
 								);
 
 								if (saved) {
 									downloaded++;
+									subjectPapersDownloaded++;
+								}
+							} else {
+								errors.push(
+									`${subj.name} ${examType} P${paperNum}: Upload to server failed`,
+								);
+							}
+						} else {
+							errors.push(
+								`${subj.name} ${examType} P${paperNum}: Could not download PDF`,
+							);
+						}
+					} else {
+						errors.push(
+							`${subj.name} ${examType} P${paperNum}: No source URL found`,
+						);
+					}
+
+					if (includeMemo) {
+						const memoInfo = await findExamPaperUrl(
+							subj.name,
+							year,
+							paperNum,
+							"memo",
+							session,
+						);
+
+						if (memoInfo) {
+							const memoData = await downloadPdf(memoInfo.url);
+
+							if (memoData) {
+								const uploadResult = await uploadToUploadThing(
+									memoData.buffer,
+									memoFileName,
+								);
+
+								if (uploadResult) {
+									const saved = await saveToDatabase(
+										subj.id,
+										year,
+										paperNum,
+										"memo",
+										uploadResult.url,
+										uploadResult.key,
+										memoFileName,
+									);
+
+									if (saved) {
+										downloaded++;
+									}
 								}
 							}
 						}
 					}
 				}
-			}
 
-			results.push({
-				subject: subj.name,
-				papers: subjectPapersDownloaded,
-				status: subjectPapersDownloaded > 0 ? "success" : "failed",
-			});
+				results.push({
+					subject: subj.name,
+					papers: subjectPapersDownloaded,
+					status: subjectPapersDownloaded > 0 ? "success" : "failed",
+				});
+			}
 		}
 
 		return NextResponse.json({
