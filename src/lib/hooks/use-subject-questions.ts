@@ -1,6 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
+import { cacheQuestions, getCachedQuestions } from "@/lib/db/offline";
 import { useUploadStore } from "@/lib/store";
 import type { QAFile, QAQuestion } from "@/lib/types/questions";
 
@@ -121,8 +122,20 @@ export async function fetchSubjectQuestions(
 		? `${normalizedSubject}-${topic.toLowerCase()}`
 		: normalizedSubject;
 
+	// Check IndexedDB first (offline-first)
+	const offlineCached = await getCachedQuestions(normalizedSubject, topic);
+	if (offlineCached && offlineCached.length >= numberOfQuestions) {
+		const shuffled = [...(offlineCached as QAQuestion[])].sort(
+			() => Math.random() - 0.5,
+		);
+		return shuffled.slice(0, numberOfQuestions);
+	}
+
+	// Check Zustand fallback (memory cache)
 	const cached = store.getCachedQuestions(cacheKey);
 	if (cached && cached.length >= numberOfQuestions) {
+		// Migrate to IndexedDB for next time
+		cacheQuestions(normalizedSubject, cached, topic);
 		const shuffled = [...cached].sort(() => Math.random() - 0.5);
 		return shuffled.slice(0, numberOfQuestions);
 	}
@@ -138,6 +151,7 @@ export async function fetchSubjectQuestions(
 			const data = await response.json();
 			if (data.questions && Array.isArray(data.questions)) {
 				const questions = data.questions as QAQuestion[];
+				await cacheQuestions(normalizedSubject, questions, topic);
 				store.setCachedQuestions(cacheKey, questions);
 				const shuffled = [...questions].sort(() => Math.random() - 0.5);
 				return shuffled.slice(0, numberOfQuestions);
@@ -150,6 +164,7 @@ export async function fetchSubjectQuestions(
 	const fileUrls = await discoverQAFileUrls(subject, numberOfQuestions);
 	const allQuestions: QAQuestion[] = [];
 
+	// Add cached to results
 	if (cached && cached.length > 0) {
 		allQuestions.push(...cached);
 	}
@@ -160,6 +175,11 @@ export async function fetchSubjectQuestions(
 	);
 	allQuestions.push(...fetchedQuestions);
 
+	// Cache results to IndexedDB
+	if (allQuestions.length > 0) {
+		await cacheQuestions(normalizedSubject, allQuestions, topic);
+	}
+
 	// AI fallback if no questions found
 	if (allQuestions.length === 0) {
 		console.log("[Questions] No local questions, generating with AI...");
@@ -169,6 +189,7 @@ export async function fetchSubjectQuestions(
 				numberOfQuestions,
 				topic,
 			);
+			await cacheQuestions(normalizedSubject, aiQuestions, topic);
 			store.setCachedQuestions(cacheKey, aiQuestions);
 			return aiQuestions;
 		} catch (aiError) {
@@ -179,6 +200,7 @@ export async function fetchSubjectQuestions(
 	const shuffled = [...allQuestions].sort(() => Math.random() - 0.5);
 	const result = shuffled.slice(0, numberOfQuestions);
 
+	await cacheQuestions(normalizedSubject, result, topic);
 	store.setCachedQuestions(cacheKey, result);
 
 	return result;

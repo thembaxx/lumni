@@ -5,8 +5,15 @@ import { useEffect } from "react";
 import { ThemeProvider } from "@/components/theme";
 import { WebVitalsLogger } from "@/components/web-vitals";
 import { prefetchUploadSubjects } from "@/lib/hooks/use-upload-subjects";
+import { OnlineStatusIndicator } from "@/lib/hooks/useOnlineStatus";
 import { queryClient } from "@/lib/query-client";
 import { useAppStore } from "@/lib/store";
+import { useAutoSync } from "@/lib/sync-queue";
+
+function AutoSyncWrapper() {
+	useAutoSync();
+	return null;
+}
 
 export function Providers({ children }: { children: React.ReactNode }) {
 	const setInitialized = useAppStore((s) => s.setInitialized);
@@ -24,6 +31,8 @@ export function Providers({ children }: { children: React.ReactNode }) {
 			<ThemeProvider>
 				{children}
 				<WebVitalsLogger />
+				<OnlineStatusIndicator />
+				<AutoSyncWrapper />
 			</ThemeProvider>
 		</QueryClientProvider>
 	);
