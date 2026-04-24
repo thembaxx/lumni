@@ -8,5 +8,15 @@ export function QuizClient() {
 	const initialSubject = searchParams.get("subject") || undefined;
 	const topic = searchParams.get("topic") || undefined;
 
-	return <QuizView initialSubject={initialSubject} topic={topic} />;
+	const handleQuit = () => {
+		window.history.back();
+	};
+
+	return (
+		<QuizView
+			initialSubject={initialSubject}
+			topic={topic}
+			onQuit={handleQuit}
+		/>
+	);
 }
