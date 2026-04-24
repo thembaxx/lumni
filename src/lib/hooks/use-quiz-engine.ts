@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
+import { useInterval } from "./use-interval";
 
 export interface QuizEngineState {
 	isRunning: boolean;
@@ -121,23 +122,18 @@ export function useQuizEngine({
 		setCorrectAnswers(0);
 	}, []);
 
-	useEffect(() => {
-		let interval: NodeJS.Timeout;
-
-		if (isRunning && elapsedTime < maxTime) {
-			interval = setInterval(() => {
-				setElapsedTime((prev) => {
-					if (prev >= maxTime) {
-						handleStop();
-						return maxTime;
-					}
-					return prev + 1;
-				});
-			}, 1000);
-		}
-
-		return () => clearInterval(interval);
-	}, [isRunning, elapsedTime, maxTime, handleStop]);
+	useInterval(
+		() => {
+			setElapsedTime((prev) => {
+				if (prev >= maxTime) {
+					handleStop();
+					return maxTime;
+				}
+				return prev + 1;
+			});
+		},
+		isRunning ? 1000 : null,
+	);
 
 	const state: QuizEngineState = {
 		isRunning,

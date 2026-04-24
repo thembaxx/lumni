@@ -9,8 +9,9 @@ import {
 	RotateCcw,
 	SendHorizontal,
 } from "lucide-react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { LiveWaveform } from "@/components/ui/live-waveform";
+import { useAudioRecorder } from "@/lib/hooks/use-audio-recorder";
 import { cn } from "@/lib/utils";
 
 interface VoiceRecorderProps {
@@ -22,116 +23,20 @@ export function VoiceRecorder({
 	onRecordingComplete,
 	className,
 }: VoiceRecorderProps) {
-	const [isRecording, setIsRecording] = useState(false);
-	const [isPlaying, setIsPlaying] = useState(false);
-	const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
-	const [duration, setDuration] = useState(0);
-	const [playbackPosition, setPlaybackPosition] = useState(0);
 	const [isSending, setIsSending] = useState(false);
 	const [sendSuccess, setSendSuccess] = useState(false);
 
-	const mediaRecorderRef = useRef<MediaRecorder | null>(null);
-	const audioChunksRef = useRef<Blob[]>([]);
-	const audioRef = useRef<HTMLAudioElement | null>(null);
-	const timerRef = useRef<NodeJS.Timeout | null>(null);
-	const totalDurationRef = useRef(0);
-
-	useEffect(() => {
-		return () => {
-			if (timerRef.current) clearInterval(timerRef.current);
-			if (audioRef.current) {
-				audioRef.current.pause();
-				audioRef.current = null;
-			}
-		};
-	}, []);
-
-	const toggleRecording = useCallback(async () => {
-		if (isRecording) {
-			if (
-				mediaRecorderRef.current &&
-				mediaRecorderRef.current.state === "recording"
-			) {
-				mediaRecorderRef.current.stop();
-			}
-			if (timerRef.current) {
-				clearInterval(timerRef.current);
-				timerRef.current = null;
-			}
-			setIsRecording(false);
-		} else {
-			try {
-				const stream = await navigator.mediaDevices.getUserMedia({
-					audio: true,
-				});
-				const mediaRecorder = new MediaRecorder(stream);
-				mediaRecorderRef.current = mediaRecorder;
-				audioChunksRef.current = [];
-
-				mediaRecorder.ondataavailable = (event) => {
-					if (event.data.size > 0) {
-						audioChunksRef.current.push(event.data);
-					}
-				};
-
-				mediaRecorder.onstop = () => {
-					const blob = new Blob(audioChunksRef.current, {
-						type: "audio/webm",
-					});
-					setAudioBlob(blob);
-					totalDurationRef.current = duration;
-					onRecordingComplete?.(blob);
-					stream.getTracks().forEach((track) => track.stop());
-				};
-
-				mediaRecorder.start(100);
-				setIsRecording(true);
-				setDuration(0);
-
-				timerRef.current = setInterval(() => {
-					setDuration((prev) => prev + 1);
-				}, 1000);
-			} catch (error) {
-				console.error("Failed to start recording:", error);
-			}
-		}
-	}, [isRecording, onRecordingComplete, duration]);
-
-	const togglePlayback = useCallback(() => {
-		if (!audioBlob) return;
-
-		if (!audioRef.current) {
-			audioRef.current = new Audio(URL.createObjectURL(audioBlob));
-			audioRef.current.onended = () => {
-				setIsPlaying(false);
-				setPlaybackPosition(0);
-			};
-			audioRef.current.ontimeupdate = () => {
-				setPlaybackPosition(audioRef.current?.currentTime || 0);
-			};
-		}
-
-		if (isPlaying) {
-			audioRef.current.pause();
-			setIsPlaying(false);
-		} else {
-			audioRef.current.play();
-			setIsPlaying(true);
-		}
-	}, [audioBlob, isPlaying]);
-
-	const resetRecording = useCallback(() => {
-		if (audioRef.current) {
-			audioRef.current.pause();
-			audioRef.current = null;
-		}
-		setAudioBlob(null);
-		setIsPlaying(false);
-		setDuration(0);
-		setPlaybackPosition(0);
-		totalDurationRef.current = 0;
-		onRecordingComplete?.(null);
-	}, [onRecordingComplete]);
+	const {
+		isRecording,
+		isPlaying,
+		audioBlob,
+		duration,
+		playbackPosition,
+		totalDuration,
+		toggleRecording,
+		togglePlayback,
+		resetRecording,
+	} = useAudioRecorder({ onRecordingComplete });
 
 	const handleSend = useCallback(() => {
 		if (!audioBlob || isRecording) return;
@@ -159,7 +64,7 @@ export function VoiceRecorder({
 		if (sendSuccess) return "Sent!";
 		if (isRecording) return "Recording";
 		if (isPlaying) {
-			const remaining = Math.floor(totalDurationRef.current - playbackPosition);
+			const remaining = Math.floor(totalDuration - playbackPosition);
 			return `Playing ${formatTime(remaining)}`;
 		}
 		if (audioBlob) return "Recorded";
@@ -170,12 +75,10 @@ export function VoiceRecorder({
 		if (sendSuccess) return null;
 		if (isRecording) return formatTime(duration);
 		if (isPlaying) {
-			return formatTime(
-				Math.floor(totalDurationRef.current - playbackPosition),
-			);
+			return formatTime(Math.floor(totalDuration - playbackPosition));
 		}
-		if (audioBlob && totalDurationRef.current > 0) {
-			return formatTime(totalDurationRef.current);
+		if (audioBlob && totalDuration > 0) {
+			return formatTime(totalDuration);
 		}
 		return null;
 	};
@@ -216,9 +119,7 @@ export function VoiceRecorder({
 				>
 					{getStatusText()}
 				</span>
-				{(isRecording ||
-					isPlaying ||
-					(audioBlob && totalDurationRef.current > 0)) && (
+				{(isRecording || isPlaying || (audioBlob && totalDuration > 0)) && (
 					<span className="text-2xl font-mono font-bold tabular-nums text-foreground animate-fade-in-up">
 						{getTimerDisplay()}
 					</span>

@@ -1,13 +1,14 @@
 "use client";
 
 import { Minus, Play, Plus, RotateCcw, Square } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
 	ChartContainer,
 	ChartTooltip,
 	ChartTooltipContent,
 } from "@/components/ui/chart";
+import { useInterval } from "@/lib/hooks";
 import { cn } from "@/lib/utils";
 
 const DEFAULT_TIME = 25 * 60;
@@ -30,23 +31,18 @@ export function FocusTab({ className }: FocusTabProps) {
 		return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
 	}, []);
 
-	useEffect(() => {
-		let interval: NodeJS.Timeout;
-
-		if (isRunning && timeLeft > 0) {
-			interval = setInterval(() => {
-				setTimeLeft((prev) => {
-					if (prev <= 1) {
-						setIsRunning(false);
-						return 0;
-					}
-					return prev - 1;
-				});
-			}, 1000);
-		}
-
-		return () => clearInterval(interval);
-	}, [isRunning, timeLeft]);
+	useInterval(
+		() => {
+			setTimeLeft((prev) => {
+				if (prev <= 1) {
+					setIsRunning(false);
+					return 0;
+				}
+				return prev - 1;
+			});
+		},
+		isRunning && timeLeft > 0 ? 1000 : null,
+	);
 
 	const handleStart = () => {
 		if (timeLeft === 0) {

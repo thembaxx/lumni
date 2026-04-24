@@ -76,6 +76,9 @@ export function AdminDashboard() {
 	});
 	const [activeTab, setActiveTab] = useState<"exam" | "subjects">("exam");
 	const [showSuccess, setShowSuccess] = useState(false);
+	const [initialSelected, setInitialSelected] = useState<Set<string> | null>(
+		null,
+	);
 
 	const { data: subjectsData, isLoading } = useQuery({
 		queryKey: ["admin-subjects"],
@@ -89,10 +92,12 @@ export function AdminDashboard() {
 	const subjects = subjectsData?.subjects || [];
 
 	useEffect(() => {
-		if (subjects.length > 0 && selectedSubjects.size === 0) {
-			setSelectedSubjects(new Set(subjects.map((s) => s.id)));
+		if (!initialSelected && subjects.length > 0) {
+			setInitialSelected(new Set(subjects.map((s) => s.id)));
 		}
-	}, [subjects, selectedSubjects.size]);
+	}, [subjects, initialSelected]);
+
+	const effectiveSelected = initialSelected ?? selectedSubjects;
 
 	const saveMutation = useMutation({
 		mutationFn: async (subject: {
@@ -164,7 +169,7 @@ export function AdminDashboard() {
 					year: selectedYear,
 					examTypes: Array.from(selectedExamTypes),
 					includeMemo,
-					subjectIds: Array.from(selectedSubjects),
+					subjectIds: Array.from(effectiveSelected),
 				}),
 			});
 			if (!res.ok) throw new Error("Failed to download");
@@ -254,7 +259,7 @@ export function AdminDashboard() {
 			<div className="p-4 space-y-4">
 				<AdminStatCards
 					subjectsCount={subjects.length}
-					selectedCount={selectedSubjects.size}
+					selectedCount={effectiveSelected.size}
 				/>
 
 				<AnimatedCard delay={0.1}>
@@ -273,7 +278,7 @@ export function AdminDashboard() {
 								<ExamFilters
 									selectedYear={selectedYear}
 									onYearChange={setSelectedYear}
-									selectedSubjects={selectedSubjects}
+									selectedSubjects={effectiveSelected}
 									subjects={subjects}
 									onToggleSubject={toggleSubject}
 									onSelectAll={selectAllSubjects}
@@ -290,9 +295,9 @@ export function AdminDashboard() {
 								onClick={() => downloadMutation.mutate()}
 								loading={downloadMutation.isPending}
 								disabled={
-									selectedSubjects.size === 0 || selectedExamTypes.size === 0
+									effectiveSelected.size === 0 || selectedExamTypes.size === 0
 								}
-								selectedCount={selectedSubjects.size}
+								selectedCount={effectiveSelected.size}
 								examTypesCount={selectedExamTypes.size}
 							/>
 						</motion.div>
@@ -328,7 +333,7 @@ export function AdminDashboard() {
 									<div className="p-0">
 										<SubjectTable
 											subjects={subjects}
-											selectedSubjects={selectedSubjects}
+											selectedSubjects={effectiveSelected}
 											onToggleSubject={toggleSubject}
 											onEditSubject={setEditSubject}
 											onDeleteSubject={handleDeleteSubject}
