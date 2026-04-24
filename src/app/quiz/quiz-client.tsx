@@ -7,6 +7,8 @@ export function QuizClient() {
 	const searchParams = useSearchParams();
 	const initialSubject = searchParams.get("subject") || undefined;
 	const topic = searchParams.get("topic") || undefined;
+	const countParam = searchParams.get("count");
+	const questionCount = countParam ? parseInt(countParam, 10) : 20;
 
 	const handleQuit = () => {
 		window.history.back();
@@ -16,6 +18,7 @@ export function QuizClient() {
 		<QuizView
 			initialSubject={initialSubject}
 			topic={topic}
+			questionCount={questionCount}
 			onQuit={handleQuit}
 		/>
 	);

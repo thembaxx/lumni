@@ -184,6 +184,33 @@ export const verification = pgTable(
 	(table) => [index("verification_identifier_idx").on(table.identifier)],
 );
 
+export const examPaper = pgTable(
+	"exam_paper",
+	{
+		id: text("id").primaryKey(),
+		subjectId: text("subject_id")
+			.notNull()
+			.references(() => subject.id, { onDelete: "cascade" }),
+		year: integer("year").notNull(),
+		paperNumber: integer("paper_number").notNull(),
+		type: text("type").notNull(),
+		memoId: text("memo_id"),
+		fileUrl: text("file_url").notNull(),
+		fileKey: text("file_key").notNull(),
+		originalFileName: text("original_file_name"),
+		uploadedAt: timestamp("uploaded_at").default(sql`now()`).notNull(),
+	},
+	(table) => [
+		index("exam_paper_subjectId_idx").on(table.subjectId),
+		index("exam_paper_subjectId_year_paperNumber_type_idx").on(
+			table.subjectId,
+			table.year,
+			table.paperNumber,
+			table.type,
+		),
+	],
+);
+
 export const userRelations = relations(user, ({ many }) => ({
 	sessions: many(session),
 	accounts: many(account),
@@ -253,6 +280,13 @@ export const studySessionRelations = relations(studySession, ({ one }) => ({
 	}),
 	subject: one(subject, {
 		fields: [studySession.subjectId],
+		references: [subject.id],
+	}),
+}));
+
+export const examPaperRelations = relations(examPaper, ({ one, many }) => ({
+	subject: one(subject, {
+		fields: [examPaper.subjectId],
 		references: [subject.id],
 	}),
 }));

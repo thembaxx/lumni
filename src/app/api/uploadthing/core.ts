@@ -44,8 +44,18 @@ export const ourFileRouter = {
 			console.log("file url", file.ufsUrl);
 			return { uploadedBy: metadata.userId };
 		}),
+	examPapersUploader: f(["pdf"])
+		.middleware(async ({ req }) => {
+			const user = await requireAuth(req);
+			return { userId: user.id };
+		})
+		.onUploadComplete(async ({ metadata, file }) => {
+			console.log("Exam Paper Upload complete for userId:", metadata.userId);
+			console.log("file url", file.ufsUrl);
+			return { uploadedBy: metadata.userId };
+		}),
 	subjectsUploader: f({
-		"application/json": { maxFileSize: "1MB", maxFileCount: 1 },
+		"application/json": { maxFileCount: 1 },
 	})
 		.middleware(async ({ req }) => {
 			const user = await requireAuth(req);
@@ -57,7 +67,7 @@ export const ourFileRouter = {
 			return { uploadedBy: metadata.userId };
 		}),
 	qaUploader: f({
-		"application/json": { maxFileSize: "1MB", maxFileCount: 20 },
+		"application/json": { maxFileCount: 20 },
 	})
 		.middleware(async ({ req }) => {
 			const user = await requireAuth(req);

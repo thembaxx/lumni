@@ -10,6 +10,7 @@ import {
 	EmptyMedia,
 	EmptyTitle,
 } from "@/components/ui/empty";
+import { SubjectSelector } from "./subject-selector";
 
 interface QuizEmptyStateProps {
 	subject?: string;
@@ -176,7 +177,7 @@ export function QuizSelectSubject({
 				</EmptyDescription>
 			</EmptyHeader>
 			<EmptyContent>
-				<Button onClick={() => onSelect("")}>{buttonLabel}</Button>
+				<SubjectSelector onSelect={onSelect} />
 			</EmptyContent>
 		</Empty>
 	);
