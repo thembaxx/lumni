@@ -1,1 +1,1 @@
-export type TabValue = "ai" | "spaces";
+export type TabValue = "ai" | "spaces" | "admin";

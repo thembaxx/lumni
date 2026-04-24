@@ -7,6 +7,17 @@ function generateFileName(subject: string, number: number): string {
 	return `${formattedSubject}_qa_${number}.json`;
 }
 
+function generateExamPaperFileName(
+	year: number,
+	subject: string,
+	paper: number,
+	isMemo: boolean = false,
+): string {
+	const formattedSubject = formatSubjectName(subject);
+	const suffix = isMemo ? "_memo" : "";
+	return `${year}_${formattedSubject}_p${paper}${suffix}.pdf`;
+}
+
 interface UTUploadResponse {
 	url: string;
 	name: string;
@@ -67,3 +78,44 @@ export async function fetchSubjectQuestionsFiles(
 }
 
 export { formatSubjectName, generateFileName };
+
+export async function uploadExamPaper(
+	year: number,
+	subject: string,
+	paper: number,
+	file: File,
+	isMemo: boolean = false,
+): Promise<UTUploadResponse> {
+	const fileName = generateExamPaperFileName(year, subject, paper, isMemo);
+	const formData = new FormData();
+	formData.append("file", file);
+	formData.append("filename", fileName);
+
+	const response = await fetch("/api/uploadthing", {
+		method: "POST",
+		body: formData,
+	});
+
+	if (!response.ok) {
+		throw new Error(`Exam paper upload failed: ${response.statusText}`);
+	}
+
+	const result = await response.json();
+	return {
+		url: result.url,
+		name: fileName,
+		appId: result.appId,
+	};
+}
+
+export function getExamPaperUrl(
+	year: number,
+	subject: string,
+	paper: number,
+	isMemo: boolean = false,
+	baseUrl?: string,
+): string {
+	const fileName = generateExamPaperFileName(year, subject, paper, isMemo);
+	const base = baseUrl || "";
+	return `${base}/${fileName}`;
+}

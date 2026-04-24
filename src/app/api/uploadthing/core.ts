@@ -34,13 +34,23 @@ async function requireAuth(req: Request): Promise<{ id: string }> {
 }
 
 export const ourFileRouter = {
-	imageUploader: f(["image", "video", "pdf"])
+	imageUploader: f(["image", "video", "pdf"], { maxFileSize: "10MB" })
 		.middleware(async ({ req }) => {
 			const user = await requireAuth(req);
 			return { userId: user.id };
 		})
 		.onUploadComplete(async ({ metadata, file }) => {
 			console.log("Upload complete for userId:", metadata.userId);
+			console.log("file url", file.ufsUrl);
+			return { uploadedBy: metadata.userId };
+		}),
+	examPapersUploader: f(["pdf"], { maxFileSize: "10MB", maxFileCount: 10 })
+		.middleware(async ({ req }) => {
+			const user = await requireAuth(req);
+			return { userId: user.id };
+		})
+		.onUploadComplete(async ({ metadata, file }) => {
+			console.log("Exam Paper Upload complete for userId:", metadata.userId);
 			console.log("file url", file.ufsUrl);
 			return { uploadedBy: metadata.userId };
 		}),
