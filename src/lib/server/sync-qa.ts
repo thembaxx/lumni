@@ -3,13 +3,7 @@
 import { eq, inArray } from "drizzle-orm";
 import { UTApi } from "uploadthing/server";
 import { getDb } from "@/lib/db/client";
-import {
-	question,
-	studySession,
-	subject as subjectTable,
-	topic,
-	userProgress,
-} from "@/lib/db/schema";
+import { question, subject as subjectTable, topic } from "@/lib/db/schema";
 
 export interface QAFileMetadata {
 	subject: string;
@@ -42,6 +36,27 @@ export interface QAQuestion {
 export interface QAFile {
 	metadata: QAFileMetadata;
 	questions: QAQuestion[];
+}
+
+export interface ParsedQuestion {
+	id: string;
+	topicId: string;
+	questionText: string;
+	options: string;
+	correctAnswer: string;
+	explanation: string;
+	difficulty: string;
+	hasImage: boolean;
+	imageData?: string;
+}
+
+export interface SyncResult {
+	success: boolean;
+	synced: number;
+	local: number;
+	version: string;
+	isFresh: boolean;
+	error?: string;
 }
 
 function formatSubjectName(subject: string): string {
@@ -182,19 +197,7 @@ export async function getLocalQuestions(subjectId: string): Promise<{
 export async function parseQuestions(
 	qa: QAQuestion[],
 	topicMap: Map<string, string>,
-): Promise<{
-	questions: {
-		id: string;
-		topicId: string;
-		questionText: string;
-		options: string;
-		correctAnswer: string;
-		explanation: string;
-		difficulty: string;
-		hasImage: boolean;
-		imageData?: string;
-	}[];
-}> {
+): Promise<{ questions: ParsedQuestion[] }> {
 	const parsed = qa.map((q) => {
 		const topicId = topicMap.get(q.topic) || "";
 
@@ -226,20 +229,8 @@ export async function parseQuestions(
 
 export async function mergeQuestions(
 	existingQuestions: { id: string }[],
-	newQuestions: {
-		id: string;
-		topicId: string;
-		questionText: string;
-		options: string;
-		correctAnswer: string;
-		explanation: string;
-		difficulty: string;
-		hasImage: boolean;
-		imageData?: string;
-	}[],
-): Promise<{
-	toInsert: typeof newQuestions;
-}> {
+	newQuestions: ParsedQuestion[],
+): Promise<{ toInsert: ParsedQuestion[] }> {
 	const existingIds = new Set(existingQuestions.map((q) => q.id));
 
 	const toInsert = newQuestions.filter((q) => !existingIds.has(q.id));
@@ -250,14 +241,7 @@ export async function mergeQuestions(
 export async function syncSubjectQuestions(
 	subject: string,
 	fileNumber: number = 1,
-): Promise<{
-	success: boolean;
-	synced: number;
-	local: number;
-	version: string;
-	isFresh: boolean;
-	error?: string;
-}> {
+): Promise<SyncResult> {
 	try {
 		const subjectId = formatSubjectName(subject);
 
@@ -366,14 +350,7 @@ export async function syncSubjectQuestions(
 export async function autoSyncSubject(
 	subject: string,
 	fileNumber: number = 1,
-): Promise<{
-	success: boolean;
-	synced: number;
-	local: number;
-	version: string;
-	isFresh: boolean;
-	error?: string;
-}> {
+): Promise<SyncResult> {
 	const subjectId = formatSubjectName(subject);
 
 	const localData = await getLocalQuestions(subjectId);

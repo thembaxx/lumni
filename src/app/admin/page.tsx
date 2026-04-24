@@ -52,23 +52,15 @@ function Preloader({ onComplete }: { onComplete: () => void }) {
 }
 
 export default function AdminPage() {
-	const [isAuthenticated, setIsAuthenticated] = useState(false);
+	const [isAuthenticated, setIsAuthenticated] = useState(() => {
+		if (typeof window === "undefined") return false;
+		return !!localStorage.getItem("admin_session");
+	});
 	const [showPreloader, setShowPreloader] = useState(true);
 	const [isSeeding, setIsSeeding] = useState(false);
 	const [seedStatus, setSeedStatus] = useState<"idle" | "success" | "error">(
 		"idle",
 	);
-
-	const checkAuth = useCallback(() => {
-		const session = localStorage.getItem("admin_session");
-		setIsAuthenticated(!!session);
-	}, []);
-
-	useEffect(() => {
-		checkAuth();
-		window.addEventListener("storage", checkAuth);
-		return () => window.removeEventListener("storage", checkAuth);
-	}, [checkAuth]);
 
 	const handleSeed = async () => {
 		setIsSeeding(true);

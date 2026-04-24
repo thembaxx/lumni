@@ -1,7 +1,7 @@
 "use client";
 
 import { type HTMLAttributes, useEffect, useRef } from "react";
-
+import { useWaveformRenderer } from "@/lib/hooks/use-waveform-renderer";
 import { cn } from "@/lib/utils";
 
 export type LiveWaveformProps = HTMLAttributes<HTMLDivElement> & {
@@ -98,6 +98,7 @@ export const LiveWaveform = ({
 		return () => resizeObserver.disconnect();
 	}, []);
 
+	// Processing animation
 	useEffect(() => {
 		if (processing && !active) {
 			let time = 0;
@@ -284,7 +285,6 @@ export const LiveWaveform = ({
 				audioContextRef.current = audioContext;
 				analyserRef.current = analyser;
 
-				// Clear history when starting
 				historyRef.current = [];
 			} catch (error) {
 				onError?.(error as Error);
@@ -332,7 +332,6 @@ export const LiveWaveform = ({
 		let rafId: number;
 
 		const animate = (currentTime: number) => {
-			// Render waveform
 			const rect = canvas.getBoundingClientRect();
 
 			// Update audio data if active
@@ -346,7 +345,6 @@ export const LiveWaveform = ({
 					analyserRef.current.getByteFrequencyData(dataArray);
 
 					if (mode === "static") {
-						// For static mode, update bars in place
 						const startFreq = Math.floor(dataArray.length * 0.05);
 						const endFreq = Math.floor(dataArray.length * 0.4);
 						const relevantData = dataArray.slice(startFreq, endFreq);
@@ -355,7 +353,6 @@ export const LiveWaveform = ({
 						const halfCount = Math.floor(barCount / 2);
 						const newBars: number[] = [];
 
-						// Mirror the data for symmetric display
 						for (let i = halfCount - 1; i >= 0; i--) {
 							const dataIndex = Math.floor(
 								(i / halfCount) * relevantData.length,
@@ -381,7 +378,6 @@ export const LiveWaveform = ({
 						staticBarsRef.current = newBars;
 						lastActiveDataRef.current = newBars;
 					} else {
-						// Scrolling mode - original behavior
 						let sum = 0;
 						const startFreq = Math.floor(dataArray.length * 0.05);
 						const endFreq = Math.floor(dataArray.length * 0.4);
@@ -392,11 +388,9 @@ export const LiveWaveform = ({
 						}
 						const average = (sum / relevantData.length / 255) * sensitivity;
 
-						// Add to history
 						historyRef.current.push(Math.min(1, Math.max(0.05, average)));
 						lastActiveDataRef.current = [...historyRef.current];
 
-						// Maintain history size
 						if (historyRef.current.length > historySize) {
 							historyRef.current.shift();
 						}
@@ -405,7 +399,6 @@ export const LiveWaveform = ({
 				}
 			}
 
-			// Only redraw if needed
 			if (!needsRedrawRef.current && !active) {
 				rafId = requestAnimationFrame(animate);
 				return;
@@ -418,18 +411,14 @@ export const LiveWaveform = ({
 				barColor ||
 				(() => {
 					const style = getComputedStyle(canvas);
-					// Try to get the computed color value directly
-					const color = style.color;
-					return color || "#000";
+					return style.color || "#000";
 				})();
 
 			const step = barWidth + barGap;
 			const barCount = Math.floor(rect.width / step);
 			const centerY = rect.height / 2;
 
-			// Draw bars based on mode
 			if (mode === "static") {
-				// Static mode - bars in fixed positions
 				const dataToRender = processing
 					? staticBarsRef.current
 					: active
@@ -456,7 +445,6 @@ export const LiveWaveform = ({
 					}
 				}
 			} else {
-				// Scrolling mode - original behavior
 				for (let i = 0; i < barCount && i < historyRef.current.length; i++) {
 					const dataIndex = historyRef.current.length - 1 - i;
 					const value = historyRef.current[dataIndex] || 0.1;
@@ -477,21 +465,14 @@ export const LiveWaveform = ({
 				}
 			}
 
-			// Apply edge fading
 			if (fadeEdges && fadeWidth > 0 && rect.width > 0) {
-				// Cache gradient if width hasn't changed
 				if (!gradientCacheRef.current || lastWidthRef.current !== rect.width) {
 					const gradient = ctx.createLinearGradient(0, 0, rect.width, 0);
 					const fadePercent = Math.min(0.3, fadeWidth / rect.width);
 
-					// destination-out: removes destination where source alpha is high
-					// We want: fade edges out, keep center solid
-					// Left edge: start opaque (1) = remove, fade to transparent (0) = keep
 					gradient.addColorStop(0, "rgba(255,255,255,1)");
 					gradient.addColorStop(fadePercent, "rgba(255,255,255,0)");
-					// Center stays transparent = keep everything
 					gradient.addColorStop(1 - fadePercent, "rgba(255,255,255,0)");
-					// Right edge: fade from transparent (0) = keep to opaque (1) = remove
 					gradient.addColorStop(1, "rgba(255,255,255,1)");
 
 					gradientCacheRef.current = gradient;
