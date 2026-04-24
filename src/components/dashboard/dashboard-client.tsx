@@ -15,11 +15,14 @@ interface DashboardClientProps {
 
 export function DashboardClient({ initialTab = "ai" }: DashboardClientProps) {
 	const [query, setQuery] = useState("");
-	const [activeTab, setActiveTab] = useState<TabValue>(initialTab);
+	const activeTab = initialTab || "ai";
 
 	return (
 		<div className="min-h-screen flex flex-col bg-background">
-			<DashboardHeader activeTab={activeTab} onTabChange={setActiveTab} />
+			<DashboardHeader
+				activeTab={activeTab as TabValue}
+				onTabChange={() => {}}
+			/>
 			<div className="grow">
 				<StudyTopicCardExample />
 			</div>

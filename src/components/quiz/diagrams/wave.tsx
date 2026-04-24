@@ -50,7 +50,7 @@ export function WaveDiagram({ data }: { data: WaveData }) {
 			}
 			lines.push(
 				<Line
-					key={w}
+					key={`wave-${w}`}
 					points={points}
 					stroke={data.sourceMoving ? "#ef4444" : "#3b82f6"}
 					strokeWidth={2}
@@ -72,7 +72,7 @@ export function WaveDiagram({ data }: { data: WaveData }) {
 			const yOffset = (i - 1) * 15;
 			lines.push(
 				<Line
-					key={i}
+					key={`photon-${i}`}
 					points={[0, 100 + yOffset, 300, 100 + yOffset]}
 					stroke="#fbbf24"
 					strokeWidth={3}

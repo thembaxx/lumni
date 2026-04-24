@@ -9,13 +9,10 @@ import { ListenToLesson } from "@/components/listen-to-lesson";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { getDifficultyColor } from "@/lib/utils/colors";
 import { Badge } from "../ui/badge";
 import { PracticeButton } from "./practice-button";
-import {
-	getDifficultyColor,
-	getRandomTopic,
-	TopicData,
-} from "./study-topic-card.data";
+import { getRandomTopic, TopicData } from "./study-topic-card.data";
 
 interface StudyTopicCardProps {
 	className?: string;

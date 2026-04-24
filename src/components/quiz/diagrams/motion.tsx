@@ -59,7 +59,7 @@ export function MotionDiagram({ data }: { data: MotionData }) {
 							: obj.y;
 
 				return (
-					<Group key={index} x={x} y={y}>
+					<Group key={`group-${index}`} x={x} y={y}>
 						<Rect
 							width={obj.width || 50}
 							height={obj.height || 30}
@@ -96,7 +96,7 @@ export function MotionDiagram({ data }: { data: MotionData }) {
 							: baseY;
 
 				return (
-					<Group key={index} x={x} y={y}>
+					<Group key={`group-${index}`} x={x} y={y}>
 						<Circle radius={obj.radius || 15} fill={obj.fill} />
 						{obj.label && (
 							<Text

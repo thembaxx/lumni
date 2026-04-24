@@ -1,6 +1,12 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import {
+	AnimatePresence,
+	domAnimation,
+	LazyMotion,
+	m,
+	motion,
+} from "framer-motion";
 import { Database, Loader2 } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { AdminDashboard } from "@/components/admin/admin-dashboard";

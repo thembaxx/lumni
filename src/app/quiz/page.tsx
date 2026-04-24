@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { QuizClient } from "./quiz-client";
 
 export const metadata: Metadata = {
@@ -7,5 +8,9 @@ export const metadata: Metadata = {
 };
 
 export default function QuizPage() {
-	return <QuizClient />;
+	return (
+		<Suspense fallback={null}>
+			<QuizClient />
+		</Suspense>
+	);
 }

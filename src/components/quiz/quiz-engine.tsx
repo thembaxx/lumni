@@ -165,7 +165,10 @@ export function QuizEngine({
 				<Skeleton className="h-24 w-full rounded-lg" />
 				<div className="space-y-2">
 					{[1, 2, 3, 4].map((i) => (
-						<Skeleton key={i} className="h-12 w-full rounded-lg" />
+						<Skeleton
+							key={`skeleton-${i}`}
+							className="h-12 w-full rounded-lg"
+						/>
 					))}
 				</div>
 			</Card>

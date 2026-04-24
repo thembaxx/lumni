@@ -13,6 +13,8 @@ import {
 } from "@/components/ui/drawer";
 import { useFilteredSubjects } from "@/lib/hooks/use-subjects";
 
+const EMPTY_SELECTION: string[] = [];
+
 type SubjectsDrawerProps = {
 	children?: React.ReactNode;
 	onSelect?: (subject: string) => void;
@@ -25,7 +27,7 @@ export function SubjectsDrawer({
 	children,
 	onSelect,
 	userId,
-	selectedSubjects = [],
+	selectedSubjects = EMPTY_SELECTION,
 	onSelectionChange,
 }: SubjectsDrawerProps) {
 	const [searchQuery, setSearchQuery] = useState("");
