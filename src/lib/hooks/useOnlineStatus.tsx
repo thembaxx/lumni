@@ -38,6 +38,15 @@ export function useOnlineStatus(): {
 	};
 }
 
+const _Z_INDEX = {
+	toast: 50,
+	dropdown: 40,
+	modal: 30,
+	popover: 20,
+	header: 10,
+	base: 1,
+} as const;
+
 export function OnlineStatusIndicator() {
 	const { isOnline } = useOnlineStatus();
 
@@ -45,19 +54,9 @@ export function OnlineStatusIndicator() {
 
 	return (
 		<div
-			style={{
-				position: "fixed",
-				bottom: "1rem",
-				left: "50%",
-				transform: "translateX(-50%)",
-				backgroundColor: "#f59e0b",
-				color: "white",
-				padding: "0.5rem 1rem",
-				borderRadius: "0.5rem",
-				fontSize: "0.875rem",
-				fontWeight: 500,
-				zIndex: 9999,
-			}}
+			className="fixed bottom-4 left-1/2 -translate-x-1/2 bg-amber-500 text-white px-4 py-2 rounded-lg text-sm font-medium z-[50] shadow-lg"
+			role="status"
+			aria-live="polite"
 		>
 			You&apos;re offline. Changes will sync when reconnected.
 		</div>

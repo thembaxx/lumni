@@ -51,7 +51,7 @@ export function CircuitDiagram({ data }: { data: CircuitData }) {
 				}
 				points.push(rx + 20, ry);
 				return (
-					<Group key={index}>
+					<Group key={`component-${index}`}>
 						<Line
 							points={points}
 							stroke={componentColor}
@@ -74,7 +74,7 @@ export function CircuitDiagram({ data }: { data: CircuitData }) {
 			if (comp.label?.includes("ε") || comp.label?.includes("V")) {
 				return (
 					<Text
-						key={index}
+						key={`text-${index}`}
 						text={comp.label}
 						x={x + 20}
 						y={95}

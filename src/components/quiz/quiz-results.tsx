@@ -90,7 +90,7 @@ export function QuizResultsInline({
 		<div className="flex justify-center gap-1">
 			{Array.from({ length: totalQuestions }).map((_, idx) => (
 				<div
-					key={idx}
+					key={`result-${idx}`}
 					className={
 						idx < currentQuestionIndex
 							? "h-1.5 w-1.5 rounded-full bg-green-500"

@@ -72,7 +72,13 @@ export function Flashcard({ cards, onKnown, onReview }: FlashcardProps) {
 
 	return (
 		<LazyMotion features={domAnimation}>
-			<div className="space-y-4" onKeyDown={handleKeyDown} tabIndex={0}>
+			<div
+				className="space-y-4"
+				onKeyDown={handleKeyDown}
+				tabIndex={0}
+				role="region"
+				aria-label="Flashcard quiz"
+			>
 				<div className="flex items-center justify-between text-sm text-muted-foreground">
 					<span>
 						Card {currentIndex + 1} of {cards.length}
@@ -85,8 +91,14 @@ export function Flashcard({ cards, onKnown, onReview }: FlashcardProps) {
 				<div
 					className="perspective-1000 cursor-pointer min-h-[300px]"
 					onClick={handleFlip}
+					onKeyDown={(e) => {
+						if (e.key === " " || e.key === "Enter") {
+							e.preventDefault();
+							handleFlip();
+						}
+					}}
 					role="button"
-					tabIndex={-1}
+					tabIndex={0}
 					aria-label={isFlipped ? "Flip card to front" : "Flip card to back"}
 				>
 					<m.div

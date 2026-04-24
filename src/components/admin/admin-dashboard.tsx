@@ -1,7 +1,13 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { AnimatePresence, motion } from "framer-motion";
+import {
+	AnimatePresence,
+	domAnimation,
+	LazyMotion,
+	m,
+	motion,
+} from "framer-motion";
 import {
 	BookOpen,
 	Check,
@@ -192,7 +198,7 @@ function AnimatedCheckbox({
 				transition={{ duration: 0.2 }}
 			>
 				<motion.div
-					initial={{ scale: 0, opacity: 0 }}
+					initial={{ scale: 0.95, opacity: 0 }}
 					animate={{
 						scale: checked ? 1 : 0,
 						opacity: checked ? 1 : 0,
@@ -252,8 +258,8 @@ function AnimatedSubjectRow({
 				>
 					{isSelected && (
 						<motion.div
-							initial={{ scale: 0 }}
-							animate={{ scale: 1 }}
+							initial={{ scale: 0.95, opacity: 0 }}
+							animate={{ scale: 1, opacity: 1 }}
 							transition={{ type: "spring", stiffness: 500, damping: 25 }}
 						>
 							<Check className="w-3 h-3 text-background" />
@@ -498,6 +504,7 @@ export function AdminDashboard() {
 			return res.json();
 		},
 		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["admin-subjects"] });
 			setShowSuccess(true);
 			setTimeout(() => setShowSuccess(false), 2000);
 		},
@@ -554,8 +561,8 @@ export function AdminDashboard() {
 						className="fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-foreground text-background px-4 py-2 rounded-lg shadow-lg flex items-center gap-2"
 					>
 						<motion.div
-							initial={{ scale: 0 }}
-							animate={{ scale: 1 }}
+							initial={{ scale: 0.95, opacity: 0 }}
+							animate={{ scale: 1, opacity: 1 }}
 							transition={{ type: "spring", stiffness: 500, damping: 25 }}
 						>
 							<Check className="w-4 h-4" />

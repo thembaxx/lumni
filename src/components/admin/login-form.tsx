@@ -1,6 +1,12 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import {
+	AnimatePresence,
+	domAnimation,
+	LazyMotion,
+	m,
+	motion,
+} from "framer-motion";
 import { ArrowRight, Loader2, Lock, Mail } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
