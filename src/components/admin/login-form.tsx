@@ -7,8 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 
-const ADMIN_EMAIL = "mndebele.themba@gmail.com";
-const ADMIN_PASSWORD = "26vrX^S54R4M^$hFb7UofM^&^$a#sC";
+const ADMIN_EMAIL = process.env.NEXT_PUBLIC_ADMIN_EMAIL || "";
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "";
 
 interface LoginFormProps {
 	onSuccess: () => void;
