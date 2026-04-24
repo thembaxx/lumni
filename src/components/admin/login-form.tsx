@@ -7,9 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 
-const ADMIN_EMAIL = process.env.NEXT_PUBLIC_ADMIN_EMAIL || "";
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "";
-
 interface LoginFormProps {
 	onSuccess: () => void;
 }
@@ -32,18 +29,31 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
 		setError("");
 		setLoading(true);
 
-		await new Promise((r) => setTimeout(r, 600));
+		try {
+			const res = await fetch("/api/admin/verify-login", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ email, password }),
+			});
 
-		if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
-			localStorage.setItem("admin_session", "true");
-			localStorage.setItem("admin_email", email);
-			setLoading(false);
-			onSuccess();
-		} else {
+			const data = await res.json();
+
+			if (res.ok && data.valid) {
+				localStorage.setItem("admin_session", "true");
+				localStorage.setItem("admin_email", email);
+				setLoading(false);
+				onSuccess();
+			} else {
+				setLoading(false);
+				setShake(true);
+				setTimeout(() => setShake(false), 400);
+				setError(data.error || "Invalid credentials");
+			}
+		} catch {
 			setLoading(false);
 			setShake(true);
 			setTimeout(() => setShake(false), 400);
-			setError("Invalid credentials");
+			setError("Verification failed");
 		}
 	};
 
