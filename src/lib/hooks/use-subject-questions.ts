@@ -59,6 +59,26 @@ async function fetchFilesInParallel(
 	}
 }
 
+async function generateWithAI(
+	subject: string,
+	count: number,
+	topic?: string,
+): Promise<QAQuestion[]> {
+	const response = await fetch("/api/generate-questions", {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify({ subject, topic, count }),
+	});
+
+	if (!response.ok) {
+		const error = await response.json();
+		throw new Error(error.error || "AI generation failed");
+	}
+
+	const data = await response.json();
+	return data.questions;
+}
+
 async function discoverQAFileUrls(
 	subject: string,
 	numberOfQuestions: number,
@@ -139,6 +159,22 @@ export async function fetchSubjectQuestions(
 		FETCH_TIMEOUT * fileUrls.length,
 	);
 	allQuestions.push(...fetchedQuestions);
+
+	// AI fallback if no questions found
+	if (allQuestions.length === 0) {
+		console.log("[Questions] No local questions, generating with AI...");
+		try {
+			const aiQuestions = await generateWithAI(
+				normalizedSubject,
+				numberOfQuestions,
+				topic,
+			);
+			store.setCachedQuestions(cacheKey, aiQuestions);
+			return aiQuestions;
+		} catch (aiError) {
+			console.error("[Questions] AI generation failed:", aiError);
+		}
+	}
 
 	const shuffled = [...allQuestions].sort(() => Math.random() - 0.5);
 	const result = shuffled.slice(0, numberOfQuestions);
