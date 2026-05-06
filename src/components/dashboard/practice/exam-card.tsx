@@ -24,8 +24,8 @@ export function ExamCard({ exam, delay = 0 }: ExamCardProps) {
 
 	return (
 		<m.button
-			initial="hidden"
-			animate="visible"
+			initial={{ opacity: 0, y: 10 }}
+			animate={{ opacity: 1, y: 0 }}
 			transition={{ delay: delay * 0.05, duration: 0.4 }}
 			onClick={handleDownload}
 			onMouseEnter={() => setIsHovered(true)}

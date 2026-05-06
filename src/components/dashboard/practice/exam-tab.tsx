@@ -230,16 +230,16 @@ export function ExamTab({ className }: ExamTabProps) {
 						</m.div>
 					) : (
 						<m.div
-							initial="hidden"
-							animate="visible"
+							initial={{ opacity: 0 }}
+							animate={{ opacity: 1 }}
 							transition={{ staggerChildren: 0.12 }}
 							className="space-y-6"
 						>
 							{groupedExams.map((group, groupIndex) => (
 								<m.div
 									key={group.subject}
-									initial="hidden"
-									animate="visible"
+									initial={{ opacity: 0, y: 10 }}
+									animate={{ opacity: 1, y: 0 }}
 									transition={{ delay: groupIndex * 0.12, duration: 0.5 }}
 									className="space-y-3"
 								>
