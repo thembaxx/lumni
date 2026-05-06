@@ -23,10 +23,16 @@ export function DashboardClient({ initialTab = "ai" }: DashboardClientProps) {
 				activeTab={activeTab as TabValue}
 				onTabChange={() => {}}
 			/>
-			<div className="grow">
+			<div className="grow px-4 pt-2">
+				<div className="mb-6 animate-fade-in-up">
+					<h2 className="text-xl font-semibold tracking-tight">Welcome back</h2>
+					<p className="text-muted-foreground text-sm mt-1">
+						Ready to ace your exams?
+					</p>
+				</div>
 				<StudyTopicCardExample />
 			</div>
-			<div className="px-4 pb-6 space-y-3">
+			<div className="px-4 pb-6 space-y-4">
 				<QuickActions />
 				<SearchInput value={query} onChange={setQuery} />
 			</div>

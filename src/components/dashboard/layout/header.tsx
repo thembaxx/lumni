@@ -20,7 +20,7 @@ export function DashboardHeader({
 	const [practiceOpen, setPracticeOpen] = useState(false);
 
 	return (
-		<nav className="flex items-center justify-between px-4 py-3 w-full animate-fade-in-up">
+		<nav className="flex items-center justify-between px-4 py-4 w-full animate-fade-in-up border-b border-border/30">
 			<Menu />
 			<TabNav activeTab={activeTab} onTabChange={onTabChange} />
 			<PracticeSheet open={practiceOpen} onOpenChange={setPracticeOpen} />

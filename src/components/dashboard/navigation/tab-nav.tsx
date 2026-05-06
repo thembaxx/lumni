@@ -38,17 +38,17 @@ export function TabNav({ activeTab, onTabChange }: TabNavProps) {
 		>
 			<ViewTransition default="none" enter="vt-fade-in" exit="vt-fade-out">
 				<TabsList
-					className="bg-secondary/50 backdrop-blur-xl p-1 grid grid-cols-2 rounded-3xl h-11 relative"
+					className="bg-secondary/60 backdrop-blur-md border border-border/40 p-1 grid grid-cols-2 rounded-2xl h-10 relative shadow-sm"
 					aria-label="Navigation tabs"
 				>
 					<span
 						className={cn(
-							"absolute top-1 bottom-1 bg-primary/10 rounded-[20px] shadow-sm transition-all duration-300 ease-out-quart",
+							"absolute top-0.5 bottom-0.5 bg-background rounded-xl shadow-sm transition-all duration-300 ease-out-quart border border-border/30",
 							activeTab === "ai"
-								? "left-1 w-[calc(33.33%-4px)]"
+								? "left-0.5 w-[calc(33.33%-4px)]"
 								: activeTab === "spaces"
-									? "left-[calc(33.33%+4px)] w-[calc(33.33%-4px)]"
-									: "left-[calc(66.66%+4px)] w-[calc(33.33%-4px)]",
+									? "left-[calc(33.33%+2px)] w-[calc(33.33%-4px)]"
+									: "left-[calc(66.66%+2px)] w-[calc(33.33%-4px)]",
 						)}
 					/>
 					{tabs.map((tab) => (
@@ -56,12 +56,15 @@ export function TabNav({ activeTab, onTabChange }: TabNavProps) {
 							key={tab.value}
 							value={tab.value}
 							className={cn(
-								"relative z-10 px-5 h-9 rounded-[20px] text-sm font-medium transition-all duration-200 data-selected:text-primary-foreground tab-trigger-item",
+								"relative z-10 px-4 h-8 rounded-xl text-xs font-medium transition-all duration-200 tab-trigger-item",
+								activeTab === tab.value
+									? "text-foreground"
+									: "text-muted-foreground hover:text-foreground",
 							)}
 						>
 							<tab.icon
 								className={cn(
-									"w-4 h-4 mr-1.5 transition-transform duration-200",
+									"w-3.5 h-3.5 mr-1.5 transition-transform duration-200",
 									activeTab === tab.value && "tab-icon-active",
 								)}
 							/>
