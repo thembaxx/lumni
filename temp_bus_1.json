@@ -1,0 +1,547 @@
+[
+	{
+		"id": "bus_041",
+		"topic": "Business Environments",
+		"difficulty": "Medium",
+		"points": 15,
+		"questionText": "According to the PESTLE analysis diagram, which factor is directly affected by changes in interest rates?",
+		"questionType": "multiple-choice",
+		"options": [
+			{ "id": "A", "text": "Economic", "isCorrect": true },
+			{ "id": "B", "text": "Social", "isCorrect": false },
+			{ "id": "C", "text": "Technological", "isCorrect": false },
+			{ "id": "D", "text": "Legal", "isCorrect": false }
+		],
+		"supportsDiagram": true,
+		"diagram": {
+			"type": "node-flow",
+			"data": {
+				"nodes": [
+					{
+						"id": "p",
+						"type": "factor",
+						"label": "Political",
+						"x": 100,
+						"y": 20
+					},
+					{
+						"id": "e",
+						"type": "factor",
+						"label": "Economic",
+						"x": 300,
+						"y": 20
+					},
+					{
+						"id": "s",
+						"type": "factor",
+						"label": "Social",
+						"x": 100,
+						"y": 100
+					},
+					{
+						"id": "t",
+						"type": "factor",
+						"label": "Technological",
+						"x": 300,
+						"y": 100
+					},
+					{ "id": "l", "type": "factor", "label": "Legal", "x": 100, "y": 180 },
+					{
+						"id": "env",
+						"type": "factor",
+						"label": "Environmental",
+						"x": 300,
+						"y": 180
+					}
+				],
+				"edges": []
+			}
+		},
+		"hint": "Think about monetary policy and capital costs.",
+		"explanation": "Interest rates are a key economic factor that influences consumer spending and business investment."
+	},
+	{
+		"id": "bus_042",
+		"topic": "Ethics and Professionalism",
+		"difficulty": "Hard",
+		"points": 20,
+		"questionText": "A business manager decides to use company resources for personal gain. Which ethical theory is most likely being violated if we consider the 'universalizability' of this action?",
+		"questionType": "multiple-choice",
+		"options": [
+			{ "id": "A", "text": "Kant's Categorical Imperative", "isCorrect": true },
+			{ "id": "B", "text": "Utilitarianism", "isCorrect": false },
+			{ "id": "C", "text": "Virtue Ethics", "isCorrect": false },
+			{ "id": "D", "text": "Ethical Egoism", "isCorrect": false }
+		],
+		"supportsDiagram": false,
+		"diagram": null,
+		"hint": "Think about 'what if everyone did this?'",
+		"explanation": "Kant's Categorical Imperative suggests that an action is only ethical if it can be willed as a universal law."
+	},
+	{
+		"id": "bus_043",
+		"topic": "Team Performance",
+		"difficulty": "Medium",
+		"points": 15,
+		"questionText": "Based on Tuckman's Model diagram, in which stage does the team start to resolve differences and develop consensus?",
+		"questionType": "multiple-choice",
+		"options": [
+			{ "id": "A", "text": "Forming", "isCorrect": false },
+			{ "id": "B", "text": "Storming", "isCorrect": false },
+			{ "id": "C", "text": "Norming", "isCorrect": true },
+			{ "id": "D", "text": "Performing", "isCorrect": false }
+		],
+		"supportsDiagram": true,
+		"diagram": {
+			"type": "node-flow",
+			"data": {
+				"nodes": [
+					{ "id": "f", "type": "stage", "label": "Forming", "x": 50, "y": 50 },
+					{
+						"id": "s",
+						"type": "stage",
+						"label": "Storming",
+						"x": 150,
+						"y": 50
+					},
+					{ "id": "n", "type": "stage", "label": "Norming", "x": 250, "y": 50 },
+					{
+						"id": "p",
+						"type": "stage",
+						"label": "Performing",
+						"x": 350,
+						"y": 50
+					}
+				],
+				"edges": [
+					{ "id": "e1", "source": "f", "target": "s" },
+					{ "id": "e2", "source": "s", "target": "n" },
+					{ "id": "e3", "source": "n", "target": "p" }
+				]
+			}
+		},
+		"hint": "Standards and relationships are established here.",
+		"explanation": "Norming is the stage where team members settle into their roles and develop cohesion."
+	},
+	{
+		"id": "bus_044",
+		"topic": "Investment: Securities",
+		"difficulty": "Hard",
+		"points": 20,
+		"questionText": "What is the primary difference between ordinary shares and preference shares regarding dividend payments?",
+		"questionType": "multiple-choice",
+		"options": [
+			{
+				"id": "A",
+				"text": "Preference shares have a fixed dividend rate.",
+				"isCorrect": true
+			},
+			{
+				"id": "B",
+				"text": "Ordinary shares always receive higher dividends.",
+				"isCorrect": false
+			},
+			{
+				"id": "C",
+				"text": "Ordinary shares have priority in liquidation.",
+				"isCorrect": false
+			},
+			{
+				"id": "D",
+				"text": "Preference shares have full voting rights.",
+				"isCorrect": false
+			}
+		],
+		"supportsDiagram": false,
+		"diagram": null,
+		"hint": "Consider the 'fixed' nature of one of these.",
+		"explanation": "Preference shareholders usually receive a fixed dividend before any dividends are paid to ordinary shareholders."
+	},
+	{
+		"id": "bus_045",
+		"topic": "Human Resources Function",
+		"difficulty": "Medium",
+		"points": 15,
+		"questionText": "Which step in the recruitment process follows 'Job Analysis' according to the flow?",
+		"questionType": "multiple-choice",
+		"options": [
+			{ "id": "A", "text": "Interviewing", "isCorrect": false },
+			{
+				"id": "B",
+				"text": "Job Description and Specification",
+				"isCorrect": true
+			},
+			{ "id": "C", "text": "Selection", "isCorrect": false },
+			{ "id": "D", "text": "Induction", "isCorrect": false }
+		],
+		"supportsDiagram": true,
+		"diagram": {
+			"type": "node-flow",
+			"data": {
+				"nodes": [
+					{
+						"id": "n1",
+						"type": "step",
+						"label": "Job Analysis",
+						"x": 200,
+						"y": 20
+					},
+					{
+						"id": "n2",
+						"type": "step",
+						"label": "Job Desc/Spec",
+						"x": 200,
+						"y": 80
+					},
+					{
+						"id": "n3",
+						"type": "step",
+						"label": "Advertising",
+						"x": 200,
+						"y": 140
+					},
+					{
+						"id": "n4",
+						"type": "step",
+						"label": "Shortlisting",
+						"x": 200,
+						"y": 200
+					}
+				],
+				"edges": [
+					{ "id": "e1", "source": "n1", "target": "n2" },
+					{ "id": "e2", "source": "n2", "target": "n3" },
+					{ "id": "e3", "source": "n3", "target": "n4" }
+				]
+			}
+		},
+		"hint": "Defining what the job is and who is needed.",
+		"explanation": "Job analysis leads to the creation of a job description and a job specification."
+	},
+	{
+		"id": "bus_046",
+		"topic": "Insurance",
+		"difficulty": "Easy",
+		"points": 10,
+		"questionText": "Which principle of insurance ensures that the insured does not profit from a loss?",
+		"questionType": "multiple-choice",
+		"options": [
+			{ "id": "A", "text": "Utmost Good Faith", "isCorrect": false },
+			{ "id": "B", "text": "Insurable Interest", "isCorrect": false },
+			{ "id": "C", "text": "Indemnification", "isCorrect": true },
+			{ "id": "D", "text": "Proximate Cause", "isCorrect": false }
+		],
+		"supportsDiagram": false,
+		"diagram": null,
+		"hint": "Restoring to the previous financial position.",
+		"explanation": "Indemnification aims to put the insured back in the same financial position they were in before the loss occurred."
+	},
+	{
+		"id": "bus_047",
+		"topic": "Conflict Management",
+		"difficulty": "Medium",
+		"points": 15,
+		"questionText": "In the conflict resolution process shown, what is the 'Mediation' step?",
+		"questionType": "multiple-choice",
+		"options": [
+			{
+				"id": "A",
+				"text": "A third party makes a binding decision.",
+				"isCorrect": false
+			},
+			{
+				"id": "B",
+				"text": "A third party facilitates discussion.",
+				"isCorrect": true
+			},
+			{
+				"id": "C",
+				"text": "Parties negotiate without help.",
+				"isCorrect": false
+			},
+			{ "id": "D", "text": "The matter goes to court.", "isCorrect": false }
+		],
+		"supportsDiagram": true,
+		"diagram": {
+			"type": "node-flow",
+			"data": {
+				"nodes": [
+					{
+						"id": "n1",
+						"type": "method",
+						"label": "Negotiation",
+						"x": 50,
+						"y": 50
+					},
+					{
+						"id": "n2",
+						"type": "method",
+						"label": "Mediation",
+						"x": 200,
+						"y": 50
+					},
+					{
+						"id": "n3",
+						"type": "method",
+						"label": "Arbitration",
+						"x": 350,
+						"y": 50
+					}
+				],
+				"edges": [
+					{ "id": "e1", "source": "n1", "target": "n2" },
+					{ "id": "e2", "source": "n2", "target": "n3" }
+				]
+			}
+		},
+		"hint": "The helper does not decide the outcome.",
+		"explanation": "Mediation involves a neutral third party helping the conflicting parties reach their own agreement."
+	},
+	{
+		"id": "bus_048",
+		"topic": "Business Environments",
+		"difficulty": "Easy",
+		"points": 10,
+		"questionText": "Which of the following is an example of a factor in the Market Environment?",
+		"questionType": "multiple-choice",
+		"options": [
+			{ "id": "A", "text": "Suppliers", "isCorrect": true },
+			{ "id": "B", "text": "Government Legislation", "isCorrect": false },
+			{ "id": "C", "text": "Organizational Culture", "isCorrect": false },
+			{ "id": "D", "text": "Technological Trends", "isCorrect": false }
+		],
+		"supportsDiagram": false,
+		"diagram": null,
+		"hint": "Think about immediate stakeholders outside the firm.",
+		"explanation": "Suppliers, competitors, and consumers are key components of the Market Environment."
+	},
+	{
+		"id": "bus_049",
+		"topic": "Investment: Insurance",
+		"difficulty": "Hard",
+		"points": 20,
+		"questionText": "If a building worth R1,000,000 is insured for R600,000 and a fire causes R200,000 damage, how much will the insurance company pay under the 'Average Clause'?",
+		"questionType": "multiple-choice",
+		"options": [
+			{ "id": "A", "text": "R200,000", "isCorrect": false },
+			{ "id": "B", "text": "R120,000", "isCorrect": true },
+			{ "id": "C", "text": "R600,000", "isCorrect": false },
+			{ "id": "D", "text": "R100,000", "isCorrect": false }
+		],
+		"supportsDiagram": false,
+		"diagram": null,
+		"hint": "Payment = (Sum Insured / Market Value) x Actual Loss",
+		"explanation": "Under-insurance leads to the application of the average clause: (600,000 / 1,000,000) * 200,000 = 120,000."
+	},
+	{
+		"id": "bus_050",
+		"topic": "Ethics and Professionalism",
+		"difficulty": "Medium",
+		"points": 15,
+		"questionText": "Which document outlines the ethical standards and values of a company?",
+		"questionType": "multiple-choice",
+		"options": [
+			{ "id": "A", "text": "Business Plan", "isCorrect": false },
+			{ "id": "B", "text": "Code of Conduct", "isCorrect": true },
+			{ "id": "C", "text": "Employment Contract", "isCorrect": false },
+			{ "id": "D", "text": "Financial Statement", "isCorrect": false }
+		],
+		"supportsDiagram": false,
+		"diagram": null,
+		"hint": "It guides employee behavior.",
+		"explanation": "A Code of Conduct (or Code of Ethics) sets out the rules and expectations for ethical behavior in an organization."
+	},
+	{
+		"id": "bus_051",
+		"topic": "Team Performance",
+		"difficulty": "Easy",
+		"points": 10,
+		"questionText": "What is 'Synergy' in the context of team performance?",
+		"questionType": "multiple-choice",
+		"options": [
+			{
+				"id": "A",
+				"text": "The combined effect is greater than the sum of individual efforts.",
+				"isCorrect": true
+			},
+			{
+				"id": "B",
+				"text": "One person doing all the work.",
+				"isCorrect": false
+			},
+			{
+				"id": "C",
+				"text": "Constant disagreement among members.",
+				"isCorrect": false
+			},
+			{
+				"id": "D",
+				"text": "Dividing tasks so everyone works alone.",
+				"isCorrect": false
+			}
+		],
+		"supportsDiagram": false,
+		"diagram": null,
+		"hint": "1 + 1 = 3",
+		"explanation": "Synergy occurs when a team produces a better result together than they could have individually."
+	},
+	{
+		"id": "bus_052",
+		"topic": "Human Resources Function",
+		"difficulty": "Medium",
+		"points": 15,
+		"questionText": "Based on the Training Cycle diagram, what is the first step?",
+		"questionType": "multiple-choice",
+		"options": [
+			{ "id": "A", "text": "Delivering Training", "isCorrect": false },
+			{ "id": "B", "text": "Identifying Training Needs", "isCorrect": true },
+			{ "id": "C", "text": "Evaluating Training", "isCorrect": false },
+			{ "id": "D", "text": "Designing Training", "isCorrect": false }
+		],
+		"supportsDiagram": true,
+		"diagram": {
+			"type": "node-flow",
+			"data": {
+				"nodes": [
+					{
+						"id": "n1",
+						"type": "step",
+						"label": "Identify Needs",
+						"x": 200,
+						"y": 20
+					},
+					{ "id": "n2", "type": "step", "label": "Design", "x": 350, "y": 100 },
+					{
+						"id": "n3",
+						"type": "step",
+						"label": "Deliver",
+						"x": 200,
+						"y": 180
+					},
+					{ "id": "n4", "type": "step", "label": "Evaluate", "x": 50, "y": 100 }
+				],
+				"edges": [
+					{ "id": "e1", "source": "n1", "target": "n2" },
+					{ "id": "e2", "source": "n2", "target": "n3" },
+					{ "id": "e3", "source": "n3", "target": "n4" },
+					{ "id": "e4", "source": "n4", "target": "n1" }
+				]
+			}
+		},
+		"hint": "Finding the gap between current and required skills.",
+		"explanation": "The training cycle starts with identifying where training is actually needed."
+	},
+	{
+		"id": "bus_053",
+		"topic": "Investment: Securities",
+		"difficulty": "Medium",
+		"points": 15,
+		"questionText": "What does JSE stand for?",
+		"questionType": "multiple-choice",
+		"options": [
+			{ "id": "A", "text": "Johannesburg Stock Exchange", "isCorrect": true },
+			{ "id": "B", "text": "Joint Stock Enterprise", "isCorrect": false },
+			{ "id": "C", "text": "Junior Stock Exchange", "isCorrect": false },
+			{
+				"id": "D",
+				"text": "Johannesburg Security Exchange",
+				"isCorrect": false
+			}
+		],
+		"supportsDiagram": false,
+		"diagram": null,
+		"hint": "The main stock exchange in South Africa.",
+		"explanation": "The JSE is the largest stock exchange in Africa and is located in Sandton, Johannesburg."
+	},
+	{
+		"id": "bus_054",
+		"topic": "Business Environments",
+		"difficulty": "Hard",
+		"points": 20,
+		"questionText": "A business faces high competition and low barriers to entry. According to Porter's Five Forces diagram, which force is strongest?",
+		"questionType": "multiple-choice",
+		"options": [
+			{ "id": "A", "text": "Threat of New Entrants", "isCorrect": true },
+			{
+				"id": "B",
+				"text": "Bargaining Power of Suppliers",
+				"isCorrect": false
+			},
+			{ "id": "C", "text": "Bargaining Power of Buyers", "isCorrect": false },
+			{ "id": "D", "text": "Threat of Substitutes", "isCorrect": false }
+		],
+		"supportsDiagram": true,
+		"diagram": {
+			"type": "node-flow",
+			"data": {
+				"nodes": [
+					{
+						"id": "ent",
+						"type": "force",
+						"label": "Threat of New Entrants",
+						"x": 200,
+						"y": 20
+					},
+					{
+						"id": "sup",
+						"type": "force",
+						"label": "Supplier Power",
+						"x": 50,
+						"y": 100
+					},
+					{
+						"id": "riv",
+						"type": "force",
+						"label": "Competitive Rivalry",
+						"x": 200,
+						"y": 100
+					},
+					{
+						"id": "buy",
+						"type": "force",
+						"label": "Buyer Power",
+						"x": 350,
+						"y": 100
+					},
+					{
+						"id": "sub",
+						"type": "force",
+						"label": "Threat of Substitutes",
+						"x": 200,
+						"y": 180
+					}
+				],
+				"edges": [
+					{ "id": "e1", "source": "ent", "target": "riv" },
+					{ "id": "e2", "source": "sup", "target": "riv" },
+					{ "id": "e3", "source": "buy", "target": "riv" },
+					{ "id": "e4", "source": "sub", "target": "riv" }
+				]
+			}
+		},
+		"hint": "Ease of starting a new competing business.",
+		"explanation": "Low barriers to entry mean it is easy for new competitors to enter the market, increasing the threat of new entrants."
+	},
+	{
+		"id": "bus_055",
+		"topic": "Insurance",
+		"difficulty": "Medium",
+		"points": 15,
+		"questionText": "What is 'Compulsory Insurance'?",
+		"questionType": "multiple-choice",
+		"options": [
+			{ "id": "A", "text": "Insurance required by law.", "isCorrect": true },
+			{ "id": "B", "text": "Insurance for luxury items.", "isCorrect": false },
+			{
+				"id": "C",
+				"text": "Life insurance taken by choice.",
+				"isCorrect": false
+			},
+			{ "id": "D", "text": "Insurance that pays double.", "isCorrect": false }
+		],
+		"supportsDiagram": false,
+		"diagram": null,
+		"hint": "Think about UIF or COIDA.",
+		"explanation": "Compulsory insurance is mandated by the government, such as the Unemployment Insurance Fund (UIF)."
+	}
+]

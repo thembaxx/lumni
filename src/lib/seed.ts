@@ -1,6 +1,6 @@
 import { eq, sql } from "drizzle-orm";
 import nscSubjects from "./data/subjects.json";
-import { db } from "./db/client";
+import { getDb } from "./db/client";
 import {
 	question,
 	studySession,
@@ -601,13 +601,13 @@ export async function seedDatabase() {
 	console.log("🌱 Seeding database...");
 
 	for (const subj of nscSubjectsData) {
-		await db.insert(subject).values(subj).onConflictDoNothing();
+		await getDb().insert(subject).values(subj).onConflictDoNothing();
 	}
 	console.log("✓ Subjects seeded");
 
 	const allTopics = [...physicsTopics, ...mathTopics, ...lifeScienceTopics];
 	for (const t of allTopics) {
-		await db.insert(topic).values(t).onConflictDoNothing();
+		await getDb().insert(topic).values(t).onConflictDoNothing();
 	}
 	console.log("✓ Topics seeded");
 
@@ -617,7 +617,7 @@ export async function seedDatabase() {
 		...lifeScienceQuestions,
 	];
 	for (const q of allQuestions) {
-		await db.insert(question).values(q).onConflictDoNothing();
+		await getDb().insert(question).values(q).onConflictDoNothing();
 	}
 	console.log("✓ Questions seeded");
 
@@ -628,7 +628,7 @@ export async function seedDatabase() {
 }
 
 export async function getUserStats(userId: string) {
-	const progressArr = await db
+	const progressArr = await getDb()
 		.select()
 		.from(userProgress)
 		.where(eq(userProgress.userId, userId))
@@ -636,7 +636,7 @@ export async function getUserStats(userId: string) {
 
 	const progress = progressArr[0] || null;
 
-	const sessions = await db
+	const sessions = await getDb()
 		.select()
 		.from(studySession)
 		.where(eq(studySession.userId, userId));
@@ -661,7 +661,7 @@ export async function getUserStats(userId: string) {
 }
 
 export async function selectSubject(userId: string, subjectId: string) {
-	await db
+	await getDb()
 		.insert(userSubject)
 		.values({
 			id: `${userId}-${subjectId}`,
@@ -670,7 +670,7 @@ export async function selectSubject(userId: string, subjectId: string) {
 		})
 		.onConflictDoNothing();
 
-	await db
+	await getDb()
 		.insert(userProgress)
 		.values({
 			id: `${userId}-${subjectId}`,

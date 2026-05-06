@@ -1,10 +1,10 @@
 {
 	"metadata": {
 		"subject": "physical-science",
-		"totalQuestions": 35,
-		"version": "1.0.0",
-		"curriculum": "Physical Science",
-		"createdAt": "2026-04-23"
+		"totalQuestions": 80,
+		"version": "1.3.0",
+		"curriculum": "NSC Grade 12 Physical Science",
+		"createdAt": "2024-05-21"
 	},
 	"questions": [
 		{
@@ -664,6 +664,1118 @@
 			"diagram": null,
 			"hint": "Conservation of energy",
 			"explanation": "Law of Conservation: energy converted but total stays constant"
+		},
+		{
+			"id": "ps_036",
+			"topic": "Chemical Bonding",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Which type of bond is formed when electrons are shared equally between two atoms of the same element?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Non-polar covalent", "isCorrect": true },
+				{ "id": "B", "text": "Polar covalent", "isCorrect": false },
+				{ "id": "C", "text": "Ionic", "isCorrect": false },
+				{ "id": "D", "text": "Metallic", "isCorrect": false }
+			],
+			"supportsDiagram": true,
+			"diagram": {
+				"type": "node-flow",
+				"title": "Bonding Types",
+				"data": {
+					"nodes": [
+						{ "id": "elec", "label": "Electronegativity Difference (ΔEN)", "x": 150, "y": 20 },
+						{ "id": "nonpolar", "label": "ΔEN = 0: Non-polar Covalent", "x": 50, "y": 120 },
+						{ "id": "polar", "label": "0 < ΔEN < 1.7: Polar Covalent", "x": 150, "y": 120 },
+						{ "id": "ionic", "label": "ΔEN > 1.7: Ionic", "x": 250, "y": 120 }
+					],
+					"edges": [
+						{ "id": "e1", "source": "elec", "target": "nonpolar" },
+						{ "id": "e2", "source": "elec", "target": "polar" },
+						{ "id": "e3", "source": "elec", "target": "ionic" }
+					]
+				}
+			},
+			"hint": "Think about the electronegativity difference",
+			"explanation": "In non-polar covalent bonds, electrons are shared equally because the atoms have the same electronegativity."
+		},
+		{
+			"id": "ps_037",
+			"topic": "Rates of Reaction",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What effect does a catalyst have on a chemical reaction?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Lowers activation energy", "isCorrect": true },
+				{ "id": "B", "text": "Increases heat of reaction", "isCorrect": false },
+				{ "id": "C", "text": "Decreases reaction rate", "isCorrect": false },
+				{ "id": "D", "text": "Consumes reactants faster", "isCorrect": false }
+			],
+			"supportsDiagram": true,
+			"diagram": {
+				"type": "node-flow",
+				"title": "Energy Profile with Catalyst",
+				"data": {
+					"nodes": [
+						{ "id": "reac", "label": "Reactants", "x": 20, "y": 200 },
+						{ "id": "uncat", "label": "Uncatalyzed Peak (High Ea)", "x": 150, "y": 50 },
+						{ "id": "cat", "label": "Catalyzed Peak (Low Ea)", "x": 150, "y": 120 },
+						{ "id": "prod", "label": "Products", "x": 300, "y": 200 }
+					],
+					"edges": [
+						{ "id": "e1", "source": "reac", "target": "uncat" },
+						{ "id": "e2", "source": "uncat", "target": "prod" },
+						{ "id": "e3", "source": "reac", "target": "cat" },
+						{ "id": "e4", "source": "cat", "target": "prod" }
+					]
+				}
+			},
+			"hint": "It provides an alternative pathway",
+			"explanation": "A catalyst increases the reaction rate by providing an alternative reaction pathway with a lower activation energy."
+		},
+		{
+			"id": "ps_038",
+			"topic": "Chemical Equilibrium",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "According to Le Chatelier's Principle, what happens to an exothermic reaction at equilibrium when temperature is increased?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Equilibrium shifts to the left (reactants)", "isCorrect": true },
+				{ "id": "B", "text": "Equilibrium shifts to the right (products)", "isCorrect": false },
+				{ "id": "C", "text": "No change in equilibrium", "isCorrect": false },
+				{ "id": "D", "text": "Kc value increases", "isCorrect": false }
+			],
+			"supportsDiagram": true,
+			"diagram": {
+				"type": "node-flow",
+				"title": "Equilibrium Stress: Temperature",
+				"data": {
+					"nodes": [
+						{ "id": "stress", "label": "Increase Temperature", "x": 150, "y": 20 },
+						{ "id": "exo", "label": "Exothermic Reaction (Heat is product)", "x": 50, "y": 100 },
+						{ "id": "endo", "label": "Endothermic Reaction (Heat is reactant)", "x": 250, "y": 100 },
+						{ "id": "shift_l", "label": "Shift Left", "x": 50, "y": 200 },
+						{ "id": "shift_r", "label": "Shift Right", "x": 250, "y": 200 }
+					],
+					"edges": [
+						{ "id": "e1", "source": "stress", "target": "exo" },
+						{ "id": "e2", "source": "stress", "target": "endo" },
+						{ "id": "e3", "source": "exo", "target": "shift_l" },
+						{ "id": "e4", "source": "endo", "target": "shift_r" }
+					]
+				}
+			},
+			"hint": "System acts to oppose the change (remove heat)",
+			"explanation": "In an exothermic reaction, heat is a product. Increasing temperature adds heat, so the system shifts to the left to consume it."
+		},
+		{
+			"id": "ps_039",
+			"topic": "Organic Chemistry",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What is the IUPAC name for CH₃CH₂CH₂OH?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Propan-1-ol", "isCorrect": true },
+				{ "id": "B", "text": "Ethanol", "isCorrect": false },
+				{ "id": "C", "text": "Propan-2-ol", "isCorrect": false },
+				{ "id": "D", "text": "Butan-1-ol", "isCorrect": false }
+			],
+			"supportsDiagram": true,
+			"diagram": {
+				"type": "node-flow",
+				"title": "IUPAC Naming Steps",
+				"data": {
+					"nodes": [
+						{ "id": "chain", "label": "Longest Carbon Chain (3 C = Prop-)", "x": 50, "y": 50 },
+						{ "id": "func", "label": "Functional Group (-OH = -ol)", "x": 150, "y": 100 },
+						{ "id": "num", "label": "Numbering (C1 has -OH)", "x": 250, "y": 50 },
+						{ "id": "name", "label": "Propan-1-ol", "x": 150, "y": 180 }
+					],
+					"edges": [
+						{ "id": "e1", "source": "chain", "target": "name" },
+						{ "id": "e2", "source": "func", "target": "name" },
+						{ "id": "e3", "source": "num", "target": "name" }
+					]
+				}
+			},
+			"hint": "Count the carbons and identify the -OH position",
+			"explanation": "There are 3 carbons (prop-) and an alcohol group (-ol) on the first carbon."
+		},
+		{
+			"id": "ps_040",
+			"topic": "Electrochemistry",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "In a galvanic cell, oxidation occurs at the ____ which is the ____ electrode.",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Anode; Negative", "isCorrect": true },
+				{ "id": "B", "text": "Cathode; Positive", "isCorrect": false },
+				{ "id": "C", "text": "Anode; Positive", "isCorrect": false },
+				{ "id": "D", "text": "Cathode; Negative", "isCorrect": false }
+			],
+			"supportsDiagram": true,
+			"diagram": {
+				"type": "node-flow",
+				"title": "Galvanic Cell Components",
+				"data": {
+					"nodes": [
+						{ "id": "anode", "label": "Anode (-) : Oxidation", "x": 50, "y": 100 },
+						{ "id": "ext", "label": "External Circuit (e- flow)", "x": 150, "y": 20 },
+						{ "id": "cath", "label": "Cathode (+) : Reduction", "x": 250, "y": 100 },
+						{ "id": "salt", "label": "Salt Bridge (Ion flow)", "x": 150, "y": 180 }
+					],
+					"edges": [
+						{ "id": "e1", "source": "anode", "target": "ext" },
+						{ "id": "e2", "source": "ext", "target": "cath" },
+						{ "id": "e3", "source": "cath", "target": "salt" },
+						{ "id": "e4", "source": "salt", "target": "anode" }
+					]
+				}
+			},
+			"hint": "AN OX and RED CAT; and in Galvanic, Anode is negative",
+			"explanation": "Oxidation always occurs at the anode. In a galvanic cell, the anode is the negative electrode where electrons are released."
+		},
+		{
+			"id": "ps_041",
+			"topic": "Chemical Bonding",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Which intermolecular force is responsible for the unusually high boiling point of water?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Hydrogen bonding", "isCorrect": true },
+				{ "id": "B", "text": "London dispersion forces", "isCorrect": false },
+				{ "id": "C", "text": "Dipole-dipole forces", "isCorrect": false },
+				{ "id": "D", "text": "Ion-dipole forces", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It involves H bonded to N, O, or F",
+			"explanation": "Hydrogen bonds are strong intermolecular forces occurring when H is bonded to highly electronegative atoms (N, O, F)."
+		},
+		{
+			"id": "ps_042",
+			"topic": "Organic Chemistry",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "To which homologous series does CH₃COOCH₂CH₃ belong?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Esters", "isCorrect": true },
+				{ "id": "B", "text": "Ketones", "isCorrect": false },
+				{ "id": "C", "text": "Carboxylic acids", "isCorrect": false },
+				{ "id": "D", "text": "Aldehydes", "isCorrect": false }
+			],
+			"supportsDiagram": true,
+			"diagram": {
+				"type": "node-flow",
+				"title": "Esterification Reaction",
+				"data": {
+					"nodes": [
+						{ "id": "acid", "label": "Carboxylic Acid", "x": 50, "y": 100 },
+						{ "id": "alc", "label": "Alcohol", "x": 150, "y": 20 },
+						{ "id": "est", "label": "Ester + Water", "x": 250, "y": 100 }
+					],
+					"edges": [
+						{ "id": "e1", "source": "acid", "target": "est" },
+						{ "id": "e2", "source": "alc", "target": "est" }
+					]
+				}
+			},
+			"hint": "Identify the -COO- functional group",
+			"explanation": "The -COO- group indicates an ester, formed from an acid and an alcohol."
+		},
+		{
+			"id": "ps_043",
+			"topic": "Electrochemistry",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "During the electrolysis of molten copper(II) chloride, what is produced at the cathode?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Copper metal", "isCorrect": true },
+				{ "id": "B", "text": "Chlorine gas", "isCorrect": false },
+				{ "id": "C", "text": "Copper ions", "isCorrect": false },
+				{ "id": "D", "text": "Oxygen gas", "isCorrect": false }
+			],
+			"supportsDiagram": true,
+			"diagram": {
+				"type": "node-flow",
+				"title": "Electrolytic Cell Flow",
+				"data": {
+					"nodes": [
+						{ "id": "ps", "label": "Power Source (+/-)", "x": 150, "y": 20 },
+						{ "id": "anode", "label": "Anode (+): Cl- → Cl2", "x": 50, "y": 120 },
+						{ "id": "cath", "label": "Cathode (-): Cu2+ → Cu", "x": 250, "y": 120 }
+					],
+					"edges": [
+						{ "id": "e1", "source": "ps", "target": "anode" },
+						{ "id": "e2", "source": "ps", "target": "cath" }
+					]
+				}
+			},
+			"hint": "Positive ions (cations) migrate to the negative electrode",
+			"explanation": "Cu²⁺ ions are attracted to the negative cathode, where they gain electrons (reduction) to form copper metal."
+		},
+		{
+			"id": "ps_044",
+			"topic": "Chemical Equilibrium",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What is the only factor that can change the value of the equilibrium constant (Kc)?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Temperature", "isCorrect": true },
+				{ "id": "B", "text": "Pressure", "isCorrect": false },
+				{ "id": "C", "text": "Concentration", "isCorrect": false },
+				{ "id": "D", "text": "Catalyst", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Stress only changes position, except for this one",
+			"explanation": "The equilibrium constant is temperature-dependent. Changes in concentration or pressure shift the position but not the constant."
+		},
+		{
+			"id": "ps_045",
+			"topic": "Organic Chemistry",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Which type of reaction converts an alkene into an alkane?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Addition (Hydrogenation)", "isCorrect": true },
+				{ "id": "B", "text": "Substitution", "isCorrect": false },
+				{ "id": "C", "text": "Elimination", "isCorrect": false },
+				{ "id": "D", "text": "Combustion", "isCorrect": false }
+			],
+			"supportsDiagram": true,
+			"diagram": {
+				"type": "node-flow",
+				"title": "Organic Reaction Pathways",
+				"data": {
+					"nodes": [
+						{ "id": "alkene", "label": "Alkene (C=C)", "x": 150, "y": 50 },
+						{ "id": "add", "label": "+ H2 (Addition)", "x": 50, "y": 120 },
+						{ "id": "elim", "label": "- H2 (Elimination)", "x": 250, "y": 120 },
+						{ "id": "alkane", "label": "Alkane (C-C)", "x": 150, "y": 200 }
+					],
+					"edges": [
+						{ "id": "e1", "source": "alkene", "target": "add" },
+						{ "id": "e2", "source": "add", "target": "alkane" },
+						{ "id": "e3", "source": "alkane", "target": "elim" },
+						{ "id": "e4", "source": "elim", "target": "alkene" }
+					]
+				}
+			},
+			"hint": "Breaking the double bond to add hydrogen",
+			"explanation": "Hydrogenation is an addition reaction where H₂ is added across the double bond of an alkene to form an alkane."
+		},
+		{
+			"id": "ps_046",
+			"topic": "Chemical Bonding",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "VSEPR theory: What is the shape of a molecule with 4 bonding pairs and 0 lone pairs on the central atom?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Tetrahedral", "isCorrect": true },
+				{ "id": "B", "text": "Linear", "isCorrect": false },
+				{ "id": "C", "text": "Trigonal planar", "isCorrect": false },
+				{ "id": "D", "text": "Octahedral", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Think of CH₄",
+			"explanation": "Four bonding pairs arrange themselves as far apart as possible, forming a tetrahedral shape with 109.5° angles."
+		},
+		{
+			"id": "ps_047",
+			"topic": "Rates of Reaction",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "How does increasing the surface area of a solid reactant affect the reaction rate?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Increases rate by providing more collision sites", "isCorrect": true },
+				{ "id": "B", "text": "Decreases rate by cooling the system", "isCorrect": false },
+				{ "id": "C", "text": "No effect on rate", "isCorrect": false },
+				{ "id": "D", "text": "Decreases activation energy", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Powder vs. Chunks",
+			"explanation": "A larger surface area allows more particles to be exposed to collisions, increasing the frequency of effective collisions."
+		},
+		{
+			"id": "ps_048",
+			"topic": "Electrochemistry",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "In the chlor-alkali industry, what are the three main products of the electrolysis of concentrated NaCl solution (brine)?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Chlorine, Hydrogen, Sodium Hydroxide", "isCorrect": true },
+				{ "id": "B", "text": "Sodium metal, Chlorine, Water", "isCorrect": false },
+				{ "id": "C", "text": "Oxygen, Hydrogen, Sodium", "isCorrect": false },
+				{ "id": "D", "text": "Chlorine, Oxygen, Sodium Carbonate", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Cl₂ is produced at the anode, H₂ at the cathode",
+			"explanation": "The electrolysis of brine yields Cl₂ gas, H₂ gas, and NaOH solution (caustic soda)."
+		},
+		{
+			"id": "ps_049",
+			"topic": "Organic Chemistry",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What is the general formula for the homologous series of alkanes?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "CnH2n+2", "isCorrect": true },
+				{ "id": "B", "text": "CnH2n", "isCorrect": false },
+				{ "id": "C", "text": "CnH2n-2", "isCorrect": false },
+				{ "id": "D", "text": "CnH2n+1OH", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Methane is CH₄, Ethane is C₂H₆",
+			"explanation": "Alkanes follow the general formula CnH2n+2, indicating they are saturated hydrocarbons."
+		},
+		{
+			"id": "ps_050",
+			"topic": "Chemical Equilibrium",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "If the concentration of a reactant is increased in a system at equilibrium, the system will:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Shift to the right (products)", "isCorrect": true },
+				{ "id": "B", "text": "Shift to the left (reactants)", "isCorrect": false },
+				{ "id": "C", "text": "Stay unchanged", "isCorrect": false },
+				{ "id": "D", "text": "Decrease the Kc value", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Sistema removes the 'extra' stuff",
+			"explanation": "Increasing reactant concentration causes the system to shift towards the products to consume the added reactant."
+		},
+		{
+			"id": "ps_051",
+			"topic": "Organic Chemistry",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Which of the following is a structural isomer of butane?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "2-methylpropane", "isCorrect": true },
+				{ "id": "B", "text": "Cyclobutane", "isCorrect": false },
+				{ "id": "C", "text": "Propane", "isCorrect": false },
+				{ "id": "D", "text": "Pentane", "isCorrect": false }
+			],
+			"supportsDiagram": true,
+			"diagram": {
+				"type": "node-flow",
+				"title": "Isomerism Classification",
+				"data": {
+					"nodes": [
+						{ "id": "iso", "label": "Structural Isomers", "x": 150, "y": 20 },
+						{ "id": "chain", "label": "Chain (e.g. Butane & 2-methylpropane)", "x": 50, "y": 120 },
+						{ "id": "pos", "label": "Positional (e.g. Propan-1-ol & Propan-2-ol)", "x": 150, "y": 120 },
+						{ "id": "func", "label": "Functional (e.g. Ethanol & Methoxymethane)", "x": 250, "y": 120 }
+					],
+					"edges": [
+						{ "id": "e1", "source": "iso", "target": "chain" },
+						{ "id": "e2", "source": "iso", "target": "pos" },
+						{ "id": "e3", "source": "iso", "target": "func" }
+					]
+				}
+			},
+			"hint": "Same molecular formula, different structural arrangement of carbon chain",
+			"explanation": "Both butane and 2-methylpropane have the molecular formula C₄H₁₀ but different carbon skeletons."
+		},
+		{
+			"id": "ps_052",
+			"topic": "Organic Chemistry",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "What is the major product when 2-bromobutane reacts with concentrated NaOH in ethanol under reflux?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "But-2-ene", "isCorrect": true },
+				{ "id": "B", "text": "Butan-2-ol", "isCorrect": false },
+				{ "id": "C", "text": "But-1-ene", "isCorrect": false },
+				{ "id": "D", "text": "Butane", "isCorrect": false }
+			],
+			"supportsDiagram": true,
+			"diagram": {
+				"type": "node-flow",
+				"title": "Elimination vs Substitution",
+				"data": {
+					"nodes": [
+						{ "id": "reac", "label": "Haloalkane + Base", "x": 150, "y": 20 },
+						{ "id": "elim", "label": "Elimination (Conc Base, Ethanol, Heat)", "x": 50, "y": 120 },
+						{ "id": "sub", "label": "Substitution (Dilute Base, Aqueous)", "x": 250, "y": 120 },
+						{ "id": "prod1", "label": "Alkene (Major: Zaitsev)", "x": 50, "y": 220 },
+						{ "id": "prod2", "label": "Alcohol", "x": 250, "y": 220 }
+					],
+					"edges": [
+						{ "id": "e1", "source": "reac", "target": "elim" },
+						{ "id": "e2", "source": "reac", "target": "sub" },
+						{ "id": "e3", "source": "elim", "target": "prod1" },
+						{ "id": "e4", "source": "sub", "target": "prod2" }
+					]
+				}
+			},
+			"hint": "Concentrated base and ethanol favor elimination over substitution",
+			"explanation": "This is a dehydrohalogenation reaction (elimination). According to Zaitsev's rule, the more substituted alkene (but-2-ene) is the major product."
+		},
+		{
+			"id": "ps_053",
+			"topic": "Rates of Reaction",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "In the Maxwell-Boltzmann distribution curve, what does the total area under the curve represent?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Total number of particles in the sample", "isCorrect": true },
+				{ "id": "B", "text": "The activation energy of the reaction", "isCorrect": false },
+				{ "id": "C", "text": "The average kinetic energy of the particles", "isCorrect": false },
+				{ "id": "D", "text": "The rate of the chemical reaction", "isCorrect": false }
+			],
+			"supportsDiagram": true,
+			"diagram": {
+				"type": "node-flow",
+				"title": "Maxwell-Boltzmann Curve Components",
+				"data": {
+					"nodes": [
+						{ "id": "peak", "label": "Peak: Most Probable Energy", "x": 100, "y": 50 },
+						{ "id": "area", "label": "Total Area: Total Particles", "x": 150, "y": 150 },
+						{ "id": "ea", "label": "Ea: Activation Energy Threshold", "x": 250, "y": 100 },
+						{ "id": "coll", "label": "Shaded region: Particles with E >= Ea", "x": 300, "y": 180 }
+					],
+					"edges": [
+						{ "id": "e1", "source": "area", "target": "peak" },
+						{ "id": "e2", "source": "ea", "target": "coll" }
+					]
+				}
+			},
+			"hint": "Think about what the probability distribution covers",
+			"explanation": "The Maxwell-Boltzmann distribution shows the number of particles at different energies; hence the total area represents the total number of particles."
+		},
+		{
+			"id": "ps_054",
+			"topic": "Rates of Reaction",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "Which statement correctly explains how an increase in temperature affects the reaction rate according to collision theory?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "More particles have kinetic energy greater than or equal to Ea", "isCorrect": true },
+				{ "id": "B", "text": "The activation energy of the reaction is lowered", "isCorrect": false },
+				{ "id": "C", "text": "The particles become more concentrated in the vessel", "isCorrect": false },
+				{ "id": "D", "text": "The reaction becomes more exothermic, releasing more heat", "isCorrect": false }
+			],
+			"supportsDiagram": true,
+			"diagram": {
+				"type": "node-flow",
+				"title": "Temperature Effect Flow",
+				"data": {
+					"nodes": [
+						{ "id": "temp", "label": "Increase Temperature", "x": 150, "y": 20 },
+						{ "id": "ke", "label": "Increase Average KE", "x": 150, "y": 100 },
+						{ "id": "freq", "label": "Increase Collision Frequency", "x": 50, "y": 180 },
+						{ "id": "frac", "label": "Increase Fraction with E >= Ea", "x": 250, "y": 180 },
+						{ "id": "rate", "label": "Increase Reaction Rate", "x": 150, "y": 260 }
+					],
+					"edges": [
+						{ "id": "e1", "source": "temp", "target": "ke" },
+						{ "id": "e2", "source": "ke", "target": "freq" },
+						{ "id": "e3", "source": "ke", "target": "frac" },
+						{ "id": "e4", "source": "freq", "target": "rate" },
+						{ "id": "e5", "source": "frac", "target": "rate" }
+					]
+				}
+			},
+			"hint": "Temperature relates to the speed and energy of particles",
+			"explanation": "Increased temperature increases average KE, resulting in a larger fraction of particles possessing sufficient energy (>= Ea) for effective collisions."
+		},
+		{
+			"id": "ps_055",
+			"topic": "Chemical Equilibrium",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "If the equilibrium constant (Kc) for a reaction is 0.005 at 25°C, what does this indicate about the position of equilibrium?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "The equilibrium lies far to the left (reactants favored)", "isCorrect": true },
+				{ "id": "B", "text": "The equilibrium lies far to the right (products favored)", "isCorrect": false },
+				{ "id": "C", "text": "The reaction is extremely fast", "isCorrect": false },
+				{ "id": "D", "text": "The concentrations of reactants and products are equal", "isCorrect": false }
+			],
+			"supportsDiagram": true,
+			"diagram": {
+				"type": "node-flow",
+				"title": "Kc Interpretation",
+				"data": {
+					"nodes": [
+						{ "id": "kc", "label": "Equilibrium Constant (Kc)", "x": 150, "y": 20 },
+						{ "id": "high", "label": "Kc >> 1 : Products Favored", "x": 250, "y": 100 },
+						{ "id": "low", "label": "Kc << 1 : Reactants Favored", "x": 50, "y": 100 },
+						{ "id": "eq", "label": "Kc ≈ 1 : Comparable Amounts", "x": 150, "y": 180 }
+					],
+					"edges": [
+						{ "id": "e1", "source": "kc", "target": "high" },
+						{ "id": "e2", "source": "kc", "target": "low" },
+						{ "id": "e3", "source": "kc", "target": "eq" }
+					]
+				}
+			},
+			"hint": "Recall that Kc = [Products]/[Reactants]",
+			"explanation": "A very small Kc value (< 1) means the denominator (reactants) is much larger than the numerator (products) at equilibrium."
+		},
+		{
+			"id": "ps_056",
+			"topic": "Chemical Equilibrium",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "For the Haber Process: N₂(g) + 3H₂(g) ⇌ 2NH₃(g) (ΔH = -92 kJ/mol). How will increasing the pressure of the system affect the yield of ammonia?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Increases the yield of ammonia", "isCorrect": true },
+				{ "id": "B", "text": "Decreases the yield of ammonia", "isCorrect": false },
+				{ "id": "C", "text": "No change in yield", "isCorrect": false },
+				{ "id": "D", "text": "Initially increases then decreases yield", "isCorrect": false }
+			],
+			"supportsDiagram": true,
+			"diagram": {
+				"type": "node-flow",
+				"title": "Pressure Shift Logic",
+				"data": {
+					"nodes": [
+						{ "id": "stress", "label": "Increase Pressure", "x": 150, "y": 20 },
+						{ "id": "count", "label": "Count Gas Moles", "x": 150, "y": 100 },
+						{ "id": "reac", "label": "Reactants: 4 moles", "x": 50, "y": 180 },
+						{ "id": "prod", "label": "Products: 2 moles", "x": 250, "y": 180 },
+						{ "id": "shift", "label": "Shift to fewer moles (Right)", "x": 150, "y": 260 }
+					],
+					"edges": [
+						{ "id": "e1", "source": "stress", "target": "count" },
+						{ "id": "e2", "source": "count", "target": "reac" },
+						{ "id": "e3", "source": "count", "target": "prod" },
+						{ "id": "e4", "source": "reac", "target": "shift" },
+						{ "id": "e5", "source": "prod", "target": "shift" }
+					]
+				}
+			},
+			"hint": "Le Chatelier's Principle: Increase in pressure favors the side with fewer gas moles",
+			"explanation": "There are 4 moles of gas on the left and 2 on the right. Increasing pressure shifts the equilibrium to the side with fewer moles (ammonia)."
+		},
+		{
+			"id": "ps_057",
+			"topic": "Acids and Bases",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "According to the Brønsted-Lowry theory, an acid is defined as a:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Proton donor", "isCorrect": true },
+				{ "id": "B", "text": "Proton acceptor", "isCorrect": false },
+				{ "id": "C", "text": "Hydroxyl ion donor", "isCorrect": false },
+				{ "id": "D", "text": "Electron pair acceptor", "isCorrect": false }
+			],
+			"supportsDiagram": true,
+			"diagram": {
+				"type": "node-flow",
+				"title": "Brønsted-Lowry Relationship",
+				"data": {
+					"nodes": [
+						{ "id": "acid", "label": "Acid (HA)", "x": 50, "y": 50 },
+						{ "id": "base", "label": "Base (B)", "x": 250, "y": 50 },
+						{ "id": "trans", "label": "Proton Transfer (H+)", "x": 150, "y": 20 },
+						{ "id": "ca", "label": "Conjugate Acid (BH+)", "x": 250, "y": 150 },
+						{ "id": "cb", "label": "Conjugate Base (A-)", "x": 50, "y": 150 }
+					],
+					"edges": [
+						{ "id": "e1", "source": "acid", "target": "trans" },
+						{ "id": "e2", "source": "trans", "target": "base" },
+						{ "id": "e3", "source": "acid", "target": "cb" },
+						{ "id": "e4", "source": "base", "target": "ca" }
+					]
+				}
+			},
+			"hint": "Think about H+ ions",
+			"explanation": "Brønsted-Lowry acids donate protons (H+), while bases accept them."
+		},
+		{
+			"id": "ps_058",
+			"topic": "Acids and Bases",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What is the pH of a 0.001 mol/dm³ solution of nitric acid (HNO₃)?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "3", "isCorrect": true },
+				{ "id": "B", "text": "1", "isCorrect": false },
+				{ "id": "C", "text": "2", "isCorrect": false },
+				{ "id": "D", "text": "4", "isCorrect": false }
+			],
+			"supportsDiagram": true,
+			"diagram": {
+				"type": "node-flow",
+				"title": "pH Calculation Logic",
+				"data": {
+					"nodes": [
+						{ "id": "conc", "label": "[HNO3] = 0.001 M", "x": 150, "y": 20 },
+						{ "id": "ion", "label": "Strong Acid: [H+] = [HNO3]", "x": 150, "y": 100 },
+						{ "id": "log", "label": "pH = -log[H+]", "x": 150, "y": 180 },
+						{ "id": "ans", "label": "pH = -log(10^-3) = 3", "x": 150, "y": 260 }
+					],
+					"edges": [
+						{ "id": "e1", "source": "conc", "target": "ion" },
+						{ "id": "e2", "source": "ion", "target": "log" },
+						{ "id": "e3", "source": "log", "target": "ans" }
+					]
+				}
+			},
+			"hint": "pH = -log[H3O+]",
+			"explanation": "Nitric acid is a strong monoprotic acid, so [H+] = 0.001 mol/dm³. pH = -log(0.001) = 3."
+		},
+		{
+			"id": "ps_059",
+			"topic": "Electrochemistry",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Which of the following standard reduction potentials (E°) represents the strongest oxidizing agent?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "E° = +2.87 V (F2/F-)", "isCorrect": true },
+				{ "id": "B", "text": "E° = -3.05 V (Li+/Li)", "isCorrect": false },
+				{ "id": "C", "text": "E° = 0.00 V (H+/H2)", "isCorrect": false },
+				{ "id": "D", "text": "E° = +0.76 V (Zn2+/Zn)", "isCorrect": false }
+			],
+			"supportsDiagram": true,
+			"diagram": {
+				"type": "node-flow",
+				"title": "Redox Potentials Hierarchy",
+				"data": {
+					"nodes": [
+						{ "id": "tab", "label": "Standard Reduction Potentials", "x": 150, "y": 20 },
+						{ "id": "pos", "label": "High E° (+): Stronger OX Agent", "x": 50, "y": 120 },
+						{ "id": "neg", "label": "Low E° (-): Stronger RED Agent", "x": 250, "y": 120 },
+						{ "id": "f", "label": "Fluorine (+2.87V): Strongest OX", "x": 50, "y": 220 },
+						{ "id": "li", "label": "Lithium (-3.05V): Strongest RED", "x": 250, "y": 220 }
+					],
+					"edges": [
+						{ "id": "e1", "source": "tab", "target": "pos" },
+						{ "id": "e2", "source": "tab", "target": "neg" },
+						{ "id": "e3", "source": "pos", "target": "f" },
+						{ "id": "e4", "source": "neg", "target": "li" }
+					]
+				}
+			},
+			"hint": "The more positive the E° value, the more easily the substance is reduced",
+			"explanation": "Strong oxidizing agents have the highest (most positive) reduction potentials because they have a high affinity for electrons."
+		},
+		{
+			"id": "ps_060",
+			"topic": "Electrochemistry",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "In a Zn-Cu galvanic cell, which of the following describes the movement of anions through the salt bridge?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Toward the zinc half-cell (anode)", "isCorrect": true },
+				{ "id": "B", "text": "Toward the copper half-cell (cathode)", "isCorrect": false },
+				{ "id": "C", "text": "Toward the positive electrode", "isCorrect": false },
+				{ "id": "D", "text": "Opposite to the direction of electrons in the bridge", "isCorrect": false }
+			],
+			"supportsDiagram": true,
+			"diagram": {
+				"type": "node-flow",
+				"title": "Ion Flow Logic",
+				"data": {
+					"nodes": [
+						{ "id": "ox", "label": "Anode: Zn -> Zn2+ + 2e-", "x": 50, "y": 50 },
+						{ "id": "red", "label": "Cathode: Cu2+ + 2e- -> Cu", "x": 250, "y": 50 },
+						{ "id": "bridge", "label": "Salt Bridge", "x": 150, "y": 150 },
+						{ "id": "anion", "label": "Anions -> Anode half-cell", "x": 50, "y": 250 },
+						{ "id": "cation", "label": "Cations -> Cathode half-cell", "x": 250, "y": 250 }
+					],
+					"edges": [
+						{ "id": "e1", "source": "ox", "target": "bridge" },
+						{ "id": "e2", "source": "red", "target": "bridge" },
+						{ "id": "e3", "source": "bridge", "target": "anion" },
+						{ "id": "e4", "source": "bridge", "target": "cation" }
+					]
+				}
+			},
+			"hint": "Anions migrate to the Anode to balance the build-up of positive charge",
+			"explanation": "At the anode, oxidation produces Zn²⁺ ions. Negative anions from the salt bridge move into this half-cell to maintain electrical neutrality."
+		},
+		{
+			"id": "ps_061",
+			"topic": "Organic Chemistry",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What is the primary intermolecular force between molecules of propanone (acetone)?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Dipole-dipole forces", "isCorrect": true },
+				{ "id": "B", "text": "Hydrogen bonding", "isCorrect": false },
+				{ "id": "C", "text": "London dispersion forces", "isCorrect": false },
+				{ "id": "D", "text": "Ion-dipole forces", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Propanone has a polar C=O group but no O-H bond",
+			"explanation": "Ketones are polar due to the carbonyl group, leading to dipole-dipole interactions, but they cannot form hydrogen bonds with themselves."
+		},
+		{
+			"id": "ps_062",
+			"topic": "Organic Chemistry",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Which homologous series is characterized by the presence of a -CHO functional group?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Aldehydes", "isCorrect": true },
+				{ "id": "B", "text": "Ketones", "isCorrect": false },
+				{ "id": "C", "text": "Carboxylic acids", "isCorrect": false },
+				{ "id": "D", "text": "Esters", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It is always at the end of a carbon chain",
+			"explanation": "Aldehydes have the formyl group (-CHO) at the end of the chain. Ketones have -CO- in the middle."
+		},
+		{
+			"id": "ps_063",
+			"topic": "Rates of Reaction",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "According to the collision theory, for a collision to be effective, particles must collide with:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Correct orientation and sufficient energy", "isCorrect": true },
+				{ "id": "B", "text": "Maximum possible speed", "isCorrect": false },
+				{ "id": "C", "text": "Low kinetic energy", "isCorrect": false },
+				{ "id": "D", "text": "Large surface area", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Energy and geometry both matter",
+			"explanation": "An effective collision requires the minimum activation energy and the correct geometric alignment to break and form bonds."
+		},
+		{
+			"id": "ps_064",
+			"topic": "Rates of Reaction",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "If the rate law for a reaction is Rate = k[A][B]², what happens to the rate if the concentration of B is doubled?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "It increases by a factor of 4", "isCorrect": true },
+				{ "id": "B", "text": "It doubles", "isCorrect": false },
+				{ "id": "C", "text": "It triples", "isCorrect": false },
+				{ "id": "D", "text": "It increases by a factor of 8", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "B is second order",
+			"explanation": "Since the reaction is second order with respect to B, doubling [B] results in a 2² = 4-fold increase in the rate."
+		},
+		{
+			"id": "ps_065",
+			"topic": "Chemical Equilibrium",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What happens to the Kc value of an endothermic reaction if the temperature is increased?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Increases", "isCorrect": true },
+				{ "id": "B", "text": "Decreases", "isCorrect": false },
+				{ "id": "C", "text": "Remains the same", "isCorrect": false },
+				{ "id": "D", "text": "Becomes negative", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Increase in temp favors the endothermic direction",
+			"explanation": "For an endothermic reaction, increasing temperature shifts equilibrium to the right (products), which increases the Kc value."
+		},
+		{
+			"id": "ps_066",
+			"topic": "Chemical Equilibrium",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Which of the following will NOT affect the position of equilibrium for the reaction: H₂(g) + I₂(g) ⇌ 2HI(g)?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Changing the pressure", "isCorrect": true },
+				{ "id": "B", "text": "Changing the temperature", "isCorrect": false },
+				{ "id": "C", "text": "Adding more H2 gas", "isCorrect": false },
+				{ "id": "D", "text": "Removing HI gas", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Count the number of gas moles on each side",
+			"explanation": "There are 2 moles of gas on both sides, so pressure changes do not shift the equilibrium position."
+		},
+		{
+			"id": "ps_067",
+			"topic": "Acids and Bases",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "A solution of sodium ethanoate (CH₃COONa) is:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Basic (pH > 7)", "isCorrect": true },
+				{ "id": "B", "text": "Acidic (pH < 7)", "isCorrect": false },
+				{ "id": "C", "text": "Neutral (pH = 7)", "isCorrect": false },
+				{ "id": "D", "text": "Strongly acidic", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Consider the hydrolysis of the ethanoate ion",
+			"explanation": "CH₃COO⁻ is the conjugate base of a weak acid. It undergoes hydrolysis in water to produce OH⁻ ions, making the solution basic."
+		},
+		{
+			"id": "ps_068",
+			"topic": "Acids and Bases",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Which indicator is most suitable for a titration between a strong acid and a weak base?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Methyl orange", "isCorrect": true },
+				{ "id": "B", "text": "Phenolphthalein", "isCorrect": false },
+				{ "id": "C", "text": "Bromothymol blue", "isCorrect": false },
+				{ "id": "D", "text": "Universal indicator", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "The equivalence point will be below pH 7",
+			"explanation": "A strong acid-weak base titration has an acidic equivalence point. Methyl orange changes color in the acidic range (pH 3.1-4.4)."
+		},
+		{
+			"id": "ps_069",
+			"topic": "Electrochemistry",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "In an electrolytic cell, the cathode is the:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Negative electrode where reduction occurs", "isCorrect": true },
+				{ "id": "B", "text": "Positive electrode where oxidation occurs", "isCorrect": false },
+				{ "id": "C", "text": "Negative electrode where oxidation occurs", "isCorrect": false },
+				{ "id": "D", "text": "Positive electrode where reduction occurs", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Reduction always happens at the cathode, but polarity differs from galvanic cells",
+			"explanation": "In electrolysis, an external source provides electrons to the cathode (negative), where reduction takes place."
+		},
+		{
+			"id": "ps_070",
+			"topic": "Electrochemistry",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What is the function of the salt bridge in a galvanic cell?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "To maintain electrical neutrality", "isCorrect": true },
+				{ "id": "B", "text": "To allow electrons to flow between half-cells", "isCorrect": false },
+				{ "id": "C", "text": "To provide a path for the external current", "isCorrect": false },
+				{ "id": "D", "text": "To speed up the reaction", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It allows ions to move",
+			"explanation": "The salt bridge completes the circuit and prevents charge build-up by allowing ions to migrate between the half-cells."
+		},
+		{
+			"id": "ps_071",
+			"topic": "Organic Chemistry",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Which property of alkanes explains why they are used as fuels?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "They release large amounts of energy when burned", "isCorrect": true },
+				{ "id": "B", "text": "They are highly reactive with cold water", "isCorrect": false },
+				{ "id": "C", "text": "They have very high boiling points", "isCorrect": false },
+				{ "id": "D", "text": "They are soluble in water", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Combustion is highly exothermic",
+			"explanation": "Alkanes undergo combustion reactions with oxygen, releasing significant thermal energy."
+		},
+		{
+			"id": "ps_072",
+			"topic": "Organic Chemistry",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "Which type of isomerism is shown by but-1-ene and but-2-ene?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Positional isomerism", "isCorrect": true },
+				{ "id": "B", "text": "Chain isomerism", "isCorrect": false },
+				{ "id": "C", "text": "Functional isomerism", "isCorrect": false },
+				{ "id": "D", "text": "Optical isomerism", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "The position of the double bond changes",
+			"explanation": "They have the same carbon chain but the double bond is at different positions (C1 vs C2)."
+		},
+		{
+			"id": "ps_073",
+			"topic": "Rates of Reaction",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "A change in which factor will change the value of the rate constant (k)?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Temperature", "isCorrect": true },
+				{ "id": "B", "text": "Concentration", "isCorrect": false },
+				{ "id": "C", "text": "Pressure", "isCorrect": false },
+				{ "id": "D", "text": "Volume", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Arrhenius equation",
+			"explanation": "The rate constant k is temperature-dependent. Higher temperatures lead to higher k values."
+		},
+		{
+			"id": "ps_074",
+			"topic": "Rates of Reaction",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "The minimum energy required for a collision to result in a reaction is called:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Activation energy", "isCorrect": true },
+				{ "id": "B", "text": "Kinetic energy", "isCorrect": false },
+				{ "id": "C", "text": "Potential energy", "isCorrect": false },
+				{ "id": "D", "text": "Internal energy", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Ea",
+			"explanation": "Activation energy is the 'barrier' that reactants must overcome to reach the transition state."
+		},
+		{
+			"id": "ps_075",
+			"topic": "Chemical Equilibrium",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "What happens to the concentration of reactants when a catalyst is added to a system already at equilibrium?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Remains unchanged", "isCorrect": true },
+				{ "id": "B", "text": "Decreases", "isCorrect": false },
+				{ "id": "C", "text": "Increases", "isCorrect": false },
+				{ "id": "D", "text": "Becomes zero", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Catalysts speed up both forward and reverse reactions equally",
+			"explanation": "A catalyst increases the rate at which equilibrium is reached but does not affect the position of equilibrium or the concentrations."
+		},
+		{
+			"id": "ps_076",
+			"topic": "Chemical Equilibrium",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "In a reversible reaction, chemical equilibrium is reached when:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Rate of forward reaction equals rate of reverse reaction", "isCorrect": true },
+				{ "id": "B", "text": "Concentration of products equals concentration of reactants", "isCorrect": false },
+				{ "id": "C", "text": "The reaction stops completely", "isCorrect": false },
+				{ "id": "D", "text": "All reactants have been converted to products", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Dynamic equilibrium",
+			"explanation": "At equilibrium, the rates are equal, and consequently, the concentrations of species remain constant."
+		},
+		{
+			"id": "ps_077",
+			"topic": "Acids and Bases",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What is the conjugate acid of the base H₂O?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "H3O+", "isCorrect": true },
+				{ "id": "B", "text": "OH-", "isCorrect": false },
+				{ "id": "C", "text": "H2", "isCorrect": false },
+				{ "id": "D", "text": "O2-", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Add a proton (H+) to the base",
+			"explanation": "A conjugate acid is formed when a base accepts a proton. H₂O + H⁺ → H₃O⁺."
+		},
+		{
+			"id": "ps_078",
+			"topic": "Acids and Bases",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "A substance that can act as either an acid or a base is called:",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "Ampholyte (or amphoteric)", "isCorrect": true },
+				{ "id": "B", "text": "Neutralizer", "isCorrect": false },
+				{ "id": "C", "text": "Isomer", "isCorrect": false },
+				{ "id": "D", "text": "Catalyst", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Water is a common example",
+			"explanation": "Ampholytes (like water or HSO₄⁻) can donate or accept protons depending on the environment."
+		},
+		{
+			"id": "ps_079",
+			"topic": "Electrochemistry",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What is the standard cell potential (E°cell) for a cell with Zn/Zn²⁺ (-0.76 V) and Cu/Cu²⁺ (+0.34 V)?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "1.10 V", "isCorrect": true },
+				{ "id": "B", "text": "0.42 V", "isCorrect": false },
+				{ "id": "C", "text": "-1.10 V", "isCorrect": false },
+				{ "id": "D", "text": "0.76 V", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "E°cell = E°cathode - E°anode",
+			"explanation": "E°cell = 0.34 - (-0.76) = 1.10 V. Copper is the cathode (higher E°) and Zinc is the anode."
+		},
+		{
+			"id": "ps_080",
+			"topic": "Electrochemistry",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "Which statement is true for an object being electroplated with silver?",
+			"questionType": "multiple-choice",
+			"options": [
+				{ "id": "A", "text": "The object must be the cathode", "isCorrect": true },
+				{ "id": "B", "text": "The object must be the anode", "isCorrect": false },
+				{ "id": "C", "text": "The electrolyte must contain zinc ions", "isCorrect": false },
+				{ "id": "D", "text": "A silver rod is used as the cathode", "isCorrect": false }
+			],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "The metal to be plated must be reduced onto the object",
+			"explanation": "The object to be plated is placed at the negative cathode where Ag⁺ ions from the solution gain electrons to form silver metal."
 		}
 	]
 }

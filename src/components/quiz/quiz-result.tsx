@@ -1,6 +1,13 @@
 "use client";
 
 import {
+	CancelIcon,
+	ClappingIcon,
+	PartyIcon,
+	ThumbsUpIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+import {
 	IconArrowRight,
 	IconHome,
 	IconRefresh,
@@ -95,12 +102,20 @@ export function QuizResult({ results, onRestart, onClose }: QuizResultProps) {
 
 	const getMessage = () => {
 		if (accuracy >= 90)
-			return { title: "Outstanding!", emoji: "🎉", celebration: true };
+			return {
+				title: "Outstanding!",
+				icon: PartyIcon,
+				celebration: true,
+			};
 		if (accuracy >= 70)
-			return { title: "Great job!", emoji: "👏", celebration: false };
+			return { title: "Great job!", icon: ClappingIcon, celebration: false };
 		if (accuracy >= 50)
-			return { title: "Good effort!", emoji: "👍", celebration: false };
-		return { title: "Keep practicing!", emoji: "💪", celebration: false };
+			return { title: "Good effort!", icon: ThumbsUpIcon, celebration: false };
+		return {
+			title: "Keep practicing!",
+			icon: CancelIcon,
+			celebration: false,
+		};
 	};
 
 	const message = getMessage();
@@ -120,7 +135,7 @@ export function QuizResult({ results, onRestart, onClose }: QuizResultProps) {
 					transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
 					className="text-5xl"
 				>
-					{message.emoji}
+					<HugeiconsIcon icon={message.icon} className="w-12 h-12" />
 				</m.div>
 				<m.h2
 					className="text-2xl font-bold"

@@ -1,0 +1,512 @@
+[
+	{
+		"id": "bus_056",
+		"topic": "Ethics and Professionalism",
+		"difficulty": "Medium",
+		"points": 15,
+		"questionText": "According to the Triple Bottom Line diagram, which three factors must a business balance for sustainability?",
+		"questionType": "multiple-choice",
+		"options": [
+			{ "id": "A", "text": "Profit, People, Planet", "isCorrect": true },
+			{ "id": "B", "text": "Price, Product, Promotion", "isCorrect": false },
+			{ "id": "C", "text": "Power, Politics, Prestige", "isCorrect": false },
+			{
+				"id": "D",
+				"text": "Planning, Production, Purchasing",
+				"isCorrect": false
+			}
+		],
+		"supportsDiagram": true,
+		"diagram": {
+			"type": "node-flow",
+			"data": {
+				"nodes": [
+					{
+						"id": "eco",
+						"type": "pillar",
+						"label": "Profit (Economic)",
+						"x": 200,
+						"y": 20
+					},
+					{
+						"id": "soc",
+						"type": "pillar",
+						"label": "People (Social)",
+						"x": 100,
+						"y": 150
+					},
+					{
+						"id": "env",
+						"type": "pillar",
+						"label": "Planet (Environmental)",
+						"x": 300,
+						"y": 150
+					}
+				],
+				"edges": [
+					{ "id": "e1", "source": "eco", "target": "soc" },
+					{ "id": "e2", "source": "soc", "target": "env" },
+					{ "id": "e3", "source": "env", "target": "eco" }
+				]
+			}
+		},
+		"hint": "Social, environmental, and financial performance.",
+		"explanation": "The Triple Bottom Line measures success in terms of social responsibility, environmental impact, and economic profit."
+	},
+	{
+		"id": "bus_057",
+		"topic": "Team Performance",
+		"difficulty": "Hard",
+		"points": 20,
+		"questionText": "Which conflict management style is characterized by a 'Win-Win' outcome where both parties work together to find a solution that satisfies all concerns?",
+		"questionType": "multiple-choice",
+		"options": [
+			{ "id": "A", "text": "Collaborating", "isCorrect": true },
+			{ "id": "B", "text": "Compromising", "isCorrect": false },
+			{ "id": "C", "text": "Accommodating", "isCorrect": false },
+			{ "id": "D", "text": "Competing", "isCorrect": false }
+		],
+		"supportsDiagram": false,
+		"diagram": null,
+		"hint": "High concern for both self and others.",
+		"explanation": "Collaboration involves open communication and joint problem-solving to achieve a mutually beneficial outcome."
+	},
+	{
+		"id": "bus_058",
+		"topic": "Human Resources Function",
+		"difficulty": "Easy",
+		"points": 10,
+		"questionText": "What is the purpose of 'Induction' for a new employee?",
+		"questionType": "multiple-choice",
+		"options": [
+			{ "id": "A", "text": "To terminate the contract.", "isCorrect": false },
+			{
+				"id": "B",
+				"text": "To introduce the employee to the business and their role.",
+				"isCorrect": true
+			},
+			{
+				"id": "C",
+				"text": "To conduct a performance appraisal.",
+				"isCorrect": false
+			},
+			{ "id": "D", "text": "To advertise a new vacancy.", "isCorrect": false }
+		],
+		"supportsDiagram": false,
+		"diagram": null,
+		"hint": "First few days on the job.",
+		"explanation": "Induction (or orientation) helps new employees settle into the organization and understand their duties."
+	},
+	{
+		"id": "bus_059",
+		"topic": "Investment: Securities",
+		"difficulty": "Medium",
+		"points": 15,
+		"questionText": "According to the Risk vs Return diagram, which investment typically has the lowest risk and lowest potential return?",
+		"questionType": "multiple-choice",
+		"options": [
+			{ "id": "A", "text": "Fixed Deposits", "isCorrect": true },
+			{ "id": "B", "text": "Shares", "isCorrect": false },
+			{ "id": "C", "text": "Real Estate", "isCorrect": false },
+			{ "id": "D", "text": "Venture Capital", "isCorrect": false }
+		],
+		"supportsDiagram": true,
+		"diagram": {
+			"type": "node-flow",
+			"data": {
+				"nodes": [
+					{
+						"id": "low",
+						"type": "point",
+						"label": "Fixed Deposits (Low)",
+						"x": 50,
+						"y": 180
+					},
+					{
+						"id": "mid",
+						"type": "point",
+						"label": "Unit Trusts (Medium)",
+						"x": 200,
+						"y": 100
+					},
+					{
+						"id": "hig",
+						"type": "point",
+						"label": "Shares (High)",
+						"x": 350,
+						"y": 20
+					}
+				],
+				"edges": [
+					{ "id": "e1", "source": "low", "target": "mid" },
+					{ "id": "e2", "source": "mid", "target": "hig" }
+				]
+			}
+		},
+		"hint": "Safety vs Growth.",
+		"explanation": "Fixed deposits are considered low-risk as the principal is guaranteed, but they offer lower interest rates compared to volatile shares."
+	},
+	{
+		"id": "bus_060",
+		"topic": "Insurance",
+		"difficulty": "Medium",
+		"points": 15,
+		"questionText": "What is 'Non-compulsory' insurance also known as?",
+		"questionType": "multiple-choice",
+		"options": [
+			{ "id": "A", "text": "Short-term insurance", "isCorrect": false },
+			{ "id": "B", "text": "Voluntary insurance", "isCorrect": true },
+			{ "id": "C", "text": "Legislated insurance", "isCorrect": false },
+			{ "id": "D", "text": "Assurance", "isCorrect": false }
+		],
+		"supportsDiagram": false,
+		"diagram": null,
+		"hint": "Taken by own choice.",
+		"explanation": "Voluntary (non-compulsory) insurance is taken out by individuals or businesses based on their own risk assessment."
+	},
+	{
+		"id": "bus_061",
+		"topic": "Business Environments",
+		"difficulty": "Hard",
+		"points": 20,
+		"questionText": "In a SWOT analysis, which two factors are 'External' to the business?",
+		"questionType": "multiple-choice",
+		"options": [
+			{ "id": "A", "text": "Strengths and Weaknesses", "isCorrect": false },
+			{ "id": "B", "text": "Opportunities and Threats", "isCorrect": true },
+			{ "id": "C", "text": "Strengths and Opportunities", "isCorrect": false },
+			{ "id": "D", "text": "Weaknesses and Threats", "isCorrect": false }
+		],
+		"supportsDiagram": true,
+		"diagram": {
+			"type": "node-flow",
+			"data": {
+				"nodes": [
+					{
+						"id": "s",
+						"type": "internal",
+						"label": "Strengths",
+						"x": 100,
+						"y": 50
+					},
+					{
+						"id": "w",
+						"type": "internal",
+						"label": "Weaknesses",
+						"x": 300,
+						"y": 50
+					},
+					{
+						"id": "o",
+						"type": "external",
+						"label": "Opportunities",
+						"x": 100,
+						"y": 150
+					},
+					{
+						"id": "t",
+						"type": "external",
+						"label": "Threats",
+						"x": 300,
+						"y": 150
+					}
+				],
+				"edges": []
+			}
+		},
+		"hint": "Factors existing in the market or macro environment.",
+		"explanation": "Opportunities and Threats come from the external environment, while Strengths and Weaknesses are internal."
+	},
+	{
+		"id": "bus_062",
+		"topic": "Ethics and Professionalism",
+		"difficulty": "Easy",
+		"points": 10,
+		"questionText": "What is 'Whistle-blowing'?",
+		"questionType": "multiple-choice",
+		"options": [
+			{
+				"id": "A",
+				"text": "Reporting illegal or unethical behavior within an organization.",
+				"isCorrect": true
+			},
+			{
+				"id": "B",
+				"text": "Promoting a product through social media.",
+				"isCorrect": false
+			},
+			{ "id": "C", "text": "Conducting a job interview.", "isCorrect": false },
+			{ "id": "D", "text": "Competing for a market share.", "isCorrect": false }
+		],
+		"supportsDiagram": false,
+		"diagram": null,
+		"hint": "Exposing wrongdoing.",
+		"explanation": "Whistle-blowing is the act of informing on someone or some organization engaged in an illicit activity."
+	},
+	{
+		"id": "bus_063",
+		"topic": "Team Performance",
+		"difficulty": "Medium",
+		"points": 15,
+		"questionText": "Which role in Belbin's Team Roles is responsible for ensuring the team stays on schedule and meets deadlines?",
+		"questionType": "multiple-choice",
+		"options": [
+			{ "id": "A", "text": "Completer-Finisher", "isCorrect": true },
+			{ "id": "B", "text": "Plant", "isCorrect": false },
+			{ "id": "C", "text": "Resource Investigator", "isCorrect": false },
+			{ "id": "D", "text": "Shaper", "isCorrect": false }
+		],
+		"supportsDiagram": false,
+		"diagram": null,
+		"hint": "Attention to detail and timing.",
+		"explanation": "The Completer-Finisher is focused on error-free delivery and meeting deadlines."
+	},
+	{
+		"id": "bus_064",
+		"topic": "Human Resources Function",
+		"difficulty": "Hard",
+		"points": 20,
+		"questionText": "According to the Labor Relations Act (LRA) flow, what is the first step in resolving a collective dispute?",
+		"questionType": "multiple-choice",
+		"options": [
+			{
+				"id": "A",
+				"text": "Referral to CCMA for Conciliation",
+				"isCorrect": true
+			},
+			{ "id": "B", "text": "Industrial Action (Strike)", "isCorrect": false },
+			{ "id": "C", "text": "Labor Appeal Court", "isCorrect": false },
+			{ "id": "D", "text": "Dismissal of all employees", "isCorrect": false }
+		],
+		"supportsDiagram": true,
+		"diagram": {
+			"type": "node-flow",
+			"data": {
+				"nodes": [
+					{
+						"id": "dis",
+						"type": "event",
+						"label": "Dispute",
+						"x": 200,
+						"y": 20
+					},
+					{
+						"id": "con",
+						"type": "step",
+						"label": "Conciliation (CCMA)",
+						"x": 200,
+						"y": 100
+					},
+					{
+						"id": "arb",
+						"type": "step",
+						"label": "Arbitration",
+						"x": 200,
+						"y": 180
+					}
+				],
+				"edges": [
+					{ "id": "e1", "source": "dis", "target": "con" },
+					{ "id": "e2", "source": "con", "target": "arb" }
+				]
+			}
+		},
+		"hint": "Commission for Conciliation, Mediation and Arbitration.",
+		"explanation": "Disputes are typically first referred to the CCMA for conciliation to try and reach an amicable agreement."
+	},
+	{
+		"id": "bus_065",
+		"topic": "Investment: Securities",
+		"difficulty": "Medium",
+		"points": 15,
+		"questionText": "What are 'Unit Trusts'?",
+		"questionType": "multiple-choice",
+		"options": [
+			{
+				"id": "A",
+				"text": "An investment where money from many investors is pooled to buy various securities.",
+				"isCorrect": true
+			},
+			{
+				"id": "B",
+				"text": "A loan made directly to a business.",
+				"isCorrect": false
+			},
+			{ "id": "C", "text": "Insurance against theft.", "isCorrect": false },
+			{ "id": "D", "text": "A type of government tax.", "isCorrect": false }
+		],
+		"supportsDiagram": false,
+		"diagram": null,
+		"hint": "Diversified portfolio managed by professionals.",
+		"explanation": "Unit trusts allow small investors to gain exposure to a diversified portfolio of shares, bonds, or property."
+	},
+	{
+		"id": "bus_066",
+		"topic": "Insurance",
+		"difficulty": "Easy",
+		"points": 10,
+		"questionText": "What does the 'Premium' represent in an insurance contract?",
+		"questionType": "multiple-choice",
+		"options": [
+			{
+				"id": "A",
+				"text": "The monthly or annual payment made to the insurer.",
+				"isCorrect": true
+			},
+			{
+				"id": "B",
+				"text": "The amount paid out after a claim.",
+				"isCorrect": false
+			},
+			{
+				"id": "C",
+				"text": "The total value of the insured item.",
+				"isCorrect": false
+			},
+			{
+				"id": "D",
+				"text": "The profit made by the insurance company.",
+				"isCorrect": false
+			}
+		],
+		"supportsDiagram": false,
+		"diagram": null,
+		"hint": "Cost of cover.",
+		"explanation": "The premium is the consideration paid by the insured in exchange for the insurance cover."
+	},
+	{
+		"id": "bus_067",
+		"topic": "Business Environments",
+		"difficulty": "Medium",
+		"points": 15,
+		"questionText": "Which act aims to ensure that employees are treated fairly and receive a minimum wage in South Africa?",
+		"questionType": "multiple-choice",
+		"options": [
+			{
+				"id": "A",
+				"text": "Basic Conditions of Employment Act (BCEA)",
+				"isCorrect": true
+			},
+			{ "id": "B", "text": "Companies Act", "isCorrect": false },
+			{ "id": "C", "text": "Consumer Protection Act", "isCorrect": false },
+			{ "id": "D", "text": "National Credit Act", "isCorrect": false }
+		],
+		"supportsDiagram": false,
+		"diagram": null,
+		"hint": "Focuses on leave, working hours, and remuneration.",
+		"explanation": "The BCEA sets the minimum standards for employment conditions in South Africa."
+	},
+	{
+		"id": "bus_068",
+		"topic": "Ethics and Professionalism",
+		"difficulty": "Medium",
+		"points": 15,
+		"questionText": "In the Corporate Social Responsibility (CSR) diagram, what is the goal of 'Social Investment'?",
+		"questionType": "multiple-choice",
+		"options": [
+			{
+				"id": "A",
+				"text": "To improve the well-being of the community.",
+				"isCorrect": true
+			},
+			{
+				"id": "B",
+				"text": "To increase the CEO's salary.",
+				"isCorrect": false
+			},
+			{ "id": "C", "text": "To evade paying taxes.", "isCorrect": false },
+			{
+				"id": "D",
+				"text": "To reduce the quality of products.",
+				"isCorrect": false
+			}
+		],
+		"supportsDiagram": true,
+		"diagram": {
+			"type": "node-flow",
+			"data": {
+				"nodes": [
+					{
+						"id": "bus",
+						"type": "actor",
+						"label": "Business",
+						"x": 50,
+						"y": 50
+					},
+					{
+						"id": "csr",
+						"type": "action",
+						"label": "CSR Programs",
+						"x": 200,
+						"y": 50
+					},
+					{
+						"id": "com",
+						"type": "beneficiary",
+						"label": "Community",
+						"x": 350,
+						"y": 50
+					}
+				],
+				"edges": [
+					{ "id": "e1", "source": "bus", "target": "csr", "label": "Funding" },
+					{ "id": "e2", "source": "csr", "target": "com", "label": "Impact" }
+				]
+			}
+		},
+		"hint": "Giving back to society.",
+		"explanation": "CSR programs are initiatives where businesses contribute to community development and social causes."
+	},
+	{
+		"id": "bus_069",
+		"topic": "Human Resources Function",
+		"difficulty": "Medium",
+		"points": 15,
+		"questionText": "Which document is used to evaluate an employee's performance over a specific period?",
+		"questionType": "multiple-choice",
+		"options": [
+			{ "id": "A", "text": "Performance Appraisal Form", "isCorrect": true },
+			{ "id": "B", "text": "Attendance Register", "isCorrect": false },
+			{ "id": "C", "text": "CV (Curriculum Vitae)", "isCorrect": false },
+			{ "id": "D", "text": "Petty Cash Voucher", "isCorrect": false }
+		],
+		"supportsDiagram": false,
+		"diagram": null,
+		"hint": "Assessing if targets were met.",
+		"explanation": "Performance appraisal is the systematic evaluation of the performance of employees and to understand the abilities of a person for further growth and development."
+	},
+	{
+		"id": "bus_070",
+		"topic": "Investment: Securities",
+		"difficulty": "Hard",
+		"points": 20,
+		"questionText": "What is the difference between 'Simple Interest' and 'Compound Interest' on an investment?",
+		"questionType": "multiple-choice",
+		"options": [
+			{
+				"id": "A",
+				"text": "Compound interest is calculated on the principal plus accumulated interest.",
+				"isCorrect": true
+			},
+			{
+				"id": "B",
+				"text": "Simple interest is only for bank loans.",
+				"isCorrect": false
+			},
+			{
+				"id": "C",
+				"text": "Simple interest yields higher returns over long periods.",
+				"isCorrect": false
+			},
+			{
+				"id": "D",
+				"text": "There is no difference between them.",
+				"isCorrect": false
+			}
+		],
+		"supportsDiagram": false,
+		"diagram": null,
+		"hint": "Interest on interest.",
+		"explanation": "Compound interest earns interest on both the initial principal and the interest that has already been added."
+	}
+]

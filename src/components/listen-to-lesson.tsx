@@ -1,3 +1,5 @@
+import { HeadphonesIcon, StopCircleIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -151,7 +153,10 @@ export function ListenToLesson({
 				className,
 			)}
 		>
-			<span className="mr-1.5">{isPlaying ? "■" : "▶"}</span>
+			<HugeiconsIcon
+				icon={isPlaying ? StopCircleIcon : HeadphonesIcon}
+				className="w-4 h-4 mr-1.5"
+			/>
 			{isPlaying
 				? "Stop listening..."
 				: useCustomVoice

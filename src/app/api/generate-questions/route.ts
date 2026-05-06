@@ -27,8 +27,8 @@ Return ONLY a JSON array with no surrounding text. Each question must have:
 - points: number (10 for Easy, 20 for Medium, 30 for Hard)
 - questionText: string (the question)
 - questionType: "multiple-choice"
-- supportsDiagram: boolean
-- diagram: null
+- supportsDiagram: boolean (set to true if a diagram helps visualize the problem)
+- diagram: object | null (only if supportsDiagram is true)
 - hint: string (a hint to help answer)
 - explanation: string (why the answer is correct)
 
@@ -36,6 +36,14 @@ For options, each must have:
 - id: "A" | "B" | "C" | "D"
 - text: string (option text)
 - isCorrect: boolean (exactly one correct per question)
+
+DIAGRAM SPECIFICATION (if supportsDiagram is true):
+Use one of these types:
+1. "force-vector": data: { objects: [{type: "rectangle"|"circle", x, y, width, height, fill, label}], showForces: [{label, direction: "up"|"down"|"left"|"right", color, origin}] }
+2. "circuit": data: { components: [{type: "battery"|"resistor"|"bulb"|"switch", x, y, label, value, unit}] }
+3. "motion": data: { objects: [{id, type: "circle"|"rectangle", label, x, y, fill}] }
+4. "node-flow": data: { nodes: [{id, type, label, x, y}], edges: [{id, source, target}] }
+5. "wave": data: { amplitude, frequency, phase, label }
 
 Example format:
 [{"id":"q1","topic":"${subject}","difficulty":"${difficulty}","points":${difficulty === "Easy" ? 10 : difficulty === "Medium" ? 20 : 30},"questionText":"...","questionType":"multiple-choice","options":[{"id":"A","text":"...","isCorrect":true},{"id":"B","text":"...","isCorrect":false},{"id":"C","text":"...","isCorrect":false},{"id":"D","text":"...","isCorrect":false}],"supportsDiagram":false,"diagram":null,"hint":"...","explanation":"..."}]`;

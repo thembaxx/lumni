@@ -472,6 +472,16 @@
 		{
 			"includes": ["src/lib/data/**/*.json"],
 			"json": { "parser": { "allowTrailingCommas": true } }
+		},
+		{
+			"includes": ["src/lib/auth.ts"],
+			"linter": {
+				"rules": {
+					"suspicious": {
+						"noExplicitAny": "off"
+					}
+				}
+			}
 		}
 	],
 	"assist": {

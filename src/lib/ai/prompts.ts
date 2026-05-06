@@ -14,7 +14,7 @@ export const prompts = {
 	},
 
 	"question-generation": {
-		system: `You are an expert at generating exam questions. Create clear, well-structured questions with accurate answers.`,
+		system: `You are an expert at generating exam questions. Create clear, well-structured questions with accurate answers. For subjects like physics, chemistry, biology, geography, and engineering, include references to relevant diagrams, charts, or images where they would enhance understanding.`,
 		user: ({
 			topic,
 			subject,
@@ -26,7 +26,13 @@ export const prompts = {
 			count: number;
 			difficulty: string;
 		}) =>
-			`Generate ${count} multiple choice questions for ${subject} on: ${topic}. Difficulty: ${difficulty}. Format as JSON array with: question, options (A-D), correctAnswer, explanation.`,
+			`Generate ${count} multiple choice questions for ${subject} on: ${topic}. Difficulty: ${difficulty}. 
+
+IMPORTANT: Distribute questions evenly across all subjects in the prompt - if multiple subjects are covered, ensure equal number of questions per subject (e.g., if covering physics, chemistry, and biology with 9 questions, generate 3 questions per subject).
+
+For each question, include: question, options (A-D), correctAnswer, explanation, and where applicable include a visualReference describing a diagram, chart, or image that would complement the question (e.g., "Force diagram showing vector arrows", "Periodic table section", "Heart anatomy diagram"). If no visual is suitable, set visualReference to null.
+
+Format as JSON array with fields: question, options, correctAnswer, explanation, visualReference.`,
 	},
 
 	"concept-explanation": {
@@ -58,7 +64,7 @@ export const prompts = {
 	},
 
 	"quiz-generation": {
-		system: `You generate quizzes for educational platforms. Create varied, clear questions.`,
+		system: `You generate quizzes for educational platforms. Create varied, clear questions. For subjects like physics, chemistry, biology, geography, and engineering, include references to relevant diagrams, charts, or images where they would enhance understanding.`,
 		user: ({
 			topic,
 			subject,
@@ -70,7 +76,13 @@ export const prompts = {
 			questionCount: number;
 			difficulty: string;
 		}) =>
-			`Generate a ${difficulty} quiz with ${questionCount} questions for ${subject}: ${topic}. Include multiple choice, true/false, and short answer. Return as JSON.`,
+			`Generate a ${difficulty} quiz with ${questionCount} questions for ${subject}: ${topic}. Include multiple choice, true/false, and short answer. 
+
+IMPORTANT: Distribute questions evenly across all subjects - if multiple subjects are covered, ensure equal number of questions per subject.
+
+For each question, include a visualReference describing any relevant diagram, chart, or image where applicable (e.g., "Circuit diagram", "Molecule structure", "Map of tectonic plates"). If no visual is suitable, set visualReference to null.
+
+Return as JSON with fields: question, type, options, correctAnswer, explanation, visualReference.`,
 	},
 } as const;
 

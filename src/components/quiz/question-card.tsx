@@ -1,5 +1,7 @@
 "use client";
 
+import { CancelIcon, CheckmarkCircle02Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { MinusIcon, PlusIcon } from "lucide-react";
 import { useCallback, useState } from "react";
 import { Badge } from "@/components/ui/badge";
@@ -217,10 +219,16 @@ export function QuestionCard({
 								</span>
 								<span className="flex-1 font-medium">{option.text}</span>
 								{showResult && isCorrectOption && (
-									<span className="text-green-500">✓</span>
+									<HugeiconsIcon
+										icon={CheckmarkCircle02Icon}
+										className="w-5 h-5 text-green-500"
+									/>
 								)}
 								{showResult && isSelected && !isCorrectOption && (
-									<span className="text-red-500">✗</span>
+									<HugeiconsIcon
+										icon={CancelIcon}
+										className="w-5 h-5 text-red-500"
+									/>
 								)}
 							</button>
 						);
@@ -257,12 +265,25 @@ export function QuestionCard({
 					disabled={!selectedOption}
 					className="flex-1"
 				>
-					{showFeedback
-						? selectedOption &&
-							question.options.find((o) => o.id === selectedOption)?.isCorrect
-							? "✓ Correct!"
-							: "✗ Try Again"
-						: "Check Answer"}
+					{showFeedback ? (
+						selectedOption &&
+						question.options.find((o) => o.id === selectedOption)?.isCorrect ? (
+							<>
+								<HugeiconsIcon
+									icon={CheckmarkCircle02Icon}
+									className="w-4 h-4 mr-1"
+								/>
+								Correct!
+							</>
+						) : (
+							<>
+								<HugeiconsIcon icon={CancelIcon} className="w-4 h-4 mr-1" />
+								Try Again
+							</>
+						)
+					) : (
+						"Check Answer"
+					)}
 				</Button>
 				<Button
 					variant="outline"
