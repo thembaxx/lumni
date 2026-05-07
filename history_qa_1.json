@@ -582,10 +582,34 @@
 				"title": "Feudal Hierarchy",
 				"data": {
 					"nodes": [
-						{ "id": "king", "type": "rank", "label": "King", "x": 150, "y": 50 },
-						{ "id": "nobles", "type": "rank", "label": "Nobles", "x": 150, "y": 100 },
-						{ "id": "knights", "type": "rank", "label": "Knights", "x": 150, "y": 150 },
-						{ "id": "peasants", "type": "rank", "label": "Peasants", "x": 150, "y": 200 }
+						{
+							"id": "king",
+							"type": "rank",
+							"label": "King",
+							"x": 150,
+							"y": 50
+						},
+						{
+							"id": "nobles",
+							"type": "rank",
+							"label": "Nobles",
+							"x": 150,
+							"y": 100
+						},
+						{
+							"id": "knights",
+							"type": "rank",
+							"label": "Knights",
+							"x": 150,
+							"y": 150
+						},
+						{
+							"id": "peasants",
+							"type": "rank",
+							"label": "Peasants",
+							"x": 150,
+							"y": 200
+						}
 					],
 					"edges": [
 						{ "id": "h1", "source": "king", "target": "nobles" },
@@ -652,9 +676,27 @@
 				"title": "WWI Timeline",
 				"data": {
 					"nodes": [
-						{ "id": "start", "type": "event", "label": "1914: War Begins", "x": 50, "y": 100 },
-						{ "id": "us", "type": "event", "label": "1917: US Enters", "x": 150, "y": 100 },
-						{ "id": "end", "type": "event", "label": "1919: Treaty of Versailles", "x": 250, "y": 100 }
+						{
+							"id": "start",
+							"type": "event",
+							"label": "1914: War Begins",
+							"x": 50,
+							"y": 100
+						},
+						{
+							"id": "us",
+							"type": "event",
+							"label": "1917: US Enters",
+							"x": 150,
+							"y": 100
+						},
+						{
+							"id": "end",
+							"type": "event",
+							"label": "1919: Treaty of Versailles",
+							"x": 250,
+							"y": 100
+						}
 					],
 					"edges": [
 						{ "id": "t1", "source": "start", "target": "us" },
@@ -720,11 +762,28 @@
 				"title": "Allied Strategy",
 				"data": {
 					"nodes": [
-						{ "id": "uk", "type": "base", "label": "United Kingdom", "x": 150, "y": 50 },
-						{ "id": "norm", "type": "target", "label": "Normandy, France", "x": 150, "y": 150 }
+						{
+							"id": "uk",
+							"type": "base",
+							"label": "United Kingdom",
+							"x": 150,
+							"y": 50
+						},
+						{
+							"id": "norm",
+							"type": "target",
+							"label": "Normandy, France",
+							"x": 150,
+							"y": 150
+						}
 					],
 					"edges": [
-						{ "id": "inv", "source": "uk", "target": "norm", "label": "Operation Overlord" }
+						{
+							"id": "inv",
+							"source": "uk",
+							"target": "norm",
+							"label": "Operation Overlord"
+						}
 					]
 				}
 			},

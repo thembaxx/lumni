@@ -65,13 +65,19 @@ function SheetContent({
 				data-vaul-drawer-direction={direction}
 				className={cn(
 					"fixed z-50 flex h-full flex-col bg-popover text-popover-foreground",
-					direction === "right" &&
-						"inset-y-0 right-0 w-3/4 sm:max-w-sm rounded-l-xl border-l",
-					direction === "left" &&
-						"inset-y-0 left-0 w-3/4 sm:max-w-sm rounded-r-xl border-r",
-					direction === "bottom" &&
-						"inset-x-0 bottom-0 h-auto rounded-t-xl border-t",
-					direction === "top" && "inset-x-0 top-0 h-auto rounded-b-xl border-b",
+					"data-[vaul-drawer-direction=right]:inset-y-0 right-0 w-3/4 sm:max-w-sm rounded-l-xl border-l",
+					"data-[vaul-drawer-direction=left]:inset-y-0 left-0 w-3/4 sm:max-w-sm rounded-r-xl border-r",
+					"data-[vaul-drawer-direction=bottom]:inset-x-0 bottom-0 h-auto rounded-t-xl border-t",
+					"data-[vaul-drawer-direction=top]:inset-x-0 top-0 h-auto rounded-b-xl border-b",
+					"data-[vaul-drawer-direction]:data-[vaul-drawer-direction]:data-[state=open]:animate-in",
+					"data-[vaul-drawer-direction]:data-[vaul-drawer-direction]:data-[state=open]:duration-300",
+					"data-[vaul-drawer-direction]:data-[vaul-drawer-direction]:data-[state=open]:ease-out-quart",
+					"data-[vaul-drawer-direction]:data-[vaul-drawer-direction]:data-[state=closed]:animate-out",
+					"data-[vaul-drawer-direction]:data-[vaul-drawer-direction]:data-[state=closed]:duration-200",
+					"data-[vaul-drawer-direction=right]:data-[state=open]:slide-in-from-right",
+					"data-[vaul-drawer-direction=left]:data-[state=open]:slide-in-from-left",
+					"data-[vaul-drawer-direction=bottom]:data-[state=open]:slide-in-from-bottom",
+					"data-[vaul-drawer-direction=top]:data-[state=open]:slide-in-from-top",
 					className,
 				)}
 				{...props}

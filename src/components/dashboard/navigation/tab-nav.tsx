@@ -15,7 +15,6 @@ interface TabConfig {
 const tabs: TabConfig[] = [
 	{ value: "ai", label: "AI", icon: Snowflake },
 	{ value: "spaces", label: "Spaces", icon: LayoutGrid },
-	{ value: "admin", label: "Admin", icon: Shield },
 ];
 
 interface TabNavProps {

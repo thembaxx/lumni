@@ -5,6 +5,8 @@ import { Suspense } from "react";
 import { extractRouterConfig } from "uploadthing/server";
 
 import "./globals.css";
+import { PageTransition } from "@/components/layout/page-transition";
+import { BottomNav } from "@/components/navigation/bottom-nav";
 import { Providers } from "@/components/providers";
 import { ourFileRouter } from "./api/uploadthing/core";
 import { fontMono, fontSans } from "./fonts";
@@ -13,8 +15,6 @@ async function UTSSR() {
 	await connection();
 	return <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />;
 }
-
-export { Menu } from "@/components/menu";
 
 export const metadata: Metadata = {
 	title: {
@@ -72,7 +72,7 @@ export default function RootLayout({
 			className={`${fontSans.variable} ${fontMono.variable} h-full antialiased`}
 		>
 			<body
-				className={`${fontSans.variable} ${fontMono.variable} h-full antialiased min-h-full flex flex-col font-body`}
+				className={`${fontSans.variable} ${fontMono.variable} h-full antialiased min-h-full flex flex-col font-body bg-background text-foreground`}
 			>
 				<div
 					className="noise-overlay hidden dark:hidden sm:block"
@@ -81,7 +81,12 @@ export default function RootLayout({
 				<Suspense fallback={null}>
 					<UTSSR />
 				</Suspense>
-				<Providers>{children}</Providers>
+				<Providers>
+					<PageTransition>
+						{children}
+						<BottomNav />
+					</PageTransition>
+				</Providers>
 			</body>
 		</html>
 	);

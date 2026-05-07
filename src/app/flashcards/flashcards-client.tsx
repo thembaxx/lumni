@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
+import { Confetti, XPGainPopup } from "@/components/celebration";
 import { useSubjectQuestions } from "@/lib/hooks/use-subject-questions";
 import { FlashcardsActive } from "./flashcards-active";
 import { FlashcardsEmpty } from "./flashcards-empty";
@@ -25,6 +26,8 @@ export function FlashcardsClient() {
 	const [knownCards, setKnownCards] = useState<Set<string>>(new Set());
 	const [reviewCards, setReviewCards] = useState<Set<string>>(new Set());
 	const [sessionComplete, setSessionComplete] = useState(false);
+	const [showConfetti, setShowConfetti] = useState(false);
+	const [showXPGain, setShowXPGain] = useState(false);
 
 	const subjectToFetch = selectedSubject.toLowerCase();
 	const { data: questions, isLoading } = useSubjectQuestions(
@@ -82,6 +85,10 @@ export function FlashcardsClient() {
 		const currentCard = cards[currentIndex];
 		if (!currentCard) return;
 		setKnownCards((prev) => new Set(prev).add(currentCard.id));
+		setShowConfetti(true);
+		setShowXPGain(true);
+		setTimeout(() => setShowConfetti(false), 1500);
+		setTimeout(() => setShowXPGain(false), 1000);
 		nextCard();
 	}, [cards, currentIndex, nextCard]);
 
@@ -132,18 +139,22 @@ export function FlashcardsClient() {
 	}
 
 	return (
-		<FlashcardsActive
-			cards={cards}
-			currentIndex={currentIndex}
-			isFlipped={isFlipped}
-			knownCount={knownCards.size}
-			reviewCount={reviewCards.size}
-			onFlip={handleFlip}
-			onKnown={handleKnown}
-			onReview={handleReview}
-			onPrevious={previousCard}
-			onNext={nextCard}
-			onQuit={stopSession}
-		/>
+		<>
+			<Confetti trigger={showConfetti} count={20} duration={1200} />
+			<XPGainPopup amount={10} visible={showXPGain} />
+			<FlashcardsActive
+				cards={cards}
+				currentIndex={currentIndex}
+				isFlipped={isFlipped}
+				knownCount={knownCards.size}
+				reviewCount={reviewCards.size}
+				onFlip={handleFlip}
+				onKnown={handleKnown}
+				onReview={handleReview}
+				onPrevious={previousCard}
+				onNext={nextCard}
+				onQuit={stopSession}
+			/>
+		</>
 	);
 }

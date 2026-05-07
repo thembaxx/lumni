@@ -569,8 +569,24 @@
 				"type": "circuit",
 				"data": {
 					"components": [
-						{ "id": "b1", "type": "battery", "x": 200, "y": 20, "label": "DC Power Source", "value": 12, "unit": "V" },
-						{ "id": "r1", "type": "resistor", "x": 100, "y": 100, "label": "Control Resistor", "value": 50, "unit": "Ω" }
+						{
+							"id": "b1",
+							"type": "battery",
+							"x": 200,
+							"y": 20,
+							"label": "DC Power Source",
+							"value": 12,
+							"unit": "V"
+						},
+						{
+							"id": "r1",
+							"type": "resistor",
+							"x": 100,
+							"y": 100,
+							"label": "Control Resistor",
+							"value": 50,
+							"unit": "Ω"
+						}
 					]
 				}
 			},
@@ -595,9 +611,27 @@
 				"type": "node-flow",
 				"data": {
 					"nodes": [
-						{ "id": "reac", "type": "state", "label": "Reactants", "x": 50, "y": 150 },
-						{ "id": "trans", "type": "state", "label": "Transition State", "x": 200, "y": 50 },
-						{ "id": "prod", "type": "state", "label": "Products", "x": 350, "y": 180 }
+						{
+							"id": "reac",
+							"type": "state",
+							"label": "Reactants",
+							"x": 50,
+							"y": 150
+						},
+						{
+							"id": "trans",
+							"type": "state",
+							"label": "Transition State",
+							"x": 200,
+							"y": 50
+						},
+						{
+							"id": "prod",
+							"type": "state",
+							"label": "Products",
+							"x": 350,
+							"y": 180
+						}
 					],
 					"edges": [
 						{ "id": "path1", "source": "reac", "target": "trans" },
@@ -626,7 +660,14 @@
 				"type": "motion",
 				"data": {
 					"objects": [
-						{ "id": "mol1", "type": "circle", "label": "Gas Molecule", "x": 100, "y": 100, "fill": "#FF0000" }
+						{
+							"id": "mol1",
+							"type": "circle",
+							"label": "Gas Molecule",
+							"x": 100,
+							"y": 100,
+							"fill": "#FF0000"
+						}
 					]
 				}
 			},
@@ -778,11 +819,41 @@
 				"data": {
 					"nodes": [
 						{ "id": "1s", "type": "orbital", "label": "1s", "x": 50, "y": 250 },
-						{ "id": "2s", "type": "orbital", "label": "2s", "x": 100, "y": 200 },
-						{ "id": "2p", "type": "orbital", "label": "2p", "x": 150, "y": 200 },
-						{ "id": "3s", "type": "orbital", "label": "3s", "x": 200, "y": 150 },
-						{ "id": "3p", "type": "orbital", "label": "3p", "x": 250, "y": 150 },
-						{ "id": "4s", "type": "orbital", "label": "4s", "x": 300, "y": 100 },
+						{
+							"id": "2s",
+							"type": "orbital",
+							"label": "2s",
+							"x": 100,
+							"y": 200
+						},
+						{
+							"id": "2p",
+							"type": "orbital",
+							"label": "2p",
+							"x": 150,
+							"y": 200
+						},
+						{
+							"id": "3s",
+							"type": "orbital",
+							"label": "3s",
+							"x": 200,
+							"y": 150
+						},
+						{
+							"id": "3p",
+							"type": "orbital",
+							"label": "3p",
+							"x": 250,
+							"y": 150
+						},
+						{
+							"id": "4s",
+							"type": "orbital",
+							"label": "4s",
+							"x": 300,
+							"y": 100
+						},
 						{ "id": "3d", "type": "orbital", "label": "3d", "x": 350, "y": 100 }
 					],
 					"edges": [
@@ -847,13 +918,42 @@
 				"type": "node-flow",
 				"data": {
 					"nodes": [
-						{ "id": "m1_pos", "type": "charge", "label": "δ+", "x": 100, "y": 50 },
-						{ "id": "m1_neg", "type": "charge", "label": "δ-", "x": 150, "y": 50 },
-						{ "id": "m2_pos", "type": "charge", "label": "δ+", "x": 250, "y": 50 },
-						{ "id": "m2_neg", "type": "charge", "label": "δ-", "x": 300, "y": 50 }
+						{
+							"id": "m1_pos",
+							"type": "charge",
+							"label": "δ+",
+							"x": 100,
+							"y": 50
+						},
+						{
+							"id": "m1_neg",
+							"type": "charge",
+							"label": "δ-",
+							"x": 150,
+							"y": 50
+						},
+						{
+							"id": "m2_pos",
+							"type": "charge",
+							"label": "δ+",
+							"x": 250,
+							"y": 50
+						},
+						{
+							"id": "m2_neg",
+							"type": "charge",
+							"label": "δ-",
+							"x": 300,
+							"y": 50
+						}
 					],
 					"edges": [
-						{ "id": "attract", "source": "m1_neg", "target": "m2_pos", "label": "IMF" }
+						{
+							"id": "attract",
+							"source": "m1_neg",
+							"target": "m2_pos",
+							"label": "IMF"
+						}
 					]
 				}
 			},
@@ -896,11 +996,28 @@
 				"type": "node-flow",
 				"data": {
 					"nodes": [
-						{ "id": "vsepr", "type": "start", "label": "AX2E2", "x": 200, "y": 20 },
-						{ "id": "geo", "type": "result", "label": "Bent Shape", "x": 200, "y": 150 }
+						{
+							"id": "vsepr",
+							"type": "start",
+							"label": "AX2E2",
+							"x": 200,
+							"y": 20
+						},
+						{
+							"id": "geo",
+							"type": "result",
+							"label": "Bent Shape",
+							"x": 200,
+							"y": 150
+						}
 					],
 					"edges": [
-						{ "id": "l1", "source": "vsepr", "target": "geo", "label": "Repulsion" }
+						{
+							"id": "l1",
+							"source": "vsepr",
+							"target": "geo",
+							"label": "Repulsion"
+						}
 					]
 				}
 			},
@@ -943,11 +1060,28 @@
 				"type": "node-flow",
 				"data": {
 					"nodes": [
-						{ "id": "theory", "type": "value", "label": "Theoretical Yield (100g)", "x": 100, "y": 50 },
-						{ "id": "actual", "type": "value", "label": "Actual Yield (80g)", "x": 300, "y": 50 }
+						{
+							"id": "theory",
+							"type": "value",
+							"label": "Theoretical Yield (100g)",
+							"x": 100,
+							"y": 50
+						},
+						{
+							"id": "actual",
+							"type": "value",
+							"label": "Actual Yield (80g)",
+							"x": 300,
+							"y": 50
+						}
 					],
 					"edges": [
-						{ "id": "calc", "source": "theory", "target": "actual", "label": "Efficiency" }
+						{
+							"id": "calc",
+							"source": "theory",
+							"target": "actual",
+							"label": "Efficiency"
+						}
 					]
 				}
 			},
@@ -990,9 +1124,27 @@
 				"type": "node-flow",
 				"data": {
 					"nodes": [
-						{ "id": "ion1", "type": "cation", "label": "M+", "x": 100, "y": 50 },
-						{ "id": "ion2", "type": "cation", "label": "M+", "x": 200, "y": 50 },
-						{ "id": "e_sea", "type": "electrons", "label": "Sea of Electrons", "x": 150, "y": 150 }
+						{
+							"id": "ion1",
+							"type": "cation",
+							"label": "M+",
+							"x": 100,
+							"y": 50
+						},
+						{
+							"id": "ion2",
+							"type": "cation",
+							"label": "M+",
+							"x": 200,
+							"y": 50
+						},
+						{
+							"id": "e_sea",
+							"type": "electrons",
+							"label": "Sea of Electrons",
+							"x": 150,
+							"y": 150
+						}
 					],
 					"edges": [
 						{ "id": "bond", "source": "e_sea", "target": "ion1" },
@@ -1057,11 +1209,28 @@
 				"type": "node-flow",
 				"data": {
 					"nodes": [
-						{ "id": "top_right", "type": "extreme", "label": "Smallest Atoms", "x": 300, "y": 20 },
-						{ "id": "bot_left", "type": "extreme", "label": "Largest Atoms", "x": 50, "y": 250 }
+						{
+							"id": "top_right",
+							"type": "extreme",
+							"label": "Smallest Atoms",
+							"x": 300,
+							"y": 20
+						},
+						{
+							"id": "bot_left",
+							"type": "extreme",
+							"label": "Largest Atoms",
+							"x": 50,
+							"y": 250
+						}
 					],
 					"edges": [
-						{ "id": "trend", "source": "bot_left", "target": "top_right", "label": "Decreasing Radius" }
+						{
+							"id": "trend",
+							"source": "bot_left",
+							"target": "top_right",
+							"label": "Decreasing Radius"
+						}
 					]
 				}
 			},
@@ -1104,15 +1273,54 @@
 				"type": "node-flow",
 				"data": {
 					"nodes": [
-						{ "id": "mass_c", "type": "start", "label": "Mass of C (12g)", "x": 50, "y": 100 },
-						{ "id": "mol_c", "type": "step", "label": "Moles of C", "x": 150, "y": 100 },
-						{ "id": "mol_o2", "type": "step", "label": "Moles of O2", "x": 250, "y": 100 },
-						{ "id": "mass_o2", "type": "end", "label": "Mass of O2", "x": 350, "y": 100 }
+						{
+							"id": "mass_c",
+							"type": "start",
+							"label": "Mass of C (12g)",
+							"x": 50,
+							"y": 100
+						},
+						{
+							"id": "mol_c",
+							"type": "step",
+							"label": "Moles of C",
+							"x": 150,
+							"y": 100
+						},
+						{
+							"id": "mol_o2",
+							"type": "step",
+							"label": "Moles of O2",
+							"x": 250,
+							"y": 100
+						},
+						{
+							"id": "mass_o2",
+							"type": "end",
+							"label": "Mass of O2",
+							"x": 350,
+							"y": 100
+						}
 					],
 					"edges": [
-						{ "id": "conv1", "source": "mass_c", "target": "mol_c", "label": "/12" },
-						{ "id": "conv2", "source": "mol_c", "target": "mol_o2", "label": "1:1 ratio" },
-						{ "id": "conv3", "source": "mol_o2", "target": "mass_o2", "label": "*32" }
+						{
+							"id": "conv1",
+							"source": "mass_c",
+							"target": "mol_c",
+							"label": "/12"
+						},
+						{
+							"id": "conv2",
+							"source": "mol_c",
+							"target": "mol_o2",
+							"label": "1:1 ratio"
+						},
+						{
+							"id": "conv3",
+							"source": "mol_o2",
+							"target": "mass_o2",
+							"label": "*32"
+						}
 					]
 				}
 			},
@@ -1127,10 +1335,26 @@
 			"questionText": "What does Heisenberg's Uncertainty Principle state?",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "Position and momentum cannot both be known exactly", "isCorrect": true },
-				{ "id": "B", "text": "Electrons act only as particles", "isCorrect": false },
-				{ "id": "C", "text": "Orbitals are circular paths", "isCorrect": false },
-				{ "id": "D", "text": "Energy levels are continuous", "isCorrect": false }
+				{
+					"id": "A",
+					"text": "Position and momentum cannot both be known exactly",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Electrons act only as particles",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Orbitals are circular paths",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Energy levels are continuous",
+					"isCorrect": false
+				}
 			],
 			"supportsDiagram": false,
 			"diagram": null,
@@ -1173,14 +1397,47 @@
 				"type": "node-flow",
 				"data": {
 					"nodes": [
-						{ "id": "low", "type": "range", "label": "0.0 - 0.4", "x": 50, "y": 100 },
-						{ "id": "mid", "type": "range", "label": "0.5 - 1.7", "x": 200, "y": 100 },
-						{ "id": "high", "type": "range", "label": "> 1.7", "x": 350, "y": 100 }
+						{
+							"id": "low",
+							"type": "range",
+							"label": "0.0 - 0.4",
+							"x": 50,
+							"y": 100
+						},
+						{
+							"id": "mid",
+							"type": "range",
+							"label": "0.5 - 1.7",
+							"x": 200,
+							"y": 100
+						},
+						{
+							"id": "high",
+							"type": "range",
+							"label": "> 1.7",
+							"x": 350,
+							"y": 100
+						}
 					],
 					"edges": [
-						{ "id": "e1", "source": "low", "target": "nonpolar", "label": "Non-polar" },
-						{ "id": "e2", "source": "mid", "target": "polar", "label": "Polar" },
-						{ "id": "e3", "source": "high", "target": "ionic", "label": "Ionic" }
+						{
+							"id": "e1",
+							"source": "low",
+							"target": "nonpolar",
+							"label": "Non-polar"
+						},
+						{
+							"id": "e2",
+							"source": "mid",
+							"target": "polar",
+							"label": "Polar"
+						},
+						{
+							"id": "e3",
+							"source": "high",
+							"target": "ionic",
+							"label": "Ionic"
+						}
 					]
 				}
 			},
@@ -1206,7 +1463,7 @@
 			"explanation": "Concentration = Moles / Volume = 2 / 4 = 0.5 mol/L (M)."
 		},
 		{
-_topic": "Atomic Structure",
+			"topic": "Atomic Structure",
 			"difficulty": "Medium",
 			"points": 15,
 			"questionText": "How many protons are in an atom of Gold (Au) if its atomic number is 79?",
@@ -1240,14 +1497,48 @@ _topic": "Atomic Structure",
 				"type": "node-flow",
 				"data": {
 					"nodes": [
-						{ "id": "p1", "type": "state", "label": "Pressure P", "x": 100, "y": 50 },
-						{ "id": "v1", "type": "state", "label": "Volume V", "x": 300, "y": 50 },
-						{ "id": "p2", "type": "state", "label": "Pressure 2P", "x": 100, "y": 150 },
-						{ "id": "v2", "type": "state", "label": "Volume V/2", "x": 300, "y": 150 }
+						{
+							"id": "p1",
+							"type": "state",
+							"label": "Pressure P",
+							"x": 100,
+							"y": 50
+						},
+						{
+							"id": "v1",
+							"type": "state",
+							"label": "Volume V",
+							"x": 300,
+							"y": 50
+						},
+						{
+							"id": "p2",
+							"type": "state",
+							"label": "Pressure 2P",
+							"x": 100,
+							"y": 150
+						},
+						{
+							"id": "v2",
+							"type": "state",
+							"label": "Volume V/2",
+							"x": 300,
+							"y": 150
+						}
 					],
 					"edges": [
-						{ "id": "boyle", "source": "p1", "target": "p2", "label": "Increase P" },
-						{ "id": "boyle2", "source": "v1", "target": "v2", "label": "Decrease V" }
+						{
+							"id": "boyle",
+							"source": "p1",
+							"target": "p2",
+							"label": "Increase P"
+						},
+						{
+							"id": "boyle2",
+							"source": "v1",
+							"target": "v2",
+							"label": "Decrease V"
+						}
 					]
 				}
 			},
@@ -1280,8 +1571,16 @@ _topic": "Atomic Structure",
 			"questionText": "In the diagram of the emission spectrum, what causes the specific lines of light?",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "Electrons falling to lower energy levels", "isCorrect": true },
-				{ "id": "B", "text": "Electrons jumping to higher levels", "isCorrect": false },
+				{
+					"id": "A",
+					"text": "Electrons falling to lower energy levels",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Electrons jumping to higher levels",
+					"isCorrect": false
+				},
 				{ "id": "C", "text": "Protons moving", "isCorrect": false },
 				{ "id": "D", "text": "Nuclear fission", "isCorrect": false }
 			],
@@ -1290,13 +1589,41 @@ _topic": "Atomic Structure",
 				"type": "node-flow",
 				"data": {
 					"nodes": [
-						{ "id": "e_high", "type": "state", "label": "Excited State", "x": 100, "y": 50 },
-						{ "id": "e_low", "type": "state", "label": "Ground State", "x": 100, "y": 200 },
-						{ "id": "photon", "type": "output", "label": "Light Emission", "x": 300, "y": 125 }
+						{
+							"id": "e_high",
+							"type": "state",
+							"label": "Excited State",
+							"x": 100,
+							"y": 50
+						},
+						{
+							"id": "e_low",
+							"type": "state",
+							"label": "Ground State",
+							"x": 100,
+							"y": 200
+						},
+						{
+							"id": "photon",
+							"type": "output",
+							"label": "Light Emission",
+							"x": 300,
+							"y": 125
+						}
 					],
 					"edges": [
-						{ "id": "fall", "source": "e_high", "target": "e_low", "label": "Relaxation" },
-						{ "id": "emit", "source": "fall", "target": "photon", "label": "E = hf" }
+						{
+							"id": "fall",
+							"source": "e_high",
+							"target": "e_low",
+							"label": "Relaxation"
+						},
+						{
+							"id": "emit",
+							"source": "fall",
+							"target": "photon",
+							"label": "E = hf"
+						}
 					]
 				}
 			},
@@ -1357,11 +1684,28 @@ _topic": "Atomic Structure",
 				"type": "node-flow",
 				"data": {
 					"nodes": [
-						{ "id": "h2o_1", "type": "molecule", "label": "H2O (A)", "x": 100, "y": 50 },
-						{ "id": "h2o_2", "type": "molecule", "label": "H2O (B)", "x": 300, "y": 50 }
+						{
+							"id": "h2o_1",
+							"type": "molecule",
+							"label": "H2O (A)",
+							"x": 100,
+							"y": 50
+						},
+						{
+							"id": "h2o_2",
+							"type": "molecule",
+							"label": "H2O (B)",
+							"x": 300,
+							"y": 50
+						}
 					],
 					"edges": [
-						{ "id": "h_bond", "source": "h2o_1", "target": "h2o_2", "label": "---" }
+						{
+							"id": "h_bond",
+							"source": "h2o_1",
+							"target": "h2o_2",
+							"label": "---"
+						}
 					]
 				}
 			},
@@ -1458,11 +1802,28 @@ _topic": "Atomic Structure",
 				"type": "node-flow",
 				"data": {
 					"nodes": [
-						{ "id": "acid", "type": "start", "label": "Acid (20mL, 0.1M)", "x": 100, "y": 100 },
-						{ "id": "base", "type": "end", "label": "Base (10mL, ?M)", "x": 300, "y": 100 }
+						{
+							"id": "acid",
+							"type": "start",
+							"label": "Acid (20mL, 0.1M)",
+							"x": 100,
+							"y": 100
+						},
+						{
+							"id": "base",
+							"type": "end",
+							"label": "Base (10mL, ?M)",
+							"x": 300,
+							"y": 100
+						}
 					],
 					"edges": [
-						{ "id": "neutral", "source": "acid", "target": "base", "label": "1:1 reaction" }
+						{
+							"id": "neutral",
+							"source": "acid",
+							"target": "base",
+							"label": "1:1 reaction"
+						}
 					]
 				}
 			},

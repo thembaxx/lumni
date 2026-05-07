@@ -5,7 +5,6 @@ import { BookOpen, Search, X } from "lucide-react";
 import { useState } from "react";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
 	Empty,
 	EmptyContent,
@@ -54,21 +53,21 @@ export function ExamTab({ className }: ExamTabProps) {
 
 	return (
 		<LazyMotion features={domAnimation}>
-			<div className={cn("w-full px-4 pb-6 space-y-5", className)}>
+			<div className={cn("w-full px-4 pb-6 space-y-4", className)}>
 				<m.div
 					initial={{ opacity: 0, y: -10 }}
 					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.4, ease: [0.25, 0.4, 0.25, 1] }}
-					className="space-y-4"
+					transition={{ duration: 0.3, ease: "easeOut" }}
+					className="space-y-3"
 				>
 					<div className="relative">
-						<Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+						<Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/60" />
 						<Input
 							type="text"
-							placeholder="Search exam papers..."
+							placeholder="Search exams..."
 							value={searchQuery}
 							onChange={(e) => setSearchQuery(e.target.value)}
-							className="w-full h-11 pl-11 pr-11 rounded-xl bg-secondary/60 backdrop-blur-sm border border-border/60 text-foreground placeholder-muted-foreground text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-200"
+							className="h-10 pl-10 pr-10 rounded-full bg-secondary/50 border-0 text-sm placeholder:text-muted-foreground/60 focus-visible:ring-1 focus-visible:ring-primary/30"
 						/>
 						<AnimatePresence>
 							{searchQuery && (
@@ -77,47 +76,28 @@ export function ExamTab({ className }: ExamTabProps) {
 									animate={{ opacity: 1, scale: 1 }}
 									exit={{ opacity: 0, scale: 0.8 }}
 									onClick={() => setSearchQuery("")}
-									className="absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-full bg-muted/60 hover:bg-muted text-muted-foreground hover:text-foreground transition-all duration-200"
+									className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 flex items-center justify-center rounded-full bg-muted/60 hover:bg-muted text-muted-foreground hover:text-foreground"
 									type="button"
 								>
-									<X className="w-3.5 h-3.5" />
+									<X className="w-3 h-3" />
 								</m.button>
 							)}
 						</AnimatePresence>
 					</div>
 
-					<div className="flex items-center gap-2.5">
+					<div className="flex items-center gap-2">
 						<SubjectsDrawer onSelect={handleSubjectSelect}>
-							<m.button
-								whileHover={{ scale: 1.02 }}
-								whileTap={{ scale: 0.98 }}
+							<button
 								className={cn(
-									"h-9 rounded-lg pl-4 pr-3.5 border border-border/60 bg-secondary/50 backdrop-blur-sm text-sm font-medium transition-all duration-200",
-									selectedSubject &&
-										"bg-primary/10 border-primary/30 text-primary",
+									"h-8 px-3 rounded-full bg-secondary/60 text-xs font-medium transition-colors",
+									selectedSubject
+										? "bg-primary text-primary-foreground"
+										: "text-foreground/80 hover:text-foreground hover:bg-secondary/80",
 								)}
 								type="button"
 							>
-								<div className="flex items-center gap-2">
-									<span className="text-xs">
-										{selectedSubject || "All Subjects"}
-									</span>
-									<m.svg
-										xmlns="http://www.w3.org/2000/svg"
-										width="14"
-										height="14"
-										viewBox="0 0 24 24"
-										fill="none"
-										stroke="currentColor"
-										strokeWidth="2"
-										strokeLinecap="round"
-										strokeLinejoin="round"
-									>
-										<path d="m6 9 6 6 6 6" />
-										<path d="m18 15 6-6-6" />
-									</m.svg>
-								</div>
-							</m.button>
+								{selectedSubject || "Subject"}
+							</button>
 						</SubjectsDrawer>
 
 						<AnimatePresence>
@@ -127,45 +107,44 @@ export function ExamTab({ className }: ExamTabProps) {
 									animate={{ opacity: 1, scale: 1 }}
 									exit={{ opacity: 0, scale: 0.9 }}
 									onClick={clearFilters}
-									className="h-9 px-3 flex items-center justify-center rounded-lg bg-muted/50 text-muted-foreground hover:text-foreground transition-all duration-200"
+									className="h-8 px-3 flex items-center text-xs text-muted-foreground hover:text-foreground"
 									type="button"
 								>
-									<X className="w-4 h-4" />
+									<X className="w-3 h-3 mr-1" />
+									Clear
 								</m.button>
 							)}
 						</AnimatePresence>
 					</div>
 
-					<div className="flex items-center gap-2 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
-						<m.button
+					<div className="flex items-center gap-1.5 overflow-x-auto pb-1 -mx-4 px-4 scrollbar-hide">
+						<button
 							key="all-years"
 							onClick={() => handleYearSelect(null)}
 							className={cn(
-								"shrink-0 h-8 px-4 rounded-full text-xs font-medium transition-all duration-200",
+								"shrink-0 h-7 px-3 rounded-full text-xs font-medium transition-colors",
 								selectedYear === null
 									? "bg-foreground text-background"
-									: "bg-muted/60 hover:bg-muted text-muted-foreground",
+									: "bg-muted/60 text-muted-foreground hover:text-foreground",
 							)}
 							type="button"
 						>
 							All
-						</m.button>
+						</button>
 						{YEARS.map((year) => (
-							<m.button
+							<button
 								key={year}
 								onClick={() => handleYearSelect(year)}
-								whileHover={{ scale: 1.05 }}
-								whileTap={{ scale: 0.95 }}
 								className={cn(
-									"shrink-0 h-8 px-4 rounded-full text-xs font-medium transition-all duration-200",
+									"shrink-0 h-7 px-3 rounded-full text-xs font-medium transition-colors",
 									selectedYear === year
 										? "bg-foreground text-background"
-										: "bg-muted/60 hover:bg-muted text-muted-foreground",
+										: "bg-muted/60 text-muted-foreground hover:text-foreground",
 								)}
 								type="button"
 							>
 								{year}
-							</m.button>
+							</button>
 						))}
 					</div>
 				</m.div>
@@ -176,54 +155,53 @@ export function ExamTab({ className }: ExamTabProps) {
 							initial={{ opacity: 0 }}
 							animate={{ opacity: 1 }}
 							exit={{ opacity: 0 }}
-							className="flex items-center justify-center py-16"
+							className="flex items-center justify-center py-12"
 						>
-							<div className="flex flex-col items-center gap-3">
-								<div className="w-8 h-8 rounded-full border-2 border-muted border-t-foreground animate-spin" />
-								<p className="text-muted-foreground text-sm">
-									Loading exam papers...
-								</p>
+							<div className="flex flex-col items-center gap-2">
+								<div className="w-5 h-5 rounded-full border border-muted border-t-foreground animate-spin" />
+								<p className="text-xs text-muted-foreground">Loading...</p>
 							</div>
 						</m.div>
 					) : error ? (
 						<m.div
-							initial={{ opacity: 0, y: 20 }}
+							initial={{ opacity: 0, y: 10 }}
 							animate={{ opacity: 1, y: 0 }}
 						>
 							<Empty className="border border-dashed border-destructive/30">
 								<EmptyHeader>
 									<EmptyMedia variant="icon">
-										<BookOpen className="w-8 h-8 text-destructive" />
+										<BookOpen className="w-6 h-6 text-destructive" />
 									</EmptyMedia>
-									<EmptyTitle>Failed to load exams</EmptyTitle>
-									<EmptyDescription>
-										There was an error loading the exam papers.
-									</EmptyDescription>
+									<EmptyTitle>Failed to load</EmptyTitle>
+									<EmptyDescription>Please try again.</EmptyDescription>
 								</EmptyHeader>
 							</Empty>
 						</m.div>
 					) : exams.length === 0 ? (
 						<m.div
-							initial={{ opacity: 0, y: 20 }}
+							initial={{ opacity: 0, y: 10 }}
 							animate={{ opacity: 1, y: 0 }}
 						>
 							<Empty className="border border-dashed">
 								<EmptyHeader>
 									<EmptyMedia variant="icon">
-										<BookOpen className="w-10 h-10" />
+										<BookOpen className="w-8 h-8 text-muted-foreground/40" />
 									</EmptyMedia>
-									<EmptyTitle>No exams found</EmptyTitle>
+									<EmptyTitle className="text-base">No exams found</EmptyTitle>
 									<EmptyDescription>
 										{hasActiveFilters
-											? "Try adjusting your filters or search query"
-											: "No exam papers available yet."}
+											? "Try adjusting your filters"
+											: "No exams available yet."}
 									</EmptyDescription>
 								</EmptyHeader>
 								{hasActiveFilters && (
 									<EmptyContent>
-										<Button variant="outline" size="sm" onClick={clearFilters}>
+										<button
+											onClick={clearFilters}
+											className="text-sm text-primary hover:underline"
+										>
 											Clear filters
-										</Button>
+										</button>
 									</EmptyContent>
 								)}
 							</Empty>
@@ -232,42 +210,39 @@ export function ExamTab({ className }: ExamTabProps) {
 						<m.div
 							initial={{ opacity: 0 }}
 							animate={{ opacity: 1 }}
-							transition={{ staggerChildren: 0.12 }}
-							className="space-y-6"
+							transition={{ staggerChildren: 0.08 }}
+							className="space-y-5"
 						>
 							{groupedExams.map((group, groupIndex) => (
 								<m.div
 									key={group.subject}
-									initial={{ opacity: 0, y: 10 }}
+									initial={{ opacity: 0, y: 8 }}
 									animate={{ opacity: 1, y: 0 }}
-									transition={{ delay: groupIndex * 0.12, duration: 0.5 }}
-									className="space-y-3"
+									transition={{ delay: groupIndex * 0.08 }}
+									className="space-y-2.5"
 								>
-									<div className="flex items-center justify-between px-1">
-										<h3 className="text-base font-semibold text-foreground tracking-tight">
+									<div className="flex items-center justify-between px-0.5">
+										<h3 className="text-sm font-semibold text-foreground">
 											{group.subject}
 										</h3>
 										<Badge
 											variant="secondary"
-											className="text-[11px] font-medium px-2.5 py-0.5 rounded-full"
+											className="text-[10px] font-medium px-2 py-0"
 										>
 											{group.papers.length}
 										</Badge>
 									</div>
-									<div className="grid gap-2.5">
-										{group.papers.slice(0, 6).map((exam, examIndex) => (
-											<ExamCard key={exam.id} exam={exam} delay={examIndex} />
+									<div className="grid gap-2">
+										{group.papers.slice(0, 4).map((exam, examIndex) => (
+											<ExamCard key={exam.id} exam={exam} />
 										))}
-										{group.papers.length > 6 && (
-											<m.button
-												initial={{ opacity: 0 }}
-												animate={{ opacity: 1 }}
-												transition={{ delay: 0.3 }}
-												className="w-full h-10 rounded-lg bg-muted/40 hover:bg-muted/70 text-muted-foreground hover:text-foreground text-sm font-medium transition-all duration-200"
+										{group.papers.length > 4 && (
+											<button
+												className="h-9 rounded-lg bg-muted/40 text-xs text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors"
 												type="button"
 											>
-												+{group.papers.length - 6} more {group.subject} papers
-											</m.button>
+												+{group.papers.length - 4} more
+											</button>
 										)}
 									</div>
 								</m.div>

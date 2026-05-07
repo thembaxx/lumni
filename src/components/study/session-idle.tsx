@@ -27,12 +27,12 @@ export function SessionIdle({
 	onSelect,
 }: SessionIdleProps) {
 	return (
-		<div className="min-h-screen bg-background p-4 flex items-center justify-center">
-			<Card className="max-w-md w-full">
-				<CardHeader className="text-center">
+		<div className="min-h-screen bg-background p-4 flex items-center justify-center pb-20">
+			<Card className="max-w-md w-full card-elevated p-6">
+				<CardHeader className="text-center pb-4">
 					<CardTitle className="text-2xl">{title}</CardTitle>
 				</CardHeader>
-				<CardContent className="space-y-4">
+				<CardContent className="space-y-6">
 					<Empty>
 						<EmptyHeader>
 							<EmptyMedia variant="icon">{icon}</EmptyMedia>

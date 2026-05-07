@@ -18,6 +18,7 @@ export interface ExamPaper {
 	url: string;
 	localPath?: string;
 	downloadedAt?: string;
+	src?: string;
 }
 
 export interface ExamFilter {

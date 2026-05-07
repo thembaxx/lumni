@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { StreakFire } from "@/components/celebration";
 import { QuickActions, SearchInput } from "@/components/dashboard";
 import {
 	Achievements,
@@ -59,12 +60,12 @@ export function DashboardClient({ initialTab = "ai" }: DashboardClientProps) {
 	return (
 		<div className="min-h-screen flex flex-col bg-background pb-20">
 			<motion.div
-				className="px-4 pt-6"
+				className="px-4 pt-6 max-w-md mx-auto"
 				variants={containerVariants}
 				initial="hidden"
 				animate="visible"
 			>
-				<motion.div variants={itemVariants} className="mb-6">
+				<motion.div variants={itemVariants} className="mb-8">
 					<h1 className="text-2xl font-semibold tracking-tight">
 						Welcome back
 					</h1>
@@ -73,40 +74,49 @@ export function DashboardClient({ initialTab = "ai" }: DashboardClientProps) {
 					</p>
 				</motion.div>
 
-				<motion.div variants={itemVariants}>
+				<motion.div variants={itemVariants} className="mb-6">
 					<XpLevelCard levelInfo={levelInfo} totalXp={gamification.totalXp} />
 				</motion.div>
 
-				<motion.div variants={itemVariants} className="mt-4">
+				<motion.div variants={itemVariants} className="mb-6">
+					<StreakFire streak={currentStreak} showMilestone />
+				</motion.div>
+				<motion.div variants={itemVariants} className="mb-6">
 					<StreakCelebration
 						currentStreak={currentStreak}
 						milestones={gamification.streakMilestones}
 					/>
 				</motion.div>
 
-				<motion.div variants={itemVariants} className="mt-4">
-					<DailyChallenges challenges={gamification.dailyChallenges} />
-				</motion.div>
+				<div className="space-y-6 mb-8">
+					<motion.div variants={itemVariants}>
+						<DailyChallenges challenges={gamification.dailyChallenges} />
+					</motion.div>
 
-				<motion.div variants={itemVariants} className="mt-4">
-					<Achievements achievements={gamification.achievements} />
-				</motion.div>
+					<motion.div variants={itemVariants}>
+						<Achievements achievements={gamification.achievements} />
+					</motion.div>
 
-				<motion.div variants={itemVariants} className="mt-4">
-					<ProgressMilestones
-						currentStreak={currentStreak}
-						milestones={gamification.streakMilestones}
-					/>
-				</motion.div>
+					<motion.div variants={itemVariants}>
+						<ProgressMilestones
+							currentStreak={currentStreak}
+							milestones={gamification.streakMilestones}
+						/>
+					</motion.div>
+				</div>
 
-				<motion.div variants={itemVariants} className="mt-6">
+				<motion.div variants={itemVariants} className="mb-6">
 					<StudyTopicCardExample />
 				</motion.div>
 
-				<motion.div variants={itemVariants} className="mt-6 space-y-4">
-					<QuickActions />
-					<SearchInput value={query} onChange={setQuery} />
-				</motion.div>
+				<div className="space-y-4">
+					<motion.div variants={itemVariants}>
+						<QuickActions />
+					</motion.div>
+					<motion.div variants={itemVariants}>
+						<SearchInput value={query} onChange={setQuery} />
+					</motion.div>
+				</div>
 			</motion.div>
 		</div>
 	);

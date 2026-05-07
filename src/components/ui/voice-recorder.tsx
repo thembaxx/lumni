@@ -33,10 +33,28 @@ export function VoiceRecorder({
 		duration,
 		playbackPosition,
 		totalDuration,
+		permissionStatus,
+		recordingError,
+		isTooShort,
+		isTooLong,
 		toggleRecording,
 		togglePlayback,
 		resetRecording,
+		requestPermission,
 	} = useAudioRecorder({ onRecordingComplete });
+
+	const showPermissionError =
+		permissionStatus === "denied" || permissionStatus === "unsupported";
+	const showValidationError =
+		isTooShort || isTooLong || (recordingError && !isRecording);
+
+	const handleRecordClick = async () => {
+		if (permissionStatus === "prompt") {
+			const granted = await requestPermission();
+			if (!granted) return;
+		}
+		toggleRecording();
+	};
 
 	const handleSend = useCallback(() => {
 		if (!audioBlob || isRecording) return;
@@ -105,6 +123,13 @@ export function VoiceRecorder({
 			</div>
 
 			<div className="flex flex-col items-center gap-1 min-h-14">
+				{showValidationError && (
+					<span className="text-xs text-destructive animate-fade-in-up">
+						{isTooShort && `Recording too short (min 1s)`}
+						{isTooLong && "Maximum duration reached"}
+						{recordingError && !isTooShort && !isTooLong && recordingError}
+					</span>
+				)}
 				<span
 					className={cn(
 						"text-xs uppercase tracking-widest font-medium transition-all duration-200",
@@ -114,10 +139,12 @@ export function VoiceRecorder({
 								? "text-destructive animate-pulse"
 								: isPlaying
 									? "text-primary animate-pulse"
-									: "text-muted-foreground",
+									: showPermissionError
+										? "text-destructive"
+										: "text-muted-foreground",
 					)}
 				>
-					{getStatusText()}
+					{showPermissionError ? "Permission Required" : getStatusText()}
 				</span>
 				{(isRecording || isPlaying || (audioBlob && totalDuration > 0)) && (
 					<span className="text-2xl font-mono font-bold tabular-nums text-foreground animate-fade-in-up">
@@ -145,13 +172,15 @@ export function VoiceRecorder({
 				</button>
 
 				<button
-					onClick={toggleRecording}
-					disabled={isSending}
+					onClick={handleRecordClick}
+					disabled={isSending || showPermissionError}
 					className={cn(
 						"relative flex h-16 w-16 items-center justify-center rounded-full transition-all duration-200 active:scale-95",
 						isRecording
 							? "bg-destructive text-destructive-foreground shadow-[0_0_30px_rgba(239,68,68,0.6)]"
-							: "bg-foreground text-background hover:scale-105 hover:shadow-xl hover:shadow-foreground/20",
+							: showPermissionError
+								? "bg-muted text-muted-foreground cursor-not-allowed"
+								: "bg-foreground text-background hover:scale-105 hover:shadow-xl hover:shadow-foreground/20",
 						isSending && "opacity-50 pointer-events-none",
 					)}
 					aria-label={isRecording ? "Stop recording" : "Start recording"}
@@ -207,12 +236,19 @@ export function VoiceRecorder({
 
 			<button
 				onClick={handleSend}
-				disabled={isRecording || !audioBlob || isSending || sendSuccess}
+				disabled={
+					isRecording ||
+					!audioBlob ||
+					isSending ||
+					sendSuccess ||
+					isTooShort ||
+					isTooLong
+				}
 				className={cn(
 					"mt-2 flex w-full items-center justify-center gap-2 rounded-lg px-4 py-3 text-sm font-medium transition-all duration-200 active:scale-[0.98]",
 					sendSuccess
 						? "bg-green-500 text-white"
-						: !isRecording && audioBlob
+						: !isRecording && audioBlob && !isTooShort && !isTooLong
 							? "bg-primary text-primary-foreground hover:opacity-90 hover:scale-[1.02] hover:shadow-lg"
 							: "bg-muted/50 text-muted-foreground/50 cursor-not-allowed",
 				)}

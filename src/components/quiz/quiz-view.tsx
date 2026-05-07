@@ -106,8 +106,8 @@ export function QuizView({
 			return <QuizSubjectPrompt onSelect={handleStart} hasSubject={false} />;
 		}
 		return (
-			<div className="min-h-screen bg-background p-4 flex items-center justify-center">
-				<Card className="max-w-md w-full">
+			<div className="min-h-screen bg-background p-4 flex items-center justify-center pb-20">
+				<Card className="max-w-md w-full card-elevated">
 					<CardHeader className="text-center">
 						<CardTitle className="text-2xl">Quiz Practice</CardTitle>
 					</CardHeader>
@@ -122,8 +122,8 @@ export function QuizView({
 	// State 2: Loading questions
 	if (isLoading) {
 		return (
-			<div className="min-h-screen bg-background p-4 flex items-center justify-center">
-				<Card className="max-w-md w-full">
+			<div className="min-h-screen bg-background p-4 flex items-center justify-center pb-20">
+				<Card className="max-w-md w-full card-elevated">
 					<CardContent className="p-8 text-center">
 						<p className="text-muted-foreground">Loading questions...</p>
 					</CardContent>
@@ -135,8 +135,8 @@ export function QuizView({
 	// State 3: No questions available for subject
 	if (questions.length === 0) {
 		return (
-			<div className="min-h-screen bg-background p-4 flex items-center justify-center">
-				<Card className="max-w-md w-full">
+			<div className="min-h-screen bg-background p-4 flex items-center justify-center pb-20">
+				<Card className="max-w-md w-full card-elevated">
 					<CardHeader className="text-center">
 						<CardTitle>No Questions</CardTitle>
 					</CardHeader>
@@ -155,7 +155,7 @@ export function QuizView({
 	// State 4: Quiz complete - show results
 	if (isComplete) {
 		return (
-			<div className="min-h-screen bg-background p-4 flex items-center justify-center">
+			<div className="min-h-screen bg-background p-4 flex items-center justify-center pb-20">
 				<QuizResultsCard
 					totalQuestions={questions.length}
 					correctAnswers={correctAnswers}
@@ -169,7 +169,7 @@ export function QuizView({
 
 	// State 5: Quiz active - show question
 	return (
-		<div className="min-h-screen bg-background p-4 space-y-4">
+		<div className="min-h-screen bg-background p-4 space-y-6 pb-20 max-w-md mx-auto">
 			<QuizHeader
 				elapsedTime={elapsedTime}
 				currentQuestionIndex={currentQuestionIndex}

@@ -17,21 +17,45 @@ import { cn } from "@/lib/utils";
 interface NavItem {
 	id: string;
 	label: string;
-	icon: React.ComponentType<{ className?: string }>;
+	icon: any;
 	href: string;
 }
 
 const navItems: NavItem[] = [
-	{ id: "home", label: "Home", icon: Home05Icon, href: "/dashboard" },
-	{ id: "quiz", label: "Quiz", icon: GridIcon, href: "/quiz" },
+	{
+		id: "home",
+		label: "Home",
+		icon: Home05Icon as unknown as React.ComponentType<{ className?: string }>,
+		href: "/dashboard",
+	},
+	{
+		id: "quiz",
+		label: "Quiz",
+		icon: GridIcon as unknown as React.ComponentType<{ className?: string }>,
+		href: "/quiz",
+	},
 	{
 		id: "flashcards",
 		label: "Cards",
-		icon: FlashcardIcon,
+		icon: FlashcardIcon as unknown as React.ComponentType<{
+			className?: string;
+		}>,
 		href: "/flashcards",
 	},
-	{ id: "upload", label: "Upload", icon: ArrowUpIcon, href: "/upload" },
-	{ id: "settings", label: "Settings", icon: Settings02Icon, href: "/admin" },
+	{
+		id: "upload",
+		label: "Upload",
+		icon: ArrowUpIcon as unknown as React.ComponentType<{ className?: string }>,
+		href: "/upload",
+	},
+	{
+		id: "settings",
+		label: "Settings",
+		icon: Settings02Icon as unknown as React.ComponentType<{
+			className?: string;
+		}>,
+		href: "/admin",
+	},
 ];
 
 function NavItemComponent({
@@ -111,7 +135,7 @@ export function BottomNav() {
 
 	const handleNavigate = useCallback(
 		(href: string) => {
-			router.push(href);
+			router?.push(href);
 		},
 		[router],
 	);

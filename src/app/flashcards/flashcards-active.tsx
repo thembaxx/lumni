@@ -59,8 +59,8 @@ export function FlashcardsActive({
 	);
 
 	return (
-		<div className="min-h-screen bg-background p-4 flex flex-col">
-			<div className="flex items-center justify-between mb-4">
+		<div className="min-h-screen bg-background p-4 flex flex-col max-w-md mx-auto">
+			<div className="flex items-center justify-between mb-6">
 				<Button variant="ghost" size="sm" onClick={onQuit}>
 					Quit
 				</Button>

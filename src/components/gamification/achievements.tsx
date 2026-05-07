@@ -1,0 +1,87 @@
+"use client";
+
+import { motion } from "framer-motion";
+import type { Achievement } from "@/lib/types/gamification";
+
+interface AchievementsProps {
+	achievements: Achievement[];
+}
+
+const rarityColors = {
+	common: "bg-muted border-border",
+	rare: "bg-blue-500/10 border-blue-500/30",
+	epic: "bg-purple-500/10 border-purple-500/30",
+	legendary: "bg-amber-500/10 border-amber-500/30",
+};
+
+const rarityGlow = {
+	common: "",
+	rare: "shadow-blue-500/20",
+	epic: "shadow-purple-500/20",
+	legendary: "shadow-amber-500/30",
+};
+
+export function Achievements({ achievements }: AchievementsProps) {
+	const earnedCount = achievements.filter((a) => a.earnedAt).length;
+	const earnedAchievements = achievements.filter((a) => a.earnedAt);
+	const lockedAchievements = achievements.filter((a) => !a.earnedAt);
+
+	return (
+		<div className="space-y-3">
+			<div className="flex items-center justify-between">
+				<h3 className="text-sm font-semibold text-foreground">Achievements</h3>
+				<span className="text-xs text-muted-foreground">
+					{earnedCount} / {achievements.length}
+				</span>
+			</div>
+
+			<div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+				{earnedAchievements.slice(0, 6).map((achievement, index) => (
+					<motion.button
+						key={achievement.id}
+						initial={{ opacity: 0, scale: 0.8 }}
+						animate={{ opacity: 1, scale: 1 }}
+						transition={{ delay: index * 0.05 }}
+						className={`relative flex-shrink-0 w-14 h-14 rounded-xl border-2 ${rarityColors[achievement.rarity]} ${rarityGlow[achievement.rarity]} shadow-lg flex items-center justify-center transition-transform hover:scale-105`}
+						title={`${achievement.name}: ${achievement.description}`}
+					>
+						<span className="text-2xl">{achievement.icon}</span>
+						{achievement.rarity === "legendary" && (
+							<motion.span
+								className="absolute inset-0 rounded-xl"
+								animate={{ opacity: [0.3, 0.6, 0.3] }}
+								transition={{ duration: 2, repeat: Infinity }}
+								style={{
+									boxShadow: "0 0 12px 2px rgba(251, 191, 36, 0.4)",
+								}}
+							/>
+						)}
+					</motion.button>
+				))}
+
+				{lockedAchievements.slice(0, 3).map((achievement, index) => (
+					<motion.div
+						key={achievement.id}
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 0.5 }}
+						transition={{ delay: (earnedAchievements.length + index) * 0.05 }}
+						className="relative flex-shrink-0 w-14 h-14 rounded-xl border-2 border-dashed border-border bg-muted/30 flex items-center justify-center"
+						title={`Locked: ${achievement.name}`}
+					>
+						<span className="text-xl grayscale">🔒</span>
+					</motion.div>
+				))}
+
+				{achievements.length > 9 && (
+					<motion.div
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 0.7 }}
+						className="flex-shrink-0 w-14 h-14 rounded-xl border border-border bg-muted/30 flex items-center justify-center text-xs text-muted-foreground"
+					>
+						+{achievements.length - 9}
+					</motion.div>
+				)}
+			</div>
+		</div>
+	);
+}

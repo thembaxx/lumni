@@ -615,8 +615,18 @@
 				"data": {
 					"nodes": [
 						{ "id": "orig", "label": "y = 2x - 3", "x": 50, "y": 50 },
-						{ "id": "swap", "label": "Swap x and y: x = 2y - 3", "x": 150, "y": 100 },
-						{ "id": "solve", "label": "Solve for y: y = (x+3)/2", "x": 250, "y": 150 }
+						{
+							"id": "swap",
+							"label": "Swap x and y: x = 2y - 3",
+							"x": 150,
+							"y": 100
+						},
+						{
+							"id": "solve",
+							"label": "Solve for y: y = (x+3)/2",
+							"x": 250,
+							"y": 150
+						}
 					],
 					"edges": [
 						{ "id": "e1", "source": "orig", "target": "swap" },
@@ -664,11 +674,26 @@
 				"title": "Circle Theorems",
 				"data": {
 					"nodes": [
-						{ "id": "center", "label": "Angle at Center (2x)", "x": 150, "y": 50 },
-						{ "id": "circ", "label": "Angle at Circumference (x)", "x": 150, "y": 150 }
+						{
+							"id": "center",
+							"label": "Angle at Center (2x)",
+							"x": 150,
+							"y": 50
+						},
+						{
+							"id": "circ",
+							"label": "Angle at Circumference (x)",
+							"x": 150,
+							"y": 150
+						}
 					],
 					"edges": [
-						{ "id": "e1", "source": "circ", "target": "center", "label": "subtended by same arc" }
+						{
+							"id": "e1",
+							"source": "circ",
+							"target": "center",
+							"label": "subtended by same arc"
+						}
 					]
 				}
 			},
@@ -696,7 +721,12 @@
 					"nodes": [
 						{ "id": "pa", "label": "P(A) = 0.4", "x": 50, "y": 50 },
 						{ "id": "pb", "label": "P(B) = 0.5", "x": 150, "y": 50 },
-						{ "id": "pandb", "label": "P(A ∩ B) = P(A) × P(B)", "x": 100, "y": 150 }
+						{
+							"id": "pandb",
+							"label": "P(A ∩ B) = P(A) × P(B)",
+							"x": 100,
+							"y": 150
+						}
 					],
 					"edges": [
 						{ "id": "e1", "source": "pa", "target": "pandb" },
@@ -779,8 +809,18 @@
 				"data": {
 					"nodes": [
 						{ "id": "eq", "label": "x² - 6x + y² + 4y = 3", "x": 50, "y": 50 },
-						{ "id": "comp", "label": "(x-3)² - 9 + (y+2)² - 4 = 3", "x": 150, "y": 100 },
-						{ "id": "final", "label": "(x-3)² + (y+2)² = 16", "x": 250, "y": 150 }
+						{
+							"id": "comp",
+							"label": "(x-3)² - 9 + (y+2)² - 4 = 3",
+							"x": 150,
+							"y": 100
+						},
+						{
+							"id": "final",
+							"label": "(x-3)² + (y+2)² = 16",
+							"x": 250,
+							"y": 150
+						}
 					],
 					"edges": [
 						{ "id": "e1", "source": "eq", "target": "comp" },
@@ -828,12 +868,22 @@
 				"title": "Geometric Series Convergence",
 				"data": {
 					"nodes": [
-						{ "id": "series", "label": "a + ar + ar² + ...", "x": 150, "y": 50 },
+						{
+							"id": "series",
+							"label": "a + ar + ar² + ...",
+							"x": 150,
+							"y": 50
+						},
 						{ "id": "cond", "label": "-1 < r < 1", "x": 50, "y": 150 },
 						{ "id": "sum", "label": "S∞ = a / (1 - r)", "x": 250, "y": 150 }
 					],
 					"edges": [
-						{ "id": "e1", "source": "series", "target": "cond", "label": "converges if" },
+						{
+							"id": "e1",
+							"source": "series",
+							"target": "cond",
+							"label": "converges if"
+						},
 						{ "id": "e2", "source": "cond", "target": "sum", "label": "then" }
 					]
 				}
@@ -1157,8 +1207,16 @@
 			"questionText": "Find the general solution for: 2sin²θ + sinθ - 1 = 0",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "θ = 30° + n·360° or 150° + n·360° or 270° + n·360°", "isCorrect": true },
-				{ "id": "B", "text": "θ = 30° + n·360° or 270° + n·360°", "isCorrect": false },
+				{
+					"id": "A",
+					"text": "θ = 30° + n·360° or 150° + n·360° or 270° + n·360°",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "θ = 30° + n·360° or 270° + n·360°",
+					"isCorrect": false
+				},
 				{ "id": "C", "text": "θ = 30° + n·180°", "isCorrect": false },
 				{ "id": "D", "text": "θ = 60° + n·360°", "isCorrect": false }
 			],
@@ -1486,7 +1544,12 @@
 						{ "id": "p", "label": "P = 200,000", "x": 50, "y": 50 },
 						{ "id": "i", "label": "i = 0.12/12 = 0.01", "x": 150, "y": 50 },
 						{ "id": "n", "label": "n = 60", "x": 250, "y": 50 },
-						{ "id": "formula", "label": "P = x[1-(1+i)⁻ⁿ]/i", "x": 150, "y": 150 }
+						{
+							"id": "formula",
+							"label": "P = x[1-(1+i)⁻ⁿ]/i",
+							"x": 150,
+							"y": 150
+						}
 					],
 					"edges": [
 						{ "id": "e1", "source": "p", "target": "formula" },
@@ -1520,7 +1583,12 @@
 						{ "id": "x", "label": "x = 1000", "x": 50, "y": 50 },
 						{ "id": "i", "label": "i = 0.09/12 = 0.0075", "x": 150, "y": 50 },
 						{ "id": "n", "label": "n = 120", "x": 250, "y": 50 },
-						{ "id": "formula", "label": "F = x[(1+i)ⁿ-1]/i", "x": 150, "y": 150 }
+						{
+							"id": "formula",
+							"label": "F = x[(1+i)ⁿ-1]/i",
+							"x": 150,
+							"y": 150
+						}
 					],
 					"edges": [
 						{ "id": "e1", "source": "x", "target": "formula" },
@@ -1583,9 +1651,19 @@
 				"title": "Correlation Scale",
 				"data": {
 					"nodes": [
-						{ "id": "min", "label": "-1 (Perfect Negative)", "x": 50, "y": 100 },
+						{
+							"id": "min",
+							"label": "-1 (Perfect Negative)",
+							"x": 50,
+							"y": 100
+						},
 						{ "id": "zero", "label": "0 (None)", "x": 150, "y": 100 },
-						{ "id": "max", "label": "+1 (Perfect Positive)", "x": 250, "y": 100 }
+						{
+							"id": "max",
+							"label": "+1 (Perfect Positive)",
+							"x": 250,
+							"y": 100
+						}
 					],
 					"edges": [
 						{ "id": "e1", "source": "min", "target": "zero" },
@@ -1715,7 +1793,11 @@
 				{ "id": "A", "text": "Yes", "isCorrect": true },
 				{ "id": "B", "text": "No", "isCorrect": false },
 				{ "id": "C", "text": "Cannot be determined", "isCorrect": false },
-				{ "id": "D", "text": "Only if they are mutually exclusive", "isCorrect": false }
+				{
+					"id": "D",
+					"text": "Only if they are mutually exclusive",
+					"isCorrect": false
+				}
 			],
 			"supportsDiagram": false,
 			"diagram": null,

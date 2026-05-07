@@ -1,6 +1,7 @@
 "use client";
 
 import { IconBook, IconBulb, IconFileDescription } from "@tabler/icons-react";
+import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { LessonsButton } from "@/components/lesson";
 import { Button } from "@/components/ui/button";
@@ -11,44 +12,72 @@ const quickActions = [
 	{ icon: IconBook, label: "Lessons" },
 ];
 
+function ActionButton({
+	icon: Icon,
+	label,
+	onClick,
+}: {
+	icon: React.ComponentType<{ className?: string }>;
+	label: string;
+	onClick?: () => void;
+}) {
+	return (
+		<motion.button
+			onClick={onClick}
+			className="rounded-xl bg-secondary/80 border border-border/50 text-foreground hover:bg-accent hover:border-accent h-11 px-5 flex items-center gap-2.5 shadow-sm active:scale-[0.97] transition-all"
+			whileHover={{ scale: 1.02, y: -2 }}
+			whileTap={{ scale: 0.97 }}
+			transition={{ type: "spring", stiffness: 400, damping: 20 }}
+		>
+			<motion.span
+				className="text-primary"
+				whileHover={{ scale: 1.15, rotate: 5 }}
+				transition={{ type: "spring", stiffness: 400, damping: 20 }}
+			>
+				<Icon className="w-4 h-4" />
+			</motion.span>
+			<span className="text-sm font-medium">{label}</span>
+		</motion.button>
+	);
+}
+
 export function QuickActions() {
 	const router = useRouter();
 
 	return (
-		<div className="space-y-3">
-			<p className="text-xs font-medium text-muted-foreground uppercase tracking-wider px-1">
-				Quick actions
-			</p>
-			<ul className="flex items-center gap-3 overflow-x-auto scrollbar-hide animate-fade-in-up delay-400">
+		<div>
+			<ul className="flex items-center gap-3 overflow-x-auto scrollbar-hide py-1">
 				{quickActions.map((action, index) => (
-					<li key={action.label}>
+					<motion.li
+						key={action.label}
+						initial={{ opacity: 0, y: 8 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{
+							delay: 0.3 + index * 0.08,
+							type: "spring",
+							stiffness: 300,
+							damping: 30,
+						}}
+					>
 						{action.label === "Lessons" ? (
 							<LessonsButton />
 						) : action.label === "Practice" ? (
-							<Button
-								variant="outline"
-								className="rounded-xl bg-secondary/80 border-border/50 text-foreground hover:bg-accent hover:border-accent h-10 px-5 flex items-center gap-2.5 quick-action-btn shadow-sm"
-								style={{ animationDelay: `${450 + index * 50}ms` }}
+							<ActionButton
+								icon={
+									action.icon as React.ComponentType<{ className?: string }>
+								}
+								label={action.label}
 								onClick={() => router.push("/quiz")}
-							>
-								<span className="quick-action-icon text-primary">
-									<action.icon className="w-4 h-4" />
-								</span>
-								<span className="text-sm font-medium">{action.label}</span>
-							</Button>
+							/>
 						) : (
-							<Button
-								variant="outline"
-								className="rounded-xl bg-secondary/80 border-border/50 text-foreground hover:bg-accent hover:border-accent h-10 px-5 flex items-center gap-2.5 quick-action-btn shadow-sm"
-								style={{ animationDelay: `${450 + index * 50}ms` }}
-							>
-								<span className="quick-action-icon text-primary">
-									<action.icon className="w-4 h-4" />
-								</span>
-								<span className="text-sm font-medium">{action.label}</span>
-							</Button>
+							<ActionButton
+								icon={
+									action.icon as React.ComponentType<{ className?: string }>
+								}
+								label={action.label}
+							/>
 						)}
-					</li>
+					</motion.li>
 				))}
 			</ul>
 		</div>

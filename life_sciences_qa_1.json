@@ -570,9 +570,27 @@
 				"title": "Central Dogma",
 				"data": {
 					"nodes": [
-						{ "id": "dna", "type": "molecule", "label": "DNA", "x": 50, "y": 100 },
-						{ "id": "rna", "type": "molecule", "label": "mRNA", "x": 150, "y": 100 },
-						{ "id": "prot", "type": "molecule", "label": "Protein", "x": 250, "y": 100 }
+						{
+							"id": "dna",
+							"type": "molecule",
+							"label": "DNA",
+							"x": 50,
+							"y": 100
+						},
+						{
+							"id": "rna",
+							"type": "molecule",
+							"label": "mRNA",
+							"x": 150,
+							"y": 100
+						},
+						{
+							"id": "prot",
+							"type": "molecule",
+							"label": "Protein",
+							"x": 250,
+							"y": 100
+						}
 					],
 					"edges": [
 						{ "id": "transc", "source": "dna", "target": "rna" },
@@ -638,11 +656,41 @@
 				"title": "Photosynthesis Inputs",
 				"data": {
 					"nodes": [
-						{ "id": "sun", "type": "energy", "label": "Sunlight", "x": 100, "y": 50 },
-						{ "id": "co2", "type": "matter", "label": "CO2", "x": 50, "y": 100 },
-						{ "id": "h2o", "type": "matter", "label": "H2O", "x": 50, "y": 150 },
-						{ "id": "chlo", "type": "organelle", "label": "Chloroplast", "x": 150, "y": 125 },
-						{ "id": "gluc", "type": "product", "label": "Glucose", "x": 250, "y": 125 }
+						{
+							"id": "sun",
+							"type": "energy",
+							"label": "Sunlight",
+							"x": 100,
+							"y": 50
+						},
+						{
+							"id": "co2",
+							"type": "matter",
+							"label": "CO2",
+							"x": 50,
+							"y": 100
+						},
+						{
+							"id": "h2o",
+							"type": "matter",
+							"label": "H2O",
+							"x": 50,
+							"y": 150
+						},
+						{
+							"id": "chlo",
+							"type": "organelle",
+							"label": "Chloroplast",
+							"x": 150,
+							"y": 125
+						},
+						{
+							"id": "gluc",
+							"type": "product",
+							"label": "Glucose",
+							"x": 250,
+							"y": 125
+						}
 					],
 					"edges": [
 						{ "id": "i1", "source": "sun", "target": "chlo" },
@@ -728,14 +776,36 @@
 				"title": "Flower Anatomy",
 				"data": {
 					"nodes": [
-						{ "id": "ant", "type": "male", "label": "Anther", "x": 100, "y": 50 },
-						{ "id": "stig", "type": "female", "label": "Stigma", "x": 200, "y": 50 },
-						{ "id": "sty", "type": "female", "label": "Style", "x": 200, "y": 100 },
-						{ "id": "ov", "type": "female", "label": "Ovary", "x": 200, "y": 150 }
+						{
+							"id": "ant",
+							"type": "male",
+							"label": "Anther",
+							"x": 100,
+							"y": 50
+						},
+						{
+							"id": "stig",
+							"type": "female",
+							"label": "Stigma",
+							"x": 200,
+							"y": 50
+						},
+						{
+							"id": "sty",
+							"type": "female",
+							"label": "Style",
+							"x": 200,
+							"y": 100
+						},
+						{
+							"id": "ov",
+							"type": "female",
+							"label": "Ovary",
+							"x": 200,
+							"y": 150
+						}
 					],
-					"edges": [
-						{ "id": "poll", "source": "ant", "target": "stig" }
-					]
+					"edges": [{ "id": "poll", "source": "ant", "target": "stig" }]
 				}
 			},
 			"hint": "Part of the stamen",
@@ -785,10 +855,22 @@
 			"questionText": "Identify the components of a DNA nucleotide.",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "Phosphate group, deoxyribose sugar, nitrogenous base", "isCorrect": true },
-				{ "id": "B", "text": "Phosphate group, ribose sugar, nitrogenous base", "isCorrect": false },
+				{
+					"id": "A",
+					"text": "Phosphate group, deoxyribose sugar, nitrogenous base",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Phosphate group, ribose sugar, nitrogenous base",
+					"isCorrect": false
+				},
 				{ "id": "C", "text": "Amino acid, sugar, base", "isCorrect": false },
-				{ "id": "D", "text": "Glycerol, fatty acid, phosphate", "isCorrect": false }
+				{
+					"id": "D",
+					"text": "Glycerol, fatty acid, phosphate",
+					"isCorrect": false
+				}
 			],
 			"supportsDiagram": true,
 			"diagram": {
@@ -796,9 +878,27 @@
 				"title": "DNA Nucleotide Structure",
 				"data": {
 					"nodes": [
-						{ "id": "phos", "label": "Phosphate", "x": 50, "y": 50, "type": "default" },
-						{ "id": "sug", "label": "Deoxyribose Sugar", "x": 150, "y": 100, "type": "default" },
-						{ "id": "base", "label": "Nitrogenous Base", "x": 250, "y": 100, "type": "default" }
+						{
+							"id": "phos",
+							"label": "Phosphate",
+							"x": 50,
+							"y": 50,
+							"type": "default"
+						},
+						{
+							"id": "sug",
+							"label": "Deoxyribose Sugar",
+							"x": 150,
+							"y": 100,
+							"type": "default"
+						},
+						{
+							"id": "base",
+							"label": "Nitrogenous Base",
+							"x": 250,
+							"y": 100,
+							"type": "default"
+						}
 					],
 					"edges": [
 						{ "id": "e1", "source": "phos", "target": "sug" },
@@ -817,8 +917,16 @@
 			"questionText": "What is the significance of crossing over during Prophase I of meiosis?",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "It increases genetic variation", "isCorrect": true },
-				{ "id": "B", "text": "It ensures the chromosome number is doubled", "isCorrect": false },
+				{
+					"id": "A",
+					"text": "It increases genetic variation",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "It ensures the chromosome number is doubled",
+					"isCorrect": false
+				},
 				{ "id": "C", "text": "It prevents mutations", "isCorrect": false },
 				{ "id": "D", "text": "It speeds up cell division", "isCorrect": false }
 			],
@@ -829,8 +937,18 @@
 				"data": {
 					"nodes": [
 						{ "id": "homo", "label": "Homologous Pairs", "x": 50, "y": 100 },
-						{ "id": "chias", "label": "Chiasmata Formation", "x": 150, "y": 100 },
-						{ "id": "recom", "label": "Recombinant Chromatids", "x": 250, "y": 100 }
+						{
+							"id": "chias",
+							"label": "Chiasmata Formation",
+							"x": 150,
+							"y": 100
+						},
+						{
+							"id": "recom",
+							"label": "Recombinant Chromatids",
+							"x": 250,
+							"y": 100
+						}
 					],
 					"edges": [
 						{ "id": "e1", "source": "homo", "target": "chias" },
@@ -849,10 +967,26 @@
 			"questionText": "Follow the path of a nerve impulse in a reflex arc.",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "Receptor -> Sensory Neuron -> Interneuron -> Motor Neuron -> Effector", "isCorrect": true },
-				{ "id": "B", "text": "Effector -> Motor Neuron -> Interneuron -> Sensory Neuron -> Receptor", "isCorrect": false },
-				{ "id": "C", "text": "Receptor -> Motor Neuron -> Interneuron -> Sensory Neuron -> Effector", "isCorrect": false },
-				{ "id": "D", "text": "Sensory Neuron -> Receptor -> Interneuron -> Motor Neuron -> Effector", "isCorrect": false }
+				{
+					"id": "A",
+					"text": "Receptor -> Sensory Neuron -> Interneuron -> Motor Neuron -> Effector",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Effector -> Motor Neuron -> Interneuron -> Sensory Neuron -> Receptor",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Receptor -> Motor Neuron -> Interneuron -> Sensory Neuron -> Effector",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Sensory Neuron -> Receptor -> Interneuron -> Motor Neuron -> Effector",
+					"isCorrect": false
+				}
 			],
 			"supportsDiagram": true,
 			"diagram": {
@@ -863,7 +997,12 @@
 						{ "id": "stim", "label": "Stimulus", "x": 50, "y": 50 },
 						{ "id": "recep", "label": "Receptor", "x": 100, "y": 100 },
 						{ "id": "sens", "label": "Sensory Neuron", "x": 150, "y": 150 },
-						{ "id": "relay", "label": "Relay Neuron (CNS)", "x": 200, "y": 100 },
+						{
+							"id": "relay",
+							"label": "Relay Neuron (CNS)",
+							"x": 200,
+							"y": 100
+						},
 						{ "id": "moto", "label": "Motor Neuron", "x": 250, "y": 150 },
 						{ "id": "effe", "label": "Effector (Muscle)", "x": 300, "y": 100 }
 					],
@@ -887,10 +1026,26 @@
 			"questionText": "How does the body respond to high blood glucose levels?",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "Pancreas secretes insulin; liver converts glucose to glycogen", "isCorrect": true },
-				{ "id": "B", "text": "Pancreas secretes glucagon; liver converts glycogen to glucose", "isCorrect": false },
-				{ "id": "C", "text": "Adrenal gland secretes adrenaline; heart rate increases", "isCorrect": false },
-				{ "id": "D", "text": "Thyroid secretes thyroxin; metabolic rate increases", "isCorrect": false }
+				{
+					"id": "A",
+					"text": "Pancreas secretes insulin; liver converts glucose to glycogen",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Pancreas secretes glucagon; liver converts glycogen to glucose",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Adrenal gland secretes adrenaline; heart rate increases",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Thyroid secretes thyroxin; metabolic rate increases",
+					"isCorrect": false
+				}
 			],
 			"supportsDiagram": true,
 			"diagram": {
@@ -899,7 +1054,12 @@
 				"data": {
 					"nodes": [
 						{ "id": "high", "label": "High Blood Glucose", "x": 150, "y": 50 },
-						{ "id": "panc", "label": "Pancreas (Beta Cells)", "x": 150, "y": 120 },
+						{
+							"id": "panc",
+							"label": "Pancreas (Beta Cells)",
+							"x": 150,
+							"y": 120
+						},
 						{ "id": "insu", "label": "Insulin Released", "x": 150, "y": 190 },
 						{ "id": "liv", "label": "Liver/Cells", "x": 150, "y": 260 },
 						{ "id": "norm", "label": "Normal Glucose", "x": 150, "y": 330 }
@@ -907,7 +1067,12 @@
 					"edges": [
 						{ "id": "e1", "source": "high", "target": "panc" },
 						{ "id": "e2", "source": "panc", "target": "insu" },
-						{ "id": "e3", "source": "insu", "target": "liv", "label": "Glucose -> Glycogen" },
+						{
+							"id": "e3",
+							"source": "insu",
+							"target": "liv",
+							"label": "Glucose -> Glycogen"
+						},
 						{ "id": "e4", "source": "liv", "target": "norm" }
 					]
 				}
@@ -923,10 +1088,26 @@
 			"questionText": "What is the correct sequence of development after fertilization?",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "Zygote -> Morula -> Blastocyst -> Embryo -> Foetus", "isCorrect": true },
-				{ "id": "B", "text": "Embryo -> Zygote -> Foetus -> Morula -> Blastocyst", "isCorrect": false },
-				{ "id": "C", "text": "Morula -> Blastocyst -> Zygote -> Embryo -> Foetus", "isCorrect": false },
-				{ "id": "D", "text": "Zygote -> Embryo -> Foetus -> Blastocyst -> Morula", "isCorrect": false }
+				{
+					"id": "A",
+					"text": "Zygote -> Morula -> Blastocyst -> Embryo -> Foetus",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Embryo -> Zygote -> Foetus -> Morula -> Blastocyst",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Morula -> Blastocyst -> Zygote -> Embryo -> Foetus",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Zygote -> Embryo -> Foetus -> Blastocyst -> Morula",
+					"isCorrect": false
+				}
 			],
 			"supportsDiagram": true,
 			"diagram": {
@@ -971,9 +1152,24 @@
 				"data": {
 					"nodes": [
 						{ "id": "grass", "label": "Grass (Producer)", "x": 150, "y": 300 },
-						{ "id": "rab", "label": "Rabbit (Primary Consumer)", "x": 50, "y": 200 },
-						{ "id": "mou", "label": "Mouse (Primary Consumer)", "x": 250, "y": 200 },
-						{ "id": "hawk", "label": "Hawk (Secondary Consumer)", "x": 150, "y": 50 }
+						{
+							"id": "rab",
+							"label": "Rabbit (Primary Consumer)",
+							"x": 50,
+							"y": 200
+						},
+						{
+							"id": "mou",
+							"label": "Mouse (Primary Consumer)",
+							"x": 250,
+							"y": 200
+						},
+						{
+							"id": "hawk",
+							"label": "Hawk (Secondary Consumer)",
+							"x": 150,
+							"y": 50
+						}
 					],
 					"edges": [
 						{ "id": "e1", "source": "grass", "target": "rab" },
@@ -994,10 +1190,26 @@
 			"questionText": "What happens during accommodation of the eye for distant vision?",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "Ciliary muscles relax, suspensory ligaments tighten, lens becomes flatter", "isCorrect": true },
-				{ "id": "B", "text": "Ciliary muscles contract, suspensory ligaments slacken, lens becomes rounder", "isCorrect": false },
-				{ "id": "C", "text": "Pupil dilates, radial muscles contract", "isCorrect": false },
-				{ "id": "D", "text": "Circular muscles contract, pupil constricts", "isCorrect": false }
+				{
+					"id": "A",
+					"text": "Ciliary muscles relax, suspensory ligaments tighten, lens becomes flatter",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Ciliary muscles contract, suspensory ligaments slacken, lens becomes rounder",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Pupil dilates, radial muscles contract",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Circular muscles contract, pupil constricts",
+					"isCorrect": false
+				}
 			],
 			"supportsDiagram": false,
 			"diagram": null,
@@ -1012,10 +1224,26 @@
 			"questionText": "Describe the negative feedback loop involving TSH and Thyroxin.",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "High Thyroxin inhibits Pituitary from secreting TSH", "isCorrect": true },
-				{ "id": "B", "text": "High TSH inhibits Thyroid from secreting Thyroxin", "isCorrect": false },
-				{ "id": "C", "text": "Low Thyroxin inhibits Pituitary from secreting TSH", "isCorrect": false },
-				{ "id": "D", "text": "Thyroxin stimulates the Pancreas to release TSH", "isCorrect": false }
+				{
+					"id": "A",
+					"text": "High Thyroxin inhibits Pituitary from secreting TSH",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "High TSH inhibits Thyroid from secreting Thyroxin",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Low Thyroxin inhibits Pituitary from secreting TSH",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Thyroxin stimulates the Pancreas to release TSH",
+					"isCorrect": false
+				}
 			],
 			"supportsDiagram": true,
 			"diagram": {
@@ -1030,9 +1258,19 @@
 					],
 					"edges": [
 						{ "id": "e1", "source": "pitu", "target": "tsh" },
-						{ "id": "e2", "source": "tsh", "target": "thyr", "label": "Stimulates" },
+						{
+							"id": "e2",
+							"source": "tsh",
+							"target": "thyr",
+							"label": "Stimulates"
+						},
 						{ "id": "e3", "source": "thyr", "target": "thyx" },
-						{ "id": "e4", "source": "thyx", "target": "pitu", "label": "Negative Feedback (Inhibits)" }
+						{
+							"id": "e4",
+							"source": "thyx",
+							"target": "pitu",
+							"label": "Negative Feedback (Inhibits)"
+						}
 					]
 				}
 			},
@@ -1047,10 +1285,26 @@
 			"questionText": "Which error in meiosis leads to Down Syndrome?",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "Nondisjunction of chromosome 21", "isCorrect": true },
-				{ "id": "B", "text": "Crossing over error in chromosome 21", "isCorrect": false },
-				{ "id": "C", "text": "Deletion of part of chromosome 21", "isCorrect": false },
-				{ "id": "D", "text": "Duplication of the X chromosome", "isCorrect": false }
+				{
+					"id": "A",
+					"text": "Nondisjunction of chromosome 21",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Crossing over error in chromosome 21",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Deletion of part of chromosome 21",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Duplication of the X chromosome",
+					"isCorrect": false
+				}
 			],
 			"supportsDiagram": false,
 			"diagram": null,
@@ -1065,10 +1319,26 @@
 			"questionText": "What are the base-pairing rules in DNA?",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "Adenine-Thymine, Cytosine-Guanine", "isCorrect": true },
-				{ "id": "B", "text": "Adenine-Guanine, Cytosine-Thymine", "isCorrect": false },
-				{ "id": "C", "text": "Adenine-Uracil, Cytosine-Guanine", "isCorrect": false },
-				{ "id": "D", "text": "Guanine-Thymine, Adenine-Cytosine", "isCorrect": false }
+				{
+					"id": "A",
+					"text": "Adenine-Thymine, Cytosine-Guanine",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Adenine-Guanine, Cytosine-Thymine",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Adenine-Uracil, Cytosine-Guanine",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Guanine-Thymine, Adenine-Cytosine",
+					"isCorrect": false
+				}
 			],
 			"supportsDiagram": false,
 			"diagram": null,
@@ -1173,10 +1443,26 @@
 			"questionText": "What is the function of ADH (Antidiuretic Hormone)?",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "Increases water reabsorption in the kidneys", "isCorrect": true },
-				{ "id": "B", "text": "Decreases water reabsorption in the kidneys", "isCorrect": false },
-				{ "id": "C", "text": "Stimulates the release of glucose", "isCorrect": false },
-				{ "id": "D", "text": "Regulates calcium levels in the blood", "isCorrect": false }
+				{
+					"id": "A",
+					"text": "Increases water reabsorption in the kidneys",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Decreases water reabsorption in the kidneys",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Stimulates the release of glucose",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Regulates calcium levels in the blood",
+					"isCorrect": false
+				}
 			],
 			"supportsDiagram": false,
 			"diagram": null,

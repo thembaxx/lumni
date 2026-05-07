@@ -733,9 +733,27 @@
 				"type": "node-flow",
 				"data": {
 					"nodes": [
-						{ "id": "1", "type": "process", "label": "Source Documents", "x": 50, "y": 50 },
-						{ "id": "2", "type": "process", "label": "Journal", "x": 200, "y": 50 },
-						{ "id": "3", "type": "process", "label": "Ledger", "x": 350, "y": 50 }
+						{
+							"id": "1",
+							"type": "process",
+							"label": "Source Documents",
+							"x": 50,
+							"y": 50
+						},
+						{
+							"id": "2",
+							"type": "process",
+							"label": "Journal",
+							"x": 200,
+							"y": 50
+						},
+						{
+							"id": "3",
+							"type": "process",
+							"label": "Ledger",
+							"x": 350,
+							"y": 50
+						}
 					],
 					"edges": [
 						{ "id": "e1-2", "source": "1", "target": "2" },
@@ -754,10 +772,26 @@
 			"questionText": "What are outstanding checks in a bank reconciliation?",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "Checks written but not yet cleared by bank", "isCorrect": true },
-				{ "id": "B", "text": "Checks received but not yet deposited", "isCorrect": false },
-				{ "id": "C", "text": "Checks returned for insufficient funds", "isCorrect": false },
-				{ "id": "D", "text": "Checks that have been voided", "isCorrect": false }
+				{
+					"id": "A",
+					"text": "Checks written but not yet cleared by bank",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Checks received but not yet deposited",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Checks returned for insufficient funds",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Checks that have been voided",
+					"isCorrect": false
+				}
 			],
 			"supportsDiagram": false,
 			"diagram": null,
@@ -836,11 +870,28 @@
 				"type": "node-flow",
 				"data": {
 					"nodes": [
-						{ "id": "n1", "type": "account", "label": "Cash (T-Account)", "x": 100, "y": 100 },
-						{ "id": "n2", "type": "report", "label": "Trial Balance", "x": 300, "y": 100 }
+						{
+							"id": "n1",
+							"type": "account",
+							"label": "Cash (T-Account)",
+							"x": 100,
+							"y": 100
+						},
+						{
+							"id": "n2",
+							"type": "report",
+							"label": "Trial Balance",
+							"x": 300,
+							"y": 100
+						}
 					],
 					"edges": [
-						{ "id": "e1-2", "source": "n1", "target": "n2", "label": "transfer balance" }
+						{
+							"id": "e1-2",
+							"source": "n1",
+							"target": "n2",
+							"label": "transfer balance"
+						}
 					]
 				}
 			},
@@ -855,10 +906,26 @@
 			"questionText": "If the Trial Balance debits and credits are equal, does it guarantee no errors were made?",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "No, some errors do not affect equality", "isCorrect": true },
-				{ "id": "B", "text": "Yes, it is the ultimate proof of accuracy", "isCorrect": false },
-				{ "id": "C", "text": "Yes, provided the math is correct", "isCorrect": false },
-				{ "id": "D", "text": "No, it only checks asset accounts", "isCorrect": false }
+				{
+					"id": "A",
+					"text": "No, some errors do not affect equality",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Yes, it is the ultimate proof of accuracy",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Yes, provided the math is correct",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "No, it only checks asset accounts",
+					"isCorrect": false
+				}
 			],
 			"supportsDiagram": false,
 			"diagram": null,
@@ -875,7 +942,11 @@
 			"options": [
 				{ "id": "A", "text": "Balance Sheet", "isCorrect": true },
 				{ "id": "B", "text": "Income Statement", "isCorrect": false },
-				{ "id": "C", "text": "Retained Earnings Statement", "isCorrect": false },
+				{
+					"id": "C",
+					"text": "Retained Earnings Statement",
+					"isCorrect": false
+				},
 				{ "id": "D", "text": "Statement of Cash Flows", "isCorrect": false }
 			],
 			"supportsDiagram": false,
@@ -891,9 +962,21 @@
 			"questionText": "According to the revenue recognition principle, when should revenue be recorded?",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "When it is earned, regardless of cash timing", "isCorrect": true },
-				{ "id": "B", "text": "When cash is received from the customer", "isCorrect": false },
-				{ "id": "C", "text": "At the end of the fiscal year", "isCorrect": false },
+				{
+					"id": "A",
+					"text": "When it is earned, regardless of cash timing",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "When cash is received from the customer",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "At the end of the fiscal year",
+					"isCorrect": false
+				},
 				{ "id": "D", "text": "When the invoice is printed", "isCorrect": false }
 			],
 			"supportsDiagram": false,
@@ -909,9 +992,17 @@
 			"questionText": "In the provided internal control flow, which step represents 'Segregation of Duties'?",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "Split between Recording and Custody", "isCorrect": true },
+				{
+					"id": "A",
+					"text": "Split between Recording and Custody",
+					"isCorrect": true
+				},
 				{ "id": "B", "text": "Authorization by Manager", "isCorrect": false },
-				{ "id": "C", "text": "Independent Internal Verification", "isCorrect": false },
+				{
+					"id": "C",
+					"text": "Independent Internal Verification",
+					"isCorrect": false
+				},
 				{ "id": "D", "text": "Physical Controls", "isCorrect": false }
 			],
 			"supportsDiagram": true,
@@ -919,9 +1010,27 @@
 				"type": "node-flow",
 				"data": {
 					"nodes": [
-						{ "id": "root", "type": "control", "label": "Transaction", "x": 200, "y": 20 },
-						{ "id": "rec", "type": "dept", "label": "Accounting (Recording)", "x": 100, "y": 120 },
-						{ "id": "cus", "type": "dept", "label": "Warehouse (Custody)", "x": 300, "y": 120 }
+						{
+							"id": "root",
+							"type": "control",
+							"label": "Transaction",
+							"x": 200,
+							"y": 20
+						},
+						{
+							"id": "rec",
+							"type": "dept",
+							"label": "Accounting (Recording)",
+							"x": 100,
+							"y": 120
+						},
+						{
+							"id": "cus",
+							"type": "dept",
+							"label": "Warehouse (Custody)",
+							"x": 300,
+							"y": 120
+						}
 					],
 					"edges": [
 						{ "id": "e1", "source": "root", "target": "rec" },
@@ -1012,10 +1121,26 @@
 			"questionText": "What is the primary purpose of preparing a Bank Reconciliation Statement?",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "To calculate the net profit", "isCorrect": false },
-				{ "id": "B", "text": "To identify discrepancies between the Cash Book and Bank Statement", "isCorrect": true },
-				{ "id": "C", "text": "To pay the monthly bank charges", "isCorrect": false },
-				{ "id": "D", "text": "To record depreciation on bank equipment", "isCorrect": false }
+				{
+					"id": "A",
+					"text": "To calculate the net profit",
+					"isCorrect": false
+				},
+				{
+					"id": "B",
+					"text": "To identify discrepancies between the Cash Book and Bank Statement",
+					"isCorrect": true
+				},
+				{
+					"id": "C",
+					"text": "To pay the monthly bank charges",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "To record depreciation on bank equipment",
+					"isCorrect": false
+				}
 			],
 			"supportsDiagram": false,
 			"diagram": null,
@@ -1081,7 +1206,12 @@
 						{ "id": "lab", "label": "Direct Labor", "x": 50, "y": 150 },
 						{ "id": "pri", "label": "Prime Cost", "x": 200, "y": 100 },
 						{ "id": "ovh", "label": "Factory Overheads", "x": 200, "y": 200 },
-						{ "id": "tot", "label": "Total Manufacturing Cost", "x": 400, "y": 150 }
+						{
+							"id": "tot",
+							"label": "Total Manufacturing Cost",
+							"x": 400,
+							"y": 150
+						}
 					],
 					"edges": [
 						{ "id": "e1", "source": "mat", "target": "pri" },
@@ -1102,10 +1232,22 @@
 			"questionText": "If the 'Provision for Bad Debts' needs to be INCREASED, what is the effect on the Income Statement?",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "It is recorded as Other Income", "isCorrect": false },
-				{ "id": "B", "text": "It is recorded as an Operating Expense", "isCorrect": true },
+				{
+					"id": "A",
+					"text": "It is recorded as Other Income",
+					"isCorrect": false
+				},
+				{
+					"id": "B",
+					"text": "It is recorded as an Operating Expense",
+					"isCorrect": true
+				},
 				{ "id": "C", "text": "It has no effect on profit", "isCorrect": false },
-				{ "id": "D", "text": "It is added directly to Retained Income", "isCorrect": false }
+				{
+					"id": "D",
+					"text": "It is added directly to Retained Income",
+					"isCorrect": false
+				}
 			],
 			"supportsDiagram": false,
 			"diagram": null,
@@ -1156,10 +1298,22 @@
 			"questionText": "In the VAT Flow diagram, what happens when 'Output VAT' (tax on sales) is GREATER than 'Input VAT' (tax on purchases)?",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "The business gets a refund from SARS", "isCorrect": false },
-				{ "id": "B", "text": "The business owes money to SARS", "isCorrect": true },
+				{
+					"id": "A",
+					"text": "The business gets a refund from SARS",
+					"isCorrect": false
+				},
+				{
+					"id": "B",
+					"text": "The business owes money to SARS",
+					"isCorrect": true
+				},
 				{ "id": "C", "text": "No VAT is recorded", "isCorrect": false },
-				{ "id": "D", "text": "SARS pays interest to the business", "isCorrect": false }
+				{
+					"id": "D",
+					"text": "SARS pays interest to the business",
+					"isCorrect": false
+				}
 			],
 			"supportsDiagram": true,
 			"diagram": {
@@ -1225,7 +1379,11 @@
 			"questionType": "multiple-choice",
 			"options": [
 				{ "id": "A", "text": "Recording the sale price", "isCorrect": false },
-				{ "id": "B", "text": "Calculating depreciation for the current period", "isCorrect": true },
+				{
+					"id": "B",
+					"text": "Calculating depreciation for the current period",
+					"isCorrect": true
+				},
 				{ "id": "C", "text": "Closing the asset account", "isCorrect": false },
 				{ "id": "D", "text": "Calculating profit or loss", "isCorrect": false }
 			],
@@ -1242,9 +1400,17 @@
 			"questionText": "Which of the following is classified as a Factory Overhead?",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "Raw materials used in production", "isCorrect": false },
+				{
+					"id": "A",
+					"text": "Raw materials used in production",
+					"isCorrect": false
+				},
 				{ "id": "B", "text": "Wages of factory cleaners", "isCorrect": true },
-				{ "id": "C", "text": "Sales commission for the marketing team", "isCorrect": false },
+				{
+					"id": "C",
+					"text": "Sales commission for the marketing team",
+					"isCorrect": false
+				},
 				{ "id": "D", "text": "CEO's salary", "isCorrect": false }
 			],
 			"supportsDiagram": false,
@@ -1272,7 +1438,12 @@
 				"data": {
 					"nodes": [
 						{ "id": "eq", "label": "Shareholders' Equity", "x": 200, "y": 50 },
-						{ "id": "cap", "label": "Ordinary Share Capital", "x": 100, "y": 150 },
+						{
+							"id": "cap",
+							"label": "Ordinary Share Capital",
+							"x": 100,
+							"y": 150
+						},
 						{ "id": "ret", "label": "Retained Income", "x": 300, "y": 150 }
 					],
 					"edges": [
@@ -1293,8 +1464,16 @@
 			"questionType": "multiple-choice",
 			"options": [
 				{ "id": "A", "text": "Slow moving stock", "isCorrect": false },
-				{ "id": "B", "text": "Efficient sales and inventory management", "isCorrect": true },
-				{ "id": "C", "text": "Too much capital tied up in stock", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "Efficient sales and inventory management",
+					"isCorrect": true
+				},
+				{
+					"id": "C",
+					"text": "Too much capital tied up in stock",
+					"isCorrect": false
+				},
 				{ "id": "D", "text": "Low demand for products", "isCorrect": false }
 			],
 			"supportsDiagram": false,
@@ -1310,8 +1489,16 @@
 			"questionText": "In a period of inflation, using FIFO will result in:",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "A lower closing stock value", "isCorrect": false },
-				{ "id": "B", "text": "A higher closing stock value", "isCorrect": true },
+				{
+					"id": "A",
+					"text": "A lower closing stock value",
+					"isCorrect": false
+				},
+				{
+					"id": "B",
+					"text": "A higher closing stock value",
+					"isCorrect": true
+				},
 				{ "id": "C", "text": "No change in profit", "isCorrect": false },
 				{ "id": "D", "text": "Higher Cost of Sales", "isCorrect": false }
 			],
@@ -1346,9 +1533,21 @@
 			"questionText": "An R800 check received from a debtor was returned by the bank marked 'R/D' (Refer to Drawer). How is this recorded?",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "Credit Cash Book and Debit Bank Statement", "isCorrect": false },
-				{ "id": "B", "text": "Debit Debtors Control and Credit Bank (Cash Book)", "isCorrect": true },
-				{ "id": "C", "text": "Debit Bank and Credit Debtors Control", "isCorrect": false },
+				{
+					"id": "A",
+					"text": "Credit Cash Book and Debit Bank Statement",
+					"isCorrect": false
+				},
+				{
+					"id": "B",
+					"text": "Debit Debtors Control and Credit Bank (Cash Book)",
+					"isCorrect": true
+				},
+				{
+					"id": "C",
+					"text": "Debit Bank and Credit Debtors Control",
+					"isCorrect": false
+				},
 				{ "id": "D", "text": "Do nothing", "isCorrect": false }
 			],
 			"supportsDiagram": false,
@@ -1365,7 +1564,11 @@
 			"questionType": "multiple-choice",
 			"options": [
 				{ "id": "A", "text": "Asset Account", "isCorrect": false },
-				{ "id": "B", "text": "Accumulated Depreciation Account", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "Accumulated Depreciation Account",
+					"isCorrect": false
+				},
 				{ "id": "C", "text": "Asset Disposal Account", "isCorrect": true },
 				{ "id": "D", "text": "Cash Account", "isCorrect": false }
 			],
@@ -1381,9 +1584,24 @@
 						{ "id": "bnk", "label": "Bank/Debtor (Sale)", "x": 450, "y": 100 }
 					],
 					"edges": [
-						{ "id": "e1", "source": "ast", "target": "dis", "label": "transfer cost" },
-						{ "id": "e2", "source": "acc", "target": "dis", "label": "transfer depr" },
-						{ "id": "e3", "source": "bnk", "target": "dis", "label": "record sale" }
+						{
+							"id": "e1",
+							"source": "ast",
+							"target": "dis",
+							"label": "transfer cost"
+						},
+						{
+							"id": "e2",
+							"source": "acc",
+							"target": "dis",
+							"label": "transfer depr"
+						},
+						{
+							"id": "e3",
+							"source": "bnk",
+							"target": "dis",
+							"label": "record sale"
+						}
 					]
 				}
 			},
@@ -1416,9 +1634,21 @@
 			"questionText": "Where would 'Proceeds from issue of shares' appear on the Cash Flow Statement?",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "Cash Flow from Operating Activities", "isCorrect": false },
-				{ "id": "B", "text": "Cash Flow from Investing Activities", "isCorrect": false },
-				{ "id": "C", "text": "Cash Flow from Financing Activities", "isCorrect": true },
+				{
+					"id": "A",
+					"text": "Cash Flow from Operating Activities",
+					"isCorrect": false
+				},
+				{
+					"id": "B",
+					"text": "Cash Flow from Investing Activities",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Cash Flow from Financing Activities",
+					"isCorrect": true
+				},
 				{ "id": "D", "text": "Net change in cash", "isCorrect": false }
 			],
 			"supportsDiagram": false,
@@ -1434,9 +1664,21 @@
 			"questionText": "Based on the Liquidity Components diagram, what is the key difference between the Current Ratio and the Acid-Test Ratio?",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "The Acid-Test ratio includes bank overdrafts", "isCorrect": false },
-				{ "id": "B", "text": "The Acid-Test ratio excludes inventory", "isCorrect": true },
-				{ "id": "C", "text": "The Current ratio excludes debtors", "isCorrect": false },
+				{
+					"id": "A",
+					"text": "The Acid-Test ratio includes bank overdrafts",
+					"isCorrect": false
+				},
+				{
+					"id": "B",
+					"text": "The Acid-Test ratio excludes inventory",
+					"isCorrect": true
+				},
+				{
+					"id": "C",
+					"text": "The Current ratio excludes debtors",
+					"isCorrect": false
+				},
 				{ "id": "D", "text": "There is no difference", "isCorrect": false }
 			],
 			"supportsDiagram": true,
@@ -1453,8 +1695,18 @@
 					"edges": [
 						{ "id": "e1", "source": "inv", "target": "ca" },
 						{ "id": "e2", "source": "liq", "target": "ca" },
-						{ "id": "e3", "source": "ca", "target": "cl", "label": "Current Ratio" },
-						{ "id": "e4", "source": "liq", "target": "cl", "label": "Acid-Test" }
+						{
+							"id": "e3",
+							"source": "ca",
+							"target": "cl",
+							"label": "Current Ratio"
+						},
+						{
+							"id": "e4",
+							"source": "liq",
+							"target": "cl",
+							"label": "Acid-Test"
+						}
 					]
 				}
 			},
@@ -1471,8 +1723,16 @@
 			"options": [
 				{ "id": "A", "text": "Cost price only", "isCorrect": false },
 				{ "id": "B", "text": "Selling price", "isCorrect": false },
-				{ "id": "C", "text": "Lower of cost or net realisable value", "isCorrect": true },
-				{ "id": "D", "text": "Higher of cost or net realisable value", "isCorrect": false }
+				{
+					"id": "C",
+					"text": "Lower of cost or net realisable value",
+					"isCorrect": true
+				},
+				{
+					"id": "D",
+					"text": "Higher of cost or net realisable value",
+					"isCorrect": false
+				}
 			],
 			"supportsDiagram": false,
 			"diagram": null,
@@ -1488,9 +1748,17 @@
 			"questionType": "multiple-choice",
 			"options": [
 				{ "id": "A", "text": "It is ignored", "isCorrect": false },
-				{ "id": "B", "text": "Output VAT is charged on the cost price", "isCorrect": true },
+				{
+					"id": "B",
+					"text": "Output VAT is charged on the cost price",
+					"isCorrect": true
+				},
 				{ "id": "C", "text": "Input VAT is claimed back", "isCorrect": false },
-				{ "id": "D", "text": "It is a zero-rated transaction", "isCorrect": false }
+				{
+					"id": "D",
+					"text": "It is a zero-rated transaction",
+					"isCorrect": false
+				}
 			],
 			"supportsDiagram": false,
 			"diagram": null,
@@ -1540,7 +1808,11 @@
 			"questionType": "multiple-choice",
 			"options": [
 				{ "id": "A", "text": "The cost of the new asset", "isCorrect": false },
-				{ "id": "B", "text": "The selling price of the old asset", "isCorrect": true },
+				{
+					"id": "B",
+					"text": "The selling price of the old asset",
+					"isCorrect": true
+				},
 				{ "id": "C", "text": "Accumulated depreciation", "isCorrect": false },
 				{ "id": "D", "text": "A discount on purchases", "isCorrect": false }
 			],
@@ -1558,9 +1830,17 @@
 			"questionType": "multiple-choice",
 			"options": [
 				{ "id": "A", "text": "Net Wage only", "isCorrect": false },
-				{ "id": "B", "text": "Gross Wage plus employer contributions", "isCorrect": true },
+				{
+					"id": "B",
+					"text": "Gross Wage plus employer contributions",
+					"isCorrect": true
+				},
 				{ "id": "C", "text": "Total deductions", "isCorrect": false },
-				{ "id": "D", "text": "Basic salary excluding overtime", "isCorrect": false }
+				{
+					"id": "D",
+					"text": "Basic salary excluding overtime",
+					"isCorrect": false
+				}
 			],
 			"supportsDiagram": true,
 			"diagram": {
@@ -1569,9 +1849,19 @@
 				"data": {
 					"nodes": [
 						{ "id": "gro", "label": "Gross Wage", "x": 50, "y": 100 },
-						{ "id": "con", "label": "Employer Contrib (UIF/SDL)", "x": 50, "y": 200 },
+						{
+							"id": "con",
+							"label": "Employer Contrib (UIF/SDL)",
+							"x": 50,
+							"y": 200
+						},
 						{ "id": "tot", "label": "Direct Labor Cost", "x": 250, "y": 150 },
-						{ "id": "ded", "label": "Deductions (PAYE/UIF)", "x": 450, "y": 50 },
+						{
+							"id": "ded",
+							"label": "Deductions (PAYE/UIF)",
+							"x": 450,
+							"y": 50
+						},
 						{ "id": "net", "label": "Net Wage (Paid)", "x": 450, "y": 150 }
 					],
 					"edges": [
@@ -1596,7 +1886,11 @@
 				{ "id": "A", "text": "Retained Income increases", "isCorrect": false },
 				{ "id": "B", "text": "Retained Income decreases", "isCorrect": true },
 				{ "id": "C", "text": "Share capital increases", "isCorrect": false },
-				{ "id": "D", "text": "The company becomes insolvent", "isCorrect": false }
+				{
+					"id": "D",
+					"text": "The company becomes insolvent",
+					"isCorrect": false
+				}
 			],
 			"supportsDiagram": true,
 			"diagram": {

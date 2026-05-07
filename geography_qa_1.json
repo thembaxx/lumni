@@ -33,10 +33,22 @@
 			"questionText": "Which condition is essential for the initial formation of a tropical cyclone?",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "Sea surface temperature > 26.5°C", "isCorrect": true },
+				{
+					"id": "A",
+					"text": "Sea surface temperature > 26.5°C",
+					"isCorrect": true
+				},
 				{ "id": "B", "text": "Strong vertical wind shear", "isCorrect": false },
-				{ "id": "C", "text": "High pressure at the surface", "isCorrect": false },
-				{ "id": "D", "text": "Proximity to the Equator (0-5° latitude)", "isCorrect": false }
+				{
+					"id": "C",
+					"text": "High pressure at the surface",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Proximity to the Equator (0-5° latitude)",
+					"isCorrect": false
+				}
 			],
 			"supportsDiagram": true,
 			"diagram": {
@@ -44,7 +56,12 @@
 				"title": "Cyclone Formation",
 				"data": {
 					"nodes": [
-						{ "id": "heat", "label": "Warm Ocean (>26.5°C)", "x": 50, "y": 150 },
+						{
+							"id": "heat",
+							"label": "Warm Ocean (>26.5°C)",
+							"x": 50,
+							"y": 150
+						},
 						{ "id": "evap", "label": "Rapid Evaporation", "x": 150, "y": 100 },
 						{ "id": "low", "label": "Low Pressure Core", "x": 250, "y": 150 }
 					],
@@ -83,7 +100,11 @@
 			"questionText": "Berg winds cause high temperatures along the coast due to:",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "Adiabatic heating as air descends", "isCorrect": true },
+				{
+					"id": "A",
+					"text": "Adiabatic heating as air descends",
+					"isCorrect": true
+				},
 				{ "id": "B", "text": "Warm ocean currents", "isCorrect": false },
 				{ "id": "C", "text": "Direct solar radiation", "isCorrect": false },
 				{ "id": "D", "text": "Friction with the ground", "isCorrect": false }
@@ -94,7 +115,12 @@
 				"title": "Berg Wind Process",
 				"data": {
 					"nodes": [
-						{ "id": "plateau", "label": "High Interior Plateau", "x": 50, "y": 50 },
+						{
+							"id": "plateau",
+							"label": "High Interior Plateau",
+							"x": 50,
+							"y": 50
+						},
 						{ "id": "descend", "label": "Subsiding Air", "x": 150, "y": 100 },
 						{ "id": "heat", "label": "Adiabatic Heating", "x": 250, "y": 150 }
 					],
@@ -115,10 +141,22 @@
 			"questionText": "An anabatic wind occurs when:",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "Slopes are heated by the sun", "isCorrect": true },
+				{
+					"id": "A",
+					"text": "Slopes are heated by the sun",
+					"isCorrect": true
+				},
 				{ "id": "B", "text": "Slopes cool down at night", "isCorrect": false },
-				{ "id": "C", "text": "Cold air sinks into the valley", "isCorrect": false },
-				{ "id": "D", "text": "High pressure develops in the valley", "isCorrect": false }
+				{
+					"id": "C",
+					"text": "Cold air sinks into the valley",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "High pressure develops in the valley",
+					"isCorrect": false
+				}
 			],
 			"supportsDiagram": true,
 			"diagram": {
@@ -127,7 +165,12 @@
 				"data": {
 					"nodes": [
 						{ "id": "sun", "label": "Solar Radiation", "x": 50, "y": 50 },
-						{ "id": "slope", "label": "Warm Valley Slopes", "x": 150, "y": 100 },
+						{
+							"id": "slope",
+							"label": "Warm Valley Slopes",
+							"x": 150,
+							"y": 100
+						},
 						{ "id": "rise", "label": "Upslope Air Flow", "x": 250, "y": 50 }
 					],
 					"edges": [
@@ -246,7 +289,12 @@
 					"nodes": [
 						{ "id": "base", "label": "Sea Level Drop", "x": 50, "y": 150 },
 						{ "id": "energy", "label": "Incision Begins", "x": 150, "y": 100 },
-						{ "id": "knick", "label": "Knickpoint (Waterfall)", "x": 250, "y": 50 }
+						{
+							"id": "knick",
+							"label": "Knickpoint (Waterfall)",
+							"x": 250,
+							"y": 50
+						}
 					],
 					"edges": [
 						{ "id": "r1", "source": "base", "target": "energy" },
@@ -331,7 +379,12 @@
 				"data": {
 					"nodes": [
 						{ "id": "pri", "label": "Primary (Extraction)", "x": 50, "y": 100 },
-						{ "id": "sec", "label": "Secondary (Processing)", "x": 150, "y": 100 },
+						{
+							"id": "sec",
+							"label": "Secondary (Processing)",
+							"x": 150,
+							"y": 100
+						},
 						{ "id": "ter", "label": "Tertiary (Services)", "x": 250, "y": 100 }
 					],
 					"edges": [
@@ -387,7 +440,11 @@
 			"questionText": "High drainage density is most likely to occur in areas with:",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "Impermeable rock and steep slopes", "isCorrect": true },
+				{
+					"id": "A",
+					"text": "Impermeable rock and steep slopes",
+					"isCorrect": true
+				},
 				{ "id": "B", "text": "Sand and flat terrain", "isCorrect": false },
 				{ "id": "C", "text": "Thick vegetation", "isCorrect": false },
 				{ "id": "D", "text": "High infiltration rates", "isCorrect": false }
@@ -423,7 +480,11 @@
 			"questionText": "A major advantage of the informal sector for the unemployed is:",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "Ease of entry and survival income", "isCorrect": true },
+				{
+					"id": "A",
+					"text": "Ease of entry and survival income",
+					"isCorrect": true
+				},
 				{ "id": "B", "text": "High job security", "isCorrect": false },
 				{ "id": "C", "text": "Health insurance benefits", "isCorrect": false },
 				{ "id": "D", "text": "Pension funds", "isCorrect": false }
@@ -441,7 +502,11 @@
 			"questionText": "The 'eye' of a tropical cyclone is characterized by:",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "Subsiding air and calm weather", "isCorrect": true },
+				{
+					"id": "A",
+					"text": "Subsiding air and calm weather",
+					"isCorrect": true
+				},
 				{ "id": "B", "text": "Intense thunderstorms", "isCorrect": false },
 				{ "id": "C", "text": "The highest wind speeds", "isCorrect": false },
 				{ "id": "D", "text": "Heaviest rainfall", "isCorrect": false }
@@ -477,10 +542,26 @@
 			"questionText": "In Christaller's Central Place Theory, the 'threshold' is:",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "Minimum population needed for a service", "isCorrect": true },
-				{ "id": "B", "text": "Maximum distance a customer will travel", "isCorrect": false },
-				{ "id": "C", "text": "The boundary of the trade area", "isCorrect": false },
-				{ "id": "D", "text": "The profit margin of a business", "isCorrect": false }
+				{
+					"id": "A",
+					"text": "Minimum population needed for a service",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Maximum distance a customer will travel",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "The boundary of the trade area",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "The profit margin of a business",
+					"isCorrect": false
+				}
 			],
 			"supportsDiagram": false,
 			"diagram": null,
@@ -545,7 +626,11 @@
 			"questionText": "A graded river is one that has:",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "A smooth longitudinal profile", "isCorrect": true },
+				{
+					"id": "A",
+					"text": "A smooth longitudinal profile",
+					"isCorrect": true
+				},
 				{ "id": "B", "text": "Many waterfalls and rapids", "isCorrect": false },
 				{ "id": "C", "text": "A very steep gradient", "isCorrect": false },
 				{ "id": "D", "text": "No sediment load", "isCorrect": false }
@@ -592,9 +677,19 @@
 				"title": "Katabatic Wind",
 				"data": {
 					"nodes": [
-						{ "id": "cool", "label": "Night Cooling of Slopes", "x": 50, "y": 50 },
+						{
+							"id": "cool",
+							"label": "Night Cooling of Slopes",
+							"x": 50,
+							"y": 50
+						},
 						{ "id": "sink", "label": "Dense Air Sinks", "x": 150, "y": 100 },
-						{ "id": "trap", "label": "Cold Air in Valley Floor", "x": 250, "y": 200 }
+						{
+							"id": "trap",
+							"label": "Cold Air in Valley Floor",
+							"x": 250,
+							"y": 200
+						}
 					],
 					"edges": [
 						{ "id": "k1", "source": "cool", "target": "sink" },
@@ -614,7 +709,11 @@
 			"questionType": "multiple-choice",
 			"options": [
 				{ "id": "A", "text": "Feeding the farmer's family", "isCorrect": true },
-				{ "id": "B", "text": "Exporting to international markets", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "Exporting to international markets",
+					"isCorrect": false
+				},
 				{ "id": "C", "text": "Maximizing profit", "isCorrect": false },
 				{ "id": "D", "text": "Industrial processing", "isCorrect": false }
 			],
@@ -649,8 +748,16 @@
 			"questionText": "Urban sprawl refers to:",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "Uncontrolled growth of urban areas", "isCorrect": true },
-				{ "id": "B", "text": "Building skyscrapers in the CBD", "isCorrect": false },
+				{
+					"id": "A",
+					"text": "Uncontrolled growth of urban areas",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Building skyscrapers in the CBD",
+					"isCorrect": false
+				},
 				{ "id": "C", "text": "Improving public transport", "isCorrect": false },
 				{ "id": "D", "text": "Creating green belts", "isCorrect": false }
 			],
@@ -701,9 +808,17 @@
 			"questionText": "Which is a reason for the large informal sector in South Africa?",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "High unemployment in the formal sector", "isCorrect": true },
+				{
+					"id": "A",
+					"text": "High unemployment in the formal sector",
+					"isCorrect": true
+				},
 				{ "id": "B", "text": "Lack of natural resources", "isCorrect": false },
-				{ "id": "C", "text": "Excessive government subsidies", "isCorrect": false },
+				{
+					"id": "C",
+					"text": "Excessive government subsidies",
+					"isCorrect": false
+				},
 				{ "id": "D", "text": "Strict labor laws", "isCorrect": false }
 			],
 			"supportsDiagram": false,
@@ -753,9 +868,17 @@
 			"questionText": "A 'wind gap' is a feature that indicates:",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "A former river valley now dry due to capture", "isCorrect": true },
+				{
+					"id": "A",
+					"text": "A former river valley now dry due to capture",
+					"isCorrect": true
+				},
 				{ "id": "B", "text": "A narrow mountain pass", "isCorrect": false },
-				{ "id": "C", "text": "An area of high wind erosion", "isCorrect": false },
+				{
+					"id": "C",
+					"text": "An area of high wind erosion",
+					"isCorrect": false
+				},
 				{ "id": "D", "text": "A valley formed by wind", "isCorrect": false }
 			],
 			"supportsDiagram": false,
@@ -792,7 +915,11 @@
 				{ "id": "A", "text": "Can be located anywhere", "isCorrect": true },
 				{ "id": "B", "text": "Must be near raw materials", "isCorrect": false },
 				{ "id": "C", "text": "Must be near the market", "isCorrect": false },
-				{ "id": "D", "text": "Needs large amounts of water", "isCorrect": false }
+				{
+					"id": "D",
+					"text": "Needs large amounts of water",
+					"isCorrect": false
+				}
 			],
 			"supportsDiagram": false,
 			"diagram": null,
@@ -807,10 +934,22 @@
 			"questionText": "A superimposed drainage pattern is one that:",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "Flows on a younger surface that is later eroded", "isCorrect": true },
+				{
+					"id": "A",
+					"text": "Flows on a younger surface that is later eroded",
+					"isCorrect": true
+				},
 				{ "id": "B", "text": "Develops on folded rock", "isCorrect": false },
-				{ "id": "C", "text": "Is older than the rock it flows over", "isCorrect": false },
-				{ "id": "D", "text": "Radiates from a central point", "isCorrect": false }
+				{
+					"id": "C",
+					"text": "Is older than the rock it flows over",
+					"isCorrect": false
+				},
+				{
+					"id": "D",
+					"text": "Radiates from a central point",
+					"isCorrect": false
+				}
 			],
 			"supportsDiagram": false,
 			"diagram": null,
@@ -843,8 +982,16 @@
 			"questionText": "A major challenge for residents of informal settlements is:",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "Lack of basic services like water and sanitation", "isCorrect": true },
-				{ "id": "B", "text": "Too many parks and open spaces", "isCorrect": false },
+				{
+					"id": "A",
+					"text": "Lack of basic services like water and sanitation",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Too many parks and open spaces",
+					"isCorrect": false
+				},
 				{ "id": "C", "text": "High property taxes", "isCorrect": false },
 				{ "id": "D", "text": "Excessive street lighting", "isCorrect": false }
 			],
@@ -861,7 +1008,11 @@
 			"questionText": "Globalization has led to the growth of:",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "Multi-national Corporations (MNCs)", "isCorrect": true },
+				{
+					"id": "A",
+					"text": "Multi-national Corporations (MNCs)",
+					"isCorrect": true
+				},
 				{ "id": "B", "text": "Isolated local economies", "isCorrect": false },
 				{ "id": "C", "text": "Higher trade barriers", "isCorrect": false },
 				{ "id": "D", "text": "Less international travel", "isCorrect": false }
@@ -879,8 +1030,16 @@
 			"questionText": "In a mid-latitude cyclone, the cold front is characterized by:",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "Cumulonimbus clouds and heavy rain", "isCorrect": true },
-				{ "id": "B", "text": "Stratus clouds and light drizzle", "isCorrect": false },
+				{
+					"id": "A",
+					"text": "Cumulonimbus clouds and heavy rain",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Stratus clouds and light drizzle",
+					"isCorrect": false
+				},
 				{ "id": "C", "text": "Rising temperatures", "isCorrect": false },
 				{ "id": "D", "text": "Falling air pressure", "isCorrect": false }
 			],
@@ -927,7 +1086,12 @@
 				"data": {
 					"nodes": [
 						{ "id": "out", "label": "Outer Rainbands", "x": 50, "y": 100 },
-						{ "id": "wall", "label": "Eyewall (High Wind)", "x": 150, "y": 100 },
+						{
+							"id": "wall",
+							"label": "Eyewall (High Wind)",
+							"x": 150,
+							"y": 100
+						},
 						{ "id": "eye", "label": "Eye (Calm Center)", "x": 250, "y": 100 }
 					],
 					"edges": [
@@ -958,9 +1122,24 @@
 				"title": "River Profile",
 				"data": {
 					"nodes": [
-						{ "id": "upper", "label": "Upper Course (Erosion)", "x": 50, "y": 50 },
-						{ "id": "middle", "label": "Middle Course (Transport)", "x": 150, "y": 100 },
-						{ "id": "lower", "label": "Lower Course (Deposition)", "x": 250, "y": 150 }
+						{
+							"id": "upper",
+							"label": "Upper Course (Erosion)",
+							"x": 50,
+							"y": 50
+						},
+						{
+							"id": "middle",
+							"label": "Middle Course (Transport)",
+							"x": 150,
+							"y": 100
+						},
+						{
+							"id": "lower",
+							"label": "Lower Course (Deposition)",
+							"x": 250,
+							"y": 150
+						}
 					],
 					"edges": [
 						{ "id": "flow1", "source": "upper", "target": "middle" },
@@ -979,7 +1158,11 @@
 			"questionText": "The central area of a city with the highest land value and accessibility is the:",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "Central Business District (CBD)", "isCorrect": true },
+				{
+					"id": "A",
+					"text": "Central Business District (CBD)",
+					"isCorrect": true
+				},
 				{ "id": "B", "text": "Residential Zone", "isCorrect": false },
 				{ "id": "C", "text": "Industrial Park", "isCorrect": false },
 				{ "id": "D", "text": "Rural-Urban Fringe", "isCorrect": false }
@@ -992,7 +1175,12 @@
 					"nodes": [
 						{ "id": "cbd", "label": "1. CBD", "x": 150, "y": 150 },
 						{ "id": "trans", "label": "2. Transition", "x": 150, "y": 100 },
-						{ "id": "low", "label": "3. Low-class Residential", "x": 150, "y": 50 }
+						{
+							"id": "low",
+							"label": "3. Low-class Residential",
+							"x": 150,
+							"y": 50
+						}
 					],
 					"edges": [
 						{ "id": "z1", "source": "cbd", "target": "trans" },
@@ -1023,7 +1211,12 @@
 				"data": {
 					"nodes": [
 						{ "id": "raw", "label": "Primary (Extraction)", "x": 50, "y": 100 },
-						{ "id": "mfg", "label": "Secondary (Manufacturing)", "x": 150, "y": 100 },
+						{
+							"id": "mfg",
+							"label": "Secondary (Manufacturing)",
+							"x": 150,
+							"y": 100
+						},
 						{ "id": "svc", "label": "Tertiary (Services)", "x": 250, "y": 100 }
 					],
 					"edges": [
@@ -1072,8 +1265,18 @@
 				"title": "Settlement Types",
 				"data": {
 					"nodes": [
-						{ "id": "nuc", "label": "Nucleated (Clustered)", "x": 100, "y": 50 },
-						{ "id": "disp", "label": "Dispersed (Scattered)", "x": 100, "y": 150 }
+						{
+							"id": "nuc",
+							"label": "Nucleated (Clustered)",
+							"x": 100,
+							"y": 50
+						},
+						{
+							"id": "disp",
+							"label": "Dispersed (Scattered)",
+							"x": 100,
+							"y": 150
+						}
 					],
 					"edges": []
 				}
@@ -1100,9 +1303,24 @@
 				"title": "Berg Wind Flow",
 				"data": {
 					"nodes": [
-						{ "id": "plateau", "label": "Interior Plateau (High Pressure)", "x": 50, "y": 50 },
-						{ "id": "desc", "label": "Descending Air (Heating)", "x": 150, "y": 100 },
-						{ "id": "coast", "label": "Coastal Plain (Hot/Dry)", "x": 250, "y": 150 }
+						{
+							"id": "plateau",
+							"label": "Interior Plateau (High Pressure)",
+							"x": 50,
+							"y": 50
+						},
+						{
+							"id": "desc",
+							"label": "Descending Air (Heating)",
+							"x": 150,
+							"y": 100
+						},
+						{
+							"id": "coast",
+							"label": "Coastal Plain (Hot/Dry)",
+							"x": 250,
+							"y": 150
+						}
 					],
 					"edges": [
 						{ "id": "w1", "source": "plateau", "target": "desc" },
@@ -1152,7 +1370,12 @@
 					"nodes": [
 						{ "id": "base", "label": "Lower Base Level", "x": 50, "y": 100 },
 						{ "id": "energy", "label": "Increased Energy", "x": 150, "y": 100 },
-						{ "id": "erosion", "label": "Vertical Incision (Knickpoint)", "x": 250, "y": 100 }
+						{
+							"id": "erosion",
+							"label": "Vertical Incision (Knickpoint)",
+							"x": 250,
+							"y": 100
+						}
 					],
 					"edges": [
 						{ "id": "r1", "source": "base", "target": "energy" },
@@ -1261,9 +1484,21 @@
 			"questionText": "Temperature inversion occurs when:",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "Warm air sits above cool air", "isCorrect": true },
-				{ "id": "B", "text": "Cool air sits above warm air", "isCorrect": false },
-				{ "id": "C", "text": "Air temperature stays constant", "isCorrect": false },
+				{
+					"id": "A",
+					"text": "Warm air sits above cool air",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Cool air sits above warm air",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Air temperature stays constant",
+					"isCorrect": false
+				},
 				{ "id": "D", "text": "It rains heavily", "isCorrect": false }
 			],
 			"supportsDiagram": false,
@@ -1388,7 +1623,11 @@
 			"questionType": "multiple-choice",
 			"options": [
 				{ "id": "A", "text": "Sector Model (Hoyt)", "isCorrect": true },
-				{ "id": "B", "text": "Concentric Zone Model (Burgess)", "isCorrect": false },
+				{
+					"id": "B",
+					"text": "Concentric Zone Model (Burgess)",
+					"isCorrect": false
+				},
 				{ "id": "C", "text": "Multiple Nuclei Model", "isCorrect": false },
 				{ "id": "D", "text": "Urban Sprawl Model", "isCorrect": false }
 			],
@@ -1405,9 +1644,21 @@
 			"questionText": "An anabatic wind occurs during the day when:",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "Air warms and rises up a slope", "isCorrect": true },
-				{ "id": "B", "text": "Air cools and sinks down a slope", "isCorrect": false },
-				{ "id": "C", "text": "Winds blow from sea to land", "isCorrect": false },
+				{
+					"id": "A",
+					"text": "Air warms and rises up a slope",
+					"isCorrect": true
+				},
+				{
+					"id": "B",
+					"text": "Air cools and sinks down a slope",
+					"isCorrect": false
+				},
+				{
+					"id": "C",
+					"text": "Winds blow from sea to land",
+					"isCorrect": false
+				},
 				{ "id": "D", "text": "Winds blow from land to sea", "isCorrect": false }
 			],
 			"supportsDiagram": false,
@@ -1423,7 +1674,11 @@
 			"questionText": "Which is a characteristic of the informal economic sector?",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "No official registration/taxes", "isCorrect": true },
+				{
+					"id": "A",
+					"text": "No official registration/taxes",
+					"isCorrect": true
+				},
 				{ "id": "B", "text": "High job security", "isCorrect": false },
 				{ "id": "C", "text": "Fixed working hours", "isCorrect": false },
 				{ "id": "D", "text": "Health insurance benefits", "isCorrect": false }
@@ -1477,7 +1732,11 @@
 			"questionText": "Coastal areas have more moderate temperatures than inland areas due to:",
 			"questionType": "multiple-choice",
 			"options": [
-				{ "id": "A", "text": "The high specific heat of water", "isCorrect": true },
+				{
+					"id": "A",
+					"text": "The high specific heat of water",
+					"isCorrect": true
+				},
 				{ "id": "B", "text": "Distance from the equator", "isCorrect": false },
 				{ "id": "C", "text": "Cloud cover", "isCorrect": false },
 				{ "id": "D", "text": "Soil type", "isCorrect": false }
