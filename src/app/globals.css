@@ -18,26 +18,26 @@
 }
 
 .light {
-	--background: oklch(98% 0.015 60);
-	--foreground: oklch(20% 0.015 60);
+	--background: oklch(98.5% 0.01 70);
+	--foreground: oklch(22% 0.02 70);
 	--card: oklch(100% 0 0);
-	--card-foreground: oklch(15% 0.015 60);
+	--card-foreground: oklch(18% 0.015 70);
 	--popover: oklch(100% 0 0);
-	--popover-foreground: oklch(15% 0.015 60);
-	--primary: oklch(60% 0.18 35);
+	--popover-foreground: oklch(18% 0.015 70);
+	--primary: oklch(55% 0.2 40);
 	--primary-foreground: oklch(100% 0 0);
-	--secondary: oklch(92% 0.03 170);
-	--secondary-foreground: oklch(25% 0.02 170);
-	--muted: oklch(94% 0.015 60);
-	--muted-foreground: oklch(50% 0.015 60);
-	--accent: oklch(88% 0.05 160);
-	--accent-foreground: oklch(30% 0.04 160);
+	--secondary: oklch(94% 0.02 180);
+	--secondary-foreground: oklch(28% 0.025 180);
+	--muted: oklch(96% 0.01 70);
+	--muted-foreground: oklch(52% 0.015 70);
+	--accent: oklch(90% 0.04 165);
+	--accent-foreground: oklch(32% 0.04 165);
 	--destructive: oklch(58% 0.16 25);
 	--destructive-foreground: oklch(100% 0 0);
-	--border: oklch(86% 0.01 60);
-	--input: oklch(86% 0.01 60);
-	--ring: oklch(60% 0.18 35);
-	--radius: 1rem;
+	--border: oklch(88% 0.008 70);
+	--input: oklch(88% 0.008 70);
+	--ring: oklch(55% 0.2 40);
+	--radius: 1.5rem;
 	--success: oklch(68% 0.16 150);
 	--warning: oklch(75% 0.14 45);
 	--info: oklch(65% 0.12 210);
@@ -55,33 +55,34 @@
 
 	--font-geist: var(--font-geist);
 	--font-geist-mono: var(--font-geist-mono);
+	--font-serif: var(--font-serif);
 }
 
 .dark {
-	--background: oklch(10% 0.015 60);
-	--foreground: oklch(96% 0.008 60);
-	--card: oklch(16% 0.02 60);
-	--card-foreground: oklch(96% 0.008 60);
-	--popover: oklch(16% 0.02 60);
-	--popover-foreground: oklch(96% 0.008 60);
-	--primary: oklch(72% 0.18 35);
-	--primary-foreground: oklch(15% 0.01 60);
-	--secondary: oklch(22% 0.025 170);
-	--secondary-foreground: oklch(92% 0.01 170);
-	--muted: oklch(22% 0.015 60);
-	--muted-foreground: oklch(68% 0.012 60);
-	--accent: oklch(28% 0.04 160);
-	--accent-foreground: oklch(85% 0.03 160);
+	--background: oklch(8% 0.015 280);
+	--foreground: oklch(94% 0.008 280);
+	--card: oklch(14% 0.02 280);
+	--card-foreground: oklch(94% 0.008 280);
+	--popover: oklch(14% 0.02 280);
+	--popover-foreground: oklch(94% 0.008 280);
+	--primary: oklch(70% 0.2 40);
+	--primary-foreground: oklch(12% 0.01 280);
+	--secondary: oklch(20% 0.025 280);
+	--secondary-foreground: oklch(90% 0.01 280);
+	--muted: oklch(18% 0.015 280);
+	--muted-foreground: oklch(64% 0.012 280);
+	--accent: oklch(26% 0.05 280);
+	--accent-foreground: oklch(88% 0.04 280);
 	--destructive: oklch(62% 0.16 25);
-	--destructive-foreground: oklch(96% 0.008 60);
-	--border: oklch(28% 0.015 60);
-	--input: oklch(28% 0.015 60);
-	--ring: oklch(72% 0.18 35);
-	--radius: 1rem;
+	--destructive-foreground: oklch(94% 0.008 280);
+	--border: oklch(24% 0.015 280);
+	--input: oklch(24% 0.015 280);
+	--ring: oklch(70% 0.2 40);
+	--radius: 1.5rem;
 	--success: oklch(72% 0.15 150);
 	--warning: oklch(82% 0.12 45);
 	--info: oklch(68% 0.12 210);
-	--glow-primary: oklch(72% 0.18 35 / 20%);
+	--glow-primary: oklch(70% 0.2 40 / 20%);
 
 	--font-size-xs: 0.75rem;
 	--font-size-sm: 0.875rem;
@@ -97,6 +98,7 @@
 	/* Font Families - referencing Next.js font CSS variables */
 	--font-geist: var(--font-geist);
 	--font-geist-mono: var(--font-geist-mono);
+	--font-serif: var(--font-serif);
 }
 
 @theme inline {
@@ -127,6 +129,7 @@
 	--radius-lg: var(--radius);
 	--radius-xl: calc(var(--radius) + 4px);
 	--font-sans: var(--font-geist);
+	--font-serif: var(--font-serif);
 }
 
 @layer base {
@@ -156,6 +159,7 @@
 	h4,
 	h5,
 	h6 {
+		font-family: var(--font-serif);
 		font-weight: 400;
 		letter-spacing: -0.03em;
 		line-height: 1.15;

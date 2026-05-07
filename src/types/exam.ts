@@ -25,6 +25,7 @@ export interface ExamFilter {
 	search: string;
 	year: number | null;
 	subject: string | null;
+	session: string;
 }
 
 export interface ExamGroup {

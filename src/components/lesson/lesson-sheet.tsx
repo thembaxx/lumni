@@ -60,7 +60,7 @@ export function LessonSheet() {
 			<SheetTrigger asChild>
 				<Button variant="outline" className="gap-2">
 					<Search className="h-4 w-4" />
-					Lessons
+					<span className="grow whitespace-nowrap">Lessons</span>
 				</Button>
 			</SheetTrigger>
 			<LazyMotion features={domAnimation}>

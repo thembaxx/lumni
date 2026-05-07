@@ -31,6 +31,18 @@ export function useExams(filter: ExamFilter) {
 			);
 		}
 
+		if (filter.session && filter.session !== "all") {
+			results = results.filter((exam) => {
+				if (filter.session === "may") {
+					return exam.session === "may-june";
+				}
+				if (filter.session === "nov") {
+					return exam.session === "november";
+				}
+				return true;
+			});
+		}
+
 		return results;
 	}, [exams, filter]);
 

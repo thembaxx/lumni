@@ -1,6 +1,6 @@
 "use client";
 
-import { More01Icon } from "@hugeicons/core-free-icons";
+import { Cancel01Icon, More01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -42,16 +42,20 @@ export function PracticeSheet({ open, onOpenChange }: PracticeSheetProps) {
 			</SheetTrigger>
 			<SheetContent
 				side="bottom"
-				className="min-h-[95dvh] flex flex-col max-h-[95dvh] mx-auto mt-0 rounded-t-4xl animate-fade-in-scale"
+				className="min-h-[95dvh] h-full flex flex-col max-h-[95dvh] w-full mt-0 rounded-t-4xl animate-fade-in-scale"
 			>
-				<SheetHeader
-					className={`flex flex-col items-center transition-opacity duration-300 ${
-						showQuizHeader
-							? "opacity-100"
-							: "opacity-0 pointer-events-none absolute"
-					}`}
-				>
-					<SheetTitle>Practice</SheetTitle>
+				<SheetHeader className="relative flex flex-row items-center justify-center pr-12">
+					<button
+						onClick={() => onOpenChange(false)}
+						className="absolute right-0 p-2 rounded-lg hover:bg-muted/50 transition-colors"
+						aria-label="Close practice sheet"
+					>
+						<HugeiconsIcon
+							icon={Cancel01Icon}
+							className="w-5 h-5 text-muted-foreground"
+						/>
+					</button>
+					<SheetTitle className="text-base">Practice</SheetTitle>
 				</SheetHeader>
 				<div
 					className={`px-4 py-2 w-full grow flex flex-col items-center overflow-y-auto`}

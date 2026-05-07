@@ -5,6 +5,8 @@ import { BookOpen, Search, X } from "lucide-react";
 import { useState } from "react";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
 import {
 	Empty,
 	EmptyContent,
@@ -27,12 +29,14 @@ interface ExamTabProps {
 export function ExamTab({ className }: ExamTabProps) {
 	const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
 	const [selectedYear, setSelectedYear] = useState<number | null>(null);
+	const [selectedSession, setSelectedSession] = useState<string>("all");
 	const [searchQuery, setSearchQuery] = useState("");
 
 	const { exams, groupedExams, isLoading, error } = useExams({
 		search: searchQuery,
 		year: selectedYear,
 		subject: selectedSubject,
+		session: selectedSession,
 	});
 
 	const handleSubjectSelect = (subject: string) => {
@@ -46,14 +50,16 @@ export function ExamTab({ className }: ExamTabProps) {
 	const clearFilters = () => {
 		setSelectedSubject(null);
 		setSelectedYear(null);
+		setSelectedSession("all");
 		setSearchQuery("");
 	};
 
-	const hasActiveFilters = selectedSubject || selectedYear || searchQuery;
+	const hasActiveFilters =
+		selectedSubject || selectedYear || selectedSession !== "all" || searchQuery;
 
 	return (
 		<LazyMotion features={domAnimation}>
-			<div className={cn("w-full px-4 pb-6 space-y-4", className)}>
+			<div className={cn("w-full px-4 pb-6 space-y-8", className)}>
 				<m.div
 					initial={{ opacity: 0, y: -10 }}
 					animate={{ opacity: 1, y: 0 }}
@@ -85,11 +91,11 @@ export function ExamTab({ className }: ExamTabProps) {
 						</AnimatePresence>
 					</div>
 
-					<div className="flex items-center gap-2">
+					<div className="flex items-center justify-between gap-2">
 						<SubjectsDrawer onSelect={handleSubjectSelect}>
 							<button
 								className={cn(
-									"h-8 px-3 rounded-full bg-secondary/60 text-xs font-medium transition-colors",
+									"h-7 px-3 rounded-lg bg-secondary/60 text-xs font-medium transition-colors",
 									selectedSubject
 										? "bg-primary text-primary-foreground"
 										: "text-foreground/80 hover:text-foreground hover:bg-secondary/80",
@@ -100,6 +106,30 @@ export function ExamTab({ className }: ExamTabProps) {
 							</button>
 						</SubjectsDrawer>
 
+						<ButtonGroup>
+							<Button
+								variant={selectedSession === "all" ? "default" : "secondary"}
+								size="sm"
+								onClick={() => setSelectedSession("all")}
+							>
+								All
+							</Button>
+							<Button
+								variant={selectedSession === "may" ? "default" : "secondary"}
+								size="sm"
+								onClick={() => setSelectedSession("may")}
+							>
+								May/Jun
+							</Button>
+							<Button
+								variant={selectedSession === "nov" ? "default" : "secondary"}
+								size="sm"
+								onClick={() => setSelectedSession("nov")}
+							>
+								Nov/Dec
+							</Button>
+						</ButtonGroup>
+
 						<AnimatePresence>
 							{hasActiveFilters && (
 								<m.button
@@ -107,11 +137,10 @@ export function ExamTab({ className }: ExamTabProps) {
 									animate={{ opacity: 1, scale: 1 }}
 									exit={{ opacity: 0, scale: 0.9 }}
 									onClick={clearFilters}
-									className="h-8 px-3 flex items-center text-xs text-muted-foreground hover:text-foreground"
+									className="h-7 px-2.5 flex items-center text-xs text-muted-foreground hover:text-foreground"
 									type="button"
 								>
-									<X className="w-3 h-3 mr-1" />
-									Clear
+									<X className="w-3.5 h-3.5" />
 								</m.button>
 							)}
 						</AnimatePresence>
@@ -122,7 +151,7 @@ export function ExamTab({ className }: ExamTabProps) {
 							key="all-years"
 							onClick={() => handleYearSelect(null)}
 							className={cn(
-								"shrink-0 h-7 px-3 rounded-full text-xs font-medium transition-colors",
+								"shrink-0 h-7 px-2.5 rounded-lg text-xs font-medium transition-colors",
 								selectedYear === null
 									? "bg-foreground text-background"
 									: "bg-muted/60 text-muted-foreground hover:text-foreground",
@@ -136,7 +165,7 @@ export function ExamTab({ className }: ExamTabProps) {
 								key={year}
 								onClick={() => handleYearSelect(year)}
 								className={cn(
-									"shrink-0 h-7 px-3 rounded-full text-xs font-medium transition-colors",
+									"shrink-0 h-7 px-2.5 rounded-lg text-xs font-medium transition-colors",
 									selectedYear === year
 										? "bg-foreground text-background"
 										: "bg-muted/60 text-muted-foreground hover:text-foreground",

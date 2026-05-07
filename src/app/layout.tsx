@@ -9,7 +9,7 @@ import { PageTransition } from "@/components/layout/page-transition";
 import { BottomNav } from "@/components/navigation/bottom-nav";
 import { Providers } from "@/components/providers";
 import { ourFileRouter } from "./api/uploadthing/core";
-import { fontMono, fontSans } from "./fonts";
+import { fontMono, fontSans, fontSerif } from "./fonts";
 
 async function UTSSR() {
 	await connection();
@@ -69,10 +69,10 @@ export default function RootLayout({
 	return (
 		<html
 			lang="en"
-			className={`${fontSans.variable} ${fontMono.variable} h-full antialiased`}
+			className={`${fontSans.variable} ${fontMono.variable} ${fontSerif.variable} h-full antialiased`}
 		>
 			<body
-				className={`${fontSans.variable} ${fontMono.variable} h-full antialiased min-h-full flex flex-col font-body bg-background text-foreground`}
+				className={`${fontSans.variable} ${fontMono.variable} ${fontSerif.variable} h-full antialiased min-h-full flex flex-col font-body bg-background text-foreground`}
 			>
 				<div
 					className="noise-overlay hidden dark:hidden sm:block"

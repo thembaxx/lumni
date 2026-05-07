@@ -2,12 +2,10 @@
 
 import { IconBook, IconBulb, IconFileDescription } from "@tabler/icons-react";
 import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
 import { LessonsButton } from "@/components/lesson";
-import { Button } from "@/components/ui/button";
 
 const quickActions = [
-	{ icon: IconFileDescription, label: "Exam papers" },
+	{ icon: IconFileDescription, label: "Exams" },
 	{ icon: IconBulb, label: "Practice" },
 	{ icon: IconBook, label: "Lessons" },
 ];
@@ -41,9 +39,11 @@ function ActionButton({
 	);
 }
 
-export function QuickActions() {
-	const router = useRouter();
-
+export function QuickActions({
+	onPracticeClick,
+}: {
+	onPracticeClick?: () => void;
+}) {
 	return (
 		<div>
 			<ul className="flex items-center gap-3 overflow-x-auto scrollbar-hide py-1">
@@ -67,7 +67,7 @@ export function QuickActions() {
 									action.icon as React.ComponentType<{ className?: string }>
 								}
 								label={action.label}
-								onClick={() => router.push("/quiz")}
+								onClick={onPracticeClick}
 							/>
 						) : (
 							<ActionButton

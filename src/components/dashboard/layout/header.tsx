@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Menu } from "@/components/menu";
 import { TabNav } from "../navigation/tab-nav";
 import { PracticeSheet } from "../practice/practice-sheet";
 import type { TabValue } from "../types";
@@ -21,7 +20,7 @@ export function DashboardHeader({
 
 	return (
 		<nav className="flex items-center justify-between px-4 py-4 w-full animate-fade-in-up border-b border-border/30">
-			<Menu />
+			<div className="w-10" />
 			<TabNav activeTab={activeTab} onTabChange={onTabChange} />
 			<PracticeSheet open={practiceOpen} onOpenChange={setPracticeOpen} />
 		</nav>

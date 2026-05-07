@@ -1,11 +1,19 @@
 import { useState } from "react";
+import { StreakFire } from "@/components/celebration";
 import {
 	ProgressChart,
 	StatsCards,
 	SubjectDrawer,
 } from "@/components/dashboard";
+import {
+	Achievements,
+	DailyChallenges,
+	ProgressMilestones,
+	StreakCelebration,
+} from "@/components/gamification";
 import { QuizEngine } from "@/components/quiz/quiz-engine";
 import { useUserProgress, useUserSubjects } from "@/lib/hooks";
+import { useGamification } from "@/lib/hooks/use-gamification";
 import { toggleUserSubject } from "@/lib/server/actions";
 
 const DEFAULT_USER_ID = "demo-user";
@@ -17,6 +25,11 @@ export default function StatsTab() {
 		useUserProgress(userId);
 	const { data: subjectsResult, isLoading: isSubjectsLoading } =
 		useUserSubjects(userId);
+	const {
+		gamification,
+		currentStreak,
+		isLoaded: isGamificationLoaded,
+	} = useGamification();
 
 	const selectedSubjects = subjectsResult?.selectedSubjectIds ?? [];
 	const progress = progressData ?? {
@@ -46,7 +59,7 @@ export default function StatsTab() {
 		{ date: "Sun", accuracy: progress.accuracy || 0 },
 	];
 
-	if (isProgressLoading || isSubjectsLoading) {
+	if (isProgressLoading || isSubjectsLoading || !isGamificationLoaded) {
 		return (
 			<div className="px-4 pb-6 space-y-3">
 				<div className="animate-pulse h-24 bg-muted rounded-lg" />
@@ -62,6 +75,17 @@ export default function StatsTab() {
 				userId={userId}
 				selectedSubjects={selectedSubjects}
 				onSelectionChange={handleSubjectToggle}
+			/>
+			<StreakFire streak={currentStreak} showMilestone />
+			<StreakCelebration
+				currentStreak={currentStreak}
+				milestones={gamification.streakMilestones}
+			/>
+			<DailyChallenges challenges={gamification.dailyChallenges} />
+			<Achievements achievements={gamification.achievements} />
+			<ProgressMilestones
+				currentStreak={currentStreak}
+				milestones={gamification.streakMilestones}
 			/>
 			<StatsCards
 				streak={progress.streak}

@@ -12,15 +12,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/compat/router";
 import { usePathname } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
-import {
-	Drawer,
-	DrawerContent,
-	DrawerDescription,
-	DrawerHeader,
-	DrawerTitle,
-	DrawerTrigger,
-} from "@/components/ui/drawer";
-import { VoiceRecorder } from "@/components/ui/voice-recorder";
+import { PracticeSheet } from "@/components/dashboard/practice/practice-sheet";
 import { cn } from "@/lib/utils";
 
 interface NavItem {
@@ -76,7 +68,7 @@ function NavItemComponent({
 		<motion.button
 			onClick={onClick}
 			className={cn(
-				"flex flex-col items-center justify-center gap-1.5 py-2 px-1 min-w-[64px] min-h-[48px] rounded-xl transition-colors relative",
+				"flex flex-1 flex-col items-center justify-center gap-1.5 py-2 px-1 min-h-[48px] rounded-xl transition-colors relative",
 				isActive
 					? "text-primary"
 					: "text-muted-foreground hover:text-foreground",
@@ -148,7 +140,7 @@ export function BottomNav() {
 
 	const handleItemClick = useCallback(
 		(item: NavItem) => {
-			if (item.id === "practice") {
+			if (item.id === "practice" || item.id === "quiz") {
 				setPracticeDrawerOpen(true);
 			} else {
 				handleNavigate(item.href);
@@ -165,7 +157,7 @@ export function BottomNav() {
 				animate={{ y: 0, opacity: 1 }}
 				transition={{ type: "spring", stiffness: 300, damping: 30, delay: 0.2 }}
 			>
-				<div className="flex items-center justify-between px-2 pb-safe">
+				<div className="flex w-full px-2 pb-safe">
 					{navItems.map((item, index) => (
 						<NavItemComponent
 							key={item.id}
@@ -180,19 +172,10 @@ export function BottomNav() {
 					aria-hidden="true"
 				/>
 			</motion.nav>
-			<Drawer open={practiceDrawerOpen} onOpenChange={setPracticeDrawerOpen}>
-				<DrawerContent>
-					<DrawerHeader className="text-left">
-						<DrawerTitle>Practice</DrawerTitle>
-						<DrawerDescription>
-							Record your voice to practice pronunciation
-						</DrawerDescription>
-					</DrawerHeader>
-					<div className="px-4 pb-8">
-						<VoiceRecorder />
-					</div>
-				</DrawerContent>
-			</Drawer>
+			<PracticeSheet
+				open={practiceDrawerOpen}
+				onOpenChange={setPracticeDrawerOpen}
+			/>
 		</>
 	);
 }
