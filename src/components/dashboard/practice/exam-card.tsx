@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
+import {  m } from "framer-motion";
 import { ChevronLeft, ChevronRight, Download, FileText, X } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
@@ -68,7 +68,7 @@ function PdfViewer({
 
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange}>
-			<DialogContent className="max-w-[98vw] max-h-[95vh] p-0 gap-0 rounded-2xl overflow-hidden">
+			<DialogContent className="max-w-[98vw] h-full max-h-[95vh] p-0 gap-0 rounded-2xl overflow-hidden">
 				<div className="flex flex-col h-full">
 					<div className="flex items-center justify-between px-4 py-3 border-b shrink-0">
 						<div className="flex items-center gap-2 min-w-0 flex-1">
@@ -81,7 +81,7 @@ function PdfViewer({
 							</Badge>
 						</div>
 
-						<div className="flex items-center gap-0.5">
+						{/* <div className="flex items-center gap-0.5">
 							<Button
 								variant="ghost"
 								size="icon"
@@ -101,7 +101,7 @@ function PdfViewer({
 							>
 								<span className="text-base">+</span>
 							</Button>
-						</div>
+						</div> */}
 
 						<div className="flex items-center gap-0.5">
 							<Button
@@ -131,8 +131,7 @@ function PdfViewer({
 								className="h-8 ml-1 text-xs"
 								onClick={handleDownload}
 							>
-								<Download className="w-3 h-3 mr-1.5" />
-								Save
+								<Download className="w-4 h-4" />
 							</Button>
 						</div>
 					</div>
