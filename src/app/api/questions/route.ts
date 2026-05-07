@@ -2,6 +2,8 @@ import * as fs from "fs";
 import { NextRequest, NextResponse } from "next/server";
 import * as path from "path";
 
+export const runtime = "nodejs";
+
 function sanitizeFileName(name: string): string {
 	return name.replace(/[^a-zA-Z0-9_\-.]/g, "");
 }

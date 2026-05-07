@@ -1,23 +1,32 @@
 "use client";
 
 import {
-	ArrowUpIcon,
 	GridIcon as FlashcardIcon,
 	GridIcon,
 	Home05Icon,
+	Mic01Icon,
 	Settings02Icon,
 } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/compat/router";
 import { usePathname } from "next/navigation";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
+import {
+	Drawer,
+	DrawerContent,
+	DrawerDescription,
+	DrawerHeader,
+	DrawerTitle,
+	DrawerTrigger,
+} from "@/components/ui/drawer";
+import { VoiceRecorder } from "@/components/ui/voice-recorder";
 import { cn } from "@/lib/utils";
 
 interface NavItem {
 	id: string;
 	label: string;
-	icon: any;
+	icon: IconSvgElement;
 	href: string;
 }
 
@@ -25,35 +34,31 @@ const navItems: NavItem[] = [
 	{
 		id: "home",
 		label: "Home",
-		icon: Home05Icon as unknown as React.ComponentType<{ className?: string }>,
+		icon: Home05Icon,
 		href: "/dashboard",
 	},
 	{
 		id: "quiz",
 		label: "Quiz",
-		icon: GridIcon as unknown as React.ComponentType<{ className?: string }>,
+		icon: GridIcon,
 		href: "/quiz",
 	},
 	{
 		id: "flashcards",
 		label: "Cards",
-		icon: FlashcardIcon as unknown as React.ComponentType<{
-			className?: string;
-		}>,
+		icon: FlashcardIcon,
 		href: "/flashcards",
 	},
 	{
-		id: "upload",
-		label: "Upload",
-		icon: ArrowUpIcon as unknown as React.ComponentType<{ className?: string }>,
-		href: "/upload",
+		id: "practice",
+		label: "Practice",
+		icon: Mic01Icon,
+		href: "",
 	},
 	{
 		id: "settings",
 		label: "Settings",
-		icon: Settings02Icon as unknown as React.ComponentType<{
-			className?: string;
-		}>,
+		icon: Settings02Icon,
 		href: "/admin",
 	},
 ];
@@ -122,6 +127,7 @@ function NavItemComponent({
 export function BottomNav() {
 	const pathname = usePathname();
 	const router = useRouter();
+	const [practiceDrawerOpen, setPracticeDrawerOpen] = useState(false);
 
 	const activeIndex = useMemo(() => {
 		const index = navItems.findIndex((item) => {
@@ -140,27 +146,53 @@ export function BottomNav() {
 		[router],
 	);
 
+	const handleItemClick = useCallback(
+		(item: NavItem) => {
+			if (item.id === "practice") {
+				setPracticeDrawerOpen(true);
+			} else {
+				handleNavigate(item.href);
+			}
+		},
+		[handleNavigate],
+	);
+
 	return (
-		<motion.nav
-			className="fixed bottom-0 left-0 right-0 z-50 bg-card/80 backdrop-blur-xl border-t border-border/50 md:hidden"
-			initial={{ y: 100, opacity: 0 }}
-			animate={{ y: 0, opacity: 1 }}
-			transition={{ type: "spring", stiffness: 300, damping: 30, delay: 0.2 }}
-		>
-			<div className="flex items-center justify-between px-2 pb-safe">
-				{navItems.map((item, index) => (
-					<NavItemComponent
-						key={item.id}
-						item={item}
-						isActive={index === activeIndex}
-						onClick={() => handleNavigate(item.href)}
-					/>
-				))}
-			</div>
-			<div
-				className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-border/50 to-transparent"
-				aria-hidden="true"
-			/>
-		</motion.nav>
+		<>
+			<motion.nav
+				className="fixed bottom-0 left-0 right-0 z-50 bg-card/80 backdrop-blur-xl border-t border-border/50 md:hidden"
+				initial={{ y: 100, opacity: 0 }}
+				animate={{ y: 0, opacity: 1 }}
+				transition={{ type: "spring", stiffness: 300, damping: 30, delay: 0.2 }}
+			>
+				<div className="flex items-center justify-between px-2 pb-safe">
+					{navItems.map((item, index) => (
+						<NavItemComponent
+							key={item.id}
+							item={item}
+							isActive={index === activeIndex}
+							onClick={() => handleItemClick(item)}
+						/>
+					))}
+				</div>
+				<div
+					className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-border/50 to-transparent"
+					aria-hidden="true"
+				/>
+			</motion.nav>
+			<Drawer open={practiceDrawerOpen} onOpenChange={setPracticeDrawerOpen}>
+				<DrawerContent>
+					<DrawerHeader className="text-left">
+						<DrawerTitle>Practice</DrawerTitle>
+						<DrawerDescription>
+							Record your voice to practice pronunciation
+						</DrawerDescription>
+					</DrawerHeader>
+					<div className="px-4 pb-8">
+						<VoiceRecorder />
+					</div>
+				</DrawerContent>
+			</Drawer>
+		</>
 	);
 }
