@@ -227,20 +227,22 @@ export function ExamCard({ exam }: ExamCardProps) {
 							Saved
 						</Badge>
 					) : null}
-					<button
+					<Button
+						variant="default"
+						size="sm"
+						className="h-8 text-xs"
 						onClick={handleViewPdf}
-						className="h-8 px-3 rounded-full bg-primary text-primary-foreground text-xs font-medium hover:bg-primary/90 transition-colors"
-						type="button"
 					>
 						View
-					</button>
-					<button
+					</Button>
+					<Button
+						variant="secondary"
+						size="sm"
+						className="h-8 text-xs"
 						onClick={handlePractice}
-						className="h-8 px-3 rounded-full bg-secondary text-xs font-medium hover:bg-secondary/80 transition-colors"
-						type="button"
 					>
 						Practice
-					</button>
+					</Button>
 				</div>
 			</m.div>
 

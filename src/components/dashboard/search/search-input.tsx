@@ -6,6 +6,8 @@ import { Book, Mic } from "lucide-react";
 import { useState } from "react";
 import { VoiceWaveIcon } from "@/components/icons";
 import { AnimatedDialogContent } from "@/components/ui/animated-dialog-content";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { SubjectsDrawer } from "../drawers/subjects-drawer";
 
@@ -25,43 +27,42 @@ export function SearchInput({ value, onChange }: SearchInputProps) {
 				isFocused && "ring-2 ring-primary/20 border-primary/30",
 			)}
 		>
-			<input
+			<Input
 				type="text"
 				placeholder="Ask anything about your studies..."
 				value={value}
 				onChange={(e) => onChange(e.target.value)}
 				onFocus={() => setIsFocused(true)}
 				onBlur={() => setIsFocused(false)}
-				className="w-full bg-transparent text-foreground placeholder:text-muted-foreground/60 text-sm outline-none mb-4 input-focus rounded-md font-medium"
+				className="bg-transparent text-foreground placeholder:text-muted-foreground/60 text-sm outline-none mb-4 shadow-none border-0 p-0 focus-visible:ring-0"
 			/>
 
 			<div className="flex items-center justify-between">
 				<div className="flex items-center gap-2">
-					<button
-						className="w-8 h-8 rounded-lg bg-muted/60 flex items-center justify-center hover:bg-muted transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background toolbutton"
-						aria-label="Add attachment"
-					>
+					<Button variant="ghost" size="icon" className="w-8 h-8 bg-muted/60 hover:bg-muted toolbutton">
 						<HugeiconsIcon
 							icon={Camera01FreeIcons}
 							className="w-4 h-4 text-muted-foreground toolbutton-icon"
 						/>
-					</button>
+					</Button>
 					<SubjectsDrawer>
-						<button className="w-8 h-8 rounded-lg bg-muted/60 flex items-center justify-center hover:bg-muted transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background toolbutton">
+						<Button variant="ghost" size="icon" className="w-8 h-8 bg-muted/60 hover:bg-muted toolbutton">
 							<Book className="w-4 h-4 text-muted-foreground toolbutton-icon" />
-						</button>
+						</Button>
 					</SubjectsDrawer>
 				</div>
 
 				<div className="flex items-center gap-2">
 					<AnimatedDialogContent>
-						<span className="w-8 h-8 rounded-lg bg-muted/60 flex items-center justify-center hover:bg-muted transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background toolbutton cursor-pointer">
+						<Button variant="ghost" size="icon" className="w-8 h-8 bg-muted/60 hover:bg-muted toolbutton cursor-pointer">
 							<Mic className="w-4 h-4 text-muted-foreground toolbutton-icon" />
-						</span>
+						</Button>
 					</AnimatedDialogContent>
-					<button
+					<Button
+						variant="default"
+						size="icon"
 						className={cn(
-							"w-9 h-9 rounded-lg bg-primary flex items-center justify-center hover:opacity-90 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background voice-btn",
+							"w-9 h-9 voice-btn",
 							voicePressed && "voice-btn-pressed",
 						)}
 						aria-label="Voice input"
@@ -72,11 +73,11 @@ export function SearchInput({ value, onChange }: SearchInputProps) {
 					>
 						<VoiceWaveIcon
 							className={cn(
-								"w-4 h-4 text-primary-foreground voice-btn-icon",
+								"w-4 h-4 voice-btn-icon",
 								voicePressed && "scale-125",
 							)}
 						/>
-					</button>
+					</Button>
 				</div>
 			</div>
 		</div>

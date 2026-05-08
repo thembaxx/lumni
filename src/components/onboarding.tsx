@@ -132,13 +132,15 @@ export function Onboarding({ onComplete }: OnboardingProps) {
 						: "scale-100 opacity-100 translate-y-0",
 				)}
 			>
-				<button
+				<Button
+					variant="ghost"
+					size="icon"
 					onClick={handleSkip}
-					className="absolute top-4 right-4 p-2 rounded-full hover:bg-muted transition-colors"
+					className="absolute top-4 right-4 rounded-full hover:bg-muted"
 					aria-label="Skip onboarding"
 				>
-					<X className="h-4 w-4 text-muted-foreground" />
-				</button>
+					<X className="h-4 w-4" />
+				</Button>
 
 				<div className="p-8">
 					<div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10">

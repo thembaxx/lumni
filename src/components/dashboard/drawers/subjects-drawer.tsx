@@ -11,6 +11,8 @@ import {
 	DrawerTitle,
 	DrawerTrigger,
 } from "@/components/ui/drawer";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useFilteredSubjects } from "@/hooks/use-subjects";
 
 const EMPTY_SELECTION: string[] = [];
@@ -53,13 +55,13 @@ export function SubjectsDrawer({
 
 				<div className="px-4 pb-2">
 					<div className="relative">
-						<Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-						<input
+						<Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+						<Input
 							type="text"
 							placeholder="Search subjects..."
 							value={searchQuery}
 							onChange={(e) => setSearchQuery(e.target.value)}
-							className="w-full h-10 pl-10 pr-4 rounded-lg bg-secondary border border-border text-foreground placeholder-muted-foreground text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+							className="h-10 pl-10 pr-4 rounded-lg"
 						/>
 					</div>
 				</div>
@@ -85,16 +87,19 @@ export function SubjectsDrawer({
 					) : (
 						<div className="space-y-1">
 							{subjects?.map((subject) => (
-								<button
+								<Button
 									key={subject.id + subject.name}
-									className="w-full text-left p-3 rounded-lg hover:bg-secondary transition-colors duration-200"
+									variant="ghost"
+									className="w-full justify-start h-auto p-3 rounded-lg hover:bg-secondary"
 									onClick={() => handleSelect(subject.name)}
 								>
-									<p className="font-medium text-foreground">{subject.name}</p>
-									<p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">
-										{subject.description}
-									</p>
-								</button>
+									<div className="text-left">
+										<p className="font-medium text-foreground">{subject.name}</p>
+										<p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">
+											{subject.description}
+										</p>
+									</div>
+								</Button>
 							))}
 						</div>
 					)}

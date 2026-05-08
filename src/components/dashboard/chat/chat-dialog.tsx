@@ -7,11 +7,12 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Book as BookLucide, Mic as MicLucide } from "lucide-react";
+import { Book as BookLucide, Mic as MicLucide, Send as SendLucide } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { LottieWrapper } from "@/components/lottie/lottie-wrapper";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
 import { type ChatMessage, useChat } from "@/hooks/use-chat";
 import { cn } from "@/lib/utils";
 
@@ -122,8 +123,8 @@ function ChatInput({
 						: "border-border/30",
 				)}
 			>
-				<form onSubmit={handleSubmit}>
-					<input
+				<div className="mb-3">
+					<Input
 						ref={inputRef}
 						type="text"
 						placeholder="Ask me anything..."
@@ -132,40 +133,30 @@ function ChatInput({
 						onFocus={() => setIsFocused(true)}
 						onBlur={() => setIsFocused(false)}
 						disabled={isLoading}
-						className="w-full bg-transparent text-foreground placeholder:text-muted-foreground/60 text-sm outline-none mb-3 input-focus rounded-md font-medium"
+						className="bg-transparent text-foreground placeholder:text-muted-foreground/60 text-sm outline-none font-medium border-0 shadow-none p-0 focus-visible:ring-0"
 					/>
-				</form>
+				</div>
 
 				<div className="flex items-center justify-between">
 					<div className="flex items-center gap-2">
-						<button
-							className="w-8 h-8 rounded-lg bg-muted/60 flex items-center justify-center hover:bg-muted transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background toolbutton"
-							aria-label="Add attachment"
-						>
+						<Button variant="ghost" size="icon" className="w-8 h-8 rounded-lg bg-muted/60 hover:bg-muted toolbutton">
 							<HugeiconsIcon
 								icon={Camera01FreeIcons}
 								className="w-4 h-4 text-muted-foreground toolbutton-icon"
 							/>
-						</button>
-						<button className="w-8 h-8 rounded-lg bg-muted/60 flex items-center justify-center hover:bg-muted transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background toolbutton">
+						</Button>
+						<Button variant="ghost" size="icon" className="w-8 h-8 rounded-lg bg-muted/60 hover:bg-muted toolbutton">
 							<BookLucide className="w-4 h-4 text-muted-foreground toolbutton-icon" />
-						</button>
+						</Button>
 					</div>
 
 					<div className="flex items-center gap-2">
-						<button
-							className="w-8 h-8 rounded-lg bg-muted/60 flex items-center justify-center hover:bg-muted transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background toolbutton"
-							aria-label="Voice input"
-						>
+						<Button variant="ghost" size="icon" className="w-8 h-8 rounded-lg bg-muted/60 hover:bg-muted toolbutton">
 							<MicLucide className="w-4 h-4 text-muted-foreground toolbutton-icon" />
-						</button>
-						<button
-							className={cn(
-								"w-9 h-9 rounded-lg bg-primary flex items-center justify-center hover:opacity-90 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background voice-btn",
-								voicePressed && "voice-btn-pressed",
-								(isLoading || !input.trim()) && "opacity-50 cursor-not-allowed",
-							)}
-							aria-label="Send message"
+						</Button>
+						<Button
+							variant="default"
+							size="icon"
 							onClick={() => {
 								if (input.trim() && !isLoading) {
 									setVoicePressed(true);
@@ -174,15 +165,20 @@ function ChatInput({
 								}
 							}}
 							disabled={!input.trim() || isLoading}
+							className={cn(
+								"w-9 h-9 voice-btn",
+								voicePressed && "voice-btn-pressed",
+							)}
+							aria-label="Send message"
 						>
 							<HugeiconsIcon
 								icon={SentIcon}
 								className={cn(
-									"w-4 h-4 text-primary-foreground voice-btn-icon",
+									"w-4 h-4 voice-btn-icon",
 									voicePressed && "scale-125",
 								)}
 							/>
-						</button>
+						</Button>
 					</div>
 				</div>
 			</div>

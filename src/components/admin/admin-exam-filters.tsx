@@ -4,6 +4,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Loader2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
+import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 
 interface Subject {
@@ -53,32 +56,33 @@ function AnimatedYearButton({
 	onClick: () => void;
 }) {
 	return (
-		<motion.button
-			key={year}
-			onClick={onClick}
-			whileHover={{ scale: 1.05 }}
-			whileTap={{ scale: 0.95 }}
-			className={cn(
-				"px-3 py-1.5 rounded-md text-sm font-medium transition-colors",
-				selected
-					? "bg-foreground text-background"
-					: "bg-muted hover:bg-muted/80",
-			)}
+		<motion.div
 			initial={{ opacity: 0, scale: 0.8 }}
 			animate={{ opacity: 1, scale: 1 }}
 			transition={{ delay: year * 0.03, ...springTransition }}
+			whileHover={{ scale: 1.05 }}
+			whileTap={{ scale: 0.95 }}
 		>
-			{year}
-		</motion.button>
+			<Button
+				variant={selected ? "default" : "secondary"}
+				size="sm"
+				onClick={onClick}
+				className="min-w-[60px]"
+			>
+				{year}
+			</Button>
+		</motion.div>
 	);
 }
 
-function AnimatedCheckbox({
+function SubjectCheckboxItem({
 	checked,
 	onChange,
+	label,
 }: {
 	checked: boolean;
 	onChange: () => void;
+	label: string;
 }) {
 	return (
 		<motion.label
@@ -87,34 +91,8 @@ function AnimatedCheckbox({
 			animate={{ opacity: 1 }}
 			whileHover={{ backgroundColor: "rgba(0,0,0,0.02)" }}
 		>
-			<motion.div
-				initial={false}
-				animate={{
-					backgroundColor: checked ? "var(--foreground)" : "transparent",
-					borderColor: checked
-						? "var(--foreground)"
-						: "var(--muted-foreground)",
-				}}
-				className="w-4 h-4 rounded border flex items-center justify-center"
-				transition={{ duration: 0.2 }}
-			>
-				<motion.div
-					initial={{ scale: 0.95, opacity: 0 }}
-					animate={{
-						scale: checked ? 1 : 0,
-						opacity: checked ? 1 : 0,
-					}}
-					transition={{ type: "spring", stiffness: 500, damping: 30 }}
-				>
-					<span className="text-background text-xs">✓</span>
-				</motion.div>
-			</motion.div>
-			<input
-				type="checkbox"
-				checked={checked}
-				onChange={onChange}
-				className="sr-only"
-			/>
+			<Checkbox checked={checked} onCheckedChange={onChange} />
+			<span>{label}</span>
 		</motion.label>
 	);
 }
@@ -160,20 +138,27 @@ export function ExamFilters({
 						<Label className="text-sm font-medium text-foreground">
 							Subjects
 						</Label>
-						<motion.button
-							onClick={
-								selectedSubjects.size === subjects.length
-									? onDeselectAll
-									: onSelectAll
-							}
+						<motion.div
+							initial={{ opacity: 0, scale: 0.8 }}
+							animate={{ opacity: 1, scale: 1 }}
 							whileHover={{ scale: 1.05 }}
 							whileTap={{ scale: 0.95 }}
-							className="text-sm font-medium text-primary hover:underline"
 						>
-							{selectedSubjects.size === subjects.length
-								? "Deselect all"
-								: "Select all"}
-						</motion.button>
+							<Button
+								variant="ghost"
+								size="sm"
+								onClick={
+									selectedSubjects.size === subjects.length
+										? onDeselectAll
+										: onSelectAll
+								}
+								className="text-sm font-medium text-primary hover:underline"
+							>
+								{selectedSubjects.size === subjects.length
+									? "Deselect all"
+									: "Select all"}
+							</Button>
+						</motion.div>
 					</div>
 					<div className="border rounded-lg divide-y max-h-48 overflow-y-auto">
 						{isLoading ? (
@@ -181,14 +166,13 @@ export function ExamFilters({
 								<Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />
 							</div>
 						) : (
-							subjects.map((subject) => (
-								<div key={subject.id} className="flex items-center p-3">
-									<AnimatedCheckbox
-										checked={selectedSubjects.has(subject.id)}
-										onChange={() => onToggleSubject(subject.id)}
-									/>
-									<span>{subject.name}</span>
-								</div>
+subjects.map((subject) => (
+								<SubjectCheckboxItem
+									key={subject.id}
+									checked={selectedSubjects.has(subject.id)}
+									onChange={() => onToggleSubject(subject.id)}
+									label={subject.name}
+								/>
 							))
 						)}
 					</div>
@@ -200,48 +184,34 @@ export function ExamFilters({
 					</Label>
 					<div className="flex gap-1">
 						{EXAM_TYPES.map((type) => (
-							<motion.button
+							<motion.div
 								key={type.value}
-								onClick={() => onToggleExamType(type.value)}
 								whileHover={{ scale: 1.02 }}
 								whileTap={{ scale: 0.98 }}
-								className={cn(
-									"flex-1 px-3 py-1.5 rounded-md text-sm font-medium transition-colors",
-									selectedExamTypes.has(type.value)
-										? "bg-foreground text-background"
-										: "bg-muted hover:bg-muted/80",
-								)}
 							>
-								{type.label}
-							</motion.button>
+								<Button
+									variant={selectedExamTypes.has(type.value) ? "default" : "secondary"}
+									onClick={() => onToggleExamType(type.value)}
+									className="flex-1"
+								>
+									{type.label}
+								</Button>
+							</motion.div>
 						))}
 					</div>
 				</div>
 
-				<div className="flex items-center justify-between py-2 cursor-pointer">
+				<div className="flex items-center justify-between py-2">
 					<div>
 						<Label className="text-sm">Include Memo</Label>
 						<p className="text-xs text-muted-foreground">
 							With marking guidelines
 						</p>
 					</div>
-					<motion.button
-						type="button"
-						onClick={() => onIncludeMemoChange(!includeMemo)}
-						whileTap={{ scale: 0.95 }}
-						className={cn(
-							"w-10 h-5 rounded-full transition-colors relative",
-							includeMemo ? "bg-foreground" : "bg-muted",
-						)}
-					>
-						<motion.div
-							className="absolute top-0.5 w-4 h-4 rounded-full bg-background shadow-sm"
-							animate={{
-								left: includeMemo ? 20 : 4,
-							}}
-							transition={springTransition}
-						/>
-					</motion.button>
+					<Switch
+						checked={includeMemo}
+						onCheckedChange={onIncludeMemoChange}
+					/>
 				</div>
 			</CardContent>
 		</Card>

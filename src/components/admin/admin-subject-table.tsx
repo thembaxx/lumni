@@ -1,8 +1,9 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { Check, Edit2, Loader2, Trash2 } from "lucide-react";
+import { Edit2, Loader2, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 
 interface Subject {
@@ -55,37 +56,9 @@ export function SubjectTable({
 							className="flex items-center justify-between p-3 border-b last:border-b-0"
 						>
 							<label className="flex items-center gap-3 flex-1 min-w-0 cursor-pointer">
-								<motion.div
-									className={cn(
-										"w-4 h-4 rounded border flex items-center justify-center transition-colors",
-										selectedSubjects.has(subject.id)
-											? "bg-foreground border-foreground"
-											: "border-muted-foreground",
-									)}
-									animate={{
-										scale: selectedSubjects.has(subject.id) ? [1, 1.1, 1] : 1,
-									}}
-									transition={{ duration: 0.2 }}
-								>
-									{selectedSubjects.has(subject.id) && (
-										<motion.div
-											initial={{ scale: 0.95, opacity: 0 }}
-											animate={{ scale: 1, opacity: 1 }}
-											transition={{
-												type: "spring",
-												stiffness: 500,
-												damping: 25,
-											}}
-										>
-											<Check className="w-3 h-3 text-background" />
-										</motion.div>
-									)}
-								</motion.div>
-								<input
-									type="checkbox"
+								<Checkbox
 									checked={selectedSubjects.has(subject.id)}
-									onChange={() => onToggleSubject(subject.id)}
-									className="sr-only"
+									onCheckedChange={() => onToggleSubject(subject.id)}
 								/>
 								<div className="flex-1 min-w-0">
 									<p className="text-sm font-medium truncate">{subject.name}</p>

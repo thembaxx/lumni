@@ -93,17 +93,13 @@ export function ExamTab({ className }: ExamTabProps) {
 
 					<div className="flex items-center justify-between gap-2">
 						<SubjectsDrawer onSelect={handleSubjectSelect}>
-							<button
-								className={cn(
-									"h-7 px-3 rounded-lg bg-secondary/60 text-xs font-medium transition-colors",
-									selectedSubject
-										? "bg-primary text-primary-foreground"
-										: "text-foreground/80 hover:text-foreground hover:bg-secondary/80",
-								)}
-								type="button"
+							<Button
+								variant={selectedSubject ? "default" : "secondary"}
+								size="sm"
+								className="h-7"
 							>
 								{selectedSubject || "Subject"}
-							</button>
+							</Button>
 						</SubjectsDrawer>
 
 						<ButtonGroup>
@@ -147,33 +143,24 @@ export function ExamTab({ className }: ExamTabProps) {
 					</div>
 
 					<div className="flex items-center gap-1.5 overflow-x-auto pb-1 -mx-4 px-4 scrollbar-hide">
-						<button
-							key="all-years"
+						<Button
+							variant={selectedYear === null ? "default" : "secondary"}
+							size="sm"
+							className="shrink-0 h-7 text-xs font-medium"
 							onClick={() => handleYearSelect(null)}
-							className={cn(
-								"shrink-0 h-7 px-2.5 rounded-lg text-xs font-medium transition-colors",
-								selectedYear === null
-									? "bg-foreground text-background"
-									: "bg-muted/60 text-muted-foreground hover:text-foreground",
-							)}
-							type="button"
 						>
 							All
-						</button>
+						</Button>
 						{YEARS.map((year) => (
-							<button
+							<Button
 								key={year}
+								variant={selectedYear === year ? "default" : "secondary"}
+								size="sm"
+								className="shrink-0 h-7 text-xs font-medium"
 								onClick={() => handleYearSelect(year)}
-								className={cn(
-									"shrink-0 h-7 px-2.5 rounded-lg text-xs font-medium transition-colors",
-									selectedYear === year
-										? "bg-foreground text-background"
-										: "bg-muted/60 text-muted-foreground hover:text-foreground",
-								)}
-								type="button"
 							>
 								{year}
-							</button>
+							</Button>
 						))}
 					</div>
 				</m.div>
@@ -225,12 +212,9 @@ export function ExamTab({ className }: ExamTabProps) {
 								</EmptyHeader>
 								{hasActiveFilters && (
 									<EmptyContent>
-										<button
-											onClick={clearFilters}
-											className="text-sm text-primary hover:underline"
-										>
+										<Button variant="link" size="sm" onClick={clearFilters}>
 											Clear filters
-										</button>
+										</Button>
 									</EmptyContent>
 								)}
 							</Empty>
@@ -266,12 +250,13 @@ export function ExamTab({ className }: ExamTabProps) {
 											<ExamCard key={exam.id} exam={exam} />
 										))}
 										{group.papers.length > 4 && (
-											<button
-												className="h-9 rounded-lg bg-muted/40 text-xs text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors"
-												type="button"
+											<Button
+												variant="secondary"
+												size="sm"
+												className="h-9 text-xs"
 											>
 												+{group.papers.length - 4} more
-											</button>
+											</Button>
 										)}
 									</div>
 								</m.div>

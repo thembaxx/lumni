@@ -221,44 +221,48 @@ export function QuestionCard({
 							}
 
 							return (
-								<m.button
+								<m.div
 									key={option.id}
-									type="button"
-									disabled={state.isSubmitted}
-									onClick={() => handleSelect(option.id)}
-									className={cn(
-										"quiz-option-btn flex w-full items-center gap-3 rounded-lg border border-border bg-card p-4 text-left",
-										"disabled:cursor-not-allowed disabled:opacity-50",
-										optionClass,
-									)}
 									initial={{ opacity: 0, x: -8 }}
 									animate={{ opacity: 1, x: 0 }}
 									transition={{ delay: optionIndex * 0.05 }}
 								>
-									<m.span
+									<Button
+										variant="ghost"
+										type="button"
+										disabled={state.isSubmitted}
+										onClick={() => handleSelect(option.id)}
 										className={cn(
-											"quiz-option-letter flex h-6 w-6 items-center justify-center rounded-full border text-sm font-medium",
-											isSelected
-												? "border-primary bg-primary text-primary-foreground"
-												: "border-muted-foreground/30",
+											"quiz-option-btn flex w-full items-center gap-3 rounded-lg border border-border bg-card p-4 text-left h-auto",
+											"disabled:cursor-not-allowed disabled:opacity-50",
+											optionClass,
 										)}
 									>
-										{option.id}
-									</m.span>
-									<span className="flex-1 font-medium">{option.text}</span>
-									{showResult && isCorrectOption && (
-										<HugeiconsIcon
-											icon={CheckmarkCircle02Icon}
-											className="w-5 h-5 text-success"
-										/>
-									)}
-									{showResult && isSelected && !isCorrectOption && (
-										<HugeiconsIcon
-											icon={CancelIcon}
-											className="w-5 h-5 text-destructive"
-										/>
-									)}
-								</m.button>
+										<span
+											className={cn(
+												"quiz-option-letter flex h-6 w-6 items-center justify-center rounded-full border text-sm font-medium",
+												isSelected
+													? "border-primary bg-primary text-primary-foreground"
+													: "border-muted-foreground/30",
+											)}
+										>
+											{option.id}
+										</span>
+										<span className="flex-1 font-medium">{option.text}</span>
+										{showResult && isCorrectOption && (
+											<HugeiconsIcon
+												icon={CheckmarkCircle02Icon}
+												className="w-5 h-5 text-success"
+											/>
+										)}
+										{showResult && isSelected && !isCorrectOption && (
+											<HugeiconsIcon
+												icon={CancelIcon}
+												className="w-5 h-5 text-destructive"
+											/>
+										)}
+									</Button>
+								</m.div>
 							);
 						})}
 					</div>

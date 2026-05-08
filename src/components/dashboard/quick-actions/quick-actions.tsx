@@ -2,7 +2,9 @@
 
 import { IconBook, IconBulb, IconFileDescription } from "@tabler/icons-react";
 import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
 import { LessonsButton } from "@/components/lesson";
+import { cn } from "@/lib/utils";
 
 const quickActions = [
 	{ icon: IconFileDescription, label: "Exams" },
@@ -20,22 +22,25 @@ function ActionButton({
 	onClick?: () => void;
 }) {
 	return (
-		<motion.button
-			onClick={onClick}
-			className="rounded-xl bg-secondary/80 border border-border/50 text-foreground hover:bg-accent hover:border-accent h-11 px-5 flex items-center gap-2.5 shadow-sm active:scale-[0.97] transition-all"
+		<motion.div
 			whileHover={{ scale: 1.02, y: -2 }}
 			whileTap={{ scale: 0.97 }}
 			transition={{ type: "spring", stiffness: 400, damping: 20 }}
+			className={cn(
+				"rounded-xl border bg-secondary/80 border-border/50 shadow-sm",
+			)}
 		>
-			<motion.span
-				className="text-primary"
-				whileHover={{ scale: 1.15, rotate: 5 }}
-				transition={{ type: "spring", stiffness: 400, damping: 20 }}
+			<Button
+				variant="ghost"
+				onClick={onClick}
+				className="h-11 px-5 w-full justify-start gap-2.5 text-foreground hover:bg-accent hover:border-accent active:scale-[0.97]"
 			>
-				<Icon className="w-4 h-4" />
-			</motion.span>
-			<span className="text-sm font-medium">{label}</span>
-		</motion.button>
+				<span className="text-primary">
+					<Icon className="w-4 h-4" />
+				</span>
+				<span className="text-sm font-medium">{label}</span>
+			</Button>
+		</motion.div>
 	);
 }
 
