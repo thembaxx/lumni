@@ -1,4 +1,4 @@
-import type { QAQuestion } from "@/lib/types/questions";
+import type { QAQuestion } from "@/types/questions";
 
 export interface UserProgress {
 	subjectId: string;

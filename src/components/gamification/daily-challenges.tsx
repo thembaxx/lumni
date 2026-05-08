@@ -2,7 +2,7 @@
 
 import { IconCheck } from "@tabler/icons-react";
 import { motion } from "framer-motion";
-import type { DailyChallenge } from "@/lib/types/gamification";
+import type { DailyChallenge } from "@/types/gamification";
 
 interface DailyChallengesProps {
 	challenges: DailyChallenge[];

@@ -16,7 +16,7 @@ import {
 	EmptyTitle,
 } from "@/components/ui/empty";
 import { Input } from "@/components/ui/input";
-import { useExams } from "@/lib/hooks/use-exams";
+import { useExams } from "@/hooks/use-exams";
 import { cn } from "@/lib/utils";
 import { ExamCard } from "./exam-card";
 

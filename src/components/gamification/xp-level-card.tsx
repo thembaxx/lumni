@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import type { LevelInfo } from "@/lib/types/gamification";
+import type { LevelInfo } from "@/types/gamification";
 
 interface XpLevelCardProps {
 	levelInfo: LevelInfo;

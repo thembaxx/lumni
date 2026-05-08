@@ -11,7 +11,7 @@ import {
 	DrawerTitle,
 	DrawerTrigger,
 } from "@/components/ui/drawer";
-import { useFilteredSubjects } from "@/lib/hooks/use-subjects";
+import { useFilteredSubjects } from "@/hooks/use-subjects";
 
 const EMPTY_SELECTION: string[] = [];
 

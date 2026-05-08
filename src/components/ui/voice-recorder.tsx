@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { useCallback, useState } from "react";
 import { LiveWaveform } from "@/components/ui/live-waveform";
-import { useAudioRecorder } from "@/lib/hooks/use-audio-recorder";
+import { useAudioRecorder } from "@/hooks/use-audio-recorder";
 import { cn } from "@/lib/utils";
 
 interface VoiceRecorderProps {

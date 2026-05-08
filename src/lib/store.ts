@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { QAQuestion } from "@/lib/types/questions";
+import type { QAQuestion } from "@/types/questions";
 
 export interface UploadSubject {
 	routeKey: string;

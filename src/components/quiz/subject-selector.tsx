@@ -3,7 +3,7 @@
 import { Atom, Briefcase, Calculator, Dna, Receipt } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { nscSubjects } from "@/lib/data/nsc-subjects";
+import { nscSubjects } from "@/data/nsc-subjects";
 import { cn } from "@/lib/utils";
 
 interface SubjectSelectorProps {

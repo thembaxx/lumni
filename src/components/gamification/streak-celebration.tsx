@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import type { StreakMilestone } from "@/lib/types/gamification";
+import type { StreakMilestone } from "@/types/gamification";
 
 interface StreakCelebrationProps {
 	currentStreak: number;

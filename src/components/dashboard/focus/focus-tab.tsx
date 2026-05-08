@@ -8,7 +8,7 @@ import {
 	ChartTooltip,
 	ChartTooltipContent,
 } from "@/components/ui/chart";
-import { useInterval } from "@/lib/hooks";
+import { useInterval } from "@/hooks";
 import { cn } from "@/lib/utils";
 
 const DEFAULT_TIME = 25 * 60;

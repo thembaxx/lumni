@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from "react";
 import { Confetti, XPGainPopup } from "@/components/celebration";
-import { useSubjectQuestions } from "@/lib/hooks/use-subject-questions";
+import { useSubjectQuestions } from "@/hooks/use-subject-questions";
 import { FlashcardsActive } from "./flashcards-active";
 import { FlashcardsEmpty } from "./flashcards-empty";
 import { FlashcardsIdle } from "./flashcards-idle";

@@ -5,7 +5,7 @@ import { startTransition, useCallback, useState, ViewTransition } from "react";
 import { QuestionCard } from "@/components/quiz/question-card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import type { QAQuestion } from "@/lib/types/questions";
+import type { QAQuestion } from "@/types/questions";
 import { cn } from "@/lib/utils";
 
 interface QuizSessionProps {

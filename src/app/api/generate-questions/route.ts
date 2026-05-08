@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { generateWithSystem, initAI, isAIConfigured } from "@/lib/ai";
 import type { AIResponse } from "@/lib/ai/types";
-import type { QAQuestion } from "@/lib/types/questions";
+import type { QAQuestion } from "@/types/questions";
 
 export const dynamic = "force-dynamic";
 

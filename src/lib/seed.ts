@@ -1,5 +1,5 @@
 import { eq, sql } from "drizzle-orm";
-import nscSubjects from "./data/subjects.json";
+import nscSubjects from "../data/subjects.json";
 import { getDb } from "./db/client";
 import {
 	question,

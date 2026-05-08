@@ -13,7 +13,7 @@ import {
 } from "@/components/quiz";
 import { QuestionCard } from "@/components/quiz/question-card";
 import { Button } from "@/components/ui/button";
-import { useQuizSession } from "@/lib/hooks/use-quiz-session";
+import { useQuizSession } from "@/hooks/use-quiz-session";
 import { cn } from "@/lib/utils";
 import { formatTime } from "@/lib/utils/time";
 

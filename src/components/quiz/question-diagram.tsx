@@ -1,7 +1,7 @@
 "use client";
 
 import { Background, Controls, MiniMap, ReactFlow } from "@xyflow/react";
-import type { QADiagram } from "@/lib/types/questions";
+import type { QADiagram } from "@/types/questions";
 import { CircuitDiagram } from "./diagrams/circuit";
 import { ForceVectorDiagram } from "./diagrams/force-vector";
 import { MotionDiagram } from "./diagrams/motion";

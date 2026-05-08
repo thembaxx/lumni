@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { QuickActions } from "@/components/dashboard";
 import { XpLevelCard } from "@/components/gamification";
-import { useGamification } from "@/lib/hooks/use-gamification";
+import { useGamification } from "@/hooks/use-gamification";
 import StudyTopicCardExample from "../study/example";
 import type { TabValue } from "./types";
 

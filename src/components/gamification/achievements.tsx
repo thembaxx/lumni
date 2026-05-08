@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import type { Achievement } from "@/lib/types/gamification";
+import type { Achievement } from "@/types/gamification";
 
 interface AchievementsProps {
 	achievements: Achievement[];

@@ -22,7 +22,7 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from "@/components/ui/sheet";
-import { useFilteredSubjects } from "@/lib/hooks/use-subjects";
+import { useFilteredSubjects } from "@/hooks/use-subjects";
 
 const containerVariants: Variants = {
 	hidden: { opacity: 0 },

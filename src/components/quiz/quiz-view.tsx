@@ -12,7 +12,7 @@ import {
 	QuizSubjectPrompt,
 } from "@/components/quiz";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useQuizSession } from "@/lib/hooks/use-quiz-session";
+import { useQuizSession } from "@/hooks/use-quiz-session";
 
 export type QuizViewVariant = "full" | "compact";
 

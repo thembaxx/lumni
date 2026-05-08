@@ -12,8 +12,8 @@ import {
 	StreakCelebration,
 } from "@/components/gamification";
 import { QuizEngine } from "@/components/quiz/quiz-engine";
-import { useUserProgress, useUserSubjects } from "@/lib/hooks";
-import { useGamification } from "@/lib/hooks/use-gamification";
+import { useUserProgress, useUserSubjects } from "@/hooks";
+import { useGamification } from "@/hooks/use-gamification";
 import { toggleUserSubject } from "@/lib/server/actions";
 
 const DEFAULT_USER_ID = "demo-user";

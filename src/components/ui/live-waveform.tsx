@@ -1,7 +1,7 @@
 "use client";
 
 import { type HTMLAttributes, useEffect, useRef } from "react";
-import { useWaveformRenderer } from "@/lib/hooks/use-waveform-renderer";
+import { useWaveformRenderer } from "@/hooks/use-waveform-renderer";
 import { cn } from "@/lib/utils";
 
 export type LiveWaveformProps = HTMLAttributes<HTMLDivElement> & {
