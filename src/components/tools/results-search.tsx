@@ -98,7 +98,7 @@ export function ResultsSearch() {
                   setSearchQuery("");
                 }}
                 className={cn(
-                  "px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors",
+                  "px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-colors active:scale-[0.96] transition-transform duration-150",
                   selectedYear === year
                     ? "bg-primary text-primary-foreground"
                     : "bg-muted text-muted-foreground"
@@ -118,10 +118,10 @@ export function ResultsSearch() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-              className="pl-10"
+              className="pl-10 rounded-xl"
             />
           </div>
-          <Button onClick={handleSearch}>Search</Button>
+          <Button onClick={handleSearch} className="rounded-xl active:scale-[0.96] transition-transform duration-150">Search</Button>
         </div>
       </div>
 
@@ -135,21 +135,21 @@ export function ResultsSearch() {
           {results.map((result, idx) => (
             <motion.div
               key={result.examNumber}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.1 }}
+              transition={{ delay: idx * 0.05 }}
             >
-              <Card className="p-4">
+              <Card className="p-4 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.06)]">
                 <div className="flex items-start gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shadow-[inset_0_2px_4px_rgba(0,0,0,0.06)]">
                     <UserIcon className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-semibold">{result.name}</h3>
+                    <h3 className="font-semibold text-wrap balance">{result.name}</h3>
                     <p className="text-xs text-muted-foreground">
                       {result.school}, {result.province}
                     </p>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-muted-foreground tabular-nums">
                       Exam No: {result.examNumber}
                     </p>
                   </div>
@@ -159,10 +159,10 @@ export function ResultsSearch() {
                   {result.subjects.map((subj) => (
                     <div
                       key={subj.name}
-                      className="flex justify-between text-sm p-2 rounded bg-muted"
+                      className="flex justify-between text-sm p-2.5 rounded-lg bg-muted"
                     >
                       <span className="text-muted-foreground">{subj.name}</span>
-                      <span className="font-medium">
+                      <span className="font-medium tabular-nums">
                         {subj.percentage}% ({getGrade(subj.percentage)})
                       </span>
                     </div>
@@ -171,7 +171,7 @@ export function ResultsSearch() {
 
                 <div className="flex justify-between items-center pt-2 border-t">
                   <span className="text-sm text-muted-foreground">Overall</span>
-                  <span className="text-lg font-bold">{result.overall}%</span>
+                  <span className="text-lg font-bold tabular-nums">{result.overall}%</span>
                 </div>
               </Card>
             </motion.div>

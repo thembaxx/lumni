@@ -185,14 +185,14 @@ export function PeriodicTable() {
         placeholder="Search elements..."
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
-        className="w-full px-4 py-2 mb-4 rounded-lg bg-muted border-0 text-sm focus:ring-2 focus:ring-primary"
+        className="w-full px-4 py-2.5 mb-4 rounded-xl bg-muted border-0 text-sm focus:ring-2 focus:ring-primary transition-all"
       />
 
       <div className="flex gap-2 flex-wrap mb-4">
         {Object.entries(categoryColors).map(([category, color]) => (
           <span
             key={category}
-            className={`px-2 py-1 rounded-full text-xs text-white ${color}`}
+            className={`px-2.5 py-1.5 rounded-xl text-xs text-white font-medium ${color}`}
           >
             {categoryLabels[category]}
           </span>
@@ -209,11 +209,11 @@ export function PeriodicTable() {
                 className={`
                   relative p-2 rounded-lg text-center
                   ${categoryColors[el.category]} text-white
+                  active:scale-[0.96] transition-transform duration-150
                 `}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.05 }}
               >
-                <div className="text-xs font-bold">{el.atomicNumber}</div>
+                <div className="text-xs font-bold tabular-nums">{el.atomicNumber}</div>
                 <div className="text-lg font-bold">{el.symbol}</div>
                 <div className="text-[10px] truncate">{el.name}</div>
               </motion.button>
@@ -226,16 +226,16 @@ export function PeriodicTable() {
                 key={el.atomicNumber}
                 onClick={() => setSelectedElement(el)}
                 className={`
-                  aspect-square rounded-sm text-[8px] flex flex-col items-center justify-center
+                  aspect-square rounded text-[8px] flex flex-col items-center justify-center
                   ${categoryColors[el.category]} text-white
-                  hover:opacity-80 transition-opacity
+                  hover:opacity-80 active:scale-[0.96] transition-transform duration-150
                 `}
                 initial={{ opacity: 0, scale: 0 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: el.atomicNumber * 0.01 }}
-                whileHover={{ scale: 1.3, zIndex: 10 }}
+                whileHover={{ scale: 1.15, zIndex: 10 }}
               >
-                <span className="font-bold">{el.atomicNumber}</span>
+                <span className="font-bold tabular-nums">{el.atomicNumber}</span>
                 <span className="font-bold text-xs">{el.symbol}</span>
               </motion.button>
             ))}
@@ -248,12 +248,13 @@ export function PeriodicTable() {
                 key={el.atomicNumber}
                 onClick={() => setSelectedElement(el)}
                 className={`
-                  aspect-square rounded-sm text-[8px] flex flex-col items-center justify-center
+                  aspect-square rounded text-[8px] flex flex-col items-center justify-center
                   ${categoryColors[el.category]} text-white
+                  active:scale-[0.96] transition-transform duration-150
                 `}
-                whileHover={{ scale: 1.3 }}
+                whileHover={{ scale: 1.15 }}
               >
-                <span className="font-bold">{el.atomicNumber}</span>
+                <span className="font-bold tabular-nums">{el.atomicNumber}</span>
                 <span className="font-bold text-xs">{el.symbol}</span>
               </motion.button>
             ))}
@@ -261,60 +262,83 @@ export function PeriodicTable() {
         )}
       </div>
 
-      <AnimatePresence>
+      <AnimatePresence initial={false}>
         {selectedElement && (
           <motion.div
-            initial={{ opacity: 0, y: 100 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 100 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
             className="fixed inset-0 z-50 flex items-end"
           >
             <div className="absolute inset-0 bg-black/50" onClick={() => setSelectedElement(null)} />
             <motion.div
               className="relative w-full bg-background rounded-t-3xl p-6"
-              initial={{ y: 100 }}
+              initial={{ y: 20 }}
               animate={{ y: 0 }}
-              exit={{ y: 100 }}
+              exit={{ y: 20 }}
+              transition={{ duration: 0.3 }}
             >
               <button
                 onClick={() => setSelectedElement(null)}
-                className="absolute top-4 right-4 p-2 rounded-full bg-muted"
+                className="absolute top-4 right-4 p-2 rounded-xl bg-muted active:scale-[0.96] transition-transform duration-150"
               >
                 <XIcon className="w-5 h-5" />
               </button>
 
-              <div className="flex items-center gap-6 mb-6">
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                className="flex items-center gap-6 mb-6"
+              >
                 <div className={`
                   w-20 h-20 rounded-2xl flex items-center justify-center text-white text-3xl font-bold
+                  shadow-[0_4px_12px_rgba(0,0,0,0.15)]
                   ${categoryColors[selectedElement.category]}
                 `}>
                   {selectedElement.symbol}
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold">{selectedElement.name}</h2>
-                  <p className="text-muted-foreground">
+                  <h2 className="text-2xl font-bold text-wrap balance">{selectedElement.name}</h2>
+                  <p className="text-muted-foreground tabular-nums">
                     Atomic Number: {selectedElement.atomicNumber}
                   </p>
-                  <p className="text-muted-foreground">
+                  <p className="text-muted-foreground tabular-nums">
                     Atomic Mass: {selectedElement.atomicMass}
                   </p>
                 </div>
-              </div>
+              </motion.div>
 
               <div className="grid grid-cols-2 gap-4">
-                <div className="p-4 rounded-xl bg-muted">
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.15 }}
+                  className="p-4 rounded-xl bg-muted shadow-[0_2px_8px_rgba(0,0,0,0.08)]"
+                >
                   <p className="text-xs text-muted-foreground mb-1">Category</p>
                   <p className="font-semibold">{categoryLabels[selectedElement.category]}</p>
-                </div>
-                <div className="p-4 rounded-xl bg-muted">
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="p-4 rounded-xl bg-muted shadow-[0_2px_8px_rgba(0,0,0,0.08)]"
+                >
                   <p className="text-xs text-muted-foreground mb-1">Electron Config</p>
                   <p className="font-semibold">{selectedElement.electronConfig}</p>
-                </div>
-                <div className="p-4 rounded-xl bg-muted col-span-2">
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.25 }}
+                  className="p-4 rounded-xl bg-muted shadow-[0_2px_8px_rgba(0,0,0,0.08)] col-span-2"
+                >
                   <p className="text-xs text-muted-foreground mb-1">Discovery</p>
                   <p className="font-semibold">{selectedElement.discoveryYear}</p>
                   <p className="text-sm text-muted-foreground mt-1">{selectedElement.namedAfter}</p>
-                </div>
+                </motion.div>
               </div>
             </motion.div>
           </motion.div>

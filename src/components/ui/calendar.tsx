@@ -95,16 +95,16 @@ export function Calendar({
       <div className="flex items-center justify-between mb-4">
         <button
           onClick={handlePrevMonth}
-          className="p-2 rounded-lg hover:bg-muted transition-colors"
+          className="p-2 rounded-xl hover:bg-muted transition-colors active:scale-[0.96] transition-transform duration-150"
         >
           <ChevronLeftIcon className="w-5 h-5" />
         </button>
-        <span className="font-semibold text-sm">
+        <span className="font-semibold text-sm text-wrap balance tabular-nums">
           {monthNames[month]} {year}
         </span>
         <button
           onClick={handleNextMonth}
-          className="p-2 rounded-lg hover:bg-muted transition-colors"
+          className="p-2 rounded-xl hover:bg-muted transition-colors active:scale-[0.96] transition-transform duration-150"
         >
           <ChevronRightIcon className="w-5 h-5" />
         </button>
@@ -136,13 +136,13 @@ export function Calendar({
               key={day}
               onClick={() => handleDayClick(day)}
               className={cn(
-                "aspect-square rounded-lg text-sm font-medium transition-all relative",
+                "aspect-square rounded-lg text-sm font-medium transition-colors relative active:scale-[0.96] transition-transform duration-150",
                 selected && "bg-primary text-primary-foreground",
                 !selected && "hover:bg-muted",
                 today && !selected && "ring-2 ring-primary ring-inset"
               )}
             >
-              {day}
+              <span className="tabular-nums">{day}</span>
               {marked && !selected && (
                 <span
                   className={cn(

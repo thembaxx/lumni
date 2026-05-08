@@ -89,19 +89,20 @@ export function APSCalculator() {
 
   return (
     <div className="p-4 h-full overflow-y-auto">
-      <div className="space-y-4 mb-6">
+      <div className="space-y-3 mb-6">
         {subjects.map((subject, index) => (
           <motion.div
             key={subject.id}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.05 }}
             className="flex gap-2 items-center"
           >
             <Input
               placeholder="Subject name"
               value={subject.name}
               onChange={(e) => updateSubject(subject.id, "name", e.target.value)}
-              className="flex-1"
+              className="flex-1 rounded-lg"
             />
             <Input
               type="number"
@@ -110,13 +111,14 @@ export function APSCalculator() {
               max={100}
               value={subject.percentage || ""}
               onChange={(e) => updateSubject(subject.id, "percentage", parseInt(e.target.value) || 0)}
-              className="w-20"
+              className="w-20 rounded-lg tabular-nums"
             />
             <Button
               variant="ghost"
               size="icon-sm"
               onClick={() => removeSubject(subject.id)}
               disabled={subjects.length === 1}
+              className="active:scale-[0.96] transition-transform duration-150"
             >
               <Trash2Icon className="w-4 h-4" />
             </Button>
@@ -125,24 +127,25 @@ export function APSCalculator() {
       </div>
 
       <div className="flex gap-2 mb-6">
-        <Button variant="outline" onClick={addSubject} className="flex-1">
+        <Button variant="outline" onClick={addSubject} className="flex-1 rounded-lg active:scale-[0.96] transition-transform duration-150">
           <PlusIcon className="w-4 h-4 mr-2" />
           Add Subject
         </Button>
         <Button
           variant={includeLifeOrientation ? "default" : "outline"}
           onClick={() => setIncludeLifeOrientation(!includeLifeOrientation)}
+          className="rounded-lg active:scale-[0.96] transition-transform duration-150"
         >
           Include LO
         </Button>
       </div>
 
-      <div className="p-4 rounded-xl bg-muted mb-6">
+      <div className="p-5 rounded-2xl bg-muted shadow-[0_2px_8px_rgba(0,0,0,0.08)] mb-6">
         <div className="flex items-center justify-between mb-2">
           <span className="text-muted-foreground">Your APS Score</span>
           <CalculatorIcon className="w-5 h-5 text-muted-foreground" />
         </div>
-        <div className="text-4xl font-bold text-center">{totalAPS}</div>
+        <div className="text-4xl font-bold text-center tabular-nums">{totalAPS}</div>
         <p className="text-center text-muted-foreground text-sm mt-2">
           Max possible: 42 points (6 subjects × 7)
         </p>
@@ -150,19 +153,19 @@ export function APSCalculator() {
 
       {subjects.some(s => s.percentage > 0) && (
         <div className="mb-6">
-          <h3 className="font-semibold mb-3">Subject Breakdown</h3>
+          <h3 className="font-semibold mb-3 text-wrap balance">Subject Breakdown</h3>
           <div className="space-y-2">
             {subjects
               .filter(s => s.percentage > 0)
               .sort((a, b) => getAPSForSubject(b.percentage) - getAPSForSubject(a.percentage))
               .map((subject, idx) => (
-                <div key={subject.id} className="flex justify-between items-center p-2 rounded-lg bg-card">
+                <div key={subject.id} className="flex justify-between items-center p-3 rounded-xl bg-card shadow-[0_2px_8px_rgba(0,0,0,0.06)]">
                   <div>
                     <span className="font-medium">{subject.name || `Subject ${idx + 1}`}</span>
-                    <span className="text-muted-foreground text-sm ml-2">({subject.percentage}%)</span>
+                    <span className="text-muted-foreground text-sm ml-2 tabular-nums">({subject.percentage}%)</span>
                   </div>
                   <div className="text-right">
-                    <span className="font-bold">{getAPSForSubject(subject.percentage)} pts</span>
+                    <span className="font-bold tabular-nums">{getAPSForSubject(subject.percentage)} pts</span>
                     <span className="text-xs text-muted-foreground ml-2 block">{getGrade(subject.percentage)}</span>
                   </div>
                 </div>
@@ -172,34 +175,41 @@ export function APSCalculator() {
       )}
 
       <div>
-        <h3 className="font-semibold mb-3">University Requirements</h3>
+        <h3 className="font-semibold mb-3 text-wrap balance">University Requirements</h3>
         <div className="space-y-3">
-          {universityRequirements.map((uni) => (
-            <Card key={uni.university} className="p-3">
-              <div className="flex justify-between items-start mb-2">
-                <span className="font-medium text-sm">{uni.university}</span>
-                <span className={cn(
-                  "text-sm font-bold",
-                  totalAPS >= uni.minAPS ? "text-green-500" : "text-red-500"
-                )}>
-                  Min: {uni.minAPS}
-                </span>
-              </div>
-              <div className="grid grid-cols-2 gap-2 text-xs">
-                <div className={totalAPS >= uni.courses.medicine ? "text-green-500" : "text-muted-foreground"}>
-                  Medicine: {uni.courses.medicine}+
+          {universityRequirements.map((uni, idx) => (
+            <motion.div
+              key={uni.university}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.05 }}
+            >
+              <Card className="p-3 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.06)]">
+                <div className="flex justify-between items-start mb-2">
+                  <span className="font-medium text-sm">{uni.university}</span>
+                  <span className={cn(
+                    "text-sm font-bold tabular-nums",
+                    totalAPS >= uni.minAPS ? "text-green-500" : "text-red-500"
+                  )}>
+                    Min: {uni.minAPS}
+                  </span>
                 </div>
-                <div className={totalAPS >= uni.courses.engineering ? "text-green-500" : "text-muted-foreground"}>
-                  Engineering: {uni.courses.engineering}+
+                <div className="grid grid-cols-2 gap-2 text-xs">
+                  <div className={totalAPS >= uni.courses.medicine ? "text-green-500" : "text-muted-foreground"}>
+                    Medicine: {uni.courses.medicine}+
+                  </div>
+                  <div className={totalAPS >= uni.courses.engineering ? "text-green-500" : "text-muted-foreground"}>
+                    Engineering: {uni.courses.engineering}+
+                  </div>
+                  <div className={totalAPS >= uni.courses.commerce ? "text-green-500" : "text-muted-foreground"}>
+                    Commerce: {uni.courses.commerce}+
+                  </div>
+                  <div className={totalAPS >= uni.courses.science ? "text-green-500" : "text-muted-foreground"}>
+                    Science: {uni.courses.science}+
+                  </div>
                 </div>
-                <div className={totalAPS >= uni.courses.commerce ? "text-green-500" : "text-muted-foreground"}>
-                  Commerce: {uni.courses.commerce}+
-                </div>
-                <div className={totalAPS >= uni.courses.science ? "text-green-500" : "text-muted-foreground"}>
-                  Science: {uni.courses.science}+
-                </div>
-              </div>
-            </Card>
+              </Card>
+            </motion.div>
           ))}
         </div>
       </div>

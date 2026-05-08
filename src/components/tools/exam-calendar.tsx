@@ -126,12 +126,12 @@ export function ExamCalendar() {
       />
 
       <div className="mt-4 flex justify-between items-center">
-        <h3 className="font-semibold">
+        <h3 className="font-semibold text-wrap balance">
           {selectedDate
             ? `Exams on ${selectedDate.toLocaleDateString()}`
             : "Select a date"}
         </h3>
-        <Button size="sm" onClick={() => setIsAddingExam(true)}>
+        <Button size="sm" onClick={() => setIsAddingExam(true)} className="rounded-lg active:scale-[0.96] transition-transform duration-150">
           <PlusIcon className="w-4 h-4 mr-1" />
           Add
         </Button>
@@ -140,12 +140,12 @@ export function ExamCalendar() {
       {examsOnDate.length > 0 ? (
         <div className="mt-3 space-y-2">
           {examsOnDate.map((exam) => (
-            <Card key={exam.id} className="p-3">
+            <Card key={exam.id} className="p-3 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.06)]">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <span
                     className={cn(
-                      "px-2 py-1 rounded text-xs text-white font-medium",
+                      "px-2.5 py-1 rounded-lg text-xs text-white font-medium",
                       getSubjectColor(exam.subject)
                     )}
                   >
@@ -162,6 +162,7 @@ export function ExamCalendar() {
                   variant="ghost"
                   size="icon-sm"
                   onClick={() => deleteExam(exam.id)}
+                  className="active:scale-[0.96] transition-transform duration-150"
                 >
                   <Trash2Icon className="w-4 h-4" />
                 </Button>
@@ -181,36 +182,39 @@ export function ExamCalendar() {
             .sort((a, b) => a.date.getTime() - b.date.getTime())
             .slice(0, 5)
             .map((exam) => (
-              <div
+              <motion.div
                 key={exam.id}
-                className="flex items-center gap-2 p-2 rounded-lg bg-muted"
+                initial={{ opacity: 0, y: 5 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex items-center gap-2 p-2.5 rounded-xl bg-muted shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
               >
                 <span
                   className={cn(
-                    "px-2 py-1 rounded text-xs text-white font-medium",
+                    "px-2.5 py-1 rounded-lg text-xs text-white font-medium",
                     getSubjectColor(exam.subject)
                   )}
                 >
                   {getSubjectAbbr(exam.subject)}
                 </span>
-                <span className="text-sm">
+                <span className="text-sm tabular-nums">
                   {exam.date.toLocaleDateString("en-ZA", {
                     month: "short",
                     day: "numeric",
                   })}
                 </span>
                 <span className="text-xs text-muted-foreground">{exam.paper}</span>
-              </div>
+              </motion.div>
             ))}
         </div>
       </div>
 
-      <AnimatePresence>
+      <AnimatePresence initial={false}>
         {isAddingExam && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4"
           >
             <div
@@ -218,19 +222,20 @@ export function ExamCalendar() {
               onClick={() => setIsAddingExam(false)}
             />
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="relative bg-background rounded-xl p-6 w-full max-w-sm"
+              initial={{ scale: 0.95, opacity: 0, y: 10 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 10 }}
+              transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+              className="relative bg-background rounded-2xl p-6 w-full max-w-sm shadow-[0_8px_30px_rgba(0,0,0,0.12)]"
             >
               <button
                 onClick={() => setIsAddingExam(false)}
-                className="absolute top-4 right-4 p-1"
+                className="absolute top-4 right-4 p-1.5 rounded-lg active:scale-[0.96] transition-transform duration-150"
               >
                 <XIcon className="w-5 h-5" />
               </button>
 
-              <h3 className="text-lg font-semibold mb-4">Add Exam</h3>
+              <h3 className="text-lg font-semibold mb-4 text-wrap balance">Add Exam</h3>
 
               <div className="space-y-4">
                 <div>
@@ -241,7 +246,7 @@ export function ExamCalendar() {
                         key={subject.id}
                         onClick={() => setNewExam({ ...newExam, subject: subject.id })}
                         className={cn(
-                          "p-2 rounded-lg text-xs font-medium transition-colors",
+                          "p-2.5 rounded-xl text-xs font-medium transition-colors active:scale-[0.96] transition-transform duration-150",
                           newExam.subject === subject.id
                             ? "bg-primary text-primary-foreground"
                             : "bg-muted hover:bg-muted/80"
@@ -261,7 +266,7 @@ export function ExamCalendar() {
                         key={paper}
                         onClick={() => setNewExam({ ...newExam, paper })}
                         className={cn(
-                          "flex-1 p-2 rounded-lg text-xs font-medium transition-colors",
+                          "flex-1 p-2.5 rounded-xl text-xs font-medium transition-colors active:scale-[0.96] transition-transform duration-150",
                           newExam.paper === paper
                             ? "bg-primary text-primary-foreground"
                             : "bg-muted hover:bg-muted/80"
@@ -273,7 +278,7 @@ export function ExamCalendar() {
                   </div>
                 </div>
 
-                <Button className="w-full" onClick={addExam} disabled={!newExam.subject}>
+                <Button className="w-full rounded-xl active:scale-[0.96] transition-transform duration-150" onClick={addExam} disabled={!newExam.subject}>
                   Add Exam
                 </Button>
               </div>

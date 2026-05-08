@@ -195,7 +195,7 @@ export function SmartScheduler() {
                   <button
                     onClick={() => toggleSubject(subject.id)}
                     className={cn(
-                      "w-full p-2 rounded-lg text-sm font-medium transition-colors text-left",
+                      "w-full p-2.5 rounded-xl text-sm font-medium transition-colors text-left active:scale-[0.96] transition-transform duration-150",
                       selectedSubjects.includes(subject.id)
                         ? "bg-primary text-primary-foreground"
                         : "bg-muted text-muted-foreground"
@@ -204,13 +204,13 @@ export function SmartScheduler() {
                     {subject.name}
                   </button>
                   {selectedSubjects.includes(subject.id) && (
-                    <div className="flex gap-1 mt-1">
+                    <div className="flex gap-1 mt-1.5">
                       {(["easy", "medium", "hard"] as const).map((diff) => (
                         <button
                           key={diff}
                           onClick={() => updateDifficulty(subject.id, diff)}
                           className={cn(
-                            "flex-1 text-[10px] py-1 rounded capitalize",
+                            "flex-1 text-[10px] py-1.5 rounded-lg capitalize active:scale-[0.96] transition-transform duration-150",
                             difficultyMap[subject.id] === diff
                               ? diff === "easy"
                                 ? "bg-green-500"
@@ -238,7 +238,7 @@ export function SmartScheduler() {
                   key={h}
                   onClick={() => setHoursPerDay(h)}
                   className={cn(
-                    "flex-1 py-2 rounded-lg text-sm font-medium",
+                    "flex-1 py-2.5 rounded-xl text-sm font-medium active:scale-[0.96] transition-transform duration-150",
                     hoursPerDay === h
                       ? "bg-primary text-primary-foreground"
                       : "bg-muted"
@@ -256,12 +256,12 @@ export function SmartScheduler() {
               type="date"
               value={examDate}
               onChange={(e) => setExamDate(e.target.value)}
-              className="mt-2"
+              className="mt-2 rounded-xl"
             />
           </div>
 
           <Button
-            className="w-full"
+            className="w-full rounded-xl active:scale-[0.96] transition-transform duration-150"
             onClick={generateSchedule}
             disabled={selectedSubjects.length === 0 || !examDate || isGenerating}
           >
@@ -281,8 +281,8 @@ export function SmartScheduler() {
       ) : (
         <div className="flex-1 overflow-y-auto">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="font-semibold">Your Study Plan</h3>
-            <Button variant="outline" size="sm" onClick={() => setSchedule([])}>
+            <h3 className="font-semibold text-wrap balance">Your Study Plan</h3>
+            <Button variant="outline" size="sm" onClick={() => setSchedule([])} className="rounded-lg active:scale-[0.96] transition-transform duration-150">
               Reset
             </Button>
           </div>
@@ -293,9 +293,9 @@ export function SmartScheduler() {
               .map((day, idx) => (
                 <motion.div
                   key={day.day}
-                  initial={{ opacity: 0, x: -20 }}
+                  initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: idx * 0.1 }}
+                  transition={{ delay: idx * 0.05 }}
                 >
                   <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
                     <CalendarIcon className="w-4 h-4" />
@@ -306,7 +306,7 @@ export function SmartScheduler() {
                       <Card
                         key={`${day.day}-${sidx}`}
                         className={cn(
-                          "p-3",
+                          "p-3 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)]",
                           session.subject === "Break" && "bg-muted/50"
                         )}
                       >
@@ -320,13 +320,13 @@ export function SmartScheduler() {
                           <div className="flex items-center gap-2">
                             <span
                               className={cn(
-                                "px-2 py-0.5 rounded text-[10px] capitalize",
+                                "px-2.5 py-0.5 rounded-lg text-[10px] capitalize",
                                 getTypeColor(session.type)
                               )}
                             >
                               {session.type}
                             </span>
-                            <span className="text-sm text-muted-foreground flex items-center gap-1">
+                            <span className="text-sm text-muted-foreground flex items-center gap-1 tabular-nums">
                               <ClockIcon className="w-3 h-3" />
                               {session.duration}min
                             </span>
