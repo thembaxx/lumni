@@ -4,14 +4,13 @@ import { ArrowDown01FreeIcons } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import type { Variants } from "framer-motion";
-import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
+import { domAnimation, LazyMotion, m } from "framer-motion";
 import { Search } from "lucide-react";
 import { useState } from "react";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
 import { LessonCard } from "@/components/lesson";
 import type { LessonCardData } from "@/components/lesson/lesson-card";
 import { LessonCardProvider } from "@/components/lesson/lesson-card-context";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {

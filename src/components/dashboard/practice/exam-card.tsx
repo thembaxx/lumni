@@ -24,7 +24,7 @@ function PdfViewer({
 }) {
 	const [pdfPage, setPdfPage] = useState(1);
 	const [totalPages] = useState(1);
-	const [pdfZoom, setPdfZoom] = useState(100);
+	const [_pdfZoom, setPdfZoom] = useState(100);
 	const [isLoading, setIsLoading] = useState(true);
 
 	const pdfUrl = exam.src || exam.localPath || exam.url;
@@ -47,11 +47,11 @@ function PdfViewer({
 		() => setPdfPage((p) => Math.min(totalPages, p + 1)),
 		[totalPages],
 	);
-	const handleZoomIn = useCallback(
+	const _handleZoomIn = useCallback(
 		() => setPdfZoom((z) => Math.min(200, z + 25)),
 		[],
 	);
-	const handleZoomOut = useCallback(
+	const _handleZoomOut = useCallback(
 		() => setPdfZoom((z) => Math.max(50, z - 25)),
 		[],
 	);

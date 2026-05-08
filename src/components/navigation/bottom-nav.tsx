@@ -9,10 +9,10 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
 import { AnimatePresence, motion } from "framer-motion";
-import { useRouter } from "next/compat/router";
 import { usePathname } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
 import { PracticeSheet } from "@/components/dashboard/practice/practice-sheet";
+import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { cn } from "@/lib/utils";
 
 interface NavItem {
@@ -118,7 +118,7 @@ function NavItemComponent({
 
 export function BottomNav() {
 	const pathname = usePathname();
-	const router = useRouter();
+	const { push } = useNavigationDirection();
 	const [practiceDrawerOpen, setPracticeDrawerOpen] = useState(false);
 
 	const activeIndex = useMemo(() => {
@@ -131,22 +131,15 @@ export function BottomNav() {
 		return index >= 0 ? index : 0;
 	}, [pathname]);
 
-	const handleNavigate = useCallback(
-		(href: string) => {
-			router?.push(href);
-		},
-		[router],
-	);
-
 	const handleItemClick = useCallback(
 		(item: NavItem) => {
 			if (item.id === "practice" || item.id === "quiz") {
 				setPracticeDrawerOpen(true);
 			} else {
-				handleNavigate(item.href);
+				push(item.href);
 			}
 		},
-		[handleNavigate],
+		[push],
 	);
 
 	return (

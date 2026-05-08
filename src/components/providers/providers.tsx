@@ -8,8 +8,8 @@ import { WebVitalsLogger } from "@/components/web-vitals";
 import { prefetchUploadSubjects } from "@/lib/hooks/use-upload-subjects";
 import { OnlineStatusIndicator } from "@/lib/hooks/useOnlineStatus";
 import { queryClient } from "@/lib/query-client";
-import { useAppStore } from "@/lib/store";
 import { useAutoSync } from "@/lib/sync-queue";
+import { useAppStore } from "@/store";
 
 function AutoSyncWrapper() {
 	useAutoSync();
