@@ -4,13 +4,14 @@ import {
 	GridIcon as FlashcardIcon,
 	GridIcon,
 	Home05Icon,
-	Mic01Icon,
+	MessageIcon,
 	Settings02Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
+import { ChatDialog } from "@/components/dashboard/chat/chat-dialog";
 import { PracticeSheet } from "@/components/dashboard/practice/practice-sheet";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { cn } from "@/lib/utils";
@@ -36,16 +37,16 @@ const navItems: NavItem[] = [
 		href: "/quiz",
 	},
 	{
+		id: "chat",
+		label: "Chat",
+		icon: MessageIcon,
+		href: "",
+	},
+	{
 		id: "flashcards",
 		label: "Cards",
 		icon: FlashcardIcon,
 		href: "/flashcards",
-	},
-	{
-		id: "practice",
-		label: "Practice",
-		icon: Mic01Icon,
-		href: "",
 	},
 	{
 		id: "settings",
@@ -120,6 +121,7 @@ export function BottomNav() {
 	const pathname = usePathname();
 	const { push } = useNavigationDirection();
 	const [practiceDrawerOpen, setPracticeDrawerOpen] = useState(false);
+	const [chatDialogOpen, setChatDialogOpen] = useState(false);
 
 	const activeIndex = useMemo(() => {
 		const index = navItems.findIndex((item) => {
@@ -133,7 +135,9 @@ export function BottomNav() {
 
 	const handleItemClick = useCallback(
 		(item: NavItem) => {
-			if (item.id === "practice" || item.id === "quiz") {
+			if (item.id === "chat") {
+				setChatDialogOpen(true);
+			} else if (item.id === "quiz") {
 				setPracticeDrawerOpen(true);
 			} else {
 				push(item.href);
@@ -169,6 +173,7 @@ export function BottomNav() {
 				open={practiceDrawerOpen}
 				onOpenChange={setPracticeDrawerOpen}
 			/>
+			<ChatDialog open={chatDialogOpen} onOpenChange={setChatDialogOpen} />
 		</>
 	);
 }

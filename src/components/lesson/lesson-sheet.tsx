@@ -57,9 +57,12 @@ export function LessonSheet() {
 	return (
 		<Sheet open={isOpen} onOpenChange={setIsOpen}>
 			<SheetTrigger asChild>
-				<Button variant="outline" className="gap-2">
-					<Search className="h-4 w-4" />
-					<span className="grow whitespace-nowrap">Lessons</span>
+				<Button
+					variant="outline"
+					className="h-11 px-5 rounded-xl border-border/50 bg-secondary/80 gap-2.5 border hover:bg-accent hover:border-accent shadow-sm"
+				>
+					<Search className="h-4 w-4 text-primary" />
+					<span className="text-sm font-medium">Lessons</span>
 				</Button>
 			</SheetTrigger>
 			<LazyMotion features={domAnimation}>

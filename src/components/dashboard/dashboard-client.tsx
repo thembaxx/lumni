@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { QuickActions, SearchInput } from "@/components/dashboard";
+import { QuickActions } from "@/components/dashboard";
 import { XpLevelCard } from "@/components/gamification";
 import { useGamification } from "@/lib/hooks/use-gamification";
 import StudyTopicCardExample from "../study/example";
@@ -37,9 +37,8 @@ const itemVariants = {
 };
 
 export function DashboardClient({ initialTab = "ai" }: DashboardClientProps) {
-	const [query, setQuery] = useState("");
 	const [_activeTab] = useState<TabValue>(initialTab || "ai");
-	const [_practiceOpen, setPracticeOpen] = useState(false);
+	const [practiceOpen, setPracticeOpen] = useState(false);
 	const { levelInfo, isLoaded, gamification } = useGamification();
 
 	if (!isLoaded) {
@@ -51,9 +50,9 @@ export function DashboardClient({ initialTab = "ai" }: DashboardClientProps) {
 	}
 
 	return (
-		<div className="min-h-screen flex flex-col bg-background pb-20">
+		<div className="min-h-screen flex flex-col bg-background pb-20 overflow-hidden w-full">
 			<motion.div
-				className="max-w-md mx-auto"
+				className="max-w-md mx-auto w-full"
 				variants={containerVariants}
 				initial="hidden"
 				animate="visible"
@@ -65,16 +64,13 @@ export function DashboardClient({ initialTab = "ai" }: DashboardClientProps) {
 					<XpLevelCard levelInfo={levelInfo} totalXp={gamification.totalXp} />
 				</motion.div>
 
-				<motion.div variants={itemVariants} className="mb-6 px-4-">
+				<motion.div variants={itemVariants} className="mb-6 px-4">
 					<StudyTopicCardExample />
 				</motion.div>
 
-				<div className="space-y-4">
-					<motion.div variants={itemVariants} className="px-4">
+				<div className="space-y-4 w-full">
+					<motion.div variants={itemVariants} className="px-4 overflow-x-auto scrollbar-hide">
 						<QuickActions onPracticeClick={() => setPracticeOpen(true)} />
-					</motion.div>
-					<motion.div variants={itemVariants} className="px-4">
-						<SearchInput value={query} onChange={setQuery} />
 					</motion.div>
 				</div>
 			</motion.div>
