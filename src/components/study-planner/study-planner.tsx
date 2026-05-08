@@ -355,7 +355,7 @@ function AddSessionModal({
 }) {
 	const [subject, setSubject] = useState("");
 	const [topic, setTopic] = useState("");
-	const [type, setType] = useState("quiz");
+	const [type, setType] = useState<"flashcard" | "exam" | "quiz" | "review">("quiz");
 	const [duration, setDuration] = useState(30);
 
 	return (
@@ -386,7 +386,7 @@ function AddSessionModal({
 						<select
 							className="w-full p-2 border rounded-md"
 							value={type}
-							onChange={(e) => setType(e.target.value)}
+							onChange={(e) => setType(e.target.value as "flashcard" | "exam" | "quiz" | "review")}
 						>
 							<option value="quiz">Quiz</option>
 							<option value="flashcard">Flashcard</option>

@@ -477,7 +477,7 @@ export async function retryFailedSyncItems(): Promise<number> {
 export async function saveConflict(
 	conflict: Omit<SyncConflict, "id" | "resolvedAt" | "resolution">,
 ): Promise<number> {
-	return offlineDB.conflicts.add(conflict);
+	return offlineDB.conflicts.add(conflict as SyncConflict);
 }
 
 export async function getUnresolvedConflicts(): Promise<SyncConflict[]> {

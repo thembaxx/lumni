@@ -59,7 +59,7 @@ const ANALYTICS_KEY = "lumni_analytics";
 const HISTORY_KEY = "lumni_performance_history";
 
 export function loadAnalytics(): OverallAnalytics | null {
-	return loadFromStorage<OverallAnalytics>(ANALYTICS_KEY, null);
+	return loadFromStorage<OverallAnalytics | null>(ANALYTICS_KEY, null);
 }
 
 export function saveAnalytics(data: OverallAnalytics): void {

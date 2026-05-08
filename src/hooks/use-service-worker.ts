@@ -104,18 +104,19 @@ const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | 
 		if (typeof window === "undefined") return;
 
 		const handler = (e: Event) => {
-			e.preventDefault();
-			setDeferredPrompt(e);
+			const event = e as BeforeInstallPromptEvent;
+			event.preventDefault();
+			setDeferredPrompt(event);
 			const wasDismissed = localStorage.getItem("pwa-install-dismissed");
 			if (!wasDismissed) {
 				setIsInstallable(true);
 			}
 		};
 
-		window.addEventListener("beforeinstallprompt", handler);
+		window.addEventListener("beforeinstallprompt", handler as EventListener);
 
 		return () => {
-			window.removeEventListener("beforeinstallprompt", handler);
+			window.removeEventListener("beforeinstallprompt", handler as EventListener);
 		};
 	}, []);
 

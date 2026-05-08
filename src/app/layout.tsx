@@ -8,6 +8,7 @@ import "./globals.css";
 import { PageTransition } from "@/components/layout/page-transition";
 import { BottomNav } from "@/components/navigation/bottom-nav";
 import { Providers } from "@/components/providers";
+import { FloatingToolsButton } from "@/components/tools";
 import { ourFileRouter } from "./api/uploadthing/core";
 import { fontMono, fontSans, fontSerif } from "./fonts";
 
@@ -82,6 +83,7 @@ export default function RootLayout({
 					<UTSSR />
 				</Suspense>
 				<Providers>
+					<FloatingToolsButton />
 					<PageTransition>
 						{children}
 						<BottomNav />

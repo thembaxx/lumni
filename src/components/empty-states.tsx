@@ -74,6 +74,10 @@ interface EmptyStateWithIllustrationProps {
 		label: string;
 		onClick: () => void;
 	};
+	secondaryAction?: {
+		label: string;
+		onClick: () => void;
+	};
 	animation?: "search" | "upload" | "error";
 }
 
@@ -82,6 +86,7 @@ export function EmptyStateWithIllustration({
 	title,
 	description,
 	action,
+	secondaryAction,
 	animation,
 }: EmptyStateWithIllustrationProps) {
 	return (
@@ -110,7 +115,14 @@ export function EmptyStateWithIllustration({
 			<p className="mb-6 max-w-md text-sm text-muted-foreground">
 				{description}
 			</p>
-			{action && <Button onClick={action.onClick}>{action.label}</Button>}
+			<div className="flex gap-2">
+				{secondaryAction && (
+					<Button variant="outline" onClick={secondaryAction.onClick}>
+						{secondaryAction.label}
+					</Button>
+				)}
+				{action && <Button onClick={action.onClick}>{action.label}</Button>}
+			</div>
 		</div>
 	);
 }
