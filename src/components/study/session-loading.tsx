@@ -14,7 +14,7 @@ export function SessionLoading({ useLottie = false }: SessionLoadingProps) {
 				<CardContent className="p-8 text-center">
 					{useLottie ? (
 						<LottieWrapper
-							animation="loading-dots"
+							animation="loading-lumni"
 							className="w-24 h-24 mx-auto"
 							loop
 						/>

@@ -5,6 +5,7 @@ import emptyUploadData from "@/assets/animations/empty-upload.json";
 import errorStateData from "@/assets/animations/error-state.json";
 import levelUpData from "@/assets/animations/level-up.json";
 import loadingDotsData from "@/assets/animations/loading-dots.json";
+import loadingLumniData from "@/assets/animations/loading-lumni.json";
 import streakFireData from "@/assets/animations/streak-fire.json";
 import successCheckData from "@/assets/animations/success-check.json";
 import xpBurstData from "@/assets/animations/xp-burst.json";
@@ -15,6 +16,7 @@ export const LOTTIE_ANIMATIONS = {
 	confetti: confettiData,
 	"success-check": successCheckData,
 	"loading-dots": loadingDotsData,
+	"loading-lumni": loadingLumniData,
 	"streak-fire": streakFireData,
 	"xp-burst": xpBurstData,
 	"empty-search": emptySearchData,

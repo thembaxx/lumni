@@ -15,7 +15,7 @@ interface LoadingScreenProps {
 export function LoadingScreen({
 	duration = 2000,
 	redirectTo = "/dashboard",
-	useLottie = false,
+	useLottie = true,
 }: LoadingScreenProps) {
 	const [progress, setProgress] = useState(0);
 	const [isVisible, setIsVisible] = useState(false);
@@ -62,7 +62,7 @@ export function LoadingScreen({
 				<div className="relative flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20">
 					{useLottie ? (
 						<LottieWrapper
-							animation="loading-dots"
+							animation="loading-lumni"
 							className="w-12 h-12"
 							loop
 						/>

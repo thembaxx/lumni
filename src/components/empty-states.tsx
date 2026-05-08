@@ -217,7 +217,11 @@ export const EmptyStates = {
 
 	loadingSlow: () => (
 		<div className="flex flex-col items-center justify-center py-12 px-4 text-center">
-			<LottieWrapper animation="loading-dots" className="w-16 h-16 mb-4" loop />
+			<LottieWrapper
+				animation="loading-lumni"
+				className="w-16 h-16 mb-4"
+				loop
+			/>
 			<h3 className="mb-2 text-lg font-semibold">Loading...</h3>
 			<p className="max-w-sm text-sm text-muted-foreground">
 				This is taking longer than usual. Please wait while we fetch your data.
