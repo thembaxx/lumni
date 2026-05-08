@@ -20,12 +20,7 @@ export function AnimatedDialogContent({
 }: AnimatedDialogContentProps) {
 	return (
 		<Dialog>
-			<DialogTrigger
-				// @ts-expect-error - base-ui render prop type mismatch
-				asChild
-			>
-				{children}
-			</DialogTrigger>
+			<DialogTrigger asChild>{children}</DialogTrigger>
 			<LazyMotion features={domAnimation}>
 				<DialogContent className="sm:max-w-md">
 					<m.div
