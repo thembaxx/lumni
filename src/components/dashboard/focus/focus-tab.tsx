@@ -125,7 +125,7 @@ export function FocusTab({ className }: FocusTabProps) {
 						strokeDasharray="264"
 						strokeDashoffset={264 - (264 * progress) / 100}
 						strokeLinecap="round"
-						className="text-primary transition-all duration-500 ease-in-out"
+						className="text-primary transition-colors duration-500 ease-in-out"
 					/>
 				</svg>
 			</div>

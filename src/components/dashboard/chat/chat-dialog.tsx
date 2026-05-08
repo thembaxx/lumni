@@ -7,7 +7,11 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Book as BookLucide, Mic as MicLucide, Send as SendLucide } from "lucide-react";
+import {
+	Book as BookLucide,
+	Mic as MicLucide,
+	Send as SendLucide,
+} from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { LottieWrapper } from "@/components/lottie/lottie-wrapper";
 import { Button } from "@/components/ui/button";
@@ -139,19 +143,31 @@ function ChatInput({
 
 				<div className="flex items-center justify-between">
 					<div className="flex items-center gap-2">
-						<Button variant="ghost" size="icon" className="w-8 h-8 rounded-lg bg-muted/60 hover:bg-muted toolbutton">
+						<Button
+							variant="ghost"
+							size="icon"
+							className="w-8 h-8 rounded-lg bg-muted/60 hover:bg-muted toolbutton"
+						>
 							<HugeiconsIcon
 								icon={Camera01FreeIcons}
 								className="w-4 h-4 text-muted-foreground toolbutton-icon"
 							/>
 						</Button>
-						<Button variant="ghost" size="icon" className="w-8 h-8 rounded-lg bg-muted/60 hover:bg-muted toolbutton">
+						<Button
+							variant="ghost"
+							size="icon"
+							className="w-8 h-8 rounded-lg bg-muted/60 hover:bg-muted toolbutton"
+						>
 							<BookLucide className="w-4 h-4 text-muted-foreground toolbutton-icon" />
 						</Button>
 					</div>
 
 					<div className="flex items-center gap-2">
-						<Button variant="ghost" size="icon" className="w-8 h-8 rounded-lg bg-muted/60 hover:bg-muted toolbutton">
+						<Button
+							variant="ghost"
+							size="icon"
+							className="w-8 h-8 rounded-lg bg-muted/60 hover:bg-muted toolbutton"
+						>
 							<MicLucide className="w-4 h-4 text-muted-foreground toolbutton-icon" />
 						</Button>
 						<Button

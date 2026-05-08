@@ -116,7 +116,7 @@ export function VoiceRecorder({
 					barGap={2}
 					fadeEdges
 					className={cn(
-						"w-full transition-all duration-300",
+						"w-full transition-transform duration-300",
 						isRecording && "scale-y-110",
 					)}
 				/>
@@ -132,7 +132,7 @@ export function VoiceRecorder({
 				)}
 				<span
 					className={cn(
-						"text-xs uppercase tracking-widest font-medium transition-all duration-200",
+						"text-xs uppercase tracking-widest font-medium transition-colors duration-200",
 						sendSuccess
 							? "text-green-500"
 							: isRecording
@@ -158,7 +158,7 @@ export function VoiceRecorder({
 					onClick={resetRecording}
 					disabled={(!audioBlob && !isRecording) || isSending}
 					className={cn(
-						"flex h-10 w-10 items-center justify-center rounded-lg transition-all duration-200 active:scale-95",
+						"flex h-10 w-10 items-center justify-center rounded-lg transition-transform duration-200 active:scale-[0.96]",
 						audioBlob || isRecording
 							? "bg-muted/80 hover:bg-muted text-muted-foreground hover:text-foreground hover:scale-105"
 							: "bg-muted/30 text-muted-foreground/30 cursor-not-allowed",
@@ -175,7 +175,7 @@ export function VoiceRecorder({
 					onClick={handleRecordClick}
 					disabled={isSending || showPermissionError}
 					className={cn(
-						"relative flex h-16 w-16 items-center justify-center rounded-full transition-all duration-200 active:scale-95",
+						"relative flex h-16 w-16 items-center justify-center rounded-full transition-transform duration-200 active:scale-[0.96]",
 						isRecording
 							? "bg-destructive text-destructive-foreground shadow-[0_0_30px_rgba(239,68,68,0.6)]"
 							: showPermissionError
@@ -187,7 +187,7 @@ export function VoiceRecorder({
 				>
 					<span
 						className={cn(
-							"absolute inset-0 rounded-full transition-all duration-300",
+							"absolute inset-0 rounded-full transition-opacity duration-300",
 							isRecording
 								? "animate-ping bg-destructive/40"
 								: "ring-2 ring-transparent",
@@ -211,7 +211,7 @@ export function VoiceRecorder({
 					onClick={togglePlayback}
 					disabled={!audioBlob || isRecording || isSending}
 					className={cn(
-						"flex h-10 w-10 items-center justify-center rounded-lg transition-all duration-200 active:scale-95",
+						"flex h-10 w-10 items-center justify-center rounded-lg transition-transform duration-200 active:scale-[0.96]",
 						audioBlob && !isRecording
 							? "bg-primary text-primary-foreground hover:scale-105 hover:shadow-xl hover:shadow-primary/20"
 							: "bg-muted/30 text-muted-foreground/30 cursor-not-allowed",
@@ -245,7 +245,7 @@ export function VoiceRecorder({
 					isTooLong
 				}
 				className={cn(
-					"mt-2 flex w-full items-center justify-center gap-2 rounded-lg px-4 py-3 text-sm font-medium transition-all duration-200 active:scale-[0.98]",
+					"mt-2 flex w-full items-center justify-center gap-2 rounded-lg px-4 py-3 text-sm font-medium transition-transform duration-200 active:scale-[0.96]",
 					sendSuccess
 						? "bg-green-500 text-white"
 						: !isRecording && audioBlob && !isTooShort && !isTooLong

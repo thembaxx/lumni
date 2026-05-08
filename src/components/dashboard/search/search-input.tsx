@@ -39,14 +39,22 @@ export function SearchInput({ value, onChange }: SearchInputProps) {
 
 			<div className="flex items-center justify-between">
 				<div className="flex items-center gap-2">
-					<Button variant="ghost" size="icon" className="w-8 h-8 bg-muted/60 hover:bg-muted toolbutton">
+					<Button
+						variant="ghost"
+						size="icon"
+						className="w-8 h-8 bg-muted/60 hover:bg-muted toolbutton"
+					>
 						<HugeiconsIcon
 							icon={Camera01FreeIcons}
 							className="w-4 h-4 text-muted-foreground toolbutton-icon"
 						/>
 					</Button>
 					<SubjectsDrawer>
-						<Button variant="ghost" size="icon" className="w-8 h-8 bg-muted/60 hover:bg-muted toolbutton">
+						<Button
+							variant="ghost"
+							size="icon"
+							className="w-8 h-8 bg-muted/60 hover:bg-muted toolbutton"
+						>
 							<Book className="w-4 h-4 text-muted-foreground toolbutton-icon" />
 						</Button>
 					</SubjectsDrawer>
@@ -54,7 +62,11 @@ export function SearchInput({ value, onChange }: SearchInputProps) {
 
 				<div className="flex items-center gap-2">
 					<AnimatedDialogContent>
-						<Button variant="ghost" size="icon" className="w-8 h-8 bg-muted/60 hover:bg-muted toolbutton cursor-pointer">
+						<Button
+							variant="ghost"
+							size="icon"
+							className="w-8 h-8 bg-muted/60 hover:bg-muted toolbutton cursor-pointer"
+						>
 							<Mic className="w-4 h-4 text-muted-foreground toolbutton-icon" />
 						</Button>
 					</AnimatedDialogContent>

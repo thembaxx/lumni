@@ -38,7 +38,7 @@ export function ProgressMilestones({
 								transition={{ delay: index * 0.1 }}
 							>
 								<motion.div
-									className={`relative z-10 flex h-10 w-10 items-center justify-center rounded-full border-4 transition-all ${
+									className={`relative z-10 flex h-10 w-10 items-center justify-center rounded-full border-4 transition-colors transition-border-color ${
 										isUnlocked
 											? "bg-primary border-primary text-primary-foreground"
 											: isCurrent

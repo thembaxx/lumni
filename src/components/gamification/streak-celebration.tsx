@@ -54,7 +54,7 @@ export function StreakCelebration({
 		<motion.div
 			initial={{ opacity: 0, y: 10 }}
 			animate={{ opacity: 1, y: 0 }}
-			className={`relative overflow-hidden rounded-2xl p-4 transition-all ${
+			className={`relative overflow-hidden rounded-2xl p-4 transition-colors transition-background ${
 				isMilestone
 					? "bg-gradient-to-br from-orange-500/20 via-amber-500/10 to-card border border-orange-500/30"
 					: "bg-card border border-border/50"

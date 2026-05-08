@@ -33,7 +33,7 @@ export function LoadingScreen({
 
 	return (
 		<div
-			className={`flex flex-col items-center gap-8 transition-all duration-500 ease-out-quart ${
+			className={`flex flex-col items-center gap-8 transition-opacity duration-500 ease-out-quart ${
 				isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
 			}`}
 		>
@@ -63,12 +63,12 @@ export function LoadingScreen({
 
 			<Progress
 				value={progress}
-				className="w-48 transition-all duration-150 ease-out-quart"
+				className="w-48 transition-[width] duration-150 ease-out-quart"
 			/>
 			<Button
 				onClick={handleManualEnter}
 				disabled={progress === 100}
-				className="rounded-full bg-primary text-primary-foreground hover:scale-105 active:scale-95 transition-all duration-150 h-10 px-8"
+				className="rounded-full bg-primary text-primary-foreground hover:scale-105 active:scale-[0.96] transition-transform duration-150 h-10 px-8"
 			>
 				{progress === 100 ? "Entering..." : "Skip & Enter"}
 			</Button>

@@ -41,7 +41,7 @@ export function DailyChallenges({ challenges }: DailyChallengesProps) {
 						initial={{ opacity: 0, x: -10 }}
 						animate={{ opacity: 1, x: 0 }}
 						transition={{ delay: index * 0.1 }}
-						className={`relative overflow-hidden rounded-xl p-3 transition-all ${
+						className={`relative overflow-hidden rounded-xl p-3 transition-colors ${
 							challenge.completed
 								? "bg-green-500/10 border border-green-500/20"
 								: "bg-card border border-border/50 hover:border-primary/30"

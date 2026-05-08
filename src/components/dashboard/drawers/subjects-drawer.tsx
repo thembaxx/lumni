@@ -2,6 +2,7 @@
 
 import { Search } from "lucide-react";
 import { useRef, useState } from "react";
+import { Button } from "@/components/ui/button";
 import {
 	Drawer,
 	DrawerClose,
@@ -11,7 +12,6 @@ import {
 	DrawerTitle,
 	DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useFilteredSubjects } from "@/hooks/use-subjects";
 
@@ -94,7 +94,9 @@ export function SubjectsDrawer({
 									onClick={() => handleSelect(subject.name)}
 								>
 									<div className="text-left">
-										<p className="font-medium text-foreground">{subject.name}</p>
+										<p className="font-medium text-foreground">
+											{subject.name}
+										</p>
 										<p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">
 											{subject.description}
 										</p>

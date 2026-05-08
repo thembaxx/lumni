@@ -53,7 +53,7 @@ export function SubjectSelector({ onSelect, className }: SubjectSelectorProps) {
 							onClick={() => handleSelect(subject.id)}
 							disabled={isGenerating}
 							className={cn(
-								"p-4 rounded-xl border-2 text-left transition-all",
+								"p-4 rounded-xl border-2 text-left transition-colors transition-border-color transition-transform",
 								"hover:border-primary/50 hover:bg-primary/5",
 								"focus:outline-none focus:ring-2 focus:ring-primary/20",
 								"disabled:opacity-50 disabled:cursor-not-allowed",

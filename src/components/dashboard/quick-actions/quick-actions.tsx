@@ -2,8 +2,8 @@
 
 import { IconBook, IconBulb, IconFileDescription } from "@tabler/icons-react";
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
 import { LessonsButton } from "@/components/lesson";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const quickActions = [

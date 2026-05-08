@@ -100,7 +100,7 @@ function NavItemComponent({
 			</div>
 			<span
 				className={cn(
-					"text-[10px] font-medium tracking-wide transition-all duration-200",
+					"text-[10px] font-medium tracking-wide transition-colors duration-200",
 					isActive ? "text-primary" : "text-muted-foreground",
 				)}
 			>

@@ -42,7 +42,7 @@ export function TabNav({ activeTab, onTabChange }: TabNavProps) {
 				>
 					<span
 						className={cn(
-							"absolute top-0.5 bottom-0.5 bg-background rounded-xl shadow-sm transition-all duration-300 ease-out-quart border border-border/30",
+							"absolute top-0.5 bottom-0.5 bg-background rounded-xl shadow-sm transition-transform transition-shadow duration-300 ease-out-quart border border-border/30",
 							activeTab === "ai"
 								? "left-0.5 w-[calc(33.33%-4px)]"
 								: activeTab === "spaces"
@@ -55,7 +55,7 @@ export function TabNav({ activeTab, onTabChange }: TabNavProps) {
 							key={tab.value}
 							value={tab.value}
 							className={cn(
-								"relative z-10 px-4 h-8 rounded-xl text-xs font-medium transition-all duration-200 tab-trigger-item",
+								"relative z-10 px-4 h-8 rounded-xl text-xs font-medium transition-colors duration-200 tab-trigger-item",
 								activeTab === tab.value
 									? "text-foreground"
 									: "text-muted-foreground hover:text-foreground",

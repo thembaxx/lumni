@@ -186,7 +186,7 @@ function CollapsedContent({
 		<m.div key={`${data.id}-closed`} layoutId={`card-${data.id}`}>
 			<div
 				onClick={onOpen}
-				className="p-5 rounded-2xl border bg-card text-card-foreground shadow-sm hover:border-primary/20 transition-all duration-200 cursor-pointer w-full text-left"
+				className="p-5 rounded-2xl border bg-card text-card-foreground shadow-sm hover:border-primary/20 transition-colors transition-transform duration-200 cursor-pointer w-full text-left"
 				role="button"
 				tabIndex={0}
 				onKeyDown={(e) => {

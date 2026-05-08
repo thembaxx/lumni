@@ -2,11 +2,11 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { Loader2 } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
 
 interface Subject {
@@ -166,7 +166,7 @@ export function ExamFilters({
 								<Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />
 							</div>
 						) : (
-subjects.map((subject) => (
+							subjects.map((subject) => (
 								<SubjectCheckboxItem
 									key={subject.id}
 									checked={selectedSubjects.has(subject.id)}
@@ -190,7 +190,9 @@ subjects.map((subject) => (
 								whileTap={{ scale: 0.98 }}
 							>
 								<Button
-									variant={selectedExamTypes.has(type.value) ? "default" : "secondary"}
+									variant={
+										selectedExamTypes.has(type.value) ? "default" : "secondary"
+									}
 									onClick={() => onToggleExamType(type.value)}
 									className="flex-1"
 								>
@@ -208,10 +210,7 @@ subjects.map((subject) => (
 							With marking guidelines
 						</p>
 					</div>
-					<Switch
-						checked={includeMemo}
-						onCheckedChange={onIncludeMemoChange}
-					/>
+					<Switch checked={includeMemo} onCheckedChange={onIncludeMemoChange} />
 				</div>
 			</CardContent>
 		</Card>
