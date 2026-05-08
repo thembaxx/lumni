@@ -2,17 +2,20 @@
 
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
+import { LottieWrapper } from "@/components/lottie";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 
 interface LoadingScreenProps {
 	duration?: number;
 	redirectTo?: string;
+	useLottie?: boolean;
 }
 
 export function LoadingScreen({
 	duration = 2000,
 	redirectTo = "/dashboard",
+	useLottie = false,
 }: LoadingScreenProps) {
 	const [progress, setProgress] = useState(0);
 	const [isVisible, setIsVisible] = useState(false);
@@ -57,7 +60,15 @@ export function LoadingScreen({
 			<div className="relative">
 				<div className="absolute inset-0 animate-pulse rounded-full bg-primary/20 blur-xl" />
 				<div className="relative flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20">
-					<span className="text-2xl font-semibold text-primary">L</span>
+					{useLottie ? (
+						<LottieWrapper
+							animation="loading-dots"
+							className="w-12 h-12"
+							loop
+						/>
+					) : (
+						<span className="text-2xl font-semibold text-primary">L</span>
+					)}
 				</div>
 			</div>
 

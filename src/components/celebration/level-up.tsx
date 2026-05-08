@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { Crown, Star } from "lucide-react";
+import { LottieWrapper } from "@/components/lottie";
 
 interface LevelUpProps {
 	visible: boolean;
@@ -9,6 +10,7 @@ interface LevelUpProps {
 	title: string;
 	xpToNext: number;
 	onClose?: () => void;
+	useLottie?: boolean;
 }
 
 export function LevelUp({
@@ -17,6 +19,7 @@ export function LevelUp({
 	title,
 	xpToNext,
 	onClose,
+	useLottie = false,
 }: LevelUpProps) {
 	return (
 		<AnimatePresence>
@@ -52,12 +55,19 @@ export function LevelUp({
 								transition={{ delay: 0.2 }}
 								className="mb-4"
 							>
-								<motion.div
-									animate={{ rotate: [0, 10, -10, 0] }}
-									transition={{ duration: 0.5, repeat: 3 }}
-								>
-									<Crown className="w-16 h-16 mx-auto text-amber-500" />
-								</motion.div>
+								{useLottie ? (
+									<LottieWrapper
+										animation="level-up"
+										className="w-24 h-24 mx-auto"
+									/>
+								) : (
+									<motion.div
+										animate={{ rotate: [0, 10, -10, 0] }}
+										transition={{ duration: 0.5, repeat: 3 }}
+									>
+										<Crown className="w-16 h-16 mx-auto text-amber-500" />
+									</motion.div>
+								)}
 							</motion.div>
 
 							<motion.div

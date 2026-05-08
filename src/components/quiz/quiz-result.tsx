@@ -21,6 +21,7 @@ import {
 	useTransform,
 } from "framer-motion";
 import { useEffect } from "react";
+import { LottieWrapper } from "@/components/lottie";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
@@ -37,6 +38,7 @@ interface QuizResultProps {
 	};
 	onRestart: () => void;
 	onClose?: () => void;
+	useLottie?: boolean;
 }
 
 function AnimatedCounter({
@@ -96,7 +98,12 @@ function Confetti() {
 	);
 }
 
-export function QuizResult({ results, onRestart, onClose }: QuizResultProps) {
+export function QuizResult({
+	results,
+	onRestart,
+	onClose,
+	useLottie = false,
+}: QuizResultProps) {
 	const { totalQuestions, correctAnswers, accuracy, incorrectAnswers } =
 		results;
 
@@ -135,7 +142,11 @@ export function QuizResult({ results, onRestart, onClose }: QuizResultProps) {
 					transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
 					className="text-5xl"
 				>
-					<HugeiconsIcon icon={message.icon} className="w-12 h-12" />
+					{useLottie && message.celebration ? (
+						<LottieWrapper animation="success-check" className="w-24 h-24" />
+					) : (
+						<HugeiconsIcon icon={message.icon} className="w-12 h-12" />
+					)}
 				</m.div>
 				<m.h2
 					className="text-2xl font-bold"

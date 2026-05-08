@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { Trophy } from "lucide-react";
+import { LottieWrapper } from "@/components/lottie";
 
 interface AchievementUnlockProps {
 	visible: boolean;
@@ -11,6 +12,7 @@ interface AchievementUnlockProps {
 	xpReward: number;
 	rarity: "common" | "rare" | "epic" | "legendary";
 	onClose?: () => void;
+	useLottie?: boolean;
 }
 
 const rarityColors = {
@@ -35,6 +37,7 @@ export function AchievementUnlock({
 	xpReward,
 	rarity,
 	onClose,
+	useLottie = false,
 }: AchievementUnlockProps) {
 	return (
 		<AnimatePresence>
@@ -67,7 +70,14 @@ export function AchievementUnlock({
 								transition={{ type: "spring", delay: 0.2 }}
 								className="mb-4"
 							>
-								<div className="text-7xl mb-4">{icon}</div>
+								{useLottie ? (
+									<LottieWrapper
+										animation="achievement-unlock"
+										className="w-32 h-32 mx-auto"
+									/>
+								) : (
+									<div className="text-7xl mb-4">{icon}</div>
+								)}
 							</motion.div>
 
 							<motion.div
