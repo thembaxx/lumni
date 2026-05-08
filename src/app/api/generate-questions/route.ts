@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { generateWithSystem, initAI, isAIConfigured } from "@/lib/ai";
 import type { AIResponse } from "@/lib/ai/types";
+import {
+	filterValidQuestions,
+	validateQuestions,
+} from "@/lib/utils/question-validator";
 import type { QAQuestion } from "@/types/questions";
 
 export const dynamic = "force-dynamic";
@@ -115,9 +119,35 @@ export async function POST(req: NextRequest) {
 			difficulty,
 		);
 
+		const { valid, invalid, results } = validateQuestions(questions);
+
+		const validationSummary = {
+			total: questions.length,
+			valid: valid.length,
+			invalid: invalid.length,
+			byId: Object.fromEntries(
+				questions.map((q) => [
+					q.id,
+					{
+						isValid: results.get(q.id)?.isValid ?? false,
+						errors: results.get(q.id)?.errors?.length ?? 0,
+						warnings: results.get(q.id)?.warnings?.length ?? 0,
+						score: results.get(q.id)?.score ?? 0,
+					},
+				]),
+			),
+		};
+
+		const shouldFilter = req.headers.get("x-validate-questions") === "true";
+		const finalQuestions = shouldFilter
+			? filterValidQuestions(questions).questions
+			: valid;
+
 		return NextResponse.json({
-			questions,
+			questions: finalQuestions,
 			provider: "gemini",
+			validation: validationSummary,
+			filtered: shouldFilter,
 		});
 	} catch (error) {
 		console.error("Question generation error:", error);

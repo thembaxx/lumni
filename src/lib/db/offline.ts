@@ -40,6 +40,17 @@ export interface SyncQueueItem {
 	lastError?: string;
 	createdAt: number;
 	updatedAt: number;
+	retryAfter?: number;
+	priority?: number;
+}
+
+export interface SyncConflict {
+	id: number;
+	localData: unknown;
+	serverData: unknown;
+	conflictType: "progress" | "attempt" | "preference";
+	resolvedAt?: number;
+	resolution?: "local" | "server" | "merged";
 }
 
 export interface CachedSubject {
@@ -51,12 +62,36 @@ export interface CachedSubject {
 	cachedAt: number;
 }
 
+export interface QuizAnswer {
+	questionId: string;
+	selectedOption: string | null;
+	isCorrect: boolean | null;
+	answeredAt: number;
+	timeSpent: number;
+}
+
+export interface QuizSessionState {
+	id?: number;
+	sessionId: string;
+	subject: string;
+	topic?: string;
+	questions: string; // JSON stringified QAQuestion[]
+	answers: QuizAnswer[];
+	currentIndex: number;
+	startedAt: number;
+	lastSavedAt: number;
+	isPaused: boolean;
+	duration: number;
+}
+
 export class LumniOfflineDB extends Dexie {
 	questions!: Table<CachedQuestion, number>;
 	progress!: Table<CachedProgress, number>;
 	quizAttempts!: Table<QuizAttempt, number>;
 	syncQueue!: Table<SyncQueueItem, number>;
 	subjects!: Table<CachedSubject, number>;
+	quizSessions!: Table<QuizSessionState, number>;
+	conflicts!: Table<SyncConflict, number>;
 
 	constructor() {
 		super("lumni-offline");
@@ -67,6 +102,15 @@ export class LumniOfflineDB extends Dexie {
 			quizAttempts: "++id, &odSubject, userId, completedAt",
 			syncQueue: "++id, status, createdAt",
 			subjects: "++id, &code, cachedAt",
+		});
+
+		this.version(2).stores({
+			quizSessions: "++id, &sessionId, subject, startedAt, lastSavedAt",
+		});
+
+		this.version(3).stores({
+			syncQueue: "++id, status, priority, createdAt",
+			conflicts: "++id, resolvedAt",
 		});
 	}
 }
@@ -224,4 +268,233 @@ export async function removeSyncItem(id: number): Promise<void> {
 
 export async function clearSyncQueue(): Promise<void> {
 	await offlineDB.syncQueue.where("status").equals("pending").delete();
+}
+
+export async function saveQuizSession(
+	session: Omit<QuizSessionState, "id" | "lastSavedAt">,
+): Promise<number> {
+	const existing = await offlineDB.quizSessions
+		.where("sessionId")
+		.equals(session.sessionId)
+		.first();
+
+	if (existing) {
+		return offlineDB.quizSessions.update(existing.id!, {
+			...session,
+			lastSavedAt: Date.now(),
+		});
+	}
+
+	return offlineDB.quizSessions.add({
+		...session,
+		lastSavedAt: Date.now(),
+	});
+}
+
+export async function getQuizSession(
+	sessionId: string,
+): Promise<QuizSessionState | undefined> {
+	return offlineDB.quizSessions.where("sessionId").equals(sessionId).first();
+}
+
+export async function getActiveQuizSession(
+	subject: string,
+): Promise<QuizSessionState | undefined> {
+	const sessions = await offlineDB.quizSessions
+		.where("subject")
+		.equals(subject)
+		.toArray();
+
+	const active = sessions.find((s) => !s.isPaused);
+	if (active) return active;
+
+	return sessions.sort((a, b) => b.lastSavedAt - a.lastSavedAt)[0];
+}
+
+export async function getAllPausedSessions(): Promise<QuizSessionState[]> {
+	return offlineDB.quizSessions.filter((s) => s.isPaused).toArray();
+}
+
+export async function resumeQuizSession(
+	sessionId: string,
+): Promise<QuizSessionState | undefined> {
+	const session = await getQuizSession(sessionId);
+	if (!session) return undefined;
+
+	await offlineDB.quizSessions.update(session.id!, {
+		isPaused: false,
+		lastSavedAt: Date.now(),
+	});
+
+	return { ...session, isPaused: false };
+}
+
+export async function pauseQuizSession(sessionId: string): Promise<void> {
+	const session = await getQuizSession(sessionId);
+	if (!session) return;
+
+	await offlineDB.quizSessions.update(session.id!, {
+		isPaused: true,
+		lastSavedAt: Date.now(),
+	});
+}
+
+export async function deleteQuizSession(sessionId: string): Promise<void> {
+	await offlineDB.quizSessions.where("sessionId").equals(sessionId).delete();
+}
+
+export async function clearOldQuizSessions(maxAgeHours = 24): Promise<void> {
+	const cutoff = Date.now() - maxAgeHours * 60 * 60 * 1000;
+	await offlineDB.quizSessions.where("lastSavedAt").below(cutoff).delete();
+}
+
+export function calculateBackoffDelay(attempts: number): number {
+	const baseDelay = 1000;
+	const maxDelay = 60000;
+	const delay = Math.min(baseDelay * Math.pow(2, attempts), maxDelay);
+	const jitter = Math.random() * 1000;
+	return delay + jitter;
+}
+
+export async function addToSyncQueueWithPriority(
+	action: SyncQueueItem["action"],
+	payload: unknown,
+	priority: number = 0,
+): Promise<number> {
+	const existing = await offlineDB.syncQueue
+		.where("status")
+		.equals("pending")
+		.toArray();
+
+	const sameAction = existing.find(
+		(item) => JSON.parse(item.payload) === payload,
+	);
+	if (sameAction) {
+		return sameAction.id!;
+	}
+
+	return offlineDB.syncQueue.add({
+		action,
+		payload: JSON.stringify(payload),
+		status: "pending",
+		attempts: 0,
+		maxRetries: 3,
+		priority,
+		createdAt: Date.now(),
+		updatedAt: Date.now(),
+	});
+}
+
+export async function getNextSyncItem(): Promise<SyncQueueItem | null> {
+	const items = await offlineDB.syncQueue
+		.where("status")
+		.equals("pending")
+		.toArray();
+
+	if (items.length === 0) return null;
+
+	items.sort((a, b) => {
+		const aTime = a.retryAfter || 0;
+		const bTime = b.retryAfter || 0;
+		if (aTime > Date.now() || bTime > Date.now()) return 0;
+		return (b.priority || 0) - (a.priority || 0) || a.createdAt - b.createdAt;
+	});
+
+	return items[0];
+}
+
+export async function markSyncItemSyncing(id: number): Promise<void> {
+	await offlineDB.syncQueue.update(id, {
+		status: "syncing",
+		updatedAt: Date.now(),
+	});
+}
+
+export async function markSyncItemFailed(
+	id: number,
+	error: string,
+	attempts: number,
+	maxRetries: number,
+): Promise<void> {
+	if (attempts >= maxRetries) {
+		await offlineDB.syncQueue.update(id, {
+			status: "failed",
+			lastError: error,
+			attempts,
+			updatedAt: Date.now(),
+		});
+	} else {
+		const retryAfter = Date.now() + calculateBackoffDelay(attempts);
+		await offlineDB.syncQueue.update(id, {
+			status: "pending",
+			lastError: error,
+			attempts,
+			retryAfter,
+			updatedAt: Date.now(),
+		});
+	}
+}
+
+export async function markSyncItemSuccess(id: number): Promise<void> {
+	await offlineDB.syncQueue.delete(id);
+}
+
+export async function getSyncQueueStats(): Promise<{
+	pending: number;
+	syncing: number;
+	failed: number;
+	total: number;
+}> {
+	const all = await offlineDB.syncQueue.toArray();
+	return {
+		pending: all.filter((i) => i.status === "pending").length,
+		syncing: all.filter((i) => i.status === "syncing").length,
+		failed: all.filter((i) => i.status === "failed").length,
+		total: all.length,
+	};
+}
+
+export async function retryFailedSyncItems(): Promise<number> {
+	const failed = await offlineDB.syncQueue
+		.where("status")
+		.equals("failed")
+		.toArray();
+
+	let retried = 0;
+	for (const item of failed) {
+		await offlineDB.syncQueue.update(item.id!, {
+			status: "pending",
+			attempts: 0,
+			retryAfter: undefined,
+			updatedAt: Date.now(),
+		});
+		retried++;
+	}
+
+	return retried;
+}
+
+export async function saveConflict(
+	conflict: Omit<SyncConflict, "id" | "resolvedAt" | "resolution">,
+): Promise<number> {
+	return offlineDB.conflicts.add(conflict);
+}
+
+export async function getUnresolvedConflicts(): Promise<SyncConflict[]> {
+	return offlineDB.conflicts.filter((c) => !c.resolvedAt).toArray();
+}
+
+export async function resolveConflict(
+	id: number,
+	resolution: "local" | "server" | "merged",
+	mergedData?: unknown,
+): Promise<void> {
+	await offlineDB.conflicts.update(id, {
+		resolvedAt: Date.now(),
+		resolution,
+	});
+}
+
+export async function clearResolvedConflicts(): Promise<void> {
+	await offlineDB.conflicts.filter((c) => !!c.resolvedAt).delete();
 }

@@ -10,7 +10,88 @@ export type NotificationType =
 	| "quiz_due"
 	| "flashcard_review"
 	| "streak_warning"
-	| "achievement";
+	| "achievement"
+	| "exam_reminder"
+	| "weekly_summary"
+	| "streak_celebration"
+	| "weak_topic_alert";
+
+export interface NotificationTemplate {
+	type: NotificationType;
+	title: string;
+	body: string;
+	icon: string;
+	actionUrl: string;
+}
+
+export const NOTIFICATION_TEMPLATES: Record<
+	NotificationType,
+	() => NotificationTemplate
+> = {
+	study_reminder: () => ({
+		type: "study_reminder",
+		title: "Time to Study! 📚",
+		body: "Your daily practice session is waiting. Keep your streak going!",
+		icon: "📚",
+		actionUrl: "/quiz",
+	}),
+	quiz_due: () => ({
+		type: "quiz_due",
+		title: "Quiz Ready! 🎯",
+		body: "Your generated quiz is ready. Test your knowledge!",
+		icon: "🎯",
+		actionUrl: "/quiz",
+	}),
+	flashcard_review: () => ({
+		type: "flashcard_review",
+		title: "Review Time! 🃏",
+		body: "You have flashcards due for review. Don't lose your progress!",
+		icon: "🃏",
+		actionUrl: "/flashcards",
+	}),
+	streak_warning: () => ({
+		type: "streak_warning",
+		title: "Streak at Risk! 🔥",
+		body: "Your streak will reset if you don't practice today!",
+		icon: "🔥",
+		actionUrl: "/quiz",
+	}),
+	achievement: () => ({
+		type: "achievement",
+		title: "Achievement Unlocked! 🏆",
+		body: "Congratulations! You've earned a new achievement!",
+		icon: "🏆",
+		actionUrl: "/dashboard",
+	}),
+	exam_reminder: () => ({
+		type: "exam_reminder",
+		title: "Exam Prep 📅",
+		body: "Your exam is approaching. Time to review past papers!",
+		icon: "📅",
+		actionUrl: "/dashboard?tab=practice",
+	}),
+	weekly_summary: () => ({
+		type: "weekly_summary",
+		title: "Weekly Progress 📊",
+		body: "Great week! You answered X questions with Y% accuracy.",
+		icon: "📊",
+		actionUrl: "/dashboard?tab=stats",
+	}),
+	streak_celebration: () => ({
+		type: "streak_celebration",
+		title: "Streak Milestone! 🎉",
+		body: "Amazing! You've reached a new streak milestone!",
+		icon: "🎉",
+		actionUrl: "/dashboard",
+	}),
+	weak_topic_alert: () => ({
+		type: "weak_topic_alert",
+		title: "Focus Area 📌",
+		body: "Time to practice your weak topics and improve!",
+		icon: "📌",
+		actionUrl: "/quiz",
+	}),
+};
 
 export interface ScheduledNotification {
 	id: string;
@@ -227,4 +308,96 @@ export function useOfflineStudyReminder() {
 	}, [enabled, isSupported, scheduleDailyReminder]);
 
 	return { enabled, toggle };
+}
+
+export interface StudyPattern {
+	preferredTimes: number[];
+	averageSessionLength: number;
+	studyDays: number[];
+	streakDays: number;
+}
+
+const STUDY_PATTERN_KEY = "lumni_study_pattern";
+
+export function getStudyPattern(): StudyPattern {
+	if (typeof window === "undefined") {
+		return {
+			preferredTimes: [18, 19, 20],
+			averageSessionLength: 20,
+			studyDays: [1, 2, 3, 4, 5, 6, 0],
+			streakDays: 0,
+		};
+	}
+	const stored = localStorage.getItem(STUDY_PATTERN_KEY);
+	return stored
+		? JSON.parse(stored)
+		: {
+				preferredTimes: [18, 19, 20],
+				averageSessionLength: 20,
+				studyDays: [1, 2, 3, 4, 5, 6, 0],
+				streakDays: 0,
+			};
+}
+
+export function updateStudyPattern(updates: Partial<StudyPattern>): void {
+	if (typeof window === "undefined") return;
+	const current = getStudyPattern();
+	const updated = { ...current, ...updates };
+	localStorage.setItem(STUDY_PATTERN_KEY, JSON.stringify(updated));
+}
+
+export function getSmartReminderTime(): { hour: number; minute: number } {
+	const pattern = getStudyPattern();
+	const preferred = pattern.preferredTimes;
+
+	if (preferred.length > 0) {
+		const avgTime = preferred.reduce((a, b) => a + b, 0) / preferred.length;
+		return { hour: Math.round(avgTime), minute: 0 };
+	}
+
+	return { hour: 19, minute: 0 };
+}
+
+export function scheduleSmartReminder(
+	scheduleNotification: (n: Omit<ScheduledNotification, "id">) => void,
+): void {
+	const { hour, minute } = getSmartReminderTime();
+	const now = new Date();
+	const scheduled = new Date();
+	scheduled.setHours(hour, minute, 0, 0);
+
+	if (scheduled <= now) {
+		scheduled.setDate(scheduled.getDate() + 1);
+	}
+
+	scheduleNotification({
+		type: "study_reminder",
+		title: "Study Time! 🎯",
+		body: "Your personalized reminder - time to practice!",
+		scheduledAt: scheduled.getTime(),
+		actionUrl: "/quiz",
+	});
+}
+
+export function checkStreakAndNotify(
+	scheduleNotification: (n: Omit<ScheduledNotification, "id">) => void,
+	currentStreak: number,
+): void {
+	if (currentStreak === 0) {
+		scheduleNotification({
+			type: "streak_warning",
+			title: "Streak at Risk! 🔥",
+			body: "Practice now to keep your streak going!",
+			scheduledAt: Date.now() + 12 * 60 * 60 * 1000,
+			actionUrl: "/quiz",
+		});
+	} else if (currentStreak > 0 && currentStreak % 7 === 0) {
+		scheduleNotification({
+			type: "streak_celebration",
+			title: `🎉 ${currentStreak} Day Streak!`,
+			body: "Incredible dedication! Keep it up!",
+			scheduledAt: Date.now(),
+			actionUrl: "/dashboard",
+		});
+	}
 }

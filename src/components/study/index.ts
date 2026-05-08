@@ -1,9 +1,15 @@
-export { default as StudyTopicCardExample } from "./example";
-export { PracticeButton } from "./practice-button";
-export { StudySessionLayout } from "./study-session-layout";
-export { StudyTopicCard } from "./study-topic-card";
+export { useSpacedRepetition } from "@/hooks/use-spaced-repetition";
 export {
-	getDifficultyColor,
-	getRandomTopic,
-	type TopicData,
-} from "./study-topic-card.data";
+	convertQuizToFlashcards,
+	createFlashcard,
+	deleteFlashcard,
+	type FlashcardSM2,
+	getCardStats,
+	getDueCards,
+	getIntervalLabel,
+	getMasteryLevel,
+	getNewCards,
+	reviewFlashcard,
+	type SM2Quality,
+} from "@/lib/utils/spaced-repetition";
+export { FlashcardStats, SM2StudySession } from "./sm2-study-session";

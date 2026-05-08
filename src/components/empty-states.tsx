@@ -237,4 +237,41 @@ export const EmptyStates = {
 			action={onRetry ? { label: "Try Again", onClick: onRetry } : undefined}
 		/>
 	),
+
+	getStarted: (onStartQuiz?: () => void, onBrowse?: () => void) => (
+		<EmptyStateWithIllustration
+			animation="search"
+			title="Ready to Start?"
+			description="You're all set up! Begin your study session now or explore subjects and topics."
+			action={
+				onStartQuiz ? { label: "Start Quiz", onClick: onStartQuiz } : undefined
+			}
+			secondaryAction={
+				onBrowse ? { label: "Browse Subjects", onClick: onBrowse } : undefined
+			}
+		/>
+	),
+
+	interruptedQuiz: (onResume?: () => void) => (
+		<EmptyStateWithIllustration
+			animation="search"
+			title="Quiz Interrupted"
+			description="You have an unfinished quiz. Would you like to continue where you left off?"
+			action={
+				onResume ? { label: "Resume Quiz", onClick: onResume } : undefined
+			}
+		/>
+	),
+
+	noDueCards: () => (
+		<EmptyStateWithIllustration
+			animation="search"
+			title="All Caught Up! 🎉"
+			description="No flashcards due for review. Great job staying on top of your studies!"
+			action={{
+				label: "Add More Cards",
+				onClick: () => (window.location.href = "/quiz"),
+			}}
+		/>
+	),
 };
