@@ -23,7 +23,7 @@ export function useLottiePlayer() {
 	}, []);
 
 	const reset = useCallback(() => {
-		lottieRef.current?.reset();
+		lottieRef.current?.stop();
 		setIsPlaying(false);
 	}, []);
 
