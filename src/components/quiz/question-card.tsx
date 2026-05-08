@@ -30,9 +30,9 @@ interface QuestionCardProps {
 }
 
 const difficultyColors = {
-	Easy: "bg-green-500/20 text-white border-green-500",
-	Medium: "bg-yellow-500/20 text-white border-yellow-500",
-	Hard: "bg-red-500/20 text-white border-red-500",
+	Easy: "bg-success/20 text-success border-success",
+	Medium: "bg-warning/20 text-warning border-warning",
+	Hard: "bg-destructive/20 text-destructive border-destructive",
 };
 
 export function QuestionCard({
@@ -211,9 +211,10 @@ export function QuestionCard({
 							if (showResult) {
 								if (isCorrectOption) {
 									optionClass =
-										"border-green-500/40 ring-2 ring-green-500 bg-green-500/10 animate-checkmark";
+										"border-success/40 ring-2 ring-success bg-success/10 animate-checkmark";
 								} else if (isSelected && !isCorrectOption) {
-									optionClass = "border-red-500 bg-red-500/10 animate-shake";
+									optionClass =
+										"border-destructive bg-destructive/10 animate-shake";
 								}
 							} else if (isSelected) {
 								optionClass = "border-primary bg-primary/10";
@@ -248,13 +249,13 @@ export function QuestionCard({
 									{showResult && isCorrectOption && (
 										<HugeiconsIcon
 											icon={CheckmarkCircle02Icon}
-											className="w-5 h-5 text-green-500"
+											className="w-5 h-5 text-success"
 										/>
 									)}
 									{showResult && isSelected && !isCorrectOption && (
 										<HugeiconsIcon
 											icon={CancelIcon}
-											className="w-5 h-5 text-red-500"
+											className="w-5 h-5 text-destructive"
 										/>
 									)}
 								</m.button>
@@ -269,7 +270,7 @@ export function QuestionCard({
 								initial={{ opacity: 0, height: 0 }}
 								animate={{ opacity: 1, height: "auto" }}
 								exit={{ opacity: 0, height: 0 }}
-								className="overflow-hidden rounded-lg bg-amber-500/3 p-4 text-amber-700"
+								className="overflow-hidden rounded-lg bg-warning/5 p-4 text-warning"
 							>
 								<p className="font-medium">Hint:</p>
 								<p>{question.hint}</p>
@@ -287,8 +288,8 @@ export function QuestionCard({
 								className={cn(
 									"rounded-lg p-4",
 									state.isCorrect
-										? "bg-green-500/10 text-green-700"
-										: "bg-red-500/10 text-red-700",
+										? "bg-success/10 text-success"
+										: "bg-destructive/10 text-destructive",
 								)}
 							>
 								<p className="font-medium">

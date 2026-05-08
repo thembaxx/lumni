@@ -5,6 +5,7 @@ import { and, eq } from "drizzle-orm";
 import { UTApi, UTFile } from "uploadthing/server";
 import { getDb } from "@/lib/db/client";
 import {
+	account,
 	examPaper,
 	studySession,
 	subject,
@@ -191,4 +192,17 @@ export async function adminUploadExamPaper(
 			error: error instanceof Error ? error.message : "Unknown error",
 		};
 	}
+}
+
+export async function getUserAccounts(userId: string) {
+	const db = getDb();
+	const accounts = await db
+		.select({
+			id: account.id,
+			providerId: account.providerId,
+		})
+		.from(account)
+		.where(eq(account.userId, userId));
+
+	return accounts.map((a) => a.providerId);
 }

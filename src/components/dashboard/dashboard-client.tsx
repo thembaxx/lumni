@@ -65,15 +65,15 @@ export function DashboardClient({ initialTab = "ai" }: DashboardClientProps) {
 					<XpLevelCard levelInfo={levelInfo} totalXp={gamification.totalXp} />
 				</motion.div>
 
-				<motion.div variants={itemVariants} className="mb-6">
+				<motion.div variants={itemVariants} className="mb-6 px-4-">
 					<StudyTopicCardExample />
 				</motion.div>
 
 				<div className="space-y-4">
-					<motion.div variants={itemVariants}>
+					<motion.div variants={itemVariants} className="px-4">
 						<QuickActions onPracticeClick={() => setPracticeOpen(true)} />
 					</motion.div>
-					<motion.div variants={itemVariants}>
+					<motion.div variants={itemVariants} className="px-4">
 						<SearchInput value={query} onChange={setQuery} />
 					</motion.div>
 				</div>

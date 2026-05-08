@@ -42,7 +42,7 @@ export function PracticeSheet({ open, onOpenChange }: PracticeSheetProps) {
 			</SheetTrigger>
 			<SheetContent
 				side="bottom"
-				className="min-h-[95dvh] h-full flex flex-col max-h-[95dvh] w-full mt-0 rounded-t-4xl animate-fade-in-scale"
+				className="min-h-[95dvh] h-full flex flex-col max-h-[95dvh] w-full mt-0 rounded-none! animate-fade-in-scale"
 			>
 				<SheetHeader className="relative flex flex-row items-center justify-center pr-12">
 					<button

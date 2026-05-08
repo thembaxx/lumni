@@ -45,22 +45,22 @@ export function StatsCards({
 			label: "Current Streak",
 			value: streak,
 			icon: IconFlame,
-			color: "text-orange-500",
-			bg: "bg-orange-500/10",
+			colorClass: "text-warning",
+			bgClass: "bg-warning/10",
 		},
 		{
 			label: "Questions",
 			value: questionsAnswered,
 			icon: IconTarget,
-			color: "text-blue-500",
-			bg: "bg-blue-500/10",
+			colorClass: "text-info",
+			bgClass: "bg-info/10",
 		},
 		{
 			label: "Accuracy",
 			value: accuracy,
 			icon: IconTrendingUp,
-			color: "text-green-500",
-			bg: "bg-green-500/10",
+			colorClass: "text-success",
+			bgClass: "bg-success/10",
 		},
 	];
 
@@ -76,7 +76,7 @@ export function StatsCards({
 					>
 						<Card className="p-4 flex flex-col h-full items-center justify-center gap-2">
 							<m.div
-								className={`p-2 rounded-full ${stat.bg}`}
+								className={`p-2 rounded-full ${stat.bgClass}`}
 								initial={{ scale: 0.95, opacity: 0 }}
 								animate={{ scale: 1, opacity: 1 }}
 								transition={{
@@ -85,7 +85,7 @@ export function StatsCards({
 									stiffness: 200,
 								}}
 							>
-								<stat.icon className={`w-5 h-5 ${stat.color}`} />
+								<stat.icon className={`w-5 h-5 ${stat.colorClass}`} />
 							</m.div>
 							<div className="text-center">
 								<p className="text-2xl font-bold">

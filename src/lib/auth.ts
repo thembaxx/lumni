@@ -48,6 +48,16 @@ function initAuth(): ReturnType<typeof betterAuth> {
 			"https://lumni.ai",
 			"https://lumni-psi.vercel.app",
 		],
+		socialProviders: {
+			google: {
+				clientId: process.env.GOOGLE_CLIENT_ID || "",
+				clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+			},
+			twitter: {
+				clientId: process.env.TWITTER_CLIENT_ID || "",
+				clientSecret: process.env.TWITTER_CLIENT_SECRET || "",
+			},
+		},
 		// biome-disable-next-line lint/suspicious/noExplicitAny
 	} as any);
 }

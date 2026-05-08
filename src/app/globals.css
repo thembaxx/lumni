@@ -24,23 +24,23 @@
 	--card-foreground: oklch(18% 0.015 70);
 	--popover: oklch(100% 0 0);
 	--popover-foreground: oklch(18% 0.015 70);
-	--primary: oklch(55% 0.2 40);
+	--primary: oklch(62% 0.19 55);
 	--primary-foreground: oklch(100% 0 0);
-	--secondary: oklch(94% 0.02 180);
-	--secondary-foreground: oklch(28% 0.025 180);
-	--muted: oklch(96% 0.01 70);
-	--muted-foreground: oklch(52% 0.015 70);
-	--accent: oklch(90% 0.04 165);
-	--accent-foreground: oklch(32% 0.04 165);
+	--secondary: oklch(94% 0.015 50);
+	--secondary-foreground: oklch(28% 0.025 50);
+	--muted: oklch(96% 0.008 50);
+	--muted-foreground: oklch(52% 0.012 50);
+	--accent: oklch(72% 0.14 165);
+	--accent-foreground: oklch(25% 0.04 165);
 	--destructive: oklch(58% 0.16 25);
 	--destructive-foreground: oklch(100% 0 0);
-	--border: oklch(88% 0.008 70);
-	--input: oklch(88% 0.008 70);
-	--ring: oklch(55% 0.2 40);
+	--border: oklch(88% 0.008 50);
+	--input: oklch(88% 0.008 50);
+	--ring: oklch(62% 0.19 55);
 	--radius: 1.5rem;
-	--success: oklch(68% 0.16 150);
-	--warning: oklch(75% 0.14 45);
-	--info: oklch(65% 0.12 210);
+	--success: oklch(62% 0.14 152);
+	--warning: oklch(78% 0.12 55);
+	--info: oklch(60% 0.12 230);
 
 	--font-size-xs: 0.75rem;
 	--font-size-sm: 0.875rem;
@@ -59,30 +59,30 @@
 }
 
 .dark {
-	--background: oklch(8% 0.015 280);
-	--foreground: oklch(94% 0.008 280);
-	--card: oklch(14% 0.02 280);
-	--card-foreground: oklch(94% 0.008 280);
-	--popover: oklch(14% 0.02 280);
-	--popover-foreground: oklch(94% 0.008 280);
-	--primary: oklch(70% 0.2 40);
-	--primary-foreground: oklch(12% 0.01 280);
-	--secondary: oklch(20% 0.025 280);
-	--secondary-foreground: oklch(90% 0.01 280);
-	--muted: oklch(18% 0.015 280);
-	--muted-foreground: oklch(64% 0.012 280);
-	--accent: oklch(26% 0.05 280);
-	--accent-foreground: oklch(88% 0.04 280);
+	--background: oklch(10% 0.012 35);
+	--foreground: oklch(94% 0.005 35);
+	--card: oklch(16% 0.018 35);
+	--card-foreground: oklch(94% 0.005 35);
+	--popover: oklch(16% 0.018 35);
+	--popover-foreground: oklch(94% 0.005 35);
+	--primary: oklch(72% 0.16 45);
+	--primary-foreground: oklch(12% 0.008 35);
+	--secondary: oklch(22% 0.02 35);
+	--secondary-foreground: oklch(88% 0.008 35);
+	--muted: oklch(20% 0.012 35);
+	--muted-foreground: oklch(60% 0.01 35);
+	--accent: oklch(28% 0.045 165);
+	--accent-foreground: oklch(86% 0.035 165);
 	--destructive: oklch(62% 0.16 25);
-	--destructive-foreground: oklch(94% 0.008 280);
-	--border: oklch(24% 0.015 280);
-	--input: oklch(24% 0.015 280);
-	--ring: oklch(70% 0.2 40);
+	--destructive-foreground: oklch(94% 0.005 35);
+	--border: oklch(26% 0.014 35);
+	--input: oklch(26% 0.014 35);
+	--ring: oklch(72% 0.16 45);
 	--radius: 1.5rem;
-	--success: oklch(72% 0.15 150);
-	--warning: oklch(82% 0.12 45);
-	--info: oklch(68% 0.12 210);
-	--glow-primary: oklch(70% 0.2 40 / 20%);
+	--success: oklch(65% 0.13 152);
+	--warning: oklch(80% 0.11 55);
+	--info: oklch(62% 0.11 230);
+	--glow-primary: oklch(72% 0.16 45 / 25%);
 
 	--font-size-xs: 0.75rem;
 	--font-size-sm: 0.875rem;
@@ -1077,95 +1077,95 @@
 .bg-gradient-mesh {
 	background-image:
 		radial-gradient(at 40% 20%, oklch(72% 0.18 35 / 8%) 0px, transparent 50%),
-		radial-gradient(at 80% 0%, oklch(68% 0.16 150 / 6%) 0px, transparent 50%),
-		radial-gradient(at 0% 50%, oklch(65% 0.12 210 / 5%) 0px, transparent 50%);
+		radial-gradient(at 80% 0%, oklch(62% 0.14 152 / 6%) 0px, transparent 50%),
+		radial-gradient(at 0% 50%, oklch(60% 0.12 230 / 5%) 0px, transparent 50%);
 }
 
 .dark .bg-gradient-mesh {
 	background-image:
-		radial-gradient(at 40% 20%, oklch(72% 0.18 35 / 12%) 0px, transparent 50%),
-		radial-gradient(at 80% 0%, oklch(68% 0.16 150 / 8%) 0px, transparent 50%),
-		radial-gradient(at 0% 50%, oklch(68% 0.12 210 / 6%) 0px, transparent 50%);
+		radial-gradient(at 40% 20%, oklch(72% 0.16 45 / 12%) 0px, transparent 50%),
+		radial-gradient(at 80% 0%, oklch(65% 0.13 152 / 8%) 0px, transparent 50%),
+		radial-gradient(at 0% 50%, oklch(62% 0.11 230 / 6%) 0px, transparent 50%);
 }
 
 /* Color tints for backgrounds */
 .bg-primary-tint {
-	background-color: oklch(60% 0.18 35 / 8%);
+	background-color: oklch(72% 0.16 45 / 8%);
 }
 
 .bg-secondary-tint {
-	background-color: oklch(92% 0.03 170 / 8%);
+	background-color: oklch(94% 0.015 50 / 8%);
 }
 
 .bg-success-tint {
-	background-color: oklch(68% 0.16 150 / 10%);
+	background-color: oklch(62% 0.14 152 / 10%);
 }
 
 .bg-warning-tint {
-	background-color: oklch(75% 0.14 45 / 10%);
+	background-color: oklch(78% 0.12 55 / 10%);
 }
 
 .bg-info-tint {
-	background-color: oklch(65% 0.12 210 / 10%);
+	background-color: oklch(60% 0.12 230 / 10%);
 }
 
 .dark .bg-primary-tint {
-	background-color: oklch(72% 0.18 35 / 15%);
+	background-color: oklch(72% 0.16 45 / 15%);
 }
 
 .dark .bg-secondary-tint {
-	background-color: oklch(22% 0.025 170 / 15%);
+	background-color: oklch(22% 0.02 35 / 15%);
 }
 
 .dark .bg-success-tint {
-	background-color: oklch(72% 0.15 150 / 15%);
+	background-color: oklch(65% 0.13 152 / 15%);
 }
 
 .dark .bg-warning-tint {
-	background-color: oklch(82% 0.12 45 / 15%);
+	background-color: oklch(80% 0.11 55 / 15%);
 }
 
 .dark .bg-info-tint {
-	background-color: oklch(68% 0.12 210 / 15%);
+	background-color: oklch(62% 0.11 230 / 15%);
 }
 
 /* Border color variations */
 .border-primary {
-	border-color: oklch(60% 0.18 35);
+	border-color: oklch(72% 0.16 45);
 }
 
 .border-secondary {
-	border-color: oklch(92% 0.03 170);
+	border-color: oklch(94% 0.015 50);
 }
 
 .border-success {
-	border-color: oklch(68% 0.16 150);
+	border-color: oklch(62% 0.14 152);
 }
 
 .border-warning {
-	border-color: oklch(75% 0.14 45);
+	border-color: oklch(78% 0.12 55);
 }
 
 .border-info {
-	border-color: oklch(65% 0.12 210);
+	border-color: oklch(60% 0.12 230);
 }
 
 .dark .border-primary {
-	border-color: oklch(72% 0.18 35);
+	border-color: oklch(72% 0.16 45);
 }
 
 .dark .border-secondary {
-	border-color: oklch(22% 0.025 170);
+	border-color: oklch(22% 0.02 35);
 }
 
 .dark .border-success {
-	border-color: oklch(72% 0.15 150);
+	border-color: oklch(65% 0.13 152);
 }
 
 .dark .border-warning {
-	border-color: oklch(82% 0.12 45);
+	border-color: oklch(80% 0.11 55);
 }
 
 .dark .border-info {
-	border-color: oklch(68% 0.12 210);
+	border-color: oklch(62% 0.11 230);
 }

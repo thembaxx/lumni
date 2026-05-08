@@ -1,6 +1,6 @@
 "use client";
 
-import {  m } from "framer-motion";
+import { m } from "framer-motion";
 import { ChevronLeft, ChevronRight, Download, FileText, X } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";

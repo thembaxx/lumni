@@ -40,7 +40,7 @@ export function StreakFire({
 					}}
 				>
 					<Flame
-						className={`w-6 h-6 ${streak >= 7 ? "text-orange-500" : "text-amber-500"}`}
+						className={`w-6 h-6 ${streak >= 7 ? "text-[oklch(72%_0.16_45)]" : "text-[oklch(78%_0.12_55)]"}`}
 						fill={streak >= 7 ? "currentColor" : "none"}
 					/>
 				</motion.div>
@@ -72,7 +72,7 @@ export function StreakFire({
 			</div>
 
 			<motion.span
-				className={`font-bold ${streak >= 7 ? "text-orange-500" : "text-amber-500"}`}
+				className={`font-bold ${streak >= 7 ? "text-[oklch(72%_0.16_45)]" : "text-[oklch(78%_0.12_55)]"}`}
 				key={streak}
 				initial={{ scale: 1.5 }}
 				animate={{ scale: 1 }}
