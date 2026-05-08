@@ -2,13 +2,19 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
+import { LottieWrapper } from "@/components/lottie";
 
 interface XPGainPopupProps {
 	amount: number;
 	visible: boolean;
+	useLottie?: boolean;
 }
 
-export function XPGainPopup({ amount, visible }: XPGainPopupProps) {
+export function XPGainPopup({
+	amount,
+	visible,
+	useLottie = false,
+}: XPGainPopupProps) {
 	return (
 		<AnimatePresence>
 			{visible && (
@@ -21,17 +27,25 @@ export function XPGainPopup({ amount, visible }: XPGainPopupProps) {
 				>
 					<motion.div
 						className="flex items-center gap-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-6 py-3 rounded-full shadow-lg"
-						animate={{
-							scale: [1, 1.1, 1],
-						}}
-						transition={{ duration: 0.3, repeat: 2 }}
+						animate={
+							useLottie
+								? undefined
+								: {
+										scale: [1, 1.1, 1],
+									}
+						}
+						transition={{ duration: 0.3, repeat: useLottie ? 0 : 2 }}
 					>
-						<motion.div
-							animate={{ rotate: [0, 15, -15, 0] }}
-							transition={{ duration: 0.5, repeat: 3 }}
-						>
-							<Sparkles className="w-5 h-5" />
-						</motion.div>
+						{useLottie ? (
+							<LottieWrapper animation="xp-burst" className="w-8 h-8" />
+						) : (
+							<motion.div
+								animate={{ rotate: [0, 15, -15, 0] }}
+								transition={{ duration: 0.5, repeat: 3 }}
+							>
+								<Sparkles className="w-5 h-5" />
+							</motion.div>
+						)}
 						<span className="text-xl font-bold">+{amount} XP</span>
 					</motion.div>
 				</motion.div>

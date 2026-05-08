@@ -1,6 +1,7 @@
 "use client";
 
 import { PuzzleIcon, Target } from "lucide-react";
+import { LottieWrapper } from "@/components/lottie";
 import { Button } from "@/components/ui/button";
 import {
 	Empty,
@@ -84,7 +85,7 @@ export function QuizStartState({ onSelect }: QuizStartStateProps) {
 			<div className="relative flex items-center justify-center">
 				<div className="absolute size-20 rounded-full bg-muted/40 animate-pulse" />
 				<div className="relative flex items-center justify-center size-20 rounded-full border border-dashed border-muted-foreground/20 bg-muted/20">
-					<PuzzleIcon className="size-8 text-muted-foreground/40" />
+					<LottieWrapper animation="empty-search" className="size-12" loop />
 				</div>
 			</div>
 			<div className="text-center space-y-1.5">
@@ -127,7 +128,7 @@ export function QuizSubjectPrompt({
 			<div className="relative flex items-center justify-center">
 				<div className="absolute size-20 rounded-full bg-muted/40 animate-pulse" />
 				<div className="relative flex items-center justify-center size-20 rounded-full border border-dashed border-muted-foreground/20 bg-muted/20">
-					<PuzzleIcon className="size-8 text-muted-foreground/40" />
+					<LottieWrapper animation="empty-search" className="size-12" loop />
 				</div>
 			</div>
 			<div className="text-center space-y-1.5">

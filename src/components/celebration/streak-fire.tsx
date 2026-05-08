@@ -2,11 +2,13 @@
 
 import { motion } from "framer-motion";
 import { Flame } from "lucide-react";
+import { LottieWrapper } from "@/components/lottie";
 
 interface StreakFireProps {
 	streak: number;
 	showMilestone?: boolean;
 	milestone?: number;
+	useLottie?: boolean;
 }
 
 const milestoneMessages: Record<number, string> = {
@@ -22,28 +24,33 @@ export function StreakFire({
 	streak,
 	showMilestone,
 	milestone,
+	useLottie = false,
 }: StreakFireProps) {
 	const isMilestone = showMilestone && milestone && streak >= milestone;
 
 	return (
 		<div className="flex items-center gap-2">
 			<div className="relative">
-				<motion.div
-					animate={{
-						scale: [1, 1.2, 1],
-						rotate: [0, 5, -5, 0],
-					}}
-					transition={{
-						duration: 0.5,
-						repeat: Infinity,
-						repeatDelay: 2,
-					}}
-				>
-					<Flame
-						className={`w-6 h-6 ${streak >= 7 ? "text-[oklch(72%_0.16_45)]" : "text-[oklch(78%_0.12_55)]"}`}
-						fill={streak >= 7 ? "currentColor" : "none"}
-					/>
-				</motion.div>
+				{useLottie ? (
+					<LottieWrapper animation="streak-fire" className="w-10 h-10" loop />
+				) : (
+					<motion.div
+						animate={{
+							scale: [1, 1.2, 1],
+							rotate: [0, 5, -5, 0],
+						}}
+						transition={{
+							duration: 0.5,
+							repeat: Infinity,
+							repeatDelay: 2,
+						}}
+					>
+						<Flame
+							className={`w-6 h-6 ${streak >= 7 ? "text-[oklch(72%_0.16_45)]" : "text-[oklch(78%_0.12_55)]"}`}
+							fill={streak >= 7 ? "currentColor" : "none"}
+						/>
+					</motion.div>
+				)}
 
 				{streak >= 3 && (
 					<motion.div

@@ -9,6 +9,7 @@ import {
 	Wifi,
 	WifiOff,
 } from "lucide-react";
+import { LottieWrapper } from "@/components/lottie";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -66,13 +67,14 @@ export function EmptyState({
 }
 
 interface EmptyStateWithIllustrationProps {
-	icon: LucideIcon;
+	icon?: LucideIcon;
 	title: string;
 	description: string;
 	action?: {
 		label: string;
 		onClick: () => void;
 	};
+	animation?: "search" | "upload" | "error";
 }
 
 export function EmptyStateWithIllustration({
@@ -80,13 +82,28 @@ export function EmptyStateWithIllustration({
 	title,
 	description,
 	action,
+	animation,
 }: EmptyStateWithIllustrationProps) {
 	return (
 		<div className="flex flex-col items-center justify-center py-16 px-4 text-center">
 			<div className="relative mb-6">
 				<div className="absolute inset-0 rounded-full bg-muted/50 blur-xl" />
 				<div className="relative flex h-20 w-20 items-center justify-center rounded-full border border-dashed border-muted-foreground/30 bg-muted/30">
-					<Icon className="h-8 w-8 text-muted-foreground/60" />
+					{animation ? (
+						<LottieWrapper
+							animation={
+								animation === "search"
+									? "empty-search"
+									: animation === "upload"
+										? "empty-upload"
+										: "error-state"
+							}
+							className="w-14 h-14"
+							loop
+						/>
+					) : Icon ? (
+						<Icon className="h-8 w-8 text-muted-foreground/60" />
+					) : null}
 				</div>
 			</div>
 			<h3 className="mb-2 text-xl font-semibold">{title}</h3>
@@ -101,7 +118,7 @@ export function EmptyStateWithIllustration({
 export const EmptyStates = {
 	noQuestions: (onAction?: () => void) => (
 		<EmptyStateWithIllustration
-			icon={BookOpen}
+			animation="search"
 			title="No Questions Available"
 			description="There are no questions for this subject yet. Upload questions or select a different subject to practice."
 			action={
@@ -112,7 +129,7 @@ export const EmptyStates = {
 
 	noFlashcards: (onAction?: () => void) => (
 		<EmptyStateWithIllustration
-			icon={RefreshCw}
+			animation="upload"
 			title="No Flashcards Yet"
 			description="Create flashcards from your quiz questions or start a study session to build your deck."
 			action={
@@ -123,7 +140,7 @@ export const EmptyStates = {
 
 	noExamPapers: (onAction?: () => void) => (
 		<EmptyStateWithIllustration
-			icon={Upload}
+			animation="upload"
 			title="No Exam Papers"
 			description="Upload exam papers to practice with past questions and prepare for your exams."
 			action={
@@ -134,7 +151,7 @@ export const EmptyStates = {
 
 	noProgress: () => (
 		<EmptyStateWithIllustration
-			icon={BookOpen}
+			animation="search"
 			title="Start Your Learning Journey"
 			description="Complete quizzes and study sessions to track your progress and see your achievements."
 			action={{
@@ -163,7 +180,7 @@ export const EmptyStates = {
 
 	noSubjects: () => (
 		<EmptyStateWithIllustration
-			icon={BookOpen}
+			animation="search"
 			title="No Subjects Selected"
 			description="Choose subjects you want to study to get personalized practice questions and track your progress."
 			action={{
@@ -182,16 +199,16 @@ export const EmptyStates = {
 	),
 
 	searchNoResults: (query: string) => (
-		<EmptyState
-			icon={BookOpen}
+		<EmptyStateWithIllustration
+			animation="search"
 			title="No Results Found"
 			description={`We couldn't find anything matching "${query}". Try different keywords or browse categories.`}
 		/>
 	),
 
 	uploadFailed: (onRetry?: () => void) => (
-		<EmptyState
-			icon={Upload}
+		<EmptyStateWithIllustration
+			animation="error"
 			title="Upload Failed"
 			description="There was a problem uploading your file. Please try again or check the file format."
 			action={onRetry ? { label: "Try Again", onClick: onRetry } : undefined}
@@ -200,7 +217,7 @@ export const EmptyStates = {
 
 	loadingSlow: () => (
 		<div className="flex flex-col items-center justify-center py-12 px-4 text-center">
-			<div className="mb-4 h-8 w-8 animate-spin rounded-full border-2 border-muted border-t-primary" />
+			<LottieWrapper animation="loading-dots" className="w-16 h-16 mb-4" loop />
 			<h3 className="mb-2 text-lg font-semibold">Loading...</h3>
 			<p className="max-w-sm text-sm text-muted-foreground">
 				This is taking longer than usual. Please wait while we fetch your data.
@@ -209,8 +226,8 @@ export const EmptyStates = {
 	),
 
 	error: (message: string, onRetry?: () => void) => (
-		<EmptyState
-			icon={RefreshCw}
+		<EmptyStateWithIllustration
+			animation="error"
 			title="Something Went Wrong"
 			description={message}
 			action={onRetry ? { label: "Try Again", onClick: onRetry } : undefined}

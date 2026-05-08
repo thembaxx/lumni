@@ -1,6 +1,7 @@
 "use client";
 
 import { Home, RotateCcw, Target } from "lucide-react";
+import { LottieWrapper } from "@/components/lottie";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { calculateAccuracy } from "@/lib/utils/time";
@@ -15,12 +16,14 @@ interface SessionResultsProps {
 	stats: StudySessionStats;
 	onQuit?: () => void;
 	onRestart?: () => void;
+	useLottie?: boolean;
 }
 
 export function SessionResults({
 	stats,
 	onQuit,
 	onRestart,
+	useLottie = false,
 }: SessionResultsProps) {
 	const accuracy = calculateAccuracy(stats.correct ?? 0, stats.total);
 
@@ -28,6 +31,12 @@ export function SessionResults({
 		<div className="min-h-screen bg-background p-4 flex items-center justify-center">
 			<Card className="max-w-md w-full">
 				<CardHeader className="text-center">
+					{useLottie && (
+						<LottieWrapper
+							animation="success-check"
+							className="w-16 h-16 mx-auto mb-2"
+						/>
+					)}
 					<CardTitle>Session Complete!</CardTitle>
 				</CardHeader>
 				<CardContent className="space-y-4">

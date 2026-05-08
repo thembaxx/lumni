@@ -1,9 +1,13 @@
 import achievementUnlockData from "@/assets/animations/achievement-unlock.json";
 import confettiData from "@/assets/animations/confetti.json";
+import emptySearchData from "@/assets/animations/empty-search.json";
+import emptyUploadData from "@/assets/animations/empty-upload.json";
+import errorStateData from "@/assets/animations/error-state.json";
 import levelUpData from "@/assets/animations/level-up.json";
 import loadingDotsData from "@/assets/animations/loading-dots.json";
 import streakFireData from "@/assets/animations/streak-fire.json";
 import successCheckData from "@/assets/animations/success-check.json";
+import xpBurstData from "@/assets/animations/xp-burst.json";
 
 export const LOTTIE_ANIMATIONS = {
 	"achievement-unlock": achievementUnlockData,
@@ -12,6 +16,10 @@ export const LOTTIE_ANIMATIONS = {
 	"success-check": successCheckData,
 	"loading-dots": loadingDotsData,
 	"streak-fire": streakFireData,
+	"xp-burst": xpBurstData,
+	"empty-search": emptySearchData,
+	"empty-upload": emptyUploadData,
+	"error-state": errorStateData,
 } as const;
 
 export type LottieAnimationName = keyof typeof LOTTIE_ANIMATIONS;

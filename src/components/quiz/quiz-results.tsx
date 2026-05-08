@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Home, RotateCcw, Timer, TrophyIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Confetti } from "@/components/celebration";
+import { LottieWrapper } from "@/components/lottie";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -22,6 +23,7 @@ interface QuizResultsCardProps {
 	onRestart?: () => void;
 	onDashboard?: () => void;
 	className?: string;
+	useLottie?: boolean;
 }
 
 export function QuizResultsCard({
@@ -31,6 +33,7 @@ export function QuizResultsCard({
 	onRestart,
 	onDashboard,
 	className,
+	useLottie = false,
 }: QuizResultsCardProps) {
 	const accuracy = calculateAccuracy(correctAnswers, totalQuestions);
 	const isGreatScore = accuracy >= 80;
@@ -77,7 +80,11 @@ export function QuizResultsCard({
 					transition={{ delay: 0.5, type: "spring", stiffness: 300 }}
 				>
 					<div className="flex items-center gap-2 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 px-4 py-2 text-white shadow-lg">
-						<TrophyIcon className="w-5 h-5" />
+						{useLottie ? (
+							<LottieWrapper animation="success-check" className="w-5 h-5" />
+						) : (
+							<TrophyIcon className="w-5 h-5" />
+						)}
 						<span className="font-bold">Perfect Score!</span>
 					</div>
 				</motion.div>
