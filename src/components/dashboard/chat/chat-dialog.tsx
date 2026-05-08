@@ -198,7 +198,7 @@ export function ChatDialog({ open, onOpenChange }: ChatDialogProps) {
 		messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
 	});
 
-	const handleClose = () => {
+	const _handleClose = () => {
 		clearChat();
 		onOpenChange(false);
 	};

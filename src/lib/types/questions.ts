@@ -4,7 +4,7 @@ export interface QAQuestion {
 	difficulty: "Easy" | "Medium" | "Hard";
 	points: number;
 	questionText: string;
-	questionType: "multiple-choice";
+	questionType: "multiple-choice" | "flashcard";
 	options: QAOption[];
 	supportsDiagram: boolean;
 	diagram: QADiagram | null;

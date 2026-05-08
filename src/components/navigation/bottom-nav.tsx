@@ -2,9 +2,9 @@
 
 import {
 	Cards01Icon as FlashcardIcon,
-	PiFreeIcons,
 	Home05Icon,
 	MessageIcon,
+	PiFreeIcons,
 	Settings02Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
