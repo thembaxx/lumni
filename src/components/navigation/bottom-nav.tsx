@@ -1,8 +1,8 @@
 "use client";
 
 import {
-	GridIcon as FlashcardIcon,
-	GridIcon,
+	Cards01Icon as FlashcardIcon,
+	PiFreeIcons,
 	Home05Icon,
 	MessageIcon,
 	Settings02Icon,
@@ -33,7 +33,7 @@ const navItems: NavItem[] = [
 	{
 		id: "quiz",
 		label: "Quiz",
-		icon: GridIcon,
+		icon: PiFreeIcons,
 		href: "/quiz",
 	},
 	{

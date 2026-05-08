@@ -797,6 +797,71 @@
 			"diagram": null,
 			"hint": "N = N₀(1/2)^(t/t½)",
 			"explanation": "125 = 1000 × (1/2)^(30/t½) → 1/8 = (1/2)^(30/t½) → t½ = 10 days"
+		},
+		{
+			"id": "phys_flash_001",
+			"topic": "Newton's Laws",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "What is Newton's First Law of Motion?",
+			"questionType": "flashcard",
+			"options": [],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Think about objects at rest or in motion...",
+			"explanation": "An object at rest stays at rest, and an object in motion stays in motion with the same speed and direction unless acted upon by an unbalanced force. Also known as the Law of Inertia! 🔮"
+		},
+		{
+			"id": "phys_flash_002",
+			"topic": "Forces",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What is the formula for gravitational force?",
+			"questionType": "flashcard",
+			"options": [],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It involves masses and distance...",
+			"explanation": "F = G(m₁m₂)/r² where G is the gravitational constant (6.674×10⁻¹¹ N⋅m²/kg²). This is Newton's law of universal gravitation! 🌎"
+		},
+		{
+			"id": "phys_flash_003",
+			"topic": "Energy",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "What is kinetic energy?",
+			"questionType": "flashcard",
+			"options": [],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Think about moving objects...",
+			"explanation": "KE = ½mv² - the energy an object possesses due to its motion. The faster it moves, the more kinetic energy! ⚡"
+		},
+		{
+			"id": "phys_flash_004",
+			"topic": "Waves",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What is the speed of light in a vacuum?",
+			"questionType": "flashcard",
+			"options": [],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "A very fast number!",
+			"explanation": "Approximately 3×10⁸ m/s (299,792,458 m/s). Light travels faster than anything else in the universe! ✨"
+		},
+		{
+			"id": "phys_flash_005",
+			"topic": "Electricity",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What is Ohm's Law?",
+			"questionType": "flashcard",
+			"options": [],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Relates voltage, current, and resistance...",
+			"explanation": "V = IR - Voltage equals Current times Resistance. This fundamental law governs all electrical circuits! 🔌"
 		}
 	]
 }

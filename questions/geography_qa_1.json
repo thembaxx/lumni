@@ -1540,6 +1540,71 @@
 			"diagram": null,
 			"hint": "Developing nation",
 			"explanation": "A wide base means many children are being born, typical of rapidly growing populations."
+		},
+		{
+			"id": "geo_flash_001",
+			"topic": "Earth Structure",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "What are the Earth's layers?",
+			"questionType": "flashcard",
+			"options": [],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Crust, mantle, and...",
+			explanation: "Crust (thin outer shell), Mantle (thick middle layer), Outer Core (liquid iron), Inner Core (solid iron). Like an onion! 🌍"
+		},
+		{
+			"id": "geo_flash_002",
+			"topic": "Plate Tectonics",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What causes earthquakes?",
+			"questionType": "flashcard",
+			"options": [],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Movement of Earth's...",
+			explanation: "Sudden release of energy when tectonic plates move, slide, or collide. This creates seismic waves that we feel as earthquakes! 🌋"
+		},
+		{
+			"id": "geo_flash_003",
+			"topic": "Climate",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "What is the greenhouse effect?",
+			"questionType": "flashcard",
+			"options": [],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Traps heat in the atmosphere...",
+			explanation: "Gases like CO₂ and methane trap heat from the sun, warming Earth. Without it, Earth would be too cold for life! 🌡️"
+		},
+		{
+			"id": "geo_flash_004",
+			"topic": "Rivers",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What is a river's watershed?",
+			"questionType": "flashcard",
+			"options": [],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Drainage basin...",
+			explanation: "The land area that drains water into a river and its tributaries. All precipitation in this area flows to the same outlet! 💧"
+		},
+		{
+			"id": "geo_flash_005",
+			"topic": "Ecosystems",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What is a food web?",
+			"questionType": "flashcard",
+			"options": [],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Shows feeding relationships...",
+			explanation: "An interconnected network of food chains showing how energy flows between organisms. Every living thing is connected! 🌿"
 		}
 	]
 }

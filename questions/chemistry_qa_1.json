@@ -1468,6 +1468,71 @@ _topic": "Atomic Structure",
 			},
 			"hint": "MaVa = MbVb",
 			"explanation": "Moles acid = 20 * 0.1 = 2 mmol. Moles base must be 2 mmol. 2 mmol / 10 mL = 0.2 M."
+		},
+		{
+			"id": "chem_flash_001",
+			"topic": "Atomic Structure",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "What is the atomic number?",
+			"questionType": "flashcard",
+			"options": [],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Found on the periodic table...",
+			"explanation": "The number of protons in an atom's nucleus. It determines the element's identity! Each element has a unique atomic number 🧪"
+		},
+		{
+			"id": "chem_flash_002",
+			"topic": "Periodic Table",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What are noble gases?",
+			"questionType": "flashcard",
+			"options": [],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "They're in the last column...",
+			"explanation": "Elements in Group 18 (He, Ne, Ar, Kr, Xe, Rn) with full valence shells. They're inert and rarely form compounds! ⭐"
+		},
+		{
+			"id": "chem_flash_003",
+			"topic": "Chemical Bonds",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What is an ionic bond?",
+			"questionType": "flashcard",
+			"options": [],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Involves transfer of electrons...",
+			"explanation": "A bond formed when one atom transfers electrons to another, creating oppositely charged ions that attract each other! ⚡"
+		},
+		{
+			"id": "chem_flash_004",
+			"topic": "Acids & Bases",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "What is pH?",
+			"questionType": "flashcard",
+			"options": [],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Measures how acidic or basic something is...",
+			"explanation": "A scale from 0-14 measuring acidity/basicity. pH 7 is neutral, below 7 is acidic, above 7 is basic! 🧼"
+		},
+		{
+			"id": "chem_flash_005",
+			"topic": "Thermodynamics",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "What is enthalpy?",
+			"questionType": "flashcard",
+			"options": [],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Related to heat energy...",
+			"explanation": "The total heat content of a system at constant pressure. Represented by H, measured in joules! 🔥"
 		}
 	]
 }

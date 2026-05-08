@@ -1775,6 +1775,71 @@
 			"diagram": null,
 			"hint": "Differentiate twice.",
 			"explanation": "f'(x) = 4x³ - 4x. f''(x) = 12x² - 4."
+		},
+		{
+			"id": "math_flash_001",
+			"topic": "Algebra",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "What is the quadratic formula?",
+			"questionType": "flashcard",
+			"options": [],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Solves ax² + bx + c = 0...",
+			explanation: "x = (-b ± √(b²-4ac)) / 2a. This formula finds the roots of any quadratic equation! 📐"
+		},
+		{
+			"id": "math_flash_002",
+			"topic": "Trigonometry",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What is SOH CAH TOA?",
+			"questionType": "flashcard",
+			"options": [],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Relates sides and angles of right triangles...",
+			explanation: "Sine = Opposite/Hypotenuse, Cosine = Adjacent/Hypotenuse, Tangent = Opposite/Adjacent. The foundation of trigonometry! 📏"
+		},
+		{
+			"id": "math_flash_003",
+			"topic": "Calculus",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "What is a derivative?",
+			"questionType": "flashcard",
+			"options": [],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Rate of change...",
+			explanation: "The instantaneous rate of change of a function. Represents the slope of the tangent line at any point! 📈"
+		},
+		{
+			"id": "math_flash_004",
+			"topic": "Geometry",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "What is the Pythagorean theorem?",
+			"questionType": "flashcard",
+			"options": [],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "For right triangles...",
+			explanation: "a² + b² = c². In a right triangle, the square of the hypotenuse equals the sum of squares of the other two sides! 🔺"
+		},
+		{
+			"id": "math_flash_005",
+			"topic": "Statistics",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What is the normal distribution?",
+			"questionType": "flashcard",
+			"options": [],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Bell curve...",
+			explanation: "A symmetric probability distribution where most values cluster around the mean. 68% within 1 standard deviation, 95% within 2! 📊"
 		}
 	]
 }

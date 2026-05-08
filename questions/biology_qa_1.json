@@ -1459,6 +1459,71 @@
 			"diagram": null,
 			"hint": "Binds to Iron in RBCs",
 			"explanation": "Hemoglobin in red blood cells binds and transports oxygen from the lungs to tissues."
+		},
+		{
+			"id": "bio_flash_001",
+			"topic": "Cells",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "What is the powerhouse of the cell?",
+			"questionType": "flashcard",
+			"options": [],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It makes ATP...",
+			"explanation": "Mitochondria! They generate most of the cell's ATP through cellular respiration, providing energy for the cell! 🧬"
+		},
+		{
+			"id": "bio_flash_002",
+			"topic": "DNA",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What does DNA stand for?",
+			"questionType": "flashcard",
+			"options": [],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "It's a molecule...",
+			"explanation": "Deoxyribonucleic Acid - the hereditary material in humans and almost all other organisms! Contains the genetic instructions for life 🧬"
+		},
+		{
+			"id": "bio_flash_003",
+			"topic": "Photosynthesis",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What is the equation for photosynthesis?",
+			"questionType": "flashcard",
+			"options": [],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Turns CO2 and water into glucose and oxygen...",
+			"explanation": "6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂. Plants convert light energy into chemical energy! ☀️"
+		},
+		{
+			"id": "bio_flash_004",
+			"topic": "Evolution",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What is natural selection?",
+			"questionType": "flashcard",
+			"options": [],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Survival of the fittest...",
+			"explanation": "The process where organisms better adapted to their environment tend to survive and produce more offspring. Key mechanism of evolution! 🦋"
+		},
+		{
+			"id": "bio_flash_005",
+			"topic": "Genetics",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "What is a gene?",
+			"questionType": "flashcard",
+			"options": [],
+			"supportsDiagram": false,
+			"diagram": null,
+			"hint": "Unit of heredity...",
+			"explanation": "A segment of DNA that codes for a specific protein or trait. Genes are passed from parents to offspring! 🧬"
 		}
 	]
 }

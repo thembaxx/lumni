@@ -784,6 +784,71 @@
 			"diagram": null,
 			"hint": "Nelson Mandela's country",
 			"explanation": "Apartheid was enforced by the National Party governments of South Africa from 1948 until the early 1990s"
+		},
+		{
+			"id": "hist_flash_001",
+			"topic": "World Wars",
+			"difficulty": "Easy",
+			"points": 10,
+			"questionText": "When did World War I begin?",
+			"questionType": "flashcard",
+			"options": [],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "1914...",
+			explanation: "1914, triggered by the assassination of Archduke Franz Ferdinand. Known as 'The Great War' involving major world powers! ⚔️"
+		},
+		{
+			"id": "hist_flash_002",
+			"topic": "Ancient Civilizations",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Who built the pyramids of Giza?",
+			"questionType": "flashcard",
+			"options": [],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Ancient Egyptians...",
+			explanation: "Built by ancient Egyptians around 2560 BCE for pharaohs Khufu, Khafre, and Menkaure. The Great Pyramid took 20 years to build! 🏛️"
+		},
+		{
+			"id": "hist_flash_003",
+			"topic": "Renaissance",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "What was the Renaissance?",
+			"questionType": "flashcard",
+			"options": [],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "A cultural rebirth in Europe...",
+			explanation: "A period of cultural, artistic, and intellectual revival in Europe (14th-17th century). Focused on classical learning and humanism! 🎨"
+		},
+		{
+			"id": "hist_flash_004",
+			"topic": "Industrial Revolution",
+			"difficulty": "Medium",
+			"points": 15,
+			"questionText": "Where did the Industrial Revolution start?",
+			"questionType": "flashcard",
+			"options": [],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Britain in the 1700s...",
+			explanation: "Started in Britain in the late 1700s. Innovations in steam power, textiles, and manufacturing transformed society! 🏭"
+		},
+		{
+			"id": "hist_flash_005",
+			"topic": "Cold War",
+			"difficulty": "Hard",
+			"points": 20,
+			"questionText": "What was the Cold War?",
+			"questionType": "flashcard",
+			"options": [],
+			"supportsDiagram": false,
+			"diagram": null,
+			hint: "Between USA and USSR...",
+			explanation: "A political tension between the USA and USSR (1947-1991) without direct military conflict. Involved proxy wars, space race, and nuclear threat! 🌍"
 		}
 	]
 }

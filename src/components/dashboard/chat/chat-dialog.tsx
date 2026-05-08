@@ -2,7 +2,6 @@
 
 import {
 	Camera01FreeIcons,
-	CancelIcon,
 	MessageIcon,
 	SentIcon,
 } from "@hugeicons/core-free-icons";
