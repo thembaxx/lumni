@@ -15,8 +15,8 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import type { QAQuestion, QuestionState } from "@/types/questions";
 import { cn } from "@/lib/utils";
+import type { QAQuestion, QuestionState } from "@/types/questions";
 import { QuestionDiagram } from "./question-diagram";
 
 interface QuestionCardProps {

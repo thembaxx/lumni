@@ -10,7 +10,7 @@ import {
 } from "framer-motion";
 import { Check } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { DownloadButton } from "./admin-action-button";
 import { ExamFilters } from "./admin-exam-filters";
@@ -76,9 +76,6 @@ export function AdminDashboard() {
 	});
 	const [activeTab, setActiveTab] = useState<"exam" | "subjects">("exam");
 	const [showSuccess, setShowSuccess] = useState(false);
-	const [initialSelected, setInitialSelected] = useState<Set<string> | null>(
-		null,
-	);
 
 	const { data: subjectsData, isLoading } = useQuery({
 		queryKey: ["admin-subjects"],
@@ -91,13 +88,7 @@ export function AdminDashboard() {
 
 	const subjects = subjectsData?.subjects || [];
 
-	useEffect(() => {
-		if (!initialSelected && subjects.length > 0) {
-			setInitialSelected(new Set(subjects.map((s) => s.id)));
-		}
-	}, [subjects, initialSelected]);
-
-	const effectiveSelected = initialSelected ?? selectedSubjects;
+	const effectiveSelected = selectedSubjects;
 
 	const saveMutation = useMutation({
 		mutationFn: async (subject: {

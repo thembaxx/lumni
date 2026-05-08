@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import {
 	QuestionCard,
 	QuizControls,
@@ -39,20 +39,13 @@ export function QuizView({
 }: QuizViewProps) {
 	const [hasStarted, setHasStarted] = useState(false);
 
-	// Auto-start when subject comes from URL params
-	useEffect(() => {
-		if (initialSubject && !hasStarted) {
-			setHasStarted(true);
-		}
-	}, [initialSubject, hasStarted]);
-
 	const { state, actions } = useQuizSession({
 		subject: initialSubject,
 		topic,
 		questionCount,
 		maxTime,
 		onFinish,
-		enabled: hasStarted,
+		enabled: hasStarted || !!initialSubject,
 	});
 
 	const {

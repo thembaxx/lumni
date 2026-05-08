@@ -9,7 +9,7 @@ import {
 	X,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -50,19 +50,16 @@ interface OnboardingProps {
 	onComplete?: () => void;
 }
 
+function getInitialOnboardingState() {
+	if (typeof window === "undefined") return false;
+	return !!localStorage.getItem(ONBOARDING_STORAGE_KEY);
+}
+
 export function Onboarding({ onComplete }: OnboardingProps) {
 	const [currentStep, setCurrentStep] = useState(0);
-	const [isVisible, setIsVisible] = useState(false);
+	const [isVisible, setIsVisible] = useState(getInitialOnboardingState);
 	const [isAnimating, setIsAnimating] = useState(false);
 	const router = useRouter();
-
-	useEffect(() => {
-		const completed = localStorage.getItem(ONBOARDING_STORAGE_KEY);
-		if (!completed) {
-			setIsVisible(true);
-			setIsAnimating(true);
-		}
-	}, []);
 
 	const handleComplete = useCallback(() => {
 		setIsAnimating(true);

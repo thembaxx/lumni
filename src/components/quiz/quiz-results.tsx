@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { Home, RotateCcw, Timer, TrophyIcon } from "lucide-react";
-import { useEffect, useState } from "react";
 import { Confetti } from "@/components/celebration";
 import { LottieWrapper } from "@/components/lottie";
 import { Button } from "@/components/ui/button";
@@ -38,14 +37,6 @@ export function QuizResultsCard({
 	const accuracy = calculateAccuracy(correctAnswers, totalQuestions);
 	const isGreatScore = accuracy >= 80;
 	const isPerfect = accuracy === 100;
-	const [showConfetti, setShowConfetti] = useState(false);
-
-	useEffect(() => {
-		if (isGreatScore) {
-			setShowConfetti(true);
-			setTimeout(() => setShowConfetti(false), 3000);
-		}
-	}, [isGreatScore]);
 
 	const containerVariants = {
 		hidden: { opacity: 0 },
@@ -71,7 +62,7 @@ export function QuizResultsCard({
 			transition={{ duration: 0.3, ease: [0.25, 1, 0.5, 1] }}
 			className="relative"
 		>
-			<Confetti trigger={showConfetti} count={60} duration={2500} />
+			<Confetti trigger={isGreatScore} count={60} duration={2500} />
 			{isPerfect && (
 				<motion.div
 					className="absolute -top-4 left-1/2 -translate-x-1/2"

@@ -2,102 +2,39 @@
 
 import {
 	ArrowLeftIcon,
-	DownloadIcon,
-	FlaskConical,
-	LogoutIcon,
 	NotificationIcon,
 	SaveIcon,
 	Settings01Icon,
-	UserIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Database, type LucideIcon, Palette, Trash2 } from "lucide-react";
+import { Database, FlaskConical, type LucideIcon, Palette } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
-import { ThemeSwitcher } from "@/components/theme";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+	AppearanceTab,
+	BetaTab,
+	DataTab,
+	NotificationsTab,
+	ProfileTab,
+	StudyTab,
+} from "@/components/settings/tabs";
 import { Button } from "@/components/ui/button";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
-import { Separator } from "@/components/ui/separator";
-import { Switch } from "@/components/ui/switch";
+import { Card, CardContent } from "@/components/ui/card";
 import { signOut, useSession } from "@/lib/auth-client";
-
-type StudyPreferences = {
-	difficulty: "easy" | "medium" | "hard";
-	questionCount: number;
-	timerEnabled: boolean;
-	timerDuration: number;
-	showExplanations: boolean;
-};
-
-type NotificationSettings = {
-	studyReminders: boolean;
-	streakAlerts: boolean;
-	achievementNotifications: boolean;
-	weeklyProgress: boolean;
-};
-
-type BetaFeatures = {
-	aiTutor: boolean;
-	voicePractice: boolean;
-	examPaperAnalysis: boolean;
-};
-
-const DEFAULT_PREFERENCES: StudyPreferences = {
-	difficulty: "medium",
-	questionCount: 10,
-	timerEnabled: true,
-	timerDuration: 30,
-	showExplanations: true,
-};
-
-const DEFAULT_NOTIFICATIONS: NotificationSettings = {
-	studyReminders: true,
-	streakAlerts: true,
-	achievementNotifications: true,
-	weeklyProgress: false,
-};
-
-const DEFAULT_BETA: BetaFeatures = {
-	aiTutor: false,
-	voicePractice: false,
-	examPaperAnalysis: false,
-};
-
-function loadFromStorage<T>(key: string, defaultValue: T): T {
-	if (typeof window === "undefined") return defaultValue;
-	try {
-		const stored = localStorage.getItem(key);
-		return stored ? JSON.parse(stored) : defaultValue;
-	} catch {
-		return defaultValue;
-	}
-}
-
-function saveToStorage<T>(key: string, value: T): void {
-	if (typeof window === "undefined") return;
-	try {
-		localStorage.setItem(key, JSON.stringify(value));
-	} catch (e) {
-		console.error("Failed to save to localStorage:", e);
-	}
-}
+import {
+	BETA_FEATURES_KEY,
+	type BetaFeatures,
+	DEFAULT_BETA,
+	DEFAULT_NOTIFICATIONS,
+	DEFAULT_PREFERENCES,
+	loadFromStorage,
+	NOTIFICATION_SETTINGS_KEY,
+	type NotificationSettings,
+	STUDY_PREFS_KEY,
+	type StudyPreferences,
+	saveToStorage,
+} from "@/lib/utils/storage";
 
 function SettingsContent() {
 	const { data: session } = useSession();
@@ -117,18 +54,18 @@ function SettingsContent() {
 	const user = session?.user;
 
 	useEffect(() => {
-		setStudyPrefs(loadFromStorage("study-preferences", DEFAULT_PREFERENCES));
+		setStudyPrefs(loadFromStorage(STUDY_PREFS_KEY, DEFAULT_PREFERENCES));
 		setNotifications(
-			loadFromStorage("notification-settings", DEFAULT_NOTIFICATIONS),
+			loadFromStorage(NOTIFICATION_SETTINGS_KEY, DEFAULT_NOTIFICATIONS),
 		);
-		setBetaFeatures(loadFromStorage("beta-features", DEFAULT_BETA));
+		setBetaFeatures(loadFromStorage(BETA_FEATURES_KEY, DEFAULT_BETA));
 	}, []);
 
 	const handleSavePreferences = () => {
 		setIsSaving(true);
-		saveToStorage("study-preferences", studyPrefs);
-		saveToStorage("notification-settings", notifications);
-		saveToStorage("beta-features", betaFeatures);
+		saveToStorage(STUDY_PREFS_KEY, studyPrefs);
+		saveToStorage(NOTIFICATION_SETTINGS_KEY, notifications);
+		saveToStorage(BETA_FEATURES_KEY, betaFeatures);
 		setTimeout(() => {
 			setIsSaving(false);
 			setSaveMessage("Settings saved!");
@@ -161,9 +98,9 @@ function SettingsContent() {
 
 	const handleClearCache = () => {
 		if (confirm("This will clear all your local preferences. Continue?")) {
-			localStorage.removeItem("study-preferences");
-			localStorage.removeItem("notification-settings");
-			localStorage.removeItem("beta-features");
+			localStorage.removeItem(STUDY_PREFS_KEY);
+			localStorage.removeItem(NOTIFICATION_SETTINGS_KEY);
+			localStorage.removeItem(BETA_FEATURES_KEY);
 			setStudyPrefs(DEFAULT_PREFERENCES);
 			setNotifications(DEFAULT_NOTIFICATIONS);
 			setBetaFeatures(DEFAULT_BETA);
@@ -174,7 +111,14 @@ function SettingsContent() {
 		{ id: "appearance", label: "Appearance", icon: Palette, isLucide: true },
 		{ id: "study", label: "Study", icon: Settings01Icon, isLucide: false },
 		...(hasAccount
-			? [{ id: "profile", label: "Profile", icon: UserIcon, isLucide: false }]
+			? [
+					{
+						id: "profile",
+						label: "Profile",
+						icon: NotificationIcon as typeof ArrowLeftIcon,
+						isLucide: false,
+					},
+				]
 			: []),
 		...(hasAccount
 			? [
@@ -191,7 +135,7 @@ function SettingsContent() {
 			id: "beta",
 			label: "Beta",
 			icon: FlaskConical,
-			isLucide: false,
+			isLucide: true,
 		},
 	];
 
@@ -245,426 +189,41 @@ function SettingsContent() {
 					</Card>
 
 					<div className="flex-1 space-y-6">
-						{activeTab === "appearance" && (
-							<Card className="border-border/50 shadow-sm">
-								<CardHeader className="pb-4">
-									<CardTitle className="text-lg">Appearance</CardTitle>
-									<CardDescription>
-										Customize how the application looks
-									</CardDescription>
-								</CardHeader>
-								<CardContent>
-									<div className="flex items-center justify-between rounded-lg border border-border/50 bg-card/50 p-4">
-										<div className="space-y-1">
-											<p className="text-sm font-medium">Theme</p>
-											<p className="text-xs text-muted-foreground">
-												Select your preferred color scheme
-											</p>
-										</div>
-										<ThemeSwitcher />
-									</div>
-								</CardContent>
-							</Card>
-						)}
+						{activeTab === "appearance" && <AppearanceTab />}
 
 						{activeTab === "study" && (
-							<Card className="border-border/50 shadow-sm">
-								<CardHeader className="pb-4">
-									<CardTitle className="text-lg">Study Preferences</CardTitle>
-									<CardDescription>
-										Customize your study experience
-									</CardDescription>
-								</CardHeader>
-								<CardContent className="space-y-6">
-									<div className="grid gap-4 md:grid-cols-2">
-										<div className="space-y-2">
-											<Label htmlFor="difficulty">Default Difficulty</Label>
-											<Select
-												value={studyPrefs.difficulty}
-												onValueChange={(v) =>
-													setStudyPrefs({
-														...studyPrefs,
-														difficulty: v as StudyPreferences["difficulty"],
-													})
-												}
-											>
-												<SelectTrigger id="difficulty">
-													<SelectValue />
-												</SelectTrigger>
-												<SelectContent>
-													<SelectItem value="easy">Easy</SelectItem>
-													<SelectItem value="medium">Medium</SelectItem>
-													<SelectItem value="hard">Hard</SelectItem>
-												</SelectContent>
-											</Select>
-										</div>
-										<div className="space-y-2">
-											<Label htmlFor="questionCount">
-												Questions per Session
-											</Label>
-											<Select
-												value={studyPrefs.questionCount.toString()}
-												onValueChange={(v) =>
-													setStudyPrefs({
-														...studyPrefs,
-														questionCount: parseInt(v || "10"),
-													})
-												}
-											>
-												<SelectTrigger id="questionCount">
-													<SelectValue />
-												</SelectTrigger>
-												<SelectContent>
-													<SelectItem value="5">5 questions</SelectItem>
-													<SelectItem value="10">10 questions</SelectItem>
-													<SelectItem value="15">15 questions</SelectItem>
-													<SelectItem value="20">20 questions</SelectItem>
-													<SelectItem value="25">25 questions</SelectItem>
-												</SelectContent>
-											</Select>
-										</div>
-									</div>
-
-									<Separator />
-
-									<div className="space-y-4">
-										<div className="flex items-center justify-between">
-											<div className="space-y-1">
-												<p className="text-sm font-medium">Timer</p>
-												<p className="text-xs text-muted-foreground">
-													Enable countdown timer for questions
-												</p>
-											</div>
-											<Switch
-												checked={studyPrefs.timerEnabled}
-												onCheckedChange={(checked) =>
-													setStudyPrefs({
-														...studyPrefs,
-														timerEnabled: checked,
-													})
-												}
-											/>
-										</div>
-										{studyPrefs.timerEnabled && (
-											<div className="ml-6 space-y-2">
-												<Label htmlFor="timerDuration">
-													Timer Duration (seconds)
-												</Label>
-												<Select
-													value={studyPrefs.timerDuration.toString()}
-													onValueChange={(v) =>
-														setStudyPrefs({
-															...studyPrefs,
-															timerDuration: parseInt(v || "30"),
-														})
-													}
-												>
-													<SelectTrigger id="timerDuration" className="w-40">
-														<SelectValue />
-													</SelectTrigger>
-													<SelectContent>
-														<SelectItem value="15">15 seconds</SelectItem>
-														<SelectItem value="30">30 seconds</SelectItem>
-														<SelectItem value="45">45 seconds</SelectItem>
-														<SelectItem value="60">60 seconds</SelectItem>
-														<SelectItem value="90">90 seconds</SelectItem>
-													</SelectContent>
-												</Select>
-											</div>
-										)}
-									</div>
-
-									<Separator />
-
-									<div className="flex items-center justify-between">
-										<div className="space-y-1">
-											<p className="text-sm font-medium">Show Explanations</p>
-											<p className="text-xs text-muted-foreground">
-												Display answer explanations after each question
-											</p>
-										</div>
-										<Switch
-											checked={studyPrefs.showExplanations}
-											onCheckedChange={(checked) =>
-												setStudyPrefs({
-													...studyPrefs,
-													showExplanations: checked,
-												})
-											}
-										/>
-									</div>
-								</CardContent>
-							</Card>
+							<StudyTab
+								studyPrefs={studyPrefs}
+								onStudyPrefsChange={setStudyPrefs}
+							/>
 						)}
 
-						{activeTab === "profile" && hasAccount && (
-							<Card className="border-border/50 shadow-sm">
-								<CardHeader className="pb-4">
-									<CardTitle className="text-lg">Profile</CardTitle>
-									<CardDescription>
-										Manage your account information
-									</CardDescription>
-								</CardHeader>
-								<CardContent className="space-y-6">
-									<div className="flex items-center gap-4">
-										<Avatar className="size-16">
-											<AvatarImage src={user?.image || ""} />
-											<AvatarFallback>
-												{user?.name?.charAt(0) || "U"}
-											</AvatarFallback>
-										</Avatar>
-										<div>
-											<p className="font-medium">{user?.name}</p>
-											<p className="text-sm text-muted-foreground">
-												{user?.email}
-											</p>
-										</div>
-									</div>
-
-									<Separator />
-
-									<div className="space-y-4">
-										<div className="space-y-2">
-											<Label htmlFor="name">Display Name</Label>
-											<Input
-												id="name"
-												defaultValue={user?.name || ""}
-												placeholder="Your name"
-											/>
-										</div>
-										<div className="space-y-2">
-											<Label htmlFor="email">Email</Label>
-											<Input
-												id="email"
-												type="email"
-												defaultValue={user?.email || ""}
-												disabled
-												className="bg-muted/50"
-											/>
-											<p className="text-xs text-muted-foreground">
-												Email cannot be changed
-											</p>
-										</div>
-									</div>
-
-									<Separator />
-
-									<Button
-										variant="destructive"
-										onClick={handleSignOut}
-										className="w-full"
-									>
-										<HugeiconsIcon icon={LogoutIcon} className="mr-2 size-4" />
-										Sign Out
-									</Button>
-								</CardContent>
-							</Card>
+						{activeTab === "profile" && hasAccount && user && (
+							<ProfileTab user={user} onSignOut={handleSignOut} />
 						)}
 
 						{activeTab === "notifications" && hasAccount && (
-							<Card className="border-border/50 shadow-sm">
-								<CardHeader className="pb-4">
-									<CardTitle className="text-lg">Notifications</CardTitle>
-									<CardDescription>
-										Manage your notification preferences
-									</CardDescription>
-								</CardHeader>
-								<CardContent className="space-y-6">
-									<div className="space-y-4">
-										<div className="flex items-center justify-between">
-											<div className="space-y-1">
-												<p className="text-sm font-medium">Study Reminders</p>
-												<p className="text-xs text-muted-foreground">
-													Get reminded to study daily
-												</p>
-											</div>
-											<Switch
-												checked={notifications.studyReminders}
-												onCheckedChange={(checked) =>
-													setNotifications({
-														...notifications,
-														studyReminders: checked,
-													})
-												}
-											/>
-										</div>
-
-										<div className="flex items-center justify-between">
-											<div className="space-y-1">
-												<p className="text-sm font-medium">Streak Alerts</p>
-												<p className="text-xs text-muted-foreground">
-													Notify when streak is at risk
-												</p>
-											</div>
-											<Switch
-												checked={notifications.streakAlerts}
-												onCheckedChange={(checked) =>
-													setNotifications({
-														...notifications,
-														streakAlerts: checked,
-													})
-												}
-											/>
-										</div>
-
-										<div className="flex items-center justify-between">
-											<div className="space-y-1">
-												<p className="text-sm font-medium">
-													Achievement Notifications
-												</p>
-												<p className="text-xs text-muted-foreground">
-													Notify when you unlock achievements
-												</p>
-											</div>
-											<Switch
-												checked={notifications.achievementNotifications}
-												onCheckedChange={(checked) =>
-													setNotifications({
-														...notifications,
-														achievementNotifications: checked,
-													})
-												}
-											/>
-										</div>
-
-										<div className="flex items-center justify-between">
-											<div className="space-y-1">
-												<p className="text-sm font-medium">Weekly Progress</p>
-												<p className="text-xs text-muted-foreground">
-													Receive weekly progress summary
-												</p>
-											</div>
-											<Switch
-												checked={notifications.weeklyProgress}
-												onCheckedChange={(checked) =>
-													setNotifications({
-														...notifications,
-														weeklyProgress: checked,
-													})
-												}
-											/>
-										</div>
-									</div>
-								</CardContent>
-							</Card>
+							<NotificationsTab
+								notifications={notifications}
+								onNotificationsChange={setNotifications}
+							/>
 						)}
 
 						{activeTab === "data" && (
-							<Card className="border-border/50 shadow-sm">
-								<CardHeader className="pb-4">
-									<CardTitle className="text-lg">Data Management</CardTitle>
-									<CardDescription>Export or clear your data</CardDescription>
-								</CardHeader>
-								<CardContent className="space-y-6">
-									<div className="rounded-lg border border-border/50 bg-card/50 p-4">
-										<div className="flex items-center justify-between">
-											<div className="space-y-1">
-												<p className="text-sm font-medium">Export Settings</p>
-												<p className="text-xs text-muted-foreground">
-													Download your preferences as JSON
-												</p>
-											</div>
-											<Button variant="outline" onClick={handleExportData}>
-												<HugeiconsIcon
-													icon={DownloadIcon}
-													className="mr-2 size-4"
-												/>
-												Export
-											</Button>
-										</div>
-									</div>
-
-									<Separator />
-
-									<div className="rounded-lg border border-destructive/30 bg-destructive/5 p-4">
-										<div className="flex items-center justify-between">
-											<div className="space-y-1">
-												<p className="text-sm font-medium text-destructive">
-													Clear Local Data
-												</p>
-												<p className="text-xs text-muted-foreground">
-													Reset all preferences to defaults
-												</p>
-											</div>
-											<Button variant="destructive" onClick={handleClearCache}>
-												<Trash2 className="mr-2 size-4" />
-												Clear
-											</Button>
-										</div>
-									</div>
-								</CardContent>
-							</Card>
+							<DataTab
+								studyPrefs={studyPrefs}
+								notifications={notifications}
+								betaFeatures={betaFeatures}
+								onExport={handleExportData}
+								onClear={handleClearCache}
+							/>
 						)}
 
 						{activeTab === "beta" && (
-							<Card className="border-border/50 shadow-sm">
-								<CardHeader className="pb-4">
-									<CardTitle className="text-lg">Beta Features</CardTitle>
-									<CardDescription>
-										Try experimental features (may be unstable)
-									</CardDescription>
-								</CardHeader>
-								<CardContent className="space-y-6">
-									<div className="rounded-lg border border-border/50 bg-card/50 p-4">
-										<div className="flex items-center justify-between">
-											<div className="space-y-1">
-												<p className="text-sm font-medium">AI Study Tutor</p>
-												<p className="text-xs text-muted-foreground">
-													Get AI-powered explanations and study help
-												</p>
-											</div>
-											<Switch
-												checked={betaFeatures.aiTutor}
-												onCheckedChange={(checked) =>
-													setBetaFeatures({ ...betaFeatures, aiTutor: checked })
-												}
-											/>
-										</div>
-									</div>
-
-									<div className="rounded-lg border border-border/50 bg-card/50 p-4">
-										<div className="flex items-center justify-between">
-											<div className="space-y-1">
-												<p className="text-sm font-medium">Voice Practice</p>
-												<p className="text-xs text-muted-foreground">
-													Practice pronunciation with voice recording
-												</p>
-											</div>
-											<Switch
-												checked={betaFeatures.voicePractice}
-												onCheckedChange={(checked) =>
-													setBetaFeatures({
-														...betaFeatures,
-														voicePractice: checked,
-													})
-												}
-											/>
-										</div>
-									</div>
-
-									<div className="rounded-lg border border-border/50 bg-card/50 p-4">
-										<div className="flex items-center justify-between">
-											<div className="space-y-1">
-												<p className="text-sm font-medium">
-													Exam Paper Analysis
-												</p>
-												<p className="text-xs text-muted-foreground">
-													Upload exam papers for AI-powered analysis
-												</p>
-											</div>
-											<Switch
-												checked={betaFeatures.examPaperAnalysis}
-												onCheckedChange={(checked) =>
-													setBetaFeatures({
-														...betaFeatures,
-														examPaperAnalysis: checked,
-													})
-												}
-											/>
-										</div>
-									</div>
-								</CardContent>
-							</Card>
+							<BetaTab
+								betaFeatures={betaFeatures}
+								onBetaFeaturesChange={setBetaFeatures}
+							/>
 						)}
 
 						<div className="flex items-center justify-between">

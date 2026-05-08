@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { LottieWrapper } from "@/components/lottie";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -18,33 +18,13 @@ export function LoadingScreen({
 	useLottie = true,
 }: LoadingScreenProps) {
 	const [progress, setProgress] = useState(0);
-	const [isVisible, setIsVisible] = useState(false);
+	const [isVisible, setIsVisible] = useState(true);
 	const router = useRouter();
 
 	const handleRedirect = useCallback(() => {
 		setIsVisible(false);
 		setTimeout(() => router.replace(redirectTo), 300);
 	}, [router, redirectTo]);
-
-	useEffect(() => {
-		setIsVisible(true);
-
-		const totalSteps = 100;
-		const intervalMs = duration / totalSteps;
-
-		const interval = setInterval(() => {
-			setProgress((prev) => {
-				if (prev >= 100) {
-					clearInterval(interval);
-					handleRedirect();
-					return 100;
-				}
-				return prev + 1;
-			});
-		}, intervalMs);
-
-		return () => clearInterval(interval);
-	}, [duration, handleRedirect]);
 
 	const handleManualEnter = () => {
 		setProgress(100);

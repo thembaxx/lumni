@@ -1,7 +1,6 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import {
 	ACHIEVEMENTS,
 	type Achievement,
@@ -79,20 +78,20 @@ function checkDateReset(dailyChallenges: DailyChallenge[]): DailyChallenge[] {
 	});
 }
 
-export function useGamification() {
-	const [isLoaded, setIsLoaded] = useState(false);
-	const [data, setData] = useState<StoredGamification>(getDefaultGamification);
+function getInitialGamificationData(): StoredGamification {
+	const stored = getStoredGamification();
+	const resetChallenges = checkDateReset(stored.dailyChallenges);
+	if (resetChallenges !== stored.dailyChallenges) {
+		stored.dailyChallenges = resetChallenges;
+		saveGamification(stored);
+	}
+	return stored;
+}
 
-	useEffect(() => {
-		const stored = getStoredGamification();
-		const resetChallenges = checkDateReset(stored.dailyChallenges);
-		if (resetChallenges !== stored.dailyChallenges) {
-			stored.dailyChallenges = resetChallenges;
-			saveGamification(stored);
-		}
-		setData(stored);
-		setIsLoaded(true);
-	}, []);
+export function useGamification() {
+	const [data, setData] = useState<StoredGamification>(
+		getInitialGamificationData,
+	);
 
 	const levelInfo = calculateLevel(data.totalXp);
 
@@ -289,7 +288,7 @@ export function useGamification() {
 	return {
 		gamification,
 		levelInfo,
-		isLoaded,
+		isLoaded: true,
 		addXp,
 		addAchievement,
 		checkAndUnlockAchievements,

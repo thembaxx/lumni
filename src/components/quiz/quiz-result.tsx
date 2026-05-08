@@ -20,7 +20,6 @@ import {
 	useSpring,
 	useTransform,
 } from "framer-motion";
-import { useEffect } from "react";
 import { LottieWrapper } from "@/components/lottie";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -50,13 +49,6 @@ function AnimatedCounter({
 }) {
 	const spring = useSpring(0, { stiffness: 100, damping: 20 });
 	const display = useTransform(spring, (current) => Math.round(current));
-
-	useEffect(() => {
-		const timeout = setTimeout(() => {
-			spring.set(value);
-		}, delay);
-		return () => clearTimeout(timeout);
-	}, [value, spring, delay]);
 
 	return <m.span>{display}</m.span>;
 }

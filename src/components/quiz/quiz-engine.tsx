@@ -1,7 +1,8 @@
 "use client";
 
+import { useQuery } from "@tanstack/react-query";
 import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { z } from "zod";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -73,16 +74,23 @@ async function fetchQuizQuestions(subjectIds: string[]): Promise<Question[]> {
 	return data.questions as Question[];
 }
 
+function useQuizQuestions(subjectIds: string[]) {
+	return useQuery({
+		queryKey: ["quiz-questions", subjectIds],
+		queryFn: () => fetchQuizQuestions(subjectIds),
+		enabled: subjectIds.length > 0,
+		staleTime: 1000 * 60 * 10,
+	});
+}
+
 export function QuizEngine({
 	subjectIds,
 	onComplete,
 	userId,
 }: QuizEngineProps) {
-	const [questions, setQuestions] = useState<Question[]>([]);
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
 	const [showFeedback, setShowFeedback] = useState(false);
-	const [loading, setLoading] = useState(true);
 	const [isComplete, setIsComplete] = useState(false);
 	const [results, setResults] = useState<QuizResults>({
 		totalQuestions: 0,
@@ -91,33 +99,22 @@ export function QuizEngine({
 		incorrectAnswers: [],
 	});
 
-	const loadQuestions = useCallback(async () => {
-		if (subjectIds.length === 0) {
-			setLoading(false);
-			return;
-		}
+	const { data: rawQuestions, isLoading } = useQuizQuestions(subjectIds);
 
-		const questionsData = await fetchQuizQuestions(subjectIds);
-		try {
-			const parsed = z.array(questionSchema).parse(questionsData);
-			const shuffled = parsed
-				.map((q) => ({
-					...q,
-					difficulty: q.difficulty as "easy" | "medium" | "hard",
-				}))
-				.sort(() => Math.random() - 0.5)
-				.slice(0, 10);
-
-			setQuestions(shuffled);
-		} catch {
-			setQuestions([]);
-		}
-		setLoading(false);
-	}, [subjectIds]);
-
-	useEffect(() => {
-		loadQuestions();
-	}, [loadQuestions]);
+	const questions = useMemo(() => {
+		if (!rawQuestions?.length) return [];
+		const validQuestions = rawQuestions
+			.map((q) => {
+				const parsed = questionSchema.safeParse(q);
+				if (!parsed.success) return null;
+				return {
+					...parsed.data,
+					difficulty: parsed.data.difficulty as "easy" | "medium" | "hard",
+				};
+			})
+			.filter((q): q is NonNullable<typeof q> => q !== null);
+		return validQuestions.sort(() => Math.random() - 0.5).slice(0, 10);
+	}, [rawQuestions]);
 
 	const currentQuestion = questions[currentIndex];
 
@@ -138,10 +135,6 @@ export function QuizEngine({
 	}
 
 	function handleRestart() {
-		const shuffled = [...questions]
-			.sort(() => Math.random() - 0.5)
-			.slice(0, 10);
-		setQuestions(shuffled);
 		setCurrentIndex(0);
 		setSelectedAnswer(null);
 		setShowFeedback(false);
@@ -154,7 +147,7 @@ export function QuizEngine({
 		});
 	}
 
-	if (loading) {
+	if (isLoading) {
 		return (
 			<Card className="p-6 space-y-4">
 				<div className="flex items-center justify-between">
@@ -210,24 +203,26 @@ export function QuizEngine({
 					)}
 				</div>
 
-				<AnimatePresence mode="wait">
-					<m.div
-						key={currentQuestion.id}
-						initial={{ opacity: 0, x: 20 }}
-						animate={{ opacity: 1, x: 0 }}
-						exit={{ opacity: 0, x: -20 }}
-						transition={{ duration: 0.2 }}
-					>
-						<QuizQuestion
-							question={currentQuestion}
-							selectedAnswer={selectedAnswer}
-							showFeedback={showFeedback}
-							onSelectAnswer={handleSelectAnswer}
-						/>
-					</m.div>
-				</AnimatePresence>
+				{currentQuestion && (
+					<AnimatePresence mode="wait">
+						<m.div
+							key={currentQuestion.id}
+							initial={{ opacity: 0, x: 20 }}
+							animate={{ opacity: 1, x: 0 }}
+							exit={{ opacity: 0, x: -20 }}
+							transition={{ duration: 0.2 }}
+						>
+							<QuizQuestion
+								question={currentQuestion}
+								selectedAnswer={selectedAnswer}
+								showFeedback={showFeedback}
+								onSelectAnswer={handleSelectAnswer}
+							/>
+						</m.div>
+					</AnimatePresence>
+				)}
 
-				{showFeedback && (
+				{showFeedback && currentQuestion && (
 					<div className="space-y-2">
 						<div
 							className={`p-4 rounded-lg ${

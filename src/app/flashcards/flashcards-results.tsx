@@ -1,7 +1,6 @@
 "use client";
 
 import { Home, RotateCcw, Target } from "lucide-react";
-import { useEffect, useState } from "react";
 import { Confetti } from "@/components/celebration";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -24,18 +23,10 @@ export function FlashcardsResults({
 	const accuracy =
 		totalCards > 0 ? Math.round((knownCount / totalCards) * 100) : 0;
 	const didWell = accuracy >= 70;
-	const [showConfetti, setShowConfetti] = useState(false);
-
-	useEffect(() => {
-		if (didWell) {
-			setShowConfetti(true);
-			setTimeout(() => setShowConfetti(false), 2500);
-		}
-	}, [didWell]);
 
 	return (
 		<>
-			<Confetti trigger={showConfetti} count={40} duration={2000} />
+			<Confetti trigger={didWell} count={40} duration={2000} />
 			<div className="min-h-screen bg-background p-4 flex items-center justify-center">
 				<Card className="max-w-md w-full">
 					<CardHeader className="text-center">

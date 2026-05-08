@@ -8,7 +8,6 @@ import {
 	useSpring,
 	useTransform,
 } from "framer-motion";
-import { useEffect } from "react";
 import { Card } from "@/components/ui/card";
 
 interface StatsCardsProps {
@@ -26,11 +25,6 @@ function AnimatedValue({
 }) {
 	const spring = useSpring(0, { stiffness: 100, damping: 20 });
 	const display = useTransform(spring, (v) => Math.round(v));
-
-	useEffect(() => {
-		const t = setTimeout(() => spring.set(target), delay);
-		return () => clearTimeout(t);
-	}, [target, spring, delay]);
 
 	return <m.span>{display}</m.span>;
 }

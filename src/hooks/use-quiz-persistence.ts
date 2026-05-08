@@ -1,10 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useRef } from "react";
 import type { QAQuestion } from "@/types/questions";
 
 const QUIZ_STORAGE_KEY = "lumni_quiz_progress";
-const AUTO_SAVE_INTERVAL = 5000;
 
 export interface QuizProgressData {
 	subject: string;
@@ -41,8 +40,8 @@ export function useQuizPersistence({
 	onRestore,
 	enabled = true,
 }: UseQuizPersistenceOptions) {
-	const intervalRef = useRef<NodeJS.Timeout | null>(null);
 	const lastSavedRef = useRef<string>("");
+	const saveTimerRef = useRef<NodeJS.Timeout | null>(null);
 
 	const getStorageKey = useCallback(() => {
 		return `${QUIZ_STORAGE_KEY}_${subject}`;
@@ -82,6 +81,15 @@ export function useQuizPersistence({
 		skippedIndices,
 		getStorageKey,
 	]);
+
+	const debouncedSave = useCallback(() => {
+		if (saveTimerRef.current) {
+			clearTimeout(saveTimerRef.current);
+		}
+		saveTimerRef.current = setTimeout(() => {
+			saveProgress();
+		}, 5000);
+	}, [saveProgress]);
 
 	const loadProgress = useCallback((): QuizProgressData | null => {
 		try {
@@ -124,18 +132,10 @@ export function useQuizPersistence({
 		}
 	}, [getStorageKey]);
 
-	useEffect(() => {
+	const triggerAutoSave = useCallback(() => {
 		if (!enabled || !questions.length) return;
-
-		intervalRef.current = setInterval(saveProgress, AUTO_SAVE_INTERVAL);
-		saveProgress();
-
-		return () => {
-			if (intervalRef.current) {
-				clearInterval(intervalRef.current);
-			}
-		};
-	}, [enabled, questions.length, saveProgress]);
+		debouncedSave();
+	}, [enabled, questions.length, debouncedSave]);
 
 	const hasExistingProgress = useCallback(() => {
 		const stored = localStorage.getItem(getStorageKey());
@@ -148,5 +148,6 @@ export function useQuizPersistence({
 		restoreProgress,
 		clearProgress,
 		hasExistingProgress,
+		triggerAutoSave,
 	};
 }
