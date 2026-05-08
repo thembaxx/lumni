@@ -153,7 +153,7 @@ export async function extractTextFromPDF(
 					const page = await pdf.getPage(i);
 					const textContent = await page.getTextContent();
 					const pageText = textContent.items
-						.map((item: any) => item.str)
+						.map((item) => (item as { str: string }).str)
 						.join(" ");
 					fullText += pageText + "\n";
 				}
@@ -180,7 +180,7 @@ export function extractTopicsFromText(text: string): ExtractedTopic[] {
 	const topics: Map<string, ExtractedTopic> = new Map();
 
 	const lowerText = text.toLowerCase();
-	const words = lowerText.split(/\s+/);
+	const _words = lowerText.split(/\s+/);
 
 	for (const [topic, keywords] of Object.entries(TOPIC_KEYWORDS)) {
 		let matchCount = 0;
@@ -255,7 +255,7 @@ export async function analyzeExamPaper(
 	file: File,
 	subject: string,
 ): Promise<ExamPaperAnalysis> {
-	const { text, pageCount } = await extractTextFromPDF(file);
+	const { text } = await extractTextFromPDF(file);
 
 	const topics = extractTopicsFromText(text);
 	const difficulty = detectDifficulty(text);

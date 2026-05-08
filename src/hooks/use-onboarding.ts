@@ -113,7 +113,10 @@ export function useOnboarding(): UseOnboardingReturn {
 }
 
 export function useOnboardingCheck(): { shouldShow: boolean; reason?: string } {
-	const [result, setResult] = useState<{ shouldShow: boolean; reason?: string }>({ shouldShow: false });
+	const [result, setResult] = useState<{
+		shouldShow: boolean;
+		reason?: string;
+	}>({ shouldShow: false });
 
 	useEffect(() => {
 		if (typeof window === "undefined") return;

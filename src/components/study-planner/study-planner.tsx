@@ -13,11 +13,14 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import type { StudySession as StudySessionType, ExamDate as ExamDateType } from "@/lib/utils/study-planner";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useStudyPlanner } from "@/hooks/use-study-planner";
+import type {
+	ExamDate as ExamDateType,
+	StudySession as StudySessionType,
+} from "@/lib/utils/study-planner";
 
 export function StudyPlanner() {
 	const {
@@ -218,16 +221,19 @@ function UpcomingSessionsCard({
 	onComplete: (id: string) => void;
 	onDelete: (id: string) => void;
 }) {
-	const groupedByDate = sessions.reduce<Record<string, StudySessionType[]>>((acc, session) => {
-		const date = new Date(session.scheduledAt).toLocaleDateString("en", {
-			weekday: "long",
-			month: "short",
-			day: "numeric",
-		});
-		if (!acc[date]) acc[date] = [];
-		acc[date].push(session);
-		return acc;
-	}, {});
+	const groupedByDate = sessions.reduce<Record<string, StudySessionType[]>>(
+		(acc, session) => {
+			const date = new Date(session.scheduledAt).toLocaleDateString("en", {
+				weekday: "long",
+				month: "short",
+				day: "numeric",
+			});
+			if (!acc[date]) acc[date] = [];
+			acc[date].push(session);
+			return acc;
+		},
+		{},
+	);
 
 	return (
 		<Card>
@@ -355,7 +361,9 @@ function AddSessionModal({
 }) {
 	const [subject, setSubject] = useState("");
 	const [topic, setTopic] = useState("");
-	const [type, setType] = useState<"flashcard" | "exam" | "quiz" | "review">("quiz");
+	const [type, setType] = useState<"flashcard" | "exam" | "quiz" | "review">(
+		"quiz",
+	);
 	const [duration, setDuration] = useState(30);
 
 	return (
@@ -386,7 +394,11 @@ function AddSessionModal({
 						<select
 							className="w-full p-2 border rounded-md"
 							value={type}
-							onChange={(e) => setType(e.target.value as "flashcard" | "exam" | "quiz" | "review")}
+							onChange={(e) =>
+								setType(
+									e.target.value as "flashcard" | "exam" | "quiz" | "review",
+								)
+							}
 						>
 							<option value="quiz">Quiz</option>
 							<option value="flashcard">Flashcard</option>

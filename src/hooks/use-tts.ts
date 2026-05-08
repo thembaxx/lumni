@@ -104,7 +104,8 @@ interface MediaRecorderWithInterval extends MediaRecorder {
 
 export function useVoiceRecorder() {
 	const [isRecording, setIsRecording] = useState(false);
-	const [mediaRecorder, setMediaRecorder] = useState<MediaRecorderWithInterval | null>(null);
+	const [mediaRecorder, setMediaRecorder] =
+		useState<MediaRecorderWithInterval | null>(null);
 	const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
 	const [recordingTime, setRecordingTime] = useState(0);
 

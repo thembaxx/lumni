@@ -1,9 +1,9 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "";
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "";
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
 	if (!ADMIN_EMAIL || !ADMIN_PASSWORD) {
 		return NextResponse.json(
 			{ valid: false, error: "Server configuration error" },

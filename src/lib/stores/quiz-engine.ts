@@ -1,3 +1,7 @@
+/**
+ * @deprecated Use `@/store/quiz-engine` instead.
+ * This file exists for backwards compatibility.
+ */
 import { create } from "zustand";
 import type { QAQuestion } from "@/types/questions";
 

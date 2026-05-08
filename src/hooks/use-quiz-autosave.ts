@@ -9,6 +9,7 @@ import {
 	resumeQuizSession,
 	saveQuizSession,
 } from "@/lib/db/offline";
+import { safeJsonParse, safeJsonStringify } from "@/lib/utils/json";
 import type { QAQuestion } from "@/types/questions";
 
 export interface UseQuizAutoSaveOptions {
@@ -63,7 +64,7 @@ export function useQuizAutoSave(
 		) => {
 			if (!enabled || questions.length === 0) return;
 
-			const saveData = JSON.stringify({ currentIndex, answers, duration });
+			const saveData = safeJsonStringify({ currentIndex, answers, duration });
 			if (saveData === lastSaveRef.current) return;
 
 			lastSaveRef.current = saveData;
@@ -72,7 +73,7 @@ export function useQuizAutoSave(
 				sessionId,
 				subject,
 				topic,
-				questions: JSON.stringify(questions),
+				questions: safeJsonStringify(questions),
 				answers,
 				currentIndex,
 				startedAt: Date.now(),
@@ -95,7 +96,7 @@ export function useQuizAutoSave(
 			sessionId: session.sessionId,
 			subject: session.subject,
 			topic: session.topic,
-			questions: JSON.parse(session.questions) as QAQuestion[],
+			questions: safeJsonParse(session.questions, []) as QAQuestion[],
 			answers: session.answers,
 			currentIndex: session.currentIndex,
 			startedAt: session.startedAt,
@@ -116,7 +117,7 @@ export function useQuizAutoSave(
 				sessionId: session.sessionId,
 				subject: session.subject,
 				topic: session.topic,
-				questions: JSON.parse(session.questions) as QAQuestion[],
+				questions: safeJsonParse(session.questions, []) as QAQuestion[],
 				answers: session.answers,
 				currentIndex: session.currentIndex,
 				startedAt: session.startedAt,

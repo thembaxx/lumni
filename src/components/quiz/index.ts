@@ -1,3 +1,4 @@
+export { EmptyStateWithIllustration } from "@/components/empty-states";
 export { QuestionCard } from "./question-card";
 export { QuestionDiagram } from "./question-diagram";
 export { QuizControls } from "./quiz-controls";

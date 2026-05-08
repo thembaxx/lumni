@@ -165,13 +165,7 @@ export function useQuizTimeout(
 		}
 
 		return () => clearTimer();
-	}, [
-		config.enabled,
-		startTimer,
-		clearTimer,
-		isPaused,
-		isExpired,
-	]);
+	}, [config.enabled, startTimer, clearTimer, isPaused, isExpired]);
 
 	return {
 		timeRemaining,

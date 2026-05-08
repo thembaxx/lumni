@@ -93,11 +93,12 @@ export function usePWAInstall(): {
 } {
 	const [isInstallable, setIsInstallable] = useState(false);
 	interface BeforeInstallPromptEvent extends Event {
-	prompt: () => Promise<void>;
-	userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
-}
+		prompt: () => Promise<void>;
+		userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
+	}
 
-const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
+	const [deferredPrompt, setDeferredPrompt] =
+		useState<BeforeInstallPromptEvent | null>(null);
 	const [dismissed, setDismissed] = useState(false);
 
 	useEffect(() => {
@@ -116,7 +117,10 @@ const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | 
 		window.addEventListener("beforeinstallprompt", handler as EventListener);
 
 		return () => {
-			window.removeEventListener("beforeinstallprompt", handler as EventListener);
+			window.removeEventListener(
+				"beforeinstallprompt",
+				handler as EventListener,
+			);
 		};
 	}, []);
 

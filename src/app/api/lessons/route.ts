@@ -1,5 +1,5 @@
 import fs from "fs";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import path from "path";
 
 export const dynamic = "force-dynamic";
@@ -12,7 +12,7 @@ interface Lesson {
 	difficulty: string;
 }
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
 	try {
 		const { searchParams } = new URL(request.url);
 		const subject = searchParams.get("subject");

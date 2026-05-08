@@ -27,7 +27,10 @@ export async function GET(req: NextRequest) {
 	const topic = searchParams.get("topic");
 
 	try {
-		const questionsDir = path.join(/*turbopackIgnore: true*/ process.cwd(), "questions");
+		const questionsDir = path.join(
+			/*turbopackIgnore: true*/ process.cwd(),
+			"questions",
+		);
 
 		if (!fs.existsSync(questionsDir)) {
 			return NextResponse.json(
@@ -48,7 +51,11 @@ export async function GET(req: NextRequest) {
 			}
 			filePath = path.join(/*turbopackIgnore: true*/ questionsDir, sanitized);
 			const resolved = path.resolve(/*turbopackIgnore: true*/ filePath);
-			if (!resolved.startsWith(path.resolve(/*turbopackIgnore: true*/ questionsDir))) {
+			if (
+				!resolved.startsWith(
+					path.resolve(/*turbopackIgnore: true*/ questionsDir),
+				)
+			) {
 				return NextResponse.json(
 					{ error: "Invalid file path" },
 					{ status: 400 },
@@ -56,7 +63,10 @@ export async function GET(req: NextRequest) {
 			}
 		} else if (subject) {
 			const formattedSubject = subject.toLowerCase().replace(/\s+/g, "-");
-			filePath = path.join(/*turbopackIgnore: true*/ questionsDir, `${formattedSubject}_qa_1.json`);
+			filePath = path.join(
+				/*turbopackIgnore: true*/ questionsDir,
+				`${formattedSubject}_qa_1.json`,
+			);
 		}
 
 		if (!filePath || !fs.existsSync(filePath)) {

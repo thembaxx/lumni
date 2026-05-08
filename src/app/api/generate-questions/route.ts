@@ -5,6 +5,7 @@ import {
 	filterValidQuestions,
 	validateQuestions,
 } from "@/lib/utils/question-validator";
+import { checkRateLimit, getRateLimitHeaders } from "@/lib/utils/rate-limit";
 import type { QAQuestion } from "@/types/questions";
 
 export const dynamic = "force-dynamic";
@@ -83,6 +84,26 @@ Example format:
 }
 
 export async function POST(req: NextRequest) {
+	const ip =
+		req.headers.get("x-forwarded-for")?.split(",")[0] ||
+		req.headers.get("x-real-ip") ||
+		"unknown";
+
+	const rateLimit = checkRateLimit(ip);
+
+	if (!rateLimit.allowed) {
+		return NextResponse.json(
+			{
+				error: "Rate limit exceeded",
+				message: `Too many requests. Please wait ${Math.ceil((rateLimit.resetAt - Date.now()) / 1000)} seconds.`,
+			},
+			{
+				status: 429,
+				headers: getRateLimitHeaders(rateLimit),
+			},
+		);
+	}
+
 	try {
 		const body: GenerateQuestionsRequest = await req.json();
 		const { subject, topic, count = 5, difficulty = "Medium" } = body;

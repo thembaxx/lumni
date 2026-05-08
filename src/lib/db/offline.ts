@@ -1,4 +1,5 @@
 import Dexie, { type Table } from "dexie";
+import { safeJsonParse, safeJsonStringify } from "@/lib/utils/json";
 
 export interface CachedQuestion {
 	id?: number;
@@ -130,7 +131,7 @@ export async function cacheQuestions(
 
 	if (existing) {
 		return offlineDB.questions.update(existing.id!, {
-			questions: JSON.stringify(questions),
+			questions: safeJsonStringify(questions),
 			cachedAt: Date.now(),
 		});
 	}
@@ -138,7 +139,7 @@ export async function cacheQuestions(
 	return offlineDB.questions.add({
 		subject: key,
 		topic,
-		questions: JSON.stringify(questions),
+		questions: safeJsonStringify(questions),
 		cachedAt: Date.now(),
 	});
 }
@@ -157,7 +158,7 @@ export async function getCachedQuestions(
 		return undefined;
 	}
 
-	return JSON.parse(cached.questions);
+	return safeJsonParse(cached.questions, []) as unknown[];
 }
 
 export async function saveProgress(
@@ -209,7 +210,7 @@ export async function saveQuizAttempt(
 	return offlineDB.quizAttempts.add({
 		odSubject,
 		userId,
-		answers: JSON.stringify(data.answers),
+		answers: safeJsonStringify(data.answers),
 		score: data.score,
 		totalQuestions: data.totalQuestions,
 		duration: data.duration,
@@ -235,7 +236,7 @@ export async function addToSyncQueue(
 ): Promise<number> {
 	return offlineDB.syncQueue.add({
 		action,
-		payload: JSON.stringify(payload),
+		payload: safeJsonStringify(payload),
 		status: "pending",
 		attempts: 0,
 		maxRetries: 3,
@@ -367,7 +368,7 @@ export async function addToSyncQueueWithPriority(
 		.toArray();
 
 	const sameAction = existing.find(
-		(item) => JSON.parse(item.payload) === payload,
+		(item) => safeJsonParse(item.payload) === payload,
 	);
 	if (sameAction) {
 		return sameAction.id!;
@@ -375,7 +376,7 @@ export async function addToSyncQueueWithPriority(
 
 	return offlineDB.syncQueue.add({
 		action,
-		payload: JSON.stringify(payload),
+		payload: safeJsonStringify(payload),
 		status: "pending",
 		attempts: 0,
 		maxRetries: 3,

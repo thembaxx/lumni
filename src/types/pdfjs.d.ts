@@ -1,5 +1,5 @@
 declare module "pdfjs-dist" {
-  export const GlobalWorkerOptions: { workerSrc: string };
-  export const getDocument: (source: any) => { promise: Promise<any> };
-  export const version: string;
+	export const GlobalWorkerOptions: { workerSrc: string };
+	export const getDocument: (source: unknown) => { promise: Promise<unknown> };
+	export const version: string;
 }

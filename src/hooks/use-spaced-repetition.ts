@@ -32,7 +32,15 @@ export interface UseSpacedRepetitionReturn {
 	removeCard: (id: string) => void;
 	editCard: (id: string, updates: Partial<FlashcardSM2>) => void;
 	review: (id: string, quality: number) => void;
-	importFromQuiz: (questions: Array<{ id: string; questionText: string; options: Array<{ text: string; isCorrect: boolean }>; explanation: string }>, subject: string) => void;
+	importFromQuiz: (
+		questions: Array<{
+			id: string;
+			questionText: string;
+			options: Array<{ text: string; isCorrect: boolean }>;
+			explanation: string;
+		}>,
+		subject: string,
+	) => void;
 	refresh: () => void;
 }
 
@@ -90,7 +98,15 @@ export function useSpacedRepetition(): UseSpacedRepetitionReturn {
 	);
 
 	const importFromQuiz = useCallback(
-		(questions: Array<{ id: string; questionText: string; options: Array<{ text: string; isCorrect: boolean }>; explanation: string }>, subject: string) => {
+		(
+			questions: Array<{
+				id: string;
+				questionText: string;
+				options: Array<{ text: string; isCorrect: boolean }>;
+				explanation: string;
+			}>,
+			subject: string,
+		) => {
 			convertQuizToFlashcards(questions, subject);
 			refresh();
 		},

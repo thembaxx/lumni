@@ -2,6 +2,7 @@
 
 import { useCallback, useMemo, useState } from "react";
 import {
+	EmptyStateWithIllustration,
 	QuestionCard,
 	QuizControls,
 	QuizEmptyState,
@@ -38,6 +39,7 @@ export function QuizView({
 	className,
 }: QuizViewProps) {
 	const [hasStarted, setHasStarted] = useState(false);
+	const [loadError, setLoadError] = useState<string | null>(null);
 
 	const { state, actions } = useQuizSession({
 		subject: initialSubject,
@@ -119,6 +121,37 @@ export function QuizView({
 				<Card className="max-w-md w-full card-elevated">
 					<CardContent className="p-8 text-center">
 						<p className="text-muted-foreground">Loading questions...</p>
+					</CardContent>
+				</Card>
+			</div>
+		);
+	}
+
+	// State 2b: Error loading questions
+	if (loadError) {
+		return (
+			<div className="min-h-screen bg-background p-4 flex items-center justify-center pb-20">
+				<Card className="max-w-md w-full card-elevated">
+					<CardHeader className="text-center">
+						<CardTitle>Failed to Load</CardTitle>
+					</CardHeader>
+					<CardContent className="space-y-4">
+						<EmptyStateWithIllustration
+							animation="error"
+							title="Failed to Load Questions"
+							description={loadError}
+							action={{
+								label: "Try Again",
+								onClick: () => {
+									setLoadError(null);
+									window.location.reload();
+								},
+							}}
+							secondaryAction={{
+								label: "Go Back",
+								onClick: handleQuitWithStop,
+							}}
+						/>
 					</CardContent>
 				</Card>
 			</div>

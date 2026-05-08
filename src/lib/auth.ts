@@ -6,17 +6,19 @@ import * as schema from "./db/schema";
 
 const POSTGRES_URL = process.env.POSTGRES_URL;
 
-let authInstance: ReturnType<typeof betterAuth> | null = null;
-
-function getPostgresUrl(): string {
+function validateEnvironment(): void {
 	if (!POSTGRES_URL) {
-		throw new Error("POSTGRES_URL is not set");
+		throw new Error(
+			"POSTGRES_URL environment variable is not set. Auth requires a database connection.",
+		);
 	}
-	return POSTGRES_URL;
 }
 
+let authInstance: ReturnType<typeof betterAuth> | null = null;
+
 function initAuth(): ReturnType<typeof betterAuth> {
-	const sql = neon(getPostgresUrl());
+	validateEnvironment();
+	const sql = neon(POSTGRES_URL!);
 	const db = drizzle(sql, { schema });
 
 	// biome-disable-next-line lint/suspicious/noExplicitAny
@@ -63,11 +65,17 @@ function initAuth(): ReturnType<typeof betterAuth> {
 }
 
 export function getAuth() {
+	if (!POSTGRES_URL) {
+		throw new Error(
+			"POSTGRES_URL is not set. Authentication is disabled. Set POSTGRES_URL to enable auth.",
+		);
+	}
 	if (!authInstance) {
 		authInstance = initAuth();
 	}
 	return authInstance;
 }
 
-// biome-disable-next-line lint/suspicious/noExplicitAny
-export const auth = POSTGRES_URL ? initAuth() : ({} as any);
+export const auth = POSTGRES_URL
+	? initAuth()
+	: ({} as ReturnType<typeof betterAuth>);
