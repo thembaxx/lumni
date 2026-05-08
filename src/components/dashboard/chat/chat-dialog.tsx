@@ -1,26 +1,18 @@
 "use client";
 
 import {
-	Book,
 	Camera01FreeIcons,
+	CancelIcon,
 	MessageIcon,
-	Mic,
 	SentIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Book as BookLucide, Mic as MicLucide, XIcon } from "lucide-react";
+import { Book as BookLucide, Mic as MicLucide } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { VoiceWaveIcon } from "@/components/icons";
 import { LottieWrapper } from "@/components/lottie/lottie-wrapper";
 import { Button } from "@/components/ui/button";
-import {
-	Dialog,
-	DialogClose,
-	DialogContent,
-	DialogHeader,
-	DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { type ChatMessage, useChat } from "@/hooks/use-chat";
 import { cn } from "@/lib/utils";
 
@@ -213,9 +205,14 @@ export function ChatDialog({ open, onOpenChange }: ChatDialogProps) {
 	};
 
 	return (
-		<Dialog open={open} onOpenChange={onOpenChange}>
-			<DialogContent className="fixed inset-0 w-full h-full max-w-none rounded-none p-0 m-0 bg-background/95 backdrop-blur-xl border-0 gap-0">
-				<DialogHeader className="px-4 py-3 border-b border-border/30 flex flex-row items-center justify-between shrink-0">
+		<Dialog
+			open={open}
+			onOpenChange={onOpenChange}
+			modal={true}
+			disablePointerDismissal={false}
+		>
+			<DialogContent className="flex flex-col translate-x-0 translate-y-0 w-full h-full max-w-none rounded-none p-0 m-0 top-0 left-0 bg-background/95 backdrop-blur-xl border-0 gap-0">
+				<div className="px-4 py-3 border-b border-border/30 flex flex-row items-center justify-between shrink-0">
 					<div className="flex items-center gap-3">
 						<div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
 							<HugeiconsIcon
@@ -223,19 +220,9 @@ export function ChatDialog({ open, onOpenChange }: ChatDialogProps) {
 								className="w-4 h-4 text-primary"
 							/>
 						</div>
-						<DialogTitle className="text-lg font-semibold">
-							Study Assistant
-						</DialogTitle>
+						<span className="text-lg font-semibold">Study Assistant</span>
 					</div>
-					<Button
-						variant="ghost"
-						size="icon-sm"
-						className="rounded-full"
-						onClick={handleClose}
-					>
-						<XIcon className="w-4 h-4" />
-					</Button>
-				</DialogHeader>
+				</div>
 
 				<div className="flex-1 flex flex-col overflow-hidden">
 					{messages.length === 0 ? (

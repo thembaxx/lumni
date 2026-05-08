@@ -38,7 +38,7 @@ const itemVariants = {
 
 export function DashboardClient({ initialTab = "ai" }: DashboardClientProps) {
 	const [_activeTab] = useState<TabValue>(initialTab || "ai");
-	const [practiceOpen, setPracticeOpen] = useState(false);
+	const [_practiceOpen, setPracticeOpen] = useState(false);
 	const { levelInfo, isLoaded, gamification } = useGamification();
 
 	if (!isLoaded) {
@@ -69,7 +69,10 @@ export function DashboardClient({ initialTab = "ai" }: DashboardClientProps) {
 				</motion.div>
 
 				<div className="space-y-4 w-full">
-					<motion.div variants={itemVariants} className="px-4 overflow-x-auto scrollbar-hide">
+					<motion.div
+						variants={itemVariants}
+						className="px-4 overflow-x-auto scrollbar-hide"
+					>
 						<QuickActions onPracticeClick={() => setPracticeOpen(true)} />
 					</motion.div>
 				</div>
