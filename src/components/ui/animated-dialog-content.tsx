@@ -55,9 +55,7 @@ export function AnimatedDialogContent({
 								animate={{ opacity: 1, x: 0 }}
 								transition={{ delay: 0.15 }}
 							>
-								<DialogDescription>
-									{description}
-								</DialogDescription>
+								<DialogDescription>{description}</DialogDescription>
 							</m.div>
 						</DialogHeader>
 						<m.div

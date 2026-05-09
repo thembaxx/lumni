@@ -1,9 +1,6 @@
 import { readFileSync } from "node:fs";
 import { uploadQAFileSubject } from "@/lib/server/upload-qa-json";
 
-const UPLOADTHING_API_KEY = process.env.UPLOADTHING_API_KEY;
-const APP_ID = process.env.APP_ID;
-
 function formatSubjectName(subject: string): string {
 	return subject.replace(/\s+/g, "_").toLowerCase();
 }

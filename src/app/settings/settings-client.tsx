@@ -2,8 +2,8 @@
 
 import { ArrowLeftIcon, Settings01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Database, FlaskConical, type LucideIcon, Palette } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
+import { Database, FlaskConical, type LucideIcon, Palette } from "lucide-react";
 import Link from "next/link";
 import { Suspense, useEffect, useState } from "react";
 import {
@@ -143,15 +143,15 @@ function SettingsContent() {
 					</TabsList>
 
 					<div className="flex-1 space-y-6">
-								<AnimatePresence mode="wait" initial={false}>
-									<motion.div
-										key={activeTab}
-										variants={tabContentVariants}
-										initial="initial"
-										animate="animate"
-										exit="exit"
-										transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-									>
+						<AnimatePresence mode="wait" initial={false}>
+							<motion.div
+								key={activeTab}
+								variants={tabContentVariants}
+								initial="initial"
+								animate="animate"
+								exit="exit"
+								transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+							>
 								{activeTab === "appearance" && <AppearanceTab />}
 
 								{activeTab === "study" && (

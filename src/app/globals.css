@@ -683,7 +683,11 @@
 }
 
 .toolbutton:active {
-	transform: scale(0.95);
+	transform: scale(0.96);
+}
+
+.toolbutton:active .toolbutton-icon {
+	transform: scale(0.96);
 }
 
 .toolbutton-icon {
@@ -715,7 +719,9 @@
 }
 
 .voice-btn-icon {
-	transition: transform var(--duration-fast) var(--ease-out-expo);
+	transition-property: transform;
+	transition-duration: 200ms;
+	transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
 }
 
 @keyframes voiceGlow {

@@ -7,15 +7,33 @@ import {
 	SentIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Play, Square } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
+import { Camera, Play, RefreshCw, Square, Upload, X } from "lucide-react";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { LottieWrapper } from "@/components/lottie/lottie-wrapper";
 import { AnimatedDialogContent } from "@/components/ui/animated-dialog-content";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import {
+	Dialog,
+	DialogContent,
+	DialogOverlay,
+	DialogPortal,
+} from "@/components/ui/dialog";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
+import { Progress } from "@/components/ui/progress";
 import { type ChatMessage, useChat } from "@/hooks/use-chat";
+import {
+	formatBytes,
+	useImageChat,
+	useImageChatWithSend,
+} from "@/hooks/use-image-chat";
 import { cn } from "@/lib/utils";
 
 interface ChatDialogProps {
@@ -29,26 +47,117 @@ function WelcomeState() {
 			<div className="w-48 h-48 mb-6">
 				<LottieWrapper animation="empty-search" loop={true} autoplay={true} />
 			</div>
-			<motion.div
-				initial={{ opacity: 0, y: 10 }}
-				animate={{ opacity: 1, y: 0 }}
-				transition={{ delay: 0.2 }}
-				className="text-center"
-			>
-				<h2 className="text-xl font-semibold text-foreground mb-2">
+			<div className="text-center">
+				<motion.h2
+					initial={{ opacity: 0, y: 8, filter: "blur(4px)" }}
+					animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+					transition={{ delay: 0.1, duration: 0.35, ease: [0.2, 0, 0, 1] }}
+					className="text-xl font-semibold text-foreground mb-2"
+				>
 					Hi! I&apos;m your study assistant
-				</h2>
-				<p className="text-muted-foreground text-sm">
+				</motion.h2>
+				<motion.p
+					initial={{ opacity: 0, y: 8, filter: "blur(4px)" }}
+					animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+					transition={{ delay: 0.2, duration: 0.35, ease: [0.2, 0, 0, 1] }}
+					className="text-muted-foreground text-sm"
+				>
 					Ask me anything about your studies!
-				</p>
-			</motion.div>
+				</motion.p>
+			</div>
 		</div>
 	);
 }
 
-function MessageBubble({ message }: { message: ChatMessage }) {
+function SmartImage({
+	src,
+	alt,
+	className,
+}: {
+	src: string;
+	alt: string;
+	className?: string;
+}) {
+	const isDataUrl = src.startsWith("data:");
+	if (isDataUrl) {
+		return (
+			<img
+				src={src}
+				alt={alt}
+				className={cn(
+					"outline outline-1 -outline-offset-1 outline-black/10 dark:outline-white/10",
+					className,
+				)}
+			/>
+		);
+	}
+	return (
+		<Image
+			src={src}
+			alt={alt}
+			fill={false}
+			width={0}
+			height={0}
+			className={cn(
+				"outline outline-1 -outline-offset-1 outline-black/10 dark:outline-white/10",
+				className,
+			)}
+			unoptimized
+		/>
+	);
+}
+
+function ImageViewer({
+	src,
+	alt,
+	open,
+	onClose,
+}: {
+	src: string;
+	alt: string;
+	open: boolean;
+	onClose: () => void;
+}) {
+	return (
+		<Dialog open={open} onOpenChange={onClose}>
+			<DialogPortal>
+				<DialogOverlay className="bg-black/95" />
+				<DialogContent
+					className="max-w-none w-screen h-screen p-0 border-0 rounded-none m-0 inset-0"
+					showCloseButton={false}
+				>
+					<div className="relative w-full h-full flex items-center justify-center">
+						<SmartImage
+							src={src}
+							alt={alt}
+							className="max-w-full max-h-full object-contain"
+						/>
+						<Button
+							variant="ghost"
+							size="icon"
+							onClick={onClose}
+							className="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/40 hover:bg-black/60 text-white"
+							aria-label="Close image viewer"
+						>
+							<X className="w-5 h-5" />
+						</Button>
+					</div>
+				</DialogContent>
+			</DialogPortal>
+		</Dialog>
+	);
+}
+
+function MessageBubble({
+	message,
+	onRetry,
+}: {
+	message: ChatMessage;
+	onRetry?: (messageId: string) => void;
+}) {
 	const isUser = message.role === "user";
 	const [isPlaying, setIsPlaying] = useState(false);
+	const [imageViewerOpen, setImageViewerOpen] = useState(false);
 	const audioRef = useRef<HTMLAudioElement | null>(null);
 
 	const togglePlay = () => {
@@ -67,6 +176,109 @@ function MessageBubble({ message }: { message: ChatMessage }) {
 			setIsPlaying(true);
 		}
 	};
+
+	if (message.type === "image") {
+		const isError = message.processingStatus === "error";
+		const isSending =
+			message.processingStatus === "sending" ||
+			message.processingStatus === "idle";
+
+		return (
+			<>
+				<motion.div
+					initial={{ opacity: 0, y: 10, scale: 0.95 }}
+					animate={{ opacity: 1, y: 0, scale: 1 }}
+					transition={{ type: "spring", stiffness: 300, damping: 25 }}
+					className={cn("max-w-[85%] ml-auto", isUser ? "mr-0" : "mr-auto")}
+				>
+					<div
+						className={cn(
+							"rounded-2xl overflow-hidden",
+							isUser
+								? "bg-primary text-primary-foreground"
+								: "bg-secondary/80 text-foreground",
+						)}
+					>
+						{message.imageUrl ? (
+							<motion.button
+								onClick={() => setImageViewerOpen(true)}
+								className="relative w-full max-w-[280px] cursor-pointer group block"
+								whileTap={{ scale: 0.98 }}
+								transition={{ duration: 0.15 }}
+							>
+								<SmartImage
+									src={message.imageUrl}
+									alt={message.imageFileName || "User uploaded image"}
+									className={cn(
+										"w-full max-h-[200px] object-cover",
+										isError && "opacity-50 grayscale",
+									)}
+								/>
+								<div
+									className={cn(
+										"absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/30 transition-colors",
+										isSending && "bg-black/30",
+									)}
+								>
+									{isSending && (
+										<div className="w-10 h-10 rounded-full bg-black/40 flex items-center justify-center">
+											<div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+										</div>
+									)}
+								</div>
+							</motion.button>
+						) : (
+							<div className="w-48 h-48 bg-muted flex items-center justify-center">
+								<div className="w-6 h-6 border-2 border-muted-foreground border-t-transparent rounded-full animate-spin" />
+							</div>
+						)}
+
+						<div className="p-2 px-3 flex items-center justify-between gap-3">
+							<span className="text-xs opacity-70 truncate max-w-[120px]">
+								{message.imageFileName || "Image"}
+								{message.imageFileSize &&
+									` (${formatBytes(message.imageFileSize)})`}
+							</span>
+							{isError && onRetry && (
+								<Button
+									variant="ghost"
+									size="icon"
+									onClick={() => onRetry(message.id)}
+									className="w-7 h-7 rounded-full shrink-0 hover:bg-primary-foreground/20"
+									aria-label="Retry"
+								>
+									<RefreshCw className="w-3.5 h-3.5" />
+								</Button>
+							)}
+						</div>
+
+						{isError && message.error && (
+							<div className="px-3 pb-2">
+								<p className="text-xs text-destructive">{message.error}</p>
+								{onRetry && (
+									<Button
+										variant="link"
+										size="sm"
+										onClick={() => onRetry(message.id)}
+										className="h-auto p-0 text-xs text-primary-foreground/80 hover:text-primary-foreground"
+									>
+										Try again
+									</Button>
+								)}
+							</div>
+						)}
+					</div>
+				</motion.div>
+
+				<ImageViewer
+					src={message.imageUrl || ""}
+					alt={message.imageFileName || "User uploaded image"}
+					open={imageViewerOpen}
+					onClose={() => setImageViewerOpen(false)}
+				/>
+			</>
+		);
+	}
 
 	if (message.type === "voice") {
 		const bars = [0.4, 0.65, 0.85, 0.55, 0.3];
@@ -98,9 +310,7 @@ function MessageBubble({ message }: { message: ChatMessage }) {
 					<span
 						className={cn(
 							"absolute inset-0 flex items-center justify-center transition-all duration-300",
-							isPlaying
-								? "opacity-100 scale-100"
-								: "opacity-0 scale-50",
+							isPlaying ? "opacity-100 scale-100" : "opacity-0 scale-50",
 						)}
 					>
 						<Square className="w-3 h-3 fill-current" />
@@ -108,9 +318,7 @@ function MessageBubble({ message }: { message: ChatMessage }) {
 					<span
 						className={cn(
 							"absolute inset-0 flex items-center justify-center transition-all duration-300",
-							isPlaying
-								? "opacity-0 scale-50"
-								: "opacity-100 scale-100",
+							isPlaying ? "opacity-0 scale-50" : "opacity-100 scale-100",
 						)}
 					>
 						<Play className="w-4 h-4 fill-current ml-0.5" />
@@ -127,7 +335,9 @@ function MessageBubble({ message }: { message: ChatMessage }) {
 									key={i}
 									className={cn(
 										"w-1 rounded-full",
-										isUser ? "bg-primary-foreground/60" : "bg-muted-foreground/40",
+										isUser
+											? "bg-primary-foreground/60"
+											: "bg-muted-foreground/40",
 									)}
 									animate={
 										isPlaying
@@ -185,16 +395,16 @@ function MessageBubble({ message }: { message: ChatMessage }) {
 }
 
 function LoadingIndicator() {
-	const messages = [
+	const loadingMessages = [
 		"Thinking...",
 		"Finding the right words...",
 		"Just a sec...",
-	];
+	] as const;
 	const [messageIndex, setMessageIndex] = useState(0);
 
 	useEffect(() => {
 		const interval = setInterval(() => {
-			setMessageIndex((prev) => (prev + 1) % messages.length);
+			setMessageIndex((prev) => (prev + 1) % 3);
 		}, 2500);
 		return () => clearInterval(interval);
 	}, []);
@@ -231,9 +441,79 @@ function LoadingIndicator() {
 					transition={{ duration: 0.2 }}
 					className="text-xs"
 				>
-					{messages[messageIndex]}
+					{loadingMessages[messageIndex]}
 				</motion.span>
 			</AnimatePresence>
+		</motion.div>
+	);
+}
+
+function ImageProcessingIndicator({
+	state,
+	onDismiss,
+}: {
+	state: {
+		status: string;
+		progress: number;
+		progressMessage: string;
+		error: string | null;
+	};
+	onDismiss: () => void;
+}) {
+	if (state.status === "idle") return null;
+
+	const isError = state.status === "error";
+
+	return (
+		<motion.div
+			initial={{ opacity: 0, y: -8, scaleY: 0.8 }}
+			animate={{ opacity: 1, y: 0, scaleY: 1 }}
+			exit={{ opacity: 0, y: -8, scaleY: 0.8 }}
+			transition={{ duration: 0.2, ease: [0.2, 0, 0, 1] }}
+			style={{ transformOrigin: "top" }}
+			className={cn(
+				"px-3 py-2 rounded-lg border text-sm",
+				isError
+					? "bg-destructive/10 border-destructive/30 text-destructive"
+					: "bg-secondary/60 border-border/30 text-foreground",
+			)}
+		>
+			<div className="flex items-center gap-2">
+				{isError ? (
+					<>
+						<span className="flex-1 truncate text-xs">{state.error}</span>
+						<Button
+							variant="ghost"
+							size="icon"
+							onClick={onDismiss}
+							className="w-6 h-6 shrink-0"
+							aria-label="Dismiss error"
+						>
+							<X className="w-3 h-3" />
+						</Button>
+					</>
+				) : (
+					<>
+						<div className="w-4 h-4 shrink-0">
+							<div className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+						</div>
+						<span className="flex-1 truncate text-xs">
+							{state.progressMessage}
+						</span>
+						{state.status !== "success" && (
+							<span className="text-xs tabular-nums text-muted-foreground">
+								{state.progress}%
+							</span>
+						)}
+					</>
+				)}
+			</div>
+			{state.status !== "error" && state.status !== "success" && (
+				<Progress
+					value={state.progress}
+					className="h-1 mt-1.5 [&>div]:bg-primary"
+				/>
+			)}
 		</motion.div>
 	);
 }
@@ -241,15 +521,28 @@ function LoadingIndicator() {
 function ChatInput({
 	onSend,
 	isLoading,
+	onSendImage,
+	imageProcessing,
+	onDismissImageProcessing,
 }: {
 	onSend: (message: string) => void;
 	isLoading: boolean;
+	onSendImage: (file: File) => void;
+	imageProcessing: {
+		status: string;
+		progress: number;
+		progressMessage: string;
+		error: string | null;
+	};
+	onDismissImageProcessing: () => void;
 }) {
 	const [input, setInput] = useState("");
 	const [isFocused, setIsFocused] = useState(false);
 	const [voicePressed, setVoicePressed] = useState(false);
 	const [voiceDialogOpen, setVoiceDialogOpen] = useState(false);
 	const inputRef = useRef<HTMLInputElement>(null);
+	const cameraInputRef = useRef<HTMLInputElement>(null);
+	const uploadInputRef = useRef<HTMLInputElement>(null);
 
 	const handleSubmit = (e?: React.FormEvent) => {
 		e?.preventDefault();
@@ -269,6 +562,20 @@ function ChatInput({
 		setVoiceDialogOpen(false);
 	};
 
+	const handleFileSelect =
+		(type: "camera" | "upload") =>
+		(event: React.ChangeEvent<HTMLInputElement>) => {
+			const file = event.target.files?.[0];
+			if (!file) return;
+
+			if (!file.type.startsWith("image/")) {
+				return;
+			}
+
+			onSendImage(file);
+			event.target.value = "";
+		};
+
 	return (
 		<div className="p-4 border-t border-border/50 bg-background/80 backdrop-blur-xl">
 			<AnimatedDialogContent
@@ -278,11 +585,21 @@ function ChatInput({
 				title="Voice Message"
 				description="Record your voice message and send it."
 			/>
+
+			<AnimatePresence>
+				{imageProcessing.status !== "idle" && (
+					<ImageProcessingIndicator
+						state={imageProcessing}
+						onDismiss={onDismissImageProcessing}
+					/>
+				)}
+			</AnimatePresence>
+
 			<div
 				className={cn(
-					"bg-secondary/60 dark:bg-secondary/40 rounded-2xl p-4 transition-colors duration-300 border",
+					"bg-secondary/60 dark:bg-secondary/40 rounded-2xl p-4 transition-[transform,border-color,box-shadow] duration-300 border mt-2",
 					isFocused
-						? "ring-2 ring-primary/20 border-primary/30"
+						? "ring-2 ring-primary/20 border-primary/30 scale-[1.01]"
 						: "border-border/30",
 				)}
 			>
@@ -300,18 +617,72 @@ function ChatInput({
 					/>
 				</div>
 
+				<input
+					ref={cameraInputRef}
+					type="file"
+					accept="image/*"
+					capture="environment"
+					className="hidden"
+					onChange={handleFileSelect("camera")}
+					disabled={isLoading}
+				/>
+				<input
+					ref={uploadInputRef}
+					type="file"
+					accept="image/*"
+					className="hidden"
+					onChange={handleFileSelect("upload")}
+					disabled={isLoading}
+				/>
+
 				<div className="flex items-center justify-between">
 					<div className="flex items-center gap-2">
-						<Button
-							variant="ghost"
-							size="icon"
-							className="w-8 h-8 rounded-lg bg-muted/60 hover:bg-muted toolbutton"
-						>
-							<HugeiconsIcon
-								icon={Camera01Icon}
-								className="w-4 h-4 text-muted-foreground toolbutton-icon"
-							/>
-						</Button>
+						<DropdownMenu>
+							<DropdownMenuTrigger asChild>
+								<div
+									role="button"
+									tabIndex={0}
+									className={cn(
+										"inline-flex shrink-0 items-center justify-center rounded-lg w-10 h-10",
+										"bg-muted/60 hover:bg-muted text-muted-foreground cursor-pointer",
+										"transition-[transform,background-color,box-shadow] duration-150 ease-out",
+										"active:scale-[0.96]",
+										"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
+										isLoading &&
+											"opacity-50 pointer-events-none cursor-not-allowed",
+									)}
+									aria-label="Add image"
+									onKeyDown={(e) => {
+										if (e.key === "Enter" || e.key === " ") {
+											e.preventDefault();
+										}
+									}}
+								>
+									<HugeiconsIcon
+										icon={Camera01Icon}
+										className="w-4 h-4 toolbutton-icon"
+									/>
+								</div>
+							</DropdownMenuTrigger>
+							<DropdownMenuContent side="top" align="start" className="w-48">
+								<DropdownMenuItem
+									onClick={() => cameraInputRef.current?.click()}
+									disabled={isLoading}
+									className="gap-2"
+								>
+									<Camera className="w-4 h-4" />
+									Take a photo
+								</DropdownMenuItem>
+								<DropdownMenuItem
+									onClick={() => uploadInputRef.current?.click()}
+									disabled={isLoading}
+									className="gap-2"
+								>
+									<Upload className="w-4 h-4" />
+									Upload a photo
+								</DropdownMenuItem>
+							</DropdownMenuContent>
+						</DropdownMenu>
 					</div>
 
 					<div className="flex items-center gap-2">
@@ -320,8 +691,12 @@ function ChatInput({
 							size="icon"
 							onClick={() => setVoiceDialogOpen(true)}
 							className="w-8 h-8 rounded-lg bg-muted/60 hover:bg-muted toolbutton"
+							disabled={isLoading}
 						>
-							<HugeiconsIcon icon={Mic02Icon} className="w-4 h-4 text-muted-foreground toolbutton-icon"/>
+							<HugeiconsIcon
+								icon={Mic02Icon}
+								className="w-4 h-4 text-muted-foreground toolbutton-icon"
+							/>
 						</Button>
 						<Button
 							variant="default"
@@ -356,16 +731,23 @@ function ChatInput({
 }
 
 export function ChatDialog({ open, onOpenChange }: ChatDialogProps) {
-	const { messages, isLoading, sendMessage, clearChat } = useChat();
+	const chat = useChat();
 	const messagesEndRef = useRef<HTMLDivElement>(null);
+	const { imageProcessing, sendImage, retryLastImage, resetState, cleanup } =
+		useImageChatWithSend(chat);
 
 	useEffect(() => {
 		messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
 	});
 
 	const _handleClose = () => {
-		clearChat();
+		cleanup();
+		chat.clearChat();
 		onOpenChange(false);
+	};
+
+	const handleDismissImageProcessing = () => {
+		resetState();
 	};
 
 	return (
@@ -389,22 +771,32 @@ export function ChatDialog({ open, onOpenChange }: ChatDialogProps) {
 				</div>
 
 				<div className="flex-1 flex flex-col overflow-hidden">
-					{messages.length === 0 ? (
+					{chat.messages.length === 0 ? (
 						<WelcomeState />
 					) : (
 						<div className="flex-1 overflow-y-auto p-4 space-y-3">
 							<AnimatePresence mode="popLayout">
-								{messages.map((message) => (
-									<MessageBubble key={message.id} message={message} />
+								{chat.messages.map((message) => (
+									<MessageBubble
+										key={message.id}
+										message={message}
+										onRetry={retryLastImage}
+									/>
 								))}
-								{isLoading && <LoadingIndicator />}
+								{chat.isLoading && <LoadingIndicator />}
 							</AnimatePresence>
 							<div ref={messagesEndRef} />
 						</div>
 					)}
 				</div>
 
-				<ChatInput onSend={sendMessage} isLoading={isLoading} />
+				<ChatInput
+					onSend={chat.sendMessage}
+					isLoading={chat.isLoading}
+					onSendImage={sendImage}
+					imageProcessing={imageProcessing}
+					onDismissImageProcessing={handleDismissImageProcessing}
+				/>
 			</DialogContent>
 		</Dialog>
 	);

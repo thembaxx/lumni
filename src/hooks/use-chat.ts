@@ -8,8 +8,14 @@ export interface ChatMessage {
 	role: "user" | "assistant";
 	content: string;
 	timestamp: Date;
-	type?: "text" | "voice";
+	type?: "text" | "voice" | "image";
 	audioDataUrl?: string;
+	imageUrl?: string;
+	imageFileName?: string;
+	imageFileSize?: number;
+	processingStatus?: "idle" | "sending" | "success" | "error";
+	error?: string | null;
+	retryCount?: number;
 }
 
 const CHAT_SYSTEM_PROMPT = `You are a helpful study assistant and tutor. Your role is to help students understand their subjects, answer questions, explain concepts, and provide guidance on their studies. Be friendly, encouraging, and patient. Use clear explanations with examples when helpful. If you don't know something, admit it and try to help them find the answer.`;

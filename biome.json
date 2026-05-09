@@ -482,6 +482,16 @@
 					}
 				}
 			}
+		},
+		{
+			"includes": ["**/chat-dialog.tsx"],
+			"linter": {
+				"rules": {
+					"performance": {
+						"noImgElement": "off"
+					}
+				}
+			}
 		}
 	],
 	"assist": {
