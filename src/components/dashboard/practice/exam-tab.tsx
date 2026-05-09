@@ -269,5 +269,3 @@ export function ExamTab({ className }: ExamTabProps) {
 		</LazyMotion>
 	);
 }
-
-

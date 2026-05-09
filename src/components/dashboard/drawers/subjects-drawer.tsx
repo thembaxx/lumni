@@ -110,5 +110,3 @@ export function SubjectsDrawer({
 		</Drawer>
 	);
 }
-
-

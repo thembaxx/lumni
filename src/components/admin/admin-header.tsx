@@ -36,7 +36,12 @@ export function AdminHeader({ onLogout }: AdminHeaderProps) {
 								<motion.span
 									initial={{ opacity: 0, scale: 0.8 }}
 									animate={{ opacity: 1, scale: 1 }}
-									transition={{ delay: 0.2, type: "spring", stiffness: 400, damping: 25 }}
+									transition={{
+										delay: 0.2,
+										type: "spring",
+										stiffness: 400,
+										damping: 25,
+									}}
 									className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-500/10 text-green-600 dark:text-green-400 text-xs font-medium"
 								>
 									<ShieldCheck className="w-3 h-3" />
@@ -47,7 +52,12 @@ export function AdminHeader({ onLogout }: AdminHeaderProps) {
 								<motion.span
 									initial={{ opacity: 0, scale: 0.8 }}
 									animate={{ opacity: 1, scale: 1 }}
-									transition={{ delay: 0.2, type: "spring", stiffness: 400, damping: 25 }}
+									transition={{
+										delay: 0.2,
+										type: "spring",
+										stiffness: 400,
+										damping: 25,
+									}}
 									className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-yellow-500/10 text-yellow-600 dark:text-yellow-400 text-xs font-medium"
 								>
 									<User className="w-3 h-3" />
