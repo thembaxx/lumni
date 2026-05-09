@@ -1691,7 +1691,7 @@ export function PeriodicTable() {
               bg-white/5 border border-white/10
               text-white placeholder-gray-400 text-sm
               focus:outline-none focus:border-indigo-500/50 focus:ring-2 focus:ring-indigo-500/20
-              transition-all duration-300
+              transition-colors duration-300
               ${isSearchFocused ? "bg-white/10 border-indigo-500/30" : ""}
             `}
 					/>
@@ -1721,7 +1721,7 @@ export function PeriodicTable() {
 						}
 						className={`
               flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium
-              border transition-all duration-200
+              border transition-colors duration-200
               ${
 								activeCategory === null
 									? "bg-white/20 border-white/30 text-white"
@@ -1747,7 +1747,7 @@ export function PeriodicTable() {
 							}}
 							className={`
               flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium
-              border transition-all duration-200 flex items-center gap-1.5
+              border transition-colors duration-200 flex items-center gap-1.5
               ${
 								activeCategory === key
 									? "bg-white/20 border-white/30 text-white"

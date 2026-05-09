@@ -126,7 +126,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
 
 			<div
 				className={cn(
-					"relative z-10 w-full max-w-md mx-4 overflow-hidden rounded-2xl bg-background shadow-2xl transition-all duration-300",
+					"relative z-10 w-full max-w-md mx-4 overflow-hidden rounded-2xl bg-background shadow-2xl transition-transform duration-300",
 					isAnimating
 						? "scale-95 opacity-0 translate-y-4"
 						: "scale-100 opacity-100 translate-y-0",
@@ -158,7 +158,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
 								<div
 									key={idx}
 									className={cn(
-										"h-1 flex-1 rounded-full transition-all duration-300",
+										"h-1 flex-1 rounded-full transition-colors duration-300",
 										idx <= currentStep ? "bg-primary" : "bg-muted",
 									)}
 								/>

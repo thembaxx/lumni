@@ -121,7 +121,7 @@ function ChatInput({
 		<div className="p-4 border-t border-border/50 bg-background/80 backdrop-blur-xl">
 			<div
 				className={cn(
-					"bg-secondary/60 dark:bg-secondary/40 rounded-2xl p-4 transition-all duration-300 border",
+					"bg-secondary/60 dark:bg-secondary/40 rounded-2xl p-4 transition-colors duration-300 border",
 					isFocused
 						? "ring-2 ring-primary/20 border-primary/30"
 						: "border-border/30",

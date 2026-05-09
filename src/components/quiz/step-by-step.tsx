@@ -54,7 +54,7 @@ export function StepByStep({ steps, className }: StepByStepProps) {
 						size="icon-sm"
 						onClick={nextStep}
 						disabled={currentStep === steps.length - 1}
-						className="h-8 w-8 hover:bg-primary/10 bg-primary/5 transition-all active:scale-95"
+						className="h-8 w-8 hover:bg-primary/10 bg-primary/5 transition-colors active:scale-[0.96]"
 					>
 						<ChevronRight className="w-4 h-4" />
 					</Button>

@@ -20,7 +20,7 @@ export function Menu({ children }: MenuProps) {
 	return (
 		<Drawer direction="bottom">
 			<DrawerTrigger asChild>
-				<button className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center hover:bg-accent transition-all duration-200 btn-ghost-hover focus-ring focus-visible:outline-none">
+				<button className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center hover:bg-accent transition-colors duration-200 btn-ghost-hover focus-ring focus-visible:outline-none">
 					<HugeiconsIcon
 						icon={Menu09Icon}
 						className="w-4 h-4 transition-transform duration-200"

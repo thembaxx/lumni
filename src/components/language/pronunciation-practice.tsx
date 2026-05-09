@@ -123,7 +123,7 @@ export function PronunciationPractice() {
 					</div>
 					<div className="h-2 bg-muted rounded-full overflow-hidden">
 						<div
-							className="h-full bg-primary transition-all"
+							className="h-full bg-primary transition-[width] duration-300"
 							style={{ width: `${progress}%` }}
 						/>
 					</div>

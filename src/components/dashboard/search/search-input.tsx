@@ -23,7 +23,7 @@ export function SearchInput({ value, onChange }: SearchInputProps) {
 	return (
 		<div
 			className={cn(
-				"bg-secondary/60 dark:bg-secondary/40 rounded-2xl p-4 animate-fade-in-up delay-400 transition-all duration-300 border border-border/30",
+				"bg-secondary/60 dark:bg-secondary/40 rounded-2xl p-4 animate-fade-in-up delay-400 transition-colors duration-300 border border-border/30",
 				isFocused && "ring-2 ring-primary/20 border-primary/30",
 			)}
 		>

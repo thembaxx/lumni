@@ -160,7 +160,7 @@ export function AiSolver() {
 								}}
 								appearance={{
 									button:
-										"bg-primary/20 hover:bg-primary/30 text-primary h-10 px-4 py-2 text-sm border border-primary/20 w-full transition-all",
+										"bg-primary/20 hover:bg-primary/30 text-primary h-10 px-4 py-2 text-sm border border-primary/20 w-full transition-colors",
 									allowedContent: "hidden",
 								}}
 								content={{
@@ -203,7 +203,7 @@ export function AiSolver() {
 						onClick={handleSolve}
 						disabled={loading || (!question && !imageUrl)}
 						className={cn(
-							"w-full gap-2 h-11 text-base font-medium transition-all shadow-lg shadow-primary/20",
+							"w-full gap-2 h-11 text-base font-medium transition-colors shadow-lg shadow-primary/20",
 							loading && "animate-pulse",
 						)}
 					>
