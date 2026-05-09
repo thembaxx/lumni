@@ -93,11 +93,11 @@ export function SubjectsDrawer({
 									className="w-full justify-start h-auto p-3 rounded-lg hover:bg-secondary"
 									onClick={() => handleSelect(subject.name)}
 								>
-									<div className="text-left">
+									<div className="text-left w-full overflow-hidden flex flex-col">
 										<p className="font-medium text-foreground">
 											{subject.name}
 										</p>
-										<p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">
+										<p className="text-xs text-muted-foreground mt-0.5 line-clamp-2 whitespace-pre-line text-pretty">
 											{subject.description}
 										</p>
 									</div>

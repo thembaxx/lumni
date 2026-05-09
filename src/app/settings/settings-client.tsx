@@ -2,8 +2,6 @@
 
 import {
 	ArrowLeftIcon,
-	NotificationIcon,
-	SaveIcon,
 	Settings01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -174,7 +172,6 @@ function SettingsContent() {
 									saveToStorage(BETA_FEATURES_KEY, betaFeatures);
 								}}
 							>
-								<HugeiconsIcon icon={SaveIcon} className="mr-2 size-4" />
 								Save Changes
 							</Button>
 						</div>

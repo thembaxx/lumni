@@ -12,6 +12,8 @@ import {
 	EmptyMedia,
 	EmptyTitle,
 } from "@/components/ui/empty";
+import { ArrowDown01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 
 interface FlashcardsIdleProps {
 	onSelect: (subject: string) => void;
@@ -37,7 +39,12 @@ export function FlashcardsIdle({ onSelect }: FlashcardsIdleProps) {
 						</EmptyHeader>
 						<EmptyContent>
 							<SubjectsDrawer onSelect={onSelect}>
-								<Button>Choose Subject</Button>
+								<Button>
+									Choose Subject
+									<HugeiconsIcon
+										icon={ArrowDown01Icon}
+										className="w-4 h-4 ml-1" />
+								</Button>
 							</SubjectsDrawer>
 						</EmptyContent>
 					</Empty>
