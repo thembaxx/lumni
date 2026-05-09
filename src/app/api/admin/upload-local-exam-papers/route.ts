@@ -1,8 +1,8 @@
 import { randomUUID } from "crypto";
 import fs from "fs";
+import { NextRequest, NextResponse } from "next/server";
 import path from "path";
 import { UTApi, UTFile } from "uploadthing/server";
-import { NextRequest, NextResponse } from "next/server";
 import { getExamsDb, insertExamPaper } from "@/lib/db/exams";
 
 const FOLDER_PATH = path.join(process.cwd(), "downloads", "exam-papers-2025");
@@ -108,7 +108,9 @@ export async function POST(request: NextRequest) {
 			);
 		}
 
-		const files = fs.readdirSync(targetFolder).filter((f) => f.endsWith(".pdf"));
+		const files = fs
+			.readdirSync(targetFolder)
+			.filter((f) => f.endsWith(".pdf"));
 
 		if (files.length === 0) {
 			return NextResponse.json(
@@ -135,7 +137,10 @@ export async function POST(request: NextRequest) {
 
 			const filePath = path.join(targetFolder, fileName);
 
-			const uploadResult = await uploadToUploadThing(filePath, originalFileName);
+			const uploadResult = await uploadToUploadThing(
+				filePath,
+				originalFileName,
+			);
 
 			if (!uploadResult) {
 				errors.push(`${fileName}: Upload to uploadthing failed`);
@@ -156,7 +161,12 @@ export async function POST(request: NextRequest) {
 					`UPDATE exam_papers 
            SET file_url = ?, file_key = ?, original_file_name = ?, uploaded_at = datetime('now')
            WHERE id = ?`,
-				).run(uploadResult.url, uploadResult.key, originalFileName, existingPaper.id);
+				).run(
+					uploadResult.url,
+					uploadResult.key,
+					originalFileName,
+					existingPaper.id,
+				);
 				updated++;
 			} else {
 				const id = randomUUID();

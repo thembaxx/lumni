@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { LogOut } from "lucide-react";
+import { LogOut, ShieldCheck, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface AdminHeaderProps {
@@ -9,6 +9,10 @@ interface AdminHeaderProps {
 }
 
 export function AdminHeader({ onLogout }: AdminHeaderProps) {
+	const isAdmin =
+		typeof window !== "undefined" &&
+		localStorage.getItem("admin_access") === "full";
+
 	return (
 		<motion.header
 			className="sticky top-0 z-10 bg-background border-b px-4 py-3"
@@ -17,23 +21,31 @@ export function AdminHeader({ onLogout }: AdminHeaderProps) {
 			transition={{ duration: 0.3 }}
 		>
 			<div className="flex items-center justify-between">
-				<div>
-					<motion.h1
-						className="text-lg font-semibold"
+				<div className="flex items-center gap-3">
+					<motion.div
 						initial={{ opacity: 0, x: -10 }}
 						animate={{ opacity: 1, x: 0 }}
 						transition={{ delay: 0.1 }}
 					>
-						Admin
-					</motion.h1>
-					<motion.p
-						className="text-xs text-muted-foreground"
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
-						transition={{ delay: 0.15 }}
-					>
-						Manage exam papers
-					</motion.p>
+						<h1 className="text-lg font-semibold">Admin</h1>
+						<div className="flex items-center gap-2">
+							<p className="text-xs text-muted-foreground">
+								Manage exam papers
+							</p>
+							{isAdmin && (
+								<span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-500/10 text-green-600 dark:text-green-400 text-xs font-medium">
+									<ShieldCheck className="w-3 h-3" />
+									Full Access
+								</span>
+							)}
+							{!isAdmin && (
+								<span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-yellow-500/10 text-yellow-600 dark:text-yellow-400 text-xs font-medium">
+									<User className="w-3 h-3" />
+									Limited
+								</span>
+							)}
+						</div>
+					</motion.div>
 				</div>
 				<motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
 					<Button

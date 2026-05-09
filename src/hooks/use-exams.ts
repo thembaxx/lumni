@@ -11,7 +11,7 @@ import type { ExamFilter, ExamGroup, ExamPaper } from "@/types/exam";
 export function useExams(filter: ExamFilter) {
 	const [exams, setExams] = useState<ExamPaper[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
-	const [error, setError] = useState<string | null>(null);
+	const [error, _setError] = useState<string | null>(null);
 
 	useEffect(() => {
 		async function fetchExams() {

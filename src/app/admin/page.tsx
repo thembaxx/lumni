@@ -12,6 +12,7 @@ import { useCallback, useEffect, useState } from "react";
 import { AdminDashboard } from "@/components/admin/admin-dashboard";
 import { LoginForm } from "@/components/admin/login-form";
 import { Button } from "@/components/ui/button";
+import { Toaster, ToastProvider } from "@/components/ui/toast";
 
 function Preloader({ onComplete }: { onComplete: () => void }) {
 	const [progress, setProgress] = useState(0);
@@ -85,60 +86,68 @@ export default function AdminPage() {
 		setShowPreloader(false);
 	};
 
+	const handleLoginSuccess = () => {
+		setIsAuthenticated(true);
+	};
+
 	if (showPreloader) {
 		return <Preloader onComplete={handlePreloaderComplete} />;
 	}
 
-	if (!isAuthenticated) {
-		return (
-			<AnimatePresence>
-				<motion.div
-					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-					transition={{ duration: 0.3 }}
-				>
-					<LoginForm onSuccess={() => setIsAuthenticated(true)} />
-				</motion.div>
-			</AnimatePresence>
-		);
-	}
-
 	return (
-		<AnimatePresence>
-			<motion.div
-				animate={{ opacity: 1 }}
-				transition={{ duration: 0.3 }}
-				initial={false}
-				className="relative min-h-screen"
-			>
-				<motion.div
-					whileHover={{ scale: 1.05 }}
-					whileTap={{ scale: 0.95 }}
-					className="fixed bottom-6 right-6 z-50"
-				>
-					<Button
-						size="icon-lg"
-						variant={
-							seedStatus === "success"
-								? "secondary"
-								: seedStatus === "error"
-									? "destructive"
-									: "default"
-						}
-						onClick={handleSeed}
-						disabled={isSeeding}
-						className="shadow-lg shadow-shadow/20 rounded-full h-14 w-14"
-						title="Seed Database"
+		<ToastProvider>
+			<AnimatePresence>
+				{!isAuthenticated && (
+					<motion.div
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						transition={{ duration: 0.3 }}
 					>
-						{isSeeding ? (
-							<Loader2 className="size-5 animate-spin" />
-						) : (
-							<Database className="size-5" />
-						)}
-					</Button>
-				</motion.div>
-				<AdminDashboard />
-			</motion.div>
-		</AnimatePresence>
+						<LoginForm onSuccess={handleLoginSuccess} />
+					</motion.div>
+				)}
+			</AnimatePresence>
+
+			{isAuthenticated && (
+				<AnimatePresence>
+					<motion.div
+						animate={{ opacity: 1 }}
+						transition={{ duration: 0.3 }}
+						initial={false}
+						className="relative min-h-screen"
+					>
+						<motion.div
+							whileHover={{ scale: 1.05 }}
+							whileTap={{ scale: 0.95 }}
+							className="fixed bottom-6 right-6 z-50"
+						>
+							<Button
+								size="icon-lg"
+								variant={
+									seedStatus === "success"
+										? "secondary"
+										: seedStatus === "error"
+											? "destructive"
+											: "default"
+								}
+								onClick={handleSeed}
+								disabled={isSeeding}
+								className="shadow-lg shadow-shadow/20 rounded-full h-14 w-14"
+								title="Seed Database"
+							>
+								{isSeeding ? (
+									<Loader2 className="size-5 animate-spin" />
+								) : (
+									<Database className="size-5" />
+								)}
+							</Button>
+						</motion.div>
+						<AdminDashboard />
+					</motion.div>
+				</AnimatePresence>
+			)}
+
+			<Toaster />
+		</ToastProvider>
 	);
 }

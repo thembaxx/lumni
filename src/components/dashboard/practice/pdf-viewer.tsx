@@ -15,10 +15,10 @@ import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
 import { AnimatePresence, motion } from "motion/react";
-import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
 import type { ExamPaper } from "@/types/exam";
 
 interface PdfViewerProps {
@@ -165,10 +165,7 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 						<h2 className="text-sm font-semibold truncate text-wrap balance">
 							{exam.title}
 						</h2>
-						<Badge
-							variant="secondary"
-							className="text-[10px] px-1.5 shrink-0"
-						>
+						<Badge variant="secondary" className="text-[10px] px-1.5 shrink-0">
 							{exam.year}
 						</Badge>
 					</div>
@@ -231,15 +228,17 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 					<div className="shrink-0 border-t bg-background safe-pb">
 						<div
 							className="flex items-center gap-0.5 px-2 py-2 overflow-x-auto scrollbar-hide [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [-ms-overflow-style:none]"
-							style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" } as React.CSSProperties}
+							style={
+								{
+									scrollbarWidth: "none",
+									WebkitOverflowScrolling: "touch",
+								} as React.CSSProperties
+							}
 						>
 							<Button
 								variant="ghost"
 								size="icon"
-								className={cn(
-									"h-11 w-11 shrink-0 rounded-full",
-									controlTap,
-								)}
+								className={cn("h-11 w-11 shrink-0 rounded-full", controlTap)}
 								onClick={handlePrevPage}
 								disabled={pdfPage <= 1 || totalPages === 0}
 								aria-label="Previous page"
@@ -260,10 +259,7 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 							<Button
 								variant="ghost"
 								size="icon"
-								className={cn(
-									"h-11 w-11 shrink-0 rounded-full",
-									controlTap,
-								)}
+								className={cn("h-11 w-11 shrink-0 rounded-full", controlTap)}
 								onClick={handleNextPage}
 								disabled={pdfPage >= totalPages || totalPages === 0}
 								aria-label="Next page"
@@ -276,10 +272,7 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 							<Button
 								variant="ghost"
 								size="icon"
-								className={cn(
-									"h-11 w-11 shrink-0 rounded-full",
-									controlTap,
-								)}
+								className={cn("h-11 w-11 shrink-0 rounded-full", controlTap)}
 								onClick={handleZoomOut}
 								disabled={!canZoomOut}
 								aria-label="Zoom out"
@@ -296,10 +289,7 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 							<Button
 								variant="ghost"
 								size="icon"
-								className={cn(
-									"h-11 w-11 shrink-0 rounded-full",
-									controlTap,
-								)}
+								className={cn("h-11 w-11 shrink-0 rounded-full", controlTap)}
 								onClick={handleZoomIn}
 								disabled={!canZoomIn}
 								aria-label="Zoom in"
@@ -350,10 +340,7 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 							<Button
 								variant="ghost"
 								size="icon"
-								className={cn(
-									"h-11 w-11 shrink-0 rounded-full",
-									controlTap,
-								)}
+								className={cn("h-11 w-11 shrink-0 rounded-full", controlTap)}
 								onClick={handleDownload}
 								aria-label="Download PDF"
 							>

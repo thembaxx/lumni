@@ -6,7 +6,8 @@ export async function POST() {
 	try {
 		const sql = getSql();
 
-		const existingResult = await sql`SELECT id FROM users WHERE email = ${"admin@lumni.com"}`;
+		const existingResult =
+			await sql`SELECT id FROM users WHERE email = ${"admin@lumni.com"}`;
 
 		if (existingResult.length > 0) {
 			return NextResponse.json({
