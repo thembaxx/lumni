@@ -8,6 +8,8 @@ export interface ChatMessage {
 	role: "user" | "assistant";
 	content: string;
 	timestamp: Date;
+	type?: "text" | "voice";
+	audioDataUrl?: string;
 }
 
 const CHAT_SYSTEM_PROMPT = `You are a helpful study assistant and tutor. Your role is to help students understand their subjects, answer questions, explain concepts, and provide guidance on their studies. Be friendly, encouraging, and patient. Use clear explanations with examples when helpful. If you don't know something, admit it and try to help them find the answer.`;
@@ -21,11 +23,14 @@ export function useChat() {
 		async (content: string) => {
 			if (!content.trim()) return;
 
+			const isVoice = content.startsWith("data:audio/");
 			const userMessage: ChatMessage = {
 				id: crypto.randomUUID(),
 				role: "user",
 				content: content.trim(),
 				timestamp: new Date(),
+				type: isVoice ? "voice" : "text",
+				audioDataUrl: isVoice ? content.trim() : undefined,
 			};
 
 			setMessages((prev) => [...prev, userMessage]);
