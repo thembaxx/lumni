@@ -1,12 +1,38 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import examData from "@/data/exams/index.json";
+import { getExamPapersWithFallback, checkAndPopulateExamsDb } from "@/lib/server";
 import type { ExamFilter, ExamGroup, ExamPaper } from "@/types/exam";
 
 export function useExams(filter: ExamFilter) {
-	const exams = useMemo(() => {
-		return examData.exams as ExamPaper[];
+	const [exams, setExams] = useState<ExamPaper[]>([]);
+	const [isLoading, setIsLoading] = useState(true);
+	const [error, setError] = useState<string | null>(null);
+
+	useEffect(() => {
+		async function fetchExams() {
+			try {
+				setIsLoading(true);
+
+				await checkAndPopulateExamsDb();
+
+				const dbExams = await getExamPapersWithFallback();
+
+				if (dbExams && dbExams.length > 0) {
+					setExams(dbExams);
+				} else {
+					setExams(examData.exams as ExamPaper[]);
+				}
+			} catch (err) {
+				console.warn("Database unavailable, using fallback data:", err instanceof Error ? err.message : "Unknown error");
+				setExams(examData.exams as ExamPaper[]);
+			} finally {
+				setIsLoading(false);
+			}
+		}
+
+		fetchExams();
 	}, []);
 
 	const filteredExams = useMemo(() => {
@@ -69,8 +95,8 @@ export function useExams(filter: ExamFilter) {
 	return {
 		exams: filteredExams,
 		groupedExams,
-		isLoading: false,
-		error: null,
+		isLoading,
+		error,
 	};
 }
 

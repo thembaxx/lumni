@@ -7,9 +7,15 @@ export {
 	getUserAccounts,
 	toggleUserSubject,
 } from "./actions";
-
+export {
+	getAllExamPapers,
+	getExamPapersWithFallback,
+	checkAndPopulateExamsDb,
+	uploadExamPaper,
+	getExamPaperUrl,
+	deleteExamPaper,
+} from "./exam-paper-actions";
 export { fetchQuestions } from "./quiz-actions";
-
 export {
 	checkSubjectStatus,
 	refreshSubject,

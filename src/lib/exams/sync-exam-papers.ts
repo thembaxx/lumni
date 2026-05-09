@@ -1,4 +1,4 @@
-import { existsSync, readdirSync, readFileSync, writeFileSync } from "fs";
+import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "path";
 import { UTApi, UTFile } from "uploadthing/server";
 import {
@@ -185,6 +185,8 @@ async function syncExamPapersInternal(
 	let skipped = 0;
 
 	for (const { filename, parsed } of toUpload) {
+		if (!parsed) continue;
+
 		const trackKey = `${parsed.year}_${parsed.subjectCode}_p${parsed.paperNumber}_${parsed.type}`;
 		if (!force && trackerSet.has(trackKey)) {
 			skipped++;
@@ -221,15 +223,6 @@ async function syncExamPapersInternal(
 					fileKey,
 					originalFileName: filename,
 				});
-
-				const existingMemoId = findPaperForMemo(
-					entry.subjectCode,
-					entry.year,
-					entry.paperNumber,
-				);
-				if (existingMemoId) {
-					// Paper was inserted before this memo — no reverse link needed
-				}
 			} else {
 				const existingPaperId = findPaperForMemo(
 					parsed.subjectCode,

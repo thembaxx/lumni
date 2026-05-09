@@ -19,6 +19,8 @@ export interface ExamPaper {
 	localPath?: string;
 	downloadedAt?: string;
 	src?: string;
+	fileUrl?: string;
+	fileKey?: string;
 }
 
 export interface ExamFilter {
