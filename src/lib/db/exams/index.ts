@@ -1,4 +1,4 @@
-import { Database } from "bun:sqlite";
+import Database from "better-sqlite3";
 import { join } from "path";
 
 let db: Database | null = null;
