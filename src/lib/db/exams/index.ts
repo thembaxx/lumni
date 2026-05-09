@@ -38,13 +38,22 @@ export function getExamsDb(): DatabaseType {
 			FOREIGN KEY (memo_id) REFERENCES exam_papers(id)
 		);
 
+		CREATE UNIQUE INDEX IF NOT EXISTS idx_exam_papers_unique
+			ON exam_papers(subject_code, year, paper_number, type);
 		CREATE INDEX IF NOT EXISTS idx_exam_papers_subject_code
 			ON exam_papers(subject_code);
 		CREATE INDEX IF NOT EXISTS idx_exam_papers_subject_year
 			ON exam_papers(subject_code, year);
-		CREATE INDEX IF NOT EXISTS idx_exam_papers_type
-			ON exam_papers(type);
 	`);
+
+	// Migration: add unique index if it doesn't exist (existing DBs won't have it)
+	try {
+		db.exec(
+			"CREATE UNIQUE INDEX IF NOT EXISTS idx_exam_papers_unique ON exam_papers(subject_code, year, paper_number, type)",
+		);
+	} catch {
+		// Index already exists — ignore
+	}
 
 	// Migration: add memo_id if it doesn't exist (existing DBs won't have it)
 	try {
@@ -107,6 +116,17 @@ export function insertExamPaper(record: {
 	originalFileName: string;
 }) {
 	const db = getExamsDb();
+
+	// Check for existing exam paper to prevent duplicates
+	const existing =
+		record.type === "paper"
+			? findPaperForMemo(record.subjectCode, record.year, record.paperNumber)
+			: findMemoForPaper(record.subjectCode, record.year, record.paperNumber);
+
+	if (existing) {
+		return; // Skip duplicate
+	}
+
 	db.prepare(
 		`INSERT INTO exam_papers (
 			id, subject_code, subject_name, year, paper_number,
