@@ -82,7 +82,7 @@ export function StatsCards({
 								<stat.icon className={`w-5 h-5 ${stat.colorClass}`} />
 							</m.div>
 							<div className="text-center">
-								<p className="text-2xl font-bold">
+								<p className="text-2xl font-bold tabular-nums">
 									<AnimatedValue
 										target={stat.value}
 										delay={index * 100 + 400}

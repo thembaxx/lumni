@@ -274,7 +274,7 @@ export function QuestionCard({
 								key="hint"
 								initial={{ opacity: 0, height: 0 }}
 								animate={{ opacity: 1, height: "auto" }}
-								exit={{ opacity: 0, height: 0 }}
+								exit={{ opacity: 0, height: 0, y: -4 }}
 								className="overflow-hidden rounded-lg bg-warning/5 p-4 text-warning"
 							>
 								<p className="font-medium">Hint:</p>
@@ -289,7 +289,7 @@ export function QuestionCard({
 								key="explanation"
 								initial={{ opacity: 0, scale: 0.95, y: -8 }}
 								animate={{ opacity: 1, scale: 1, y: 0 }}
-								exit={{ opacity: 0, scale: 0.95, y: -8 }}
+								exit={{ opacity: 0, scale: 0.95, y: -4 }}
 								className={cn(
 									"rounded-lg p-4 space-y-3",
 									state.isCorrect

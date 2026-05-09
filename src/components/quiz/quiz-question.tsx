@@ -49,7 +49,7 @@ export function QuizQuestion({
 							alt="Question diagram"
 							width={400}
 							height={300}
-							className="max-w-full h-auto rounded-lg"
+							className="max-w-full h-auto rounded-lg outline outline-[length] outline-black/10 dark:outline-white/10"
 						/>
 					</div>
 				)}
@@ -93,7 +93,7 @@ export function QuizQuestion({
 						}
 
 						return (
-							<m.div key={key} whileTap={{ scale: 0.98 }}>
+							<m.div key={key} whileTap={{ scale: 0.96 }}>
 								<Button
 									variant="outline"
 									className={buttonClass}

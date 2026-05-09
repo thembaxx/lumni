@@ -121,7 +121,7 @@ export function QuizResultsCard({
 						>
 							<div className="p-4 rounded-lg bg-muted">
 								<motion.p
-									className="text-2xl font-bold"
+									className="text-2xl font-bold tabular-nums"
 									initial={{ opacity: 0 }}
 									animate={{ opacity: 1 }}
 									transition={{ delay: 0.3 }}
@@ -138,7 +138,7 @@ export function QuizResultsCard({
 							>
 								<p
 									className={cn(
-										"text-2xl font-bold",
+										"text-2xl font-bold tabular-nums",
 										isGreatScore && "text-green-500",
 									)}
 								>
@@ -154,7 +154,7 @@ export function QuizResultsCard({
 							>
 								<p
 									className={cn(
-										"text-2xl font-bold",
+										"text-2xl font-bold tabular-nums",
 										isGreatScore && "text-green-500",
 									)}
 								>

@@ -644,7 +644,7 @@
 }
 
 .quick-action-btn:active {
-	transform: translateY(0) scale(0.97);
+	transform: translateY(0) scale-[0.96];
 	box-shadow: none;
 }
 
