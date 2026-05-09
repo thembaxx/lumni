@@ -20,6 +20,10 @@ import { useExams } from "@/hooks/use-exams";
 import { cn } from "@/lib/utils";
 import { ExamCard } from "./exam-card";
 import { GroupSkeleton } from "./exam-card-skeleton";
+import {
+	ArrowDown01Icon
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 
 const YEARS = [2025, 2024, 2023, 2022, 2021] as const;
 
@@ -60,14 +64,14 @@ export function ExamTab({ className }: ExamTabProps) {
 
 	return (
 		<LazyMotion features={domAnimation}>
-			<div className={cn("w-full px-4 pb-6 space-y-8", className)}>
+			<div className={cn("w-full px-4 pb-6 flex flex-col h-full space-y-8", className)}>
 				<m.div
 					initial={{ opacity: 0, y: -10 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.3, ease: "easeOut" }}
-					className="space-y-3"
+					className="space-y-6"
 				>
-					<div className="relative">
+					<div className="relative space-y-4 border rounded-2xl">
 						<Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/60" />
 						<Input
 							type="text"
@@ -97,13 +101,14 @@ export function ExamTab({ className }: ExamTabProps) {
 							<Button
 								variant={selectedSubject ? "default" : "secondary"}
 								size="sm"
-								className="h-7"
+								className="h-8 border"
 							>
 								{selectedSubject || "Subject"}
+								<HugeiconsIcon icon={ArrowDown01Icon} className="w-4 h-4 ml-1" />
 							</Button>
 						</SubjectsDrawer>
 
-						<ButtonGroup>
+						<ButtonGroup className="border rounded-full h-8">
 							<Button
 								variant={selectedSession === "all" ? "default" : "secondary"}
 								size="sm"
@@ -116,14 +121,14 @@ export function ExamTab({ className }: ExamTabProps) {
 								size="sm"
 								onClick={() => setSelectedSession("may")}
 							>
-								May/Jun
+								Jun
 							</Button>
 							<Button
 								variant={selectedSession === "nov" ? "default" : "secondary"}
 								size="sm"
 								onClick={() => setSelectedSession("nov")}
 							>
-								Nov/Dec
+								Nov
 							</Button>
 						</ButtonGroup>
 
@@ -167,103 +172,107 @@ export function ExamTab({ className }: ExamTabProps) {
 				</m.div>
 
 				<AnimatePresence mode="wait">
-					{isLoading ? (
-						<m.div
-							initial={{ opacity: 0 }}
-							animate={{ opacity: 1 }}
-							exit={{ opacity: 0 }}
-							transition={{ staggerChildren: 0.08 }}
-							className="space-y-5"
-						>
-							<GroupSkeleton />
-							<GroupSkeleton />
-							<GroupSkeleton />
-						</m.div>
-					) : error ? (
-						<m.div
-							initial={{ opacity: 0, y: 10 }}
-							animate={{ opacity: 1, y: 0 }}
-						>
-							<Empty className="border border-dashed border-destructive/30">
-								<EmptyHeader>
-									<EmptyMedia variant="icon">
-										<BookOpen className="w-6 h-6 text-destructive" />
-									</EmptyMedia>
-									<EmptyTitle>Failed to load</EmptyTitle>
-									<EmptyDescription>Please try again.</EmptyDescription>
-								</EmptyHeader>
-							</Empty>
-						</m.div>
-					) : exams.length === 0 ? (
-						<m.div
-							initial={{ opacity: 0, y: 10 }}
-							animate={{ opacity: 1, y: 0 }}
-						>
-							<Empty className="border border-dashed">
-								<EmptyHeader>
-									<EmptyMedia variant="icon">
-										<BookOpen className="w-8 h-8 text-muted-foreground/40" />
-									</EmptyMedia>
-									<EmptyTitle className="text-base">No exams found</EmptyTitle>
-									<EmptyDescription>
-										{hasActiveFilters
-											? "Try adjusting your filters"
-											: "No exams available yet."}
-									</EmptyDescription>
-								</EmptyHeader>
-								{hasActiveFilters && (
-									<EmptyContent>
-										<Button variant="link" size="sm" onClick={clearFilters}>
-											Clear filters
-										</Button>
-									</EmptyContent>
-								)}
-							</Empty>
-						</m.div>
-					) : (
-						<m.div
-							initial={{ opacity: 0 }}
-							animate={{ opacity: 1 }}
-							transition={{ staggerChildren: 0.08 }}
-							className="space-y-5"
-						>
-							{groupedExams.map((group, groupIndex) => (
-								<m.div
-									key={group.subject}
-									initial={{ opacity: 0, y: 8 }}
-									animate={{ opacity: 1, y: 0 }}
-									transition={{ delay: groupIndex * 0.08 }}
-									className="space-y-2.5"
-								>
-									<div className="flex items-center justify-between px-0.5">
-										<h3 className="text-sm font-semibold text-foreground">
-											{group.subject}
-										</h3>
-										<Badge
-											variant="secondary"
-											className="text-[10px] font-medium px-2 py-0"
-										>
-											{group.papers.length}
-										</Badge>
-									</div>
-									<div className="grid gap-2">
-										{group.papers.slice(0, 4).map((exam, examIndex) => (
-											<ExamCard key={exam.id} exam={exam} />
-										))}
-										{group.papers.length > 4 && (
-											<Button
-												variant="secondary"
-												size="sm"
-												className="h-9 text-xs"
-											>
-												+{group.papers.length - 4} more
+					<div className="grow">
+						{isLoading ? (
+							<m.div
+								initial={{ opacity: 0 }}
+								animate={{ opacity: 1 }}
+								exit={{ opacity: 0 }}
+								transition={{ staggerChildren: 0.08 }}
+								className="space-y-5 grow"
+							>
+								<GroupSkeleton />
+								<GroupSkeleton />
+								<GroupSkeleton />
+							</m.div>
+						) : error ? (
+							<m.div
+								initial={{ opacity: 0, y: 10 }}
+								animate={{ opacity: 1, y: 0 }}
+								className="grow"
+							>
+								<Empty className="border border-dashed border-destructive/30">
+									<EmptyHeader>
+										<EmptyMedia variant="icon">
+											<BookOpen className="w-6 h-6 text-destructive" />
+										</EmptyMedia>
+										<EmptyTitle>Failed to load</EmptyTitle>
+										<EmptyDescription>Please try again.</EmptyDescription>
+									</EmptyHeader>
+								</Empty>
+							</m.div>
+						) : exams.length === 0 ? (
+							<m.div
+								initial={{ opacity: 0, y: 10 }}
+								animate={{ opacity: 1, y: 0 }}
+								className="grow"
+							>
+								<Empty className="border border-dashed">
+									<EmptyHeader>
+										<EmptyMedia variant="icon">
+											<BookOpen className="w-8 h-8 text-muted-foreground/40" />
+										</EmptyMedia>
+										<EmptyTitle className="text-base">No exams found</EmptyTitle>
+										<EmptyDescription>
+											{hasActiveFilters
+												? "Try adjusting your filters"
+												: "No exams available yet."}
+										</EmptyDescription>
+									</EmptyHeader>
+									{hasActiveFilters && (
+										<EmptyContent>
+											<Button variant="link" size="sm" onClick={clearFilters}>
+												Clear filters
 											</Button>
-										)}
-									</div>
-								</m.div>
-							))}
-						</m.div>
-					)}
+										</EmptyContent>
+									)}
+								</Empty>
+							</m.div>
+						) : (
+							<m.div
+								initial={{ opacity: 0 }}
+								animate={{ opacity: 1 }}
+								transition={{ staggerChildren: 0.08 }}
+								className="space-y-5 grow"
+							>
+								{groupedExams.map((group, groupIndex) => (
+									<m.div
+										key={group.subject}
+										initial={{ opacity: 0, y: 8 }}
+										animate={{ opacity: 1, y: 0 }}
+										transition={{ delay: groupIndex * 0.08 }}
+										className="space-y-2.5"
+									>
+										<div className="flex items-center justify-between px-0.5 gap-4">
+											<h3 className="text-lg font-semibold text-foreground text-pretty">
+												{group.subject}
+											</h3>
+											<Badge
+												variant="secondary"
+												className="text-[10px] font-medium px-2 py-0"
+											>
+												{group.papers.length}
+											</Badge>
+										</div>
+										<div className="grid gap-2">
+											{group.papers.slice(0, 4).map((exam, examIndex) => (
+												<ExamCard key={exam.id} exam={exam} />
+											))}
+											{group.papers.length > 4 && (
+												<Button
+													variant="secondary"
+													size="sm"
+													className="h-9 text-xs"
+												>
+													+{group.papers.length - 4} more
+												</Button>
+											)}
+										</div>
+									</m.div>
+								))}
+							</m.div>
+						)}
+					</div>
 				</AnimatePresence>
 			</div>
 		</LazyMotion>

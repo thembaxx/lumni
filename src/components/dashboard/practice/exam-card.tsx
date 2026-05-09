@@ -31,11 +31,11 @@ export function ExamCard({ exam }: ExamCardProps) {
 				initial={{ opacity: 0, y: 6 }}
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.25 }}
-				className="flex items-center justify-between p-3 rounded-xl bg-secondary/40 border-0 hover:bg-secondary/60 transition-colors"
+				className="flex flex-col w-full justify-between p-3 gap-3 overflow-hidden rounded-xl bg-secondary/40 border-0 hover:bg-secondary/60 transition-colors"
 			>
 				<div className="flex-1 min-w-0 pr-2">
 					<p className="text-sm font-medium truncate">{exam.title}</p>
-					<div className="flex items-center gap-1.5 mt-0.5">
+					<div className="flex items-center gap-1.5 mt-1">
 						<span className="text-xs text-muted-foreground">{exam.year}</span>
 						<span className="text-xs text-muted-foreground/50">·</span>
 						<span
@@ -56,18 +56,18 @@ export function ExamCard({ exam }: ExamCardProps) {
 								</span>
 							</>
 						)}
+						{exam.downloadedAt ? (
+							<Badge
+								variant="outline"
+								className="text-[9px] h-5 px-1.5 text-muted-foreground/70"
+							>
+								Saved
+							</Badge>
+						) : null}
 					</div>
 				</div>
 
 				<div className="flex items-center gap-1.5 shrink-0">
-					{exam.downloadedAt ? (
-						<Badge
-							variant="outline"
-							className="text-[9px] h-5 px-1.5 text-muted-foreground/70"
-						>
-							Saved
-						</Badge>
-					) : null}
 					<Button
 						variant="default"
 						size="sm"

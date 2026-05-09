@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { LottieWrapper } from "@/components/lottie";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -10,15 +10,18 @@ interface LoadingScreenProps {
 	duration?: number;
 	redirectTo?: string;
 	useLottie?: boolean;
+	skipDelay?: number;
 }
 
 export function LoadingScreen({
 	duration = 2000,
 	redirectTo = "/dashboard",
 	useLottie = true,
+	skipDelay = 5000,
 }: LoadingScreenProps) {
 	const [progress, setProgress] = useState(0);
 	const [isVisible, setIsVisible] = useState(true);
+	const [showSkipButton, setShowSkipButton] = useState(false);
 	const router = useRouter();
 
 	const handleRedirect = useCallback(() => {
@@ -30,6 +33,41 @@ export function LoadingScreen({
 		setProgress(100);
 		handleRedirect();
 	};
+
+	useEffect(() => {
+		const startTime = performance.now();
+
+		const animate = (currentTime: number) => {
+			const elapsed = currentTime - startTime;
+			const newProgress = Math.min((elapsed / duration) * 100, 100);
+			setProgress(newProgress);
+
+			if (newProgress < 100) {
+				requestAnimationFrame(animate);
+			}
+		};
+
+		requestAnimationFrame(animate);
+	}, [duration]);
+
+	useEffect(() => {
+		const timer = setTimeout(() => {
+			if (progress < 100) {
+				setShowSkipButton(true);
+			}
+		}, skipDelay);
+
+		return () => clearTimeout(timer);
+	}, [skipDelay, progress]);
+
+	useEffect(() => {
+		if (progress >= 100) {
+			const redirectTimer = setTimeout(() => {
+				handleRedirect();
+			}, 300);
+			return () => clearTimeout(redirectTimer);
+		}
+	}, [progress, handleRedirect]);
 
 	return (
 		<div
@@ -65,13 +103,14 @@ export function LoadingScreen({
 				value={progress}
 				className="w-48 transition-[width] duration-150 ease-out-quart"
 			/>
-			<Button
-				onClick={handleManualEnter}
-				disabled={progress === 100}
-				className="rounded-full bg-primary text-primary-foreground hover:scale-105 active:scale-[0.96] transition-transform duration-150 h-10 px-8"
-			>
-				{progress === 100 ? "Entering..." : "Skip & Enter"}
-			</Button>
+			{showSkipButton && progress < 100 && (
+				<Button
+					onClick={handleManualEnter}
+					className="rounded-full bg-primary text-primary-foreground hover:scale-105 active:scale-[0.96] transition-transform duration-150 h-10 px-8"
+				>
+					Skip & Enter
+				</Button>
+			)}
 		</div>
 	);
 }

@@ -5,7 +5,7 @@ import { LOTTIE_ANIMATIONS, type LottieAnimationName } from "./lottie-assets";
 
 const Lottie = dynamic(() => import("lottie-react"), {
 	ssr: false,
-	loading: () => null,
+	loading: () => <div style={{ width: "inherit", height: "inherit" }} />,
 });
 
 interface LottieWrapperProps {
@@ -27,6 +27,10 @@ export function LottieWrapper({
 }: LottieWrapperProps) {
 	const animationData = LOTTIE_ANIMATIONS[animation];
 
+	if (!animationData) {
+		return null;
+	}
+
 	return (
 		<Lottie
 			animationData={animationData}
@@ -34,7 +38,7 @@ export function LottieWrapper({
 			autoplay={autoplay}
 			onComplete={onComplete}
 			className={className}
-			style={style}
+			style={{ width: "100%", height: "100%", ...style }}
 		/>
 	);
 }

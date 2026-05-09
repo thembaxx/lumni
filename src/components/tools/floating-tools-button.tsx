@@ -3,6 +3,7 @@
 import { ToolsIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, motion } from "framer-motion";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { ToolsDialog } from "./tools-dialog";
@@ -10,6 +11,10 @@ import { ToolsDialog } from "./tools-dialog";
 export function FloatingToolsButton() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isHovered, setIsHovered] = useState(false);
+	const pathname = usePathname();
+	const isHomePage = pathname === "/";
+
+	if (isHomePage) return null;
 
 	return (
 		<>

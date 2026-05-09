@@ -146,6 +146,8 @@ export function BottomNav() {
 		[push],
 	);
 
+	if (pathname === "/") return null;
+
 	return (
 		<>
 			<motion.nav
