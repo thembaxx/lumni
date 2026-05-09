@@ -42,7 +42,9 @@ export function Achievements({ achievements }: AchievementsProps) {
 						initial={{ opacity: 0, scale: 0.8 }}
 						animate={{ opacity: 1, scale: 1 }}
 						transition={{ delay: index * 0.05 }}
-						className={`relative flex-shrink-0 w-14 h-14 rounded-xl border-2 ${rarityColors[achievement.rarity]} ${rarityGlow[achievement.rarity]} shadow-lg flex items-center justify-center transition-transform hover:scale-105`}
+						whileHover={{ scale: 1.08 }}
+						whileTap={{ scale: 0.95 }}
+						className={`relative flex-shrink-0 w-14 h-14 rounded-xl border-2 ${rarityColors[achievement.rarity]} ${rarityGlow[achievement.rarity]} shadow-lg flex items-center justify-center transition-transform`}
 						title={`${achievement.name}: ${achievement.description}`}
 					>
 						<span className="text-2xl">{achievement.icon}</span>

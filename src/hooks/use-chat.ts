@@ -81,11 +81,11 @@ export function useChat() {
 
 				setMessages((prev) => [...prev, assistantMessage]);
 			} catch (err) {
-				setError(err instanceof Error ? err.message : "Failed to get response");
+				setError(err instanceof Error ? err.message : "Something went wrong");
 				const errorMessage: ChatMessage = {
 					id: crypto.randomUUID(),
 					role: "assistant",
-					content: "Sorry, I encountered an error. Please try again.",
+					content: "Sorry, I hit a problem. Give me another try.",
 					timestamp: new Date(),
 				};
 				setMessages((prev) => [...prev, errorMessage]);

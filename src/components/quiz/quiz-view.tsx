@@ -133,12 +133,12 @@ export function QuizView({
 			<div className="min-h-screen bg-background p-4 flex items-center justify-center pb-20">
 				<Card className="max-w-md w-full card-elevated">
 					<CardHeader className="text-center">
-						<CardTitle>Failed to Load</CardTitle>
+						<CardTitle>Unable to Load</CardTitle>
 					</CardHeader>
 					<CardContent className="space-y-4">
 						<EmptyStateWithIllustration
 							animation="error"
-							title="Failed to Load Questions"
+							title="Unable to Load Questions"
 							description={loadError}
 							action={{
 								label: "Try Again",

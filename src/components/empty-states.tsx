@@ -227,16 +227,16 @@ export const EmptyStates = {
 		/>
 	),
 
-	loadingSlow: () => (
+	loadingSlow: (task = "Loading your data") => (
 		<div className="flex flex-col items-center justify-center py-12 px-4 text-center">
 			<LottieWrapper
 				animation="loading-lumni"
 				className="w-16 h-16 mb-4"
 				loop
 			/>
-			<h3 className="mb-2 text-lg font-semibold">Loading...</h3>
+			<h3 className="mb-2 text-lg font-semibold">Just a moment</h3>
 			<p className="max-w-sm text-sm text-muted-foreground">
-				This is taking longer than usual. Please wait while we fetch your data.
+				{task}. This usually takes a few seconds.
 			</p>
 		</div>
 	),
@@ -278,7 +278,7 @@ export const EmptyStates = {
 	noDueCards: () => (
 		<EmptyStateWithIllustration
 			animation="search"
-			title="All Caught Up! 🎉"
+			title="All Caught Up"
 			description="No flashcards due for review. Great job staying on top of your studies!"
 			action={{
 				label: "Add More Cards",

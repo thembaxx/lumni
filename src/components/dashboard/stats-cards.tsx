@@ -67,12 +67,14 @@ export function StatsCards({
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ delay: index * 0.1, duration: 0.4 }}
+						whileHover={{ scale: 1.03 }}
 					>
 						<Card className="p-4 flex flex-col h-full items-center justify-center gap-2">
 							<m.div
 								className={`p-2 rounded-full ${stat.bgClass}`}
 								initial={{ scale: 0.95, opacity: 0 }}
 								animate={{ scale: 1, opacity: 1 }}
+								whileHover={{ scale: 1.1 }}
 								transition={{
 									delay: index * 0.1 + 0.2,
 									type: "spring",

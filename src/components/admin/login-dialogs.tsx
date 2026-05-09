@@ -189,7 +189,7 @@ export function MagicLinkDialog({
 				description: `Magic link sent to ${email}`,
 			});
 		} catch {
-			const msg = "Connection failed. Try again.";
+			const msg = "Unable to connect. Check your internet and try again.";
 			setError(msg);
 			toast({ type: "error", message: msg });
 		} finally {
@@ -225,11 +225,11 @@ export function MagicLinkDialog({
 			setCountdown(2 * 60 * 1000);
 			toast({
 				type: "success",
-				message: "Link resent",
-				description: `Check your inbox for a new link`,
+				message: "Link sent",
+				description: `Check your inbox for a new sign-in link`,
 			});
 		} catch {
-			const msg = "Connection failed. Try again.";
+			const msg = "Unable to connect. Check your internet and try again.";
 			setError(msg);
 			toast({ type: "error", message: msg });
 		} finally {

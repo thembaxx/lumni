@@ -21,8 +21,8 @@ export function DailyChallenges({ challenges }: DailyChallengesProps) {
 					</span>
 					{allCompleted && (
 						<motion.span
-							initial={{ scale: 0 }}
-							animate={{ scale: 1 }}
+							initial={{ scale: 0, opacity: 0 }}
+							animate={{ scale: 1, opacity: 1 }}
 							className="text-xs bg-green-500/20 text-green-600 dark:text-green-400 px-2 py-0.5 rounded-full"
 						>
 							Complete!
@@ -91,8 +91,9 @@ export function DailyChallenges({ challenges }: DailyChallengesProps) {
 
 								{challenge.completed && (
 									<motion.div
-										initial={{ scale: 0 }}
-										animate={{ scale: 1 }}
+										initial={{ scale: 0, opacity: 0 }}
+										animate={{ scale: 1, opacity: 1 }}
+										transition={{ type: "spring", stiffness: 400, damping: 20 }}
 										className="flex items-center gap-1 text-xs text-green-600 dark:text-green-400"
 									>
 										<IconCheck size={12} />

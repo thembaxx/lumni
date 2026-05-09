@@ -178,7 +178,7 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 							/>
 						) : isLoading && !error ? (
 							<LoadingOverlay
-								message="Loading PDF..."
+								message="Loading exam paper..."
 								SpinnerComponent={<Spinner className="w-6 h-6" />}
 							/>
 						) : pdfUrl ? (

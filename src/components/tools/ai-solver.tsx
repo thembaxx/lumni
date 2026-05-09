@@ -174,7 +174,7 @@ export function AiSolver() {
 													</span>
 												</div>
 											);
-										return "Loading...";
+										return "Working on it...";
 									},
 								}}
 							/>

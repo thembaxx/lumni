@@ -123,9 +123,13 @@ export function StreakCelebration({
 					)}
 
 					{currentStreak >= (nextMilestone?.streak || 0) && (
-						<p className="text-xs text-green-600 dark:text-green-400 mt-1">
-							🎉 Milestone reached!
-						</p>
+						<motion.p
+							initial={{ opacity: 0, y: 5 }}
+							animate={{ opacity: 1, y: 0 }}
+							className="text-xs text-green-600 dark:text-green-400 mt-1"
+						>
+							Milestone reached!
+						</motion.p>
 					)}
 				</div>
 			</div>

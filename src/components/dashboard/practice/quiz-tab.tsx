@@ -155,7 +155,7 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 	}
 
 	return (
-		<div className="w-full">
+		<div className="w-full h-full flex flex-col">
 			<div
 				className={cn(
 					"flex items-center gap-3 justify-between w-full",
