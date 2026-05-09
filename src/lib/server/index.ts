@@ -8,12 +8,12 @@ export {
 	toggleUserSubject,
 } from "./actions";
 export {
+	checkAndPopulateExamsDb,
+	deleteExamPaper,
 	getAllExamPapers,
 	getExamPapersWithFallback,
-	checkAndPopulateExamsDb,
-	uploadExamPaper,
 	getExamPaperUrl,
-	deleteExamPaper,
+	uploadExamPaper,
 } from "./exam-paper-actions";
 export { fetchQuestions } from "./quiz-actions";
 export {

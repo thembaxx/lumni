@@ -3,8 +3,7 @@
 import dynamic from "next/dynamic";
 
 export const PdfViewer = dynamic(
-	() =>
-		import("./pdf-viewer").then((mod) => mod.PdfViewerImpl),
+	() => import("./pdf-viewer").then((mod) => mod.PdfViewerImpl),
 	{
 		ssr: false,
 		loading: () => (

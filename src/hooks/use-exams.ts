@@ -2,7 +2,10 @@
 
 import { useEffect, useMemo, useState } from "react";
 import examData from "@/data/exams/index.json";
-import { getExamPapersWithFallback, checkAndPopulateExamsDb } from "@/lib/server";
+import {
+	checkAndPopulateExamsDb,
+	getExamPapersWithFallback,
+} from "@/lib/server";
 import type { ExamFilter, ExamGroup, ExamPaper } from "@/types/exam";
 
 export function useExams(filter: ExamFilter) {
@@ -25,7 +28,10 @@ export function useExams(filter: ExamFilter) {
 					setExams(examData.exams as ExamPaper[]);
 				}
 			} catch (err) {
-				console.warn("Database unavailable, using fallback data:", err instanceof Error ? err.message : "Unknown error");
+				console.warn(
+					"Database unavailable, using fallback data:",
+					err instanceof Error ? err.message : "Unknown error",
+				);
 				setExams(examData.exams as ExamPaper[]);
 			} finally {
 				setIsLoading(false);

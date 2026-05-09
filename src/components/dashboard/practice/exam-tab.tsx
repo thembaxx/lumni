@@ -19,6 +19,7 @@ import { Input } from "@/components/ui/input";
 import { useExams } from "@/hooks/use-exams";
 import { cn } from "@/lib/utils";
 import { ExamCard } from "./exam-card";
+import { GroupSkeleton } from "./exam-card-skeleton";
 
 const YEARS = [2025, 2024, 2023, 2022, 2021] as const;
 
@@ -171,12 +172,12 @@ export function ExamTab({ className }: ExamTabProps) {
 							initial={{ opacity: 0 }}
 							animate={{ opacity: 1 }}
 							exit={{ opacity: 0 }}
-							className="flex items-center justify-center py-12"
+							transition={{ staggerChildren: 0.08 }}
+							className="space-y-5"
 						>
-							<div className="flex flex-col items-center gap-2">
-								<div className="w-5 h-5 rounded-full border border-muted border-t-foreground animate-spin" />
-								<p className="text-xs text-muted-foreground">Loading...</p>
-							</div>
+							<GroupSkeleton />
+							<GroupSkeleton />
+							<GroupSkeleton />
 						</m.div>
 					) : error ? (
 						<m.div
