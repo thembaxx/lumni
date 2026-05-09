@@ -3,6 +3,7 @@
 import { ArrowLeftIcon, Settings01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Database, FlaskConical, type LucideIcon, Palette } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { Suspense, useEffect, useState } from "react";
 import {
@@ -12,7 +13,8 @@ import {
 	StudyTab,
 } from "@/components/settings/tabs";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { cn } from "@/lib/utils";
 import {
 	BETA_FEATURES_KEY,
 	type BetaFeatures,
@@ -26,6 +28,24 @@ import {
 	type StudyPreferences,
 	saveToStorage,
 } from "@/lib/utils/storage";
+
+const tabs = [
+	{ id: "appearance", label: "Appearance", icon: Palette, isLucide: true },
+	{ id: "study", label: "Study", icon: Settings01Icon, isLucide: false },
+	{ id: "data", label: "Data", icon: Database, isLucide: true },
+	{
+		id: "beta",
+		label: "Beta",
+		icon: FlaskConical,
+		isLucide: true,
+	},
+];
+
+const tabContentVariants = {
+	initial: { opacity: 0, y: 8 },
+	animate: { opacity: 1, y: 0 },
+	exit: { opacity: 0, y: -8 },
+};
 
 function SettingsContent() {
 	const [studyPrefs, setStudyPrefs] =
@@ -73,18 +93,6 @@ function SettingsContent() {
 		}
 	};
 
-	const tabs = [
-		{ id: "appearance", label: "Appearance", icon: Palette, isLucide: true },
-		{ id: "study", label: "Study", icon: Settings01Icon, isLucide: false },
-		{ id: "data", label: "Data", icon: Database, isLucide: true },
-		{
-			id: "beta",
-			label: "Beta",
-			icon: FlaskConical,
-			isLucide: true,
-		},
-	];
-
 	return (
 		<div className="min-h-screen bg-background">
 			<div className="mx-auto max-w-4xl p-4 md:p-8">
@@ -102,64 +110,75 @@ function SettingsContent() {
 					</div>
 				</div>
 
-				<div className="flex flex-col gap-6 lg:flex-row lg:items-start">
-					<Card className="w-full shrink-0 lg:w-56 border-border/50 shadow-sm">
-						<CardContent className="p-2">
-							<nav className="flex flex-row gap-1 lg:flex-col">
-								{tabs.map((tab) => (
-									<button
-										key={tab.id}
-										onClick={() => setActiveTab(tab.id)}
-										className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors lg:justify-start ${
-											activeTab === tab.id
-												? "bg-primary/10 text-primary"
-												: "text-muted-foreground hover:bg-muted hover:text-foreground"
-										}`}
-									>
-										{tab.isLucide ? (
-											(() => {
-												const Icon = tab.icon as LucideIcon;
-												return <Icon className="size-4 shrink-0" />;
-											})()
-										) : (
-											<HugeiconsIcon
-												icon={tab.icon as typeof ArrowLeftIcon}
-												className="size-4 shrink-0"
-											/>
-										)}
-										<span className="hidden lg:inline">{tab.label}</span>
-									</button>
-								))}
-							</nav>
-						</CardContent>
-					</Card>
+				<Tabs
+					value={activeTab}
+					onValueChange={setActiveTab}
+					className="flex flex-col"
+				>
+					<TabsList className="flex w-full overflow-x-auto justify-start px-4 py-2 gap-2 bg-card rounded-full overscroll-none border-b shrink-0 scrollbar-hide">
+						{tabs.map((tab) => (
+							<TabsTrigger
+								key={tab.id}
+								value={tab.id}
+								className={cn(
+									"flex-shrink-0 px-3 py-2 text-xs font-medium rounded-full gap-1.5 transition-all duration-200",
+									"data-[active]:bg-primary data-[active]:text-primary-foreground",
+									"text-muted-foreground hover:text-foreground hover:scale-[1.02] active:scale-[0.96] transition-transform",
+								)}
+							>
+								{tab.isLucide ? (
+									(() => {
+										const Icon = tab.icon as LucideIcon;
+										return <Icon className="size-4 shrink-0" />;
+									})()
+								) : (
+									<HugeiconsIcon
+										icon={tab.icon as typeof ArrowLeftIcon}
+										className="size-4 shrink-0"
+									/>
+								)}
+								{tab.label}
+							</TabsTrigger>
+						))}
+					</TabsList>
 
 					<div className="flex-1 space-y-6">
-						{activeTab === "appearance" && <AppearanceTab />}
+								<AnimatePresence mode="wait" initial={false}>
+									<motion.div
+										key={activeTab}
+										variants={tabContentVariants}
+										initial="initial"
+										animate="animate"
+										exit="exit"
+										transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+									>
+								{activeTab === "appearance" && <AppearanceTab />}
 
-						{activeTab === "study" && (
-							<StudyTab
-								studyPrefs={studyPrefs}
-								onStudyPrefsChange={setStudyPrefs}
-							/>
-						)}
+								{activeTab === "study" && (
+									<StudyTab
+										studyPrefs={studyPrefs}
+										onStudyPrefsChange={setStudyPrefs}
+									/>
+								)}
 
-						{activeTab === "data" && (
-							<DataTab
-								studyPrefs={studyPrefs}
-								notifications={notifications}
-								betaFeatures={betaFeatures}
-								onExport={handleExportData}
-								onClear={handleClearCache}
-							/>
-						)}
+								{activeTab === "data" && (
+									<DataTab
+										studyPrefs={studyPrefs}
+										notifications={notifications}
+										betaFeatures={betaFeatures}
+										onExport={handleExportData}
+										onClear={handleClearCache}
+									/>
+								)}
 
-						{activeTab === "beta" && (
-							<BetaTab
-								betaFeatures={betaFeatures}
-								onBetaFeaturesChange={setBetaFeatures}
-							/>
-						)}
+								{activeTab === "beta" && (
+									<BetaTab
+										betaFeatures={betaFeatures}
+										onBetaFeaturesChange={setBetaFeatures}
+									/>
+								)}
+							</motion.div>
+						</AnimatePresence>
 
 						<div className="flex items-center justify-end">
 							<Button
@@ -168,12 +187,14 @@ function SettingsContent() {
 									saveToStorage(NOTIFICATION_SETTINGS_KEY, notifications);
 									saveToStorage(BETA_FEATURES_KEY, betaFeatures);
 								}}
+								className="text-xs px-4"
+								size="lg"
 							>
 								Save Changes
 							</Button>
 						</div>
 					</div>
-				</div>
+				</Tabs>
 			</div>
 		</div>
 	);
