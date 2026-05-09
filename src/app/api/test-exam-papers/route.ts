@@ -1,28 +1,19 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { getDb } from "@/lib/db/client";
-import { examPaper, subject } from "@/lib/db/schema";
+import { COLLECTIONS, listDocuments } from "@/lib/db/client";
 
 export async function GET() {
-	const db = getDb();
 	try {
-		// Try to select from exam_paper
-		const papers = await db.select().from(examPaper).limit(5);
-		return NextResponse.json({ papers, count: papers.length });
-	} catch (err: unknown) {
-		const error = err as Error & {
-			cause?: Error;
-			query?: string;
-			params?: unknown[];
-		};
+		const papers = await listDocuments(COLLECTIONS.EXAM_PAPERS);
+		return NextResponse.json({
+			papers: papers.slice(0, 5),
+			count: papers.length,
+		});
+	} catch (error) {
 		return NextResponse.json(
 			{
-				message: error.message,
-				cause: error.cause?.message,
-				query: error.query,
-				params: error.params,
-				stack: error.stack,
-				type: error.constructor.name,
+				error:
+					error instanceof Error ? error.message : "Failed to fetch papers",
 			},
 			{ status: 500 },
 		);

@@ -1,16 +1,15 @@
 import fs from "fs";
 import { NextRequest, NextResponse } from "next/server";
 import path from "path";
-import { getDb } from "@/lib/db/client";
-import { subject } from "@/lib/db/schema";
+import { COLLECTIONS, createDocument } from "@/lib/db/client";
 
-interface ExamPaper {
+interface ExamPaperEntry {
 	subjectId: string;
 	subject: string;
 }
 
 interface ExamsData {
-	exams: ExamPaper[];
+	exams: ExamPaperEntry[];
 }
 
 async function getSubjectsFromJson() {
@@ -44,8 +43,6 @@ export async function POST(request: NextRequest) {
 		const { searchParams } = new URL(request.url);
 		const action = searchParams.get("action");
 
-		const db = getDb();
-
 		if (action === "preload") {
 			const subjects = await getSubjectsFromJson();
 
@@ -53,20 +50,19 @@ export async function POST(request: NextRequest) {
 
 			for (const sub of subjects) {
 				try {
-					await db
-						.insert(subject)
-						.values({
-							id: sub.code,
-							name: sub.name,
-							code: sub.code,
-							description: sub.description,
-							category: sub.category,
-						})
-						.onConflictDoNothing();
+					await createDocument(COLLECTIONS.SUBJECTS, {
+						name: sub.name,
+						code: sub.code,
+						description: sub.description,
+						category: sub.category,
+					});
 					results.added++;
 				} catch (e) {
 					const err = e as Error;
-					if (err.message.includes("duplicate")) {
+					if (
+						err.message.includes("already exists") ||
+						err.message.includes("duplicate")
+					) {
 						results.skipped++;
 					} else {
 						results.errors.push(sub.code + ": " + err.message);

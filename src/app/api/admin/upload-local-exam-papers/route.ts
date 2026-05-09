@@ -3,7 +3,7 @@ import fs from "fs";
 import { NextRequest, NextResponse } from "next/server";
 import path from "path";
 import { UTApi, UTFile } from "uploadthing/server";
-import { getExamsDb, insertExamPaper } from "@/lib/db/exams";
+import { getExamsDb, insertExamPaper, saveExamsDb } from "@/lib/db/exams";
 
 const FOLDER_PATH = path.join(process.cwd(), "downloads", "exam-papers-2025");
 
@@ -94,6 +94,22 @@ async function uploadToUploadThing(
 	}
 }
 
+function dbExecOne(
+	db: Awaited<ReturnType<typeof getExamsDb>>,
+	sql: string,
+	args?: unknown[],
+): Record<string, unknown> | undefined {
+	const result = db.exec(sql, args as (string | number | null | Uint8Array)[]);
+	if (!result || result.length === 0 || !result[0].values) return undefined;
+	const { columns, values } = result[0];
+	if (values.length === 0) return undefined;
+	const obj: Record<string, unknown> = {};
+	columns.forEach((col, i) => {
+		obj[col] = values[0][i];
+	});
+	return obj;
+}
+
 export async function POST(request: NextRequest) {
 	try {
 		const body = await request.json();
@@ -119,7 +135,7 @@ export async function POST(request: NextRequest) {
 			);
 		}
 
-		const db = getExamsDb();
+		const db = await getExamsDb();
 		let uploaded = 0;
 		let updated = 0;
 		const errors: string[] = [];
@@ -147,26 +163,26 @@ export async function POST(request: NextRequest) {
 				continue;
 			}
 
-			const existingPaper = db
-				.prepare(
-					`SELECT id FROM exam_papers 
-           WHERE subject_code = ? AND year = ? AND paper_number = ? AND type = ?`,
-				)
-				.get(normalizedCode, year, paperNumber, type) as
-				| { id: string }
-				| undefined;
+			const existingPaper = dbExecOne(
+				db,
+				`SELECT id FROM exam_papers
+					 WHERE subject_code = ? AND year = ? AND paper_number = ? AND type = ?`,
+				[normalizedCode, year, paperNumber, type],
+			);
 
 			if (existingPaper) {
-				db.prepare(
-					`UPDATE exam_papers 
-           SET file_url = ?, file_key = ?, original_file_name = ?, uploaded_at = datetime('now')
-           WHERE id = ?`,
-				).run(
-					uploadResult.url,
-					uploadResult.key,
-					originalFileName,
-					existingPaper.id,
+				db.run(
+					`UPDATE exam_papers
+						 SET file_url = ?, file_key = ?, original_file_name = ?, uploaded_at = datetime('now')
+						 WHERE id = ?`,
+					[
+						uploadResult.url,
+						uploadResult.key,
+						originalFileName,
+						existingPaper.id as string,
+					],
 				);
+				saveExamsDb();
 				updated++;
 			} else {
 				const id = randomUUID();
@@ -184,20 +200,19 @@ export async function POST(request: NextRequest) {
 				});
 
 				if (type === "memo") {
-					const paperResult = db
-						.prepare(
-							`SELECT id FROM exam_papers 
-                 WHERE subject_code = ? AND year = ? AND paper_number = ? AND type = 'paper'`,
-						)
-						.get(normalizedCode, year, paperNumber) as
-						| { id: string }
-						| undefined;
+					const paperResult = dbExecOne(
+						db,
+						`SELECT id FROM exam_papers
+						 WHERE subject_code = ? AND year = ? AND paper_number = ? AND type = 'paper'`,
+						[normalizedCode, year, paperNumber],
+					);
 
 					if (paperResult) {
-						db.prepare("UPDATE exam_papers SET memo_id = ? WHERE id = ?").run(
+						db.run("UPDATE exam_papers SET memo_id = ? WHERE id = ?", [
 							id,
-							paperResult.id,
-						);
+							paperResult.id as string,
+						]);
+						saveExamsDb();
 					}
 				}
 				uploaded++;

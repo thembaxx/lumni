@@ -1,81 +1,60 @@
 "use server";
 
+import { Query } from "appwrite";
 import { randomUUID } from "crypto";
-import { and, eq } from "drizzle-orm";
 import { UTApi, UTFile } from "uploadthing/server";
-import { getDb } from "@/lib/db/client";
 import {
-	account,
-	examPaper,
-	studySession,
-	subject,
-	user,
-	userProgress,
-	userSubject,
-} from "@/lib/db/schema";
+	COLLECTIONS,
+	createDocument,
+	deleteDocument,
+	getDocument,
+	listDocuments,
+	updateDocument,
+} from "@/lib/db/client";
 
 const DEFAULT_USER_ID = "demo-user";
 
 async function ensureDemoUser() {
-	const db = getDb();
-
-	const existingUser = await db
-		.select()
-		.from(user)
-		.where(eq(user.id, DEFAULT_USER_ID))
-		.limit(1);
-
-	if (existingUser.length === 0) {
-		await db.insert(user).values({
-			id: DEFAULT_USER_ID,
-			name: "Demo User",
-			email: "demo@lumni.ai",
-			emailVerified: true,
-		});
-	}
-
+	// Appwrite handles user creation via account.createMagicSession() / createPhoneSession()
 	return DEFAULT_USER_ID;
 }
 
 export async function fetchSubjects(userId?: string) {
-	const db = getDb();
 	const targetUserId = userId || (await ensureDemoUser());
 
-	const subjects = await db.select().from(subject);
+	const subjects = await listDocuments(COLLECTIONS.SUBJECTS);
 
-	const selectedUserSubjects = await db
-		.select()
-		.from(userSubject)
-		.where(eq(userSubject.userId, targetUserId));
+	const selectedUserSubjects = await listDocuments(COLLECTIONS.USER_SUBJECTS, [
+		Query.equal("userId", targetUserId),
+	]);
 
-	const selectedIds = selectedUserSubjects.map((us) => us.subjectId);
+	const selectedIds = selectedUserSubjects.map((us) => us.subjectId as string);
 
 	return { subjects, selectedSubjectIds: selectedIds };
 }
 
 export async function fetchUserProgress(userId?: string) {
-	const db = getDb();
 	const targetUserId = userId || (await ensureDemoUser());
 
-	const progressArr = await db
-		.select()
-		.from(userProgress)
-		.where(eq(userProgress.userId, targetUserId))
-		.limit(1);
+	const progressArr = await listDocuments(COLLECTIONS.USER_PROGRESS, [
+		Query.equal("userId", targetUserId),
+		Query.limit(1),
+	]);
 
 	const progress = progressArr[0] || null;
 
-	const sessions = await db
-		.select()
-		.from(studySession)
-		.where(eq(studySession.userId, targetUserId));
+	const sessions = await listDocuments(COLLECTIONS.STUDY_SESSIONS, [
+		Query.equal("userId", targetUserId),
+	]);
 
 	const totalAnswered = sessions.reduce(
-		(sum, s) => sum + (s.questionsAnswered || 0),
+		(sum, s) =>
+			sum + ((s as Record<string, unknown>).questionsAnswered as number) || 0,
 		0,
 	);
 	const totalCorrect = sessions.reduce(
-		(sum, s) => sum + (s.correctCount || 0),
+		(sum, s) =>
+			sum + ((s as Record<string, unknown>).correctCount as number) || 0,
 		0,
 	);
 	const accuracy =
@@ -84,34 +63,24 @@ export async function fetchUserProgress(userId?: string) {
 	return {
 		questionsAnswered: totalAnswered,
 		accuracy,
-		streak: progress?.currentStreak ?? 0,
+		streak: progress
+			? ((progress as Record<string, unknown>).currentStreak as number)
+			: 0,
 	};
 }
 
 export async function toggleUserSubject(userId: string, subjectId: string) {
-	const db = getDb();
+	const existing = await listDocuments(COLLECTIONS.USER_SUBJECTS, [
+		Query.equal("userId", userId),
+		Query.equal("subjectId", subjectId),
+		Query.limit(1),
+	]);
 
-	const existing = await db
-		.select()
-		.from(userSubject)
-		.where(
-			and(eq(userSubject.userId, userId), eq(userSubject.subjectId, subjectId)),
-		)
-		.then((res) => res[0]);
-
-	if (existing) {
-		await db
-			.delete(userSubject)
-			.where(
-				and(
-					eq(userSubject.userId, userId),
-					eq(userSubject.subjectId, subjectId),
-				),
-			);
+	if (existing.length > 0) {
+		await deleteDocument(COLLECTIONS.USER_SUBJECTS, existing[0].$id);
 		return false;
 	} else {
-		await db.insert(userSubject).values({
-			id: `${userId}-${subjectId}`,
+		await createDocument(COLLECTIONS.USER_SUBJECTS, {
 			userId,
 			subjectId,
 		});
@@ -151,9 +120,7 @@ export async function adminUploadExamPaper(
 		const fileKey = result.data.key;
 		const id = randomUUID();
 
-		const db = getDb();
-		await db.insert(examPaper).values({
-			id,
+		await createDocument(COLLECTIONS.EXAM_PAPERS, {
 			subjectId,
 			year,
 			paperNumber,
@@ -164,24 +131,18 @@ export async function adminUploadExamPaper(
 		});
 
 		if (type === "memo") {
-			const questionPaper = await db
-				.select()
-				.from(examPaper)
-				.where(
-					and(
-						eq(examPaper.subjectId, subjectId),
-						eq(examPaper.year, year),
-						eq(examPaper.paperNumber, paperNumber),
-						eq(examPaper.type, "paper"),
-					),
-				)
-				.limit(1);
+			const questionPaper = await listDocuments(COLLECTIONS.EXAM_PAPERS, [
+				Query.equal("subjectId", subjectId),
+				Query.equal("year", year),
+				Query.equal("paperNumber", paperNumber),
+				Query.equal("type", "paper"),
+				Query.limit(1),
+			]);
 
 			if (questionPaper.length > 0) {
-				await db
-					.update(examPaper)
-					.set({ memoId: questionPaper[0].id })
-					.where(eq(examPaper.id, id));
+				await updateDocument(COLLECTIONS.EXAM_PAPERS, questionPaper[0].$id, {
+					memoId: id,
+				});
 			}
 		}
 
@@ -194,15 +155,6 @@ export async function adminUploadExamPaper(
 	}
 }
 
-export async function getUserAccounts(userId: string) {
-	const db = getDb();
-	const accounts = await db
-		.select({
-			id: account.id,
-			providerId: account.providerId,
-		})
-		.from(account)
-		.where(eq(account.userId, userId));
-
-	return accounts.map((a) => a.providerId);
+export async function getUserAccounts(_userId: string) {
+	return [];
 }

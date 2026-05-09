@@ -1,9 +1,7 @@
-import { randomUUID } from "crypto";
-import { and, eq } from "drizzle-orm";
+import { Query } from "appwrite";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { getDb } from "@/lib/db/client";
-import { examPaper, subject } from "@/lib/db/schema";
+import { COLLECTIONS, createDocument, listDocuments } from "@/lib/db/client";
 
 function normalizeSubjectCode(code: string) {
 	return code.toLowerCase().replace(/_/g, "-").replace(/\s+/g, "-");
@@ -25,7 +23,6 @@ export async function POST(request: NextRequest) {
 			);
 		}
 
-		const db = getDb();
 		let imported = 0;
 		let skipped = 0;
 		const errors: string[] = [];
@@ -44,56 +41,44 @@ export async function POST(request: NextRequest) {
 			try {
 				const normalizedCode = normalizeSubjectCode(subjectCode);
 
-				// Find or create subject
-				const subjectsResult = await db
-					.select({ id: subject.id, code: subject.code })
-					.from(subject)
-					.where(eq(subject.code, normalizedCode))
-					.limit(1);
+				const subjects = await listDocuments(COLLECTIONS.SUBJECTS, [
+					Query.equal("code", normalizedCode),
+					Query.limit(1),
+				]);
 
-				let subjectId;
-				if (subjectsResult.length === 0) {
-					subjectId = randomUUID();
-					await db.insert(subject).values({
-						id: subjectId,
+				let subjectId: string;
+				if (subjects.length === 0) {
+					subjectId = normalizedCode;
+					await createDocument(COLLECTIONS.SUBJECTS, {
 						name: toTitleCase(subjectCode),
 						code: normalizedCode,
 						category: "general",
 					});
 				} else {
-					subjectId = subjectsResult[0].id;
+					subjectId = subjects[0].$id;
 				}
 
-				// Check if exam paper exists
-				const existingResult = await db
-					.select({ id: examPaper.id })
-					.from(examPaper)
-					.where(
-						and(
-							eq(examPaper.subjectId, subjectId),
-							eq(examPaper.year, year),
-							eq(examPaper.paperNumber, paperNumber),
-							eq(examPaper.type, type),
-						),
-					)
-					.limit(1);
+				const existing = await listDocuments(COLLECTIONS.EXAM_PAPERS, [
+					Query.equal("subjectId", subjectId),
+					Query.equal("year", year),
+					Query.equal("paperNumber", paperNumber),
+					Query.equal("type", type),
+					Query.limit(1),
+				]);
 
-				if (existingResult.length > 0) {
+				if (existing.length > 0) {
 					skipped++;
 					continue;
 				}
 
-				// Insert exam paper
-				const examPaperId = randomUUID();
-				await db.insert(examPaper).values({
-					id: examPaperId,
-					subjectId: subjectId,
-					year: year,
-					paperNumber: paperNumber,
-					type: type,
-					fileUrl: fileUrl,
-					fileKey: fileKey,
-					originalFileName: originalFileName,
+				await createDocument(COLLECTIONS.EXAM_PAPERS, {
+					subjectId,
+					year,
+					paperNumber,
+					type,
+					fileUrl,
+					fileKey,
+					originalFileName,
 				});
 
 				imported++;

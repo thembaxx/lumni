@@ -1,33 +1,27 @@
 "use server";
 
-import { eq, inArray } from "drizzle-orm";
-import { getDb } from "@/lib/db/client";
-import { question as questionTable, topic } from "@/lib/db/schema";
+import { Query } from "appwrite";
+import { COLLECTIONS, listDocuments } from "@/lib/db/client";
 
 export async function fetchQuestions(subjectIds: string[]) {
 	if (subjectIds.length === 0) return [];
 
-	const db = getDb();
+	const topicDocs = await listDocuments(COLLECTIONS.TOPICS);
 
-	const topicIds = await db
-		.select({ id: topic.id })
-		.from(topic)
-		.where(inArray(topic.subjectId, subjectIds));
+	const topicIds = topicDocs
+		.filter((t) => subjectIds.includes(t.subjectId as string))
+		.map((t) => t.$id);
 
 	if (topicIds.length === 0) return [];
 
-	const questionsData = await db
-		.select()
-		.from(questionTable)
-		.where(
-			inArray(
-				questionTable.topicId,
-				topicIds.map((t) => t.id),
-			),
-		);
+	const questionsData = await listDocuments(COLLECTIONS.QUESTIONS);
 
-	return questionsData.map((q) => ({
+	const filtered = questionsData.filter((q) =>
+		topicIds.includes(q.topicId as string),
+	);
+
+	return filtered.map((q) => ({
 		...q,
-		options: q.options ? JSON.parse(q.options) : null,
+		options: q.options ? JSON.parse(q.options as string) : null,
 	}));
 }

@@ -1,9 +1,13 @@
 "use server";
 
-import { eq, inArray } from "drizzle-orm";
+import { Query } from "appwrite";
 import { UTApi } from "uploadthing/server";
-import { getDb } from "@/lib/db/client";
-import { question, subject as subjectTable, topic } from "@/lib/db/schema";
+import {
+	COLLECTIONS,
+	createDocument,
+	listDocuments,
+	updateDocument,
+} from "@/lib/db/client";
 
 export interface QAFileMetadata {
 	subject: string;
@@ -63,14 +67,14 @@ function formatSubjectName(subject: string): string {
 	return subject.replace(/\s+/g, "_").toLowerCase();
 }
 
-function generateFileName(subject: string, number: number = 1): string {
+function generateFileName(subject: string, number = 1): string {
 	const formattedSubject = formatSubjectName(subject);
 	return `${formattedSubject}_qa_${number}.json`;
 }
 
 export async function fetchRemoteQAFile(
 	subject: string,
-	fileNumber: number = 1,
+	fileNumber = 1,
 ): Promise<{ data: QAFile | null; url: string; error?: string }> {
 	try {
 		const fileName = generateFileName(subject, fileNumber);
@@ -115,21 +119,18 @@ export async function ensureTopicExists(
 	topicName: string,
 	subjectId: string,
 ): Promise<string> {
-	const db = getDb();
+	const topics = await listDocuments(COLLECTIONS.TOPICS, [
+		Query.equal("name", topicName),
+		Query.equal("subjectId", subjectId),
+		Query.limit(1),
+	]);
 
-	const existing = await db
-		.select()
-		.from(topic)
-		.where(eq(topic.name, topicName))
-		.limit(1);
-
-	if (existing.length > 0) {
-		return existing[0].id;
+	if (topics.length > 0) {
+		return topics[0].$id;
 	}
 
 	const topicId = `${subjectId}-${formatSubjectName(topicName)}`;
-	await db.insert(topic).values({
-		id: topicId,
+	await createDocument(COLLECTIONS.TOPICS, {
 		subjectId,
 		name: topicName,
 		orderIndex: 0,
@@ -157,37 +158,41 @@ export async function getLocalQuestions(subjectId: string): Promise<{
 	questions: { questionId: string; topicId: string; version: string | null }[];
 	version: string | null;
 }> {
-	const db = getDb();
+	const subjects = await listDocuments(COLLECTIONS.SUBJECTS, [
+		Query.equal("code", subjectId),
+		Query.limit(1),
+	]);
 
-	const subjectArr = await db
-		.select()
-		.from(subjectTable)
-		.where(eq(subjectTable.id, subjectId))
-		.limit(1);
+	const version =
+		subjects.length > 0
+			? ((subjects[0] as Record<string, unknown>).sourceVersion as string) ||
+				null
+			: null;
 
-	const version = subjectArr[0]?.sourceVersion || null;
+	const topicList = await listDocuments(COLLECTIONS.TOPICS, [
+		Query.equal("subjectId", subjects[0]?.$id || subjectId),
+	]);
 
-	const topicList = await db
-		.select({ id: topic.id, name: topic.name })
-		.from(topic)
-		.where(eq(topic.subjectId, subjectId));
-
-	const topicIds = topicList.map((t) => t.id);
+	const topicIds = topicList.map((t) => t.$id);
 
 	if (topicIds.length === 0) {
 		return { topics: [], questions: [], version };
 	}
 
-	const questionList = await db
-		.select({ id: question.id, topicId: question.topicId })
-		.from(question)
-		.where(inArray(question.topicId, topicIds));
+	const questionList = await listDocuments(COLLECTIONS.QUESTIONS);
+
+	const filteredQuestions = questionList.filter((q) =>
+		topicIds.includes(q.topicId as string),
+	);
 
 	return {
-		topics: topicList,
-		questions: questionList.map((q) => ({
-			questionId: q.id,
-			topicId: q.topicId,
+		topics: topicList.map((t) => ({
+			id: t.$id,
+			name: t.name as string,
+		})),
+		questions: filteredQuestions.map((q) => ({
+			questionId: q.$id,
+			topicId: q.topicId as string,
 			version,
 		})),
 		version,
@@ -232,26 +237,23 @@ export async function mergeQuestions(
 	newQuestions: ParsedQuestion[],
 ): Promise<{ toInsert: ParsedQuestion[] }> {
 	const existingIds = new Set(existingQuestions.map((q) => q.id));
-
 	const toInsert = newQuestions.filter((q) => !existingIds.has(q.id));
-
 	return { toInsert };
 }
 
 export async function syncSubjectQuestions(
 	subject: string,
-	fileNumber: number = 1,
+	fileNumber = 1,
 ): Promise<SyncResult> {
 	try {
 		const subjectId = formatSubjectName(subject);
 
-		const subjectRec = await getDb()
-			.select()
-			.from(subjectTable)
-			.where(eq(subjectTable.id, subjectId))
-			.limit(1);
+		const subjects = await listDocuments(COLLECTIONS.SUBJECTS, [
+			Query.equal("code", subjectId),
+			Query.limit(1),
+		]);
 
-		if (subjectRec.length === 0) {
+		if (subjects.length === 0) {
 			return {
 				success: false,
 				synced: 0,
@@ -292,7 +294,7 @@ export async function syncSubjectQuestions(
 		}
 
 		const uniqueTopics = [...new Set(remoteData.questions.map((q) => q.topic))];
-		const topicMap = await ensureTopicsExist(uniqueTopics, subjectId);
+		const topicMap = await ensureTopicsExist(uniqueTopics, subjects[0].$id);
 
 		const { questions: parsedQuestions } = await parseQuestions(
 			remoteData.questions,
@@ -304,10 +306,8 @@ export async function syncSubjectQuestions(
 			parsedQuestions,
 		);
 
-		const db = getDb();
 		for (const q of toInsert) {
-			await db.insert(question).values({
-				id: q.id,
+			await createDocument(COLLECTIONS.QUESTIONS, {
 				topicId: q.topicId,
 				type: "multiple_choice",
 				questionText: q.questionText,
@@ -320,13 +320,10 @@ export async function syncSubjectQuestions(
 			});
 		}
 
-		await db
-			.update(subjectTable)
-			.set({
-				sourceUrl: url,
-				sourceVersion: remoteVersion,
-			})
-			.where(eq(subjectTable.id, subjectId));
+		await updateDocument(COLLECTIONS.SUBJECTS, subjects[0].$id, {
+			sourceUrl: url,
+			sourceVersion: remoteVersion,
+		});
 
 		return {
 			success: true,
@@ -349,7 +346,7 @@ export async function syncSubjectQuestions(
 
 export async function autoSyncSubject(
 	subject: string,
-	fileNumber: number = 1,
+	fileNumber = 1,
 ): Promise<SyncResult> {
 	const subjectId = formatSubjectName(subject);
 

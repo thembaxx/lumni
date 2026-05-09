@@ -1,11 +1,15 @@
+import { Query } from "appwrite";
 import { randomUUID } from "crypto";
-import { and, eq, inArray } from "drizzle-orm";
 import fs from "fs";
 import { NextRequest, NextResponse } from "next/server";
 import path from "path";
 import { UTApi, UTFile } from "uploadthing/server";
-import { getDb } from "@/lib/db/client";
-import { examPaper, subject } from "@/lib/db/schema";
+import {
+	COLLECTIONS,
+	createDocument,
+	listDocuments,
+	updateDocument,
+} from "@/lib/db/client";
 
 interface DownloadRequest {
 	year: number;
@@ -147,11 +151,9 @@ async function saveToDatabase(
 	originalFileName: string,
 ): Promise<boolean> {
 	try {
-		const db = getDb();
 		const id = randomUUID();
 
-		await db.insert(examPaper).values({
-			id,
+		await createDocument(COLLECTIONS.EXAM_PAPERS, {
 			subjectId,
 			year,
 			paperNumber,
@@ -162,24 +164,18 @@ async function saveToDatabase(
 		});
 
 		if (type === "paper") {
-			const existingMemo = await db
-				.select({ id: examPaper.id })
-				.from(examPaper)
-				.where(
-					and(
-						eq(examPaper.subjectId, subjectId),
-						eq(examPaper.year, year),
-						eq(examPaper.paperNumber, paperNumber),
-						eq(examPaper.type, "memo"),
-					),
-				)
-				.limit(1);
+			const existingMemo = await listDocuments(COLLECTIONS.EXAM_PAPERS, [
+				Query.equal("subjectId", subjectId),
+				Query.equal("year", year),
+				Query.equal("paperNumber", paperNumber),
+				Query.equal("type", "memo"),
+				Query.limit(1),
+			]);
 
 			if (existingMemo.length > 0) {
-				await db
-					.update(examPaper)
-					.set({ memoId: id })
-					.where(eq(examPaper.id, existingMemo[0].id));
+				await updateDocument(COLLECTIONS.EXAM_PAPERS, existingMemo[0].$id, {
+					memoId: id,
+				});
 			}
 		}
 
@@ -195,12 +191,9 @@ export async function POST(request: NextRequest) {
 		const body: DownloadRequest = await request.json();
 		const { year, examTypes, includeMemo, subjectIds } = body;
 
-		const db = getDb();
-
-		const subjects = await db
-			.select()
-			.from(subject)
-			.where(inArray(subject.id, subjectIds));
+		const subjects = await listDocuments(COLLECTIONS.SUBJECTS, [
+			Query.equal("code", subjectIds.join(",")),
+		]);
 
 		let downloaded = 0;
 		const errors: string[] = [];
@@ -214,11 +207,11 @@ export async function POST(request: NextRequest) {
 				let subjectPapersDownloaded = 0;
 
 				for (const paperNum of paperNumbers) {
-					const fileName = `${year}_${examType}_${subj.code}_p${paperNum}.pdf`;
-					const memoFileName = `${year}_${examType}_${subj.code}_p${paperNum}_memo.pdf`;
+					const fileName = `${year}_${examType}_${(subj as Record<string, unknown>).code}_p${paperNum}.pdf`;
+					const memoFileName = `${year}_${examType}_${(subj as Record<string, unknown>).code}_p${paperNum}_memo.pdf`;
 
 					const examInfo = await findExamPaperUrl(
-						subj.name,
+						(subj as Record<string, unknown>).name as string,
 						year,
 						paperNum,
 						"paper",
@@ -236,7 +229,7 @@ export async function POST(request: NextRequest) {
 
 							if (uploadResult) {
 								const saved = await saveToDatabase(
-									subj.id,
+									subj.$id,
 									year,
 									paperNum,
 									"paper",
@@ -251,23 +244,23 @@ export async function POST(request: NextRequest) {
 								}
 							} else {
 								errors.push(
-									`${subj.name} ${examType} P${paperNum}: Upload to server failed`,
+									`${(subj as Record<string, unknown>).name} ${examType} P${paperNum}: Upload to server failed`,
 								);
 							}
 						} else {
 							errors.push(
-								`${subj.name} ${examType} P${paperNum}: Could not download PDF`,
+								`${(subj as Record<string, unknown>).name} ${examType} P${paperNum}: Could not download PDF`,
 							);
 						}
 					} else {
 						errors.push(
-							`${subj.name} ${examType} P${paperNum}: No source URL found`,
+							`${(subj as Record<string, unknown>).name} ${examType} P${paperNum}: No source URL found`,
 						);
 					}
 
 					if (includeMemo) {
 						const memoInfo = await findExamPaperUrl(
-							subj.name,
+							(subj as Record<string, unknown>).name as string,
 							year,
 							paperNum,
 							"memo",
@@ -285,7 +278,7 @@ export async function POST(request: NextRequest) {
 
 								if (uploadResult) {
 									const saved = await saveToDatabase(
-										subj.id,
+										subj.$id,
 										year,
 										paperNum,
 										"memo",
@@ -304,7 +297,7 @@ export async function POST(request: NextRequest) {
 				}
 
 				results.push({
-					subject: subj.name,
+					subject: (subj as Record<string, unknown>).name as string,
 					papers: subjectPapersDownloaded,
 					status: subjectPapersDownloaded > 0 ? "success" : "failed",
 				});

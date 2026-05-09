@@ -74,13 +74,9 @@ export function ExamCard({ exam }: ExamCardProps) {
 						className="h-8 text-xs"
 						onClick={handleViewPdf}
 					>
-						View 
+						View
 					</Button>
-					<Button
-						variant="outline"
-						size="sm"
-						className="h-8 text-xs"
-					>
+					<Button variant="outline" size="sm" className="h-8 text-xs">
 						Snart View
 					</Button>
 					<Button

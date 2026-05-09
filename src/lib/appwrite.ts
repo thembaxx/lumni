@@ -1,4 +1,11 @@
-import { Client, Databases, Functions, type Models, Storage } from "appwrite";
+import {
+	Account,
+	Client,
+	Databases,
+	Functions,
+	type Models,
+	Storage,
+} from "appwrite";
 
 export const APPWRITE_ENDPOINT =
 	process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT || "https://cloud.appwrite.io/v1";
@@ -12,6 +19,7 @@ const appwriteClient = new Client()
 export const storage = new Storage(appwriteClient);
 export const functions = new Functions(appwriteClient);
 export const databases = new Databases(appwriteClient);
+export const account = new Account(appwriteClient);
 
 export const initAppwriteClient = (sessionToken?: string) => {
 	const client = new Client()

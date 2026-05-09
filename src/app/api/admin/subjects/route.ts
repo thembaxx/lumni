@@ -1,32 +1,17 @@
-import { eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
-import { getDb } from "@/lib/db/client";
-import { subject } from "@/lib/db/schema";
+import {
+	APPWRITE_DATABASE_ID,
+	COLLECTIONS,
+	createDocument,
+	deleteDocument,
+	listDocuments,
+	updateDocument,
+} from "@/lib/db/client";
 
 export async function GET() {
 	try {
-		const db = getDb();
-		try {
-			const allSubjects = await db.select().from(subject);
-			return NextResponse.json({ subjects: allSubjects });
-		} catch (dbError) {
-			console.error("Database query error:", dbError);
-			const errMsg =
-				dbError instanceof Error ? dbError.message : "Unknown database error";
-			if (errMsg.includes("does not exist")) {
-				return NextResponse.json(
-					{
-						error: "Database table not found. Please run migrations.",
-						details: errMsg,
-					},
-					{ status: 500 },
-				);
-			}
-			return NextResponse.json(
-				{ error: "Database query failed", details: errMsg },
-				{ status: 500 },
-			);
-		}
+		const subjects = await listDocuments(COLLECTIONS.SUBJECTS);
+		return NextResponse.json({ subjects });
 	} catch (error) {
 		console.error("Server error:", error);
 		return NextResponse.json(
@@ -51,20 +36,15 @@ export async function POST(request: NextRequest) {
 			);
 		}
 
-		const db = getDb();
 		const id = code.toLowerCase().replace(/\s+/g, "-");
 
-		await db
-			.insert(subject)
-			.values({
-				id,
-				name,
-				code,
-				description,
-				category: category || "general",
-				color,
-			})
-			.onConflictDoNothing();
+		await createDocument(COLLECTIONS.SUBJECTS, {
+			name,
+			code,
+			description,
+			category: category || "general",
+			color,
+		});
 
 		return NextResponse.json({ success: true, id });
 	} catch (error) {
@@ -87,7 +67,6 @@ export async function PATCH(request: NextRequest) {
 			return NextResponse.json({ error: "ID is required" }, { status: 400 });
 		}
 
-		const db = getDb();
 		const updateData: Record<string, unknown> = {
 			name,
 			description,
@@ -97,7 +76,7 @@ export async function PATCH(request: NextRequest) {
 			updateData.code = code.toLowerCase().replace(/\s+/g, "-");
 		}
 
-		await db.update(subject).set(updateData).where(eq(subject.id, id));
+		await updateDocument(COLLECTIONS.SUBJECTS, id, updateData);
 
 		return NextResponse.json({ success: true });
 	} catch (error) {
@@ -120,8 +99,7 @@ export async function DELETE(request: NextRequest) {
 			return NextResponse.json({ error: "ID is required" }, { status: 400 });
 		}
 
-		const db = getDb();
-		await db.delete(subject).where(eq(subject.id, id));
+		await deleteDocument(COLLECTIONS.SUBJECTS, id);
 
 		return NextResponse.json({ success: true });
 	} catch (error) {

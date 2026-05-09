@@ -1,5 +1,7 @@
 "use client";
 
+import { ArrowDown01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
 import { BookOpen, Search, X } from "lucide-react";
 import { useState } from "react";
@@ -20,10 +22,6 @@ import { useExams } from "@/hooks/use-exams";
 import { cn } from "@/lib/utils";
 import { ExamCard } from "./exam-card";
 import { GroupSkeleton } from "./exam-card-skeleton";
-import {
-	ArrowDown01Icon
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 
 const YEARS = [2025, 2024, 2023, 2022, 2021] as const;
 
@@ -64,7 +62,12 @@ export function ExamTab({ className }: ExamTabProps) {
 
 	return (
 		<LazyMotion features={domAnimation}>
-			<div className={cn("w-full px-4 pb-6 flex flex-col h-full space-y-8", className)}>
+			<div
+				className={cn(
+					"w-full px-4 pb-6 flex flex-col h-full space-y-8",
+					className,
+				)}
+			>
 				<m.div
 					initial={{ opacity: 0, y: -10 }}
 					animate={{ opacity: 1, y: 0 }}
@@ -104,7 +107,10 @@ export function ExamTab({ className }: ExamTabProps) {
 								className="h-8 border"
 							>
 								{selectedSubject || "Subject"}
-								<HugeiconsIcon icon={ArrowDown01Icon} className="w-4 h-4 ml-1" />
+								<HugeiconsIcon
+									icon={ArrowDown01Icon}
+									className="w-4 h-4 ml-1"
+								/>
 							</Button>
 						</SubjectsDrawer>
 
@@ -212,7 +218,9 @@ export function ExamTab({ className }: ExamTabProps) {
 										<EmptyMedia variant="icon">
 											<BookOpen className="w-8 h-8 text-muted-foreground/40" />
 										</EmptyMedia>
-										<EmptyTitle className="text-base">No exams found</EmptyTitle>
+										<EmptyTitle className="text-base">
+											No exams found
+										</EmptyTitle>
 										<EmptyDescription>
 											{hasActiveFilters
 												? "Try adjusting your filters"

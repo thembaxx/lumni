@@ -10,7 +10,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { Database, FlaskConical, type LucideIcon, Palette } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useCallback, useEffect, useState } from "react";
 import {
 	AppearanceTab,
 	BetaTab,
@@ -21,7 +21,7 @@ import {
 } from "@/components/settings/tabs";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { signOut, useSession } from "@/lib/auth-client";
+import { account } from "@/lib/appwrite";
 import {
 	BETA_FEATURES_KEY,
 	type BetaFeatures,
@@ -36,8 +36,48 @@ import {
 	saveToStorage,
 } from "@/lib/utils/storage";
 
+interface AppwriteUser {
+	$id: string;
+	name?: string;
+	email?: string;
+	phone?: string;
+	emailVerification: boolean;
+	phoneVerification: boolean;
+	prefs: Record<string, unknown>;
+	created: string;
+	updated: string;
+	status: boolean;
+}
+
+function useAppwriteSession() {
+	const [user, setUser] = useState<AppwriteUser | null>(null);
+	const [loading, setLoading] = useState(true);
+
+	const fetchUser = useCallback(async () => {
+		try {
+			const appwriteUser = await account.get();
+			setUser(appwriteUser as unknown as AppwriteUser);
+		} catch {
+			setUser(null);
+		} finally {
+			setLoading(false);
+		}
+	}, []);
+
+	useEffect(() => {
+		fetchUser();
+	}, [fetchUser]);
+
+	const signOutUser = useCallback(async () => {
+		await account.deleteSession("current");
+		setUser(null);
+	}, []);
+
+	return { data: user ? { user } : null, loading, signOut: signOutUser };
+}
+
 function SettingsContent() {
-	const { data: session } = useSession();
+	const { data: session, signOut } = useAppwriteSession();
 	const router = useRouter();
 
 	const [studyPrefs, setStudyPrefs] =

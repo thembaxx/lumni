@@ -15,9 +15,11 @@ import { Separator } from "@/components/ui/separator";
 
 interface ProfileTabProps {
 	user: {
-		name?: string | null;
-		email?: string | null;
-		image?: string | null;
+		name?: string;
+		email?: string;
+		phone?: string;
+		$id?: string;
+		[key: string]: unknown;
 	} | null;
 	onSignOut: () => void;
 }
@@ -32,7 +34,6 @@ export function ProfileTab({ user, onSignOut }: ProfileTabProps) {
 			<CardContent className="space-y-6">
 				<div className="flex items-center gap-4">
 					<Avatar className="size-16">
-						<AvatarImage src={user?.image || ""} />
 						<AvatarFallback>{user?.name?.charAt(0) || "U"}</AvatarFallback>
 					</Avatar>
 					<div>

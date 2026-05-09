@@ -8,6 +8,7 @@ import {
 	getExamPapersBySubject,
 	getExamsDb,
 	insertExamPaper,
+	saveExamsDb,
 } from "@/lib/db/exams";
 
 export interface ParsedExamPaperFilename {
@@ -64,6 +65,32 @@ function parseExamPaperFilename(
 
 function toTitleCase(str: string): string {
 	return str.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+function dbExecAll(
+	db: Awaited<ReturnType<typeof getExamsDb>>,
+	sql: string,
+	args?: unknown[],
+): Record<string, unknown>[] {
+	const result = db.exec(sql, args as (string | number | null | Uint8Array)[]);
+	if (!result || result.length === 0 || !result[0].values) return [];
+	const { columns, values } = result[0];
+	return values.map((row) => {
+		const obj: Record<string, unknown> = {};
+		columns.forEach((col, i) => {
+			obj[col] = row[i];
+		});
+		return obj;
+	});
+}
+
+function dbExecOne(
+	db: Awaited<ReturnType<typeof getExamsDb>>,
+	sql: string,
+	args?: unknown[],
+): Record<string, unknown> | undefined {
+	const rows = dbExecAll(db, sql, args);
+	return rows[0];
 }
 
 export async function uploadExamPaper(
@@ -135,12 +162,12 @@ export async function uploadExamPaper(
 
 	const id = randomUUID();
 
-	const db = getExamsDb();
-	const existingPapers = db
-		.prepare(
-			"SELECT id FROM exam_papers WHERE subject_code = ? AND year = ? AND paper_number = ? AND type = ?",
-		)
-		.all(subjectCode, year, paperNumber, type);
+	const db = await getExamsDb();
+	const existingPapers = dbExecAll(
+		db,
+		"SELECT id FROM exam_papers WHERE subject_code = ? AND year = ? AND paper_number = ? AND type = ?",
+		[subjectCode, year, paperNumber, type],
+	);
 
 	if (existingPapers.length > 0) {
 		throw new Error("Exam paper already exists");
@@ -160,49 +187,40 @@ export async function uploadExamPaper(
 	});
 
 	if (type === "memo") {
-		const paperResult = db
-			.prepare(
-				"SELECT id FROM exam_papers WHERE subject_code = ? AND year = ? AND paper_number = ? AND type = 'paper' LIMIT 1",
-			)
-			.get(subjectCode, year, paperNumber) as { id: string } | undefined;
+		const paperResult = dbExecOne(
+			db,
+			"SELECT id FROM exam_papers WHERE subject_code = ? AND year = ? AND paper_number = ? AND type = 'paper' LIMIT 1",
+			[subjectCode, year, paperNumber],
+		);
 
 		if (paperResult) {
-			db.prepare("UPDATE exam_papers SET memo_id = ? WHERE id = ?").run(
+			db.run("UPDATE exam_papers SET memo_id = ? WHERE id = ?", [
 				id,
-				paperResult.id,
-			);
+				paperResult.id as string,
+			]);
+			saveExamsDb();
 		}
 	}
 
-	const record = db
-		.prepare("SELECT * FROM exam_papers WHERE id = ?")
-		.get(id) as {
-		id: string;
-		subject_code: string;
-		subject_name: string;
-		year: number;
-		paper_number: number;
-		type: "paper" | "memo";
-		memo_id: string | null;
-		file_url: string;
-		file_key: string;
-		original_file_name: string;
-		uploaded_at: string;
-	};
+	const record = dbExecOne(
+		db,
+		"SELECT id, subject_code, subject_name, year, paper_number, type, memo_id, file_url, file_key, original_file_name, uploaded_at FROM exam_papers WHERE id = ?",
+		[id],
+	);
 
 	return {
-		id: record.id,
-		subjectId: record.subject_code,
-		subjectCode: record.subject_code,
-		subjectName: record.subject_name,
-		year: record.year,
-		paperNumber: record.paper_number,
-		type: record.type,
-		memoId: record.memo_id,
-		fileUrl: record.file_url,
-		fileKey: record.file_key,
-		originalFileName: record.original_file_name,
-		uploadedAt: record.uploaded_at,
+		id: record.id as string,
+		subjectId: record.subject_code as string,
+		subjectCode: record.subject_code as string,
+		subjectName: record.subject_name as string,
+		year: record.year as number,
+		paperNumber: record.paper_number as number,
+		type: record.type as "paper" | "memo",
+		memoId: record.memo_id as string | null,
+		fileUrl: record.file_url as string,
+		fileKey: record.file_key as string,
+		originalFileName: record.original_file_name as string,
+		uploadedAt: record.uploaded_at as string,
 	};
 }
 
@@ -236,33 +254,34 @@ export async function getExamPaperUrl(
 	paperNumber: number,
 	type: "paper" | "memo",
 ): Promise<string | null> {
-	const db = getExamsDb();
-	const record = db
-		.prepare(
-			"SELECT file_url FROM exam_papers WHERE subject_code = ? AND year = ? AND paper_number = ? AND type = ? LIMIT 1",
-		)
-		.get(subjectCode, year, paperNumber, type) as
-		| { file_url: string }
-		| undefined;
+	const db = await getExamsDb();
+	const record = dbExecOne(
+		db,
+		"SELECT file_url FROM exam_papers WHERE subject_code = ? AND year = ? AND paper_number = ? AND type = ? LIMIT 1",
+		[subjectCode, year, paperNumber, type],
+	);
 
-	return record?.file_url || null;
+	return (record?.file_url as string) || null;
 }
 
 export async function deleteExamPaper(id: string): Promise<void> {
-	const db = getExamsDb();
+	const db = await getExamsDb();
 	const utapi = new UTApi();
 
-	const record = db
-		.prepare("SELECT file_key FROM exam_papers WHERE id = ?")
-		.get(id) as { file_key: string } | undefined;
+	const record = dbExecOne(
+		db,
+		"SELECT file_key FROM exam_papers WHERE id = ?",
+		[id],
+	);
 
 	if (!record) {
 		throw new Error("Exam paper not found");
 	}
 
-	await utapi.deleteFiles(record.file_key);
+	await utapi.deleteFiles(record.file_key as string);
 
-	db.prepare("DELETE FROM exam_papers WHERE id = ?").run(id);
+	db.run("DELETE FROM exam_papers WHERE id = ?", [id]);
+	saveExamsDb();
 }
 
 export interface GetAllExamPapersOptions {
@@ -274,9 +293,10 @@ export interface GetAllExamPapersOptions {
 export async function getAllExamPapers(
 	options?: GetAllExamPapersOptions,
 ): Promise<ExamPaperRecord[]> {
-	const db = getExamsDb();
-	let query = "SELECT * FROM exam_papers WHERE 1=1";
-	const params: (number | string)[] = [];
+	const db = await getExamsDb();
+	let query =
+		"SELECT id, subject_code, subject_name, year, paper_number, type, memo_id, file_url, file_key, original_file_name, uploaded_at FROM exam_papers WHERE 1=1";
+	const params: unknown[] = [];
 
 	if (options?.year) {
 		query += " AND year = ?";
@@ -293,33 +313,21 @@ export async function getAllExamPapers(
 
 	query += " ORDER BY subject_code, year DESC, paper_number";
 
-	const records = db.prepare(query).all(...params) as {
-		id: string;
-		subject_code: string;
-		subject_name: string;
-		year: number;
-		paper_number: number;
-		type: "paper" | "memo";
-		memo_id: string | null;
-		file_url: string;
-		file_key: string;
-		original_file_name: string;
-		uploaded_at: string;
-	}[];
+	const records = dbExecAll(db, query, params);
 
 	return records.map((r) => ({
-		id: r.id,
-		subjectId: r.subject_code,
-		subjectCode: r.subject_code,
-		subjectName: r.subject_name,
-		year: r.year,
-		paperNumber: r.paper_number,
-		type: r.type,
-		memoId: r.memo_id,
-		fileUrl: r.file_url,
-		fileKey: r.file_key,
-		originalFileName: r.original_file_name,
-		uploadedAt: r.uploaded_at,
+		id: r.id as string,
+		subjectId: r.subject_code as string,
+		subjectCode: r.subject_code as string,
+		subjectName: r.subject_name as string,
+		year: r.year as number,
+		paperNumber: r.paper_number as number,
+		type: r.type as "paper" | "memo",
+		memoId: r.memo_id as string | null,
+		fileUrl: r.file_url as string,
+		fileKey: r.file_key as string,
+		originalFileName: r.original_file_name as string,
+		uploadedAt: r.uploaded_at as string,
 	}));
 }
 
@@ -396,17 +404,15 @@ export async function checkAndPopulateExamsDb() {
 			return { populated: false, count: 0 };
 		}
 
-		const db = getExamsDb();
-		const insertStmt = db.prepare(`
-			INSERT OR IGNORE INTO exam_papers (
-				id, subject_code, subject_name, year, paper_number,
-				type, file_url, file_key, original_file_name
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-		`);
+		const db = await getExamsDb();
 
-		const insertMany = db.transaction((examList: typeof exams) => {
-			for (const exam of examList) {
-				insertStmt.run(
+		for (const exam of exams) {
+			db.run(
+				`INSERT OR IGNORE INTO exam_papers (
+					id, subject_code, subject_name, year, paper_number,
+					type, file_url, file_key, original_file_name
+				) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+				[
 					exam.id,
 					exam.subjectId,
 					exam.subject,
@@ -416,11 +422,10 @@ export async function checkAndPopulateExamsDb() {
 					exam.url,
 					"",
 					exam.title,
-				);
-			}
-		});
-
-		insertMany(exams);
+				],
+			);
+		}
+		saveExamsDb();
 
 		return { populated: true, count: exams.length };
 	} catch (error) {

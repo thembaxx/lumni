@@ -1,30 +1,157 @@
-import { neon } from "@neondatabase/serverless";
-import { drizzle } from "drizzle-orm/neon-http";
-import * as schema from "./schema";
+import { databases } from "@/lib/appwrite";
 
-const DATABASE_URL = process.env.DATABASE_URL || process.env.POSTGRES_URL;
+export const APPWRITE_DATABASE_ID = process.env.APPWRITE_DATABASE_ID || "lumni";
 
-export function getDb() {
-	if (!DATABASE_URL) {
-		throw new Error("DATABASE_URL is not set in environment variables");
-	}
-	const sql = neon(DATABASE_URL);
-	return drizzle(sql, { schema });
+export const COLLECTIONS = {
+	SUBJECTS: "subjects",
+	TOPICS: "topics",
+	QUESTIONS: "questions",
+	USER_SUBJECTS: "user_subjects",
+	USER_PROGRESS: "user_progress",
+	STUDY_SESSIONS: "study_sessions",
+	EXAM_PAPERS: "exam_papers",
+} as const;
+
+export type Subject = {
+	$id: string;
+	name: string;
+	code: string;
+	description?: string;
+	icon?: string;
+	category: string;
+	color?: string;
+	sourceUrl?: string;
+	sourceVersion?: string;
+	createdAt: string;
+};
+
+export type Topic = {
+	$id: string;
+	subjectId: string;
+	name: string;
+	description?: string;
+	unitNumber?: number;
+	orderIndex?: number;
+	createdAt: string;
+};
+
+export type Question = {
+	$id: string;
+	topicId: string;
+	type: string;
+	questionText: string;
+	options?: string;
+	correctAnswer: string;
+	explanation?: string;
+	difficulty?: string;
+	hasImage?: boolean;
+	imageUrl?: string;
+	imageData?: string;
+	orderIndex?: number;
+	createdAt: string;
+};
+
+export type UserSubject = {
+	$id: string;
+	userId: string;
+	subjectId: string;
+	selectedAt: string;
+};
+
+export type UserProgress = {
+	$id: string;
+	userId: string;
+	subjectId: string;
+	questionsAttempted: number;
+	correctCount: number;
+	currentStreak: number;
+	longestStreak: number;
+	lastAttemptAt?: string;
+	createdAt: string;
+	updatedAt: string;
+};
+
+export type StudySession = {
+	$id: string;
+	userId: string;
+	subjectId: string;
+	questionsAnswered: number;
+	correctCount: number;
+	duration?: number;
+	startedAt: string;
+	endedAt?: string;
+};
+
+export type ExamPaper = {
+	$id: string;
+	subjectId: string;
+	year: number;
+	paperNumber: number;
+	type: string;
+	memoId?: string;
+	fileUrl: string;
+	fileKey: string;
+	originalFileName?: string;
+	uploadedAt: string;
+};
+
+export async function listDocuments<T>(
+	collection: string,
+	queries: string[] = [],
+): Promise<T[]> {
+	const response = await databases.listDocuments(
+		APPWRITE_DATABASE_ID,
+		collection,
+		queries,
+	);
+	return response.documents as unknown as T[];
 }
 
-export function getSql() {
-	if (!DATABASE_URL) {
-		throw new Error("DATABASE_URL is not set in environment variables");
+export async function getDocument<T>(
+	collection: string,
+	documentId: string,
+): Promise<T | null> {
+	try {
+		const doc = await databases.getDocument(
+			APPWRITE_DATABASE_ID,
+			collection,
+			documentId,
+		);
+		return doc as unknown as T;
+	} catch {
+		return null;
 	}
-	return neon(DATABASE_URL);
 }
 
-const db = DATABASE_URL ? drizzle(neon(DATABASE_URL), { schema }) : null;
+export async function createDocument(
+	collection: string,
+	data: Record<string, unknown>,
+): Promise<string> {
+	const doc = await databases.createDocument(
+		APPWRITE_DATABASE_ID,
+		collection,
+		"unique()",
+		data,
+	);
+	return doc.$id;
+}
 
-const sql = DATABASE_URL
-	? neon(DATABASE_URL)
-	: ((() => {
-			throw new Error("DATABASE_URL is not set in environment variables");
-		}) as unknown as ReturnType<typeof neon>);
+export async function updateDocument(
+	collection: string,
+	documentId: string,
+	data: Record<string, unknown>,
+): Promise<void> {
+	await databases.updateDocument(
+		APPWRITE_DATABASE_ID,
+		collection,
+		documentId,
+		data,
+	);
+}
 
-export { db as db, schema, sql as sql };
+export async function deleteDocument(
+	collection: string,
+	documentId: string,
+): Promise<void> {
+	await databases.deleteDocument(APPWRITE_DATABASE_ID, collection, documentId);
+}

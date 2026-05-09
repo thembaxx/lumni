@@ -1,12 +1,7 @@
 "use server";
 
-import { eq } from "drizzle-orm";
-import { getDb } from "@/lib/db/client";
-import {
-	studySession,
-	subject as subjectTable,
-	userProgress,
-} from "@/lib/db/schema";
+import { Query } from "appwrite";
+import { COLLECTIONS, listDocuments, updateDocument } from "@/lib/db/client";
 import { autoSyncSubject, syncSubjectQuestions } from "./sync-qa";
 
 const ALL_SUBJECTS = [
@@ -43,10 +38,10 @@ export async function syncAllSubjects(): Promise<{
 }> {
 	const results = [];
 
-	for (const subject of ALL_SUBJECTS) {
-		const result = await syncSubjectQuestions(subject, 1);
+	for (const s of ALL_SUBJECTS) {
+		const result = await syncSubjectQuestions(s, 1);
 		results.push({
-			subject,
+			subject: s,
 			...result,
 		});
 	}
@@ -62,15 +57,12 @@ export async function checkSubjectStatus(subject: string): Promise<{
 }> {
 	try {
 		const subjectId = subject.toLowerCase().replace(/\s+/g, "-");
-		const db = getDb();
+		const subjects = await listDocuments(COLLECTIONS.SUBJECTS, [
+			Query.equal("code", subjectId),
+			Query.limit(1),
+		]);
 
-		const subjectRec = await db
-			.select()
-			.from(subjectTable)
-			.where(eq(subjectTable.id, subjectId))
-			.limit(1);
-
-		if (subjectRec.length === 0) {
+		if (subjects.length === 0) {
 			return {
 				exists: false,
 				localQuestions: 0,
@@ -79,7 +71,9 @@ export async function checkSubjectStatus(subject: string): Promise<{
 			};
 		}
 
-		const version = subjectRec[0].sourceVersion || null;
+		const version =
+			((subjects[0] as Record<string, unknown>).sourceVersion as string) ||
+			null;
 		const needsSync = !version;
 
 		return {
