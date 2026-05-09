@@ -21,7 +21,7 @@ const appwriteClient = new Client()
 const serverClient = new Client()
 	.setEndpoint(APPWRITE_ENDPOINT)
 	.setProject(APPWRITE_PROJECT)
-	.setKey(APPWRITE_API_KEY);
+	.setApiKey(APPWRITE_API_KEY);
 
 export const storage = new Storage(appwriteClient);
 export const functions = new Functions(appwriteClient);

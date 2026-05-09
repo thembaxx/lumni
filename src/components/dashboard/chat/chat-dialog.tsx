@@ -638,7 +638,7 @@ function ChatInput({
 				<div className="flex items-center justify-between">
 					<div className="flex items-center gap-2">
 						<DropdownMenu>
-							<DropdownMenuTrigger asChild>
+							<DropdownMenuTrigger>
 								<div
 									role="button"
 									tabIndex={0}
