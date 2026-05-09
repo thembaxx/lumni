@@ -1,6 +1,7 @@
 export interface ChatMessage {
 	role: "system" | "user" | "model" | "assistant";
 	content: string;
+	imageUrl?: string;
 }
 
 export interface AIRequest {

@@ -18,6 +18,7 @@ import {
 import { cn } from "@/lib/utils";
 import type { QAQuestion, QuestionState } from "@/types/questions";
 import { QuestionDiagram } from "./question-diagram";
+import { StepByStep } from "./step-by-step";
 
 interface QuestionCardProps {
 	question: QAQuestion;
@@ -290,7 +291,7 @@ export function QuestionCard({
 								animate={{ opacity: 1, scale: 1, y: 0 }}
 								exit={{ opacity: 0, scale: 0.95, y: -8 }}
 								className={cn(
-									"rounded-lg p-4",
+									"rounded-lg p-4 space-y-3",
 									state.isCorrect
 										? "bg-success/10 text-success"
 										: "bg-destructive/10 text-destructive",
@@ -299,7 +300,15 @@ export function QuestionCard({
 								<p className="font-medium">
 									{state.isCorrect ? "Correct!" : "Incorrect"}
 								</p>
-								<p>{question.explanation}</p>
+								<p className="text-sm opacity-90">{question.explanation}</p>
+								{question.steps && question.steps.length > 0 && (
+									<div className="pt-2 border-t border-current/20">
+										<StepByStep
+											steps={question.steps}
+											className="text-foreground"
+										/>
+									</div>
+								)}
 							</m.div>
 						)}
 					</AnimatePresence>

@@ -16,6 +16,10 @@ const APSCalculator = dynamic(
 	() => import("./aps-calculator").then((mod) => mod.APSCalculator),
 	{ ssr: false },
 );
+const AiSolver = dynamic(
+	() => import("./ai-solver").then((mod) => mod.AiSolver),
+	{ ssr: false },
+);
 const ExamCalendar = dynamic(
 	() => import("./exam-calendar").then((mod) => mod.ExamCalendar),
 	{ ssr: false },
@@ -35,6 +39,7 @@ interface ToolsDialogProps {
 }
 
 const tabs = [
+	{ id: "solver", label: "Solver" },
 	{ id: "periodic", label: "Periodic" },
 	{ id: "calculator", label: "APS Calc" },
 	{ id: "calendar", label: "Exams" },
@@ -43,7 +48,7 @@ const tabs = [
 ];
 
 export function ToolsDialog({ open, onOpenChange }: ToolsDialogProps) {
-	const [activeTab, setActiveTab] = useState("periodic");
+	const [activeTab, setActiveTab] = useState("solver");
 
 	return (
 		<AnimatePresence initial={false}>
@@ -102,6 +107,9 @@ export function ToolsDialog({ open, onOpenChange }: ToolsDialogProps) {
 							</motion.div>
 
 							<div className="flex-1 overflow-y-auto">
+								<TabsContent value="solver" className="h-full m-0">
+									<AiSolver />
+								</TabsContent>
 								<TabsContent value="periodic" className="h-full m-0">
 									<PeriodicTable />
 								</TabsContent>

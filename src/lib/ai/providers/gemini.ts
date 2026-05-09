@@ -2,14 +2,48 @@ import { AIProvider, AIRequest, AIResponse } from "../types";
 
 const GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models";
 
+interface GeminiPart {
+	text?: string;
+	inlineData?: {
+		mimeType: string;
+		data: string;
+	};
+}
+
 export function createGeminiProvider(apiKey: string): AIProvider {
 	const model = "gemini-2.0-flash-lite-001";
 
 	async function generate(request: AIRequest): Promise<AIResponse> {
-		const contents = request.messages.map((m) => ({
-			role: m.role === "model" ? "model" : "user",
-			parts: [{ text: m.content }],
-		}));
+		const contents = await Promise.all(
+			request.messages.map(async (m) => {
+				const parts: GeminiPart[] = [{ text: m.content }];
+
+				if (m.imageUrl) {
+					try {
+						const imageResponse = await fetch(m.imageUrl);
+						if (imageResponse.ok) {
+							const buffer = await imageResponse.arrayBuffer();
+							const base64 = Buffer.from(buffer).toString("base64");
+							const contentType =
+								imageResponse.headers.get("content-type") || "image/jpeg";
+							parts.push({
+								inlineData: {
+									mimeType: contentType,
+									data: base64,
+								},
+							});
+						}
+					} catch (e) {
+						console.error("Failed to fetch image for Gemini:", e);
+					}
+				}
+
+				return {
+					role: m.role === "model" ? "model" : "user",
+					parts,
+				};
+			}),
+		);
 
 		if (request.systemPrompt) {
 			contents.unshift({

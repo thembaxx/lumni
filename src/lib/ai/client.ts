@@ -84,17 +84,19 @@ export class AIClient {
 		};
 	}
 
-	async generateWithSystem(
+	generateWithSystem(
 		systemPrompt: string,
 		userPrompt: string,
-		options?: GenerateOptions,
+		options?: GenerateOptions & { imageUrl?: string },
 	): Promise<AIResult> {
 		if (this.providers.length === 0) {
 			return { ...FAILURE_RESPONSE, error: "No AI providers configured" };
 		}
 
 		const request: AIRequest = {
-			messages: [{ role: "user", content: userPrompt }],
+			messages: [
+				{ role: "user", content: userPrompt, imageUrl: options?.imageUrl },
+			],
 			systemPrompt,
 			temperature: options?.temperature ?? 0.7,
 			maxTokens: options?.maxTokens ?? 2048,
@@ -162,7 +164,7 @@ export async function generate(
 export async function generateWithSystem(
 	systemPrompt: string,
 	userPrompt: string,
-	options?: GenerateOptions,
+	options?: GenerateOptions & { imageUrl?: string },
 ): Promise<AIResult> {
 	return getAI().generateWithSystem(systemPrompt, userPrompt, options);
 }

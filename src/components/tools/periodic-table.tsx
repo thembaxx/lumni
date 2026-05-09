@@ -1620,48 +1620,48 @@ export function PeriodicTable() {
 
 	const displayedElements = isFiltered ? filteredElements : elements;
 
-// Generate interesting fact when element is selected
-useEffect(() => {
-	if (selectedElement) {
-		setInterestingFact(null); // Reset fact when new element selected
-		
-		// Generate interesting fact
-		const generateFact = async () => {
-			try {
-				// Try to generate fact via our API route
-				const response = await fetch(`/api/generate-element-fact`, {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify({
-						element: {
-							atomicNumber: selectedElement.atomicNumber,
-							name: selectedElement.name,
-							symbol: selectedElement.symbol,
+	// Generate interesting fact when element is selected
+	useEffect(() => {
+		if (selectedElement) {
+			setInterestingFact(null); // Reset fact when new element selected
+
+			// Generate interesting fact
+			const generateFact = async () => {
+				try {
+					// Try to generate fact via our API route
+					const response = await fetch(`/api/generate-element-fact`, {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
 						},
-					}),
-				});
+						body: JSON.stringify({
+							element: {
+								atomicNumber: selectedElement.atomicNumber,
+								name: selectedElement.name,
+								symbol: selectedElement.symbol,
+							},
+						}),
+					});
 
-				if (!response.ok) {
-					throw new Error(`HTTP error! status: ${response.status}`);
-				}
+					if (!response.ok) {
+						throw new Error(`HTTP error! status: ${response.status}`);
+					}
 
-				const data = await response.json();
-				if (data.fact) {
-					setInterestingFact(data.fact);
-				} else {
+					const data = await response.json();
+					if (data.fact) {
+						setInterestingFact(data.fact);
+					} else {
+						setInterestingFact(null);
+					}
+				} catch (error) {
+					console.error("Failed to generate interesting fact:", error);
 					setInterestingFact(null);
 				}
-			} catch (error) {
-				console.error('Failed to generate interesting fact:', error);
-				setInterestingFact(null);
-			}
-		};
+			};
 
-		generateFact();
-	}
-}, [selectedElement]);
+			generateFact();
+		}
+	}, [selectedElement]);
 
 	return (
 		<div
@@ -1937,7 +1937,7 @@ useEffect(() => {
 										{selectedElement.namedAfter}
 									</p>
 								</motion.div>
-								
+
 								{interestingFact && (
 									<motion.div
 										initial={{ opacity: 0, y: 15 }}

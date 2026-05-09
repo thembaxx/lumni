@@ -10,6 +10,7 @@ export interface QAQuestion {
 	diagram: QADiagram | null;
 	hint: string;
 	explanation: string;
+	steps?: string[];
 }
 
 export interface QAOption {
