@@ -12,13 +12,20 @@ export const APPWRITE_ENDPOINT =
 export const APPWRITE_PROJECT =
 	process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID || "";
 
+export const APPWRITE_API_KEY = process.env.APPWRITE_API_KEY || "";
+
 const appwriteClient = new Client()
 	.setEndpoint(APPWRITE_ENDPOINT)
 	.setProject(APPWRITE_PROJECT);
 
+const serverClient = new Client()
+	.setEndpoint(APPWRITE_ENDPOINT)
+	.setProject(APPWRITE_PROJECT)
+	.setKey(APPWRITE_API_KEY);
+
 export const storage = new Storage(appwriteClient);
 export const functions = new Functions(appwriteClient);
-export const databases = new Databases(appwriteClient);
+export const databases = new Databases(serverClient);
 export const account = new Account(appwriteClient);
 
 export const initAppwriteClient = (sessionToken?: string) => {
