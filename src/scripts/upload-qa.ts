@@ -19,14 +19,22 @@ interface UploadOptions {
 	fileNumber?: number;
 }
 
-async function uploadFile({ filePath, subject, fileNumber = 1 }: UploadOptions): Promise<string | null> {
+async function uploadFile({
+	filePath,
+	subject,
+	fileNumber = 1,
+}: UploadOptions): Promise<string | null> {
 	const fileContent = readFileSync(filePath);
 	const fileSize = fileContent.length;
 	const fileName = generateFileName(subject, fileNumber);
 
 	console.log(`Uploading ${fileName} (${fileSize} bytes)...`);
 
-	const result = await uploadQAFileSubject(fileContent.toString("utf-8"), subject, fileNumber);
+	const result = await uploadQAFileSubject(
+		fileContent.toString("utf-8"),
+		subject,
+		fileNumber,
+	);
 
 	if (!result.success) {
 		throw new Error(`Upload failed: ${result.error}`);
@@ -53,7 +61,10 @@ async function main() {
 			process.exit(1);
 		}
 	} catch (error) {
-		console.error("Error:", error instanceof Error ? error.message : "Unknown error");
+		console.error(
+			"Error:",
+			error instanceof Error ? error.message : "Unknown error",
+		);
 		process.exit(1);
 	}
 }

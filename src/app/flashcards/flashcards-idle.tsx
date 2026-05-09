@@ -1,5 +1,7 @@
 "use client";
 
+import { ArrowDown01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { Lightbulb } from "lucide-react";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
 import { Button } from "@/components/ui/button";
@@ -12,8 +14,6 @@ import {
 	EmptyMedia,
 	EmptyTitle,
 } from "@/components/ui/empty";
-import { ArrowDown01Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 
 interface FlashcardsIdleProps {
 	onSelect: (subject: string) => void;
@@ -43,7 +43,8 @@ export function FlashcardsIdle({ onSelect }: FlashcardsIdleProps) {
 									Choose Subject
 									<HugeiconsIcon
 										icon={ArrowDown01Icon}
-										className="w-4 h-4 ml-1" />
+										className="w-4 h-4 ml-1"
+									/>
 								</Button>
 							</SubjectsDrawer>
 						</EmptyContent>

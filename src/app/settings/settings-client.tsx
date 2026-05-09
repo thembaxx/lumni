@@ -1,9 +1,6 @@
 "use client";
 
-import {
-	ArrowLeftIcon,
-	Settings01Icon,
-} from "@hugeicons/core-free-icons";
+import { ArrowLeftIcon, Settings01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Database, FlaskConical, type LucideIcon, Palette } from "lucide-react";
 import Link from "next/link";
