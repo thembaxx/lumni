@@ -111,4 +111,4 @@ export function SubjectsDrawer({
 	);
 }
 
-export const SubjectDrawer = SubjectsDrawer;
+

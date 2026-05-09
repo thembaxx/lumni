@@ -270,4 +270,4 @@ export function ExamTab({ className }: ExamTabProps) {
 	);
 }
 
-export default ExamTab;
+

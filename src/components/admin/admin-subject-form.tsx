@@ -62,25 +62,33 @@ export function SubjectForm({
 				<div className="grid grid-cols-2 gap-4">
 					<div className="space-y-2">
 						<Label className="text-sm font-medium text-foreground">Name</Label>
-						<motion.div whileFocus={{ scale: 1.01 }}>
+						<motion.div
+							whileFocus={{ scale: 1.01 }}
+							className="transition-shadow ring-1 ring-transparent focus-within:ring-primary/30 rounded-md"
+						>
 							<Input
 								placeholder="Accounting"
 								value={editSubject?.name || formData.name}
 								onChange={(e) =>
 									onFormDataChange({ ...formData, name: e.target.value })
 								}
+								className="rounded-md"
 							/>
 						</motion.div>
 					</div>
 					<div className="space-y-2">
 						<Label className="text-sm font-medium text-foreground">Code</Label>
-						<motion.div whileFocus={{ scale: 1.01 }}>
+						<motion.div
+							whileFocus={{ scale: 1.01 }}
+							className="transition-shadow ring-1 ring-transparent focus-within:ring-primary/30 rounded-md"
+						>
 							<Input
 								placeholder="accounting"
 								value={editSubject?.code || formData.code}
 								onChange={(e) =>
 									onFormDataChange({ ...formData, code: e.target.value })
 								}
+								className="rounded-md"
 							/>
 						</motion.div>
 					</div>
@@ -89,13 +97,17 @@ export function SubjectForm({
 					<Label className="text-sm font-medium text-foreground">
 						Description
 					</Label>
-					<motion.div whileFocus={{ scale: 1.01 }}>
+					<motion.div
+						whileFocus={{ scale: 1.01 }}
+						className="transition-shadow ring-1 ring-transparent focus-within:ring-primary/30 rounded-md"
+					>
 						<Input
 							placeholder="Brief description"
 							value={editSubject?.description || formData.description}
 							onChange={(e) =>
 								onFormDataChange({ ...formData, description: e.target.value })
 							}
+							className="rounded-md"
 						/>
 					</motion.div>
 				</div>

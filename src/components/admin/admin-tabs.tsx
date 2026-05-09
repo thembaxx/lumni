@@ -51,7 +51,16 @@ function AnimatedTabButton({
 
 export function AdminTabs({ activeTab, onTabChange }: AdminTabsProps) {
 	return (
-		<div className="flex gap-1 p-1 bg-muted/50 rounded-lg">
+		<div className="relative flex gap-1 p-1 bg-muted/50 rounded-lg">
+			<motion.div
+				className="absolute top-1 bottom-1 bg-background rounded-md shadow-sm"
+				initial={false}
+				animate={{
+					left: activeTab === "exam" ? 4 : "50%",
+					width: "calc(50% - 4px)",
+				}}
+				transition={springTransition}
+			/>
 			<AnimatedTabButton
 				active={activeTab === "exam"}
 				onClick={() => onTabChange("exam")}

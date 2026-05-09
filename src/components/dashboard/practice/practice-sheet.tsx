@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/sheet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FocusTab } from "../focus/focus-tab";
-import ExamTab from "./exam-tab";
+import { ExamTab } from "./exam-tab";
 import { QuizTab } from "./quiz-tab";
 import StatsTab from "./stats-tab";
 

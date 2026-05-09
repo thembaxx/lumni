@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { Mail, ShieldCheck } from "lucide-react";
 import { startTransition, useState, ViewTransition } from "react";
 import { MagicLinkDialog, OTPDialog } from "@/components/admin/login-dialogs";
@@ -8,7 +9,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
 const buttonStyles =
-	"active:scale-[0.96] transition-transform duration-150 ease-out";
+	"active:scale-[0.96] transition-transform duration-150 ease-out justify-center";
 
 export function LoginForm({ onSuccess }: { onSuccess: () => void }) {
 	const [magicOpen, setMagicOpen] = useState(false);
@@ -27,7 +28,7 @@ export function LoginForm({ onSuccess }: { onSuccess: () => void }) {
 	return (
 		<>
 			<div className="min-h-screen flex items-center justify-center p-4 bg-background -webkit-font-smoothing antialiased">
-				<div className="w-full max-w-sm">
+				<div className="w-full max-w-sm space-y-6">
 					<ViewTransition enter="vt-fade-in" default="none">
 						<div className="text-center mb-8">
 							<h1 className="text-2xl font-semibold tracking-tight">Admin</h1>

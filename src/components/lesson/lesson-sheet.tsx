@@ -163,5 +163,3 @@ export function LessonSheet() {
 }
 
 export const LessonsButton = () => <LessonSheet />;
-
-export default LessonSheet;

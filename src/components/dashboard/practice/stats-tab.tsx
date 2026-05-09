@@ -3,7 +3,7 @@ import { StreakFire } from "@/components/celebration";
 import {
 	ProgressChart,
 	StatsCards,
-	SubjectDrawer,
+	SubjectsDrawer,
 } from "@/components/dashboard";
 import {
 	Achievements,
@@ -71,7 +71,7 @@ export default function StatsTab() {
 
 	return (
 		<div className="px-4 pb-6 space-y-3">
-			<SubjectDrawer
+			<SubjectsDrawer
 				userId={userId}
 				selectedSubjects={selectedSubjects}
 				onSelectionChange={handleSubjectToggle}

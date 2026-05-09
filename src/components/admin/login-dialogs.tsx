@@ -263,7 +263,7 @@ export function MagicLinkDialog({
 									setError("");
 								}}
 								autoComplete="email"
-								className="-webkit-font-smoothing antialiased"
+								className="-webkit-font-smoothing antialiased h-11 rounded-md ring-1 ring-transparent focus-within:ring-primary/30 transition-all"
 							/>
 							{error && (
 								<p className="text-xs text-destructive flex items-center gap-1">
@@ -618,7 +618,7 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 									setError("");
 								}}
 								autoComplete="email"
-								className="-webkit-font-smoothing antialiased"
+								className="-webkit-font-smoothing antialiased h-11 rounded-md ring-1 ring-transparent focus-within:ring-primary/30 transition-all"
 							/>
 							{error && (
 								<p className="text-xs text-destructive flex items-center gap-1">

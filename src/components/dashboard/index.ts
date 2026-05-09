@@ -1,5 +1,5 @@
 export { DashboardClient } from "./dashboard-client";
-export { SubjectDrawer } from "./drawers/subjects-drawer";
+export { SubjectsDrawer } from "./drawers/subjects-drawer";
 export { DashboardHeader } from "./layout/header";
 export { DashboardHero } from "./layout/hero";
 export { TabNav } from "./navigation/tab-nav";
