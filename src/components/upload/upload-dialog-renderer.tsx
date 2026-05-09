@@ -33,7 +33,7 @@ export function openUploadDialog(
 export function UploadDialogRenderer({
 	children,
 }: {
-	children: React.ReactNode;
+	children?: React.ReactNode;
 }) {
 	const [isOpen, setIsOpen] = useState(false);
 	const [items, setItems] = useState<FileUploadState[]>([]);

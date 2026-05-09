@@ -7,7 +7,6 @@ import { ThemeProvider } from "@/components/theme";
 import { WebVitalsLogger } from "@/components/web-vitals";
 import { prefetchUploadSubjects } from "@/hooks/use-upload-subjects";
 import { OnlineStatusIndicator } from "@/hooks/useOnlineStatus";
-import { ensureExamPapersSynced } from "@/lib/exams/sync-exam-papers";
 import { queryClient } from "@/lib/query-client";
 import { useAutoSync } from "@/lib/sync-queue";
 import { useAppStore } from "@/store";
@@ -23,7 +22,6 @@ export function Providers({ children }: { children: React.ReactNode }) {
 	useEffect(() => {
 		const handlePrefetch = async () => {
 			await prefetchUploadSubjects(queryClient);
-			ensureExamPapersSynced().catch(() => {});
 			setInitialized(true);
 		};
 		handlePrefetch();
