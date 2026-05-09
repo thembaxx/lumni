@@ -1,4 +1,4 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Merriweather } from "next/font/google";
 
 export const fontSans = Geist({
 	weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
