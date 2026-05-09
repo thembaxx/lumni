@@ -9,19 +9,15 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Database, FlaskConical, type LucideIcon, Palette } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { Suspense, useCallback, useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import {
 	AppearanceTab,
 	BetaTab,
 	DataTab,
-	NotificationsTab,
-	ProfileTab,
 	StudyTab,
 } from "@/components/settings/tabs";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { account } from "@/lib/appwrite";
 import {
 	BETA_FEATURES_KEY,
 	type BetaFeatures,
@@ -36,50 +32,7 @@ import {
 	saveToStorage,
 } from "@/lib/utils/storage";
 
-interface AppwriteUser {
-	$id: string;
-	name?: string;
-	email?: string;
-	phone?: string;
-	emailVerification: boolean;
-	phoneVerification: boolean;
-	prefs: Record<string, unknown>;
-	created: string;
-	updated: string;
-	status: boolean;
-}
-
-function useAppwriteSession() {
-	const [user, setUser] = useState<AppwriteUser | null>(null);
-	const [loading, setLoading] = useState(true);
-
-	const fetchUser = useCallback(async () => {
-		try {
-			const appwriteUser = await account.get();
-			setUser(appwriteUser as unknown as AppwriteUser);
-		} catch {
-			setUser(null);
-		} finally {
-			setLoading(false);
-		}
-	}, []);
-
-	useEffect(() => {
-		fetchUser();
-	}, [fetchUser]);
-
-	const signOutUser = useCallback(async () => {
-		await account.deleteSession("current");
-		setUser(null);
-	}, []);
-
-	return { data: user ? { user } : null, loading, signOut: signOutUser };
-}
-
 function SettingsContent() {
-	const { data: session, signOut } = useAppwriteSession();
-	const router = useRouter();
-
 	const [studyPrefs, setStudyPrefs] =
 		useState<StudyPreferences>(DEFAULT_PREFERENCES);
 	const [notifications, setNotifications] = useState<NotificationSettings>(
@@ -87,11 +40,6 @@ function SettingsContent() {
 	);
 	const [betaFeatures, setBetaFeatures] = useState<BetaFeatures>(DEFAULT_BETA);
 	const [activeTab, setActiveTab] = useState("appearance");
-	const [isSaving, setIsSaving] = useState(false);
-	const [saveMessage, setSaveMessage] = useState("");
-
-	const hasAccount = !!session?.user;
-	const user = session?.user;
 
 	useEffect(() => {
 		setStudyPrefs(loadFromStorage(STUDY_PREFS_KEY, DEFAULT_PREFERENCES));
@@ -100,23 +48,6 @@ function SettingsContent() {
 		);
 		setBetaFeatures(loadFromStorage(BETA_FEATURES_KEY, DEFAULT_BETA));
 	}, []);
-
-	const handleSavePreferences = () => {
-		setIsSaving(true);
-		saveToStorage(STUDY_PREFS_KEY, studyPrefs);
-		saveToStorage(NOTIFICATION_SETTINGS_KEY, notifications);
-		saveToStorage(BETA_FEATURES_KEY, betaFeatures);
-		setTimeout(() => {
-			setIsSaving(false);
-			setSaveMessage("Settings saved!");
-			setTimeout(() => setSaveMessage(""), 2000);
-		}, 500);
-	};
-
-	const handleSignOut = async () => {
-		await signOut();
-		router.push("/");
-	};
 
 	const handleExportData = () => {
 		const data = {
@@ -150,26 +81,6 @@ function SettingsContent() {
 	const tabs = [
 		{ id: "appearance", label: "Appearance", icon: Palette, isLucide: true },
 		{ id: "study", label: "Study", icon: Settings01Icon, isLucide: false },
-		...(hasAccount
-			? [
-					{
-						id: "profile",
-						label: "Profile",
-						icon: NotificationIcon as typeof ArrowLeftIcon,
-						isLucide: false,
-					},
-				]
-			: []),
-		...(hasAccount
-			? [
-					{
-						id: "notifications",
-						label: "Notifications",
-						icon: NotificationIcon,
-						isLucide: false,
-					},
-				]
-			: []),
 		{ id: "data", label: "Data", icon: Database, isLucide: true },
 		{
 			id: "beta",
@@ -238,17 +149,6 @@ function SettingsContent() {
 							/>
 						)}
 
-						{activeTab === "profile" && hasAccount && user && (
-							<ProfileTab user={user} onSignOut={handleSignOut} />
-						)}
-
-						{activeTab === "notifications" && hasAccount && (
-							<NotificationsTab
-								notifications={notifications}
-								onNotificationsChange={setNotifications}
-							/>
-						)}
-
 						{activeTab === "data" && (
 							<DataTab
 								studyPrefs={studyPrefs}
@@ -266,11 +166,16 @@ function SettingsContent() {
 							/>
 						)}
 
-						<div className="flex items-center justify-between">
-							<p className="text-sm text-muted-foreground">{saveMessage}</p>
-							<Button onClick={handleSavePreferences} disabled={isSaving}>
+						<div className="flex items-center justify-end">
+							<Button
+								onClick={() => {
+									saveToStorage(STUDY_PREFS_KEY, studyPrefs);
+									saveToStorage(NOTIFICATION_SETTINGS_KEY, notifications);
+									saveToStorage(BETA_FEATURES_KEY, betaFeatures);
+								}}
+							>
 								<HugeiconsIcon icon={SaveIcon} className="mr-2 size-4" />
-								{isSaving ? "Saving..." : "Save Changes"}
+								Save Changes
 							</Button>
 						</div>
 					</div>

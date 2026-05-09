@@ -42,14 +42,14 @@ export function ThemeSwitcher() {
 	const currentLabel = labels[theme];
 
 	return (
-		<div className="flex items-center justify-between">
-			<p className="text-sm font-medium text-foreground">{currentLabel}</p>
+		<div className="flex items-center gap-3 justify-between">
+			<p className="text-xs font-medium text-foreground">{currentLabel}</p>
 			<Button
 				onClick={handleClick}
 				className="flex items-center justify-center rounded-lg border border-border bg-card p-2 transition-colors hover:bg-accent"
 				aria-label={`Current theme: ${labels[theme]}. Click to switch to ${labels[nextTheme()]}`}
 			>
-				<HugeiconsIcon icon={CurrentIcon} className="size-5 text-foreground" />
+				<HugeiconsIcon icon={CurrentIcon} className="size-4 text-foreground" />
 			</Button>
 		</div>
 	);
