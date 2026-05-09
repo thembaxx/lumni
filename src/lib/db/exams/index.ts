@@ -57,7 +57,7 @@ export function getExamsDb(): Database {
 export function getExamPaperCount(): number {
 	const db = getExamsDb();
 	const result = db
-		.query("SELECT COUNT(*) as count FROM exam_papers")
+		.prepare("SELECT COUNT(*) as count FROM exam_papers")
 		.get() as { count: number };
 	return result.count;
 }
@@ -65,7 +65,7 @@ export function getExamPaperCount(): number {
 export function getAllExamPapers() {
 	const db = getExamsDb();
 	return db
-		.query(
+		.prepare(
 			"SELECT * FROM exam_papers ORDER BY subject_code, year DESC, paper_number",
 		)
 		.all();

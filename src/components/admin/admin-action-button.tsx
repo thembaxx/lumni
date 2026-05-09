@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Download, Loader2 } from "lucide-react";
+import { Download, Loader2, Upload } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface AdminActionButtonProps {
@@ -71,6 +71,23 @@ export function DownloadButton({
 			Download {selectedCount} subject
 			{selectedCount !== 1 ? "s" : ""} ({examTypesCount} exam
 			{examTypesCount !== 1 ? "s" : ""})
+		</AdminActionButton>
+	);
+}
+
+interface UploadButtonProps {
+	onClick: () => void;
+	loading: boolean;
+}
+
+export function UploadButton({ onClick, loading }: UploadButtonProps) {
+	return (
+		<AdminActionButton
+			onClick={onClick}
+			loading={loading}
+			icon={<Upload className="w-4 h-4" />}
+		>
+			Upload Local Exam Papers
 		</AdminActionButton>
 	);
 }

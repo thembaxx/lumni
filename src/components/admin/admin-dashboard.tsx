@@ -12,7 +12,7 @@ import { Check } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
-import { DownloadButton } from "./admin-action-button";
+import { DownloadButton, UploadButton } from "./admin-action-button";
 import { ExamFilters } from "./admin-exam-filters";
 import { AdminHeader } from "./admin-header";
 import { AdminStatCards } from "./admin-stat-cards";
@@ -173,6 +173,23 @@ export function AdminDashboard() {
 		},
 	});
 
+	const uploadLocalMutation = useMutation({
+		mutationFn: async () => {
+			const res = await fetch("/api/admin/upload-local-exam-papers", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({}),
+			});
+			if (!res.ok) throw new Error("Failed to upload");
+			return res.json();
+		},
+		onSuccess: (data) => {
+			queryClient.invalidateQueries({ queryKey: ["admin-subjects"] });
+			setShowSuccess(true);
+			setTimeout(() => setShowSuccess(false), 4000);
+		},
+	});
+
 	const handleLogout = () => {
 		localStorage.removeItem("admin_session");
 		localStorage.removeItem("admin_email");
@@ -290,6 +307,11 @@ export function AdminDashboard() {
 								}
 								selectedCount={effectiveSelected.size}
 								examTypesCount={selectedExamTypes.size}
+							/>
+
+							<UploadButton
+								onClick={() => uploadLocalMutation.mutate()}
+								loading={uploadLocalMutation.isPending}
 							/>
 						</motion.div>
 					)}
