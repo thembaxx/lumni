@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { serverAccount } from "@/lib/appwrite";
 
 export async function POST(request: NextRequest) {
 	try {
@@ -12,11 +13,10 @@ export async function POST(request: NextRequest) {
 			);
 		}
 
-		await import("@/lib/appwrite").then(({ account }) =>
-			account.createMagicSession(
-				email,
-				`${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/api/auth/callback`,
-			),
+		await serverAccount.createMagicURLToken(
+			"unique()",
+			email,
+			`${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/api/auth/callback`,
 		);
 
 		return NextResponse.json({

@@ -1,5 +1,13 @@
-import { ID, type InputFile } from "appwrite";
-import { APPWRITE_ENDPOINT, APPWRITE_PROJECT, storage } from "./appwrite";
+import {
+	ID,
+	type ImageGravity,
+	Storage as NodeStorage,
+	Permission,
+} from "node-appwrite";
+import { InputFile } from "node-appwrite/inputFile";
+import { APPWRITE_ENDPOINT, APPWRITE_PROJECT, serverClient } from "./appwrite";
+
+const storage = new NodeStorage(serverClient);
 
 export const APPWRITE_BUCKET_ID =
 	process.env.NEXT_PUBLIC_APPWRITE_BUCKET_ID || "";
@@ -19,8 +27,13 @@ export async function uploadFile(
 	fileName: string,
 	bucketId: string = APPWRITE_BUCKET_ID,
 ): Promise<AppwriteUploadResult> {
-	const result = await storage.createFile(bucketId, ID.unique(), file, [
-		ID.permission("read", "any"),
+	const fileInput =
+		file instanceof File
+			? InputFile.fromBlob(file, file.name)
+			: InputFile.fromBlob(file, fileName);
+
+	const result = await storage.createFile(bucketId, ID.unique(), fileInput, [
+		Permission.read("any"),
 	]);
 
 	const previewUrl = `${APPWRITE_ENDPOINT}/storage/buckets/${bucketId}/files/${result.$id}/preview?project=${APPWRITE_PROJECT}`;
@@ -30,7 +43,7 @@ export async function uploadFile(
 		$id: result.$id,
 		bucketId: result.bucketId,
 		fileName: result.name,
-		size: result.size,
+		size: result.sizeOriginal,
 		mimeType: result.mimeType,
 		previewUrl,
 		url,
@@ -70,6 +83,14 @@ export async function getFilePreviewUrl(
 	bucketId: string = APPWRITE_BUCKET_ID,
 	width?: number,
 	height?: number,
+	gravity: ImageGravity = ImageGravity.Center,
 ) {
-	return storage.getFilePreview(bucketId, fileId, undefined, width, height);
+	return storage.getFilePreview(
+		bucketId,
+		fileId,
+		undefined,
+		width,
+		height,
+		gravity,
+	);
 }

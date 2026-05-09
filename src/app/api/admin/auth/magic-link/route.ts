@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { account } from "@/lib/appwrite";
+import { serverAccount } from "@/lib/appwrite";
 
 const magicLinkSchema = z.object({
 	email: z.string().email("Please enter a valid email address"),
@@ -23,7 +23,8 @@ export async function POST(request: NextRequest) {
 
 		const { email } = result.data;
 
-		await account.createMagicSession(
+		await serverAccount.createMagicURLToken(
+			"unique()",
 			email,
 			`${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/api/auth/callback`,
 		);
