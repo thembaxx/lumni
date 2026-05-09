@@ -1,7 +1,9 @@
 import Database from "better-sqlite3";
 import { join } from "path";
 
-let db: Database | null = null;
+type DatabaseType = InstanceType<typeof Database>;
+
+let db: DatabaseType | null = null;
 
 export function resetExamsDb() {
 	if (db) {
@@ -10,7 +12,7 @@ export function resetExamsDb() {
 	db = null;
 }
 
-export function getExamsDb(): Database {
+export function getExamsDb(): DatabaseType {
 	if (db) return db;
 
 	const dbPath = join(process.cwd(), "exams.db");
