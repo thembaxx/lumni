@@ -21,6 +21,7 @@ import {
 	useTransform,
 } from "framer-motion";
 import { LottieWrapper } from "@/components/lottie";
+import { AccuracyBar } from "@/components/shared/accuracy-bar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
@@ -183,30 +184,11 @@ export function QuizResult({
 					animate={{ opacity: 1 }}
 					transition={{ delay: 0.6 }}
 				>
-					<div className="flex items-center justify-between mb-2">
-						<span className="text-sm text-muted-foreground">Accuracy</span>
-						<span className="text-sm font-medium">{accuracy}%</span>
-					</div>
-					<div className="h-2 bg-muted rounded-full overflow-hidden">
-						<m.div
-							className="h-full rounded-full"
-							initial={{ width: 0 }}
-							animate={{ width: `${accuracy}%` }}
-							transition={{
-								duration: 0.8,
-								delay: 0.7,
-								ease: [0.25, 1, 0.5, 1],
-							}}
-							style={{
-								backgroundColor:
-									accuracy >= 70
-										? "#22c55e"
-										: accuracy >= 50
-											? "#eab308"
-											: "#ef4444",
-							}}
-						/>
-					</div>
+					<AccuracyBar
+						accuracy={accuracy}
+						variant="animated"
+						showLabel={true}
+					/>
 				</m.div>
 
 				{incorrectAnswers.length > 0 && (

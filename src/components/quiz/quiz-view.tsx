@@ -12,6 +12,7 @@ import {
 	QuizStartState,
 	QuizSubjectPrompt,
 } from "@/components/quiz";
+import { ProgressDots } from "@/components/shared/progress-dots";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useQuizSession } from "@/hooks/use-quiz-session";
 
@@ -227,20 +228,11 @@ export function QuizView({
 				showSkip={variant === "full"}
 			/>
 
-			<div className="flex justify-center gap-1">
-				{questions.map((q, idx) => (
-					<div
-						key={q.id || `question-${idx}`}
-						className={
-							idx === currentQuestionIndex
-								? "h-1.5 w-1.5 rounded-full bg-primary"
-								: idx < currentQuestionIndex
-									? "h-1.5 w-1.5 rounded-full bg-green-500"
-									: "h-1.5 w-1.5 rounded-full bg-muted"
-						}
-					/>
-				))}
-			</div>
+			<ProgressDots
+				total={questions.length}
+				currentIndex={currentQuestionIndex}
+				variant="quiz"
+			/>
 		</div>
 	);
 }

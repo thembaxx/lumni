@@ -6,6 +6,7 @@ import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
 import { MinusIcon, PlusIcon, Sparkles } from "lucide-react";
 import { useCallback, useState } from "react";
 import { Confetti, XPGainPopup } from "@/components/celebration";
+import { DifficultyBadge } from "@/components/shared/difficulty-badge";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -29,12 +30,6 @@ interface QuestionCardProps {
 	onSelectAnswer?: (optionId: string) => void;
 	onAnswer?: (optionId: string, isCorrect: boolean) => void;
 }
-
-const difficultyColors = {
-	Easy: "bg-success/20 text-success border-success",
-	Medium: "bg-warning/20 text-warning border-warning",
-	Hard: "bg-destructive/20 text-destructive border-destructive",
-};
 
 export function QuestionCard({
 	question,
@@ -136,15 +131,11 @@ export function QuestionCard({
 							<Badge variant="outline" className="bg-primary/10 font-medium">
 								<p className="opacity-80">{question.topic}</p>
 							</Badge>
-							<Badge
-								variant="outline"
-								className={cn(
-									"border font-mono font-medium text-xs",
-									difficultyColors[question.difficulty],
-								)}
-							>
-								{question.difficulty}
-							</Badge>
+							<DifficultyBadge
+								difficulty={question.difficulty}
+								variant="quiz"
+								className="border font-mono text-xs"
+							/>
 						</div>
 						<Badge variant="secondary" className="text-xs">
 							{question.points} pts

@@ -4,6 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
 import { useCallback, useMemo, useState } from "react";
 import { z } from "zod";
+import { DifficultyBadge } from "@/components/shared/difficulty-badge";
+import { ProgressDots } from "@/components/shared/progress-dots";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -54,12 +56,6 @@ interface QuizResults {
 		correctAnswer: string;
 	}[];
 }
-
-const difficultyColors = {
-	easy: "bg-green-500/20 text-green-500",
-	medium: "bg-yellow-500/20 text-yellow-500",
-	hard: "bg-red-500/20 text-red-500",
-};
 
 async function fetchQuizQuestions(subjectIds: string[]): Promise<Question[]> {
 	if (subjectIds.length === 0) return [];
@@ -197,9 +193,10 @@ export function QuizEngine({
 						Question {currentIndex + 1} of {questions.length}
 					</Badge>
 					{currentQuestion?.difficulty && (
-						<Badge className={difficultyColors[currentQuestion.difficulty]}>
-							{currentQuestion.difficulty}
-						</Badge>
+						<DifficultyBadge
+							difficulty={currentQuestion.difficulty}
+							variant="quiz"
+						/>
 					)}
 				</div>
 
@@ -248,26 +245,11 @@ export function QuizEngine({
 					</div>
 				)}
 
-				<div
-					className="flex justify-center gap-1"
-					role="tablist"
-					aria-label="Question progress"
-				>
-					{questions.map((q, idx) => (
-						<div
-							key={q.id || `q-${idx}`}
-							role="tab"
-							aria-selected={idx === currentIndex}
-							className={`h-1.5 w-1.5 rounded-full ${
-								idx === currentIndex
-									? "bg-primary"
-									: idx < currentIndex
-										? "bg-primary/50"
-										: "bg-muted"
-							}`}
-						/>
-					))}
-				</div>
+				<ProgressDots
+					total={questions.length}
+					currentIndex={currentIndex}
+					variant="engine"
+				/>
 			</div>
 		</LazyMotion>
 	);

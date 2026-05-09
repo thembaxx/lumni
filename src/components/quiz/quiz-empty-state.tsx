@@ -2,6 +2,7 @@
 
 import { PuzzleIcon, Target } from "lucide-react";
 import { LottieWrapper } from "@/components/lottie";
+import { AnimatedDots } from "@/components/shared/animated-dots";
 import { Button } from "@/components/ui/button";
 import {
 	Empty,
@@ -96,20 +97,7 @@ export function QuizStartState({ onSelect }: QuizStartStateProps) {
 					Choose a subject above to start your quiz
 				</p>
 			</div>
-			<div className="flex items-center gap-1.5">
-				<span
-					className="h-1.5 w-1.5 rounded-full bg-muted-foreground/40"
-					style={{ animation: "pulse-dot 1s ease-out infinite" }}
-				/>
-				<span
-					className="h-1.5 w-1.5 rounded-full bg-muted-foreground/40"
-					style={{ animation: "pulse-dot 1s ease-out infinite 150ms" }}
-				/>
-				<span
-					className="h-1.5 w-1.5 rounded-full bg-muted-foreground/40"
-					style={{ animation: "pulse-dot 1s ease-out infinite 300ms" }}
-				/>
-			</div>
+			<AnimatedDots />
 		</div>
 	);
 }
@@ -141,20 +129,7 @@ export function QuizSubjectPrompt({
 						: "Choose a subject above to start your quiz"}
 				</p>
 			</div>
-			<div className="flex items-center gap-1.5">
-				<span
-					className="h-1.5 w-1.5 rounded-full bg-muted-foreground/40"
-					style={{ animation: "pulse-dot 1s ease-out infinite" }}
-				/>
-				<span
-					className="h-1.5 w-1.5 rounded-full bg-muted-foreground/40"
-					style={{ animation: "pulse-dot 1s ease-out infinite 150ms" }}
-				/>
-				<span
-					className="h-1.5 w-1.5 rounded-full bg-muted-foreground/40"
-					style={{ animation: "pulse-dot 1s ease-out infinite 300ms" }}
-				/>
-			</div>
+			<AnimatedDots />
 		</div>
 	);
 }

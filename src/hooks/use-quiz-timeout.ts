@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { loadFromStorage, saveToStorage } from "@/lib/utils/storage";
+import { formatTime } from "@/lib/utils/time";
 
 export interface QuizTimeoutConfig {
 	enabled: boolean;
@@ -151,12 +152,6 @@ export function useQuizTimeout(
 		const now = isPaused ? startTime : Date.now();
 		return Math.floor((now - startTime + pausedTime) / 1000);
 	}, [startTime, isPaused, pausedTime]);
-
-	const formatTime = useCallback((seconds: number): string => {
-		const mins = Math.floor(seconds / 60);
-		const secs = seconds % 60;
-		return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
-	}, []);
 
 	useEffect(() => {
 		if (config.enabled && !isPaused && !isExpired) {

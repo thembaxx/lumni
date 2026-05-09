@@ -11,6 +11,7 @@ import {
 	TrendingUp,
 } from "lucide-react";
 import { useMemo } from "react";
+import { AccuracyBar } from "@/components/shared/accuracy-bar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import {
@@ -232,7 +233,12 @@ function SubjectBreakdownCard({ subjects }: { subjects: SubjectAnalytics[] }) {
 									{Math.round(subject.accuracy * 100)}%
 								</span>
 							</div>
-							<Progress value={subject.accuracy * 100} className="h-2" />
+							<AccuracyBar
+								accuracy={Math.round(subject.accuracy * 100)}
+								showLabel={false}
+								variant="simple"
+								size="md"
+							/>
 							<div className="flex gap-4 text-xs text-muted-foreground">
 								<span>{subject.totalQuestions} questions</span>
 								<span>{subject.currentStreak} day streak</span>

@@ -1,6 +1,7 @@
 "use client";
 
 import { PuzzleIcon } from "lucide-react";
+import { AnimatedDots } from "@/components/shared/animated-dots";
 
 export function SubjectNotSelectedState() {
 	return (
@@ -20,25 +21,6 @@ export function SubjectNotSelectedState() {
 				</p>
 			</div>
 			<AnimatedDots />
-		</div>
-	);
-}
-
-function AnimatedDots() {
-	return (
-		<div className="flex items-center gap-1.5">
-			<span
-				className="h-1.5 w-1.5 rounded-full bg-muted-foreground/40"
-				style={{ animation: "pulse-dot 1s ease-out infinite" }}
-			/>
-			<span
-				className="h-1.5 w-1.5 rounded-full bg-muted-foreground/40"
-				style={{ animation: "pulse-dot 1s ease-out infinite 150ms" }}
-			/>
-			<span
-				className="h-1.5 w-1.5 rounded-full bg-muted-foreground/40"
-				style={{ animation: "pulse-dot 1s ease-out infinite 300ms" }}
-			/>
 		</div>
 	);
 }

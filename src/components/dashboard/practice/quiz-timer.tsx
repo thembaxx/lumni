@@ -1,7 +1,6 @@
 "use client";
 
-import { Timer } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { TimerDisplay } from "@/components/shared/timer-display";
 
 interface QuizTimerProps {
 	elapsedTime: number;
@@ -15,11 +14,13 @@ export function QuizTimer({
 	className,
 }: QuizTimerProps) {
 	return (
-		<div className={cn("flex items-center gap-2 min-w-16", className)}>
-			<Timer className="size-4 text-muted-foreground" />
-			<span className="text-sm font-medium tabular-nums font-mono tracking-tight">
-				{formatTime(elapsedTime)}
-			</span>
-		</div>
+		<TimerDisplay
+			elapsedTime={elapsedTime}
+			formatTimeFn={formatTime}
+			variant="default"
+			className={className}
+		/>
 	);
 }
+
+export { TimerDisplay };

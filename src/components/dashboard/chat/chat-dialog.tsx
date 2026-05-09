@@ -29,12 +29,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { type ChatMessage, useChat } from "@/hooks/use-chat";
-import {
-	formatBytes,
-	useImageChat,
-	useImageChatWithSend,
-} from "@/hooks/use-image-chat";
+import { useImageChat, useImageChatWithSend } from "@/hooks/use-image-chat";
 import { cn } from "@/lib/utils";
+import { formatBytes } from "@/lib/utils/format";
 
 interface ChatDialogProps {
 	open: boolean;

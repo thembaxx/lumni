@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Home, RotateCcw, Timer, TrophyIcon } from "lucide-react";
 import { Confetti } from "@/components/celebration";
 import { LottieWrapper } from "@/components/lottie";
+import { ProgressDots } from "@/components/shared/progress-dots";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -208,17 +209,11 @@ export function QuizResultsInline({
 	totalQuestions,
 }: QuizResultsInlineProps) {
 	return (
-		<div className="flex justify-center gap-1">
-			{Array.from({ length: totalQuestions }).map((_, idx) => (
-				<div
-					key={`result-${idx}`}
-					className={
-						idx < currentQuestionIndex
-							? "h-1.5 w-1.5 rounded-full bg-green-500"
-							: "h-1.5 w-1.5 rounded-full bg-muted"
-					}
-				/>
-			))}
-		</div>
+		<ProgressDots
+			total={totalQuestions}
+			currentIndex={currentQuestionIndex}
+			completedCount={currentQuestionIndex}
+			variant="results"
+		/>
 	);
 }

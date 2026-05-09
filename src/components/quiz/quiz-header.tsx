@@ -1,6 +1,7 @@
 "use client";
 
-import { Target, Timer, X } from "lucide-react";
+import { Target, X } from "lucide-react";
+import { TimerDisplay } from "@/components/shared/timer-display";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -40,12 +41,11 @@ export function QuizHeader({
 					Quit
 				</Button>
 				<div className="flex items-center gap-3">
-					<div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-muted/50">
-						<Timer className="size-3.5 text-muted-foreground" />
-						<span className="text-sm font-medium tabular-nums font-mono">
-							{formatTime(elapsedTime)}
-						</span>
-					</div>
+					<TimerDisplay
+						elapsedTime={elapsedTime}
+						variant="inline"
+						showIcon={true}
+					/>
 					<span className="text-muted-foreground">|</span>
 					<Badge variant="secondary" className="font-mono">
 						{currentQuestionIndex + 1}/{totalQuestions}
