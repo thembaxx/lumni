@@ -1,5 +1,6 @@
 "use client";
 
+import { domAnimation, LazyMotion, m } from "framer-motion";
 import {
 	AlertCircle,
 	CheckCircle2,
@@ -11,13 +12,7 @@ import {
 	Sparkles,
 	Zap,
 } from "lucide-react";
-import {
-	startTransition,
-	useCallback,
-	useEffect,
-	useState,
-	ViewTransition,
-} from "react";
+import { startTransition, useCallback, useEffect, useState } from "react";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
@@ -89,34 +84,57 @@ function SuccessBadge({ isAdmin }: { isAdmin: boolean }) {
 	if (!show) return null;
 
 	return (
-		<ViewTransition enter="vt-fade-in" default="none">
-			<div className="absolute -top-1 -right-1 animate-bounce">
-				<ViewTransition enter="vt-scale-in" default="none">
-					<div className="relative">
-						<div className="absolute inset-0 animate-ping opacity-75">
-							<Sparkles className="h-4 w-4 text-amber-400" />
-						</div>
-						<Sparkles className="h-4 w-4 text-amber-500 relative z-10" />
+		<LazyMotion features={domAnimation}>
+			<m.div
+				className="absolute -top-1 -right-1"
+				initial={{ scale: 0, opacity: 0 }}
+				animate={{
+					scale: 1,
+					opacity: 1,
+					transition: {
+						type: "spring",
+						stiffness: 400,
+						damping: 15,
+					},
+				}}
+				exit={{ scale: 0, opacity: 0 }}
+			>
+				<div className="relative">
+					<div className="absolute inset-0 animate-ping opacity-75">
+						<Sparkles className="h-4 w-4 text-amber-400" />
 					</div>
-				</ViewTransition>
-			</div>
-			<ViewTransition enter="vt-fade-in" default="none">
-				<div className="absolute -bottom-1 -right-1">
-					<span
-						className={cn(
-							"flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium animate-bounce",
-							isAdmin
-								? "bg-green-500/20 text-green-500"
-								: "bg-blue-500/20 text-blue-500",
-						)}
-						style={{ animationDelay: "100ms" }}
-					>
-						<Zap className="h-3 w-3" />
-						{isAdmin ? "Admin" : "Welcome"}
-					</span>
+					<Sparkles className="h-4 w-4 text-amber-500 relative z-10" />
 				</div>
-			</ViewTransition>
-		</ViewTransition>
+			</m.div>
+
+			<m.div
+				className="absolute -bottom-1 -right-1"
+				initial={{ scale: 0, opacity: 0 }}
+				animate={{
+					scale: 1,
+					opacity: 1,
+					transition: {
+						type: "spring",
+						stiffness: 400,
+						damping: 15,
+						delay: 0.1,
+					},
+				}}
+				exit={{ scale: 0, opacity: 0 }}
+			>
+				<span
+					className={cn(
+						"flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium",
+						isAdmin
+							? "bg-green-500/20 text-green-500"
+							: "bg-blue-500/20 text-blue-500",
+					)}
+				>
+					<Zap className="h-3 w-3" />
+					{isAdmin ? "Admin" : "Welcome"}
+				</span>
+			</m.div>
+		</LazyMotion>
 	);
 }
 
@@ -273,18 +291,44 @@ export function MagicLinkDialog({
 							)}
 						</div>
 					) : (
-						<ViewTransition
-							enter="vt-fade-in"
-							exit="vt-fade-out"
-							default="none"
-						>
-							<div className="flex flex-col items-center gap-4 py-4">
+						<LazyMotion features={domAnimation}>
+							<m.div
+								className="flex flex-col items-center gap-4 py-4"
+								initial={{ opacity: 0, y: 10 }}
+								animate={{
+									opacity: 1,
+									y: 0,
+									transition: {
+										duration: 0.3,
+										ease: [0.4, 0, 0.2, 1],
+									},
+								}}
+								exit={{
+									opacity: 0,
+									y: -8,
+									transition: {
+										duration: 0.2,
+										ease: [0.4, 0, 1, 1],
+									},
+								}}
+							>
 								<div className="relative">
-									<ViewTransition enter="vt-scale-in" default="none">
+									<m.div
+										initial={{ scale: 0.8, opacity: 0 }}
+										animate={{
+											scale: 1,
+											opacity: 1,
+											transition: {
+												type: "spring",
+												stiffness: 350,
+												damping: 18,
+											},
+										}}
+									>
 										<div className="rounded-full bg-green-500/10 p-4">
 											<CheckCircle2 className="h-12 w-12 text-green-500" />
 										</div>
-									</ViewTransition>
+									</m.div>
 									<SuccessBadge isAdmin={false} />
 								</div>
 
@@ -298,16 +342,26 @@ export function MagicLinkDialog({
 									</p>
 								</div>
 
-								<ViewTransition enter="vt-fade-in" default="none">
-									<div className="bg-amber-500/10 border border-amber-500/30 rounded-xl px-4 py-2">
-										<p className="text-sm text-amber-600 dark:text-amber-400 flex items-center gap-2">
-											<Clock className="h-4 w-4" />
-											<span className="font-medium">
-												Link expires in 15 minutes
-											</span>
-										</p>
-									</div>
-								</ViewTransition>
+								<m.div
+									className="bg-amber-500/10 border border-amber-500/30 rounded-xl px-4 py-2"
+									initial={{ opacity: 0, y: 6 }}
+									animate={{
+										opacity: 1,
+										y: 0,
+										transition: {
+											duration: 0.3,
+											delay: 0.12,
+											ease: [0.4, 0, 0.2, 1],
+										},
+									}}
+								>
+									<p className="text-sm text-amber-600 dark:text-amber-400 flex items-center gap-2">
+										<Clock className="h-4 w-4" />
+										<span className="font-medium">
+											Link expires in 15 minutes
+										</span>
+									</p>
+								</m.div>
 
 								{error && (
 									<p className="text-xs text-destructive flex items-center gap-1">
@@ -366,8 +420,8 @@ export function MagicLinkDialog({
 										)}
 									</Button>
 								</div>
-							</div>
-						</ViewTransition>
+							</m.div>
+						</LazyMotion>
 					)}
 
 					{!sent && (
@@ -628,20 +682,46 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 							)}
 						</div>
 					) : (
-						<ViewTransition
-							enter="vt-fade-in"
-							exit="vt-fade-out"
-							default="none"
-						>
-							<div className="flex flex-col items-center gap-4 py-2">
+						<LazyMotion features={domAnimation}>
+							<m.div
+								className="flex flex-col items-center gap-4 py-2"
+								initial={{ opacity: 0, y: 10 }}
+								animate={{
+									opacity: 1,
+									y: 0,
+									transition: {
+										duration: 0.3,
+										ease: [0.4, 0, 0.2, 1],
+									},
+								}}
+								exit={{
+									opacity: 0,
+									y: -8,
+									transition: {
+										duration: 0.2,
+										ease: [0.4, 0, 1, 1],
+									},
+								}}
+							>
 								{!verified && (
 									<>
 										<div className="relative">
-											<ViewTransition enter="vt-scale-in" default="none">
+											<m.div
+												initial={{ scale: 0.8, opacity: 0 }}
+												animate={{
+													scale: 1,
+													opacity: 1,
+													transition: {
+														type: "spring",
+														stiffness: 350,
+														damping: 18,
+													},
+												}}
+											>
 												<div className="rounded-full bg-green-500/10 p-3">
 													<CheckCircle2 className="h-8 w-8 text-green-500" />
 												</div>
-											</ViewTransition>
+											</m.div>
 										</div>
 
 										<div className="text-center">
@@ -745,27 +825,49 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 								)}
 
 								{verified && (
-									<ViewTransition enter="vt-fade-in" default="none">
-										<div className="flex flex-col items-center gap-4 py-8">
-											<div className="relative">
-												<ViewTransition enter="vt-scale-in" default="none">
-													<div className="rounded-full bg-green-500/20 p-6">
-														<CheckCircle2 className="h-16 w-16 text-green-500" />
-													</div>
-												</ViewTransition>
-												<SuccessBadge isAdmin={true} />
-											</div>
-											<p className="text-lg font-medium text-foreground">
-												You&apos;re in!
-											</p>
-											<p className="text-sm text-muted-foreground animate-pulse">
-												Redirecting...
-											</p>
+									<m.div
+										className="flex flex-col items-center gap-4 py-8"
+										initial={{ opacity: 0, scale: 0.9 }}
+										animate={{
+											opacity: 1,
+											scale: 1,
+											transition: {
+												type: "spring",
+												stiffness: 300,
+												damping: 20,
+												delay: 0.05,
+											},
+										}}
+									>
+										<div className="relative">
+											<m.div
+												initial={{ scale: 0.8, opacity: 0 }}
+												animate={{
+													scale: 1,
+													opacity: 1,
+													transition: {
+														type: "spring",
+														stiffness: 350,
+														damping: 18,
+													},
+												}}
+											>
+												<div className="rounded-full bg-green-500/20 p-6">
+													<CheckCircle2 className="h-16 w-16 text-green-500" />
+												</div>
+											</m.div>
+											<SuccessBadge isAdmin={true} />
 										</div>
-									</ViewTransition>
+										<p className="text-lg font-medium text-foreground">
+											You&apos;re in!
+										</p>
+										<p className="text-sm text-muted-foreground animate-pulse">
+											Redirecting...
+										</p>
+									</m.div>
 								)}
-							</div>
-						</ViewTransition>
+							</m.div>
+						</LazyMotion>
 					)}
 
 					{!sent && (

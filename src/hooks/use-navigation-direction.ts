@@ -1,9 +1,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useCallback } from "react";
+import { useCallback, useRef } from "react";
 
-type TransitionDirection = "nav-forward" | "nav-back";
+type TransitionDirection = "forward" | "back";
 
 interface NavigationHierarchy {
 	[href: string]: number;
@@ -19,40 +19,39 @@ const navHierarchy: NavigationHierarchy = {
 
 export function useNavigationDirection() {
 	const router = useRouter();
+	const directionRef = useRef<TransitionDirection>("forward");
 
 	const push = useCallback(
 		(href: string) => {
-			if (typeof window !== "undefined" && "startViewTransition" in document) {
-				const currentDepth = navHierarchy[window.location.pathname] ?? 0;
-				const targetDepth = navHierarchy[href] ?? currentDepth;
+			const currentDepth = navHierarchy[window.location.pathname] ?? 0;
+			const targetDepth = navHierarchy[href] ?? currentDepth;
 
-				const direction: TransitionDirection =
-					targetDepth >= currentDepth ? "nav-forward" : "nav-back";
+			const direction: TransitionDirection =
+				targetDepth >= currentDepth ? "forward" : "back";
+			directionRef.current = direction;
 
-				router.push(href, { transitionTypes: [direction] });
-			} else {
-				router.push(href);
-			}
+			router.push(href);
 		},
 		[router],
 	);
 
 	const replace = useCallback(
 		(href: string) => {
-			if (typeof window !== "undefined" && "startViewTransition" in document) {
-				const currentDepth = navHierarchy[window.location.pathname] ?? 0;
-				const targetDepth = navHierarchy[href] ?? currentDepth;
+			const currentDepth = navHierarchy[window.location.pathname] ?? 0;
+			const targetDepth = navHierarchy[href] ?? currentDepth;
 
-				const direction: TransitionDirection =
-					targetDepth >= currentDepth ? "nav-forward" : "nav-back";
+			const direction: TransitionDirection =
+				targetDepth >= currentDepth ? "forward" : "back";
+			directionRef.current = direction;
 
-				router.replace(href, { transitionTypes: [direction] });
-			} else {
-				router.replace(href);
-			}
+			router.replace(href);
 		},
 		[router],
 	);
 
-	return { push, replace };
+	const getDirection = useCallback(() => {
+		return directionRef.current;
+	}, []);
+
+	return { push, replace, getDirection };
 }

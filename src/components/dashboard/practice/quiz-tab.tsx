@@ -2,8 +2,9 @@
 
 import { ArrowDown01Icon, Play, Square } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { domAnimation, LazyMotion, m } from "framer-motion";
 import { Timer, Zap } from "lucide-react";
-import { useCallback, useState, ViewTransition } from "react";
+import { useCallback, useState } from "react";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
 import {
 	QuizControls,
@@ -88,53 +89,71 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 		}
 	}, [currentQuestionIndex, actions]);
 
-	// Active quiz state
 	if (isRunning && currentQuestion) {
 		return (
-			<div className="w-full max-w-2xl px-4 pb-6 space-y-4">
-				<div className="animate-fade-in space-y-4">
-					<QuizHeader
-						elapsedTime={elapsedTime}
-						currentQuestionIndex={currentQuestionIndex}
-						totalQuestions={totalQuestions}
-						correctAnswers={correctAnswers}
-						onQuit={handleStop}
-					/>
-				</div>
+			<LazyMotion features={domAnimation}>
+				<div className="w-full max-w-2xl px-4 pb-6 space-y-4">
+					<div className="animate-fade-in space-y-4">
+						<QuizHeader
+							elapsedTime={elapsedTime}
+							currentQuestionIndex={currentQuestionIndex}
+							totalQuestions={totalQuestions}
+							correctAnswers={correctAnswers}
+							onQuit={handleStop}
+						/>
+					</div>
 
-				<ViewTransition>
-					<QuestionCard
+					<m.div
 						key={currentQuestion.id}
-						question={currentQuestion}
-						questionNumber={currentQuestionIndex + 1}
-						totalQuestions={totalQuestions}
-						selectedAnswer={selectedAnswer}
-						showFeedback={showFeedback}
-						onSelectAnswer={handleSelectAnswer}
-						onAnswer={handleAnswer}
-					/>
-				</ViewTransition>
+						initial={{ opacity: 0, y: 12 }}
+						animate={{
+							opacity: 1,
+							y: 0,
+							transition: {
+								duration: 0.28,
+								ease: [0.4, 0, 0.2, 1],
+							},
+						}}
+						exit={{
+							opacity: 0,
+							y: -8,
+							transition: {
+								duration: 0.15,
+								ease: [0.4, 0, 1, 1],
+							},
+						}}
+					>
+						<QuestionCard
+							question={currentQuestion}
+							questionNumber={currentQuestionIndex + 1}
+							totalQuestions={totalQuestions}
+							selectedAnswer={selectedAnswer}
+							showFeedback={showFeedback}
+							onSelectAnswer={handleSelectAnswer}
+							onAnswer={handleAnswer}
+						/>
+					</m.div>
 
-				<div
-					className={cn(
-						"flex items-center justify-between gap-3",
-						isTransitioning && "opacity-0",
-					)}
-				>
-					<QuizControls
-						currentQuestionIndex={currentQuestionIndex}
-						totalQuestions={totalQuestions}
-						hasSelected={!!selectedAnswer}
-						showFeedback={showFeedback}
-						onPrevious={handlePrevious}
-						onNext={handleNext}
-					/>
+					<div
+						className={cn(
+							"flex items-center justify-between gap-3",
+							isTransitioning && "opacity-0",
+						)}
+					>
+						<QuizControls
+							currentQuestionIndex={currentQuestionIndex}
+							totalQuestions={totalQuestions}
+							hasSelected={!!selectedAnswer}
+							showFeedback={showFeedback}
+							onPrevious={handlePrevious}
+							onNext={handleNext}
+						/>
+					</div>
 				</div>
-			</div>
+			</LazyMotion>
 		);
 	}
 
-	// Subject selection + timer + play UI
 	return (
 		<div className="w-full">
 			<div

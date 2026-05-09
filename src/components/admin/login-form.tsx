@@ -1,8 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { domAnimation, LazyMotion, m } from "framer-motion";
 import { Mail, ShieldCheck } from "lucide-react";
-import { startTransition, useState, ViewTransition } from "react";
+import { startTransition, useState } from "react";
 import { MagicLinkDialog, OTPDialog } from "@/components/admin/login-dialogs";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -28,54 +28,87 @@ export function LoginForm({ onSuccess }: { onSuccess: () => void }) {
 	return (
 		<>
 			<div className="min-h-screen flex items-center justify-center p-4 bg-background -webkit-font-smoothing antialiased">
-				<div className="w-full max-w-sm space-y-6">
-					<ViewTransition enter="vt-fade-in" default="none">
-						<div className="text-center mb-8">
-							<h1 className="text-2xl font-semibold tracking-tight">Admin</h1>
-							<p className="text-sm text-muted-foreground mt-1">
-								Sign in to continue
+				<LazyMotion features={domAnimation}>
+					<div className="w-full max-w-sm space-y-6">
+						<m.div
+							initial={{ opacity: 0, y: -12 }}
+							animate={{
+								opacity: 1,
+								y: 0,
+								transition: {
+									duration: 0.35,
+									ease: [0.4, 0, 0.2, 1],
+								},
+							}}
+						>
+							<div className="text-center mb-8">
+								<h1 className="text-2xl font-semibold tracking-tight">Admin</h1>
+								<p className="text-sm text-muted-foreground mt-1">
+									Sign in to continue
+								</p>
+							</div>
+						</m.div>
+
+						<m.div
+							initial={{ opacity: 0, y: 20 }}
+							animate={{
+								opacity: 1,
+								y: 0,
+								transition: {
+									duration: 0.35,
+									delay: 0.08,
+									ease: [0.4, 0, 0.2, 1],
+								},
+							}}
+						>
+							<Card className="shadow-lg">
+								<CardContent className="p-6">
+									<div className="space-y-3">
+										<Button
+											variant="outline"
+											className={cn(
+												"w-full h-12 justify-start gap-3 px-4",
+												buttonStyles,
+											)}
+											onClick={() => setMagicOpen(true)}
+										>
+											<Mail className="h-5 w-5 shrink-0" />
+											<span>Sign in with Magic Link</span>
+										</Button>
+
+										<Button
+											variant="outline"
+											className={cn(
+												"w-full h-12 justify-start gap-3 px-4",
+												buttonStyles,
+											)}
+											onClick={() => setOtpOpen(true)}
+										>
+											<ShieldCheck className="h-5 w-5 shrink-0" />
+											<span>Sign in with Email OTP</span>
+										</Button>
+									</div>
+								</CardContent>
+							</Card>
+						</m.div>
+
+						<m.div
+							initial={{ opacity: 0 }}
+							animate={{
+								opacity: 1,
+								transition: {
+									duration: 0.4,
+									delay: 0.18,
+									ease: "linear",
+								},
+							}}
+						>
+							<p className="text-xs text-muted-foreground text-center mt-6">
+								Authorized personnel only
 							</p>
-						</div>
-					</ViewTransition>
-
-					<ViewTransition enter="vt-slide-up-in" default="none">
-						<Card className="shadow-lg">
-							<CardContent className="p-6">
-								<div className="space-y-3">
-									<Button
-										variant="outline"
-										className={cn(
-											"w-full h-12 justify-start gap-3 px-4",
-											buttonStyles,
-										)}
-										onClick={() => setMagicOpen(true)}
-									>
-										<Mail className="h-5 w-5 shrink-0" />
-										<span>Sign in with Magic Link</span>
-									</Button>
-
-									<Button
-										variant="outline"
-										className={cn(
-											"w-full h-12 justify-start gap-3 px-4",
-											buttonStyles,
-										)}
-										onClick={() => setOtpOpen(true)}
-									>
-										<ShieldCheck className="h-5 w-5 shrink-0" />
-										<span>Sign in with Email OTP</span>
-									</Button>
-								</div>
-							</CardContent>
-						</Card>
-					</ViewTransition>
-
-					<ViewTransition enter="vt-fade-in" default="none">
-						<p className="text-xs text-muted-foreground text-center mt-6">
-							Authorized personnel only
-						</p>
-					</ViewTransition>
-				</div>
+						</m.div>
+					</div>
+				</LazyMotion>
 			</div>
 
 			<MagicLinkDialog

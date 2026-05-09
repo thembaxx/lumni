@@ -1,7 +1,8 @@
 "use client";
 
+import { domAnimation, LazyMotion, m } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { startTransition, useCallback, useState, ViewTransition } from "react";
+import { startTransition, useCallback, useState } from "react";
 import { QuestionCard } from "@/components/quiz/question-card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -54,65 +55,85 @@ export function QuizSession({
 	}, [currentQuestionIndex, onPrevious]);
 
 	return (
-		<div className="w-full max-w-2xl px-4 pb-6 space-y-4">
-			<div className="animate-fade-in space-y-4">
-				<div className="flex items-center justify-between">
-					<Button
-						variant="ghost"
-						size="sm"
-						onClick={onQuit}
-						className="font-medium hover:text-foreground hover:bg-destructive/10"
-					>
-						Quit
-					</Button>
-					<div className="flex items-center gap-3">
-						<TimerDisplay elapsedTime={elapsedTime} formatTime={formatTime} />
-						<span className="text-muted-foreground">|</span>
-						<QuestionCounter
-							currentQuestionIndex={currentQuestionIndex}
-							totalQuestions={totalQuestions}
-						/>
+		<LazyMotion features={domAnimation}>
+			<div className="w-full max-w-2xl px-4 pb-6 space-y-4">
+				<div className="animate-fade-in space-y-4">
+					<div className="flex items-center justify-between">
+						<Button
+							variant="ghost"
+							size="sm"
+							onClick={onQuit}
+							className="font-medium hover:text-foreground hover:bg-destructive/10"
+						>
+							Quit
+						</Button>
+						<div className="flex items-center gap-3">
+							<TimerDisplay elapsedTime={elapsedTime} formatTime={formatTime} />
+							<span className="text-muted-foreground">|</span>
+							<QuestionCounter
+								currentQuestionIndex={currentQuestionIndex}
+								totalQuestions={totalQuestions}
+							/>
+						</div>
+						<AccuracyDisplay accuracy={calculateAccuracy()} />
 					</div>
-					<AccuracyDisplay accuracy={calculateAccuracy()} />
+
+					<Progress value={progressValue} className="h-1.5" />
 				</div>
 
-				<Progress value={progressValue} className="h-1.5" />
-			</div>
-
-			<ViewTransition>
-				<QuestionCard
+				<m.div
 					key={currentQuestion.id}
-					question={currentQuestion}
-					questionNumber={currentQuestionIndex + 1}
-					totalQuestions={totalQuestions}
-					selectedAnswer={selectedAnswer}
-					showFeedback={showFeedback}
-					onSelectAnswer={onSelectAnswer}
-					onAnswer={onAnswer}
-				/>
-			</ViewTransition>
-
-			<div
-				className={cn(
-					"flex items-center justify-between gap-3",
-					isTransitioning && "opacity-0",
-				)}
-			>
-				<Button
-					variant="outline"
-					onClick={handlePrevious}
-					disabled={currentQuestionIndex === 0}
-					className="gap-2"
+					initial={{ opacity: 0, y: 12 }}
+					animate={{
+						opacity: 1,
+						y: 0,
+						transition: {
+							duration: 0.28,
+							ease: [0.4, 0, 0.2, 1],
+						},
+					}}
+					exit={{
+						opacity: 0,
+						y: -8,
+						transition: {
+							duration: 0.15,
+							ease: [0.4, 0, 1, 1],
+						},
+					}}
 				>
-					<ChevronLeft className="size-4" />
-					Previous
-				</Button>
-				<Button onClick={onNext} disabled={!showFeedback} className="gap-2">
-					{currentQuestionIndex < totalQuestions - 1 ? "Next" : "Finish"}
-					<ChevronRight className="size-4" />
-				</Button>
+					<QuestionCard
+						question={currentQuestion}
+						questionNumber={currentQuestionIndex + 1}
+						totalQuestions={totalQuestions}
+						selectedAnswer={selectedAnswer}
+						showFeedback={showFeedback}
+						onSelectAnswer={onSelectAnswer}
+						onAnswer={onAnswer}
+					/>
+				</m.div>
+
+				<div
+					className={cn(
+						"flex items-center justify-between gap-3",
+						isTransitioning && "opacity-0",
+					)}
+				>
+					<Button
+						variant="outline"
+						onClick={handlePrevious}
+						disabled={currentQuestionIndex === 0}
+						className="gap-2"
+					>
+						<ChevronLeft className="size-4" />
+						Previous
+					</Button>
+					<Button onClick={onNext} disabled={!showFeedback} className="gap-2">
+						{currentQuestionIndex < totalQuestions - 1 ? "Next" : "Finish"}
+						<ChevronRight className="size-4" />
+					</Button>
+				</div>
 			</div>
-		</div>
+		</LazyMotion>
 	);
 }
 
