@@ -52,7 +52,7 @@ const navItems: NavItem[] = [
 		id: "settings",
 		label: "Settings",
 		icon: Settings02Icon,
-		href: "/admin",
+		href: "/settings",
 	},
 ];
 

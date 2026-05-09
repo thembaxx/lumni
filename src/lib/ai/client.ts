@@ -84,7 +84,7 @@ export class AIClient {
 		};
 	}
 
-	generateWithSystem(
+	async generateWithSystem(
 		systemPrompt: string,
 		userPrompt: string,
 		options?: GenerateOptions & { imageUrl?: string },
