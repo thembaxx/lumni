@@ -14,7 +14,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
-import { AnimatePresence, motion } from "motion/react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
@@ -158,7 +157,7 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 			<DialogContent
 				ref={containerRef}
 				showCloseButton={false}
-				className="max-w-[100vw] h-[100dvh] max-h-[100dvh] p-0 gap-0 rounded-none overflow-hidden"
+				className="max-w-[100vw] h-dvh max-h-dvh p-0 gap-0 rounded-none overflow-hidden"
 			>
 				<div className="flex flex-col h-full w-full">
 					<div className="flex items-center gap-2 px-4 py-3 border-b shrink-0 bg-background">
@@ -227,7 +226,7 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 
 					<div className="shrink-0 border-t bg-background safe-pb">
 						<div
-							className="flex items-center gap-0.5 px-2 py-2 overflow-x-auto scrollbar-hide [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [-ms-overflow-style:none]"
+							className="flex items-center gap-0.5 px-2 py-2 overflow-x-auto scrollbar-hide [-webkit-overflow-scrolling:touch] scrollbar-none [-ms-overflow-style:none]"
 							style={
 								{
 									scrollbarWidth: "none",
@@ -246,7 +245,7 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 								<ChevronLeft className="w-5 h-5" />
 							</Button>
 
-							<div className="shrink-0 px-1.5 min-w-[3.5rem] text-center">
+							<div className="shrink-0 px-1.5 min-w-14 text-center">
 								<span className="text-sm font-medium tabular-nums">
 									{totalPages > 0 ? `${pdfPage}` : "—"}
 								</span>
@@ -280,7 +279,7 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 								<ZoomOut className="w-5 h-5" />
 							</Button>
 
-							<div className="shrink-0 px-1 min-w-[2.75rem] text-center">
+							<div className="shrink-0 px-1 min-w-11 text-center">
 								<span className="text-xs text-muted-foreground tabular-nums font-medium">
 									{zoomPercent}%
 								</span>
@@ -318,7 +317,7 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 											iconTransition,
 											isFullscreen
 												? "scale-100 opacity-100 blur-0"
-												: "scale-[0.25] opacity-0 blur-[4px]",
+												: "scale-[0.25] opacity-0 blur-xs",
 										)}
 									>
 										<Minimize className="w-5 h-5" />
@@ -328,7 +327,7 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 											"absolute inset-0 flex items-center justify-center",
 											iconTransition,
 											isFullscreen
-												? "scale-[0.25] opacity-0 blur-[4px]"
+												? "scale-[0.25] opacity-0 blur-xs"
 												: "scale-100 opacity-100 blur-0",
 										)}
 									>

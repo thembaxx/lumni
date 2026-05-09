@@ -121,8 +121,8 @@ function SettingsContent() {
 								key={tab.id}
 								value={tab.id}
 								className={cn(
-									"flex-shrink-0 px-3 py-2 text-xs font-medium rounded-full gap-1.5 transition-all duration-200",
-									"data-[active]:bg-primary data-[active]:text-primary-foreground",
+									"shrink-0 px-3 py-2 text-xs font-medium rounded-full gap-1.5 transition-all duration-200",
+									"data-active:bg-primary data-active:text-primary-foreground",
 									"text-muted-foreground hover:text-foreground hover:scale-[1.02] active:scale-[0.96] transition-transform",
 								)}
 							>

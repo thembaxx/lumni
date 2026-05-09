@@ -23,7 +23,7 @@ export function FloatingToolsButton() {
 				onMouseEnter={() => setIsHovered(true)}
 				onMouseLeave={() => setIsHovered(false)}
 				className={cn(
-					"fixed bottom-[86px] right-5 z-40",
+					"fixed bottom-21.5 right-5 z-40",
 					"w-14 h-14 rounded-2xl",
 					"bg-primary text-primary-foreground",
 					"shadow-[0_4px_12px_rgba(0,0,0,0.15),0_0_0_1px_rgba(255,255,255,0.05)]",

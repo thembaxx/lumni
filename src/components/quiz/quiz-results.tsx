@@ -70,7 +70,7 @@ export function QuizResultsCard({
 					animate={{ opacity: 1, scale: 1 }}
 					transition={{ delay: 0.5, type: "spring", stiffness: 300 }}
 				>
-					<div className="flex items-center gap-2 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 px-4 py-2 text-white shadow-lg">
+					<div className="flex items-center gap-2 rounded-full bg-linear-to-r from-amber-500 to-orange-500 px-4 py-2 text-white shadow-lg">
 						{useLottie ? (
 							<LottieWrapper animation="success-check" className="w-5 h-5" />
 						) : (
@@ -88,7 +88,7 @@ export function QuizResultsCard({
 					animate={isGreatScore ? { opacity: [0, 0.3, 0] } : { opacity: 0 }}
 					transition={{ duration: 2, repeat: Infinity }}
 				>
-					<div className="absolute inset-0 bg-gradient-to-r from-green-500/10 via-transparent to-green-500/10" />
+					<div className="absolute inset-0 bg-linear-to-r from-green-500/10 via-transparent to-green-500/10" />
 				</motion.div>
 
 				<CardHeader className="text-center">

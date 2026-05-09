@@ -44,7 +44,7 @@ export function Achievements({ achievements }: AchievementsProps) {
 						transition={{ delay: index * 0.05 }}
 						whileHover={{ scale: 1.08 }}
 						whileTap={{ scale: 0.95 }}
-						className={`relative flex-shrink-0 w-14 h-14 rounded-xl border-2 ${rarityColors[achievement.rarity]} ${rarityGlow[achievement.rarity]} shadow-lg flex items-center justify-center transition-transform`}
+						className={`relative shrink-0 w-14 h-14 rounded-xl border-2 ${rarityColors[achievement.rarity]} ${rarityGlow[achievement.rarity]} shadow-lg flex items-center justify-center transition-transform`}
 						title={`${achievement.name}: ${achievement.description}`}
 					>
 						<span className="text-2xl">{achievement.icon}</span>
@@ -67,7 +67,7 @@ export function Achievements({ achievements }: AchievementsProps) {
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 0.5 }}
 						transition={{ delay: (earnedAchievements.length + index) * 0.05 }}
-						className="relative flex-shrink-0 w-14 h-14 rounded-xl border-2 border-dashed border-border bg-muted/30 flex items-center justify-center"
+						className="relative shrink-0 w-14 h-14 rounded-xl border-2 border-dashed border-border bg-muted/30 flex items-center justify-center"
 						title={`Locked: ${achievement.name}`}
 					>
 						<span className="text-xl grayscale">🔒</span>
@@ -78,7 +78,7 @@ export function Achievements({ achievements }: AchievementsProps) {
 					<motion.div
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 0.7 }}
-						className="flex-shrink-0 w-14 h-14 rounded-xl border border-border bg-muted/30 flex items-center justify-center text-xs text-muted-foreground"
+						className="shrink-0 w-14 h-14 rounded-xl border border-border bg-muted/30 flex items-center justify-center text-xs text-muted-foreground"
 					>
 						+{achievements.length - 9}
 					</motion.div>

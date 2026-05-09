@@ -152,7 +152,7 @@ export function QuestionCard({
 					</div>
 					<div
 						className={cn(
-							"overflow-y-auto max-h-[300px] pr-2 scrollbar-thin scrollbar-thumb-muted-foreground/30 scrollbar-track-transparent",
+							"overflow-y-auto max-h-75 pr-2 scrollbar-thin scrollbar-thumb-muted-foreground/30 scrollbar-track-transparent",
 							question.questionText.length > 500 && "scrollbar-thin",
 						)}
 					>
@@ -227,8 +227,12 @@ export function QuestionCard({
 									initial={{ opacity: 0, x: -8 }}
 									animate={{ opacity: 1, x: 0 }}
 									transition={{ delay: optionIndex * 0.05 }}
-									whileHover={!showFeedback && !state.isSubmitted ? { scale: 1.01 } : {}}
-									whileTap={!showFeedback && !state.isSubmitted ? { scale: 0.98 } : {}}
+									whileHover={
+										!showFeedback && !state.isSubmitted ? { scale: 1.01 } : {}
+									}
+									whileTap={
+										!showFeedback && !state.isSubmitted ? { scale: 0.98 } : {}
+									}
 								>
 									<Button
 										variant="ghost"

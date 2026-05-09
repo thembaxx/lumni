@@ -142,7 +142,7 @@ export function AiSolver() {
 							placeholder="Type your question here..."
 							value={question}
 							onChange={(e) => setQuestion(e.target.value)}
-							className="min-h-[120px] resize-none bg-background/50 border-primary/10 focus-visible:ring-primary/30"
+							className="min-h-30 resize-none bg-background/50 border-primary/10 focus-visible:ring-primary/30"
 						/>
 					</div>
 

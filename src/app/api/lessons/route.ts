@@ -20,11 +20,11 @@ export async function GET(request: NextRequest) {
 		const difficulty = searchParams.get("difficulty");
 
 		const filePath = path.join(process.cwd(), "lessons-comprehensive.json");
-		
+
 		if (!fs.existsSync(filePath)) {
 			return NextResponse.json({ lessons: [] });
 		}
-		
+
 		const lessonsData = JSON.parse(fs.readFileSync(filePath, "utf-8"));
 		let filteredLessons: Lesson[] = lessonsData.lessons;
 

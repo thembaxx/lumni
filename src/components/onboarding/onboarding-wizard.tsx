@@ -134,7 +134,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 								{nscSubjects.map((subject) => (
 									<Card
 										key={subject.id}
-										className={`cursor-pointer transition-colors transition-shadow duration-200 hover:ring-2 hover:ring-primary ${
+										className={`cursor-pointer transition-colors duration-200 hover:ring-2 hover:ring-primary ${
 											selectedSubjects.includes(subject.id)
 												? "ring-2 ring-primary bg-primary/5"
 												: ""
@@ -146,7 +146,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 												className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold"
 												style={{ backgroundColor: subject.color }}
 											>
-												{subject.code.slice(0, 2)}
+												{subject.id.slice(0, 2)}
 											</div>
 											<div className="flex-1 min-w-0">
 												<p className="font-medium truncate">{subject.name}</p>

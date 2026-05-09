@@ -85,7 +85,7 @@ function SmartImage({
 				src={src}
 				alt={alt}
 				className={cn(
-					"outline outline-1 -outline-offset-1 outline-black/10 dark:outline-white/10",
+					"outline -outline-offset-1 outline-black/10 dark:outline-white/10",
 					className,
 				)}
 			/>
@@ -99,7 +99,7 @@ function SmartImage({
 			width={0}
 			height={0}
 			className={cn(
-				"outline outline-1 -outline-offset-1 outline-black/10 dark:outline-white/10",
+				"outline -outline-offset-1 outline-black/10 dark:outline-white/10",
 				className,
 			)}
 			unoptimized
@@ -202,7 +202,7 @@ function MessageBubble({
 						{message.imageUrl ? (
 							<motion.button
 								onClick={() => setImageViewerOpen(true)}
-								className="relative w-full max-w-[280px] cursor-pointer group block"
+								className="relative w-full max-w-70 cursor-pointer group block"
 								whileTap={{ scale: 0.98 }}
 								transition={{ duration: 0.15 }}
 							>
@@ -210,7 +210,7 @@ function MessageBubble({
 									src={message.imageUrl}
 									alt={message.imageFileName || "User uploaded image"}
 									className={cn(
-										"w-full max-h-[200px] object-cover",
+										"w-full max-h-50 object-cover",
 										isError && "opacity-50 grayscale",
 									)}
 								/>
@@ -234,7 +234,7 @@ function MessageBubble({
 						)}
 
 						<div className="p-2 px-3 flex items-center justify-between gap-3">
-							<span className="text-xs opacity-70 truncate max-w-[120px]">
+							<span className="text-xs opacity-70 truncate max-w-30">
 								{message.imageFileName || "Image"}
 								{message.imageFileSize &&
 									` (${formatBytes(message.imageFileSize)})`}

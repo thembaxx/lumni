@@ -89,7 +89,7 @@ export function Flashcard({ cards, onKnown, onReview }: FlashcardProps) {
 				</div>
 
 				<div
-					className="perspective-1000 cursor-pointer min-h-[300px]"
+					className="perspective-1000 cursor-pointer min-h-75"
 					onClick={handleFlip}
 					onKeyDown={(e) => {
 						if (e.key === " " || e.key === "Enter") {
