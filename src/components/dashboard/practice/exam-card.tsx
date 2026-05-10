@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { ExamPaper } from "@/types/exam";
 import { PdfViewer } from "./pdf-viewer-client";
+import { SmartViewDialog } from "./smart-view-dialog";
 
 interface ExamCardProps {
 	exam: ExamPaper;
@@ -14,6 +15,7 @@ interface ExamCardProps {
 
 export function ExamCard({ exam }: ExamCardProps) {
 	const [pdfOpen, setPdfOpen] = useState(false);
+	const [smartViewOpen, setSmartViewOpen] = useState(false);
 
 	const handleViewPdf = (e: React.MouseEvent) => {
 		e.stopPropagation();
@@ -76,8 +78,13 @@ export function ExamCard({ exam }: ExamCardProps) {
 					>
 						View
 					</Button>
-					<Button variant="outline" size="sm" className="h-8 text-xs">
-						Snart View
+					<Button
+						variant="outline"
+						size="sm"
+						className="h-8 text-xs"
+						onClick={() => setSmartViewOpen(true)}
+					>
+						Smart View
 					</Button>
 					<Button
 						variant="secondary"
@@ -91,6 +98,12 @@ export function ExamCard({ exam }: ExamCardProps) {
 			</m.div>
 
 			<PdfViewer open={pdfOpen} onOpenChange={setPdfOpen} exam={exam} />
+			<SmartViewDialog
+				open={smartViewOpen}
+				onOpenChange={setSmartViewOpen}
+				exam={exam}
+				onViewPdf={() => setPdfOpen(true)}
+			/>
 		</>
 	);
 }

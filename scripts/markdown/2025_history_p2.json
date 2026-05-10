@@ -1,0 +1,2488 @@
+{
+  "file name" : "2025_history_p2.pdf",
+  "number of pages" : 9,
+  "author" : "Chauke",
+  "title" : "QUESTION 1: IN WHAT WAY DID THE ATLANTIC CHARTER INFLUENCE THE RISE OF AFRICAN NATIONALISM IN SOUTH AFRICA BETWEEN 1941 1ND 1943",
+  "creation date" : "D:20251106112655+02'00'",
+  "modification date" : "D:20251106112657+02'00'",
+  "kids" : [ {
+    "type" : "text block",
+    "id" : 149,
+    "page number" : 1,
+    "bounding box" : [ 24.0, 24.0, 571.32, 818.04 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 1,
+      "page number" : 1,
+      "bounding box" : [ 266.074, 793.903, 322.043, 805.925 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "Confidential"
+    }, {
+      "type" : "paragraph",
+      "id" : 2,
+      "page number" : 1,
+      "bounding box" : [ 53.88, 36.049, 528.539, 47.177 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    }, {
+      "type" : "heading",
+      "id" : 3,
+      "level" : "Subtitle",
+      "page number" : 1,
+      "bounding box" : [ 53.88, 304.057, 133.272, 345.063 ],
+      "heading level" : 2,
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "MARKS: 150 TIME: 3 hours"
+    }, {
+      "type" : "paragraph",
+      "id" : 4,
+      "level" : "1",
+      "page number" : 1,
+      "bounding box" : [ 53.88, 294.936, 56.115, 303.918 ],
+      "font" : "ArialMT",
+      "font size" : 8.04,
+      "text color" : "[0.0]",
+      "content" : "."
+    }, {
+      "type" : "paragraph",
+      "id" : 5,
+      "page number" : 1,
+      "bounding box" : [ 88.92, 212.137, 496.538, 225.543 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "This question paper consists of 9 pages and an addendum of 14 pages."
+    }, {
+      "type" : "paragraph",
+      "id" : 7,
+      "page number" : 1,
+      "bounding box" : [ 236.283, 383.189, 352.333, 431.03 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 14.04,
+      "text color" : "[0.0]",
+      "content" : "HISTORY P2 NOVEMBER 2025"
+    }, {
+      "type" : "heading",
+      "id" : 9,
+      "level" : "Doctitle",
+      "page number" : 1,
+      "bounding box" : [ 213.0, 569.738, 384.324, 605.928 ],
+      "heading level" : 1,
+      "font" : "Arial-BoldMT",
+      "font size" : 15.96,
+      "text color" : "[1.0]",
+      "content" : "NATIONAL SENIOR CERTIFICATE"
+    }, {
+      "type" : "image",
+      "id" : 11,
+      "page number" : 1,
+      "bounding box" : [ 107.85, 648.27, 485.85, 789.77 ],
+      "source" : "2025_history_p2_images/imageFile1.png"
+    }, {
+      "type" : "heading",
+      "id" : 13,
+      "level" : "Subtitle",
+      "page number" : 1,
+      "bounding box" : [ 250.2, 494.258, 330.108, 512.088 ],
+      "heading level" : 1,
+      "font" : "Arial-BoldMT",
+      "font size" : 15.96,
+      "text color" : "[0.0]",
+      "content" : "GRADE 12"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 150,
+    "page number" : 2,
+    "bounding box" : [ 53.88, 782.448, 528.605, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 23,
+      "page number" : 2,
+      "bounding box" : [ 53.88, 794.569, 528.605, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "History/P2 2 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 24,
+      "page number" : 2,
+      "bounding box" : [ 254.763, 782.448, 333.923, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 152,
+    "level" : "Subtitle",
+    "page number" : 2,
+    "bounding box" : [ 53.88, 740.977, 261.144, 754.383 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "INSTRUCTIONS AND INFORMATION"
+  }, {
+    "type" : "list",
+    "id" : 153,
+    "level" : "1",
+    "page number" : 2,
+    "bounding box" : [ 59.28, 64.897, 521.713, 726.783 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 9,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 699.577, 521.713, 726.783 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1. This question paper consists of SECTION A and SECTION B based on the prescribed content framework in the CAPS document.",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 147,
+        "level" : "2",
+        "page number" : 2,
+        "bounding box" : [ 107.16, 671.977, 351.203, 685.383 ],
+        "numbering style" : "english letters",
+        "number of list items" : 1,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 2,
+          "bounding box" : [ 107.16, 671.977, 351.203, 685.383 ],
+          "font" : "Arial-BoldMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "SECTION A: SOURCE-BASED QUESTIONS",
+          "kids" : [ {
+            "type" : "list",
+            "id" : 142,
+            "level" : "3",
+            "page number" : 2,
+            "bounding box" : [ 107.16, 409.777, 521.784, 657.783 ],
+            "numbering style" : "arabic numbers",
+            "number of list items" : 6,
+            "list items" : [ {
+              "type" : "list item",
+              "page number" : 2,
+              "bounding box" : [ 107.16, 644.377, 495.564, 657.783 ],
+              "font" : "ArialMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "QUESTION 1: CIVIL RESISTANCE, 1970s TO 1980s: SOUTH AFRICA",
+              "kids" : [ ]
+            }, {
+              "type" : "list item",
+              "page number" : 2,
+              "bounding box" : [ 107.16, 602.977, 521.664, 630.183 ],
+              "font" : "ArialMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "QUESTION 2: THE COMING OF DEMOCRACY TO SOUTH AFRICA AND COMING TO TERMS WITH THE PAST",
+              "kids" : [ ]
+            }, {
+              "type" : "list item",
+              "page number" : 2,
+              "bounding box" : [ 107.16, 561.577, 521.784, 588.783 ],
+              "font" : "ArialMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "QUESTION 3: THE END OF THE COLD WAR AND A NEW WORLD ORDER, 1989 TO THE PRESENT",
+              "kids" : [ {
+                "type" : "paragraph",
+                "id" : 131,
+                "page number" : 2,
+                "bounding box" : [ 107.16, 533.977, 294.563, 547.383 ],
+                "font" : "Arial-BoldMT",
+                "font size" : 12.0,
+                "text color" : "[0.0]",
+                "content" : "SECTION B: ESSAY QUESTIONS"
+              } ]
+            }, {
+              "type" : "list item",
+              "page number" : 2,
+              "bounding box" : [ 107.16, 492.577, 521.735, 519.783 ],
+              "font" : "ArialMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "QUESTION 4: CIVIL RESISTANCE, 1970s TO 1980s: SOUTH AFRICA: THE CRISIS OF APARTHEID IN THE 1980s",
+              "kids" : [ ]
+            }, {
+              "type" : "list item",
+              "page number" : 2,
+              "bounding box" : [ 107.16, 451.177, 521.663, 478.383 ],
+              "font" : "ArialMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "QUESTION 5: THE COMING OF DEMOCRACY TO SOUTH AFRICA AND COMING TO TERMS WITH THE PAST",
+              "kids" : [ ]
+            }, {
+              "type" : "list item",
+              "page number" : 2,
+              "bounding box" : [ 107.16, 409.777, 521.784, 436.983 ],
+              "font" : "ArialMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "QUESTION 6: THE END OF THE COLD WAR AND A NEW WORLD ORDER: THE EVENTS OF 1989",
+              "kids" : [ ]
+            } ]
+          } ]
+        } ]
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 382.177, 69.336, 395.583 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 340.777, 69.336, 354.183 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 313.177, 69.336, 326.583 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "4.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 202.897, 69.336, 216.303 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "5.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 175.297, 69.336, 188.703 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "6.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 133.897, 69.336, 147.303 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "7.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 106.297, 69.336, 119.703 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "8.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 64.897, 69.336, 78.303 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "9.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 155,
+    "level" : "2",
+    "page number" : 2,
+    "bounding box" : [ 107.16, 313.177, 521.737, 395.583 ],
+    "numbering style" : "english letters",
+    "number of list items" : 2,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 107.16, 368.377, 521.737, 395.583 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "SECTION A consists of THREE source-based questions. Source material that is required to answer these questions can be found in the ADDENDUM.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 107.16, 313.177, 368.617, 354.183 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "SECTION B consists of THREE essay questions. Answer THREE questions as follows:",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 158,
+    "level" : "3",
+    "page number" : 2,
+    "bounding box" : [ 107.16, 230.497, 521.712, 298.983 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 2,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 107.16, 271.897, 521.604, 298.983 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "4.1 At least ONE must be a source-based question and at least ONE must be an essay question.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 107.16, 230.497, 521.712, 257.703 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "4.2 The THIRD question can be either a source-based question or an essay question.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 162,
+    "page number" : 2,
+    "bounding box" : [ 107.16, 64.897, 521.76, 216.303 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "You are advised to spend at least ONE hour per question. When answering questions, you should apply your knowledge, skills and insight. You will be disadvantaged by merely rewriting the sources as answers. Number the answers correctly according to the numbering system used in this question paper. Write neatly and legibly."
+  }, {
+    "type" : "footer",
+    "id" : 172,
+    "page number" : 2,
+    "bounding box" : [ 53.88, 36.049, 528.539, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 16,
+      "page number" : 2,
+      "bounding box" : [ 53.88, 36.049, 528.539, 47.177 ],
+      "heading level" : 3,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 173,
+    "page number" : 3,
+    "bounding box" : [ 53.88, 782.448, 528.605, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 25,
+      "page number" : 3,
+      "bounding box" : [ 53.88, 794.569, 528.605, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "History/P2 3 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 26,
+      "page number" : 3,
+      "bounding box" : [ 254.763, 782.448, 333.923, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 175,
+    "level" : "Subtitle",
+    "page number" : 3,
+    "bounding box" : [ 58.32, 740.977, 310.132, 754.383 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "SECTION A: SOURCE-BASED QUESTIONS2025"
+  }, {
+    "type" : "paragraph",
+    "id" : 176,
+    "page number" : 3,
+    "bounding box" : [ 58.32, 699.577, 521.736, 726.783 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "Answer at least ONE question, but not more than TWO questions, in this section. Source material to be used to answer these questions is contained in the ADDENDUM."
+  }, {
+    "type" : "list",
+    "id" : 177,
+    "level" : "4",
+    "page number" : 3,
+    "bounding box" : [ 58.32, 630.577, 521.724, 685.383 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 1,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 58.32, 630.577, 521.724, 685.383 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "QUESTION 1: WHAT WERE THE DIFFERENT RESPONSES TO THE ATTEMPTS OF THE CONGRESS OF SOUTH AFRICAN TRADE UNIONS (COSATU) TO MOBILISE SOUTH AFRICAN WORKERS IN THE 1980s?",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 178,
+    "level" : "5",
+    "page number" : 3,
+    "bounding box" : [ 59.28, 602.977, 441.336, 616.383 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 1,
+    "next list id" : 189,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 59.28, 602.977, 441.336, 616.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "Study Sources 1A, 1B, 1C and 1D and answer the questions that follow.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 179,
+    "level" : "6",
+    "page number" : 3,
+    "bounding box" : [ 59.28, 148.777, 565.356, 588.783 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 3,
+    "next list id" : 183,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 59.28, 575.377, 184.776, 588.783 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.1 Use Source 1A.",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 85,
+        "level" : "7",
+        "page number" : 3,
+        "bounding box" : [ 100.68, 397.177, 127.392, 561.183 ],
+        "numbering style" : "arabic numbers",
+        "number of list items" : 4,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 100.68, 547.777, 127.392, 561.183 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.1.1",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 100.68, 493.777, 127.392, 507.183 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.1.2",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 100.68, 452.377, 127.392, 465.783 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.1.3",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 100.68, 397.177, 127.392, 410.583 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.1.4",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 86,
+        "page number" : 3,
+        "bounding box" : [ 150.12, 520.177, 521.88, 561.183 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Quote evidence from the source which suggests that COSATU was the largest federation of black worker unions in South Africa in November 1985. (1 x 2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 87,
+        "page number" : 3,
+        "bounding box" : [ 150.12, 478.777, 521.232, 505.983 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Define the term non-parliamentary opposition group in your own words. (1 x 2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 88,
+        "page number" : 3,
+        "bounding box" : [ 150.12, 423.577, 521.88, 464.583 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Explain what can be inferred (implied) by the statement, 'COSATU … has allied itself to the aims, if not formally to the structures, of the banned and exiled African National Congress …' (1 x 2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 89,
+        "page number" : 3,
+        "bounding box" : [ 150.12, 382.177, 522.793, 409.383 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Using the information in the source and your own knowledge, state why you think industrial trade unions grew stronger in the 1980s."
+      }, {
+        "type" : "paragraph",
+        "id" : 90,
+        "page number" : 3,
+        "bounding box" : [ 488.736, 368.377, 522.756, 381.783 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2 x 2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 91,
+        "level" : "8",
+        "page number" : 3,
+        "bounding box" : [ 546.12, 520.177, 560.796, 533.583 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 92,
+        "level" : "8",
+        "page number" : 3,
+        "bounding box" : [ 546.12, 478.777, 560.796, 492.183 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 93,
+        "level" : "8",
+        "page number" : 3,
+        "bounding box" : [ 546.12, 423.577, 560.796, 436.983 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 94,
+        "level" : "8",
+        "page number" : 3,
+        "bounding box" : [ 546.12, 368.377, 560.796, 381.783 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(4)"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 59.28, 340.777, 193.536, 354.183 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.2 Study Source 1B.",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 95,
+        "level" : "9",
+        "page number" : 3,
+        "bounding box" : [ 100.08, 216.697, 126.792, 326.583 ],
+        "numbering style" : "arabic numbers",
+        "number of list items" : 3,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 100.08, 313.177, 126.792, 326.583 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.2.1",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 100.08, 271.897, 126.792, 285.303 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.2.2",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 100.08, 216.697, 126.792, 230.103 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.2.3",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 96,
+        "page number" : 3,
+        "bounding box" : [ 149.64, 299.377, 526.512, 326.583 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Comment on the significance of holding this COSATU rally on 1 May 1986. (1 x 2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 97,
+        "page number" : 3,
+        "bounding box" : [ 149.64, 244.297, 526.404, 285.303 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "What is inferred (implied) by the words, 'FORWARD WITH THE WORKERS' STRUGGLE', in the context of mass action against the apartheid government in the 1980s? (1 x 2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 98,
+        "page number" : 3,
+        "bounding box" : [ 149.64, 203.977, 526.297, 231.183 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Explain the symbolism of the 'clenched fists' in the banner and some of the workers in the photograph. (1 x 2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 99,
+        "level" : "10",
+        "page number" : 3,
+        "bounding box" : [ 550.68, 299.377, 565.356, 312.783 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 100,
+        "level" : "10",
+        "page number" : 3,
+        "bounding box" : [ 550.68, 244.297, 565.356, 257.703 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 101,
+        "level" : "10",
+        "page number" : 3,
+        "bounding box" : [ 550.68, 203.977, 565.356, 217.383 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2)"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 59.28, 148.777, 565.356, 189.783 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.3 Refer to Sources 1A and 1B. Explain how the information in Source 1A supports the visual evidence in Source 1B regarding COSATU's mass mobilisation against the apartheid government in the 1980s. (2 x 2) (4)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "footer",
+    "id" : 180,
+    "page number" : 3,
+    "bounding box" : [ 53.88, 36.049, 528.539, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 17,
+      "page number" : 3,
+      "bounding box" : [ 53.88, 36.049, 528.539, 47.177 ],
+      "heading level" : 3,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 181,
+    "page number" : 4,
+    "bounding box" : [ 53.88, 782.448, 528.605, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 27,
+      "page number" : 4,
+      "bounding box" : [ 53.88, 794.569, 528.605, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "History/P2 4 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 28,
+      "page number" : 4,
+      "bounding box" : [ 254.763, 782.448, 333.923, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 183,
+    "level" : "6",
+    "page number" : 4,
+    "bounding box" : [ 59.28, 285.577, 560.796, 754.383 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 3,
+    "previous list id" : 179,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 59.28, 740.977, 211.296, 754.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.4 Consult Source 1C.",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 102,
+        "level" : "9",
+        "page number" : 4,
+        "bounding box" : [ 105.6, 589.177, 132.312, 726.783 ],
+        "numbering style" : "arabic numbers",
+        "number of list items" : 4,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 4,
+          "bounding box" : [ 105.6, 713.377, 132.312, 726.783 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.4.1",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 4,
+          "bounding box" : [ 105.6, 671.977, 132.312, 685.383 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.4.2",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 4,
+          "bounding box" : [ 105.6, 630.577, 132.312, 643.983 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.4.3",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 4,
+          "bounding box" : [ 105.6, 589.177, 132.312, 602.583 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.4.4",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 103,
+        "page number" : 4,
+        "bounding box" : [ 149.16, 699.577, 524.592, 726.783 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Identify a campaign in the source that COSATU members conducted through a strike that took several weeks in March 1987. (1 x 1)"
+      }, {
+        "type" : "paragraph",
+        "id" : 104,
+        "page number" : 4,
+        "bounding box" : [ 149.16, 658.177, 524.64, 685.383 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Explain the term grievances in the context of COSATU's activities against the apartheid government. (1 x 2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 105,
+        "page number" : 4,
+        "bounding box" : [ 149.16, 616.777, 524.737, 643.983 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Quote THREE pieces of evidence from the source which suggest that the 'young recruits' were terrified. (3 x 1)"
+      }, {
+        "type" : "paragraph",
+        "id" : 106,
+        "page number" : 4,
+        "bounding box" : [ 149.16, 561.577, 524.714, 602.583 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Comment on the limitations of this source to a historian researching the clash between COSATU and the East Rand Riot Squad in March 1987. (2 x 2)"
+      }, {
+        "type" : "list",
+        "id" : 107,
+        "level" : "10",
+        "page number" : 4,
+        "bounding box" : [ 549.0, 561.577, 563.676, 712.983 ],
+        "numbering style" : "arabic numbers",
+        "number of list items" : 4,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 4,
+          "bounding box" : [ 549.0, 699.577, 563.676, 712.983 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(1)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 4,
+          "bounding box" : [ 549.0, 658.177, 563.676, 671.583 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(2)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 4,
+          "bounding box" : [ 549.0, 616.777, 563.676, 630.183 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(3)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 4,
+          "bounding box" : [ 549.0, 561.577, 563.676, 574.983 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(4)",
+          "kids" : [ ]
+        } ]
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 59.28, 533.977, 201.816, 547.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.5 Read Source 1D.",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 108,
+        "level" : "11",
+        "page number" : 4,
+        "bounding box" : [ 105.12, 368.377, 131.832, 519.783 ],
+        "numbering style" : "arabic numbers",
+        "number of list items" : 4,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 4,
+          "bounding box" : [ 105.12, 506.377, 131.832, 519.783 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.5.1",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 4,
+          "bounding box" : [ 105.12, 464.977, 131.832, 478.383 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.5.2",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 4,
+          "bounding box" : [ 105.12, 409.777, 131.832, 423.183 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.5.3",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 4,
+          "bounding box" : [ 105.12, 368.377, 131.832, 381.783 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.5.4",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 109,
+        "page number" : 4,
+        "bounding box" : [ 149.64, 492.577, 521.88, 519.783 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "According to the source, why was COSATU House raided by policemen on 23 April 1987? (1 x 2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 110,
+        "page number" : 4,
+        "bounding box" : [ 149.64, 437.377, 521.88, 478.383 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Using the information in the source and your own knowledge, explain why the demolition of COSATU House by the Security Branch was described as 'unprecedented and unparalleled'. (2 x 2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 111,
+        "page number" : 4,
+        "bounding box" : [ 149.64, 395.977, 521.831, 423.183 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "List FOUR ways in the source in which the police demolished the building and its contents during the COSATU House raid. (4 x 1)"
+      }, {
+        "type" : "paragraph",
+        "id" : 112,
+        "page number" : 4,
+        "bounding box" : [ 149.64, 354.577, 521.832, 381.783 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Why do you think that the Security Branch members misled the fire fighters where the fire actually started? (1 x 2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 113,
+        "level" : "8",
+        "page number" : 4,
+        "bounding box" : [ 546.12, 492.577, 560.796, 505.983 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 114,
+        "level" : "8",
+        "page number" : 4,
+        "bounding box" : [ 546.12, 437.377, 560.796, 450.783 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(4)"
+      }, {
+        "type" : "paragraph",
+        "id" : 115,
+        "level" : "8",
+        "page number" : 4,
+        "bounding box" : [ 546.12, 395.977, 560.796, 409.383 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(4)"
+      }, {
+        "type" : "paragraph",
+        "id" : 116,
+        "level" : "8",
+        "page number" : 4,
+        "bounding box" : [ 546.12, 354.577, 560.796, 367.983 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2)"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 59.28, 285.577, 560.796, 340.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.6 Using the information in the relevant sources and your own knowledge, write a paragraph of about EIGHT lines (about 80 words) explaining what the different responses were to the attempts of the Congress of South African Trade Unions (COSATU) to mobilise South African workers in the 1980s. (8)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 184,
+    "level" : "Subtitle",
+    "page number" : 4,
+    "bounding box" : [ 546.12, 271.897, 567.516, 285.303 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "[50]"
+  }, {
+    "type" : "footer",
+    "id" : 185,
+    "page number" : 4,
+    "bounding box" : [ 53.88, 36.049, 528.539, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 18,
+      "page number" : 4,
+      "bounding box" : [ 53.88, 36.049, 528.539, 47.177 ],
+      "heading level" : 3,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 186,
+    "page number" : 5,
+    "bounding box" : [ 53.88, 782.448, 528.605, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 29,
+      "page number" : 5,
+      "bounding box" : [ 53.88, 794.569, 528.605, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "History/P2 5 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 30,
+      "page number" : 5,
+      "bounding box" : [ 254.763, 782.448, 333.923, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 188,
+    "level" : "Subtitle",
+    "page number" : 5,
+    "bounding box" : [ 59.28, 701.857, 521.664, 756.663 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "QUESTION 2: WHY DID THE TRUTH AND RECONCILIATION COMMISSION (TRC) REJECT THE AMNESTY APPLICATIONS OF THE PERPETRATORS WHO TORTURED REVEREND TSHENUWANI FARISANI?"
+  }, {
+    "type" : "list",
+    "id" : 189,
+    "level" : "5",
+    "page number" : 5,
+    "bounding box" : [ 59.28, 674.257, 441.336, 687.663 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 1,
+    "previous list id" : 178,
+    "next list id" : 211,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 59.28, 674.257, 441.336, 687.663 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "Study Sources 2A, 2B, 2C and 2D and answer the questions that follow.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 190,
+    "level" : "8",
+    "page number" : 5,
+    "bounding box" : [ 59.28, 439.777, 212.976, 660.063 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 2,
+    "next list id" : 205,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 59.28, 646.657, 212.976, 660.063 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.1 Refer to Source 2A.",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 71,
+        "level" : "9",
+        "page number" : 5,
+        "bounding box" : [ 105.48, 467.377, 132.192, 632.463 ],
+        "numbering style" : "arabic numbers",
+        "number of list items" : 4,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 5,
+          "bounding box" : [ 105.48, 619.057, 132.192, 632.463 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "2.1.1",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 5,
+          "bounding box" : [ 105.48, 563.857, 132.192, 577.263 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "2.1.2",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 5,
+          "bounding box" : [ 105.48, 508.777, 132.192, 522.183 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "2.1.3",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 5,
+          "bounding box" : [ 105.48, 467.377, 132.192, 480.783 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "2.1.4",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 72,
+        "page number" : 5,
+        "bounding box" : [ 164.28, 591.457, 521.881, 632.463 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Name, from the source, TWO organisations within the Black Consciousness Movement, in which Farisani served as a founding member. (2 x 1)"
+      }, {
+        "type" : "paragraph",
+        "id" : 73,
+        "page number" : 5,
+        "bounding box" : [ 164.28, 536.257, 521.857, 577.263 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "State any THREE types of abuses, according to the source, that Farisani was subjected to during his imprisonment between 1977 and 1987. (3 x 1)"
+      }, {
+        "type" : "paragraph",
+        "id" : 74,
+        "page number" : 5,
+        "bounding box" : [ 164.28, 494.977, 521.798, 522.183 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Explain why Amnesty International declared Farisani 'a prisoner of conscience'. (1 x 2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 75,
+        "page number" : 5,
+        "bounding box" : [ 164.28, 467.377, 522.637, 480.783 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Define the term persecution in your own words. (1 x 2)"
+      }, {
+        "type" : "list",
+        "id" : 76,
+        "level" : "10",
+        "page number" : 5,
+        "bounding box" : [ 544.2, 536.257, 558.876, 604.863 ],
+        "numbering style" : "arabic numbers",
+        "number of list items" : 2,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 5,
+          "bounding box" : [ 544.2, 591.457, 558.876, 604.863 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(2)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 5,
+          "bounding box" : [ 544.2, 536.257, 558.876, 549.663 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(3)",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 77,
+        "level" : "11",
+        "page number" : 5,
+        "bounding box" : [ 544.2, 467.377, 558.876, 508.383 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2) (2)"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 59.28, 439.777, 198.336, 453.183 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.2 Read Source 2B.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 191,
+    "level" : "12",
+    "page number" : 5,
+    "bounding box" : [ 105.48, 205.177, 132.192, 425.583 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 5,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 105.48, 412.177, 132.192, 425.583 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.2.1",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 105.48, 370.777, 132.192, 384.183 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.2.2",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 105.48, 329.377, 132.192, 342.783 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.2.3",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 105.48, 274.177, 132.192, 287.583 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.2.4",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 105.48, 205.177, 132.192, 218.583 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.2.5",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 192,
+    "page number" : 5,
+    "bounding box" : [ 164.28, 398.377, 521.797, 425.583 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "Give the names of any TWO Venda Security Branch policemen in the source implicated by Farisani during his interrogation. (2 x 1)"
+  }, {
+    "type" : "paragraph",
+    "id" : 197,
+    "level" : "11",
+    "page number" : 5,
+    "bounding box" : [ 545.76, 398.377, 560.436, 411.783 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "(2)"
+  }, {
+    "type" : "paragraph",
+    "id" : 193,
+    "page number" : 5,
+    "bounding box" : [ 164.28, 356.977, 521.796, 384.183 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "What does the statement, 'I don't hate them, they must tell the truth', suggest about Farisani's testimony? (1 x 2)"
+  }, {
+    "type" : "paragraph",
+    "id" : 198,
+    "level" : "11",
+    "page number" : 5,
+    "bounding box" : [ 545.76, 356.977, 560.436, 370.383 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "(2)"
+  }, {
+    "type" : "paragraph",
+    "id" : 194,
+    "page number" : 5,
+    "bounding box" : [ 164.28, 301.777, 521.856, 342.783 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "Explain what the phrase, 'Call on your God. He'll come and help you', suggest about the tactics used by the Security Branch policeman during the interrogation. (1 x 2)"
+  }, {
+    "type" : "paragraph",
+    "id" : 199,
+    "level" : "11",
+    "page number" : 5,
+    "bounding box" : [ 545.76, 301.777, 560.436, 315.183 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "(2)"
+  }, {
+    "type" : "paragraph",
+    "id" : 195,
+    "page number" : 5,
+    "bounding box" : [ 164.28, 232.777, 521.833, 287.583 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "Using the information in the source and your own knowledge, what can you conclude from the words, '… unless they come out and confess, sooner or later they will come back …', with reference to the perpetrators? (1 x 2)"
+  }, {
+    "type" : "paragraph",
+    "id" : 200,
+    "level" : "11",
+    "page number" : 5,
+    "bounding box" : [ 545.76, 232.777, 560.436, 246.183 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "(2)"
+  }, {
+    "type" : "paragraph",
+    "id" : 196,
+    "page number" : 5,
+    "bounding box" : [ 164.28, 177.577, 521.832, 218.583 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "Why would a historian find the source reliable when researching how the TRC's Human Rights Violation Committee dealt with the violations against Reverend Farisani? (2 x 2)"
+  }, {
+    "type" : "paragraph",
+    "id" : 201,
+    "level" : "11",
+    "page number" : 5,
+    "bounding box" : [ 545.76, 177.577, 560.436, 190.983 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "(4)"
+  }, {
+    "type" : "footer",
+    "id" : 202,
+    "page number" : 5,
+    "bounding box" : [ 53.88, 36.049, 528.539, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 19,
+      "page number" : 5,
+      "bounding box" : [ 53.88, 36.049, 528.539, 47.177 ],
+      "heading level" : 3,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 203,
+    "page number" : 6,
+    "bounding box" : [ 53.88, 782.448, 528.605, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 31,
+      "page number" : 6,
+      "bounding box" : [ 53.88, 794.569, 528.605, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "History/P2 6 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 32,
+      "page number" : 6,
+      "bounding box" : [ 254.763, 782.448, 333.923, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 205,
+    "level" : "8",
+    "page number" : 6,
+    "bounding box" : [ 59.28, 242.017, 559.716, 754.383 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 4,
+    "previous list id" : 190,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 6,
+      "bounding box" : [ 59.28, 740.977, 191.976, 754.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.3 Use Source 2C.",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 78,
+        "level" : "10",
+        "page number" : 6,
+        "bounding box" : [ 105.48, 533.977, 558.876, 726.783 ],
+        "numbering style" : "arabic numbers",
+        "number of list items" : 4,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 6,
+          "bounding box" : [ 105.48, 713.377, 132.192, 726.783 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "2.3.1",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 6,
+          "bounding box" : [ 105.48, 644.377, 132.192, 657.783 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "2.3.2",
+          "kids" : [ {
+            "type" : "paragraph",
+            "id" : 68,
+            "page number" : 6,
+            "bounding box" : [ 164.28, 671.977, 521.88, 726.783 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "Quote ONE piece of evidence from the source which suggests that the TRC Amnesty Committee was satisfied that the amnesty applications by the three policemen complied with the requirements of the TRC Act. (1 x 2)"
+          }, {
+            "type" : "paragraph",
+            "id" : 69,
+            "page number" : 6,
+            "bounding box" : [ 164.28, 630.577, 521.797, 657.783 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "Name THREE applicants, according to the source, who applied for amnesty for the assault and torture of Reverend Farisani. (3 x 1)"
+          }, {
+            "type" : "list",
+            "id" : 70,
+            "level" : "11",
+            "page number" : 6,
+            "bounding box" : [ 544.2, 630.577, 558.876, 685.383 ],
+            "numbering style" : "arabic numbers",
+            "number of list items" : 2,
+            "list items" : [ {
+              "type" : "list item",
+              "page number" : 6,
+              "bounding box" : [ 544.2, 671.977, 558.876, 685.383 ],
+              "font" : "ArialMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "(2)",
+              "kids" : [ ]
+            }, {
+              "type" : "list item",
+              "page number" : 6,
+              "bounding box" : [ 544.2, 630.577, 558.876, 643.983 ],
+              "font" : "ArialMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "(3)",
+              "kids" : [ ]
+            } ]
+          } ]
+        }, {
+          "type" : "list item",
+          "page number" : 6,
+          "bounding box" : [ 107.16, 589.177, 558.876, 616.383 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "2.3.3 Explain the term oral testimonies in the context of the TRC's hearings by the Amnesty Committee. (1 x 2) (2)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 6,
+          "bounding box" : [ 107.16, 533.977, 558.876, 574.983 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "2.3.4 What conclusion can be drawn from the statement, 'The (TRC's Amnesty) Committee is not satisfied that the above three applicants have made a full disclosure', as required by the Act? (1 x 2) (2)",
+          "kids" : [ ]
+        } ]
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 6,
+      "bounding box" : [ 59.28, 478.777, 559.716, 519.783 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.4 Refer to Sources 2B and 2C. Explain how the evidence in Source 2B supports the information in Source 2C regarding the human rights violations committed against Reverend Farisani by the apartheid security policemen. (2 x 2) (4)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 6,
+      "bounding box" : [ 59.28, 421.417, 441.098, 462.423 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.5 Consult Source 2D. Explain the symbolic representation of the following:",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 79,
+        "level" : "12",
+        "page number" : 6,
+        "bounding box" : [ 104.76, 338.617, 131.472, 434.823 ],
+        "numbering style" : "arabic numbers",
+        "number of list items" : 2,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 6,
+          "bounding box" : [ 104.76, 421.417, 131.472, 434.823 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "2.5.1",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 6,
+          "bounding box" : [ 104.76, 338.617, 131.472, 352.023 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "2.5.2",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "list",
+        "id" : 80,
+        "level" : "13",
+        "page number" : 6,
+        "bounding box" : [ 165.0, 366.217, 519.157, 407.223 ],
+        "numbering style" : "english letters",
+        "number of list items" : 2,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 6,
+          "bounding box" : [ 165.0, 393.817, 519.157, 407.223 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(a) Dullah Omar (1 x 2)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 6,
+          "bounding box" : [ 165.96, 366.217, 518.556, 379.623 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(b) The security policemen (1 x 2)",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 81,
+        "page number" : 6,
+        "bounding box" : [ 165.0, 324.817, 521.676, 352.023 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Comment on why the information in FRAME A differs from FRAME B regarding evidence presented at the TRC hearings."
+      }, {
+        "type" : "paragraph",
+        "id" : 82,
+        "page number" : 6,
+        "bounding box" : [ 487.776, 311.017, 521.676, 324.423 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2 x 2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 83,
+        "level" : "14",
+        "page number" : 6,
+        "bounding box" : [ 544.2, 366.217, 558.876, 407.223 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2) (2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 84,
+        "level" : "14",
+        "page number" : 6,
+        "bounding box" : [ 544.2, 311.017, 558.876, 324.423 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(4)"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 6,
+      "bounding box" : [ 59.28, 242.017, 559.716, 296.823 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.6 Using the information in the relevant sources and your own knowledge, write a paragraph of about EIGHT lines (about 80 words) explaining why the Truth and Reconciliation Commission (TRC) rejected the amnesty applications of the perpetrators who tortured Reverend Tshenuwani Farisani. (8)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 206,
+    "level" : "Subtitle",
+    "page number" : 6,
+    "bounding box" : [ 545.04, 228.217, 566.436, 241.623 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "[50]"
+  }, {
+    "type" : "footer",
+    "id" : 207,
+    "page number" : 6,
+    "bounding box" : [ 53.88, 36.049, 528.539, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 20,
+      "page number" : 6,
+      "bounding box" : [ 53.88, 36.049, 528.539, 47.177 ],
+      "heading level" : 3,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 208,
+    "page number" : 7,
+    "bounding box" : [ 53.88, 782.448, 528.605, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 33,
+      "page number" : 7,
+      "bounding box" : [ 53.88, 794.569, 528.605, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "History/P2 7 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 34,
+      "page number" : 7,
+      "bounding box" : [ 254.763, 782.448, 333.923, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 210,
+    "level" : "Subtitle",
+    "page number" : 7,
+    "bounding box" : [ 59.28, 699.577, 521.424, 754.383 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "QUESTION 3: HOW MIGHT THE EXPANSION OF BRICS COUNTRIES BE SEEN AS A THREAT TO THE BALANCE OF POWER BETWEEN THE GLOBAL NORTH (WESTERN COUNTRIES) AND THE GLOBAL SOUTH (BRICS COUNTRIES)?"
+  }, {
+    "type" : "list",
+    "id" : 211,
+    "level" : "5",
+    "page number" : 7,
+    "bounding box" : [ 59.28, 671.977, 441.338, 685.383 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 1,
+    "previous list id" : 189,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 7,
+      "bounding box" : [ 59.28, 671.977, 441.338, 685.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "Study Sources 3A, 3B, 3C and 3D and answer the questions that follow.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 212,
+    "level" : "10",
+    "page number" : 7,
+    "bounding box" : [ 59.28, 202.897, 513.576, 657.783 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 3,
+    "next list id" : 221,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 7,
+      "bounding box" : [ 59.28, 616.777, 212.616, 657.783 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.1 Refer to Source 3A. 3.1.1",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 43,
+        "level" : "11",
+        "page number" : 7,
+        "bounding box" : [ 107.16, 492.577, 133.872, 588.783 ],
+        "numbering style" : "arabic numbers",
+        "number of list items" : 2,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 7,
+          "bounding box" : [ 107.16, 575.377, 133.872, 588.783 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "3.1.2",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 7,
+          "bounding box" : [ 107.16, 492.577, 133.872, 533.583 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "3.1.3 3.1.4",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 44,
+        "page number" : 7,
+        "bounding box" : [ 163.92, 602.977, 521.785, 630.183 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "When, according to the source, did the first meeting in the BRIC format take place? (1 x 1)"
+      }, {
+        "type" : "paragraph",
+        "id" : 45,
+        "page number" : 7,
+        "bounding box" : [ 163.92, 547.777, 521.832, 588.783 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Name the FOUR countries in the source who agreed to develop multifaceted cooperation among themselves in the formation of BRIC. (4 x 1)"
+      }, {
+        "type" : "paragraph",
+        "id" : 46,
+        "page number" : 7,
+        "bounding box" : [ 163.92, 520.177, 518.796, 533.583 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Define the term summit in your own words. (1 x 2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 47,
+        "page number" : 7,
+        "bounding box" : [ 163.92, 464.977, 521.833, 505.983 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Using information in the source and your own knowledge, explain the significance of six new countries joining BRICS on 1 January 2024. (2 x 2)"
+      }, {
+        "type" : "list",
+        "id" : 48,
+        "level" : "12",
+        "page number" : 7,
+        "bounding box" : [ 544.2, 520.177, 558.876, 616.383 ],
+        "numbering style" : "arabic numbers",
+        "number of list items" : 2,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 7,
+          "bounding box" : [ 544.2, 602.977, 558.876, 616.383 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(1)",
+          "kids" : [ {
+            "type" : "paragraph",
+            "id" : 42,
+            "level" : "13",
+            "page number" : 7,
+            "bounding box" : [ 544.2, 547.777, 558.876, 561.183 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "(4)"
+          } ]
+        }, {
+          "type" : "list item",
+          "page number" : 7,
+          "bounding box" : [ 544.2, 520.177, 558.876, 533.583 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(2)",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 49,
+        "level" : "13",
+        "page number" : 7,
+        "bounding box" : [ 544.2, 464.977, 558.876, 478.383 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(4)"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 7,
+      "bounding box" : [ 59.28, 437.377, 198.696, 450.783 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.2 Read Source 3B.",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 50,
+        "level" : "14",
+        "page number" : 7,
+        "bounding box" : [ 107.28, 271.897, 133.992, 423.183 ],
+        "numbering style" : "arabic numbers",
+        "number of list items" : 4,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 7,
+          "bounding box" : [ 107.28, 409.777, 133.992, 423.183 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "3.2.1",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 7,
+          "bounding box" : [ 107.28, 354.577, 133.992, 367.983 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "3.2.2",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 7,
+          "bounding box" : [ 107.28, 313.177, 133.992, 326.583 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "3.2.3",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 7,
+          "bounding box" : [ 107.28, 271.897, 133.992, 285.303 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "3.2.4",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 51,
+        "page number" : 7,
+        "bounding box" : [ 164.16, 382.177, 522.025, 423.183 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Name any TWO strategic initiatives launched by BRICS in the source that aimed at challenging the established international order. (2 x 1)"
+      }, {
+        "type" : "paragraph",
+        "id" : 52,
+        "page number" : 7,
+        "bounding box" : [ 164.16, 340.777, 521.964, 367.983 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Explain the concept de-dollarisation in the context of the BRICS challenge to Western countries. (1 x 2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 53,
+        "page number" : 7,
+        "bounding box" : [ 164.16, 299.377, 522.072, 326.583 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Identify ONE reason in the source why BRICS countries attempted to influence the agricultural sector. (1 x 2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 54,
+        "page number" : 7,
+        "bounding box" : [ 164.16, 258.097, 521.952, 285.303 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Comment on how the 'diminished (reduced) US influence' would change the existing international order. (2 x 2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 55,
+        "level" : "13",
+        "page number" : 7,
+        "bounding box" : [ 546.12, 382.177, 560.796, 395.583 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 56,
+        "level" : "13",
+        "page number" : 7,
+        "bounding box" : [ 546.12, 340.777, 560.796, 354.183 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 57,
+        "level" : "13",
+        "page number" : 7,
+        "bounding box" : [ 546.12, 299.377, 560.796, 312.783 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 58,
+        "level" : "13",
+        "page number" : 7,
+        "bounding box" : [ 546.12, 258.097, 560.796, 271.503 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(4)"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 7,
+      "bounding box" : [ 59.28, 202.897, 513.576, 243.903 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.3 Consult Source 3C. What message is conveyed by the graph regarding the change in:",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 213,
+    "level" : "14",
+    "page number" : 7,
+    "bounding box" : [ 109.68, 106.297, 136.392, 216.303 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 2,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 7,
+      "bounding box" : [ 109.68, 202.897, 136.392, 216.303 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.3.1",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 7,
+      "bounding box" : [ 109.68, 106.297, 136.392, 119.703 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.3.2",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 214,
+    "level" : "15",
+    "page number" : 7,
+    "bounding box" : [ 164.64, 133.897, 522.996, 188.703 ],
+    "numbering style" : "english letters",
+    "number of list items" : 2,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 7,
+      "bounding box" : [ 164.64, 161.497, 522.996, 188.703 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "(a) The G7's share of global gross domestic product (GDP) between 1995 and 2023 (1 x 2)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 7,
+      "bounding box" : [ 164.64, 133.897, 521.796, 147.303 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "(b) BRICS' share of global GDP between 1995 to 2023 (1 x 2)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 216,
+    "level" : "13",
+    "page number" : 7,
+    "bounding box" : [ 545.76, 133.897, 560.436, 174.903 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "(2) (2)"
+  }, {
+    "type" : "paragraph",
+    "id" : 215,
+    "page number" : 7,
+    "bounding box" : [ 163.92, 78.697, 523.512, 119.703 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "Using the information in the source and your own knowledge, explain the implication of the growth in China's GDP from 1995 to 2023. (2 x 2)"
+  }, {
+    "type" : "paragraph",
+    "id" : 217,
+    "level" : "13",
+    "page number" : 7,
+    "bounding box" : [ 545.76, 78.697, 560.436, 92.103 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "(4)"
+  }, {
+    "type" : "footer",
+    "id" : 218,
+    "page number" : 7,
+    "bounding box" : [ 53.88, 36.049, 528.539, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 21,
+      "page number" : 7,
+      "bounding box" : [ 53.88, 36.049, 528.539, 47.177 ],
+      "heading level" : 3,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 219,
+    "page number" : 8,
+    "bounding box" : [ 53.88, 782.448, 528.605, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 35,
+      "page number" : 8,
+      "bounding box" : [ 53.88, 794.569, 528.605, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "History/P2 8 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 36,
+      "page number" : 8,
+      "bounding box" : [ 254.763, 782.448, 333.923, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 221,
+    "level" : "10",
+    "page number" : 8,
+    "bounding box" : [ 59.28, 382.177, 559.716, 754.383 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 3,
+    "previous list id" : 212,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 8,
+      "bounding box" : [ 59.28, 713.377, 201.336, 754.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.4 Study Source 3D. 3.4.1",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 59,
+        "level" : "12",
+        "page number" : 8,
+        "bounding box" : [ 107.16, 547.777, 133.872, 671.583 ],
+        "numbering style" : "arabic numbers",
+        "number of list items" : 3,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 8,
+          "bounding box" : [ 107.16, 658.177, 133.872, 671.583 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "3.4.2",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 8,
+          "bounding box" : [ 107.16, 616.777, 133.872, 630.183 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "3.4.3",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 8,
+          "bounding box" : [ 107.16, 547.777, 133.872, 561.183 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "3.4.4",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 60,
+        "page number" : 8,
+        "bounding box" : [ 163.92, 685.777, 520.045, 726.783 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Who, according to the source, was Trump referring to when he said, '… leave the dollar, you are not doing business with the US because we're going to put a 100% tariff on your growth'? (1 x 1)"
+      }, {
+        "type" : "paragraph",
+        "id" : 61,
+        "page number" : 8,
+        "bounding box" : [ 163.92, 644.377, 519.936, 671.583 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Give a reason in the source why BRICS+ countries are critical of the Bretton Woods era. (1 x 2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 62,
+        "page number" : 8,
+        "bounding box" : [ 163.92, 575.377, 520.116, 630.183 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Using the information in the source and your own knowledge, explain why '… the fact that the BRICS+ countries form 35% of the World's GDP and 45% of the world's population …' is a concern for the USA (Trump) as the leader of the Global North. (1 x 2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 63,
+        "page number" : 8,
+        "bounding box" : [ 163.92, 533.977, 521.834, 561.183 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Comment on the usefulness of this source to a researcher studying how Trump felt threatened by the expansion of BRICS+ countries."
+      }, {
+        "type" : "paragraph",
+        "id" : 64,
+        "page number" : 8,
+        "bounding box" : [ 487.657, 520.177, 521.676, 533.583 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2 x 2)"
+      }, {
+        "type" : "list",
+        "id" : 65,
+        "level" : "13",
+        "page number" : 8,
+        "bounding box" : [ 544.2, 644.377, 558.876, 699.183 ],
+        "numbering style" : "arabic numbers",
+        "number of list items" : 2,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 8,
+          "bounding box" : [ 544.2, 685.777, 558.876, 699.183 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(1)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 8,
+          "bounding box" : [ 544.2, 644.377, 558.876, 657.783 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(2)",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 66,
+        "level" : "14",
+        "page number" : 8,
+        "bounding box" : [ 544.2, 575.377, 558.876, 588.783 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 67,
+        "level" : "14",
+        "page number" : 8,
+        "bounding box" : [ 544.2, 520.177, 558.876, 533.583 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(4)"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 8,
+      "bounding box" : [ 59.28, 464.977, 559.716, 505.983 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.5 Refer to Sources 3C and 3D. Explain how the evidence in Source 3C supports the information in Source 3D regarding how BRICS is upsetting the balance of power between the Global North and Global South. (2 x 2) (4)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 8,
+      "bounding box" : [ 59.28, 382.177, 559.716, 450.783 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.6 Using the information in the relevant sources and your own knowledge, write a paragraph of about EIGHT lines (about 80 words) explaining how the expansion of BRICS countries might be seen as a threat to the balance of power between the Global North (Western countries) and Global South (BRICS countries). (8)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 222,
+    "level" : "Subtitle",
+    "page number" : 8,
+    "bounding box" : [ 545.04, 368.377, 566.436, 381.783 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "[50]"
+  }, {
+    "type" : "footer",
+    "id" : 223,
+    "page number" : 8,
+    "bounding box" : [ 53.88, 36.049, 528.539, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 22,
+      "page number" : 8,
+      "bounding box" : [ 53.88, 36.049, 528.539, 47.177 ],
+      "heading level" : 3,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 224,
+    "page number" : 9,
+    "bounding box" : [ 53.88, 782.448, 528.613, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 37,
+      "page number" : 9,
+      "bounding box" : [ 53.88, 794.569, 528.613, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "History/P2 9 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 38,
+      "page number" : 9,
+      "bounding box" : [ 254.763, 782.448, 333.923, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 227,
+    "page number" : 9,
+    "bounding box" : [ 59.28, 685.777, 497.617, 754.383 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "SECTION B: ESSAY QUESTIONS Answer at least ONE question, but NOT more than TWO questions, in this section. Your essay should be about THREE pages long."
+  }, {
+    "type" : "heading",
+    "id" : 228,
+    "level" : "Subtitle",
+    "page number" : 9,
+    "bounding box" : [ 59.28, 630.577, 523.644, 657.783 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "QUESTION 4: CIVIL RESISTANCE, 1970s TO 1980s: SOUTH AFRICA: THE CRISIS OF APARTHEID IN THE 1980s"
+  }, {
+    "type" : "paragraph",
+    "id" : 229,
+    "page number" : 9,
+    "bounding box" : [ 59.28, 589.177, 521.712, 616.383 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "The philosophy of Biko and the Black Consciousness Movement revived resistance to apartheid in South Africa from the 1960s to the 1970s."
+  }, {
+    "type" : "paragraph",
+    "id" : 230,
+    "page number" : 9,
+    "bounding box" : [ 59.28, 547.777, 566.556, 574.983 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "Do you agree with this statement? Use relevant evidence to support your line of argument. [50]"
+  }, {
+    "type" : "heading",
+    "id" : 231,
+    "level" : "Subtitle",
+    "page number" : 9,
+    "bounding box" : [ 59.28, 492.577, 521.616, 519.783 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "QUESTION 5: THE COMING OF DEMOCRACY TO SOUTH AFRICA AND COMING TO TERMS WITH THE PAST"
+  }, {
+    "type" : "paragraph",
+    "id" : 232,
+    "page number" : 9,
+    "bounding box" : [ 59.28, 437.377, 566.556, 478.383 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "The road to democracy was characterised by a non-violent process of negotiation. Critically discuss this statement with reference to the period between 1990 and 1994. [50]"
+  }, {
+    "type" : "heading",
+    "id" : 233,
+    "level" : "Subtitle",
+    "page number" : 9,
+    "bounding box" : [ 59.28, 382.177, 521.556, 409.383 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "QUESTION 6: THE END OF THE COLD WAR AND A NEW WORLD ORDER: THE EVENTS OF 1989"
+  }, {
+    "type" : "paragraph",
+    "id" : 236,
+    "page number" : 9,
+    "bounding box" : [ 59.28, 340.777, 521.881, 367.983 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "Explain to what extent Gorbachev's policies of Glasnost and Perestroika in the 1980s ultimately led to the collapse of the Soviet Union."
+  }, {
+    "type" : "paragraph",
+    "id" : 237,
+    "page number" : 9,
+    "bounding box" : [ 59.28, 285.577, 566.556, 326.583 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "Use relevant historical evidence to support your line of argument. [50] TOTAL: 150"
+  }, {
+    "type" : "paragraph",
+    "id" : 226,
+    "page number" : 9,
+    "bounding box" : [ 53.88, 36.049, 138.246, 47.177 ],
+    "font" : "ArialMT",
+    "font size" : 9.96,
+    "text color" : "[0.0]",
+    "content" : "Copyright reserved"
+  } ]
+}

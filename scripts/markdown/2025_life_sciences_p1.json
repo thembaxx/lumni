@@ -1,0 +1,5586 @@
+{
+  "file name" : "2025_life_sciences_p1.pdf",
+  "number of pages" : 16,
+  "author" : "NSC6834",
+  "title" : "SECTION B",
+  "creation date" : "D:20251113095906+02'00'",
+  "modification date" : "D:20251113095913+02'00'",
+  "kids" : [ {
+    "type" : "text block",
+    "id" : 128,
+    "page number" : 1,
+    "bounding box" : [ 24.0, 24.0, 571.32, 818.04 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 1,
+      "page number" : 1,
+      "bounding box" : [ 266.074, 793.903, 322.043, 805.925 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "Confidential"
+    }, {
+      "type" : "paragraph",
+      "id" : 2,
+      "page number" : 1,
+      "bounding box" : [ 53.88, 36.049, 528.542, 47.177 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    }, {
+      "type" : "paragraph",
+      "id" : 3,
+      "page number" : 1,
+      "bounding box" : [ 53.88, 304.057, 146.592, 345.063 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "MARKS: 150 TIME: 2½ hours"
+    }, {
+      "type" : "paragraph",
+      "id" : 4,
+      "page number" : 1,
+      "bounding box" : [ 173.28, 207.457, 412.176, 220.863 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "This question paper consists of 16 pages."
+    }, {
+      "type" : "heading",
+      "id" : 6,
+      "level" : "Doctitle",
+      "page number" : 1,
+      "bounding box" : [ 237.48, 726.338, 318.228, 744.168 ],
+      "heading level" : 1,
+      "font" : "Arial-BoldMT",
+      "font size" : 15.96,
+      "text color" : "[0.0]",
+      "content" : "GRAAD 12"
+    }, {
+      "type" : "image",
+      "id" : 8,
+      "page number" : 1,
+      "bounding box" : [ 80.76, 378.84, 508.2, 432.12 ],
+      "source" : "2025_life_sciences_p1_images/imageFile1.png"
+    }, {
+      "type" : "paragraph",
+      "id" : 9,
+      "page number" : 1,
+      "bounding box" : [ 231.0, 383.909, 357.853, 431.75 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 14.04,
+      "text color" : "[0.0]",
+      "content" : "LIFE SCIENCES P1 NOVEMBER 2025"
+    }, {
+      "type" : "image",
+      "id" : 11,
+      "page number" : 1,
+      "bounding box" : [ 159.96, 570.48, 437.76, 607.08 ],
+      "source" : "2025_life_sciences_p1_images/imageFile2.png"
+    }, {
+      "type" : "heading",
+      "id" : 12,
+      "level" : "Subtitle",
+      "page number" : 1,
+      "bounding box" : [ 213.12, 570.338, 384.455, 606.648 ],
+      "heading level" : 1,
+      "font" : "Arial-BoldMT",
+      "font size" : 15.96,
+      "text color" : "[1.0]",
+      "content" : "NATIONAL SENIOR CERTIFICATE"
+    }, {
+      "type" : "image",
+      "id" : 13,
+      "page number" : 1,
+      "bounding box" : [ 108.0, 647.52, 486.0, 789.02 ],
+      "source" : "2025_life_sciences_p1_images/imageFile3.png"
+    }, {
+      "type" : "image",
+      "id" : 15,
+      "page number" : 1,
+      "bounding box" : [ 230.4, 492.72, 350.4, 513.24 ],
+      "source" : "2025_life_sciences_p1_images/imageFile4.png"
+    }, {
+      "type" : "heading",
+      "id" : 16,
+      "level" : "Subtitle",
+      "page number" : 1,
+      "bounding box" : [ 250.32, 494.738, 330.228, 512.568 ],
+      "heading level" : 1,
+      "font" : "Arial-BoldMT",
+      "font size" : 15.96,
+      "text color" : "[0.0]",
+      "content" : "GRADE 12"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 129,
+    "page number" : 2,
+    "bounding box" : [ 53.88, 782.448, 528.605, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 44,
+      "page number" : 2,
+      "bounding box" : [ 53.88, 794.569, 528.605, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Life Sciences/P1 2 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 45,
+      "page number" : 2,
+      "bounding box" : [ 256.925, 782.448, 336.083, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 130,
+    "page number" : 2,
+    "bounding box" : [ 59.28, 713.377, 443.618, 754.383 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "INSTRUCTIONS AND INFORMATION Read the following instructions carefully before answering the questions."
+  }, {
+    "type" : "list",
+    "id" : 131,
+    "level" : "1",
+    "page number" : 2,
+    "bounding box" : [ 59.28, 382.177, 76.056, 699.183 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 11,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 685.777, 69.336, 699.183 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 658.177, 69.336, 671.583 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 630.577, 69.336, 643.983 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 602.977, 69.336, 616.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "4.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 561.577, 69.336, 574.983 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "5.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 533.977, 69.336, 547.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "6.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 506.377, 69.336, 519.783 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "7.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 478.777, 69.336, 492.183 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "8.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 451.177, 69.336, 464.583 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "9.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 423.577, 76.056, 436.983 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "10.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 382.177, 76.056, 395.583 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "11.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 132,
+    "page number" : 2,
+    "bounding box" : [ 107.16, 382.177, 521.76, 699.183 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "Answer ALL the questions. Write ALL the answers in the ANSWER BOOK. Start the answers to EACH question at the top of a NEW page. Number the answers correctly according to the numbering system used in this question paper. Present your answers according to the instructions of each question. Do ALL drawings in pencil and label them in blue or black ink. Draw diagrams, tables or flow charts only when asked to do so. The diagrams in this question paper are NOT necessarily drawn to scale. Do NOT use graph paper. You must use a non-programmable calculator, protractor and a compass, where necessary. Write neatly and legibly."
+  }, {
+    "type" : "footer",
+    "id" : 133,
+    "page number" : 2,
+    "bounding box" : [ 53.88, 36.047, 528.549, 47.174 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 30,
+      "page number" : 2,
+      "bounding box" : [ 53.88, 36.047, 528.549, 47.174 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 134,
+    "page number" : 3,
+    "bounding box" : [ 53.88, 782.448, 528.605, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 46,
+      "page number" : 3,
+      "bounding box" : [ 53.88, 794.569, 528.605, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Life Sciences/P1 3 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 47,
+      "page number" : 3,
+      "bounding box" : [ 256.925, 782.448, 336.083, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 135,
+    "level" : "2",
+    "page number" : 3,
+    "bounding box" : [ 59.28, 740.977, 129.052, 754.383 ],
+    "numbering style" : "english letters",
+    "number of list items" : 1,
+    "next list id" : 180,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 59.28, 740.977, 129.052, 754.383 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "SECTION A2025",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 136,
+    "level" : "3",
+    "page number" : 3,
+    "bounding box" : [ 59.28, 713.377, 132.072, 726.783 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 1,
+    "next list id" : 181,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 59.28, 713.377, 132.072, 726.783 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "QUESTION 1",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 137,
+    "level" : "4",
+    "page number" : 3,
+    "bounding box" : [ 59.28, 658.177, 521.738, 699.183 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 1,
+    "next list id" : 159,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 59.28, 658.177, 521.738, 699.183 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.1 Various options are provided as possible answers to the following questions. Choose the answer and write only the letter (A to D) next to the question numbers (1.1.1 to 1.1.10) in the ANSWER BOOK, e.g. 1.1.11 D.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 138,
+    "level" : "5",
+    "page number" : 3,
+    "bounding box" : [ 107.16, 180.097, 521.712, 643.983 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 4,
+    "next list id" : 144,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 107.16, 630.577, 482.76, 643.983 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.1.1 The hormone that prepares the body for an emergency is …",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 107,
+        "level" : "6",
+        "page number" : 3,
+        "bounding box" : [ 163.92, 561.577, 172.584, 616.383 ],
+        "numbering style" : "english letters",
+        "number of list items" : 4,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 163.92, 602.977, 171.924, 616.383 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "A",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 163.92, 589.177, 171.924, 602.583 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "B",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 163.92, 575.377, 172.584, 588.783 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "C",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 163.92, 561.577, 172.584, 574.983 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "D",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 108,
+        "page number" : 3,
+        "bounding box" : [ 185.16, 561.577, 259.296, 616.383 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "aldosterone. progesterone. adrenalin. prolactin."
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 107.16, 533.977, 470.952, 547.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.1.2 Which ONE of the following are functions of the placenta?",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 109,
+        "level" : "6",
+        "page number" : 3,
+        "bounding box" : [ 163.92, 464.977, 172.584, 519.783 ],
+        "numbering style" : "english letters",
+        "number of list items" : 4,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 163.92, 506.377, 171.924, 519.783 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "A",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 163.92, 492.577, 171.924, 505.983 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "B",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 163.92, 478.777, 172.584, 492.183 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "C",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 163.92, 464.977, 172.584, 478.383 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "D",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 110,
+        "page number" : 3,
+        "bounding box" : [ 185.16, 464.977, 506.16, 519.783 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Excretion and nutrition Gaseous exchange and protection against mechanical injury Nutrition and temperature regulation Temperature regulation and excretion"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 107.16, 423.577, 521.712, 450.783 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.1.3 The table below shows the reaction time of four learners to a stimulus.",
+      "kids" : [ {
+        "type" : "table",
+        "id" : 111,
+        "level" : "7",
+        "page number" : 3,
+        "bounding box" : [ 216.48, 318.12, 409.2, 409.8 ],
+        "number of rows" : 5,
+        "number of columns" : 2,
+        "rows" : [ {
+          "type" : "table row",
+          "row number" : 1,
+          "cells" : [ {
+            "type" : "table cell",
+            "page number" : 3,
+            "bounding box" : [ 217.92, 379.98, 302.28, 408.3 ],
+            "row number" : 1,
+            "column number" : 1,
+            "row span" : 1,
+            "column span" : 1,
+            "kids" : [ {
+              "type" : "paragraph",
+              "id" : 1,
+              "page number" : 3,
+              "bounding box" : [ 230.76, 380.737, 288.624, 407.943 ],
+              "font" : "Arial-BoldMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "NAME OF LEARNER"
+            } ]
+          }, {
+            "type" : "table cell",
+            "page number" : 3,
+            "bounding box" : [ 302.28, 379.98, 407.76, 408.3 ],
+            "row number" : 1,
+            "column number" : 2,
+            "row span" : 1,
+            "column span" : 1,
+            "kids" : [ {
+              "type" : "paragraph",
+              "id" : 2,
+              "page number" : 3,
+              "bounding box" : [ 308.04, 380.737, 402.564, 407.943 ],
+              "font" : "Arial-BoldMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "REACTION TIME (SECONDS)"
+            } ]
+          } ]
+        }, {
+          "type" : "table row",
+          "row number" : 2,
+          "cells" : [ {
+            "type" : "table cell",
+            "page number" : 3,
+            "bounding box" : [ 217.92, 364.62, 302.28, 379.98 ],
+            "row number" : 2,
+            "column number" : 1,
+            "row span" : 1,
+            "column span" : 1,
+            "kids" : [ {
+              "type" : "paragraph",
+              "id" : 3,
+              "page number" : 3,
+              "bounding box" : [ 236.76, 365.377, 282.792, 378.783 ],
+              "font" : "ArialMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "Temisha"
+            } ]
+          }, {
+            "type" : "table cell",
+            "page number" : 3,
+            "bounding box" : [ 302.28, 364.62, 407.76, 379.98 ],
+            "row number" : 2,
+            "column number" : 2,
+            "row span" : 1,
+            "column span" : 1,
+            "kids" : [ {
+              "type" : "paragraph",
+              "id" : 4,
+              "page number" : 3,
+              "bounding box" : [ 346.92, 365.377, 363.672, 378.783 ],
+              "font" : "ArialMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "0,7"
+            } ]
+          } ]
+        }, {
+          "type" : "table row",
+          "row number" : 3,
+          "cells" : [ {
+            "type" : "table cell",
+            "page number" : 3,
+            "bounding box" : [ 217.92, 349.38, 302.28, 364.62 ],
+            "row number" : 3,
+            "column number" : 1,
+            "row span" : 1,
+            "column span" : 1,
+            "kids" : [ {
+              "type" : "paragraph",
+              "id" : 5,
+              "page number" : 3,
+              "bounding box" : [ 246.72, 350.137, 272.832, 363.543 ],
+              "font" : "ArialMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "Luke"
+            } ]
+          }, {
+            "type" : "table cell",
+            "page number" : 3,
+            "bounding box" : [ 302.28, 349.38, 407.76, 364.62 ],
+            "row number" : 3,
+            "column number" : 2,
+            "row span" : 1,
+            "column span" : 1,
+            "kids" : [ {
+              "type" : "paragraph",
+              "id" : 6,
+              "page number" : 3,
+              "bounding box" : [ 346.92, 350.137, 363.672, 363.543 ],
+              "font" : "ArialMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "0,6"
+            } ]
+          } ]
+        }, {
+          "type" : "table row",
+          "row number" : 4,
+          "cells" : [ {
+            "type" : "table cell",
+            "page number" : 3,
+            "bounding box" : [ 217.92, 334.02, 302.28, 349.38 ],
+            "row number" : 4,
+            "column number" : 1,
+            "row span" : 1,
+            "column span" : 1,
+            "kids" : [ {
+              "type" : "paragraph",
+              "id" : 7,
+              "page number" : 3,
+              "bounding box" : [ 244.68, 334.777, 274.752, 348.183 ],
+              "font" : "ArialMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "Anika"
+            } ]
+          }, {
+            "type" : "table cell",
+            "page number" : 3,
+            "bounding box" : [ 302.28, 334.02, 407.76, 349.38 ],
+            "row number" : 4,
+            "column number" : 2,
+            "row span" : 1,
+            "column span" : 1,
+            "kids" : [ {
+              "type" : "paragraph",
+              "id" : 8,
+              "page number" : 3,
+              "bounding box" : [ 346.92, 334.777, 363.672, 348.183 ],
+              "font" : "ArialMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "0,8"
+            } ]
+          } ]
+        }, {
+          "type" : "table row",
+          "row number" : 5,
+          "cells" : [ {
+            "type" : "table cell",
+            "page number" : 3,
+            "bounding box" : [ 217.92, 319.56, 302.28, 334.02 ],
+            "row number" : 5,
+            "column number" : 1,
+            "row span" : 1,
+            "column span" : 1,
+            "kids" : [ {
+              "type" : "paragraph",
+              "id" : 9,
+              "page number" : 3,
+              "bounding box" : [ 245.04, 319.537, 274.44, 332.943 ],
+              "font" : "ArialMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "Jordy"
+            } ]
+          }, {
+            "type" : "table cell",
+            "page number" : 3,
+            "bounding box" : [ 302.28, 319.56, 407.76, 334.02 ],
+            "row number" : 5,
+            "column number" : 2,
+            "row span" : 1,
+            "column span" : 1,
+            "kids" : [ {
+              "type" : "paragraph",
+              "id" : 10,
+              "page number" : 3,
+              "bounding box" : [ 346.92, 319.537, 363.672, 332.943 ],
+              "font" : "ArialMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "0,4"
+            } ]
+          } ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 112,
+        "page number" : 3,
+        "bounding box" : [ 163.92, 276.577, 521.736, 303.783 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Which ONE of the following learners demonstrates the fastest response to the stimulus?"
+      }, {
+        "type" : "list",
+        "id" : 113,
+        "level" : "6",
+        "page number" : 3,
+        "bounding box" : [ 163.92, 207.697, 172.584, 262.503 ],
+        "numbering style" : "english letters",
+        "number of list items" : 4,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 163.92, 249.097, 171.924, 262.503 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "A",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 163.92, 235.297, 171.924, 248.703 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "B",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 163.92, 221.497, 172.584, 234.903 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "C",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 163.92, 207.697, 172.584, 221.103 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "D",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 114,
+        "page number" : 3,
+        "bounding box" : [ 185.16, 207.697, 231.192, 262.503 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Temisha Luke Anika Jordy"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 107.16, 180.097, 456.961, 193.503 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.1.4 A high level of thyroxin in the blood will stimulate the …",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 139,
+    "level" : "6",
+    "page number" : 3,
+    "bounding box" : [ 163.92, 111.097, 172.584, 165.903 ],
+    "numbering style" : "english letters",
+    "number of list items" : 4,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 163.92, 152.497, 171.924, 165.903 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "A",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 163.92, 138.697, 171.924, 152.103 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "B",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 163.92, 124.897, 172.584, 138.303 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "C",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 163.92, 111.097, 172.584, 124.503 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "D",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 140,
+    "page number" : 3,
+    "bounding box" : [ 185.16, 111.097, 389.257, 165.903 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "pituitary gland to secrete less TSH. thyroid gland to secrete more TSH. pituitary gland to secrete more TSH. thyroid gland to secrete more thyroxin."
+  }, {
+    "type" : "footer",
+    "id" : 141,
+    "page number" : 3,
+    "bounding box" : [ 53.88, 36.047, 528.549, 47.174 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 31,
+      "page number" : 3,
+      "bounding box" : [ 53.88, 36.047, 528.549, 47.174 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 142,
+    "page number" : 4,
+    "bounding box" : [ 53.88, 782.448, 528.605, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 48,
+      "page number" : 4,
+      "bounding box" : [ 53.88, 794.569, 528.605, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Life Sciences/P1 4 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 49,
+      "page number" : 4,
+      "bounding box" : [ 256.925, 782.448, 336.083, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 143,
+    "level" : "Subtitle",
+    "page number" : 4,
+    "bounding box" : [ 107.16, 727.177, 521.724, 754.383 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "QUESTIONS 1.1.5 AND 1.1.6 ARE BASED ON THE DIAGRAM OF THE FEMALE REPRODUCTIVE SYSTEM."
+  }, {
+    "type" : "text block",
+    "id" : 150,
+    "page number" : 4,
+    "bounding box" : [ 203.25, 493.923, 437.25, 716.273 ],
+    "kids" : [ {
+      "type" : "image",
+      "id" : 19,
+      "page number" : 4,
+      "bounding box" : [ 208.8, 493.323, 439.8, 711.223 ],
+      "source" : "2025_life_sciences_p1_images/imageFile5.png"
+    }, {
+      "type" : "image",
+      "id" : 20,
+      "page number" : 4,
+      "bounding box" : [ 208.8, 625.123, 235.9, 639.873 ],
+      "source" : "2025_life_sciences_p1_images/imageFile6.png"
+    }, {
+      "type" : "image",
+      "id" : 21,
+      "page number" : 4,
+      "bounding box" : [ 309.95, 694.823, 337.05, 709.573 ],
+      "source" : "2025_life_sciences_p1_images/imageFile7.png"
+    }, {
+      "type" : "image",
+      "id" : 22,
+      "page number" : 4,
+      "bounding box" : [ 387.25, 618.423, 414.35, 633.173 ],
+      "source" : "2025_life_sciences_p1_images/imageFile8.png"
+    }, {
+      "type" : "image",
+      "id" : 24,
+      "page number" : 4,
+      "bounding box" : [ 384.25, 526.023, 411.35, 540.923 ],
+      "source" : "2025_life_sciences_p1_images/imageFile9.png"
+    }, {
+      "type" : "image",
+      "id" : 25,
+      "page number" : 4,
+      "bounding box" : [ 321.96, 692.88, 337.8, 708.84 ],
+      "source" : "2025_life_sciences_p1_images/imageFile10.png"
+    }, {
+      "type" : "heading",
+      "id" : 26,
+      "level" : "Subtitle",
+      "page number" : 4,
+      "bounding box" : [ 321.84, 696.697, 329.844, 710.103 ],
+      "heading level" : 2,
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "P"
+    }, {
+      "type" : "image",
+      "id" : 27,
+      "page number" : 4,
+      "bounding box" : [ 259.92, 526.92, 280.32, 554.04 ],
+      "source" : "2025_life_sciences_p1_images/imageFile11.png"
+    }, {
+      "type" : "list",
+      "id" : 28,
+      "level" : "1",
+      "page number" : 4,
+      "bounding box" : [ 256.2, 541.897, 268.584, 633.063 ],
+      "numbering style" : "english letters",
+      "number of list items" : 2,
+      "list items" : [ {
+        "type" : "list item",
+        "page number" : 4,
+        "bounding box" : [ 259.92, 541.897, 268.584, 555.303 ],
+        "font" : "Arial-BoldMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "R",
+        "kids" : [ {
+          "type" : "image",
+          "id" : 15,
+          "page number" : 4,
+          "bounding box" : [ 390.12, 605.88, 408.12, 618.84 ],
+          "source" : "2025_life_sciences_p1_images/imageFile12.png"
+        }, {
+          "type" : "paragraph",
+          "id" : 16,
+          "page number" : 4,
+          "bounding box" : [ 390.12, 606.697, 399.456, 620.103 ],
+          "font" : "Arial-BoldMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "Q"
+        }, {
+          "type" : "image",
+          "id" : 18,
+          "page number" : 4,
+          "bounding box" : [ 249.0, 619.68, 270.72, 633.48 ],
+          "source" : "2025_life_sciences_p1_images/imageFile13.png"
+        } ]
+      }, {
+        "type" : "list item",
+        "page number" : 4,
+        "bounding box" : [ 256.2, 619.657, 264.204, 633.063 ],
+        "font" : "Arial-BoldMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "S",
+        "kids" : [ ]
+      } ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 144,
+    "level" : "5",
+    "page number" : 4,
+    "bounding box" : [ 107.16, 234.217, 521.784, 481.983 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 3,
+    "previous list id" : 138,
+    "next list id" : 153,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 107.16, 454.777, 521.784, 481.983 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.1.5 Which ONE of the following combinations is CORRECT for a normal pregnancy?",
+      "kids" : [ {
+        "type" : "table",
+        "id" : 115,
+        "level" : "6",
+        "page number" : 4,
+        "bounding box" : [ 164.28, 351.6, 421.8, 443.28 ],
+        "number of rows" : 5,
+        "number of columns" : 3,
+        "rows" : [ {
+          "type" : "table row",
+          "row number" : 1,
+          "cells" : [ {
+            "type" : "table cell",
+            "page number" : 4,
+            "bounding box" : [ 165.72, 413.46, 187.68, 441.78 ],
+            "row number" : 1,
+            "column number" : 1,
+            "row span" : 1,
+            "column span" : 1,
+            "kids" : [ ]
+          }, {
+            "type" : "table cell",
+            "page number" : 4,
+            "bounding box" : [ 187.68, 413.46, 302.76, 441.78 ],
+            "row number" : 1,
+            "column number" : 2,
+            "row span" : 1,
+            "column span" : 1,
+            "kids" : [ {
+              "type" : "paragraph",
+              "id" : 1,
+              "page number" : 4,
+              "bounding box" : [ 199.8, 414.217, 290.425, 441.423 ],
+              "font" : "Arial-BoldMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "SITE OF FERTILISATION"
+            } ]
+          }, {
+            "type" : "table cell",
+            "page number" : 4,
+            "bounding box" : [ 302.76, 413.46, 420.36, 441.78 ],
+            "row number" : 1,
+            "column number" : 3,
+            "row span" : 1,
+            "column span" : 1,
+            "kids" : [ {
+              "type" : "paragraph",
+              "id" : 2,
+              "page number" : 4,
+              "bounding box" : [ 316.56, 414.217, 407.184, 441.423 ],
+              "font" : "Arial-BoldMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "SITE OF IMPLANTATION"
+            } ]
+          } ]
+        }, {
+          "type" : "table row",
+          "row number" : 2,
+          "cells" : [ {
+            "type" : "table cell",
+            "page number" : 4,
+            "bounding box" : [ 165.72, 398.1, 187.68, 413.46 ],
+            "row number" : 2,
+            "column number" : 1,
+            "row span" : 1,
+            "column span" : 1,
+            "kids" : [ {
+              "type" : "paragraph",
+              "id" : 3,
+              "page number" : 4,
+              "bounding box" : [ 170.4, 398.857, 178.404, 412.263 ],
+              "font" : "ArialMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "A"
+            } ]
+          }, {
+            "type" : "table cell",
+            "page number" : 4,
+            "bounding box" : [ 187.68, 398.1, 302.76, 413.46 ],
+            "row number" : 2,
+            "column number" : 2,
+            "row span" : 1,
+            "column span" : 1,
+            "kids" : [ {
+              "type" : "paragraph",
+              "id" : 4,
+              "page number" : 4,
+              "bounding box" : [ 241.08, 398.857, 249.084, 412.263 ],
+              "font" : "Arial-BoldMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "P"
+            } ]
+          }, {
+            "type" : "table cell",
+            "page number" : 4,
+            "bounding box" : [ 302.76, 398.1, 420.36, 413.46 ],
+            "row number" : 2,
+            "column number" : 3,
+            "row span" : 1,
+            "column span" : 1,
+            "kids" : [ {
+              "type" : "paragraph",
+              "id" : 5,
+              "page number" : 4,
+              "bounding box" : [ 357.84, 398.857, 365.844, 412.263 ],
+              "font" : "Arial-BoldMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "S"
+            } ]
+          } ]
+        }, {
+          "type" : "table row",
+          "row number" : 3,
+          "cells" : [ {
+            "type" : "table cell",
+            "page number" : 4,
+            "bounding box" : [ 165.72, 382.86, 187.68, 398.1 ],
+            "row number" : 3,
+            "column number" : 1,
+            "row span" : 1,
+            "column span" : 1,
+            "kids" : [ {
+              "type" : "paragraph",
+              "id" : 6,
+              "page number" : 4,
+              "bounding box" : [ 170.4, 383.617, 178.404, 397.023 ],
+              "font" : "ArialMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "B"
+            } ]
+          }, {
+            "type" : "table cell",
+            "page number" : 4,
+            "bounding box" : [ 187.68, 382.86, 302.76, 398.1 ],
+            "row number" : 3,
+            "column number" : 2,
+            "row span" : 1,
+            "column span" : 1,
+            "kids" : [ {
+              "type" : "paragraph",
+              "id" : 7,
+              "page number" : 4,
+              "bounding box" : [ 241.08, 383.617, 249.084, 397.023 ],
+              "font" : "Arial-BoldMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "S"
+            } ]
+          }, {
+            "type" : "table cell",
+            "page number" : 4,
+            "bounding box" : [ 302.76, 382.86, 420.36, 398.1 ],
+            "row number" : 3,
+            "column number" : 3,
+            "row span" : 1,
+            "column span" : 1,
+            "kids" : [ {
+              "type" : "paragraph",
+              "id" : 8,
+              "page number" : 4,
+              "bounding box" : [ 357.24, 383.617, 366.576, 397.023 ],
+              "font" : "Arial-BoldMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "Q"
+            } ]
+          } ]
+        }, {
+          "type" : "table row",
+          "row number" : 4,
+          "cells" : [ {
+            "type" : "table cell",
+            "page number" : 4,
+            "bounding box" : [ 165.72, 367.5, 187.68, 382.86 ],
+            "row number" : 4,
+            "column number" : 1,
+            "row span" : 1,
+            "column span" : 1,
+            "kids" : [ {
+              "type" : "paragraph",
+              "id" : 9,
+              "page number" : 4,
+              "bounding box" : [ 170.4, 368.257, 179.064, 381.663 ],
+              "font" : "ArialMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "C"
+            } ]
+          }, {
+            "type" : "table cell",
+            "page number" : 4,
+            "bounding box" : [ 187.68, 367.5, 302.76, 382.86 ],
+            "row number" : 4,
+            "column number" : 2,
+            "row span" : 1,
+            "column span" : 1,
+            "kids" : [ {
+              "type" : "paragraph",
+              "id" : 10,
+              "page number" : 4,
+              "bounding box" : [ 241.08, 368.257, 249.084, 381.663 ],
+              "font" : "Arial-BoldMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "P"
+            } ]
+          }, {
+            "type" : "table cell",
+            "page number" : 4,
+            "bounding box" : [ 302.76, 367.5, 420.36, 382.86 ],
+            "row number" : 4,
+            "column number" : 3,
+            "row span" : 1,
+            "column span" : 1,
+            "kids" : [ {
+              "type" : "paragraph",
+              "id" : 11,
+              "page number" : 4,
+              "bounding box" : [ 357.24, 368.257, 366.576, 381.663 ],
+              "font" : "Arial-BoldMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "Q"
+            } ]
+          } ]
+        }, {
+          "type" : "table row",
+          "row number" : 5,
+          "cells" : [ {
+            "type" : "table cell",
+            "page number" : 4,
+            "bounding box" : [ 165.72, 353.04, 187.68, 367.5 ],
+            "row number" : 5,
+            "column number" : 1,
+            "row span" : 1,
+            "column span" : 1,
+            "kids" : [ {
+              "type" : "paragraph",
+              "id" : 12,
+              "page number" : 4,
+              "bounding box" : [ 170.4, 353.017, 179.064, 366.423 ],
+              "font" : "ArialMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "D"
+            } ]
+          }, {
+            "type" : "table cell",
+            "page number" : 4,
+            "bounding box" : [ 187.68, 353.04, 302.76, 367.5 ],
+            "row number" : 5,
+            "column number" : 2,
+            "row span" : 1,
+            "column span" : 1,
+            "kids" : [ {
+              "type" : "paragraph",
+              "id" : 13,
+              "page number" : 4,
+              "bounding box" : [ 240.84, 353.017, 249.504, 366.423 ],
+              "font" : "Arial-BoldMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "R"
+            } ]
+          }, {
+            "type" : "table cell",
+            "page number" : 4,
+            "bounding box" : [ 302.76, 353.04, 420.36, 367.5 ],
+            "row number" : 5,
+            "column number" : 3,
+            "row span" : 1,
+            "column span" : 1,
+            "kids" : [ {
+              "type" : "paragraph",
+              "id" : 14,
+              "page number" : 4,
+              "bounding box" : [ 357.84, 353.017, 365.844, 366.423 ],
+              "font" : "Arial-BoldMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "P"
+            } ]
+          } ]
+        } ]
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 107.16, 326.257, 444.792, 339.663 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.1.6 In which part does the zygote develop into a morula?",
+      "kids" : [ {
+        "type" : "paragraph",
+        "id" : 116,
+        "page number" : 4,
+        "bounding box" : [ 163.92, 259.537, 172.584, 314.343 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "A B C D"
+      }, {
+        "type" : "paragraph",
+        "id" : 117,
+        "page number" : 4,
+        "bounding box" : [ 185.16, 300.937, 193.164, 314.343 ],
+        "font" : "Arial-BoldMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "S"
+      }, {
+        "type" : "list",
+        "id" : 118,
+        "level" : "7",
+        "page number" : 4,
+        "bounding box" : [ 185.16, 259.537, 194.496, 300.543 ],
+        "numbering style" : "english letters",
+        "number of list items" : 2,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 4,
+          "bounding box" : [ 185.16, 287.137, 194.496, 300.543 ],
+          "font" : "Arial-BoldMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "Q",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 4,
+          "bounding box" : [ 185.16, 259.537, 193.824, 286.743 ],
+          "font" : "Arial-BoldMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "R P",
+          "kids" : [ ]
+        } ]
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 107.16, 234.217, 420.096, 247.623 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.1.7 The following is a list of male reproductive parts:",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 145,
+    "page number" : 4,
+    "bounding box" : [ 163.92, 167.497, 277.272, 222.303 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "(i) Prostate gland (ii) Seminal vesicle (iii) Urethra (iv) Cowper's gland"
+  }, {
+    "type" : "paragraph",
+    "id" : 146,
+    "page number" : 4,
+    "bounding box" : [ 163.92, 128.377, 521.713, 155.583 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "Which ONE of the following combinations is responsible for the formation of semen?"
+  }, {
+    "type" : "list",
+    "id" : 147,
+    "level" : "7",
+    "page number" : 4,
+    "bounding box" : [ 162.72, 61.777, 171.384, 116.583 ],
+    "numbering style" : "english letters",
+    "number of list items" : 4,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 162.72, 103.177, 170.724, 116.583 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "A",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 162.72, 89.377, 170.724, 102.783 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "B",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 162.72, 75.577, 171.384, 88.983 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "C",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 162.72, 61.777, 171.384, 75.183 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "D",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 148,
+    "page number" : 4,
+    "bounding box" : [ 185.64, 103.177, 261.72, 116.583 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "(i) and (ii) only"
+  }, {
+    "type" : "list",
+    "id" : 149,
+    "level" : "8",
+    "page number" : 4,
+    "bounding box" : [ 185.64, 61.777, 285.0, 102.783 ],
+    "numbering style" : "roman numbers",
+    "number of list items" : 2,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 185.64, 89.377, 285.0, 102.783 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "(i), (ii) and (iv) only",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 185.64, 61.777, 267.0, 88.983 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "(ii) and (iii) only (i) and (iv) only",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "footer",
+    "id" : 151,
+    "page number" : 4,
+    "bounding box" : [ 53.88, 36.047, 528.549, 47.174 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 32,
+      "page number" : 4,
+      "bounding box" : [ 53.88, 36.047, 528.549, 47.174 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 152,
+    "page number" : 5,
+    "bounding box" : [ 53.88, 782.448, 528.605, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 50,
+      "page number" : 5,
+      "bounding box" : [ 53.88, 794.569, 528.605, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Life Sciences/P1 5 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 51,
+      "page number" : 5,
+      "bounding box" : [ 256.925, 782.448, 336.083, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 153,
+    "level" : "5",
+    "page number" : 5,
+    "bounding box" : [ 107.16, 472.897, 439.176, 754.383 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 2,
+    "previous list id" : 144,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 107.16, 740.977, 416.136, 754.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.1.8 The diagram below represents a human sperm.",
+      "kids" : [ {
+        "type" : "paragraph",
+        "id" : 119,
+        "page number" : 5,
+        "bounding box" : [ 163.92, 575.377, 516.216, 602.583 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "This sperm is NOT structurally suitable for fertilisation because of the …"
+      }, {
+        "type" : "list",
+        "id" : 120,
+        "level" : "7",
+        "page number" : 5,
+        "bounding box" : [ 163.92, 506.377, 172.584, 561.183 ],
+        "numbering style" : "english letters",
+        "number of list items" : 4,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 5,
+          "bounding box" : [ 163.92, 547.777, 171.924, 561.183 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "A",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 5,
+          "bounding box" : [ 163.92, 533.977, 171.924, 547.383 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "B",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 5,
+          "bounding box" : [ 163.92, 520.177, 172.584, 533.583 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "C",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 5,
+          "bounding box" : [ 163.92, 506.377, 172.584, 519.783 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "D",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 121,
+        "page number" : 5,
+        "bounding box" : [ 185.16, 506.377, 472.776, 561.183 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "absence of a nucleus to provide genetic material. absence of an acrosome to improve motility. presence of a long tail for the movement of the sperm. absence of mitochondria to provide energy."
+      }, {
+        "type" : "list",
+        "id" : 122,
+        "level" : "7",
+        "page number" : 5,
+        "bounding box" : [ 163.92, 293.497, 172.584, 348.303 ],
+        "numbering style" : "english letters",
+        "number of list items" : 4,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 5,
+          "bounding box" : [ 163.92, 334.897, 171.924, 348.303 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "A",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 5,
+          "bounding box" : [ 163.92, 321.097, 171.924, 334.503 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "B",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 5,
+          "bounding box" : [ 163.92, 307.297, 172.584, 320.703 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "C",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 5,
+          "bounding box" : [ 163.92, 293.497, 172.584, 306.903 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "D",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "list",
+        "id" : 123,
+        "level" : "8",
+        "page number" : 5,
+        "bounding box" : [ 185.16, 293.497, 283.8, 348.303 ],
+        "numbering style" : "roman numbers",
+        "number of list items" : 2,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 5,
+          "bounding box" : [ 185.16, 334.897, 283.8, 348.303 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(i), (ii) and (iii) only",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 5,
+          "bounding box" : [ 185.16, 293.497, 281.796, 334.503 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(ii) and (iii) only (i) and (iv) only (i), (ii), (iii) and (iv)",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 124,
+        "page number" : 5,
+        "bounding box" : [ 107.16, 152.137, 521.712, 275.943 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "1.1.10 Which ONE of the following is CORRECT for a person who exercises on a hot day without taking in any liquids? A B C D"
+      }, {
+        "type" : "paragraph",
+        "id" : 125,
+        "page number" : 5,
+        "bounding box" : [ 185.16, 138.337, 565.596, 234.543 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Increased ADH secretion and increased permeability of renal tubules Increased ADH secretion and the production of dilute urine Decreased ADH secretion and increased permeability of renal tubules Decreased ADH secretion and the production of concentrated urine (10 x 2) (20)"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 108.84, 472.897, 439.176, 486.303 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.1.9 The following is a list of growth responses in plants:",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "text block",
+    "id" : 156,
+    "page number" : 5,
+    "bounding box" : [ 192.75, 621.822, 449.25, 724.572 ],
+    "kids" : [ {
+      "type" : "image",
+      "id" : 1,
+      "page number" : 5,
+      "bounding box" : [ 194.25, 625.572, 446.25, 714.822 ],
+      "source" : "2025_life_sciences_p1_images/imageFile14.png"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 154,
+    "level" : "9",
+    "page number" : 5,
+    "bounding box" : [ 165.6, 403.897, 394.56, 458.703 ],
+    "numbering style" : "roman numbers",
+    "number of list items" : 4,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 165.6, 445.297, 349.56, 458.703 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "(i) Plants grow straight upwards",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 165.6, 431.497, 292.872, 444.903 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "(ii) No upward growth",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 165.6, 417.697, 394.56, 431.103 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "(iii) Increased number of lateral branches",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 165.6, 403.897, 382.416, 417.303 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "(iv) Stems bend towards unilateral light",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 155,
+    "page number" : 5,
+    "bounding box" : [ 165.6, 362.497, 521.952, 389.703 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "Which ONE of the following combinations describes the growth responses that occur when apical buds of plants are removed?"
+  }, {
+    "type" : "footer",
+    "id" : 157,
+    "page number" : 5,
+    "bounding box" : [ 53.88, 36.047, 528.549, 47.174 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 33,
+      "page number" : 5,
+      "bounding box" : [ 53.88, 36.047, 528.549, 47.174 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 158,
+    "page number" : 6,
+    "bounding box" : [ 53.88, 782.448, 528.605, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 52,
+      "page number" : 6,
+      "bounding box" : [ 53.88, 794.569, 528.605, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Life Sciences/P1 6 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 53,
+      "page number" : 6,
+      "bounding box" : [ 256.925, 782.448, 336.083, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 159,
+    "level" : "4",
+    "page number" : 6,
+    "bounding box" : [ 59.28, 395.977, 521.857, 754.383 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 2,
+    "previous list id" : 137,
+    "next list id" : 164,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 6,
+      "bounding box" : [ 59.28, 713.377, 521.857, 754.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.2 Give the correct biological term for each of the following descriptions. Write only the term next to the question numbers (1.2.1 to 1.2.8) in the ANSWER BOOK.",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 126,
+        "level" : "7",
+        "page number" : 6,
+        "bounding box" : [ 107.16, 478.777, 133.872, 699.183 ],
+        "numbering style" : "arabic numbers",
+        "number of list items" : 8,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 6,
+          "bounding box" : [ 107.16, 685.777, 133.872, 699.183 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.2.1",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 6,
+          "bounding box" : [ 107.16, 658.177, 133.872, 671.583 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.2.2",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 6,
+          "bounding box" : [ 107.16, 630.577, 133.872, 643.983 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.2.3",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 6,
+          "bounding box" : [ 107.16, 602.977, 133.872, 616.383 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.2.4",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 6,
+          "bounding box" : [ 107.16, 575.377, 133.872, 588.783 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.2.5",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 6,
+          "bounding box" : [ 107.16, 547.777, 133.872, 561.183 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.2.6",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 6,
+          "bounding box" : [ 107.16, 506.377, 133.872, 519.783 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.2.7",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 6,
+          "bounding box" : [ 107.16, 478.777, 133.872, 492.183 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.2.8",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 127,
+        "page number" : 6,
+        "bounding box" : [ 163.92, 464.977, 558.876, 699.183 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "The ovarian hormone that is secreted by the corpus luteum The eye defect that is characterised by a cloudy lens The production of ova by meiosis The part of the retina that contains no rods and cones The release of an ovum from the ovary The extra-embryonic membrane that plays a role in the formation of the placenta A plant hormone responsible for seed dormancy The maintenance of a constant internal environment within narrow limits (8 x 1) (8)"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 6,
+      "bounding box" : [ 59.28, 395.977, 521.833, 450.783 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.3 Indicate whether each of the descriptions in COLUMN I apply to A ONLY, B ONLY, BOTH A AND B or NONE of the items in COLUMN II. Write A only, B only, both A and B or none next to the question numbers (1.3.1 to 1.3.3) in the ANSWER BOOK.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "table",
+    "id" : 160,
+    "level" : "8",
+    "page number" : 6,
+    "bounding box" : [ 101.16, 264.0, 527.88, 382.2 ],
+    "number of rows" : 4,
+    "number of columns" : 3,
+    "rows" : [ {
+      "type" : "table row",
+      "row number" : 1,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 6,
+        "bounding box" : [ 103.32, 365.7, 159.36, 380.7 ],
+        "row number" : 1,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ ]
+      }, {
+        "type" : "table cell",
+        "page number" : 6,
+        "bounding box" : [ 159.36, 365.7, 387.0, 380.7 ],
+        "row number" : 1,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 1,
+          "page number" : 6,
+          "bounding box" : [ 243.12, 366.937, 302.376, 380.343 ],
+          "font" : "Arial-BoldMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "COLUMN I"
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 6,
+        "bounding box" : [ 387.0, 365.7, 526.44, 380.7 ],
+        "row number" : 1,
+        "column number" : 3,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 2,
+          "page number" : 6,
+          "bounding box" : [ 425.76, 366.937, 488.376, 380.343 ],
+          "font" : "Arial-BoldMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "COLUMN II"
+        } ]
+      } ]
+    }, {
+      "type" : "table row",
+      "row number" : 2,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 6,
+        "bounding box" : [ 103.32, 322.86, 159.36, 365.7 ],
+        "row number" : 2,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 3,
+          "page number" : 6,
+          "bounding box" : [ 107.28, 351.217, 133.992, 364.623 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.3.1"
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 6,
+        "bounding box" : [ 159.36, 322.86, 387.0, 365.7 ],
+        "row number" : 2,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 4,
+          "page number" : 6,
+          "bounding box" : [ 163.92, 323.617, 342.625, 364.623 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "The hormone responsible for the development of secondary sexual characteristics during puberty"
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 6,
+        "bounding box" : [ 387.0, 322.86, 526.44, 365.7 ],
+        "row number" : 2,
+        "column number" : 3,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "list",
+          "id" : 5,
+          "level" : "1",
+          "page number" : 6,
+          "bounding box" : [ 392.4, 337.417, 480.552, 364.623 ],
+          "numbering style" : "english letters",
+          "number of list items" : 2,
+          "list items" : [ {
+            "type" : "list item",
+            "page number" : 6,
+            "bounding box" : [ 392.4, 351.217, 466.512, 364.623 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "A: Oestrogen",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 6,
+            "bounding box" : [ 392.4, 337.417, 480.552, 350.823 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "B: Testosterone",
+            "kids" : [ ]
+          } ]
+        } ]
+      } ]
+    }, {
+      "type" : "table row",
+      "row number" : 3,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 6,
+        "bounding box" : [ 103.32, 293.7, 159.36, 322.86 ],
+        "row number" : 3,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 6,
+          "page number" : 6,
+          "bounding box" : [ 107.28, 308.257, 133.992, 321.663 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.3.2"
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 6,
+        "bounding box" : [ 159.36, 293.7, 387.0, 322.86 ],
+        "row number" : 3,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 7,
+          "page number" : 6,
+          "bounding box" : [ 163.92, 308.257, 372.036, 321.663 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "Plays a role in the pupillary mechanism"
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 6,
+        "bounding box" : [ 387.0, 293.7, 526.44, 322.86 ],
+        "row number" : 3,
+        "column number" : 3,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "list",
+          "id" : 8,
+          "level" : "1",
+          "page number" : 6,
+          "bounding box" : [ 392.4, 294.457, 491.88, 321.663 ],
+          "numbering style" : "english letters",
+          "number of list items" : 2,
+          "list items" : [ {
+            "type" : "list item",
+            "page number" : 6,
+            "bounding box" : [ 392.4, 308.257, 491.16, 321.663 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "A: Ciliary muscles",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 6,
+            "bounding box" : [ 392.4, 294.457, 491.88, 307.863 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "B: Radial muscles",
+            "kids" : [ ]
+          } ]
+        } ]
+      } ]
+    }, {
+      "type" : "table row",
+      "row number" : 4,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 6,
+        "bounding box" : [ 103.32, 265.44, 159.36, 293.7 ],
+        "row number" : 4,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 9,
+          "page number" : 6,
+          "bounding box" : [ 107.28, 279.217, 133.992, 292.623 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.3.3"
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 6,
+        "bounding box" : [ 159.36, 265.44, 387.0, 293.7 ],
+        "row number" : 4,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 10,
+          "page number" : 6,
+          "bounding box" : [ 163.92, 279.217, 312.036, 292.623 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "A plant defence mechanism"
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 6,
+        "bounding box" : [ 387.0, 265.44, 526.44, 293.7 ],
+        "row number" : 4,
+        "column number" : 3,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "list",
+          "id" : 11,
+          "level" : "1",
+          "page number" : 6,
+          "bounding box" : [ 392.4, 265.417, 466.56, 292.623 ],
+          "numbering style" : "english letters",
+          "number of list items" : 2,
+          "list items" : [ {
+            "type" : "list item",
+            "page number" : 6,
+            "bounding box" : [ 392.4, 279.217, 447.84, 292.623 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "A: Thorns",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 6,
+            "bounding box" : [ 392.4, 265.417, 466.56, 278.823 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "B: Chemicals",
+            "kids" : [ ]
+          } ]
+        } ]
+      } ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 161,
+    "page number" : 6,
+    "bounding box" : [ 487.92, 250.057, 558.996, 263.463 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "(3 x 2) (6)"
+  }, {
+    "type" : "footer",
+    "id" : 162,
+    "page number" : 6,
+    "bounding box" : [ 53.88, 36.047, 528.549, 47.174 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 34,
+      "page number" : 6,
+      "bounding box" : [ 53.88, 36.047, 528.549, 47.174 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 163,
+    "page number" : 7,
+    "bounding box" : [ 53.88, 782.448, 528.605, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 54,
+      "page number" : 7,
+      "bounding box" : [ 53.88, 794.569, 528.605, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Life Sciences/P1 7 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 55,
+      "page number" : 7,
+      "bounding box" : [ 256.925, 782.448, 336.083, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 164,
+    "level" : "4",
+    "page number" : 7,
+    "bounding box" : [ 59.28, 740.977, 522.216, 754.383 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 1,
+    "previous list id" : 159,
+    "next list id" : 173,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 7,
+      "bounding box" : [ 59.28, 740.977, 522.216, 754.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.4 The diagrams below represent different plant responses caused by hormones.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "text block",
+    "id" : 170,
+    "page number" : 7,
+    "bounding box" : [ 160.75, 395.97, 485.7, 729.192 ],
+    "kids" : [ {
+      "type" : "image",
+      "id" : 1,
+      "page number" : 7,
+      "bounding box" : [ 346.958, 576.775, 464.745, 718.269 ],
+      "source" : "2025_life_sciences_p1_images/imageFile15.png"
+    }, {
+      "type" : "image",
+      "id" : 3,
+      "page number" : 7,
+      "bounding box" : [ 393.6, 678.0, 413.04, 690.0 ],
+      "source" : "2025_life_sciences_p1_images/imageFile16.png"
+    }, {
+      "type" : "paragraph",
+      "id" : 4,
+      "page number" : 7,
+      "bounding box" : [ 400.8, 676.177, 408.804, 689.583 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "X"
+    }, {
+      "type" : "image",
+      "id" : 6,
+      "page number" : 7,
+      "bounding box" : [ 420.84, 624.48, 440.28, 640.08 ],
+      "source" : "2025_life_sciences_p1_images/imageFile17.png"
+    }, {
+      "type" : "paragraph",
+      "id" : 7,
+      "page number" : 7,
+      "bounding box" : [ 428.04, 626.377, 436.044, 639.783 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "Y"
+    }, {
+      "type" : "image",
+      "id" : 9,
+      "page number" : 7,
+      "bounding box" : [ 171.673, 592.594, 324.519, 733.92 ],
+      "source" : "2025_life_sciences_p1_images/imageFile18.png"
+    }, {
+      "type" : "image",
+      "id" : 11,
+      "page number" : 7,
+      "bounding box" : [ 196.92, 587.28, 282.48, 600.24 ],
+      "source" : "2025_life_sciences_p1_images/imageFile19.png"
+    }, {
+      "type" : "paragraph",
+      "id" : 12,
+      "page number" : 7,
+      "bounding box" : [ 204.12, 586.417, 273.624, 599.823 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "DIAGRAM A"
+    }, {
+      "type" : "image",
+      "id" : 14,
+      "page number" : 7,
+      "bounding box" : [ 368.4, 552.84, 453.84, 565.68 ],
+      "source" : "2025_life_sciences_p1_images/imageFile20.png"
+    }, {
+      "type" : "paragraph",
+      "id" : 15,
+      "page number" : 7,
+      "bounding box" : [ 375.6, 551.977, 444.864, 565.383 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "DIAGRAM B"
+    }, {
+      "type" : "image",
+      "id" : 17,
+      "page number" : 7,
+      "bounding box" : [ 290.16, 406.44, 375.6, 419.28 ],
+      "source" : "2025_life_sciences_p1_images/imageFile21.png"
+    }, {
+      "type" : "caption",
+      "id" : 18,
+      "page number" : 7,
+      "bounding box" : [ 297.36, 405.457, 366.624, 418.863 ],
+      "linked content id" : 19,
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "DIAGRAM C"
+    }, {
+      "type" : "image",
+      "id" : 19,
+      "page number" : 7,
+      "bounding box" : [ 208.848, 428.931, 430.373, 525.726 ],
+      "source" : "2025_life_sciences_p1_images/imageFile22.png"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 166,
+    "level" : "7",
+    "page number" : 7,
+    "bounding box" : [ 106.68, 147.697, 521.953, 381.783 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 3,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 7,
+      "bounding box" : [ 106.68, 354.577, 521.952, 381.783 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.4.1 Give the LETTER(S) of the diagram(s) that represent a response due to:",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 101,
+        "level" : "8",
+        "page number" : 7,
+        "bounding box" : [ 163.2, 271.897, 177.876, 340.383 ],
+        "numbering style" : "english letters",
+        "number of list items" : 3,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 7,
+          "bounding box" : [ 163.2, 326.977, 177.876, 340.383 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(a)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 7,
+          "bounding box" : [ 163.2, 299.377, 177.876, 312.783 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(b)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 7,
+          "bounding box" : [ 163.2, 271.897, 177.156, 285.303 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(c)",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 102,
+        "page number" : 7,
+        "bounding box" : [ 188.64, 271.897, 258.072, 340.383 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Abscisic acid Auxins Gibberellins"
+      }, {
+        "type" : "list",
+        "id" : 103,
+        "level" : "9",
+        "page number" : 7,
+        "bounding box" : [ 544.56, 299.377, 559.236, 340.383 ],
+        "numbering style" : "arabic numbers",
+        "number of list items" : 2,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 7,
+          "bounding box" : [ 544.56, 326.977, 559.236, 340.383 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(1)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 7,
+          "bounding box" : [ 544.56, 299.377, 559.236, 312.783 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(2)",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 104,
+        "level" : "10",
+        "page number" : 7,
+        "bounding box" : [ 544.56, 271.897, 559.236, 285.303 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(1)"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 7,
+      "bounding box" : [ 106.68, 189.097, 355.417, 257.703 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.4.2 Identify the growth response shown: By the roots in diagram A In diagram B",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 105,
+        "level" : "8",
+        "page number" : 7,
+        "bounding box" : [ 163.2, 189.097, 177.876, 230.103 ],
+        "numbering style" : "english letters",
+        "number of list items" : 2,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 7,
+          "bounding box" : [ 163.2, 216.697, 177.876, 230.103 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(a)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 7,
+          "bounding box" : [ 163.2, 189.097, 177.876, 202.503 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(b)",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 106,
+        "level" : "10",
+        "page number" : 7,
+        "bounding box" : [ 544.56, 189.097, 559.236, 230.103 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(1) (1)"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 7,
+      "bounding box" : [ 106.68, 147.697, 521.953, 174.903 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.4.3 Using X and Y in diagram B, state which side of the stem has the highest:",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 167,
+    "level" : "8",
+    "page number" : 7,
+    "bounding box" : [ 163.2, 92.497, 177.876, 133.503 ],
+    "numbering style" : "english letters",
+    "number of list items" : 2,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 7,
+      "bounding box" : [ 163.2, 120.097, 177.876, 133.503 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "(a)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 7,
+      "bounding box" : [ 163.2, 92.497, 177.876, 105.903 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "(b)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 168,
+    "page number" : 7,
+    "bounding box" : [ 188.64, 92.497, 314.76, 133.503 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "Concentration of auxins Rate of cell division"
+  }, {
+    "type" : "paragraph",
+    "id" : 169,
+    "level" : "10",
+    "page number" : 7,
+    "bounding box" : [ 544.56, 78.697, 559.236, 133.503 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "(1) (1) (8)"
+  }, {
+    "type" : "footer",
+    "id" : 171,
+    "page number" : 7,
+    "bounding box" : [ 53.88, 36.047, 528.549, 47.174 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 35,
+      "page number" : 7,
+      "bounding box" : [ 53.88, 36.047, 528.549, 47.174 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 172,
+    "page number" : 8,
+    "bounding box" : [ 53.88, 782.448, 528.605, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 56,
+      "page number" : 8,
+      "bounding box" : [ 53.88, 794.569, 528.605, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Life Sciences/P1 8 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 57,
+      "page number" : 8,
+      "bounding box" : [ 256.925, 782.448, 336.083, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 173,
+    "level" : "4",
+    "page number" : 8,
+    "bounding box" : [ 59.28, 740.977, 382.656, 754.383 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 1,
+    "previous list id" : 164,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 8,
+      "bounding box" : [ 59.28, 740.977, 382.656, 754.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.5 The diagram below shows the structure of a neuron.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "text block",
+    "id" : 177,
+    "page number" : 8,
+    "bounding box" : [ 155.4, 548.32, 457.4, 728.255 ],
+    "kids" : [ {
+      "type" : "image",
+      "id" : 1,
+      "page number" : 8,
+      "bounding box" : [ 194.028, 573.344, 451.124, 693.954 ],
+      "source" : "2025_life_sciences_p1_images/imageFile23.png"
+    }, {
+      "type" : "image",
+      "id" : 5,
+      "page number" : 8,
+      "bounding box" : [ 163.44, 607.08, 180.36, 622.44 ],
+      "source" : "2025_life_sciences_p1_images/imageFile24.png"
+    }, {
+      "type" : "paragraph",
+      "id" : 6,
+      "page number" : 8,
+      "bounding box" : [ 170.64, 608.617, 179.304, 622.023 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "A"
+    }, {
+      "type" : "image",
+      "id" : 8,
+      "page number" : 8,
+      "bounding box" : [ 299.4, 708.36, 315.48, 725.28 ],
+      "source" : "2025_life_sciences_p1_images/imageFile25.png"
+    }, {
+      "type" : "paragraph",
+      "id" : 9,
+      "page number" : 8,
+      "bounding box" : [ 306.6, 711.457, 315.264, 724.863 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "C"
+    }, {
+      "type" : "image",
+      "id" : 11,
+      "page number" : 8,
+      "bounding box" : [ 371.16, 668.16, 389.76, 681.84 ],
+      "source" : "2025_life_sciences_p1_images/imageFile26.png"
+    }, {
+      "type" : "paragraph",
+      "id" : 12,
+      "page number" : 8,
+      "bounding box" : [ 378.36, 668.017, 387.024, 681.423 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "D"
+    }, {
+      "type" : "image",
+      "id" : 14,
+      "page number" : 8,
+      "bounding box" : [ 215.04, 688.56, 231.96, 703.68 ],
+      "source" : "2025_life_sciences_p1_images/imageFile27.png"
+    }, {
+      "type" : "paragraph",
+      "id" : 15,
+      "page number" : 8,
+      "bounding box" : [ 222.24, 689.857, 230.904, 703.263 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "B"
+    }, {
+      "type" : "image",
+      "id" : 17,
+      "page number" : 8,
+      "bounding box" : [ 236.52, 559.68, 369.6, 573.6 ],
+      "source" : "2025_life_sciences_p1_images/imageFile28.png"
+    }, {
+      "type" : "paragraph",
+      "id" : 18,
+      "page number" : 8,
+      "bounding box" : [ 243.72, 559.777, 359.112, 573.183 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "Direction of impulse"
+    }, {
+      "type" : "image",
+      "id" : 21,
+      "page number" : 8,
+      "bounding box" : [ 426.96, 696.72, 444.72, 710.4 ],
+      "source" : "2025_life_sciences_p1_images/imageFile29.png"
+    }, {
+      "type" : "paragraph",
+      "id" : 22,
+      "page number" : 8,
+      "bounding box" : [ 434.16, 696.577, 442.164, 709.983 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "E"
+    }, {
+      "type" : "image",
+      "id" : 25,
+      "page number" : 8,
+      "bounding box" : [ 361.08, 590.28, 378.0, 602.28 ],
+      "source" : "2025_life_sciences_p1_images/imageFile30.png"
+    }, {
+      "type" : "paragraph",
+      "id" : 26,
+      "page number" : 8,
+      "bounding box" : [ 368.28, 588.577, 375.612, 601.983 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "F"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 175,
+    "level" : "8",
+    "page number" : 8,
+    "bounding box" : [ 107.16, 256.417, 558.876, 532.023 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 4,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 8,
+      "bounding box" : [ 107.16, 518.617, 558.876, 532.023 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.5.1 Name the type of neuron represented by the diagram. (1)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 8,
+      "bounding box" : [ 107.16, 408.217, 230.016, 504.423 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.5.2 Identify part: B D E",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 94,
+        "level" : "9",
+        "page number" : 8,
+        "bounding box" : [ 163.08, 408.217, 177.756, 476.823 ],
+        "numbering style" : "english letters",
+        "number of list items" : 3,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 8,
+          "bounding box" : [ 163.08, 463.417, 177.756, 476.823 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(a)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 8,
+          "bounding box" : [ 163.08, 435.817, 177.756, 449.223 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(b)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 8,
+          "bounding box" : [ 163.08, 408.217, 177.036, 421.623 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(c)",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 95,
+        "level" : "10",
+        "page number" : 8,
+        "bounding box" : [ 544.44, 408.217, 559.116, 476.823 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(1) (1) (1)"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 8,
+      "bounding box" : [ 107.16, 297.817, 418.633, 394.023 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.5.3 Give the LETTER of the part that: Contains the genetic material of the neuron Insulates the neuron Makes synaptic contact with an interneuron",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 98,
+        "level" : "9",
+        "page number" : 8,
+        "bounding box" : [ 162.96, 297.817, 177.636, 366.423 ],
+        "numbering style" : "english letters",
+        "number of list items" : 3,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 8,
+          "bounding box" : [ 162.96, 353.017, 177.636, 366.423 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(a)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 8,
+          "bounding box" : [ 162.96, 325.417, 177.636, 338.823 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(b)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 8,
+          "bounding box" : [ 162.96, 297.817, 176.916, 311.223 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(c)",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 99,
+        "level" : "10",
+        "page number" : 8,
+        "bounding box" : [ 544.44, 297.817, 559.116, 366.423 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(1) (1) (1)"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 8,
+      "bounding box" : [ 107.16, 256.417, 558.876, 283.623 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.5.4 Name the disorder that is associated with the degeneration of part F. (1)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 176,
+    "level" : "Subtitle",
+    "page number" : 8,
+    "bounding box" : [ 408.96, 215.017, 558.876, 256.023 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "(8) TOTAL SECTION A: 50"
+  }, {
+    "type" : "footer",
+    "id" : 178,
+    "page number" : 8,
+    "bounding box" : [ 53.88, 36.047, 528.549, 47.174 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 36,
+      "page number" : 8,
+      "bounding box" : [ 53.88, 36.047, 528.549, 47.174 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 179,
+    "page number" : 9,
+    "bounding box" : [ 53.88, 782.448, 528.605, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 58,
+      "page number" : 9,
+      "bounding box" : [ 53.88, 794.569, 528.605, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Life Sciences/P1 9 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 59,
+      "page number" : 9,
+      "bounding box" : [ 256.925, 782.448, 336.083, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 180,
+    "level" : "2",
+    "page number" : 9,
+    "bounding box" : [ 59.28, 740.977, 124.704, 754.383 ],
+    "numbering style" : "english letters",
+    "number of list items" : 1,
+    "previous list id" : 135,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 9,
+      "bounding box" : [ 59.28, 740.977, 124.704, 754.383 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "SECTION B",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 181,
+    "level" : "3",
+    "page number" : 9,
+    "bounding box" : [ 59.28, 713.377, 132.072, 726.783 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 1,
+    "previous list id" : 136,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 9,
+      "bounding box" : [ 59.28, 713.377, 132.072, 726.783 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "QUESTION 2",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 182,
+    "level" : "5",
+    "page number" : 9,
+    "bounding box" : [ 59.28, 365.017, 519.097, 699.183 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 2,
+    "next list id" : 189,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 9,
+      "bounding box" : [ 59.28, 658.177, 519.097, 699.183 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.1 In bird eggs, the yolk is the main source of energy for the developing embryo. The table below provides information about the eggs of some bird types.",
+      "kids" : [ {
+        "type" : "table",
+        "id" : 89,
+        "level" : "6",
+        "page number" : 9,
+        "bounding box" : [ 180.6, 522.12, 451.56, 644.4 ],
+        "number of rows" : 7,
+        "number of columns" : 2,
+        "rows" : [ {
+          "type" : "table row",
+          "row number" : 1,
+          "cells" : [ {
+            "type" : "table cell",
+            "page number" : 9,
+            "bounding box" : [ 182.04, 614.58, 302.04, 642.9 ],
+            "row number" : 1,
+            "column number" : 1,
+            "row span" : 1,
+            "column span" : 1,
+            "kids" : [ {
+              "type" : "paragraph",
+              "id" : 2,
+              "page number" : 9,
+              "bounding box" : [ 199.56, 622.177, 283.584, 635.583 ],
+              "font" : "Arial-BoldMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "TYPE OF BIRD"
+            } ]
+          }, {
+            "type" : "table cell",
+            "page number" : 9,
+            "bounding box" : [ 302.04, 614.58, 450.12, 642.9 ],
+            "row number" : 1,
+            "column number" : 2,
+            "row span" : 1,
+            "column span" : 1,
+            "kids" : [ {
+              "type" : "paragraph",
+              "id" : 4,
+              "page number" : 9,
+              "bounding box" : [ 311.4, 615.337, 441.384, 642.543 ],
+              "font" : "Arial-BoldMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "AVERAGE % OF YOLK IN THE EGG"
+            } ]
+          } ]
+        }, {
+          "type" : "table row",
+          "row number" : 2,
+          "cells" : [ {
+            "type" : "table cell",
+            "page number" : 9,
+            "bounding box" : [ 182.04, 599.22, 302.04, 614.58 ],
+            "row number" : 2,
+            "column number" : 1,
+            "row span" : 1,
+            "column span" : 1,
+            "kids" : [ {
+              "type" : "paragraph",
+              "id" : 7,
+              "page number" : 9,
+              "bounding box" : [ 223.92, 599.977, 259.392, 613.383 ],
+              "font" : "ArialMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "Goose"
+            } ]
+          }, {
+            "type" : "table cell",
+            "page number" : 9,
+            "bounding box" : [ 302.04, 599.22, 450.12, 614.58 ],
+            "row number" : 2,
+            "column number" : 2,
+            "row span" : 1,
+            "column span" : 1,
+            "kids" : [ {
+              "type" : "paragraph",
+              "id" : 9,
+              "page number" : 9,
+              "bounding box" : [ 364.68, 599.977, 388.152, 613.383 ],
+              "font" : "ArialMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "35,1"
+            } ]
+          } ]
+        }, {
+          "type" : "table row",
+          "row number" : 3,
+          "cells" : [ {
+            "type" : "table cell",
+            "page number" : 9,
+            "bounding box" : [ 182.04, 583.98, 302.04, 599.22 ],
+            "row number" : 3,
+            "column number" : 1,
+            "row span" : 1,
+            "column span" : 1,
+            "kids" : [ {
+              "type" : "paragraph",
+              "id" : 11,
+              "page number" : 9,
+              "bounding box" : [ 226.2, 584.737, 256.872, 598.143 ],
+              "font" : "ArialMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "Eagle"
+            } ]
+          }, {
+            "type" : "table cell",
+            "page number" : 9,
+            "bounding box" : [ 302.04, 583.98, 450.12, 599.22 ],
+            "row number" : 3,
+            "column number" : 2,
+            "row span" : 1,
+            "column span" : 1,
+            "kids" : [ {
+              "type" : "paragraph",
+              "id" : 13,
+              "page number" : 9,
+              "bounding box" : [ 364.68, 584.737, 388.152, 598.143 ],
+              "font" : "ArialMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "12,0"
+            } ]
+          } ]
+        }, {
+          "type" : "table row",
+          "row number" : 4,
+          "cells" : [ {
+            "type" : "table cell",
+            "page number" : 9,
+            "bounding box" : [ 182.04, 568.62, 302.04, 583.98 ],
+            "row number" : 4,
+            "column number" : 1,
+            "row span" : 1,
+            "column span" : 1,
+            "kids" : [ {
+              "type" : "paragraph",
+              "id" : 15,
+              "page number" : 9,
+              "bounding box" : [ 227.88, 569.377, 255.24, 582.783 ],
+              "font" : "ArialMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "Duck"
+            } ]
+          }, {
+            "type" : "table cell",
+            "page number" : 9,
+            "bounding box" : [ 302.04, 568.62, 450.12, 583.98 ],
+            "row number" : 4,
+            "column number" : 2,
+            "row span" : 1,
+            "column span" : 1,
+            "kids" : [ {
+              "type" : "paragraph",
+              "id" : 17,
+              "page number" : 9,
+              "bounding box" : [ 364.68, 569.377, 388.152, 582.783 ],
+              "font" : "ArialMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "35,4"
+            } ]
+          } ]
+        }, {
+          "type" : "table row",
+          "row number" : 5,
+          "cells" : [ {
+            "type" : "table cell",
+            "page number" : 9,
+            "bounding box" : [ 182.04, 553.38, 302.04, 568.62 ],
+            "row number" : 5,
+            "column number" : 1,
+            "row span" : 1,
+            "column span" : 1,
+            "kids" : [ {
+              "type" : "paragraph",
+              "id" : 19,
+              "page number" : 9,
+              "bounding box" : [ 222.6, 554.137, 260.712, 567.543 ],
+              "font" : "ArialMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "Vulture"
+            } ]
+          }, {
+            "type" : "table cell",
+            "page number" : 9,
+            "bounding box" : [ 302.04, 553.38, 450.12, 568.62 ],
+            "row number" : 5,
+            "column number" : 2,
+            "row span" : 1,
+            "column span" : 1,
+            "kids" : [ {
+              "type" : "paragraph",
+              "id" : 21,
+              "page number" : 9,
+              "bounding box" : [ 364.68, 554.137, 388.152, 567.543 ],
+              "font" : "ArialMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "14,0"
+            } ]
+          } ]
+        }, {
+          "type" : "table row",
+          "row number" : 6,
+          "cells" : [ {
+            "type" : "table cell",
+            "page number" : 9,
+            "bounding box" : [ 182.04, 538.02, 302.04, 553.38 ],
+            "row number" : 6,
+            "column number" : 1,
+            "row span" : 1,
+            "column span" : 1,
+            "kids" : [ {
+              "type" : "paragraph",
+              "id" : 23,
+              "page number" : 9,
+              "bounding box" : [ 219.96, 538.777, 263.352, 552.183 ],
+              "font" : "ArialMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "Chicken"
+            } ]
+          }, {
+            "type" : "table cell",
+            "page number" : 9,
+            "bounding box" : [ 302.04, 538.02, 450.12, 553.38 ],
+            "row number" : 6,
+            "column number" : 2,
+            "row span" : 1,
+            "column span" : 1,
+            "kids" : [ {
+              "type" : "paragraph",
+              "id" : 25,
+              "page number" : 9,
+              "bounding box" : [ 364.68, 538.777, 388.152, 552.183 ],
+              "font" : "ArialMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "31,9"
+            } ]
+          } ]
+        }, {
+          "type" : "table row",
+          "row number" : 7,
+          "cells" : [ {
+            "type" : "table cell",
+            "page number" : 9,
+            "bounding box" : [ 182.04, 523.56, 302.04, 538.02 ],
+            "row number" : 7,
+            "column number" : 1,
+            "row span" : 1,
+            "column span" : 1,
+            "kids" : [ {
+              "type" : "paragraph",
+              "id" : 27,
+              "page number" : 9,
+              "bounding box" : [ 222.96, 523.537, 260.352, 536.943 ],
+              "font" : "ArialMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "Pigeon"
+            } ]
+          }, {
+            "type" : "table cell",
+            "page number" : 9,
+            "bounding box" : [ 302.04, 523.56, 450.12, 538.02 ],
+            "row number" : 7,
+            "column number" : 2,
+            "row span" : 1,
+            "column span" : 1,
+            "kids" : [ {
+              "type" : "paragraph",
+              "id" : 29,
+              "page number" : 9,
+              "bounding box" : [ 364.68, 523.537, 388.152, 536.943 ],
+              "font" : "ArialMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "17,9"
+            } ]
+          } ]
+        } ]
+      }, {
+        "type" : "list",
+        "id" : 90,
+        "level" : "7",
+        "page number" : 9,
+        "bounding box" : [ 107.16, 409.777, 558.876, 505.983 ],
+        "numbering style" : "arabic numbers",
+        "number of list items" : 3,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 9,
+          "bounding box" : [ 107.16, 478.777, 558.876, 505.983 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "2.1.1 Explain why we may conclude that ducks display precocial development. (3)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 9,
+          "bounding box" : [ 107.16, 437.377, 558.876, 464.583 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "2.1.2 Name the THREE bird types that would have a higher degree of parental care. (3)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 9,
+          "bounding box" : [ 107.16, 409.777, 558.876, 423.183 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "2.1.3 Give a reason for your answer to QUESTION 2.1.2. (2)",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 91,
+        "level" : "8",
+        "page number" : 9,
+        "bounding box" : [ 544.2, 395.977, 558.876, 409.383 ],
+        "font" : "Arial-BoldMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(8)"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 9,
+      "bounding box" : [ 59.28, 365.017, 455.256, 378.783 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.2 The diagram below shows a part of the male reproductive system.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "text block",
+    "id" : 186,
+    "page number" : 9,
+    "bounding box" : [ 217.75, 231.234, 411.051, 352.455 ],
+    "kids" : [ {
+      "type" : "image",
+      "id" : 31,
+      "page number" : 9,
+      "bounding box" : [ 324.48, 333.84, 342.6, 345.84 ],
+      "source" : "2025_life_sciences_p1_images/imageFile31.png"
+    }, {
+      "type" : "paragraph",
+      "id" : 32,
+      "page number" : 9,
+      "bounding box" : [ 331.68, 332.017, 340.344, 345.423 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "A"
+    }, {
+      "type" : "image",
+      "id" : 34,
+      "page number" : 9,
+      "bounding box" : [ 367.56, 297.36, 385.56, 309.24 ],
+      "source" : "2025_life_sciences_p1_images/imageFile32.png"
+    }, {
+      "type" : "paragraph",
+      "id" : 35,
+      "page number" : 9,
+      "bounding box" : [ 374.64, 295.417, 383.304, 308.823 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "B"
+    }, {
+      "type" : "image",
+      "id" : 37,
+      "page number" : 9,
+      "bounding box" : [ 344.64, 244.8, 412.68, 257.64 ],
+      "source" : "2025_life_sciences_p1_images/imageFile33.png"
+    }, {
+      "type" : "paragraph",
+      "id" : 38,
+      "page number" : 9,
+      "bounding box" : [ 351.84, 243.817, 400.548, 257.223 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "Scrotum"
+    }, {
+      "type" : "image",
+      "id" : 40,
+      "page number" : 9,
+      "bounding box" : [ 219.72, 253.2, 237.84, 265.2 ],
+      "source" : "2025_life_sciences_p1_images/imageFile34.png"
+    }, {
+      "type" : "paragraph",
+      "id" : 41,
+      "page number" : 9,
+      "bounding box" : [ 226.92, 251.377, 235.584, 264.783 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "C"
+    }, {
+      "type" : "image",
+      "id" : 42,
+      "page number" : 9,
+      "bounding box" : [ 243.164, 226.955, 348.827, 326.227 ],
+      "source" : "2025_life_sciences_p1_images/imageFile35.png"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 183,
+    "level" : "9",
+    "page number" : 9,
+    "bounding box" : [ 107.16, 93.697, 376.176, 217.503 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 3,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 9,
+      "bounding box" : [ 107.16, 148.897, 376.176, 217.503 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.2.1 Give the LETTER and the NAME of the: (a) (b)",
+      "kids" : [ {
+        "type" : "paragraph",
+        "id" : 85,
+        "page number" : 9,
+        "bounding box" : [ 192.24, 148.897, 395.832, 189.903 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Gland that secretes testosterone Part that stores sperm until maturation"
+      }, {
+        "type" : "paragraph",
+        "id" : 86,
+        "level" : "8",
+        "page number" : 9,
+        "bounding box" : [ 544.2, 148.897, 558.876, 189.903 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2) (2)"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 9,
+      "bounding box" : [ 107.16, 121.297, 133.872, 134.703 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.2.2",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 9,
+      "bounding box" : [ 107.16, 93.697, 133.872, 107.103 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.2.3",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 184,
+    "page number" : 9,
+    "bounding box" : [ 163.92, 93.697, 446.137, 134.703 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "Explain the role of the scrotum in sperm production. Name and describe the process of sperm production."
+  }, {
+    "type" : "paragraph",
+    "id" : 185,
+    "level" : "8",
+    "page number" : 9,
+    "bounding box" : [ 544.2, 79.897, 565.596, 134.703 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "(2) (5) (11)"
+  }, {
+    "type" : "footer",
+    "id" : 187,
+    "page number" : 9,
+    "bounding box" : [ 53.88, 36.047, 528.549, 47.174 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 37,
+      "page number" : 9,
+      "bounding box" : [ 53.88, 36.047, 528.549, 47.174 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 188,
+    "page number" : 10,
+    "bounding box" : [ 53.88, 782.448, 528.605, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 60,
+      "page number" : 10,
+      "bounding box" : [ 53.88, 794.569, 528.605, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Life Sciences/P1 10 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 61,
+      "page number" : 10,
+      "bounding box" : [ 256.925, 782.448, 336.083, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 189,
+    "level" : "5",
+    "page number" : 10,
+    "bounding box" : [ 59.28, 727.177, 521.593, 754.383 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 1,
+    "previous list id" : 182,
+    "next list id" : 197,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 10,
+      "bounding box" : [ 59.28, 727.177, 521.593, 754.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.3 The thickness of the endometrium varies throughout the menstrual cycle of a female.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "caption",
+    "id" : 190,
+    "page number" : 10,
+    "bounding box" : [ 107.16, 685.777, 521.676, 712.983 ],
+    "linked content id" : 191,
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "The table below shows the results recorded for a woman who had her endometrial thickness monitored for a particular menstrual cycle."
+  }, {
+    "type" : "table",
+    "id" : 191,
+    "level" : "7",
+    "page number" : 10,
+    "bounding box" : [ 187.56, 565.08, 458.28, 672.0 ],
+    "number of rows" : 6,
+    "number of columns" : 2,
+    "rows" : [ {
+      "type" : "table row",
+      "row number" : 1,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 10,
+        "bounding box" : [ 189.0, 642.18, 322.92, 670.5 ],
+        "row number" : 1,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 1,
+          "page number" : 10,
+          "bounding box" : [ 195.84, 642.937, 315.084, 670.143 ],
+          "font" : "Arial-BoldMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "DAY OF THE MENSTRUAL CYCLE"
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 10,
+        "bounding box" : [ 322.92, 642.18, 456.84, 670.5 ],
+        "row number" : 1,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 2,
+          "page number" : 10,
+          "bounding box" : [ 328.56, 642.937, 451.956, 670.143 ],
+          "font" : "Arial-BoldMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "THICKNESS OF THE ENDOMETRIUM (mm)"
+        } ]
+      } ]
+    }, {
+      "type" : "table row",
+      "row number" : 2,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 10,
+        "bounding box" : [ 189.0, 626.82, 322.92, 642.18 ],
+        "row number" : 2,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 3,
+          "page number" : 10,
+          "bounding box" : [ 252.24, 627.577, 258.912, 640.983 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "0"
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 10,
+        "bounding box" : [ 322.92, 626.82, 456.84, 642.18 ],
+        "row number" : 2,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 4,
+          "page number" : 10,
+          "bounding box" : [ 383.52, 627.577, 396.912, 640.983 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "14"
+        } ]
+      } ]
+    }, {
+      "type" : "table row",
+      "row number" : 3,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 10,
+        "bounding box" : [ 189.0, 611.58, 322.92, 626.82 ],
+        "row number" : 3,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 5,
+          "page number" : 10,
+          "bounding box" : [ 252.24, 612.337, 258.912, 625.743 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "7"
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 10,
+        "bounding box" : [ 322.92, 611.58, 456.84, 626.82 ],
+        "row number" : 3,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 6,
+          "page number" : 10,
+          "bounding box" : [ 386.88, 612.337, 393.552, 625.743 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "3"
+        } ]
+      } ]
+    }, {
+      "type" : "table row",
+      "row number" : 4,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 10,
+        "bounding box" : [ 189.0, 596.22, 322.92, 611.58 ],
+        "row number" : 4,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 7,
+          "page number" : 10,
+          "bounding box" : [ 248.88, 596.977, 262.272, 610.383 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "14"
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 10,
+        "bounding box" : [ 322.92, 596.22, 456.84, 611.58 ],
+        "row number" : 4,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 8,
+          "page number" : 10,
+          "bounding box" : [ 386.88, 596.977, 393.552, 610.383 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "5"
+        } ]
+      } ]
+    }, {
+      "type" : "table row",
+      "row number" : 5,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 10,
+        "bounding box" : [ 189.0, 580.98, 322.92, 596.22 ],
+        "row number" : 5,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 9,
+          "page number" : 10,
+          "bounding box" : [ 248.88, 581.737, 262.272, 595.143 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "21"
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 10,
+        "bounding box" : [ 322.92, 580.98, 456.84, 596.22 ],
+        "row number" : 5,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 10,
+          "page number" : 10,
+          "bounding box" : [ 383.52, 581.737, 396.912, 595.143 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "13"
+        } ]
+      } ]
+    }, {
+      "type" : "table row",
+      "row number" : 6,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 10,
+        "bounding box" : [ 189.0, 566.52, 322.92, 580.98 ],
+        "row number" : 6,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 11,
+          "page number" : 10,
+          "bounding box" : [ 248.88, 566.377, 262.272, 579.783 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "28"
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 10,
+        "bounding box" : [ 322.92, 566.52, 456.84, 580.98 ],
+        "row number" : 6,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 12,
+          "page number" : 10,
+          "bounding box" : [ 383.52, 566.377, 396.912, 579.783 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "16"
+        } ]
+      } ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 193,
+    "level" : "8",
+    "page number" : 10,
+    "bounding box" : [ 106.56, 371.737, 559.236, 550.743 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 4,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 10,
+      "bounding box" : [ 106.68, 482.137, 520.272, 550.743 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.3.1 Referring to ovarian hormones, explain the: Decrease in thickness of the endometrium from day 0 to day 7 Increase in thickness of the endometrium from day 7 to day 14",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 83,
+        "level" : "9",
+        "page number" : 10,
+        "bounding box" : [ 163.2, 482.137, 177.876, 523.143 ],
+        "numbering style" : "english letters",
+        "number of list items" : 2,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 10,
+          "bounding box" : [ 163.2, 509.737, 177.876, 523.143 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(a)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 10,
+          "bounding box" : [ 163.2, 482.137, 177.876, 495.543 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(b)",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 84,
+        "level" : "10",
+        "page number" : 10,
+        "bounding box" : [ 544.56, 482.137, 559.236, 523.143 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(3) (2)"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 10,
+      "bounding box" : [ 106.56, 440.737, 559.236, 467.943 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.3.2 Describe changes in the endometrium that cause it to become thicker. (2)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 10,
+      "bounding box" : [ 106.56, 399.337, 559.236, 426.543 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.3.3 State the significance of the change in endometrium thickness described in QUESTION 2.3.2. (1)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 10,
+      "bounding box" : [ 106.56, 371.737, 559.236, 385.143 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.3.4 Draw a bar graph to show the results in the table. (6)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 194,
+    "level" : "Subtitle",
+    "page number" : 10,
+    "bounding box" : [ 544.56, 357.937, 565.956, 371.343 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "(14)"
+  }, {
+    "type" : "footer",
+    "id" : 195,
+    "page number" : 10,
+    "bounding box" : [ 53.88, 36.047, 528.549, 47.174 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 38,
+      "page number" : 10,
+      "bounding box" : [ 53.88, 36.047, 528.549, 47.174 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 196,
+    "page number" : 11,
+    "bounding box" : [ 53.88, 782.448, 528.605, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 62,
+      "page number" : 11,
+      "bounding box" : [ 53.88, 794.569, 528.605, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Life Sciences/P1 11 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 63,
+      "page number" : 11,
+      "bounding box" : [ 256.925, 782.448, 336.083, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 197,
+    "level" : "5",
+    "page number" : 11,
+    "bounding box" : [ 59.28, 699.577, 521.712, 754.383 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 1,
+    "previous list id" : 189,
+    "next list id" : 203,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 11,
+      "bounding box" : [ 59.28, 699.577, 521.712, 754.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.4 The diagrams below represent the differences in the diameter of an arteriole (small artery) close to the surface of the skin. These differences are due to changes that occur during thermoregulation under different environmental conditions. Diagram Y shows the arteriole under normal conditions.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "text block",
+    "id" : 200,
+    "page number" : 11,
+    "bounding box" : [ 135.0, 519.925, 500.6, 681.075 ],
+    "kids" : [ {
+      "type" : "image",
+      "id" : 1,
+      "page number" : 11,
+      "bounding box" : [ 136.11, 555.101, 494.6, 672.806 ],
+      "source" : "2025_life_sciences_p1_images/imageFile36.png"
+    }, {
+      "type" : "image",
+      "id" : 2,
+      "page number" : 11,
+      "bounding box" : [ 245.76, 527.28, 383.16, 556.68 ],
+      "source" : "2025_life_sciences_p1_images/imageFile37.png"
+    }, {
+      "type" : "image",
+      "id" : 3,
+      "page number" : 11,
+      "bounding box" : [ 135.96, 514.68, 490.2, 556.44 ],
+      "source" : "2025_life_sciences_p1_images/imageFile38.png"
+    }, {
+      "type" : "paragraph",
+      "id" : 4,
+      "page number" : 11,
+      "bounding box" : [ 193.296, 528.817, 436.572, 556.023 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "X Y Z (Normal conditions)"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 198,
+    "level" : "8",
+    "page number" : 11,
+    "bounding box" : [ 107.16, 409.297, 560.676, 505.503 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 3,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 11,
+      "bounding box" : [ 107.16, 492.097, 558.876, 505.503 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.4.1 Name the part of the brain that controls thermoregulation. (1)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 11,
+      "bounding box" : [ 107.16, 450.697, 558.876, 477.903 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.4.2 Give the LETTER of the diagram which represents the arteriole on a cold day. (1)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 11,
+      "bounding box" : [ 107.16, 409.297, 560.676, 436.503 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.4.3 Explain the significance of the change in the diameter of the arteriole from normal conditions to the condition in diagram Z. (4)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 199,
+    "level" : "9",
+    "page number" : 11,
+    "bounding box" : [ 546.0, 395.497, 560.676, 408.903 ],
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "(6)"
+  }, {
+    "type" : "footer",
+    "id" : 201,
+    "page number" : 11,
+    "bounding box" : [ 53.88, 36.047, 528.549, 47.174 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 39,
+      "page number" : 11,
+      "bounding box" : [ 53.88, 36.047, 528.549, 47.174 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 202,
+    "page number" : 12,
+    "bounding box" : [ 53.88, 782.448, 528.605, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 64,
+      "page number" : 12,
+      "bounding box" : [ 53.88, 794.569, 528.605, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Life Sciences/P1 12 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 65,
+      "page number" : 12,
+      "bounding box" : [ 256.925, 782.448, 336.083, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 203,
+    "level" : "5",
+    "page number" : 12,
+    "bounding box" : [ 59.28, 713.377, 522.864, 754.383 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 1,
+    "previous list id" : 197,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 12,
+      "bounding box" : [ 59.28, 713.377, 522.864, 754.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.5 Idiopathic Short Stature (ISS) describes a condition where children have normal birth height, but grow slowly and do not reach the expected height for their age group. This condition is NOT due to malnutrition or different lifestyles.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 204,
+    "page number" : 12,
+    "bounding box" : [ 107.28, 671.977, 522.937, 699.183 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "Scientists investigated the effect of added growth hormone on the height of children with ISS."
+  }, {
+    "type" : "paragraph",
+    "id" : 205,
+    "page number" : 12,
+    "bounding box" : [ 107.28, 644.377, 269.257, 657.783 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "The procedure was as follows:"
+  }, {
+    "type" : "list",
+    "id" : 206,
+    "level" : "8",
+    "page number" : 12,
+    "bounding box" : [ 108.96, 516.217, 522.984, 630.664 ],
+    "numbering style" : "unordered",
+    "number of list items" : 5,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 12,
+      "bounding box" : [ 108.96, 602.257, 522.96, 630.664 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• Consent was obtained from the parents of a group of two-year-old boys with ISS.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 12,
+      "bounding box" : [ 108.96, 587.523, 338.496, 602.224 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• The boys were divided into two groups.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 12,
+      "bounding box" : [ 108.96, 559.177, 522.961, 587.584 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• The participants in Group A received human growth hormone at a daily dosage of 0,028 mg per kg of body weight.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 12,
+      "bounding box" : [ 108.96, 544.443, 486.576, 559.144 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• The participants in Group B did not receive the hormone treatment.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 12,
+      "bounding box" : [ 108.96, 516.217, 522.984, 544.624 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• The height of the participants was measured and recorded monthly until each participant reached the age of 18 years.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 207,
+    "page number" : 12,
+    "bounding box" : [ 107.28, 474.817, 522.912, 502.023 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "At 18 years of age, the average height in Group A was 8 cm more than that in Group B."
+  }, {
+    "type" : "list",
+    "id" : 208,
+    "level" : "9",
+    "page number" : 12,
+    "bounding box" : [ 107.16, 295.417, 558.876, 460.623 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 5,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 12,
+      "bounding box" : [ 107.16, 447.217, 558.876, 460.623 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.5.1 State the dependent variable of this investigation. (1)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 12,
+      "bounding box" : [ 107.16, 405.817, 558.876, 433.023 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.5.2 List THREE variables that were kept constant and which contributed to the validity of the investigation. (3)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 12,
+      "bounding box" : [ 107.16, 378.217, 558.876, 391.623 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.5.3 Explain the purpose of Group B in this investigation. (2)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 12,
+      "bounding box" : [ 107.16, 323.017, 558.876, 364.023 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.5.4 Calculate the daily amount of added human growth hormone that was given to a boy with a mass of 25 kg. Show ALL your working, INCLUDING the correct unit. (3)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 12,
+      "bounding box" : [ 107.16, 295.417, 558.876, 308.823 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.5.5 Give a conclusion for this investigation. (2)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 209,
+    "level" : "Subtitle",
+    "page number" : 12,
+    "bounding box" : [ 544.2, 267.817, 565.596, 295.023 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "(11) [50]"
+  }, {
+    "type" : "footer",
+    "id" : 210,
+    "page number" : 12,
+    "bounding box" : [ 53.88, 36.047, 528.549, 47.174 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 40,
+      "page number" : 12,
+      "bounding box" : [ 53.88, 36.047, 528.549, 47.174 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 211,
+    "page number" : 13,
+    "bounding box" : [ 53.88, 782.448, 528.605, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 66,
+      "page number" : 13,
+      "bounding box" : [ 53.88, 794.569, 528.605, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Life Sciences/P1 13 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 67,
+      "page number" : 13,
+      "bounding box" : [ 256.925, 782.448, 336.083, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 212,
+    "level" : "Subtitle",
+    "page number" : 13,
+    "bounding box" : [ 59.28, 740.977, 132.072, 754.383 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "QUESTION 3"
+  }, {
+    "type" : "list",
+    "id" : 213,
+    "level" : "10",
+    "page number" : 13,
+    "bounding box" : [ 59.28, 699.577, 522.912, 726.783 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 1,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 13,
+      "bounding box" : [ 59.28, 699.577, 522.912, 726.783 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.1 The diagrams below represent the structure of a normal eye and that of an eye with astigmatism.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "text block",
+    "id" : 216,
+    "page number" : 13,
+    "bounding box" : [ 150.9, 487.724, 473.858, 688.724 ],
+    "kids" : [ {
+      "type" : "image",
+      "id" : 6,
+      "page number" : 13,
+      "bounding box" : [ 154.2, 634.56, 177.12, 651.84 ],
+      "source" : "2025_life_sciences_p1_images/imageFile39.png"
+    }, {
+      "type" : "list",
+      "id" : 7,
+      "level" : "1",
+      "page number" : 13,
+      "bounding box" : [ 161.4, 568.537, 177.264, 651.423 ],
+      "numbering style" : "english letters",
+      "number of list items" : 3,
+      "list items" : [ {
+        "type" : "list item",
+        "page number" : 13,
+        "bounding box" : [ 161.4, 638.017, 170.064, 651.423 ],
+        "font" : "Arial-BoldMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "A",
+        "kids" : [ {
+          "type" : "image",
+          "id" : 1,
+          "page number" : 13,
+          "bounding box" : [ 214.8, 497.28, 306.48, 515.4 ],
+          "source" : "2025_life_sciences_p1_images/imageFile40.png"
+        }, {
+          "type" : "paragraph",
+          "id" : 2,
+          "page number" : 13,
+          "bounding box" : [ 222.0, 500.857, 455.268, 514.983 ],
+          "font" : "Arial-BoldMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "Normal eye Eye with astigmatism"
+        }, {
+          "type" : "image",
+          "id" : 3,
+          "page number" : 13,
+          "bounding box" : [ 325.92, 496.56, 475.2, 514.68 ],
+          "source" : "2025_life_sciences_p1_images/imageFile41.png"
+        }, {
+          "type" : "image",
+          "id" : 4,
+          "page number" : 13,
+          "bounding box" : [ 161.4, 596.76, 176.4, 608.76 ],
+          "source" : "2025_life_sciences_p1_images/imageFile42.png"
+        } ]
+      }, {
+        "type" : "list item",
+        "page number" : 13,
+        "bounding box" : [ 168.6, 594.937, 177.264, 608.343 ],
+        "font" : "Arial-BoldMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "B",
+        "kids" : [ {
+          "type" : "image",
+          "id" : 5,
+          "page number" : 13,
+          "bounding box" : [ 159.84, 570.36, 179.04, 582.36 ],
+          "source" : "2025_life_sciences_p1_images/imageFile43.png"
+        } ]
+      }, {
+        "type" : "list item",
+        "page number" : 13,
+        "bounding box" : [ 167.04, 568.537, 175.704, 581.943 ],
+        "font" : "Arial-BoldMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "C",
+        "kids" : [ ]
+      } ]
+    }, {
+      "type" : "image",
+      "id" : 8,
+      "page number" : 13,
+      "bounding box" : [ 211.895, 522.94, 291.375, 683.815 ],
+      "source" : "2025_life_sciences_p1_images/imageFile44.png"
+    }, {
+      "type" : "image",
+      "id" : 9,
+      "page number" : 13,
+      "bounding box" : [ 349.6, 524.688, 433.578, 681.714 ],
+      "source" : "2025_life_sciences_p1_images/imageFile45.png"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 214,
+    "level" : "11",
+    "page number" : 13,
+    "bounding box" : [ 107.16, 293.737, 559.236, 472.743 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 4,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 13,
+      "bounding box" : [ 107.16, 376.537, 559.236, 472.743 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.1.1 Identify: (a) Fluid A (1) (b) Part B (1) (c) Part C (1)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 13,
+      "bounding box" : [ 107.16, 348.937, 558.876, 362.343 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.1.2 Describe the appearance of the cornea of an eye with astigmatism. (1)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 13,
+      "bounding box" : [ 107.16, 321.337, 558.876, 334.743 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.1.3 Explain how astigmatism affects vision. (3)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 13,
+      "bounding box" : [ 107.16, 293.737, 558.876, 307.143 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.1.4 Give ONE treatment for astigmatism. (1)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 215,
+    "level" : "Subtitle",
+    "page number" : 13,
+    "bounding box" : [ 544.2, 279.937, 558.876, 293.343 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "(8)"
+  }, {
+    "type" : "footer",
+    "id" : 217,
+    "page number" : 13,
+    "bounding box" : [ 53.88, 36.047, 528.549, 47.174 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 41,
+      "page number" : 13,
+      "bounding box" : [ 53.88, 36.047, 528.549, 47.174 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 218,
+    "page number" : 14,
+    "bounding box" : [ 53.88, 782.448, 528.605, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 68,
+      "page number" : 14,
+      "bounding box" : [ 53.88, 794.569, 528.605, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Life Sciences/P1 14 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 69,
+      "page number" : 14,
+      "bounding box" : [ 256.925, 782.448, 336.083, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 219,
+    "level" : "Subtitle",
+    "page number" : 14,
+    "bounding box" : [ 59.28, 740.977, 440.737, 754.383 ],
+    "heading level" : 3,
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "3.2 The diagrams below show parts of the human nervous system."
+  }, {
+    "type" : "text block",
+    "id" : 220,
+    "page number" : 14,
+    "bounding box" : [ 106.35, 405.972, 522.9, 727.022 ],
+    "kids" : [ {
+      "type" : "image",
+      "id" : 4,
+      "page number" : 14,
+      "bounding box" : [ 120.851, 532.033, 307.838, 714.137 ],
+      "source" : "2025_life_sciences_p1_images/imageFile46.png"
+    }, {
+      "type" : "image",
+      "id" : 6,
+      "page number" : 14,
+      "bounding box" : [ 140.16, 512.52, 163.2, 530.04 ],
+      "source" : "2025_life_sciences_p1_images/imageFile47.png"
+    }, {
+      "type" : "paragraph",
+      "id" : 7,
+      "page number" : 14,
+      "bounding box" : [ 147.36, 516.217, 156.024, 529.623 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "C"
+    }, {
+      "type" : "image",
+      "id" : 9,
+      "page number" : 14,
+      "bounding box" : [ 208.44, 480.12, 293.28, 496.68 ],
+      "source" : "2025_life_sciences_p1_images/imageFile48.png"
+    }, {
+      "type" : "paragraph",
+      "id" : 10,
+      "page number" : 14,
+      "bounding box" : [ 215.64, 482.857, 281.053, 496.263 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "Spinal cord"
+    }, {
+      "type" : "image",
+      "id" : 12,
+      "page number" : 14,
+      "bounding box" : [ 355.32, 674.88, 377.88, 688.2 ],
+      "source" : "2025_life_sciences_p1_images/imageFile49.png"
+    }, {
+      "type" : "list",
+      "id" : 13,
+      "level" : "1",
+      "page number" : 14,
+      "bounding box" : [ 353.88, 588.817, 371.184, 687.783 ],
+      "numbering style" : "english letters",
+      "number of list items" : 2,
+      "list items" : [ {
+        "type" : "list item",
+        "page number" : 14,
+        "bounding box" : [ 362.52, 674.377, 371.184, 687.783 ],
+        "font" : "Arial-BoldMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "A",
+        "kids" : [ {
+          "type" : "image",
+          "id" : 3,
+          "page number" : 14,
+          "bounding box" : [ 346.68, 589.44, 369.24, 602.64 ],
+          "source" : "2025_life_sciences_p1_images/imageFile50.png"
+        } ]
+      }, {
+        "type" : "list item",
+        "page number" : 14,
+        "bounding box" : [ 353.88, 588.817, 362.544, 602.223 ],
+        "font" : "Arial-BoldMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "B",
+        "kids" : [ ]
+      } ]
+    }, {
+      "type" : "image",
+      "id" : 15,
+      "page number" : 14,
+      "bounding box" : [ 297.137, 435.074, 461.834, 542.704 ],
+      "source" : "2025_life_sciences_p1_images/imageFile51.png"
+    }, {
+      "type" : "image",
+      "id" : 22,
+      "page number" : 14,
+      "bounding box" : [ 489.72, 543.6, 513.24, 560.04 ],
+      "source" : "2025_life_sciences_p1_images/imageFile52.png"
+    }, {
+      "type" : "list",
+      "id" : 23,
+      "level" : "1",
+      "page number" : 14,
+      "bounding box" : [ 495.96, 426.577, 505.584, 559.623 ],
+      "numbering style" : "english letters",
+      "number of list items" : 2,
+      "list items" : [ {
+        "type" : "list item",
+        "page number" : 14,
+        "bounding box" : [ 496.92, 546.217, 505.584, 559.623 ],
+        "font" : "Arial-BoldMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "D",
+        "kids" : [ {
+          "type" : "image",
+          "id" : 1,
+          "page number" : 14,
+          "bounding box" : [ 488.76, 425.64, 512.28, 440.4 ],
+          "source" : "2025_life_sciences_p1_images/imageFile53.png"
+        } ]
+      }, {
+        "type" : "list item",
+        "page number" : 14,
+        "bounding box" : [ 495.96, 426.577, 503.964, 439.983 ],
+        "font" : "Arial-BoldMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "E",
+        "kids" : [ ]
+      } ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 221,
+    "level" : "12",
+    "page number" : 14,
+    "bounding box" : [ 107.16, 209.857, 558.876, 388.863 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 3,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 14,
+      "bounding box" : [ 107.16, 361.657, 558.876, 388.863 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.2.1 Name the branch of the nervous system represented by the parts shown. (1)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 14,
+      "bounding box" : [ 107.16, 251.257, 462.097, 347.463 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.2.2 Give the LETTER and NAME of the part responsible for: Balance and coordination Control of breathing Control of skeletal muscles",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 76,
+        "level" : "13",
+        "page number" : 14,
+        "bounding box" : [ 163.92, 251.257, 178.596, 319.863 ],
+        "numbering style" : "english letters",
+        "number of list items" : 3,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 14,
+          "bounding box" : [ 163.92, 306.457, 178.596, 319.863 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(a)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 14,
+          "bounding box" : [ 163.92, 278.857, 178.596, 292.263 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(b)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 14,
+          "bounding box" : [ 163.92, 251.257, 177.876, 264.663 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(c)",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 77,
+        "level" : "14",
+        "page number" : 14,
+        "bounding box" : [ 544.2, 251.257, 558.876, 319.863 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2) (2) (2)"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 14,
+      "bounding box" : [ 107.16, 209.857, 558.876, 237.063 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.2.3 Describe the pathway of an impulse from part D through the spinal cord to part E, to bring about a reflex action. (6)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 222,
+    "level" : "14",
+    "page number" : 14,
+    "bounding box" : [ 544.2, 196.057, 565.596, 209.463 ],
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "(13)"
+  }, {
+    "type" : "heading",
+    "id" : 224,
+    "level" : "Subtitle",
+    "page number" : 14,
+    "bounding box" : [ 59.28, 167.737, 558.876, 181.143 ],
+    "heading level" : 3,
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "3.3 Describe how the human eye ACCOMMODATES for distant vision. (5)"
+  }, {
+    "type" : "footer",
+    "id" : 226,
+    "page number" : 14,
+    "bounding box" : [ 53.88, 36.047, 528.549, 47.174 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 42,
+      "page number" : 14,
+      "bounding box" : [ 53.88, 36.047, 528.549, 47.174 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 227,
+    "page number" : 15,
+    "bounding box" : [ 53.88, 782.448, 528.605, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 70,
+      "page number" : 15,
+      "bounding box" : [ 53.88, 794.569, 528.605, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Life Sciences/P1 15 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 71,
+      "page number" : 15,
+      "bounding box" : [ 256.925, 782.448, 336.083, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 230,
+    "level" : "10",
+    "page number" : 15,
+    "bounding box" : [ 59.28, 740.977, 414.096, 754.383 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 1,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 15,
+      "bounding box" : [ 59.28, 740.977, 414.096, 754.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.4 The diagram below shows the structure of the human ear.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "text block",
+    "id" : 233,
+    "page number" : 15,
+    "bounding box" : [ 108.15, 453.821, 528.15, 730.121 ],
+    "kids" : [ {
+      "type" : "image",
+      "id" : 21,
+      "page number" : 15,
+      "bounding box" : [ 134.569, 455.294, 501.464, 693.737 ],
+      "source" : "2025_life_sciences_p1_images/imageFile54.png"
+    }, {
+      "type" : "image",
+      "id" : 29,
+      "page number" : 15,
+      "bounding box" : [ 227.88, 677.4, 333.0, 693.72 ],
+      "source" : "2025_life_sciences_p1_images/imageFile55.png"
+    }, {
+      "type" : "paragraph",
+      "id" : 30,
+      "level" : "1",
+      "page number" : 15,
+      "bounding box" : [ 235.08, 679.897, 318.457, 693.303 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "Auditory canal"
+    }, {
+      "type" : "image",
+      "id" : 31,
+      "page number" : 15,
+      "bounding box" : [ 496.32, 470.4, 519.48, 486.72 ],
+      "source" : "2025_life_sciences_p1_images/imageFile56.png"
+    }, {
+      "type" : "paragraph",
+      "id" : 32,
+      "page number" : 15,
+      "bounding box" : [ 503.52, 472.897, 512.184, 486.303 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "D"
+    }, {
+      "type" : "image",
+      "id" : 33,
+      "page number" : 15,
+      "bounding box" : [ 479.52, 613.92, 502.8, 630.24 ],
+      "source" : "2025_life_sciences_p1_images/imageFile57.png"
+    }, {
+      "type" : "paragraph",
+      "id" : 34,
+      "page number" : 15,
+      "bounding box" : [ 486.72, 616.417, 495.384, 629.823 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "C"
+    }, {
+      "type" : "image",
+      "id" : 35,
+      "page number" : 15,
+      "bounding box" : [ 333.48, 700.68, 356.64, 716.88 ],
+      "source" : "2025_life_sciences_p1_images/imageFile58.png"
+    }, {
+      "type" : "paragraph",
+      "id" : 36,
+      "page number" : 15,
+      "bounding box" : [ 340.68, 703.177, 349.344, 716.583 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "B"
+    }, {
+      "type" : "image",
+      "id" : 37,
+      "page number" : 15,
+      "bounding box" : [ 291.6, 496.68, 314.76, 512.88 ],
+      "source" : "2025_life_sciences_p1_images/imageFile59.png"
+    }, {
+      "type" : "paragraph",
+      "id" : 38,
+      "page number" : 15,
+      "bounding box" : [ 298.8, 499.057, 306.804, 512.463 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "E"
+    }, {
+      "type" : "image",
+      "id" : 39,
+      "page number" : 15,
+      "bounding box" : [ 136.56, 680.28, 159.72, 696.6 ],
+      "source" : "2025_life_sciences_p1_images/imageFile60.png"
+    }, {
+      "type" : "paragraph",
+      "id" : 40,
+      "page number" : 15,
+      "bounding box" : [ 143.64, 682.777, 152.304, 696.183 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "A"
+    }, {
+      "type" : "image",
+      "id" : 42,
+      "page number" : 15,
+      "bounding box" : [ 220.8, 527.76, 320.64, 543.84 ],
+      "source" : "2025_life_sciences_p1_images/imageFile61.png"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 234,
+    "level" : "13",
+    "page number" : 15,
+    "bounding box" : [ 107.16, 189.097, 558.876, 436.983 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 4,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 15,
+      "bounding box" : [ 107.16, 368.377, 230.016, 436.983 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.4.1 Identify part: (a) (b)",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 74,
+        "level" : "14",
+        "page number" : 15,
+        "bounding box" : [ 192.24, 368.377, 200.904, 409.383 ],
+        "numbering style" : "english letters",
+        "number of list items" : 2,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 15,
+          "bounding box" : [ 192.24, 395.977, 200.904, 409.383 ],
+          "font" : "Arial-BoldMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "A",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 15,
+          "bounding box" : [ 192.24, 368.377, 200.904, 381.783 ],
+          "font" : "Arial-BoldMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "B",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 75,
+        "level" : "15",
+        "page number" : 15,
+        "bounding box" : [ 544.2, 368.377, 558.876, 409.383 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(1) (1)"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 15,
+      "bounding box" : [ 107.16, 340.777, 558.876, 354.183 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.4.2 Give the LETTERS of TWO parts that are normally filled with fluid. (2)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 15,
+      "bounding box" : [ 107.16, 299.377, 558.876, 326.583 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.4.3 Describe how balance is restored when there is a change in the speed and direction of head movement. (5)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 15,
+      "bounding box" : [ 107.16, 189.097, 521.88, 285.303 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.4.4 When a person is exposed to loud noise over a long period, it may lead to noise-induced hearing loss (NIHL), which is caused by damage to the hair cells in the organ of Corti. These cells are not repaired when damaged. Placing earplugs in the auditory canal can prevent damage to the hair cells. Explain how:",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 242,
+    "level" : "16",
+    "page number" : 15,
+    "bounding box" : [ 163.92, 120.097, 178.596, 174.903 ],
+    "numbering style" : "english letters",
+    "number of list items" : 2,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 15,
+      "bounding box" : [ 163.92, 161.497, 178.596, 174.903 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "(a)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 15,
+      "bounding box" : [ 163.92, 120.097, 178.596, 133.503 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "(b)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 243,
+    "page number" : 15,
+    "bounding box" : [ 192.24, 147.697, 521.713, 174.903 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "Damage to the hair cells in the organ of Corti can lead to hearing loss"
+  }, {
+    "type" : "list",
+    "id" : 245,
+    "level" : "17",
+    "page number" : 15,
+    "bounding box" : [ 544.2, 106.297, 558.876, 161.103 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 2,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 15,
+      "bounding box" : [ 544.2, 147.697, 558.876, 161.103 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "(2)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 15,
+      "bounding box" : [ 544.2, 106.297, 558.876, 119.703 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "(3)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 244,
+    "page number" : 15,
+    "bounding box" : [ 192.24, 106.297, 521.616, 133.503 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "Earplugs can prevent damage to the hair cells in the organ of Corti"
+  }, {
+    "type" : "heading",
+    "id" : 246,
+    "level" : "Subtitle",
+    "page number" : 15,
+    "bounding box" : [ 544.2, 92.497, 565.596, 105.903 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "(14)"
+  }, {
+    "type" : "footer",
+    "id" : 247,
+    "page number" : 15,
+    "bounding box" : [ 53.88, 36.047, 528.549, 47.174 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 43,
+      "page number" : 15,
+      "bounding box" : [ 53.88, 36.047, 528.549, 47.174 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 248,
+    "page number" : 16,
+    "bounding box" : [ 53.88, 782.448, 528.605, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 72,
+      "page number" : 16,
+      "bounding box" : [ 53.88, 794.569, 528.605, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Life Sciences/P1 16 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 73,
+      "page number" : 16,
+      "bounding box" : [ 256.925, 782.448, 336.083, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 250,
+    "page number" : 16,
+    "bounding box" : [ 59.28, 727.177, 521.616, 754.383 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "3.5 The graph below shows the insulin levels of three people over a 23-hour period, who were treated as follows:"
+  }, {
+    "type" : "list",
+    "id" : 251,
+    "level" : "18",
+    "page number" : 16,
+    "bounding box" : [ 112.56, 616.777, 515.712, 712.983 ],
+    "numbering style" : "english letters",
+    "number of list items" : 3,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 16,
+      "bounding box" : [ 112.56, 699.577, 421.537, 712.983 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "Person A: A healthy person who received no treatment",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 16,
+      "bounding box" : [ 112.56, 658.177, 515.712, 685.383 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "Person B: A person with diabetes mellitus who received a rapid-acting insulin injection before each meal",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 16,
+      "bounding box" : [ 112.56, 616.777, 515.616, 643.983 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "Person C: A person with diabetes mellitus who received a daily injection, containing long-acting insulin, at 23:00",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 252,
+    "page number" : 16,
+    "bounding box" : [ 107.16, 589.177, 478.656, 602.583 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "All three people received the same meals at the same time of the day."
+  }, {
+    "type" : "text block",
+    "id" : 253,
+    "page number" : 16,
+    "bounding box" : [ 105.7, 348.183, 522.408, 579.433 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 9,
+      "level" : "1",
+      "page number" : 16,
+      "bounding box" : [ 167.483, 385.725, 178.61, 405.659 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "4:00"
+    }, {
+      "type" : "paragraph",
+      "id" : 10,
+      "page number" : 16,
+      "bounding box" : [ 181.048, 385.725, 192.175, 405.659 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "5:00"
+    }, {
+      "type" : "paragraph",
+      "id" : 11,
+      "page number" : 16,
+      "bounding box" : [ 194.614, 385.725, 205.741, 405.659 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "6:00"
+    }, {
+      "type" : "paragraph",
+      "id" : 12,
+      "page number" : 16,
+      "bounding box" : [ 208.179, 385.725, 219.306, 405.659 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "7:00"
+    }, {
+      "type" : "paragraph",
+      "id" : 13,
+      "page number" : 16,
+      "bounding box" : [ 221.745, 385.725, 232.872, 405.659 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "8:00"
+    }, {
+      "type" : "paragraph",
+      "id" : 14,
+      "page number" : 16,
+      "bounding box" : [ 235.31, 385.725, 246.437, 405.659 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "9:00"
+    }, {
+      "type" : "paragraph",
+      "id" : 15,
+      "page number" : 16,
+      "bounding box" : [ 248.876, 380.168, 260.003, 405.74 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "10:00"
+    }, {
+      "type" : "paragraph",
+      "id" : 16,
+      "page number" : 16,
+      "bounding box" : [ 262.441, 380.168, 273.569, 405.74 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "11:00"
+    }, {
+      "type" : "paragraph",
+      "id" : 17,
+      "page number" : 16,
+      "bounding box" : [ 276.007, 380.168, 287.134, 405.74 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "12:00"
+    }, {
+      "type" : "paragraph",
+      "id" : 18,
+      "page number" : 16,
+      "bounding box" : [ 289.572, 380.168, 300.7, 405.74 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "13:00"
+    }, {
+      "type" : "paragraph",
+      "id" : 19,
+      "page number" : 16,
+      "bounding box" : [ 303.138, 380.168, 314.265, 405.74 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "14:00"
+    }, {
+      "type" : "paragraph",
+      "id" : 20,
+      "page number" : 16,
+      "bounding box" : [ 316.703, 380.168, 327.831, 405.74 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "15:00"
+    }, {
+      "type" : "paragraph",
+      "id" : 21,
+      "page number" : 16,
+      "bounding box" : [ 330.269, 380.168, 341.396, 405.74 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "16:00"
+    }, {
+      "type" : "paragraph",
+      "id" : 22,
+      "page number" : 16,
+      "bounding box" : [ 343.834, 380.168, 354.962, 405.74 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "17:00"
+    }, {
+      "type" : "paragraph",
+      "id" : 23,
+      "page number" : 16,
+      "bounding box" : [ 357.4, 380.168, 368.527, 405.74 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "18:00"
+    }, {
+      "type" : "paragraph",
+      "id" : 24,
+      "page number" : 16,
+      "bounding box" : [ 370.965, 380.168, 382.093, 405.74 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "19:00"
+    }, {
+      "type" : "paragraph",
+      "id" : 25,
+      "page number" : 16,
+      "bounding box" : [ 384.531, 380.168, 395.658, 405.74 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "20:00"
+    }, {
+      "type" : "paragraph",
+      "id" : 26,
+      "page number" : 16,
+      "bounding box" : [ 398.097, 380.168, 409.224, 405.74 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "21:00"
+    }, {
+      "type" : "paragraph",
+      "id" : 27,
+      "page number" : 16,
+      "bounding box" : [ 411.662, 380.168, 422.789, 405.74 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "22:00"
+    }, {
+      "type" : "paragraph",
+      "id" : 28,
+      "page number" : 16,
+      "bounding box" : [ 425.228, 380.168, 436.355, 405.74 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "23:00"
+    }, {
+      "type" : "paragraph",
+      "id" : 29,
+      "page number" : 16,
+      "bounding box" : [ 438.793, 385.725, 449.92, 405.659 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "0:00"
+    }, {
+      "type" : "paragraph",
+      "id" : 30,
+      "page number" : 16,
+      "bounding box" : [ 452.359, 385.725, 463.486, 405.659 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "1:00"
+    }, {
+      "type" : "paragraph",
+      "id" : 31,
+      "page number" : 16,
+      "bounding box" : [ 465.924, 385.725, 477.051, 405.659 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "2:00"
+    }, {
+      "type" : "paragraph",
+      "id" : 32,
+      "page number" : 16,
+      "bounding box" : [ 479.49, 385.725, 490.617, 405.659 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "3:00"
+    }, {
+      "type" : "paragraph",
+      "id" : 33,
+      "page number" : 16,
+      "bounding box" : [ 123.168, 419.197, 136.574, 540.649 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "Insulinconcentration"
+    }, {
+      "type" : "paragraph",
+      "id" : 34,
+      "page number" : 16,
+      "bounding box" : [ 136.968, 423.877, 150.374, 535.875 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "(Internationalunits)"
+    }, {
+      "type" : "paragraph",
+      "id" : 35,
+      "page number" : 16,
+      "bounding box" : [ 287.951, 360.339, 354.503, 373.745 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "Time of day"
+    }, {
+      "type" : "image",
+      "id" : 36,
+      "page number" : 16,
+      "bounding box" : [ 183.84, 541.92, 530.52, 568.68 ],
+      "source" : "2025_life_sciences_p1_images/imageFile62.png"
+    }, {
+      "type" : "paragraph",
+      "id" : 37,
+      "page number" : 16,
+      "bounding box" : [ 191.04, 554.857, 496.512, 568.263 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "Blood insulin concentration over a period of 23 hours"
+    }, {
+      "type" : "image",
+      "id" : 38,
+      "page number" : 16,
+      "bounding box" : [ 417.0, 468.72, 494.64, 488.04 ],
+      "source" : "2025_life_sciences_p1_images/imageFile63.png"
+    }, {
+      "type" : "paragraph",
+      "id" : 39,
+      "page number" : 16,
+      "bounding box" : [ 424.2, 474.217, 477.024, 487.623 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "Person B"
+    }, {
+      "type" : "image",
+      "id" : 40,
+      "page number" : 16,
+      "bounding box" : [ 382.68, 503.76, 451.92, 518.64 ],
+      "source" : "2025_life_sciences_p1_images/imageFile64.png"
+    }, {
+      "type" : "paragraph",
+      "id" : 41,
+      "page number" : 16,
+      "bounding box" : [ 389.88, 504.817, 442.824, 518.223 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "Person A"
+    }, {
+      "type" : "image",
+      "id" : 42,
+      "page number" : 16,
+      "bounding box" : [ 448.56, 435.96, 518.52, 450.72 ],
+      "source" : "2025_life_sciences_p1_images/imageFile65.png"
+    }, {
+      "type" : "paragraph",
+      "id" : 43,
+      "page number" : 16,
+      "bounding box" : [ 455.64, 436.897, 508.464, 450.303 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "Person C"
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 258,
+    "page number" : 16,
+    "bounding box" : [ 123.168, 522.673, 136.574, 540.649 ],
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "ion"
+  }, {
+    "type" : "paragraph",
+    "id" : 259,
+    "page number" : 16,
+    "bounding box" : [ 136.968, 525.194, 150.374, 535.875 ],
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "s)"
+  }, {
+    "type" : "list",
+    "id" : 254,
+    "level" : "19",
+    "page number" : 16,
+    "bounding box" : [ 107.16, 155.257, 558.876, 334.263 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 5,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 16,
+      "bounding box" : [ 107.16, 320.857, 558.876, 334.263 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.5.1 Name the organ that secretes insulin. (1)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 16,
+      "bounding box" : [ 107.16, 279.457, 558.876, 306.663 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.5.2 State the number of meals that were eaten during the 23-hour period. (1)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 16,
+      "bounding box" : [ 107.16, 238.057, 558.876, 265.263 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.5.3 Tabulate TWO differences between long-acting insulin treatment and rapid-acting insulin treatment over the 23-hour period. (5)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 16,
+      "bounding box" : [ 107.16, 196.657, 558.876, 223.863 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.5.4 Name the type of insulin treatment that is similar to insulin secretion in a healthy person. (1)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 16,
+      "bounding box" : [ 107.16, 155.257, 558.876, 182.463 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.5.5 Explain why person B may experience a lack of energy after receiving a rapid-acting insulin injection if NO meal is taken. (2)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 255,
+    "level" : "15",
+    "page number" : 16,
+    "bounding box" : [ 544.2, 127.657, 565.596, 154.863 ],
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "(10) [50]"
+  }, {
+    "type" : "paragraph",
+    "id" : 256,
+    "page number" : 16,
+    "bounding box" : [ 408.96, 86.377, 521.556, 113.583 ],
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "TOTAL SECTION B: GRAND TOTAL:"
+  }, {
+    "type" : "paragraph",
+    "id" : 257,
+    "page number" : 16,
+    "bounding box" : [ 545.16, 86.377, 565.272, 113.583 ],
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "100 150"
+  }, {
+    "type" : "paragraph",
+    "id" : 249,
+    "page number" : 16,
+    "bounding box" : [ 53.88, 36.047, 138.245, 47.174 ],
+    "font" : "ArialMT",
+    "font size" : 9.96,
+    "text color" : "[0.0]",
+    "content" : "Copyright reserved"
+  } ]
+}

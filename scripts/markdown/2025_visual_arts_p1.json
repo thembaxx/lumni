@@ -1,0 +1,3115 @@
+{
+  "file name" : "2025_visual_arts_p1.pdf",
+  "number of pages" : 19,
+  "author" : "NSC44",
+  "title" : "",
+  "creation date" : "D:20251110122453+02'00'",
+  "modification date" : "D:20251110122457+02'00'",
+  "kids" : [ {
+    "type" : "text block",
+    "id" : 96,
+    "page number" : 1,
+    "bounding box" : [ 24.0, 24.0, 571.32, 818.04 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 1,
+      "page number" : 1,
+      "bounding box" : [ 266.074, 793.903, 322.043, 805.925 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "Confidential"
+    }, {
+      "type" : "paragraph",
+      "id" : 2,
+      "page number" : 1,
+      "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    }, {
+      "type" : "paragraph",
+      "id" : 3,
+      "page number" : 1,
+      "bounding box" : [ 53.88, 292.537, 136.632, 333.543 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "MARKS: 100 TIME: 3 hours"
+    }, {
+      "type" : "paragraph",
+      "id" : 4,
+      "page number" : 1,
+      "bounding box" : [ 149.64, 182.257, 435.818, 209.463 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "This question paper consists of 19 pages. This question paper must be printed in full colour."
+    }, {
+      "type" : "image",
+      "id" : 6,
+      "page number" : 1,
+      "bounding box" : [ 83.04, 372.72, 510.36, 426.0 ],
+      "source" : "2025_visual_arts_p1_images/imageFile1.png"
+    }, {
+      "type" : "paragraph",
+      "id" : 7,
+      "page number" : 1,
+      "bounding box" : [ 238.804, 375.753, 354.853, 423.59 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 14.04,
+      "text color" : "[0.0]",
+      "content" : "VISUAL ARTS P1 NOVEMBER 2025"
+    }, {
+      "type" : "image",
+      "id" : 9,
+      "page number" : 1,
+      "bounding box" : [ 157.56, 566.16, 435.48, 600.36 ],
+      "source" : "2025_visual_arts_p1_images/imageFile2.png"
+    }, {
+      "type" : "heading",
+      "id" : 10,
+      "level" : "Doctitle",
+      "page number" : 1,
+      "bounding box" : [ 210.72, 563.618, 382.055, 599.808 ],
+      "heading level" : 1,
+      "font" : "Arial-BoldMT",
+      "font size" : 15.96,
+      "text color" : "[1.0]",
+      "content" : "NATIONAL SENIOR CERTIFICATE"
+    }, {
+      "type" : "image",
+      "id" : 12,
+      "page number" : 1,
+      "bounding box" : [ 234.48, 691.32, 354.36, 711.84 ],
+      "source" : "2025_visual_arts_p1_images/imageFile3.png"
+    }, {
+      "type" : "image",
+      "id" : 13,
+      "page number" : 1,
+      "bounding box" : [ 106.05, 647.27, 484.05, 788.77 ],
+      "source" : "2025_visual_arts_p1_images/imageFile4.png"
+    }, {
+      "type" : "image",
+      "id" : 15,
+      "page number" : 1,
+      "bounding box" : [ 236.52, 489.12, 356.4, 509.64 ],
+      "source" : "2025_visual_arts_p1_images/imageFile5.png"
+    }, {
+      "type" : "heading",
+      "id" : 16,
+      "level" : "Subtitle",
+      "page number" : 1,
+      "bounding box" : [ 256.44, 491.138, 336.355, 508.968 ],
+      "heading level" : 1,
+      "font" : "Arial-BoldMT",
+      "font size" : 15.96,
+      "text color" : "[0.0]",
+      "content" : "GRADE 12"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 97,
+    "page number" : 2,
+    "bounding box" : [ 53.88, 782.448, 528.603, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 53,
+      "page number" : 2,
+      "bounding box" : [ 53.88, 794.569, 528.603, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Visual Arts/P1 2 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 54,
+      "page number" : 2,
+      "bounding box" : [ 256.915, 782.448, 336.083, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 98,
+    "page number" : 2,
+    "bounding box" : [ 59.28, 713.377, 374.737, 754.383 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "INSTRUCTIONS AND INFORMATION In this examination you will demonstrate the following skills:"
+  }, {
+    "type" : "list",
+    "id" : 99,
+    "level" : "1",
+    "page number" : 2,
+    "bounding box" : [ 59.28, 599.017, 521.736, 699.544 ],
+    "numbering style" : "unordered",
+    "number of list items" : 5,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 684.843, 280.199, 699.544 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• The use of the correct art terminology",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 670.323, 431.593, 685.024 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• The use and implementation of visual analysis and critical thinking",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 655.683, 422.737, 670.384 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• Writing and research skills within a historical and cultural context",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 641.043, 521.736, 655.744 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• The placing of specific examples into a cultural, social, political and historical context",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 599.017, 454.776, 641.224 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• An understanding of distinctive creative styles Read the following instructions before deciding which questions to answer.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 100,
+    "level" : "2",
+    "page number" : 2,
+    "bounding box" : [ 59.28, 224.137, 69.336, 584.823 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 9,
+    "next list id" : 108,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 571.417, 69.336, 584.823 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 543.817, 69.336, 557.223 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 516.217, 69.336, 529.623 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 474.817, 69.336, 488.223 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "4.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 433.417, 69.336, 446.823 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "5.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 405.817, 69.336, 419.223 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "6.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 306.937, 69.336, 320.343 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "7.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 265.537, 69.336, 278.943 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "8.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 224.137, 69.336, 237.543 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "9.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 101,
+    "page number" : 2,
+    "bounding box" : [ 107.16, 405.817, 521.76, 584.823 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "This question paper consists of EIGHT questions. Answer ANY FIVE questions for a total of 100 marks. Number the answers correctly according to the numbering system used in this question paper. Questions mainly appear on the left-hand pages, with visual sources on the right-hand pages. Ensure that you refer to the visual sources reproduced in colour where required. You MUST use your own studied artworks in the second part of each question."
+  }, {
+    "type" : "list",
+    "id" : 102,
+    "level" : "1",
+    "page number" : 2,
+    "bounding box" : [ 107.16, 335.043, 521.676, 391.984 ],
+    "numbering style" : "unordered",
+    "number of list items" : 2,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 107.16, 349.777, 521.676, 391.984 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• You may NOT use artworks that appear in this question paper as your examples of studied artworks. You may, however, use other artworks by artists who appear in this question paper as your studied artworks.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 107.16, 335.043, 499.297, 349.744 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• You may NOT repeat the same studied artworks in different questions.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 103,
+    "page number" : 2,
+    "bounding box" : [ 107.16, 293.737, 521.712, 320.943 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "Name the artist and title of EACH artwork you discuss in your answers for the artwork you have studied."
+  }, {
+    "type" : "paragraph",
+    "id" : 104,
+    "page number" : 2,
+    "bounding box" : [ 107.16, 252.337, 521.593, 279.543 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "Use full sentences and paragraphs according to the instructions of each question. Listing of facts/tables is NOT acceptable."
+  }, {
+    "type" : "paragraph",
+    "id" : 105,
+    "page number" : 2,
+    "bounding box" : [ 107.16, 197.137, 521.712, 238.143 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "You must answer the questions in a holistic way. The bullets do not correspond to a specific mark, but should be used by you to guide your answers to the questions."
+  }, {
+    "type" : "footer",
+    "id" : 106,
+    "page number" : 2,
+    "bounding box" : [ 53.88, 36.047, 528.548, 47.174 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 36,
+      "page number" : 2,
+      "bounding box" : [ 53.88, 36.047, 528.548, 47.174 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 107,
+    "page number" : 3,
+    "bounding box" : [ 53.88, 782.448, 528.603, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 55,
+      "page number" : 3,
+      "bounding box" : [ 53.88, 794.569, 528.603, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Visual Arts/P1 3 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 56,
+      "page number" : 3,
+      "bounding box" : [ 256.915, 782.448, 336.083, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 108,
+    "level" : "2",
+    "page number" : 3,
+    "bounding box" : [ 59.28, 418.417, 76.056, 754.383 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 4,
+    "previous list id" : 100,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 59.28, 740.977, 76.056, 754.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "10.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 59.28, 598.417, 76.056, 611.823 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "11.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 59.28, 570.817, 76.056, 584.223 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "12.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 59.28, 418.417, 76.056, 431.823 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "13.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 109,
+    "page number" : 3,
+    "bounding box" : [ 107.16, 727.177, 521.712, 754.383 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "When you are required to conduct an analysis, you have to give a detailed discussion that uses a selection of the following criteria:2025"
+  }, {
+    "type" : "list",
+    "id" : 110,
+    "level" : "1",
+    "page number" : 3,
+    "bounding box" : [ 107.16, 499.897, 521.76, 713.344 ],
+    "numbering style" : "unordered",
+    "number of list items" : 8,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 107.16, 698.643, 501.433, 713.344 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• Formal art elements, such as line, colour, texture, shape/form and tone",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 107.16, 684.123, 348.097, 698.824 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• Composition, focal point and balance, etc.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 107.16, 669.483, 180.0, 684.184 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• Influences",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 107.16, 654.843, 211.272, 669.544 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• Style and media",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 107.16, 640.323, 181.272, 655.024 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• Technique",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 107.16, 570.577, 509.498, 640.384 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• Meaning and interpretation Ensure that you directly compare artworks if the question asks you to do so. Time management and length of answers:",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 107.16, 528.337, 521.592, 556.744 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• You should spend approximately 36 minutes per question on your selected FIVE questions.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 107.16, 499.897, 521.76, 528.304 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• Use the following as a guideline to the length of your answer. Note the mark allocation.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 111,
+    "level" : "2",
+    "page number" : 3,
+    "bounding box" : [ 125.16, 443.636, 371.556, 485.703 ],
+    "numbering style" : "unordered",
+    "number of list items" : 3,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 125.16, 471.236, 357.192, 485.703 ],
+      "font" : "CourierNewPSMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "o 6–8 marks: a minimum of ½ –¾ page",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 125.16, 457.436, 371.556, 471.903 ],
+      "font" : "CourierNewPSMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "o 10–14 marks: a minimum of 1–1½ page(s)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 125.16, 443.636, 339.84, 458.103 ],
+      "font" : "CourierNewPSMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "o 20 marks: a minimum of 2 pages",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 112,
+    "page number" : 3,
+    "bounding box" : [ 107.16, 418.297, 234.457, 431.703 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "Write neatly and legibly."
+  }, {
+    "type" : "footer",
+    "id" : 113,
+    "page number" : 3,
+    "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 37,
+      "page number" : 3,
+      "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 114,
+    "page number" : 4,
+    "bounding box" : [ 53.88, 782.448, 528.603, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 57,
+      "page number" : 4,
+      "bounding box" : [ 53.88, 794.569, 528.603, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Visual Arts/P1 4 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 58,
+      "page number" : 4,
+      "bounding box" : [ 256.915, 782.448, 336.083, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 115,
+    "page number" : 4,
+    "bounding box" : [ 59.28, 740.977, 248.736, 754.383 ],
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "ANSWER ANY FIVE QUESTIONS."
+  }, {
+    "type" : "list",
+    "id" : 116,
+    "level" : "3",
+    "page number" : 4,
+    "bounding box" : [ 59.28, 713.377, 347.124, 726.783 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 1,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 59.28, 713.377, 347.124, 726.783 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "QUESTION 1: THE VOICE OF EMERGING ARTISTS",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "text block",
+    "id" : 117,
+    "page number" : 4,
+    "bounding box" : [ 53.88, 533.28, 528.6, 699.6 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 1,
+      "page number" : 4,
+      "bounding box" : [ 206.04, 670.537, 376.273, 697.743 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "'Rise and shine to dawn I wake To cast my net in a fishless lake"
+    }, {
+      "type" : "paragraph",
+      "id" : 2,
+      "page number" : 4,
+      "bounding box" : [ 178.44, 587.737, 403.992, 656.343 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "I sailed downstream to see what I had, I pulled my boat along the land, I swam the dirt and walked the stream and Off the shore I saw a bream and Tuna too, and salmon roe'"
+    }, {
+      "type" : "paragraph",
+      "id" : 3,
+      "page number" : 4,
+      "bounding box" : [ 226.68, 562.489, 522.239, 573.617 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "[Source: An extract from A Song about Fishing by Genesis Owusu]"
+    }, {
+      "type" : "paragraph",
+      "id" : 4,
+      "page number" : 4,
+      "bounding box" : [ 60.0, 534.817, 355.656, 548.223 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "Fishing has been the livelihood of many South Africans."
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 118,
+    "level" : "4",
+    "page number" : 4,
+    "bounding box" : [ 59.28, 294.697, 521.836, 519.183 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 2,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 59.28, 464.377, 521.617, 519.183 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.1 Discuss how artists Peter Clarke and Maggie Laubser portrayed the life of fishermen. You may use the following guidelines:",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 95,
+        "level" : "5",
+        "page number" : 4,
+        "bounding box" : [ 107.16, 377.403, 566.436, 450.544 ],
+        "numbering style" : "unordered",
+        "number of list items" : 5,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 4,
+          "bounding box" : [ 107.16, 435.843, 314.016, 450.544 ],
+          "font" : "SymbolMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "• Different stories told by EACH artist",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 4,
+          "bounding box" : [ 107.16, 421.203, 265.297, 435.904 ],
+          "font" : "SymbolMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "• Use of colour and contrast",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 4,
+          "bounding box" : [ 107.16, 406.563, 273.336, 421.264 ],
+          "font" : "SymbolMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "• Composition and focal point",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 4,
+          "bounding box" : [ 107.16, 392.043, 195.912, 406.744 ],
+          "font" : "SymbolMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "• Simplification",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 4,
+          "bounding box" : [ 107.16, 377.403, 566.436, 392.104 ],
+          "font" : "SymbolMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "• Atmosphere or mood created (10)",
+          "kids" : [ ]
+        } ]
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 59.28, 294.697, 521.836, 363.303 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.2 Write an essay in which you discuss the artworks of any TWO South African artists that you have studied (ONE artwork per artist) that portray the lives of people in their communities. Use the following guidelines:",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 119,
+    "level" : "5",
+    "page number" : 4,
+    "bounding box" : [ 107.16, 208.657, 566.436, 280.864 ],
+    "numbering style" : "unordered",
+    "number of list items" : 4,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 107.16, 266.163, 185.232, 280.864 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• Description",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 107.16, 251.643, 231.96, 266.344 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• Formal art elements",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 107.16, 237.003, 191.952, 251.704 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• Composition",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 107.16, 208.657, 566.436, 237.064 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• How communities are depicted in the artworks (10) [20]",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "text block",
+    "id" : 120,
+    "page number" : 4,
+    "bounding box" : [ 57.96, 67.8, 528.6, 112.08 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 6,
+      "level" : "Subtitle",
+      "page number" : 4,
+      "bounding box" : [ 63.96, 69.217, 354.72, 110.223 ],
+      "heading level" : 2,
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "Glossary: Bream, tuna, salmon roe: types of fish and fish eggs"
+    } ]
+  }, {
+    "type" : "footer",
+    "id" : 121,
+    "page number" : 4,
+    "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 38,
+      "page number" : 4,
+      "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 122,
+    "page number" : 5,
+    "bounding box" : [ 53.88, 782.448, 528.603, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 59,
+      "page number" : 5,
+      "bounding box" : [ 53.88, 794.569, 528.603, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Visual Arts/P1 5 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 60,
+      "page number" : 5,
+      "bounding box" : [ 256.915, 782.448, 336.083, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "text block",
+    "id" : 125,
+    "page number" : 5,
+    "bounding box" : [ 164.725, 438.319, 421.975, 754.819 ],
+    "kids" : [ {
+      "type" : "image",
+      "id" : 1,
+      "page number" : 5,
+      "bounding box" : [ 166.225, 439.819, 420.475, 753.319 ],
+      "source" : "2025_visual_arts_p1_images/imageFile6.png"
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 123,
+    "page number" : 5,
+    "bounding box" : [ 138.6, 425.017, 447.576, 438.423 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "FIGURE 1a: Peter Clarke, Fishermen, oil on board, 1960."
+  }, {
+    "type" : "text block",
+    "id" : 126,
+    "page number" : 5,
+    "bounding box" : [ 121.25, 129.172, 466.0, 410.872 ],
+    "kids" : [ {
+      "type" : "image",
+      "id" : 2,
+      "page number" : 5,
+      "bounding box" : [ 122.75, 130.514, 464.768, 409.372 ],
+      "source" : "2025_visual_arts_p1_images/imageFile7.png"
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 124,
+    "page number" : 5,
+    "bounding box" : [ 122.64, 114.577, 458.376, 127.983 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "FIGURE 1b: Maggie Laubser, Fish Seller, oil on canvas, 1937."
+  }, {
+    "type" : "footer",
+    "id" : 127,
+    "page number" : 5,
+    "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 39,
+      "page number" : 5,
+      "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 128,
+    "page number" : 6,
+    "bounding box" : [ 53.88, 782.448, 528.603, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 61,
+      "page number" : 6,
+      "bounding box" : [ 53.88, 794.569, 528.603, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Visual Arts/P1 6 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 62,
+      "page number" : 6,
+      "bounding box" : [ 256.915, 782.448, 336.083, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 129,
+    "level" : "Subtitle",
+    "page number" : 6,
+    "bounding box" : [ 59.28, 727.177, 521.786, 754.383 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "QUESTION 2: SOUTH AFRICAN ARTISTS INFLUENCED BY AFRICAN AND/OR INDIGENOUS ART FORMS"
+  }, {
+    "type" : "text block",
+    "id" : 130,
+    "page number" : 6,
+    "bounding box" : [ 53.88, 682.92, 528.0, 713.4 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 1,
+      "page number" : 6,
+      "bounding box" : [ 60.0, 684.337, 521.834, 711.543 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "Sanford Biggers is a contemporary African American artist who reflects on his African and Western heritage in his artwork."
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 131,
+    "level" : "6",
+    "page number" : 6,
+    "bounding box" : [ 59.28, 430.417, 521.738, 668.583 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 2,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 6,
+      "bounding box" : [ 59.28, 627.577, 465.456, 668.583 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.1 Discuss how African and Western art was combined in FIGURE 2a. You may use the following as guidelines:",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 94,
+        "level" : "5",
+        "page number" : 6,
+        "bounding box" : [ 107.16, 513.123, 559.716, 613.864 ],
+        "numbering style" : "unordered",
+        "number of list items" : 5,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 6,
+          "bounding box" : [ 107.16, 585.457, 521.618, 613.864 ],
+          "font" : "SymbolMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "• The influence of FIGURE 2b on the pose and naturalistic style of FIGURE 2a",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 6,
+          "bounding box" : [ 107.16, 570.723, 388.753, 585.424 ],
+          "font" : "SymbolMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "• The position and scale of the mask in FIGURE 2a",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 6,
+          "bounding box" : [ 107.16, 556.083, 385.44, 570.784 ],
+          "font" : "SymbolMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "• Similarities between FIGURE 2a and FIGURE 2c",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 6,
+          "bounding box" : [ 107.16, 527.737, 521.532, 556.144 ],
+          "font" : "SymbolMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "• What the combination of Western art and African art says about Biggers' heritage in FIGURE 2a",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 6,
+          "bounding box" : [ 107.16, 513.123, 559.716, 527.824 ],
+          "font" : "SymbolMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "• How the title, The Soothsayer, conveys the message of FIGURE 2a (8)",
+          "kids" : [ ]
+        } ]
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 6,
+      "bounding box" : [ 59.28, 430.417, 521.738, 499.023 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.2 Discuss the work of TWO South African artists who use African culture, symbols and/or techniques in their artworks (ONE artwork per artist that you have studied). You may use the following guidelines:",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 132,
+    "level" : "5",
+    "page number" : 6,
+    "bounding box" : [ 107.16, 344.377, 566.436, 416.584 ],
+    "numbering style" : "unordered",
+    "number of list items" : 4,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 6,
+      "bounding box" : [ 107.16, 401.883, 231.96, 416.584 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• Formal art elements",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 6,
+      "bounding box" : [ 107.16, 387.243, 151.752, 401.944 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• Style",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 6,
+      "bounding box" : [ 107.16, 372.723, 236.592, 387.424 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• Media and technique",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 6,
+      "bounding box" : [ 107.16, 344.377, 566.436, 372.784 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• Meaning/Message of the artwork (12) [20]",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "text block",
+    "id" : 133,
+    "page number" : 6,
+    "bounding box" : [ 57.96, 65.52, 528.6, 206.4 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 3,
+      "page number" : 6,
+      "bounding box" : [ 63.96, 163.417, 522.436, 204.423 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "Glossary: Western Art: Western Art originated in Europe during the Renaissance and spread"
+    }, {
+      "type" : "paragraph",
+      "id" : 7,
+      "page number" : 6,
+      "bounding box" : [ 145.32, 135.817, 522.553, 163.023 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "to all the colonies, such as the United States of America, Australia and other countries."
+    }, {
+      "type" : "paragraph",
+      "id" : 11,
+      "page number" : 6,
+      "bounding box" : [ 63.96, 108.217, 522.433, 121.623 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "Heritage: traditions, beliefs and customs that are passed down from one"
+    }, {
+      "type" : "paragraph",
+      "id" : 13,
+      "page number" : 6,
+      "bounding box" : [ 63.96, 66.817, 345.553, 107.823 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "generation to the next Soothsayer: a person who is able to see the future"
+    } ]
+  }, {
+    "type" : "footer",
+    "id" : 134,
+    "page number" : 6,
+    "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 40,
+      "page number" : 6,
+      "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 135,
+    "page number" : 7,
+    "bounding box" : [ 53.88, 782.448, 528.603, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 63,
+      "page number" : 7,
+      "bounding box" : [ 53.88, 794.569, 528.603, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Visual Arts/P1 7 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 64,
+      "page number" : 7,
+      "bounding box" : [ 256.915, 782.448, 336.083, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "text block",
+    "id" : 139,
+    "page number" : 7,
+    "bounding box" : [ 165.3, 430.369, 394.35, 754.269 ],
+    "kids" : [ {
+      "type" : "image",
+      "id" : 2,
+      "page number" : 7,
+      "bounding box" : [ 166.8, 431.902, 393.119, 752.769 ],
+      "source" : "2025_visual_arts_p1_images/imageFile8.png"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 136,
+    "level" : "6",
+    "page number" : 7,
+    "bounding box" : [ 72.96, 138.217, 502.296, 428.943 ],
+    "numbering style" : "english letters",
+    "number of list items" : 2,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 7,
+      "bounding box" : [ 78.6, 401.737, 502.296, 428.943 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "FIGURE 2a: Sanford Biggers, The Soothsayer, white marble on wooden plinth, 2019–2023.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 7,
+      "bounding box" : [ 72.96, 138.217, 294.433, 151.623 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "FIGURE 2b: Roman artist, Nymph with a",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "text block",
+    "id" : 138,
+    "page number" : 7,
+    "bounding box" : [ 71.5, 151.45, 295.4, 385.65 ],
+    "kids" : [ {
+      "type" : "image",
+      "id" : 1,
+      "page number" : 7,
+      "bounding box" : [ 73.0, 152.974, 294.111, 384.15 ],
+      "source" : "2025_visual_arts_p1_images/imageFile9.png"
+    } ]
+  }, {
+    "type" : "text block",
+    "id" : 140,
+    "page number" : 7,
+    "bounding box" : [ 330.85, 133.4, 509.55, 385.65 ],
+    "kids" : [ {
+      "type" : "image",
+      "id" : 3,
+      "page number" : 7,
+      "bounding box" : [ 332.35, 134.753, 508.297, 384.15 ],
+      "source" : "2025_visual_arts_p1_images/imageFile10.png"
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 137,
+    "page number" : 7,
+    "bounding box" : [ 78.84, 106.297, 504.372, 138.078 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "Shell, marble, 1st century (Western art). FIGURE 2c: Benin artist, Benin Mask, ivory, 1600 (African art)."
+  }, {
+    "type" : "footer",
+    "id" : 141,
+    "page number" : 7,
+    "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 41,
+      "page number" : 7,
+      "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 142,
+    "page number" : 8,
+    "bounding box" : [ 53.88, 782.448, 528.603, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 65,
+      "page number" : 8,
+      "bounding box" : [ 53.88, 794.569, 528.603, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Visual Arts/P1 8 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 66,
+      "page number" : 8,
+      "bounding box" : [ 256.915, 782.448, 336.083, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 143,
+    "level" : "Subtitle",
+    "page number" : 8,
+    "bounding box" : [ 59.28, 727.177, 523.524, 754.383 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "QUESTION 3: SOCIOPOLITICAL ART, INCLUDING RESISTANCE ART OF THE 1970s AND 1980s"
+  }, {
+    "type" : "text block",
+    "id" : 144,
+    "page number" : 8,
+    "bounding box" : [ 53.88, 604.8, 530.4, 713.4 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 1,
+      "page number" : 8,
+      "bounding box" : [ 60.0, 684.337, 524.472, 711.543 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "Recently on the Cape Flats, a Grade 3 learner wrote the following: 'One day, I am going to be a gangster and hold a gun in my hand and smuggle guns in my house.'"
+    }, {
+      "type" : "paragraph",
+      "id" : 2,
+      "page number" : 8,
+      "bounding box" : [ 159.72, 661.366, 524.285, 672.493 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "[Quote taken from Three Months in a Cape Flats School by Nicole van Driel, 2024]"
+    }, {
+      "type" : "paragraph",
+      "id" : 3,
+      "page number" : 8,
+      "bounding box" : [ 60.0, 606.097, 524.351, 647.103 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "Léshaan Moses shows gang initiation rituals performed in the Cape Flats in Cape Town. Young people are forced to participate in violent acts to be accepted as members of a gang."
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 145,
+    "level" : "7",
+    "page number" : 8,
+    "bounding box" : [ 59.28, 417.457, 566.436, 590.463 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 2,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 8,
+      "bounding box" : [ 59.28, 549.457, 493.273, 590.463 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.1 What impact does the artwork in FIGURE 3a have on you as the viewer? You must refer to the following guidelines:",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 93,
+        "level" : "5",
+        "page number" : 8,
+        "bounding box" : [ 107.16, 462.483, 566.436, 535.624 ],
+        "numbering style" : "unordered",
+        "number of list items" : 5,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 8,
+          "bounding box" : [ 107.16, 520.923, 217.956, 535.624 ],
+          "font" : "SymbolMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "• The use of colour",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 8,
+          "bounding box" : [ 107.16, 506.283, 312.672, 520.984 ],
+          "font" : "SymbolMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "• The different postures of each child",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 8,
+          "bounding box" : [ 107.16, 491.643, 313.957, 506.344 ],
+          "font" : "SymbolMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "• Why the young children look similar",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 8,
+          "bounding box" : [ 107.16, 477.123, 451.513, 491.824 ],
+          "font" : "SymbolMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "• The style and the meaning of the monsters in the background",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 8,
+          "bounding box" : [ 107.16, 462.483, 566.436, 477.184 ],
+          "font" : "SymbolMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "• Explanation of the title (10)",
+          "kids" : [ ]
+        } ]
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 8,
+      "bounding box" : [ 59.28, 417.457, 566.436, 444.663 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.2 Discuss any TWO sociopolitical South African artworks you have studied (ONE artwork per artist) that had an emotional impact on you. (10)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 146,
+    "level" : "Subtitle",
+    "page number" : 8,
+    "bounding box" : [ 545.04, 403.657, 566.436, 417.063 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "[20]"
+  }, {
+    "type" : "footer",
+    "id" : 147,
+    "page number" : 8,
+    "bounding box" : [ 53.88, 36.047, 528.548, 47.174 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 42,
+      "page number" : 8,
+      "bounding box" : [ 53.88, 36.047, 528.548, 47.174 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 148,
+    "page number" : 9,
+    "bounding box" : [ 53.88, 782.448, 528.603, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 67,
+      "page number" : 9,
+      "bounding box" : [ 53.88, 794.569, 528.603, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Visual Arts/P1 9 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 68,
+      "page number" : 9,
+      "bounding box" : [ 256.915, 782.448, 336.083, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "text block",
+    "id" : 150,
+    "page number" : 9,
+    "bounding box" : [ 56.25, 101.968, 516.5, 750.668 ],
+    "kids" : [ {
+      "type" : "image",
+      "id" : 1,
+      "page number" : 9,
+      "bounding box" : [ 57.75, 103.468, 515.0, 749.168 ],
+      "source" : "2025_visual_arts_p1_images/imageFile11.png"
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 149,
+    "level" : "Subtitle",
+    "page number" : 9,
+    "bounding box" : [ 523.137, 186.84, 536.543, 671.856 ],
+    "heading level" : 3,
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "FIGURE3:LéshaanMoses,DodgingBullets, acrylicpaint,pencilandpen,dateunknown."
+  }, {
+    "type" : "footer",
+    "id" : 151,
+    "page number" : 9,
+    "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 43,
+      "page number" : 9,
+      "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 152,
+    "page number" : 10,
+    "bounding box" : [ 53.88, 782.448, 528.603, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 69,
+      "page number" : 10,
+      "bounding box" : [ 53.88, 794.569, 528.603, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Visual Arts/P1 10 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 70,
+      "page number" : 10,
+      "bounding box" : [ 256.915, 782.448, 336.083, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 153,
+    "level" : "Subtitle",
+    "page number" : 10,
+    "bounding box" : [ 59.28, 727.177, 523.332, 754.383 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "QUESTION 4: ART, CRAFT AND SPIRITUAL WORKS MAINLY FROM RURAL SOUTH AFRICA"
+  }, {
+    "type" : "text block",
+    "id" : 154,
+    "page number" : 10,
+    "bounding box" : [ 53.88, 442.8, 531.6, 713.4 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 2,
+      "page number" : 10,
+      "bounding box" : [ 60.0, 629.137, 283.632, 711.543 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "In this photograph, Esther Mahlangu stands in front of a homestead that was painted with her Ndebele designs. She used the style of the Ndebele wall painting with acrylic paint on canvas (FIGURE 4a and FIGURE 4b)."
+    }, {
+      "type" : "paragraph",
+      "id" : 4,
+      "page number" : 10,
+      "bounding box" : [ 330.48, 444.337, 501.312, 471.543 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "Photograph of Esther Mahlangu in front of a Ndebele homestead"
+    }, {
+      "type" : "text block",
+      "id" : 6,
+      "page number" : 10,
+      "bounding box" : [ 306.4, 471.173, 526.15, 711.923 ],
+      "kids" : [ {
+        "type" : "image",
+        "id" : 1,
+        "page number" : 10,
+        "bounding box" : [ 307.9, 472.466, 524.83, 710.423 ],
+        "source" : "2025_visual_arts_p1_images/imageFile12.png"
+      } ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 155,
+    "page number" : 10,
+    "bounding box" : [ 59.28, 373.777, 521.474, 428.583 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "4.1 Explain how Esther Mahlangu celebrates the traditional Ndebele style in contemporary painting. You may refer to the following guidelines:"
+  }, {
+    "type" : "list",
+    "id" : 156,
+    "level" : "5",
+    "page number" : 10,
+    "bounding box" : [ 107.16, 273.217, 559.716, 360.064 ],
+    "numbering style" : "unordered",
+    "number of list items" : 5,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 10,
+      "bounding box" : [ 107.16, 345.363, 446.833, 360.064 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• Use of colour, line and space in FIGURE 4a and FIGURE 4b",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 10,
+      "bounding box" : [ 107.16, 330.723, 368.714, 345.424 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• A description of the rural scene in FIGURE 4a",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 10,
+      "bounding box" : [ 107.16, 316.083, 317.233, 330.784 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• What makes FIGURE 4a simplified?",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 10,
+      "bounding box" : [ 107.16, 301.443, 346.032, 316.144 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• Composition and repetition in FIGURE 4b",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 10,
+      "bounding box" : [ 107.16, 273.217, 559.716, 301.624 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• What makes FIGURE 4b abstract, and how does it celebrate Ndebele traditions? (8)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 157,
+    "page number" : 10,
+    "bounding box" : [ 59.28, 214.297, 521.762, 255.303 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "4.2 Write an essay about the artworks of TWO South African artists/craft artists from rural South Africa you have studied (ONE artwork per artist) who created either traditional art, craft and/or spiritual artworks."
+  }, {
+    "type" : "paragraph",
+    "id" : 158,
+    "page number" : 10,
+    "bounding box" : [ 107.16, 186.697, 308.017, 200.103 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "You may use the following guidelines:"
+  }, {
+    "type" : "list",
+    "id" : 159,
+    "level" : "5",
+    "page number" : 10,
+    "bounding box" : [ 107.16, 100.657, 566.436, 172.864 ],
+    "numbering style" : "unordered",
+    "number of list items" : 4,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 10,
+      "bounding box" : [ 107.16, 158.163, 277.68, 172.864 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• Description of EACH artwork",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 10,
+      "bounding box" : [ 107.16, 143.523, 283.32, 158.224 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• Any TWO formal art elements",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 10,
+      "bounding box" : [ 107.16, 129.003, 236.592, 143.704 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• Media and technique",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 10,
+      "bounding box" : [ 107.16, 100.657, 566.436, 129.064 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• Possible meaning/message/function (12) [20]",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "footer",
+    "id" : 160,
+    "page number" : 10,
+    "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 44,
+      "page number" : 10,
+      "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 161,
+    "page number" : 11,
+    "bounding box" : [ 53.88, 782.448, 528.603, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 71,
+      "page number" : 11,
+      "bounding box" : [ 53.88, 794.569, 528.603, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Visual Arts/P1 11 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 72,
+      "page number" : 11,
+      "bounding box" : [ 256.915, 782.448, 336.083, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "text block",
+    "id" : 163,
+    "page number" : 11,
+    "bounding box" : [ 68.675, 442.819, 514.175, 754.819 ],
+    "kids" : [ {
+      "type" : "image",
+      "id" : 1,
+      "page number" : 11,
+      "bounding box" : [ 70.175, 444.319, 512.675, 753.319 ],
+      "source" : "2025_visual_arts_p1_images/imageFile13.png"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 162,
+    "level" : "6",
+    "page number" : 11,
+    "bounding box" : [ 115.2, 104.497, 466.176, 441.063 ],
+    "numbering style" : "english letters",
+    "number of list items" : 2,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 11,
+      "bounding box" : [ 115.2, 427.657, 466.176, 441.063 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "FIGURE 4a: Esther Mahlangu, Gateway, acrylic on canvas, 2005.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 11,
+      "bounding box" : [ 117.6, 104.497, 463.897, 117.903 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "FIGURE 4b: Esther Mahlangu, Untitled, acrylic on canvas, 2009.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "text block",
+    "id" : 164,
+    "page number" : 11,
+    "bounding box" : [ 63.425, 117.572, 519.425, 413.822 ],
+    "kids" : [ {
+      "type" : "image",
+      "id" : 2,
+      "page number" : 11,
+      "bounding box" : [ 64.925, 119.072, 517.925, 412.322 ],
+      "source" : "2025_visual_arts_p1_images/imageFile14.png"
+    } ]
+  }, {
+    "type" : "footer",
+    "id" : 165,
+    "page number" : 11,
+    "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 45,
+      "page number" : 11,
+      "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 166,
+    "page number" : 12,
+    "bounding box" : [ 53.88, 782.448, 528.603, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 73,
+      "page number" : 12,
+      "bounding box" : [ 53.88, 794.569, 528.603, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Visual Arts/P1 12 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 74,
+      "page number" : 12,
+      "bounding box" : [ 256.915, 782.448, 336.083, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 167,
+    "level" : "Subtitle",
+    "page number" : 12,
+    "bounding box" : [ 59.28, 727.177, 536.003, 754.383 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "QUESTION 5: MULTIMEDIA AND NEW MEDIA – ALTERNATIVE CONTEMPORARY AND POPULAR ART FORMS IN SOUTH AFRICA"
+  }, {
+    "type" : "text block",
+    "id" : 172,
+    "page number" : 12,
+    "bounding box" : [ 148.65, 524.723, 440.35, 713.423 ],
+    "kids" : [ {
+      "type" : "image",
+      "id" : 2,
+      "page number" : 12,
+      "bounding box" : [ 150.15, 526.223, 438.85, 711.451 ],
+      "source" : "2025_visual_arts_p1_images/imageFile15.png"
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 168,
+    "page number" : 12,
+    "bounding box" : [ 133.68, 497.257, 447.096, 524.463 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "FIGURE 5a: Claude Monet, The Waterlilies – the Clouds, oil on canvas, 1920–1926."
+  }, {
+    "type" : "text block",
+    "id" : 169,
+    "page number" : 12,
+    "bounding box" : [ 53.16, 425.28, 528.24, 483.48 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 1,
+      "page number" : 12,
+      "bounding box" : [ 59.28, 426.697, 522.193, 481.503 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "In Flooded Garden, Oscar Murillo changed the Turbine Hall (Tate Modern, London) into an interactive space for people to come and paint. Murillo was inspired by Claude Monet's paintings of his garden. He started by painting onto the canvases and then invited the viewers to paint over his first layer of paint."
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 170,
+    "level" : "7",
+    "page number" : 12,
+    "bounding box" : [ 59.28, 172.777, 521.831, 411.063 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 2,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 12,
+      "bounding box" : [ 59.28, 356.257, 521.831, 411.063 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "5.1 Explain the interaction between the people and the artwork(s) in FIGURES 5b to 5d. You may use the following guidelines:",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 92,
+        "level" : "5",
+        "page number" : 12,
+        "bounding box" : [ 107.16, 241.683, 566.436, 342.424 ],
+        "numbering style" : "unordered",
+        "number of list items" : 5,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 12,
+          "bounding box" : [ 107.16, 327.723, 376.272, 342.424 ],
+          "font" : "SymbolMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "• Similarities with Monet's painting in FIGURE 5a",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 12,
+          "bounding box" : [ 107.16, 299.377, 521.713, 327.784 ],
+          "font" : "SymbolMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "• The benefits of being part of the creation of Murillo's artwork for the individual involved",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 12,
+          "bounding box" : [ 107.16, 284.763, 420.793, 299.464 ],
+          "font" : "SymbolMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "• Reasons for the circular shape and scale in FIGURE 5b",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 12,
+          "bounding box" : [ 107.16, 256.417, 521.796, 284.824 ],
+          "font" : "SymbolMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "• Why Murillo is considered the artist, even though he is not the sole creator of the artwork",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 12,
+          "bounding box" : [ 107.16, 241.683, 566.436, 256.384 ],
+          "font" : "SymbolMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "• How performance and installation art inspired Murillo's Flooded Garden (10)",
+          "kids" : [ ]
+        } ]
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 12,
+      "bounding box" : [ 59.28, 172.777, 521.714, 227.583 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "5.2 Discuss TWO artworks that you have studied which show how the artists used new/alternative media. You may use the following guidelines:",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 171,
+    "level" : "5",
+    "page number" : 12,
+    "bounding box" : [ 107.16, 101.377, 566.436, 158.944 ],
+    "numbering style" : "unordered",
+    "number of list items" : 3,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 12,
+      "bounding box" : [ 107.16, 144.243, 185.232, 158.944 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• Description",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 12,
+      "bounding box" : [ 107.16, 129.723, 239.28, 144.424 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• Materials/Techniques",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 12,
+      "bounding box" : [ 107.16, 101.377, 566.436, 129.784 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• Message/Meaning (10) [20]",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "footer",
+    "id" : 173,
+    "page number" : 12,
+    "bounding box" : [ 53.88, 36.047, 528.548, 47.174 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 46,
+      "page number" : 12,
+      "bounding box" : [ 53.88, 36.047, 528.548, 47.174 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 174,
+    "page number" : 13,
+    "bounding box" : [ 53.88, 782.448, 528.603, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 75,
+      "page number" : 13,
+      "bounding box" : [ 53.88, 794.569, 528.603, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Visual Arts/P1 13 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 76,
+      "page number" : 13,
+      "bounding box" : [ 256.915, 782.448, 336.083, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "text block",
+    "id" : 180,
+    "page number" : 13,
+    "bounding box" : [ 300.65, 587.569, 520.05, 753.719 ],
+    "kids" : [ {
+      "type" : "image",
+      "id" : 3,
+      "page number" : 13,
+      "bounding box" : [ 302.15, 589.069, 518.55, 752.219 ],
+      "source" : "2025_visual_arts_p1_images/imageFile16.png"
+    } ]
+  }, {
+    "type" : "text block",
+    "id" : 181,
+    "page number" : 13,
+    "bounding box" : [ 60.7, 588.069, 285.35, 753.519 ],
+    "kids" : [ {
+      "type" : "image",
+      "id" : 4,
+      "page number" : 13,
+      "bounding box" : [ 62.2, 589.569, 283.85, 752.019 ],
+      "source" : "2025_visual_arts_p1_images/imageFile17.png"
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 175,
+    "page number" : 13,
+    "bounding box" : [ 82.92, 571.057, 498.456, 584.463 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "FIGURE 5b: Oscar Murillo, Flooded Garden, artist and viewers busy painting."
+  }, {
+    "type" : "text block",
+    "id" : 179,
+    "page number" : 13,
+    "bounding box" : [ 89.95, 235.821, 491.75, 558.571 ],
+    "kids" : [ {
+      "type" : "image",
+      "id" : 2,
+      "page number" : 13,
+      "bounding box" : [ 91.45, 237.535, 490.373, 557.07 ],
+      "source" : "2025_visual_arts_p1_images/imageFile18.png"
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 176,
+    "page number" : 13,
+    "bounding box" : [ 96.24, 208.417, 485.112, 235.623 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "FIGURE 5c: Oscar Murillo, Flooded Garden (aerial/top view), installation in the Turbine Hall, Tate Modern, 20 July–26 August 2024."
+  }, {
+    "type" : "text block",
+    "id" : 177,
+    "page number" : 13,
+    "bounding box" : [ 56.25, 94.674, 525.3, 194.724 ],
+    "kids" : [ {
+      "type" : "image",
+      "id" : 1,
+      "page number" : 13,
+      "bounding box" : [ 57.75, 95.7, 523.8, 193.224 ],
+      "source" : "2025_visual_arts_p1_images/imageFile19.png"
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 178,
+    "page number" : 13,
+    "bounding box" : [ 72.24, 79.657, 509.256, 93.063 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "FIGURE 5d: Oscar Murillo, Flooded Garden, completed artwork on display, 2024."
+  }, {
+    "type" : "footer",
+    "id" : 182,
+    "page number" : 13,
+    "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 47,
+      "page number" : 13,
+      "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 183,
+    "page number" : 14,
+    "bounding box" : [ 53.88, 782.448, 528.603, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 77,
+      "page number" : 14,
+      "bounding box" : [ 53.88, 794.569, 528.603, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Visual Arts/P1 14 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 78,
+      "page number" : 14,
+      "bounding box" : [ 256.915, 782.448, 336.083, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 184,
+    "level" : "Subtitle",
+    "page number" : 14,
+    "bounding box" : [ 59.28, 740.977, 465.144, 754.383 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "QUESTION 6: POST-1994 DEMOCRATIC IDENTITY IN SOUTH AFRICA"
+  }, {
+    "type" : "text block",
+    "id" : 185,
+    "page number" : 14,
+    "bounding box" : [ 53.88, 613.92, 530.4, 727.2 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 1,
+      "page number" : 14,
+      "bounding box" : [ 60.0, 656.737, 524.497, 725.343 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "Nosiviwe Matikinca, the winner of the 2023 SASOL New Signatures Art Competition, draws attention to the struggles faced by learners in underfunded public schools in South Africa. Many South African learners travel far to get to school and find themselves in overcrowded classrooms where there is a lack of resources, such as books or school tables."
+    }, {
+      "type" : "paragraph",
+      "id" : 2,
+      "page number" : 14,
+      "bounding box" : [ 60.0, 615.337, 524.354, 642.543 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "FIGURE 6b shows an installation of ceramic school shoes (made with the slip casting method) and school desks."
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 186,
+    "level" : "7",
+    "page number" : 14,
+    "bounding box" : [ 59.28, 399.097, 566.436, 599.583 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 2,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 14,
+      "bounding box" : [ 59.28, 544.777, 521.712, 599.583 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "6.1 Discuss the impact of school experiences on learners' identity, as seen in FIGURE 6a and FIGURE 6b. You may refer to the following guidelines in your answer:",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 91,
+        "level" : "5",
+        "page number" : 14,
+        "bounding box" : [ 107.16, 444.123, 566.436, 531.064 ],
+        "numbering style" : "unordered",
+        "number of list items" : 5,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 14,
+          "bounding box" : [ 107.16, 516.363, 520.752, 531.064 ],
+          "font" : "SymbolMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "• Why did the artist choose to use this fragile material in creating the shoes?",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 14,
+          "bounding box" : [ 107.16, 488.017, 521.592, 516.424 ],
+          "font" : "SymbolMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "• What mood/atmosphere is conveyed in FIGURE 6b of the shoes in an empty classroom?",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 14,
+          "bounding box" : [ 107.16, 473.283, 285.817, 487.984 ],
+          "font" : "SymbolMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "• Explain the title of the artwork.",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 14,
+          "bounding box" : [ 107.16, 458.643, 489.433, 473.344 ],
+          "font" : "SymbolMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "• How does the artwork reflect educational inequalities in our schools?",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 14,
+          "bounding box" : [ 107.16, 444.123, 566.436, 458.824 ],
+          "font" : "SymbolMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "• Explain shoes as a symbol of identity. (10)",
+          "kids" : [ ]
+        } ]
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 14,
+      "bounding box" : [ 59.28, 399.097, 566.436, 426.303 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "6.2 Write an essay in which you discuss TWO South African artworks you have studied (ONE artwork per artist) that address identity in our democratic society. (10)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 187,
+    "level" : "Subtitle",
+    "page number" : 14,
+    "bounding box" : [ 545.04, 385.297, 566.436, 398.703 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "[20]"
+  }, {
+    "type" : "text block",
+    "id" : 188,
+    "page number" : 14,
+    "bounding box" : [ 57.96, 65.04, 528.6, 164.52 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 4,
+      "level" : "Subtitle",
+      "page number" : 14,
+      "bounding box" : [ 63.96, 149.257, 119.196, 162.663 ],
+      "heading level" : 2,
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "Glossary:"
+    }, {
+      "type" : "paragraph",
+      "id" : 7,
+      "page number" : 14,
+      "bounding box" : [ 63.96, 66.457, 522.433, 135.063 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "Slip casting method: This is a ceramic production technique that involves the pouring of liquid clay, known as slip, into a mould. The mould is then drained of excess slip, allowing a thin layer of clay to solidify against the walls of the mould. The ceramic slip sculpture is then fired in a kiln (oven)."
+    } ]
+  }, {
+    "type" : "footer",
+    "id" : 189,
+    "page number" : 14,
+    "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 48,
+      "page number" : 14,
+      "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 190,
+    "page number" : 15,
+    "bounding box" : [ 53.88, 782.448, 528.603, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 79,
+      "page number" : 15,
+      "bounding box" : [ 53.88, 794.569, 528.603, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Visual Arts/P1 15 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 80,
+      "page number" : 15,
+      "bounding box" : [ 256.915, 782.448, 336.083, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "text block",
+    "id" : 192,
+    "page number" : 15,
+    "bounding box" : [ 127.25, 450.319, 450.4, 754.669 ],
+    "kids" : [ {
+      "type" : "image",
+      "id" : 1,
+      "page number" : 15,
+      "bounding box" : [ 128.75, 451.701, 449.051, 753.169 ],
+      "source" : "2025_visual_arts_p1_images/imageFile20.png"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 191,
+    "level" : "8",
+    "page number" : 15,
+    "bounding box" : [ 75.84, 142.897, 506.016, 449.703 ],
+    "numbering style" : "english letters in lower case",
+    "number of list items" : 2,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 15,
+      "bounding box" : [ 77.52, 422.497, 504.312, 449.703 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "FIGURE 6a: Nosiviwe Matikinca, Ndiziphiwe – The Gift That Was Given to Me (detail), ceramic school shoes, 2023.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 15,
+      "bounding box" : [ 75.84, 142.897, 506.016, 170.223 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "FIGURE 6b: Nosiviwe Matikinca, Ndiziphiwe – The Gift That Was Given to Me, installation view of school desks with ceramic school shoes, 2023.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "text block",
+    "id" : 193,
+    "page number" : 15,
+    "bounding box" : [ 76.65, 170.399, 504.5, 408.549 ],
+    "kids" : [ {
+      "type" : "image",
+      "id" : 2,
+      "page number" : 15,
+      "bounding box" : [ 78.15, 171.661, 502.744, 407.049 ],
+      "source" : "2025_visual_arts_p1_images/imageFile21.png"
+    } ]
+  }, {
+    "type" : "footer",
+    "id" : 194,
+    "page number" : 15,
+    "bounding box" : [ 53.88, 36.047, 528.548, 47.174 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 49,
+      "page number" : 15,
+      "bounding box" : [ 53.88, 36.047, 528.548, 47.174 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 195,
+    "page number" : 16,
+    "bounding box" : [ 53.88, 782.448, 528.603, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 81,
+      "page number" : 16,
+      "bounding box" : [ 53.88, 794.569, 528.603, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Visual Arts/P1 16 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 82,
+      "page number" : 16,
+      "bounding box" : [ 256.915, 782.448, 336.083, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 196,
+    "level" : "Subtitle",
+    "page number" : 16,
+    "bounding box" : [ 59.28, 740.977, 426.324, 754.383 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "QUESTION 7: GENDER ISSUES: MASCULINITY AND FEMINITY"
+  }, {
+    "type" : "table",
+    "id" : 197,
+    "level" : "9",
+    "page number" : 16,
+    "bounding box" : [ 53.88, 444.72, 528.6, 727.2 ],
+    "number of rows" : 1,
+    "number of columns" : 2,
+    "rows" : [ {
+      "type" : "table row",
+      "row number" : 1,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 16,
+        "bounding box" : [ 55.32, 446.16, 308.16, 725.7 ],
+        "row number" : 1,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 1,
+          "page number" : 16,
+          "bounding box" : [ 60.0, 698.137, 302.713, 725.343 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "It is often said that beauty is in the eye of the beholder."
+        }, {
+          "type" : "paragraph",
+          "id" : 2,
+          "page number" : 16,
+          "bounding box" : [ 60.0, 615.337, 302.761, 683.943 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "In the photograph (FIGURE 7a) alongside, Kim Kardashian is wearing a body belt to make her waist look smaller to exaggerate her figure. She is often seen as a symbol of beauty today."
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 16,
+        "bounding box" : [ 308.16, 446.16, 527.16, 725.7 ],
+        "row number" : 1,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 4,
+          "page number" : 16,
+          "bounding box" : [ 322.92, 446.137, 513.216, 473.343 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "FIGURE 7a: Kim Kardashian, Met Gala, colour photograph, 2024."
+        }, {
+          "type" : "text block",
+          "id" : 5,
+          "page number" : 16,
+          "bounding box" : [ 354.2, 472.972, 482.45, 725.722 ],
+          "kids" : [ {
+            "type" : "image",
+            "id" : 3,
+            "page number" : 16,
+            "bounding box" : [ 355.7, 474.472, 481.2, 724.222 ],
+            "source" : "2025_visual_arts_p1_images/imageFile22.png"
+          } ]
+        } ]
+      } ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 198,
+    "level" : "10",
+    "page number" : 16,
+    "bounding box" : [ 59.28, 179.137, 560.196, 430.383 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 3,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 16,
+      "bounding box" : [ 59.28, 403.177, 560.196, 430.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "7.1 How do you feel about Kim Kardashian physically transforming her body to be a symbol of beauty today? Explain your answer by referring to FIGURE 7a. (2)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 16,
+      "bounding box" : [ 59.28, 320.377, 522.193, 388.983 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "7.2 How are conventional ideas of beauty reinforced or challenged in the paintings of women? Select ANY TWO artworks from FIGURES 7b, 7c, 7d or 7e to answer this question. You may use the following guidelines:",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 90,
+        "level" : "5",
+        "page number" : 16,
+        "bounding box" : [ 107.16, 248.043, 566.916, 306.664 ],
+        "numbering style" : "unordered",
+        "number of list items" : 4,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 16,
+          "bounding box" : [ 107.16, 291.963, 478.92, 306.664 ],
+          "font" : "SymbolMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "• The portrayal of the human body and the changing ideas of beauty",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 16,
+          "bounding box" : [ 107.16, 277.323, 397.801, 292.024 ],
+          "font" : "SymbolMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "• The attitude and pose of the women in the artworks",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 16,
+          "bounding box" : [ 107.16, 262.683, 234.036, 277.384 ],
+          "font" : "SymbolMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "• The impact of colour",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 16,
+          "bounding box" : [ 107.16, 248.043, 566.916, 262.744 ],
+          "font" : "SymbolMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "• The relationship between the artwork and the conventional idea of beauty (10)",
+          "kids" : [ ]
+        } ]
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 16,
+      "bounding box" : [ 59.28, 179.137, 522.072, 233.943 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "7.3 Write an essay on TWO artworks (ONE artwork per artist) that comment on gender issues. You may use the following guidelines:",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 199,
+    "level" : "5",
+    "page number" : 16,
+    "bounding box" : [ 107.16, 106.923, 560.196, 165.424 ],
+    "numbering style" : "unordered",
+    "number of list items" : 4,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 16,
+      "bounding box" : [ 107.16, 150.723, 287.16, 165.424 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• Brief description of the artwork",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 16,
+      "bounding box" : [ 107.16, 136.083, 236.592, 150.784 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• Media and technique",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 16,
+      "bounding box" : [ 107.16, 121.443, 259.32, 136.144 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• TWO formal art elements",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 16,
+      "bounding box" : [ 107.16, 106.923, 560.196, 121.624 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• Gender roles explored (8)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 200,
+    "level" : "Subtitle",
+    "page number" : 16,
+    "bounding box" : [ 545.52, 93.217, 566.916, 106.623 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "[20]"
+  }, {
+    "type" : "footer",
+    "id" : 201,
+    "page number" : 16,
+    "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 50,
+      "page number" : 16,
+      "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 202,
+    "page number" : 17,
+    "bounding box" : [ 53.88, 782.448, 528.603, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 83,
+      "page number" : 17,
+      "bounding box" : [ 53.88, 794.569, 528.603, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Visual Arts/P1 17 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 84,
+      "page number" : 17,
+      "bounding box" : [ 256.915, 782.448, 336.083, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "text block",
+    "id" : 210,
+    "page number" : 17,
+    "bounding box" : [ 66.3, 479.719, 284.4, 754.469 ],
+    "kids" : [ {
+      "type" : "image",
+      "id" : 4,
+      "page number" : 17,
+      "bounding box" : [ 67.8, 481.219, 282.941, 752.969 ],
+      "source" : "2025_visual_arts_p1_images/imageFile23.png"
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 203,
+    "page number" : 17,
+    "bounding box" : [ 67.56, 452.377, 282.576, 479.583 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "FIGURE 7b: Peter Paul Rubens, The Three Graces, oil on canvas, 1639."
+  }, {
+    "type" : "text block",
+    "id" : 208,
+    "page number" : 17,
+    "bounding box" : [ 69.75, 152.547, 279.75, 424.797 ],
+    "kids" : [ {
+      "type" : "image",
+      "id" : 2,
+      "page number" : 17,
+      "bounding box" : [ 71.25, 154.194, 278.25, 423.297 ],
+      "source" : "2025_visual_arts_p1_images/imageFile24.png"
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 205,
+    "page number" : 17,
+    "bounding box" : [ 74.28, 124.297, 275.856, 151.503 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "FIGURE 7d: Jenni Saville, The Bride, oil on canvas, 1992."
+  }, {
+    "type" : "text block",
+    "id" : 207,
+    "page number" : 17,
+    "bounding box" : [ 315.15, 480.319, 509.4, 754.819 ],
+    "kids" : [ {
+      "type" : "image",
+      "id" : 1,
+      "page number" : 17,
+      "bounding box" : [ 316.65, 482.312, 507.997, 753.319 ],
+      "source" : "2025_visual_arts_p1_images/imageFile25.png"
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 204,
+    "page number" : 17,
+    "bounding box" : [ 313.44, 438.577, 510.193, 479.583 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "FIGURE 7c: Otto Dix, Portrait of the Journalist Sylvia von Harden, oil and tempera on wood, 1926."
+  }, {
+    "type" : "text block",
+    "id" : 209,
+    "page number" : 17,
+    "bounding box" : [ 311.45, 151.797, 510.95, 424.797 ],
+    "kids" : [ {
+      "type" : "image",
+      "id" : 3,
+      "page number" : 17,
+      "bounding box" : [ 312.95, 153.297, 509.45, 423.297 ],
+      "source" : "2025_visual_arts_p1_images/imageFile26.png"
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 206,
+    "page number" : 17,
+    "bounding box" : [ 309.12, 96.697, 514.632, 151.503 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "FIGURE 7e: Delita Martins, Rain Falls from The Lemon Tree, acrylic, charcoal, decorative papers and hand stitching, 2020."
+  }, {
+    "type" : "footer",
+    "id" : 211,
+    "page number" : 17,
+    "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 51,
+      "page number" : 17,
+      "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 212,
+    "page number" : 18,
+    "bounding box" : [ 53.88, 782.448, 528.603, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 85,
+      "page number" : 18,
+      "bounding box" : [ 53.88, 794.569, 528.603, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Visual Arts/P1 18 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 86,
+      "page number" : 18,
+      "bounding box" : [ 256.915, 782.448, 336.083, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 213,
+    "level" : "Subtitle",
+    "page number" : 18,
+    "bounding box" : [ 59.28, 740.977, 353.784, 754.383 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "QUESTION 8: ARCHITECTURE IN SOUTH AFRICA"
+  }, {
+    "type" : "text block",
+    "id" : 214,
+    "page number" : 18,
+    "bounding box" : [ 53.88, 600.12, 530.4, 727.2 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 1,
+      "page number" : 18,
+      "bounding box" : [ 60.0, 684.337, 524.353, 725.343 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "Former president Thabo Mbeki had a vision of the new Presidential Centre as a building which 'aims to combine both an African past and an African future. It will be a place where Africans uncover their own history and identity'."
+    }, {
+      "type" : "paragraph",
+      "id" : 2,
+      "page number" : 18,
+      "bounding box" : [ 60.0, 601.537, 524.4, 670.143 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "This Centre houses a museum, research centre, special collection and a reading and archive centre (a collection of historical documents or records). The Presidential Library houses artefacts and key documents to preserve African history and knowledge. The architect used the shape of an African-style granary (a structure which stores grain) as inspiration for his design."
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 215,
+    "level" : "8",
+    "page number" : 18,
+    "bounding box" : [ 59.28, 344.737, 521.666, 585.783 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 2,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 18,
+      "bounding box" : [ 59.28, 530.977, 521.666, 585.783 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "8.1 Explain how the Thabo Mbeki Presidential Library reinterprets the traditional granary into a functional public space. Write an essay using the following guidelines:",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 89,
+        "level" : "5",
+        "page number" : 18,
+        "bounding box" : [ 107.16, 417.337, 559.716, 517.264 ],
+        "numbering style" : "unordered",
+        "number of list items" : 4,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 18,
+          "bounding box" : [ 107.16, 488.857, 521.616, 517.264 ],
+          "font" : "SymbolMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "• How the granary in FIGURE 8c influenced the forms, colour and texture of the building in FIGURE 8a",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 18,
+          "bounding box" : [ 107.16, 474.123, 466.201, 488.824 ],
+          "font" : "SymbolMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "• The role/function of the openings in FIGURE 8a and FIGURE 8c",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 18,
+          "bounding box" : [ 107.16, 445.777, 521.717, 474.184 ],
+          "font" : "SymbolMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "• Why you think the architects in FIGURE 8a chose a traditional structure (FIGURE 8c) as an influence",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 18,
+          "bounding box" : [ 107.16, 417.337, 559.716, 445.744 ],
+          "font" : "SymbolMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "• What relationship the architects saw between the function of a granary (FIGURE 8c) and the idea of a library (FIGURE 8a) (8)",
+          "kids" : [ ]
+        } ]
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 18,
+      "bounding box" : [ 59.28, 344.737, 521.64, 399.543 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "8.2 Analyse TWO South African buildings you have studied that use functionality and distinctive design to benefit the community. You may use the following guidelines in your response:",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 216,
+    "level" : "5",
+    "page number" : 18,
+    "bounding box" : [ 107.16, 258.697, 566.436, 330.904 ],
+    "numbering style" : "unordered",
+    "number of list items" : 4,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 18,
+      "bounding box" : [ 107.16, 316.203, 180.0, 330.904 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• Influences",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 18,
+      "bounding box" : [ 107.16, 301.563, 241.92, 316.264 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• Site and surroundings",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 18,
+      "bounding box" : [ 107.16, 286.923, 326.76, 301.624 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• Materials and construction techniques",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 18,
+      "bounding box" : [ 107.16, 258.697, 566.436, 287.104 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• Architectural style (12) [20]",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "footer",
+    "id" : 217,
+    "page number" : 18,
+    "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 52,
+      "page number" : 18,
+      "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 218,
+    "page number" : 19,
+    "bounding box" : [ 53.88, 782.448, 528.603, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 87,
+      "page number" : 19,
+      "bounding box" : [ 53.88, 794.569, 528.603, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Visual Arts/P1 19 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 88,
+      "page number" : 19,
+      "bounding box" : [ 256.915, 782.448, 336.083, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "text block",
+    "id" : 224,
+    "page number" : 19,
+    "bounding box" : [ 55.75, 502.169, 571.75, 759.419 ],
+    "kids" : [ {
+      "type" : "image",
+      "id" : 1,
+      "page number" : 19,
+      "bounding box" : [ 57.25, 503.319, 570.632, 757.919 ],
+      "source" : "2025_visual_arts_p1_images/imageFile27.png"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 220,
+    "level" : "7",
+    "page number" : 19,
+    "bounding box" : [ 74.88, 261.697, 549.216, 502.503 ],
+    "numbering style" : "english letters",
+    "number of list items" : 2,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 19,
+      "bounding box" : [ 78.24, 475.297, 549.216, 502.503 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "FIGURE 8a: Sir David Adjaye of Adjaye Associates, Thabo Mbeki Presidential Library, Riviera, Johannesburg, South Africa, compressed layers of mud 2021.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 19,
+      "bounding box" : [ 74.88, 261.697, 321.697, 288.903 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "FIGURE 8b: Adjaye Associates, Thabo Mbeki Presidential Library, Riviera, Johannesburg,",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "text block",
+    "id" : 225,
+    "page number" : 19,
+    "bounding box" : [ 59.25, 289.772, 338.25, 461.522 ],
+    "kids" : [ {
+      "type" : "image",
+      "id" : 2,
+      "page number" : 19,
+      "bounding box" : [ 60.75, 291.829, 336.75, 460.022 ],
+      "source" : "2025_visual_arts_p1_images/imageFile28.png"
+    } ]
+  }, {
+    "type" : "text block",
+    "id" : 226,
+    "page number" : 19,
+    "bounding box" : [ 348.15, 292.022, 564.9, 461.522 ],
+    "kids" : [ {
+      "type" : "image",
+      "id" : 3,
+      "page number" : 19,
+      "bounding box" : [ 349.65, 293.522, 563.4, 460.022 ],
+      "source" : "2025_visual_arts_p1_images/imageFile29.png"
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 222,
+    "page number" : 19,
+    "bounding box" : [ 358.8, 261.697, 557.618, 288.903 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "FIGURE 8c: Traditional grain storage (granary), Niger, mud, date unknown."
+  }, {
+    "type" : "paragraph",
+    "id" : 221,
+    "page number" : 19,
+    "bounding box" : [ 147.24, 247.897, 249.456, 261.303 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "South Africa, 2021."
+  }, {
+    "type" : "heading",
+    "id" : 223,
+    "level" : "Subtitle",
+    "page number" : 19,
+    "bounding box" : [ 477.6, 234.097, 565.272, 247.503 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "TOTAL: 100"
+  }, {
+    "type" : "paragraph",
+    "id" : 219,
+    "page number" : 19,
+    "bounding box" : [ 53.88, 36.037, 138.244, 47.164 ],
+    "font" : "ArialMT",
+    "font size" : 9.96,
+    "text color" : "[0.0]",
+    "content" : "Copyright reserved"
+  } ]
+}

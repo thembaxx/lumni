@@ -1,0 +1,4045 @@
+{
+  "file name" : "2025_economics_p2.pdf",
+  "number of pages" : 12,
+  "author" : ", NSC6774",
+  "title" : "",
+  "creation date" : "D:20251121103700+02'00'",
+  "modification date" : "D:20251121103705+02'00'",
+  "kids" : [ {
+    "type" : "text block",
+    "id" : 80,
+    "page number" : 1,
+    "bounding box" : [ 24.0, 24.0, 571.32, 818.04 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 1,
+      "page number" : 1,
+      "bounding box" : [ 266.074, 793.903, 322.043, 805.925 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "Confidential"
+    }, {
+      "type" : "paragraph",
+      "id" : 2,
+      "page number" : 1,
+      "bounding box" : [ 53.88, 36.049, 528.539, 47.177 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    }, {
+      "type" : "paragraph",
+      "id" : 3,
+      "page number" : 1,
+      "bounding box" : [ 53.88, 311.017, 136.632, 352.023 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "MARKS: 150 TIME: 2 hours"
+    }, {
+      "type" : "paragraph",
+      "id" : 4,
+      "page number" : 1,
+      "bounding box" : [ 173.28, 214.417, 412.176, 227.823 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "This question paper consists of 12 pages."
+    }, {
+      "type" : "image",
+      "id" : 6,
+      "page number" : 1,
+      "bounding box" : [ 83.64, 389.88, 511.56, 437.76 ],
+      "source" : "2025_economics_p2_images/imageFile1.png"
+    }, {
+      "type" : "paragraph",
+      "id" : 7,
+      "page number" : 1,
+      "bounding box" : [ 239.64, 391.945, 355.689, 437.39 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 14.04,
+      "text color" : "[0.0]",
+      "content" : "ECONOMICS P2 NOVEMBER 2025"
+    }, {
+      "type" : "image",
+      "id" : 9,
+      "page number" : 1,
+      "bounding box" : [ 158.04, 566.16, 435.48, 605.28 ],
+      "source" : "2025_economics_p2_images/imageFile2.png"
+    }, {
+      "type" : "heading",
+      "id" : 10,
+      "level" : "Doctitle",
+      "page number" : 1,
+      "bounding box" : [ 211.08, 568.418, 382.415, 604.728 ],
+      "heading level" : 1,
+      "font" : "Arial-BoldMT",
+      "font size" : 15.96,
+      "text color" : "[1.0]",
+      "content" : "NATIONAL SENIOR CERTIFICATE"
+    }, {
+      "type" : "image",
+      "id" : 12,
+      "page number" : 1,
+      "bounding box" : [ 234.36, 694.56, 354.24, 715.08 ],
+      "source" : "2025_economics_p2_images/imageFile3.png"
+    }, {
+      "type" : "image",
+      "id" : 13,
+      "page number" : 1,
+      "bounding box" : [ 111.9, 650.67, 489.9, 791.87 ],
+      "source" : "2025_economics_p2_images/imageFile4.png"
+    }, {
+      "type" : "image",
+      "id" : 15,
+      "page number" : 1,
+      "bounding box" : [ 236.64, 494.04, 357.0, 511.32 ],
+      "source" : "2025_economics_p2_images/imageFile5.png"
+    }, {
+      "type" : "heading",
+      "id" : 16,
+      "level" : "Subtitle",
+      "page number" : 1,
+      "bounding box" : [ 256.68, 492.938, 336.595, 510.768 ],
+      "heading level" : 1,
+      "font" : "Arial-BoldMT",
+      "font size" : 15.96,
+      "text color" : "[0.0]",
+      "content" : "GRADE 12"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 81,
+    "page number" : 2,
+    "bounding box" : [ 53.88, 782.448, 528.605, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 32,
+      "page number" : 2,
+      "bounding box" : [ 53.88, 794.569, 528.605, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Economics/P2 2 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 33,
+      "page number" : 2,
+      "bounding box" : [ 254.763, 782.448, 333.923, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 82,
+    "level" : "Subtitle",
+    "page number" : 2,
+    "bounding box" : [ 59.28, 740.977, 266.544, 754.383 ],
+    "heading level" : 3,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "INSTRUCTIONS AND INFORMATION"
+  }, {
+    "type" : "list",
+    "id" : 83,
+    "level" : "1",
+    "page number" : 2,
+    "bounding box" : [ 59.28, 326.617, 521.761, 726.783 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 11,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 713.377, 425.497, 726.783 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1. Answer FOUR questions as follows in the ANSWER BOOK:",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 78,
+        "level" : "2",
+        "page number" : 2,
+        "bounding box" : [ 107.16, 657.817, 175.896, 698.823 ],
+        "numbering style" : "english letters",
+        "number of list items" : 3,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 2,
+          "bounding box" : [ 107.16, 685.417, 175.296, 698.823 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "SECTION A:",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 2,
+          "bounding box" : [ 107.16, 671.617, 175.296, 685.023 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "SECTION B:",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 2,
+          "bounding box" : [ 107.16, 657.817, 175.896, 671.223 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "SECTION C:",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 79,
+        "page number" : 2,
+        "bounding box" : [ 192.24, 657.817, 385.777, 698.823 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "COMPULSORY Answer TWO of the three questions. Answer ONE of the two questions."
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 616.417, 521.714, 643.623 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2. Answer only the required number of questions. Answers in excess of the required number will NOT be marked.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 575.017, 521.761, 602.223 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3. Number the answers correctly according to the numbering system used in this question paper.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 547.417, 358.536, 560.823 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "4. Write the question number above each answer.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 519.817, 261.817, 533.223 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "5. Read the questions carefully.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 492.217, 309.336, 505.623 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "6. Start EACH question on a NEW page.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 464.617, 378.097, 478.023 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "7. Leave 2–3 lines between subsections of questions.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 409.417, 521.716, 450.423 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "8. Answer the questions in full sentences and ensure that the format, content and context of your responses comply with the cognitive requirements of the questions.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 381.817, 247.297, 395.223 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "9. Use only black or blue ink.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 354.217, 388.777, 367.623 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "10. You may use a non-programmable pocket calculator.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 326.617, 234.457, 340.023 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "11. Write neatly and legibly.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "footer",
+    "id" : 84,
+    "page number" : 2,
+    "bounding box" : [ 53.88, 36.049, 528.539, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 22,
+      "page number" : 2,
+      "bounding box" : [ 53.88, 36.049, 528.539, 47.177 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 85,
+    "page number" : 3,
+    "bounding box" : [ 53.88, 782.448, 528.605, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 34,
+      "page number" : 3,
+      "bounding box" : [ 53.88, 794.569, 528.605, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Economics/P2 3 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 35,
+      "page number" : 3,
+      "bounding box" : [ 254.763, 782.448, 333.923, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 86,
+    "level" : "3",
+    "page number" : 3,
+    "bounding box" : [ 59.28, 750.217, 226.372, 763.623 ],
+    "numbering style" : "english letters",
+    "number of list items" : 1,
+    "next list id" : 113,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 59.28, 750.217, 226.372, 763.623 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "SECTION A (COMPULSORY)2025",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 87,
+    "level" : "4",
+    "page number" : 3,
+    "bounding box" : [ 59.28, 726.097, 520.044, 739.503 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 1,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 59.28, 726.097, 520.044, 739.503 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "QUESTION 1 30 MARKS – 20 MINUTES",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 88,
+    "level" : "5",
+    "page number" : 3,
+    "bounding box" : [ 59.28, 674.257, 521.738, 715.263 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 1,
+    "next list id" : 97,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 59.28, 674.257, 521.738, 715.263 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.1 Various options are provided as possible answers to the following questions. Choose the answer and write only the letter (A–D) next to the question numbers (1.1.1 to 1.1.8) in the ANSWER BOOK, e.g. 1.1.9 D.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 89,
+    "level" : "6",
+    "page number" : 3,
+    "bounding box" : [ 107.16, 132.097, 521.832, 663.543 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 6,
+    "next list id" : 94,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 107.16, 636.337, 521.76, 663.543 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.1.1 The costs that will always decrease when production increases, is referred to as … cost.",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 66,
+        "level" : "7",
+        "page number" : 3,
+        "bounding box" : [ 158.52, 572.017, 167.184, 626.823 ],
+        "numbering style" : "english letters",
+        "number of list items" : 4,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 158.52, 613.417, 166.524, 626.823 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "A",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 158.52, 599.617, 166.524, 613.023 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "B",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 158.52, 585.817, 167.184, 599.223 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "C",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 158.52, 572.017, 167.184, 585.423 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "D",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 67,
+        "page number" : 3,
+        "bounding box" : [ 179.76, 572.017, 268.392, 626.823 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "average average variable total average fixed"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 107.16, 546.817, 438.719, 560.223 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.1.2 The demand curve of a monopolistic competitor is …",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 68,
+        "level" : "7",
+        "page number" : 3,
+        "bounding box" : [ 158.52, 482.377, 167.184, 537.183 ],
+        "numbering style" : "english letters",
+        "number of list items" : 4,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 158.52, 523.777, 166.524, 537.183 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "A",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 158.52, 509.977, 166.524, 523.383 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "B",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 158.52, 496.177, 167.184, 509.583 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "C",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 158.52, 482.377, 167.184, 495.783 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "D",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 69,
+        "page number" : 3,
+        "bounding box" : [ 179.76, 482.377, 277.176, 537.183 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "relatively elastic. relatively inelastic. perfectly elastic. perfectly inelastic."
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 107.16, 444.457, 521.832, 471.663 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.1.3 The price that is set by the government above the equilibrium price to allow producers to make a fair profit is called ...",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 70,
+        "level" : "7",
+        "page number" : 3,
+        "bounding box" : [ 158.52, 377.257, 167.184, 432.063 ],
+        "numbering style" : "english letters",
+        "number of list items" : 4,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 158.52, 418.657, 166.524, 432.063 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "A",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 158.52, 404.857, 166.524, 418.263 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "B",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 158.52, 391.057, 167.184, 404.463 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "C",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 158.52, 377.257, 167.184, 390.663 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "D",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 71,
+        "page number" : 3,
+        "bounding box" : [ 179.76, 377.257, 264.576, 432.063 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "market price. selling price. maximum price. minimum price."
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 107.16, 339.217, 521.737, 366.423 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.1.4 Failure by businesses to produce goods and services at the lowest possible average cost is called … inefficiency.",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 72,
+        "level" : "7",
+        "page number" : 3,
+        "bounding box" : [ 158.52, 273.697, 167.184, 328.503 ],
+        "numbering style" : "english letters",
+        "number of list items" : 4,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 158.52, 315.097, 166.524, 328.503 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "A",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 158.52, 301.297, 166.524, 314.703 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "B",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 158.52, 287.497, 167.184, 300.903 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "C",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 158.52, 273.697, 167.184, 287.103 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "D",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 73,
+        "page number" : 3,
+        "bounding box" : [ 179.76, 273.697, 237.072, 328.503 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "allocative market productive distributive"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 107.16, 235.657, 521.761, 262.863 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.1.5 When the general price level increases, the real value of savings will …",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 74,
+        "level" : "7",
+        "page number" : 3,
+        "bounding box" : [ 158.52, 170.137, 167.184, 224.943 ],
+        "numbering style" : "english letters",
+        "number of list items" : 4,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 158.52, 211.537, 166.524, 224.943 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "A",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 158.52, 197.737, 166.524, 211.143 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "B",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 158.52, 183.937, 167.184, 197.343 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "C",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 158.52, 170.137, 167.184, 183.543 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "D",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 75,
+        "page number" : 3,
+        "bounding box" : [ 179.76, 170.137, 272.616, 224.943 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "rise. decline. remain the same. increase."
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 107.16, 132.097, 521.76, 159.303 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.1.6 The activities of people visiting places for meetings and conferences is known as … tourism.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 90,
+    "level" : "7",
+    "page number" : 3,
+    "bounding box" : [ 158.52, 66.577, 167.184, 121.383 ],
+    "numbering style" : "english letters",
+    "number of list items" : 4,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 158.52, 107.977, 166.524, 121.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "A",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 158.52, 94.177, 166.524, 107.583 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "B",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 158.52, 80.377, 167.184, 93.783 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "C",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 158.52, 66.577, 167.184, 79.983 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "D",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 91,
+    "page number" : 3,
+    "bounding box" : [ 179.76, 66.577, 227.28, 121.383 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "paleo business leisure eco-"
+  }, {
+    "type" : "footer",
+    "id" : 92,
+    "page number" : 3,
+    "bounding box" : [ 53.88, 36.049, 528.539, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 23,
+      "page number" : 3,
+      "bounding box" : [ 53.88, 36.049, 528.539, 47.177 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 93,
+    "page number" : 4,
+    "bounding box" : [ 53.88, 782.448, 528.605, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 36,
+      "page number" : 4,
+      "bounding box" : [ 53.88, 794.569, 528.605, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Economics/P2 4 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 37,
+      "page number" : 4,
+      "bounding box" : [ 254.763, 782.448, 333.923, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 94,
+    "level" : "6",
+    "page number" : 4,
+    "bounding box" : [ 107.16, 640.897, 521.761, 759.063 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 2,
+    "previous list id" : 89,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 107.16, 745.657, 485.496, 759.063 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.1.7 Internet facilities needed by tourists is called … infrastructure.",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 76,
+        "level" : "7",
+        "page number" : 4,
+        "bounding box" : [ 158.52, 680.017, 167.184, 734.823 ],
+        "numbering style" : "english letters",
+        "number of list items" : 4,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 4,
+          "bounding box" : [ 158.52, 721.417, 166.524, 734.823 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "A",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 4,
+          "bounding box" : [ 158.52, 707.617, 166.524, 721.023 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "B",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 4,
+          "bounding box" : [ 158.52, 693.817, 167.184, 707.223 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "C",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 4,
+          "bounding box" : [ 158.52, 680.017, 167.184, 693.423 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "D",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 77,
+        "page number" : 4,
+        "bounding box" : [ 179.76, 680.017, 260.592, 734.823 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "transport energy communication basic services"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 107.16, 640.897, 521.761, 668.103 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.1.8 The process of converting waste material into economic goods is known as …",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 95,
+    "level" : "7",
+    "page number" : 4,
+    "bounding box" : [ 157.2, 574.297, 165.864, 629.103 ],
+    "numbering style" : "english letters",
+    "number of list items" : 4,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 157.2, 615.697, 165.204, 629.103 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "A",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 157.2, 601.897, 165.204, 615.303 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "B",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 157.2, 588.097, 165.864, 601.503 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "C",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 157.2, 574.297, 165.864, 587.703 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "D",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 96,
+    "page number" : 4,
+    "bounding box" : [ 178.56, 574.297, 567.636, 629.103 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "recycling. re-using. littering. resourcing. (8 x 2) (16)"
+  }, {
+    "type" : "list",
+    "id" : 97,
+    "level" : "5",
+    "page number" : 4,
+    "bounding box" : [ 59.28, 521.377, 521.736, 562.383 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 1,
+    "previous list id" : 88,
+    "next list id" : 102,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 59.28, 521.377, 521.736, 562.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.2 Choose a description from COLUMN B that matches the item in COLUMN A. Write only the letter (A–I) next to the question numbers (1.2.1 to 1.2.8) in the ANSWER BOOK, e.g. 1.2.9 J.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "table",
+    "id" : 98,
+    "level" : "7",
+    "page number" : 4,
+    "bounding box" : [ 101.88, 100.68, 528.72, 509.88 ],
+    "number of rows" : 2,
+    "number of columns" : 2,
+    "rows" : [ {
+      "type" : "table row",
+      "row number" : 1,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 4,
+        "bounding box" : [ 104.04, 493.86, 287.52, 508.38 ],
+        "row number" : 1,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 1,
+          "page number" : 4,
+          "bounding box" : [ 162.36, 494.617, 227.184, 508.023 ],
+          "font" : "Arial-BoldMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "COLUMN A"
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 4,
+        "bounding box" : [ 287.52, 493.86, 527.28, 508.38 ],
+        "row number" : 1,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 2,
+          "page number" : 4,
+          "bounding box" : [ 375.0, 494.617, 439.584, 508.023 ],
+          "font" : "Arial-BoldMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "COLUMN B"
+        } ]
+      } ]
+    }, {
+      "type" : "table row",
+      "row number" : 2,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 4,
+        "bounding box" : [ 104.04, 102.12, 287.52, 493.86 ],
+        "row number" : 2,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "list",
+          "id" : 3,
+          "level" : "1",
+          "page number" : 4,
+          "bounding box" : [ 108.0, 294.097, 134.712, 492.663 ],
+          "numbering style" : "arabic numbers",
+          "number of list items" : 8,
+          "list items" : [ {
+            "type" : "list item",
+            "page number" : 4,
+            "bounding box" : [ 108.0, 479.257, 134.712, 492.663 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "1.2.1",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 4,
+            "bounding box" : [ 108.0, 452.857, 134.712, 466.263 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "1.2.2",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 4,
+            "bounding box" : [ 108.0, 426.337, 134.712, 439.743 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "1.2.3",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 4,
+            "bounding box" : [ 108.0, 399.937, 134.712, 413.343 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "1.2.4",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 4,
+            "bounding box" : [ 108.0, 373.537, 134.712, 386.943 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "1.2.5",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 4,
+            "bounding box" : [ 108.0, 347.017, 134.712, 360.423 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "1.2.6",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 4,
+            "bounding box" : [ 108.0, 320.617, 134.712, 334.023 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "1.2.7",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 4,
+            "bounding box" : [ 108.0, 294.097, 134.712, 307.503 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "1.2.8",
+            "kids" : [ ]
+          } ]
+        }, {
+          "type" : "paragraph",
+          "id" : 4,
+          "page number" : 4,
+          "bounding box" : [ 157.56, 294.097, 278.4, 492.663 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "Homogenous products Price-taker Collusion Free riders Inflation targeting Ecotourism Tourism Preservation"
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 4,
+        "bounding box" : [ 287.52, 102.12, 527.28, 493.86 ],
+        "row number" : 2,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "list",
+          "id" : 5,
+          "level" : "1",
+          "page number" : 4,
+          "bounding box" : [ 292.2, 115.897, 301.536, 492.663 ],
+          "numbering style" : "english letters",
+          "number of list items" : 9,
+          "list items" : [ {
+            "type" : "list item",
+            "page number" : 4,
+            "bounding box" : [ 292.2, 479.257, 300.204, 492.663 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "A",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 4,
+            "bounding box" : [ 292.2, 439.057, 300.204, 452.463 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "B",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 4,
+            "bounding box" : [ 292.2, 398.737, 300.864, 412.143 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "C",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 4,
+            "bounding box" : [ 292.2, 344.737, 300.864, 358.143 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "D",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 4,
+            "bounding box" : [ 292.2, 304.537, 300.204, 317.943 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "E",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 4,
+            "bounding box" : [ 292.2, 264.217, 299.532, 277.623 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "F",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 4,
+            "bounding box" : [ 292.2, 210.217, 301.536, 223.623 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "G",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 4,
+            "bounding box" : [ 292.2, 156.097, 300.864, 169.503 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "H",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 4,
+            "bounding box" : [ 292.2, 115.897, 295.536, 129.303 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "I",
+            "kids" : [ ]
+          } ]
+        }, {
+          "type" : "paragraph",
+          "id" : 6,
+          "page number" : 4,
+          "bounding box" : [ 313.92, 465.457, 514.153, 492.663 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "method used to prevent the extinction of non-renewable resources"
+        }, {
+          "type" : "paragraph",
+          "id" : 7,
+          "page number" : 4,
+          "bounding box" : [ 313.92, 425.257, 514.08, 452.463 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "people who enjoy goods and services without paying for them"
+        }, {
+          "type" : "paragraph",
+          "id" : 8,
+          "page number" : 4,
+          "bounding box" : [ 313.92, 371.137, 520.752, 412.143 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "the activities of people travelling to and staying in places outside their usual environment"
+        }, {
+          "type" : "paragraph",
+          "id" : 9,
+          "page number" : 4,
+          "bounding box" : [ 313.92, 330.937, 504.793, 358.143 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "a firm that has no influence over the market price"
+        }, {
+          "type" : "paragraph",
+          "id" : 10,
+          "page number" : 4,
+          "bounding box" : [ 313.92, 290.737, 500.16, 317.943 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "goods that are identical in terms of appearance, packaging and quality"
+        }, {
+          "type" : "paragraph",
+          "id" : 11,
+          "page number" : 4,
+          "bounding box" : [ 313.92, 236.617, 516.792, 277.623 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "monetary policy approach used by the SARB to keep price changes within 3–6%"
+        }, {
+          "type" : "paragraph",
+          "id" : 12,
+          "page number" : 4,
+          "bounding box" : [ 313.92, 182.617, 511.393, 223.623 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "an agreement among firms within the same industry to reduce competition through price fixing"
+        }, {
+          "type" : "paragraph",
+          "id" : 13,
+          "page number" : 4,
+          "bounding box" : [ 313.92, 142.297, 516.097, 169.503 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "a firm that has control over the market price"
+        }, {
+          "type" : "paragraph",
+          "id" : 14,
+          "page number" : 4,
+          "bounding box" : [ 313.92, 102.097, 504.193, 129.303 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "activities of people visiting places to enjoy the natural environment"
+        } ]
+      } ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 99,
+    "page number" : 4,
+    "bounding box" : [ 497.76, 86.857, 561.516, 100.263 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "(8 x 1) (8)"
+  }, {
+    "type" : "footer",
+    "id" : 100,
+    "page number" : 4,
+    "bounding box" : [ 53.88, 36.049, 528.539, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 24,
+      "page number" : 4,
+      "bounding box" : [ 53.88, 36.049, 528.539, 47.177 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 101,
+    "page number" : 5,
+    "bounding box" : [ 53.88, 782.448, 528.605, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 38,
+      "page number" : 5,
+      "bounding box" : [ 53.88, 794.569, 528.605, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Economics/P2 5 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 39,
+      "page number" : 5,
+      "bounding box" : [ 254.763, 782.448, 333.923, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 102,
+    "level" : "5",
+    "page number" : 5,
+    "bounding box" : [ 59.28, 713.377, 521.617, 754.383 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 1,
+    "previous list id" : 97,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 59.28, 713.377, 521.617, 754.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.3 Give ONE term for each of the following descriptions. Write only the term next to the question numbers (1.3.1 to 1.3.6) in the ANSWER BOOK. Abbreviations, acronyms and examples will NOT be accepted.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 103,
+    "level" : "7",
+    "page number" : 5,
+    "bounding box" : [ 107.16, 478.777, 133.872, 699.183 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 6,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 107.16, 685.777, 133.872, 699.183 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.3.1",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 107.16, 644.377, 133.872, 657.783 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.3.2",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 107.16, 602.977, 133.872, 616.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.3.3",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 107.16, 561.577, 133.872, 574.983 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.3.4",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 107.16, 520.177, 133.872, 533.583 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.3.5",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 107.16, 478.777, 133.872, 492.183 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.3.6",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 104,
+    "page number" : 5,
+    "bounding box" : [ 163.92, 671.977, 521.641, 699.183 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "A market in which decisions are left to individual sellers and buyers without government interference"
+  }, {
+    "type" : "paragraph",
+    "id" : 105,
+    "page number" : 5,
+    "bounding box" : [ 163.92, 630.577, 521.881, 657.783 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "The percentage of total sales in an industry that a particular business controls"
+  }, {
+    "type" : "paragraph",
+    "id" : 106,
+    "page number" : 5,
+    "bounding box" : [ 163.92, 589.177, 521.88, 616.383 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "A technique used to evaluate the social costs and benefits associated with public projects"
+  }, {
+    "type" : "paragraph",
+    "id" : 107,
+    "page number" : 5,
+    "bounding box" : [ 163.92, 547.777, 521.76, 574.983 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "A general rise in prices caused by increases in the cost of the factors of production"
+  }, {
+    "type" : "paragraph",
+    "id" : 108,
+    "page number" : 5,
+    "bounding box" : [ 163.92, 506.377, 521.712, 533.583 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "Places listed by the United Nations as having cultural, historical and scientific significance"
+  }, {
+    "type" : "paragraph",
+    "id" : 109,
+    "page number" : 5,
+    "bounding box" : [ 163.92, 464.977, 558.876, 492.183 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "The gradual increase in the temperature of the Earth's atmosphere due to a increase in carbon emissions (6 x 1) (6)"
+  }, {
+    "type" : "heading",
+    "id" : 110,
+    "level" : "Subtitle",
+    "page number" : 5,
+    "bounding box" : [ 408.96, 437.377, 558.552, 450.783 ],
+    "heading level" : 3,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "TOTAL SECTION A: 30"
+  }, {
+    "type" : "footer",
+    "id" : 111,
+    "page number" : 5,
+    "bounding box" : [ 53.88, 36.049, 528.539, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 25,
+      "page number" : 5,
+      "bounding box" : [ 53.88, 36.049, 528.539, 47.177 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 112,
+    "page number" : 6,
+    "bounding box" : [ 53.88, 782.448, 528.605, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 40,
+      "page number" : 6,
+      "bounding box" : [ 53.88, 794.569, 528.605, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Economics/P2 6 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 41,
+      "page number" : 6,
+      "bounding box" : [ 254.763, 782.448, 333.923, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 113,
+    "level" : "3",
+    "page number" : 6,
+    "bounding box" : [ 59.28, 713.377, 492.936, 754.383 ],
+    "numbering style" : "english letters",
+    "number of list items" : 1,
+    "previous list id" : 86,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 6,
+      "bounding box" : [ 59.28, 713.377, 492.936, 754.383 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "SECTION B Answer any TWO of the three questions from this section in the ANSWER BOOK.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 114,
+    "level" : "Subtitle",
+    "page number" : 6,
+    "bounding box" : [ 59.28, 685.777, 520.044, 699.183 ],
+    "heading level" : 3,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "QUESTION 2: MICROECONOMICS 40 MARKS – 30 MINUTES"
+  }, {
+    "type" : "list",
+    "id" : 115,
+    "level" : "6",
+    "page number" : 6,
+    "bounding box" : [ 59.28, 561.577, 422.616, 671.583 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 2,
+    "next list id" : 120,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 6,
+      "bounding box" : [ 59.28, 658.177, 275.377, 671.583 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.1 Answer the following questions.",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 63,
+        "level" : "7",
+        "page number" : 6,
+        "bounding box" : [ 107.16, 589.177, 558.876, 643.983 ],
+        "numbering style" : "arabic numbers",
+        "number of list items" : 2,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 6,
+          "bounding box" : [ 107.16, 630.577, 558.876, 643.983 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "2.1.1 Give any TWO examples of oligopoly markets. (2 x 1) (2)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 6,
+          "bounding box" : [ 107.16, 589.177, 558.876, 616.383 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "2.1.2 Why would a perfectly competitive firm consider shutting down its operations? (1 x 2) (2)",
+          "kids" : [ ]
+        } ]
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 6,
+      "bounding box" : [ 59.28, 561.577, 422.616, 574.983 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.2 Study the table below and answer the questions that follow.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "text block",
+    "id" : 116,
+    "page number" : 6,
+    "bounding box" : [ 101.16, 399.96, 527.76, 547.8 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 36,
+      "level" : "Subtitle",
+      "page number" : 6,
+      "bounding box" : [ 217.92, 532.537, 410.844, 545.943 ],
+      "heading level" : 3,
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "COST AND REVENUE SCHEDULE"
+    }, {
+      "type" : "table",
+      "id" : 37,
+      "level" : "1",
+      "page number" : 6,
+      "bounding box" : [ 107.16, 404.4, 521.64, 532.56 ],
+      "number of rows" : 7,
+      "number of columns" : 5,
+      "rows" : [ {
+        "type" : "table row",
+        "row number" : 1,
+        "cells" : [ {
+          "type" : "table cell",
+          "page number" : 6,
+          "bounding box" : [ 107.64, 490.441, 192.12, 532.08 ],
+          "row number" : 1,
+          "column number" : 1,
+          "row span" : 1,
+          "column span" : 1,
+          "kids" : [ {
+            "type" : "paragraph",
+            "id" : 1,
+            "page number" : 6,
+            "bounding box" : [ 125.4, 518.257, 174.192, 531.663 ],
+            "font" : "Arial-BoldMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "Quantity"
+          } ]
+        }, {
+          "type" : "table cell",
+          "page number" : 6,
+          "bounding box" : [ 192.12, 490.441, 274.68, 532.08 ],
+          "row number" : 1,
+          "column number" : 2,
+          "row span" : 1,
+          "column span" : 1,
+          "kids" : [ {
+            "type" : "paragraph",
+            "id" : 2,
+            "page number" : 6,
+            "bounding box" : [ 210.36, 490.657, 256.272, 531.663 ],
+            "font" : "Arial-BoldMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "Total revenue (rands)"
+          } ]
+        }, {
+          "type" : "table cell",
+          "page number" : 6,
+          "bounding box" : [ 274.68, 490.441, 359.76, 532.08 ],
+          "row number" : 1,
+          "column number" : 3,
+          "row span" : 1,
+          "column span" : 1,
+          "kids" : [ {
+            "type" : "paragraph",
+            "id" : 3,
+            "page number" : 6,
+            "bounding box" : [ 292.56, 490.657, 341.976, 531.663 ],
+            "font" : "Arial-BoldMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "Marginal revenue (rands)"
+          } ]
+        }, {
+          "type" : "table cell",
+          "page number" : 6,
+          "bounding box" : [ 359.76, 490.441, 444.72, 532.08 ],
+          "row number" : 1,
+          "column number" : 4,
+          "row span" : 1,
+          "column span" : 1,
+          "kids" : [ {
+            "type" : "paragraph",
+            "id" : 4,
+            "page number" : 6,
+            "bounding box" : [ 377.52, 490.657, 426.936, 531.663 ],
+            "font" : "Arial-BoldMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "Marginal cost (rands)"
+          } ]
+        }, {
+          "type" : "table cell",
+          "page number" : 6,
+          "bounding box" : [ 444.72, 490.441, 521.16, 532.08 ],
+          "row number" : 1,
+          "column number" : 5,
+          "row span" : 1,
+          "column span" : 1,
+          "kids" : [ {
+            "type" : "paragraph",
+            "id" : 5,
+            "page number" : 6,
+            "bounding box" : [ 462.72, 490.657, 503.436, 531.663 ],
+            "font" : "Arial-BoldMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "Total cost (rands)"
+          } ]
+        } ]
+      }, {
+        "type" : "table row",
+        "row number" : 2,
+        "cells" : [ {
+          "type" : "table cell",
+          "page number" : 6,
+          "bounding box" : [ 107.64, 476.16, 192.12, 490.441 ],
+          "row number" : 2,
+          "column number" : 1,
+          "row span" : 1,
+          "column span" : 1,
+          "kids" : [ {
+            "type" : "paragraph",
+            "id" : 6,
+            "page number" : 6,
+            "bounding box" : [ 146.4, 476.377, 153.072, 489.783 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "0"
+          } ]
+        }, {
+          "type" : "table cell",
+          "page number" : 6,
+          "bounding box" : [ 192.12, 476.16, 274.68, 490.441 ],
+          "row number" : 2,
+          "column number" : 2,
+          "row span" : 1,
+          "column span" : 1,
+          "kids" : [ {
+            "type" : "paragraph",
+            "id" : 7,
+            "page number" : 6,
+            "bounding box" : [ 230.04, 476.377, 236.712, 489.783 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "0"
+          } ]
+        }, {
+          "type" : "table cell",
+          "page number" : 6,
+          "bounding box" : [ 274.68, 476.16, 359.76, 490.441 ],
+          "row number" : 2,
+          "column number" : 3,
+          "row span" : 1,
+          "column span" : 1,
+          "kids" : [ {
+            "type" : "paragraph",
+            "id" : 8,
+            "level" : "1",
+            "page number" : 6,
+            "bounding box" : [ 315.24, 476.377, 319.236, 489.783 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "-"
+          } ]
+        }, {
+          "type" : "table cell",
+          "page number" : 6,
+          "bounding box" : [ 359.76, 476.16, 444.72, 490.441 ],
+          "row number" : 2,
+          "column number" : 4,
+          "row span" : 1,
+          "column span" : 1,
+          "kids" : [ {
+            "type" : "paragraph",
+            "id" : 9,
+            "level" : "1",
+            "page number" : 6,
+            "bounding box" : [ 400.2, 476.377, 404.196, 489.783 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "-"
+          } ]
+        }, {
+          "type" : "table cell",
+          "page number" : 6,
+          "bounding box" : [ 444.72, 476.16, 521.16, 490.441 ],
+          "row number" : 2,
+          "column number" : 5,
+          "row span" : 1,
+          "column span" : 1,
+          "kids" : [ {
+            "type" : "paragraph",
+            "id" : 10,
+            "page number" : 6,
+            "bounding box" : [ 473.04, 476.377, 493.152, 489.783 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "100"
+          } ]
+        } ]
+      }, {
+        "type" : "table row",
+        "row number" : 3,
+        "cells" : [ {
+          "type" : "table cell",
+          "page number" : 6,
+          "bounding box" : [ 107.64, 461.76, 192.12, 476.16 ],
+          "row number" : 3,
+          "column number" : 1,
+          "row span" : 1,
+          "column span" : 1,
+          "kids" : [ {
+            "type" : "paragraph",
+            "id" : 11,
+            "page number" : 6,
+            "bounding box" : [ 146.4, 461.977, 153.072, 475.383 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "2"
+          } ]
+        }, {
+          "type" : "table cell",
+          "page number" : 6,
+          "bounding box" : [ 192.12, 461.76, 274.68, 476.16 ],
+          "row number" : 3,
+          "column number" : 2,
+          "row span" : 1,
+          "column span" : 1,
+          "kids" : [ {
+            "type" : "paragraph",
+            "id" : 12,
+            "page number" : 6,
+            "bounding box" : [ 226.68, 461.977, 240.072, 475.383 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "40"
+          } ]
+        }, {
+          "type" : "table cell",
+          "page number" : 6,
+          "bounding box" : [ 274.68, 461.76, 359.76, 476.16 ],
+          "row number" : 3,
+          "column number" : 3,
+          "row span" : 1,
+          "column span" : 1,
+          "kids" : [ {
+            "type" : "paragraph",
+            "id" : 13,
+            "page number" : 6,
+            "bounding box" : [ 310.56, 461.977, 323.952, 475.383 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "20"
+          } ]
+        }, {
+          "type" : "table cell",
+          "page number" : 6,
+          "bounding box" : [ 359.76, 461.76, 444.72, 476.16 ],
+          "row number" : 3,
+          "column number" : 4,
+          "row span" : 1,
+          "column span" : 1,
+          "kids" : [ {
+            "type" : "paragraph",
+            "id" : 14,
+            "page number" : 6,
+            "bounding box" : [ 395.52, 461.977, 408.912, 475.383 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "10"
+          } ]
+        }, {
+          "type" : "table cell",
+          "page number" : 6,
+          "bounding box" : [ 444.72, 461.76, 521.16, 476.16 ],
+          "row number" : 3,
+          "column number" : 5,
+          "row span" : 1,
+          "column span" : 1,
+          "kids" : [ {
+            "type" : "paragraph",
+            "id" : 15,
+            "page number" : 6,
+            "bounding box" : [ 473.04, 461.977, 493.152, 475.383 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "120"
+          } ]
+        } ]
+      }, {
+        "type" : "table row",
+        "row number" : 4,
+        "cells" : [ {
+          "type" : "table cell",
+          "page number" : 6,
+          "bounding box" : [ 107.64, 447.48, 192.12, 461.76 ],
+          "row number" : 4,
+          "column number" : 1,
+          "row span" : 1,
+          "column span" : 1,
+          "kids" : [ {
+            "type" : "paragraph",
+            "id" : 16,
+            "page number" : 6,
+            "bounding box" : [ 146.4, 447.697, 153.072, 461.103 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "4"
+          } ]
+        }, {
+          "type" : "table cell",
+          "page number" : 6,
+          "bounding box" : [ 192.12, 447.48, 274.68, 461.76 ],
+          "row number" : 4,
+          "column number" : 2,
+          "row span" : 1,
+          "column span" : 1,
+          "kids" : [ {
+            "type" : "paragraph",
+            "id" : 17,
+            "page number" : 6,
+            "bounding box" : [ 226.68, 447.697, 240.072, 461.103 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "80"
+          } ]
+        }, {
+          "type" : "table cell",
+          "page number" : 6,
+          "bounding box" : [ 274.68, 447.48, 359.76, 461.76 ],
+          "row number" : 4,
+          "column number" : 3,
+          "row span" : 1,
+          "column span" : 1,
+          "kids" : [ {
+            "type" : "paragraph",
+            "id" : 18,
+            "page number" : 6,
+            "bounding box" : [ 310.56, 447.697, 323.952, 461.103 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "20"
+          } ]
+        }, {
+          "type" : "table cell",
+          "page number" : 6,
+          "bounding box" : [ 359.76, 447.48, 444.72, 461.76 ],
+          "row number" : 4,
+          "column number" : 4,
+          "row span" : 1,
+          "column span" : 1,
+          "kids" : [ {
+            "type" : "paragraph",
+            "id" : 19,
+            "page number" : 6,
+            "bounding box" : [ 398.88, 447.697, 405.552, 461.103 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "8"
+          } ]
+        }, {
+          "type" : "table cell",
+          "page number" : 6,
+          "bounding box" : [ 444.72, 447.48, 521.16, 461.76 ],
+          "row number" : 4,
+          "column number" : 5,
+          "row span" : 1,
+          "column span" : 1,
+          "kids" : [ {
+            "type" : "paragraph",
+            "id" : 20,
+            "page number" : 6,
+            "bounding box" : [ 473.04, 447.697, 493.152, 461.103 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "136"
+          } ]
+        } ]
+      }, {
+        "type" : "table row",
+        "row number" : 5,
+        "cells" : [ {
+          "type" : "table cell",
+          "page number" : 6,
+          "bounding box" : [ 107.64, 433.201, 192.12, 447.48 ],
+          "row number" : 5,
+          "column number" : 1,
+          "row span" : 1,
+          "column span" : 1,
+          "kids" : [ {
+            "type" : "paragraph",
+            "id" : 21,
+            "page number" : 6,
+            "bounding box" : [ 146.4, 433.417, 153.072, 446.823 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "6"
+          } ]
+        }, {
+          "type" : "table cell",
+          "page number" : 6,
+          "bounding box" : [ 192.12, 433.201, 274.68, 447.48 ],
+          "row number" : 5,
+          "column number" : 2,
+          "row span" : 1,
+          "column span" : 1,
+          "kids" : [ {
+            "type" : "paragraph",
+            "id" : 22,
+            "page number" : 6,
+            "bounding box" : [ 223.32, 433.417, 243.432, 446.823 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "120"
+          } ]
+        }, {
+          "type" : "table cell",
+          "page number" : 6,
+          "bounding box" : [ 274.68, 433.201, 359.76, 447.48 ],
+          "row number" : 5,
+          "column number" : 3,
+          "row span" : 1,
+          "column span" : 1,
+          "kids" : [ {
+            "type" : "paragraph",
+            "id" : 23,
+            "page number" : 6,
+            "bounding box" : [ 310.56, 433.417, 323.952, 446.823 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "20"
+          } ]
+        }, {
+          "type" : "table cell",
+          "page number" : 6,
+          "bounding box" : [ 359.76, 433.201, 444.72, 447.48 ],
+          "row number" : 5,
+          "column number" : 4,
+          "row span" : 1,
+          "column span" : 1,
+          "kids" : [ {
+            "type" : "paragraph",
+            "id" : 24,
+            "page number" : 6,
+            "bounding box" : [ 395.52, 433.417, 408.912, 446.823 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "10"
+          } ]
+        }, {
+          "type" : "table cell",
+          "page number" : 6,
+          "bounding box" : [ 444.72, 433.201, 521.16, 447.48 ],
+          "row number" : 5,
+          "column number" : 5,
+          "row span" : 1,
+          "column span" : 1,
+          "kids" : [ {
+            "type" : "paragraph",
+            "id" : 25,
+            "page number" : 6,
+            "bounding box" : [ 473.04, 433.417, 493.152, 446.823 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "156"
+          } ]
+        } ]
+      }, {
+        "type" : "table row",
+        "row number" : 6,
+        "cells" : [ {
+          "type" : "table cell",
+          "page number" : 6,
+          "bounding box" : [ 107.64, 418.92, 192.12, 433.201 ],
+          "row number" : 6,
+          "column number" : 1,
+          "row span" : 1,
+          "column span" : 1,
+          "kids" : [ {
+            "type" : "paragraph",
+            "id" : 26,
+            "page number" : 6,
+            "bounding box" : [ 146.4, 419.137, 153.072, 432.543 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "8"
+          } ]
+        }, {
+          "type" : "table cell",
+          "page number" : 6,
+          "bounding box" : [ 192.12, 418.92, 274.68, 433.201 ],
+          "row number" : 6,
+          "column number" : 2,
+          "row span" : 1,
+          "column span" : 1,
+          "kids" : [ {
+            "type" : "paragraph",
+            "id" : 27,
+            "page number" : 6,
+            "bounding box" : [ 223.32, 419.137, 243.432, 432.543 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "160"
+          } ]
+        }, {
+          "type" : "table cell",
+          "page number" : 6,
+          "bounding box" : [ 274.68, 418.92, 359.76, 433.201 ],
+          "row number" : 6,
+          "column number" : 3,
+          "row span" : 1,
+          "column span" : 1,
+          "kids" : [ {
+            "type" : "paragraph",
+            "id" : 28,
+            "page number" : 6,
+            "bounding box" : [ 310.56, 419.137, 323.952, 432.543 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "20"
+          } ]
+        }, {
+          "type" : "table cell",
+          "page number" : 6,
+          "bounding box" : [ 359.76, 418.92, 444.72, 433.201 ],
+          "row number" : 6,
+          "column number" : 4,
+          "row span" : 1,
+          "column span" : 1,
+          "kids" : [ {
+            "type" : "paragraph",
+            "id" : 29,
+            "page number" : 6,
+            "bounding box" : [ 395.52, 419.137, 408.912, 432.543 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "20"
+          } ]
+        }, {
+          "type" : "table cell",
+          "page number" : 6,
+          "bounding box" : [ 444.72, 418.92, 521.16, 433.201 ],
+          "row number" : 6,
+          "column number" : 5,
+          "row span" : 1,
+          "column span" : 1,
+          "kids" : [ {
+            "type" : "paragraph",
+            "id" : 30,
+            "page number" : 6,
+            "bounding box" : [ 473.04, 419.137, 493.152, 432.543 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "196"
+          } ]
+        } ]
+      }, {
+        "type" : "table row",
+        "row number" : 7,
+        "cells" : [ {
+          "type" : "table cell",
+          "page number" : 6,
+          "bounding box" : [ 107.64, 404.881, 192.12, 418.92 ],
+          "row number" : 7,
+          "column number" : 1,
+          "row span" : 1,
+          "column span" : 1,
+          "kids" : [ {
+            "type" : "paragraph",
+            "id" : 31,
+            "page number" : 6,
+            "bounding box" : [ 143.04, 404.857, 156.432, 418.263 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "10"
+          } ]
+        }, {
+          "type" : "table cell",
+          "page number" : 6,
+          "bounding box" : [ 192.12, 404.881, 274.68, 418.92 ],
+          "row number" : 7,
+          "column number" : 2,
+          "row span" : 1,
+          "column span" : 1,
+          "kids" : [ {
+            "type" : "paragraph",
+            "id" : 32,
+            "page number" : 6,
+            "bounding box" : [ 223.32, 404.857, 243.432, 418.263 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "200"
+          } ]
+        }, {
+          "type" : "table cell",
+          "page number" : 6,
+          "bounding box" : [ 274.68, 404.881, 359.76, 418.92 ],
+          "row number" : 7,
+          "column number" : 3,
+          "row span" : 1,
+          "column span" : 1,
+          "kids" : [ {
+            "type" : "paragraph",
+            "id" : 33,
+            "page number" : 6,
+            "bounding box" : [ 310.56, 404.857, 323.952, 418.263 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "20"
+          } ]
+        }, {
+          "type" : "table cell",
+          "page number" : 6,
+          "bounding box" : [ 359.76, 404.881, 444.72, 418.92 ],
+          "row number" : 7,
+          "column number" : 4,
+          "row span" : 1,
+          "column span" : 1,
+          "kids" : [ {
+            "type" : "paragraph",
+            "id" : 34,
+            "page number" : 6,
+            "bounding box" : [ 397.92, 404.857, 406.584, 418.263 ],
+            "font" : "Arial-BoldMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "A"
+          } ]
+        }, {
+          "type" : "table cell",
+          "page number" : 6,
+          "bounding box" : [ 444.72, 404.881, 521.16, 418.92 ],
+          "row number" : 7,
+          "column number" : 5,
+          "row span" : 1,
+          "column span" : 1,
+          "kids" : [ {
+            "type" : "paragraph",
+            "id" : 35,
+            "page number" : 6,
+            "bounding box" : [ 473.04, 404.857, 493.152, 418.263 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "256"
+          } ]
+        } ]
+      } ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 117,
+    "level" : "8",
+    "page number" : 6,
+    "bounding box" : [ 107.16, 219.817, 558.876, 385.743 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 5,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 6,
+      "bounding box" : [ 107.16, 372.337, 558.876, 385.743 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.2.1 Identify the profit maximisation quantity in the table above. (1)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 6,
+      "bounding box" : [ 107.16, 330.937, 558.876, 358.143 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.2.2 Name the concept that refers to income earned by a business for each unit sold. (1)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 6,
+      "bounding box" : [ 107.16, 302.617, 558.876, 316.023 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.2.3 Briefly describe the term implicit cost. (2)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 6,
+      "bounding box" : [ 107.16, 261.217, 558.876, 288.423 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.2.4 Why is the marginal revenue the same for a perfectly competitive firm when production increases? (2)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 6,
+      "bounding box" : [ 107.16, 219.817, 558.876, 247.023 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.2.5 Use the information in the table above to calculate the marginal cost (A) if 10 units are produced. Show ALL calculations. (4)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "footer",
+    "id" : 118,
+    "page number" : 6,
+    "bounding box" : [ 53.88, 36.049, 528.539, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 26,
+      "page number" : 6,
+      "bounding box" : [ 53.88, 36.049, 528.539, 47.177 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 119,
+    "page number" : 7,
+    "bounding box" : [ 53.88, 782.448, 528.605, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 42,
+      "page number" : 7,
+      "bounding box" : [ 53.88, 794.569, 528.605, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Economics/P2 7 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 43,
+      "page number" : 7,
+      "bounding box" : [ 254.763, 782.448, 333.923, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 120,
+    "level" : "6",
+    "page number" : 7,
+    "bounding box" : [ 59.28, 182.137, 558.876, 754.383 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 3,
+    "previous list id" : 115,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 7,
+      "bounding box" : [ 59.28, 740.977, 427.296, 754.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.3 Study the graph below and answer the questions that follow.",
+      "kids" : [ {
+        "type" : "text block",
+        "id" : 64,
+        "page number" : 7,
+        "bounding box" : [ 99.9, 434.772, 529.65, 727.272 ],
+        "kids" : [ {
+          "type" : "image",
+          "id" : 2,
+          "page number" : 7,
+          "bounding box" : [ 431.64, 623.76, 462.24, 639.48 ],
+          "source" : "2025_economics_p2_images/imageFile6.png"
+        }, {
+          "type" : "paragraph",
+          "id" : 3,
+          "page number" : 7,
+          "bounding box" : [ 438.84, 625.657, 446.844, 639.063 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "S"
+        }, {
+          "type" : "image",
+          "id" : 5,
+          "page number" : 7,
+          "bounding box" : [ 282.6, 581.04, 313.08, 594.84 ],
+          "source" : "2025_economics_p2_images/imageFile7.png"
+        }, {
+          "type" : "paragraph",
+          "id" : 6,
+          "page number" : 7,
+          "bounding box" : [ 289.8, 581.017, 300.99, 594.423 ],
+          "font" : "Arial-BoldMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "e1"
+        }, {
+          "type" : "image",
+          "id" : 8,
+          "page number" : 7,
+          "bounding box" : [ 326.76, 551.4, 351.96, 565.2 ],
+          "source" : "2025_economics_p2_images/imageFile8.png"
+        }, {
+          "type" : "paragraph",
+          "id" : 9,
+          "page number" : 7,
+          "bounding box" : [ 333.96, 551.377, 340.632, 564.783 ],
+          "font" : "Arial-BoldMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "e"
+        }, {
+          "type" : "image",
+          "id" : 11,
+          "page number" : 7,
+          "bounding box" : [ 168.12, 488.64, 201.6, 504.36 ],
+          "source" : "2025_economics_p2_images/imageFile9.png"
+        }, {
+          "type" : "paragraph",
+          "id" : 12,
+          "page number" : 7,
+          "bounding box" : [ 175.32, 490.537, 190.032, 503.943 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "S1"
+        }, {
+          "type" : "image",
+          "id" : 14,
+          "page number" : 7,
+          "bounding box" : [ 396.96, 651.48, 432.0, 667.2 ],
+          "source" : "2025_economics_p2_images/imageFile10.png"
+        }, {
+          "type" : "paragraph",
+          "id" : 15,
+          "page number" : 7,
+          "bounding box" : [ 193.08, 640.057, 418.872, 666.783 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "S1 D"
+        }, {
+          "type" : "image",
+          "id" : 17,
+          "page number" : 7,
+          "bounding box" : [ 185.88, 640.2, 214.32, 653.88 ],
+          "source" : "2025_economics_p2_images/imageFile11.png"
+        }, {
+          "type" : "image",
+          "id" : 19,
+          "page number" : 7,
+          "bounding box" : [ 138.6, 543.36, 170.28, 555.0 ],
+          "source" : "2025_economics_p2_images/imageFile12.png"
+        }, {
+          "type" : "paragraph",
+          "id" : 20,
+          "page number" : 7,
+          "bounding box" : [ 145.8, 541.177, 153.804, 554.583 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "P"
+        }, {
+          "type" : "image",
+          "id" : 22,
+          "page number" : 7,
+          "bounding box" : [ 423.12, 483.36, 450.0, 495.0 ],
+          "source" : "2025_economics_p2_images/imageFile13.png"
+        }, {
+          "type" : "paragraph",
+          "id" : 23,
+          "page number" : 7,
+          "bounding box" : [ 430.32, 481.177, 438.984, 494.583 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "D"
+        }, {
+          "type" : "image",
+          "id" : 25,
+          "page number" : 7,
+          "bounding box" : [ 138.36, 568.32, 173.52, 581.28 ],
+          "source" : "2025_economics_p2_images/imageFile14.png"
+        }, {
+          "type" : "paragraph",
+          "id" : 26,
+          "page number" : 7,
+          "bounding box" : [ 145.56, 567.457, 160.272, 580.863 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "P1"
+        }, {
+          "type" : "image",
+          "id" : 30,
+          "page number" : 7,
+          "bounding box" : [ 416.28, 446.04, 512.28, 458.28 ],
+          "source" : "2025_economics_p2_images/imageFile15.png"
+        }, {
+          "type" : "paragraph",
+          "id" : 31,
+          "page number" : 7,
+          "bounding box" : [ 166.08, 444.457, 484.284, 463.863 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "O Q1 Q QUANTITY"
+        }, {
+          "type" : "image",
+          "id" : 33,
+          "page number" : 7,
+          "bounding box" : [ 158.88, 452.04, 417.36, 464.28 ],
+          "source" : "2025_economics_p2_images/imageFile16.png"
+        }, {
+          "type" : "image",
+          "id" : 39,
+          "page number" : 7,
+          "bounding box" : [ 249.96, 484.68, 277.56, 500.28 ],
+          "source" : "2025_economics_p2_images/imageFile17.png"
+        }, {
+          "type" : "paragraph",
+          "id" : 40,
+          "page number" : 7,
+          "bounding box" : [ 257.16, 486.577, 265.164, 499.983 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "S"
+        }, {
+          "type" : "image",
+          "id" : 45,
+          "page number" : 7,
+          "bounding box" : [ 118.68, 634.8, 151.2, 673.2 ],
+          "source" : "2025_economics_p2_images/imageFile18.png"
+        }, {
+          "type" : "paragraph",
+          "id" : 46,
+          "page number" : 7,
+          "bounding box" : [ 126.417, 634.8, 139.823, 671.484 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "PRICE"
+        }, {
+          "type" : "image",
+          "id" : 51,
+          "page number" : 7,
+          "bounding box" : [ 222.0, 693.48, 441.96, 709.08 ],
+          "source" : "2025_economics_p2_images/imageFile19.png"
+        }, {
+          "type" : "heading",
+          "id" : 52,
+          "level" : "Subtitle",
+          "page number" : 7,
+          "bounding box" : [ 229.2, 695.257, 374.544, 708.663 ],
+          "heading level" : 3,
+          "font" : "Arial-BoldMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "TAXES ON PRODUCTION"
+        } ]
+      }, {
+        "type" : "list",
+        "id" : 65,
+        "level" : "8",
+        "page number" : 7,
+        "bounding box" : [ 107.16, 264.937, 558.876, 416.343 ],
+        "numbering style" : "arabic numbers",
+        "number of list items" : 5,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 7,
+          "bounding box" : [ 107.16, 402.937, 558.876, 416.343 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "2.3.1 Identify the original equilibrium price in the graph above. (1)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 7,
+          "bounding box" : [ 107.16, 375.337, 558.876, 388.743 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "2.3.2 Give any ONE example of a direct tax. (1)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 7,
+          "bounding box" : [ 107.16, 347.737, 558.876, 361.143 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "2.3.3 Briefly describe the term Pareto efficiency. (2)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 7,
+          "bounding box" : [ 107.16, 306.337, 558.876, 333.543 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "2.3.4 Why does the government impose excise duties, such as sin tax, on demerit goods? (2)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 7,
+          "bounding box" : [ 107.16, 264.937, 558.876, 292.143 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "2.3.5 How can producer subsidies positively influence the economy? (2 x 2) (4)",
+          "kids" : [ ]
+        } ]
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 7,
+      "bounding box" : [ 59.28, 223.537, 558.876, 250.743 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.4 Briefly discuss the immobility of factors of production and lack of information as factors that may lead to misallocation of resources in markets. (2 x 4) (8)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 7,
+      "bounding box" : [ 59.28, 182.137, 558.876, 209.343 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.5 Why would a firm in a perfect market always make normal profit in the long run? (4 x 2) (8)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 122,
+    "page number" : 7,
+    "bounding box" : [ 126.417, 634.8, 139.823, 671.484 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "PRICE"
+  }, {
+    "type" : "paragraph",
+    "id" : 121,
+    "page number" : 7,
+    "bounding box" : [ 544.2, 168.337, 565.596, 181.743 ],
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "[40]"
+  }, {
+    "type" : "footer",
+    "id" : 123,
+    "page number" : 7,
+    "bounding box" : [ 53.88, 36.049, 528.539, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 27,
+      "page number" : 7,
+      "bounding box" : [ 53.88, 36.049, 528.539, 47.177 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 124,
+    "page number" : 8,
+    "bounding box" : [ 53.88, 782.448, 528.605, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 44,
+      "page number" : 8,
+      "bounding box" : [ 53.88, 794.569, 528.605, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Economics/P2 8 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 45,
+      "page number" : 8,
+      "bounding box" : [ 254.763, 782.448, 333.923, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 125,
+    "level" : "Subtitle",
+    "page number" : 8,
+    "bounding box" : [ 59.28, 740.977, 520.884, 754.383 ],
+    "heading level" : 3,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "QUESTION 3: CONTEMPORARY ECONOMIC ISSUES 40 MARKS – 30 MINUTES"
+  }, {
+    "type" : "list",
+    "id" : 126,
+    "level" : "9",
+    "page number" : 8,
+    "bounding box" : [ 59.28, 615.097, 432.576, 726.783 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 2,
+    "next list id" : 131,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 8,
+      "bounding box" : [ 59.28, 713.377, 275.377, 726.783 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.1 Answer the following questions.",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 58,
+        "level" : "10",
+        "page number" : 8,
+        "bounding box" : [ 107.16, 642.697, 558.876, 699.183 ],
+        "numbering style" : "arabic numbers",
+        "number of list items" : 2,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 8,
+          "bounding box" : [ 107.16, 671.977, 558.876, 699.183 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "3.1.1 Name any TWO approaches used in command and control systems for ensuring environmental sustainability. (2 x 1) (2)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 8,
+          "bounding box" : [ 107.16, 642.697, 558.876, 656.103 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "3.1.2 Why is the tourism industry regarded as labour-intensive? (1 x 2) (2)",
+          "kids" : [ ]
+        } ]
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 8,
+      "bounding box" : [ 59.28, 615.097, 432.576, 628.503 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.2 Study the extract below and answer the questions that follow.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "text block",
+    "id" : 127,
+    "page number" : 8,
+    "bounding box" : [ 101.16, 435.12, 527.76, 601.32 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 1,
+      "level" : "Subtitle",
+      "page number" : 8,
+      "bounding box" : [ 209.76, 586.057, 418.944, 599.463 ],
+      "heading level" : 3,
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "TOURISM TRANSFORMATION FUND"
+    }, {
+      "type" : "paragraph",
+      "id" : 2,
+      "page number" : 8,
+      "bounding box" : [ 107.16, 517.057, 521.714, 571.863 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "The Tourism Transformation Fund (TTF) is a capital investment funding mechanism established by the Department of Tourism. It was established in collaboration with the National Empowerment Fund (NEF) and focuses on financial support for entrepreneurs investing in the tourism sector."
+    }, {
+      "type" : "paragraph",
+      "id" : 3,
+      "page number" : 8,
+      "bounding box" : [ 107.16, 461.857, 521.713, 502.863 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "The TTF provides grant funding, debt financing and equity contributions to facilitate capital investment in the tourism sector. Through partnerships, the NEF is responsible for administering the TTF."
+    }, {
+      "type" : "paragraph",
+      "id" : 4,
+      "page number" : 8,
+      "bounding box" : [ 338.76, 436.609, 521.529, 447.737 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "[Adapted from http://www.tourism.gov.za]"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 128,
+    "level" : "11",
+    "page number" : 8,
+    "bounding box" : [ 107.16, 254.857, 558.876, 420.903 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 5,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 8,
+      "bounding box" : [ 107.16, 393.697, 558.876, 420.903 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.2.1 Identify a government initiative that provides financial assistance to tourism investments in the extract above. (1)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 8,
+      "bounding box" : [ 107.16, 365.257, 558.876, 378.663 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.2.2 Name an economic sector under which tourism is classified. (1)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 8,
+      "bounding box" : [ 107.16, 337.657, 558.876, 351.063 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.2.3 Briefly describe the term cultural tourism. (2)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 8,
+      "bounding box" : [ 107.16, 296.257, 558.876, 323.463 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.2.4 Explain the importance of public-private partnerships (PPPs) in developing tourist destinations. (2)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 8,
+      "bounding box" : [ 107.16, 254.857, 558.876, 282.063 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.2.5 How can natural disasters negatively impact the tourism industry? (2 x 2) (4)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "footer",
+    "id" : 129,
+    "page number" : 8,
+    "bounding box" : [ 53.88, 36.049, 528.539, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 28,
+      "page number" : 8,
+      "bounding box" : [ 53.88, 36.049, 528.539, 47.177 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 130,
+    "page number" : 9,
+    "bounding box" : [ 53.88, 782.448, 528.605, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 46,
+      "page number" : 9,
+      "bounding box" : [ 53.88, 794.569, 528.605, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Economics/P2 9 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 47,
+      "page number" : 9,
+      "bounding box" : [ 254.763, 782.448, 333.923, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 131,
+    "level" : "9",
+    "page number" : 9,
+    "bounding box" : [ 59.28, 150.337, 558.876, 754.383 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 3,
+    "previous list id" : 126,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 9,
+      "bounding box" : [ 59.28, 740.977, 436.656, 754.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.3 Study the cartoon below and answer the questions that follow.",
+      "kids" : [ {
+        "type" : "text block",
+        "id" : 59,
+        "page number" : 9,
+        "bounding box" : [ 105.15, 413.771, 534.15, 722.771 ],
+        "kids" : [ {
+          "type" : "caption",
+          "id" : 1,
+          "page number" : 9,
+          "bounding box" : [ 172.56, 688.057, 467.244, 715.263 ],
+          "linked content id" : 2,
+          "font" : "Arial-BoldMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "INTERNATIONAL PROTOCOLS AND AGREEMENTS ON ENVIRONMENTAL SUSTAINABILITY"
+        }, {
+          "type" : "image",
+          "id" : 2,
+          "page number" : 9,
+          "bounding box" : [ 107.65, 414.375, 531.55, 688.125 ],
+          "source" : "2025_economics_p2_images/imageFile20.png"
+        }, {
+          "type" : "image",
+          "id" : 4,
+          "page number" : 9,
+          "bounding box" : [ 341.4, 649.32, 532.8, 681.48 ],
+          "source" : "2025_economics_p2_images/imageFile21.png"
+        }, {
+          "type" : "heading",
+          "id" : 5,
+          "level" : "Subtitle",
+          "page number" : 9,
+          "bounding box" : [ 366.24, 647.49, 508.017, 678.69 ],
+          "heading level" : 2,
+          "font" : "Calibri-Bold",
+          "font size" : 14.04,
+          "text color" : "[0.0]",
+          "content" : "STOCKHOLM PROTOCOL 1972"
+        }, {
+          "type" : "image",
+          "id" : 7,
+          "page number" : 9,
+          "bounding box" : [ 130.56, 424.68, 253.56, 465.48 ],
+          "source" : "2025_economics_p2_images/imageFile22.png"
+        }, {
+          "type" : "heading",
+          "id" : 8,
+          "level" : "Subtitle",
+          "page number" : 9,
+          "bounding box" : [ 143.76, 431.37, 239.997, 462.69 ],
+          "heading level" : 2,
+          "font" : "Calibri-Bold",
+          "font size" : 14.04,
+          "text color" : "[0.0]",
+          "content" : "RIO+20 SUMMIT 2012"
+        }, {
+          "type" : "image",
+          "id" : 10,
+          "page number" : 9,
+          "bounding box" : [ 351.801, 489.797, 493.178, 588.13 ],
+          "source" : "2025_economics_p2_images/imageFile23.png"
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 60,
+        "page number" : 9,
+        "bounding box" : [ 405.12, 402.169, 534.251, 413.297 ],
+        "font" : "ArialMT",
+        "font size" : 9.96,
+        "text color" : "[0.0]",
+        "content" : "[Source: Caglecartoons.com]"
+      }, {
+        "type" : "list",
+        "id" : 62,
+        "level" : "11",
+        "page number" : 9,
+        "bounding box" : [ 107.16, 233.137, 558.876, 385.143 ],
+        "numbering style" : "arabic numbers",
+        "number of list items" : 5,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 9,
+          "bounding box" : [ 107.16, 357.937, 558.876, 385.143 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "3.3.1 Identify, in the cartoon above, the international agreement that refers to the world summit on sustainable development. (1)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 9,
+          "bounding box" : [ 107.16, 329.737, 558.876, 343.143 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "3.3.2 State the environmental problem that relates to the removal of trees. (1)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 9,
+          "bounding box" : [ 107.16, 302.137, 558.876, 315.543 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "3.3.3 Briefly describe the term marketable permit. (2)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 9,
+          "bounding box" : [ 107.16, 260.737, 558.876, 287.943 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "3.3.4 Explain the impact of the loss of indigenous knowledge on the environment. (2)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 9,
+          "bounding box" : [ 107.16, 233.137, 558.876, 246.543 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "3.3.5 Why do markets fail to ensure environmental sustainability? (2 x 2) (4)",
+          "kids" : [ ]
+        } ]
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 9,
+      "bounding box" : [ 59.28, 191.737, 558.876, 218.943 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.4 Briefly discuss the effects of tourism on gross domestic product (GDP) and poverty. (2 x 4) (8)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 9,
+      "bounding box" : [ 59.28, 150.337, 558.876, 177.543 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.5 Analyse the various international measures in reducing climate change. (4 x 2) (8)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 132,
+    "level" : "Subtitle",
+    "page number" : 9,
+    "bounding box" : [ 544.2, 136.537, 565.596, 149.943 ],
+    "heading level" : 3,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "[40]"
+  }, {
+    "type" : "footer",
+    "id" : 133,
+    "page number" : 9,
+    "bounding box" : [ 53.88, 36.049, 528.539, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 29,
+      "page number" : 9,
+      "bounding box" : [ 53.88, 36.049, 528.539, 47.177 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 134,
+    "page number" : 10,
+    "bounding box" : [ 53.88, 782.448, 528.605, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 48,
+      "page number" : 10,
+      "bounding box" : [ 53.88, 794.569, 528.605, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Economics/P2 10 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 49,
+      "page number" : 10,
+      "bounding box" : [ 254.763, 782.448, 333.923, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 136,
+    "level" : "Subtitle",
+    "page number" : 10,
+    "bounding box" : [ 59.28, 727.177, 522.564, 754.383 ],
+    "heading level" : 3,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "QUESTION 4: MICROECONOMICS AND CONTEMPORARY ECONOMIC ISSUES 40 MARKS – 30 MINUTES"
+  }, {
+    "type" : "list",
+    "id" : 137,
+    "level" : "12",
+    "page number" : 10,
+    "bounding box" : [ 59.28, 604.177, 436.656, 712.983 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 2,
+    "next list id" : 143,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 10,
+      "bounding box" : [ 59.28, 699.577, 275.377, 712.983 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "4.1 Answer the following questions.",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 54,
+        "level" : "13",
+        "page number" : 10,
+        "bounding box" : [ 107.16, 631.777, 558.876, 685.383 ],
+        "numbering style" : "arabic numbers",
+        "number of list items" : 2,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 10,
+          "bounding box" : [ 107.16, 658.177, 558.876, 685.383 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "4.1.1 Give any TWO examples of private costs associated with the building of a school. (2 x 1) (2)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 10,
+          "bounding box" : [ 107.16, 631.777, 558.876, 645.183 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "4.1.2 How can soil erosion impact agricultural production? (1 x 2) (2)",
+          "kids" : [ ]
+        } ]
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 10,
+      "bounding box" : [ 59.28, 604.177, 436.656, 617.583 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "4.2 Study the cartoon below and answer the questions that follow.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "text block",
+    "id" : 135,
+    "page number" : 10,
+    "bounding box" : [ 112.55, 294.333, 539.3, 589.983 ],
+    "kids" : [ {
+      "type" : "image",
+      "id" : 1,
+      "page number" : 10,
+      "bounding box" : [ 117.55, 295.334, 538.623, 558.184 ],
+      "source" : "2025_economics_p2_images/imageFile24.png"
+    }, {
+      "type" : "heading",
+      "id" : 2,
+      "level" : "Subtitle",
+      "page number" : 10,
+      "bounding box" : [ 163.92, 567.337, 477.264, 580.743 ],
+      "heading level" : 3,
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "IMPERFECT DISTRIBUTION OF INCOME AND WEALTH"
+    }, {
+      "type" : "image",
+      "id" : 4,
+      "page number" : 10,
+      "bounding box" : [ 115.613, 309.786, 213.291, 357.908 ],
+      "source" : "2025_economics_p2_images/imageFile25.png"
+    }, {
+      "type" : "image",
+      "id" : 7,
+      "page number" : 10,
+      "bounding box" : [ 139.68, 460.2, 219.12, 509.04 ],
+      "source" : "2025_economics_p2_images/imageFile26.png"
+    }, {
+      "type" : "paragraph",
+      "id" : 8,
+      "page number" : 10,
+      "bounding box" : [ 148.325, 460.23, 210.333, 506.91 ],
+      "font" : "Calibri-Bold",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "HEY, THERE IS INCOME INEQUALITY IN THE MARKET."
+    }, {
+      "type" : "image",
+      "id" : 10,
+      "page number" : 10,
+      "bounding box" : [ 255.24, 452.28, 338.16, 489.6 ],
+      "source" : "2025_economics_p2_images/imageFile27.png"
+    }, {
+      "type" : "paragraph",
+      "id" : 11,
+      "page number" : 10,
+      "bounding box" : [ 267.24, 460.92, 326.342, 487.44 ],
+      "font" : "Calibri-Bold",
+      "font size" : 11.04,
+      "text color" : "[0.0]",
+      "content" : "YES, BUT IT'S MAN-MADE."
+    }, {
+      "type" : "image",
+      "id" : 13,
+      "page number" : 10,
+      "bounding box" : [ 341.4, 507.0, 426.0, 549.84 ],
+      "source" : "2025_economics_p2_images/imageFile28.png"
+    }, {
+      "type" : "paragraph",
+      "id" : 14,
+      "page number" : 10,
+      "bounding box" : [ 354.36, 508.444, 413.141, 546.36 ],
+      "font" : "Calibri-Bold",
+      "font size" : 11.04,
+      "text color" : "[0.0]",
+      "content" : "NO – IT'S TOTALLY NATURAL!"
+    }, {
+      "type" : "image",
+      "id" : 16,
+      "page number" : 10,
+      "bounding box" : [ 452.748, 418.718, 527.303, 465.911 ],
+      "source" : "2025_economics_p2_images/imageFile29.png"
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 138,
+    "page number" : 10,
+    "bounding box" : [ 336.72, 281.209, 538.449, 292.337 ],
+    "font" : "ArialMT",
+    "font size" : 9.96,
+    "text color" : "[0.0]",
+    "content" : "[Adapted from https://www.bostonglobe.com/]"
+  }, {
+    "type" : "list",
+    "id" : 140,
+    "level" : "14",
+    "page number" : 10,
+    "bounding box" : [ 107.16, 86.257, 558.876, 266.943 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 5,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 10,
+      "bounding box" : [ 107.16, 239.737, 558.876, 266.943 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "4.2.1 Identify the reason for the unequal distribution of income and wealth in the cartoon above. (1)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 10,
+      "bounding box" : [ 107.16, 198.337, 558.876, 225.543 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "4.2.2 Give an economic term which refers to the lowest remuneration of labour set by the government. (1)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 10,
+      "bounding box" : [ 108.84, 170.737, 558.876, 184.143 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "4.2.3 Briefly describe the term progressive income tax. (2)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 10,
+      "bounding box" : [ 107.16, 129.337, 558.876, 156.543 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "4.2.4 Why do markets undersupply goods that generate positive externalities? (2)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 10,
+      "bounding box" : [ 107.16, 86.257, 558.876, 113.463 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "4.2.5 How can the government use redress methods to redistribute wealth in South Africa? (2 x 2) (4)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "footer",
+    "id" : 141,
+    "page number" : 10,
+    "bounding box" : [ 53.88, 36.049, 528.539, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 30,
+      "page number" : 10,
+      "bounding box" : [ 53.88, 36.049, 528.539, 47.177 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 142,
+    "page number" : 11,
+    "bounding box" : [ 53.88, 782.448, 528.605, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 50,
+      "page number" : 11,
+      "bounding box" : [ 53.88, 794.569, 528.605, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Economics/P2 11 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 51,
+      "page number" : 11,
+      "bounding box" : [ 254.763, 782.448, 333.923, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 143,
+    "level" : "12",
+    "page number" : 11,
+    "bounding box" : [ 59.28, 310.537, 558.876, 754.383 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 3,
+    "previous list id" : 137,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 11,
+      "bounding box" : [ 59.28, 740.977, 432.576, 754.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "4.3 Study the extract below and answer the questions that follow.",
+      "kids" : [ {
+        "type" : "text block",
+        "id" : 55,
+        "page number" : 11,
+        "bounding box" : [ 101.16, 574.68, 527.76, 727.2 ],
+        "kids" : [ {
+          "type" : "heading",
+          "id" : 1,
+          "level" : "Subtitle",
+          "page number" : 11,
+          "bounding box" : [ 257.76, 711.937, 371.004, 725.343 ],
+          "heading level" : 3,
+          "font" : "Arial-BoldMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "MANAGING WASTE"
+        }, {
+          "type" : "paragraph",
+          "id" : 2,
+          "page number" : 11,
+          "bounding box" : [ 107.16, 642.937, 521.74, 697.743 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "Managing hazardous waste and chemical waste requires proper identification, handling, storage and transportation in order to prevent biodiversity loss. Storage of waste in designated well-ventilated areas and the use of appropriate containers prevent leaks and reactions."
+        }, {
+          "type" : "paragraph",
+          "id" : 3,
+          "page number" : 11,
+          "bounding box" : [ 107.16, 601.537, 521.716, 628.743 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "Companies should train employees on safe handling procedures and labelling containers clearly with hazard symbols and waste descriptions."
+        }, {
+          "type" : "paragraph",
+          "id" : 4,
+          "page number" : 11,
+          "bounding box" : [ 331.56, 576.289, 521.769, 587.417 ],
+          "font" : "ArialMT",
+          "font size" : 9.96,
+          "text color" : "[0.0]",
+          "content" : "[Adapted from https://www.vetorstock.com]"
+        } ]
+      }, {
+        "type" : "list",
+        "id" : 57,
+        "level" : "14",
+        "page number" : 11,
+        "bounding box" : [ 107.16, 395.377, 559.716, 560.463 ],
+        "numbering style" : "arabic numbers",
+        "number of list items" : 5,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 11,
+          "bounding box" : [ 107.16, 533.257, 558.876, 560.463 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "4.3.1 Identify the environmental problem that relates to the reduction of plants and animal species in the extract above. (1)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 11,
+          "bounding box" : [ 107.16, 491.977, 558.876, 519.183 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "4.3.2 Name the method used by the government to create environmental awareness. (1)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 11,
+          "bounding box" : [ 107.28, 464.377, 559.716, 477.783 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "4.3.3 Briefly describe the term land pollution. (2)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 11,
+          "bounding box" : [ 108.84, 436.777, 558.876, 450.183 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "4.3.4 Explain the impact of chemical waste on the environment. (2)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 11,
+          "bounding box" : [ 107.16, 395.377, 558.876, 422.583 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "4.3.5 How can the Basel Convention help to manage hazardous waste? (2 x 2) (4)",
+          "kids" : [ ]
+        } ]
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 11,
+      "bounding box" : [ 59.28, 353.977, 558.876, 381.183 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "4.4 With the aid of a correctly labelled graph, explain economic loss for a perfectly competitive firm. (8)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 11,
+      "bounding box" : [ 59.28, 310.537, 558.876, 337.743 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "4.5 Analyse the strategies (ways) that can be used to promote tourism in South Africa. (4 x 2) (8)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 144,
+    "level" : "Subtitle",
+    "page number" : 11,
+    "bounding box" : [ 408.96, 269.137, 565.596, 310.143 ],
+    "heading level" : 3,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "[40] TOTAL SECTION B: 80"
+  }, {
+    "type" : "footer",
+    "id" : 145,
+    "page number" : 11,
+    "bounding box" : [ 53.88, 36.049, 528.539, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 31,
+      "page number" : 11,
+      "bounding box" : [ 53.88, 36.049, 528.539, 47.177 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 146,
+    "page number" : 12,
+    "bounding box" : [ 53.88, 794.209, 528.605, 805.337 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 52,
+      "page number" : 12,
+      "bounding box" : [ 53.88, 794.209, 528.605, 805.337 ],
+      "heading level" : 4,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Economics/P2 12 DBE/November 2025"
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 147,
+    "page number" : 12,
+    "bounding box" : [ 254.405, 782.686, 331.009, 793.813 ],
+    "font" : "Arial-ItalicMT",
+    "font size" : 9.96,
+    "text color" : "[0.0]",
+    "content" : "NSC Confidential"
+  }, {
+    "type" : "caption",
+    "id" : 149,
+    "page number" : 12,
+    "bounding box" : [ 59.28, 690.697, 467.617, 757.023 ],
+    "linked content id" : 150,
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "SECTION C Answer any ONE of the two questions in this section in the ANSWER BOOK. Your answer will be assessed as follows:"
+  }, {
+    "type" : "table",
+    "id" : 150,
+    "level" : "15",
+    "page number" : 12,
+    "bounding box" : [ 53.88, 306.0, 528.6, 678.0 ],
+    "number of rows" : 5,
+    "number of columns" : 2,
+    "rows" : [ {
+      "type" : "table row",
+      "row number" : 1,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 12,
+        "bounding box" : [ 55.32, 648.18, 421.56, 676.5 ],
+        "row number" : 1,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 1,
+          "page number" : 12,
+          "bounding box" : [ 169.08, 655.777, 306.924, 669.183 ],
+          "font" : "Arial-BoldMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "STRUCTURE OF ESSAY"
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 12,
+        "bounding box" : [ 421.56, 648.18, 527.16, 676.5 ],
+        "row number" : 1,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 2,
+          "page number" : 12,
+          "bounding box" : [ 435.24, 648.937, 513.864, 676.143 ],
+          "font" : "Arial-BoldMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "MARK ALLOCATION"
+        } ]
+      } ]
+    }, {
+      "type" : "table row",
+      "row number" : 2,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 12,
+        "bounding box" : [ 55.32, 542.46, 421.56, 648.18 ],
+        "row number" : 2,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 3,
+          "page number" : 12,
+          "bounding box" : [ 60.0, 622.14, 269.206, 647.074 ],
+          "font" : "ArialMT",
+          "font size" : 11.04,
+          "text color" : "[0.0]",
+          "content" : "Introduction The introduction is a lower-order response."
+        }, {
+          "type" : "list",
+          "id" : 4,
+          "level" : "1",
+          "page number" : 12,
+          "bounding box" : [ 59.989, 543.3, 412.035, 622.144 ],
+          "numbering style" : "unordered",
+          "number of list items" : 4,
+          "list items" : [ {
+            "type" : "list item",
+            "page number" : 12,
+            "bounding box" : [ 59.989, 596.108, 412.035, 622.144 ],
+            "font" : "SymbolMT",
+            "font size" : 11.04,
+            "text color" : "[0.0]",
+            "content" : "• A good starting point will be to define the main concept related to the question topic.",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 12,
+            "bounding box" : [ 60.0, 582.586, 375.89, 596.111 ],
+            "font" : "SymbolMT",
+            "font size" : 11.04,
+            "text color" : "[0.0]",
+            "content" : "• DO NOT include any part of the question in your introduction.",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 12,
+            "bounding box" : [ 60.0, 569.151, 348.321, 582.676 ],
+            "font" : "SymbolMT",
+            "font size" : 11.04,
+            "text color" : "[0.0]",
+            "content" : "• DO NOT repeat any part of the introduction in the body.",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 12,
+            "bounding box" : [ 60.0, 543.3, 411.922, 569.339 ],
+            "font" : "SymbolMT",
+            "font size" : 11.04,
+            "text color" : "[0.0]",
+            "content" : "• Avoid mentioning in the introduction what you are going to discuss in the body.",
+            "kids" : [ ]
+          } ]
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 12,
+        "bounding box" : [ 421.56, 542.46, 527.16, 648.18 ],
+        "row number" : 2,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 5,
+          "page number" : 12,
+          "bounding box" : [ 458.04, 622.14, 491.061, 634.474 ],
+          "font" : "ArialMT",
+          "font size" : 11.04,
+          "text color" : "[0.0]",
+          "content" : "Max. 2"
+        } ]
+      } ]
+    }, {
+      "type" : "table row",
+      "row number" : 3,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 12,
+        "bounding box" : [ 55.32, 428.34, 421.56, 542.46 ],
+        "row number" : 3,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 6,
+          "page number" : 12,
+          "bounding box" : [ 60.0, 429.06, 404.661, 541.474 ],
+          "font" : "ArialMT",
+          "font size" : 11.04,
+          "text color" : "[0.0]",
+          "content" : "Body Main part: Discuss in detail/Discuss in detail with the aid of graphs/ In-depth discussion/Examine/Critically discuss/Analyse/Compare/ Evaluate/Distinguish/Differentiate/Explain/Assess/Debate A maximum of 8 marks may be allocated for headings/examples. Additional part: Critically discuss/Evaluate/Critically evaluate/Deduce/ Compare/Distinguish/Suggest/Interpret/Debate/How A maximum of 2 marks may be allocated for mere listing of facts."
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 12,
+        "bounding box" : [ 421.56, 428.34, 527.16, 542.46 ],
+        "row number" : 3,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 7,
+          "page number" : 12,
+          "bounding box" : [ 455.04, 516.42, 494.181, 528.754 ],
+          "font" : "ArialMT",
+          "font size" : 11.04,
+          "text color" : "[0.0]",
+          "content" : "Max. 26"
+        }, {
+          "type" : "paragraph",
+          "id" : 8,
+          "page number" : 12,
+          "bounding box" : [ 455.04, 453.18, 494.181, 465.514 ],
+          "font" : "ArialMT",
+          "font size" : 11.04,
+          "text color" : "[0.0]",
+          "content" : "Max. 10"
+        } ]
+      } ]
+    }, {
+      "type" : "table row",
+      "row number" : 4,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 12,
+        "bounding box" : [ 55.32, 321.9, 421.56, 428.34 ],
+        "row number" : 4,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 9,
+          "page number" : 12,
+          "bounding box" : [ 60.0, 402.3, 273.388, 427.234 ],
+          "font" : "ArialMT",
+          "font size" : 11.04,
+          "text color" : "[0.0]",
+          "content" : "Conclusion Any higher-order conclusion should include:"
+        }, {
+          "type" : "list",
+          "id" : 10,
+          "level" : "1",
+          "page number" : 12,
+          "bounding box" : [ 60.0, 322.534, 410.11, 402.304 ],
+          "numbering style" : "unordered",
+          "number of list items" : 5,
+          "list items" : [ {
+            "type" : "list item",
+            "page number" : 12,
+            "bounding box" : [ 60.0, 376.268, 410.11, 402.304 ],
+            "font" : "SymbolMT",
+            "font size" : 11.04,
+            "text color" : "[0.0]",
+            "content" : "• A brief summary of what has been discussed without repeating facts already mentioned",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 12,
+            "bounding box" : [ 60.0, 362.746, 344.123, 376.271 ],
+            "font" : "SymbolMT",
+            "font size" : 11.04,
+            "text color" : "[0.0]",
+            "content" : "• Any opinion or value judgement on the facts discussed",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 12,
+            "bounding box" : [ 60.011, 349.311, 406.255, 362.836 ],
+            "font" : "SymbolMT",
+            "font size" : 11.04,
+            "text color" : "[0.0]",
+            "content" : "• Additional support information to strengthen the discussion/analysis",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 12,
+            "bounding box" : [ 60.011, 335.985, 331.113, 349.51 ],
+            "font" : "SymbolMT",
+            "font size" : 11.04,
+            "text color" : "[0.0]",
+            "content" : "• A contradictory viewpoint with motivation, if required",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 12,
+            "bounding box" : [ 60.0, 322.534, 169.773, 336.059 ],
+            "font" : "SymbolMT",
+            "font size" : 11.04,
+            "text color" : "[0.0]",
+            "content" : "• Recommendations",
+            "kids" : [ ]
+          } ]
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 12,
+        "bounding box" : [ 421.56, 321.9, 527.16, 428.34 ],
+        "row number" : 4,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 11,
+          "page number" : 12,
+          "bounding box" : [ 458.04, 402.3, 491.061, 414.634 ],
+          "font" : "ArialMT",
+          "font size" : 11.04,
+          "text color" : "[0.0]",
+          "content" : "Max. 2"
+        } ]
+      } ]
+    }, {
+      "type" : "table row",
+      "row number" : 5,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 12,
+        "bounding box" : [ 55.32, 307.44, 421.56, 321.9 ],
+        "row number" : 5,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 12,
+          "page number" : 12,
+          "bounding box" : [ 60.0, 307.417, 99.852, 320.823 ],
+          "font" : "Arial-BoldMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "TOTAL"
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 12,
+        "bounding box" : [ 421.56, 307.44, 527.16, 321.9 ],
+        "row number" : 5,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 13,
+          "page number" : 12,
+          "bounding box" : [ 467.88, 307.417, 481.272, 320.823 ],
+          "font" : "Arial-BoldMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "40"
+        } ]
+      } ]
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 151,
+    "level" : "Subtitle",
+    "page number" : 12,
+    "bounding box" : [ 59.28, 278.257, 520.044, 291.663 ],
+    "heading level" : 3,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "QUESTION 5: MICROECONOMICS 40 MARKS – 40 MINUTES"
+  }, {
+    "type" : "list",
+    "id" : 152,
+    "level" : "16",
+    "page number" : 12,
+    "bounding box" : [ 59.28, 201.217, 566.556, 267.904 ],
+    "numbering style" : "unordered",
+    "number of list items" : 2,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 12,
+      "bounding box" : [ 59.28, 239.497, 521.713, 267.904 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• Discuss, in detail, the characteristics of a monopoly market structure, including a graph showing long-run economic profit. (26 marks)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 12,
+      "bounding box" : [ 59.28, 201.217, 566.556, 230.344 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• How can the government prevent the abuse of market power by dominant businesses? (10 marks) [40]",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 153,
+    "level" : "Subtitle",
+    "page number" : 12,
+    "bounding box" : [ 59.28, 174.817, 520.044, 188.223 ],
+    "heading level" : 3,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "QUESTION 6: CONTEMPORARY ECONOMIC ISSUES 40 MARKS – 40 MINUTES"
+  }, {
+    "type" : "list",
+    "id" : 154,
+    "level" : "16",
+    "page number" : 12,
+    "bounding box" : [ 59.28, 112.177, 566.556, 164.464 ],
+    "numbering style" : "unordered",
+    "number of list items" : 2,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 12,
+      "bounding box" : [ 59.28, 149.763, 519.396, 164.464 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• Discuss, in detail, the measures to combat inflation. (26 marks)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 12,
+      "bounding box" : [ 59.28, 112.177, 566.556, 140.584 ],
+      "font" : "SymbolMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "• How can South Africa's trading partners, such as the USA and China, influence the domestic inflation rate? (10 marks) [40]",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 155,
+    "page number" : 12,
+    "bounding box" : [ 408.96, 71.977, 521.556, 99.183 ],
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "TOTAL SECTION C: GRAND TOTAL:"
+  }, {
+    "type" : "paragraph",
+    "id" : 156,
+    "page number" : 12,
+    "bounding box" : [ 545.16, 71.977, 565.272, 99.183 ],
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "40 150"
+  }, {
+    "type" : "paragraph",
+    "id" : 148,
+    "page number" : 12,
+    "bounding box" : [ 53.89, 36.044, 138.254, 47.171 ],
+    "font" : "ArialMT",
+    "font size" : 9.96,
+    "text color" : "[0.0]",
+    "content" : "Copyright reserved"
+  } ]
+}

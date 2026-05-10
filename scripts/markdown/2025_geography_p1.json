@@ -1,0 +1,5261 @@
+{
+  "file name" : "2025_geography_p1.pdf",
+  "number of pages" : 18,
+  "author" : ", NSC6788",
+  "title" : null,
+  "creation date" : "D:20251112100434+02'00'",
+  "modification date" : "D:20251112100441+02'00'",
+  "kids" : [ {
+    "type" : "text block",
+    "id" : 115,
+    "page number" : 1,
+    "bounding box" : [ 24.0, 24.0, 571.32, 817.92 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 1,
+      "page number" : 1,
+      "bounding box" : [ 265.954, 793.783, 321.923, 805.805 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "Confidential"
+    }, {
+      "type" : "paragraph",
+      "id" : 2,
+      "page number" : 1,
+      "bounding box" : [ 53.88, 36.049, 528.539, 47.177 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    }, {
+      "type" : "paragraph",
+      "id" : 3,
+      "page number" : 1,
+      "bounding box" : [ 53.88, 298.177, 136.632, 339.183 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "MARKS: 150 TIME: 3 hours"
+    }, {
+      "type" : "paragraph",
+      "id" : 4,
+      "page number" : 1,
+      "bounding box" : [ 173.28, 201.577, 412.176, 214.983 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "This question paper consists of 18 pages."
+    }, {
+      "type" : "image",
+      "id" : 6,
+      "page number" : 1,
+      "bounding box" : [ 82.56, 375.6, 513.36, 423.96 ],
+      "source" : "2025_geography_p1_images/imageFile1.png"
+    }, {
+      "type" : "paragraph",
+      "id" : 7,
+      "page number" : 1,
+      "bounding box" : [ 239.88, 375.745, 355.929, 423.59 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 14.04,
+      "text color" : "[0.0]",
+      "content" : "GEOGRAPHY P1 NOVEMBER 2025"
+    }, {
+      "type" : "image",
+      "id" : 9,
+      "page number" : 1,
+      "bounding box" : [ 164.64, 560.28, 442.44, 594.36 ],
+      "source" : "2025_geography_p1_images/imageFile2.png"
+    }, {
+      "type" : "heading",
+      "id" : 10,
+      "level" : "Doctitle",
+      "page number" : 1,
+      "bounding box" : [ 217.8, 557.618, 389.135, 593.808 ],
+      "heading level" : 1,
+      "font" : "Arial-BoldMT",
+      "font size" : 15.96,
+      "text color" : "[1.0]",
+      "content" : "NATIONAL SENIOR CERTIFICATE"
+    }, {
+      "type" : "image",
+      "id" : 11,
+      "page number" : 1,
+      "bounding box" : [ 109.874, 637.269, 487.575, 778.0 ],
+      "source" : "2025_geography_p1_images/imageFile3.png"
+    }, {
+      "type" : "image",
+      "id" : 13,
+      "page number" : 1,
+      "bounding box" : [ 244.32, 484.8, 364.56, 500.88 ],
+      "source" : "2025_geography_p1_images/imageFile4.png"
+    }, {
+      "type" : "heading",
+      "id" : 14,
+      "level" : "Subtitle",
+      "page number" : 1,
+      "bounding box" : [ 264.36, 482.498, 344.275, 500.328 ],
+      "heading level" : 1,
+      "font" : "Arial-BoldMT",
+      "font size" : 15.96,
+      "text color" : "[0.0]",
+      "content" : "GRADE 12"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 116,
+    "page number" : 2,
+    "bounding box" : [ 53.88, 782.328, 528.605, 805.577 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 50,
+      "page number" : 2,
+      "bounding box" : [ 53.88, 794.449, 528.605, 805.577 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Geography/P1 2 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 51,
+      "page number" : 2,
+      "bounding box" : [ 254.644, 782.328, 333.803, 794.405 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 117,
+    "level" : "Subtitle",
+    "page number" : 2,
+    "bounding box" : [ 53.88, 740.857, 261.144, 754.263 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "INSTRUCTIONS AND INFORMATION"
+  }, {
+    "type" : "list",
+    "id" : 118,
+    "level" : "1",
+    "page number" : 2,
+    "bounding box" : [ 59.28, 244.177, 76.056, 726.663 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 13,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 713.257, 69.336, 726.663 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 589.057, 69.336, 602.463 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 561.457, 69.336, 574.863 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 533.857, 69.336, 547.263 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "4.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 506.257, 69.336, 519.663 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "5.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 478.657, 69.336, 492.063 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "6.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 437.257, 69.336, 450.663 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "7.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 409.657, 69.336, 423.063 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "8.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 382.057, 69.336, 395.463 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "9.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 340.657, 76.056, 354.063 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "10.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 299.257, 76.056, 312.663 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "11.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 271.777, 76.056, 285.183 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "12.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 244.177, 76.056, 257.583 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "13.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 119,
+    "page number" : 2,
+    "bounding box" : [ 95.28, 713.257, 342.816, 726.663 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "This question paper consists of TWO sections."
+  }, {
+    "type" : "list",
+    "id" : 120,
+    "level" : "2",
+    "page number" : 2,
+    "bounding box" : [ 95.28, 685.657, 160.044, 699.063 ],
+    "numbering style" : "english letters",
+    "number of list items" : 1,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 95.28, 685.657, 160.044, 699.063 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "SECTION A",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 114,
+        "level" : "3",
+        "page number" : 2,
+        "bounding box" : [ 95.28, 506.257, 450.036, 685.263 ],
+        "numbering style" : "arabic numbers",
+        "number of list items" : 3,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 2,
+          "bounding box" : [ 95.28, 671.857, 343.356, 685.263 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "QUESTION 1: CLIMATE AND WEATHER (60)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 2,
+          "bounding box" : [ 95.28, 658.057, 313.476, 671.463 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "QUESTION 2: GEOMORPHOLOGY (60)",
+          "kids" : [ {
+            "type" : "paragraph",
+            "id" : 113,
+            "page number" : 2,
+            "bounding box" : [ 95.28, 630.457, 160.044, 643.863 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "SECTION B"
+          } ]
+        }, {
+          "type" : "list item",
+          "page number" : 2,
+          "bounding box" : [ 95.28, 506.257, 450.036, 630.063 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "QUESTION 3: GEOGRAPHICAL SKILLS AND TECHNIQUES (30) Answer ALL THREE questions. ALL diagrams are included in the question paper. Leave a line between the subsections of questions answered. Start EACH question at the top of a NEW page.",
+          "kids" : [ ]
+        } ]
+      } ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 121,
+    "page number" : 2,
+    "bounding box" : [ 95.28, 464.857, 528.962, 492.063 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "Number the answers correctly according to the numbering system used in this question paper."
+  }, {
+    "type" : "paragraph",
+    "id" : 122,
+    "page number" : 2,
+    "bounding box" : [ 95.28, 244.177, 528.936, 450.663 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "Do NOT write in the margins of the ANSWER BOOK. Draw fully labelled diagrams when instructed to do so. Answer in FULL SENTENCES, except when you have to state, name, identify or list. Units of measurement MUST be indicated in your final answer, e.g. 1020 hPa, 14 °C and 45 m. You may use a non-programmable calculator. You may use a magnifying glass. Write neatly and legibly."
+  }, {
+    "type" : "heading",
+    "id" : 123,
+    "level" : "Subtitle",
+    "page number" : 2,
+    "bounding box" : [ 53.88, 216.577, 417.384, 229.983 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "SPECIFIC INSTRUCTIONS AND INFORMATION FOR SECTION B"
+  }, {
+    "type" : "list",
+    "id" : 124,
+    "level" : "1",
+    "page number" : 2,
+    "bounding box" : [ 59.28, 78.577, 76.056, 202.383 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 4,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 188.977, 76.056, 202.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "14.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 147.577, 76.056, 160.983 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "15.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 106.177, 76.056, 119.583 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "16.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 78.577, 76.056, 91.983 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "17.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 125,
+    "page number" : 2,
+    "bounding box" : [ 95.28, 175.177, 528.792, 202.383 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "A 1 : 50 000 topographical map 3318DD STELLENBOSCH and a 1 : 10 000 orthophoto map 3318 DD 18 STELLENBOSCH are provided."
+  }, {
+    "type" : "paragraph",
+    "id" : 126,
+    "page number" : 2,
+    "bounding box" : [ 95.28, 133.777, 528.912, 160.983 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "The area demarcated in RED/BLACK on the topographical map represents the area covered by the orthophoto map."
+  }, {
+    "type" : "paragraph",
+    "id" : 127,
+    "page number" : 2,
+    "bounding box" : [ 95.28, 64.777, 528.793, 119.583 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "Show ALL calculations. Marks will be allocated for steps in calculations. You must hand in the topographical and orthophoto map to the invigilator at the end of this examination session."
+  }, {
+    "type" : "footer",
+    "id" : 128,
+    "page number" : 2,
+    "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 34,
+      "page number" : 2,
+      "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+      "heading level" : 3,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 129,
+    "page number" : 3,
+    "bounding box" : [ 53.88, 782.328, 528.605, 805.577 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 52,
+      "page number" : 3,
+      "bounding box" : [ 53.88, 794.449, 528.605, 805.577 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Geography/P1 3 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 53,
+      "page number" : 3,
+      "bounding box" : [ 254.644, 782.328, 333.803, 794.405 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 130,
+    "level" : "3",
+    "page number" : 3,
+    "bounding box" : [ 53.88, 740.857, 424.972, 754.263 ],
+    "numbering style" : "english letters",
+    "number of list items" : 1,
+    "next list id" : 220,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 53.88, 740.857, 424.972, 754.263 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "SECTION A: CLIMATE AND WEATHER AND GEOMORPHOLOGY2025",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 131,
+    "level" : "4",
+    "page number" : 3,
+    "bounding box" : [ 53.88, 713.257, 280.464, 726.663 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 1,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 53.88, 713.257, 280.464, 726.663 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "QUESTION 1: CLIMATE AND WEATHER",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 132,
+    "level" : "5",
+    "page number" : 3,
+    "bounding box" : [ 59.28, 644.257, 523.415, 699.063 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 1,
+    "next list id" : 137,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 59.28, 644.257, 523.415, 699.063 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.1 The questions are based on synoptic weather map interpretation. Complete the statements in COLUMN A with the options in COLUMN B. Write only Y or Z next to the question numbers (1.1.1 to 1.1.8) in the ANSWER BOOK, e.g. 1.1.9 Y.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "table",
+    "id" : 133,
+    "level" : "6",
+    "page number" : 3,
+    "bounding box" : [ 100.8, 92.88, 529.56, 630.48 ],
+    "number of rows" : 9,
+    "number of columns" : 2,
+    "rows" : [ {
+      "type" : "table row",
+      "row number" : 1,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 3,
+        "bounding box" : [ 102.96, 614.46, 380.64, 628.98 ],
+        "row number" : 1,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 1,
+          "page number" : 3,
+          "bounding box" : [ 208.2, 615.217, 273.024, 628.623 ],
+          "font" : "Arial-BoldMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "COLUMN A"
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 3,
+        "bounding box" : [ 380.64, 614.46, 528.12, 628.98 ],
+        "row number" : 1,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 2,
+          "page number" : 3,
+          "bounding box" : [ 421.92, 615.217, 486.504, 628.623 ],
+          "font" : "Arial-BoldMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "COLUMN B"
+        } ]
+      } ]
+    }, {
+      "type" : "table row",
+      "row number" : 2,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 3,
+        "bounding box" : [ 102.96, 571.5, 380.64, 614.46 ],
+        "row number" : 2,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 3,
+          "page number" : 3,
+          "bounding box" : [ 106.8, 572.257, 361.152, 613.263 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.1.1 The name of the air pressure cell that dominates the interior of South Africa in winter"
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 3,
+        "bounding box" : [ 380.64, 571.5, 528.12, 614.46 ],
+        "row number" : 2,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "list",
+          "id" : 4,
+          "level" : "1",
+          "page number" : 3,
+          "bounding box" : [ 385.32, 586.057, 393.324, 613.263 ],
+          "numbering style" : "english letters",
+          "number of list items" : 2,
+          "list items" : [ {
+            "type" : "list item",
+            "page number" : 3,
+            "bounding box" : [ 385.32, 599.857, 393.324, 613.263 ],
+            "font" : "Arial-BoldMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "Y",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 3,
+            "bounding box" : [ 385.32, 586.057, 392.652, 599.463 ],
+            "font" : "Arial-BoldMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "Z",
+            "kids" : [ ]
+          } ]
+        }, {
+          "type" : "paragraph",
+          "id" : 5,
+          "page number" : 3,
+          "bounding box" : [ 413.64, 586.057, 483.672, 613.263 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "heat low Kalahari high"
+        } ]
+      } ]
+    }, {
+      "type" : "table row",
+      "row number" : 3,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 3,
+        "bounding box" : [ 102.96, 542.46, 380.64, 571.5 ],
+        "row number" : 3,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 6,
+          "page number" : 3,
+          "bounding box" : [ 106.8, 543.217, 340.476, 570.423 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.1.2 Air movement associated with highpressure cells"
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 3,
+        "bounding box" : [ 380.64, 542.46, 528.12, 571.5 ],
+        "row number" : 3,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "list",
+          "id" : 7,
+          "level" : "1",
+          "page number" : 3,
+          "bounding box" : [ 385.32, 543.217, 393.324, 570.423 ],
+          "numbering style" : "english letters",
+          "number of list items" : 2,
+          "list items" : [ {
+            "type" : "list item",
+            "page number" : 3,
+            "bounding box" : [ 385.32, 557.017, 393.324, 570.423 ],
+            "font" : "Arial-BoldMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "Y",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 3,
+            "bounding box" : [ 385.32, 543.217, 392.652, 556.623 ],
+            "font" : "Arial-BoldMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "Z",
+            "kids" : [ ]
+          } ]
+        }, {
+          "type" : "paragraph",
+          "id" : 8,
+          "page number" : 3,
+          "bounding box" : [ 413.64, 543.217, 482.352, 570.423 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "convergence divergence"
+        } ]
+      } ]
+    }, {
+      "type" : "table row",
+      "row number" : 4,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 3,
+        "bounding box" : [ 102.96, 513.3, 380.64, 542.46 ],
+        "row number" : 4,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 9,
+          "page number" : 3,
+          "bounding box" : [ 106.8, 514.057, 359.832, 541.263 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.1.3 The general direction of movement of a coastal low-pressure system is …"
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 3,
+        "bounding box" : [ 380.64, 513.3, 528.12, 542.46 ],
+        "row number" : 4,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "list",
+          "id" : 10,
+          "level" : "1",
+          "page number" : 3,
+          "bounding box" : [ 385.32, 514.057, 393.324, 541.263 ],
+          "numbering style" : "english letters",
+          "number of list items" : 2,
+          "list items" : [ {
+            "type" : "list item",
+            "page number" : 3,
+            "bounding box" : [ 385.32, 527.857, 393.324, 541.263 ],
+            "font" : "Arial-BoldMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "Y",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 3,
+            "bounding box" : [ 385.32, 514.057, 392.652, 527.463 ],
+            "font" : "Arial-BoldMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "Z",
+            "kids" : [ ]
+          } ]
+        }, {
+          "type" : "paragraph",
+          "id" : 11,
+          "page number" : 3,
+          "bounding box" : [ 413.64, 514.057, 457.68, 541.263 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "easterly westerly"
+        } ]
+      } ]
+    }, {
+      "type" : "table row",
+      "row number" : 5,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 3,
+        "bounding box" : [ 102.96, 484.26, 380.64, 513.3 ],
+        "row number" : 5,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 12,
+          "page number" : 3,
+          "bounding box" : [ 106.8, 485.017, 374.616, 512.223 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.1.4 The … is known as a blocking high when it is in the path of the mid-latitude cyclone."
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 3,
+        "bounding box" : [ 380.64, 484.26, 528.12, 513.3 ],
+        "row number" : 5,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "list",
+          "id" : 13,
+          "level" : "1",
+          "page number" : 3,
+          "bounding box" : [ 385.32, 485.017, 393.324, 512.223 ],
+          "numbering style" : "english letters",
+          "number of list items" : 2,
+          "list items" : [ {
+            "type" : "list item",
+            "page number" : 3,
+            "bounding box" : [ 385.32, 498.817, 393.324, 512.223 ],
+            "font" : "Arial-BoldMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "Y",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 3,
+            "bounding box" : [ 385.32, 485.017, 392.652, 498.423 ],
+            "font" : "Arial-BoldMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "Z",
+            "kids" : [ ]
+          } ]
+        }, {
+          "type" : "paragraph",
+          "id" : 14,
+          "page number" : 3,
+          "bounding box" : [ 413.64, 485.017, 507.072, 512.223 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "South Indian high Kalahari high"
+        } ]
+      } ]
+    }, {
+      "type" : "table row",
+      "row number" : 6,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 3,
+        "bounding box" : [ 102.96, 441.3, 380.64, 484.26 ],
+        "row number" : 6,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 15,
+          "page number" : 3,
+          "bounding box" : [ 106.8, 442.057, 347.16, 483.063 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.1.5 The elongation of isobars extending outwards from a high-pressure cell is referred to as …"
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 3,
+        "bounding box" : [ 380.64, 441.3, 528.12, 484.26 ],
+        "row number" : 6,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "list",
+          "id" : 16,
+          "level" : "1",
+          "page number" : 3,
+          "bounding box" : [ 385.32, 455.857, 393.324, 483.063 ],
+          "numbering style" : "english letters",
+          "number of list items" : 2,
+          "list items" : [ {
+            "type" : "list item",
+            "page number" : 3,
+            "bounding box" : [ 385.32, 469.657, 393.324, 483.063 ],
+            "font" : "Arial-BoldMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "Y",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 3,
+            "bounding box" : [ 385.32, 455.857, 392.652, 469.263 ],
+            "font" : "Arial-BoldMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "Z",
+            "kids" : [ ]
+          } ]
+        }, {
+          "type" : "paragraph",
+          "id" : 17,
+          "page number" : 3,
+          "bounding box" : [ 413.64, 455.857, 462.312, 483.063 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "diverging ridging"
+        } ]
+      } ]
+    }, {
+      "type" : "table row",
+      "row number" : 7,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 3,
+        "bounding box" : [ 102.96, 394.02, 380.64, 441.3 ],
+        "row number" : 7,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 18,
+          "page number" : 3,
+          "bounding box" : [ 106.8, 413.017, 365.017, 440.223 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.1.6 A … is found between two air masses of different moisture contents."
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 3,
+        "bounding box" : [ 380.64, 394.02, 528.12, 441.3 ],
+        "row number" : 7,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "list",
+          "id" : 19,
+          "level" : "1",
+          "page number" : 3,
+          "bounding box" : [ 385.32, 413.017, 393.324, 440.223 ],
+          "numbering style" : "english letters",
+          "number of list items" : 2,
+          "list items" : [ {
+            "type" : "list item",
+            "page number" : 3,
+            "bounding box" : [ 385.32, 426.817, 393.324, 440.223 ],
+            "font" : "Arial-BoldMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "Y",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 3,
+            "bounding box" : [ 385.32, 413.017, 392.652, 426.423 ],
+            "font" : "Arial-BoldMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "Z",
+            "kids" : [ ]
+          } ]
+        }, {
+          "type" : "paragraph",
+          "id" : 20,
+          "page number" : 3,
+          "bounding box" : [ 413.64, 399.217, 511.752, 440.223 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "moisture front inter-tropical convergence zone"
+        } ]
+      } ]
+    }, {
+      "type" : "table row",
+      "row number" : 8,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 3,
+        "bounding box" : [ 102.96, 245.34, 380.64, 394.02 ],
+        "row number" : 8,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 22,
+          "page number" : 3,
+          "bounding box" : [ 106.8, 365.617, 367.152, 392.823 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.1.7 The conditions represented in the sketch below will lead to …"
+        }, {
+          "type" : "text block",
+          "id" : 23,
+          "page number" : 3,
+          "bounding box" : [ 187.8, 261.12, 337.68, 351.72 ],
+          "kids" : [ {
+            "type" : "image",
+            "id" : 21,
+            "page number" : 3,
+            "bounding box" : [ 189.225, 262.653, 335.675, 350.379 ],
+            "source" : "2025_geography_p1_images/imageFile5.png"
+          } ]
+        }, {
+          "type" : "paragraph",
+          "id" : 24,
+          "page number" : 3,
+          "bounding box" : [ 190.32, 249.649, 335.161, 260.777 ],
+          "font" : "ArialMT",
+          "font size" : 9.96,
+          "text color" : "[0.0]",
+          "content" : "[Source: Examiner's own sketch]"
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 3,
+        "bounding box" : [ 380.64, 245.34, 528.12, 394.02 ],
+        "row number" : 8,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "list",
+          "id" : 25,
+          "level" : "1",
+          "page number" : 3,
+          "bounding box" : [ 385.32, 365.617, 393.324, 392.823 ],
+          "numbering style" : "english letters",
+          "number of list items" : 2,
+          "list items" : [ {
+            "type" : "list item",
+            "page number" : 3,
+            "bounding box" : [ 385.32, 379.417, 393.324, 392.823 ],
+            "font" : "Arial-BoldMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "Y",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 3,
+            "bounding box" : [ 385.32, 365.617, 392.652, 379.023 ],
+            "font" : "Arial-BoldMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "Z",
+            "kids" : [ ]
+          } ]
+        }, {
+          "type" : "paragraph",
+          "id" : 26,
+          "page number" : 3,
+          "bounding box" : [ 413.64, 365.617, 512.52, 392.823 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "line thunderstorms berg winds"
+        } ]
+      } ]
+    }, {
+      "type" : "table row",
+      "row number" : 9,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 3,
+        "bounding box" : [ 102.96, 94.32, 380.64, 245.34 ],
+        "row number" : 9,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 28,
+          "page number" : 3,
+          "bounding box" : [ 106.8, 217.057, 347.76, 244.263 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.1.8 Rainfall with 20 knots of wind is likely at …"
+        }, {
+          "type" : "paragraph",
+          "id" : 29,
+          "page number" : 3,
+          "bounding box" : [ 189.716, 94.369, 337.439, 105.497 ],
+          "font" : "ArialMT",
+          "font size" : 9.96,
+          "text color" : "[0.0]",
+          "content" : "[Source: Examiner's own sketch]"
+        }, {
+          "type" : "text block",
+          "id" : 30,
+          "page number" : 3,
+          "bounding box" : [ 188.475, 105.062, 336.875, 203.283 ],
+          "kids" : [ {
+            "type" : "image",
+            "id" : 27,
+            "page number" : 3,
+            "bounding box" : [ 189.975, 106.562, 335.375, 201.783 ],
+            "source" : "2025_geography_p1_images/imageFile6.png"
+          } ]
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 3,
+        "bounding box" : [ 380.64, 94.32, 528.12, 245.34 ],
+        "row number" : 9,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "list",
+          "id" : 31,
+          "level" : "1",
+          "page number" : 3,
+          "bounding box" : [ 385.32, 217.057, 393.324, 244.263 ],
+          "numbering style" : "english letters",
+          "number of list items" : 2,
+          "list items" : [ {
+            "type" : "list item",
+            "page number" : 3,
+            "bounding box" : [ 385.32, 230.857, 393.324, 244.263 ],
+            "font" : "Arial-BoldMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "Y",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 3,
+            "bounding box" : [ 385.32, 217.057, 392.652, 230.463 ],
+            "font" : "Arial-BoldMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "Z",
+            "kids" : [ ]
+          } ]
+        }, {
+          "type" : "paragraph",
+          "id" : 32,
+          "page number" : 3,
+          "bounding box" : [ 413.64, 217.057, 502.476, 244.263 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "Durban (Dbn) Cape Town (CT)"
+        } ]
+      } ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 134,
+    "page number" : 3,
+    "bounding box" : [ 489.36, 78.937, 560.676, 92.343 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "(8 x 1) (8)"
+  }, {
+    "type" : "footer",
+    "id" : 135,
+    "page number" : 3,
+    "bounding box" : [ 53.88, 36.049, 531.308, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 35,
+      "page number" : 3,
+      "bounding box" : [ 53.88, 36.049, 531.308, 47.177 ],
+      "heading level" : 3,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 136,
+    "page number" : 4,
+    "bounding box" : [ 53.88, 782.328, 528.613, 805.577 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 54,
+      "page number" : 4,
+      "bounding box" : [ 53.88, 794.449, 528.613, 805.577 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Geography/P1 4 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 55,
+      "page number" : 4,
+      "bounding box" : [ 254.644, 782.328, 333.803, 794.405 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 137,
+    "level" : "5",
+    "page number" : 4,
+    "bounding box" : [ 59.28, 715.537, 523.44, 756.543 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 1,
+    "previous list id" : 132,
+    "next list id" : 155,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 59.28, 715.537, 523.44, 756.543 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.2 Various options are provided as possible answers to the following questions. Choose the answer and write only the letter (A–D) next to the question numbers (1.2.1 to 1.2.7) in the ANSWER BOOK, e.g. 1.2.8 D.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 138,
+    "page number" : 4,
+    "bounding box" : [ 107.52, 674.617, 523.392, 701.823 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "Refer to the photograph on slope aspect below to answer QUESTIONS 1.2.1 to 1.2.3."
+  }, {
+    "type" : "text block",
+    "id" : 139,
+    "page number" : 4,
+    "bounding box" : [ 186.24, 426.6, 399.12, 659.64 ],
+    "kids" : [ {
+      "type" : "image",
+      "id" : 1,
+      "page number" : 4,
+      "bounding box" : [ 187.675, 428.008, 397.569, 658.206 ],
+      "source" : "2025_geography_p1_images/imageFile7.png"
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 140,
+    "page number" : 4,
+    "bounding box" : [ 98.4, 413.82, 482.469, 426.154 ],
+    "font" : "ArialMT",
+    "font size" : 9.96,
+    "text color" : "[0.0]",
+    "content" : "[Source: https://upload.wikimedia.org/wikipedia/commons/d/d8/Effects_of_aspect.JPG]"
+  }, {
+    "type" : "list",
+    "id" : 142,
+    "level" : "6",
+    "page number" : 4,
+    "bounding box" : [ 108.24, 203.377, 473.856, 400.743 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 3,
+    "next list id" : 151,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 108.24, 387.337, 297.72, 400.743 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.2.1 Slope aspect refers to …",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 107,
+        "level" : "7",
+        "page number" : 4,
+        "bounding box" : [ 165.6, 321.817, 383.736, 376.623 ],
+        "numbering style" : "english letters",
+        "number of list items" : 4,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 4,
+          "bounding box" : [ 165.6, 363.217, 382.056, 376.623 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "A upslope movement of air in a valley.",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 4,
+          "bounding box" : [ 165.6, 349.417, 332.976, 362.823 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "B climate on a smaller scale.",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 4,
+          "bounding box" : [ 165.6, 335.617, 370.898, 349.023 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "C a zone of warmer air in the valley.",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 4,
+          "bounding box" : [ 165.6, 321.817, 383.736, 335.223 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "D slope direction in relation to the sun.",
+          "kids" : [ ]
+        } ]
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 108.24, 296.497, 473.856, 309.903 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.2.2 The photograph represents a valley in the … Hemisphere.",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 108,
+        "level" : "7",
+        "page number" : 4,
+        "bounding box" : [ 165.6, 229.777, 240.312, 284.583 ],
+        "numbering style" : "english letters",
+        "number of list items" : 4,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 4,
+          "bounding box" : [ 165.6, 271.177, 238.272, 284.583 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "A Northern",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 4,
+          "bounding box" : [ 165.6, 257.377, 232.992, 270.783 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "B Eastern",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 4,
+          "bounding box" : [ 165.6, 243.577, 240.312, 256.983 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "C Southern",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 4,
+          "bounding box" : [ 165.6, 229.777, 236.232, 243.183 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "D Western",
+          "kids" : [ ]
+        } ]
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 108.24, 203.377, 367.776, 216.783 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.2.3 Slope B represents a … and … slope.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 143,
+    "level" : "8",
+    "page number" : 4,
+    "bounding box" : [ 165.6, 136.657, 234.996, 191.463 ],
+    "numbering style" : "roman numbers",
+    "number of list items" : 4,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 165.6, 178.057, 227.796, 191.463 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "(i) cooler",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 165.6, 164.257, 234.996, 177.663 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "(ii) warmer",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 165.6, 150.457, 223.776, 163.863 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "(iii) moist",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 165.6, 136.657, 219.036, 150.063 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "(iv) drier",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 144,
+    "level" : "7",
+    "page number" : 4,
+    "bounding box" : [ 165.6, 69.937, 247.356, 124.743 ],
+    "numbering style" : "english letters",
+    "number of list items" : 4,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 165.6, 111.337, 241.476, 124.743 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "A (i) and (ii)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 165.6, 97.537, 246.756, 110.943 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "B (ii) and (iii)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 165.6, 83.737, 244.116, 97.143 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "C (i) and (iii)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 165.6, 69.937, 247.356, 83.343 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "D (ii) and (iv)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "footer",
+    "id" : 145,
+    "page number" : 4,
+    "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 36,
+      "page number" : 4,
+      "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+      "heading level" : 3,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 146,
+    "page number" : 5,
+    "bounding box" : [ 53.88, 782.328, 528.613, 805.577 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 56,
+      "page number" : 5,
+      "bounding box" : [ 53.88, 794.449, 528.613, 805.577 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Geography/P1 5 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 57,
+      "page number" : 5,
+      "bounding box" : [ 254.644, 782.328, 333.803, 794.405 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 147,
+    "page number" : 5,
+    "bounding box" : [ 108.24, 731.737, 521.112, 758.943 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "Refer to the photograph on valley winds below to answer QUESTIONS 1.2.4 to 1.2.7."
+  }, {
+    "type" : "text block",
+    "id" : 148,
+    "page number" : 5,
+    "bounding box" : [ 137.28, 534.12, 447.96, 718.92 ],
+    "kids" : [ {
+      "type" : "image",
+      "id" : 1,
+      "page number" : 5,
+      "bounding box" : [ 138.753, 535.552, 445.919, 717.552 ],
+      "source" : "2025_geography_p1_images/imageFile8.png"
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 149,
+    "page number" : 5,
+    "bounding box" : [ 123.0, 522.649, 449.113, 533.777 ],
+    "font" : "ArialMT",
+    "font size" : 9.96,
+    "text color" : "[0.0]",
+    "content" : "[Source: https://d19lgisewk9l6l.cloudfront.net/assetbank/Oudtshoorn_.jpg]"
+  }, {
+    "type" : "list",
+    "id" : 151,
+    "level" : "6",
+    "page number" : 5,
+    "bounding box" : [ 108.24, 131.617, 520.417, 510.663 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 4,
+    "previous list id" : 142,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 108.24, 497.257, 359.256, 510.663 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.2.4 The arrows at A indicate a/an … wind.",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 109,
+        "level" : "7",
+        "page number" : 5,
+        "bounding box" : [ 155.88, 431.737, 233.4, 486.543 ],
+        "numbering style" : "english letters",
+        "number of list items" : 4,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 5,
+          "bounding box" : [ 155.88, 473.137, 230.76, 486.543 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "A anabatic",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 5,
+          "bounding box" : [ 155.88, 459.337, 233.4, 472.743 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "B katabatic",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 5,
+          "bounding box" : [ 155.88, 445.537, 227.352, 458.943 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "C upslope",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 5,
+          "bounding box" : [ 155.88, 431.737, 228.672, 445.143 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "D onshore",
+          "kids" : [ ]
+        } ]
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 108.24, 407.497, 515.52, 420.903 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.2.5 The main conditions for the formation of the wind at A are … and …",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 110,
+        "level" : "8",
+        "page number" : 5,
+        "bounding box" : [ 155.88, 341.977, 284.712, 396.783 ],
+        "numbering style" : "roman numbers",
+        "number of list items" : 4,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 5,
+          "bounding box" : [ 155.88, 383.377, 284.712, 396.783 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(i) terrestrial radiation",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 5,
+          "bounding box" : [ 155.88, 369.577, 260.712, 382.983 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(ii) solar radiation",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 5,
+          "bounding box" : [ 155.88, 355.777, 277.44, 369.183 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(iii) low temperatures",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 5,
+          "bounding box" : [ 155.88, 341.977, 282.12, 355.383 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(iv) high temperatures",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "list",
+        "id" : 111,
+        "level" : "7",
+        "page number" : 5,
+        "bounding box" : [ 155.88, 275.257, 241.836, 330.063 ],
+        "numbering style" : "english letters",
+        "number of list items" : 4,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 5,
+          "bounding box" : [ 155.88, 316.657, 238.596, 330.063 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "A (i) and (iii)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 5,
+          "bounding box" : [ 155.88, 302.857, 239.196, 316.263 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "B (i) and (iv)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 5,
+          "bounding box" : [ 155.88, 289.057, 241.236, 302.463 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "C (ii) and (iii)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 5,
+          "bounding box" : [ 155.88, 275.257, 241.836, 288.663 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "D (ii) and (iv)",
+          "kids" : [ ]
+        } ]
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 108.24, 236.257, 520.417, 263.463 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.2.6 … forms when the dew point temperature of air is below freezing point on the valley floor.",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 112,
+        "level" : "7",
+        "page number" : 5,
+        "bounding box" : [ 155.88, 170.617, 216.792, 225.423 ],
+        "numbering style" : "english letters",
+        "number of list items" : 4,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 5,
+          "bounding box" : [ 155.88, 212.017, 207.216, 225.423 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "A Mist",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 5,
+          "bounding box" : [ 155.88, 198.217, 205.992, 211.623 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "B Fog",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 5,
+          "bounding box" : [ 155.88, 184.417, 212.616, 197.823 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "C Frost",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 5,
+          "bounding box" : [ 155.88, 170.617, 216.792, 184.023 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "D Smog",
+          "kids" : [ ]
+        } ]
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 108.24, 131.617, 520.153, 158.823 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.2.7 The negative physical (natural) impact of the answer to QUESTION 1.2.6 is that it …",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 152,
+    "level" : "7",
+    "page number" : 5,
+    "bounding box" : [ 155.88, 65.977, 558.996, 120.783 ],
+    "numbering style" : "english letters",
+    "number of list items" : 4,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 155.88, 107.377, 275.856, 120.783 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "A reduces visibility.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 155.88, 93.577, 288.096, 106.983 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "B increases pollution.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 155.88, 79.777, 278.736, 93.183 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "C increases rainfall.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 155.88, 65.977, 558.996, 79.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "D destroys vegetation. (7 x 1) (7)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "footer",
+    "id" : 153,
+    "page number" : 5,
+    "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 37,
+      "page number" : 5,
+      "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+      "heading level" : 3,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 154,
+    "page number" : 6,
+    "bounding box" : [ 53.88, 782.328, 528.613, 805.577 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 58,
+      "page number" : 6,
+      "bounding box" : [ 53.88, 794.449, 528.613, 805.577 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Geography/P1 6 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 59,
+      "page number" : 6,
+      "bounding box" : [ 254.644, 782.328, 333.803, 794.405 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 155,
+    "level" : "5",
+    "page number" : 6,
+    "bounding box" : [ 59.28, 740.857, 405.936, 754.263 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 1,
+    "previous list id" : 137,
+    "next list id" : 164,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 6,
+      "bounding box" : [ 59.28, 740.857, 405.936, 754.263 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.3 Refer to the sketches below on the mid-latitude cyclone.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "table",
+    "id" : 156,
+    "level" : "7",
+    "page number" : 6,
+    "bounding box" : [ 53.88, 372.48, 531.48, 727.08 ],
+    "number of rows" : 2,
+    "number of columns" : 2,
+    "rows" : [ {
+      "type" : "table row",
+      "row number" : 1,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 6,
+        "bounding box" : [ 55.32, 547.26, 310.92, 725.58 ],
+        "row number" : 1,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "heading",
+          "id" : 1,
+          "level" : "Doctitle",
+          "page number" : 6,
+          "bounding box" : [ 177.0, 707.258, 188.523, 725.088 ],
+          "heading level" : 1,
+          "font" : "Arial-BoldMT",
+          "font size" : 15.96,
+          "text color" : "[0.0]",
+          "content" : "A"
+        }, {
+          "type" : "paragraph",
+          "id" : 2,
+          "page number" : 6,
+          "bounding box" : [ 159.937, 548.089, 304.791, 559.217 ],
+          "font" : "ArialMT",
+          "font size" : 9.96,
+          "text color" : "[0.0]",
+          "content" : "[Source: Examiner's own sketch]"
+        }, {
+          "type" : "image",
+          "id" : 3,
+          "page number" : 6,
+          "bounding box" : [ 60.0, 592.453, 308.25, 707.203 ],
+          "source" : "2025_geography_p1_images/imageFile9.png"
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 6,
+        "bounding box" : [ 310.92, 547.26, 530.04, 725.58 ],
+        "row number" : 1,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "heading",
+          "id" : 4,
+          "level" : "Doctitle",
+          "page number" : 6,
+          "bounding box" : [ 415.08, 707.258, 426.603, 725.088 ],
+          "heading level" : 1,
+          "font" : "Arial-BoldMT",
+          "font size" : 15.96,
+          "text color" : "[0.0]",
+          "content" : "B"
+        }, {
+          "type" : "caption",
+          "id" : 5,
+          "page number" : 6,
+          "bounding box" : [ 348.48, 548.809, 493.319, 559.937 ],
+          "linked content id" : 6,
+          "font" : "ArialMT",
+          "font size" : 9.96,
+          "text color" : "[0.0]",
+          "content" : "[Source: Examiner's own sketch]"
+        }, {
+          "type" : "image",
+          "id" : 6,
+          "page number" : 6,
+          "bounding box" : [ 330.825, 560.203, 510.825, 707.203 ],
+          "source" : "2025_geography_p1_images/imageFile10.png"
+        } ]
+      } ]
+    }, {
+      "type" : "table row",
+      "row number" : 2,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 6,
+        "bounding box" : [ 55.32, 373.92, 310.92, 547.26 ],
+        "row number" : 2,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "caption",
+          "id" : 7,
+          "page number" : 6,
+          "bounding box" : [ 177.0, 528.098, 188.523, 545.928 ],
+          "linked content id" : 8,
+          "font" : "Arial-BoldMT",
+          "font size" : 15.96,
+          "text color" : "[0.0]",
+          "content" : "C"
+        }, {
+          "type" : "image",
+          "id" : 8,
+          "page number" : 6,
+          "bounding box" : [ 63.4, 376.609, 302.1, 528.109 ],
+          "source" : "2025_geography_p1_images/imageFile11.png"
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 6,
+        "bounding box" : [ 310.92, 373.92, 530.04, 547.26 ],
+        "row number" : 2,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "caption",
+          "id" : 9,
+          "page number" : 6,
+          "bounding box" : [ 415.08, 528.098, 426.603, 545.928 ],
+          "linked content id" : 10,
+          "font" : "Arial-BoldMT",
+          "font size" : 15.96,
+          "text color" : "[0.0]",
+          "content" : "D"
+        }, {
+          "type" : "image",
+          "id" : 10,
+          "page number" : 6,
+          "bounding box" : [ 316.3, 376.609, 528.3, 528.109 ],
+          "source" : "2025_geography_p1_images/imageFile12.png"
+        } ]
+      } ]
+    } ]
+  }, {
+    "type" : "caption",
+    "id" : 157,
+    "page number" : 6,
+    "bounding box" : [ 201.8, 360.889, 531.724, 372.017 ],
+    "linked content id" : 156,
+    "font" : "ArialMT",
+    "font size" : 9.96,
+    "text color" : "[0.0]",
+    "content" : "[Source: https://www.google.com/search?+impact of mid-latitude cyclones]"
+  }, {
+    "type" : "list",
+    "id" : 159,
+    "level" : "8",
+    "page number" : 6,
+    "bounding box" : [ 108.24, 140.017, 561.516, 346.623 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 5,
+    "next list id" : 163,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 6,
+      "bounding box" : [ 108.24, 319.417, 561.516, 346.623 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.3.1 What is the name of the boundary between two air masses, as shown in sketch A? (1 x 1) (1)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 6,
+      "bounding box" : [ 108.24, 278.017, 561.516, 305.223 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.3.2 Give ONE reason why the boundary between the two air masses in sketch A would form a wave. (1 x 1) (1)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 6,
+      "bounding box" : [ 108.24, 236.617, 561.516, 263.823 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.3.3 Name the stage of development of the mid-latitude cyclone associated with weather conditions in photographs C and D. (1 x 1) (1)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 6,
+      "bounding box" : [ 108.24, 195.217, 521.784, 222.423 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.3.4 Explain how the weather conditions illustrated in photographs C and D developed during the stage named in QUESTION 1.3.3.",
+      "kids" : [ {
+        "type" : "paragraph",
+        "id" : 106,
+        "page number" : 6,
+        "bounding box" : [ 487.656, 181.417, 561.516, 194.823 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2 x 2) (4)"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 6,
+      "bounding box" : [ 108.24, 140.017, 521.712, 167.223 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.3.5 In the ANSWER BOOK, draw a fully labelled cross-section of a cold front (E–F) in sketch B. Clearly indicate the following:",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 160,
+    "page number" : 6,
+    "bounding box" : [ 163.56, 71.017, 561.516, 125.823 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "(a) Correct cross-section (b) General direction of movement of the mid-latitude cyclone (c) Cloud type (d) Sector (4 x 1) (4)"
+  }, {
+    "type" : "footer",
+    "id" : 161,
+    "page number" : 6,
+    "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 38,
+      "page number" : 6,
+      "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+      "heading level" : 3,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 162,
+    "page number" : 7,
+    "bounding box" : [ 53.88, 782.328, 528.613, 805.577 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 60,
+      "page number" : 7,
+      "bounding box" : [ 53.88, 794.449, 528.613, 805.577 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Geography/P1 7 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 61,
+      "page number" : 7,
+      "bounding box" : [ 254.644, 782.328, 333.803, 794.405 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 163,
+    "level" : "8",
+    "page number" : 7,
+    "bounding box" : [ 108.24, 713.257, 560.916, 754.263 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 1,
+    "previous list id" : 159,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 7,
+      "bounding box" : [ 108.24, 713.257, 560.916, 754.263 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.3.6 Refer to sketch B. Explain how the difference in temperature of the air masses behind the cold front and ahead of the warm front will result in the formation of a cold front occlusion. (2 x 2) (4)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 164,
+    "level" : "5",
+    "page number" : 7,
+    "bounding box" : [ 59.28, 685.657, 426.576, 699.063 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 1,
+    "previous list id" : 155,
+    "next list id" : 173,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 7,
+      "bounding box" : [ 59.28, 685.657, 426.576, 699.063 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.4 Refer to the infographic below on Tropical Cyclone Dikeledi.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "table",
+    "id" : 165,
+    "level" : "7",
+    "page number" : 7,
+    "bounding box" : [ 53.88, 261.6, 527.16, 671.88 ],
+    "number of rows" : 4,
+    "number of columns" : 2,
+    "rows" : [ {
+      "type" : "table row",
+      "row number" : 1,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 7,
+        "bounding box" : [ 55.32, 655.86, 279.84, 670.38 ],
+        "row number" : 1,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 1,
+          "page number" : 7,
+          "bounding box" : [ 128.52, 656.617, 205.764, 670.023 ],
+          "font" : "Arial-BoldMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "A: FACT FILE"
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 7,
+        "bounding box" : [ 279.84, 655.86, 525.72, 670.38 ],
+        "row number" : 1,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 2,
+          "page number" : 7,
+          "bounding box" : [ 348.72, 656.617, 457.284, 670.023 ],
+          "font" : "Arial-BoldMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "B: LOCATION MAP"
+        } ]
+      } ]
+    }, {
+      "type" : "table row",
+      "row number" : 2,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 7,
+        "bounding box" : [ 55.32, 474.9, 279.84, 655.86 ],
+        "row number" : 2,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 3,
+          "page number" : 7,
+          "bounding box" : [ 60.0, 613.657, 248.736, 654.663 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "Tropical Cyclone Dikeledi was first observed off the north-east coast of Madagascar."
+        }, {
+          "type" : "paragraph",
+          "id" : 4,
+          "page number" : 7,
+          "bounding box" : [ 60.0, 544.657, 228.792, 599.463 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "Conditions recorded on 8 January 2025: Pressure in the centre: 996 hPa Maximum wind speed: 75 km/h"
+        }, {
+          "type" : "paragraph",
+          "id" : 5,
+          "page number" : 7,
+          "bounding box" : [ 60.0, 475.657, 232.152, 530.463 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "Conditions recorded on 13 January 2025: Pressure in the centre: 976 hPa Maximum wind speed: 150 km/h"
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 7,
+        "bounding box" : [ 279.84, 474.9, 525.72, 655.86 ],
+        "row number" : 2,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "caption",
+          "id" : 6,
+          "page number" : 7,
+          "bounding box" : [ 375.942, 478.009, 520.916, 489.137 ],
+          "linked content id" : 7,
+          "font" : "ArialMT",
+          "font size" : 9.96,
+          "text color" : "[0.0]",
+          "content" : "[Source: Examiner's own sketch]"
+        }, {
+          "type" : "image",
+          "id" : 7,
+          "page number" : 7,
+          "bounding box" : [ 285.25, 489.709, 520.95, 642.459 ],
+          "source" : "2025_geography_p1_images/imageFile13.png"
+        } ]
+      } ]
+    }, {
+      "type" : "table row",
+      "row number" : 3,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 7,
+        "bounding box" : [ 55.32, 456.9, 279.84, 474.9 ],
+        "row number" : 3,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 8,
+          "page number" : 7,
+          "bounding box" : [ 105.12, 460.417, 229.164, 473.823 ],
+          "font" : "Arial-BoldMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "C: SATELLITE IMAGE"
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 7,
+        "bounding box" : [ 279.84, 456.9, 525.72, 474.9 ],
+        "row number" : 3,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 9,
+          "page number" : 7,
+          "bounding box" : [ 341.04, 460.417, 465.084, 473.823 ],
+          "font" : "Arial-BoldMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "D: SATELLITE IMAGE"
+        } ]
+      } ]
+    }, {
+      "type" : "table row",
+      "row number" : 4,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 7,
+        "bounding box" : [ 55.32, 263.04, 279.84, 456.9 ],
+        "row number" : 4,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "caption",
+          "id" : 10,
+          "page number" : 7,
+          "bounding box" : [ 89.64, 430.86, 244.703, 455.914 ],
+          "linked content id" : 11,
+          "font" : "ArialMT",
+          "font size" : 11.04,
+          "text color" : "[0.0]",
+          "content" : "Time span: 2025/01/08 03:30 to 2025/01/08 14:00 UTC"
+        }, {
+          "type" : "image",
+          "id" : 11,
+          "page number" : 7,
+          "bounding box" : [ 62.225, 263.699, 271.575, 430.925 ],
+          "source" : "2025_geography_p1_images/imageFile14.png"
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 7,
+        "bounding box" : [ 279.84, 263.04, 525.72, 456.9 ],
+        "row number" : 4,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "caption",
+          "id" : 12,
+          "page number" : 7,
+          "bounding box" : [ 325.44, 430.86, 480.863, 455.914 ],
+          "linked content id" : 13,
+          "font" : "ArialMT",
+          "font size" : 11.04,
+          "text color" : "[0.0]",
+          "content" : "Time span: 2025/01/13 14:00 to 2025/01/13 15:30 UTC"
+        }, {
+          "type" : "image",
+          "id" : 13,
+          "page number" : 7,
+          "bounding box" : [ 296.6, 263.675, 508.85, 430.925 ],
+          "source" : "2025_geography_p1_images/imageFile15.png"
+        } ]
+      } ]
+    } ]
+  }, {
+    "type" : "caption",
+    "id" : 166,
+    "page number" : 7,
+    "bounding box" : [ 301.131, 250.009, 525.127, 261.137 ],
+    "linked content id" : 165,
+    "font" : "ArialMT",
+    "font size" : 9.96,
+    "text color" : "[0.0]",
+    "content" : "[Adapted from https://afriwx.co.za/synoptic-charts/]"
+  }, {
+    "type" : "list",
+    "id" : 168,
+    "level" : "8",
+    "page number" : 7,
+    "bounding box" : [ 108.24, 110.737, 560.916, 238.023 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 3,
+    "next list id" : 172,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 7,
+      "bounding box" : [ 108.24, 210.817, 560.916, 238.023 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.4.1 According to the fact file, in which stage of development was Tropical Cyclone Dikeledi on 8 January 2025? (1 x 1) (1)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 7,
+      "bounding box" : [ 108.24, 171.697, 560.916, 198.903 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.4.2 Give TWO reasons in the fact file to support your answer to QUESTION 1.4.1. (2 x 1) (2)",
+      "kids" : [ {
+        "type" : "paragraph",
+        "id" : 105,
+        "page number" : 7,
+        "bounding box" : [ 108.24, 146.377, 237.576, 159.783 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Refer to location map B."
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 7,
+      "bounding box" : [ 108.24, 110.737, 560.916, 137.943 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.4.3 Explain why Tropical Cyclone Dikeledi developed between 5° and 20° south of the equator. (2 x 2) (4)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "footer",
+    "id" : 169,
+    "page number" : 7,
+    "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 39,
+      "page number" : 7,
+      "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+      "heading level" : 3,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 170,
+    "page number" : 8,
+    "bounding box" : [ 53.88, 782.328, 528.613, 805.577 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 62,
+      "page number" : 8,
+      "bounding box" : [ 53.88, 794.449, 528.613, 805.577 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Geography/P1 8 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 63,
+      "page number" : 8,
+      "bounding box" : [ 254.644, 782.328, 333.803, 794.405 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 171,
+    "page number" : 8,
+    "bounding box" : [ 108.96, 747.817, 308.496, 761.223 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "Refer to the satellite images C and D."
+  }, {
+    "type" : "list",
+    "id" : 172,
+    "level" : "8",
+    "page number" : 8,
+    "bounding box" : [ 108.96, 670.777, 560.916, 735.903 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 2,
+    "previous list id" : 168,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 8,
+      "bounding box" : [ 108.96, 708.697, 560.916, 735.903 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.4.4 Describe the weather conditions associated with the forward lefthand quadrant (dangerous semicircle) in satellite image D. (2 x 2) (4)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 8,
+      "bounding box" : [ 108.96, 670.777, 560.916, 697.983 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.4.5 Explain why Tropical Cyclone Dikeledi intensified from 8 January to 13 January 2025. (2 x 2) (4)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 173,
+    "level" : "5",
+    "page number" : 8,
+    "bounding box" : [ 59.28, 645.457, 513.816, 658.863 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 1,
+    "previous list id" : 164,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 8,
+      "bounding box" : [ 59.28, 645.457, 513.816, 658.863 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.5 Refer to the synoptic weather map below showing South African berg winds.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "text block",
+    "id" : 174,
+    "page number" : 8,
+    "bounding box" : [ 79.32, 248.04, 531.72, 633.12 ],
+    "kids" : [ {
+      "type" : "text block",
+      "id" : 2,
+      "page number" : 8,
+      "bounding box" : [ 85.32, 311.64, 525.48, 630.36 ],
+      "kids" : [ {
+        "type" : "image",
+        "id" : 1,
+        "page number" : 8,
+        "bounding box" : [ 86.75, 313.07, 524.05, 628.92 ],
+        "source" : "2025_geography_p1_images/imageFile16.png"
+      } ]
+    }, {
+      "type" : "paragraph",
+      "id" : 3,
+      "page number" : 8,
+      "bounding box" : [ 85.32, 272.497, 525.696, 299.703 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "Extremely hot and uncomfortable conditions are expected across the Eastern Cape. Temperatures are expected to rise above 30 °C."
+    }, {
+      "type" : "paragraph",
+      "id" : 4,
+      "page number" : 8,
+      "bounding box" : [ 228.849, 249.529, 525.489, 260.657 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "[Adapted from https://SAWS#WatherOutlook#Southafricanweather]"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 175,
+    "level" : "7",
+    "page number" : 8,
+    "bounding box" : [ 108.96, 86.977, 559.956, 238.383 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 4,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 8,
+      "bounding box" : [ 108.96, 211.177, 559.956, 238.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.5.1 Name ONE South African city indicated on the synoptic weather map that is experiencing berg wind conditions. (1 x 1) (1)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 8,
+      "bounding box" : [ 108.96, 174.457, 559.956, 201.663 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.5.2 Give evidence from the synoptic weather map to support your answer to QUESTION 1.5.1. (1 x 2) (2)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 8,
+      "bounding box" : [ 108.96, 137.617, 559.956, 164.823 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.5.3 Explain the processes that lead to berg winds being warm and dry. (2 x 2) (4)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 8,
+      "bounding box" : [ 108.96, 86.977, 519.937, 127.983 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.5.4 The warm and dry conditions can influence veld fires. In a paragraph of approximately EIGHT lines, suggest sustainable strategies that can be put in place to reduce the negative impact of veld fires.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 176,
+    "page number" : 8,
+    "bounding box" : [ 485.88, 73.177, 559.956, 86.583 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "(4 x 2) (8)"
+  }, {
+    "type" : "heading",
+    "id" : 177,
+    "level" : "Subtitle",
+    "page number" : 8,
+    "bounding box" : [ 545.28, 59.377, 566.676, 72.783 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "[60]"
+  }, {
+    "type" : "footer",
+    "id" : 178,
+    "page number" : 8,
+    "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 40,
+      "page number" : 8,
+      "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+      "heading level" : 3,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 179,
+    "page number" : 9,
+    "bounding box" : [ 53.88, 782.328, 528.613, 805.577 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 64,
+      "page number" : 9,
+      "bounding box" : [ 53.88, 794.449, 528.613, 805.577 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Geography/P1 9 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 65,
+      "page number" : 9,
+      "bounding box" : [ 254.644, 782.328, 333.803, 794.405 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 180,
+    "level" : "Subtitle",
+    "page number" : 9,
+    "bounding box" : [ 59.28, 743.137, 254.004, 756.543 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "QUESTION 2: GEOMORPHOLOGY"
+  }, {
+    "type" : "list",
+    "id" : 181,
+    "level" : "8",
+    "page number" : 9,
+    "bounding box" : [ 59.28, 689.137, 522.721, 730.143 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 1,
+    "next list id" : 188,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 9,
+      "bounding box" : [ 59.28, 689.137, 522.721, 730.143 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.1 Refer to the sketch below based on drainage basins. Complete the statements in COLUMN A with the options in COLUMN B. Write only Y or Z next to the question numbers (2.1.1 to 2.1.8) in the ANSWER BOOK, e.g. 2.1.9 Y.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "text block",
+    "id" : 182,
+    "page number" : 9,
+    "bounding box" : [ 105.96, 433.68, 479.28, 674.16 ],
+    "kids" : [ {
+      "type" : "image",
+      "id" : 1,
+      "page number" : 9,
+      "bounding box" : [ 107.425, 435.053, 477.485, 672.753 ],
+      "source" : "2025_geography_p1_images/imageFile17.png"
+    } ]
+  }, {
+    "type" : "caption",
+    "id" : 183,
+    "page number" : 9,
+    "bounding box" : [ 334.359, 422.089, 479.283, 433.217 ],
+    "linked content id" : 184,
+    "font" : "ArialMT",
+    "font size" : 9.96,
+    "text color" : "[0.0]",
+    "content" : "[Source: Examiner's own sketch]"
+  }, {
+    "type" : "table",
+    "id" : 184,
+    "level" : "9",
+    "page number" : 9,
+    "bounding box" : [ 99.36, 85.44, 529.56, 409.44 ],
+    "number of rows" : 9,
+    "number of columns" : 2,
+    "rows" : [ {
+      "type" : "table row",
+      "row number" : 1,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 9,
+        "bounding box" : [ 100.8, 393.3, 381.0, 407.94 ],
+        "row number" : 1,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 2,
+          "page number" : 9,
+          "bounding box" : [ 208.56, 394.057, 273.384, 407.463 ],
+          "font" : "Arial-BoldMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "COLUMN A"
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 9,
+        "bounding box" : [ 381.0, 393.3, 528.12, 407.94 ],
+        "row number" : 1,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 3,
+          "page number" : 9,
+          "bounding box" : [ 422.88, 394.057, 487.464, 407.463 ],
+          "font" : "Arial-BoldMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "COLUMN B"
+        } ]
+      } ]
+    }, {
+      "type" : "table row",
+      "row number" : 2,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 9,
+        "bounding box" : [ 100.8, 364.26, 381.0, 393.3 ],
+        "row number" : 2,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 4,
+          "page number" : 9,
+          "bounding box" : [ 105.48, 365.017, 355.873, 392.223 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "2.1.1 The main river A and its tributaries are referred to as a …"
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 9,
+        "bounding box" : [ 381.0, 364.26, 528.12, 393.3 ],
+        "row number" : 2,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "list",
+          "id" : 5,
+          "level" : "1",
+          "page number" : 9,
+          "bounding box" : [ 387.12, 365.017, 395.124, 392.223 ],
+          "numbering style" : "english letters",
+          "number of list items" : 2,
+          "list items" : [ {
+            "type" : "list item",
+            "page number" : 9,
+            "bounding box" : [ 387.12, 378.817, 395.124, 392.223 ],
+            "font" : "Arial-BoldMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "Y",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 9,
+            "bounding box" : [ 387.12, 365.017, 394.452, 378.423 ],
+            "font" : "Arial-BoldMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "Z",
+            "kids" : [ ]
+          } ]
+        }, {
+          "type" : "paragraph",
+          "id" : 6,
+          "page number" : 9,
+          "bounding box" : [ 409.56, 365.017, 492.312, 392.223 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "catchment area river system"
+        } ]
+      } ]
+    }, {
+      "type" : "table row",
+      "row number" : 3,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 9,
+        "bounding box" : [ 100.8, 335.1, 381.0, 364.26 ],
+        "row number" : 3,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 7,
+          "page number" : 9,
+          "bounding box" : [ 105.48, 335.857, 357.156, 363.063 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "2.1.2 The ... in area B separates one stream from another."
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 9,
+        "bounding box" : [ 381.0, 335.1, 528.12, 364.26 ],
+        "row number" : 3,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "list",
+          "id" : 8,
+          "level" : "1",
+          "page number" : 9,
+          "bounding box" : [ 387.12, 335.857, 395.124, 363.063 ],
+          "numbering style" : "english letters",
+          "number of list items" : 2,
+          "list items" : [ {
+            "type" : "list item",
+            "page number" : 9,
+            "bounding box" : [ 387.12, 349.657, 395.124, 363.063 ],
+            "font" : "Arial-BoldMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "Y",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 9,
+            "bounding box" : [ 387.12, 335.857, 394.452, 349.263 ],
+            "font" : "Arial-BoldMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "Z",
+            "kids" : [ ]
+          } ]
+        }, {
+          "type" : "paragraph",
+          "id" : 9,
+          "page number" : 9,
+          "bounding box" : [ 409.56, 335.857, 464.952, 363.063 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "watershed interfluve"
+        } ]
+      } ]
+    }, {
+      "type" : "table row",
+      "row number" : 4,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 9,
+        "bounding box" : [ 100.8, 306.06, 381.0, 335.1 ],
+        "row number" : 4,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 10,
+          "page number" : 9,
+          "bounding box" : [ 105.48, 306.817, 352.512, 334.023 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "2.1.3 The area at C will have a ... infiltration rate."
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 9,
+        "bounding box" : [ 381.0, 306.06, 528.12, 335.1 ],
+        "row number" : 4,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "list",
+          "id" : 11,
+          "level" : "1",
+          "page number" : 9,
+          "bounding box" : [ 387.12, 306.817, 395.124, 334.023 ],
+          "numbering style" : "english letters",
+          "number of list items" : 2,
+          "list items" : [ {
+            "type" : "list item",
+            "page number" : 9,
+            "bounding box" : [ 387.12, 320.617, 395.124, 334.023 ],
+            "font" : "Arial-BoldMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "Y",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 9,
+            "bounding box" : [ 387.12, 306.817, 394.452, 320.223 ],
+            "font" : "Arial-BoldMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "Z",
+            "kids" : [ ]
+          } ]
+        }, {
+          "type" : "paragraph",
+          "id" : 12,
+          "page number" : 9,
+          "bounding box" : [ 409.56, 306.817, 432.192, 334.023 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "low high"
+        } ]
+      } ]
+    }, {
+      "type" : "table row",
+      "row number" : 5,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 9,
+        "bounding box" : [ 100.8, 276.9, 381.0, 306.06 ],
+        "row number" : 5,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 13,
+          "page number" : 9,
+          "bounding box" : [ 105.48, 291.457, 288.936, 304.863 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "2.1.4 The river at D is a ... river."
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 9,
+        "bounding box" : [ 381.0, 276.9, 528.12, 306.06 ],
+        "row number" : 5,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "list",
+          "id" : 14,
+          "level" : "1",
+          "page number" : 9,
+          "bounding box" : [ 387.12, 277.657, 395.124, 304.863 ],
+          "numbering style" : "english letters",
+          "number of list items" : 2,
+          "list items" : [ {
+            "type" : "list item",
+            "page number" : 9,
+            "bounding box" : [ 387.12, 291.457, 395.124, 304.863 ],
+            "font" : "Arial-BoldMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "Y",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 9,
+            "bounding box" : [ 387.12, 277.657, 394.452, 291.063 ],
+            "font" : "Arial-BoldMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "Z",
+            "kids" : [ ]
+          } ]
+        }, {
+          "type" : "paragraph",
+          "id" : 15,
+          "page number" : 9,
+          "bounding box" : [ 409.56, 277.657, 467.016, 304.863 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "permanant periodic"
+        } ]
+      } ]
+    }, {
+      "type" : "table row",
+      "row number" : 6,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 9,
+        "bounding box" : [ 100.8, 247.86, 381.0, 276.9 ],
+        "row number" : 6,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 16,
+          "page number" : 9,
+          "bounding box" : [ 105.48, 248.617, 362.472, 275.823 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "2.1.5 The confluence on the sketch is located at …"
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 9,
+        "bounding box" : [ 381.0, 247.86, 528.12, 276.9 ],
+        "row number" : 6,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "list",
+          "id" : 17,
+          "level" : "1",
+          "page number" : 9,
+          "bounding box" : [ 387.12, 248.617, 395.124, 275.823 ],
+          "numbering style" : "english letters",
+          "number of list items" : 2,
+          "list items" : [ {
+            "type" : "list item",
+            "page number" : 9,
+            "bounding box" : [ 387.12, 262.417, 395.124, 275.823 ],
+            "font" : "Arial-BoldMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "Y",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 9,
+            "bounding box" : [ 387.12, 248.617, 394.452, 262.023 ],
+            "font" : "Arial-BoldMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "Z",
+            "kids" : [ ]
+          } ]
+        }, {
+          "type" : "list",
+          "id" : 18,
+          "level" : "1",
+          "page number" : 9,
+          "bounding box" : [ 409.56, 248.617, 417.564, 275.823 ],
+          "numbering style" : "english letters",
+          "number of list items" : 2,
+          "list items" : [ {
+            "type" : "list item",
+            "page number" : 9,
+            "bounding box" : [ 409.56, 262.417, 417.564, 275.823 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "E",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 9,
+            "bounding box" : [ 409.56, 248.617, 416.892, 262.023 ],
+            "font" : "ArialMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "F",
+            "kids" : [ ]
+          } ]
+        } ]
+      } ]
+    }, {
+      "type" : "table row",
+      "row number" : 7,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 9,
+        "bounding box" : [ 100.8, 218.7, 381.0, 247.86 ],
+        "row number" : 7,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 19,
+          "page number" : 9,
+          "bounding box" : [ 105.48, 219.457, 372.552, 246.663 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "2.1.6 ... will increase in area G due to the steep slope."
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 9,
+        "bounding box" : [ 381.0, 218.7, 528.12, 247.86 ],
+        "row number" : 7,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "list",
+          "id" : 20,
+          "level" : "1",
+          "page number" : 9,
+          "bounding box" : [ 387.12, 219.457, 395.124, 246.663 ],
+          "numbering style" : "english letters",
+          "number of list items" : 2,
+          "list items" : [ {
+            "type" : "list item",
+            "page number" : 9,
+            "bounding box" : [ 387.12, 233.257, 395.124, 246.663 ],
+            "font" : "Arial-BoldMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "Y",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 9,
+            "bounding box" : [ 387.12, 219.457, 394.452, 232.863 ],
+            "font" : "Arial-BoldMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "Z",
+            "kids" : [ ]
+          } ]
+        }, {
+          "type" : "paragraph",
+          "id" : 21,
+          "page number" : 9,
+          "bounding box" : [ 409.56, 219.457, 461.712, 246.663 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "Infiltration Run-off"
+        } ]
+      } ]
+    }, {
+      "type" : "table row",
+      "row number" : 8,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 9,
+        "bounding box" : [ 100.8, 189.66, 381.0, 218.7 ],
+        "row number" : 8,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 22,
+          "page number" : 9,
+          "bounding box" : [ 105.48, 190.417, 337.92, 217.623 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "2.1.7 The stage of the river at H is the … course."
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 9,
+        "bounding box" : [ 381.0, 189.66, 528.12, 218.7 ],
+        "row number" : 8,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "list",
+          "id" : 23,
+          "level" : "1",
+          "page number" : 9,
+          "bounding box" : [ 387.12, 190.417, 395.124, 217.623 ],
+          "numbering style" : "english letters",
+          "number of list items" : 2,
+          "list items" : [ {
+            "type" : "list item",
+            "page number" : 9,
+            "bounding box" : [ 387.12, 204.217, 395.124, 217.623 ],
+            "font" : "Arial-BoldMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "Y",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 9,
+            "bounding box" : [ 387.12, 190.417, 394.452, 203.823 ],
+            "font" : "Arial-BoldMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "Z",
+            "kids" : [ ]
+          } ]
+        }, {
+          "type" : "paragraph",
+          "id" : 24,
+          "page number" : 9,
+          "bounding box" : [ 409.56, 190.417, 445.032, 217.623 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "lower middle"
+        } ]
+      } ]
+    }, {
+      "type" : "table row",
+      "row number" : 9,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 9,
+        "bounding box" : [ 100.8, 86.88, 381.0, 189.66 ],
+        "row number" : 9,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "paragraph",
+          "id" : 26,
+          "page number" : 9,
+          "bounding box" : [ 105.48, 175.004, 343.56, 188.463 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "2.1.8 The water table at I will resemble …"
+        }, {
+          "type" : "text block",
+          "id" : 27,
+          "page number" : 9,
+          "bounding box" : [ 151.65, 106.522, 333.15, 161.272 ],
+          "kids" : [ {
+            "type" : "image",
+            "id" : 25,
+            "page number" : 9,
+            "bounding box" : [ 153.15, 108.022, 331.65, 159.772 ],
+            "source" : "2025_geography_p1_images/imageFile18.png"
+          } ]
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 9,
+        "bounding box" : [ 381.0, 86.88, 528.12, 189.66 ],
+        "row number" : 9,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "list",
+          "id" : 28,
+          "level" : "1",
+          "page number" : 9,
+          "bounding box" : [ 385.56, 129.097, 393.564, 188.463 ],
+          "numbering style" : "english letters",
+          "number of list items" : 2,
+          "list items" : [ {
+            "type" : "list item",
+            "page number" : 9,
+            "bounding box" : [ 385.56, 175.057, 393.564, 188.463 ],
+            "font" : "Arial-BoldMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "Y",
+            "kids" : [ ]
+          }, {
+            "type" : "list item",
+            "page number" : 9,
+            "bounding box" : [ 385.56, 129.097, 392.892, 142.503 ],
+            "font" : "Arial-BoldMT",
+            "font size" : 12.0,
+            "text color" : "[0.0]",
+            "content" : "Z",
+            "kids" : [ ]
+          } ]
+        }, {
+          "type" : "image",
+          "id" : 29,
+          "page number" : 9,
+          "bounding box" : [ 408.1, 153.822, 484.181, 188.922 ],
+          "source" : "2025_geography_p1_images/imageFile19.png"
+        }, {
+          "type" : "image",
+          "id" : 30,
+          "page number" : 9,
+          "bounding box" : [ 408.1, 95.323, 490.11, 140.023 ],
+          "source" : "2025_geography_p1_images/imageFile20.png"
+        } ]
+      } ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 185,
+    "page number" : 9,
+    "bounding box" : [ 487.68, 71.617, 559.716, 85.023 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "(8 x 1) (8)"
+  }, {
+    "type" : "footer",
+    "id" : 186,
+    "page number" : 9,
+    "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 41,
+      "page number" : 9,
+      "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+      "heading level" : 3,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 187,
+    "page number" : 10,
+    "bounding box" : [ 53.88, 782.328, 528.613, 805.577 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 66,
+      "page number" : 10,
+      "bounding box" : [ 53.88, 794.449, 528.613, 805.577 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Geography/P1 10 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 67,
+      "page number" : 10,
+      "bounding box" : [ 254.644, 782.328, 333.803, 794.405 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 188,
+    "level" : "8",
+    "page number" : 10,
+    "bounding box" : [ 55.56, 701.737, 520.464, 756.543 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 1,
+    "previous list id" : 181,
+    "next list id" : 201,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 10,
+      "bounding box" : [ 55.56, 701.737, 520.464, 756.543 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.2 Refer to the sketches below on river capture. Various options are provided as possible answers to the following questions. Choose the answer and write only the letter (A–D) next to the question numbers (2.2.1 to 2.2.7) in the ANSWER BOOK, e.g. 2.2.8 D.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "table",
+    "id" : 189,
+    "level" : "9",
+    "page number" : 10,
+    "bounding box" : [ 53.88, 495.12, 531.48, 691.44 ],
+    "number of rows" : 1,
+    "number of columns" : 2,
+    "rows" : [ {
+      "type" : "table row",
+      "row number" : 1,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 10,
+        "bounding box" : [ 55.32, 496.56, 292.56, 689.94 ],
+        "row number" : 1,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "image",
+          "id" : 1,
+          "page number" : 10,
+          "bounding box" : [ 91.075, 497.205, 255.325, 689.955 ],
+          "source" : "2025_geography_p1_images/imageFile21.png"
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 10,
+        "bounding box" : [ 292.56, 496.56, 530.04, 689.94 ],
+        "row number" : 1,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "image",
+          "id" : 2,
+          "page number" : 10,
+          "bounding box" : [ 319.4, 497.955, 503.9, 689.955 ],
+          "source" : "2025_geography_p1_images/imageFile22.png"
+        } ]
+      } ]
+    } ]
+  }, {
+    "type" : "caption",
+    "id" : 190,
+    "page number" : 10,
+    "bounding box" : [ 125.52, 483.529, 531.37, 494.657 ],
+    "linked content id" : 189,
+    "font" : "ArialMT",
+    "font size" : 9.96,
+    "text color" : "[0.0]",
+    "content" : "[Adapted from https://www.google.com/url?sa=expeditieaarde.blogspot.com%river capture-]"
+  }, {
+    "type" : "list",
+    "id" : 192,
+    "level" : "10",
+    "page number" : 10,
+    "bounding box" : [ 106.8, 138.457, 524.162, 469.263 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 4,
+    "next list id" : 196,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 10,
+      "bounding box" : [ 106.8, 442.057, 524.162, 469.263 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.2.1 A river that has its water diverted into another river is referred to as a …",
+      "kids" : [ {
+        "type" : "paragraph",
+        "id" : 100,
+        "page number" : 10,
+        "bounding box" : [ 163.56, 373.057, 281.256, 427.863 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "A captured stream. B stream piracy. C captor stream. D headward stream."
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 10,
+      "bounding box" : [ 106.8, 331.657, 524.078, 358.863 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.2.2 Rivers flowing over areas with a … are more likely to be the captor stream.",
+      "kids" : [ {
+        "type" : "paragraph",
+        "id" : 101,
+        "page number" : 10,
+        "bounding box" : [ 163.56, 262.657, 354.12, 317.463 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "A gentle gradient and soft rock B steep gradient and low rainfall C steep gradient and soft rock D heavy rainfall and resistant rock"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 10,
+      "bounding box" : [ 106.8, 235.057, 459.816, 248.463 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.2.3 Evidence that river capture has taken place in sketch B:",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 102,
+        "level" : "11",
+        "page number" : 10,
+        "bounding box" : [ 163.56, 166.057, 437.256, 220.863 ],
+        "numbering style" : "english letters",
+        "number of list items" : 4,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 10,
+          "bounding box" : [ 163.56, 207.457, 376.656, 220.863 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "A River Y has more water flowing in it.",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 10,
+          "bounding box" : [ 163.56, 193.657, 437.256, 207.063 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "B River Y has captured the headwaters of river X.",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 10,
+          "bounding box" : [ 163.56, 179.857, 437.136, 193.263 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "C River X has captured the headwaters of river Y.",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 10,
+          "bounding box" : [ 163.56, 166.057, 384.695, 179.463 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "D River X has a smaller drainage basin.",
+          "kids" : [ ]
+        } ]
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 10,
+      "bounding box" : [ 106.8, 138.457, 453.72, 151.863 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.2.4 The cause of river capture, as shown in sketch B, is …",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 193,
+    "level" : "11",
+    "page number" : 10,
+    "bounding box" : [ 163.56, 69.457, 337.896, 124.263 ],
+    "numbering style" : "english letters",
+    "number of list items" : 4,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 10,
+      "bounding box" : [ 163.56, 110.857, 337.776, 124.263 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "A headward erosion by river Y.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 10,
+      "bounding box" : [ 163.56, 97.057, 317.976, 110.463 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "B lateral erosion by river X.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 10,
+      "bounding box" : [ 163.56, 83.257, 337.896, 96.663 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "C headward erosion by river X.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 10,
+      "bounding box" : [ 163.56, 69.457, 323.136, 82.863 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "D vertical erosion by river Y.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "footer",
+    "id" : 194,
+    "page number" : 10,
+    "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 42,
+      "page number" : 10,
+      "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+      "heading level" : 3,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 195,
+    "page number" : 11,
+    "bounding box" : [ 53.88, 782.328, 528.613, 805.577 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 68,
+      "page number" : 11,
+      "bounding box" : [ 53.88, 794.449, 528.613, 805.577 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Geography/P1 11 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 69,
+      "page number" : 11,
+      "bounding box" : [ 254.644, 782.328, 333.803, 794.405 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 196,
+    "level" : "10",
+    "page number" : 11,
+    "bounding box" : [ 106.8, 520.057, 521.592, 754.263 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 3,
+    "previous list id" : 192,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 11,
+      "bounding box" : [ 106.8, 727.057, 521.592, 754.263 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.2.5 The part of the river that has less water after river capture is known as the … stream.",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 103,
+        "level" : "11",
+        "page number" : 11,
+        "bounding box" : [ 163.56, 658.057, 258.624, 712.863 ],
+        "numbering style" : "english letters",
+        "number of list items" : 4,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 11,
+          "bounding box" : [ 163.56, 699.457, 218.676, 712.863 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "A captor",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 11,
+          "bounding box" : [ 163.56, 685.657, 258.624, 699.063 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "B non-perennial",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 11,
+          "bounding box" : [ 163.56, 671.857, 234.624, 685.263 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "C perennial",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 11,
+          "bounding box" : [ 163.56, 658.057, 213.216, 671.463 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "D misfit",
+          "kids" : [ ]
+        } ]
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 11,
+      "bounding box" : [ 106.8, 630.457, 509.16, 643.863 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.2.6 River X has more erosive power after river capture because of …",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 104,
+        "level" : "11",
+        "page number" : 11,
+        "bounding box" : [ 163.56, 561.457, 462.576, 616.263 ],
+        "numbering style" : "english letters",
+        "number of list items" : 4,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 11,
+          "bounding box" : [ 163.56, 602.857, 462.576, 616.263 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "A a greater volume of water and turbulent stream flow.",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 11,
+          "bounding box" : [ 163.56, 589.057, 415.176, 602.463 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "B a greater volume of water and laminar flow.",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 11,
+          "bounding box" : [ 163.56, 575.257, 421.896, 588.663 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "C headward erosion and turbulent stream flow.",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 11,
+          "bounding box" : [ 163.56, 561.457, 344.496, 574.863 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "D rejuvenation and laminar flow.",
+          "kids" : [ ]
+        } ]
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 11,
+      "bounding box" : [ 106.8, 520.057, 521.557, 547.263 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.2.7 The physical (natural) impact of river capture on the captor stream is that the … and …",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 197,
+    "level" : "12",
+    "page number" : 11,
+    "bounding box" : [ 163.56, 451.057, 349.152, 505.863 ],
+    "numbering style" : "roman numbers",
+    "number of list items" : 4,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 11,
+      "bounding box" : [ 163.56, 492.457, 330.481, 505.863 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "(i) drainage basin decreases",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 11,
+      "bounding box" : [ 163.56, 478.657, 349.152, 492.063 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "(ii) river rejuvenation takes place",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 11,
+      "bounding box" : [ 163.56, 464.857, 302.52, 478.263 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "(iii) deposition increases",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 11,
+      "bounding box" : [ 163.56, 451.057, 286.476, 464.463 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "(iv) water flows faster",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 198,
+    "level" : "11",
+    "page number" : 11,
+    "bounding box" : [ 163.56, 382.057, 561.156, 436.863 ],
+    "numbering style" : "english letters",
+    "number of list items" : 4,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 11,
+      "bounding box" : [ 163.56, 423.457, 239.076, 436.863 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "A (i) and (iv)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 11,
+      "bounding box" : [ 163.56, 409.657, 238.476, 423.063 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "B (i) and (iii)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 11,
+      "bounding box" : [ 163.56, 395.857, 241.716, 409.263 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "C (ii) and (iv)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 11,
+      "bounding box" : [ 163.56, 382.057, 561.156, 395.463 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "D (ii) and (iii) (7 x 1) (7)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "footer",
+    "id" : 199,
+    "page number" : 11,
+    "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 43,
+      "page number" : 11,
+      "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+      "heading level" : 3,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 200,
+    "page number" : 12,
+    "bounding box" : [ 53.88, 782.328, 528.613, 805.577 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 70,
+      "page number" : 12,
+      "bounding box" : [ 53.88, 794.449, 528.613, 805.577 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Geography/P1 12 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 71,
+      "page number" : 12,
+      "bounding box" : [ 254.644, 782.328, 333.803, 794.405 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 201,
+    "level" : "8",
+    "page number" : 12,
+    "bounding box" : [ 59.28, 743.137, 461.256, 756.543 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 1,
+    "previous list id" : 188,
+    "next list id" : 207,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 12,
+      "bounding box" : [ 59.28, 743.137, 461.256, 756.543 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.3 Refer to the sketches below showing two longitudinal river profiles.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "text block",
+    "id" : 202,
+    "page number" : 12,
+    "bounding box" : [ 116.88, 353.04, 468.48, 729.36 ],
+    "kids" : [ {
+      "type" : "image",
+      "id" : 1,
+      "page number" : 12,
+      "bounding box" : [ 118.3, 354.901, 467.03, 727.901 ],
+      "source" : "2025_geography_p1_images/imageFile23.png"
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 203,
+    "page number" : 12,
+    "bounding box" : [ 323.044, 341.449, 467.874, 352.577 ],
+    "font" : "ArialMT",
+    "font size" : 9.96,
+    "text color" : "[0.0]",
+    "content" : "[Source: Examiner's own sketch]"
+  }, {
+    "type" : "list",
+    "id" : 204,
+    "level" : "10",
+    "page number" : 12,
+    "bounding box" : [ 107.52, 61.897, 559.956, 328.383 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 7,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 12,
+      "bounding box" : [ 107.52, 314.977, 559.956, 328.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.3.1 What is a longitudinal profile? (1 x 2) (2)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 12,
+      "bounding box" : [ 107.52, 274.657, 559.956, 301.863 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.3.2 Which ONE of the sketches above shows a graded longitudinal profile? (1 x 1) (1)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 12,
+      "bounding box" : [ 107.52, 234.457, 559.956, 261.663 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.3.3 Give evidence in the sketch to support your answer to QUESTION 2.3.2. (2 x 1) (2)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 12,
+      "bounding box" : [ 107.52, 194.137, 559.956, 221.343 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.3.4 Classify EACH of the temporary base levels in sketch A as either natural or human-made. (2 x 1) (2)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 12,
+      "bounding box" : [ 107.52, 142.417, 559.956, 182.343 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.3.5 Why is the sea indicated as the permanent base level? (1 x 2) (2) Refer to cross-profiles C and D.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 12,
+      "bounding box" : [ 107.52, 102.217, 559.956, 129.423 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.3.6 Differentiate between the shapes of the cross-profiles at C and D. (1 x 2) (2)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 12,
+      "bounding box" : [ 107.52, 61.897, 559.956, 89.103 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.3.7 Explain the main processes that give rise to the difference in the shape of cross-profiles C and D. (2 x 2) (4)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "footer",
+    "id" : 205,
+    "page number" : 12,
+    "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 44,
+      "page number" : 12,
+      "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+      "heading level" : 3,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 206,
+    "page number" : 13,
+    "bounding box" : [ 53.88, 782.328, 528.613, 805.577 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 72,
+      "page number" : 13,
+      "bounding box" : [ 53.88, 794.449, 528.613, 805.577 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Geography/P1 13 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 73,
+      "page number" : 13,
+      "bounding box" : [ 254.644, 782.328, 333.803, 794.405 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 207,
+    "level" : "8",
+    "page number" : 13,
+    "bounding box" : [ 59.28, 740.857, 409.776, 754.263 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 1,
+    "previous list id" : 201,
+    "next list id" : 214,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 13,
+      "bounding box" : [ 59.28, 740.857, 409.776, 754.263 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.4 Refer to photographs A and B below showing meanders.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "table",
+    "id" : 208,
+    "level" : "10",
+    "page number" : 13,
+    "bounding box" : [ 53.88, 414.96, 531.48, 728.28 ],
+    "number of rows" : 1,
+    "number of columns" : 2,
+    "rows" : [ {
+      "type" : "table row",
+      "row number" : 1,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 13,
+        "bounding box" : [ 55.32, 416.4, 291.96, 726.78 ],
+        "row number" : 1,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "caption",
+          "id" : 1,
+          "page number" : 13,
+          "bounding box" : [ 168.24, 710.665, 178.377, 726.35 ],
+          "linked content id" : 2,
+          "font" : "Arial-BoldMT",
+          "font size" : 14.04,
+          "text color" : "[0.0]",
+          "content" : "A"
+        }, {
+          "type" : "image",
+          "id" : 2,
+          "page number" : 13,
+          "bounding box" : [ 60.0, 531.435, 289.0, 710.653 ],
+          "source" : "2025_geography_p1_images/imageFile24.png"
+        }, {
+          "type" : "image",
+          "id" : 3,
+          "page number" : 13,
+          "bounding box" : [ 60.0, 419.674, 286.35, 531.403 ],
+          "source" : "2025_geography_p1_images/imageFile25.png"
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 13,
+        "bounding box" : [ 291.96, 416.4, 530.04, 726.78 ],
+        "row number" : 1,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "caption",
+          "id" : 4,
+          "page number" : 13,
+          "bounding box" : [ 406.32, 710.665, 416.457, 726.35 ],
+          "linked content id" : 5,
+          "font" : "Arial-BoldMT",
+          "font size" : 14.04,
+          "text color" : "[0.0]",
+          "content" : "B"
+        }, {
+          "type" : "image",
+          "id" : 5,
+          "page number" : 13,
+          "bounding box" : [ 297.35, 531.403, 528.35, 710.653 ],
+          "source" : "2025_geography_p1_images/imageFile26.png"
+        }, {
+          "type" : "image",
+          "id" : 6,
+          "page number" : 13,
+          "bounding box" : [ 297.35, 418.173, 526.8, 530.653 ],
+          "source" : "2025_geography_p1_images/imageFile27.png"
+        } ]
+      } ]
+    } ]
+  }, {
+    "type" : "caption",
+    "id" : 209,
+    "page number" : 13,
+    "bounding box" : [ 270.608, 403.369, 531.49, 414.497 ],
+    "linked content id" : 208,
+    "font" : "ArialMT",
+    "font size" : 9.96,
+    "text color" : "[0.0]",
+    "content" : "[Source: https://www.google.com/search?+meanders&tbm]"
+  }, {
+    "type" : "list",
+    "id" : 211,
+    "level" : "11",
+    "page number" : 13,
+    "bounding box" : [ 107.52, 211.297, 561.156, 390.303 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 4,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 13,
+      "bounding box" : [ 107.52, 363.097, 561.156, 390.303 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.4.1 Meanders are more likely to form in the (upper/lower) stage/course of a river. (1 x 1) (1)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 13,
+      "bounding box" : [ 107.52, 321.697, 561.156, 348.903 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.4.2 Account for the gentle gradient of the inner bank at C in photograph A. (1 x 2) (2)",
+      "kids" : [ {
+        "type" : "paragraph",
+        "id" : 99,
+        "page number" : 13,
+        "bounding box" : [ 106.56, 294.097, 351.456, 307.503 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Refer to photograph B and cross-section E–F."
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 13,
+      "bounding box" : [ 107.52, 252.697, 561.156, 279.903 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.4.3 How does the process of river rejuvenation lead to the formation of incised meanders? (2 x 2) (4)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 13,
+      "bounding box" : [ 107.52, 211.297, 561.156, 238.503 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.4.4 Refer to photograph A. In a paragraph of approximately EIGHT lines, explain how an oxbow lake is formed. (4 x 2) (8)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "footer",
+    "id" : 212,
+    "page number" : 13,
+    "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 45,
+      "page number" : 13,
+      "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+      "heading level" : 3,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 213,
+    "page number" : 14,
+    "bounding box" : [ 53.88, 782.328, 528.613, 805.577 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 74,
+      "page number" : 14,
+      "bounding box" : [ 53.88, 794.449, 528.613, 805.577 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Geography/P1 14 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 75,
+      "page number" : 14,
+      "bounding box" : [ 254.644, 782.328, 333.803, 794.405 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 214,
+    "level" : "8",
+    "page number" : 14,
+    "bounding box" : [ 59.28, 736.297, 521.557, 763.503 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 1,
+    "previous list id" : 207,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 14,
+      "bounding box" : [ 59.28, 736.297, 521.557, 763.503 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.5 Refer to the extract and photograph below on catchment and river management.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "table",
+    "id" : 215,
+    "level" : "10",
+    "page number" : 14,
+    "bounding box" : [ 102.12, 324.36, 531.48, 727.08 ],
+    "number of rows" : 2,
+    "number of columns" : 1,
+    "rows" : [ {
+      "type" : "table row",
+      "row number" : 1,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 14,
+        "bounding box" : [ 103.56, 592.38, 530.04, 725.58 ],
+        "row number" : 1,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "heading",
+          "id" : 1,
+          "level" : "Subtitle",
+          "page number" : 14,
+          "bounding box" : [ 162.6, 711.817, 470.888, 725.223 ],
+          "heading level" : 2,
+          "font" : "Arial-BoldMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "IMPACT OF SETTLEMENTS ON RIVER MANAGEMENT"
+        }, {
+          "type" : "paragraph",
+          "id" : 2,
+          "page number" : 14,
+          "bounding box" : [ 108.24, 647.377, 525.554, 702.183 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "Dense settlements that locate along rivers have a negative impact on rivers. The main reason is that these settlements generally receive poor service provision. These poor communities also do not have the means to pay for the provision of services, such as waste removal."
+        }, {
+          "type" : "paragraph",
+          "id" : 3,
+          "page number" : 14,
+          "bounding box" : [ 108.24, 596.737, 525.457, 637.743 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "When large amounts of waste pile up in the settlement, the community is more likely to dispose of the waste in the river. This leads to further pollution, eventually leading to serious health risks for the community."
+        } ]
+      } ]
+    }, {
+      "type" : "table row",
+      "row number" : 2,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 14,
+        "bounding box" : [ 103.56, 325.8, 530.04, 592.38 ],
+        "row number" : 2,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "caption",
+          "id" : 4,
+          "page number" : 14,
+          "bounding box" : [ 121.08, 326.929, 525.249, 349.577 ],
+          "linked content id" : 7,
+          "font" : "ArialMT",
+          "font size" : 9.96,
+          "text color" : "[0.0]",
+          "content" : "[Adapted from https://witsvuvuzela.com/2022/11/28/-residents-live-on-the-edge-of-a-healthhazard/]"
+        }, {
+          "type" : "image",
+          "id" : 7,
+          "page number" : 14,
+          "bounding box" : [ 108.25, 349.902, 559.0, 582.402 ],
+          "source" : "2025_geography_p1_images/imageFile28.png"
+        } ]
+      } ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 216,
+    "level" : "11",
+    "page number" : 14,
+    "bounding box" : [ 108.24, 121.897, 561.276, 310.023 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 5,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 14,
+      "bounding box" : [ 108.24, 282.817, 561.276, 310.023 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.5.1 According to the extract, why are dense settlements along rivers associated with pollution? (1 x 1) (1)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 14,
+      "bounding box" : [ 108.24, 241.417, 561.276, 268.623 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.5.2 Give TWO reasons from the photograph to support your answer to QUESTION 2.5.1. (2 x 1) (2)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 14,
+      "bounding box" : [ 108.24, 200.017, 561.276, 227.223 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.5.3 Explain how the rise in the water level of the river will negatively affect the houses (in the photograph) due to their location. (1 x 2) (2)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 14,
+      "bounding box" : [ 108.24, 160.897, 561.276, 188.103 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.5.4 Explain the negative impact of poor river management on the health of rivers. (2 x 2) (4)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 14,
+      "bounding box" : [ 108.24, 121.897, 561.276, 149.103 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.5.5 Suggest strategies that the municipality can put in place to ensure the sustainability of the river in the photograph. (3 x 2) (6)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 217,
+    "level" : "Subtitle",
+    "page number" : 14,
+    "bounding box" : [ 409.056, 82.777, 567.996, 121.503 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "[60] TOTAL SECTION A: 120"
+  }, {
+    "type" : "footer",
+    "id" : 218,
+    "page number" : 14,
+    "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 46,
+      "page number" : 14,
+      "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+      "heading level" : 3,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 219,
+    "page number" : 15,
+    "bounding box" : [ 53.88, 782.328, 528.613, 805.577 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 76,
+      "page number" : 15,
+      "bounding box" : [ 53.88, 794.449, 528.613, 805.577 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Geography/P1 15 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 77,
+      "page number" : 15,
+      "bounding box" : [ 254.644, 782.328, 333.803, 794.405 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 220,
+    "level" : "3",
+    "page number" : 15,
+    "bounding box" : [ 59.28, 740.857, 124.704, 754.263 ],
+    "numbering style" : "english letters",
+    "number of list items" : 1,
+    "previous list id" : 130,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 15,
+      "bounding box" : [ 59.28, 740.857, 124.704, 754.263 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "SECTION B",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 221,
+    "level" : "8",
+    "page number" : 15,
+    "bounding box" : [ 59.28, 713.257, 394.644, 726.663 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 1,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 15,
+      "bounding box" : [ 59.28, 713.257, 394.644, 726.663 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "QUESTION 3: GEOGRAPHICAL SKILLS AND TECHNIQUES",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "text block",
+    "id" : 222,
+    "page number" : 15,
+    "bounding box" : [ 52.92, 193.68, 527.76, 700.68 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 1,
+      "page number" : 15,
+      "bounding box" : [ 155.64, 685.297, 424.943, 698.703 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "GENERAL INFORMATION ON STELLENBOSCH"
+    }, {
+      "type" : "paragraph",
+      "id" : 2,
+      "page number" : 15,
+      "bounding box" : [ 59.04, 385.897, 228.444, 399.303 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "Coordinates: 33°45ꞌS; 18°45ꞌE"
+    }, {
+      "type" : "paragraph",
+      "id" : 4,
+      "page number" : 15,
+      "bounding box" : [ 59.04, 303.097, 521.713, 371.703 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "Stellenbosch is located in a hilly, sheltered valley within the Cape Winelands, with an average elevation of 136 metres above sea level, surrounded by hills and mountains, like Papegaaiberg, Stellenboschberg, and the Jonkershoek, Drakenstein and Simonsberg mountain ranges. It is situated approximately 50 kilometres east of Cape Town."
+    }, {
+      "type" : "paragraph",
+      "id" : 11,
+      "page number" : 15,
+      "bounding box" : [ 59.04, 261.697, 521.635, 288.903 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "Stellenbosch has a Mediterranean climate with warm, dry summers and cool, rainy winters."
+    }, {
+      "type" : "paragraph",
+      "id" : 15,
+      "page number" : 15,
+      "bounding box" : [ 59.04, 220.297, 521.592, 247.503 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "The Eerste River originates in the Jonkershoek Mountains, 60 kilometres east of Cape Town, and flows through the Jonkershoek Valley before reaching Stellenbosch."
+    }, {
+      "type" : "paragraph",
+      "id" : 18,
+      "page number" : 15,
+      "bounding box" : [ 271.56, 195.169, 521.649, 206.297 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "[Adapted from https://en.wikipedia.org/wiki/Stellenbosch]"
+    }, {
+      "type" : "image",
+      "id" : 19,
+      "page number" : 15,
+      "bounding box" : [ 137.125, 413.595, 443.575, 671.556 ],
+      "source" : "2025_geography_p1_images/imageFile29.png"
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 224,
+    "page number" : 15,
+    "bounding box" : [ 59.04, 152.137, 521.712, 179.343 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "The following English terms and their Afrikaans translations are shown on the topographical map:"
+  }, {
+    "type" : "paragraph",
+    "id" : 227,
+    "page number" : 15,
+    "bounding box" : [ 59.04, 83.137, 331.776, 137.943 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "ENGLISH AFRIKAANS River Rivier Nature reserve Natuurreservaart Mountain Berg"
+  }, {
+    "type" : "footer",
+    "id" : 229,
+    "page number" : 15,
+    "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 47,
+      "page number" : 15,
+      "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+      "heading level" : 3,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 230,
+    "page number" : 16,
+    "bounding box" : [ 53.88, 782.328, 528.613, 805.577 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 78,
+      "page number" : 16,
+      "bounding box" : [ 53.88, 794.449, 528.613, 805.577 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Geography/P1 16 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 79,
+      "page number" : 16,
+      "bounding box" : [ 254.644, 782.328, 333.803, 794.405 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 231,
+    "level" : "Subtitle",
+    "page number" : 16,
+    "bounding box" : [ 59.28, 740.857, 307.404, 754.263 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "3.1 MAP SKILLS AND CALCULATIONS"
+  }, {
+    "type" : "list",
+    "id" : 232,
+    "level" : "9",
+    "page number" : 16,
+    "bounding box" : [ 107.52, 181.417, 561.276, 726.663 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 6,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 16,
+      "bounding box" : [ 107.52, 699.457, 561.276, 726.663 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.1.1 Calculate the difference in height between trigonometrical station F in block C3 and trigonometrical station G in block D3. (2 x 1) (2)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 16,
+      "bounding box" : [ 107.52, 671.857, 477.96, 685.263 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.1.2 The natural feature found at 33°58ꞌ29\"S; 18°54ꞌ15\"E is a …",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 94,
+        "level" : "10",
+        "page number" : 16,
+        "bounding box" : [ 163.56, 602.857, 561.276, 657.663 ],
+        "numbering style" : "english letters",
+        "number of list items" : 4,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 16,
+          "bounding box" : [ 163.56, 644.257, 305.976, 657.663 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "A trigonometrical station.",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 16,
+          "bounding box" : [ 163.56, 630.457, 264.456, 643.863 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "B perennial river.",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 16,
+          "bounding box" : [ 163.56, 616.657, 223.896, 630.063 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "C saddle.",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 16,
+          "bounding box" : [ 163.56, 602.857, 561.276, 616.263 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "D spot height. (1 x 1) (1)",
+          "kids" : [ ]
+        } ]
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 16,
+      "bounding box" : [ 107.52, 478.657, 521.712, 588.663 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.1.3 Calculate the average gradient from 6 in block E5 to 7 in block D5 on the orthophoto map. Use the following information: Vertical interval (VI) = 60 m Formula: Vertical Interval (VI)",
+      "kids" : [ {
+        "type" : "paragraph",
+        "id" : 96,
+        "page number" : 16,
+        "bounding box" : [ 213.696, 464.857, 561.276, 478.263 ],
+        "font" : "Arial-BoldMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Horizontal Equivalent (HE) (4 x 1) (4)"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 16,
+      "bounding box" : [ 107.52, 423.457, 521.594, 450.663 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.1.4 Match the average gradient (answer to QUESTION 3.1.3) with sketch A or B below.",
+      "kids" : [ {
+        "type" : "paragraph",
+        "id" : 97,
+        "page number" : 16,
+        "bounding box" : [ 243.84, 395.857, 407.784, 409.263 ],
+        "font" : "Arial-BoldMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "A B"
+      }, {
+        "type" : "paragraph",
+        "id" : 98,
+        "page number" : 16,
+        "bounding box" : [ 487.056, 253.057, 561.276, 266.463 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(1 x 1) (1)"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 16,
+      "bounding box" : [ 107.52, 209.017, 561.276, 236.223 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.1.5 Is L in block C2 visible from H in block C4 on the topographical map? (1 x 1) (1)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 16,
+      "bounding box" : [ 107.52, 181.417, 561.276, 194.823 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.1.6 Give a reason for your answer to QUESTION 3.1.5. (1 x 1) (1)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "text block",
+    "id" : 233,
+    "page number" : 16,
+    "bounding box" : [ 183.554, 267.68, 311.804, 395.93 ],
+    "kids" : [ {
+      "type" : "image",
+      "id" : 1,
+      "page number" : 16,
+      "bounding box" : [ 185.054, 269.18, 310.304, 394.43 ],
+      "source" : "2025_geography_p1_images/imageFile30.png"
+    } ]
+  }, {
+    "type" : "text block",
+    "id" : 234,
+    "page number" : 16,
+    "bounding box" : [ 342.56, 266.935, 467.16, 395.93 ],
+    "kids" : [ {
+      "type" : "image",
+      "id" : 2,
+      "page number" : 16,
+      "bounding box" : [ 344.06, 268.435, 465.66, 394.43 ],
+      "source" : "2025_geography_p1_images/imageFile31.png"
+    } ]
+  }, {
+    "type" : "footer",
+    "id" : 235,
+    "page number" : 16,
+    "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 48,
+      "page number" : 16,
+      "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+      "heading level" : 3,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 236,
+    "page number" : 17,
+    "bounding box" : [ 53.88, 782.328, 528.613, 805.577 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 80,
+      "page number" : 17,
+      "bounding box" : [ 53.88, 794.449, 528.613, 805.577 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Geography/P1 17 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 81,
+      "page number" : 17,
+      "bounding box" : [ 254.644, 782.328, 333.803, 794.405 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 237,
+    "level" : "Subtitle",
+    "page number" : 17,
+    "bounding box" : [ 59.28, 740.857, 243.623, 754.263 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "3.2 MAP INTERPRETATION"
+  }, {
+    "type" : "list",
+    "id" : 238,
+    "level" : "11",
+    "page number" : 17,
+    "bounding box" : [ 108.24, 74.617, 559.956, 726.663 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 8,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 17,
+      "bounding box" : [ 108.24, 713.257, 324.456, 726.663 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.2.1 Stellenbosch has a … climate.",
+      "kids" : [ {
+        "type" : "paragraph",
+        "id" : 86,
+        "page number" : 17,
+        "bounding box" : [ 162.84, 644.257, 559.956, 699.063 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "A tropical B arid C Mediterranean D subtropical (1 x 1) (1)"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 17,
+      "bounding box" : [ 108.24, 602.857, 559.956, 630.063 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.2.2 Stellenbosch experiences seasonal rainfall. Give evidence from block A5 on the topographical map to support this statement. (1 x 1) (1)",
+      "kids" : [ {
+        "type" : "paragraph",
+        "id" : 87,
+        "page number" : 17,
+        "bounding box" : [ 108.24, 575.257, 315.816, 588.663 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Refer to area 8 on the orthophoto map."
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 17,
+      "bounding box" : [ 108.24, 533.857, 559.956, 561.063 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.2.3 Explain why area 8 will experience lower temperatures than the surrounding built-up area. (1 x 2) (2)",
+      "kids" : [ {
+        "type" : "paragraph",
+        "id" : 88,
+        "page number" : 17,
+        "bounding box" : [ 108.24, 506.257, 495.936, 519.663 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Refer to the row of trees labelled J in block E3 on the topographical map."
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 17,
+      "bounding box" : [ 108.24, 464.857, 559.956, 492.063 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.2.4 State the general wind direction experienced in the area around J during the night. (1 x 1) (1)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 17,
+      "bounding box" : [ 108.24, 423.457, 559.956, 450.663 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.2.5 Give evidence from the map to support your answer to QUESTION 3.2.4. (1 x 2) (2)",
+      "kids" : [ {
+        "type" : "paragraph",
+        "id" : 89,
+        "page number" : 17,
+        "bounding box" : [ 108.24, 395.857, 276.456, 409.263 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Refer to the topographical map."
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 17,
+      "bounding box" : [ 108.24, 354.457, 559.956, 381.663 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.2.6 Stellenboschberg is a watershed. Give evidence from the map to support this statement. (1 x 2) (2)",
+      "kids" : [ {
+        "type" : "paragraph",
+        "id" : 90,
+        "page number" : 17,
+        "bounding box" : [ 108.24, 326.857, 415.297, 340.263 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Refer to the photograph of a river located in Stellenbosch."
+      }, {
+        "type" : "text block",
+        "id" : 91,
+        "page number" : 17,
+        "bounding box" : [ 196.8, 155.16, 432.24, 313.08 ],
+        "kids" : [ {
+          "type" : "image",
+          "id" : 1,
+          "page number" : 17,
+          "bounding box" : [ 198.25, 156.62, 430.8, 311.62 ],
+          "source" : "2025_geography_p1_images/imageFile32.png"
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 92,
+        "page number" : 17,
+        "bounding box" : [ 313.744, 143.689, 432.369, 154.817 ],
+        "font" : "ArialMT",
+        "font size" : 9.96,
+        "text color" : "[0.0]",
+        "content" : "[Source: shutterstock.com]"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 17,
+      "bounding box" : [ 108.24, 102.217, 559.956, 129.423 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.2.7 Will the river depicted on the photograph be located at K in block D1 or L in block C2? (1 x 1) (1)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 17,
+      "bounding box" : [ 108.24, 74.617, 559.956, 88.023 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.2.8 Give a reason for your answer to QUESTION 3.2.7. (1 x 2) (2)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "footer",
+    "id" : 239,
+    "page number" : 17,
+    "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 49,
+      "page number" : 17,
+      "bounding box" : [ 53.88, 36.049, 528.549, 47.177 ],
+      "heading level" : 3,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 240,
+    "page number" : 18,
+    "bounding box" : [ 53.88, 782.328, 528.605, 805.577 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 82,
+      "page number" : 18,
+      "bounding box" : [ 53.88, 794.449, 528.605, 805.577 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Geography/P1 18 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 83,
+      "page number" : 18,
+      "bounding box" : [ 254.644, 782.328, 333.803, 794.405 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 242,
+    "level" : "Subtitle",
+    "page number" : 18,
+    "bounding box" : [ 59.28, 740.857, 387.036, 754.263 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "3.3 GEOGRAPHICAL INFORMATION SYSTEMS (GIS)"
+  }, {
+    "type" : "list",
+    "id" : 243,
+    "level" : "12",
+    "page number" : 18,
+    "bounding box" : [ 108.24, 492.457, 559.956, 726.663 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 4,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 18,
+      "bounding box" : [ 108.24, 699.457, 520.992, 726.663 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.3.1 The number 310, labelled M on the main road in block A3 on the topographical map, is referred to as … data.",
+      "kids" : [ {
+        "type" : "paragraph",
+        "id" : 84,
+        "page number" : 18,
+        "bounding box" : [ 162.12, 630.457, 559.956, 685.263 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "A spatial B vector C attribute D numerical (1 x 1) (1)"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 18,
+      "bounding box" : [ 108.24, 589.057, 559.956, 616.263 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.3.2 Identify a natural line feature in block A4 on the topographical map. (1 x 1) (1)",
+      "kids" : [ {
+        "type" : "paragraph",
+        "id" : 85,
+        "page number" : 18,
+        "bounding box" : [ 108.24, 561.457, 378.456, 574.863 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Refer to area 9 in block A3 on the orthophoto map."
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 18,
+      "bounding box" : [ 108.24, 520.057, 559.956, 547.263 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.3.3 Using data manipulation, explain how you would manipulate the scale at area 9 to make the image clearer. (1 x 2) (2)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 18,
+      "bounding box" : [ 108.24, 492.457, 345.576, 505.863 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.3.4 … refers to the clarity of an image.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 244,
+    "page number" : 18,
+    "bounding box" : [ 162.12, 423.457, 559.956, 478.263 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "A Data integration B Buffering C Data sharing D Resolution (1 x 1) (1)"
+  }, {
+    "type" : "paragraph",
+    "id" : 245,
+    "page number" : 18,
+    "bounding box" : [ 108.24, 382.057, 520.956, 409.263 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "Refer to the images of the Danie Craven Stadium below, extracted from block D1/D2 on the orthophoto map."
+  }, {
+    "type" : "table",
+    "id" : 246,
+    "level" : "13",
+    "page number" : 18,
+    "bounding box" : [ 53.88, 194.04, 531.48, 369.48 ],
+    "number of rows" : 1,
+    "number of columns" : 2,
+    "rows" : [ {
+      "type" : "table row",
+      "row number" : 1,
+      "cells" : [ {
+        "type" : "table cell",
+        "page number" : 18,
+        "bounding box" : [ 55.32, 195.48, 292.68, 367.98 ],
+        "row number" : 1,
+        "column number" : 1,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "caption",
+          "id" : 1,
+          "page number" : 18,
+          "bounding box" : [ 169.32, 354.217, 177.984, 367.623 ],
+          "linked content id" : 2,
+          "font" : "Arial-BoldMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "A"
+        }, {
+          "type" : "image",
+          "id" : 2,
+          "page number" : 18,
+          "bounding box" : [ 76.7, 201.333, 270.506, 354.183 ],
+          "source" : "2025_geography_p1_images/imageFile33.png"
+        } ]
+      }, {
+        "type" : "table cell",
+        "page number" : 18,
+        "bounding box" : [ 292.68, 195.48, 530.04, 367.98 ],
+        "row number" : 1,
+        "column number" : 2,
+        "row span" : 1,
+        "column span" : 1,
+        "kids" : [ {
+          "type" : "caption",
+          "id" : 3,
+          "page number" : 18,
+          "bounding box" : [ 407.4, 354.217, 416.064, 367.623 ],
+          "linked content id" : 4,
+          "font" : "Arial-BoldMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "B"
+        }, {
+          "type" : "image",
+          "id" : 4,
+          "page number" : 18,
+          "bounding box" : [ 316.45, 200.354, 506.847, 354.183 ],
+          "source" : "2025_geography_p1_images/imageFile34.png"
+        } ]
+      } ]
+    } ]
+  }, {
+    "type" : "caption",
+    "id" : 247,
+    "page number" : 18,
+    "bounding box" : [ 95.395, 182.449, 530.287, 193.577 ],
+    "linked content id" : 246,
+    "font" : "ArialMT",
+    "font size" : 9.96,
+    "text color" : "[0.0]",
+    "content" : "[Source: https://earth.google.com/web/search/Danie+Craven+Stadium,+Coetzenburg+Street/@-A]"
+  }, {
+    "type" : "list",
+    "id" : 249,
+    "level" : "12",
+    "page number" : 18,
+    "bounding box" : [ 107.16, 125.977, 559.956, 166.983 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 2,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 18,
+      "bounding box" : [ 107.16, 153.577, 559.956, 166.983 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.3.5 Which photograph, A or B, has fewer pixels? (1 x 1) (1)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 18,
+      "bounding box" : [ 107.16, 125.977, 559.956, 139.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.3.6 Give a reason for your answer to QUESTION 3.3.5. (1 x 2) (2)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 250,
+    "level" : "Subtitle",
+    "page number" : 18,
+    "bounding box" : [ 408.24, 84.577, 565.152, 111.783 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "TOTAL SECTION B: 30 GRAND TOTAL: 150"
+  }, {
+    "type" : "paragraph",
+    "id" : 241,
+    "page number" : 18,
+    "bounding box" : [ 53.88, 36.049, 138.246, 47.177 ],
+    "font" : "ArialMT",
+    "font size" : 9.96,
+    "text color" : "[0.0]",
+    "content" : "Copyright reserved"
+  } ]
+}

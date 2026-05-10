@@ -1,0 +1,2555 @@
+{
+  "file name" : "2025_history_p1.pdf",
+  "number of pages" : 9,
+  "author" : "Chauke",
+  "title" : "QUESTION 1: IN WHAT WAY DID THE ATLANTIC CHARTER INFLUENCE THE RISE OF AFRICAN NATIONALISM IN SOUTH AFRICA BETWEEN 1941 1ND 1943",
+  "creation date" : "D:20260122101855+02'00'",
+  "modification date" : "D:20260122101858+02'00'",
+  "kids" : [ {
+    "type" : "text block",
+    "id" : 156,
+    "page number" : 1,
+    "bounding box" : [ 24.0, 24.0, 571.32, 818.04 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 1,
+      "page number" : 1,
+      "bounding box" : [ 266.074, 793.903, 322.043, 805.925 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "Confidential"
+    }, {
+      "type" : "paragraph",
+      "id" : 2,
+      "page number" : 1,
+      "bounding box" : [ 53.88, 36.049, 528.539, 47.177 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    }, {
+      "type" : "paragraph",
+      "id" : 3,
+      "page number" : 1,
+      "bounding box" : [ 53.88, 304.057, 133.272, 345.063 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "MARKS: 150 TIME: 3 hours"
+    }, {
+      "type" : "paragraph",
+      "id" : 4,
+      "page number" : 1,
+      "bounding box" : [ 96.36, 207.457, 503.977, 220.863 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "This question paper consists of 9 pages and an addendum of 14 pages."
+    }, {
+      "type" : "paragraph",
+      "id" : 6,
+      "page number" : 1,
+      "bounding box" : [ 236.283, 383.189, 352.333, 431.03 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 14.04,
+      "text color" : "[0.0]",
+      "content" : "HISTORY P1 NOVEMBER 2025"
+    }, {
+      "type" : "heading",
+      "id" : 8,
+      "level" : "Doctitle",
+      "page number" : 1,
+      "bounding box" : [ 213.0, 569.738, 384.324, 605.928 ],
+      "heading level" : 1,
+      "font" : "Arial-BoldMT",
+      "font size" : 15.96,
+      "text color" : "[1.0]",
+      "content" : "NATIONAL SENIOR CERTIFICATE"
+    }, {
+      "type" : "image",
+      "id" : 10,
+      "page number" : 1,
+      "bounding box" : [ 107.85, 648.27, 485.85, 789.77 ],
+      "source" : "2025_history_p1_images/imageFile1.png"
+    }, {
+      "type" : "heading",
+      "id" : 12,
+      "level" : "Subtitle",
+      "page number" : 1,
+      "bounding box" : [ 250.2, 494.258, 330.108, 512.088 ],
+      "heading level" : 1,
+      "font" : "Arial-BoldMT",
+      "font size" : 15.96,
+      "text color" : "[0.0]",
+      "content" : "GRADE 12"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 157,
+    "page number" : 2,
+    "bounding box" : [ 53.88, 782.448, 528.613, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 23,
+      "page number" : 2,
+      "bounding box" : [ 53.88, 794.569, 528.613, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "History/P1 2 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 24,
+      "page number" : 2,
+      "bounding box" : [ 254.763, 782.448, 333.923, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 159,
+    "level" : "Subtitle",
+    "page number" : 2,
+    "bounding box" : [ 53.88, 740.977, 261.144, 754.383 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "INSTRUCTIONS AND INFORMATION"
+  }, {
+    "type" : "list",
+    "id" : 160,
+    "level" : "1",
+    "page number" : 2,
+    "bounding box" : [ 59.28, 92.497, 521.713, 726.783 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 9,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 699.577, 521.713, 726.783 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1. This question paper consists of SECTION A and SECTION B based on the prescribed content framework in the CAPS document.",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 154,
+        "level" : "2",
+        "page number" : 2,
+        "bounding box" : [ 107.16, 671.977, 351.203, 685.383 ],
+        "numbering style" : "english letters",
+        "number of list items" : 1,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 2,
+          "bounding box" : [ 107.16, 671.977, 351.203, 685.383 ],
+          "font" : "Arial-BoldMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "SECTION A: SOURCE-BASED QUESTIONS",
+          "kids" : [ {
+            "type" : "list",
+            "id" : 149,
+            "level" : "3",
+            "page number" : 2,
+            "bounding box" : [ 107.16, 437.377, 521.724, 657.783 ],
+            "numbering style" : "arabic numbers",
+            "number of list items" : 6,
+            "list items" : [ {
+              "type" : "list item",
+              "page number" : 2,
+              "bounding box" : [ 107.16, 644.377, 486.024, 657.783 ],
+              "font" : "ArialMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "QUESTION 1: THE COLD WAR: THE ORIGINS OF THE COLD WAR",
+              "kids" : [ ]
+            }, {
+              "type" : "list item",
+              "page number" : 2,
+              "bounding box" : [ 107.16, 616.777, 473.964, 630.183 ],
+              "font" : "ArialMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "QUESTION 2: INDEPENDENT AFRICA: CASE STUDY – ANGOLA",
+              "kids" : [ ]
+            }, {
+              "type" : "list item",
+              "page number" : 2,
+              "bounding box" : [ 107.16, 575.377, 521.724, 602.583 ],
+              "font" : "ArialMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "QUESTION 3: CIVIL SOCIETY PROTESTS FROM THE 1950s TO THE 1970s: THE US CIVIL RIGHTS MOVEMENT",
+              "kids" : [ {
+                "type" : "paragraph",
+                "id" : 139,
+                "page number" : 2,
+                "bounding box" : [ 107.16, 547.777, 294.563, 561.183 ],
+                "font" : "Arial-BoldMT",
+                "font size" : 12.0,
+                "text color" : "[0.0]",
+                "content" : "SECTION B: ESSAY QUESTIONS"
+              } ]
+            }, {
+              "type" : "list item",
+              "page number" : 2,
+              "bounding box" : [ 107.16, 506.377, 521.592, 533.583 ],
+              "font" : "ArialMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "QUESTION 4: THE EXTENSION OF THE COLD WAR: CASE STUDY – VIETNAM",
+              "kids" : [ ]
+            }, {
+              "type" : "list item",
+              "page number" : 2,
+              "bounding box" : [ 107.16, 478.777, 496.656, 492.183 ],
+              "font" : "ArialMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "QUESTION 5: INDEPENDENT AFRICA: CASE STUDY – THE CONGO",
+              "kids" : [ ]
+            }, {
+              "type" : "list item",
+              "page number" : 2,
+              "bounding box" : [ 107.16, 437.377, 521.724, 464.583 ],
+              "font" : "ArialMT",
+              "font size" : 12.0,
+              "text color" : "[0.0]",
+              "content" : "QUESTION 6: CIVIL SOCIETY PROTESTS FROM THE 1950s TO THE 1970s: THE BLACK POWER MOVEMENT",
+              "kids" : [ ]
+            } ]
+          } ]
+        } ]
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 409.777, 69.336, 423.183 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 368.377, 69.336, 381.783 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 340.777, 69.336, 354.183 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "4.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 230.497, 69.336, 243.903 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "5.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 202.897, 69.336, 216.303 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "6.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 161.497, 69.336, 174.903 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "7.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 133.897, 69.336, 147.303 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "8.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 59.28, 92.497, 69.336, 105.903 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "9.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 162,
+    "level" : "2",
+    "page number" : 2,
+    "bounding box" : [ 107.16, 340.777, 521.737, 423.183 ],
+    "numbering style" : "english letters",
+    "number of list items" : 2,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 107.16, 395.977, 521.737, 423.183 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "SECTION A consists of THREE source-based questions. Source material that is required to answer these questions can be found in the ADDENDUM.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 107.16, 340.777, 368.617, 381.783 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "SECTION B consists of THREE essay questions. Answer THREE questions as follows:",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 165,
+    "level" : "3",
+    "page number" : 2,
+    "bounding box" : [ 107.16, 258.097, 521.641, 326.583 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 2,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 107.16, 299.377, 521.604, 326.583 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "4.1 At least ONE must be a source-based question and at least ONE must be an essay question.",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 2,
+      "bounding box" : [ 107.16, 258.097, 521.641, 285.303 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "4.2 The THIRD question can be either a source-based question or an essay question.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 169,
+    "page number" : 2,
+    "bounding box" : [ 107.16, 92.497, 521.76, 243.903 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "You are advised to spend ONE hour per question. When answering questions, you should apply your knowledge, skills and insight. You will be disadvantaged by merely rewriting the sources as answers. Number the answers correctly according to the numbering system used in this question paper. Write neatly and legibly."
+  }, {
+    "type" : "footer",
+    "id" : 179,
+    "page number" : 2,
+    "bounding box" : [ 53.882, 36.047, 528.541, 47.174 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 16,
+      "page number" : 2,
+      "bounding box" : [ 53.882, 36.047, 528.541, 47.174 ],
+      "heading level" : 3,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 180,
+    "page number" : 3,
+    "bounding box" : [ 53.88, 782.448, 528.613, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 25,
+      "page number" : 3,
+      "bounding box" : [ 53.88, 794.569, 528.613, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "History/P1 3 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 26,
+      "page number" : 3,
+      "bounding box" : [ 254.763, 782.448, 333.923, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 182,
+    "level" : "Subtitle",
+    "page number" : 3,
+    "bounding box" : [ 59.28, 740.977, 307.732, 754.383 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "SECTION A: SOURCE-BASED QUESTIONS2025"
+  }, {
+    "type" : "paragraph",
+    "id" : 183,
+    "page number" : 3,
+    "bounding box" : [ 59.28, 699.577, 521.712, 726.783 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "Answer at least ONE question, but not more than TWO questions, in this section. Source material that is to be used to answer these questions is contained in the ADDENDUM."
+  }, {
+    "type" : "heading",
+    "id" : 184,
+    "level" : "Subtitle",
+    "page number" : 3,
+    "bounding box" : [ 59.28, 644.377, 521.652, 685.383 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "QUESTION 1: HOW DID THE POLICY OF CONTAINMENT CONTRIBUTE TO COLD WAR TENSIONS BETWEEN THE UNITED STATES OF AMERICA AND THE SOVIET UNION IN 1947?"
+  }, {
+    "type" : "list",
+    "id" : 185,
+    "level" : "4",
+    "page number" : 3,
+    "bounding box" : [ 59.28, 616.777, 441.336, 630.183 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 1,
+    "next list id" : 196,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 59.28, 616.777, 441.336, 630.183 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "Study Sources 1A, 1B, 1C and 1D and answer the questions that follow.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 186,
+    "level" : "5",
+    "page number" : 3,
+    "bounding box" : [ 59.28, 147.697, 559.716, 602.583 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 3,
+    "next list id" : 190,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 59.28, 589.177, 189.336, 602.583 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.1 Use Source 1A.",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 92,
+        "level" : "6",
+        "page number" : 3,
+        "bounding box" : [ 106.08, 382.177, 132.792, 574.983 ],
+        "numbering style" : "arabic numbers",
+        "number of list items" : 5,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 106.08, 561.577, 132.792, 574.983 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.1.1",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 106.08, 506.377, 132.792, 519.783 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.1.2",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 106.08, 464.977, 132.792, 478.383 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.1.3",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 106.08, 437.377, 132.792, 450.783 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.1.4",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 106.08, 382.177, 132.792, 395.583 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.1.5",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 93,
+        "page number" : 3,
+        "bounding box" : [ 162.6, 533.977, 520.956, 574.983 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Who, according to source, did Churchill blame for, 'A shadow (that) has fallen upon the scenes so lately lighted by the Allied victory'? Give TWO responses. (2 x 1)"
+      }, {
+        "type" : "paragraph",
+        "id" : 94,
+        "page number" : 3,
+        "bounding box" : [ 162.6, 492.577, 520.872, 519.783 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Why do you think Churchill adopted a conciliatory (soft) attitude towards the Soviet Union despite its expansive tendencies? (1 x 2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 95,
+        "page number" : 3,
+        "bounding box" : [ 162.6, 464.977, 518.196, 478.383 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Define the term Iron Curtain in your own words. (1 x 2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 96,
+        "page number" : 3,
+        "bounding box" : [ 162.6, 409.777, 520.872, 450.783 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Comment on what Churchill implied by the words, '… all these famous cities and the populations around them lie in what I must call the Soviet sphere …' (1 x 2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 97,
+        "page number" : 3,
+        "bounding box" : [ 162.6, 368.377, 520.897, 395.583 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Explain the reliability of this source to a historian researching about the origins of the Cold War. (2 x 2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 98,
+        "level" : "7",
+        "page number" : 3,
+        "bounding box" : [ 546.6, 533.977, 561.276, 547.383 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 99,
+        "level" : "7",
+        "page number" : 3,
+        "bounding box" : [ 546.6, 464.977, 561.276, 505.983 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2) (2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 100,
+        "level" : "7",
+        "page number" : 3,
+        "bounding box" : [ 546.6, 409.777, 561.276, 423.183 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 101,
+        "level" : "7",
+        "page number" : 3,
+        "bounding box" : [ 546.6, 368.377, 561.276, 381.783 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(4)"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 59.28, 313.177, 439.416, 354.183 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.2 Consult Source 1B. Explain the symbolic representation of the following:",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 102,
+        "level" : "8",
+        "page number" : 3,
+        "bounding box" : [ 106.92, 216.697, 133.632, 326.583 ],
+        "numbering style" : "arabic numbers",
+        "number of list items" : 2,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 106.92, 313.177, 133.632, 326.583 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.2.1",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 106.92, 216.697, 133.632, 230.103 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.2.2",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "list",
+        "id" : 103,
+        "level" : "9",
+        "page number" : 3,
+        "bounding box" : [ 165.48, 244.297, 520.356, 298.983 ],
+        "numbering style" : "english letters",
+        "number of list items" : 2,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 165.48, 271.897, 520.344, 298.983 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(a) A bear/wolf labelled 'COMMUNIST INFILTRATION AND DICTATORSHIP THREATS' (1 x 2)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 3,
+          "bounding box" : [ 165.48, 244.297, 520.356, 257.703 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(b) 'U.S. AID' hammer (1 x 2)",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 104,
+        "page number" : 3,
+        "bounding box" : [ 163.32, 202.897, 520.284, 230.103 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Comment on why you would consider the caption 'WHAT WE'RE DRIVING AT' appropriate. (1 x 2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 105,
+        "level" : "7",
+        "page number" : 3,
+        "bounding box" : [ 545.88, 244.297, 560.556, 285.303 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2) (2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 106,
+        "level" : "7",
+        "page number" : 3,
+        "bounding box" : [ 545.88, 202.897, 560.556, 216.303 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2)"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 3,
+      "bounding box" : [ 59.28, 147.697, 559.716, 188.703 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.3 Refer to Sources 1A and 1B. Explain how the information in Source 1A supports the evidence in Source 1B regarding the increasing threat of communism. (2 x 2) (4)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "footer",
+    "id" : 187,
+    "page number" : 3,
+    "bounding box" : [ 53.882, 36.047, 528.541, 47.174 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 17,
+      "page number" : 3,
+      "bounding box" : [ 53.882, 36.047, 528.541, 47.174 ],
+      "heading level" : 3,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 188,
+    "page number" : 4,
+    "bounding box" : [ 53.88, 782.448, 528.613, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 27,
+      "page number" : 4,
+      "bounding box" : [ 53.88, 794.569, 528.613, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "History/P1 4 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 28,
+      "page number" : 4,
+      "bounding box" : [ 254.763, 782.448, 333.923, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 190,
+    "level" : "5",
+    "page number" : 4,
+    "bounding box" : [ 59.28, 285.577, 560.796, 754.383 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 3,
+    "previous list id" : 186,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 59.28, 740.977, 200.736, 754.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.4 Study Source 1C.",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 107,
+        "level" : "7",
+        "page number" : 4,
+        "bounding box" : [ 105.96, 575.377, 132.672, 726.783 ],
+        "numbering style" : "arabic numbers",
+        "number of list items" : 4,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 4,
+          "bounding box" : [ 105.96, 713.377, 132.672, 726.783 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.4.1",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 4,
+          "bounding box" : [ 105.96, 671.977, 132.672, 685.383 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.4.2",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 4,
+          "bounding box" : [ 105.96, 616.777, 132.672, 630.183 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.4.3",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 4,
+          "bounding box" : [ 105.96, 575.377, 132.672, 588.783 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.4.4",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 108,
+        "page number" : 4,
+        "bounding box" : [ 162.6, 699.577, 522.984, 726.783 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "What, according to the source, was the first concern of the Marshall Plan policymakers? (1 x 2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 109,
+        "page number" : 4,
+        "bounding box" : [ 162.6, 658.177, 523.032, 685.383 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Why, according to the source, was containing the Soviet Union the second major goal of American policy? Give TWO responses."
+      }, {
+        "type" : "paragraph",
+        "id" : 110,
+        "page number" : 4,
+        "bounding box" : [ 489.0, 644.377, 522.996, 657.783 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2 x 1)"
+      }, {
+        "type" : "paragraph",
+        "id" : 111,
+        "page number" : 4,
+        "bounding box" : [ 162.6, 602.977, 523.033, 630.183 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Quote TWO pieces of evidence from the source that suggest the aims of the third goal of the policy of containment. (2 x 1)"
+      }, {
+        "type" : "paragraph",
+        "id" : 112,
+        "page number" : 4,
+        "bounding box" : [ 162.6, 561.577, 522.913, 588.783 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Explain the implication of the phrase, '… the drive for European integration …', in the context of the policy of containment. (2 x 2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 113,
+        "level" : "8",
+        "page number" : 4,
+        "bounding box" : [ 546.6, 699.577, 561.276, 712.983 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 114,
+        "level" : "8",
+        "page number" : 4,
+        "bounding box" : [ 546.6, 644.377, 561.276, 657.783 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 115,
+        "level" : "8",
+        "page number" : 4,
+        "bounding box" : [ 546.6, 602.977, 561.276, 616.383 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 116,
+        "level" : "8",
+        "page number" : 4,
+        "bounding box" : [ 546.6, 561.577, 561.276, 574.983 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(4)"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 59.28, 533.977, 199.296, 547.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.5 Read Source 1D.",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 117,
+        "level" : "9",
+        "page number" : 4,
+        "bounding box" : [ 107.16, 382.177, 133.872, 519.783 ],
+        "numbering style" : "arabic numbers",
+        "number of list items" : 4,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 4,
+          "bounding box" : [ 107.16, 506.377, 133.872, 519.783 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.5.1",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 4,
+          "bounding box" : [ 107.16, 464.977, 133.872, 478.383 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.5.2",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 4,
+          "bounding box" : [ 107.16, 423.577, 133.872, 436.983 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.5.3",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 4,
+          "bounding box" : [ 107.16, 382.177, 133.872, 395.583 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "1.5.4",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 118,
+        "page number" : 4,
+        "bounding box" : [ 163.32, 492.577, 524.233, 519.783 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Why, according to the source, was the Molotov Plan created by the Soviet Union in 1947? (1 x 2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 119,
+        "page number" : 4,
+        "bounding box" : [ 163.32, 451.177, 524.114, 478.383 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Quote TWO reasons from the source why the Soviet Union refused to accept financial aid from the Marshall Plan. (2 x 1)"
+      }, {
+        "type" : "paragraph",
+        "id" : 120,
+        "page number" : 4,
+        "bounding box" : [ 163.32, 409.777, 524.076, 436.983 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Explain the term satellite states in the context of the Cold War. (1 x 2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 121,
+        "page number" : 4,
+        "bounding box" : [ 163.32, 354.577, 524.112, 395.583 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Using the information in the source and your own knowledge, comment on what the COMECON offered the USSR and its satellite states. (2 x 2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 122,
+        "level" : "8",
+        "page number" : 4,
+        "bounding box" : [ 544.2, 492.577, 558.876, 505.983 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 123,
+        "level" : "8",
+        "page number" : 4,
+        "bounding box" : [ 544.2, 451.177, 558.876, 464.583 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 124,
+        "level" : "8",
+        "page number" : 4,
+        "bounding box" : [ 544.2, 409.777, 558.876, 423.183 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 125,
+        "level" : "8",
+        "page number" : 4,
+        "bounding box" : [ 544.2, 354.577, 558.876, 367.983 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(4)"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 4,
+      "bounding box" : [ 59.28, 285.577, 560.796, 340.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "1.6 Using the information in the relevant sources and your own knowledge, write a paragraph of about EIGHT lines (about 80 words) explaining how the policy of containment contributed to Cold War tensions between the United States of America and the Soviet Union in 1947. (8)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 191,
+    "level" : "Subtitle",
+    "page number" : 4,
+    "bounding box" : [ 546.12, 271.777, 567.516, 285.183 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "[50]"
+  }, {
+    "type" : "footer",
+    "id" : 192,
+    "page number" : 4,
+    "bounding box" : [ 53.882, 36.047, 528.541, 47.174 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 18,
+      "page number" : 4,
+      "bounding box" : [ 53.882, 36.047, 528.541, 47.174 ],
+      "heading level" : 3,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 193,
+    "page number" : 5,
+    "bounding box" : [ 53.88, 782.448, 528.613, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 29,
+      "page number" : 5,
+      "bounding box" : [ 53.88, 794.569, 528.613, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "History/P1 5 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 30,
+      "page number" : 5,
+      "bounding box" : [ 254.763, 782.448, 333.923, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 195,
+    "level" : "Subtitle",
+    "page number" : 5,
+    "bounding box" : [ 59.28, 727.177, 521.604, 754.383 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "QUESTION 2: WHY DID THE UNITED STATES OF AMERICA (USA) BECOME INVOLVED IN THE ANGOLAN CIVIL WAR FROM 1975?"
+  }, {
+    "type" : "list",
+    "id" : 196,
+    "level" : "4",
+    "page number" : 5,
+    "bounding box" : [ 59.28, 699.577, 441.336, 712.983 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 1,
+    "previous list id" : 185,
+    "next list id" : 212,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 59.28, 699.577, 441.336, 712.983 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "Study Sources 2A, 2B, 2C and 2D and answer the questions that follow.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 197,
+    "level" : "7",
+    "page number" : 5,
+    "bounding box" : [ 59.28, 464.977, 203.136, 685.383 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 2,
+    "next list id" : 206,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 59.28, 671.977, 198.696, 685.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.1 Read Source 2A.",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 69,
+        "level" : "8",
+        "page number" : 5,
+        "bounding box" : [ 106.44, 506.377, 133.152, 657.783 ],
+        "numbering style" : "arabic numbers",
+        "number of list items" : 4,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 5,
+          "bounding box" : [ 106.44, 644.377, 133.152, 657.783 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "2.1.1",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 5,
+          "bounding box" : [ 106.44, 602.977, 133.152, 616.383 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "2.1.2",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 5,
+          "bounding box" : [ 106.44, 561.577, 133.152, 574.983 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "2.1.3",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 5,
+          "bounding box" : [ 106.44, 506.377, 133.152, 519.783 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "2.1.4",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 70,
+        "page number" : 5,
+        "bounding box" : [ 162.6, 630.577, 523.992, 657.783 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Which country, according to the source, did not want the MPLA to gain control of Angola? (1 x 1)"
+      }, {
+        "type" : "paragraph",
+        "id" : 71,
+        "page number" : 5,
+        "bounding box" : [ 162.6, 589.177, 522.672, 616.383 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Name THREE provisions in the source for the Central Intelligence Agency's (CIA) involvement in Africa. (3 x 1)"
+      }, {
+        "type" : "paragraph",
+        "id" : 72,
+        "page number" : 5,
+        "bounding box" : [ 162.6, 533.977, 522.756, 574.983 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Using the information in the source and your own knowledge, explain why you think it was necessary for the CIA to covertly support FNLA and UNITA in 1975. (2 x 2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 73,
+        "page number" : 5,
+        "bounding box" : [ 162.6, 492.577, 522.756, 519.783 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Explain the limitations of this source to a researcher studying the role of the MPLA in Angola. (2 x 2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 74,
+        "level" : "9",
+        "page number" : 5,
+        "bounding box" : [ 544.8, 630.577, 559.476, 643.983 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(1)"
+      }, {
+        "type" : "list",
+        "id" : 75,
+        "level" : "10",
+        "page number" : 5,
+        "bounding box" : [ 544.8, 533.977, 559.476, 602.583 ],
+        "numbering style" : "arabic numbers",
+        "number of list items" : 2,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 5,
+          "bounding box" : [ 544.8, 589.177, 559.476, 602.583 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(3)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 5,
+          "bounding box" : [ 544.8, 533.977, 559.476, 547.383 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(4)",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 76,
+        "level" : "9",
+        "page number" : 5,
+        "bounding box" : [ 544.8, 492.577, 559.476, 505.983 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(4)"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 59.28, 464.977, 203.136, 478.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.2 Study Source 2B.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 198,
+    "level" : "10",
+    "page number" : 5,
+    "bounding box" : [ 109.68, 244.297, 136.392, 450.783 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 5,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 109.68, 437.377, 136.392, 450.783 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.2.1",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 109.68, 395.977, 136.392, 409.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.2.2",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 109.68, 354.577, 136.392, 367.983 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.2.3",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 109.68, 299.377, 136.392, 312.783 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.2.4",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 109.68, 244.297, 136.392, 257.703 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.2.5",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 199,
+    "page number" : 5,
+    "bounding box" : [ 163.92, 244.297, 520.776, 450.783 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "Quote evidence from the source that suggests Mobutu was supported with millions of dollars. (1 x 1) What, according to the source, did Mobutu do when the world copper prices plunged in early 1975? Give TWO responses. (2 x 1) Why, according to the source, was only $41,7 million and not $100 million authorised by the National Security Council to ensure that Holden Roberto won the Angolan Civil War? (1 x 1) Comment on what is implied by the statement, 'The CIA's task seemingly was not to win but to prevent an easy victory for the Soviet-backed forces.' (1 x 2) Define the term self-determination in your own words. (1 x 2)"
+  }, {
+    "type" : "list",
+    "id" : 200,
+    "level" : "11",
+    "page number" : 5,
+    "bounding box" : [ 544.08, 382.177, 558.756, 436.983 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 2,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 544.08, 423.577, 558.756, 436.983 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "(1)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 544.08, 382.177, 558.756, 395.583 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "(2)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 201,
+    "level" : "11",
+    "page number" : 5,
+    "bounding box" : [ 544.08, 271.897, 558.756, 340.383 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 2,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 544.08, 326.977, 558.756, 340.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "(1)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 5,
+      "bounding box" : [ 544.08, 271.897, 558.756, 285.303 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "(2)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 202,
+    "level" : "9",
+    "page number" : 5,
+    "bounding box" : [ 544.08, 244.297, 558.756, 257.703 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "(2)"
+  }, {
+    "type" : "footer",
+    "id" : 203,
+    "page number" : 5,
+    "bounding box" : [ 53.882, 36.047, 528.541, 47.174 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 19,
+      "page number" : 5,
+      "bounding box" : [ 53.882, 36.047, 528.541, 47.174 ],
+      "heading level" : 3,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 204,
+    "page number" : 6,
+    "bounding box" : [ 53.88, 782.448, 528.613, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 31,
+      "page number" : 6,
+      "bounding box" : [ 53.88, 794.569, 528.613, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "History/P1 6 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 32,
+      "page number" : 6,
+      "bounding box" : [ 254.763, 782.448, 333.923, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 206,
+    "level" : "7",
+    "page number" : 6,
+    "bounding box" : [ 59.28, 202.897, 559.476, 754.383 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 4,
+    "previous list id" : 197,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 6,
+      "bounding box" : [ 59.28, 713.377, 194.496, 754.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.3 Use Source 2C. 2.3.1",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 77,
+        "level" : "9",
+        "page number" : 6,
+        "bounding box" : [ 108.12, 547.777, 134.832, 671.583 ],
+        "numbering style" : "arabic numbers",
+        "number of list items" : 3,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 6,
+          "bounding box" : [ 108.12, 658.177, 134.832, 671.583 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "2.3.2",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 6,
+          "bounding box" : [ 108.12, 616.777, 134.832, 630.183 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "2.3.3",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 6,
+          "bounding box" : [ 108.12, 547.777, 134.832, 561.183 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "2.3.4",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 78,
+        "page number" : 6,
+        "bounding box" : [ 160.92, 685.777, 520.656, 726.783 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Quote any TWO pieces of evidence mentioned in the source, that explains why Hultslander was opposed to covert operation programmes in Angola. (2 x 1)"
+      }, {
+        "type" : "paragraph",
+        "id" : 79,
+        "page number" : 6,
+        "bounding box" : [ 160.92, 644.377, 520.512, 671.583 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Explain the term covert action in the context of the CIA programme in Angola. (1 x 2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 80,
+        "page number" : 6,
+        "bounding box" : [ 160.92, 575.377, 520.68, 630.183 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Comment on what was implied by the statement, 'Kissinger feared that an MPLA victory would have destabilising (disrupting) effects throughout southern Africa', in the context of US involvement in Angola. (2 x 2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 81,
+        "page number" : 6,
+        "bounding box" : [ 160.92, 520.177, 520.632, 561.183 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "What, according to the source, did Hultslander do during his all-night session with [Senator] Clarke at Killoran's Luanda residence? Give TWO responses. (2 x 1)"
+      }, {
+        "type" : "paragraph",
+        "id" : 82,
+        "level" : "10",
+        "page number" : 6,
+        "bounding box" : [ 544.8, 685.777, 559.476, 699.183 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 83,
+        "level" : "10",
+        "page number" : 6,
+        "bounding box" : [ 544.8, 644.377, 559.476, 657.783 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 84,
+        "level" : "10",
+        "page number" : 6,
+        "bounding box" : [ 544.8, 575.377, 559.476, 588.783 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(4)"
+      }, {
+        "type" : "paragraph",
+        "id" : 85,
+        "level" : "10",
+        "page number" : 6,
+        "bounding box" : [ 544.8, 520.177, 559.476, 533.583 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2)"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 6,
+      "bounding box" : [ 59.28, 492.577, 211.296, 505.983 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.4 Consult Source 2D.",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 86,
+        "level" : "11",
+        "page number" : 6,
+        "bounding box" : [ 106.44, 409.777, 133.152, 478.383 ],
+        "numbering style" : "arabic numbers",
+        "number of list items" : 2,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 6,
+          "bounding box" : [ 106.44, 464.977, 133.152, 478.383 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "2.4.1",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 6,
+          "bounding box" : [ 106.44, 409.777, 133.152, 423.183 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "2.4.2",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 87,
+        "page number" : 6,
+        "bounding box" : [ 162.6, 437.377, 522.098, 478.383 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Comment on why you would NOT agree with Kissinger's statement, '… and my country as a party involved in the mediation of the conflict, promises to do everything to bring it to a definitive end.' (2 x 2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 88,
+        "page number" : 6,
+        "bounding box" : [ 162.6, 382.177, 522.072, 423.183 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "What conclusion can be drawn from the cartoonist's portrayal of the following liberation movements regarding their relations with the USA:"
+      }, {
+        "type" : "paragraph",
+        "id" : 89,
+        "page number" : 6,
+        "bounding box" : [ 164.16, 326.977, 521.316, 367.983 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(a) MPLA (1 x 2) (b) UNITA (1 x 2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 90,
+        "level" : "10",
+        "page number" : 6,
+        "bounding box" : [ 544.8, 437.377, 559.476, 450.783 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(4)"
+      }, {
+        "type" : "paragraph",
+        "id" : 91,
+        "level" : "10",
+        "page number" : 6,
+        "bounding box" : [ 544.8, 326.977, 559.476, 367.983 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2) (2)"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 6,
+      "bounding box" : [ 59.28, 271.897, 559.476, 312.783 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.5 Refer to Sources 2A and 2D. Comment on how the information in Source 2A supports the evidence in Source 2D regarding the involvement of the USA in the Angolan Civil War. (2 x 2) (4)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 6,
+      "bounding box" : [ 59.28, 202.897, 559.476, 257.703 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "2.6 Using the information in the relevant sources and your own knowledge, write a paragraph of about EIGHT lines (about 80 words) explaining why the United States of America (USA) became involved in the Angolan Civil War from 1975. (8)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 207,
+    "level" : "Subtitle",
+    "page number" : 6,
+    "bounding box" : [ 544.8, 189.097, 566.196, 202.503 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "[50]"
+  }, {
+    "type" : "footer",
+    "id" : 208,
+    "page number" : 6,
+    "bounding box" : [ 53.882, 36.047, 528.541, 47.174 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 20,
+      "page number" : 6,
+      "bounding box" : [ 53.882, 36.047, 528.541, 47.174 ],
+      "heading level" : 3,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 209,
+    "page number" : 7,
+    "bounding box" : [ 53.88, 782.448, 528.613, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 33,
+      "page number" : 7,
+      "bounding box" : [ 53.88, 794.569, 528.613, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "History/P1 7 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 34,
+      "page number" : 7,
+      "bounding box" : [ 254.763, 782.448, 333.923, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 211,
+    "level" : "11",
+    "page number" : 7,
+    "bounding box" : [ 59.28, 699.577, 521.615, 754.383 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 1,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 7,
+      "bounding box" : [ 59.28, 699.577, 521.615, 754.383 ],
+      "font" : "Arial-BoldMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "QUESTION 3: HOW DID THE NON-VIOLENT APPROACH ADOPTED BY MARTIN LUTHER KING JR CHARACTERISE THE CIVIL SOCIETY PROTESTS IN THE UNITED STATES OF AMERICA (USA) DURING THE 1960s?",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 212,
+    "level" : "4",
+    "page number" : 7,
+    "bounding box" : [ 59.28, 671.977, 441.336, 685.383 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 1,
+    "previous list id" : 196,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 7,
+      "bounding box" : [ 59.28, 671.977, 441.336, 685.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "Study Sources 3A, 3B, 3C and 3D and answer the questions that follow.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 213,
+    "level" : "8",
+    "page number" : 7,
+    "bounding box" : [ 59.28, 354.577, 212.616, 657.783 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 2,
+    "next list id" : 229,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 7,
+      "bounding box" : [ 59.28, 644.377, 212.616, 657.783 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.1 Refer to Source 3A.",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 44,
+        "level" : "9",
+        "page number" : 7,
+        "bounding box" : [ 107.16, 409.777, 133.872, 630.183 ],
+        "numbering style" : "arabic numbers",
+        "number of list items" : 5,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 7,
+          "bounding box" : [ 107.16, 616.777, 133.872, 630.183 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "3.1.1",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 7,
+          "bounding box" : [ 107.16, 561.577, 133.872, 574.983 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "3.1.2",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 7,
+          "bounding box" : [ 107.16, 506.377, 133.872, 519.783 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "3.1.3",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 7,
+          "bounding box" : [ 107.16, 464.977, 133.872, 478.383 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "3.1.4",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 7,
+          "bounding box" : [ 107.16, 409.777, 133.872, 423.183 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "3.1.5",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 45,
+        "page number" : 7,
+        "bounding box" : [ 163.92, 589.177, 521.76, 630.183 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Who, according to the source, indirectly influenced King Jr to apply the non-violent approach to the specific problems of African Americans? (1 x 1)"
+      }, {
+        "type" : "paragraph",
+        "id" : 46,
+        "page number" : 7,
+        "bounding box" : [ 163.92, 533.977, 521.833, 574.983 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "What, according to the source, did King Jr learn from a sermon by the president of Howard University, Mordecai Johnson, regarding the non-violent approach? (2 x 1)"
+      }, {
+        "type" : "paragraph",
+        "id" : 47,
+        "page number" : 7,
+        "bounding box" : [ 163.92, 506.377, 489.456, 519.783 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Define the term non-violent mass protests in your own words."
+      }, {
+        "type" : "paragraph",
+        "id" : 48,
+        "page number" : 7,
+        "bounding box" : [ 487.656, 492.577, 521.676, 505.983 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(1 x 2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 49,
+        "page number" : 7,
+        "bounding box" : [ 163.92, 437.377, 521.712, 478.383 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Explain what King Jr implied by the statement, 'It (non-violence) meant putting oneself in the face of violence …', in the context of the civil society protests. (2 x 2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 50,
+        "page number" : 7,
+        "bounding box" : [ 163.92, 395.977, 521.64, 423.183 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "What, according to the source, did King Jr want to achieve by organising thousands across the South in specific mass actions?"
+      }, {
+        "type" : "paragraph",
+        "id" : 51,
+        "page number" : 7,
+        "bounding box" : [ 487.776, 382.177, 521.676, 395.583 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(1 x 1)"
+      }, {
+        "type" : "list",
+        "id" : 52,
+        "level" : "10",
+        "page number" : 7,
+        "bounding box" : [ 544.2, 533.977, 558.876, 602.583 ],
+        "numbering style" : "arabic numbers",
+        "number of list items" : 2,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 7,
+          "bounding box" : [ 544.2, 589.177, 558.876, 602.583 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(1)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 7,
+          "bounding box" : [ 544.2, 533.977, 558.876, 547.383 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(2)",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 53,
+        "level" : "11",
+        "page number" : 7,
+        "bounding box" : [ 544.2, 492.577, 558.876, 505.983 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 54,
+        "level" : "11",
+        "page number" : 7,
+        "bounding box" : [ 544.2, 437.377, 558.876, 450.783 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(4)"
+      }, {
+        "type" : "paragraph",
+        "id" : 55,
+        "level" : "11",
+        "page number" : 7,
+        "bounding box" : [ 544.2, 382.177, 558.876, 395.583 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(1)"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 7,
+      "bounding box" : [ 59.28, 354.577, 198.696, 367.983 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.2 Read Source 3B.",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 214,
+    "level" : "12",
+    "page number" : 7,
+    "bounding box" : [ 107.16, 133.897, 133.872, 340.383 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 5,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 7,
+      "bounding box" : [ 107.16, 326.977, 133.872, 340.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.2.1",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 7,
+      "bounding box" : [ 107.16, 271.897, 133.872, 285.303 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.2.2",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 7,
+      "bounding box" : [ 107.16, 216.697, 133.872, 230.103 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.2.3",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 7,
+      "bounding box" : [ 107.16, 175.297, 133.872, 188.703 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.2.4",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 7,
+      "bounding box" : [ 107.16, 133.897, 133.872, 147.303 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.2.5",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 215,
+    "page number" : 7,
+    "bounding box" : [ 163.92, 299.377, 522.481, 340.383 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "According to the source, why did King Jr believe that the point of making a choice among militant, massive non-violence or riots had arrived? Give TWO responses. (2 x 1)"
+  }, {
+    "type" : "paragraph",
+    "id" : 221,
+    "level" : "11",
+    "page number" : 7,
+    "bounding box" : [ 544.2, 299.377, 558.876, 312.783 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "(2)"
+  }, {
+    "type" : "paragraph",
+    "id" : 216,
+    "page number" : 7,
+    "bounding box" : [ 163.92, 258.097, 522.337, 285.303 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "What did King Jr imply by the words, 'But I am convinced that if rioting continues, it will strengthen the right wing of the country …'?"
+  }, {
+    "type" : "paragraph",
+    "id" : 217,
+    "page number" : 7,
+    "bounding box" : [ 488.256, 244.297, 522.276, 257.703 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "(2 x 2)"
+  }, {
+    "type" : "paragraph",
+    "id" : 222,
+    "level" : "11",
+    "page number" : 7,
+    "bounding box" : [ 544.2, 244.297, 558.876, 257.703 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "(4)"
+  }, {
+    "type" : "paragraph",
+    "id" : 218,
+    "page number" : 7,
+    "bounding box" : [ 163.92, 202.897, 522.36, 230.103 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "Give any TWO reasons in the source suggesting that King Jr was totally committed to the non-violent approach. (2 x 1)"
+  }, {
+    "type" : "paragraph",
+    "id" : 223,
+    "level" : "11",
+    "page number" : 7,
+    "bounding box" : [ 544.2, 202.897, 558.876, 216.303 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "(2)"
+  }, {
+    "type" : "paragraph",
+    "id" : 219,
+    "page number" : 7,
+    "bounding box" : [ 163.92, 161.497, 522.192, 188.703 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "Explain the term racial justice in the context of the USA in the 1960s. (1 x 2)"
+  }, {
+    "type" : "paragraph",
+    "id" : 224,
+    "level" : "11",
+    "page number" : 7,
+    "bounding box" : [ 544.2, 161.497, 558.876, 174.903 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "(2)"
+  }, {
+    "type" : "paragraph",
+    "id" : 220,
+    "page number" : 7,
+    "bounding box" : [ 163.92, 120.097, 522.312, 147.303 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "Comment on the usefulness of this source for a historian researching non-violent protest in the USA in the 1960s. (2 x 2)"
+  }, {
+    "type" : "paragraph",
+    "id" : 225,
+    "level" : "11",
+    "page number" : 7,
+    "bounding box" : [ 544.2, 120.097, 558.876, 133.503 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "(4)"
+  }, {
+    "type" : "footer",
+    "id" : 226,
+    "page number" : 7,
+    "bounding box" : [ 53.882, 36.047, 528.541, 47.174 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 21,
+      "page number" : 7,
+      "bounding box" : [ 53.882, 36.047, 528.541, 47.174 ],
+      "heading level" : 3,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 227,
+    "page number" : 8,
+    "bounding box" : [ 53.88, 782.448, 528.613, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 35,
+      "page number" : 8,
+      "bounding box" : [ 53.88, 794.569, 528.613, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "History/P1 8 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 36,
+      "page number" : 8,
+      "bounding box" : [ 254.763, 782.448, 333.923, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "list",
+    "id" : 229,
+    "level" : "8",
+    "page number" : 8,
+    "bounding box" : [ 59.28, 313.177, 560.796, 768.183 ],
+    "numbering style" : "arabic numbers",
+    "number of list items" : 4,
+    "previous list id" : 213,
+    "list items" : [ {
+      "type" : "list item",
+      "page number" : 8,
+      "bounding box" : [ 59.28, 754.777, 191.976, 768.183 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.3 Use Source 3C.",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 56,
+        "level" : "10",
+        "page number" : 8,
+        "bounding box" : [ 107.16, 630.577, 133.872, 740.583 ],
+        "numbering style" : "arabic numbers",
+        "number of list items" : 2,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 8,
+          "bounding box" : [ 107.16, 727.177, 133.872, 740.583 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "3.3.1",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 8,
+          "bounding box" : [ 107.16, 630.577, 133.872, 643.983 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "3.3.2",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 57,
+        "page number" : 8,
+        "bounding box" : [ 163.92, 713.377, 523.776, 740.583 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Explain what the following groups wanted to achieve in terms of lunch counter sit-ins in the USA in the early 1960s:"
+      }, {
+        "type" : "list",
+        "id" : 58,
+        "level" : "11",
+        "page number" : 8,
+        "bounding box" : [ 163.2, 658.177, 520.835, 699.183 ],
+        "numbering style" : "english letters",
+        "number of list items" : 2,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 8,
+          "bounding box" : [ 163.2, 685.777, 518.316, 699.183 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(a) Students sitting at the lunch counter (1 x 2)",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 8,
+          "bounding box" : [ 163.2, 658.177, 520.835, 671.583 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "(b) White group in the background (1 x 2)",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 59,
+        "page number" : 8,
+        "bounding box" : [ 163.92, 616.777, 523.776, 643.983 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Why do you think students participating in the sit-ins did not hit back against the intimidation by the white group? (1 x 2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 60,
+        "level" : "12",
+        "page number" : 8,
+        "bounding box" : [ 544.2, 658.177, 558.876, 699.183 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2) (2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 61,
+        "level" : "12",
+        "page number" : 8,
+        "bounding box" : [ 544.2, 616.777, 558.876, 630.183 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2)"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 8,
+      "bounding box" : [ 59.28, 561.577, 559.716, 602.583 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.4 Refer to Sources 3A and 3C. Comment on how the information in Source 3A supports the evidence in Source 3C regarding King Jr's non-violent approach to the protest actions in the USA in the 1960s. (2 x 2) (4)",
+      "kids" : [ ]
+    }, {
+      "type" : "list item",
+      "page number" : 8,
+      "bounding box" : [ 59.28, 533.977, 201.336, 547.383 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.5 Study Source 3D.",
+      "kids" : [ {
+        "type" : "list",
+        "id" : 62,
+        "level" : "13",
+        "page number" : 8,
+        "bounding box" : [ 107.16, 409.777, 133.872, 519.783 ],
+        "numbering style" : "arabic numbers",
+        "number of list items" : 3,
+        "list items" : [ {
+          "type" : "list item",
+          "page number" : 8,
+          "bounding box" : [ 107.16, 506.377, 133.872, 519.783 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "3.5.1",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 8,
+          "bounding box" : [ 107.16, 464.977, 133.872, 478.383 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "3.5.2",
+          "kids" : [ ]
+        }, {
+          "type" : "list item",
+          "page number" : 8,
+          "bounding box" : [ 107.16, 409.777, 133.872, 423.183 ],
+          "font" : "ArialMT",
+          "font size" : 12.0,
+          "text color" : "[0.0]",
+          "content" : "3.5.3",
+          "kids" : [ ]
+        } ]
+      }, {
+        "type" : "paragraph",
+        "id" : 63,
+        "page number" : 8,
+        "bounding box" : [ 163.92, 492.577, 523.056, 519.783 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Quote TWO criticisms from the source that were levelled against King Jr's non-violent approach by Malcolm X. (2 x 1)"
+      }, {
+        "type" : "paragraph",
+        "id" : 64,
+        "page number" : 8,
+        "bounding box" : [ 163.92, 437.377, 523.116, 478.383 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Give any TWO examples of protests in the source that King Jr believed touched the conscience and established a sense of shame amongst the white community. (2 x 1)"
+      }, {
+        "type" : "paragraph",
+        "id" : 65,
+        "page number" : 8,
+        "bounding box" : [ 163.92, 382.177, 523.08, 423.183 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "Explain the implication of the following concern raised by James Baldwin: '… whether it will be possible to contain the Negro people within this framework of non-violence …' (2 x 2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 66,
+        "level" : "12",
+        "page number" : 8,
+        "bounding box" : [ 544.2, 492.577, 558.876, 505.983 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 67,
+        "level" : "12",
+        "page number" : 8,
+        "bounding box" : [ 544.2, 437.377, 558.876, 450.783 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(2)"
+      }, {
+        "type" : "paragraph",
+        "id" : 68,
+        "level" : "12",
+        "page number" : 8,
+        "bounding box" : [ 544.2, 382.177, 558.876, 395.583 ],
+        "font" : "ArialMT",
+        "font size" : 12.0,
+        "text color" : "[0.0]",
+        "content" : "(4)"
+      } ]
+    }, {
+      "type" : "list item",
+      "page number" : 8,
+      "bounding box" : [ 59.28, 313.177, 560.796, 367.983 ],
+      "font" : "ArialMT",
+      "font size" : 12.0,
+      "text color" : "[0.0]",
+      "content" : "3.6 Using the information in the relevant sources and your own knowledge, write a paragraph of about EIGHT lines (about 80 words) explaining how the non-violent approach adopted by Martin Luther King Jr characterised the civil society protests in the United States of America (USA) during the 1960s. (8)",
+      "kids" : [ ]
+    } ]
+  }, {
+    "type" : "heading",
+    "id" : 230,
+    "level" : "Subtitle",
+    "page number" : 8,
+    "bounding box" : [ 546.12, 299.377, 567.516, 312.783 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "[50]"
+  }, {
+    "type" : "footer",
+    "id" : 231,
+    "page number" : 8,
+    "bounding box" : [ 53.882, 36.047, 528.541, 47.174 ],
+    "kids" : [ {
+      "type" : "heading",
+      "id" : 22,
+      "page number" : 8,
+      "bounding box" : [ 53.882, 36.047, 528.541, 47.174 ],
+      "heading level" : 3,
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "Copyright reserved Please turn over"
+    } ]
+  }, {
+    "type" : "header",
+    "id" : 232,
+    "page number" : 9,
+    "bounding box" : [ 53.88, 782.448, 528.596, 805.697 ],
+    "kids" : [ {
+      "type" : "paragraph",
+      "id" : 37,
+      "page number" : 9,
+      "bounding box" : [ 53.88, 794.569, 528.596, 805.697 ],
+      "font" : "ArialMT",
+      "font size" : 9.96,
+      "text color" : "[0.0]",
+      "content" : "History/P1 9 DBE/November 2025"
+    }, {
+      "type" : "paragraph",
+      "id" : 38,
+      "page number" : 9,
+      "bounding box" : [ 256.915, 782.448, 336.083, 794.525 ],
+      "font" : "Tahoma",
+      "font size" : 10.499,
+      "text color" : "[0.0]",
+      "content" : "NSC Confidential"
+    } ]
+  }, {
+    "type" : "paragraph",
+    "id" : 235,
+    "page number" : 9,
+    "bounding box" : [ 59.28, 685.777, 497.617, 754.383 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "SECTION B: ESSAY QUESTIONS Answer at least ONE question, but NOT more than TWO questions, in this section. Your essay should be about THREE pages long."
+  }, {
+    "type" : "heading",
+    "id" : 236,
+    "level" : "Subtitle",
+    "page number" : 9,
+    "bounding box" : [ 59.28, 644.377, 514.956, 657.783 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "QUESTION 4: THE EXTENSION OF THE COLD WAR: CASE STUDY – VIETNAM"
+  }, {
+    "type" : "paragraph",
+    "id" : 238,
+    "page number" : 9,
+    "bounding box" : [ 59.28, 589.177, 521.916, 630.183 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "The military tactics and strategies used by the Viet Cong during the Vietnam War between 1962 and 1975 proved to be successful in defeating the strong army of the USA."
+  }, {
+    "type" : "paragraph",
+    "id" : 239,
+    "page number" : 9,
+    "bounding box" : [ 59.28, 547.777, 566.556, 574.983 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "Do you agree with this statement? Support your line of argument with relevant historical evidence. [50]"
+  }, {
+    "type" : "heading",
+    "id" : 240,
+    "level" : "Subtitle",
+    "page number" : 9,
+    "bounding box" : [ 59.28, 506.377, 455.016, 519.783 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "QUESTION 5: INDEPENDENT AFRICA: CASE STUDY – THE CONGO"
+  }, {
+    "type" : "paragraph",
+    "id" : 241,
+    "page number" : 9,
+    "bounding box" : [ 59.28, 464.977, 521.712, 492.183 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "The political, economic, social and cultural policies introduced by Mobutu Sese Seko after gaining independence in the 1960s were a dismal failure."
+  }, {
+    "type" : "paragraph",
+    "id" : 242,
+    "page number" : 9,
+    "bounding box" : [ 59.28, 423.577, 566.556, 450.783 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "Critically discuss the statement above by using relevant historical evidence to support your line of argument. [50]"
+  }, {
+    "type" : "heading",
+    "id" : 243,
+    "level" : "Subtitle",
+    "page number" : 9,
+    "bounding box" : [ 59.28, 368.377, 521.48, 395.583 ],
+    "heading level" : 2,
+    "font" : "Arial-BoldMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "QUESTION 6: CIVIL SOCIETY PROTESTS FROM THE 1950s TO THE 1970s: THE BLACK POWER MOVEMENT"
+  }, {
+    "type" : "paragraph",
+    "id" : 246,
+    "page number" : 9,
+    "bounding box" : [ 59.28, 313.177, 521.834, 354.183 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "Explain to what extent the Black Power Movement was successful in organising African Americans to challenge racial discrimination and segregation in the USA during the 1960s."
+  }, {
+    "type" : "paragraph",
+    "id" : 247,
+    "page number" : 9,
+    "bounding box" : [ 59.28, 258.097, 566.556, 298.983 ],
+    "font" : "ArialMT",
+    "font size" : 12.0,
+    "text color" : "[0.0]",
+    "content" : "Substantiate your answer with relevant historical evidence. [50] TOTAL: 150"
+  }, {
+    "type" : "paragraph",
+    "id" : 234,
+    "page number" : 9,
+    "bounding box" : [ 53.88, 36.049, 138.248, 47.177 ],
+    "font" : "ArialMT",
+    "font size" : 9.96,
+    "text color" : "[0.0]",
+    "content" : "Copyright reserved"
+  } ]
+}
