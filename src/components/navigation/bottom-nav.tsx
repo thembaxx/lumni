@@ -36,10 +36,10 @@ const navItems: NavItem[] = [
 		href: "",
 	},
 	{
-		id: "flashcards",
-		label: "Cards",
-		icon: "fluent:playing-cards-20-filled",
-		href: "/flashcards",
+		id: "practice",
+		label: "Practice",
+		icon: "fluent:book-open-24-filled",
+		href: "",
 	},
 	{
 		id: "settings",
@@ -130,7 +130,7 @@ export function BottomNav() {
 		(item: NavItem) => {
 			if (item.id === "chat") {
 				setChatDialogOpen(true);
-			} else if (item.id === "quiz") {
+			} else if (item.id === "practice") {
 				setPracticeDrawerOpen(true);
 			} else {
 				push(item.href);

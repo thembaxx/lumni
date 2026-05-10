@@ -41,14 +41,16 @@ export function FlashcardsClient() {
 
 	const cards: FlashcardItem[] =
 		isLoading === false && questions?.length
-			? questions.map((q) => ({
-					id: q.id,
-					front: q.questionText,
-					back: q.explanation,
-					topic: q.topic,
-					difficulty: q.difficulty,
-					hint: q.hint,
-				}))
+			? questions
+					.filter((q) => q && q.id)
+					.map((q) => ({
+						id: q.id,
+						front: q.questionText,
+						back: q.explanation,
+						topic: q.topic,
+						difficulty: q.difficulty,
+						hint: q.hint,
+					}))
 			: [];
 
 	const totalCards = cards.length;
