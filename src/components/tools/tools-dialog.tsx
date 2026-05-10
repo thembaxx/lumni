@@ -87,15 +87,16 @@ export function ToolsDialog({ open, onOpenChange }: ToolsDialogProps) {
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
 								transition={{ delay: 0.2, duration: 0.3 }}
+								className="px-4"
 							>
-								<TabsList className="flex w-full overflow-x-auto px-4 py-2 gap-2 bg-transparent border-b flex-shrink-0">
+								<TabsList className="flex justify-start w-full overflow-x-auto px-4 py-2 gap-2 scrollbar-hide bg-transparent border-b shrink-0">
 									{tabs.map((tab) => (
 										<TabsTrigger
 											key={tab.id}
 											value={tab.id}
 											className={cn(
-												"flex-shrink-0 px-3 py-2 text-xs font-medium rounded-md",
-												"data-[active]:bg-primary data-[active]:text-primary-foreground",
+												"shrink-0 px-3 py-2 text-xs font-medium rounded-md",
+												"data-active:bg-primary data-active:text-primary-foreground",
 												"text-muted-foreground hover:text-foreground",
 												"active:scale-[0.96] transition-transform duration-150",
 											)}
@@ -106,7 +107,7 @@ export function ToolsDialog({ open, onOpenChange }: ToolsDialogProps) {
 								</TabsList>
 							</motion.div>
 
-							<div className="flex-1 overflow-y-auto">
+							<div className="grow overflow-y-auto">
 								<TabsContent value="solver" className="h-full m-0">
 									<AiSolver />
 								</TabsContent>

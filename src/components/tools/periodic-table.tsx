@@ -164,7 +164,7 @@ export function PeriodicTable() {
 
 	return (
 		<div
-			className="min-h-screen bg-[#0a0a0f] text-white p-4 pb-24"
+			className="min-h-screen dark:bg-[#0a0a0f] text-white p-4 pb-24"
 			style={{
 				backgroundImage:
 					"radial-gradient(ellipse at 50% 0%, rgba(99,102,241,0.08) 0%, transparent 60%)",
@@ -223,11 +223,11 @@ export function PeriodicTable() {
 							setActiveCategory(activeCategory === null ? null : null)
 						}
 						className={`
-              flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium
+              shrink-0 px-3 py-1.5 rounded-full text-xs font-medium
               border transition-colors duration-200
               ${
 								activeCategory === null
-									? "bg-white/20 border-white/30 text-white"
+									? "bg-white/20 border-white/30 text-foreground"
 									: "bg-white/5 border-white/10 text-gray-400 hover:bg-white/10"
 							}
             `}

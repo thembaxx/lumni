@@ -106,10 +106,6 @@ export function AiSolver() {
 			)}
 
 			<Card className="border-primary/20 bg-primary/5 shadow-inner overflow-hidden">
-				<div className="absolute top-0 right-0 p-4 opacity-10 pointer-events-none">
-					<Sparkles className="w-24 h-24" />
-				</div>
-
 				<CardHeader className="pb-2">
 					<CardTitle className="text-lg flex items-center gap-2">
 						<Sparkles className="w-5 h-5 text-primary animate-pulse" />
