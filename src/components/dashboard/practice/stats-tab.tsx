@@ -1,3 +1,4 @@
+import { Timer } from "lucide-react";
 import { useCallback, useState } from "react";
 import { StreakFire } from "@/components/celebration";
 import {
@@ -12,12 +13,11 @@ import {
 	StreakCelebration,
 } from "@/components/gamification";
 import { QuizEngine, type QuizResults } from "@/components/quiz/quiz-engine";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useUserProgress, useUserSubjects } from "@/hooks";
 import { useGamification } from "@/hooks/use-gamification";
 import { toggleUserSubject } from "@/lib/server/actions";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Timer } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const DEFAULT_USER_ID = "demo-user";
@@ -161,9 +161,14 @@ export default function StatsTab() {
 						</CardHeader>
 						<CardContent className="space-y-2">
 							{quizResults.incorrectAnswers.slice(0, 3).map((item, idx) => (
-								<div key={item.questionId || idx} className="flex gap-2 text-sm">
+								<div
+									key={item.questionId || idx}
+									className="flex gap-2 text-sm"
+								>
 									<span className="text-muted-foreground">{idx + 1}.</span>
-									<span className="text-destructive">{item.selectedAnswer}</span>
+									<span className="text-destructive">
+										{item.selectedAnswer}
+									</span>
 									<span className="text-muted-foreground">→</span>
 									<span className="text-success">{item.correctAnswer}</span>
 								</div>

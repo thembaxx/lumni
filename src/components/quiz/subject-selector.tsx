@@ -2,11 +2,28 @@
 
 import {
 	Atom,
+	BookOpen,
 	Briefcase,
 	Calculator,
 	Dna,
+	Globe,
+	Hammer,
+	Heart,
+	Landmark,
+	Laptop,
+	Leaf,
+	Map,
+	MapPin,
+	Music,
+	Palette,
+	PenTool,
 	Receipt,
 	Search,
+	ShoppingCart,
+	TrendingUp,
+	Utensils,
+	Wrench,
+	Zap,
 } from "lucide-react";
 import { useState } from "react";
 import { useFilteredSubjects } from "@/hooks";
@@ -19,15 +36,35 @@ interface SubjectSelectorProps {
 }
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+	book: BookOpen,
+	"book-open": BookOpen,
 	calculator: Calculator,
 	atom: Atom,
 	dna: Dna,
+	plant: Leaf,
 	receipt: Receipt,
 	briefcase: Briefcase,
+	"chart-line": TrendingUp,
+	globe: Globe,
+	"ancient-pyramids": Landmark,
+	heart: Heart,
+	laptop: Laptop,
+	monitor: Laptop,
+	"pen-tool": PenTool,
+	hammer: Hammer,
+	zap: Zap,
+	wrench: Wrench,
+	palette: Palette,
+	"theater-masks": MapPin,
+	music: Music,
+	"shopping-cart": ShoppingCart,
+	map: Map,
+	utensils: Utensils,
+	tractor: Leaf,
 };
 
 function getSubjectIcon(iconName: string) {
-	return iconMap[iconName] || Calculator;
+	return iconMap[iconName] || BookOpen;
 }
 
 export function SubjectSelector({ onSelect, className }: SubjectSelectorProps) {
@@ -71,23 +108,28 @@ export function SubjectSelector({ onSelect, className }: SubjectSelectorProps) {
 							onClick={() => handleSelect(subject.id)}
 							disabled={isGenerating}
 							className={cn(
-								"p-4 rounded-xl border-2 text-left transition-colors transition-border-color flex flex-col items-start",
-								"hover:border-primary/50 hover:bg-primary/5",
-								"focus:outline-none focus:ring-2 focus:ring-primary/20",
-								"disabled:opacity-50 disabled:cursor-not-allowed",
-								isSelected && "border-primary bg-primary/10",
+								"group p-4 rounded-2xl border border-border/60 text-left transition-all duration-200 flex flex-col items-start",
+								"hover:-translate-y-0.5 hover:border-border hover:shadow-lg hover:shadow-black/5 dark:hover:shadow-black/20",
+								"active:translate-y-0 active:scale-[0.98] active:shadow-none",
+								"focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50",
+								"disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none",
+								isSelected &&
+									"border-primary bg-primary/5 dark:bg-primary/10 shadow-md shadow-primary/10",
 							)}
 						>
 							<div
-								className="size-10 rounded-lg flex items-center justify-center mb-3"
-								style={{ backgroundColor: subject.color + "20" }}
+								className="size-11 rounded-xl flex items-center justify-center mb-3 transition-transform duration-200 group-hover:scale-110"
+								style={{
+									backgroundColor: subject.color + "15",
+									boxShadow: `0 0 0 1px ${subject.color}20`,
+								}}
 							>
-								<span style={{ color: subject.color }}>
-									<Icon className="size-5" />
-								</span>
+								<Icon className={cn("size-5", `text-[${subject.color}]`)} />
 							</div>
-							<h3 className="font-medium text-sm">{subject.name}</h3>
-							<p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+							<h3 className="font-semibold text-sm text-foreground group-hover:text-foreground/90">
+								{subject.name}
+							</h3>
+							<p className="text-xs text-muted-foreground mt-1.5 line-clamp-2 leading-relaxed">
 								{subject.description}
 							</p>
 						</button>

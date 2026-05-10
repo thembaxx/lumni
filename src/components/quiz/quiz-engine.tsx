@@ -2,15 +2,15 @@
 
 import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
 import { useCallback, useState } from "react";
+import { ProgressDots } from "@/components/shared/progress-dots";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useSubjectQuestions } from "@/hooks/use-subject-questions";
 import { useQuizEngine } from "@/hooks/use-quiz-engine";
-import { QuizControls } from "./quiz-controls";
+import { useSubjectQuestions } from "@/hooks/use-subject-questions";
 import { QuestionCard } from "./question-card";
+import { QuizControls } from "./quiz-controls";
 import { QuizEngineHeader } from "./quiz-engine-header";
 import { QuizResult } from "./quiz-result";
-import { ProgressDots } from "@/components/shared/progress-dots";
 
 interface QuizEngineProps {
 	subjectId: string;
@@ -93,9 +93,7 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 			const selectedOpt = currentQuestion.options.find(
 				(o) => o.id === optionId,
 			);
-			const correctOpt = currentQuestion.options.find(
-				(o) => o.isCorrect,
-			);
+			const correctOpt = currentQuestion.options.find((o) => o.isCorrect);
 			setIncorrectAnswers((prev) => [
 				...prev,
 				{
