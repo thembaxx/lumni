@@ -4,6 +4,7 @@ export {
 	useSyncAll,
 	useSyncSingleSubject,
 } from "./use-question-sync";
+export { useQuizEngine } from "./use-quiz-engine";
 export {
 	useSubjectQuestions,
 	useSubjectQuestionsByDifficulty,

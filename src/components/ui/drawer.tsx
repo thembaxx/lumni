@@ -71,7 +71,7 @@ function DrawerContent({
 				)}
 				{...props}
 			>
-				<div className="mx-auto mt-4 hidden h-1 w-[100px] shrink-0 rounded-full bg-muted group-data-[vaul-drawer-direction=bottom]/drawer-content:block transition-all duration-200 group-hover:scale-x-110" />
+				<div className="mx-auto mt-4 hidden h-1 w-25 shrink-0 rounded-full bg-muted group-data-[vaul-drawer-direction=bottom]/drawer-content:block transition-all duration-200 group-hover:scale-x-110" />
 				{children}
 			</DrawerPrimitive.Content>
 		</DrawerPortal>

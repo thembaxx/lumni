@@ -1,7 +1,6 @@
 "use client";
 
-import { ToolsIcon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { Icon } from "@iconify/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -44,7 +43,7 @@ export function FloatingToolsButton() {
 							exit={{ scale: 0.25, opacity: 0, filter: "blur(4px)" }}
 							transition={{ type: "spring", duration: 0.3, bounce: 0 }}
 						>
-							<HugeiconsIcon icon={ToolsIcon} className="w-6 h-6" />
+							<Icon icon="fluent:chess-24-filled" className="w-6 h-6" />
 						</motion.div>
 					) : (
 						<motion.div
@@ -54,7 +53,7 @@ export function FloatingToolsButton() {
 							exit={{ scale: 0.25, opacity: 0, filter: "blur(4px)" }}
 							transition={{ type: "spring", duration: 0.3, bounce: 0 }}
 						>
-							<HugeiconsIcon icon={ToolsIcon} className="w-6 h-6" />
+							<Icon icon="fluent:chess-24-filled" className="w-6 h-6" />
 						</motion.div>
 					)}
 				</AnimatePresence>

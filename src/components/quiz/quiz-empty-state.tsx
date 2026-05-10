@@ -142,7 +142,7 @@ export function QuizSelectSubject({
 	buttonLabel?: string;
 }) {
 	return (
-		<Empty>
+		<Empty className="p-0">
 			<EmptyHeader>
 				<EmptyMedia variant="icon">
 					<Target className="size-8" />
@@ -152,7 +152,7 @@ export function QuizSelectSubject({
 					Select a subject to begin practicing
 				</EmptyDescription>
 			</EmptyHeader>
-			<EmptyContent>
+			<EmptyContent className="px-0">
 				<SubjectSelector onSelect={onSelect} />
 			</EmptyContent>
 		</Empty>

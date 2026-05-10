@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { StreakFire } from "@/components/celebration";
 import {
 	ProgressChart,
@@ -11,15 +11,20 @@ import {
 	ProgressMilestones,
 	StreakCelebration,
 } from "@/components/gamification";
-import { QuizEngine } from "@/components/quiz/quiz-engine";
+import { QuizEngine, type QuizResults } from "@/components/quiz/quiz-engine";
 import { useUserProgress, useUserSubjects } from "@/hooks";
 import { useGamification } from "@/hooks/use-gamification";
 import { toggleUserSubject } from "@/lib/server/actions";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Timer } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const DEFAULT_USER_ID = "demo-user";
 
 export default function StatsTab() {
 	const [userId] = useState(DEFAULT_USER_ID);
+	const [quizResults, setQuizResults] = useState<QuizResults | null>(null);
 
 	const { data: progressData, isLoading: isProgressLoading } =
 		useUserProgress(userId);
@@ -49,6 +54,14 @@ export default function StatsTab() {
 		}
 	}
 
+	const handleQuizComplete = useCallback((results: QuizResults) => {
+		setQuizResults(results);
+	}, []);
+
+	const handleQuizRestart = useCallback(() => {
+		setQuizResults(null);
+	}, []);
+
 	const chartData = [
 		{ date: "Mon", accuracy: 65 },
 		{ date: "Tue", accuracy: 70 },
@@ -65,6 +78,103 @@ export default function StatsTab() {
 				<div className="animate-pulse h-24 bg-muted rounded-lg" />
 				<div className="animate-pulse h-24 bg-muted rounded-lg" />
 				<div className="animate-pulse h-48 bg-muted rounded-lg" />
+			</div>
+		);
+	}
+
+	if (quizResults) {
+		const isGreatScore = quizResults.accuracy >= 80;
+		const isPerfect = quizResults.accuracy === 100;
+
+		return (
+			<div className="px-4 pb-6 space-y-3">
+				<SubjectsDrawer
+					userId={userId}
+					selectedSubjects={selectedSubjects}
+					onSelectionChange={handleSubjectToggle}
+				/>
+				<StreakFire streak={currentStreak} showMilestone />
+
+				<Card className="overflow-visible">
+					{isPerfect && (
+						<div className="flex items-center justify-center -mt-2">
+							<div className="flex items-center gap-2 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 px-4 py-1.5 text-white shadow-lg">
+								<span className="text-sm font-bold">Perfect Score!</span>
+							</div>
+						</div>
+					)}
+					<CardHeader className="text-center pb-2">
+						<CardTitle>
+							{isPerfect
+								? "Flawless!"
+								: isGreatScore
+									? "Great Job!"
+									: "Quiz Complete!"}
+						</CardTitle>
+					</CardHeader>
+					<CardContent className="space-y-4">
+						<div className="grid grid-cols-3 gap-3 text-center">
+							<div className="p-3 rounded-lg bg-muted">
+								<p className="text-xl font-bold tabular-nums">
+									{quizResults.totalQuestions}
+								</p>
+								<p className="text-xs text-muted-foreground">Questions</p>
+							</div>
+							<div className="p-3 rounded-lg bg-muted">
+								<p
+									className={cn(
+										"text-xl font-bold tabular-nums",
+										isGreatScore && "text-green-500",
+									)}
+								>
+									{quizResults.correctAnswers}
+								</p>
+								<p className="text-xs text-muted-foreground">Correct</p>
+							</div>
+							<div className="p-3 rounded-lg bg-muted">
+								<p
+									className={cn(
+										"text-xl font-bold tabular-nums",
+										isGreatScore && "text-green-500",
+									)}
+								>
+									{quizResults.accuracy}%
+								</p>
+								<p className="text-xs text-muted-foreground">Accuracy</p>
+							</div>
+						</div>
+
+						<div className="flex items-center justify-center gap-2 text-muted-foreground">
+							<Timer className="size-4" />
+							<span className="text-sm">
+								{Math.floor(quizResults.elapsedTime / 60)}m{" "}
+								{quizResults.elapsedTime % 60}s
+							</span>
+						</div>
+					</CardContent>
+				</Card>
+
+				{quizResults.incorrectAnswers.length > 0 && (
+					<Card>
+						<CardHeader className="pb-2">
+							<CardTitle className="text-base">Review Mistakes</CardTitle>
+						</CardHeader>
+						<CardContent className="space-y-2">
+							{quizResults.incorrectAnswers.slice(0, 3).map((item, idx) => (
+								<div key={item.questionId || idx} className="flex gap-2 text-sm">
+									<span className="text-muted-foreground">{idx + 1}.</span>
+									<span className="text-destructive">{item.selectedAnswer}</span>
+									<span className="text-muted-foreground">→</span>
+									<span className="text-success">{item.correctAnswer}</span>
+								</div>
+							))}
+						</CardContent>
+					</Card>
+				)}
+
+				<Button className="w-full" onClick={handleQuizRestart}>
+					Try Another Quiz
+				</Button>
 			</div>
 		);
 	}
@@ -96,9 +206,8 @@ export default function StatsTab() {
 			{selectedSubjects.length > 0 && (
 				<div className="pt-4">
 					<QuizEngine
-						subjectIds={selectedSubjects}
-						userId={userId}
-						onComplete={() => {}}
+						subjectId={selectedSubjects[0]}
+						onComplete={handleQuizComplete}
 					/>
 				</div>
 			)}

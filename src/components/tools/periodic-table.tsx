@@ -249,7 +249,7 @@ export function PeriodicTable() {
 								ease: elementEaseOutQuint,
 							}}
 							className={`
-              flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium
+              shrink-0 px-3 py-1.5 rounded-full text-xs font-medium
               border transition-colors duration-200 flex items-center gap-1.5
               ${
 								activeCategory === key
@@ -314,7 +314,7 @@ export function PeriodicTable() {
 							onClick={(e) => e.stopPropagation()}
 							className={`
                 relative w-full max-w-md rounded-3xl overflow-hidden
-                bg-gradient-to-b from-[#0f0f18] to-[#0a0a0f]
+                bg-linear-to-b from-[#0f0f18] to-[#0a0a0f]
                 border
               `}
 							style={{

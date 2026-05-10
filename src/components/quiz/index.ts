@@ -2,6 +2,7 @@ export { EmptyStateWithIllustration } from "@/components/empty-states";
 export { QuestionCard } from "./question-card";
 export { QuestionDiagram } from "./question-diagram";
 export { QuizControls } from "./quiz-controls";
+export { QuizEngine, QuizEngineHeader } from "./quiz-engine";
 export {
 	QuizEmptyState,
 	QuizSelectSubject,

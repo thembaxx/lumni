@@ -1,6 +1,7 @@
 "use client";
 
 import { ChevronLeft, ChevronRight, SkipForward } from "lucide-react";
+import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 
 interface QuizControlsProps {
@@ -26,11 +27,21 @@ export function QuizControls({
 }: QuizControlsProps) {
 	const isFirst = currentQuestionIndex === 0;
 	const isLast = currentQuestionIndex === totalQuestions - 1;
+	const nextButtonRef = useRef<HTMLButtonElement>(null);
+
+	// Auto-focus the action button after feedback appears (accessibility)
+	if (showFeedback && nextButtonRef.current) {
+		nextButtonRef.current.focus();
+	}
 
 	if (showFeedback) {
 		return (
 			<div className="space-y-2">
-				<Button className="w-full" onClick={onNext}>
+				<Button
+					ref={nextButtonRef}
+					className="w-full"
+					onClick={onNext}
+				>
 					{isLast ? "See Results" : "Next Question"}
 					{!isLast && <ChevronRight className="size-4 ml-2" />}
 				</Button>
@@ -50,7 +61,11 @@ export function QuizControls({
 				Previous
 			</Button>
 			{showSkip && onSkip && (
-				<Button variant="outline" onClick={onSkip} className="flex-1">
+				<Button
+					variant="outline"
+					onClick={onSkip}
+					className="flex-1"
+				>
 					Skip
 					<SkipForward className="size-4 ml-2" />
 				</Button>

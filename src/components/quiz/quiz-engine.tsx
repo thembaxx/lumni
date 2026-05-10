@@ -1,55 +1,27 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
 import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
-import { useCallback, useMemo, useState } from "react";
-import { z } from "zod";
-import { DifficultyBadge } from "@/components/shared/difficulty-badge";
-import { ProgressDots } from "@/components/shared/progress-dots";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { useCallback, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { QuizQuestion } from "./quiz-question";
+import { useSubjectQuestions } from "@/hooks/use-subject-questions";
+import { useQuizEngine } from "@/hooks/use-quiz-engine";
+import { QuizControls } from "./quiz-controls";
+import { QuestionCard } from "./question-card";
+import { QuizEngineHeader } from "./quiz-engine-header";
 import { QuizResult } from "./quiz-result";
-
-const questionSchema = z.object({
-	id: z.string(),
-	topicId: z.string(),
-	type: z.string(),
-	questionText: z.string(),
-	options: z.record(z.string(), z.string()).nullable(),
-	correctAnswer: z.string(),
-	explanation: z.string().nullable(),
-	difficulty: z.string(),
-	hasImage: z.boolean(),
-	imageUrl: z.string().nullable(),
-});
-
-interface Question {
-	id: string;
-	topicId: string;
-	type: string;
-	questionText: string;
-	options: Record<string, string> | null;
-	correctAnswer: string;
-	explanation: string | null;
-	difficulty: "easy" | "medium" | "hard";
-	hasImage: boolean;
-	imageUrl: string | null;
-	topicName?: string;
-}
+import { ProgressDots } from "@/components/shared/progress-dots";
 
 interface QuizEngineProps {
-	subjectIds: string[];
+	subjectId: string;
 	onComplete?: (results: QuizResults) => void;
-	userId: string;
 }
 
-interface QuizResults {
+export interface QuizResults {
 	totalQuestions: number;
 	correctAnswers: number;
 	accuracy: number;
+	elapsedTime: number;
 	incorrectAnswers: {
 		questionId: string;
 		selectedAnswer: string;
@@ -57,93 +29,99 @@ interface QuizResults {
 	}[];
 }
 
-async function fetchQuizQuestions(subjectIds: string[]): Promise<Question[]> {
-	if (subjectIds.length === 0) return [];
-	const params = new URLSearchParams();
-	for (const id of subjectIds) {
-		params.append("subjectIds", id);
-	}
-	const response = await fetch(`/api/questions?${params}`);
-	if (!response.ok) return [];
-	const data = await response.json();
-	if (!data.questions) return [];
-	return data.questions as Question[];
+function buildResults(
+	total: number,
+	correct: number,
+	elapsedTime: number,
+	incorrect: QuizResults["incorrectAnswers"],
+): QuizResults {
+	return {
+		totalQuestions: total,
+		correctAnswers: correct,
+		accuracy: total > 0 ? Math.round((correct / total) * 100) : 0,
+		elapsedTime,
+		incorrectAnswers: incorrect,
+	};
 }
 
-function useQuizQuestions(subjectIds: string[]) {
-	return useQuery({
-		queryKey: ["quiz-questions", subjectIds],
-		queryFn: () => fetchQuizQuestions(subjectIds),
-		enabled: subjectIds.length > 0,
-		staleTime: 1000 * 60 * 10,
+export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
+	const [incorrectAnswers, setIncorrectAnswers] = useState<
+		QuizResults["incorrectAnswers"]
+	>([]);
+
+	const {
+		data: questions,
+		isLoading,
+		isFetching,
+	} = useSubjectQuestions(subjectId, 10);
+
+	const { state: engineState, actions: engineActions } = useQuizEngine({
+		maxTime: 90 * 60,
+		totalQuestions: questions?.length ?? 0,
+		onFinish: useCallback(
+			({
+				correctAnswers,
+				elapsedTime,
+			}: {
+				correctAnswers: number;
+				elapsedTime: number;
+			}) => {
+				if (questions) {
+					onComplete?.(
+						buildResults(
+							questions.length,
+							correctAnswers,
+							elapsedTime,
+							incorrectAnswers,
+						),
+					);
+				}
+			},
+			[onComplete, questions, incorrectAnswers],
+		),
+		enabled: (questions?.length ?? 0) > 0,
 	});
-}
 
-export function QuizEngine({
-	subjectIds,
-	onComplete,
-	userId,
-}: QuizEngineProps) {
-	const [currentIndex, setCurrentIndex] = useState(0);
-	const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
-	const [showFeedback, setShowFeedback] = useState(false);
-	const [isComplete, setIsComplete] = useState(false);
-	const [results, setResults] = useState<QuizResults>({
-		totalQuestions: 0,
-		correctAnswers: 0,
-		accuracy: 0,
-		incorrectAnswers: [],
-	});
+	const currentQuestion = questions?.[engineState.currentQuestionIndex];
 
-	const { data: rawQuestions, isLoading } = useQuizQuestions(subjectIds);
+	function handleAnswer(optionId: string, isCorrect: boolean) {
+		engineActions.handleAnswer(optionId, isCorrect);
 
-	const questions = useMemo(() => {
-		if (!rawQuestions?.length) return [];
-		const validQuestions = rawQuestions
-			.map((q) => {
-				const parsed = questionSchema.safeParse(q);
-				if (!parsed.success) return null;
-				return {
-					...parsed.data,
-					difficulty: parsed.data.difficulty as "easy" | "medium" | "hard",
-				};
-			})
-			.filter((q): q is NonNullable<typeof q> => q !== null);
-		return validQuestions.sort(() => Math.random() - 0.5).slice(0, 10);
-	}, [rawQuestions]);
-
-	const currentQuestion = questions[currentIndex];
-
-	function handleSelectAnswer(answer: string) {
-		if (showFeedback) return;
-		setSelectedAnswer(answer);
-	}
-
-	function handleNext() {
-		if (currentIndex < questions.length - 1) {
-			setCurrentIndex((prev) => prev + 1);
-			setSelectedAnswer(null);
-			setShowFeedback(false);
-		} else {
-			setIsComplete(true);
-			onComplete?.(results);
+		// Celebrations are handled inside QuestionCard.
+		// Track incorrect answers for final results display.
+		if (!isCorrect && currentQuestion) {
+			const selectedOpt = currentQuestion.options.find(
+				(o) => o.id === optionId,
+			);
+			const correctOpt = currentQuestion.options.find(
+				(o) => o.isCorrect,
+			);
+			setIncorrectAnswers((prev) => [
+				...prev,
+				{
+					questionId: currentQuestion.id,
+					selectedAnswer: selectedOpt?.text ?? optionId,
+					correctAnswer: correctOpt?.text ?? "",
+				},
+			]);
 		}
 	}
 
-	function handleRestart() {
-		setCurrentIndex(0);
-		setSelectedAnswer(null);
-		setShowFeedback(false);
-		setIsComplete(false);
-		setResults({
-			totalQuestions: 0,
-			correctAnswers: 0,
-			accuracy: 0,
-			incorrectAnswers: [],
-		});
+	function handleQuit() {
+		engineActions.handleStop();
+		if (questions) {
+			onComplete?.(
+				buildResults(
+					questions.length,
+					engineState.correctAnswers,
+					engineState.elapsedTime,
+					incorrectAnswers,
+				),
+			);
+		}
 	}
 
-	if (isLoading) {
+	if (isLoading || isFetching) {
 		return (
 			<Card className="p-6 space-y-4">
 				<div className="flex items-center justify-between">
@@ -154,17 +132,14 @@ export function QuizEngine({
 				<Skeleton className="h-24 w-full rounded-lg" />
 				<div className="space-y-2">
 					{[1, 2, 3, 4].map((i) => (
-						<Skeleton
-							key={`skeleton-${i}`}
-							className="h-12 w-full rounded-lg"
-						/>
+						<Skeleton key={i} className="h-12 w-full rounded-lg" />
 					))}
 				</div>
 			</Card>
 		);
 	}
 
-	if (questions.length === 0) {
+	if (!questions?.length) {
 		return (
 			<Card className="p-8 flex flex-col items-center justify-center gap-4">
 				<p className="text-muted-foreground">
@@ -175,79 +150,94 @@ export function QuizEngine({
 		);
 	}
 
-	if (isComplete) {
+	// Quiz complete - show final results
+	if (engineState.currentQuestionIndex >= questions.length) {
 		return (
-			<QuizResult
-				results={results}
-				onRestart={handleRestart}
-				onClose={() => onComplete?.(results)}
-			/>
+			<LazyMotion features={domAnimation}>
+				<AnimatePresence mode="wait">
+					<m.div
+						key="results"
+						initial={{ opacity: 0, scale: 0.9 }}
+						animate={{ opacity: 1, scale: 1 }}
+						exit={{ opacity: 0, scale: 0.9 }}
+						transition={{ duration: 0.4 }}
+					>
+						<QuizResult
+							results={buildResults(
+								questions.length,
+								engineState.correctAnswers,
+								engineState.elapsedTime,
+								incorrectAnswers,
+							)}
+							onRestart={() => {
+								setIncorrectAnswers([]);
+								engineActions.handleRestart();
+							}}
+							onClose={handleQuit}
+							useLottie={false}
+						/>
+					</m.div>
+				</AnimatePresence>
+			</LazyMotion>
 		);
 	}
+
+	if (!currentQuestion) return null;
 
 	return (
 		<LazyMotion features={domAnimation}>
 			<div className="space-y-4">
-				<div className="flex items-center justify-between">
-					<Badge variant="outline">
-						Question {currentIndex + 1} of {questions.length}
-					</Badge>
-					{currentQuestion?.difficulty && (
-						<DifficultyBadge
-							difficulty={currentQuestion.difficulty}
-							variant="quiz"
+				{/* Header - extracted into QuizEngineHeader */}
+				<QuizEngineHeader
+					elapsedTime={engineState.elapsedTime}
+					currentQuestionIndex={engineState.currentQuestionIndex}
+					totalQuestions={questions.length}
+					difficulty={
+						currentQuestion.difficulty.toLowerCase() as
+							| "easy"
+							| "medium"
+							| "hard"
+					}
+					onQuit={handleQuit}
+				/>
+
+				{/* Question card - owns celebration, step-by-step, and diagram */}
+				<AnimatePresence mode="wait">
+					<m.div
+						key={currentQuestion.id}
+						initial={{ opacity: 0, x: 20 }}
+						animate={{ opacity: 1, x: 0 }}
+						exit={{ opacity: 0, x: -20 }}
+						transition={{ duration: 0.2 }}
+					>
+						<QuestionCard
+							question={currentQuestion}
+							questionNumber={engineState.currentQuestionIndex + 1}
+							totalQuestions={questions.length}
+							selectedAnswer={engineState.selectedAnswer}
+							showFeedback={engineState.showFeedback}
+							onSelectAnswer={engineActions.handleSelectAnswer}
+							onAnswer={handleAnswer}
 						/>
-					)}
-				</div>
+					</m.div>
+				</AnimatePresence>
 
-				{currentQuestion && (
-					<AnimatePresence mode="wait">
-						<m.div
-							key={currentQuestion.id}
-							initial={{ opacity: 0, x: 20 }}
-							animate={{ opacity: 1, x: 0 }}
-							exit={{ opacity: 0, x: -20 }}
-							transition={{ duration: 0.2 }}
-						>
-							<QuizQuestion
-								question={currentQuestion}
-								selectedAnswer={selectedAnswer}
-								showFeedback={showFeedback}
-								onSelectAnswer={handleSelectAnswer}
-							/>
-						</m.div>
-					</AnimatePresence>
-				)}
+				{/* Navigation controls */}
+				<QuizControls
+					currentQuestionIndex={engineState.currentQuestionIndex}
+					totalQuestions={questions.length}
+					hasSelected={!!engineState.selectedAnswer}
+					showFeedback={engineState.showFeedback}
+					onPrevious={engineActions.handlePrevious}
+					onNext={engineActions.handleNext}
+					onSkip={engineActions.handleSkip}
+					showSkip
+				/>
 
-				{showFeedback && currentQuestion && (
-					<div className="space-y-2">
-						<div
-							className={`p-4 rounded-lg ${
-								selectedAnswer === currentQuestion.correctAnswer
-									? "bg-green-500/20 text-green-500"
-									: "bg-red-500/20 text-red-500"
-							}`}
-						>
-							{selectedAnswer === currentQuestion.correctAnswer
-								? "Correct!"
-								: `Incorrect. The correct answer is ${currentQuestion.correctAnswer}`}
-						</div>
-						{currentQuestion.explanation && (
-							<Card className="p-4 bg-muted">
-								<p className="text-sm">{currentQuestion.explanation}</p>
-							</Card>
-						)}
-						<Button className="w-full" onClick={handleNext}>
-							{currentIndex < questions.length - 1
-								? "Next Question"
-								: "See Results"}
-						</Button>
-					</div>
-				)}
-
+				{/* Progress */}
 				<ProgressDots
 					total={questions.length}
-					currentIndex={currentIndex}
+					currentIndex={engineState.currentQuestionIndex}
 					variant="engine"
 				/>
 			</div>

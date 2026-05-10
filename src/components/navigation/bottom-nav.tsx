@@ -1,13 +1,6 @@
 "use client";
 
-import {
-	Cards01Icon as FlashcardIcon,
-	Home05Icon,
-	MessageIcon,
-	PiFreeIcons,
-	Settings02Icon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
+import { Icon } from "@iconify/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
@@ -19,7 +12,7 @@ import { cn } from "@/lib/utils";
 interface NavItem {
 	id: string;
 	label: string;
-	icon: IconSvgElement;
+	icon: string;
 	href: string;
 }
 
@@ -27,31 +20,31 @@ const navItems: NavItem[] = [
 	{
 		id: "home",
 		label: "Home",
-		icon: Home05Icon,
+		icon: "fluent:home-empty-24-filled",
 		href: "/dashboard",
 	},
 	{
-		id: "quiz",
-		label: "Quiz",
-		icon: PiFreeIcons,
+		id: "syllabus",
+		label: "Syllabus",
+		icon: "fluent:notebook-24-filled",
 		href: "/quiz",
 	},
 	{
 		id: "chat",
 		label: "Chat",
-		icon: MessageIcon,
+		icon: "fluent:chat-sparkle-24-filled",
 		href: "",
 	},
 	{
 		id: "flashcards",
 		label: "Cards",
-		icon: FlashcardIcon,
+		icon: "fluent:playing-cards-20-filled",
 		href: "/flashcards",
 	},
 	{
 		id: "settings",
 		label: "Settings",
-		icon: Settings02Icon,
+		icon: "fluent:person-24-filled",
 		href: "/settings",
 	},
 ];
@@ -69,7 +62,7 @@ function NavItemComponent({
 		<motion.button
 			onClick={onClick}
 			className={cn(
-				"flex flex-1 flex-col items-center justify-center gap-1.5 py-2 px-1 min-h-[48px] rounded-xl transition-colors relative",
+				"flex flex-1 flex-col items-center justify-center gap-1.5 py-2 px-1 min-h-12 rounded-xl transition-colors relative",
 				isActive
 					? "text-primary"
 					: "text-muted-foreground hover:text-foreground",
@@ -90,7 +83,7 @@ function NavItemComponent({
 				)}
 			</AnimatePresence>
 			<div className="relative z-10">
-				<HugeiconsIcon
+				<Icon
 					icon={item.icon}
 					className={cn(
 						"w-5 h-5 transition-transform duration-200",
@@ -167,7 +160,7 @@ export function BottomNav() {
 					))}
 				</div>
 				<div
-					className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-border/50 to-transparent"
+					className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-border/50 to-transparent"
 					aria-hidden="true"
 				/>
 			</motion.nav>
