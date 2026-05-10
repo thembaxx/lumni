@@ -103,6 +103,7 @@ export function QuizSession({
 				>
 					<QuestionCard
 						question={currentQuestion}
+						topic={currentQuestion.topic}
 						questionNumber={currentQuestionIndex + 1}
 						totalQuestions={totalQuestions}
 						selectedAnswer={selectedAnswer}

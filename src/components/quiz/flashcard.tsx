@@ -15,11 +15,17 @@ interface FlashcardData {
 
 interface FlashcardProps {
 	cards: FlashcardData[];
+	subject?: string;
 	onKnown?: (cardId: string) => void;
 	onReview?: (cardId: string) => void;
 }
 
-export function Flashcard({ cards, onKnown, onReview }: FlashcardProps) {
+export function Flashcard({
+	cards,
+	subject,
+	onKnown,
+	onReview,
+}: FlashcardProps) {
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [isFlipped, setIsFlipped] = useState(false);
 
@@ -114,11 +120,17 @@ export function Flashcard({ cards, onKnown, onReview }: FlashcardProps) {
 							style={{ backfaceVisibility: "hidden" }}
 						>
 							<div className="text-lg font-medium text-center">
-								<MarkdownRenderer content={currentCard.front} />
+								<MarkdownRenderer
+									content={currentCard.front}
+									subject={subject}
+								/>
 							</div>
 							{currentCard.hint && (
 								<div className="text-xs text-muted-foreground mt-4">
-									<MarkdownRenderer content={`Hint: ${currentCard.hint}`} />
+									<MarkdownRenderer
+										content={`Hint: ${currentCard.hint}`}
+										subject={subject}
+									/>
 								</div>
 							)}
 							<p className="text-xs text-muted-foreground mt-8">Tap to flip</p>
@@ -132,7 +144,10 @@ export function Flashcard({ cards, onKnown, onReview }: FlashcardProps) {
 							}}
 						>
 							<div className="text-lg font-medium text-center">
-								<MarkdownRenderer content={currentCard.back} />
+								<MarkdownRenderer
+									content={currentCard.back}
+									subject={subject}
+								/>
 							</div>
 						</Card>
 					</m.div>

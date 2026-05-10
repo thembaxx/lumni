@@ -24,6 +24,8 @@ import { StepByStep } from "./step-by-step";
 
 interface QuestionCardProps {
 	question: QAQuestion;
+	subject?: string;
+	topic?: string;
 	questionNumber?: number;
 	totalQuestions?: number;
 	selectedAnswer?: string | null;
@@ -34,6 +36,8 @@ interface QuestionCardProps {
 
 export function QuestionCard({
 	question,
+	subject: subjectProp,
+	topic: topicProp,
 	questionNumber,
 	totalQuestions,
 	selectedAnswer: externalSelectedAnswer,
@@ -41,6 +45,8 @@ export function QuestionCard({
 	onSelectAnswer,
 	onAnswer,
 }: QuestionCardProps) {
+	const effectiveSubject = subjectProp || topicProp || "";
+
 	const [internalState, setInternalState] = useState<QuestionState>({
 		selectedOption: null,
 		isCorrect: null,
@@ -149,7 +155,10 @@ export function QuestionCard({
 						)}
 					>
 						<CardTitle className="text-lg leading-relaxed">
-							<MarkdownRenderer content={question.questionText} />
+							<MarkdownRenderer
+								content={question.questionText}
+								subject={effectiveSubject}
+							/>
 						</CardTitle>
 					</div>
 				</CardHeader>
@@ -248,7 +257,10 @@ export function QuestionCard({
 											{option.id}
 										</span>
 										<span className="flex-1 font-medium">
-											<MarkdownRenderer content={option.text} />
+											<MarkdownRenderer
+												content={option.text}
+												subject={effectiveSubject}
+											/>
 										</span>
 										{showResult && isCorrectOption && (
 											<HugeiconsIcon
@@ -278,7 +290,10 @@ export function QuestionCard({
 								className="overflow-hidden rounded-lg bg-warning/5 p-4 text-warning"
 							>
 								<p className="font-medium">Hint:</p>
-								<MarkdownRenderer content={question.hint} />
+								<MarkdownRenderer
+									content={question.hint}
+									subject={effectiveSubject}
+								/>
 							</m.div>
 						)}
 					</AnimatePresence>
@@ -301,12 +316,16 @@ export function QuestionCard({
 									{state.isCorrect ? "Correct!" : "Incorrect"}
 								</p>
 								<div className="text-sm opacity-90">
-									<MarkdownRenderer content={question.explanation} />
+									<MarkdownRenderer
+										content={question.explanation}
+										subject={effectiveSubject}
+									/>
 								</div>
 								{question.steps && question.steps.length > 0 && (
 									<div className="pt-2 border-t border-current/20">
 										<StepByStep
 											steps={question.steps}
+											subject={effectiveSubject}
 											className="text-foreground"
 										/>
 									</div>

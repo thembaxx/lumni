@@ -125,6 +125,7 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 					>
 						<QuestionCard
 							question={currentQuestion}
+							subject={selectedSubject}
 							questionNumber={currentQuestionIndex + 1}
 							totalQuestions={totalQuestions}
 							selectedAnswer={selectedAnswer}

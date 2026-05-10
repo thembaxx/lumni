@@ -3,22 +3,61 @@
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import rehypeKatex from "rehype-katex";
 import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
 import { cn } from "@/lib/utils";
+
+const MATH_SUBJECTS = ["mathematics", "technical-mathematics"];
+const PHYSICS_CHEMISTRY_SUBJECTS = [
+	"physical-sciences",
+	"mathematical-literacy",
+];
+
+const SUBJECT_COLORS: Record<string, string> = {
+	mathematics: "#60a5fa",
+	"technical-mathematics": "#c084fc",
+	"physical-sciences": "#34d399",
+	"mathematical-literacy": "#fb923c",
+};
 
 interface MarkdownRendererProps {
 	content: string;
 	className?: string;
+	subject?: string;
 }
 
 export function MarkdownRenderer({
 	content,
 	className,
+	subject,
 }: MarkdownRendererProps) {
+	const isMathSubject = MATH_SUBJECTS.some((s) =>
+		subject?.toLowerCase().includes(s.toLowerCase()),
+	);
+	const isPhysicsChemSubject = PHYSICS_CHEMISTRY_SUBJECTS.some((s) =>
+		subject?.toLowerCase().includes(s.toLowerCase()),
+	);
+	const subjectColor = Object.entries(SUBJECT_COLORS).find(([key]) =>
+		subject?.toLowerCase().includes(key.toLowerCase()),
+	)?.[1];
+
+	const containerStyle = subjectColor
+		? ({ "--subject-accent": subjectColor } as React.CSSProperties)
+		: undefined;
+
 	return (
-		<div className={cn("markdown-content", className)}>
+		<div
+			className={cn(
+				"markdown-content",
+				isPhysicsChemSubject && "tabular-nums",
+				className,
+			)}
+			style={containerStyle}
+		>
 			<ReactMarkdown
-				remarkPlugins={[remarkGfm]}
+				remarkPlugins={[remarkGfm, ...(isMathSubject ? [remarkMath] : [])]}
+				rehypePlugins={isMathSubject ? [rehypeKatex] : []}
 				components={{
 					code({ className, children, ...props }) {
 						const match = /language-(\w+)/.exec(className || "");

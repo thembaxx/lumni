@@ -210,6 +210,7 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 					>
 						<QuestionCard
 							question={currentQuestion}
+							subject={subjectId}
 							questionNumber={engineState.currentQuestionIndex + 1}
 							totalQuestions={questions.length}
 							selectedAnswer={engineState.selectedAnswer}

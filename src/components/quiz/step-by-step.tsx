@@ -9,10 +9,11 @@ import { cn } from "@/lib/utils";
 
 interface StepByStepProps {
 	steps: string[];
+	subject?: string;
 	className?: string;
 }
 
-export function StepByStep({ steps, className }: StepByStepProps) {
+export function StepByStep({ steps, subject, className }: StepByStepProps) {
 	const [currentStep, setCurrentStep] = useState(0);
 
 	if (!steps || steps.length === 0) return null;
@@ -74,7 +75,10 @@ export function StepByStep({ steps, className }: StepByStepProps) {
 					>
 						<div className="absolute top-0 left-0 w-1.5 h-full bg-primary/20 group-hover:bg-primary/40 transition-colors rounded-l-2xl" />
 						<div className="text-sm leading-relaxed font-medium text-foreground/90">
-							<MarkdownRenderer content={steps[currentStep]} />
+							<MarkdownRenderer
+								content={steps[currentStep]}
+								subject={subject}
+							/>
 						</div>
 					</motion.div>
 				</AnimatePresence>

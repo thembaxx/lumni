@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import 'tailwind-scrollbar-hide/v4';
+@import "katex/dist/katex.min.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -131,6 +132,30 @@
 	--radius-xl: calc(var(--radius) + 4px);
 	--font-sans: var(--font-geist);
 	--font-serif: var(--font-serif);
+	--subject-accent: var(--primary);
+}
+
+.markdown-content.tabular-nums {
+	font-variant-numeric: tabular-nums;
+}
+
+.markdown-content.tabular-nums span[data-number],
+.markdown-content.tabular-nums .katex {
+	font-variant-numeric: tabular-nums;
+}
+
+.markdown-content .katex-display {
+	overflow-x: auto;
+	overflow-y: hidden;
+	padding: 0.5rem 0;
+}
+
+.markdown-content .katex {
+	font-size: 1.1em;
+}
+
+.markdown-content:has(.katex) {
+	line-height: 1.8;
 }
 
 @layer base {
