@@ -6,6 +6,7 @@ import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
 import { MinusIcon, PlusIcon, Sparkles } from "lucide-react";
 import { useCallback, useState } from "react";
 import { Confetti, XPGainPopup } from "@/components/celebration";
+import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { DifficultyBadge } from "@/components/shared/difficulty-badge";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -147,8 +148,8 @@ export function QuestionCard({
 							question.questionText.length > 500 && "scrollbar-thin",
 						)}
 					>
-						<CardTitle className="text-lg leading-relaxed whitespace-pre-wrap">
-							{question.questionText}
+						<CardTitle className="text-lg leading-relaxed">
+							<MarkdownRenderer content={question.questionText} />
 						</CardTitle>
 					</div>
 				</CardHeader>
@@ -246,7 +247,9 @@ export function QuestionCard({
 										>
 											{option.id}
 										</span>
-										<span className="flex-1 font-medium">{option.text}</span>
+										<span className="flex-1 font-medium">
+											<MarkdownRenderer content={option.text} />
+										</span>
 										{showResult && isCorrectOption && (
 											<HugeiconsIcon
 												icon={CheckmarkCircle02Icon}
@@ -275,7 +278,7 @@ export function QuestionCard({
 								className="overflow-hidden rounded-lg bg-warning/5 p-4 text-warning"
 							>
 								<p className="font-medium">Hint:</p>
-								<p>{question.hint}</p>
+								<MarkdownRenderer content={question.hint} />
 							</m.div>
 						)}
 					</AnimatePresence>
@@ -297,7 +300,9 @@ export function QuestionCard({
 								<p className="font-medium">
 									{state.isCorrect ? "Correct!" : "Incorrect"}
 								</p>
-								<p className="text-sm opacity-90">{question.explanation}</p>
+								<div className="text-sm opacity-90">
+									<MarkdownRenderer content={question.explanation} />
+								</div>
 								{question.steps && question.steps.length > 0 && (
 									<div className="pt-2 border-t border-current/20">
 										<StepByStep

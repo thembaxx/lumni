@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Play, RefreshCw, Square } from "lucide-react";
 import { useRef, useState } from "react";
+import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Button } from "@/components/ui/button";
 import { type ChatMessage } from "@/hooks/use-chat";
 import { cn } from "@/lib/utils";
@@ -246,7 +247,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 					: "bg-secondary/80 text-foreground mr-auto rounded-bl-md",
 			)}
 		>
-			{message.content}
+			<MarkdownRenderer content={message.content} />
 		</motion.div>
 	);
 }

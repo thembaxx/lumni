@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, GraduationCap } from "lucide-react";
 import { useState } from "react";
+import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -72,9 +73,9 @@ export function StepByStep({ steps, className }: StepByStepProps) {
 						className="bg-card border border-primary/10 rounded-2xl p-6 shadow-sm relative group"
 					>
 						<div className="absolute top-0 left-0 w-1.5 h-full bg-primary/20 group-hover:bg-primary/40 transition-colors rounded-l-2xl" />
-						<p className="text-sm leading-relaxed font-medium text-foreground/90">
-							{steps[currentStep]}
-						</p>
+						<div className="text-sm leading-relaxed font-medium text-foreground/90">
+							<MarkdownRenderer content={steps[currentStep]} />
+						</div>
 					</motion.div>
 				</AnimatePresence>
 			</div>

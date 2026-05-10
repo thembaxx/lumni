@@ -2,6 +2,7 @@
 
 import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
 import { useState } from "react";
+import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
@@ -112,13 +113,13 @@ export function Flashcard({ cards, onKnown, onReview }: FlashcardProps) {
 							className="absolute inset-0 backface-hidden p-6 flex flex-col items-center justify-center"
 							style={{ backfaceVisibility: "hidden" }}
 						>
-							<p className="text-lg font-medium text-center">
-								{currentCard.front}
-							</p>
+							<div className="text-lg font-medium text-center">
+								<MarkdownRenderer content={currentCard.front} />
+							</div>
 							{currentCard.hint && (
-								<p className="text-xs text-muted-foreground mt-4">
-									Hint: {currentCard.hint}
-								</p>
+								<div className="text-xs text-muted-foreground mt-4">
+									<MarkdownRenderer content={`Hint: ${currentCard.hint}`} />
+								</div>
 							)}
 							<p className="text-xs text-muted-foreground mt-8">Tap to flip</p>
 						</Card>
@@ -130,9 +131,9 @@ export function Flashcard({ cards, onKnown, onReview }: FlashcardProps) {
 								backfaceVisibility: "hidden",
 							}}
 						>
-							<p className="text-lg font-medium text-center">
-								{currentCard.back}
-							</p>
+							<div className="text-lg font-medium text-center">
+								<MarkdownRenderer content={currentCard.back} />
+							</div>
 						</Card>
 					</m.div>
 				</div>

@@ -3,6 +3,7 @@
 import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -31,12 +32,6 @@ export function LessonCard({
 	const { setOpenId, isOpen } = useLessonCardContext();
 	const isCardOpen = isOpen(id);
 	const [isPlaying, setIsPlaying] = useState(false);
-	const [currentWordIndex, setCurrentWordIndex] = useState(-1);
-	const [words, setWords] = useState<string[]>([]);
-
-	useEffect(() => {
-		setWords(summary.split(" "));
-	}, [summary]);
 
 	return (
 		<LazyMotion features={domAnimation}>
@@ -83,21 +78,9 @@ export function LessonCard({
 									<h3 className="text-xl font-semibold leading-tight text-foreground text-wrap balance">
 										{title}
 									</h3>
-									<p className="text-sm text-muted-foreground leading-relaxed text-pretty">
-										{words.map((word, index) => (
-											<span
-												key={`open-${index}`}
-												className={cn(
-													"transition-colors duration-150 ease-out-quart",
-													index === currentWordIndex &&
-														"text-primary font-medium bg-primary/10 rounded px-0.5 -mx-0.5",
-												)}
-											>
-												{word}
-												{index < words.length - 1 && " "}
-											</span>
-										))}
-									</p>
+									<div className="text-sm text-muted-foreground leading-relaxed text-pretty">
+										<MarkdownRenderer content={summary} />
+									</div>
 								</div>
 
 								<div className="flex gap-2 items-center pt-2">
@@ -105,7 +88,6 @@ export function LessonCard({
 										<ListenToLesson
 											text={summary}
 											onPlayingChange={setIsPlaying}
-											onWordIndexChange={setCurrentWordIndex}
 										/>
 									</div>
 									<PracticeButton
@@ -164,21 +146,9 @@ export function LessonCard({
 									<h3 className="text-md font-semibold leading-tight text-foreground text-wrap balance">
 										{title}
 									</h3>
-									<p className="text-[13px] text-muted-foreground leading-relaxed text-pretty line-clamp-2">
-										{words.map((word, index) => (
-											<span
-												key={`closed-${index}`}
-												className={cn(
-													"transition-colors duration-150 ease-out-quart",
-													index === currentWordIndex &&
-														"text-primary font-medium bg-primary/10 rounded px-0.5 -mx-0.5",
-												)}
-											>
-												{word}
-												{index < words.length - 1 && " "}
-											</span>
-										))}
-									</p>
+									<div className="text-[13px] text-muted-foreground leading-relaxed text-pretty line-clamp-2">
+										<MarkdownRenderer content={summary} />
+									</div>
 								</div>
 
 								<div className="flex gap-2 items-center">
@@ -186,7 +156,6 @@ export function LessonCard({
 										<ListenToLesson
 											text={summary}
 											onPlayingChange={setIsPlaying}
-											onWordIndexChange={setCurrentWordIndex}
 										/>
 									</div>
 									<PracticeButton

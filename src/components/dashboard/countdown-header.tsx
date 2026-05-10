@@ -133,7 +133,11 @@ const easeOutQuart = [0.16, 1, 0.3, 1] as const;
 const easeOutQuint = [0.22, 1, 0.36, 1] as const;
 
 export function CountdownHeader() {
-	const { user: { name }, isLoggedIn, isLoading } = useAppwriteSession();
+	const {
+		user: { name },
+		isLoggedIn,
+		isLoading,
+	} = useAppwriteSession();
 	const [timeOfDay] = useState<TimeOfDay>(getTimeOfDay);
 	const [daysLeft, setDaysLeft] = useState(() => getDaysUntil());
 	const [yearProgress, setYearProgress] = useState(() => getYearProgress());
