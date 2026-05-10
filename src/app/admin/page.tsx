@@ -8,7 +8,7 @@ import {
 	motion,
 } from "framer-motion";
 import { Database, Loader2 } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { AdminDashboard } from "@/components/admin/admin-dashboard";
 import { LoginForm } from "@/components/admin/login-form";
 import { Button } from "@/components/ui/button";

@@ -1,9 +1,10 @@
 "use client";
 
 import { domAnimation, LazyMotion, m } from "framer-motion";
-import { Mail } from "lucide-react";
+import { Mail, MessageSquare } from "lucide-react";
 import { startTransition, useState } from "react";
 import { MagicLinkDialog } from "@/components/admin/login-dialogs";
+import { OTPDialog } from "@/components/auth/otp-dialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
@@ -13,8 +14,15 @@ const buttonStyles =
 
 export function LoginForm({ onSuccess }: { onSuccess: () => void }) {
 	const [magicOpen, setMagicOpen] = useState(false);
+	const [otpOpen, setOtpOpen] = useState(false);
 
 	const handleMagicSuccess = () => {
+		startTransition(() => {
+			setTimeout(onSuccess, 1500);
+		});
+	};
+
+	const handleOtpSuccess = () => {
 		startTransition(() => {
 			setTimeout(onSuccess, 1500);
 		});
@@ -70,6 +78,17 @@ export function LoginForm({ onSuccess }: { onSuccess: () => void }) {
 											<Mail className="h-5 w-5 shrink-0" />
 											<span>Sign in with Magic Link</span>
 										</Button>
+										<Button
+											variant="outline"
+											className={cn(
+												"w-full h-12 justify-start gap-3 px-4",
+												buttonStyles,
+											)}
+											onClick={() => setOtpOpen(true)}
+										>
+											<MessageSquare className="h-5 w-5 shrink-0" />
+											<span>Sign in with OTP</span>
+										</Button>
 									</div>
 								</CardContent>
 							</Card>
@@ -98,6 +117,11 @@ export function LoginForm({ onSuccess }: { onSuccess: () => void }) {
 				open={magicOpen}
 				onOpenChange={setMagicOpen}
 				onSuccess={handleMagicSuccess}
+			/>
+			<OTPDialog
+				open={otpOpen}
+				onOpenChange={setOtpOpen}
+				onSuccess={handleOtpSuccess}
 			/>
 		</>
 	);
