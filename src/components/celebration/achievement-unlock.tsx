@@ -15,11 +15,11 @@ interface AchievementUnlockProps {
 	useLottie?: boolean;
 }
 
-const rarityColors = {
-	common: "from-gray-400 to-gray-500",
-	rare: "from-blue-400 to-blue-600",
-	epic: "from-purple-400 to-purple-600",
-	legendary: "from-amber-400 to-orange-500",
+const raritySolid = {
+	common: "bg-gray-500",
+	rare: "bg-blue-500",
+	epic: "bg-purple-500",
+	legendary: "bg-amber-500",
 };
 
 const rarityGlow = {
@@ -58,7 +58,7 @@ export function AchievementUnlock({
 						onClick={(e) => e.stopPropagation()}
 					>
 						<div
-							className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${rarityColors[rarity]} blur-xl opacity-50`}
+							className={`absolute inset-0 rounded-3xl bg-opacity-50 blur-xl ${raritySolid[rarity]}`}
 						/>
 
 						<div

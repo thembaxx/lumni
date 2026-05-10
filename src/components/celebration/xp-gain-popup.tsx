@@ -26,7 +26,7 @@ export function XPGainPopup({
 					className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 pointer-events-none"
 				>
 					<motion.div
-						className="flex items-center gap-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-6 py-3 rounded-full shadow-lg"
+						className="flex items-center gap-2 bg-amber-500 text-white px-6 py-3 rounded-full shadow-lg"
 						animate={
 							useLottie
 								? undefined

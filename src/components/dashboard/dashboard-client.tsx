@@ -2,7 +2,12 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { QuickActions } from "@/components/dashboard";
+import {
+	CountdownHeader,
+	QuickActions,
+	StatsCards,
+	TodayFocusCard,
+} from "@/components/dashboard";
 import { XpLevelCard } from "@/components/gamification";
 import { useGamification } from "@/hooks/use-gamification";
 import StudyTopicCardExample from "../study/example";
@@ -18,7 +23,7 @@ const containerVariants = {
 		opacity: 1,
 		transition: {
 			staggerChildren: 0.08,
-			delayChildren: 0.1,
+			delayChildren: 0.55,
 		},
 	},
 };
@@ -39,7 +44,8 @@ const itemVariants = {
 export function DashboardClient({ initialTab = "ai" }: DashboardClientProps) {
 	const [_activeTab] = useState<TabValue>(initialTab || "ai");
 	const [_practiceOpen, setPracticeOpen] = useState(false);
-	const { levelInfo, isLoaded, gamification } = useGamification();
+	const { levelInfo, isLoaded, gamification, currentStreak } =
+		useGamification();
 
 	if (!isLoaded) {
 		return (
@@ -49,6 +55,13 @@ export function DashboardClient({ initialTab = "ai" }: DashboardClientProps) {
 		);
 	}
 
+	const stats = {
+		streak: currentStreak,
+		questionsAnswered:
+			gamification.totalXp > 0 ? Math.floor(gamification.totalXp / 25) : 0,
+		accuracy: 0,
+	};
+
 	return (
 		<div className="min-h-screen flex flex-col bg-background pb-20 overflow-hidden w-full">
 			<motion.div
@@ -57,11 +70,25 @@ export function DashboardClient({ initialTab = "ai" }: DashboardClientProps) {
 				initial="hidden"
 				animate="visible"
 			>
+				<CountdownHeader />
+
+				<motion.div variants={itemVariants} className="mb-3 px-4">
+					<StatsCards
+						streak={stats.streak}
+						questionsAnswered={stats.questionsAnswered}
+						accuracy={stats.accuracy}
+					/>
+				</motion.div>
+
 				<motion.div
 					variants={itemVariants}
 					className="mb-4 bg-card rounded-2xl p-4"
 				>
 					<XpLevelCard levelInfo={levelInfo} totalXp={gamification.totalXp} />
+				</motion.div>
+
+				<motion.div variants={itemVariants} className="mb-4 px-4">
+					<TodayFocusCard />
 				</motion.div>
 
 				<motion.div variants={itemVariants} className="mb-6 px-4">

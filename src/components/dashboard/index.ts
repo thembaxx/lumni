@@ -1,3 +1,4 @@
+export { CountdownHeader } from "./countdown-header";
 export { DashboardClient } from "./dashboard-client";
 export { SubjectsDrawer } from "./drawers/subjects-drawer";
 export { DashboardHeader } from "./layout/header";
@@ -8,4 +9,5 @@ export { ProgressChart } from "./progress-chart";
 export { QuickActions } from "./quick-actions/quick-actions";
 export { SearchInput } from "./search/search-input";
 export { StatsCards } from "./stats-cards";
+export { TodayFocusCard } from "./today-focus-card";
 export type { TabValue } from "./types";

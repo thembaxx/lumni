@@ -98,7 +98,7 @@ export default function StatsTab() {
 				<Card className="overflow-visible">
 					{isPerfect && (
 						<div className="flex items-center justify-center -mt-2">
-							<div className="flex items-center gap-2 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 px-4 py-1.5 text-white shadow-lg">
+							<div className="flex items-center gap-2 rounded-full bg-amber-500 text-white px-4 py-1.5 shadow-lg">
 								<span className="text-sm font-bold">Perfect Score!</span>
 							</div>
 						</div>

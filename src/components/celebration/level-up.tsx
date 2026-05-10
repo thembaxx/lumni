@@ -40,7 +40,7 @@ export function LevelUp({
 						onClick={(e) => e.stopPropagation()}
 					>
 						<motion.div
-							className="absolute inset-0 rounded-3xl bg-gradient-to-br from-amber-400 via-orange-500 to-amber-600 blur-xl opacity-60"
+							className="absolute inset-0 rounded-3xl bg-amber-500 blur-xl opacity-40"
 							animate={{
 								scale: [1, 1.1, 1],
 								opacity: [0.6, 0.8, 0.6],
@@ -79,7 +79,7 @@ export function LevelUp({
 									Level Up!
 								</p>
 								<motion.div
-									className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-8 py-3 rounded-full mb-4"
+									className="inline-flex items-center gap-2 bg-amber-500 text-white px-8 py-3 rounded-full mb-4"
 									initial={{ scale: 0.8 }}
 									animate={{ scale: 1 }}
 									transition={{ delay: 0.4, type: "spring" }}

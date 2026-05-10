@@ -56,7 +56,7 @@ export function StreakCelebration({
 			animate={{ opacity: 1, y: 0 }}
 			className={`relative overflow-hidden rounded-2xl p-4 transition-colors transition-background ${
 				isMilestone
-					? "bg-linear-to-br from-orange-500/20 via-amber-500/10 to-card border border-orange-500/30"
+					? "bg-orange-500/20 border border-orange-500/30"
 					: "bg-card border border-border/50"
 			}`}
 		>
@@ -67,13 +67,13 @@ export function StreakCelebration({
 					animate={{ opacity: [0, 0.3, 0] }}
 					transition={{ duration: 2, repeat: Infinity }}
 				>
-					<div className="absolute inset-0 bg-linear-to-r from-transparent via-orange-500/20 to-transparent" />
+					<div className="absolute inset-0 bg-orange-500/20" />
 				</motion.div>
 			)}
 
 			<div className="flex items-center gap-4">
 				<motion.div
-					className="relative flex h-12 w-12 items-center justify-center rounded-xl bg-linear-to-br from-orange-500 to-amber-500 shadow-lg"
+					className="relative flex h-12 w-12 items-center justify-center rounded-xl bg-orange-500 shadow-lg"
 					animate={currentStreak >= 3 ? { scale: [1, 1.05, 1] } : {}}
 					transition={{ duration: 1.5, repeat: Infinity }}
 				>
@@ -109,7 +109,7 @@ export function StreakCelebration({
 						<>
 							<div className="relative h-2 bg-secondary rounded-full overflow-hidden">
 								<motion.div
-									className="absolute inset-y-0 left-0 rounded-full bg-linear-to-r from-orange-500 to-amber-500"
+									className="absolute inset-y-0 left-0 rounded-full bg-orange-500"
 									initial={{ width: 0 }}
 									animate={{ width: `${Math.min(progress, 100)}%` }}
 									transition={{ duration: 0.8 }}

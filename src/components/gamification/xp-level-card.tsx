@@ -13,11 +13,11 @@ export function XpLevelCard({ levelInfo, totalXp }: XpLevelCardProps) {
 		<motion.div
 			initial={{ opacity: 0, y: 10 }}
 			animate={{ opacity: 1, y: 0 }}
-			className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/10 via-card to-card border border-border/50 p-4"
+			className="relative overflow-hidden rounded-2xl bg-primary/10 border border-border/50 p-4"
 		>
 			<div className="flex items-center gap-4">
 				<motion.div
-					className="relative flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary/60 shadow-lg"
+					className="relative flex h-14 w-14 items-center justify-center rounded-full bg-primary shadow-lg"
 					initial={{ scale: 0.8 }}
 					animate={{ scale: 1 }}
 					transition={{ type: "spring", stiffness: 300, damping: 20 }}
@@ -50,13 +50,13 @@ export function XpLevelCard({ levelInfo, totalXp }: XpLevelCardProps) {
 
 					<div className="relative h-3 bg-secondary rounded-full overflow-hidden">
 						<motion.div
-							className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-primary to-primary/80"
+							className="absolute inset-y-0 left-0 rounded-full bg-primary"
 							initial={{ width: 0 }}
 							animate={{ width: `${levelInfo.progress}%` }}
 							transition={{ duration: 0.8, ease: "easeOut" }}
 						/>
 						<motion.div
-							className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+							className="absolute inset-0 bg-white/20"
 							animate={{ x: ["-100%", "100%"] }}
 							transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
 						/>
