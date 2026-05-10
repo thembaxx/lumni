@@ -63,7 +63,7 @@ export function DashboardClient({ initialTab = "ai" }: DashboardClientProps) {
 	};
 
 	return (
-		<div className="min-h-screen flex flex-col bg-background pb-20 overflow-hidden w-full">
+		<div className="min-h-screen flex flex-col pt-4 bg-background pb-20 overflow-hidden w-full">
 			<motion.div
 				className="max-w-md mx-auto w-full"
 				variants={containerVariants}

@@ -1,6 +1,6 @@
 "use client";
 
-import { BulbIcon, CheckmarkCircle01Icon } from "@hugeicons/core-free-icons";
+import { CheckmarkCircle01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useRouter } from "next/navigation";
@@ -44,23 +44,30 @@ const recommendations = {
 	},
 };
 
-const priorityLabels = {
-	weakest: { tag: "Needs work", tagColor: "text-destructive" },
-	due: { tag: "Due for review", tagColor: "text-warning" },
-	streak: { tag: "Keep it hot", tagColor: "text-success" },
-	balanced: { tag: "Balance mode", tagColor: "text-info" },
+const priorityConfig = {
+	weakest: {
+		tag: "Needs work",
+		accent: "bg-[oklch(var(--destructive))]",
+		iconColor: "text-[oklch(var(--destructive))]",
+	},
+	due: {
+		tag: "Due for review",
+		accent: "bg-[oklch(var(--warning))]",
+		iconColor: "text-[oklch(var(--warning))]",
+	},
+	streak: {
+		tag: "Keep it hot",
+		accent: "bg-[oklch(var(--success))]",
+		iconColor: "text-[oklch(var(--success))]",
+	},
+	balanced: {
+		tag: "Balance mode",
+		accent: "bg-[oklch(var(--info))]",
+		iconColor: "text-[oklch(var(--info))]",
+	},
 };
 
 const easeOutQuint = [0.22, 1, 0.36, 1] as const;
-
-const staggerChildren = {
-	hidden: { opacity: 0, y: 10 },
-	visible: {
-		opacity: 1,
-		y: 0,
-		transition: { duration: 0.35, ease: easeOutQuint },
-	},
-};
 
 export function TodayFocusCard({
 	subjectName,
@@ -77,7 +84,7 @@ export function TodayFocusCard({
 	const subject = selectedSubject ?? rec.subject;
 	const topic = topicName ?? rec.topic;
 	const whyReason = reason ?? rec.reason;
-	const label = priorityLabels[priority];
+	const config = priorityConfig[priority];
 
 	function handleStart() {
 		setShowSuccess(true);
@@ -88,139 +95,111 @@ export function TodayFocusCard({
 		}, 600);
 	}
 
-	const cardVariants = {
-		hidden: { opacity: 0, y: 12 },
-		visible: {
-			opacity: 1,
-			y: 0,
-			transition: {
-				duration: shouldReduceMotion ? 0 : 0.4,
-				ease: easeOutQuint,
-			},
-		},
-	};
-
 	return (
 		<motion.div
-			variants={cardVariants}
-			initial="hidden"
-			animate="visible"
+			initial={{ opacity: 0, y: 16 }}
+			animate={{ opacity: 1, y: 0 }}
+			transition={{
+				duration: shouldReduceMotion ? 0 : 0.5,
+				ease: easeOutQuint,
+			}}
 			whileHover={
 				shouldReduceMotion
 					? undefined
-					: { y: -2, transition: { duration: 0.2, ease: easeOutQuint } }
+					: { y: -3, transition: { duration: 0.25, ease: easeOutQuint } }
 			}
+			whileTap={shouldReduceMotion ? undefined : { scale: 0.96 }}
 		>
-			<Card className="relative overflow-hidden border-border/40 bg-secondary/40 dark:bg-secondary/10">
-				<div className="absolute inset-0 bg-secondary/50 dark:bg-secondary/30 pointer-events-none" />
+			<Card className="relative overflow-hidden bg-[oklch(var(--card))] border">
+				<div
+					className={`absolute top-0 left-0 right-0 h-0.5 ${config.accent}`}
+				/>
 
-				<motion.div className="relative p-4 sm:p-5 space-y-3">
-					<motion.div
-						variants={staggerChildren}
-						className="flex items-start justify-between"
-					>
-						<div className="flex items-center gap-2">
-							<div className="flex items-center justify-center shrink-0 size-7 rounded-full bg-[oklch(62%_0.19_55/15%)] dark:bg-[oklch(72%_0.16_45/20%)]">
-								<HugeiconsIcon
-									icon={CheckmarkCircle01Icon}
-									className="size-3.5"
-								/>
-							</div>
-							<div>
-								<span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground block">
-									Today&apos;s Focus
-								</span>
-								<span className={`text-xs font-medium ${label.tagColor}`}>
-									<motion.span
-										animate={
-											shouldReduceMotion ||
-											(priority !== "streak" && priority !== "weakest")
-												? {}
-												: { scale: [1, 1.06, 1] }
-										}
-										transition={{
-											duration: 1.8,
-											repeat: Infinity,
-											ease: easeOutQuint,
-										}}
-									>
-										{label.tag}
-									</motion.span>
-								</span>
-							</div>
+				<div className="p-5 space-y-4">
+					<div className="flex items-center gap-3">
+						<div
+							className={`flex items-center justify-center size-9 rounded-xl ${config.accent} bg-opacity-15`}
+						>
+							<HugeiconsIcon
+								icon={CheckmarkCircle01Icon}
+								className={`size-5 ${config.iconColor}`}
+							/>
 						</div>
-					</motion.div>
+						<div className="space-y-0.5">
+							<span className="text-[13px] font-semibold text-[oklch(var(--foreground))] tracking-tight block">
+								Today&apos;s Focus
+							</span>
+							<span className={`text-[12px] font-medium ${config.iconColor}`}>
+								{config.tag}
+							</span>
+						</div>
+					</div>
 
-					<motion.div variants={staggerChildren} className="space-y-1">
+					<div className="space-y-2">
 						<div className="flex items-center gap-2">
-							<p className="text-xs text-primary font-medium">{subject}</p>
+							<p className="text-[13px] text-[oklch(var(--primary))] font-medium">
+								{subject}
+							</p>
 							<SubjectsDrawer onSelect={(name) => setSelectedSubject(name)}>
 								<button
 									type="button"
-									className="text-xs text-muted-foreground/60 hover:text-muted-foreground transition-colors underline-offset-2 hover:underline min-h-[40px] min-w-[40px] flex items-center"
+									className="text-[12px] text-[oklch(var(--muted-foreground))] hover:text-[oklch(var(--foreground))] transition-colors underline-offset-2 hover:underline"
 								>
 									change
 								</button>
 							</SubjectsDrawer>
 						</div>
-						<h3 className="text-base sm:text-lg font-bold text-foreground leading-snug">
+						<h3 className="text-[17px] font-semibold text-[oklch(var(--foreground))] leading-snug tracking-tight text-wrap balance">
 							{topic}
 						</h3>
-					</motion.div>
+					</div>
 
-					<motion.p
-						variants={staggerChildren}
-						className="text-xs text-muted-foreground leading-relaxed"
-					>
+					<p className="text-[13px] text-[oklch(var(--muted-foreground))] leading-relaxed">
 						{whyReason}
-					</motion.p>
+					</p>
 
-					<motion.div variants={staggerChildren}>
-						<div className="relative">
-							<Button
-								size="sm"
-								className="w-full font-semibold text-sm h-9 active:scale-[0.96] transition-transform duration-150"
-								onClick={handleStart}
-								disabled={showSuccess}
-							>
-								<AnimatePresence mode="wait">
-									{showSuccess ? (
-										<motion.span
-											key="success"
-											initial={{ scale: 0.5, opacity: 0 }}
-											animate={{ scale: 1, opacity: 1 }}
-											exit={{ scale: 0.5, opacity: 0 }}
-											transition={{
-												duration: shouldReduceMotion ? 0 : 0.25,
-												ease: easeOutQuint,
-											}}
-											className="flex items-center gap-1.5"
-										>
-											<HugeiconsIcon
-												icon={CheckmarkCircle01Icon}
-												className="size-3.5"
-											/>
-											Starting quiz...
-										</motion.span>
-									) : (
-										<motion.span
-											key="action"
-											initial={{ scale: 0.5, opacity: 0 }}
-											animate={{ scale: 1, opacity: 1 }}
-											exit={{ scale: 0.5, opacity: 0 }}
-											transition={{
-												duration: shouldReduceMotion ? 0 : 0.2,
-												ease: easeOutQuint,
-											}}
-										>
-											{rec.action}
-										</motion.span>
-									)}
-								</AnimatePresence>
-							</Button>
-						</div>
-					</motion.div>
-				</motion.div>
+					<Button
+						size="sm"
+						className={`w-full font-semibold text-[13px] h-9 hover:opacity-90 active:scale-[0.96] transition-transform`}
+						onClick={handleStart}
+						disabled={showSuccess}
+					>
+						<AnimatePresence mode="wait">
+							{showSuccess ? (
+								<motion.span
+									key="success"
+									initial={{ scale: 0.5, opacity: 0 }}
+									animate={{ scale: 1, opacity: 1 }}
+									exit={{ scale: 0.5, opacity: 0 }}
+									transition={{
+										duration: shouldReduceMotion ? 0 : 0.25,
+										ease: easeOutQuint,
+									}}
+									className="flex items-center gap-1.5"
+								>
+									<HugeiconsIcon
+										icon={CheckmarkCircle01Icon}
+										className="size-3.5"
+									/>
+									Starting quiz...
+								</motion.span>
+							) : (
+								<motion.span
+									key="action"
+									initial={{ scale: 0.5, opacity: 0 }}
+									animate={{ scale: 1, opacity: 1 }}
+									exit={{ scale: 0.5, opacity: 0 }}
+									transition={{
+										duration: shouldReduceMotion ? 0 : 0.2,
+										ease: easeOutQuint,
+									}}
+								>
+									{rec.action}
+								</motion.span>
+							)}
+						</AnimatePresence>
+					</Button>
+				</div>
 			</Card>
 		</motion.div>
 	);
