@@ -173,9 +173,13 @@ async function saveToDatabase(
 			]);
 
 			if (existingMemo.length > 0) {
-				await updateDocument(COLLECTIONS.EXAM_PAPERS, existingMemo[0].$id, {
-					memoId: id,
-				});
+				await updateDocument(
+					COLLECTIONS.EXAM_PAPERS,
+					(existingMemo[0] as Record<string, unknown>).$id as string,
+					{
+						memoId: id,
+					},
+				);
 			}
 		}
 
@@ -229,7 +233,7 @@ export async function POST(request: NextRequest) {
 
 							if (uploadResult) {
 								const saved = await saveToDatabase(
-									subj.$id,
+									(subj as Record<string, unknown>).$id as string,
 									year,
 									paperNum,
 									"paper",
@@ -278,7 +282,7 @@ export async function POST(request: NextRequest) {
 
 								if (uploadResult) {
 									const saved = await saveToDatabase(
-										subj.$id,
+										(subj as Record<string, unknown>).$id as string,
 										year,
 										paperNum,
 										"memo",

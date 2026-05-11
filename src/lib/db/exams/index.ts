@@ -198,7 +198,7 @@ export function findPaperForMemo(
 		[subjectCode, year, paperNumber],
 	);
 	const rows = rowsToObjects(result);
-	return rows[0]?.id ?? null;
+	return (rows[0]?.id as string) ?? null;
 }
 
 export function findMemoForPaper(
@@ -212,7 +212,7 @@ export function findMemoForPaper(
 		[subjectCode, year, paperNumber],
 	);
 	const rows = rowsToObjects(result);
-	return rows[0]?.id ?? null;
+	return (rows[0]?.id as string) ?? null;
 }
 
 function rowsToObjects(result: unknown): Record<string, unknown>[] {

@@ -1,12 +1,12 @@
 "use client";
 
 import { useCallback, useState } from "react";
+import type { AppwriteExecution } from "@/lib/appwrite-functions";
 import {
-	type AppwriteExecution,
 	executeFunction,
 	listExecutions,
 	listFunctions,
-} from "./appwrite-functions";
+} from "@/lib/appwrite-functions";
 
 interface UseAppwriteFunctionsOptions {
 	functionId?: string;

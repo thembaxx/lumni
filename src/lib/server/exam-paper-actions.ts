@@ -75,9 +75,9 @@ function dbExecAll(
 	const result = db.exec(sql, args as (string | number | null | Uint8Array)[]);
 	if (!result || result.length === 0 || !result[0].values) return [];
 	const { columns, values } = result[0];
-	return values.map((row) => {
+	return values.map((row: unknown[]) => {
 		const obj: Record<string, unknown> = {};
-		columns.forEach((col, i) => {
+		columns.forEach((col: string, i: number) => {
 			obj[col] = row[i];
 		});
 		return obj;
@@ -208,6 +208,10 @@ export async function uploadExamPaper(
 		[id],
 	);
 
+	if (!record) {
+		throw new Error("Failed to retrieve uploaded exam paper");
+	}
+
 	return {
 		id: record.id as string,
 		subjectId: record.subject_code as string,
@@ -282,53 +286,6 @@ export async function deleteExamPaper(id: string): Promise<void> {
 
 	db.run("DELETE FROM exam_papers WHERE id = ?", [id]);
 	saveExamsDb();
-}
-
-export interface GetAllExamPapersOptions {
-	year?: number;
-	subjectCode?: string;
-	type?: "paper" | "memo";
-}
-
-export async function getAllExamPapers(
-	options?: GetAllExamPapersOptions,
-): Promise<ExamPaperRecord[]> {
-	const db = await getExamsDb();
-	let query =
-		"SELECT id, subject_code, subject_name, year, paper_number, type, memo_id, file_url, file_key, original_file_name, uploaded_at FROM exam_papers WHERE 1=1";
-	const params: unknown[] = [];
-
-	if (options?.year) {
-		query += " AND year = ?";
-		params.push(options.year);
-	}
-	if (options?.subjectCode) {
-		query += " AND subject_code = ?";
-		params.push(options.subjectCode);
-	}
-	if (options?.type) {
-		query += " AND type = ?";
-		params.push(options.type);
-	}
-
-	query += " ORDER BY subject_code, year DESC, paper_number";
-
-	const records = dbExecAll(db, query, params);
-
-	return records.map((r) => ({
-		id: r.id as string,
-		subjectId: r.subject_code as string,
-		subjectCode: r.subject_code as string,
-		subjectName: r.subject_name as string,
-		year: r.year as number,
-		paperNumber: r.paper_number as number,
-		type: r.type as "paper" | "memo",
-		memoId: r.memo_id as string | null,
-		fileUrl: r.file_url as string,
-		fileKey: r.file_key as string,
-		originalFileName: r.original_file_name as string,
-		uploadedAt: r.uploaded_at as string,
-	}));
 }
 
 export async function getExamPapersWithFallback() {

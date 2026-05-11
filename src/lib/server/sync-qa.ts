@@ -126,7 +126,7 @@ export async function ensureTopicExists(
 	]);
 
 	if (topics.length > 0) {
-		return topics[0].$id;
+		return (topics[0] as { $id: string }).$id;
 	}
 
 	const topicId = `${subjectId}-${formatSubjectName(topicName)}`;
@@ -169,9 +169,12 @@ export async function getLocalQuestions(subjectId: string): Promise<{
 				null
 			: null;
 
-	const topicList = await listDocuments(COLLECTIONS.TOPICS, [
-		Query.equal("subjectId", subjects[0]?.$id || subjectId),
-	]);
+	const topicList = (await listDocuments(COLLECTIONS.TOPICS, [
+		Query.equal(
+			"subjectId",
+			((subjects[0] as Record<string, unknown>)?.$id as string) || subjectId,
+		),
+	])) as { $id: string; name: string; subjectId: string }[];
 
 	const topicIds = topicList.map((t) => t.$id);
 
@@ -179,20 +182,24 @@ export async function getLocalQuestions(subjectId: string): Promise<{
 		return { topics: [], questions: [], version };
 	}
 
-	const questionList = await listDocuments(COLLECTIONS.QUESTIONS);
+	const questionList = (await listDocuments(COLLECTIONS.QUESTIONS)) as {
+		$id: string;
+		topicId: string;
+		name: string;
+	}[];
 
 	const filteredQuestions = questionList.filter((q) =>
-		topicIds.includes(q.topicId as string),
+		topicIds.includes(q.topicId),
 	);
 
 	return {
 		topics: topicList.map((t) => ({
 			id: t.$id,
-			name: t.name as string,
+			name: t.name,
 		})),
 		questions: filteredQuestions.map((q) => ({
 			questionId: q.$id,
-			topicId: q.topicId as string,
+			topicId: q.topicId,
 			version,
 		})),
 		version,
@@ -294,7 +301,10 @@ export async function syncSubjectQuestions(
 		}
 
 		const uniqueTopics = [...new Set(remoteData.questions.map((q) => q.topic))];
-		const topicMap = await ensureTopicsExist(uniqueTopics, subjects[0].$id);
+		const topicMap = await ensureTopicsExist(
+			uniqueTopics,
+			(subjects[0] as Record<string, unknown>).$id as string,
+		);
 
 		const { questions: parsedQuestions } = await parseQuestions(
 			remoteData.questions,
@@ -320,10 +330,14 @@ export async function syncSubjectQuestions(
 			});
 		}
 
-		await updateDocument(COLLECTIONS.SUBJECTS, subjects[0].$id, {
-			sourceUrl: url,
-			sourceVersion: remoteVersion,
-		});
+		await updateDocument(
+			COLLECTIONS.SUBJECTS,
+			(subjects[0] as Record<string, unknown>).$id as string,
+			{
+				sourceUrl: url,
+				sourceVersion: remoteVersion,
+			},
+		);
 
 		return {
 			success: true,

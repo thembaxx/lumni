@@ -103,7 +103,9 @@ export function useChat() {
 
 	return {
 		messages,
+		setMessages,
 		isLoading,
+		setIsLoading,
 		error,
 		sendMessage,
 		clearChat,

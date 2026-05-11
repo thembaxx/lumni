@@ -11,7 +11,8 @@
 		"format": "biome format --write .",
 		"db:migrate": "tsx src/lib/db/migrate.ts",
 		"db:sync": "tsx src/lib/db/sync/cli.ts",
-		"markdown:convert": "tsx scripts/pdt-to-mkdwn.ts"
+		"markdown:convert": "tsx scripts/pdt-to-mkdwn.ts",
+		"JSON:convert": "tsx scripts/markdown-to-json.ts"
 	},
 	"dependencies": {
 		"@base-ui/react": "^1.4.1",

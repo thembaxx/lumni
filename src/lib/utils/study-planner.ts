@@ -152,7 +152,7 @@ export function autoScheduleSessions(
 				id: `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
 				subject,
 				topic,
-				type: "practice",
+				type: "quiz",
 				scheduledAt,
 				duration: Math.round(sessionDuration),
 				completed: false,
@@ -179,6 +179,7 @@ export function getStudyStats(): {
 	const plan = loadStudyPlan();
 
 	const completed = plan.sessions.filter((s) => s.completed);
+	const now = Date.now();
 	const upcoming = plan.sessions.filter(
 		(s) => !s.completed && s.scheduledAt >= now,
 	);

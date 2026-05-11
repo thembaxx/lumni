@@ -10,7 +10,7 @@ export {
 export {
 	checkAndPopulateExamsDb,
 	deleteExamPaper,
-	getAllExamPapers,
+	getExamPapers,
 	getExamPapersWithFallback,
 	getExamPaperUrl,
 	uploadExamPaper,

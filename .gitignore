@@ -23,7 +23,9 @@
 # misc
 .DS_Store
 *.pem
-/scripts
+/scripts/files
+/scripts/markdown
+/scripts/json
 
 # sqlite
 *.db

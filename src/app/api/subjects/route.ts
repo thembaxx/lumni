@@ -45,7 +45,9 @@ export async function GET(request: NextRequest) {
 		Query.equal("userId", targetUserId),
 	]);
 
-	const selectedIds = selectedUserSubjects.map((us) => us.subjectId as string);
+	const selectedIds = selectedUserSubjects.map(
+		(us) => (us as Record<string, unknown>).subjectId as string,
+	);
 
 	const progressArr = await listDocuments(COLLECTIONS.USER_PROGRESS, [
 		Query.equal("userId", targetUserId),
@@ -59,12 +61,12 @@ export async function GET(request: NextRequest) {
 	]);
 
 	const totalAnswered = sessions.reduce(
-		(sum, s) =>
+		(sum: number, s) =>
 			sum + ((s as Record<string, unknown>).questionsAnswered as number) || 0,
 		0,
 	);
 	const totalCorrect = sessions.reduce(
-		(sum, s) =>
+		(sum: number, s) =>
 			sum + ((s as Record<string, unknown>).correctCount as number) || 0,
 		0,
 	);

@@ -73,25 +73,20 @@ export function StatCard({
 						className,
 					)}
 				>
-					{m.div(
-						(className) =>
-							className && (
-								<div className={cn("p-2 rounded-full", bgClass, className)}>
-									{Icon && <Icon className={cn("h-5 w-5", colorClass)} />}
-								</div>
-							),
-						{
-							initial: { scale: 0.95, opacity: 0 },
-							animate: { scale: 1, opacity: 1 },
-							whileHover: { scale: 1.1 },
-							transition: {
-								delay: delay + 0.2,
-								type: "spring",
-								stiffness: 300,
-								damping: 25,
-							},
-						},
-					)}
+					<m.div
+						className={cn("p-2 rounded-full", bgClass)}
+						initial={{ scale: 0.95, opacity: 0 }}
+						animate={{ scale: 1, opacity: 1 }}
+						whileHover={{ scale: 1.1 }}
+						transition={{
+							delay: delay + 0.2,
+							type: "spring",
+							stiffness: 300,
+							damping: 25,
+						}}
+					>
+						{Icon && <Icon className={cn("h-5 w-5", colorClass)} />}
+					</m.div>
 					<m.div
 						className="text-center"
 						initial={{ opacity: 0, y: 5 }}
@@ -115,7 +110,7 @@ export function StatCard({
 
 	return (
 		<Card className={cn(className)}>
-			<CardContent className="p-4">
+			<div className="p-4">
 				<div className="flex items-center gap-2 text-muted-foreground mb-2">
 					{Icon && <Icon className="h-4 w-4" />}
 					<span className="text-xs">{label}</span>
@@ -130,7 +125,7 @@ export function StatCard({
 					{trend === "up" && <TrendingUp className="h-4 w-4" />}
 					{trend === "down" && <TrendingDown className="h-4 w-4" />}
 				</div>
-			</CardContent>
+			</div>
 		</Card>
 	);
 }

@@ -38,7 +38,7 @@ export function getRateLimitHeaders(result: ReturnType<typeof checkRateLimit>) {
 		"X-RateLimit-Remaining": String(result.remaining),
 		"X-RateLimit-Reset": String(result.resetAt),
 		"Retry-After": result.allowed
-			? undefined
+			? ""
 			: String(Math.ceil((result.resetAt - Date.now()) / 1000)),
 	};
 }

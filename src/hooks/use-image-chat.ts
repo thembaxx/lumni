@@ -222,23 +222,26 @@ export function useImageChatWithSend(
 				retryCount: 0,
 			};
 
-			chat.setMessages((prev) => [...prev, userMessage as ChatMessage]);
+			chat.setMessages(
+				(prev) => [...prev, userMessage as ChatMessage] as ChatMessage[],
+			);
 			chat.setIsLoading(true);
 
 			try {
 				const imageData = await processImage(file);
 
-				chat.setMessages((prev) =>
-					prev.map((m) =>
-						m.id === userMessage.id
-							? {
-									...(m as RetryableMessage),
-									imageUrl: imageData.dataUrl,
-									imageFileName: imageData.fileName,
-									imageFileSize: imageData.fileSize,
-								}
-							: m,
-					),
+				chat.setMessages(
+					(prev) =>
+						prev.map((m) =>
+							m.id === userMessage.id
+								? {
+										...m,
+										imageUrl: imageData.dataUrl,
+										imageFileName: imageData.fileName,
+										imageFileSize: imageData.fileSize,
+									}
+								: m,
+						) as ChatMessage[],
 				);
 
 				setImageProcessing((prev) => ({
@@ -281,14 +284,17 @@ export function useImageChatWithSend(
 					timestamp: new Date(),
 				};
 
-				chat.setMessages((prev) => [
-					...prev.map((m) =>
-						m.id === userMessage.id
-							? { ...(m as RetryableMessage), processingStatus: "success" }
-							: m,
-					),
-					assistantMessage,
-				]);
+				chat.setMessages(
+					(prev) =>
+						[
+							...prev.map((m) =>
+								m.id === userMessage.id
+									? { ...m, processingStatus: "success" as const }
+									: m,
+							),
+							assistantMessage,
+						] as ChatMessage[],
+				);
 
 				setImageProcessing({
 					status: "idle",
@@ -311,16 +317,17 @@ export function useImageChatWithSend(
 					error: errorMessage,
 				});
 
-				chat.setMessages((prev) =>
-					prev.map((m) =>
-						m.id === userMessage.id
-							? {
-									...(m as RetryableMessage),
-									processingStatus: "error",
-									error: errorMessage,
-								}
-							: m,
-					),
+				chat.setMessages(
+					(prev) =>
+						prev.map((m) =>
+							m.id === userMessage.id
+								? {
+										...m,
+										processingStatus: "error" as const,
+										error: errorMessage,
+									}
+								: m,
+						) as ChatMessage[],
 				);
 			} finally {
 				chat.setIsLoading(false);
@@ -341,13 +348,13 @@ export function useImageChatWithSend(
 				return prev.map((m) =>
 					m.id === messageId
 						? {
-								...(m as RetryableMessage),
+								...m,
 								processingStatus: "sending" as const,
 								error: null,
 								retryCount: (currentMsg.retryCount || 0) + 1,
 							}
 						: m,
-				);
+				) as ChatMessage[];
 			});
 
 			setImageProcessing({
@@ -393,12 +400,13 @@ export function useImageChatWithSend(
 					timestamp: new Date(),
 				};
 
-				chat.setMessages((prev) =>
-					prev.map((m) =>
-						m.id === messageId
-							? { ...(m as RetryableMessage), processingStatus: "success" }
-							: m,
-					),
+				chat.setMessages(
+					(prev) =>
+						prev.map((m) =>
+							m.id === messageId
+								? { ...m, processingStatus: "success" as const }
+								: m,
+						) as ChatMessage[],
 				);
 
 				chat.setMessages((prev) => [...prev, assistantMessage]);
@@ -422,16 +430,17 @@ export function useImageChatWithSend(
 					error: errorMessage,
 				});
 
-				chat.setMessages((prev) =>
-					prev.map((m) =>
-						m.id === messageId
-							? {
-									...(m as RetryableMessage),
-									processingStatus: "error",
-									error: errorMessage,
-								}
-							: m,
-					),
+				chat.setMessages(
+					(prev) =>
+						prev.map((m) =>
+							m.id === messageId
+								? {
+										...m,
+										processingStatus: "error" as const,
+										error: errorMessage,
+									}
+								: m,
+						) as ChatMessage[],
 				);
 			} finally {
 				chat.setIsLoading(false);

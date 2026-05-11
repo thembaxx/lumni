@@ -146,15 +146,18 @@ export async function extractTextFromPDF(
 				const pdfjsLib = await import("pdfjs-dist");
 				pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
 
-				const pdf = await pdfjsLib.getDocument(typedarray).promise;
+				const pdf = (await pdfjsLib.getDocument(typedarray).promise) as {
+					numPages: number;
+					getPage: (i: number) => Promise<{
+						getTextContent: () => Promise<{ items: { str: string }[] }>;
+					}>;
+				};
 				let fullText = "";
 
 				for (let i = 1; i <= pdf.numPages; i++) {
 					const page = await pdf.getPage(i);
 					const textContent = await page.getTextContent();
-					const pageText = textContent.items
-						.map((item) => (item as { str: string }).str)
-						.join(" ");
+					const pageText = textContent.items.map((item) => item.str).join(" ");
 					fullText += pageText + "\n";
 				}
 

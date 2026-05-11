@@ -142,7 +142,10 @@ export async function seedDatabase() {
 				Query.limit(1),
 			]);
 			if (docs.length > 0) {
-				subjectMap.set(s.code, docs[0].$id);
+				subjectMap.set(
+					s.code,
+					(docs[0] as Record<string, unknown>).$id as string,
+				);
 			}
 		} catch {
 			// skip

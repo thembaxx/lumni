@@ -55,7 +55,7 @@ export async function POST(request: NextRequest) {
 						category: "general",
 					});
 				} else {
-					subjectId = subjects[0].$id;
+					subjectId = (subjects[0] as Record<string, unknown>).$id as string;
 				}
 
 				const existing = await listDocuments(COLLECTIONS.EXAM_PAPERS, [

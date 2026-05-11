@@ -28,7 +28,9 @@ export async function fetchSubjects(userId?: string) {
 		Query.equal("userId", targetUserId),
 	]);
 
-	const selectedIds = selectedUserSubjects.map((us) => us.subjectId as string);
+	const selectedIds = selectedUserSubjects.map(
+		(us) => (us as Record<string, unknown>).subjectId as string,
+	);
 
 	return { subjects, selectedSubjectIds: selectedIds };
 }
@@ -48,12 +50,12 @@ export async function fetchUserProgress(userId?: string) {
 	]);
 
 	const totalAnswered = sessions.reduce(
-		(sum, s) =>
+		(sum: number, s) =>
 			sum + ((s as Record<string, unknown>).questionsAnswered as number) || 0,
 		0,
 	);
 	const totalCorrect = sessions.reduce(
-		(sum, s) =>
+		(sum: number, s) =>
 			sum + ((s as Record<string, unknown>).correctCount as number) || 0,
 		0,
 	);
@@ -77,7 +79,10 @@ export async function toggleUserSubject(userId: string, subjectId: string) {
 	]);
 
 	if (existing.length > 0) {
-		await deleteDocument(COLLECTIONS.USER_SUBJECTS, existing[0].$id);
+		await deleteDocument(
+			COLLECTIONS.USER_SUBJECTS,
+			(existing[0] as Record<string, unknown>).$id as string,
+		);
 		return false;
 	} else {
 		await createDocument(COLLECTIONS.USER_SUBJECTS, {
@@ -140,9 +145,13 @@ export async function adminUploadExamPaper(
 			]);
 
 			if (questionPaper.length > 0) {
-				await updateDocument(COLLECTIONS.EXAM_PAPERS, questionPaper[0].$id, {
-					memoId: id,
-				});
+				await updateDocument(
+					COLLECTIONS.EXAM_PAPERS,
+					(questionPaper[0] as Record<string, unknown>).$id as string,
+					{
+						memoId: id,
+					},
+				);
 			}
 		}
 

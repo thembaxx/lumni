@@ -8,7 +8,7 @@ import {
 	getFile,
 	listFiles,
 	uploadFile,
-} from "./appwrite-storage";
+} from "@/lib/appwrite-storage";
 
 interface UseAppwriteStorageOptions {
 	bucketId?: string;

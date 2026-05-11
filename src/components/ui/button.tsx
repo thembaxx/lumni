@@ -31,6 +31,9 @@ const buttonVariants = cva(
 				/* Uber Chip/Filter */
 				uber_chip:
 					"bg-[#efefef] text-[#000000] rounded-[999px] px-4 py-3 hover:bg-[#e2e2e2] aria-expanded:bg-[#000000] aria-expanded:text-[#ffffff] dark:bg-[#1a1a1a] dark:text-[#ffffff] dark:hover:bg-[#2a2a2a] dark:aria-expanded:bg-[#ffffff] dark:aria-expanded:text-[#000000]",
+				/* Secondary - alias for outline with slightly different tone */
+				secondary:
+					"border-[#000000] bg-[#ffffff] text-[#000000] rounded-[999px] px-3 py-2 hover:bg-[#e2e2e2] dark:border-[#ffffff] dark:bg-[#0a0a0a] dark:text-[#ffffff] dark:hover:bg-[#1a1a1a]",
 				/* Uber Floating Action */
 				uber_floating:
 					"bg-[#ffffff] text-[#000000] rounded-[999px] px-3.5 py-3.5 shadow-[rgba(0,0,0,0.16)_0px_2px_8px_0px] translate-y-[2px] hover:bg-[#f3f3f3] dark:bg-[#1a1a1a] dark:text-[#ffffff] dark:shadow-[rgba(255,255,255,0.08)_0px_2px_8px_0px]",

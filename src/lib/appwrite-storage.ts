@@ -1,6 +1,6 @@
 import {
 	ID,
-	type ImageGravity,
+	ImageGravity,
 	Storage as NodeStorage,
 	Permission,
 } from "node-appwrite";
@@ -32,9 +32,12 @@ export async function uploadFile(
 			? InputFile.fromBlob(file, file.name)
 			: InputFile.fromBlob(file, fileName);
 
-	const result = await storage.createFile(bucketId, ID.unique(), fileInput, [
-		Permission.read("any"),
-	]);
+	const result = await storage.createFile(
+		bucketId,
+		ID.unique(),
+		fileInput as unknown as Parameters<typeof storage.createFile>[2],
+		[Permission.read("any")],
+	);
 
 	const previewUrl = `${APPWRITE_ENDPOINT}/storage/buckets/${bucketId}/files/${result.$id}/preview?project=${APPWRITE_PROJECT}`;
 	const url = `${APPWRITE_ENDPOINT}/storage/buckets/${bucketId}/files/${result.$id}/download?project=${APPWRITE_PROJECT}`;
@@ -83,14 +86,13 @@ export async function getFilePreviewUrl(
 	bucketId: string = APPWRITE_BUCKET_ID,
 	width?: number,
 	height?: number,
-	gravity: ImageGravity = ImageGravity.Center,
+	gravity?: ImageGravity,
 ) {
 	return storage.getFilePreview(
 		bucketId,
 		fileId,
-		undefined,
 		width,
 		height,
-		gravity,
+		gravity ?? ImageGravity.Center,
 	);
 }

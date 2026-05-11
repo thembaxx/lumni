@@ -1,2 +1,9 @@
-export { db, schema } from "./client";
-export * from "./schema";
+export {
+	APPWRITE_DATABASE_ID,
+	COLLECTIONS,
+	createDocument,
+	deleteDocument,
+	getDocument,
+	listDocuments,
+	updateDocument,
+} from "./client";

@@ -30,7 +30,9 @@ const milestoneMessages: Record<number, string> = {
 };
 
 function isStreakMilestone(streak: number): boolean {
-	return streak >= 3 && streakMilestones.includes(streak);
+	return (
+		streak >= 3 && (streakMilestones as readonly number[]).includes(streak)
+	);
 }
 
 function StatCard({

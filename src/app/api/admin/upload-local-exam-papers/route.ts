@@ -104,7 +104,7 @@ function dbExecOne(
 	const { columns, values } = result[0];
 	if (values.length === 0) return undefined;
 	const obj: Record<string, unknown> = {};
-	columns.forEach((col, i) => {
+	columns.forEach((col: string, i: number) => {
 		obj[col] = values[0][i];
 	});
 	return obj;

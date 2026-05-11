@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
 export interface InputOTPProps {
+	className?: string;
 	maxLength?: number;
 	onComplete?: (value: string) => void;
 	error?: boolean;
