@@ -8,7 +8,7 @@ async function main() {
 
   await convert([inputDir], {
   outputDir: outputDir,
-  format: 'markdown,json'
+  format: 'markdown'
 });
 }
 
