@@ -499,10 +499,32 @@ export class MarkdownExamParser {
               break;
           }
 
-          const smarks = ns.match(/^\((\d+)\)\s*$/);
-          if (smarks) {
+          const compoundMarks = ns.match(
+            /^\((\d+)\s*x\s*(\d+)\)\s*\((\d+)\)\s*$/,
+          );
+          if (compoundMarks) {
             if (marks === null)
-              marks = parseInt(smarks[1], 10);
+              marks = `(${compoundMarks[1]} x ${compoundMarks[2]}) (${compoundMarks[3]})`;
+            j++;
+            continue;
+          }
+
+          const simpleMarks = ns.match(
+            /^\((\d+)\)\s*$/,
+          );
+          if (simpleMarks) {
+            if (marks === null)
+              marks = parseInt(simpleMarks[1], 10);
+            j++;
+            continue;
+          }
+
+          const marksOnlyPair = ns.match(
+            /^\((\d+)\s*x\s*(\d+)\)\s*$/,
+          );
+          if (marksOnlyPair) {
+            if (marks === null)
+              marks = `(${marksOnlyPair[1]} x ${marksOnlyPair[2]})`;
             j++;
             continue;
           }

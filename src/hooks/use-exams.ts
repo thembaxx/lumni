@@ -1,109 +1,124 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import examData from "@/data/exams/index.json";
-import {
-	checkAndPopulateExamsDb,
-	getExamPapersWithFallback,
-} from "@/lib/server";
 import type { ExamFilter, ExamGroup, ExamPaper } from "@/types/exam";
 
+interface AppwriteExam {
+  id: string;
+  subject: string;
+  paperCode: string;
+  examPeriod: string;
+  year: number;
+  grade: number;
+  language: string;
+  totalMarks: number;
+  duration: string;
+  fileKeys: { pdf: string; markdown: string; json: string } | null;
+  uploadedAt: string;
+}
+
 export function useExams(filter: ExamFilter) {
-	const [exams, setExams] = useState<ExamPaper[]>([]);
-	const [isLoading, setIsLoading] = useState(true);
-	const [error, _setError] = useState<string | null>(null);
+  const [exams, setExams] = useState<ExamPaper[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, _setError] = useState<string | null>(null);
 
-	useEffect(() => {
-		async function fetchExams() {
-			try {
-				setIsLoading(true);
+  useEffect(() => {
+    async function fetchExams() {
+      try {
+        setIsLoading(true);
 
-				await checkAndPopulateExamsDb();
+        const res = await fetch("/api/admin/exams");
+        if (res.ok) {
+          const data = await res.json();
+          const appwriteExams = (data.exams || []) as AppwriteExam[];
+          const mapped: ExamPaper[] = appwriteExams.map((e) => ({
+            id: e.id,
+            subject: e.subject,
+            subjectId: e.subject.toLowerCase().replace(/\s+/g, "-"),
+            year: e.year,
+            session: e.examPeriod.toLowerCase().includes("june")
+              ? ("may-june" as const)
+              : ("november" as const),
+            type: "paper" as const,
+            paperNumber: parseInt(e.paperCode?.replace("P", "") || "1"),
+            language: e.language?.toLowerCase() as
+              | "english"
+              | "afrikaans"
+              | undefined,
+            title: `${e.subject} ${e.paperCode} ${e.examPeriod}`,
+            url: "",
+            fileUrl: e.fileKeys?.pdf || undefined,
+            fileKey: e.fileKeys?.json || undefined,
+          }));
+          if (mapped.length > 0) {
+            setExams(mapped);
+            setIsLoading(false);
+            return;
+          }
+        }
 
-				const dbExams = await getExamPapersWithFallback();
+        setExams([]);
+      } catch {
+        setExams([]);
+      } finally {
+        setIsLoading(false);
+      }
+    }
 
-				if (dbExams && dbExams.length > 0) {
-					setExams(dbExams);
-				} else {
-					setExams(examData.exams as ExamPaper[]);
-				}
-			} catch (err) {
-				console.warn(
-					"Database unavailable, using fallback data:",
-					err instanceof Error ? err.message : "Unknown error",
-				);
-				setExams(examData.exams as ExamPaper[]);
-			} finally {
-				setIsLoading(false);
-			}
-		}
+    fetchExams();
+  }, []);
 
-		fetchExams();
-	}, []);
+  const filteredExams = useMemo(() => {
+    let results = exams;
 
-	const filteredExams = useMemo(() => {
-		let results = exams;
+    if (filter.search) {
+      const searchLower = filter.search.toLowerCase();
+      results = results.filter(
+        (exam) =>
+          exam.subject.toLowerCase().includes(searchLower) ||
+          exam.title.toLowerCase().includes(searchLower),
+      );
+    }
 
-		if (filter.search) {
-			const searchLower = filter.search.toLowerCase();
-			results = results.filter(
-				(exam) =>
-					exam.subject.toLowerCase().includes(searchLower) ||
-					exam.title.toLowerCase().includes(searchLower),
-			);
-		}
+    if (filter.year) {
+      results = results.filter((exam) => exam.year === filter.year);
+    }
 
-		if (filter.year) {
-			results = results.filter((exam) => exam.year === filter.year);
-		}
+    if (filter.subject) {
+      results = results.filter(
+        (exam) =>
+          exam.subject.toLowerCase() === filter.subject?.toLowerCase(),
+      );
+    }
 
-		if (filter.subject) {
-			results = results.filter(
-				(exam) => exam.subject.toLowerCase() === filter.subject?.toLowerCase(),
-			);
-		}
+    return results;
+  }, [exams, filter]);
 
-		if (filter.session && filter.session !== "all") {
-			results = results.filter((exam) => {
-				if (filter.session === "may") {
-					return exam.session === "may-june";
-				}
-				if (filter.session === "nov") {
-					return exam.session === "november";
-				}
-				return true;
-			});
-		}
+  const groupedExams = useMemo<ExamGroup[]>(() => {
+    const grouped = new Map<string, ExamPaper[]>();
 
-		return results;
-	}, [exams, filter]);
+    filteredExams.forEach((exam) => {
+      const existing = grouped.get(exam.subject) || [];
+      grouped.set(exam.subject, [...existing, exam]);
+    });
 
-	const groupedExams = useMemo<ExamGroup[]>(() => {
-		const grouped = new Map<string, ExamPaper[]>();
+    return Array.from(grouped.entries())
+      .map(([subject, papers]) => ({
+        subject,
+        papers: papers.sort((a, b) => {
+          if (a.year !== b.year) return b.year - a.year;
+          return 0;
+        }),
+      }))
+      .sort((a, b) => a.subject.localeCompare(b.subject));
+  }, [filteredExams]);
 
-		filteredExams.forEach((exam) => {
-			const existing = grouped.get(exam.subject) || [];
-			grouped.set(exam.subject, [...existing, exam]);
-		});
-
-		return Array.from(grouped.entries())
-			.map(([subject, papers]) => ({
-				subject,
-				papers: papers.sort((a, b) => {
-					if (a.year !== b.year) return b.year - a.year;
-					if (a.session !== b.session) return a.session === "november" ? -1 : 1;
-					return 0;
-				}),
-			}))
-			.sort((a, b) => a.subject.localeCompare(b.subject));
-	}, [filteredExams]);
-
-	return {
-		exams: filteredExams,
-		groupedExams,
-		isLoading,
-		error,
-	};
+  return {
+    exams: filteredExams,
+    groupedExams,
+    isLoading,
+    error,
+  };
 }
 
 export type { ExamFilter, ExamGroup, ExamPaper } from "@/types/exam";

@@ -1,0 +1,582 @@
+{
+  "metadata": {
+    "subject": "Geography",
+    "paperCode": "P1",
+    "examPeriod": "NOVEMBER 2025",
+    "year": 2025,
+    "grade": 12,
+    "qualification": "National Senior Certificate",
+    "language": "English",
+    "totalMarks": 150,
+    "duration": "3 hours",
+    "pageCount": 16
+  },
+  "instructions": [
+    "This question paper consists of FOUR questions.",
+    "Answer ANY THREE questions of 50 marks each.",
+    "All diagrams are included in the ANNEXURE.",
+    "Leave a line between subsections of questions answered.",
+    "Start EACH question at the top of a NEW page.",
+    "Number the answers correctly according to the numbering system used in this question paper.",
+    "Do NOT write in the margins of the ANSWER BOOK.",
+    "Where possible, illustrate your answers with labelled diagrams.",
+    "Write neatly and legibly."
+  ],
+  "sections": [
+    {
+      "id": "A",
+      "title": "CLIMATE, WEATHER AND GEOMORPHOLOGY",
+      "questions": [
+        {
+          "id": "1",
+          "title": "CLIMATE AND WEATHER [50]",
+          "context": [
+            {
+              "type": "text",
+              "value": "- A polar front"
+            },
+            {
+              "type": "text",
+              "value": "- B intertropical convergence zone"
+            },
+            {
+              "type": "text",
+              "value": "- C sub-tropical high pressure belt"
+            },
+            {
+              "type": "text",
+              "value": "- D westerly wind belt"
+            },
+            {
+              "type": "text",
+              "value": "- A South Indian high pressure"
+            },
+            {
+              "type": "text",
+              "value": "- B South Atlantic high pressure"
+            },
+            {
+              "type": "text",
+              "value": "- C Kalahari high pressure"
+            },
+            {
+              "type": "text",
+              "value": "- D Antarctic high pressure"
+            },
+            {
+              "type": "text",
+              "value": "(2 x 2) (4)"
+            },
+            {
+              "type": "image",
+              "imagePath": "images/figure1.2.png",
+              "altText": "Synoptic weather map"
+            }
+          ],
+          "parts": [
+            {
+              "id": "1.1",
+              "text": "Various options are provided as possible answers to the following questions. Choose the answer and write only the letter (A–D) next to the question numbers.",
+              "type": "multiple-choice",
+              "marks": "(2 x 2) (4)",
+              "answerFormat": "single-select",
+              "content": [
+                {
+                  "type": "text",
+                  "value": "- 1.1.1 The zone where the trade winds of the two hemispheres meet is known as the ..."
+                },
+                {
+                  "type": "text",
+                  "value": "- 1.1.2 The pressure cell that dominates South Africa's weather in winter is the ..."
+                }
+              ],
+              "options": [
+                {
+                  "id": "A",
+                  "text": "polar front"
+                },
+                {
+                  "id": "B",
+                  "text": "intertropical convergence zone"
+                },
+                {
+                  "id": "C",
+                  "text": "sub-tropical high pressure belt"
+                },
+                {
+                  "id": "D",
+                  "text": "westerly wind belt"
+                },
+                {
+                  "id": "A",
+                  "text": "South Indian high pressure"
+                },
+                {
+                  "id": "B",
+                  "text": "South Atlantic high pressure"
+                },
+                {
+                  "id": "C",
+                  "text": "Kalahari high pressure"
+                },
+                {
+                  "id": "D",
+                  "text": "Antarctic high pressure"
+                }
+              ]
+            },
+            {
+              "id": "1.2",
+              "text": "Study FIGURE 1.2 showing a synoptic weather map and answer the questions that follow.",
+              "type": "short-answer",
+              "marks": 10,
+              "answerFormat": "free-text",
+              "content": [
+                {
+                  "type": "image",
+                  "imagePath": "images/figure1.2.png",
+                  "altText": "Synoptic weather map"
+                },
+                {
+                  "type": "text",
+                  "value": "- 1.2.1 Identify the pressure cell labelled A. (1 x 1) (1)"
+                },
+                {
+                  "type": "text",
+                  "value": "- 1.2.2 Give the isobaric interval on the synoptic weather map. (1 x 1) (1)"
+                },
+                {
+                  "type": "text",
+                  "value": "- 1.2.3 Determine the air pressure at the centre of the low pressure cell B. (1 x 2) (2)"
+                },
+                {
+                  "type": "text",
+                  "value": "- 1.2.4 Which direction is the cold front C moving? (1 x 2) (2)"
+                },
+                {
+                  "type": "text",
+                  "value": "- 1.2.5 Explain the relationship between the wind speed and the spacing of isobars in the vicinity of the low pressure cell B. (2 x 2) (4)"
+                }
+              ]
+            }
+          ],
+          "totalMarks": null
+        },
+        {
+          "id": "2",
+          "title": "GEOMORPHOLOGY [50]",
+          "context": [
+            {
+              "type": "image",
+              "imagePath": "images/figure2.1.png",
+              "altText": "Fluvial landforms"
+            },
+            {
+              "type": "table",
+              "tableData": {
+                "headers": [
+                  "COLUMN X",
+                  "COLUMN Y"
+                ],
+                "rows": [
+                  [
+                    "2.2.1 Meander",
+                    "Y A bend in the river course"
+                  ],
+                  [
+                    "",
+                    "Z A lake formed by river deposition"
+                  ],
+                  [
+                    "2.2.2 Levee",
+                    "Y A raised bank along a river channel"
+                  ],
+                  [
+                    "",
+                    "Z A deep pool in the river bed"
+                  ],
+                  [
+                    "2.2.3 Oxbow lake",
+                    "Y A horseshoe-shaped lake formed from a meander"
+                  ],
+                  [
+                    "",
+                    "Z A lake formed behind a dam"
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "text",
+              "value": "--- ---"
+            },
+            {
+              "type": "table",
+              "tableData": {
+                "headers": [
+                  "2.2.1 Meander",
+                  "Y A bend in the river course"
+                ],
+                "rows": [
+                  [
+                    "",
+                    "Z A lake formed by river deposition"
+                  ],
+                  [
+                    "2.2.2 Levee",
+                    "Y A raised bank along a river channel"
+                  ],
+                  [
+                    "",
+                    "Z A deep pool in the river bed"
+                  ],
+                  [
+                    "2.2.3 Oxbow lake",
+                    "Y A horseshoe-shaped lake formed from a meander"
+                  ],
+                  [
+                    "",
+                    "Z A lake formed behind a dam"
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "table",
+              "tableData": {
+                "headers": [
+                  "",
+                  "Z A lake formed by river deposition"
+                ],
+                "rows": [
+                  [
+                    "2.2.2 Levee",
+                    "Y A raised bank along a river channel"
+                  ],
+                  [
+                    "",
+                    "Z A deep pool in the river bed"
+                  ],
+                  [
+                    "2.2.3 Oxbow lake",
+                    "Y A horseshoe-shaped lake formed from a meander"
+                  ],
+                  [
+                    "",
+                    "Z A lake formed behind a dam"
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "table",
+              "tableData": {
+                "headers": [
+                  "2.2.2 Levee",
+                  "Y A raised bank along a river channel"
+                ],
+                "rows": [
+                  [
+                    "",
+                    "Z A deep pool in the river bed"
+                  ],
+                  [
+                    "2.2.3 Oxbow lake",
+                    "Y A horseshoe-shaped lake formed from a meander"
+                  ],
+                  [
+                    "",
+                    "Z A lake formed behind a dam"
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "table",
+              "tableData": {
+                "headers": [
+                  "",
+                  "Z A deep pool in the river bed"
+                ],
+                "rows": [
+                  [
+                    "2.2.3 Oxbow lake",
+                    "Y A horseshoe-shaped lake formed from a meander"
+                  ],
+                  [
+                    "",
+                    "Z A lake formed behind a dam"
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "table",
+              "tableData": {
+                "headers": [
+                  "2.2.3 Oxbow lake",
+                  "Y A horseshoe-shaped lake formed from a meander"
+                ],
+                "rows": [
+                  [
+                    "",
+                    "Z A lake formed behind a dam"
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "table",
+              "tableData": {
+                "headers": [
+                  "",
+                  "Z A lake formed behind a dam"
+                ],
+                "rows": []
+              }
+            },
+            {
+              "type": "text",
+              "value": "(3 x 2) (6)"
+            }
+          ],
+          "parts": [
+            {
+              "id": "2.1",
+              "text": "FIGURE 2.1 shows fluvial landforms.",
+              "type": "short-answer",
+              "answerFormat": "free-text",
+              "content": [
+                {
+                  "type": "image",
+                  "imagePath": "images/figure2.1.png",
+                  "altText": "Fluvial landforms"
+                },
+                {
+                  "type": "text",
+                  "value": "- 2.1.1 Define the term drainage basin. (1 x 1) (1)"
+                },
+                {
+                  "type": "text",
+                  "value": "- 2.1.2 Identify the drainage pattern shown in the sketch above. (1 x 1) (1)"
+                },
+                {
+                  "type": "text",
+                  "value": "- 2.1.3 Give a reason for your answer to QUESTION 2.1.2. (1 x 2) (2)"
+                },
+                {
+                  "type": "text",
+                  "value": "- 2.1.4 Draw a simple labelled diagram to illustrate a dendritic drainage pattern. (1 x 2) (2)"
+                }
+              ]
+            },
+            {
+              "id": "2.2",
+              "text": "Match the description in COLUMN Y with the term in COLUMN X. Write only Y or Z next to the question numbers.",
+              "type": "matching",
+              "marks": "(3 x 2) (6)",
+              "answerFormat": "dropdown-pairs",
+              "table": {
+                "headers": [
+                  "COLUMN X",
+                  "COLUMN Y"
+                ],
+                "rows": [
+                  [
+                    "2.2.1 Meander",
+                    "Y A bend in the river course"
+                  ],
+                  [
+                    "",
+                    "Z A lake formed by river deposition"
+                  ],
+                  [
+                    "2.2.2 Levee",
+                    "Y A raised bank along a river channel"
+                  ],
+                  [
+                    "",
+                    "Z A deep pool in the river bed"
+                  ],
+                  [
+                    "2.2.3 Oxbow lake",
+                    "Y A horseshoe-shaped lake formed from a meander"
+                  ],
+                  [
+                    "",
+                    "Z A lake formed behind a dam"
+                  ]
+                ]
+              }
+            }
+          ],
+          "totalMarks": null
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "title": "RURAL AND URBAN SETTLEMENTS",
+      "questions": [
+        {
+          "id": "3",
+          "title": "RURAL AND URBAN SETTLEMENTS [50]",
+          "context": [
+            {
+              "type": "text",
+              "value": "**Essay question**"
+            },
+            {
+              "type": "text",
+              "value": "Write an essay of approximately ONE page in which you discuss the factors that influence the location of rural settlements in South Africa. In your essay you should discuss:"
+            },
+            {
+              "type": "text",
+              "value": "- (a) Physical factors (relief, climate, water availability)"
+            },
+            {
+              "type": "text",
+              "value": "- (b) Economic factors (farming, mining, transport routes)"
+            },
+            {
+              "type": "text",
+              "value": "- (c) Social factors (cultural traditions, security)"
+            }
+          ],
+          "parts": [
+            {
+              "id": "a",
+              "text": "Physical factors (relief, climate, water availability)",
+              "type": "short-answer",
+              "marks": 50,
+              "answerFormat": "free-text",
+              "subParts": [
+                {
+                  "id": "(b)",
+                  "text": "Economic factors (farming, mining, transport routes)",
+                  "type": "short-answer",
+                  "marks": null
+                },
+                {
+                  "id": "(c)",
+                  "text": "Social factors (cultural traditions, security)",
+                  "type": "short-answer",
+                  "marks": null
+                }
+              ]
+            }
+          ],
+          "totalMarks": null
+        },
+        {
+          "id": "4",
+          "title": "RURAL AND URBAN SETTLEMENTS [50]",
+          "context": [
+            {
+              "type": "image",
+              "imagePath": "images/figure4.1.png",
+              "altText": "Urban land use zones"
+            },
+            {
+              "type": "text",
+              "value": "Source 4A: South African urban development report"
+            },
+            {
+              "type": "text",
+              "value": "Refer to Source 4A and FIGURE 4.1 to answer the following questions:"
+            },
+            {
+              "type": "table",
+              "tableData": {
+                "headers": [
+                  "TOTAL SECTION B:",
+                  "100"
+                ],
+                "rows": [
+                  [
+                    "GRAND TOTAL:",
+                    150
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "text",
+              "value": "--- ---"
+            },
+            {
+              "type": "table",
+              "tableData": {
+                "headers": [
+                  "GRAND TOTAL:",
+                  "150"
+                ],
+                "rows": []
+              }
+            }
+          ],
+          "parts": [
+            {
+              "id": "4.1",
+              "text": "Study FIGURE 4.1 showing urban land use zones and answer the questions that follow.",
+              "type": "short-answer",
+              "marks": 12,
+              "answerFormat": "free-text",
+              "content": [
+                {
+                  "type": "image",
+                  "imagePath": "images/figure4.1.png",
+                  "altText": "Urban land use zones"
+                },
+                {
+                  "type": "text",
+                  "value": "- 4.1.1 Define the term urban expansion. (1 x 1) (1)"
+                },
+                {
+                  "type": "text",
+                  "value": "- 4.1.2 Identify the land use zone labelled CBD. (1 x 1) (1)"
+                },
+                {
+                  "type": "text",
+                  "value": "- 4.1.3 Give ONE characteristic of the CBD. (1 x 2) (2)"
+                },
+                {
+                  "type": "text",
+                  "value": "Source 4A: South African urban development report"
+                },
+                {
+                  "type": "text",
+                  "value": "Refer to Source 4A and FIGURE 4.1 to answer the following questions:"
+                },
+                {
+                  "type": "text",
+                  "value": "- 4.1.4 Explain TWO factors that contribute to the decline of the CBD. (2 x 2) (4)"
+                },
+                {
+                  "type": "text",
+                  "value": "- 4.1.5 Suggest strategies to revitalise the CBD. (2 x 2) (4)"
+                }
+              ],
+              "table": {
+                "headers": [
+                  "TOTAL SECTION B:",
+                  "100"
+                ],
+                "rows": [
+                  [
+                    "GRAND TOTAL:",
+                    150
+                  ]
+                ]
+              },
+              "sourceRefs": [
+                "4A"
+              ]
+            }
+          ],
+          "totalMarks": null
+        }
+      ]
+    }
+  ]
+}

@@ -1,45 +1,80 @@
 import { NextResponse } from "next/server";
-import {
-	getAllExamPapers,
-	getExamPaperById,
-	getExamPaperCount,
-	getExamPapersBySubject,
-} from "@/lib/db/exams";
-import { ensureExamPapersSynced } from "@/lib/exams/sync-exam-papers";
+import { databases } from "@/lib/appwrite";
+import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 
 export const runtime = "nodejs";
 
 export async function GET(request: Request) {
-	const { searchParams } = new URL(request.url);
-	const subjectCode = searchParams.get("subject");
-	const year = searchParams.get("year");
-	const id = searchParams.get("id");
+  const { searchParams } = new URL(request.url);
+  const subjectCode = searchParams.get("subject");
+  const year = searchParams.get("year");
+  const id = searchParams.get("id");
 
-	try {
-		if (id) {
-			const paper = getExamPaperById(id);
-			return NextResponse.json(paper);
-		}
+  try {
+    if (id) {
+      const doc = await databases.getDocument(
+        APPWRITE_DATABASE_ID,
+        COLLECTIONS.EXAM_PAPERS,
+        id,
+      );
+      if (!doc) {
+        return NextResponse.json(
+          { error: "Exam paper not found" },
+          { status: 404 },
+        );
+      }
+      return NextResponse.json({
+        id: doc.$id,
+        subject: doc.subject,
+        paperCode: doc.paperCode,
+        examPeriod: doc.examPeriod,
+        year: doc.year,
+        grade: doc.grade,
+        language: doc.language,
+        totalMarks: doc.totalMarks,
+        duration: doc.duration,
+        fileKeys: doc.fileKeys ? JSON.parse(doc.fileKeys as string) : null,
+        uploadedAt: doc.uploadedAt,
+      });
+    }
 
-		if (subjectCode) {
-			const papers = getExamPapersBySubject(
-				subjectCode,
-				year ? parseInt(year, 10) : undefined,
-			);
-			return NextResponse.json({ papers, count: papers.length });
-		}
+    const queries: string[] = [];
+    if (subjectCode) {
+      queries.push(`subject=${subjectCode}`);
+    }
+    if (year) {
+      queries.push(`year=${year}`);
+    }
 
-		const all = getAllExamPapers();
-		return NextResponse.json({ papers: all, count: all.length });
-	} catch (error) {
-		return NextResponse.json(
-			{
-				error:
-					error instanceof Error
-						? error.message
-						: "Failed to fetch exam papers",
-			},
-			{ status: 500 },
-		);
-	}
+    const response = await databases.listDocuments(
+      APPWRITE_DATABASE_ID,
+      COLLECTIONS.EXAM_PAPERS,
+      queries,
+    );
+
+    const exams = response.documents.map((doc) => ({
+      id: doc.$id,
+      subject: doc.subject,
+      paperCode: doc.paperCode,
+      examPeriod: doc.examPeriod,
+      year: doc.year,
+      grade: doc.grade,
+      language: doc.language,
+      totalMarks: doc.totalMarks,
+      duration: doc.duration,
+      uploadedAt: doc.uploadedAt,
+    }));
+
+    return NextResponse.json({ papers: exams, count: exams.length });
+  } catch (error) {
+    return NextResponse.json(
+      {
+        error:
+          error instanceof Error
+            ? error.message
+            : "Failed to fetch exam papers",
+      },
+      { status: 500 },
+    );
+  }
 }

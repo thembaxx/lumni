@@ -28,19 +28,34 @@ export async function POST(request: Request) {
     }
 
     const pdfUrl = pdfFiles[0].url;
-    const pdfResponse = await fetch(pdfUrl);
-    if (!pdfResponse.ok) {
+    const filename =
+      (pdfFiles[0]?.key || "exam-paper").replace(/\.pdf$/i, "");
+
+    // Convert PDF to markdown using markdown.new API
+    const encodedUrl = encodeURIComponent(pdfUrl);
+    const convertUrl = `https://markdown.new/${encodedUrl}`;
+
+    const conversionResponse = await fetch(convertUrl, {
+      headers: { Accept: "text/markdown" },
+    });
+
+    if (!conversionResponse.ok) {
       return NextResponse.json(
-        { error: "Failed to download PDF from UploadThing" },
+        {
+          error: `PDF conversion failed: ${conversionResponse.status}`,
+        },
         { status: 502 },
       );
     }
 
-    const pdfBuffer = Buffer.from(await pdfResponse.arrayBuffer());
-    const markdownContent = pdfBuffer.toString("utf-8");
+    const markdownContent = await conversionResponse.text();
+    if (!markdownContent?.trim()) {
+      return NextResponse.json(
+        { error: "Empty markdown from conversion" },
+        { status: 502 },
+      );
+    }
 
-    const filename =
-      (pdfFiles[0]?.key || "exam-paper").replace(/\.pdf$/i, "");
     const result = parseMarkdown(markdownContent, filename);
 
     const markdownBlob = new Blob([markdownContent], {
