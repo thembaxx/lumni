@@ -403,6 +403,23 @@
 .markdown-content .katex { font-size: 1.1em; }
 .markdown-content:has(.katex) { line-height: 1.8; }
 
+/* Standalone Equation component styles */
+.katex {
+	font-size: 1.1em;
+}
+.katex-display {
+	overflow-x: auto;
+	overflow-y: hidden;
+	padding: 0.5rem 0;
+}
+:has(> .katex-display) {
+	line-height: 1.8;
+}
+
+.tabular-nums .katex {
+	font-variant-numeric: tabular-nums;
+}
+
 /* ========================================
    UTILITY CLASSES
    ======================================== */

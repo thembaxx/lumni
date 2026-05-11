@@ -9,6 +9,7 @@ import remarkMath from "remark-math";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { normalizeMathDelimiters } from "@/lib/katex-utils";
 import {
 	type GetExamMarkdownResult,
 	getExamMarkdown,
@@ -120,7 +121,7 @@ export function SmartViewDialog({
 										remarkPlugins={[remarkGfm, remarkMath]}
 										rehypePlugins={[rehypeKatex]}
 									>
-										{result.content}
+										{normalizeMathDelimiters(result.content)}
 									</ReactMarkdown>
 								</div>
 							</div>

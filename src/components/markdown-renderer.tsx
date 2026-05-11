@@ -1,18 +1,24 @@
 "use client";
 
+import { useMemo } from "react";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import rehypeKatex from "rehype-katex";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
+import { normalizeMathDelimiters } from "@/lib/katex-utils";
 import { cn } from "@/lib/utils";
 
-const MATH_SUBJECTS = ["mathematics", "technical-mathematics"];
-const PHYSICS_CHEMISTRY_SUBJECTS = [
+const MATH_SUBJECTS = [
+	"mathematics",
+	"technical-mathematics",
 	"physical-sciences",
 	"mathematical-literacy",
 ];
+const TABULAR_SUBJECTS = ["physical-sciences", "mathematical-literacy"];
+
+const MATH_DETECT_RE = /\$\$[\s\S]*?\$\$|\$[a-zA-Z\\{].*?\$|\\\(|\\\[/;
 
 const SUBJECT_COLORS: Record<string, string> = {
 	mathematics: "#60a5fa",
@@ -35,12 +41,21 @@ export function MarkdownRenderer({
 	const isMathSubject = MATH_SUBJECTS.some((s) =>
 		subject?.toLowerCase().includes(s.toLowerCase()),
 	);
-	const isPhysicsChemSubject = PHYSICS_CHEMISTRY_SUBJECTS.some((s) =>
+	const isTabularSubject = TABULAR_SUBJECTS.some((s) =>
 		subject?.toLowerCase().includes(s.toLowerCase()),
 	);
 	const subjectColor = Object.entries(SUBJECT_COLORS).find(([key]) =>
 		subject?.toLowerCase().includes(key.toLowerCase()),
 	)?.[1];
+
+	const normalizedContent = useMemo(
+		() => normalizeMathDelimiters(content),
+		[content],
+	);
+	const hasMath = useMemo(
+		() => MATH_DETECT_RE.test(normalizedContent),
+		[normalizedContent],
+	);
 
 	const containerStyle = subjectColor
 		? ({ "--subject-accent": subjectColor } as React.CSSProperties)
@@ -50,14 +65,17 @@ export function MarkdownRenderer({
 		<div
 			className={cn(
 				"markdown-content",
-				isPhysicsChemSubject && "tabular-nums",
+				isTabularSubject && "tabular-nums",
 				className,
 			)}
 			style={containerStyle}
 		>
 			<ReactMarkdown
-				remarkPlugins={[remarkGfm, ...(isMathSubject ? [remarkMath] : [])]}
-				rehypePlugins={isMathSubject ? [rehypeKatex] : []}
+				remarkPlugins={[
+					remarkGfm,
+					...(isMathSubject || hasMath ? [remarkMath] : []),
+				]}
+				rehypePlugins={isMathSubject || hasMath ? [rehypeKatex] : []}
 				components={{
 					code({ className, children, ...props }) {
 						const match = /language-(\w+)/.exec(className || "");
@@ -180,7 +198,7 @@ export function MarkdownRenderer({
 					},
 				}}
 			>
-				{content}
+				{normalizedContent}
 			</ReactMarkdown>
 		</div>
 	);
