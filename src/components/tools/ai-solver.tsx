@@ -126,7 +126,7 @@ export function AiSolver() {
 									variant="ghost"
 									size="sm"
 									onClick={() => insertSymbol(s.value)}
-									className="h-7 w-8 p-0 text-xs font-serif hover:bg-primary/20"
+									className="h-7 w-8 p-0 ios-footnote hover:bg-primary/20"
 								>
 									{s.label}
 								</Button>

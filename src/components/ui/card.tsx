@@ -12,12 +12,11 @@ function Card({
 			data-slot="card"
 			data-size={size}
 			className={cn(
-				"group/card flex flex-col gap-4 overflow-hidden bg-[#ffffff] text-[#000000] py-5 px-5",
-				"rounded-lg shadow-[rgba(0,0,0,0.12)_0px_4px_16px_0px]",
-				"dark:bg-[#0a0a0a] dark:text-[#ffffff] dark:shadow-[rgba(255,255,255,0.06)_0px_4px_16px_0px]",
-				"transition-transform duration-200 hover:scale-[1.005]",
+				"group/card flex flex-col gap-4 overflow-hidden bg-[--system-surface] text-[--system-text-primary] py-4 px-4",
+				"rounded-[16px] shadow-[--shadow-level-2]",
+				"dark:bg-[--system-surface] dark:text-[--system-text-primary] dark:shadow-[--shadow-level-2]",
 				"has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0",
-				"data-[size=sm]:gap-3 data-[size=sm]:py-4 data-[size=sm]:px-4",
+				"data-[size=sm]:gap-3 data-[size=sm]:py-3 data-[size=sm]:px-3",
 				className,
 			)}
 			{...props}
@@ -46,6 +45,7 @@ function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
 			data-slot="card-title"
 			className={cn(
 				"text-base leading-snug font-semibold tracking-tight group-data-[size=sm]/card:text-sm",
+
 				className,
 			)}
 			{...props}
@@ -57,7 +57,7 @@ function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
 	return (
 		<div
 			data-slot="card-description"
-			className={cn("text-sm text-[#4b4b4b] dark:text-[#afafaf]", className)}
+			className={cn("ios-footnote text-[--system-text-secondary]", className)}
 			{...props}
 		/>
 	);
@@ -90,10 +90,7 @@ function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
 	return (
 		<div
 			data-slot="card-footer"
-			className={cn(
-				"flex items-center border-t border-[#000000]/10 dark:border-[#ffffff]/10 p-4 mt-4",
-				className,
-			)}
+			className={cn("flex items-center ios-separator pt-4 mt-4", className)}
 			{...props}
 		/>
 	);

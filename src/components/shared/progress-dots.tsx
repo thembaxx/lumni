@@ -67,7 +67,7 @@ export function ProgressDots({
 						type="button"
 						onClick={() => onDotClick?.(idx)}
 						className={cn(
-							"h-1.5 w-1.5 rounded-full transition-all",
+							"h-1.5 w-1.5 rounded-full transition-[background-color,scale] duration-150 ease-out",
 							dotClass,
 							onDotClick && "cursor-pointer hover:scale-125",
 						)}

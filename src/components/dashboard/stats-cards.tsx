@@ -47,30 +47,28 @@ function StatCard({
 
 	return (
 		<motion.div
-			initial={{ opacity: 0, y: 20 }}
+			initial={{ opacity: 0, y: 8 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{
-				duration: shouldReduceMotion ? 0 : 0.5,
+				duration: shouldReduceMotion ? 0 : 0.35,
 				ease: easeOutQuint,
-				delay: shouldReduceMotion ? 0 : index * 0.08,
+				delay: shouldReduceMotion ? 0 : index * 0.05,
 			}}
-			whileHover={shouldReduceMotion ? undefined : { y: -4 }}
-			whileTap={shouldReduceMotion ? undefined : { scale: 0.96 }}
 		>
-			<Card className="relative p-4 flex flex-col h-full items-center justify-start gap-3 overflow-hidden group cursor-default">
+			<Card className="relative p-4 flex flex-col h-full items-center justify-start gap-3 overflow-hidden cursor-default">
 				<div
 					className={`absolute top-0 left-0 right-0 h-1 ${accentClass} opacity-80`}
 				/>
 
-				<div className="relative flex items-center justify-center w-10 h-10 rounded-full bg-[oklch(var(--card))] shadow-sm border border-[oklch(var(--border))] group-hover:scale-110 transition-transform duration-300">
+				<div className="relative flex items-center justify-center w-10 h-10 rounded-full bg-[--system-surface] shadow-[--shadow-level-1]">
 					<Icon className={`w-5 h-5 ${colorClass}`} />
 				</div>
 
 				<div className="text-center space-y-1">
-					<p className="text-2xl font-semibold tracking-tight text-[oklch(var(--foreground))] tabular-nums text-wrap balance">
+					<p className="text-2xl font-semibold tracking-tight text-[--system-text-primary] tabular-nums text-wrap balance">
 						{value}
 					</p>
-					<p className="text-xs text-[oklch(var(--muted-foreground))] font-medium leading-tight">
+					<p className="ios-footnote text-[--system-text-secondary] font-medium leading-tight">
 						{label}
 					</p>
 				</div>

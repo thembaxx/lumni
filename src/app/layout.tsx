@@ -11,7 +11,7 @@ import { Providers } from "@/components/providers";
 import { FloatingToolsButton } from "@/components/tools";
 import { UploadDialogRenderer } from "@/components/upload/upload-dialog-renderer";
 import { ourFileRouter } from "./api/uploadthing/core";
-import { fontMono, fontSans, fontSerif } from "./fonts";
+import { fontMono, fontSans } from "./fonts";
 
 async function UTSSR() {
 	await connection();
@@ -71,15 +71,11 @@ export default function RootLayout({
 	return (
 		<html
 			lang="en"
-			className={`${fontSans.variable} ${fontMono.variable} ${fontSerif.variable} h-full antialiased`}
+			className={`${fontSans.variable} ${fontMono.variable} h-full antialiased`}
 		>
 			<body
-				className={`${fontSans.variable} ${fontMono.variable} ${fontSerif.variable} h-full antialiased min-h-full flex flex-col font-body bg-background text-foreground`}
+				className={`${fontSans.variable} ${fontMono.variable} h-full antialiased min-h-full flex flex-col bg-[--system-background] text-[--system-text-primary]`}
 			>
-				<div
-					className="noise-overlay hidden dark:hidden sm:block"
-					aria-hidden="true"
-				/>
 				<Suspense fallback={null}>
 					<UTSSR />
 				</Suspense>

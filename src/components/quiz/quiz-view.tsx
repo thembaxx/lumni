@@ -105,7 +105,7 @@ export function QuizView({
 			<div className="min-h-screen bg-background p-4 flex items-center justify-center pb-20">
 				<Card className="max-w-md w-full card-elevated">
 					<CardHeader className="text-center">
-						<CardTitle className="text-2xl font-serif">Quiz Practice</CardTitle>
+						<CardTitle className="ios-title-2">Quiz Practice</CardTitle>
 					</CardHeader>
 					<CardContent className="space-y-4">
 						<QuizSelectSubject onSelect={handleStart} />

@@ -91,7 +91,7 @@ export function StepByStep({ steps, subject, className }: StepByStepProps) {
 						type="button"
 						onClick={() => setCurrentStep(idx)}
 						className={cn(
-							"h-1.5 rounded-full transition-all duration-300",
+							"h-1.5 rounded-full transition-[width,background-color] duration-300 ease-out",
 							idx === currentStep
 								? "w-8 bg-primary shadow-sm shadow-primary/30"
 								: "w-2 bg-muted-foreground/20 hover:bg-muted-foreground/40",

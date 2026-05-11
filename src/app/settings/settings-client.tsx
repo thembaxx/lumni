@@ -1,9 +1,8 @@
 "use client";
 
-import { ArrowLeftIcon, Settings01Icon } from "@hugeicons/core-free-icons";
+import { ArrowLeftIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Database, FlaskConical, type LucideIcon, Palette } from "lucide-react";
 import Link from "next/link";
 import { Suspense, useEffect, useState } from "react";
 import {
@@ -12,9 +11,7 @@ import {
 	DataTab,
 	StudyTab,
 } from "@/components/settings/tabs";
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { cn } from "@/lib/utils";
+import { SegmentedControl } from "@/components/ui/segmented-control";
 import {
 	BETA_FEATURES_KEY,
 	type BetaFeatures,
@@ -30,22 +27,13 @@ import {
 } from "@/lib/utils/storage";
 
 const tabs = [
-	{ id: "appearance", label: "Appearance", icon: Palette, isLucide: true },
-	{ id: "study", label: "Study", icon: Settings01Icon, isLucide: false },
-	{ id: "data", label: "Data", icon: Database, isLucide: true },
-	{
-		id: "beta",
-		label: "Beta",
-		icon: FlaskConical,
-		isLucide: true,
-	},
+	{ value: "appearance", label: "Appearance" },
+	{ value: "study", label: "Study" },
+	{ value: "data", label: "Data" },
+	{ value: "beta", label: "Beta" },
 ];
 
-const tabContentVariants = {
-	initial: { opacity: 0, y: 8 },
-	animate: { opacity: 1, y: 0 },
-	exit: { opacity: 0, y: -8 },
-};
+const iOSEase: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 function SettingsContent() {
 	const [studyPrefs, setStudyPrefs] =
@@ -94,107 +82,79 @@ function SettingsContent() {
 	};
 
 	return (
-		<div className="min-h-screen bg-background">
-			<div className="mx-auto max-w-4xl p-4 md:p-8">
-				<div className="mb-8 flex items-center gap-4">
-					<Link href="/dashboard">
-						<Button variant="ghost" size="icon" className="shrink-0">
-							<HugeiconsIcon icon={ArrowLeftIcon} className="size-5" />
-						</Button>
+		<div className="min-h-screen bg-[--system-grouped-background]">
+			<div className="mx-auto max-w-md">
+				<div className="flex items-center gap-3 px-4 pt-safe pb-2">
+					<Link
+						href="/dashboard"
+						className="flex items-center justify-center size-11 rounded-full text-[--system-accent] hover:bg-[--system-surface-secondary] transition-colors"
+					>
+						<HugeiconsIcon icon={ArrowLeftIcon} className="size-5" />
 					</Link>
-					<div>
-						<h1 className="text-2xl font-bold tracking-tight">Settings</h1>
-						<p className="text-muted-foreground">
-							Manage your preferences and account
-						</p>
-					</div>
+					<h1 className="ios-large-title text-[--system-text-primary]">
+						Settings
+					</h1>
 				</div>
 
-				<Tabs
-					value={activeTab}
-					onValueChange={setActiveTab}
-					className="flex flex-col"
-				>
-					<TabsList className="flex w-full overflow-x-auto justify-start px-4 py-2 gap-2 bg-card rounded-full overscroll-none border-b shrink-0 scrollbar-hide">
-						{tabs.map((tab) => (
-							<TabsTrigger
-								key={tab.id}
-								value={tab.id}
-								className={cn(
-									"shrink-0 px-3 py-2 text-xs font-medium rounded-full gap-1.5 transition-all duration-200",
-									"data-active:bg-primary data-active:text-primary-foreground",
-									"text-muted-foreground hover:text-foreground hover:scale-[1.02] active:scale-[0.96] transition-transform",
-								)}
-							>
-								{tab.isLucide ? (
-									(() => {
-										const Icon = tab.icon as LucideIcon;
-										return <Icon className="size-4 shrink-0" />;
-									})()
-								) : (
-									<HugeiconsIcon
-										icon={tab.icon as typeof ArrowLeftIcon}
-										className="size-4 shrink-0"
-									/>
-								)}
-								{tab.label}
-							</TabsTrigger>
-						))}
-					</TabsList>
+				<div className="px-4 pb-4">
+					<SegmentedControl
+						value={activeTab}
+						onValueChange={setActiveTab}
+						items={tabs}
+					/>
+				</div>
 
-					<div className="flex-1 space-y-6">
-						<AnimatePresence mode="wait" initial={false}>
-							<motion.div
-								key={activeTab}
-								variants={tabContentVariants}
-								initial="initial"
-								animate="animate"
-								exit="exit"
-								transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-							>
-								{activeTab === "appearance" && <AppearanceTab />}
+				<div className="flex-1 px-4 pb-8">
+					<AnimatePresence mode="wait" initial={false}>
+						<motion.div
+							key={activeTab}
+							initial={{ opacity: 0, y: 4 }}
+							animate={{ opacity: 1, y: 0 }}
+							exit={{ opacity: 0, y: -4 }}
+							transition={{ duration: 0.2, ease: iOSEase }}
+						>
+							{activeTab === "appearance" && <AppearanceTab />}
 
-								{activeTab === "study" && (
-									<StudyTab
-										studyPrefs={studyPrefs}
-										onStudyPrefsChange={setStudyPrefs}
-									/>
-								)}
+							{activeTab === "study" && (
+								<StudyTab
+									studyPrefs={studyPrefs}
+									onStudyPrefsChange={setStudyPrefs}
+								/>
+							)}
 
-								{activeTab === "data" && (
-									<DataTab
-										studyPrefs={studyPrefs}
-										notifications={notifications}
-										betaFeatures={betaFeatures}
-										onExport={handleExportData}
-										onClear={handleClearCache}
-									/>
-								)}
+							{activeTab === "data" && (
+								<DataTab
+									studyPrefs={studyPrefs}
+									notifications={notifications}
+									betaFeatures={betaFeatures}
+									onExport={handleExportData}
+									onClear={handleClearCache}
+								/>
+							)}
 
-								{activeTab === "beta" && (
-									<BetaTab
-										betaFeatures={betaFeatures}
-										onBetaFeaturesChange={setBetaFeatures}
-									/>
-								)}
-							</motion.div>
-						</AnimatePresence>
+							{activeTab === "beta" && (
+								<BetaTab
+									betaFeatures={betaFeatures}
+									onBetaFeaturesChange={setBetaFeatures}
+								/>
+							)}
+						</motion.div>
+					</AnimatePresence>
+				</div>
 
-						<div className="flex items-center justify-end">
-							<Button
-								onClick={() => {
-									saveToStorage(STUDY_PREFS_KEY, studyPrefs);
-									saveToStorage(NOTIFICATION_SETTINGS_KEY, notifications);
-									saveToStorage(BETA_FEATURES_KEY, betaFeatures);
-								}}
-								className="text-xs px-4"
-								size="lg"
-							>
-								Save Changes
-							</Button>
-						</div>
-					</div>
-				</Tabs>
+				<div className="px-4 pb-8">
+					<button
+						type="button"
+						onClick={() => {
+							saveToStorage(STUDY_PREFS_KEY, studyPrefs);
+							saveToStorage(NOTIFICATION_SETTINGS_KEY, notifications);
+							saveToStorage(BETA_FEATURES_KEY, betaFeatures);
+						}}
+						className="w-full h-11 rounded-[12px] bg-[--system-accent] text-[#ffffff] text-sm font-semibold hover:opacity-90 transition-opacity"
+					>
+						Save Changes
+					</button>
+				</div>
 			</div>
 		</div>
 	);

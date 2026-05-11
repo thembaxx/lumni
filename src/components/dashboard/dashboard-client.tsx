@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { useState } from "react";
 import {
 	CountdownHeader,
@@ -13,35 +12,11 @@ import { useGamification } from "@/hooks/use-gamification";
 import StudyTopicCardExample from "../study/example";
 import type { TabValue } from "./types";
 
-interface DashboardClientProps {
+export function DashboardClient({
+	initialTab = "ai",
+}: {
 	initialTab?: TabValue;
-}
-
-const containerVariants = {
-	hidden: { opacity: 0 },
-	visible: {
-		opacity: 1,
-		transition: {
-			staggerChildren: 0.08,
-			delayChildren: 0.55,
-		},
-	},
-};
-
-const itemVariants = {
-	hidden: { opacity: 0, y: 16 },
-	visible: {
-		opacity: 1,
-		y: 0,
-		transition: {
-			type: "spring" as const,
-			stiffness: 300,
-			damping: 30,
-		},
-	},
-};
-
-export function DashboardClient({ initialTab = "ai" }: DashboardClientProps) {
+}) {
 	const [_activeTab] = useState<TabValue>(initialTab || "ai");
 	const [_practiceOpen, setPracticeOpen] = useState(false);
 	const { levelInfo, isLoaded, gamification, currentStreak } =
@@ -49,8 +24,17 @@ export function DashboardClient({ initialTab = "ai" }: DashboardClientProps) {
 
 	if (!isLoaded) {
 		return (
-			<div className="min-h-screen flex items-center justify-center">
-				<div className="animate-pulse text-muted-foreground">Loading...</div>
+			<div className="min-h-screen flex items-center justify-center px-4">
+				<div className="w-full max-w-md space-y-3">
+					<div className="h-24 rounded-[16px] bg-[--system-surface-secondary] animate-pulse" />
+					<div className="grid grid-cols-3 gap-3">
+						<div className="h-24 rounded-[16px] bg-[--system-surface-secondary] animate-pulse" />
+						<div className="h-24 rounded-[16px] bg-[--system-surface-secondary] animate-pulse" />
+						<div className="h-24 rounded-[16px] bg-[--system-surface-secondary] animate-pulse" />
+					</div>
+					<div className="h-32 rounded-[16px] bg-[--system-surface-secondary] animate-pulse" />
+					<div className="h-20 rounded-[16px] bg-[--system-surface-secondary] animate-pulse" />
+				</div>
 			</div>
 		);
 	}
@@ -63,47 +47,34 @@ export function DashboardClient({ initialTab = "ai" }: DashboardClientProps) {
 	};
 
 	return (
-		<div className="min-h-screen flex flex-col pt-4 bg-background pb-20 overflow-hidden w-full">
-			<motion.div
-				className="max-w-md mx-auto w-full"
-				variants={containerVariants}
-				initial="hidden"
-				animate="visible"
-			>
+		<div className="min-h-screen flex flex-col bg-[--system-grouped-background] pb-[69px] overflow-hidden w-full">
+			<div className="max-w-md mx-auto w-full">
 				<CountdownHeader />
 
-				<motion.div variants={itemVariants} className="mb-3 px-4">
+				<div className="mb-3 px-4">
 					<StatsCards
 						streak={stats.streak}
 						questionsAnswered={stats.questionsAnswered}
 						accuracy={stats.accuracy}
 					/>
-				</motion.div>
-
-				<motion.div
-					variants={itemVariants}
-					className="mb-4 bg-card rounded-2xl p-4"
-				>
-					<XpLevelCard levelInfo={levelInfo} totalXp={gamification.totalXp} />
-				</motion.div>
-
-				<motion.div variants={itemVariants} className="mb-4 px-4">
-					<TodayFocusCard />
-				</motion.div>
-
-				<motion.div variants={itemVariants} className="mb-6 px-4">
-					<StudyTopicCardExample />
-				</motion.div>
-
-				<div className="space-y-4 w-full">
-					<motion.div
-						variants={itemVariants}
-						className="px-4 overflow-x-auto scrollbar-hide"
-					>
-						<QuickActions onPracticeClick={() => setPracticeOpen(true)} />
-					</motion.div>
 				</div>
-			</motion.div>
+
+				<div className="mb-4 rounded-[16px] p-4 mx-4 bg-[--system-surface] shadow-[--shadow-level-1]">
+					<XpLevelCard levelInfo={levelInfo} totalXp={gamification.totalXp} />
+				</div>
+
+				<div className="mb-4 px-4">
+					<TodayFocusCard />
+				</div>
+
+				<div className="mb-6 px-4">
+					<StudyTopicCardExample />
+				</div>
+
+				<div className="space-y-4 w-full px-4 overflow-x-auto scrollbar-hide">
+					<QuickActions onPracticeClick={() => setPracticeOpen(true)} />
+				</div>
+			</div>
 		</div>
 	);
 }

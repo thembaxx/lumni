@@ -169,16 +169,20 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 				>
 					<span
 						className={cn(
-							"absolute inset-0 flex items-center justify-center transition-all duration-300",
-							isPlaying ? "opacity-100 scale-100" : "opacity-0 scale-50",
+							"absolute inset-0 flex items-center justify-center transition-[opacity,scale,filter] duration-300 ease-[cubic-bezier(0.2,0,0,1)]",
+							isPlaying
+								? "opacity-100 scale-100 blur-0"
+								: "opacity-0 scale-[0.25] blur-[4px]",
 						)}
 					>
 						<Square className="w-3 h-3 fill-current" />
 					</span>
 					<span
 						className={cn(
-							"absolute inset-0 flex items-center justify-center transition-all duration-300",
-							isPlaying ? "opacity-0 scale-50" : "opacity-100 scale-100",
+							"absolute inset-0 flex items-center justify-center transition-[opacity,scale,filter] duration-300 ease-[cubic-bezier(0.2,0,0,1)]",
+							isPlaying
+								? "opacity-0 scale-[0.25] blur-[4px]"
+								: "opacity-100 scale-100 blur-0",
 						)}
 					>
 						<Play className="w-4 h-4 fill-current ml-0.5" />

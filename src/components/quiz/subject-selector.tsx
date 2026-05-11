@@ -108,7 +108,7 @@ export function SubjectSelector({ onSelect, className }: SubjectSelectorProps) {
 							onClick={() => handleSelect(subject.id)}
 							disabled={isGenerating}
 							className={cn(
-								"group p-4 rounded-2xl border border-border/60 text-left transition-all duration-200 flex flex-col items-start",
+								"group p-4 rounded-2xl border border-border/60 text-left transition-[border-color,box-shadow] duration-200 ease-out flex flex-col items-start",
 								"hover:-translate-y-0.5 hover:border-border hover:shadow-lg hover:shadow-black/5 dark:hover:shadow-black/20",
 								"active:translate-y-0 active:scale-[0.98] active:shadow-none",
 								"focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50",

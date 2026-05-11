@@ -58,23 +58,22 @@ export function ToolsDialog({ open, onOpenChange }: ToolsDialogProps) {
 					animate={{ opacity: 1 }}
 					exit={{ opacity: 0 }}
 					transition={{ duration: 0.2 }}
-					className="fixed inset-0 z-50 bg-[#ffffff] dark:bg-[#0a0a0a]"
+					className="fixed inset-0 z-50 bg-[--system-background]"
 				>
 					<div className="h-full flex flex-col">
 						<motion.header
 							initial={{ opacity: 0, y: -10 }}
 							animate={{ opacity: 1, y: 0 }}
 							transition={{ delay: 0.1, duration: 0.3 }}
-							className="flex items-center justify-between px-5 py-4 border-b border-[#000000]/10 dark:border-[#ffffff]/10"
+							className="flex items-center justify-between px-4 py-3 ios-separator"
 						>
-							<h1 className="text-lg font-semibold text-wrap balance text-[#000000] dark:text-[#ffffff]">
+							<h1 className="ios-title-3 font-semibold text-[--system-text-primary]">
 								Tools
 							</h1>
 							<Button
-								variant="uber_chip"
-								size="pill_sm"
+								variant="ghost"
+								size="icon-sm"
 								onClick={() => onOpenChange(false)}
-								className="active:scale-[0.97] transition-transform duration-150"
 							>
 								<XIcon className="w-4 h-4" />
 							</Button>
@@ -97,11 +96,11 @@ export function ToolsDialog({ open, onOpenChange }: ToolsDialogProps) {
 											key={tab.id}
 											value={tab.id}
 											className={cn(
-												"shrink-0 px-4 py-2.5 text-sm font-medium rounded-[999px]",
-												"data-active:bg-[#000000] data-active:text-[#ffffff] data-active:shadow-[rgba(0,0,0,0.12)_0px_4px_16px_0px]",
-												"text-[#000000] bg-[#efefef] hover:bg-[#e2e2e2] active:scale-[0.97] transition-all duration-150",
-												"dark:data-active:bg-[#ffffff] dark:data-active:text-[#000000]",
-												"dark:text-[#ffffff] dark:bg-[#2a2a2a] dark:hover:bg-[#3a3a3a]",
+												"shrink-0 px-4 py-2.5 text-sm font-medium rounded-[12px]",
+												"data-active:bg-[--system-accent] data-active:text-[#ffffff] data-active:shadow-[--shadow-level-1]",
+												"text-[--system-text-primary] bg-[--system-surface-secondary] hover:bg-[--system-separator] transition-[background-color] duration-150 ease-out",
+												"dark:data-active:bg-[--system-accent] dark:data-active:text-[#ffffff]",
+												"dark:text-[--system-text-primary] dark:bg-[--system-surface-secondary]",
 											)}
 										>
 											{tab.label}

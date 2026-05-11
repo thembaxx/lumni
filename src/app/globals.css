@@ -6,37 +6,70 @@
 @custom-variant dark (&:is(.dark *));
 
 /* ========================================
-   UBER DESIGN SYSTEM
-   From DESIGN.md - Pure black/white palette
+   iOS DESIGN SYSTEM
+   Apple HIG-inspired tokens with monochrome base + blue accent
    ======================================== */
 
 :root {
-	/* Uber Color Palette */
-	--uber-black: #000000;
-	--uber-white: #ffffff;
-	--uber-hover-gray: #e2e2e2;
-	--uber-hover-light: #f3f3f3;
-	--uber-chip-gray: #efefef;
-	--uber-body-gray: #4b4b4b;
-	--uber-muted-gray: #afafaf;
+	/* iOS Color Tokens */
+	--system-background: #ffffff;
+	--system-grouped-background: #f2f2f7;
+	--system-surface: #ffffff;
+	--system-surface-secondary: #f2f2f7;
+	--system-separator: rgba(60, 60, 67, 0.12);
+	--system-accent: #007AFF;
+	--system-text-primary: #000000;
+	--system-text-secondary: rgba(60, 60, 67, 0.6);
+	--system-text-tertiary: rgba(60, 60, 67, 0.3);
+	--system-destructive: #FF3B30;
+	--system-green: #34C759;
+	--system-blue: #007AFF;
 
-	/* Uber Shadows */
-	--uber-shadow-light: rgba(0, 0, 0, 0.12);
-	--uber-shadow-medium: rgba(0, 0, 0, 0.16);
-	--uber-shadow-button-press: rgba(0, 0, 0, 0.08);
+	/* iOS Blur/Material Tokens (for minimal glass on tab bar, sheets) */
+	--system-blur: 20px;
+	--system-material-light: rgba(255, 255, 255, 0.8);
 
-	/* Uber Typography Scale */
-	--uber-display: 3.25rem;
-	--uber-heading-1: 2.25rem;
-	--uber-heading-2: 2rem;
-	--uber-heading-3: 1.5rem;
-	--uber-heading-4: 1.25rem;
-	--uber-nav-large: 1.125rem;
-	--uber-body: 1rem;
-	--uber-caption: 0.875rem;
-	--uber-micro: 0.75rem;
+	/* iOS Spacing Scale (8pt grid) */
+	--space-1: 4px;
+	--space-2: 8px;
+	--space-3: 12px;
+	--space-4: 16px;
+	--space-5: 20px;
+	--space-6: 24px;
+	--space-8: 32px;
+	--space-10: 40px;
+	--space-12: 48px;
+	--space-16: 64px;
+
+	/* iOS Corner Radii (continuous/superellipse approximation) */
+	--radius-button: 12px;
+	--radius-card: 16px;
+	--radius-sheet: 22px;
+	--radius-input: 10px;
+	--radius-badge: 6px;
+	--radius-tab-bar: 16px;
+	--radius-list-group: 16px;
+
+	/* iOS Multi-layer Subtle Shadows */
+	--shadow-level-1: 0 1px 2px rgba(0, 0, 0, 0.04);
+	--shadow-level-2: 0 4px 12px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+	--shadow-level-3: 0 8px 28px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+
+	/* iOS Typography Scale (Dynamic Type with Geist) */
+	--fs-large-title: 34px;
+	--fs-title-1: 28px;
+	--fs-title-2: 22px;
+	--fs-title-3: 20px;
+	--fs-headline: 17px;
+	--fs-body: 17px;
+	--fs-callout: 16px;
+	--fs-subhead: 15px;
+	--fs-footnote: 13px;
+	--fs-caption-1: 12px;
+	--fs-caption-2: 11px;
 
 	/* Animation Timing */
+	--ease-ios: cubic-bezier(0.16, 1, 0.3, 1);
 	--ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
 	--ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
 	--ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -46,86 +79,75 @@
 	--duration-fast: 150ms;
 	--duration-normal: 200ms;
 	--duration-slow: 300ms;
-	--duration-page: 500ms;
+	--duration-page: 350ms;
 
-	/* Aliases for compatibility */
-	--background: #ffffff;
-	--foreground: #000000;
-	--card: #ffffff;
-	--card-foreground: #000000;
-	--popover: #ffffff;
-	--popover-foreground: #000000;
-	--primary: #000000;
+	/* Compat aliases for shadcn components */
+	--background: var(--system-background);
+	--foreground: var(--system-text-primary);
+	--card: var(--system-surface);
+	--card-foreground: var(--system-text-primary);
+	--popover: var(--system-surface);
+	--popover-foreground: var(--system-text-primary);
+	--primary: var(--system-accent);
 	--primary-foreground: #ffffff;
-	--secondary: #efefef;
-	--secondary-foreground: #000000;
-	--muted: #efefef;
-	--muted-foreground: #4b4b4b;
-	--accent: #000000;
+	--secondary: var(--system-surface-secondary);
+	--secondary-foreground: var(--system-text-primary);
+	--muted: var(--system-surface-secondary);
+	--muted-foreground: var(--system-text-secondary);
+	--accent: var(--system-accent);
 	--accent-foreground: #ffffff;
-	--destructive: #000000;
+	--destructive: var(--system-destructive);
 	--destructive-foreground: #ffffff;
-	--border: #000000;
-	--input: #ffffff;
-	--ring: #000000;
-	--radius: 0.5rem;
-
-	/* Font sizes */
-	--font-size-xs: 0.75rem;
-	--font-size-sm: 0.875rem;
-	--font-size-base: 1rem;
-	--font-size-lg: 1.125rem;
-	--font-size-xl: 1.25rem;
-	--font-size-2xl: 1.563rem;
-	--font-size-3xl: 1.953rem;
-	--font-size-4xl: 2.441rem;
-	--font-size-5xl: 3.052rem;
-	--font-size-6xl: 3.815rem;
+	--border: var(--system-separator);
+	--input: var(--system-surface);
+	--ring: var(--system-accent);
+	--radius: var(--radius-button);
 
 	/* Font families */
 	--font-geist: var(--font-geist);
 	--font-geist-mono: var(--font-geist-mono);
-	--font-serif: var(--font-serif);
 }
 
-/* Dark mode - Uber uses true black */
+/* Dark mode */
 .dark {
-	--background: #000000;
-	--foreground: #ffffff;
-	--card: #0a0a0a;
-	--card-foreground: #ffffff;
-	--popover: #0a0a0a;
-	--popover-foreground: #ffffff;
-	--primary: #ffffff;
-	--primary-foreground: #000000;
-	--secondary: #1a1a1a;
-	--secondary-foreground: #ffffff;
-	--muted: #1a1a1a;
-	--muted-foreground: #afafaf;
-	--accent: #ffffff;
-	--accent-foreground: #000000;
-	--destructive: #ffffff;
-	--destructive-foreground: #000000;
-	--border: #ffffff;
-	--input: #0a0a0a;
-	--ring: #ffffff;
+	--system-background: #000000;
+	--system-grouped-background: #1c1c1e;
+	--system-surface: #1c1c1e;
+	--system-surface-secondary: #2c2c2e;
+	--system-separator: rgba(84, 84, 88, 0.36);
+	--system-accent: #0A84FF;
+	--system-text-primary: #ffffff;
+	--system-text-secondary: rgba(235, 235, 245, 0.6);
+	--system-text-tertiary: rgba(235, 235, 245, 0.3);
+	--system-destructive: #FF453A;
+	--system-green: #30D158;
 
-	/* Font sizes */
-	--font-size-xs: 0.75rem;
-	--font-size-sm: 0.875rem;
-	--font-size-base: 1rem;
-	--font-size-lg: 1.125rem;
-	--font-size-xl: 1.25rem;
-	--font-size-2xl: 1.563rem;
-	--font-size-3xl: 1.953rem;
-	--font-size-4xl: 2.441rem;
-	--font-size-5xl: 3.052rem;
-	--font-size-6xl: 3.815rem;
+	--system-material-light: rgba(28, 28, 30, 0.85);
 
-	/* Font families */
-	--font-geist: var(--font-geist);
-	--font-geist-mono: var(--font-geist-mono);
-	--font-serif: var(--font-serif);
+	--shadow-level-1: 0 1px 2px rgba(0, 0, 0, 0.24);
+	--shadow-level-2: 0 4px 12px rgba(0, 0, 0, 0.32), 0 1px 3px rgba(0, 0, 0, 0.24);
+	--shadow-level-3: 0 8px 28px rgba(0, 0, 0, 0.4), 0 2px 6px rgba(0, 0, 0, 0.24);
+
+	/* Compat aliases */
+	--background: var(--system-background);
+	--foreground: var(--system-text-primary);
+	--card: var(--system-surface);
+	--card-foreground: var(--system-text-primary);
+	--popover: var(--system-surface);
+	--popover-foreground: var(--system-text-primary);
+	--primary: var(--system-accent);
+	--primary-foreground: #ffffff;
+	--secondary: var(--system-surface-secondary);
+	--secondary-foreground: var(--system-text-primary);
+	--muted: var(--system-surface-secondary);
+	--muted-foreground: var(--system-text-secondary);
+	--accent: var(--system-accent);
+	--accent-foreground: #ffffff;
+	--destructive: var(--system-destructive);
+	--destructive-foreground: #ffffff;
+	--border: var(--system-separator);
+	--input: var(--system-surface);
+	--ring: var(--system-accent);
 }
 
 @theme inline {
@@ -148,12 +170,11 @@
 	--color-border: var(--border);
 	--color-input: var(--input);
 	--color-ring: var(--ring);
-	--radius-sm: 0.25rem;
-	--radius-md: 0.5rem;
-	--radius-lg: 1rem;
-	--radius-xl: 1.5rem;
+	--radius-sm: var(--radius-badge);
+	--radius-md: var(--radius-button);
+	--radius-lg: var(--radius-card);
+	--radius-xl: var(--radius-sheet);
 	--font-sans: var(--font-geist);
-	--font-serif: var(--font-serif);
 }
 
 /* ========================================
@@ -161,9 +182,7 @@
    ======================================== */
 
 @layer base {
-	*,
-	*::before,
-	*::after {
+	*, *::before, *::after {
 		border-color: var(--border);
 	}
 
@@ -175,42 +194,79 @@
 	}
 
 	body {
-		background-color: var(--background);
-		color: var(--foreground);
+		background-color: var(--system-background);
+		color: var(--system-text-primary);
+		font-family: var(--font-geist);
 		line-height: 1.5;
 		letter-spacing: -0.01em;
 	}
 
 	h1, h2, h3, h4, h5, h6 {
-		font-family: var(--font-serif);
+		font-family: var(--font-geist);
 		font-weight: 700;
 		letter-spacing: -0.02em;
 		line-height: 1.22;
-		color: var(--foreground);
+		color: var(--system-text-primary);
+		text-wrap: balance;
 	}
 
-	p {
+	p, li, figcaption, blockquote {
 		line-height: 1.6;
 		letter-spacing: -0.01em;
+		text-wrap: pretty;
 	}
 
 	small {
-		font-size: var(--font-size-sm);
+		font-size: var(--fs-footnote);
 		letter-spacing: 0;
 	}
 
 	button {
-		font-family: var(--font-sans);
+		font-family: var(--font-geist);
 		letter-spacing: 0;
 	}
 
 	input, textarea {
-		font-family: var(--font-sans);
+		font-family: var(--font-geist);
 	}
 }
 
 /* ========================================
-   ANIMATION KEYFRAMES
+   iOS TYPE SCALE UTILITY CLASSES
+   ======================================== */
+
+.ios-large-title { font-size: var(--fs-large-title); font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
+.ios-title-1 { font-size: var(--fs-title-1); font-weight: 700; line-height: 1.22; letter-spacing: -0.02em; }
+.ios-title-2 { font-size: var(--fs-title-2); font-weight: 700; line-height: 1.27; letter-spacing: -0.02em; }
+.ios-title-3 { font-size: var(--fs-title-3); font-weight: 600; line-height: 1.2; letter-spacing: -0.02em; }
+.ios-headline { font-size: var(--fs-headline); font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; }
+.ios-body { font-size: var(--fs-body); font-weight: 400; line-height: 1.3; letter-spacing: -0.01em; }
+.ios-callout { font-size: var(--fs-callout); font-weight: 400; line-height: 1.3; letter-spacing: -0.01em; }
+.ios-subhead { font-size: var(--fs-subhead); font-weight: 400; line-height: 1.33; letter-spacing: -0.01em; }
+.ios-footnote { font-size: var(--fs-footnote); font-weight: 400; line-height: 1.38; letter-spacing: 0; }
+.ios-caption-1 { font-size: var(--fs-caption-1); font-weight: 400; line-height: 1.33; letter-spacing: 0; }
+.ios-caption-2 { font-size: var(--fs-caption-2); font-weight: 400; line-height: 1.18; letter-spacing: 0; }
+
+/* ========================================
+   iOS UTILITY CLASSES
+   ======================================== */
+
+.ios-hairline {
+	height: 0.33px;
+	background-color: var(--system-separator);
+}
+
+.ios-separator {
+	border-bottom: 0.33px solid var(--system-separator);
+}
+
+.ios-focus-ring:focus-visible {
+	outline: none;
+	box-shadow: 0 0 0 3px var(--system-accent);
+}
+
+/* ========================================
+   ANIMATION KEYFRAMES (essential only)
    ======================================== */
 
 @keyframes fadeInUp {
@@ -258,11 +314,6 @@
 	100% { transform: scale(1); }
 }
 
-@keyframes slideInBottom {
-	from { opacity: 0; transform: translateY(20px); }
-	to { opacity: 1; transform: translateY(0); }
-}
-
 @keyframes slideInFromLeft {
 	from { opacity: 0; transform: translateX(-30px); }
 	to { opacity: 1; transform: translateX(0); }
@@ -283,230 +334,52 @@
 	to { opacity: 0; transform: translateX(30px); }
 }
 
-@keyframes slideInFrom50 {
-	from { opacity: 0; transform: translateX(-50%); }
-	to { opacity: 1; transform: translateX(0); }
+@keyframes shimmer {
+	100% { transform: translateX(100%); }
 }
 
-@keyframes slideOutTo50 {
-	from { opacity: 1; transform: translateX(0); }
-	to { opacity: 0; transform: translateX(50%); }
-}
-
-@keyframes slideInFrom150 {
-	from { opacity: 0; transform: translateX(150%); }
-	to { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes slideOutTo150 {
-	from { opacity: 1; transform: translateX(0); }
-	to { opacity: 0; transform: translateX(150%); }
-}
-
-@keyframes slideOutBottom {
-	from { opacity: 1; transform: translateY(0); }
-	to { opacity: 0; transform: translateY(20px); }
-}
-
-@keyframes drawerSlideInLeft {
-	from { transform: translateX(-100%); }
-	to { transform: translateX(0); }
-}
-
-@keyframes drawerSlideInRight {
-	from { transform: translateX(100%); }
-	to { transform: translateX(0); }
-}
-
-@keyframes drawerSlideInTop {
-	from { transform: translateY(-100%); opacity: 0; }
-	to { transform: translateY(0); opacity: 1; }
-}
-
-@keyframes slideInFromTop {
-	from { transform: translateY(-100%); opacity: 0; }
-	to { transform: translateY(0); opacity: 1; }
-}
-
-@keyframes slideInFromBottom {
-	from { transform: translateY(100%); opacity: 0; }
-	to { transform: translateY(0); opacity: 1; }
-}
-
-@keyframes slideOutToTop {
-	from { transform: translateY(0); opacity: 1; }
-	to { transform: translateY(-100%); opacity: 0; }
-}
-
-@keyframes slideOutToBottom {
-	from { transform: translateY(0); opacity: 1; }
-	to { transform: translateY(100%); opacity: 0; }
-}
-
+/* View transition keyframes */
 @keyframes vt-slide-from-right {
 	from { transform: translateX(100%); opacity: 0; }
 }
-
 @keyframes vt-slide-to-left {
 	to { transform: translateX(-100%); opacity: 0; }
 }
-
 @keyframes vt-slide-from-left {
 	from { transform: translateX(-100%); opacity: 0; }
 }
-
 @keyframes vt-slide-to-right {
 	to { transform: translateX(100%); opacity: 0; }
 }
-
-@keyframes vt-fade-in {
-	from { opacity: 0; }
-}
-
-@keyframes vt-fade-out {
-	to { opacity: 0; }
-}
-
+@keyframes vt-fade-in { from { opacity: 0; } }
+@keyframes vt-fade-out { to { opacity: 0; } }
 @keyframes vt-slide-up-in {
 	from { transform: translateY(20px); opacity: 0; }
 }
-
 @keyframes vt-slide-down-out {
 	to { transform: translateY(20px); opacity: 0; }
-}
-
-@keyframes shimmer {
-	100% { transform: translateX(100%); }
 }
 
 /* ========================================
    ANIMATION CLASSES
    ======================================== */
 
-.animate-fade-in-up { animation: fadeInUp var(--duration-slow) var(--ease-out-quart) forwards; }
-.animate-fade-in-scale { animation: fadeInScale var(--duration-slow) var(--ease-out-quart) forwards; }
-.animate-slide-in-bottom { animation: slideInBottom var(--duration-slow) var(--ease-out-quart) forwards; }
-.animate-slide-out-bottom { animation: slideOutBottom var(--duration-slow) var(--ease-out-quart) forwards; }
-.animate-slide-in-from-left { animation: slideInFromLeft var(--duration-slow) var(--ease-out-quart) forwards; }
-.animate-slide-in-from-right { animation: slideInFromRight var(--duration-slow) var(--ease-out-quart) forwards; }
-.animate-slide-out-to-left { animation: slideOutToLeft var(--duration-slow) var(--ease-out-quart) forwards; }
-.animate-slide-out-to-right { animation: slideOutToRight var(--duration-slow) var(--ease-out-quart) forwards; }
-.animate-slide-in-from-top { animation: slideInFromTop var(--duration-slow) var(--ease-out-quart) forwards; }
-.animate-slide-in-from-bottom { animation: slideInFromBottom var(--duration-slow) var(--ease-out-quart) forwards; }
-.animate-slide-out-to-top { animation: slideOutToTop var(--duration-slow) var(--ease-out-quart) forwards; }
-.animate-slide-out-to-bottom { animation: slideOutToBottom var(--duration-slow) var(--ease-out-quart) forwards; }
-.animate-slide-in-from-50 { animation: slideInFrom50 var(--duration-slow) var(--ease-out-quart) forwards; }
-.animate-slide-out-to-50 { animation: slideOutTo50 var(--duration-slow) var(--ease-out-quart) forwards; }
-.animate-slide-in-from-150 { animation: slideInFrom150 var(--duration-slow) var(--ease-out-quart) forwards; }
-.animate-slide-out-to-150 { animation: slideOutTo150 var(--duration-slow) var(--ease-out-quart) forwards; }
-.animate-icon-pop { animation: iconPop var(--duration-fast) var(--ease-out-expo); }
-.animate-ripple-full { animation: rippleFull 600ms var(--ease-out-expo) forwards; }
-.animate-shake { animation: shake 500ms var(--ease-out-quart); }
-.animate-checkmark { animation: checkmark 400ms var(--ease-out-expo) forwards; }
-.animate-check-bounce { animation: checkBounce 400ms var(--ease-out-quint) forwards; }
+.animate-fade-in-up { animation: fadeInUp var(--duration-slow) var(--ease-ios) forwards; }
+.animate-fade-in-scale { animation: fadeInScale var(--duration-slow) var(--ease-ios) forwards; }
+.animate-slide-in-from-left { animation: slideInFromLeft var(--duration-slow) var(--ease-ios) forwards; }
+.animate-slide-in-from-right { animation: slideInFromRight var(--duration-slow) var(--ease-ios) forwards; }
+.animate-slide-out-to-left { animation: slideOutToLeft var(--duration-slow) var(--ease-ios) forwards; }
+.animate-slide-out-to-right { animation: slideOutToRight var(--duration-slow) var(--ease-ios) forwards; }
+.animate-icon-pop { animation: iconPop var(--duration-fast) var(--ease-ios); }
+.animate-ripple-full { animation: rippleFull 600ms var(--ease-ios) forwards; }
+.animate-shake { animation: shake 500ms var(--ease-ios); }
+.animate-checkmark { animation: checkmark 400ms var(--ease-ios) forwards; }
+.animate-check-bounce { animation: checkBounce 400ms var(--ease-ios) forwards; }
 
-/* Stagger delays */
 .delay-100 { animation-delay: 100ms; }
 .delay-200 { animation-delay: 200ms; }
 .delay-300 { animation-delay: 300ms; }
 .delay-400 { animation-delay: 400ms; }
-
-/* ========================================
-   UBER COMPONENT UTILITIES
-   ======================================== */
-
-/* Uber Pill Buttons - 999px border radius */
-.uber-pill {
-	border-radius: 999px;
-	font-weight: 500;
-	transition: background-color 150ms ease, transform 100ms ease;
-	cursor: pointer;
-}
-
-.uber-pill-primary {
-	background-color: var(--uber-black);
-	color: var(--uber-white);
-	padding: 10px 12px;
-}
-
-.uber-pill-primary:hover { background-color: #1a1a1a; }
-.uber-pill-primary:active { transform: scale(0.97); }
-
-.uber-pill-secondary {
-	background-color: var(--uber-white);
-	color: var(--uber-black);
-	padding: 10px 12px;
-	border: 1px solid var(--uber-black);
-}
-
-.uber-pill-secondary:hover { background-color: var(--uber-hover-gray); }
-
-.uber-pill-chip {
-	background-color: var(--uber-chip-gray);
-	color: var(--uber-black);
-	padding: 14px 16px;
-}
-
-.uber-pill-chip:hover { background-color: var(--uber-hover-gray); }
-.uber-pill-chip.active { background-color: var(--uber-black); color: var(--uber-white); }
-
-.uber-pill-floating {
-	background-color: var(--uber-white);
-	color: var(--uber-black);
-	padding: 14px;
-	box-shadow: var(--uber-shadow-medium) 0px 2px 8px 0px;
-	transform: translateY(2px);
-}
-
-.uber-pill-floating:hover { background-color: var(--uber-hover-light); }
-
-/* Dark mode pill variants */
-.dark .uber-pill-floating { background-color: #1a1a1a; color: var(--uber-white); }
-.dark .uber-pill-secondary { background-color: #1a1a1a; color: var(--uber-white); border-color: #ffffff; }
-.dark .uber-pill-chip { background-color: #2a2a2a; color: var(--uber-white); }
-.dark .uber-pill-chip:hover { background-color: #3a3a3a; }
-.dark .uber-pill-chip.active { background-color: #ffffff; color: #000000; }
-
-/* Uber Card Styles - 8px radius, whisper shadows */
-.uber-card {
-	background-color: var(--uber-white);
-	border-radius: 8px;
-	box-shadow: var(--uber-shadow-light) 0px 4px 16px 0px;
-	padding: 24px;
-}
-
-.dark .uber-card { background-color: #1a1a1a; box-shadow: var(--uber-shadow-medium) 0px 4px 16px 0px; }
-
-.uber-card-featured {
-	background-color: var(--uber-white);
-	border-radius: 12px;
-	box-shadow: var(--uber-shadow-medium) 0px 4px 16px 0px;
-	padding: 24px;
-}
-
-.dark .uber-card-featured { background-color: #1a1a1a; }
-
-/* Uber Input Styles - black border */
-.uber-input {
-	background-color: var(--uber-white);
-	border: 1px solid var(--uber-black);
-	border-radius: 8px;
-	padding: 10px 12px;
-	color: var(--uber-black);
-	font-family: system-ui, sans-serif;
-}
-
-.uber-input::placeholder { color: var(--uber-muted-gray); }
-.uber-input:focus { outline: none; box-shadow: 0 0 0 2px var(--uber-white) inset; }
-
-.dark .uber-input { background-color: #1a1a1a; color: var(--uber-white); border-color: #333333; }
-.dark .uber-input::placeholder { color: #888888; }
-
-/* Focus ring */
-.uber-focus-ring:focus-visible {
-	outline: none;
-	box-shadow: 0 0 0 2px var(--uber-white) inset, 0 0 0 4px var(--uber-black);
-}
 
 /* ========================================
    MARKDOWN & KAETX STYLES
@@ -538,17 +411,16 @@
 .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); }
 .pt-safe { padding-top: env(safe-area-inset-top, 0px); }
 
-/* Noise texture overlay */
-.noise-overlay {
-	position: fixed;
-	inset: 0;
-	pointer-events: none;
-	z-index: 9999;
-	opacity: 0.03;
-	background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+/* Image outlines */
+img {
+	outline: 1px solid rgba(0, 0, 0, 0.1);
+	outline-offset: -1px;
 }
 
-.dark .noise-overlay { opacity: 0.04; }
+.dark img {
+	outline: 1px solid rgba(255, 255, 255, 0.1);
+	outline-offset: -1px;
+}
 
 /* ========================================
    REDUCED MOTION
@@ -561,7 +433,7 @@
 		transition-duration: 0.01ms !important;
 	}
 
-	.animate-breathe, .animate-gentle-pulse, .animate-check-bounce {
+	.animate-check-bounce {
 		animation: none;
 	}
 

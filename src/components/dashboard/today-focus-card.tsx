@@ -97,20 +97,14 @@ export function TodayFocusCard({
 
 	return (
 		<motion.div
-			initial={{ opacity: 0, y: 16 }}
+			initial={{ opacity: 0, y: 8 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{
-				duration: shouldReduceMotion ? 0 : 0.5,
+				duration: shouldReduceMotion ? 0 : 0.35,
 				ease: easeOutQuint,
 			}}
-			whileHover={
-				shouldReduceMotion
-					? undefined
-					: { y: -3, transition: { duration: 0.25, ease: easeOutQuint } }
-			}
-			whileTap={shouldReduceMotion ? undefined : { scale: 0.96 }}
 		>
-			<Card className="relative overflow-hidden bg-[oklch(var(--card))] border">
+			<Card className="relative overflow-hidden border-0">
 				<div
 					className={`absolute top-0 left-0 right-0 h-0.5 ${config.accent}`}
 				/>

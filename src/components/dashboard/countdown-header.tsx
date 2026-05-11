@@ -179,7 +179,7 @@ export function CountdownHeader() {
 			opacity: 1,
 			y: 0,
 			transition: {
-				duration: shouldReduceMotion ? 0 : 0.4,
+				duration: shouldReduceMotion ? 0 : 0.25,
 				ease: easeOutQuint,
 			},
 		},
@@ -191,9 +191,9 @@ export function CountdownHeader() {
 			scale: 1,
 			opacity: 1,
 			transition: {
-				duration: shouldReduceMotion ? 0 : 0.5,
+				duration: shouldReduceMotion ? 0 : 0.35,
 				ease: easeOutQuart,
-				delay: shouldReduceMotion ? 0 : 0.15,
+				delay: shouldReduceMotion ? 0 : 0.1,
 			},
 		},
 	};
@@ -204,9 +204,9 @@ export function CountdownHeader() {
 			opacity: 1,
 			scaleX: 1,
 			transition: {
-				duration: shouldReduceMotion ? 0 : 0.6,
+				duration: shouldReduceMotion ? 0 : 0.4,
 				ease: easeOutQuint,
-				delay: shouldReduceMotion ? 0 : 0.35,
+				delay: shouldReduceMotion ? 0 : 0.15,
 			},
 		},
 	};
@@ -278,7 +278,7 @@ export function CountdownHeader() {
 							</motion.span>
 						)}
 						{!isLoading && mounted && (
-							<span className="text-base font-serif sm:text-lg font-medium text-muted-foreground">
+							<span className="ios-callout font-medium text-[--system-text-secondary] tabular-nums">
 								{daysLeft === 1 ? "day" : "days"} until the NSC Finals
 							</span>
 						)}

@@ -1,7 +1,7 @@
 "use client";
 
 import { Icon } from "@iconify/react";
-import { AnimatePresence, motion } from "framer-motion";
+
 import { usePathname } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
 import { ChatDialog } from "@/components/dashboard/chat/chat-dialog";
@@ -20,7 +20,7 @@ const navItems: NavItem[] = [
 	{
 		id: "home",
 		label: "Home",
-		icon: "fluent:home-empty-24-filled",
+		icon: "fluent:home-24-filled",
 		href: "/dashboard",
 	},
 	{
@@ -59,34 +59,20 @@ function NavItemComponent({
 	onClick: () => void;
 }) {
 	return (
-		<motion.button
+		<button
 			onClick={onClick}
 			className={cn(
-				"flex flex-1 flex-col items-center justify-center gap-1.5 py-3 px-2 min-h-14 rounded-[999px] transition-all duration-200 relative",
+				"flex flex-1 flex-col items-center justify-center gap-1 px-2 transition-colors duration-150",
 				isActive
-					? "bg-[#000000] text-[#ffffff] dark:bg-[#ffffff] dark:text-[#000000]"
-					: "bg-[#efefef] text-[#000000] hover:bg-[#e2e2e2] dark:bg-[#2a2a2a] dark:text-[#ffffff] dark:hover:bg-[#3a3a3a]",
+					? "text-[--system-accent]"
+					: "text-[--system-text-tertiary] hover:text-[--system-text-secondary]",
 			)}
-			whileTap={{ scale: 0.95 }}
-			transition={{ duration: 0.15 }}
 		>
-			<div className="relative z-10">
-				<Icon
-					icon={item.icon}
-					className={cn(
-						"w-5 h-5 transition-transform duration-200",
-						isActive && "scale-110",
-					)}
-				/>
-			</div>
-			<span
-				className={cn(
-					"text-[10px] font-medium tracking-wide transition-colors duration-200",
-				)}
-			>
+			<Icon icon={item.icon} className="w-[25px] h-[25px]" />
+			<span className="text-[10px] font-medium tracking-wide">
 				{item.label}
 			</span>
-		</motion.button>
+		</button>
 	);
 }
 
@@ -123,13 +109,8 @@ export function BottomNav() {
 
 	return (
 		<>
-			<motion.nav
-				className="fixed bottom-0 left-0 right-0 z-50 bg-[#ffffff] dark:bg-[#1a1a1a] border-t border-[#000000]/10 dark:border-[#ffffff]/10 md:hidden"
-				initial={{ y: 100, opacity: 0 }}
-				animate={{ y: 0, opacity: 1 }}
-				transition={{ type: "spring", stiffness: 300, damping: 30, delay: 0.2 }}
-			>
-				<div className="flex w-full px-3 pb-safe gap-1">
+			<nav className="fixed bottom-0 left-0 right-0 z-50 h-[49px] bg-[--system-surface] ios-separator md:hidden pb-safe">
+				<div className="flex w-full h-full items-center px-1.5">
 					{navItems.map((item, index) => (
 						<NavItemComponent
 							key={item.id}
@@ -139,7 +120,7 @@ export function BottomNav() {
 						/>
 					))}
 				</div>
-			</motion.nav>
+			</nav>
 			<PracticeSheet
 				open={practiceDrawerOpen}
 				onOpenChange={setPracticeDrawerOpen}

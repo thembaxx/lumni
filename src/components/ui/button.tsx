@@ -4,52 +4,40 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-	"group/button inline-flex shrink-0 items-center justify-center border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all duration-150 outline-none select-none focus-visible:ring-[3px] focus-visible:ring-current active:not-aria-[haspopup]:scale-[0.97] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+	"group/button inline-flex shrink-0 items-center justify-center border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-[scale,background-color,box-shadow,color] duration-150 ease-out outline-none select-none active:not-disabled:scale-[0.96] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
 	{
 		variants: {
 			variant: {
-				/* Uber Primary - Black pill */
+				/* iOS Primary - Blue accent fill */
 				default:
-					"bg-[#000000] text-[#ffffff] rounded-[999px] px-3 py-2 dark:bg-[#ffffff] dark:text-[#000000]",
-				/* Uber Secondary - White with black border */
+					"bg-[#007AFF] text-[#ffffff] rounded-[12px] px-3 py-2 hover:bg-[#0066D6] dark:bg-[#0A84FF] dark:text-[#ffffff] dark:hover:bg-[#0066D6]",
+				/* iOS Outline - Blue border */
 				outline:
-					"border-[#000000] bg-[#ffffff] text-[#000000] rounded-[999px] px-3 py-2 hover:bg-[#e2e2e2] dark:border-[#ffffff] dark:bg-[#0a0a0a] dark:text-[#ffffff] dark:hover:bg-[#1a1a1a]",
-				/* Uber Ghost */
+					"border-[#007AFF] bg-transparent text-[#007AFF] rounded-[12px] px-3 py-2 hover:bg-[#007AFF]/5 dark:border-[#0A84FF] dark:text-[#0A84FF] dark:hover:bg-[#0A84FF]/10",
+				/* iOS Ghost - Subtle text */
 				ghost:
-					"hover:bg-[#efefef] text-[#000000] rounded-[999px] px-3 py-2 dark:text-[#ffffff] dark:hover:bg-[#1a1a1a]",
-				/* Uber Destructive */
+					"text-[--system-text-secondary] rounded-[12px] px-3 py-2 hover:bg-[--system-surface-secondary] dark:text-[--system-text-secondary] dark:hover:bg-[--system-surface-secondary]",
+				/* iOS Destructive - Red */
 				destructive:
-					"bg-[#000000] text-[#ffffff] rounded-[999px] px-3 py-2 dark:bg-[#ffffff] dark:text-[#000000]",
-				/* Uber Link */
-				link: "text-[#000000] underline-offset-4 hover:underline dark:text-[#ffffff]",
-				/* Uber Pill Primary */
-				uber_primary:
-					"bg-[#000000] text-[#ffffff] rounded-[999px] px-3 py-2 hover:bg-[#1a1a1a] focus-visible:ring-[#ffffff] dark:bg-[#ffffff] dark:text-[#000000] dark:hover:bg-[#e5e5e5]",
-				/* Uber Pill Secondary */
-				uber_secondary:
-					"bg-[#ffffff] text-[#000000] border border-[#000000] rounded-[999px] px-3 py-2 hover:bg-[#e2e2e2] focus-visible:ring-[#000000] dark:bg-[#1a1a1a] dark:text-[#ffffff] dark:border-[#ffffff] dark:hover:bg-[#2a2a2a]",
-				/* Uber Chip/Filter */
-				uber_chip:
-					"bg-[#efefef] text-[#000000] rounded-[999px] px-4 py-3 hover:bg-[#e2e2e2] aria-expanded:bg-[#000000] aria-expanded:text-[#ffffff] dark:bg-[#1a1a1a] dark:text-[#ffffff] dark:hover:bg-[#2a2a2a] dark:aria-expanded:bg-[#ffffff] dark:aria-expanded:text-[#000000]",
-				/* Secondary - alias for outline with slightly different tone */
+					"bg-[#FF3B30] text-[#ffffff] rounded-[12px] px-3 py-2 hover:bg-[#D70015] dark:bg-[#FF453A] dark:text-[#ffffff]",
+				/* Link */
+				link: "text-[--system-accent] underline-offset-4 hover:underline dark:text-[--system-accent]",
+				/* iOS Secondary fill - light gray */
 				secondary:
-					"border-[#000000] bg-[#ffffff] text-[#000000] rounded-[999px] px-3 py-2 hover:bg-[#e2e2e2] dark:border-[#ffffff] dark:bg-[#0a0a0a] dark:text-[#ffffff] dark:hover:bg-[#1a1a1a]",
-				/* Uber Floating Action */
+					"bg-[--system-surface-secondary] text-[--system-text-primary] rounded-[12px] px-3 py-2 hover:bg-[--system-separator] dark:bg-[--system-surface-secondary] dark:text-[--system-text-primary]",
+				/* Floating action - elevated */
 				uber_floating:
-					"bg-[#ffffff] text-[#000000] rounded-[999px] px-3.5 py-3.5 shadow-[rgba(0,0,0,0.16)_0px_2px_8px_0px] translate-y-[2px] hover:bg-[#f3f3f3] dark:bg-[#1a1a1a] dark:text-[#ffffff] dark:shadow-[rgba(255,255,255,0.08)_0px_2px_8px_0px]",
+					"bg-[--system-surface] text-[--system-text-primary] rounded-[12px] px-3.5 py-3.5 shadow-[--shadow-level-2] hover:bg-[--system-surface-secondary] dark:bg-[--system-surface] dark:text-[--system-text-primary]",
 			},
 			size: {
-				default: "h-9 gap-2 px-4",
-				xs: "h-6 rounded-[999px] px-2 text-xs gap-1.5",
-				sm: "h-8 rounded-[999px] px-3 text-sm gap-1.5",
-				lg: "h-11 rounded-[999px] px-5 text-base gap-2",
-				icon: "size-10 rounded-[999px]",
-				"icon-xs": "size-6 rounded-[999px]",
-				"icon-sm": "size-8 rounded-[999px]",
-				"icon-lg": "size-12 rounded-[999px]",
-				pill_sm: "h-8 rounded-[999px] px-3 py-2 text-xs gap-1.5",
-				pill_default: "h-10 rounded-[999px] px-4 py-2.5 text-sm gap-2",
-				pill_lg: "h-12 rounded-[999px] px-6 py-3 text-base gap-2",
+				default: "h-11 gap-2 px-4 min-h-[44px]",
+				xs: "h-7 rounded-[10px] px-2 text-xs gap-1.5 min-h-[28px]",
+				sm: "h-9 rounded-[10px] px-3 text-sm gap-1.5 min-h-[36px]",
+				lg: "h-12 rounded-[12px] px-5 text-base gap-2 min-h-[48px]",
+				icon: "size-11 rounded-full",
+				"icon-xs": "size-7 rounded-full",
+				"icon-sm": "size-9 rounded-full",
+				"icon-lg": "size-12 rounded-full",
 			},
 		},
 		defaultVariants: {

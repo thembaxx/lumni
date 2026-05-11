@@ -24,7 +24,7 @@ function Tabs({
 }
 
 const tabsListVariants = cva(
-	"group/tabs-list inline-flex w-fit items-center justify-center rounded-[999px] p-[3px] bg-[#efefef] dark:bg-[#1a1a1a] data-[variant=pill]:rounded-[999px] data-[variant=line]:rounded-none",
+	"group/tabs-list inline-flex w-fit items-center justify-center rounded-[12px] p-[3px] bg-[--system-surface-secondary] dark:bg-[--system-surface-secondary] data-[variant=pill]:rounded-[12px] data-[variant=line]:rounded-none",
 	{
 		variants: {
 			variant: {
@@ -59,12 +59,12 @@ function TabsTrigger({ className, ...props }: TabsPrimitive.Tab.Props) {
 		<TabsPrimitive.Tab
 			data-slot="tabs-trigger"
 			className={cn(
-				"relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-[999px] border border-transparent px-4 py-2.5 text-sm font-medium whitespace-nowrap text-[#4b4b4b] transition-all duration-150 hover:bg-[#e2e2e2] hover:text-[#000000] focus-visible:ring-[2px] disabled:pointer-events-none disabled:opacity-50",
-				"dark:text-[#afafaf] dark:hover:bg-[#2a2a2a] dark:hover:text-[#ffffff]",
-				"data-[variant=default]/tabs-list:data-active:bg-[#000000] data-[variant=default]/tabs-list:data-active:text-[#ffffff] data-[variant=default]/tabs-list:data-active:shadow-[rgba(0,0,0,0.12)_0px_4px_16px_0px]",
-				"data-[variant=default]/tabs-list:dark:data-active:bg-[#ffffff] data-[variant=default]/tabs-list:dark:data-active:text-[#000000]",
-				"data-[variant=pill]/tabs-list:bg-[#efefef] data-[variant=pill]/tabs-list:hover:bg-[#e2e2e2]",
-				"data-[variant=pill]/tabs-list:data-active:bg-[#000000] data-[variant=pill]/tabs-list:data-active:text-[#ffffff] data-[variant=pill]/tabs-list:dark:bg-[#1a1a1a] data-[variant=pill]/tabs-list:dark:hover:bg-[#2a2a2a] data-[variant=pill]/tabs-list:dark:data-active:bg-[#ffffff] data-[variant=pill]/tabs-list:dark:data-active:text-[#000000]",
+				"relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-[10px] border border-transparent px-4 py-2.5 text-sm font-medium whitespace-nowrap text-[--system-text-secondary] transition-[background-color,color,box-shadow] duration-150 ease-out focus-visible:ring-[2px] disabled:pointer-events-none disabled:opacity-50",
+				"dark:text-[--system-text-secondary] dark:hover:text-[--system-text-primary]",
+				"data-[variant=default]/tabs-list:data-active:bg-[--system-accent] data-[variant=default]/tabs-list:data-active:text-[#ffffff] data-[variant=default]/tabs-list:data-active:shadow-[--shadow-level-1]",
+				"data-[variant=default]/tabs-list:dark:data-active:bg-[--system-accent] data-[variant=default]/tabs-list:dark:data-active:text-[#ffffff]",
+				"data-[variant=pill]/tabs-list:bg-[--system-surface-secondary] data-[variant=pill]/tabs-list:hover:bg-[--system-separator]",
+				"data-[variant=pill]/tabs-list:data-active:bg-[--system-accent] data-[variant=pill]/tabs-list:data-active:text-[#ffffff] data-[variant=pill]/tabs-list:dark:bg-[--system-surface-secondary] data-[variant=pill]/tabs-list:dark:data-active:bg-[--system-accent] data-[variant=pill]/tabs-list:dark:data-active:text-[#ffffff]",
 				className,
 			)}
 			{...props}

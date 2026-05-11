@@ -1,7 +1,6 @@
 "use client";
 
 import { IconBook, IconBulb, IconFileDescription } from "@tabler/icons-react";
-import { motion } from "framer-motion";
 import { LessonsButton } from "@/components/lesson";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -22,25 +21,18 @@ function ActionButton({
 	onClick?: () => void;
 }) {
 	return (
-		<motion.div
-			whileHover={{ scale: 1.02, y: -2 }}
-			whileTap={{ scale: 0.97 }}
-			transition={{ type: "spring", stiffness: 400, damping: 20 }}
-			className={cn(
-				"rounded-xl border bg-secondary/80 border-border/50 shadow-sm",
-			)}
-		>
+		<div className="rounded-[12px] border bg-[--system-surface-secondary] border-[--system-separator]">
 			<Button
 				variant="ghost"
 				onClick={onClick}
-				className="h-9 pl-3 pr-5 w-full justify-start gap-2.5 text-foreground hover:bg-accent hover:border-accent active:scale-[0.97]"
+				className="h-10 pl-3 pr-5 w-full justify-start gap-2.5 text-[--system-text-primary]"
 			>
 				<span className="text-primary">
 					<Icon className="w-4 h-4" />
 				</span>
 				<span className="text-sm font-medium">{label}</span>
 			</Button>
-		</motion.div>
+		</div>
 	);
 }
 
@@ -52,18 +44,8 @@ export function QuickActions({
 	return (
 		<div>
 			<ul className="flex items-center gap-3 overflow-x-auto scrollbar-hide py-1">
-				{quickActions.map((action, index) => (
-					<motion.li
-						key={action.label}
-						initial={{ opacity: 0, y: 8 }}
-						animate={{ opacity: 1, y: 0 }}
-						transition={{
-							delay: 0.3 + index * 0.08,
-							type: "spring",
-							stiffness: 300,
-							damping: 30,
-						}}
-					>
+				{quickActions.map((action) => (
+					<li key={action.label}>
 						{action.label === "Lessons" ? (
 							<LessonsButton />
 						) : action.label === "Practice" ? (
@@ -82,7 +64,7 @@ export function QuickActions({
 								label={action.label}
 							/>
 						)}
-					</motion.li>
+					</li>
 				))}
 			</ul>
 		</div>
