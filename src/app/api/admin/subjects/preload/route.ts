@@ -14,7 +14,7 @@ interface ExamsData {
 
 async function getSubjectsFromJson() {
 	const fileContent = fs.readFileSync(
-		path.join(process.cwd(), "data", "exams", "index.json"),
+		path.resolve("data", "exams", "index.json"),
 		"utf-8",
 	);
 	const examsData: ExamsData = JSON.parse(fileContent);

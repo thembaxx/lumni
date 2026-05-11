@@ -11,37 +11,52 @@ interface MatchingInputProps {
 	disabled?: boolean;
 }
 
-export function MatchingInput({ leftItems, rightItems, onSubmit, disabled }: MatchingInputProps) {
+export function MatchingInput({
+	leftItems,
+	rightItems,
+	onSubmit,
+	disabled,
+}: MatchingInputProps) {
 	const [selectedLeft, setSelectedLeft] = useState<string | null>(null);
 	const [selectedRight, setSelectedRight] = useState<string | null>(null);
 	const [pairs, setPairs] = useState<{ left: string; right: string }[]>([]);
 
-	const handleLeftClick = useCallback((item: string) => {
-		if (disabled) return;
-		setSelectedLeft(item);
-		if (selectedRight) {
-			setPairs((prev) => [...prev, { left: item, right: selectedRight }]);
-			setSelectedLeft(null);
-			setSelectedRight(null);
-		}
-	}, [disabled, selectedRight]);
+	const handleLeftClick = useCallback(
+		(item: string) => {
+			if (disabled) return;
+			setSelectedLeft(item);
+			if (selectedRight) {
+				setPairs((prev) => [...prev, { left: item, right: selectedRight }]);
+				setSelectedLeft(null);
+				setSelectedRight(null);
+			}
+		},
+		[disabled, selectedRight],
+	);
 
-	const handleRightClick = useCallback((item: string) => {
-		if (disabled) return;
-		setSelectedRight(item);
-		if (selectedLeft) {
-			setPairs((prev) => [...prev, { left: selectedLeft, right: item }]);
-			setSelectedLeft(null);
-			setSelectedRight(null);
-		}
-	}, [disabled, selectedLeft]);
+	const handleRightClick = useCallback(
+		(item: string) => {
+			if (disabled) return;
+			setSelectedRight(item);
+			if (selectedLeft) {
+				setPairs((prev) => [...prev, { left: selectedLeft, right: item }]);
+				setSelectedLeft(null);
+				setSelectedRight(null);
+			}
+		},
+		[disabled, selectedLeft],
+	);
 
 	const removePair = useCallback((index: number) => {
 		setPairs((prev) => prev.filter((_, i) => i !== index));
 	}, []);
 
-	const remainingLeft = leftItems.filter((l) => !pairs.some((p) => p.left === l));
-	const remainingRight = rightItems.filter((r) => !pairs.some((p) => p.right === r));
+	const remainingLeft = leftItems.filter(
+		(l) => !pairs.some((p) => p.left === l),
+	);
+	const remainingRight = rightItems.filter(
+		(r) => !pairs.some((p) => p.right === r),
+	);
 
 	return (
 		<div className="space-y-4">
@@ -52,7 +67,10 @@ export function MatchingInput({ leftItems, rightItems, onSubmit, disabled }: Mat
 						<Button
 							key={item}
 							variant="outline"
-							className={cn("w-full justify-start", selectedLeft === item && "ring-2 ring-primary")}
+							className={cn(
+								"w-full justify-start",
+								selectedLeft === item && "ring-2 ring-primary",
+							)}
 							onClick={() => handleLeftClick(item)}
 							disabled={disabled}
 						>
@@ -66,7 +84,10 @@ export function MatchingInput({ leftItems, rightItems, onSubmit, disabled }: Mat
 						<Button
 							key={item}
 							variant="outline"
-							className={cn("w-full justify-start", selectedRight === item && "ring-2 ring-primary")}
+							className={cn(
+								"w-full justify-start",
+								selectedRight === item && "ring-2 ring-primary",
+							)}
 							onClick={() => handleRightClick(item)}
 							disabled={disabled}
 						>
@@ -84,7 +105,12 @@ export function MatchingInput({ leftItems, rightItems, onSubmit, disabled }: Mat
 							<span>→</span>
 							<span>{p.right}</span>
 							{!disabled && (
-								<Button variant="ghost" size="sm" onClick={() => removePair(i)} className="h-6 px-2 text-xs">
+								<Button
+									variant="ghost"
+									size="sm"
+									onClick={() => removePair(i)}
+									className="h-6 px-2 text-xs"
+								>
 									✕
 								</Button>
 							)}
@@ -92,7 +118,11 @@ export function MatchingInput({ leftItems, rightItems, onSubmit, disabled }: Mat
 					))}
 				</div>
 			)}
-			<Button onClick={() => onSubmit(pairs)} disabled={disabled || pairs.length !== leftItems.length} className="w-full">
+			<Button
+				onClick={() => onSubmit(pairs)}
+				disabled={disabled || pairs.length !== leftItems.length}
+				className="w-full"
+			>
 				Submit Match
 			</Button>
 		</div>

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { QuestionEngine } from "@/lib/question-engine";
-import type { Question, GradingResult } from "@/lib/question-engine/types";
+import type { GradingResult, Question } from "@/lib/question-engine/types";
 
 export const dynamic = "force-dynamic";
 
@@ -31,15 +31,22 @@ export async function GET() {
 
 		if (questions.length === 0) {
 			addError("No questions generated");
-			return NextResponse.json({ ...results, status: "partial_failure" }, { status: 500 });
+			return NextResponse.json(
+				{ ...results, status: "partial_failure" },
+				{ status: 500 },
+			);
 		}
 
 		const q = questions[0] as Question<"multiple-choice">;
-		addStep(`Question 1 type: ${q.type}, text: "${q.questionText.slice(0, 60)}..."`);
+		addStep(
+			`Question 1 type: ${q.type}, text: "${q.questionText.slice(0, 60)}..."`,
+		);
 
 		addStep("Testing validation...");
 		const validation = engine.validate(q);
-		addStep(`Validation score: ${validation.score}, isValid: ${validation.isValid}`);
+		addStep(
+			`Validation score: ${validation.score}, isValid: ${validation.isValid}`,
+		);
 
 		addStep("Testing hint generation...");
 		const hint = await engine.generateHint({ questionId: q.id, question: q });
@@ -52,7 +59,9 @@ export async function GET() {
 				type: "option-ids",
 				value: [correctAnswer.id],
 			});
-			addStep(`Grade result - correct: ${gradeResult.correct}, score: ${gradeResult.score}/${q.points}`);
+			addStep(
+				`Grade result - correct: ${gradeResult.correct}, score: ${gradeResult.score}/${q.points}`,
+			);
 		}
 
 		addStep("Testing type listing...");
@@ -62,7 +71,9 @@ export async function GET() {
 		addStep("All tests passed");
 		results.status = "success";
 	} catch (error) {
-		addError(`Fatal error: ${error instanceof Error ? error.message : String(error)}`);
+		addError(
+			`Fatal error: ${error instanceof Error ? error.message : String(error)}`,
+		);
 		results.status = "failure";
 	}
 

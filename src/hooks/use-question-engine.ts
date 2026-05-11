@@ -20,7 +20,9 @@ interface HintResult {
 	hint: string;
 }
 
-async function generateQuestions(params: GenerationParams): Promise<GenerateResult> {
+async function generateQuestions(
+	params: GenerationParams,
+): Promise<GenerateResult> {
 	const response = await fetch("/api/engine/generate", {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
@@ -33,7 +35,10 @@ async function generateQuestions(params: GenerationParams): Promise<GenerateResu
 	return response.json();
 }
 
-async function gradeAnswer(question: Question, answer: UserAnswer): Promise<GradingResult> {
+async function gradeAnswer(
+	question: Question,
+	answer: UserAnswer,
+): Promise<GradingResult> {
 	const response = await fetch("/api/engine/grade", {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
@@ -74,7 +79,11 @@ export function useQuestionEngine(
 			trackEngineEvent({
 				event: "generate",
 				subject: params?.subject,
-				questionType: params?.questionType ? (Array.isArray(params.questionType) ? params.questionType.join(",") : params.questionType) : "any",
+				questionType: params?.questionType
+					? Array.isArray(params.questionType)
+						? params.questionType.join(",")
+						: params.questionType
+					: "any",
 				count: result.count,
 				success: true,
 			});
@@ -86,7 +95,13 @@ export function useQuestionEngine(
 	});
 
 	const gradeMutation = useMutation({
-		mutationFn: async ({ question, answer }: { question: Question; answer: UserAnswer }) => {
+		mutationFn: async ({
+			question,
+			answer,
+		}: {
+			question: Question;
+			answer: UserAnswer;
+		}) => {
 			const result = await gradeAnswer(question, answer);
 			trackEngineEvent({
 				event: "grade",
@@ -117,7 +132,11 @@ export function useQuestionEngine(
 			trackEngineEvent({
 				event: "generate",
 				subject: generateParams.subject,
-				questionType: generateParams.questionType ? (Array.isArray(generateParams.questionType) ? generateParams.questionType.join(",") : generateParams.questionType) : "any",
+				questionType: generateParams.questionType
+					? Array.isArray(generateParams.questionType)
+						? generateParams.questionType.join(",")
+						: generateParams.questionType
+					: "any",
 				count: result.count,
 				success: true,
 			});

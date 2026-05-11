@@ -20,7 +20,9 @@ export async function saveQuestionsToAppwrite(
 						topicId: topic || subject,
 						type: q.type,
 						questionText: q.questionText,
-						options: safeJsonStringify("options" in q.body ? q.body.options : []),
+						options: safeJsonStringify(
+							"options" in q.body ? q.body.options : [],
+						),
 						correctAnswer:
 							"correctOptionId" in q.body
 								? q.body.correctOptionId
@@ -52,23 +54,24 @@ export async function loadQuestionsFromAppwrite(
 ): Promise<Question[]> {
 	try {
 		const { Query } = await import("appwrite");
-		const queries = [Query.equal("topicId", topic || subject), Query.limit(limit)];
+		const queries = [
+			Query.equal("topicId", topic || subject),
+			Query.limit(limit),
+		];
 		const response = await databases.listDocuments(
 			APPWRITE_DATABASE_ID,
 			COLLECTION_ID,
 			queries,
 		);
-		return (
-			response.documents
-				.map((doc: Record<string, unknown>) => {
-					const fullData = doc.fullData as string | undefined;
-					if (fullData) {
-						return safeJsonParse(fullData, null) as Question | null;
-					}
-					return null;
-				})
-				.filter((q: Question | null): q is Question => q !== null)
-		);
+		return response.documents
+			.map((doc: Record<string, unknown>) => {
+				const fullData = doc.fullData as string | undefined;
+				if (fullData) {
+					return safeJsonParse(fullData, null) as Question | null;
+				}
+				return null;
+			})
+			.filter((q: Question | null): q is Question => q !== null);
 	} catch (error) {
 		console.error("[Persistence] Failed to load from Appwrite:", error);
 		return [];

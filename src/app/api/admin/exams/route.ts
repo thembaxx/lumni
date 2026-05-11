@@ -5,37 +5,34 @@ import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 export const runtime = "nodejs";
 
 export async function GET() {
-  try {
-    const response = await databases.listDocuments(
-      APPWRITE_DATABASE_ID,
-      COLLECTIONS.EXAM_PAPERS,
-    );
+	try {
+		const response = await databases.listDocuments(
+			APPWRITE_DATABASE_ID,
+			COLLECTIONS.EXAM_PAPERS,
+		);
 
-    const exams = response.documents.map((doc) => ({
-      id: doc.$id,
-      subject: doc.subject,
-      paperCode: doc.paperCode,
-      examPeriod: doc.examPeriod,
-      year: doc.year,
-      grade: doc.grade,
-      language: doc.language,
-      totalMarks: doc.totalMarks,
-      duration: doc.duration,
-      fileKeys: doc.fileKeys ? JSON.parse(doc.fileKeys as string) : null,
-      uploadedAt: doc.uploadedAt,
-    }));
+		const exams = response.documents.map((doc) => ({
+			id: doc.$id,
+			subject: doc.subject,
+			paperCode: doc.paperCode,
+			examPeriod: doc.examPeriod,
+			year: doc.year,
+			grade: doc.grade,
+			language: doc.language,
+			totalMarks: doc.totalMarks,
+			duration: doc.duration,
+			fileKeys: doc.fileKeys ? JSON.parse(doc.fileKeys as string) : null,
+			uploadedAt: doc.uploadedAt,
+		}));
 
-    return NextResponse.json({ exams, total: exams.length });
-  } catch (error) {
-    console.error("Failed to list exams:", error);
-    return NextResponse.json(
-      {
-        error:
-          error instanceof Error
-            ? error.message
-            : "Failed to list exams",
-      },
-      { status: 500 },
-    );
-  }
+		return NextResponse.json({ exams, total: exams.length });
+	} catch (error) {
+		console.error("Failed to list exams:", error);
+		return NextResponse.json(
+			{
+				error: error instanceof Error ? error.message : "Failed to list exams",
+			},
+			{ status: 500 },
+		);
+	}
 }

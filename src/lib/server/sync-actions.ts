@@ -58,11 +58,17 @@ export async function checkSubjectStatus(subject: string): Promise<{
 		]);
 
 		if (subjects.length === 0) {
-			return { exists: false, localQuestions: 0, version: null, needsSync: true };
+			return {
+				exists: false,
+				localQuestions: 0,
+				version: null,
+				needsSync: true,
+			};
 		}
 
 		const version =
-			((subjects[0] as Record<string, unknown>).sourceVersion as string) || null;
+			((subjects[0] as Record<string, unknown>).sourceVersion as string) ||
+			null;
 		const needsSync = !version;
 
 		return { exists: true, localQuestions: 0, version, needsSync };

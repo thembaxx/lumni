@@ -1,5 +1,6 @@
 import { getAI } from "@/lib/ai";
 import type { AIResponse } from "@/lib/ai/types";
+import { PromptManager } from "../prompt-manager";
 import type {
 	GenerationParams,
 	GradingResult,
@@ -8,22 +9,29 @@ import type {
 	UserAnswer,
 	ValidationResult,
 } from "../types";
-import { PromptManager } from "../prompt-manager";
 import { validateMCQ } from "../validators/mcq-validator";
 
 export class MCQProcessor implements QuestionProcessor<"multiple-choice"> {
 	readonly type = "multiple-choice" as const;
 	private prompts = new PromptManager();
 
-	async generate(params: GenerationParams): Promise<Question<"multiple-choice">[]> {
+	async generate(
+		params: GenerationParams,
+	): Promise<Question<"multiple-choice">[]> {
 		const prompt = this.prompts.getPrompt("multiple-choice", params);
-		const result = await getAI().generateWithSystem(prompt.system, prompt.user, {
-			temperature: 0.8,
-			maxTokens: 4096,
-		});
+		const result = await getAI().generateWithSystem(
+			prompt.system,
+			prompt.user,
+			{
+				temperature: 0.8,
+				maxTokens: 4096,
+			},
+		);
 
 		if ("available" in result && !result.available) {
-			throw new Error(`AI generation failed: ${"error" in result ? result.error : "unknown"}`);
+			throw new Error(
+				`AI generation failed: ${"error" in result ? result.error : "unknown"}`,
+			);
 		}
 
 		const response = result as AIResponse;
@@ -35,10 +43,14 @@ export class MCQProcessor implements QuestionProcessor<"multiple-choice"> {
 	async generateHint(question: Question<"multiple-choice">): Promise<string> {
 		const prompt = this.prompts.getHintPrompt("multiple-choice");
 		const ctx = `Question: ${question.questionText}\nOptions: ${JSON.stringify(question.body.options)}`;
-		const result = await getAI().generateWithSystem(prompt.system, `${prompt.user}\n\n${ctx}`, {
-			temperature: 0.5,
-			maxTokens: 256,
-		});
+		const result = await getAI().generateWithSystem(
+			prompt.system,
+			`${prompt.user}\n\n${ctx}`,
+			{
+				temperature: 0.5,
+				maxTokens: 256,
+			},
+		);
 		if ("available" in result && !result.available) return question.hint;
 		return this.cleanResponse((result as AIResponse).content);
 	}
@@ -48,7 +60,9 @@ export class MCQProcessor implements QuestionProcessor<"multiple-choice"> {
 		answer: UserAnswer,
 	): Promise<GradingResult> {
 		const selectedIds = answer.value as string[];
-		const correctIds = question.body.options.filter((o) => o.isCorrect).map((o) => o.id);
+		const correctIds = question.body.options
+			.filter((o) => o.isCorrect)
+			.map((o) => o.id);
 
 		const isCorrect =
 			selectedIds.length === correctIds.length &&
@@ -69,6 +83,9 @@ export class MCQProcessor implements QuestionProcessor<"multiple-choice"> {
 	}
 
 	private cleanResponse(content: string): string {
-		return content.replace(/```json/g, "").replace(/```/g, "").trim();
+		return content
+			.replace(/```json/g, "")
+			.replace(/```/g, "")
+			.trim();
 	}
 }

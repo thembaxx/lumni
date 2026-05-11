@@ -1,18 +1,15 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import {
-	AnimatePresence,
-	motion,
-} from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { Check } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { AdminExamList } from "./admin-exam-list";
+import { AdminExamUploadZone } from "./admin-exam-upload-zone";
 import { AdminHeader } from "./admin-header";
 import { AdminStatCards } from "./admin-stat-cards";
-import { AdminExamUploadZone } from "./admin-exam-upload-zone";
-import { AdminExamList } from "./admin-exam-list";
 import { SubjectForm } from "./admin-subject-form";
 import { SubjectTable } from "./admin-subject-table";
 import { AdminTabs } from "./admin-tabs";
@@ -216,9 +213,13 @@ export function AdminDashboard() {
 							className="space-y-4"
 						>
 							<AnimatedCard delay={0.15}>
-								<AdminExamUploadZone onUploadComplete={() => {
-									queryClient.invalidateQueries({ queryKey: ["admin-exams"] });
-								}} />
+								<AdminExamUploadZone
+									onUploadComplete={() => {
+										queryClient.invalidateQueries({
+											queryKey: ["admin-exams"],
+										});
+									}}
+								/>
 							</AnimatedCard>
 
 							<AnimatedCard delay={0.2}>

@@ -54,12 +54,12 @@ export function useQuizSession({
 	onFinish,
 	enabled = true,
 }: UseQuizSessionOptions = {}): UseQuizSessionResult {
-	const [selectedSubject, setSelectedSubject] = useState<string>(initialSubject);
+	const [selectedSubject, setSelectedSubject] =
+		useState<string>(initialSubject);
 	const [points, setPoints] = useState(() => Math.floor(Math.random() * 101));
 	const [sessionStarted, setSessionStarted] = useState(false);
 
-	const normalizedSubject =
-		initialSubject || selectedSubject.toLowerCase();
+	const normalizedSubject = initialSubject || selectedSubject.toLowerCase();
 
 	const engineParams = useMemo(
 		() => ({
@@ -113,13 +113,10 @@ export function useQuizSession({
 		startTimer();
 	}, [startTimer]);
 
-	const handleStartWithSubject = useCallback(
-		(subject: string) => {
-			setSelectedSubject(subject);
-			setSessionStarted(true);
-		},
-		[],
-	);
+	const handleStartWithSubject = useCallback((subject: string) => {
+		setSelectedSubject(subject);
+		setSessionStarted(true);
+	}, []);
 
 	const handleStop = useCallback(() => {
 		setIsRunning(false);

@@ -1,15 +1,15 @@
-import type { QuestionProcessor, QuestionType } from "./types";
-import { MCQProcessor } from "./processors/mcq-processor";
-import { MatchingProcessor } from "./processors/matching-processor";
-import { ShortAnswerProcessor } from "./processors/short-answer-processor";
-import { LongAnswerProcessor } from "./processors/long-answer-processor";
-import { EssayProcessor } from "./processors/essay-processor";
 import { CalculationProcessor } from "./processors/calculation-processor";
-import { DiagramProcessor } from "./processors/diagram-processor";
-import { ProgrammingProcessor } from "./processors/programming-processor";
-import { SourceBasedProcessor } from "./processors/source-based-processor";
 import { DataResponseProcessor } from "./processors/data-response-processor";
+import { DiagramProcessor } from "./processors/diagram-processor";
+import { EssayProcessor } from "./processors/essay-processor";
+import { LongAnswerProcessor } from "./processors/long-answer-processor";
+import { MatchingProcessor } from "./processors/matching-processor";
+import { MCQProcessor } from "./processors/mcq-processor";
 import { MixedProcessor } from "./processors/mixed-processor";
+import { ProgrammingProcessor } from "./processors/programming-processor";
+import { ShortAnswerProcessor } from "./processors/short-answer-processor";
+import { SourceBasedProcessor } from "./processors/source-based-processor";
+import type { QuestionProcessor, QuestionType } from "./types";
 
 export class ProcessorRegistry {
 	private processors = new Map<QuestionType, QuestionProcessor>();

@@ -33,7 +33,9 @@ export function convertQuizToFlashcards({
 
 	for (const question of questions) {
 		if (incorrectAnswerIds.includes(question.id)) {
-			const correctOption = getMcqOptions(question).find((opt) => opt.isCorrect);
+			const correctOption = getMcqOptions(question).find(
+				(opt) => opt.isCorrect,
+			);
 
 			flashcards.push({
 				id: `fc_${question.id}_${Date.now()}`,

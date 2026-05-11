@@ -20,7 +20,14 @@ import {
 import { useQuestionEngine } from "@/hooks/use-question-engine";
 import { cn } from "@/lib/utils";
 import type { Question, QuestionState, UserAnswer } from "@/types/questions";
-import { CalculationInput, EssayInput, LongAnswerInput, MatchingInput, ProgrammingInput, ShortAnswerInput } from "./inputs";
+import {
+	CalculationInput,
+	EssayInput,
+	LongAnswerInput,
+	MatchingInput,
+	ProgrammingInput,
+	ShortAnswerInput,
+} from "./inputs";
 import { DataResponseInput } from "./inputs/data-response-input";
 import { SourceBasedInput } from "./inputs/source-based-input";
 import { QuestionDiagram } from "./question-diagram";
@@ -58,9 +65,12 @@ export function QuestionCard({
 
 	const [showConfetti, setShowConfetti] = useState(false);
 	const [showXPGain, setShowXPGain] = useState(false);
-	const [gradeResult, setGradeResult] = useState<{ correct: boolean; score: number; feedback: string } | null>(null);
+	const [gradeResult, setGradeResult] = useState<{
+		correct: boolean;
+		score: number;
+		feedback: string;
+	} | null>(null);
 	const [isGrading, setIsGrading] = useState(false);
-	const [userAnswer, setUserAnswer] = useState<unknown>(null);
 
 	const { grade } = useQuestionEngine();
 
@@ -68,33 +78,50 @@ export function QuestionCard({
 	const mcqBody = isMCQ ? (question as Question<"multiple-choice">).body : null;
 	const options = mcqBody?.options ?? [];
 	const hasDiagram = (question.media?.length ?? 0) > 0;
-	const showMCQOptions = isMCQ && !state.isSubmitted;
 
-	const handleGrade = useCallback(async (answer: UserAnswer) => {
-		setUserAnswer(answer.value);
-		setIsGrading(true);
-		try {
-			const result = await grade(question, answer);
-			setGradeResult(result);
-			setState((prev) => ({ ...prev, isSubmitted: true, isCorrect: result.correct, showExplanation: true }));
-			if (result.correct) {
-				setShowConfetti(true);
-				setShowXPGain(true);
-				setTimeout(() => setShowConfetti(false), 2000);
-				setTimeout(() => setShowXPGain(false), 1500);
+	const handleGrade = useCallback(
+		async (answer: UserAnswer) => {
+			setIsGrading(true);
+			try {
+				const result = await grade(question, answer);
+				setGradeResult(result);
+				setState((prev) => ({
+					...prev,
+					isSubmitted: true,
+					isCorrect: result.correct,
+					showExplanation: true,
+				}));
+				if (result.correct) {
+					setShowConfetti(true);
+					setShowXPGain(true);
+					setTimeout(() => setShowConfetti(false), 2000);
+					setTimeout(() => setShowXPGain(false), 1500);
+				}
+				onAnswered?.(result.correct, result.score);
+			} catch {
+				setGradeResult({
+					correct: false,
+					score: 0,
+					feedback: "Grading failed. Please try again.",
+				});
+				setState((prev) => ({
+					...prev,
+					isSubmitted: true,
+					showExplanation: true,
+				}));
 			}
-			onAnswered?.(result.correct, result.score);
-		} catch {
-			setGradeResult({ correct: false, score: 0, feedback: "Grading failed. Please try again." });
-			setState((prev) => ({ ...prev, isSubmitted: true, showExplanation: true }));
-		}
-		setIsGrading(false);
-	}, [grade, question, onAnswered]);
+			setIsGrading(false);
+		},
+		[grade, question, onAnswered],
+	);
 
-	const handleMCQSelect = useCallback((optionId: string) => {
-		if (state.isSubmitted) return;
-		setState((prev) => ({ ...prev, selectedOption: optionId }));
-	}, [state.isSubmitted]);
+	const handleMCQSelect = useCallback(
+		(optionId: string) => {
+			if (state.isSubmitted) return;
+			setState((prev) => ({ ...prev, selectedOption: optionId }));
+		},
+		[state.isSubmitted],
+	);
 
 	const handleMCGSubmit = useCallback(() => {
 		if (!state.selectedOption || !isMCQ) return;
@@ -117,7 +144,14 @@ export function QuestionCard({
 		switch (question.type) {
 			case "multiple-choice":
 				return (
-					<div className={cn("grid gap-2", options.every((o) => o.text.length <= 30) ? "grid-cols-2" : "grid-cols-1")}>
+					<div
+						className={cn(
+							"grid gap-2",
+							options.every((o) => o.text.length <= 30)
+								? "grid-cols-2"
+								: "grid-cols-1",
+						)}
+					>
 						{options.map((option, i) => {
 							const isSelected = state.selectedOption === option.id;
 							return (
@@ -138,18 +172,31 @@ export function QuestionCard({
 											isSelected && "border-primary bg-primary/10",
 										)}
 									>
-										<span className={cn(
-											"flex h-6 w-6 items-center justify-center rounded-full border text-sm font-medium",
-											isSelected ? "border-primary bg-primary text-primary-foreground" : "border-muted-foreground/30",
-										)}>{option.id}</span>
+										<span
+											className={cn(
+												"flex h-6 w-6 items-center justify-center rounded-full border text-sm font-medium",
+												isSelected
+													? "border-primary bg-primary text-primary-foreground"
+													: "border-muted-foreground/30",
+											)}
+										>
+											{option.id}
+										</span>
 										<span className="flex-1 font-medium">
-											<MarkdownRenderer content={option.text} subject={effectiveSubject} />
+											<MarkdownRenderer
+												content={option.text}
+												subject={effectiveSubject}
+											/>
 										</span>
 									</Button>
 								</m.div>
 							);
 						})}
-						<Button onClick={handleMCGSubmit} disabled={!state.selectedOption} className="col-span-full mt-2">
+						<Button
+							onClick={handleMCGSubmit}
+							disabled={!state.selectedOption}
+							className="col-span-full mt-2"
+						>
 							Check Answer
 						</Button>
 					</div>
@@ -207,7 +254,9 @@ export function QuestionCard({
 				return (
 					<CalculationInput
 						unit={body.body.unit}
-						onSubmit={(answer) => handleGrade({ type: "numeric", value: answer })}
+						onSubmit={(answer) =>
+							handleGrade({ type: "numeric", value: answer })
+						}
 						disabled={isGrading}
 					/>
 				);
@@ -217,7 +266,8 @@ export function QuestionCard({
 				const diagramBody = question as Question<"diagram">;
 				return (
 					<div className="text-center text-muted-foreground text-sm py-4">
-						{diagramBody.body.instructions || "Interact with the diagram above and submit your answer."}
+						{diagramBody.body.instructions ||
+							"Interact with the diagram above and submit your answer."}
 					</div>
 				);
 			}
@@ -240,7 +290,9 @@ export function QuestionCard({
 					<SourceBasedInput
 						source={body.body.source}
 						subQuestions={body.body.subQuestions}
-						onSubmit={(answers) => handleGrade({ type: "mixed", value: answers })}
+						onSubmit={(answers) =>
+							handleGrade({ type: "mixed", value: answers })
+						}
 						disabled={isGrading}
 					/>
 				);
@@ -252,7 +304,9 @@ export function QuestionCard({
 					<DataResponseInput
 						data={body.body.data}
 						questions={body.body.questions}
-						onSubmit={(answers) => handleGrade({ type: "mixed", value: answers })}
+						onSubmit={(answers) =>
+							handleGrade({ type: "mixed", value: answers })
+						}
 						disabled={isGrading}
 					/>
 				);
@@ -264,10 +318,27 @@ export function QuestionCard({
 					<div className="space-y-4">
 						{body.body.parts.map((part, i) => (
 							<div key={part.id} className="rounded-lg border p-3">
-								<p className="text-sm font-medium mb-2">{i + 1}. {part.questionText} <span className="text-xs text-muted-foreground">({part.points} pts)</span></p>
+								<p className="text-sm font-medium mb-2">
+									{i + 1}. {part.questionText}{" "}
+									<span className="text-xs text-muted-foreground">
+										({part.points} pts)
+									</span>
+								</p>
 							</div>
 						))}
-						<Button onClick={() => handleGrade({ type: "mixed", value: body.body.parts.map((p) => ({ partId: p.id, answer: { type: "text", value: "" } })) })} disabled={isGrading} className="w-full">
+						<Button
+							onClick={() =>
+								handleGrade({
+									type: "mixed",
+									value: body.body.parts.map((p) => ({
+										partId: p.id,
+										answer: { type: "text", value: "" },
+									})),
+								})
+							}
+							disabled={isGrading}
+							className="w-full"
+						>
 							Submit All Parts
 						</Button>
 					</div>
@@ -275,7 +346,11 @@ export function QuestionCard({
 			}
 
 			default:
-				return <p className="text-muted-foreground text-sm">Question type not supported yet.</p>;
+				return (
+					<p className="text-muted-foreground text-sm">
+						Question type not supported yet.
+					</p>
+				);
 		}
 	};
 
@@ -287,22 +362,36 @@ export function QuestionCard({
 			<m.div
 				initial={{ opacity: 0, scale: 0.95, y: -8 }}
 				animate={{ opacity: 1, scale: 1, y: 0 }}
-				className={cn("rounded-lg p-4 space-y-3", isCorrect ? "bg-success/10 text-success" : "bg-destructive/10 text-destructive")}
+				className={cn(
+					"rounded-lg p-4 space-y-3",
+					isCorrect
+						? "bg-success/10 text-success"
+						: "bg-destructive/10 text-destructive",
+				)}
 			>
 				<p className="font-medium">{isCorrect ? "Correct!" : "Incorrect"}</p>
 				{feedback && (
 					<div className="space-y-1">
 						<div className="flex items-center gap-2">
-							<span className="text-sm font-medium">Score: {feedback.score}/{question.points}</span>
+							<span className="text-sm font-medium">
+								Score: {feedback.score}/{question.points}
+							</span>
 						</div>
 						<div className="text-sm opacity-90">
-							<MarkdownRenderer content={feedback.feedback || question.explanation} subject={effectiveSubject} />
+							<MarkdownRenderer
+								content={feedback.feedback || question.explanation}
+								subject={effectiveSubject}
+							/>
 						</div>
 					</div>
 				)}
 				{question.steps && question.steps.length > 0 && (
 					<div className="pt-2 border-t border-current/20">
-						<StepByStep steps={question.steps} subject={effectiveSubject} className="text-foreground" />
+						<StepByStep
+							steps={question.steps}
+							subject={effectiveSubject}
+							className="text-foreground"
+						/>
 					</div>
 				)}
 			</m.div>
@@ -320,14 +409,33 @@ export function QuestionCard({
 							<Badge variant="outline" className="bg-primary/10 font-medium">
 								<span className="opacity-80">{question.topic}</span>
 							</Badge>
-							<DifficultyBadge difficulty={question.difficulty} variant="quiz" className="border font-mono text-xs" />
-							<Badge variant="outline" className="bg-primary/5 text-xs font-mono">{question.type}</Badge>
+							<DifficultyBadge
+								difficulty={question.difficulty}
+								variant="quiz"
+								className="border font-mono text-xs"
+							/>
+							<Badge
+								variant="outline"
+								className="bg-primary/5 text-xs font-mono"
+							>
+								{question.type}
+							</Badge>
 						</div>
-						<Badge variant="secondary" className="text-xs">{question.points} pts</Badge>
+						<Badge variant="secondary" className="text-xs">
+							{question.points} pts
+						</Badge>
 					</div>
-					<div className={cn("overflow-y-auto max-h-75 pr-2", question.questionText.length > 500 && "scrollbar-thin")}>
+					<div
+						className={cn(
+							"overflow-y-auto max-h-75 pr-2",
+							question.questionText.length > 500 && "scrollbar-thin",
+						)}
+					>
 						<CardTitle className="text-lg leading-relaxed">
-							<MarkdownRenderer content={question.questionText} subject={effectiveSubject} />
+							<MarkdownRenderer
+								content={question.questionText}
+								subject={effectiveSubject}
+							/>
 						</CardTitle>
 					</div>
 				</CardHeader>
@@ -335,23 +443,45 @@ export function QuestionCard({
 				{hasDiagram && (
 					<CardContent>
 						<div className="flex items-center justify-between">
-							<p className="text-xs font-medium text-muted-foreground">Diagram</p>
-							<Button variant="ghost" size="sm" onClick={handleToggleDiagram} className="h-8 gap-1 px-2">
-								{state.showDiagram ? <><MinusIcon className="h-4 w-4" /><span className="text-xs">Hide</span></> : <><PlusIcon className="h-4 w-4" /><span className="text-xs">Show</span></>}
+							<p className="text-xs font-medium text-muted-foreground">
+								Diagram
+							</p>
+							<Button
+								variant="ghost"
+								size="sm"
+								onClick={handleToggleDiagram}
+								className="h-8 gap-1 px-2"
+							>
+								{state.showDiagram ? (
+									<>
+										<MinusIcon className="h-4 w-4" />
+										<span className="text-xs">Hide</span>
+									</>
+								) : (
+									<>
+										<PlusIcon className="h-4 w-4" />
+										<span className="text-xs">Show</span>
+									</>
+								)}
 							</Button>
 						</div>
-						{state.showDiagram && question.media?.map((m, i) => (
-							<div key={i} className="mt-2">
-								{m.diagramData && <QuestionDiagram diagram={m.diagramData} />}
-							</div>
-						))}
+						{state.showDiagram &&
+							question.media?.map((m, i) => (
+								<div key={i} className="mt-2">
+									{m.diagramData && <QuestionDiagram diagram={m.diagramData} />}
+								</div>
+							))}
 					</CardContent>
 				)}
 
 				<CardContent className="space-y-3">
 					{renderInput()}
 
-					{isGrading && <p className="text-sm text-muted-foreground text-center">Grading your answer...</p>}
+					{isGrading && (
+						<p className="text-sm text-muted-foreground text-center">
+							Grading your answer...
+						</p>
+					)}
 
 					<AnimatePresence>
 						{state.showHint && (
@@ -363,7 +493,10 @@ export function QuestionCard({
 								className="overflow-hidden rounded-lg bg-warning/5 p-4 text-warning"
 							>
 								<p className="font-medium">Hint:</p>
-								<MarkdownRenderer content={question.hint} subject={effectiveSubject} />
+								<MarkdownRenderer
+									content={question.hint}
+									subject={effectiveSubject}
+								/>
 							</m.div>
 						)}
 					</AnimatePresence>
@@ -372,8 +505,17 @@ export function QuestionCard({
 				</CardContent>
 
 				<CardFooter className="flex gap-3">
-					<Button onClick={handleHint} variant="outline" className={cn("gap-2", state.showHint && "animate-icon-pop")}>
-						<MinusIcon className={cn("h-4 w-4 transition-transform duration-200", state.showHint && "rotate-180")} />
+					<Button
+						onClick={handleHint}
+						variant="outline"
+						className={cn("gap-2", state.showHint && "animate-icon-pop")}
+					>
+						<MinusIcon
+							className={cn(
+								"h-4 w-4 transition-transform duration-200",
+								state.showHint && "rotate-180",
+							)}
+						/>
 						Hint
 					</Button>
 					{state.isSubmitted && onNext && (

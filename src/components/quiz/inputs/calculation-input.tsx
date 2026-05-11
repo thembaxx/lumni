@@ -10,7 +10,11 @@ interface CalculationInputProps {
 	disabled?: boolean;
 }
 
-export function CalculationInput({ unit, onSubmit, disabled }: CalculationInputProps) {
+export function CalculationInput({
+	unit,
+	onSubmit,
+	disabled,
+}: CalculationInputProps) {
 	const [value, setValue] = useState("");
 	const [enteredUnit, setEnteredUnit] = useState(unit);
 
@@ -35,8 +39,15 @@ export function CalculationInput({ unit, onSubmit, disabled }: CalculationInputP
 				/>
 			</div>
 			<div className="flex justify-between items-center">
-				<span className="text-xs text-muted-foreground">Expected unit: {unit}</span>
-				<Button onClick={() => onSubmit({ value: parseFloat(value), unit: enteredUnit })} disabled={disabled || !value || isNaN(parseFloat(value))}>
+				<span className="text-xs text-muted-foreground">
+					Expected unit: {unit}
+				</span>
+				<Button
+					onClick={() =>
+						onSubmit({ value: parseFloat(value), unit: enteredUnit })
+					}
+					disabled={disabled || !value || isNaN(parseFloat(value))}
+				>
 					Submit Answer
 				</Button>
 			</div>

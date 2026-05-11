@@ -44,7 +44,6 @@ export function QuizView({
 	const [loadError, setLoadError] = useState<string | null>(null);
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [correctAnswers, setCorrectAnswers] = useState(0);
-	const [totalAnswered, setTotalAnswered] = useState(0);
 	const [currentAnswered, setCurrentAnswered] = useState(false);
 	const [elapsedTime, setElapsedTime] = useState(0);
 	const [isComplete, setIsComplete] = useState(false);
@@ -60,7 +59,7 @@ export function QuizView({
 		[selectedSubject, topic, questionCount],
 	);
 
-	const { questions, isLoading, isError, error } = useQuestionEngine(engineParams, {
+	const { questions, isLoading, isError } = useQuestionEngine(engineParams, {
 		enabled: sessionActive && !!selectedSubject,
 	});
 
@@ -72,7 +71,6 @@ export function QuizView({
 		setSessionActive(true);
 		setCurrentIndex(0);
 		setCorrectAnswers(0);
-		setTotalAnswered(0);
 		setCurrentAnswered(false);
 		setElapsedTime(0);
 		setIsComplete(false);
@@ -88,7 +86,6 @@ export function QuizView({
 	const handleRestart = useCallback(() => {
 		setCurrentIndex(0);
 		setCorrectAnswers(0);
-		setTotalAnswered(0);
 		setElapsedTime(0);
 		setIsComplete(false);
 	}, []);
@@ -115,7 +112,6 @@ export function QuizView({
 
 	const handleAnswered = useCallback((correct: boolean) => {
 		setCurrentAnswered(true);
-		setTotalAnswered((prev) => prev + 1);
 		if (correct) setCorrectAnswers((prev) => prev + 1);
 	}, []);
 
@@ -150,7 +146,13 @@ export function QuizView({
 							animation="error"
 							title="Unable to Load Questions"
 							description={loadError}
-							action={{ label: "Try Again", onClick: () => { setLoadError(null); window.location.reload(); } }}
+							action={{
+								label: "Try Again",
+								onClick: () => {
+									setLoadError(null);
+									window.location.reload();
+								},
+							}}
 							secondaryAction={{ label: "Go Back", onClick: handleStop }}
 						/>
 					</CardContent>
@@ -161,7 +163,12 @@ export function QuizView({
 
 	if (!sessionActive || !selectedSubject) {
 		if (variant === "compact") {
-			return <QuizSubjectPrompt onSelect={() => handleStartWithSubject("")} hasSubject={false} />;
+			return (
+				<QuizSubjectPrompt
+					onSelect={() => handleStartWithSubject("")}
+					hasSubject={false}
+				/>
+			);
 		}
 		return (
 			<div className="min-h-screen bg-background p-4 flex items-center justify-center pb-20">
@@ -197,7 +204,11 @@ export function QuizView({
 						<CardTitle>Unable to Load Questions</CardTitle>
 					</CardHeader>
 					<CardContent>
-						<QuizEmptyState variant="no-questions" subject={selectedSubject} onBack={handleStop} />
+						<QuizEmptyState
+							variant="no-questions"
+							subject={selectedSubject}
+							onBack={handleStop}
+						/>
 					</CardContent>
 				</Card>
 			</div>
@@ -212,7 +223,11 @@ export function QuizView({
 						<CardTitle>No Questions</CardTitle>
 					</CardHeader>
 					<CardContent className="space-y-4">
-						<QuizEmptyState variant="no-questions" subject={selectedSubject} onBack={handleStop} />
+						<QuizEmptyState
+							variant="no-questions"
+							subject={selectedSubject}
+							onBack={handleStop}
+						/>
 					</CardContent>
 				</Card>
 			</div>
@@ -265,7 +280,11 @@ export function QuizView({
 				showSkip={variant === "full" && !currentAnswered}
 			/>
 
-			<ProgressDots total={totalQuestions} currentIndex={currentIndex} variant="quiz" />
+			<ProgressDots
+				total={totalQuestions}
+				currentIndex={currentIndex}
+				variant="quiz"
+			/>
 		</div>
 	);
 }

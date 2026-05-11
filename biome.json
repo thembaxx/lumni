@@ -492,6 +492,16 @@
 					}
 				}
 			}
+		},
+		{
+			"includes": ["**/content-block-renderer.tsx", "**/diagram-input.tsx"],
+			"linter": {
+				"rules": {
+					"performance": {
+						"noImgElement": "off"
+					}
+				}
+			}
 		}
 	],
 	"assist": {

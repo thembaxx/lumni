@@ -14,7 +14,10 @@ export function checkGibberish(text: string, field: string): ValidationError[] {
 	return warnings;
 }
 
-export function checkPlaceholders(text: string, field: string): ValidationError[] {
+export function checkPlaceholders(
+	text: string,
+	field: string,
+): ValidationError[] {
 	const warnings: ValidationError[] = [];
 	if (/\{\{|\}\}|<.*>|__|_+/g.test(text)) {
 		warnings.push({
@@ -53,7 +56,10 @@ export function checkLength(
 	return errors;
 }
 
-export function checkDifficulty(value: string, field: string): ValidationError[] {
+export function checkDifficulty(
+	value: string,
+	field: string,
+): ValidationError[] {
 	const errors: ValidationError[] = [];
 	if (!["Easy", "Medium", "Hard"].includes(value)) {
 		errors.push({

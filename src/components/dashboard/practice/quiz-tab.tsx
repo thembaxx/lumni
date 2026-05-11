@@ -49,10 +49,7 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 		points,
 	} = state;
 
-	const {
-		handleStartWithSubject,
-		handleStop,
-	} = actions;
+	const { handleStartWithSubject, handleStop } = actions;
 
 	const doStart = useCallback(() => {
 		if (hasSubject) {

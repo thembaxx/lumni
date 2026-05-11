@@ -43,7 +43,7 @@ function getExamsFromJson(
 	subjectId: string,
 ): ExamPaperEntry[] {
 	try {
-		const filePath = path.join(process.cwd(), "data", "exams", "index.json");
+		const filePath = path.resolve("data", "exams", "index.json");
 		const content = fs.readFileSync(filePath, "utf-8");
 		const data: ExamsData = JSON.parse(content);
 

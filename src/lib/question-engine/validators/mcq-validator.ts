@@ -7,7 +7,9 @@ import {
 	checkPoints,
 } from "./shared-quality-checks";
 
-export function validateMCQ(question: Question<"multiple-choice">): ValidationResult {
+export function validateMCQ(
+	question: Question<"multiple-choice">,
+): ValidationResult {
 	const errors: ValidationError[] = [];
 	const warnings: ValidationError[] = [];
 
@@ -46,7 +48,9 @@ export function validateMCQ(question: Question<"multiple-choice">): ValidationRe
 
 	const optLengths = question.body.options.map((o) => o.text.length);
 	const avg = optLengths.reduce((a, b) => a + b, 0) / optLengths.length;
-	const variance = optLengths.reduce((s, l) => s + Math.pow(l - avg, 2), 0) / optLengths.length;
+	const variance =
+		optLengths.reduce((s, l) => s + Math.pow(l - avg, 2), 0) /
+		optLengths.length;
 	if (variance > 100) {
 		warnings.push({
 			type: "quality",
@@ -56,7 +60,10 @@ export function validateMCQ(question: Question<"multiple-choice">): ValidationRe
 		});
 	}
 
-	if (new Set(question.body.options.map((o) => o.text.toLowerCase().trim())).size !== question.body.options.length) {
+	if (
+		new Set(question.body.options.map((o) => o.text.toLowerCase().trim()))
+			.size !== question.body.options.length
+	) {
 		warnings.push({
 			type: "quality",
 			field: "options",

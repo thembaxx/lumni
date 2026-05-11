@@ -6,13 +6,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
-	getAnalyticsSummary,
 	clearAnalytics,
+	getAnalyticsSummary,
 	loadEvents,
 } from "@/lib/utils/engine-analytics";
 import {
-	getQualityStats,
 	clearQualityRecords,
+	getQualityStats,
 	loadQualityRecords,
 } from "@/lib/utils/engine-quality";
 
@@ -54,7 +54,9 @@ export default function AdminQualityPage() {
 			<div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
 				<Card>
 					<CardHeader className="p-4 pb-2">
-						<CardTitle className="text-sm text-muted-foreground">Total Requests</CardTitle>
+						<CardTitle className="text-sm text-muted-foreground">
+							Total Requests
+						</CardTitle>
 					</CardHeader>
 					<CardContent className="p-4 pt-0">
 						<p className="text-3xl font-bold">{analytics.totalRequests}</p>
@@ -62,30 +64,42 @@ export default function AdminQualityPage() {
 				</Card>
 				<Card>
 					<CardHeader className="p-4 pb-2">
-						<CardTitle className="text-sm text-muted-foreground">Success Rate</CardTitle>
+						<CardTitle className="text-sm text-muted-foreground">
+							Success Rate
+						</CardTitle>
 					</CardHeader>
 					<CardContent className="p-4 pt-0">
-						<p className={`text-3xl font-bold ${analytics.successRate >= 80 ? "text-success" : analytics.successRate >= 50 ? "text-warning" : "text-destructive"}`}>
+						<p
+							className={`text-3xl font-bold ${analytics.successRate >= 80 ? "text-success" : analytics.successRate >= 50 ? "text-warning" : "text-destructive"}`}
+						>
 							{analytics.successRate}%
 						</p>
 					</CardContent>
 				</Card>
 				<Card>
 					<CardHeader className="p-4 pb-2">
-						<CardTitle className="text-sm text-muted-foreground">Avg Validation Score</CardTitle>
+						<CardTitle className="text-sm text-muted-foreground">
+							Avg Validation Score
+						</CardTitle>
 					</CardHeader>
 					<CardContent className="p-4 pt-0">
-						<p className={`text-3xl font-bold ${quality.avgScore >= 80 ? "text-success" : quality.avgScore >= 50 ? "text-warning" : "text-destructive"}`}>
+						<p
+							className={`text-3xl font-bold ${quality.avgScore >= 80 ? "text-success" : quality.avgScore >= 50 ? "text-warning" : "text-destructive"}`}
+						>
 							{quality.avgScore}
 						</p>
 					</CardContent>
 				</Card>
 				<Card>
 					<CardHeader className="p-4 pb-2">
-						<CardTitle className="text-sm text-muted-foreground">Question Pass Rate</CardTitle>
+						<CardTitle className="text-sm text-muted-foreground">
+							Question Pass Rate
+						</CardTitle>
 					</CardHeader>
 					<CardContent className="p-4 pt-0">
-						<p className={`text-3xl font-bold ${quality.passRate >= 80 ? "text-success" : quality.passRate >= 50 ? "text-warning" : "text-destructive"}`}>
+						<p
+							className={`text-3xl font-bold ${quality.passRate >= 80 ? "text-success" : quality.passRate >= 50 ? "text-warning" : "text-destructive"}`}
+						>
 							{quality.passRate}%
 						</p>
 					</CardContent>
@@ -119,14 +133,28 @@ export default function AdminQualityPage() {
 					</CardHeader>
 					<CardContent className="space-y-2">
 						{Object.entries(quality.byType).length === 0 && (
-							<p className="text-sm text-muted-foreground">No quality data yet</p>
+							<p className="text-sm text-muted-foreground">
+								No quality data yet
+							</p>
 						)}
-						{(Object.entries(quality.byType) as [string, { count: number; avgScore: number }][]).map(([type, stats]) => (
-							<div key={type} className="flex items-center justify-between text-sm">
-								<Badge variant="outline" className="font-mono text-xs">{type}</Badge>
+						{(
+							Object.entries(quality.byType) as [
+								string,
+								{ count: number; avgScore: number },
+							][]
+						).map(([type, stats]) => (
+							<div
+								key={type}
+								className="flex items-center justify-between text-sm"
+							>
+								<Badge variant="outline" className="font-mono text-xs">
+									{type}
+								</Badge>
 								<div className="flex gap-3">
 									<span className="text-muted-foreground">{stats.count}x</span>
-									<span className={`font-mono ${stats.avgScore >= 80 ? "text-success" : "text-warning"}`}>
+									<span
+										className={`font-mono ${stats.avgScore >= 80 ? "text-success" : "text-warning"}`}
+									>
 										{stats.avgScore}
 									</span>
 								</div>
@@ -142,16 +170,28 @@ export default function AdminQualityPage() {
 				</CardHeader>
 				<CardContent>
 					{events.length === 0 ? (
-						<p className="text-sm text-muted-foreground">No events recorded yet</p>
+						<p className="text-sm text-muted-foreground">
+							No events recorded yet
+						</p>
 					) : (
 						<div className="space-y-1 max-h-60 overflow-y-auto">
 							{events.map((e, i) => (
-								<div key={i} className="flex items-center gap-2 text-xs font-mono">
-									<Badge variant={e.success ? "secondary" : "destructive"} className="text-[10px] px-1 py-0">
+								<div
+									key={i}
+									className="flex items-center gap-2 text-xs font-mono"
+								>
+									<Badge
+										variant={e.success ? "secondary" : "destructive"}
+										className="text-[10px] px-1 py-0"
+									>
 										{e.event}
 									</Badge>
-									<span className="text-muted-foreground">{e.subject || "-"}</span>
-									<span className="text-muted-foreground">{e.questionType || "-"}</span>
+									<span className="text-muted-foreground">
+										{e.subject || "-"}
+									</span>
+									<span className="text-muted-foreground">
+										{e.questionType || "-"}
+									</span>
 									<span className="text-muted-foreground ml-auto">
 										{new Date(e.timestamp).toLocaleTimeString()}
 									</span>
@@ -172,11 +212,19 @@ export default function AdminQualityPage() {
 					) : (
 						<div className="space-y-1 max-h-60 overflow-y-auto">
 							{recentQuality.map((r, i) => (
-								<div key={i} className="flex items-center gap-2 text-xs font-mono">
-									<Badge variant={r.isValid ? "secondary" : "destructive"} className="text-[10px] px-1 py-0">
+								<div
+									key={i}
+									className="flex items-center gap-2 text-xs font-mono"
+								>
+									<Badge
+										variant={r.isValid ? "secondary" : "destructive"}
+										className="text-[10px] px-1 py-0"
+									>
 										{r.validationScore}
 									</Badge>
-									<span className="text-muted-foreground">{r.questionType}</span>
+									<span className="text-muted-foreground">
+										{r.questionType}
+									</span>
 									<span className="text-muted-foreground">{r.subject}</span>
 									<span className="text-muted-foreground ml-auto">
 										{new Date(r.timestamp).toLocaleTimeString()}

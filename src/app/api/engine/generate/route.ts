@@ -24,11 +24,17 @@ export async function POST(req: NextRequest) {
 		const body = (await req.json()) as GenerationParams;
 
 		if (!body.subject) {
-			return NextResponse.json({ error: "Subject is required" }, { status: 400 });
+			return NextResponse.json(
+				{ error: "Subject is required" },
+				{ status: 400 },
+			);
 		}
 
 		if (!body.count || body.count < 1) {
-			return NextResponse.json({ error: "Count must be at least 1" }, { status: 400 });
+			return NextResponse.json(
+				{ error: "Count must be at least 1" },
+				{ status: 400 },
+			);
 		}
 
 		const engine = await QuestionEngine.initialize();
@@ -41,7 +47,12 @@ export async function POST(req: NextRequest) {
 	} catch (error) {
 		console.error("[Engine Generate] Error:", error);
 		return NextResponse.json(
-			{ error: error instanceof Error ? error.message : "Failed to generate questions" },
+			{
+				error:
+					error instanceof Error
+						? error.message
+						: "Failed to generate questions",
+			},
 			{ status: 500 },
 		);
 	}

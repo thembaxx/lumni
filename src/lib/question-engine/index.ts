@@ -1,5 +1,5 @@
-export { QuestionEngine } from "./question-engine";
+export { MediaResolver } from "./media-resolver";
 export { ProcessorRegistry } from "./processor-registry";
 export { PromptManager } from "./prompt-manager";
-export { MediaResolver } from "./media-resolver";
+export { QuestionEngine } from "./question-engine";
 export type * from "./types";

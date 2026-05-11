@@ -76,18 +76,19 @@ export function QuestionDiagram({ diagram }: { diagram: DiagramSpec }) {
 			{diagram.type === "circuit" && (
 				<CircuitDiagram data={diagram.data as never} />
 			)}
-			{diagram.type === "wave" && (
-				<WaveDiagram data={diagram.data as never} />
-			)}
+			{diagram.type === "wave" && <WaveDiagram data={diagram.data as never} />}
 			{diagram.type === "motion" && (
 				<MotionDiagram data={diagram.data as never} />
 			)}
-			{diagram.type === "custom-svg" && (diagram.data as Record<string, string>).svg && (
-				<div
-					className="w-full overflow-auto rounded-lg border bg-white p-4"
-					dangerouslySetInnerHTML={{ __html: String((diagram.data as Record<string, string>).svg) }}
-				/>
-			)}
+			{diagram.type === "custom-svg" &&
+				(diagram.data as Record<string, string>).svg && (
+					<div
+						className="w-full overflow-auto rounded-lg border bg-white p-4"
+						dangerouslySetInnerHTML={{
+							__html: String((diagram.data as Record<string, string>).svg),
+						}}
+					/>
+				)}
 		</div>
 	);
 }

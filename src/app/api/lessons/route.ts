@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
 		const search = searchParams.get("search");
 		const difficulty = searchParams.get("difficulty");
 
-		const filePath = path.join(process.cwd(), "lessons-comprehensive.json");
+		const filePath = path.resolve("lessons-comprehensive.json");
 
 		if (!fs.existsSync(filePath)) {
 			return NextResponse.json({ lessons: [] });

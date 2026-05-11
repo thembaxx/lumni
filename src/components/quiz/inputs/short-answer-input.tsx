@@ -10,7 +10,11 @@ interface ShortAnswerInputProps {
 	disabled?: boolean;
 }
 
-export function ShortAnswerInput({ maxLength, onSubmit, disabled }: ShortAnswerInputProps) {
+export function ShortAnswerInput({
+	maxLength,
+	onSubmit,
+	disabled,
+}: ShortAnswerInputProps) {
 	const [value, setValue] = useState("");
 
 	return (
@@ -23,8 +27,13 @@ export function ShortAnswerInput({ maxLength, onSubmit, disabled }: ShortAnswerI
 				className="w-full"
 			/>
 			<div className="flex items-center justify-between">
-				<span className="text-xs text-muted-foreground">{value.length}/{maxLength} characters</span>
-				<Button onClick={() => onSubmit(value.trim())} disabled={disabled || !value.trim()}>
+				<span className="text-xs text-muted-foreground">
+					{value.length}/{maxLength} characters
+				</span>
+				<Button
+					onClick={() => onSubmit(value.trim())}
+					disabled={disabled || !value.trim()}
+				>
 					Submit Answer
 				</Button>
 			</div>

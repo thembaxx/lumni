@@ -72,13 +72,25 @@ export interface MixedPart {
 }
 
 export interface DiagramSpec {
-	type: "force-vector" | "circuit" | "wave" | "motion" | "node-flow" | "node" | "custom-svg";
+	type:
+		| "force-vector"
+		| "circuit"
+		| "wave"
+		| "motion"
+		| "node-flow"
+		| "node"
+		| "custom-svg";
 	title: string;
 	data: Record<string, unknown>;
 }
 
 export interface MediaContent {
-	type: "inline-svg" | "image-url" | "diagram-data" | "map-coordinates" | "interactive";
+	type:
+		| "inline-svg"
+		| "image-url"
+		| "diagram-data"
+		| "map-coordinates"
+		| "interactive";
 	label: string;
 	svgContent?: string;
 	diagramData?: DiagramSpec;
@@ -166,7 +178,14 @@ export type Question<T extends QuestionType = QuestionType> = {
 };
 
 export interface UserAnswer {
-	type: "option-ids" | "pairs" | "text" | "code" | "numeric" | "coordinates" | "mixed";
+	type:
+		| "option-ids"
+		| "pairs"
+		| "text"
+		| "code"
+		| "numeric"
+		| "coordinates"
+		| "mixed";
 	value: unknown;
 }
 
@@ -206,7 +225,10 @@ export type QuestionProcessor<T extends QuestionType = QuestionType> = {
 	generateHint(question: Question<T>): Promise<string>;
 	grade(question: Question<T>, answer: UserAnswer): Promise<GradingResult>;
 	validate(question: Question<T>): ValidationResult;
-	generateFromSource?(source: string, params: GenerationParams): Promise<Question<T>[]>;
+	generateFromSource?(
+		source: string,
+		params: GenerationParams,
+	): Promise<Question<T>[]>;
 };
 
 export interface ValidationError {

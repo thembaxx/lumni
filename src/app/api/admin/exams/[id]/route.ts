@@ -8,52 +8,49 @@ export const runtime = "nodejs";
 const utapi = new UTApi();
 
 export async function DELETE(
-  _request: Request,
-  { params }: { params: Promise<{ id: string }> },
+	_request: Request,
+	{ params }: { params: Promise<{ id: string }> },
 ) {
-  try {
-    const { id } = await params;
+	try {
+		const { id } = await params;
 
-    const doc = await databases.getDocument(
-      APPWRITE_DATABASE_ID,
-      COLLECTIONS.EXAM_PAPERS,
-      id,
-    );
+		const doc = await databases.getDocument(
+			APPWRITE_DATABASE_ID,
+			COLLECTIONS.EXAM_PAPERS,
+			id,
+		);
 
-    if (!doc) {
-      return NextResponse.json(
-        { error: "Exam paper not found" },
-        { status: 404 },
-      );
-    }
+		if (!doc) {
+			return NextResponse.json(
+				{ error: "Exam paper not found" },
+				{ status: 404 },
+			);
+		}
 
-    const fileKeysRaw = doc.fileKeys as string;
-    const fileKeys: Record<string, string> = fileKeysRaw
-      ? JSON.parse(fileKeysRaw)
-      : {};
-    const keysToDelete = Object.values(fileKeys).filter(Boolean);
+		const fileKeysRaw = doc.fileKeys as string;
+		const fileKeys: Record<string, string> = fileKeysRaw
+			? JSON.parse(fileKeysRaw)
+			: {};
+		const keysToDelete = Object.values(fileKeys).filter(Boolean);
 
-    if (keysToDelete.length > 0) {
-      await utapi.deleteFiles(keysToDelete);
-    }
+		if (keysToDelete.length > 0) {
+			await utapi.deleteFiles(keysToDelete);
+		}
 
-    await databases.deleteDocument(
-      APPWRITE_DATABASE_ID,
-      COLLECTIONS.EXAM_PAPERS,
-      id,
-    );
+		await databases.deleteDocument(
+			APPWRITE_DATABASE_ID,
+			COLLECTIONS.EXAM_PAPERS,
+			id,
+		);
 
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error("Failed to delete exam:", error);
-    return NextResponse.json(
-      {
-        error:
-          error instanceof Error
-            ? error.message
-            : "Failed to delete exam",
-      },
-      { status: 500 },
-    );
-  }
+		return NextResponse.json({ success: true });
+	} catch (error) {
+		console.error("Failed to delete exam:", error);
+		return NextResponse.json(
+			{
+				error: error instanceof Error ? error.message : "Failed to delete exam",
+			},
+			{ status: 500 },
+		);
+	}
 }

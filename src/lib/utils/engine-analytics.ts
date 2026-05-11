@@ -12,7 +12,9 @@ export interface AnalyticsEvent {
 
 const ANALYTICS_KEY = "lumni_engine_analytics";
 
-export function trackEngineEvent(data: Omit<AnalyticsEvent, "timestamp">): void {
+export function trackEngineEvent(
+	data: Omit<AnalyticsEvent, "timestamp">,
+): void {
 	try {
 		const events = loadEvents();
 		events.push({ ...data, timestamp: Date.now() });
@@ -45,14 +47,22 @@ export function getAnalyticsSummary(): {
 	const events = loadEvents();
 	if (events.length === 0) {
 		return {
-			totalRequests: 0, generateCount: 0, gradeCount: 0, hintCount: 0,
-			successRate: 0, bySubject: {}, byType: {},
+			totalRequests: 0,
+			generateCount: 0,
+			gradeCount: 0,
+			hintCount: 0,
+			successRate: 0,
+			bySubject: {},
+			byType: {},
 		};
 	}
 
 	const bySubject: Record<string, number> = {};
 	const byType: Record<string, number> = {};
-	let generate = 0, grade = 0, hint = 0, success = 0;
+	let generate = 0,
+		grade = 0,
+		hint = 0,
+		success = 0;
 
 	for (const e of events) {
 		if (e.event === "generate") generate++;
@@ -60,7 +70,8 @@ export function getAnalyticsSummary(): {
 		if (e.event === "hint") hint++;
 		if (e.success) success++;
 		if (e.subject) bySubject[e.subject] = (bySubject[e.subject] || 0) + 1;
-		if (e.questionType) byType[e.questionType] = (byType[e.questionType] || 0) + 1;
+		if (e.questionType)
+			byType[e.questionType] = (byType[e.questionType] || 0) + 1;
 	}
 
 	return {

@@ -6,12 +6,19 @@ export interface PromptTemplate {
 }
 
 export class PromptManager {
-	getPrompt(type: QuestionType | "any", params: GenerationParams): PromptTemplate {
+	getPrompt(
+		type: QuestionType | "any",
+		params: GenerationParams,
+	): PromptTemplate {
 		const difficulty = params.difficulty ?? "Medium";
 		const subject = params.subject;
 		const topic = params.topic ? ` on the topic: ${params.topic}` : "";
-		const bloom = params.bloomLevel ? `. Bloom's taxonomy level: ${params.bloomLevel}` : "";
-		const unit = params.curriculumUnit ? `. Curriculum unit: ${params.curriculumUnit}` : "";
+		const bloom = params.bloomLevel
+			? `. Bloom's taxonomy level: ${params.bloomLevel}`
+			: "";
+		const unit = params.curriculumUnit
+			? `. Curriculum unit: ${params.curriculumUnit}`
+			: "";
 		const count = params.count;
 
 		if (type === "any") {

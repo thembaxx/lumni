@@ -1,34 +1,34 @@
 "use client";
 
+import { ContentBlockRenderer } from "@/components/exam/content-block-renderer";
 import { Textarea } from "@/components/ui/textarea";
 import type { ContentBlock } from "@/types/exam-paper";
-import { ContentBlockRenderer } from "@/components/exam/content-block-renderer";
 
 interface DataResponseInputProps {
-  value: string | undefined;
-  onChange: (value: string) => void;
-  disabled?: boolean;
-  content?: ContentBlock[] | null;
+	value: string | undefined;
+	onChange: (value: string) => void;
+	disabled?: boolean;
+	content?: ContentBlock[] | null;
 }
 
 export function DataResponseInput({
-  value = "",
-  onChange,
-  disabled,
-  content,
+	value = "",
+	onChange,
+	disabled,
+	content,
 }: DataResponseInputProps) {
-  return (
-    <div className="space-y-4">
-      {content?.map((block, idx) => (
-        <ContentBlockRenderer key={idx} block={block} />
-      ))}
-      <Textarea
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        disabled={disabled}
-        placeholder="Analyse the data above and respond..."
-        className="min-h-[120px]"
-      />
-    </div>
-  );
+	return (
+		<div className="space-y-4">
+			{content?.map((block, idx) => (
+				<ContentBlockRenderer key={idx} block={block} />
+			))}
+			<Textarea
+				value={value}
+				onChange={(e) => onChange(e.target.value)}
+				disabled={disabled}
+				placeholder="Analyse the data above and respond..."
+				className="min-h-[120px]"
+			/>
+		</div>
+	);
 }

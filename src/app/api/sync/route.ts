@@ -14,7 +14,10 @@ export async function POST(req: NextRequest) {
 		switch (action) {
 			case "sync": {
 				if (!subject) {
-					return NextResponse.json({ error: "Missing subject" }, { status: 400 });
+					return NextResponse.json(
+						{ error: "Missing subject" },
+						{ status: 400 },
+					);
 				}
 				const result = await syncSubject(subject);
 				return NextResponse.json(result);
@@ -22,7 +25,10 @@ export async function POST(req: NextRequest) {
 
 			case "refresh": {
 				if (!subject) {
-					return NextResponse.json({ error: "Missing subject" }, { status: 400 });
+					return NextResponse.json(
+						{ error: "Missing subject" },
+						{ status: 400 },
+					);
 				}
 				const result = await refreshSubject(subject);
 				return NextResponse.json(result);
@@ -30,7 +36,10 @@ export async function POST(req: NextRequest) {
 
 			case "check": {
 				if (!subject) {
-					return NextResponse.json({ error: "Missing subject" }, { status: 400 });
+					return NextResponse.json(
+						{ error: "Missing subject" },
+						{ status: 400 },
+					);
 				}
 				const result = await checkSubjectStatus(subject);
 				return NextResponse.json(result);
@@ -56,6 +65,7 @@ export async function POST(req: NextRequest) {
 export async function GET() {
 	return NextResponse.json({
 		status: "ok",
-		message: "Question Engine v2 active. Generate questions via POST /api/engine/generate",
+		message:
+			"Question Engine v2 active. Generate questions via POST /api/engine/generate",
 	});
 }

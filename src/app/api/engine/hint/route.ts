@@ -25,17 +25,29 @@ export async function POST(req: NextRequest) {
 		const { question } = body as { question: Question };
 
 		if (!question || !question.id) {
-			return NextResponse.json({ error: "Question is required" }, { status: 400 });
+			return NextResponse.json(
+				{ error: "Question is required" },
+				{ status: 400 },
+			);
 		}
 
 		const engine = await QuestionEngine.initialize();
-		const hint = await engine.generateHint({ questionId: question.id, question });
+		const hint = await engine.generateHint({
+			questionId: question.id,
+			question,
+		});
 
-		return NextResponse.json({ hint }, { headers: getRateLimitHeaders(rateLimit) });
+		return NextResponse.json(
+			{ hint },
+			{ headers: getRateLimitHeaders(rateLimit) },
+		);
 	} catch (error) {
 		console.error("[Engine Hint] Error:", error);
 		return NextResponse.json(
-			{ error: error instanceof Error ? error.message : "Failed to generate hint" },
+			{
+				error:
+					error instanceof Error ? error.message : "Failed to generate hint",
+			},
 			{ status: 500 },
 		);
 	}

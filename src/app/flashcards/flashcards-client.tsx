@@ -3,12 +3,12 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import { Confetti, XPGainPopup } from "@/components/celebration";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
+import type { Question } from "@/types/questions";
 import { FlashcardsActive } from "./flashcards-active";
 import { FlashcardsEmpty } from "./flashcards-empty";
 import { FlashcardsIdle } from "./flashcards-idle";
 import { FlashcardsLoading } from "./flashcards-loading";
 import { FlashcardsResults } from "./flashcards-results";
-import type { Question } from "@/types/questions";
 
 interface FlashcardItem {
 	id: string;
@@ -41,7 +41,11 @@ export function FlashcardsClient() {
 		[selectedSubject],
 	);
 
-	const { questions, isLoading, hint: generateHint, isGeneratingHint } = useQuestionEngine(engineParams, {
+	const {
+		questions,
+		isLoading,
+		hint: generateHint,
+	} = useQuestionEngine(engineParams, {
 		enabled: isActive && !!selectedSubject,
 	});
 
@@ -82,9 +86,11 @@ export function FlashcardsClient() {
 			if (!prev) {
 				const card = cards[currentIndex];
 				if (card && !hintsRef.current.has(card.id) && card.rawQuestion) {
-					generateHint(card.rawQuestion).then((hint) => {
-						hintsRef.current.set(card.id, hint);
-					}).catch(() => {});
+					generateHint(card.rawQuestion)
+						.then((hint) => {
+							hintsRef.current.set(card.id, hint);
+						})
+						.catch(() => {});
 				}
 			}
 			return !prev;

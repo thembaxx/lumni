@@ -1,7 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { BarChart3, FlaskConical, LogOut, ShieldCheck, User } from "lucide-react";
+import {
+	BarChart3,
+	FlaskConical,
+	LogOut,
+	ShieldCheck,
+	User,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -39,7 +45,9 @@ export function AdminHeader({ onLogout }: AdminHeaderProps) {
 					>
 						<h1 className="text-lg font-semibold">Admin</h1>
 						<div className="flex items-center gap-2">
-							<p className="text-xs text-muted-foreground">Manage exam papers & engine</p>
+							<p className="text-xs text-muted-foreground">
+								Manage exam papers & engine
+							</p>
 							{isAdmin ? (
 								<motion.span
 									initial={{ opacity: 0, scale: 0.8 }}
@@ -63,7 +71,12 @@ export function AdminHeader({ onLogout }: AdminHeaderProps) {
 					</motion.div>
 				</div>
 				<motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-					<Button variant="ghost" size="sm" onClick={onLogout} className="text-muted-foreground">
+					<Button
+						variant="ghost"
+						size="sm"
+						onClick={onLogout}
+						className="text-muted-foreground"
+					>
 						<LogOut className="w-4 h-4" />
 					</Button>
 				</motion.div>

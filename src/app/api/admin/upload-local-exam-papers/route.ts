@@ -1,11 +1,13 @@
 import { randomUUID } from "crypto";
-import fs from "fs";
-import { NextRequest, NextResponse } from "next/server";
-import path from "path";
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import { UTApi, UTFile } from "uploadthing/server";
 import { getExamsDb, insertExamPaper, saveExamsDb } from "@/lib/db/exams";
 
-const FOLDER_PATH = path.join(process.cwd(), "downloads", "exam-papers-2025");
+async function getDefaultFolderPath(): Promise<string> {
+	const path = await import("path");
+	return path.join(process.cwd(), "downloads", "exam-papers-2025");
+}
 
 interface ParsedFile {
 	year: number;
@@ -112,10 +114,15 @@ function dbExecOne(
 
 export async function POST(request: NextRequest) {
 	try {
+		const [{ default: fs }, { default: path }] = await Promise.all([
+			import("fs"),
+			import("path"),
+		]);
+
 		const body = await request.json();
 		const { folderPath } = body;
 
-		const targetFolder = folderPath || FOLDER_PATH;
+		const targetFolder = folderPath || (await getDefaultFolderPath());
 
 		if (!fs.existsSync(targetFolder)) {
 			return NextResponse.json(

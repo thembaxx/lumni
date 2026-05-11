@@ -83,7 +83,9 @@ describe("Question Types", () => {
 			body: {
 				language: "python",
 				starterCode: "def solve():",
-				testCases: [{ input: "5", expectedOutput: "25", description: "Square of 5" }],
+				testCases: [
+					{ input: "5", expectedOutput: "25", description: "Square of 5" },
+				],
 				timeLimit: 5000,
 			},
 		};
@@ -93,9 +95,17 @@ describe("Question Types", () => {
 
 	test("QuestionType union includes all 11 types", () => {
 		const types: QuestionType[] = [
-			"multiple-choice", "matching", "short-answer", "long-answer",
-			"essay", "calculation", "diagram", "programming",
-			"source-based", "data-response", "mixed",
+			"multiple-choice",
+			"matching",
+			"short-answer",
+			"long-answer",
+			"essay",
+			"calculation",
+			"diagram",
+			"programming",
+			"source-based",
+			"data-response",
+			"mixed",
 		];
 		expect(types.length).toBe(11);
 	});

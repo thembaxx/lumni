@@ -2,7 +2,9 @@ import { describe, expect, test } from "bun:test";
 import type { Question } from "@/lib/question-engine/types";
 import { validateMCQ } from "../mcq-validator";
 
-function makeQuestion(overrides?: Partial<Question<"multiple-choice">>): Question<"multiple-choice"> {
+function makeQuestion(
+	overrides?: Partial<Question<"multiple-choice">>,
+): Question<"multiple-choice"> {
 	return {
 		id: "q1",
 		type: "multiple-choice",
@@ -52,31 +54,67 @@ describe("MCQ Validator", () => {
 	});
 
 	test("fails on less than 2 options", () => {
-		const result = validateMCQ(makeQuestion({ body: { options: [{ id: "A", text: "Only", isCorrect: true }], correctOptionId: "A", allowMultiple: false } }));
+		const result = validateMCQ(
+			makeQuestion({
+				body: {
+					options: [{ id: "A", text: "Only", isCorrect: true }],
+					correctOptionId: "A",
+					allowMultiple: false,
+				},
+			}),
+		);
 		expect(result.isValid).toBe(false);
 	});
 
 	test("detects no correct answer", () => {
-		const result = validateMCQ(makeQuestion({ body: { options: [
-			{ id: "A", text: "1", isCorrect: false },
-			{ id: "B", text: "2", isCorrect: false },
-		], correctOptionId: "", allowMultiple: false } }));
+		const result = validateMCQ(
+			makeQuestion({
+				body: {
+					options: [
+						{ id: "A", text: "1", isCorrect: false },
+						{ id: "B", text: "2", isCorrect: false },
+					],
+					correctOptionId: "",
+					allowMultiple: false,
+				},
+			}),
+		);
 		expect(result.isValid).toBe(false);
 	});
 
 	test("detects multiple correct when not allowed", () => {
-		const result = validateMCQ(makeQuestion({ body: { options: [
-			{ id: "A", text: "1", isCorrect: true },
-			{ id: "B", text: "2", isCorrect: true },
-		], correctOptionId: "", allowMultiple: false } }));
+		const result = validateMCQ(
+			makeQuestion({
+				body: {
+					options: [
+						{ id: "A", text: "1", isCorrect: true },
+						{ id: "B", text: "2", isCorrect: true },
+					],
+					correctOptionId: "",
+					allowMultiple: false,
+				},
+			}),
+		);
 		expect(result.isValid).toBe(false);
 	});
 
 	test("warns on option length variance", () => {
-		const result = validateMCQ(makeQuestion({ body: { options: [
-			{ id: "A", text: "A very long option that is much longer than the others", isCorrect: false },
-			{ id: "B", text: "short", isCorrect: true },
-		], correctOptionId: "B", allowMultiple: false } }));
+		const result = validateMCQ(
+			makeQuestion({
+				body: {
+					options: [
+						{
+							id: "A",
+							text: "A very long option that is much longer than the others",
+							isCorrect: false,
+						},
+						{ id: "B", text: "short", isCorrect: true },
+					],
+					correctOptionId: "B",
+					allowMultiple: false,
+				},
+			}),
+		);
 		expect(result.warnings.length).toBeGreaterThanOrEqual(0);
 	});
 });

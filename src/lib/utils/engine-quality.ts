@@ -56,8 +56,12 @@ export function getQualityStats(): {
 		byType[r.questionType].totalScore += r.validationScore;
 	}
 
-	const avgScore = Math.round(records.reduce((s, r) => s + r.validationScore, 0) / records.length);
-	const passRate = Math.round((records.filter((r) => r.isValid).length / records.length) * 100);
+	const avgScore = Math.round(
+		records.reduce((s, r) => s + r.validationScore, 0) / records.length,
+	);
+	const passRate = Math.round(
+		(records.filter((r) => r.isValid).length / records.length) * 100,
+	);
 
 	return {
 		total: records.length,
@@ -66,7 +70,10 @@ export function getQualityStats(): {
 		byType: Object.fromEntries(
 			Object.entries(byType).map(([type, stats]) => [
 				type,
-				{ count: stats.count, avgScore: Math.round(stats.totalScore / stats.count) },
+				{
+					count: stats.count,
+					avgScore: Math.round(stats.totalScore / stats.count),
+				},
 			]),
 		),
 	};
