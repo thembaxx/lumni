@@ -1,42 +1,40 @@
-export interface QAQuestion {
-	id: string;
-	topic: string;
-	difficulty: "Easy" | "Medium" | "Hard";
-	points: number;
-	questionText: string;
-	questionType: "multiple-choice" | "flashcard";
-	options: QAOption[];
-	supportsDiagram: boolean;
-	diagram: QADiagram | null;
-	hint: string;
-	explanation: string;
-	steps?: string[];
-}
+import type {
+	QuestionType as EngineQuestionType,
+	Question as EngineQuestion,
+	QuestionBody as EngineQuestionBody,
+	Option as EngineOption,
+	DiagramSpec as EngineDiagramSpec,
+	MediaContent as EngineMediaContent,
+	UserAnswer as EngineUserAnswer,
+	GradingResult as EngineGradingResult,
+	GenerationParams as EngineGenerationParams,
+	ValidationResult as EngineValidationResult,
+	ValidationError as EngineValidationError,
+} from "@/lib/question-engine/types";
 
-export interface QAOption {
-	id: string;
-	text: string;
-	isCorrect: boolean;
-}
+export type QuestionType = EngineQuestionType;
+export type Question<T extends EngineQuestionType = EngineQuestionType> = EngineQuestion<T>;
+export type QuestionBody = EngineQuestionBody;
+export type Difficulty = EngineQuestion["difficulty"];
+export type BloomLevel = EngineQuestion["bloomTaxonomy"];
+export type Option = EngineOption;
+export type RubricCriterion = { name: string; description: string; maxScore: number };
+export type TestCase = { input: string; expectedOutput: string; description: string };
+export type SubQuestion = { id: string; questionText: string; type: EngineQuestionType; points: number; body: EngineQuestionBody[EngineQuestionType] };
+export type Source = { type: "text" | "image" | "table" | "graph" | "map" | "infographic"; content: string; attribution?: string; mediaUrl?: string };
+export type DataSet = { type: "table" | "chart" | "graph"; title: string; headers?: string[]; rows?: Record<string, string | number>[]; chartType?: "bar" | "line" | "pie" | "scatter"; chartData?: Record<string, unknown> };
+export type MixedPart = { id: string; questionText: string; type: EngineQuestionType; points: number; body: EngineQuestionBody[EngineQuestionType] };
+export type DiagramSpec = EngineDiagramSpec;
+export type MediaContent = EngineMediaContent;
+export type UserAnswer = EngineUserAnswer;
+export type GradingResult = EngineGradingResult;
+export type GenerationParams = EngineGenerationParams;
+export type ValidationResult = EngineValidationResult;
+export type ValidationError = EngineValidationError;
 
-export interface QADiagram {
-	type: "force-vector" | "circuit" | "wave" | "motion" | "node-flow" | "node";
-	title: string;
-	data: Record<string, unknown> & {
-		nodes?: Array<{
-			id: string;
-			type?: string;
-			label: string;
-			x?: number;
-			y?: number;
-		}>;
-		edges?: Array<{
-			id: string;
-			source: string;
-			target: string;
-		}>;
-	};
-}
+export type QAQuestion<T extends EngineQuestionType = EngineQuestionType> = EngineQuestion<T>;
+export type QAOption = EngineOption;
+export type QADiagram = EngineDiagramSpec;
 
 export interface QAMetadata {
 	subject: string;
@@ -48,7 +46,7 @@ export interface QAMetadata {
 
 export interface QAFile {
 	metadata: QAMetadata;
-	questions: QAQuestion[];
+	questions: Question[];
 }
 
 export interface QuestionState {

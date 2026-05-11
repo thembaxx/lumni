@@ -1,13 +1,14 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { Confetti, XPGainPopup } from "@/components/celebration";
-import { useSubjectQuestions } from "@/hooks/use-subject-questions";
+import { useQuestionEngine } from "@/hooks/use-question-engine";
 import { FlashcardsActive } from "./flashcards-active";
 import { FlashcardsEmpty } from "./flashcards-empty";
 import { FlashcardsIdle } from "./flashcards-idle";
 import { FlashcardsLoading } from "./flashcards-loading";
 import { FlashcardsResults } from "./flashcards-results";
+import type { Question } from "@/types/questions";
 
 interface FlashcardItem {
 	id: string;
@@ -16,6 +17,7 @@ interface FlashcardItem {
 	topic: string;
 	difficulty: string;
 	hint?: string;
+	rawQuestion: Question;
 }
 
 export function FlashcardsClient() {
@@ -25,19 +27,23 @@ export function FlashcardsClient() {
 	const [isFlipped, setIsFlipped] = useState(false);
 	const [knownCards, setKnownCards] = useState<Set<string>>(new Set());
 	const [reviewCards, setReviewCards] = useState<Set<string>>(new Set());
+	const hintsRef = useRef<Map<string, string>>(new Map());
 	const [sessionComplete, setSessionComplete] = useState(false);
 	const [showConfetti, setShowConfetti] = useState(false);
 	const [showXPGain, setShowXPGain] = useState(false);
 
-	const subjectToFetch = selectedSubject.toLowerCase();
-	const { data: questions, isLoading } = useSubjectQuestions(
-		subjectToFetch,
-		20,
-		undefined,
-		{
-			enabled: isActive && !!selectedSubject,
-		},
+	const engineParams = useMemo(
+		() => ({
+			subject: selectedSubject.toLowerCase(),
+			count: 20,
+			questionType: "multiple-choice" as const,
+		}),
+		[selectedSubject],
 	);
+
+	const { questions, isLoading, hint: generateHint, isGeneratingHint } = useQuestionEngine(engineParams, {
+		enabled: isActive && !!selectedSubject,
+	});
 
 	const cards: FlashcardItem[] =
 		isLoading === false && questions?.length
@@ -49,7 +55,8 @@ export function FlashcardsClient() {
 						back: q.explanation,
 						topic: q.topic,
 						difficulty: q.difficulty,
-						hint: q.hint,
+						hint: hintsRef.current.get(q.id) || q.hint,
+						rawQuestion: q,
 					}))
 			: [];
 
@@ -71,8 +78,18 @@ export function FlashcardsClient() {
 	}, []);
 
 	const handleFlip = useCallback(() => {
-		setIsFlipped((prev) => !prev);
-	}, []);
+		setIsFlipped((prev) => {
+			if (!prev) {
+				const card = cards[currentIndex];
+				if (card && !hintsRef.current.has(card.id) && card.rawQuestion) {
+					generateHint(card.rawQuestion).then((hint) => {
+						hintsRef.current.set(card.id, hint);
+					}).catch(() => {});
+				}
+			}
+			return !prev;
+		});
+	}, [currentIndex, cards, generateHint]);
 
 	const nextCard = useCallback(() => {
 		if (currentIndex < cards.length - 1) {

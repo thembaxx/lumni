@@ -1,4 +1,8 @@
-import type { QAQuestion } from "@/types/questions";
+import type { Option, QAQuestion } from "@/types/questions";
+
+function getMcqOptions(q: QAQuestion): Option[] {
+	return (q as unknown as { body: { options: Option[] } }).body?.options ?? [];
+}
 
 export interface UserProgress {
 	subjectId: string;
@@ -61,11 +65,10 @@ export function updateProgressFromQuiz(
 
 	const correctAnswers = new Set(
 		questions
-			.filter((q) =>
-				q.options?.find(
-					(o) => o.isCorrect && q.options?.find((opt) => opt.isCorrect),
-				),
-			)
+			.filter((q) => {
+				const opts = getMcqOptions(q);
+				return opts.find((o) => o.isCorrect);
+			})
 			.map((q) => q.topic),
 	);
 

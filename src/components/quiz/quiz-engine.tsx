@@ -1,12 +1,12 @@
 "use client";
 
 import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { ProgressDots } from "@/components/shared/progress-dots";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useQuizEngine } from "@/hooks/use-quiz-engine";
-import { useSubjectQuestions } from "@/hooks/use-subject-questions";
+import { useQuestionEngine } from "@/hooks/use-question-engine";
+import type { Question } from "@/types/questions";
 import { QuestionCard } from "./question-card";
 import { QuizControls } from "./quiz-controls";
 import { QuizEngineHeader } from "./quiz-engine-header";
@@ -49,77 +49,86 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 		QuizResults["incorrectAnswers"]
 	>([]);
 
-	const {
-		data: questions,
-		isLoading,
-		isFetching,
-	} = useSubjectQuestions(subjectId, 10);
+	const engineParams = useMemo(
+		() => ({
+			subject: subjectId,
+			count: 10,
+			questionType: "multiple-choice" as const,
+		}),
+		[subjectId],
+	);
 
-	const { state: engineState, actions: engineActions } = useQuizEngine({
-		maxTime: 90 * 60,
-		totalQuestions: questions?.length ?? 0,
-		onFinish: useCallback(
-			({
-				correctAnswers,
-				elapsedTime,
-			}: {
-				correctAnswers: number;
-				elapsedTime: number;
-			}) => {
-				if (questions) {
-					onComplete?.(
-						buildResults(
-							questions.length,
-							correctAnswers,
-							elapsedTime,
-							incorrectAnswers,
-						),
-					);
-				}
-			},
-			[onComplete, questions, incorrectAnswers],
-		),
-		enabled: (questions?.length ?? 0) > 0,
+	const { questions, isLoading, isError } = useQuestionEngine(engineParams, {
+		enabled: true,
 	});
 
-	const currentQuestion = questions?.[engineState.currentQuestionIndex];
+	// Internal quiz state
+	const [currentIndex, setCurrentIndex] = useState(0);
+	const [correctAnswers, setCorrectAnswers] = useState(0);
+	const [elapsedTime, setElapsedTime] = useState(0);
+	const [isComplete, setIsComplete] = useState(false);
+	const [timerStarted, setTimerStarted] = useState(false);
 
-	function handleAnswer(optionId: string, isCorrect: boolean) {
-		engineActions.handleAnswer(optionId, isCorrect);
-
-		// Celebrations are handled inside QuestionCard.
-		// Track incorrect answers for final results display.
-		if (!isCorrect && currentQuestion) {
-			const selectedOpt = currentQuestion.options.find(
-				(o) => o.id === optionId,
-			);
-			const correctOpt = currentQuestion.options.find((o) => o.isCorrect);
-			setIncorrectAnswers((prev) => [
-				...prev,
-				{
-					questionId: currentQuestion.id,
-					selectedAnswer: selectedOpt?.text ?? optionId,
-					correctAnswer: correctOpt?.text ?? "",
-				},
-			]);
-		}
+	// Start timer on first render
+	if (!timerStarted && questions.length > 0) {
+		setTimerStarted(true);
+		const interval = setInterval(() => {
+			setElapsedTime((prev) => {
+				if (prev >= 90 * 60) {
+					clearInterval(interval);
+					return prev;
+				}
+				return prev + 1;
+			});
+		}, 1000);
 	}
 
-	function handleQuit() {
-		engineActions.handleStop();
+	const currentQuestion = questions?.[currentIndex];
+
+	const handleNext = useCallback(() => {
+		if (currentIndex < questions.length - 1) {
+			setCurrentIndex((prev) => prev + 1);
+		} else {
+			setIsComplete(true);
+		}
+	}, [currentIndex, questions.length]);
+
+	const handlePrevious = useCallback(() => {
+		if (currentIndex > 0) {
+			setCurrentIndex((prev) => prev - 1);
+		}
+	}, [currentIndex]);
+
+	const handleSkip = useCallback(() => {
+		if (currentIndex < questions.length - 1) {
+			setCurrentIndex((prev) => prev + 1);
+		} else {
+			setIsComplete(true);
+		}
+	}, [currentIndex, questions.length]);
+
+	const handleRestart = useCallback(() => {
+		setCurrentIndex(0);
+		setCorrectAnswers(0);
+		setElapsedTime(0);
+		setIsComplete(false);
+		setIncorrectAnswers([]);
+	}, []);
+
+	const handleQuit = useCallback(() => {
 		if (questions) {
 			onComplete?.(
 				buildResults(
 					questions.length,
-					engineState.correctAnswers,
-					engineState.elapsedTime,
+					correctAnswers,
+					elapsedTime,
 					incorrectAnswers,
 				),
 			);
 		}
-	}
+	}, [questions, correctAnswers, elapsedTime, incorrectAnswers, onComplete]);
 
-	if (isLoading || isFetching) {
+	if (isLoading) {
 		return (
 			<Card className="p-6 space-y-4">
 				<div className="flex items-center justify-between">
@@ -137,6 +146,14 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 		);
 	}
 
+	if (isError) {
+		return (
+			<Card className="p-8 flex flex-col items-center justify-center gap-4">
+				<p className="text-destructive">Failed to load questions.</p>
+			</Card>
+		);
+	}
+
 	if (!questions?.length) {
 		return (
 			<Card className="p-8 flex flex-col items-center justify-center gap-4">
@@ -148,8 +165,7 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 		);
 	}
 
-	// Quiz complete - show final results
-	if (engineState.currentQuestionIndex >= questions.length) {
+	if (isComplete) {
 		return (
 			<LazyMotion features={domAnimation}>
 				<AnimatePresence mode="wait">
@@ -163,13 +179,13 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 						<QuizResult
 							results={buildResults(
 								questions.length,
-								engineState.correctAnswers,
-								engineState.elapsedTime,
+								correctAnswers,
+								elapsedTime,
 								incorrectAnswers,
 							)}
 							onRestart={() => {
 								setIncorrectAnswers([]);
-								engineActions.handleRestart();
+								handleRestart();
 							}}
 							onClose={handleQuit}
 							useLottie={false}
@@ -185,10 +201,9 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 	return (
 		<LazyMotion features={domAnimation}>
 			<div className="space-y-4">
-				{/* Header - extracted into QuizEngineHeader */}
 				<QuizEngineHeader
-					elapsedTime={engineState.elapsedTime}
-					currentQuestionIndex={engineState.currentQuestionIndex}
+					elapsedTime={elapsedTime}
+					currentQuestionIndex={currentIndex}
 					totalQuestions={questions.length}
 					difficulty={
 						currentQuestion.difficulty.toLowerCase() as
@@ -199,7 +214,6 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 					onQuit={handleQuit}
 				/>
 
-				{/* Question card - owns celebration, step-by-step, and diagram */}
 				<AnimatePresence mode="wait">
 					<m.div
 						key={currentQuestion.id}
@@ -211,32 +225,27 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 						<QuestionCard
 							question={currentQuestion}
 							subject={subjectId}
-							questionNumber={engineState.currentQuestionIndex + 1}
+							questionNumber={currentIndex + 1}
 							totalQuestions={questions.length}
-							selectedAnswer={engineState.selectedAnswer}
-							showFeedback={engineState.showFeedback}
-							onSelectAnswer={engineActions.handleSelectAnswer}
-							onAnswer={handleAnswer}
+							onNext={handleNext}
 						/>
 					</m.div>
 				</AnimatePresence>
 
-				{/* Navigation controls */}
 				<QuizControls
-					currentQuestionIndex={engineState.currentQuestionIndex}
+					currentQuestionIndex={currentIndex}
 					totalQuestions={questions.length}
-					hasSelected={!!engineState.selectedAnswer}
-					showFeedback={engineState.showFeedback}
-					onPrevious={engineActions.handlePrevious}
-					onNext={engineActions.handleNext}
-					onSkip={engineActions.handleSkip}
+					hasSelected={false}
+					showFeedback={false}
+					onPrevious={handlePrevious}
+					onNext={handleNext}
+					onSkip={handleSkip}
 					showSkip
 				/>
 
-				{/* Progress */}
 				<ProgressDots
 					total={questions.length}
-					currentIndex={engineState.currentQuestionIndex}
+					currentIndex={currentIndex}
 					variant="engine"
 				/>
 			</div>

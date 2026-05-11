@@ -7,19 +7,15 @@ import { QuestionCard } from "@/components/quiz/question-card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
-import type { QAQuestion } from "@/types/questions";
+import type { Question } from "@/types/questions";
 
 interface QuizSessionProps {
-	currentQuestion: QAQuestion;
+	currentQuestion: Question;
 	currentQuestionIndex: number;
 	totalQuestions: number;
-	selectedAnswer: string | null;
-	showFeedback: boolean;
 	isTransitioning: boolean;
 	elapsedTime: number;
 	correctAnswers: number;
-	onSelectAnswer: (optionId: string) => void;
-	onAnswer: (optionId: string, isCorrect: boolean) => void;
 	onNext: () => void;
 	onPrevious: () => void;
 	onQuit: () => void;
@@ -31,13 +27,9 @@ export function QuizSession({
 	currentQuestion,
 	currentQuestionIndex,
 	totalQuestions,
-	selectedAnswer,
-	showFeedback,
 	isTransitioning,
 	elapsedTime,
 	correctAnswers,
-	onSelectAnswer,
-	onAnswer,
 	onNext,
 	onPrevious,
 	onQuit,
@@ -103,13 +95,10 @@ export function QuizSession({
 				>
 					<QuestionCard
 						question={currentQuestion}
-						topic={currentQuestion.topic}
+						subject={currentQuestion.subject}
 						questionNumber={currentQuestionIndex + 1}
 						totalQuestions={totalQuestions}
-						selectedAnswer={selectedAnswer}
-						showFeedback={showFeedback}
-						onSelectAnswer={onSelectAnswer}
-						onAnswer={onAnswer}
+						onNext={onNext}
 					/>
 				</m.div>
 
@@ -128,7 +117,7 @@ export function QuizSession({
 						<ChevronLeft className="size-4" />
 						Previous
 					</Button>
-					<Button onClick={onNext} disabled={!showFeedback} className="gap-2">
+					<Button onClick={onNext} className="gap-2">
 						{currentQuestionIndex < totalQuestions - 1 ? "Next" : "Finish"}
 						<ChevronRight className="size-4" />
 					</Button>

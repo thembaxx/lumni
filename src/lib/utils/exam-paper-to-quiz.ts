@@ -1,4 +1,4 @@
-import type { QAQuestion } from "@/types/questions";
+import type { Question } from "@/types/questions";
 
 export interface ExamQuestion {
 	id: string;
@@ -28,8 +28,8 @@ export function convertExamPaperToQuiz({
 	questions,
 	questionCount = 20,
 	shuffle = true,
-}: ExamPaperQuizOptions): QAQuestion[] {
-	const quizQuestions: QAQuestion[] = [];
+}: ExamPaperQuizOptions): Question<"multiple-choice">[] {
+	const quizQuestions: Question<"multiple-choice">[] = [];
 
 	let selectedQuestions = [...questions];
 
@@ -42,33 +42,41 @@ export function convertExamPaperToQuiz({
 	}
 
 	for (const examQ of selectedQuestions) {
-		const options =
+		const opts =
 			examQ.options ||
 			generateDefaultOptions(examQ.questionText, examQ.correctAnswer);
 
-		const quizQuestion: QAQuestion = {
+		const options = opts.map((text, idx) => ({
+			id: String.fromCharCode(65 + idx),
+			text,
+			isCorrect:
+				examQ.correctAnswer?.toUpperCase() === String.fromCharCode(65 + idx),
+		}));
+
+		const correctOptionId = options.find((o) => o.isCorrect)?.id ?? "A";
+
+		const quizQuestion: Question<"multiple-choice"> = {
 			id: `exam_${paperId}_q${examQ.questionNumber}`,
-			questionText: examQ.questionText,
-			questionType: "multiple-choice",
-			options: options.map((text, idx) => ({
-				id: String.fromCharCode(65 + idx),
-				text,
-				isCorrect:
-					examQ.correctAnswer?.toUpperCase() === String.fromCharCode(65 + idx),
-			})),
-			explanation: examQ.marking
-				? `Mark: ${examQ.marking}`
-				: `Question ${examQ.questionNumber} from ${year} Paper ${paperNumber}`,
-			difficulty: determineDifficulty(examQ.questionNumber, questions.length),
+			type: "multiple-choice",
+			subject,
 			topic: `${subject} - ${year}`,
+			difficulty: determineDifficulty(examQ.questionNumber, questions.length),
+			bloomTaxonomy: "remember",
 			points: calculatePoints(
 				examQ.questionNumber,
 				questions.length,
 				examQ.subQuestion?.length || 1,
 			),
-			supportsDiagram: false,
-			diagram: null,
+			questionText: examQ.questionText,
 			hint: "",
+			explanation: examQ.marking
+				? `Mark: ${examQ.marking}`
+				: `Question ${examQ.questionNumber} from ${year} Paper ${paperNumber}`,
+			body: {
+				options,
+				correctOptionId,
+				allowMultiple: false,
+			},
 		};
 
 		quizQuestions.push(quizQuestion);
@@ -102,7 +110,6 @@ function determineDifficulty(
 	totalQuestions: number,
 ): "Easy" | "Medium" | "Hard" {
 	const progress = questionNumber / totalQuestions;
-
 	if (progress < 0.33) return "Easy";
 	if (progress < 0.66) return "Medium";
 	return "Hard";

@@ -38,7 +38,7 @@ const navItems: NavItem[] = [
 	{
 		id: "practice",
 		label: "Practice",
-		icon: "fluent:book-open-24-filled",
+		icon: "fluent:learning-app-24-filled",
 		href: "",
 	},
 	{

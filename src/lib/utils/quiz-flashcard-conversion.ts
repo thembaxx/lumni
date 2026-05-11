@@ -1,4 +1,8 @@
-import type { QAQuestion } from "@/types/questions";
+import type { Option, QAQuestion } from "@/types/questions";
+
+function getMcqOptions(q: QAQuestion): Option[] {
+	return (q as unknown as { body: { options: Option[] } }).body?.options ?? [];
+}
 
 export interface FlashcardData {
 	id: string;
@@ -29,7 +33,7 @@ export function convertQuizToFlashcards({
 
 	for (const question of questions) {
 		if (incorrectAnswerIds.includes(question.id)) {
-			const correctOption = question.options.find((opt) => opt.isCorrect);
+			const correctOption = getMcqOptions(question).find((opt) => opt.isCorrect);
 
 			flashcards.push({
 				id: `fc_${question.id}_${Date.now()}`,

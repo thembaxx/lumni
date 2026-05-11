@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
 	EmptyStateWithIllustration,
 	QuestionCard,
@@ -9,12 +9,12 @@ import {
 	QuizHeader,
 	QuizResultsCard,
 	QuizSelectSubject,
-	QuizStartState,
 	QuizSubjectPrompt,
 } from "@/components/quiz";
 import { ProgressDots } from "@/components/shared/progress-dots";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useQuizSession } from "@/hooks/use-quiz-session";
+import { useQuestionEngine } from "@/hooks/use-question-engine";
+import type { Question } from "@/types/questions";
 
 export type QuizViewVariant = "full" | "compact";
 
@@ -39,96 +39,100 @@ export function QuizView({
 	onFinish,
 	className,
 }: QuizViewProps) {
-	const [hasStarted, setHasStarted] = useState(false);
+	const [selectedSubject, setSelectedSubject] = useState(initialSubject ?? "");
+	const [sessionActive, setSessionActive] = useState(false);
 	const [loadError, setLoadError] = useState<string | null>(null);
+	const [currentIndex, setCurrentIndex] = useState(0);
+	const [correctAnswers, setCorrectAnswers] = useState(0);
+	const [totalAnswered, setTotalAnswered] = useState(0);
+	const [elapsedTime, setElapsedTime] = useState(0);
+	const [isComplete, setIsComplete] = useState(false);
+	const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-	const { state, actions } = useQuizSession({
-		subject: initialSubject,
-		topic,
-		questionCount,
-		maxTime,
-		onFinish,
-		enabled: hasStarted || !!initialSubject,
+	const engineParams = useMemo(
+		() => ({
+			subject: selectedSubject.toLowerCase(),
+			topic,
+			count: questionCount,
+			questionType: "any" as const,
+		}),
+		[selectedSubject, topic, questionCount],
+	);
+
+	const { questions, isLoading, isError, error } = useQuestionEngine(engineParams, {
+		enabled: sessionActive && !!selectedSubject,
 	});
 
-	const {
-		elapsedTime,
-		currentQuestionIndex,
-		selectedAnswer,
-		showFeedback,
-		correctAnswers,
-		questions,
-		currentQuestion,
-		isLoading,
-		hasSubject,
-		selectedSubject,
-		totalQuestions,
-	} = state;
+	const currentQuestion = questions?.[currentIndex] ?? null;
+	const totalQuestions = questions?.length ?? questionCount;
 
-	const {
-		handleStartWithSubject,
-		handleStop,
-		handleRestart,
-		handleSelectAnswer,
-		handleAnswer,
-		handleNext,
-		handlePrevious,
-		handleSkip,
-	} = actions;
+	const handleStartWithSubject = useCallback((subject: string) => {
+		setSelectedSubject(subject);
+		setSessionActive(true);
+		setCurrentIndex(0);
+		setCorrectAnswers(0);
+		setTotalAnswered(0);
+		setElapsedTime(0);
+		setIsComplete(false);
+		setLoadError(null);
+	}, []);
 
-	const handleStart = useCallback(() => {
-		if (selectedSubject) {
-			setHasStarted(true);
-			handleStartWithSubject(selectedSubject);
+	const handleStop = useCallback(() => {
+		setSessionActive(false);
+		if (timerRef.current) clearInterval(timerRef.current);
+		onFinish?.({ correctAnswers, elapsedTime });
+	}, [onFinish, correctAnswers, elapsedTime]);
+
+	const handleRestart = useCallback(() => {
+		setCurrentIndex(0);
+		setCorrectAnswers(0);
+		setTotalAnswered(0);
+		setElapsedTime(0);
+		setIsComplete(false);
+	}, []);
+
+	const handleNext = useCallback(() => {
+		if (currentIndex < totalQuestions - 1) {
+			setCurrentIndex((prev) => prev + 1);
+		} else {
+			setIsComplete(true);
+			if (timerRef.current) clearInterval(timerRef.current);
+			onFinish?.({ correctAnswers, elapsedTime });
 		}
-	}, [handleStartWithSubject, selectedSubject]);
+	}, [currentIndex, totalQuestions, onFinish, correctAnswers, elapsedTime]);
 
-	const handleQuitWithStop = useCallback(() => {
-		handleStop();
-		onQuit?.();
-	}, [handleStop, onQuit]);
+	const handlePrevious = useCallback(() => {
+		if (currentIndex > 0) setCurrentIndex((prev) => prev - 1);
+	}, [currentIndex]);
 
-	const isComplete = useMemo(() => {
-		return (
-			correctAnswers > 0 &&
-			currentQuestionIndex === questions.length - 1 &&
-			showFeedback
-		);
-	}, [correctAnswers, currentQuestionIndex, questions.length, showFeedback]);
+	const handleSkip = useCallback(() => {
+		handleNext();
+	}, [handleNext]);
 
-	// State 1: No subject selected yet - show landing/selection UI
-	if (!hasSubject) {
-		if (variant === "compact") {
-			return <QuizSubjectPrompt onSelect={handleStart} hasSubject={false} />;
+	const handleAnswered = useCallback((correct: boolean) => {
+		setTotalAnswered((prev) => prev + 1);
+		if (correct) setCorrectAnswers((prev) => prev + 1);
+	}, []);
+
+	useEffect(() => {
+		if (sessionActive && questions.length > 0) {
+			if (timerRef.current) clearInterval(timerRef.current);
+			timerRef.current = setInterval(() => {
+				setElapsedTime((prev) => {
+					if (prev >= maxTime) {
+						if (timerRef.current) clearInterval(timerRef.current);
+						setIsComplete(true);
+						return prev;
+					}
+					return prev + 1;
+				});
+			}, 1000);
 		}
-		return (
-			<div className="min-h-screen bg-background p-4 flex items-center justify-center pb-20">
-				<Card className="max-w-md w-full card-elevated">
-					<CardHeader className="text-center">
-						<CardTitle className="ios-title-2">Quiz Practice</CardTitle>
-					</CardHeader>
-					<CardContent className="space-y-4">
-						<QuizSelectSubject onSelect={handleStart} />
-					</CardContent>
-				</Card>
-			</div>
-		);
-	}
+		return () => {
+			if (timerRef.current) clearInterval(timerRef.current);
+		};
+	}, [sessionActive, questions.length, maxTime]);
 
-	// State 2: Loading questions
-	if (isLoading) {
-		return (
-			<div className="min-h-screen bg-background p-4 flex items-center justify-center pb-20">
-				<Card className="max-w-md w-full card-elevated">
-					<CardContent className="p-8 text-center">
-						<p className="text-muted-foreground">Loading questions...</p>
-					</CardContent>
-				</Card>
-			</div>
-		);
-	}
-
-	// State 2b: Error loading questions
 	if (loadError) {
 		return (
 			<div className="min-h-screen bg-background p-4 flex items-center justify-center pb-20">
@@ -141,17 +145,8 @@ export function QuizView({
 							animation="error"
 							title="Unable to Load Questions"
 							description={loadError}
-							action={{
-								label: "Try Again",
-								onClick: () => {
-									setLoadError(null);
-									window.location.reload();
-								},
-							}}
-							secondaryAction={{
-								label: "Go Back",
-								onClick: handleQuitWithStop,
-							}}
+							action={{ label: "Try Again", onClick: () => { setLoadError(null); window.location.reload(); } }}
+							secondaryAction={{ label: "Go Back", onClick: handleStop }}
 						/>
 					</CardContent>
 				</Card>
@@ -159,7 +154,51 @@ export function QuizView({
 		);
 	}
 
-	// State 3: No questions available for subject
+	if (!sessionActive || !selectedSubject) {
+		if (variant === "compact") {
+			return <QuizSubjectPrompt onSelect={() => handleStartWithSubject("")} hasSubject={false} />;
+		}
+		return (
+			<div className="min-h-screen bg-background p-4 flex items-center justify-center pb-20">
+				<Card className="max-w-md w-full card-elevated">
+					<CardHeader className="text-center">
+						<CardTitle className="ios-title-2">Quiz Practice</CardTitle>
+					</CardHeader>
+					<CardContent className="space-y-4">
+						<QuizSelectSubject onSelect={(s) => handleStartWithSubject(s)} />
+					</CardContent>
+				</Card>
+			</div>
+		);
+	}
+
+	if (isLoading) {
+		return (
+			<div className="min-h-screen bg-background p-4 flex items-center justify-center pb-20">
+				<Card className="max-w-md w-full card-elevated">
+					<CardContent className="p-8 text-center">
+						<p className="text-muted-foreground">Loading questions...</p>
+					</CardContent>
+				</Card>
+			</div>
+		);
+	}
+
+	if (isError) {
+		return (
+			<div className="min-h-screen bg-background p-4 flex items-center justify-center pb-20">
+				<Card className="max-w-md w-full card-elevated">
+					<CardHeader className="text-center">
+						<CardTitle>Unable to Load Questions</CardTitle>
+					</CardHeader>
+					<CardContent>
+						<QuizEmptyState variant="no-questions" subject={selectedSubject} onBack={handleStop} />
+					</CardContent>
+				</Card>
+			</div>
+		);
+	}
+
 	if (questions.length === 0) {
 		return (
 			<div className="min-h-screen bg-background p-4 flex items-center justify-center pb-20">
@@ -168,23 +207,18 @@ export function QuizView({
 						<CardTitle>No Questions</CardTitle>
 					</CardHeader>
 					<CardContent className="space-y-4">
-						<QuizEmptyState
-							variant="no-questions"
-							subject={selectedSubject}
-							onBack={handleStop}
-						/>
+						<QuizEmptyState variant="no-questions" subject={selectedSubject} onBack={handleStop} />
 					</CardContent>
 				</Card>
 			</div>
 		);
 	}
 
-	// State 4: Quiz complete - show results
 	if (isComplete) {
 		return (
 			<div className="min-h-screen bg-background p-4 flex items-center justify-center pb-20">
 				<QuizResultsCard
-					totalQuestions={questions.length}
+					totalQuestions={totalQuestions}
 					correctAnswers={correctAnswers}
 					elapsedTime={elapsedTime}
 					onRestart={handleRestart}
@@ -194,46 +228,39 @@ export function QuizView({
 		);
 	}
 
-	// State 5: Quiz active - show question
 	return (
 		<div className="min-h-screen bg-background p-4 space-y-6 pb-20 max-w-md mx-auto">
 			<QuizHeader
 				elapsedTime={elapsedTime}
-				currentQuestionIndex={currentQuestionIndex}
+				currentQuestionIndex={currentIndex}
 				totalQuestions={totalQuestions}
 				correctAnswers={correctAnswers}
-				onQuit={handleQuitWithStop}
+				onQuit={handleStop}
 			/>
 
 			{currentQuestion && (
 				<QuestionCard
 					question={currentQuestion}
 					subject={selectedSubject}
-					questionNumber={currentQuestionIndex + 1}
+					questionNumber={currentIndex + 1}
 					totalQuestions={totalQuestions}
-					selectedAnswer={selectedAnswer}
-					showFeedback={showFeedback}
-					onSelectAnswer={handleSelectAnswer}
-					onAnswer={handleAnswer}
+					onNext={handleNext}
+					onAnswered={handleAnswered}
 				/>
 			)}
 
 			<QuizControls
-				currentQuestionIndex={currentQuestionIndex}
+				currentQuestionIndex={currentIndex}
 				totalQuestions={totalQuestions}
-				hasSelected={!!selectedAnswer}
-				showFeedback={showFeedback}
+				hasSelected={false}
+				showFeedback={false}
 				onPrevious={handlePrevious}
 				onNext={handleNext}
 				onSkip={handleSkip}
 				showSkip={variant === "full"}
 			/>
 
-			<ProgressDots
-				total={questions.length}
-				currentIndex={currentQuestionIndex}
-				variant="quiz"
-			/>
+			<ProgressDots total={totalQuestions} currentIndex={currentIndex} variant="quiz" />
 		</div>
 	);
 }

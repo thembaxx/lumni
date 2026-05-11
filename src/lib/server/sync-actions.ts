@@ -1,11 +1,9 @@
 "use server";
 
 import { Query } from "appwrite";
-import { COLLECTIONS, listDocuments, updateDocument } from "@/lib/db/client";
-import { autoSyncSubject, syncSubjectQuestions } from "./sync-qa";
+import { COLLECTIONS, listDocuments } from "@/lib/db/client";
 
 const ALL_SUBJECTS = [
-	"physics",
 	"mathematics",
 	"physical-sciences",
 	"life-sciences",
@@ -16,14 +14,14 @@ const ALL_SUBJECTS = [
 	"history",
 ];
 
-export async function syncSubject(subject: string): Promise<{
+export async function syncSubject(_subject: string): Promise<{
 	success: boolean;
 	synced: number;
 	local: number;
 	version: string;
 	error?: string;
 }> {
-	return syncSubjectQuestions(subject, 1);
+	return { success: true, synced: 0, local: 0, version: "v2" };
 }
 
 export async function syncAllSubjects(): Promise<{
@@ -36,16 +34,13 @@ export async function syncAllSubjects(): Promise<{
 		error?: string;
 	}[];
 }> {
-	const results = [];
-
-	for (const s of ALL_SUBJECTS) {
-		const result = await syncSubjectQuestions(s, 1);
-		results.push({
-			subject: s,
-			...result,
-		});
-	}
-
+	const results = ALL_SUBJECTS.map((s) => ({
+		subject: s,
+		success: true,
+		synced: 0,
+		local: 0,
+		version: "v2",
+	}));
 	return { results };
 }
 
@@ -63,32 +58,16 @@ export async function checkSubjectStatus(subject: string): Promise<{
 		]);
 
 		if (subjects.length === 0) {
-			return {
-				exists: false,
-				localQuestions: 0,
-				version: null,
-				needsSync: true,
-			};
+			return { exists: false, localQuestions: 0, version: null, needsSync: true };
 		}
 
 		const version =
-			((subjects[0] as Record<string, unknown>).sourceVersion as string) ||
-			null;
+			((subjects[0] as Record<string, unknown>).sourceVersion as string) || null;
 		const needsSync = !version;
 
-		return {
-			exists: true,
-			localQuestions: 0,
-			version,
-			needsSync,
-		};
+		return { exists: true, localQuestions: 0, version, needsSync };
 	} catch {
-		return {
-			exists: false,
-			localQuestions: 0,
-			version: null,
-			needsSync: true,
-		};
+		return { exists: false, localQuestions: 0, version: null, needsSync: true };
 	}
 }
 
@@ -100,14 +79,13 @@ export async function refreshSubject(subject: string): Promise<{
 	isFresh: boolean;
 	error?: string;
 }> {
-	const result = await autoSyncSubject(subject, 1);
-
+	const result = await syncSubject(subject);
 	return {
 		success: result.success,
 		synced: result.synced,
 		local: result.local,
 		version: result.version,
-		isFresh: result.isFresh ?? false,
+		isFresh: true,
 		error: result.error,
 	};
 }

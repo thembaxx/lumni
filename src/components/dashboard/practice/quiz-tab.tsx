@@ -128,10 +128,7 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 							subject={selectedSubject}
 							questionNumber={currentQuestionIndex + 1}
 							totalQuestions={totalQuestions}
-							selectedAnswer={selectedAnswer}
-							showFeedback={showFeedback}
-							onSelectAnswer={handleSelectAnswer}
-							onAnswer={handleAnswer}
+							onNext={handleNext}
 						/>
 					</m.div>
 

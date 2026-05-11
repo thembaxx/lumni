@@ -1,4 +1,8 @@
-import type { QAQuestion } from "@/types/questions";
+import type { Option, QAQuestion } from "@/types/questions";
+
+function getMcqOptions(q: QAQuestion): Option[] {
+	return (q as unknown as { body: { options: Option[] } }).body?.options ?? [];
+}
 
 export interface DuplicateCheckResult {
 	duplicates: QAQuestion[];
@@ -40,12 +44,13 @@ export function generateQuestionHash(question: QAQuestion): string {
 		.replace(/\s+/g, " ")
 		.trim();
 
-	const optionsText = question.options
+	const options = getMcqOptions(question);
+	const optionsText = options
 		.map((opt) => opt.text.toLowerCase().replace(/\s+/g, " ").trim())
 		.sort()
 		.join("|");
 
-	const correctOption = question.options.find((opt) => opt.isCorrect);
+	const correctOption = options.find((opt) => opt.isCorrect);
 	return `${normalizedText}|${optionsText}|${correctOption?.id || ""}`;
 }
 

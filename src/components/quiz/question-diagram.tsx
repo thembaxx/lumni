@@ -1,7 +1,7 @@
 "use client";
 
 import { Background, Controls, MiniMap, ReactFlow } from "@xyflow/react";
-import type { QADiagram } from "@/types/questions";
+import type { DiagramSpec } from "@/types/questions";
 import { CircuitDiagram } from "./diagrams/circuit";
 import { ForceVectorDiagram } from "./diagrams/force-vector";
 import { MotionDiagram } from "./diagrams/motion";
@@ -48,7 +48,7 @@ function NodeDiagramFlow({ data }: { data: NodeDiagramData }) {
 	);
 }
 
-export function QuestionDiagram({ diagram }: { diagram: QADiagram }) {
+export function QuestionDiagram({ diagram }: { diagram: DiagramSpec }) {
 	if (diagram.type === "node-flow" || diagram.type === "node") {
 		return (
 			<NodeDiagramFlow
@@ -71,34 +71,21 @@ export function QuestionDiagram({ diagram }: { diagram: QADiagram }) {
 	return (
 		<div className="space-y-2">
 			{diagram.type === "force-vector" && (
-				<ForceVectorDiagram
-					data={
-						diagram.data as Extract<QADiagram["data"], { objects?: unknown[] }>
-					}
-				/>
+				<ForceVectorDiagram data={diagram.data as never} />
 			)}
 			{diagram.type === "circuit" && (
-				<CircuitDiagram
-					data={
-						diagram.data as Extract<
-							QADiagram["data"],
-							{ components?: unknown[] }
-						>
-					}
-				/>
+				<CircuitDiagram data={diagram.data as never} />
 			)}
 			{diagram.type === "wave" && (
-				<WaveDiagram
-					data={
-						diagram.data as Extract<QADiagram["data"], { showWaves?: boolean }>
-					}
-				/>
+				<WaveDiagram data={diagram.data as never} />
 			)}
 			{diagram.type === "motion" && (
-				<MotionDiagram
-					data={
-						diagram.data as Extract<QADiagram["data"], { showMotion?: boolean }>
-					}
+				<MotionDiagram data={diagram.data as never} />
+			)}
+			{diagram.type === "custom-svg" && (diagram.data as Record<string, string>).svg && (
+				<div
+					className="w-full overflow-auto rounded-lg border bg-white p-4"
+					dangerouslySetInnerHTML={{ __html: String((diagram.data as Record<string, string>).svg) }}
 				/>
 			)}
 		</div>

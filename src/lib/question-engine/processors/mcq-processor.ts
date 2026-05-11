@@ -1,0 +1,74 @@
+import { getAI } from "@/lib/ai";
+import type { AIResponse } from "@/lib/ai/types";
+import type {
+	GenerationParams,
+	GradingResult,
+	Question,
+	QuestionProcessor,
+	UserAnswer,
+	ValidationResult,
+} from "../types";
+import { PromptManager } from "../prompt-manager";
+import { validateMCQ } from "../validators/mcq-validator";
+
+export class MCQProcessor implements QuestionProcessor<"multiple-choice"> {
+	readonly type = "multiple-choice" as const;
+	private prompts = new PromptManager();
+
+	async generate(params: GenerationParams): Promise<Question<"multiple-choice">[]> {
+		const prompt = this.prompts.getPrompt("multiple-choice", params);
+		const result = await getAI().generateWithSystem(prompt.system, prompt.user, {
+			temperature: 0.8,
+			maxTokens: 4096,
+		});
+
+		if ("available" in result && !result.available) {
+			throw new Error(`AI generation failed: ${"error" in result ? result.error : "unknown"}`);
+		}
+
+		const response = result as AIResponse;
+		const content = this.cleanResponse(response.content);
+		const parsed = JSON.parse(content) as Question<"multiple-choice">[];
+		return Array.isArray(parsed) ? parsed : [parsed];
+	}
+
+	async generateHint(question: Question<"multiple-choice">): Promise<string> {
+		const prompt = this.prompts.getHintPrompt("multiple-choice");
+		const ctx = `Question: ${question.questionText}\nOptions: ${JSON.stringify(question.body.options)}`;
+		const result = await getAI().generateWithSystem(prompt.system, `${prompt.user}\n\n${ctx}`, {
+			temperature: 0.5,
+			maxTokens: 256,
+		});
+		if ("available" in result && !result.available) return question.hint;
+		return this.cleanResponse((result as AIResponse).content);
+	}
+
+	async grade(
+		question: Question<"multiple-choice">,
+		answer: UserAnswer,
+	): Promise<GradingResult> {
+		const selectedIds = answer.value as string[];
+		const correctIds = question.body.options.filter((o) => o.isCorrect).map((o) => o.id);
+
+		const isCorrect =
+			selectedIds.length === correctIds.length &&
+			selectedIds.every((id) => correctIds.includes(id));
+
+		return {
+			correct: isCorrect,
+			score: isCorrect ? question.points : 0,
+			maxScore: question.points,
+			feedback: isCorrect
+				? question.explanation
+				: `The correct answer was: ${correctIds.join(", ")}. ${question.explanation}`,
+		};
+	}
+
+	validate(question: Question<"multiple-choice">): ValidationResult {
+		return validateMCQ(question);
+	}
+
+	private cleanResponse(content: string): string {
+		return content.replace(/```json/g, "").replace(/```/g, "").trim();
+	}
+}

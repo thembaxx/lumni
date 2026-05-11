@@ -5,11 +5,7 @@ export {
 	useSyncAll,
 	useSyncSingleSubject,
 } from "./use-question-sync";
-export { useQuizEngine } from "./use-quiz-engine";
-export {
-	useSubjectQuestions,
-	useSubjectQuestionsByDifficulty,
-} from "./use-subject-questions";
+export { useQuestionEngine } from "./use-question-engine";
 export { useFilteredSubjects, useSubjects } from "./use-subjects";
 export { useUploadSubjects } from "./use-upload-subjects";
 export { type UserProgress, useUserProgress } from "./use-user-progress";
