@@ -2,6 +2,7 @@
 
 import { m } from "framer-motion";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -14,6 +15,7 @@ interface ExamCardProps {
 }
 
 export function ExamCard({ exam }: ExamCardProps) {
+	const router = useRouter();
 	const [pdfOpen, setPdfOpen] = useState(false);
 	const [smartViewOpen, setSmartViewOpen] = useState(false);
 
@@ -25,6 +27,11 @@ export function ExamCard({ exam }: ExamCardProps) {
 	const handlePractice = (e: React.MouseEvent) => {
 		e.stopPropagation();
 		console.log("Practice for:", exam.id);
+	};
+
+	const handleTakeExam = (e: React.MouseEvent) => {
+		e.stopPropagation();
+		router.push(`/exam/${exam.id}`);
 	};
 
 	return (
@@ -93,6 +100,14 @@ export function ExamCard({ exam }: ExamCardProps) {
 						onClick={handlePractice}
 					>
 						Practice
+					</Button>
+					<Button
+						variant="default"
+						size="sm"
+						className="h-8 text-xs"
+						onClick={handleTakeExam}
+					>
+						Take Exam
 					</Button>
 				</div>
 			</m.div>

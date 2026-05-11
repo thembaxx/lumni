@@ -3,19 +3,16 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
 	AnimatePresence,
-	domAnimation,
-	LazyMotion,
-	m,
 	motion,
 } from "framer-motion";
 import { Check } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
-import { DownloadButton, UploadButton } from "./admin-action-button";
-import { ExamFilters } from "./admin-exam-filters";
 import { AdminHeader } from "./admin-header";
 import { AdminStatCards } from "./admin-stat-cards";
+import { AdminExamUploadZone } from "./admin-exam-upload-zone";
+import { AdminExamList } from "./admin-exam-list";
 import { SubjectForm } from "./admin-subject-form";
 import { SubjectTable } from "./admin-subject-table";
 import { AdminTabs } from "./admin-tabs";
@@ -62,11 +59,6 @@ export function AdminDashboard() {
 	const [selectedSubjects, setSelectedSubjects] = useState<Set<string>>(
 		new Set(),
 	);
-	const [selectedYear, setSelectedYear] = useState<number>(2025);
-	const [selectedExamTypes, setSelectedExamTypes] = useState<Set<string>>(
-		new Set(["june", "november"]),
-	);
-	const [includeMemo, setIncludeMemo] = useState(true);
 	const [editSubject, setEditSubject] = useState<Subject | null>(null);
 	const [newSubject, setNewSubject] = useState({
 		name: "",
@@ -87,8 +79,6 @@ export function AdminDashboard() {
 	});
 
 	const subjects = subjectsData?.subjects || [];
-
-	const effectiveSelected = selectedSubjects;
 
 	const saveMutation = useMutation({
 		mutationFn: async (subject: {
@@ -151,45 +141,6 @@ export function AdminDashboard() {
 		},
 	});
 
-	const downloadMutation = useMutation({
-		mutationFn: async () => {
-			const res = await fetch("/api/admin/download-exam-papers", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
-					year: selectedYear,
-					examTypes: Array.from(selectedExamTypes),
-					includeMemo,
-					subjectIds: Array.from(effectiveSelected),
-				}),
-			});
-			if (!res.ok) throw new Error("Failed to download");
-			return res.json();
-		},
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["admin-subjects"] });
-			setShowSuccess(true);
-			setTimeout(() => setShowSuccess(false), 2000);
-		},
-	});
-
-	const uploadLocalMutation = useMutation({
-		mutationFn: async () => {
-			const res = await fetch("/api/admin/upload-local-exam-papers", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({}),
-			});
-			if (!res.ok) throw new Error("Failed to upload");
-			return res.json();
-		},
-		onSuccess: (data) => {
-			queryClient.invalidateQueries({ queryKey: ["admin-subjects"] });
-			setShowSuccess(true);
-			setTimeout(() => setShowSuccess(false), 4000);
-		},
-	});
-
 	const handleLogout = () => {
 		localStorage.removeItem("admin_session");
 		localStorage.removeItem("admin_email");
@@ -222,24 +173,6 @@ export function AdminDashboard() {
 		setSelectedSubjects(newSelected);
 	};
 
-	const selectAllSubjects = () => {
-		setSelectedSubjects(new Set(subjects.map((s) => s.id)));
-	};
-
-	const deselectAllSubjects = () => {
-		setSelectedSubjects(new Set());
-	};
-
-	const toggleExamType = (type: string) => {
-		const newSelected = new Set(selectedExamTypes);
-		if (newSelected.has(type)) {
-			newSelected.delete(type);
-		} else {
-			newSelected.add(type);
-		}
-		setSelectedExamTypes(newSelected);
-	};
-
 	return (
 		<div className="min-h-screen bg-background">
 			<AnimatePresence>
@@ -267,7 +200,7 @@ export function AdminDashboard() {
 			<div className="p-4 space-y-4">
 				<AdminStatCards
 					subjectsCount={subjects.length}
-					selectedCount={effectiveSelected.size}
+					selectedCount={selectedSubjects.size}
 				/>
 
 				<AnimatedCard delay={0.1}>
@@ -283,36 +216,14 @@ export function AdminDashboard() {
 							className="space-y-4"
 						>
 							<AnimatedCard delay={0.15}>
-								<ExamFilters
-									selectedYear={selectedYear}
-									onYearChange={setSelectedYear}
-									selectedSubjects={effectiveSelected}
-									subjects={subjects}
-									onToggleSubject={toggleSubject}
-									onSelectAll={selectAllSubjects}
-									onDeselectAll={deselectAllSubjects}
-									selectedExamTypes={selectedExamTypes}
-									onToggleExamType={toggleExamType}
-									includeMemo={includeMemo}
-									onIncludeMemoChange={setIncludeMemo}
-									isLoading={isLoading}
-								/>
+								<AdminExamUploadZone onUploadComplete={() => {
+									queryClient.invalidateQueries({ queryKey: ["admin-exams"] });
+								}} />
 							</AnimatedCard>
 
-							<DownloadButton
-								onClick={() => downloadMutation.mutate()}
-								loading={downloadMutation.isPending}
-								disabled={
-									effectiveSelected.size === 0 || selectedExamTypes.size === 0
-								}
-								selectedCount={effectiveSelected.size}
-								examTypesCount={selectedExamTypes.size}
-							/>
-
-							<UploadButton
-								onClick={() => uploadLocalMutation.mutate()}
-								loading={uploadLocalMutation.isPending}
-							/>
+							<AnimatedCard delay={0.2}>
+								<AdminExamList />
+							</AnimatedCard>
 						</motion.div>
 					)}
 
@@ -346,7 +257,7 @@ export function AdminDashboard() {
 									<div className="p-0">
 										<SubjectTable
 											subjects={subjects}
-											selectedSubjects={effectiveSelected}
+											selectedSubjects={selectedSubjects}
 											onToggleSubject={toggleSubject}
 											onEditSubject={setEditSubject}
 											onDeleteSubject={handleDeleteSubject}

@@ -82,17 +82,19 @@ export type StudySession = {
 	endedAt?: string;
 };
 
-export type ExamPaper = {
+export type ExamPaperRecord = {
 	$id: string;
-	subjectId: string;
+	subject: string;
+	paperCode: string;
+	examPeriod: string;
 	year: number;
-	paperNumber: number;
-	type: string;
-	memoId?: string;
-	fileUrl: string;
-	fileKey: string;
-	originalFileName?: string;
+	grade: number;
+	language: string;
+	totalMarks: number;
+	duration: string;
+	fileKeys: string;
 	uploadedAt: string;
+	uploadedBy: string;
 };
 
 export async function listDocuments<T>(
