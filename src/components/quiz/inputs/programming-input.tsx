@@ -25,7 +25,7 @@ export function ProgrammingInput({ language, starterCode, onSubmit, disabled }: 
 				onChange={(e) => setCode(e.target.value)}
 				placeholder={`Write your ${language} code here...`}
 				disabled={disabled}
-				className="min-h-[200px] w-full font-mono text-sm"
+				className="min-h-[120px] sm:min-h-[200px] w-full font-mono text-sm"
 			/>
 			<div className="flex justify-end">
 				<Button onClick={() => onSubmit(code)} disabled={disabled || !code.trim()}>

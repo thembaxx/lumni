@@ -45,6 +45,7 @@ export function QuizView({
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [correctAnswers, setCorrectAnswers] = useState(0);
 	const [totalAnswered, setTotalAnswered] = useState(0);
+	const [currentAnswered, setCurrentAnswered] = useState(false);
 	const [elapsedTime, setElapsedTime] = useState(0);
 	const [isComplete, setIsComplete] = useState(false);
 	const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -72,6 +73,7 @@ export function QuizView({
 		setCurrentIndex(0);
 		setCorrectAnswers(0);
 		setTotalAnswered(0);
+		setCurrentAnswered(false);
 		setElapsedTime(0);
 		setIsComplete(false);
 		setLoadError(null);
@@ -94,6 +96,7 @@ export function QuizView({
 	const handleNext = useCallback(() => {
 		if (currentIndex < totalQuestions - 1) {
 			setCurrentIndex((prev) => prev + 1);
+			setCurrentAnswered(false);
 		} else {
 			setIsComplete(true);
 			if (timerRef.current) clearInterval(timerRef.current);
@@ -103,6 +106,7 @@ export function QuizView({
 
 	const handlePrevious = useCallback(() => {
 		if (currentIndex > 0) setCurrentIndex((prev) => prev - 1);
+		setCurrentAnswered(false);
 	}, [currentIndex]);
 
 	const handleSkip = useCallback(() => {
@@ -110,6 +114,7 @@ export function QuizView({
 	}, [handleNext]);
 
 	const handleAnswered = useCallback((correct: boolean) => {
+		setCurrentAnswered(true);
 		setTotalAnswered((prev) => prev + 1);
 		if (correct) setCorrectAnswers((prev) => prev + 1);
 	}, []);
@@ -252,12 +257,12 @@ export function QuizView({
 			<QuizControls
 				currentQuestionIndex={currentIndex}
 				totalQuestions={totalQuestions}
-				hasSelected={false}
-				showFeedback={false}
+				hasSelected={currentAnswered}
+				showFeedback={currentAnswered}
 				onPrevious={handlePrevious}
 				onNext={handleNext}
 				onSkip={handleSkip}
-				showSkip={variant === "full"}
+				showSkip={variant === "full" && !currentAnswered}
 			/>
 
 			<ProgressDots total={totalQuestions} currentIndex={currentIndex} variant="quiz" />

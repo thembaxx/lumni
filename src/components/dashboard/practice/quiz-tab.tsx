@@ -41,8 +41,6 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 		isRunning,
 		elapsedTime,
 		currentQuestionIndex,
-		selectedAnswer,
-		showFeedback,
 		correctAnswers,
 		currentQuestion,
 		hasSubject,
@@ -54,9 +52,6 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 	const {
 		handleStartWithSubject,
 		handleStop,
-		handleSelectSubject,
-		handleSelectAnswer,
-		handleAnswer,
 	} = actions;
 
 	const doStart = useCallback(() => {
@@ -141,8 +136,8 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 						<QuizControls
 							currentQuestionIndex={currentQuestionIndex}
 							totalQuestions={totalQuestions}
-							hasSelected={!!selectedAnswer}
-							showFeedback={showFeedback}
+							hasSelected={false}
+							showFeedback={false}
 							onPrevious={handlePrevious}
 							onNext={handleNext}
 						/>
@@ -160,7 +155,7 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 					className,
 				)}
 			>
-				<SubjectsDrawer onSelect={handleSelectSubject}>
+				<SubjectsDrawer onSelect={handleStartWithSubject}>
 					<Button
 						variant="secondary"
 						className="h-9 rounded-md pl-3 border-muted bg-muted/50"

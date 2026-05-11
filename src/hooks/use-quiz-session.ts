@@ -17,8 +17,6 @@ export interface QuizSessionState {
 	isRunning: boolean;
 	elapsedTime: number;
 	currentQuestionIndex: number;
-	selectedAnswer: string | null;
-	showFeedback: boolean;
 	correctAnswers: number;
 	totalQuestions: number;
 }
@@ -26,11 +24,8 @@ export interface QuizSessionState {
 export interface UseQuizSessionActions {
 	handleStart: () => void;
 	handleStartWithSubject: (subject: string) => void;
-	handleSelectSubject: (subject: string) => void;
 	handleStop: () => void;
 	handleRestart: () => void;
-	handleSelectAnswer: (optionId: string) => void;
-	handleAnswer: (optionId: string, isCorrect: boolean) => void;
 	handleNext: () => void;
 	handlePrevious: () => void;
 	handleSkip: () => void;
@@ -71,7 +66,7 @@ export function useQuizSession({
 			subject: normalizedSubject,
 			topic,
 			count: questionCount,
-			questionType: "multiple-choice" as const,
+			questionType: "any" as const,
 		}),
 		[normalizedSubject, topic, questionCount],
 	);
@@ -83,12 +78,9 @@ export function useQuizSession({
 
 	const questionsToUse = loadedQuestions ?? [];
 
-	// Quiz engine state
 	const [isRunning, setIsRunning] = useState(false);
 	const [elapsedTime, setElapsedTime] = useState(0);
 	const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-	const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
-	const [showFeedback, setShowFeedback] = useState(false);
 	const [correctAnswers, setCorrectAnswers] = useState(0);
 	const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -116,8 +108,6 @@ export function useQuizSession({
 	const handleStart = useCallback(() => {
 		setIsRunning(true);
 		setCurrentQuestionIndex(0);
-		setSelectedAnswer(null);
-		setShowFeedback(false);
 		setCorrectAnswers(0);
 		setElapsedTime(0);
 		startTimer();
@@ -131,10 +121,6 @@ export function useQuizSession({
 		[],
 	);
 
-	const handleSelectSubject = useCallback((subject: string) => {
-		setSelectedSubject(subject);
-	}, []);
-
 	const handleStop = useCallback(() => {
 		setIsRunning(false);
 		stopTimer();
@@ -144,8 +130,6 @@ export function useQuizSession({
 	const handleRestart = useCallback(() => {
 		setPoints(Math.floor(Math.random() * 101));
 		setCurrentQuestionIndex(0);
-		setSelectedAnswer(null);
-		setShowFeedback(false);
 		setCorrectAnswers(0);
 		setElapsedTime(0);
 		setIsRunning(true);
@@ -156,35 +140,13 @@ export function useQuizSession({
 		setIsRunning(false);
 		setElapsedTime(0);
 		setCurrentQuestionIndex(0);
-		setSelectedAnswer(null);
-		setShowFeedback(false);
 		setCorrectAnswers(0);
 		stopTimer();
 	}, [stopTimer]);
 
-	const handleSelectAnswer = useCallback(
-		(optionId: string) => {
-			if (showFeedback) return;
-			setSelectedAnswer(optionId);
-		},
-		[showFeedback],
-	);
-
-	const handleAnswer = useCallback(
-		(_optionId: string, isCorrect: boolean) => {
-			setShowFeedback(true);
-			if (isCorrect) {
-				setCorrectAnswers((prev) => prev + 1);
-			}
-		},
-		[],
-	);
-
 	const handleNext = useCallback(() => {
 		if (currentQuestionIndex < questionsToUse.length - 1) {
 			setCurrentQuestionIndex((prev) => prev + 1);
-			setSelectedAnswer(null);
-			setShowFeedback(false);
 		} else {
 			handleStop();
 		}
@@ -193,20 +155,12 @@ export function useQuizSession({
 	const handlePrevious = useCallback(() => {
 		if (currentQuestionIndex > 0) {
 			setCurrentQuestionIndex((prev) => prev - 1);
-			setSelectedAnswer(null);
-			setShowFeedback(false);
 		}
 	}, [currentQuestionIndex]);
 
 	const handleSkip = useCallback(() => {
-		if (currentQuestionIndex < questionsToUse.length - 1) {
-			setCurrentQuestionIndex((prev) => prev + 1);
-			setSelectedAnswer(null);
-			setShowFeedback(false);
-		} else {
-			handleStop();
-		}
-	}, [currentQuestionIndex, questionsToUse.length, handleStop]);
+		handleNext();
+	}, [handleNext]);
 
 	const currentQuestion = questionsToUse[currentQuestionIndex];
 
@@ -214,8 +168,6 @@ export function useQuizSession({
 		isRunning,
 		elapsedTime,
 		currentQuestionIndex,
-		selectedAnswer,
-		showFeedback,
 		correctAnswers,
 		totalQuestions: questionsToUse.length || questionCount,
 	};
@@ -223,11 +175,8 @@ export function useQuizSession({
 	const actions: UseQuizSessionActions = {
 		handleStart,
 		handleStartWithSubject,
-		handleSelectSubject,
 		handleStop,
 		handleRestart,
-		handleSelectAnswer,
-		handleAnswer,
 		handleNext,
 		handlePrevious,
 		handleSkip,

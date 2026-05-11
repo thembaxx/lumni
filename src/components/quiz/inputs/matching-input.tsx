@@ -45,7 +45,7 @@ export function MatchingInput({ leftItems, rightItems, onSubmit, disabled }: Mat
 
 	return (
 		<div className="space-y-4">
-			<div className="flex gap-4">
+			<div className="flex flex-col sm:flex-row gap-4">
 				<div className="flex-1 space-y-2">
 					<p className="text-sm font-medium">Items</p>
 					{remainingLeft.map((item) => (

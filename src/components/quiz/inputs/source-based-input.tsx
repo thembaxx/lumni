@@ -20,7 +20,7 @@ export function SourceBasedInput({ source, subQuestions, onSubmit, disabled }: S
 
 	return (
 		<div className="space-y-4">
-			<div className="rounded-lg border bg-muted/20 p-4">
+			<div className="rounded-lg border bg-muted/20 p-3 sm:p-4 max-h-48 sm:max-h-64 overflow-y-auto">
 				<p className="text-xs font-medium text-muted-foreground mb-2">Source: {source.type}</p>
 				<MarkdownRenderer content={source.content} />
 				{source.attribution && (

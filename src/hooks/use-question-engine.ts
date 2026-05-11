@@ -8,6 +8,7 @@ import type {
 	Question,
 	UserAnswer,
 } from "@/lib/question-engine/types";
+import { trackEngineEvent } from "@/lib/utils/engine-analytics";
 
 interface GenerateResult {
 	questions: Question[];
@@ -68,24 +69,58 @@ export function useQuestionEngine(
 ) {
 	const query = useQuery({
 		queryKey: ["questionEngine", params],
-		queryFn: () => generateQuestions(params!),
+		queryFn: async () => {
+			const result = await generateQuestions(params!);
+			trackEngineEvent({
+				event: "generate",
+				subject: params?.subject,
+				questionType: params?.questionType ? (Array.isArray(params.questionType) ? params.questionType.join(",") : params.questionType) : "any",
+				count: result.count,
+				success: true,
+			});
+			return result;
+		},
 		enabled: options?.enabled ?? !!params,
 		staleTime: 1000 * 60 * 60,
 		retry: 1,
 	});
 
 	const gradeMutation = useMutation({
-		mutationFn: ({ question, answer }: { question: Question; answer: UserAnswer }) =>
-			gradeAnswer(question, answer),
+		mutationFn: async ({ question, answer }: { question: Question; answer: UserAnswer }) => {
+			const result = await gradeAnswer(question, answer);
+			trackEngineEvent({
+				event: "grade",
+				subject: question.subject,
+				questionType: question.type,
+				success: true,
+			});
+			return result;
+		},
 	});
 
 	const hintMutation = useMutation({
-		mutationFn: (question: Question) => generateHint(question),
+		mutationFn: async (question: Question) => {
+			const result = await generateHint(question);
+			trackEngineEvent({
+				event: "hint",
+				subject: question.subject,
+				questionType: question.type,
+				success: true,
+			});
+			return result;
+		},
 	});
 
 	const generate = useCallback(
 		async (generateParams: GenerationParams): Promise<Question[]> => {
 			const result = await generateQuestions(generateParams);
+			trackEngineEvent({
+				event: "generate",
+				subject: generateParams.subject,
+				questionType: generateParams.questionType ? (Array.isArray(generateParams.questionType) ? generateParams.questionType.join(",") : generateParams.questionType) : "any",
+				count: result.count,
+				success: true,
+			});
 			return result.questions;
 		},
 		[],

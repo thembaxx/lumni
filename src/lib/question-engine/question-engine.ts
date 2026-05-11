@@ -99,7 +99,11 @@ export class QuestionEngine {
 
 	validate(question: Question): ValidationResult {
 		const processor = this.registry.getProcessor(question.type as QuestionType);
-		return processor.validate(question as never);
+		const result = processor.validate(question as never);
+		console.log(
+			`[Quality] ${question.type}/${question.subject}: score=${result.score}, valid=${result.isValid}`,
+		);
+		return result;
 	}
 
 	getPromptManager(): PromptManager {
