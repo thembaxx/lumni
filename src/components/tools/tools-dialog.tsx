@@ -58,23 +58,25 @@ export function ToolsDialog({ open, onOpenChange }: ToolsDialogProps) {
 					animate={{ opacity: 1 }}
 					exit={{ opacity: 0 }}
 					transition={{ duration: 0.2 }}
-					className="fixed inset-0 z-50 bg-background"
+					className="fixed inset-0 z-50 bg-[#ffffff] dark:bg-[#0a0a0a]"
 				>
 					<div className="h-full flex flex-col">
 						<motion.header
 							initial={{ opacity: 0, y: -10 }}
 							animate={{ opacity: 1, y: 0 }}
 							transition={{ delay: 0.1, duration: 0.3 }}
-							className="flex items-center justify-between px-4 py-3 border-b"
+							className="flex items-center justify-between px-5 py-4 border-b border-[#000000]/10 dark:border-[#ffffff]/10"
 						>
-							<h1 className="text-lg font-semibold text-wrap balance">Tools</h1>
+							<h1 className="text-lg font-semibold text-wrap balance text-[#000000] dark:text-[#ffffff]">
+								Tools
+							</h1>
 							<Button
-								variant="ghost"
-								size="icon-sm"
+								variant="uber_chip"
+								size="pill_sm"
 								onClick={() => onOpenChange(false)}
-								className="active:scale-[0.96] transition-transform duration-150"
+								className="active:scale-[0.97] transition-transform duration-150"
 							>
-								<XIcon className="w-5 h-5" />
+								<XIcon className="w-4 h-4" />
 							</Button>
 						</motion.header>
 
@@ -87,18 +89,19 @@ export function ToolsDialog({ open, onOpenChange }: ToolsDialogProps) {
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
 								transition={{ delay: 0.2, duration: 0.3 }}
-								className="px-4"
+								className="px-4 py-3"
 							>
-								<TabsList className="flex justify-start w-full overflow-x-auto px-4 py-2 gap-2 scrollbar-hide bg-transparent border-b shrink-0">
+								<TabsList className="flex justify-start w-full overflow-x-auto px-2 py-2 gap-2 scrollbar-hide bg-transparent shrink-0">
 									{tabs.map((tab) => (
 										<TabsTrigger
 											key={tab.id}
 											value={tab.id}
 											className={cn(
-												"shrink-0 px-3 py-2 text-xs font-medium rounded-md",
-												"data-active:bg-primary data-active:text-primary-foreground",
-												"text-muted-foreground hover:text-foreground",
-												"active:scale-[0.96] transition-transform duration-150",
+												"shrink-0 px-4 py-2.5 text-sm font-medium rounded-[999px]",
+												"data-active:bg-[#000000] data-active:text-[#ffffff] data-active:shadow-[rgba(0,0,0,0.12)_0px_4px_16px_0px]",
+												"text-[#000000] bg-[#efefef] hover:bg-[#e2e2e2] active:scale-[0.97] transition-all duration-150",
+												"dark:data-active:bg-[#ffffff] dark:data-active:text-[#000000]",
+												"dark:text-[#ffffff] dark:bg-[#2a2a2a] dark:hover:bg-[#3a3a3a]",
 											)}
 										>
 											{tab.label}

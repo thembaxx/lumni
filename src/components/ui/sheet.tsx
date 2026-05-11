@@ -36,7 +36,7 @@ function SheetOverlay({
 		<DrawerPrimitive.Overlay
 			data-slot="sheet-overlay"
 			className={cn(
-				"fixed inset-0 z-50 bg-black/80 supports-backdrop-filter:backdrop-blur-xs data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0",
+				"fixed inset-0 z-50 bg-black/60 data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0",
 				className,
 			)}
 			{...props}
@@ -64,11 +64,11 @@ function SheetContent({
 				data-slot="sheet-content"
 				data-vaul-drawer-direction={direction}
 				className={cn(
-					"fixed z-50 flex h-full flex-col bg-popover text-popover-foreground",
-					"data-[vaul-drawer-direction=right]:inset-y-0 right-0 w-3/4 sm:max-w-sm rounded-l-xl border-l",
-					"data-[vaul-drawer-direction=left]:inset-y-0 left-0 w-3/4 sm:max-w-sm rounded-r-xl border-r",
-					"data-[vaul-drawer-direction=bottom]:inset-x-0 bottom-0 h-auto rounded-t-xl border-t",
-					"data-[vaul-drawer-direction=top]:inset-x-0 top-0 h-auto rounded-b-xl border-b",
+					"fixed z-50 flex h-full flex-col bg-[#ffffff] text-[#000000] dark:bg-[#0a0a0a] dark:text-[#ffffff]",
+					"data-[vaul-drawer-direction=right]:inset-y-0 right-0 w-3/4 sm:max-w-sm border-l border-[#000000]/10 dark:border-[#ffffff]/10",
+					"data-[vaul-drawer-direction=left]:inset-y-0 left-0 w-3/4 sm:max-w-sm border-r border-[#000000]/10 dark:border-[#ffffff]/10",
+					"data-[vaul-drawer-direction=bottom]:inset-x-0 bottom-0 h-auto border-t border-[#000000]/10 dark:border-[#ffffff]/10",
+					"data-[vaul-drawer-direction=top]:inset-x-0 top-0 h-auto border-b border-[#000000]/10 dark:border-[#ffffff]/10",
 					"data-[vaul-drawer-direction]:data-[vaul-drawer-direction]:data-[state=open]:animate-in",
 					"data-[vaul-drawer-direction]:data-[vaul-drawer-direction]:data-[state=open]:duration-300",
 					"data-[vaul-drawer-direction]:data-[vaul-drawer-direction]:data-[state=open]:ease-out-quart",
@@ -93,7 +93,7 @@ function SheetHeader({ className, ...props }: React.ComponentProps<"div">) {
 		<div
 			data-slot="sheet-header"
 			className={cn(
-				"flex flex-col gap-1.5 p-4 text-center sm:text-left",
+				"flex flex-col gap-1.5 p-5 border-b border-[#000000]/10 dark:border-[#ffffff]/10",
 				className,
 			)}
 			{...props}
@@ -105,7 +105,10 @@ function SheetFooter({ className, ...props }: React.ComponentProps<"div">) {
 	return (
 		<div
 			data-slot="sheet-footer"
-			className={cn("mt-auto flex flex-col-reverse gap-2 p-4", className)}
+			className={cn(
+				"mt-auto flex flex-col-reverse gap-2 p-5 border-t border-[#000000]/10 dark:border-[#ffffff]/10",
+				className,
+			)}
 			{...props}
 		/>
 	);
@@ -118,7 +121,7 @@ function SheetTitle({
 	return (
 		<DrawerPrimitive.Title
 			data-slot="sheet-title"
-			className={cn("text-lg font-medium text-foreground", className)}
+			className={cn("text-lg font-semibold tracking-tight", className)}
 			{...props}
 		/>
 	);
@@ -131,7 +134,7 @@ function SheetDescription({
 	return (
 		<DrawerPrimitive.Description
 			data-slot="sheet-description"
-			className={cn("text-sm text-muted-foreground", className)}
+			className={cn("text-sm text-[#4b4b4b] dark:text-[#afafaf]", className)}
 			{...props}
 		/>
 	);

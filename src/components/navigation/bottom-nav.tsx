@@ -62,26 +62,14 @@ function NavItemComponent({
 		<motion.button
 			onClick={onClick}
 			className={cn(
-				"flex flex-1 flex-col items-center justify-center gap-1.5 py-2 px-1 min-h-12 rounded-xl transition-colors relative",
+				"flex flex-1 flex-col items-center justify-center gap-1.5 py-3 px-2 min-h-14 rounded-[999px] transition-all duration-200 relative",
 				isActive
-					? "text-primary"
-					: "text-muted-foreground hover:text-foreground",
+					? "bg-[#000000] text-[#ffffff] dark:bg-[#ffffff] dark:text-[#000000]"
+					: "bg-[#efefef] text-[#000000] hover:bg-[#e2e2e2] dark:bg-[#2a2a2a] dark:text-[#ffffff] dark:hover:bg-[#3a3a3a]",
 			)}
-			whileTap={{ scale: 0.92 }}
+			whileTap={{ scale: 0.95 }}
 			transition={{ duration: 0.15 }}
 		>
-			<AnimatePresence mode="wait">
-				{isActive && (
-					<motion.div
-						layoutId="activeIndicator"
-						className="absolute inset-0 bg-primary/10 rounded-xl"
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
-						exit={{ opacity: 0 }}
-						transition={{ duration: 0.2 }}
-					/>
-				)}
-			</AnimatePresence>
 			<div className="relative z-10">
 				<Icon
 					icon={item.icon}
@@ -94,18 +82,10 @@ function NavItemComponent({
 			<span
 				className={cn(
 					"text-[10px] font-medium tracking-wide transition-colors duration-200",
-					isActive ? "text-primary" : "text-muted-foreground",
 				)}
 			>
 				{item.label}
 			</span>
-			{isActive && (
-				<motion.div
-					layoutId="activeDot"
-					className="absolute -bottom-1 w-1 h-1 rounded-full bg-primary"
-					transition={{ type: "spring", stiffness: 300, damping: 30 }}
-				/>
-			)}
 		</motion.button>
 	);
 }
@@ -144,12 +124,12 @@ export function BottomNav() {
 	return (
 		<>
 			<motion.nav
-				className="fixed bottom-0 left-0 right-0 z-50 bg-card/80 backdrop-blur-xl border-t border-border/50 md:hidden"
+				className="fixed bottom-0 left-0 right-0 z-50 bg-[#ffffff] dark:bg-[#1a1a1a] border-t border-[#000000]/10 dark:border-[#ffffff]/10 md:hidden"
 				initial={{ y: 100, opacity: 0 }}
 				animate={{ y: 0, opacity: 1 }}
 				transition={{ type: "spring", stiffness: 300, damping: 30, delay: 0.2 }}
 			>
-				<div className="flex w-full px-2 pb-safe">
+				<div className="flex w-full px-3 pb-safe gap-1">
 					{navItems.map((item, index) => (
 						<NavItemComponent
 							key={item.id}
@@ -159,10 +139,6 @@ export function BottomNav() {
 						/>
 					))}
 				</div>
-				<div
-					className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-border/50 to-transparent"
-					aria-hidden="true"
-				/>
 			</motion.nav>
 			<PracticeSheet
 				open={practiceDrawerOpen}

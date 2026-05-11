@@ -23,11 +23,14 @@ export function FloatingToolsButton() {
 				onMouseLeave={() => setIsHovered(false)}
 				className={cn(
 					"fixed bottom-21.5 right-5 z-40",
-					"w-14 h-14 rounded-2xl",
-					"bg-primary text-primary-foreground",
-					"shadow-[0_4px_12px_rgba(0,0,0,0.15),0_0_0_1px_rgba(255,255,255,0.05)]",
+					"w-14 h-14 rounded-[999px]",
+					"bg-[#ffffff] text-[#000000]",
+					"shadow-[rgba(0,0,0,0.16)_0px_2px_8px_0px]",
+					"translate-y-[2px]",
 					"flex items-center justify-center",
-					"active:scale-[0.96] transition-transform duration-150 ease-out",
+					"active:scale-[0.97] transition-all duration-150 ease-out",
+					"dark:bg-[#1a1a1a] dark:text-[#ffffff] dark:shadow-[rgba(255,255,255,0.1)_0px_2px_8px_0px]",
+					"hover:bg-[#f3f3f3] dark:hover:bg-[#2a2a2a]",
 				)}
 				initial={{ scale: 0, opacity: 0 }}
 				animate={{ scale: 1, opacity: 1 }}
