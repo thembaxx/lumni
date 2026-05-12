@@ -1,8 +1,8 @@
 "use client";
 
+import { VisualContent } from "@/components/visual/visual-content";
 import { useVisualEngine } from "@/hooks/use-visual-engine";
 import type { Question as ExamQuestion } from "@/types/exam-paper";
-import { VisualContent } from "@/components/visual/visual-content";
 import { ContentBlockRenderer } from "./content-block-renderer";
 import { MarksDisplay } from "./marks-display";
 import { PartRenderer } from "./part-renderer";
@@ -86,9 +86,7 @@ export function QuestionRenderer({
 			))}
 
 			{question.parts.length === 0 && (
-				<p className="text-sm text-muted-foreground italic">
-					No sub-questions
-				</p>
+				<p className="text-sm text-muted-foreground italic">No sub-questions</p>
 			)}
 
 			{question.parts.map((part) => {

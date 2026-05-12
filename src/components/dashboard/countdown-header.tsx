@@ -135,13 +135,12 @@ export function CountdownHeader() {
 		isLoggedIn,
 		isLoading,
 	} = useAppwriteSession();
-	const [timeOfDay] = useState<TimeOfDay>(getTimeOfDay);
-	const [daysLeft, setDaysLeft] = useState(() => getDaysUntil());
-	const [yearProgress, setYearProgress] = useState(() => getYearProgress());
+	const [daysLeft, setDaysLeft] = useState(0);
+	const [yearProgress, setYearProgress] = useState(0);
 	const [mounted, setMounted] = useState(false);
 	const shouldReduceMotion = useReducedMotion();
 
-	const greeting = greetingMap[timeOfDay];
+	const greeting = mounted ? greetingMap[getTimeOfDay()] : "Good";
 	const firstName = isLoggedIn && name ? name.split(" ")[0] : null;
 	const phase = mounted ? getPhase(daysLeft) : "grind";
 	const msg = mounted
@@ -152,11 +151,12 @@ export function CountdownHeader() {
 
 	useEffect(() => {
 		setMounted(true);
+		setDaysLeft(getDaysUntil());
+		setYearProgress(getYearProgress());
 		function tick() {
 			setDaysLeft(getDaysUntil());
 			setYearProgress(getYearProgress());
 		}
-		tick();
 
 		const midnight = new Date();
 		midnight.setDate(midnight.getDate() + 1);
@@ -289,7 +289,7 @@ export function CountdownHeader() {
 					<div
 						className="mt-3 mb-3 h-1.5 w-full overflow-hidden rounded-full bg-border/40"
 						role="progressbar"
-						aria-valuenow={Math.round(yearProgress * 100)}
+						aria-valuenow={mounted ? Math.round(yearProgress * 100) : 0}
 						aria-valuemin={0}
 						aria-valuemax={100}
 						aria-label="Year progress: days studied vs total"

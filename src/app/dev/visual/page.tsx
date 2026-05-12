@@ -1,10 +1,6 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import { VisualContent } from "@/components/visual/visual-content";
-import { DiagramRenderer } from "@/components/visual/diagram-renderer";
-import { ImageViewer } from "@/components/visual/image-viewer";
-import { MermaidDiagram } from "@/components/visual/mermaid-diagram";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -18,11 +14,21 @@ import {
 } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
+import { DiagramRenderer } from "@/components/visual/diagram-renderer";
+import { ImageViewer } from "@/components/visual/image-viewer";
+import { MermaidDiagram } from "@/components/visual/mermaid-diagram";
+import { VisualContent } from "@/components/visual/visual-content";
 import { STEM_SUBJECTS } from "@/lib/visual-engine";
 import type { VisualContent as VisualContentType } from "@/lib/visual-engine/types";
 
 const SUBJECTS = [...STEM_SUBJECTS].sort();
-const ALL_SUBJECTS = [...SUBJECTS, "history", "english-home-language", "life-orientation", "music"].sort();
+const ALL_SUBJECTS = [
+	...SUBJECTS,
+	"history",
+	"english-home-language",
+	"life-orientation",
+	"music",
+].sort();
 
 export default function DevVisualPage() {
 	const [subject, setSubject] = useState("mathematics");
@@ -73,7 +79,9 @@ export default function DevVisualPage() {
 			const data = await res.json();
 			setTestResult(JSON.stringify(data, null, 2));
 		} catch (err) {
-			setTestResult(`Error: ${err instanceof Error ? err.message : "Network error"}`);
+			setTestResult(
+				`Error: ${err instanceof Error ? err.message : "Network error"}`,
+			);
 		}
 		setIsLoading(false);
 	}, []);
@@ -121,7 +129,12 @@ export default function DevVisualPage() {
 					<Badge variant="outline" className="text-xs">
 						{isSTEM ? "STEM → AI Diagram" : "Non-STEM → Image Search"}
 					</Badge>
-					<Button onClick={handleRunTests} variant="outline" size="sm" disabled={isLoading}>
+					<Button
+						onClick={handleRunTests}
+						variant="outline"
+						size="sm"
+						disabled={isLoading}
+					>
 						Run All Tests
 					</Button>
 				</CardContent>
@@ -129,7 +142,9 @@ export default function DevVisualPage() {
 
 			{error && (
 				<Card className="border-destructive">
-					<CardContent className="p-4 text-destructive text-sm">{error}</CardContent>
+					<CardContent className="p-4 text-destructive text-sm">
+						{error}
+					</CardContent>
 				</Card>
 			)}
 

@@ -27,8 +27,8 @@ function NodeDiagramFlow({ data }: { data: NodeDiagramData }) {
 		data.nodes?.map((n) => ({
 			id: n.id,
 			position: {
-				x: n.x || Math.random() * 200,
-				y: n.y || Math.random() * 200,
+				x: n.x || 0,
+				y: n.y || 0,
 			},
 			data: { label: n.label },
 			type: n.type || "default",

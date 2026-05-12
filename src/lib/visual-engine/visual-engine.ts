@@ -1,5 +1,5 @@
-import { initAI, isAIConfigured } from "@/lib/ai";
 import Dexie from "dexie";
+import { initAI, isAIConfigured } from "@/lib/ai";
 import { searchImage } from "./image-resolver";
 import { generateDiagram } from "./stem-renderer";
 import type {
@@ -28,7 +28,9 @@ function getStore(): Dexie {
 }
 
 function makeCacheKey(questionId: string, subject: string): string {
-	return `${questionId}-${subject}`.replace(/[^a-zA-Z0-9._-]/g, "_").slice(0, 36);
+	return `${questionId}-${subject}`
+		.replace(/[^a-zA-Z0-9._-]/g, "_")
+		.slice(0, 36);
 }
 
 export class VisualEngine {
@@ -48,7 +50,10 @@ export class VisualEngine {
 		const cached = await this.checkCache(cacheKey);
 		if (cached) return cached;
 
-		const appwriteVisual = await this.checkAppwriteCache(params.questionId, params.subject);
+		const appwriteVisual = await this.checkAppwriteCache(
+			params.questionId,
+			params.subject,
+		);
 		if (appwriteVisual) {
 			await this.writeDexieCache(cacheKey, params.subject, appwriteVisual);
 			return appwriteVisual;
@@ -109,9 +114,7 @@ export class VisualEngine {
 		return generateDiagram(params.questionText, params.subject, params.topic);
 	}
 
-	private async checkCache(
-		cacheKey: string,
-	): Promise<VisualContent | null> {
+	private async checkCache(cacheKey: string): Promise<VisualContent | null> {
 		try {
 			const store = getStore();
 			const entry = await store.table("visuals").get(cacheKey);

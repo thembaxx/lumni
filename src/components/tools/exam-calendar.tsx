@@ -127,7 +127,7 @@ export function ExamCalendar() {
 			<div className="mt-4 flex justify-between items-center">
 				<h3 className="font-semibold text-wrap balance">
 					{selectedDate
-						? `Exams on ${selectedDate.toLocaleDateString()}`
+						? `Exams on ${selectedDate.toLocaleDateString("en-ZA")}`
 						: "Select a date"}
 				</h3>
 				<Button

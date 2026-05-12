@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { ExternalLinkIcon } from "lucide-react";
+import Image from "next/image";
 import { useState } from "react";
 
 interface ImageViewerProps {
@@ -11,7 +11,12 @@ interface ImageViewerProps {
 	sourceUrl?: string;
 }
 
-export function ImageViewer({ url, label, attribution, sourceUrl }: ImageViewerProps) {
+export function ImageViewer({
+	url,
+	label,
+	attribution,
+	sourceUrl,
+}: ImageViewerProps) {
 	const [error, setError] = useState(false);
 	const [loading, setLoading] = useState(true);
 
@@ -38,7 +43,10 @@ export function ImageViewer({ url, label, attribution, sourceUrl }: ImageViewerP
 					unoptimized
 					className="object-contain max-h-96 !relative"
 					onLoad={() => setLoading(false)}
-					onError={() => { setError(true); setLoading(false); }}
+					onError={() => {
+						setError(true);
+						setLoading(false);
+					}}
 					style={loading ? { display: "none" } : undefined}
 				/>
 			</div>

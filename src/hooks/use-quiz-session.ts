@@ -56,7 +56,7 @@ export function useQuizSession({
 }: UseQuizSessionOptions = {}): UseQuizSessionResult {
 	const [selectedSubject, setSelectedSubject] =
 		useState<string>(initialSubject);
-	const [points, setPoints] = useState(() => Math.floor(Math.random() * 101));
+	const [points, setPoints] = useState(0);
 	const [sessionStarted, setSessionStarted] = useState(false);
 
 	const normalizedSubject = initialSubject || selectedSubject.toLowerCase();

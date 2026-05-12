@@ -26,9 +26,7 @@ export async function saveVisualToAppwrite(
 				subject,
 				visual: safeJsonStringify(visual),
 				createdAt: new Date().toISOString(),
-				expiresAt: new Date(
-					Date.now() + 7 * 24 * 60 * 60 * 1000,
-				).toISOString(),
+				expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
 			},
 		);
 	} catch {

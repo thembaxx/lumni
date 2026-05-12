@@ -58,7 +58,7 @@ function AnimatedCounter({
 function Confetti() {
 	const particles = Array.from({ length: 12 }, (_, i) => ({
 		id: i,
-		x: Math.random() * 200 - 100,
+		x: ((i * 17 + 5) % 200) - 100,
 		delay: i * 0.05,
 		color: [
 			"oklch(64.8% 0.173 142°)",

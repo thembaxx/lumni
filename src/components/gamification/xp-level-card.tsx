@@ -45,7 +45,7 @@ export function XpLevelCard({ levelInfo, totalXp }: XpLevelCardProps) {
 							{levelInfo.title}
 						</span>
 						<span className="text-xs text-muted-foreground font-medium">
-							{totalXp.toLocaleString()} XP
+							{totalXp.toLocaleString("en-ZA")} XP
 						</span>
 					</div>
 
