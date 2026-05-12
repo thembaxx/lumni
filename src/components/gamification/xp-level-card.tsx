@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import type { LevelInfo } from "@/types/gamification";
+import { iOSEase, springTransition } from "@/lib/utils/animation";
 
 interface XpLevelCardProps {
 	levelInfo: LevelInfo;
@@ -53,7 +54,7 @@ export function XpLevelCard({ levelInfo, totalXp }: XpLevelCardProps) {
 							className="absolute inset-y-0 left-0 rounded-full bg-[--system-accent]"
 							initial={{ width: 0 }}
 							animate={{ width: `${levelInfo.progress}%` }}
-							transition={{ duration: 0.8, ease: "easeOut" }}
+							transition={{ duration: 0.8, ease: iOSEase }}
 						/>
 						<motion.div
 							className="absolute inset-0 bg-white/20 dark:bg-black/20"

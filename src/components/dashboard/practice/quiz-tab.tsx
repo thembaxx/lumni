@@ -4,6 +4,7 @@ import { ArrowDown01Icon, Play, Square } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { domAnimation, LazyMotion, m } from "framer-motion";
 import { Timer, Zap } from "lucide-react";
+import { iOSEase } from "@/lib/utils/animation";
 import { useCallback, useState } from "react";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
 import {
@@ -114,7 +115,7 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 							y: 0,
 							transition: {
 								duration: 0.28,
-								ease: [0.4, 0, 0.2, 1],
+								ease: iOSEase,
 							},
 						}}
 						exit={{
@@ -122,7 +123,7 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 							y: -8,
 							transition: {
 								duration: 0.15,
-								ease: [0.4, 0, 1, 1],
+								ease: iOSEase,
 							},
 						}}
 					>

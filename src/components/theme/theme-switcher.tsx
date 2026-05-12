@@ -8,6 +8,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 import { useTheme } from "@/components/theme";
+import { iOSEase } from "@/lib/utils/animation";
 import { Button } from "@/components/ui/button";
 
 type Theme = "system" | "dark" | "light";
@@ -51,7 +52,7 @@ export function ThemeSwitcher() {
 							initial={{ opacity: 0, scale: 0.25, filter: "blur(4px)" }}
 							animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
 							exit={{ opacity: 0, scale: 0.25, filter: "blur(4px)" }}
-							transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+							transition={{ type: "spring", duration: 0.3, bounce: 0, ease: iOSEase }}
 						>
 							<HugeiconsIcon
 								icon={CurrentIcon}

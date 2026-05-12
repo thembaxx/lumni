@@ -9,13 +9,13 @@ export const metadata: Metadata = {
 
 export default function Home() {
 	return (
-		<div className="min-h-screen flex flex-col items-center justify-center bg-background">
-			<main className="flex flex-col items-center gap-10">
-				<div className="flex flex-col items-center gap-4 animate-fade-in-up">
-					<h1 className="text-5xl font-medium tracking-tight text-foreground">
+		<div className="min-h-screen flex flex-col items-center justify-center bg-[--system-background]">
+			<main className="flex flex-col items-center gap-[--space-10]">
+				<div className="flex flex-col items-center gap-[--space-4] animate-fade-in-scale">
+					<h1 className="ios-large-title font-bold text-[--system-text-primary]">
 						lumni
 					</h1>
-					<p className="text-muted-foreground text-base max-w-xs text-center leading-relaxed">
+					<p className="ios-callout text-[--system-text-secondary] max-w-xs text-center leading-relaxed">
 						{appConfig.descriptionShort}
 					</p>
 				</div>

@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { LottieWrapper } from "@/components/lottie/lottie-wrapper";
+import { iOSEase } from "@/lib/utils/animation";
 import { cn } from "@/lib/utils";
 
 export function WelcomeState() {
@@ -12,7 +13,7 @@ export function WelcomeState() {
 				<motion.h2
 					initial={{ opacity: 0, y: 8, filter: "blur(4px)" }}
 					animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-					transition={{ delay: 0.1, duration: 0.35, ease: [0.2, 0, 0, 1] }}
+					transition={{ delay: 0.1, duration: 0.35, ease: iOSEase }}
 					className="text-xl font-semibold text-foreground mb-2"
 				>
 					Hi! I&apos;m your study assistant
@@ -20,7 +21,7 @@ export function WelcomeState() {
 				<motion.p
 					initial={{ opacity: 0, y: 8, filter: "blur(4px)" }}
 					animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-					transition={{ delay: 0.2, duration: 0.35, ease: [0.2, 0, 0, 1] }}
+					transition={{ delay: 0.2, duration: 0.35, ease: iOSEase }}
 					className="text-muted-foreground text-sm"
 				>
 					Ask me anything about your studies!

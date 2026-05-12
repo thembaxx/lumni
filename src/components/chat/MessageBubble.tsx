@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Play, RefreshCw, Square } from "lucide-react";
+import { iOSEase } from "@/lib/utils/animation";
 import { useRef, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Button } from "@/components/ui/button";
@@ -165,7 +166,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 					)}
 					aria-label={isPlaying ? "Pause" : "Play"}
 					whileTap={{ scale: 0.96 }}
-					transition={{ duration: 0.15, ease: [0.25, 1, 0.5, 1] }}
+					transition={{ duration: 0.15, ease: iOSEase }}
 				>
 					<span
 						className={cn(
@@ -222,11 +223,11 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 													repeat: Infinity,
 													duration: 0.8,
 													delay: i * 0.1,
-													ease: [0.25, 1, 0.5, 1],
+													ease: iOSEase,
 												}
 											: {
 													duration: 0.3,
-													ease: [0.25, 1, 0.5, 1],
+													ease: iOSEase,
 												}
 									}
 									style={{ height: `${Math.round(height * 20)}px` }}

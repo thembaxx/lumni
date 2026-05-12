@@ -2,6 +2,7 @@
 
 import { domAnimation, LazyMotion, m } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { iOSEase } from "@/lib/utils/animation";
 import { startTransition, useCallback, useState } from "react";
 import { QuestionCard } from "@/components/quiz/question-card";
 import { Button } from "@/components/ui/button";
@@ -81,7 +82,7 @@ export function QuizSession({
 						y: 0,
 						transition: {
 							duration: 0.28,
-							ease: [0.4, 0, 0.2, 1],
+							ease: iOSEase,
 						},
 					}}
 					exit={{
@@ -89,7 +90,7 @@ export function QuizSession({
 						y: -8,
 						transition: {
 							duration: 0.15,
-							ease: [0.4, 0, 1, 1],
+							ease: iOSEase,
 						},
 					}}
 				>

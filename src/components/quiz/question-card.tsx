@@ -4,6 +4,7 @@ import { CancelIcon, CheckmarkCircle02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
 import { MinusIcon, PlusIcon } from "lucide-react";
+import { iOSEase } from "@/lib/utils/animation";
 import { useCallback, useState } from "react";
 import { Confetti, XPGainPopup } from "@/components/celebration";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
@@ -159,7 +160,7 @@ export function QuestionCard({
 									key={option.id}
 									initial={{ opacity: 0, x: -8 }}
 									animate={{ opacity: 1, x: 0 }}
-									transition={{ delay: i * 0.05 }}
+									transition={{ delay: i * 0.05, duration: 0.25, ease: iOSEase }}
 									whileHover={{ scale: 1.01 }}
 									whileTap={{ scale: 0.98 }}
 								>
@@ -425,6 +426,7 @@ export function QuestionCard({
 			<m.div
 				initial={{ opacity: 0, scale: 0.95, y: -8 }}
 				animate={{ opacity: 1, scale: 1, y: 0 }}
+				transition={{ duration: 0.3, ease: iOSEase }}
 				className={cn(
 					"rounded-lg p-4 space-y-3",
 					isCorrect
@@ -556,6 +558,7 @@ export function QuestionCard({
 								initial={{ opacity: 0, y: -4 }}
 								animate={{ opacity: 1, y: 0 }}
 								exit={{ opacity: 0, y: -4 }}
+								transition={{ duration: 0.2, ease: iOSEase }}
 								className="rounded-lg bg-warning/5 p-4 text-warning"
 							>
 								<p className="font-medium">Hint:</p>
@@ -578,8 +581,8 @@ export function QuestionCard({
 					>
 						<MinusIcon
 							className={cn(
-								"h-4 w-4 transition-transform duration-200",
-								state.showHint && "rotate-180",
+							"h-4 w-4 transition-transform duration-[var(--duration-normal)]",
+							state.showHint && "rotate-180",
 							)}
 						/>
 						Hint

@@ -2,6 +2,7 @@
 
 import { IconCheck, IconX } from "@tabler/icons-react";
 import { domAnimation, LazyMotion, m } from "framer-motion";
+import { iOSEase } from "@/lib/utils/animation";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useCallback } from "react";
 import { Badge } from "@/components/ui/badge";
@@ -94,7 +95,7 @@ export function FlashcardsActive({
 						aria-label="Flip flashcard"
 						initial={{ rotateY: 0 }}
 						animate={{ rotateY: isFlipped ? 180 : 0 }}
-						transition={{ duration: 0.5 }}
+						transition={{ duration: 0.5, ease: iOSEase }}
 					>
 						<Card
 							className={cn(

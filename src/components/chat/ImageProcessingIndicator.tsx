@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { X } from "lucide-react";
+import { iOSEase } from "@/lib/utils/animation";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
@@ -27,7 +28,7 @@ export function ImageProcessingIndicator({
 			initial={{ opacity: 0, y: -8, scaleY: 0.8 }}
 			animate={{ opacity: 1, y: 0, scaleY: 1 }}
 			exit={{ opacity: 0, y: -8, scaleY: 0.8 }}
-			transition={{ duration: 0.2, ease: [0.2, 0, 0, 1] }}
+			transition={{ duration: 0.2, ease: iOSEase }}
 			style={{ transformOrigin: "top" }}
 			className={cn(
 				"px-3 py-2 rounded-lg border text-sm",

@@ -2,6 +2,7 @@
 
 import { domAnimation, LazyMotion, m } from "framer-motion";
 import { LayoutGrid, Snowflake } from "lucide-react";
+import { iOSEase } from "@/lib/utils/animation";
 import { startTransition } from "react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
@@ -44,7 +45,7 @@ export function TabNav({ activeTab, onTabChange }: TabNavProps) {
 						y: 0,
 						transition: {
 							duration: 0.3,
-							ease: [0.4, 0, 0.2, 1],
+							ease: iOSEase,
 						},
 					}}
 				>

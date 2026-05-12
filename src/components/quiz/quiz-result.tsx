@@ -24,6 +24,7 @@ import { LottieWrapper } from "@/components/lottie";
 import { AccuracyBar } from "@/components/shared/accuracy-bar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { iOSEase, springTransition } from "@/lib/utils/animation";
 
 interface QuizResultProps {
 	results: {
@@ -89,7 +90,7 @@ function Confetti() {
 					transition={{
 						duration: 0.8,
 						delay: p.delay,
-						ease: [0.25, 0.46, 0.45, 0.94],
+						ease: iOSEase,
 					}}
 				/>
 			))}
@@ -130,7 +131,7 @@ export function QuizResult({
 		<m.div
 			initial={{ opacity: 0, scale: 0.9 }}
 			animate={{ opacity: 1, scale: 1 }}
-			transition={{ duration: 0.4, ease: [0.25, 1, 0.5, 1] }}
+			transition={{ duration: 0.4, ease: iOSEase }}
 			className="space-y-6"
 		>
 			<Card className="p-8 flex flex-col items-center text-center gap-4 relative overflow-visible">
@@ -138,7 +139,7 @@ export function QuizResult({
 				<m.div
 					initial={{ scale: 0.95, opacity: 0 }}
 					animate={{ scale: 1, opacity: 1 }}
-					transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+					transition={{ delay: 0.2, ...springTransition }}
 					className="text-5xl"
 				>
 					{useLottie && message.celebration ? (

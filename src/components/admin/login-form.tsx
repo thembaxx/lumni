@@ -2,6 +2,7 @@
 
 import { domAnimation, LazyMotion, m } from "framer-motion";
 import { Mail, MessageSquare } from "lucide-react";
+import { iOSEase } from "@/lib/utils/animation";
 import { startTransition, useState } from "react";
 import { MagicLinkDialog } from "@/components/admin/login-dialogs";
 import { OTPDialog } from "@/components/auth/otp-dialog";
@@ -40,7 +41,7 @@ export function LoginForm({ onSuccess }: { onSuccess: () => void }) {
 								y: 0,
 								transition: {
 									duration: 0.35,
-									ease: [0.4, 0, 0.2, 1],
+									ease: iOSEase,
 								},
 							}}
 						>
@@ -60,7 +61,7 @@ export function LoginForm({ onSuccess }: { onSuccess: () => void }) {
 								transition: {
 									duration: 0.35,
 									delay: 0.08,
-									ease: [0.4, 0, 0.2, 1],
+									ease: iOSEase,
 								},
 							}}
 						>

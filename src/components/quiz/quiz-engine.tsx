@@ -2,6 +2,7 @@
 
 import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
 import { useCallback, useMemo, useState } from "react";
+import { iOSEase } from "@/lib/utils/animation";
 import { ProgressDots } from "@/components/shared/progress-dots";
 import { Card } from "@/components/ui/card";
 import { AssessmentHeader } from "@/components/ui/headers/assessment-header";
@@ -174,7 +175,7 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 						initial={{ opacity: 0, scale: 0.9 }}
 						animate={{ opacity: 1, scale: 1 }}
 						exit={{ opacity: 0, scale: 0.9 }}
-						transition={{ duration: 0.4 }}
+						transition={{ duration: 0.4, ease: iOSEase }}
 					>
 						<QuizResult
 							results={buildResults(
@@ -222,7 +223,7 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 						initial={{ opacity: 0, x: 20 }}
 						animate={{ opacity: 1, x: 0 }}
 						exit={{ opacity: 0, x: -20 }}
-						transition={{ duration: 0.2 }}
+						transition={{ duration: 0.2, ease: iOSEase }}
 					>
 						<QuestionCard
 							question={currentQuestion}

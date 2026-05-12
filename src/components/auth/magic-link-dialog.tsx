@@ -1,4 +1,5 @@
 import { domAnimation, LazyMotion, m } from "framer-motion";
+import { iOSEase } from "@/lib/utils/animation";
 import {
 	AlertCircle,
 	CheckCircle2,
@@ -199,7 +200,7 @@ export function MagicLinkDialog({
 									y: 0,
 									transition: {
 										duration: 0.3,
-										ease: [0.4, 0, 0.2, 1],
+										ease: iOSEase,
 									},
 								}}
 							>
@@ -242,7 +243,7 @@ export function MagicLinkDialog({
 										transition: {
 											duration: 0.3,
 											delay: 0.12,
-											ease: [0.4, 0, 0.2, 1],
+											ease: iOSEase,
 										},
 									}}
 								>
