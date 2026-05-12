@@ -1,33 +1,38 @@
-import achievementUnlockData from "@/assets/animations/achievement-unlock.json";
-import confettiData from "@/assets/animations/confetti.json";
-import emptySearchData from "@/assets/animations/empty-search.json";
-import emptyUploadData from "@/assets/animations/empty-upload.json";
-import errorStateData from "@/assets/animations/error-state.json";
-import levelUpData from "@/assets/animations/level-up.json";
-import loadingDotsData from "@/assets/animations/loading-dots.json";
-import loadingLumniData from "@/assets/animations/loading-lumni.json";
-import page404Data from "@/assets/animations/page-404.json";
-import quizCorrectData from "@/assets/animations/quiz-correct.json";
-import quizIncorrectData from "@/assets/animations/quiz-incorrect.json";
-import streakFireData from "@/assets/animations/streak-fire.json";
-import successCheckData from "@/assets/animations/success-check.json";
-import xpBurstData from "@/assets/animations/xp-burst.json";
-
 export const LOTTIE_ANIMATIONS = {
-	"achievement-unlock": achievementUnlockData,
-	"level-up": levelUpData,
-	confetti: confettiData,
-	"success-check": successCheckData,
-	"loading-dots": loadingDotsData,
-	"loading-lumni": loadingLumniData,
-	"page-404": page404Data,
-	"quiz-correct": quizCorrectData,
-	"quiz-incorrect": quizIncorrectData,
-	"streak-fire": streakFireData,
-	"xp-burst": xpBurstData,
-	"empty-search": emptySearchData,
-	"empty-upload": emptyUploadData,
-	"error-state": errorStateData,
+	"achievement-unlock": () =>
+		import("@/assets/animations/achievement-unlock.json").then(
+			(m) => m.default,
+		),
+	"level-up": () =>
+		import("@/assets/animations/level-up.json").then((m) => m.default),
+	confetti: () =>
+		import("@/assets/animations/confetti.json").then((m) => m.default),
+	"success-check": () =>
+		import("@/assets/animations/success-check.json").then((m) => m.default),
+	"loading-dots": () =>
+		import("@/assets/animations/loading-dots.json").then((m) => m.default),
+	"loading-lumni": () =>
+		import("@/assets/animations/loading-lumni.json").then((m) => m.default),
+	"page-404": () =>
+		import("@/assets/animations/page-404.json").then((m) => m.default),
+	"quiz-correct": () =>
+		import("@/assets/animations/quiz-correct.json").then((m) => m.default),
+	"quiz-incorrect": () =>
+		import("@/assets/animations/quiz-incorrect.json").then((m) => m.default),
+	"streak-fire": () =>
+		import("@/assets/animations/streak-fire.json").then((m) => m.default),
+	"xp-burst": () =>
+		import("@/assets/animations/xp-burst.json").then((m) => m.default),
+	"empty-search": () =>
+		import("@/assets/animations/empty-search.json").then((m) => m.default),
+	"empty-upload": () =>
+		import("@/assets/animations/empty-upload.json").then((m) => m.default),
+	"error-state": () =>
+		import("@/assets/animations/error-state.json").then((m) => m.default),
 } as const;
 
 export type LottieAnimationName = keyof typeof LOTTIE_ANIMATIONS;
+
+export function loadAnimationData(name: LottieAnimationName): Promise<object> {
+	return LOTTIE_ANIMATIONS[name]();
+}

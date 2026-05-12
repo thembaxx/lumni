@@ -1,5 +1,7 @@
 "use client";
 
+import { useReducedMotion } from "framer-motion";
+import { LottieWrapper } from "@/components/lottie";
 import type { VisualContent as VisualContentType } from "@/lib/visual-engine/types";
 import { DiagramRenderer } from "./diagram-renderer";
 import { ImageViewer } from "./image-viewer";
@@ -11,13 +13,16 @@ interface VisualContentProps {
 }
 
 export function VisualContent({ visual, isLoading }: VisualContentProps) {
+	const shouldReduceMotion = useReducedMotion();
+
 	if (isLoading) {
 		return (
-			<div className="space-y-2">
-				<div className="flex h-40 items-center justify-center rounded-lg border bg-muted/10">
+			<div className="flex h-40 items-center justify-center rounded-lg border bg-muted/10">
+				{shouldReduceMotion ? (
 					<div className="h-6 w-6 animate-spin rounded-full border-2 border-muted-foreground/30 border-t-muted-foreground" />
-				</div>
-				<div className="h-3 w-32 animate-pulse rounded bg-muted/20" />
+				) : (
+					<LottieWrapper animation="loading-lumni" className="w-16 h-16" loop />
+				)}
 			</div>
 		);
 	}

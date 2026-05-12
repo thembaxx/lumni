@@ -2,6 +2,7 @@
 
 import { IconFlame, IconTarget, IconTrendingUp } from "@tabler/icons-react";
 import { motion, useReducedMotion } from "framer-motion";
+import { type LottieAnimationName, LottieWrapper } from "@/components/lottie";
 import { Card } from "@/components/ui/card";
 import { easeOutQuint, iOSEase } from "@/lib/utils/animation";
 
@@ -15,6 +16,7 @@ interface StatItemProps {
 	label: string;
 	value: number;
 	icon: React.ComponentType<{ className?: string }>;
+	animation?: LottieAnimationName;
 	colorClass: string;
 	accentClass: string;
 	index: number;
@@ -38,6 +40,7 @@ function StatCard({
 	label,
 	value,
 	icon: Icon,
+	animation,
 	colorClass,
 	accentClass,
 	index,
@@ -60,7 +63,11 @@ function StatCard({
 				/>
 
 				<div className="relative flex items-center justify-center w-10 h-10 rounded-full bg-system-surface shadow-level-1">
-					<Icon className={`w-5 h-5 ${colorClass}`} />
+					{animation && !shouldReduceMotion ? (
+						<LottieWrapper animation={animation} className="w-5 h-5" loop />
+					) : (
+						<Icon className={`w-5 h-5 ${colorClass}`} />
+					)}
 				</div>
 
 				<div className="text-center space-y-1">
@@ -106,6 +113,7 @@ export function StatsCards({
 					label="Streak"
 					value={streak}
 					icon={IconFlame}
+					animation={hasStreak ? "streak-fire" : undefined}
 					colorClass={hasStreak ? "text-warning" : "text-muted-foreground"}
 					accentClass={hasStreak ? "bg-warning" : "bg-border"}
 					index={0}
@@ -114,6 +122,7 @@ export function StatsCards({
 					label="Questions"
 					value={questionsAnswered}
 					icon={IconTarget}
+					animation="loading-dots"
 					colorClass="text-info"
 					accentClass="bg-info"
 					index={1}
@@ -122,6 +131,7 @@ export function StatsCards({
 					label="Accuracy"
 					value={accuracy}
 					icon={IconTrendingUp}
+					animation="success-check"
 					colorClass="text-success"
 					accentClass="bg-success"
 					index={2}

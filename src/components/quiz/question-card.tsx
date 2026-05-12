@@ -445,7 +445,7 @@ export function QuestionCard({
 			>
 				<div className="flex items-center gap-3">
 					<LottieWrapper
-						animation={isCorrect ? "quiz-correct" : "quiz-incorrect"}
+						animation={isCorrect ? "success-check" : "error-state"}
 						className="w-10 h-10 shrink-0"
 						loop={false}
 					/>

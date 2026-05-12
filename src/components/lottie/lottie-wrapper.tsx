@@ -1,7 +1,9 @@
 "use client";
 
+import type { LottieRef } from "lottie-react";
 import dynamic from "next/dynamic";
-import { LOTTIE_ANIMATIONS, type LottieAnimationName } from "./lottie-assets";
+import { useEffect, useState } from "react";
+import { type LottieAnimationName, loadAnimationData } from "./lottie-assets";
 
 const Lottie = dynamic(() => import("lottie-react"), {
 	ssr: false,
@@ -15,6 +17,7 @@ interface LottieWrapperProps {
 	onComplete?: () => void;
 	className?: string;
 	style?: React.CSSProperties;
+	lottieRef?: LottieRef;
 }
 
 export function LottieWrapper({
@@ -24,20 +27,32 @@ export function LottieWrapper({
 	onComplete,
 	className,
 	style,
+	lottieRef,
 }: LottieWrapperProps) {
-	const animationData = LOTTIE_ANIMATIONS[animation];
+	const [data, setData] = useState<object | null>(null);
 
-	if (!animationData) {
-		return null;
+	useEffect(() => {
+		let cancelled = false;
+		loadAnimationData(animation).then((d) => {
+			if (!cancelled) setData(d);
+		});
+		return () => {
+			cancelled = true;
+		};
+	}, [animation]);
+
+	if (!data) {
+		return <div className={className} />;
 	}
 
 	return (
 		<Lottie
-			animationData={animationData}
+			animationData={data}
 			loop={loop}
 			autoplay={autoplay}
 			onComplete={onComplete}
 			className={className}
+			lottieRef={lottieRef}
 			style={{ width: "100%", height: "100%", ...style }}
 		/>
 	);
