@@ -1,0 +1,66 @@
+{
+  "subjectId": "design",
+  "subjectName": "Design",
+  "topics": [
+    {
+      "id": "design-principles",
+      "name": "Design Principles",
+      "order": 1,
+      "prerequisites": [],
+      "bloomTarget": "understand",
+      "subtopics": [
+        { "id": "elements-of-design", "name": "Elements of Design", "order": 1 },
+        { "id": "principles-of-composition", "name": "Principles of Composition", "order": 2 },
+        { "id": "colour-theory", "name": "Colour Theory", "order": 3 }
+      ]
+    },
+    {
+      "id": "drawing-and-rendering",
+      "name": "Drawing and Rendering",
+      "order": 2,
+      "prerequisites": ["design-principles"],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "observational-drawing", "name": "Observational Drawing", "order": 1 },
+        { "id": "perspective-rendering", "name": "Perspective Rendering", "order": 2 },
+        { "id": "digital-illustration", "name": "Digital Illustration", "order": 3 }
+      ]
+    },
+    {
+      "id": "materials-and-manufacturing",
+      "name": "Materials and Manufacturing",
+      "order": 3,
+      "prerequisites": [],
+      "bloomTarget": "understand",
+      "subtopics": [
+        { "id": "material-properties", "name": "Material Properties", "order": 1 },
+        { "id": "manufacturing-processes", "name": "Manufacturing Processes", "order": 2 },
+        { "id": "sustainable-design", "name": "Sustainable Design", "order": 3 }
+      ]
+    },
+    {
+      "id": "design-history",
+      "name": "Design History",
+      "order": 4,
+      "prerequisites": [],
+      "bloomTarget": "understand",
+      "subtopics": [
+        { "id": "modern-movements", "name": "Modern Movements", "order": 1 },
+        { "id": "african-design", "name": "African Design", "order": 2 },
+        { "id": "contemporary-design", "name": "Contemporary Design", "order": 3 }
+      ]
+    },
+    {
+      "id": "graphic-communication",
+      "name": "Graphic Communication",
+      "order": 5,
+      "prerequisites": ["design-principles"],
+      "bloomTarget": "create",
+      "subtopics": [
+        { "id": "typography", "name": "Typography", "order": 1 },
+        { "id": "branding-and-identity", "name": "Branding and Identity", "order": 2 },
+        { "id": "information-design", "name": "Information Design", "order": 3 }
+      ]
+    }
+  ]
+}

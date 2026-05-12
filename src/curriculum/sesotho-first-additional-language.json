@@ -1,0 +1,79 @@
+{
+  "subjectId": "sesotho-first-additional-language",
+  "subjectName": "Sesotho First Additional Language",
+  "topics": [
+    {
+      "id": "sot-fal-reading",
+      "name": "Ho Bala le ho Utloisisa",
+      "order": 1,
+      "prerequisites": [],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "sot-fal-literal", "name": "Literal Comprehension", "order": 1 },
+        { "id": "sot-fal-inferential", "name": "Inferential Comprehension", "order": 2 },
+        { "id": "sot-fal-critical", "name": "Critical Reading", "order": 3 }
+      ]
+    },
+    {
+      "id": "sot-fal-literature",
+      "name": "Lingoliloeng",
+      "order": 2,
+      "prerequisites": [],
+      "bloomTarget": "evaluate",
+      "subtopics": [
+        { "id": "sot-fal-poetry", "name": "Poetry", "order": 1 },
+        { "id": "sot-fal-novel", "name": "Novel", "order": 2 },
+        { "id": "sot-fal-drama", "name": "Drama", "order": 3 },
+        { "id": "sot-fal-short-stories", "name": "Short Stories", "order": 4 }
+      ]
+    },
+    {
+      "id": "sot-fal-writing",
+      "name": "ho Ngola",
+      "order": 3,
+      "prerequisites": [],
+      "bloomTarget": "create",
+      "subtopics": [
+        { "id": "sot-fal-essay", "name": "Essay Writing", "order": 1 },
+        { "id": "sot-fal-transactional", "name": "Transactional Writing", "order": 2 },
+        { "id": "sot-fal-creative", "name": "Creative Writing", "order": 3 }
+      ]
+    },
+    {
+      "id": "sot-fal-language",
+      "name": "Sebopeho sa Puo",
+      "order": 4,
+      "prerequisites": [],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "sot-fal-grammar", "name": "Grammar and Spelling", "order": 1 },
+        { "id": "sot-fal-vocabulary", "name": "Vocabulary", "order": 2 },
+        { "id": "sot-fal-syntax", "name": "Sentence Structure", "order": 3 }
+      ]
+    },
+    {
+      "id": "sot-fal-visual",
+      "name": "Tsebo ya Ponaletso",
+      "order": 5,
+      "prerequisites": [],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "sot-fal-adverts", "name": "Advertisements", "order": 1 },
+        { "id": "sot-fal-cartoons", "name": "Cartoons and Comics", "order": 2 },
+        { "id": "sot-fal-graphics", "name": "Graphic Texts", "order": 3 }
+      ]
+    },
+    {
+      "id": "sot-fal-oral",
+      "name": "Puo ya Molomo",
+      "order": 6,
+      "prerequisites": [],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "sot-fal-listening", "name": "Listening Comprehension", "order": 1 },
+        { "id": "sot-fal-speaking", "name": "Speaking and Presentation", "order": 2 },
+        { "id": "sot-fal-discussion", "name": "Group Discussion", "order": 3 }
+      ]
+    }
+  ]
+}

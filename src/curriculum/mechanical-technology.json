@@ -1,0 +1,78 @@
+{
+  "subjectId": "mechanical-technology",
+  "subjectName": "Mechanical Technology",
+  "topics": [
+    {
+      "id": "mech-tools-equipment",
+      "name": "Tools and Equipment",
+      "order": 1,
+      "prerequisites": [],
+      "bloomTarget": "remember",
+      "subtopics": [
+        { "id": "mech-hand-tools", "name": "Hand Tools", "order": 1 },
+        { "id": "mech-measuring-instruments", "name": "Measuring Instruments", "order": 2 },
+        { "id": "mech-power-tools", "name": "Power Tools", "order": 3 }
+      ]
+    },
+    {
+      "id": "mech-materials",
+      "name": "Materials",
+      "order": 2,
+      "prerequisites": ["mech-tools-equipment"],
+      "bloomTarget": "understand",
+      "subtopics": [
+        { "id": "mech-ferrous-metals", "name": "Ferrous Metals", "order": 1 },
+        { "id": "mech-non-ferrous-metals", "name": "Non-Ferrous Metals", "order": 2 },
+        { "id": "mech-plastics-composites", "name": "Plastics and Composites", "order": 3 }
+      ]
+    },
+    {
+      "id": "mech-engines",
+      "name": "Engines",
+      "order": 3,
+      "prerequisites": ["mech-materials"],
+      "bloomTarget": "understand",
+      "subtopics": [
+        { "id": "mech-four-stroke-cycle", "name": "Four-Stroke Cycle", "order": 1 },
+        { "id": "mech-engine-components", "name": "Engine Components", "order": 2 },
+        { "id": "mech-fuel-systems", "name": "Fuel Systems", "order": 3 }
+      ]
+    },
+    {
+      "id": "mech-force-motion",
+      "name": "Force and Motion",
+      "order": 4,
+      "prerequisites": ["mech-materials"],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "mech-forces-moments", "name": "Forces and Moments", "order": 1 },
+        { "id": "mech-stress-strain", "name": "Stress and Strain", "order": 2 },
+        { "id": "mech-power-transmission", "name": "Power Transmission", "order": 3 }
+      ]
+    },
+    {
+      "id": "mech-maintenance",
+      "name": "Maintenance",
+      "order": 5,
+      "prerequisites": ["mech-engines"],
+      "bloomTarget": "evaluate",
+      "subtopics": [
+        { "id": "mech-preventive-maintenance", "name": "Preventive Maintenance", "order": 1 },
+        { "id": "mech-lubrication", "name": "Lubrication", "order": 2 },
+        { "id": "mech-fault-finding", "name": "Fault Finding", "order": 3 }
+      ]
+    },
+    {
+      "id": "mech-welding-fabrication",
+      "name": "Welding and Fabrication",
+      "order": 6,
+      "prerequisites": ["mech-materials", "mech-tools-equipment"],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "mech-arc-welding", "name": "Arc Welding", "order": 1 },
+        { "id": "mech-gas-welding", "name": "Gas Welding", "order": 2 },
+        { "id": "mech-sheet-metal-work", "name": "Sheet Metal Work", "order": 3 }
+      ]
+    }
+  ]
+}

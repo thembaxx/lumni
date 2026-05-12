@@ -1,0 +1,67 @@
+{
+  "subjectId": "agricultural-sciences",
+  "subjectName": "Agricultural Sciences",
+  "topics": [
+    {
+      "id": "animal-nutrition",
+      "name": "Animal Nutrition",
+      "order": 1,
+      "prerequisites": [],
+      "bloomTarget": "understand",
+      "subtopics": [
+        { "id": "digestive-systems", "name": "Digestive Systems", "order": 1 },
+        { "id": "nutrient-requirements", "name": "Nutrient Requirements", "order": 2 },
+        { "id": "feed-formulation", "name": "Feed Formulation", "order": 3 }
+      ]
+    },
+    {
+      "id": "plant-nutrition",
+      "name": "Plant Nutrition",
+      "order": 2,
+      "prerequisites": [],
+      "bloomTarget": "understand",
+      "subtopics": [
+        { "id": "soil-nutrients", "name": "Soil Nutrients", "order": 1 },
+        { "id": "photosynthesis", "name": "Photosynthesis and Respiration", "order": 2 },
+        { "id": "fertilization", "name": "Fertilization Practices", "order": 3 }
+      ]
+    },
+    {
+      "id": "genetics-and-breeding",
+      "name": "Genetics and Breeding",
+      "order": 3,
+      "prerequisites": ["animal-nutrition", "plant-nutrition"],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "mendelian-genetics", "name": "Mendelian Genetics", "order": 1 },
+        { "id": "animal-breeding", "name": "Animal Breeding", "order": 2 },
+        { "id": "plant-breeding", "name": "Plant Breeding", "order": 3 },
+        { "id": "biotechnology", "name": "Biotechnology", "order": 4 }
+      ]
+    },
+    {
+      "id": "soil-science",
+      "name": "Soil Science",
+      "order": 4,
+      "prerequisites": ["plant-nutrition"],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "soil-formation", "name": "Soil Formation and Classification", "order": 1 },
+        { "id": "soil-conservation", "name": "Soil Conservation", "order": 2 },
+        { "id": "soil-fertility", "name": "Soil Fertility Management", "order": 3 }
+      ]
+    },
+    {
+      "id": "agricultural-ecology",
+      "name": "Agricultural Ecology",
+      "order": 5,
+      "prerequisites": ["soil-science"],
+      "bloomTarget": "evaluate",
+      "subtopics": [
+        { "id": "ecosystems", "name": "Ecosystems and Biodiversity", "order": 1 },
+        { "id": "climate-change", "name": "Climate Change Impacts", "order": 2 },
+        { "id": "sustainable-agriculture", "name": "Sustainable Agriculture", "order": 3 }
+      ]
+    }
+  ]
+}

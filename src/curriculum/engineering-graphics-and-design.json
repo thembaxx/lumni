@@ -1,0 +1,78 @@
+{
+  "subjectId": "engineering-graphics-and-design",
+  "subjectName": "Engineering Graphics and Design",
+  "topics": [
+    {
+      "id": "egd-freehand-drawing",
+      "name": "Freehand Drawing",
+      "order": 1,
+      "prerequisites": [],
+      "bloomTarget": "remember",
+      "subtopics": [
+        { "id": "egd-sketching-techniques", "name": "Sketching Techniques", "order": 1 },
+        { "id": "egd-line-weights-types", "name": "Line Weights and Types", "order": 2 },
+        { "id": "egd-proportion-scale", "name": "Proportion and Scale", "order": 3 }
+      ]
+    },
+    {
+      "id": "egd-instrument-drawing",
+      "name": "Instrument Drawing",
+      "order": 2,
+      "prerequisites": ["egd-freehand-drawing"],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "egd-drawing-tools-equipment", "name": "Drawing Tools and Equipment", "order": 1 },
+        { "id": "egd-geometric-constructions", "name": "Geometric Constructions", "order": 2 },
+        { "id": "egd-orthographic-projection", "name": "Orthographic Projection", "order": 3 }
+      ]
+    },
+    {
+      "id": "egd-solid-geometry",
+      "name": "Solid Geometry",
+      "order": 3,
+      "prerequisites": ["egd-instrument-drawing"],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "egd-prisms-pyramids", "name": "Prisms and Pyramids", "order": 1 },
+        { "id": "egd-cylinders-cones", "name": "Cylinders and Cones", "order": 2 },
+        { "id": "egd-intersections-developments", "name": "Intersections and Developments", "order": 3 }
+      ]
+    },
+    {
+      "id": "egd-mechanical-drawing",
+      "name": "Mechanical Drawing",
+      "order": 4,
+      "prerequisites": ["egd-instrument-drawing"],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "egd-assembly-drawings", "name": "Assembly Drawings", "order": 1 },
+        { "id": "egd-sectional-views", "name": "Sectional Views", "order": 2 },
+        { "id": "egd-dimensioning", "name": "Dimensioning", "order": 3 }
+      ]
+    },
+    {
+      "id": "egd-civil-drawing",
+      "name": "Civil Drawing",
+      "order": 5,
+      "prerequisites": ["egd-instrument-drawing"],
+      "bloomTarget": "create",
+      "subtopics": [
+        { "id": "egd-floor-plans", "name": "Floor Plans", "order": 1 },
+        { "id": "egd-elevations-sections", "name": "Elevations and Sections", "order": 2 },
+        { "id": "egd-site-plans", "name": "Site Plans", "order": 3 }
+      ]
+    },
+    {
+      "id": "egd-isometric-drawing",
+      "name": "Isometric Drawing",
+      "order": 6,
+      "prerequisites": ["egd-solid-geometry"],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "egd-isometric-projection", "name": "Isometric Projection", "order": 1 },
+        { "id": "egd-circles-isometric", "name": "Circles in Isometric", "order": 2 },
+        { "id": "egd-exploded-views", "name": "Exploded Views", "order": 3 }
+      ]
+    }
+  ]
+}

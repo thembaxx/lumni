@@ -1,0 +1,79 @@
+{
+  "subjectId": "isi-zulu-home-language",
+  "subjectName": "IsiZulu Home Language",
+  "topics": [
+    {
+      "id": "zul-comprehension",
+      "name": "Reading and Comprehension",
+      "order": 1,
+      "prerequisites": [],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "zul-literal", "name": "Literal Comprehension", "order": 1 },
+        { "id": "zul-inferential", "name": "Inferential Comprehension", "order": 2 },
+        { "id": "zul-critical", "name": "Critical Reading", "order": 3 }
+      ]
+    },
+    {
+      "id": "zul-literature",
+      "name": "Literature",
+      "order": 2,
+      "prerequisites": [],
+      "bloomTarget": "evaluate",
+      "subtopics": [
+        { "id": "zul-poetry", "name": "Poetry", "order": 1 },
+        { "id": "zul-novel", "name": "Novel", "order": 2 },
+        { "id": "zul-drama", "name": "Drama", "order": 3 },
+        { "id": "zul-short-stories", "name": "Short Stories", "order": 4 }
+      ]
+    },
+    {
+      "id": "zul-writing",
+      "name": "Writing",
+      "order": 3,
+      "prerequisites": [],
+      "bloomTarget": "create",
+      "subtopics": [
+        { "id": "zul-essay", "name": "Essay Writing", "order": 1 },
+        { "id": "zul-transactional", "name": "Transactional Writing", "order": 2 },
+        { "id": "zul-creative", "name": "Creative Writing", "order": 3 }
+      ]
+    },
+    {
+      "id": "zul-language-structure",
+      "name": "Language Structure",
+      "order": 4,
+      "prerequisites": [],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "zul-grammar", "name": "Grammar", "order": 1 },
+        { "id": "zul-vocabulary", "name": "Vocabulary", "order": 2 },
+        { "id": "zul-syntax", "name": "Syntax", "order": 3 }
+      ]
+    },
+    {
+      "id": "zul-visual-literacy",
+      "name": "Visual Literacy",
+      "order": 5,
+      "prerequisites": [],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "zul-adverts", "name": "Advertisements", "order": 1 },
+        { "id": "zul-cartoons", "name": "Cartoons", "order": 2 },
+        { "id": "zul-graphics", "name": "Graphics", "order": 3 }
+      ]
+    },
+    {
+      "id": "zul-oral-communication",
+      "name": "Oral Communication",
+      "order": 6,
+      "prerequisites": [],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "zul-listening-speaking", "name": "Listening and Speaking", "order": 1 },
+        { "id": "zul-presentation", "name": "Presentation Skills", "order": 2 },
+        { "id": "zul-dialogue", "name": "Dialogue and Discussion", "order": 3 }
+      ]
+    }
+  ]
+}

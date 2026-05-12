@@ -1,0 +1,79 @@
+{
+  "subjectId": "afrikaans-first-additional-language",
+  "subjectName": "Afrikaans First Additional Language",
+  "topics": [
+    {
+      "id": "afr-fal-begrip",
+      "name": "Leuzen en Begrip",
+      "order": 1,
+      "prerequisites": [],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "afr-fal-literal", "name": "Literal Comprehension", "order": 1 },
+        { "id": "afr-fal-inferential", "name": "Inferential Comprehension", "order": 2 },
+        { "id": "afr-fal-critical", "name": "Critical Reading", "order": 3 }
+      ]
+    },
+    {
+      "id": "afr-fal-letterkunde",
+      "name": "Letterkunde",
+      "order": 2,
+      "prerequisites": [],
+      "bloomTarget": "evaluate",
+      "subtopics": [
+        { "id": "afr-fal-poetry", "name": "Poetry", "order": 1 },
+        { "id": "afr-fal-novel", "name": "Novel", "order": 2 },
+        { "id": "afr-fal-drama", "name": "Drama", "order": 3 },
+        { "id": "afr-fal-short-stories", "name": "Short Stories", "order": 4 }
+      ]
+    },
+    {
+      "id": "afr-fal-skryfwerk",
+      "name": "Skryfwerk",
+      "order": 3,
+      "prerequisites": [],
+      "bloomTarget": "create",
+      "subtopics": [
+        { "id": "afr-fal-essay", "name": "Essay Writing", "order": 1 },
+        { "id": "afr-fal-transactional", "name": "Transactional Writing", "order": 2 },
+        { "id": "afr-fal-creative", "name": "Creative Writing", "order": 3 }
+      ]
+    },
+    {
+      "id": "afr-fal-taalstruktuur",
+      "name": "Taalstruktuur",
+      "order": 4,
+      "prerequisites": [],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "afr-fal-grammar", "name": "Grammar and Spelling", "order": 1 },
+        { "id": "afr-fal-vocabulary", "name": "Vocabulary", "order": 2 },
+        { "id": "afr-fal-syntax", "name": "Sentence Structure", "order": 3 }
+      ]
+    },
+    {
+      "id": "afr-fal-visueel",
+      "name": "Visuele Geletterdheid",
+      "order": 5,
+      "prerequisites": [],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "afr-fal-adverts", "name": "Advertisements", "order": 1 },
+        { "id": "afr-fal-cartoons", "name": "Cartoons and Comics", "order": 2 },
+        { "id": "afr-fal-graphics", "name": "Graphic Texts", "order": 3 }
+      ]
+    },
+    {
+      "id": "afr-fal-mondeling",
+      "name": "Mondelinge Kommunikasie",
+      "order": 6,
+      "prerequisites": [],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "afr-fal-listening", "name": "Listening Comprehension", "order": 1 },
+        { "id": "afr-fal-speaking", "name": "Speaking and Presentation", "order": 2 },
+        { "id": "afr-fal-discussion", "name": "Group Discussion", "order": 3 }
+      ]
+    }
+  ]
+}

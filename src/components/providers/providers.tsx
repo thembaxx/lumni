@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { JoyProvider } from "@/components/celebration";
 import { ThemeProvider } from "@/components/theme";
 import { WebVitalsLogger } from "@/components/web-vitals";
+import { useJobProcessor } from "@/hooks/use-job-processor";
 import { prefetchUploadSubjects } from "@/hooks/use-upload-subjects";
 import { OnlineStatusIndicator } from "@/hooks/useOnlineStatus";
 import { queryClient } from "@/lib/query-client";
@@ -13,6 +14,11 @@ import { useAppStore } from "@/store";
 
 function AutoSyncWrapper() {
 	useAutoSync();
+	return null;
+}
+
+function JobProcessorWrapper() {
+	useJobProcessor();
 	return null;
 }
 
@@ -35,6 +41,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
 					<WebVitalsLogger />
 					<OnlineStatusIndicator />
 					<AutoSyncWrapper />
+					<JobProcessorWrapper />
 				</JoyProvider>
 			</ThemeProvider>
 		</QueryClientProvider>

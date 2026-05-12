@@ -1,0 +1,81 @@
+{
+  "subjectId": "dramatic-arts",
+  "subjectName": "Dramatic Arts",
+  "topics": [
+    {
+      "id": "theatre-history",
+      "name": "Theatre History",
+      "order": 1,
+      "prerequisites": [],
+      "bloomTarget": "understand",
+      "subtopics": [
+        { "id": "greek-and-roman-theatre", "name": "Greek and Roman Theatre", "order": 1 },
+        { "id": "elizabethan-theatre", "name": "Elizabethan Theatre", "order": 2 },
+        { "id": "modern-theatre", "name": "Modern Theatre", "order": 3 },
+        { "id": "south-african-theatre-history", "name": "South African Theatre History", "order": 4 }
+      ]
+    },
+    {
+      "id": "acting-techniques",
+      "name": "Acting Techniques",
+      "order": 2,
+      "prerequisites": [],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "stanislavski", "name": "Stanislavski", "order": 1 },
+        { "id": "brecht", "name": "Brecht", "order": 2 },
+        { "id": "physical-theatre", "name": "Physical Theatre", "order": 3 },
+        { "id": "meisner", "name": "Meisner", "order": 4 }
+      ]
+    },
+    {
+      "id": "voice-and-movement",
+      "name": "Voice and Movement",
+      "order": 3,
+      "prerequisites": [],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "vocal-projection", "name": "Vocal Projection", "order": 1 },
+        { "id": "articulation", "name": "Articulation", "order": 2 },
+        { "id": "body-awareness", "name": "Body Awareness", "order": 3 },
+        { "id": "stage-movement", "name": "Stage Movement", "order": 4 }
+      ]
+    },
+    {
+      "id": "script-analysis",
+      "name": "Script Analysis",
+      "order": 4,
+      "prerequisites": ["theatre-history"],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "dramatic-structure", "name": "Dramatic Structure", "order": 1 },
+        { "id": "character-analysis", "name": "Character Analysis", "order": 2 },
+        { "id": "theme-and-context", "name": "Theme and Context", "order": 3 }
+      ]
+    },
+    {
+      "id": "production-and-design",
+      "name": "Production and Design",
+      "order": 5,
+      "prerequisites": [],
+      "bloomTarget": "create",
+      "subtopics": [
+        { "id": "set-design", "name": "Set Design", "order": 1 },
+        { "id": "lighting-and-sound", "name": "Lighting and Sound", "order": 2 },
+        { "id": "costume-and-makeup", "name": "Costume and Makeup", "order": 3 }
+      ]
+    },
+    {
+      "id": "south-african-theatre",
+      "name": "South African Theatre",
+      "order": 6,
+      "prerequisites": ["theatre-history"],
+      "bloomTarget": "evaluate",
+      "subtopics": [
+        { "id": "protest-theatre", "name": "Protest Theatre", "order": 1 },
+        { "id": "post-apartheid-theatre", "name": "Post-Apartheid Theatre", "order": 2 },
+        { "id": "contemporary-sa-playwrights", "name": "Contemporary SA Playwrights", "order": 3 }
+      ]
+    }
+  ]
+}

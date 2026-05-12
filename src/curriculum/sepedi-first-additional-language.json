@@ -1,0 +1,79 @@
+{
+  "subjectId": "sepedi-first-additional-language",
+  "subjectName": "Sepedi First Additional Language",
+  "topics": [
+    {
+      "id": "nso-fal-reading",
+      "name": "Go Bala le Go Kwešiša",
+      "order": 1,
+      "prerequisites": [],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "nso-fal-literal", "name": "Literal Comprehension", "order": 1 },
+        { "id": "nso-fal-inferential", "name": "Inferential Comprehension", "order": 2 },
+        { "id": "nso-fal-critical", "name": "Critical Reading", "order": 3 }
+      ]
+    },
+    {
+      "id": "nso-fal-literature",
+      "name": "Dingwalwa",
+      "order": 2,
+      "prerequisites": [],
+      "bloomTarget": "evaluate",
+      "subtopics": [
+        { "id": "nso-fal-poetry", "name": "Poetry", "order": 1 },
+        { "id": "nso-fal-novel", "name": "Novel", "order": 2 },
+        { "id": "nso-fal-drama", "name": "Drama", "order": 3 },
+        { "id": "nso-fal-short-stories", "name": "Short Stories", "order": 4 }
+      ]
+    },
+    {
+      "id": "nso-fal-writing",
+      "name": "Go Ngwala",
+      "order": 3,
+      "prerequisites": [],
+      "bloomTarget": "create",
+      "subtopics": [
+        { "id": "nso-fal-essay", "name": "Essay Writing", "order": 1 },
+        { "id": "nso-fal-transactional", "name": "Transactional Writing", "order": 2 },
+        { "id": "nso-fal-creative", "name": "Creative Writing", "order": 3 }
+      ]
+    },
+    {
+      "id": "nso-fal-language",
+      "name": "Seopedi sa Polelo",
+      "order": 4,
+      "prerequisites": [],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "nso-fal-grammar", "name": "Grammar and Spelling", "order": 1 },
+        { "id": "nso-fal-vocabulary", "name": "Vocabulary", "order": 2 },
+        { "id": "nso-fal-syntax", "name": "Sentence Structure", "order": 3 }
+      ]
+    },
+    {
+      "id": "nso-fal-visual",
+      "name": "Tshebo ya Dikai",
+      "order": 5,
+      "prerequisites": [],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "nso-fal-adverts", "name": "Advertisements", "order": 1 },
+        { "id": "nso-fal-cartoons", "name": "Cartoons and Comics", "order": 2 },
+        { "id": "nso-fal-graphics", "name": "Graphic Texts", "order": 3 }
+      ]
+    },
+    {
+      "id": "nso-fal-oral",
+      "name": "Poledišano",
+      "order": 6,
+      "prerequisites": [],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "nso-fal-listening", "name": "Listening Comprehension", "order": 1 },
+        { "id": "nso-fal-speaking", "name": "Speaking and Presentation", "order": 2 },
+        { "id": "nso-fal-discussion", "name": "Group Discussion", "order": 3 }
+      ]
+    }
+  ]
+}

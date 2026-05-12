@@ -1,0 +1,67 @@
+{
+  "subjectId": "agricultural-management-practices",
+  "subjectName": "Agricultural Management Practices",
+  "topics": [
+    {
+      "id": "farm-management",
+      "name": "Farm Management",
+      "order": 1,
+      "prerequisites": [],
+      "bloomTarget": "understand",
+      "subtopics": [
+        { "id": "farm-planning", "name": "Farm Planning and Layout", "order": 1 },
+        { "id": "production-systems", "name": "Production Systems", "order": 2 },
+        { "id": "resource-management", "name": "Resource Management", "order": 3 }
+      ]
+    },
+    {
+      "id": "financial-management",
+      "name": "Financial Management",
+      "order": 2,
+      "prerequisites": ["farm-management"],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "budgeting", "name": "Budgeting and Financial Planning", "order": 1 },
+        { "id": "cost-analysis", "name": "Cost Analysis and Break-Even", "order": 2 },
+        { "id": "financial-statements", "name": "Financial Statements", "order": 3 },
+        { "id": "credit-and-loans", "name": "Credit and Loans", "order": 4 }
+      ]
+    },
+    {
+      "id": "marketing",
+      "name": "Marketing",
+      "order": 3,
+      "prerequisites": ["financial-management"],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "marketing-principles", "name": "Marketing Principles", "order": 1 },
+        { "id": "marketing-mix", "name": "Marketing Mix", "order": 2 },
+        { "id": "marketing-channels", "name": "Marketing Channels", "order": 3 }
+      ]
+    },
+    {
+      "id": "labour-management",
+      "name": "Labour Management",
+      "order": 4,
+      "prerequisites": ["farm-management"],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "labour-legislation", "name": "Labour Legislation", "order": 1 },
+        { "id": "staff-recruitment", "name": "Staff Recruitment and Selection", "order": 2 },
+        { "id": "workplace-safety", "name": "Workplace Safety", "order": 3 }
+      ]
+    },
+    {
+      "id": "record-keeping",
+      "name": "Record Keeping",
+      "order": 5,
+      "prerequisites": ["financial-management"],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "farm-records", "name": "Farm Records", "order": 1 },
+        { "id": "inventory-management", "name": "Inventory Management", "order": 2 },
+        { "id": "data-analysis", "name": "Data Analysis and Reporting", "order": 3 }
+      ]
+    }
+  ]
+}

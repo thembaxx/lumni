@@ -1,0 +1,78 @@
+{
+  "subjectId": "computer-applications-technology",
+  "subjectName": "Computer Applications Technology",
+  "topics": [
+    {
+      "id": "cat-hardware-software",
+      "name": "Computer Hardware and Software",
+      "order": 1,
+      "prerequisites": [],
+      "bloomTarget": "remember",
+      "subtopics": [
+        { "id": "cat-system-components", "name": "System Components", "order": 1 },
+        { "id": "cat-operating-systems", "name": "Operating Systems", "order": 2 },
+        { "id": "cat-application-software", "name": "Application Software", "order": 3 }
+      ]
+    },
+    {
+      "id": "cat-word-processing",
+      "name": "Word Processing",
+      "order": 2,
+      "prerequisites": ["cat-hardware-software"],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "cat-document-formatting", "name": "Document Formatting", "order": 1 },
+        { "id": "cat-mail-merge", "name": "Mail Merge", "order": 2 },
+        { "id": "cat-tables-graphics", "name": "Tables and Graphics", "order": 3 }
+      ]
+    },
+    {
+      "id": "cat-spreadsheets",
+      "name": "Spreadsheets",
+      "order": 3,
+      "prerequisites": ["cat-hardware-software"],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "cat-formulas-functions", "name": "Formulas and Functions", "order": 1 },
+        { "id": "cat-charts-graphs", "name": "Charts and Graphs", "order": 2 },
+        { "id": "cat-data-analysis", "name": "Data Analysis", "order": 3 }
+      ]
+    },
+    {
+      "id": "cat-databases",
+      "name": "Databases",
+      "order": 4,
+      "prerequisites": ["cat-hardware-software"],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "cat-tables-queries", "name": "Tables and Queries", "order": 1 },
+        { "id": "cat-forms-reports", "name": "Forms and Reports", "order": 2 },
+        { "id": "cat-data-relationships", "name": "Data Relationships", "order": 3 }
+      ]
+    },
+    {
+      "id": "cat-internet-email",
+      "name": "Internet and Email",
+      "order": 5,
+      "prerequisites": ["cat-hardware-software"],
+      "bloomTarget": "understand",
+      "subtopics": [
+        { "id": "cat-web-browsing", "name": "Web Browsing", "order": 1 },
+        { "id": "cat-email-etiquette", "name": "Email Etiquette", "order": 2 },
+        { "id": "cat-online-safety", "name": "Online Safety", "order": 3 }
+      ]
+    },
+    {
+      "id": "cat-social-implications",
+      "name": "Social Implications",
+      "order": 6,
+      "prerequisites": ["cat-internet-email"],
+      "bloomTarget": "evaluate",
+      "subtopics": [
+        { "id": "cat-digital-citizenship", "name": "Digital Citizenship", "order": 1 },
+        { "id": "cat-cyber-security", "name": "Cyber Security", "order": 2 },
+        { "id": "cat-e-waste-environment", "name": "E-Waste and Environment", "order": 3 }
+      ]
+    }
+  ]
+}

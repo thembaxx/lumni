@@ -1,0 +1,67 @@
+{
+  "subjectId": "hospitality-studies",
+  "subjectName": "Hospitality Studies",
+  "topics": [
+    {
+      "id": "kitchen-operations",
+      "name": "Kitchen Operations",
+      "order": 1,
+      "prerequisites": [],
+      "bloomTarget": "remember",
+      "subtopics": [
+        { "id": "kitchen-hygiene", "name": "Kitchen Hygiene and Safety", "order": 1 },
+        { "id": "kitchen-equipment", "name": "Kitchen Equipment", "order": 2 },
+        { "id": "kitchen-organization", "name": "Kitchen Organization", "order": 3 }
+      ]
+    },
+    {
+      "id": "food-preparation-and-service",
+      "name": "Food Preparation and Service",
+      "order": 2,
+      "prerequisites": ["kitchen-operations"],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "preparation-techniques", "name": "Preparation Techniques", "order": 1 },
+        { "id": "cooking-methods", "name": "Cooking Methods", "order": 2 },
+        { "id": "menu-planning", "name": "Menu Planning", "order": 3 },
+        { "id": "food-service", "name": "Food Service Styles", "order": 4 }
+      ]
+    },
+    {
+      "id": "accommodation-services",
+      "name": "Accommodation Services",
+      "order": 3,
+      "prerequisites": ["kitchen-operations"],
+      "bloomTarget": "understand",
+      "subtopics": [
+        { "id": "housekeeping", "name": "Housekeeping Procedures", "order": 1 },
+        { "id": "room-types", "name": "Room Types and Layouts", "order": 2 },
+        { "id": "laundry-services", "name": "Laundry Services", "order": 3 }
+      ]
+    },
+    {
+      "id": "beverage-studies",
+      "name": "Beverage Studies",
+      "order": 4,
+      "prerequisites": ["food-preparation-and-service"],
+      "bloomTarget": "understand",
+      "subtopics": [
+        { "id": "non-alcoholic-beverages", "name": "Non-Alcoholic Beverages", "order": 1 },
+        { "id": "alcoholic-beverages", "name": "Alcoholic Beverages", "order": 2 },
+        { "id": "beverage-service", "name": "Beverage Service", "order": 3 }
+      ]
+    },
+    {
+      "id": "hospitality-business-management",
+      "name": "Hospitality Business Management",
+      "order": 5,
+      "prerequisites": ["accommodation-services", "beverage-studies"],
+      "bloomTarget": "evaluate",
+      "subtopics": [
+        { "id": "financial-management", "name": "Financial Management", "order": 1 },
+        { "id": "customer-relations", "name": "Customer Relations", "order": 2 },
+        { "id": "marketing-hospitality", "name": "Marketing in Hospitality", "order": 3 }
+      ]
+    }
+  ]
+}

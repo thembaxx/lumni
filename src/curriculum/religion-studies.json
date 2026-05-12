@@ -1,0 +1,67 @@
+{
+  "subjectId": "religion-studies",
+  "subjectName": "Religion Studies",
+  "topics": [
+    {
+      "id": "world-religions",
+      "name": "World Religions",
+      "order": 1,
+      "prerequisites": [],
+      "bloomTarget": "understand",
+      "subtopics": [
+        { "id": "african-traditional-religion", "name": "African Traditional Religion", "order": 1 },
+        { "id": "buddhism", "name": "Buddhism", "order": 2 },
+        { "id": "christianity", "name": "Christianity", "order": 3 },
+        { "id": "islam", "name": "Islam", "order": 4 }
+      ]
+    },
+    {
+      "id": "religious-texts-and-traditions",
+      "name": "Religious Texts and Traditions",
+      "order": 2,
+      "prerequisites": ["world-religions"],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "sacred-scriptures", "name": "Sacred Scriptures", "order": 1 },
+        { "id": "oral-traditions", "name": "Oral Traditions", "order": 2 },
+        { "id": "interpretation-and-exegesis", "name": "Interpretation and Exegesis", "order": 3 }
+      ]
+    },
+    {
+      "id": "ethics-and-morality",
+      "name": "Ethics and Morality",
+      "order": 3,
+      "prerequisites": ["world-religions"],
+      "bloomTarget": "evaluate",
+      "subtopics": [
+        { "id": "ethical-theories", "name": "Ethical Theories", "order": 1 },
+        { "id": "bioethics", "name": "Bioethics", "order": 2 },
+        { "id": "social-justice", "name": "Social Justice", "order": 3 }
+      ]
+    },
+    {
+      "id": "religion-and-society",
+      "name": "Religion and Society",
+      "order": 4,
+      "prerequisites": [],
+      "bloomTarget": "evaluate",
+      "subtopics": [
+        { "id": "religion-and-politics", "name": "Religion and Politics", "order": 1 },
+        { "id": "interfaith-dialogue", "name": "Interfaith Dialogue", "order": 2 },
+        { "id": "religion-and-gender", "name": "Religion and Gender", "order": 3 }
+      ]
+    },
+    {
+      "id": "comparative-religion",
+      "name": "Comparative Religion",
+      "order": 5,
+      "prerequisites": ["world-religions", "religious-texts-and-traditions"],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "comparative-methodology", "name": "Comparative Methodology", "order": 1 },
+        { "id": "themes-across-traditions", "name": "Themes Across Traditions", "order": 2 },
+        { "id": "syncretism", "name": "Syncretism", "order": 3 }
+      ]
+    }
+  ]
+}

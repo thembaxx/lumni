@@ -1,0 +1,79 @@
+{
+  "subjectId": "si-swati-home-language",
+  "subjectName": "SiSwati Home Language",
+  "topics": [
+    {
+      "id": "ssw-comprehension",
+      "name": "Reading and Comprehension",
+      "order": 1,
+      "prerequisites": [],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "ssw-literal", "name": "Literal Comprehension", "order": 1 },
+        { "id": "ssw-inferential", "name": "Inferential Comprehension", "order": 2 },
+        { "id": "ssw-critical", "name": "Critical Reading", "order": 3 }
+      ]
+    },
+    {
+      "id": "ssw-literature",
+      "name": "Literature",
+      "order": 2,
+      "prerequisites": [],
+      "bloomTarget": "evaluate",
+      "subtopics": [
+        { "id": "ssw-poetry", "name": "Poetry", "order": 1 },
+        { "id": "ssw-novel", "name": "Novel", "order": 2 },
+        { "id": "ssw-drama", "name": "Drama", "order": 3 },
+        { "id": "ssw-short-stories", "name": "Short Stories", "order": 4 }
+      ]
+    },
+    {
+      "id": "ssw-writing",
+      "name": "Writing",
+      "order": 3,
+      "prerequisites": [],
+      "bloomTarget": "create",
+      "subtopics": [
+        { "id": "ssw-essay", "name": "Essay Writing", "order": 1 },
+        { "id": "ssw-transactional", "name": "Transactional Writing", "order": 2 },
+        { "id": "ssw-creative", "name": "Creative Writing", "order": 3 }
+      ]
+    },
+    {
+      "id": "ssw-language-structure",
+      "name": "Language Structure",
+      "order": 4,
+      "prerequisites": [],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "ssw-grammar", "name": "Grammar", "order": 1 },
+        { "id": "ssw-vocabulary", "name": "Vocabulary", "order": 2 },
+        { "id": "ssw-syntax", "name": "Syntax", "order": 3 }
+      ]
+    },
+    {
+      "id": "ssw-visual-literacy",
+      "name": "Visual Literacy",
+      "order": 5,
+      "prerequisites": [],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "ssw-adverts", "name": "Advertisements", "order": 1 },
+        { "id": "ssw-cartoons", "name": "Cartoons", "order": 2 },
+        { "id": "ssw-graphics", "name": "Graphics", "order": 3 }
+      ]
+    },
+    {
+      "id": "ssw-oral-communication",
+      "name": "Oral Communication",
+      "order": 6,
+      "prerequisites": [],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "ssw-listening-speaking", "name": "Listening and Speaking", "order": 1 },
+        { "id": "ssw-presentation", "name": "Presentation Skills", "order": 2 },
+        { "id": "ssw-dialogue", "name": "Dialogue and Discussion", "order": 3 }
+      ]
+    }
+  ]
+}

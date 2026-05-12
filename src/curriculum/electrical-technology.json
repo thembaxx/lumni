@@ -1,0 +1,78 @@
+{
+  "subjectId": "electrical-technology",
+  "subjectName": "Electrical Technology",
+  "topics": [
+    {
+      "id": "elect-dc-circuits",
+      "name": "DC Circuits",
+      "order": 1,
+      "prerequisites": [],
+      "bloomTarget": "understand",
+      "subtopics": [
+        { "id": "elect-ohms-kirchhoffs", "name": "Ohm's Law and Kirchhoff's Laws", "order": 1 },
+        { "id": "elect-series-parallel", "name": "Series and Parallel Networks", "order": 2 },
+        { "id": "elect-network-theorems", "name": "Network Theorems", "order": 3 }
+      ]
+    },
+    {
+      "id": "elect-ac-circuits",
+      "name": "AC Circuits",
+      "order": 2,
+      "prerequisites": ["elect-dc-circuits"],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "elect-sinusoidal-waveforms", "name": "Sinusoidal Waveforms", "order": 1 },
+        { "id": "elect-phasors-impedance", "name": "Phasors and Impedance", "order": 2 },
+        { "id": "elect-power-ac-circuits", "name": "Power in AC Circuits", "order": 3 }
+      ]
+    },
+    {
+      "id": "elect-electronics",
+      "name": "Electronics",
+      "order": 3,
+      "prerequisites": ["elect-dc-circuits"],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "elect-diodes-rectifiers", "name": "Diodes and Rectifiers", "order": 1 },
+        { "id": "elect-transistors-amplifiers", "name": "Transistors and Amplifiers", "order": 2 },
+        { "id": "elect-operational-amplifiers", "name": "Operational Amplifiers", "order": 3 }
+      ]
+    },
+    {
+      "id": "elect-digital-systems",
+      "name": "Digital Systems",
+      "order": 4,
+      "prerequisites": ["elect-electronics"],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "elect-number-systems", "name": "Number Systems", "order": 1 },
+        { "id": "elect-logic-gates", "name": "Logic Gates", "order": 2 },
+        { "id": "elect-sequential-logic", "name": "Sequential Logic", "order": 3 }
+      ]
+    },
+    {
+      "id": "elect-machines",
+      "name": "Electrical Machines",
+      "order": 5,
+      "prerequisites": ["elect-ac-circuits"],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "elect-dc-machines", "name": "DC Machines", "order": 1 },
+        { "id": "elect-ac-motors", "name": "AC Motors", "order": 2 },
+        { "id": "elect-transformers", "name": "Transformers", "order": 3 }
+      ]
+    },
+    {
+      "id": "elect-power-systems",
+      "name": "Power Systems",
+      "order": 6,
+      "prerequisites": ["elect-ac-circuits", "elect-machines"],
+      "bloomTarget": "evaluate",
+      "subtopics": [
+        { "id": "elect-power-generation", "name": "Power Generation", "order": 1 },
+        { "id": "elect-transmission-distribution", "name": "Transmission and Distribution", "order": 2 },
+        { "id": "elect-three-phase-systems", "name": "Three-Phase Systems", "order": 3 }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "subjectId": "agricultural-technology",
+  "subjectName": "Agricultural Technology",
+  "topics": [
+    {
+      "id": "farm-structures",
+      "name": "Farm Structures",
+      "order": 1,
+      "prerequisites": [],
+      "bloomTarget": "understand",
+      "subtopics": [
+        { "id": "building-materials", "name": "Building Materials", "order": 1 },
+        { "id": "animal-housing", "name": "Animal Housing", "order": 2 },
+        { "id": "storage-structures", "name": "Storage Structures", "order": 3 },
+        { "id": "structural-design", "name": "Structural Design", "order": 4 }
+      ]
+    },
+    {
+      "id": "agricultural-machinery",
+      "name": "Agricultural Machinery",
+      "order": 2,
+      "prerequisites": ["farm-structures"],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "tractor-operation", "name": "Tractor Operation and Maintenance", "order": 1 },
+        { "id": "tillage-equipment", "name": "Tillage Equipment", "order": 2 },
+        { "id": "harvesting-machinery", "name": "Harvesting Machinery", "order": 3 }
+      ]
+    },
+    {
+      "id": "irrigation-systems",
+      "name": "Irrigation Systems",
+      "order": 3,
+      "prerequisites": [],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "irrigation-methods", "name": "Irrigation Methods", "order": 1 },
+        { "id": "pumping-systems", "name": "Pumping Systems", "order": 2 },
+        { "id": "water-management", "name": "Water Management", "order": 3 }
+      ]
+    },
+    {
+      "id": "post-harvest-technology",
+      "name": "Post-Harvest Technology",
+      "order": 4,
+      "prerequisites": ["agricultural-machinery"],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "harvest-handling", "name": "Harvest Handling", "order": 1 },
+        { "id": "processing-techniques", "name": "Processing Techniques", "order": 2 },
+        { "id": "preservation-methods", "name": "Preservation Methods", "order": 3 },
+        { "id": "quality-control", "name": "Quality Control", "order": 4 }
+      ]
+    },
+    {
+      "id": "energy-systems",
+      "name": "Energy Systems",
+      "order": 5,
+      "prerequisites": ["irrigation-systems"],
+      "bloomTarget": "evaluate",
+      "subtopics": [
+        { "id": "renewable-energy", "name": "Renewable Energy Sources", "order": 1 },
+        { "id": "energy-efficiency", "name": "Energy Efficiency", "order": 2 },
+        { "id": "bioenergy", "name": "Bioenergy", "order": 3 }
+      ]
+    }
+  ]
+}

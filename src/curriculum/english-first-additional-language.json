@@ -1,0 +1,79 @@
+{
+  "subjectId": "english-first-additional-language",
+  "subjectName": "English First Additional Language",
+  "topics": [
+    {
+      "id": "eng-fal-comprehension",
+      "name": "Reading and Comprehension",
+      "order": 1,
+      "prerequisites": [],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "eng-fal-literal", "name": "Literal Comprehension", "order": 1 },
+        { "id": "eng-fal-inferential", "name": "Inferential Comprehension", "order": 2 },
+        { "id": "eng-fal-critical", "name": "Critical Reading", "order": 3 }
+      ]
+    },
+    {
+      "id": "eng-fal-literature",
+      "name": "Literature",
+      "order": 2,
+      "prerequisites": [],
+      "bloomTarget": "evaluate",
+      "subtopics": [
+        { "id": "eng-fal-poetry", "name": "Poetry", "order": 1 },
+        { "id": "eng-fal-novel", "name": "Novel", "order": 2 },
+        { "id": "eng-fal-drama", "name": "Drama", "order": 3 },
+        { "id": "eng-fal-short-stories", "name": "Short Stories", "order": 4 }
+      ]
+    },
+    {
+      "id": "eng-fal-writing",
+      "name": "Writing and Transactional Texts",
+      "order": 3,
+      "prerequisites": [],
+      "bloomTarget": "create",
+      "subtopics": [
+        { "id": "eng-fal-essay", "name": "Essay Writing", "order": 1 },
+        { "id": "eng-fal-transactional", "name": "Transactional Writing", "order": 2 },
+        { "id": "eng-fal-creative", "name": "Creative Writing", "order": 3 }
+      ]
+    },
+    {
+      "id": "eng-fal-language",
+      "name": "Language Structure and Conventions",
+      "order": 4,
+      "prerequisites": [],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "eng-fal-grammar", "name": "Grammar and Spelling", "order": 1 },
+        { "id": "eng-fal-vocabulary", "name": "Vocabulary", "order": 2 },
+        { "id": "eng-fal-syntax", "name": "Sentence Structure", "order": 3 }
+      ]
+    },
+    {
+      "id": "eng-fal-visual",
+      "name": "Visual Literacy",
+      "order": 5,
+      "prerequisites": [],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "eng-fal-adverts", "name": "Advertisements", "order": 1 },
+        { "id": "eng-fal-cartoons", "name": "Cartoons and Comics", "order": 2 },
+        { "id": "eng-fal-graphics", "name": "Graphic Texts", "order": 3 }
+      ]
+    },
+    {
+      "id": "eng-fal-oral",
+      "name": "Oral Communication",
+      "order": 6,
+      "prerequisites": [],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "eng-fal-listening", "name": "Listening Comprehension", "order": 1 },
+        { "id": "eng-fal-speaking", "name": "Speaking and Presentation", "order": 2 },
+        { "id": "eng-fal-discussion", "name": "Group Discussion", "order": 3 }
+      ]
+    }
+  ]
+}

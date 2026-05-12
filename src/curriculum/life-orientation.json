@@ -1,0 +1,69 @@
+{
+  "subjectId": "life-orientation",
+  "subjectName": "Life Orientation",
+  "topics": [
+    {
+      "id": "personal-wellbeing",
+      "name": "Personal Wellbeing",
+      "order": 1,
+      "prerequisites": [],
+      "bloomTarget": "understand",
+      "subtopics": [
+        { "id": "self-awareness", "name": "Self-Awareness and Self-Esteem", "order": 1 },
+        { "id": "stress-management", "name": "Stress Management", "order": 2 },
+        { "id": "healthy-lifestyle", "name": "Healthy Lifestyle", "order": 3 },
+        { "id": "relationships", "name": "Relationships", "order": 4 }
+      ]
+    },
+    {
+      "id": "citizenship-and-democracy",
+      "name": "Citizenship and Democracy",
+      "order": 2,
+      "prerequisites": [],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "constitution", "name": "The Constitution", "order": 1 },
+        { "id": "human-rights", "name": "Human Rights", "order": 2 },
+        { "id": "democratic-processes", "name": "Democratic Processes", "order": 3 },
+        { "id": "responsible-citizenship", "name": "Responsible Citizenship", "order": 4 }
+      ]
+    },
+    {
+      "id": "career-studies",
+      "name": "Career Studies",
+      "order": 3,
+      "prerequisites": ["personal-wellbeing"],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "career-choices", "name": "Career Choices", "order": 1 },
+        { "id": "subject-choices", "name": "Subject Choices", "order": 2 },
+        { "id": "tertiary-education", "name": "Tertiary Education", "order": 3 },
+        { "id": "entrepreneurship-opportunities", "name": "Entrepreneurship Opportunities", "order": 4 }
+      ]
+    },
+    {
+      "id": "physical-education",
+      "name": "Physical Education",
+      "order": 4,
+      "prerequisites": ["personal-wellbeing"],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "fitness-programmes", "name": "Fitness Programmes", "order": 1 },
+        { "id": "sports-participation", "name": "Sports Participation", "order": 2 },
+        { "id": "safety-in-sport", "name": "Safety in Sport", "order": 3 }
+      ]
+    },
+    {
+      "id": "social-and-environmental-responsibility",
+      "name": "Social and Environmental Responsibility",
+      "order": 5,
+      "prerequisites": ["citizenship-and-democracy"],
+      "bloomTarget": "evaluate",
+      "subtopics": [
+        { "id": "social-issues", "name": "Social Issues", "order": 1 },
+        { "id": "environmental-issues", "name": "Environmental Issues", "order": 2 },
+        { "id": "community-service", "name": "Community Service", "order": 3 }
+      ]
+    }
+  ]
+}

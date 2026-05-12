@@ -1,0 +1,75 @@
+{
+  "subjectId": "civil-technology",
+  "subjectName": "Civil Technology",
+  "topics": [
+    {
+      "id": "civil-construction-materials",
+      "name": "Construction Materials",
+      "order": 1,
+      "prerequisites": [],
+      "bloomTarget": "remember",
+      "subtopics": [
+        { "id": "civil-concrete-cement", "name": "Concrete and Cement", "order": 1 },
+        { "id": "civil-bricks-blocks", "name": "Bricks and Blocks", "order": 2 },
+        { "id": "civil-timber-steel", "name": "Timber and Steel", "order": 3 }
+      ]
+    },
+    {
+      "id": "civil-foundations",
+      "name": "Foundations and Structures",
+      "order": 2,
+      "prerequisites": ["civil-construction-materials"],
+      "bloomTarget": "understand",
+      "subtopics": [
+        { "id": "civil-foundation-types", "name": "Types of Foundations", "order": 1 },
+        { "id": "civil-retaining-walls", "name": "Retaining Walls", "order": 2 }
+      ]
+    },
+    {
+      "id": "civil-roofing",
+      "name": "Roofing",
+      "order": 3,
+      "prerequisites": ["civil-foundations"],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "civil-roof-types-trusses", "name": "Roof Types and Trusses", "order": 1 },
+        { "id": "civil-roof-coverings", "name": "Roof Coverings", "order": 2 },
+        { "id": "civil-gutters-downpipes", "name": "Gutters and Downpipes", "order": 3 }
+      ]
+    },
+    {
+      "id": "civil-services",
+      "name": "Civil Services",
+      "order": 4,
+      "prerequisites": ["civil-roofing"],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "civil-water-supply", "name": "Water Supply Systems", "order": 1 },
+        { "id": "civil-drainage-sanitation", "name": "Drainage and Sanitation", "order": 2 }
+      ]
+    },
+    {
+      "id": "civil-drawing",
+      "name": "Drawing and Interpretation",
+      "order": 5,
+      "prerequisites": [],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "civil-plan-reading", "name": "Plan Reading", "order": 1 },
+        { "id": "civil-sections-elevations", "name": "Sections and Elevations", "order": 2 },
+        { "id": "civil-detailing", "name": "Detailing", "order": 3 }
+      ]
+    },
+    {
+      "id": "civil-quantity-surveying",
+      "name": "Quantity Surveying",
+      "order": 6,
+      "prerequisites": ["civil-drawing"],
+      "bloomTarget": "evaluate",
+      "subtopics": [
+        { "id": "civil-quantities-measurements", "name": "Quantities and Measurements", "order": 1 },
+        { "id": "civil-cost-estimation", "name": "Cost Estimation", "order": 2 }
+      ]
+    }
+  ]
+}

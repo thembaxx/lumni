@@ -1,0 +1,79 @@
+{
+  "subjectId": "tshivenda-home-language",
+  "subjectName": "Tshivenda Home Language",
+  "topics": [
+    {
+      "id": "ven-comprehension",
+      "name": "Reading and Comprehension",
+      "order": 1,
+      "prerequisites": [],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "ven-literal", "name": "Literal Comprehension", "order": 1 },
+        { "id": "ven-inferential", "name": "Inferential Comprehension", "order": 2 },
+        { "id": "ven-critical", "name": "Critical Reading", "order": 3 }
+      ]
+    },
+    {
+      "id": "ven-literature",
+      "name": "Literature",
+      "order": 2,
+      "prerequisites": [],
+      "bloomTarget": "evaluate",
+      "subtopics": [
+        { "id": "ven-poetry", "name": "Poetry", "order": 1 },
+        { "id": "ven-novel", "name": "Novel", "order": 2 },
+        { "id": "ven-drama", "name": "Drama", "order": 3 },
+        { "id": "ven-short-stories", "name": "Short Stories", "order": 4 }
+      ]
+    },
+    {
+      "id": "ven-writing",
+      "name": "Writing",
+      "order": 3,
+      "prerequisites": [],
+      "bloomTarget": "create",
+      "subtopics": [
+        { "id": "ven-essay", "name": "Essay Writing", "order": 1 },
+        { "id": "ven-transactional", "name": "Transactional Writing", "order": 2 },
+        { "id": "ven-creative", "name": "Creative Writing", "order": 3 }
+      ]
+    },
+    {
+      "id": "ven-language-structure",
+      "name": "Language Structure",
+      "order": 4,
+      "prerequisites": [],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "ven-grammar", "name": "Grammar", "order": 1 },
+        { "id": "ven-vocabulary", "name": "Vocabulary", "order": 2 },
+        { "id": "ven-syntax", "name": "Syntax", "order": 3 }
+      ]
+    },
+    {
+      "id": "ven-visual-literacy",
+      "name": "Visual Literacy",
+      "order": 5,
+      "prerequisites": [],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "ven-adverts", "name": "Advertisements", "order": 1 },
+        { "id": "ven-cartoons", "name": "Cartoons", "order": 2 },
+        { "id": "ven-graphics", "name": "Graphics", "order": 3 }
+      ]
+    },
+    {
+      "id": "ven-oral-communication",
+      "name": "Oral Communication",
+      "order": 6,
+      "prerequisites": [],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "ven-listening-speaking", "name": "Listening and Speaking", "order": 1 },
+        { "id": "ven-presentation", "name": "Presentation Skills", "order": 2 },
+        { "id": "ven-dialogue", "name": "Dialogue and Discussion", "order": 3 }
+      ]
+    }
+  ]
+}

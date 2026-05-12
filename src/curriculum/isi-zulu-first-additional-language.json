@@ -1,0 +1,79 @@
+{
+  "subjectId": "isi-zulu-first-additional-language",
+  "subjectName": "IsiZulu First Additional Language",
+  "topics": [
+    {
+      "id": "zul-fal-reading",
+      "name": "Ukufunda nokuQonda",
+      "order": 1,
+      "prerequisites": [],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "zul-fal-literal", "name": "Literal Comprehension", "order": 1 },
+        { "id": "zul-fal-inferential", "name": "Inferential Comprehension", "order": 2 },
+        { "id": "zul-fal-critical", "name": "Critical Reading", "order": 3 }
+      ]
+    },
+    {
+      "id": "zul-fal-literature",
+      "name": "Imibhalo",
+      "order": 2,
+      "prerequisites": [],
+      "bloomTarget": "evaluate",
+      "subtopics": [
+        { "id": "zul-fal-poetry", "name": "Poetry", "order": 1 },
+        { "id": "zul-fal-novel", "name": "Novel", "order": 2 },
+        { "id": "zul-fal-drama", "name": "Drama", "order": 3 },
+        { "id": "zul-fal-short-stories", "name": "Short Stories", "order": 4 }
+      ]
+    },
+    {
+      "id": "zul-fal-writing",
+      "name": "Ukubhala",
+      "order": 3,
+      "prerequisites": [],
+      "bloomTarget": "create",
+      "subtopics": [
+        { "id": "zul-fal-essay", "name": "Essay Writing", "order": 1 },
+        { "id": "zul-fal-transactional", "name": "Transactional Writing", "order": 2 },
+        { "id": "zul-fal-creative", "name": "Creative Writing", "order": 3 }
+      ]
+    },
+    {
+      "id": "zul-fal-language",
+      "name": "Ukwakhiwa Kolimi",
+      "order": 4,
+      "prerequisites": [],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "zul-fal-grammar", "name": "Grammar and Spelling", "order": 1 },
+        { "id": "zul-fal-vocabulary", "name": "Vocabulary", "order": 2 },
+        { "id": "zul-fal-syntax", "name": "Sentence Structure", "order": 3 }
+      ]
+    },
+    {
+      "id": "zul-fal-visual",
+      "name": "Ukubona Okubhaliwe",
+      "order": 5,
+      "prerequisites": [],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "zul-fal-adverts", "name": "Advertisements", "order": 1 },
+        { "id": "zul-fal-cartoons", "name": "Cartoons and Comics", "order": 2 },
+        { "id": "zul-fal-graphics", "name": "Graphic Texts", "order": 3 }
+      ]
+    },
+    {
+      "id": "zul-fal-oral",
+      "name": "Ukukhuluma",
+      "order": 6,
+      "prerequisites": [],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "zul-fal-listening", "name": "Listening Comprehension", "order": 1 },
+        { "id": "zul-fal-speaking", "name": "Speaking and Presentation", "order": 2 },
+        { "id": "zul-fal-discussion", "name": "Group Discussion", "order": 3 }
+      ]
+    }
+  ]
+}

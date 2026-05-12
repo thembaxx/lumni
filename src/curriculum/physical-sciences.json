@@ -1,0 +1,106 @@
+{
+	"subjectId": "physical-sciences",
+	"subjectName": "Physical Sciences",
+	"topics": [
+		{
+			"id": "mechanics",
+			"name": "Mechanics",
+			"order": 1,
+			"prerequisites": [],
+			"bloomTarget": "apply",
+			"subtopics": [
+				{ "id": "mechanics-vectors", "name": "Vectors and Scalars", "order": 1 },
+				{ "id": "mechanics-newtons-laws", "name": "Newton's Laws", "order": 2 },
+				{ "id": "mechanics-momentum", "name": "Momentum and Impulse", "order": 3 },
+				{ "id": "mechanics-work-energy", "name": "Work, Energy and Power", "order": 4 },
+				{ "id": "mechanics-gravitation", "name": "Gravitation", "order": 5 }
+			]
+		},
+		{
+			"id": "waves",
+			"name": "Waves and Sound",
+			"order": 2,
+			"prerequisites": ["mechanics"],
+			"bloomTarget": "apply",
+			"subtopics": [
+				{ "id": "waves-transverse", "name": "Transverse Waves", "order": 1 },
+				{ "id": "waves-longitudinal", "name": "Longitudinal Waves", "order": 2 },
+				{ "id": "waves-sound", "name": "Sound and Doppler Effect", "order": 3 }
+			]
+		},
+		{
+			"id": "electromagnetism",
+			"name": "Electromagnetism",
+			"order": 3,
+			"prerequisites": ["mechanics"],
+			"bloomTarget": "analyze",
+			"subtopics": [
+				{ "id": "em-electrostatics", "name": "Electrostatics", "order": 1 },
+				{ "id": "em-electric-circuits", "name": "Electric Circuits", "order": 2 },
+				{ "id": "em-electrodynamics", "name": "Electrodynamics", "order": 3 },
+				{ "id": "em-magnetism", "name": "Magnetism", "order": 4 }
+			]
+		},
+		{
+			"id": "chemical-change",
+			"name": "Chemical Change",
+			"order": 4,
+			"prerequisites": [],
+			"bloomTarget": "apply",
+			"subtopics": [
+				{ "id": "chem-stoichiometry", "name": "Stoichiometry", "order": 1 },
+				{ "id": "chem-reactions", "name": "Chemical Reactions", "order": 2 },
+				{ "id": "chem-equilibrium", "name": "Chemical Equilibrium", "order": 3 },
+				{ "id": "chem-kinetics", "name": "Reaction Rates", "order": 4 },
+				{ "id": "chem-energetics", "name": "Energy and Chemical Change", "order": 5 }
+			]
+		},
+		{
+			"id": "atomic-combinations",
+			"name": "Atomic Combinations",
+			"order": 5,
+			"prerequisites": ["chemical-change"],
+			"bloomTarget": "understand",
+			"subtopics": [
+				{ "id": "atomic-bonding", "name": "Chemical Bonding", "order": 1 },
+				{ "id": "atomic-molecular", "name": "Molecular Structure", "order": 2 },
+				{ "id": "atomic-intermolecular", "name": "Intermolecular Forces", "order": 3 }
+			]
+		},
+		{
+			"id": "acids-bases",
+			"name": "Acids and Bases",
+			"order": 6,
+			"prerequisites": ["chemical-change"],
+			"bloomTarget": "analyze",
+			"subtopics": [
+				{ "id": "acid-theories", "name": "Acid-Base Theories", "order": 1 },
+				{ "id": "acid-ph", "name": "pH and Indicators", "order": 2 },
+				{ "id": "acid-titrations", "name": "Titrations", "order": 3 }
+			]
+		},
+		{
+			"id": "electrochemistry",
+			"name": "Electrochemistry",
+			"order": 7,
+			"prerequisites": ["acids-bases", "electromagnetism"],
+			"bloomTarget": "analyze",
+			"subtopics": [
+				{ "id": "electro-galvanic", "name": "Galvanic Cells", "order": 1 },
+				{ "id": "electro-electrolytic", "name": "Electrolytic Cells", "order": 2 }
+			]
+		},
+		{
+			"id": "optical-phenomena",
+			"name": "Optical Phenomena",
+			"order": 8,
+			"prerequisites": ["waves"],
+			"bloomTarget": "understand",
+			"subtopics": [
+				{ "id": "optics-reflection", "name": "Reflection and Refraction", "order": 1 },
+				{ "id": "optics-lenses", "name": "Lenses", "order": 2 },
+				{ "id": "optics-photon", "name": "Photon and Wave Nature", "order": 3 }
+			]
+		}
+	]
+}

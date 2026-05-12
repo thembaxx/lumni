@@ -1,0 +1,46 @@
+{
+	"subjectId": "business-studies",
+	"subjectName": "Business Studies",
+	"topics": [
+		{
+			"id": "business-environment",
+			"name": "Business Environment",
+			"order": 1, "prerequisites": [], "bloomTarget": "understand",
+			"subtopics": [
+				{ "id": "bus-micro", "name": "Micro Environment", "order": 1 },
+				{ "id": "bus-market", "name": "Market Environment", "order": 2 },
+				{ "id": "bus-macro", "name": "Macro Environment", "order": 3 }
+			]
+		},
+		{
+			"id": "business-ventures",
+			"name": "Business Ventures",
+			"order": 2, "prerequisites": ["business-environment"], "bloomTarget": "apply",
+			"subtopics": [
+				{ "id": "bus-entrepreneurship", "name": "Entrepreneurship", "order": 1 },
+				{ "id": "bus-investment", "name": "Investment", "order": 2 },
+				{ "id": "bus-forms-ownership", "name": "Forms of Ownership", "order": 3 }
+			]
+		},
+		{
+			"id": "business-roles",
+			"name": "Business Roles",
+			"order": 3, "prerequisites": ["business-environment"], "bloomTarget": "analyze",
+			"subtopics": [
+				{ "id": "bus-leadership", "name": "Leadership and Management", "order": 1 },
+				{ "id": "bus-hr", "name": "Human Resources", "order": 2 },
+				{ "id": "bus-ethics", "name": "Ethics and Professionalism", "order": 3 }
+			]
+		},
+		{
+			"id": "business-operations",
+			"name": "Business Operations",
+			"order": 4, "prerequisites": ["business-ventures"], "bloomTarget": "apply",
+			"subtopics": [
+				{ "id": "bus-production", "name": "Production Management", "order": 1 },
+				{ "id": "bus-marketing", "name": "Marketing", "order": 2 },
+				{ "id": "bus-quality", "name": "Quality Management", "order": 3 }
+			]
+		}
+	]
+}

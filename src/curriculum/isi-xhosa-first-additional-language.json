@@ -1,0 +1,79 @@
+{
+  "subjectId": "isi-xhosa-first-additional-language",
+  "subjectName": "IsiXhosa First Additional Language",
+  "topics": [
+    {
+      "id": "xho-fal-reading",
+      "name": "UkuFunda nokuQonda",
+      "order": 1,
+      "prerequisites": [],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "xho-fal-literal", "name": "Literal Comprehension", "order": 1 },
+        { "id": "xho-fal-inferential", "name": "Inferential Comprehension", "order": 2 },
+        { "id": "xho-fal-critical", "name": "Critical Reading", "order": 3 }
+      ]
+    },
+    {
+      "id": "xho-fal-literature",
+      "name": "Uncwadi",
+      "order": 2,
+      "prerequisites": [],
+      "bloomTarget": "evaluate",
+      "subtopics": [
+        { "id": "xho-fal-poetry", "name": "Poetry", "order": 1 },
+        { "id": "xho-fal-novel", "name": "Novel", "order": 2 },
+        { "id": "xho-fal-drama", "name": "Drama", "order": 3 },
+        { "id": "xho-fal-short-stories", "name": "Short Stories", "order": 4 }
+      ]
+    },
+    {
+      "id": "xho-fal-writing",
+      "name": "ukuBhala",
+      "order": 3,
+      "prerequisites": [],
+      "bloomTarget": "create",
+      "subtopics": [
+        { "id": "xho-fal-essay", "name": "Essay Writing", "order": 1 },
+        { "id": "xho-fal-transactional", "name": "Transactional Writing", "order": 2 },
+        { "id": "xho-fal-creative", "name": "Creative Writing", "order": 3 }
+      ]
+    },
+    {
+      "id": "xho-fal-language",
+      "name": "ulwimi nokuLusetyenzisa",
+      "order": 4,
+      "prerequisites": [],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "xho-fal-grammar", "name": "Grammar and Spelling", "order": 1 },
+        { "id": "xho-fal-vocabulary", "name": "Vocabulary", "order": 2 },
+        { "id": "xho-fal-syntax", "name": "Sentence Structure", "order": 3 }
+      ]
+    },
+    {
+      "id": "xho-fal-visual",
+      "name": "ukuBona nokuHlalutya",
+      "order": 5,
+      "prerequisites": [],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "xho-fal-adverts", "name": "Advertisements", "order": 1 },
+        { "id": "xho-fal-cartoons", "name": "Cartoons and Comics", "order": 2 },
+        { "id": "xho-fal-graphics", "name": "Graphic Texts", "order": 3 }
+      ]
+    },
+    {
+      "id": "xho-fal-oral",
+      "name": "ukuThetha",
+      "order": 6,
+      "prerequisites": [],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "xho-fal-listening", "name": "Listening Comprehension", "order": 1 },
+        { "id": "xho-fal-speaking", "name": "Speaking and Presentation", "order": 2 },
+        { "id": "xho-fal-discussion", "name": "Group Discussion", "order": 3 }
+      ]
+    }
+  ]
+}

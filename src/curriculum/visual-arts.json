@@ -1,0 +1,68 @@
+{
+  "subjectId": "visual-arts",
+  "subjectName": "Visual Arts",
+  "topics": [
+    {
+      "id": "visual-literacy",
+      "name": "Visual Literacy",
+      "order": 1,
+      "prerequisites": [],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "formal-analysis", "name": "Formal Analysis", "order": 1 },
+        { "id": "art-criticism", "name": "Art Criticism", "order": 2 },
+        { "id": "visual-culture", "name": "Visual Culture", "order": 3 }
+      ]
+    },
+    {
+      "id": "art-history",
+      "name": "Art History",
+      "order": 2,
+      "prerequisites": [],
+      "bloomTarget": "understand",
+      "subtopics": [
+        { "id": "ancient-and-medieval-art", "name": "Ancient and Medieval Art", "order": 1 },
+        { "id": "renaissance-to-modern", "name": "Renaissance to Modern", "order": 2 },
+        { "id": "african-art", "name": "African Art", "order": 3 },
+        { "id": "contemporary-art", "name": "Contemporary Art", "order": 4 }
+      ]
+    },
+    {
+      "id": "drawing-and-painting",
+      "name": "Drawing and Painting",
+      "order": 3,
+      "prerequisites": ["visual-literacy"],
+      "bloomTarget": "create",
+      "subtopics": [
+        { "id": "figure-drawing", "name": "Figure Drawing", "order": 1 },
+        { "id": "still-life", "name": "Still Life", "order": 2 },
+        { "id": "mixed-media", "name": "Mixed Media", "order": 3 },
+        { "id": "colour-painting", "name": "Colour Painting", "order": 4 }
+      ]
+    },
+    {
+      "id": "sculpture-and-3d-work",
+      "name": "Sculpture and 3D Work",
+      "order": 4,
+      "prerequisites": [],
+      "bloomTarget": "create",
+      "subtopics": [
+        { "id": "clay-modelling", "name": "Clay Modelling", "order": 1 },
+        { "id": "wire-and-found-objects", "name": "Wire and Found Objects", "order": 2 },
+        { "id": "installation-art", "name": "Installation Art", "order": 3 }
+      ]
+    },
+    {
+      "id": "digital-art-and-new-media",
+      "name": "Digital Art and New Media",
+      "order": 5,
+      "prerequisites": ["visual-literacy"],
+      "bloomTarget": "create",
+      "subtopics": [
+        { "id": "digital-imaging", "name": "Digital Imaging", "order": 1 },
+        { "id": "video-art", "name": "Video Art", "order": 2 },
+        { "id": "web-and-interactive-art", "name": "Web and Interactive Art", "order": 3 }
+      ]
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { QuestionEngine } from "@/lib/question-engine";
+import { LearningOrchestrator } from "@/lib/orchestrator";
 import type { Question, UserAnswer } from "@/lib/question-engine/types";
 import { checkRateLimit, getRateLimitHeaders } from "@/lib/utils/rate-limit";
 
@@ -34,12 +34,16 @@ export async function POST(req: NextRequest) {
 			);
 		}
 
-		const engine = await QuestionEngine.initialize();
-		const result = await engine.grade(question, answer);
+		const orchestrator = await LearningOrchestrator.initialize();
+		const { result, jobIds } = await orchestrator.gradeAndTrack(
+			question,
+			answer,
+		);
 
-		return NextResponse.json(result, {
-			headers: getRateLimitHeaders(rateLimit),
-		});
+		return NextResponse.json(
+			{ ...result, jobIds },
+			{ headers: getRateLimitHeaders(rateLimit) },
+		);
 	} catch (error) {
 		console.error("[Engine Grade] Error:", error);
 		return NextResponse.json(

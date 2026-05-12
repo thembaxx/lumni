@@ -1,0 +1,68 @@
+{
+  "subjectId": "consumer-studies",
+  "subjectName": "Consumer Studies",
+  "topics": [
+    {
+      "id": "consumer-rights-and-responsibilities",
+      "name": "Consumer Rights and Responsibilities",
+      "order": 1,
+      "prerequisites": [],
+      "bloomTarget": "understand",
+      "subtopics": [
+        { "id": "consumer-legislation", "name": "Consumer Legislation", "order": 1 },
+        { "id": "consumer-protection", "name": "Consumer Protection", "order": 2 },
+        { "id": "fraud-and-scams", "name": "Fraud and Scams", "order": 3 }
+      ]
+    },
+    {
+      "id": "food-and-nutrition",
+      "name": "Food and Nutrition",
+      "order": 2,
+      "prerequisites": [],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "nutritional-requirements", "name": "Nutritional Requirements", "order": 1 },
+        { "id": "meal-planning", "name": "Meal Planning", "order": 2 },
+        { "id": "food-budgeting", "name": "Food Budgeting", "order": 3 },
+        { "id": "food-safety", "name": "Food Safety and Hygiene", "order": 4 }
+      ]
+    },
+    {
+      "id": "textiles-and-clothing",
+      "name": "Textiles and Clothing",
+      "order": 3,
+      "prerequisites": [],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "textile-fibres", "name": "Textile Fibres", "order": 1 },
+        { "id": "fabric-construction", "name": "Fabric Construction", "order": 2 },
+        { "id": "clothing-care", "name": "Clothing Care", "order": 3 }
+      ]
+    },
+    {
+      "id": "housing-and-interior-design",
+      "name": "Housing and Interior Design",
+      "order": 4,
+      "prerequisites": ["consumer-rights-and-responsibilities"],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "housing-needs", "name": "Housing Needs", "order": 1 },
+        { "id": "interior-elements", "name": "Interior Design Elements", "order": 2 },
+        { "id": "furniture-selection", "name": "Furniture Selection", "order": 3 }
+      ]
+    },
+    {
+      "id": "entrepreneurship",
+      "name": "Entrepreneurship",
+      "order": 5,
+      "prerequisites": ["consumer-rights-and-responsibilities", "food-and-nutrition"],
+      "bloomTarget": "create",
+      "subtopics": [
+        { "id": "business-planning", "name": "Business Planning", "order": 1 },
+        { "id": "production-planning", "name": "Production Planning", "order": 2 },
+        { "id": "marketing-strategies", "name": "Marketing Strategies", "order": 3 },
+        { "id": "financial-planning", "name": "Financial Planning", "order": 4 }
+      ]
+    }
+  ]
+}

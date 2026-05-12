@@ -1,0 +1,78 @@
+{
+  "subjectId": "technical-sciences",
+  "subjectName": "Technical Sciences",
+  "topics": [
+    {
+      "id": "tech-sci-mechanics",
+      "name": "Mechanics",
+      "order": 1,
+      "prerequisites": [],
+      "bloomTarget": "understand",
+      "subtopics": [
+        { "id": "tech-sci-vectors-scalars", "name": "Vectors and Scalars", "order": 1 },
+        { "id": "tech-sci-newtons-laws", "name": "Newton's Laws", "order": 2 },
+        { "id": "tech-sci-work-energy-power", "name": "Work, Energy and Power", "order": 3 }
+      ]
+    },
+    {
+      "id": "tech-sci-waves-sound",
+      "name": "Waves and Sound",
+      "order": 2,
+      "prerequisites": ["tech-sci-mechanics"],
+      "bloomTarget": "understand",
+      "subtopics": [
+        { "id": "tech-sci-transverse-longitudinal", "name": "Transverse and Longitudinal Waves", "order": 1 },
+        { "id": "tech-sci-sound-properties", "name": "Sound Properties", "order": 2 },
+        { "id": "tech-sci-doppler-effect", "name": "Doppler Effect", "order": 3 }
+      ]
+    },
+    {
+      "id": "tech-sci-electricity-magnetism",
+      "name": "Electricity and Magnetism",
+      "order": 3,
+      "prerequisites": ["tech-sci-mechanics"],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "tech-sci-electrostatics", "name": "Electrostatics", "order": 1 },
+        { "id": "tech-sci-electric-circuits", "name": "Electric Circuits", "order": 2 },
+        { "id": "tech-sci-electromagnetism", "name": "Electromagnetism", "order": 3 }
+      ]
+    },
+    {
+      "id": "tech-sci-chemistry",
+      "name": "Chemistry Basics",
+      "order": 4,
+      "prerequisites": [],
+      "bloomTarget": "remember",
+      "subtopics": [
+        { "id": "tech-sci-atomic-structure", "name": "Atomic Structure and Bonding", "order": 1 },
+        { "id": "tech-sci-chemical-reactions", "name": "Chemical Reactions", "order": 2 },
+        { "id": "tech-sci-stoichiometry", "name": "Stoichiometry", "order": 3 }
+      ]
+    },
+    {
+      "id": "tech-sci-hydraulics",
+      "name": "Hydraulics",
+      "order": 5,
+      "prerequisites": ["tech-sci-mechanics"],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "tech-sci-pressure-pascals-law", "name": "Pressure and Pascal's Law", "order": 1 },
+        { "id": "tech-sci-hydraulic-systems", "name": "Hydraulic Systems", "order": 2 },
+        { "id": "tech-sci-buoyancy", "name": "Buoyancy", "order": 3 }
+      ]
+    },
+    {
+      "id": "tech-sci-thermodynamics",
+      "name": "Thermodynamics",
+      "order": 6,
+      "prerequisites": ["tech-sci-chemistry", "tech-sci-mechanics"],
+      "bloomTarget": "evaluate",
+      "subtopics": [
+        { "id": "tech-sci-heat-temperature", "name": "Heat and Temperature", "order": 1 },
+        { "id": "tech-sci-gas-laws", "name": "Gas Laws", "order": 2 },
+        { "id": "tech-sci-first-law-thermodynamics", "name": "First Law of Thermodynamics", "order": 3 }
+      ]
+    }
+  ]
+}

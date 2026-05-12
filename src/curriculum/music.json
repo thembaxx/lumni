@@ -1,0 +1,66 @@
+{
+  "subjectId": "music",
+  "subjectName": "Music",
+  "topics": [
+    {
+      "id": "music-theory-and-harmony",
+      "name": "Music Theory and Harmony",
+      "order": 1,
+      "prerequisites": [],
+      "bloomTarget": "understand",
+      "subtopics": [
+        { "id": "notation-and-scales", "name": "Notation and Scales", "order": 1 },
+        { "id": "chords-and-harmony", "name": "Chords and Harmony", "order": 2 },
+        { "id": "cadences-and-progressions", "name": "Cadences and Progressions", "order": 3 }
+      ]
+    },
+    {
+      "id": "music-history-and-appreciation",
+      "name": "Music History and Appreciation",
+      "order": 2,
+      "prerequisites": [],
+      "bloomTarget": "understand",
+      "subtopics": [
+        { "id": "western-art-music", "name": "Western Art Music", "order": 1 },
+        { "id": "african-music", "name": "African Music", "order": 2 },
+        { "id": "jazz-and-popular-music", "name": "Jazz and Popular Music", "order": 3 }
+      ]
+    },
+    {
+      "id": "performance",
+      "name": "Performance",
+      "order": 3,
+      "prerequisites": ["music-theory-and-harmony"],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "instrumental-technique", "name": "Instrumental Technique", "order": 1 },
+        { "id": "ensemble-playing", "name": "Ensemble Playing", "order": 2 },
+        { "id": "sight-reading", "name": "Sight-Reading", "order": 3 }
+      ]
+    },
+    {
+      "id": "aural-skills",
+      "name": "Aural Skills",
+      "order": 4,
+      "prerequisites": ["music-theory-and-harmony"],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "interval-recognition", "name": "Interval Recognition", "order": 1 },
+        { "id": "rhythm-dictation", "name": "Rhythm Dictation", "order": 2 },
+        { "id": "harmonic-analysis", "name": "Harmonic Analysis", "order": 3 }
+      ]
+    },
+    {
+      "id": "composition-and-improvisation",
+      "name": "Composition and Improvisation",
+      "order": 5,
+      "prerequisites": ["music-theory-and-harmony", "aural-skills"],
+      "bloomTarget": "create",
+      "subtopics": [
+        { "id": "melodic-writing", "name": "Melodic Writing", "order": 1 },
+        { "id": "harmonic-composition", "name": "Harmonic Composition", "order": 2 },
+        { "id": "improvisation-techniques", "name": "Improvisation Techniques", "order": 3 }
+      ]
+    }
+  ]
+}

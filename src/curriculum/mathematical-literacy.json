@@ -1,0 +1,79 @@
+{
+  "subjectId": "mathematical-literacy",
+  "subjectName": "Mathematical Literacy",
+  "topics": [
+    {
+      "id": "number-and-operations",
+      "name": "Number and Operations",
+      "order": 1,
+      "prerequisites": [],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "number-forms", "name": "Number Forms", "order": 1 },
+        { "id": "ratio-and-proportion", "name": "Ratio and Proportion", "order": 2 },
+        { "id": "percentages", "name": "Percentages", "order": 3 }
+      ]
+    },
+    {
+      "id": "patterns-and-relationships",
+      "name": "Patterns and Relationships",
+      "order": 2,
+      "prerequisites": ["number-and-operations"],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "linear-patterns", "name": "Linear Patterns", "order": 1 },
+        { "id": "graphs", "name": "Graphs", "order": 2 },
+        { "id": "representing-relationships", "name": "Representing Relationships", "order": 3 }
+      ]
+    },
+    {
+      "id": "finance",
+      "name": "Finance",
+      "order": 3,
+      "prerequisites": ["number-and-operations"],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "personal-finance", "name": "Personal Finance", "order": 1 },
+        { "id": "taxation", "name": "Taxation", "order": 2 },
+        { "id": "inflation-and-loans", "name": "Inflation and Loans", "order": 3 }
+      ]
+    },
+    {
+      "id": "measurement",
+      "name": "Measurement",
+      "order": 4,
+      "prerequisites": ["number-and-operations"],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "length-and-distance", "name": "Length and Distance", "order": 1 },
+        { "id": "mass-and-volume", "name": "Mass and Volume", "order": 2 },
+        { "id": "temperature-and-time", "name": "Temperature and Time", "order": 3 },
+        { "id": "perimeter-area-and-volume", "name": "Perimeter, Area and Volume", "order": 4 }
+      ]
+    },
+    {
+      "id": "data-handling",
+      "name": "Data Handling",
+      "order": 5,
+      "prerequisites": ["number-and-operations"],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "data-collection", "name": "Data Collection", "order": 1 },
+        { "id": "representing-data", "name": "Representing Data", "order": 2 },
+        { "id": "measures-of-central-tendency", "name": "Measures of Central Tendency", "order": 3 }
+      ]
+    },
+    {
+      "id": "probability",
+      "name": "Probability",
+      "order": 6,
+      "prerequisites": ["number-and-operations"],
+      "bloomTarget": "evaluate",
+      "subtopics": [
+        { "id": "theoretical-probability", "name": "Theoretical Probability", "order": 1 },
+        { "id": "relative-frequency", "name": "Relative Frequency", "order": 2 },
+        { "id": "risk-analysis", "name": "Risk Analysis", "order": 3 }
+      ]
+    }
+  ]
+}

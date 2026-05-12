@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { QuestionEngine } from "@/lib/question-engine";
+import { LearningOrchestrator } from "@/lib/orchestrator";
 import type { GenerationParams } from "@/lib/question-engine/types";
 import { checkRateLimit, getRateLimitHeaders } from "@/lib/utils/rate-limit";
 
@@ -37,11 +37,16 @@ export async function POST(req: NextRequest) {
 			);
 		}
 
-		const engine = await QuestionEngine.initialize();
-		const questions = await engine.generate(body);
+		const orchestrator = await LearningOrchestrator.initialize();
+		const result = await orchestrator.generateQuestionSet(body);
 
 		return NextResponse.json(
-			{ questions, count: questions.length, type: body.questionType || "any" },
+			{
+				questions: result.questions,
+				count: result.count,
+				type: body.questionType || "any",
+				jobIds: result.jobIds,
+			},
 			{ headers: getRateLimitHeaders(rateLimit) },
 		);
 	} catch (error) {

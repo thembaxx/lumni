@@ -1,4 +1,6 @@
 import Dexie, { type Table } from "dexie";
+import type { CompetencyRecord } from "@/lib/competency-engine/types";
+import type { JobRecord } from "@/lib/orchestrator/types";
 import { safeJsonParse, safeJsonStringify } from "@/lib/utils/json";
 
 export interface CachedQuestion {
@@ -93,6 +95,8 @@ export class LumniOfflineDB extends Dexie {
 	subjects!: Table<CachedSubject, number>;
 	quizSessions!: Table<QuizSessionState, number>;
 	conflicts!: Table<SyncConflict, number>;
+	jobs!: Table<JobRecord, number>;
+	competencies!: Table<CompetencyRecord, number>;
 
 	constructor() {
 		super("lumni-offline");
@@ -112,6 +116,14 @@ export class LumniOfflineDB extends Dexie {
 		this.version(3).stores({
 			syncQueue: "++id, status, priority, createdAt",
 			conflicts: "++id, resolvedAt",
+		});
+
+		this.version(4).stores({
+			jobs: "++id, type, status, priority, scheduledAt, createdAt",
+		});
+
+		this.version(5).stores({
+			competencies: "++id, subjectId, topicId, bloomLevel, level, lastAssessed",
 		});
 	}
 }

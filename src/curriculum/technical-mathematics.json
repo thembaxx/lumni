@@ -1,0 +1,78 @@
+{
+  "subjectId": "technical-mathematics",
+  "subjectName": "Technical Mathematics",
+  "topics": [
+    {
+      "id": "tech-math-algebra",
+      "name": "Algebra",
+      "order": 1,
+      "prerequisites": [],
+      "bloomTarget": "remember",
+      "subtopics": [
+        { "id": "tech-math-exponents-logarithms", "name": "Exponents and Logarithms", "order": 1 },
+        { "id": "tech-math-equations-inequalities", "name": "Equations and Inequalities", "order": 2 },
+        { "id": "tech-math-sequences-series", "name": "Sequences and Series", "order": 3 }
+      ]
+    },
+    {
+      "id": "tech-math-functions",
+      "name": "Functions and Graphs",
+      "order": 2,
+      "prerequisites": ["tech-math-algebra"],
+      "bloomTarget": "understand",
+      "subtopics": [
+        { "id": "tech-math-linear-quadratic", "name": "Linear and Quadratic Functions", "order": 1 },
+        { "id": "tech-math-exponential-logarithmic", "name": "Exponential and Logarithmic Functions", "order": 2 },
+        { "id": "tech-math-hyperbolic-functions", "name": "Hyperbolic Functions", "order": 3 }
+      ]
+    },
+    {
+      "id": "tech-math-trigonometry",
+      "name": "Trigonometry",
+      "order": 3,
+      "prerequisites": ["tech-math-algebra"],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "tech-math-trig-ratios", "name": "Trigonometric Ratios", "order": 1 },
+        { "id": "tech-math-trig-identities", "name": "Identities and Equations", "order": 2 },
+        { "id": "tech-math-trig-graphs", "name": "Graphs of Trigonometric Functions", "order": 3 }
+      ]
+    },
+    {
+      "id": "tech-math-calculus",
+      "name": "Calculus",
+      "order": 4,
+      "prerequisites": ["tech-math-functions", "tech-math-trigonometry"],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "tech-math-limits-continuity", "name": "Limits and Continuity", "order": 1 },
+        { "id": "tech-math-differentiation", "name": "Differentiation", "order": 2 },
+        { "id": "tech-math-integration", "name": "Integration", "order": 3 }
+      ]
+    },
+    {
+      "id": "tech-math-analytic-geometry",
+      "name": "Analytic Geometry",
+      "order": 5,
+      "prerequisites": ["tech-math-algebra"],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "tech-math-straight-lines", "name": "Straight Lines", "order": 1 },
+        { "id": "tech-math-conic-sections", "name": "Circles and Conic Sections", "order": 2 },
+        { "id": "tech-math-distance-midpoint", "name": "Distance and Midpoint", "order": 3 }
+      ]
+    },
+    {
+      "id": "tech-math-statistics",
+      "name": "Statistics",
+      "order": 6,
+      "prerequisites": ["tech-math-functions"],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "tech-math-data-representation", "name": "Data Collection and Representation", "order": 1 },
+        { "id": "tech-math-central-tendency", "name": "Measures of Central Tendency", "order": 2 },
+        { "id": "tech-math-probability", "name": "Probability", "order": 3 }
+      ]
+    }
+  ]
+}

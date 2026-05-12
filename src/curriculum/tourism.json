@@ -1,0 +1,69 @@
+{
+  "subjectId": "tourism",
+  "subjectName": "Tourism",
+  "topics": [
+    {
+      "id": "tourism-sectors",
+      "name": "Tourism Sectors",
+      "order": 1,
+      "prerequisites": [],
+      "bloomTarget": "remember",
+      "subtopics": [
+        { "id": "hospitality-sector", "name": "Hospitality Sector", "order": 1 },
+        { "id": "transport-sector", "name": "Transport Sector", "order": 2 },
+        { "id": "attractions-sector", "name": "Attractions Sector", "order": 3 },
+        { "id": "travel-services", "name": "Travel Services", "order": 4 }
+      ]
+    },
+    {
+      "id": "map-work-and-tour-planning",
+      "name": "Map Work and Tour Planning",
+      "order": 2,
+      "prerequisites": ["tourism-sectors"],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "map-reading", "name": "Map Reading", "order": 1 },
+        { "id": "route-planning", "name": "Route Planning", "order": 2 },
+        { "id": "itinerary-planning", "name": "Itinerary Planning", "order": 3 },
+        { "id": "tour-budgeting", "name": "Tour Budgeting", "order": 4 }
+      ]
+    },
+    {
+      "id": "tourism-marketing",
+      "name": "Tourism Marketing",
+      "order": 3,
+      "prerequisites": ["tourism-sectors"],
+      "bloomTarget": "analyze",
+      "subtopics": [
+        { "id": "marketing-mix-tourism", "name": "Marketing Mix", "order": 1 },
+        { "id": "target-markets", "name": "Target Markets", "order": 2 },
+        { "id": "promotional-strategies", "name": "Promotional Strategies", "order": 3 }
+      ]
+    },
+    {
+      "id": "sustainable-tourism",
+      "name": "Sustainable Tourism",
+      "order": 4,
+      "prerequisites": ["tourism-sectors"],
+      "bloomTarget": "evaluate",
+      "subtopics": [
+        { "id": "responsible-tourism", "name": "Responsible Tourism", "order": 1 },
+        { "id": "environmental-impact", "name": "Environmental Impact", "order": 2 },
+        { "id": "community-benefits", "name": "Community Benefits", "order": 3 }
+      ]
+    },
+    {
+      "id": "customer-service-and-communication",
+      "name": "Customer Service and Communication",
+      "order": 5,
+      "prerequisites": ["tourism-sectors", "map-work-and-tour-planning"],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "communication-skills", "name": "Communication Skills", "order": 1 },
+        { "id": "customer-care", "name": "Customer Care", "order": 2 },
+        { "id": "handling-complaints", "name": "Handling Complaints", "order": 3 },
+        { "id": "professional-ethics", "name": "Professional Ethics", "order": 4 }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "subjectId": "dance-studies",
+  "subjectName": "Dance Studies",
+  "topics": [
+    {
+      "id": "dance-technique",
+      "name": "Dance Technique",
+      "order": 1,
+      "prerequisites": [],
+      "bloomTarget": "apply",
+      "subtopics": [
+        { "id": "ballet-technique", "name": "Ballet Technique", "order": 1 },
+        { "id": "contemporary-technique", "name": "Contemporary Technique", "order": 2 },
+        { "id": "afro-fusion-technique", "name": "Afro-Fusion Technique", "order": 3 }
+      ]
+    },
+    {
+      "id": "dance-theory-and-history",
+      "name": "Dance Theory and History",
+      "order": 2,
+      "prerequisites": [],
+      "bloomTarget": "understand",
+      "subtopics": [
+        { "id": "history-of-dance", "name": "History of Dance", "order": 1 },
+        { "id": "dance-notation", "name": "Dance Notation", "order": 2 },
+        { "id": "dance-criticism", "name": "Dance Criticism", "order": 3 }
+      ]
+    },
+    {
+      "id": "choreography",
+      "name": "Choreography",
+      "order": 3,
+      "prerequisites": ["dance-technique"],
+      "bloomTarget": "create",
+      "subtopics": [
+        { "id": "choreographic-processes", "name": "Choreographic Processes", "order": 1 },
+        { "id": "group-choreography", "name": "Group Choreography", "order": 2 },
+        { "id": "solo-choreography", "name": "Solo Choreography", "order": 3 }
+      ]
+    },
+    {
+      "id": "dance-anatomy-and-health",
+      "name": "Dance Anatomy and Health",
+      "order": 4,
+      "prerequisites": [],
+      "bloomTarget": "understand",
+      "subtopics": [
+        { "id": "anatomy-for-dancers", "name": "Anatomy for Dancers", "order": 1 },
+        { "id": "injury-prevention", "name": "Injury Prevention", "order": 2 },
+        { "id": "nutrition-and-wellness", "name": "Nutrition and Wellness", "order": 3 }
+      ]
+    },
+    {
+      "id": "performance-and-production",
+      "name": "Performance and Production",
+      "order": 5,
+      "prerequisites": ["dance-technique", "choreography"],
+      "bloomTarget": "evaluate",
+      "subtopics": [
+        { "id": "stage-craft", "name": "Stage Craft", "order": 1 },
+        { "id": "audition-techniques", "name": "Audition Techniques", "order": 2 },
+        { "id": "performance-repertoire", "name": "Performance Repertoire", "order": 3 }
+      ]
+    }
+  ]
+}
