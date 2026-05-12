@@ -13,7 +13,7 @@ interface XPGainPopupProps {
 export function XPGainPopup({
 	amount,
 	visible,
-	useLottie = false,
+	useLottie = true,
 }: XPGainPopupProps) {
 	return (
 		<AnimatePresence initial={false}>

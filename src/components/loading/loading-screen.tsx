@@ -1,10 +1,12 @@
 "use client";
 
+import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { LottieWrapper } from "@/components/lottie";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { iOSEase } from "@/lib/utils/animation";
 
 interface LoadingScreenProps {
 	duration?: number;
@@ -26,7 +28,7 @@ export function LoadingScreen({
 
 	const handleRedirect = useCallback(() => {
 		setIsVisible(false);
-		setTimeout(() => router.replace(redirectTo), 300);
+		setTimeout(() => router.replace(redirectTo), 400);
 	}, [router, redirectTo]);
 
 	const handleManualEnter = () => {
@@ -36,17 +38,14 @@ export function LoadingScreen({
 
 	useEffect(() => {
 		const startTime = performance.now();
-
 		const animate = (currentTime: number) => {
 			const elapsed = currentTime - startTime;
 			const newProgress = Math.min((elapsed / duration) * 100, 100);
 			setProgress(newProgress);
-
 			if (newProgress < 100) {
 				requestAnimationFrame(animate);
 			}
 		};
-
 		requestAnimationFrame(animate);
 	}, [duration]);
 
@@ -56,61 +55,102 @@ export function LoadingScreen({
 				setShowSkipButton(true);
 			}
 		}, skipDelay);
-
 		return () => clearTimeout(timer);
 	}, [skipDelay, progress]);
 
 	useEffect(() => {
 		if (progress >= 100) {
-			const redirectTimer = setTimeout(() => {
-				handleRedirect();
-			}, 300);
-			return () => clearTimeout(redirectTimer);
+			const timer = setTimeout(handleRedirect, 300);
+			return () => clearTimeout(timer);
 		}
 	}, [progress, handleRedirect]);
 
 	return (
-		<div
-			className={`flex flex-col items-center gap-[--space-8] transition-opacity duration-500 ease-[var(--ease-ios)] ${
-				isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-			}`}
-		>
-			<div className="relative">
-				<div className="absolute inset-0 animate-pulse rounded-full bg-[--system-accent]/20 blur-xl" />
-				<div className="relative flex items-center justify-center w-16 h-16 rounded-2xl bg-[--system-accent]/10 border border-[--system-accent]/20">
-					{useLottie ? (
-						<LottieWrapper
-							animation="loading-lumni"
-							className="w-12 h-12"
-							loop
-						/>
-					) : (
-						<span className="text-2xl font-semibold text-foreground">L</span>
-					)}
-				</div>
-			</div>
-
-			<div className="text-center space-y-1">
-				<h2 className="ios-headline text-[--system-text-primary]">
-					Loading Lumni
-				</h2>
-				<p className="ios-footnote text-[--system-text-secondary]">
-					Preparing your study experience...
-				</p>
-			</div>
-
-			<Progress
-				value={progress}
-				className="w-48 transition-[width] duration-[var(--duration-slow)] ease-[var(--ease-ios)]"
-			/>
-			{showSkipButton && progress < 100 && (
-				<Button
-					onClick={handleManualEnter}
-					className="rounded-full bg-[--system-accent] text-background hover:scale-105 h-10 px-8"
+		<AnimatePresence>
+			{isVisible && (
+				<motion.div
+					key="loading-screen"
+					initial={{ opacity: 0, scale: 0.96 }}
+					animate={{ opacity: 1, scale: 1 }}
+					exit={{ opacity: 0, y: -12, scale: 0.96 }}
+					transition={{ duration: 0.4, ease: iOSEase }}
+					className="flex flex-col items-center gap-[--space-8]"
 				>
-					Skip & Enter
-				</Button>
+					<motion.div
+						initial={{ opacity: 0, scale: 0.8 }}
+						animate={{ opacity: 1, scale: 1 }}
+						transition={{ duration: 0.5, ease: iOSEase, delay: 0.05 }}
+						className="relative"
+					>
+						<motion.div
+							className="absolute inset-0 rounded-full bg-[--system-accent]/20 blur-xl"
+							animate={{ scale: [1, 1.15, 1] }}
+							transition={{
+								duration: 2.5,
+								repeat: Infinity,
+								ease: iOSEase,
+							}}
+						/>
+						<div className="relative flex items-center justify-center w-20 h-20 rounded-2xl bg-[--system-accent]/10 border border-[--system-accent]/20">
+							{useLottie ? (
+								<LottieWrapper
+									animation="loading-lumni"
+									className="w-14 h-14"
+									loop
+								/>
+							) : (
+								<motion.span
+									className="text-3xl font-semibold text-foreground"
+									animate={{ opacity: [1, 0.4, 1] }}
+									transition={{ duration: 1.5, repeat: Infinity }}
+								>
+									L
+								</motion.span>
+							)}
+						</div>
+					</motion.div>
+
+					<motion.div
+						initial={{ opacity: 0, y: 10 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ duration: 0.4, ease: iOSEase, delay: 0.15 }}
+						className="text-center space-y-1"
+					>
+						<h2 className="ios-headline text-[--system-text-primary]">
+							Loading Lumni
+						</h2>
+						<p className="ios-footnote text-[--system-text-secondary]">
+							Preparing your study experience...
+						</p>
+					</motion.div>
+
+					<motion.div
+						initial={{ opacity: 0, y: 10 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ duration: 0.4, ease: iOSEase, delay: 0.25 }}
+					>
+						<Progress
+							value={progress}
+							className="w-48 transition-[width] duration-[var(--duration-slow)] ease-[var(--ease-ios)]"
+						/>
+					</motion.div>
+
+					{showSkipButton && progress < 100 && (
+						<motion.div
+							initial={{ opacity: 0, y: 12 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{ duration: 0.35, ease: iOSEase }}
+						>
+							<Button
+								onClick={handleManualEnter}
+								className="rounded-full bg-[--system-accent] text-background hover:scale-105 h-10 px-8"
+							>
+								Skip & Enter
+							</Button>
+						</motion.div>
+					)}
+				</motion.div>
 			)}
-		</div>
+		</AnimatePresence>
 	);
 }

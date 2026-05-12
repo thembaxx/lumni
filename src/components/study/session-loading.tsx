@@ -7,7 +7,7 @@ interface SessionLoadingProps {
 	useLottie?: boolean;
 }
 
-export function SessionLoading({ useLottie = false }: SessionLoadingProps) {
+export function SessionLoading({ useLottie = true }: SessionLoadingProps) {
 	return (
 		<div className="min-h-screen bg-background p-4 flex items-center justify-center">
 			<Card className="max-w-md w-full">

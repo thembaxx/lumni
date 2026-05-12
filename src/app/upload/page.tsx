@@ -1,13 +1,10 @@
 "use client";
 
-import {
-	CheckmarkCircle01Icon,
-	CloudUploadIcon,
-	DatabaseIcon,
-} from "@hugeicons/core-free-icons";
+import { CloudUploadIcon, DatabaseIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
+import { LottieWrapper } from "@/components/lottie";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -98,9 +95,16 @@ export default function UploadPage() {
 				<div className="px-[--space-4] space-y-[--space-4] pb-[--space-8]">
 					<Card>
 						<CardHeader>
-							<CardTitle className="flex items-center gap-2">
-								<HugeiconsIcon icon={CloudUploadIcon} className="size-4" />
-								Upload
+							<CardTitle className="flex flex-col items-center gap-3 text-center">
+								<LottieWrapper
+									animation="empty-upload"
+									className="w-20 h-20"
+									loop
+								/>
+								<span className="flex items-center gap-2">
+									<HugeiconsIcon icon={CloudUploadIcon} className="size-4" />
+									Upload
+								</span>
 							</CardTitle>
 							<CardDescription>
 								Upload JSON question files for subjects
@@ -116,12 +120,12 @@ export default function UploadPage() {
 							/>
 
 							{lastUpload && (
-								<div className="rounded-[--radius-button] bg-[var(--success)]/10 p-[--space-3]">
-									<p className="text-[13px] font-medium text-[var(--success)] flex items-center gap-1.5">
-										<HugeiconsIcon
-											icon={CheckmarkCircle01Icon}
-											className="size-4"
-										/>
+								<div className="rounded-[--radius-button] bg-[var(--success)]/10 p-[--space-4] text-center">
+									<LottieWrapper
+										animation="success-check"
+										className="w-16 h-16 mx-auto mb-2"
+									/>
+									<p className="text-[13px] font-medium text-[var(--success)]">
 										Upload successful
 									</p>
 									<p className="text-[12px] text-muted-foreground break-all mt-1">

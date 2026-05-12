@@ -102,7 +102,7 @@ export function QuizResult({
 	results,
 	onRestart,
 	onClose,
-	useLottie = false,
+	useLottie = true,
 }: QuizResultProps) {
 	const { totalQuestions, correctAnswers, accuracy, incorrectAnswers } =
 		results;

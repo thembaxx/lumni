@@ -19,7 +19,7 @@ export function LevelUp({
 	title,
 	xpToNext,
 	onClose,
-	useLottie = false,
+	useLottie = true,
 }: LevelUpProps) {
 	return (
 		<AnimatePresence initial={false}>

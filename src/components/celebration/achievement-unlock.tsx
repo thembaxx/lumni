@@ -44,7 +44,7 @@ export function AchievementUnlock({
 	xpReward,
 	rarity,
 	onClose,
-	useLottie = false,
+	useLottie = true,
 }: AchievementUnlockProps) {
 	return (
 		<AnimatePresence initial={false}>

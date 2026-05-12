@@ -1,5 +1,7 @@
-import { cva, type VariantProps } from "class-variance-authority";
+"use client";
 
+import { cva, type VariantProps } from "class-variance-authority";
+import { type LottieAnimationName, LottieWrapper } from "@/components/lottie";
 import { cn } from "@/lib/utils";
 
 function Empty({ className, ...props }: React.ComponentProps<"div">) {
@@ -39,6 +41,27 @@ const emptyMediaVariants = cva(
 		},
 	},
 );
+
+interface EmptyLottieProps {
+	animation: LottieAnimationName;
+	className?: string;
+	loop?: boolean;
+}
+
+function EmptyLottie({ animation, className, loop = true }: EmptyLottieProps) {
+	return (
+		<div className="relative mb-2">
+			<div className="absolute inset-0 rounded-full bg-muted/40 animate-pulse" />
+			<div className="relative flex items-center justify-center size-20 rounded-full border border-dashed border-muted-foreground/20 bg-muted/20">
+				<LottieWrapper
+					animation={animation}
+					className={cn("size-12", className)}
+					loop={loop}
+				/>
+			</div>
+		</div>
+	);
+}
 
 function EmptyMedia({
 	className,
@@ -99,6 +122,7 @@ export {
 	EmptyContent,
 	EmptyDescription,
 	EmptyHeader,
+	EmptyLottie,
 	EmptyMedia,
 	EmptyTitle,
 };

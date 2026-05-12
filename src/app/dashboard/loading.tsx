@@ -1,8 +1,18 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { LottieWrapper } from "@/components/lottie";
 import { Skeleton } from "@/components/ui/skeleton";
+import { iOSEase } from "@/lib/utils/animation";
 
 export default function Loading() {
 	return (
-		<div className="min-h-screen flex flex-col bg-background">
+		<motion.div
+			initial={{ opacity: 0 }}
+			animate={{ opacity: 1 }}
+			transition={{ duration: 0.3, ease: iOSEase }}
+			className="min-h-screen flex flex-col bg-background"
+		>
 			<nav className="flex items-center justify-between px-4 py-3 w-full">
 				<Skeleton className="w-10 h-10 rounded-full" />
 
@@ -16,10 +26,10 @@ export default function Loading() {
 				<Skeleton className="w-10 h-10 rounded-xl" />
 			</nav>
 
-			<main className="flex-1 flex flex-col items-center justify-center gap-2">
+			<main className="flex-1 flex flex-col items-center justify-center gap-3">
+				<LottieWrapper animation="loading-dots" className="w-16 h-8" loop />
 				<Skeleton className="h-8 w-32 rounded-full" />
 				<Skeleton className="h-4 w-48 rounded-full" />
-				<Skeleton className="h-4 w-24 rounded-full" />
 			</main>
 
 			<div className="px-4 pb-6 space-y-3">
@@ -35,6 +45,6 @@ export default function Loading() {
 					<Skeleton className="h-9 flex-1 rounded-full" />
 				</div>
 			</div>
-		</div>
+		</motion.div>
 	);
 }

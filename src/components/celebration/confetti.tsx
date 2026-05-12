@@ -28,7 +28,7 @@ export function Confetti({
 	trigger,
 	count = 50,
 	duration = 2000,
-	useLottie = false,
+	useLottie = true,
 }: {
 	trigger: boolean;
 	count?: number;

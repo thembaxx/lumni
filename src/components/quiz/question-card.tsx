@@ -6,6 +6,7 @@ import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
 import { MinusIcon, PlusIcon } from "lucide-react";
 import { useCallback, useState } from "react";
 import { Confetti, XPGainPopup } from "@/components/celebration";
+import { LottieWrapper } from "@/components/lottie";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { DifficultyBadge } from "@/components/shared/difficulty-badge";
 import { Badge } from "@/components/ui/badge";
@@ -25,12 +26,12 @@ import {
 	ProgrammingInput,
 	ShortAnswerInput,
 } from "@/components/ui/inputs";
+import { VisualContent } from "@/components/visual/visual-content";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
 import { useVisualEngine } from "@/hooks/use-visual-engine";
 import { cn } from "@/lib/utils";
 import { iOSEase } from "@/lib/utils/animation";
 import type { Question, QuestionState, UserAnswer } from "@/types/questions";
-import { VisualContent } from "@/components/visual/visual-content";
 import { QuestionDiagram } from "./question-diagram";
 import { StepByStep } from "./step-by-step";
 
@@ -442,7 +443,14 @@ export function QuestionCard({
 						: "bg-destructive/10 text-destructive",
 				)}
 			>
-				<p className="font-medium">{isCorrect ? "Correct!" : "Incorrect"}</p>
+				<div className="flex items-center gap-3">
+					<LottieWrapper
+						animation={isCorrect ? "quiz-correct" : "quiz-incorrect"}
+						className="w-10 h-10 shrink-0"
+						loop={false}
+					/>
+					<p className="font-medium">{isCorrect ? "Correct!" : "Incorrect"}</p>
+				</div>
 				{feedback && (
 					<div className="space-y-1">
 						<div className="flex items-center gap-2">
@@ -555,9 +563,16 @@ export function QuestionCard({
 					{renderInput()}
 
 					{isGrading && (
-						<p className="text-sm text-muted-foreground text-center">
-							Grading your answer...
-						</p>
+						<div className="flex items-center justify-center gap-2">
+							<LottieWrapper
+								animation="loading-dots"
+								className="w-12 h-6"
+								loop
+							/>
+							<p className="text-sm text-muted-foreground">
+								Grading your answer...
+							</p>
+						</div>
 					)}
 
 					<AnimatePresence initial={false}>

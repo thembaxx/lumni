@@ -24,7 +24,7 @@ export function StreakFire({
 	streak,
 	showMilestone,
 	milestone,
-	useLottie = false,
+	useLottie = true,
 }: StreakFireProps) {
 	const isMilestone = showMilestone && milestone && streak >= milestone;
 
