@@ -131,12 +131,26 @@ export function StatsCards({
 		<div className="relative">
 			{showMilestone && (
 				<motion.div
-					initial={{ opacity: 0, x: -8 }}
-					animate={{ opacity: 1, x: 0 }}
+					initial={{ opacity: 0, x: -8, scale: 0.9 }}
+					animate={{ opacity: 1, x: 0, scale: 1 }}
 					transition={{ duration: 0.4, ease: iOSEase }}
 					className="absolute -top-5 left-0 flex items-center gap-1.5"
 				>
-					<span className="text-warning text-sm">🔥</span>
+					<LottieWrapper
+						animation="confetti"
+						className="w-6 h-6 -ml-1 pointer-events-none"
+					/>
+					<motion.span
+						animate={{ scale: [1, 1.15, 1] }}
+						transition={{
+							duration: 0.5,
+							ease: easeOutQuint,
+							delay: 0.2,
+						}}
+						className="text-warning text-sm"
+					>
+						🔥
+					</motion.span>
 					<span className="text-[12px] font-bold text-warning tracking-tight">
 						{milestoneMsg}
 					</span>

@@ -42,9 +42,13 @@ function ActionButton({
 				onClick={onClick}
 				className="h-11 px-5 rounded-lg border border-border/50 bg-secondary/60 gap-2.5 justify-start text-foreground hover:bg-accent hover:border-accent shadow-sm"
 			>
-				<span className="text-system-accent">
+				<motion.span
+					whileHover={shouldReduceMotion ? {} : { rotate: [0, -10, 10, 0] }}
+					transition={{ duration: 0.4, ease: iOSEase }}
+					className="text-system-accent"
+				>
 					<Icon className="w-4 h-4" />
-				</span>
+				</motion.span>
 				<span className="text-sm font-bold">{label}</span>
 			</Button>
 		</motion.div>

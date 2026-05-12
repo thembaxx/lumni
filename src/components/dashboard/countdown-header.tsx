@@ -80,39 +80,65 @@ function getPhase(daysLeft: number): Phase {
 	return "final";
 }
 
+const encouragements = [
+	"Small steps every day build unstoppable momentum.",
+	"Your brain learns best in focused 25-minute bursts.",
+	"Reviewing past papers is the fastest path to confidence.",
+	"Sleep is when your brain consolidates memory. Don't skip it.",
+	"Teaching a concept to someone else locks it in your mind.",
+	"The Pomodoro technique: 25 min study, 5 min break. Try it.",
+	"Active recall beats re-reading. Quiz yourself, don't just read.",
+	"Mix up your subjects to keep your brain engaged.",
+	"Explain it out loud. If you can say it, you know it.",
+	"Your mistakes are just data. Review them, learn, move on.",
+];
+
+function todaysSeed(): number {
+	const date = new Date();
+	return (
+		date.getFullYear() * 10000 + (date.getMonth() + 1) * 100 + date.getDate()
+	);
+}
+
+function pickEncouragement(): string {
+	const seed = todaysSeed();
+	return encouragements[seed % encouragements.length];
+}
+
 function getMessage(
 	daysLeft: number,
 	firstName: string | null,
 ): { primary: string; subtitle: string } {
 	const name = firstName ?? "keep pushing";
+	const tip = pickEncouragement();
 	if (daysLeft > 90)
 		return {
 			primary: `Build your foundation, ${name}`,
-			subtitle: "The long game starts now. Steady effort every day.",
+			subtitle: tip,
 		};
 	if (daysLeft > 60)
 		return {
 			primary: `Keep pushing, ${name}`,
-			subtitle: "You're building momentum. Every session counts.",
+			subtitle: tip,
 		};
 	if (daysLeft > 30)
 		return {
 			primary: `The grind is real, ${name}`,
-			subtitle: "Intensify your prep. Focus on weak areas.",
+			subtitle: tip,
 		};
 	if (daysLeft > 14)
 		return {
 			primary: `Final stretch, ${name}`,
-			subtitle: "Almost there. Stay focused, stay consistent.",
+			subtitle: tip,
 		};
 	if (daysLeft > 7)
 		return {
 			primary: `${name} \u2014 this is it`,
-			subtitle: "Last week before the NSC. You've got this.",
+			subtitle: tip,
 		};
 	return {
 		primary: `${name} \u2014 believe`,
-		subtitle: "Trust your preparation. You've earned this.",
+		subtitle: tip,
 	};
 }
 
