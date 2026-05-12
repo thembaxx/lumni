@@ -6,6 +6,7 @@ import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { ListenToLesson } from "@/components/listen-to-lesson";
+import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
@@ -32,14 +33,11 @@ export function StudyTopicCard({
 	const router = useRouter();
 	const [topic, setTopic] = useState<TopicData | null>(null);
 	const [isPlaying, setIsPlaying] = useState(false);
-	const [currentWordIndex, setCurrentWordIndex] = useState(-1);
-	const [words, setWords] = useState<string[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
 
 	const initializeTopic = useCallback(() => {
 		const randomTopic = initialTopic || getRandomTopic();
 		setTopic(randomTopic);
-		setWords(randomTopic.summary.split(" "));
 		setIsLoading(false);
 	}, [initialTopic]);
 
@@ -49,7 +47,6 @@ export function StudyTopicCard({
 
 	const handleRefresh = () => {
 		setIsPlaying(false);
-		setCurrentWordIndex(-1);
 		setIsLoading(true);
 		initializeTopic();
 	};
@@ -128,21 +125,11 @@ export function StudyTopicCard({
 						transition={{ delay: 0.15 }}
 						className="space-y-1"
 					>
-						<p className="text-sm text-muted-foreground leading-relaxed text-pretty">
-							{words.map((word, index) => (
-								<span
-									key={`word-${index}`}
-									className={cn(
-										"transition-colors duration-150 ease-out-quart",
-										index === currentWordIndex &&
-											"text-[--system-accent] font-medium bg-[--system-accent]/10 rounded px-0.5 -mx-0.5",
-									)}
-								>
-									{word}
-									{index < words.length - 1 && " "}
-								</span>
-							))}
-						</p>
+						<MarkdownRenderer
+							content={topic.summary}
+							subject={topic.subject}
+							className="text-sm text-muted-foreground leading-relaxed"
+						/>
 					</m.div>
 
 					<m.div
@@ -154,7 +141,10 @@ export function StudyTopicCard({
 							<ListenToLesson
 								text={topic.summary}
 								onPlayingChange={setIsPlaying}
-								onWordIndexChange={setCurrentWordIndex}
+								// Note: Word index highlighting removed due to MarkdownRenderer usage
+								// To preserve exact word highlighting, would need a more complex solution
+								// that maps word positions in rendered markdown back to raw text
+								onWordIndexChange={() => {}}
 							/>
 						</div>
 						<PracticeButton
