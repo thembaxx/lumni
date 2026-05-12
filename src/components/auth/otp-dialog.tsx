@@ -1,5 +1,4 @@
 import { domAnimation, LazyMotion, m } from "framer-motion";
-import { iOSEase } from "@/lib/utils/animation";
 import {
 	AlertCircle,
 	CheckCircle2,
@@ -27,6 +26,7 @@ import {
 } from "@/components/ui/input-otp";
 import { toast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
+import { iOSEase } from "@/lib/utils/animation";
 import { buttonStyles, countdownStyles, iconStyles } from "./auth-styles";
 import { formatCountdown } from "./countdown-utils";
 import { LoadingDots } from "./loading-dots";

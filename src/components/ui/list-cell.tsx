@@ -35,31 +35,31 @@ function ListCell({
 			onClick={onClick}
 			disabled={disabled}
 			className={cn(
-				"flex w-full items-center gap-3 px-4 py-3 text-left min-h-[44px]",
-				"bg-[--system-surface] transition-colors duration-150",
+				"flex w-full items-center gap-4 px-5 py-4 text-left min-h-[56px]",
+				"bg-[--system-surface] transition-[background-color,scale] duration-200",
 				onClick &&
-					"hover:bg-[--system-surface-secondary] active:bg-[--system-surface-secondary]",
+					"hover:bg-[--system-surface-secondary] active:bg-[--system-surface-secondary] active:scale-[0.98]",
 				disabled && "opacity-50",
 				showSeparator && "ios-separator",
 				className,
 			)}
 		>
 			{leading && (
-				<div className="flex shrink-0 items-center justify-center">
+				<div className="flex shrink-0 items-center justify-center size-8 rounded-lg bg-secondary/30 text-system-accent">
 					{leading}
 				</div>
 			)}
 			<div className="flex-1 min-w-0">
 				<div
 					className={cn(
-						"ios-body font-normal truncate",
+						"text-[16px] font-semibold tracking-tight text-foreground truncate",
 						destructive && "text-[--system-destructive]",
 					)}
 				>
 					{title}
 				</div>
 				{subtitle && (
-					<div className="ios-footnote text-[--system-text-secondary] mt-0.5">
+					<div className="text-[13px] font-medium text-[--system-text-secondary] mt-0.5 leading-snug">
 						{subtitle}
 					</div>
 				)}
@@ -78,8 +78,8 @@ function ListGroup({ children, className }: ListGroupProps) {
 	return (
 		<div
 			className={cn(
-				"overflow-hidden rounded-[--radius-list-group] bg-[--system-surface]",
-				"shadow-[--shadow-level-1]",
+				"overflow-hidden rounded-[24px] bg-[--system-surface]",
+				"shadow-level-1 border border-border/5",
 				className,
 			)}
 		>
@@ -102,15 +102,15 @@ function ListSection({
 	className,
 }: ListSectionProps) {
 	return (
-		<section className={cn("", className)}>
+		<section className={cn("mb-8 last:mb-0", className)}>
 			{header && (
-				<div className="ios-footnote font-semibold text-[--system-text-secondary] uppercase tracking-wide px-4 py-2 pt-5">
+				<div className="text-[13px] font-bold text-[--system-text-tertiary] uppercase tracking-[0.05em] px-6 py-3">
 					{header}
 				</div>
 			)}
 			<ListGroup>{children}</ListGroup>
 			{footer && (
-				<div className="ios-footnote text-[--system-text-tertiary] px-4 py-2 pb-5">
+				<div className="text-[12px] font-medium text-[--system-text-tertiary] px-6 py-3 leading-relaxed">
 					{footer}
 				</div>
 			)}

@@ -12,7 +12,10 @@ export function NotificationsTab({
 	onNotificationsChange,
 }: NotificationsTabProps) {
 	return (
-		<ListSection header="Notifications" footer="Manage your notification preferences">
+		<ListSection
+			header="Notifications"
+			footer="Manage your notification preferences"
+		>
 			<ListCell
 				title="Study Reminders"
 				subtitle="Get reminded to study daily"

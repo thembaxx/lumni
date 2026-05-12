@@ -52,26 +52,24 @@ const phaseConfigs: Record<
 	}
 > = {
 	foundation: {
-		glowClass: "bg-[oklch(62%_0.19_55/8%)] dark:bg-[oklch(72%_0.16_45/12%)]",
-		glow2Class:
-			"bg-[oklch(72%_0.14_165/10%)] dark:bg-[oklch(28%_0.045_165/15%)]",
-		barLight: "from-[oklch(62%_0.19_55)] to-[oklch(72%_0.14_165)]",
+		glowClass: "bg-system-accent/10",
+		glow2Class: "bg-system-accent-secondary/10",
+		barLight: "bg-gradient-to-r from-system-accent to-system-accent-secondary",
 	},
 	grind: {
-		glowClass: "bg-[oklch(62%_0.19_55/10%)] dark:bg-[oklch(72%_0.16_45/15%)]",
-		glow2Class:
-			"bg-[oklch(72%_0.14_165/12%)] dark:bg-[oklch(28%_0.045_165/18%)]",
-		barLight: "from-[oklch(62%_0.19_55)] to-[oklch(72%_0.14_165)]",
+		glowClass: "bg-system-accent/15",
+		glow2Class: "bg-system-accent-secondary/15",
+		barLight: "bg-gradient-to-r from-system-accent to-system-accent-secondary",
 	},
 	intensify: {
-		glowClass: "bg-[oklch(78%_0.12_55/12%)] dark:bg-[oklch(80%_0.11_55/15%)]",
-		glow2Class: "bg-[oklch(62%_0.19_55/15%)] dark:bg-[oklch(72%_0.16_45/18%)]",
-		barLight: "from-[oklch(78%_0.12_55)] to-[oklch(62%_0.19_55)]",
+		glowClass: "bg-warning/15",
+		glow2Class: "bg-system-accent/15",
+		barLight: "bg-gradient-to-r from-warning to-system-accent",
 	},
 	final: {
-		glowClass: "bg-[oklch(58%_0.16_25/15%)] dark:bg-[oklch(62%_0.16_25/18%)]",
-		glow2Class: "bg-[oklch(78%_0.12_55/18%)] dark:bg-[oklch(80%_0.11_55/20%)]",
-		barLight: "from-[oklch(58%_0.16_25)] to-[oklch(78%_0.12_55)]",
+		glowClass: "bg-destructive/15",
+		glow2Class: "bg-warning/15",
+		barLight: "bg-gradient-to-r from-destructive to-warning",
 	},
 };
 
@@ -215,9 +213,9 @@ export function CountdownHeader() {
 			variants={headerVariants}
 			initial="hidden"
 			animate="visible"
-			className="mx-[--space-4] mb-[--space-4]"
+			className="w-full"
 		>
-			<div className="relative overflow-hidden rounded-[--radius-card] bg-secondary/60 dark:bg-secondary/20 px-[--space-5] py-[--space-5] sm:px-[--space-6] sm:py-[--space-6]">
+			<div className="relative overflow-hidden rounded-lg bg-secondary/60 dark:bg-secondary/20 px-5 py-5 sm:px-6 sm:py-6">
 				{milestone && (
 					<motion.div
 						initial={{ opacity: 0, y: -8, scale: 0.9 }}
@@ -244,7 +242,7 @@ export function CountdownHeader() {
 							>
 								{milestone.emoji}
 							</motion.span>
-							<span className="text-xs font-semibold text-warning">
+							<span className="text-xs font-bold text-warning uppercase tracking-tight">
 								{milestone.label}
 							</span>
 						</div>
@@ -252,10 +250,10 @@ export function CountdownHeader() {
 				)}
 
 				<div className="relative z-10">
-					<h1 className="font-geist text-xl sm:text-2xl font-bold text-foreground leading-tight tracking-tight text-wrap balance">
+					<h1 className="text-xl sm:text-2xl font-bold text-foreground leading-tight tracking-tight text-wrap balance">
 						{greeting}
 						{isLoggedIn && name ? (
-							<span className="text-[--system-accent]">, {firstName}</span>
+							<span className="text-system-accent">, {firstName}</span>
 						) : null}
 					</h1>
 
@@ -268,7 +266,7 @@ export function CountdownHeader() {
 								initial="hidden"
 								animate="visible"
 								className={cn(
-									"inline-block text-4xl sm:text-4xl font-bold tracking-tight tabular-nums",
+									"inline-block text-5xl sm:text-4xl font-bold tracking-tighter tabular-nums font-mono text-transparent bg-clip-text",
 									cfg.barLight,
 								)}
 								aria-live="polite"
@@ -278,10 +276,10 @@ export function CountdownHeader() {
 						)}
 						{!isLoading && mounted && (
 							<div>
-								<p className="uppercase text-[10px] font-medium text-[--system-text-secondary] opacity-80">
+								<p className="uppercase text-[10px] font-bold text-muted-foreground tracking-widest opacity-80">
 									Next exam
 								</p>
-								<p className="ios-callout text-[12px]! font-semibold! text-[--system-text-secondary] tabular-nums">
+								<p className="text-[12px] font-bold text-muted-foreground tabular-nums">
 									{daysLeft === 1 ? "day" : "days"} until the NSC Finals
 								</p>
 							</div>
@@ -289,7 +287,7 @@ export function CountdownHeader() {
 					</div>
 
 					<div
-						className="mt-3 mb-3 h-0.5 w-full overflow-hidden rounded-full bg-border/40"
+						className="mt-3 mb-3 h-1.5 w-full overflow-hidden rounded-full bg-border/40"
 						role="progressbar"
 						aria-valuenow={Math.round(yearProgress * 100)}
 						aria-valuemin={0}
@@ -300,7 +298,10 @@ export function CountdownHeader() {
 							variants={barGlowVariants}
 							initial="hidden"
 							animate="visible"
-							className={cn("h-full rounded-full", cfg.barLight)}
+							className={cn(
+								"h-full rounded-full shadow-[0_0_8px_rgba(0,0,0,0.1)]",
+								cfg.barLight,
+							)}
 						/>
 					</div>
 
@@ -312,9 +313,9 @@ export function CountdownHeader() {
 								duration: shouldReduceMotion ? 0 : 0.3,
 								delay: shouldReduceMotion ? 0 : 0.5,
 							}}
-							className="mt-1 text-xs text-muted-foreground leading-snug text-pretty"
+							className="mt-1 text-xs text-muted-foreground leading-snug text-pretty font-medium"
 						>
-							<span className="font-semibold text-foreground/80">
+							<span className="font-bold text-foreground/80">
 								{msg.primary}
 							</span>
 							<span className="mx-1 opacity-50">—</span>

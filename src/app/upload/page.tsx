@@ -116,8 +116,8 @@ export default function UploadPage() {
 							/>
 
 							{lastUpload && (
-								<div className="rounded-[--radius-button] bg-[oklch(var(--success))]/10 p-[--space-3]">
-									<p className="text-[13px] font-medium text-[oklch(var(--success))] flex items-center gap-1.5">
+								<div className="rounded-[--radius-button] bg-[var(--success)]/10 p-[--space-3]">
+									<p className="text-[13px] font-medium text-[var(--success)] flex items-center gap-1.5">
 										<HugeiconsIcon
 											icon={CheckmarkCircle01Icon}
 											className="size-4"

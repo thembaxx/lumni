@@ -76,7 +76,7 @@ export function ChatInput({
 		};
 
 	return (
-		<div className="p-[--space-4] border-t border-border/50 bg-background/80 backdrop-blur-xl">
+		<div className="p-4 border-t border-border/50 bg-background/80 backdrop-blur-xl">
 			<AnimatedDialogContent
 				open={voiceDialogOpen}
 				onOpenChange={setVoiceDialogOpen}
@@ -96,9 +96,9 @@ export function ChatInput({
 
 			<div
 				className={cn(
-					"bg-secondary/60 dark:bg-secondary/40 rounded-[--radius-card] p-[--space-4] transition-[transform,border-color,box-shadow] duration-[var(--duration-slow)] border mt-2",
+					"bg-secondary/60 dark:bg-secondary/40 rounded-lg p-4 transition-all duration-300 border mt-2",
 					isFocused
-						? "ring-2 ring-[--system-accent]/20 border-[--system-accent]/30 scale-[1.01]"
+						? "ring-2 ring-system-accent/20 border-system-accent/40 scale-[1.005] bg-background"
 						: "border-border/30",
 				)}
 			>
@@ -112,7 +112,7 @@ export function ChatInput({
 						onFocus={() => setIsFocused(true)}
 						onBlur={() => setIsFocused(false)}
 						disabled={isLoading}
-						className="bg-transparent text-foreground placeholder:text-muted-foreground/60 ios-body outline-none font-medium border-0 shadow-none p-0 focus-visible:ring-0"
+						className="bg-transparent text-foreground placeholder:text-muted-foreground/50 text-sm outline-none font-bold border-0 shadow-none p-0 focus-visible:ring-0"
 					/>
 				</div>
 
@@ -139,11 +139,10 @@ export function ChatInput({
 						<DropdownMenu>
 							<DropdownMenuTrigger
 								className={cn(
-									"inline-flex shrink-0 items-center justify-center rounded-[--radius-button] size-10",
-									"bg-muted/60 hover:bg-muted text-muted-foreground cursor-pointer",
-									"transition-[scale,background-color,box-shadow] duration-[var(--duration-fast)] ease-[var(--ease-ios)]",
-									"active:scale-[0.96]",
-									"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--system-accent]/50",
+									"inline-flex shrink-0 items-center justify-center rounded-md size-10",
+									"bg-white dark:bg-muted/40 hover:bg-secondary text-muted-foreground cursor-pointer shadow-sm border border-border/30",
+									"transition-all active:scale-[0.96]",
+									"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-system-accent/50",
 									isLoading &&
 										"opacity-50 pointer-events-none cursor-not-allowed",
 								)}
@@ -151,14 +150,14 @@ export function ChatInput({
 							>
 								<HugeiconsIcon
 									icon={Camera01Icon}
-									className="w-4 h-4 toolbutton-icon"
+									className="w-4.5 h-4.5 toolbutton-icon"
 								/>
 							</DropdownMenuTrigger>
 							<DropdownMenuContent side="top" align="start" className="w-48">
 								<DropdownMenuItem
 									onClick={() => cameraInputRef.current?.click()}
 									disabled={isLoading}
-									className="gap-2"
+									className="gap-2 font-bold text-xs uppercase tracking-tight"
 								>
 									<Camera className="w-4 h-4" />
 									Take a photo
@@ -166,7 +165,7 @@ export function ChatInput({
 								<DropdownMenuItem
 									onClick={() => uploadInputRef.current?.click()}
 									disabled={isLoading}
-									className="gap-2"
+									className="gap-2 font-bold text-xs uppercase tracking-tight"
 								>
 									<Upload className="w-4 h-4" />
 									Upload a photo
@@ -180,12 +179,12 @@ export function ChatInput({
 							variant="ghost"
 							size="icon"
 							onClick={() => setVoiceDialogOpen(true)}
-							className="rounded-[--radius-button] bg-muted/60 hover:bg-muted toolbutton"
+							className="rounded-md bg-white dark:bg-muted/40 hover:bg-secondary size-10 shadow-sm border border-border/30"
 							disabled={isLoading}
 						>
 							<HugeiconsIcon
 								icon={Mic02Icon}
-								className="w-4 h-4 text-muted-foreground toolbutton-icon"
+								className="w-4.5 h-4.5 text-muted-foreground toolbutton-icon"
 							/>
 						</Button>
 						<Button
@@ -200,17 +199,14 @@ export function ChatInput({
 							}}
 							disabled={!input.trim() || isLoading}
 							className={cn(
-								"size-9 voice-btn",
-								voicePressed && "voice-btn-pressed",
+								"size-10 rounded-md bg-system-accent hover:bg-system-accent/90 shadow-level-2",
+								voicePressed && "scale-[0.95] brightness-90",
 							)}
 							aria-label="Send message"
 						>
 							<HugeiconsIcon
 								icon={SentIcon}
-								className={cn(
-									"w-4 h-4 voice-btn-icon",
-									voicePressed && "scale-125",
-								)}
+								className={cn("w-4.5 h-4.5", voicePressed && "scale-110")}
 							/>
 						</Button>
 					</div>

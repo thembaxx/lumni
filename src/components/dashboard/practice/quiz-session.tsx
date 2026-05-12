@@ -2,12 +2,12 @@
 
 import { domAnimation, LazyMotion, m } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { iOSEase } from "@/lib/utils/animation";
 import { startTransition, useCallback, useState } from "react";
 import { QuestionCard } from "@/components/quiz/question-card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
+import { iOSEase } from "@/lib/utils/animation";
 import type { Question } from "@/types/questions";
 
 interface QuizSessionProps {

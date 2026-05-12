@@ -5,7 +5,6 @@ import { Suspense } from "react";
 import { extractRouterConfig } from "uploadthing/server";
 
 import "./globals.css";
-import { Geist } from "next/font/google";
 import { PageTransition } from "@/components/layout/page-transition";
 import { BottomNav } from "@/components/navigation/bottom-nav";
 import { Providers } from "@/components/providers";
@@ -14,8 +13,6 @@ import { UploadDialogRenderer } from "@/components/upload/upload-dialog-renderer
 import { cn } from "@/lib/utils";
 import { ourFileRouter } from "./api/uploadthing/core";
 import { fontMono, fontSans } from "./fonts";
-
-const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 async function UTSSR() {
 	await connection();
@@ -80,8 +77,6 @@ export default function RootLayout({
 				"antialiased",
 				fontSans.variable,
 				fontMono.variable,
-				"font-sans",
-				geist.variable,
 			)}
 		>
 			<body

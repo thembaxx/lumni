@@ -21,23 +21,44 @@ export function LoadingIndicator() {
 		<motion.div
 			initial={{ opacity: 0, y: 10 }}
 			animate={{ opacity: 1, y: 0 }}
-			className="flex items-center gap-2 p-3 rounded-2xl bg-secondary/80 text-muted-foreground"
+			className="flex items-center gap-3 p-4 rounded-lg bg-system-surface-secondary text-muted-foreground border border-border/40 shadow-sm"
 		>
-			<div className="flex gap-1">
+			<div className="flex gap-1.5">
 				<motion.span
-					className="w-2 h-2 rounded-full bg-muted-foreground/60"
-					animate={{ scale: [1, 1.3, 1] }}
-					transition={{ repeat: Infinity, duration: 0.6, delay: 0 }}
+					className="w-2.5 h-2.5 rounded-full bg-system-accent/40"
+					animate={{
+						scale: [1, 1.3, 1],
+						backgroundColor: [
+							"var(--system-accent-alpha-20)",
+							"var(--system-accent)",
+							"var(--system-accent-alpha-20)",
+						],
+					}}
+					transition={{ repeat: Infinity, duration: 0.8, delay: 0 }}
 				/>
 				<motion.span
-					className="w-2 h-2 rounded-full bg-muted-foreground/60"
-					animate={{ scale: [1, 1.3, 1] }}
-					transition={{ repeat: Infinity, duration: 0.6, delay: 0.15 }}
+					className="w-2.5 h-2.5 rounded-full bg-system-accent/40"
+					animate={{
+						scale: [1, 1.3, 1],
+						backgroundColor: [
+							"var(--system-accent-alpha-20)",
+							"var(--system-accent)",
+							"var(--system-accent-alpha-20)",
+						],
+					}}
+					transition={{ repeat: Infinity, duration: 0.8, delay: 0.2 }}
 				/>
 				<motion.span
-					className="w-2 h-2 rounded-full bg-muted-foreground/60"
-					animate={{ scale: [1, 1.3, 1] }}
-					transition={{ repeat: Infinity, duration: 0.6, delay: 0.3 }}
+					className="w-2.5 h-2.5 rounded-full bg-system-accent/40"
+					animate={{
+						scale: [1, 1.3, 1],
+						backgroundColor: [
+							"var(--system-accent-alpha-20)",
+							"var(--system-accent)",
+							"var(--system-accent-alpha-20)",
+						],
+					}}
+					transition={{ repeat: Infinity, duration: 0.8, delay: 0.4 }}
 				/>
 			</div>
 			<AnimatePresence mode="wait" initial={false}>
@@ -47,7 +68,7 @@ export function LoadingIndicator() {
 					animate={{ opacity: 1, y: 0 }}
 					exit={{ opacity: 0, y: -4 }}
 					transition={{ duration: 0.2 }}
-					className="text-xs"
+					className="text-xs font-bold uppercase tracking-widest"
 				>
 					{loadingMessages[messageIndex]}
 				</motion.span>

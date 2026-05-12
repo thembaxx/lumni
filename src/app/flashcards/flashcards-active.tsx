@@ -2,13 +2,13 @@
 
 import { IconCheck, IconX } from "@tabler/icons-react";
 import { domAnimation, LazyMotion, m } from "framer-motion";
-import { iOSEase } from "@/lib/utils/animation";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useCallback } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { iOSEase } from "@/lib/utils/animation";
 
 interface FlashcardItem {
 	id: string;

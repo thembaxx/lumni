@@ -4,7 +4,7 @@ export const fontSans = Geist({
 	weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 	subsets: ["latin"],
 	display: "swap",
-	variable: "--font-geist",
+	variable: "--font-sans",
 	preload: true,
 });
 

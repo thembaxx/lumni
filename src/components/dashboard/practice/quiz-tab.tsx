@@ -4,7 +4,6 @@ import { ArrowDown01Icon, Play, Square } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { domAnimation, LazyMotion, m } from "framer-motion";
 import { Timer, Zap } from "lucide-react";
-import { iOSEase } from "@/lib/utils/animation";
 import { useCallback, useState } from "react";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
 import {
@@ -17,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { AssessmentHeader } from "@/components/ui/headers/assessment-header";
 import { useQuizSession } from "@/hooks/use-quiz-session";
 import { cn } from "@/lib/utils";
+import { iOSEase } from "@/lib/utils/animation";
 import { formatTime } from "@/lib/utils/time";
 
 interface QuizTabProps {

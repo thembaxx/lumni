@@ -2,13 +2,13 @@
 
 import { domAnimation, LazyMotion, m } from "framer-motion";
 import { Mail, MessageSquare } from "lucide-react";
-import { iOSEase } from "@/lib/utils/animation";
 import { startTransition, useState } from "react";
 import { MagicLinkDialog } from "@/components/admin/login-dialogs";
 import { OTPDialog } from "@/components/auth/otp-dialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { iOSEase } from "@/lib/utils/animation";
 
 const buttonStyles =
 	"active:scale-[0.96] transition-transform duration-150 ease-out justify-center";

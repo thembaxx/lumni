@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
 import { X } from "lucide-react";
-import { iOSEase } from "@/lib/utils/animation";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
+import { iOSEase } from "@/lib/utils/animation";
 
 interface ImageProcessingIndicatorProps {
 	state: {

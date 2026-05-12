@@ -2,12 +2,12 @@
 
 import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
 import { useCallback, useMemo, useState } from "react";
-import { iOSEase } from "@/lib/utils/animation";
 import { ProgressDots } from "@/components/shared/progress-dots";
 import { Card } from "@/components/ui/card";
 import { AssessmentHeader } from "@/components/ui/headers/assessment-header";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
+import { iOSEase } from "@/lib/utils/animation";
 import type { Question } from "@/types/questions";
 import { QuestionCard } from "./question-card";
 import { QuizControls } from "./quiz-controls";

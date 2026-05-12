@@ -54,20 +54,20 @@ function StatCard({
 				delay: shouldReduceMotion ? 0 : index * 0.05,
 			}}
 		>
-			<Card className="relative p-4 flex flex-col h-full items-center justify-start gap-3 overflow-hidden cursor-default">
+			<Card className="relative p-5 flex flex-col h-full items-center justify-start gap-3 overflow-hidden cursor-default shadow-sm border-border/40 hover:border-border/80 transition-colors">
 				<div
 					className={`absolute top-0 left-0 right-0 h-1 ${accentClass} opacity-80`}
 				/>
 
-				<div className="relative flex items-center justify-center w-10 h-10 rounded-full bg-[--system-surface] shadow-[--shadow-level-1]">
+				<div className="relative flex items-center justify-center w-10 h-10 rounded-full bg-system-surface shadow-level-1">
 					<Icon className={`w-5 h-5 ${colorClass}`} />
 				</div>
 
 				<div className="text-center space-y-1">
-					<p className="text-2xl font-semibold tracking-tight text-[--system-text-primary] tabular-nums text-wrap balance">
+					<p className="text-2xl font-bold tracking-tight text-foreground tabular-nums text-wrap balance">
 						{value}
 					</p>
-					<p className="ios-footnote text-[--system-text-secondary] font-medium leading-tight">
+					<p className="text-[11px] uppercase tracking-wider text-muted-foreground font-bold leading-tight">
 						{label}
 					</p>
 				</div>
@@ -95,7 +95,7 @@ export function StatsCards({
 					className="absolute -top-5 left-0 flex items-center gap-1.5"
 				>
 					<span className="text-warning text-sm">🔥</span>
-					<span className="text-[13px] font-semibold text-warning tracking-tight">
+					<span className="text-[12px] font-bold text-warning tracking-tight">
 						{milestoneMsg}
 					</span>
 				</motion.div>
@@ -106,32 +106,24 @@ export function StatsCards({
 					label="Streak"
 					value={streak}
 					icon={IconFlame}
-					colorClass={
-						hasStreak
-							? "text-[oklch(var(--warning))]"
-							: "text-[oklch(var(--muted-foreground))]"
-					}
-					accentClass={
-						hasStreak
-							? "bg-[oklch(var(--warning))]"
-							: "bg-[oklch(var(--border))]"
-					}
+					colorClass={hasStreak ? "text-warning" : "text-muted-foreground"}
+					accentClass={hasStreak ? "bg-warning" : "bg-border"}
 					index={0}
 				/>
 				<StatCard
 					label="Questions"
 					value={questionsAnswered}
 					icon={IconTarget}
-					colorClass="text-[oklch(var(--info))]"
-					accentClass="bg-[oklch(var(--info))]"
+					colorClass="text-info"
+					accentClass="bg-info"
 					index={1}
 				/>
 				<StatCard
 					label="Accuracy"
 					value={accuracy}
 					icon={IconTrendingUp}
-					colorClass="text-[oklch(var(--success))]"
-					accentClass="bg-[oklch(var(--success))]"
+					colorClass="text-success"
+					accentClass="bg-success"
 					index={2}
 				/>
 			</div>

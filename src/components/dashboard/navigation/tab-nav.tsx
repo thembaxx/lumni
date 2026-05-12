@@ -2,10 +2,10 @@
 
 import { domAnimation, LazyMotion, m } from "framer-motion";
 import { LayoutGrid, Snowflake } from "lucide-react";
-import { iOSEase } from "@/lib/utils/animation";
 import { startTransition } from "react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
+import { iOSEase } from "@/lib/utils/animation";
 import type { TabValue } from "../types";
 
 interface TabConfig {

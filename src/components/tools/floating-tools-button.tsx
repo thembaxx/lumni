@@ -22,11 +22,11 @@ export function FloatingToolsButton() {
 				variant="default"
 				onClick={() => setIsOpen(true)}
 				className={cn(
-					"fixed bottom-[69px] right-5 z-40",
-					"size-[52px] rounded-[16px]",
+					"fixed bottom-17.25 right-5 z-40",
+					"size-13 rounded-full",
 				)}
 			>
-				<Icon icon="fluent:chess-24-filled" className="w-6 h-6" />
+				<Icon icon="fluent:board-24-regular" className="w-6 h-6" />
 			</Button>
 
 			<ToolsDialog open={isOpen} onOpenChange={setIsOpen} />

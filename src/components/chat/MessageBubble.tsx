@@ -1,11 +1,11 @@
 import { motion } from "framer-motion";
 import { Play, RefreshCw, Square } from "lucide-react";
-import { iOSEase } from "@/lib/utils/animation";
 import { useRef, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Button } from "@/components/ui/button";
 import { type ChatMessage } from "@/hooks/use-chat";
 import { cn } from "@/lib/utils";
+import { iOSEase } from "@/lib/utils/animation";
 import { formatBytes } from "@/lib/utils/format";
 import { ImageViewer } from "./ImageViewer";
 import { SmartImage } from "./SmartImage";
@@ -54,10 +54,10 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 				>
 					<div
 						className={cn(
-							"rounded-2xl overflow-hidden",
+							"rounded-lg overflow-hidden",
 							isUser
-								? "bg-[--system-accent] text-background"
-								: "bg-secondary/80 text-foreground",
+								? "bg-system-accent text-white"
+								: "bg-system-surface-secondary text-foreground border border-border/40",
 						)}
 					>
 						{message.imageUrl ? (
@@ -83,7 +83,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 								>
 									{isSending && (
 										<div className="w-10 h-10 rounded-full bg-black/40 flex items-center justify-center">
-											<div className="w-4 h-4 border-2 border-white border-t-transparent dark:border-foreground/30 dark:border-t-transparent rounded-full animate-spin" />
+											<div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
 										</div>
 									)}
 								</div>
@@ -95,7 +95,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 						)}
 
 						<div className="p-2 px-3 flex items-center justify-between gap-3">
-							<span className="text-xs opacity-70 truncate max-w-30">
+							<span className="text-[10px] font-bold opacity-80 truncate max-w-30 uppercase tracking-tight">
 								{message.imageFileName || "Image"}
 								{message.imageFileSize &&
 									` (${formatBytes(message.imageFileSize)})`}
@@ -105,7 +105,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 									variant="ghost"
 									size="icon"
 									onClick={() => onRetry(message.id)}
-									className="rounded-full shrink-0 bg-background/20"
+									className="rounded-full shrink-0 bg-white/20 hover:bg-white/30"
 									aria-label="Retry"
 								>
 									<RefreshCw className="w-3.5 h-3.5" />
@@ -150,19 +150,19 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 				animate={{ opacity: 1, y: 0, scale: 1 }}
 				transition={{ type: "spring", stiffness: 300, damping: 25 }}
 				className={cn(
-					"max-w-[85%] p-3 rounded-2xl text-sm flex items-center gap-3",
+					"max-w-[85%] p-4 rounded-lg text-sm flex items-center gap-4",
 					isUser
-						? "bg-[--system-accent] text-background ml-auto rounded-br-md"
-						: "bg-secondary/80 text-foreground mr-auto rounded-bl-md",
+						? "bg-system-accent text-white ml-auto rounded-br-none shadow-level-2"
+						: "bg-system-surface-secondary text-foreground mr-auto rounded-bl-none border border-border/40 shadow-sm",
 				)}
 			>
 				<motion.button
 					onClick={togglePlay}
 					className={cn(
-						"relative flex items-center justify-center w-10 h-10 rounded-full shrink-0 transition-colors",
+						"relative flex items-center justify-center w-11 h-11 rounded-full shrink-0 transition-colors shadow-sm",
 						isUser
-							? "bg-background/20 hover:bg-background/30"
-							: "bg-muted hover:bg-muted/80",
+							? "bg-white/20 hover:bg-white/30"
+							: "bg-white dark:bg-black/20 hover:bg-secondary border border-border/40",
 					)}
 					aria-label={isPlaying ? "Pause" : "Play"}
 					whileTap={{ scale: 0.96 }}
@@ -176,7 +176,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 								: "opacity-0 scale-[0.25] blur-[4px]",
 						)}
 					>
-						<Square className="w-3 h-3 fill-current" />
+						<Square className="w-3.5 h-3.5 fill-current" />
 					</span>
 					<span
 						className={cn(
@@ -190,19 +190,17 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 					</span>
 				</motion.button>
 				<div className="flex flex-col gap-1 min-w-0">
-					<span className="text-xs opacity-70">
+					<span className="text-[10px] font-bold uppercase tracking-widest opacity-80">
 						{isPlaying ? "Playing..." : "Voice message"}
 					</span>
 					<div className="flex items-center gap-2">
-						<div className="flex gap-0.5 h-4">
+						<div className="flex gap-1 h-5 items-center">
 							{bars.map((height, i) => (
 								<motion.div
 									key={i}
 									className={cn(
-										"w-1 rounded-full",
-										isUser
-											? "bg-[--system-accent]/60"
-											: "bg-muted-foreground/40",
+										"w-1.25 rounded-full",
+										isUser ? "bg-white/40" : "bg-system-accent/40",
 									)}
 									animate={
 										isPlaying
@@ -246,10 +244,10 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 			animate={{ opacity: 1, y: 0, scale: 1 }}
 			transition={{ type: "spring", stiffness: 300, damping: 25 }}
 			className={cn(
-				"max-w-[85%] p-3 rounded-2xl text-sm leading-relaxed",
+				"max-w-[85%] p-4 rounded-lg text-sm leading-relaxed font-medium",
 				isUser
-					? "bg-[--system-accent] text-background ml-auto rounded-br-md"
-					: "bg-secondary/80 text-foreground mr-auto rounded-bl-md",
+					? "bg-system-accent text-white ml-auto rounded-br-none shadow-level-2"
+					: "bg-system-surface-secondary text-foreground mr-auto rounded-bl-none border border-border/40 shadow-sm",
 			)}
 		>
 			<MarkdownRenderer content={message.content} />

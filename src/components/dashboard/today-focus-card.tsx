@@ -48,23 +48,27 @@ const recommendations = {
 const priorityConfig = {
 	weakest: {
 		tag: "Needs work",
-		accent: "bg-[oklch(var(--destructive))]",
-		iconColor: "text-[oklch(var(--destructive))]",
+		accent: "bg-destructive",
+		iconColor: "text-destructive",
+		bgAlpha: "bg-destructive/15",
 	},
 	due: {
 		tag: "Due for review",
-		accent: "bg-[oklch(var(--warning))]",
-		iconColor: "text-[oklch(var(--warning))]",
+		accent: "bg-warning",
+		iconColor: "text-warning",
+		bgAlpha: "bg-warning/15",
 	},
 	streak: {
 		tag: "Keep it hot",
-		accent: "bg-[oklch(var(--success))]",
-		iconColor: "text-[oklch(var(--success))]",
+		accent: "bg-success",
+		iconColor: "text-success",
+		bgAlpha: "bg-success/15",
 	},
 	balanced: {
 		tag: "Balance mode",
-		accent: "bg-[oklch(var(--info))]",
-		iconColor: "text-[oklch(var(--info))]",
+		accent: "bg-info",
+		iconColor: "text-info",
+		bgAlpha: "bg-info/15",
 	},
 };
 
@@ -103,15 +107,13 @@ export function TodayFocusCard({
 				ease: iOSEase,
 			}}
 		>
-			<Card className="relative overflow-hidden">
-				<div
-					className={`absolute top-0 left-0 right-0 h-0.5 ${config.accent}`}
-				/>
+			<Card className="relative overflow-hidden shadow-sm border-border/40 hover:border-border/80 transition-colors">
+				<div className={`absolute top-0 left-0 right-0 h-1 ${config.accent}`} />
 
-				<div className="p-[--space-5] space-y-[--space-4]">
+				<div className="p-5 space-y-4">
 					<div className="flex items-center gap-3">
 						<div
-							className={`flex items-center justify-center size-9 rounded-xl ${config.accent} bg-opacity-15`}
+							className={`flex items-center justify-center size-10 rounded-xl ${config.bgAlpha}`}
 						>
 							<HugeiconsIcon
 								icon={CheckmarkCircle01Icon}
@@ -119,10 +121,10 @@ export function TodayFocusCard({
 							/>
 						</div>
 						<div className="space-y-0.5">
-							<span className="text-[13px] font-semibold text-[oklch(var(--foreground))] tracking-tight block">
+							<span className="text-[13px] font-bold text-foreground tracking-tight block">
 								Today&apos;s Focus
 							</span>
-							<span className={`text-[12px] font-medium ${config.iconColor}`}>
+							<span className={`text-[12px] font-bold ${config.iconColor}`}>
 								{config.tag}
 							</span>
 						</div>
@@ -130,27 +132,25 @@ export function TodayFocusCard({
 
 					<div className="space-y-2">
 						<div className="flex items-center gap-2">
-							<p className="text-[13px] text-[oklch(var(--primary))] font-medium">
-								{subject}
-							</p>
+							<p className="text-[13px] text-primary font-bold">{subject}</p>
 							<SubjectsDrawer onSelect={(name) => setSelectedSubject(name)}>
-								<span className="text-[12px] text-[oklch(var(--muted-foreground))] hover:text-[oklch(var(--foreground))] cursor-pointer">
+								<span className="text-[12px] text-muted-foreground hover:text-foreground cursor-pointer transition-colors font-medium">
 									change
 								</span>
 							</SubjectsDrawer>
 						</div>
-						<h3 className="text-[17px] font-semibold text-[oklch(var(--foreground))] leading-snug tracking-tight text-wrap balance">
+						<h3 className="text-lg font-bold text-foreground leading-tight tracking-tight text-wrap balance">
 							{topic}
 						</h3>
 					</div>
 
-					<p className="text-[13px] text-[oklch(var(--muted-foreground))] leading-relaxed">
+					<p className="text-[13px] text-muted-foreground leading-relaxed font-medium">
 						{whyReason}
 					</p>
 
 					<Button
 						size="sm"
-						className="w-full font-semibold text-[13px] h-9 hover:opacity-90"
+						className="w-full font-bold text-[13px] h-10 hover:opacity-90 active:scale-[0.98] transition-all"
 						onClick={handleStart}
 						disabled={showSuccess}
 					>
@@ -158,9 +158,9 @@ export function TodayFocusCard({
 							{showSuccess ? (
 								<motion.span
 									key="success"
-									initial={{ scale: 0.5, opacity: 0 }}
+									initial={{ scale: 0.8, opacity: 0 }}
 									animate={{ scale: 1, opacity: 1 }}
-									exit={{ scale: 0.5, opacity: 0 }}
+									exit={{ scale: 0.8, opacity: 0 }}
 									transition={{
 										duration: shouldReduceMotion ? 0 : 0.25,
 										ease: iOSEase,
@@ -176,9 +176,9 @@ export function TodayFocusCard({
 							) : (
 								<motion.span
 									key="action"
-									initial={{ scale: 0.5, opacity: 0 }}
+									initial={{ scale: 0.8, opacity: 0 }}
 									animate={{ scale: 1, opacity: 1 }}
-									exit={{ scale: 0.5, opacity: 0 }}
+									exit={{ scale: 0.8, opacity: 0 }}
 									transition={{
 										duration: shouldReduceMotion ? 0 : 0.2,
 										ease: iOSEase,

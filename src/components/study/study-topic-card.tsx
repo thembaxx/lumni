@@ -87,8 +87,8 @@ export function StudyTopicCard({
 					exit="hidden"
 					transition={{ duration: 0.2, ease: iOSEase }}
 					className={cn(
-						"p-6 rounded-2xl border bg-transparent text-card-foreground shadow-sm",
-						"space-y-5",
+						"p-5 rounded-2xl border bg-transparent text-card-foreground shadow-sm",
+						"space-y-4",
 						className,
 					)}
 				>
@@ -99,7 +99,7 @@ export function StudyTopicCard({
 					>
 						<Badge
 							variant="outline"
-							className="px-3 py-0.5 text-[xs] font-medium bg-[--system-accent]/10 rounded-full"
+							className="px-3 py-0.5 text-[10px] font-medium bg-[--system-accent]/10 rounded-full border-none"
 						>
 							{topic.subject}
 						</Badge>
@@ -116,7 +116,7 @@ export function StudyTopicCard({
 					<m.h3
 						variants={variants}
 						transition={{ delay: 0.1 }}
-						className="text-xl font-semibold leading-tight text-foreground text-wrap balance"
+						className="text-lg font-semibold leading-tight text-foreground text-wrap balance tracking-tight"
 					>
 						{topic.topicTitle}
 					</m.h3>

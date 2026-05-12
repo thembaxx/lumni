@@ -65,20 +65,25 @@ function NavItemComponent({
 			onClick={onClick}
 			data-nav-item
 			className={cn(
-				"flex flex-1 flex-col items-center justify-center gap-1 px-2 h-auto rounded-none min-h-0 py-0 transition-none",
+				"flex flex-1 flex-col items-center justify-center gap-1 px-2 h-auto rounded-none min-h-0 py-0 transition-colors duration-300 relative z-10",
 				isActive
-					? "text-[--system-accent]"
-					: "text-[--system-text-tertiary] hover:text-[--system-text-secondary]",
+					? "text-system-accent"
+					: "text-muted-foreground/25 hover:text-muted-foreground/40",
 			)}
 		>
 			<m.span
-				className="flex items-center justify-center"
-				animate={isActive ? { scale: 1.1 } : { scale: 1 }}
-				transition={{ type: "spring", stiffness: 400, damping: 20, mass: 0.5 }}
+				className="flex items-center justify-center relative"
+				animate={isActive ? { scale: 1.1, y: -2 } : { scale: 0.9, y: 0 }}
+				transition={{ type: "spring", stiffness: 400, damping: 25, mass: 0.5 }}
 			>
 				<Icon icon={item.icon} className="size-6" />
 			</m.span>
-			<span className="text-[10px] font-medium tracking-wide">
+			<span
+				className={cn(
+					"text-[10px] font-black tracking-tight uppercase transition-all duration-300",
+					isActive ? "opacity-100 translate-y-0" : "opacity-40 translate-y-0.5",
+				)}
+			>
 				{item.label}
 			</span>
 		</Button>
@@ -139,7 +144,7 @@ export function BottomNav() {
 	return (
 		<>
 			<LazyMotion features={domAnimation}>
-				<nav className="fixed bottom-0 left-0 right-0 z-50 h-[49px] bg-[--system-surface] ios-separator md:hidden pb-safe">
+				<nav className="fixed bottom-0 left-0 right-0 z-50 h-[64px] bg-system-background/95 backdrop-blur-md border-t border-border/40 md:hidden pb-safe">
 					<div
 						ref={listRef}
 						className="relative flex w-full h-full items-center px-1.5"
@@ -153,16 +158,16 @@ export function BottomNav() {
 							/>
 						))}
 						<m.div
-							className="absolute bottom-1 h-[3px] rounded-full bg-[--system-accent] z-0"
+							className="absolute top-1/2 -translate-y-1/2 h-10 rounded-2xl bg-system-accent/8 z-0"
 							initial={false}
 							animate={{
-								left: indicator.left + indicator.width / 2 - 16,
-								width: 32,
+								left: indicator.left + 6,
+								width: indicator.width - 12,
 							}}
 							transition={{
 								type: "spring",
 								stiffness: 400,
-								damping: 30,
+								damping: 35,
 							}}
 						/>
 					</div>

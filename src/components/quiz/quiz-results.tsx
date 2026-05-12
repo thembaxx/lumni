@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { Home, RotateCcw, Timer, TrophyIcon } from "lucide-react";
-import { iOSEase } from "@/lib/utils/animation";
 import { Confetti } from "@/components/celebration";
 import { LottieWrapper } from "@/components/lottie";
 import { ProgressDots } from "@/components/shared/progress-dots";
@@ -15,6 +14,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { iOSEase } from "@/lib/utils/animation";
 import { calculateAccuracy, formatTime } from "@/lib/utils/time";
 
 interface QuizResultsCardProps {
@@ -53,7 +53,12 @@ export function QuizResultsCard({
 		visible: {
 			opacity: 1,
 			y: 0,
-			transition: { type: "spring" as const, stiffness: 300, damping: 25, bounce: 0 },
+			transition: {
+				type: "spring" as const,
+				stiffness: 300,
+				damping: 25,
+				bounce: 0,
+			},
 		},
 	};
 

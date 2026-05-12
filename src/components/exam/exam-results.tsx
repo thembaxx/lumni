@@ -42,7 +42,9 @@ export function ExamResults({
 			<div className="max-w-3xl mx-auto p-[--space-6] space-y-[--space-6]">
 				<div className="flex items-center justify-between">
 					<div>
-						<h1 className="ios-title-1 text-[--system-text-primary]">Exam Submitted</h1>
+						<h1 className="ios-title-1 text-[--system-text-primary]">
+							Exam Submitted
+						</h1>
 						<p className="ios-footnote text-[--system-text-secondary]">
 							{paper.metadata.subject} {paper.metadata.paperCode}
 						</p>
@@ -104,7 +106,9 @@ export function ExamResults({
 							</CardTitle>
 						</CardHeader>
 						<CardContent>
-							<p className="ios-title-3 font-bold tabular-nums">{formatTime(timeTaken)}</p>
+							<p className="ios-title-3 font-bold tabular-nums">
+								{formatTime(timeTaken)}
+							</p>
 						</CardContent>
 					</Card>
 				</div>

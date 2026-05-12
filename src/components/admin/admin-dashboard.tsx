@@ -3,13 +3,13 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
 import { BookOpen, Check, FileText, LogOut } from "lucide-react";
-import { iOSEase } from "@/lib/utils/animation";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { AnimatedTabs } from "@/components/ui/animated-tabs";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { PageHeader } from "@/components/ui/headers/page-header";
+import { iOSEase } from "@/lib/utils/animation";
 import { AdminExamList } from "./admin-exam-list";
 import { AdminExamUploadZone } from "./admin-exam-upload-zone";
 import { AdminStatCards } from "./admin-stat-cards";
