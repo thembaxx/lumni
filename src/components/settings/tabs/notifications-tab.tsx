@@ -1,10 +1,4 @@
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
+import { ListCell, ListGroup, ListSection } from "@/components/ui/list-cell";
 import { Switch } from "@/components/ui/switch";
 import type { NotificationSettings } from "@/lib/utils/storage";
 
@@ -18,86 +12,68 @@ export function NotificationsTab({
 	onNotificationsChange,
 }: NotificationsTabProps) {
 	return (
-		<Card className="border-border/50 shadow-sm">
-			<CardHeader className="pb-4">
-				<CardTitle className="text-lg">Notifications</CardTitle>
-				<CardDescription>Manage your notification preferences</CardDescription>
-			</CardHeader>
-			<CardContent className="space-y-6">
-				<div className="space-y-4">
-					<div className="flex items-center justify-between">
-						<div className="space-y-1">
-							<p className="text-sm font-medium">Study Reminders</p>
-							<p className="text-xs text-muted-foreground">
-								Get reminded to study daily
-							</p>
-						</div>
-						<Switch
-							checked={notifications.studyReminders}
-							onCheckedChange={(checked) =>
-								onNotificationsChange({
-									...notifications,
-									studyReminders: checked,
-								})
-							}
-						/>
-					</div>
-
-					<div className="flex items-center justify-between">
-						<div className="space-y-1">
-							<p className="text-sm font-medium">Streak Alerts</p>
-							<p className="text-xs text-muted-foreground">
-								Notify when streak is at risk
-							</p>
-						</div>
-						<Switch
-							checked={notifications.streakAlerts}
-							onCheckedChange={(checked) =>
-								onNotificationsChange({
-									...notifications,
-									streakAlerts: checked,
-								})
-							}
-						/>
-					</div>
-
-					<div className="flex items-center justify-between">
-						<div className="space-y-1">
-							<p className="text-sm font-medium">Achievement Notifications</p>
-							<p className="text-xs text-muted-foreground">
-								Notify when you unlock achievements
-							</p>
-						</div>
-						<Switch
-							checked={notifications.achievementNotifications}
-							onCheckedChange={(checked) =>
-								onNotificationsChange({
-									...notifications,
-									achievementNotifications: checked,
-								})
-							}
-						/>
-					</div>
-
-					<div className="flex items-center justify-between">
-						<div className="space-y-1">
-							<p className="text-sm font-medium">Weekly Progress</p>
-							<p className="text-xs text-muted-foreground">
-								Receive weekly progress summary
-							</p>
-						</div>
-						<Switch
-							checked={notifications.weeklyProgress}
-							onCheckedChange={(checked) =>
-								onNotificationsChange({
-									...notifications,
-									weeklyProgress: checked,
-								})
-							}
-						/>
-					</div>
-				</div>
-			</CardContent>
-		</Card>
+		<ListSection header="Notifications" footer="Manage your notification preferences">
+			<ListCell
+				title="Study Reminders"
+				subtitle="Get reminded to study daily"
+				trailing={
+					<Switch
+						checked={notifications.studyReminders}
+						onCheckedChange={(checked) =>
+							onNotificationsChange({
+								...notifications,
+								studyReminders: checked,
+							})
+						}
+					/>
+				}
+			/>
+			<ListCell
+				title="Streak Alerts"
+				subtitle="Notify when streak is at risk"
+				trailing={
+					<Switch
+						checked={notifications.streakAlerts}
+						onCheckedChange={(checked) =>
+							onNotificationsChange({
+								...notifications,
+								streakAlerts: checked,
+							})
+						}
+					/>
+				}
+			/>
+			<ListCell
+				title="Achievement Notifications"
+				subtitle="Notify when you unlock achievements"
+				trailing={
+					<Switch
+						checked={notifications.achievementNotifications}
+						onCheckedChange={(checked) =>
+							onNotificationsChange({
+								...notifications,
+								achievementNotifications: checked,
+							})
+						}
+					/>
+				}
+			/>
+			<ListCell
+				title="Weekly Progress"
+				subtitle="Receive weekly progress summary"
+				showSeparator={false}
+				trailing={
+					<Switch
+						checked={notifications.weeklyProgress}
+						onCheckedChange={(checked) =>
+							onNotificationsChange({
+								...notifications,
+								weeklyProgress: checked,
+							})
+						}
+					/>
+				}
+			/>
+		</ListSection>
 	);
 }

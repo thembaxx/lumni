@@ -72,15 +72,15 @@ export function ChatDialog({ open, onOpenChange }: ChatDialogProps) {
 			disablePointerDismissal={false}
 		>
 			<DialogContent className="flex flex-col translate-x-0 translate-y-0 w-full h-full max-w-none rounded-none p-0 m-0 top-0 left-0 bg-background/95 backdrop-blur-xl border-0 gap-0">
-				<div className="px-4 py-3 border-b border-border/30 flex flex-row items-center justify-between shrink-0">
-					<div className="flex items-center gap-3">
-						<div className="w-8 h-8 rounded-full bg-[--system-accent]/10 flex items-center justify-center">
+				<div className="px-[--space-4] py-[--space-3] border-b border-border/30 flex flex-row items-center justify-between shrink-0">
+					<div className="flex items-center gap-[--space-3]">
+						<div className="size-8 rounded-full bg-[--system-accent]/10 flex items-center justify-center">
 							<HugeiconsIcon
 								icon={MessageIcon}
-								className="w-4 h-4 text-foreground"
+								className="size-4 text-foreground"
 							/>
 						</div>
-						<span className="text-lg font-semibold">Study Assistant</span>
+						<span className="ios-headline">Study Assistant</span>
 					</div>
 				</div>
 
@@ -88,7 +88,7 @@ export function ChatDialog({ open, onOpenChange }: ChatDialogProps) {
 					{chat.messages.length === 0 ? (
 						<WelcomeState />
 					) : (
-						<div className="flex-1 overflow-y-auto p-4 space-y-3">
+						<div className="flex-1 overflow-y-auto p-[--space-4] space-y-[--space-3]">
 							<AnimatePresence mode="popLayout" initial={false}>
 								{chat.messages.map((message) => (
 									<MessageBubble

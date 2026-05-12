@@ -71,7 +71,7 @@ export function LoadingScreen({
 
 	return (
 		<div
-			className={`flex flex-col items-center gap-8 transition-opacity duration-500 ease-out-quart ${
+			className={`flex flex-col items-center gap-[--space-8] transition-opacity duration-500 ease-[var(--ease-ios)] ${
 				isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
 			}`}
 		>
@@ -91,22 +91,22 @@ export function LoadingScreen({
 			</div>
 
 			<div className="text-center space-y-1">
-				<h2 className="text-lg font-medium text-foreground tracking-tight">
+				<h2 className="ios-headline text-[--system-text-primary]">
 					Loading Lumni
 				</h2>
-				<p className="text-xs text-muted-foreground">
+				<p className="ios-footnote text-[--system-text-secondary]">
 					Preparing your study experience...
 				</p>
 			</div>
 
 			<Progress
 				value={progress}
-				className="w-48 transition-[width] duration-150 ease-out-quart"
+				className="w-48 transition-[width] duration-[var(--duration-slow)] ease-[var(--ease-ios)]"
 			/>
 			{showSkipButton && progress < 100 && (
 				<Button
 					onClick={handleManualEnter}
-					className="rounded-full bg-[--system-accent] text-background hover:scale-105 active:scale-[0.96] h-10 px-8"
+					className="rounded-full bg-[--system-accent] text-background hover:scale-105 h-10 px-8"
 				>
 					Skip & Enter
 				</Button>

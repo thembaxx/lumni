@@ -134,13 +134,9 @@ export function TodayFocusCard({
 								{subject}
 							</p>
 							<SubjectsDrawer onSelect={(name) => setSelectedSubject(name)}>
-								<Button
-									type="button"
-									variant="link"
-									className="text-[12px] text-[oklch(var(--muted-foreground))] hover:text-[oklch(var(--foreground))]"
-								>
+								<span className="text-[12px] text-[oklch(var(--muted-foreground))] hover:text-[oklch(var(--foreground))] cursor-pointer">
 									change
-								</Button>
+								</span>
 							</SubjectsDrawer>
 						</div>
 						<h3 className="text-[17px] font-semibold text-[oklch(var(--foreground))] leading-snug tracking-tight text-wrap balance">

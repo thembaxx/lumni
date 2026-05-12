@@ -76,7 +76,7 @@ export function ChatInput({
 		};
 
 	return (
-		<div className="p-4 border-t border-border/50 bg-background/80 backdrop-blur-xl">
+		<div className="p-[--space-4] border-t border-border/50 bg-background/80 backdrop-blur-xl">
 			<AnimatedDialogContent
 				open={voiceDialogOpen}
 				onOpenChange={setVoiceDialogOpen}
@@ -96,7 +96,7 @@ export function ChatInput({
 
 			<div
 				className={cn(
-					"bg-secondary/60 dark:bg-secondary/40 rounded-2xl p-4 transition-[transform,border-color,box-shadow] duration-300 border mt-2",
+					"bg-secondary/60 dark:bg-secondary/40 rounded-[--radius-card] p-[--space-4] transition-[transform,border-color,box-shadow] duration-[var(--duration-slow)] border mt-2",
 					isFocused
 						? "ring-2 ring-[--system-accent]/20 border-[--system-accent]/30 scale-[1.01]"
 						: "border-border/30",
@@ -112,7 +112,7 @@ export function ChatInput({
 						onFocus={() => setIsFocused(true)}
 						onBlur={() => setIsFocused(false)}
 						disabled={isLoading}
-						className="bg-transparent text-foreground placeholder:text-muted-foreground/60 text-sm outline-none font-medium border-0 shadow-none p-0 focus-visible:ring-0"
+						className="bg-transparent text-foreground placeholder:text-muted-foreground/60 ios-body outline-none font-medium border-0 shadow-none p-0 focus-visible:ring-0"
 					/>
 				</div>
 
@@ -137,31 +137,22 @@ export function ChatInput({
 				<div className="flex items-center justify-between">
 					<div className="flex items-center gap-2">
 						<DropdownMenu>
-							<DropdownMenuTrigger>
-								<div
-									role="button"
-									tabIndex={0}
-									className={cn(
-										"inline-flex shrink-0 items-center justify-center rounded-lg w-10 h-10",
-										"bg-muted/60 hover:bg-muted text-muted-foreground cursor-pointer",
-										"transition-[scale,background-color,box-shadow] duration-150 ease-out",
-										"active:scale-[0.96]",
-										"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--system-accent]/50",
-										isLoading &&
-											"opacity-50 pointer-events-none cursor-not-allowed",
-									)}
-									aria-label="Add image"
-									onKeyDown={(e) => {
-										if (e.key === "Enter" || e.key === " ") {
-											e.preventDefault();
-										}
-									}}
-								>
-									<HugeiconsIcon
-										icon={Camera01Icon}
-										className="w-4 h-4 toolbutton-icon"
-									/>
-								</div>
+							<DropdownMenuTrigger
+								className={cn(
+									"inline-flex shrink-0 items-center justify-center rounded-[--radius-button] size-10",
+									"bg-muted/60 hover:bg-muted text-muted-foreground cursor-pointer",
+									"transition-[scale,background-color,box-shadow] duration-[var(--duration-fast)] ease-[var(--ease-ios)]",
+									"active:scale-[0.96]",
+									"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--system-accent]/50",
+									isLoading &&
+										"opacity-50 pointer-events-none cursor-not-allowed",
+								)}
+								aria-label="Add image"
+							>
+								<HugeiconsIcon
+									icon={Camera01Icon}
+									className="w-4 h-4 toolbutton-icon"
+								/>
 							</DropdownMenuTrigger>
 							<DropdownMenuContent side="top" align="start" className="w-48">
 								<DropdownMenuItem
@@ -189,7 +180,7 @@ export function ChatInput({
 							variant="ghost"
 							size="icon"
 							onClick={() => setVoiceDialogOpen(true)}
-							className="rounded-lg bg-muted/60 hover:bg-muted toolbutton"
+							className="rounded-[--radius-button] bg-muted/60 hover:bg-muted toolbutton"
 							disabled={isLoading}
 						>
 							<HugeiconsIcon
@@ -209,7 +200,7 @@ export function ChatInput({
 							}}
 							disabled={!input.trim() || isLoading}
 							className={cn(
-								"w-9 h-9 voice-btn",
+								"size-9 voice-btn",
 								voicePressed && "voice-btn-pressed",
 							)}
 							aria-label="Send message"

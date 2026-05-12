@@ -38,12 +38,12 @@ export function ExamResults({
 	const flaggedCount = flags.length;
 
 	return (
-		<div className="min-h-dvh bg-background">
-			<div className="max-w-3xl mx-auto p-6 space-y-6">
+		<div className="min-h-dvh bg-[--system-grouped-background]">
+			<div className="max-w-3xl mx-auto p-[--space-6] space-y-[--space-6]">
 				<div className="flex items-center justify-between">
 					<div>
-						<h1 className="text-2xl font-bold">Exam Submitted</h1>
-						<p className="text-sm text-muted-foreground">
+						<h1 className="ios-title-1 text-[--system-text-primary]">Exam Submitted</h1>
+						<p className="ios-footnote text-[--system-text-secondary]">
 							{paper.metadata.subject} {paper.metadata.paperCode}
 						</p>
 					</div>
@@ -52,22 +52,22 @@ export function ExamResults({
 						size="sm"
 						onClick={() => router.push("/dashboard/practice")}
 					>
-						<ArrowLeft className="w-4 h-4 mr-1" />
+						<ArrowLeft className="size-4 mr-1" />
 						Back to Exams
 					</Button>
 				</div>
 
-				<div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+				<div className="grid grid-cols-2 md:grid-cols-4 gap-[--space-3]">
 					<Card>
 						<CardHeader className="pb-2">
-							<CardTitle className="text-xs font-medium text-muted-foreground">
+							<CardTitle className="ios-caption-1 font-semibold text-[--system-text-secondary]">
 								Answered
 							</CardTitle>
 						</CardHeader>
 						<CardContent>
-							<p className="text-2xl font-bold">
+							<p className="ios-title-3 font-bold">
 								{answeredCount}
-								<span className="text-sm font-normal text-muted-foreground">
+								<span className="ios-footnote font-normal text-[--system-text-secondary]">
 									/{totalParts}
 								</span>
 							</p>
@@ -75,7 +75,7 @@ export function ExamResults({
 					</Card>
 					<Card>
 						<CardHeader className="pb-2">
-							<CardTitle className="text-xs font-medium text-muted-foreground">
+							<CardTitle className="ios-caption-1 font-semibold text-[--system-text-secondary]">
 								Unanswered
 							</CardTitle>
 						</CardHeader>
@@ -87,7 +87,7 @@ export function ExamResults({
 					</Card>
 					<Card>
 						<CardHeader className="pb-2">
-							<CardTitle className="text-xs font-medium text-muted-foreground">
+							<CardTitle className="ios-caption-1 font-semibold text-[--system-text-secondary]">
 								Flagged
 							</CardTitle>
 						</CardHeader>
@@ -99,26 +99,26 @@ export function ExamResults({
 					</Card>
 					<Card>
 						<CardHeader className="pb-2">
-							<CardTitle className="text-xs font-medium text-muted-foreground">
+							<CardTitle className="ios-caption-1 font-semibold text-[--system-text-secondary]">
 								Time Taken
 							</CardTitle>
 						</CardHeader>
 						<CardContent>
-							<p className="text-2xl font-bold">{formatTime(timeTaken)}</p>
+							<p className="ios-title-3 font-bold tabular-nums">{formatTime(timeTaken)}</p>
 						</CardContent>
 					</Card>
 				</div>
 
 				<Card>
 					<CardHeader>
-						<CardTitle className="text-base">Score Breakdown</CardTitle>
+						<CardTitle className="ios-headline">Score Breakdown</CardTitle>
 					</CardHeader>
 					<CardContent>
 						<ScrollArea className="max-h-[400px]">
 							<div className="space-y-4">
 								{paper.sections.map((section) => (
 									<div key={section.id}>
-										<h3 className="text-sm font-semibold mb-2 text-muted-foreground uppercase">
+										<h3 className="ios-subhead font-semibold text-[--system-text-secondary] uppercase">
 											Section {section.id}
 										</h3>
 										{section.questions.map((question) => (
@@ -167,8 +167,8 @@ export function ExamResults({
 				{flaggedCount > 0 && (
 					<Card>
 						<CardHeader>
-							<CardTitle className="text-base flex items-center gap-2">
-								<Flag className="w-4 h-4 text-amber-500 dark:text-amber-400" />
+							<CardTitle className="ios-headline flex items-center gap-2">
+								<Flag className="size-4 text-amber-500 dark:text-amber-400" />
 								Flagged for Review
 							</CardTitle>
 						</CardHeader>

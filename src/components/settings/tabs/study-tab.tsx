@@ -16,14 +16,14 @@ interface StudyTabProps {
 
 export function StudyTab({ studyPrefs, onStudyPrefsChange }: StudyTabProps) {
 	return (
-		<div className="space-y-6">
+		<div className="space-y-[--space-6]">
 			<section>
-				<div className="ios-footnote font-semibold text-[--system-text-secondary] uppercase tracking-wide px-4 py-2 pt-5">
+				<div className="ios-footnote font-semibold text-[--system-text-secondary] uppercase tracking-wide px-[--space-4] py-[--space-2] pt-5">
 					Study Preferences
 				</div>
-				<div className="overflow-hidden rounded-[16px] bg-[--system-surface] shadow-[--shadow-level-1]">
+				<div className="overflow-hidden rounded-[--radius-card] bg-[--system-surface] shadow-[--shadow-level-1]">
 					<div className="ios-separator">
-						<div className="px-4 py-3 space-y-1">
+						<div className="px-[--space-4] py-[--space-3] space-y-1">
 							<Label className="ios-body font-medium text-[--system-text-primary]">
 								Default Difficulty
 							</Label>
@@ -48,7 +48,7 @@ export function StudyTab({ studyPrefs, onStudyPrefsChange }: StudyTabProps) {
 						</div>
 					</div>
 					<div className="ios-separator">
-						<div className="px-4 py-3 space-y-1">
+						<div className="px-[--space-4] py-[--space-3] space-y-1">
 							<Label className="ios-body font-medium text-[--system-text-primary]">
 								Questions per Session
 							</Label>
@@ -75,7 +75,7 @@ export function StudyTab({ studyPrefs, onStudyPrefsChange }: StudyTabProps) {
 						</div>
 					</div>
 					<div className="ios-separator">
-						<div className="flex items-center justify-between px-4 py-3 min-h-[44px]">
+						<div className="flex items-center justify-between px-[--space-4] py-[--space-3] min-h-[44px]">
 							<div className="space-y-0.5">
 								<p className="ios-body font-medium text-[--system-text-primary]">
 									Timer
@@ -97,7 +97,7 @@ export function StudyTab({ studyPrefs, onStudyPrefsChange }: StudyTabProps) {
 					</div>
 					{studyPrefs.timerEnabled && (
 						<div className="ios-separator">
-							<div className="ml-6 px-4 py-3 space-y-1">
+							<div className="ml-6 px-[--space-4] py-[--space-3] space-y-1">
 								<Label className="ios-body font-medium text-[--system-text-primary]">
 									Timer Duration (seconds)
 								</Label>

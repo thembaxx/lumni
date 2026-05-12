@@ -4,11 +4,11 @@ import { appConfig } from "../../app.config";
 
 export default function NotFound() {
 	return (
-		<div className="min-h-screen flex flex-col items-center justify-center bg-background">
-			<main className="flex flex-col items-center gap-6 text-center px-4">
+		<div className="min-h-screen flex flex-col items-center justify-center bg-[--system-background]">
+			<main className="flex flex-col items-center gap-[--space-6] text-center px-[--space-4]">
 				<div className="w-16 h-16 rounded-full bg-secondary flex items-center justify-center">
 					<svg
-						className="w-8 h-8 text-muted-foreground"
+						className="size-8 text-muted-foreground"
 						fill="none"
 						viewBox="0 0 24 24"
 						stroke="currentColor"
@@ -21,12 +21,12 @@ export default function NotFound() {
 						/>
 					</svg>
 				</div>
-				<div className="space-y-2">
-					<h2 className="text-xl font-semibold text-foreground">
+				<div className="space-y-[--space-2]">
+					<h2 className="ios-title-2 text-[--system-text-primary]">
 						Page not found
 					</h2>
-					<p className="text-muted-foreground text-sm max-w-md">
-						The page you're looking for doesn't exist or has been moved.
+					<p className="ios-callout text-[--system-text-secondary]">
+						The page you&apos;re looking for doesn&apos;t exist or has been moved.
 					</p>
 				</div>
 				<Link href="/">

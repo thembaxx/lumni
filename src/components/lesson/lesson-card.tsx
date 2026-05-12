@@ -111,20 +111,20 @@ export function LessonCard({
 					</m.div>
 				) : (
 					<m.div key={`lesson-${id}-closed`} layoutId={`lesson-${id}`}>
-						<div
-							onClick={() => setOpenId(id)}
-							className="p-5 rounded-2xl border bg-card text-card-foreground shadow-sm hover:border-[--system-accent]/20 transition-[scale,colors] duration-200 active:scale-[0.98] cursor-pointer w-full text-left"
-							role="button"
-							tabIndex={0}
-							onKeyDown={(e) => {
-								if (e.key === "Enter" || e.key === " ") {
-									e.preventDefault();
-									setOpenId(id);
-								}
-							}}
-							aria-label={`${title} - ${difficulty} lesson`}
-						>
-							<div className="space-y-3">
+						<div className="p-5 rounded-2xl border bg-card text-card-foreground shadow-sm w-full text-left">
+							<div
+								onClick={() => setOpenId(id)}
+								className="space-y-3 cursor-pointer hover:border-[--system-accent]/20 transition-[scale,colors] duration-200 active:scale-[0.98]"
+								role="button"
+								tabIndex={0}
+								onKeyDown={(e) => {
+									if (e.key === "Enter" || e.key === " ") {
+										e.preventDefault();
+										setOpenId(id);
+									}
+								}}
+								aria-label={`${title} - ${difficulty} lesson`}
+							>
 								<div className="flex justify-between items-start">
 									<Badge
 										variant="outline"
@@ -150,22 +150,22 @@ export function LessonCard({
 										<MarkdownRenderer content={summary} />
 									</div>
 								</div>
+							</div>
 
-								<div className="flex gap-2 items-center">
-									<div className={isPlaying ? "animate-pulse" : ""}>
-										<ListenToLesson
-											text={summary}
-											onPlayingChange={setIsPlaying}
-										/>
-									</div>
-									<PracticeButton
-										onClick={() =>
-											router.push(
-												`/quiz?subject=${encodeURIComponent(subject)}&topic=${encodeURIComponent(title)}`,
-											)
-										}
+							<div className="flex gap-2 items-center mt-3">
+								<div className={isPlaying ? "animate-pulse" : ""}>
+									<ListenToLesson
+										text={summary}
+										onPlayingChange={setIsPlaying}
 									/>
 								</div>
+								<PracticeButton
+									onClick={() =>
+										router.push(
+											`/quiz?subject=${encodeURIComponent(subject)}&topic=${encodeURIComponent(title)}`,
+										)
+									}
+								/>
 							</div>
 						</div>
 					</m.div>
