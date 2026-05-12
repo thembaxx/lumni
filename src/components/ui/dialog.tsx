@@ -112,7 +112,7 @@ function DialogFooter({
 		<div
 			data-slot="dialog-footer"
 			className={cn(
-				"-mx-6 -mb-6 flex flex-col-reverse gap-2 border-t border-[#000000]/10 dark:border-[#ffffff]/10 p-4 sm:flex-row sm:justify-end",
+				"-mx-6 -mb-6 flex flex-col-reverse gap-2 border-t border-[--system-separator] p-4 sm:flex-row sm:justify-end",
 				className,
 			)}
 			{...props}
@@ -144,7 +144,7 @@ function DialogDescription({
 	return (
 		<DialogPrimitive.Description
 			data-slot="dialog-description"
-			className={cn("text-sm text-[#4b4b4b] dark:text-[#afafaf]", className)}
+			className={cn("text-sm text-muted-foreground", className)}
 			{...props}
 		/>
 	);

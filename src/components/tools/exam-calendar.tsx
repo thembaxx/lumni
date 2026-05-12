@@ -134,7 +134,7 @@ export function ExamCalendar() {
 				<Button
 					size="sm"
 					onClick={() => setIsAddingExam(true)}
-					className="rounded-lg active:scale-[0.96] transition-transform duration-150"
+					className="rounded-lg active:scale-[0.96]"
 				>
 					<PlusIcon className="w-4 h-4 mr-1" />
 					Add
@@ -172,7 +172,7 @@ export function ExamCalendar() {
 									variant="ghost"
 									size="icon-sm"
 									onClick={() => deleteExam(exam.id)}
-									className="active:scale-[0.96] transition-transform duration-150"
+									className="active:scale-[0.96]"
 								>
 									<Trash2Icon className="w-4 h-4" />
 								</Button>
@@ -242,12 +242,14 @@ export function ExamCalendar() {
 							transition={{ type: "spring", duration: 0.3, bounce: 0 }}
 							className="relative bg-background rounded-2xl p-6 w-full max-w-sm shadow-[0_8px_30px_rgba(0,0,0,0.12)]"
 						>
-							<button
+							<Button
+								variant="ghost"
+								size="icon-sm"
 								onClick={() => setIsAddingExam(false)}
-								className="absolute top-4 right-4 p-1.5 rounded-lg active:scale-[0.96] transition-transform duration-150"
+								className="absolute top-4 right-4"
 							>
 								<XIcon className="w-5 h-5" />
-							</button>
+							</Button>
 
 							<h3 className="text-lg font-semibold mb-4 text-wrap balance">
 								Add Exam
@@ -258,20 +260,17 @@ export function ExamCalendar() {
 									<Label>Subject</Label>
 									<div className="grid grid-cols-2 gap-2 mt-2">
 										{commonSubjects.map((subject) => (
-											<button
+											<Button
 												key={subject.id}
+												variant={
+													newExam.subject === subject.id ? "default" : "ghost"
+												}
 												onClick={() =>
 													setNewExam({ ...newExam, subject: subject.id })
 												}
-												className={cn(
-													"p-2.5 rounded-xl text-xs font-medium transition-colors active:scale-[0.96] transition-transform duration-150",
-													newExam.subject === subject.id
-														? "bg-primary text-primary-foreground"
-														: "bg-muted hover:bg-muted/80",
-												)}
 											>
 												{subject.name.slice(0, 10)}
-											</button>
+											</Button>
 										))}
 									</div>
 								</div>
@@ -280,24 +279,19 @@ export function ExamCalendar() {
 									<Label>Paper</Label>
 									<div className="flex gap-2 mt-2">
 										{["Paper 1", "Paper 2", "Paper 3"].map((paper) => (
-											<button
+											<Button
 												key={paper}
+												variant={newExam.paper === paper ? "default" : "ghost"}
 												onClick={() => setNewExam({ ...newExam, paper })}
-												className={cn(
-													"flex-1 p-2.5 rounded-xl text-xs font-medium transition-colors active:scale-[0.96] transition-transform duration-150",
-													newExam.paper === paper
-														? "bg-primary text-primary-foreground"
-														: "bg-muted hover:bg-muted/80",
-												)}
 											>
 												{paper}
-											</button>
+											</Button>
 										))}
 									</div>
 								</div>
 
 								<Button
-									className="w-full rounded-xl active:scale-[0.96] transition-transform duration-150"
+									className="w-full rounded-xl active:scale-[0.96]"
 									onClick={addExam}
 									disabled={!newExam.subject}
 								>

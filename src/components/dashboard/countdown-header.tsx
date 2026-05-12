@@ -256,7 +256,7 @@ export function CountdownHeader() {
 					<h1 className="font-geist text-xl sm:text-2xl font-bold text-foreground leading-tight tracking-tight text-wrap-balance">
 						{greeting}
 						{isLoggedIn && name ? (
-							<span className="text-primary">, {firstName}</span>
+							<span className="text-[--system-accent]">, {firstName}</span>
 						) : null}
 					</h1>
 

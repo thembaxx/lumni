@@ -37,7 +37,7 @@ export function ExamHeader({
 			<Button
 				variant="ghost"
 				size="icon"
-				className="h-8 w-8 lg:hidden"
+				className="lg:hidden"
 				onClick={onToggleSidebar}
 			>
 				<Menu className="w-4 h-4" />
@@ -52,13 +52,13 @@ export function ExamHeader({
 			<div className="flex items-center gap-4 ml-auto text-xs">
 				<div className="flex items-center gap-1.5">
 					<span className="text-muted-foreground">Progress:</span>
-					<span className="font-medium">
+					<span className="font-medium tabular-nums">
 						{answeredCount}/{totalParts}
 					</span>
 				</div>
 				<div className="flex items-center gap-1.5">
 					<span className="text-muted-foreground">Marks:</span>
-					<span className="font-medium">{totalMarks}</span>
+					<span className="font-medium tabular-nums">{totalMarks}</span>
 				</div>
 				<div
 					className={`flex items-center gap-1.5 ${
@@ -67,7 +67,7 @@ export function ExamHeader({
 				>
 					<Clock className="w-3.5 h-3.5" />
 					<span
-						className={`font-mono font-medium ${
+						className={`font-mono font-medium tabular-nums ${
 							isLowTime ? "animate-pulse" : ""
 						}`}
 					>

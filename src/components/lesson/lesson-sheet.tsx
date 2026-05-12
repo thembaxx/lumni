@@ -61,7 +61,7 @@ export function LessonSheet() {
 					variant="outline"
 					className="h-11 px-5 rounded-xl border-border/50 bg-secondary/80 gap-2.5 border hover:bg-accent hover:border-accent shadow-sm"
 				>
-					<Search className="h-4 w-4 text-primary" />
+					<Search className="h-4 w-4 text-[--system-accent]" />
 					<span className="text-sm font-medium">Lessons</span>
 				</Button>
 			</SheetTrigger>

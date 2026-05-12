@@ -2,6 +2,14 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow,
+} from "@/components/ui/table";
 import { Textarea } from "@/components/ui/textarea";
 import type { DataSet, SubQuestion } from "@/types/questions";
 
@@ -16,31 +24,24 @@ function renderDataTable(data: DataSet) {
 	if (data.type !== "table" || !data.headers || !data.rows) return null;
 	return (
 		<div className="overflow-x-auto">
-			<table className="w-full text-sm border-collapse">
-				<thead>
-					<tr>
+			<Table>
+				<TableHeader>
+					<TableRow>
 						{data.headers.map((h, i) => (
-							<th
-								key={i}
-								className="border px-3 py-2 bg-muted/30 text-left font-medium"
-							>
-								{h}
-							</th>
+							<TableHead key={i}>{h}</TableHead>
 						))}
-					</tr>
-				</thead>
-				<tbody>
+					</TableRow>
+				</TableHeader>
+				<TableBody>
 					{data.rows.map((row, ri) => (
-						<tr key={ri}>
+						<TableRow key={ri}>
 							{data.headers!.map((h, ci) => (
-								<td key={ci} className="border px-3 py-2">
-									{String(row[h] ?? "")}
-								</td>
+								<TableCell key={ci}>{String(row[h] ?? "")}</TableCell>
 							))}
-						</tr>
+						</TableRow>
 					))}
-				</tbody>
-			</table>
+				</TableBody>
+			</Table>
 		</div>
 	);
 }

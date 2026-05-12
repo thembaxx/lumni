@@ -12,6 +12,13 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 
 interface StudySession {
@@ -262,36 +269,31 @@ export function SmartScheduler() {
 						<div className="grid grid-cols-2 gap-2">
 							{subjectOptions.map((subject) => (
 								<div key={subject.id}>
-									<button
-										onClick={() => toggleSubject(subject.id)}
-										className={cn(
-											"w-full p-2.5 rounded-xl text-sm font-medium transition-colors text-left active:scale-[0.96] transition-transform duration-150",
+									<Button
+										variant={
 											selectedSubjects.includes(subject.id)
-												? "bg-primary text-primary-foreground"
-												: "bg-muted text-muted-foreground",
-										)}
+												? "default"
+												: "ghost"
+										}
+										onClick={() => toggleSubject(subject.id)}
 									>
 										{subject.name}
-									</button>
+									</Button>
 									{selectedSubjects.includes(subject.id) && (
 										<div className="flex gap-1 mt-1.5">
 											{(["easy", "medium", "hard"] as const).map((diff) => (
-												<button
+												<Button
 													key={diff}
-													onClick={() => updateDifficulty(subject.id, diff)}
-													className={cn(
-														"flex-1 text-[10px] py-1.5 rounded-lg capitalize active:scale-[0.96] transition-transform duration-150",
+													size="xs"
+													variant={
 														difficultyMap[subject.id] === diff
-															? diff === "easy"
-																? "bg-green-500"
-																: diff === "medium"
-																	? "bg-yellow-500"
-																	: "bg-red-500"
-															: "bg-muted",
-													)}
+															? "default"
+															: "ghost"
+													}
+													onClick={() => updateDifficulty(subject.id, diff)}
 												>
 													{diff[0]}
-												</button>
+												</Button>
 											))}
 										</div>
 									)}
@@ -304,18 +306,13 @@ export function SmartScheduler() {
 						<Label>Study Hours Per Day</Label>
 						<div className="flex gap-2 mt-2">
 							{[1, 2, 3, 4, 5].map((h) => (
-								<button
+								<Button
 									key={h}
+									variant={hoursPerDay === h ? "default" : "ghost"}
 									onClick={() => setHoursPerDay(h)}
-									className={cn(
-										"flex-1 py-2.5 rounded-xl text-sm font-medium active:scale-[0.96] transition-transform duration-150",
-										hoursPerDay === h
-											? "bg-primary text-primary-foreground"
-											: "bg-muted",
-									)}
 								>
 									{h}h
-								</button>
+								</Button>
 							))}
 						</div>
 					</div>
@@ -331,7 +328,7 @@ export function SmartScheduler() {
 					</div>
 
 					<Button
-						className="w-full rounded-xl active:scale-[0.96] transition-transform duration-150"
+						className="w-full rounded-xl active:scale-[0.96]"
 						onClick={generateSchedule}
 						disabled={
 							selectedSubjects.length === 0 || !examDate || isGenerating
@@ -358,7 +355,7 @@ export function SmartScheduler() {
 							variant="outline"
 							size="sm"
 							onClick={() => setSchedule([])}
-							className="rounded-lg active:scale-[0.96] transition-transform duration-150"
+							className="rounded-lg active:scale-[0.96]"
 						>
 							Reset
 						</Button>

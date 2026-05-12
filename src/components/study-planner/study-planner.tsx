@@ -16,6 +16,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
 import { useStudyPlanner } from "@/hooks/use-study-planner";
 import type {
 	ExamDate as ExamDateType,
@@ -178,18 +185,18 @@ function TodaySessionsCard({
 								className="flex items-center justify-between p-3 rounded-lg bg-muted"
 							>
 								<div className="flex items-center gap-3">
-									<button
+									<Button
+										variant="ghost"
+										size="icon-xs"
 										onClick={() => onComplete(session.id)}
-										className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+										className={`rounded-full ${
 											session.completed
-												? "bg-green-500 border-green-500"
+												? "bg-green-500 text-white hover:bg-green-500"
 												: "border-muted-foreground"
 										}`}
 									>
-										{session.completed && (
-											<Check className="h-3 w-3 text-white" />
-										)}
-									</button>
+										{session.completed && <Check className="h-3 w-3" />}
+									</Button>
 									<div>
 										<p className="font-medium text-sm">{session.subject}</p>
 										<p className="text-xs text-muted-foreground">
@@ -197,12 +204,13 @@ function TodaySessionsCard({
 										</p>
 									</div>
 								</div>
-								<button
+								<Button
+									variant="ghost"
+									size="icon-xs"
 									onClick={() => onDelete(session.id)}
-									className="text-muted-foreground hover:text-red-500"
 								>
 									<Trash2 className="h-4 w-4" />
-								</button>
+								</Button>
 							</div>
 						))}
 					</div>
@@ -263,18 +271,18 @@ function UpcomingSessionsCard({
 												className="flex items-center justify-between p-3 rounded-lg bg-muted"
 											>
 												<div className="flex items-center gap-3">
-													<button
+													<Button
+														variant="ghost"
+														size="icon-xs"
 														onClick={() => onComplete(session.id)}
-														className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+														className={`rounded-full ${
 															session.completed
-																? "bg-green-500 border-green-500"
+																? "bg-green-500 text-white hover:bg-green-500"
 																: "border-muted-foreground"
 														}`}
 													>
-														{session.completed && (
-															<Check className="h-3 w-3 text-white" />
-														)}
-													</button>
+														{session.completed && <Check className="h-3 w-3" />}
+													</Button>
 													<div>
 														<p className="font-medium text-sm">
 															{session.subject}
@@ -285,12 +293,13 @@ function UpcomingSessionsCard({
 														</p>
 													</div>
 												</div>
-												<button
+												<Button
+													variant="ghost"
+													size="icon-xs"
 													onClick={() => onDelete(session.id)}
-													className="text-muted-foreground hover:text-red-500"
 												>
 													<Trash2 className="h-4 w-4" />
-												</button>
+												</Button>
 											</div>
 										))}
 									</div>
@@ -337,12 +346,13 @@ function UpcomingExamsCard({
 										{exam.paper} • {exam.daysUntil} days left
 									</p>
 								</div>
-								<button
+								<Button
+									variant="ghost"
+									size="icon-xs"
 									onClick={() => onDelete(exam.id)}
-									className="text-muted-foreground hover:text-red-500"
 								>
 									<Trash2 className="h-4 w-4" />
-								</button>
+								</Button>
 							</div>
 						))}
 					</div>
@@ -391,20 +401,22 @@ function AddSessionModal({
 					</div>
 					<div>
 						<Label>Type</Label>
-						<select
-							className="w-full p-2 border rounded-md"
+						<Select
 							value={type}
-							onChange={(e) =>
-								setType(
-									e.target.value as "flashcard" | "exam" | "quiz" | "review",
-								)
+							onValueChange={(v) =>
+								setType(v as "flashcard" | "exam" | "quiz" | "review")
 							}
 						>
-							<option value="quiz">Quiz</option>
-							<option value="flashcard">Flashcard</option>
-							<option value="exam">Exam Paper</option>
-							<option value="review">Review</option>
-						</select>
+							<SelectTrigger>
+								<SelectValue />
+							</SelectTrigger>
+							<SelectContent>
+								<SelectItem value="quiz">Quiz</SelectItem>
+								<SelectItem value="flashcard">Flashcard</SelectItem>
+								<SelectItem value="exam">Exam Paper</SelectItem>
+								<SelectItem value="review">Review</SelectItem>
+							</SelectContent>
+						</Select>
 					</div>
 					<div>
 						<Label>Duration (minutes)</Label>

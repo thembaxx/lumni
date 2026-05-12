@@ -35,7 +35,7 @@ export function LessonCard({
 
 	return (
 		<LazyMotion features={domAnimation}>
-			<AnimatePresence>
+			<AnimatePresence initial={false}>
 				{isCardOpen && (
 					<m.div
 						initial={{ opacity: 0 }}
@@ -48,7 +48,7 @@ export function LessonCard({
 				)}
 			</AnimatePresence>
 
-			<AnimatePresence mode="popLayout">
+			<AnimatePresence mode="popLayout" initial={false}>
 				{isCardOpen ? (
 					<m.div
 						key={`lesson-${id}-open`}
@@ -60,13 +60,13 @@ export function LessonCard({
 								<div className="flex justify-between items-start">
 									<Badge
 										variant="outline"
-										className="px-3 py-0.5 text-xs font-medium bg-primary/10 rounded-full"
+										className="px-3 py-0.5 text-xs font-medium bg-[--system-accent]/10 rounded-full"
 									>
 										{subject}
 									</Badge>
 									<Badge
 										className={cn(
-											"px-3 py-0.5 text-[10px] uppercase font-medium bg-primary/10 rounded-full",
+											"px-3 py-0.5 text-[10px] uppercase font-medium bg-[--system-accent]/10 rounded-full",
 											getDifficultyColor(difficulty),
 										)}
 									>
@@ -113,7 +113,7 @@ export function LessonCard({
 					<m.div key={`lesson-${id}-closed`} layoutId={`lesson-${id}`}>
 						<div
 							onClick={() => setOpenId(id)}
-							className="p-5 rounded-2xl border bg-card text-card-foreground shadow-sm hover:border-primary/20 transition-colors transition-transform duration-200 cursor-pointer w-full text-left"
+							className="p-5 rounded-2xl border bg-card text-card-foreground shadow-sm hover:border-[--system-accent]/20 transition-colors transition-transform duration-200 cursor-pointer w-full text-left"
 							role="button"
 							tabIndex={0}
 							onKeyDown={(e) => {
@@ -128,13 +128,13 @@ export function LessonCard({
 								<div className="flex justify-between items-start">
 									<Badge
 										variant="outline"
-										className="px-3 py-0.5 text-xs font-medium bg-primary/10 rounded-full"
+										className="px-3 py-0.5 text-xs font-medium bg-[--system-accent]/10 rounded-full"
 									>
 										{subject}
 									</Badge>
 									<Badge
 										className={cn(
-											"px-3 py-0.5 text-[10px] uppercase font-medium bg-primary/10 rounded-full",
+											"px-3 py-0.5 text-[10px] uppercase font-medium bg-[--system-accent]/10 rounded-full",
 											getDifficultyColor(difficulty),
 										)}
 									>

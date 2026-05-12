@@ -33,7 +33,7 @@ function InputOTPSegment({
 	return (
 		<m.div
 			className={cn(
-				"relative flex h-12 w-10 items-center justify-center rounded-lg border bg-transparent transition-all",
+				"relative flex h-12 w-10 items-center justify-center rounded-lg border bg-transparent transition-[border-color,box-shadow]",
 				error
 					? "border-destructive animate-shake"
 					: isActive

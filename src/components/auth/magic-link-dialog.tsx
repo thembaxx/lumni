@@ -158,7 +158,7 @@ export function MagicLinkDialog({
 			<DialogContent className="sm:max-w-md shadow-lg">
 				<DialogHeader>
 					<DialogTitle className="flex items-center gap-2">
-						<Mail className="h-5 w-5 text-primary" />
+						<Mail className="h-5 w-5 text-foreground" />
 						Sign in with Magic Link
 					</DialogTitle>
 					<DialogDescription>
@@ -180,7 +180,7 @@ export function MagicLinkDialog({
 									setError("");
 								}}
 								autoComplete="email"
-								className="-webkit-font-smoothing antialiased h-11 rounded-md ring-1 ring-transparent focus-within:ring-primary/30 transition-[ring-color,box-shadow] duration-150"
+								className="-webkit-font-smoothing antialiased h-11 rounded-md ring-1 ring-transparent focus-within:ring-[--system-accent]/30 transition-[ring-color,box-shadow] duration-150"
 							/>
 							{error && (
 								<p className="text-xs text-destructive flex items-center gap-1">
@@ -281,7 +281,7 @@ export function MagicLinkDialog({
 												{formatCountdown(countdown)}
 											</span>
 										) : (
-											<span className="text-primary flex items-center gap-1">
+											<span className="text-foreground flex items-center gap-1">
 												<Zap className="h-3 w-3" />
 												Ready
 											</span>

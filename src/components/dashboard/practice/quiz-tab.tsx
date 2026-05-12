@@ -204,7 +204,7 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 						className={cn(
 							"size-11 rounded-full",
 							hasSubject
-								? "bg-primary hover:bg-primary/90 animate-fade-in-scale"
+								? "bg-[--system-accent] hover:bg-[--system-accent]/90 animate-fade-in-scale"
 								: "bg-muted cursor-not-allowed",
 						)}
 					>

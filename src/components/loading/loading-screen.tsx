@@ -76,8 +76,8 @@ export function LoadingScreen({
 			}`}
 		>
 			<div className="relative">
-				<div className="absolute inset-0 animate-pulse rounded-full bg-primary/20 blur-xl" />
-				<div className="relative flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20">
+				<div className="absolute inset-0 animate-pulse rounded-full bg-[--system-accent]/20 blur-xl" />
+				<div className="relative flex items-center justify-center w-16 h-16 rounded-2xl bg-[--system-accent]/10 border border-[--system-accent]/20">
 					{useLottie ? (
 						<LottieWrapper
 							animation="loading-lumni"
@@ -85,7 +85,7 @@ export function LoadingScreen({
 							loop
 						/>
 					) : (
-						<span className="text-2xl font-semibold text-primary">L</span>
+						<span className="text-2xl font-semibold text-foreground">L</span>
 					)}
 				</div>
 			</div>
@@ -106,7 +106,7 @@ export function LoadingScreen({
 			{showSkipButton && progress < 100 && (
 				<Button
 					onClick={handleManualEnter}
-					className="rounded-full bg-primary text-primary-foreground hover:scale-105 active:scale-[0.96] transition-transform duration-150 h-10 px-8"
+					className="rounded-full bg-[--system-accent] text-background hover:scale-105 active:scale-[0.96] h-10 px-8"
 				>
 					Skip & Enter
 				</Button>

@@ -15,7 +15,7 @@ export function PWAUpdateToast() {
 		<div className="fixed bottom-4 left-4 right-4 z-50 md:left-auto md:right-4 md:max-w-sm">
 			<div className="bg-background border border-border rounded-lg shadow-lg p-4 flex items-start gap-3">
 				<div className="flex-shrink-0 mt-0.5">
-					<RefreshCw className="h-5 w-5 text-primary" />
+					<RefreshCw className="h-5 w-5 text-foreground" />
 				</div>
 				<div className="flex-1 min-w-0">
 					<p className="text-sm font-medium">Update Available</p>
@@ -41,12 +41,13 @@ export function PWAUpdateToast() {
 						</Button>
 					</div>
 				</div>
-				<button
+				<Button
+					variant="ghost"
+					size="icon-xs"
 					onClick={() => setDismissed(true)}
-					className="text-muted-foreground hover:text-foreground"
 				>
 					<X className="h-4 w-4" />
-				</button>
+				</Button>
 			</div>
 		</div>
 	);
@@ -62,7 +63,7 @@ export function PWAInstallPrompt() {
 			<div className="bg-background border border-border rounded-lg shadow-lg p-4">
 				<div className="flex items-center gap-3">
 					<div className="flex-shrink-0">
-						<div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+						<div className="w-10 h-10 bg-[--system-accent]/10 rounded-lg flex items-center justify-center">
 							<span className="text-xl">📱</span>
 						</div>
 					</div>

@@ -101,7 +101,7 @@ export function StudyTopicCard({
 					>
 						<Badge
 							variant="outline"
-							className="px-3 py-0.5 text-[xs] font-medium bg-primary/10 rounded-full"
+							className="px-3 py-0.5 text-[xs] font-medium bg-[--system-accent]/10 rounded-full"
 						>
 							{topic.subject}
 						</Badge>
@@ -135,7 +135,7 @@ export function StudyTopicCard({
 									className={cn(
 										"transition-colors duration-150 ease-out-quart",
 										index === currentWordIndex &&
-											"text-primary font-medium bg-primary/10 rounded px-0.5 -mx-0.5",
+											"text-[--system-accent] font-medium bg-[--system-accent]/10 rounded px-0.5 -mx-0.5",
 									)}
 								>
 									{word}

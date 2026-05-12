@@ -48,7 +48,7 @@ function HighlightedText({
 					className={cn(
 						"transition-colors duration-150 ease-out-quart",
 						index === currentWordIndex &&
-							"text-primary font-medium bg-primary/10 rounded px-0.5 -mx-0.5",
+							"text-primary font-medium bg-[--system-accent]/10 rounded px-0.5 -mx-0.5",
 					)}
 				>
 					{word}
@@ -67,7 +67,7 @@ function CardOverlay({
 	onClose: () => void;
 }) {
 	return (
-		<AnimatePresence>
+		<AnimatePresence initial={false}>
 			{isOpen && (
 				<m.div
 					initial={{ opacity: 0 }}
@@ -112,13 +112,13 @@ function ExpandedContent({
 					<div className="flex justify-between items-start">
 						<Badge
 							variant="outline"
-							className="px-3 py-0.5 text-xs font-medium bg-primary/10 rounded-full"
+							className="px-3 py-0.5 text-xs font-medium bg-[--system-accent]/10 rounded-full"
 						>
 							{data.subject}
 						</Badge>
 						<Badge
 							className={cn(
-								"px-3 py-0.5 text-[10px] uppercase font-medium bg-primary/10 rounded-full",
+								"px-3 py-0.5 text-[10px] uppercase font-medium bg-[--system-accent]/10 rounded-full",
 								data.difficulty === "easy" &&
 									"bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100",
 								data.difficulty === "medium" &&
@@ -186,7 +186,7 @@ function CollapsedContent({
 		<m.div key={`${data.id}-closed`} layoutId={`card-${data.id}`}>
 			<div
 				onClick={onOpen}
-				className="p-5 rounded-2xl border bg-card text-card-foreground shadow-sm hover:border-primary/20 transition-colors transition-transform duration-200 cursor-pointer w-full text-left"
+				className="p-5 rounded-2xl border bg-card text-card-foreground shadow-sm hover:border-[--system-accent]/20 transition-colors transition-transform duration-200 cursor-pointer w-full text-left"
 				role="button"
 				tabIndex={0}
 				onKeyDown={(e) => {
@@ -201,13 +201,13 @@ function CollapsedContent({
 					<div className="flex justify-between items-start">
 						<Badge
 							variant="outline"
-							className="px-3 py-0.5 text-xs font-medium bg-primary/10 rounded-full"
+							className="px-3 py-0.5 text-xs font-medium bg-[--system-accent]/10 rounded-full"
 						>
 							{data.subject}
 						</Badge>
 						<Badge
 							className={cn(
-								"px-3 py-0.5 text-[10px] uppercase font-medium bg-primary/10 rounded-full",
+								"px-3 py-0.5 text-[10px] uppercase font-medium bg-[--system-accent]/10 rounded-full",
 								data.difficulty === "easy" &&
 									"bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100",
 								data.difficulty === "medium" &&
@@ -265,7 +265,7 @@ export function ExpandableCard({
 		<LazyMotion features={domAnimation}>
 			<CardOverlay isOpen={isOpen} onClose={() => onOpenChange(false)} />
 
-			<AnimatePresence mode="popLayout">
+			<AnimatePresence mode="popLayout" initial={false}>
 				{isOpen ? (
 					<ExpandedContent
 						data={data}

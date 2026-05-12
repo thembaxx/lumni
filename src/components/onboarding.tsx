@@ -143,8 +143,8 @@ export function Onboarding({ onComplete }: OnboardingProps) {
 				</Button>
 
 				<div className="p-8">
-					<div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10">
-						<Icon className="h-8 w-8 text-primary" />
+<div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[--system-accent]/10">
+					<Icon className="h-8 w-8 text-foreground" />
 					</div>
 
 					<h2 className="mb-2 text-2xl font-bold tracking-tight">
@@ -159,7 +159,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
 									key={idx}
 									className={cn(
 										"h-1 flex-1 rounded-full transition-colors duration-300",
-										idx <= currentStep ? "bg-primary" : "bg-muted",
+										idx <= currentStep ? "bg-[--system-accent]" : "bg-muted",
 									)}
 								/>
 							))}
@@ -197,7 +197,7 @@ export function OnboardingActionButtons() {
 				className="h-auto flex-col gap-2 py-4"
 				onClick={() => router.push("/quiz")}
 			>
-				<Target className="h-5 w-5 text-primary" />
+				<Target className="h-5 w-5 text-foreground" />
 				<span className="text-sm font-medium">Start Quiz</span>
 			</Button>
 			<Button
@@ -205,7 +205,7 @@ export function OnboardingActionButtons() {
 				className="h-auto flex-col gap-2 py-4"
 				onClick={() => router.push("/flashcards")}
 			>
-				<BookOpen className="h-5 w-5 text-primary" />
+				<BookOpen className="h-5 w-5 text-foreground" />
 				<span className="text-sm font-medium">Flashcards</span>
 			</Button>
 			<Button
@@ -213,7 +213,7 @@ export function OnboardingActionButtons() {
 				className="h-auto flex-col gap-2 py-4"
 				onClick={() => router.push("/dashboard?tab=practice")}
 			>
-				<GraduationCap className="h-5 w-5 text-primary" />
+				<GraduationCap className="h-5 w-5 text-foreground" />
 				<span className="text-sm font-medium">Exam Papers</span>
 			</Button>
 		</div>

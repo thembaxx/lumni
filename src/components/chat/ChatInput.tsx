@@ -85,7 +85,7 @@ export function ChatInput({
 				description="Record your voice message and send it."
 			/>
 
-			<AnimatePresence>
+			<AnimatePresence initial={false}>
 				{imageProcessing.status !== "idle" && (
 					<ImageProcessingIndicator
 						state={imageProcessing}
@@ -98,7 +98,7 @@ export function ChatInput({
 				className={cn(
 					"bg-secondary/60 dark:bg-secondary/40 rounded-2xl p-4 transition-[transform,border-color,box-shadow] duration-300 border mt-2",
 					isFocused
-						? "ring-2 ring-primary/20 border-primary/30 scale-[1.01]"
+						? "ring-2 ring-[--system-accent]/20 border-[--system-accent]/30 scale-[1.01]"
 						: "border-border/30",
 				)}
 			>
@@ -144,9 +144,9 @@ export function ChatInput({
 									className={cn(
 										"inline-flex shrink-0 items-center justify-center rounded-lg w-10 h-10",
 										"bg-muted/60 hover:bg-muted text-muted-foreground cursor-pointer",
-										"transition-[transform,background-color,box-shadow] duration-150 ease-out",
+										"transition-[scale,background-color,box-shadow] duration-150 ease-out",
 										"active:scale-[0.96]",
-										"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
+										"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--system-accent]/50",
 										isLoading &&
 											"opacity-50 pointer-events-none cursor-not-allowed",
 									)}
@@ -189,7 +189,7 @@ export function ChatInput({
 							variant="ghost"
 							size="icon"
 							onClick={() => setVoiceDialogOpen(true)}
-							className="w-8 h-8 rounded-lg bg-muted/60 hover:bg-muted toolbutton"
+							className="rounded-lg bg-muted/60 hover:bg-muted toolbutton"
 							disabled={isLoading}
 						>
 							<HugeiconsIcon

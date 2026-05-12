@@ -9,7 +9,6 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Camera, Play, RefreshCw, Square, Upload, X } from "lucide-react";
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { ChatInput } from "@/components/chat/ChatInput";
 import { ImageProcessingIndicator } from "@/components/chat/ImageProcessingIndicator";
@@ -75,11 +74,11 @@ export function ChatDialog({ open, onOpenChange }: ChatDialogProps) {
 			<DialogContent className="flex flex-col translate-x-0 translate-y-0 w-full h-full max-w-none rounded-none p-0 m-0 top-0 left-0 bg-background/95 backdrop-blur-xl border-0 gap-0">
 				<div className="px-4 py-3 border-b border-border/30 flex flex-row items-center justify-between shrink-0">
 					<div className="flex items-center gap-3">
-						<div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-							<HugeiconsIcon
-								icon={MessageIcon}
-								className="w-4 h-4 text-primary"
-							/>
+<div className="w-8 h-8 rounded-full bg-[--system-accent]/10 flex items-center justify-center">
+						<HugeiconsIcon
+							icon={MessageIcon}
+							className="w-4 h-4 text-foreground"
+						/>
 						</div>
 						<span className="text-lg font-semibold">Study Assistant</span>
 					</div>
@@ -90,7 +89,7 @@ export function ChatDialog({ open, onOpenChange }: ChatDialogProps) {
 						<WelcomeState />
 					) : (
 						<div className="flex-1 overflow-y-auto p-4 space-y-3">
-							<AnimatePresence mode="popLayout">
+							<AnimatePresence mode="popLayout" initial={false}>
 								{chat.messages.map((message) => (
 									<MessageBubble
 										key={message.id}

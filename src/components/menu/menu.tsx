@@ -3,6 +3,7 @@
 import { Menu09Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { ThemeSwitcher } from "@/components/theme";
+import { Button } from "@/components/ui/button";
 import {
 	Drawer,
 	DrawerContent,
@@ -20,12 +21,12 @@ export function Menu({ children }: MenuProps) {
 	return (
 		<Drawer direction="bottom">
 			<DrawerTrigger asChild>
-				<button className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center hover:bg-accent transition-colors duration-200 btn-ghost-hover focus-ring focus-visible:outline-none">
+				<Button variant="secondary" size="icon" className="rounded-full">
 					<HugeiconsIcon
 						icon={Menu09Icon}
 						className="w-4 h-4 transition-transform duration-200"
 					/>
-				</button>
+				</Button>
 			</DrawerTrigger>
 			<DrawerContent className="mx-auto max-w-lg mt-0 rounded-b-2xl min-h-[40dvh] animate-fade-in-scale">
 				<DrawerHeader className="text-left">

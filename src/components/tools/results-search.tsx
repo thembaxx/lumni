@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
 	type ExamResult,
 	examYears,
@@ -52,25 +53,20 @@ export function ResultsSearch() {
 		<div className="p-4 h-full flex flex-col">
 			<div className="space-y-4 mb-6">
 				<div>
-					<label className="text-sm font-medium mb-2 block">Year</label>
+					<Label className="mb-2">Year</Label>
 					<div className="flex gap-2 overflow-x-auto pb-2">
 						{examYears.map((year) => (
-							<button
+							<Button
 								key={year}
+								variant={selectedYear === year ? "default" : "ghost"}
 								onClick={() => {
 									setSelectedYear(year);
 									setResults([]);
 									setSearchQuery("");
 								}}
-								className={cn(
-									"px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-colors active:scale-[0.96] transition-transform duration-150",
-									selectedYear === year
-										? "bg-primary text-primary-foreground"
-										: "bg-muted text-muted-foreground",
-								)}
 							>
 								{year}
-							</button>
+							</Button>
 						))}
 					</div>
 				</div>

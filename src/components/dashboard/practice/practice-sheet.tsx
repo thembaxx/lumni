@@ -45,16 +45,18 @@ export function PracticeSheet({ open, onOpenChange }: PracticeSheetProps) {
 				className="min-h-[95dvh] h-full flex flex-col max-h-[95dvh] w-full mt-0 rounded-none! animate-fade-in-scale"
 			>
 				<SheetHeader className="relative flex flex-row items-center justify-center pr-12">
-					<button
+					<Button
+						variant="ghost"
+						size="icon"
 						onClick={() => onOpenChange(false)}
-						className="absolute right-0 p-2 rounded-lg hover:bg-muted/50 transition-colors"
+						className="absolute right-0"
 						aria-label="Close practice sheet"
 					>
 						<HugeiconsIcon
 							icon={Cancel01Icon}
 							className="w-5 h-5 text-muted-foreground"
 						/>
-					</button>
+					</Button>
 					<SheetTitle className="text-base">Practice</SheetTitle>
 				</SheetHeader>
 				<div

@@ -26,6 +26,7 @@ import {
 	Zap,
 } from "lucide-react";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
 import { useFilteredSubjects } from "@/hooks";
 import { cn } from "@/lib/utils";
 import { Input } from "../ui/input";
@@ -103,15 +104,15 @@ export function SubjectSelector({ onSelect, className }: SubjectSelectorProps) {
 					const isSelected = selected === subject.id;
 
 					return (
-						<button
+						<Button
 							key={subject.id}
+							variant="ghost"
 							onClick={() => handleSelect(subject.id)}
 							disabled={isGenerating}
 							className={cn(
-								"group p-4 rounded-2xl border border-border/60 text-left transition-[border-color,box-shadow] duration-200 ease-out flex flex-col items-start",
+								"group p-4 rounded-2xl border border-border/60 text-left flex flex-col items-start h-auto w-full",
 								"hover:-translate-y-0.5 hover:border-border hover:shadow-lg hover:shadow-black/5 dark:hover:shadow-black/20",
-								"active:translate-y-0 active:scale-[0.98] active:shadow-none",
-								"focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50",
+								"focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:border-primary/50",
 								"disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none",
 								isSelected &&
 									"border-primary bg-primary/5 dark:bg-primary/10 shadow-md shadow-primary/10",
@@ -132,7 +133,7 @@ export function SubjectSelector({ onSelect, className }: SubjectSelectorProps) {
 							<p className="text-xs text-muted-foreground mt-1.5 line-clamp-2 leading-relaxed">
 								{subject.description}
 							</p>
-						</button>
+						</Button>
 					);
 				})}
 			</div>

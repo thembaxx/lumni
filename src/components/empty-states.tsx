@@ -46,7 +46,7 @@ export function EmptyState({
 			<div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-muted">
 				<Icon className="h-6 w-6 text-muted-foreground" />
 			</div>
-			<h3 className="mb-2 text-lg font-semibold">{title}</h3>
+			<h3 className="mb-2 text-lg font-semibold text-wrap-balance">{title}</h3>
 			<p className="mb-4 max-w-sm text-sm text-muted-foreground">
 				{description}
 			</p>
@@ -111,7 +111,7 @@ export function EmptyStateWithIllustration({
 					) : null}
 				</div>
 			</div>
-			<h3 className="mb-2 text-xl font-semibold">{title}</h3>
+			<h3 className="mb-2 text-xl font-semibold text-wrap-balance">{title}</h3>
 			<p className="mb-6 max-w-md text-sm text-muted-foreground">
 				{description}
 			</p>

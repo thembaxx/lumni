@@ -6,6 +6,13 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
 import type { GradingResult, Question } from "@/types/questions";
@@ -103,17 +110,21 @@ export default function DevEnginePage() {
 							max={20}
 							placeholder="Count"
 						/>
-						<select
+						<Select
 							value={questionType}
-							onChange={(e) => setQuestionType(e.target.value)}
-							className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+							onValueChange={(v) => v && setQuestionType(v)}
 						>
-							{types.map((t) => (
-								<option key={t} value={t}>
-									{t}
-								</option>
-							))}
-						</select>
+							<SelectTrigger>
+								<SelectValue />
+							</SelectTrigger>
+							<SelectContent>
+								{types.map((t) => (
+									<SelectItem key={t} value={t}>
+										{t}
+									</SelectItem>
+								))}
+							</SelectContent>
+						</Select>
 					</div>
 					<Button
 						onClick={handleGenerate}

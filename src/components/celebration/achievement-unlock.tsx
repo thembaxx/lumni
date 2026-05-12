@@ -40,7 +40,7 @@ export function AchievementUnlock({
 	useLottie = false,
 }: AchievementUnlockProps) {
 	return (
-		<AnimatePresence>
+		<AnimatePresence initial={false}>
 			{visible && (
 				<motion.div
 					initial={{ opacity: 0 }}
@@ -91,7 +91,9 @@ export function AchievementUnlock({
 										Achievement Unlocked!
 									</span>
 								</div>
-								<h2 className="text-2xl font-bold mb-2">{name}</h2>
+								<h2 className="text-2xl font-bold mb-2 text-wrap-balance">
+									{name}
+								</h2>
 								<p className="text-muted-foreground mb-4">{description}</p>
 								<div className="inline-flex items-center gap-2 bg-amber-500/20 text-amber-600 px-4 py-2 rounded-full">
 									<span className="text-lg font-bold">+{xpReward} XP</span>

@@ -1,0 +1,141 @@
+"use client";
+
+import { Target, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
+import { Badge } from "@/components/ui/badge";
+import { TimerDisplay } from "@/components/shared/timer-display";
+import { cn } from "@/lib/utils";
+
+interface AssessmentHeaderProps {
+  title: string;
+  elapsedTime: number;
+  currentQuestionIndex: number;
+  totalQuestions: number;
+  progressValue: number;
+  onQuit?: () => void;
+  showAccuracy?: boolean;
+  accuracy?: number;
+  difficulty?: "easy" | "medium" | "hard";
+  showMarks?: boolean;
+  marks?: number;
+  totalMarks?: number;
+  showProgress?: boolean;
+  timeRemaining?: number;
+  formatTime?: (seconds: number) => string;
+  className?: string;
+}
+
+const difficultyColors = {
+  easy: "bg-green-500/20 text-green-600 dark:text-green-400 border-green-500/30",
+  medium:
+    "bg-yellow-500/20 text-yellow-600 dark:text-yellow-400 border-yellow-500/30",
+  hard: "bg-red-500/20 text-red-600 dark:text-red-400 border-red-500/30",
+};
+
+export function AssessmentHeader({
+  title,
+  elapsedTime,
+  currentQuestionIndex,
+  totalQuestions,
+  progressValue,
+  onQuit,
+  showAccuracy,
+  accuracy,
+  difficulty,
+  showMarks,
+  marks,
+  totalMarks,
+  showProgress = true,
+  timeRemaining,
+  formatTime,
+  className,
+}: AssessmentHeaderProps) {
+  const isExam = timeRemaining !== undefined;
+
+  return (
+    <div className={cn("space-y-4", className)}>
+      <div className="flex items-center justify-between">
+        {/* Left: Quit button */}
+        {onQuit && (
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onQuit}
+            className="font-medium text-muted-foreground hover:text-foreground hover:bg-destructive/10"
+          >
+            <span className="text-lg">×</span>
+            <span className="ml-1">Quit</span>
+          </Button>
+        )}
+
+        {/* Center: Timer + difficulty/accuracy + question counter */}
+        <div className="flex items-center gap-2">
+          <TimerDisplay
+            elapsedTime={elapsedTime}
+            variant="inline"
+            showIcon={false}
+            formatTimeFn={formatTime}
+          />
+
+          {isExam && timeRemaining !== undefined && (
+            <>
+              <span className="text-muted-foreground">·</span>
+              <span className="text-sm font-mono text-muted-foreground">
+                {typeof formatTime === "function"
+                  ? formatTime(timeRemaining)
+                  : `${Math.floor(timeRemaining / 60)}m ${timeRemaining % 60}s`}
+              </span>
+            </>
+          )}
+
+          <span className="text-muted-foreground">·</span>
+
+          {difficulty && (
+            <>
+              <Badge
+                variant="outline"
+                className={cn(
+                  "font-mono text-xs border",
+                  difficultyColors[difficulty],
+                )}
+              >
+                {difficulty}
+              </Badge>
+              <span className="text-muted-foreground">·</span>
+            </>
+          )}
+
+          {showAccuracy && accuracy !== undefined && (
+            <>
+              <Target className="size-3.5 text-muted-foreground" />
+              <span className="text-sm font-semibold tabular-nums text-muted-foreground">
+                {accuracy}%
+              </span>
+              <span className="text-muted-foreground">·</span>
+            </>
+          )}
+
+          <span className="text-sm font-mono text-muted-foreground">
+            {currentQuestionIndex + 1}/{totalQuestions}
+          </span>
+        </div>
+
+        {/* Right: Marks display (exam context) */}
+        {showMarks && marks !== undefined && totalMarks !== undefined && (
+          <div className="flex items-center gap-1.5">
+            <span className="text-sm text-muted-foreground">Marks:</span>
+            <span className="text-sm font-semibold tabular-nums text-muted-foreground">
+              {marks}/{totalMarks}
+            </span>
+          </div>
+        )}
+      </div>
+
+      {/* Optional progress bar */}
+      {showProgress && (
+        <Progress value={progressValue} className="h-1.5" />
+      )}
+    </div>
+  );
+}

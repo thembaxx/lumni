@@ -58,7 +58,9 @@ export function AccuracyBar({
 						<span className="text-sm text-muted-foreground">
 							{getAccuracyLabel(accuracy)}
 						</span>
-						<span className="text-sm font-medium">{accuracy}%</span>
+						<span className="text-sm font-medium tabular-nums">
+							{accuracy}%
+						</span>
 					</div>
 				)}
 				<div
@@ -86,7 +88,7 @@ export function AccuracyBar({
 			{showLabel && (
 				<div className="flex items-center justify-between mb-2">
 					<span className="text-sm text-muted-foreground">Accuracy</span>
-					<span className="text-sm font-medium">{accuracy}%</span>
+					<span className="text-sm font-medium tabular-nums">{accuracy}%</span>
 				</div>
 			)}
 			<div

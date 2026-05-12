@@ -7,6 +7,14 @@ import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import rehypeKatex from "rehype-katex";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow,
+} from "@/components/ui/table";
 import { normalizeMathDelimiters } from "@/lib/katex-utils";
 import { cn } from "@/lib/utils";
 
@@ -130,7 +138,7 @@ export function MarkdownRenderer({
 					},
 					blockquote({ children }) {
 						return (
-							<blockquote className="border-l-4 border-primary/30 pl-4 italic my-3">
+							<blockquote className="border-l-4 border-[--system-accent]/30 pl-4 italic my-3">
 								{children}
 							</blockquote>
 						);
@@ -150,7 +158,7 @@ export function MarkdownRenderer({
 						return (
 							<a
 								href={href}
-								className="text-primary underline hover:text-primary/80"
+								className="text-foreground underline hover:text-foreground/80"
 								target="_blank"
 								rel="noopener noreferrer"
 							>
@@ -161,28 +169,24 @@ export function MarkdownRenderer({
 					table({ children }) {
 						return (
 							<div className="overflow-x-auto my-3">
-								<table className="min-w-full divide-y divide-border border rounded-lg">
-									{children}
-								</table>
+								<Table>{children}</Table>
 							</div>
 						);
 					},
 					thead({ children }) {
-						return <thead className="bg-muted">{children}</thead>;
+						return <TableHeader>{children}</TableHeader>;
 					},
 					th({ children }) {
-						return (
-							<th className="px-3 py-2 text-left text-sm font-semibold">
-								{children}
-							</th>
-						);
+						return <TableHead>{children}</TableHead>;
+					},
+					tr({ children }) {
+						return <TableRow>{children}</TableRow>;
 					},
 					td({ children }) {
-						return (
-							<td className="px-3 py-2 text-sm border-t border-border">
-								{children}
-							</td>
-						);
+						return <TableCell>{children}</TableCell>;
+					},
+					tbody({ children }) {
+						return <TableBody>{children}</TableBody>;
 					},
 					hr() {
 						return <hr className="my-4 border-border" />;

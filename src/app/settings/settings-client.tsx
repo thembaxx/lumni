@@ -11,6 +11,7 @@ import {
 	DataTab,
 	StudyTab,
 } from "@/components/settings/tabs";
+import { Button } from "@/components/ui/button";
 import { SegmentedControl } from "@/components/ui/segmented-control";
 import {
 	BETA_FEATURES_KEY,
@@ -143,17 +144,17 @@ function SettingsContent() {
 				</div>
 
 				<div className="px-4 pb-8">
-					<button
+					<Button
 						type="button"
 						onClick={() => {
 							saveToStorage(STUDY_PREFS_KEY, studyPrefs);
 							saveToStorage(NOTIFICATION_SETTINGS_KEY, notifications);
 							saveToStorage(BETA_FEATURES_KEY, betaFeatures);
 						}}
-						className="w-full h-11 rounded-[12px] bg-[--system-accent] text-[#ffffff] text-sm font-semibold hover:opacity-90 transition-opacity"
+						className="w-full"
 					>
 						Save Changes
-					</button>
+					</Button>
 				</div>
 			</div>
 		</div>

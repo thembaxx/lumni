@@ -143,7 +143,7 @@ export function ExamEngine({
 
 			<div className="flex flex-1 min-h-0">
 				<aside
-					className={`w-64 border-r bg-muted/20 shrink-0 overflow-hidden transition-all ${
+					className={`w-64 border-r bg-muted/20 shrink-0 overflow-hidden transition-[width,opacity] ${
 						sidebarOpen
 							? "max-lg:fixed max-lg:inset-0 max-lg:z-50"
 							: "max-lg:w-0 max-lg:hidden"

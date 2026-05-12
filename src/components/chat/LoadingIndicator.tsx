@@ -40,7 +40,7 @@ export function LoadingIndicator() {
 					transition={{ repeat: Infinity, duration: 0.6, delay: 0.3 }}
 				/>
 			</div>
-			<AnimatePresence mode="wait">
+			<AnimatePresence mode="wait" initial={false}>
 				<motion.span
 					key={messageIndex}
 					initial={{ opacity: 0, y: 4 }}

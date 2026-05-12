@@ -6,24 +6,24 @@
 @custom-variant dark (&:is(.dark *));
 
 /* ========================================
-   iOS DESIGN SYSTEM
-   Apple HIG-inspired tokens with monochrome base + blue accent
+   iOS DESIGN SYSTEM — Monochrome
+   Neutral palette with semantic color accents only
    ======================================== */
 
 :root {
-	/* iOS Color Tokens */
+	/* iOS Color Tokens — Monochrome */
 	--system-background: #ffffff;
 	--system-grouped-background: #f2f2f7;
 	--system-surface: #ffffff;
 	--system-surface-secondary: #f2f2f7;
 	--system-separator: rgba(60, 60, 67, 0.12);
-	--system-accent: #007AFF;
+	--system-accent: #2C2C2E;
 	--system-text-primary: #000000;
 	--system-text-secondary: rgba(60, 60, 67, 0.6);
 	--system-text-tertiary: rgba(60, 60, 67, 0.3);
-	--system-destructive: #FF3B30;
-	--system-green: #34C759;
-	--system-blue: #007AFF;
+	--system-destructive: #3C3C3C;
+	--system-destructive-foreground: #ffffff;
+	--system-success: #34C759;
 
 	/* iOS Blur/Material Tokens (for minimal glass on tab bar, sheets) */
 	--system-blur: 20px;
@@ -115,12 +115,12 @@
 	--system-surface: #1c1c1e;
 	--system-surface-secondary: #2c2c2e;
 	--system-separator: rgba(84, 84, 88, 0.36);
-	--system-accent: #0A84FF;
+	--system-accent: #5A5A5C;
 	--system-text-primary: #ffffff;
 	--system-text-secondary: rgba(235, 235, 245, 0.6);
 	--system-text-tertiary: rgba(235, 235, 245, 0.3);
-	--system-destructive: #FF453A;
-	--system-green: #30D158;
+	--system-destructive: #5A5A5C;
+	--system-success: #30D158;
 
 	--system-material-light: rgba(28, 28, 30, 0.85);
 

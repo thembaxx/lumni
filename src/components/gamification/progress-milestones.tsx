@@ -40,9 +40,9 @@ export function ProgressMilestones({
 								<motion.div
 									className={`relative z-10 flex h-10 w-10 items-center justify-center rounded-full border-4 transition-colors transition-border-color ${
 										isUnlocked
-											? "bg-primary border-primary text-primary-foreground"
+											? "bg-[--system-accent] border-[--system-accent] text-background"
 											: isCurrent
-												? "bg-primary/20 border-primary animate-pulse"
+												? "bg-[--system-accent]/20 border-[--system-accent] animate-pulse"
 												: "bg-card border-border"
 									}`}
 									whileHover={{ scale: 1.1 }}
@@ -65,7 +65,7 @@ export function ProgressMilestones({
 								<div className="mt-2 text-center">
 									<p
 										className={`text-xs font-medium ${
-											isUnlocked ? "text-primary" : "text-muted-foreground"
+											isUnlocked ? "text-[--system-accent]" : "text-muted-foreground"
 										}`}
 									>
 										{milestone.streak} days

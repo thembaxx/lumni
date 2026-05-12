@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 export type ProgressDotsVariant = "quiz" | "engine" | "results";
@@ -15,13 +16,13 @@ interface ProgressDotsProps {
 
 const variantStyles = {
 	quiz: {
-		current: "bg-primary",
+		current: "bg-[--system-accent]",
 		completed: "bg-green-500",
 		pending: "bg-muted",
 	},
 	engine: {
-		current: "bg-primary",
-		completed: "bg-primary/50",
+		current: "bg-[--system-accent]",
+		completed: "bg-[--system-accent]/50",
 		pending: "bg-muted",
 	},
 	results: {
@@ -62,14 +63,15 @@ export function ProgressDots({
 				}
 
 				return (
-					<button
+					<Button
 						key={idx}
 						type="button"
+						variant="ghost"
 						onClick={() => onDotClick?.(idx)}
 						className={cn(
-							"h-1.5 w-1.5 rounded-full transition-[background-color,scale] duration-150 ease-out",
+							"h-1.5 w-1.5 rounded-full p-0 min-h-0",
 							dotClass,
-							onDotClick && "cursor-pointer hover:scale-125",
+							onDotClick && "hover:scale-125",
 						)}
 						disabled={!onDotClick}
 					/>

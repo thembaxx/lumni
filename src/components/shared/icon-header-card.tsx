@@ -26,14 +26,14 @@ export function IconHeaderCard({
 	return (
 		<Card
 			className={cn(
-				isHighlighted && "bg-primary/5 border-primary/20",
+				isHighlighted && "bg-[--system-accent]/5 border-[--system-accent]/20",
 				className,
 			)}
 		>
 			<CardHeader className="pb-2">
 				<CardTitle className="text-base flex items-center gap-2">
 					<Icon
-						className={cn(iconClassName, isHighlighted && "text-primary")}
+						className={cn(iconClassName, isHighlighted && "text-foreground")}
 					/>
 					{title}
 				</CardTitle>

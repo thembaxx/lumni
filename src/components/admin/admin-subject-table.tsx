@@ -45,7 +45,7 @@ export function SubjectTable({
 					No subjects
 				</div>
 			) : (
-				<AnimatePresence mode="popLayout">
+				<AnimatePresence mode="popLayout" initial={false}>
 					{subjects.map((subject, index) => (
 						<motion.div
 							key={subject.id}

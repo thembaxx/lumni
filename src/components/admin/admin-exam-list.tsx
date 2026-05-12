@@ -111,7 +111,6 @@ export function AdminExamList() {
 										<Button
 											variant="ghost"
 											size="icon"
-											className="h-8 w-8"
 											onClick={() => router.push(`/exam/${exam.id}`)}
 											title="Take exam"
 										>
@@ -120,7 +119,7 @@ export function AdminExamList() {
 										<Button
 											variant="ghost"
 											size="icon"
-											className="h-8 w-8 text-destructive hover:text-destructive"
+											className="text-destructive hover:text-destructive"
 											onClick={() => handleDelete(exam.id)}
 											disabled={deleting === exam.id}
 											title="Delete exam"

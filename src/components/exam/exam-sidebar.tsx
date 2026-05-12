@@ -1,6 +1,7 @@
 "use client";
 
 import { Flag } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import type { ExamPaper } from "@/types/exam-paper";
@@ -73,24 +74,25 @@ export function ExamSidebar({
 											);
 
 											return (
-												<button
+												<Button
 													key={part.id}
 													type="button"
+													variant="ghost"
 													onClick={() => onNavigate(fullId)}
 													className={cn(
-														"w-8 h-8 rounded text-xs font-medium transition-all",
+														"size-8 rounded text-xs font-medium",
 														currentPartId === fullId &&
 															"ring-2 ring-primary ring-offset-1",
 														status === "answered" &&
-															"bg-emerald-100 text-emerald-700",
+															"bg-emerald-100 text-emerald-700 hover:bg-emerald-100",
 														status === "flagged" &&
-															"bg-amber-100 text-amber-700",
+															"bg-amber-100 text-amber-700 hover:bg-amber-100",
 														status === "unanswered" &&
 															"bg-muted text-muted-foreground hover:bg-muted/80",
 													)}
 												>
 													{part.id.split(".").pop()}
-												</button>
+												</Button>
 											);
 										})}
 									</div>

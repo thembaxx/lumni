@@ -13,16 +13,16 @@ export function XpLevelCard({ levelInfo, totalXp }: XpLevelCardProps) {
 		<motion.div
 			initial={{ opacity: 0, y: 10 }}
 			animate={{ opacity: 1, y: 0 }}
-			className="relative overflow-hidden rounded-2xl bg-primary/10 border border-border/50 p-4"
+			className="relative overflow-hidden rounded-2xl bg-[--system-accent]/10 border border-border/50 p-4"
 		>
 			<div className="flex items-center gap-4">
 				<motion.div
-					className="relative flex h-14 w-14 items-center justify-center rounded-full bg-primary shadow-lg"
+					className="relative flex h-14 w-14 items-center justify-center rounded-full bg-[--system-accent] shadow-lg"
 					initial={{ scale: 0.8 }}
 					animate={{ scale: 1 }}
 					transition={{ type: "spring", stiffness: 300, damping: 20 }}
 				>
-					<span className="text-2xl font-bold text-primary-foreground">
+					<span className="text-2xl font-bold text-background">
 						{levelInfo.level}
 					</span>
 					<motion.div
@@ -50,7 +50,7 @@ export function XpLevelCard({ levelInfo, totalXp }: XpLevelCardProps) {
 
 					<div className="relative h-3 bg-secondary rounded-full overflow-hidden">
 						<motion.div
-							className="absolute inset-y-0 left-0 rounded-full bg-primary"
+							className="absolute inset-y-0 left-0 rounded-full bg-[--system-accent]"
 							initial={{ width: 0 }}
 							animate={{ width: `${levelInfo.progress}%` }}
 							transition={{ duration: 0.8, ease: "easeOut" }}

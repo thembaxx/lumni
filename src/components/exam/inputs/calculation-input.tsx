@@ -4,6 +4,7 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
 interface CalculationInputProps {
@@ -26,7 +27,7 @@ export function CalculationInput({
 	return (
 		<div className="space-y-3">
 			<div className="flex items-center gap-3">
-				<label className="text-sm font-medium">Answer:</label>
+				<Label>Answer:</Label>
 				<Input
 					value={answerValue}
 					onChange={(e) => onAnswerChange(e.target.value)}

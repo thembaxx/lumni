@@ -30,8 +30,8 @@ export function StatCard({
 	label,
 	value,
 	trend,
-	colorClass = "text-primary",
-	bgClass = "bg-primary/10",
+	colorClass = "text-foreground",
+	bgClass = "bg-[--system-accent]/10",
 	variant = "default",
 	className,
 	delay = 0,
@@ -117,7 +117,7 @@ export function StatCard({
 				</div>
 				<div
 					className={cn(
-						"text-2xl font-bold flex items-center gap-2",
+						"text-2xl font-bold flex items-center gap-2 tabular-nums",
 						trendColor,
 					)}
 				>

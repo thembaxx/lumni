@@ -135,12 +135,13 @@ export function TodayFocusCard({
 								{subject}
 							</p>
 							<SubjectsDrawer onSelect={(name) => setSelectedSubject(name)}>
-								<button
+								<Button
 									type="button"
-									className="text-[12px] text-[oklch(var(--muted-foreground))] hover:text-[oklch(var(--foreground))] transition-colors underline-offset-2 hover:underline"
+									variant="link"
+									className="text-[12px] text-[oklch(var(--muted-foreground))] hover:text-[oklch(var(--foreground))]"
 								>
 									change
-								</button>
+								</Button>
 							</SubjectsDrawer>
 						</div>
 						<h3 className="text-[17px] font-semibold text-[oklch(var(--foreground))] leading-snug tracking-tight text-wrap balance">
@@ -158,7 +159,7 @@ export function TodayFocusCard({
 						onClick={handleStart}
 						disabled={showSuccess}
 					>
-						<AnimatePresence mode="wait">
+						<AnimatePresence mode="wait" initial={false}>
 							{showSuccess ? (
 								<motion.span
 									key="success"

@@ -183,12 +183,14 @@ export function AiSolver() {
 									fill
 									className="object-cover transition-transform group-hover:scale-110"
 								/>
-								<button
+								<Button
+									variant="destructive"
+									size="icon-xs"
 									onClick={() => setImageUrl(null)}
-									className="absolute top-1 right-1 bg-destructive/80 hover:bg-destructive text-destructive-foreground p-1 rounded-full backdrop-blur-sm transition-colors"
+									className="absolute top-1 right-1"
 								>
 									<X className="w-3 h-3" />
-								</button>
+								</Button>
 							</div>
 						)}
 					</div>

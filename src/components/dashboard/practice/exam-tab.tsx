@@ -74,23 +74,23 @@ export function ExamTab({ className }: ExamTabProps) {
 					transition={{ duration: 0.3, ease: "easeOut" }}
 					className="space-y-6"
 				>
-					<div className="relative space-y-4 border rounded-2xl">
+					<div className="relative space-y-4 border rounded-2xl shadow-sm">
 						<Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/60" />
 						<Input
 							type="text"
 							placeholder="Search exams..."
 							value={searchQuery}
 							onChange={(e) => setSearchQuery(e.target.value)}
-							className="h-10 pl-10 pr-10 rounded-full bg-secondary/50 border-0 text-sm placeholder:text-muted-foreground/60 focus-visible:ring-1 focus-visible:ring-primary/30"
+							className="h-10 pl-10 pr-10 rounded-full bg-secondary/50 border-0 text-sm placeholder:text-muted-foreground/60 focus-visible:ring-1 focus-visible:ring-[--system-accent]/30"
 						/>
-						<AnimatePresence>
+						<AnimatePresence initial={false}>
 							{searchQuery && (
 								<m.button
 									initial={{ opacity: 0, scale: 0.8 }}
 									animate={{ opacity: 1, scale: 1 }}
 									exit={{ opacity: 0, scale: 0.8 }}
 									onClick={() => setSearchQuery("")}
-									className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 flex items-center justify-center rounded-full bg-muted/60 hover:bg-muted text-muted-foreground hover:text-foreground"
+									className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center rounded-full bg-muted/60 hover:bg-muted text-muted-foreground hover:text-foreground active:scale-[0.96] transition-[scale] size-7"
 									type="button"
 								>
 									<X className="w-3 h-3" />
@@ -104,7 +104,7 @@ export function ExamTab({ className }: ExamTabProps) {
 							<Button
 								variant={selectedSubject ? "default" : "secondary"}
 								size="sm"
-								className="h-8 border"
+								className="border"
 							>
 								{selectedSubject || "Subject"}
 								<HugeiconsIcon
@@ -114,7 +114,7 @@ export function ExamTab({ className }: ExamTabProps) {
 							</Button>
 						</SubjectsDrawer>
 
-						<ButtonGroup className="border rounded-full h-8">
+						<ButtonGroup className="border rounded-full h-9">
 							<Button
 								variant={selectedSession === "all" ? "default" : "secondary"}
 								size="sm"
@@ -138,14 +138,14 @@ export function ExamTab({ className }: ExamTabProps) {
 							</Button>
 						</ButtonGroup>
 
-						<AnimatePresence>
+						<AnimatePresence initial={false}>
 							{hasActiveFilters && (
 								<m.button
 									initial={{ opacity: 0, scale: 0.9 }}
 									animate={{ opacity: 1, scale: 1 }}
 									exit={{ opacity: 0, scale: 0.9 }}
 									onClick={clearFilters}
-									className="h-7 px-2.5 flex items-center text-xs text-muted-foreground hover:text-foreground"
+									className="h-9 px-2.5 flex items-center text-xs text-muted-foreground hover:text-foreground active:scale-[0.96] transition-[scale]"
 									type="button"
 								>
 									<X className="w-3.5 h-3.5" />
@@ -158,7 +158,7 @@ export function ExamTab({ className }: ExamTabProps) {
 						<Button
 							variant={selectedYear === null ? "default" : "secondary"}
 							size="sm"
-							className="shrink-0 h-7 text-xs font-medium"
+							className="shrink-0 h-9 text-xs font-medium"
 							onClick={() => handleYearSelect(null)}
 						>
 							All
@@ -168,7 +168,7 @@ export function ExamTab({ className }: ExamTabProps) {
 								key={year}
 								variant={selectedYear === year ? "default" : "secondary"}
 								size="sm"
-								className="shrink-0 h-7 text-xs font-medium"
+								className="shrink-0 h-9 text-xs font-medium"
 								onClick={() => handleYearSelect(year)}
 							>
 								{year}
@@ -177,7 +177,7 @@ export function ExamTab({ className }: ExamTabProps) {
 					</div>
 				</m.div>
 
-				<AnimatePresence mode="wait">
+				<AnimatePresence mode="wait" initial={false}>
 					<div className="grow">
 						{isLoading ? (
 							<m.div

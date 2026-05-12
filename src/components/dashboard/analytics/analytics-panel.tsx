@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { useMemo } from "react";
 import { AccuracyBar } from "@/components/shared/accuracy-bar";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import {
@@ -26,7 +27,7 @@ export function AnalyticsPanel() {
 	if (isLoading) {
 		return (
 			<div className="flex items-center justify-center p-8">
-				<div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+				<div className="animate-spin rounded-full h-8 w-8 border-b-2 border-foreground" />
 			</div>
 		);
 	}
@@ -41,7 +42,7 @@ export function AnalyticsPanel() {
 				</p>
 				<a
 					href="/quiz"
-					className="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+					className="inline-flex items-center justify-center rounded-md text-sm font-medium bg-[--system-accent] text-background hover:bg-[--system-accent]/90 h-10 px-4 py-2"
 				>
 					Start Quiz
 				</a>
@@ -53,12 +54,9 @@ export function AnalyticsPanel() {
 		<div className="space-y-6">
 			<div className="flex items-center justify-between">
 				<h2 className="text-2xl font-bold">Analytics</h2>
-				<button
-					onClick={refresh}
-					className="text-sm text-muted-foreground hover:text-foreground"
-				>
+				<Button variant="ghost" onClick={refresh}>
 					Refresh
-				</button>
+				</Button>
 			</div>
 
 			<OverallStatsCard analytics={analytics} />
@@ -146,10 +144,10 @@ function StatCard({
 
 function InsightsCard({ insights }: { insights: string[] }) {
 	return (
-		<Card className="bg-primary/5 border-primary/20">
+		<Card className="bg-[--system-accent]/5 border-[--system-accent]/20">
 			<CardHeader className="pb-2">
 				<CardTitle className="text-base flex items-center gap-2">
-					<Brain className="h-4 w-4 text-primary" />
+					<Brain className="h-4 w-4 text-foreground" />
 					Insights
 				</CardTitle>
 			</CardHeader>
@@ -157,7 +155,7 @@ function InsightsCard({ insights }: { insights: string[] }) {
 				<ul className="space-y-2">
 					{insights.map((insight, i) => (
 						<li key={i} className="text-sm flex items-start gap-2">
-							<span className="text-primary">•</span>
+							<span className="text-foreground">•</span>
 							{insight}
 						</li>
 					))}
@@ -271,7 +269,7 @@ function WeeklyProgressCard({
 					{progress.map((day, i) => (
 						<div key={i} className="flex-1 flex flex-col items-center gap-1">
 							<div
-								className="w-full bg-primary/80 rounded-t"
+								className="w-full bg-[--system-accent]/80 rounded-t"
 								style={{ height: `${day.accuracy * 100}%`, minHeight: "4px" }}
 							/>
 							<span className="text-xs text-muted-foreground">

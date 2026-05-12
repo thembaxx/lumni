@@ -31,7 +31,7 @@ function Alert({
 	const iOSEase: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 	return (
-		<AnimatePresence>
+		<AnimatePresence initial={false}>
 			{open && (
 				<div className="fixed inset-0 z-50 flex items-center justify-center p-8">
 					<motion.div

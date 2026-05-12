@@ -27,9 +27,9 @@ function ActionButton({
 				onClick={onClick}
 				className="h-10 pl-3 pr-5 w-full justify-start gap-2.5 text-[--system-text-primary]"
 			>
-				<span className="text-primary">
-					<Icon className="w-4 h-4" />
-				</span>
+<span className="text-[--system-accent]">
+						<Icon className="w-4 h-4" />
+					</span>
 				<span className="text-sm font-medium">{label}</span>
 			</Button>
 		</div>

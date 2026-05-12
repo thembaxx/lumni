@@ -22,7 +22,7 @@ export function LevelUp({
 	useLottie = false,
 }: LevelUpProps) {
 	return (
-		<AnimatePresence>
+		<AnimatePresence initial={false}>
 			{visible && (
 				<motion.div
 					initial={{ opacity: 0 }}
@@ -87,7 +87,9 @@ export function LevelUp({
 									<Star className="w-6 h-6 fill-white" />
 									<span className="text-4xl font-bold">{level}</span>
 								</motion.div>
-								<h2 className="text-2xl font-bold mb-2">{title}</h2>
+								<h2 className="text-2xl font-bold mb-2 text-wrap-balance">
+									{title}
+								</h2>
 								<p className="text-muted-foreground mb-4">
 									{xpToNext > 0
 										? `${xpToNext} XP to next level`

@@ -44,7 +44,7 @@ export function DailyChallenges({ challenges }: DailyChallengesProps) {
 						className={`relative overflow-hidden rounded-xl p-3 transition-colors ${
 							challenge.completed
 								? "bg-green-500/10 border border-green-500/20"
-								: "bg-card border border-border/50 hover:border-primary/30"
+								: "bg-card border border-border/50 hover:border-[--system-accent]/30"
 						}`}
 					>
 						<div className="flex items-center gap-3">
@@ -79,7 +79,7 @@ export function DailyChallenges({ challenges }: DailyChallengesProps) {
 								{!challenge.completed && challenge.type === "questions" && (
 									<div className="relative h-1.5 bg-secondary rounded-full overflow-hidden">
 										<motion.div
-											className="absolute inset-y-0 left-0 rounded-full bg-primary"
+											className="absolute inset-y-0 left-0 rounded-full bg-[--system-accent]"
 											initial={{ width: 0 }}
 											animate={{
 												width: `${(challenge.progress / challenge.target) * 100}%`,

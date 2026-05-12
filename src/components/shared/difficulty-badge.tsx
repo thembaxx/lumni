@@ -34,7 +34,7 @@ export function DifficultyBadge({
 	return (
 		<Badge
 			className={cn(
-				"px-3 py-0.5 text-[10px] uppercase font-medium bg-primary/10 rounded-full",
+				"px-3 py-0.5 text-[10px] uppercase font-medium bg-[--system-accent]/10 rounded-full",
 				colorClass,
 				className,
 			)}

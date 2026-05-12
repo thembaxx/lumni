@@ -8,6 +8,7 @@ import {
 } from "framer-motion";
 import { Search, X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import { Input } from "@/components/ui/input";
 import {
 	elementCategoryConfig,
 	elementEaseOutBack,
@@ -178,7 +179,7 @@ export function PeriodicTable() {
 					className="relative mb-4"
 				>
 					<Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-					<input
+					<Input
 						type="text"
 						placeholder="Search by name, symbol, or number..."
 						value={searchQuery}
@@ -189,8 +190,7 @@ export function PeriodicTable() {
               w-full pl-12 pr-10 py-3 rounded-2xl
               bg-white/5 border border-white/10
               text-white placeholder-gray-400 text-sm
-              focus:outline-none focus:border-indigo-500/50 focus:ring-2 focus:ring-indigo-500/20
-              transition-colors duration-300
+              focus-visible:border-indigo-500/50 focus-visible:ring-2 focus-visible:ring-indigo-500/20
               ${isSearchFocused ? "bg-white/10 border-indigo-500/30" : ""}
             `}
 					/>
@@ -289,7 +289,7 @@ export function PeriodicTable() {
 				</motion.div>
 			</div>
 
-			<AnimatePresence>
+			<AnimatePresence initial={false}>
 				{selectedElement && (
 					<motion.div
 						initial={{ opacity: 0 }}

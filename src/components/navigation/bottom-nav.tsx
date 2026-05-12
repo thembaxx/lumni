@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
 import { ChatDialog } from "@/components/dashboard/chat/chat-dialog";
 import { PracticeSheet } from "@/components/dashboard/practice/practice-sheet";
+import { Button } from "@/components/ui/button";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { cn } from "@/lib/utils";
 
@@ -59,10 +60,11 @@ function NavItemComponent({
 	onClick: () => void;
 }) {
 	return (
-		<button
+		<Button
+			variant="ghost"
 			onClick={onClick}
 			className={cn(
-				"flex flex-1 flex-col items-center justify-center gap-1 px-2 transition-colors duration-150",
+				"flex flex-1 flex-col items-center justify-center gap-1 px-2 h-auto rounded-none min-h-0 py-0",
 				isActive
 					? "text-[--system-accent]"
 					: "text-[--system-text-tertiary] hover:text-[--system-text-secondary]",
@@ -72,7 +74,7 @@ function NavItemComponent({
 			<span className="text-[10px] font-medium tracking-wide">
 				{item.label}
 			</span>
-		</button>
+		</Button>
 	);
 }
 

@@ -168,7 +168,7 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 	if (isComplete) {
 		return (
 			<LazyMotion features={domAnimation}>
-				<AnimatePresence mode="wait">
+				<AnimatePresence mode="wait" initial={false}>
 					<m.div
 						key="results"
 						initial={{ opacity: 0, scale: 0.9 }}
@@ -214,7 +214,7 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 					onQuit={handleQuit}
 				/>
 
-				<AnimatePresence mode="wait">
+				<AnimatePresence mode="wait" initial={false}>
 					<m.div
 						key={currentQuestion.id}
 						initial={{ opacity: 0, x: 20 }}

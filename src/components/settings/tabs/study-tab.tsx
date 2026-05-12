@@ -1,3 +1,4 @@
+import { Label } from "@/components/ui/label";
 import {
 	Select,
 	SelectContent,
@@ -23,9 +24,9 @@ export function StudyTab({ studyPrefs, onStudyPrefsChange }: StudyTabProps) {
 				<div className="overflow-hidden rounded-[16px] bg-[--system-surface] shadow-[--shadow-level-1]">
 					<div className="ios-separator">
 						<div className="px-4 py-3 space-y-1">
-							<label className="ios-body font-medium text-[--system-text-primary] block">
+							<Label className="ios-body font-medium text-[--system-text-primary]">
 								Default Difficulty
-							</label>
+							</Label>
 							<Select
 								value={studyPrefs.difficulty}
 								onValueChange={(v) =>
@@ -48,9 +49,9 @@ export function StudyTab({ studyPrefs, onStudyPrefsChange }: StudyTabProps) {
 					</div>
 					<div className="ios-separator">
 						<div className="px-4 py-3 space-y-1">
-							<label className="ios-body font-medium text-[--system-text-primary] block">
+							<Label className="ios-body font-medium text-[--system-text-primary]">
 								Questions per Session
-							</label>
+							</Label>
 							<Select
 								value={studyPrefs.questionCount.toString()}
 								onValueChange={(v) =>
@@ -97,9 +98,9 @@ export function StudyTab({ studyPrefs, onStudyPrefsChange }: StudyTabProps) {
 					{studyPrefs.timerEnabled && (
 						<div className="ios-separator">
 							<div className="ml-6 px-4 py-3 space-y-1">
-								<label className="ios-body font-medium text-[--system-text-primary] block">
+								<Label className="ios-body font-medium text-[--system-text-primary]">
 									Timer Duration (seconds)
-								</label>
+								</Label>
 								<Select
 									value={studyPrefs.timerDuration.toString()}
 									onValueChange={(v) =>

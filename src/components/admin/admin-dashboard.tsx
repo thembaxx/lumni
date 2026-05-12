@@ -172,7 +172,7 @@ export function AdminDashboard() {
 
 	return (
 		<div className="min-h-screen bg-background">
-			<AnimatePresence>
+			<AnimatePresence initial={false}>
 				{showSuccess && (
 					<motion.div
 						initial={{ opacity: 0, y: -20, scale: 0.95 }}
@@ -204,7 +204,7 @@ export function AdminDashboard() {
 					<AdminTabs activeTab={activeTab} onTabChange={setActiveTab} />
 				</AnimatedCard>
 
-				<AnimatePresence mode="wait">
+				<AnimatePresence mode="wait" initial={false}>
 					{activeTab === "exam" && (
 						<motion.div
 							key="exam"

@@ -1,7 +1,8 @@
 "use client";
 
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
-import * as React from "react";
+import { useCallback, useMemo, useState } from "react";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 export interface CalendarProps {
@@ -33,10 +34,10 @@ export function Calendar({
 	selected,
 	onSelect,
 	markedDates = [],
-	markedDatesColor = "bg-primary",
+	markedDatesColor = "bg-[--system-accent]",
 }: CalendarProps) {
-	const [currentDate, setCurrentDate] = React.useState(new Date());
-	const [selectedDate, setSelectedDate] = React.useState<Date | null>(
+	const [currentDate, setCurrentDate] = useState(new Date());
+	const [selectedDate, setSelectedDate] = useState<Date | null>(
 		selected instanceof Date ? selected : null,
 	);
 
@@ -103,21 +104,15 @@ export function Calendar({
 	return (
 		<div className={cn("w-full", className)}>
 			<div className="flex items-center justify-between mb-4">
-				<button
-					onClick={handlePrevMonth}
-					className="p-2 rounded-xl hover:bg-muted transition-colors active:scale-[0.96] transition-transform duration-150"
-				>
+				<Button variant="ghost" onClick={handlePrevMonth}>
 					<ChevronLeftIcon className="w-5 h-5" />
-				</button>
+				</Button>
 				<span className="font-semibold text-sm text-wrap balance tabular-nums">
 					{monthNames[month]} {year}
 				</span>
-				<button
-					onClick={handleNextMonth}
-					className="p-2 rounded-xl hover:bg-muted transition-colors active:scale-[0.96] transition-transform duration-150"
-				>
+				<Button variant="ghost" onClick={handleNextMonth}>
 					<ChevronRightIcon className="w-5 h-5" />
-				</button>
+				</Button>
 			</div>
 
 			<div className="grid grid-cols-7 gap-1 mb-2">
@@ -142,14 +137,16 @@ export function Calendar({
 					const today = isToday(day);
 
 					return (
-						<button
+						<Button
 							key={day}
+							variant="ghost"
 							onClick={() => handleDayClick(day)}
 							className={cn(
-								"aspect-square rounded-lg text-sm font-medium transition-colors relative active:scale-[0.96] transition-transform duration-150",
-								selected && "bg-primary text-primary-foreground",
+								"aspect-square rounded-lg text-sm font-medium transition-colors relative",
+selected &&
+								"bg-[--system-accent] text-background hover:bg-[--system-accent]",
 								!selected && "hover:bg-muted",
-								today && !selected && "ring-2 ring-primary ring-inset",
+								today && !selected && "ring-2 ring-[--system-accent] ring-inset",
 							)}
 						>
 							<span className="tabular-nums">{day}</span>
@@ -161,7 +158,7 @@ export function Calendar({
 									)}
 								/>
 							)}
-						</button>
+						</Button>
 					);
 				})}
 			</div>

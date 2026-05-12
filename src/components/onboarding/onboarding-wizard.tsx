@@ -12,6 +12,7 @@ import {
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Slider } from "@/components/ui/slider";
 import { nscSubjects } from "@/data/nsc-subjects";
 import { useOnboarding } from "@/hooks/use-onboarding";
 
@@ -88,7 +89,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 						<div
 							key={i}
 							className={`flex-1 h-1 rounded-full transition-colors ${
-								i <= step ? "bg-primary" : "bg-muted"
+								i <= step ? "bg-[--system-accent]" : "bg-muted"
 							}`}
 						/>
 					))}
@@ -134,9 +135,9 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 								{nscSubjects.map((subject) => (
 									<Card
 										key={subject.id}
-										className={`cursor-pointer transition-colors duration-200 hover:ring-2 hover:ring-primary ${
-											selectedSubjects.includes(subject.id)
-												? "ring-2 ring-primary bg-primary/5"
+className={`cursor-pointer transition-colors duration-200 hover:ring-2 hover:ring-[--system-accent] ${
+												selectedSubjects.includes(subject.id)
+													? "ring-2 ring-[--system-accent] bg-[--system-accent]/5"
 												: ""
 										}`}
 										onClick={() => toggleSubject(subject.id)}
@@ -155,7 +156,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 												</p>
 											</div>
 											{selectedSubjects.includes(subject.id) && (
-												<Check className="h-5 w-5 text-primary" />
+												<Check className="h-5 w-5 text-foreground" />
 											)}
 										</CardContent>
 									</Card>
@@ -175,19 +176,19 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 								What's your desired APS (Admission Point Score)?
 							</p>
 							<div className="text-center mb-8">
-								<div className="text-6xl font-bold text-primary mb-2">
-									{targetAps}
+<div className="text-6xl font-bold text-foreground mb-2">
+								{targetAps}
 								</div>
 								<p className="text-muted-foreground">Target APS</p>
 							</div>
 							<div className="space-y-4">
-								<input
-									type="range"
-									min="20"
-									max="50"
-									value={targetAps}
-									onChange={(e) => setTargetAps(parseInt(e.target.value))}
-									className="w-full"
+								<Slider
+									min={20}
+									max={50}
+									value={[targetAps]}
+									onValueChange={(v) =>
+										setTargetAps(Array.isArray(v) ? v[0] : v)
+									}
 								/>
 								<div className="flex justify-between text-sm text-muted-foreground">
 									<span>20 (Minimum)</span>
@@ -211,20 +212,20 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 								How much time can you commit to studying each day?
 							</p>
 							<div className="text-center mb-8">
-								<div className="text-6xl font-bold text-primary mb-2">
+								<div className="text-6xl font-bold text-foreground mb-2">
 									{dailyMinutes}
 								</div>
 								<p className="text-muted-foreground">minutes per day</p>
 							</div>
 							<div className="space-y-4">
-								<input
-									type="range"
-									min="10"
-									max="120"
-									step="10"
-									value={dailyMinutes}
-									onChange={(e) => setDailyMinutes(parseInt(e.target.value))}
-									className="w-full"
+								<Slider
+									min={10}
+									max={120}
+									step={10}
+									value={[dailyMinutes]}
+									onValueChange={(v) =>
+										setDailyMinutes(Array.isArray(v) ? v[0] : v)
+									}
 								/>
 								<div className="flex justify-between text-sm text-muted-foreground">
 									<span>10 min</span>
@@ -264,7 +265,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 								Enable notifications to get study reminders and track your
 								progress.
 							</p>
-							<Card className={notifications ? "ring-2 ring-primary" : ""}>
+							<Card className={notifications ? "ring-2 ring-[--system-accent]" : ""}>
 								<CardContent className="p-4">
 									<div className="flex items-center justify-between">
 										<div className="flex items-center gap-3">

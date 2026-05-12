@@ -53,7 +53,7 @@ export function ImageProcessingIndicator({
 				) : (
 					<>
 						<div className="w-4 h-4 shrink-0">
-							<div className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+							<div className="w-4 h-4 border-2 border-[--system-accent] border-t-transparent rounded-full animate-spin" />
 						</div>
 						<span className="flex-1 truncate text-xs">
 							{state.progressMessage}
@@ -69,7 +69,7 @@ export function ImageProcessingIndicator({
 			{state.status !== "error" && state.status !== "success" && (
 				<Progress
 					value={state.progress}
-					className="h-1 mt-1.5 [&>div]:bg-primary"
+					className="h-1 mt-1.5 [&>div]:bg-[--system-accent]"
 				/>
 			)}
 		</motion.div>

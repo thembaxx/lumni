@@ -16,7 +16,7 @@ export function XPGainPopup({
 	useLottie = false,
 }: XPGainPopupProps) {
 	return (
-		<AnimatePresence>
+		<AnimatePresence initial={false}>
 			{visible && (
 				<motion.div
 					initial={{ opacity: 0, y: 20, scale: 0.5 }}

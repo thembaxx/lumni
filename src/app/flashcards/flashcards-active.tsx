@@ -93,11 +93,11 @@ export function FlashcardsActive({
 						<Card
 							className={cn(
 								"absolute inset-0 backface-hidden p-6 flex flex-col",
-								!isFlipped && "border-primary/50 bg-primary/5",
+								!isFlipped && "border-[--system-accent]/50 bg-[--system-accent]/5",
 							)}
 						>
 							<div className="flex items-center gap-2 mb-4">
-								<Badge variant="outline" className="bg-primary/10">
+								<Badge variant="outline" className="bg-[--system-accent]/10">
 									{currentCard.topic}
 								</Badge>
 								<Badge variant="outline" className="font-mono text-xs">

@@ -10,6 +10,7 @@ import {
 	SendHorizontal,
 } from "lucide-react";
 import { useCallback, useState } from "react";
+import { Button } from "@/components/ui/button";
 import { LiveWaveform } from "@/components/ui/live-waveform";
 import { useAudioRecorder } from "@/hooks/use-audio-recorder";
 import { cn } from "@/lib/utils";
@@ -138,7 +139,7 @@ export function VoiceRecorder({
 							: isRecording
 								? "text-destructive animate-pulse"
 								: isPlaying
-									? "text-primary animate-pulse"
+									? "text-[--system-accent] animate-pulse"
 									: showPermissionError
 										? "text-destructive"
 										: "text-muted-foreground",
@@ -154,14 +155,16 @@ export function VoiceRecorder({
 			</div>
 
 			<div className="flex items-center gap-4">
-				<button
+				<Button
+					variant="ghost"
+					size="icon"
 					onClick={resetRecording}
 					disabled={(!audioBlob && !isRecording) || isSending}
 					className={cn(
-						"flex h-10 w-10 items-center justify-center rounded-lg transition-transform duration-200 active:scale-[0.96]",
+						"rounded-lg",
 						audioBlob || isRecording
 							? "bg-muted/80 hover:bg-muted text-muted-foreground hover:text-foreground hover:scale-105"
-							: "bg-muted/30 text-muted-foreground/30 cursor-not-allowed",
+							: "bg-muted/30 text-muted-foreground/30",
 						isSending && "opacity-50 pointer-events-none",
 					)}
 					aria-label="Reset recording"
@@ -169,13 +172,14 @@ export function VoiceRecorder({
 					<span className="transition-transform duration-200 active:rotate-180">
 						<RotateCcw className="h-4 w-4" />
 					</span>
-				</button>
+				</Button>
 
-				<button
+				<Button
+					variant="ghost"
 					onClick={handleRecordClick}
 					disabled={isSending || showPermissionError}
 					className={cn(
-						"relative flex h-16 w-16 items-center justify-center rounded-full transition-transform duration-200 active:scale-[0.96]",
+						"relative h-16 w-16 rounded-full",
 						isRecording
 							? "bg-destructive text-destructive-foreground shadow-[0_0_30px_rgba(239,68,68,0.6)]"
 							: showPermissionError
@@ -205,16 +209,18 @@ export function VoiceRecorder({
 							<Mic className="h-6 w-6" />
 						)}
 					</span>
-				</button>
+				</Button>
 
-				<button
+				<Button
+					variant="ghost"
+					size="icon"
 					onClick={togglePlayback}
 					disabled={!audioBlob || isRecording || isSending}
 					className={cn(
-						"flex h-10 w-10 items-center justify-center rounded-lg transition-transform duration-200 active:scale-[0.96]",
+						"rounded-lg",
 						audioBlob && !isRecording
-							? "bg-primary text-primary-foreground hover:scale-105 hover:shadow-xl hover:shadow-primary/20"
-							: "bg-muted/30 text-muted-foreground/30 cursor-not-allowed",
+							? "bg-[--system-accent] text-background hover:scale-105 hover:shadow-xl hover:shadow-[--system-accent]/20"
+							: "bg-muted/30 text-muted-foreground/30",
 						isSending && "opacity-50 pointer-events-none",
 					)}
 					aria-label={isPlaying ? "Pause playback" : "Play recording"}
@@ -231,10 +237,10 @@ export function VoiceRecorder({
 							<Play className="h-4 w-4 ml-0.5" />
 						)}
 					</span>
-				</button>
+				</Button>
 			</div>
 
-			<button
+			<Button
 				onClick={handleSend}
 				disabled={
 					isRecording ||
@@ -245,12 +251,12 @@ export function VoiceRecorder({
 					isTooLong
 				}
 				className={cn(
-					"mt-2 flex w-full items-center justify-center gap-2 rounded-lg px-4 py-3 text-sm font-medium transition-transform duration-200 active:scale-[0.96]",
+					"mt-2 w-full rounded-lg",
 					sendSuccess
-						? "bg-green-500 text-white"
+						? "bg-green-500 text-white hover:bg-green-500"
 						: !isRecording && audioBlob && !isTooShort && !isTooLong
-							? "bg-primary text-primary-foreground hover:opacity-90 hover:scale-[1.02] hover:shadow-lg"
-							: "bg-muted/50 text-muted-foreground/50 cursor-not-allowed",
+							? "bg-[--system-accent] text-background hover:opacity-90"
+							: "bg-muted/50 text-muted-foreground/50",
 				)}
 				aria-label="Send voice message"
 			>
@@ -270,7 +276,7 @@ export function VoiceRecorder({
 						<span>Send Voice Message</span>
 					</span>
 				)}
-			</button>
+			</Button>
 		</div>
 	);
 }

@@ -24,7 +24,7 @@ export function SearchInput({ value, onChange }: SearchInputProps) {
 		<div
 			className={cn(
 				"bg-secondary/60 dark:bg-secondary/40 rounded-2xl p-4 animate-fade-in-up delay-400 transition-colors duration-300 border border-border/30",
-				isFocused && "ring-2 ring-primary/20 border-primary/30",
+				isFocused && "ring-2 ring-[--system-accent]/20 border-[--system-accent]/30",
 			)}
 		>
 			<Input
@@ -42,7 +42,7 @@ export function SearchInput({ value, onChange }: SearchInputProps) {
 					<Button
 						variant="ghost"
 						size="icon"
-						className="w-8 h-8 bg-muted/60 hover:bg-muted toolbutton"
+						className="bg-muted/60 hover:bg-muted toolbutton"
 					>
 						<HugeiconsIcon
 							icon={Camera01FreeIcons}
@@ -53,7 +53,7 @@ export function SearchInput({ value, onChange }: SearchInputProps) {
 						<Button
 							variant="ghost"
 							size="icon"
-							className="w-8 h-8 bg-muted/60 hover:bg-muted toolbutton"
+							className="bg-muted/60 hover:bg-muted toolbutton"
 						>
 							<Book className="w-4 h-4 text-muted-foreground toolbutton-icon" />
 						</Button>
@@ -65,7 +65,7 @@ export function SearchInput({ value, onChange }: SearchInputProps) {
 						<Button
 							variant="ghost"
 							size="icon"
-							className="w-8 h-8 bg-muted/60 hover:bg-muted toolbutton cursor-pointer"
+							className="bg-muted/60 hover:bg-muted toolbutton cursor-pointer"
 						>
 							<Mic className="w-4 h-4 text-muted-foreground toolbutton-icon" />
 						</Button>
@@ -73,10 +73,7 @@ export function SearchInput({ value, onChange }: SearchInputProps) {
 					<Button
 						variant="default"
 						size="icon"
-						className={cn(
-							"w-9 h-9 voice-btn",
-							voicePressed && "voice-btn-pressed",
-						)}
+						className={cn("voice-btn", voicePressed && "voice-btn-pressed")}
 						aria-label="Voice input"
 						onClick={() => {
 							setVoicePressed(true);

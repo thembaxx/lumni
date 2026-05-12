@@ -55,7 +55,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 						className={cn(
 							"rounded-2xl overflow-hidden",
 							isUser
-								? "bg-primary text-primary-foreground"
+								? "bg-[--system-accent] text-background"
 								: "bg-secondary/80 text-foreground",
 						)}
 					>
@@ -104,7 +104,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 									variant="ghost"
 									size="icon"
 									onClick={() => onRetry(message.id)}
-									className="w-7 h-7 rounded-full shrink-0 hover:bg-primary-foreground/20"
+									className="rounded-full shrink-0 bg-background/20"
 									aria-label="Retry"
 								>
 									<RefreshCw className="w-3.5 h-3.5" />
@@ -120,7 +120,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 										variant="link"
 										size="sm"
 										onClick={() => onRetry(message.id)}
-										className="h-auto p-0 text-xs text-primary-foreground/80 hover:text-primary-foreground"
+										className="h-auto p-0 text-xs text-background/80 hover:text-background"
 									>
 										Try again
 									</Button>
@@ -148,10 +148,10 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 				initial={{ opacity: 0, y: 10, scale: 0.95 }}
 				animate={{ opacity: 1, y: 0, scale: 1 }}
 				transition={{ type: "spring", stiffness: 300, damping: 25 }}
-				className={cn(
+className={cn(
 					"max-w-[85%] p-3 rounded-2xl text-sm flex items-center gap-3",
 					isUser
-						? "bg-primary text-primary-foreground ml-auto rounded-br-md"
+						? "bg-[--system-accent] text-background ml-auto rounded-br-md"
 						: "bg-secondary/80 text-foreground mr-auto rounded-bl-md",
 				)}
 			>
@@ -160,7 +160,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 					className={cn(
 						"relative flex items-center justify-center w-10 h-10 rounded-full shrink-0 transition-colors",
 						isUser
-							? "bg-primary-foreground/20 hover:bg-primary-foreground/30"
+							? "bg-background/20 hover:bg-background/30"
 							: "bg-muted hover:bg-muted/80",
 					)}
 					aria-label={isPlaying ? "Pause" : "Play"}
@@ -200,7 +200,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 									className={cn(
 										"w-1 rounded-full",
 										isUser
-											? "bg-primary-foreground/60"
+											? "bg-[--system-accent]/60"
 											: "bg-muted-foreground/40",
 									)}
 									animate={
@@ -247,7 +247,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 			className={cn(
 				"max-w-[85%] p-3 rounded-2xl text-sm leading-relaxed",
 				isUser
-					? "bg-primary text-primary-foreground ml-auto rounded-br-md"
+					? "bg-[--system-accent] text-background ml-auto rounded-br-md"
 					: "bg-secondary/80 text-foreground mr-auto rounded-bl-md",
 			)}
 		>

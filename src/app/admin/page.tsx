@@ -96,7 +96,7 @@ export default function AdminPage() {
 
 	return (
 		<ToastProvider>
-			<AnimatePresence>
+			<AnimatePresence initial={false}>
 				{!isAuthenticated && (
 					<motion.div
 						initial={{ opacity: 0 }}
@@ -109,7 +109,7 @@ export default function AdminPage() {
 			</AnimatePresence>
 
 			{isAuthenticated && (
-				<AnimatePresence>
+				<AnimatePresence initial={false}>
 					<motion.div
 						animate={{ opacity: 1 }}
 						transition={{ duration: 0.3 }}

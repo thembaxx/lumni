@@ -483,14 +483,14 @@ export function QuestionCard({
 						</p>
 					)}
 
-					<AnimatePresence>
+					<AnimatePresence initial={false}>
 						{state.showHint && (
 							<m.div
 								key="hint"
-								initial={{ opacity: 0, height: 0 }}
-								animate={{ opacity: 1, height: "auto" }}
-								exit={{ opacity: 0, height: 0, y: -4 }}
-								className="overflow-hidden rounded-lg bg-warning/5 p-4 text-warning"
+								initial={{ opacity: 0, y: -4 }}
+								animate={{ opacity: 1, y: 0 }}
+								exit={{ opacity: 0, y: -4 }}
+								className="rounded-lg bg-warning/5 p-4 text-warning"
 							>
 								<p className="font-medium">Hint:</p>
 								<MarkdownRenderer
@@ -501,7 +501,7 @@ export function QuestionCard({
 						)}
 					</AnimatePresence>
 
-					<AnimatePresence>{renderFeedback()}</AnimatePresence>
+					<AnimatePresence initial={false}>{renderFeedback()}</AnimatePresence>
 				</CardContent>
 
 				<CardFooter className="flex gap-3">
