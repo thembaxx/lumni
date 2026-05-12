@@ -10,6 +10,7 @@ export const COLLECTIONS = {
 	USER_PROGRESS: "user_progress",
 	STUDY_SESSIONS: "study_sessions",
 	EXAM_PAPERS: "exam_papers",
+	VISUALS: "visuals",
 } as const;
 
 export type Subject = {

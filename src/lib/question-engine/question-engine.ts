@@ -94,6 +94,7 @@ export class QuestionEngine {
 
 		await cacheQuestions(subject, sliced, topic);
 		syncQuestionsToAppwrite(sliced, subject, topic).catch(() => {});
+		this.preCacheVisuals(sliced).catch(() => {});
 
 		return sliced;
 	}
@@ -163,6 +164,20 @@ export class QuestionEngine {
 		} catch {
 			return null;
 		}
+	}
+
+	private async preCacheVisuals(questions: Question[]): Promise<void> {
+		const { visualEngine } = await import("@/lib/visual-engine");
+		await Promise.allSettled(
+			questions.map((q) =>
+				visualEngine.resolve({
+					questionId: q.id,
+					questionText: q.questionText,
+					subject: q.subject,
+					topic: q.topic,
+				}),
+			),
+		);
 	}
 
 	private async generateMixed(params: GenerationParams): Promise<Question[]> {

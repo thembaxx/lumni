@@ -3,7 +3,7 @@ import { AIProvider, AIRequest, AIResponse } from "../types";
 const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
 
 export function createGroqProvider(apiKey: string): AIProvider {
-	const model = "llama-3.1-8b-versatile";
+	const model = "llama-3.3-70b-versatile";
 
 	async function generate(request: AIRequest): Promise<AIResponse> {
 		const messages = request.messages.map((m) => ({

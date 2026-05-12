@@ -2,8 +2,12 @@
 
 import { Background, Controls, MiniMap, ReactFlow } from "@xyflow/react";
 import type { DiagramSpec } from "@/types/questions";
+import { ChartDiagram } from "./diagrams/chart";
+import { ChemistryDiagram } from "./diagrams/chemistry";
 import { CircuitDiagram } from "./diagrams/circuit";
 import { ForceVectorDiagram } from "./diagrams/force-vector";
+import { GeometryDiagram } from "./diagrams/geometry";
+import { GraphDiagram } from "./diagrams/graph";
 import { MotionDiagram } from "./diagrams/motion";
 import { WaveDiagram } from "./diagrams/wave";
 
@@ -79,6 +83,18 @@ export function QuestionDiagram({ diagram }: { diagram: DiagramSpec }) {
 			{diagram.type === "wave" && <WaveDiagram data={diagram.data as never} />}
 			{diagram.type === "motion" && (
 				<MotionDiagram data={diagram.data as never} />
+			)}
+			{diagram.type === "geometry" && (
+				<GeometryDiagram data={diagram.data as never} />
+			)}
+			{diagram.type === "chart" && (
+				<ChartDiagram data={diagram.data as never} />
+			)}
+			{diagram.type === "chemistry" && (
+				<ChemistryDiagram data={diagram.data as never} />
+			)}
+			{diagram.type === "graph" && (
+				<GraphDiagram data={diagram.data as never} />
 			)}
 			{diagram.type === "custom-svg" &&
 				(diagram.data as Record<string, string>).svg && (

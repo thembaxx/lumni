@@ -1,13 +1,16 @@
 "use client";
 
-import type { Question } from "@/types/exam-paper";
+import { useVisualEngine } from "@/hooks/use-visual-engine";
+import type { Question as ExamQuestion } from "@/types/exam-paper";
+import { VisualContent } from "@/components/visual/visual-content";
 import { ContentBlockRenderer } from "./content-block-renderer";
 import { MarksDisplay } from "./marks-display";
 import { PartRenderer } from "./part-renderer";
 
 interface QuestionRendererProps {
-	question: Question;
+	question: ExamQuestion;
 	sectionId: string;
+	subject?: string;
 	answers: Record<string, { value: string | string[] }>;
 	flags: string[];
 	currentPartId: string | null;
@@ -16,9 +19,22 @@ interface QuestionRendererProps {
 	disabled?: boolean;
 }
 
+function buildQuestionText(question: ExamQuestion): string {
+	const parts = question.parts
+		.map((p) => p.text || "")
+		.filter(Boolean)
+		.join(" ");
+	const context = question.context
+		?.map((c) => c.value || "")
+		.filter(Boolean)
+		.join(" ");
+	return [context, parts].filter(Boolean).join(" ") || question.title || "";
+}
+
 export function QuestionRenderer({
 	question,
 	sectionId,
+	subject,
 	answers,
 	flags,
 	currentPartId,
@@ -26,6 +42,26 @@ export function QuestionRenderer({
 	onFlag,
 	disabled,
 }: QuestionRendererProps) {
+	const questionText = buildQuestionText(question);
+	const engineQuestion = subject
+		? {
+				id: `exam-${sectionId}-${question.id}`,
+				questionText,
+				subject,
+				topic: "",
+				type: "mixed" as const,
+				difficulty: "Medium" as const,
+				bloomTaxonomy: "understand" as const,
+				points: question.totalMarks || 0,
+				hint: "",
+				explanation: "",
+				body: { parts: [] },
+			}
+		: null;
+
+	const { data: visual, isLoading: visualLoading } =
+		useVisualEngine(engineQuestion);
+
 	const makePartId = (partId: string) =>
 		`${sectionId}-${question.id}-${partId}`;
 
@@ -41,6 +77,8 @@ export function QuestionRenderer({
 				)}
 			</div>
 
+			<VisualContent visual={visual} isLoading={visualLoading} />
+
 			{question.context?.map((block, idx) => (
 				<div key={idx} className="pl-4 border-l-2 border-muted">
 					<ContentBlockRenderer block={block} />
@@ -48,7 +86,9 @@ export function QuestionRenderer({
 			))}
 
 			{question.parts.length === 0 && (
-				<p className="text-sm text-muted-foreground italic">No sub-questions</p>
+				<p className="text-sm text-muted-foreground italic">
+					No sub-questions
+				</p>
 			)}
 
 			{question.parts.map((part) => {

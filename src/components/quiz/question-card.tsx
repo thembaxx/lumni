@@ -26,9 +26,11 @@ import {
 	ShortAnswerInput,
 } from "@/components/ui/inputs";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
+import { useVisualEngine } from "@/hooks/use-visual-engine";
 import { cn } from "@/lib/utils";
 import { iOSEase } from "@/lib/utils/animation";
 import type { Question, QuestionState, UserAnswer } from "@/types/questions";
+import { VisualContent } from "@/components/visual/visual-content";
 import { QuestionDiagram } from "./question-diagram";
 import { StepByStep } from "./step-by-step";
 
@@ -74,6 +76,8 @@ export function QuestionCard({
 	const [code, setCode] = useState("");
 
 	const { grade } = useQuestionEngine();
+
+	const { data: visual, isLoading: visualLoading } = useVisualEngine(question);
 
 	const isMCQ = question.type === "multiple-choice";
 	const mcqBody = isMCQ ? (question as Question<"multiple-choice">).body : null;
@@ -497,6 +501,7 @@ export function QuestionCard({
 							{question.points} pts
 						</Badge>
 					</div>
+					<VisualContent visual={visual} isLoading={visualLoading} />
 					<div
 						className={cn(
 							"overflow-y-auto max-h-75 pr-2",
@@ -585,7 +590,7 @@ export function QuestionCard({
 					>
 						<MinusIcon
 							className={cn(
-								"h-4 w-4 transition-transform duration-[var(--duration-normal)]",
+								"h-4 w-4 transition-transform duration-(--duration-normal)",
 								state.showHint && "rotate-180",
 							)}
 						/>

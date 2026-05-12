@@ -206,6 +206,7 @@ export function ExamEngine({
 										key={question.id}
 										question={question}
 										sectionId={section.id}
+										subject={paper.metadata.subject}
 										answers={answers}
 										flags={flags}
 										currentPartId={currentPartId}

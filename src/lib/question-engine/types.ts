@@ -79,7 +79,11 @@ export interface DiagramSpec {
 		| "motion"
 		| "node-flow"
 		| "node"
-		| "custom-svg";
+		| "custom-svg"
+		| "geometry"
+		| "chart"
+		| "chemistry"
+		| "graph";
 	title: string;
 	data: Record<string, unknown>;
 }
