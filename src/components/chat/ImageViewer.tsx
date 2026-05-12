@@ -35,7 +35,7 @@ export function ImageViewer({ src, alt, open, onClose }: ImageViewerProps) {
 							variant="ghost"
 							size="icon"
 							onClick={onClose}
-							className="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/40 hover:bg-black/60 text-white"
+							className="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/40 hover:bg-black/60 text-white dark:bg-black/70 dark:hover:bg-black/80"
 							aria-label="Close image viewer"
 						>
 							<X className="w-5 h-5" />

@@ -71,7 +71,7 @@ export function MotionDiagram({ data }: { data: MotionData }) {
 								text={obj.label}
 								x={(obj.width || 50) / 2}
 								y={(obj.height || 30) / 2}
-								fill="#fff"
+								fill="oklch(100% 0 0)"
 								fontSize={10}
 								offsetX={(obj.label.length || 0) * 4}
 								offsetY={3}
@@ -101,7 +101,7 @@ export function MotionDiagram({ data }: { data: MotionData }) {
 						{obj.label && (
 							<Text
 								text={obj.label}
-								fill="#fff"
+								fill="oklch(100% 0 0)"
 								fontSize={10}
 								offsetX={(obj.label.length || 0) * 4}
 								offsetY={3}
@@ -122,11 +122,17 @@ export function MotionDiagram({ data }: { data: MotionData }) {
 						text={`v₀ = ${data.initialVelocity} m/s`}
 						x={20}
 						y={30}
-						fill="#3b82f6"
+						fill="oklch(57.7% 0.184 264°)"
 						fontSize={12}
 						fontStyle="bold"
 					/>
-					<Text text="↑" x={80} y={35} fill="#3b82f6" fontSize={12} />
+					<Text
+						text="↑"
+						x={80}
+						y={35}
+						fill="oklch(57.7% 0.184 264°)"
+						fontSize={12}
+					/>
 				</Group>
 			);
 		}
@@ -139,7 +145,7 @@ export function MotionDiagram({ data }: { data: MotionData }) {
 			<Group>
 				<Line
 					points={[150, 180, 150, 40]}
-					stroke="#6366f1"
+					stroke="oklch(52.5% 0.142 274°)"
 					strokeWidth={1}
 					dash={[4, 4]}
 				/>
@@ -148,7 +154,7 @@ export function MotionDiagram({ data }: { data: MotionData }) {
 						x={data.trajectory.apex.x}
 						y={data.trajectory.apex.y}
 						radius={4}
-						fill="#6366f1"
+						fill="oklch(52.5% 0.142 274°)"
 					/>
 				)}
 			</Group>
@@ -161,7 +167,7 @@ export function MotionDiagram({ data }: { data: MotionData }) {
 			<Group>
 				<Line
 					points={[80, 130, 180, 130]}
-					stroke="#6b7280"
+					stroke="oklch(52.9% 0.012 264°)"
 					strokeWidth={1}
 					dash={[4, 4]}
 				/>
@@ -169,7 +175,7 @@ export function MotionDiagram({ data }: { data: MotionData }) {
 					text={`${data.angle}°`}
 					x={130}
 					y={145}
-					fill="#6b7280"
+					fill="oklch(52.9% 0.012 264°)"
 					fontSize={11}
 					fontStyle="italic"
 				/>

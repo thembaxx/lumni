@@ -30,7 +30,7 @@ export function AnimatedDialogContent({
 }: AnimatedDialogContentProps) {
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange}>
-			<DialogTrigger asChild>{children}</DialogTrigger>
+			<DialogTrigger>{children}</DialogTrigger>
 			<LazyMotion features={domAnimation}>
 				<DialogContent className="sm:max-w-md">
 					<m.div

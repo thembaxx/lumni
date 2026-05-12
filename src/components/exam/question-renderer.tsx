@@ -78,7 +78,7 @@ export function QuestionRenderer({
 								onClick={() => onFlag(fullId)}
 								className={`shrink-0 text-xs px-2 py-0.5 rounded transition-colors ${
 									flags.includes(fullId)
-										? "bg-amber-100 text-amber-700"
+										? "bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-200"
 										: "bg-muted text-muted-foreground hover:bg-muted/80"
 								}`}
 							>

@@ -15,9 +15,9 @@ interface AccuracyBarProps {
 }
 
 function getAccuracyColor(accuracy: number): string {
-	if (accuracy >= 70) return "bg-green-500";
-	if (accuracy >= 50) return "bg-yellow-500";
-	return "bg-red-500";
+	if (accuracy >= 70) return "bg-green-500 dark:bg-green-700";
+	if (accuracy >= 50) return "bg-yellow-500 dark:bg-yellow-700";
+	return "bg-red-500 dark:bg-red-700";
 }
 
 function getAccuracyLabel(accuracy: number): string {

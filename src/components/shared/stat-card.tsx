@@ -20,8 +20,8 @@ interface StatCardProps {
 }
 
 const trendColors = {
-	up: "text-green-500",
-	down: "text-red-500",
+	up: "text-green-500 dark:text-green-400",
+	down: "text-red-500 dark:text-red-400",
 	neutral: "text-muted-foreground",
 };
 

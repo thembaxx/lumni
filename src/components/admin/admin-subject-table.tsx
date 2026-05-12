@@ -70,7 +70,7 @@ export function SubjectTable({
 							<div className="flex gap-1">
 								<motion.div
 									whileHover={{ scale: 1.1 }}
-									whileTap={{ scale: 0.9 }}
+									whileTap={{ scale: 0.95 }}
 								>
 									<Button
 										variant="ghost"
@@ -83,7 +83,7 @@ export function SubjectTable({
 								</motion.div>
 								<motion.div
 									whileHover={{ scale: 1.1 }}
-									whileTap={{ scale: 0.9 }}
+									whileTap={{ scale: 0.95 }}
 								>
 									<Button
 										variant="ghost"

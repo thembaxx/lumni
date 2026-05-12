@@ -83,7 +83,7 @@ export function QuestionDiagram({ diagram }: { diagram: DiagramSpec }) {
 			{diagram.type === "custom-svg" &&
 				(diagram.data as Record<string, string>).svg && (
 					<div
-						className="w-full overflow-auto rounded-lg border bg-white p-4"
+						className="w-full overflow-auto rounded-lg border bg-background p-4"
 						dangerouslySetInnerHTML={{
 							__html: String((diagram.data as Record<string, string>).svg),
 						}}

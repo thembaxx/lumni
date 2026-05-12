@@ -75,7 +75,7 @@ export function ForceVectorDiagram({ data }: { data: ForceVectorData }) {
 							text={obj.label}
 							x={(obj.width || 50) / 2}
 							y={(obj.height || 30) / 2}
-							fill="#fff"
+							fill="oklch(100% 0 0)"
 							fontSize={12}
 							offsetX={(obj.label?.length || 0) * 5}
 							offsetY={4}
@@ -89,7 +89,7 @@ export function ForceVectorDiagram({ data }: { data: ForceVectorData }) {
 						<Circle radius={obj.radius || 15} fill={obj.fill} />
 						<Text
 							text={obj.label}
-							fill="#fff"
+							fill="oklch(100% 0 0)"
 							fontSize={10}
 							offsetX={(obj.label?.length || 0) * 4}
 							offsetY={3}
@@ -139,7 +139,7 @@ export function ForceVectorDiagram({ data }: { data: ForceVectorData }) {
 			<Group>
 				<Line
 					points={[150, 140, 250, 140]}
-					stroke="#6b7280"
+					stroke="oklch(52.9% 0.012 264°)"
 					strokeWidth={1}
 					dash={[4, 4]}
 				/>
@@ -147,7 +147,7 @@ export function ForceVectorDiagram({ data }: { data: ForceVectorData }) {
 					text={`${data.angle}°`}
 					x={200}
 					y={155}
-					fill="#6b7280"
+					fill="oklch(52.9% 0.012 264°)"
 					fontSize={12}
 					fontStyle="italic"
 				/>

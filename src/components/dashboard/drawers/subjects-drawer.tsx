@@ -43,7 +43,9 @@ export function SubjectsDrawer({
 
 	return (
 		<Drawer direction="bottom">
-			<DrawerTrigger asChild>{children}</DrawerTrigger>
+			<DrawerTrigger className="inline-flex items-center justify-center">
+				{children}
+			</DrawerTrigger>
 			<DrawerContent className="mx-auto max-w-lg mt-0 rounded-b-2xl min-h-[60dvh] animate-fade-in-scale">
 				<DrawerClose ref={drawerCloseRef} className="hidden" />
 				<DrawerHeader className="text-left">

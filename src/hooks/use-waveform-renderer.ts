@@ -110,7 +110,7 @@ export function useWaveformRenderer({
 				barColor ||
 				(() => {
 					const style = getComputedStyle(canvas);
-					return style.color || "#000";
+					return style.color || "oklch(0% 0 0)";
 				})();
 
 			const step = barWidth + barGap;
@@ -171,10 +171,10 @@ export function useWaveformRenderer({
 					const gradient = ctx.createLinearGradient(0, 0, rect.width, 0);
 					const fadePercent = Math.min(0.3, fadeWidth / rect.width);
 
-					gradient.addColorStop(0, "rgba(255,255,255,1)");
-					gradient.addColorStop(fadePercent, "rgba(255,255,255,0)");
-					gradient.addColorStop(1 - fadePercent, "rgba(255,255,255,0)");
-					gradient.addColorStop(1, "rgba(255,255,255,1)");
+					gradient.addColorStop(0, "oklch(100% 0 0 / 1)");
+					gradient.addColorStop(fadePercent, "oklch(100% 0 0 / 0)");
+					gradient.addColorStop(1 - fadePercent, "oklch(100% 0 0 / 0)");
+					gradient.addColorStop(1, "oklch(100% 0 0 / 1)");
 
 					gradientCacheRef.current = gradient;
 					lastWidthRef.current = rect.width;

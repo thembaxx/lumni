@@ -5,13 +5,17 @@ import { Suspense } from "react";
 import { extractRouterConfig } from "uploadthing/server";
 
 import "./globals.css";
+import { Geist } from "next/font/google";
 import { PageTransition } from "@/components/layout/page-transition";
 import { BottomNav } from "@/components/navigation/bottom-nav";
 import { Providers } from "@/components/providers";
 import { FloatingToolsButton } from "@/components/tools";
 import { UploadDialogRenderer } from "@/components/upload/upload-dialog-renderer";
+import { cn } from "@/lib/utils";
 import { ourFileRouter } from "./api/uploadthing/core";
 import { fontMono, fontSans } from "./fonts";
+
+const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 async function UTSSR() {
 	await connection();
@@ -71,21 +75,31 @@ export default function RootLayout({
 	return (
 		<html
 			lang="en"
-			className={`${fontSans.variable} ${fontMono.variable} h-full antialiased`}
+			className={cn(
+				"h-full",
+				"antialiased",
+				fontSans.variable,
+				fontMono.variable,
+				"font-sans",
+				geist.variable,
+			)}
 		>
 			<body
 				className={`${fontSans.variable} ${fontMono.variable} h-full antialiased min-h-full flex flex-col bg-[--system-background] text-[--system-text-primary]`}
 			>
+				<script
+					dangerouslySetInnerHTML={{
+						__html: `(function(){try{var t=localStorage.getItem("theme");if(t==="dark"){document.documentElement.classList.add("dark");document.documentElement.style.colorScheme="dark"}else if(t==="light"){document.documentElement.classList.remove("dark");document.documentElement.style.colorScheme="light"}else{if(window.matchMedia("(prefers-color-scheme:dark)").matches){document.documentElement.classList.add("dark");document.documentElement.style.colorScheme="dark"}else{document.documentElement.classList.remove("dark");document.documentElement.style.colorScheme="light"}}}catch(e){}})()`,
+					}}
+				/>
 				<Suspense fallback={null}>
 					<UTSSR />
 				</Suspense>
 				<Providers>
 					<UploadDialogRenderer />
 					<FloatingToolsButton />
-					<PageTransition>
-						{children}
-						<BottomNav />
-					</PageTransition>
+					<PageTransition>{children}</PageTransition>
+					<BottomNav />
 				</Providers>
 			</body>
 		</html>

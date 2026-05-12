@@ -1,5 +1,6 @@
 "use client";
 
+import { AnimatePresence, motion } from "framer-motion";
 import {
 	Check,
 	Mic,
@@ -111,7 +112,7 @@ export function VoiceRecorder({
 					active={isRecording}
 					processing={!isRecording && !audioBlob}
 					mode="static"
-					barColor="#FFA500"
+					barColor="oklch(76.7% 0.179 65°)"
 					height={64}
 					barWidth={3}
 					barGap={2}
@@ -135,7 +136,7 @@ export function VoiceRecorder({
 					className={cn(
 						"text-xs uppercase tracking-widest font-medium transition-colors duration-200",
 						sendSuccess
-							? "text-green-500"
+							? "text-green-500 dark:text-green-400"
 							: isRecording
 								? "text-destructive animate-pulse"
 								: isPlaying
@@ -181,7 +182,7 @@ export function VoiceRecorder({
 					className={cn(
 						"relative h-16 w-16 rounded-full",
 						isRecording
-							? "bg-destructive text-destructive-foreground shadow-[0_0_30px_rgba(239,68,68,0.6)]"
+							? "bg-destructive text-destructive-foreground shadow-[0_0_30px_oklch(59.3%_0.194_28°_/_0.6)]"
 							: showPermissionError
 								? "bg-muted text-muted-foreground cursor-not-allowed"
 								: "bg-foreground text-background hover:scale-105 hover:shadow-xl hover:shadow-foreground/20",
@@ -197,17 +198,23 @@ export function VoiceRecorder({
 								: "ring-2 ring-transparent",
 						)}
 					/>
-					<span
-						className={cn(
-							"relative flex items-center justify-center transition-transform duration-200",
-							isRecording && "scale-90",
-						)}
-					>
-						{isRecording ? (
-							<MicOff className="h-6 w-6" />
-						) : (
-							<Mic className="h-6 w-6" />
-						)}
+					<span className="relative flex items-center justify-center">
+						<MicOff
+							className="absolute h-6 w-6 transition-[opacity,transform] duration-200"
+							style={{
+								opacity: isRecording ? 1 : 0,
+								transform: `scale(${isRecording ? 1 : 0.25})`,
+								transitionTimingFunction: "cubic-bezier(0.2, 0, 0, 1)",
+							}}
+						/>
+						<Mic
+							className="h-6 w-6 transition-[opacity,transform] duration-200"
+							style={{
+								opacity: isRecording ? 0 : 1,
+								transform: `scale(${isRecording ? 0.25 : 1})`,
+								transitionTimingFunction: "cubic-bezier(0.2, 0, 0, 1)",
+							}}
+						/>
 					</span>
 				</Button>
 
@@ -225,17 +232,23 @@ export function VoiceRecorder({
 					)}
 					aria-label={isPlaying ? "Pause playback" : "Play recording"}
 				>
-					<span
-						className={cn(
-							"transition-transform duration-200",
-							isPlaying && "scale-90",
-						)}
-					>
-						{isPlaying ? (
-							<Pause className="h-4 w-4" />
-						) : (
-							<Play className="h-4 w-4 ml-0.5" />
-						)}
+					<span className="relative flex items-center justify-center">
+						<Pause
+							className="absolute h-4 w-4 transition-[opacity,transform] duration-200"
+							style={{
+								opacity: isPlaying ? 1 : 0,
+								transform: `scale(${isPlaying ? 1 : 0.25})`,
+								transitionTimingFunction: "cubic-bezier(0.2, 0, 0, 1)",
+							}}
+						/>
+						<Play
+							className="h-4 w-4 ml-0.5 transition-[opacity,transform] duration-200"
+							style={{
+								opacity: isPlaying ? 0 : 1,
+								transform: `scale(${isPlaying ? 0.25 : 1})`,
+								transitionTimingFunction: "cubic-bezier(0.2, 0, 0, 1)",
+							}}
+						/>
 					</span>
 				</Button>
 			</div>
@@ -260,22 +273,47 @@ export function VoiceRecorder({
 				)}
 				aria-label="Send voice message"
 			>
-				{sendSuccess ? (
-					<span className="flex items-center gap-2">
-						<Check className="h-4 w-4 animate-checkmark" />
-						<span>Sent!</span>
-					</span>
-				) : isSending ? (
-					<span className="flex items-center gap-2">
-						<span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-						<span>Sending...</span>
-					</span>
-				) : (
-					<span className="flex items-center gap-2">
-						<SendHorizontal className="h-4 w-4" />
-						<span>Send Voice Message</span>
-					</span>
-				)}
+				<span className="flex items-center gap-2">
+					<AnimatePresence mode="wait" initial={false}>
+						{sendSuccess ? (
+							<motion.span
+								key="success"
+								className="flex items-center gap-2"
+								initial={{ opacity: 0, scale: 0.25, filter: "blur(4px)" }}
+								animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+								exit={{ opacity: 0, scale: 0.25, filter: "blur(4px)" }}
+								transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+							>
+								<Check className="h-4 w-4" />
+								<span>Sent!</span>
+							</motion.span>
+						) : isSending ? (
+							<motion.span
+								key="sending"
+								className="flex items-center gap-2"
+								initial={{ opacity: 0, scale: 0.25, filter: "blur(4px)" }}
+								animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+								exit={{ opacity: 0, scale: 0.25, filter: "blur(4px)" }}
+								transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+							>
+								<span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+								<span>Sending...</span>
+							</motion.span>
+						) : (
+							<motion.span
+								key="idle"
+								className="flex items-center gap-2"
+								initial={{ opacity: 0, scale: 0.25, filter: "blur(4px)" }}
+								animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+								exit={{ opacity: 0, scale: 0.25, filter: "blur(4px)" }}
+								transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+							>
+								<SendHorizontal className="h-4 w-4" />
+								<span>Send Voice Message</span>
+							</motion.span>
+						)}
+					</AnimatePresence>
+				</span>
 			</Button>
 		</div>
 	);

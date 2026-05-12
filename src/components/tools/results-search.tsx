@@ -107,9 +107,9 @@ export function ResultsSearch() {
 							animate={{ opacity: 1, y: 0 }}
 							transition={{ delay: idx * 0.05 }}
 						>
-							<Card className="p-4 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.06)]">
+							<Card className="p-4 rounded-xl shadow-[0_2px_8px_oklch(0%_0_0_/_0.06)]">
 								<div className="flex items-start gap-3 mb-3">
-									<div className="w-10 h-10 rounded-xl bg-[--system-accent]/10 flex items-center justify-center shadow-[inset_0_2px_4px_rgba(0,0,0,0.06)]">
+									<div className="w-10 h-10 rounded-xl bg-[--system-accent]/10 flex items-center justify-center shadow-[inset_0_2px_4px_oklch(0%_0_0_/_0.06)]">
 										<UserIcon className="w-5 h-5 text-foreground" />
 									</div>
 									<div>

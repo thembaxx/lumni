@@ -97,9 +97,9 @@ export function ToolsDialog({ open, onOpenChange }: ToolsDialogProps) {
 											value={tab.id}
 											className={cn(
 												"shrink-0 px-4 py-2.5 text-sm font-medium rounded-[12px]",
-												"data-active:bg-[--system-accent] data-active:text-[#ffffff] data-active:shadow-[--shadow-level-1]",
+												"data-active:bg-[--system-accent] data-active:text-[oklch(100%_0_0)] data-active:shadow-[--shadow-level-1]",
 												"text-[--system-text-primary] bg-[--system-surface-secondary] hover:bg-[--system-separator] transition-[background-color] duration-150 ease-out",
-												"dark:data-active:bg-[--system-accent] dark:data-active:text-[#ffffff]",
+												"dark:data-active:bg-[--system-accent] dark:data-active:text-[oklch(100%_0_0)]",
 												"dark:text-[--system-text-primary] dark:bg-[--system-surface-secondary]",
 											)}
 										>

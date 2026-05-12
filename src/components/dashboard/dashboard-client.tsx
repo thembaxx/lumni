@@ -47,7 +47,7 @@ export function DashboardClient({
 	};
 
 	return (
-		<div className="min-h-screen flex flex-col bg-[--system-grouped-background] pb-[69px] overflow-hidden w-full">
+		<div className="min-h-screen flex flex-col bg-[--system-grouped-background] pt-4 pb-[69px] overflow-hidden w-full">
 			<div className="max-w-md mx-auto w-full">
 				<CountdownHeader />
 

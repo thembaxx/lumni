@@ -14,7 +14,7 @@ export function Equation({
 	math,
 	block = false,
 	className,
-	errorColor = "#ef4444",
+	errorColor = "oklch(59.3% 0.194 28°)",
 }: EquationProps) {
 	const uid = useId();
 

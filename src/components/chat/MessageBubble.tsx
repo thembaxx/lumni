@@ -82,7 +82,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 								>
 									{isSending && (
 										<div className="w-10 h-10 rounded-full bg-black/40 flex items-center justify-center">
-											<div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+											<div className="w-4 h-4 border-2 border-white border-t-transparent dark:border-foreground/30 dark:border-t-transparent rounded-full animate-spin" />
 										</div>
 									)}
 								</div>

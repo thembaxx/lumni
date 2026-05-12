@@ -20,13 +20,11 @@ interface MenuProps {
 export function Menu({ children }: MenuProps) {
 	return (
 		<Drawer direction="bottom">
-			<DrawerTrigger asChild>
-				<Button variant="secondary" size="icon" className="rounded-full">
-					<HugeiconsIcon
-						icon={Menu09Icon}
-						className="w-4 h-4 transition-transform duration-200"
-					/>
-				</Button>
+			<DrawerTrigger
+				className="inline-flex items-center justify-center rounded-full bg-secondary text-secondary-foreground hover:bg-secondary/80 size-10 transition-colors"
+				aria-label="Open menu"
+			>
+				<HugeiconsIcon icon={Menu09Icon} className="w-4 h-4" />
 			</DrawerTrigger>
 			<DrawerContent className="mx-auto max-w-lg mt-0 rounded-b-2xl min-h-[40dvh] animate-fade-in-scale">
 				<DrawerHeader className="text-left">

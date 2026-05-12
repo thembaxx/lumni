@@ -238,11 +238,11 @@ export function SmartScheduler() {
 			case "new":
 				return "bg-[--system-accent]/10 text-muted-foreground";
 			case "review":
-				return "bg-purple-500/20 text-purple-500";
+				return "bg-purple-500/20 text-purple-500 dark:bg-purple-900/40 dark:text-purple-300";
 			case "practice":
-				return "bg-green-500/20 text-green-500";
+				return "bg-green-500/20 text-green-500 dark:bg-green-900/40 dark:text-green-300";
 			default:
-				return "bg-gray-500/20 text-gray-500";
+				return "bg-muted/50 text-muted-foreground";
 		}
 	};
 
@@ -380,7 +380,7 @@ export function SmartScheduler() {
 											<Card
 												key={`${day.day}-${sidx}`}
 												className={cn(
-													"p-3 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)]",
+													"p-3 rounded-xl shadow-[0_2px_8px_oklch(0%_0_0_/_0.04)]",
 													session.subject === "Break" && "bg-muted/50",
 												)}
 											>

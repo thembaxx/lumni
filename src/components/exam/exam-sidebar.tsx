@@ -43,7 +43,8 @@ export function ExamSidebar({
 						<span className="w-2 h-2 rounded-full bg-emerald-500" /> Answered
 					</span>
 					<span className="flex items-center gap-1">
-						<Flag className="w-2.5 h-2.5 text-amber-500" /> Flagged
+						<Flag className="w-2.5 h-2.5 text-amber-500 dark:text-amber-400" />{" "}
+						Flagged
 					</span>
 					<span className="flex items-center gap-1">
 						<span className="w-2 h-2 rounded-full bg-muted-foreground/30" />{" "}
@@ -84,9 +85,9 @@ export function ExamSidebar({
 														currentPartId === fullId &&
 															"ring-2 ring-[--system-accent] ring-offset-1",
 														status === "answered" &&
-															"bg-emerald-100 text-emerald-700 hover:bg-emerald-100",
+															"bg-emerald-100 text-emerald-700 hover:bg-emerald-100 dark:bg-emerald-900/40 dark:text-emerald-200 dark:hover:bg-emerald-900/60",
 														status === "flagged" &&
-															"bg-amber-100 text-amber-700 hover:bg-amber-100",
+															"bg-amber-100 text-amber-700 hover:bg-amber-100 dark:bg-amber-900/40 dark:text-amber-200 dark:hover:bg-amber-900/60",
 														status === "unanswered" &&
 															"bg-muted text-muted-foreground hover:bg-muted/80",
 													)}

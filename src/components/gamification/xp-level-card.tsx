@@ -29,9 +29,9 @@ export function XpLevelCard({ levelInfo, totalXp }: XpLevelCardProps) {
 						className="absolute inset-0 rounded-full"
 						animate={{
 							boxShadow: [
-								"0 0 0 0 rgba(20, 184, 166, 0)",
-								"0 0 20px 4px rgba(20, 184, 166, 0.3)",
-								"0 0 0 0 rgba(20, 184, 166, 0)",
+								"0 0 0 0 oklch(66.4% 0.125 186° / 0)",
+								"0 0 20px 4px oklch(66.4% 0.125 186° / 0.3)",
+								"0 0 0 0 oklch(66.4% 0.125 186° / 0)",
 							],
 						}}
 						transition={{ duration: 2, repeat: Infinity }}
@@ -56,7 +56,7 @@ export function XpLevelCard({ levelInfo, totalXp }: XpLevelCardProps) {
 							transition={{ duration: 0.8, ease: "easeOut" }}
 						/>
 						<motion.div
-							className="absolute inset-0 bg-white/20"
+							className="absolute inset-0 bg-white/20 dark:bg-black/20"
 							animate={{ x: ["-100%", "100%"] }}
 							transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
 						/>

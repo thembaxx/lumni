@@ -1,178 +1,86 @@
 "use client";
 
-import { domAnimation, LazyMotion, m } from "framer-motion";
-import { forwardRef, useCallback, useEffect, useState } from "react";
-import { Input } from "@/components/ui/input";
+import { MinusSignIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { OTPInput, OTPInputContext } from "input-otp";
+import * as React from "react";
 import { cn } from "@/lib/utils";
 
-export interface InputOTPProps {
-	className?: string;
-	maxLength?: number;
-	onComplete?: (value: string) => void;
-	error?: boolean;
-	value?: string;
-	onChange?: (value: string) => void;
-}
-
-interface InputOTPSegementProps {
-	index: number;
-	value: string;
-	segments: string[];
-	error?: boolean;
-}
-
-function InputOTPSegment({
-	index,
-	value,
-	segments,
-	error,
-}: InputOTPSegementProps) {
-	const hasText = value.length > 0;
-	const isActive = index === segments.findIndex((s) => s === "");
-
+function InputOTP({
+	className,
+	containerClassName,
+	...props
+}: React.ComponentProps<typeof OTPInput> & {
+	containerClassName?: string;
+}) {
 	return (
-		<m.div
-			className={cn(
-				"relative flex h-12 w-10 items-center justify-center rounded-lg border bg-transparent transition-[border-color,box-shadow]",
-				error
-					? "border-destructive animate-shake"
-					: isActive
-						? "border-ring ring-2 ring-ring/30"
-						: hasText
-							? "border-muted-foreground"
-							: "border-input",
+		<OTPInput
+			data-slot="input-otp"
+			containerClassName={cn(
+				"cn-input-otp flex items-center has-disabled:opacity-50",
+				containerClassName,
 			)}
-			animate={{
-				x: error ? [0, -6, 6, -6, 6, 0] : 0,
-			}}
-			transition={{
-				duration: error ? 0.4 : 0,
-			}}
-		>
-			<span
-				className={cn(
-					"text-lg font-medium tabular-nums",
-					hasText ? "text-foreground" : "text-muted-foreground/50",
-				)}
-			>
-				{hasText ? value : ""}
-			</span>
-		</m.div>
+			spellCheck={false}
+			className={cn("disabled:cursor-not-allowed", className)}
+			{...props}
+		/>
 	);
 }
 
-function InputOTPInner(
-	{
-		className,
-		maxLength = 6,
-		onComplete,
-		error = false,
-		value: controlledValue,
-		onChange,
-	}: InputOTPProps,
-	ref: React.Ref<HTMLInputElement>,
-) {
-	// biome-ignore lint/correctness/useHookAtTopLevel: forwardRef callback is a valid component scope
-	const [internalValue, setInternalValue] = useState("");
-	// biome-ignore lint/correctness/useHookAtTopLevel: forwardRef callback is a valid component scope
-	const [isShaking, setIsShaking] = useState(false);
-
-	const value = controlledValue ?? internalValue;
-	const segments = Array.from({ length: maxLength }, (_, i) => value[i] || "");
-
-	// biome-ignore lint/correctness/useHookAtTopLevel: forwardRef callback is a valid component scope
-	const setValue = useCallback(
-		(newValue: string) => {
-			const sanitized = newValue.replace(/\D/g, "").slice(0, maxLength);
-			setInternalValue(sanitized);
-			onChange?.(sanitized);
-			if (sanitized.length === maxLength && onComplete) {
-				onComplete(sanitized);
-			}
-		},
-		[maxLength, onChange, onComplete],
+function InputOTPGroup({ className, ...props }: React.ComponentProps<"div">) {
+	return (
+		<div
+			data-slot="input-otp-group"
+			className={cn(
+				"flex items-center rounded-md has-aria-invalid:border-destructive has-aria-invalid:ring-2 has-aria-invalid:ring-destructive/20 dark:has-aria-invalid:ring-destructive/40",
+				className,
+			)}
+			{...props}
+		/>
 	);
+}
 
-	// biome-ignore lint/correctness/useHookAtTopLevel: forwardRef callback is a valid component scope
-	const handleChange = useCallback(
-		(e: React.ChangeEvent<HTMLInputElement>) => {
-			setValue(e.target.value);
-		},
-		[setValue],
-	);
-
-	// biome-ignore lint/correctness/useHookAtTopLevel: forwardRef callback is a valid component scope
-	const handleKeyDown = useCallback(
-		(e: React.KeyboardEvent<HTMLInputElement>) => {
-			if (e.key === "Backspace" && value.length === 0) {
-				e.preventDefault();
-			}
-		},
-		[value],
-	);
-
-	// biome-ignore lint/correctness/useHookAtTopLevel: forwardRef callback is a valid component scope
-	const handlePaste = useCallback(
-		(e: React.ClipboardEvent) => {
-			e.preventDefault();
-			const pasted = e.clipboardData
-				.getData("text")
-				.replace(/\D/g, "")
-				.slice(0, maxLength);
-			setValue(pasted);
-		},
-		[setValue, maxLength],
-	);
-
-	// biome-ignore lint/correctness/useHookAtTopLevel: forwardRef callback is a valid component scope
-	useEffect(() => {
-		if (error && !isShaking) {
-			setIsShaking(true);
-			const timer = setTimeout(() => setIsShaking(false), 400);
-			return () => clearTimeout(timer);
-		}
-	}, [error, isShaking]);
-
-	// biome-ignore lint/correctness/useHookAtTopLevel: forwardRef callback is a valid component scope
-	useEffect(() => {
-		if (!isShaking && value.length === 0) {
-			const input = document.getElementById("input-otp");
-			input?.focus();
-		}
-	}, [value, isShaking]);
+function InputOTPSlot({
+	index,
+	className,
+	...props
+}: React.ComponentProps<"div"> & {
+	index: number;
+}) {
+	const inputOTPContext = React.useContext(OTPInputContext);
+	const { char, hasFakeCaret, isActive } = inputOTPContext?.slots[index] ?? {};
 
 	return (
-		<LazyMotion features={domAnimation}>
-			<div className={cn("flex gap-2 justify-center", className)}>
-				<div className="flex gap-1.5">
-					{segments.map((segment, index) => (
-						<InputOTPSegment
-							key={index}
-							index={index}
-							value={segment}
-							segments={segments}
-							error={isShaking}
-						/>
-					))}
+		<div
+			data-slot="input-otp-slot"
+			data-active={isActive}
+			className={cn(
+				"relative flex size-7 items-center justify-center border-y border-r border-input bg-input/20 text-xs/relaxed transition-[color,box-shadow,background-color,border-color] outline-none first:rounded-l-md first:border-l last:rounded-r-md aria-invalid:border-destructive data-[active=true]:z-10 data-[active=true]:border-ring data-[active=true]:ring-2 data-[active=true]:ring-ring/30 data-[active=true]:aria-invalid:border-destructive data-[active=true]:aria-invalid:ring-destructive/20 dark:bg-input/30 dark:data-[active=true]:aria-invalid:ring-destructive/40",
+				className,
+			)}
+			{...props}
+		>
+			{char}
+			{hasFakeCaret && (
+				<div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+					<div className="h-4 w-px animate-caret-blink bg-foreground duration-1000" />
 				</div>
-				<Input
-					id="input-otp"
-					ref={ref}
-					className="sr-only"
-					autoComplete="one-time-code"
-					inputMode="numeric"
-					maxLength={maxLength}
-					onChange={handleChange}
-					onKeyDown={handleKeyDown}
-					onPaste={handlePaste}
-					value={value}
-				/>
-			</div>
-		</LazyMotion>
+			)}
+		</div>
 	);
 }
 
-export const InputOTP = forwardRef<HTMLInputElement, InputOTPProps>(
-	InputOTPInner,
-);
-InputOTP.displayName = "InputOTP";
+function InputOTPSeparator({ ...props }: React.ComponentProps<"div">) {
+	return (
+		<div
+			data-slot="input-otp-separator"
+			className="flex items-center [&_svg:not([class*='size-'])]:size-4"
+			role="separator"
+			{...props}
+		>
+			<HugeiconsIcon icon={MinusSignIcon} strokeWidth={2} />
+		</div>
+	);
+}
+
+export { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot };

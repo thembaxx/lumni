@@ -52,7 +52,11 @@ export function WaveDiagram({ data }: { data: WaveData }) {
 				<Line
 					key={`wave-${w}`}
 					points={points}
-					stroke={data.sourceMoving ? "#ef4444" : "#3b82f6"}
+					stroke={
+						data.sourceMoving
+							? "oklch(59.3% 0.194 28°)"
+							: "oklch(57.7% 0.184 264°)"
+					}
 					strokeWidth={2}
 				/>,
 			);
@@ -62,7 +66,14 @@ export function WaveDiagram({ data }: { data: WaveData }) {
 
 	const source = useMemo(() => {
 		if (!data.sourceMoving) return null;
-		return <Circle x={30 + phase * 0.5} y={100} radius={15} fill="#ef4444" />;
+		return (
+			<Circle
+				x={30 + phase * 0.5}
+				y={100}
+				radius={15}
+				fill="oklch(59.3% 0.194 28°)"
+			/>
+		);
 	}, [data.sourceMoving, phase]);
 
 	const photon = useMemo(() => {
@@ -74,7 +85,7 @@ export function WaveDiagram({ data }: { data: WaveData }) {
 				<Line
 					key={`photon-${i}`}
 					points={[0, 100 + yOffset, 300, 100 + yOffset]}
-					stroke="#fbbf24"
+					stroke="oklch(81.9% 0.145 80°)"
 					strokeWidth={3}
 					dash={[5, 5]}
 				/>,

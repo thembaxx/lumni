@@ -64,7 +64,7 @@ export function AssessmentHeader({
 						onClick={onQuit}
 						className="font-medium text-muted-foreground hover:text-foreground hover:bg-destructive/10"
 					>
-						<span className="text-lg">×</span>
+						<span className="text-lg leading-none">×</span>
 						<span className="ml-1">Quit</span>
 					</Button>
 				)}

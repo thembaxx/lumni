@@ -59,7 +59,13 @@ function Confetti() {
 		id: i,
 		x: Math.random() * 200 - 100,
 		delay: i * 0.05,
-		color: ["#22c55e", "#3b82f6", "#eab308", "#ec4899", "#8b5cf6"][i % 5],
+		color: [
+			"oklch(64.8% 0.173 142°)",
+			"oklch(57.7% 0.184 264°)",
+			"oklch(78.6% 0.156 80°)",
+			"oklch(62.2% 0.195 348°)",
+			"oklch(53.5% 0.182 286°)",
+		][i % 5],
 	}));
 	return (
 		<div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -157,7 +163,7 @@ export function QuizResult({
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ delay: 0.4 }}
 					>
-						<p className="text-3xl font-bold text-green-500">
+						<p className="text-3xl font-bold text-green-500 dark:text-green-400">
 							<AnimatedCounter value={correctAnswers} delay={500} />
 						</p>
 						<p className="text-xs text-muted-foreground">Correct</p>
@@ -168,7 +174,7 @@ export function QuizResult({
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ delay: 0.5 }}
 					>
-						<p className="text-3xl font-bold text-red-500">
+						<p className="text-3xl font-bold text-red-500 dark:text-red-400">
 							<AnimatedCounter
 								value={totalQuestions - correctAnswers}
 								delay={600}

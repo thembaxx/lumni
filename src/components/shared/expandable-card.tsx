@@ -107,7 +107,7 @@ function ExpandedContent({
 			layoutId={`card-${data.id}`}
 			className="fixed left-1/2 top-1/2 z-50 w-[calc(100%-2rem)] max-w-sm -translate-x-1/2 -translate-y-1/2"
 		>
-			<Card className="p-4 rounded-2xl border bg-card text-card-foreground shadow-2xl shadow-black/20 max-h-[80dvh] overflow-y-auto">
+			<Card className="p-4 rounded-2xl bg-card text-card-foreground shadow-2xl shadow-black/20 max-h-[80dvh] overflow-y-auto">
 				<div className="space-y-3">
 					<div className="flex justify-between items-start">
 						<Badge
@@ -186,7 +186,7 @@ function CollapsedContent({
 		<m.div key={`${data.id}-closed`} layoutId={`card-${data.id}`}>
 			<div
 				onClick={onOpen}
-				className="p-5 rounded-2xl border bg-card text-card-foreground shadow-sm hover:border-[--system-accent]/20 transition-colors transition-transform duration-200 cursor-pointer w-full text-left"
+				className="p-5 rounded-2xl border bg-card text-card-foreground shadow-sm hover:border-[--system-accent]/20 transition-[scale,colors] duration-200 active:scale-[0.98] cursor-pointer w-full text-left"
 				role="button"
 				tabIndex={0}
 				onKeyDown={(e) => {

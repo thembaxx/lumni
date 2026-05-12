@@ -191,7 +191,7 @@ function TodaySessionsCard({
 										onClick={() => onComplete(session.id)}
 										className={`rounded-full ${
 											session.completed
-												? "bg-green-500 text-white hover:bg-green-500"
+												? "bg-green-500 text-white hover:bg-green-500 dark:bg-green-700 dark:hover:bg-green-600"
 												: "border-muted-foreground"
 										}`}
 									>
@@ -277,7 +277,7 @@ function UpcomingSessionsCard({
 														onClick={() => onComplete(session.id)}
 														className={`rounded-full ${
 															session.completed
-																? "bg-green-500 text-white hover:bg-green-500"
+																? "bg-green-500 text-white hover:bg-green-500 dark:bg-green-700 dark:hover:bg-green-600"
 																: "border-muted-foreground"
 														}`}
 													>

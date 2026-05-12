@@ -89,7 +89,7 @@ function SubjectCheckboxItem({
 			className="flex items-center gap-3 p-3 cursor-pointer hover:bg-muted/50 transition-colors"
 			initial={{ opacity: 0 }}
 			animate={{ opacity: 1 }}
-			whileHover={{ backgroundColor: "rgba(0,0,0,0.02)" }}
+			whileHover={{ backgroundColor: "oklch(0% 0 0 / 0.02)" }}
 		>
 			<Checkbox checked={checked} onCheckedChange={onChange} />
 			<span>{label}</span>

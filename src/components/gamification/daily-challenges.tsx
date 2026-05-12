@@ -23,7 +23,7 @@ export function DailyChallenges({ challenges }: DailyChallengesProps) {
 						<motion.span
 							initial={{ scale: 0, opacity: 0 }}
 							animate={{ scale: 1, opacity: 1 }}
-							className="text-xs bg-green-500/20 text-green-600 dark:text-green-400 px-2 py-0.5 rounded-full"
+							className="text-xs bg-green-500/20 text-green-600 dark:text-green-400 dark:bg-green-900/30 px-2 py-0.5 rounded-full"
 						>
 							Complete!
 						</motion.span>
@@ -43,14 +43,16 @@ export function DailyChallenges({ challenges }: DailyChallengesProps) {
 						transition={{ delay: index * 0.1 }}
 						className={`relative overflow-hidden rounded-xl p-3 transition-colors ${
 							challenge.completed
-								? "bg-green-500/10 border border-green-500/20"
+								? "bg-green-500/10 border border-green-500/20 dark:bg-green-900/20 dark:border-green-900/30"
 								: "bg-card border border-border/50 hover:border-[--system-accent]/30"
 						}`}
 					>
 						<div className="flex items-center gap-3">
 							<div
 								className={`flex h-10 w-10 items-center justify-center rounded-lg text-lg ${
-									challenge.completed ? "bg-green-500/20" : "bg-muted"
+									challenge.completed
+										? "bg-green-500/20 dark:bg-green-900/30"
+										: "bg-muted"
 								}`}
 							>
 								{challenge.completed ? "✓" : challenge.icon}

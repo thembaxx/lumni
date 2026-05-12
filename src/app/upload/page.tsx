@@ -124,7 +124,9 @@ export default function UploadPage() {
 
 			{lastUpload && (
 				<div className="mt-8 p-4 bg-green-500/10 rounded-lg">
-					<p className="font-medium text-green-700">Last Upload Successful!</p>
+					<p className="font-medium text-green-700 dark:text-green-300">
+						Last Upload Successful!
+					</p>
 					<p className="text-sm text-muted-foreground break-all">
 						{lastUpload}
 					</p>

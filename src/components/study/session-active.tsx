@@ -58,8 +58,8 @@ export function SessionActive({
 							<>
 								<span className="text-muted-foreground">|</span>
 								<div className="flex items-center gap-1.5">
-									<Target className="size-3.5 text-green-500" />
-									<span className="text-sm font-semibold tabular-nums font-mono text-green-500">
+									<Target className="size-3.5 text-green-500 dark:text-green-400" />
+									<span className="text-sm font-semibold tabular-nums font-mono text-green-500 dark:text-green-400">
 										{activity.accuracy}%
 									</span>
 								</div>

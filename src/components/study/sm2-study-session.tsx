@@ -66,7 +66,7 @@ export function SM2StudySession({ subject }: { subject?: string }) {
 					<span className="text-xs px-2 py-1 bg-muted text-foreground rounded">
 						{dueCards.length} due
 					</span>
-					<span className="text-xs px-2 py-1 bg-green-100 text-green-700 rounded">
+					<span className="text-xs px-2 py-1 bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-200 rounded">
 						{newCards.length} new
 					</span>
 				</div>
@@ -157,17 +157,17 @@ export function FlashcardStats() {
 				<div className="text-lg font-bold">{stats.total}</div>
 				<div className="text-xs text-muted-foreground">Total</div>
 			</div>
-			<div className="text-center p-2 bg-red-100 rounded">
+			<div className="text-center p-2 bg-red-100 dark:bg-red-900/40 rounded">
 				<div className="text-lg font-bold text-red-700">{stats.due}</div>
 				<div className="text-xs text-red-600">Due</div>
 			</div>
-			<div className="text-center p-2 bg-yellow-100 rounded">
+			<div className="text-center p-2 bg-yellow-100 dark:bg-yellow-900/40 rounded">
 				<div className="text-lg font-bold text-yellow-700">
 					{stats.learning}
 				</div>
 				<div className="text-xs text-yellow-600">Learning</div>
 			</div>
-			<div className="text-center p-2 bg-green-100 rounded">
+			<div className="text-center p-2 bg-green-100 dark:bg-green-900/40 rounded">
 				<div className="text-lg font-bold text-green-700">{stats.mature}</div>
 				<div className="text-xs text-green-600">Mastered</div>
 			</div>

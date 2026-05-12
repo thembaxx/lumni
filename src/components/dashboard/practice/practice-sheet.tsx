@@ -27,18 +27,11 @@ export function PracticeSheet({ open, onOpenChange }: PracticeSheetProps) {
 
 	return (
 		<Sheet open={open} onOpenChange={onOpenChange}>
-			<SheetTrigger asChild>
-				<Button
-					variant="secondary"
-					size="icon"
-					className="rounded-xl h-10 w-10"
-					aria-label="Open practice sheet"
-				>
-					<HugeiconsIcon
-						icon={More01Icon}
-						className="w-4 h-4 transition-transform duration-200"
-					/>
-				</Button>
+			<SheetTrigger
+				className="rounded-xl h-10 w-10 flex items-center justify-center bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-colors"
+				aria-label="Open practice sheet"
+			>
+				<HugeiconsIcon icon={More01Icon} className="w-4 h-4" />
 			</SheetTrigger>
 			<SheetContent
 				side="bottom"

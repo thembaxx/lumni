@@ -14,14 +14,14 @@ interface ConfettiPiece {
 }
 
 const CONFETTI_COLORS = [
-	"#22c55e",
-	"#eab308",
-	"#f97316",
-	"#ec4899",
-	"#3b82f6",
-	"#8b5cf6",
-	"#14b8a6",
-	"#f43f5e",
+	"oklch(64.8% 0.173 142°)",
+	"oklch(78.6% 0.156 80°)",
+	"oklch(69.6% 0.196 49°)",
+	"oklch(62.2% 0.195 348°)",
+	"oklch(57.7% 0.184 264°)",
+	"oklch(53.5% 0.182 286°)",
+	"oklch(66.4% 0.125 186°)",
+	"oklch(58.1% 0.226 14°)",
 ];
 
 export function Confetti({

@@ -68,10 +68,16 @@ export function FlashcardsActive({
 					<Badge variant="outline">
 						{currentIndex + 1} / {totalCards}
 					</Badge>
-					<Badge variant="secondary" className="text-green-500">
+					<Badge
+						variant="secondary"
+						className="text-green-500 dark:text-green-400"
+					>
 						{knownCount} known
 					</Badge>
-					<Badge variant="secondary" className="text-amber-500">
+					<Badge
+						variant="secondary"
+						className="text-amber-500 dark:text-amber-400"
+					>
 						{reviewCount} review
 					</Badge>
 				</div>
@@ -125,8 +131,8 @@ export function FlashcardsActive({
 								</p>
 							</div>
 							{currentCard.hint && (
-								<div className="mt-4 p-3 rounded-lg bg-amber-500/10">
-									<p className="text-xs text-amber-700">
+								<div className="mt-4 p-3 rounded-lg bg-amber-500/10 dark:bg-amber-700/20">
+									<p className="text-xs text-amber-700 dark:text-amber-300">
 										Hint: {currentCard.hint}
 									</p>
 								</div>
@@ -140,7 +146,7 @@ export function FlashcardsActive({
 				<div className="flex gap-2 mt-4">
 					<Button
 						variant="outline"
-						className="flex-1 border-amber-500/50 text-amber-700"
+						className="flex-1 border-amber-500/50 text-amber-700 dark:border-amber-700/50 dark:text-amber-300"
 						onClick={onReview}
 					>
 						<IconX className="size-4 mr-2" />

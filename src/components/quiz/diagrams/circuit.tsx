@@ -18,9 +18,9 @@ interface CircuitData {
 }
 
 export function CircuitDiagram({ data }: { data: CircuitData }) {
-	const wireColor = "#374151";
-	const componentColor = "#6366f1";
-	const batteryColor = "#ef4444";
+	const wireColor = "oklch(32.5% 0.012 264°)";
+	const componentColor = "oklch(52.5% 0.142 274°)";
+	const batteryColor = "oklch(59.3% 0.194 28°)";
 	const x = 80;
 
 	const wires = useMemo(

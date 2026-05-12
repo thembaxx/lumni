@@ -1,33 +1,27 @@
 "use client";
 
-import {
-	CheckboxIndicator,
-	Checkbox as CheckboxPrimitive,
-} from "@radix-ui/react-checkbox";
-import { IconCheck } from "@tabler/icons-react";
-import { clsx } from "clsx";
-import * as React from "react";
+import { Checkbox as CheckboxPrimitive } from "@base-ui/react/checkbox";
+import { Tick02Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { cn } from "@/lib/utils";
 
-type CheckboxProps = React.ComponentPropsWithoutRef<typeof CheckboxPrimitive>;
-
-function Checkbox({ className, ...props }: CheckboxProps) {
+function Checkbox({ className, ...props }: CheckboxPrimitive.Root.Props) {
 	return (
-		<CheckboxPrimitive
-			className={clsx(
-				"peer h-4 w-4 shrink-0 rounded-sm border border-[--system-accent] ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-[--system-accent] data-[state=checked]:text-background transition-colors transition-background duration-200",
+		<CheckboxPrimitive.Root
+			data-slot="checkbox"
+			className={cn(
+				"peer relative flex size-4 shrink-0 items-center justify-center rounded-[4px] border border-input transition-shadow outline-none group-has-disabled/field:opacity-50 after:absolute after:-inset-x-3 after:-inset-y-2 focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/30 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-2 aria-invalid:ring-destructive/20 aria-invalid:aria-checked:border-primary dark:bg-input/30 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 data-checked:border-primary data-checked:bg-primary data-checked:text-primary-foreground dark:data-checked:bg-primary",
 				className,
 			)}
 			{...props}
 		>
-			<CheckboxIndicator
-				className={clsx(
-					"flex items-center justify-center text-current",
-					"data-[state=checked]:animate-check-bounce",
-				)}
+			<CheckboxPrimitive.Indicator
+				data-slot="checkbox-indicator"
+				className="grid place-content-center text-current transition-none [&>svg]:size-3.5"
 			>
-				<IconCheck className="h-4 w-4 data-[state=unchecked]:scale-0 data-[state=checked]:scale-100 transition-transform duration-200" />
-			</CheckboxIndicator>
-		</CheckboxPrimitive>
+				<HugeiconsIcon icon={Tick02Icon} strokeWidth={2} />
+			</CheckboxPrimitive.Indicator>
+		</CheckboxPrimitive.Root>
 	);
 }
 

@@ -90,7 +90,7 @@ export function ExamTab({ className }: ExamTabProps) {
 									animate={{ opacity: 1, scale: 1 }}
 									exit={{ opacity: 0, scale: 0.8 }}
 									onClick={() => setSearchQuery("")}
-									className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center rounded-full bg-muted/60 hover:bg-muted text-muted-foreground hover:text-foreground active:scale-[0.96] transition-[scale] size-7"
+									className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center rounded-full bg-muted/60 hover:bg-muted text-muted-foreground hover:text-foreground active:scale-[0.96] transition-[scale] size-7 after:absolute after:-inset-2"
 									type="button"
 								>
 									<X className="w-3 h-3" />

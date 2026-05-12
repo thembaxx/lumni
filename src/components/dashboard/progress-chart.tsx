@@ -25,7 +25,7 @@ export function ProgressChart({ data, title }: ProgressChartProps) {
 	return (
 		<Card className="p-4">
 			{title && (
-				<h3 className="text-lg font-semibold mb-4 text-wrap-balance">
+				<h3 className="text-lg font-semibold mb-4 text-wrap balance">
 					{title}
 				</h3>
 			)}

@@ -19,7 +19,7 @@ export function FloatingToolsButton() {
 		<>
 			<Button
 				type="button"
-				variant="uber_floating"
+				variant="default"
 				onClick={() => setIsOpen(true)}
 				className={cn(
 					"fixed bottom-[69px] right-5 z-40",

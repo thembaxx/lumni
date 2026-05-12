@@ -175,7 +175,7 @@ export function PronunciationPractice() {
 							<Button
 								size="lg"
 								onClick={handleRecord}
-								className={`gap-2 ${isRecording ? "bg-red-500 hover:bg-red-600" : ""}`}
+								className={`gap-2 ${isRecording ? "bg-red-500 hover:bg-red-600 dark:bg-red-700 dark:hover:bg-red-600" : ""}`}
 							>
 								<Mic className="h-5 w-5" />
 								{isRecording ? `${recordingTime}s` : "Record"}

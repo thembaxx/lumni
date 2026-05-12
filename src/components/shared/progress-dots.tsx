@@ -17,7 +17,7 @@ interface ProgressDotsProps {
 const variantStyles = {
 	quiz: {
 		current: "bg-[--system-accent]",
-		completed: "bg-green-500",
+		completed: "bg-green-500 dark:bg-green-700",
 		pending: "bg-muted",
 	},
 	engine: {
@@ -26,8 +26,8 @@ const variantStyles = {
 		pending: "bg-muted",
 	},
 	results: {
-		current: "bg-green-500",
-		completed: "bg-green-500",
+		current: "bg-green-500 dark:bg-green-700",
+		completed: "bg-green-500 dark:bg-green-700",
 		pending: "bg-muted",
 	},
 };

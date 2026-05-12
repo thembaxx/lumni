@@ -118,9 +118,9 @@ function StatCard({
 }) {
 	const trendColor =
 		trend === "up"
-			? "text-green-500"
+			? "text-green-500 dark:text-green-400"
 			: trend === "down"
-				? "text-red-500"
+				? "text-red-500 dark:text-red-400"
 				: "text-muted-foreground";
 
 	return (
@@ -192,8 +192,8 @@ function RecommendationsCard({
 									rec.type === "practice"
 										? "bg-[--system-accent]"
 										: rec.type === "exam"
-											? "bg-purple-500"
-											: "bg-green-500"
+											? "bg-purple-500 dark:bg-purple-700"
+											: "bg-green-500 dark:bg-green-700"
 								}`}
 							/>
 							<div>
@@ -241,7 +241,7 @@ function SubjectBreakdownCard({ subjects }: { subjects: SubjectAnalytics[] }) {
 								<span>{subject.totalQuestions} questions</span>
 								<span>{subject.currentStreak} day streak</span>
 								{subject.weakTopics.length > 0 && (
-									<span className="text-red-500">
+									<span className="text-red-500 dark:text-red-400">
 										Weak: {subject.weakTopics[0].topic}
 									</span>
 								)}

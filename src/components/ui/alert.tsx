@@ -1,107 +1,76 @@
-"use client";
-
-import { AnimatePresence, motion } from "framer-motion";
+import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
-interface AlertAction {
-	label: string;
-	onClick: () => void;
-	variant?: "default" | "destructive" | "cancel";
-}
-
-interface AlertProps {
-	open: boolean;
-	onOpenChange: (open: boolean) => void;
-	title: string;
-	message: string;
-	actions: AlertAction[];
-	className?: string;
-}
+const alertVariants = cva(
+	"group/alert relative grid w-full gap-0.5 rounded-lg border px-2 py-1.5 text-left text-xs/relaxed has-data-[slot=alert-action]:relative has-data-[slot=alert-action]:pr-18 has-[>svg]:grid-cols-[auto_1fr] has-[>svg]:gap-x-1.5 *:[svg]:row-span-2 *:[svg]:translate-y-0.5 *:[svg]:text-current *:[svg:not([class*='size-'])]:size-3.5",
+	{
+		variants: {
+			variant: {
+				default: "bg-card text-card-foreground",
+				destructive:
+					"bg-card text-destructive *:data-[slot=alert-description]:text-destructive/90 *:[svg]:text-current",
+			},
+		},
+		defaultVariants: {
+			variant: "default",
+		},
+	},
+);
 
 function Alert({
-	open,
-	onOpenChange,
-	title,
-	message,
-	actions,
 	className,
-}: AlertProps) {
-	const iOSEase: [number, number, number, number] = [0.16, 1, 0.3, 1];
-
+	variant,
+	...props
+}: React.ComponentProps<"div"> & VariantProps<typeof alertVariants>) {
 	return (
-		<AnimatePresence initial={false}>
-			{open && (
-				<div className="fixed inset-0 z-50 flex items-center justify-center p-8">
-					<motion.div
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
-						exit={{ opacity: 0 }}
-						transition={{ duration: 0.2, ease: iOSEase }}
-						className="fixed inset-0 bg-black/40 dark:bg-black/60"
-						onClick={() => onOpenChange(false)}
-					/>
-					<motion.div
-						initial={{ opacity: 0, scale: 0.92 }}
-						animate={{ opacity: 1, scale: 1 }}
-						exit={{ opacity: 0, scale: 0.92 }}
-						transition={{ duration: 0.25, ease: iOSEase }}
-						className={cn(
-							"relative w-full max-w-[270px] rounded-[22px] bg-[--system-surface] p-0 shadow-[--shadow-level-3]",
-							className,
-						)}
-						role="alertdialog"
-						aria-modal="true"
-						aria-label={title}
-					>
-						<div className="px-5 py-4 text-center">
-							<h2 className="ios-headline font-semibold text-[--system-text-primary] mb-1">
-								{title}
-							</h2>
-							<p className="ios-footnote text-[--system-text-secondary] leading-relaxed">
-								{message}
-							</p>
-						</div>
-						<div className="ios-separator" />
-						<div
-							className={cn(
-								"flex",
-								actions.length > 1 ? "flex-row" : "flex-col",
-							)}
-						>
-							{actions.map((action, index) => (
-								<React.Fragment key={index}>
-									{index > 0 && actions.length > 1 && (
-										<div className="w-[0.33px] bg-[--system-separator] self-stretch" />
-									)}
-									<button
-										type="button"
-										onClick={() => {
-											action.onClick();
-											onOpenChange(false);
-										}}
-										className={cn(
-											"flex-1 py-3.5 text-center ios-headline font-semibold transition-colors duration-150",
-											action.variant === "destructive"
-												? "text-[--system-destructive]"
-												: action.variant === "cancel"
-													? "text-[--system-text-secondary] font-normal"
-													: "text-[--system-accent]",
-											"hover:bg-[--system-surface-secondary] active:bg-[--system-surface-secondary]",
-											actions.length > 1 ? "rounded-none" : "rounded-b-[22px]",
-										)}
-									>
-										{action.label}
-									</button>
-								</React.Fragment>
-							))}
-						</div>
-					</motion.div>
-				</div>
-			)}
-		</AnimatePresence>
+		<div
+			data-slot="alert"
+			role="alert"
+			className={cn(alertVariants({ variant }), className)}
+			{...props}
+		/>
 	);
 }
 
-export { Alert };
+function AlertTitle({ className, ...props }: React.ComponentProps<"div">) {
+	return (
+		<div
+			data-slot="alert-title"
+			className={cn(
+				"font-medium group-has-[>svg]/alert:col-start-2 [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground",
+				className,
+			)}
+			{...props}
+		/>
+	);
+}
+
+function AlertDescription({
+	className,
+	...props
+}: React.ComponentProps<"div">) {
+	return (
+		<div
+			data-slot="alert-description"
+			className={cn(
+				"text-xs/relaxed text-balance text-muted-foreground md:text-pretty [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground [&_p:not(:last-child)]:mb-4",
+				className,
+			)}
+			{...props}
+		/>
+	);
+}
+
+function AlertAction({ className, ...props }: React.ComponentProps<"div">) {
+	return (
+		<div
+			data-slot="alert-action"
+			className={cn("absolute top-1.5 right-2", className)}
+			{...props}
+		/>
+	);
+}
+
+export { Alert, AlertAction, AlertDescription, AlertTitle };

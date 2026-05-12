@@ -32,15 +32,15 @@ const subjectAbbrs: Record<string, string> = {
 
 const subjectColors: Record<string, string> = {
 	mathematics: "bg-[--system-accent]",
-	"physical-sciences": "bg-green-500",
-	"life-sciences": "bg-purple-500",
-	"english-home-language": "bg-orange-500",
-	"afrikaans-home-language": "bg-red-500",
-	geography: "bg-teal-500",
-	history: "bg-yellow-500",
-	accounting: "bg-amber-500",
-	"business-studies": "bg-pink-500",
-	economics: "bg-cyan-500",
+	"physical-sciences": "bg-green-500 dark:bg-green-700",
+	"life-sciences": "bg-purple-500 dark:bg-purple-700",
+	"english-home-language": "bg-orange-500 dark:bg-orange-700",
+	"afrikaans-home-language": "bg-red-500 dark:bg-red-700",
+	geography: "bg-teal-500 dark:bg-teal-700",
+	history: "bg-yellow-500 dark:bg-yellow-700",
+	accounting: "bg-amber-500 dark:bg-amber-700",
+	"business-studies": "bg-pink-500 dark:bg-pink-700",
+	economics: "bg-cyan-500 dark:bg-cyan-700",
 };
 
 const commonSubjects = [
@@ -60,7 +60,7 @@ const STORAGE_KEY = "lumni-exams";
 
 export function ExamCalendar() {
 	const [exams, setExams] = useState<Exam[]>([]);
-	const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+	const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
 	const [isAddingExam, setIsAddingExam] = useState(false);
 	const [newExam, setNewExam] = useState({ subject: "", paper: "Paper 1" });
 
@@ -109,7 +109,7 @@ export function ExamCalendar() {
 		: [];
 
 	const getSubjectColor = (subjectId: string) => {
-		return subjectColors[subjectId] || "bg-gray-500";
+		return subjectColors[subjectId] || "bg-muted";
 	};
 
 	const getSubjectAbbr = (subjectId: string) => {
@@ -119,8 +119,7 @@ export function ExamCalendar() {
 	return (
 		<div className="p-4 h-full flex flex-col">
 			<Calendar
-				markedDates={exams.map((e) => e.date)}
-				markedDatesColor="bg-[--system-accent]"
+				mode="single"
 				onSelect={(date) => date && setSelectedDate(date)}
 				selected={selectedDate}
 			/>
@@ -146,7 +145,7 @@ export function ExamCalendar() {
 					{examsOnDate.map((exam) => (
 						<Card
 							key={exam.id}
-							className="p-3 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.06)]"
+							className="p-3 rounded-xl shadow-[0_2px_8px_oklch(0%_0_0_/_0.06)]"
 						>
 							<div className="flex items-center justify-between">
 								<div className="flex items-center gap-3">
@@ -198,7 +197,7 @@ export function ExamCalendar() {
 								key={exam.id}
 								initial={{ opacity: 0, y: 5 }}
 								animate={{ opacity: 1, y: 0 }}
-								className="flex items-center gap-2 p-2.5 rounded-xl bg-muted shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
+								className="flex items-center gap-2 p-2.5 rounded-xl bg-muted shadow-[0_2px_8px_oklch(0%_0_0_/_0.04)]"
 							>
 								<span
 									className={cn(
@@ -240,7 +239,7 @@ export function ExamCalendar() {
 							animate={{ scale: 1, opacity: 1, y: 0 }}
 							exit={{ scale: 0.95, opacity: 0, y: 10 }}
 							transition={{ type: "spring", duration: 0.3, bounce: 0 }}
-							className="relative bg-background rounded-2xl p-6 w-full max-w-sm shadow-[0_8px_30px_rgba(0,0,0,0.12)]"
+							className="relative bg-background rounded-2xl p-6 w-full max-w-sm shadow-[0_8px_30px_oklch(0%_0_0_/_0.12)]"
 						>
 							<Button
 								variant="ghost"

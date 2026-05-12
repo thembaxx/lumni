@@ -104,7 +104,7 @@ export function TodayFocusCard({
 				ease: easeOutQuint,
 			}}
 		>
-			<Card className="relative overflow-hidden border-0">
+			<Card className="relative overflow-hidden border">
 				<div
 					className={`absolute top-0 left-0 right-0 h-0.5 ${config.accent}`}
 				/>

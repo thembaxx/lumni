@@ -89,7 +89,7 @@ export function QuizResultsCard({
 					animate={isGreatScore ? { opacity: [0, 0.3, 0] } : { opacity: 0 }}
 					transition={{ duration: 2, repeat: Infinity }}
 				>
-					<div className="absolute inset-0 bg-green-500/10" />
+					<div className="absolute inset-0 bg-green-500/10 dark:bg-green-700/20" />
 				</motion.div>
 
 				<CardHeader className="text-center">
@@ -140,7 +140,7 @@ export function QuizResultsCard({
 								<p
 									className={cn(
 										"text-2xl font-bold tabular-nums",
-										isGreatScore && "text-green-500",
+										isGreatScore && "text-green-500 dark:text-green-400",
 									)}
 								>
 									{correctAnswers}
@@ -156,7 +156,7 @@ export function QuizResultsCard({
 								<p
 									className={cn(
 										"text-2xl font-bold tabular-nums",
-										isGreatScore && "text-green-500",
+										isGreatScore && "text-green-500 dark:text-green-400",
 									)}
 								>
 									{accuracy}%

@@ -216,7 +216,7 @@ export function APSCalculator() {
 				</Button>
 			</div>
 
-			<div className="p-5 rounded-2xl bg-muted shadow-[0_2px_8px_rgba(0,0,0,0.08)] mb-6">
+			<div className="p-5 rounded-2xl bg-muted shadow-[0_2px_8px_oklch(0%_0_0_/_0.08)] mb-6">
 				<div className="flex items-center justify-between mb-2">
 					<span className="text-muted-foreground">Your APS Score</span>
 					<CalculatorIcon className="w-5 h-5 text-muted-foreground" />
@@ -245,7 +245,7 @@ export function APSCalculator() {
 							.map((subject, idx) => (
 								<div
 									key={subject.id}
-									className="flex justify-between items-center p-3 rounded-xl bg-card shadow-[0_2px_8px_rgba(0,0,0,0.06)]"
+									className="flex justify-between items-center p-3 rounded-xl bg-card shadow-[0_2px_8px_oklch(0%_0_0_/_0.06)]"
 								>
 									<div>
 										<span className="font-medium">
@@ -281,15 +281,15 @@ export function APSCalculator() {
 							animate={{ opacity: 1, y: 0 }}
 							transition={{ delay: idx * 0.05 }}
 						>
-							<Card className="p-3 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.06)]">
+							<Card className="p-3 rounded-xl shadow-[0_2px_8px_oklch(0%_0_0_/_0.06)]">
 								<div className="flex justify-between items-start mb-2">
 									<span className="font-medium text-sm">{uni.university}</span>
 									<span
 										className={cn(
 											"text-sm font-bold tabular-nums",
 											totalAPS >= uni.minAPS
-												? "text-green-500"
-												: "text-red-500",
+												? "text-green-500 dark:text-green-400"
+												: "text-red-500 dark:text-red-400",
 										)}
 									>
 										Min: {uni.minAPS}
@@ -299,7 +299,7 @@ export function APSCalculator() {
 									<div
 										className={
 											totalAPS >= uni.courses.medicine
-												? "text-green-500"
+												? "text-green-500 dark:text-green-400"
 												: "text-muted-foreground"
 										}
 									>
@@ -308,7 +308,7 @@ export function APSCalculator() {
 									<div
 										className={
 											totalAPS >= uni.courses.engineering
-												? "text-green-500"
+												? "text-green-500 dark:text-green-400"
 												: "text-muted-foreground"
 										}
 									>
@@ -317,7 +317,7 @@ export function APSCalculator() {
 									<div
 										className={
 											totalAPS >= uni.courses.commerce
-												? "text-green-500"
+												? "text-green-500 dark:text-green-400"
 												: "text-muted-foreground"
 										}
 									>
@@ -326,7 +326,7 @@ export function APSCalculator() {
 									<div
 										className={
 											totalAPS >= uni.courses.science
-												? "text-green-500"
+												? "text-green-500 dark:text-green-400"
 												: "text-muted-foreground"
 										}
 									>

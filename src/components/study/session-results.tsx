@@ -46,26 +46,30 @@ export function SessionResults({
 							<p className="text-xs text-muted-foreground">Total</p>
 						</div>
 						{stats.correct !== undefined && (
-							<div className="p-4 rounded-lg bg-green-500/10">
-								<p className="text-2xl font-bold text-green-500">
+							<div className="p-4 rounded-lg bg-green-500/10 dark:bg-green-700/20">
+								<p className="text-2xl font-bold text-green-500 dark:text-green-400">
 									{stats.correct}
 								</p>
-								<p className="text-xs text-green-500">Known</p>
+								<p className="text-xs text-green-500 dark:text-green-400">
+									Known
+								</p>
 							</div>
 						)}
 						{stats.review !== undefined && (
-							<div className="p-4 rounded-lg bg-amber-500/10">
-								<p className="text-2xl font-bold text-amber-500">
+							<div className="p-4 rounded-lg bg-amber-500/10 dark:bg-amber-700/20">
+								<p className="text-2xl font-bold text-amber-500 dark:text-amber-400">
 									{stats.review}
 								</p>
-								<p className="text-xs text-amber-500">Review</p>
+								<p className="text-xs text-amber-500 dark:text-amber-400">
+									Review
+								</p>
 							</div>
 						)}
 					</div>
 					{stats.correct !== undefined && (
 						<div className="flex items-center justify-center gap-2">
-							<Target className="size-4 text-green-500" />
-							<span className="text-sm font-medium text-green-500">
+							<Target className="size-4 text-green-500 dark:text-green-400" />
+							<span className="text-sm font-medium text-green-500 dark:text-green-400">
 								{accuracy}% accuracy
 							</span>
 						</div>

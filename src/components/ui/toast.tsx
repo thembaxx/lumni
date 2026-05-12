@@ -17,6 +17,7 @@ export interface ToastData {
 	message: string;
 	description?: string;
 	duration?: number;
+	exiting?: boolean;
 }
 
 interface ToastContextType {
@@ -48,12 +49,17 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
 		setToasts((prev) => [...prev, newToast]);
 
 		setTimeout(() => {
-			setToasts((prev) => prev.filter((t) => t.id !== id));
+			dismiss(id);
 		}, newToast.duration);
 	}, []);
 
 	const dismiss = useCallback((id: string) => {
-		setToasts((prev) => prev.filter((t) => t.id !== id));
+		setToasts((prev) =>
+			prev.map((t) => (t.id === id ? { ...t, exiting: true } : t)),
+		);
+		setTimeout(() => {
+			setToasts((prev) => prev.filter((t) => t.id !== id));
+		}, 200);
 	}, []);
 
 	return (
@@ -96,7 +102,10 @@ export function ToastItem({ toast: t }: { toast: ToastData }) {
 	return (
 		<div
 			className={cn(
-				"pointer-events-auto flex w-full items-center gap-3 rounded-lg border p-4 shadow-lg animate-in slide-in-from-bottom-4",
+				"pointer-events-auto flex w-full items-center gap-3 rounded-lg border p-4 shadow-lg transition-[opacity,transform] duration-200",
+				t.exiting
+					? "opacity-0 translate-y-2 scale-95"
+					: "animate-in slide-in-from-bottom-4",
 				toastStyles[t.type],
 			)}
 		>
@@ -133,7 +142,7 @@ export async function toast(props: Omit<ToastData, "id">) {
 	if (container) {
 		const toastEl = document.createElement("div");
 		toastEl.className = cn(
-			"pointer-events-auto flex w-full max-w-sm items-center gap-3 rounded-lg border p-4 shadow-lg animate-in slide-in-from-bottom-4",
+			"pointer-events-auto flex w-full max-w-sm items-center gap-3 rounded-lg border p-4 shadow-lg animate-in slide-in-from-bottom-4 transition-[opacity,transform] duration-200",
 			toastStyles[props.type],
 		);
 		toastEl.innerHTML = `
@@ -148,7 +157,10 @@ export async function toast(props: Omit<ToastData, "id">) {
 		container.appendChild(toastEl);
 
 		setTimeout(() => {
-			toastEl.remove();
+			toastEl.classList.add("opacity-0", "translate-y-2", "scale-95");
+			setTimeout(() => {
+				toastEl.remove();
+			}, 200);
 		}, newToast.duration);
 	}
 }

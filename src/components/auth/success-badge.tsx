@@ -59,7 +59,7 @@ export function SuccessBadge({ isAdmin }: { isAdmin: boolean }) {
 					className={cn(
 						"flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium",
 						isAdmin
-							? "bg-green-500/20 text-green-500"
+							? "bg-green-500/20 text-green-500 dark:bg-green-900/30 dark:text-green-300"
 							: "bg-[--system-accent]/10 text-muted-foreground",
 					)}
 				>

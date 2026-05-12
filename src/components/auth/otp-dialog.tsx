@@ -19,7 +19,11 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { InputOTP } from "@/components/ui/input-otp";
+import {
+	InputOTP,
+	InputOTPGroup,
+	InputOTPSlot,
+} from "@/components/ui/input-otp";
 import { toast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { buttonStyles, countdownStyles, iconStyles } from "./auth-styles";
@@ -307,7 +311,7 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 												}}
 											>
 												<div className="rounded-full bg-green-500/10 p-3">
-													<CheckCircle2 className="h-8 w-8 text-green-500" />
+													<CheckCircle2 className="h-8 w-8 text-green-500 dark:text-green-400" />
 												</div>
 											</m.div>
 										</div>
@@ -326,11 +330,21 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 												<InputOTP
 													value={otp}
 													onChange={setOtp}
-													error={
+													maxLength={6}
+													aria-invalid={
 														remainingAttempts !== null && remainingAttempts < 3
 													}
 													onComplete={handleVerify}
-												/>
+												>
+													<InputOTPGroup>
+														<InputOTPSlot index={0} />
+														<InputOTPSlot index={1} />
+														<InputOTPSlot index={2} />
+														<InputOTPSlot index={3} />
+														<InputOTPSlot index={4} />
+														<InputOTPSlot index={5} />
+													</InputOTPGroup>
+												</InputOTP>
 											</div>
 
 											{error && (
@@ -441,7 +455,7 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 												}}
 											>
 												<div className="rounded-full bg-green-500/20 p-6">
-													<CheckCircle2 className="h-16 w-16 text-green-500" />
+													<CheckCircle2 className="h-16 w-16 text-green-500 dark:text-green-400" />
 												</div>
 											</m.div>
 											<SuccessBadge isAdmin={true} />

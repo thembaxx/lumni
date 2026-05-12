@@ -56,14 +56,9 @@ export function LessonSheet() {
 
 	return (
 		<Sheet open={isOpen} onOpenChange={setIsOpen}>
-			<SheetTrigger asChild>
-				<Button
-					variant="outline"
-					className="h-11 px-5 rounded-xl border-border/50 bg-secondary/80 gap-2.5 border hover:bg-accent hover:border-accent shadow-sm"
-				>
-					<Search className="h-4 w-4 text-[--system-accent]" />
-					<span className="text-sm font-medium">Lessons</span>
-				</Button>
+			<SheetTrigger className="h-11 px-5 rounded-xl border border-border/50 bg-secondary/80 gap-2.5 inline-flex items-center justify-center hover:bg-accent hover:border-accent shadow-sm transition-colors text-sm font-medium">
+				<Search className="h-4 w-4 text-[--system-accent]" />
+				<span>Lessons</span>
 			</SheetTrigger>
 			<LazyMotion features={domAnimation}>
 				<SheetContent
@@ -151,10 +146,8 @@ export function LessonSheet() {
 						)}
 					</div>
 
-					<SheetClose className="py-4" asChild>
-						<Button variant="ghost" className="w-full">
-							Close
-						</Button>
+					<SheetClose className="py-4 w-full text-sm font-medium text-center text-foreground hover:bg-accent/50 rounded-lg transition-colors">
+						Close
 					</SheetClose>
 				</SheetContent>
 			</LazyMotion>

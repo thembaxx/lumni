@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
+import Markdown from "react-markdown";
 import { useAppwriteSession } from "@/hooks/use-appwrite-session";
 import { cn } from "@/lib/utils";
 
@@ -253,14 +254,14 @@ export function CountdownHeader() {
 				)}
 
 				<div className="relative z-10">
-					<h1 className="font-geist text-xl sm:text-2xl font-bold text-foreground leading-tight tracking-tight text-wrap-balance">
+					<h1 className="font-geist text-xl sm:text-2xl font-bold text-foreground leading-tight tracking-tight text-wrap balance">
 						{greeting}
 						{isLoggedIn && name ? (
 							<span className="text-[--system-accent]">, {firstName}</span>
 						) : null}
 					</h1>
 
-					<div className="mt-2 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+					<div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1">
 						{isLoading || !mounted ? (
 							<div className="h-8 w-24 animate-pulse rounded-md bg-muted/40" />
 						) : (
@@ -269,7 +270,7 @@ export function CountdownHeader() {
 								initial="hidden"
 								animate="visible"
 								className={cn(
-									"inline-block text-3xl sm:text-4xl font-bold tracking-tight tabular-nums",
+									"inline-block text-4xl sm:text-4xl font-bold tracking-tight tabular-nums",
 									cfg.barLight,
 								)}
 								aria-live="polite"
@@ -278,14 +279,19 @@ export function CountdownHeader() {
 							</motion.span>
 						)}
 						{!isLoading && mounted && (
-							<span className="ios-callout font-medium text-[--system-text-secondary] tabular-nums">
-								{daysLeft === 1 ? "day" : "days"} until the NSC Finals
-							</span>
+							<div>
+								<p className="uppercase text-[10px] font-medium text-[--system-text-secondary] opacity-80">
+									Next exam
+								</p>
+								<p className="ios-callout text-[12px]! font-semibold! text-[--system-text-secondary] tabular-nums">
+									{daysLeft === 1 ? "day" : "days"} until the NSC Finals
+								</p>
+							</div>
 						)}
 					</div>
 
 					<div
-						className="mt-3 mb-1 h-1 w-full overflow-hidden rounded-full bg-border/40"
+						className="mt-3 mb-3 h-0.5 w-full overflow-hidden rounded-full bg-border/40"
 						role="progressbar"
 						aria-valuenow={Math.round(yearProgress * 100)}
 						aria-valuemin={0}
@@ -308,12 +314,12 @@ export function CountdownHeader() {
 								duration: shouldReduceMotion ? 0 : 0.3,
 								delay: shouldReduceMotion ? 0 : 0.5,
 							}}
-							className="mt-1 text-xs text-muted-foreground leading-snug"
+							className="mt-1 text-xs text-muted-foreground leading-snug text-pretty"
 						>
 							<span className="font-semibold text-foreground/80">
 								{msg.primary}
 							</span>
-							<span className="mx-1 opacity-50">\u2014</span>
+							<span className="mx-1 opacity-50">—</span>
 							{msg.subtitle}
 						</motion.p>
 					)}

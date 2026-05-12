@@ -92,7 +92,7 @@ export function ExamResults({
 							</CardTitle>
 						</CardHeader>
 						<CardContent>
-							<p className="text-2xl font-bold text-amber-600">
+							<p className="text-2xl font-bold text-amber-600 dark:text-amber-400">
 								{flaggedCount}
 							</p>
 						</CardContent>
@@ -138,7 +138,7 @@ export function ExamResults({
 																key={part.id}
 																className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs ${
 																	answered
-																		? "bg-emerald-50 text-emerald-700"
+																		? "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/30 dark:text-emerald-200"
 																		: "bg-muted text-muted-foreground"
 																} ${flagged ? "ring-1 ring-amber-300" : ""}`}
 															>
@@ -149,7 +149,7 @@ export function ExamResults({
 																)}
 																{part.id}
 																{flagged && (
-																	<Flag className="w-2.5 h-2.5 text-amber-500" />
+																	<Flag className="w-2.5 h-2.5 text-amber-500 dark:text-amber-400" />
 																)}
 															</div>
 														);
@@ -168,7 +168,7 @@ export function ExamResults({
 					<Card>
 						<CardHeader>
 							<CardTitle className="text-base flex items-center gap-2">
-								<Flag className="w-4 h-4 text-amber-500" />
+								<Flag className="w-4 h-4 text-amber-500 dark:text-amber-400" />
 								Flagged for Review
 							</CardTitle>
 						</CardHeader>
@@ -197,7 +197,7 @@ export function ExamResults({
 											key={item.id}
 											className="text-sm text-muted-foreground flex items-center gap-2"
 										>
-											<Flag className="w-3 h-3 text-amber-400" />
+											<Flag className="w-3 h-3 text-amber-400 dark:text-amber-300" />
 											{item.label}
 										</li>
 									))}
