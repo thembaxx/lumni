@@ -168,7 +168,7 @@ export function StatsCards({
 					index={0}
 				/>
 				<StatCard
-					label="Questions"
+					label="Answered"
 					value={questionsAnswered}
 					icon={IconTarget}
 					animation="loading-dots"

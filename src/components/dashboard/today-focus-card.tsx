@@ -15,7 +15,7 @@ import { SubjectsDrawer } from "./drawers/subjects-drawer";
 const FALLBACK = {
 	subject: "Physical Sciences",
 	topic: "Chemical Bonding & Molecular Structure",
-	reason: "Your lowest-scoring area this week. Time to close the gap.",
+	reason: "Pick a subject to find your focus area.",
 	action: "Practice now",
 	tag: "Needs work",
 	accent: "bg-destructive",
@@ -108,10 +108,10 @@ export function TodayFocusCard() {
 	const topic = active?.name ?? FALLBACK.topic;
 	const reason = active
 		? active.reason === "ready-to-start"
-			? "Ready to start — prerequisites are met and the topic is new."
+			? "You're ready for this topic. Give it a try."
 			: active.reason === "needs-practice"
 				? "Needs more practice to reach proficiency. Keep at it!"
-				: "Due for spaced repetition review to reinforce learning."
+				: "Time to review this topic and lock it in."
 		: FALLBACK.reason;
 
 	function handleStart() {
@@ -174,7 +174,7 @@ export function TodayFocusCard() {
 								}}
 							>
 								<span className="text-[12px] text-muted-foreground hover:text-foreground cursor-pointer transition-colors font-medium p-2 -m-2">
-									change
+									change subject
 								</span>
 							</SubjectsDrawer>
 						</div>

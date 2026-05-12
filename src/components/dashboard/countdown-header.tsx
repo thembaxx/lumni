@@ -133,11 +133,11 @@ function getMessage(
 		};
 	if (daysLeft > 7)
 		return {
-			primary: `${name} \u2014 this is it`,
+			primary: `${name}, this is it`,
 			subtitle: tip,
 		};
 	return {
-		primary: `${name} \u2014 believe`,
+		primary: `${name}, believe`,
 		subtitle: tip,
 	};
 }
@@ -306,7 +306,7 @@ export function CountdownHeader() {
 									Next exam
 								</p>
 								<p className="text-[12px] font-bold text-muted-foreground tabular-nums">
-									{daysLeft === 1 ? "day" : "days"} until the NSC Finals
+									{daysLeft === 1 ? "day" : "days"} until finals
 								</p>
 							</div>
 						)}
@@ -344,8 +344,7 @@ export function CountdownHeader() {
 							<span className="font-bold text-foreground/80">
 								{msg.primary}
 							</span>
-							<span className="mx-1 opacity-50">—</span>
-							{msg.subtitle}
+							. {msg.subtitle}
 						</motion.p>
 					)}
 				</div>
