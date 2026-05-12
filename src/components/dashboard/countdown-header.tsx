@@ -4,8 +4,8 @@ import { motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 import Markdown from "react-markdown";
 import { useAppwriteSession } from "@/hooks/use-appwrite-session";
-import { iOSEase } from "@/lib/utils/animation";
 import { cn } from "@/lib/utils";
+import { iOSEase } from "@/lib/utils/animation";
 
 const NSC_FINAL_DATE = new Date("2026-10-12");
 const NSC_YEAR_START = new Date("2026-01-14");
@@ -180,18 +180,18 @@ export function CountdownHeader() {
 			transition: {
 				duration: shouldReduceMotion ? 0 : 0.25,
 				ease: iOSEase,
-				},
 			},
-		};
+		},
+	};
 
-		const numberVariants = {
-			hidden: { scale: 0.88, opacity: 0 },
-			visible: {
-				scale: 1,
-				opacity: 1,
-				transition: {
-					duration: shouldReduceMotion ? 0 : 0.35,
-					ease: iOSEase,
+	const numberVariants = {
+		hidden: { scale: 0.88, opacity: 0 },
+		visible: {
+			scale: 1,
+			opacity: 1,
+			transition: {
+				duration: shouldReduceMotion ? 0 : 0.35,
+				ease: iOSEase,
 				delay: shouldReduceMotion ? 0 : 0.1,
 			},
 		},

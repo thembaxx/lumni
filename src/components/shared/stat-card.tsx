@@ -3,8 +3,8 @@
 import { m } from "framer-motion";
 import { LucideIcon, TrendingDown, TrendingUp } from "lucide-react";
 import { Card } from "@/components/ui/card";
-import { iOSEase } from "@/lib/utils/animation";
 import { cn } from "@/lib/utils";
+import { iOSEase } from "@/lib/utils/animation";
 
 export type StatCardVariant = "default" | "admin" | "dashboard";
 

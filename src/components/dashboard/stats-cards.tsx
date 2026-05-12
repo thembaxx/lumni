@@ -3,7 +3,7 @@
 import { IconFlame, IconTarget, IconTrendingUp } from "@tabler/icons-react";
 import { motion, useReducedMotion } from "framer-motion";
 import { Card } from "@/components/ui/card";
-import { iOSEase, easeOutQuint } from "@/lib/utils/animation";
+import { easeOutQuint, iOSEase } from "@/lib/utils/animation";
 
 interface StatsCardsProps {
 	streak: number;

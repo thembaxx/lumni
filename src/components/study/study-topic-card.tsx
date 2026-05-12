@@ -3,7 +3,6 @@
 import { Dice5 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
-import { iOSEase } from "@/lib/utils/animation";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { ListenToLesson } from "@/components/listen-to-lesson";
@@ -11,6 +10,7 @@ import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { iOSEase } from "@/lib/utils/animation";
 import { getDifficultyColor } from "@/lib/utils/colors";
 import { Badge } from "../ui/badge";
 import { PracticeButton } from "./practice-button";

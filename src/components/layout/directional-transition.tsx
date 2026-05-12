@@ -1,8 +1,8 @@
 "use client";
 
 import { domAnimation, LazyMotion, m } from "framer-motion";
-import { iOSEase, easeOutQuint } from "@/lib/utils/animation";
 import { createContext, useContext, useState } from "react";
+import { easeOutQuint, iOSEase } from "@/lib/utils/animation";
 
 interface DirectionalTransitionContextValue {
 	direction: "forward" | "back";

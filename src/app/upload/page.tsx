@@ -1,11 +1,21 @@
 "use client";
 
-import { CheckmarkCircle01Icon, CloudUploadIcon, DatabaseIcon } from "@hugeicons/core-free-icons";
+import {
+	CheckmarkCircle01Icon,
+	CloudUploadIcon,
+	DatabaseIcon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from "@/components/ui/card";
 import { ListCell, ListGroup, ListSection } from "@/components/ui/list-cell";
 import { UploadButton } from "@/lib/uploadthing";
 
@@ -108,7 +118,10 @@ export default function UploadPage() {
 							{lastUpload && (
 								<div className="rounded-[--radius-button] bg-[oklch(var(--success))]/10 p-[--space-3]">
 									<p className="text-[13px] font-medium text-[oklch(var(--success))] flex items-center gap-1.5">
-										<HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-4" />
+										<HugeiconsIcon
+											icon={CheckmarkCircle01Icon}
+											className="size-4"
+										/>
 										Upload successful
 									</p>
 									<p className="text-[12px] text-muted-foreground break-all mt-1">
@@ -121,10 +134,7 @@ export default function UploadPage() {
 
 					<ListSection header="File Naming Convention">
 						<ListGroup>
-							<ListCell
-								title="Format"
-								subtitle="[subject]_qa_[number].json"
-							/>
+							<ListCell title="Format" subtitle="[subject]_qa_[number].json" />
 							<ListCell
 								title="Example"
 								subtitle="physical_sciences_qa_1.json"
