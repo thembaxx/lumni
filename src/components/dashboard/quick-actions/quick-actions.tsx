@@ -6,10 +6,12 @@ import {
 	IconFileDescription,
 	IconRoute,
 } from "@tabler/icons-react";
+import { motion, useReducedMotion } from "framer-motion";
 import { StudyPlanSheet } from "@/components/dashboard/study-plan-sheet";
 import { LessonsButton } from "@/components/lesson";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { iOSEase } from "@/lib/utils/animation";
 
 const quickActions = [
 	{ icon: IconFileDescription, label: "Exams" },
@@ -27,17 +29,25 @@ function ActionButton({
 	label: string;
 	onClick?: () => void;
 }) {
+	const shouldReduceMotion = useReducedMotion();
+
 	return (
-		<Button
-			variant="ghost"
-			onClick={onClick}
-			className="h-11 px-5 rounded-lg border border-border/50 bg-secondary/60 gap-2.5 justify-start text-foreground hover:bg-accent hover:border-accent shadow-sm"
+		<motion.div
+			whileHover={shouldReduceMotion ? {} : { scale: 1.03 }}
+			whileTap={shouldReduceMotion ? {} : { scale: 0.97 }}
+			transition={{ duration: 0.2, ease: iOSEase }}
 		>
-			<span className="text-system-accent">
-				<Icon className="w-4 h-4" />
-			</span>
-			<span className="text-sm font-bold">{label}</span>
-		</Button>
+			<Button
+				variant="ghost"
+				onClick={onClick}
+				className="h-11 px-5 rounded-lg border border-border/50 bg-secondary/60 gap-2.5 justify-start text-foreground hover:bg-accent hover:border-accent shadow-sm"
+			>
+				<span className="text-system-accent">
+					<Icon className="w-4 h-4" />
+				</span>
+				<span className="text-sm font-bold">{label}</span>
+			</Button>
+		</motion.div>
 	);
 }
 

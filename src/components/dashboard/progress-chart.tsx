@@ -59,6 +59,8 @@ export function ProgressChart({ data, title }: ProgressChartProps) {
 						strokeWidth={2}
 						dot={{ fill: "var(--primary)", strokeWidth: 0, r: 4 }}
 						activeDot={{ r: 6 }}
+						isAnimationActive={true}
+						animationDuration={500}
 					/>
 				</LineChart>
 			</ResponsiveContainer>

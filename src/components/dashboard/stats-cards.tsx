@@ -1,7 +1,14 @@
 "use client";
 
 import { IconFlame, IconTarget, IconTrendingUp } from "@tabler/icons-react";
-import { motion, useReducedMotion } from "framer-motion";
+import {
+	motion,
+	useMotionValue,
+	useReducedMotion,
+	useSpring,
+	useTransform,
+} from "framer-motion";
+import { useEffect } from "react";
 import { type LottieAnimationName, LottieWrapper } from "@/components/lottie";
 import { Card } from "@/components/ui/card";
 import { easeOutQuint, iOSEase } from "@/lib/utils/animation";
@@ -34,6 +41,31 @@ function isStreakMilestone(streak: number): boolean {
 	return (
 		streak >= 3 && (streakMilestones as readonly number[]).includes(streak)
 	);
+}
+
+function AnimatedNumber({
+	value,
+	shouldReduceMotion,
+}: {
+	value: number;
+	shouldReduceMotion: boolean | null;
+}) {
+	const motionValue = useMotionValue(0);
+	const springValue = useSpring(motionValue, {
+		stiffness: 80,
+		damping: 20,
+	});
+	const rounded = useTransform(springValue, (v) => Math.round(v));
+
+	useEffect(() => {
+		motionValue.set(value);
+	}, [value, motionValue]);
+
+	if (shouldReduceMotion) {
+		return <>{value}</>;
+	}
+
+	return <motion.span>{rounded}</motion.span>;
 }
 
 function StatCard({
@@ -72,7 +104,10 @@ function StatCard({
 
 				<div className="text-center space-y-1">
 					<p className="text-2xl font-bold tracking-tight text-foreground tabular-nums text-wrap balance">
-						{value}
+						<AnimatedNumber
+							value={value}
+							shouldReduceMotion={shouldReduceMotion}
+						/>
 					</p>
 					<p className="text-[11px] uppercase tracking-wider text-muted-foreground font-bold leading-tight">
 						{label}

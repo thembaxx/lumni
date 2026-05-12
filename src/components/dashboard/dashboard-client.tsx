@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useState } from "react";
 import { CountdownHeader } from "@/components/dashboard/countdown-header";
 import { QuickActions } from "@/components/dashboard/quick-actions/quick-actions";
@@ -23,23 +23,6 @@ export function DashboardClient({
 		useGamification();
 	const shouldReduceMotion = useReducedMotion();
 
-	if (!isLoaded) {
-		return (
-			<div className="min-h-screen flex items-center justify-center px-4">
-				<div className="w-full max-w-md space-y-3">
-					<div className="h-24 rounded-[16px] bg-[--system-surface-secondary] animate-pulse" />
-					<div className="grid grid-cols-3 gap-3">
-						<div className="h-24 rounded-[16px] bg-[--system-surface-secondary] animate-pulse" />
-						<div className="h-24 rounded-[16px] bg-[--system-surface-secondary] animate-pulse" />
-						<div className="h-24 rounded-[16px] bg-[--system-surface-secondary] animate-pulse" />
-					</div>
-					<div className="h-32 rounded-[16px] bg-[--system-surface-secondary] animate-pulse" />
-					<div className="h-20 rounded-[16px] bg-[--system-surface-secondary] animate-pulse" />
-				</div>
-			</div>
-		);
-	}
-
 	const stats = {
 		streak: currentStreak,
 		questionsAnswered:
@@ -58,37 +41,70 @@ export function DashboardClient({
 	});
 
 	return (
-		<div className="min-h-screen flex flex-col bg-system-grouped pt-4 pb-[calc(var(--spacing-safe-pb)+var(--space-16)+var(--space-5))] overflow-x-hidden w-full">
-			<div className="max-w-md mx-auto w-full px-4 space-y-6">
-				<CountdownHeader />
-
-				<motion.div {...sectionProps(0.1)}>
-					<StatsCards
-						streak={stats.streak}
-						questionsAnswered={stats.questionsAnswered}
-						accuracy={stats.accuracy}
-					/>
-				</motion.div>
-
-				<motion.div {...sectionProps(0.15)}>
-					<XpLevelCard levelInfo={levelInfo} totalXp={gamification.totalXp} />
-				</motion.div>
-
-				<motion.div {...sectionProps(0.2)}>
-					<TodayFocusCard />
-				</motion.div>
-
-				<motion.div {...sectionProps(0.25)}>
-					<StudyTopicCardExample />
-				</motion.div>
-
+		<AnimatePresence mode="wait">
+			{!isLoaded ? (
 				<motion.div
-					{...sectionProps(0.3)}
-					className="w-full overflow-x-auto scrollbar-hide"
+					key="loading"
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					exit={{ opacity: 0, transition: { duration: 0.15 } }}
+					transition={{ duration: 0.2, ease: iOSEase }}
+					className="min-h-screen flex items-center justify-center px-4"
 				>
-					<QuickActions onPracticeClick={() => setPracticeOpen(true)} />
+					<div className="w-full max-w-md space-y-3">
+						<div className="h-24 rounded-[16px] bg-[--system-surface-secondary] animate-pulse" />
+						<div className="grid grid-cols-3 gap-3">
+							<div className="h-24 rounded-[16px] bg-[--system-surface-secondary] animate-pulse" />
+							<div className="h-24 rounded-[16px] bg-[--system-surface-secondary] animate-pulse" />
+							<div className="h-24 rounded-[16px] bg-[--system-surface-secondary] animate-pulse" />
+						</div>
+						<div className="h-32 rounded-[16px] bg-[--system-surface-secondary] animate-pulse" />
+						<div className="h-20 rounded-[16px] bg-[--system-surface-secondary] animate-pulse" />
+					</div>
 				</motion.div>
-			</div>
-		</div>
+			) : (
+				<motion.div
+					key="content"
+					initial={{ opacity: 0, y: 4 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ duration: 0.25, ease: iOSEase }}
+					className="min-h-screen flex flex-col bg-system-grouped pt-4 pb-[calc(var(--spacing-safe-pb)+var(--space-16)+var(--space-5))] overflow-x-hidden w-full"
+				>
+					<div className="max-w-md mx-auto w-full px-4 space-y-6">
+						<CountdownHeader />
+
+						<motion.div {...sectionProps(0.1)}>
+							<StatsCards
+								streak={stats.streak}
+								questionsAnswered={stats.questionsAnswered}
+								accuracy={stats.accuracy}
+							/>
+						</motion.div>
+
+						<motion.div {...sectionProps(0.15)}>
+							<XpLevelCard
+								levelInfo={levelInfo}
+								totalXp={gamification.totalXp}
+							/>
+						</motion.div>
+
+						<motion.div {...sectionProps(0.2)}>
+							<TodayFocusCard />
+						</motion.div>
+
+						<motion.div {...sectionProps(0.25)}>
+							<StudyTopicCardExample />
+						</motion.div>
+
+						<motion.div
+							{...sectionProps(0.3)}
+							className="w-full overflow-x-auto scrollbar-hide"
+						>
+							<QuickActions onPracticeClick={() => setPracticeOpen(true)} />
+						</motion.div>
+					</div>
+				</motion.div>
+			)}
+		</AnimatePresence>
 	);
 }
