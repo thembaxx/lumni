@@ -2,7 +2,8 @@
 
 import { domAnimation, LazyMotion, m } from "framer-motion";
 import { LayoutGrid, Snowflake } from "lucide-react";
-import { startTransition } from "react";
+import { startTransition, useState } from "react";
+import { LottieSparkle } from "@/components/lottie";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import { iOSEase } from "@/lib/utils/animation";
@@ -25,7 +26,10 @@ interface TabNavProps {
 }
 
 export function TabNav({ activeTab, onTabChange }: TabNavProps) {
+	const [tabSwitch, setTabSwitch] = useState(0);
+
 	const handleTabChange = (value: string) => {
+		setTabSwitch((p) => p + 1);
 		startTransition(() => {
 			onTabChange(value as TabValue);
 		});
@@ -83,6 +87,11 @@ export function TabNav({ activeTab, onTabChange }: TabNavProps) {
 								{tab.label}
 							</TabsTrigger>
 						))}
+						<LottieSparkle
+							animation="xp-burst"
+							trigger={tabSwitch}
+							className="absolute left-1/2 -translate-x-1/2 bottom-0 w-8 h-3 pointer-events-none"
+						/>
 					</TabsList>
 				</m.div>
 			</Tabs>
