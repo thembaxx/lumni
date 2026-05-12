@@ -9,5 +9,6 @@ export { ProgressChart } from "./progress-chart";
 export { QuickActions } from "./quick-actions/quick-actions";
 export { SearchInput } from "./search/search-input";
 export { StatsCards } from "./stats-cards";
+export { StudyPlanSheet } from "./study-plan-sheet";
 export { TodayFocusCard } from "./today-focus-card";
 export type { TabValue } from "./types";

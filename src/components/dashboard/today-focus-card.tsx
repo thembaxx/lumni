@@ -2,101 +2,133 @@
 
 import { CheckmarkCircle01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { useQuery } from "@tanstack/react-query";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { useFilteredSubjects } from "@/hooks/use-subjects";
 import { iOSEase } from "@/lib/utils/animation";
 import { SubjectsDrawer } from "./drawers/subjects-drawer";
 
-interface TodayFocusProps {
-	subjectName?: string;
-	topicName?: string;
-	reason?: string;
-	priority?: "weakest" | "due" | "streak" | "balanced";
-}
-
-const recommendations = {
-	weakest: {
-		subject: "Physical Sciences",
-		topic: "Chemical Bonding & Molecular Structure",
-		reason: "Your lowest-scoring area this week. Time to close the gap.",
-		action: "Practice now",
-	},
-	due: {
-		subject: "Mathematics",
-		topic: "Calculus: Differential Equations",
-		reason:
-			"You haven't covered this in 5 days. Spaced repetition says it's due.",
-		action: "Start review",
-	},
-	streak: {
-		subject: "English Home Language",
-		topic: "Essay Writing: Argumentative Structure",
-		reason: "You've built a streak here. Double down to maximize it.",
-		action: "Continue",
-	},
-	balanced: {
-		subject: "Life Sciences",
-		topic: "Cell Division: Mitosis & Meiosis",
-		reason: "Keep all your subjects warm. Balance prevents burnout.",
-		action: "Study",
-	},
+const FALLBACK = {
+	subject: "Physical Sciences",
+	topic: "Chemical Bonding & Molecular Structure",
+	reason: "Your lowest-scoring area this week. Time to close the gap.",
+	action: "Practice now",
+	tag: "Needs work",
+	accent: "bg-destructive",
+	iconColor: "text-destructive",
+	bgAlpha: "bg-destructive/15",
 };
 
-const priorityConfig = {
-	weakest: {
+const actionConfig: Record<
+	string,
+	{
+		tag: string;
+		accent: string;
+		iconColor: string;
+		bgAlpha: string;
+		action: string;
+	}
+> = {
+	study: {
+		tag: "Ready to start",
+		accent: "bg-info",
+		iconColor: "text-info",
+		bgAlpha: "bg-info/15",
+		action: "Study",
+	},
+	practice: {
 		tag: "Needs work",
 		accent: "bg-destructive",
 		iconColor: "text-destructive",
 		bgAlpha: "bg-destructive/15",
+		action: "Practice now",
 	},
-	due: {
+	review: {
 		tag: "Due for review",
 		accent: "bg-warning",
 		iconColor: "text-warning",
 		bgAlpha: "bg-warning/15",
-	},
-	streak: {
-		tag: "Keep it hot",
-		accent: "bg-success",
-		iconColor: "text-success",
-		bgAlpha: "bg-success/15",
-	},
-	balanced: {
-		tag: "Balance mode",
-		accent: "bg-info",
-		iconColor: "text-info",
-		bgAlpha: "bg-info/15",
+		action: "Start review",
 	},
 };
 
-export function TodayFocusCard({
-	subjectName,
-	topicName,
-	reason,
-	priority = "balanced",
-}: TodayFocusProps) {
+export function TodayFocusCard() {
 	const router = useRouter();
-	const [selectedSubject, setSelectedSubject] = useState(subjectName ?? null);
+	const [selectedSubjectId, setSelectedSubjectId] = useState<string | null>(
+		null,
+	);
 	const [showSuccess, setShowSuccess] = useState(false);
 	const shouldReduceMotion = useReducedMotion();
 
-	const rec = recommendations[priority];
-	const subject = selectedSubject ?? rec.subject;
-	const topic = topicName ?? rec.topic;
-	const whyReason = reason ?? rec.reason;
-	const config = priorityConfig[priority];
+	const { data: subjects } = useFilteredSubjects("");
+	const subjectNameById = useMemo(() => {
+		const map = new Map<string, string>();
+		for (const s of subjects ?? []) {
+			map.set(s.id, s.name);
+		}
+		return map;
+	}, [subjects]);
+
+	const { data: nextTopics } = useQuery({
+		queryKey: ["next-topics", selectedSubjectId],
+		queryFn: async () => {
+			const res = await fetch(
+				`/api/engine/next-topics?subject=${encodeURIComponent(selectedSubjectId!)}`,
+			);
+			if (!res.ok) throw new Error("Failed to fetch focus");
+			return res.json() as Promise<{
+				recommendations: {
+					topicId: string;
+					name: string;
+					level: string;
+					reason: string;
+					action: string;
+					estimatedMinutes: number;
+				}[];
+			}>;
+		},
+		enabled: !!selectedSubjectId,
+		staleTime: 1000 * 60 * 5,
+	});
+
+	const active = (nextTopics?.recommendations ?? []).find(
+		(r) => r.action !== "skip",
+	);
+
+	const cfg = active
+		? (actionConfig[active.action] ?? actionConfig.study)
+		: FALLBACK;
+	const subjectName = selectedSubjectId
+		? (subjectNameById.get(selectedSubjectId) ?? selectedSubjectId)
+		: FALLBACK.subject;
+	const topic = active?.name ?? FALLBACK.topic;
+	const reason = active
+		? active.reason === "ready-to-start"
+			? "Ready to start — prerequisites are met and the topic is new."
+			: active.reason === "needs-practice"
+				? "Needs more practice to reach proficiency. Keep at it!"
+				: "Due for spaced repetition review to reinforce learning."
+		: FALLBACK.reason;
 
 	function handleStart() {
 		setShowSuccess(true);
 		setTimeout(() => {
 			router.push(
-				`/quiz?subject=${encodeURIComponent(subject)}&topic=${encodeURIComponent(topic)}`,
+				`/quiz?subject=${encodeURIComponent(subjectName)}&topic=${encodeURIComponent(topic)}`,
 			);
 		}, 600);
 	}
+
+	useEffect(() => {
+		if (showSuccess) {
+			const t = setTimeout(() => setShowSuccess(false), 600);
+			return () => clearTimeout(t);
+		}
+	}, [showSuccess]);
 
 	return (
 		<motion.div
@@ -108,32 +140,39 @@ export function TodayFocusCard({
 			}}
 		>
 			<Card className="relative overflow-hidden shadow-sm border-border/40 hover:border-border/80 transition-colors">
-				<div className={`absolute top-0 left-0 right-0 h-1 ${config.accent}`} />
+				<div className={`absolute top-0 left-0 right-0 h-1 ${cfg.accent}`} />
 
 				<div className="p-5 space-y-4">
 					<div className="flex items-center gap-3">
 						<div
-							className={`flex items-center justify-center size-10 rounded-xl ${config.bgAlpha}`}
+							className={`flex items-center justify-center size-10 rounded-xl ${cfg.bgAlpha}`}
 						>
 							<HugeiconsIcon
 								icon={CheckmarkCircle01Icon}
-								className={`size-5 ${config.iconColor}`}
+								className={`size-5 ${cfg.iconColor}`}
 							/>
 						</div>
 						<div className="space-y-0.5">
 							<span className="text-[13px] font-bold text-foreground tracking-tight block">
 								Today&apos;s Focus
 							</span>
-							<span className={`text-[12px] font-bold ${config.iconColor}`}>
-								{config.tag}
+							<span className={`text-[12px] font-bold ${cfg.iconColor}`}>
+								{cfg.tag}
 							</span>
 						</div>
 					</div>
 
 					<div className="space-y-2">
 						<div className="flex items-center gap-2">
-							<p className="text-[13px] text-primary font-bold">{subject}</p>
-							<SubjectsDrawer onSelect={(name) => setSelectedSubject(name)}>
+							<p className="text-[13px] text-primary font-bold">
+								{subjectName}
+							</p>
+							<SubjectsDrawer
+								onSelect={(name) => {
+									const found = subjects?.find((s) => s.name === name);
+									if (found) setSelectedSubjectId(found.id);
+								}}
+							>
 								<span className="text-[12px] text-muted-foreground hover:text-foreground cursor-pointer transition-colors font-medium">
 									change
 								</span>
@@ -145,7 +184,7 @@ export function TodayFocusCard({
 					</div>
 
 					<p className="text-[13px] text-muted-foreground leading-relaxed font-medium">
-						{whyReason}
+						{reason}
 					</p>
 
 					<Button
@@ -184,7 +223,7 @@ export function TodayFocusCard({
 										ease: iOSEase,
 									}}
 								>
-									{rec.action}
+									{cfg.action}
 								</motion.span>
 							)}
 						</AnimatePresence>

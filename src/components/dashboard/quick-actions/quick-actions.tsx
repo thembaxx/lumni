@@ -1,12 +1,19 @@
 "use client";
 
-import { IconBook, IconBulb, IconFileDescription } from "@tabler/icons-react";
+import {
+	IconBook,
+	IconBulb,
+	IconFileDescription,
+	IconRoute,
+} from "@tabler/icons-react";
+import { StudyPlanSheet } from "@/components/dashboard/study-plan-sheet";
 import { LessonsButton } from "@/components/lesson";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const quickActions = [
 	{ icon: IconFileDescription, label: "Exams" },
+	{ icon: IconRoute, label: "Study Plan" },
 	{ icon: IconBulb, label: "Practice" },
 	{ icon: IconBook, label: "Lessons" },
 ];
@@ -44,7 +51,9 @@ export function QuickActions({
 			<ul className="flex items-center gap-3 overflow-x-auto scrollbar-hide py-1">
 				{quickActions.map((action) => (
 					<li key={action.label} className="flex-shrink-0">
-						{action.label === "Lessons" ? (
+						{action.label === "Study Plan" ? (
+							<StudyPlanSheet />
+						) : action.label === "Lessons" ? (
 							<LessonsButton />
 						) : action.label === "Practice" ? (
 							<ActionButton
