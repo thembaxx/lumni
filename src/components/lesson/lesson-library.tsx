@@ -78,11 +78,11 @@ export function LessonLibrary() {
 		<div className="space-y-6">
 			<div className="flex items-center justify-between">
 				<div>
-					<h2 className="text-lg font-semibold flex items-center gap-2">
+					<h2 className="text-lg font-semibold flex items-center gap-2 text-balance">
 						<Target className="h-5 w-5 text-[--system-accent]" />
 						Your Learning Path
 					</h2>
-					<p className="text-sm text-muted-foreground mt-0.5">
+					<p className="text-sm text-muted-foreground mt-0.5 text-pretty">
 						Personalized recommendations based on your progress
 					</p>
 				</div>
@@ -94,7 +94,7 @@ export function LessonLibrary() {
 			</div>
 
 			{!selectedSubject && (
-				<Card className="p-8 text-center">
+				<Card className="p-8 text-center rounded-3xl">
 					<GraduationCap className="h-10 w-10 mx-auto mb-3 text-muted-foreground" />
 					<p className="text-sm text-muted-foreground">
 						Select a subject to see your personalized study recommendations.
@@ -111,7 +111,7 @@ export function LessonLibrary() {
 			)}
 
 			{error && selectedSubject && (
-				<Card className="p-6 text-center">
+				<Card className="p-6 text-center rounded-3xl">
 					<p className="text-sm text-destructive">
 						Failed to load recommendations.
 					</p>
@@ -151,7 +151,9 @@ export function LessonLibrary() {
 							] as const
 						).map((s) => (
 							<Card key={s.label} className="p-3 text-center">
-								<div className={`text-lg font-bold ${s.color}`}>{s.value}</div>
+								<div className={`text-lg font-bold tabular-nums ${s.color}`}>
+									{s.value}
+								</div>
 								<div className="text-xs text-muted-foreground">{s.label}</div>
 							</Card>
 						))}
@@ -160,7 +162,10 @@ export function LessonLibrary() {
 					{summary.averageScore > 0 && (
 						<div className="flex items-center gap-2 text-sm text-muted-foreground">
 							<Trophy className="h-4 w-4 text-amber-500" />
-							Average competency score: {Math.round(summary.averageScore)}%
+							Average competency score:{" "}
+							<span className="tabular-nums">
+								{Math.round(summary.averageScore)}%
+							</span>
 						</div>
 					)}
 
@@ -182,7 +187,7 @@ export function LessonLibrary() {
 								return (
 									<Card
 										key={rec.topicId}
-										className={`p-4 flex items-center justify-between gap-3 ${rec.action === "skip" ? "opacity-50" : ""}`}
+										className={`p-4 flex items-center justify-between gap-3 rounded-3xl ${rec.action === "skip" ? "opacity-50" : ""}`}
 									>
 										<div className="flex items-center gap-3 min-w-0">
 											<div
@@ -230,7 +235,7 @@ export function LessonLibrary() {
 					)}
 
 					{!isLoading && recommendations.length === 0 && selectedSubject && (
-						<Card className="p-6 text-center">
+						<Card className="p-6 text-center rounded-3xl">
 							<Trophy className="h-8 w-8 mx-auto mb-2 text-emerald-500" />
 							<p className="text-sm text-muted-foreground">
 								No recommendations available. All topics may be mastered.
@@ -254,7 +259,7 @@ function NextUpCard({
 }) {
 	const NextActionIcon = actionIcons[nextUp.action];
 	return (
-		<Card className="p-5 border-[--system-accent]/20 bg-[--system-accent]/5">
+		<Card className="p-5 border-[--system-accent]/20 bg-[--system-accent]/5 rounded-3xl">
 			<div className="flex items-start justify-between gap-4">
 				<div className="space-y-1 min-w-0">
 					<div className="flex items-center gap-2">

@@ -31,7 +31,7 @@ function ActionButton({
 		<Button
 			variant="ghost"
 			onClick={onClick}
-			className="h-11 px-5 rounded-lg border border-border/50 bg-secondary/60 gap-2.5 justify-start text-foreground hover:bg-accent hover:border-accent shadow-sm transition-all active:scale-[0.98]"
+			className="h-11 px-5 rounded-lg border border-border/50 bg-secondary/60 gap-2.5 justify-start text-foreground hover:bg-accent hover:border-accent shadow-sm"
 		>
 			<span className="text-system-accent">
 				<Icon className="w-4 h-4" />

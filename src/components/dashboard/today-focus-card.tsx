@@ -173,7 +173,7 @@ export function TodayFocusCard() {
 									if (found) setSelectedSubjectId(found.id);
 								}}
 							>
-								<span className="text-[12px] text-muted-foreground hover:text-foreground cursor-pointer transition-colors font-medium">
+								<span className="text-[12px] text-muted-foreground hover:text-foreground cursor-pointer transition-colors font-medium p-2 -m-2">
 									change
 								</span>
 							</SubjectsDrawer>
@@ -189,7 +189,7 @@ export function TodayFocusCard() {
 
 					<Button
 						size="sm"
-						className="w-full font-bold text-[13px] h-10 hover:opacity-90 active:scale-[0.98] transition-all"
+						className="w-full font-bold text-[13px] h-10 hover:opacity-90"
 						onClick={handleStart}
 						disabled={showSuccess}
 					>
@@ -199,7 +199,7 @@ export function TodayFocusCard() {
 									key="success"
 									initial={{ scale: 0.8, opacity: 0 }}
 									animate={{ scale: 1, opacity: 1 }}
-									exit={{ scale: 0.8, opacity: 0 }}
+									exit={{ y: 4, opacity: 0, scale: 0.96 }}
 									transition={{
 										duration: shouldReduceMotion ? 0 : 0.25,
 										ease: iOSEase,
@@ -217,7 +217,7 @@ export function TodayFocusCard() {
 									key="action"
 									initial={{ scale: 0.8, opacity: 0 }}
 									animate={{ scale: 1, opacity: 1 }}
-									exit={{ scale: 0.8, opacity: 0 }}
+									exit={{ y: 4, opacity: 0, scale: 0.96 }}
 									transition={{
 										duration: shouldReduceMotion ? 0 : 0.2,
 										ease: iOSEase,
