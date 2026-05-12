@@ -1,7 +1,7 @@
 "use client";
 
 import { domAnimation, LazyMotion, m } from "framer-motion";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
 interface TabConfig {
@@ -45,9 +45,9 @@ function AnimatedTabs({
 		});
 	}, [tabs, value]);
 
-	useCallback(() => {
+	useEffect(() => {
 		requestAnimationFrame(measure);
-	}, [measure])();
+	}, [measure]);
 
 	return (
 		<LazyMotion features={domAnimation}>

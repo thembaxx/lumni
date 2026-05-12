@@ -5,9 +5,8 @@ import {
 	Moon02Icon,
 	Sun01Icon,
 } from "@hugeicons/core-free-icons";
-
-import { AnimatePresence, m } from "framer-motion";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { AnimatePresence, m } from "framer-motion";
 import { useTheme } from "@/components/theme";
 import { Button } from "@/components/ui/button";
 

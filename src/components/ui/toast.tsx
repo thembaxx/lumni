@@ -39,20 +39,6 @@ export function useToastContext() {
 export function ToastProvider({ children }: { children: React.ReactNode }) {
 	const [toasts, setToasts] = useState<ToastData[]>([]);
 
-	const toast = useCallback((props: Omit<ToastData, "id">) => {
-		const id = Math.random().toString(36).slice(2);
-		const newToast: ToastData = {
-			...props,
-			id,
-			duration: props.duration ?? 5000,
-		};
-		setToasts((prev) => [...prev, newToast]);
-
-		setTimeout(() => {
-			dismiss(id);
-		}, newToast.duration);
-	}, []);
-
 	const dismiss = useCallback((id: string) => {
 		setToasts((prev) =>
 			prev.map((t) => (t.id === id ? { ...t, exiting: true } : t)),
@@ -61,6 +47,23 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
 			setToasts((prev) => prev.filter((t) => t.id !== id));
 		}, 200);
 	}, []);
+
+	const toast = useCallback(
+		(props: Omit<ToastData, "id">) => {
+			const id = Math.random().toString(36).slice(2);
+			const newToast: ToastData = {
+				...props,
+				id,
+				duration: props.duration ?? 5000,
+			};
+			setToasts((prev) => [...prev, newToast]);
+
+			setTimeout(() => {
+				dismiss(id);
+			}, newToast.duration);
+		},
+		[dismiss],
+	);
 
 	return (
 		<ToastContext.Provider value={{ toasts, toast, dismiss }}>

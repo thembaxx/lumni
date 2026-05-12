@@ -1,12 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import {
-	CountdownHeader,
-	QuickActions,
-	StatsCards,
-	TodayFocusCard,
-} from "@/components/dashboard";
+import { CountdownHeader } from "@/components/dashboard/countdown-header";
+import { QuickActions } from "@/components/dashboard/quick-actions/quick-actions";
+import { StatsCards } from "@/components/dashboard/stats-cards";
+import { TodayFocusCard } from "@/components/dashboard/today-focus-card";
 import { XpLevelCard } from "@/components/gamification";
 import { useGamification } from "@/hooks/use-gamification";
 import StudyTopicCardExample from "../study/example";

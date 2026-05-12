@@ -1,7 +1,7 @@
 "use client";
 
 import { Minus, Play, Plus, RotateCcw, Square } from "lucide-react";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
 	ChartContainer,
@@ -25,11 +25,11 @@ export function FocusTab({ className }: FocusTabProps) {
 
 	const progress = initialTime > 0 ? (timeLeft / initialTime) * 100 : 0;
 
-	const formatTime = useCallback((seconds: number) => {
+	const formatTime = (seconds: number) => {
 		const mins = Math.floor(seconds / 60);
 		const secs = seconds % 60;
 		return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
-	}, []);
+	};
 
 	useInterval(
 		() => {

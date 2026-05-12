@@ -82,6 +82,8 @@ export function useQuizSession({
 	const [elapsedTime, setElapsedTime] = useState(0);
 	const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 	const [correctAnswers, setCorrectAnswers] = useState(0);
+	const correctAnswersRef = useRef(correctAnswers);
+	correctAnswersRef.current = correctAnswers;
 	const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
 	const startTimer = useCallback(() => {
@@ -90,13 +92,16 @@ export function useQuizSession({
 			setElapsedTime((prev) => {
 				if (prev >= maxTime) {
 					if (timerRef.current) clearInterval(timerRef.current);
-					onFinish?.({ correctAnswers, elapsedTime: prev });
+					onFinish?.({
+						correctAnswers: correctAnswersRef.current,
+						elapsedTime: prev,
+					});
 					return prev;
 				}
 				return prev + 1;
 			});
 		}, 1000);
-	}, [maxTime, onFinish, correctAnswers]);
+	}, [maxTime, onFinish]);
 
 	const stopTimer = useCallback(() => {
 		if (timerRef.current) {

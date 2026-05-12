@@ -107,13 +107,13 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 		}
 	}, [currentIndex, questions.length]);
 
-	const handleRestart = useCallback(() => {
+	const handleRestart = () => {
 		setCurrentIndex(0);
 		setCorrectAnswers(0);
 		setElapsedTime(0);
 		setIsComplete(false);
 		setIncorrectAnswers([]);
-	}, []);
+	};
 
 	const handleQuit = useCallback(() => {
 		if (questions) {

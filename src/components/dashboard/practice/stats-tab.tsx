@@ -1,11 +1,23 @@
 import { Timer } from "lucide-react";
+import dynamic from "next/dynamic";
 import { useCallback, useState } from "react";
 import { StreakFire } from "@/components/celebration";
-import {
-	ProgressChart,
-	StatsCards,
-	SubjectsDrawer,
-} from "@/components/dashboard";
+import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
+import { StatsCards } from "@/components/dashboard/stats-cards";
+
+const ProgressChart = dynamic(
+	() =>
+		import("@/components/dashboard/progress-chart").then(
+			(m) => m.ProgressChart,
+		),
+	{
+		ssr: false,
+		loading: () => (
+			<div className="h-[250px] rounded-lg bg-[--system-surface] animate-pulse" />
+		),
+	},
+);
+
 import {
 	Achievements,
 	DailyChallenges,
@@ -15,8 +27,9 @@ import {
 import { QuizEngine, type QuizResults } from "@/components/quiz/quiz-engine";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useUserProgress, useUserSubjects } from "@/hooks";
 import { useGamification } from "@/hooks/use-gamification";
+import { useUserProgress } from "@/hooks/use-user-progress";
+import { useUserSubjects } from "@/hooks/use-user-subjects";
 import { toggleUserSubject } from "@/lib/server/actions";
 import { cn } from "@/lib/utils";
 

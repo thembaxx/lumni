@@ -40,6 +40,7 @@ export function DiagramInput({ value, onChange, disabled }: DiagramInputProps) {
 					<img
 						src={preview}
 						alt="Uploaded diagram"
+						loading="lazy"
 						className="max-w-sm max-h-48 rounded border"
 					/>
 					{!disabled && (

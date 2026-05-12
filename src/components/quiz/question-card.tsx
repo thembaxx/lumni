@@ -130,13 +130,13 @@ export function QuestionCard({
 		handleGrade({ type: "option-ids", value: [selectedOpt.id] });
 	}, [state.selectedOption, isMCQ, options, handleGrade]);
 
-	const handleHint = useCallback(() => {
+	const handleHint = () => {
 		setState((prev) => ({ ...prev, showHint: !prev.showHint }));
-	}, []);
+	};
 
-	const handleToggleDiagram = useCallback(() => {
+	const handleToggleDiagram = () => {
 		setState((prev) => ({ ...prev, showDiagram: !prev.showDiagram }));
-	}, []);
+	};
 
 	const renderInput = () => {
 		if (state.isSubmitted) return null;
