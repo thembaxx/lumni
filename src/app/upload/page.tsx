@@ -1,8 +1,12 @@
 "use client";
 
-import { Database, Loader2 } from "lucide-react";
+import { CheckmarkCircle01Icon, CloudUploadIcon, DatabaseIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Loader2 } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { ListCell, ListGroup, ListSection } from "@/components/ui/list-cell";
 import { UploadButton } from "@/lib/uploadthing";
 
 function formatSubjectName(subject: string): string {
@@ -25,7 +29,7 @@ function extractSubjectFromFileName(fileName: string): string {
 export default function UploadPage() {
 	const [_uploadedUrls, setUploadedUrls] = useState<string[]>([]);
 	const [lastUpload, setLastUpload] = useState<string | null>(null);
-	const [syncStatus, setSyncStatus] = useState<
+	const [_syncStatus, setSyncStatus] = useState<
 		"idle" | "syncing" | "done" | "error"
 	>("idle");
 	const [seedStatus, setSeedStatus] = useState<
@@ -39,14 +43,11 @@ export default function UploadPage() {
 			const data = await res.json();
 			if (data.success) {
 				setSeedStatus("done");
-				alert("Database seeded successfully!");
 			} else {
 				setSeedStatus("error");
-				alert(`Seed failed: ${data.error}`);
 			}
 		} catch {
 			setSeedStatus("error");
-			alert("Seed failed: Network error");
 		}
 	};
 
@@ -73,76 +74,96 @@ export default function UploadPage() {
 				setSyncStatus("error");
 			}
 		}
-
-		alert(
-			`Uploaded successfully!\n\nFile: ${files[0]?.name}\nURL: ${urls[0]}${subject ? `\nSynced: ${syncStatus}` : ""}`,
-		);
 	};
 
 	return (
-		<div className="min-h-screen flex flex-col items-center justify-center gap-8 p-8">
-			<h1 className="text-2xl font-bold">Upload QA Files</h1>
-			<div className="text-center space-y-2">
-				<p className="text-muted-foreground">
-					Upload JSON question files for subjects
-				</p>
-				<p className="text-sm text-muted-foreground">
-					<strong>Convention:</strong> [subject]_qa_[number].json
-				</p>
-				<p className="text-xs text-muted-foreground">
-					Example: physical_sciences_qa_1.json
-				</p>
-			</div>
-
-			<div className="flex gap-4">
-				<UploadButton
-					endpoint="qaUploader"
-					onClientUploadComplete={handleUploadComplete}
-					onUploadError={(error: Error) => {
-						console.error("Upload error:", error);
-						alert(`Error: ${error.message}`);
-					}}
-				/>
-
-				<Button
-					variant="outline"
-					onClick={handleSeedDatabase}
-					disabled={seedStatus === "seeding"}
-				>
-					{seedStatus === "seeding" ? (
-						<Loader2 className="mr-2 h-4 w-4 animate-spin" />
-					) : (
-						<Database className="mr-2 h-4 w-4" />
-					)}
-					{seedStatus === "seeding"
-						? "Seeding..."
-						: seedStatus === "done"
-							? "Seeded!"
-							: "Seed Database"}
-				</Button>
-			</div>
-
-			{lastUpload && (
-				<div className="mt-8 p-4 bg-green-500/10 rounded-lg">
-					<p className="font-medium text-green-700 dark:text-green-300">
-						Last Upload Successful!
-					</p>
-					<p className="text-sm text-muted-foreground break-all">
-						{lastUpload}
-					</p>
+		<div className="min-h-screen bg-[--system-grouped-background]">
+			<div className="mx-auto max-w-md">
+				<div className="px-[--space-4] pt-safe pb-[--space-2]">
+					<h1 className="ios-large-title text-[--system-text-primary]">
+						Upload QA Files
+					</h1>
 				</div>
-			)}
 
-			<div className="mt-8 text-center text-sm text-muted-foreground">
-				<p>Or upload manually at:</p>
-				<a
-					href="https://uploadthing.com/dashboard"
-					target="_blank"
-					rel="noopener noreferrer"
-					className="text-foreground hover:underline"
-				>
-					https://uploadthing.com/dashboard
-				</a>
+				<div className="px-[--space-4] space-y-[--space-4] pb-[--space-8]">
+					<Card>
+						<CardHeader>
+							<CardTitle className="flex items-center gap-2">
+								<HugeiconsIcon icon={CloudUploadIcon} className="size-4" />
+								Upload
+							</CardTitle>
+							<CardDescription>
+								Upload JSON question files for subjects
+							</CardDescription>
+						</CardHeader>
+						<CardContent className="space-y-[--space-3]">
+							<UploadButton
+								endpoint="qaUploader"
+								onClientUploadComplete={handleUploadComplete}
+								onUploadError={(error: Error) => {
+									console.error("Upload error:", error);
+								}}
+							/>
+
+							{lastUpload && (
+								<div className="rounded-[--radius-button] bg-[oklch(var(--success))]/10 p-[--space-3]">
+									<p className="text-[13px] font-medium text-[oklch(var(--success))] flex items-center gap-1.5">
+										<HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-4" />
+										Upload successful
+									</p>
+									<p className="text-[12px] text-muted-foreground break-all mt-1">
+										{lastUpload}
+									</p>
+								</div>
+							)}
+						</CardContent>
+					</Card>
+
+					<ListSection header="File Naming Convention">
+						<ListGroup>
+							<ListCell
+								title="Format"
+								subtitle="[subject]_qa_[number].json"
+							/>
+							<ListCell
+								title="Example"
+								subtitle="physical_sciences_qa_1.json"
+								showSeparator={false}
+							/>
+						</ListGroup>
+					</ListSection>
+
+					<Card>
+						<CardHeader>
+							<CardTitle className="flex items-center gap-2">
+								<HugeiconsIcon icon={DatabaseIcon} className="size-4" />
+								Database
+							</CardTitle>
+							<CardDescription>
+								Seed the database with initial data
+							</CardDescription>
+						</CardHeader>
+						<CardContent>
+							<Button
+								variant="outline"
+								onClick={handleSeedDatabase}
+								disabled={seedStatus === "seeding"}
+								className="w-full"
+							>
+								{seedStatus === "seeding" ? (
+									<Loader2 className="mr-2 h-4 w-4 animate-spin" />
+								) : (
+									<HugeiconsIcon icon={DatabaseIcon} className="size-4 mr-2" />
+								)}
+								{seedStatus === "seeding"
+									? "Seeding..."
+									: seedStatus === "done"
+										? "Seeded!"
+										: "Seed Database"}
+							</Button>
+						</CardContent>
+					</Card>
+				</div>
 			</div>
 		</div>
 	);

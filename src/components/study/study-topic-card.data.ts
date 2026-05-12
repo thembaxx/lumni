@@ -46,7 +46,7 @@ export const mockTopics: TopicData[] = [
     difficulty: "medium",
     topicTitle: "Literary Devices",
     summary:
-      'Literary devices are techniques that writers use to express ideas and enhance their writing. Common devices include metaphor (comparing two unlike things), simile (comparing using "like" or "as"), personification (giving human qualities to non-human things), and foreshadowing (hinting at future events). Authors use these devices to make their writing more engaging and to convey deeper meanings. Understanding literary devices helps readers appreciate the artistry in writing and better understand the author\\'s intended message and themes.\n\nExample of code highlighting:\n```javascript\nfunction greet(name) {\n  return `Hello, ${name}!`;\n}\n```',
+      "Literary devices are techniques that writers use to express ideas and enhance their writing. Common devices include metaphor (comparing two unlike things), simile (comparing using \"like\" or \"as\"), personification (giving human qualities to non-human things), and foreshadowing (hinting at future events). Authors use these devices to make their writing more engaging and to convey deeper meanings. Understanding literary devices helps readers appreciate the artistry in writing and better understand the author's intended message and themes.\n\nExample of code highlighting:\n```javascript\nfunction greet(name) {\n  return `Hello, ${name}!`;\n}\n```",
   },
 ];
 

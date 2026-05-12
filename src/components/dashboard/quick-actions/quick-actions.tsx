@@ -21,7 +21,7 @@ function ActionButton({
 	onClick?: () => void;
 }) {
 	return (
-		<div className="rounded-[12px] border bg-[--system-surface-secondary] border-[--system-separator]">
+		<div className="rounded-[--radius-button] bg-[--system-surface-secondary] ring-1 ring-foreground/10">
 			<Button
 				variant="ghost"
 				onClick={onClick}

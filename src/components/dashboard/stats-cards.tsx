@@ -3,6 +3,7 @@
 import { IconFlame, IconTarget, IconTrendingUp } from "@tabler/icons-react";
 import { motion, useReducedMotion } from "framer-motion";
 import { Card } from "@/components/ui/card";
+import { iOSEase, easeOutQuint } from "@/lib/utils/animation";
 
 interface StatsCardsProps {
 	streak: number;
@@ -18,8 +19,6 @@ interface StatItemProps {
 	accentClass: string;
 	index: number;
 }
-
-const easeOutQuint = [0.22, 1, 0.36, 1] as const;
 
 const streakMilestones = [3, 7, 14, 30] as const;
 const milestoneMessages: Record<number, string> = {
@@ -51,7 +50,7 @@ function StatCard({
 			animate={{ opacity: 1, y: 0 }}
 			transition={{
 				duration: shouldReduceMotion ? 0 : 0.35,
-				ease: easeOutQuint,
+				ease: iOSEase,
 				delay: shouldReduceMotion ? 0 : index * 0.05,
 			}}
 		>
@@ -92,7 +91,7 @@ export function StatsCards({
 				<motion.div
 					initial={{ opacity: 0, x: -8 }}
 					animate={{ opacity: 1, x: 0 }}
-					transition={{ duration: 0.4, ease: easeOutQuint }}
+					transition={{ duration: 0.4, ease: iOSEase }}
 					className="absolute -top-5 left-0 flex items-center gap-1.5"
 				>
 					<span className="text-warning text-sm">🔥</span>

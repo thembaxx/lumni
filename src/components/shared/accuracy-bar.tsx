@@ -2,6 +2,7 @@
 
 import { m } from "framer-motion";
 import { Progress, ProgressIndicator } from "@/components/ui/progress";
+import { iOSEase } from "@/lib/utils/animation";
 import { cn } from "@/lib/utils";
 
 export type AccuracyBarVariant = "default" | "animated" | "simple";
@@ -75,7 +76,7 @@ export function AccuracyBar({
 						animate={{ width: `${accuracy}%` }}
 						transition={{
 							duration: 0.8,
-							ease: [0.25, 1, 0.5, 1],
+							ease: iOSEase,
 						}}
 					/>
 				</div>

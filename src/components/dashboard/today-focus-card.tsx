@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { iOSEase } from "@/lib/utils/animation";
 import { SubjectsDrawer } from "./drawers/subjects-drawer";
 
 interface TodayFocusProps {
@@ -67,8 +68,6 @@ const priorityConfig = {
 	},
 };
 
-const easeOutQuint = [0.22, 1, 0.36, 1] as const;
-
 export function TodayFocusCard({
 	subjectName,
 	topicName,
@@ -101,15 +100,15 @@ export function TodayFocusCard({
 			animate={{ opacity: 1, y: 0 }}
 			transition={{
 				duration: shouldReduceMotion ? 0 : 0.35,
-				ease: easeOutQuint,
+				ease: iOSEase,
 			}}
 		>
-			<Card className="relative overflow-hidden border">
+			<Card className="relative overflow-hidden">
 				<div
 					className={`absolute top-0 left-0 right-0 h-0.5 ${config.accent}`}
 				/>
 
-				<div className="p-5 space-y-4">
+				<div className="p-[--space-5] space-y-[--space-4]">
 					<div className="flex items-center gap-3">
 						<div
 							className={`flex items-center justify-center size-9 rounded-xl ${config.accent} bg-opacity-15`}
@@ -155,7 +154,7 @@ export function TodayFocusCard({
 
 					<Button
 						size="sm"
-						className={`w-full font-semibold text-[13px] h-9 hover:opacity-90 active:scale-[0.96] transition-transform`}
+						className="w-full font-semibold text-[13px] h-9 hover:opacity-90"
 						onClick={handleStart}
 						disabled={showSuccess}
 					>
@@ -168,7 +167,7 @@ export function TodayFocusCard({
 									exit={{ scale: 0.5, opacity: 0 }}
 									transition={{
 										duration: shouldReduceMotion ? 0 : 0.25,
-										ease: easeOutQuint,
+										ease: iOSEase,
 									}}
 									className="flex items-center gap-1.5"
 								>
@@ -186,7 +185,7 @@ export function TodayFocusCard({
 									exit={{ scale: 0.5, opacity: 0 }}
 									transition={{
 										duration: shouldReduceMotion ? 0 : 0.2,
-										ease: easeOutQuint,
+										ease: iOSEase,
 									}}
 								>
 									{rec.action}

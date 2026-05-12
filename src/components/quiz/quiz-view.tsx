@@ -249,7 +249,7 @@ export function QuizView({
 	}
 
 	return (
-		<div className="min-h-screen bg-background p-4 space-y-6 pb-20 max-w-md mx-auto">
+		<div className="min-h-screen bg-background p-[--space-4] space-y-[--space-6] pb-20 max-w-md mx-auto">
 			<AssessmentHeader
 				title="Quiz Practice"
 				elapsedTime={elapsedTime}

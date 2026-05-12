@@ -3,6 +3,7 @@
 import { Dice5 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
+import { iOSEase } from "@/lib/utils/animation";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { ListenToLesson } from "@/components/listen-to-lesson";
@@ -84,7 +85,7 @@ export function StudyTopicCard({
 					initial="hidden"
 					animate="visible"
 					exit="hidden"
-					transition={{ duration: 0.2, ease: [0.2, 0, 0, 1] }}
+					transition={{ duration: 0.2, ease: iOSEase }}
 					className={cn(
 						"p-6 rounded-2xl border bg-transparent text-card-foreground shadow-sm",
 						"space-y-5",

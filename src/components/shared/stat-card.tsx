@@ -3,6 +3,7 @@
 import { m } from "framer-motion";
 import { LucideIcon, TrendingDown, TrendingUp } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { iOSEase } from "@/lib/utils/animation";
 import { cn } from "@/lib/utils";
 
 export type StatCardVariant = "default" | "admin" | "dashboard";
@@ -43,7 +44,7 @@ export function StatCard({
 			<m.div
 				initial={{ opacity: 0, scale: 0.95 }}
 				animate={{ opacity: 1, scale: 1 }}
-				transition={{ delay, duration: 0.3, ease: [0.25, 1, 0.5, 1] }}
+				transition={{ delay, duration: 0.3, ease: iOSEase }}
 				className={cn("p-3 rounded-lg bg-muted/50", className)}
 			>
 				<p className="text-xs text-muted-foreground">{label}</p>

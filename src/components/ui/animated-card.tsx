@@ -1,7 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import type { ReactNode } from "react";
+import { normalTransition } from "@/lib/utils/animation";
 
 interface AnimatedCardProps {
 	children: ReactNode;
@@ -14,11 +15,16 @@ export function AnimatedCard({
 	delay = 0,
 	className,
 }: AnimatedCardProps) {
+	const shouldReduceMotion = useReducedMotion();
+
 	return (
 		<motion.div
 			initial={{ opacity: 0, y: 10 }}
 			animate={{ opacity: 1, y: 0 }}
-			transition={{ delay, duration: 0.3, ease: [0.25, 1, 0.5, 1] }}
+			transition={{
+				...normalTransition,
+				delay: shouldReduceMotion ? 0 : delay,
+			}}
 			className={className}
 		>
 			{children}

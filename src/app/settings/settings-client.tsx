@@ -13,6 +13,7 @@ import {
 } from "@/components/settings/tabs";
 import { Button } from "@/components/ui/button";
 import { SegmentedControl } from "@/components/ui/segmented-control";
+import { iOSEase, tabContent } from "@/lib/utils/animation";
 import {
 	BETA_FEATURES_KEY,
 	type BetaFeatures,
@@ -33,8 +34,6 @@ const tabs = [
 	{ value: "data", label: "Data" },
 	{ value: "beta", label: "Beta" },
 ];
-
-const iOSEase: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 function SettingsContent() {
 	const [studyPrefs, setStudyPrefs] =
@@ -85,7 +84,7 @@ function SettingsContent() {
 	return (
 		<div className="min-h-screen bg-[--system-grouped-background]">
 			<div className="mx-auto max-w-md">
-				<div className="flex items-center gap-3 px-4 pt-safe pb-2">
+				<div className="flex items-center gap-[--space-3] px-[--space-4] pt-safe pb-[--space-2]">
 					<Link
 						href="/dashboard"
 						className="flex items-center justify-center size-11 rounded-full text-[--system-accent] hover:bg-[--system-surface-secondary] transition-colors"
@@ -97,7 +96,7 @@ function SettingsContent() {
 					</h1>
 				</div>
 
-				<div className="px-4 pb-4">
+				<div className="px-[--space-4] pb-[--space-4]">
 					<SegmentedControl
 						value={activeTab}
 						onValueChange={setActiveTab}
@@ -105,14 +104,14 @@ function SettingsContent() {
 					/>
 				</div>
 
-				<div className="flex-1 px-4 pb-8">
+				<div className="flex-1 px-[--space-4] pb-[--space-8]">
 					<AnimatePresence mode="wait" initial={false}>
 						<motion.div
 							key={activeTab}
-							initial={{ opacity: 0, y: 4 }}
-							animate={{ opacity: 1, y: 0 }}
-							exit={{ opacity: 0, y: -4 }}
-							transition={{ duration: 0.2, ease: iOSEase }}
+							variants={tabContent}
+							initial="hidden"
+							animate="visible"
+							exit="exit"
 						>
 							{activeTab === "appearance" && <AppearanceTab />}
 
@@ -143,7 +142,7 @@ function SettingsContent() {
 					</AnimatePresence>
 				</div>
 
-				<div className="px-4 pb-8">
+				<div className="px-[--space-4] pb-[--space-8]">
 					<Button
 						type="button"
 						onClick={() => {

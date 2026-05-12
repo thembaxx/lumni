@@ -76,7 +76,7 @@ function NavItemComponent({
 				animate={isActive ? { scale: 1.1 } : { scale: 1 }}
 				transition={{ type: "spring", stiffness: 400, damping: 20, mass: 0.5 }}
 			>
-				<Icon icon={item.icon} className="w-[25px] h-[25px]" />
+				<Icon icon={item.icon} className="size-6" />
 			</m.span>
 			<span className="text-[10px] font-medium tracking-wide">
 				{item.label}

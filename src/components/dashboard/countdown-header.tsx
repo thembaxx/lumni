@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 import Markdown from "react-markdown";
 import { useAppwriteSession } from "@/hooks/use-appwrite-session";
+import { iOSEase } from "@/lib/utils/animation";
 import { cn } from "@/lib/utils";
 
 const NSC_FINAL_DATE = new Date("2026-10-12");
@@ -130,9 +131,6 @@ function getMilestone(daysLeft: number): Milestone {
 	return null;
 }
 
-const easeOutQuart = [0.16, 1, 0.3, 1] as const;
-const easeOutQuint = [0.22, 1, 0.36, 1] as const;
-
 export function CountdownHeader() {
 	const {
 		user: { name },
@@ -181,19 +179,19 @@ export function CountdownHeader() {
 			y: 0,
 			transition: {
 				duration: shouldReduceMotion ? 0 : 0.25,
-				ease: easeOutQuint,
+				ease: iOSEase,
+				},
 			},
-		},
-	};
+		};
 
-	const numberVariants = {
-		hidden: { scale: 0.88, opacity: 0 },
-		visible: {
-			scale: 1,
-			opacity: 1,
-			transition: {
-				duration: shouldReduceMotion ? 0 : 0.35,
-				ease: easeOutQuart,
+		const numberVariants = {
+			hidden: { scale: 0.88, opacity: 0 },
+			visible: {
+				scale: 1,
+				opacity: 1,
+				transition: {
+					duration: shouldReduceMotion ? 0 : 0.35,
+					ease: iOSEase,
 				delay: shouldReduceMotion ? 0 : 0.1,
 			},
 		},
@@ -206,7 +204,7 @@ export function CountdownHeader() {
 			scaleX: 1,
 			transition: {
 				duration: shouldReduceMotion ? 0 : 0.4,
-				ease: easeOutQuint,
+				ease: iOSEase,
 				delay: shouldReduceMotion ? 0 : 0.15,
 			},
 		},
@@ -217,16 +215,16 @@ export function CountdownHeader() {
 			variants={headerVariants}
 			initial="hidden"
 			animate="visible"
-			className="mx-4 mb-4"
+			className="mx-[--space-4] mb-[--space-4]"
 		>
-			<div className="relative overflow-hidden rounded-2xl bg-secondary/60 dark:bg-secondary/20 px-5 py-5 sm:px-6 sm:py-6">
+			<div className="relative overflow-hidden rounded-[--radius-card] bg-secondary/60 dark:bg-secondary/20 px-[--space-5] py-[--space-5] sm:px-[--space-6] sm:py-[--space-6]">
 				{milestone && (
 					<motion.div
 						initial={{ opacity: 0, y: -8, scale: 0.9 }}
 						animate={{ opacity: 1, y: 0, scale: 1 }}
 						transition={{
 							duration: shouldReduceMotion ? 0 : 0.4,
-							ease: easeOutQuint,
+							ease: iOSEase,
 						}}
 						className="absolute -top-px left-4 right-4 flex items-center justify-center"
 					>
@@ -240,7 +238,7 @@ export function CountdownHeader() {
 								transition={{
 									duration: 1,
 									repeat: Infinity,
-									ease: easeOutQuint,
+									ease: iOSEase,
 								}}
 								className="text-sm"
 							>
@@ -330,7 +328,7 @@ export function CountdownHeader() {
 					animate={{ opacity: 1, scale: 1 }}
 					transition={{
 						duration: shouldReduceMotion ? 0 : 0.8,
-						ease: easeOutQuint,
+						ease: iOSEase,
 						delay: shouldReduceMotion ? 0 : 0.2,
 					}}
 					className={cn(
