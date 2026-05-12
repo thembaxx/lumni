@@ -65,18 +65,18 @@
 	--shadow-level-2: 0 8px 24px oklch(264° 0.05 20% / 0.06), 0 2px 6px oklch(0% 0 0 / 0.04);
 	--shadow-level-3: 0 16px 48px oklch(264° 0.05 20% / 0.1), 0 4px 12px oklch(0% 0 0 / 0.04);
 
-	/* Typography Scale */
-	--fs-large-title: 34px;
-	--fs-title-1: 28px;
-	--fs-title-2: 22px;
-	--fs-title-3: 20px;
-	--fs-headline: 17px;
-	--fs-body: 17px;
-	--fs-callout: 16px;
-	--fs-subhead: 15px;
-	--fs-footnote: 13px;
-	--fs-caption-1: 12px;
-	--fs-caption-2: 11px;
+	/* Typography Scale (rem-based) */
+	--fs-large-title: 2.125rem;  /* 34px */
+	--fs-title-1: 1.75rem;      /* 28px */
+	--fs-title-2: 1.375rem;     /* 22px */
+	--fs-title-3: 1.25rem;      /* 20px */
+	--fs-headline: 1.0625rem;   /* 17px */
+	--fs-body: 1rem;            /* 16px */
+	--fs-callout: 0.9375rem;    /* 15px */
+	--fs-subhead: 0.875rem;     /* 14px */
+	--fs-footnote: 0.8125rem;   /* 13px */
+	--fs-caption-1: 0.75rem;    /* 12px */
+	--fs-caption-2: 0.6875rem;  /* 11px */
 
 	/* Animation Timing */
 	--ease-ios: cubic-bezier(0.16, 1, 0.3, 1);
@@ -263,6 +263,7 @@
 	}
 
 	h1, h2, h3, h4, h5, h6 {
+		font-family: var(--font-heading);
 		font-weight: 700;
 		letter-spacing: -0.02em;
 		line-height: 1.2;
@@ -293,12 +294,16 @@
    UTILITY CLASSES
    ======================================== */
 
-.ios-large-title { font-size: var(--fs-large-title); font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
-.ios-title-1 { font-size: var(--fs-title-1); font-weight: 700; line-height: 1.22; letter-spacing: -0.02em; }
-.ios-title-2 { font-size: var(--fs-title-2); font-weight: 700; line-height: 1.27; letter-spacing: -0.02em; }
-.ios-title-3 { font-size: var(--fs-title-3); font-weight: 600; line-height: 1.2; letter-spacing: -0.02em; }
-.ios-headline { font-size: var(--fs-headline); font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; }
-.ios-body { font-size: var(--fs-body); font-weight: 400; line-height: 1.3; letter-spacing: -0.01em; }
+.ios-large-title { font-family: var(--font-heading); font-size: var(--fs-large-title); font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
+.ios-title-1 { font-family: var(--font-heading); font-size: var(--fs-title-1); font-weight: 700; line-height: 1.22; letter-spacing: -0.02em; }
+.ios-title-2 { font-family: var(--font-heading); font-size: var(--fs-title-2); font-weight: 700; line-height: 1.27; letter-spacing: -0.02em; }
+.ios-title-3 { font-family: var(--font-heading); font-size: var(--fs-title-3); font-weight: 600; line-height: 1.25; letter-spacing: -0.02em; }
+.ios-headline { font-family: var(--font-heading); font-size: var(--fs-headline); font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; }
+.ios-body { font-size: var(--fs-body); font-weight: 400; line-height: 1.5; letter-spacing: 0; }
+.ios-subhead { font-size: var(--fs-subhead); font-weight: 400; line-height: 1.35; letter-spacing: 0; }
+.ios-footnote { font-size: var(--fs-footnote); font-weight: 400; line-height: 1.4; letter-spacing: 0; }
+.ios-caption-1 { font-size: var(--fs-caption-1); font-weight: 400; line-height: 1.3; letter-spacing: 0.005em; }
+.ios-caption-2 { font-size: var(--fs-caption-2); font-weight: 400; line-height: 1.2; letter-spacing: 0.005em; }
 
 .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); }
 .pt-safe { padding-top: env(safe-area-inset-top, 0px); }

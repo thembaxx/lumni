@@ -170,7 +170,7 @@ function SettingsContent() {
 										className={`size-4.5 transition-transform duration-300 ${isActive ? "scale-110" : ""}`}
 									/>
 									<span
-										className={`text-[13px] font-bold tracking-wide ${isActive ? "opacity-100" : "opacity-80"}`}
+										className={`text-[length:var(--fs-footnote)] font-bold ${isActive ? "opacity-100" : "opacity-80"}`}
 									>
 										{tab.label}
 									</span>

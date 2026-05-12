@@ -52,14 +52,14 @@ function ListCell({
 			<div className="flex-1 min-w-0">
 				<div
 					className={cn(
-						"text-[16px] font-semibold tracking-tight text-foreground truncate",
+						"text-[length:var(--fs-body)] font-semibold text-foreground truncate",
 						destructive && "text-[--system-destructive]",
 					)}
 				>
 					{title}
 				</div>
 				{subtitle && (
-					<div className="text-[13px] font-medium text-[--system-text-secondary] mt-0.5 leading-snug">
+					<div className="text-[length:var(--fs-footnote)] font-medium text-[--system-text-secondary] mt-0.5 leading-snug">
 						{subtitle}
 					</div>
 				)}
@@ -104,13 +104,13 @@ function ListSection({
 	return (
 		<section className={cn("mb-8 last:mb-0", className)}>
 			{header && (
-				<div className="text-[13px] font-bold text-[--system-text-tertiary] uppercase tracking-[0.05em] px-6 py-3">
+				<div className="text-[length:var(--fs-footnote)] font-bold text-[--system-text-tertiary] uppercase tracking-[0.05em] px-6 py-3">
 					{header}
 				</div>
 			)}
 			<ListGroup>{children}</ListGroup>
 			{footer && (
-				<div className="text-[12px] font-medium text-[--system-text-tertiary] px-6 py-3 leading-relaxed">
+				<div className="text-[length:var(--fs-caption-1)] font-medium text-[--system-text-tertiary] px-6 py-3 leading-relaxed">
 					{footer}
 				</div>
 			)}

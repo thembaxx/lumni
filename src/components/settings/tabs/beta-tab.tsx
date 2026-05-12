@@ -11,7 +11,7 @@ export function BetaTab({ betaFeatures, onBetaFeaturesChange }: BetaTabProps) {
 	return (
 		<ListSection
 			header="Beta Features"
-			footer="Try experimental features (may be unstable)"
+			footer="Experimental features still in development"
 		>
 			<ListCell
 				title="AI Study Tutor"

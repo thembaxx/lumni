@@ -1,4 +1,4 @@
-import { ListCell, ListGroup, ListSection } from "@/components/ui/list-cell";
+import { ListCell, ListSection } from "@/components/ui/list-cell";
 import { Switch } from "@/components/ui/switch";
 import type { NotificationSettings } from "@/lib/utils/storage";
 

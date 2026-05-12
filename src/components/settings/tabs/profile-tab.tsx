@@ -29,10 +29,10 @@ export function ProfileTab({ user, onSignOut }: ProfileTabProps) {
 					</div>
 				</div>
 				<div className="text-center space-y-1">
-					<h2 className="text-2xl font-bold tracking-tight text-foreground">
+					<h2 className="text-[length:var(--fs-title-2)] font-bold text-foreground">
 						{user?.name || "User"}
 					</h2>
-					<p className="text-[14px] font-medium text-[--system-text-secondary]">
+					<p className="text-[length:var(--fs-subhead)] font-medium text-[--system-text-secondary]">
 						{user?.email}
 					</p>
 				</div>
@@ -43,9 +43,10 @@ export function ProfileTab({ user, onSignOut }: ProfileTabProps) {
 					leading={<HugeiconsIcon icon={UserIcon} className="size-5" />}
 					title="Display Name"
 					subtitle={user?.name || "Not set"}
-					onClick={() => {}}
 					trailing={
-						<span className="text-system-accent text-sm font-bold">Edit</span>
+						<span className="text-system-accent text-[length:var(--fs-footnote)] font-semibold">
+							Edit
+						</span>
 					}
 				/>
 				<ListCell
@@ -60,16 +61,16 @@ export function ProfileTab({ user, onSignOut }: ProfileTabProps) {
 				<Button
 					variant="destructive"
 					onClick={onSignOut}
-					className="w-full h-14 rounded-2xl font-bold text-base shadow-level-2 transition-[transform,opacity] active:scale-[0.96]"
+					className="w-full h-14 rounded-2xl font-bold text-[length:var(--fs-body)] shadow-level-2 transition-[transform,opacity] active:scale-[0.96]"
 				>
 					<HugeiconsIcon icon={LogoutIcon} className="mr-3 size-5" />
 					Sign Out
 				</Button>
 				<div className="mt-8 flex flex-col items-center gap-1">
-					<p className="ios-footnote text-[--system-text-tertiary] font-bold tracking-widest uppercase">
+					<p className="text-[length:var(--fs-footnote)] text-[--system-text-tertiary] font-bold tracking-widest uppercase">
 						Lumni Mobile
 					</p>
-					<p className="text-[11px] text-[--system-text-tertiary] tabular-nums font-medium">
+					<p className="text-[length:var(--fs-caption-2)] text-[--system-text-tertiary] tabular-nums font-medium">
 						Version 1.0.4 (Stable-RC)
 					</p>
 				</div>
