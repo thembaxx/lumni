@@ -63,7 +63,7 @@ export function SM2StudySession({ subject }: { subject?: string }) {
 					Card {currentIndex + 1} of {allCards.length}
 				</span>
 				<div className="flex gap-2">
-					<span className="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded">
+					<span className="text-xs px-2 py-1 bg-muted text-foreground rounded">
 						{dueCards.length} due
 					</span>
 					<span className="text-xs px-2 py-1 bg-green-100 text-green-700 rounded">
@@ -171,9 +171,9 @@ export function FlashcardStats() {
 				<div className="text-lg font-bold text-green-700">{stats.mature}</div>
 				<div className="text-xs text-green-600">Mastered</div>
 			</div>
-			<div className="text-center p-2 bg-blue-100 rounded">
-				<div className="text-lg font-bold text-blue-700">{stats.new}</div>
-				<div className="text-xs text-blue-600">New</div>
+			<div className="text-center p-2 bg-muted rounded">
+				<div className="text-lg font-bold text-foreground">{stats.new}</div>
+				<div className="text-xs text-muted-foreground">New</div>
 			</div>
 		</div>
 	);

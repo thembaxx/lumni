@@ -93,7 +93,8 @@ export function FlashcardsActive({
 						<Card
 							className={cn(
 								"absolute inset-0 backface-hidden p-6 flex flex-col",
-								!isFlipped && "border-[--system-accent]/50 bg-[--system-accent]/5",
+								!isFlipped &&
+									"border-[--system-accent]/50 bg-[--system-accent]/5",
 							)}
 						>
 							<div className="flex items-center gap-2 mb-4">

@@ -30,7 +30,7 @@ export default function NotFound() {
 					</p>
 				</div>
 				<Link href="/">
-					<Button className="bg-primary text-primary-foreground hover:bg-primary/80">
+					<Button className="bg-[--system-accent] text-background hover:bg-[--system-accent]/80">
 						Back to {appConfig.name}
 					</Button>
 				</Link>

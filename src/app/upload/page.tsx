@@ -137,7 +137,7 @@ export default function UploadPage() {
 					href="https://uploadthing.com/dashboard"
 					target="_blank"
 					rel="noopener noreferrer"
-					className="text-primary hover:underline"
+					className="text-foreground hover:underline"
 				>
 					https://uploadthing.com/dashboard
 				</a>

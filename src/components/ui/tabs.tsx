@@ -31,6 +31,8 @@ const tabsListVariants = cva(
 				default: "bg-[#efefef] dark:bg-[#1a1a1a]",
 				line: "gap-1 bg-transparent",
 				pill: "bg-transparent p-0 gap-2",
+				animated:
+					"relative bg-[#efefef] dark:bg-[#1a1a1a] p-1 has-[[data-active]]:shadow-[--shadow-level-1]",
 			},
 		},
 		defaultVariants: {

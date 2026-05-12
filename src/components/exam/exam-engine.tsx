@@ -1,11 +1,11 @@
 "use client";
 
-import { Loader2 } from "lucide-react";
+import { Loader2, Menu } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { AssessmentHeader } from "@/components/ui/headers/assessment-header";
 import { useExamSessionStore } from "@/store/exam-session";
 import type { ExamPaper } from "@/types/exam-paper";
-import { ExamHeader } from "./exam-header";
 import { ExamResults } from "./exam-results";
 import { ExamSidebar } from "./exam-sidebar";
 import { ExamSubmitDialog } from "./exam-submit-dialog";
@@ -131,15 +131,33 @@ export function ExamEngine({
 	return (
 		<div className="h-dvh flex flex-col bg-background">
 			<ExamTimer />
-			<ExamHeader
-				subject={paper.metadata.subject}
-				paperCode={paper.metadata.paperCode}
-				timeRemaining={timeRemaining}
-				answeredCount={answeredCount}
-				totalParts={totalParts}
-				totalMarks={paper.metadata.totalMarks}
-				onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
-			/>
+			<div className="flex items-start gap-2 px-4 pt-4">
+				<Button
+					variant="ghost"
+					size="sm"
+					onClick={() => setSidebarOpen(!sidebarOpen)}
+					className="lg:hidden shrink-0 mt-0.5"
+				>
+					<Menu className="size-4" />
+					<span className="sr-only">Toggle question list</span>
+				</Button>
+				<AssessmentHeader
+					title={`${paper.metadata.subject} ${paper.metadata.paperCode}`}
+					elapsedTime={
+						startedAt ? Math.floor((Date.now() - startedAt) / 1000) : 0
+					}
+					currentQuestionIndex={answeredCount}
+					totalQuestions={totalParts}
+					progressValue={
+						totalParts > 0 ? (answeredCount / totalParts) * 100 : 0
+					}
+					showMarks={true}
+					marks={paper.metadata.totalMarks}
+					totalMarks={paper.metadata.totalMarks}
+					timeRemaining={timeRemaining}
+					className="flex-1"
+				/>
+			</div>
 
 			<div className="flex flex-1 min-h-0">
 				<aside

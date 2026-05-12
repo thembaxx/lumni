@@ -236,7 +236,7 @@ export function SmartScheduler() {
 	const getTypeColor = (type: string) => {
 		switch (type) {
 			case "new":
-				return "bg-blue-500/20 text-blue-500";
+				return "bg-[--system-accent]/10 text-muted-foreground";
 			case "review":
 				return "bg-purple-500/20 text-purple-500";
 			case "practice":

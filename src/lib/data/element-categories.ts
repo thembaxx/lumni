@@ -43,7 +43,7 @@ export const elementCategoryConfig: Record<string, ElementCategoryConfig> = {
 		rgb: "6, 182, 212",
 	},
 	halogen: {
-		bg: "bg-blue-500/90",
+		bg: "bg-[--system-accent]/90",
 		glow: "shadow-[0_0_20px_rgba(59,130,246,0.6)]",
 		label: "Halogen",
 		rgb: "59, 130, 246",

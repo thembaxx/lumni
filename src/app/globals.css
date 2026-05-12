@@ -16,7 +16,7 @@
 	--system-grouped-background: #f2f2f7;
 	--system-surface: #ffffff;
 	--system-surface-secondary: #f2f2f7;
-	--system-separator: rgba(60, 60, 67, 0.12);
+	--system-separator: rgba(60, 60, 67, 0.18);
 	--system-accent: #2C2C2E;
 	--system-text-primary: #000000;
 	--system-text-secondary: rgba(60, 60, 67, 0.6);
@@ -114,7 +114,7 @@
 	--system-grouped-background: #1c1c1e;
 	--system-surface: #1c1c1e;
 	--system-surface-secondary: #2c2c2e;
-	--system-separator: rgba(84, 84, 88, 0.36);
+	--system-separator: rgba(84, 84, 88, 0.45);
 	--system-accent: #5A5A5C;
 	--system-text-primary: #ffffff;
 	--system-text-secondary: rgba(235, 235, 245, 0.6);

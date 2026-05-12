@@ -17,9 +17,6 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { useQuestionEngine } from "@/hooks/use-question-engine";
-import { cn } from "@/lib/utils";
-import type { Question, QuestionState, UserAnswer } from "@/types/questions";
 import {
 	CalculationInput,
 	EssayInput,
@@ -27,9 +24,10 @@ import {
 	MatchingInput,
 	ProgrammingInput,
 	ShortAnswerInput,
-} from "./inputs";
-import { DataResponseInput } from "./inputs/data-response-input";
-import { SourceBasedInput } from "./inputs/source-based-input";
+} from "@/components/ui/inputs";
+import { useQuestionEngine } from "@/hooks/use-question-engine";
+import { cn } from "@/lib/utils";
+import type { Question, QuestionState, UserAnswer } from "@/types/questions";
 import { QuestionDiagram } from "./question-diagram";
 import { StepByStep } from "./step-by-step";
 
@@ -71,6 +69,8 @@ export function QuestionCard({
 		feedback: string;
 	} | null>(null);
 	const [isGrading, setIsGrading] = useState(false);
+	const [calcValue, setCalcValue] = useState("");
+	const [code, setCode] = useState("");
 
 	const { grade } = useQuestionEngine();
 
@@ -169,14 +169,15 @@ export function QuestionCard({
 										onClick={() => handleMCQSelect(option.id)}
 										className={cn(
 											"quiz-option-btn flex w-full items-center gap-3 rounded-lg border border-border bg-card p-4 text-left h-auto",
-											isSelected && "border-primary bg-primary/10",
+											isSelected &&
+												"border-[--system-accent] bg-[--system-accent]/10",
 										)}
 									>
 										<span
 											className={cn(
 												"flex h-6 w-6 items-center justify-center rounded-full border text-sm font-medium",
 												isSelected
-													? "border-primary bg-primary text-primary-foreground"
+													? "border-[--system-accent] bg-[--system-accent] text-background"
 													: "border-muted-foreground/30",
 											)}
 										>
@@ -204,11 +205,15 @@ export function QuestionCard({
 
 			case "matching": {
 				const body = question as Question<"matching">;
+				const matchingPairs = body.body.pairs.map((p) => [p.left, p.right]);
+				const table: import("@/types/exam-paper").DataTable = {
+					headers: ["Items", "Match"],
+					rows: matchingPairs,
+				};
 				return (
 					<MatchingInput
-						leftItems={body.body.pairs.map((p) => p.left)}
-						rightItems={body.body.pairs.map((p) => p.right)}
-						onSubmit={(pairs) => handleGrade({ type: "pairs", value: pairs })}
+						table={table}
+						onChange={(pairs) => handleGrade({ type: "pairs", value: pairs })}
 						disabled={isGrading}
 					/>
 				);
@@ -252,13 +257,20 @@ export function QuestionCard({
 			case "calculation": {
 				const body = question as Question<"calculation">;
 				return (
-					<CalculationInput
-						unit={body.body.unit}
-						onSubmit={(answer) =>
-							handleGrade({ type: "numeric", value: answer })
-						}
-						disabled={isGrading}
-					/>
+					<div className="space-y-3">
+						<CalculationInput
+							value={calcValue}
+							onChange={setCalcValue}
+							unit={body.body.unit}
+							disabled={isGrading}
+						/>
+						<Button
+							onClick={() => handleGrade({ type: "numeric", value: calcValue })}
+							disabled={isGrading || !calcValue.trim()}
+						>
+							Submit Answer
+						</Button>
+					</div>
 				);
 			}
 
@@ -275,40 +287,91 @@ export function QuestionCard({
 			case "programming": {
 				const body = question as Question<"programming">;
 				return (
-					<ProgrammingInput
-						language={body.body.language}
-						starterCode={body.body.starterCode}
-						onSubmit={(code) => handleGrade({ type: "code", value: code })}
-						disabled={isGrading}
-					/>
+					<div className="space-y-3">
+						<ProgrammingInput
+							value={code}
+							onChange={setCode}
+							language={body.body.language}
+							starterCode={body.body.starterCode}
+							disabled={isGrading}
+						/>
+						<Button
+							onClick={() => handleGrade({ type: "code", value: code })}
+							disabled={isGrading || !code.trim()}
+						>
+							Submit Answer
+						</Button>
+					</div>
 				);
 			}
 
 			case "source-based": {
 				const body = question as Question<"source-based">;
 				return (
-					<SourceBasedInput
-						source={body.body.source}
-						subQuestions={body.body.subQuestions}
-						onSubmit={(answers) =>
-							handleGrade({ type: "mixed", value: answers })
-						}
-						disabled={isGrading}
-					/>
+					<div className="space-y-3">
+						<div className="rounded-lg bg-muted/30 p-4 text-sm">
+							<MarkdownRenderer
+								content={body.body.source.content}
+								subject={effectiveSubject}
+							/>
+							{body.body.source.attribution && (
+								<p className="text-xs text-muted-foreground mt-2">
+									— {body.body.source.attribution}
+								</p>
+							)}
+						</div>
+						{body.body.subQuestions.map((sq, i) => (
+							<div key={i} className="rounded-lg border p-3">
+								<p className="text-sm font-medium mb-2">{sq.questionText}</p>
+							</div>
+						))}
+						<Button
+							onClick={() => {
+								handleGrade({
+									type: "mixed",
+									value: body.body.subQuestions.map((sq) => ({
+										partId: sq.id,
+										answer: { type: "text", value: "" },
+									})),
+								});
+							}}
+							disabled={isGrading}
+						>
+							Submit Answer
+						</Button>
+					</div>
 				);
 			}
 
 			case "data-response": {
 				const body = question as Question<"data-response">;
 				return (
-					<DataResponseInput
-						data={body.body.data}
-						questions={body.body.questions}
-						onSubmit={(answers) =>
-							handleGrade({ type: "mixed", value: answers })
-						}
-						disabled={isGrading}
-					/>
+					<div className="space-y-3">
+						<div className="rounded-lg bg-muted/30 p-4 text-sm font-mono whitespace-pre-wrap">
+							{typeof body.body.data === "string"
+								? body.body.data
+								: JSON.stringify(body.body.data, null, 2)}
+						</div>
+						{body.body.questions.map((q, i) => (
+							<div key={i} className="rounded-lg border p-3">
+								<p className="text-sm font-medium mb-2">{q.questionText}</p>
+							</div>
+						))}
+						<Button
+							onClick={() => {
+								handleGrade({
+									type: "mixed",
+									value: body.body.questions.map((q) => ({
+										partId: q.id,
+										answer: { type: "text", value: "" },
+									})),
+								});
+							}}
+							disabled={isGrading}
+						>
+							Submit Answer
+						</Button>
+					</div>
 				);
 			}
 
@@ -406,7 +469,10 @@ export function QuestionCard({
 				<CardHeader className="space-y-4">
 					<div className="flex items-center justify-between">
 						<div className="flex items-center gap-2">
-							<Badge variant="outline" className="bg-primary/10 font-medium">
+							<Badge
+								variant="outline"
+								className="bg-[--system-accent]/10 font-medium"
+							>
 								<span className="opacity-80">{question.topic}</span>
 							</Badge>
 							<DifficultyBadge
@@ -416,7 +482,7 @@ export function QuestionCard({
 							/>
 							<Badge
 								variant="outline"
-								className="bg-primary/5 text-xs font-mono"
+								className="bg-[--system-accent]/5 text-xs font-mono"
 							>
 								{question.type}
 							</Badge>

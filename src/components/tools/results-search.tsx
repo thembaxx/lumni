@@ -93,7 +93,7 @@ export function ResultsSearch() {
 
 			{isSearching ? (
 				<div className="flex-1 flex items-center justify-center">
-					<div className="animate-spin w-8 h-8 border-2 border-primary border-t-transparent rounded-full" />
+					<div className="animate-spin w-8 h-8 border-2 border-[--system-accent] border-t-transparent rounded-full" />
 				</div>
 			) : results.length > 0 ? (
 				<div className="space-y-4 flex-1 overflow-y-auto">
@@ -109,8 +109,8 @@ export function ResultsSearch() {
 						>
 							<Card className="p-4 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.06)]">
 								<div className="flex items-start gap-3 mb-3">
-									<div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shadow-[inset_0_2px_4px_rgba(0,0,0,0.06)]">
-										<UserIcon className="w-5 h-5 text-primary" />
+									<div className="w-10 h-10 rounded-xl bg-[--system-accent]/10 flex items-center justify-center shadow-[inset_0_2px_4px_rgba(0,0,0,0.06)]">
+										<UserIcon className="w-5 h-5 text-foreground" />
 									</div>
 									<div>
 										<h3 className="font-semibold text-wrap balance">

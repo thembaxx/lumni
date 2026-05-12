@@ -17,14 +17,14 @@ interface AchievementUnlockProps {
 
 const raritySolid = {
 	common: "bg-gray-500",
-	rare: "bg-blue-500",
+	rare: "bg-[--system-accent]",
 	epic: "bg-purple-500",
 	legendary: "bg-amber-500",
 };
 
 const rarityGlow = {
 	common: "shadow-gray-500/50",
-	rare: "shadow-blue-500/50",
+	rare: "shadow-[--system-accent]/50",
 	epic: "shadow-purple-500/50",
 	legendary: "shadow-amber-500/70",
 };
@@ -62,7 +62,7 @@ export function AchievementUnlock({
 						/>
 
 						<div
-							className={`relative bg-card border-2 border-${rarity === "legendary" ? "amber-500" : rarity === "epic" ? "purple-500" : rarity === "rare" ? "blue-500" : "gray-400"} rounded-3xl p-8 text-center shadow-2xl ${rarityGlow[rarity]}`}
+							className={`relative bg-card border-2 border-${rarity === "legendary" ? "amber-500" : rarity === "epic" ? "purple-500" : rarity === "rare" ? "[--system-accent]" : "gray-400"} rounded-3xl p-8 text-center shadow-2xl ${rarityGlow[rarity]}`}
 						>
 							<motion.div
 								initial={{ scale: 0, rotate: -180 }}

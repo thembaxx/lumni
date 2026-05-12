@@ -9,8 +9,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 
 interface CalculationInputProps {
-	value: string;
-	onChange: (value: string) => void;
+	value?: string;
+	onChange?: (value: string) => void;
+	onSubmit?: (value: string) => void;
 	workingValue?: string;
 	onWorkingChange?: (value: string) => void;
 	unit?: string;
@@ -20,12 +21,13 @@ interface CalculationInputProps {
 
 export function CalculationInput({
 	value = "",
-	onChange,
+	onChange = () => {},
 	workingValue = "",
 	onWorkingChange,
 	unit,
 	onUnitChange,
 	disabled,
+	onSubmit,
 }: CalculationInputProps) {
 	const [showWorking, setShowWorking] = useState(false);
 
@@ -40,9 +42,7 @@ export function CalculationInput({
 					placeholder="Enter your answer..."
 					className="max-w-[200px]"
 				/>
-				{unit && (
-					<span className="text-sm text-muted-foreground">{unit}</span>
-				)}
+				{unit && <span className="text-sm text-muted-foreground">{unit}</span>}
 				{onUnitChange && (
 					<Input
 						value={unit || ""}
@@ -78,6 +78,15 @@ export function CalculationInput({
 					placeholder="Show your working steps..."
 					className="min-h-[100px]"
 				/>
+			)}
+			{onSubmit && (
+				<Button
+					onClick={() => onSubmit(value.trim())}
+					disabled={disabled || !value.trim()}
+					size="sm"
+				>
+					Submit Answer
+				</Button>
 			)}
 		</div>
 	);

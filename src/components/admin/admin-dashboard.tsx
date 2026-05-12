@@ -2,17 +2,18 @@
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
-import { Check } from "lucide-react";
+import { BookOpen, Check, FileText, LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { AnimatedTabs } from "@/components/ui/animated-tabs";
+import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { PageHeader } from "@/components/ui/headers/page-header";
 import { AdminExamList } from "./admin-exam-list";
 import { AdminExamUploadZone } from "./admin-exam-upload-zone";
-import { AdminHeader } from "./admin-header";
 import { AdminStatCards } from "./admin-stat-cards";
 import { SubjectForm } from "./admin-subject-form";
 import { SubjectTable } from "./admin-subject-table";
-import { AdminTabs } from "./admin-tabs";
 
 interface Subject {
 	id: string;
@@ -192,7 +193,15 @@ export function AdminDashboard() {
 				)}
 			</AnimatePresence>
 
-			<AdminHeader onLogout={handleLogout} />
+			<PageHeader
+				title="Admin"
+				subtitle="Manage exam papers & engine"
+				rightSection={
+					<Button variant="ghost" size="icon-sm" onClick={handleLogout}>
+						<LogOut className="size-4" />
+					</Button>
+				}
+			/>
 
 			<div className="p-4 space-y-4">
 				<AdminStatCards
@@ -201,76 +210,88 @@ export function AdminDashboard() {
 				/>
 
 				<AnimatedCard delay={0.1}>
-					<AdminTabs activeTab={activeTab} onTabChange={setActiveTab} />
+					<AnimatedTabs
+						tabs={[
+							{
+								value: "exam",
+								label: "Exam",
+								icon: <FileText className="size-4" />,
+							},
+							{
+								value: "subjects",
+								label: "Subjects",
+								icon: <BookOpen className="size-4" />,
+							},
+						]}
+						value={activeTab}
+						onValueChange={(v) => setActiveTab(v as "exam" | "subjects")}
+						listClassName="w-full"
+					>
+						{activeTab === "exam" && (
+							<motion.div
+								{...fadeInUp}
+								transition={{ duration: 0.25 }}
+								className="space-y-4"
+							>
+								<AnimatedCard delay={0.15}>
+									<AdminExamUploadZone
+										onUploadComplete={() => {
+											queryClient.invalidateQueries({
+												queryKey: ["admin-exams"],
+											});
+										}}
+									/>
+								</AnimatedCard>
+
+								<AnimatedCard delay={0.2}>
+									<AdminExamList />
+								</AnimatedCard>
+							</motion.div>
+						)}
+
+						{activeTab === "subjects" && (
+							<motion.div
+								{...fadeInUp}
+								transition={{ duration: 0.25 }}
+								className="space-y-4"
+							>
+								<AnimatedCard delay={0.15}>
+									<SubjectForm
+										editSubject={editSubject}
+										formData={newSubject}
+										onFormDataChange={setNewSubject}
+										onSave={handleSaveSubject}
+										onCancel={() => setEditSubject(null)}
+										onPreload={() => preloadMutation.mutate()}
+										isSaving={saveMutation.isPending}
+										isPreloading={preloadMutation.isPending}
+									/>
+								</AnimatedCard>
+
+								<AnimatedCard delay={0.2}>
+									<Card>
+										<CardHeader className="pb-3">
+											<CardTitle className="text-base text-foreground">
+												All Subjects ({subjects.length})
+											</CardTitle>
+										</CardHeader>
+										<div className="p-0">
+											<SubjectTable
+												subjects={subjects}
+												selectedSubjects={selectedSubjects}
+												onToggleSubject={toggleSubject}
+												onEditSubject={setEditSubject}
+												onDeleteSubject={handleDeleteSubject}
+												isLoading={isLoading}
+												isDeleting={deleteMutation.isPending}
+											/>
+										</div>
+									</Card>
+								</AnimatedCard>
+							</motion.div>
+						)}
+					</AnimatedTabs>
 				</AnimatedCard>
-
-				<AnimatePresence mode="wait" initial={false}>
-					{activeTab === "exam" && (
-						<motion.div
-							key="exam"
-							{...fadeInUp}
-							transition={{ duration: 0.25 }}
-							className="space-y-4"
-						>
-							<AnimatedCard delay={0.15}>
-								<AdminExamUploadZone
-									onUploadComplete={() => {
-										queryClient.invalidateQueries({
-											queryKey: ["admin-exams"],
-										});
-									}}
-								/>
-							</AnimatedCard>
-
-							<AnimatedCard delay={0.2}>
-								<AdminExamList />
-							</AnimatedCard>
-						</motion.div>
-					)}
-
-					{activeTab === "subjects" && (
-						<motion.div
-							key="subjects"
-							{...fadeInUp}
-							transition={{ duration: 0.25 }}
-							className="space-y-4"
-						>
-							<AnimatedCard delay={0.15}>
-								<SubjectForm
-									editSubject={editSubject}
-									formData={newSubject}
-									onFormDataChange={setNewSubject}
-									onSave={handleSaveSubject}
-									onCancel={() => setEditSubject(null)}
-									onPreload={() => preloadMutation.mutate()}
-									isSaving={saveMutation.isPending}
-									isPreloading={preloadMutation.isPending}
-								/>
-							</AnimatedCard>
-
-							<AnimatedCard delay={0.2}>
-								<Card>
-									<CardHeader className="pb-3">
-										<CardTitle className="text-base text-foreground">
-											All Subjects ({subjects.length})
-										</CardTitle>
-									</CardHeader>
-									<div className="p-0">
-										<SubjectTable
-											subjects={subjects}
-											selectedSubjects={selectedSubjects}
-											onToggleSubject={toggleSubject}
-											onEditSubject={setEditSubject}
-											onDeleteSubject={handleDeleteSubject}
-											isLoading={isLoading}
-											isDeleting={deleteMutation.isPending}
-										/>
-									</div>
-								</Card>
-							</AnimatedCard>
-						</motion.div>
-					)}
-				</AnimatePresence>
 			</div>
 		</div>
 	);

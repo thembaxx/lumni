@@ -31,7 +31,7 @@ const subjectAbbrs: Record<string, string> = {
 };
 
 const subjectColors: Record<string, string> = {
-	mathematics: "bg-blue-500",
+	mathematics: "bg-[--system-accent]",
 	"physical-sciences": "bg-green-500",
 	"life-sciences": "bg-purple-500",
 	"english-home-language": "bg-orange-500",
@@ -120,7 +120,7 @@ export function ExamCalendar() {
 		<div className="p-4 h-full flex flex-col">
 			<Calendar
 				markedDates={exams.map((e) => e.date)}
-				markedDatesColor="bg-primary"
+				markedDatesColor="bg-[--system-accent]"
 				onSelect={(date) => date && setSelectedDate(date)}
 				selected={selectedDate}
 			/>

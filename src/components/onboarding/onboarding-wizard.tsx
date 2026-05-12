@@ -135,9 +135,9 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 								{nscSubjects.map((subject) => (
 									<Card
 										key={subject.id}
-className={`cursor-pointer transition-colors duration-200 hover:ring-2 hover:ring-[--system-accent] ${
-												selectedSubjects.includes(subject.id)
-													? "ring-2 ring-[--system-accent] bg-[--system-accent]/5"
+										className={`cursor-pointer transition-colors duration-200 hover:ring-2 hover:ring-[--system-accent] ${
+											selectedSubjects.includes(subject.id)
+												? "ring-2 ring-[--system-accent] bg-[--system-accent]/5"
 												: ""
 										}`}
 										onClick={() => toggleSubject(subject.id)}
@@ -176,8 +176,8 @@ className={`cursor-pointer transition-colors duration-200 hover:ring-2 hover:rin
 								What's your desired APS (Admission Point Score)?
 							</p>
 							<div className="text-center mb-8">
-<div className="text-6xl font-bold text-foreground mb-2">
-								{targetAps}
+								<div className="text-6xl font-bold text-foreground mb-2">
+									{targetAps}
 								</div>
 								<p className="text-muted-foreground">Target APS</p>
 							</div>
@@ -265,7 +265,9 @@ className={`cursor-pointer transition-colors duration-200 hover:ring-2 hover:rin
 								Enable notifications to get study reminders and track your
 								progress.
 							</p>
-							<Card className={notifications ? "ring-2 ring-[--system-accent]" : ""}>
+							<Card
+								className={notifications ? "ring-2 ring-[--system-accent]" : ""}
+							>
 								<CardContent className="p-4">
 									<div className="flex items-center justify-between">
 										<div className="flex items-center gap-3">

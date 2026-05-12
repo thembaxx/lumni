@@ -6,8 +6,8 @@ import { cn } from "@/lib/utils";
 import type { ContentBlock } from "@/types/exam-paper";
 
 interface SourceBasedInputProps {
-	value: string | undefined;
-	onChange: (value: string) => void;
+	value?: string | undefined;
+	onChange?: (value: string) => void;
 	sourceRefs?: string[];
 	content?: ContentBlock[] | null;
 	disabled?: boolean;
@@ -15,7 +15,7 @@ interface SourceBasedInputProps {
 
 export function SourceBasedInput({
 	value = "",
-	onChange,
+	onChange = () => {},
 	sourceRefs,
 	content,
 	disabled,
@@ -27,7 +27,7 @@ export function SourceBasedInput({
 					{sourceRefs.map((ref) => (
 						<span
 							key={ref}
-							className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-primary/10 text-primary"
+							className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-[--system-accent]/10 text-foreground"
 						>
 							Source {ref}
 						</span>

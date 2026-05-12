@@ -65,7 +65,9 @@ export function ProgressMilestones({
 								<div className="mt-2 text-center">
 									<p
 										className={`text-xs font-medium ${
-											isUnlocked ? "text-[--system-accent]" : "text-muted-foreground"
+											isUnlocked
+												? "text-[--system-accent]"
+												: "text-muted-foreground"
 										}`}
 									>
 										{milestone.streak} days

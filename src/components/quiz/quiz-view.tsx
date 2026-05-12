@@ -6,13 +6,13 @@ import {
 	QuestionCard,
 	QuizControls,
 	QuizEmptyState,
-	QuizHeader,
 	QuizResultsCard,
 	QuizSelectSubject,
 	QuizSubjectPrompt,
 } from "@/components/quiz";
 import { ProgressDots } from "@/components/shared/progress-dots";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { AssessmentHeader } from "@/components/ui/headers/assessment-header";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
 import type { Question } from "@/types/questions";
 
@@ -250,11 +250,18 @@ export function QuizView({
 
 	return (
 		<div className="min-h-screen bg-background p-4 space-y-6 pb-20 max-w-md mx-auto">
-			<QuizHeader
+			<AssessmentHeader
+				title="Quiz Practice"
 				elapsedTime={elapsedTime}
 				currentQuestionIndex={currentIndex}
 				totalQuestions={totalQuestions}
-				correctAnswers={correctAnswers}
+				progressValue={((currentIndex + 1) / totalQuestions) * 100}
+				showAccuracy
+				accuracy={
+					totalQuestions > 0
+						? Math.round((correctAnswers / (currentIndex + 1 || 1)) * 100)
+						: 0
+				}
 				onQuit={handleStop}
 			/>
 

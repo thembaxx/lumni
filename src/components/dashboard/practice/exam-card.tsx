@@ -52,7 +52,7 @@ export function ExamCard({ exam }: ExamCardProps) {
 								"text-[10px] px-1.5 py-0.5 rounded font-medium",
 								exam.session === "november"
 									? "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400"
-									: "bg-blue-500/15 text-blue-600 dark:text-blue-400",
+									: "bg-[--system-accent]/10 text-muted-foreground",
 							)}
 						>
 							{exam.session === "november" ? "Nov" : "May"}

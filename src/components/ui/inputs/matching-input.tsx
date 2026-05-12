@@ -12,7 +12,7 @@ import type { DataTable } from "@/types/exam-paper";
 
 interface MatchingInputProps {
 	table: DataTable;
-	value: Record<string, string> | undefined;
+	value?: Record<string, string>;
 	onChange: (pairs: Record<string, string>) => void;
 	disabled?: boolean;
 }

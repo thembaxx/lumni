@@ -60,7 +60,9 @@ export function QuestionRenderer({
 						key={part.id}
 						id={fullId}
 						className={`rounded-lg p-4 transition-colors ${
-							isCurrent ? "ring-1 ring-primary bg-primary/5" : ""
+							isCurrent
+								? "ring-1 ring-[--system-accent] bg-[--system-accent]/5"
+								: ""
 						}`}
 					>
 						<div className="flex items-start justify-between gap-2 mb-3">

@@ -143,10 +143,12 @@ export function Calendar({
 							onClick={() => handleDayClick(day)}
 							className={cn(
 								"aspect-square rounded-lg text-sm font-medium transition-colors relative",
-selected &&
-								"bg-[--system-accent] text-background hover:bg-[--system-accent]",
+								selected &&
+									"bg-[--system-accent] text-background hover:bg-[--system-accent]",
 								!selected && "hover:bg-muted",
-								today && !selected && "ring-2 ring-[--system-accent] ring-inset",
+								today &&
+									!selected &&
+									"ring-2 ring-[--system-accent] ring-inset",
 							)}
 						>
 							<span className="tabular-nums">{day}</span>

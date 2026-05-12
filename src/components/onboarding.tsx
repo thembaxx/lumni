@@ -143,8 +143,8 @@ export function Onboarding({ onComplete }: OnboardingProps) {
 				</Button>
 
 				<div className="p-8">
-<div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[--system-accent]/10">
-					<Icon className="h-8 w-8 text-foreground" />
+					<div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[--system-accent]/10">
+						<Icon className="h-8 w-8 text-foreground" />
 					</div>
 
 					<h2 className="mb-2 text-2xl font-bold tracking-tight">

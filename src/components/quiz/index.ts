@@ -9,7 +9,5 @@ export {
 	QuizSubjectPrompt,
 } from "./quiz-empty-state";
 export { QuizEngine } from "./quiz-engine";
-export { QuizEngineHeader } from "./quiz-engine-header";
-export { QuizHeader } from "./quiz-header";
 export { QuizResultsCard, QuizResultsInline } from "./quiz-results";
 export { QuizView } from "./quiz-view";

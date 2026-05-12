@@ -157,7 +157,7 @@ export function UploadHeader({
 	return (
 		<div className="flex items-center gap-2">
 			<UploadCloudIcon
-				className="size-5 text-primary"
+				className="size-5 text-foreground"
 				data-icon="inline-start"
 			/>
 			<span className="font-medium">

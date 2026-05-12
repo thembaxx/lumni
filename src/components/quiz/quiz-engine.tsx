@@ -4,12 +4,12 @@ import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
 import { useCallback, useMemo, useState } from "react";
 import { ProgressDots } from "@/components/shared/progress-dots";
 import { Card } from "@/components/ui/card";
+import { AssessmentHeader } from "@/components/ui/headers/assessment-header";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
 import type { Question } from "@/types/questions";
 import { QuestionCard } from "./question-card";
 import { QuizControls } from "./quiz-controls";
-import { QuizEngineHeader } from "./quiz-engine-header";
 import { QuizResult } from "./quiz-result";
 
 interface QuizEngineProps {
@@ -201,10 +201,12 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 	return (
 		<LazyMotion features={domAnimation}>
 			<div className="space-y-4">
-				<QuizEngineHeader
+				<AssessmentHeader
+					title={subjectId}
 					elapsedTime={elapsedTime}
 					currentQuestionIndex={currentIndex}
 					totalQuestions={questions.length}
+					progressValue={((currentIndex + 1) / questions.length) * 100}
 					difficulty={
 						currentQuestion.difficulty.toLowerCase() as
 							| "easy"

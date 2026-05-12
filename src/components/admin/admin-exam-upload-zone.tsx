@@ -72,7 +72,7 @@ export function AdminExamUploadZone({
 						setState("error");
 						setMessage(err.message);
 					}}
-					className="border-2 border-dashed rounded-lg py-8 ut-button:bg-primary ut-button:text-primary-foreground ut-button:text-sm ut-allowed-content:text-muted-foreground ut-label:text-foreground"
+					className="border-2 border-dashed rounded-lg py-8 ut-button:bg-[--system-accent] ut-button:text-background ut-button:text-sm ut-allowed-content:text-muted-foreground ut-label:text-foreground"
 				/>
 			)}
 
@@ -90,7 +90,7 @@ export function AdminExamUploadZone({
 
 			{state === "converting" && (
 				<div className="flex items-center gap-3 p-4 border rounded-lg bg-muted/30">
-					<Loader2 className="w-5 h-5 animate-spin text-primary" />
+					<Loader2 className="w-5 h-5 animate-spin text-foreground" />
 					<div>
 						<p className="text-sm font-medium">Converting...</p>
 						<p className="text-xs text-muted-foreground">

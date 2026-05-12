@@ -8,12 +8,12 @@ import { useCallback, useState } from "react";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
 import {
 	QuizControls,
-	QuizHeader,
 	QuizStartState,
 	QuizSubjectPrompt,
 } from "@/components/quiz";
 import { QuestionCard } from "@/components/quiz/question-card";
 import { Button } from "@/components/ui/button";
+import { AssessmentHeader } from "@/components/ui/headers/assessment-header";
 import { useQuizSession } from "@/hooks/use-quiz-session";
 import { cn } from "@/lib/utils";
 import { formatTime } from "@/lib/utils/time";
@@ -86,11 +86,22 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 			<LazyMotion features={domAnimation}>
 				<div className="w-full max-w-2xl px-4 pb-6 space-y-4">
 					<div className="animate-fade-in space-y-4">
-						<QuizHeader
+						<AssessmentHeader
+							title={selectedSubject}
 							elapsedTime={elapsedTime}
 							currentQuestionIndex={currentQuestionIndex}
 							totalQuestions={totalQuestions}
-							correctAnswers={correctAnswers}
+							progressValue={
+								((currentQuestionIndex + 1) / totalQuestions) * 100
+							}
+							showAccuracy
+							accuracy={
+								totalQuestions > 0
+									? Math.round(
+											(correctAnswers / (currentQuestionIndex + 1 || 1)) * 100,
+										)
+									: 0
+							}
 							onQuit={handleStop}
 						/>
 					</div>

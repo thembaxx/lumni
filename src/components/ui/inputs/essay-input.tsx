@@ -4,8 +4,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 
 interface EssayInputProps {
-	value: string | undefined;
-	onChange: (value: string) => void;
+	value?: string | undefined;
+	onChange?: (value: string) => void;
 	wordLimit?: number;
 	disabled?: boolean;
 	rubric?: { name: string; description: string; maxScore: number }[];
@@ -14,13 +14,15 @@ interface EssayInputProps {
 
 export function EssayInput({
 	value = "",
-	onChange,
+	onChange = () => {},
 	wordLimit,
 	disabled,
 	rubric,
 	onSubmit,
 }: EssayInputProps) {
-	const wordCount = value ? value.trim().split(/\s+/).filter(Boolean).length : 0;
+	const wordCount = value
+		? value.trim().split(/\s+/).filter(Boolean).length
+		: 0;
 	const overLimit = wordLimit !== undefined && wordCount > wordLimit;
 
 	return (
@@ -54,9 +56,7 @@ export function EssayInput({
 					<span>Words: {wordCount}</span>
 					{wordLimit !== undefined && (
 						<span
-							className={cn(
-								overLimit ? "text-destructive font-medium" : "",
-							)}
+							className={cn(overLimit ? "text-destructive font-medium" : "")}
 						>
 							Limit: {wordLimit}
 						</span>
@@ -70,7 +70,7 @@ export function EssayInput({
 						className={cn(
 							"rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
 							!overLimit && value.trim() && wordCount >= 20
-								? "bg-primary text-primary-foreground hover:bg-primary/90"
+								? "bg-[--system-accent] text-background hover:bg-[--system-accent]/90"
 								: "bg-muted text-muted-foreground cursor-not-allowed",
 						)}
 					>

@@ -82,7 +82,7 @@ export function ExamSidebar({
 													className={cn(
 														"size-8 rounded text-xs font-medium",
 														currentPartId === fullId &&
-															"ring-2 ring-primary ring-offset-1",
+															"ring-2 ring-[--system-accent] ring-offset-1",
 														status === "answered" &&
 															"bg-emerald-100 text-emerald-700 hover:bg-emerald-100",
 														status === "flagged" &&

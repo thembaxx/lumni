@@ -1,25 +1,31 @@
 "use client";
 
+import { useState } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 
 interface ProgrammingInputProps {
-	value: string | undefined;
-	onChange: (value: string) => void;
+	value?: string | undefined;
+	onChange?: (value: string) => void;
 	language?: string;
 	starterCode?: string;
 	disabled?: boolean;
+	onSubmit?: (value: string) => void;
 }
 
 export function ProgrammingInput({
 	value = "",
-	onChange,
+	onChange = () => {},
 	language = "delphi",
 	starterCode,
 	disabled,
+	onSubmit,
 }: ProgrammingInputProps) {
+	const [code, setCode] = useState(value);
+
 	return (
 		<div className="space-y-3">
 			{starterCode && (
@@ -37,12 +43,24 @@ export function ProgrammingInput({
 				</div>
 			)}
 			<Textarea
-				value={value}
-				onChange={(e) => onChange(e.target.value)}
+				value={code}
+				onChange={(e) => {
+					setCode(e.target.value);
+					onChange(e.target.value);
+				}}
 				disabled={disabled}
 				placeholder={`Write your ${language} code here...`}
 				className={cn("min-h-[150px] font-mono text-sm", starterCode && "mt-2")}
 			/>
+			{onSubmit && (
+				<Button
+					onClick={() => onSubmit(code.trim())}
+					disabled={disabled || !code.trim()}
+					size="sm"
+				>
+					Submit Answer
+				</Button>
+			)}
 		</div>
 	);
 }

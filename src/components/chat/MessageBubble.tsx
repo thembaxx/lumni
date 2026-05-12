@@ -148,7 +148,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 				initial={{ opacity: 0, y: 10, scale: 0.95 }}
 				animate={{ opacity: 1, y: 0, scale: 1 }}
 				transition={{ type: "spring", stiffness: 300, damping: 25 }}
-className={cn(
+				className={cn(
 					"max-w-[85%] p-3 rounded-2xl text-sm flex items-center gap-3",
 					isUser
 						? "bg-[--system-accent] text-background ml-auto rounded-br-md"

@@ -4,8 +4,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 
 interface LongAnswerInputProps {
-	value: string | undefined;
-	onChange: (value: string) => void;
+	value?: string | undefined;
+	onChange?: (value: string) => void;
 	minWords?: number;
 	maxWords?: number;
 	disabled?: boolean;
@@ -18,7 +18,7 @@ function countWords(text: string): number {
 
 export function LongAnswerInput({
 	value = "",
-	onChange,
+	onChange = () => {},
 	minWords,
 	maxWords,
 	disabled,
@@ -60,7 +60,7 @@ export function LongAnswerInput({
 						className={cn(
 							"rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
 							withinRange && value.trim()
-								? "bg-primary text-primary-foreground hover:bg-primary/90"
+								? "bg-[--system-accent] text-background hover:bg-[--system-accent]/90"
 								: "bg-muted text-muted-foreground cursor-not-allowed",
 						)}
 					>

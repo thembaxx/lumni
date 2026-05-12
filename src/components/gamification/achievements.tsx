@@ -9,14 +9,14 @@ interface AchievementsProps {
 
 const rarityColors = {
 	common: "bg-muted border-border",
-	rare: "bg-blue-500/10 border-blue-500/30",
+	rare: "bg-[--system-accent]/10 border-[--system-accent]/20",
 	epic: "bg-purple-500/10 border-purple-500/30",
 	legendary: "bg-amber-500/10 border-amber-500/30",
 };
 
 const rarityGlow = {
 	common: "",
-	rare: "shadow-blue-500/20",
+	rare: "shadow-[--system-accent]/20",
 	epic: "shadow-purple-500/20",
 	legendary: "shadow-amber-500/30",
 };

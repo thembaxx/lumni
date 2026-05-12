@@ -152,7 +152,7 @@ export function ExamFilters({
 										? onDeselectAll
 										: onSelectAll
 								}
-								className="text-sm font-medium text-primary hover:underline"
+								className="text-sm font-medium text-foreground hover:underline"
 							>
 								{selectedSubjects.size === subjects.length
 									? "Deselect all"

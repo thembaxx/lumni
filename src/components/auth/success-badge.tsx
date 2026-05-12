@@ -60,7 +60,7 @@ export function SuccessBadge({ isAdmin }: { isAdmin: boolean }) {
 						"flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium",
 						isAdmin
 							? "bg-green-500/20 text-green-500"
-							: "bg-blue-500/20 text-blue-500",
+							: "bg-[--system-accent]/10 text-muted-foreground",
 					)}
 				>
 					<Zap className="h-3 w-3" />

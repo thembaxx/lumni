@@ -48,7 +48,7 @@ function HighlightedText({
 					className={cn(
 						"transition-colors duration-150 ease-out-quart",
 						index === currentWordIndex &&
-							"text-primary font-medium bg-[--system-accent]/10 rounded px-0.5 -mx-0.5",
+							"text-foreground font-medium bg-[--system-accent]/10 rounded px-0.5 -mx-0.5",
 					)}
 				>
 					{word}

@@ -1,18 +1,20 @@
 "use client";
 
+import {
+	CalculationInput,
+	DataResponseInput,
+	DiagramInput,
+	EssayInput,
+	LongAnswerInput,
+	MatchingInput,
+	MixedInput,
+	MultipleChoiceInput,
+	ProgrammingInput,
+	ShortAnswerInput,
+	SourceBasedInput,
+} from "@/components/ui/inputs";
 import type { QuestionPart } from "@/types/exam-paper";
 import { ContentBlockRenderer } from "./content-block-renderer";
-import { CalculationInput } from "./inputs/calculation-input";
-import { DataResponseInput } from "./inputs/data-response-input";
-import { DiagramInput } from "./inputs/diagram-input";
-import { EssayInput } from "./inputs/essay-input";
-import { LongAnswerInput } from "./inputs/long-answer-input";
-import { MatchingInput } from "./inputs/matching-input";
-import { MixedInput } from "./inputs/mixed-input";
-import { MultipleChoiceInput } from "./inputs/multiple-choice-input";
-import { ProgrammingInput } from "./inputs/programming-input";
-import { ShortAnswerInput } from "./inputs/short-answer-input";
-import { SourceBasedInput } from "./inputs/source-based-input";
 
 interface PartRendererProps {
 	part: QuestionPart;
@@ -76,10 +78,8 @@ export function PartRenderer({
 		case "calculation":
 			return (
 				<CalculationInput
-					answerValue={partValue || ""}
-					workingValue=""
-					onAnswerChange={onChange}
-					onWorkingChange={() => {}}
+					value={partValue || ""}
+					onChange={onChange}
 					disabled={disabled}
 				/>
 			);

@@ -190,7 +190,7 @@ function RecommendationsCard({
 							<div
 								className={`w-2 h-2 rounded-full mt-2 ${
 									rec.type === "practice"
-										? "bg-blue-500"
+										? "bg-[--system-accent]"
 										: rec.type === "exam"
 											? "bg-purple-500"
 											: "bg-green-500"

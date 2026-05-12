@@ -8,12 +8,12 @@ const buttonVariants = cva(
 	{
 		variants: {
 			variant: {
-/* iOS Primary - Gray accent fill */
-			default:
-				"bg-[--system-accent] text-background rounded-[12px] px-3 py-2 hover:bg-[--system-accent]/80 dark:bg-[--system-accent] dark:text-background dark:hover:bg-[--system-accent]/80",
-			/* iOS Outline - Gray border */
-			outline:
-				"border-[--system-accent] bg-transparent text-[--system-accent] rounded-[12px] px-3 py-2 hover:bg-[--system-accent]/5 dark:border-[--system-accent] dark:text-[--system-accent] dark:hover:bg-[--system-accent]/10",
+				/* iOS Primary - Gray accent fill */
+				default:
+					"bg-[--system-accent] text-background rounded-[12px] px-3 py-2 hover:bg-[--system-accent]/80 dark:bg-[--system-accent] dark:text-background dark:hover:bg-[--system-accent]/80",
+				/* iOS Outline - Gray border */
+				outline:
+					"border-[--system-accent] bg-transparent text-[--system-accent] rounded-[12px] px-3 py-2 hover:bg-[--system-accent]/5 dark:border-[--system-accent] dark:text-[--system-accent] dark:hover:bg-[--system-accent]/10",
 				/* iOS Ghost - Subtle text */
 				ghost:
 					"text-[--system-text-secondary] rounded-[12px] px-3 py-2 hover:bg-[--system-surface-secondary] dark:text-[--system-text-secondary] dark:hover:bg-[--system-surface-secondary]",

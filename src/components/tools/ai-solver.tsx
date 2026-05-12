@@ -105,10 +105,10 @@ export function AiSolver() {
 				</div>
 			)}
 
-			<Card className="border-primary/20 bg-primary/5 shadow-inner overflow-hidden">
+			<Card className="border-[--system-accent]/20 bg-[--system-accent]/5 shadow-inner overflow-hidden">
 				<CardHeader className="pb-2">
 					<CardTitle className="text-lg flex items-center gap-2">
-						<Sparkles className="w-5 h-5 text-primary animate-pulse" />
+						<Sparkles className="w-5 h-5 text-foreground animate-pulse" />
 						AI Solver
 					</CardTitle>
 					<p className="text-xs text-muted-foreground">
@@ -126,7 +126,7 @@ export function AiSolver() {
 									variant="ghost"
 									size="sm"
 									onClick={() => insertSymbol(s.value)}
-									className="h-7 w-8 p-0 ios-footnote hover:bg-primary/20"
+									className="h-7 w-8 p-0 ios-footnote hover:bg-[--system-accent]/20"
 								>
 									{s.label}
 								</Button>
@@ -138,7 +138,7 @@ export function AiSolver() {
 							placeholder="Type your question here..."
 							value={question}
 							onChange={(e) => setQuestion(e.target.value)}
-							className="min-h-30 resize-none bg-background/50 border-primary/10 focus-visible:ring-primary/30"
+							className="min-h-30 resize-none bg-background/50 border-[--system-accent]/10 focus-visible:ring-[--system-accent]/30"
 						/>
 					</div>
 
@@ -156,7 +156,7 @@ export function AiSolver() {
 								}}
 								appearance={{
 									button:
-										"bg-primary/20 hover:bg-primary/30 text-primary h-10 px-4 py-2 text-sm border border-primary/20 w-full transition-colors",
+										"bg-[--system-accent]/20 hover:bg-[--system-accent]/30 text-foreground h-10 px-4 py-2 text-sm border border-[--system-accent]/20 w-full transition-colors",
 									allowedContent: "hidden",
 								}}
 								content={{
@@ -176,7 +176,7 @@ export function AiSolver() {
 							/>
 						</div>
 						{imageUrl && (
-							<div className="relative w-20 h-20 rounded-lg overflow-hidden border-2 border-primary/20 shadow-lg group">
+							<div className="relative w-20 h-20 rounded-lg overflow-hidden border-2 border-[--system-accent]/20 shadow-lg group">
 								<Image
 									src={imageUrl}
 									alt="Uploaded"
@@ -201,7 +201,7 @@ export function AiSolver() {
 						onClick={handleSolve}
 						disabled={loading || (!question && !imageUrl)}
 						className={cn(
-							"w-full gap-2 h-11 text-base font-medium transition-colors shadow-lg shadow-primary/20",
+							"w-full gap-2 h-11 text-base font-medium transition-colors shadow-lg shadow-[--system-accent]/20",
 							loading && "animate-pulse",
 						)}
 					>
@@ -221,10 +221,10 @@ export function AiSolver() {
 			</Card>
 
 			{result && (
-				<Card className="animate-in fade-in slide-in-from-bottom-6 duration-500 border-primary/10">
-					<CardHeader className="bg-primary/5 border-b border-primary/10">
+				<Card className="animate-in fade-in slide-in-from-bottom-6 duration-500 border-[--system-accent]/10">
+					<CardHeader className="bg-[--system-accent]/5 border-b border-[--system-accent]/10">
 						<CardTitle className="text-base flex items-center gap-2">
-							<Sparkles className="w-4 h-4 text-primary" />
+							<Sparkles className="w-4 h-4 text-foreground" />
 							Final Answer
 						</CardTitle>
 					</CardHeader>

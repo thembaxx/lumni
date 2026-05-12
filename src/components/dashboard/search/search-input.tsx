@@ -24,7 +24,8 @@ export function SearchInput({ value, onChange }: SearchInputProps) {
 		<div
 			className={cn(
 				"bg-secondary/60 dark:bg-secondary/40 rounded-2xl p-4 animate-fade-in-up delay-400 transition-colors duration-300 border border-border/30",
-				isFocused && "ring-2 ring-[--system-accent]/20 border-[--system-accent]/30",
+				isFocused &&
+					"ring-2 ring-[--system-accent]/20 border-[--system-accent]/30",
 			)}
 		>
 			<Input

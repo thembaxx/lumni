@@ -82,8 +82,7 @@ const toastStyles: Record<ToastType, string> = {
 	error: "border-destructive/50 bg-destructive/10 text-destructive",
 	warning:
 		"border-yellow-500/30 bg-yellow-500/10 text-yellow-600 dark:text-yellow-400",
-	info:
-		"border-[--system-accent]/50 bg-[--system-accent]/10 text-[--system-accent] dark:text-[--system-accent]",
+	info: "border-[--system-accent]/50 bg-[--system-accent]/10 text-[--system-accent] dark:text-[--system-accent]",
 };
 
 const toastIcons: Record<ToastType, string> = {

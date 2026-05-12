@@ -5,8 +5,8 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
 interface ShortAnswerInputProps {
-	value: string | undefined;
-	onChange: (value: string) => void;
+	value?: string | undefined;
+	onChange?: (value: string) => void;
 	maxLength?: number;
 	disabled?: boolean;
 	onSubmit?: (value: string) => void;
@@ -14,7 +14,7 @@ interface ShortAnswerInputProps {
 
 export function ShortAnswerInput({
 	value = "",
-	onChange,
+	onChange = () => {},
 	maxLength,
 	disabled,
 	onSubmit,

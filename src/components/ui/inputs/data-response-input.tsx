@@ -5,15 +5,15 @@ import { Textarea } from "@/components/ui/textarea";
 import type { ContentBlock } from "@/types/exam-paper";
 
 interface DataResponseInputProps {
-	value: string | undefined;
-	onChange: (value: string) => void;
+	value?: string | undefined;
+	onChange?: (value: string) => void;
 	content?: ContentBlock[] | null;
 	disabled?: boolean;
 }
 
 export function DataResponseInput({
 	value = "",
-	onChange,
+	onChange = () => {},
 	content,
 	disabled,
 }: DataResponseInputProps) {

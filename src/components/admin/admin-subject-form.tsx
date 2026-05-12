@@ -64,7 +64,7 @@ export function SubjectForm({
 						<Label className="text-sm font-medium text-foreground">Name</Label>
 						<motion.div
 							whileFocus={{ scale: 1.01 }}
-							className="transition-shadow ring-1 ring-transparent focus-within:ring-primary/30 rounded-md"
+							className="transition-shadow ring-1 ring-transparent focus-within:ring-[--system-accent]/30 rounded-md"
 						>
 							<Input
 								placeholder="Accounting"
@@ -80,7 +80,7 @@ export function SubjectForm({
 						<Label className="text-sm font-medium text-foreground">Code</Label>
 						<motion.div
 							whileFocus={{ scale: 1.01 }}
-							className="transition-shadow ring-1 ring-transparent focus-within:ring-primary/30 rounded-md"
+							className="transition-shadow ring-1 ring-transparent focus-within:ring-[--system-accent]/30 rounded-md"
 						>
 							<Input
 								placeholder="accounting"
@@ -99,7 +99,7 @@ export function SubjectForm({
 					</Label>
 					<motion.div
 						whileFocus={{ scale: 1.01 }}
-						className="transition-shadow ring-1 ring-transparent focus-within:ring-primary/30 rounded-md"
+						className="transition-shadow ring-1 ring-transparent focus-within:ring-[--system-accent]/30 rounded-md"
 					>
 						<Input
 							placeholder="Brief description"
