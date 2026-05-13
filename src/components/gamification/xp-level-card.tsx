@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { iOSEase, springTransition } from "@/lib/utils/animation";
+import { iOSEase } from "@/lib/utils/animation";
 import type { LevelInfo } from "@/types/gamification";
 
 interface XpLevelCardProps {
@@ -26,17 +26,6 @@ export function XpLevelCard({ levelInfo, totalXp }: XpLevelCardProps) {
 					<span className="text-2xl font-bold text-white">
 						{levelInfo.level}
 					</span>
-					<motion.div
-						className="absolute inset-0 rounded-full"
-						animate={{
-							boxShadow: [
-								"0 0 0 0 var(--system-accent-alpha-0)",
-								"0 0 20px 4px var(--system-accent-alpha-30)",
-								"0 0 0 0 var(--system-accent-alpha-0)",
-							],
-						}}
-						transition={{ duration: 2, repeat: Infinity }}
-					/>
 				</motion.div>
 
 				<div className="flex-1">
@@ -55,11 +44,6 @@ export function XpLevelCard({ levelInfo, totalXp }: XpLevelCardProps) {
 							initial={{ width: 0 }}
 							animate={{ width: `${levelInfo.progress}%` }}
 							transition={{ duration: 0.8, ease: iOSEase }}
-						/>
-						<motion.div
-							className="absolute inset-0 bg-white/20 dark:bg-black/20"
-							animate={{ x: ["-100%", "100%"] }}
-							transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
 						/>
 					</div>
 

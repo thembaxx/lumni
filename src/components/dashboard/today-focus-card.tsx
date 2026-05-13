@@ -1,6 +1,9 @@
 "use client";
 
-import { ArrowDown01Icon, CheckmarkCircle01Icon } from "@hugeicons/core-free-icons";
+import {
+	ArrowDown01Icon,
+	CheckmarkCircle01Icon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
@@ -139,9 +142,7 @@ export function TodayFocusCard() {
 				ease: iOSEase,
 			}}
 		>
-			<Card className="relative overflow-hidden border border-border/80 hover:border-border/80 transition-colors">
-				<div className={`absolute top-0 left-0 right-0 h-1 ${cfg.accent}`} />
-
+			<Card className="border border-border/80 hover:border-border/80 transition-colors">
 				<div className="p-5 space-y-4">
 					<div className="flex items-center gap-3">
 						<div
@@ -175,7 +176,10 @@ export function TodayFocusCard() {
 							>
 								<div className="flex items-center text-[12px] text-muted-foreground border rounded-sm pl-2 pr-1.5 py-1 hover:text-foreground cursor-pointer transition-colors font-medium p-2 -m-2">
 									change subject
-									<HugeiconsIcon icon={ArrowDown01Icon} className="size-4 ml-2" />
+									<HugeiconsIcon
+										icon={ArrowDown01Icon}
+										className="size-4 ml-2"
+									/>
 								</div>
 							</SubjectsDrawer>
 						</div>

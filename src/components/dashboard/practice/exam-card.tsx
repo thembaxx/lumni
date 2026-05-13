@@ -2,7 +2,7 @@
 
 import { m } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -26,7 +26,6 @@ export function ExamCard({ exam }: ExamCardProps) {
 
 	const handlePractice = (e: React.MouseEvent) => {
 		e.stopPropagation();
-		console.log("Practice for:", exam.id);
 	};
 
 	const handleTakeExam = (e: React.MouseEvent) => {

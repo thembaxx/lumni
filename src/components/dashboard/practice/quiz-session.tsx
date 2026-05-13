@@ -161,7 +161,7 @@ function QuestionCounter({
 function AccuracyDisplay({ accuracy }: { accuracy: number }) {
 	return (
 		<div className="flex items-center gap-1.5">
-			<span className="text-sm font-semibold tabular-nums font-mono text-green-500 dark:text-green-400">
+			<span className="text-sm font-semibold tabular-nums font-mono text-success">
 				{accuracy}%
 			</span>
 		</div>

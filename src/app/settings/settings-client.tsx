@@ -84,8 +84,8 @@ function SettingsContent() {
 			await account.deleteSession("current");
 			router.push("/");
 			router.refresh();
-		} catch (error) {
-			console.error("Sign out failed:", error);
+		} catch {
+			// Silently handle sign-out failure; session may already be invalid
 		}
 	};
 
@@ -149,12 +149,14 @@ function SettingsContent() {
 
 				{/* Tabs Navigation - Elevated Horizontal Scroll */}
 				<nav className="sticky top-[calc(var(--spacing-safe-pt)+56px)] z-20 bg-system-grouped/90 backdrop-blur-xl px-6 py-2 border-b border-border/5">
-					<div className="flex gap-2 overflow-x-auto scrollbar-hide py-1 -mx-2 px-2">
+					<div className="flex gap-2 overflow-x-auto scrollbar-hide py-1 -mx-2 px-2" role="tablist">
 						{tabs.map((tab) => {
 							const isActive = activeTab === tab.value;
 							return (
 								<button
 									key={tab.value}
+									role="tab"
+									aria-selected={isActive}
 									onClick={() => setActiveTab(tab.value)}
 									className={`
 										relative flex items-center gap-2 px-4 py-2.5 rounded-full whitespace-nowrap transition-all duration-300 active:scale-[0.96]
@@ -185,9 +187,9 @@ function SettingsContent() {
 					<AnimatePresence mode="wait" initial={false}>
 						<motion.div
 							key={activeTab}
-							initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
-							animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-							exit={{ opacity: 0, y: -10, filter: "blur(4px)" }}
+							initial={{ opacity: 0, y: 10 }}
+							animate={{ opacity: 1, y: 0 }}
+							exit={{ opacity: 0, y: -10 }}
 							transition={{
 								type: "spring",
 								duration: 0.4,

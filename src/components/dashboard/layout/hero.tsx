@@ -7,7 +7,7 @@ export function DashboardHero() {
 		<main className="flex-1 flex flex-col items-center justify-center px-4">
 			<Image
 				src="/logo.png"
-				alt="Hero Image"
+				alt=""
 				width={48}
 				height={48}
 				className="mb-6 animate-fade-in-up delay-50"

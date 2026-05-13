@@ -89,11 +89,7 @@ function StatCard({
 				delay: shouldReduceMotion ? 0 : index * 0.05,
 			}}
 		>
-			<Card className="relative p-5 flex flex-col h-full items-center justify-start gap-3 overflow-hidden cursor-default border shadow-sm border-border/80 hover:border-border/80 transition-colors">
-				<div
-					className={`absolute top-0 left-0 right-0 h-1 ${accentClass} opacity-80`}
-				/>
-
+			<Card className="relative p-5 flex flex-col h-full items-center justify-start gap-3 cursor-default border shadow-sm border-border/80 hover:border-border/80 transition-colors">
 				<div className="relative flex items-center justify-center w-10 h-10 rounded-full bg-system-surface shadow-level-1">
 					{animation && !shouldReduceMotion ? (
 						<LottieWrapper animation={animation} className="w-5 h-5" loop />
@@ -157,7 +153,7 @@ export function StatsCards({
 				</motion.div>
 			)}
 
-			<div className="grid grid-cols-3 gap-3">
+			<div className="grid grid-cols-3 gap-2 sm:gap-3">
 				<StatCard
 					label="Streak"
 					value={streak}

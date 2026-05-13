@@ -31,6 +31,7 @@ export function SearchInput({ value, onChange }: SearchInputProps) {
 			<Input
 				type="text"
 				placeholder="Ask anything about your studies..."
+				aria-label="Ask anything about your studies"
 				value={value}
 				onChange={(e) => onChange(e.target.value)}
 				onFocus={() => setIsFocused(true)}

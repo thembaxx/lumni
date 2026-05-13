@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ProgressDots } from "@/components/shared/progress-dots";
 import { Card } from "@/components/ui/card";
 import { AssessmentHeader } from "@/components/ui/headers/assessment-header";
@@ -68,21 +68,24 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 	const [correctAnswers, setCorrectAnswers] = useState(0);
 	const [elapsedTime, setElapsedTime] = useState(0);
 	const [isComplete, setIsComplete] = useState(false);
-	const [timerStarted, setTimerStarted] = useState(false);
+	const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-	// Start timer on first render
-	if (!timerStarted && questions.length > 0) {
-		setTimerStarted(true);
-		const interval = setInterval(() => {
-			setElapsedTime((prev) => {
-				if (prev >= 90 * 60) {
-					clearInterval(interval);
-					return prev;
-				}
-				return prev + 1;
-			});
-		}, 1000);
-	}
+	useEffect(() => {
+		if (questions.length > 0) {
+			timerRef.current = setInterval(() => {
+				setElapsedTime((prev) => {
+					if (prev >= 90 * 60) {
+						if (timerRef.current) clearInterval(timerRef.current);
+						return prev;
+					}
+					return prev + 1;
+				});
+			}, 1000);
+		}
+		return () => {
+			if (timerRef.current) clearInterval(timerRef.current);
+		};
+	}, [questions.length]);
 
 	const currentQuestion = questions?.[currentIndex];
 

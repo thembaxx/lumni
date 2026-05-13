@@ -111,7 +111,7 @@ export default function StatsTab() {
 				<Card className="overflow-visible">
 					{isPerfect && (
 						<div className="flex items-center justify-center -mt-2">
-							<div className="flex items-center gap-2 rounded-full bg-amber-500 text-white px-4 py-1.5 shadow-lg">
+							<div className="flex items-center gap-2 rounded-full bg-warning text-warning-foreground px-4 py-1.5 shadow-lg">
 								<span className="text-sm font-bold">Perfect Score!</span>
 							</div>
 						</div>
@@ -137,7 +137,7 @@ export default function StatsTab() {
 								<p
 									className={cn(
 										"text-xl font-bold tabular-nums",
-										isGreatScore && "text-green-500",
+										isGreatScore && "text-success",
 									)}
 								>
 									{quizResults.correctAnswers}
@@ -148,7 +148,7 @@ export default function StatsTab() {
 								<p
 									className={cn(
 										"text-xl font-bold tabular-nums",
-										isGreatScore && "text-green-500",
+										isGreatScore && "text-success",
 									)}
 								>
 									{quizResults.accuracy}%

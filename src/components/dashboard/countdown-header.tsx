@@ -292,8 +292,7 @@ export function CountdownHeader() {
 								initial="hidden"
 								animate="visible"
 								className={cn(
-									"inline-block text-5xl sm:text-4xl font-bold tracking-tighter tabular-nums font-mono text-transparent bg-clip-text",
-									cfg.barLight,
+									"inline-block text-5xl sm:text-4xl font-bold tracking-tighter tabular-nums font-mono text-system-accent",
 								)}
 								aria-live="polite"
 							>
@@ -324,10 +323,7 @@ export function CountdownHeader() {
 							variants={barGlowVariants}
 							initial="hidden"
 							animate="visible"
-							className={cn(
-								"h-full rounded-full shadow-[0_0_8px_rgba(0,0,0,0.1)]",
-								cfg.barLight,
-							)}
+							className={cn("h-full rounded-full shadow-md", cfg.barLight)}
 						/>
 					</div>
 
