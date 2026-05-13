@@ -2,14 +2,13 @@
 
 import type { DotLottie } from "@lottiefiles/dotlottie-react";
 import dynamic from "next/dynamic";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { type LottieAnimationName, loadAnimationData } from "./lottie-assets";
+import { useCallback, useEffect, useRef } from "react";
+import { type LottieAnimationName, getAnimationSrc } from "./lottie-assets";
 
 const DotLottieReact = dynamic(
 	() => import("@lottiefiles/dotlottie-react").then((m) => m.DotLottieReact),
 	{
 		ssr: false,
-		loading: () => <div style={{ width: "inherit", height: "inherit" }} />,
 	},
 );
 
@@ -32,20 +31,9 @@ export function LottieWrapper({
 	style,
 	lottieRef,
 }: LottieWrapperProps) {
-	const [data, setData] = useState<Record<string, unknown> | null>(null);
 	const dotLottieRef = useRef<DotLottie | null>(null);
 	const onCompleteRef = useRef(onComplete);
 	onCompleteRef.current = onComplete;
-
-	useEffect(() => {
-		let cancelled = false;
-		loadAnimationData(animation).then((d) => {
-			if (!cancelled) setData(d);
-		});
-		return () => {
-			cancelled = true;
-		};
-	}, [animation]);
 
 	const handleRef = useCallback(
 		(dotLottie: DotLottie | null) => {
@@ -67,13 +55,9 @@ export function LottieWrapper({
 		};
 	}, [onComplete]);
 
-	if (!data) {
-		return <div className={className} />;
-	}
-
 	return (
 		<DotLottieReact
-			data={data}
+			src={getAnimationSrc(animation)}
 			loop={loop}
 			autoplay={autoplay}
 			className={className}
