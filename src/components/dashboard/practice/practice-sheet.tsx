@@ -44,7 +44,10 @@ export function PracticeSheet({
 				side="bottom"
 				className="min-h-[95dvh] h-full flex flex-col max-h-[95dvh] w-full mt-0 rounded-t-3xl! bg-system-grouped/95 backdrop-blur-xl border-t border-border/20 animate-fade-in-scale"
 			>
-				<SheetHeader className="relative flex flex-row items-center justify-center pr-12 pt-2">
+				<SheetHeader
+					className="relative flex flex-row items-center justify-center pr-12 pt-2"
+					style={{ viewTransitionName: open ? "practice-trigger" : "none" as string }}
+				>
 					<Button
 						variant="ghost"
 						size="icon"

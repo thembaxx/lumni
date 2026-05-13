@@ -112,7 +112,7 @@ export function ChatInput({
 						onFocus={() => setIsFocused(true)}
 						onBlur={() => setIsFocused(false)}
 						disabled={isLoading}
-						className="bg-transparent text-foreground placeholder:text-muted-foreground/50 text-sm outline-none border-0 shadow-none p-0 focus-visible:ring-0"
+						className="bg-transparent text-foreground placeholder:text-muted-foreground/50 outline-none border-0 shadow-none p-0 focus-visible:ring-0"
 					/>
 				</div>
 

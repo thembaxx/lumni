@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAppwriteSession } from "@/hooks/use-appwrite-session";
 import { cn } from "@/lib/utils";
 import { iOSEase } from "@/lib/utils/animation";
@@ -163,6 +163,8 @@ export function CountdownHeader() {
 	const [daysLeft, setDaysLeft] = useState(0);
 	const [yearProgress, setYearProgress] = useState(0);
 	const [mounted, setMounted] = useState(false);
+	const [isCompact, setIsCompact] = useState(false);
+	const sentinelRef = useRef<HTMLDivElement>(null);
 	const shouldReduceMotion = useReducedMotion();
 
 	const greeting = mounted ? greetingMap[getTimeOfDay()] : "Good";
@@ -193,6 +195,25 @@ export function CountdownHeader() {
 			return () => clearInterval(interval);
 		}, msUntilMidnight);
 		return () => clearTimeout(timeout);
+	}, []);
+
+	useEffect(() => {
+		const el = sentinelRef.current;
+		if (!el) return;
+
+		const container = el.closest("[data-scroll-container]") ?? null;
+		const observer = new IntersectionObserver(
+			([entry]) => {
+				setIsCompact(entry.boundingClientRect.top < 0);
+			},
+			{
+				root: container,
+				rootMargin: "-1px 0px 0px 0px",
+				threshold: 0,
+			},
+		);
+		observer.observe(el);
+		return () => observer.disconnect();
 	}, []);
 
 	const headerVariants = {
@@ -234,12 +255,15 @@ export function CountdownHeader() {
 	};
 
 	return (
-		<motion.div
-			variants={headerVariants}
-			initial="hidden"
-			animate="visible"
-			className="w-full"
-		>
+		<>
+			<div ref={sentinelRef} className="pointer-events-none h-px" aria-hidden />
+
+			<motion.div
+				variants={headerVariants}
+				initial="hidden"
+				animate="visible"
+				className="w-full"
+			>
 			<div className="relative overflow-hidden rounded-lg bg-secondary/60 dark:bg-secondary/20 px-5 py-5 sm:px-6 sm:py-6">
 				{milestone && (
 					<motion.div
@@ -367,5 +391,41 @@ export function CountdownHeader() {
 				/>
 			</div>
 		</motion.div>
+
+			<motion.div
+				initial={false}
+				animate={{
+					opacity: isCompact ? 1 : 0,
+					y: isCompact ? 0 : -4,
+					pointerEvents: isCompact ? "auto" : "none" as unknown as undefined,
+				}}
+				transition={{
+					duration: shouldReduceMotion ? 0 : 0.2,
+					ease: iOSEase,
+				}}
+				className="sticky top-0 z-20 -mx-4 px-4 pt-2 pb-2 bg-system-grouped-background/80 backdrop-blur-xl border-b border-border/10"
+				style={{ viewTransitionName: "countdown-compact" }}
+			>
+				<div className="max-w-md mx-auto flex items-center gap-3">
+					<span className="text-[13px] font-bold text-foreground/70">
+						{greeting}{isLoggedIn && name ? `, ${firstName}` : ""}
+					</span>
+					<span className="ml-auto flex items-baseline gap-1">
+						<span className="text-lg font-bold tabular-nums text-system-accent">
+							{daysLeft}
+						</span>
+						<span className="text-[11px] text-muted-foreground font-medium">
+							{daysLeft === 1 ? "day" : "days"}
+						</span>
+					</span>
+					<div className="h-1 w-12 overflow-hidden rounded-full bg-border/30">
+						<div
+							className={cn("h-full rounded-full transition-all", cfg.barLight)}
+							style={{ width: `${yearProgress * 100}%` }}
+						/>
+					</div>
+				</div>
+			</motion.div>
+		</>
 	);
 }

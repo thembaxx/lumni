@@ -69,13 +69,15 @@ export function QuickActions({
 						) : action.label === "Lessons" ? (
 							<LessonsButton />
 						) : action.label === "Practice" ? (
-							<ActionButton
-								icon={
-									action.icon as React.ComponentType<{ className?: string }>
-								}
-								label={action.label}
-								onClick={onPracticeClick}
-							/>
+							<div style={{ viewTransitionName: "practice-trigger" as string }}>
+								<ActionButton
+									icon={
+										action.icon as React.ComponentType<{ className?: string }>
+									}
+									label={action.label}
+									onClick={onPracticeClick}
+								/>
+							</div>
 						) : (
 							<ActionButton
 								icon={
