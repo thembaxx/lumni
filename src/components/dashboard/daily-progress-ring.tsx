@@ -2,6 +2,7 @@
 
 import { IconCircleCheck, IconFlame } from "@tabler/icons-react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatedProgressBar } from "@/components/shared/animated-progress-bar";
 import { useGamification } from "@/hooks/use-gamification";
 import { iOSEase } from "@/lib/utils/animation";
 
@@ -127,14 +128,13 @@ export function DailyProgressRing() {
 					ease: iOSEase,
 				}}
 			>
-				<div className="h-1.5 w-32 rounded-full bg-border/40 overflow-hidden">
-					<motion.div
-						className={`h-full rounded-full ${isComplete ? "bg-success" : "bg-system-accent"}`}
-						initial={{ width: 0 }}
-						animate={{ width: `${progress * 100}%` }}
-						transition={{ duration: 0.8, ease: iOSEase }}
-					/>
-				</div>
+				<AnimatedProgressBar
+					value={progress * 100}
+					size="md"
+					color={isComplete ? "success" : "accent"}
+					trackClassName="bg-border/40"
+					className="w-32"
+				/>
 				<span className="text-xs text-muted-foreground font-medium tabular-nums">
 					{daily?.progress ?? 0} / {daily?.target ?? 10}
 				</span>

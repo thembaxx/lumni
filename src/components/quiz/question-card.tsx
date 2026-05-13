@@ -2,7 +2,8 @@
 
 import { CancelIcon, CheckmarkCircle02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
+import { Anim } from "@/components/shared/anim";
 import { MinusIcon, PlusIcon } from "lucide-react";
 import { useCallback, useState } from "react";
 import { Confetti, XPGainPopup } from "@/components/celebration";
@@ -480,7 +481,7 @@ export function QuestionCard({
 	};
 
 	return (
-		<LazyMotion features={domAnimation}>
+		<Anim>
 			<Confetti trigger={showConfetti} count={30} duration={1500} />
 			<XPGainPopup amount={15} visible={showXPGain} />
 			<Card className="w-full max-w-2xl">
@@ -618,6 +619,6 @@ export function QuestionCard({
 					)}
 				</CardFooter>
 			</Card>
-		</LazyMotion>
+		</Anim>
 	);
 }

@@ -1,6 +1,7 @@
 "use client";
 
-import { domAnimation, LazyMotion, m } from "framer-motion";
+import { m } from "framer-motion";
+import { Anim } from "@/components/shared/anim";
 import { createContext, useContext, useState } from "react";
 import { easeOutQuint, iOSEase } from "@/lib/utils/animation";
 
@@ -46,7 +47,7 @@ export function DirectionalTransition({
 	const xOffset = direction === "forward" ? 40 : -40;
 
 	return (
-		<LazyMotion features={domAnimation}>
+		<Anim>
 			<m.div
 				initial={{ opacity: 0, x: xOffset }}
 				animate={{
@@ -69,6 +70,6 @@ export function DirectionalTransition({
 			>
 				{children}
 			</m.div>
-		</LazyMotion>
+		</Anim>
 	);
 }

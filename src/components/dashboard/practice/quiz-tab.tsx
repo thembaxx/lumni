@@ -2,7 +2,8 @@
 
 import { ArrowDown01Icon, Play, Square } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { domAnimation, LazyMotion, m } from "framer-motion";
+import { m } from "framer-motion";
+import { Anim } from "@/components/shared/anim";
 import { Timer, Zap } from "lucide-react";
 import { useCallback, useState } from "react";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
@@ -84,7 +85,7 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 
 	if (isRunning && currentQuestion) {
 		return (
-			<LazyMotion features={domAnimation}>
+			<Anim>
 				<div className="w-full max-w-2xl px-4 pb-6 space-y-4">
 					<div className="animate-fade-in space-y-4">
 						<AssessmentHeader
@@ -152,7 +153,7 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 						/>
 					</div>
 				</div>
-			</LazyMotion>
+			</Anim>
 		);
 	}
 

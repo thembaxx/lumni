@@ -1,5 +1,6 @@
 import { getAI } from "@/lib/ai";
 import type { AIResponse } from "@/lib/ai/types";
+import { ensureArray, parseAIResponse } from "../parse-response";
 import { PromptManager } from "../prompt-manager";
 import type {
 	GenerationParams,
@@ -9,6 +10,7 @@ import type {
 	UserAnswer,
 	ValidationResult,
 } from "../types";
+import { validateMixed } from "../validators";
 
 export class MixedProcessor implements QuestionProcessor<"mixed"> {
 	readonly type = "mixed" as const;
@@ -21,12 +23,9 @@ export class MixedProcessor implements QuestionProcessor<"mixed"> {
 			prompt.user,
 			{ temperature: 0.8, maxTokens: 4096 },
 		);
-		if ("available" in result && !result.available)
-			throw new Error("AI generation failed");
-		const parsed = JSON.parse(
-			this.cleanResponse((result as AIResponse).content),
-		) as Question<"mixed">[];
-		return Array.isArray(parsed) ? parsed : [parsed];
+		const parsed = parseAIResponse<Question<"mixed">[]>(result, []);
+		if (!parsed) throw new Error("AI generation failed");
+		return ensureArray(parsed.data);
 	}
 
 	async generateHint(question: Question<"mixed">): Promise<string> {
@@ -52,53 +51,31 @@ export class MixedProcessor implements QuestionProcessor<"mixed"> {
 			`${prompt.user}\n\n${ctx}`,
 			{ temperature: 0.2, maxTokens: 1024 },
 		);
-		if ("available" in result && !result.available)
+		const parsed = parseAIResponse<{
+			correct: boolean;
+			score?: number;
+			maxScore?: number;
+			feedback?: string;
+			breakdown?: GradingResult["breakdown"];
+		}>(result, { correct: false });
+		if (parsed) {
 			return {
-				correct: false,
-				score: 0,
-				maxScore: question.points,
-				feedback: "Grading unavailable.",
-			};
-		try {
-			const g = JSON.parse(this.cleanResponse((result as AIResponse).content));
-			return {
-				correct: g.correct,
-				score: g.score,
-				maxScore: g.maxScore ?? question.points,
-				feedback: g.feedback,
-				breakdown: g.breakdown,
-			};
-		} catch {
-			return {
-				correct: false,
-				score: 0,
-				maxScore: question.points,
-				feedback: "Unable to grade mixed answer.",
+				correct: parsed.data.correct,
+				score: parsed.data.score ?? 0,
+				maxScore: parsed.data.maxScore ?? question.points,
+				feedback: parsed.data.feedback ?? "",
+				breakdown: parsed.data.breakdown,
 			};
 		}
-	}
-
-	validate(question: Question<"mixed">): ValidationResult {
-		const errors = [];
-		if (!question.body.parts?.length)
-			errors.push({
-				type: "schema" as const,
-				field: "parts",
-				message: "Parts required",
-				severity: "error" as const,
-			});
 		return {
-			isValid: errors.length === 0,
-			errors,
-			warnings: [],
-			score: errors.length > 0 ? 0 : 100,
+			correct: false,
+			score: 0,
+			maxScore: question.points,
+			feedback: "Unable to grade mixed answer.",
 		};
 	}
 
-	private cleanResponse(content: string): string {
-		return content
-			.replace(/```json/g, "")
-			.replace(/```/g, "")
-			.trim();
+	validate(question: Question<"mixed">): ValidationResult {
+		return validateMixed(question);
 	}
 }

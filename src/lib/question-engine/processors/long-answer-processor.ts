@@ -1,5 +1,10 @@
 import { getAI } from "@/lib/ai";
 import type { AIResponse } from "@/lib/ai/types";
+import {
+	ensureArray,
+	getTextResponse,
+	parseAIResponse,
+} from "../parse-response";
 import { PromptManager } from "../prompt-manager";
 import type {
 	GenerationParams,
@@ -9,6 +14,7 @@ import type {
 	UserAnswer,
 	ValidationResult,
 } from "../types";
+import { validateLongAnswer } from "../validators";
 
 export class LongAnswerProcessor implements QuestionProcessor<"long-answer"> {
 	readonly type = "long-answer" as const;
@@ -21,12 +27,9 @@ export class LongAnswerProcessor implements QuestionProcessor<"long-answer"> {
 			prompt.user,
 			{ temperature: 0.8, maxTokens: 4096 },
 		);
-		if ("available" in result && !result.available)
-			throw new Error("AI generation failed");
-		const parsed = JSON.parse(
-			this.cleanResponse((result as AIResponse).content),
-		) as Question<"long-answer">[];
-		return Array.isArray(parsed) ? parsed : [parsed];
+		const parsed = parseAIResponse<Question<"long-answer">[]>(result, []);
+		if (!parsed) throw new Error("AI generation failed");
+		return ensureArray(parsed.data);
 	}
 
 	async generateHint(question: Question<"long-answer">): Promise<string> {
@@ -61,53 +64,31 @@ export class LongAnswerProcessor implements QuestionProcessor<"long-answer"> {
 			`${prompt.user}\n\n${ctx}`,
 			{ temperature: 0.2, maxTokens: 1024 },
 		);
-		if ("available" in result && !result.available)
+		const parsed = parseAIResponse<{
+			correct: boolean;
+			score?: number;
+			maxScore?: number;
+			feedback?: string;
+			breakdown?: GradingResult["breakdown"];
+		}>(result, { correct: false });
+		if (parsed) {
 			return {
-				correct: false,
-				score: 0,
-				maxScore: question.points,
-				feedback: "Grading unavailable.",
-			};
-		try {
-			const g = JSON.parse(this.cleanResponse((result as AIResponse).content));
-			return {
-				correct: g.correct,
-				score: g.score,
-				maxScore: g.maxScore ?? question.points,
-				feedback: g.feedback,
-				breakdown: g.breakdown,
-			};
-		} catch {
-			return {
-				correct: false,
-				score: 0,
-				maxScore: question.points,
-				feedback: "Unable to grade.",
+				correct: parsed.data.correct,
+				score: parsed.data.score ?? 0,
+				maxScore: parsed.data.maxScore ?? question.points,
+				feedback: parsed.data.feedback ?? "",
+				breakdown: parsed.data.breakdown,
 			};
 		}
-	}
-
-	validate(question: Question<"long-answer">): ValidationResult {
-		const errors = [];
-		if (!question.body.rubric?.length)
-			errors.push({
-				type: "schema" as const,
-				field: "rubric",
-				message: "Rubric required",
-				severity: "error" as const,
-			});
 		return {
-			isValid: errors.length === 0,
-			errors,
-			warnings: [],
-			score: errors.length > 0 ? 0 : 100,
+			correct: false,
+			score: 0,
+			maxScore: question.points,
+			feedback: "Unable to grade.",
 		};
 	}
 
-	private cleanResponse(content: string): string {
-		return content
-			.replace(/```json/g, "")
-			.replace(/```/g, "")
-			.trim();
+	validate(question: Question<"long-answer">): ValidationResult {
+		return validateLongAnswer(question);
 	}
 }

@@ -1,7 +1,7 @@
 "use client";
 
-import { m } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { FadeIn } from "@/components/shared/fade-in";
 import { useCallback, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -35,10 +35,9 @@ export function ExamCard({ exam }: ExamCardProps) {
 
 	return (
 		<>
-			<m.div
-				initial={{ opacity: 0, y: 6 }}
-				animate={{ opacity: 1, y: 0 }}
-				transition={{ duration: 0.25 }}
+			<FadeIn
+				duration={0.25}
+				distance={6}
 				className="flex flex-col w-full justify-between p-3 gap-3 overflow-hidden rounded-xl bg-secondary/40 border-0 hover:bg-secondary/60 transition-colors"
 			>
 				<div className="flex-1 min-w-0 pr-2">
@@ -109,7 +108,7 @@ export function ExamCard({ exam }: ExamCardProps) {
 						Take Exam
 					</Button>
 				</div>
-			</m.div>
+			</FadeIn>
 
 			<PdfViewer open={pdfOpen} onOpenChange={setPdfOpen} exam={exam} />
 			<SmartViewDialog

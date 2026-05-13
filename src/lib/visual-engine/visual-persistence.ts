@@ -1,15 +1,10 @@
 import { databases } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
+import { makeCacheKey } from "@/lib/db/offline";
 import { safeJsonParse, safeJsonStringify } from "@/lib/utils/json";
 import type { VisualContent } from "./types";
 
 const COLLECTION_ID = COLLECTIONS.VISUALS;
-
-function makeDocumentId(questionId: string, subject: string): string {
-	const raw = `${questionId}-${subject}`;
-	const sanitized = raw.replace(/[^a-zA-Z0-9._-]/g, "_");
-	return sanitized.slice(0, 36);
-}
 
 export async function saveVisualToAppwrite(
 	questionId: string,
@@ -20,7 +15,7 @@ export async function saveVisualToAppwrite(
 		await databases.createDocument(
 			APPWRITE_DATABASE_ID,
 			COLLECTION_ID,
-			makeDocumentId(questionId, subject),
+			makeCacheKey(questionId, subject),
 			{
 				questionId,
 				subject,
@@ -42,7 +37,7 @@ export async function loadVisualFromAppwrite(
 		const response = await databases.getDocument(
 			APPWRITE_DATABASE_ID,
 			COLLECTION_ID,
-			makeDocumentId(questionId, subject),
+			makeCacheKey(questionId, subject),
 		);
 
 		if (!response) return null;

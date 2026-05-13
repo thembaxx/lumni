@@ -1,6 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { AnimatedProgressBar } from "@/components/shared/animated-progress-bar";
+import { FadeIn } from "@/components/shared/fade-in";
+import { getStreakMessage } from "@/lib/utils/gamification";
 import type { StreakMilestone } from "@/types/gamification";
 
 interface StreakCelebrationProps {
@@ -30,15 +33,6 @@ function getStreakEmoji(streak: number): string {
 	return streakEmojis[streak] || "🌱";
 }
 
-function getStreakMessage(streak: number): string {
-	if (streak >= 30) return "Legendary!";
-	if (streak >= 14) return "Unstoppable!";
-	if (streak >= 7) return "Week Warrior!";
-	if (streak >= 3) return "On Fire!";
-	if (streak >= 1) return "Keep it up!";
-	return "Start your streak!";
-}
-
 export function StreakCelebration({
 	currentStreak,
 	milestones,
@@ -51,15 +45,11 @@ export function StreakCelebration({
 	const isMilestone = currentStreak > 0 && currentStreak % 7 === 0;
 
 	return (
-		<motion.div
-			initial={{ opacity: 0, y: 10 }}
-			animate={{ opacity: 1, y: 0 }}
-			className={`relative overflow-hidden rounded-2xl p-4 transition-colors transition-background ${
+		<FadeIn distance={10} className={`relative overflow-hidden rounded-2xl p-4 transition-colors transition-background ${
 				isMilestone
 					? "bg-orange-500/20 border border-orange-500/30"
 					: "bg-card border border-border/50"
-			}`}
-		>
+			}`}>
 			{isMilestone && (
 				<motion.div
 					className="absolute inset-0 pointer-events-none"
@@ -107,14 +97,12 @@ export function StreakCelebration({
 
 					{nextMilestone && currentStreak < nextMilestone.streak && (
 						<>
-							<div className="relative h-2 bg-secondary rounded-full overflow-hidden">
-								<motion.div
-									className="absolute inset-y-0 left-0 rounded-full bg-orange-500"
-									initial={{ width: 0 }}
-									animate={{ width: `${Math.min(progress, 100)}%` }}
-									transition={{ duration: 0.8 }}
-								/>
-							</div>
+							<AnimatedProgressBar
+								value={Math.min(progress, 100)}
+								size="lg"
+								color="warning"
+								trackClassName="bg-secondary"
+							/>
 							<p className="text-xs text-muted-foreground mt-1">
 								{nextMilestone.streak - currentStreak} days to unlock:{" "}
 								{nextMilestone.reward}
@@ -133,6 +121,6 @@ export function StreakCelebration({
 					)}
 				</div>
 			</div>
-		</motion.div>
+		</FadeIn>
 	);
 }

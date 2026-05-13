@@ -1,6 +1,7 @@
 "use client";
 
-import { domAnimation, LazyMotion, m } from "framer-motion";
+import { m } from "framer-motion";
+import { Anim } from "@/components/shared/anim";
 import { LayoutGrid, Snowflake } from "lucide-react";
 import { startTransition, useState } from "react";
 import { LottieSparkle } from "@/components/lottie";
@@ -36,7 +37,7 @@ export function TabNav({ activeTab, onTabChange }: TabNavProps) {
 	};
 
 	return (
-		<LazyMotion features={domAnimation}>
+		<Anim>
 			<Tabs
 				value={activeTab}
 				className="flex flex-col items-center"
@@ -95,6 +96,6 @@ export function TabNav({ activeTab, onTabChange }: TabNavProps) {
 					</TabsList>
 				</m.div>
 			</Tabs>
-		</LazyMotion>
+		</Anim>
 	);
 }

@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Flame } from "lucide-react";
 import { LottieWrapper } from "@/components/lottie";
+import { getStreakMessage } from "@/lib/utils/gamification";
 
 interface StreakFireProps {
 	streak: number;
@@ -10,15 +11,6 @@ interface StreakFireProps {
 	milestone?: number;
 	useLottie?: boolean;
 }
-
-const milestoneMessages: Record<number, string> = {
-	3: "On Fire!",
-	7: "Week Warrior!",
-	14: "Two Weeks!",
-	30: "Unstoppable!",
-	60: "Legendary!",
-	100: "Grandmaster!",
-};
 
 export function StreakFire({
 	streak,
@@ -72,7 +64,7 @@ export function StreakFire({
 						animate={{ opacity: 1, y: 0 }}
 					>
 						<div className="bg-amber-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">
-							{milestoneMessages[milestone] || "Milestone!"}
+							{getStreakMessage(milestone)}
 						</div>
 					</motion.div>
 				)}

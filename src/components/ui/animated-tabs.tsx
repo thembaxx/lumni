@@ -1,6 +1,7 @@
 "use client";
 
-import { domAnimation, LazyMotion, m } from "framer-motion";
+import { m } from "framer-motion";
+import { Anim } from "@/components/shared/anim";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
@@ -50,7 +51,7 @@ function AnimatedTabs({
 	}, [measure]);
 
 	return (
-		<LazyMotion features={domAnimation}>
+		<Anim>
 			<div className={cn("flex flex-col gap-2", className)}>
 				<div
 					ref={listRef}
@@ -92,7 +93,7 @@ function AnimatedTabs({
 				</div>
 				{value && children}
 			</div>
-		</LazyMotion>
+		</Anim>
 	);
 }
 

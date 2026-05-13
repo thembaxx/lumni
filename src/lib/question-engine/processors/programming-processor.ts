@@ -1,5 +1,6 @@
 import { getAI } from "@/lib/ai";
 import type { AIResponse } from "@/lib/ai/types";
+import { ensureArray, parseAIResponse } from "../parse-response";
 import { PromptManager } from "../prompt-manager";
 import type {
 	GenerationParams,
@@ -9,6 +10,7 @@ import type {
 	UserAnswer,
 	ValidationResult,
 } from "../types";
+import { validateProgramming } from "../validators";
 
 export class ProgrammingProcessor implements QuestionProcessor<"programming"> {
 	readonly type = "programming" as const;
@@ -21,12 +23,9 @@ export class ProgrammingProcessor implements QuestionProcessor<"programming"> {
 			prompt.user,
 			{ temperature: 0.7, maxTokens: 4096 },
 		);
-		if ("available" in result && !result.available)
-			throw new Error("AI generation failed");
-		const parsed = JSON.parse(
-			this.cleanResponse((result as AIResponse).content),
-		) as Question<"programming">[];
-		return Array.isArray(parsed) ? parsed : [parsed];
+		const parsed = parseAIResponse<Question<"programming">[]>(result, []);
+		if (!parsed) throw new Error("AI generation failed");
+		return ensureArray(parsed.data);
 	}
 
 	async generateHint(question: Question<"programming">): Promise<string> {
@@ -52,60 +51,30 @@ export class ProgrammingProcessor implements QuestionProcessor<"programming"> {
 			`${prompt.user}\n\n${ctx}`,
 			{ temperature: 0.2, maxTokens: 1024 },
 		);
-		if ("available" in result && !result.available)
+		const parsed = parseAIResponse<{
+			correct: boolean;
+			score?: number;
+			feedback?: string;
+			breakdown?: GradingResult["breakdown"];
+		}>(result, { correct: false });
+		if (parsed) {
 			return {
-				correct: false,
-				score: 0,
+				correct: parsed.data.correct,
+				score: parsed.data.score ?? 0,
 				maxScore: question.points,
-				feedback: "Code review unavailable.",
-			};
-		try {
-			const g = JSON.parse(this.cleanResponse((result as AIResponse).content));
-			return {
-				correct: g.correct,
-				score: g.score,
-				maxScore: question.points,
-				feedback: g.feedback,
-				breakdown: g.breakdown,
-			};
-		} catch {
-			return {
-				correct: false,
-				score: 0,
-				maxScore: question.points,
-				feedback: "Unable to evaluate code.",
+				feedback: parsed.data.feedback ?? "",
+				breakdown: parsed.data.breakdown,
 			};
 		}
-	}
-
-	validate(question: Question<"programming">): ValidationResult {
-		const errors = [];
-		if (!question.body.language)
-			errors.push({
-				type: "schema" as const,
-				field: "language",
-				message: "Language required",
-				severity: "error" as const,
-			});
-		if (!question.body.testCases?.length)
-			errors.push({
-				type: "schema" as const,
-				field: "testCases",
-				message: "Test cases required",
-				severity: "error" as const,
-			});
 		return {
-			isValid: errors.length === 0,
-			errors,
-			warnings: [],
-			score: errors.length > 0 ? 0 : 100,
+			correct: false,
+			score: 0,
+			maxScore: question.points,
+			feedback: "Unable to evaluate code.",
 		};
 	}
 
-	private cleanResponse(content: string): string {
-		return content
-			.replace(/```json/g, "")
-			.replace(/```/g, "")
-			.trim();
+	validate(question: Question<"programming">): ValidationResult {
+		return validateProgramming(question);
 	}
 }

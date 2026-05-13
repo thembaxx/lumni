@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import type { StreakMilestone } from "@/types/gamification";
+import { FadeIn } from "@/components/shared/fade-in";
 
 interface ProgressMilestonesProps {
 	currentStreak: number;
@@ -30,12 +31,11 @@ export function ProgressMilestones({
 								currentStreak < milestones[index + 1].streak);
 
 						return (
-							<motion.div
+							<FadeIn
 								key={milestone.streak}
+								distance={10}
+								delay={index * 0.1}
 								className="flex flex-col items-center"
-								initial={{ opacity: 0, y: 10 }}
-								animate={{ opacity: 1, y: 0 }}
-								transition={{ delay: index * 0.1 }}
 							>
 								<motion.div
 									className={`relative z-10 flex h-10 w-10 items-center justify-center rounded-full border-4 transition-colors transition-border-color ${
@@ -60,7 +60,7 @@ export function ProgressMilestones({
 											{milestone.streak}
 										</span>
 									)}
-								</motion.div>
+							</motion.div>
 
 								<div className="mt-2 text-center">
 									<p
@@ -76,7 +76,7 @@ export function ProgressMilestones({
 										{milestone.reward.split(" ")[0]}
 									</p>
 								</div>
-							</motion.div>
+							</FadeIn>
 						);
 					})}
 				</div>

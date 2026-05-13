@@ -1,15 +1,9 @@
 import { getAI } from "@/lib/ai";
+import { cleanResponse } from "@/lib/ai/parse-response";
 import type { AIResponse } from "@/lib/ai/types";
 import { classifyAndMap, isKonvaType } from "./diagram-mapper";
 import { getDiagramPrompt, getMermaidPrompt } from "./prompts";
 import type { VisualContent } from "./types";
-
-function cleanResponse(content: string): string {
-	return content
-		.replace(/```json\s*/g, "")
-		.replace(/```\s*/g, "")
-		.trim();
-}
 
 export async function generateDiagram(
 	questionText: string,

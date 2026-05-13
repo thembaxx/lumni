@@ -1,5 +1,6 @@
 import { getAI } from "@/lib/ai";
 import type { AIResponse } from "@/lib/ai/types";
+import { ensureArray, parseAIResponse } from "../parse-response";
 import { PromptManager } from "../prompt-manager";
 import type {
 	GenerationParams,
@@ -9,6 +10,7 @@ import type {
 	UserAnswer,
 	ValidationResult,
 } from "../types";
+import { validateMatching } from "../validators";
 
 export class MatchingProcessor implements QuestionProcessor<"matching"> {
 	readonly type = "matching" as const;
@@ -21,12 +23,9 @@ export class MatchingProcessor implements QuestionProcessor<"matching"> {
 			prompt.user,
 			{ temperature: 0.7, maxTokens: 4096 },
 		);
-		if ("available" in result && !result.available)
-			throw new Error("AI generation failed");
-		const parsed = JSON.parse(
-			this.cleanResponse((result as AIResponse).content),
-		) as Question<"matching">[];
-		return Array.isArray(parsed) ? parsed : [parsed];
+		const parsed = parseAIResponse<Question<"matching">[]>(result, []);
+		if (!parsed) throw new Error("AI generation failed");
+		return ensureArray(parsed.data);
 	}
 
 	async generateHint(question: Question<"matching">): Promise<string> {
@@ -58,27 +57,6 @@ export class MatchingProcessor implements QuestionProcessor<"matching"> {
 	}
 
 	validate(question: Question<"matching">): ValidationResult {
-		const errors = [];
-		if (!question.body.pairs || question.body.pairs.length < 2) {
-			errors.push({
-				type: "schema" as const,
-				field: "pairs",
-				message: "Need at least 2 pairs",
-				severity: "error" as const,
-			});
-		}
-		return {
-			isValid: errors.length === 0,
-			errors,
-			warnings: [],
-			score: errors.length > 0 ? 0 : 100,
-		};
-	}
-
-	private cleanResponse(content: string): string {
-		return content
-			.replace(/```json/g, "")
-			.replace(/```/g, "")
-			.trim();
+		return validateMatching(question);
 	}
 }

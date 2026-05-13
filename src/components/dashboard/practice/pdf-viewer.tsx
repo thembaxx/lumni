@@ -14,6 +14,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
+import { EmptyState } from "@/components/shared/empty-state";
+import { LoadingOverlay } from "@/components/shared/loading-spinner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
@@ -34,34 +36,6 @@ const controlTap =
 	"active:not-disabled:scale-[0.96] transition-transform duration-150 ease-out";
 const iconTransition =
 	"transition-[opacity,filter,scale] duration-300 cubic-bezier(0.2, 0, 0, 1)";
-
-function Spinner({ className }: { className?: string }) {
-	return (
-		<div
-			className={cn(
-				"w-5 h-5 rounded-full border-2 border-muted border-t-foreground animate-spin",
-				className,
-			)}
-		/>
-	);
-}
-
-function LoadingOverlay({
-	message,
-	SpinnerComponent,
-}: {
-	message: string;
-	SpinnerComponent: React.ReactNode;
-}) {
-	return (
-		<div className="absolute inset-0 z-10 flex items-center justify-center bg-background/80 backdrop-blur-sm">
-			<div className="flex flex-col items-center gap-3">
-				{SpinnerComponent}
-				<span className="text-xs text-muted-foreground">{message}</span>
-			</div>
-		</div>
-	);
-}
 
 export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 	const [pdfPage, setPdfPage] = useState(1);
@@ -173,12 +147,12 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 						{!workerReady ? (
 							<LoadingOverlay
 								message="Initializing PDF viewer..."
-								SpinnerComponent={<Spinner className="w-6 h-6" />}
+								spinnerSize="lg"
 							/>
 						) : isLoading && !error ? (
 							<LoadingOverlay
 								message="Loading exam paper..."
-								SpinnerComponent={<Spinner className="w-6 h-6" />}
+								spinnerSize="lg"
 							/>
 						) : pdfUrl ? (
 							<div className="w-full h-full overflow-auto">
@@ -200,27 +174,15 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 								</div>
 							</div>
 						) : (
-							<div className="flex items-center justify-center h-full">
-								<div className="text-center">
-									<FileText className="w-10 h-10 mx-auto mb-3 text-muted-foreground/30" />
-									<p className="text-sm text-muted-foreground">
-										PDF unavailable
-									</p>
-								</div>
-							</div>
+							<EmptyState icon={FileText} title="PDF unavailable" />
 						)}
 						{error && (
-							<div className="absolute inset-0 z-20 flex items-center justify-center bg-background/90 backdrop-blur-sm">
-								<div className="text-center px-6">
-									<FileText className="w-10 h-10 mx-auto mb-3 text-muted-foreground/30" />
-									<p className="text-sm font-medium text-foreground">
-										Failed to load PDF
-									</p>
-									<p className="text-xs text-muted-foreground mt-1 max-w-xs">
-										{error}
-									</p>
-								</div>
-							</div>
+							<EmptyState
+								icon={FileText}
+								title="Failed to load PDF"
+								description={error}
+								overlay
+							/>
 						)}
 					</div>
 

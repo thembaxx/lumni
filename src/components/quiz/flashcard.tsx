@@ -1,6 +1,7 @@
 "use client";
 
-import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
+import { Anim } from "@/components/shared/anim";
 import { useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Button } from "@/components/ui/button";
@@ -78,7 +79,7 @@ export function Flashcard({
 	}
 
 	return (
-		<LazyMotion features={domAnimation}>
+		<Anim>
 			<div
 				className="space-y-4"
 				onKeyDown={handleKeyDown}
@@ -168,6 +169,6 @@ export function Flashcard({
 					</Button>
 				</div>
 			</div>
-		</LazyMotion>
+		</Anim>
 	);
 }

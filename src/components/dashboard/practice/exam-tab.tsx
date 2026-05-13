@@ -2,7 +2,8 @@
 
 import { ArrowDown01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
+import { Anim } from "@/components/shared/anim";
 import { BookOpen, Search, X } from "lucide-react";
 import { useState } from "react";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
@@ -61,7 +62,7 @@ export function ExamTab({ className }: ExamTabProps) {
 		selectedSubject || selectedYear || selectedSession !== "all" || searchQuery;
 
 	return (
-		<LazyMotion features={domAnimation}>
+		<Anim>
 			<div
 				className={cn(
 					"w-full px-4 pb-6 flex flex-col h-full space-y-8",
@@ -283,6 +284,6 @@ export function ExamTab({ className }: ExamTabProps) {
 					</div>
 				</AnimatePresence>
 			</div>
-		</LazyMotion>
+		</Anim>
 	);
 }

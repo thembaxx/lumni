@@ -199,17 +199,14 @@ export function ChatInput({
 							}}
 							disabled={!input.trim() || isLoading}
 							className={cn(
-								"size-10 rounded-md bg-system-accent hover:bg-system-accent/90 shadow-level-2 border border-border/40",
+								"size-10 rounded-md bg-system-accent hover:bg-system-accent/90 shadow-level-2",
 								voicePressed && "scale-[0.95] brightness-90",
 							)}
 							aria-label="Send message"
 						>
 							<HugeiconsIcon
 								icon={SentIcon}
-								className={cn(
-									"w-4.5 h-4.5 text-muted-foreground toolbutton-icon",
-									voicePressed && "scale-110",
-								)}
+								className={cn("w-4.5 h-4.5", voicePressed && "scale-110")}
 							/>
 						</Button>
 					</div>

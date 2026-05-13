@@ -1,25 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { LearningOrchestrator } from "@/lib/orchestrator";
 import type { Question, UserAnswer } from "@/lib/question-engine/types";
-import { checkRateLimit, getRateLimitHeaders } from "@/lib/utils/rate-limit";
+import { withRateLimit } from "@/lib/utils/with-rate-limit";
 
 export const dynamic = "force-dynamic";
 
-export async function POST(req: NextRequest) {
-	const ip =
-		req.headers.get("x-forwarded-for")?.split(",")[0] ||
-		req.headers.get("x-real-ip") ||
-		"unknown";
-
-	const rateLimit = checkRateLimit(ip);
-
-	if (!rateLimit.allowed) {
-		return NextResponse.json(
-			{ error: "Rate limit exceeded" },
-			{ status: 429, headers: getRateLimitHeaders(rateLimit) },
-		);
-	}
-
+export const POST = withRateLimit(async (req: NextRequest) => {
 	try {
 		const body = await req.json();
 		const { question, answer } = body as {
@@ -40,10 +26,7 @@ export async function POST(req: NextRequest) {
 			answer,
 		);
 
-		return NextResponse.json(
-			{ ...result, jobIds },
-			{ headers: getRateLimitHeaders(rateLimit) },
-		);
+		return NextResponse.json({ ...result, jobIds });
 	} catch (error) {
 		console.error("[Engine Grade] Error:", error);
 		return NextResponse.json(
@@ -54,4 +37,4 @@ export async function POST(req: NextRequest) {
 			{ status: 500 },
 		);
 	}
-}
+});

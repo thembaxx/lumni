@@ -1,6 +1,7 @@
 "use client";
 
-import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
+import { Anim } from "@/components/shared/anim";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
@@ -24,7 +25,7 @@ export function PageTransition({ children }: PageTransitionProps) {
 	}, [pathname, displayPathname, getDirection]);
 
 	return (
-		<LazyMotion features={domAnimation}>
+		<Anim>
 			<AnimatePresence mode="popLayout" initial={false}>
 				<m.div
 					key={displayPathname}
@@ -53,6 +54,6 @@ export function PageTransition({ children }: PageTransitionProps) {
 					{children}
 				</m.div>
 			</AnimatePresence>
-		</LazyMotion>
+		</Anim>
 	);
 }

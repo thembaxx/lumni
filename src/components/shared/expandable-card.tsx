@@ -1,9 +1,11 @@
 "use client";
 
-import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
+import { Anim } from "@/components/shared/anim";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ListenToLesson } from "@/components/listen-to-lesson";
+import { DifficultyBadge } from "@/components/shared/difficulty-badge";
 import { PracticeButton } from "@/components/study/practice-button";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -116,19 +118,7 @@ function ExpandedContent({
 						>
 							{data.subject}
 						</Badge>
-						<Badge
-							className={cn(
-								"px-3 py-0.5 text-[10px] uppercase font-medium bg-[--system-accent]/10 rounded-full",
-								data.difficulty === "easy" &&
-									"bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100",
-								data.difficulty === "medium" &&
-									"bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100",
-								data.difficulty === "hard" &&
-									"bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100",
-							)}
-						>
-							{data.difficulty}
-						</Badge>
+						<DifficultyBadge difficulty={data.difficulty} />
 					</div>
 
 					<div className="space-y-1">
@@ -205,19 +195,7 @@ function CollapsedContent({
 						>
 							{data.subject}
 						</Badge>
-						<Badge
-							className={cn(
-								"px-3 py-0.5 text-[10px] uppercase font-medium bg-[--system-accent]/10 rounded-full",
-								data.difficulty === "easy" &&
-									"bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100",
-								data.difficulty === "medium" &&
-									"bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100",
-								data.difficulty === "hard" &&
-									"bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100",
-							)}
-						>
-							{data.difficulty}
-						</Badge>
+						<DifficultyBadge difficulty={data.difficulty} />
 					</div>
 
 					<div className="space-y-1">
@@ -262,7 +240,7 @@ export function ExpandableCard({
 	const [currentWordIndex, setCurrentWordIndex] = useState(-1);
 
 	return (
-		<LazyMotion features={domAnimation}>
+		<Anim>
 			<CardOverlay isOpen={isOpen} onClose={() => onOpenChange(false)} />
 
 			<AnimatePresence mode="popLayout" initial={false}>
@@ -286,6 +264,6 @@ export function ExpandableCard({
 					/>
 				)}
 			</AnimatePresence>
-		</LazyMotion>
+		</Anim>
 	);
 }

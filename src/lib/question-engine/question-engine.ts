@@ -1,6 +1,5 @@
 import { initAI, isAIConfigured } from "@/lib/ai";
-import { cacheQuestions, getCachedQuestions } from "@/lib/db/offline";
-import { syncQuestionsToAppwrite } from "./persistence";
+import { getCachedQuestions } from "@/lib/db/offline";
 import { ProcessorRegistry } from "./processor-registry";
 import { PromptManager } from "./prompt-manager";
 import type {
@@ -52,7 +51,6 @@ export class QuestionEngine {
 		);
 		if (appwriteQuestions.length >= count) {
 			const shuffled = appwriteQuestions.sort(() => Math.random() - 0.5);
-			await cacheQuestions(subject, shuffled, topic);
 			return shuffled.slice(0, count);
 		}
 
@@ -91,10 +89,6 @@ export class QuestionEngine {
 		}
 
 		const sliced = questions.slice(0, count);
-
-		await cacheQuestions(subject, sliced, topic);
-		syncQuestionsToAppwrite(sliced, subject, topic).catch(() => {});
-		this.preCacheVisuals(sliced).catch(() => {});
 
 		return sliced;
 	}
@@ -164,20 +158,6 @@ export class QuestionEngine {
 		} catch {
 			return null;
 		}
-	}
-
-	private async preCacheVisuals(questions: Question[]): Promise<void> {
-		const { visualEngine } = await import("@/lib/visual-engine");
-		await Promise.allSettled(
-			questions.map((q) =>
-				visualEngine.resolve({
-					questionId: q.id,
-					questionText: q.questionText,
-					subject: q.subject,
-					topic: q.topic,
-				}),
-			),
-		);
 	}
 
 	private async generateMixed(params: GenerationParams): Promise<Question[]> {

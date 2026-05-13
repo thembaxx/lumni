@@ -1,5 +1,6 @@
 import { getAI } from "@/lib/ai";
 import type { AIResponse } from "@/lib/ai/types";
+import { ensureArray, parseAIResponse } from "../parse-response";
 import { PromptManager } from "../prompt-manager";
 import type {
 	GenerationParams,
@@ -9,6 +10,7 @@ import type {
 	UserAnswer,
 	ValidationResult,
 } from "../types";
+import { validateDataResponse } from "../validators";
 
 export class DataResponseProcessor
 	implements QuestionProcessor<"data-response">
@@ -25,12 +27,9 @@ export class DataResponseProcessor
 			prompt.user,
 			{ temperature: 0.7, maxTokens: 4096 },
 		);
-		if ("available" in result && !result.available)
-			throw new Error("AI generation failed");
-		const parsed = JSON.parse(
-			this.cleanResponse((result as AIResponse).content),
-		) as Question<"data-response">[];
-		return Array.isArray(parsed) ? parsed : [parsed];
+		const parsed = parseAIResponse<Question<"data-response">[]>(result, []);
+		if (!parsed) throw new Error("AI generation failed");
+		return ensureArray(parsed.data);
 	}
 
 	async generateHint(question: Question<"data-response">): Promise<string> {
@@ -56,59 +55,28 @@ export class DataResponseProcessor
 			`${prompt.user}\n\n${ctx}`,
 			{ temperature: 0.2, maxTokens: 1024 },
 		);
-		if ("available" in result && !result.available)
+		const parsed = parseAIResponse<{
+			correct: boolean;
+			score?: number;
+			feedback?: string;
+		}>(result, { correct: false });
+		if (parsed) {
 			return {
-				correct: false,
-				score: 0,
+				correct: parsed.data.correct,
+				score: parsed.data.score ?? 0,
 				maxScore: question.points,
-				feedback: "Grading unavailable.",
-			};
-		try {
-			const g = JSON.parse(this.cleanResponse((result as AIResponse).content));
-			return {
-				correct: g.correct,
-				score: g.score,
-				maxScore: question.points,
-				feedback: g.feedback,
-			};
-		} catch {
-			return {
-				correct: false,
-				score: 0,
-				maxScore: question.points,
-				feedback: "Unable to grade.",
+				feedback: parsed.data.feedback ?? "",
 			};
 		}
-	}
-
-	validate(question: Question<"data-response">): ValidationResult {
-		const errors = [];
-		if (!question.body.data)
-			errors.push({
-				type: "schema" as const,
-				field: "data",
-				message: "Data set required",
-				severity: "error" as const,
-			});
-		if (!question.body.questions?.length)
-			errors.push({
-				type: "schema" as const,
-				field: "questions",
-				message: "Questions required",
-				severity: "error" as const,
-			});
 		return {
-			isValid: errors.length === 0,
-			errors,
-			warnings: [],
-			score: errors.length > 0 ? 0 : 100,
+			correct: false,
+			score: 0,
+			maxScore: question.points,
+			feedback: "Unable to grade.",
 		};
 	}
 
-	private cleanResponse(content: string): string {
-		return content
-			.replace(/```json/g, "")
-			.replace(/```/g, "")
-			.trim();
+	validate(question: Question<"data-response">): ValidationResult {
+		return validateDataResponse(question);
 	}
 }

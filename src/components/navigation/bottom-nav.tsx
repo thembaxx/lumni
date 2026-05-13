@@ -1,7 +1,8 @@
 "use client";
 
 import { Icon } from "@iconify/react";
-import { domAnimation, LazyMotion, m } from "framer-motion";
+import { m } from "framer-motion";
+import { Anim } from "@/components/shared/anim";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ChatDialog } from "@/components/dashboard/chat/chat-dialog";
@@ -149,7 +150,7 @@ export function BottomNav() {
 
 	return (
 		<>
-			<LazyMotion features={domAnimation}>
+			<Anim>
 				<nav className="fixed bottom-0 left-0 right-0 z-50 h-16 bg-system-background/95 backdrop-blur-md border-t border-border/40 md:hidden pb-safe">
 					<div
 						ref={listRef}
@@ -178,7 +179,7 @@ export function BottomNav() {
 						/>
 					</div>
 				</nav>
-			</LazyMotion>
+			</Anim>
 			<PracticeSheet
 				open={practiceDrawerOpen}
 				onOpenChange={setPracticeDrawerOpen}

@@ -1,5 +1,10 @@
 import { getAI } from "@/lib/ai";
 import type { AIResponse } from "@/lib/ai/types";
+import {
+	ensureArray,
+	getTextResponse,
+	parseAIResponse,
+} from "../parse-response";
 import { PromptManager } from "../prompt-manager";
 import type {
 	GenerationParams,
@@ -9,7 +14,7 @@ import type {
 	UserAnswer,
 	ValidationResult,
 } from "../types";
-import { validateMCQ } from "../validators/mcq-validator";
+import { validateMCQ } from "../validators";
 
 export class MCQProcessor implements QuestionProcessor<"multiple-choice"> {
 	readonly type = "multiple-choice" as const;
@@ -28,16 +33,13 @@ export class MCQProcessor implements QuestionProcessor<"multiple-choice"> {
 			},
 		);
 
-		if ("available" in result && !result.available) {
+		const parsed = parseAIResponse<Question<"multiple-choice">[]>(result, []);
+		if (!parsed) {
 			throw new Error(
 				`AI generation failed: ${"error" in result ? result.error : "unknown"}`,
 			);
 		}
-
-		const response = result as AIResponse;
-		const content = this.cleanResponse(response.content);
-		const parsed = JSON.parse(content) as Question<"multiple-choice">[];
-		return Array.isArray(parsed) ? parsed : [parsed];
+		return ensureArray(parsed.data);
 	}
 
 	async generateHint(question: Question<"multiple-choice">): Promise<string> {
@@ -51,8 +53,7 @@ export class MCQProcessor implements QuestionProcessor<"multiple-choice"> {
 				maxTokens: 256,
 			},
 		);
-		if ("available" in result && !result.available) return question.hint;
-		return this.cleanResponse((result as AIResponse).content);
+		return getTextResponse(result) ?? question.hint;
 	}
 
 	async grade(
@@ -80,12 +81,5 @@ export class MCQProcessor implements QuestionProcessor<"multiple-choice"> {
 
 	validate(question: Question<"multiple-choice">): ValidationResult {
 		return validateMCQ(question);
-	}
-
-	private cleanResponse(content: string): string {
-		return content
-			.replace(/```json/g, "")
-			.replace(/```/g, "")
-			.trim();
 	}
 }

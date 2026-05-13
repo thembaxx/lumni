@@ -2,6 +2,7 @@ import Dexie, { type Table } from "dexie";
 import type { CompetencyRecord } from "@/lib/competency-engine/types";
 import type { JobRecord } from "@/lib/orchestrator/types";
 import { safeJsonParse, safeJsonStringify } from "@/lib/utils/json";
+import type { VisualContent } from "@/lib/visual-engine/types";
 
 export interface CachedQuestion {
 	id?: number;
@@ -73,6 +74,15 @@ export interface QuizAnswer {
 	timeSpent: number;
 }
 
+export interface CachedVisual {
+	id?: number;
+	cacheKey: string;
+	subject: string;
+	visual: string; // JSON stringified VisualContent | null
+	createdAt: number;
+	expiresAt: number;
+}
+
 export interface QuizSessionState {
 	id?: number;
 	sessionId: string;
@@ -97,6 +107,7 @@ export class LumniOfflineDB extends Dexie {
 	conflicts!: Table<SyncConflict, number>;
 	jobs!: Table<JobRecord, number>;
 	competencies!: Table<CompetencyRecord, number>;
+	visuals!: Table<CachedVisual, number>;
 
 	constructor() {
 		super("lumni-offline");
@@ -124,6 +135,10 @@ export class LumniOfflineDB extends Dexie {
 
 		this.version(5).stores({
 			competencies: "++id, subjectId, topicId, bloomLevel, level, lastAssessed",
+		});
+
+		this.version(6).stores({
+			visuals: "++id, &cacheKey, subject, createdAt",
 		});
 	}
 }
@@ -510,4 +525,56 @@ export async function resolveConflict(
 
 export async function clearResolvedConflicts(): Promise<void> {
 	await offlineDB.conflicts.filter((c) => !!c.resolvedAt).delete();
+}
+
+const CACHE_TTL_MS = 7 * 24 * 60 * 60 * 1000;
+
+export function makeCacheKey(questionId: string, subject: string): string {
+	return `${questionId}-${subject}`
+		.replace(/[^a-zA-Z0-9._-]/g, "_")
+		.slice(0, 36);
+}
+
+export async function cacheVisual(
+	cacheKey: string,
+	subject: string,
+	visual: VisualContent | null,
+): Promise<void> {
+	const now = Date.now();
+	const existing = await offlineDB.visuals
+		.where("cacheKey")
+		.equals(cacheKey)
+		.first();
+
+	const record: Omit<CachedVisual, "id"> = {
+		cacheKey,
+		subject,
+		visual: safeJsonStringify(visual),
+		createdAt: now,
+		expiresAt: now + CACHE_TTL_MS,
+	};
+
+	if (existing) {
+		await offlineDB.visuals.update(existing.id!, record);
+	} else {
+		await offlineDB.visuals.add(record as CachedVisual);
+	}
+}
+
+export async function getCachedVisual(
+	cacheKey: string,
+): Promise<VisualContent | null> {
+	const entry = await offlineDB.visuals
+		.where("cacheKey")
+		.equals(cacheKey)
+		.first();
+
+	if (!entry) return null;
+
+	if (Date.now() > entry.expiresAt) {
+		await offlineDB.visuals.delete(entry.id!);
+		return null;
+	}
+
+	return safeJsonParse(entry.visual, null) as VisualContent | null;
 }

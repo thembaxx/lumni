@@ -1,6 +1,7 @@
 "use client";
 
-import { domAnimation, LazyMotion, m } from "framer-motion";
+import { m } from "framer-motion";
+import { Anim } from "@/components/shared/anim";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { cn } from "@/lib/utils";
@@ -41,7 +42,7 @@ function SegmentedControl({
 	}, [measure]);
 
 	return (
-		<LazyMotion features={domAnimation}>
+		<Anim>
 			<div
 				ref={listRef}
 				role="radiogroup"
@@ -80,7 +81,7 @@ function SegmentedControl({
 					}}
 				/>
 			</div>
-		</LazyMotion>
+		</Anim>
 	);
 }
 

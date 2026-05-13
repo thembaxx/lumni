@@ -1,9 +1,11 @@
 "use client";
 
-import { domAnimation, LazyMotion, m } from "framer-motion";
+import { m } from "framer-motion";
+import { Anim } from "@/components/shared/anim";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { startTransition, useCallback, useState } from "react";
 import { QuestionCard } from "@/components/quiz/question-card";
+import { TimerDisplay } from "@/components/shared/timer-display";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
@@ -48,7 +50,7 @@ export function QuizSession({
 	}, [currentQuestionIndex, onPrevious]);
 
 	return (
-		<LazyMotion features={domAnimation}>
+		<Anim>
 			<div className="w-full max-w-2xl px-4 pb-6 space-y-4">
 				<div className="animate-fade-in space-y-4">
 					<div className="flex items-center justify-between">
@@ -61,7 +63,11 @@ export function QuizSession({
 							Quit
 						</Button>
 						<div className="flex items-center gap-3">
-							<TimerDisplay elapsedTime={elapsedTime} formatTime={formatTime} />
+							<TimerDisplay
+								elapsedTime={elapsedTime}
+								formatTimeFn={formatTime}
+								showIcon={false}
+							/>
 							<span className="text-muted-foreground">|</span>
 							<QuestionCounter
 								currentQuestionIndex={currentQuestionIndex}
@@ -124,23 +130,7 @@ export function QuizSession({
 					</Button>
 				</div>
 			</div>
-		</LazyMotion>
-	);
-}
-
-function TimerDisplay({
-	elapsedTime,
-	formatTime,
-}: {
-	elapsedTime: number;
-	formatTime: (seconds: number) => string;
-}) {
-	return (
-		<div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-muted/50">
-			<span className="text-sm font-medium tabular-nums font-mono">
-				{formatTime(elapsedTime)}
-			</span>
-		</div>
+		</Anim>
 	);
 }
 

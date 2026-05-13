@@ -2,7 +2,8 @@
 
 import { Dice5 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
+import { Anim } from "@/components/shared/anim";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { ListenToLesson } from "@/components/listen-to-lesson";
@@ -77,7 +78,7 @@ export function StudyTopicCard({
 	}
 
 	return (
-		<LazyMotion features={domAnimation}>
+		<Anim>
 			<AnimatePresence mode="wait" initial={false}>
 				<m.div
 					key={topic.topicTitle}
@@ -172,6 +173,6 @@ export function StudyTopicCard({
 					</m.div>
 				</m.div>
 			</AnimatePresence>
-		</LazyMotion>
+		</Anim>
 	);
 }

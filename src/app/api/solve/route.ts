@@ -1,31 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { generateWithSystem, initAI, isAIConfigured } from "@/lib/ai";
+import { cleanResponse } from "@/lib/ai/parse-response";
 import type { AIResponse } from "@/lib/ai/types";
-import { checkRateLimit, getRateLimitHeaders } from "@/lib/utils/rate-limit";
+import { withRateLimit } from "@/lib/utils/with-rate-limit";
 
 export const dynamic = "force-dynamic";
 
-export async function POST(req: NextRequest) {
-	const ip =
-		req.headers.get("x-forwarded-for")?.split(",")[0] ||
-		req.headers.get("x-real-ip") ||
-		"unknown";
-
-	const rateLimit = checkRateLimit(ip);
-
-	if (!rateLimit.allowed) {
-		return NextResponse.json(
-			{
-				error: "Rate limit exceeded",
-				message: `Too many requests. Please wait ${Math.ceil((rateLimit.resetAt - Date.now()) / 1000)} seconds.`,
-			},
-			{
-				status: 429,
-				headers: getRateLimitHeaders(rateLimit),
-			},
-		);
-	}
-
+export const POST = withRateLimit(async (req: NextRequest) => {
 	try {
 		const { question, imageUrl } = await req.json();
 
@@ -70,21 +51,16 @@ export async function POST(req: NextRequest) {
 		}
 
 		const response = result as AIResponse;
-		const cleanedContent = response.content
-			.replace(/```json/g, "")
-			.replace(/```/g, "")
-			.trim();
+		const cleaned = cleanResponse(response.content);
 
 		try {
-			const solved = JSON.parse(cleanedContent);
+			const solved = JSON.parse(cleaned);
 			return NextResponse.json({
 				solution: solved.solution,
 				steps: solved.steps,
 				provider: response.provider,
 			});
-		} catch (_parseError) {
-			console.error("Failed to parse AI response:", cleanedContent);
-			// Fallback if not JSON
+		} catch {
 			return NextResponse.json({
 				solution: response.content,
 				steps: [],
@@ -103,4 +79,4 @@ export async function POST(req: NextRequest) {
 			{ status: 500 },
 		);
 	}
-}
+});

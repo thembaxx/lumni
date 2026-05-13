@@ -1,8 +1,8 @@
 "use client";
 
 import { Zap } from "lucide-react";
+import { TimerDisplay } from "@/components/shared/timer-display";
 import { cn } from "@/lib/utils";
-import { QuizTimer } from "./quiz-timer";
 
 interface QuizStatsDisplayProps {
 	elapsedTime: number;
@@ -27,7 +27,11 @@ export function QuizStatsDisplay({
 				className,
 			)}
 		>
-			<QuizTimer elapsedTime={elapsedTime} formatTime={formatTime} />
+			<TimerDisplay
+				elapsedTime={elapsedTime}
+				formatTimeFn={formatTime}
+				showIcon={false}
+			/>
 
 			<div className="w-px h-4 bg-muted" />
 

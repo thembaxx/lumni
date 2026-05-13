@@ -1,6 +1,7 @@
 "use client";
 
-import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
+import { Anim } from "@/components/shared/anim";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
@@ -34,7 +35,7 @@ export function LessonCard({
 	const [isPlaying, setIsPlaying] = useState(false);
 
 	return (
-		<LazyMotion features={domAnimation}>
+		<Anim>
 			<AnimatePresence initial={false}>
 				{isCardOpen && (
 					<m.div
@@ -171,6 +172,6 @@ export function LessonCard({
 					</m.div>
 				)}
 			</AnimatePresence>
-		</LazyMotion>
+		</Anim>
 	);
 }

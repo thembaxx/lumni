@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { iOSEase } from "@/lib/utils/animation";
+import { AnimatedProgressBar } from "@/components/shared/animated-progress-bar";
+import { FadeIn } from "@/components/shared/fade-in";
 import type { LevelInfo } from "@/types/gamification";
 
 interface XpLevelCardProps {
@@ -11,11 +12,7 @@ interface XpLevelCardProps {
 
 export function XpLevelCard({ levelInfo, totalXp }: XpLevelCardProps) {
 	return (
-		<motion.div
-			initial={{ opacity: 0, y: 10 }}
-			animate={{ opacity: 1, y: 0 }}
-			className="relative overflow-hidden rounded-lg bg-system-accent/10 border border-border/50 p-5"
-		>
+		<FadeIn distance={10} className="relative overflow-hidden rounded-lg bg-system-accent/10 border border-border/50 p-5">
 			<div className="flex items-center gap-4">
 				<motion.div
 					className="relative flex h-14 w-14 items-center justify-center rounded-full bg-system-accent shadow-lg"
@@ -26,7 +23,7 @@ export function XpLevelCard({ levelInfo, totalXp }: XpLevelCardProps) {
 					<span className="text-2xl font-bold text-white">
 						{levelInfo.level}
 					</span>
-				</motion.div>
+		</motion.div>
 
 				<div className="flex-1">
 					<div className="flex items-center justify-between mb-1">
@@ -38,14 +35,11 @@ export function XpLevelCard({ levelInfo, totalXp }: XpLevelCardProps) {
 						</span>
 					</div>
 
-					<div className="relative h-3 bg-secondary/50 rounded-full overflow-hidden">
-						<motion.div
-							className="absolute inset-y-0 left-0 rounded-full bg-system-accent"
-							initial={{ width: 0 }}
-							animate={{ width: `${levelInfo.progress}%` }}
-							transition={{ duration: 0.8, ease: iOSEase }}
-						/>
-					</div>
+					<AnimatedProgressBar
+						value={levelInfo.progress}
+						size="xl"
+						color="accent"
+					/>
 
 					<p className="text-xs text-muted-foreground mt-1 font-medium">
 						{levelInfo.currentXp} / {levelInfo.xpToNextLevel} XP to Level{" "}
@@ -53,6 +47,6 @@ export function XpLevelCard({ levelInfo, totalXp }: XpLevelCardProps) {
 					</p>
 				</div>
 			</div>
-		</motion.div>
+		</FadeIn>
 	);
 }

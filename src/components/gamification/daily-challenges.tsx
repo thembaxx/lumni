@@ -2,6 +2,8 @@
 
 import { IconCheck } from "@tabler/icons-react";
 import { motion } from "framer-motion";
+import { AnimatedProgressBar } from "@/components/shared/animated-progress-bar";
+import { FadeIn } from "@/components/shared/fade-in";
 import type { DailyChallenge } from "@/types/gamification";
 
 interface DailyChallengesProps {
@@ -36,11 +38,11 @@ export function DailyChallenges({ challenges }: DailyChallengesProps) {
 
 			<div className="space-y-2">
 				{challenges.map((challenge, index) => (
-					<motion.div
+					<FadeIn
 						key={challenge.id}
-						initial={{ opacity: 0, x: -10 }}
-						animate={{ opacity: 1, x: 0 }}
-						transition={{ delay: index * 0.1 }}
+						direction="left"
+						distance={10}
+						delay={index * 0.1}
 						className={`relative overflow-hidden rounded-xl p-3 transition-colors ${
 							challenge.completed
 								? "bg-green-500/10 border border-green-500/20 dark:bg-green-900/20 dark:border-green-900/30"
@@ -79,16 +81,12 @@ export function DailyChallenges({ challenges }: DailyChallengesProps) {
 								</p>
 
 								{!challenge.completed && challenge.type === "questions" && (
-									<div className="relative h-1.5 bg-secondary rounded-full overflow-hidden">
-										<motion.div
-											className="absolute inset-y-0 left-0 rounded-full bg-[--system-accent]"
-											initial={{ width: 0 }}
-											animate={{
-												width: `${(challenge.progress / challenge.target) * 100}%`,
-											}}
-											transition={{ duration: 0.5 }}
-										/>
-									</div>
+									<AnimatedProgressBar
+										value={(challenge.progress / challenge.target) * 100}
+										size="md"
+										color="accent"
+										trackClassName="bg-secondary"
+									/>
 								)}
 
 								{challenge.completed && (
@@ -100,11 +98,11 @@ export function DailyChallenges({ challenges }: DailyChallengesProps) {
 									>
 										<IconCheck size={12} />
 										Completed
-									</motion.div>
+								</motion.div>
 								)}
 							</div>
 						</div>
-					</motion.div>
+					</FadeIn>
 				))}
 			</div>
 		</div>

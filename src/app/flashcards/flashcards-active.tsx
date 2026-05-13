@@ -1,7 +1,8 @@
 "use client";
 
 import { IconCheck, IconX } from "@tabler/icons-react";
-import { domAnimation, LazyMotion, m } from "framer-motion";
+import { m } from "framer-motion";
+import { Anim } from "@/components/shared/anim";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useCallback } from "react";
 import { Badge } from "@/components/ui/badge";
@@ -85,7 +86,7 @@ export function FlashcardsActive({
 			</div>
 
 			<div className="flex-1 flex items-center justify-center">
-				<LazyMotion features={domAnimation}>
+				<Anim>
 					<m.div
 						className="perspective-1000 cursor-pointer w-full max-w-md"
 						onClick={onFlip}
@@ -140,7 +141,7 @@ export function FlashcardsActive({
 							)}
 						</Card>
 					</m.div>
-				</LazyMotion>
+				</Anim>
 			</div>
 
 			{isFlipped && (

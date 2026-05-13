@@ -3,6 +3,11 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Trophy } from "lucide-react";
 import { LottieWrapper } from "@/components/lottie";
+import {
+	rarityBorder,
+	rarityGlowStrong,
+	raritySolid,
+} from "@/lib/utils/gamification";
 
 interface AchievementUnlockProps {
 	visible: boolean;
@@ -14,27 +19,6 @@ interface AchievementUnlockProps {
 	onClose?: () => void;
 	useLottie?: boolean;
 }
-
-const raritySolid = {
-	common: "bg-muted",
-	rare: "bg-[--system-accent]",
-	epic: "bg-purple-500 dark:bg-purple-700",
-	legendary: "bg-amber-500 dark:bg-amber-700",
-};
-
-const rarityGlow = {
-	common: "shadow-gray-500/50 dark:shadow-gray-700/50",
-	rare: "shadow-[--system-accent]/50",
-	epic: "shadow-purple-500/50 dark:shadow-purple-700/50",
-	legendary: "shadow-amber-500/70 dark:shadow-amber-700/70",
-};
-
-const rarityBorder = {
-	common: "border-gray-400 dark:border-gray-600",
-	rare: "border-[--system-accent]",
-	epic: "border-purple-500 dark:border-purple-700",
-	legendary: "border-amber-500 dark:border-amber-700",
-};
 
 export function AchievementUnlock({
 	visible,
@@ -69,7 +53,7 @@ export function AchievementUnlock({
 						/>
 
 						<div
-							className={`relative bg-card border-2 ${rarityBorder[rarity]} rounded-3xl p-8 text-center shadow-2xl ${rarityGlow[rarity]}`}
+							className={`relative bg-card border-2 ${rarityBorder[rarity]} rounded-3xl p-8 text-center shadow-2xl ${rarityGlowStrong[rarity]}`}
 						>
 							<motion.div
 								initial={{ scale: 0, rotate: -180 }}

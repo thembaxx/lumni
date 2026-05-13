@@ -1,37 +1,13 @@
-import Dexie from "dexie";
 import { initAI, isAIConfigured } from "@/lib/ai";
+import { cacheVisual, getCachedVisual, makeCacheKey } from "@/lib/db/offline";
 import { searchImage } from "./image-resolver";
 import { generateDiagram } from "./stem-renderer";
-import type {
-	VisualCacheEntry,
-	VisualContent,
-	VisualEngineParams,
-} from "./types";
+import type { VisualContent, VisualEngineParams } from "./types";
 import { STEM_SUBJECTS } from "./types";
 import {
 	loadVisualFromAppwrite,
 	saveVisualToAppwrite,
 } from "./visual-persistence";
-
-const CACHE_TTL_MS = 7 * 24 * 60 * 60 * 1000;
-
-let db: Dexie | null = null;
-
-function getStore(): Dexie {
-	if (!db) {
-		db = new Dexie("lumni");
-		db.version(1).stores({
-			visuals: "id, subject, createdAt",
-		});
-	}
-	return db;
-}
-
-function makeCacheKey(questionId: string, subject: string): string {
-	return `${questionId}-${subject}`
-		.replace(/[^a-zA-Z0-9._-]/g, "_")
-		.slice(0, 36);
-}
 
 export class VisualEngine {
 	static initialize(): void {
@@ -47,7 +23,7 @@ export class VisualEngine {
 	async resolve(params: VisualEngineParams): Promise<VisualContent | null> {
 		const cacheKey = makeCacheKey(params.questionId, params.subject);
 
-		const cached = await this.checkCache(cacheKey);
+		const cached = await getCachedVisual(cacheKey);
 		if (cached) return cached;
 
 		const appwriteVisual = await this.checkAppwriteCache(
@@ -55,14 +31,14 @@ export class VisualEngine {
 			params.subject,
 		);
 		if (appwriteVisual) {
-			await this.writeDexieCache(cacheKey, params.subject, appwriteVisual);
+			await cacheVisual(cacheKey, params.subject, appwriteVisual);
 			return appwriteVisual;
 		}
 
 		const visual = await this.generate(params);
 
 		await Promise.allSettled([
-			this.writeDexieCache(cacheKey, params.subject, visual),
+			cacheVisual(cacheKey, params.subject, visual),
 			saveVisualToAppwrite(params.questionId, params.subject, visual),
 		]);
 
@@ -114,24 +90,6 @@ export class VisualEngine {
 		return generateDiagram(params.questionText, params.subject, params.topic);
 	}
 
-	private async checkCache(cacheKey: string): Promise<VisualContent | null> {
-		try {
-			const store = getStore();
-			const entry = await store.table("visuals").get(cacheKey);
-
-			if (!entry) return null;
-
-			if (Date.now() > new Date(entry.expiresAt).getTime()) {
-				await store.table("visuals").delete(cacheKey);
-				return null;
-			}
-
-			return entry.visual;
-		} catch {
-			return null;
-		}
-	}
-
 	private async checkAppwriteCache(
 		questionId: string,
 		subject: string,
@@ -140,27 +98,6 @@ export class VisualEngine {
 			return loadVisualFromAppwrite(questionId, subject);
 		} catch {
 			return null;
-		}
-	}
-
-	private async writeDexieCache(
-		cacheKey: string,
-		subject: string,
-		visual: VisualContent | null,
-	): Promise<void> {
-		try {
-			const store = getStore();
-			const now = new Date();
-			const entry: VisualCacheEntry = {
-				id: cacheKey,
-				subject,
-				visual,
-				createdAt: now.toISOString(),
-				expiresAt: new Date(now.getTime() + CACHE_TTL_MS).toISOString(),
-			};
-			await store.table("visuals").put(entry);
-		} catch {
-			/* cache write failure is non-critical */
 		}
 	}
 }

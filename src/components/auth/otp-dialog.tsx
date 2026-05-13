@@ -1,4 +1,5 @@
-import { domAnimation, LazyMotion, m } from "framer-motion";
+import { m } from "framer-motion";
+import { Anim } from "@/components/shared/anim";
 import {
 	AlertCircle,
 	CheckCircle2,
@@ -275,7 +276,7 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 							)}
 						</div>
 					) : (
-						<LazyMotion features={domAnimation}>
+						<Anim>
 							<m.div
 								className="flex flex-col items-center gap-4 py-2"
 								initial={{ opacity: 0, y: 10 }}
@@ -470,7 +471,7 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 									</m.div>
 								)}
 							</m.div>
-						</LazyMotion>
+						</Anim>
 					)}
 
 					{!sent && (

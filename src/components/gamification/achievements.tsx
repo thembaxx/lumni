@@ -1,25 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { rarityColors, rarityGlow } from "@/lib/utils/gamification";
 import type { Achievement } from "@/types/gamification";
 
 interface AchievementsProps {
 	achievements: Achievement[];
 }
-
-const rarityColors = {
-	common: "bg-muted border-border",
-	rare: "bg-[--system-accent]/10 border-[--system-accent]/20",
-	epic: "bg-purple-500/10 border-purple-500/30",
-	legendary: "bg-amber-500/10 border-amber-500/30",
-};
-
-const rarityGlow = {
-	common: "",
-	rare: "shadow-[--system-accent]/20",
-	epic: "shadow-purple-500/20",
-	legendary: "shadow-amber-500/30",
-};
 
 export function Achievements({ achievements }: AchievementsProps) {
 	const earnedCount = achievements.filter((a) => a.earnedAt).length;

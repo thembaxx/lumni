@@ -1,5 +1,10 @@
 import { getAI } from "@/lib/ai";
 import type { AIResponse } from "@/lib/ai/types";
+import {
+	ensureArray,
+	getTextResponse,
+	parseAIResponse,
+} from "../parse-response";
 import { PromptManager } from "../prompt-manager";
 import type {
 	GenerationParams,
@@ -9,6 +14,7 @@ import type {
 	UserAnswer,
 	ValidationResult,
 } from "../types";
+import { validateShortAnswer } from "../validators";
 
 export class ShortAnswerProcessor implements QuestionProcessor<"short-answer"> {
 	readonly type = "short-answer" as const;
@@ -23,12 +29,9 @@ export class ShortAnswerProcessor implements QuestionProcessor<"short-answer"> {
 			prompt.user,
 			{ temperature: 0.7, maxTokens: 4096 },
 		);
-		if ("available" in result && !result.available)
-			throw new Error("AI generation failed");
-		const parsed = JSON.parse(
-			this.cleanResponse((result as AIResponse).content),
-		) as Question<"short-answer">[];
-		return Array.isArray(parsed) ? parsed : [parsed];
+		const parsed = parseAIResponse<Question<"short-answer">[]>(result, []);
+		if (!parsed) throw new Error("AI generation failed");
+		return ensureArray(parsed.data);
 	}
 
 	async generateHint(question: Question<"short-answer">): Promise<string> {
@@ -39,8 +42,7 @@ export class ShortAnswerProcessor implements QuestionProcessor<"short-answer"> {
 			`${prompt.user}\n\n${ctx}`,
 			{ temperature: 0.5, maxTokens: 256 },
 		);
-		if ("available" in result && !result.available) return question.hint;
-		return this.cleanResponse((result as AIResponse).content);
+		return getTextResponse(result) ?? question.hint;
 	}
 
 	async grade(
@@ -65,60 +67,33 @@ export class ShortAnswerProcessor implements QuestionProcessor<"short-answer"> {
 			{ temperature: 0.2, maxTokens: 512 },
 		);
 
-		if ("available" in result && !result.available) {
-			const exactMatch = question.body.acceptableAnswers.some(
-				(a) => a.toLowerCase().trim() === studentAnswer.toLowerCase().trim(),
-			);
+		const parsed = parseAIResponse<{
+			correct: boolean;
+			score?: number;
+			feedback?: string;
+		}>(result, { correct: false });
+
+		if (parsed) {
 			return {
-				correct: exactMatch,
-				score: exactMatch ? question.points : 0,
+				correct: parsed.data.correct,
+				score: parsed.data.correct ? question.points : 0,
 				maxScore: question.points,
-				feedback: exactMatch ? "Correct!" : "Incorrect.",
+				feedback: parsed.data.feedback ?? question.explanation,
 			};
 		}
 
-		try {
-			const grade = JSON.parse(
-				this.cleanResponse((result as AIResponse).content),
-			);
-			return {
-				correct: grade.correct,
-				score: grade.correct ? question.points : 0,
-				maxScore: question.points,
-				feedback: grade.feedback ?? question.explanation,
-			};
-		} catch {
-			return {
-				correct: false,
-				score: 0,
-				maxScore: question.points,
-				feedback: question.explanation,
-			};
-		}
-	}
-
-	validate(question: Question<"short-answer">): ValidationResult {
-		const errors = [];
-		if (!question.body.modelAnswer || question.body.modelAnswer.length < 3) {
-			errors.push({
-				type: "schema" as const,
-				field: "modelAnswer",
-				message: "Model answer required",
-				severity: "error" as const,
-			});
-		}
+		const exactMatch = question.body.acceptableAnswers.some(
+			(a) => a.toLowerCase().trim() === studentAnswer.toLowerCase().trim(),
+		);
 		return {
-			isValid: errors.length === 0,
-			errors,
-			warnings: [],
-			score: errors.length > 0 ? 0 : 100,
+			correct: exactMatch,
+			score: exactMatch ? question.points : 0,
+			maxScore: question.points,
+			feedback: exactMatch ? "Correct!" : "Incorrect.",
 		};
 	}
 
-	private cleanResponse(content: string): string {
-		return content
-			.replace(/```json/g, "")
-			.replace(/```/g, "")
-			.trim();
+	validate(question: Question<"short-answer">): ValidationResult {
+		return validateShortAnswer(question);
 	}
 }

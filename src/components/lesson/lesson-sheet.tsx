@@ -4,7 +4,8 @@ import { ArrowDown01FreeIcons } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import type { Variants } from "framer-motion";
-import { domAnimation, LazyMotion, m } from "framer-motion";
+import { m } from "framer-motion";
+import { Anim } from "@/components/shared/anim";
 import { Search } from "lucide-react";
 import { useState } from "react";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
@@ -60,7 +61,7 @@ export function LessonSheet() {
 				<Search className="h-4 w-4 text-[--system-accent]" />
 				<span>Lessons</span>
 			</SheetTrigger>
-			<LazyMotion features={domAnimation}>
+			<Anim>
 				<SheetContent
 					className="sm:max-w-135 w-full h-dvh px-4 rounded-t-none"
 					side="bottom"
@@ -150,7 +151,7 @@ export function LessonSheet() {
 						Close
 					</SheetClose>
 				</SheetContent>
-			</LazyMotion>
+			</Anim>
 		</Sheet>
 	);
 }

@@ -1,5 +1,6 @@
 import { getAI } from "@/lib/ai";
 import type { AIResponse } from "@/lib/ai/types";
+import { ensureArray, parseAIResponse } from "../parse-response";
 import { PromptManager } from "../prompt-manager";
 import type {
 	GenerationParams,
@@ -9,6 +10,7 @@ import type {
 	UserAnswer,
 	ValidationResult,
 } from "../types";
+import { validateCalculation } from "../validators";
 
 export class CalculationProcessor implements QuestionProcessor<"calculation"> {
 	readonly type = "calculation" as const;
@@ -21,12 +23,9 @@ export class CalculationProcessor implements QuestionProcessor<"calculation"> {
 			prompt.user,
 			{ temperature: 0.6, maxTokens: 4096 },
 		);
-		if ("available" in result && !result.available)
-			throw new Error("AI generation failed");
-		const parsed = JSON.parse(
-			this.cleanResponse((result as AIResponse).content),
-		) as Question<"calculation">[];
-		return Array.isArray(parsed) ? parsed : [parsed];
+		const parsed = parseAIResponse<Question<"calculation">[]>(result, []);
+		if (!parsed) throw new Error("AI generation failed");
+		return ensureArray(parsed.data);
 	}
 
 	async generateHint(question: Question<"calculation">): Promise<string> {
@@ -78,33 +77,6 @@ export class CalculationProcessor implements QuestionProcessor<"calculation"> {
 	}
 
 	validate(question: Question<"calculation">): ValidationResult {
-		const errors = [];
-		if (question.body.correctValue == null)
-			errors.push({
-				type: "schema" as const,
-				field: "correctValue",
-				message: "Correct value required",
-				severity: "error" as const,
-			});
-		if (!question.body.unit)
-			errors.push({
-				type: "schema" as const,
-				field: "unit",
-				message: "Unit required",
-				severity: "error" as const,
-			});
-		return {
-			isValid: errors.length === 0,
-			errors,
-			warnings: [],
-			score: errors.length > 0 ? 0 : 100,
-		};
-	}
-
-	private cleanResponse(content: string): string {
-		return content
-			.replace(/```json/g, "")
-			.replace(/```/g, "")
-			.trim();
+		return validateCalculation(question);
 	}
 }

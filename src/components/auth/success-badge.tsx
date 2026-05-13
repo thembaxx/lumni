@@ -1,4 +1,5 @@
-import { domAnimation, LazyMotion, m } from "framer-motion";
+import { m } from "framer-motion";
+import { Anim } from "@/components/shared/anim";
 import { Sparkles, Zap } from "lucide-react";
 import { startTransition, useCallback, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -17,7 +18,7 @@ export function SuccessBadge({ isAdmin }: { isAdmin: boolean }) {
 	if (!show) return null;
 
 	return (
-		<LazyMotion features={domAnimation}>
+		<Anim>
 			<m.div
 				className="absolute -top-1 -right-1"
 				initial={{ scale: 0, opacity: 0 }}
@@ -67,6 +68,6 @@ export function SuccessBadge({ isAdmin }: { isAdmin: boolean }) {
 					{isAdmin ? "Admin" : "Welcome"}
 				</span>
 			</m.div>
-		</LazyMotion>
+		</Anim>
 	);
 }

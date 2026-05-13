@@ -1,6 +1,7 @@
 "use client";
 
-import { domAnimation, LazyMotion, m } from "framer-motion";
+import { m } from "framer-motion";
+import { Anim } from "@/components/shared/anim";
 import {
 	Dialog,
 	DialogContent,
@@ -31,7 +32,7 @@ export function AnimatedDialogContent({
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange}>
 			<DialogTrigger>{children}</DialogTrigger>
-			<LazyMotion features={domAnimation}>
+			<Anim>
 				<DialogContent className="sm:max-w-md">
 					<m.div
 						initial={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -67,7 +68,7 @@ export function AnimatedDialogContent({
 						</m.div>
 					</m.div>
 				</DialogContent>
-			</LazyMotion>
+			</Anim>
 		</Dialog>
 	);
 }

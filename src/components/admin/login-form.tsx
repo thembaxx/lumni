@@ -1,6 +1,7 @@
 "use client";
 
-import { domAnimation, LazyMotion, m } from "framer-motion";
+import { m } from "framer-motion";
+import { Anim } from "@/components/shared/anim";
 import { Mail, MessageSquare } from "lucide-react";
 import { startTransition, useState } from "react";
 import { MagicLinkDialog } from "@/components/admin/login-dialogs";
@@ -32,7 +33,7 @@ export function LoginForm({ onSuccess }: { onSuccess: () => void }) {
 	return (
 		<>
 			<div className="min-h-screen flex items-center justify-center p-4 bg-background -webkit-font-smoothing antialiased">
-				<LazyMotion features={domAnimation}>
+				<Anim>
 					<div className="w-full max-w-sm space-y-6">
 						<m.div
 							initial={{ opacity: 0, y: -12 }}
@@ -111,7 +112,7 @@ export function LoginForm({ onSuccess }: { onSuccess: () => void }) {
 							</p>
 						</m.div>
 					</div>
-				</LazyMotion>
+				</Anim>
 			</div>
 
 			<MagicLinkDialog

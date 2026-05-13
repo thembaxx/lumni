@@ -1,6 +1,7 @@
 "use client";
 
-import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
+import { Anim } from "@/components/shared/anim";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ProgressDots } from "@/components/shared/progress-dots";
 import { Card } from "@/components/ui/card";
@@ -171,7 +172,7 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 
 	if (isComplete) {
 		return (
-			<LazyMotion features={domAnimation}>
+			<Anim>
 				<AnimatePresence mode="wait" initial={false}>
 					<m.div
 						key="results"
@@ -196,14 +197,14 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 						/>
 					</m.div>
 				</AnimatePresence>
-			</LazyMotion>
+			</Anim>
 		);
 	}
 
 	if (!currentQuestion) return null;
 
 	return (
-		<LazyMotion features={domAnimation}>
+		<Anim>
 			<div className="space-y-4">
 				<AssessmentHeader
 					title={subjectId}
@@ -255,6 +256,6 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 					variant="engine"
 				/>
 			</div>
-		</LazyMotion>
+		</Anim>
 	);
 }
