@@ -150,7 +150,7 @@ export function BottomNav() {
 	return (
 		<>
 			<LazyMotion features={domAnimation}>
-				<nav className="fixed bottom-0 left-0 right-0 z-50 h-[64px] bg-system-background/95 backdrop-blur-md border-t border-border/40 md:hidden pb-safe">
+				<nav className="fixed bottom-0 left-0 right-0 z-50 h-16 bg-system-background/95 backdrop-blur-md border-t border-border/40 md:hidden pb-safe">
 					<div
 						ref={listRef}
 						className="relative flex w-full h-full items-center px-1.5"

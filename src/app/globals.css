@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import 'tailwind-scrollbar-hide/v4';
+@import "tailwind-scrollbar-hide/v4";
 @import "katex/dist/katex.min.css";
 
 @custom-variant dark (&:is(.dark *));
@@ -13,27 +13,29 @@
 :root {
 	/* Core Color Tokens — Playful & Energetic */
 	--system-background: oklch(100% 0 0);
-	--system-grouped-background: oklch(98% 0.005 264°);
+	--system-grouped-background: oklch(98% 0.005 264);
 	--system-surface: oklch(100% 0 0);
-	--system-surface-secondary: oklch(96.7% 0.01 264°);
+	--system-surface-secondary: oklch(96.7% 0.01 264);
 	--system-separator: oklch(0% 0 0 / 0.08);
 	
 	/* Energetic Accents */
-	--system-accent: oklch(55% 0.18 264°); /* Vibrant Purple */
-	--system-accent-secondary: oklch(75% 0.15 85°); /* South African Gold/Yellow hint */
+	--system-accent: oklch(55% 0.18 264); /* Vibrant Purple */
+	--system-accent-secondary: oklch(75% 0.15 85); /* South African Gold/Yellow hint */
 	
-	--system-text-primary: oklch(20% 0.02 264°);
-	--system-text-secondary: oklch(20% 0.02 264° / 0.65);
-	--system-text-tertiary: oklch(20% 0.02 264° / 0.35);
+	--system-text-primary: oklch(20% 0.02 264);
+	--system-text-secondary: oklch(20% 0.02 264 / 0.65);
+	--system-text-tertiary: oklch(20% 0.02 264 / 0.35);
 	
-	--system-destructive: oklch(55% 0.18 25°);
+	--system-destructive: oklch(55% 0.18 25);
 	--system-destructive-foreground: oklch(100% 0 0);
-	--system-success: oklch(65% 0.2 145°);
+	--system-success: oklch(65% 0.2 145);
 
 	/* Semantic aliases */
 	--success: var(--system-success);
-	--warning: oklch(75% 0.15 70°);
-	--info: oklch(60% 0.15 240°);
+	--success-foreground: oklch(100% 0 0);
+	--warning: oklch(75% 0.15 70);
+	--warning-foreground: oklch(100% 0 0);
+	--info: oklch(60% 0.15 240);
 
 	/* Blur & Material */
 	--system-blur: 20px;
@@ -62,8 +64,8 @@
 
 	/* Shadows */
 	--shadow-level-1: 0 1px 3px oklch(0% 0 0 / 0.04);
-	--shadow-level-2: 0 8px 24px oklch(264° 0.05 20% / 0.06), 0 2px 6px oklch(0% 0 0 / 0.04);
-	--shadow-level-3: 0 16px 48px oklch(264° 0.05 20% / 0.1), 0 4px 12px oklch(0% 0 0 / 0.04);
+	--shadow-level-2: 0 8px 24px oklch(20% 0.05 264 / 0.06), 0 2px 6px oklch(0% 0 0 / 0.04);
+	--shadow-level-3: 0 16px 48px oklch(20% 0.05 264 / 0.1), 0 4px 12px oklch(0% 0 0 / 0.04);
 
 	/* Typography Scale (rem-based) */
 	--fs-large-title: 2.125rem;  /* 34px */
@@ -80,7 +82,7 @@
 
 	/* Animation Timing */
 	--ease-ios: cubic-bezier(0.16, 1, 0.3, 1);
-	--ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+	--duration-slow: 300ms;
 
 	/* Shadcn Compat */
 	--background: var(--system-background);
@@ -105,21 +107,21 @@
 	--radius: 12px;
 
 	/* Color Alpha Variations */
-	--system-accent-alpha-0: oklch(55% 0.18 264° / 0);
-	--system-accent-alpha-10: oklch(55% 0.18 264° / 0.1);
-	--system-accent-alpha-20: oklch(55% 0.18 264° / 0.2);
-	--system-accent-alpha-30: oklch(55% 0.18 264° / 0.3);
+	--system-accent-alpha-0: oklch(55% 0.18 264 / 0);
+	--system-accent-alpha-10: oklch(55% 0.18 264 / 0.1);
+	--system-accent-alpha-20: oklch(55% 0.18 264 / 0.2);
+	--system-accent-alpha-30: oklch(55% 0.18 264 / 0.3);
 	
-	--system-success-alpha-20: oklch(65% 0.2 145° / 0.2);
-	--system-destructive-alpha-20: oklch(55% 0.18 25° / 0.2);
+	--system-success-alpha-20: oklch(65% 0.2 145 / 0.2);
+	--system-destructive-alpha-20: oklch(55% 0.18 25 / 0.2);
 
-	--chart-1: oklch(65% 0.2 145°);
-	--chart-2: oklch(55% 0.18 264°);
-	--chart-3: oklch(75% 0.15 85°);
-	--chart-4: oklch(60% 0.15 240°);
-	--chart-5: oklch(55% 0.18 25°);
+	--chart-1: oklch(65% 0.2 145);
+	--chart-2: oklch(55% 0.18 264);
+	--chart-3: oklch(75% 0.15 85);
+	--chart-4: oklch(60% 0.15 240);
+	--chart-5: oklch(55% 0.18 25);
 
-	--sidebar: oklch(98% 0.005 264°);
+	--sidebar: oklch(98% 0.005 264);
 	--sidebar-foreground: var(--system-text-primary);
 	--sidebar-primary: var(--system-accent);
 	--sidebar-primary-foreground: oklch(100% 0 0);
@@ -151,7 +153,9 @@
 	--color-input: var(--input);
 	--color-ring: var(--ring);
 	--color-success: var(--success);
+	--color-success-foreground: var(--success-foreground);
 	--color-warning: var(--warning);
+	--color-warning-foreground: var(--warning-foreground);
 	--color-info: var(--info);
 
 	/* Custom System Colors */
@@ -161,6 +165,11 @@
 	--color-system-surface-secondary: var(--system-surface-secondary);
 	--color-system-accent: var(--system-accent);
 	--color-system-accent-secondary: var(--system-accent-secondary);
+
+	/* Shadows */
+	--shadow-level-1: var(--shadow-level-1);
+	--shadow-level-2: var(--shadow-level-2);
+	--shadow-level-3: var(--shadow-level-3);
 
 	/* Radii */
 	--radius-sm: var(--radius-badge);
@@ -198,18 +207,18 @@
 
 /* Dark mode */
 .dark {
-	--system-background: oklch(12% 0.01 264°);
-	--system-grouped-background: oklch(8% 0.01 264°);
-	--system-surface: oklch(16% 0.015 264°);
-	--system-surface-secondary: oklch(20% 0.02 264°);
+	--system-background: oklch(12% 0.01 264);
+	--system-grouped-background: oklch(8% 0.01 264);
+	--system-surface: oklch(16% 0.015 264);
+	--system-surface-secondary: oklch(20% 0.02 264);
 	--system-separator: oklch(100% 0 0 / 0.12);
 	
-	--system-accent: oklch(65% 0.18 264°);
-	--system-text-primary: oklch(98% 0.01 264°);
-	--system-text-secondary: oklch(98% 0.01 264° / 0.65);
-	--system-text-tertiary: oklch(98% 0.01 264° / 0.35);
+	--system-accent: oklch(65% 0.18 264);
+	--system-text-primary: oklch(98% 0.01 264);
+	--system-text-secondary: oklch(98% 0.01 264 / 0.65);
+	--system-text-tertiary: oklch(98% 0.01 264 / 0.35);
 
-	--system-material-light: oklch(16% 0.015 264° / 0.85);
+	--system-material-light: oklch(16% 0.015 264 / 0.85);
 
 	--shadow-level-1: 0 1px 3px oklch(0% 0 0 / 0.2);
 	--shadow-level-2: 0 8px 24px oklch(0% 0 0 / 0.3), 0 2px 6px oklch(0% 0 0 / 0.2);
@@ -223,18 +232,50 @@
 	--popover: var(--system-surface);
 	--popover-foreground: var(--system-text-primary);
 	--primary: var(--system-accent);
-	--primary-foreground: oklch(10% 0.01 264°);
+	--primary-foreground: oklch(10% 0.01 264);
 	--secondary: var(--system-surface-secondary);
 	--secondary-foreground: var(--system-text-primary);
 	--muted: var(--system-surface-secondary);
 	--muted-foreground: var(--system-text-secondary);
 	--accent: var(--system-surface-secondary);
 	--accent-foreground: var(--system-accent);
-	--destructive: oklch(60% 0.2 25°);
+	--destructive: oklch(60% 0.2 25);
 	--destructive-foreground: oklch(100% 0 0);
 	--border: var(--system-separator);
 	--input: var(--system-separator);
 	--ring: var(--system-accent);
+
+	/* Dark mode overrides for remaining tokens */
+	--system-accent-secondary: oklch(75% 0.15 85);
+
+	--success: oklch(65% 0.2 145);
+	--success-foreground: oklch(10% 0.01 264);
+	--warning: oklch(80% 0.15 70);
+	--warning-foreground: oklch(10% 0.01 264);
+	--info: oklch(65% 0.15 240);
+
+	--system-accent-alpha-0: oklch(65% 0.18 264 / 0);
+	--system-accent-alpha-10: oklch(65% 0.18 264 / 0.1);
+	--system-accent-alpha-20: oklch(65% 0.18 264 / 0.2);
+	--system-accent-alpha-30: oklch(65% 0.18 264 / 0.3);
+
+	--system-success-alpha-20: oklch(70% 0.2 145 / 0.2);
+	--system-destructive-alpha-20: oklch(60% 0.2 25 / 0.2);
+
+	--chart-1: oklch(70% 0.2 145);
+	--chart-2: oklch(65% 0.18 264);
+	--chart-3: oklch(80% 0.15 85);
+	--chart-4: oklch(65% 0.15 240);
+	--chart-5: oklch(60% 0.2 25);
+
+	--sidebar: oklch(20% 0.02 264);
+	--sidebar-foreground: oklch(98% 0.01 264);
+	--sidebar-primary: oklch(65% 0.18 264);
+	--sidebar-primary-foreground: oklch(10% 0.01 264);
+	--sidebar-accent: oklch(20% 0.02 264);
+	--sidebar-accent-foreground: oklch(65% 0.18 264);
+	--sidebar-border: oklch(100% 0 0 / 0.12);
+	--sidebar-ring: oklch(65% 0.18 264);
 }
 
 /* ========================================
@@ -305,8 +346,8 @@
 .ios-caption-1 { font-size: var(--fs-caption-1); font-weight: 400; line-height: 1.3; letter-spacing: 0.005em; }
 .ios-caption-2 { font-size: var(--fs-caption-2); font-weight: 400; line-height: 1.2; letter-spacing: 0.005em; }
 
-.pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); }
-.pt-safe { padding-top: env(safe-area-inset-top, 0px); }
+.pb-safe { padding-bottom: var(--spacing-safe-pb); }
+.pt-safe { padding-top: var(--spacing-safe-pt); }
 
 /* ========================================
    ANIMATION KEYFRAMES & UTILITIES

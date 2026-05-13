@@ -56,7 +56,7 @@ export function StudyTopicCard({
 		return (
 			<Card
 				className={cn(
-					"p-6 rounded-2xl border bg-card text-card-foreground shadow-sm",
+					"p-6 rounded-2xl border bg-card text-card-foreground",
 					className,
 				)}
 			>
@@ -163,7 +163,7 @@ export function StudyTopicCard({
 							className={cn(
 								"h-8 px-3 text-xs rounded-lg",
 								"active:scale-[0.96] transition-transform",
-								"transition-colors duration-150 ease-out-quart",
+								"transition-colors duration-150 ease-[var(--ease-ios)]",
 							)}
 							aria-label="Get new topic"
 						>

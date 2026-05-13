@@ -1,6 +1,6 @@
 "use client";
 
-import { Cancel01Icon, More01Icon } from "@hugeicons/core-free-icons";
+import { Cancel01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -19,23 +19,27 @@ import StatsTab from "./stats-tab";
 
 interface PracticeSheetProps {
 	open: boolean;
+	children?: React.ReactNode;
 	onOpenChange: (open: boolean) => void;
 }
 
-export function PracticeSheet({ open, onOpenChange }: PracticeSheetProps) {
+export function PracticeSheet({
+	open,
+	onOpenChange,
+	children,
+}: PracticeSheetProps) {
 	const [showQuizHeader, setShowQuizHeader] = useState(true);
 
 	return (
 		<Sheet open={open} onOpenChange={onOpenChange}>
-			<SheetTrigger
-				className="rounded-lg h-10 w-10 flex items-center justify-center bg-system-surface shadow-sm border border-border/40 text-foreground hover:bg-secondary transition-all active:scale-[0.95]"
-				aria-label="Open practice sheet"
-			>
-				<HugeiconsIcon
-					icon={More01Icon}
-					className="w-4 h-4 text-system-accent"
-				/>
-			</SheetTrigger>
+			{children && (
+				<SheetTrigger
+					className="rounded-lg h-10 w-10 flex items-center justify-center bg-system-surface shadow-sm border border-border/40 text-foreground hover:bg-secondary transition-all active:scale-[0.95]"
+					aria-label="Open practice sheet"
+				>
+					{children}
+				</SheetTrigger>
+			)}
 			<SheetContent
 				side="bottom"
 				className="min-h-[95dvh] h-full flex flex-col max-h-[95dvh] w-full mt-0 rounded-t-3xl! bg-system-grouped/95 backdrop-blur-xl border-t border-border/20 animate-fade-in-scale"

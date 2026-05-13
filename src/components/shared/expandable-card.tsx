@@ -46,7 +46,7 @@ function HighlightedText({
 				<span
 					key={`${currentWordIndex}-${index}`}
 					className={cn(
-						"transition-colors duration-150 ease-out-quart",
+						"transition-colors duration-150 ease-[var(--ease-ios)]",
 						index === currentWordIndex &&
 							"text-foreground font-medium bg-[--system-accent]/10 rounded px-0.5 -mx-0.5",
 					)}

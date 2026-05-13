@@ -122,7 +122,7 @@ function SettingsContent() {
 		<div className="min-h-screen bg-system-grouped flex flex-col antialiased">
 			<div className="mx-auto w-full max-w-md flex flex-col flex-1">
 				{/* Refined Header */}
-				<header className="sticky top-0 z-30 bg-system-grouped/90 backdrop-blur-xl px-6 pt-safe pb-4">
+				<header className="sticky top-0 z-30 bg-system-grouped/90 backdrop-blur-xl px-6 pt-6 pb-4">
 					<div className="flex items-center justify-between h-14">
 						<div className="flex items-center gap-4">
 							<Link
@@ -150,7 +150,7 @@ function SettingsContent() {
 				{/* Tabs Navigation - Elevated Horizontal Scroll */}
 				<nav className="sticky top-[calc(var(--spacing-safe-pt)+56px)] z-20 bg-system-grouped/90 backdrop-blur-xl px-6 py-2 border-b border-border/5">
 					<div
-						className="flex gap-2 overflow-x-auto scrollbar-hide py-1 -mx-2 px-2"
+						className="flex gap-0 overflow-x-auto scrollbar-hide py-1 -mx-2 px-2"
 						role="tablist"
 					>
 						{tabs.map((tab) => {
@@ -165,17 +165,13 @@ function SettingsContent() {
 										relative flex items-center gap-2 px-4 py-2.5 rounded-full whitespace-nowrap transition-all duration-300 active:scale-[0.96]
 										${
 											isActive
-												? "bg-system-surface text-system-accent shadow-level-1 border border-border/10"
+												? "bg-system-surface text-system-accent shadow-level-1 border border-border/30"
 												: "text-[--system-text-secondary] hover:text-foreground hover:bg-system-surface/50"
 										}
 									`}
 								>
-									<HugeiconsIcon
-										icon={tab.icon}
-										className={`size-4.5 transition-transform duration-300 ${isActive ? "scale-110" : ""}`}
-									/>
 									<span
-										className={`text-[length:var(--fs-footnote)] font-bold ${isActive ? "opacity-100" : "opacity-80"}`}
+										className={`text-(length:--fs-footnote) font-bold ${isActive ? "opacity-100" : "opacity-80"}`}
 									>
 										{tab.label}
 									</span>

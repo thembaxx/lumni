@@ -34,7 +34,7 @@ export function StudyTab({ studyPrefs, onStudyPrefsChange }: StudyTabProps) {
 								})
 							}
 						>
-							<SelectTrigger className="w-[100px] h-9 border-none bg-secondary/50 focus:ring-0">
+							<SelectTrigger className="w-25 h-9 border-none bg-secondary/50 focus:ring-0">
 								<SelectValue />
 							</SelectTrigger>
 							<SelectContent>
