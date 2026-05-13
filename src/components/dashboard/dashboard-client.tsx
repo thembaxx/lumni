@@ -3,13 +3,12 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useState } from "react";
 import { CountdownHeader } from "@/components/dashboard/countdown-header";
+import { DailyProgressRing } from "@/components/dashboard/daily-progress-ring";
 import { QuickActions } from "@/components/dashboard/quick-actions/quick-actions";
 import { StatsCards } from "@/components/dashboard/stats-cards";
 import { TodayFocusCard } from "@/components/dashboard/today-focus-card";
-import { XpLevelCard } from "@/components/gamification";
 import { useGamification } from "@/hooks/use-gamification";
 import { iOSEase } from "@/lib/utils/animation";
-import StudyTopicCardExample from "../study/example";
 import type { TabValue } from "./types";
 
 export function DashboardClient({
@@ -19,12 +18,10 @@ export function DashboardClient({
 }) {
 	const [_activeTab] = useState<TabValue>(initialTab || "ai");
 	const [_practiceOpen, setPracticeOpen] = useState(false);
-	const { levelInfo, isLoaded, gamification, currentStreak } =
-		useGamification();
+	const { isLoaded, gamification } = useGamification();
 	const shouldReduceMotion = useReducedMotion();
 
 	const stats = {
-		streak: currentStreak,
 		questionsAnswered:
 			gamification.totalXp > 0 ? Math.floor(gamification.totalXp / 25) : 0,
 		accuracy: 0,
@@ -74,17 +71,13 @@ export function DashboardClient({
 						<CountdownHeader />
 
 						<motion.div {...sectionProps(0.1)}>
-							<StatsCards
-								streak={stats.streak}
-								questionsAnswered={stats.questionsAnswered}
-								accuracy={stats.accuracy}
-							/>
+							<DailyProgressRing />
 						</motion.div>
 
 						<motion.div {...sectionProps(0.15)}>
-							<XpLevelCard
-								levelInfo={levelInfo}
-								totalXp={gamification.totalXp}
+							<StatsCards
+								questionsAnswered={stats.questionsAnswered}
+								accuracy={stats.accuracy}
 							/>
 						</motion.div>
 
@@ -92,12 +85,8 @@ export function DashboardClient({
 							<TodayFocusCard />
 						</motion.div>
 
-						<motion.div {...sectionProps(0.25)}>
-							<StudyTopicCardExample />
-						</motion.div>
-
 						<motion.div
-							{...sectionProps(0.3)}
+							{...sectionProps(0.25)}
 							className="w-full overflow-x-auto scrollbar-hide"
 						>
 							<QuickActions onPracticeClick={() => setPracticeOpen(true)} />

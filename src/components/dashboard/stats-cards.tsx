@@ -1,6 +1,6 @@
 "use client";
 
-import { IconFlame, IconTarget, IconTrendingUp } from "@tabler/icons-react";
+import { IconTarget, IconTrendingUp } from "@tabler/icons-react";
 import {
 	motion,
 	useMotionValue,
@@ -11,10 +11,9 @@ import {
 import { useEffect } from "react";
 import { type LottieAnimationName, LottieWrapper } from "@/components/lottie";
 import { Card } from "@/components/ui/card";
-import { easeOutQuint, iOSEase } from "@/lib/utils/animation";
+import { iOSEase } from "@/lib/utils/animation";
 
 interface StatsCardsProps {
-	streak: number;
 	questionsAnswered: number;
 	accuracy: number;
 }
@@ -28,21 +27,6 @@ interface StatItemProps {
 	accentClass: string;
 	index: number;
 }
-
-const streakMilestones = [3, 7, 14, 30] as const;
-const milestoneMessages: Record<number, string> = {
-	3: "Getting hot",
-	7: "Week warrior",
-	14: "Unstoppable",
-	30: "Legendary",
-};
-
-function isStreakMilestone(streak: number): boolean {
-	return (
-		streak >= 3 && (streakMilestones as readonly number[]).includes(streak)
-	);
-}
-
 function AnimatedNumber({
 	value,
 	shouldReduceMotion,
@@ -91,7 +75,7 @@ function StatCard({
 		>
 			<Card className="relative p-5 flex flex-col h-full items-center justify-start gap-3 cursor-default border shadow-sm border-border/80 hover:border-border/80 transition-colors">
 				<div className="relative flex items-center justify-center w-10 h-10 rounded-full bg-system-surface shadow-level-1">
-					{animation  ? (
+					{animation ? (
 						<LottieWrapper animation={animation} className="w-5 h-5" loop />
 					) : (
 						<Icon className={`w-5 h-5 ${colorClass}`} />
@@ -114,74 +98,27 @@ function StatCard({
 	);
 }
 
-export function StatsCards({
-	streak,
-	questionsAnswered,
-	accuracy,
-}: StatsCardsProps) {
-	const hasStreak = streak > 0;
-	const showMilestone = isStreakMilestone(streak);
-	const milestoneMsg = milestoneMessages[streak] ?? null;
-
+export function StatsCards({ questionsAnswered, accuracy }: StatsCardsProps) {
 	return (
-		<div className="relative">
-			{showMilestone && (
-				<motion.div
-					initial={{ opacity: 0, x: -8, scale: 0.9 }}
-					animate={{ opacity: 1, x: 0, scale: 1 }}
-					transition={{ duration: 0.4, ease: iOSEase }}
-					className="absolute -top-5 left-0 flex items-center gap-1.5"
-				>
-					<LottieWrapper
-						animation="confetti"
-						className="w-6 h-6 -ml-1 pointer-events-none"
-					/>
-					<motion.span
-						animate={{ scale: [1, 1.15, 1] }}
-						transition={{
-							duration: 0.5,
-							ease: easeOutQuint,
-							delay: 0.2,
-						}}
-						className="text-warning text-sm"
-					>
-						🔥
-					</motion.span>
-					<span className="text-[12px] font-bold text-warning tracking-tight">
-						{milestoneMsg}
-					</span>
-				</motion.div>
-			)}
-
-			<div className="grid grid-cols-3 gap-2 sm:gap-3">
-				<StatCard
-					label="Streak"
-					value={streak}
-					icon={IconFlame}
-					animation={hasStreak ? "streak-fire" : undefined}
-					colorClass={hasStreak ? "text-warning" : "text-muted-foreground"}
-					accentClass={hasStreak ? "bg-warning" : "bg-border"}
-					index={0}
-				/>
-				<StatCard
-					label="Answered"
-					value={questionsAnswered}
-					icon={IconTarget}
-					animation="loading-dots"
-					colorClass="text-info"
-					accentClass="bg-info"
-					index={1}
-				/>
-				<StatCard
-					label="Accuracy"
-					value={accuracy}
-					icon={IconTrendingUp}
-					animation="success-check"
-					colorClass="text-success"
-					accentClass="bg-success"
-					index={2}
-				/>
-			</div>
+		<div className="grid grid-cols-2 gap-2 sm:gap-3">
+			<StatCard
+				label="Answered"
+				value={questionsAnswered}
+				icon={IconTarget}
+				animation="loading-dots"
+				colorClass="text-info"
+				accentClass="bg-info"
+				index={0}
+			/>
+			<StatCard
+				label="Accuracy"
+				value={accuracy}
+				icon={IconTrendingUp}
+				animation="success-check"
+				colorClass="text-success"
+				accentClass="bg-success"
+				index={1}
+			/>
 		</div>
 	);
 }

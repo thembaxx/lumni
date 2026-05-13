@@ -305,7 +305,7 @@ export function CountdownHeader() {
 									{daysLeft === 1 ? "day" : "days"}
 								</p>
 								<p className="text-[12px] font-bold text-muted-foreground tabular-nums">
-									 until finals
+									until finals
 								</p>
 							</div>
 						)}

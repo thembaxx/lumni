@@ -33,6 +33,8 @@ export const LOTTIE_ANIMATIONS = {
 
 export type LottieAnimationName = keyof typeof LOTTIE_ANIMATIONS;
 
-export function loadAnimationData(name: LottieAnimationName): Promise<Record<string, unknown>> {
+export function loadAnimationData(
+	name: LottieAnimationName,
+): Promise<Record<string, unknown>> {
 	return LOTTIE_ANIMATIONS[name]();
 }

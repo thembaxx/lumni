@@ -72,7 +72,7 @@ function NavItemComponent({
 			)}
 		>
 			<m.span
-				className="flex items-center justify-center relative"
+				className="flex items-center justify-center relative text-muted-foreground"
 				animate={isActive ? { scale: 1.1, y: -2 } : { scale: 0.9, y: 0 }}
 				transition={{ type: "spring", stiffness: 400, damping: 25, mass: 0.5 }}
 			>
@@ -80,14 +80,14 @@ function NavItemComponent({
 					icon={item.icon}
 					className={cn(
 						"size-6",
-						isActive ? "text-system-accent opacity-100" : "opacity-40",
+						isActive ? "text-system-accent opacity-100" : " opacity-50",
 					)}
 				/>
 			</m.span>
 			<span
 				className={cn(
-					"text-[10px] font-black tracking-tight uppercase transition-all duration-300",
-					isActive ? "opacity-100 translate-y-0" : "opacity-40 translate-y-0.5",
+					"text-[10px] font-black tracking-tight text-muted-foreground uppercase transition-all duration-300",
+					isActive ? "opacity-100 translate-y-0" : "opacity-60 translate-y-0.5",
 				)}
 			>
 				{item.label}

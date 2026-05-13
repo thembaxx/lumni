@@ -1,4 +1,5 @@
 export { CountdownHeader } from "./countdown-header";
+export { DailyProgressRing } from "./daily-progress-ring";
 export { DashboardClient } from "./dashboard-client";
 export { SubjectsDrawer } from "./drawers/subjects-drawer";
 export { DashboardHeader } from "./layout/header";

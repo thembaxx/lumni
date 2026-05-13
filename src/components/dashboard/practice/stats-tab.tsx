@@ -58,6 +58,7 @@ export default function StatsTab() {
 
 	async function handleSubjectToggle(newSelection: string[]) {
 		const added = newSelection.find((id) => !selectedSubjects.includes(id));
+
 		const removed = selectedSubjects.find((id) => !newSelection.includes(id));
 
 		if (added) {
@@ -216,7 +217,6 @@ export default function StatsTab() {
 				milestones={gamification.streakMilestones}
 			/>
 			<StatsCards
-				streak={progress.streak}
 				questionsAnswered={progress.questionsAnswered}
 				accuracy={progress.accuracy}
 			/>

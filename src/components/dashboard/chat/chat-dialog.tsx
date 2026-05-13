@@ -71,7 +71,10 @@ export function ChatDialog({ open, onOpenChange }: ChatDialogProps) {
 			modal={true}
 			disablePointerDismissal={false}
 		>
-			<DialogContent showCloseButton={false} className="flex flex-col translate-x-0 translate-y-0 w-full h-full max-w-none rounded-none p-0 m-0 top-0 left-0 bg-background/95 backdrop-blur-xl border-0 gap-0">
+			<DialogContent
+				showCloseButton={false}
+				className="flex flex-col translate-x-0 translate-y-0 w-full h-full max-w-none rounded-none p-0 m-0 top-0 left-0 bg-background/95 backdrop-blur-xl border-0 gap-0"
+			>
 				<div className="pl-4 pr-5 py-4 border-b border-border/30 flex flex-row items-center justify-between shrink-0">
 					<div className="flex items-center gap-1">
 						<div className="size-9 rounded-full bg-system-accent/10 flex items-center grow justify-center">

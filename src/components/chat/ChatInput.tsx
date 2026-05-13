@@ -206,7 +206,10 @@ export function ChatInput({
 						>
 							<HugeiconsIcon
 								icon={SentIcon}
-								className={cn("w-4.5 h-4.5 text-muted-foreground toolbutton-icon", voicePressed && "scale-110")}
+								className={cn(
+									"w-4.5 h-4.5 text-muted-foreground toolbutton-icon",
+									voicePressed && "scale-110",
+								)}
 							/>
 						</Button>
 					</div>
