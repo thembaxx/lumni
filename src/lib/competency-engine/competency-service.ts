@@ -60,6 +60,8 @@ export class CompetencyService {
 				topicId,
 				bloomLevel,
 				score: newScore,
+				attempts: newAttempts,
+				lastAssessed: now,
 				level,
 			}).catch(() => {});
 		} catch {

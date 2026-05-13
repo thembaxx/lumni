@@ -1,6 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
+import { competencyService, pathEngine } from "@/lib/competency-engine";
 import type { TopicRecommendation } from "@/lib/competency-engine/path-engine";
 
 export function useNextTopics(subjectId: string | undefined) {
@@ -17,14 +18,16 @@ export function useNextTopics(subjectId: string | undefined) {
 				averageScore: number;
 			};
 		}> => {
-			const response = await fetch(
-				`/api/engine/next-topics?subject=${encodeURIComponent(subjectId!)}`,
+			const records = await competencyService.getCompetencies(subjectId!);
+			const competencyMap = new Map(
+				records.map((c) => [`${c.subjectId}:${c.topicId}:${c.bloomLevel}`, c]),
 			);
-			if (!response.ok) {
-				const error = await response.json();
-				throw new Error(error.error || "Failed to fetch next topics");
-			}
-			return response.json();
+			const recommendations = await pathEngine.getNextTopics(
+				subjectId!,
+				competencyMap,
+			);
+			const summary = await competencyService.getMasterySummary(subjectId!);
+			return { recommendations, summary };
 		},
 		enabled: !!subjectId,
 		staleTime: 1000 * 60 * 5,

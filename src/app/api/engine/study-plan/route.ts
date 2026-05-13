@@ -1,5 +1,8 @@
+import { Query } from "appwrite";
 import { NextRequest, NextResponse } from "next/server";
-import { competencyService, pathEngine } from "@/lib/competency-engine";
+import { pathEngine } from "@/lib/competency-engine";
+import type { CompetencyRecord } from "@/lib/competency-engine/types";
+import { COLLECTIONS, listDocuments } from "@/lib/db/client";
 
 export const dynamic = "force-dynamic";
 
@@ -25,16 +28,25 @@ export async function GET(req: NextRequest) {
 
 		const subjects = subjectsParam.split(",").map((s) => s.trim());
 
-		const allCompetencies: [
-			string,
-			import("@/lib/competency-engine").CompetencyRecord,
-		][] = [];
+		const allCompetencies: [string, CompetencyRecord][] = [];
 		for (const subject of subjects) {
-			const comps = await competencyService.getCompetencies(subject);
-			for (const c of comps) {
+			const docs = await listDocuments<Record<string, unknown>>(
+				COLLECTIONS.COMPETENCIES,
+				[Query.equal("subjectId", subject)],
+			);
+			for (const d of docs) {
+				const record: CompetencyRecord = {
+					subjectId: d.subjectId as string,
+					topicId: d.topicId as string,
+					bloomLevel: d.bloomLevel as CompetencyRecord["bloomLevel"],
+					score: d.score as number,
+					attempts: d.attempts as number,
+					lastAssessed: d.lastAssessed as number,
+					level: d.level as CompetencyRecord["level"],
+				};
 				allCompetencies.push([
-					`${c.subjectId}:${c.topicId}:${c.bloomLevel}`,
-					c,
+					`${record.subjectId}:${record.topicId}:${record.bloomLevel}`,
+					record,
 				]);
 			}
 		}
