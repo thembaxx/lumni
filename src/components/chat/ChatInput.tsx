@@ -112,7 +112,7 @@ export function ChatInput({
 						onFocus={() => setIsFocused(true)}
 						onBlur={() => setIsFocused(false)}
 						disabled={isLoading}
-						className="bg-transparent text-foreground placeholder:text-muted-foreground/50 text-sm outline-none font-bold border-0 shadow-none p-0 focus-visible:ring-0"
+						className="bg-transparent text-foreground placeholder:text-muted-foreground/50 text-sm outline-none border-0 shadow-none p-0 focus-visible:ring-0"
 					/>
 				</div>
 
@@ -179,7 +179,7 @@ export function ChatInput({
 							variant="ghost"
 							size="icon"
 							onClick={() => setVoiceDialogOpen(true)}
-							className="rounded-md bg-white dark:bg-muted/40 hover:bg-secondary size-10 shadow-sm border border-border/30"
+							className="rounded-md bg-white dark:bg-muted/40 hover:bg-secondary size-10 border border-border/40"
 							disabled={isLoading}
 						>
 							<HugeiconsIcon
@@ -188,7 +188,7 @@ export function ChatInput({
 							/>
 						</Button>
 						<Button
-							variant="default"
+							variant="ghost"
 							size="icon"
 							onClick={() => {
 								if (input.trim() && !isLoading) {
@@ -199,14 +199,14 @@ export function ChatInput({
 							}}
 							disabled={!input.trim() || isLoading}
 							className={cn(
-								"size-10 rounded-md bg-system-accent hover:bg-system-accent/90 shadow-level-2",
+								"size-10 rounded-md bg-system-accent hover:bg-system-accent/90 shadow-level-2 border border-border/40",
 								voicePressed && "scale-[0.95] brightness-90",
 							)}
 							aria-label="Send message"
 						>
 							<HugeiconsIcon
 								icon={SentIcon}
-								className={cn("w-4.5 h-4.5", voicePressed && "scale-110")}
+								className={cn("w-4.5 h-4.5 text-muted-foreground toolbutton-icon", voicePressed && "scale-110")}
 							/>
 						</Button>
 					</div>

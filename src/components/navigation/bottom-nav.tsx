@@ -80,7 +80,7 @@ function NavItemComponent({
 					icon={item.icon}
 					className={cn(
 						"size-6",
-						isActive ? "text-system-accent" : "text-muted-foreground/40",
+						isActive ? "text-system-accent opacity-100" : "opacity-40",
 					)}
 				/>
 			</m.span>

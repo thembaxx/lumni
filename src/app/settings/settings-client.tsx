@@ -149,7 +149,10 @@ function SettingsContent() {
 
 				{/* Tabs Navigation - Elevated Horizontal Scroll */}
 				<nav className="sticky top-[calc(var(--spacing-safe-pt)+56px)] z-20 bg-system-grouped/90 backdrop-blur-xl px-6 py-2 border-b border-border/5">
-					<div className="flex gap-2 overflow-x-auto scrollbar-hide py-1 -mx-2 px-2" role="tablist">
+					<div
+						className="flex gap-2 overflow-x-auto scrollbar-hide py-1 -mx-2 px-2"
+						role="tablist"
+					>
 						{tabs.map((tab) => {
 							const isActive = activeTab === tab.value;
 							return (

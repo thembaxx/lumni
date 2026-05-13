@@ -96,7 +96,7 @@ This moves all JSON files to separate chunks loaded only when their animation is
 ### Trade-off
 - **Pro:** Smaller initial bundle (saves ~400KB+).
 - **Con:** Brief flash while animation data loads on first render.
-- **Mitigation:** The `lottie-react` dynamic import already shows a placeholder div — the JSON load happens concurrently.
+- **Mitigation:** The `@lottiefiles/dotlottie-react` dynamic import already shows a placeholder div — the JSON load happens concurrently.
 
 ### Files Touched
 - `src/components/lottie/lottie-assets.ts`
@@ -121,6 +121,12 @@ This moves all JSON files to separate chunks loaded only when their animation is
 ## Dark Mode (already done)
 
 No changes needed. Custom `ThemeProvider`, CSS variable system with `.dark` overrides, flash prevention script, and `ThemeSwitcher` all exist and work.
+
+---
+
+## Dependencies
+
+Lottie animations use `@lottiefiles/dotlottie-react` (canvas-based). No `lottie-web` dependency or version pins are needed — the dotLottie player uses a self-contained WASM renderer that ships with the package.
 
 ---
 

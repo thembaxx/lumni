@@ -301,11 +301,11 @@ export function CountdownHeader() {
 						)}
 						{!isLoading && mounted && (
 							<div>
-								<p className="uppercase text-[10px] font-bold text-muted-foreground tracking-widest opacity-80">
-									Next exam
+								<p className="text-[12px] font-medium text-muted-foreground tabular-nums">
+									{daysLeft === 1 ? "day" : "days"}
 								</p>
 								<p className="text-[12px] font-bold text-muted-foreground tabular-nums">
-									{daysLeft === 1 ? "day" : "days"} until finals
+									 until finals
 								</p>
 							</div>
 						)}

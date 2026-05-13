@@ -91,7 +91,7 @@ function StatCard({
 		>
 			<Card className="relative p-5 flex flex-col h-full items-center justify-start gap-3 cursor-default border shadow-sm border-border/80 hover:border-border/80 transition-colors">
 				<div className="relative flex items-center justify-center w-10 h-10 rounded-full bg-system-surface shadow-level-1">
-					{animation && !shouldReduceMotion ? (
+					{animation  ? (
 						<LottieWrapper animation={animation} className="w-5 h-5" loop />
 					) : (
 						<Icon className={`w-5 h-5 ${colorClass}`} />

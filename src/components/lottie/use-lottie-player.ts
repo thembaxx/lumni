@@ -1,34 +1,34 @@
 "use client";
 
-import type { LottieRefCurrentProps } from "lottie-react";
+import type { DotLottie } from "@lottiefiles/dotlottie-react";
 import { useCallback, useRef, useState } from "react";
 
 export function useLottiePlayer() {
-	const lottieRef = useRef<LottieRefCurrentProps>(null);
+	const dotLottieRef = useRef<DotLottie | null>(null);
 	const [isPlaying, setIsPlaying] = useState(false);
 
 	const play = useCallback(() => {
-		lottieRef.current?.play();
+		dotLottieRef.current?.play();
 		setIsPlaying(true);
 	}, []);
 
 	const pause = useCallback(() => {
-		lottieRef.current?.pause();
+		dotLottieRef.current?.pause();
 		setIsPlaying(false);
 	}, []);
 
 	const stop = useCallback(() => {
-		lottieRef.current?.stop();
+		dotLottieRef.current?.stop();
 		setIsPlaying(false);
 	}, []);
 
 	const reset = useCallback(() => {
-		lottieRef.current?.stop();
+		dotLottieRef.current?.stop();
 		setIsPlaying(false);
 	}, []);
 
 	return {
-		lottieRef,
+		lottieRef: dotLottieRef,
 		play,
 		pause,
 		stop,
