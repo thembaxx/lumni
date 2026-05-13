@@ -49,7 +49,7 @@ function AnimatedNumber({
 		return <>{value}</>;
 	}
 
-	return <motion.span>{rounded}</motion.span>;
+	return <motion.span aria-live="polite">{rounded}</motion.span>;
 }
 
 function StatCard({

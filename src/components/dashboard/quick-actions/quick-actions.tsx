@@ -10,7 +10,6 @@ import { motion, useReducedMotion } from "framer-motion";
 import { StudyPlanSheet } from "@/components/dashboard/study-plan-sheet";
 import { LessonsButton } from "@/components/lesson";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import { iOSEase } from "@/lib/utils/animation";
 
 const quickActions = [

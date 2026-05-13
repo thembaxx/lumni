@@ -2,7 +2,6 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
-import Markdown from "react-markdown";
 import { useAppwriteSession } from "@/hooks/use-appwrite-session";
 import { cn } from "@/lib/utils";
 import { iOSEase } from "@/lib/utils/animation";

@@ -57,7 +57,7 @@ export function DailyProgressRing() {
 						strokeDasharray={C}
 						initial={shouldReduceMotion ? false : { strokeDashoffset: C }}
 						animate={{ strokeDashoffset: offset }}
-						transition={{ duration: 1, ease: iOSEase }}
+						transition={{ duration: 0.8, ease: iOSEase }}
 						className={isComplete ? "text-success" : "text-system-accent"}
 					/>
 				</svg>
