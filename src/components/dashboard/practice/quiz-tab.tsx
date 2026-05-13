@@ -1,10 +1,10 @@
 "use client";
 
-import { ArrowDown01Icon, Play, Square } from "@hugeicons/core-free-icons";
+import { ArrowDown01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { Anim } from "@/components/shared/anim";
-import { Timer, Zap } from "lucide-react";
+import { PlayIcon, Square, Timer, Zap } from "lucide-react";
 import { useCallback, useState } from "react";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
 import {
@@ -207,7 +207,7 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 						onClick={handleStop}
 						className="size-11 rounded-full bg-destructive hover:bg-destructive/90"
 					>
-						<HugeiconsIcon icon={Square} className="size-4" />
+						<Square className="size-4" />
 					</Button>
 				) : (
 					<Button
@@ -221,7 +221,7 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 								: "bg-muted cursor-not-allowed",
 						)}
 					>
-						<HugeiconsIcon icon={Play} className="size-4 ml-0.5" />
+						<PlayIcon className="size-4 ml-0.5" />
 					</Button>
 				)}
 			</div>

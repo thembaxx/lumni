@@ -7,6 +7,7 @@ import { extractRouterConfig } from "uploadthing/server";
 import "./globals.css";
 import { PageTransition } from "@/components/layout/page-transition";
 import { BottomNav } from "@/components/navigation/bottom-nav";
+import { DesktopSidebar } from "@/components/navigation/desktop-sidebar";
 import { Providers } from "@/components/providers";
 import { FloatingToolsButton } from "@/components/tools";
 import { UploadDialogRenderer } from "@/components/upload/upload-dialog-renderer";
@@ -62,6 +63,10 @@ export const viewport: Viewport = {
 	width: "device-width",
 	initialScale: 1,
 	maximumScale: 5,
+	themeColor: [
+		{ media: "(prefers-color-scheme: light)", color: "#fcfaf5" },
+		{ media: "(prefers-color-scheme: dark)", color: "#14141f" },
+	],
 };
 
 export default function RootLayout({
@@ -94,7 +99,12 @@ export default function RootLayout({
 				<Providers>
 					<UploadDialogRenderer />
 					<FloatingToolsButton />
-					<PageTransition>{children}</PageTransition>
+					<div className="flex flex-1">
+						<DesktopSidebar />
+						<main className="flex-1 min-w-0">
+							<PageTransition>{children}</PageTransition>
+						</main>
+					</div>
 					<BottomNav />
 				</Providers>
 			</body>

@@ -1,52 +1,57 @@
 "use client";
 
-import { Icon } from "@iconify/react";
-import { m } from "framer-motion";
-import { Anim } from "@/components/shared/anim";
+import {
+	Home01Icon,
+	Notebook01Icon,
+	BubbleChatSpark01Icon,
+	OnlineLearning01Icon,
+	User03Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { usePathname } from "next/navigation";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { ChatDialog } from "@/components/dashboard/chat/chat-dialog";
 import { PracticeSheet } from "@/components/dashboard/practice/practice-sheet";
-import { Button } from "@/components/ui/button";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { cn } from "@/lib/utils";
 
 interface NavItem {
 	id: string;
 	label: string;
-	icon: string;
+	icon: typeof Home01Icon;
 	href: string;
+	badge?: number;
 }
 
 const navItems: NavItem[] = [
 	{
 		id: "home",
 		label: "Home",
-		icon: "fluent:home-24-filled",
+		icon: Home01Icon,
 		href: "/dashboard",
 	},
 	{
 		id: "syllabus",
 		label: "Syllabus",
-		icon: "fluent:notebook-24-filled",
+		icon: Notebook01Icon,
 		href: "/quiz",
 	},
 	{
 		id: "chat",
 		label: "Chat",
-		icon: "fluent:chat-sparkle-24-filled",
+		icon: BubbleChatSpark01Icon,
 		href: "",
 	},
 	{
 		id: "practice",
 		label: "Practice",
-		icon: "fluent:learning-app-24-filled",
+		icon: OnlineLearning01Icon,
 		href: "",
 	},
 	{
 		id: "settings",
 		label: "Settings",
-		icon: "fluent:person-24-filled",
+		icon: User03Icon,
 		href: "/settings",
 	},
 ];
@@ -61,39 +66,41 @@ function NavItemComponent({
 	onClick: () => void;
 }) {
 	return (
-		<Button
-			variant="ghost"
+		<button
+			type="button"
 			onClick={onClick}
-			data-nav-item
+			aria-current={isActive ? "page" : undefined}
 			className={cn(
-				"flex flex-1 flex-col items-center justify-center gap-1 px-2 h-auto rounded-none min-h-0 py-0 transition-colors duration-300 relative z-10",
-				isActive
-					? "text-system-accent"
-					: "text-muted-foreground/25 hover:text-muted-foreground/40",
+				"flex flex-1 flex-col items-center justify-center gap-0.5 h-full min-w-0",
+				"transition-colors duration-150 relative cursor-pointer",
+				"bg-transparent border-none outline-none",
+				"active:opacity-60",
 			)}
 		>
-			<m.span
-				className="flex items-center justify-center relative text-muted-foreground"
-				animate={isActive ? { scale: 1.1, y: -2 } : { scale: 0.9, y: 0 }}
-				transition={{ type: "spring", stiffness: 400, damping: 25, mass: 0.5 }}
-			>
-				<Icon
-					icon={item.icon}
-					className={cn(
-						"size-6",
-						isActive ? "text-system-accent opacity-100" : " opacity-50",
+			<div className="relative flex items-center justify-center size-6">
+			<HugeiconsIcon
+				icon={item.icon}
+				aria-hidden="true"
+				className={cn(
+						"size-[25px] transition-colors duration-200",
+						isActive ? "text-system-accent" : "text-system-text-tertiary",
 					)}
 				/>
-			</m.span>
+				{item.badge !== undefined && item.badge > 0 && (
+					<span className="absolute -top-1 -right-1.5 min-w-[16px] h-4 px-1 rounded-full bg-system-destructive text-[10px] font-semibold text-white flex items-center justify-center leading-none">
+						{item.badge > 99 ? "99+" : item.badge}
+					</span>
+				)}
+			</div>
 			<span
 				className={cn(
-					"text-[10px] font-black tracking-tight text-muted-foreground uppercase transition-all duration-300",
-					isActive ? "opacity-100 translate-y-0" : "opacity-60 translate-y-0.5",
+					"text-[10px] font-medium leading-none tracking-[var(--tracking-caption-1)] transition-colors duration-200",
+					isActive ? "text-system-accent" : "text-system-text-tertiary",
 				)}
 			>
 				{item.label}
 			</span>
-		</Button>
+		</button>
 	);
 }
 
@@ -102,8 +109,6 @@ export function BottomNav() {
 	const { push } = useNavigationDirection();
 	const [practiceDrawerOpen, setPracticeDrawerOpen] = useState(false);
 	const [chatDialogOpen, setChatDialogOpen] = useState(false);
-	const listRef = useRef<HTMLDivElement>(null);
-	const [indicator, setIndicator] = useState({ left: 0, width: 0 });
 
 	const activeIndex = useMemo(() => {
 		const index = navItems.findIndex((item) => {
@@ -114,24 +119,6 @@ export function BottomNav() {
 		});
 		return index >= 0 ? index : 0;
 	}, [pathname]);
-
-	const measure = useCallback(() => {
-		if (!listRef.current) return;
-		const buttons =
-			listRef.current.querySelectorAll<HTMLButtonElement>("[data-nav-item]");
-		const btn = buttons[activeIndex];
-		if (!btn) return;
-		const listRect = listRef.current.getBoundingClientRect();
-		const btnRect = btn.getBoundingClientRect();
-		setIndicator({
-			left: btnRect.left - listRect.left,
-			width: btnRect.width,
-		});
-	}, [activeIndex]);
-
-	useEffect(() => {
-		requestAnimationFrame(measure);
-	}, [measure]);
 
 	const handleItemClick = useCallback(
 		(item: NavItem) => {
@@ -150,36 +137,22 @@ export function BottomNav() {
 
 	return (
 		<>
-			<Anim>
-				<nav className="fixed bottom-0 left-0 right-0 z-50 h-16 bg-system-background/95 backdrop-blur-md border-t border-border/40 md:hidden pb-safe">
-					<div
-						ref={listRef}
-						className="relative flex w-full h-full items-center px-1.5"
-					>
-						{navItems.map((item, index) => (
-							<NavItemComponent
-								key={item.id}
-								item={item}
-								isActive={index === activeIndex}
-								onClick={() => handleItemClick(item)}
-							/>
-						))}
-						<m.div
-							className="absolute top-1/2 -translate-y-1/2 h-10 rounded-2xl bg-system-accent/8 z-0"
-							initial={false}
-							animate={{
-								left: indicator.left + 6,
-								width: indicator.width - 12,
-							}}
-							transition={{
-								type: "spring",
-								stiffness: 400,
-								damping: 35,
-							}}
+			<nav
+				aria-label="Main navigation"
+				className="fixed bottom-0 left-0 right-0 z-50 md:hidden"
+				style={{ height: "calc(49px + env(safe-area-inset-bottom, 0px))" }}
+			>
+				<div className="flex w-full h-[49px] items-stretch bg-system-background/80 backdrop-blur-xl border-t border-system-separator/30">
+					{navItems.map((item, index) => (
+						<NavItemComponent
+							key={item.id}
+							item={item}
+							isActive={index === activeIndex}
+							onClick={() => handleItemClick(item)}
 						/>
-					</div>
-				</nav>
-			</Anim>
+					))}
+				</div>
+			</nav>
 			<PracticeSheet
 				open={practiceDrawerOpen}
 				onOpenChange={setPracticeDrawerOpen}

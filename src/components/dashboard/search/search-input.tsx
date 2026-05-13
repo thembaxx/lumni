@@ -36,7 +36,7 @@ export function SearchInput({ value, onChange }: SearchInputProps) {
 				onChange={(e) => onChange(e.target.value)}
 				onFocus={() => setIsFocused(true)}
 				onBlur={() => setIsFocused(false)}
-				className="bg-transparent text-foreground placeholder:text-muted-foreground/60 text-sm outline-none mb-4 shadow-none border-0 p-0 focus-visible:ring-0"
+				className="bg-transparent text-foreground placeholder:text-muted-foreground/60 text-sm mb-4 shadow-none border-0 p-0 focus-visible:ring-2 focus-visible:ring-system-accent/30"
 			/>
 
 			<div className="flex items-center justify-between">

@@ -1,31 +1,59 @@
 import * as React from "react";
 
+import { NavigationBar } from "@/components/ui/navigation-bar";
 import { cn } from "@/lib/utils";
 
 interface PageShellProps {
 	children: React.ReactNode;
 	title?: string;
+	subtitle?: string;
+	showBack?: boolean;
+	rightAction?: React.ReactNode;
+	bottomSection?: React.ReactNode;
 	className?: string;
+	innerClassName?: string;
 }
 
-function PageShell({ children, title, className }: PageShellProps) {
+function PageShell({
+	children,
+	title,
+	subtitle,
+	showBack,
+	rightAction,
+	bottomSection,
+	className,
+	innerClassName,
+}: PageShellProps) {
+	if (!title) {
+		return (
+			<div
+				className={cn(
+					"min-h-screen bg-system-background pb-[calc(var(--space-16)+var(--space-5))]",
+					className,
+				)}
+			>
+				<div className={cn("max-w-md mx-auto", innerClassName)}>
+					{children}
+				</div>
+			</div>
+		);
+	}
+
 	return (
 		<div
 			className={cn(
-				"min-h-screen bg-[--system-background] pb-[calc(var(--space-16)+var(--space-5))]",
+				"min-h-screen bg-system-background pb-[calc(var(--space-16)+var(--space-5))]",
 				className,
 			)}
 		>
-			{title && (
-				<div className="sticky top-0 z-10 bg-[--system-background]/90 backdrop-blur-[--system-blur] pt-safe">
-					<div className="max-w-md mx-auto px-[--space-4] py-[--space-3]">
-						<h1 className="ios-large-title text-[--system-text-primary]">
-							{title}
-						</h1>
-					</div>
-				</div>
-			)}
-			<div className="max-w-md mx-auto">{children}</div>
+			<NavigationBar
+				title={title}
+				subtitle={subtitle}
+				showBack={showBack}
+				rightAction={rightAction}
+				bottomSection={bottomSection}
+			/>
+			<div className={cn("max-w-md mx-auto", innerClassName)}>{children}</div>
 		</div>
 	);
 }

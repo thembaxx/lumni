@@ -12,11 +12,18 @@
 
 :root {
 	/* Core Color Tokens — Airy & Warm */
+	/* Apple semantic hierarchy: bg → bg-secondary → bg-tertiary */
 	--system-background: oklch(100% 0 0);
+	--system-background-secondary: oklch(97% 0.003 60);
+	--system-background-tertiary: oklch(95% 0.005 60);
+	--system-background-elevated: oklch(100% 0 0);
 	--system-grouped-background: oklch(98.8% 0.003 60);
 	--system-surface: oklch(100% 0 0);
 	--system-surface-secondary: oklch(97.8% 0.005 60);
 	--system-separator: oklch(0% 0 0 / 0.06);
+	/* Apple fill hierarchy: for button backgrounds, progress, slider tracks */
+	--system-fill: oklch(0% 0 0 / 0.06);
+	--system-fill-secondary: oklch(0% 0 0 / 0.03);
 	
 	/* Energetic Accents */
 	--system-accent: oklch(55% 0.18 264); /* Vibrant Purple */
@@ -25,6 +32,7 @@
 	--system-text-primary: oklch(20% 0.02 264);
 	--system-text-secondary: oklch(20% 0.02 264 / 0.65);
 	--system-text-tertiary: oklch(20% 0.02 264 / 0.35);
+	--label-quaternary: oklch(20% 0.02 264 / 0.18);
 	
 	--system-destructive: oklch(55% 0.18 25);
 	--system-destructive-foreground: oklch(100% 0 0);
@@ -39,7 +47,17 @@
 
 	/* Blur & Material */
 	--system-blur: 20px;
-	--system-material-light: oklch(100% 0 0 / 0.85);
+	--system-blur-heavy: 40px;
+	/* Liquid Glass material tiers (iOS 26+ inspired) */
+	--material-ultra-thin: oklch(100% 0 0 / 0.3);
+	--material-thin: oklch(100% 0 0 / 0.6);
+	--material-regular: oklch(100% 0 0 / 0.8);
+	--material-thick: oklch(100% 0 0 / 0.92);
+	--material-ultra-thick: oklch(100% 0 0 / 0.97);
+	/* Dark glass — for cards, sheets, toolbars */
+	--material-glass: oklch(100% 0 0 / 0.12);
+	--material-glass-strong: oklch(100% 0 0 / 0.2);
+	--material-vibrancy: 1.2; /* brightness multiplier for text on glass */
 
 	/* Spacing Scale (8pt grid) */
 	--space-1: 4px;
@@ -50,8 +68,12 @@
 	--space-6: 24px;
 	--space-8: 32px;
 	--space-10: 40px;
+	--space-11: 44px;
 	--space-12: 48px;
 	--space-16: 64px;
+
+	/* Apple HIG: minimum 44×44pt touch targets */
+	--touch-target-min: 44px;
 
 	/* Corner Radii */
 	--radius-button: 12px;
@@ -89,8 +111,31 @@
 	--fs-caption-1: 0.75rem;    /* 12px */
 	--fs-caption-2: 0.6875rem;  /* 11px */
 
+	/* Apple-Exact Tracking (letter-spacing) per text style */
+	/* Converted from Apple HIG 1/1000em values */
+	--tracking-large-title: 0.012em;  /* 34pt: +12/1000em */
+	--tracking-title-1: 0.014em;      /* 28pt: +14/1000em */
+	--tracking-title-2: -0.012em;     /* 22pt: -12/1000em */
+	--tracking-title-3: -0.023em;     /* 20pt: -23/1000em */
+	--tracking-headline: -0.026em;    /* 17pt: -26/1000em */
+	--tracking-body: -0.02em;         /* 16pt: -20/1000em */
+	--tracking-callout: -0.016em;     /* 15pt: -16/1000em */
+	--tracking-subhead: -0.011em;     /* 14pt: -11/1000em */
+	--tracking-footnote: -0.006em;    /* 13pt: -6/1000em */
+	--tracking-caption-1: 0em;        /* 12pt: 0/1000em */
+	--tracking-caption-2: 0.006em;    /* 11pt: +6/1000em */
+
+	/* Dynamic Type: scale factor controlled by user preference */
+	/* Set via JS: document.documentElement.style.setProperty('--text-scale', '1.25') */
+	/* Default 1.0 = normal, matches system base font-size */
+	--text-scale: 1;
+
 	/* Animation Timing */
 	--ease-ios: cubic-bezier(0.16, 1, 0.3, 1);
+	/* Apple HIG motion curves */
+	--ease-ios-decelerate: cubic-bezier(0, 0, 0.2, 1);     /* objects arriving on screen */
+	--ease-ios-accelerate: cubic-bezier(0.4, 0, 1, 1);     /* objects leaving screen */
+	--ease-ios-spring: cubic-bezier(0.34, 1.56, 0.64, 1);  /* interactive gestures */
 	--duration-slow: 300ms;
 
 	/* Shadcn Compat */
@@ -98,7 +143,7 @@
 	--foreground: var(--system-text-primary);
 	--card: var(--system-surface);
 	--card-foreground: var(--system-text-primary);
-	--popover: var(--system-surface);
+	--popover: var(--system-background-elevated);
 	--popover-foreground: var(--system-text-primary);
 	--primary: var(--system-accent);
 	--primary-foreground: oklch(100% 0 0);
@@ -169,11 +214,25 @@
 
 	/* Custom System Colors */
 	--color-system-background: var(--system-background);
+	--color-system-background-secondary: var(--system-background-secondary);
+	--color-system-background-tertiary: var(--system-background-tertiary);
+	--color-system-background-elevated: var(--system-background-elevated);
 	--color-system-grouped: var(--system-grouped-background);
 	--color-system-surface: var(--system-surface);
 	--color-system-surface-secondary: var(--system-surface-secondary);
+	--color-system-fill: var(--system-fill);
+	--color-system-fill-secondary: var(--system-fill-secondary);
 	--color-system-accent: var(--system-accent);
 	--color-system-accent-secondary: var(--system-accent-secondary);
+	--color-label-quaternary: var(--label-quaternary);
+
+	/* Materials (Liquid Glass) */
+	--material-ultra-thin: var(--material-ultra-thin);
+	--material-thin: var(--material-thin);
+	--material-regular: var(--material-regular);
+	--material-thick: var(--material-thick);
+	--material-glass: var(--material-glass);
+	--material-glass-strong: var(--material-glass-strong);
 
 	/* Shadows */
 	--shadow-level-1: var(--shadow-level-1);
@@ -209,6 +268,12 @@
 	--color-chart-4: var(--chart-4);
 	--color-chart-5: var(--chart-5);
 
+	/* Easing Curves */
+	--ease-ios: cubic-bezier(0.16, 1, 0.3, 1);
+	--ease-ios-decelerate: cubic-bezier(0, 0, 0.2, 1);
+	--ease-ios-accelerate: cubic-bezier(0.4, 0, 1, 1);
+	--ease-ios-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
 	/* Spacing */
 	--spacing-safe-pb: env(safe-area-inset-bottom, 0px);
 	--spacing-safe-pt: env(safe-area-inset-top, 0px);
@@ -216,16 +281,33 @@
 
 /* Dark mode */
 .dark {
-	--system-background: oklch(12% 0.01 264);
+	/* Liquid Glass dark materials */
+	--material-ultra-thin: oklch(10% 0.01 264 / 0.3);
+	--material-thin: oklch(12% 0.01 264 / 0.6);
+	--material-regular: oklch(14% 0.015 264 / 0.8);
+	--material-thick: oklch(16% 0.015 264 / 0.92);
+	--material-ultra-thick: oklch(20% 0.02 264 / 0.97);
+	--material-glass: oklch(100% 0 0 / 0.08);
+	--material-glass-strong: oklch(100% 0 0 / 0.15);
+	--material-vibrancy: 1.3;
+
+	/* Apple dark mode: base layer dimmer, elevated layers brighter */
+	--system-background: oklch(10% 0.01 264);        /* base page */
+	--system-background-secondary: oklch(12% 0.012 264);
+	--system-background-tertiary: oklch(14% 0.015 264);
+	--system-background-elevated: oklch(20% 0.02 264); /* sheets, popovers */
 	--system-grouped-background: oklch(8% 0.01 264);
-	--system-surface: oklch(16% 0.015 264);
-	--system-surface-secondary: oklch(20% 0.02 264);
+	--system-surface: oklch(16% 0.015 264);            /* cards */
+	--system-surface-secondary: oklch(22% 0.02 264);    /* elevated cards */
 	--system-separator: oklch(100% 0 0 / 0.12);
+	--system-fill: oklch(100% 0 0 / 0.08);
+	--system-fill-secondary: oklch(100% 0 0 / 0.04);
 	
 	--system-accent: oklch(65% 0.18 264);
 	--system-text-primary: oklch(98% 0.01 264);
 	--system-text-secondary: oklch(98% 0.01 264 / 0.65);
 	--system-text-tertiary: oklch(98% 0.01 264 / 0.35);
+	--label-quaternary: oklch(98% 0.01 264 / 0.18);
 
 	--system-material-light: oklch(16% 0.015 264 / 0.85);
 
@@ -247,7 +329,7 @@
 	--foreground: var(--system-text-primary);
 	--card: var(--system-surface);
 	--card-foreground: var(--system-text-primary);
-	--popover: var(--system-surface);
+	--popover: var(--system-background-elevated);
 	--popover-foreground: var(--system-text-primary);
 	--primary: var(--system-accent);
 	--primary-foreground: oklch(10% 0.01 264);
@@ -317,14 +399,14 @@
 		color: var(--system-text-primary);
 		font-family: var(--font-sans);
 		line-height: 1.5;
-		letter-spacing: -0.01em;
+		letter-spacing: var(--tracking-body);
 		@apply min-h-screen flex flex-col;
 	}
 
 	h1, h2, h3, h4, h5, h6 {
 		font-family: var(--font-heading);
 		font-weight: 700;
-		letter-spacing: -0.02em;
+		letter-spacing: var(--tracking-title-1);
 		line-height: 1.2;
 		color: var(--system-text-primary);
 		text-wrap: balance;
@@ -332,7 +414,7 @@
 
 	p, li, figcaption, blockquote {
 		line-height: 1.6;
-		letter-spacing: -0.01em;
+		letter-spacing: var(--tracking-body);
 		text-wrap: pretty;
 	}
 
@@ -353,16 +435,16 @@
    UTILITY CLASSES
    ======================================== */
 
-.ios-large-title { font-family: var(--font-heading); font-size: var(--fs-large-title); font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
-.ios-title-1 { font-family: var(--font-heading); font-size: var(--fs-title-1); font-weight: 700; line-height: 1.22; letter-spacing: -0.02em; }
-.ios-title-2 { font-family: var(--font-heading); font-size: var(--fs-title-2); font-weight: 700; line-height: 1.27; letter-spacing: -0.02em; }
-.ios-title-3 { font-family: var(--font-heading); font-size: var(--fs-title-3); font-weight: 600; line-height: 1.25; letter-spacing: -0.02em; }
-.ios-headline { font-family: var(--font-heading); font-size: var(--fs-headline); font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; }
-.ios-body { font-size: var(--fs-body); font-weight: 400; line-height: 1.5; letter-spacing: 0; }
-.ios-subhead { font-size: var(--fs-subhead); font-weight: 400; line-height: 1.35; letter-spacing: 0; }
-.ios-footnote { font-size: var(--fs-footnote); font-weight: 400; line-height: 1.4; letter-spacing: 0; }
-.ios-caption-1 { font-size: var(--fs-caption-1); font-weight: 400; line-height: 1.3; letter-spacing: 0.005em; }
-.ios-caption-2 { font-size: var(--fs-caption-2); font-weight: 400; line-height: 1.2; letter-spacing: 0.005em; }
+.ios-large-title { font-family: var(--font-heading); font-size: calc(var(--fs-large-title) * var(--text-scale)); font-weight: 700; line-height: 1.2; letter-spacing: var(--tracking-large-title); }
+.ios-title-1 { font-family: var(--font-heading); font-size: calc(var(--fs-title-1) * var(--text-scale)); font-weight: 700; line-height: 1.22; letter-spacing: var(--tracking-title-1); }
+.ios-title-2 { font-family: var(--font-heading); font-size: calc(var(--fs-title-2) * var(--text-scale)); font-weight: 700; line-height: 1.27; letter-spacing: var(--tracking-title-2); }
+.ios-title-3 { font-family: var(--font-heading); font-size: calc(var(--fs-title-3) * var(--text-scale)); font-weight: 600; line-height: 1.25; letter-spacing: var(--tracking-title-3); }
+.ios-headline { font-family: var(--font-heading); font-size: calc(var(--fs-headline) * var(--text-scale)); font-weight: 600; line-height: 1.3; letter-spacing: var(--tracking-headline); }
+.ios-body { font-size: calc(var(--fs-body) * var(--text-scale)); font-weight: 400; line-height: 1.5; letter-spacing: var(--tracking-body); }
+.ios-subhead { font-size: calc(var(--fs-subhead) * var(--text-scale)); font-weight: 400; line-height: 1.35; letter-spacing: var(--tracking-subhead); }
+.ios-footnote { font-size: calc(var(--fs-footnote) * var(--text-scale)); font-weight: 400; line-height: 1.4; letter-spacing: var(--tracking-footnote); }
+.ios-caption-1 { font-size: calc(var(--fs-caption-1) * var(--text-scale)); font-weight: 400; line-height: 1.3; letter-spacing: var(--tracking-caption-1); }
+.ios-caption-2 { font-size: calc(var(--fs-caption-2) * var(--text-scale)); font-weight: 400; line-height: 1.2; letter-spacing: var(--tracking-caption-2); }
 
 .pb-safe { padding-bottom: var(--spacing-safe-pb); }
 .pt-safe { padding-top: var(--spacing-safe-pt); }
@@ -456,6 +538,34 @@
 .animate-stagger > *:nth-child(3) { animation-delay: 100ms; }
 .animate-stagger > *:nth-child(4) { animation-delay: 150ms; }
 .animate-stagger > *:nth-child(5) { animation-delay: 200ms; }
+
+/* ========================================
+   TOUCH TARGET & ACCESSIBILITY
+   ======================================== */
+
+/* Apple HIG minimum 44×44pt touch targets */
+.min-touch { min-height: var(--touch-target-min); min-width: var(--touch-target-min); }
+.min-touch-h { min-height: var(--touch-target-min); }
+.min-touch-w { min-width: var(--touch-target-min); }
+
+/* ========================================
+   LIQUID GLASS MATERIAL UTILITIES
+   ======================================== */
+
+/* Frosted glass surfaces — pair with bg color for fallback */
+.glass-ultra-thin { background: var(--material-ultra-thin); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.glass-thin { background: var(--material-thin); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+.glass-regular { background: var(--material-regular); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); }
+.glass-thick { background: var(--material-thick); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); }
+.glass-card { background: var(--material-glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--system-separator); }
+.glass-card-strong { background: var(--material-glass-strong); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border: 1px solid var(--system-separator); }
+
+/* Vibrancy helper — boosts text contrast on glass backgrounds */
+.vibrant-text { filter: brightness(var(--material-vibrancy)); }
+
+/* Section spacing pattern */
+.section-gap { padding-top: var(--space-4); padding-bottom: var(--space-4); }
+.section-gap-lg { padding-top: var(--space-6); padding-bottom: var(--space-6); }
 
 /* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {

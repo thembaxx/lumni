@@ -23,10 +23,11 @@ export function FloatingToolsButton() {
 				onClick={() => setIsOpen(true)}
 				className={cn(
 					"fixed bottom-17.25 right-5 z-40",
-					"size-13 rounded-full",
+					"h-11 rounded-md shadow-level-3 font-medium pr-5",
 				)}
 			>
 				<Icon icon="fluent:board-24-regular" className="w-6 h-6" />
+				Open Tools
 			</Button>
 
 			<ToolsDialog open={isOpen} onOpenChange={setIsOpen} />
