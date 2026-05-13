@@ -76,7 +76,7 @@ function NavItemComponent({
 				animate={isActive ? { scale: 1.1, y: -2 } : { scale: 0.9, y: 0 }}
 				transition={{ type: "spring", stiffness: 400, damping: 25, mass: 0.5 }}
 			>
-				<Icon icon={item.icon} className={cn("size-6", isActive ? "text-system-accent" : "text-[#616161]")} />
+				<Icon icon={item.icon} className={cn("size-6", isActive ? "text-system-accent" : "text-muted-foreground/40")} />
 			</m.span>
 			<span
 				className={cn(
