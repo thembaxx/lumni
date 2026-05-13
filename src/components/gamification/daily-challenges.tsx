@@ -98,7 +98,7 @@ export function DailyChallenges({ challenges }: DailyChallengesProps) {
 									>
 										<IconCheck size={12} />
 										Completed
-								</motion.div>
+									</motion.div>
 								)}
 							</div>
 						</div>

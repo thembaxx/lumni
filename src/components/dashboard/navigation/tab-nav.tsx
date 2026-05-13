@@ -1,10 +1,10 @@
 "use client";
 
 import { m } from "framer-motion";
-import { Anim } from "@/components/shared/anim";
 import { LayoutGrid, Snowflake } from "lucide-react";
 import { startTransition, useState } from "react";
 import { LottieSparkle } from "@/components/lottie";
+import { Anim } from "@/components/shared/anim";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import { iOSEase } from "@/lib/utils/animation";

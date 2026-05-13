@@ -1,8 +1,9 @@
 "use client";
 
 import { AnimatePresence, m } from "framer-motion";
-import { Anim } from "@/components/shared/anim";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Anim } from "@/components/shared/anim";
+import { LottieWrapper } from "@/components/lottie/lottie-wrapper";
 import { ProgressDots } from "@/components/shared/progress-dots";
 import { Card } from "@/components/ui/card";
 import { AssessmentHeader } from "@/components/ui/headers/assessment-header";
@@ -135,18 +136,11 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 
 	if (isLoading) {
 		return (
-			<Card className="p-6 space-y-4">
-				<div className="flex items-center justify-between">
-					<Skeleton className="h-5 w-32" />
-					<Skeleton className="h-5 w-16" />
-				</div>
-				<Skeleton className="h-6 w-full" />
-				<Skeleton className="h-24 w-full rounded-lg" />
-				<div className="space-y-2">
-					{[1, 2, 3, 4].map((i) => (
-						<Skeleton key={i} className="h-12 w-full rounded-lg" />
-					))}
-				</div>
+			<Card className="p-6 flex flex-col items-center justify-center gap-4">
+				<LottieWrapper animation="loading-dots" className="h-8 mx-auto" loop />
+				<p className="text-sm text-muted-foreground">
+					Generating questions...
+				</p>
 			</Card>
 		);
 	}
@@ -154,7 +148,8 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 	if (isError) {
 		return (
 			<Card className="p-8 flex flex-col items-center justify-center gap-4">
-				<p className="text-destructive">Failed to load questions.</p>
+				<LottieWrapper animation="error-state" className="w-16 h-16" />
+				<p className="text-destructive font-medium">Failed to load questions.</p>
 			</Card>
 		);
 	}
@@ -162,6 +157,7 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 	if (!questions?.length) {
 		return (
 			<Card className="p-8 flex flex-col items-center justify-center gap-4">
+				<LottieWrapper animation="empty-search" className="w-16 h-16" />
 				<p className="text-muted-foreground">
 					No questions available for this subject.
 				</p>

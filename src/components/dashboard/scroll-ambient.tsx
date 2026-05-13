@@ -47,7 +47,8 @@ export function ScrollAmbient() {
 		if (!container) return;
 
 		function update() {
-			const { scrollTop, scrollHeight, clientHeight } = container as HTMLElement;
+			const { scrollTop, scrollHeight, clientHeight } =
+				container as HTMLElement;
 			const maxScroll = Math.max(1, scrollHeight - clientHeight);
 			setScrollProgress(Math.min(1, scrollTop / maxScroll));
 		}

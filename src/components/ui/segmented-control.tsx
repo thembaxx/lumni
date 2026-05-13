@@ -1,8 +1,8 @@
 "use client";
 
 import { m } from "framer-motion";
-import { Anim } from "@/components/shared/anim";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { Anim } from "@/components/shared/anim";
 
 import { cn } from "@/lib/utils";
 

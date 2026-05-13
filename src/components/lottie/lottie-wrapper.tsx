@@ -3,7 +3,7 @@
 import type { DotLottie } from "@lottiefiles/dotlottie-react";
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useRef } from "react";
-import { type LottieAnimationName, getAnimationSrc } from "./lottie-assets";
+import { getAnimationSrc, type LottieAnimationName } from "./lottie-assets";
 
 const DotLottieReact = dynamic(
 	() => import("@lottiefiles/dotlottie-react").then((m) => m.DotLottieReact),

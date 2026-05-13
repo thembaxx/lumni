@@ -1,0 +1,149 @@
+import { writeFileSync, mkdirSync, existsSync, readFileSync } from "node:fs";
+import { resolve } from "node:path";
+
+const OUT = resolve(__dirname, "..", "src", "assets", "animations");
+
+// Create minimal but high-quality Lottie animations for UX gaps
+// These can be replaced with professional animations from LottieFiles later
+
+const animations: Record<string, string> = {
+  // Typing indicator - similar to the one we downloaded from LottieFiles
+  // 3 bouncing dots that simulate a typing indicator
+  "typing-indicator": JSON.stringify({
+    v: "5.9.0",
+    fr: 30,
+    ip: 0,
+    op: 60,
+    w: 120,
+    h: 80,
+    nm: "Typing Indicator",
+    ddd: 0,
+    assets: [],
+    layers: [
+      {
+        ddd: 0,
+        ind: 1,
+        ty: 4,
+        nm: "Dot 1",
+        sr: 1,
+        ks: {
+          o: { a: 0, k: 100 },
+          r: { a: 0, k: 0 },
+          p: { a: 1, k: [{ i: { x: 0.667, y: 1 }, o: { x: 0.333, y: 0 }, t: 0, s: [60, 60, 100], to: [60, 20, 0], ti: [60, 20, 0] }, { t: 15, s: [60, 20, 0] }] },
+          a: { a: 0, k: [0, 0, 0] },
+          s: { a: 0, k: [100, 100, 100] },
+        },
+        ao: 0,
+        shapes: [
+          {
+            ty: "el",
+            p: { a: 0, k: [0, 0] },
+            s: { a: 0, k: [20, 20] },
+            nm: "Ellipse Path 1",
+            mn: "ADBE Vector Shape - Ellipse",
+            hd: false,
+          },
+          {
+            ty: "fl",
+            c: { a: 0, k: [0.1, 0.1, 0.1, 1] },
+            o: { a: 0, k: 100 },
+            r: 1,
+            nm: "Fill 1",
+            mn: "ADBE Vector Graphic - Fill",
+            hd: false,
+          },
+          { ty: "tr", p: { a: 0, k: [60, 60] }, a: { a: 0, k: [0, 0] }, s: { a: 0, k: [100, 100] }, r: { a: 0, k: 0 }, o: { a: 0, k: 100 }, sk: { a: 0, k: 0 }, sa: { a: 0, k: 0 }, nm: "Transform" },
+        ],
+        ip: 0,
+        op: 60,
+        st: 0,
+      },
+      {
+        ddd: 0,
+        ind: 2,
+        ty: 4,
+        nm: "Dot 2",
+        sr: 1,
+        ks: {
+          o: { a: 0, k: 100 },
+          r: { a: 0, k: 0 },
+          p: { a: 1, k: [{ i: { x: 0.667, y: 1 }, o: { x: 0.333, y: 0 }, t: 0, s: [60, 120, 100], to: [60, 120, 0], ti: [60, 120, 0] }, { t: 15, s: [60, 120, 0] }] },
+          a: { a: 0, k: [0, 0, 0] },
+          s: { a: 0, k: [100, 100, 100] },
+        },
+        ao: 0,
+        shapes: [
+          {
+            ty: "el",
+            p: { a: 0, k: [0, 0] },
+            s: { a: 0, k: [20, 20] },
+            nm: "Ellipse Path 1",
+            mn: "ADBE Vector Shape - Ellipse",
+            hd: false,
+          },
+          {
+            ty: "fl",
+            c: { a: 0, k: [0.1, 0.1, 0.1, 1] },
+            o: { a: 0, k: 100 },
+            r: 1,
+            nm: "Fill 1",
+            mn: "ADBE Vector Graphic - Fill",
+            hd: false,
+          },
+          { ty: "tr", p: { a: 0, k: [60, 60] }, a: { a: 0, k: [0, 0] }, s: { a: 0, k: [100, 100] }, r: { a: 0, k: 0 }, o: { a: 0, k: 100 }, sk: { a: 0, k: 0 }, sa: { a: 0, k: 0 }, nm: "Transform" },
+        ],
+        ip: 0,
+        op: 60,
+        st: 5,
+      },
+      {
+        ddd: 0,
+        ind: 3,
+        ty: 4,
+        nm: "Dot 3",
+        sr: 1,
+        ks: {
+          o: { a: 0, k: 100 },
+          r: { a: 0, k: 0 },
+          p: { a: 1, k: [{ i: { x: 0.667, y: 1 }, o: { x: 0.333, y: 0 }, t: 0, s: [60, 180, 100], to: [60, 180, 0], ti: [60, 180, 0] }, { t: 15, s: [60, 180, 0] }] },
+          a: { a: 0, k: [0, 0, 0] },
+          s: { a: 0, k: [100, 100, 100] },
+        },
+        ao: 0,
+        shapes: [
+          {
+            ty: "el",
+            p: { a: 0, k: [0, 0] },
+            s: { a: 0, k: [20, 20] },
+            nm: "Ellipse Path 1",
+            mn: "ADBE Vector Shape - Ellipse",
+            hd: false,
+          },
+          {
+            ty: "fl",
+            c: { a: 0, k: [0.1, 0.1, 0.1, 1] },
+            o: { a: 0, k: 100 },
+            r: 1,
+            nm: "Fill 1",
+            mn: "ADBE Vector Graphic - Fill",
+            hd: false,
+          },
+          { ty: "tr", p: { a: 0, k: [60, 60] }, a: { a: 0, k: [0, 0] }, s: { a: 0, k: [100, 100] }, r: { a: 0, k: 0 }, o: { a: 0, k: 100 }, sk: { a: 0, k: 0 }, sa: { a: 0, k: 0 }, nm: "Transform" },
+        ],
+        ip: 0,
+        op: 60,
+        st: 10,
+      },
+    ],
+    markers: [],
+  }),
+};
+
+// Write all animations
+for (const [id, json] of Object.entries(animations)) {
+  const outPath = resolve(OUT, `${id}.json`);
+  writeFileSync(outPath, json, "utf-8");
+  console.log(`✓ Created ${id}.json`);
+}
+
+console.log(`\nCreated ${Object.keys(animations).length} new Lottie JSON animations`);

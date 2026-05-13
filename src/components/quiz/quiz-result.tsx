@@ -1,19 +1,6 @@
 "use client";
 
 import {
-	CancelIcon,
-	ClappingIcon,
-	PartyIcon,
-	ThumbsUpIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import {
-	IconArrowRight,
-	IconHome,
-	IconRefresh,
-	IconTrophy,
-} from "@tabler/icons-react";
-import {
 	AnimatePresence,
 	LazyMotion,
 	m,
@@ -21,6 +8,8 @@ import {
 	useTransform,
 } from "framer-motion";
 import { LottieWrapper } from "@/components/lottie";
+import type { LottieAnimationName } from "@/components/lottie";
+import { IconRefresh, IconHome } from "@tabler/icons-react";
 import { AccuracyBar } from "@/components/shared/accuracy-bar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -111,21 +100,34 @@ export function QuizResult({
 		if (accuracy >= 90)
 			return {
 				title: "Outstanding!",
-				icon: PartyIcon,
+				animation: "level-up",
+				lottieSize: "w-20 h-20",
 				celebration: true,
 			};
 		if (accuracy >= 70)
-			return { title: "Great job!", icon: ClappingIcon, celebration: false };
+			return {
+				title: "Great job!",
+				animation: "confetti",
+				lottieSize: "w-16 h-16",
+				celebration: false,
+			};
 		if (accuracy >= 50)
-			return { title: "Good effort!", icon: ThumbsUpIcon, celebration: false };
+			return {
+				title: "Good effort!",
+				animation: "success-check",
+				lottieSize: "w-16 h-16",
+				celebration: false,
+			};
 		return {
 			title: "Keep practicing!",
-			icon: CancelIcon,
+			animation: "error-state",
+			lottieSize: "w-16 h-16",
 			celebration: false,
 		};
 	};
 
 	const message = getMessage();
+	const animation = message.animation as LottieAnimationName;
 
 	return (
 		<m.div
@@ -135,19 +137,17 @@ export function QuizResult({
 			className="space-y-6"
 		>
 			<Card className="p-8 flex flex-col items-center text-center gap-4 relative overflow-visible">
-				{message.celebration && <Confetti />}
-				<m.div
-					initial={{ scale: 0.95, opacity: 0 }}
-					animate={{ scale: 1, opacity: 1 }}
-					transition={{ delay: 0.2, ...springTransition }}
-					className="text-5xl"
-				>
-					{useLottie && message.celebration ? (
-						<LottieWrapper animation="success-check" className="w-24 h-24" />
-					) : (
-						<HugeiconsIcon icon={message.icon} className="w-12 h-12" />
-					)}
-				</m.div>
+{message.celebration && <Confetti />}
+			<m.div
+				initial={{ scale: 0.95, opacity: 0 }}
+				animate={{ scale: 1, opacity: 1 }}
+				transition={{ delay: 0.2, ...springTransition }}
+			>
+				<LottieWrapper
+					animation={animation}
+					className={message.lottieSize}
+				/>
+			</m.div>
 				<m.h2
 					className="text-2xl font-bold"
 					initial={{ opacity: 0, y: 10 }}

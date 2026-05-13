@@ -1,7 +1,5 @@
 "use client";
 
-import { PuzzleIcon, Target } from "lucide-react";
-import { LottieWrapper } from "@/components/lottie";
 import { AnimatedDots } from "@/components/shared/animated-dots";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,6 +10,8 @@ import {
 	EmptyMedia,
 	EmptyTitle,
 } from "@/components/ui/empty";
+import { LottieWrapper } from "@/components/lottie/lottie-wrapper";
+import { Target } from "lucide-react";
 import { SubjectSelector } from "./subject-selector";
 
 interface QuizEmptyStateProps {
@@ -35,7 +35,7 @@ function QuizEmptyStateNotStarted({ onStart }: QuizEmptyStateNotStartedProps) {
 		<Empty className="border border-dashed mt-24">
 			<EmptyHeader>
 				<EmptyMedia variant="icon">
-					<PuzzleIcon />
+					<LottieWrapper animation="empty-search" className="size-12 mx-auto" loop />
 				</EmptyMedia>
 				<EmptyTitle>Quiz not started</EmptyTitle>
 				<EmptyDescription>
@@ -60,7 +60,7 @@ function QuizEmptyStateNoQuestions({
 		<Empty>
 			<EmptyHeader>
 				<EmptyMedia variant="icon">
-					<Target className="size-8" />
+					<LottieWrapper animation="empty-search" className="size-12 mx-auto" loop />
 				</EmptyMedia>
 				<EmptyTitle>No questions found</EmptyTitle>
 				<EmptyDescription>

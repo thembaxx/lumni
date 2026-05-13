@@ -58,7 +58,7 @@ export function ToolsDialog({ open, onOpenChange }: ToolsDialogProps) {
 					animate={{ opacity: 1 }}
 					exit={{ opacity: 0 }}
 					transition={{ duration: 0.2 }}
-					className="fixed inset-0 z-50 bg-[--system-background]"
+					className="fixed inset-0 z-50 bg-system-surface"
 				>
 					<div className="h-full flex flex-col">
 						<motion.header
@@ -90,17 +90,13 @@ export function ToolsDialog({ open, onOpenChange }: ToolsDialogProps) {
 								transition={{ delay: 0.2, duration: 0.3 }}
 								className="px-4 py-3"
 							>
-								<TabsList className="flex justify-start w-full overflow-x-auto px-2 py-2 gap-2 scrollbar-hide bg-transparent shrink-0">
+								<TabsList className="h-11 p-1 bg-secondary/50 dark:bg-secondary/20 transition-all duration-300 rounded-lg flex justify-start w-full overflow-x-auto px-2 py-2 gap-2 scrollbar-hide shrink-0">
 									{tabs.map((tab) => (
 										<TabsTrigger
 											key={tab.id}
 											value={tab.id}
 											className={cn(
-												"shrink-0 px-4 py-2.5 text-sm font-medium rounded-[12px]",
-												"data-active:bg-[--system-accent] data-active:text-[oklch(100%_0_0)] data-active:shadow-[--shadow-level-1]",
-												"text-[--system-text-primary] bg-[--system-surface-secondary] hover:bg-[--system-separator] transition-[background-color] duration-150 ease-out",
-												"dark:data-active:bg-[--system-accent] dark:data-active:text-[oklch(100%_0_0)]",
-												"dark:text-[--system-text-primary] dark:bg-[--system-surface-secondary]",
+												"shrink-0 px-4 py-2.5 text-sm font-medium rounded-[12px]"
 											)}
 										>
 											{tab.label}

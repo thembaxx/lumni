@@ -1,11 +1,11 @@
 "use client";
 
 import { m } from "framer-motion";
-import { Anim } from "@/components/shared/anim";
 import { Mail, MessageSquare } from "lucide-react";
 import { startTransition, useState } from "react";
 import { MagicLinkDialog } from "@/components/admin/login-dialogs";
 import { OTPDialog } from "@/components/auth/otp-dialog";
+import { Anim } from "@/components/shared/anim";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";

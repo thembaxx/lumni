@@ -1,8 +1,8 @@
 "use client";
 
 import { m } from "framer-motion";
-import { Anim } from "@/components/shared/anim";
 import { createContext, useContext, useState } from "react";
+import { Anim } from "@/components/shared/anim";
 import { easeOutQuint, iOSEase } from "@/lib/utils/animation";
 
 interface DirectionalTransitionContextValue {

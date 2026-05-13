@@ -2,6 +2,7 @@
 
 import { Home, RotateCcw, Target } from "lucide-react";
 import { Confetti } from "@/components/celebration";
+import { LottieWrapper } from "@/components/lottie/lottie-wrapper";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 

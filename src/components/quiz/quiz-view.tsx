@@ -11,6 +11,7 @@ import {
 	QuizSubjectPrompt,
 } from "@/components/quiz";
 import { ProgressDots } from "@/components/shared/progress-dots";
+import { LottieWrapper } from "@/components/lottie/lottie-wrapper";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AssessmentHeader } from "@/components/ui/headers/assessment-header";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
@@ -188,7 +189,8 @@ export function QuizView({
 		return (
 			<div className="min-h-screen bg-background p-4 flex items-center justify-center pb-20">
 				<Card className="max-w-md w-full card-elevated">
-					<CardContent className="p-8 text-center">
+					<CardContent className="p-8 text-center space-y-4">
+						<LottieWrapper animation="loading-dots" className="w-12 h-3 mx-auto" loop />
 						<p className="text-muted-foreground">Loading questions...</p>
 					</CardContent>
 				</Card>

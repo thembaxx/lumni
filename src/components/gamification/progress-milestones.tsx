@@ -1,8 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import type { StreakMilestone } from "@/types/gamification";
 import { FadeIn } from "@/components/shared/fade-in";
+import type { StreakMilestone } from "@/types/gamification";
 
 interface ProgressMilestonesProps {
 	currentStreak: number;
@@ -60,7 +60,7 @@ export function ProgressMilestones({
 											{milestone.streak}
 										</span>
 									)}
-							</motion.div>
+								</motion.div>
 
 								<div className="mt-2 text-center">
 									<p

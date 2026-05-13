@@ -1,9 +1,9 @@
 "use client";
 
 import {
+	BubbleChatSpark01Icon,
 	Home01Icon,
 	Notebook01Icon,
-	BubbleChatSpark01Icon,
 	OnlineLearning01Icon,
 	User03Icon,
 } from "@hugeicons/core-free-icons";
@@ -78,10 +78,10 @@ function NavItemComponent({
 			)}
 		>
 			<div className="relative flex items-center justify-center size-6">
-			<HugeiconsIcon
-				icon={item.icon}
-				aria-hidden="true"
-				className={cn(
+				<HugeiconsIcon
+					icon={item.icon}
+					aria-hidden="true"
+					className={cn(
 						"size-[25px] transition-colors duration-200",
 						isActive ? "text-system-accent" : "text-system-text-tertiary",
 					)}

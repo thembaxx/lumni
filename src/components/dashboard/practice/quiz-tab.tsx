@@ -3,7 +3,6 @@
 import { ArrowDown01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
-import { Anim } from "@/components/shared/anim";
 import { PlayIcon, Square, Timer, Zap } from "lucide-react";
 import { useCallback, useState } from "react";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
@@ -13,6 +12,7 @@ import {
 	QuizSubjectPrompt,
 } from "@/components/quiz";
 import { QuestionCard } from "@/components/quiz/question-card";
+import { Anim } from "@/components/shared/anim";
 import { Button } from "@/components/ui/button";
 import { AssessmentHeader } from "@/components/ui/headers/assessment-header";
 import { useQuizSession } from "@/hooks/use-quiz-session";

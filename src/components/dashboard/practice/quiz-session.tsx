@@ -1,10 +1,10 @@
 "use client";
 
 import { m } from "framer-motion";
-import { Anim } from "@/components/shared/anim";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { startTransition, useCallback, useState } from "react";
 import { QuestionCard } from "@/components/quiz/question-card";
+import { Anim } from "@/components/shared/anim";
 import { TimerDisplay } from "@/components/shared/timer-display";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";

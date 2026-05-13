@@ -1,6 +1,6 @@
 export {
-	type LottieAnimationName,
 	getAnimationSrc,
+	type LottieAnimationName,
 } from "./lottie-assets";
 export { LottieSparkle } from "./lottie-sparkle";
 export { LottieWrapper } from "./lottie-wrapper";

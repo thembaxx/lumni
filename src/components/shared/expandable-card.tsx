@@ -1,10 +1,10 @@
 "use client";
 
 import { AnimatePresence, m } from "framer-motion";
-import { Anim } from "@/components/shared/anim";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ListenToLesson } from "@/components/listen-to-lesson";
+import { Anim } from "@/components/shared/anim";
 import { DifficultyBadge } from "@/components/shared/difficulty-badge";
 import { PracticeButton } from "@/components/study/practice-button";
 import { Badge } from "@/components/ui/badge";

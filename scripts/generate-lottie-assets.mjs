@@ -1,7 +1,8 @@
-import { readdirSync, readFileSync, writeFileSync, existsSync, mkdirSync, createWriteStream } from "node:fs";
+import { readdirSync, readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ZipArchive } from "archiver";
+import { createWriteStream } from "node:fs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -31,6 +32,7 @@ const TITLE_MAP = {
   "empty-search": "Empty Search",
   "empty-upload": "Empty Upload",
   "error-state": "Error State",
+  "typing-indicator": "Chat Typing",
 };
 
 function toPascalCase(str) {
@@ -59,17 +61,15 @@ async function createLottieArchive(id, jsonPath, outputPath) {
     ],
   };
 
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve2, reject) => {
     const output = createWriteStream(outputPath);
     const archive = new ZipArchive({ zlib: { level: 9 } });
 
-    output.on("close", () => resolve(archive.pointer()));
+    output.on("close", () => resolve2(archive.pointer()));
     archive.on("error", reject);
 
     archive.pipe(output);
-    archive.append(JSON.stringify(manifest, null, 2), {
-      name: "manifest.json",
-    });
+    archive.append(JSON.stringify(manifest, null, 2), { name: "manifest.json" });
     archive.append(JSON.stringify(jsonData), { name: `${id}.json` });
     archive.finalize();
   });
@@ -96,9 +96,7 @@ async function main() {
     totalBytes += size;
     sources[id] = `/animations/${id}.lottie`;
 
-    console.log(
-      `  ✓ ${id}.lottie (${(size / 1024).toFixed(1)} KB)`,
-    );
+    console.log(`  ✓ ${id}.lottie (${(size / 1024).toFixed(1)} KB)`);
   }
 
   const sortedKeys = Object.keys(sources).sort();

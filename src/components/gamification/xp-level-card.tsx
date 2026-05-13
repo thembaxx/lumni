@@ -12,7 +12,10 @@ interface XpLevelCardProps {
 
 export function XpLevelCard({ levelInfo, totalXp }: XpLevelCardProps) {
 	return (
-		<FadeIn distance={10} className="relative overflow-hidden rounded-lg bg-system-accent/10 border border-border/50 p-5">
+		<FadeIn
+			distance={10}
+			className="relative overflow-hidden rounded-lg bg-system-accent/10 border border-border/50 p-5"
+		>
 			<div className="flex items-center gap-4">
 				<motion.div
 					className="relative flex h-14 w-14 items-center justify-center rounded-full bg-system-accent shadow-lg"
@@ -23,7 +26,7 @@ export function XpLevelCard({ levelInfo, totalXp }: XpLevelCardProps) {
 					<span className="text-2xl font-bold text-white">
 						{levelInfo.level}
 					</span>
-		</motion.div>
+				</motion.div>
 
 				<div className="flex-1">
 					<div className="flex items-center justify-between mb-1">

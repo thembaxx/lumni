@@ -6,8 +6,10 @@ import {
 	Empty,
 	EmptyDescription,
 	EmptyHeader,
+	EmptyMedia,
 	EmptyTitle,
 } from "@/components/ui/empty";
+import { LottieWrapper } from "@/components/lottie/lottie-wrapper";
 
 interface FlashcardsEmptyProps {
 	subject: string;
@@ -24,6 +26,9 @@ export function FlashcardsEmpty({ subject, onGoBack }: FlashcardsEmptyProps) {
 				<CardContent className="space-y-4">
 					<Empty>
 						<EmptyHeader>
+							<EmptyMedia>
+								<LottieWrapper animation="empty-search" className="w-20 h-20 mx-auto" loop />
+							</EmptyMedia>
 							<EmptyTitle>No flashcards found</EmptyTitle>
 							<EmptyDescription>
 								Upload questions for {subject} to study

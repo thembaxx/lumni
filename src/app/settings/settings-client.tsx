@@ -14,6 +14,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
+import { LottieWrapper } from "@/components/lottie/lottie-wrapper";
 import {
 	AppearanceTab,
 	BetaTab,
@@ -77,6 +78,14 @@ function SettingsContent() {
 
 		await new Promise((resolve) => setTimeout(resolve, 600));
 		setIsSaving(false);
+		// Flash success-check animation briefly
+		const btn = document.activeElement as HTMLElement;
+		if (btn) {
+			btn.textContent = "✓ Saved";
+			setTimeout(() => {
+				btn.textContent = "Save";
+			}, 1200);
+		}
 	};
 
 	const handleSignOut = async () => {
@@ -244,13 +253,20 @@ function SettingsContent() {
 export function SettingsClient() {
 	return (
 		<Suspense
-			fallback={
-				<div className="flex items-center justify-center min-h-screen bg-system-grouped">
-					<div className="p-8 text-center ios-body text-[--system-text-secondary] animate-pulse">
+fallback={
+			<div className="flex items-center justify-center min-h-screen bg-system-grouped">
+				<div className="flex flex-col items-center gap-4">
+					<LottieWrapper
+						animation="loading-dots"
+						className="h-8"
+						loop
+					/>
+					<p className="ios-body text-[--system-text-secondary]">
 						Loading settings...
-					</div>
+					</p>
 				</div>
-			}
+			</div>
+		}
 		>
 			<SettingsContent />
 		</Suspense>

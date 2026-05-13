@@ -5,13 +5,13 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import type { Variants } from "framer-motion";
 import { m } from "framer-motion";
-import { Anim } from "@/components/shared/anim";
 import { Search } from "lucide-react";
 import { useState } from "react";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
 import { LessonCard } from "@/components/lesson";
 import type { LessonCardData } from "@/components/lesson/lesson-card";
 import { LessonCardProvider } from "@/components/lesson/lesson-card-context";
+import { Anim } from "@/components/shared/anim";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {

@@ -4,6 +4,7 @@ import { ArrowLeft, Check, Flag, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { LottieWrapper } from "@/components/lottie/lottie-wrapper";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import type { ExamPaper } from "@/types/exam-paper";
 import type { ExamAnswer } from "@/types/exam-session";
@@ -40,7 +41,9 @@ export function ExamResults({
 	return (
 		<div className="min-h-dvh bg-[--system-grouped-background]">
 			<div className="max-w-3xl mx-auto p-[--space-6] space-y-[--space-6]">
-				<div className="flex items-center justify-between">
+<div className="flex items-center justify-between">
+				<div className="flex items-center gap-3">
+					<LottieWrapper animation="success-check" className="w-10 h-10" />
 					<div>
 						<h1 className="ios-title-1 text-[--system-text-primary]">
 							Exam Submitted
@@ -49,6 +52,7 @@ export function ExamResults({
 							{paper.metadata.subject} {paper.metadata.paperCode}
 						</p>
 					</div>
+				</div>
 					<Button
 						variant="outline"
 						size="sm"

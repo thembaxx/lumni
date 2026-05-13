@@ -4,11 +4,11 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useState } from "react";
 import { CountdownHeader } from "@/components/dashboard/countdown-header";
 import { DailyProgressRing } from "@/components/dashboard/daily-progress-ring";
+import { PracticeSheet } from "@/components/dashboard/practice/practice-sheet";
 import { QuickActions } from "@/components/dashboard/quick-actions/quick-actions";
+import { ScrollAmbient } from "@/components/dashboard/scroll-ambient";
 import { StatsCards } from "@/components/dashboard/stats-cards";
 import { TodayFocusCard } from "@/components/dashboard/today-focus-card";
-import { ScrollAmbient } from "@/components/dashboard/scroll-ambient";
-import { PracticeSheet } from "@/components/dashboard/practice/practice-sheet";
 import { useGamification } from "@/hooks/use-gamification";
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 import { useViewTransition } from "@/hooks/use-view-transition";
@@ -126,7 +126,10 @@ export function DashboardClient({
 							</SectionReveal>
 
 							{practiceOpen ? null : (
-								<SectionReveal delay={0.2} className="w-full overflow-x-auto scrollbar-hide">
+								<SectionReveal
+									delay={0.2}
+									className="w-full overflow-x-auto scrollbar-hide"
+								>
 									<QuickActions onPracticeClick={handlePracticeClick} />
 								</SectionReveal>
 							)}

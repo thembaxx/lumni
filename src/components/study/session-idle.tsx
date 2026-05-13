@@ -1,6 +1,6 @@
 "use client";
 
-import { Target } from "lucide-react";
+import { LottieWrapper } from "@/components/lottie/lottie-wrapper";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -23,7 +23,7 @@ interface SessionIdleProps {
 export function SessionIdle({
 	title = "Start Learning",
 	description = "Select a subject to begin studying",
-	icon = <Target className="size-8" />,
+	icon,
 	onSelect,
 }: SessionIdleProps) {
 	return (
@@ -35,7 +35,15 @@ export function SessionIdle({
 				<CardContent className="space-y-6">
 					<Empty>
 						<EmptyHeader>
-							<EmptyMedia variant="icon">{icon}</EmptyMedia>
+							<EmptyMedia variant="icon">
+								{icon ?? (
+									<LottieWrapper
+										animation="loading-lumni"
+										className="size-16 mx-auto"
+										loop
+									/>
+								)}
+							</EmptyMedia>
 							<EmptyTitle>{title}</EmptyTitle>
 							<EmptyDescription>{description}</EmptyDescription>
 						</EmptyHeader>

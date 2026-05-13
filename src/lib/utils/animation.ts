@@ -5,8 +5,12 @@ import type { Transition, Variants } from "framer-motion";
 export const iOSEase: [number, number, number, number] = [0.16, 1, 0.3, 1];
 export const iOSDecelerate: [number, number, number, number] = [0, 0, 0.2, 1];
 export const iOSAccelerate: [number, number, number, number] = [0.4, 0, 1, 1];
-export const iOSSpring: [number, number, number, number] = [0.34, 1.56, 0.64, 1];
-export const easeOutQuint: [number, number, number, number] = [0.22, 1, 0.36, 1];
+export const iOSSpring: [number, number, number, number] = [
+	0.34, 1.56, 0.64, 1,
+];
+export const easeOutQuint: [number, number, number, number] = [
+	0.22, 1, 0.36, 1,
+];
 
 /* ============ Duration Transitions ============ */
 export const fastTransition: Transition = {

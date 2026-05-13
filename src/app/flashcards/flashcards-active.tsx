@@ -2,9 +2,9 @@
 
 import { IconCheck, IconX } from "@tabler/icons-react";
 import { m } from "framer-motion";
-import { Anim } from "@/components/shared/anim";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useCallback } from "react";
+import { Anim } from "@/components/shared/anim";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";

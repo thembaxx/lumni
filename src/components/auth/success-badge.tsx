@@ -1,7 +1,7 @@
 import { m } from "framer-motion";
-import { Anim } from "@/components/shared/anim";
 import { Sparkles, Zap } from "lucide-react";
 import { startTransition, useCallback, useEffect, useState } from "react";
+import { Anim } from "@/components/shared/anim";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";

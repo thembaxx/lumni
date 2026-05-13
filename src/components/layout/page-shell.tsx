@@ -32,9 +32,7 @@ function PageShell({
 					className,
 				)}
 			>
-				<div className={cn("max-w-md mx-auto", innerClassName)}>
-					{children}
-				</div>
+				<div className={cn("max-w-md mx-auto", innerClassName)}>{children}</div>
 			</div>
 		);
 	}

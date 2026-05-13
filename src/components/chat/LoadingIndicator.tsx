@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { LottieWrapper } from "@/components/lottie/lottie-wrapper";
 
 export function LoadingIndicator() {
 	const loadingMessages = [
@@ -23,42 +24,12 @@ export function LoadingIndicator() {
 			animate={{ opacity: 1, y: 0 }}
 			className="flex items-center gap-3 p-4 rounded-lg bg-system-surface-secondary text-muted-foreground border border-border/40 shadow-sm"
 		>
-			<div className="flex gap-1.5">
-				<motion.span
-					className="w-2.5 h-2.5 rounded-full bg-system-accent/40"
-					animate={{
-						scale: [1, 1.3, 1],
-						backgroundColor: [
-							"var(--system-accent-alpha-20)",
-							"var(--system-accent)",
-							"var(--system-accent-alpha-20)",
-						],
-					}}
-					transition={{ repeat: Infinity, duration: 0.8, delay: 0 }}
-				/>
-				<motion.span
-					className="w-2.5 h-2.5 rounded-full bg-system-accent/40"
-					animate={{
-						scale: [1, 1.3, 1],
-						backgroundColor: [
-							"var(--system-accent-alpha-20)",
-							"var(--system-accent)",
-							"var(--system-accent-alpha-20)",
-						],
-					}}
-					transition={{ repeat: Infinity, duration: 0.8, delay: 0.2 }}
-				/>
-				<motion.span
-					className="w-2.5 h-2.5 rounded-full bg-system-accent/40"
-					animate={{
-						scale: [1, 1.3, 1],
-						backgroundColor: [
-							"var(--system-accent-alpha-20)",
-							"var(--system-accent)",
-							"var(--system-accent-alpha-20)",
-						],
-					}}
-					transition={{ repeat: Infinity, duration: 0.8, delay: 0.4 }}
+			<div className="w-7 h-7 flex-shrink-0">
+				<LottieWrapper
+					animation="typing-indicator"
+					loop
+					autoplay
+					className="w-full h-full"
 				/>
 			</div>
 			<AnimatePresence mode="wait" initial={false}>

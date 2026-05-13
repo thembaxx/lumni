@@ -1,9 +1,9 @@
 "use client";
 
 import { AnimatePresence, m, useReducedMotion } from "framer-motion";
-import { Anim } from "@/components/shared/anim";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { Anim } from "@/components/shared/anim";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import {
 	iOSAccelerate,

@@ -39,7 +39,7 @@ export function ThemeSwitcher() {
 
 	return (
 		<div className="flex items-center gap-3 justify-between">
-			<p className="text-xs font-medium text-foreground">{labels[theme]}</p>
+			{/* <p className="text-xs font-medium text-foreground">{labels[theme]}</p> */}
 			<Button
 				onClick={() => setTheme(nextTheme())}
 				className="flex items-center justify-center rounded-lg border border-border bg-card p-2 transition-colors hover:bg-accent"

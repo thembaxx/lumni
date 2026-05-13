@@ -264,140 +264,140 @@ export function CountdownHeader() {
 				animate="visible"
 				className="w-full"
 			>
-			<div className="relative overflow-hidden rounded-lg bg-secondary/60 dark:bg-secondary/20 px-5 py-5 sm:px-6 sm:py-6">
-				{milestone && (
-					<motion.div
-						initial={{ opacity: 0, y: -8, scale: 0.9 }}
-						animate={{ opacity: 1, y: 0, scale: 1 }}
-						transition={{
-							duration: shouldReduceMotion ? 0 : 0.4,
-							ease: iOSEase,
-						}}
-						className="absolute -top-px left-4 right-4 flex items-center justify-center"
-					>
-						<div className="inline-flex items-center gap-1.5 rounded-b-xl bg-warning/20 dark:bg-warning/10 border border-warning/30 dark:border-warning/20 px-3 py-1">
-							<motion.span
-								animate={
-									shouldReduceMotion
-										? {}
-										: { scale: [1, 1.15, 1], rotate: [0, 8, -8, 0] }
-								}
-								transition={{
-									duration: 1,
-									repeat: Infinity,
-									ease: iOSEase,
-								}}
-								className="text-sm"
-							>
-								{milestone.emoji}
-							</motion.span>
-							<span className="text-xs font-bold text-warning uppercase tracking-tight">
-								{milestone.label}
-							</span>
+				<div className="relative overflow-hidden rounded-lg bg-secondary/60 dark:bg-secondary/20 px-5 py-5 sm:px-6 sm:py-6">
+					{milestone && (
+						<motion.div
+							initial={{ opacity: 0, y: -8, scale: 0.9 }}
+							animate={{ opacity: 1, y: 0, scale: 1 }}
+							transition={{
+								duration: shouldReduceMotion ? 0 : 0.4,
+								ease: iOSEase,
+							}}
+							className="absolute -top-px left-4 right-4 flex items-center justify-center"
+						>
+							<div className="inline-flex items-center gap-1.5 rounded-b-xl bg-warning/20 dark:bg-warning/10 border border-warning/30 dark:border-warning/20 px-3 py-1">
+								<motion.span
+									animate={
+										shouldReduceMotion
+											? {}
+											: { scale: [1, 1.15, 1], rotate: [0, 8, -8, 0] }
+									}
+									transition={{
+										duration: 1,
+										repeat: Infinity,
+										ease: iOSEase,
+									}}
+									className="text-sm"
+								>
+									{milestone.emoji}
+								</motion.span>
+								<span className="text-xs font-bold text-warning uppercase tracking-tight">
+									{milestone.label}
+								</span>
+							</div>
+						</motion.div>
+					)}
+
+					<div className="relative z-10">
+						<h1 className="text-xl sm:text-2xl font-bold text-foreground leading-tight tracking-tight text-wrap balance">
+							{greeting}
+							{isLoggedIn && name ? (
+								<span className="text-system-accent">, {firstName}</span>
+							) : null}
+						</h1>
+
+						<div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1">
+							{isLoading || !mounted ? (
+								<div className="h-8 w-24 animate-pulse rounded-md bg-muted/40" />
+							) : (
+								<motion.span
+									variants={numberVariants}
+									initial="hidden"
+									animate="visible"
+									className={cn(
+										"inline-block text-5xl sm:text-4xl font-bold tracking-tighter tabular-nums font-mono text-system-accent",
+									)}
+									aria-live="polite"
+								>
+									{daysLeft}
+								</motion.span>
+							)}
+							{!isLoading && mounted && (
+								<div>
+									<p className="text-[12px] font-medium text-muted-foreground tabular-nums">
+										{daysLeft === 1 ? "day" : "days"}
+									</p>
+									<p className="text-[12px] font-bold text-muted-foreground tabular-nums">
+										until finals
+									</p>
+								</div>
+							)}
 						</div>
-					</motion.div>
-				)}
 
-				<div className="relative z-10">
-					<h1 className="text-xl sm:text-2xl font-bold text-foreground leading-tight tracking-tight text-wrap balance">
-						{greeting}
-						{isLoggedIn && name ? (
-							<span className="text-system-accent">, {firstName}</span>
-						) : null}
-					</h1>
-
-					<div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1">
-						{isLoading || !mounted ? (
-							<div className="h-8 w-24 animate-pulse rounded-md bg-muted/40" />
-						) : (
-							<motion.span
-								variants={numberVariants}
+						<div
+							className="mt-3 mb-3 h-1.5 w-full overflow-hidden rounded-full bg-border/40"
+							role="progressbar"
+							aria-valuenow={mounted ? Math.round(yearProgress * 100) : 0}
+							aria-valuemin={0}
+							aria-valuemax={100}
+							aria-label="Year progress: days studied vs total"
+						>
+							<motion.div
+								variants={barGlowVariants}
 								initial="hidden"
 								animate="visible"
-								className={cn(
-									"inline-block text-5xl sm:text-4xl font-bold tracking-tighter tabular-nums font-mono text-system-accent",
-								)}
-								aria-live="polite"
+								className={cn("h-full rounded-full shadow-sm", cfg.barLight)}
+							/>
+						</div>
+
+						{mounted && (
+							<motion.p
+								initial={{ opacity: 0 }}
+								animate={{ opacity: 1 }}
+								transition={{
+									duration: shouldReduceMotion ? 0 : 0.3,
+									delay: shouldReduceMotion ? 0 : 0.5,
+								}}
+								className="mt-1 text-xs text-muted-foreground leading-snug text-pretty font-medium"
 							>
-								{daysLeft}
-							</motion.span>
-						)}
-						{!isLoading && mounted && (
-							<div>
-								<p className="text-[12px] font-medium text-muted-foreground tabular-nums">
-									{daysLeft === 1 ? "day" : "days"}
-								</p>
-								<p className="text-[12px] font-bold text-muted-foreground tabular-nums">
-									until finals
-								</p>
-							</div>
+								<span className="font-bold text-foreground/80">
+									{msg.primary}
+								</span>
+								. {msg.subtitle}
+							</motion.p>
 						)}
 					</div>
 
+					<motion.div
+						initial={{ opacity: 0, scale: 0.5 }}
+						animate={{ opacity: 1, scale: 1 }}
+						transition={{
+							duration: shouldReduceMotion ? 0 : 0.8,
+							ease: iOSEase,
+							delay: shouldReduceMotion ? 0 : 0.2,
+						}}
+						className={cn(
+							"pointer-events-none absolute -right-6 -top-6 h-32 w-32 rounded-full blur-2xl",
+							cfg.glowClass,
+						)}
+						aria-hidden="true"
+					/>
 					<div
-						className="mt-3 mb-3 h-1.5 w-full overflow-hidden rounded-full bg-border/40"
-						role="progressbar"
-						aria-valuenow={mounted ? Math.round(yearProgress * 100) : 0}
-						aria-valuemin={0}
-						aria-valuemax={100}
-						aria-label="Year progress: days studied vs total"
-					>
-						<motion.div
-							variants={barGlowVariants}
-							initial="hidden"
-							animate="visible"
-							className={cn("h-full rounded-full shadow-sm", cfg.barLight)}
-						/>
-					</div>
-
-					{mounted && (
-						<motion.p
-							initial={{ opacity: 0 }}
-							animate={{ opacity: 1 }}
-							transition={{
-								duration: shouldReduceMotion ? 0 : 0.3,
-								delay: shouldReduceMotion ? 0 : 0.5,
-							}}
-							className="mt-1 text-xs text-muted-foreground leading-snug text-pretty font-medium"
-						>
-							<span className="font-bold text-foreground/80">
-								{msg.primary}
-							</span>
-							. {msg.subtitle}
-						</motion.p>
-					)}
+						className={cn(
+							"pointer-events-none absolute -bottom-4 -right-4 h-20 w-20 rounded-full blur-xl",
+							cfg.glow2Class,
+						)}
+						aria-hidden="true"
+					/>
 				</div>
-
-				<motion.div
-					initial={{ opacity: 0, scale: 0.5 }}
-					animate={{ opacity: 1, scale: 1 }}
-					transition={{
-						duration: shouldReduceMotion ? 0 : 0.8,
-						ease: iOSEase,
-						delay: shouldReduceMotion ? 0 : 0.2,
-					}}
-					className={cn(
-						"pointer-events-none absolute -right-6 -top-6 h-32 w-32 rounded-full blur-2xl",
-						cfg.glowClass,
-					)}
-					aria-hidden="true"
-				/>
-				<div
-					className={cn(
-						"pointer-events-none absolute -bottom-4 -right-4 h-20 w-20 rounded-full blur-xl",
-						cfg.glow2Class,
-					)}
-					aria-hidden="true"
-				/>
-			</div>
-		</motion.div>
+			</motion.div>
 
 			<motion.div
 				initial={false}
 				animate={{
 					opacity: isCompact ? 1 : 0,
 					y: isCompact ? 0 : -4,
-					pointerEvents: isCompact ? "auto" : "none" as unknown as undefined,
+					pointerEvents: isCompact ? "auto" : ("none" as unknown as undefined),
 				}}
 				transition={{
 					duration: shouldReduceMotion ? 0 : 0.2,
@@ -408,7 +408,8 @@ export function CountdownHeader() {
 			>
 				<div className="max-w-md mx-auto flex items-center gap-3">
 					<span className="text-[13px] font-bold text-foreground/70">
-						{greeting}{isLoggedIn && name ? `, ${firstName}` : ""}
+						{greeting}
+						{isLoggedIn && name ? `, ${firstName}` : ""}
 					</span>
 					<span className="ml-auto flex items-baseline gap-1">
 						<span className="text-lg font-bold tabular-nums text-system-accent">

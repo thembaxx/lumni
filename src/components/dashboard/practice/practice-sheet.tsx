@@ -46,7 +46,9 @@ export function PracticeSheet({
 			>
 				<SheetHeader
 					className="relative flex flex-row items-center justify-center pr-12 pt-2"
-					style={{ viewTransitionName: open ? "practice-trigger" : "none" as string }}
+					style={{
+						viewTransitionName: open ? "practice-trigger" : ("none" as string),
+					}}
 				>
 					<Button
 						variant="ghost"

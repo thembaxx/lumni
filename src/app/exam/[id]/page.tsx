@@ -1,10 +1,11 @@
 "use client";
 
-import { AlertCircle, ArrowLeft, Loader2 } from "lucide-react";
+import { AlertCircle, ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { use, useEffect, useState } from "react";
 import { ExamEngine } from "@/components/exam/exam-engine";
 import { Button } from "@/components/ui/button";
+import { LottieWrapper } from "@/components/lottie/lottie-wrapper";
 import type { ExamPaper } from "@/types/exam-paper";
 
 interface PageProps {
@@ -64,8 +65,8 @@ export default function ExamPage({ params }: PageProps) {
 	if (loading) {
 		return (
 			<div className="min-h-dvh flex items-center justify-center bg-background">
-				<div className="flex flex-col items-center gap-3">
-					<Loader2 className="w-8 h-8 animate-spin text-muted-foreground" />
+				<div className="flex flex-col items-center gap-4">
+					<LottieWrapper animation="loading-lumni" className="w-16 h-16" loop />
 					<p className="text-sm text-muted-foreground">Loading exam...</p>
 				</div>
 			</div>

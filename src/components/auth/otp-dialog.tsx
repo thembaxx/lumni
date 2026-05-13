@@ -1,5 +1,4 @@
 import { m } from "framer-motion";
-import { Anim } from "@/components/shared/anim";
 import {
 	AlertCircle,
 	CheckCircle2,
@@ -11,6 +10,7 @@ import {
 } from "lucide-react";
 import { startTransition, useCallback, useEffect, useState } from "react";
 import { z } from "zod";
+import { Anim } from "@/components/shared/anim";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,

@@ -3,12 +3,12 @@
 import { CancelIcon, CheckmarkCircle02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
-import { Anim } from "@/components/shared/anim";
 import { MinusIcon, PlusIcon } from "lucide-react";
 import { useCallback, useState } from "react";
 import { Confetti, XPGainPopup } from "@/components/celebration";
 import { LottieWrapper } from "@/components/lottie";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { Anim } from "@/components/shared/anim";
 import { DifficultyBadge } from "@/components/shared/difficulty-badge";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";

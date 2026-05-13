@@ -45,11 +45,14 @@ export function StreakCelebration({
 	const isMilestone = currentStreak > 0 && currentStreak % 7 === 0;
 
 	return (
-		<FadeIn distance={10} className={`relative overflow-hidden rounded-2xl p-4 transition-colors transition-background ${
+		<FadeIn
+			distance={10}
+			className={`relative overflow-hidden rounded-2xl p-4 transition-colors transition-background ${
 				isMilestone
 					? "bg-orange-500/20 border border-orange-500/30"
 					: "bg-card border border-border/50"
-			}`}>
+			}`}
+		>
 			{isMilestone && (
 				<motion.div
 					className="absolute inset-0 pointer-events-none"

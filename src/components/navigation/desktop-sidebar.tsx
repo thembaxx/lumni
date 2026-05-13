@@ -1,12 +1,12 @@
 "use client";
 
 import {
+	BubbleChatSpark01Icon,
 	Home01Icon,
 	Notebook01Icon,
-	BubbleChatSpark01Icon,
 	OnlineLearning01Icon,
-	User03Icon,
 	Settings01Icon,
+	User03Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { usePathname } from "next/navigation";
@@ -90,7 +90,10 @@ export function DesktopSidebar() {
 
 	return (
 		<>
-			<aside aria-label="Sidebar navigation" className="hidden md:flex flex-col w-64 h-screen bg-system-grouped border-r border-system-separator/50 pt-safe">
+			<aside
+				aria-label="Sidebar navigation"
+				className="hidden md:flex flex-col w-64 h-screen bg-system-grouped border-r border-system-separator/50 pt-safe"
+			>
 				{/* App brand */}
 				<div className="px-5 py-4">
 					<h1 className="ios-headline text-system-accent">Lumni</h1>
