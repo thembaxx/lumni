@@ -1,7 +1,7 @@
 "use client";
 
-import { IconFlame } from "@tabler/icons-react";
-import { motion, useReducedMotion } from "framer-motion";
+import { IconCircleCheck, IconFlame } from "@tabler/icons-react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useGamification } from "@/hooks/use-gamification";
 import { iOSEase } from "@/lib/utils/animation";
 
@@ -11,8 +11,7 @@ const R = (SIZE - STROKE) / 2;
 const C = 2 * Math.PI * R;
 
 export function DailyProgressRing() {
-	const { levelInfo, gamification, currentStreak } =
-		useGamification();
+	const { levelInfo, gamification, currentStreak } = useGamification();
 	const shouldReduceMotion = useReducedMotion();
 
 	const daily = gamification.dailyChallenges[0];
@@ -29,6 +28,7 @@ export function DailyProgressRing() {
 				ease: iOSEase,
 			}}
 			className="flex flex-col items-center py-4"
+			style={{ willChange: "transform, opacity" }}
 		>
 			<div className="relative" style={{ width: SIZE, height: SIZE }}>
 				<svg
@@ -82,9 +82,22 @@ export function DailyProgressRing() {
 
 			<div className="flex items-center gap-4 mt-4">
 				<div className="flex items-center gap-1.5">
-					<IconFlame
-						className={`w-5 h-5 ${currentStreak > 0 ? "text-warning" : "text-muted-foreground"}`}
-					/>
+					<motion.span
+						animate={
+							shouldReduceMotion || currentStreak === 0
+								? {}
+								: { scale: [1, 1.2, 1] }
+						}
+						transition={{
+							duration: 1.5,
+							repeat: Infinity,
+							ease: iOSEase,
+						}}
+					>
+						<IconFlame
+							className={`w-5 h-5 transition-colors duration-300 ${currentStreak > 0 ? "text-warning" : "text-muted-foreground"}`}
+						/>
+					</motion.span>
 					<span className="text-lg font-bold text-foreground tabular-nums">
 						{currentStreak}
 					</span>
@@ -101,7 +114,19 @@ export function DailyProgressRing() {
 				</div>
 			</div>
 
-			<div className="mt-3 flex items-center gap-2">
+			<motion.div
+				className="mt-3 flex items-center gap-2"
+				animate={
+					isComplete && !shouldReduceMotion
+						? { scale: [1, 1.02, 1] }
+						: { scale: 1 }
+				}
+				transition={{
+					duration: 2,
+					repeat: isComplete ? Infinity : 0,
+					ease: iOSEase,
+				}}
+			>
 				<div className="h-1.5 w-32 rounded-full bg-border/40 overflow-hidden">
 					<motion.div
 						className={`h-full rounded-full ${isComplete ? "bg-success" : "bg-system-accent"}`}
@@ -113,10 +138,36 @@ export function DailyProgressRing() {
 				<span className="text-xs text-muted-foreground font-medium tabular-nums">
 					{daily?.progress ?? 0} / {daily?.target ?? 10}
 				</span>
+			</motion.div>
+			<div className="relative h-5 mt-0.5 flex items-center justify-center">
+				<AnimatePresence mode="wait">
+					{isComplete ? (
+						<motion.div
+							key="complete"
+							initial={{ scale: 0, opacity: 0 }}
+							animate={{ scale: 1, opacity: 1 }}
+							exit={{ scale: 0, opacity: 0 }}
+							transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+							className="flex items-center gap-1"
+						>
+							<IconCircleCheck className="w-3.5 h-3.5 text-success" />
+							<span className="text-[11px] font-bold text-success">
+								Daily goal complete
+							</span>
+						</motion.div>
+					) : (
+						<motion.p
+							key="incomplete"
+							initial={{ opacity: 0 }}
+							animate={{ opacity: 1 }}
+							exit={{ opacity: 0 }}
+							className="text-[11px] text-muted-foreground font-medium"
+						>
+							questions today
+						</motion.p>
+					)}
+				</AnimatePresence>
 			</div>
-			<p className="text-[11px] text-muted-foreground font-medium mt-0.5">
-				questions today
-			</p>
 		</motion.div>
 	);
 }

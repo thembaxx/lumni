@@ -34,7 +34,7 @@ function ActionButton({
 	return (
 		<motion.div
 			whileHover={shouldReduceMotion ? {} : { scale: 1.03 }}
-			whileTap={shouldReduceMotion ? {} : { scale: 0.97 }}
+			whileTap={shouldReduceMotion ? {} : { scale: 0.96 }}
 			transition={{ duration: 0.2, ease: iOSEase }}
 		>
 			<Button

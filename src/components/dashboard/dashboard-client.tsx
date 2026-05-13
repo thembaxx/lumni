@@ -38,7 +38,7 @@ export function DashboardClient({
 	});
 
 	return (
-		<AnimatePresence mode="wait">
+		<AnimatePresence initial={false} mode="wait">
 			{!isLoaded ? (
 				<motion.div
 					key="loading"
@@ -64,6 +64,11 @@ export function DashboardClient({
 					key="content"
 					initial={{ opacity: 0, y: 4 }}
 					animate={{ opacity: 1, y: 0 }}
+					exit={{
+						opacity: 0,
+						y: -4,
+						transition: { duration: 0.15, ease: iOSEase },
+					}}
 					transition={{ duration: 0.25, ease: iOSEase }}
 					className="min-h-screen flex flex-col bg-system-grouped pt-4 pb-[calc(var(--spacing-safe-pb)+var(--space-16)+var(--space-5))] overflow-x-hidden w-full"
 				>

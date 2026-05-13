@@ -11,12 +11,12 @@
    ======================================== */
 
 :root {
-	/* Core Color Tokens — Playful & Energetic */
+	/* Core Color Tokens — Airy & Warm */
 	--system-background: oklch(100% 0 0);
-	--system-grouped-background: oklch(98% 0.005 264);
+	--system-grouped-background: oklch(98.8% 0.003 60);
 	--system-surface: oklch(100% 0 0);
-	--system-surface-secondary: oklch(96.7% 0.01 264);
-	--system-separator: oklch(0% 0 0 / 0.08);
+	--system-surface-secondary: oklch(97.8% 0.005 60);
+	--system-separator: oklch(0% 0 0 / 0.06);
 	
 	/* Energetic Accents */
 	--system-accent: oklch(55% 0.18 264); /* Vibrant Purple */
@@ -62,10 +62,19 @@
 	--radius-tab-bar: 20px;
 	--radius-list-group: 20px;
 
-	/* Shadows */
-	--shadow-level-1: 0 1px 3px oklch(0% 0 0 / 0.04);
-	--shadow-level-2: 0 8px 24px oklch(20% 0.05 264 / 0.06), 0 2px 6px oklch(0% 0 0 / 0.04);
-	--shadow-level-3: 0 16px 48px oklch(20% 0.05 264 / 0.1), 0 4px 12px oklch(0% 0 0 / 0.04);
+	/* Shadows — multi-layer soft float */
+	--shadow-level-1:
+		0 1px 2px oklch(0% 0 0 / 0.04),
+		0 1px 4px oklch(0% 0 0 / 0.02);
+	--shadow-level-2:
+		0 2px 4px oklch(0% 0 0 / 0.04),
+		0 4px 12px oklch(0% 0 0 / 0.03),
+		0 8px 24px oklch(0% 0 0 / 0.02);
+	--shadow-level-3:
+		0 2px 4px oklch(0% 0 0 / 0.04),
+		0 8px 16px oklch(0% 0 0 / 0.04),
+		0 16px 48px oklch(0% 0 0 / 0.03),
+		0 32px 64px oklch(0% 0 0 / 0.015);
 
 	/* Typography Scale (rem-based) */
 	--fs-large-title: 2.125rem;  /* 34px */
@@ -121,7 +130,7 @@
 	--chart-4: oklch(60% 0.15 240);
 	--chart-5: oklch(55% 0.18 25);
 
-	--sidebar: oklch(98% 0.005 264);
+	--sidebar: oklch(98.8% 0.003 60);
 	--sidebar-foreground: var(--system-text-primary);
 	--sidebar-primary: var(--system-accent);
 	--sidebar-primary-foreground: oklch(100% 0 0);
@@ -220,9 +229,18 @@
 
 	--system-material-light: oklch(16% 0.015 264 / 0.85);
 
-	--shadow-level-1: 0 1px 3px oklch(0% 0 0 / 0.2);
-	--shadow-level-2: 0 8px 24px oklch(0% 0 0 / 0.3), 0 2px 6px oklch(0% 0 0 / 0.2);
-	--shadow-level-3: 0 16px 48px oklch(0% 0 0 / 0.4), 0 4px 12px oklch(0% 0 0 / 0.2);
+	--shadow-level-1:
+		0 1px 2px oklch(0% 0 0 / 0.15),
+		0 1px 4px oklch(0% 0 0 / 0.08);
+	--shadow-level-2:
+		0 2px 4px oklch(0% 0 0 / 0.18),
+		0 4px 12px oklch(0% 0 0 / 0.12),
+		0 8px 24px oklch(0% 0 0 / 0.08);
+	--shadow-level-3:
+		0 2px 4px oklch(0% 0 0 / 0.2),
+		0 8px 16px oklch(0% 0 0 / 0.15),
+		0 16px 48px oklch(0% 0 0 / 0.1),
+		0 32px 64px oklch(0% 0 0 / 0.06);
 
 	/* Compat aliases */
 	--background: var(--system-background);

@@ -54,22 +54,22 @@ const phaseConfigs: Record<
 	foundation: {
 		glowClass: "bg-system-accent/10",
 		glow2Class: "bg-system-accent-secondary/10",
-		barLight: "bg-gradient-to-r from-system-accent to-system-accent-secondary",
+		barLight: "bg-system-accent",
 	},
 	grind: {
 		glowClass: "bg-system-accent/15",
 		glow2Class: "bg-system-accent-secondary/15",
-		barLight: "bg-gradient-to-r from-system-accent to-system-accent-secondary",
+		barLight: "bg-system-accent",
 	},
 	intensify: {
 		glowClass: "bg-warning/15",
 		glow2Class: "bg-system-accent/15",
-		barLight: "bg-gradient-to-r from-warning to-system-accent",
+		barLight: "bg-warning",
 	},
 	final: {
 		glowClass: "bg-destructive/15",
 		glow2Class: "bg-warning/15",
-		barLight: "bg-gradient-to-r from-destructive to-warning",
+		barLight: "bg-destructive",
 	},
 };
 
@@ -323,7 +323,7 @@ export function CountdownHeader() {
 							variants={barGlowVariants}
 							initial="hidden"
 							animate="visible"
-							className={cn("h-full rounded-full shadow-md", cfg.barLight)}
+							className={cn("h-full rounded-full shadow-sm", cfg.barLight)}
 						/>
 					</div>
 
