@@ -89,7 +89,7 @@ function StatCard({
 				delay: shouldReduceMotion ? 0 : index * 0.05,
 			}}
 		>
-			<Card className="relative p-5 flex flex-col h-full items-center justify-start gap-3 overflow-hidden cursor-default shadow-sm border-border/40 hover:border-border/80 transition-colors">
+			<Card className="relative p-5 flex flex-col h-full items-center justify-start gap-3 overflow-hidden cursor-default border shadow-sm border-border/80 hover:border-border/80 transition-colors">
 				<div
 					className={`absolute top-0 left-0 right-0 h-1 ${accentClass} opacity-80`}
 				/>

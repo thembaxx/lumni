@@ -17,7 +17,7 @@ export function StudyPlanSheet() {
 
 	return (
 		<Sheet open={open} onOpenChange={setOpen}>
-			<SheetTrigger className="h-11 px-5 rounded-lg border border-border/50 bg-secondary/60 gap-2.5 inline-flex items-center justify-center text-foreground hover:bg-accent hover:border-accent shadow-sm transition-colors">
+			<SheetTrigger className="h-11 px-5 rounded-lg border border-border/80 bg-secondary/60 gap-2.5 inline-flex items-center justify-center text-foreground hover:bg-accent hover:border-accent transition-colors">
 				<span className="text-[--system-accent]">
 					<svg
 						className="w-4 h-4"
@@ -33,7 +33,7 @@ export function StudyPlanSheet() {
 						<path d="M2 12l10 5 10-5" />
 					</svg>
 				</span>
-				<span className="text-sm font-bold">Study Plan</span>
+				<span className="text-sm font-medium">Study Plan</span>
 			</SheetTrigger>
 			<SheetContent
 				className="sm:max-w-135 w-full h-dvh px-4 rounded-t-none"

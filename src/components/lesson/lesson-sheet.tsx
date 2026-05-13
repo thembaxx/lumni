@@ -56,7 +56,7 @@ export function LessonSheet() {
 
 	return (
 		<Sheet open={isOpen} onOpenChange={setIsOpen}>
-			<SheetTrigger className="h-11 px-5 rounded-xl border border-border/50 bg-secondary/80 gap-2.5 inline-flex items-center justify-center hover:bg-accent hover:border-accent shadow-sm transition-colors text-sm font-medium">
+			<SheetTrigger className="h-11 px-5 rounded-xl border border-border/80 bg-secondary/80 gap-2.5 inline-flex items-center justify-center hover:bg-accent hover:border-accent transition-colors text-sm font-medium">
 				<Search className="h-4 w-4 text-[--system-accent]" />
 				<span>Lessons</span>
 			</SheetTrigger>

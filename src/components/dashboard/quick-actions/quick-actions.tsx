@@ -40,7 +40,7 @@ function ActionButton({
 			<Button
 				variant="ghost"
 				onClick={onClick}
-				className="h-11 px-5 rounded-lg border border-border/50 bg-secondary/60 gap-2.5 justify-start text-foreground hover:bg-accent hover:border-accent shadow-sm"
+				className="h-11 px-5 rounded-lg border border-border/80 bg-secondary/60 gap-2.5 justify-start text-foreground hover:bg-accent hover:border-accent"
 			>
 				<motion.span
 					whileHover={shouldReduceMotion ? {} : { rotate: [0, -10, 10, 0] }}
@@ -49,7 +49,7 @@ function ActionButton({
 				>
 					<Icon className="w-4 h-4" />
 				</motion.span>
-				<span className="text-sm font-bold">{label}</span>
+				<span className="text-sm font-medium">{label}</span>
 			</Button>
 		</motion.div>
 	);
@@ -64,7 +64,7 @@ export function QuickActions({
 		<div className="w-full">
 			<ul className="flex items-center gap-3 overflow-x-auto scrollbar-hide py-1">
 				{quickActions.map((action) => (
-					<li key={action.label} className="flex-shrink-0">
+					<li key={action.label} className="shrink-0">
 						{action.label === "Study Plan" ? (
 							<StudyPlanSheet />
 						) : action.label === "Lessons" ? (

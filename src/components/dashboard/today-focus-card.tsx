@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckmarkCircle01Icon } from "@hugeicons/core-free-icons";
+import { ArrowDown01Icon, CheckmarkCircle01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
@@ -139,13 +139,13 @@ export function TodayFocusCard() {
 				ease: iOSEase,
 			}}
 		>
-			<Card className="relative overflow-hidden shadow-sm border-border/40 hover:border-border/80 transition-colors">
+			<Card className="relative overflow-hidden border border-border/80 hover:border-border/80 transition-colors">
 				<div className={`absolute top-0 left-0 right-0 h-1 ${cfg.accent}`} />
 
 				<div className="p-5 space-y-4">
 					<div className="flex items-center gap-3">
 						<div
-							className={`flex items-center justify-center size-10 rounded-xl ${cfg.bgAlpha}`}
+							className={`flex items-center justify-center border size-10 rounded-xl ${cfg.bgAlpha}`}
 						>
 							<HugeiconsIcon
 								icon={CheckmarkCircle01Icon}
@@ -156,15 +156,15 @@ export function TodayFocusCard() {
 							<span className="text-[13px] font-bold text-foreground tracking-tight block">
 								Today&apos;s Focus
 							</span>
-							<span className={`text-[12px] font-bold ${cfg.iconColor}`}>
+							<span className={`text-[12px] font-medium ${cfg.iconColor}`}>
 								{cfg.tag}
 							</span>
 						</div>
 					</div>
 
-					<div className="space-y-2">
-						<div className="flex items-center gap-2">
-							<p className="text-[13px] text-primary font-bold">
+					<div className="space-y-4">
+						<div className="flex justify-between items-center gap-2">
+							<p className="text-[13px] text-primary font-semibold">
 								{subjectName}
 							</p>
 							<SubjectsDrawer
@@ -173,9 +173,10 @@ export function TodayFocusCard() {
 									if (found) setSelectedSubjectId(found.id);
 								}}
 							>
-								<span className="text-[12px] text-muted-foreground hover:text-foreground cursor-pointer transition-colors font-medium p-2 -m-2">
+								<div className="flex items-center text-[12px] text-muted-foreground border rounded-sm pl-2 pr-1.5 py-1 hover:text-foreground cursor-pointer transition-colors font-medium p-2 -m-2">
 									change subject
-								</span>
+									<HugeiconsIcon icon={ArrowDown01Icon} className="size-4 ml-2" />
+								</div>
 							</SubjectsDrawer>
 						</div>
 						<h3 className="text-lg font-bold text-foreground leading-tight tracking-tight text-wrap balance">
@@ -183,13 +184,14 @@ export function TodayFocusCard() {
 						</h3>
 					</div>
 
-					<p className="text-[13px] text-muted-foreground leading-relaxed font-medium">
+					<p className="text-xs text-muted-foreground leading-relaxed font-medium">
 						{reason}
 					</p>
 
 					<Button
 						size="sm"
-						className="w-full font-bold text-[13px] h-10 hover:opacity-90"
+						variant="secondary"
+						className="w-full font-bold bg-black/10 dark:bg-white/10 text-[13px] h-10 hover:opacity-90"
 						onClick={handleStart}
 						disabled={showSuccess}
 					>
