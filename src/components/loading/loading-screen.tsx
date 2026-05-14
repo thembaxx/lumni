@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { LottieWrapper } from "@/components/lottie";
+import { CircleNotch } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { iOSEase } from "@/lib/utils/animation";
@@ -11,14 +11,12 @@ import { iOSEase } from "@/lib/utils/animation";
 interface LoadingScreenProps {
 	duration?: number;
 	redirectTo?: string;
-	useLottie?: boolean;
 	skipDelay?: number;
 }
 
 export function LoadingScreen({
 	duration = 2000,
 	redirectTo = "/dashboard",
-	useLottie = true,
 	skipDelay = 5000,
 }: LoadingScreenProps) {
 	const [progress, setProgress] = useState(0);
@@ -92,21 +90,13 @@ export function LoadingScreen({
 							}}
 						/>
 						<div className="relative flex items-center justify-center w-20 h-20 rounded-2xl bg-[--system-accent]/10 border border-[--system-accent]/20">
-							{useLottie ? (
-								<LottieWrapper
-									animation="loading-lumni"
-									className="w-14 h-14"
-									loop
-								/>
-							) : (
-								<motion.span
-									className="text-3xl font-semibold text-foreground"
-									animate={{ opacity: [1, 0.4, 1] }}
-									transition={{ duration: 1.5, repeat: Infinity }}
-								>
-									L
-								</motion.span>
-							)}
+							<motion.div
+								animate={{ rotate: 360 }}
+								transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+								className="size-14"
+							>
+								<CircleNotch className="size-14 text-foreground" />
+							</motion.div>
 						</div>
 					</motion.div>
 

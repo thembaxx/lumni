@@ -1,7 +1,8 @@
 "use client";
 
 import { useReducedMotion } from "framer-motion";
-import { LottieWrapper } from "@/components/lottie";
+import { motion } from "framer-motion";
+import { SpinnerGap } from "@phosphor-icons/react";
 import type { VisualContent as VisualContentType } from "@/lib/visual-engine/types";
 import { DiagramRenderer } from "./diagram-renderer";
 import { ImageViewer } from "./image-viewer";
@@ -21,7 +22,13 @@ export function VisualContent({ visual, isLoading }: VisualContentProps) {
 				{shouldReduceMotion ? (
 					<div className="size-6 animate-spin rounded-full border-2 border-muted-foreground/30 border-t-muted-foreground" />
 				) : (
-					<LottieWrapper animation="loading-lumni" className="size-16" loop />
+					<motion.div
+						animate={{ rotate: 360 }}
+						transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+						className="size-6"
+					>
+						<SpinnerGap className="size-6 text-muted-foreground" />
+					</motion.div>
 				)}
 			</div>
 		);
@@ -57,7 +64,7 @@ export function VisualContent({ visual, isLoading }: VisualContentProps) {
 					url={visual.imageUrl}
 					label={visual.label}
 					attribution={visual.attribution}
-					sourceUrl={visual.sourceUrl}
+					sourceUrl={visual.imageUrl}
 				/>
 			);
 

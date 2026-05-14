@@ -2,47 +2,40 @@
 
 import { Flame } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
-import { LottieWrapper } from "@/components/lottie";
 import { getStreakMessage } from "@/lib/utils/gamification";
 
 interface StreakFireProps {
 	streak: number;
 	showMilestone?: boolean;
 	milestone?: number;
-	useLottie?: boolean;
 }
 
 export function StreakFire({
 	streak,
 	showMilestone,
 	milestone,
-	useLottie = true,
 }: StreakFireProps) {
 	const isMilestone = showMilestone && milestone && streak >= milestone;
 
 	return (
 		<div className="flex items-center gap-2">
 			<div className="relative">
-				{useLottie ? (
-					<LottieWrapper animation="streak-fire" className="size-10" loop />
-				) : (
-					<motion.div
-						animate={{
-							scale: [1, 1.2, 1],
-							rotate: [0, 5, -5, 0],
-						}}
-						transition={{
-							duration: 0.5,
-							repeat: Infinity,
-							repeatDelay: 2,
-						}}
-					>
-						<Flame
-							className={`size-6 ${streak >= 7 ? "text-warning" : "text-warning/80"}`}
-							fill={streak >= 7 ? "currentColor" : "none"}
-						/>
-					</motion.div>
-				)}
+				<motion.div
+					animate={{
+						scale: [1, 1.2, 1],
+						rotate: [0, 5, -5, 0],
+					}}
+					transition={{
+						duration: 0.5,
+						repeat: Infinity,
+						repeatDelay: 2,
+					}}
+				>
+					<Flame
+						className={`size-6 ${streak >= 7 ? "text-warning" : "text-warning/80"}`}
+						fill={streak >= 7 ? "currentColor" : "none"}
+					/>
+				</motion.div>
 
 				{streak >= 3 && (
 					<motion.div

@@ -1,10 +1,10 @@
 "use client";
 
-import { CheckCircle, Minus, Plus, X } from "@phosphor-icons/react";
-import { AnimatePresence, m } from "framer-motion";
+import { CheckCircle, CircleNotch, Minus, Plus, X } from "@phosphor-icons/react";
+import { AnimatePresence, m, motion } from "framer-motion";
 import { useCallback, useState } from "react";
 import { Confetti, XPGainPopup } from "@/components/celebration";
-import { LottieWrapper } from "@/components/lottie";
+import { AnimatedIcon, getIconMapping } from "@/lib/utils/icon-mapping";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Anim } from "@/components/shared/anim";
 import { DifficultyBadge } from "@/components/shared/difficulty-badge";
@@ -443,11 +443,17 @@ export function QuestionCard({
 				)}
 			>
 				<div className="flex items-center gap-3">
-					<LottieWrapper
-						animation={isCorrect ? "success-check" : "error-state"}
-						className="size-10 shrink-0"
-						loop={false}
-					/>
+					<motion.div
+						initial={{ scale: 0 }}
+						animate={{ scale: 1 }}
+						transition={{ duration: 0.3 }}
+					>
+						{isCorrect ? (
+							<CheckCircle className="size-10 shrink-0" />
+						) : (
+							<X className="size-10 shrink-0" />
+						)}
+					</motion.div>
 					<p className="font-medium">{isCorrect ? "Correct!" : "Incorrect"}</p>
 				</div>
 				{feedback && (
@@ -563,11 +569,9 @@ export function QuestionCard({
 
 					{isGrading && (
 						<div className="flex items-center justify-center gap-2">
-							<LottieWrapper
-								animation="loading-dots"
-								className="w-12 h-6"
-								loop
-							/>
+							<div className="size-12">
+								<CircleNotch className="size-12 animate-spin text-muted-foreground" />
+							</div>
 							<p className="text-sm text-muted-foreground">
 								Grading your answer...
 							</p>

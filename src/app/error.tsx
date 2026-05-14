@@ -2,9 +2,10 @@
 
 import { ArrowsClockwise, House } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
-import { LottieWrapper } from "@/components/lottie";
+import { CheckCircle } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import { iOSEase } from "@/lib/utils/animation";
+import { AnimatedIcon } from "@/lib/utils/icon-mapping";
 
 export default function Error({
 	error,
@@ -32,11 +33,13 @@ export default function Error({
 						>
 							<div className="absolute inset-0 rounded-full bg-destructive/10 blur-xl" />
 							<div className="relative flex items-center justify-center w-28 h-28 rounded-[--radius-card] bg-destructive/10 border border-destructive/20">
-								<LottieWrapper
-									animation="error-state"
-									className="w-20 h-20"
-									loop={false}
-								/>
+								<motion.div
+									initial={{ scale: 0, opacity: 0 }}
+									animate={{ scale: 1, opacity: 1 }}
+									transition={{ delay: 0.3 }}
+								>
+									<AnimatedIcon name="error-state" className="w-20 h-20" />
+								</motion.div>
 							</div>
 						</motion.div>
 

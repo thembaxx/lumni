@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { LottieWrapper } from "@/components/lottie/lottie-wrapper";
+import { Sparkle } from "@phosphor-icons/react";
 import { cn } from "@/lib/utils";
 import { iOSEase } from "@/lib/utils/animation";
 
@@ -7,7 +7,13 @@ export function WelcomeState() {
 	return (
 		<div className="flex-1 flex flex-col items-center justify-center p-8">
 			<div className="size-48 mb-6">
-				<LottieWrapper animation="empty-search" loop={true} autoplay={true} />
+				<motion.div
+					animate={{ scale: [1, 1.2, 1] }}
+					transition={{ duration: 1.5, repeat: Infinity }}
+					className="size-full flex items-center justify-center"
+				>
+					<Sparkle className="size-20 text-primary/60" />
+				</motion.div>
 			</div>
 			<div className="text-center">
 				<motion.h2

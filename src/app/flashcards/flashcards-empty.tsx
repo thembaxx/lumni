@@ -1,10 +1,12 @@
 "use client";
 
-import { LottieWrapper } from "@/components/lottie/lottie-wrapper";
+import { MagnifyingGlass } from "@phosphor-icons/react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
 	Empty,
+	EmptyContent,
 	EmptyDescription,
 	EmptyHeader,
 	EmptyMedia,
@@ -26,22 +28,25 @@ export function FlashcardsEmpty({ subject, onGoBack }: FlashcardsEmptyProps) {
 				<CardContent className="space-y-4">
 					<Empty>
 						<EmptyHeader>
-							<EmptyMedia>
-								<LottieWrapper
-									animation="empty-search"
-									className="w-20 h-20 mx-auto"
-									loop
-								/>
+							<EmptyMedia variant="icon">
+								<motion.div
+									animate={{ scale: [1, 1.2, 1] }}
+									transition={{ duration: 1.5, repeat: Infinity }}
+								>
+									<MagnifyingGlass className="size-10 mx-auto text-muted-foreground" />
+								</motion.div>
 							</EmptyMedia>
 							<EmptyTitle>No flashcards found</EmptyTitle>
 							<EmptyDescription>
 								Upload questions for {subject} to study
 							</EmptyDescription>
 						</EmptyHeader>
+						<EmptyContent>
+							<Button variant="outline" className="w-full" onClick={onGoBack}>
+								Go Back
+							</Button>
+						</EmptyContent>
 					</Empty>
-					<Button variant="outline" className="w-full" onClick={onGoBack}>
-						Go Back
-					</Button>
 				</CardContent>
 			</Card>
 		</div>

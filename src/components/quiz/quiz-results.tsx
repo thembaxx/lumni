@@ -8,7 +8,6 @@ import {
 } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
 import { Confetti } from "@/components/celebration";
-import { LottieWrapper } from "@/components/lottie";
 import { ProgressDots } from "@/components/shared/progress-dots";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -24,7 +23,6 @@ interface QuizResultsCardProps {
 	onRestart?: () => void;
 	onDashboard?: () => void;
 	className?: string;
-	useLottie?: boolean;
 }
 
 export function QuizResultsCard({
@@ -34,7 +32,6 @@ export function QuizResultsCard({
 	onRestart,
 	onDashboard,
 	className,
-	useLottie = false,
 }: QuizResultsCardProps) {
 	const accuracy = calculateAccuracy(correctAnswers, totalQuestions);
 	const isGreatScore = accuracy >= 80;
@@ -81,11 +78,7 @@ export function QuizResultsCard({
 						variant="secondary"
 						className="flex items-center gap-2 px-4 py-2 shadow-lg"
 					>
-						{useLottie ? (
-							<LottieWrapper animation="success-check" className="size-5" />
-						) : (
-							<Trophy className="size-5" />
-						)}
+						<Trophy className="size-5" />
 						<span className="font-extrabold">Perfect Score!</span>
 					</Badge>
 				</motion.div>
@@ -198,6 +191,7 @@ interface QuizResultsInlineProps {
 export function QuizResultsInline({
 	currentQuestionIndex,
 	totalQuestions,
+	correctAnswers,
 }: QuizResultsInlineProps) {
 	return (
 		<ProgressDots

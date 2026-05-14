@@ -2,7 +2,6 @@
 
 import { ArrowCounterClockwise, House, Target } from "@phosphor-icons/react";
 import { Confetti } from "@/components/celebration";
-import { LottieWrapper } from "@/components/lottie/lottie-wrapper";
 import { Button } from "@/components/ui/button";
 
 interface FlashcardsResultsProps {

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { LottieWrapper } from "@/components/lottie";
+import { SpinnerGap } from "@phosphor-icons/react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { iOSEase } from "@/lib/utils/animation";
 
@@ -19,7 +19,12 @@ export default function Loading() {
 					animate={{ scale: 1 }}
 					transition={{ duration: 0.4, ease: iOSEase }}
 				>
-					<LottieWrapper animation="loading-lumni" className="w-24 h-24" loop />
+					<motion.div
+						animate={{ rotate: 360 }}
+						transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+					>
+						<SpinnerGap className="size-24 text-foreground" />
+					</motion.div>
 				</motion.div>
 				<Skeleton className="h-4 w-48 rounded-full" />
 				<div className="flex flex-col items-center gap-4 w-full max-w-xs">

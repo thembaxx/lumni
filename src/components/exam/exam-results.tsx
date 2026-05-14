@@ -2,7 +2,8 @@
 
 import { ArrowLeft, Check, Flag, X } from "@phosphor-icons/react";
 import { useRouter } from "next/navigation";
-import { LottieWrapper } from "@/components/lottie/lottie-wrapper";
+import { CheckCircle } from "@phosphor-icons/react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -43,7 +44,13 @@ export function ExamResults({
 			<div className="max-w-3xl mx-auto p-[--space-6] flex flex-col gap-[--space-6]">
 				<div className="flex items-center justify-between">
 					<div className="flex items-center gap-3">
-						<LottieWrapper animation="success-check" className="size-10" />
+						<motion.div
+							initial={{ scale: 0, opacity: 0 }}
+							animate={{ scale: 1, opacity: 1 }}
+							transition={{ delay: 0.3 }}
+						>
+							<CheckCircle className="size-10 text-success" />
+						</motion.div>
 						<div>
 							<h1 className="ios-title-1 text-[--system-text-primary]">
 								Exam Submitted

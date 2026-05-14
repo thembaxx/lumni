@@ -97,7 +97,7 @@ function NavItemComponent({
 			</div>
 			<span
 				className={cn(
-					"text-[10px] font-medium leading-none tracking-[var(--tracking-caption-1)] transition-colors duration-200",
+					"text-[10px] font-medium leading-none tracking-[var(--tracking-caption-1)] uppercase transition-colors duration-200",
 					isActive ? "text-system-accent" : "text-system-text-tertiary",
 				)}
 			>
@@ -141,10 +141,10 @@ export function BottomNav() {
 		<>
 			<nav
 				aria-label="Main navigation"
-				className="fixed bottom-0 left-0 right-0 z-50 md:hidden"
+				className="fixed bottom-0 left-0 right-0 z-50 md:hidden w-full flex"
 				style={{ height: "calc(49px + env(safe-area-inset-bottom, 0px))" }}
 			>
-				<div className="flex w-full h-[49px] items-stretch bg-system-background/80 backdrop-blur-xl border-t border-system-separator/30">
+				<div className="flex w-full h-12.25 grow items-stretch bg-system-background/80 backdrop-blur-xl border-t border-system-separator/30">
 					{navItems.map((item, index) => (
 						<NavItemComponent
 							key={item.id}

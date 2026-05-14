@@ -1,8 +1,13 @@
 "use client";
 
 import { ArrowCounterClockwise, House, Target } from "@phosphor-icons/react";
-import { LottieWrapper } from "@/components/lottie";
+import { motion } from "framer-motion";
+import { AnimatedIcon } from "@/lib/utils/icon-mapping";
 import { Button } from "@/components/ui/button";
+import {
+	AccuracyBar,
+} from "@/components/shared/accuracy-bar";
+import { iOSEase, springTransition } from "@/lib/utils/animation";
 import { calculateAccuracy } from "@/lib/utils/time";
 
 interface StudySessionStats {
@@ -15,14 +20,12 @@ interface SessionResultsProps {
 	stats: StudySessionStats;
 	onQuit?: () => void;
 	onRestart?: () => void;
-	useLottie?: boolean;
 }
 
 export function SessionResults({
 	stats,
 	onQuit,
 	onRestart,
-	useLottie = false,
 }: SessionResultsProps) {
 	const accuracy = calculateAccuracy(stats.correct ?? 0, stats.total);
 
@@ -31,12 +34,14 @@ export function SessionResults({
 			<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4">
 				<div className="max-w-md w-full mx-auto flex flex-col gap-4">
 					<header className="text-left">
-						{useLottie && (
-							<LottieWrapper
-								animation="success-check"
-								className="size-16 mb-2"
-							/>
-						)}
+						<motion.div
+							initial={{ scale: 0, opacity: 0 }}
+							animate={{ scale: 1, opacity: 1 }}
+							transition={{ duration: 0.3 }}
+							className="mb-2"
+						>
+							<AnimatedIcon name="success-check" className="size-16 mx-auto" />
+						</motion.div>
 						<h2 className="text-xl font-extrabold tracking-tight">
 							Session Complete!
 						</h2>

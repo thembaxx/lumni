@@ -9,9 +9,11 @@ import {
 	Wifi,
 	WifiOff,
 } from "lucide-react";
-import { LottieWrapper } from "@/components/lottie";
+import { ChatCenteredText, CloudArrowUp } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { AnimatedIcon } from "@/lib/utils/icon-mapping";
+import { motion } from "framer-motion";
 
 interface EmptyStateProps {
 	icon: LucideIcon;
@@ -81,6 +83,17 @@ interface EmptyStateWithIllustrationProps {
 	animation?: "search" | "upload" | "error";
 }
 
+function AnimatedIllustration({ animation }: { animation: "search" | "upload" | "error" }) {
+	const animationMap: Record<string, string> = {
+		search: "empty-search",
+		upload: "empty-upload",
+		error: "error-state",
+	};
+	return (
+		<AnimatedIcon name={animationMap[animation]} className="size-14" />
+	);
+}
+
 export function EmptyStateWithIllustration({
 	icon: Icon,
 	title,
@@ -95,17 +108,7 @@ export function EmptyStateWithIllustration({
 				<div className="absolute inset-0 rounded-full bg-muted/50 blur-xl" />
 				<div className="relative flex h-20 w-20 items-center justify-center rounded-full border border-dashed border-muted-foreground/30 bg-muted/30">
 					{animation ? (
-						<LottieWrapper
-							animation={
-								animation === "search"
-									? "empty-search"
-									: animation === "upload"
-										? "empty-upload"
-										: "error-state"
-							}
-							className="w-14 h-14"
-							loop
-						/>
+						<AnimatedIllustration animation={animation} />
 					) : Icon ? (
 						<Icon className="h-8 w-8 text-muted-foreground/60" />
 					) : null}
@@ -229,11 +232,13 @@ export const EmptyStates = {
 
 	loadingSlow: (task = "Loading your data") => (
 		<div className="flex flex-col items-center justify-center py-12 px-4 text-center">
-			<LottieWrapper
-				animation="loading-lumni"
-				className="w-16 h-16 mb-4"
-				loop
-			/>
+			<motion.div
+				animate={{ rotate: 360 }}
+				transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+				className="size-16 mb-4"
+			>
+				<AnimatedIcon name="loading-lumni" className="size-16" />
+			</motion.div>
 			<h3 className="mb-2 text-lg font-semibold">Just a moment</h3>
 			<p className="max-w-sm text-sm text-muted-foreground">
 				{task}. This usually takes a few seconds.

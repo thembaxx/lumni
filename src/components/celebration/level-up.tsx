@@ -2,7 +2,6 @@
 
 import { Crown, Star } from "@phosphor-icons/react";
 import { AnimatePresence, motion } from "framer-motion";
-import { LottieWrapper } from "@/components/lottie";
 
 interface LevelUpProps {
 	visible: boolean;
@@ -10,7 +9,6 @@ interface LevelUpProps {
 	title: string;
 	xpToNext: number;
 	onClose?: () => void;
-	useLottie?: boolean;
 }
 
 export function LevelUp({
@@ -19,7 +17,6 @@ export function LevelUp({
 	title,
 	xpToNext,
 	onClose,
-	useLottie = true,
 }: LevelUpProps) {
 	return (
 		<AnimatePresence initial={false}>
@@ -55,19 +52,12 @@ export function LevelUp({
 								transition={{ delay: 0.2 }}
 								className="mb-4"
 							>
-								{useLottie ? (
-									<LottieWrapper
-										animation="level-up"
-										className="size-24 mx-auto"
-									/>
-								) : (
-									<motion.div
-										animate={{ rotate: [0, 10, -10, 0] }}
-										transition={{ duration: 0.5, repeat: 3 }}
-									>
-										<Crown className="size-16 mx-auto text-warning" />
-									</motion.div>
-								)}
+								<motion.div
+									animate={{ rotate: [0, 10, -10, 0] }}
+									transition={{ duration: 0.5, repeat: 3 }}
+								>
+									<Crown className="size-16 mx-auto text-warning" />
+								</motion.div>
 							</motion.div>
 
 							<motion.div

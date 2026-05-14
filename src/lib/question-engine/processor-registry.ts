@@ -1,35 +1,27 @@
-import { CalculationProcessor } from "./processors/calculation-processor";
-import { DataResponseProcessor } from "./processors/data-response-processor";
-import { DiagramProcessor } from "./processors/diagram-processor";
-import { EssayProcessor } from "./processors/essay-processor";
-import { LongAnswerProcessor } from "./processors/long-answer-processor";
-import { MatchingProcessor } from "./processors/matching-processor";
-import { MCQProcessor } from "./processors/mcq-processor";
-import { MixedProcessor } from "./processors/mixed-processor";
-import { ProgrammingProcessor } from "./processors/programming-processor";
-import { ShortAnswerProcessor } from "./processors/short-answer-processor";
-import { SourceBasedProcessor } from "./processors/source-based-processor";
+import { PromptManager } from "./prompt-manager";
+import { processorConfigs } from "./processors/processor-configs";
+import { TypedQuestionProcessor } from "./processors/processor";
 import type { QuestionProcessor, QuestionType } from "./types";
 
 export class ProcessorRegistry {
 	private processors = new Map<QuestionType, QuestionProcessor>();
 
 	constructor() {
-		this.register(new MCQProcessor());
-		this.register(new MatchingProcessor());
-		this.register(new ShortAnswerProcessor());
-		this.register(new LongAnswerProcessor());
-		this.register(new EssayProcessor());
-		this.register(new CalculationProcessor());
-		this.register(new DiagramProcessor());
-		this.register(new ProgrammingProcessor());
-		this.register(new SourceBasedProcessor());
-		this.register(new DataResponseProcessor());
-		this.register(new MixedProcessor());
+		const prompts = new PromptManager();
+		for (const config of processorConfigs) {
+			const processor = new TypedQuestionProcessor(
+				config.type as QuestionType,
+				{ generateTemperature: config.temperature },
+				config.grade,
+				config.hint,
+				prompts,
+			);
+			this.register(config.type as QuestionType, processor);
+		}
 	}
 
-	private register(processor: QuestionProcessor): void {
-		this.processors.set(processor.type, processor);
+	private register(type: QuestionType, processor: QuestionProcessor): void {
+		this.processors.set(type, processor);
 	}
 
 	getProcessor<T extends QuestionType>(type: T): QuestionProcessor<T> {

@@ -9,12 +9,12 @@ import {
 	PaintBrush,
 	User,
 } from "@phosphor-icons/react";
+import { CircleNotch } from "@phosphor-icons/react";
 
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
-import { LottieWrapper } from "@/components/lottie/lottie-wrapper";
 import {
 	AppearanceTab,
 	BetaTab,
@@ -256,7 +256,13 @@ export function SettingsClient() {
 			fallback={
 				<div className="flex items-center justify-center min-h-[100dvh] bg-system-grouped">
 					<div className="flex flex-col items-center gap-4">
-						<LottieWrapper animation="loading-dots" className="h-8" loop />
+						<motion.div
+							animate={{ rotate: 360 }}
+							transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
+							className="h-8"
+						>
+							<CircleNotch className="size-8 text-muted-foreground" />
+						</motion.div>
 						<p className="ios-body text-[--system-text-secondary]">
 							Loading settings...
 						</p>

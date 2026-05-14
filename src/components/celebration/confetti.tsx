@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { LottieWrapper } from "@/components/lottie";
 
 interface ConfettiPiece {
 	id: number;
@@ -28,17 +27,15 @@ export function Confetti({
 	trigger,
 	count = 50,
 	duration = 2000,
-	useLottie = true,
 }: {
 	trigger: boolean;
 	count?: number;
 	duration?: number;
-	useLottie?: boolean;
 }) {
 	const [pieces, setPieces] = useState<ConfettiPiece[]>([]);
 
 	useEffect(() => {
-		if (trigger && !useLottie) {
+		if (trigger) {
 			const newPieces = Array.from({ length: count }, (_, i) => ({
 				id: i,
 				x: Math.random() * 100,
@@ -51,21 +48,7 @@ export function Confetti({
 			setPieces(newPieces);
 			setTimeout(() => setPieces([]), duration);
 		}
-	}, [trigger, count, duration, useLottie]);
-
-	if (useLottie) {
-		if (!trigger) return null;
-		return (
-			<div className="fixed inset-0 pointer-events-none z-50 overflow-hidden">
-				<LottieWrapper
-					animation="confetti"
-					className="w-full h-full"
-					autoplay
-					onComplete={() => {}}
-				/>
-			</div>
-		);
-	}
+	}, [trigger, count, duration]);
 
 	if (pieces.length === 0) return null;
 

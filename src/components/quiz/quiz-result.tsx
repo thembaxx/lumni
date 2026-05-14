@@ -8,8 +8,7 @@ import {
 	useSpring,
 	useTransform,
 } from "framer-motion";
-import type { LottieAnimationName } from "@/components/lottie";
-import { LottieWrapper } from "@/components/lottie";
+import { AnimatedIcon } from "@/lib/utils/icon-mapping";
 import { AccuracyBar } from "@/components/shared/accuracy-bar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -28,7 +27,6 @@ interface QuizResultProps {
 	};
 	onRestart: () => void;
 	onClose?: () => void;
-	useLottie?: boolean;
 }
 
 function AnimatedCounter({
@@ -87,47 +85,41 @@ function Confetti() {
 	);
 }
 
+function getMessage(accuracy: number) {
+	if (accuracy >= 90)
+		return {
+			title: "Outstanding!",
+			icon: "level-up" as const,
+			celebration: true,
+		};
+	if (accuracy >= 70)
+		return {
+			title: "Great job!",
+			icon: "confetti" as const,
+			celebration: false,
+		};
+	if (accuracy >= 50)
+		return {
+			title: "Good effort!",
+			icon: "success-check" as const,
+			celebration: false,
+		};
+	return {
+		title: "Keep practicing!",
+		icon: "error-state" as const,
+		celebration: false,
+	};
+}
+
 export function QuizResult({
 	results,
 	onRestart,
 	onClose,
-	useLottie = true,
 }: QuizResultProps) {
 	const { totalQuestions, correctAnswers, accuracy, incorrectAnswers } =
 		results;
 
-	const getMessage = () => {
-		if (accuracy >= 90)
-			return {
-				title: "Outstanding!",
-				animation: "level-up",
-				lottieSize: "size-20",
-				celebration: true,
-			};
-		if (accuracy >= 70)
-			return {
-				title: "Great job!",
-				animation: "confetti",
-				lottieSize: "size-16",
-				celebration: false,
-			};
-		if (accuracy >= 50)
-			return {
-				title: "Good effort!",
-				animation: "success-check",
-				lottieSize: "size-16",
-				celebration: false,
-			};
-		return {
-			title: "Keep practicing!",
-			animation: "error-state",
-			lottieSize: "size-16",
-			celebration: false,
-		};
-	};
-
-	const message = getMessage();
-	const animation = message.animation as LottieAnimationName;
+	const message = getMessage(accuracy);
 
 	return (
 		<m.div
@@ -143,7 +135,7 @@ export function QuizResult({
 					animate={{ scale: 1, opacity: 1 }}
 					transition={{ delay: 0.2, ...springTransition }}
 				>
-					<LottieWrapper animation={animation} className={message.lottieSize} />
+					<AnimatedIcon name={message.icon} className="size-20" />
 				</m.div>
 				<m.h2
 					className="text-2xl font-extrabold"

@@ -1,8 +1,8 @@
 "use client";
 
-import { AnimatePresence, m } from "framer-motion";
+import { AnimatePresence, m, motion } from "framer-motion";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { LottieWrapper } from "@/components/lottie/lottie-wrapper";
+import { CircleNotch, WarningCircle, MagnifyingGlass } from "@phosphor-icons/react";
 import { Anim } from "@/components/shared/anim";
 import { ProgressDots } from "@/components/shared/progress-dots";
 import { Card, CardContent } from "@/components/ui/card";
@@ -10,6 +10,7 @@ import { AssessmentHeader } from "@/components/ui/headers/assessment-header";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
 import { iOSEase } from "@/lib/utils/animation";
+import { AnimatedIcon } from "@/lib/utils/icon-mapping";
 import type { Question } from "@/types/questions";
 import { QuestionCard } from "./question-card";
 import { QuizControls } from "./quiz-controls";
@@ -139,11 +140,13 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 			<div className="grid grid-cols-12 gap-0">
 				<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4 pb-20">
 					<Card className="max-w-md w-full p-6 flex flex-col items-center gap-4">
-						<LottieWrapper
-							animation="loading-dots"
-							className="h-8 mx-auto"
-							loop
-						/>
+						<motion.div
+							animate={{ rotate: 360 }}
+							transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
+							className="h-8 w-8 mx-auto"
+						>
+							<CircleNotch className="size-8 text-muted-foreground" />
+						</motion.div>
 						<p className="text-sm text-muted-foreground">
 							Generating questions...
 						</p>
@@ -164,7 +167,7 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 			<div className="grid grid-cols-12 gap-0">
 				<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4 pb-20">
 					<Card className="max-w-md w-full p-8 flex flex-col items-center gap-4">
-						<LottieWrapper animation="error-state" className="size-16" />
+						<AnimatedIcon name="error-state" className="size-16" />
 						<p className="text-destructive font-medium">
 							Failed to load questions.
 						</p>
@@ -185,7 +188,7 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 			<div className="grid grid-cols-12 gap-0">
 				<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4 pb-20">
 					<Card className="max-w-md w-full p-8 flex flex-col items-center gap-4">
-						<LottieWrapper animation="empty-search" className="size-16" />
+						<AnimatedIcon name="empty-search" className="size-16" />
 						<p className="text-muted-foreground">
 							No questions available for this subject.
 						</p>
@@ -225,7 +228,6 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 								handleRestart();
 							}}
 							onClose={handleQuit}
-							useLottie={false}
 						/>
 					</m.div>
 				</AnimatePresence>

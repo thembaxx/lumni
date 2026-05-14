@@ -19,7 +19,6 @@ import { LoadingIndicator } from "@/components/chat/LoadingIndicator";
 import { MessageBubble } from "@/components/chat/MessageBubble";
 import { SmartImage } from "@/components/chat/SmartImage";
 import { WelcomeState } from "@/components/chat/WelcomeState";
-import { LottieWrapper } from "@/components/lottie/lottie-wrapper";
 import { AnimatedDialogContent } from "@/components/ui/animated-dialog-content";
 import { Button } from "@/components/ui/button";
 import {

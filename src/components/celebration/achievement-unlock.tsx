@@ -2,7 +2,6 @@
 
 import { Trophy } from "@phosphor-icons/react";
 import { AnimatePresence, motion } from "framer-motion";
-import { LottieWrapper } from "@/components/lottie";
 import {
 	rarityBorder,
 	rarityGlowStrong,
@@ -17,7 +16,6 @@ interface AchievementUnlockProps {
 	xpReward: number;
 	rarity: "common" | "rare" | "epic" | "legendary";
 	onClose?: () => void;
-	useLottie?: boolean;
 }
 
 export function AchievementUnlock({
@@ -28,7 +26,6 @@ export function AchievementUnlock({
 	xpReward,
 	rarity,
 	onClose,
-	useLottie = true,
 }: AchievementUnlockProps) {
 	return (
 		<AnimatePresence initial={false}>
@@ -61,14 +58,12 @@ export function AchievementUnlock({
 								transition={{ type: "spring", delay: 0.2 }}
 								className="mb-4"
 							>
-								{useLottie ? (
-									<LottieWrapper
-										animation="achievement-unlock"
-										className="size-32 mx-auto"
-									/>
-								) : (
+								<motion.div
+									animate={{ scale: [0, 1.2, 1] }}
+									transition={{ duration: 0.3 }}
+								>
 									<div className="text-7xl mb-4">{icon}</div>
-								)}
+								</motion.div>
 							</motion.div>
 
 							<motion.div

@@ -1,10 +1,11 @@
 "use client";
 
+import { ArrowLeft } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { LottieWrapper } from "@/components/lottie";
 import { Button } from "@/components/ui/button";
 import { iOSEase } from "@/lib/utils/animation";
+import { AnimatedIcon } from "@/lib/utils/icon-mapping";
 import { appConfig } from "../../app.config";
 
 export default function NotFound() {
@@ -25,11 +26,7 @@ export default function NotFound() {
 					>
 						<div className="absolute inset-0 rounded-full bg-secondary blur-xl" />
 						<div className="relative w-24 h-24 rounded-full bg-secondary/60 flex items-center justify-center">
-							<LottieWrapper
-								animation="page-404"
-								className="w-16 h-16"
-								loop={false}
-							/>
+							<AnimatedIcon name="page-404" className="w-16 h-16" />
 						</div>
 					</motion.div>
 					<motion.div

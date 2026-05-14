@@ -1,6 +1,7 @@
 "use client";
 
-import { LottieWrapper } from "@/components/lottie/lottie-wrapper";
+import { MagnifyingGlass } from "@phosphor-icons/react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -29,15 +30,16 @@ export function SessionEmpty({ subject, onGoBack }: SessionEmptyProps) {
 						<Empty>
 							<EmptyHeader>
 								<EmptyMedia variant="icon">
-									<LottieWrapper
-										animation="empty-search"
-										className="size-16 mx-auto"
-										loop
-									/>
+									<motion.div
+										animate={{ scale: [1, 1.2, 1] }}
+										transition={{ duration: 1.5, repeat: Infinity }}
+									>
+										<MagnifyingGlass className="size-16 mx-auto text-muted-foreground" />
+									</motion.div>
 								</EmptyMedia>
 								<EmptyTitle>No content found</EmptyTitle>
 								<EmptyDescription>
-									CloudArrowUp questions for {subject} to start studying
+									Upload questions for {subject} to start studying
 								</EmptyDescription>
 							</EmptyHeader>
 							<EmptyContent>

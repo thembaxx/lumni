@@ -1,7 +1,8 @@
 "use client";
 
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
-import { LottieWrapper } from "@/components/lottie/lottie-wrapper";
+import { SpinnerGap } from "@phosphor-icons/react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -40,11 +41,12 @@ export function SessionIdle({
 							<EmptyHeader>
 								<EmptyMedia variant="icon">
 									{icon ?? (
-										<LottieWrapper
-											animation="loading-lumni"
-											className="size-16 mx-auto"
-											loop
-										/>
+										<motion.div
+											animate={{ rotate: 360 }}
+											transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+										>
+											<SpinnerGap className="size-16 mx-auto text-muted-foreground" />
+										</motion.div>
 									)}
 								</EmptyMedia>
 								<EmptyTitle>{title}</EmptyTitle>

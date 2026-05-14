@@ -1,7 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { LottieWrapper } from "@/components/lottie/lottie-wrapper";
+import { motion } from "framer-motion";
+import { CircleNotch } from "@phosphor-icons/react";
 import {
 	EmptyStateWithIllustration,
 	QuestionCard,
@@ -207,11 +208,13 @@ export function QuizView({
 				<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4 pb-20">
 					<Card size="sm" className="max-w-md w-full">
 						<CardContent className="flex flex-col items-center gap-4 p-8 text-left">
-							<LottieWrapper
-								animation="loading-dots"
-								className="w-12 h-3 mx-auto"
-								loop
-							/>
+<motion.div
+							animate={{ rotate: 360 }}
+							transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
+							className="w-12 h-3 mx-auto"
+						>
+							<CircleNotch className="size-12 text-muted-foreground" />
+						</motion.div>
 							<p className="text-muted-foreground">Loading questions...</p>
 						</CardContent>
 					</Card>

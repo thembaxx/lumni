@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { LottieWrapper } from "@/components/lottie";
+import { CircleNotch } from "@phosphor-icons/react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { iOSEase } from "@/lib/utils/animation";
 
@@ -27,7 +27,13 @@ export default function Loading() {
 			</nav>
 
 			<main className="flex-1 flex flex-col items-center justify-center gap-3">
-				<LottieWrapper animation="loading-dots" className="w-16 h-8" loop />
+				<motion.div
+					animate={{ rotate: 360 }}
+					transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+					className="size-16"
+				>
+					<CircleNotch className="size-16 text-muted-foreground" />
+				</motion.div>
 				<Skeleton className="h-8 w-32 rounded-full" />
 				<Skeleton className="h-4 w-48 rounded-full" />
 			</main>

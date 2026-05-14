@@ -1,7 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { LottieWrapper } from "@/components/lottie/lottie-wrapper";
-import { cn } from "@/lib/utils";
+import { CircleNotch } from "@phosphor-icons/react";
 
 export function LoadingIndicator() {
 	const loadingMessages = [
@@ -25,12 +24,13 @@ export function LoadingIndicator() {
 			className="flex items-center gap-3 p-4 rounded-lg bg-system-surface-secondary text-muted-foreground border border-border/40 shadow-sm"
 		>
 			<div className="size-7 flex-shrink-0">
-				<LottieWrapper
-					animation="typing-indicator"
-					loop
-					autoplay
-					className="w-full h-full"
-				/>
+				<motion.div
+					animate={{ rotate: 360 }}
+					transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
+					className="size-full"
+				>
+					<CircleNotch className="size-7 text-muted-foreground" />
+				</motion.div>
 			</div>
 			<AnimatePresence mode="wait" initial={false}>
 				<motion.span

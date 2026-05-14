@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import type { Question } from "@/lib/question-engine/types";
-import { validateMCQ } from "../mcq-validator";
+import { validateQuestion } from "..";
 
 function makeQuestion(
 	overrides?: Partial<Question<"multiple-choice">>,
@@ -32,29 +32,29 @@ function makeQuestion(
 
 describe("MCQ Validator", () => {
 	test("passes valid question", () => {
-		const result = validateMCQ(makeQuestion());
+		const result = validateQuestion(makeQuestion());
 		expect(result.isValid).toBe(true);
 		expect(result.score).toBeGreaterThan(80);
 	});
 
 	test("fails on short question text", () => {
-		const result = validateMCQ(makeQuestion({ questionText: "Hi" }));
+		const result = validateQuestion(makeQuestion({ questionText: "Hi" }));
 		expect(result.isValid).toBe(false);
 		expect(result.errors.some((e) => e.field === "questionText")).toBe(true);
 	});
 
 	test("fails on missing difficulty", () => {
-		const result = validateMCQ(makeQuestion({ difficulty: "" as never }));
+		const result = validateQuestion(makeQuestion({ difficulty: "" as never }));
 		expect(result.isValid).toBe(false);
 	});
 
 	test("fails on zero points", () => {
-		const result = validateMCQ(makeQuestion({ points: 0 }));
+		const result = validateQuestion(makeQuestion({ points: 0 }));
 		expect(result.isValid).toBe(false);
 	});
 
 	test("fails on less than 2 options", () => {
-		const result = validateMCQ(
+		const result = validateQuestion(
 			makeQuestion({
 				body: {
 					options: [{ id: "A", text: "Only", isCorrect: true }],
@@ -67,7 +67,7 @@ describe("MCQ Validator", () => {
 	});
 
 	test("detects no correct answer", () => {
-		const result = validateMCQ(
+		const result = validateQuestion(
 			makeQuestion({
 				body: {
 					options: [
@@ -83,7 +83,7 @@ describe("MCQ Validator", () => {
 	});
 
 	test("detects multiple correct when not allowed", () => {
-		const result = validateMCQ(
+		const result = validateQuestion(
 			makeQuestion({
 				body: {
 					options: [
@@ -99,7 +99,7 @@ describe("MCQ Validator", () => {
 	});
 
 	test("warns on option length variance", () => {
-		const result = validateMCQ(
+		const result = validateQuestion(
 			makeQuestion({
 				body: {
 					options: [

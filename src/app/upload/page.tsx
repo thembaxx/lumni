@@ -1,11 +1,12 @@
 "use client";
 
-import { CloudArrowUp, Database, Spinner } from "@phosphor-icons/react";
+import { CloudArrowUp, Database, Spinner, CheckCircle } from "@phosphor-icons/react";
 import { useState } from "react";
-import { LottieWrapper } from "@/components/lottie";
 import { Button } from "@/components/ui/button";
 import { ListCell, ListGroup, ListSection } from "@/components/ui/list-cell";
 import { UploadButton } from "@/lib/uploadthing";
+import { motion } from "framer-motion";
+import { AnimatedIcon } from "@/lib/utils/icon-mapping";
 
 function formatSubjectName(subject: string): string {
 	return subject.replace(/\s+/g, "_").toLowerCase();
@@ -87,11 +88,7 @@ export default function UploadPage() {
 					<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
 						<header>
 							<h2 className="font-heading text-sm font-medium flex flex-col items-center gap-3 text-center">
-								<LottieWrapper
-									animation="empty-upload"
-									className="w-20 h-20"
-									loop
-								/>
+								<AnimatedIcon name="empty-upload" className="size-20" />
 								<span className="flex items-center gap-2">
 									<CloudArrowUp className="size-4" />
 									Upload
@@ -112,10 +109,13 @@ export default function UploadPage() {
 
 							{lastCloudArrowUp && (
 								<div className="rounded-[--radius-button] bg-[var(--success)]/10 p-[--space-4] text-center">
-									<LottieWrapper
-										animation="success-check"
-										className="w-16 h-16 mx-auto mb-2"
-									/>
+									<motion.div
+										initial={{ scale: 0, opacity: 0 }}
+										animate={{ scale: 1, opacity: 1 }}
+										transition={{ duration: 0.3 }}
+									>
+										<CheckCircle className="size-16 mx-auto mb-2 text-success" />
+									</motion.div>
 									<p className="text-[13px] font-medium text-[var(--success)]">
 										CloudArrowUp successful
 									</p>

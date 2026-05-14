@@ -1,7 +1,8 @@
 "use client";
 
 import { Target } from "@phosphor-icons/react";
-import { LottieWrapper } from "@/components/lottie/lottie-wrapper";
+import { CircleNotch } from "@phosphor-icons/react";
+import { motion } from "framer-motion";
 import { AnimatedDots } from "@/components/shared/animated-dots";
 import { Button } from "@/components/ui/button";
 import {
@@ -33,16 +34,17 @@ interface QuizEmptyStateNoQuestionsProps {
 
 function QuizEmptyStateNotStarted({ onStart }: QuizEmptyStateNotStartedProps) {
 	return (
-		<Empty className="border border-dashed mt-24">
+		<Empty className="border border-dashed mt-2">
 			<div className="grid grid-cols-12 gap-4 items-center">
 				<div className="col-span-12 md:col-span-6">
 					<EmptyHeader>
 						<EmptyMedia variant="icon">
-							<LottieWrapper
-								animation="empty-search"
-								className="size-12 mx-auto md:mx-0"
-								loop
-							/>
+							<motion.div
+								animate={{ rotate: 360 }}
+								transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
+							>
+								<CircleNotch className="size-12 mx-auto md:mx-0 text-muted-foreground" />
+							</motion.div>
 						</EmptyMedia>
 						<EmptyTitle>Quiz not started</EmptyTitle>
 						<EmptyDescription>
@@ -74,15 +76,16 @@ function QuizEmptyStateNoQuestions({
 				<div className="col-span-12 md:col-span-6">
 					<EmptyHeader>
 						<EmptyMedia variant="icon">
-							<LottieWrapper
-								animation="empty-search"
-								className="size-12 mx-auto md:mx-0"
-								loop
-							/>
+							<motion.div
+								animate={{ rotate: 360 }}
+								transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
+							>
+								<CircleNotch className="size-12 mx-auto md:mx-0 text-muted-foreground" />
+							</motion.div>
 						</EmptyMedia>
 						<EmptyTitle>No questions found</EmptyTitle>
 						<EmptyDescription>
-							CloudArrowUp questions for {subject} to start practicing
+							Upload questions for {subject} to start practicing
 						</EmptyDescription>
 					</EmptyHeader>
 					<EmptyContent>
@@ -121,11 +124,12 @@ export function QuizStartState({ onSelect }: QuizStartStateProps) {
 					<div className="relative">
 						<Skeleton shape="circle" className="absolute size-20" />
 						<div className="relative flex items-center justify-center size-20 rounded-full border border-dashed border-muted-foreground/20 bg-muted/20">
-							<LottieWrapper
-								animation="empty-search"
-								className="size-12"
-								loop
-							/>
+							<motion.div
+								animate={{ rotate: 360 }}
+								transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
+							>
+								<CircleNotch className="size-12 text-muted-foreground" />
+							</motion.div>
 						</div>
 					</div>
 				</div>
@@ -165,11 +169,12 @@ export function QuizSubjectPrompt({
 					<div className="relative">
 						<Skeleton shape="circle" className="absolute size-20" />
 						<div className="relative flex items-center justify-center size-20 rounded-full border border-dashed border-muted-foreground/20 bg-muted/20">
-							<LottieWrapper
-								animation="empty-search"
-								className="size-12"
-								loop
-							/>
+							<motion.div
+								animate={{ rotate: 360 }}
+								transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
+							>
+								<CircleNotch className="size-12 text-muted-foreground" />
+							</motion.div>
 						</div>
 					</div>
 				</div>

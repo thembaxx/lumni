@@ -1,173 +1,28 @@
-import { Query } from "appwrite";
-import { COLLECTIONS, createDocument, listDocuments } from "./db/client";
+import { ensureAppwrite } from "./db/ensure";
+import { seedConfig } from "./db/ensure-config";
 
 export async function seedDatabase() {
 	console.log("Seeding Appwrite database...");
+	const report = await ensureAppwrite(seedConfig);
 
-	try {
-		const existingSubjects = await listDocuments(COLLECTIONS.SUBJECTS);
+	console.log(`Database: ${report.database.status}`);
 
-		if (existingSubjects.length > 0) {
-			console.log(
-				`Database already has ${existingSubjects.length} subjects, skipping seed.`,
-			);
-			console.log(`   - ${existingSubjects.length} subjects`);
-			return;
-		}
-	} catch {
-		// Collection might not exist yet, continue with seeding
+	for (const [id, col] of Object.entries(report.collections)) {
+		console.log(`  Collection "${id}": ${col.status}`);
 	}
 
-	const subjectDefs = [
-		{
-			name: "Mathematics",
-			code: "mathematics",
-			category: "mathematics",
-			color: "oklch(57.7% 0.184 264°)",
-			icon: "calculator",
-		},
-		{
-			name: "Physical Sciences",
-			code: "physical-sciences",
-			category: "sciences",
-			color: "oklch(59.3% 0.194 28°)",
-			icon: "flask",
-		},
-		{
-			name: "Life Sciences",
-			code: "life-sciences",
-			category: "sciences",
-			color: "oklch(64.8% 0.173 142°)",
-			icon: "leaf",
-		},
-		{
-			name: "Accounting",
-			code: "accounting",
-			category: "commerce",
-			color: "oklch(75.4% 0.154 70°)",
-			icon: "book",
-		},
-		{
-			name: "Business Studies",
-			code: "business-studies",
-			category: "commerce",
-			color: "oklch(53.5% 0.182 286°)",
-			icon: "briefcase",
-		},
-		{
-			name: "Economics",
-			code: "economics",
-			category: "commerce",
-			color: "oklch(66.1% 0.142 210°)",
-			icon: "trending-up",
-		},
-		{
-			name: "Geography",
-			code: "geography",
-			category: "social",
-			color: "oklch(62.1% 0.186 155°)",
-			icon: "globe",
-		},
-		{
-			name: "History",
-			code: "history",
-			category: "social",
-			color: "oklch(69.6% 0.196 49°)",
-			icon: "clock",
-		},
-	];
-
-	const topicDefs = [
-		{
-			name: "Calculus",
-			subjectCode: "mathematics",
-			description: "Differential calculus, Integration, Applications",
-		},
-		{
-			name: "Algebra",
-			subjectCode: "mathematics",
-			description: "Number patterns, Sequences and series, Finance",
-		},
-		{
-			name: "Trigonometry",
-			subjectCode: "mathematics",
-			description: "Trigonometric identities, Equations, Graphs",
-		},
-		{
-			name: "Mechanics",
-			subjectCode: "physical-sciences",
-			description: "Momentum, Newton's Laws, Work, Energy and Power",
-		},
-		{
-			name: "Waves and Sound",
-			subjectCode: "physical-sciences",
-			description: "Wave properties, Doppler effect, Sound waves",
-		},
-		{
-			name: "Electricity and Magnetism",
-			subjectCode: "physical-sciences",
-			description: "Electric circuits, Electrostatics, Electrodynamics",
-		},
-		{
-			name: "Matter and Materials",
-			subjectCode: "physical-sciences",
-			description: "Organic chemistry, Rates of reaction, Chemical equilibrium",
-		},
-		{
-			name: "Genetics",
-			subjectCode: "life-sciences",
-			description: "DNA, inheritance, genetic engineering",
-		},
-		{
-			name: "Evolution",
-			subjectCode: "life-sciences",
-			description: "Natural selection, speciation, human evolution",
-		},
-	];
-
-	for (const s of subjectDefs) {
-		try {
-			await createDocument(COLLECTIONS.SUBJECTS, s);
-		} catch (e) {
-			console.error(`Failed to create subject ${s.code}:`, e);
-		}
-	}
-	console.log(`   - ${subjectDefs.length} subjects`);
-
-	const subjectMap = new Map<string, string>();
-	for (const s of subjectDefs) {
-		try {
-			const docs = await listDocuments(COLLECTIONS.SUBJECTS, [
-				Query.equal("code", s.code),
-				Query.limit(1),
-			]);
-			if (docs.length > 0) {
-				subjectMap.set(
-					s.code,
-					(docs[0] as Record<string, unknown>).$id as string,
-				);
-			}
-		} catch {
-			// skip
+	for (const [id, seeded] of Object.entries(report.seeded)) {
+		console.log(
+			`  Seeded "${id}": ${seeded.inserted} inserted, ${seeded.skipped} skipped`,
+		);
+		for (const err of seeded.errors) {
+			console.log(`    Error: ${err}`);
 		}
 	}
 
-	for (const t of topicDefs) {
-		const subjectId = subjectMap.get(t.subjectCode);
-		if (!subjectId) continue;
-		try {
-			await createDocument(COLLECTIONS.TOPICS, {
-				subjectId,
-				name: t.name,
-				description: t.description,
-				orderIndex: 0,
-			});
-		} catch (e) {
-			console.error(`Failed to create topic ${t.name}:`, e);
-		}
+	if (!report.success) {
+		throw new Error("Seeding completed with errors");
 	}
-	console.log(`   - ${topicDefs.length} topics`);
-
 	console.log("Database seeded successfully!");
 }
 
