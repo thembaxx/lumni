@@ -75,11 +75,11 @@ export function LessonLibrary() {
 	const nextUp = activeRecs[0];
 
 	return (
-		<div className="space-y-6">
+		<div className="flex flex-col gap-6">
 			<div className="flex items-center justify-between">
 				<div>
 					<h2 className="text-lg font-semibold flex items-center gap-2 text-balance">
-						<Target className="h-5 w-5 text-[--system-accent]" />
+						<Target className="size-5 text-[--system-accent]" />
 						Your Learning Path
 					</h2>
 					<p className="text-sm text-muted-foreground mt-0.5 text-pretty">
@@ -95,7 +95,7 @@ export function LessonLibrary() {
 
 			{!selectedSubject && (
 				<Card className="p-8 text-center rounded-3xl">
-					<GraduationCap className="h-10 w-10 mx-auto mb-3 text-muted-foreground" />
+					<GraduationCap className="size-10 mx-auto mb-3 text-muted-foreground" />
 					<p className="text-sm text-muted-foreground">
 						Select a subject to see your personalized study recommendations.
 					</p>
@@ -103,7 +103,7 @@ export function LessonLibrary() {
 			)}
 
 			{isLoading && selectedSubject && (
-				<div className="space-y-3">
+				<div className="flex flex-col gap-3">
 					<Skeleton className="h-24 w-full rounded-xl" />
 					<Skeleton className="h-20 w-full rounded-xl" />
 					<Skeleton className="h-20 w-full rounded-xl" />
@@ -161,7 +161,7 @@ export function LessonLibrary() {
 
 					{summary.averageScore > 0 && (
 						<div className="flex items-center gap-2 text-sm text-muted-foreground">
-							<Trophy className="h-4 w-4 text-amber-500" />
+							<Trophy className="size-4 text-amber-500" />
 							Average competency score:{" "}
 							<span className="tabular-nums">
 								{Math.round(summary.averageScore)}%
@@ -178,7 +178,7 @@ export function LessonLibrary() {
 					)}
 
 					{recommendations.length > 0 && (
-						<div className="space-y-2">
+						<div className="flex flex-col gap-2">
 							<h3 className="text-sm font-medium text-muted-foreground">
 								All Topics
 							</h3>
@@ -191,9 +191,9 @@ export function LessonLibrary() {
 									>
 										<div className="flex items-center gap-3 min-w-0">
 											<div
-												className={`h-8 w-8 rounded-lg flex items-center justify-center ${levelColors[rec.level] ?? "bg-muted"}`}
+												className={`size-8 rounded-lg flex items-center justify-center ${levelColors[rec.level] ?? "bg-muted"}`}
 											>
-												<Icon className="h-4 w-4" />
+												<Icon className="size-4" />
 											</div>
 											<div className="min-w-0">
 												<p className="text-sm font-medium truncate">
@@ -236,7 +236,7 @@ export function LessonLibrary() {
 
 					{!isLoading && recommendations.length === 0 && selectedSubject && (
 						<Card className="p-6 text-center rounded-3xl">
-							<Trophy className="h-8 w-8 mx-auto mb-2 text-emerald-500" />
+							<Trophy className="size-8 mx-auto mb-2 text-emerald-500" />
 							<p className="text-sm text-muted-foreground">
 								No recommendations available. All topics may be mastered.
 							</p>
@@ -261,7 +261,7 @@ function NextUpCard({
 	return (
 		<Card className="p-5 border-[--system-accent]/20 bg-[--system-accent]/5 rounded-3xl">
 			<div className="flex items-start justify-between gap-4">
-				<div className="space-y-1 min-w-0">
+				<div className="flex flex-col gap-1 min-w-0">
 					<div className="flex items-center gap-2">
 						<Badge variant="outline" className="text-xs">
 							Next Up
@@ -276,11 +276,11 @@ function NextUpCard({
 					<h3 className="font-semibold text-base truncate">{nextUp.name}</h3>
 					<div className="flex items-center gap-3 text-xs text-muted-foreground">
 						<span className="capitalize flex items-center gap-1">
-							<NextActionIcon className="h-3.5 w-3.5" />
+							<NextActionIcon className="size-3.5" />
 							{actionLabels[nextUp.action]}
 						</span>
 						<span className="flex items-center gap-1">
-							<Clock className="h-3.5 w-3.5" />
+							<Clock className="size-3.5" />
 							{nextUp.estimatedMinutes} min
 						</span>
 					</div>

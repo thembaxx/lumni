@@ -1,14 +1,14 @@
-import { m } from "framer-motion";
 import {
-	AlertCircle,
-	CheckCircle2,
+	ArrowsClockwise,
+	CheckCircle,
 	Clock,
-	Loader2,
-	Mail,
-	RefreshCw,
-	Sparkles,
-	Zap,
-} from "lucide-react";
+	Envelope,
+	Lightning,
+	Sparkle,
+	Spinner,
+	WarningCircle,
+} from "@phosphor-icons/react";
+import { m } from "framer-motion";
 import { startTransition, useCallback, useEffect, useState } from "react";
 import { z } from "zod";
 import { Anim } from "@/components/shared/anim";
@@ -160,7 +160,7 @@ export function MagicLinkDialog({
 			<DialogContent className="sm:max-w-md shadow-lg">
 				<DialogHeader>
 					<DialogTitle className="flex items-center gap-2">
-						<Mail className="h-5 w-5 text-foreground" />
+						<Envelope className="size-5 text-foreground" />
 						Sign in with Magic Link
 					</DialogTitle>
 					<DialogDescription>
@@ -170,9 +170,9 @@ export function MagicLinkDialog({
 					</DialogDescription>
 				</DialogHeader>
 
-				<div className="space-y-4">
+				<div className="flex flex-col gap-4">
 					{!sent ? (
-						<div className="space-y-2">
+						<div className="flex flex-col gap-2">
 							<Input
 								type="email"
 								placeholder="email@example.com"
@@ -186,7 +186,7 @@ export function MagicLinkDialog({
 							/>
 							{error && (
 								<p className="text-xs text-destructive flex items-center gap-1">
-									<AlertCircle className="h-3 w-3" />
+									<WarningCircle className="size-3" />
 									{error}
 								</p>
 							)}
@@ -218,14 +218,14 @@ export function MagicLinkDialog({
 											},
 										}}
 									>
-										<div className="rounded-full bg-green-500/10 p-4">
-											<CheckCircle2 className="h-12 w-12 text-green-500" />
+										<div className="rounded-full bg-success/10 p-4">
+											<CheckCircle className="size-12 text-success" />
 										</div>
 									</m.div>
 									<SuccessBadge isAdmin={false} />
 								</div>
 
-								<div className="text-center space-y-2">
+								<div className="text-center flex flex-col gap-2">
 									<p className="font-medium text-foreground text-lg">
 										Magic link sent!
 									</p>
@@ -236,7 +236,7 @@ export function MagicLinkDialog({
 								</div>
 
 								<m.div
-									className="bg-amber-500/10 border border-amber-500/30 dark:bg-amber-700/20 dark:border-amber-700/30 rounded-xl px-4 py-2"
+									className="bg-warning/10 border border-warning/30 rounded-xl px-4 py-2"
 									initial={{ opacity: 0, y: 6 }}
 									animate={{
 										opacity: 1,
@@ -248,8 +248,8 @@ export function MagicLinkDialog({
 										},
 									}}
 								>
-									<p className="text-sm text-amber-600 dark:text-amber-400 flex items-center gap-2">
-										<Clock className="h-4 w-4" />
+									<p className="text-sm text-warning-foreground flex items-center gap-2">
+										<Clock className="size-4" />
 										<span className="font-medium">
 											Link expires in 15 minutes
 										</span>
@@ -258,7 +258,7 @@ export function MagicLinkDialog({
 
 								{error && (
 									<p className="text-xs text-destructive flex items-center gap-1">
-										<AlertCircle className="h-3 w-3" />
+										<WarningCircle className="size-3" />
 										{error}
 									</p>
 								)}
@@ -284,7 +284,7 @@ export function MagicLinkDialog({
 											</span>
 										) : (
 											<span className="text-foreground flex items-center gap-1">
-												<Zap className="h-3 w-3" />
+												<Lightning className="size-3" />
 												Ready
 											</span>
 										)}
@@ -298,12 +298,12 @@ export function MagicLinkDialog({
 										className={cn(buttonStyles, loading && "opacity-70")}
 									>
 										{loading ? (
-											<Loader2 className="h-4 w-4 animate-spin" />
+											<Spinner className="size-4 animate-spin" />
 										) : (
 											<>
-												<RefreshCw
+												<ArrowsClockwise
 													className={cn(
-														"h-4 w-4",
+														"size-4",
 														iconStyles,
 														countdown > 0 && "animate-pulse",
 													)}
@@ -326,12 +326,12 @@ export function MagicLinkDialog({
 							{loading ? (
 								<span className="flex items-center gap-2">
 									<LoadingDots />
-									<span>Sending...</span>
+									<span>PaperPlaneing...</span>
 								</span>
 							) : (
 								<span className="flex items-center gap-2">
-									<Zap className="h-4 w-4" />
-									Send Magic Link
+									<Lightning className="size-4" />
+									PaperPlane Magic Link
 								</span>
 							)}
 						</Button>

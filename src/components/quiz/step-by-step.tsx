@@ -1,7 +1,7 @@
 "use client";
 
+import { CaretLeft, CaretRight, GraduationCap } from "@phosphor-icons/react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronLeft, ChevronRight, GraduationCap } from "lucide-react";
 import { useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Button } from "@/components/ui/button";
@@ -31,11 +31,11 @@ export function StepByStep({ steps, subject, className }: StepByStepProps) {
 	};
 
 	return (
-		<div className={cn("space-y-4", className)}>
+		<div className={cn("flex flex-col gap-4", className)}>
 			<div className="flex items-center justify-between px-1">
 				<div className="flex items-center gap-2 text-sm font-semibold text-foreground">
 					<div className="bg-[--system-accent]/10 p-1.5 rounded-full shadow-inner">
-						<GraduationCap className="w-4 h-4" />
+						<GraduationCap className="size-4" />
 					</div>
 					<span>
 						Step {currentStep + 1} of {steps.length}
@@ -47,18 +47,18 @@ export function StepByStep({ steps, subject, className }: StepByStepProps) {
 						size="icon-sm"
 						onClick={prevStep}
 						disabled={currentStep === 0}
-						className="h-8 w-8 hover:bg-[--system-accent]/10 transition-colors"
+						className="size-8 hover:bg-[--system-accent]/10"
 					>
-						<ChevronLeft className="w-4 h-4" />
+						<CaretLeft data-icon="inline-start" />
 					</Button>
 					<Button
 						variant="ghost"
 						size="icon-sm"
 						onClick={nextStep}
 						disabled={currentStep === steps.length - 1}
-						className="h-8 w-8 hover:bg-[--system-accent]/10 bg-[--system-accent]/5 transition-colors active:scale-[0.96]"
+						className="size-8 hover:bg-[--system-accent]/10 bg-[--system-accent]/5"
 					>
-						<ChevronRight className="w-4 h-4" />
+						<CaretRight data-icon="inline-start" />
 					</Button>
 				</div>
 			</div>

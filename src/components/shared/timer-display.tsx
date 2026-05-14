@@ -1,6 +1,6 @@
 "use client";
 
-import { Timer } from "lucide-react";
+import { Timer } from "@phosphor-icons/react";
 import { cn } from "@/lib/utils";
 import { formatTime } from "@/lib/utils/time";
 

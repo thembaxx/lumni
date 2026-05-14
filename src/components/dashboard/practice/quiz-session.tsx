@@ -1,7 +1,7 @@
 "use client";
 
+import { CaretLeft, CaretRight } from "@phosphor-icons/react";
 import { m } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { startTransition, useCallback, useState } from "react";
 import { QuestionCard } from "@/components/quiz/question-card";
 import { Anim } from "@/components/shared/anim";
@@ -51,8 +51,8 @@ export function QuizSession({
 
 	return (
 		<Anim>
-			<div className="w-full max-w-2xl px-4 pb-6 space-y-4">
-				<div className="animate-fade-in space-y-4">
+			<div className="w-full max-w-2xl px-4 pb-6 flex flex-col gap-4">
+				<div className="animate-fade-in flex flex-col gap-4">
 					<div className="flex items-center justify-between">
 						<Button
 							variant="ghost"
@@ -121,12 +121,12 @@ export function QuizSession({
 						disabled={currentQuestionIndex === 0}
 						className="gap-2"
 					>
-						<ChevronLeft className="size-4" />
+						<CaretLeft data-icon />
 						Previous
 					</Button>
 					<Button onClick={onNext} className="gap-2">
 						{currentQuestionIndex < totalQuestions - 1 ? "Next" : "Finish"}
-						<ChevronRight className="size-4" />
+						<CaretRight data-icon />
 					</Button>
 				</div>
 			</div>

@@ -1,7 +1,6 @@
 "use client";
 
-import { Cancel01Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { XCircle } from "@phosphor-icons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -33,12 +32,7 @@ export function PracticeSheet({
 	return (
 		<Sheet open={open} onOpenChange={onOpenChange}>
 			{children && (
-				<SheetTrigger
-					className="rounded-lg h-10 w-10 flex items-center justify-center bg-system-surface shadow-sm border border-border/40 text-foreground hover:bg-secondary transition-all active:scale-[0.95]"
-					aria-label="Open practice sheet"
-				>
-					{children}
-				</SheetTrigger>
+				<SheetTrigger aria-label="Open practice sheet">{children}</SheetTrigger>
 			)}
 			<SheetContent
 				side="bottom"
@@ -57,10 +51,7 @@ export function PracticeSheet({
 						className="absolute right-0 rounded-full hover:bg-secondary"
 						aria-label="Close practice sheet"
 					>
-						<HugeiconsIcon
-							icon={Cancel01Icon}
-							className="w-5 h-5 text-muted-foreground"
-						/>
+						<XCircle className="text-muted-foreground" data-icon />
 					</Button>
 					<SheetTitle className="text-sm font-bold uppercase tracking-widest text-muted-foreground/80">
 						Practice
@@ -74,7 +65,7 @@ export function PracticeSheet({
 						className="flex flex-col items-center w-full h-full"
 					>
 						<TabsList
-							className={`h-11 p-1 bg-secondary/50 dark:bg-secondary/20 transition-all duration-300 rounded-lg ${
+							className={`h-11 p-1 bg-secondary/50  transition-all duration-300 rounded-lg ${
 								showQuizHeader
 									? "opacity-100 translate-y-0"
 									: "opacity-0 -translate-y-4 pointer-events-none absolute"

@@ -13,6 +13,7 @@ import type { LessonCardData } from "@/components/lesson/lesson-card";
 import { LessonCardProvider } from "@/components/lesson/lesson-card-context";
 import { Anim } from "@/components/shared/anim";
 import { Button } from "@/components/ui/button";
+import { Empty, EmptyDescription, EmptyTitle } from "@/components/ui/empty";
 import { Input } from "@/components/ui/input";
 import {
 	Sheet,
@@ -23,6 +24,7 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from "@/components/ui/sheet";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useFilteredSubjects } from "@/hooks/use-subjects";
 
 const containerVariants: Variants = {
@@ -58,7 +60,7 @@ export function LessonSheet() {
 	return (
 		<Sheet open={isOpen} onOpenChange={setIsOpen}>
 			<SheetTrigger className="h-11 px-5 rounded-xl border border-border/80 bg-secondary/80 gap-2.5 inline-flex items-center justify-center hover:bg-accent hover:border-accent transition-colors text-sm font-medium">
-				<Search className="h-4 w-4 text-[--system-accent]" />
+				<Search className="size-4 text-[--system-accent]" />
 				<span>Lessons</span>
 			</SheetTrigger>
 			<Anim>
@@ -75,7 +77,7 @@ export function LessonSheet() {
 
 					<div className="flex items-center gap-2 px-4 pb-6 grow">
 						<div className="relative">
-							<Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+							<Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
 							<Input
 								placeholder="Filter by title..."
 								value={searchQuery}
@@ -94,22 +96,16 @@ export function LessonSheet() {
 								className="flex items-center gap-3 h-8"
 							>
 								{selectedSubject ? selectedSubject : "All subjects"}
-								<HugeiconsIcon
-									icon={ArrowDown01FreeIcons}
-									className="h-5 w-5"
-								/>
+								<HugeiconsIcon icon={ArrowDown01FreeIcons} data-icon />
 							</Button>
 						</SubjectsDrawer>
 					</div>
 
-					<div className="px-4 pb-4 grow max-h-[95dvh] overflow-y-auto space-y-4">
+					<div className="px-4 pb-4 grow max-h-[95dvh] overflow-y-auto flex flex-col gap-4">
 						{isLoading && (
-							<div className="animate-pulse space-y-2">
+							<div className="flex flex-col gap-2">
 								{[...Array(5)].map((_, i) => (
-									<div
-										key={`skeleton-${i}`}
-										className="h-20 bg-muted rounded-xl"
-									/>
+									<Skeleton key={`skeleton-${i}`} className="h-20 rounded-xl" />
 								))}
 							</div>
 						)}
@@ -124,9 +120,12 @@ export function LessonSheet() {
 						)}
 
 						{!isLoading && !error && data?.lessons?.length === 0 && (
-							<div className="text-center text-muted-foreground py-8 text-sm">
-								No lessons found.
-							</div>
+							<Empty className="border-none py-8">
+								<EmptyTitle>No lessons found</EmptyTitle>
+								<EmptyDescription>
+									Try selecting a different subject
+								</EmptyDescription>
+							</Empty>
 						)}
 
 						{!isLoading && data?.lessons && data.lessons.length > 0 && (
@@ -135,7 +134,7 @@ export function LessonSheet() {
 									variants={containerVariants}
 									initial="hidden"
 									animate="show"
-									className="space-y-4"
+									className="flex flex-col gap-4"
 								>
 									{data.lessons.map((lesson: LessonCardData) => (
 										<m.div key={lesson.id} variants={itemVariants}>

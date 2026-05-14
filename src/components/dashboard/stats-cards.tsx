@@ -1,6 +1,6 @@
 "use client";
 
-import { IconTarget, IconTrendingUp } from "@tabler/icons-react";
+import { Target, TrendUp } from "@phosphor-icons/react";
 import {
 	motion,
 	useMotionValue,
@@ -10,7 +10,8 @@ import {
 } from "framer-motion";
 import { useEffect } from "react";
 import { type LottieAnimationName, LottieWrapper } from "@/components/lottie";
-import { Card } from "@/components/ui/card";
+import { PerpetualFloat } from "@/components/shared/perpetual-float";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { iOSEase } from "@/lib/utils/animation";
 
 interface StatsCardsProps {
@@ -73,16 +74,21 @@ function StatCard({
 				delay: shouldReduceMotion ? 0 : index * 0.05,
 			}}
 		>
-			<Card className="relative p-5 flex flex-col h-full items-center justify-start gap-3 cursor-default border shadow-sm border-border/80 hover:border-border/80 transition-colors">
-				<div className="relative flex items-center justify-center w-10 h-10 rounded-full bg-system-surface shadow-level-1">
-					{animation ? (
-						<LottieWrapper animation={animation} className="w-5 h-5" loop />
-					) : (
-						<Icon className={`w-5 h-5 ${colorClass}`} />
-					)}
-				</div>
-
-				<div className="text-center space-y-1">
+			<Card className="relative h-full cursor-default hover:border-border/80 transition-colors gap-3 py-5">
+				<CardHeader className="flex flex-col items-center justify-center border-t-0 px-5 pt-0">
+					<div className="relative flex items-center justify-center size-10 rounded-full bg-system-surface shadow-level-1">
+						{animation ? (
+							<PerpetualFloat floatRange={2} speed={4}>
+								<LottieWrapper animation={animation} className="size-5" loop />
+							</PerpetualFloat>
+						) : (
+							<PerpetualFloat floatRange={2} speed={4}>
+								<Icon className={`size-5 ${colorClass}`} />
+							</PerpetualFloat>
+						)}
+					</div>
+				</CardHeader>
+				<CardContent className="text-center space-y-1 px-5 pb-0">
 					<p className="text-2xl font-bold tracking-tight text-foreground tabular-nums text-wrap balance">
 						<AnimatedNumber
 							value={value}
@@ -92,7 +98,7 @@ function StatCard({
 					<p className="text-[11px] uppercase tracking-wider text-muted-foreground font-bold leading-tight">
 						{label}
 					</p>
-				</div>
+				</CardContent>
 			</Card>
 		</motion.div>
 	);
@@ -104,7 +110,7 @@ export function StatsCards({ questionsAnswered, accuracy }: StatsCardsProps) {
 			<StatCard
 				label="Answered"
 				value={questionsAnswered}
-				icon={IconTarget}
+				icon={Target}
 				animation="loading-dots"
 				colorClass="text-info"
 				accentClass="bg-info"
@@ -113,7 +119,7 @@ export function StatsCards({ questionsAnswered, accuracy }: StatsCardsProps) {
 			<StatCard
 				label="Accuracy"
 				value={accuracy}
-				icon={IconTrendingUp}
+				icon={TrendUp}
 				animation="success-check"
 				colorClass="text-success"
 				accentClass="bg-success"

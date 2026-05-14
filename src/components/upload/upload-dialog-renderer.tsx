@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertCircleIcon } from "lucide-react";
+import { WarningCircle } from "@phosphor-icons/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -55,7 +55,7 @@ export function UploadDialogRenderer({
 				}),
 			);
 		},
-		onUploadError: (error) => {
+		onUploadError: (error: Error) => {
 			setItems((prev) =>
 				prev.map((item) => {
 					if (item.status === "uploading") {
@@ -174,7 +174,7 @@ export function UploadDialogRenderer({
 						</DialogTitle>
 						{hasErrors && (
 							<DialogDescription className="flex items-center gap-1.5 text-destructive">
-								<AlertCircleIcon
+								<WarningCircle
 									className="size-4 shrink-0"
 									data-icon="inline-start"
 								/>

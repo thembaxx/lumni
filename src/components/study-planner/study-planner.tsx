@@ -4,16 +4,15 @@ import {
 	BookOpen,
 	Calendar,
 	Check,
-	ChevronLeft,
-	ChevronRight,
+	CaretLeft,
+	CaretRight,
 	Clock,
 	Plus,
-	Trash2,
+	TrashSimple,
 	X,
-} from "lucide-react";
+} from "@phosphor-icons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -123,34 +122,34 @@ function StatsRow({
 }) {
 	return (
 		<div className="grid grid-cols-4 gap-4">
-			<Card>
-				<CardContent className="p-4 text-center">
+			<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+				<div className="px-4 group-data-[size=sm]/card:px-3 p-4 text-center">
 					<div className="text-2xl font-bold">{stats.completedSessions}</div>
 					<div className="text-xs text-muted-foreground">Completed</div>
-				</CardContent>
-			</Card>
-			<Card>
-				<CardContent className="p-4 text-center">
+				</div>
+			</div>
+			<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+				<div className="px-4 group-data-[size=sm]/card:px-3 p-4 text-center">
 					<div className="text-2xl font-bold">{stats.upcomingSessions}</div>
 					<div className="text-xs text-muted-foreground">Upcoming</div>
-				</CardContent>
-			</Card>
-			<Card>
-				<CardContent className="p-4 text-center">
+				</div>
+			</div>
+			<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+				<div className="px-4 group-data-[size=sm]/card:px-3 p-4 text-center">
 					<div className="text-2xl font-bold">
 						{Math.round(stats.studyTimeMinutes / 60)}h
 					</div>
 					<div className="text-xs text-muted-foreground">Study Time</div>
-				</CardContent>
-			</Card>
-			<Card>
-				<CardContent className="p-4 text-center">
+				</div>
+			</div>
+			<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+				<div className="px-4 group-data-[size=sm]/card:px-3 p-4 text-center">
 					<div className="text-2xl font-bold">
 						{stats.daysUntilNextExam !== null ? stats.daysUntilNextExam : "-"}
 					</div>
 					<div className="text-xs text-muted-foreground">Days to Exam</div>
-				</CardContent>
-			</Card>
+				</div>
+			</div>
 		</div>
 	);
 }
@@ -165,14 +164,14 @@ function TodaySessionsCard({
 	onDelete: (id: string) => void;
 }) {
 	return (
-		<Card>
-			<CardHeader className="pb-2">
-				<CardTitle className="text-base flex items-center gap-2">
+		<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+			<header className="rounded-t-[2.5rem] border-t border-border/80 pb-2">
+				<h2 className="font-heading text-sm font-medium text-base flex items-center gap-2">
 					<Calendar className="h-4 w-4" />
 					Today
-				</CardTitle>
-			</CardHeader>
-			<CardContent>
+				</h2>
+			</header>
+			<div className="px-4 group-data-[size=sm]/card:px-3">
 				{sessions.length === 0 ? (
 					<p className="text-sm text-muted-foreground py-4 text-center">
 						No sessions scheduled for today
@@ -191,7 +190,7 @@ function TodaySessionsCard({
 										onClick={() => onComplete(session.id)}
 										className={`rounded-full ${
 											session.completed
-												? "bg-green-500 text-white hover:bg-green-500 dark:bg-green-700 dark:hover:bg-green-600"
+												? "bg-success text-success-foreground hover:bg-success/90 dark:bg-success/70 dark:hover:bg-success/60"
 												: "border-muted-foreground"
 										}`}
 									>
@@ -209,14 +208,14 @@ function TodaySessionsCard({
 									size="icon-xs"
 									onClick={() => onDelete(session.id)}
 								>
-									<Trash2 className="h-4 w-4" />
+									<TrashSimple className="h-4 w-4" />
 								</Button>
 							</div>
 						))}
 					</div>
 				)}
-			</CardContent>
-		</Card>
+			</div>
+		</div>
 	);
 }
 
@@ -244,14 +243,14 @@ function UpcomingSessionsCard({
 	);
 
 	return (
-		<Card>
-			<CardHeader className="pb-2">
-				<CardTitle className="text-base flex items-center gap-2">
+		<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+			<header className="rounded-t-[2.5rem] border-t border-border/80 pb-2">
+				<h2 className="font-heading text-sm font-medium text-base flex items-center gap-2">
 					<Clock className="h-4 w-4" />
 					Upcoming Sessions
-				</CardTitle>
-			</CardHeader>
-			<CardContent>
+				</h2>
+			</header>
+			<div className="px-4 group-data-[size=sm]/card:px-3">
 				{Object.keys(groupedByDate).length === 0 ? (
 					<p className="text-sm text-muted-foreground py-4 text-center">
 						No upcoming sessions
@@ -277,7 +276,7 @@ function UpcomingSessionsCard({
 														onClick={() => onComplete(session.id)}
 														className={`rounded-full ${
 															session.completed
-																? "bg-green-500 text-white hover:bg-green-500 dark:bg-green-700 dark:hover:bg-green-600"
+																? "bg-success text-success-foreground hover:bg-success/90 dark:bg-success/70 dark:hover:bg-success/60"
 																: "border-muted-foreground"
 														}`}
 													>
@@ -298,7 +297,7 @@ function UpcomingSessionsCard({
 													size="icon-xs"
 													onClick={() => onDelete(session.id)}
 												>
-													<Trash2 className="h-4 w-4" />
+													<TrashSimple className="h-4 w-4" />
 												</Button>
 											</div>
 										))}
@@ -308,8 +307,8 @@ function UpcomingSessionsCard({
 						)}
 					</div>
 				)}
-			</CardContent>
-		</Card>
+			</div>
+		</div>
 	);
 }
 
@@ -321,14 +320,14 @@ function UpcomingExamsCard({
 	onDelete: (id: string) => void;
 }) {
 	return (
-		<Card>
-			<CardHeader className="pb-2">
-				<CardTitle className="text-base flex items-center gap-2">
+		<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+			<header className="rounded-t-[2.5rem] border-t border-border/80 pb-2">
+				<h2 className="font-heading text-sm font-medium text-base flex items-center gap-2">
 					<BookOpen className="h-4 w-4" />
 					Upcoming Exams
-				</CardTitle>
-			</CardHeader>
-			<CardContent>
+				</h2>
+			</header>
+			<div className="px-4 group-data-[size=sm]/card:px-3">
 				{exams.length === 0 ? (
 					<p className="text-sm text-muted-foreground py-4 text-center">
 						No exams scheduled
@@ -351,14 +350,14 @@ function UpcomingExamsCard({
 									size="icon-xs"
 									onClick={() => onDelete(exam.id)}
 								>
-									<Trash2 className="h-4 w-4" />
+									<TrashSimple className="h-4 w-4" />
 								</Button>
 							</div>
 						))}
 					</div>
 				)}
-			</CardContent>
-		</Card>
+			</div>
+		</div>
 	);
 }
 
@@ -378,11 +377,11 @@ function AddSessionModal({
 
 	return (
 		<div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-			<Card className="w-full max-w-md">
-				<CardHeader>
-					<CardTitle>Add Study Session</CardTitle>
-				</CardHeader>
-				<CardContent className="space-y-4">
+			<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors w-full max-w-md">
+				<header>
+					<h2 className="font-heading text-sm font-medium">Add Study Session</h2>
+				</header>
+				<div className="px-4 group-data-[size=sm]/card:px-3 space-y-4">
 					<div>
 						<Label>Subject</Label>
 						<Input
@@ -449,8 +448,8 @@ function AddSessionModal({
 							Add
 						</Button>
 					</div>
-				</CardContent>
-			</Card>
+				</div>
+			</div>
 		</div>
 	);
 }
@@ -468,11 +467,11 @@ function AddExamModal({
 
 	return (
 		<div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-			<Card className="w-full max-w-md">
-				<CardHeader>
-					<CardTitle>Add Exam Date</CardTitle>
-				</CardHeader>
-				<CardContent className="space-y-4">
+			<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors w-full max-w-md">
+				<header>
+					<h2 className="font-heading text-sm font-medium">Add Exam Date</h2>
+				</header>
+				<div className="px-4 group-data-[size=sm]/card:px-3 space-y-4">
 					<div>
 						<Label>Subject</Label>
 						<Input
@@ -516,8 +515,8 @@ function AddExamModal({
 							Add
 						</Button>
 					</div>
-				</CardContent>
-			</Card>
+				</div>
+			</div>
 		</div>
 	);
 }

@@ -1,5 +1,5 @@
+import { X } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
-import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
@@ -45,16 +45,16 @@ export function ImageProcessingIndicator({
 							variant="ghost"
 							size="icon"
 							onClick={onDismiss}
-							className="w-6 h-6 shrink-0"
+							className="size-6 shrink-0"
 							aria-label="Dismiss error"
 						>
-							<X className="w-3 h-3" />
+							<X data-icon />
 						</Button>
 					</>
 				) : (
 					<>
-						<div className="w-4 h-4 shrink-0">
-							<div className="w-4 h-4 border-2 border-[--system-accent] border-t-transparent rounded-full animate-spin" />
+						<div className="size-4 shrink-0">
+							<div className="size-4 border-2 border-[--system-accent] border-t-transparent rounded-full animate-spin" />
 						</div>
 						<span className="flex-1 truncate text-xs">
 							{state.progressMessage}

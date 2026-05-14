@@ -72,7 +72,7 @@ export function Flashcard({
 
 	if (cards.length === 0) {
 		return (
-			<Card className="p-8 flex flex-col items-center justify-center gap-4">
+			<Card className="max-w-md w-full mx-auto p-8 flex flex-col items-center justify-center gap-4">
 				<p className="text-muted-foreground">No flashcards available.</p>
 			</Card>
 		);
@@ -81,7 +81,7 @@ export function Flashcard({
 	return (
 		<Anim>
 			<div
-				className="space-y-4"
+				className="flex flex-col gap-4"
 				onKeyDown={handleKeyDown}
 				tabIndex={0}
 				role="region"
@@ -116,8 +116,8 @@ export function Flashcard({
 							transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
 						}}
 					>
-						<Card
-							className="absolute inset-0 backface-hidden p-6 flex flex-col items-center justify-center"
+						<div
+							className="absolute inset-0 backface-hidden p-6 flex flex-col items-center justify-center rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]"
 							style={{ backfaceVisibility: "hidden" }}
 						>
 							<div className="text-lg font-medium text-center">
@@ -135,10 +135,10 @@ export function Flashcard({
 								</div>
 							)}
 							<p className="text-xs text-muted-foreground mt-8">Tap to flip</p>
-						</Card>
+						</div>
 
-						<Card
-							className="absolute inset-0 backface-hidden p-6 flex flex-col items-center justify-center"
+						<div
+							className="absolute inset-0 backface-hidden p-6 flex flex-col items-center justify-center rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]"
 							style={{
 								transform: "rotateY(180deg)",
 								backfaceVisibility: "hidden",
@@ -150,7 +150,7 @@ export function Flashcard({
 									subject={subject}
 								/>
 							</div>
-						</Card>
+						</div>
 					</m.div>
 				</div>
 

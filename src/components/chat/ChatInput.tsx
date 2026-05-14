@@ -1,24 +1,27 @@
-import { Camera01Icon, Mic02Icon, SentIcon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, motion } from "framer-motion";
-import { Camera, Upload } from "lucide-react";
+import {
+	Camera,
+	Microphone,
+	PaperPlane,
+	UploadSimple,
+} from "@phosphor-icons/react";
+import { AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { AnimatedDialogContent } from "@/components/ui/animated-dialog-content";
 import { Button } from "@/components/ui/button";
 import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuTrigger,
+	DropdownList,
+	DropdownListContent,
+	DropdownListItem,
+	DropdownListTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { ImageProcessingIndicator } from "./ImageProcessingIndicator";
 
 interface ChatInputProps {
-	onSend: (message: string) => void;
+	onPaperPlane: (message: string) => void;
 	isLoading: boolean;
-	onSendImage: (file: File) => void;
+	onPaperPlaneImage: (file: File) => void;
 	imageProcessing: {
 		status: string;
 		progress: number;
@@ -29,9 +32,9 @@ interface ChatInputProps {
 }
 
 export function ChatInput({
-	onSend,
+	onPaperPlane,
 	isLoading,
-	onSendImage,
+	onPaperPlaneImage,
 	imageProcessing,
 	onDismissImageProcessing,
 }: ChatInputProps) {
@@ -46,7 +49,7 @@ export function ChatInput({
 	const handleSubmit = (e?: React.FormEvent) => {
 		e?.preventDefault();
 		if (input.trim() && !isLoading) {
-			onSend(input);
+			onPaperPlane(input);
 			setInput("");
 		}
 	};
@@ -55,7 +58,7 @@ export function ChatInput({
 		if (!audioBlob) return;
 		const reader = new FileReader();
 		reader.onloadend = () => {
-			onSend(reader.result as string);
+			onPaperPlane(reader.result as string);
 		};
 		reader.readAsDataURL(audioBlob);
 		setVoiceDialogOpen(false);
@@ -71,7 +74,7 @@ export function ChatInput({
 				return;
 			}
 
-			onSendImage(file);
+			onPaperPlaneImage(file);
 			event.target.value = "";
 		};
 
@@ -96,7 +99,7 @@ export function ChatInput({
 
 			<div
 				className={cn(
-					"bg-secondary/60 dark:bg-secondary/40 rounded-lg p-4 transition-all duration-300 border mt-2",
+					"bg-secondary/60 rounded-lg p-4 transition-all duration-300 border mt-2",
 					isFocused
 						? "ring-2 ring-system-accent/20 border-system-accent/40 scale-[1.005] bg-background"
 						: "border-border/30",
@@ -136,11 +139,11 @@ export function ChatInput({
 
 				<div className="flex items-center justify-between">
 					<div className="flex items-center gap-2">
-						<DropdownMenu>
-							<DropdownMenuTrigger
+						<DropdownList>
+							<DropdownListTrigger
 								className={cn(
 									"inline-flex shrink-0 items-center justify-center rounded-md size-10",
-									"bg-white dark:bg-muted/40 hover:bg-secondary text-muted-foreground cursor-pointer shadow-sm border border-border/30",
+									"bg-white hover:bg-secondary text-muted-foreground cursor-pointer shadow-sm border border-border/30",
 									"transition-all active:scale-[0.96]",
 									"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-system-accent/50",
 									isLoading &&
@@ -148,30 +151,27 @@ export function ChatInput({
 								)}
 								aria-label="Add image"
 							>
-								<HugeiconsIcon
-									icon={Camera01Icon}
-									className="w-4.5 h-4.5 toolbutton-icon"
-								/>
-							</DropdownMenuTrigger>
-							<DropdownMenuContent side="top" align="start" className="w-48">
-								<DropdownMenuItem
+								<Camera data-icon />
+							</DropdownListTrigger>
+							<DropdownListContent side="top" align="start" className="w-48">
+								<DropdownListItem
 									onClick={() => cameraInputRef.current?.click()}
 									disabled={isLoading}
 									className="gap-2 font-bold text-xs uppercase tracking-tight"
 								>
-									<Camera className="w-4 h-4" />
+									<Camera data-icon="inline-start" />
 									Take a photo
-								</DropdownMenuItem>
-								<DropdownMenuItem
+								</DropdownListItem>
+								<DropdownListItem
 									onClick={() => uploadInputRef.current?.click()}
 									disabled={isLoading}
 									className="gap-2 font-bold text-xs uppercase tracking-tight"
 								>
-									<Upload className="w-4 h-4" />
+									<UploadSimple data-icon="inline-start" />
 									Upload a photo
-								</DropdownMenuItem>
-							</DropdownMenuContent>
-						</DropdownMenu>
+								</DropdownListItem>
+							</DropdownListContent>
+						</DropdownList>
 					</div>
 
 					<div className="flex items-center gap-2">
@@ -179,12 +179,12 @@ export function ChatInput({
 							variant="ghost"
 							size="icon"
 							onClick={() => setVoiceDialogOpen(true)}
-							className="rounded-md bg-white dark:bg-muted/40 hover:bg-secondary size-10 border border-border/40"
+							className="rounded-md bg-white hover:bg-secondary size-10 border border-border/40"
 							disabled={isLoading}
 						>
-							<HugeiconsIcon
-								icon={Mic02Icon}
-								className="w-4.5 h-4.5 text-muted-foreground toolbutton-icon"
+							<Microphone
+								data-icon
+								className="text-muted-foreground toolbutton-icon"
 							/>
 						</Button>
 						<Button
@@ -204,9 +204,9 @@ export function ChatInput({
 							)}
 							aria-label="Send message"
 						>
-							<HugeiconsIcon
-								icon={SentIcon}
-								className={cn("w-4.5 h-4.5", voicePressed && "scale-110")}
+							<PaperPlane
+								data-icon
+								className={cn(voicePressed && "scale-110")}
 							/>
 						</Button>
 					</div>

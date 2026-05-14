@@ -1,13 +1,13 @@
 "use client";
 
 import {
-	AlertCircleIcon,
 	CheckCircleIcon,
+	CloudArrowUp,
 	FileIcon,
 	ImageIcon,
-	UploadCloudIcon,
+	WarningCircle,
 	XCircleIcon,
-} from "lucide-react";
+} from "@phosphor-icons/react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -134,10 +134,7 @@ export function UploadFileItem({
 
 			{isError && (
 				<p className="flex items-center gap-1.5 text-xs text-destructive">
-					<AlertCircleIcon
-						className="size-3 shrink-0"
-						data-icon="inline-start"
-					/>
+					<WarningCircle className="size-3 shrink-0" data-icon="inline-start" />
 					{item.error ?? "Upload failed"}
 				</p>
 			)}
@@ -156,7 +153,7 @@ export function UploadHeader({
 }) {
 	return (
 		<div className="flex items-center gap-2">
-			<UploadCloudIcon
+			<CloudArrowUp
 				className="size-5 text-foreground"
 				data-icon="inline-start"
 			/>

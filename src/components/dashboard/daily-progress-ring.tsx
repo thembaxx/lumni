@@ -1,6 +1,6 @@
 "use client";
 
-import { IconCircleCheck, IconFlame } from "@tabler/icons-react";
+import { CheckCircle, Flame } from "@phosphor-icons/react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { AnimatedProgressBar } from "@/components/shared/animated-progress-bar";
 import { useGamification } from "@/hooks/use-gamification";
@@ -31,7 +31,10 @@ export function DailyProgressRing() {
 			className="flex flex-col items-center py-4"
 			style={{ willChange: "transform, opacity" }}
 		>
-			<div className="relative" style={{ width: SIZE, height: SIZE }}>
+			<div
+				className="relative max-w-full"
+				style={{ width: SIZE, height: SIZE }}
+			>
 				<svg
 					width={SIZE}
 					height={SIZE}
@@ -95,8 +98,8 @@ export function DailyProgressRing() {
 							ease: iOSEase,
 						}}
 					>
-						<IconFlame
-							className={`w-5 h-5 transition-colors duration-300 ${currentStreak > 0 ? "text-warning" : "text-muted-foreground"}`}
+						<Flame
+							className={`size-5 transition-colors duration-300 ${currentStreak > 0 ? "text-warning" : "text-muted-foreground"}`}
 						/>
 					</motion.span>
 					<span className="text-lg font-bold text-foreground tabular-nums">
@@ -150,7 +153,7 @@ export function DailyProgressRing() {
 							transition={{ type: "spring", duration: 0.3, bounce: 0 }}
 							className="flex items-center gap-1"
 						>
-							<IconCircleCheck className="w-3.5 h-3.5 text-success" />
+							<CheckCircle className="size-3.5 text-success" />
 							<span className="text-[11px] font-bold text-success">
 								Daily goal complete
 							</span>

@@ -3,13 +3,13 @@
 import { AnimatePresence, motion } from "framer-motion";
 import {
 	Check,
-	Mic,
-	MicOff,
+	Microphone,
+	MicrophoneSlash,
 	Pause,
 	Play,
-	RotateCcw,
-	SendHorizontal,
-} from "lucide-react";
+	ArrowCounterClockwise,
+	PaperPlaneRight,
+} from "@phosphor-icons/react";
 import { useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { LiveWaveform } from "@/components/ui/live-waveform";
@@ -25,8 +25,8 @@ export function VoiceRecorder({
 	onRecordingComplete,
 	className,
 }: VoiceRecorderProps) {
-	const [isSending, setIsSending] = useState(false);
-	const [sendSuccess, setSendSuccess] = useState(false);
+	const [isPaperPlaneing, setIsPaperPlaneing] = useState(false);
+	const [sendSuccess, setPaperPlaneSuccess] = useState(false);
 
 	const {
 		isRecording,
@@ -61,14 +61,14 @@ export function VoiceRecorder({
 	const handleSend = useCallback(() => {
 		if (!audioBlob || isRecording) return;
 
-		setIsSending(true);
+		setIsPaperPlaneing(true);
 
 		setTimeout(() => {
-			setIsSending(false);
-			setSendSuccess(true);
+			setIsPaperPlaneing(false);
+			setPaperPlaneSuccess(true);
 
 			setTimeout(() => {
-				setSendSuccess(false);
+				setPaperPlaneSuccess(false);
 				resetRecording();
 			}, 800);
 		}, 600);
@@ -135,9 +135,9 @@ export function VoiceRecorder({
 				<span
 					className={cn(
 						"text-xs uppercase tracking-widest font-medium transition-colors duration-200",
-						sendSuccess
-							? "text-green-500 dark:text-green-400"
-							: isRecording
+sendSuccess
+						? "text-success dark:text-success-foreground"
+						: isRecording
 								? "text-destructive animate-pulse"
 								: isPlaying
 									? "text-[--system-accent] animate-pulse"
@@ -160,25 +160,25 @@ export function VoiceRecorder({
 					variant="ghost"
 					size="icon"
 					onClick={resetRecording}
-					disabled={(!audioBlob && !isRecording) || isSending}
+					disabled={(!audioBlob && !isRecording) || isPaperPlaneing}
 					className={cn(
 						"rounded-lg",
 						audioBlob || isRecording
 							? "bg-muted/80 hover:bg-muted text-muted-foreground hover:text-foreground hover:scale-105"
 							: "bg-muted/30 text-muted-foreground/30",
-						isSending && "opacity-50 pointer-events-none",
+						isPaperPlaneing && "opacity-50 pointer-events-none",
 					)}
 					aria-label="Reset recording"
 				>
 					<span className="transition-transform duration-200 active:rotate-180">
-						<RotateCcw className="h-4 w-4" />
+						<ArrowCounterClockwise className="h-4 w-4" />
 					</span>
 				</Button>
 
 				<Button
 					variant="ghost"
 					onClick={handleRecordClick}
-					disabled={isSending || showPermissionError}
+					disabled={isPaperPlaneing || showPermissionError}
 					className={cn(
 						"relative h-16 w-16 rounded-full",
 						isRecording
@@ -186,7 +186,7 @@ export function VoiceRecorder({
 							: showPermissionError
 								? "bg-muted text-muted-foreground cursor-not-allowed"
 								: "bg-foreground text-background hover:scale-105 hover:shadow-xl hover:shadow-foreground/20",
-						isSending && "opacity-50 pointer-events-none",
+						isPaperPlaneing && "opacity-50 pointer-events-none",
 					)}
 					aria-label={isRecording ? "Stop recording" : "Start recording"}
 				>
@@ -199,7 +199,7 @@ export function VoiceRecorder({
 						)}
 					/>
 					<span className="relative flex items-center justify-center">
-						<MicOff
+						<MicrophoneSlash
 							className="absolute h-6 w-6 transition-[opacity,transform] duration-200"
 							style={{
 								opacity: isRecording ? 1 : 0,
@@ -207,7 +207,7 @@ export function VoiceRecorder({
 								transitionTimingFunction: "cubic-bezier(0.2, 0, 0, 1)",
 							}}
 						/>
-						<Mic
+						<Microphone
 							className="h-6 w-6 transition-[opacity,transform] duration-200"
 							style={{
 								opacity: isRecording ? 0 : 1,
@@ -222,13 +222,13 @@ export function VoiceRecorder({
 					variant="ghost"
 					size="icon"
 					onClick={togglePlayback}
-					disabled={!audioBlob || isRecording || isSending}
+					disabled={!audioBlob || isRecording || isPaperPlaneing}
 					className={cn(
 						"rounded-lg",
 						audioBlob && !isRecording
 							? "bg-[--system-accent] text-background hover:scale-105 hover:shadow-xl hover:shadow-[--system-accent]/20"
 							: "bg-muted/30 text-muted-foreground/30",
-						isSending && "opacity-50 pointer-events-none",
+						isPaperPlaneing && "opacity-50 pointer-events-none",
 					)}
 					aria-label={isPlaying ? "Pause playback" : "Play recording"}
 				>
@@ -258,16 +258,16 @@ export function VoiceRecorder({
 				disabled={
 					isRecording ||
 					!audioBlob ||
-					isSending ||
+					isPaperPlaneing ||
 					sendSuccess ||
 					isTooShort ||
 					isTooLong
 				}
 				className={cn(
 					"mt-2 w-full rounded-lg",
-					sendSuccess
-						? "bg-green-500 text-white hover:bg-green-500"
-						: !isRecording && audioBlob && !isTooShort && !isTooLong
+sendSuccess
+					? "bg-success text-primary-foreground hover:bg-success/90"
+					: !isRecording && audioBlob && !isTooShort && !isTooLong
 							? "bg-[--system-accent] text-background hover:opacity-90"
 							: "bg-muted/50 text-muted-foreground/50",
 				)}
@@ -287,7 +287,7 @@ export function VoiceRecorder({
 								<Check className="h-4 w-4" />
 								<span>Sent!</span>
 							</motion.span>
-						) : isSending ? (
+						) : isPaperPlaneing ? (
 							<motion.span
 								key="sending"
 								className="flex items-center gap-2"
@@ -308,7 +308,7 @@ export function VoiceRecorder({
 								exit={{ opacity: 0, scale: 0.25, filter: "blur(4px)" }}
 								transition={{ type: "spring", duration: 0.3, bounce: 0 }}
 							>
-								<SendHorizontal className="h-4 w-4" />
+								<PaperPlaneRight className="h-4 w-4" />
 								<span>Send Voice Message</span>
 							</motion.span>
 						)}

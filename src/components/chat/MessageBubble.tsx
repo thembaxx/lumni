@@ -1,5 +1,5 @@
+import { ArrowsClockwise, Play, Square } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
-import { Play, RefreshCw, Square } from "lucide-react";
 import { useRef, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Button } from "@/components/ui/button";
@@ -40,7 +40,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 
 	if (message.type === "image") {
 		const isError = message.processingStatus === "error";
-		const isSending =
+		const isPaperPlaneing =
 			message.processingStatus === "sending" ||
 			message.processingStatus === "idle";
 
@@ -78,19 +78,19 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 								<div
 									className={cn(
 										"absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/30 transition-colors",
-										isSending && "bg-black/30",
+										isPaperPlaneing && "bg-black/30",
 									)}
 								>
-									{isSending && (
-										<div className="w-10 h-10 rounded-full bg-black/40 flex items-center justify-center">
-											<div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+									{isPaperPlaneing && (
+										<div className="size-10 rounded-full bg-black/40 flex items-center justify-center">
+											<div className="size-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
 										</div>
 									)}
 								</div>
 							</motion.button>
 						) : (
-							<div className="w-48 h-48 bg-muted flex items-center justify-center">
-								<div className="w-6 h-6 border-2 border-muted-foreground border-t-transparent rounded-full animate-spin" />
+							<div className="size-48 bg-muted flex items-center justify-center">
+								<div className="size-6 border-2 border-muted-foreground border-t-transparent rounded-full animate-spin" />
 							</div>
 						)}
 
@@ -108,7 +108,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 									className="rounded-full shrink-0 bg-white/20 hover:bg-white/30"
 									aria-label="Retry"
 								>
-									<RefreshCw className="w-3.5 h-3.5" />
+									<ArrowsClockwise data-icon />
 								</Button>
 							)}
 						</div>
@@ -159,10 +159,10 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 				<motion.button
 					onClick={togglePlay}
 					className={cn(
-						"relative flex items-center justify-center w-11 h-11 rounded-full shrink-0 transition-colors shadow-sm",
+						"relative flex items-center justify-center size-11 rounded-full shrink-0 transition-colors shadow-sm",
 						isUser
 							? "bg-white/20 hover:bg-white/30"
-							: "bg-white dark:bg-black/20 hover:bg-secondary border border-border/40",
+							: "bg-white hover:bg-secondary border border-border/40",
 					)}
 					aria-label={isPlaying ? "Pause" : "Play"}
 					whileTap={{ scale: 0.96 }}
@@ -176,7 +176,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 								: "opacity-0 scale-[0.25] blur-[4px]",
 						)}
 					>
-						<Square className="w-3.5 h-3.5 fill-current" />
+						<Square className="size-3.5 fill-current" />
 					</span>
 					<span
 						className={cn(
@@ -186,7 +186,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 								: "opacity-100 scale-100 blur-0",
 						)}
 					>
-						<Play className="w-4 h-4 fill-current ml-0.5" />
+						<Play className="size-4 fill-current ml-0.5" />
 					</span>
 				</motion.button>
 				<div className="flex flex-col gap-1 min-w-0">

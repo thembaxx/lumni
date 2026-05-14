@@ -1,9 +1,8 @@
+import { Lightning, Sparkle } from "@phosphor-icons/react";
 import { m } from "framer-motion";
-import { Sparkles, Zap } from "lucide-react";
-import { startTransition, useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Anim } from "@/components/shared/anim";
-import { Button } from "@/components/ui/button";
-import { toast } from "@/hooks/use-toast";
+import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
 export function SuccessBadge({ isAdmin }: { isAdmin: boolean }) {
@@ -35,9 +34,9 @@ export function SuccessBadge({ isAdmin }: { isAdmin: boolean }) {
 			>
 				<div className="relative">
 					<div className="absolute inset-0 animate-ping opacity-75">
-						<Sparkles className="h-4 w-4 text-amber-400" />
+						<Sparkle className="size-4 text-warning-foreground" />
 					</div>
-					<Sparkles className="h-4 w-4 text-amber-500 relative z-10" />
+					<Sparkle className="size-4 text-warning relative z-10" />
 				</div>
 			</m.div>
 
@@ -56,17 +55,16 @@ export function SuccessBadge({ isAdmin }: { isAdmin: boolean }) {
 				}}
 				exit={{ scale: 0, opacity: 0 }}
 			>
-				<span
+				<Badge
+					variant={isAdmin ? "default" : "secondary"}
 					className={cn(
-						"flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium",
-						isAdmin
-							? "bg-green-500/20 text-green-500 dark:bg-green-900/30 dark:text-green-300"
-							: "bg-[--system-accent]/10 text-muted-foreground",
+						"gap-1 px-2 text-[10px] font-medium",
+						isAdmin && "bg-success/20 text-success-foreground",
 					)}
 				>
-					<Zap className="h-3 w-3" />
+					<Lightning className="size-3" />
 					{isAdmin ? "Admin" : "Welcome"}
-				</span>
+				</Badge>
 			</m.div>
 		</Anim>
 	);

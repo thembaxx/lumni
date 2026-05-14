@@ -23,7 +23,7 @@ export function SearchInput({ value, onChange }: SearchInputProps) {
 	return (
 		<div
 			className={cn(
-				"bg-secondary/60 dark:bg-secondary/40 rounded-2xl p-4 animate-fade-in-up delay-400 transition-colors duration-300 border border-border/30",
+				"bg-secondary/60 rounded-2xl p-4 animate-fade-in-up delay-400 transition-colors duration-300 border border-border/30",
 				isFocused &&
 					"ring-2 ring-[--system-accent]/20 border-[--system-accent]/30",
 			)}
@@ -48,7 +48,8 @@ export function SearchInput({ value, onChange }: SearchInputProps) {
 					>
 						<HugeiconsIcon
 							icon={Camera01FreeIcons}
-							className="w-4 h-4 text-muted-foreground toolbutton-icon"
+							className="text-muted-foreground toolbutton-icon"
+							data-icon
 						/>
 					</Button>
 					<SubjectsDrawer>
@@ -57,7 +58,10 @@ export function SearchInput({ value, onChange }: SearchInputProps) {
 							size="icon"
 							className="bg-muted/60 hover:bg-muted toolbutton"
 						>
-							<Book className="w-4 h-4 text-muted-foreground toolbutton-icon" />
+							<Book
+								className="text-muted-foreground toolbutton-icon"
+								data-icon
+							/>
 						</Button>
 					</SubjectsDrawer>
 				</div>
@@ -69,7 +73,10 @@ export function SearchInput({ value, onChange }: SearchInputProps) {
 							size="icon"
 							className="bg-muted/60 hover:bg-muted toolbutton cursor-pointer"
 						>
-							<Mic className="w-4 h-4 text-muted-foreground toolbutton-icon" />
+							<Mic
+								className="text-muted-foreground toolbutton-icon"
+								data-icon
+							/>
 						</Button>
 					</AnimatedDialogContent>
 					<Button
@@ -83,10 +90,8 @@ export function SearchInput({ value, onChange }: SearchInputProps) {
 						}}
 					>
 						<VoiceWaveIcon
-							className={cn(
-								"w-4 h-4 voice-btn-icon",
-								voicePressed && "scale-125",
-							)}
+							className={cn("voice-btn-icon", voicePressed && "scale-125")}
+							data-icon
 						/>
 					</Button>
 				</div>

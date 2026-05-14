@@ -35,7 +35,7 @@ export function ExamSubmitDialog({
 						Are you sure you want to submit your exam?
 					</DialogDescription>
 				</DialogHeader>
-				<div className="space-y-3 py-2">
+				<div className="flex flex-col gap-3 py-2">
 					<div className="flex justify-between text-sm">
 						<span className="text-muted-foreground">Answered</span>
 						<span className="font-medium">

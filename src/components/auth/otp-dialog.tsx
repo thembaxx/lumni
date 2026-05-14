@@ -1,13 +1,13 @@
-import { m } from "framer-motion";
 import {
-	AlertCircle,
-	CheckCircle2,
-	Loader2,
-	RefreshCw,
+	ArrowsClockwise,
+	CheckCircle,
+	Lightning,
 	ShieldCheck,
-	Sparkles,
-	Zap,
-} from "lucide-react";
+	Sparkle,
+	Spinner,
+	WarningCircle,
+} from "@phosphor-icons/react";
+import { m } from "framer-motion";
 import { startTransition, useCallback, useEffect, useState } from "react";
 import { z } from "zod";
 import { Anim } from "@/components/shared/anim";
@@ -55,7 +55,7 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 	);
 	const [verified, setVerified] = useState(false);
 
-	const handleSend = useCallback(async () => {
+	const handlePaperPlane = useCallback(async () => {
 		const result = otpSendSchema.safeParse({ email });
 		if (!result.success) {
 			const msg =
@@ -244,7 +244,7 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 			<DialogContent className="sm:max-w-md shadow-lg">
 				<DialogHeader>
 					<DialogTitle className="flex items-center gap-2">
-						<ShieldCheck className="h-5 w-5 text-foreground" />
+						<ShieldCheck className="size-5 text-foreground" />
 						Sign in with Email OTP
 					</DialogTitle>
 					<DialogDescription>
@@ -254,9 +254,9 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 					</DialogDescription>
 				</DialogHeader>
 
-				<div className="space-y-4">
+				<div className="flex flex-col gap-4">
 					{!sent ? (
-						<div className="space-y-2">
+						<div className="flex flex-col gap-2">
 							<Input
 								type="email"
 								placeholder="email@example.com"
@@ -270,7 +270,7 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 							/>
 							{error && (
 								<p className="text-xs text-destructive flex items-center gap-1">
-									<AlertCircle className="h-3 w-3" />
+									<WarningCircle className="size-3" />
 									{error}
 								</p>
 							)}
@@ -312,8 +312,8 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 													},
 												}}
 											>
-												<div className="rounded-full bg-green-500/10 p-3">
-													<CheckCircle2 className="h-8 w-8 text-green-500 dark:text-green-400" />
+												<div className="rounded-full bg-success/10 p-3">
+													<CheckCircle className="size-8 text-success" />
 												</div>
 											</m.div>
 										</div>
@@ -327,7 +327,7 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 											</p>
 										</div>
 
-										<div className="w-full space-y-3">
+										<div className="w-full flex flex-col gap-3">
 											<div className="flex justify-center">
 												<InputOTP
 													value={otp}
@@ -351,7 +351,7 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 
 											{error && (
 												<p className="text-xs text-destructive flex items-center justify-center gap-1">
-													<AlertCircle className="h-3 w-3" />
+													<WarningCircle className="size-3" />
 													{error}
 												</p>
 											)}
@@ -369,7 +369,7 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 												</span>
 											) : (
 												<span className="flex items-center gap-2">
-													<Zap className="h-4 w-4" />
+													<Lightning className="size-4" />
 													Verify
 												</span>
 											)}
@@ -396,7 +396,7 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 													</span>
 												) : (
 													<span className="text-foreground flex items-center gap-1">
-														<Zap className="h-3 w-3" />
+														<Lightning className="size-3" />
 														Ready
 													</span>
 												)}
@@ -410,12 +410,12 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 												className={cn(buttonStyles, loading && "opacity-70")}
 											>
 												{loading ? (
-													<Loader2 className="h-4 w-4 animate-spin" />
+													<Spinner className="size-4 animate-spin" />
 												) : (
 													<>
-														<RefreshCw
+														<ArrowsClockwise
 															className={cn(
-																"h-4 w-4",
+																"size-4",
 																iconStyles,
 																countdown > 0 && "animate-pulse",
 															)}
@@ -456,8 +456,8 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 													},
 												}}
 											>
-												<div className="rounded-full bg-green-500/20 p-6">
-													<CheckCircle2 className="h-16 w-16 text-green-500 dark:text-green-400" />
+												<div className="rounded-full bg-success/20 p-6">
+													<CheckCircle className="size-16 text-success" />
 												</div>
 											</m.div>
 											<SuccessBadge isAdmin={true} />
@@ -476,19 +476,19 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 
 					{!sent && (
 						<Button
-							onClick={handleSend}
+							onClick={handlePaperPlane}
 							disabled={loading || !email}
 							className={cn("w-full", buttonStyles)}
 						>
 							{loading ? (
 								<span className="flex items-center gap-2">
 									<LoadingDots />
-									<span>Sending...</span>
+									<span>PaperPlaneing...</span>
 								</span>
 							) : (
 								<span className="flex items-center gap-2">
-									<Zap className="h-4 w-4" />
-									Send OTP
+									<Lightning className="size-4" />
+									PaperPlane OTP
 								</span>
 							)}
 						</Button>

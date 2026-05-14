@@ -1,7 +1,7 @@
 "use client";
 
+import { Flame } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
-import { Flame } from "lucide-react";
 import { LottieWrapper } from "@/components/lottie";
 import { getStreakMessage } from "@/lib/utils/gamification";
 
@@ -24,7 +24,7 @@ export function StreakFire({
 		<div className="flex items-center gap-2">
 			<div className="relative">
 				{useLottie ? (
-					<LottieWrapper animation="streak-fire" className="w-10 h-10" loop />
+					<LottieWrapper animation="streak-fire" className="size-10" loop />
 				) : (
 					<motion.div
 						animate={{
@@ -38,7 +38,7 @@ export function StreakFire({
 						}}
 					>
 						<Flame
-							className={`w-6 h-6 ${streak >= 7 ? "text-[oklch(72%_0.16_45)]" : "text-[oklch(78%_0.12_55)]"}`}
+							className={`size-6 ${streak >= 7 ? "text-warning" : "text-warning/80"}`}
 							fill={streak >= 7 ? "currentColor" : "none"}
 						/>
 					</motion.div>
@@ -63,7 +63,7 @@ export function StreakFire({
 						initial={{ opacity: 0, y: -10 }}
 						animate={{ opacity: 1, y: 0 }}
 					>
-						<div className="bg-amber-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">
+						<div className="bg-warning text-primary-foreground text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">
 							{getStreakMessage(milestone)}
 						</div>
 					</motion.div>
@@ -71,7 +71,7 @@ export function StreakFire({
 			</div>
 
 			<motion.span
-				className={`font-bold ${streak >= 7 ? "text-[oklch(72%_0.16_45)]" : "text-[oklch(78%_0.12_55)]"}`}
+				className={`font-bold ${streak >= 7 ? "text-warning" : "text-warning/80"}`}
 				key={streak}
 				initial={{ scale: 1.5 }}
 				animate={{ scale: 1 }}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { LottieWrapper } from "@/components/lottie/lottie-wrapper";
 import {
 	EmptyStateWithIllustration,
 	QuestionCard,
@@ -11,7 +12,6 @@ import {
 	QuizSubjectPrompt,
 } from "@/components/quiz";
 import { ProgressDots } from "@/components/shared/progress-dots";
-import { LottieWrapper } from "@/components/lottie/lottie-wrapper";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AssessmentHeader } from "@/components/ui/headers/assessment-header";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
@@ -137,27 +137,35 @@ export function QuizView({
 
 	if (loadError) {
 		return (
-			<div className="min-h-screen bg-background p-4 flex items-center justify-center pb-20">
-				<Card className="max-w-md w-full card-elevated">
-					<CardHeader className="text-center">
-						<CardTitle>Unable to Load</CardTitle>
-					</CardHeader>
-					<CardContent className="space-y-4">
-						<EmptyStateWithIllustration
-							animation="error"
-							title="Unable to Load Questions"
-							description={loadError}
-							action={{
-								label: "Try Again",
-								onClick: () => {
-									setLoadError(null);
-									window.location.reload();
-								},
-							}}
-							secondaryAction={{ label: "Go Back", onClick: handleStop }}
-						/>
-					</CardContent>
-				</Card>
+			<div className="min-h-[100dvh] bg-background grid grid-cols-12 gap-0">
+				<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4 pb-20">
+					<Card size="sm" className="max-w-md w-full">
+						<CardContent className="flex flex-col gap-4">
+							<CardTitle className="text-xl font-bold tracking-tight">
+								Unable to Load
+							</CardTitle>
+							<EmptyStateWithIllustration
+								animation="error"
+								title="Unable to Load Questions"
+								description={loadError}
+								action={{
+									label: "Try Again",
+									onClick: () => {
+										setLoadError(null);
+										window.location.reload();
+									},
+								}}
+								secondaryAction={{ label: "Go Back", onClick: handleStop }}
+							/>
+						</CardContent>
+					</Card>
+				</div>
+				<div className="col-span-12 md:col-span-5 col-start-1 md:col-start-8 relative overflow-hidden bg-system-surface/30">
+					<div className="absolute inset-0 bg-gradient-to-br from-destructive/5 via-transparent to-transparent" />
+					<div className="absolute inset-0 flex items-center justify-center p-8">
+						<div className="w-full h-full max-w-xs aspect-square rounded-3xl bg-destructive/10 blur-2xl animate-float-slow" />
+					</div>
+				</div>
 			</div>
 		);
 	}
@@ -172,128 +180,183 @@ export function QuizView({
 			);
 		}
 		return (
-			<div className="min-h-screen bg-background p-4 flex items-center justify-center pb-20">
-				<Card className="max-w-md w-full card-elevated">
-					<CardHeader className="text-center">
-						<CardTitle className="ios-title-2">Quiz Practice</CardTitle>
-					</CardHeader>
-					<CardContent className="space-y-4">
-						<QuizSelectSubject onSelect={(s) => handleStartWithSubject(s)} />
-					</CardContent>
-				</Card>
+			<div className="min-h-[100dvh] bg-background grid grid-cols-12 gap-0">
+				<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4 pb-20">
+					<Card size="sm" className="max-w-md w-full">
+						<CardContent className="flex flex-col gap-4">
+							<CardTitle className="ios-title-2 font-bold tracking-tight">
+								Quiz Practice
+							</CardTitle>
+							<QuizSelectSubject onSelect={(s) => handleStartWithSubject(s)} />
+						</CardContent>
+					</Card>
+				</div>
+				<div className="col-span-12 md:col-span-5 col-start-1 md:col-start-8 relative overflow-hidden bg-system-surface/30">
+					<div className="absolute inset-0 bg-gradient-to-br from-[--system-accent]/10 via-transparent to-transparent" />
+					<div className="absolute inset-0 flex items-center justify-center p-8">
+						<div className="w-full h-full max-w-xs aspect-square rounded-3xl bg-system-accent/10 blur-2xl animate-float-slow" />
+					</div>
+				</div>
 			</div>
 		);
 	}
 
 	if (isLoading) {
 		return (
-			<div className="min-h-screen bg-background p-4 flex items-center justify-center pb-20">
-				<Card className="max-w-md w-full card-elevated">
-					<CardContent className="p-8 text-center space-y-4">
-						<LottieWrapper animation="loading-dots" className="w-12 h-3 mx-auto" loop />
-						<p className="text-muted-foreground">Loading questions...</p>
-					</CardContent>
-				</Card>
+			<div className="min-h-[100dvh] bg-background grid grid-cols-12 gap-0">
+				<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4 pb-20">
+					<Card size="sm" className="max-w-md w-full">
+						<CardContent className="flex flex-col items-center gap-4 p-8 text-left">
+							<LottieWrapper
+								animation="loading-dots"
+								className="w-12 h-3 mx-auto"
+								loop
+							/>
+							<p className="text-muted-foreground">Loading questions...</p>
+						</CardContent>
+					</Card>
+				</div>
+				<div className="col-span-12 md:col-span-5 col-start-1 md:col-start-8 relative overflow-hidden bg-system-surface/30">
+					<div className="absolute inset-0 bg-gradient-to-br from-[--system-accent]/10 via-transparent to-transparent" />
+					<div className="absolute inset-0 flex items-center justify-center p-8">
+						<div className="w-full h-full max-w-xs aspect-square rounded-3xl bg-system-accent/10 blur-2xl animate-float-slow" />
+					</div>
+				</div>
 			</div>
 		);
 	}
 
 	if (isError) {
 		return (
-			<div className="min-h-screen bg-background p-4 flex items-center justify-center pb-20">
-				<Card className="max-w-md w-full card-elevated">
-					<CardHeader className="text-center">
-						<CardTitle>Unable to Load Questions</CardTitle>
-					</CardHeader>
-					<CardContent>
-						<QuizEmptyState
-							variant="no-questions"
-							subject={selectedSubject}
-							onBack={handleStop}
-						/>
-					</CardContent>
-				</Card>
+			<div className="min-h-[100dvh] bg-background grid grid-cols-12 gap-0">
+				<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4 pb-20">
+					<Card size="sm" className="max-w-md w-full">
+						<CardContent>
+							<CardTitle className="text-xl font-bold tracking-tight">
+								Unable to Load Questions
+							</CardTitle>
+							<QuizEmptyState
+								variant="no-questions"
+								subject={selectedSubject}
+								onBack={handleStop}
+							/>
+						</CardContent>
+					</Card>
+				</div>
+				<div className="col-span-12 md:col-span-5 col-start-1 md:col-start-8 relative overflow-hidden bg-system-surface/30">
+					<div className="absolute inset-0 bg-gradient-to-br from-destructive/5 via-transparent to-transparent" />
+					<div className="absolute inset-0 flex items-center justify-center p-8">
+						<div className="w-full h-full max-w-xs aspect-square rounded-3xl bg-destructive/10 blur-2xl animate-float-slow" />
+					</div>
+				</div>
 			</div>
 		);
 	}
 
 	if (questions.length === 0) {
 		return (
-			<div className="min-h-screen bg-background p-4 flex items-center justify-center pb-20">
-				<Card className="max-w-md w-full card-elevated">
-					<CardHeader className="text-center">
-						<CardTitle>No Questions</CardTitle>
-					</CardHeader>
-					<CardContent className="space-y-4">
-						<QuizEmptyState
-							variant="no-questions"
-							subject={selectedSubject}
-							onBack={handleStop}
-						/>
-					</CardContent>
-				</Card>
+			<div className="min-h-[100dvh] bg-background grid grid-cols-12 gap-0">
+				<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4 pb-20">
+					<Card size="sm" className="max-w-md w-full">
+						<CardContent>
+							<CardTitle className="text-xl font-bold tracking-tight">
+								No Questions
+							</CardTitle>
+							<QuizEmptyState
+								variant="no-questions"
+								subject={selectedSubject}
+								onBack={handleStop}
+							/>
+						</CardContent>
+					</Card>
+				</div>
+				<div className="col-span-12 md:col-span-5 col-start-1 md:col-start-8 relative overflow-hidden bg-system-surface/30">
+					<div className="absolute inset-0 bg-gradient-to-br from-[--system-accent]/10 via-transparent to-transparent" />
+					<div className="absolute inset-0 flex items-center justify-center p-8">
+						<div className="w-full h-full max-w-xs aspect-square rounded-3xl bg-system-accent/10 blur-2xl animate-float-slow" />
+					</div>
+				</div>
 			</div>
 		);
 	}
 
 	if (isComplete) {
 		return (
-			<div className="min-h-screen bg-background p-4 flex items-center justify-center pb-20">
-				<QuizResultsCard
-					totalQuestions={totalQuestions}
-					correctAnswers={correctAnswers}
-					elapsedTime={elapsedTime}
-					onRestart={handleRestart}
-					onDashboard={handleStop}
-				/>
+			<div className="min-h-[100dvh] bg-background grid grid-cols-12 gap-0">
+				<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4 pb-20">
+					<QuizResultsCard
+						totalQuestions={totalQuestions}
+						correctAnswers={correctAnswers}
+						elapsedTime={elapsedTime}
+						onRestart={handleRestart}
+						onDashboard={handleStop}
+					/>
+				</div>
+				<div className="col-span-12 md:col-span-5 col-start-1 md:col-start-8 relative overflow-hidden bg-system-surface/30">
+					<div className="absolute inset-0 bg-gradient-to-br from-[--system-accent]/10 via-transparent to-transparent" />
+					<div className="absolute inset-0 flex items-center justify-center p-8">
+						<div className="w-full h-full max-w-xs aspect-square rounded-3xl bg-system-accent/10 blur-2xl animate-float-slow" />
+					</div>
+				</div>
 			</div>
 		);
 	}
 
 	return (
-		<div className="min-h-screen bg-background p-[--space-4] space-y-[--space-6] pb-20 max-w-md mx-auto">
-			<AssessmentHeader
-				title="Quiz Practice"
-				elapsedTime={elapsedTime}
-				currentQuestionIndex={currentIndex}
-				totalQuestions={totalQuestions}
-				progressValue={((currentIndex + 1) / totalQuestions) * 100}
-				showAccuracy
-				accuracy={
-					totalQuestions > 0
-						? Math.round((correctAnswers / (currentIndex + 1 || 1)) * 100)
-						: 0
-				}
-				onQuit={handleStop}
-			/>
-
-			{currentQuestion && (
-				<QuestionCard
-					question={currentQuestion}
-					subject={selectedSubject}
-					questionNumber={currentIndex + 1}
+		<div className="min-h-[100dvh] bg-background grid grid-cols-12 gap-0">
+			{/* Main quiz content — left column */}
+			<main className="col-span-12 md:col-span-7 col-start-1 flex flex-col gap-6 p-4 md:p-6 pb-20">
+				<AssessmentHeader
+					title="Quiz Practice"
+					elapsedTime={elapsedTime}
+					currentQuestionIndex={currentIndex}
 					totalQuestions={totalQuestions}
-					onNext={handleNext}
-					onAnswered={handleAnswered}
+					progressValue={((currentIndex + 1) / totalQuestions) * 100}
+					showAccuracy
+					accuracy={
+						totalQuestions > 0
+							? Math.round((correctAnswers / (currentIndex + 1 || 1)) * 100)
+							: 0
+					}
+					onQuit={handleStop}
 				/>
-			)}
 
-			<QuizControls
-				currentQuestionIndex={currentIndex}
-				totalQuestions={totalQuestions}
-				hasSelected={currentAnswered}
-				showFeedback={currentAnswered}
-				onPrevious={handlePrevious}
-				onNext={handleNext}
-				onSkip={handleSkip}
-				showSkip={variant === "full" && !currentAnswered}
-			/>
+				{currentQuestion && (
+					<QuestionCard
+						question={currentQuestion}
+						subject={selectedSubject}
+						questionNumber={currentIndex + 1}
+						totalQuestions={totalQuestions}
+						onNext={handleNext}
+						onAnswered={handleAnswered}
+					/>
+				)}
 
-			<ProgressDots
-				total={totalQuestions}
-				currentIndex={currentIndex}
-				variant="quiz"
-			/>
+				<QuizControls
+					currentQuestionIndex={currentIndex}
+					totalQuestions={totalQuestions}
+					hasSelected={currentAnswered}
+					showFeedback={currentAnswered}
+					onPrevious={handlePrevious}
+					onNext={handleNext}
+					onSkip={handleSkip}
+					showSkip={variant === "full" && !currentAnswered}
+				/>
+
+				<ProgressDots
+					total={totalQuestions}
+					currentIndex={currentIndex}
+					variant="quiz"
+				/>
+			</main>
+
+			{/* Decorative accent — right zone */}
+			<div className="col-span-12 md:col-span-5 col-start-1 md:col-start-8 relative overflow-hidden bg-system-surface/30">
+				<div className="absolute inset-0 bg-gradient-to-br from-[--system-accent]/10 via-transparent to-transparent" />
+				<div className="absolute inset-0 flex items-center justify-center p-8">
+					<div className="w-full h-full max-w-xs aspect-square rounded-3xl bg-system-accent/10 blur-2xl animate-float-slow" />
+				</div>
+			</div>
 		</div>
 	);
 }

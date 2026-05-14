@@ -1,10 +1,10 @@
 "use client";
 
-import { ArrowLeft, Check, Flag, X } from "lucide-react";
+import { ArrowLeft, Check, Flag, X } from "@phosphor-icons/react";
 import { useRouter } from "next/navigation";
+import { LottieWrapper } from "@/components/lottie/lottie-wrapper";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { LottieWrapper } from "@/components/lottie/lottie-wrapper";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import type { ExamPaper } from "@/types/exam-paper";
 import type { ExamAnswer } from "@/types/exam-session";
@@ -40,32 +40,32 @@ export function ExamResults({
 
 	return (
 		<div className="min-h-dvh bg-[--system-grouped-background]">
-			<div className="max-w-3xl mx-auto p-[--space-6] space-y-[--space-6]">
-<div className="flex items-center justify-between">
-				<div className="flex items-center gap-3">
-					<LottieWrapper animation="success-check" className="w-10 h-10" />
-					<div>
-						<h1 className="ios-title-1 text-[--system-text-primary]">
-							Exam Submitted
-						</h1>
-						<p className="ios-footnote text-[--system-text-secondary]">
-							{paper.metadata.subject} {paper.metadata.paperCode}
-						</p>
+			<div className="max-w-3xl mx-auto p-[--space-6] flex flex-col gap-[--space-6]">
+				<div className="flex items-center justify-between">
+					<div className="flex items-center gap-3">
+						<LottieWrapper animation="success-check" className="size-10" />
+						<div>
+							<h1 className="ios-title-1 text-[--system-text-primary]">
+								Exam Submitted
+							</h1>
+							<p className="ios-footnote text-[--system-text-secondary]">
+								{paper.metadata.subject} {paper.metadata.paperCode}
+							</p>
+						</div>
 					</div>
-				</div>
 					<Button
 						variant="outline"
 						size="sm"
 						onClick={() => router.push("/dashboard/practice")}
 					>
-						<ArrowLeft className="size-4 mr-1" />
+						<ArrowLeft data-icon />
 						Back to Exams
 					</Button>
 				</div>
 
 				<div className="grid grid-cols-2 md:grid-cols-4 gap-[--space-3]">
 					<Card>
-						<CardHeader className="pb-2">
+						<CardHeader>
 							<CardTitle className="ios-caption-1 font-semibold text-[--system-text-secondary]">
 								Answered
 							</CardTitle>
@@ -80,7 +80,7 @@ export function ExamResults({
 						</CardContent>
 					</Card>
 					<Card>
-						<CardHeader className="pb-2">
+						<CardHeader>
 							<CardTitle className="ios-caption-1 font-semibold text-[--system-text-secondary]">
 								Unanswered
 							</CardTitle>
@@ -92,19 +92,17 @@ export function ExamResults({
 						</CardContent>
 					</Card>
 					<Card>
-						<CardHeader className="pb-2">
+						<CardHeader>
 							<CardTitle className="ios-caption-1 font-semibold text-[--system-text-secondary]">
 								Flagged
 							</CardTitle>
 						</CardHeader>
 						<CardContent>
-							<p className="text-2xl font-bold text-amber-600 dark:text-amber-400">
-								{flaggedCount}
-							</p>
+							<p className="text-2xl font-bold text-warning">{flaggedCount}</p>
 						</CardContent>
 					</Card>
 					<Card>
-						<CardHeader className="pb-2">
+						<CardHeader>
 							<CardTitle className="ios-caption-1 font-semibold text-[--system-text-secondary]">
 								Time Taken
 							</CardTitle>
@@ -123,7 +121,7 @@ export function ExamResults({
 					</CardHeader>
 					<CardContent>
 						<ScrollArea className="max-h-[400px]">
-							<div className="space-y-4">
+							<div className="flex flex-col gap-4">
 								{paper.sections.map((section) => (
 									<div key={section.id}>
 										<h3 className="ios-subhead font-semibold text-[--system-text-secondary] uppercase">
@@ -146,18 +144,18 @@ export function ExamResults({
 																key={part.id}
 																className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs ${
 																	answered
-																		? "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/30 dark:text-emerald-200"
+																		? "bg-success/10 text-success-foreground"
 																		: "bg-muted text-muted-foreground"
-																} ${flagged ? "ring-1 ring-amber-300" : ""}`}
+																} ${flagged ? "ring-1 ring-warning/30" : ""}`}
 															>
 																{answered ? (
-																	<Check className="w-3 h-3" />
+																	<Check className="size-3" />
 																) : (
-																	<X className="w-3 h-3" />
+																	<X className="size-3" />
 																)}
 																{part.id}
 																{flagged && (
-																	<Flag className="w-2.5 h-2.5 text-amber-500 dark:text-amber-400" />
+																	<Flag className="size-2.5 text-warning" />
 																)}
 															</div>
 														);
@@ -176,12 +174,12 @@ export function ExamResults({
 					<Card>
 						<CardHeader>
 							<CardTitle className="ios-headline flex items-center gap-2">
-								<Flag className="size-4 text-amber-500 dark:text-amber-400" />
+								<Flag className="size-4 text-warning" />
 								Flagged for Review
 							</CardTitle>
 						</CardHeader>
 						<CardContent>
-							<ul className="space-y-1">
+							<ul className="flex flex-col gap-1">
 								{paper.sections
 									.flatMap((section) =>
 										section.questions.flatMap((question) =>
@@ -205,7 +203,7 @@ export function ExamResults({
 											key={item.id}
 											className="text-sm text-muted-foreground flex items-center gap-2"
 										>
-											<Flag className="w-3 h-3 text-amber-400 dark:text-amber-300" />
+											<Flag className="size-3 text-warning-foreground" />
 											{item.label}
 										</li>
 									))}

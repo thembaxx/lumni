@@ -1,6 +1,6 @@
 "use client";
 
-import { IconCheck } from "@tabler/icons-react";
+import { Check } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
 import { AnimatedProgressBar } from "@/components/shared/animated-progress-bar";
 import { FadeIn } from "@/components/shared/fade-in";
@@ -15,7 +15,7 @@ export function DailyChallenges({ challenges }: DailyChallengesProps) {
 	const allCompleted = completedCount === challenges.length;
 
 	return (
-		<div className="space-y-3">
+		<div className="flex flex-col gap-3">
 			<div className="flex items-center justify-between">
 				<div className="flex items-center gap-2">
 					<span className="text-sm font-semibold text-foreground">
@@ -25,7 +25,7 @@ export function DailyChallenges({ challenges }: DailyChallengesProps) {
 						<motion.span
 							initial={{ scale: 0, opacity: 0 }}
 							animate={{ scale: 1, opacity: 1 }}
-							className="text-xs bg-green-500/20 text-green-600 dark:text-green-400 dark:bg-green-900/30 px-2 py-0.5 rounded-full"
+							className="text-xs bg-success/20 text-success-foreground px-2 py-0.5 rounded-full"
 						>
 							Complete!
 						</motion.span>
@@ -36,7 +36,7 @@ export function DailyChallenges({ challenges }: DailyChallengesProps) {
 				</span>
 			</div>
 
-			<div className="space-y-2">
+			<div className="flex flex-col gap-2">
 				{challenges.map((challenge, index) => (
 					<FadeIn
 						key={challenge.id}
@@ -45,16 +45,14 @@ export function DailyChallenges({ challenges }: DailyChallengesProps) {
 						delay={index * 0.1}
 						className={`relative overflow-hidden rounded-xl p-3 transition-colors ${
 							challenge.completed
-								? "bg-green-500/10 border border-green-500/20 dark:bg-green-900/20 dark:border-green-900/30"
+								? "bg-success/20 border border-success/20"
 								: "bg-card border border-border/50 hover:border-[--system-accent]/30"
 						}`}
 					>
 						<div className="flex items-center gap-3">
 							<div
-								className={`flex h-10 w-10 items-center justify-center rounded-lg text-lg ${
-									challenge.completed
-										? "bg-green-500/20 dark:bg-green-900/30"
-										: "bg-muted"
+								className={`flex size-10 items-center justify-center rounded-lg text-lg ${
+									challenge.completed ? "bg-success/20" : "bg-muted"
 								}`}
 							>
 								{challenge.completed ? "✓" : challenge.icon}
@@ -65,7 +63,7 @@ export function DailyChallenges({ challenges }: DailyChallengesProps) {
 									<span
 										className={`text-sm font-medium ${
 											challenge.completed
-												? "text-green-600 dark:text-green-400"
+												? "text-success-foreground"
 												: "text-foreground"
 										}`}
 									>
@@ -94,9 +92,9 @@ export function DailyChallenges({ challenges }: DailyChallengesProps) {
 										initial={{ scale: 0, opacity: 0 }}
 										animate={{ scale: 1, opacity: 1 }}
 										transition={{ type: "spring", stiffness: 400, damping: 20 }}
-										className="flex items-center gap-1 text-xs text-green-600 dark:text-green-400"
+										className="flex items-center gap-1 text-xs text-success-foreground"
 									>
-										<IconCheck size={12} />
+										<Check size={12} />
 										Completed
 									</motion.div>
 								)}

@@ -165,7 +165,7 @@ export function PeriodicTable() {
 
 	return (
 		<div
-			className="min-h-screen dark:bg-[oklch(7.8%_0.003_264°)] text-white p-4 pb-24"
+			className="min-h-screen text-white p-4 pb-24"
 			style={{
 				backgroundImage:
 					"radial-gradient(ellipse at 50% 0%, oklch(52.5% 0.142 274° / 0.08) 0%, transparent 60%)",
@@ -178,7 +178,7 @@ export function PeriodicTable() {
 					transition={{ delay: 0.15, duration: 0.4, ease: elementEaseOutQuart }}
 					className="relative mb-4"
 				>
-					<Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground/70" />
+					<Search className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-muted-foreground/70" />
 					<Input
 						type="text"
 						placeholder="Search by name, symbol, or number..."
@@ -188,10 +188,10 @@ export function PeriodicTable() {
 						onBlur={() => setIsSearchFocused(false)}
 						className={`
               w-full pl-12 pr-10 py-3 rounded-2xl
-              bg-white/5 dark:bg-black/5 border border-white/10
+              bg-white/5 border border-white/10
               text-white placeholder-gray-400 text-sm
               focus-visible:border-indigo-500/50 focus-visible:ring-2 focus-visible:ring-indigo-500/20
-              ${isSearchFocused ? "bg-white/10 dark:bg-black/10 border-indigo-500/30" : ""}
+              ${isSearchFocused ? "bg-white/10 border-indigo-500/30" : ""}
             `}
 					/>
 					{searchQuery && (
@@ -200,10 +200,10 @@ export function PeriodicTable() {
 							animate={{ opacity: 1, scale: 1 }}
 							exit={{ opacity: 0, scale: 0.5 }}
 							onClick={() => setSearchQuery("")}
-							className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-white/10 dark:bg-black/10"
+							className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-white/10"
 							whileTap={{ scale: 0.95 }}
 						>
-							<X className="w-4 h-4 text-muted-foreground/70" />
+							<X data-icon className="text-muted-foreground/70" />
 						</motion.button>
 					)}
 				</motion.div>
@@ -227,8 +227,8 @@ export function PeriodicTable() {
               border transition-colors duration-200
               ${
 								activeCategory === null
-									? "bg-white/20 dark:bg-black/20 border-white/30 text-foreground"
-									: "bg-white/5 dark:bg-black/5 border-white/10 text-muted-foreground/70 hover:bg-white/10 dark:bg-black/10"
+									? "bg-white/20 border-white/30 text-foreground"
+									: "bg-white/5 border-white/10 text-muted-foreground/70 hover:bg-white/10"
 							}
             `}
 						whileTap={{ scale: 0.95 }}
@@ -253,14 +253,14 @@ export function PeriodicTable() {
               border transition-colors duration-200 flex items-center gap-1.5
               ${
 								activeCategory === key
-									? "bg-white/20 dark:bg-black/20 border-white/30 text-white"
-									: "bg-white/5 dark:bg-black/5 border-white/10 text-muted-foreground/70 hover:bg-white/10 dark:bg-black/10"
+									? "bg-white/20 border-white/30 text-white"
+									: "bg-white/5 border-white/10 text-muted-foreground/70 hover:bg-white/10"
 							}
             `}
 							whileTap={{ scale: 0.95 }}
 						>
 							<motion.span
-								className={`w-2.5 h-2.5 rounded-full ${config.bg.replace(
+								className={`size-2.5 rounded-full ${config.bg.replace(
 									"/90",
 									"",
 								)}`}
@@ -331,7 +331,7 @@ export function PeriodicTable() {
 
 							<motion.button
 								onClick={() => setSelectedElement(null)}
-								className="absolute top-4 right-4 p-2 rounded-xl bg-white/5 dark:bg-black/5 hover:bg-white/10 dark:bg-black/10 z-10"
+								className="absolute top-4 right-4 p-2 rounded-xl bg-white/5 hover:bg-white/10 z-10"
 								whileHover={{
 									scale: 1.1,
 									backgroundColor: "oklch(100% 0 0 / 0.15)",
@@ -339,7 +339,7 @@ export function PeriodicTable() {
 								whileTap={{ scale: 0.95 }}
 								transition={{ duration: 0.15 }}
 							>
-								<X className="w-5 h-5" />
+								<X data-icon />
 							</motion.button>
 
 							<div className="p-6 pt-8">
@@ -362,7 +362,7 @@ export function PeriodicTable() {
 											ease: elementEaseOutBack,
 										}}
 										className={`
-                    w-20 h-20 rounded-2xl flex items-center justify-center
+                    size-20 rounded-2xl flex items-center justify-center
                     ${getBg(selectedElement.category)}
                   `}
 										style={{
@@ -395,7 +395,7 @@ export function PeriodicTable() {
 											duration: 0.3,
 											ease: elementEaseOutQuart,
 										}}
-										className="p-4 rounded-xl bg-white/5 dark:bg-black/5 border border-white/5"
+										className="p-4 rounded-xl bg-white/5 border border-white/5"
 									>
 										<p className="text-xs text-muted-foreground mb-1.5">
 											Category
@@ -413,7 +413,7 @@ export function PeriodicTable() {
 											duration: 0.3,
 											ease: elementEaseOutQuart,
 										}}
-										className="p-4 rounded-xl bg-white/5 dark:bg-black/5 border border-white/5"
+										className="p-4 rounded-xl bg-white/5 border border-white/5"
 									>
 										<p className="text-xs text-muted-foreground mb-1.5">
 											Electron Config
@@ -432,7 +432,7 @@ export function PeriodicTable() {
 										duration: 0.3,
 										ease: elementEaseOutQuart,
 									}}
-									className="p-4 rounded-xl bg-white/5 dark:bg-black/5 border border-white/5"
+									className="p-4 rounded-xl bg-white/5 border border-white/5"
 								>
 									<p className="text-xs text-muted-foreground mb-1.5">
 										Discovery
@@ -454,7 +454,7 @@ export function PeriodicTable() {
 											duration: 0.3,
 											ease: elementEaseOutQuart,
 										}}
-										className="p-4 rounded-xl bg-white/5 dark:bg-black/5 border border-white/5"
+										className="p-4 rounded-xl bg-white/5 border border-white/5"
 									>
 										<p className="text-xs text-muted-foreground mb-1.5">
 											Did You Know?

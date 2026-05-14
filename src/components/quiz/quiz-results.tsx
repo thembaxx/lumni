@@ -1,18 +1,18 @@
 "use client";
 
+import {
+	ArrowCounterClockwise,
+	House,
+	Timer,
+	Trophy,
+} from "@phosphor-icons/react";
 import { motion } from "framer-motion";
-import { Home, RotateCcw, Timer, TrophyIcon } from "lucide-react";
 import { Confetti } from "@/components/celebration";
 import { LottieWrapper } from "@/components/lottie";
 import { ProgressDots } from "@/components/shared/progress-dots";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { iOSEase } from "@/lib/utils/animation";
 import { calculateAccuracy, formatTime } from "@/lib/utils/time";
@@ -77,34 +77,37 @@ export function QuizResultsCard({
 					animate={{ opacity: 1, scale: 1 }}
 					transition={{ delay: 0.5, type: "spring", stiffness: 300 }}
 				>
-					<div className="flex items-center gap-2 rounded-full bg-amber-500 text-white px-4 py-2 shadow-lg">
+					<Badge
+						variant="warning"
+						className="flex items-center gap-2 px-4 py-2 shadow-lg"
+					>
 						{useLottie ? (
-							<LottieWrapper animation="success-check" className="w-5 h-5" />
+							<LottieWrapper animation="success-check" className="size-5" />
 						) : (
-							<TrophyIcon className="w-5 h-5" />
+							<Trophy className="size-5" />
 						)}
 						<span className="font-bold">Perfect Score!</span>
-					</div>
+					</Badge>
 				</motion.div>
 			)}
 
-			<Card className={cn("overflow-hidden", className)}>
+			<Card className={cn("relative", className)}>
 				<motion.div
-					className="absolute inset-0 pointer-events-none"
+					className="absolute inset-0 pointer-events-none rounded-[2.5rem] overflow-hidden"
 					initial={{ opacity: 0 }}
 					animate={isGreatScore ? { opacity: [0, 0.3, 0] } : { opacity: 0 }}
 					transition={{ duration: 2, repeat: Infinity }}
 				>
-					<div className="absolute inset-0 bg-green-500/10 dark:bg-green-700/20" />
+					<div className="absolute inset-0 bg-success/10" />
 				</motion.div>
 
-				<CardHeader className="text-center">
+				<CardHeader className="flex flex-col gap-2 p-6 pb-0 md:text-left">
 					<motion.div
 						initial={{ opacity: 0, y: -10 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ delay: 0.1 }}
 					>
-						<CardTitle>
+						<CardTitle className="text-xl font-bold tracking-tight">
 							{isPerfect
 								? "Flawless!"
 								: isGreatScore
@@ -112,93 +115,75 @@ export function QuizResultsCard({
 									: "Quiz Complete!"}
 						</CardTitle>
 					</motion.div>
-					<CardDescription>Here are your results:</CardDescription>
+					<p className="text-sm text-muted-foreground">
+						Here are your results:
+					</p>
 				</CardHeader>
 
-				<motion.div
-					className="space-y-4"
-					variants={containerVariants}
-					initial="hidden"
-					animate="visible"
-				>
-					<CardContent className="space-y-4">
-						<motion.div
-							className="grid grid-cols-3 gap-4 text-center"
-							variants={itemVariants}
-						>
-							<div className="p-4 rounded-lg bg-muted">
-								<motion.p
-									className="text-2xl font-bold tabular-nums"
+				<CardContent>
+					<motion.div
+						className="flex flex-col gap-4"
+						variants={containerVariants}
+						initial="hidden"
+						animate="visible"
+					>
+						<section className="flex flex-col gap-4">
+							<motion.div
+								className="grid grid-cols-12 gap-4 md:text-left"
+								variants={itemVariants}
+							>
+								<motion.div
+									className="col-span-5 p-4 rounded-lg bg-muted"
 									initial={{ opacity: 0 }}
 									animate={{ opacity: 1 }}
 									transition={{ delay: 0.3 }}
 								>
-									{totalQuestions}
-								</motion.p>
-								<p className="text-xs text-muted-foreground">Questions</p>
-							</div>
-							<motion.div
-								className="p-4 rounded-lg bg-muted"
-								initial={{ opacity: 0 }}
-								animate={{ opacity: 1 }}
-								transition={{ delay: 0.4 }}
-							>
-								<p
-									className={cn(
-										"text-2xl font-bold tabular-nums",
-										isGreatScore && "text-green-500 dark:text-green-400",
-									)}
+									<motion.p
+										className="text-2xl font-bold tabular-nums"
+										initial={{ opacity: 0 }}
+										animate={{ opacity: 1 }}
+										transition={{ delay: 0.3 }}
+									>
+										{totalQuestions}
+									</motion.p>
+									<p className="text-xs text-muted-foreground">Questions</p>
+								</motion.div>
+								<motion.div
+									className="col-span-3 p-4 rounded-lg bg-muted"
+									initial={{ opacity: 0 }}
+									animate={{ opacity: 1 }}
+									transition={{ delay: 0.4 }}
 								>
-									{correctAnswers}
-								</p>
-								<p className="text-xs text-muted-foreground">Correct</p>
+									<p
+										className={cn(
+											"text-2xl font-bold tabular-nums",
+											isGreatScore && "text-success",
+										)}
+									>
+										{correctAnswers}
+									</p>
+									<p className="text-xs text-muted-foreground">Correct</p>
+								</motion.div>
+								<motion.div
+									className="col-span-4 p-4 rounded-lg bg-muted"
+									initial={{ opacity: 0 }}
+									animate={{ opacity: 1 }}
+									transition={{ delay: 0.5 }}
+								>
+									<p
+										className={cn(
+											"text-2xl font-bold tabular-nums",
+											isGreatScore && "text-success",
+										)}
+									>
+										{accuracy}%
+									</p>
+									<p className="text-xs text-muted-foreground">Accuracy</p>
+								</motion.div>
 							</motion.div>
-							<motion.div
-								className="p-4 rounded-lg bg-muted"
-								initial={{ opacity: 0 }}
-								animate={{ opacity: 1 }}
-								transition={{ delay: 0.5 }}
-							>
-								<p
-									className={cn(
-										"text-2xl font-bold tabular-nums",
-										isGreatScore && "text-green-500 dark:text-green-400",
-									)}
-								>
-									{accuracy}%
-								</p>
-								<p className="text-xs text-muted-foreground">Accuracy</p>
-							</motion.div>
-						</motion.div>
-
-						<motion.div
-							className="flex items-center justify-center gap-2 text-muted-foreground"
-							variants={itemVariants}
-						>
-							<Timer className="size-4" />
-							<span className="text-sm">{formatTime(elapsedTime)}</span>
-						</motion.div>
-
-						<motion.div className="flex gap-2" variants={itemVariants}>
-							{onDashboard && (
-								<Button
-									variant="outline"
-									className="flex-1"
-									onClick={onDashboard}
-								>
-									<Home className="size-4 mr-2" />
-									Dashboard
-								</Button>
-							)}
-							{onRestart && (
-								<Button className="flex-1" onClick={onRestart}>
-									<RotateCcw className="size-4 mr-2" />
-									Try Again
-								</Button>
-							)}
-						</motion.div>
-					</CardContent>
-				</motion.div>
+						</section>
+					</motion.div>
+				</CardContent>
 			</Card>
 		</motion.div>
 	);

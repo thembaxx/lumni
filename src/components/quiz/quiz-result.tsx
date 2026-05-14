@@ -1,5 +1,6 @@
 "use client";
 
+import { ArrowsClockwise, House } from "@phosphor-icons/react";
 import {
 	AnimatePresence,
 	LazyMotion,
@@ -7,12 +8,11 @@ import {
 	useSpring,
 	useTransform,
 } from "framer-motion";
-import { LottieWrapper } from "@/components/lottie";
 import type { LottieAnimationName } from "@/components/lottie";
-import { IconRefresh, IconHome } from "@tabler/icons-react";
+import { LottieWrapper } from "@/components/lottie";
 import { AccuracyBar } from "@/components/shared/accuracy-bar";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { iOSEase, springTransition } from "@/lib/utils/animation";
 
 interface QuizResultProps {
@@ -51,10 +51,10 @@ function Confetti() {
 		delay: i * 0.05,
 		color: [
 			"oklch(64.8% 0.173 142°)",
-			"oklch(57.7% 0.184 264°)",
+			"oklch(57.7% 0.184 146°)",
 			"oklch(78.6% 0.156 80°)",
 			"oklch(62.2% 0.195 348°)",
-			"oklch(53.5% 0.182 286°)",
+			"oklch(53.5% 0.182 86°)",
 		][i % 5],
 	}));
 	return (
@@ -101,27 +101,27 @@ export function QuizResult({
 			return {
 				title: "Outstanding!",
 				animation: "level-up",
-				lottieSize: "w-20 h-20",
+				lottieSize: "size-20",
 				celebration: true,
 			};
 		if (accuracy >= 70)
 			return {
 				title: "Great job!",
 				animation: "confetti",
-				lottieSize: "w-16 h-16",
+				lottieSize: "size-16",
 				celebration: false,
 			};
 		if (accuracy >= 50)
 			return {
 				title: "Good effort!",
 				animation: "success-check",
-				lottieSize: "w-16 h-16",
+				lottieSize: "size-16",
 				celebration: false,
 			};
 		return {
 			title: "Keep practicing!",
 			animation: "error-state",
-			lottieSize: "w-16 h-16",
+			lottieSize: "size-16",
 			celebration: false,
 		};
 	};
@@ -134,20 +134,17 @@ export function QuizResult({
 			initial={{ opacity: 0, scale: 0.9 }}
 			animate={{ opacity: 1, scale: 1 }}
 			transition={{ duration: 0.4, ease: iOSEase }}
-			className="space-y-6"
+			className="flex flex-col gap-6"
 		>
-			<Card className="p-8 flex flex-col items-center text-center gap-4 relative overflow-visible">
-{message.celebration && <Confetti />}
-			<m.div
-				initial={{ scale: 0.95, opacity: 0 }}
-				animate={{ scale: 1, opacity: 1 }}
-				transition={{ delay: 0.2, ...springTransition }}
-			>
-				<LottieWrapper
-					animation={animation}
-					className={message.lottieSize}
-				/>
-			</m.div>
+			<Card className="p-8 flex flex-col items-center text-center gap-4 overflow-visible">
+				{message.celebration && <Confetti />}
+				<m.div
+					initial={{ scale: 0.95, opacity: 0 }}
+					animate={{ scale: 1, opacity: 1 }}
+					transition={{ delay: 0.2, ...springTransition }}
+				>
+					<LottieWrapper animation={animation} className={message.lottieSize} />
+				</m.div>
 				<m.h2
 					className="text-2xl font-bold"
 					initial={{ opacity: 0, y: 10 }}
@@ -157,14 +154,14 @@ export function QuizResult({
 					{message.title}
 				</m.h2>
 
-				<div className="grid grid-cols-2 gap-6 w-full max-w-xs">
+				<div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-xs">
 					<m.div
 						className="flex flex-col items-center"
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ delay: 0.4 }}
 					>
-						<p className="text-3xl font-bold text-green-500 dark:text-green-400">
+						<p className="text-3xl font-bold text-success">
 							<AnimatedCounter value={correctAnswers} delay={500} />
 						</p>
 						<p className="text-xs text-muted-foreground">Correct</p>
@@ -175,7 +172,7 @@ export function QuizResult({
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ delay: 0.5 }}
 					>
-						<p className="text-3xl font-bold text-red-500 dark:text-red-400">
+						<p className="text-3xl font-bold text-destructive">
 							<AnimatedCounter
 								value={totalQuestions - correctAnswers}
 								delay={600}
@@ -206,7 +203,7 @@ export function QuizResult({
 						transition={{ delay: 0.8 }}
 					>
 						<p className="text-sm font-medium mb-2">Review:</p>
-						<div className="space-y-1 text-left">
+						<div className="flex flex-col gap-1 text-left">
 							{incorrectAnswers.slice(0, 3).map((item, idx) => (
 								<p
 									key={`review-${item.questionId || idx}`}
@@ -228,12 +225,12 @@ export function QuizResult({
 				transition={{ delay: 0.9 }}
 			>
 				<Button variant="outline" className="flex-1" onClick={onRestart}>
-					<IconRefresh className="w-4 h-4 mr-2" />
+					<ArrowsClockwise data-icon="inline-start" />
 					Try Again
 				</Button>
 				{onClose && (
 					<Button className="flex-1" onClick={onClose}>
-						<IconHome className="w-4 h-4 mr-2" />
+						<House data-icon="inline-start" />
 						Dashboard
 					</Button>
 				)}

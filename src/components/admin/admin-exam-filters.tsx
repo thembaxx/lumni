@@ -1,7 +1,7 @@
 "use client";
 
+import { Spinner } from "@phosphor-icons/react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -113,13 +113,11 @@ export function ExamFilters({
 }: ExamFiltersProps) {
 	return (
 		<Card>
-			<CardHeader className="pb-3">
-				<CardTitle className="text-base text-foreground">
-					Download Papers
-				</CardTitle>
+			<CardHeader>
+				<CardTitle>Download Papers</CardTitle>
 			</CardHeader>
-			<CardContent className="space-y-6">
-				<div className="space-y-3">
+			<CardContent className="flex flex-col gap-6">
+				<div className="flex flex-col gap-3">
 					<Label className="text-sm font-medium text-foreground">Year</Label>
 					<div className="flex flex-wrap gap-1">
 						{YEARS.map((year) => (
@@ -133,7 +131,7 @@ export function ExamFilters({
 					</div>
 				</div>
 
-				<div className="space-y-3">
+				<div className="flex flex-col gap-3">
 					<div className="flex items-center justify-between">
 						<Label className="text-sm font-medium text-foreground">
 							Subjects
@@ -163,7 +161,7 @@ export function ExamFilters({
 					<div className="border rounded-lg divide-y max-h-48 overflow-y-auto">
 						{isLoading ? (
 							<div className="flex items-center justify-center p-4">
-								<Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />
+								<Spinner className="size-4 animate-spin text-muted-foreground" />
 							</div>
 						) : (
 							subjects.map((subject) => (
@@ -178,7 +176,7 @@ export function ExamFilters({
 					</div>
 				</div>
 
-				<div className="space-y-3">
+				<div className="flex flex-col gap-3">
 					<Label className="text-sm font-medium text-foreground">
 						Exam Type
 					</Label>

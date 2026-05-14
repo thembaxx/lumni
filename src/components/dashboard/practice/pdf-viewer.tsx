@@ -199,12 +199,12 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 							<Button
 								variant="ghost"
 								size="icon"
-								className={cn("h-11 w-11 shrink-0 rounded-full", controlTap)}
+								className={cn("shrink-0", controlTap)}
 								onClick={handlePrevPage}
 								disabled={pdfPage <= 1 || totalPages === 0}
 								aria-label="Previous page"
 							>
-								<ChevronLeft className="w-5 h-5" />
+								<ChevronLeft data-icon />
 							</Button>
 
 							<div className="shrink-0 px-1.5 min-w-14 text-center">
@@ -220,12 +220,12 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 							<Button
 								variant="ghost"
 								size="icon"
-								className={cn("h-11 w-11 shrink-0 rounded-full", controlTap)}
+								className={cn("shrink-0", controlTap)}
 								onClick={handleNextPage}
 								disabled={pdfPage >= totalPages || totalPages === 0}
 								aria-label="Next page"
 							>
-								<ChevronRight className="w-5 h-5" />
+								<ChevronRight data-icon />
 							</Button>
 
 							<div className="w-px h-5 bg-border shrink-0" />
@@ -233,12 +233,12 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 							<Button
 								variant="ghost"
 								size="icon"
-								className={cn("h-11 w-11 shrink-0 rounded-full", controlTap)}
+								className={cn("shrink-0", controlTap)}
 								onClick={handleZoomOut}
 								disabled={!canZoomOut}
 								aria-label="Zoom out"
 							>
-								<ZoomOut className="w-5 h-5" />
+								<ZoomOut data-icon />
 							</Button>
 
 							<div className="shrink-0 px-1 min-w-11 text-center">
@@ -250,12 +250,12 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 							<Button
 								variant="ghost"
 								size="icon"
-								className={cn("h-11 w-11 shrink-0 rounded-full", controlTap)}
+								className={cn("shrink-0", controlTap)}
 								onClick={handleZoomIn}
 								disabled={!canZoomIn}
 								aria-label="Zoom in"
 							>
-								<ZoomIn className="w-5 h-5" />
+								<ZoomIn data-icon />
 							</Button>
 
 							<div className="w-px h-5 bg-border shrink-0" />
@@ -263,16 +263,13 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 							<Button
 								variant="ghost"
 								size="icon"
-								className={cn(
-									"h-11 w-11 shrink-0 rounded-full relative",
-									controlTap,
-								)}
+								className={cn("shrink-0 relative", controlTap)}
 								onClick={toggleFullscreen}
 								aria-label={
 									isFullscreen ? "Exit fullscreen" : "Enter fullscreen"
 								}
 							>
-								<div className="relative w-5 h-5">
+								<div className="relative size-5">
 									<div
 										className={cn(
 											"absolute inset-0 flex items-center justify-center",
@@ -282,7 +279,7 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 												: "scale-[0.25] opacity-0 blur-xs",
 										)}
 									>
-										<Minimize className="w-5 h-5" />
+										<Minimize data-icon />
 									</div>
 									<div
 										className={cn(
@@ -293,7 +290,7 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 												: "scale-100 opacity-100 blur-0",
 										)}
 									>
-										<Maximize2 className="w-5 h-5" />
+										<Maximize2 data-icon />
 									</div>
 								</div>
 							</Button>
@@ -301,11 +298,11 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 							<Button
 								variant="ghost"
 								size="icon"
-								className={cn("h-11 w-11 shrink-0 rounded-full", controlTap)}
+								className={cn("shrink-0", controlTap)}
 								onClick={handleDownload}
 								aria-label="Download PDF"
 							>
-								<Download className="w-5 h-5" />
+								<Download data-icon />
 							</Button>
 						</div>
 					</div>

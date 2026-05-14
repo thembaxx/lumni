@@ -1,9 +1,7 @@
 "use client";
 
-import { CancelIcon, CheckmarkCircle02Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { CheckCircle, Minus, Plus, X } from "@phosphor-icons/react";
 import { AnimatePresence, m } from "framer-motion";
-import { MinusIcon, PlusIcon } from "lucide-react";
 import { useCallback, useState } from "react";
 import { Confetti, XPGainPopup } from "@/components/celebration";
 import { LottieWrapper } from "@/components/lottie";
@@ -268,7 +266,7 @@ export function QuestionCard({
 			case "calculation": {
 				const body = question as Question<"calculation">;
 				return (
-					<div className="space-y-3">
+					<div className="flex flex-col gap-3">
 						<CalculationInput
 							value={calcValue}
 							onChange={setCalcValue}
@@ -298,7 +296,7 @@ export function QuestionCard({
 			case "programming": {
 				const body = question as Question<"programming">;
 				return (
-					<div className="space-y-3">
+					<div className="flex flex-col gap-3">
 						<ProgrammingInput
 							value={code}
 							onChange={setCode}
@@ -319,7 +317,7 @@ export function QuestionCard({
 			case "source-based": {
 				const body = question as Question<"source-based">;
 				return (
-					<div className="space-y-3">
+					<div className="flex flex-col gap-3">
 						<div className="rounded-lg bg-muted/30 p-4 text-sm">
 							<MarkdownRenderer
 								content={body.body.source.content}
@@ -357,7 +355,7 @@ export function QuestionCard({
 			case "data-response": {
 				const body = question as Question<"data-response">;
 				return (
-					<div className="space-y-3">
+					<div className="flex flex-col gap-3">
 						<div className="rounded-lg bg-muted/30 p-4 text-sm font-mono whitespace-pre-wrap">
 							{typeof body.body.data === "string"
 								? body.body.data
@@ -389,7 +387,7 @@ export function QuestionCard({
 			case "mixed": {
 				const body = question as Question<"mixed">;
 				return (
-					<div className="space-y-4">
+					<div className="flex flex-col gap-4">
 						{body.body.parts.map((part, i) => (
 							<div key={part.id} className="rounded-lg border p-3">
 								<p className="text-sm font-medium mb-2">
@@ -438,7 +436,7 @@ export function QuestionCard({
 				animate={{ opacity: 1, scale: 1, y: 0 }}
 				transition={{ duration: 0.3, ease: iOSEase }}
 				className={cn(
-					"rounded-lg p-4 space-y-3",
+					"rounded-lg p-4 flex flex-col gap-3",
 					isCorrect
 						? "bg-success/10 text-success"
 						: "bg-destructive/10 text-destructive",
@@ -447,13 +445,13 @@ export function QuestionCard({
 				<div className="flex items-center gap-3">
 					<LottieWrapper
 						animation={isCorrect ? "success-check" : "error-state"}
-						className="w-10 h-10 shrink-0"
+						className="size-10 shrink-0"
 						loop={false}
 					/>
 					<p className="font-medium">{isCorrect ? "Correct!" : "Incorrect"}</p>
 				</div>
 				{feedback && (
-					<div className="space-y-1">
+					<div className="flex flex-col gap-1">
 						<div className="flex items-center gap-2">
 							<span className="text-sm font-medium">
 								Score: {feedback.score}/{question.points}
@@ -481,11 +479,11 @@ export function QuestionCard({
 	};
 
 	return (
-		<Anim>
+		<Anim layoutId="question-card">
 			<Confetti trigger={showConfetti} count={30} duration={1500} />
 			<XPGainPopup amount={15} visible={showXPGain} />
-			<Card className="w-full max-w-2xl">
-				<CardHeader className="space-y-4">
+			<Card key={question.id} size="sm" className="w-full max-w-2xl">
+				<CardHeader className="gap-4">
 					<div className="flex items-center justify-between">
 						<div className="flex items-center gap-2">
 							<Badge
@@ -540,12 +538,12 @@ export function QuestionCard({
 							>
 								{state.showDiagram ? (
 									<>
-										<MinusIcon className="h-4 w-4" />
+										<Minus data-icon="inline-start" />
 										<span className="text-xs">Hide</span>
 									</>
 								) : (
 									<>
-										<PlusIcon className="h-4 w-4" />
+										<Plus data-icon="inline-start" />
 										<span className="text-xs">Show</span>
 									</>
 								)}
@@ -560,7 +558,7 @@ export function QuestionCard({
 					</CardContent>
 				)}
 
-				<CardContent className="space-y-3">
+				<CardContent className="flex flex-col gap-3">
 					{renderInput()}
 
 					{isGrading && (
@@ -598,17 +596,18 @@ export function QuestionCard({
 					<AnimatePresence initial={false}>{renderFeedback()}</AnimatePresence>
 				</CardContent>
 
-				<CardFooter className="flex gap-3">
+				<CardFooter className="gap-3">
 					<Button
 						onClick={handleHint}
 						variant="outline"
 						className={cn("gap-2", state.showHint && "animate-icon-pop")}
 					>
-						<MinusIcon
+						<Minus
 							className={cn(
-								"h-4 w-4 transition-transform duration-(--duration-normal)",
+								"transition-transform duration-(--duration-normal)",
 								state.showHint && "rotate-180",
 							)}
+							data-icon="inline-start"
 						/>
 						Hint
 					</Button>

@@ -1,18 +1,10 @@
 "use client";
 
-import { CloudUploadIcon, DatabaseIcon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { Loader2 } from "lucide-react";
+import { CloudArrowUp, Database } from "@phosphor-icons/react";
+import { Spinner } from "@phosphor-icons/react";
 import { useState } from "react";
 import { LottieWrapper } from "@/components/lottie";
 import { Button } from "@/components/ui/button";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
 import { ListCell, ListGroup, ListSection } from "@/components/ui/list-cell";
 import { UploadButton } from "@/lib/uploadthing";
 
@@ -34,8 +26,8 @@ function extractSubjectFromFileName(fileName: string): string {
 }
 
 export default function UploadPage() {
-	const [_uploadedUrls, setUploadedUrls] = useState<string[]>([]);
-	const [lastUpload, setLastUpload] = useState<string | null>(null);
+	const [_uploadedUrls, setCloudArrowUpedUrls] = useState<string[]>([]);
+	const [lastCloudArrowUp, setLastCloudArrowUp] = useState<string | null>(null);
 	const [_syncStatus, setSyncStatus] = useState<
 		"idle" | "syncing" | "done" | "error"
 	>("idle");
@@ -62,8 +54,8 @@ export default function UploadPage() {
 		files: { url: string; name: string }[],
 	) => {
 		const urls = files.map((f) => f.url);
-		setUploadedUrls(urls);
-		setLastUpload(urls[0] || null);
+		setCloudArrowUpedUrls(urls);
+		setLastCloudArrowUp(urls[0] || null);
 
 		const fileName = files[0]?.name || "";
 		const subject = extractSubjectFromFileName(fileName);
@@ -84,7 +76,7 @@ export default function UploadPage() {
 	};
 
 	return (
-		<div className="min-h-screen bg-[--system-grouped-background]">
+		<div className="min-h-[100dvh] bg-[--system-grouped-background]">
 			<div className="mx-auto max-w-md">
 				<div className="px-[--space-4] pt-safe pb-[--space-2]">
 					<h1 className="ios-large-title text-[--system-text-primary]">
@@ -93,48 +85,48 @@ export default function UploadPage() {
 				</div>
 
 				<div className="px-[--space-4] space-y-[--space-4] pb-[--space-8]">
-					<Card>
-						<CardHeader>
-							<CardTitle className="flex flex-col items-center gap-3 text-center">
+					<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+						<header>
+							<h2 className="font-heading text-sm font-medium flex flex-col items-center gap-3 text-center">
 								<LottieWrapper
 									animation="empty-upload"
 									className="w-20 h-20"
 									loop
 								/>
 								<span className="flex items-center gap-2">
-									<HugeiconsIcon icon={CloudUploadIcon} className="size-4" />
+									<CloudArrowUp className="size-4" />
 									Upload
 								</span>
-							</CardTitle>
-							<CardDescription>
+							</h2>
+							<p className="text-xs/relaxed text-muted-foreground">
 								Upload JSON question files for subjects
-							</CardDescription>
-						</CardHeader>
-						<CardContent className="space-y-[--space-3]">
+							</p>
+						</header>
+						<div className="px-4 group-data-[size=sm]/card:px-3 space-y-[--space-3]">
 							<UploadButton
 								endpoint="qaUploader"
 								onClientUploadComplete={handleUploadComplete}
 								onUploadError={(error: Error) => {
-									console.error("Upload error:", error);
+									console.error("CloudArrowUp error:", error);
 								}}
 							/>
 
-							{lastUpload && (
+							{lastCloudArrowUp && (
 								<div className="rounded-[--radius-button] bg-[var(--success)]/10 p-[--space-4] text-center">
 									<LottieWrapper
 										animation="success-check"
 										className="w-16 h-16 mx-auto mb-2"
 									/>
 									<p className="text-[13px] font-medium text-[var(--success)]">
-										Upload successful
+										CloudArrowUp successful
 									</p>
 									<p className="text-[12px] text-muted-foreground break-all mt-1">
-										{lastUpload}
+										{lastCloudArrowUp}
 									</p>
 								</div>
 							)}
-						</CardContent>
-					</Card>
+						</div>
+					</div>
 
 					<ListSection header="File Naming Convention">
 						<ListGroup>
@@ -147,17 +139,17 @@ export default function UploadPage() {
 						</ListGroup>
 					</ListSection>
 
-					<Card>
-						<CardHeader>
-							<CardTitle className="flex items-center gap-2">
-								<HugeiconsIcon icon={DatabaseIcon} className="size-4" />
-								Database
-							</CardTitle>
-							<CardDescription>
+					<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+						<header>
+							<h2 className="font-heading text-sm font-medium flex items-center gap-2">
+<Database className="size-4" />
+							Database
+							</h2>
+							<p className="text-xs/relaxed text-muted-foreground">
 								Seed the database with initial data
-							</CardDescription>
-						</CardHeader>
-						<CardContent>
+							</p>
+						</header>
+						<div className="px-4 group-data-[size=sm]/card:px-3">
 							<Button
 								variant="outline"
 								onClick={handleSeedDatabase}
@@ -165,9 +157,9 @@ export default function UploadPage() {
 								className="w-full"
 							>
 								{seedStatus === "seeding" ? (
-									<Loader2 className="mr-2 h-4 w-4 animate-spin" />
+									<Spinner className="mr-2 h-4 w-4 animate-spin" />
 								) : (
-									<HugeiconsIcon icon={DatabaseIcon} className="size-4 mr-2" />
+									<Database className="size-4 mr-2" />
 								)}
 								{seedStatus === "seeding"
 									? "Seeding..."
@@ -175,8 +167,8 @@ export default function UploadPage() {
 										? "Seeded!"
 										: "Seed Database"}
 							</Button>
-						</CardContent>
-					</Card>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

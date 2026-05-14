@@ -1,6 +1,6 @@
 "use client";
 
-import { Home, Target, Timer } from "lucide-react";
+import { House, Target, Timer } from "@phosphor-icons/react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -35,15 +35,15 @@ export function SessionActive({
 	const progressValue = activity?.progress ?? 0;
 
 	return (
-		<div className="min-h-screen bg-background p-4 space-y-4">
-			<div className="flex items-center justify-between">
+		<div className="min-h-[100dvh] bg-background p-4 flex flex-col gap-4">
+			<div className="flex items-center justify-between gap-2 flex-wrap">
 				{onQuit && (
 					<Button variant="ghost" size="sm" onClick={onQuit}>
 						Quit
 					</Button>
 				)}
 				{activity && (
-					<div className="flex items-center gap-3">
+					<div className="flex items-center gap-2 flex-wrap">
 						<div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-muted/50">
 							<Timer className="size-3.5 text-muted-foreground" />
 							<span className="text-sm font-medium tabular-nums font-mono">
@@ -58,8 +58,8 @@ export function SessionActive({
 							<>
 								<span className="text-muted-foreground">|</span>
 								<div className="flex items-center gap-1.5">
-									<Target className="size-3.5 text-green-500 dark:text-green-400" />
-									<span className="text-sm font-semibold tabular-nums font-mono text-green-500 dark:text-green-400">
+									<Target className="size-3.5 text-success" />
+									<span className="text-sm font-semibold tabular-nums font-mono text-success">
 										{activity.accuracy}%
 									</span>
 								</div>

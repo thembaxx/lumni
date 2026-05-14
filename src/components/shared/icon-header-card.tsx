@@ -1,11 +1,11 @@
 "use client";
 
-import { LucideIcon } from "lucide-react";
+import { Icon } from "@phosphor-icons/react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
 interface IconHeaderCardProps {
-	icon: LucideIcon;
+	icon?: React.ComponentType<{ className?: string }>;
 	title: string;
 	iconClassName?: string;
 	variant?: "default" | "highlighted";
@@ -16,7 +16,7 @@ interface IconHeaderCardProps {
 export function IconHeaderCard({
 	icon: Icon,
 	title,
-	iconClassName = "h-4 w-4",
+	iconClassName = "size-4",
 	variant = "default",
 	className,
 	children,
@@ -30,11 +30,13 @@ export function IconHeaderCard({
 				className,
 			)}
 		>
-			<CardHeader className="pb-2">
-				<CardTitle className="text-base flex items-center gap-2">
-					<Icon
-						className={cn(iconClassName, isHighlighted && "text-foreground")}
-					/>
+			<CardHeader>
+				<CardTitle className="flex items-center gap-2">
+					{Icon && (
+						<Icon
+							className={cn(iconClassName, isHighlighted && "text-foreground")}
+						/>
+					)}
 					{title}
 				</CardTitle>
 			</CardHeader>

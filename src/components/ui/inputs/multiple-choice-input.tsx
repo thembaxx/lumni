@@ -22,7 +22,7 @@ export function MultipleChoiceInput({
 			value={value}
 			onValueChange={onChange}
 			disabled={disabled}
-			className="space-y-2"
+			className="flex flex-col gap-2"
 		>
 			{options.map((opt) => (
 				<div key={opt.id} className="flex items-center gap-3">

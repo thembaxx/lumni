@@ -1,17 +1,17 @@
 "use client";
 
-import { Image as ImageIcon, Loader2, Send, Sparkles, X } from "lucide-react";
+import {
+	Image as ImageIcon,
+	PaperPlane,
+	Sparkle,
+	Spinner,
+	X,
+} from "@phosphor-icons/react";
 import Image from "next/image";
 import { useRef, useState } from "react";
 import { StepByStep } from "@/components/quiz/step-by-step";
 import { Button } from "@/components/ui/button";
-import {
-	Card,
-	CardContent,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { UploadButton } from "@/lib/uploadthing";
 import { cn } from "@/lib/utils";
@@ -98,27 +98,27 @@ export function AiSolver() {
 	};
 
 	return (
-		<div className="h-full flex flex-col p-4 space-y-4 max-w-2xl mx-auto overflow-y-auto">
+		<div className="h-full flex flex-col p-4 gap-4 max-w-2xl mx-auto overflow-y-auto">
 			{error && (
 				<div className="bg-destructive/10 text-destructive text-xs p-3 rounded-lg border border-destructive/20 animate-in fade-in slide-in-from-top-1">
 					{error}
 				</div>
 			)}
 
-			<Card className="border-[--system-accent]/20 bg-[--system-accent]/5 shadow-inner overflow-hidden">
-				<CardHeader className="pb-2">
-					<CardTitle className="text-lg flex items-center gap-2">
-						<Sparkles className="w-5 h-5 text-foreground animate-pulse" />
+			<div className="border-[--system-accent]/20 bg-[--system-accent]/5 shadow-inner overflow-hidden">
+				<header className="rounded-t-[2.5rem] border-t border-border/80 pb-2">
+					<h2 className="font-heading text-sm font-medium text-lg flex items-center gap-2">
+						<Sparkle className="size-5 text-foreground animate-pulse" />
 						AI Solver
-					</CardTitle>
+					</h2>
 					<p className="text-xs text-muted-foreground">
 						Upload a photo of your homework or type a question to get a
 						step-by-step solution.
 					</p>
-				</CardHeader>
+				</header>
 
-				<CardContent className="space-y-4">
-					<div className="space-y-2">
+				<div className="px-4 group-data-[size=sm]/card:px-3 flex flex-col gap-4">
+					<div className="flex flex-col gap-2">
 						<div className="flex flex-wrap gap-1 p-1 bg-background/50 rounded-md border border-border/50">
 							{MATH_SYMBOLS.map((s) => (
 								<Button
@@ -152,7 +152,7 @@ export function AiSolver() {
 									}
 								}}
 								onUploadError={(error: Error) => {
-									setError(`Upload failed: ${error.message}`);
+									setError(`CloudArrowUp failed: ${error.message}`);
 								}}
 								appearance={{
 									button:
@@ -164,9 +164,9 @@ export function AiSolver() {
 										if (ready)
 											return (
 												<div className="flex items-center gap-2">
-													<ImageIcon className="w-4 h-4" />
+													<ImageIcon data-icon />
 													<span>
-														{imageUrl ? "Replace Photo" : "Upload Photo"}
+														{imageUrl ? "Replace Photo" : "CloudArrowUp Photo"}
 													</span>
 												</div>
 											);
@@ -176,7 +176,7 @@ export function AiSolver() {
 							/>
 						</div>
 						{imageUrl && (
-							<div className="relative w-20 h-20 rounded-lg overflow-hidden border-2 border-[--system-accent]/20 shadow-lg group">
+							<div className="relative size-20 rounded-lg overflow-hidden border-2 border-[--system-accent]/20 shadow-lg group">
 								<Image
 									src={imageUrl}
 									alt="Uploaded"
@@ -189,14 +189,14 @@ export function AiSolver() {
 									onClick={() => setImageUrl(null)}
 									className="absolute top-1 right-1"
 								>
-									<X className="w-3 h-3" />
+									<X data-icon />
 								</Button>
 							</div>
 						)}
 					</div>
-				</CardContent>
+				</div>
 
-				<CardFooter>
+				<footer className="flex items-center rounded-b-[2.5rem] border-t border-border/80 px-4 group-data-[size=sm]/card:px-3 [.border-t]:pt-4 group-data-[size=sm]/card:[.border-t]:pt-3">
 					<Button
 						onClick={handleSolve}
 						disabled={loading || (!question && !imageUrl)}
@@ -207,28 +207,28 @@ export function AiSolver() {
 					>
 						{loading ? (
 							<>
-								<Loader2 className="w-5 h-5 animate-spin" />
+								<Spinner data-icon className="animate-spin" />
 								Thinking...
 							</>
 						) : (
 							<>
-								<Send className="w-4 h-4" />
+								<PaperPlane data-icon />
 								Solve Problem
 							</>
 						)}
 					</Button>
-				</CardFooter>
-			</Card>
+				</footer>
+			</div>
 
 			{result && (
-				<Card className="animate-in fade-in slide-in-from-bottom-6 duration-500 border-[--system-accent]/10">
-					<CardHeader className="bg-[--system-accent]/5 border-b border-[--system-accent]/10">
-						<CardTitle className="text-base flex items-center gap-2">
-							<Sparkles className="w-4 h-4 text-foreground" />
+				<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors animate-in fade-in slide-in-from-bottom-6 duration-500 border-[--system-accent]/10">
+					<header className="rounded-t-[2.5rem] border-t border-border/80 bg-[--system-accent]/5 border-b border-[--system-accent]/10">
+						<h2 className="font-heading text-sm font-medium text-base flex items-center gap-2">
+							<Sparkle className="size-4 text-foreground" />
 							Final Answer
-						</CardTitle>
-					</CardHeader>
-					<CardContent className="pt-6 space-y-6">
+						</h2>
+					</header>
+					<div className="px-4 group-data-[size=sm]/card:px-3 pt-6 flex flex-col gap-6">
 						<div className="bg-background rounded-lg p-4 border border-border shadow-sm">
 							<div className="whitespace-pre-wrap text-sm leading-relaxed font-medium">
 								{result.solution}
@@ -236,19 +236,19 @@ export function AiSolver() {
 						</div>
 
 						{result.steps && result.steps.length > 0 && (
-							<div className="space-y-4">
+							<div className="flex flex-col gap-4">
 								<div className="flex items-center gap-2">
-									<div className="h-px flex-1 bg-border" />
+									<Separator className="flex-1" />
 									<p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
 										Step-by-Step Breakdown
 									</p>
-									<div className="h-px flex-1 bg-border" />
+									<Separator className="flex-1" />
 								</div>
 								<StepByStep steps={result.steps} />
 							</div>
 						)}
-					</CardContent>
-				</Card>
+					</div>
+				</div>
 			)}
 		</div>
 	);

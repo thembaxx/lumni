@@ -1,15 +1,15 @@
 "use client";
 
 import {
-	AlertCircle,
 	BookOpen,
 	Brain,
 	Clock,
 	Flame,
 	Target,
-	TrendingDown,
-	TrendingUp,
-} from "lucide-react";
+	TrendDown,
+	TrendUp,
+	WarningCircle,
+} from "@phosphor-icons/react";
 import { useMemo } from "react";
 import { AccuracyBar } from "@/components/shared/accuracy-bar";
 import { Button } from "@/components/ui/button";
@@ -27,7 +27,7 @@ export function AnalyticsPanel() {
 	if (isLoading) {
 		return (
 			<div className="flex items-center justify-center p-8">
-				<div className="animate-spin rounded-full h-8 w-8 border-b-2 border-foreground" />
+				<div className="animate-spin rounded-full size-8 border-b-2 border-foreground" />
 			</div>
 		);
 	}
@@ -35,23 +35,18 @@ export function AnalyticsPanel() {
 	if (!analytics || analytics.totalQuestions === 0) {
 		return (
 			<div className="text-center p-8">
-				<Brain className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
+				<Brain className="size-12 mx-auto text-muted-foreground mb-4" />
 				<h3 className="text-lg font-semibold mb-2">No Analytics Yet</h3>
 				<p className="text-muted-foreground mb-4">
 					Complete some quizzes to see your performance analytics.
 				</p>
-				<a
-					href="/quiz"
-					className="inline-flex items-center justify-center rounded-md text-sm font-medium bg-[--system-accent] text-background hover:bg-[--system-accent]/90 h-10 px-4 py-2"
-				>
-					Start Quiz
-				</a>
+				<Button render={<a href="/quiz" />}>Start Quiz</Button>
 			</div>
 		);
 	}
 
 	return (
-		<div className="space-y-6">
+		<div className="flex flex-col gap-6">
 			<div className="flex items-center justify-between">
 				<h2 className="text-2xl font-bold">Analytics</h2>
 				<Button variant="ghost" onClick={refresh}>
@@ -124,18 +119,18 @@ function StatCard({
 				: "text-muted-foreground";
 
 	return (
-		<Card>
-			<CardContent className="p-4">
+		<Card size="sm">
+			<CardContent>
 				<div className="flex items-center gap-2 text-muted-foreground mb-2">
-					<Icon className="h-4 w-4" />
+					<Icon className="size-4" />
 					<span className="text-xs">{label}</span>
 				</div>
 				<div
 					className={`text-2xl font-bold flex items-center gap-2 ${trendColor}`}
 				>
 					{value}
-					{trend === "up" && <TrendingUp className="h-4 w-4" />}
-					{trend === "down" && <TrendingDown className="h-4 w-4" />}
+					{trend === "up" && <TrendUp className="size-4" />}
+					{trend === "down" && <TrendDown className="size-4" />}
 				</div>
 			</CardContent>
 		</Card>
@@ -144,15 +139,18 @@ function StatCard({
 
 function InsightsCard({ insights }: { insights: string[] }) {
 	return (
-		<Card className="bg-[--system-accent]/5 border-[--system-accent]/20">
-			<CardHeader className="pb-2">
-				<CardTitle className="text-base flex items-center gap-2">
-					<Brain className="h-4 w-4 text-foreground" />
+		<Card
+			size="sm"
+			className="bg-[--system-accent]/5 border-[--system-accent]/20"
+		>
+			<CardHeader>
+				<CardTitle>
+					<Brain className="size-4 text-foreground" />
 					Insights
 				</CardTitle>
 			</CardHeader>
 			<CardContent>
-				<ul className="space-y-2">
+				<ul className="flex flex-col gap-2">
 					{insights.map((insight, i) => (
 						<li key={i} className="text-sm flex items-start gap-2">
 							<span className="text-foreground">•</span>
@@ -173,22 +171,22 @@ function RecommendationsCard({
 	const topRecommendations = recommendations.slice(0, 3);
 
 	return (
-		<Card>
-			<CardHeader className="pb-2">
-				<CardTitle className="text-base flex items-center gap-2">
-					<AlertCircle className="h-4 w-4" />
+		<Card size="sm">
+			<CardHeader>
+				<CardTitle>
+					<WarningCircle className="size-4" />
 					Recommendations
 				</CardTitle>
 			</CardHeader>
 			<CardContent>
-				<div className="space-y-3">
+				<div className="flex flex-col gap-3">
 					{topRecommendations.map((rec, i) => (
 						<div
 							key={i}
 							className="flex items-start gap-3 p-3 rounded-lg bg-muted/50"
 						>
 							<div
-								className={`w-2 h-2 rounded-full mt-2 ${
+								className={`size-2 rounded-full mt-2 ${
 									rec.type === "practice"
 										? "bg-[--system-accent]"
 										: rec.type === "exam"
@@ -214,17 +212,17 @@ function RecommendationsCard({
 
 function SubjectBreakdownCard({ subjects }: { subjects: SubjectAnalytics[] }) {
 	return (
-		<Card>
-			<CardHeader className="pb-2">
-				<CardTitle className="text-base flex items-center gap-2">
-					<BookOpen className="h-4 w-4" />
+		<Card size="sm">
+			<CardHeader>
+				<CardTitle>
+					<BookOpen className="size-4" />
 					Subject Breakdown
 				</CardTitle>
 			</CardHeader>
 			<CardContent>
-				<div className="space-y-4">
+				<div className="flex flex-col gap-4">
 					{subjects.map((subject) => (
-						<div key={subject.subjectId} className="space-y-2">
+						<div key={subject.subjectId} className="flex flex-col gap-2">
 							<div className="flex items-center justify-between">
 								<span className="font-medium">{subject.subjectName}</span>
 								<span className="text-sm text-muted-foreground">
@@ -260,9 +258,9 @@ function WeeklyProgressCard({
 	progress: OverallAnalytics["weeklyProgress"];
 }) {
 	return (
-		<Card>
-			<CardHeader className="pb-2">
-				<CardTitle className="text-base">Weekly Progress</CardTitle>
+		<Card size="sm">
+			<CardHeader>
+				<CardTitle>Weekly Progress</CardTitle>
 			</CardHeader>
 			<CardContent>
 				<div className="flex items-end gap-2 h-32">

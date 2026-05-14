@@ -1,6 +1,6 @@
 "use client";
 
-import { Target, X } from "lucide-react";
+import { Target, X } from "@phosphor-icons/react";
 import { TimerDisplay } from "@/components/shared/timer-display";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -27,10 +27,10 @@ interface AssessmentHeaderProps {
 }
 
 const difficultyColors = {
-	easy: "bg-green-500/20 text-green-600 dark:text-green-400 border-green-500/30",
+	easy: "bg-success/20 text-success-foreground dark:text-success-foreground border-success/30",
 	medium:
-		"bg-yellow-500/20 text-yellow-600 dark:text-yellow-400 border-yellow-500/30",
-	hard: "bg-red-500/20 text-red-600 dark:text-red-400 border-red-500/30",
+		"bg-warning/20 text-warning-foreground dark:text-warning-foreground border-warning/30",
+	hard: "bg-destructive/20 text-destructive-foreground dark:text-destructive-foreground border-destructive/30",
 };
 
 export function AssessmentHeader({
@@ -55,7 +55,7 @@ export function AssessmentHeader({
 
 	return (
 		<div className={cn("space-y-4", className)}>
-			<div className="flex items-center justify-between">
+			<div className="flex items-center justify-between gap-2 flex-wrap">
 				{/* Left: Quit button */}
 				{onQuit && (
 					<Button
@@ -70,7 +70,7 @@ export function AssessmentHeader({
 				)}
 
 				{/* Center: Timer + difficulty/accuracy + question counter */}
-				<div className="flex items-center gap-2">
+				<div className="flex items-center gap-2 flex-wrap">
 					<TimerDisplay
 						elapsedTime={elapsedTime}
 						variant="inline"

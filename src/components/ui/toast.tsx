@@ -87,10 +87,10 @@ function ToastContainer({ toasts }: { toasts: ToastData[] }) {
 
 const toastStyles: Record<ToastType, string> = {
 	success:
-		"border-green-500/30 bg-green-500/10 text-green-600 dark:text-green-400",
+		"border-success/30 bg-success/10 text-success-foreground dark:text-success-foreground",
 	error: "border-destructive/50 bg-destructive/10 text-destructive",
 	warning:
-		"border-yellow-500/30 bg-yellow-500/10 text-yellow-600 dark:text-yellow-400",
+		"border-warning/30 bg-warning/10 text-warning-foreground dark:text-warning-foreground",
 	info: "border-[--system-accent]/50 bg-[--system-accent]/10 text-[--system-accent] dark:text-[--system-accent]",
 };
 

@@ -6,7 +6,7 @@ import { iOSEase } from "@/lib/utils/animation";
 export function WelcomeState() {
 	return (
 		<div className="flex-1 flex flex-col items-center justify-center p-8">
-			<div className="w-48 h-48 mb-6">
+			<div className="size-48 mb-6">
 				<LottieWrapper animation="empty-search" loop={true} autoplay={true} />
 			</div>
 			<div className="text-center">

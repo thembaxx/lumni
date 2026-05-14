@@ -15,10 +15,7 @@ export function SmartImage({ src, alt, className }: SmartImageProps) {
 			<img
 				src={src}
 				alt={alt}
-				className={cn(
-					"outline -outline-offset-1 outline-black/10 dark:outline-white/10",
-					className,
-				)}
+				className={cn("outline -outline-offset-1 outline-black/10", className)}
 			/>
 		);
 	}
@@ -29,10 +26,7 @@ export function SmartImage({ src, alt, className }: SmartImageProps) {
 			fill={false}
 			width={0}
 			height={0}
-			className={cn(
-				"outline -outline-offset-1 outline-black/10 dark:outline-white/10",
-				className,
-			)}
+			className={cn("outline -outline-offset-1 outline-black/10", className)}
 			unoptimized
 		/>
 	);

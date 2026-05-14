@@ -43,7 +43,7 @@ export function PageTransition({ children }: PageTransitionProps) {
 				<m.div
 					ref={constraintsRef}
 					key={displayPathname}
-					className="min-h-screen overflow-x-hidden"
+					className="min-h-[100dvh] overflow-x-hidden"
 					custom={direction}
 					initial={{
 						opacity: 0,

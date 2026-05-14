@@ -54,7 +54,7 @@ export function OnlineStatusIndicator() {
 
 	return (
 		<div
-			className="fixed bottom-4 left-1/2 -translate-x-1/2 bg-amber-500 text-white px-4 py-2 rounded-lg text-sm font-medium z-[50] shadow-lg"
+			className="fixed bottom-4 left-1/2 -translate-x-1/2 bg-warning text-primary-foreground px-4 py-2 rounded-lg text-sm font-medium z-[50] shadow-lg"
 			role="status"
 			aria-live="polite"
 		>

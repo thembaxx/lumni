@@ -3,36 +3,36 @@ export type Rarity = "common" | "rare" | "epic" | "legendary";
 export const rarityColors: Record<Rarity, string> = {
 	common: "bg-muted border-border",
 	rare: "bg-[--system-accent]/10 border-[--system-accent]/20",
-	epic: "bg-purple-500/10 border-purple-500/30",
-	legendary: "bg-amber-500/10 border-amber-500/30",
+	epic: "bg-accent/10 border-accent/30",
+	legendary: "bg-warning/10 border-warning/30",
 };
 
 export const rarityGlow: Record<Rarity, string> = {
 	common: "",
 	rare: "shadow-[--system-accent]/20",
-	epic: "shadow-purple-500/20",
-	legendary: "shadow-amber-500/30",
+	epic: "shadow-accent/20",
+	legendary: "shadow-warning/30",
 };
 
 export const raritySolid: Record<Rarity, string> = {
 	common: "bg-muted",
 	rare: "bg-[--system-accent]",
-	epic: "bg-purple-500 dark:bg-purple-700",
-	legendary: "bg-amber-500 dark:bg-amber-700",
+	epic: "bg-accent dark:bg-accent/70",
+	legendary: "bg-warning dark:bg-warning/70",
 };
 
 export const rarityBorder: Record<Rarity, string> = {
-	common: "border-gray-400 dark:border-gray-600",
+	common: "border-border",
 	rare: "border-[--system-accent]",
-	epic: "border-purple-500 dark:border-purple-700",
-	legendary: "border-amber-500 dark:border-amber-700",
+	epic: "border-accent dark:border-accent/70",
+	legendary: "border-warning dark:border-warning/70",
 };
 
 export const rarityGlowStrong: Record<Rarity, string> = {
 	common: "shadow-gray-500/50 dark:shadow-gray-700/50",
 	rare: "shadow-[--system-accent]/50",
-	epic: "shadow-purple-500/50 dark:shadow-purple-700/50",
-	legendary: "shadow-amber-500/70 dark:shadow-amber-700/70",
+	epic: "shadow-accent/50 dark:shadow-accent/50",
+	legendary: "shadow-warning/70 dark:shadow-warning/70",
 };
 
 const streakMessages: Record<number, string> = {

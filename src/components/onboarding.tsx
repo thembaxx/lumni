@@ -7,7 +7,7 @@ import {
 	GraduationCap,
 	Target,
 	X,
-} from "lucide-react";
+} from "@phosphor-icons/react";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -191,10 +191,10 @@ export function OnboardingActionButtons() {
 	const router = useRouter();
 
 	return (
-		<div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+		<div className="grid grid-cols-12 gap-3">
 			<Button
 				variant="outline"
-				className="h-auto flex-col gap-2 py-4"
+				className="col-span-12 sm:col-span-5 h-auto flex-col gap-2 py-4"
 				onClick={() => router.push("/quiz")}
 			>
 				<Target className="h-5 w-5 text-foreground" />
@@ -202,7 +202,7 @@ export function OnboardingActionButtons() {
 			</Button>
 			<Button
 				variant="outline"
-				className="h-auto flex-col gap-2 py-4"
+				className="col-span-12 sm:col-span-4 h-auto flex-col gap-2 py-4"
 				onClick={() => router.push("/flashcards")}
 			>
 				<BookOpen className="h-5 w-5 text-foreground" />
@@ -210,7 +210,7 @@ export function OnboardingActionButtons() {
 			</Button>
 			<Button
 				variant="outline"
-				className="h-auto flex-col gap-2 py-4"
+				className="col-span-12 sm:col-span-3 h-auto flex-col gap-2 py-4"
 				onClick={() => router.push("/dashboard?tab=practice")}
 			>
 				<GraduationCap className="h-5 w-5 text-foreground" />

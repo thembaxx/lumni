@@ -1,10 +1,15 @@
 "use client";
 
-import { UploadDropzone } from "@uploadthing/react";
-import { AlertCircle, Check, FileText, Loader2, Upload } from "lucide-react";
+import {
+	Check,
+	CloudArrowUp,
+	FileText,
+	Spinner,
+	WarningCircle,
+} from "@phosphor-icons/react";
 import { useState } from "react";
-import type { OurFileRouter } from "@/app/api/uploadthing/core";
 import { Button } from "@/components/ui/button";
+import { UploadDropzone } from "@/lib/uploadthing";
 
 interface AdminExamUploadZoneProps {
 	onUploadComplete: () => void;
@@ -55,11 +60,11 @@ export function AdminExamUploadZone({
 	};
 
 	return (
-		<div className="space-y-3">
+		<div className="flex flex-col gap-3">
 			<div className="text-sm font-medium">Upload Exam Paper</div>
 
 			{state === "idle" && (
-				<UploadDropzone<OurFileRouter, "examPapersUploader">
+				<UploadDropzone
 					endpoint="examPapersUploader"
 					onUploadBegin={() => {
 						setState("uploading");
@@ -78,7 +83,7 @@ export function AdminExamUploadZone({
 
 			{state === "uploading" && (
 				<div className="flex items-center gap-3 p-4 border rounded-lg bg-muted/30">
-					<Loader2 className="w-5 h-5 animate-spin text-muted-foreground" />
+					<Spinner className="size-5 animate-spin text-muted-foreground" />
 					<div>
 						<p className="text-sm font-medium">Uploading PDF...</p>
 						<p className="text-xs text-muted-foreground">
@@ -90,7 +95,7 @@ export function AdminExamUploadZone({
 
 			{state === "converting" && (
 				<div className="flex items-center gap-3 p-4 border rounded-lg bg-muted/30">
-					<Loader2 className="w-5 h-5 animate-spin text-foreground" />
+					<Spinner className="size-5 animate-spin text-foreground" />
 					<div>
 						<p className="text-sm font-medium">Converting...</p>
 						<p className="text-xs text-muted-foreground">
@@ -102,7 +107,7 @@ export function AdminExamUploadZone({
 
 			{state === "success" && (
 				<div className="flex items-center gap-3 p-4 border rounded-lg bg-emerald-50">
-					<Check className="w-5 h-5 text-emerald-600" />
+					<Check className="size-5 text-emerald-600" />
 					<div>
 						<p className="text-sm font-medium text-emerald-700">Success!</p>
 						<p className="text-xs text-emerald-600">{message}</p>
@@ -112,7 +117,7 @@ export function AdminExamUploadZone({
 
 			{state === "error" && (
 				<div className="flex items-center gap-3 p-4 border rounded-lg bg-destructive/5">
-					<AlertCircle className="w-5 h-5 text-destructive" />
+					<WarningCircle className="size-5 text-destructive" />
 					<div className="flex-1">
 						<p className="text-sm font-medium text-destructive">Error</p>
 						<p className="text-xs text-destructive/80">{message}</p>

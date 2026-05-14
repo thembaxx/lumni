@@ -1,11 +1,23 @@
 "use client";
 
+import {
+	ArrowSquareOut,
+	FileText,
+	Spinner,
+	TrashSimple,
+} from "@phosphor-icons/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { ExternalLink, FileText, Loader2, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+	Empty,
+	EmptyContent,
+	EmptyDescription,
+	EmptyHeader,
+	EmptyTitle,
+} from "@/components/ui/empty";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface ExamListItem {
@@ -65,30 +77,30 @@ export function AdminExamList() {
 
 	return (
 		<Card>
-			<CardHeader className="pb-3">
-				<CardTitle className="text-base text-foreground">
-					Exam Papers ({data?.total || 0})
-				</CardTitle>
+			<CardHeader>
+				<CardTitle>Exam Papers ({data?.total || 0})</CardTitle>
 			</CardHeader>
 			<CardContent className="p-0">
 				{isLoading ? (
 					<div className="flex items-center justify-center py-8">
-						<Loader2 className="w-5 h-5 animate-spin text-muted-foreground" />
+						<Spinner className="size-5 animate-spin text-muted-foreground" />
 					</div>
 				) : error ? (
 					<div className="p-4 text-sm text-destructive">
 						Failed to load exam papers
 					</div>
 				) : exams.length === 0 ? (
-					<div className="flex flex-col items-center justify-center py-8 text-center">
-						<FileText className="w-8 h-8 text-muted-foreground/30 mb-2" />
-						<p className="text-sm text-muted-foreground">
-							No exam papers uploaded yet
-						</p>
-						<p className="text-xs text-muted-foreground/60 mt-1">
-							Upload a PDF above to get started
-						</p>
-					</div>
+					<Empty>
+						<EmptyHeader>
+							<FileText className="size-8 text-muted-foreground/30" />
+							<EmptyTitle>No exam papers uploaded yet</EmptyTitle>
+						</EmptyHeader>
+						<EmptyContent>
+							<EmptyDescription>
+								Upload a PDF above to get started
+							</EmptyDescription>
+						</EmptyContent>
+					</Empty>
 				) : (
 					<ScrollArea className="max-h-[500px]">
 						<div className="divide-y">
@@ -114,7 +126,7 @@ export function AdminExamList() {
 											onClick={() => router.push(`/exam/${exam.id}`)}
 											title="Take exam"
 										>
-											<ExternalLink className="w-4 h-4" />
+											<ArrowSquareOut className="size-4" />
 										</Button>
 										<Button
 											variant="ghost"
@@ -125,9 +137,9 @@ export function AdminExamList() {
 											title="Delete exam"
 										>
 											{deleting === exam.id ? (
-												<Loader2 className="w-4 h-4 animate-spin" />
+												<Spinner className="size-4 animate-spin" />
 											) : (
-												<Trash2 className="w-4 h-4" />
+												<TrashSimple className="size-4" />
 											)}
 										</Button>
 									</div>

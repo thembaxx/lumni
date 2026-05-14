@@ -1,5 +1,7 @@
 "use client";
 
+import { Target } from "@phosphor-icons/react";
+import { LottieWrapper } from "@/components/lottie/lottie-wrapper";
 import { AnimatedDots } from "@/components/shared/animated-dots";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,8 +12,7 @@ import {
 	EmptyMedia,
 	EmptyTitle,
 } from "@/components/ui/empty";
-import { LottieWrapper } from "@/components/lottie/lottie-wrapper";
-import { Target } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 import { SubjectSelector } from "./subject-selector";
 
 interface QuizEmptyStateProps {
@@ -33,21 +34,32 @@ interface QuizEmptyStateNoQuestionsProps {
 function QuizEmptyStateNotStarted({ onStart }: QuizEmptyStateNotStartedProps) {
 	return (
 		<Empty className="border border-dashed mt-24">
-			<EmptyHeader>
-				<EmptyMedia variant="icon">
-					<LottieWrapper animation="empty-search" className="size-12 mx-auto" loop />
-				</EmptyMedia>
-				<EmptyTitle>Quiz not started</EmptyTitle>
-				<EmptyDescription>
-					Practice quizzes you start will be saved here for easy access later.
-					You can also view and manage your past quiz attempts here.
-				</EmptyDescription>
-			</EmptyHeader>
-			<EmptyContent>
-				<Button variant="outline" size="sm" onClick={onStart}>
-					Start quiz
-				</Button>
-			</EmptyContent>
+			<div className="grid grid-cols-12 gap-4 items-center">
+				<div className="col-span-12 md:col-span-6">
+					<EmptyHeader>
+						<EmptyMedia variant="icon">
+							<LottieWrapper
+								animation="empty-search"
+								className="size-12 mx-auto md:mx-0"
+								loop
+							/>
+						</EmptyMedia>
+						<EmptyTitle>Quiz not started</EmptyTitle>
+						<EmptyDescription>
+							Practice quizzes you start will be saved here for easy access
+							later. You can also view and manage your past quiz attempts here.
+						</EmptyDescription>
+					</EmptyHeader>
+					<EmptyContent>
+						<Button variant="outline" size="sm" onClick={onStart}>
+							Start quiz
+						</Button>
+					</EmptyContent>
+				</div>
+				<div className="col-span-12 md:col-span-6 hidden md:block">
+					<div className="w-full h-48 rounded-3xl bg-muted/40 animate-float-slow" />
+				</div>
+			</div>
 		</Empty>
 	);
 }
@@ -58,20 +70,31 @@ function QuizEmptyStateNoQuestions({
 }: QuizEmptyStateNoQuestionsProps) {
 	return (
 		<Empty>
-			<EmptyHeader>
-				<EmptyMedia variant="icon">
-					<LottieWrapper animation="empty-search" className="size-12 mx-auto" loop />
-				</EmptyMedia>
-				<EmptyTitle>No questions found</EmptyTitle>
-				<EmptyDescription>
-					Upload questions for {subject} to start practicing
-				</EmptyDescription>
-			</EmptyHeader>
-			<EmptyContent>
-				<Button variant="outline" onClick={onBack}>
-					Go Back
-				</Button>
-			</EmptyContent>
+			<div className="grid grid-cols-12 gap-4 items-center">
+				<div className="col-span-12 md:col-span-6">
+					<EmptyHeader>
+						<EmptyMedia variant="icon">
+							<LottieWrapper
+								animation="empty-search"
+								className="size-12 mx-auto md:mx-0"
+								loop
+							/>
+						</EmptyMedia>
+						<EmptyTitle>No questions found</EmptyTitle>
+						<EmptyDescription>
+							CloudArrowUp questions for {subject} to start practicing
+						</EmptyDescription>
+					</EmptyHeader>
+					<EmptyContent>
+						<Button variant="outline" onClick={onBack}>
+							Go Back
+						</Button>
+					</EmptyContent>
+				</div>
+				<div className="col-span-12 md:col-span-6 hidden md:block">
+					<div className="w-full h-48 rounded-3xl bg-destructive/10 animate-float-slow" />
+				</div>
+			</div>
 		</Empty>
 	);
 }
@@ -82,22 +105,34 @@ interface QuizStartStateProps {
 
 export function QuizStartState({ onSelect }: QuizStartStateProps) {
 	return (
-		<div className="mt-24 flex flex-col items-center gap-4 animate-fade-in-scale">
-			<div className="relative flex items-center justify-center">
-				<div className="absolute size-20 rounded-full bg-muted/40 animate-pulse" />
-				<div className="relative flex items-center justify-center size-20 rounded-full border border-dashed border-muted-foreground/20 bg-muted/20">
-					<LottieWrapper animation="empty-search" className="size-12" loop />
+		<div className="mt-24 flex flex-col gap-4">
+			<div className="grid grid-cols-12 gap-4 items-center">
+				<div className="col-span-12 md:col-span-6">
+					<div className="flex flex-col gap-4 text-center md:text-left">
+						<p className="text-sm font-medium text-muted-foreground">
+							Select a subject to begin
+						</p>
+						<p className="text-xs text-muted-foreground/60">
+							Choose a subject above to start your quiz
+						</p>
+					</div>
+				</div>
+				<div className="col-span-12 md:col-span-6 flex justify-center">
+					<div className="relative">
+						<Skeleton shape="circle" className="absolute size-20" />
+						<div className="relative flex items-center justify-center size-20 rounded-full border border-dashed border-muted-foreground/20 bg-muted/20">
+							<LottieWrapper
+								animation="empty-search"
+								className="size-12"
+								loop
+							/>
+						</div>
+					</div>
 				</div>
 			</div>
-			<div className="text-center space-y-1.5">
-				<p className="text-sm font-medium text-muted-foreground">
-					Select a subject to begin
-				</p>
-				<p className="text-xs text-muted-foreground/60">
-					Choose a subject above to start your quiz
-				</p>
+			<div className="flex justify-center md:justify-start">
+				<AnimatedDots />
 			</div>
-			<AnimatedDots />
 		</div>
 	);
 }
@@ -112,24 +147,36 @@ export function QuizSubjectPrompt({
 	hasSubject,
 }: QuizSubjectPromptProps) {
 	return (
-		<div className="mt-24 flex flex-col items-center gap-4 animate-fade-in-scale">
-			<div className="relative flex items-center justify-center">
-				<div className="absolute size-20 rounded-full bg-muted/40 animate-pulse" />
-				<div className="relative flex items-center justify-center size-20 rounded-full border border-dashed border-muted-foreground/20 bg-muted/20">
-					<LottieWrapper animation="empty-search" className="size-12" loop />
+		<div className="mt-24 flex flex-col gap-4">
+			<div className="grid grid-cols-12 gap-4 items-center">
+				<div className="col-span-12 md:col-span-6">
+					<div className="flex flex-col gap-4 text-center md:text-left">
+						<p className="text-sm font-medium text-muted-foreground">
+							{hasSubject ? "Ready to begin" : "Select a subject to begin"}
+						</p>
+						<p className="text-xs text-muted-foreground/60">
+							{hasSubject
+								? "Press play to start your quiz"
+								: "Choose a subject above to start your quiz"}
+						</p>
+					</div>
+				</div>
+				<div className="col-span-12 md:col-span-6 flex justify-center">
+					<div className="relative">
+						<Skeleton shape="circle" className="absolute size-20" />
+						<div className="relative flex items-center justify-center size-20 rounded-full border border-dashed border-muted-foreground/20 bg-muted/20">
+							<LottieWrapper
+								animation="empty-search"
+								className="size-12"
+								loop
+							/>
+						</div>
+					</div>
 				</div>
 			</div>
-			<div className="text-center space-y-1.5">
-				<p className="text-sm font-medium text-muted-foreground">
-					{hasSubject ? "Ready to begin" : "Select a subject to begin"}
-				</p>
-				<p className="text-xs text-muted-foreground/60">
-					{hasSubject
-						? "Press play to start your quiz"
-						: "Choose a subject above to start your quiz"}
-				</p>
+			<div className="flex justify-center md:justify-start">
+				<AnimatedDots />
 			</div>
-			<AnimatedDots />
 		</div>
 	);
 }

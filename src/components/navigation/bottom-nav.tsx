@@ -1,24 +1,26 @@
 "use client";
 
 import {
-	BubbleChatSpark01Icon,
-	Home01Icon,
-	Notebook01Icon,
-	OnlineLearning01Icon,
-	User03Icon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+	ChatDots,
+	House,
+	MonitorPlay,
+	Notebook,
+	User,
+} from "@phosphor-icons/react";
+
 import { usePathname } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
 import { ChatDialog } from "@/components/dashboard/chat/chat-dialog";
 import { PracticeSheet } from "@/components/dashboard/practice/practice-sheet";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { cn } from "@/lib/utils";
 
 interface NavItem {
 	id: string;
 	label: string;
-	icon: typeof Home01Icon;
+	icon: typeof House;
 	href: string;
 	badge?: number;
 }
@@ -27,31 +29,31 @@ const navItems: NavItem[] = [
 	{
 		id: "home",
 		label: "Home",
-		icon: Home01Icon,
+		icon: House,
 		href: "/dashboard",
 	},
 	{
 		id: "syllabus",
 		label: "Syllabus",
-		icon: Notebook01Icon,
+		icon: Notebook,
 		href: "/quiz",
 	},
 	{
 		id: "chat",
 		label: "Chat",
-		icon: BubbleChatSpark01Icon,
+		icon: ChatDots,
 		href: "",
 	},
 	{
 		id: "practice",
 		label: "Practice",
-		icon: OnlineLearning01Icon,
+		icon: MonitorPlay,
 		href: "",
 	},
 	{
 		id: "settings",
 		label: "Settings",
-		icon: User03Icon,
+		icon: User,
 		href: "/settings",
 	},
 ];
@@ -66,30 +68,32 @@ function NavItemComponent({
 	onClick: () => void;
 }) {
 	return (
-		<button
+		<Button
 			type="button"
+			variant="ghost"
 			onClick={onClick}
 			aria-current={isActive ? "page" : undefined}
-			className={cn(
-				"flex flex-1 flex-col items-center justify-center gap-0.5 h-full min-w-0",
-				"transition-colors duration-150 relative cursor-pointer",
-				"bg-transparent border-none outline-none",
-				"active:opacity-60",
-			)}
+			className="[all:unset] flex flex-1 flex-col items-center justify-center gap-0.5 h-full min-w-0 transition-colors duration-150 relative cursor-pointer active:opacity-60"
 		>
 			<div className="relative flex items-center justify-center size-6">
-				<HugeiconsIcon
-					icon={item.icon}
-					aria-hidden="true"
-					className={cn(
-						"size-[25px] transition-colors duration-200",
-						isActive ? "text-system-accent" : "text-system-text-tertiary",
-					)}
-				/>
+				{(() => {
+					const Icon = item.icon;
+					return (
+						<Icon
+							className={cn(
+								"size-[25px] transition-colors duration-200",
+								isActive ? "text-system-accent" : "text-system-text-tertiary",
+							)}
+						/>
+					);
+				})()}
 				{item.badge !== undefined && item.badge > 0 && (
-					<span className="absolute -top-1 -right-1.5 min-w-[16px] h-4 px-1 rounded-full bg-system-destructive text-[10px] font-semibold text-white flex items-center justify-center leading-none">
+					<Badge
+						variant="destructive"
+						className="absolute -top-1 -right-1.5 min-w-[16px] h-4 px-1 text-[10px] leading-none border-0"
+					>
 						{item.badge > 99 ? "99+" : item.badge}
-					</span>
+					</Badge>
 				)}
 			</div>
 			<span
@@ -100,7 +104,7 @@ function NavItemComponent({
 			>
 				{item.label}
 			</span>
-		</button>
+		</Button>
 	);
 }
 

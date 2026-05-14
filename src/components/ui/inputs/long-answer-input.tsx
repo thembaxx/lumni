@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 
@@ -30,7 +31,7 @@ export function LongAnswerInput({
 	const withinRange = !belowMin && !aboveMax;
 
 	return (
-		<div className="space-y-3">
+		<div className="flex flex-col gap-3">
 			<Textarea
 				value={value}
 				onChange={(e) => onChange(e.target.value)}
@@ -53,19 +54,15 @@ export function LongAnswerInput({
 					)}
 				</div>
 				{onSubmit && (
-					<button
+					<Button
 						type="button"
 						onClick={() => onSubmit(value.trim())}
 						disabled={disabled || !withinRange || !value.trim()}
-						className={cn(
-							"rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
-							withinRange && value.trim()
-								? "bg-[--system-accent] text-background hover:bg-[--system-accent]/90"
-								: "bg-muted text-muted-foreground cursor-not-allowed",
-						)}
+						variant={withinRange && value.trim() ? "default" : "secondary"}
+						size="sm"
 					>
 						Submit Answer
-					</button>
+					</Button>
 				)}
 			</div>
 		</div>

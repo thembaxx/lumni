@@ -1,9 +1,8 @@
 "use client";
 
-import { CalculatorIcon, PlusIcon, Trash2Icon } from "lucide-react";
+import { Calculator, Plus, Trash } from "@phosphor-icons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
@@ -153,7 +152,7 @@ export function APSCalculator() {
 
 	return (
 		<div className="p-4 h-full overflow-y-auto">
-			<div className="space-y-3 mb-6">
+			<div className="flex flex-col gap-3 mb-6">
 				{subjects.map((subject, index) => (
 					<motion.div
 						key={subject.id}
@@ -192,7 +191,7 @@ export function APSCalculator() {
 							disabled={subjects.length === 1}
 							className="active:scale-[0.96] transition-transform duration-150"
 						>
-							<Trash2Icon className="w-4 h-4" />
+							<Trash data-icon />
 						</Button>
 					</motion.div>
 				))}
@@ -204,7 +203,7 @@ export function APSCalculator() {
 					onClick={addSubject}
 					className="flex-1 rounded-lg active:scale-[0.96] transition-transform duration-150"
 				>
-					<PlusIcon className="w-4 h-4 mr-2" />
+					<Plus data-icon className="mr-2" />
 					Add Subject
 				</Button>
 				<Button
@@ -219,7 +218,7 @@ export function APSCalculator() {
 			<div className="p-5 rounded-2xl bg-muted shadow-[0_2px_8px_oklch(0%_0_0_/_0.08)] mb-6">
 				<div className="flex items-center justify-between mb-2">
 					<span className="text-muted-foreground">Your APS Score</span>
-					<CalculatorIcon className="w-5 h-5 text-muted-foreground" />
+					<Calculator className="size-5 text-muted-foreground" />
 				</div>
 				<div className="text-4xl font-bold text-center tabular-nums">
 					{totalAPS}
@@ -234,7 +233,7 @@ export function APSCalculator() {
 					<h3 className="font-semibold mb-3 text-wrap balance">
 						Subject Breakdown
 					</h3>
-					<div className="space-y-2">
+					<div className="flex flex-col gap-2">
 						{subjects
 							.filter((s) => s.percentage > 0)
 							.sort(
@@ -273,7 +272,7 @@ export function APSCalculator() {
 				<h3 className="font-semibold mb-3 text-wrap balance">
 					University Requirements
 				</h3>
-				<div className="space-y-3">
+				<div className="flex flex-col gap-3">
 					{universityRequirements.map((uni, idx) => (
 						<motion.div
 							key={uni.university}
@@ -281,15 +280,15 @@ export function APSCalculator() {
 							animate={{ opacity: 1, y: 0 }}
 							transition={{ delay: idx * 0.05 }}
 						>
-							<Card className="p-3 rounded-xl shadow-[0_2px_8px_oklch(0%_0_0_/_0.06)]">
+							<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors p-3 rounded-xl shadow-[0_2px_8px_oklch(0%_0_0_/_0.06)]">
 								<div className="flex justify-between items-start mb-2">
 									<span className="font-medium text-sm">{uni.university}</span>
 									<span
 										className={cn(
 											"text-sm font-bold tabular-nums",
 											totalAPS >= uni.minAPS
-												? "text-green-500 dark:text-green-400"
-												: "text-red-500 dark:text-red-400",
+												? "text-success"
+												: "text-destructive",
 										)}
 									>
 										Min: {uni.minAPS}
@@ -299,7 +298,7 @@ export function APSCalculator() {
 									<div
 										className={
 											totalAPS >= uni.courses.medicine
-												? "text-green-500 dark:text-green-400"
+												? "text-success"
 												: "text-muted-foreground"
 										}
 									>
@@ -308,7 +307,7 @@ export function APSCalculator() {
 									<div
 										className={
 											totalAPS >= uni.courses.engineering
-												? "text-green-500 dark:text-green-400"
+												? "text-success"
 												: "text-muted-foreground"
 										}
 									>
@@ -317,7 +316,7 @@ export function APSCalculator() {
 									<div
 										className={
 											totalAPS >= uni.courses.commerce
-												? "text-green-500 dark:text-green-400"
+												? "text-success"
 												: "text-muted-foreground"
 										}
 									>
@@ -326,14 +325,14 @@ export function APSCalculator() {
 									<div
 										className={
 											totalAPS >= uni.courses.science
-												? "text-green-500 dark:text-green-400"
+												? "text-success"
 												: "text-muted-foreground"
 										}
 									>
 										Science: {uni.courses.science}+
 									</div>
 								</div>
-							</Card>
+							</div>
 						</motion.div>
 					))}
 				</div>

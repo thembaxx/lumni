@@ -43,7 +43,10 @@ export function SubjectsDrawer({
 
 	return (
 		<Drawer direction="bottom">
-			<DrawerTrigger className="inline-flex items-center justify-center">
+			<DrawerTrigger
+				asChild
+				className="inline-flex items-center justify-center"
+			>
 				{children}
 			</DrawerTrigger>
 			<DrawerContent className="mx-auto max-w-lg mt-0 rounded-b-2xl min-h-[60dvh] animate-fade-in-scale">
@@ -57,7 +60,7 @@ export function SubjectsDrawer({
 
 				<div className="px-4 pb-2">
 					<div className="relative">
-						<Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+						<Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground pointer-events-none" />
 						<Input
 							type="text"
 							placeholder="Search subjects..."
@@ -87,12 +90,12 @@ export function SubjectsDrawer({
 							No subjects found.
 						</p>
 					) : (
-						<div className="space-y-1">
+						<div className="flex flex-col gap-1">
 							{subjects?.map((subject) => (
 								<Button
 									key={subject.id + subject.name}
 									variant="ghost"
-									className="w-full justify-start h-auto p-3 rounded-lg hover:bg-secondary"
+									className="w-full justify-start p-3 rounded-lg hover:bg-secondary"
 									onClick={() => handleSelect(subject.name)}
 								>
 									<div className="text-left w-full overflow-hidden flex flex-col">

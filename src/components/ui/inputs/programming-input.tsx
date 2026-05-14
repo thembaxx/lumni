@@ -27,7 +27,7 @@ export function ProgrammingInput({
 	const [code, setCode] = useState(value);
 
 	return (
-		<div className="space-y-3">
+		<div className="flex flex-col gap-3">
 			{starterCode && (
 				<div className="rounded border overflow-hidden">
 					<div className="bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">

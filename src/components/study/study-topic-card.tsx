@@ -1,7 +1,6 @@
 "use client";
 
-import { Dice5 } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { DiceFive } from "@phosphor-icons/react";
 import { AnimatePresence, m } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
@@ -9,7 +8,8 @@ import { ListenToLesson } from "@/components/listen-to-lesson";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Anim } from "@/components/shared/anim";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { iOSEase } from "@/lib/utils/animation";
 import { getDifficultyColor } from "@/lib/utils/colors";
@@ -55,24 +55,19 @@ export function StudyTopicCard({
 
 	if (isLoading || !topic) {
 		return (
-			<Card
-				className={cn(
-					"p-6 rounded-2xl border bg-card text-card-foreground",
-					className,
-				)}
-			>
-				<div className="animate-pulse space-y-4">
+			<Card className={cn(className)}>
+				<CardContent className="flex flex-col gap-4">
 					<div className="flex gap-2">
-						<div className="h-6 bg-muted rounded-full w-20"></div>
-						<div className="h-6 bg-muted rounded-full w-16"></div>
+						<Skeleton className="h-6 w-20 rounded-full" />
+						<Skeleton className="h-6 w-16 rounded-full" />
 					</div>
-					<div className="h-7 bg-muted rounded-lg w-2/3"></div>
-					<div className="space-y-2">
-						<div className="h-4 bg-muted rounded"></div>
-						<div className="h-4 bg-muted rounded"></div>
-						<div className="h-4 bg-muted rounded w-5/6"></div>
+					<Skeleton className="h-7 w-2/3 rounded-lg" />
+					<div className="flex flex-col gap-2">
+						<Skeleton className="h-4 rounded" />
+						<Skeleton className="h-4 rounded" />
+						<Skeleton className="h-4 w-5/6 rounded" />
 					</div>
-				</div>
+				</CardContent>
 			</Card>
 		);
 	}
@@ -89,7 +84,7 @@ export function StudyTopicCard({
 					transition={{ duration: 0.2, ease: iOSEase }}
 					className={cn(
 						"p-5 rounded-2xl border bg-transparent text-card-foreground shadow-sm",
-						"space-y-4",
+						"flex flex-col gap-4",
 						className,
 					)}
 				>
@@ -125,7 +120,7 @@ export function StudyTopicCard({
 					<m.div
 						variants={variants}
 						transition={{ delay: 0.15 }}
-						className="space-y-1"
+						className="flex flex-col gap-1"
 					>
 						<MarkdownRenderer
 							content={topic.summary}
@@ -168,7 +163,7 @@ export function StudyTopicCard({
 							)}
 							aria-label="Get new topic"
 						>
-							<HugeiconsIcon icon={Dice5} className="h-5 w-5" />
+							<DiceFive data-icon="inline-start" />
 						</Button>
 					</m.div>
 				</m.div>

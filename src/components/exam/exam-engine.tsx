@@ -1,6 +1,6 @@
 "use client";
 
-import { Loader2, Menu } from "lucide-react";
+import { List, Spinner } from "@phosphor-icons/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { AssessmentHeader } from "@/components/ui/headers/assessment-header";
@@ -138,7 +138,7 @@ export function ExamEngine({
 					onClick={() => setSidebarOpen(!sidebarOpen)}
 					className="lg:hidden shrink-0 mt-0.5"
 				>
-					<Menu className="size-4" />
+					<List data-icon />
 					<span className="sr-only">Toggle question list</span>
 				</Button>
 				<AssessmentHeader
@@ -178,7 +178,7 @@ export function ExamEngine({
 				</aside>
 
 				<main className="flex-1 overflow-auto min-w-0">
-					<div className="max-w-3xl mx-auto p-4 sm:p-6 space-y-8">
+					<div className="max-w-3xl mx-auto p-4 sm:p-6 flex flex-col gap-8">
 						{paper.sections.map((section) => (
 							<div key={section.id}>
 								<h2 className="text-xl font-bold mb-4">
@@ -191,7 +191,7 @@ export function ExamEngine({
 										<p className="text-xs font-semibold text-muted-foreground uppercase mb-1">
 											Instructions
 										</p>
-										<ul className="space-y-1">
+										<ul className="flex flex-col gap-1">
 											{section.instructions.map((inst, idx) => (
 												<li key={idx} className="text-xs text-muted-foreground">
 													{inst}
@@ -225,7 +225,7 @@ export function ExamEngine({
 							>
 								{isSubmitting ? (
 									<>
-										<Loader2 className="w-4 h-4 mr-2 animate-spin" />
+										<Spinner data-icon className="mr-2 animate-spin" />
 										Submitting...
 									</>
 								) : (

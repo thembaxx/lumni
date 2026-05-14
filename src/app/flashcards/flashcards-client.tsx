@@ -157,7 +157,7 @@ export function FlashcardsClient() {
 				totalCards={totalCards}
 				knownCount={knownCards.size}
 				reviewCount={reviewCards.size}
-				onGoHome={stopSession}
+				onGoHouse={stopSession}
 				onRestart={handleRestart}
 			/>
 		);

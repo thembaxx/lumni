@@ -1,22 +1,18 @@
 "use client";
 
-import {
-	IconBook,
-	IconBulb,
-	IconFileDescription,
-	IconRoute,
-} from "@tabler/icons-react";
+import { Book, FileText, Lightbulb, MapTrifold } from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "framer-motion";
 import { StudyPlanSheet } from "@/components/dashboard/study-plan-sheet";
 import { LessonsButton } from "@/components/lesson";
+import { PerpetualFloat } from "@/components/shared/perpetual-float";
 import { Button } from "@/components/ui/button";
 import { iOSEase } from "@/lib/utils/animation";
 
 const quickActions = [
-	{ icon: IconFileDescription, label: "Exams" },
-	{ icon: IconRoute, label: "Study Plan" },
-	{ icon: IconBulb, label: "Practice" },
-	{ icon: IconBook, label: "Lessons" },
+	{ icon: FileText, label: "Exams" },
+	{ icon: MapTrifold, label: "Study Plan" },
+	{ icon: Lightbulb, label: "Practice" },
+	{ icon: Book, label: "Lessons" },
 ];
 
 function ActionButton({
@@ -39,14 +35,16 @@ function ActionButton({
 			<Button
 				variant="ghost"
 				onClick={onClick}
-				className="h-11 px-5 rounded-lg border border-border/80 bg-secondary/60 gap-2.5 justify-start text-foreground hover:bg-accent hover:border-accent"
+				className="h-11 px-5 rounded-[2.5rem] border border-border/80 bg-secondary/60 gap-2.5 justify-start text-foreground hover:bg-accent hover:border-accent"
 			>
 				<motion.span
 					whileHover={shouldReduceMotion ? {} : { rotate: [0, -10, 10, 0] }}
 					transition={{ duration: 0.4, ease: iOSEase }}
-					className="text-system-accent"
+					className="text-accent"
 				>
-					<Icon className="w-4 h-4" />
+					<PerpetualFloat floatRange={1.5} speed={3}>
+						<Icon data-icon />
+					</PerpetualFloat>
 				</motion.span>
 				<span className="text-sm font-medium">{label}</span>
 			</Button>

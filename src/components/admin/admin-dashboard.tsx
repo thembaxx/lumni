@@ -1,13 +1,13 @@
 "use client";
 
+import { BookOpen, Check, FileText, SignOut } from "@phosphor-icons/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
-import { BookOpen, Check, FileText, LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { AnimatedTabs } from "@/components/ui/animated-tabs";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PageHeader } from "@/components/ui/headers/page-header";
 import { iOSEase } from "@/lib/utils/animation";
 import { AdminExamList } from "./admin-exam-list";
@@ -140,7 +140,7 @@ export function AdminDashboard() {
 		},
 	});
 
-	const handleLogout = () => {
+	const handleSignOut = () => {
 		localStorage.removeItem("admin_session");
 		localStorage.removeItem("admin_email");
 		router.push("/admin");
@@ -173,7 +173,7 @@ export function AdminDashboard() {
 	};
 
 	return (
-		<div className="min-h-screen bg-background">
+		<div className="min-h-[100dvh] bg-background">
 			<AnimatePresence initial={false}>
 				{showSuccess && (
 					<motion.div
@@ -187,7 +187,7 @@ export function AdminDashboard() {
 							animate={{ scale: 1, opacity: 1 }}
 							transition={{ type: "spring", stiffness: 500, damping: 25 }}
 						>
-							<Check className="w-4 h-4" />
+							<Check className="size-4" />
 						</motion.div>
 						<span className="text-sm font-medium">Success!</span>
 					</motion.div>
@@ -198,13 +198,13 @@ export function AdminDashboard() {
 				title="Admin"
 				subtitle="Manage exam papers & engine"
 				rightSection={
-					<Button variant="ghost" size="icon-sm" onClick={handleLogout}>
-						<LogOut className="size-4" />
+					<Button variant="ghost" size="icon-sm" onClick={handleSignOut}>
+						<SignOut className="size-4" />
 					</Button>
 				}
 			/>
 
-			<div className="p-4 space-y-4">
+			<div className="p-4 flex flex-col gap-4">
 				<AdminStatCards
 					subjectsCount={subjects.length}
 					selectedCount={selectedSubjects.size}
@@ -232,7 +232,7 @@ export function AdminDashboard() {
 							<motion.div
 								{...fadeInUp}
 								transition={{ duration: 0.25 }}
-								className="space-y-4"
+								className="flex flex-col gap-4"
 							>
 								<AnimatedCard delay={0.15}>
 									<AdminExamUploadZone
@@ -254,7 +254,7 @@ export function AdminDashboard() {
 							<motion.div
 								{...fadeInUp}
 								transition={{ duration: 0.25 }}
-								className="space-y-4"
+								className="flex flex-col gap-4"
 							>
 								<AnimatedCard delay={0.15}>
 									<SubjectForm
@@ -271,12 +271,10 @@ export function AdminDashboard() {
 
 								<AnimatedCard delay={0.2}>
 									<Card>
-										<CardHeader className="pb-3">
-											<CardTitle className="text-base text-foreground">
-												All Subjects ({subjects.length})
-											</CardTitle>
+										<CardHeader>
+											<CardTitle>All Subjects ({subjects.length})</CardTitle>
 										</CardHeader>
-										<div className="p-0">
+										<CardContent className="p-0">
 											<SubjectTable
 												subjects={subjects}
 												selectedSubjects={selectedSubjects}
@@ -286,7 +284,7 @@ export function AdminDashboard() {
 												isLoading={isLoading}
 												isDeleting={deleteMutation.isPending}
 											/>
-										</div>
+										</CardContent>
 									</Card>
 								</AnimatedCard>
 							</motion.div>

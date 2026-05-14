@@ -37,7 +37,7 @@ export function MatchingInput({
 	const rightOptions = [...new Set(items.map((i) => i.right))];
 
 	return (
-		<div className="space-y-3">
+		<div className="flex flex-col gap-3">
 			<div className="grid grid-cols-[1fr_auto_1fr] gap-3 items-center text-sm font-medium text-muted-foreground mb-1">
 				<span>{colA}</span>
 				<span />

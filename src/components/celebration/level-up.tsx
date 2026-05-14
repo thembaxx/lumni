@@ -1,7 +1,7 @@
 "use client";
 
+import { Crown, Star } from "@phosphor-icons/react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Crown, Star } from "lucide-react";
 import { LottieWrapper } from "@/components/lottie";
 
 interface LevelUpProps {
@@ -40,7 +40,7 @@ export function LevelUp({
 						onClick={(e) => e.stopPropagation()}
 					>
 						<motion.div
-							className="absolute inset-0 rounded-3xl bg-amber-500 blur-xl opacity-40 dark:bg-amber-700"
+							className="absolute inset-0 rounded-3xl bg-warning blur-xl opacity-40"
 							animate={{
 								scale: [1, 1.1, 1],
 								opacity: [0.6, 0.8, 0.6],
@@ -48,7 +48,7 @@ export function LevelUp({
 							transition={{ duration: 2, repeat: Infinity }}
 						/>
 
-						<div className="relative bg-card border-2 border-amber-500 rounded-3xl p-8 text-center shadow-2xl shadow-amber-500/30 dark:border-amber-700 dark:shadow-amber-700/30">
+						<div className="relative bg-card border-2 border-warning rounded-3xl p-8 text-center shadow-2xl shadow-warning/30">
 							<motion.div
 								initial={{ y: -30, opacity: 0 }}
 								animate={{ y: 0, opacity: 1 }}
@@ -58,14 +58,14 @@ export function LevelUp({
 								{useLottie ? (
 									<LottieWrapper
 										animation="level-up"
-										className="w-24 h-24 mx-auto"
+										className="size-24 mx-auto"
 									/>
 								) : (
 									<motion.div
 										animate={{ rotate: [0, 10, -10, 0] }}
 										transition={{ duration: 0.5, repeat: 3 }}
 									>
-										<Crown className="w-16 h-16 mx-auto text-amber-500 dark:text-amber-400" />
+										<Crown className="size-16 mx-auto text-warning" />
 									</motion.div>
 								)}
 							</motion.div>
@@ -75,16 +75,16 @@ export function LevelUp({
 								animate={{ opacity: 1, y: 0 }}
 								transition={{ delay: 0.3 }}
 							>
-								<p className="text-amber-500 font-medium uppercase tracking-wider mb-2 dark:text-amber-400">
+								<p className="text-warning font-medium uppercase tracking-wider mb-2">
 									Level Up!
 								</p>
 								<motion.div
-									className="inline-flex items-center gap-2 bg-amber-500 text-white px-8 py-3 rounded-full mb-4"
+									className="inline-flex items-center gap-2 bg-warning text-primary-foreground px-8 py-3 rounded-full mb-4"
 									initial={{ scale: 0.8 }}
 									animate={{ scale: 1 }}
 									transition={{ delay: 0.4, type: "spring" }}
 								>
-									<Star className="w-6 h-6 fill-white" />
+									<Star className="size-6 fill-white" />
 									<span className="text-4xl font-bold">{level}</span>
 								</motion.div>
 								<h2 className="text-2xl font-bold mb-2 text-wrap balance">

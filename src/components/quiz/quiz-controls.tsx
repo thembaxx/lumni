@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronLeft, ChevronRight, SkipForward } from "lucide-react";
+import { CaretLeft, CaretRight, SkipForward } from "@phosphor-icons/react";
 import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 
@@ -36,10 +36,10 @@ export function QuizControls({
 
 	if (showFeedback) {
 		return (
-			<div className="space-y-2">
+			<div className="flex flex-col gap-2">
 				<Button ref={nextButtonRef} className="w-full" onClick={onNext}>
 					{isLast ? "See Results" : "Next Question"}
-					{!isLast && <ChevronRight className="size-4 ml-2" />}
+					{!isLast && <CaretRight data-icon="inline-end" />}
 				</Button>
 			</div>
 		);
@@ -53,13 +53,13 @@ export function QuizControls({
 				disabled={isFirst}
 				className="flex-1"
 			>
-				<ChevronLeft className="size-4 mr-2" />
+				<CaretLeft data-icon="inline-start" />
 				Previous
 			</Button>
 			{showSkip && onSkip && (
 				<Button variant="outline" onClick={onSkip} className="flex-1">
 					Skip
-					<SkipForward className="size-4 ml-2" />
+					<SkipForward data-icon="inline-end" />
 				</Button>
 			)}
 		</div>

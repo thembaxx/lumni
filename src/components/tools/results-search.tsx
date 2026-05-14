@@ -5,6 +5,12 @@ import { SearchIcon, UserIcon } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import {
+	Empty,
+	EmptyDescription,
+	EmptyMedia,
+	EmptyTitle,
+} from "@/components/ui/empty";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -51,7 +57,7 @@ export function ResultsSearch() {
 
 	return (
 		<div className="p-4 h-full flex flex-col">
-			<div className="space-y-4 mb-6">
+			<div className="flex flex-col gap-4 mb-6">
 				<div>
 					<Label className="mb-2">Year</Label>
 					<div className="flex gap-2 overflow-x-auto pb-2">
@@ -73,7 +79,7 @@ export function ResultsSearch() {
 
 				<div className="flex gap-2">
 					<div className="relative flex-1">
-						<SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+						<SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
 						<Input
 							placeholder="Search by name..."
 							value={searchQuery}
@@ -93,10 +99,10 @@ export function ResultsSearch() {
 
 			{isSearching ? (
 				<div className="flex-1 flex items-center justify-center">
-					<div className="animate-spin w-8 h-8 border-2 border-[--system-accent] border-t-transparent rounded-full" />
+					<div className="animate-spin size-8 border-2 border-[--system-accent] border-t-transparent rounded-full" />
 				</div>
 			) : results.length > 0 ? (
-				<div className="space-y-4 flex-1 overflow-y-auto">
+				<div className="flex flex-col gap-4 flex-1 overflow-y-auto">
 					<p className="text-sm text-muted-foreground">
 						{results.length} results found
 					</p>
@@ -109,8 +115,8 @@ export function ResultsSearch() {
 						>
 							<Card className="p-4 rounded-xl shadow-[0_2px_8px_oklch(0%_0_0_/_0.06)]">
 								<div className="flex items-start gap-3 mb-3">
-									<div className="w-10 h-10 rounded-xl bg-[--system-accent]/10 flex items-center justify-center shadow-[inset_0_2px_4px_oklch(0%_0_0_/_0.06)]">
-										<UserIcon className="w-5 h-5 text-foreground" />
+									<div className="size-10 rounded-xl bg-[--system-accent]/10 flex items-center justify-center shadow-[inset_0_2px_4px_oklch(0%_0_0_/_0.06)]">
+										<UserIcon className="size-5 text-foreground" />
 									</div>
 									<div>
 										<h3 className="font-semibold text-wrap balance">
@@ -150,23 +156,25 @@ export function ResultsSearch() {
 					))}
 				</div>
 			) : searchQuery ? (
-				<div className="flex-1 flex flex-col items-center justify-center text-center">
-					<SearchIcon className="w-12 h-12 text-muted-foreground mb-4" />
-					<p className="text-muted-foreground">
-						No results found for "{searchQuery}"
-					</p>
-					<p className="text-sm text-muted-foreground mt-2">
+				<Empty className="border-none">
+					<EmptyMedia>
+						<SearchIcon className="size-12 text-muted-foreground" />
+					</EmptyMedia>
+					<EmptyTitle>No results found for "{searchQuery}"</EmptyTitle>
+					<EmptyDescription>
 						Try searching with a different name
-					</p>
-				</div>
+					</EmptyDescription>
+				</Empty>
 			) : (
-				<div className="flex-1 flex flex-col items-center justify-center text-center">
-					<SearchIcon className="w-12 h-12 text-muted-foreground mb-4" />
-					<p className="text-muted-foreground">Enter a name to search</p>
-					<p className="text-sm text-muted-foreground mt-2">
+				<Empty className="border-none">
+					<EmptyMedia>
+						<SearchIcon className="size-12 text-muted-foreground" />
+					</EmptyMedia>
+					<EmptyTitle>Enter a name to search</EmptyTitle>
+					<EmptyDescription>
 						Search through {selectedYear} results
-					</p>
-				</div>
+					</EmptyDescription>
+				</Empty>
 			)}
 		</div>
 	);

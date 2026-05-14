@@ -64,19 +64,16 @@ export function ExamTab({ className }: ExamTabProps) {
 	return (
 		<Anim>
 			<div
-				className={cn(
-					"w-full px-4 pb-6 flex flex-col h-full space-y-8",
-					className,
-				)}
+				className={cn("w-full px-4 pb-6 flex flex-col h-full gap-8", className)}
 			>
 				<m.div
 					initial={{ opacity: 0, y: -10 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.3, ease: "easeOut" }}
-					className="space-y-6"
+					className="flex flex-col gap-6"
 				>
-					<div className="relative space-y-4 border rounded-2xl shadow-sm">
-						<Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/60" />
+					<div className="relative flex flex-col gap-4 border rounded-2xl shadow-sm">
+						<Search className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-muted-foreground/60" />
 						<Input
 							type="text"
 							placeholder="Search exams..."
@@ -86,21 +83,26 @@ export function ExamTab({ className }: ExamTabProps) {
 						/>
 						<AnimatePresence initial={false}>
 							{searchQuery && (
-								<m.button
+								<m.div
 									initial={{ opacity: 0, scale: 0.8 }}
 									animate={{ opacity: 1, scale: 1 }}
 									exit={{ opacity: 0, scale: 0.8 }}
-									onClick={() => setSearchQuery("")}
-									className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center rounded-full bg-muted/60 hover:bg-muted text-muted-foreground hover:text-foreground active:scale-[0.96] transition-[scale] size-7 after:absolute after:-inset-2"
-									type="button"
+									className="absolute right-3 top-1/2 -translate-y-1/2"
 								>
-									<X className="w-3 h-3" />
-								</m.button>
+									<Button
+										onClick={() => setSearchQuery("")}
+										variant="ghost"
+										size="icon"
+										className="rounded-full bg-muted/60 hover:bg-muted text-muted-foreground hover:text-foreground active:scale-[0.96] transition-[scale]"
+									>
+										<X data-icon />
+									</Button>
+								</m.div>
 							)}
 						</AnimatePresence>
 					</div>
 
-					<div className="flex items-center justify-between gap-2">
+					<div className="flex items-center justify-between gap-2 flex-wrap">
 						<SubjectsDrawer onSelect={handleSubjectSelect}>
 							<Button
 								variant={selectedSubject ? "default" : "secondary"}
@@ -110,7 +112,8 @@ export function ExamTab({ className }: ExamTabProps) {
 								{selectedSubject || "Subject"}
 								<HugeiconsIcon
 									icon={ArrowDown01Icon}
-									className="w-4 h-4 ml-1"
+									className="ml-1"
+									data-icon
 								/>
 							</Button>
 						</SubjectsDrawer>
@@ -141,16 +144,20 @@ export function ExamTab({ className }: ExamTabProps) {
 
 						<AnimatePresence initial={false}>
 							{hasActiveFilters && (
-								<m.button
+								<m.div
 									initial={{ opacity: 0, scale: 0.9 }}
 									animate={{ opacity: 1, scale: 1 }}
 									exit={{ opacity: 0, scale: 0.9 }}
-									onClick={clearFilters}
-									className="h-9 px-2.5 flex items-center text-xs text-muted-foreground hover:text-foreground active:scale-[0.96] transition-[scale]"
-									type="button"
 								>
-									<X className="w-3.5 h-3.5" />
-								</m.button>
+									<Button
+										onClick={clearFilters}
+										variant="ghost"
+										size="sm"
+										className="text-muted-foreground hover:text-foreground active:scale-[0.96] transition-[scale]"
+									>
+										<X data-icon />
+									</Button>
+								</m.div>
 							)}
 						</AnimatePresence>
 					</div>
@@ -159,7 +166,7 @@ export function ExamTab({ className }: ExamTabProps) {
 						<Button
 							variant={selectedYear === null ? "default" : "secondary"}
 							size="sm"
-							className="shrink-0 h-9 text-xs font-medium"
+							className="shrink-0"
 							onClick={() => handleYearSelect(null)}
 						>
 							All
@@ -169,7 +176,7 @@ export function ExamTab({ className }: ExamTabProps) {
 								key={year}
 								variant={selectedYear === year ? "default" : "secondary"}
 								size="sm"
-								className="shrink-0 h-9 text-xs font-medium"
+								className="shrink-0"
 								onClick={() => handleYearSelect(year)}
 							>
 								{year}
@@ -186,7 +193,7 @@ export function ExamTab({ className }: ExamTabProps) {
 								animate={{ opacity: 1 }}
 								exit={{ opacity: 0 }}
 								transition={{ staggerChildren: 0.08 }}
-								className="space-y-5 grow"
+								className="flex flex-col gap-5 grow"
 							>
 								<GroupSkeleton />
 								<GroupSkeleton />
@@ -201,7 +208,7 @@ export function ExamTab({ className }: ExamTabProps) {
 								<Empty className="border border-dashed border-destructive/30">
 									<EmptyHeader>
 										<EmptyMedia variant="icon">
-											<BookOpen className="w-6 h-6 text-destructive" />
+											<BookOpen className="size-6 text-destructive" />
 										</EmptyMedia>
 										<EmptyTitle>Failed to load</EmptyTitle>
 										<EmptyDescription>Please try again.</EmptyDescription>
@@ -217,7 +224,7 @@ export function ExamTab({ className }: ExamTabProps) {
 								<Empty className="border border-dashed">
 									<EmptyHeader>
 										<EmptyMedia variant="icon">
-											<BookOpen className="w-8 h-8 text-muted-foreground/40" />
+											<BookOpen className="size-8 text-muted-foreground/40" />
 										</EmptyMedia>
 										<EmptyTitle className="text-base">
 											No exams found
@@ -242,7 +249,7 @@ export function ExamTab({ className }: ExamTabProps) {
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
 								transition={{ staggerChildren: 0.08 }}
-								className="space-y-5 grow"
+								className="flex flex-col gap-5 grow"
 							>
 								{groupedExams.map((group, groupIndex) => (
 									<m.div
@@ -250,7 +257,7 @@ export function ExamTab({ className }: ExamTabProps) {
 										initial={{ opacity: 0, y: 8 }}
 										animate={{ opacity: 1, y: 0 }}
 										transition={{ delay: groupIndex * 0.08 }}
-										className="space-y-2.5"
+										className="flex flex-col gap-2.5"
 									>
 										<div className="flex items-center justify-between px-0.5 gap-4">
 											<h3 className="text-lg font-semibold text-foreground text-pretty">
@@ -268,11 +275,7 @@ export function ExamTab({ className }: ExamTabProps) {
 												<ExamCard key={exam.id} exam={exam} />
 											))}
 											{group.papers.length > 4 && (
-												<Button
-													variant="secondary"
-													size="sm"
-													className="h-9 text-xs"
-												>
+												<Button variant="secondary" size="sm">
 													+{group.papers.length - 4} more
 												</Button>
 											)}

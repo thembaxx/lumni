@@ -4,7 +4,6 @@ import { useCallback, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
 	Select,
@@ -86,11 +85,11 @@ export default function DevEnginePage() {
 	];
 
 	return (
-		<div className="min-h-screen bg-background p-4 max-w-4xl mx-auto space-y-4 pb-20">
+		<div className="min-h-[100dvh] bg-background p-4 max-w-4xl mx-auto space-y-4 pb-20">
 			<h1 className="text-xl font-bold">Engine Integration Test</h1>
 
-			<Card>
-				<CardContent className="p-4 space-y-3">
+			<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+				<div className="px-4 group-data-[size=sm]/card:px-3 p-4 space-y-3">
 					<div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
 						<Input
 							value={subject}
@@ -133,31 +132,33 @@ export default function DevEnginePage() {
 					>
 						{isLoading ? "Generating..." : "Generate"}
 					</Button>
-				</CardContent>
-			</Card>
+				</div>
+			</div>
 
 			{error && (
-				<Card className="border-destructive">
-					<CardContent className="p-4 text-destructive text-sm">
+				<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors border-destructive">
+					<div className="px-4 group-data-[size=sm]/card:px-3 p-4 text-destructive text-sm">
 						{error}
-					</CardContent>
-				</Card>
+					</div>
+				</div>
 			)}
 
 			{isLoading && <Skeleton className="h-48 w-full" />}
 
 			{questions.length > 0 && (
 				<>
-					<Card>
-						<CardHeader className="p-4 pb-2">
-							<CardTitle className="text-sm">
+					<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+						<header className="rounded-t-[2.5rem] border-t border-border/80 p-4 pb-2">
+							<h2 className="font-heading text-sm font-medium text-sm">
 								Questions ({questions.length})
-							</CardTitle>
-						</CardHeader>
-						<CardContent className="p-4 pt-0 space-y-3">
+							</h2>
+						</header>
+						<div className="px-4 group-data-[size=sm]/card:px-3 p-4 pt-0 space-y-3">
 							{questions.map((q, i) => (
-								<Card key={q.id}>
-									<CardContent className="p-3 space-y-2">
+								<div
+									key={q.id}
+									className="px-4 group-data-[size=sm]/card:px-3 p-3 space-y-2"
+								>
 										<div className="flex items-center gap-2 flex-wrap">
 											<Badge variant="outline" className="text-xs">
 												{q.type}
@@ -177,12 +178,11 @@ export default function DevEnginePage() {
 										</div>
 										<div className="text-xs text-muted-foreground line-clamp-2">
 											Hint: {q.hint}
-										</div>
 										<div className="flex gap-2 flex-wrap">
-											<Button
-												size="sm"
-												variant="outline"
-												onClick={() => handleGrade(q)}
+												<Button
+													size="sm"
+													variant="outline"
+													onClick={() => handleGrade(q)}
 												disabled={!!grading[q.id]}
 											>
 												{grading[q.id]
@@ -195,24 +195,24 @@ export default function DevEnginePage() {
 												</Badge>
 											)}
 										</div>
-									</CardContent>
-								</Card>
+									</div>
+								</div>
 							))}
-						</CardContent>
-					</Card>
+						</div>
+					</div>
 
-					<Card>
-						<CardHeader className="p-4 pb-2">
-							<CardTitle className="text-sm">Raw Response</CardTitle>
-						</CardHeader>
-						<CardContent className="p-4 pt-0">
+					<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+						<header className="rounded-t-[2.5rem] border-t border-border/80 p-4 pb-2">
+							<h2 className="font-heading text-sm font-medium text-sm">Raw Response</h2>
+						</header>
+						<div className="px-4 group-data-[size=sm]/card:px-3 p-4 pt-0">
 							<Textarea
 								value={rawJson}
 								readOnly
 								className="min-h-[200px] font-mono text-xs"
 							/>
-						</CardContent>
-					</Card>
+						</div>
+					</div>
 				</>
 			)}
 		</div>

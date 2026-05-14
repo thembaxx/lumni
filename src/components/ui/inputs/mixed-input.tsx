@@ -20,7 +20,7 @@ export function MixedInput({
 	disabled,
 }: MixedInputProps) {
 	return (
-		<div className="space-y-4">
+		<div className="flex flex-col gap-4">
 			{content?.map((block, idx) => (
 				<ContentBlockRenderer key={idx} block={block} />
 			))}

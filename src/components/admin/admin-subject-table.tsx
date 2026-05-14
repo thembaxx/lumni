@@ -1,7 +1,7 @@
 "use client";
 
+import { Pencil, Spinner, TrashSimple } from "@phosphor-icons/react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Edit2, Loader2, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
@@ -38,7 +38,7 @@ export function SubjectTable({
 		<>
 			{isLoading ? (
 				<div className="flex items-center justify-center p-4">
-					<Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />
+					<Spinner className="size-4 animate-spin text-muted-foreground" />
 				</div>
 			) : subjects.length === 0 ? (
 				<div className="p-4 text-center text-sm text-muted-foreground">
@@ -76,9 +76,9 @@ export function SubjectTable({
 										variant="ghost"
 										size="icon"
 										onClick={() => onEditSubject(subject)}
-										className="h-8 w-8"
+										className="size-8"
 									>
-										<Edit2 className="w-3 h-3" />
+										<Pencil className="size-3" />
 									</Button>
 								</motion.div>
 								<motion.div
@@ -90,12 +90,12 @@ export function SubjectTable({
 										size="icon"
 										onClick={() => onDeleteSubject(subject.id)}
 										disabled={isDeleting}
-										className="h-8 w-8"
+										className="size-8"
 									>
 										{isDeleting ? (
-											<Loader2 className="w-3 h-3 animate-spin" />
+											<Spinner className="size-3 animate-spin" />
 										) : (
-											<Trash2 className="w-3 h-3 text-destructive" />
+											<TrashSimple className="size-3 text-destructive" />
 										)}
 									</Button>
 								</motion.div>

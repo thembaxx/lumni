@@ -1,21 +1,20 @@
 "use client";
 
-import { Menu as MenuPrimitive } from "@base-ui/react/menu";
-import { ArrowRight01Icon, Tick02Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { Menu as ListPrimitive } from "@base-ui/react/menu";
+import { ArrowRight, Check } from "@phosphor-icons/react";
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
-function DropdownMenu({ ...props }: MenuPrimitive.Root.Props) {
-	return <MenuPrimitive.Root data-slot="dropdown-menu" {...props} />;
+function DropdownMenu({ ...props }: ListPrimitive.Root.Props) {
+	return <ListPrimitive.Root data-slot="dropdown-menu" {...props} />;
 }
 
-function DropdownMenuPortal({ ...props }: MenuPrimitive.Portal.Props) {
-	return <MenuPrimitive.Portal data-slot="dropdown-menu-portal" {...props} />;
+function DropdownMenuPortal({ ...props }: ListPrimitive.Portal.Props) {
+	return <ListPrimitive.Portal data-slot="dropdown-menu-portal" {...props} />;
 }
 
-function DropdownMenuTrigger({ ...props }: MenuPrimitive.Trigger.Props) {
-	return <MenuPrimitive.Trigger data-slot="dropdown-menu-trigger" {...props} />;
+function DropdownMenuTrigger({ ...props }: ListPrimitive.Trigger.Props) {
+	return <ListPrimitive.Trigger data-slot="dropdown-menu-trigger" {...props} />;
 }
 
 function DropdownMenuContent({
@@ -25,21 +24,21 @@ function DropdownMenuContent({
 	sideOffset = 4,
 	className,
 	...props
-}: MenuPrimitive.Popup.Props &
+}: ListPrimitive.Popup.Props &
 	Pick<
-		MenuPrimitive.Positioner.Props,
+		ListPrimitive.Positioner.Props,
 		"align" | "alignOffset" | "side" | "sideOffset"
 	>) {
 	return (
-		<MenuPrimitive.Portal>
-			<MenuPrimitive.Positioner
+		<ListPrimitive.Portal>
+			<ListPrimitive.Positioner
 				className="isolate z-50 outline-none"
 				align={align}
 				alignOffset={alignOffset}
 				side={side}
 				sideOffset={sideOffset}
 			>
-				<MenuPrimitive.Popup
+				<ListPrimitive.Popup
 					data-slot="dropdown-menu-content"
 					className={cn(
 						"z-50 max-h-(--available-height) w-(--anchor-width) min-w-32 origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-[10px] bg-popover p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10 duration-100 outline-none data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:overflow-hidden data-closed:fade-out-0 data-closed:zoom-out-95",
@@ -47,24 +46,24 @@ function DropdownMenuContent({
 					)}
 					{...props}
 				/>
-			</MenuPrimitive.Positioner>
-		</MenuPrimitive.Portal>
+</ListPrimitive.Positioner>
+	</ListPrimitive.Portal>
 	);
 }
 
-function DropdownMenuGroup({ ...props }: MenuPrimitive.Group.Props) {
-	return <MenuPrimitive.Group data-slot="dropdown-menu-group" {...props} />;
+function DropdownMenuGroup({ ...props }: ListPrimitive.Group.Props) {
+	return <ListPrimitive.Group data-slot="dropdown-menu-group" {...props} />;
 }
 
 function DropdownMenuLabel({
 	className,
 	inset,
 	...props
-}: MenuPrimitive.GroupLabel.Props & {
+}: ListPrimitive.GroupLabel.Props & {
 	inset?: boolean;
 }) {
 	return (
-		<MenuPrimitive.GroupLabel
+		<ListPrimitive.GroupLabel
 			data-slot="dropdown-menu-label"
 			data-inset={inset}
 			className={cn(
@@ -81,12 +80,12 @@ function DropdownMenuItem({
 	inset,
 	variant = "default",
 	...props
-}: MenuPrimitive.Item.Props & {
+}: ListPrimitive.Item.Props & {
 	inset?: boolean;
 	variant?: "default" | "destructive";
 }) {
 	return (
-		<MenuPrimitive.Item
+		<ListPrimitive.Item
 			data-slot="dropdown-menu-item"
 			data-inset={inset}
 			data-variant={variant}
@@ -99,8 +98,8 @@ function DropdownMenuItem({
 	);
 }
 
-function DropdownMenuSub({ ...props }: MenuPrimitive.SubmenuRoot.Props) {
-	return <MenuPrimitive.SubmenuRoot data-slot="dropdown-menu-sub" {...props} />;
+function DropdownMenuSub({ ...props }: ListPrimitive.SubmenuRoot.Props) {
+	return <ListPrimitive.SubmenuRoot data-slot="dropdown-menu-sub" {...props} />;
 }
 
 function DropdownMenuSubTrigger({
@@ -108,11 +107,11 @@ function DropdownMenuSubTrigger({
 	inset,
 	children,
 	...props
-}: MenuPrimitive.SubmenuTrigger.Props & {
+}: ListPrimitive.SubmenuTrigger.Props & {
 	inset?: boolean;
 }) {
 	return (
-		<MenuPrimitive.SubmenuTrigger
+		<ListPrimitive.SubmenuTrigger
 			data-slot="dropdown-menu-sub-trigger"
 			data-inset={inset}
 			className={cn(
@@ -122,12 +121,8 @@ function DropdownMenuSubTrigger({
 			{...props}
 		>
 			{children}
-			<HugeiconsIcon
-				icon={ArrowRight01Icon}
-				strokeWidth={2}
-				className="ml-auto"
-			/>
-		</MenuPrimitive.SubmenuTrigger>
+<ArrowRight className="ml-auto" />
+		</ListPrimitive.SubmenuTrigger>
 	);
 }
 
@@ -161,11 +156,11 @@ function DropdownMenuCheckboxItem({
 	checked,
 	inset,
 	...props
-}: MenuPrimitive.CheckboxItem.Props & {
+}: ListPrimitive.CheckboxItem.Props & {
 	inset?: boolean;
 }) {
 	return (
-		<MenuPrimitive.CheckboxItem
+		<ListPrimitive.CheckboxItem
 			data-slot="dropdown-menu-checkbox-item"
 			data-inset={inset}
 			className={cn(
@@ -179,18 +174,18 @@ function DropdownMenuCheckboxItem({
 				className="pointer-events-none absolute right-2 flex items-center justify-center"
 				data-slot="dropdown-menu-checkbox-item-indicator"
 			>
-				<MenuPrimitive.CheckboxItemIndicator>
-					<HugeiconsIcon icon={Tick02Icon} strokeWidth={2} />
-				</MenuPrimitive.CheckboxItemIndicator>
+				<ListPrimitive.CheckboxItemIndicator>
+					<Check />
+				</ListPrimitive.CheckboxItemIndicator>
 			</span>
 			{children}
-		</MenuPrimitive.CheckboxItem>
+		</ListPrimitive.CheckboxItem>
 	);
 }
 
-function DropdownMenuRadioGroup({ ...props }: MenuPrimitive.RadioGroup.Props) {
+function DropdownMenuRadioGroup({ ...props }: ListPrimitive.RadioGroup.Props) {
 	return (
-		<MenuPrimitive.RadioGroup
+		<ListPrimitive.RadioGroup
 			data-slot="dropdown-menu-radio-group"
 			{...props}
 		/>
@@ -202,11 +197,11 @@ function DropdownMenuRadioItem({
 	children,
 	inset,
 	...props
-}: MenuPrimitive.RadioItem.Props & {
+}: ListPrimitive.RadioItem.Props & {
 	inset?: boolean;
 }) {
 	return (
-		<MenuPrimitive.RadioItem
+		<ListPrimitive.RadioItem
 			data-slot="dropdown-menu-radio-item"
 			data-inset={inset}
 			className={cn(
@@ -219,21 +214,21 @@ function DropdownMenuRadioItem({
 				className="pointer-events-none absolute right-2 flex items-center justify-center"
 				data-slot="dropdown-menu-radio-item-indicator"
 			>
-				<MenuPrimitive.RadioItemIndicator>
-					<HugeiconsIcon icon={Tick02Icon} strokeWidth={2} />
-				</MenuPrimitive.RadioItemIndicator>
+				<ListPrimitive.RadioItemIndicator>
+					<Check />
+				</ListPrimitive.RadioItemIndicator>
 			</span>
 			{children}
-		</MenuPrimitive.RadioItem>
+		</ListPrimitive.RadioItem>
 	);
 }
 
 function DropdownMenuSeparator({
 	className,
 	...props
-}: MenuPrimitive.Separator.Props) {
+}: ListPrimitive.Separator.Props) {
 	return (
-		<MenuPrimitive.Separator
+		<ListPrimitive.Separator
 			data-slot="dropdown-menu-separator"
 			className={cn("-mx-1 my-1 h-px bg-border/50", className)}
 			{...props}
@@ -258,19 +253,19 @@ function DropdownMenuShortcut({
 }
 
 export {
-	DropdownMenu,
-	DropdownMenuCheckboxItem,
-	DropdownMenuContent,
-	DropdownMenuGroup,
-	DropdownMenuItem,
-	DropdownMenuLabel,
-	DropdownMenuPortal,
-	DropdownMenuRadioGroup,
-	DropdownMenuRadioItem,
-	DropdownMenuSeparator,
-	DropdownMenuShortcut,
-	DropdownMenuSub,
-	DropdownMenuSubContent,
-	DropdownMenuSubTrigger,
-	DropdownMenuTrigger,
+	DropdownMenu as DropdownList,
+	DropdownMenuCheckboxItem as DropdownListCheckboxItem,
+	DropdownMenuContent as DropdownListContent,
+	DropdownMenuGroup as DropdownListGroup,
+	DropdownMenuItem as DropdownListItem,
+	DropdownMenuLabel as DropdownListLabel,
+	DropdownMenuPortal as DropdownListPortal,
+	DropdownMenuRadioGroup as DropdownListRadioGroup,
+	DropdownMenuRadioItem as DropdownListRadioItem,
+	DropdownMenuSeparator as DropdownListSeparator,
+	DropdownMenuShortcut as DropdownListShortcut,
+	DropdownMenuSub as DropdownListSub,
+	DropdownMenuSubContent as DropdownListSubContent,
+	DropdownMenuSubTrigger as DropdownListSubTrigger,
+	DropdownMenuTrigger as DropdownListTrigger,
 };

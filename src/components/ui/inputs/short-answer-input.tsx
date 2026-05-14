@@ -22,7 +22,7 @@ export function ShortAnswerInput({
 	const charCount = value.length;
 
 	return (
-		<div className="space-y-3">
+		<div className="flex flex-col gap-3">
 			<Input
 				value={value}
 				onChange={(e) => {

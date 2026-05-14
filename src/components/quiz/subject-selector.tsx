@@ -30,6 +30,7 @@ import { Button } from "@/components/ui/button";
 import { useFilteredSubjects } from "@/hooks";
 import { cn } from "@/lib/utils";
 import { Input } from "../ui/input";
+import { Skeleton } from "../ui/skeleton";
 
 interface SubjectSelectorProps {
 	onSelect: (subject: string) => void;
@@ -85,10 +86,10 @@ export function SubjectSelector({ onSelect, className }: SubjectSelectorProps) {
 	};
 
 	return (
-		<div className={cn("space-y-4 w-full", className)}>
+		<div className={cn("flex flex-col gap-4 w-full", className)}>
 			<div className="pb-2">
 				<div className="relative">
-					<Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+					<Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground pointer-events-none" />
 					<Input
 						type="text"
 						placeholder="Search subjects..."
@@ -138,9 +139,14 @@ export function SubjectSelector({ onSelect, className }: SubjectSelectorProps) {
 				})}
 			</div>
 			{isGenerating && (
-				<p className="text-center text-sm text-muted-foreground animate-pulse">
-					Generating questions with AI...
-				</p>
+				<div className="flex justify-center">
+					<div className="flex items-center gap-2">
+						<Skeleton className="size-4 rounded-full" />
+						<span className="text-sm text-muted-foreground">
+							Generating questions with AI...
+						</span>
+					</div>
+				</div>
 			)}
 		</div>
 	);

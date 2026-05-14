@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { cn } from "@/lib/utils";
 import { LottieWrapper } from "@/components/lottie/lottie-wrapper";
+import { cn } from "@/lib/utils";
 
 export function LoadingIndicator() {
 	const loadingMessages = [
@@ -24,7 +24,7 @@ export function LoadingIndicator() {
 			animate={{ opacity: 1, y: 0 }}
 			className="flex items-center gap-3 p-4 rounded-lg bg-system-surface-secondary text-muted-foreground border border-border/40 shadow-sm"
 		>
-			<div className="w-7 h-7 flex-shrink-0">
+			<div className="size-7 flex-shrink-0">
 				<LottieWrapper
 					animation="typing-indicator"
 					loop

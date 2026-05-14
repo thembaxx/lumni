@@ -1,14 +1,14 @@
 "use client";
 
 import {
+	ArrowsClockwise,
 	Check,
-	Mic,
+	Microphone,
 	Pause,
 	Play,
-	RefreshCw,
+	SpeakerHigh,
 	Square,
-	Volume2,
-} from "lucide-react";
+} from "@phosphor-icons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -96,7 +96,7 @@ export function PronunciationPractice() {
 			: 0;
 
 	return (
-		<div className="space-y-6 max-w-2xl mx-auto">
+		<div className="flex flex-col gap-6 max-w-2xl mx-auto">
 			<div className="flex items-center justify-between">
 				<h2 className="text-2xl font-bold">Pronunciation Practice</h2>
 				<div className="flex gap-2">
@@ -114,7 +114,7 @@ export function PronunciationPractice() {
 			</div>
 
 			{progress > 0 && (
-				<div className="space-y-2">
+				<div className="flex flex-col gap-2">
 					<div className="flex justify-between text-sm text-muted-foreground">
 						<span>Progress</span>
 						<span>
@@ -138,13 +138,13 @@ export function PronunciationPractice() {
 								Difficulty: {currentExercise.difficulty}
 							</span>
 							{completed.has(currentExercise.id) && (
-								<span className="flex items-center gap-1 text-green-500">
-									<Check className="h-4 w-4" /> Completed
+								<span className="flex items-center gap-1 text-success">
+									<Check data-icon /> Completed
 								</span>
 							)}
 						</CardTitle>
 					</CardHeader>
-					<CardContent className="space-y-6">
+					<CardContent className="flex flex-col gap-6">
 						<div className="text-center py-4">
 							<p className="text-2xl font-medium mb-2">
 								{currentExercise.text}
@@ -164,20 +164,16 @@ export function PronunciationPractice() {
 								disabled={isSpeaking}
 								className="gap-2"
 							>
-								{isSpeaking ? (
-									<Pause className="h-5 w-5" />
-								) : (
-									<Volume2 className="h-5 w-5" />
-								)}
+								{isSpeaking ? <Pause data-icon /> : <SpeakerHigh data-icon />}
 								{isSpeaking ? "Speaking..." : "Listen"}
 							</Button>
 
 							<Button
 								size="lg"
 								onClick={handleRecord}
-								className={`gap-2 ${isRecording ? "bg-red-500 hover:bg-red-600 dark:bg-red-700 dark:hover:bg-red-600" : ""}`}
+								className={`gap-2 ${isRecording ? "bg-destructive hover:bg-destructive/90" : ""}`}
 							>
-								<Mic className="h-5 w-5" />
+								<Microphone data-icon />
 								{isRecording ? `${recordingTime}s` : "Record"}
 							</Button>
 						</div>
@@ -194,14 +190,14 @@ export function PronunciationPractice() {
 
 						<div className="flex justify-center gap-4 pt-4">
 							<Button variant="outline" onClick={nextExercise}>
-								<RefreshCw className="h-4 w-4 mr-2" />
+								<ArrowsClockwise data-icon />
 								Skip
 							</Button>
 							<Button
 								onClick={markComplete}
 								disabled={completed.has(currentExercise.id)}
 							>
-								<Check className="h-4 w-4 mr-2" />
+								<Check data-icon />
 								Mark Complete
 							</Button>
 						</div>
@@ -215,10 +211,10 @@ export function PronunciationPractice() {
 
 			<Card>
 				<CardHeader>
-					<CardTitle className="text-base">Tips</CardTitle>
+					<CardTitle>Tips</CardTitle>
 				</CardHeader>
 				<CardContent>
-					<ul className="text-sm text-muted-foreground space-y-2">
+					<ul className="flex flex-col gap-2 text-sm text-muted-foreground">
 						<li>• Click "Listen" to hear the correct pronunciation</li>
 						<li>• Click "Record" and try to match the pronunciation</li>
 						<li>• Listen to your recording and compare</li>

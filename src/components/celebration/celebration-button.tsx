@@ -36,8 +36,9 @@ export const CelebrationButton = forwardRef<
 		};
 
 		const variantStyles = {
-			correct: "bg-green-500 hover:bg-green-600 text-white",
-			incorrect: "bg-red-500 hover:bg-red-600 text-white",
+			correct: "bg-success hover:bg-success/90 text-primary-foreground",
+			incorrect:
+				"bg-destructive hover:bg-destructive/90 text-primary-foreground",
 			default: "",
 		};
 

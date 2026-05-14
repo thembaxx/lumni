@@ -1,10 +1,17 @@
 "use client";
 
-import type { LucideIcon } from "lucide-react";
+import type { Icon } from "@phosphor-icons/react";
+import {
+	Empty,
+	EmptyContent,
+	EmptyDescription,
+	EmptyHeader,
+	EmptyTitle,
+} from "@/components/ui/empty";
 import { cn } from "@/lib/utils";
 
 interface EmptyStateProps {
-	icon?: LucideIcon;
+	icon?: Icon;
 	title: string;
 	description?: string;
 	action?: React.ReactNode;
@@ -28,18 +35,18 @@ export function EmptyState({
 				className,
 			)}
 		>
-			<div className="text-center max-w-sm px-6">
-				{Icon && (
-					<Icon className="w-10 h-10 mx-auto mb-3 text-muted-foreground/30" />
-				)}
-				<p className="text-sm font-medium text-foreground mb-1">{title}</p>
-				{description && (
-					<p className="text-xs text-muted-foreground mt-1 max-w-xs mx-auto">
-						{description}
-					</p>
-				)}
-				{action && <div className="mt-4">{action}</div>}
-			</div>
+			<Empty>
+				<EmptyHeader>
+					{Icon && (
+						<Icon className="size-10 mx-auto text-muted-foreground/30" />
+					)}
+					<EmptyTitle>{title}</EmptyTitle>
+				</EmptyHeader>
+				<EmptyContent>
+					{description && <EmptyDescription>{description}</EmptyDescription>}
+					{action && action}
+				</EmptyContent>
+			</Empty>
 		</div>
 	);
 }

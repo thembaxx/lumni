@@ -1,6 +1,6 @@
 "use client";
 
-import { RefreshCw, X } from "lucide-react";
+import { ArrowsClockwise, X } from "@phosphor-icons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { usePWAInstall, useServiceWorker } from "@/hooks/use-service-worker";
@@ -15,7 +15,7 @@ export function PWAUpdateToast() {
 		<div className="fixed bottom-4 left-4 right-4 z-50 md:left-auto md:right-4 md:max-w-sm">
 			<div className="bg-background border border-border rounded-lg shadow-lg p-4 flex items-start gap-3">
 				<div className="flex-shrink-0 mt-0.5">
-					<RefreshCw className="h-5 w-5 text-foreground" />
+					<ArrowsClockwise className="h-5 w-5 text-foreground" />
 				</div>
 				<div className="flex-1 min-w-0">
 					<p className="text-sm font-medium">Update Available</p>

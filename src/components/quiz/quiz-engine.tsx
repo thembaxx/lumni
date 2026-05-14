@@ -1,11 +1,11 @@
 "use client";
 
-import { AnimatePresence, m } from "framer-motion";
+import { AnimatePresence, m, useMotionValue } from "framer-motion";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Anim } from "@/components/shared/anim";
 import { LottieWrapper } from "@/components/lottie/lottie-wrapper";
+import { Anim } from "@/components/shared/anim";
 import { ProgressDots } from "@/components/shared/progress-dots";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { AssessmentHeader } from "@/components/ui/headers/assessment-header";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
@@ -89,6 +89,9 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 		};
 	}, [questions.length]);
 
+	// Motion value for animated progress (decoupled from React re-renders)
+	const progressMotion = useMotionValue(0);
+
 	const currentQuestion = questions?.[currentIndex];
 
 	const handleNext = useCallback(() => {
@@ -136,33 +139,69 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 
 	if (isLoading) {
 		return (
-			<Card className="p-6 flex flex-col items-center justify-center gap-4">
-				<LottieWrapper animation="loading-dots" className="h-8 mx-auto" loop />
-				<p className="text-sm text-muted-foreground">
-					Generating questions...
-				</p>
-			</Card>
+			<div className="grid grid-cols-12 gap-0">
+				<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4 pb-20">
+					<Card className="max-w-md w-full p-6 flex flex-col items-center gap-4">
+						<LottieWrapper
+							animation="loading-dots"
+							className="h-8 mx-auto"
+							loop
+						/>
+						<p className="text-sm text-muted-foreground">
+							Generating questions...
+						</p>
+					</Card>
+				</div>
+				<div className="col-span-12 md:col-span-5 col-start-1 md:col-start-8 relative overflow-hidden bg-system-surface/30">
+					<div className="absolute inset-0 bg-gradient-to-br from-[--system-accent]/10 via-transparent to-transparent" />
+					<div className="absolute inset-0 flex items-center justify-center p-8">
+						<div className="w-full h-full max-w-xs aspect-square rounded-3xl bg-[--system-accent]/10 blur-2xl animate-float-slow" />
+					</div>
+				</div>
+			</div>
 		);
 	}
 
 	if (isError) {
 		return (
-			<Card className="p-8 flex flex-col items-center justify-center gap-4">
-				<LottieWrapper animation="error-state" className="w-16 h-16" />
-				<p className="text-destructive font-medium">Failed to load questions.</p>
-			</Card>
+			<div className="grid grid-cols-12 gap-0">
+				<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4 pb-20">
+					<Card className="max-w-md w-full p-8 flex flex-col items-center gap-4">
+						<LottieWrapper animation="error-state" className="size-16" />
+						<p className="text-destructive font-medium">
+							Failed to load questions.
+						</p>
+					</Card>
+				</div>
+				<div className="col-span-12 md:col-span-5 col-start-1 md:col-start-8 relative overflow-hidden bg-system-surface/30">
+					<div className="absolute inset-0 bg-gradient-to-br from-destructive/5 via-transparent to-transparent" />
+					<div className="absolute inset-0 flex items-center justify-center p-8">
+						<div className="w-full h-full max-w-xs aspect-square rounded-3xl bg-destructive/10 blur-2xl animate-float-slow" />
+					</div>
+				</div>
+			</div>
 		);
 	}
 
 	if (!questions?.length) {
 		return (
-			<Card className="p-8 flex flex-col items-center justify-center gap-4">
-				<LottieWrapper animation="empty-search" className="w-16 h-16" />
-				<p className="text-muted-foreground">
-					No questions available for this subject.
-				</p>
-				<p className="text-sm">Select a subject to start practicing.</p>
-			</Card>
+			<div className="grid grid-cols-12 gap-0">
+				<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4 pb-20">
+					<Card className="max-w-md w-full p-8 flex flex-col items-center gap-4">
+						<LottieWrapper animation="empty-search" className="size-16" />
+						<p className="text-muted-foreground">
+							No questions available for this subject.
+						</p>
+						<p className="text-sm">Select a subject to start practicing.</p>
+					</Card>
+				</div>
+				<div className="col-span-12 md:col-span-5 col-start-1 md:col-start-8 relative overflow-hidden bg-system-surface/30">
+					<div className="absolute inset-0 bg-gradient-to-br from-[--system-accent]/10 via-transparent to-transparent" />
+					<div className="absolute inset-0 flex items-center justify-center p-8">
+						<div className="w-full h-full max-w-xs aspect-square rounded-3xl bg-[--system-accent]/10 blur-2xl animate-float-slow" />
+					</div>
+				</div>
+			</div>
 		);
 	}
 
@@ -201,7 +240,7 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 
 	return (
 		<Anim>
-			<div className="space-y-4">
+			<div className="flex flex-col gap-4">
 				<AssessmentHeader
 					title={subjectId}
 					elapsedTime={elapsedTime}

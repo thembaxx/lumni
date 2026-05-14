@@ -18,7 +18,7 @@ export function XpLevelCard({ levelInfo, totalXp }: XpLevelCardProps) {
 		>
 			<div className="flex items-center gap-4">
 				<motion.div
-					className="relative flex h-14 w-14 items-center justify-center rounded-full bg-system-accent shadow-lg"
+					className="relative flex size-14 items-center justify-center rounded-full bg-system-accent shadow-lg"
 					initial={{ scale: 0.8 }}
 					animate={{ scale: 1 }}
 					transition={{ type: "spring", stiffness: 300, damping: 20 }}

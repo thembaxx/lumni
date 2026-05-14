@@ -3,11 +3,11 @@ export type Difficulty = "easy" | "medium" | "hard";
 export function getDifficultyColor(difficulty: Difficulty): string {
 	switch (difficulty) {
 		case "easy":
-			return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100";
+			return "bg-success/10 text-success border-success/20";
 		case "medium":
-			return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100";
+			return "bg-warning/10 text-warning border-warning/20";
 		case "hard":
-			return "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100";
+			return "bg-destructive/10 text-destructive border-destructive/20";
 	}
 }
 

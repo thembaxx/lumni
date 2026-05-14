@@ -1,7 +1,7 @@
 "use client";
 
+import { Trophy } from "@phosphor-icons/react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Trophy } from "lucide-react";
 import { LottieWrapper } from "@/components/lottie";
 import {
 	rarityBorder,
@@ -64,7 +64,7 @@ export function AchievementUnlock({
 								{useLottie ? (
 									<LottieWrapper
 										animation="achievement-unlock"
-										className="w-32 h-32 mx-auto"
+										className="size-32 mx-auto"
 									/>
 								) : (
 									<div className="text-7xl mb-4">{icon}</div>
@@ -77,8 +77,8 @@ export function AchievementUnlock({
 								transition={{ delay: 0.3 }}
 							>
 								<div className="flex items-center justify-center gap-2 mb-2">
-									<Trophy className="w-5 h-5 text-amber-500 dark:text-amber-400" />
-									<span className="text-sm font-medium text-amber-500 uppercase tracking-wider dark:text-amber-400">
+									<Trophy className="size-5 text-warning" />
+									<span className="text-sm font-medium text-warning uppercase tracking-wider">
 										Achievement Unlocked!
 									</span>
 								</div>
@@ -86,7 +86,7 @@ export function AchievementUnlock({
 									{name}
 								</h2>
 								<p className="text-muted-foreground mb-4">{description}</p>
-								<div className="inline-flex items-center gap-2 bg-amber-500/20 text-amber-600 px-4 py-2 rounded-full dark:bg-amber-700/30 dark:text-amber-300">
+								<div className="inline-flex items-center gap-2 bg-warning/20 text-warning-foreground px-4 py-2 rounded-full">
 									<span className="text-lg font-bold">+{xpReward} XP</span>
 								</div>
 							</motion.div>

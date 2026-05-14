@@ -56,8 +56,8 @@ export function LessonCard({
 						layoutId={`lesson-${id}`}
 						className="fixed left-1/2 top-1/2 z-50 w-[calc(100%-2rem)] max-w-sm -translate-x-1/2 -translate-y-1/2"
 					>
-						<Card className="p-4 rounded-2xl bg-card text-card-foreground shadow-2xl shadow-black/20 max-h-[80dvh] overflow-y-auto">
-							<div className="space-y-3">
+						<Card className="max-h-[80dvh] overflow-y-auto p-4">
+							<div className="flex flex-col gap-3">
 								<div className="flex justify-between items-start">
 									<Badge
 										variant="outline"
@@ -75,7 +75,7 @@ export function LessonCard({
 									</Badge>
 								</div>
 
-								<div className="space-y-1">
+								<div className="flex flex-col gap-1">
 									<h3 className="text-xl font-semibold leading-tight text-foreground text-wrap balance">
 										{title}
 									</h3>
@@ -112,10 +112,10 @@ export function LessonCard({
 					</m.div>
 				) : (
 					<m.div key={`lesson-${id}-closed`} layoutId={`lesson-${id}`}>
-						<div className="p-5 rounded-2xl border bg-card text-card-foreground shadow-sm w-full text-left">
+						<Card className="p-5 rounded-2xl shadow-sm w-full text-left">
 							<div
 								onClick={() => setOpenId(id)}
-								className="space-y-3 cursor-pointer hover:border-[--system-accent]/20 transition-[scale,colors] duration-200 active:scale-[0.98]"
+								className="flex flex-col gap-3 cursor-pointer hover:border-[--system-accent]/20 transition-[scale,colors] duration-200 active:scale-[0.98]"
 								role="button"
 								tabIndex={0}
 								onKeyDown={(e) => {
@@ -143,7 +143,7 @@ export function LessonCard({
 									</Badge>
 								</div>
 
-								<div className="space-y-1">
+								<div className="flex flex-col gap-1">
 									<h3 className="text-md font-semibold leading-tight text-foreground text-wrap balance">
 										{title}
 									</h3>
@@ -168,7 +168,7 @@ export function LessonCard({
 									}
 								/>
 							</div>
-						</div>
+						</Card>
 					</m.div>
 				)}
 			</AnimatePresence>

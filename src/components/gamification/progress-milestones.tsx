@@ -14,7 +14,7 @@ export function ProgressMilestones({
 	milestones,
 }: ProgressMilestonesProps) {
 	return (
-		<div className="space-y-3">
+		<div className="flex flex-col gap-3">
 			<h3 className="text-sm font-semibold text-foreground">
 				Streak Milestones
 			</h3>
@@ -38,11 +38,11 @@ export function ProgressMilestones({
 								className="flex flex-col items-center"
 							>
 								<motion.div
-									className={`relative z-10 flex h-10 w-10 items-center justify-center rounded-full border-4 transition-colors transition-border-color ${
+									className={`relative z-10 flex size-10 items-center justify-center rounded-full border-4 transition-colors transition-border-color ${
 										isUnlocked
 											? "bg-[--system-accent] border-[--system-accent] text-background"
 											: isCurrent
-												? "bg-[--system-accent]/20 border-[--system-accent] animate-pulse"
+												? "bg-[--system-accent]/20 border-[--system-accent]"
 												: "bg-card border-border"
 									}`}
 									whileHover={{ scale: 1.1 }}

@@ -1,15 +1,14 @@
 "use client";
 
-import { motion } from "framer-motion";
 import {
 	BookOpenIcon,
 	CalendarIcon,
 	ClockIcon,
-	SparklesIcon,
-} from "lucide-react";
+	SparkleIcon,
+} from "@phosphor-icons/react";
+import { motion } from "framer-motion";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -238,9 +237,9 @@ export function SmartScheduler() {
 			case "new":
 				return "bg-[--system-accent]/10 text-muted-foreground";
 			case "review":
-				return "bg-purple-500/20 text-purple-500 dark:bg-purple-900/40 dark:text-purple-300";
+				return "bg-accent/20 text-accent";
 			case "practice":
-				return "bg-green-500/20 text-green-500 dark:bg-green-900/40 dark:text-green-300";
+				return "bg-success/20 text-success";
 			default:
 				return "bg-muted/50 text-muted-foreground";
 		}
@@ -263,7 +262,7 @@ export function SmartScheduler() {
 	return (
 		<div className="p-4 h-full flex flex-col overflow-hidden">
 			{schedule.length === 0 ? (
-				<div className="space-y-6">
+				<div className="flex flex-col gap-6">
 					<div>
 						<Label className="mb-3 block">Select Subjects</Label>
 						<div className="grid grid-cols-2 gap-2">
@@ -336,12 +335,12 @@ export function SmartScheduler() {
 					>
 						{isGenerating ? (
 							<>
-								<div className="animate-spin w-4 h-4 border-2 border-current border-t-transparent rounded-full mr-2" />
+								<div className="animate-spin size-4 border-2 border-current border-t-transparent rounded-full mr-2" />
 								Generating...
 							</>
 						) : (
 							<>
-								<SparklesIcon className="w-4 h-4 mr-2" />
+								<SparkleIcon data-icon className="mr-2" />
 								Generate Schedule
 							</>
 						)}
@@ -361,7 +360,7 @@ export function SmartScheduler() {
 						</Button>
 					</div>
 
-					<div className="space-y-4">
+					<div className="flex flex-col gap-4">
 						{scheduleByDay
 							.filter((d) => d.sessions.length > 0)
 							.map((day, idx) => (
@@ -372,15 +371,15 @@ export function SmartScheduler() {
 									transition={{ delay: idx * 0.05 }}
 								>
 									<h4 className="font-medium text-sm mb-2 flex items-center gap-2">
-										<CalendarIcon className="w-4 h-4" />
+										<CalendarIcon className="size-4" />
 										{day.day}
 									</h4>
-									<div className="space-y-2">
+									<div className="flex flex-col gap-2">
 										{day.sessions.map((session, sidx) => (
-											<Card
+											<div
 												key={`${day.day}-${sidx}`}
 												className={cn(
-													"p-3 rounded-xl shadow-[0_2px_8px_oklch(0%_0_0_/_0.04)]",
+													"p-3 rounded-xl shadow-[0_2px_8px_oklch(0%_0_0_/_0.04)] overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors",
 													session.subject === "Break" && "bg-muted/50",
 												)}
 											>
@@ -403,12 +402,12 @@ export function SmartScheduler() {
 															{session.type}
 														</span>
 														<span className="text-sm text-muted-foreground flex items-center gap-1 tabular-nums">
-															<ClockIcon className="w-3 h-3" />
+															<ClockIcon className="size-3" />
 															{session.duration}min
 														</span>
 													</div>
 												</div>
-											</Card>
+											</div>
 										))}
 									</div>
 								</motion.div>

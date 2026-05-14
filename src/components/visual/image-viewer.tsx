@@ -1,6 +1,6 @@
 "use client";
 
-import { ExternalLinkIcon } from "lucide-react";
+import { ArrowSquareOut } from "@phosphor-icons/react";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -29,11 +29,11 @@ export function ImageViewer({
 	}
 
 	return (
-		<div className="space-y-1">
+		<div className="flex flex-col gap-1">
 			<div className="relative overflow-hidden rounded-lg border bg-background/20 min-h-48">
 				{loading && (
 					<div className="absolute inset-0 flex items-center justify-center bg-muted/10">
-						<div className="h-6 w-6 animate-spin rounded-full border-2 border-muted-foreground/30 border-t-muted-foreground" />
+						<div className="size-6 animate-spin rounded-full border-2 border-muted-foreground/30 border-t-muted-foreground" />
 					</div>
 				)}
 				<Image
@@ -60,7 +60,7 @@ export function ImageViewer({
 							rel="noopener noreferrer"
 							className="inline-flex items-center gap-0.5 hover:text-muted-foreground"
 						>
-							<ExternalLinkIcon className="h-3 w-3" />
+							<ArrowSquareOut className="size-3" />
 						</a>
 					)}
 				</p>

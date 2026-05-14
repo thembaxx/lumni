@@ -1,15 +1,14 @@
 "use client";
 
+import { TrendDown, TrendUp } from "@phosphor-icons/react";
 import { m } from "framer-motion";
-import { LucideIcon, TrendingDown, TrendingUp } from "lucide-react";
-import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { iOSEase } from "@/lib/utils/animation";
 
 export type StatCardVariant = "default" | "admin" | "dashboard";
 
 interface StatCardProps {
-	icon?: LucideIcon;
+	icon?: React.ComponentType<{ className?: string }>;
 	label: string;
 	value: string | number;
 	trend?: "up" | "down" | "neutral";
@@ -21,8 +20,8 @@ interface StatCardProps {
 }
 
 const trendColors = {
-	up: "text-green-500 dark:text-green-400",
-	down: "text-red-500 dark:text-red-400",
+	up: "text-success",
+	down: "text-destructive",
 	neutral: "text-muted-foreground",
 };
 
@@ -68,9 +67,9 @@ export function StatCard({
 				transition={{ delay, duration: 0.4 }}
 				whileHover={{ scale: 1.03 }}
 			>
-				<Card
+				<div
 					className={cn(
-						"p-4 flex flex-col items-center justify-center gap-2",
+						"p-4 flex flex-col items-center justify-center gap-2 overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors",
 						className,
 					)}
 				>
@@ -86,7 +85,7 @@ export function StatCard({
 							damping: 25,
 						}}
 					>
-						{Icon && <Icon className={cn("h-5 w-5", colorClass)} />}
+						{Icon && <Icon className={cn("size-5", colorClass)} />}
 					</m.div>
 					<m.div
 						className="text-center"
@@ -104,16 +103,21 @@ export function StatCard({
 					>
 						{value}
 					</m.span>
-				</Card>
+				</div>
 			</m.div>
 		);
 	}
 
 	return (
-		<Card className={cn(className)}>
+		<div
+			className={cn(
+				"overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors",
+				className,
+			)}
+		>
 			<div className="p-4">
 				<div className="flex items-center gap-2 text-muted-foreground mb-2">
-					{Icon && <Icon className="h-4 w-4" />}
+					{Icon && <Icon className="size-4" />}
 					<span className="text-xs">{label}</span>
 				</div>
 				<div
@@ -123,10 +127,10 @@ export function StatCard({
 					)}
 				>
 					{value}
-					{trend === "up" && <TrendingUp className="h-4 w-4" />}
-					{trend === "down" && <TrendingDown className="h-4 w-4" />}
+					{trend === "up" && <TrendUp className="size-4" />}
+					{trend === "down" && <TrendDown className="size-4" />}
 				</div>
 			</div>
-		</Card>
+		</div>
 	);
 }

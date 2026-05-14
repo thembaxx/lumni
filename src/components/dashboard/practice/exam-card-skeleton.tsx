@@ -9,7 +9,7 @@ export function ExamCardSkeleton({ className }: ExamCardSkeletonProps) {
 		<div
 			className={`flex items-center justify-between p-3 rounded-xl bg-secondary/40 border-0 ${className ?? ""}`}
 		>
-			<div className="flex-1 min-w-0 pr-2 space-y-1">
+			<div className="flex-1 min-w-0 pr-2 flex flex-col gap-1">
 				<Skeleton className="h-4 w-3/4 rounded" />
 				<div className="flex items-center gap-1.5">
 					<Skeleton className="h-3 w-8 rounded" />
@@ -33,7 +33,7 @@ interface GroupSkeletonProps {
 
 export function GroupSkeleton({ className }: GroupSkeletonProps) {
 	return (
-		<div className={`space-y-2.5 ${className ?? ""}`}>
+		<div className={`flex flex-col gap-2.5 ${className ?? ""}`}>
 			<div className="flex items-center justify-between px-0.5">
 				<Skeleton className="h-4 w-24 rounded" />
 				<Skeleton className="h-4 w-6 rounded" />

@@ -1,15 +1,15 @@
 "use client";
 
 import {
-	AiChat02Icon,
+	ChatText,
 	ArrowLeftIcon,
-	Book02Icon,
-	Database01Icon,
-	Notification03Icon,
-	PaintBrush01Icon,
-	UserIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+	BookOpen,
+	Database,
+	Bell,
+	PaintBrush,
+	User,
+} from "@phosphor-icons/react";
+
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -42,12 +42,12 @@ import {
 } from "@/lib/utils/storage";
 
 const tabs = [
-	{ value: "profile", label: "Profile", icon: UserIcon },
-	{ value: "appearance", label: "UI", icon: PaintBrush01Icon },
-	{ value: "study", label: "Study", icon: Book02Icon },
-	{ value: "notifications", label: "Alerts", icon: Notification03Icon },
-	{ value: "data", label: "Data", icon: Database01Icon },
-	{ value: "beta", label: "Beta", icon: AiChat02Icon },
+	{ value: "profile", label: "Profile", icon: User },
+	{ value: "appearance", label: "UI", icon: PaintBrush },
+	{ value: "study", label: "Study", icon: BookOpen },
+	{ value: "notifications", label: "Alerts", icon: Bell },
+	{ value: "data", label: "Data", icon: Database },
+	{ value: "beta", label: "Beta", icon: ChatText },
 ];
 
 function SettingsContent() {
@@ -128,7 +128,7 @@ function SettingsContent() {
 	};
 
 	return (
-		<div className="min-h-screen bg-system-grouped flex flex-col antialiased">
+		<div className="min-h-[100dvh] bg-system-grouped flex flex-col antialiased">
 			<div className="mx-auto w-full max-w-md flex flex-col flex-1">
 				{/* Refined Header */}
 				<header className="sticky top-0 z-30 bg-system-grouped/90 backdrop-blur-xl px-6 pt-6 pb-4">
@@ -138,7 +138,7 @@ function SettingsContent() {
 								href="/dashboard"
 								className="flex items-center justify-center size-10 rounded-full text-foreground bg-system-surface shadow-sm border border-border/40 hover:bg-secondary transition-colors active:scale-[0.96]"
 							>
-								<HugeiconsIcon icon={ArrowLeftIcon} className="size-5" />
+								<ArrowLeftIcon className="size-5" />
 							</Link>
 							<h1 className="ios-title-3 text-foreground font-bold tracking-tight">
 								Settings
@@ -254,7 +254,7 @@ export function SettingsClient() {
 	return (
 		<Suspense
 fallback={
-			<div className="flex items-center justify-center min-h-screen bg-system-grouped">
+			<div className="flex items-center justify-center min-h-[100dvh] bg-system-grouped">
 				<div className="flex flex-col items-center gap-4">
 					<LottieWrapper
 						animation="loading-dots"

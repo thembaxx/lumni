@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { CaretDown, CaretUp } from "@phosphor-icons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -32,7 +32,7 @@ export function CalculationInput({
 	const [showWorking, setShowWorking] = useState(false);
 
 	return (
-		<div className="space-y-3">
+		<div className="flex flex-col gap-3">
 			<div className="flex items-center gap-3">
 				<Label>Answer:</Label>
 				<Input
@@ -63,9 +63,9 @@ export function CalculationInput({
 					className="text-xs"
 				>
 					{showWorking ? (
-						<ChevronUp className={cn("w-3 h-3 mr-1")} />
+						<CaretUp data-icon="inline-start" />
 					) : (
-						<ChevronDown className={cn("w-3 h-3 mr-1")} />
+						<CaretDown data-icon="inline-start" />
 					)}
 					Show working
 				</Button>

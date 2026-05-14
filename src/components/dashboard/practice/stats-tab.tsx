@@ -1,9 +1,12 @@
-import { Timer } from "lucide-react";
+import { Timer } from "@phosphor-icons/react";
 import dynamic from "next/dynamic";
 import { useCallback, useState } from "react";
 import { StreakFire } from "@/components/celebration";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
 import { StatsCards } from "@/components/dashboard/stats-cards";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const ProgressChart = dynamic(
 	() =>
@@ -12,9 +15,7 @@ const ProgressChart = dynamic(
 		),
 	{
 		ssr: false,
-		loading: () => (
-			<div className="h-[250px] rounded-lg bg-[--system-surface] animate-pulse" />
-		),
+		loading: () => <Skeleton className="h-[250px] rounded-lg" />,
 	},
 );
 
@@ -25,13 +26,10 @@ import {
 	StreakCelebration,
 } from "@/components/gamification";
 import { QuizEngine, type QuizResults } from "@/components/quiz/quiz-engine";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useGamification } from "@/hooks/use-gamification";
 import { useUserProgress } from "@/hooks/use-user-progress";
 import { useUserSubjects } from "@/hooks/use-user-subjects";
-import { toggleUserSubject } from "@/lib/server/actions";
-import { cn } from "@/lib/utils";
+import { toggleUserSubject } from "@/lib/server";
 
 const DEFAULT_USER_ID = "demo-user";
 
@@ -58,7 +56,6 @@ export default function StatsTab() {
 
 	async function handleSubjectToggle(newSelection: string[]) {
 		const added = newSelection.find((id) => !selectedSubjects.includes(id));
-
 		const removed = selectedSubjects.find((id) => !newSelection.includes(id));
 
 		if (added) {
@@ -88,10 +85,10 @@ export default function StatsTab() {
 
 	if (isProgressLoading || isSubjectsLoading || !isGamificationLoaded) {
 		return (
-			<div className="px-4 pb-6 space-y-3">
-				<div className="animate-pulse h-24 bg-muted rounded-lg" />
-				<div className="animate-pulse h-24 bg-muted rounded-lg" />
-				<div className="animate-pulse h-48 bg-muted rounded-lg" />
+			<div className="px-4 pb-6 flex flex-col gap-3">
+				<Skeleton className="h-24 rounded-lg" />
+				<Skeleton className="h-24 rounded-lg" />
+				<Skeleton className="h-48 rounded-lg" />
 			</div>
 		);
 	}
@@ -101,7 +98,7 @@ export default function StatsTab() {
 		const isPerfect = quizResults.accuracy === 100;
 
 		return (
-			<div className="px-4 pb-6 space-y-3">
+			<div className="px-4 pb-6 flex flex-col gap-3">
 				<SubjectsDrawer
 					userId={userId}
 					selectedSubjects={selectedSubjects}
@@ -109,7 +106,7 @@ export default function StatsTab() {
 				/>
 				<StreakFire streak={currentStreak} showMilestone />
 
-				<Card className="overflow-visible">
+				<Card className="overflow-visible border-0">
 					{isPerfect && (
 						<div className="flex items-center justify-center -mt-2">
 							<div className="flex items-center gap-2 rounded-full bg-warning text-warning-foreground px-4 py-1.5 shadow-lg">
@@ -117,40 +114,43 @@ export default function StatsTab() {
 							</div>
 						</div>
 					)}
-					<CardHeader className="text-center pb-2">
-						<CardTitle>
+					<CardHeader className="p-6 pb-2 md:text-left">
+						<h3 className="text-xl font-bold tracking-tight">
 							{isPerfect
 								? "Flawless!"
 								: isGreatScore
 									? "Great Job!"
 									: "Quiz Complete!"}
-						</CardTitle>
+						</h3>
+						<p className="text-sm text-muted-foreground mt-1">
+							Here are your results:
+						</p>
 					</CardHeader>
-					<CardContent className="space-y-4">
-						<div className="grid grid-cols-3 gap-3 text-center">
-							<div className="p-3 rounded-lg bg-muted">
+					<CardContent className="px-6 pb-6 flex flex-col gap-4">
+						<div className="grid grid-cols-12 gap-3 md:text-left">
+							<div className="col-span-5 p-3 rounded-lg bg-muted">
 								<p className="text-xl font-bold tabular-nums">
 									{quizResults.totalQuestions}
 								</p>
 								<p className="text-xs text-muted-foreground">Questions</p>
 							</div>
-							<div className="p-3 rounded-lg bg-muted">
+							<div className="col-span-3 p-3 rounded-lg bg-muted">
 								<p
-									className={cn(
-										"text-xl font-bold tabular-nums",
-										isGreatScore && "text-success",
-									)}
+									className={
+										"text-xl font-bold tabular-nums" +
+										(isGreatScore ? " text-success" : "")
+									}
 								>
 									{quizResults.correctAnswers}
 								</p>
 								<p className="text-xs text-muted-foreground">Correct</p>
 							</div>
-							<div className="p-3 rounded-lg bg-muted">
+							<div className="col-span-4 p-3 rounded-lg bg-muted">
 								<p
-									className={cn(
-										"text-xl font-bold tabular-nums",
-										isGreatScore && "text-success",
-									)}
+									className={
+										"text-xl font-bold tabular-nums" +
+										(isGreatScore ? " text-success" : "")
+									}
 								>
 									{quizResults.accuracy}%
 								</p>
@@ -169,11 +169,13 @@ export default function StatsTab() {
 				</Card>
 
 				{quizResults.incorrectAnswers.length > 0 && (
-					<Card>
-						<CardHeader className="pb-2">
-							<CardTitle className="text-base">Review Mistakes</CardTitle>
+					<Card className="overflow-hidden border-0">
+						<CardHeader className="p-4 pb-2">
+							<h3 className="text-base font-bold tracking-tight">
+								Review Mistakes
+							</h3>
 						</CardHeader>
-						<CardContent className="space-y-2">
+						<CardContent className="p-4 flex flex-col gap-2">
 							{quizResults.incorrectAnswers.slice(0, 3).map((item, idx) => (
 								<div
 									key={item.questionId || idx}
@@ -199,7 +201,7 @@ export default function StatsTab() {
 	}
 
 	return (
-		<div className="px-4 pb-6 space-y-3">
+		<div className="px-4 pb-6 flex flex-col gap-3">
 			<SubjectsDrawer
 				userId={userId}
 				selectedSubjects={selectedSubjects}

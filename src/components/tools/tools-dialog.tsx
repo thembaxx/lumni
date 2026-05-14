@@ -75,7 +75,7 @@ export function ToolsDialog({ open, onOpenChange }: ToolsDialogProps) {
 								size="icon-sm"
 								onClick={() => onOpenChange(false)}
 							>
-								<XIcon className="w-4 h-4" />
+								<XIcon data-icon />
 							</Button>
 						</motion.header>
 
@@ -90,13 +90,13 @@ export function ToolsDialog({ open, onOpenChange }: ToolsDialogProps) {
 								transition={{ delay: 0.2, duration: 0.3 }}
 								className="px-4 py-3"
 							>
-								<TabsList className="h-11 p-1 bg-secondary/50 dark:bg-secondary/20 transition-all duration-300 rounded-lg flex justify-start w-full overflow-x-auto px-2 py-2 gap-2 scrollbar-hide shrink-0">
+								<TabsList className="h-11 p-1 bg-secondary/50 transition-all duration-300 rounded-lg flex justify-start w-full overflow-x-auto px-2 py-2 gap-2 scrollbar-hide shrink-0">
 									{tabs.map((tab) => (
 										<TabsTrigger
 											key={tab.id}
 											value={tab.id}
 											className={cn(
-												"shrink-0 px-4 py-2.5 text-sm font-medium rounded-[12px]"
+												"shrink-0 px-4 py-2.5 text-sm font-medium rounded-[12px]",
 											)}
 										>
 											{tab.label}

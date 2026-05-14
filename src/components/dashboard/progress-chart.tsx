@@ -1,7 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Card } from "@/components/ui/card";
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface ProgressDataPoint {
 	date: string;
@@ -66,133 +67,141 @@ export function ProgressChart({ data, title }: ProgressChartProps) {
 
 	if (data.length === 0) {
 		return (
-			<Card className="p-4">
+			<Card className="overflow-hidden">
 				{title && (
-					<h3 className="text-lg font-semibold mb-4 text-wrap balance">
-						{title}
-					</h3>
+					<CardHeader>
+						<CardTitle className="text-lg font-semibold text-wrap balance">
+							{title}
+						</CardTitle>
+					</CardHeader>
 				)}
-				<div className="flex items-center justify-center h-[250px] text-muted-foreground text-sm font-medium">
-					No progress data yet
-				</div>
+				<CardContent>
+					<div className="flex items-center justify-center h-[250px] text-muted-foreground text-sm font-medium">
+						No progress data yet
+					</div>
+				</CardContent>
 			</Card>
 		);
 	}
 
 	return (
-		<Card className="p-4">
+		<Card className="overflow-hidden">
 			{title && (
-				<h3 className="text-lg font-semibold mb-4 text-wrap balance">
-					{title}
-				</h3>
+				<CardHeader>
+					<CardTitle className="text-lg font-semibold text-wrap balance">
+						{title}
+					</CardTitle>
+				</CardHeader>
 			)}
-			<svg
-				viewBox={`0 0 ${xMax} 100`}
-				className="w-full h-[250px] overflow-visible"
-				preserveAspectRatio="xMidYMid meet"
-				role="img"
-				aria-label={title ? `${title} chart` : "Progress chart"}
-			>
-				{yTicks.map((tick) => {
-					const y = 10 + 80 * (1 - (tick - 0) / (100 - 0));
-					return (
-						<g key={tick}>
-							<line
-								x1={28}
-								y1={y}
-								x2={xMax - 10}
-								y2={y}
-								stroke="var(--border)"
-								strokeWidth="0.5"
-							/>
-							<text
-								x={26}
-								y={y + 1}
-								textAnchor="end"
-								fill="var(--muted-foreground)"
-								fontSize="3"
-								fontFamily="ui-monospace, monospace"
-							>
-								{tick}
-							</text>
-						</g>
-					);
-				})}
-
-				{path && (
-					<path
-						d={path}
-						fill="none"
-						stroke="var(--primary)"
-						strokeWidth="1.5"
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-				)}
-
-				{points.map((p, i) => (
-					<g key={i}>
-						<circle
-							cx={p.x}
-							cy={p.y}
-							r={hovered === i ? 3 : 1.5}
-							fill={hovered === i ? "var(--primary)" : "var(--card)"}
-							stroke="var(--primary)"
-							strokeWidth="1.5"
-							style={{ transition: "r 0.15s ease" }}
-						/>
-						<rect
-							x={p.x - 6}
-							y={p.y - 6}
-							width={12}
-							height={12}
-							fill="transparent"
-							onMouseEnter={() => setHovered(i)}
-							onMouseLeave={() => setHovered(null)}
-							style={{ cursor: "pointer" }}
-						/>
-						{hovered === i && (
-							<g>
-								<rect
-									x={p.x - 10}
-									y={p.y - 14}
-									width={20}
-									height={8}
-									rx={2}
-									fill="var(--background)"
+			<CardContent>
+				<svg
+					viewBox={`0 0 ${xMax} 100`}
+					className="w-full h-[250px] overflow-visible"
+					preserveAspectRatio="xMidYMid meet"
+					role="img"
+					aria-label={title ? `${title} chart` : "Progress chart"}
+				>
+					{yTicks.map((tick) => {
+						const y = 10 + 80 * (1 - (tick - 0) / (100 - 0));
+						return (
+							<g key={tick}>
+								<line
+									x1={28}
+									y1={y}
+									x2={xMax - 10}
+									y2={y}
 									stroke="var(--border)"
 									strokeWidth="0.5"
 								/>
 								<text
-									x={p.x}
-									y={p.y - 9}
-									textAnchor="middle"
-									fill="var(--foreground)"
+									x={26}
+									y={y + 1}
+									textAnchor="end"
+									fill="var(--muted-foreground)"
 									fontSize="3"
-									fontWeight="600"
 									fontFamily="ui-monospace, monospace"
 								>
-									{p.accuracy}%
+									{tick}
 								</text>
 							</g>
-						)}
-					</g>
-				))}
+						);
+					})}
 
-				{points.map((p, i) => (
-					<text
-						key={`label-${i}`}
-						x={p.x}
-						y={96}
-						textAnchor="middle"
-						fill="var(--muted-foreground)"
-						fontSize="3"
-						fontFamily="inherit"
-					>
-						{p.date}
-					</text>
-				))}
-			</svg>
+					{path && (
+						<path
+							d={path}
+							fill="none"
+							stroke="var(--primary)"
+							strokeWidth="1.5"
+							strokeLinecap="round"
+							strokeLinejoin="round"
+						/>
+					)}
+
+					{points.map((p, i) => (
+						<g key={i}>
+							<circle
+								cx={p.x}
+								cy={p.y}
+								r={hovered === i ? 3 : 1.5}
+								fill={hovered === i ? "var(--primary)" : "var(--card)"}
+								stroke="var(--primary)"
+								strokeWidth="1.5"
+								style={{ transition: "r 0.15s ease" }}
+							/>
+							<rect
+								x={p.x - 6}
+								y={p.y - 6}
+								width={12}
+								height={12}
+								fill="transparent"
+								onMouseEnter={() => setHovered(i)}
+								onMouseLeave={() => setHovered(null)}
+								style={{ cursor: "pointer" }}
+							/>
+							{hovered === i && (
+								<g>
+									<rect
+										x={p.x - 10}
+										y={p.y - 14}
+										width={20}
+										height={8}
+										rx={2}
+										fill="var(--background)"
+										stroke="var(--border)"
+										strokeWidth="0.5"
+									/>
+									<text
+										x={p.x}
+										y={p.y - 9}
+										textAnchor="middle"
+										fill="var(--foreground)"
+										fontSize="3"
+										fontWeight="600"
+										fontFamily="ui-monospace, monospace"
+									>
+										{p.accuracy}%
+									</text>
+								</g>
+							)}
+						</g>
+					))}
+
+					{points.map((p, i) => (
+						<text
+							key={`label-${i}`}
+							x={p.x}
+							y={96}
+							textAnchor="middle"
+							fill="var(--muted-foreground)"
+							fontSize="3"
+							fontFamily="inherit"
+						>
+							{p.date}
+						</text>
+					))}
+				</svg>
+			</CardContent>
 		</Card>
 	);
 }

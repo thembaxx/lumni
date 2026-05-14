@@ -25,15 +25,14 @@
 	--system-fill: oklch(0% 0 0 / 0.06);
 	--system-fill-secondary: oklch(0% 0 0 / 0.03);
 	
-	/* Energetic Accents */
-	--system-accent: oklch(55% 0.18 264); /* Vibrant Purple */
-	--system-accent-secondary: oklch(75% 0.15 85); /* South African Gold/Yellow hint */
-	
+	/* Energetic Accent — single emerald green, saturation <80% */
+	--system-accent: oklch(52% 0.18 146); /* Emerald Green */
+
 	--system-text-primary: oklch(20% 0.02 264);
 	--system-text-secondary: oklch(20% 0.02 264 / 0.65);
 	--system-text-tertiary: oklch(20% 0.02 264 / 0.35);
 	--label-quaternary: oklch(20% 0.02 264 / 0.18);
-	
+
 	--system-destructive: oklch(55% 0.18 25);
 	--system-destructive-foreground: oklch(100% 0 0);
 	--system-success: oklch(65% 0.2 145);
@@ -160,20 +159,20 @@
 	--ring: var(--system-accent);
 	--radius: 12px;
 
-	/* Color Alpha Variations */
-	--system-accent-alpha-0: oklch(55% 0.18 264 / 0);
-	--system-accent-alpha-10: oklch(55% 0.18 264 / 0.1);
-	--system-accent-alpha-20: oklch(55% 0.18 264 / 0.2);
-	--system-accent-alpha-30: oklch(55% 0.18 264 / 0.3);
+	/* Dark mode accent override — emerald stays consistent */
+	--system-accent-alpha-0: oklch(52% 0.18 146 / 0);
+	--system-accent-alpha-10: oklch(52% 0.18 146 / 0.1);
+	--system-accent-alpha-20: oklch(52% 0.18 146 / 0.2);
+	--system-accent-alpha-30: oklch(52% 0.18 146 / 0.3);
 	
 	--system-success-alpha-20: oklch(65% 0.2 145 / 0.2);
 	--system-destructive-alpha-20: oklch(55% 0.18 25 / 0.2);
 
-	--chart-1: oklch(65% 0.2 145);
-	--chart-2: oklch(55% 0.18 264);
-	--chart-3: oklch(75% 0.15 85);
-	--chart-4: oklch(60% 0.15 240);
-	--chart-5: oklch(55% 0.18 25);
+	--chart-1: oklch(52% 0.18 146);   /* Emerald accent */
+	--chart-2: oklch(65% 0.2 145);    /* Success green */
+	--chart-3: oklch(75% 0.15 70);    /* Warm amber */
+	--chart-4: oklch(60% 0.15 240);   /* Cool blue */
+	--chart-5: oklch(55% 0.18 25);    /* Destructive red */
 
 	--sidebar: oklch(98.8% 0.003 60);
 	--sidebar-foreground: var(--system-text-primary);
@@ -223,7 +222,6 @@
 	--color-system-fill: var(--system-fill);
 	--color-system-fill-secondary: var(--system-fill-secondary);
 	--color-system-accent: var(--system-accent);
-	--color-system-accent-secondary: var(--system-accent-secondary);
 	--color-label-quaternary: var(--label-quaternary);
 
 	/* Materials (Liquid Glass) */
@@ -303,7 +301,7 @@
 	--system-fill: oklch(100% 0 0 / 0.08);
 	--system-fill-secondary: oklch(100% 0 0 / 0.04);
 	
-	--system-accent: oklch(65% 0.18 264);
+	--system-accent: oklch(65% 0.18 146);
 	--system-text-primary: oklch(98% 0.01 264);
 	--system-text-secondary: oklch(98% 0.01 264 / 0.65);
 	--system-text-tertiary: oklch(98% 0.01 264 / 0.35);
@@ -346,7 +344,6 @@
 	--ring: var(--system-accent);
 
 	/* Dark mode overrides for remaining tokens */
-	--system-accent-secondary: oklch(75% 0.15 85);
 
 	--success: oklch(65% 0.2 145);
 	--success-foreground: oklch(10% 0.01 264);
@@ -354,28 +351,28 @@
 	--warning-foreground: oklch(10% 0.01 264);
 	--info: oklch(65% 0.15 240);
 
-	--system-accent-alpha-0: oklch(65% 0.18 264 / 0);
-	--system-accent-alpha-10: oklch(65% 0.18 264 / 0.1);
-	--system-accent-alpha-20: oklch(65% 0.18 264 / 0.2);
-	--system-accent-alpha-30: oklch(65% 0.18 264 / 0.3);
+	--system-accent-alpha-0: oklch(65% 0.18 146 / 0);
+	--system-accent-alpha-10: oklch(65% 0.18 146 / 0.1);
+	--system-accent-alpha-20: oklch(65% 0.18 146 / 0.2);
+	--system-accent-alpha-30: oklch(65% 0.18 146 / 0.3);
 
 	--system-success-alpha-20: oklch(70% 0.2 145 / 0.2);
 	--system-destructive-alpha-20: oklch(60% 0.2 25 / 0.2);
 
 	--chart-1: oklch(70% 0.2 145);
-	--chart-2: oklch(65% 0.18 264);
-	--chart-3: oklch(80% 0.15 85);
+	--chart-2: oklch(65% 0.18 146);
+	--chart-3: oklch(80% 0.15 70);
 	--chart-4: oklch(65% 0.15 240);
 	--chart-5: oklch(60% 0.2 25);
 
 	--sidebar: oklch(20% 0.02 264);
 	--sidebar-foreground: oklch(98% 0.01 264);
-	--sidebar-primary: oklch(65% 0.18 264);
+	--sidebar-primary: oklch(52% 0.18 146);
 	--sidebar-primary-foreground: oklch(10% 0.01 264);
 	--sidebar-accent: oklch(20% 0.02 264);
-	--sidebar-accent-foreground: oklch(65% 0.18 264);
+	--sidebar-accent-foreground: oklch(65% 0.18 146);
 	--sidebar-border: oklch(100% 0 0 / 0.12);
-	--sidebar-ring: oklch(65% 0.18 264);
+	--sidebar-ring: oklch(52% 0.18 146);
 }
 
 /* ========================================
@@ -401,7 +398,7 @@
 		font-family: var(--font-sans);
 		line-height: 1.5;
 		letter-spacing: var(--tracking-body);
-		@apply min-h-screen flex flex-col;
+		@apply min-h-[100dvh] flex flex-col;
 	}
 
 	h1, h2, h3, h4, h5, h6 {
@@ -517,11 +514,13 @@
 
 @keyframes fadeOut { to { opacity: 0; } }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes floatSlow { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
 
 .animate-fade-in-up { animation: fadeInUp 400ms var(--ease-ios) forwards; }
 .animate-fade-in-scale { animation: fadeInScale 400ms var(--ease-ios) forwards; }
 .animate-icon-pop { animation: iconPop 200ms var(--ease-ios); }
 .animate-checkmark { animation: checkmark 400ms var(--ease-ios) forwards; }
+.animate-float-slow { animation: floatSlow 4s ease-in-out infinite; }
 
 .animate-shimmer {
 	background: linear-gradient(90deg, transparent, var(--system-surface-secondary), transparent);

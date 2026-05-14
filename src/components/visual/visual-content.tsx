@@ -19,9 +19,9 @@ export function VisualContent({ visual, isLoading }: VisualContentProps) {
 		return (
 			<div className="flex h-40 items-center justify-center rounded-lg border bg-muted/10">
 				{shouldReduceMotion ? (
-					<div className="h-6 w-6 animate-spin rounded-full border-2 border-muted-foreground/30 border-t-muted-foreground" />
+					<div className="size-6 animate-spin rounded-full border-2 border-muted-foreground/30 border-t-muted-foreground" />
 				) : (
-					<LottieWrapper animation="loading-lumni" className="w-16 h-16" loop />
+					<LottieWrapper animation="loading-lumni" className="size-16" loop />
 				)}
 			</div>
 		);
@@ -33,7 +33,7 @@ export function VisualContent({ visual, isLoading }: VisualContentProps) {
 		case "konva-diagram":
 			if (!visual.diagramType || !visual.diagramData) return null;
 			return (
-				<div className="space-y-1">
+				<div className="flex flex-col gap-1">
 					{visual.label && (
 						<p className="text-xs font-medium text-muted-foreground">
 							{visual.label}

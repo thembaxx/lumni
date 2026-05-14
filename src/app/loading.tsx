@@ -11,7 +11,7 @@ export default function Loading() {
 			initial={{ opacity: 0 }}
 			animate={{ opacity: 1 }}
 			transition={{ duration: 0.3, ease: iOSEase }}
-			className="min-h-screen flex flex-col items-center justify-center bg-background"
+			className="min-h-[100dvh] flex flex-col items-center justify-center bg-background"
 		>
 			<main className="flex flex-col items-center gap-8">
 				<motion.div

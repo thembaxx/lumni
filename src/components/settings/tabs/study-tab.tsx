@@ -16,7 +16,7 @@ interface StudyTabProps {
 
 export function StudyTab({ studyPrefs, onStudyPrefsChange }: StudyTabProps) {
 	return (
-		<div className="space-y-[--space-4]">
+		<div className="flex flex-col gap-[--space-4]">
 			<ListSection
 				header="Study Experience"
 				footer="Customize your learning session defaults"

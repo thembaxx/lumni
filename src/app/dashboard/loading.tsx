@@ -11,7 +11,7 @@ export default function Loading() {
 			initial={{ opacity: 0 }}
 			animate={{ opacity: 1 }}
 			transition={{ duration: 0.3, ease: iOSEase }}
-			className="min-h-screen flex flex-col bg-background"
+			className="min-h-[100dvh] flex flex-col bg-background"
 		>
 			<nav className="flex items-center justify-between px-4 py-3 w-full">
 				<Skeleton className="w-10 h-10 rounded-full" />

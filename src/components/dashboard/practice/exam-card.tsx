@@ -45,16 +45,17 @@ export function ExamCard({ exam }: ExamCardProps) {
 					<div className="flex items-center gap-1.5 mt-1">
 						<span className="text-xs text-muted-foreground">{exam.year}</span>
 						<span className="text-xs text-muted-foreground/50">·</span>
-						<span
+						<Badge
+							variant="outline"
 							className={cn(
-								"text-[10px] px-1.5 py-0.5 rounded font-medium",
+								"text-[10px] px-1.5 py-0.5",
 								exam.session === "november"
-									? "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400"
+									? "bg-success/15 text-success-foreground"
 									: "bg-[--system-accent]/10 text-muted-foreground",
 							)}
 						>
 							{exam.session === "november" ? "Nov" : "May"}
-						</span>
+						</Badge>
 						{exam.language && (
 							<>
 								<span className="text-xs text-muted-foreground/50">·</span>
@@ -74,37 +75,21 @@ export function ExamCard({ exam }: ExamCardProps) {
 					</div>
 				</div>
 
-				<div className="flex items-center gap-1.5 shrink-0">
-					<Button
-						variant="default"
-						size="sm"
-						className="h-8 text-xs"
-						onClick={handleViewPdf}
-					>
+				<div className="flex items-center gap-1.5 flex-wrap">
+					<Button variant="default" size="sm" onClick={handleViewPdf}>
 						View
 					</Button>
 					<Button
 						variant="outline"
 						size="sm"
-						className="h-8 text-xs"
 						onClick={() => setSmartViewOpen(true)}
 					>
 						Smart View
 					</Button>
-					<Button
-						variant="secondary"
-						size="sm"
-						className="h-8 text-xs"
-						onClick={handlePractice}
-					>
+					<Button variant="secondary" size="sm" onClick={handlePractice}>
 						Practice
 					</Button>
-					<Button
-						variant="default"
-						size="sm"
-						className="h-8 text-xs"
-						onClick={handleTakeExam}
-					>
+					<Button variant="default" size="sm" onClick={handleTakeExam}>
 						Take Exam
 					</Button>
 				</div>

@@ -1,7 +1,7 @@
 "use client";
 
+import { CloudArrowUp, Download, Spinner } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
-import { Download, Loader2, Upload } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface AdminActionButtonProps {
@@ -38,7 +38,7 @@ export function AdminActionButton({
 				animate={loading ? { opacity: 0.7 } : { opacity: 1 }}
 				className="flex items-center justify-center gap-2"
 			>
-				{loading && <Loader2 className="w-3 h-3 animate-spin" />}
+				{loading && <Spinner className="size-3 animate-spin" />}
 				{icon && icon}
 				{children}
 			</motion.span>
@@ -66,7 +66,7 @@ export function DownloadButton({
 			onClick={onClick}
 			loading={loading}
 			disabled={disabled}
-			icon={<Download className="w-4 h-4" />}
+			icon={<Download className="size-4" />}
 		>
 			Download {selectedCount} subject
 			{selectedCount !== 1 ? "s" : ""} ({examTypesCount} exam
@@ -85,7 +85,7 @@ export function UploadButton({ onClick, loading }: UploadButtonProps) {
 		<AdminActionButton
 			onClick={onClick}
 			loading={loading}
-			icon={<Upload className="w-4 h-4" />}
+			icon={<CloudArrowUp className="size-4" />}
 		>
 			Upload Local Exam Papers
 		</AdminActionButton>

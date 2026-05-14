@@ -3,7 +3,6 @@
 import { useCallback, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
 	Select,
@@ -27,7 +26,7 @@ const ALL_SUBJECTS = [
 	"history",
 	"english-home-language",
 	"life-orientation",
-	"music",
+	"MusicNote",
 ].sort();
 
 export default function DevVisualPage() {
@@ -89,11 +88,11 @@ export default function DevVisualPage() {
 	const isSTEM = STEM_SUBJECTS.has(subject);
 
 	return (
-		<div className="min-h-screen bg-background p-4 max-w-4xl mx-auto space-y-4 pb-20">
+		<div className="min-h-[100dvh] bg-background p-4 max-w-4xl mx-auto space-y-4 pb-20">
 			<h1 className="text-xl font-bold">Visual Engine Test</h1>
 
-			<Card>
-				<CardContent className="p-4 space-y-3">
+			<div className="rounded-[2.5rem] bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] overflow-hidden">
+				<div className="p-4 space-y-3">
 					<div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
 						<Select value={subject} onValueChange={(v) => v && setSubject(v)}>
 							<SelectTrigger>
@@ -120,56 +119,39 @@ export default function DevVisualPage() {
 							{isLoading ? "Resolving..." : "Resolve Visual"}
 						</Button>
 					</div>
-					<Textarea
-						value={questionText}
-						onChange={(e) => setQuestionText(e.target.value)}
-						placeholder="Enter question text..."
-						rows={3}
-					/>
-					<Badge variant="outline" className="text-xs">
-						{isSTEM ? "STEM → AI Diagram" : "Non-STEM → Image Search"}
-					</Badge>
-					<Button
-						onClick={handleRunTests}
-						variant="outline"
-						size="sm"
-						disabled={isLoading}
-					>
-						Run All Tests
-					</Button>
-				</CardContent>
-			</Card>
+				</div>
+			</div>
 
 			{error && (
-				<Card className="border-destructive">
-					<CardContent className="p-4 text-destructive text-sm">
+				<div className="rounded-[2.5rem] border border-destructive bg-destructive/5 overflow-hidden">
+					<div className="p-4 text-destructive text-sm">
 						{error}
-					</CardContent>
-				</Card>
+					</div>
+				</div>
 			)}
 
 			{testResult && (
-				<Card>
-					<CardHeader className="p-4 pb-2">
-						<CardTitle className="text-sm">Test Results</CardTitle>
-					</CardHeader>
-					<CardContent className="p-4 pt-0">
+				<div className="rounded-[2.5rem] bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] overflow-hidden">
+					<div className="p-4 pb-2">
+						<h3 className="text-sm font-bold tracking-tight">Test Results</h3>
+					</div>
+					<div className="p-4 pt-0">
 						<Textarea
 							value={testResult}
 							readOnly
 							className="min-h-[200px] font-mono text-xs"
 						/>
-					</CardContent>
-				</Card>
+					</div>
+				</div>
 			)}
 
 			{isLoading && !testResult && <Skeleton className="h-48 w-full" />}
 
 			{visual && (
 				<>
-					<Card>
-						<CardHeader className="p-4 pb-2">
-							<CardTitle className="text-sm flex items-center gap-2">
+					<div className="rounded-[2.5rem] bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] overflow-hidden">
+						<div className="p-4 pb-2">
+							<h3 className="text-sm font-bold tracking-tight flex items-center gap-2">
 								Rendered Visual
 								<Badge variant="secondary" className="text-xs">
 									{visual.type}
@@ -179,35 +161,35 @@ export default function DevVisualPage() {
 										{visual.diagramType}
 									</Badge>
 								)}
-							</CardTitle>
-						</CardHeader>
-						<CardContent className="p-4 pt-0">
+							</h3>
+						</div>
+						<div className="p-4 pt-0">
 							<VisualContent visual={visual} />
-						</CardContent>
-					</Card>
+						</div>
+					</div>
 
-					<Card>
-						<CardHeader className="p-4 pb-2">
-							<CardTitle className="text-sm">Raw Response</CardTitle>
-						</CardHeader>
-						<CardContent className="p-4 pt-0">
+					<div className="rounded-[2.5rem] bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] overflow-hidden">
+						<div className="p-4 pb-2">
+							<h3 className="text-sm font-bold tracking-tight">Raw Response</h3>
+						</div>
+						<div className="p-4 pt-0">
 							<Textarea
 								value={rawJson}
 								readOnly
 								className="min-h-[150px] font-mono text-xs"
 							/>
-						</CardContent>
-					</Card>
+						</div>
+					</div>
 				</>
 			)}
 
 			{!visual && !isLoading && !error && !testResult && (
-				<Card>
-					<CardContent className="p-8 text-center text-sm text-muted-foreground">
+				<div className="rounded-[2.5rem] bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] overflow-hidden">
+					<div className="p-8 text-center text-sm text-muted-foreground">
 						Enter a question above and click "Resolve Visual" to see the result.
 						Use "Run All Tests" to test all subjects at once.
-					</CardContent>
-				</Card>
+					</div>
+				</div>
 			)}
 		</div>
 	);

@@ -57,14 +57,14 @@ export function MermaidDiagram({ code, label }: MermaidDiagramProps) {
 	}
 
 	return (
-		<div className="space-y-1">
+		<div className="flex flex-col gap-1">
 			{label && (
 				<p className="text-xs font-medium text-muted-foreground">{label}</p>
 			)}
 			<div className="overflow-auto rounded-lg border bg-background/20 p-4">
 				{loading && (
 					<div className="flex h-32 items-center justify-center">
-						<div className="h-6 w-6 animate-spin rounded-full border-2 border-muted-foreground/30 border-t-muted-foreground" />
+						<div className="size-6 animate-spin rounded-full border-2 border-muted-foreground/30 border-t-muted-foreground" />
 					</div>
 				)}
 				<div

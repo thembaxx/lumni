@@ -17,7 +17,7 @@ interface ProgressDotsProps {
 const variantStyles = {
 	quiz: {
 		current: "bg-[--system-accent]",
-		completed: "bg-green-500 dark:bg-green-700",
+		completed: "bg-success",
 		pending: "bg-muted",
 	},
 	engine: {
@@ -26,8 +26,8 @@ const variantStyles = {
 		pending: "bg-muted",
 	},
 	results: {
-		current: "bg-green-500 dark:bg-green-700",
-		completed: "bg-green-500 dark:bg-green-700",
+		current: "bg-success",
+		completed: "bg-success",
 		pending: "bg-muted",
 	},
 };
@@ -69,7 +69,7 @@ export function ProgressDots({
 						variant="ghost"
 						onClick={() => onDotClick?.(idx)}
 						className={cn(
-							"h-1.5 w-1.5 rounded-full p-0 min-h-0",
+							"size-1.5 rounded-full p-0 min-h-0",
 							dotClass,
 							onDotClick && "hover:scale-125",
 						)}

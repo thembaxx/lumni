@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useAppwriteSession } from "@/hooks/use-appwrite-session";
 import { cn } from "@/lib/utils";
 import { iOSEase } from "@/lib/utils/animation";
@@ -264,7 +265,7 @@ export function CountdownHeader() {
 				animate="visible"
 				className="w-full"
 			>
-				<div className="relative overflow-hidden rounded-lg bg-secondary/60 dark:bg-secondary/20 px-5 py-5 sm:px-6 sm:py-6">
+				<div className="relative overflow-hidden rounded-lg bg-secondary/60 px-5 py-5 sm:px-6 sm:py-6">
 					{milestone && (
 						<motion.div
 							initial={{ opacity: 0, y: -8, scale: 0.9 }}
@@ -275,7 +276,7 @@ export function CountdownHeader() {
 							}}
 							className="absolute -top-px left-4 right-4 flex items-center justify-center"
 						>
-							<div className="inline-flex items-center gap-1.5 rounded-b-xl bg-warning/20 dark:bg-warning/10 border border-warning/30 dark:border-warning/20 px-3 py-1">
+							<div className="inline-flex items-center gap-1.5 rounded-b-xl bg-warning/20 border border-warning/30 px-3 py-1">
 								<motion.span
 									animate={
 										shouldReduceMotion
@@ -308,14 +309,14 @@ export function CountdownHeader() {
 
 						<div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1">
 							{isLoading || !mounted ? (
-								<div className="h-8 w-24 animate-pulse rounded-md bg-muted/40" />
+								<Skeleton className="h-8 w-24 rounded-md" />
 							) : (
 								<motion.span
 									variants={numberVariants}
 									initial="hidden"
 									animate="visible"
 									className={cn(
-										"inline-block text-5xl sm:text-4xl font-bold tracking-tighter tabular-nums font-mono text-system-accent",
+										"inline-block text-4xl md:text-5xl font-bold tracking-tighter tabular-nums font-mono text-system-accent",
 									)}
 									aria-live="polite"
 								>
@@ -377,14 +378,14 @@ export function CountdownHeader() {
 							delay: shouldReduceMotion ? 0 : 0.2,
 						}}
 						className={cn(
-							"pointer-events-none absolute -right-6 -top-6 h-32 w-32 rounded-full blur-2xl",
+							"pointer-events-none absolute -right-6 -top-6 size-32 rounded-full blur-2xl",
 							cfg.glowClass,
 						)}
 						aria-hidden="true"
 					/>
 					<div
 						className={cn(
-							"pointer-events-none absolute -bottom-4 -right-4 h-20 w-20 rounded-full blur-xl",
+							"pointer-events-none absolute -bottom-4 -right-4 size-20 rounded-full blur-xl",
 							cfg.glow2Class,
 						)}
 						aria-hidden="true"

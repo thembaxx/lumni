@@ -1,6 +1,12 @@
 "use client";
 
-import { Minus, Play, Plus, RotateCcw, Square } from "lucide-react";
+import {
+	ArrowCounterClockwise,
+	Minus,
+	Play,
+	Plus,
+	Square,
+} from "@phosphor-icons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -94,7 +100,7 @@ export function FocusTab({ className }: FocusTabProps) {
 	return (
 		<div className={cn("flex flex-col items-center gap-6", className)}>
 			<div className="relative">
-				<ChartContainer config={chartConfig} className="size-48">
+				<ChartContainer config={chartConfig} className="size-40 sm:size-48">
 					<div className="absolute inset-0 flex items-center justify-center">
 						<span className="text-4xl font-bold tabular-nums tracking-tight">
 							{formatTime(timeLeft)}
@@ -136,25 +142,16 @@ export function FocusTab({ className }: FocusTabProps) {
 					size="icon"
 					onClick={handleMinusFive}
 					disabled={isRunning || timeLeft <= 60}
-					className="size-12"
 				>
 					<Minus className="size-5" />
 				</Button>
 
 				{isRunning ? (
-					<Button
-						size="icon"
-						onClick={handleStop}
-						className="size-16 rounded-full"
-					>
+					<Button size="icon" onClick={handleStop} className="rounded-full">
 						<Square className="size-6 fill-current" />
 					</Button>
 				) : (
-					<Button
-						size="icon"
-						onClick={handleStart}
-						className="size-16 rounded-full"
-					>
+					<Button size="icon" onClick={handleStart} className="rounded-full">
 						<Play className="size-6 ml-1" />
 					</Button>
 				)}
@@ -164,7 +161,6 @@ export function FocusTab({ className }: FocusTabProps) {
 					size="icon"
 					onClick={handleAddFive}
 					disabled={isRunning || timeLeft >= MAX_TIME}
-					className="size-12"
 				>
 					<Plus className="size-5" />
 				</Button>
@@ -176,7 +172,7 @@ export function FocusTab({ className }: FocusTabProps) {
 				onClick={handleReset}
 				className="text-muted-foreground hover:text-foreground"
 			>
-				<RotateCcw className="size-4 mr-2" />
+				<ArrowCounterClockwise className="size-4 mr-2" />
 				Reset Timer
 			</Button>
 		</div>

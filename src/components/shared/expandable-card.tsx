@@ -9,7 +9,7 @@ import { DifficultyBadge } from "@/components/shared/difficulty-badge";
 import { PracticeButton } from "@/components/study/practice-button";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { Difficulty } from "@/lib/utils/colors";
 
@@ -109,8 +109,8 @@ function ExpandedContent({
 			layoutId={`card-${data.id}`}
 			className="fixed left-1/2 top-1/2 z-50 w-[calc(100%-2rem)] max-w-sm -translate-x-1/2 -translate-y-1/2"
 		>
-			<Card className="p-4 rounded-2xl bg-card text-card-foreground shadow-2xl shadow-black/20 max-h-[80dvh] overflow-y-auto">
-				<div className="space-y-3">
+			<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors p-4 rounded-2xl bg-card text-card-foreground shadow-2xl shadow-black/20 max-h-[80dvh] overflow-y-auto">
+				<div className="flex flex-col gap-3">
 					<div className="flex justify-between items-start">
 						<Badge
 							variant="outline"
@@ -121,7 +121,7 @@ function ExpandedContent({
 						<DifficultyBadge difficulty={data.difficulty} />
 					</div>
 
-					<div className="space-y-1">
+					<div className="flex flex-col gap-1">
 						<h3 className="text-xl font-semibold leading-tight text-foreground text-wrap balance">
 							{data.title}
 						</h3>
@@ -129,13 +129,21 @@ function ExpandedContent({
 					</div>
 
 					<div className="flex gap-2 items-center pt-2">
-						<div className={isPlaying ? "animate-pulse" : ""}>
+						{isPlaying ? (
+							<Skeleton className="rounded-full inline-flex">
+								<ListenToLesson
+									text={data.summary}
+									onPlayingChange={onPlayingChange}
+									onWordIndexChange={onWordIndexChange}
+								/>
+							</Skeleton>
+						) : (
 							<ListenToLesson
 								text={data.summary}
 								onPlayingChange={onPlayingChange}
 								onWordIndexChange={onWordIndexChange}
 							/>
-						</div>
+						)}
 						<PracticeButton
 							onClick={() =>
 								router.push(
@@ -150,7 +158,7 @@ function ExpandedContent({
 						Close
 					</Button>
 				</div>
-			</Card>
+			</div>
 		</m.div>
 	);
 }
@@ -177,7 +185,7 @@ function CollapsedContent({
 			<div className="p-5 rounded-2xl border bg-card text-card-foreground shadow-sm w-full text-left">
 				<div
 					onClick={onOpen}
-					className="space-y-3 cursor-pointer hover:border-[--system-accent]/20 transition-[scale,colors] duration-200 active:scale-[0.98]"
+					className="flex flex-col gap-3 cursor-pointer hover:border-[--system-accent]/20 transition-[scale,colors] duration-200 active:scale-[0.98]"
 					role="button"
 					tabIndex={0}
 					onKeyDown={(e) => {
@@ -198,7 +206,7 @@ function CollapsedContent({
 						<DifficultyBadge difficulty={data.difficulty} />
 					</div>
 
-					<div className="space-y-1">
+					<div className="flex flex-col gap-1">
 						<h3 className="text-md font-semibold leading-tight text-foreground text-wrap balance">
 							{data.title}
 						</h3>
@@ -210,13 +218,21 @@ function CollapsedContent({
 				</div>
 
 				<div className="flex gap-2 items-center mt-3">
-					<div className={isPlaying ? "animate-pulse" : ""}>
+					{isPlaying ? (
+						<Skeleton className="rounded-full inline-flex">
+							<ListenToLesson
+								text={data.summary}
+								onPlayingChange={onPlayingChange}
+								onWordIndexChange={onWordIndexChange}
+							/>
+						</Skeleton>
+					) : (
 						<ListenToLesson
 							text={data.summary}
 							onPlayingChange={onPlayingChange}
 							onWordIndexChange={onWordIndexChange}
 						/>
-					</div>
+					)}
 					<PracticeButton
 						onClick={() =>
 							router.push(

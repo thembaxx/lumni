@@ -1,7 +1,7 @@
 "use client";
 
+import { CloudArrowUp } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
-import { Upload } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -43,24 +43,22 @@ export function SubjectForm({
 }: SubjectFormProps) {
 	return (
 		<Card>
-			<CardHeader className="pb-3">
+			<CardHeader>
 				<div className="flex items-center justify-between">
-					<CardTitle className="text-base text-foreground">
-						{editSubject ? "Edit" : "Add Subject"}
-					</CardTitle>
+					<CardTitle>{editSubject ? "Edit" : "Add Subject"}</CardTitle>
 					<AdminActionButton
 						onClick={onPreload}
 						loading={isPreloading}
 						variant="outline"
-						icon={<Upload className="w-3 h-3" />}
+						icon={<CloudArrowUp className="size-3" />}
 					>
 						Preload
 					</AdminActionButton>
 				</div>
 			</CardHeader>
-			<CardContent className="space-y-4">
+			<CardContent className="flex flex-col gap-4">
 				<div className="grid grid-cols-2 gap-4">
-					<div className="space-y-2">
+					<div className="flex flex-col gap-2">
 						<Label className="text-sm font-medium text-foreground">Name</Label>
 						<motion.div
 							whileFocus={{ scale: 1.01 }}
@@ -76,7 +74,7 @@ export function SubjectForm({
 							/>
 						</motion.div>
 					</div>
-					<div className="space-y-2">
+					<div className="flex flex-col gap-2">
 						<Label className="text-sm font-medium text-foreground">Code</Label>
 						<motion.div
 							whileFocus={{ scale: 1.01 }}
@@ -93,7 +91,7 @@ export function SubjectForm({
 						</motion.div>
 					</div>
 				</div>
-				<div className="space-y-2">
+				<div className="flex flex-col gap-2">
 					<Label className="text-sm font-medium text-foreground">
 						Description
 					</Label>

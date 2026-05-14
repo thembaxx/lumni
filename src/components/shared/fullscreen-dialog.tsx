@@ -1,6 +1,6 @@
 "use client";
 
-import { X } from "lucide-react";
+import { X } from "@phosphor-icons/react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
@@ -58,11 +58,11 @@ export function FullscreenDialog({
 						<Button
 							variant="ghost"
 							size="icon"
-							className="h-8 w-8 shrink-0"
+							className="size-8 shrink-0"
 							onClick={handleClose}
 							aria-label="Close"
 						>
-							<X className="w-4 h-4" />
+							<X className="size-4" />
 						</Button>
 					</div>
 					{children}

@@ -20,7 +20,7 @@ export function StudyPlanSheet() {
 			<SheetTrigger className="h-11 px-5 rounded-lg border border-border/80 bg-secondary/60 gap-2.5 inline-flex items-center justify-center text-foreground hover:bg-accent hover:border-accent transition-colors">
 				<span className="text-[--system-accent]">
 					<svg
-						className="w-4 h-4"
+						className="size-4"
 						viewBox="0 0 24 24"
 						fill="none"
 						stroke="currentColor"

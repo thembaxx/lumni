@@ -49,7 +49,7 @@ export function StreakCelebration({
 			distance={10}
 			className={`relative overflow-hidden rounded-2xl p-4 transition-colors transition-background ${
 				isMilestone
-					? "bg-orange-500/20 border border-orange-500/30"
+					? "bg-warning/20 border border-warning/30"
 					: "bg-card border border-border/50"
 			}`}
 		>
@@ -60,13 +60,13 @@ export function StreakCelebration({
 					animate={{ opacity: [0, 0.3, 0] }}
 					transition={{ duration: 2, repeat: Infinity }}
 				>
-					<div className="absolute inset-0 bg-orange-500/20" />
+					<div className="absolute inset-0 bg-warning/20" />
 				</motion.div>
 			)}
 
 			<div className="flex items-center gap-4">
 				<motion.div
-					className="relative flex h-12 w-12 items-center justify-center rounded-xl bg-orange-500 shadow-lg"
+					className="relative flex size-12 items-center justify-center rounded-xl bg-warning shadow-lg"
 					animate={currentStreak >= 3 ? { scale: [1, 1.05, 1] } : {}}
 					transition={{ duration: 1.5, repeat: Infinity }}
 				>
@@ -89,9 +89,7 @@ export function StreakCelebration({
 						</span>
 						<span
 							className={`text-xs font-medium ${
-								isMilestone
-									? "text-orange-600 dark:text-orange-400"
-									: "text-muted-foreground"
+								isMilestone ? "text-warning" : "text-muted-foreground"
 							}`}
 						>
 							{getStreakMessage(currentStreak)}
@@ -117,7 +115,7 @@ export function StreakCelebration({
 						<motion.p
 							initial={{ opacity: 0, y: 5 }}
 							animate={{ opacity: 1, y: 0 }}
-							className="text-xs text-green-600 dark:text-green-400 mt-1"
+							className="text-xs text-success-foreground mt-1"
 						>
 							Milestone reached!
 						</motion.p>

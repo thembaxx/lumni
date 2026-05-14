@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
 	clearAnalytics,
@@ -43,7 +42,7 @@ export default function AdminQualityPage() {
 	}, [refresh]);
 
 	return (
-		<div className="min-h-screen bg-background p-6 max-w-5xl mx-auto space-y-6">
+		<div className="min-h-[100dvh] bg-background p-6 max-w-5xl mx-auto space-y-6">
 			<div className="flex items-center justify-between">
 				<h1 className="text-2xl font-bold">Engine Quality & Analytics</h1>
 				<Button variant="outline" size="sm" onClick={handleClear}>
@@ -52,66 +51,66 @@ export default function AdminQualityPage() {
 			</div>
 
 			<div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-				<Card>
-					<CardHeader className="p-4 pb-2">
-						<CardTitle className="text-sm text-muted-foreground">
+				<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+					<header className="rounded-t-[2.5rem] border-t border-border/80 p-4 pb-2">
+						<h2 className="font-heading text-sm font-medium text-sm text-muted-foreground">
 							Total Requests
-						</CardTitle>
-					</CardHeader>
-					<CardContent className="p-4 pt-0">
+						</h2>
+					</header>
+					<div className="px-4 group-data-[size=sm]/card:px-3 p-4 pt-0">
 						<p className="text-3xl font-bold">{analytics.totalRequests}</p>
-					</CardContent>
-				</Card>
-				<Card>
-					<CardHeader className="p-4 pb-2">
-						<CardTitle className="text-sm text-muted-foreground">
+					</div>
+				</div>
+				<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+					<header className="rounded-t-[2.5rem] border-t border-border/80 p-4 pb-2">
+						<h2 className="font-heading text-sm font-medium text-sm text-muted-foreground">
 							Success Rate
-						</CardTitle>
-					</CardHeader>
-					<CardContent className="p-4 pt-0">
+						</h2>
+					</header>
+					<div className="px-4 group-data-[size=sm]/card:px-3 p-4 pt-0">
 						<p
 							className={`text-3xl font-bold ${analytics.successRate >= 80 ? "text-success" : analytics.successRate >= 50 ? "text-warning" : "text-destructive"}`}
 						>
 							{analytics.successRate}%
 						</p>
-					</CardContent>
-				</Card>
-				<Card>
-					<CardHeader className="p-4 pb-2">
-						<CardTitle className="text-sm text-muted-foreground">
+					</div>
+				</div>
+				<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+					<header className="rounded-t-[2.5rem] border-t border-border/80 p-4 pb-2">
+						<h2 className="font-heading text-sm font-medium text-sm text-muted-foreground">
 							Avg Validation Score
-						</CardTitle>
-					</CardHeader>
-					<CardContent className="p-4 pt-0">
+						</h2>
+					</header>
+					<div className="px-4 group-data-[size=sm]/card:px-3 p-4 pt-0">
 						<p
 							className={`text-3xl font-bold ${quality.avgScore >= 80 ? "text-success" : quality.avgScore >= 50 ? "text-warning" : "text-destructive"}`}
 						>
 							{quality.avgScore}
 						</p>
-					</CardContent>
-				</Card>
-				<Card>
-					<CardHeader className="p-4 pb-2">
-						<CardTitle className="text-sm text-muted-foreground">
+					</div>
+				</div>
+				<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+					<header className="rounded-t-[2.5rem] border-t border-border/80 p-4 pb-2">
+						<h2 className="font-heading text-sm font-medium text-sm text-muted-foreground">
 							Question Pass Rate
-						</CardTitle>
-					</CardHeader>
-					<CardContent className="p-4 pt-0">
+						</h2>
+					</header>
+					<div className="px-4 group-data-[size=sm]/card:px-3 p-4 pt-0">
 						<p
 							className={`text-3xl font-bold ${quality.passRate >= 80 ? "text-success" : quality.passRate >= 50 ? "text-warning" : "text-destructive"}`}
 						>
 							{quality.passRate}%
 						</p>
-					</CardContent>
-				</Card>
+					</div>
+				</div>
 			</div>
 
 			<div className="grid grid-cols-2 gap-6">
-				<Card>
-					<CardHeader>
-						<CardTitle className="text-lg">Requests Breakdown</CardTitle>
-					</CardHeader>
-					<CardContent className="space-y-3">
+				<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+					<header>
+						<h2 className="font-heading text-sm font-medium text-lg">Requests Breakdown</h2>
+					</header>
+					<div className="px-4 group-data-[size=sm]/card:px-3 space-y-3">
 						<div className="flex justify-between text-sm">
 							<span>Generate</span>
 							<span className="font-mono">{analytics.generateCount}</span>
@@ -124,14 +123,14 @@ export default function AdminQualityPage() {
 							<span>Hint</span>
 							<span className="font-mono">{analytics.hintCount}</span>
 						</div>
-					</CardContent>
-				</Card>
+					</div>
+				</div>
 
-				<Card>
-					<CardHeader>
-						<CardTitle className="text-lg">Quality by Type</CardTitle>
-					</CardHeader>
-					<CardContent className="space-y-2">
+				<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+					<header>
+						<h2 className="font-heading text-sm font-medium text-lg">Quality by Type</h2>
+					</header>
+					<div className="px-4 group-data-[size=sm]/card:px-3 space-y-2">
 						{Object.entries(quality.byType).length === 0 && (
 							<p className="text-sm text-muted-foreground">
 								No quality data yet
@@ -160,15 +159,15 @@ export default function AdminQualityPage() {
 								</div>
 							</div>
 						))}
-					</CardContent>
-				</Card>
+					</div>
+				</div>
 			</div>
 
-			<Card>
-				<CardHeader>
-					<CardTitle className="text-lg">Recent Events</CardTitle>
-				</CardHeader>
-				<CardContent>
+			<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+				<header>
+					<h2 className="font-heading text-sm font-medium text-lg">Recent Events</h2>
+				</header>
+				<div className="px-4 group-data-[size=sm]/card:px-3">
 					{events.length === 0 ? (
 						<p className="text-sm text-muted-foreground">
 							No events recorded yet
@@ -199,14 +198,14 @@ export default function AdminQualityPage() {
 							))}
 						</div>
 					)}
-				</CardContent>
-			</Card>
+				</div>
+			</div>
 
-			<Card>
-				<CardHeader>
-					<CardTitle className="text-lg">Recent Quality Records</CardTitle>
-				</CardHeader>
-				<CardContent>
+			<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+				<header>
+					<h2 className="font-heading text-sm font-medium text-lg">Recent Quality Records</h2>
+				</header>
+				<div className="px-4 group-data-[size=sm]/card:px-3">
 					{recentQuality.length === 0 ? (
 						<p className="text-sm text-muted-foreground">No quality data yet</p>
 					) : (
@@ -233,8 +232,8 @@ export default function AdminQualityPage() {
 							))}
 						</div>
 					)}
-				</CardContent>
-			</Card>
+				</div>
+			</div>
 		</div>
 	);
 }

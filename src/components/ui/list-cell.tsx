@@ -138,4 +138,4 @@ function ChevronRight({ className }: { className?: string }) {
 	);
 }
 
-export { ChevronRight, ListCell, ListGroup, ListSection };
+export { ListCell, ListGroup, ListSection };

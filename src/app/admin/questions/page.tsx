@@ -4,7 +4,6 @@ import { useCallback, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { Question } from "@/types/questions";
@@ -84,12 +83,12 @@ export default function AdminQuestionsPage() {
 	];
 
 	return (
-		<div className="min-h-screen bg-background p-6 max-w-4xl mx-auto space-y-6">
-			<Card>
-				<CardHeader>
-					<CardTitle>Question Engine Admin</CardTitle>
-				</CardHeader>
-				<CardContent className="space-y-4">
+		<div className="min-h-[100dvh] bg-background p-6 max-w-4xl mx-auto space-y-6">
+			<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+				<header>
+					<h2 className="font-heading text-sm font-medium">Question Engine Admin</h2>
+				</header>
+				<div className="px-4 group-data-[size=sm]/card:px-3 space-y-4">
 					<div className="flex gap-2">
 						<Input
 							value={subject}
@@ -114,25 +113,25 @@ export default function AdminQuestionsPage() {
 							</Button>
 						))}
 					</div>
-				</CardContent>
-			</Card>
+				</div>
+			</div>
 
 			{isLoading && (
-				<Card>
-					<CardContent className="p-6 space-y-4">
+				<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+					<div className="px-4 group-data-[size=sm]/card:px-3 p-6 space-y-4">
 						<Skeleton className="h-6 w-3/4" />
 						<Skeleton className="h-4 w-1/2" />
 						<Skeleton className="h-24 w-full" />
-					</CardContent>
-				</Card>
+					</div>
+				</div>
 			)}
 
 			{questions.map((item, i) => {
 				const q = item.question;
 				const isExpanded = expandedId === `${i}`;
-				return (
-					<Card key={i}>
-						<CardContent className="p-4">
+return (
+				<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+					<div className="px-4 group-data-[size=sm]/card:px-3 p-4">
 							<div
 								className="flex items-center gap-3 cursor-pointer"
 								onClick={() => setExpandedId(isExpanded ? null : `${i}`)}
@@ -197,8 +196,8 @@ export default function AdminQuestionsPage() {
 									)}
 								</div>
 							)}
-						</CardContent>
-					</Card>
+						</div>
+					</div>
 				);
 			})}
 		</div>

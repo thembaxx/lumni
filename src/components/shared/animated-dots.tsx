@@ -22,7 +22,7 @@ export function AnimatedDots({
 				<span
 					key={i}
 					className={cn(
-						"h-1.5 w-1.5 rounded-full bg-muted-foreground/40",
+						"size-1.5 rounded-full bg-muted-foreground/40",
 						dotClassName,
 					)}
 					style={{
@@ -47,7 +47,7 @@ export function AnimatedDotsMotion({
 				<m.span
 					key={i}
 					className={cn(
-						"h-1.5 w-1.5 rounded-full bg-muted-foreground/40",
+						"size-1.5 rounded-full bg-muted-foreground/40",
 						dotClassName,
 					)}
 					animate={{

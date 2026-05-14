@@ -8,9 +8,9 @@ interface LoadingSpinnerProps {
 }
 
 const spinnerSizes = {
-	sm: "w-4 h-4 border-2",
-	md: "w-5 h-5 border-2",
-	lg: "w-6 h-6 border-[2.5px]",
+	sm: "size-4 border-2",
+	md: "size-5 border-2",
+	lg: "size-6 border-[2.5px]",
 };
 
 export function LoadingSpinner({

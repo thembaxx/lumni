@@ -1,7 +1,6 @@
 "use client";
 
-import { Settings01Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { Gear } from "@phosphor-icons/react";
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -35,7 +34,7 @@ export function DashboardHeader({
 							className="shrink-0"
 							aria-label="Settings"
 						>
-							<HugeiconsIcon icon={Settings01Icon} className="size-5" />
+							<Gear className="size-5" />
 						</Button>
 					</Link>
 					<PracticeSheet open={practiceOpen} onOpenChange={setPracticeOpen} />

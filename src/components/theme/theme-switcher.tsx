@@ -1,11 +1,6 @@
 "use client";
 
-import {
-	ComputerIcon,
-	Moon02Icon,
-	Sun01Icon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { Monitor, Moon, Sun } from "@phosphor-icons/react";
 import { AnimatePresence, m } from "framer-motion";
 import { useTheme } from "@/components/theme";
 import { Button } from "@/components/ui/button";
@@ -16,9 +11,9 @@ type Theme = "system" | "dark" | "light";
 const themes: Theme[] = ["system", "light", "dark"];
 
 const iconMap = {
-	system: ComputerIcon,
-	light: Sun01Icon,
-	dark: Moon02Icon,
+	system: Monitor,
+	light: Sun,
+	dark: Moon,
 } as const;
 
 const labels = {
@@ -59,10 +54,7 @@ export function ThemeSwitcher() {
 								ease: iOSEase,
 							}}
 						>
-							<HugeiconsIcon
-								icon={CurrentIcon}
-								className="size-4 text-foreground"
-							/>
+							<CurrentIcon className="size-4 text-foreground" />
 						</m.div>
 					</AnimatePresence>
 				</div>

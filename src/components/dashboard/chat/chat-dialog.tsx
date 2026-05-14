@@ -1,14 +1,16 @@
 "use client";
 
 import {
-	Camera01Icon,
-	MessageIcon,
-	Mic02Icon,
-	SentIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, motion } from "framer-motion";
-import { Camera, Play, RefreshCw, Square, Upload, X } from "lucide-react";
+	ArrowsClockwise,
+	ChatCenteredText,
+	CloudArrowUp,
+	Microphone,
+	PaperPlane,
+	Play,
+	Square,
+	X,
+} from "@phosphor-icons/react";
+import { AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { ChatInput } from "@/components/chat/ChatInput";
 import { ImageProcessingIndicator } from "@/components/chat/ImageProcessingIndicator";
@@ -27,10 +29,10 @@ import {
 	DialogPortal,
 } from "@/components/ui/dialog";
 import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuTrigger,
+	DropdownList,
+	DropdownListContent,
+	DropdownListItem,
+	DropdownListTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
@@ -73,15 +75,12 @@ export function ChatDialog({ open, onOpenChange }: ChatDialogProps) {
 		>
 			<DialogContent
 				showCloseButton={false}
-				className="flex flex-col translate-x-0 translate-y-0 w-full h-full max-w-none rounded-none p-0 m-0 top-0 left-0 bg-background/95 backdrop-blur-xl border-0 gap-0"
+				className="flex flex-col translate-x-0 translate-y-0 size-full max-w-none rounded-none p-0 m-0 top-0 left-0 bg-background/95 backdrop-blur-xl border-0 gap-0"
 			>
 				<div className="pl-4 pr-5 py-4 border-b border-border/30 flex flex-row items-center justify-between shrink-0">
 					<div className="flex items-center gap-1">
 						<div className="size-9 rounded-full bg-system-accent/10 flex items-center grow justify-center">
-							<HugeiconsIcon
-								icon={MessageIcon}
-								className="size-6 text-system-accent"
-							/>
+							<ChatCenteredText className="size-6 text-system-accent" />
 						</div>
 						<span className="text-base font-bold leading-1 text-left tracking-tight">
 							Study Assistant
@@ -101,7 +100,7 @@ export function ChatDialog({ open, onOpenChange }: ChatDialogProps) {
 					{chat.messages.length === 0 ? (
 						<WelcomeState />
 					) : (
-						<div className="flex-1 overflow-y-auto p-4 space-y-4">
+						<div className="flex-1 overflow-y-auto p-4 flex flex-col gap-4">
 							<AnimatePresence mode="popLayout" initial={false}>
 								{chat.messages.map((message) => (
 									<MessageBubble
@@ -118,9 +117,9 @@ export function ChatDialog({ open, onOpenChange }: ChatDialogProps) {
 				</div>
 
 				<ChatInput
-					onSend={chat.sendMessage}
+					onPaperPlane={chat.sendMessage}
 					isLoading={chat.isLoading}
-					onSendImage={sendImage}
+					onPaperPlaneImage={sendImage}
 					imageProcessing={imageProcessing}
 					onDismissImageProcessing={handleDismissImageProcessing}
 				/>

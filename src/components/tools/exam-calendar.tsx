@@ -1,11 +1,10 @@
 "use client";
 
+import { Plus, Trash, X } from "@phosphor-icons/react";
 import { AnimatePresence, motion } from "framer-motion";
-import { PlusIcon, Trash2Icon, XIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
@@ -32,23 +31,23 @@ const subjectAbbrs: Record<string, string> = {
 
 const subjectColors: Record<string, string> = {
 	mathematics: "bg-[--system-accent]",
-	"physical-sciences": "bg-green-500 dark:bg-green-700",
-	"life-sciences": "bg-purple-500 dark:bg-purple-700",
-	"english-home-language": "bg-orange-500 dark:bg-orange-700",
-	"afrikaans-home-language": "bg-red-500 dark:bg-red-700",
-	geography: "bg-teal-500 dark:bg-teal-700",
-	history: "bg-yellow-500 dark:bg-yellow-700",
-	accounting: "bg-amber-500 dark:bg-amber-700",
-	"business-studies": "bg-pink-500 dark:bg-pink-700",
-	economics: "bg-cyan-500 dark:bg-cyan-700",
+	"physical-sciences": "bg-success",
+	"life-sciences": "bg-accent",
+	"english-home-language": "bg-warning",
+	"afrikaans-home-language": "bg-destructive",
+	geography: "bg-info",
+	history: "bg-warning",
+	accounting: "bg-warning-foreground",
+	"business-studies": "bg-accent",
+	economics: "bg-info",
 };
 
 const commonSubjects = [
 	{ id: "mathematics", name: "Mathematics" },
 	{ id: "physical-sciences", name: "Physical Sciences" },
 	{ id: "life-sciences", name: "Life Sciences" },
-	{ id: "english-home-language", name: "English Home Language" },
-	{ id: "afrikaans-home-language", name: "Afrikaans Home Language" },
+	{ id: "english-home-language", name: "English House Language" },
+	{ id: "afrikaans-home-language", name: "Afrikaans House Language" },
 	{ id: "geography", name: "Geography" },
 	{ id: "history", name: "History" },
 	{ id: "accounting", name: "Accounting" },
@@ -135,17 +134,17 @@ export function ExamCalendar() {
 					onClick={() => setIsAddingExam(true)}
 					className="rounded-lg active:scale-[0.96]"
 				>
-					<PlusIcon className="w-4 h-4 mr-1" />
+					<Plus data-icon className="mr-1" />
 					Add
 				</Button>
 			</div>
 
 			{examsOnDate.length > 0 ? (
-				<div className="mt-3 space-y-2">
+				<div className="mt-3 flex flex-col gap-2">
 					{examsOnDate.map((exam) => (
-						<Card
+						<div
 							key={exam.id}
-							className="p-3 rounded-xl shadow-[0_2px_8px_oklch(0%_0_0_/_0.06)]"
+							className="p-3 rounded-xl shadow-[0_2px_8px_oklch(0%_0_0_/_0.06)] overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors"
 						>
 							<div className="flex items-center justify-between">
 								<div className="flex items-center gap-3">
@@ -173,10 +172,10 @@ export function ExamCalendar() {
 									onClick={() => deleteExam(exam.id)}
 									className="active:scale-[0.96]"
 								>
-									<Trash2Icon className="w-4 h-4" />
+									<Trash data-icon />
 								</Button>
 							</div>
-						</Card>
+						</div>
 					))}
 				</div>
 			) : selectedDate ? (
@@ -187,7 +186,7 @@ export function ExamCalendar() {
 
 			<div className="mt-4">
 				<h4 className="font-medium text-sm mb-2">Upcoming Exams</h4>
-				<div className="space-y-2">
+				<div className="flex flex-col gap-2">
 					{exams
 						.filter((e) => e.date >= new Date())
 						.sort((a, b) => a.date.getTime() - b.date.getTime())
@@ -247,14 +246,14 @@ export function ExamCalendar() {
 								onClick={() => setIsAddingExam(false)}
 								className="absolute top-4 right-4"
 							>
-								<XIcon className="w-5 h-5" />
+								<X data-icon />
 							</Button>
 
 							<h3 className="text-lg font-semibold mb-4 text-wrap balance">
 								Add Exam
 							</h3>
 
-							<div className="space-y-4">
+							<div className="flex flex-col gap-4">
 								<div>
 									<Label>Subject</Label>
 									<div className="grid grid-cols-2 gap-2 mt-2">

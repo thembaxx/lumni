@@ -66,7 +66,7 @@ export function QuestionRenderer({
 		`${sectionId}-${question.id}-${partId}`;
 
 	return (
-		<div className="space-y-6">
+		<div className="flex flex-col gap-6">
 			<div className="flex items-center gap-2">
 				<h3 className="text-lg font-semibold">
 					QUESTION {question.id}
@@ -116,7 +116,7 @@ export function QuestionRenderer({
 								onClick={() => onFlag(fullId)}
 								className={`shrink-0 text-xs px-2 py-0.5 rounded transition-colors ${
 									flags.includes(fullId)
-										? "bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-200"
+										? "bg-amber-100 text-amber-700"
 										: "bg-muted text-muted-foreground hover:bg-muted/80"
 								}`}
 							>
@@ -138,7 +138,7 @@ export function QuestionRenderer({
 						</div>
 
 						{part.subParts && part.subParts.length > 0 && (
-							<div className="mt-4 space-y-4 pl-4 border-l-2 border-muted">
+							<div className="mt-4 flex flex-col gap-4 pl-4 border-l-2 border-muted">
 								{part.subParts.map((subPart) => {
 									const subFullId = `${fullId}(${subPart.id})`;
 									return (

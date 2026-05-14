@@ -143,7 +143,7 @@ export function TodayFocusCard() {
 			}}
 		>
 			<Card className="border border-border/80 hover:border-border/80 transition-colors">
-				<div className="p-5 space-y-4">
+				<div className="p-5 flex flex-col gap-4">
 					<div className="flex items-center gap-3">
 						<div
 							className={`flex items-center justify-center border size-10 rounded-xl ${cfg.bgAlpha}`}
@@ -153,7 +153,7 @@ export function TodayFocusCard() {
 								className={`size-5 ${cfg.iconColor}`}
 							/>
 						</div>
-						<div className="space-y-0.5">
+						<div className="flex flex-col gap-0.5">
 							<span className="text-[13px] font-bold text-foreground tracking-tight block">
 								Today&apos;s Focus
 							</span>
@@ -163,7 +163,7 @@ export function TodayFocusCard() {
 						</div>
 					</div>
 
-					<div className="space-y-4">
+					<div className="flex flex-col gap-4">
 						<div className="flex justify-between items-center gap-2">
 							<p className="text-[13px] text-primary font-semibold">
 								{subjectName}
@@ -174,8 +174,8 @@ export function TodayFocusCard() {
 									if (found) setSelectedSubjectId(found.id);
 								}}
 							>
-								<div className="flex items-center text-[12px] text-muted-foreground border rounded-sm pl-2 pr-1.5 py-1 hover:text-foreground cursor-pointer transition-colors font-medium p-2 -m-2">
-									change subject
+								<div className="flex items-center font-medium text-[12px] text-muted-foreground border rounded-sm pl-2 pr-1.5 py-1 hover:text-foreground cursor-pointer transition-colors font-medium p-2 -m-2">
+									Change subject
 									<HugeiconsIcon
 										icon={ArrowDown01Icon}
 										className="size-4 ml-2"
@@ -195,7 +195,7 @@ export function TodayFocusCard() {
 					<Button
 						size="sm"
 						variant="secondary"
-						className="w-full font-bold bg-black/10 dark:bg-white/10 text-[13px] h-10 hover:opacity-90"
+						className="w-full font-bold bg-black/10 text-[13px] hover:opacity-90"
 						onClick={handleStart}
 						disabled={showSuccess}
 					>
@@ -212,10 +212,7 @@ export function TodayFocusCard() {
 									}}
 									className="flex items-center gap-1.5"
 								>
-									<HugeiconsIcon
-										icon={CheckmarkCircle01Icon}
-										className="size-3.5"
-									/>
+									<HugeiconsIcon icon={CheckmarkCircle01Icon} data-icon />
 									Starting quiz...
 								</motion.span>
 							) : (

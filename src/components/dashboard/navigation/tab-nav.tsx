@@ -1,7 +1,7 @@
 "use client";
 
+import { GridFour, Snowflake } from "@phosphor-icons/react";
 import { m } from "framer-motion";
-import { LayoutGrid, Snowflake } from "lucide-react";
 import { startTransition, useState } from "react";
 import { LottieSparkle } from "@/components/lottie";
 import { Anim } from "@/components/shared/anim";
@@ -18,7 +18,7 @@ interface TabConfig {
 
 const tabs: TabConfig[] = [
 	{ value: "ai", label: "AI", icon: Snowflake },
-	{ value: "spaces", label: "Practice", icon: LayoutGrid },
+	{ value: "spaces", label: "Practice", icon: GridFour },
 ];
 
 interface TabNavProps {
@@ -81,7 +81,7 @@ export function TabNav({ activeTab, onTabChange }: TabNavProps) {
 							>
 								<tab.icon
 									className={cn(
-										"w-3.5 h-3.5 mr-1.5 transition-transform duration-200",
+										"size-3.5 mr-1.5 transition-transform duration-200",
 										activeTab === tab.value && "tab-icon-active",
 									)}
 								/>

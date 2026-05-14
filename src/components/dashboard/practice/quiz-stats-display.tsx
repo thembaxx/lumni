@@ -1,6 +1,6 @@
 "use client";
 
-import { Zap } from "lucide-react";
+import { Lightning } from "@phosphor-icons/react";
 import { TimerDisplay } from "@/components/shared/timer-display";
 import { cn } from "@/lib/utils";
 
@@ -36,7 +36,7 @@ export function QuizStatsDisplay({
 			<div className="w-px h-4 bg-muted" />
 
 			<div className="flex items-center gap-2 min-w-14">
-				<Zap className="size-4 text-yellow-500 dark:text-yellow-400" />
+				<Lightning className="size-4 text-warning" />
 				<span className="text-sm font-semibold tabular-nums font-mono">
 					{points}
 				</span>

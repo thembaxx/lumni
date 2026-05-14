@@ -11,9 +11,9 @@ import { ToolsDialog } from "./tools-dialog";
 export function FloatingToolsButton() {
 	const [isOpen, setIsOpen] = useState(false);
 	const pathname = usePathname();
-	const isHomePage = pathname === "/";
+	const isHousePage = pathname === "/";
 
-	if (isHomePage) return null;
+	if (isHousePage) return null;
 
 	return (
 		<>
@@ -26,7 +26,7 @@ export function FloatingToolsButton() {
 					"h-11 rounded-md shadow-level-3 font-medium pr-5",
 				)}
 			>
-				<Icon icon="fluent:board-24-regular" className="w-6 h-6" />
+				<Icon icon="fluent:board-24-regular" data-icon />
 				Open Tools
 			</Button>
 

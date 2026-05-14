@@ -74,7 +74,7 @@ export function Confetti({
 			{pieces.map((piece) => (
 				<motion.div
 					key={piece.id}
-					className="absolute w-3 h-3"
+					className="absolute size-3"
 					style={{
 						left: `${piece.x}%`,
 						top: "-20px",

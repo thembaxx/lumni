@@ -1,4 +1,4 @@
-import { X } from "lucide-react";
+import { X } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -22,7 +22,7 @@ export function ImageViewer({ src, alt, open, onClose }: ImageViewerProps) {
 			<DialogPortal>
 				<DialogOverlay className="bg-black/95" />
 				<DialogContent
-					className="max-w-none w-screen h-screen p-0 border-0 rounded-none m-0 inset-0"
+					className="max-w-none w-screen h-[100dvh] p-0 border-0 rounded-none m-0 inset-0"
 					showCloseButton={false}
 				>
 					<div className="relative w-full h-full flex items-center justify-center">
@@ -35,10 +35,10 @@ export function ImageViewer({ src, alt, open, onClose }: ImageViewerProps) {
 							variant="ghost"
 							size="icon"
 							onClick={onClose}
-							className="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/40 hover:bg-black/60 text-white dark:bg-black/70 dark:hover:bg-black/80"
+							className="absolute top-4 right-4 size-10 rounded-full bg-black/40 hover:bg-black/60 text-white"
 							aria-label="Close image viewer"
 						>
-							<X className="w-5 h-5" />
+							<X data-icon />
 						</Button>
 					</div>
 				</DialogContent>

@@ -1,7 +1,8 @@
 "use client";
 
-import { Brain, Check, RotateCcw, X } from "lucide-react";
+import { ArrowCounterClockwise, Brain, Check, X } from "@phosphor-icons/react";
 import { useCallback, useState } from "react";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useSpacedRepetition } from "@/hooks/use-spaced-repetition";
@@ -20,7 +21,7 @@ export function SM2StudySession({ subject }: { subject?: string }) {
 	if (allCards.length === 0) {
 		return (
 			<div className="text-center py-12">
-				<Brain className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
+				<Brain className="size-12 mx-auto text-muted-foreground mb-4" />
 				<h3 className="text-xl font-semibold mb-2">All Caught Up! 🎉</h3>
 				<p className="text-muted-foreground">
 					No cards due for review. Add more flashcards or come back later.
@@ -63,17 +64,17 @@ export function SM2StudySession({ subject }: { subject?: string }) {
 					Card {currentIndex + 1} of {allCards.length}
 				</span>
 				<div className="flex gap-2">
-					<span className="text-xs px-2 py-1 bg-muted text-foreground rounded">
+					<Badge className="bg-muted text-foreground">
 						{dueCards.length} due
-					</span>
-					<span className="text-xs px-2 py-1 bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-200 rounded">
+					</Badge>
+					<Badge className="bg-success/10 text-success-foreground">
 						{newCards.length} new
-					</span>
+					</Badge>
 				</div>
 			</div>
 
-			<Card className="min-h-[300px]">
-				<CardContent className="p-6 flex flex-col items-center justify-center min-h-[300px]">
+			<Card className="min-h-[300px] p-0">
+				<CardContent className="flex flex-col items-center justify-center min-h-[300px] p-6">
 					<p className="text-lg text-center mb-8 font-medium">
 						{currentCard?.front}
 					</p>
@@ -157,19 +158,17 @@ export function FlashcardStats() {
 				<div className="text-lg font-bold">{stats.total}</div>
 				<div className="text-xs text-muted-foreground">Total</div>
 			</div>
-			<div className="text-center p-2 bg-red-100 dark:bg-red-900/40 rounded">
-				<div className="text-lg font-bold text-red-700">{stats.due}</div>
-				<div className="text-xs text-red-600">Due</div>
+			<div className="text-center p-2 bg-destructive/10 rounded">
+				<div className="text-lg font-bold text-destructive">{stats.due}</div>
+				<div className="text-xs text-destructive">Due</div>
 			</div>
-			<div className="text-center p-2 bg-yellow-100 dark:bg-yellow-900/40 rounded">
-				<div className="text-lg font-bold text-yellow-700">
-					{stats.learning}
-				</div>
-				<div className="text-xs text-yellow-600">Learning</div>
+			<div className="text-center p-2 bg-warning/10 rounded">
+				<div className="text-lg font-bold text-warning">{stats.learning}</div>
+				<div className="text-xs text-warning">Learning</div>
 			</div>
-			<div className="text-center p-2 bg-green-100 dark:bg-green-900/40 rounded">
-				<div className="text-lg font-bold text-green-700">{stats.mature}</div>
-				<div className="text-xs text-green-600">Mastered</div>
+			<div className="text-center p-2 bg-success/10 rounded">
+				<div className="text-lg font-bold text-success">{stats.mature}</div>
+				<div className="text-xs text-success">Mastered</div>
 			</div>
 			<div className="text-center p-2 bg-muted rounded">
 				<div className="text-lg font-bold text-foreground">{stats.new}</div>

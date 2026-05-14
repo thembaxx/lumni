@@ -7,7 +7,7 @@ import {
 	m,
 	motion,
 } from "framer-motion";
-import { Database, Loader2 } from "lucide-react";
+import { Database, Spinner } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 import { AdminDashboard } from "@/components/admin/admin-dashboard";
 import { LoginForm } from "@/components/admin/login-form";
@@ -114,7 +114,7 @@ export default function AdminPage() {
 						animate={{ opacity: 1 }}
 						transition={{ duration: 0.3 }}
 						initial={false}
-						className="relative min-h-screen"
+						className="relative min-h-[100dvh]"
 					>
 						<motion.div
 							whileHover={{ scale: 1.05 }}
@@ -136,7 +136,7 @@ export default function AdminPage() {
 								title="Seed Database"
 							>
 								{isSeeding ? (
-									<Loader2 className="size-5 animate-spin" />
+									<Spinner className="size-5 animate-spin" />
 								) : (
 									<Database className="size-5" />
 								)}

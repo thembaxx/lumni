@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 
@@ -26,11 +27,11 @@ export function EssayInput({
 	const overLimit = wordLimit !== undefined && wordCount > wordLimit;
 
 	return (
-		<div className="space-y-4">
+		<div className="flex flex-col gap-4">
 			{rubric && rubric.length > 0 && (
 				<div className="rounded-lg bg-muted/30 p-3">
 					<p className="text-sm font-medium mb-2">Grading Criteria:</p>
-					<ul className="space-y-1">
+					<ul className="flex flex-col gap-1">
 						{rubric.map((c, i) => (
 							<li key={i} className="text-sm text-muted-foreground">
 								<span className="font-medium">{c.name}</span> ({c.maxScore}{" "}
@@ -63,19 +64,19 @@ export function EssayInput({
 					)}
 				</div>
 				{onSubmit && (
-					<button
+					<Button
 						type="button"
 						onClick={() => onSubmit(value.trim())}
 						disabled={disabled || overLimit || wordCount < 20 || !value.trim()}
-						className={cn(
-							"rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
+						variant={
 							!overLimit && value.trim() && wordCount >= 20
-								? "bg-[--system-accent] text-background hover:bg-[--system-accent]/90"
-								: "bg-muted text-muted-foreground cursor-not-allowed",
-						)}
+								? "default"
+								: "secondary"
+						}
+						size="sm"
 					>
 						Submit Essay
-					</button>
+					</Button>
 				)}
 			</div>
 		</div>

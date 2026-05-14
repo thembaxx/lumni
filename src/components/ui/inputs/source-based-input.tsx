@@ -1,6 +1,7 @@
 "use client";
 
 import { ContentBlockRenderer } from "@/components/exam/content-block-renderer";
+import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import type { ContentBlock } from "@/types/exam-paper";
@@ -21,16 +22,13 @@ export function SourceBasedInput({
 	disabled,
 }: SourceBasedInputProps) {
 	return (
-		<div className="space-y-4">
+		<div className="flex flex-col gap-4">
 			{sourceRefs && sourceRefs.length > 0 && (
 				<div className="flex gap-2 flex-wrap">
 					{sourceRefs.map((ref) => (
-						<span
-							key={ref}
-							className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-[--system-accent]/10 text-foreground"
-						>
+						<Badge key={ref} variant="secondary">
 							Source {ref}
-						</span>
+						</Badge>
 					))}
 				</div>
 			)}
