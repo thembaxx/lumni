@@ -1,4 +1,6 @@
 import { initAI, isAIConfigured } from "@/lib/ai";
+import { CachingStrategy } from "@/lib/caching-strategy";
+import type { CacheTier } from "@/lib/caching-strategy";
 import { getCachedQuestions } from "@/lib/db/offline";
 import { ProcessorRegistry } from "./processor-registry";
 import { PromptManager } from "./prompt-manager";
@@ -12,13 +14,94 @@ import type {
 	ValidationResult,
 } from "./types";
 
+interface CacheParams {
+	subject: string;
+	topic?: string;
+	count: number;
+}
+
 export class QuestionEngine {
 	private registry: ProcessorRegistry;
 	private prompts: PromptManager;
+	private cachingStrategy: CachingStrategy<Question[], CacheParams>;
 
 	constructor() {
 		this.registry = new ProcessorRegistry();
 		this.prompts = new PromptManager();
+		this.cachingStrategy = new CachingStrategy<Question[], CacheParams>(
+			[
+				{
+					name: "dexie",
+					read: async (p) => {
+						const cached = await getCachedQuestions(p.subject, p.topic);
+						if (cached && cached.length >= p.count) {
+							const shuffled = [...(cached as Question[])].sort(
+								() => Math.random() - 0.5,
+							);
+							return shuffled.slice(0, p.count);
+						}
+						return null;
+					},
+					write: async () => {},
+				},
+				{
+					name: "appwrite",
+					read: async (p) => {
+						const { loadQuestionsFromAppwrite } = await import("./persistence");
+						const appwriteQuestions = await loadQuestionsFromAppwrite(
+							p.subject,
+							p.topic,
+							p.count,
+						);
+						if (appwriteQuestions.length >= p.count) {
+							const shuffled = appwriteQuestions.sort(
+								() => Math.random() - 0.5,
+							);
+							return shuffled.slice(0, p.count);
+						}
+						return null;
+					},
+					write: async () => {},
+				},
+			],
+			{
+				generate: async (params) => {
+					const enriched = await this.enrichParams(params);
+					const { questionType, count } = enriched;
+					let questions: Question[];
+
+					if (!questionType || questionType === "any") {
+						questions = await this.generateMixed(enriched);
+					} else {
+						const types = Array.isArray(questionType)
+							? questionType
+							: [questionType];
+						const perTypeCount = Math.ceil(count / types.length);
+						questions = [];
+
+						for (const type of types) {
+							try {
+								const processor = this.registry.getProcessor(type);
+								const typeParams = {
+									...enriched,
+									count: perTypeCount,
+									questionType: type,
+								};
+								const result = await processor.generate(typeParams);
+								questions.push(...result);
+							} catch (error) {
+								console.error(
+									`[QuestionEngine] Failed to generate ${type}:`,
+									error,
+								);
+							}
+						}
+					}
+
+					return questions.slice(0, count);
+				},
+			},
+		);
 	}
 
 	static async initialize(): Promise<QuestionEngine> {
@@ -33,64 +116,17 @@ export class QuestionEngine {
 	}
 
 	async generate(params: GenerationParams): Promise<Question[]> {
-		const { questionType, count, subject, topic } = params;
+		const cacheParams: CacheParams = {
+			subject: params.subject,
+			topic: params.topic,
+			count: params.count,
+		};
+		const cached = await this.cachingStrategy.resolve(cacheParams);
+		if (cached !== null) return cached;
 
-		const cached = await getCachedQuestions(subject, topic);
-		if (cached && cached.length >= count) {
-			const shuffled = [...(cached as Question[])].sort(
-				() => Math.random() - 0.5,
-			);
-			return shuffled.slice(0, count);
-		}
-
-		const { loadQuestionsFromAppwrite } = await import("./persistence");
-		const appwriteQuestions = await loadQuestionsFromAppwrite(
-			subject,
-			topic,
-			count,
-		);
-		if (appwriteQuestions.length >= count) {
-			const shuffled = appwriteQuestions.sort(() => Math.random() - 0.5);
-			return shuffled.slice(0, count);
-		}
-
-		const curriculumContext = await this.retrieveCurriculumContext(
-			subject,
-			topic,
-		);
-
-		const enrichParams = curriculumContext
-			? { ...params, curriculumContext }
-			: params;
-
-		let questions: Question[];
-
-		if (!questionType || questionType === "any") {
-			questions = await this.generateMixed(enrichParams);
-		} else {
-			const types = Array.isArray(questionType) ? questionType : [questionType];
-			const perTypeCount = Math.ceil(count / types.length);
-			questions = [];
-
-			for (const type of types) {
-				try {
-					const processor = this.registry.getProcessor(type);
-					const typeParams = {
-						...enrichParams,
-						count: perTypeCount,
-						questionType: type,
-					};
-					const result = await processor.generate(typeParams);
-					questions.push(...result);
-				} catch (error) {
-					console.error(`[QuestionEngine] Failed to generate ${type}:`, error);
-				}
-			}
-		}
-
-		const sliced = questions.slice(0, count);
-
-		return sliced;
+		const enriched = await this.enrichParams(params);
+		const questions = await this.generateFromAI(enriched);
+		return questions.slice(0, params.count);
 	}
 
 	async generateHint(params: HintParams): Promise<string> {
@@ -108,33 +144,49 @@ export class QuestionEngine {
 	validate(question: Question): ValidationResult {
 		const processor = this.registry.getProcessor(question.type as QuestionType);
 		const result = processor.validate(question as never);
-		console.log(
-			`[Quality] ${question.type}/${question.subject}: score=${result.score}, valid=${result.isValid}`,
-		);
 		return result;
-	}
-
-	getPromptManager(): PromptManager {
-		return this.prompts;
 	}
 
 	listTypes(): QuestionType[] {
 		return this.registry.listTypes();
 	}
 
-	private buildCacheKey(params: GenerationParams): string {
-		const parts = [
+	private async generateFromAI(params: GenerationParams): Promise<Question[]> {
+		const { questionType, count } = params;
+
+		if (!questionType || questionType === "any") {
+			return this.generateMixed(params);
+		}
+
+		const types = Array.isArray(questionType) ? questionType : [questionType];
+		const perTypeCount = Math.ceil(count / types.length);
+		const questions: Question[] = [];
+
+		for (const type of types) {
+			try {
+				const processor = this.registry.getProcessor(type);
+				const typeParams = {
+					...params,
+					count: perTypeCount,
+					questionType: type,
+				};
+				const result = await processor.generate(typeParams);
+				questions.push(...result);
+			} catch (error) {
+				console.error(`[QuestionEngine] Failed to generate ${type}:`, error);
+			}
+		}
+
+		return questions.slice(0, count);
+	}
+
+	private async enrichParams(params: GenerationParams): Promise<GenerationParams> {
+		const curriculumContext = await this.retrieveCurriculumContext(
 			params.subject,
-			params.topic ?? "",
-			params.difficulty ?? "",
-			params.questionType
-				? Array.isArray(params.questionType)
-					? params.questionType.join(",")
-					: params.questionType
-				: "",
-			params.bloomLevel ?? "",
-		];
-		return parts.filter(Boolean).join(":");
+			params.topic,
+		);
+		if (!curriculumContext) return params;
+		return { ...params, curriculumContext };
 	}
 
 	private async retrieveCurriculumContext(
@@ -198,5 +250,9 @@ export class QuestionEngine {
 		}
 
 		return results.slice(0, params.count);
+	}
+
+	getPromptManager(): PromptManager {
+		return this.prompts;
 	}
 }

@@ -210,6 +210,7 @@ export interface GenerationParams {
 	subject: string;
 	topic?: string;
 	curriculumUnit?: string;
+	curriculumContext?: string;
 	difficulty?: Difficulty;
 	bloomLevel?: BloomLevel;
 	questionType?: QuestionType | QuestionType[] | "any";

@@ -11,6 +11,7 @@ import type {
 	ValidationResult,
 } from "../types";
 import { validateQuestion } from "../validators";
+import type { GradeFn, HintFn } from "./types";
 
 export class TypedQuestionProcessor<T extends QuestionType>
 	implements QuestionProcessor<T>
@@ -18,15 +19,8 @@ export class TypedQuestionProcessor<T extends QuestionType>
 	constructor(
 		public readonly type: T,
 		private config: { generateTemperature: number },
-		private gradeFn: (
-			q: Question<T>,
-			a: UserAnswer,
-			prompts: PromptManager,
-		) => GradingResult | Promise<GradingResult>,
-		private hintFn: (
-			q: Question<T>,
-			prompts: PromptManager,
-		) => string | Promise<string>,
+		private gradeFn: GradeFn,
+		private hintFn: HintFn,
 		private prompts: PromptManager,
 	) {}
 

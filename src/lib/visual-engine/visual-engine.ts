@@ -1,5 +1,7 @@
 import { initAI, isAIConfigured } from "@/lib/ai";
-import { cacheVisual, getCachedVisual, makeCacheKey } from "@/lib/db/offline";
+import { CachingStrategy } from "@/lib/caching-strategy";
+import type { CacheTier } from "@/lib/caching-strategy";
+import { getCachedVisual, makeCacheKey, cacheVisual } from "@/lib/db/offline";
 import { searchImage } from "./image-resolver";
 import { generateDiagram } from "./stem-renderer";
 import type { VisualContent, VisualEngineParams } from "./types";
@@ -10,6 +12,46 @@ import {
 } from "./visual-persistence";
 
 export class VisualEngine {
+	private cachingStrategy: CachingStrategy<VisualContent, VisualEngineParams>;
+
+	constructor() {
+		this.cachingStrategy = new CachingStrategy<VisualContent, VisualEngineParams>(
+			[
+				{
+					name: "dexie",
+					read: async (params) => {
+						const cacheKey = makeCacheKey(params.questionId, params.subject);
+						return getCachedVisual(cacheKey);
+					},
+					write: async (params, visual) => {
+						const cacheKey = makeCacheKey(params.questionId, params.subject);
+						await cacheVisual(cacheKey, params.subject, visual);
+					},
+				},
+				{
+					name: "appwrite",
+					read: async (params) => {
+						try {
+							return loadVisualFromAppwrite(params.questionId, params.subject);
+						} catch {
+							return null;
+						}
+					},
+					write: async (params, visual) => {
+						await saveVisualToAppwrite(
+							params.questionId,
+							params.subject,
+							visual,
+						);
+					},
+				},
+			],
+			{
+				generate: async (params) => this.generate(params),
+			},
+		);
+	}
+
 	static initialize(): void {
 		if (!isAIConfigured()) {
 			initAI({
@@ -21,28 +63,7 @@ export class VisualEngine {
 	}
 
 	async resolve(params: VisualEngineParams): Promise<VisualContent | null> {
-		const cacheKey = makeCacheKey(params.questionId, params.subject);
-
-		const cached = await getCachedVisual(cacheKey);
-		if (cached) return cached;
-
-		const appwriteVisual = await this.checkAppwriteCache(
-			params.questionId,
-			params.subject,
-		);
-		if (appwriteVisual) {
-			await cacheVisual(cacheKey, params.subject, appwriteVisual);
-			return appwriteVisual;
-		}
-
-		const visual = await this.generate(params);
-
-		await Promise.allSettled([
-			cacheVisual(cacheKey, params.subject, visual),
-			saveVisualToAppwrite(params.questionId, params.subject, visual),
-		]);
-
-		return visual;
+		return this.cachingStrategy.resolve(params);
 	}
 
 	private async generate(
@@ -88,17 +109,6 @@ export class VisualEngine {
 		}
 
 		return generateDiagram(params.questionText, params.subject, params.topic);
-	}
-
-	private async checkAppwriteCache(
-		questionId: string,
-		subject: string,
-	): Promise<VisualContent | null> {
-		try {
-			return loadVisualFromAppwrite(questionId, subject);
-		} catch {
-			return null;
-		}
 	}
 }
 
