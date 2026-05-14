@@ -1,6 +1,7 @@
 import { Query } from "appwrite";
 import { AppwriteException, DatabasesIndexType } from "node-appwrite";
-import { databases } from "@/lib/appwrite";
+import type { Databases as NodeDatabases } from "node-appwrite";
+import { databases as clientDatabases } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 import { schemaConfig } from "./ensure-schema";
 
@@ -37,15 +38,18 @@ export type SeedCollectionConfig = {
 
 export type SeedConfig = Record<string, SeedCollectionConfig>;
 
-async function ensureDatabase() {
-	await databases.get(APPWRITE_DATABASE_ID);
+async function ensureDatabase(db: NodeDatabases) {
+	await db.get(APPWRITE_DATABASE_ID);
 }
 
-async function ensureCollection(collectionId: string) {
-	await databases.getCollection(APPWRITE_DATABASE_ID, collectionId);
+async function ensureCollection(db: NodeDatabases, collectionId: string) {
+	await db.getCollection(APPWRITE_DATABASE_ID, collectionId);
 }
 
-async function ensureCollectionSchema(collectionId: string): Promise<{
+async function ensureCollectionSchema(
+	db: NodeDatabases,
+	collectionId: string,
+): Promise<{
 	attributesCreated: number;
 	indexesCreated: number;
 }> {
@@ -57,11 +61,24 @@ async function ensureCollectionSchema(collectionId: string): Promise<{
 	let attributesCreated = 0;
 	let indexesCreated = 0;
 
-	// Create attributes
+	let existingAttrs: string[] = [];
+	let existingIndexes: string[] = [];
+	try {
+		const listAttrs = await db.listAttributes(
+			APPWRITE_DATABASE_ID,
+			collectionId,
+		);
+		existingAttrs = listAttrs.attributes.map((a) => a.key);
+	} catch {
+		// collection might not exist yet — proceed with creation
+	}
+
+	// Create missing attributes
 	for (const [attrName, attrConfig] of Object.entries(schema.attributes)) {
+		if (existingAttrs.includes(attrName)) continue;
 		try {
 			if (attrConfig.type === "string") {
-				await databases.createStringAttribute(
+				await db.createStringAttribute(
 					APPWRITE_DATABASE_ID,
 					collectionId,
 					attrName,
@@ -70,7 +87,7 @@ async function ensureCollectionSchema(collectionId: string): Promise<{
 				);
 				attributesCreated++;
 			} else if (attrConfig.type === "integer") {
-				await databases.createIntegerAttribute(
+				await db.createIntegerAttribute(
 					APPWRITE_DATABASE_ID,
 					collectionId,
 					attrName,
@@ -78,7 +95,7 @@ async function ensureCollectionSchema(collectionId: string): Promise<{
 				);
 				attributesCreated++;
 			} else if (attrConfig.type === "boolean") {
-				await databases.createBooleanAttribute(
+				await db.createBooleanAttribute(
 					APPWRITE_DATABASE_ID,
 					collectionId,
 					attrName,
@@ -86,7 +103,7 @@ async function ensureCollectionSchema(collectionId: string): Promise<{
 				);
 				attributesCreated++;
 			} else if (attrConfig.type === "datetime") {
-				await databases.createDatetimeAttribute(
+				await db.createDatetimeAttribute(
 					APPWRITE_DATABASE_ID,
 					collectionId,
 					attrName,
@@ -95,17 +112,38 @@ async function ensureCollectionSchema(collectionId: string): Promise<{
 				attributesCreated++;
 			}
 		} catch (e) {
-			// Attribute might already exist - continue
 			if (!(e instanceof AppwriteException && e.code === 409)) {
 				console.error(`Failed to create attribute ${attrName}:`, String(e));
 			}
 		}
 	}
 
-	// Create indexes
+	try {
+		const listIndexes = await db.listIndexes(
+			APPWRITE_DATABASE_ID,
+			collectionId,
+		);
+		existingIndexes = listIndexes.indexes.map((i) => i.key);
+	} catch {
+		// collection might not exist yet
+	}
+
+	// Create missing indexes
 	for (const idx of schema.indexes) {
+		if (existingIndexes.includes(idx.key)) continue;
+
+		const allAttrsAvailable = idx.attributes.every((a) =>
+			existingAttrs.includes(a),
+		);
+		if (!allAttrsAvailable) {
+			console.error(
+				`Failed to create index ${idx.key}: required attributes not yet available: ${idx.attributes.filter((a) => !existingAttrs.includes(a)).join(", ")}`,
+			);
+			continue;
+		}
+
 		try {
-			await databases.createIndex(
+			await db.createIndex(
 				APPWRITE_DATABASE_ID,
 				collectionId,
 				idx.key,
@@ -114,7 +152,6 @@ async function ensureCollectionSchema(collectionId: string): Promise<{
 			);
 			indexesCreated++;
 		} catch (e) {
-			// Index might already exist - continue
 			if (!(e instanceof AppwriteException && e.code === 409)) {
 				console.error(`Failed to create index ${idx.key}:`, String(e));
 			}
@@ -126,7 +163,9 @@ async function ensureCollectionSchema(collectionId: string): Promise<{
 
 export async function ensureAppwrite(
 	config?: SeedConfig,
+	databases?: NodeDatabases,
 ): Promise<EnsureReport> {
+	const db = databases || clientDatabases;
 	const report: EnsureReport = {
 		success: true,
 		database: { status: "exists" },
@@ -135,11 +174,11 @@ export async function ensureAppwrite(
 	};
 
 	try {
-		await ensureDatabase();
+		await ensureDatabase(db);
 	} catch (e) {
 		if (e instanceof AppwriteException && e.code === 404) {
 			try {
-				await databases.create(APPWRITE_DATABASE_ID, APPWRITE_DATABASE_ID);
+				await db.create(APPWRITE_DATABASE_ID, APPWRITE_DATABASE_ID);
 				report.database = { status: "created" };
 			} catch (err) {
 				report.database = { status: "error", error: String(err) };
@@ -155,18 +194,17 @@ export async function ensureAppwrite(
 		let schemaResult = { attributesCreated: 0, indexesCreated: 0 };
 		report.collections[collectionId] = { status: "exists" };
 		try {
-			await ensureCollection(collectionId);
+			await ensureCollection(db, collectionId);
 		} catch (e) {
 			if (e instanceof AppwriteException && e.code === 404) {
 				try {
-					await databases.createCollection(
+					await db.createCollection(
 						APPWRITE_DATABASE_ID,
 						collectionId,
 						collectionId,
 					);
 					report.collections[collectionId] = { status: "created" };
-					// Create schema for newly created collection
-					schemaResult = await ensureCollectionSchema(collectionId);
+					schemaResult = await ensureCollectionSchema(db, collectionId);
 					(
 						report.collections[collectionId] as Record<string, unknown>
 					).attributesCreated = schemaResult.attributesCreated;
@@ -194,7 +232,7 @@ export async function ensureAppwrite(
 	for (const collectionId of ALL_COLLECTIONS) {
 		const status = report.collections[collectionId].status;
 		if (status === "exists") {
-			const schemaResult = await ensureCollectionSchema(collectionId);
+			const schemaResult = await ensureCollectionSchema(db, collectionId);
 			if (
 				schemaResult.attributesCreated > 0 ||
 				schemaResult.indexesCreated > 0
@@ -234,7 +272,7 @@ export async function ensureAppwrite(
 			const seededDocs: SeededDoc[] = [];
 			for (const doc of docs) {
 				try {
-					const existing = await databases.listDocuments(
+					const existing = await db.listDocuments(
 						APPWRITE_DATABASE_ID,
 						collectionId,
 						[
@@ -250,7 +288,7 @@ export async function ensureAppwrite(
 						seededDocs.push(existing.documents[0] as unknown as SeededDoc);
 						localReport.skipped++;
 					} else {
-						const created = await databases.createDocument(
+						const created = await db.createDocument(
 							APPWRITE_DATABASE_ID,
 							collectionId,
 							"unique()",

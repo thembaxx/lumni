@@ -1,6 +1,6 @@
 import { databases } from "@/lib/appwrite";
 
-export const APPWRITE_DATABASE_ID = process.env.APPWRITE_DATABASE_ID || "lumni";
+export const APPWRITE_DATABASE_ID = process.env.APPWRITE_DATABASE_ID!;
 
 export const COLLECTIONS = {
 	SUBJECTS: "subjects",

@@ -116,6 +116,7 @@ export const schemaConfig: Record<string, CollectionSchema> = {
 		attributes: {
 			subject: { type: "string", size: 100 },
 			paperCode: { type: "string", size: 50 },
+			paperNumber: { type: "integer" },
 			examPeriod: { type: "string", size: 50 },
 			year: { type: "integer" },
 			grade: { type: "integer" },
