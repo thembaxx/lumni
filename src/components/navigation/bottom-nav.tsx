@@ -144,7 +144,7 @@ export function BottomNav() {
 				className="fixed bottom-0 left-0 right-0 z-50 md:hidden w-full flex"
 				style={{ height: "calc(49px + env(safe-area-inset-bottom, 0px))" }}
 			>
-				<div className="flex w-full h-12.25 grow items-stretch bg-system-background/80 backdrop-blur-xl border-t border-system-separator/30">
+				<div className="grid grid-cols-5 W w-full h-12.25 grow items-stretch bg-system-background/80 backdrop-blur-xl border-t border-system-separator/30">
 					{navItems.map((item, index) => (
 						<NavItemComponent
 							key={item.id}

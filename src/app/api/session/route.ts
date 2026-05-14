@@ -9,8 +9,20 @@ export async function GET(_request: NextRequest) {
 			userId: user.$id,
 			name: user.name,
 			email: user.email,
+			emailVerification: user.emailVerification,
+			labels: user.labels,
+			prefs: user.prefs,
+			isAnonymous: user.labels?.includes("anonymous") ?? false,
 		});
 	} catch {
-		return NextResponse.json({ userId: null, name: null, email: null });
+		return NextResponse.json({
+			userId: null,
+			name: null,
+			email: null,
+			emailVerification: false,
+			labels: [],
+			prefs: {},
+			isAnonymous: false,
+		});
 	}
 }

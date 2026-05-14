@@ -8,6 +8,7 @@ import "./globals.css";
 import { PageTransition } from "@/components/layout/page-transition";
 import { BottomNav } from "@/components/navigation/bottom-nav";
 import { DesktopSidebar } from "@/components/navigation/desktop-sidebar";
+import { TopNav } from "@/components/navigation/top-nav";
 import { Providers } from "@/components/providers";
 import { FloatingToolsButton } from "@/components/tools";
 import { UploadDialogRenderer } from "@/components/upload/upload-dialog-renderer";
@@ -102,7 +103,8 @@ export default function RootLayout({
 					<FloatingToolsButton />
 					<div className="flex flex-1">
 						<DesktopSidebar />
-						<main className="flex-1 min-w-0">
+						<main className="flex-1 min-w-0 flex flex-col">
+							<TopNav />
 							<PageTransition>{children}</PageTransition>
 						</main>
 					</div>

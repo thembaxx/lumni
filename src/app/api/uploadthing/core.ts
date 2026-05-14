@@ -44,6 +44,14 @@ export const ourFileRouter = {
 			console.log("file url", file.ufsUrl);
 			return { uploadedBy: metadata.userId };
 		}),
+	avatarUploader: f(["image"])
+		.middleware(async ({ req }) => {
+			const user = await requireAuth(req);
+			return { userId: user.id };
+		})
+		.onUploadComplete(async ({ metadata, file }) => {
+			return { avatarUrl: file.ufsUrl, uploadedBy: metadata.userId };
+		}),
 	examPapersUploader: f(["pdf"])
 		.middleware(async ({ req }) => {
 			const user = await requireAuth(req);

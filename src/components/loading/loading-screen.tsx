@@ -1,11 +1,12 @@
 "use client";
 
+import { CircleNotch } from "@phosphor-icons/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { CircleNotch } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { useAuth } from "@/lib/auth/auth-context";
 import { iOSEase } from "@/lib/utils/animation";
 
 interface LoadingScreenProps {
@@ -23,29 +24,53 @@ export function LoadingScreen({
 	const [isVisible, setIsVisible] = useState(true);
 	const [showSkipButton, setShowSkipButton] = useState(false);
 	const router = useRouter();
+	const { authReady } = useAuth();
+	const redirectedRef = useRef(false);
 
-	const handleRedirect = useCallback(() => {
+	const redirect = useCallback(() => {
+		if (redirectedRef.current) return;
+		redirectedRef.current = true;
 		setIsVisible(false);
 		setTimeout(() => router.replace(redirectTo), 400);
 	}, [router, redirectTo]);
 
 	const handleManualEnter = () => {
 		setProgress(100);
-		handleRedirect();
+		if (redirectedRef.current) return;
+		setTimeout(redirect, 300);
 	};
 
 	useEffect(() => {
 		const startTime = performance.now();
+		let frameId: number;
+
 		const animate = (currentTime: number) => {
 			const elapsed = currentTime - startTime;
-			const newProgress = Math.min((elapsed / duration) * 100, 100);
-			setProgress(newProgress);
-			if (newProgress < 100) {
-				requestAnimationFrame(animate);
+
+			let targetProgress: number;
+			if (!authReady) {
+				targetProgress = Math.min((elapsed / duration) * 70, 70);
+			} else {
+				const timeSinceReady = elapsed;
+				targetProgress = Math.min(
+					70 + (timeSinceReady / (duration * 0.3)) * 30,
+					100,
+				);
+			}
+
+			setProgress(targetProgress);
+
+			if (targetProgress < 100) {
+				frameId = requestAnimationFrame(animate);
+			} else {
+				setTimeout(redirect, 300);
 			}
 		};
-		requestAnimationFrame(animate);
-	}, [duration]);
+
+		frameId = requestAnimationFrame(animate);
+
+		return () => cancelAnimationFrame(frameId);
+	}, [duration, authReady, redirect]);
 
 	useEffect(() => {
 		const timer = setTimeout(() => {
@@ -55,13 +80,6 @@ export function LoadingScreen({
 		}, skipDelay);
 		return () => clearTimeout(timer);
 	}, [skipDelay, progress]);
-
-	useEffect(() => {
-		if (progress >= 100) {
-			const timer = setTimeout(handleRedirect, 300);
-			return () => clearTimeout(timer);
-		}
-	}, [progress, handleRedirect]);
 
 	return (
 		<AnimatePresence>

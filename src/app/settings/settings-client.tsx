@@ -24,8 +24,6 @@ import {
 	StudyTab,
 } from "@/components/settings/tabs";
 import { Button } from "@/components/ui/button";
-import { useAppwriteSession } from "@/hooks/use-appwrite-session";
-import { account } from "@/lib/appwrite";
 import { iOSEase } from "@/lib/utils/animation";
 import {
 	BETA_FEATURES_KEY,
@@ -52,7 +50,6 @@ const tabs = [
 
 function SettingsContent() {
 	const router = useRouter();
-	const { user } = useAppwriteSession();
 	const [studyPrefs, setStudyPrefs] =
 		useState<StudyPreferences>(DEFAULT_PREFERENCES);
 	const [notifications, setNotifications] = useState<NotificationSettings>(
@@ -85,16 +82,6 @@ function SettingsContent() {
 			setTimeout(() => {
 				btn.textContent = "Save";
 			}, 1200);
-		}
-	};
-
-	const handleSignOut = async () => {
-		try {
-			await account.deleteSession("current");
-			router.push("/");
-			router.refresh();
-		} catch {
-			// Silently handle sign-out failure; session may already be invalid
 		}
 	};
 
@@ -207,7 +194,7 @@ function SettingsContent() {
 							className="w-full"
 						>
 							{activeTab === "profile" && (
-								<ProfileTab user={user} onSignOut={handleSignOut} />
+								<ProfileTab />
 							)}
 
 							{activeTab === "appearance" && <AppearanceTab />}

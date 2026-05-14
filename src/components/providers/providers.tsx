@@ -8,8 +8,9 @@ import { WebVitalsLogger } from "@/components/web-vitals";
 import { useJobProcessor } from "@/hooks/use-job-processor";
 import { prefetchUploadSubjects } from "@/hooks/use-upload-subjects";
 import { OnlineStatusIndicator } from "@/hooks/useOnlineStatus";
-import { handleCompetencySync } from "@/lib/competency-engine/sync-handler";
+import { AuthProvider } from "@/lib/auth/auth-context";
 import { queryClient } from "@/lib/query-client";
+import { handleSync } from "@/lib/sync/sync-handler";
 import { initSyncQueue, useAutoSync } from "@/lib/sync-queue";
 import { useAppStore } from "@/store";
 
@@ -27,7 +28,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
 	const setInitialized = useAppStore((s) => s.setInitialized);
 
 	useEffect(() => {
-		initSyncQueue({ onSync: handleCompetencySync });
+		initSyncQueue({ onSync: handleSync });
 
 		const handlePrefetch = async () => {
 			await prefetchUploadSubjects(queryClient);
@@ -39,13 +40,15 @@ export function Providers({ children }: { children: React.ReactNode }) {
 	return (
 		<QueryClientProvider client={queryClient}>
 			<ThemeProvider>
-				<JoyProvider>
-					{children}
-					<WebVitalsLogger />
-					<OnlineStatusIndicator />
-					<AutoSyncWrapper />
-					<JobProcessorWrapper />
-				</JoyProvider>
+				<AuthProvider>
+					<JoyProvider>
+						{children}
+						<WebVitalsLogger />
+						<OnlineStatusIndicator />
+						<AutoSyncWrapper />
+						<JobProcessorWrapper />
+					</JoyProvider>
+				</AuthProvider>
 			</ThemeProvider>
 		</QueryClientProvider>
 	);
