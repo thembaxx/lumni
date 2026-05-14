@@ -31,7 +31,7 @@ export function SessionIdle({
 			<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4 pb-20">
 				<Card className="max-w-md w-full mx-auto p-6">
 					<CardHeader className="px-0 pt-0 pb-4">
-						<CardTitle className="text-2xl font-bold tracking-tight">
+						<CardTitle className="text-2xl font-extrabold tracking-tight">
 							{title}
 						</CardTitle>
 					</CardHeader>

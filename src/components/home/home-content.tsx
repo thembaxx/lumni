@@ -16,7 +16,7 @@ export function HomeContent() {
 						className="flex flex-col gap-[--space-6]"
 					>
 						<div className="flex flex-col gap-[--space-3]">
-							<h1 className="ios-large-title font-bold text-[--system-text-primary] tracking-tighter">
+							<h1 className="ios-large-title font-extrabold text-[--system-text-primary] tracking-tighter">
 								lumni
 							</h1>
 							<p className="ios-callout text-[--system-text-secondary] max-w-sm leading-relaxed">

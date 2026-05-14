@@ -85,9 +85,9 @@ export function LevelUp({
 									transition={{ delay: 0.4, type: "spring" }}
 								>
 									<Star className="size-6 fill-white" />
-									<span className="text-4xl font-bold">{level}</span>
+									<span className="text-4xl font-extrabold">{level}</span>
 								</motion.div>
-								<h2 className="text-2xl font-bold mb-2 text-wrap balance">
+								<h2 className="text-2xl font-extrabold mb-2 text-wrap balance">
 									{title}
 								</h2>
 								<p className="text-muted-foreground mb-4">

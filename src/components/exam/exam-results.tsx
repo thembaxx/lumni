@@ -71,7 +71,7 @@ export function ExamResults({
 							</CardTitle>
 						</CardHeader>
 						<CardContent>
-							<p className="ios-title-3 font-bold">
+							<p className="ios-title-3 font-extrabold">
 								{answeredCount}
 								<span className="ios-footnote font-normal text-[--system-text-secondary]">
 									/{totalParts}
@@ -86,7 +86,7 @@ export function ExamResults({
 							</CardTitle>
 						</CardHeader>
 						<CardContent>
-							<p className="text-2xl font-bold text-destructive">
+							<p className="text-2xl font-extrabold text-destructive">
 								{totalParts - answeredCount}
 							</p>
 						</CardContent>
@@ -98,7 +98,9 @@ export function ExamResults({
 							</CardTitle>
 						</CardHeader>
 						<CardContent>
-							<p className="text-2xl font-bold text-warning">{flaggedCount}</p>
+							<p className="text-2xl font-extrabold text-warning">
+								{flaggedCount}
+							</p>
 						</CardContent>
 					</Card>
 					<Card>
@@ -108,7 +110,7 @@ export function ExamResults({
 							</CardTitle>
 						</CardHeader>
 						<CardContent>
-							<p className="ios-title-3 font-bold tabular-nums">
+							<p className="ios-title-3 font-extrabold tabular-nums">
 								{formatTime(timeTaken)}
 							</p>
 						</CardContent>

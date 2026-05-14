@@ -37,18 +37,18 @@ export function SessionResults({
 								className="size-16 mb-2"
 							/>
 						)}
-						<h2 className="text-xl font-bold tracking-tight">
+						<h2 className="text-xl font-extrabold tracking-tight">
 							Session Complete!
 						</h2>
 					</header>
 					<div className="grid grid-cols-12 gap-3">
 						<div className="col-span-5 p-4 rounded-lg bg-muted">
-							<p className="text-2xl font-bold">{stats.total}</p>
+							<p className="text-2xl font-extrabold">{stats.total}</p>
 							<p className="text-xs text-muted-foreground">Total</p>
 						</div>
 						{stats.correct !== undefined && (
 							<div className="col-span-3 p-4 rounded-lg bg-success/10">
-								<p className="text-2xl font-bold text-success">
+								<p className="text-2xl font-extrabold text-success">
 									{stats.correct}
 								</p>
 								<p className="text-xs text-success">Known</p>
@@ -56,7 +56,7 @@ export function SessionResults({
 						)}
 						{stats.review !== undefined && (
 							<div className="col-span-4 p-4 rounded-lg bg-warning/10">
-								<p className="text-2xl font-bold text-warning">
+								<p className="text-2xl font-extrabold text-warning">
 									{stats.review}
 								</p>
 								<p className="text-xs text-warning">Review</p>

@@ -44,7 +44,7 @@ export default function AdminQualityPage() {
 	return (
 		<div className="min-h-[100dvh] bg-background p-6 max-w-5xl mx-auto space-y-6">
 			<div className="flex items-center justify-between">
-				<h1 className="text-2xl font-bold">Engine Quality & Analytics</h1>
+				<h1 className="text-2xl font-extrabold">Engine Quality & Analytics</h1>
 				<Button variant="outline" size="sm" onClick={handleClear}>
 					Clear Data
 				</Button>
@@ -58,7 +58,7 @@ export default function AdminQualityPage() {
 						</h2>
 					</header>
 					<div className="px-4 group-data-[size=sm]/card:px-3 p-4 pt-0">
-						<p className="text-3xl font-bold">{analytics.totalRequests}</p>
+						<p className="text-3xl font-extrabold">{analytics.totalRequests}</p>
 					</div>
 				</div>
 				<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
@@ -69,7 +69,7 @@ export default function AdminQualityPage() {
 					</header>
 					<div className="px-4 group-data-[size=sm]/card:px-3 p-4 pt-0">
 						<p
-							className={`text-3xl font-bold ${analytics.successRate >= 80 ? "text-success" : analytics.successRate >= 50 ? "text-warning" : "text-destructive"}`}
+							className={`text-3xl font-extrabold ${analytics.successRate >= 80 ? "text-success" : analytics.successRate >= 50 ? "text-warning" : "text-destructive"}`}
 						>
 							{analytics.successRate}%
 						</p>
@@ -83,7 +83,7 @@ export default function AdminQualityPage() {
 					</header>
 					<div className="px-4 group-data-[size=sm]/card:px-3 p-4 pt-0">
 						<p
-							className={`text-3xl font-bold ${quality.avgScore >= 80 ? "text-success" : quality.avgScore >= 50 ? "text-warning" : "text-destructive"}`}
+							className={`text-3xl font-extrabold ${quality.avgScore >= 80 ? "text-success" : quality.avgScore >= 50 ? "text-warning" : "text-destructive"}`}
 						>
 							{quality.avgScore}
 						</p>
@@ -97,7 +97,7 @@ export default function AdminQualityPage() {
 					</header>
 					<div className="px-4 group-data-[size=sm]/card:px-3 p-4 pt-0">
 						<p
-							className={`text-3xl font-bold ${quality.passRate >= 80 ? "text-success" : quality.passRate >= 50 ? "text-warning" : "text-destructive"}`}
+							className={`text-3xl font-extrabold ${quality.passRate >= 80 ? "text-success" : quality.passRate >= 50 ? "text-warning" : "text-destructive"}`}
 						>
 							{quality.passRate}%
 						</p>

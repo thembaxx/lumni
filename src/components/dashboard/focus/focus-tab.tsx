@@ -102,7 +102,7 @@ export function FocusTab({ className }: FocusTabProps) {
 			<div className="relative">
 				<ChartContainer config={chartConfig} className="size-40 sm:size-48">
 					<div className="absolute inset-0 flex items-center justify-center">
-						<span className="text-4xl font-bold tabular-nums tracking-tight">
+						<span className="text-4xl font-extrabold tabular-nums tracking-tight">
 							{formatTime(timeLeft)}
 						</span>
 					</div>

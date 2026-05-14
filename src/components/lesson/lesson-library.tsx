@@ -151,7 +151,9 @@ export function LessonLibrary() {
 							] as const
 						).map((s) => (
 							<Card key={s.label} className="p-3 text-center">
-								<div className={`text-lg font-bold tabular-nums ${s.color}`}>
+								<div
+									className={`text-lg font-extrabold tabular-nums ${s.color}`}
+								>
 									{s.value}
 								</div>
 								<div className="text-xs text-muted-foreground">{s.label}</div>

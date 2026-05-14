@@ -39,7 +39,7 @@ export function LoadingIndicator() {
 					animate={{ opacity: 1, y: 0 }}
 					exit={{ opacity: 0, y: -4 }}
 					transition={{ duration: 0.2 }}
-					className="text-xs font-bold uppercase tracking-widest"
+					className="text-xs font-extrabold uppercase tracking-widest"
 				>
 					{loadingMessages[messageIndex]}
 				</motion.span>

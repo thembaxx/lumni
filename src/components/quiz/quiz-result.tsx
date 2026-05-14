@@ -146,7 +146,7 @@ export function QuizResult({
 					<LottieWrapper animation={animation} className={message.lottieSize} />
 				</m.div>
 				<m.h2
-					className="text-2xl font-bold"
+					className="text-2xl font-extrabold"
 					initial={{ opacity: 0, y: 10 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ delay: 0.3 }}
@@ -161,7 +161,7 @@ export function QuizResult({
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ delay: 0.4 }}
 					>
-						<p className="text-3xl font-bold text-success">
+						<p className="text-3xl font-extrabold text-success">
 							<AnimatedCounter value={correctAnswers} delay={500} />
 						</p>
 						<p className="text-xs text-muted-foreground">Correct</p>
@@ -172,7 +172,7 @@ export function QuizResult({
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ delay: 0.5 }}
 					>
-						<p className="text-3xl font-bold text-destructive">
+						<p className="text-3xl font-extrabold text-destructive">
 							<AnimatedCounter
 								value={totalQuestions - correctAnswers}
 								delay={600}

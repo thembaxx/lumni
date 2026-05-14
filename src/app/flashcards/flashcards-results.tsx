@@ -32,17 +32,17 @@ export function FlashcardsResults({
 					<div className="max-w-md w-full mx-auto">
 						<div className="space-y-4">
 							<header className="text-left">
-								<h2 className="text-xl font-bold tracking-tight">
+								<h2 className="text-xl font-extrabold tracking-tight">
 									Session Complete!
 								</h2>
 							</header>
 							<div className="grid grid-cols-12 gap-3">
 								<div className="col-span-8 sm:col-span-8 p-4 rounded-lg bg-muted">
-									<p className="text-2xl font-bold">{totalCards}</p>
+									<p className="text-2xl font-extrabold">{totalCards}</p>
 									<p className="text-xs text-muted-foreground">Total</p>
 								</div>
 								<div className="col-span-4 sm:col-span-4 p-4 rounded-lg bg-success/10 dark:bg-success/20">
-									<p className="text-xl font-bold text-success dark:text-success-foreground">
+									<p className="text-xl font-extrabold text-success dark:text-success-foreground">
 										{knownCount}
 									</p>
 									<p className="text-xs text-success dark:text-success-foreground">
@@ -50,7 +50,7 @@ export function FlashcardsResults({
 									</p>
 								</div>
 								<div className="col-span-12 sm:col-span-4 p-4 rounded-lg bg-warning/10 dark:bg-warning/20">
-									<p className="text-xl font-bold text-warning dark:text-warning-foreground">
+									<p className="text-xl font-extrabold text-warning dark:text-warning-foreground">
 										{reviewCount}
 									</p>
 									<p className="text-xs text-warning dark:text-warning-foreground">

@@ -46,7 +46,7 @@ export function XPGainPopup({
 								<Sparkle className="size-5" />
 							</motion.div>
 						)}
-						<span className="text-xl font-bold">+{amount} XP</span>
+						<span className="text-xl font-extrabold">+{amount} XP</span>
 					</motion.div>
 				</motion.div>
 			)}

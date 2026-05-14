@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, m, useMotionValue } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { LottieWrapper } from "@/components/lottie/lottie-wrapper";
 import { Anim } from "@/components/shared/anim";
@@ -88,9 +88,6 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 			if (timerRef.current) clearInterval(timerRef.current);
 		};
 	}, [questions.length]);
-
-	// Motion value for animated progress (decoupled from React re-renders)
-	const progressMotion = useMotionValue(0);
 
 	const currentQuestion = questions?.[currentIndex];
 

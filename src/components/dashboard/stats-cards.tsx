@@ -89,13 +89,13 @@ function StatCard({
 					</div>
 				</CardHeader>
 				<CardContent className="text-center space-y-1 px-5 pb-0">
-					<p className="text-2xl font-bold tracking-tight text-foreground tabular-nums text-wrap balance">
+					<p className="text-2xl font-extrabold tracking-tight text-foreground tabular-nums text-wrap balance">
 						<AnimatedNumber
 							value={value}
 							shouldReduceMotion={shouldReduceMotion}
 						/>
 					</p>
-					<p className="text-[11px] uppercase tracking-wider text-muted-foreground font-bold leading-tight">
+					<p className="text-[11px] uppercase tracking-wider text-muted-foreground font-extrabold leading-tight">
 						{label}
 					</p>
 				</CardContent>

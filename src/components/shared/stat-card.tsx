@@ -96,7 +96,7 @@ export function StatCard({
 						<span className="text-xs text-muted-foreground">{label}</span>
 					</m.div>
 					<m.span
-						className={cn("text-xl font-bold tabular-nums", colorClass)}
+						className={cn("text-xl font-extrabold tabular-nums", colorClass)}
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						transition={{ delay: delay + 0.35 }}
@@ -122,7 +122,7 @@ export function StatCard({
 				</div>
 				<div
 					className={cn(
-						"text-2xl font-bold flex items-center gap-2 tabular-nums",
+						"text-2xl font-extrabold flex items-center gap-2 tabular-nums",
 						trendColor,
 					)}
 				>

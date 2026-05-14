@@ -95,7 +95,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 						)}
 
 						<div className="p-2 px-3 flex items-center justify-between gap-3">
-							<span className="text-[10px] font-bold opacity-80 truncate max-w-30 uppercase tracking-tight">
+							<span className="text-[10px] font-extrabold opacity-80 truncate max-w-30 uppercase tracking-tight">
 								{message.imageFileName || "Image"}
 								{message.imageFileSize &&
 									` (${formatBytes(message.imageFileSize)})`}
@@ -190,7 +190,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 					</span>
 				</motion.button>
 				<div className="flex flex-col gap-1 min-w-0">
-					<span className="text-[10px] font-bold uppercase tracking-widest opacity-80">
+					<span className="text-[10px] font-extrabold uppercase tracking-widest opacity-80">
 						{isPlaying ? "Playing..." : "Voice message"}
 					</span>
 					<div className="flex items-center gap-2">

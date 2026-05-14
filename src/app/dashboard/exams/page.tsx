@@ -53,7 +53,7 @@ export default function ExamsPage() {
 			<div className="max-w-3xl mx-auto w-full px-4 flex flex-col gap-8">
 				<Anim>
 					<div className="flex flex-col gap-6">
-						<h1 className="ios-title-1 font-bold text-foreground tracking-tight">
+						<h1 className="ios-title-1 font-extrabold text-foreground tracking-tight">
 							Past Exam Papers
 						</h1>
 

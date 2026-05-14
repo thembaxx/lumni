@@ -157,7 +157,7 @@ export function ChatInput({
 								<DropdownListItem
 									onClick={() => cameraInputRef.current?.click()}
 									disabled={isLoading}
-									className="gap-2 font-bold text-xs uppercase tracking-tight"
+									className="gap-2 font-extrabold text-xs uppercase tracking-tight"
 								>
 									<Camera data-icon="inline-start" />
 									Take a photo
@@ -165,7 +165,7 @@ export function ChatInput({
 								<DropdownListItem
 									onClick={() => uploadInputRef.current?.click()}
 									disabled={isLoading}
-									className="gap-2 font-bold text-xs uppercase tracking-tight"
+									className="gap-2 font-extrabold text-xs uppercase tracking-tight"
 								>
 									<UploadSimple data-icon="inline-start" />
 									Upload a photo

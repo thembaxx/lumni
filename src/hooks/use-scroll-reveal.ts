@@ -12,7 +12,7 @@ export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(
 	options: UseScrollRevealOptions = {},
 ) {
 	const {
-		threshold = 0,
+		threshold: _threshold = 0,
 		rootMargin = "-48px 0px -48px 0px",
 		once = false,
 	} = options;

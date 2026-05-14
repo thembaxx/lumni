@@ -149,7 +149,7 @@ export function VoiceRecorder({
 					{showPermissionError ? "Permission Required" : getStatusText()}
 				</span>
 				{(isRecording || isPlaying || (audioBlob && totalDuration > 0)) && (
-					<span className="text-2xl font-mono font-bold tabular-nums text-foreground animate-fade-in-up">
+					<span className="text-2xl font-mono font-extrabold tabular-nums text-foreground animate-fade-in-up">
 						{getTimerDisplay()}
 					</span>
 				)}

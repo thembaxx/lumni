@@ -39,7 +39,7 @@ function Preloader({ onComplete }: { onComplete: () => void }) {
 			transition={{ duration: 0.3 }}
 		>
 			<div className="w-12 h-12 rounded-xl bg-foreground flex items-center justify-center">
-				<span className="text-2xl font-bold text-background">L</span>
+				<span className="text-2xl font-extrabold text-background">L</span>
 			</div>
 			<div className="w-32 h-1 bg-secondary rounded-full mt-6 overflow-hidden">
 				<motion.div

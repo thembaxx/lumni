@@ -22,7 +22,9 @@ export function FlashcardsIdle({ onSelect }: FlashcardsIdleProps) {
 			<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4 pb-20">
 				<div className="max-w-md w-full mx-auto card-elevated overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] p-6">
 					<header className="text-left pb-4">
-						<h2 className="text-2xl font-bold tracking-tight">Flashcards</h2>
+						<h2 className="text-2xl font-extrabold tracking-tight">
+							Flashcards
+						</h2>
 					</header>
 					<div className="space-y-4">
 						<Empty>

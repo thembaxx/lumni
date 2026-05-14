@@ -292,7 +292,7 @@ export function CountdownHeader() {
 								>
 									{milestone.emoji}
 								</motion.span>
-								<span className="text-xs font-bold text-warning uppercase tracking-tight">
+								<span className="text-xs font-extrabold text-warning uppercase tracking-tight">
 									{milestone.label}
 								</span>
 							</div>
@@ -300,7 +300,7 @@ export function CountdownHeader() {
 					)}
 
 					<div className="relative z-10">
-						<h1 className="text-xl sm:text-2xl font-bold text-foreground leading-tight tracking-tight text-wrap balance">
+						<h1 className="text-xl sm:text-2xl font-extrabold text-foreground leading-tight tracking-tight text-wrap balance">
 							{greeting}
 							{isLoggedIn && name ? (
 								<span className="text-system-accent">, {firstName}</span>
@@ -316,7 +316,7 @@ export function CountdownHeader() {
 									initial="hidden"
 									animate="visible"
 									className={cn(
-										"inline-block text-4xl md:text-5xl font-bold tracking-tighter tabular-nums font-mono text-system-accent",
+										"inline-block text-4xl md:text-5xl font-extrabold tracking-tighter tabular-nums font-mono text-system-accent",
 									)}
 									aria-live="polite"
 								>
@@ -328,7 +328,7 @@ export function CountdownHeader() {
 									<p className="text-[12px] font-medium text-muted-foreground tabular-nums">
 										{daysLeft === 1 ? "day" : "days"}
 									</p>
-									<p className="text-[12px] font-bold text-muted-foreground tabular-nums">
+									<p className="text-[12px] font-extrabold text-muted-foreground tabular-nums">
 										until finals
 									</p>
 								</div>
@@ -361,7 +361,7 @@ export function CountdownHeader() {
 								}}
 								className="mt-1 text-xs text-muted-foreground leading-snug text-pretty font-medium"
 							>
-								<span className="font-bold text-foreground/80">
+								<span className="font-extrabold text-foreground/80">
 									{msg.primary}
 								</span>
 								. {msg.subtitle}
@@ -408,12 +408,12 @@ export function CountdownHeader() {
 				style={{ viewTransitionName: "countdown-compact" }}
 			>
 				<div className="max-w-md mx-auto flex items-center gap-3">
-					<span className="text-[13px] font-bold text-foreground/70">
+					<span className="text-[13px] font-extrabold text-foreground/70">
 						{greeting}
 						{isLoggedIn && name ? `, ${firstName}` : ""}
 					</span>
 					<span className="ml-auto flex items-baseline gap-1">
-						<span className="text-lg font-bold tabular-nums text-system-accent">
+						<span className="text-lg font-extrabold tabular-nums text-system-accent">
 							{daysLeft}
 						</span>
 						<span className="text-[11px] text-muted-foreground font-medium">

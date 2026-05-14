@@ -239,7 +239,7 @@ export function AiSolver() {
 							<div className="flex flex-col gap-4">
 								<div className="flex items-center gap-2">
 									<Separator className="flex-1" />
-									<p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+									<p className="text-xs font-extrabold uppercase tracking-wider text-muted-foreground">
 										Step-by-Step Breakdown
 									</p>
 									<Separator className="flex-1" />

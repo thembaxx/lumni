@@ -144,10 +144,14 @@ export function MarkdownRenderer({
 						);
 					},
 					h1({ children }) {
-						return <h1 className="text-2xl font-bold mb-3 mt-4">{children}</h1>;
+						return (
+							<h1 className="text-2xl font-extrabold mb-3 mt-4">{children}</h1>
+						);
 					},
 					h2({ children }) {
-						return <h2 className="text-xl font-bold mb-2 mt-3">{children}</h2>;
+						return (
+							<h2 className="text-xl font-extrabold mb-2 mt-3">{children}</h2>
+						);
 					},
 					h3({ children }) {
 						return (

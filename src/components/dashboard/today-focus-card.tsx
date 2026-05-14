@@ -154,7 +154,7 @@ export function TodayFocusCard() {
 							/>
 						</div>
 						<div className="flex flex-col gap-0.5">
-							<span className="text-[13px] font-bold text-foreground tracking-tight block">
+							<span className="text-[13px] font-extrabold text-foreground tracking-tight block">
 								Today&apos;s Focus
 							</span>
 							<span className={`text-[12px] font-medium ${cfg.iconColor}`}>
@@ -183,7 +183,7 @@ export function TodayFocusCard() {
 								</div>
 							</SubjectsDrawer>
 						</div>
-						<h3 className="text-lg font-bold text-foreground leading-tight tracking-tight text-wrap balance">
+						<h3 className="text-lg font-extrabold text-foreground leading-tight tracking-tight text-wrap balance">
 							{topic}
 						</h3>
 					</div>
@@ -195,7 +195,7 @@ export function TodayFocusCard() {
 					<Button
 						size="sm"
 						variant="secondary"
-						className="w-full font-bold bg-black/10 text-[13px] hover:opacity-90"
+						className="w-full font-extrabold bg-black/10 text-[13px] hover:opacity-90"
 						onClick={handleStart}
 						disabled={showSuccess}
 					>

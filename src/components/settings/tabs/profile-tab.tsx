@@ -18,7 +18,7 @@ export function ProfileTab({ user, onSignOut }: ProfileTabProps) {
 			<div className="flex flex-col items-center justify-center py-8 gap-4">
 				<div className="relative group">
 					<Avatar className="size-24 shadow-level-3 border-[6px] border-system-surface transition-transform duration-500 group-hover:scale-105">
-						<AvatarFallback className="text-3xl font-bold bg-system-accent text-white">
+						<AvatarFallback className="text-3xl font-extrabold bg-system-accent text-white">
 							{user?.name?.charAt(0) || "U"}
 						</AvatarFallback>
 					</Avatar>
@@ -28,7 +28,7 @@ export function ProfileTab({ user, onSignOut }: ProfileTabProps) {
 					</div>
 				</div>
 				<div className="text-center flex flex-col gap-1">
-					<h2 className="text-(length:--fs-title-2) font-bold text-foreground">
+					<h2 className="text-(length:--fs-title-2) font-extrabold text-foreground">
 						{user?.name || "User"}
 					</h2>
 					<p className="text-(length:--fs-subhead) font-medium text-[--system-text-secondary]">
@@ -57,17 +57,17 @@ export function ProfileTab({ user, onSignOut }: ProfileTabProps) {
 			</ListSection>
 
 			<div className="px-2 pt-4">
-<Button
-				size="default"
-				variant="destructive"
-				onClick={onSignOut}
-				className="w-full rounded-lg font-medium text-sm shadow-level-2 transition-[transform,opacity] active:scale-[0.96]"
+				<Button
+					size="default"
+					variant="destructive"
+					onClick={onSignOut}
+					className="w-full rounded-lg font-medium text-sm shadow-level-2 transition-[transform,opacity] active:scale-[0.96]"
 				>
 					<SignOut data-icon />
 					Sign Out
 				</Button>
 				<div className="mt-8 flex flex-col items-center gap-1">
-					<p className="text-(length:--fs-footnote) text-[--system-text-tertiary] font-bold tracking-widest uppercase">
+					<p className="text-(length:--fs-footnote) text-[--system-text-tertiary] font-extrabold tracking-widest uppercase">
 						Lumni Mobile
 					</p>
 					<p className="text-(length:--fs-caption-2) text-[--system-text-tertiary] tabular-nums font-medium">

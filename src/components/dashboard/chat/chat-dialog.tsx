@@ -82,7 +82,7 @@ export function ChatDialog({ open, onOpenChange }: ChatDialogProps) {
 						<div className="size-9 rounded-full bg-system-accent/10 flex items-center grow justify-center">
 							<ChatCenteredText className="size-6 text-system-accent" />
 						</div>
-						<span className="text-base font-bold leading-1 text-left tracking-tight">
+						<span className="text-base font-extrabold leading-1 text-left tracking-tight">
 							Study Assistant
 						</span>
 					</div>

@@ -1,7 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 
 export const fontSans = Geist({
-	weight: ["400", "500", "600", "700"],
+	weight: ["400", "500", "600", "800"],
 	subsets: ["latin"],
 	display: "swap",
 	variable: "--font-sans",

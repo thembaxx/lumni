@@ -155,23 +155,31 @@ export function FlashcardStats() {
 	return (
 		<div className="grid grid-cols-5 gap-2">
 			<div className="text-center p-2 bg-muted rounded">
-				<div className="text-lg font-bold">{stats.total}</div>
+				<div className="text-lg font-extrabold">{stats.total}</div>
 				<div className="text-xs text-muted-foreground">Total</div>
 			</div>
 			<div className="text-center p-2 bg-destructive/10 rounded">
-				<div className="text-lg font-bold text-destructive">{stats.due}</div>
+				<div className="text-lg font-extrabold text-destructive">
+					{stats.due}
+				</div>
 				<div className="text-xs text-destructive">Due</div>
 			</div>
 			<div className="text-center p-2 bg-warning/10 rounded">
-				<div className="text-lg font-bold text-warning">{stats.learning}</div>
+				<div className="text-lg font-extrabold text-warning">
+					{stats.learning}
+				</div>
 				<div className="text-xs text-warning">Learning</div>
 			</div>
 			<div className="text-center p-2 bg-success/10 rounded">
-				<div className="text-lg font-bold text-success">{stats.mature}</div>
+				<div className="text-lg font-extrabold text-success">
+					{stats.mature}
+				</div>
 				<div className="text-xs text-success">Mastered</div>
 			</div>
 			<div className="text-center p-2 bg-muted rounded">
-				<div className="text-lg font-bold text-foreground">{stats.new}</div>
+				<div className="text-lg font-extrabold text-foreground">
+					{stats.new}
+				</div>
 				<div className="text-xs text-muted-foreground">New</div>
 			</div>
 		</div>

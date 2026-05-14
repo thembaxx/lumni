@@ -112,9 +112,9 @@ Apple's convention: **base layers are dim, elevated layers are bright**. In ligh
 
 | Role | Font | Weight Range |
 |---|---|---|
-| Sans (body/UI) | **Geist** (SF Pro alternative) | 400, 500, 600, 700 |
+| Sans (body/UI) | **Geist** (SF Pro alternative) | 400, 500, 600, 800 |
 | Mono (code/data) | **Geist Mono** | 400, 500, 700 |
-| Heading | Geist (via `--font-heading`) | 700 |
+| Heading | Geist (via `--font-heading`) | 800 |
 
 Loaded via `next/font/google` in `src/app/fonts.ts` with `display: swap` and `preload: true`.
 
@@ -123,10 +123,10 @@ Loaded via `next/font/google` in `src/app/fonts.ts` with `display: swap` and `pr
 All sizes use `rem` units and respect the `--text-scale` CSS variable for Dynamic Type.
 
 | Style | Size (rem/px) | Weight | Line Height | Tracking (em) | Apple Equivalent |
-|---|---|---|---|---|---|
-| Large Title | 2.125rem / 34px | 700 | 1.2 | +0.012 | UIFontTextStyleLargeTitle |
-| Title 1 | 1.75rem / 28px | 700 | 1.22 | +0.014 | UIFontTextStyleTitle1 |
-| Title 2 | 1.375rem / 22px | 700 | 1.27 | -0.012 | UIFontTextStyleTitle2 |
+|---|---|---|---|---|---|---|
+| Large Title | 2.125rem / 34px | 800 | 1.2 | +0.012 | UIFontTextStyleLargeTitle |
+| Title 1 | 1.75rem / 28px | 800 | 1.22 | +0.014 | UIFontTextStyleTitle1 |
+| Title 2 | 1.375rem / 22px | 800 | 1.27 | -0.012 | UIFontTextStyleTitle2 |
 | Title 3 | 1.25rem / 20px | 600 | 1.25 | -0.023 | UIFontTextStyleTitle3 |
 | Headline | 1.0625rem / 17px | 600 | 1.3 | -0.026 | UIFontTextStyleHeadline |
 | Body | 1rem / 16px | 400 | 1.5 | -0.020 | UIFontTextStyleBody |

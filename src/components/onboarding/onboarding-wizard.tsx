@@ -108,7 +108,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 								animate={{ opacity: 1, x: 0 }}
 								transition={{ duration: 0.4, ease: "easeOut" }}
 							>
-								<h1 className="text-3xl font-bold mb-4 tracking-tight">
+								<h1 className="text-3xl font-extrabold mb-4 tracking-tight">
 									Welcome to Lumni
 								</h1>
 								<p className="text-muted-foreground text-lg mb-8 leading-relaxed">
@@ -161,7 +161,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 							transition={{ duration: 0.35, ease: iOSEase }}
 						>
 							<div className="col-span-12 md:col-span-7">
-								<h2 className="text-2xl font-bold mb-2">
+								<h2 className="text-2xl font-extrabold mb-2">
 									Choose Your Subjects
 								</h2>
 								<p className="text-muted-foreground mb-6">
@@ -180,7 +180,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 										>
 											<CardContent className="flex items-center gap-3 py-4">
 												<div
-													className="size-10 rounded-full flex items-center justify-center text-white font-bold"
+													className="size-10 rounded-full flex items-center justify-center text-white font-extrabold"
 													style={{ backgroundColor: subject.color }}
 												>
 													{subject.id.slice(0, 2)}
@@ -222,12 +222,14 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 									transition={{ duration: 0.35, ease: iOSEase }}
 									className="flex flex-col gap-4"
 								>
-									<h2 className="text-2xl font-bold mb-2">Set Your Target</h2>
+									<h2 className="text-2xl font-extrabold mb-2">
+										Set Your Target
+									</h2>
 									<p className="text-muted-foreground mb-6">
 										What's your desired APS (Admission Point Score)?
 									</p>
 									<div className="text-left mb-8">
-										<div className="text-6xl font-bold text-foreground mb-2">
+										<div className="text-6xl font-extrabold text-foreground mb-2">
 											{targetAps}
 										</div>
 										<p className="text-muted-foreground">Target APS</p>
@@ -274,12 +276,14 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 									transition={{ duration: 0.35, ease: iOSEase }}
 									className="flex flex-col gap-4"
 								>
-									<h2 className="text-2xl font-bold mb-2">Daily Study Time</h2>
+									<h2 className="text-2xl font-extrabold mb-2">
+										Daily Study Time
+									</h2>
 									<p className="text-muted-foreground mb-6">
 										How much time can you commit to studying each day?
 									</p>
 									<div className="text-left mb-8">
-										<div className="text-6xl font-bold text-foreground mb-2">
+										<div className="text-6xl font-extrabold text-foreground mb-2">
 											{dailyMinutes}
 										</div>
 										<p className="text-muted-foreground">minutes per day</p>
@@ -346,7 +350,9 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 									transition={{ duration: 0.35, ease: iOSEase }}
 									className="flex flex-col gap-4"
 								>
-									<h2 className="text-2xl font-bold mb-2">Stay Connected</h2>
+									<h2 className="text-2xl font-extrabold mb-2">
+										Stay Connected
+									</h2>
 									<p className="text-muted-foreground mb-6">
 										Enable notifications to get study reminders and track your
 										progress.

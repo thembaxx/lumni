@@ -63,7 +63,7 @@ export function StreakFire({
 						initial={{ opacity: 0, y: -10 }}
 						animate={{ opacity: 1, y: 0 }}
 					>
-						<div className="bg-warning text-primary-foreground text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">
+						<div className="bg-warning text-primary-foreground text-[10px] font-extrabold px-2 py-0.5 rounded-full whitespace-nowrap">
 							{getStreakMessage(milestone)}
 						</div>
 					</motion.div>
@@ -71,7 +71,7 @@ export function StreakFire({
 			</div>
 
 			<motion.span
-				className={`font-bold ${streak >= 7 ? "text-warning" : "text-warning/80"}`}
+				className={`font-extrabold ${streak >= 7 ? "text-warning" : "text-warning/80"}`}
 				key={streak}
 				initial={{ scale: 1.5 }}
 				animate={{ scale: 1 }}

@@ -77,7 +77,7 @@ function HeroBanner() {
 
 			<div className="relative p-8 flex flex-col justify-center h-full max-w-3xl">
 				<motion.h1
-					className="ios-title-1 font-bold text-foreground leading-tight tracking-tight max-w-lg"
+					className="ios-title-1 font-extrabold text-foreground leading-tight tracking-tight max-w-lg"
 					initial={{ opacity: 0, x: -20 }}
 					animate={{ opacity: 1, x: 0 }}
 					transition={{ duration: 0.5, delay: 0.1, ease: iOSEase }}

@@ -95,12 +95,12 @@ export function PeriodicTable() {
           aspect-square p-2 cursor-pointer
         `}
 			>
-				<span className="absolute top-1.5 left-2 text-[10px] font-bold opacity-50 tabular-nums">
+				<span className="absolute top-1.5 left-2 text-[10px] font-extrabold opacity-50 tabular-nums">
 					{el.atomicNumber}
 				</span>
 				<motion.span
 					style={{ scale: symbolScale }}
-					className="font-bold text-white text-xl drop-shadow-lg"
+					className="font-extrabold text-white text-xl drop-shadow-lg"
 				>
 					{el.symbol}
 				</motion.span>
@@ -369,12 +369,12 @@ export function PeriodicTable() {
 											boxShadow: `0 0 30px oklch(${elementCategoryConfig[selectedElement.category]?.rgb} / 0.5), 0 0 60px oklch(${elementCategoryConfig[selectedElement.category]?.rgb} / 0.25)`,
 										}}
 									>
-										<span className="text-3xl font-bold text-white">
+										<span className="text-3xl font-extrabold text-white">
 											{selectedElement.symbol}
 										</span>
 									</motion.div>
 									<div className="flex-1 pt-1">
-										<h2 className="text-2xl font-bold mb-1">
+										<h2 className="text-2xl font-extrabold mb-1">
 											{selectedElement.name}
 										</h2>
 										<p className="text-sm text-muted-foreground/70">

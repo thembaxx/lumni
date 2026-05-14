@@ -141,7 +141,7 @@ export function QuizView({
 				<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4 pb-20">
 					<Card size="sm" className="max-w-md w-full">
 						<CardContent className="flex flex-col gap-4">
-							<CardTitle className="text-xl font-bold tracking-tight">
+							<CardTitle className="text-xl font-extrabold tracking-tight">
 								Unable to Load
 							</CardTitle>
 							<EmptyStateWithIllustration
@@ -184,7 +184,7 @@ export function QuizView({
 				<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4 pb-20">
 					<Card size="sm" className="max-w-md w-full">
 						<CardContent className="flex flex-col gap-4">
-							<CardTitle className="ios-title-2 font-bold tracking-tight">
+							<CardTitle className="ios-title-2 font-extrabold tracking-tight">
 								Quiz Practice
 							</CardTitle>
 							<QuizSelectSubject onSelect={(s) => handleStartWithSubject(s)} />
@@ -232,7 +232,7 @@ export function QuizView({
 				<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4 pb-20">
 					<Card size="sm" className="max-w-md w-full">
 						<CardContent>
-							<CardTitle className="text-xl font-bold tracking-tight">
+							<CardTitle className="text-xl font-extrabold tracking-tight">
 								Unable to Load Questions
 							</CardTitle>
 							<QuizEmptyState
@@ -259,7 +259,7 @@ export function QuizView({
 				<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4 pb-20">
 					<Card size="sm" className="max-w-md w-full">
 						<CardContent>
-							<CardTitle className="text-xl font-bold tracking-tight">
+							<CardTitle className="text-xl font-extrabold tracking-tight">
 								No Questions
 							</CardTitle>
 							<QuizEmptyState

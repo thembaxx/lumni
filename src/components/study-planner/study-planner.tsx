@@ -47,7 +47,7 @@ export function StudyPlanner() {
 	return (
 		<div className="space-y-6">
 			<div className="flex items-center justify-between">
-				<h2 className="text-2xl font-bold">Study Planner</h2>
+				<h2 className="text-2xl font-extrabold">Study Planner</h2>
 				<div className="flex gap-2">
 					<Button
 						variant="outline"
@@ -124,19 +124,23 @@ function StatsRow({
 		<div className="grid grid-cols-4 gap-4">
 			<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
 				<div className="px-4 group-data-[size=sm]/card:px-3 p-4 text-center">
-					<div className="text-2xl font-bold">{stats.completedSessions}</div>
+					<div className="text-2xl font-extrabold">
+						{stats.completedSessions}
+					</div>
 					<div className="text-xs text-muted-foreground">Completed</div>
 				</div>
 			</div>
 			<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
 				<div className="px-4 group-data-[size=sm]/card:px-3 p-4 text-center">
-					<div className="text-2xl font-bold">{stats.upcomingSessions}</div>
+					<div className="text-2xl font-extrabold">
+						{stats.upcomingSessions}
+					</div>
 					<div className="text-xs text-muted-foreground">Upcoming</div>
 				</div>
 			</div>
 			<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
 				<div className="px-4 group-data-[size=sm]/card:px-3 p-4 text-center">
-					<div className="text-2xl font-bold">
+					<div className="text-2xl font-extrabold">
 						{Math.round(stats.studyTimeMinutes / 60)}h
 					</div>
 					<div className="text-xs text-muted-foreground">Study Time</div>
@@ -144,7 +148,7 @@ function StatsRow({
 			</div>
 			<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
 				<div className="px-4 group-data-[size=sm]/card:px-3 p-4 text-center">
-					<div className="text-2xl font-bold">
+					<div className="text-2xl font-extrabold">
 						{stats.daysUntilNextExam !== null ? stats.daysUntilNextExam : "-"}
 					</div>
 					<div className="text-xs text-muted-foreground">Days to Exam</div>

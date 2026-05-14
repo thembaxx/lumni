@@ -95,7 +95,7 @@ export function FocusTimerCard() {
 								className="text-system-accent transition-all duration-500"
 							/>
 						</svg>
-						<span className="absolute inset-0 flex items-center justify-center text-sm font-bold tabular-nums tracking-tight">
+						<span className="absolute inset-0 flex items-center justify-center text-sm font-extrabold tabular-nums tracking-tight">
 							{formatTime(timeLeft)}
 						</span>
 					</div>

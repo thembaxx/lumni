@@ -74,11 +74,11 @@ export function DailyProgressRing() {
 							ease: iOSEase,
 							delay: shouldReduceMotion ? 0 : 0.2,
 						}}
-						className="text-3xl font-bold text-foreground tabular-nums"
+						className="text-3xl font-extrabold text-foreground tabular-nums"
 					>
 						{levelInfo.level}
 					</motion.span>
-					<span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
+					<span className="text-[11px] font-extrabold text-muted-foreground uppercase tracking-wider">
 						{levelInfo.title}
 					</span>
 				</div>
@@ -102,7 +102,7 @@ export function DailyProgressRing() {
 							className={`size-5 transition-colors duration-300 ${currentStreak > 0 ? "text-warning" : "text-muted-foreground"}`}
 						/>
 					</motion.span>
-					<span className="text-lg font-bold text-foreground tabular-nums">
+					<span className="text-lg font-extrabold text-foreground tabular-nums">
 						{currentStreak}
 					</span>
 					<span className="text-xs text-muted-foreground font-medium">
@@ -111,7 +111,7 @@ export function DailyProgressRing() {
 				</div>
 				<div className="h-6 w-px bg-border/40" />
 				<div className="text-right">
-					<p className="text-lg font-bold text-foreground tabular-nums">
+					<p className="text-lg font-extrabold text-foreground tabular-nums">
 						{gamification.totalXp.toLocaleString("en-ZA")}
 					</p>
 					<p className="text-xs text-muted-foreground font-medium">total XP</p>
@@ -154,7 +154,7 @@ export function DailyProgressRing() {
 							className="flex items-center gap-1"
 						>
 							<CheckCircle className="size-3.5 text-success" />
-							<span className="text-[11px] font-bold text-success">
+							<span className="text-[11px] font-extrabold text-success">
 								Daily goal complete
 							</span>
 						</motion.div>

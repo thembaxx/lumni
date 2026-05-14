@@ -401,7 +401,7 @@
 
 	h1, h2, h3, h4, h5, h6 {
 		font-family: var(--font-heading);
-		font-weight: 700;
+		font-weight: 800;
 		letter-spacing: var(--tracking-title-1);
 		line-height: 1.2;
 		color: var(--system-text-primary);
@@ -431,9 +431,9 @@
    UTILITY CLASSES
    ======================================== */
 
-.ios-large-title { font-family: var(--font-heading); font-size: calc(var(--fs-large-title) * var(--text-scale)); font-weight: 700; line-height: 1.2; letter-spacing: var(--tracking-large-title); }
-.ios-title-1 { font-family: var(--font-heading); font-size: calc(var(--fs-title-1) * var(--text-scale)); font-weight: 700; line-height: 1.22; letter-spacing: var(--tracking-title-1); }
-.ios-title-2 { font-family: var(--font-heading); font-size: calc(var(--fs-title-2) * var(--text-scale)); font-weight: 700; line-height: 1.27; letter-spacing: var(--tracking-title-2); }
+.ios-large-title { font-family: var(--font-heading); font-size: calc(var(--fs-large-title) * var(--text-scale)); font-weight: 800; line-height: 1.2; letter-spacing: var(--tracking-large-title); }
+.ios-title-1 { font-family: var(--font-heading); font-size: calc(var(--fs-title-1) * var(--text-scale)); font-weight: 800; line-height: 1.22; letter-spacing: var(--tracking-title-1); }
+.ios-title-2 { font-family: var(--font-heading); font-size: calc(var(--fs-title-2) * var(--text-scale)); font-weight: 800; line-height: 1.27; letter-spacing: var(--tracking-title-2); }
 .ios-title-3 { font-family: var(--font-heading); font-size: calc(var(--fs-title-3) * var(--text-scale)); font-weight: 600; line-height: 1.25; letter-spacing: var(--tracking-title-3); }
 .ios-headline { font-family: var(--font-heading); font-size: calc(var(--fs-headline) * var(--text-scale)); font-weight: 600; line-height: 1.3; letter-spacing: var(--tracking-headline); }
 .ios-body { font-size: calc(var(--fs-body) * var(--text-scale)); font-weight: 400; line-height: 1.5; letter-spacing: var(--tracking-body); }

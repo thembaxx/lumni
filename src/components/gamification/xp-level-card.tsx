@@ -23,14 +23,14 @@ export function XpLevelCard({ levelInfo, totalXp }: XpLevelCardProps) {
 					animate={{ scale: 1 }}
 					transition={{ type: "spring", stiffness: 300, damping: 20 }}
 				>
-					<span className="text-2xl font-bold text-white">
+					<span className="text-2xl font-extrabold text-white">
 						{levelInfo.level}
 					</span>
 				</motion.div>
 
 				<div className="flex-1">
 					<div className="flex items-center justify-between mb-1">
-						<span className="text-sm font-bold text-foreground">
+						<span className="text-sm font-extrabold text-foreground">
 							{levelInfo.title}
 						</span>
 						<span className="text-xs text-muted-foreground font-medium">

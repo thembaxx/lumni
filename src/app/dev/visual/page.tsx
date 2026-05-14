@@ -13,9 +13,6 @@ import {
 } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
-import { DiagramRenderer } from "@/components/visual/diagram-renderer";
-import { ImageViewer } from "@/components/visual/image-viewer";
-import { MermaidDiagram } from "@/components/visual/mermaid-diagram";
 import { VisualContent } from "@/components/visual/visual-content";
 import { STEM_SUBJECTS } from "@/lib/visual-engine";
 import type { VisualContent as VisualContentType } from "@/lib/visual-engine/types";
@@ -32,14 +29,14 @@ const ALL_SUBJECTS = [
 export default function DevVisualPage() {
 	const [subject, setSubject] = useState("mathematics");
 	const [topic, setTopic] = useState("algebra");
-	const [questionText, setQuestionText] = useState(
+	const [questionText] = useState(
 		"Solve for x in the equation $x^2 - 5x + 6 = 0$. Show the parabola graph.",
 	);
 	const [visual, setVisual] = useState<VisualContentType | null>(null);
 	const [rawJson, setRawJson] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState("");
-	const [testResult, setTestResult] = useState<string>("");
+	const [testResult] = useState<string>("");
 
 	const handleResolve = useCallback(async () => {
 		setIsLoading(true);
@@ -67,29 +64,11 @@ export default function DevVisualPage() {
 		setIsLoading(false);
 	}, [questionText, subject, topic]);
 
-	const handleRunTests = useCallback(async () => {
-		setIsLoading(true);
-		setError("");
-		setVisual(null);
-		setRawJson("");
-		setTestResult("Running tests...");
-		try {
-			const res = await fetch("/api/engine/visual/test");
-			const data = await res.json();
-			setTestResult(JSON.stringify(data, null, 2));
-		} catch (err) {
-			setTestResult(
-				`Error: ${err instanceof Error ? err.message : "Network error"}`,
-			);
-		}
-		setIsLoading(false);
-	}, []);
-
-	const isSTEM = STEM_SUBJECTS.has(subject);
+	const _isSTEM = STEM_SUBJECTS.has(subject);
 
 	return (
 		<div className="min-h-[100dvh] bg-background p-4 max-w-4xl mx-auto space-y-4 pb-20">
-			<h1 className="text-xl font-bold">Visual Engine Test</h1>
+			<h1 className="text-xl font-extrabold">Visual Engine Test</h1>
 
 			<div className="rounded-[2.5rem] bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] overflow-hidden">
 				<div className="p-4 space-y-3">
@@ -131,7 +110,9 @@ export default function DevVisualPage() {
 			{testResult && (
 				<div className="rounded-[2.5rem] bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] overflow-hidden">
 					<div className="p-4 pb-2">
-						<h3 className="text-sm font-bold tracking-tight">Test Results</h3>
+						<h3 className="text-sm font-extrabold tracking-tight">
+							Test Results
+						</h3>
 					</div>
 					<div className="p-4 pt-0">
 						<Textarea
@@ -149,7 +130,7 @@ export default function DevVisualPage() {
 				<>
 					<div className="rounded-[2.5rem] bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] overflow-hidden">
 						<div className="p-4 pb-2">
-							<h3 className="text-sm font-bold tracking-tight flex items-center gap-2">
+							<h3 className="text-sm font-extrabold tracking-tight flex items-center gap-2">
 								Rendered Visual
 								<Badge variant="secondary" className="text-xs">
 									{visual.type}
@@ -168,7 +149,9 @@ export default function DevVisualPage() {
 
 					<div className="rounded-[2.5rem] bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] overflow-hidden">
 						<div className="p-4 pb-2">
-							<h3 className="text-sm font-bold tracking-tight">Raw Response</h3>
+							<h3 className="text-sm font-extrabold tracking-tight">
+								Raw Response
+							</h3>
 						</div>
 						<div className="p-4 pt-0">
 							<Textarea

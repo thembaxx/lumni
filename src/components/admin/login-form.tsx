@@ -102,7 +102,10 @@ export function LoginForm({ onSuccess }: { onSuccess: () => void }) {
 												placeholder="••••••••"
 											/>
 										</div>
-										<Button size="default" className="w-full rounded-lg font-medium text-sm bg-[--system-accent] hover:bg-[--system-accent]/90 text-white shadow-level-2 transition-[transform,opacity] active:scale-[0.96]">
+										<Button
+											size="default"
+											className="w-full rounded-lg font-medium text-sm bg-[--system-accent] hover:bg-[--system-accent]/90 text-white shadow-level-2 transition-[transform,opacity] active:scale-[0.96]"
+										>
 											Sign In
 										</Button>
 									</CardContent>

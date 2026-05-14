@@ -112,7 +112,7 @@ export function ToastItem({ toast: t }: { toast: ToastData }) {
 				toastStyles[t.type],
 			)}
 		>
-			<span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-current/10 text-xs font-bold">
+			<span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-current/10 text-xs font-extrabold">
 				{toastIcons[t.type]}
 			</span>
 			<div className="flex-1 min-w-0">
@@ -149,7 +149,7 @@ export async function toast(props: Omit<ToastData, "id">) {
 			toastStyles[props.type],
 		);
 		toastEl.innerHTML = `
-			<span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-current/10 text-xs font-bold">
+			<span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-current/10 text-xs font-extrabold">
 				${toastIcons[props.type]}
 			</span>
 			<div class="flex-1 min-w-0">

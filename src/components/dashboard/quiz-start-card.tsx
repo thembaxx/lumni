@@ -27,7 +27,9 @@ export function QuizStartCard({ onStart }: QuizStartCardProps) {
 		>
 			<CardContent className="p-5 flex flex-col gap-4">
 				<div className="flex items-center justify-between">
-					<h3 className="text-lg font-bold tracking-tight">Start a Quiz</h3>
+					<h3 className="text-lg font-extrabold tracking-tight">
+						Start a Quiz
+					</h3>
 					<div className="flex items-center gap-3 px-3 py-1.5 rounded-full bg-muted/30 border border-muted">
 						<div className="flex items-center gap-1.5">
 							<Timer className="size-3.5 text-muted-foreground" />

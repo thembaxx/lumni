@@ -110,12 +110,12 @@ export default function StatsTab() {
 					{isPerfect && (
 						<div className="flex items-center justify-center -mt-2">
 							<div className="flex items-center gap-2 rounded-full bg-warning text-warning-foreground px-4 py-1.5 shadow-lg">
-								<span className="text-sm font-bold">Perfect Score!</span>
+								<span className="text-sm font-extrabold">Perfect Score!</span>
 							</div>
 						</div>
 					)}
 					<CardHeader className="p-6 pb-2 md:text-left">
-						<h3 className="text-xl font-bold tracking-tight">
+						<h3 className="text-xl font-extrabold tracking-tight">
 							{isPerfect
 								? "Flawless!"
 								: isGreatScore
@@ -129,7 +129,7 @@ export default function StatsTab() {
 					<CardContent className="px-6 pb-6 flex flex-col gap-4">
 						<div className="grid grid-cols-12 gap-3 md:text-left">
 							<div className="col-span-5 p-3 rounded-lg bg-muted">
-								<p className="text-xl font-bold tabular-nums">
+								<p className="text-xl font-extrabold tabular-nums">
 									{quizResults.totalQuestions}
 								</p>
 								<p className="text-xs text-muted-foreground">Questions</p>
@@ -137,7 +137,7 @@ export default function StatsTab() {
 							<div className="col-span-3 p-3 rounded-lg bg-muted">
 								<p
 									className={
-										"text-xl font-bold tabular-nums" +
+										"text-xl font-extrabold tabular-nums" +
 										(isGreatScore ? " text-success" : "")
 									}
 								>
@@ -148,7 +148,7 @@ export default function StatsTab() {
 							<div className="col-span-4 p-3 rounded-lg bg-muted">
 								<p
 									className={
-										"text-xl font-bold tabular-nums" +
+										"text-xl font-extrabold tabular-nums" +
 										(isGreatScore ? " text-success" : "")
 									}
 								>
@@ -171,7 +171,7 @@ export default function StatsTab() {
 				{quizResults.incorrectAnswers.length > 0 && (
 					<Card className="overflow-hidden border-0">
 						<CardHeader className="p-4 pb-2">
-							<h3 className="text-base font-bold tracking-tight">
+							<h3 className="text-base font-extrabold tracking-tight">
 								Review Mistakes
 							</h3>
 						</CardHeader>

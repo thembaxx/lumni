@@ -121,7 +121,7 @@ export function SubjectSelect({
 											}}
 										>
 											<span
-												className="text-xs font-bold"
+												className="text-xs font-extrabold"
 												style={{ color: subject.color }}
 											>
 												{subject.name[0]}

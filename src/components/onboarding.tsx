@@ -147,7 +147,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
 						<Icon className="h-8 w-8 text-foreground" />
 					</div>
 
-					<h2 className="mb-2 text-2xl font-bold tracking-tight">
+					<h2 className="mb-2 text-2xl font-extrabold tracking-tight">
 						{step.title}
 					</h2>
 					<p className="mb-8 text-muted-foreground">{step.description}</p>

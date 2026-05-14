@@ -140,7 +140,7 @@ function SettingsContent() {
 							>
 								<ArrowLeftIcon className="size-5" />
 							</Link>
-							<h1 className="ios-title-3 text-foreground font-bold tracking-tight">
+							<h1 className="ios-title-3 text-foreground font-extrabold tracking-tight">
 								Settings
 							</h1>
 						</div>
@@ -149,7 +149,7 @@ function SettingsContent() {
 							size="sm"
 							onClick={handleSave}
 							disabled={isSaving}
-							className="h-10 px-6 rounded-full font-bold bg-system-accent hover:bg-system-accent/90 text-white shadow-level-2 transition-[transform,opacity] active:scale-[0.96]"
+							className="h-10 px-6 rounded-full font-extrabold bg-system-accent hover:bg-system-accent/90 text-white shadow-level-2 transition-[transform,opacity] active:scale-[0.96]"
 						>
 							{isSaving ? "Saving..." : "Save"}
 						</Button>
@@ -180,7 +180,7 @@ function SettingsContent() {
 									`}
 								>
 									<span
-										className={`text-(length:--fs-footnote) font-bold ${isActive ? "opacity-100" : "opacity-80"}`}
+										className={`text-(length:--fs-footnote) font-extrabold ${isActive ? "opacity-100" : "opacity-80"}`}
 									>
 										{tab.label}
 									</span>

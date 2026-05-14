@@ -84,7 +84,7 @@ export function StreakCelebration({
 
 				<div className="flex-1">
 					<div className="flex items-center justify-between mb-1">
-						<span className="text-lg font-bold text-foreground">
+						<span className="text-lg font-extrabold text-foreground">
 							{currentStreak} day{currentStreak !== 1 ? "s" : ""}
 						</span>
 						<span

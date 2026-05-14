@@ -147,7 +147,7 @@ export function ResultsSearch() {
 
 								<div className="flex justify-between items-center pt-2 border-t">
 									<span className="text-sm text-muted-foreground">Overall</span>
-									<span className="text-lg font-bold tabular-nums">
+									<span className="text-lg font-extrabold tabular-nums">
 										{result.overall}%
 									</span>
 								</div>

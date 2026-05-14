@@ -220,7 +220,7 @@ export function APSCalculator() {
 					<span className="text-muted-foreground">Your APS Score</span>
 					<Calculator className="size-5 text-muted-foreground" />
 				</div>
-				<div className="text-4xl font-bold text-center tabular-nums">
+				<div className="text-4xl font-extrabold text-center tabular-nums">
 					{totalAPS}
 				</div>
 				<p className="text-center text-muted-foreground text-sm mt-2">
@@ -255,7 +255,7 @@ export function APSCalculator() {
 										</span>
 									</div>
 									<div className="text-right">
-										<span className="font-bold tabular-nums">
+										<span className="font-extrabold tabular-nums">
 											{getAPSForSubject(subject.percentage)} pts
 										</span>
 										<span className="text-xs text-muted-foreground ml-2 block">
@@ -285,7 +285,7 @@ export function APSCalculator() {
 									<span className="font-medium text-sm">{uni.university}</span>
 									<span
 										className={cn(
-											"text-sm font-bold tabular-nums",
+											"text-sm font-extrabold tabular-nums",
 											totalAPS >= uni.minAPS
 												? "text-success"
 												: "text-destructive",

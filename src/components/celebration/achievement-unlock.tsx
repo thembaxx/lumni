@@ -82,12 +82,12 @@ export function AchievementUnlock({
 										Achievement Unlocked!
 									</span>
 								</div>
-								<h2 className="text-2xl font-bold mb-2 text-wrap balance">
+								<h2 className="text-2xl font-extrabold mb-2 text-wrap balance">
 									{name}
 								</h2>
 								<p className="text-muted-foreground mb-4">{description}</p>
 								<div className="inline-flex items-center gap-2 bg-warning/20 text-warning-foreground px-4 py-2 rounded-full">
-									<span className="text-lg font-bold">+{xpReward} XP</span>
+									<span className="text-lg font-extrabold">+{xpReward} XP</span>
 								</div>
 							</motion.div>
 						</div>

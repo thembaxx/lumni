@@ -78,7 +78,7 @@ export function QuizResultsCard({
 					transition={{ delay: 0.5, type: "spring", stiffness: 300 }}
 				>
 					<Badge
-						variant="warning"
+						variant="secondary"
 						className="flex items-center gap-2 px-4 py-2 shadow-lg"
 					>
 						{useLottie ? (
@@ -86,7 +86,7 @@ export function QuizResultsCard({
 						) : (
 							<Trophy className="size-5" />
 						)}
-						<span className="font-bold">Perfect Score!</span>
+						<span className="font-extrabold">Perfect Score!</span>
 					</Badge>
 				</motion.div>
 			)}
@@ -107,7 +107,7 @@ export function QuizResultsCard({
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ delay: 0.1 }}
 					>
-						<CardTitle className="text-xl font-bold tracking-tight">
+						<CardTitle className="text-xl font-extrabold tracking-tight">
 							{isPerfect
 								? "Flawless!"
 								: isGreatScore
@@ -139,7 +139,7 @@ export function QuizResultsCard({
 									transition={{ delay: 0.3 }}
 								>
 									<motion.p
-										className="text-2xl font-bold tabular-nums"
+										className="text-2xl font-extrabold tabular-nums"
 										initial={{ opacity: 0 }}
 										animate={{ opacity: 1 }}
 										transition={{ delay: 0.3 }}
@@ -156,7 +156,7 @@ export function QuizResultsCard({
 								>
 									<p
 										className={cn(
-											"text-2xl font-bold tabular-nums",
+											"text-2xl font-extrabold tabular-nums",
 											isGreatScore && "text-success",
 										)}
 									>
@@ -172,7 +172,7 @@ export function QuizResultsCard({
 								>
 									<p
 										className={cn(
-											"text-2xl font-bold tabular-nums",
+											"text-2xl font-extrabold tabular-nums",
 											isGreatScore && "text-success",
 										)}
 									>
