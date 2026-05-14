@@ -514,11 +514,19 @@
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes floatSlow { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
 
+@keyframes blobOrbit {
+	0%, 100% { transform: translate(0, 0) scale(1); }
+	25% { transform: translate(28px, -12px) scale(1.06); }
+	50% { transform: translate(4px, -26px) scale(0.94); }
+	75% { transform: translate(-22px, -8px) scale(1.02); }
+}
+
 .animate-fade-in-up { animation: fadeInUp 400ms var(--ease-ios) forwards; }
 .animate-fade-in-scale { animation: fadeInScale 400ms var(--ease-ios) forwards; }
 .animate-icon-pop { animation: iconPop 200ms var(--ease-ios); }
 .animate-checkmark { animation: checkmark 400ms var(--ease-ios) forwards; }
 .animate-float-slow { animation: floatSlow 4s ease-in-out infinite; }
+.animate-blob-orbit { animation: blobOrbit 6s ease-in-out infinite; }
 
 .animate-shimmer {
 	background: linear-gradient(90deg, transparent, var(--system-surface-secondary), transparent);

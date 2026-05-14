@@ -88,14 +88,14 @@ export function LoadingScreen({
 					key="loading-screen"
 					initial={{ opacity: 0, scale: 0.96 }}
 					animate={{ opacity: 1, scale: 1 }}
-					exit={{ opacity: 0, y: -12, scale: 0.96 }}
-					transition={{ duration: 0.4, ease: iOSEase }}
-					className="flex flex-col items-center gap-[--space-8]"
+					exit={{ opacity: 0, y: -12, filter: "blur(4px)", scale: 0.96 }}
+					transition={{ duration: 0.15, ease: "easeIn" }}
+					className="flex flex-col items-center"
 				>
 					<motion.div
-						initial={{ opacity: 0, scale: 0.8 }}
-						animate={{ opacity: 1, scale: 1 }}
-						transition={{ duration: 0.5, ease: iOSEase, delay: 0.05 }}
+						initial={{ opacity: 0, scale: 0.8, filter: "blur(4px)" }}
+						animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+						transition={{ duration: 0.5, ease: iOSEase, delay: 0 }}
 						className="relative"
 					>
 						<motion.div
@@ -113,41 +113,47 @@ export function LoadingScreen({
 								transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
 								className="size-14"
 							>
-								<CircleNotch className="size-14 text-foreground" />
+								<CircleNotch className="size-14 text-system-accent" />
 							</motion.div>
 						</div>
 					</motion.div>
 
-					<motion.div
-						initial={{ opacity: 0, y: 10 }}
-						animate={{ opacity: 1, y: 0 }}
-						transition={{ duration: 0.4, ease: iOSEase, delay: 0.15 }}
-						className="text-center space-y-1"
+					<motion.h2
+						initial={{ opacity: 0, y: 12, filter: "blur(4px)" }}
+						animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+						transition={{ duration: 0.4, ease: iOSEase, delay: 0.08 }}
+						className="ios-title-2 text-[--system-text-primary] mt-[--space-6] text-center"
 					>
-						<h2 className="ios-headline text-[--system-text-primary]">
-							Loading Lumni
-						</h2>
-						<p className="ios-footnote text-[--system-text-secondary]">
-							Preparing your study experience...
-						</p>
-					</motion.div>
+						Lumni
+					</motion.h2>
+
+					<motion.p
+						initial={{ opacity: 0, y: 8, filter: "blur(4px)" }}
+						animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+						transition={{ duration: 0.35, ease: iOSEase, delay: 0.12 }}
+						className="ios-footnote text-[--system-text-secondary] mt-[--space-2] text-center"
+					>
+						Preparing your study experience...
+					</motion.p>
 
 					<motion.div
-						initial={{ opacity: 0, y: 10 }}
-						animate={{ opacity: 1, y: 0 }}
-						transition={{ duration: 0.4, ease: iOSEase, delay: 0.25 }}
+						initial={{ opacity: 0, y: 12, filter: "blur(4px)" }}
+						animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+						transition={{ duration: 0.4, ease: iOSEase, delay: 0.2 }}
+						className="mt-[--space-6]"
 					>
 						<Progress
 							value={progress}
-							className="w-48 transition-[width] duration-[var(--duration-slow)] ease-[var(--ease-ios)]"
+							className="w-56 transition-[width] duration-[var(--duration-slow)] ease-[var(--ease-ios)]"
 						/>
 					</motion.div>
 
 					{showSkipButton && progress < 100 && (
-						<motion.div
-							initial={{ opacity: 0, y: 12 }}
-							animate={{ opacity: 1, y: 0 }}
-							transition={{ duration: 0.35, ease: iOSEase }}
+							<motion.div
+								initial={{ opacity: 0, y: 12, filter: "blur(4px)" }}
+								animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+								transition={{ duration: 0.35, ease: iOSEase }}
+							className="mt-[--space-6]"
 						>
 							<Button
 								onClick={handleManualEnter}
