@@ -1,8 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { motion } from "framer-motion";
 import { CircleNotch } from "@phosphor-icons/react";
+import { motion } from "framer-motion";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
 	EmptyStateWithIllustration,
 	QuestionCard,
@@ -208,13 +208,13 @@ export function QuizView({
 				<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4 pb-20">
 					<Card size="sm" className="max-w-md w-full">
 						<CardContent className="flex flex-col items-center gap-4 p-8 text-left">
-<motion.div
-							animate={{ rotate: 360 }}
-							transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
-							className="w-12 h-3 mx-auto"
-						>
-							<CircleNotch className="size-12 text-muted-foreground" />
-						</motion.div>
+							<motion.div
+								animate={{ rotate: 360 }}
+								transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
+								className="w-12 h-3 mx-auto"
+							>
+								<CircleNotch className="size-12 text-muted-foreground" />
+							</motion.div>
 							<p className="text-muted-foreground">Loading questions...</p>
 						</CardContent>
 					</Card>

@@ -31,7 +31,9 @@ export function validateQuestion(question: Question): ValidationResult {
 
 	const minTextLen =
 		question.type === "essay" || question.type === "programming" ? 20 : 10;
-	errors.push(...checkLength(question.questionText, "questionText", minTextLen));
+	errors.push(
+		...checkLength(question.questionText, "questionText", minTextLen),
+	);
 	errors.push(...checkDifficulty(question.difficulty, "difficulty"));
 	errors.push(...checkPoints(question.points, "points"));
 
@@ -71,8 +73,7 @@ export function validateQuestion(question: Question): ValidationResult {
 			}
 
 			const optLengths = body.options.map((o) => o.text.length);
-			const avg =
-				optLengths.reduce((a, b) => a + b, 0) / optLengths.length;
+			const avg = optLengths.reduce((a, b) => a + b, 0) / optLengths.length;
 			const variance =
 				optLengths.reduce((s, l) => s + Math.pow(l - avg, 2), 0) /
 				optLengths.length;
@@ -86,8 +87,8 @@ export function validateQuestion(question: Question): ValidationResult {
 			}
 
 			if (
-				new Set(body.options.map((o) => o.text.toLowerCase().trim()))
-					.size !== body.options.length
+				new Set(body.options.map((o) => o.text.toLowerCase().trim())).size !==
+				body.options.length
 			) {
 				warnings.push({
 					type: "quality",
@@ -97,10 +98,7 @@ export function validateQuestion(question: Question): ValidationResult {
 				});
 			}
 
-			if (
-				!question.explanation ||
-				question.explanation.trim().length < 10
-			) {
+			if (!question.explanation || question.explanation.trim().length < 10) {
 				warnings.push({
 					type: "schema",
 					field: "explanation",
@@ -142,10 +140,7 @@ export function validateQuestion(question: Question): ValidationResult {
 
 		case "short-answer": {
 			const body = question.body as QuestionBody["short-answer"];
-			if (
-				!body.modelAnswer ||
-				body.modelAnswer.trim().length < 3
-			) {
+			if (!body.modelAnswer || body.modelAnswer.trim().length < 3) {
 				errors.push({
 					type: "schema",
 					field: "modelAnswer",
@@ -154,10 +149,7 @@ export function validateQuestion(question: Question): ValidationResult {
 				});
 			}
 
-			if (
-				!body.acceptableAnswers ||
-				body.acceptableAnswers.length === 0
-			) {
+			if (!body.acceptableAnswers || body.acceptableAnswers.length === 0) {
 				warnings.push({
 					type: "quality",
 					field: "acceptableAnswers",
@@ -166,10 +158,7 @@ export function validateQuestion(question: Question): ValidationResult {
 				});
 			}
 
-			if (
-				!question.explanation ||
-				question.explanation.trim().length < 10
-			) {
+			if (!question.explanation || question.explanation.trim().length < 10) {
 				warnings.push({
 					type: "schema",
 					field: "explanation",
@@ -192,10 +181,7 @@ export function validateQuestion(question: Question): ValidationResult {
 			}
 
 			if (body.rubric) {
-				const totalMax = body.rubric.reduce(
-					(s, r) => s + r.maxScore,
-					0,
-				);
+				const totalMax = body.rubric.reduce((s, r) => s + r.maxScore, 0);
 				if (totalMax <= 0) {
 					errors.push({
 						type: "consistency",
@@ -215,10 +201,7 @@ export function validateQuestion(question: Question): ValidationResult {
 				});
 			}
 
-			if (
-				!body.modelAnswer ||
-				body.modelAnswer.trim().length < 20
-			) {
+			if (!body.modelAnswer || body.modelAnswer.trim().length < 20) {
 				warnings.push({
 					type: "quality",
 					field: "modelAnswer",
@@ -240,10 +223,7 @@ export function validateQuestion(question: Question): ValidationResult {
 				});
 			}
 
-			if (
-				!body.modelAnswer ||
-				body.modelAnswer.trim().length < 50
-			) {
+			if (!body.modelAnswer || body.modelAnswer.trim().length < 50) {
 				warnings.push({
 					type: "quality",
 					field: "modelAnswer",
@@ -265,10 +245,7 @@ export function validateQuestion(question: Question): ValidationResult {
 
 		case "calculation": {
 			const body = question.body as QuestionBody["calculation"];
-			if (
-				body.correctValue == null ||
-				isNaN(body.correctValue)
-			) {
+			if (body.correctValue == null || isNaN(body.correctValue)) {
 				errors.push({
 					type: "schema",
 					field: "correctValue",
@@ -277,10 +254,7 @@ export function validateQuestion(question: Question): ValidationResult {
 				});
 			}
 
-			if (
-				!body.unit ||
-				body.unit.trim().length === 0
-			) {
+			if (!body.unit || body.unit.trim().length === 0) {
 				errors.push({
 					type: "schema",
 					field: "unit",
@@ -298,10 +272,7 @@ export function validateQuestion(question: Question): ValidationResult {
 				});
 			}
 
-			if (
-				!body.formula ||
-				body.formula.trim().length < 3
-			) {
+			if (!body.formula || body.formula.trim().length < 3) {
 				warnings.push({
 					type: "quality",
 					field: "formula",
@@ -332,10 +303,7 @@ export function validateQuestion(question: Question): ValidationResult {
 				});
 			}
 
-			if (
-				body.diagramData &&
-				!body.diagramData.type
-			) {
+			if (body.diagramData && !body.diagramData.type) {
 				errors.push({
 					type: "schema",
 					field: "diagramType",
@@ -344,10 +312,7 @@ export function validateQuestion(question: Question): ValidationResult {
 				});
 			}
 
-			if (
-				!body.instructions ||
-				body.instructions.trim().length < 5
-			) {
+			if (!body.instructions || body.instructions.trim().length < 5) {
 				errors.push({
 					type: "schema",
 					field: "instructions",
@@ -369,10 +334,7 @@ export function validateQuestion(question: Question): ValidationResult {
 				});
 			}
 
-			if (
-				!body.source?.content ||
-				body.source.content.trim().length < 10
-			) {
+			if (!body.source?.content || body.source.content.trim().length < 10) {
 				errors.push({
 					type: "schema",
 					field: "sourceContent",
@@ -381,10 +343,7 @@ export function validateQuestion(question: Question): ValidationResult {
 				});
 			}
 
-			if (
-				!body.subQuestions ||
-				body.subQuestions.length < 1
-			) {
+			if (!body.subQuestions || body.subQuestions.length < 1) {
 				errors.push({
 					type: "schema",
 					field: "subQuestions",
@@ -406,10 +365,7 @@ export function validateQuestion(question: Question): ValidationResult {
 				});
 			}
 
-			if (
-				!body.testCases ||
-				body.testCases.length === 0
-			) {
+			if (!body.testCases || body.testCases.length === 0) {
 				errors.push({
 					type: "schema",
 					field: "testCases",
@@ -454,10 +410,7 @@ export function validateQuestion(question: Question): ValidationResult {
 				});
 			}
 
-			if (
-				!body.questions ||
-				body.questions.length < 1
-			) {
+			if (!body.questions || body.questions.length < 1) {
 				errors.push({
 					type: "schema",
 					field: "questions",
@@ -480,10 +433,7 @@ export function validateQuestion(question: Question): ValidationResult {
 			}
 
 			if (body.parts) {
-				const totalPoints = body.parts.reduce(
-					(s, p) => s + (p.points || 0),
-					0,
-				);
+				const totalPoints = body.parts.reduce((s, p) => s + (p.points || 0), 0);
 				if (totalPoints !== question.points) {
 					warnings.push({
 						type: "consistency",

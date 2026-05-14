@@ -1,6 +1,6 @@
+import { CircleNotch } from "@phosphor-icons/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { CircleNotch } from "@phosphor-icons/react";
 
 export function LoadingIndicator() {
 	const loadingMessages = [

@@ -1,8 +1,12 @@
 "use client";
 
+import {
+	CircleNotch,
+	MagnifyingGlass,
+	WarningCircle,
+} from "@phosphor-icons/react";
 import { AnimatePresence, m, motion } from "framer-motion";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { CircleNotch, WarningCircle, MagnifyingGlass } from "@phosphor-icons/react";
 import { Anim } from "@/components/shared/anim";
 import { ProgressDots } from "@/components/shared/progress-dots";
 import { Card, CardContent } from "@/components/ui/card";

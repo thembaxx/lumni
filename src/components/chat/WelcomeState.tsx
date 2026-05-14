@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
 import { Sparkle } from "@phosphor-icons/react";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { iOSEase } from "@/lib/utils/animation";
 

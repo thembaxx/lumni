@@ -143,7 +143,7 @@ export function ChatInput({
 							<DropdownListTrigger
 								className={cn(
 									"inline-flex shrink-0 items-center justify-center rounded-md size-10",
-									"bg-white hover:bg-secondary text-muted-foreground cursor-pointer shadow-sm border border-border/30",
+									"hover:bg-secondary text-muted-foreground cursor-pointer shadow-sm border border-border/30",
 									"transition-all active:scale-[0.96]",
 									"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-system-accent/50",
 									isLoading &&
@@ -179,7 +179,7 @@ export function ChatInput({
 							variant="ghost"
 							size="icon"
 							onClick={() => setVoiceDialogOpen(true)}
-							className="rounded-md bg-white hover:bg-secondary size-10 border border-border/40"
+							className="rounded-md hover:bg-secondary size-10 border border-border/40"
 							disabled={isLoading}
 						>
 							<Microphone
@@ -199,7 +199,7 @@ export function ChatInput({
 							}}
 							disabled={!input.trim() || isLoading}
 							className={cn(
-								"size-10 rounded-md bg-system-accent hover:bg-system-accent/90 shadow-level-2",
+								"size-10 rounded-md bg-system-accent text-white hover:bg-system-accent/90 shadow-level-2",
 								voicePressed && "scale-[0.95] brightness-90",
 							)}
 							aria-label="Send message"

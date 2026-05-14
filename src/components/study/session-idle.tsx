@@ -1,8 +1,8 @@
 "use client";
 
-import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
 import { SpinnerGap } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
+import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -43,7 +43,11 @@ export function SessionIdle({
 									{icon ?? (
 										<motion.div
 											animate={{ rotate: 360 }}
-											transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+											transition={{
+												duration: 1,
+												repeat: Infinity,
+												ease: "linear",
+											}}
 										>
 											<SpinnerGap className="size-16 mx-auto text-muted-foreground" />
 										</motion.div>

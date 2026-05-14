@@ -1,7 +1,6 @@
 "use client";
 
-import { Target } from "@phosphor-icons/react";
-import { CircleNotch } from "@phosphor-icons/react";
+import { CircleNotch, Target } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
 import { AnimatedDots } from "@/components/shared/animated-dots";
 import { Button } from "@/components/ui/button";

@@ -1,6 +1,7 @@
 "use client";
 
-import { Target, TrendUp } from "@phosphor-icons/react";
+import { CheckmarkCircle01Icon, Target01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import {
 	motion,
 	useMotionValue,
@@ -9,7 +10,6 @@ import {
 	useTransform,
 } from "framer-motion";
 import { useEffect } from "react";
-import { CircleNotch } from "@phosphor-icons/react";
 import { PerpetualFloat } from "@/components/shared/perpetual-float";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { iOSEase } from "@/lib/utils/animation";
@@ -22,7 +22,7 @@ interface StatsCardsProps {
 interface StatItemProps {
 	label: string;
 	value: number;
-	icon: React.ComponentType<{ className?: string }>;
+	icon: typeof CheckmarkCircle01Icon;
 	colorClass: string;
 	accentClass: string;
 	index: number;
@@ -76,18 +76,7 @@ function StatCard({
 				<CardHeader className="flex flex-col items-center justify-center border-t-0 px-5 pt-0">
 					<div className="relative flex items-center justify-center size-10 rounded-full bg-system-surface shadow-level-1">
 						<PerpetualFloat floatRange={2} speed={4}>
-							<motion.div
-								animate={{ rotate: 360 }}
-								transition={{
-									duration: 1.5,
-									repeat: Infinity,
-									ease: "linear",
-								}}
-							>
-								<CircleNotch
-									className={`size-5 ${colorClass}`}
-								/>
-							</motion.div>
+							<HugeiconsIcon icon={Icon} className={`size-5 ${colorClass}`} />
 						</PerpetualFloat>
 					</div>
 				</CardHeader>
@@ -113,7 +102,7 @@ export function StatsCards({ questionsAnswered, accuracy }: StatsCardsProps) {
 			<StatCard
 				label="Answered"
 				value={questionsAnswered}
-				icon={Target}
+				icon={CheckmarkCircle01Icon}
 				colorClass="text-info"
 				accentClass="bg-info"
 				index={0}
@@ -121,7 +110,7 @@ export function StatsCards({ questionsAnswered, accuracy }: StatsCardsProps) {
 			<StatCard
 				label="Accuracy"
 				value={accuracy}
-				icon={TrendUp}
+				icon={Target01Icon}
 				colorClass="text-success"
 				accentClass="bg-success"
 				index={1}

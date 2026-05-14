@@ -1,11 +1,16 @@
 "use client";
 
-import { CloudArrowUp, Database, Spinner, CheckCircle } from "@phosphor-icons/react";
+import {
+	CheckCircle,
+	CloudArrowUp,
+	Database,
+	Spinner,
+} from "@phosphor-icons/react";
+import { motion } from "framer-motion";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ListCell, ListGroup, ListSection } from "@/components/ui/list-cell";
 import { UploadButton } from "@/lib/uploadthing";
-import { motion } from "framer-motion";
 import { AnimatedIcon } from "@/lib/utils/icon-mapping";
 
 function formatSubjectName(subject: string): string {

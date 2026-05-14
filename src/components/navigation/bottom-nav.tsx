@@ -1,25 +1,25 @@
 "use client";
 
 import {
-	ChatDots,
-	House,
-	MonitorPlay,
-	Notebook,
-	User,
-} from "@phosphor-icons/react";
-
+	Chat01Icon,
+	Home01Icon,
+	Quiz01Icon,
+	Settings01Icon,
+	Task01Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { AnimatePresence, motion } from "framer-motion";
 import { usePathname } from "next/navigation";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { ChatDialog } from "@/components/dashboard/chat/chat-dialog";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { cn } from "@/lib/utils";
 
 interface NavItem {
 	id: string;
 	label: string;
-	icon: typeof House;
+	icon: typeof Home01Icon;
 	href: string;
 	badge?: number;
 }
@@ -28,31 +28,31 @@ const navItems: NavItem[] = [
 	{
 		id: "home",
 		label: "Home",
-		icon: House,
+		icon: Home01Icon,
 		href: "/dashboard",
 	},
 	{
 		id: "syllabus",
 		label: "Syllabus",
-		icon: Notebook,
+		icon: Quiz01Icon,
 		href: "/quiz",
 	},
 	{
 		id: "chat",
 		label: "Chat",
-		icon: ChatDots,
+		icon: Chat01Icon,
 		href: "",
 	},
 	{
 		id: "practice",
 		label: "Practice",
-		icon: MonitorPlay,
+		icon: Task01Icon,
 		href: "",
 	},
 	{
 		id: "settings",
 		label: "Settings",
-		icon: User,
+		icon: Settings01Icon,
 		href: "/settings",
 	},
 ];
@@ -67,25 +67,35 @@ function NavItemComponent({
 	onClick: () => void;
 }) {
 	return (
-		<Button
+		<motion.button
 			type="button"
-			variant="ghost"
 			onClick={onClick}
 			aria-current={isActive ? "page" : undefined}
-			className="[all:unset] flex flex-1 flex-col items-center justify-center gap-0.5 h-full min-w-0 transition-colors duration-150 relative cursor-pointer active:opacity-60"
+			className="flex flex-1 flex-col items-center justify-center gap-0.5 h-full min-w-0 relative cursor-pointer bg-transparent border-none outline-none p-0 m-0 text-inherit"
+			whileTap={{ scale: 0.96 }}
+			transition={{ type: "spring", duration: 0.25, bounce: 0 }}
 		>
-			<div className="relative flex items-center justify-center size-6">
-				{(() => {
-					const Icon = item.icon;
-					return (
-						<Icon
-							className={cn(
-								"size-[25px] transition-colors duration-200",
-								isActive ? "text-system-accent" : "text-system-text-tertiary",
-							)}
-						/>
-					);
-				})()}
+			<AnimatePresence initial={false} mode="wait">
+				{isActive && (
+					<motion.div
+						layoutId="activeIndicator"
+						className="absolute inset-0 mx-1.5 mb-1 rounded-md bg-system-accent/10"
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+						transition={{ duration: 0.2 }}
+					/>
+				)}
+			</AnimatePresence>
+			<div className="relative z-10 flex items-center justify-center size-6 mb-1.5">
+				<HugeiconsIcon
+					icon={item.icon}
+					className={cn(
+						"size-[22px] transition-[transform,color] duration-200",
+						isActive && "scale-110",
+						isActive ? "text-system-accent" : "text-system-text-tertiary",
+					)}
+				/>
 				{item.badge !== undefined && item.badge > 0 && (
 					<Badge
 						variant="destructive"
@@ -97,13 +107,13 @@ function NavItemComponent({
 			</div>
 			<span
 				className={cn(
-					"text-[10px] font-medium leading-none tracking-[var(--tracking-caption-1)] uppercase transition-colors duration-200",
+					"text-[10px] font-medium leading-none text-center tracking-[var(--tracking-caption-1)] uppercase transition-colors duration-200 relative z-10",
 					isActive ? "text-system-accent" : "text-system-text-tertiary",
 				)}
 			>
 				{item.label}
 			</span>
-		</Button>
+		</motion.button>
 	);
 }
 
@@ -111,6 +121,41 @@ export function BottomNav() {
 	const pathname = usePathname();
 	const { push } = useNavigationDirection();
 	const [chatDialogOpen, setChatDialogOpen] = useState(false);
+	const [hidden, setHidden] = useState(false);
+	const [reducedMotion, setReducedMotion] = useState(false);
+
+	useEffect(() => {
+		const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+		setReducedMotion(mq.matches);
+		const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
+		mq.addEventListener("change", handler);
+		return () => mq.removeEventListener("change", handler);
+	}, []);
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies: re-run on route change to reset scroll/hidden state
+	useEffect(() => {
+		setHidden(false);
+
+		let lastY = window.scrollY;
+
+		const handleScroll = () => {
+			const currentY = window.scrollY;
+			const delta = lastY - currentY;
+
+			if (currentY <= 0) {
+				setHidden(false);
+			} else if (delta < -8) {
+				setHidden(true);
+			} else if (delta > 0) {
+				setHidden(false);
+			}
+
+			lastY = currentY;
+		};
+
+		window.addEventListener("scroll", handleScroll, { passive: true });
+		return () => window.removeEventListener("scroll", handleScroll);
+	}, [pathname]);
 
 	const activeIndex = useMemo(() => {
 		const index = navItems.findIndex((item) => {
@@ -142,9 +187,17 @@ export function BottomNav() {
 			<nav
 				aria-label="Main navigation"
 				className="fixed bottom-0 left-0 right-0 z-50 md:hidden w-full flex"
-				style={{ height: "calc(49px + env(safe-area-inset-bottom, 0px))" }}
+				style={{
+					height: "calc(49px + env(safe-area-inset-bottom, 0px))",
+					transform: hidden ? "translateY(100%)" : "translateY(0)",
+					transition: reducedMotion
+						? "none"
+						: hidden
+							? "transform 0.225s cubic-bezier(0.22, 1, 0.36, 1)"
+							: "transform 0.3s cubic-bezier(0.22, 1, 0.36, 1)",
+				}}
 			>
-				<div className="grid grid-cols-5 W w-full h-12.25 grow items-stretch bg-system-background/80 backdrop-blur-xl border-t border-system-separator/30">
+				<div className="grid grid-cols-5 w-full h-12.25 grow items-stretch bg-system-background/80 backdrop-blur-xl border-t border-system-separator/30">
 					{navItems.map((item, index) => (
 						<NavItemComponent
 							key={item.id}

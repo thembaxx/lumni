@@ -1,8 +1,7 @@
 "use client";
 
-import { useReducedMotion } from "framer-motion";
-import { motion } from "framer-motion";
 import { SpinnerGap } from "@phosphor-icons/react";
+import { motion, useReducedMotion } from "framer-motion";
 import type { VisualContent as VisualContentType } from "@/lib/visual-engine/types";
 import { DiagramRenderer } from "./diagram-renderer";
 import { ImageViewer } from "./image-viewer";

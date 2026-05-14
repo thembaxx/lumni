@@ -109,8 +109,8 @@ async function ensureCollectionSchema(collectionId: string): Promise<{
 				APPWRITE_DATABASE_ID,
 				collectionId,
 				idx.key,
-			idx.type as unknown as DatabasesIndexType,
-			idx.attributes,
+				idx.type as unknown as DatabasesIndexType,
+				idx.attributes,
 			);
 			indexesCreated++;
 		} catch (e) {

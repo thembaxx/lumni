@@ -15,10 +15,7 @@ type GradeFn = (
 	prompts: PromptManager,
 ) => GradingResult | Promise<GradingResult>;
 
-type HintFn = (
-	q: Question,
-	prompts: PromptManager,
-) => string | Promise<string>;
+type HintFn = (q: Question, prompts: PromptManager) => string | Promise<string>;
 
 export interface ProcessorConfig {
 	type: string;
@@ -87,8 +84,7 @@ function calcGrader(q: Question, a: UserAnswer): GradingResult {
 	}
 	const numericDiff = Math.abs(studentAnswer.value - body.correctValue);
 	const unitCorrect = studentAnswer.unit
-		? studentAnswer.unit.toLowerCase().trim() ===
-			body.unit.toLowerCase().trim()
+		? studentAnswer.unit.toLowerCase().trim() === body.unit.toLowerCase().trim()
 		: true;
 	const valueCorrect = numericDiff <= body.tolerance;
 	if (valueCorrect && !unitCorrect) {
@@ -217,15 +213,10 @@ function longAnswerGrader(
 			feedback: `Answer too short (${words} words, minimum ${body.minWords}).`,
 		});
 	}
-	return aiGradeResult(
-		q,
-		a,
-		prompts,
-		(q: Question, _a: UserAnswer) => {
-			const b = q.body as QuestionBody["long-answer"];
-			return `Question: ${q.questionText}\nRubric: ${JSON.stringify(b.rubric)}\nStudent: ${_a.value as string}`;
-		},
-	);
+	return aiGradeResult(q, a, prompts, (q: Question, _a: UserAnswer) => {
+		const b = q.body as QuestionBody["long-answer"];
+		return `Question: ${q.questionText}\nRubric: ${JSON.stringify(b.rubric)}\nStudent: ${_a.value as string}`;
+	});
 }
 
 function essayGrader(
@@ -242,15 +233,10 @@ function essayGrader(
 			feedback: "Essay is too short to grade.",
 		});
 	}
-	return aiGradeResult(
-		q,
-		a,
-		prompts,
-		(q: Question, _a: UserAnswer) => {
-			const b = q.body as QuestionBody["essay"];
-			return `Question: ${q.questionText}\nRubric: ${JSON.stringify(b.rubric)}\nModel answer: ${b.modelAnswer}\nStudent essay: ${_a.value as string}`;
-		},
-	);
+	return aiGradeResult(q, a, prompts, (q: Question, _a: UserAnswer) => {
+		const b = q.body as QuestionBody["essay"];
+		return `Question: ${q.questionText}\nRubric: ${JSON.stringify(b.rubric)}\nModel answer: ${b.modelAnswer}\nStudent essay: ${_a.value as string}`;
+	});
 }
 
 // ----- hinters -----

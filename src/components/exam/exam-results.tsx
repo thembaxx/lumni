@@ -1,9 +1,8 @@
 "use client";
 
-import { ArrowLeft, Check, Flag, X } from "@phosphor-icons/react";
-import { useRouter } from "next/navigation";
-import { CheckCircle } from "@phosphor-icons/react";
+import { ArrowLeft, Check, CheckCircle, Flag, X } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";

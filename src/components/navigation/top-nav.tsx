@@ -9,7 +9,6 @@ import {
 	DropdownList,
 	DropdownListContent,
 	DropdownListItem,
-	DropdownListLabel,
 	DropdownListSeparator,
 	DropdownListTrigger,
 } from "@/components/ui/dropdown-menu";
@@ -93,7 +92,10 @@ export function TopNav({ title, className }: TopNavProps) {
 								<Avatar className="size-8 cursor-pointer ring-2 ring-transparent hover:ring-system-accent/30 transition-shadow">
 									{(user?.prefs as Record<string, unknown>)?.avatarUrl ? (
 										<AvatarImage
-											src={(user?.prefs as Record<string, unknown>).avatarUrl as string}
+											src={
+												(user?.prefs as Record<string, unknown>)
+													.avatarUrl as string
+											}
 											alt={user?.name || "User"}
 										/>
 									) : null}
@@ -103,47 +105,50 @@ export function TopNav({ title, className }: TopNavProps) {
 								</Avatar>
 							</DropdownListTrigger>
 							<DropdownListContent align="end" sideOffset={8} className="w-56">
-								<DropdownListLabel className="font-normal">
-									<div className="flex flex-col gap-0.5 py-1">
-										<span className="text-sm font-semibold text-foreground">
-											{user?.name || "User"}
-										</span>
-										<span className="text-xs text-muted-foreground">
-											{user?.email}
-										</span>
+								<div className="px-3 py-2.5 border-b border-border/30">
+									<div className="text-sm font-semibold text-foreground">
+										{user?.name || "Anonymous"}
 									</div>
-								</DropdownListLabel>
-								<DropdownListSeparator />
-								<DropdownListItem
-									onClick={() => {
-										window.location.href = "/settings?tab=profile";
-									}}
-								>
-									<User className="size-4" />
-									Profile
-								</DropdownListItem>
-								<DropdownListItem
-									onClick={() => {
-										window.location.href = "/settings";
-									}}
-								>
-									<svg
-										className="size-4"
-										viewBox="0 0 24 24"
-										fill="none"
-										stroke="currentColor"
-										strokeWidth="2"
+									<div className="text-xs text-muted-foreground mt-0.5">
+										{user?.email || "Email not available"}
+									</div>
+								</div>
+								<div className="p-1">
+									<DropdownListItem
+										className="rounded-md"
+										onClick={() => {
+											window.location.href = "/settings?tab=profile";
+										}}
 									>
-										<circle cx="12" cy="12" r="3" />
-										<path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
-									</svg>
-									Settings
-								</DropdownListItem>
+										<User className="size-4" />
+										View Profile
+									</DropdownListItem>
+									<DropdownListItem
+										className="rounded-md"
+										onClick={() => {
+											window.location.href = "/settings";
+										}}
+									>
+										<svg
+											className="size-4"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="currentColor"
+											strokeWidth="2"
+										>
+											<circle cx="12" cy="12" r="3" />
+											<path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+										</svg>
+										Settings
+									</DropdownListItem>
+								</div>
 								<DropdownListSeparator />
-								<DropdownListItem variant="destructive" onClick={handleSignOut}>
-									<SignOut className="size-4" />
-									Sign Out
-								</DropdownListItem>
+								<div className="p-1">
+									<DropdownListItem variant="destructive" onClick={handleSignOut}>
+										<SignOut className="size-4" />
+										Sign Out
+									</DropdownListItem>
+								</div>
 							</DropdownListContent>
 						</DropdownList>
 					)}

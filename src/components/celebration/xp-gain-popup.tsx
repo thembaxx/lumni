@@ -8,10 +8,7 @@ interface XPGainPopupProps {
 	visible: boolean;
 }
 
-export function XPGainPopup({
-	amount,
-	visible,
-}: XPGainPopupProps) {
+export function XPGainPopup({ amount, visible }: XPGainPopupProps) {
 	return (
 		<AnimatePresence initial={false}>
 			{visible && (

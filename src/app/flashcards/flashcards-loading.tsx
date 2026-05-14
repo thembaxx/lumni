@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { SpinnerGap } from "@phosphor-icons/react";
+import { motion } from "framer-motion";
 import { iOSEase } from "@/lib/utils/animation";
 
 export function FlashcardsLoading() {

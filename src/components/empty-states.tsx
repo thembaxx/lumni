@@ -1,5 +1,7 @@
 "use client";
 
+import { ChatCenteredText, CloudArrowUp } from "@phosphor-icons/react";
+import { motion } from "framer-motion";
 import {
 	BookOpen,
 	Headphones,
@@ -9,11 +11,9 @@ import {
 	Wifi,
 	WifiOff,
 } from "lucide-react";
-import { ChatCenteredText, CloudArrowUp } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { AnimatedIcon } from "@/lib/utils/icon-mapping";
-import { motion } from "framer-motion";
 
 interface EmptyStateProps {
 	icon: LucideIcon;
@@ -83,15 +83,17 @@ interface EmptyStateWithIllustrationProps {
 	animation?: "search" | "upload" | "error";
 }
 
-function AnimatedIllustration({ animation }: { animation: "search" | "upload" | "error" }) {
+function AnimatedIllustration({
+	animation,
+}: {
+	animation: "search" | "upload" | "error";
+}) {
 	const animationMap: Record<string, string> = {
 		search: "empty-search",
 		upload: "empty-upload",
 		error: "error-state",
 	};
-	return (
-		<AnimatedIcon name={animationMap[animation]} className="size-14" />
-	);
+	return <AnimatedIcon name={animationMap[animation]} className="size-14" />;
 }
 
 export function EmptyStateWithIllustration({

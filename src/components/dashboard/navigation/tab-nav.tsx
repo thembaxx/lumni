@@ -1,8 +1,7 @@
 "use client";
 
 import { GridFour, Snowflake, Sparkle } from "@phosphor-icons/react";
-import { m } from "framer-motion";
-import { motion } from "framer-motion";
+import { m, motion } from "framer-motion";
 import { startTransition, useState } from "react";
 import { Anim } from "@/components/shared/anim";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -88,15 +87,15 @@ export function TabNav({ activeTab, onTabChange }: TabNavProps) {
 								{tab.label}
 							</TabsTrigger>
 						))}
-<motion.div
-						key={tabSwitch}
-						initial={{ scale: 0, opacity: 0 }}
-						animate={{ scale: 1, opacity: 1 }}
-						transition={{ duration: 0.3, ease: iOSEase }}
-						className="absolute left-1/2 -translate-x-1/2 bottom-0 pointer-events-none"
-					>
-						<Sparkle className="size-6 text-warning" />
-					</motion.div>
+						<motion.div
+							key={tabSwitch}
+							initial={{ scale: 0, opacity: 0 }}
+							animate={{ scale: 1, opacity: 1 }}
+							transition={{ duration: 0.3, ease: iOSEase }}
+							className="absolute left-1/2 -translate-x-1/2 bottom-0 pointer-events-none"
+						>
+							<Sparkle className="size-6 text-warning" />
+						</motion.div>
 					</TabsList>
 				</m.div>
 			</Tabs>

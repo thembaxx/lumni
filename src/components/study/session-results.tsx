@@ -2,12 +2,10 @@
 
 import { ArrowCounterClockwise, House, Target } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
-import { AnimatedIcon } from "@/lib/utils/icon-mapping";
+import { AccuracyBar } from "@/components/shared/accuracy-bar";
 import { Button } from "@/components/ui/button";
-import {
-	AccuracyBar,
-} from "@/components/shared/accuracy-bar";
 import { iOSEase, springTransition } from "@/lib/utils/animation";
+import { AnimatedIcon } from "@/lib/utils/icon-mapping";
 import { calculateAccuracy } from "@/lib/utils/time";
 
 interface StudySessionStats {

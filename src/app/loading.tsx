@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { SpinnerGap } from "@phosphor-icons/react";
+import { motion } from "framer-motion";
 import { Skeleton } from "@/components/ui/skeleton";
 import { iOSEase } from "@/lib/utils/animation";
 

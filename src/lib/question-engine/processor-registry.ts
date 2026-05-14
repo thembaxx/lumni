@@ -1,6 +1,6 @@
-import { PromptManager } from "./prompt-manager";
-import { processorConfigs } from "./processors/processor-configs";
 import { TypedQuestionProcessor } from "./processors/processor";
+import { processorConfigs } from "./processors/processor-configs";
+import { PromptManager } from "./prompt-manager";
 import type { QuestionProcessor, QuestionType } from "./types";
 
 export class ProcessorRegistry {

@@ -2,19 +2,19 @@ import {
 	ArrowLeft,
 	CheckCircle,
 	CircleNotch,
-	Confetti as PhosphorConfetti,
 	Crown,
 	Flame,
 	MagnifyingGlass,
+	Confetti as PhosphorConfetti,
+	Sparkle,
 	SpinnerGap,
 	Trophy,
 	UploadSimple,
 	WarningCircle,
 	XCircle,
-	Sparkle,
 } from "@phosphor-icons/react";
-import type { ComponentProps } from "react";
 import { motion } from "framer-motion";
+import type { ComponentProps } from "react";
 
 export type AnimationPreset =
 	| "spin"
@@ -26,8 +26,14 @@ export type AnimationPreset =
 	| "sway";
 
 export const iconAnimations = {
-	spin: { rotate: 360, transition: { duration: 1, repeat: Infinity, ease: "linear" } },
-	pulse: { scale: [1, 1.1, 1], transition: { duration: 1.5, repeat: Infinity } },
+	spin: {
+		rotate: 360,
+		transition: { duration: 1, repeat: Infinity, ease: "linear" },
+	},
+	pulse: {
+		scale: [1, 1.1, 1],
+		transition: { duration: 1.5, repeat: Infinity },
+	},
 	bounce: { y: [0, -10, 0], transition: { duration: 0.6, repeat: Infinity } },
 	shake: { x: [-5, 5, -5, 5, 0], transition: { duration: 0.4 } },
 	scale: { scale: [0, 1.2, 1], transition: { duration: 0.3 } },
@@ -39,7 +45,10 @@ interface IconMappingEntry {
 	animation?: AnimationPreset;
 }
 
-const animationPresets: Record<AnimationPreset, ComponentProps<typeof motion.div>["animate"]> = {
+const animationPresets: Record<
+	AnimationPreset,
+	ComponentProps<typeof motion.div>["animate"]
+> = {
 	spin: { rotate: 360 },
 	pulse: { scale: [1, 1.1, 1] },
 	bounce: { y: [0, -10, 0] },
@@ -49,7 +58,10 @@ const animationPresets: Record<AnimationPreset, ComponentProps<typeof motion.div
 	sway: { rotate: [0, 5, -5, 0] },
 };
 
-const animationTransitions: Record<AnimationPreset, ComponentProps<typeof motion.div>["transition"]> = {
+const animationTransitions: Record<
+	AnimationPreset,
+	ComponentProps<typeof motion.div>["transition"]
+> = {
 	spin: { duration: 1, repeat: Infinity, ease: "linear" },
 	pulse: { duration: 1.5, repeat: Infinity },
 	bounce: { duration: 0.6, repeat: Infinity },
@@ -79,9 +91,7 @@ const animationMapping: Record<string, IconMappingEntry> = {
 
 export type LottieAnimationName = keyof typeof animationMapping;
 
-export function getIconMapping(
-	name: string,
-): IconMappingEntry | undefined {
+export function getIconMapping(name: string): IconMappingEntry | undefined {
 	return animationMapping[name];
 }
 
@@ -102,9 +112,7 @@ export function AnimatedIcon({
 	const hasAnimation = !!animation;
 	const shouldLoop = loop && hasAnimation;
 
-	const animateProps = animation
-		? animationPresets[animation]
-		: undefined;
+	const animateProps = animation ? animationPresets[animation] : undefined;
 	const transitionProps = animation
 		? { ...animationTransitions[animation], repeat: shouldLoop ? Infinity : 0 }
 		: undefined;

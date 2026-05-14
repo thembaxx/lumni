@@ -1,8 +1,7 @@
 "use client";
 
-import { ArrowsClockwise, House } from "@phosphor-icons/react";
+import { ArrowsClockwise, CheckCircle, House } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
-import { CheckCircle } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import { iOSEase } from "@/lib/utils/animation";
 import { AnimatedIcon } from "@/lib/utils/icon-mapping";

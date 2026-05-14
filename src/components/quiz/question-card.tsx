@@ -1,10 +1,15 @@
 "use client";
 
-import { CheckCircle, CircleNotch, Minus, Plus, X } from "@phosphor-icons/react";
+import {
+	CheckCircle,
+	CircleNotch,
+	Minus,
+	Plus,
+	X,
+} from "@phosphor-icons/react";
 import { AnimatePresence, m, motion } from "framer-motion";
 import { useCallback, useState } from "react";
 import { Confetti, XPGainPopup } from "@/components/celebration";
-import { AnimatedIcon, getIconMapping } from "@/lib/utils/icon-mapping";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Anim } from "@/components/shared/anim";
 import { DifficultyBadge } from "@/components/shared/difficulty-badge";
@@ -30,6 +35,7 @@ import { useQuestionEngine } from "@/hooks/use-question-engine";
 import { useVisualEngine } from "@/hooks/use-visual-engine";
 import { cn } from "@/lib/utils";
 import { iOSEase } from "@/lib/utils/animation";
+import { AnimatedIcon, getIconMapping } from "@/lib/utils/icon-mapping";
 import type { Question, QuestionState, UserAnswer } from "@/types/questions";
 import { QuestionDiagram } from "./question-diagram";
 import { StepByStep } from "./step-by-step";

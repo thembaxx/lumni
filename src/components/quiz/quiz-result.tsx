@@ -8,11 +8,11 @@ import {
 	useSpring,
 	useTransform,
 } from "framer-motion";
-import { AnimatedIcon } from "@/lib/utils/icon-mapping";
 import { AccuracyBar } from "@/components/shared/accuracy-bar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { iOSEase, springTransition } from "@/lib/utils/animation";
+import { AnimatedIcon } from "@/lib/utils/icon-mapping";
 
 interface QuizResultProps {
 	results: {
@@ -111,11 +111,7 @@ function getMessage(accuracy: number) {
 	};
 }
 
-export function QuizResult({
-	results,
-	onRestart,
-	onClose,
-}: QuizResultProps) {
+export function QuizResult({ results, onRestart, onClose }: QuizResultProps) {
 	const { totalQuestions, correctAnswers, accuracy, incorrectAnswers } =
 		results;
 

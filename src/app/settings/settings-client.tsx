@@ -5,11 +5,11 @@ import {
 	Bell,
 	BookOpen,
 	ChatText,
+	CircleNotch,
 	Database,
 	PaintBrush,
 	User,
 } from "@phosphor-icons/react";
-import { CircleNotch } from "@phosphor-icons/react";
 
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
@@ -193,9 +193,7 @@ function SettingsContent() {
 							}}
 							className="w-full"
 						>
-							{activeTab === "profile" && (
-								<ProfileTab />
-							)}
+							{activeTab === "profile" && <ProfileTab />}
 
 							{activeTab === "appearance" && <AppearanceTab />}
 
