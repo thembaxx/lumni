@@ -2,7 +2,7 @@
 
 **Date:** 2026-05-13
 **Status:** Living Document
-**Stack:** Next.js 16 + Tailwind CSS v4 + Framer Motion + Geist + Hugeicons
+**Stack:** Next.js 16 + Tailwind CSS v4 + Framer Motion + Geist + Phosphor Icons
 
 ---
 
@@ -66,8 +66,7 @@ Dark mode raises lightness (`oklch(98%)` base) and reverses luminosity stacking:
 
 | Token | OKLCH Value | Role |
 |---|---|---|
-| `--system-accent` | `oklch(55% 0.18 264)` | Purple — interactive elements, active tab, link |
-| `--system-accent-secondary` | `oklch(75% 0.15 85)` | Gold — secondary branding, highlights, progression |
+| `--system-accent` | `oklch(52% 0.18 146)` | Emerald — interactive elements, active tab, link |
 
 Alpha variants: `--system-accent-alpha-10/20/30` for backgrounds, selected states, hover fills.
 
@@ -82,7 +81,7 @@ Alpha variants: `--system-accent-alpha-10/20/30` for backgrounds, selected state
 
 ### Chart Colors
 
-Five tokens (`--chart-1` through `--chart-5`) covering green, purple, gold, blue, red — designed to be distinguishable by hue alone and accessible to deuteranopia.
+Five tokens (`--chart-1` through `--chart-5`) covering emerald, green, amber, blue, red — designed to be distinguishable by hue alone and accessible to deuteranopia.
 
 ### Dark Mode Elevation Rule
 
@@ -268,7 +267,7 @@ Items: Home, Syllabus, Chat, Practice, Settings.
 - **Collapse behavior:** Title shrinks from 34px large-title to 16px headline on scrollY > 20px
 - **Background:** Transparent at top → `bg-system-background/90 backdrop-blur-xl` when collapsed
 - **Separator:** 0.5px hairline that fades in on collapse
-- **Back button:** Hugeicons `ArrowLeft01Icon`, 20px, `text-system-accent`, -ml-1.5 offset to match iOS back chevron position
+- **Back button:** Hugeicons `ArrowLeft01Icon` (via `@hugeicons/core-free-icons`), 20px, `text-system-accent`, -ml-1.5 offset to match iOS back chevron position
 - **Subtitle:** Hidden when collapsed
 - **Bottom section:** Slot for tabs/search (hidden when collapsed)
 
@@ -290,12 +289,11 @@ Two systems coexist:
 
 ## 6. Iconography
 
-### Primary Library: Hugeicons
+### Primary Library: Phosphor Icons
 
 | Variant | Usage | Props |
 |---|---|---|
-| Filled style | Tab bar navigation icons | Default import from `@hugeicons/core-free-icons`, 25px |
-| Outlined + strokeWidth={2} | Action buttons, inline UI | `strokeWidth={2}`, 16–20px |
+| Outline (default) | Tab bar navigation icons, action buttons, inline UI | Default import from `@phosphor-icons/react`, 25px tab bar, 16–20px inline |
 | Decorative | aria-hidden | Always add `aria-hidden="true"` |
 
 ### Size Conventions
@@ -310,13 +308,12 @@ Two systems coexist:
 
 ### Rendering
 
-Uses `@hugeicons/react` `HugeiconsIcon` component:
+Icons are imported by name from `@phosphor-icons/react`:
 
 ```tsx
-import { Home01Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { House, Notebook } from "@phosphor-icons/react";
 
-<HugeiconsIcon icon={Home01Icon} className="size-5" aria-hidden="true" strokeWidth={2} />
+<House className="size-5" aria-hidden="true" />
 ```
 
 ---
@@ -391,8 +388,8 @@ Named view-transition names: `practice-trigger`, `root`.
 | `.glass-ultra-thin` | 30% white | 10px | Subtle backdrop on light elements |
 | `.glass-thin` | 60% white | 20px | Navigation bars, toolbars |
 | `.glass-regular` | 80% white | 30px | Sheet backgrounds |
-| `.glass-thick` | 92% white | 40px | Popovers, contextual menus |
-| `.glass-ultra-thick` | 97% white | 40px | Heavy foreground panels |
+| `.glass-card` | 12% white | 20px | Card backgrounds, 1px separator |
+| `.glass-card-strong` | 20% white | 30px | Elevated card backgrounds, 1px separator |
 
 Dark mode variants use dark-tinted backgrounds (`oklch(10%)` to `oklch(20%)`).
 
@@ -534,10 +531,10 @@ import { pageSlideVariants, iOSDecelerate } from "@/lib/utils/animation";
 | Surface colors | 2 | `--system-surface*` |
 | Fill colors | 2 | `--system-fill*` |
 | Text colors | 4 | `--system-text-primary` through `--label-quaternary` |
-| Accent colors | 2 + 3 alpha | `--system-accent*` |
+| Accent colors | 1 + 3 alpha | `--system-accent*` |
 | Semantic colors | 4 | `--system-success`, `--system-destructive`, `--warning`, `--info` |
 | Chart colors | 5 | `--chart-1` through `--chart-5` |
-| Material tiers | 7 | `--material-*` |
+| Material tiers | 6 | `--material-*` |
 | Shadow levels | 3 | `--shadow-level-*` |
 | Spacing | 12 | `--space-*` (4px–64px) |
 | Font sizes | 11 | `--fs-*` (34px–11px) |

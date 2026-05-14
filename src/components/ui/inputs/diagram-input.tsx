@@ -46,8 +46,8 @@ export function DiagramInput({ value, onChange, disabled }: DiagramInputProps) {
 					{!disabled && (
 						<Button
 							variant="destructive"
-							size="icon"
-							className="absolute top-1 right-1 h-6 w-6"
+							size="icon-sm"
+							className="absolute top-1 right-1"
 							onClick={handleClear}
 						>
 							<TrashSimple data-icon />

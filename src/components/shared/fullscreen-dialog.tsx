@@ -57,8 +57,8 @@ export function FullscreenDialog({
 						{headerChildren}
 						<Button
 							variant="ghost"
-							size="icon"
-							className="size-8 shrink-0"
+							size="icon-sm"
+							className="shrink-0"
 							onClick={handleClose}
 							aria-label="Close"
 						>

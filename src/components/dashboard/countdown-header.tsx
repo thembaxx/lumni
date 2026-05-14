@@ -53,12 +53,12 @@ const phaseConfigs: Record<
 > = {
 	foundation: {
 		glowClass: "bg-system-accent/10",
-		glow2Class: "bg-system-accent-secondary/10",
+		glow2Class: "bg-system-accent/5",
 		barLight: "bg-system-accent",
 	},
 	grind: {
 		glowClass: "bg-system-accent/15",
-		glow2Class: "bg-system-accent-secondary/15",
+		glow2Class: "bg-system-accent/8",
 		barLight: "bg-system-accent",
 	},
 	intensify: {

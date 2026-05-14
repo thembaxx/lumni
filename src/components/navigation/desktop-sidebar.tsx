@@ -26,7 +26,7 @@ interface SidebarItem {
 const sidebarItems: SidebarItem[] = [
 	{
 		id: "home",
-		label: "House",
+		label: "Home",
 		icon: House,
 		href: "/dashboard",
 	},

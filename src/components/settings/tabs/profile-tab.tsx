@@ -57,11 +57,11 @@ export function ProfileTab({ user, onSignOut }: ProfileTabProps) {
 			</ListSection>
 
 			<div className="px-2 pt-4">
-				<Button
-					size="sm"
-					variant="destructive"
-					onClick={onSignOut}
-					className="w-full h-11 rounded-lg font-medium text-sm shadow-level-2 transition-[transform,opacity] active:scale-[0.96]"
+<Button
+				size="default"
+				variant="destructive"
+				onClick={onSignOut}
+				className="w-full rounded-lg font-medium text-sm shadow-level-2 transition-[transform,opacity] active:scale-[0.96]"
 				>
 					<SignOut data-icon />
 					Sign Out
