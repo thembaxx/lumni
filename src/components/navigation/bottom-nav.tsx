@@ -11,7 +11,6 @@ import {
 import { usePathname } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
 import { ChatDialog } from "@/components/dashboard/chat/chat-dialog";
-import { PracticeSheet } from "@/components/dashboard/practice/practice-sheet";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
@@ -111,7 +110,6 @@ function NavItemComponent({
 export function BottomNav() {
 	const pathname = usePathname();
 	const { push } = useNavigationDirection();
-	const [practiceDrawerOpen, setPracticeDrawerOpen] = useState(false);
 	const [chatDialogOpen, setChatDialogOpen] = useState(false);
 
 	const activeIndex = useMemo(() => {
@@ -129,7 +127,7 @@ export function BottomNav() {
 			if (item.id === "chat") {
 				setChatDialogOpen(true);
 			} else if (item.id === "practice") {
-				setPracticeDrawerOpen(true);
+				push("/dashboard");
 			} else {
 				push(item.href);
 			}
@@ -157,10 +155,6 @@ export function BottomNav() {
 					))}
 				</div>
 			</nav>
-			<PracticeSheet
-				open={practiceDrawerOpen}
-				onOpenChange={setPracticeDrawerOpen}
-			/>
 			<ChatDialog open={chatDialogOpen} onOpenChange={setChatDialogOpen} />
 		</>
 	);

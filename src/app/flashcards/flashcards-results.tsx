@@ -1,6 +1,6 @@
 "use client";
 
-import { House, ArrowCounterClockwise, Target } from "@phosphor-icons/react";
+import { ArrowCounterClockwise, House, Target } from "@phosphor-icons/react";
 import { Confetti } from "@/components/celebration";
 import { LottieWrapper } from "@/components/lottie/lottie-wrapper";
 import { Button } from "@/components/ui/button";
@@ -32,7 +32,9 @@ export function FlashcardsResults({
 					<div className="max-w-md w-full mx-auto">
 						<div className="space-y-4">
 							<header className="text-left">
-								<h2 className="text-xl font-bold tracking-tight">Session Complete!</h2>
+								<h2 className="text-xl font-bold tracking-tight">
+									Session Complete!
+								</h2>
 							</header>
 							<div className="grid grid-cols-12 gap-3">
 								<div className="col-span-8 sm:col-span-8 p-4 rounded-lg bg-muted">
@@ -62,7 +64,11 @@ export function FlashcardsResults({
 									</span>
 								</div>
 								<div className="col-span-12 flex gap-2">
-									<Button variant="outline" className="flex-1" onClick={onGoHouse}>
+									<Button
+										variant="outline"
+										className="flex-1"
+										onClick={onGoHouse}
+									>
 										<House className="size-4 mr-2" />
 										Dashboard
 									</Button>

@@ -1,7 +1,7 @@
 "use client";
 
+import { ArrowsClockwise, House } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
-import { House, ArrowsClockwise } from "@phosphor-icons/react";
 import { LottieWrapper } from "@/components/lottie";
 import { Button } from "@/components/ui/button";
 import { iOSEase } from "@/lib/utils/animation";
@@ -13,7 +13,7 @@ export default function Error({
 	error: Error & { digest?: string };
 	reset: () => void;
 }) {
-return (
+	return (
 		<div className="min-h-[100dvh] bg-[--system-background]">
 			<div className="grid grid-cols-12 gap-0 min-h-[100dvh]">
 				{/* Main content — left-aligned */}
@@ -45,7 +45,8 @@ return (
 								Something went wrong
 							</h2>
 							<p className="ios-callout text-[--system-text-secondary]">
-								{error.message || "An unexpected error occurred. Please try again."}
+								{error.message ||
+									"An unexpected error occurred. Please try again."}
 							</p>
 							{error.digest && (
 								<p className="ios-footnote text-[--system-text-tertiary] font-mono">

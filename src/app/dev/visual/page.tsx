@@ -124,9 +124,7 @@ export default function DevVisualPage() {
 
 			{error && (
 				<div className="rounded-[2.5rem] border border-destructive bg-destructive/5 overflow-hidden">
-					<div className="p-4 text-destructive text-sm">
-						{error}
-					</div>
+					<div className="p-4 text-destructive text-sm">{error}</div>
 				</div>
 			)}
 

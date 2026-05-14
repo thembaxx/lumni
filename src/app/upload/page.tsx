@@ -1,7 +1,6 @@
 "use client";
 
-import { CloudArrowUp, Database } from "@phosphor-icons/react";
-import { Spinner } from "@phosphor-icons/react";
+import { CloudArrowUp, Database, Spinner } from "@phosphor-icons/react";
 import { useState } from "react";
 import { LottieWrapper } from "@/components/lottie";
 import { Button } from "@/components/ui/button";
@@ -142,8 +141,8 @@ export default function UploadPage() {
 					<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
 						<header>
 							<h2 className="font-heading text-sm font-medium flex items-center gap-2">
-<Database className="size-4" />
-							Database
+								<Database className="size-4" />
+								Database
 							</h2>
 							<p className="text-xs/relaxed text-muted-foreground">
 								Seed the database with initial data

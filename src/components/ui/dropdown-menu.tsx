@@ -46,8 +46,8 @@ function DropdownMenuContent({
 					)}
 					{...props}
 				/>
-</ListPrimitive.Positioner>
-	</ListPrimitive.Portal>
+			</ListPrimitive.Positioner>
+		</ListPrimitive.Portal>
 	);
 }
 
@@ -121,7 +121,7 @@ function DropdownMenuSubTrigger({
 			{...props}
 		>
 			{children}
-<ArrowRight className="ml-auto" />
+			<ArrowRight className="ml-auto" />
 		</ListPrimitive.SubmenuTrigger>
 	);
 }

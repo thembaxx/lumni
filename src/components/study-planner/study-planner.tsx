@@ -3,9 +3,9 @@
 import {
 	BookOpen,
 	Calendar,
-	Check,
 	CaretLeft,
 	CaretRight,
+	Check,
 	Clock,
 	Plus,
 	TrashSimple,
@@ -379,7 +379,9 @@ function AddSessionModal({
 		<div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
 			<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors w-full max-w-md">
 				<header>
-					<h2 className="font-heading text-sm font-medium">Add Study Session</h2>
+					<h2 className="font-heading text-sm font-medium">
+						Add Study Session
+					</h2>
 				</header>
 				<div className="px-4 group-data-[size=sm]/card:px-3 space-y-4">
 					<div>

@@ -159,30 +159,30 @@ export default function DevEnginePage() {
 									key={q.id}
 									className="px-4 group-data-[size=sm]/card:px-3 p-3 space-y-2"
 								>
-										<div className="flex items-center gap-2 flex-wrap">
-											<Badge variant="outline" className="text-xs">
-												{q.type}
-											</Badge>
-											<Badge variant="secondary" className="text-xs">
-												{q.difficulty}
-											</Badge>
-											<span className="text-xs text-muted-foreground">
-												{q.points} pts
-											</span>
-										</div>
-										<div className="text-sm">
-											<MarkdownRenderer
-												content={q.questionText}
-												subject={subject}
-											/>
-										</div>
-										<div className="text-xs text-muted-foreground line-clamp-2">
-											Hint: {q.hint}
+									<div className="flex items-center gap-2 flex-wrap">
+										<Badge variant="outline" className="text-xs">
+											{q.type}
+										</Badge>
+										<Badge variant="secondary" className="text-xs">
+											{q.difficulty}
+										</Badge>
+										<span className="text-xs text-muted-foreground">
+											{q.points} pts
+										</span>
+									</div>
+									<div className="text-sm">
+										<MarkdownRenderer
+											content={q.questionText}
+											subject={subject}
+										/>
+									</div>
+									<div className="text-xs text-muted-foreground line-clamp-2">
+										Hint: {q.hint}
 										<div className="flex gap-2 flex-wrap">
-												<Button
-													size="sm"
-													variant="outline"
-													onClick={() => handleGrade(q)}
+											<Button
+												size="sm"
+												variant="outline"
+												onClick={() => handleGrade(q)}
 												disabled={!!grading[q.id]}
 											>
 												{grading[q.id]
@@ -203,7 +203,9 @@ export default function DevEnginePage() {
 
 					<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
 						<header className="rounded-t-[2.5rem] border-t border-border/80 p-4 pb-2">
-							<h2 className="font-heading text-sm font-medium text-sm">Raw Response</h2>
+							<h2 className="font-heading text-sm font-medium text-sm">
+								Raw Response
+							</h2>
 						</header>
 						<div className="px-4 group-data-[size=sm]/card:px-3 p-4 pt-0">
 							<Textarea

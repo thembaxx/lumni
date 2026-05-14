@@ -1,15 +1,15 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
 import {
+	ArrowCounterClockwise,
 	Check,
 	Microphone,
 	MicrophoneSlash,
+	PaperPlaneRight,
 	Pause,
 	Play,
-	ArrowCounterClockwise,
-	PaperPlaneRight,
 } from "@phosphor-icons/react";
+import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { LiveWaveform } from "@/components/ui/live-waveform";
@@ -135,9 +135,9 @@ export function VoiceRecorder({
 				<span
 					className={cn(
 						"text-xs uppercase tracking-widest font-medium transition-colors duration-200",
-sendSuccess
-						? "text-success dark:text-success-foreground"
-						: isRecording
+						sendSuccess
+							? "text-success dark:text-success-foreground"
+							: isRecording
 								? "text-destructive animate-pulse"
 								: isPlaying
 									? "text-[--system-accent] animate-pulse"
@@ -265,9 +265,9 @@ sendSuccess
 				}
 				className={cn(
 					"mt-2 w-full rounded-lg",
-sendSuccess
-					? "bg-success text-primary-foreground hover:bg-success/90"
-					: !isRecording && audioBlob && !isTooShort && !isTooLong
+					sendSuccess
+						? "bg-success text-primary-foreground hover:bg-success/90"
+						: !isRecording && audioBlob && !isTooShort && !isTooLong
 							? "bg-[--system-accent] text-background hover:opacity-90"
 							: "bg-muted/50 text-muted-foreground/50",
 				)}

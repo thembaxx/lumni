@@ -1,12 +1,7 @@
 "use client";
 
 import { Select as SelectPrimitive } from "@base-ui/react/select";
-import {
-	ArrowDown,
-	ArrowUp,
-	Check,
-	CaretUpDown,
-} from "@phosphor-icons/react";
+import { ArrowDown, ArrowUp, CaretUpDown, Check } from "@phosphor-icons/react";
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
@@ -53,7 +48,7 @@ function SelectTrigger({
 			{children}
 			<SelectPrimitive.Icon
 				render={
-<CaretUpDown className="pointer-events-none size-3.5 text-muted-foreground" />
+					<CaretUpDown className="pointer-events-none size-3.5 text-muted-foreground" />
 				}
 			/>
 		</SelectPrimitive.Trigger>

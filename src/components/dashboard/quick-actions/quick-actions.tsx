@@ -1,7 +1,8 @@
 "use client";
 
-import { Book, FileText, Lightbulb, MapTrifold } from "@phosphor-icons/react";
+import { Book, FileText, MapTrifold } from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "framer-motion";
+import { useRouter } from "next/navigation";
 import { StudyPlanSheet } from "@/components/dashboard/study-plan-sheet";
 import { LessonsButton } from "@/components/lesson";
 import { PerpetualFloat } from "@/components/shared/perpetual-float";
@@ -9,9 +10,8 @@ import { Button } from "@/components/ui/button";
 import { iOSEase } from "@/lib/utils/animation";
 
 const quickActions = [
-	{ icon: FileText, label: "Exams" },
+	{ icon: FileText, label: "Exams", route: "/dashboard/exams" },
 	{ icon: MapTrifold, label: "Study Plan" },
-	{ icon: Lightbulb, label: "Practice" },
 	{ icon: Book, label: "Lessons" },
 ];
 
@@ -52,11 +52,9 @@ function ActionButton({
 	);
 }
 
-export function QuickActions({
-	onPracticeClick,
-}: {
-	onPracticeClick?: () => void;
-}) {
+export function QuickActions() {
+	const router = useRouter();
+
 	return (
 		<div className="w-full">
 			<ul className="flex items-center gap-3 overflow-x-auto scrollbar-hide py-1">
@@ -66,22 +64,13 @@ export function QuickActions({
 							<StudyPlanSheet />
 						) : action.label === "Lessons" ? (
 							<LessonsButton />
-						) : action.label === "Practice" ? (
-							<div style={{ viewTransitionName: "practice-trigger" as string }}>
-								<ActionButton
-									icon={
-										action.icon as React.ComponentType<{ className?: string }>
-									}
-									label={action.label}
-									onClick={onPracticeClick}
-								/>
-							</div>
 						) : (
 							<ActionButton
 								icon={
 									action.icon as React.ComponentType<{ className?: string }>
 								}
 								label={action.label}
+								onClick={() => router.push(action.route!)}
 							/>
 						)}
 					</li>

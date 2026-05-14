@@ -1,5 +1,6 @@
 "use client";
 
+import { Database, Spinner } from "@phosphor-icons/react";
 import {
 	AnimatePresence,
 	domAnimation,
@@ -7,7 +8,6 @@ import {
 	m,
 	motion,
 } from "framer-motion";
-import { Database, Spinner } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 import { AdminDashboard } from "@/components/admin/admin-dashboard";
 import { LoginForm } from "@/components/admin/login-form";

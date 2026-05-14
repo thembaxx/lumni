@@ -60,12 +60,12 @@ export default function NotFound() {
 				</main>
 			</motion.div>
 
-<div className="col-span-12 md:col-span-5 col-start-1 md:col-start-8 relative overflow-hidden bg-system-surface/30">
-			<div className="absolute inset-0 bg-gradient-to-br from-[--system-accent]/5 via-transparent to-transparent" />
-			<div className="absolute inset-0 flex items-center justify-center p-8">
-				<div className="w-full h-full max-w-xs aspect-square rounded-3xl bg-[--system-accent]/10 blur-2xl animate-float-slow" />
+			<div className="col-span-12 md:col-span-5 col-start-1 md:col-start-8 relative overflow-hidden bg-system-surface/30">
+				<div className="absolute inset-0 bg-gradient-to-br from-[--system-accent]/5 via-transparent to-transparent" />
+				<div className="absolute inset-0 flex items-center justify-center p-8">
+					<div className="w-full h-full max-w-xs aspect-square rounded-3xl bg-[--system-accent]/10 blur-2xl animate-float-slow" />
+				</div>
 			</div>
-		</div>
 		</div>
 	);
 }

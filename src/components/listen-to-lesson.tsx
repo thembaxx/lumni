@@ -152,7 +152,11 @@ export function ListenToLesson({
 				className,
 			)}
 		>
-{isPlaying ? <StopCircle className="w-4 h-4 mr-1.5" /> : <Headphones className="w-4 h-4 mr-1.5" />}
+			{isPlaying ? (
+				<StopCircle className="w-4 h-4 mr-1.5" />
+			) : (
+				<Headphones className="w-4 h-4 mr-1.5" />
+			)}
 			{isPlaying
 				? "Stop listening..."
 				: useCustomVoice

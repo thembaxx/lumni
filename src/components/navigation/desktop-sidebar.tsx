@@ -12,7 +12,6 @@ import {
 import { usePathname } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
 import { ChatDialog } from "@/components/dashboard/chat/chat-dialog";
-import { PracticeSheet } from "@/components/dashboard/practice/practice-sheet";
 import { Button } from "@/components/ui/button";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { cn } from "@/lib/utils";
@@ -63,7 +62,6 @@ const bottomItems: SidebarItem[] = [
 export function DesktopSidebar() {
 	const pathname = usePathname();
 	const { push } = useNavigationDirection();
-	const [practiceOpen, setPracticeOpen] = useState(false);
 	const [chatOpen, setChatOpen] = useState(false);
 
 	const activeId = useMemo(() => {
@@ -81,7 +79,7 @@ export function DesktopSidebar() {
 			if (item.id === "chat") {
 				setChatOpen(true);
 			} else if (item.id === "practice") {
-				setPracticeOpen(true);
+				push("/dashboard");
 			} else {
 				push(item.href);
 			}
@@ -174,7 +172,6 @@ export function DesktopSidebar() {
 					})}
 				</div>
 			</aside>
-			<PracticeSheet open={practiceOpen} onOpenChange={setPracticeOpen} />
 			<ChatDialog open={chatOpen} onOpenChange={setChatOpen} />
 		</>
 	);

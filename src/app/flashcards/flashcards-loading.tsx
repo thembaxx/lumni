@@ -15,7 +15,11 @@ export function FlashcardsLoading() {
 			<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4">
 				<div className="max-w-md w-full mx-auto overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
 					<div className="p-8 text-left">
-						<LottieWrapper animation="loading-lumni" className="w-16 h-16 mb-4" loop />
+						<LottieWrapper
+							animation="loading-lumni"
+							className="w-16 h-16 mb-4"
+							loop
+						/>
 						<p className="text-muted-foreground">Loading flashcards...</p>
 					</div>
 				</div>

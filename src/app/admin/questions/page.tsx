@@ -86,7 +86,9 @@ export default function AdminQuestionsPage() {
 		<div className="min-h-[100dvh] bg-background p-6 max-w-4xl mx-auto space-y-6">
 			<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
 				<header>
-					<h2 className="font-heading text-sm font-medium">Question Engine Admin</h2>
+					<h2 className="font-heading text-sm font-medium">
+						Question Engine Admin
+					</h2>
 				</header>
 				<div className="px-4 group-data-[size=sm]/card:px-3 space-y-4">
 					<div className="flex gap-2">
@@ -129,9 +131,9 @@ export default function AdminQuestionsPage() {
 			{questions.map((item, i) => {
 				const q = item.question;
 				const isExpanded = expandedId === `${i}`;
-return (
-				<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
-					<div className="px-4 group-data-[size=sm]/card:px-3 p-4">
+				return (
+					<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+						<div className="px-4 group-data-[size=sm]/card:px-3 p-4">
 							<div
 								className="flex items-center gap-3 cursor-pointer"
 								onClick={() => setExpandedId(isExpanded ? null : `${i}`)}

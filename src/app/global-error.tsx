@@ -1,6 +1,6 @@
 "use client";
 
-import { Warning, House, ArrowsClockwise } from "@phosphor-icons/react";
+import { ArrowsClockwise, House, Warning } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 
 export default function GlobalError({

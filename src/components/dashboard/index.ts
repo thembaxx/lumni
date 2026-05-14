@@ -5,7 +5,6 @@ export { SubjectsDrawer } from "./drawers/subjects-drawer";
 export { DashboardHeader } from "./layout/header";
 export { DashboardHero } from "./layout/hero";
 export { TabNav } from "./navigation/tab-nav";
-export { PracticeSheet } from "./practice/practice-sheet";
 export { ProgressChart } from "./progress-chart";
 export { QuickActions } from "./quick-actions/quick-actions";
 export { SearchInput } from "./search/search-input";

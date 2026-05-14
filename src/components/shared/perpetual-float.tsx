@@ -1,7 +1,7 @@
 "use client";
 
-import * as React from "react";
 import { animate, motion, useMotionValue, useTransform } from "framer-motion";
+import * as React from "react";
 import { useEffect } from "react";
 import { cn } from "@/lib/utils";
 
@@ -24,8 +24,8 @@ export const PerpetualFloat = React.memo(function PerpetualFloat({
 	offsetY,
 	duration: durationProp,
 }: PerpetualFloatProps) {
-	const floatRange = floatRangeProp ?? (offsetY ?? 6);
-	const speed = speedProp ?? (durationProp ?? 3);
+	const floatRange = floatRangeProp ?? offsetY ?? 6;
+	const speed = speedProp ?? durationProp ?? 3;
 	const y = useMotionValue(0);
 	const opacity = useTransform(y, [-floatRange, 0, floatRange], [0.7, 1, 0.7]);
 

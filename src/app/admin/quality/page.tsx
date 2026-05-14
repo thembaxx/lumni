@@ -108,7 +108,9 @@ export default function AdminQualityPage() {
 			<div className="grid grid-cols-2 gap-6">
 				<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
 					<header>
-						<h2 className="font-heading text-sm font-medium text-lg">Requests Breakdown</h2>
+						<h2 className="font-heading text-sm font-medium text-lg">
+							Requests Breakdown
+						</h2>
 					</header>
 					<div className="px-4 group-data-[size=sm]/card:px-3 space-y-3">
 						<div className="flex justify-between text-sm">
@@ -128,7 +130,9 @@ export default function AdminQualityPage() {
 
 				<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
 					<header>
-						<h2 className="font-heading text-sm font-medium text-lg">Quality by Type</h2>
+						<h2 className="font-heading text-sm font-medium text-lg">
+							Quality by Type
+						</h2>
 					</header>
 					<div className="px-4 group-data-[size=sm]/card:px-3 space-y-2">
 						{Object.entries(quality.byType).length === 0 && (
@@ -165,7 +169,9 @@ export default function AdminQualityPage() {
 
 			<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
 				<header>
-					<h2 className="font-heading text-sm font-medium text-lg">Recent Events</h2>
+					<h2 className="font-heading text-sm font-medium text-lg">
+						Recent Events
+					</h2>
 				</header>
 				<div className="px-4 group-data-[size=sm]/card:px-3">
 					{events.length === 0 ? (
@@ -203,7 +209,9 @@ export default function AdminQualityPage() {
 
 			<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
 				<header>
-					<h2 className="font-heading text-sm font-medium text-lg">Recent Quality Records</h2>
+					<h2 className="font-heading text-sm font-medium text-lg">
+						Recent Quality Records
+					</h2>
 				</header>
 				<div className="px-4 group-data-[size=sm]/card:px-3">
 					{recentQuality.length === 0 ? (

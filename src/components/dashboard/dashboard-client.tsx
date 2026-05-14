@@ -4,11 +4,14 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useState } from "react";
 import { CountdownHeader } from "@/components/dashboard/countdown-header";
 import { DailyProgressRing } from "@/components/dashboard/daily-progress-ring";
-import { PracticeSheet } from "@/components/dashboard/practice/practice-sheet";
+import { FocusTimerCard } from "@/components/dashboard/focus-timer-card";
 import { QuickActions } from "@/components/dashboard/quick-actions/quick-actions";
+import { QuizStartCard } from "@/components/dashboard/quiz-start-card";
 import { ScrollAmbient } from "@/components/dashboard/scroll-ambient";
 import { StatsCards } from "@/components/dashboard/stats-cards";
+import { StatsRow } from "@/components/dashboard/stats-row";
 import { TodayFocusCard } from "@/components/dashboard/today-focus-card";
+import { QuizView } from "@/components/quiz/quiz-view";
 import { PerpetualFloat } from "@/components/shared/perpetual-float";
 import { StaggerList } from "@/components/shared/stagger-list";
 import { Card } from "@/components/ui/card";
@@ -18,7 +21,6 @@ import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 import { useViewTransition } from "@/hooks/use-view-transition";
 import { cn } from "@/lib/utils";
 import { iOSEase } from "@/lib/utils/animation";
-import type { TabValue } from "./types";
 
 function SectionReveal({
 	children,
@@ -53,7 +55,6 @@ function SectionReveal({
 	);
 }
 
-// Anti-center bias: left-aligned hero, right-weighted visual block
 function HeroBanner() {
 	const shouldReduceMotion = useReducedMotion();
 
@@ -64,7 +65,6 @@ function HeroBanner() {
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.5, ease: iOSEase }}
 		>
-			{/* Decorative floating accent */}
 			{!shouldReduceMotion && (
 				<PerpetualFloat
 					className="absolute right-8 top-1/2 -translate-y-1/2"
@@ -98,7 +98,6 @@ function HeroBanner() {
 	);
 }
 
-// Bento 2.0 stat row: 2/3 stats + 1/3 progress ring
 function BentoStatRow({
 	questionsAnswered,
 	accuracy,
@@ -108,11 +107,9 @@ function BentoStatRow({
 }) {
 	return (
 		<div className="grid grid-cols-12 gap-3">
-			{/* Stats: spans 8 cols (2/3) desktop, full width mobile */}
 			<div className="col-span-12 sm:col-span-8">
 				<StatsCards questionsAnswered={questionsAnswered} accuracy={accuracy} />
 			</div>
-			{/* Progress Ring: spans 4 cols (1/3) desktop, full width mobile */}
 			<div className="col-span-12 sm:col-span-4">
 				<SectionReveal delay={0.12}>
 					<Card className="h-full rounded-[2rem] shadow-level-1 p-4 flex items-center justify-center">
@@ -124,16 +121,12 @@ function BentoStatRow({
 	);
 }
 
-export function DashboardClient({
-	initialTab = "ai",
+function DashboardContent({
+	onStartQuiz,
 }: {
-	initialTab?: TabValue;
+	onStartQuiz: (subject: string) => void;
 }) {
-	const [_activeTab] = useState<TabValue>(initialTab || "ai");
-	const [practiceOpen, setPracticeOpen] = useState(false);
-	const { isLoaded, gamification } = useGamification();
-	const shouldReduceMotion = useReducedMotion();
-	const { startViewTransition } = useViewTransition();
+	const { gamification } = useGamification();
 
 	const stats = {
 		questionsAnswered:
@@ -141,9 +134,63 @@ export function DashboardClient({
 		accuracy: 0,
 	};
 
-	function handlePracticeClick() {
-		startViewTransition(() => setPracticeOpen(true));
-	}
+	return (
+		<div
+			data-scroll-container
+			className="min-h-[100dvh] flex flex-col bg-system-grouped pt-4 pb-[calc(var(--spacing-safe-pb)+var(--space-16)+var(--space-5))] overflow-x-hidden overflow-y-auto w-full"
+		>
+			<div className="max-w-3xl mx-auto w-full px-4 flex flex-col gap-8">
+				<HeroBanner />
+				<CountdownHeader />
+				<SectionReveal delay={0.05}>
+					<BentoStatRow
+						questionsAnswered={stats.questionsAnswered}
+						accuracy={stats.accuracy}
+					/>
+				</SectionReveal>
+				<SectionReveal delay={0.08}>
+					<FocusTimerCard />
+				</SectionReveal>
+				<SectionReveal delay={0.1}>
+					<TodayFocusCard />
+				</SectionReveal>
+				<SectionReveal delay={0.12}>
+					<QuizStartCard onStart={onStartQuiz} />
+				</SectionReveal>
+				<SectionReveal delay={0.14}>
+					<StatsRow />
+				</SectionReveal>
+				<SectionReveal delay={0.16}>
+					<StaggerList>
+						<QuickActions />
+					</StaggerList>
+				</SectionReveal>
+			</div>
+		</div>
+	);
+}
+
+export function DashboardClient({
+	initialTab = "ai",
+}: {
+	initialTab?: string;
+}) {
+	const [quizActive, setQuizActive] = useState(false);
+	const [quizSubject, setQuizSubject] = useState("");
+	const { isLoaded } = useGamification();
+	const { startViewTransition } = useViewTransition();
+
+	const handleStartQuiz = (subject: string) => {
+		startViewTransition(() => {
+			setQuizSubject(subject);
+			setQuizActive(true);
+		});
+	};
+
+	const handleQuitQuiz = () => {
+		setQuizActive(false);
+		setQuizSubject("");
+	};
 
 	return (
 		<>
@@ -168,6 +215,21 @@ export function DashboardClient({
 							<Skeleton className="h-20 rounded-[2rem]" />
 						</div>
 					</motion.div>
+				) : quizActive ? (
+					<motion.div
+						key="quiz"
+						initial={{ opacity: 0, y: 8 }}
+						animate={{ opacity: 1, y: 0 }}
+						exit={{ opacity: 0, y: -8 }}
+						transition={{ duration: 0.25, ease: iOSEase }}
+					>
+						<QuizView
+							initialSubject={quizSubject}
+							variant="full"
+							onQuit={handleQuitQuiz}
+							onFinish={handleQuitQuiz}
+						/>
+					</motion.div>
 				) : (
 					<motion.div
 						key="content"
@@ -179,42 +241,11 @@ export function DashboardClient({
 							transition: { duration: 0.15, ease: iOSEase },
 						}}
 						transition={{ duration: 0.25, ease: iOSEase }}
-						data-scroll-container
-						className="min-h-[100dvh] flex flex-col bg-system-grouped pt-4 pb-[calc(var(--spacing-safe-pb)+var(--space-16)+var(--space-5))] overflow-x-hidden overflow-y-auto w-full"
 					>
-						<div className="max-w-3xl mx-auto w-full px-4 flex flex-col gap-8">
-							{/* Hero Banner — anti-center bias: left-aligned text, right decorative */}
-							<HeroBanner />
-
-							{/* Countdown */}
-							<CountdownHeader />
-
-							{/* Row 1: Stats (2/3) + Ring (1/3) */}
-							<SectionReveal delay={0.05}>
-								<BentoStatRow
-									questionsAnswered={stats.questionsAnswered}
-									accuracy={stats.accuracy}
-								/>
-							</SectionReveal>
-
-							{/* Row 2: Today's Focus (full width) */}
-							<SectionReveal delay={0.1}>
-								<TodayFocusCard />
-							</SectionReveal>
-
-							{/* Row 3: Quick Actions (full width, staggered) */}
-							{practiceOpen ? null : (
-								<SectionReveal delay={0.15}>
-									<StaggerList>
-										<QuickActions onPracticeClick={handlePracticeClick} />
-									</StaggerList>
-								</SectionReveal>
-							)}
-						</div>
+						<DashboardContent onStartQuiz={handleStartQuiz} />
 					</motion.div>
 				)}
 			</AnimatePresence>
-			<PracticeSheet open={practiceOpen} onOpenChange={setPracticeOpen} />
 		</>
 	);
 }

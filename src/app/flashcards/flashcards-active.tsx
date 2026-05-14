@@ -1,8 +1,7 @@
 "use client";
 
-import { Check, X } from "@phosphor-icons/react";
+import { CaretLeft, CaretRight, Check, X } from "@phosphor-icons/react";
 import { m } from "framer-motion";
-import { CaretLeft, CaretRight } from "@phosphor-icons/react";
 import { useCallback } from "react";
 import { Anim } from "@/components/shared/anim";
 import { Badge } from "@/components/ui/badge";

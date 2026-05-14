@@ -1,5 +1,6 @@
 "use client";
 
+import { LottieWrapper } from "@/components/lottie/lottie-wrapper";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -9,7 +10,6 @@ import {
 	EmptyMedia,
 	EmptyTitle,
 } from "@/components/ui/empty";
-import { LottieWrapper } from "@/components/lottie/lottie-wrapper";
 
 interface FlashcardsEmptyProps {
 	subject: string;
@@ -27,7 +27,11 @@ export function FlashcardsEmpty({ subject, onGoBack }: FlashcardsEmptyProps) {
 					<Empty>
 						<EmptyHeader>
 							<EmptyMedia>
-								<LottieWrapper animation="empty-search" className="w-20 h-20 mx-auto" loop />
+								<LottieWrapper
+									animation="empty-search"
+									className="w-20 h-20 mx-auto"
+									loop
+								/>
 							</EmptyMedia>
 							<EmptyTitle>No flashcards found</EmptyTitle>
 							<EmptyDescription>
