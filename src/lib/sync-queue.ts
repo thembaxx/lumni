@@ -3,13 +3,16 @@
 import { useCallback, useEffect } from "react";
 import {
 	addToSyncQueue,
-	getPendingSyncItems,
-	removeSyncItem,
+	offlineDB,
 	resetStaleSyncingItems,
 	type SyncQueueItem,
-	updateSyncItem,
 } from "@/lib/db/offline";
-import { calculateBackoffDelay } from "@/lib/queue/core";
+import {
+	QueueCore,
+	type QueueItemBase,
+	type QueueTable,
+} from "@/lib/queue/core";
+import { safeJsonParse } from "@/lib/shared/json";
 
 interface SyncConfig {
 	maxRetries?: number;
@@ -25,7 +28,89 @@ export function initSyncQueue(config: SyncConfig): void {
 	syncConfig = { ...syncConfig, ...config };
 }
 
-let isProcessing = false;
+type QueuedSyncItem = QueueItemBase & {
+	action: SyncQueueItem["action"];
+	updatedAt: number;
+	retryAfter?: number;
+};
+
+function toQueuedItem(item: SyncQueueItem): QueuedSyncItem {
+	return {
+		id: item.id,
+		type: item.action,
+		payload: item.payload,
+		status:
+			item.status === "syncing"
+				? ("processing" as const)
+				: (item.status as "pending" | "failed"),
+		priority: item.priority ?? 0,
+		attempts: item.attempts,
+		maxRetries: item.maxRetries,
+		lastError: item.lastError,
+		scheduledAt: item.retryAfter ?? item.createdAt,
+		createdAt: item.createdAt,
+		action: item.action,
+		updatedAt: item.updatedAt,
+		retryAfter: item.retryAfter,
+	};
+}
+
+function toSyncUpdate(
+	changes: Partial<QueuedSyncItem>,
+): Partial<SyncQueueItem> {
+	const update: Partial<SyncQueueItem> = { updatedAt: Date.now() };
+	if ("status" in changes) {
+		update.status =
+			changes.status === "processing"
+				? "syncing"
+				: (changes.status as SyncQueueItem["status"]);
+	}
+	if ("lastError" in changes) update.lastError = changes.lastError;
+	if ("attempts" in changes) update.attempts = changes.attempts;
+	if ("scheduledAt" in changes) update.retryAfter = changes.scheduledAt;
+	if ("priority" in changes) update.priority = changes.priority;
+	return update;
+}
+
+const syncQueueTable: QueueTable<QueuedSyncItem> = {
+	add: async () => {
+		throw new Error("Use addToSyncQueue instead of core.enqueue");
+	},
+	get: async (id) => {
+		const item = await offlineDB.syncQueue.get(id);
+		if (!item) return undefined;
+		return toQueuedItem(item);
+	},
+	update: async (id, changes) => {
+		if ("status" in changes && changes.status === "completed") {
+			await offlineDB.syncQueue.delete(id);
+			return 1;
+		}
+		return offlineDB.syncQueue.update(id, toSyncUpdate(changes));
+	},
+	where: (_index) => ({
+		equals: (_value) => ({
+			count: async () => {
+				const all = await offlineDB.syncQueue.toArray();
+				return all.filter((i) => i.status === "pending").length;
+			},
+			toArray: async () => {
+				const all = await offlineDB.syncQueue.toArray();
+				return all
+					.filter((i) => i.status === "pending")
+					.map(toQueuedItem);
+			},
+		}),
+	}),
+	toArray: async () => {
+		const items = await offlineDB.syncQueue.toArray();
+		return items.map(toQueuedItem);
+	},
+};
+
+const core = new QueueCore<QueuedSyncItem>(syncQueueTable);
+
+const guard = { isProcessing: false };
 
 export async function queueAction(
 	action: SyncQueueItem["action"],
@@ -39,52 +124,19 @@ export async function queueAction(
 }
 
 export async function processQueue(): Promise<void> {
-	if (isProcessing) return;
 	if (typeof navigator !== "undefined" && !navigator.onLine) return;
 
-	isProcessing = true;
+	await resetStaleSyncingItems();
 
-	try {
-		await resetStaleSyncingItems();
-		const pendingItems = await getPendingSyncItems();
-
-		for (const item of pendingItems) {
-			if (item.retryAfter && item.retryAfter > Date.now()) continue;
-
-			try {
-				await updateSyncItem(item.id!, {
-					status: "syncing",
-					attempts: item.attempts + 1,
-				});
-
-				if (syncConfig.onSync) {
-					await syncConfig.onSync(item.action, JSON.parse(item.payload));
-				}
-
-				await removeSyncItem(item.id!);
-			} catch (error) {
-				const errorMessage =
-					error instanceof Error ? error.message : "Unknown error";
-
-				if (item.attempts + 1 >= (item.maxRetries || syncConfig.maxRetries!)) {
-					await updateSyncItem(item.id!, {
-						status: "failed",
-						lastError: errorMessage,
-					});
-				} else {
-					const delay = calculateBackoffDelay(item.attempts);
-					await updateSyncItem(item.id!, {
-						status: "pending",
-						lastError: errorMessage,
-						attempts: item.attempts + 1,
-						retryAfter: Date.now() + delay,
-					});
-				}
+	await core.processBatch(
+		async (item) => {
+			if (syncConfig.onSync) {
+				await syncConfig.onSync(item.action, safeJsonParse(item.payload));
 			}
-		}
-	} finally {
-		isProcessing = false;
-	}
+		},
+		1,
+		guard,
+	);
 }
 
 export function useSyncQueue() {

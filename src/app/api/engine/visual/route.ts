@@ -1,50 +1,33 @@
-import { NextRequest, NextResponse } from "next/server";
-import { checkBudget, trackUsage } from "@/lib/ai/with-budget";
+import { createEngineHandler } from "@/lib/api/engine-handler";
 import { VisualEngine, visualEngine } from "@/lib/visual-engine";
 
 export const dynamic = "force-dynamic";
 
-export async function POST(req: NextRequest) {
-	try {
-		const budget = await checkBudget(req, "visual");
-		if (!budget.allowed) return budget.response;
-
-		VisualEngine.initialize();
-
-		const body = (await req.json()) as {
+export const POST = createEngineHandler({
+	budgetType: "visual",
+	errorLabel: "Visual",
+	parseBody: async (req) => {
+		const body: {
 			questionId: string;
 			questionText: string;
 			subject: string;
 			topic?: string;
-		};
-
-		if (!body.questionId || !body.questionText || !body.subject) {
-			return NextResponse.json(
-				{ error: "questionId, questionText, and subject are required" },
-				{ status: 400 },
-			);
-		}
-
+		} = await req.json();
+		return body;
+	},
+	validate: (body) => {
+		if (!body.questionId || !body.questionText || !body.subject)
+			return "questionId, questionText, and subject are required";
+		return null;
+	},
+	execute: async (body) => {
+		VisualEngine.initialize();
 		const visual = await visualEngine.resolve({
 			questionId: body.questionId,
 			questionText: body.questionText,
 			subject: body.subject,
 			topic: body.topic || "",
 		});
-
-		trackUsage("visual", budget.userId);
-
-		return NextResponse.json({ visual });
-	} catch (error) {
-		console.error("[Visual Engine] Error:", error);
-		return NextResponse.json(
-			{
-				error:
-					error instanceof Error
-						? error.message
-						: "Failed to resolve visual content",
-			},
-			{ status: 500 },
-		);
-	}
-}
+		return { visual };
+	},
+});

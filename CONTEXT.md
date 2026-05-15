@@ -37,7 +37,7 @@ Editable user attributes in Settings > Profile: display name, email (read-only +
 ## Key modules
 
 **QueueCore** (`src/lib/queue/core.ts`):
-Generic queue class used by both `sync-queue.ts` and `JobQueue`. Provides Dexie-backed enqueue/process/retry lifecycle with exponential backoff and concurrency guard. Two adapters:
+Generic queue class used by both `SyncQueue` (adapter in `sync-queue.ts`) and `JobQueue` (adapter in `orchestrator/job-queue.ts`). Provides Dexie-backed enqueue/process/retry lifecycle with exponential backoff and concurrency guard. Two adapters — two real adapters = real seam:
 - `src/lib/sync-queue.ts` — client-side action queue for offline mutations
 - `src/lib/orchestrator/job-queue.ts` — typed background job queue for orchestration side effects
 
@@ -49,10 +49,10 @@ Single in-memory rate limiter class used by auth, API, and token-budget subsyste
 See `src/lib/auth/rate-limit.ts`, `src/lib/shared/rate-limit.ts`, `src/lib/ai/token-tracker.ts`.
 
 **QuestionEngine** (`src/lib/question-engine/`):
-Single deep module for all question operations — generate, grade, hint, validate. Used by `LearningOrchestrator` via composition, not duplication.
+Single deep module for all question operations — generate, grade, hint, validate, listTypes. Composed directly by route handlers (hint, test health-check) and by `LearningOrchestrator` for orchestrated paths.
 
 **LearningOrchestrator** (`src/lib/orchestrator/`):
-Thin orchestration layer over `QuestionEngine`. Adds job-queue side effects (appwrite-sync, analytics, spaced-repetition, progress tracking) but does not duplicate question-generation logic. Visual pre-cache was removed — diagrams are generated on-demand only.
+Composition root over `QuestionEngine` with exactly two methods: `generateQuestionSet` and `gradeAndTrack`. Adds job-queue side effects (appwrite-sync, analytics, spaced-repetition, progress tracking) but does not duplicate question-generation logic. Pure pass-through methods (`generate`, `grade`, `generateHint`, `validate`, `listTypes`) were removed — callers that need those use `QuestionEngine` directly.
 
 ## Architecture conventions
 

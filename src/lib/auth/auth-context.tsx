@@ -15,11 +15,7 @@ import { flushOfflineData } from "@/lib/sync/sync-handler";
 import { processQueue } from "@/lib/sync-queue";
 import { useAuthStore } from "@/store/auth";
 import { getReadableErrorMessage } from "./errors";
-import {
-	checkMagicLinkRateLimit,
-	checkSignInRateLimit,
-	resetSignInRateLimit,
-} from "./rate-limit";
+import { attemptMagicLink, attemptSignIn, recordSuccessfulSignIn } from "./rate-limit";
 
 export type AuthStatus = "loading" | "authenticated" | "unauthenticated";
 
@@ -89,19 +85,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 		async (email: string, password: string) => {
 			store.setError(null);
 
-			const rateLimit = checkSignInRateLimit(email);
+			const rateLimit = attemptSignIn(email);
 			if (!rateLimit.allowed) {
-				const waitMinutes = Math.ceil((rateLimit.resetAt - Date.now()) / 60000);
-				store.setError(
-					`Too many sign-in attempts. Try again in ${waitMinutes} minute${waitMinutes === 1 ? "" : "s"}.`,
-				);
+				store.setError(rateLimit.errorMessage);
 				return;
 			}
 
 			try {
 				await account.createEmailPasswordSession(email, password);
 				const user = await account.get();
-				resetSignInRateLimit(email);
+				recordSuccessfulSignIn(email);
 				store.setUser(user, "authenticated", false);
 				queryClient.invalidateQueries({ queryKey: ["user"] });
 			} catch (err) {
@@ -135,12 +128,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 		async (email: string) => {
 			store.setError(null);
 
-			const rateLimit = checkMagicLinkRateLimit(email);
+			const rateLimit = attemptMagicLink(email);
 			if (!rateLimit.allowed) {
-				const waitMinutes = Math.ceil((rateLimit.resetAt - Date.now()) / 60000);
-				store.setError(
-					`A magic link was already sent. Try again in ${waitMinutes} minute${waitMinutes === 1 ? "" : "s"}.`,
-				);
+				store.setError(rateLimit.errorMessage);
 				return;
 			}
 

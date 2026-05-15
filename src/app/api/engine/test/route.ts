@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { LearningOrchestrator } from "@/lib/orchestrator";
+import { QuestionEngine } from "@/lib/question-engine/question-engine";
 import type { GradingResult, Question } from "@/lib/question-engine/types";
 
 export const dynamic = "force-dynamic";
@@ -15,9 +16,9 @@ export async function GET() {
 	const addError = (msg: string) => (results.errors as string[]).push(msg);
 
 	try {
-		addStep("Initializing engine...");
+		addStep("Initializing engines...");
 		const orchestrator = await LearningOrchestrator.initialize();
-		addStep("Engine initialized");
+		addStep("Orchestrator initialized");
 
 		addStep("Generating 2 multiple-choice questions for 'mathematics'...");
 		const { questions } = await orchestrator.generateQuestionSet({
@@ -42,14 +43,16 @@ export async function GET() {
 			`Question 1 type: ${q.type}, text: "${q.questionText.slice(0, 60)}..."`,
 		);
 
+		const engine = new QuestionEngine();
+
 		addStep("Testing validation...");
-		const validation = orchestrator.validate(q);
+		const validation = engine.validate(q);
 		addStep(
 			`Validation score: ${validation.score}, isValid: ${validation.isValid}`,
 		);
 
 		addStep("Testing hint generation...");
-		const hint = await orchestrator.generateHint({
+		const hint = await engine.generateHint({
 			questionId: q.id,
 			question: q,
 		});
@@ -58,7 +61,7 @@ export async function GET() {
 		addStep("Testing grading...");
 		const correctAnswer = q.body.options.find((o) => o.isCorrect);
 		if (correctAnswer) {
-			const gradeResult = await orchestrator.grade(q, {
+			const gradeResult = await engine.grade(q, {
 				type: "option-ids",
 				value: [correctAnswer.id],
 			});
@@ -68,7 +71,7 @@ export async function GET() {
 		}
 
 		addStep("Testing type listing...");
-		const types = orchestrator.listTypes();
+		const types = engine.listTypes();
 		addStep(`Available types: ${types.join(", ")}`);
 
 		addStep("All tests passed");

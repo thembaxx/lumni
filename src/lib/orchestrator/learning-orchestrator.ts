@@ -1,8 +1,6 @@
 import { QuestionEngine } from "@/lib/question-engine/question-engine";
 import type {
 	GenerationParams,
-	GradingResult,
-	HintParams,
 	Question,
 	UserAnswer,
 } from "@/lib/question-engine/types";
@@ -21,10 +19,6 @@ export class LearningOrchestrator {
 	static async initialize(): Promise<LearningOrchestrator> {
 		const engine = await QuestionEngine.initialize();
 		return new LearningOrchestrator(engine);
-	}
-
-	async generate(params: GenerationParams): Promise<Question[]> {
-		return this.engine.generate(params);
 	}
 
 	async generateQuestionSet(params: GenerationParams): Promise<GenerateResult> {
@@ -112,30 +106,5 @@ export class LearningOrchestrator {
 		});
 
 		return { result, jobIds };
-	}
-
-	async grade(question: Question, answer: UserAnswer): Promise<GradingResult> {
-		return this.engine.grade(question, answer);
-	}
-
-	async generateHint(params: HintParams): Promise<string> {
-		const hint = await this.engine.generateHint(params);
-
-		trackEngineEvent({
-			event: "hint",
-			subject: params.question.subject,
-			questionType: params.question.type,
-			success: true,
-		});
-
-		return hint;
-	}
-
-	validate(question: Question) {
-		return this.engine.validate(question);
-	}
-
-	listTypes() {
-		return this.engine.listTypes();
 	}
 }
