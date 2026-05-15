@@ -13,6 +13,7 @@ import { Confetti, XPGainPopup } from "@/components/celebration";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Anim } from "@/components/shared/anim";
 import { DifficultyBadge } from "@/components/shared/difficulty-badge";
+import { TTSButton } from "@/components/shared/tts-button";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -36,6 +37,7 @@ import { useVisualEngine } from "@/hooks/use-visual-engine";
 import { cn } from "@/lib/utils";
 import { iOSEase } from "@/lib/utils/animation";
 import { AnimatedIcon, getIconMapping } from "@/lib/utils/icon-mapping";
+import { useBookmarksStore } from "@/store/bookmarks";
 import type { Question, QuestionState, UserAnswer } from "@/types/questions";
 import { QuestionDiagram } from "./question-diagram";
 import { StepByStep } from "./step-by-step";
@@ -72,6 +74,8 @@ export function QuestionCard({
 
 	const [showConfetti, setShowConfetti] = useState(false);
 	const [showXPGain, setShowXPGain] = useState(false);
+	const { addBookmark, removeBookmark, isBookmarked } = useBookmarksStore();
+	const bookmarked = isBookmarked(question.id);
 	const [gradeResult, setGradeResult] = useState<{
 		correct: boolean;
 		score: number;
@@ -516,9 +520,42 @@ export function QuestionCard({
 								{question.type}
 							</Badge>
 						</div>
-						<Badge variant="secondary" className="text-xs">
-							{question.points} pts
-						</Badge>
+						<div className="flex items-center gap-1">
+							<button
+								onClick={() =>
+									bookmarked
+										? removeBookmark(question.id)
+										: addBookmark({
+												id: question.id,
+												questionText: question.questionText,
+												subject: question.subject,
+												topic: question.topic,
+											})
+								}
+								className="size-8 rounded-full flex items-center justify-center hover:bg-muted transition-colors"
+								aria-label={
+									bookmarked ? "Remove bookmark" : "Bookmark question"
+								}
+							>
+								<svg
+									width="16"
+									height="16"
+									viewBox="0 0 24 24"
+									fill={bookmarked ? "currentColor" : "none"}
+									stroke="currentColor"
+									strokeWidth="2"
+									className={
+										bookmarked ? "text-warning" : "text-muted-foreground"
+									}
+								>
+									<path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+								</svg>
+							</button>
+							<TTSButton text={question.questionText} />
+							<Badge variant="secondary" className="text-xs">
+								{question.points} pts
+							</Badge>
+						</div>
 					</div>
 					<VisualContent visual={visual} isLoading={visualLoading} />
 					<div

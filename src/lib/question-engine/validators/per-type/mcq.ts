@@ -8,9 +8,7 @@ export function validate(
 ): void {
 	const body = question.body as QuestionBody["multiple-choice"];
 	warnings.push(...checkGibberish(question.questionText, "questionText"));
-	warnings.push(
-		...checkPlaceholders(question.questionText, "questionText"),
-	);
+	warnings.push(...checkPlaceholders(question.questionText, "questionText"));
 
 	if (!body.options || body.options.length < 2) {
 		errors.push({

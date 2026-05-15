@@ -1,5 +1,10 @@
 import type { PromptManager } from "../../prompt-manager";
-import type { GradingResult, Question, QuestionBody, UserAnswer } from "../../types";
+import type {
+	GradingResult,
+	Question,
+	QuestionBody,
+	UserAnswer,
+} from "../../types";
 import type { GradeFn, HintFn } from "../types";
 import { aiGradeResult } from "./shared";
 
@@ -33,5 +38,3 @@ export const hint: HintFn = (q) => {
 	const body = q.body as QuestionBody["long-answer"];
 	return `Write ${body.minWords}-${body.maxWords} words covering: ${body.rubric.map((r) => r.name).join(", ")}.`;
 };
-
-export const temperature = 0.8;

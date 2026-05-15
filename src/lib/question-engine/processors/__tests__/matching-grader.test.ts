@@ -1,9 +1,11 @@
 import { describe, expect, test } from "bun:test";
-import { grade } from "../graders/matching";
 import { PromptManager } from "../../prompt-manager";
 import type { Question } from "../../types";
+import { grade } from "../graders/matching";
 
-function makeQuestion(overrides?: Partial<Question<"matching">>): Question<"matching"> {
+function makeQuestion(
+	overrides?: Partial<Question<"matching">>,
+): Question<"matching"> {
 	return {
 		id: "q1",
 		type: "matching",
@@ -30,42 +32,54 @@ function makeQuestion(overrides?: Partial<Question<"matching">>): Question<"matc
 describe("Matching Grader", () => {
 	test("all correct pairs get full points", () => {
 		const q = makeQuestion();
-		const result = grade(q, {
-			type: "pairs",
-			value: [
-				{ left: "France", right: "Paris" },
-				{ left: "Germany", right: "Berlin" },
-				{ left: "Italy", right: "Rome" },
-			],
-		}, {} as PromptManager);
+		const result = grade(
+			q,
+			{
+				type: "pairs",
+				value: [
+					{ left: "France", right: "Paris" },
+					{ left: "Germany", right: "Berlin" },
+					{ left: "Italy", right: "Rome" },
+				],
+			},
+			{} as PromptManager,
+		);
 		expect(result.correct).toBe(true);
 		expect(result.score).toBe(10);
 	});
 
 	test("partial matches get partial score", () => {
 		const q = makeQuestion();
-		const result = grade(q, {
-			type: "pairs",
-			value: [
-				{ left: "France", right: "Paris" },
-				{ left: "Germany", right: "Rome" },
-				{ left: "Italy", right: "Berlin" },
-			],
-		}, {} as PromptManager);
+		const result = grade(
+			q,
+			{
+				type: "pairs",
+				value: [
+					{ left: "France", right: "Paris" },
+					{ left: "Germany", right: "Rome" },
+					{ left: "Italy", right: "Berlin" },
+				],
+			},
+			{} as PromptManager,
+		);
 		expect(result.correct).toBe(false);
 		expect(result.score).toBe(3);
 	});
 
 	test("no matches score zero", () => {
 		const q = makeQuestion();
-		const result = grade(q, {
-			type: "pairs",
-			value: [
-				{ left: "France", right: "London" },
-				{ left: "Germany", right: "Madrid" },
-				{ left: "Italy", right: "Lisbon" },
-			],
-		}, {} as PromptManager);
+		const result = grade(
+			q,
+			{
+				type: "pairs",
+				value: [
+					{ left: "France", right: "London" },
+					{ left: "Germany", right: "Madrid" },
+					{ left: "Italy", right: "Lisbon" },
+				],
+			},
+			{} as PromptManager,
+		);
 		expect(result.correct).toBe(false);
 		expect(result.score).toBe(0);
 	});

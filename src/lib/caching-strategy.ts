@@ -6,7 +6,9 @@ export interface CacheWriteAdapter<T, P> {
 	write(params: P, value: T): Promise<void>;
 }
 
-export interface CacheTier<T, P> extends CacheReadAdapter<T, P>, CacheWriteAdapter<T, P> {
+export interface CacheTier<T, P>
+	extends CacheReadAdapter<T, P>,
+		CacheWriteAdapter<T, P> {
 	name: string;
 }
 

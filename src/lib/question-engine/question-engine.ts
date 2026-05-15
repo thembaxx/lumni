@@ -1,6 +1,6 @@
 import { initAI, isAIConfigured } from "@/lib/ai";
-import { CachingStrategy } from "@/lib/caching-strategy";
 import type { CacheTier } from "@/lib/caching-strategy";
+import { CachingStrategy } from "@/lib/caching-strategy";
 import { getCachedQuestions } from "@/lib/db/offline";
 import { ProcessorRegistry } from "./processor-registry";
 import { PromptManager } from "./prompt-manager";
@@ -9,6 +9,7 @@ import type {
 	GradingResult,
 	HintParams,
 	Question,
+	QuestionProcessor,
 	QuestionType,
 	UserAnswer,
 	ValidationResult,
@@ -129,22 +130,42 @@ export class QuestionEngine {
 		return questions.slice(0, params.count);
 	}
 
+	private withProcessor<T extends QuestionType>(
+		question: Question,
+		type: T,
+	): { processor: QuestionProcessor<T>; typed: Question<T> } {
+		if (question.type !== type) {
+			throw new Error(
+				`Type mismatch: expected ${type} but got ${question.type}`,
+			);
+		}
+		const processor = this.registry.getProcessor(type);
+		return { processor, typed: question as Question<T> };
+	}
+
 	async generateHint(params: HintParams): Promise<string> {
-		const processor = this.registry.getProcessor(
-			params.question.type as QuestionType,
+		const { question } = params;
+		const { processor, typed } = this.withProcessor(
+			question,
+			question.type as QuestionType,
 		);
-		return processor.generateHint(params.question as never);
+		return processor.generateHint(typed);
 	}
 
 	async grade(question: Question, answer: UserAnswer): Promise<GradingResult> {
-		const processor = this.registry.getProcessor(question.type as QuestionType);
-		return processor.grade(question as never, answer);
+		const { processor, typed } = this.withProcessor(
+			question,
+			question.type as QuestionType,
+		);
+		return processor.grade(typed, answer);
 	}
 
 	validate(question: Question): ValidationResult {
-		const processor = this.registry.getProcessor(question.type as QuestionType);
-		const result = processor.validate(question as never);
-		return result;
+		const { processor, typed } = this.withProcessor(
+			question,
+			question.type as QuestionType,
+		);
+		return processor.validate(typed);
 	}
 
 	listTypes(): QuestionType[] {
@@ -180,7 +201,9 @@ export class QuestionEngine {
 		return questions.slice(0, count);
 	}
 
-	private async enrichParams(params: GenerationParams): Promise<GenerationParams> {
+	private async enrichParams(
+		params: GenerationParams,
+	): Promise<GenerationParams> {
 		const curriculumContext = await this.retrieveCurriculumContext(
 			params.subject,
 			params.topic,

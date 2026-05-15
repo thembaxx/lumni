@@ -1,5 +1,10 @@
 import type { PromptManager } from "../../prompt-manager";
-import type { GradingResult, Question, QuestionBody, UserAnswer } from "../../types";
+import type {
+	GradingResult,
+	Question,
+	QuestionBody,
+	UserAnswer,
+} from "../../types";
 import type { GradeFn, HintFn } from "../types";
 import { aiGradeResult, aiHintFactory } from "./shared";
 
@@ -33,5 +38,3 @@ export const grade: GradeFn = (q, a, prompts) => {
 };
 
 export const hint: HintFn = aiHintFactory();
-
-export const temperature = 0.7;

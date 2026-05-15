@@ -18,6 +18,14 @@ import { AssessmentHeader } from "@/components/ui/headers/assessment-header";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
 import type { Question } from "@/types/questions";
 
+export interface QuizResults {
+	questions: Question[];
+	correctness: boolean[];
+	correctAnswers: number;
+	totalQuestions: number;
+	elapsedTime: number;
+}
+
 export type QuizViewVariant = "full" | "compact";
 
 export interface QuizViewProps {
@@ -27,7 +35,7 @@ export interface QuizViewProps {
 	questionCount?: number;
 	maxTime?: number;
 	onQuit?: () => void;
-	onFinish?: (results: { correctAnswers: number; elapsedTime: number }) => void;
+	onFinish?: (results: QuizResults) => void;
 	className?: string;
 }
 
@@ -46,6 +54,7 @@ export function QuizView({
 	const [loadError, setLoadError] = useState<string | null>(null);
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [correctAnswers, setCorrectAnswers] = useState(0);
+	const [correctness, setCorrectness] = useState<boolean[]>([]);
 	const [currentAnswered, setCurrentAnswered] = useState(false);
 	const [elapsedTime, setElapsedTime] = useState(0);
 	const [isComplete, setIsComplete] = useState(false);
@@ -73,21 +82,37 @@ export function QuizView({
 		setSessionActive(true);
 		setCurrentIndex(0);
 		setCorrectAnswers(0);
+		setCorrectness([]);
 		setCurrentAnswered(false);
 		setElapsedTime(0);
 		setIsComplete(false);
 		setLoadError(null);
 	}, []);
 
+	const buildResults = useCallback(
+		(correct: number, time: number) => {
+			const result: QuizResults = {
+				questions: questions ?? [],
+				correctness,
+				correctAnswers: correct,
+				totalQuestions: questions?.length ?? 0,
+				elapsedTime: time,
+			};
+			return result;
+		},
+		[questions, correctness],
+	);
+
 	const handleStop = useCallback(() => {
 		setSessionActive(false);
 		if (timerRef.current) clearInterval(timerRef.current);
-		onFinish?.({ correctAnswers, elapsedTime });
-	}, [onFinish, correctAnswers, elapsedTime]);
+		onFinish?.(buildResults(correctAnswers, elapsedTime));
+	}, [onFinish, correctAnswers, elapsedTime, buildResults]);
 
 	const handleRestart = useCallback(() => {
 		setCurrentIndex(0);
 		setCorrectAnswers(0);
+		setCorrectness([]);
 		setElapsedTime(0);
 		setIsComplete(false);
 	}, []);
@@ -99,9 +124,16 @@ export function QuizView({
 		} else {
 			setIsComplete(true);
 			if (timerRef.current) clearInterval(timerRef.current);
-			onFinish?.({ correctAnswers, elapsedTime });
+			onFinish?.(buildResults(correctAnswers, elapsedTime));
 		}
-	}, [currentIndex, totalQuestions, onFinish, correctAnswers, elapsedTime]);
+	}, [
+		currentIndex,
+		totalQuestions,
+		onFinish,
+		correctAnswers,
+		elapsedTime,
+		buildResults,
+	]);
 
 	const handlePrevious = useCallback(() => {
 		if (currentIndex > 0) setCurrentIndex((prev) => prev - 1);
@@ -114,6 +146,7 @@ export function QuizView({
 
 	const handleAnswered = useCallback((correct: boolean) => {
 		setCurrentAnswered(true);
+		setCorrectness((prev) => [...prev, correct]);
 		if (correct) setCorrectAnswers((prev) => prev + 1);
 	}, []);
 

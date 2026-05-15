@@ -1,5 +1,10 @@
 import type { PromptManager } from "../../prompt-manager";
-import type { GradingResult, Question, QuestionBody, UserAnswer } from "../../types";
+import type {
+	GradingResult,
+	Question,
+	QuestionBody,
+	UserAnswer,
+} from "../../types";
 import type { GradeFn, HintFn } from "../types";
 
 export const grade: GradeFn = (q, a) => {
@@ -32,5 +37,3 @@ export const hint: HintFn = (q) => {
 	const body = q.body as QuestionBody["matching"];
 	return `Try matching these pairs correctly. You have ${body.pairs.length} items to match.`;
 };
-
-export const temperature = 0.7;

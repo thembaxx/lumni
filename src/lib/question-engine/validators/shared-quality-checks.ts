@@ -74,7 +74,7 @@ export function checkDifficulty(
 
 export function checkPoints(value: number, field: string): ValidationError[] {
 	const errors: ValidationError[] = [];
-	if (typeof value !== "number" || value <= 0) {
+	if (typeof value !== "number" || Number.isNaN(value) || value <= 0) {
 		errors.push({
 			type: "schema",
 			field,

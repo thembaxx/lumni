@@ -1,11 +1,13 @@
 import { describe, expect, test } from "bun:test";
-import { grade } from "../graders/diagram";
 import { PromptManager } from "../../prompt-manager";
 import type { Question } from "../../types";
+import { grade } from "../graders/diagram";
 
 const prompts = new PromptManager();
 
-function makeQuestion(overrides?: Partial<Question<"diagram">>): Question<"diagram"> {
+function makeQuestion(
+	overrides?: Partial<Question<"diagram">>,
+): Question<"diagram"> {
 	return {
 		id: "q1",
 		type: "diagram",
@@ -18,7 +20,11 @@ function makeQuestion(overrides?: Partial<Question<"diagram">>): Question<"diagr
 		hint: "Identify all force vectors",
 		explanation: "Forces include gravity, normal, and friction",
 		body: {
-			diagramData: { type: "force-vector", title: "Forces on a block", data: {} },
+			diagramData: {
+				type: "force-vector",
+				title: "Forces on a block",
+				data: {},
+			},
 			instructions: "Label each force arrow with its name",
 		},
 		...overrides,

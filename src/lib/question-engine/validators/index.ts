@@ -1,26 +1,29 @@
-import type {
-	Question,
-	ValidationError,
-	ValidationResult,
-} from "../types";
+import type { Question, ValidationError, ValidationResult } from "../types";
+import { validate as validateCalculation } from "./per-type/calculation";
+import { validate as validateDataResponse } from "./per-type/data-response";
+import { validate as validateDiagram } from "./per-type/diagram";
+import { validate as validateEssay } from "./per-type/essay";
+import { validate as validateLongAnswer } from "./per-type/long-answer";
+import { validate as validateMatching } from "./per-type/matching";
+import { validate as validateMcq } from "./per-type/mcq";
+import { validate as validateMixed } from "./per-type/mixed";
+import { validate as validateProgramming } from "./per-type/programming";
+import { validate as validateShortAnswer } from "./per-type/short-answer";
+import { validate as validateSourceBased } from "./per-type/source-based";
 import {
 	checkDifficulty,
 	checkLength,
 	checkPoints,
 } from "./shared-quality-checks";
-import { validate as validateMcq } from "./per-type/mcq";
-import { validate as validateMatching } from "./per-type/matching";
-import { validate as validateShortAnswer } from "./per-type/short-answer";
-import { validate as validateLongAnswer } from "./per-type/long-answer";
-import { validate as validateEssay } from "./per-type/essay";
-import { validate as validateCalculation } from "./per-type/calculation";
-import { validate as validateDiagram } from "./per-type/diagram";
-import { validate as validateSourceBased } from "./per-type/source-based";
-import { validate as validateProgramming } from "./per-type/programming";
-import { validate as validateDataResponse } from "./per-type/data-response";
-import { validate as validateMixed } from "./per-type/mixed";
 
-const typeValidators: Record<string, (question: Question, errors: ValidationError[], warnings: ValidationError[]) => void> = {
+const typeValidators: Record<
+	string,
+	(
+		question: Question,
+		errors: ValidationError[],
+		warnings: ValidationError[],
+	) => void
+> = {
 	"multiple-choice": validateMcq,
 	matching: validateMatching,
 	"short-answer": validateShortAnswer,
@@ -50,6 +53,16 @@ function scoreResult(
 export function validateQuestion(question: Question): ValidationResult {
 	const errors: ValidationError[] = [];
 	const warnings: ValidationError[] = [];
+
+	if (!question.body) {
+		errors.push({
+			type: "schema",
+			field: "body",
+			message: "Question body is missing",
+			severity: "error",
+		});
+		return scoreResult(errors, warnings);
+	}
 
 	const minTextLen =
 		question.type === "essay" || question.type === "programming" ? 20 : 10;

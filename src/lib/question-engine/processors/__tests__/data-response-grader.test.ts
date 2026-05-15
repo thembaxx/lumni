@@ -1,11 +1,13 @@
 import { describe, expect, test } from "bun:test";
-import { grade } from "../graders/data-response";
 import { PromptManager } from "../../prompt-manager";
 import type { Question } from "../../types";
+import { grade } from "../graders/data-response";
 
 const prompts = new PromptManager();
 
-function makeQuestion(overrides?: Partial<Question<"data-response">>): Question<"data-response"> {
+function makeQuestion(
+	overrides?: Partial<Question<"data-response">>,
+): Question<"data-response"> {
 	return {
 		id: "q1",
 		type: "data-response",
@@ -22,11 +24,34 @@ function makeQuestion(overrides?: Partial<Question<"data-response">>): Question<
 				type: "table",
 				title: "Temperature readings",
 				headers: ["Day", "Temp"],
-				rows: [{ Day: "Mon", Temp: 20 }, { Day: "Tue", Temp: 22 }],
+				rows: [
+					{ Day: "Mon", Temp: 20 },
+					{ Day: "Tue", Temp: 22 },
+				],
 			},
 			questions: [
-				{ id: "dq1", questionText: "What is the trend?", type: "short-answer", points: 5, body: { modelAnswer: "Increasing", acceptableAnswers: ["Increasing", "going up"], maxLength: 100 } },
-				{ id: "dq2", questionText: "Predict Wednesday", type: "short-answer", points: 5, body: { modelAnswer: "24", acceptableAnswers: ["24", "about 24"], maxLength: 100 } },
+				{
+					id: "dq1",
+					questionText: "What is the trend?",
+					type: "short-answer",
+					points: 5,
+					body: {
+						modelAnswer: "Increasing",
+						acceptableAnswers: ["Increasing", "going up"],
+						maxLength: 100,
+					},
+				},
+				{
+					id: "dq2",
+					questionText: "Predict Wednesday",
+					type: "short-answer",
+					points: 5,
+					body: {
+						modelAnswer: "24",
+						acceptableAnswers: ["24", "about 24"],
+						maxLength: 100,
+					},
+				},
 			],
 		},
 		...overrides,

@@ -1,11 +1,13 @@
 import { describe, expect, test } from "bun:test";
-import { grade } from "../graders/programming";
 import { PromptManager } from "../../prompt-manager";
 import type { Question } from "../../types";
+import { grade } from "../graders/programming";
 
 const prompts = new PromptManager();
 
-function makeQuestion(overrides?: Partial<Question<"programming">>): Question<"programming"> {
+function makeQuestion(
+	overrides?: Partial<Question<"programming">>,
+): Question<"programming"> {
 	return {
 		id: "q1",
 		type: "programming",
@@ -21,7 +23,11 @@ function makeQuestion(overrides?: Partial<Question<"programming">>): Question<"p
 			language: "python",
 			starterCode: "def sort(arr):\n    pass",
 			testCases: [
-				{ input: "[3,1,2]", expectedOutput: "[1,2,3]", description: "Basic sort" },
+				{
+					input: "[3,1,2]",
+					expectedOutput: "[1,2,3]",
+					description: "Basic sort",
+				},
 				{ input: "[]", expectedOutput: "[]", description: "Empty array" },
 			],
 			timeLimit: 5000,

@@ -1,7 +1,7 @@
 import { initAI, isAIConfigured } from "@/lib/ai";
-import { CachingStrategy } from "@/lib/caching-strategy";
 import type { CacheTier } from "@/lib/caching-strategy";
-import { getCachedVisual, makeCacheKey, cacheVisual } from "@/lib/db/offline";
+import { CachingStrategy } from "@/lib/caching-strategy";
+import { cacheVisual, getCachedVisual, makeCacheKey } from "@/lib/db/offline";
 import { searchImage } from "./image-resolver";
 import { generateDiagram } from "./stem-renderer";
 import type { VisualContent, VisualEngineParams } from "./types";
@@ -15,7 +15,10 @@ export class VisualEngine {
 	private cachingStrategy: CachingStrategy<VisualContent, VisualEngineParams>;
 
 	constructor() {
-		this.cachingStrategy = new CachingStrategy<VisualContent, VisualEngineParams>(
+		this.cachingStrategy = new CachingStrategy<
+			VisualContent,
+			VisualEngineParams
+		>(
 			[
 				{
 					name: "dexie",

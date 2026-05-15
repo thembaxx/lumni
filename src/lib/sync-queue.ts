@@ -5,6 +5,7 @@ import {
 	addToSyncQueue,
 	getPendingSyncItems,
 	removeSyncItem,
+	resetStaleSyncingItems,
 	type SyncQueueItem,
 	updateSyncItem,
 } from "@/lib/db/offline";
@@ -43,6 +44,7 @@ export async function processQueue(): Promise<void> {
 	isProcessing = true;
 
 	try {
+		await resetStaleSyncingItems();
 		const pendingItems = await getPendingSyncItems();
 
 		for (const item of pendingItems) {

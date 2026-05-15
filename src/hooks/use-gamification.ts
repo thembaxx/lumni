@@ -25,6 +25,7 @@ interface StoredGamification {
 	streakMilestones: StreakMilestone[];
 	lastPracticeDate: string | null;
 	currentStreak: number;
+	totalQuestionsAnswered: number;
 }
 
 interface StreakMilestone {
@@ -55,6 +56,7 @@ function getDefaultGamification(): StoredGamification {
 		streakMilestones: STREAK_MILESTONES.map((s) => ({ ...s })),
 		lastPracticeDate: null,
 		currentStreak: 0,
+		totalQuestionsAnswered: 0,
 	};
 }
 
@@ -141,6 +143,7 @@ export function useGamification() {
 					...prev,
 					xp: newXp,
 					totalXp: newTotalXp,
+					totalQuestionsAnswered: prev.totalQuestionsAnswered + amount,
 					dailyChallenges: updatedChallenges,
 				};
 				saveGamification(newData);
@@ -295,5 +298,6 @@ export function useGamification() {
 		updateStreak,
 		completeDailyChallenge,
 		currentStreak: data.currentStreak,
+		totalQuestionsAnswered: data.totalQuestionsAnswered,
 	};
 }

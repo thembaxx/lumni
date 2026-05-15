@@ -13,7 +13,6 @@ import {
 
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import {
 	AppearanceTab,
@@ -49,7 +48,6 @@ const tabs = [
 ];
 
 function SettingsContent() {
-	const router = useRouter();
 	const [studyPrefs, setStudyPrefs] =
 		useState<StudyPreferences>(DEFAULT_PREFERENCES);
 	const [notifications, setNotifications] = useState<NotificationSettings>(
@@ -60,10 +58,35 @@ function SettingsContent() {
 	const [isSaving, setIsSaving] = useState(false);
 
 	useEffect(() => {
-		setStudyPrefs(loadFromStorage(STUDY_PREFS_KEY, DEFAULT_PREFERENCES));
-		setNotifications(
-			loadFromStorage(NOTIFICATION_SETTINGS_KEY, DEFAULT_NOTIFICATIONS),
+		const onboarding = loadFromStorage<{
+			selectedSubjects?: string[];
+			targetAps?: number;
+			dailyStudyMinutes?: number;
+			notificationsEnabled?: boolean;
+		}>("lumni_onboarding", {});
+
+		const stored = loadFromStorage(STUDY_PREFS_KEY, DEFAULT_PREFERENCES);
+		if (
+			onboarding.dailyStudyMinutes &&
+			!localStorage.getItem(STUDY_PREFS_KEY)
+		) {
+			stored.timerDuration = onboarding.dailyStudyMinutes * 60;
+		}
+		setStudyPrefs(stored);
+
+		const notifPrefs = loadFromStorage(
+			NOTIFICATION_SETTINGS_KEY,
+			DEFAULT_NOTIFICATIONS,
 		);
+		if (
+			onboarding.notificationsEnabled !== undefined &&
+			!localStorage.getItem(NOTIFICATION_SETTINGS_KEY)
+		) {
+			notifPrefs.studyReminders = onboarding.notificationsEnabled;
+			notifPrefs.streakAlerts = onboarding.notificationsEnabled;
+		}
+		setNotifications(notifPrefs);
+
 		setBetaFeatures(loadFromStorage(BETA_FEATURES_KEY, DEFAULT_BETA));
 	}, []);
 

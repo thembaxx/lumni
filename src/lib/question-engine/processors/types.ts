@@ -1,5 +1,5 @@
-import type { GradingResult, Question, UserAnswer } from "../types";
 import type { PromptManager } from "../prompt-manager";
+import type { GradingResult, Question, UserAnswer } from "../types";
 
 export type GradeFn = (
 	q: Question,

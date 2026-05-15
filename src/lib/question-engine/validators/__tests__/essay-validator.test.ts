@@ -2,7 +2,9 @@ import { describe, expect, test } from "bun:test";
 import type { Question } from "@/lib/question-engine/types";
 import { validateQuestion } from "..";
 
-function makeQuestion(overrides?: Partial<Question<"essay">>): Question<"essay"> {
+function makeQuestion(
+	overrides?: Partial<Question<"essay">>,
+): Question<"essay"> {
 	return {
 		id: "q1",
 		type: "essay",
@@ -19,7 +21,8 @@ function makeQuestion(overrides?: Partial<Question<"essay">>): Question<"essay">
 				{ name: "Argument", description: "Clear thesis", maxScore: 5 },
 				{ name: "Evidence", description: "Examples", maxScore: 5 },
 			],
-			modelAnswer: "A substantial model answer that evaluates the role of nuclear weapons in the Cold War with sufficient depth and analysis.",
+			modelAnswer:
+				"A substantial model answer that evaluates the role of nuclear weapons in the Cold War with sufficient depth and analysis.",
 			wordLimit: 1000,
 		},
 		...overrides,
@@ -33,7 +36,15 @@ describe("Essay Validator", () => {
 	});
 
 	test("fails on less than 2 rubric criteria", () => {
-		const result = validateQuestion(makeQuestion({ body: { rubric: [{ name: "A", description: "desc", maxScore: 5 }], modelAnswer: "long enough answer text here for validation", wordLimit: 1000 } }));
+		const result = validateQuestion(
+			makeQuestion({
+				body: {
+					rubric: [{ name: "A", description: "desc", maxScore: 5 }],
+					modelAnswer: "long enough answer text here for validation",
+					wordLimit: 1000,
+				},
+			}),
+		);
 		expect(result.isValid).toBe(false);
 	});
 });

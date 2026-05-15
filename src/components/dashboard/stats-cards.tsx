@@ -1,6 +1,9 @@
 "use client";
 
-import { CheckmarkCircle01Icon, Target01Icon } from "@hugeicons/core-free-icons";
+import {
+	CheckmarkCircle01Icon,
+	Target01Icon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
 	motion,

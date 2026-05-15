@@ -4,6 +4,7 @@ import { CaretLeft, CaretRight, Check, X } from "@phosphor-icons/react";
 import { m } from "framer-motion";
 import { useCallback } from "react";
 import { Anim } from "@/components/shared/anim";
+import { TTSButton } from "@/components/shared/tts-button";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -111,6 +112,9 @@ export function FlashcardsActive({
 									<Badge variant="outline" className="font-mono text-xs">
 										{currentCard.difficulty}
 									</Badge>
+									<div className="ml-auto">
+										<TTSButton text={currentCard.front} />
+									</div>
 								</div>
 								<div className="flex-1 flex items-center justify-center">
 									<p className="text-lg font-medium text-center">
@@ -126,6 +130,9 @@ export function FlashcardsActive({
 								className="absolute inset-0 backface-hidden p-6 flex flex-col rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]"
 								style={{ transform: "rotateY(180deg)" }}
 							>
+								<div className="flex items-center justify-end mb-2">
+									<TTSButton text={currentCard.back} />
+								</div>
 								<div className="flex-1 flex items-center justify-center">
 									<p className="text-lg font-medium text-center">
 										{currentCard.back}

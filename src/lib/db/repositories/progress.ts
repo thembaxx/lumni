@@ -1,4 +1,4 @@
-import { offlineDB, type CachedProgress } from "../schema";
+import { type CachedProgress, offlineDB } from "../schema";
 
 export async function saveProgress(
 	odSubjectId: string,
@@ -32,6 +32,11 @@ export async function saveProgress(
 
 export async function getProgress(
 	odSubjectId: string,
+	userId?: string,
 ): Promise<CachedProgress | undefined> {
-	return offlineDB.progress.where("odSubjectId").equals(odSubjectId).first();
+	const query = offlineDB.progress.where("odSubjectId").equals(odSubjectId);
+	const item = await query.first();
+	if (!item) return undefined;
+	if (userId && item.userId && item.userId !== userId) return undefined;
+	return item;
 }

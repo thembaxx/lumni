@@ -1,13 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-	title: {
-		default: "Sign In",
-		template: "%s | Lumni",
-	},
-	robots: {
-		index: false,
-	},
+	title: "Lumni",
+	robots: { index: false },
 };
 
 export default function AuthLayout({

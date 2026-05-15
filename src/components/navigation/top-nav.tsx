@@ -1,6 +1,7 @@
 "use client";
 
-import { SignIn, SignOut, User } from "@phosphor-icons/react";
+import { SignIn, SignOut, Star, User } from "@phosphor-icons/react";
+import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useCallback, useMemo } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -12,6 +13,8 @@ import {
 	DropdownListSeparator,
 	DropdownListTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useGamification } from "@/hooks/use-gamification";
+import { useSyncStatus } from "@/hooks/use-sync-status";
 import { useAuth } from "@/lib/auth/auth-context";
 import { cn } from "@/lib/utils";
 
@@ -31,6 +34,8 @@ const routeTitles: Record<string, string> = {
 export function TopNav({ title, className }: TopNavProps) {
 	const pathname = usePathname();
 	const { user, status, signOut } = useAuth();
+	const { levelInfo } = useGamification();
+	const { isOnline, pendingCount } = useSyncStatus();
 
 	const handleSignOut = useCallback(async () => {
 		await signOut();
@@ -70,7 +75,42 @@ export function TopNav({ title, className }: TopNavProps) {
 					{pageTitle}
 				</h1>
 
+				{status === "authenticated" && !user?.labels?.includes("anonymous") && (
+					<motion.div
+						initial={{ opacity: 0, x: -8 }}
+						animate={{ opacity: 1, x: 0 }}
+						className="flex items-center gap-2 mr-auto ml-4"
+					>
+						<div className="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-[--system-accent]/10">
+							<Star weight="fill" className="size-3 text-[--system-accent]" />
+							<span className="text-[11px] font-bold tabular-nums text-[--system-accent]">
+								Lv.{levelInfo.level}
+							</span>
+						</div>
+						<div className="w-16 h-1.5 rounded-full bg-muted overflow-hidden">
+							<motion.div
+								initial={{ width: 0 }}
+								animate={{ width: `${levelInfo.progress}%` }}
+								transition={{ duration: 1, ease: "easeOut" }}
+								className="h-full rounded-full bg-[--system-accent]"
+							/>
+						</div>
+					</motion.div>
+				)}
+
 				<div className="flex items-center gap-2">
+					{!isOnline && (
+						<div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-warning/10 text-warning">
+							<div className="size-1.5 rounded-full bg-warning animate-pulse" />
+							<span className="text-[10px] font-medium">Offline</span>
+						</div>
+					)}
+					{pendingCount > 0 && (
+						<div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-[--system-accent]/10 text-[--system-accent]">
+							<div className="size-1.5 rounded-full bg-[--system-accent]" />
+							<span className="text-[10px] font-medium">{pendingCount}</span>
+						</div>
+					)}
 					{status === "loading" ? (
 						<div className="size-8 rounded-full bg-system-fill animate-pulse" />
 					) : status === "unauthenticated" ? (
@@ -144,7 +184,10 @@ export function TopNav({ title, className }: TopNavProps) {
 								</div>
 								<DropdownListSeparator />
 								<div className="p-1">
-									<DropdownListItem variant="destructive" onClick={handleSignOut}>
+									<DropdownListItem
+										variant="destructive"
+										onClick={handleSignOut}
+									>
 										<SignOut className="size-4" />
 										Sign Out
 									</DropdownListItem>

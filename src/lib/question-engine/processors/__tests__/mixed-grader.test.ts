@@ -1,4 +1,4 @@
-import { describe, expect, test, mock } from "bun:test";
+import { describe, expect, mock, test } from "bun:test";
 
 mock.module("@/lib/ai", () => ({
 	getAI: () => ({
@@ -12,13 +12,15 @@ mock.module("@/lib/ai", () => ({
 	initAI: () => {},
 }));
 
-import { grade } from "../graders/mixed";
 import { PromptManager } from "../../prompt-manager";
 import type { Question } from "../../types";
+import { grade } from "../graders/mixed";
 
 const prompts = new PromptManager();
 
-function makeQuestion(overrides?: Partial<Question<"mixed">>): Question<"mixed"> {
+function makeQuestion(
+	overrides?: Partial<Question<"mixed">>,
+): Question<"mixed"> {
 	return {
 		id: "q1",
 		type: "mixed",
@@ -32,8 +34,28 @@ function makeQuestion(overrides?: Partial<Question<"mixed">>): Question<"mixed">
 		explanation: "Each part builds on the previous",
 		body: {
 			parts: [
-				{ id: "p1", questionText: "Solve 2x = 8", type: "short-answer", points: 5, body: { modelAnswer: "4", acceptableAnswers: ["4", "x=4"], maxLength: 50 } },
-				{ id: "p2", questionText: "Now solve x + 3 = 7", type: "short-answer", points: 5, body: { modelAnswer: "4", acceptableAnswers: ["4", "x=4"], maxLength: 50 } },
+				{
+					id: "p1",
+					questionText: "Solve 2x = 8",
+					type: "short-answer",
+					points: 5,
+					body: {
+						modelAnswer: "4",
+						acceptableAnswers: ["4", "x=4"],
+						maxLength: 50,
+					},
+				},
+				{
+					id: "p2",
+					questionText: "Now solve x + 3 = 7",
+					type: "short-answer",
+					points: 5,
+					body: {
+						modelAnswer: "4",
+						acceptableAnswers: ["4", "x=4"],
+						maxLength: 50,
+					},
+				},
 			],
 		},
 		...overrides,

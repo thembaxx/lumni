@@ -49,7 +49,11 @@ export class LearningOrchestrator {
 		for (const type of types) {
 			try {
 				const processor = this.registry.getProcessor(type);
-				const typeParams = { ...params, count: perTypeCount, questionType: type };
+				const typeParams = {
+					...params,
+					count: perTypeCount,
+					questionType: type,
+				};
 				const result = await processor.generate(typeParams);
 				questions.push(...result);
 			} catch (error) {
@@ -194,7 +198,9 @@ export class LearningOrchestrator {
 		return this.registry.listTypes();
 	}
 
-	private async enrichParams(params: GenerationParams): Promise<GenerationParams> {
+	private async enrichParams(
+		params: GenerationParams,
+	): Promise<GenerationParams> {
 		const curriculumContext = await this.retrieveCurriculumContext(
 			params.subject,
 			params.topic,
@@ -248,11 +254,18 @@ export class LearningOrchestrator {
 			const primaryType = available[0];
 			try {
 				const processor = this.registry.getProcessor(primaryType);
-				const typeParams = { ...params, count: itemCount, questionType: primaryType };
+				const typeParams = {
+					...params,
+					count: itemCount,
+					questionType: primaryType,
+				};
 				const questions = await processor.generate(typeParams);
 				results.push(...questions);
 			} catch (error) {
-				console.error(`[Engine] Batch generation failed for ${primaryType}:`, error);
+				console.error(
+					`[Engine] Batch generation failed for ${primaryType}:`,
+					error,
+				);
 			}
 		}
 

@@ -2,7 +2,10 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useState } from "react";
+import { AchievementShowcase } from "@/components/dashboard/achievement-showcase";
+import { CompetencyOverview } from "@/components/dashboard/competency-overview";
 import { CountdownHeader } from "@/components/dashboard/countdown-header";
+import { DailyChallenges } from "@/components/dashboard/daily-challenges";
 import { DailyProgressRing } from "@/components/dashboard/daily-progress-ring";
 import { FocusTimerCard } from "@/components/dashboard/focus-timer-card";
 import { QuickActions } from "@/components/dashboard/quick-actions/quick-actions";
@@ -10,7 +13,10 @@ import { QuizStartCard } from "@/components/dashboard/quiz-start-card";
 import { ScrollAmbient } from "@/components/dashboard/scroll-ambient";
 import { StatsCards } from "@/components/dashboard/stats-cards";
 import { StatsRow } from "@/components/dashboard/stats-row";
+import { StreakCard } from "@/components/dashboard/streak-card";
+import { StudyPlanOverview } from "@/components/dashboard/study-plan-overview";
 import { TodayFocusCard } from "@/components/dashboard/today-focus-card";
+import type { QuizResults } from "@/components/quiz/quiz-view";
 import { QuizView } from "@/components/quiz/quiz-view";
 import { PerpetualFloat } from "@/components/shared/perpetual-float";
 import { StaggerList } from "@/components/shared/stagger-list";
@@ -19,6 +25,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useGamification } from "@/hooks/use-gamification";
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 import { useViewTransition } from "@/hooks/use-view-transition";
+import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
+import { competencyService } from "@/lib/competency-engine/competency-service";
 import { cn } from "@/lib/utils";
 import { iOSEase } from "@/lib/utils/animation";
 
@@ -154,13 +162,28 @@ function DashboardContent({
 				<SectionReveal delay={0.1}>
 					<TodayFocusCard />
 				</SectionReveal>
+				<SectionReveal delay={0.11}>
+					<StreakCard />
+				</SectionReveal>
+				<SectionReveal delay={0.115}>
+					<StudyPlanOverview />
+				</SectionReveal>
 				<SectionReveal delay={0.12}>
-					<QuizStartCard onStart={onStartQuiz} />
+					<CompetencyOverview />
+				</SectionReveal>
+				<SectionReveal delay={0.13}>
+					<DailyChallenges />
 				</SectionReveal>
 				<SectionReveal delay={0.14}>
-					<StatsRow />
+					<QuizStartCard onStart={onStartQuiz} />
 				</SectionReveal>
 				<SectionReveal delay={0.16}>
+					<StatsRow />
+				</SectionReveal>
+				<SectionReveal delay={0.18}>
+					<AchievementShowcase />
+				</SectionReveal>
+				<SectionReveal delay={0.19}>
 					<StaggerList>
 						<QuickActions />
 					</StaggerList>
@@ -177,7 +200,16 @@ export function DashboardClient({
 }) {
 	const [quizActive, setQuizActive] = useState(false);
 	const [quizSubject, setQuizSubject] = useState("");
-	const { isLoaded } = useGamification();
+	const {
+		isLoaded,
+		addXp,
+		updateStreak,
+		checkAndUnlockAchievements,
+		currentStreak,
+		levelInfo,
+		totalQuestionsAnswered,
+	} = useGamification();
+	const { addWrongAnswer } = useWrongAnswerJournal();
 	const { startViewTransition } = useViewTransition();
 
 	const handleStartQuiz = (subject: string) => {
@@ -185,6 +217,50 @@ export function DashboardClient({
 			setQuizSubject(subject);
 			setQuizActive(true);
 		});
+	};
+
+	const handleFinishQuiz = async (results: QuizResults) => {
+		updateStreak();
+		const accuracy =
+			results.totalQuestions > 0
+				? Math.round((results.correctAnswers / results.totalQuestions) * 100)
+				: 0;
+		const isGoodScore = accuracy >= 50;
+
+		addXp(results.totalQuestions, isGoodScore, currentStreak);
+		checkAndUnlockAchievements(
+			totalQuestionsAnswered + results.totalQuestions,
+			accuracy,
+			currentStreak,
+			levelInfo.level,
+			accuracy === 100,
+		);
+
+		for (const [i, question] of results.questions.entries()) {
+			const correct = results.correctness[i] ?? false;
+			competencyService.update(
+				question.subject,
+				question.topic,
+				question.bloomTaxonomy,
+				correct ? 1 : 0,
+				1,
+			);
+
+			if (!correct) {
+				addWrongAnswer({
+					questionId: question.id,
+					questionText: question.questionText,
+					subject: question.subject,
+					topic: question.topic,
+					correctAnswer: question.explanation,
+					userAnswer: "(see quiz history)",
+					explanation: question.explanation,
+				});
+			}
+		}
+
+		setQuizActive(false);
+		setQuizSubject("");
 	};
 
 	const handleQuitQuiz = () => {
@@ -227,7 +303,7 @@ export function DashboardClient({
 							initialSubject={quizSubject}
 							variant="full"
 							onQuit={handleQuitQuiz}
-							onFinish={handleQuitQuiz}
+							onFinish={handleFinishQuiz}
 						/>
 					</motion.div>
 				) : (

@@ -1,4 +1,4 @@
-import { describe, expect, test, mock } from "bun:test";
+import { describe, expect, mock, test } from "bun:test";
 
 mock.module("@/lib/ai", () => ({
 	getAI: () => ({
@@ -12,13 +12,15 @@ mock.module("@/lib/ai", () => ({
 	initAI: () => {},
 }));
 
-import { grade } from "../graders/short-answer";
 import { PromptManager } from "../../prompt-manager";
 import type { Question } from "../../types";
+import { grade } from "../graders/short-answer";
 
 const prompts = new PromptManager();
 
-function makeQuestion(overrides?: Partial<Question<"short-answer">>): Question<"short-answer"> {
+function makeQuestion(
+	overrides?: Partial<Question<"short-answer">>,
+): Question<"short-answer"> {
 	return {
 		id: "q1",
 		type: "short-answer",

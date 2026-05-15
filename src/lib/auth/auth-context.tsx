@@ -167,7 +167,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 				await account.createEmailPasswordSession(email, password);
 				const user = await account.get();
 				store.setUser(user, "authenticated", false);
-				queryClient.invalidateQueries();
+				queryClient.invalidateQueries({ queryKey: ["user"] });
 			} catch (err) {
 				store.setError(getReadableErrorMessage(err));
 				throw err;
@@ -182,7 +182,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 			try {
 				await account.updateName(name);
 				await account.updateEmail(email, password);
-				await account.updatePassword(password);
 				const user = await account.get();
 				store.setUser(user, "authenticated", false);
 

@@ -1,6 +1,13 @@
 "use client";
 
-import { Book, FileText, MapTrifold } from "@phosphor-icons/react";
+import {
+	Book,
+	BookmarkSimple,
+	Brain,
+	FileText,
+	MapTrifold,
+	NotePencil,
+} from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { StudyPlanSheet } from "@/components/dashboard/study-plan-sheet";
@@ -10,8 +17,11 @@ import { Button } from "@/components/ui/button";
 import { iOSEase } from "@/lib/utils/animation";
 
 const quickActions = [
-	{ icon: FileText, label: "Exams", route: "/dashboard/exams" },
+	{ icon: Brain, label: "Practice", route: "/quiz" },
+	{ icon: FileText, label: "Past Papers", route: "/past-papers" },
 	{ icon: MapTrifold, label: "Study Plan" },
+	{ icon: BookmarkSimple, label: "Bookmarks", route: "/bookmarks" },
+	{ icon: NotePencil, label: "Review", route: "/review" },
 	{ icon: Book, label: "Lessons" },
 ];
 

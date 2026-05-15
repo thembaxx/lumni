@@ -1,37 +1,15 @@
 export {
-	LumniOfflineDB,
-	offlineDB,
-} from "./schema";
-export type {
-	CachedProgress,
-	CachedQuestion,
-	CachedSubject,
-	CachedVisual,
-	QuizAnswer,
-	QuizAttempt,
-	QuizSessionState,
-	SyncConflict,
-	SyncQueueItem,
-} from "./schema";
+	clearResolvedConflicts,
+	getUnresolvedConflicts,
+	resolveConflict,
+	saveConflict,
+} from "./repositories/conflicts";
+export { getProgress, saveProgress } from "./repositories/progress";
 
-export { cacheQuestions, getCachedQuestions } from "./repositories/question-cache";
-export { saveProgress, getProgress } from "./repositories/progress";
 export {
-	addToSyncQueue,
-	addToSyncQueueWithPriority,
-	clearSyncQueue,
-	getAllSyncItems,
-	getNextSyncItem,
-	getPendingSyncItems,
-	getSyncQueueStats,
-	markSyncItemFailed,
-	markSyncItemSuccess,
-	markSyncItemSyncing,
-	removeSyncItem,
-	retryFailedSyncItems,
-	updateSyncItem,
-} from "./repositories/sync-queue";
-export { calculateBackoffDelay } from "./repositories/sync-queue";
+	cacheQuestions,
+	getCachedQuestions,
+} from "./repositories/question-cache";
 export {
 	clearOldQuizSessions,
 	deleteQuizSession,
@@ -45,13 +23,39 @@ export {
 	saveQuizSession,
 } from "./repositories/quiz-session";
 export {
+	addToSyncQueue,
+	addToSyncQueueWithPriority,
+	calculateBackoffDelay,
+	clearSyncQueue,
+	getAllSyncItems,
+	getNextSyncItem,
+	getPendingSyncItems,
+	getSyncQueueStats,
+	markSyncItemFailed,
+	markSyncItemSuccess,
+	markSyncItemSyncing,
+	removeSyncItem,
+	resetStaleSyncingItems,
+	retryFailedSyncItems,
+	updateSyncItem,
+} from "./repositories/sync-queue";
+export {
 	cacheVisual,
 	getCachedVisual,
 	makeCacheKey,
 } from "./repositories/visual-cache";
+export type {
+	CachedProgress,
+	CachedQuestion,
+	CachedSubject,
+	CachedVisual,
+	QuizAnswer,
+	QuizAttempt,
+	QuizSessionState,
+	SyncConflict,
+	SyncQueueItem,
+} from "./schema";
 export {
-	clearResolvedConflicts,
-	getUnresolvedConflicts,
-	resolveConflict,
-	saveConflict,
-} from "./repositories/conflicts";
+	LumniOfflineDB,
+	offlineDB,
+} from "./schema";

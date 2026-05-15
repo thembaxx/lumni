@@ -13,10 +13,10 @@ export default function Loading() {
 			className="min-h-[100dvh] flex flex-col items-center justify-center bg-background"
 		>
 			<div className="flex flex-col items-center gap-[--space-6]">
-			<motion.div
-				initial={{ opacity: 0, scale: 0.8, filter: "blur(4px)" }}
-				animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-				transition={{ duration: 0.5, ease: iOSEase }}
+				<motion.div
+					initial={{ opacity: 0, scale: 0.8, filter: "blur(4px)" }}
+					animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+					transition={{ duration: 0.5, ease: iOSEase }}
 				>
 					<motion.div
 						animate={{ rotate: 360 }}
@@ -26,18 +26,18 @@ export default function Loading() {
 					</motion.div>
 				</motion.div>
 
-			<motion.h2
-				initial={{ opacity: 0, y: 12, filter: "blur(4px)" }}
-				animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+				<motion.h2
+					initial={{ opacity: 0, y: 12, filter: "blur(4px)" }}
+					animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
 					transition={{ duration: 0.4, ease: iOSEase, delay: 0.08 }}
 					className="ios-title-2 text-[--system-text-primary] text-center"
 				>
 					Loading
 				</motion.h2>
 
-			<motion.p
-				initial={{ opacity: 0, y: 8, filter: "blur(4px)" }}
-				animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+				<motion.p
+					initial={{ opacity: 0, y: 8, filter: "blur(4px)" }}
+					animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
 					transition={{ duration: 0.35, ease: iOSEase, delay: 0.12 }}
 					className="ios-footnote text-[--system-text-secondary] text-center"
 				>

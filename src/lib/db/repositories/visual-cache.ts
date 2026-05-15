@@ -1,6 +1,6 @@
-import type { VisualContent } from "@/lib/visual-engine/types";
 import { safeJsonParse, safeJsonStringify } from "@/lib/utils/json";
-import { offlineDB, type CachedVisual } from "../schema";
+import type { VisualContent } from "@/lib/visual-engine/types";
+import { type CachedVisual, offlineDB } from "../schema";
 
 const CACHE_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 

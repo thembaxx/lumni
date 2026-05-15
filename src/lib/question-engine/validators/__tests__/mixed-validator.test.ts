@@ -2,7 +2,9 @@ import { describe, expect, test } from "bun:test";
 import type { Question } from "@/lib/question-engine/types";
 import { validateQuestion } from "..";
 
-function makeQuestion(overrides?: Partial<Question<"mixed">>): Question<"mixed"> {
+function makeQuestion(
+	overrides?: Partial<Question<"mixed">>,
+): Question<"mixed"> {
 	return {
 		id: "q1",
 		type: "mixed",
@@ -16,8 +18,20 @@ function makeQuestion(overrides?: Partial<Question<"mixed">>): Question<"mixed">
 		explanation: "Each part builds on the previous",
 		body: {
 			parts: [
-				{ id: "p1", questionText: "Solve 2x = 8", type: "short-answer", points: 5, body: { modelAnswer: "4", acceptableAnswers: ["4"], maxLength: 50 } },
-				{ id: "p2", questionText: "Solve x + 3 = 7", type: "short-answer", points: 10, body: { modelAnswer: "4", acceptableAnswers: ["4"], maxLength: 50 } },
+				{
+					id: "p1",
+					questionText: "Solve 2x = 8",
+					type: "short-answer",
+					points: 5,
+					body: { modelAnswer: "4", acceptableAnswers: ["4"], maxLength: 50 },
+				},
+				{
+					id: "p2",
+					questionText: "Solve x + 3 = 7",
+					type: "short-answer",
+					points: 10,
+					body: { modelAnswer: "4", acceptableAnswers: ["4"], maxLength: 50 },
+				},
 			],
 		},
 		...overrides,
@@ -31,7 +45,25 @@ describe("Mixed Validator", () => {
 	});
 
 	test("fails on less than 2 parts", () => {
-		const result = validateQuestion(makeQuestion({ body: { parts: [{ id: "p1", questionText: "Only part", type: "short-answer", points: 5, body: { modelAnswer: "4", acceptableAnswers: ["4"], maxLength: 50 } }] } }));
+		const result = validateQuestion(
+			makeQuestion({
+				body: {
+					parts: [
+						{
+							id: "p1",
+							questionText: "Only part",
+							type: "short-answer",
+							points: 5,
+							body: {
+								modelAnswer: "4",
+								acceptableAnswers: ["4"],
+								maxLength: 50,
+							},
+						},
+					],
+				},
+			}),
+		);
 		expect(result.isValid).toBe(false);
 	});
 

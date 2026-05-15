@@ -2,7 +2,9 @@ import { describe, expect, test } from "bun:test";
 import type { Question } from "@/lib/question-engine/types";
 import { validateQuestion } from "..";
 
-function makeQuestion(overrides?: Partial<Question<"calculation">>): Question<"calculation"> {
+function makeQuestion(
+	overrides?: Partial<Question<"calculation">>,
+): Question<"calculation"> {
 	return {
 		id: "q1",
 		type: "calculation",
@@ -26,17 +28,29 @@ describe("Calculation Validator", () => {
 	});
 
 	test("fails on missing correctValue", () => {
-		const result = validateQuestion(makeQuestion({ body: { formula: "F=ma", correctValue: NaN, unit: "N", tolerance: 0.1 } }));
+		const result = validateQuestion(
+			makeQuestion({
+				body: { formula: "F=ma", correctValue: NaN, unit: "N", tolerance: 0.1 },
+			}),
+		);
 		expect(result.isValid).toBe(false);
 	});
 
 	test("fails on empty unit", () => {
-		const result = validateQuestion(makeQuestion({ body: { formula: "F=ma", correctValue: 10, unit: "", tolerance: 0.1 } }));
+		const result = validateQuestion(
+			makeQuestion({
+				body: { formula: "F=ma", correctValue: 10, unit: "", tolerance: 0.1 },
+			}),
+		);
 		expect(result.isValid).toBe(false);
 	});
 
 	test("fails on negative tolerance", () => {
-		const result = validateQuestion(makeQuestion({ body: { formula: "F=ma", correctValue: 10, unit: "N", tolerance: -1 } }));
+		const result = validateQuestion(
+			makeQuestion({
+				body: { formula: "F=ma", correctValue: 10, unit: "N", tolerance: -1 },
+			}),
+		);
 		expect(result.isValid).toBe(false);
 	});
 });

@@ -10,10 +10,17 @@ import { Input } from "@/components/ui/input";
 import { useAuth } from "@/lib/auth/auth-context";
 import { iOSEase } from "@/lib/utils/animation";
 
+function safeRedirect(url: string | null): string {
+	if (!url) return "/dashboard";
+	if (!url.startsWith("/") || url.startsWith("//")) return "/dashboard";
+	if (url.includes("://") || url.includes("@")) return "/dashboard";
+	return url;
+}
+
 function SignInForm() {
 	const router = useRouter();
 	const searchParams = useSearchParams();
-	const redirect = searchParams.get("redirect") || "/dashboard";
+	const redirect = safeRedirect(searchParams.get("redirect"));
 	const { signIn, signInWithMagicLink, error } = useAuth();
 
 	const [email, setEmail] = useState("");

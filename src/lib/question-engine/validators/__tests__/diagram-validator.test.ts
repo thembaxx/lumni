@@ -2,7 +2,9 @@ import { describe, expect, test } from "bun:test";
 import type { Question } from "@/lib/question-engine/types";
 import { validateQuestion } from "..";
 
-function makeQuestion(overrides?: Partial<Question<"diagram">>): Question<"diagram"> {
+function makeQuestion(
+	overrides?: Partial<Question<"diagram">>,
+): Question<"diagram"> {
 	return {
 		id: "q1",
 		type: "diagram",
@@ -29,12 +31,23 @@ describe("Diagram Validator", () => {
 	});
 
 	test("fails on missing diagramData", () => {
-		const result = validateQuestion(makeQuestion({ body: { diagramData: undefined!, instructions: "Label" } }));
+		const result = validateQuestion(
+			makeQuestion({
+				body: { diagramData: undefined!, instructions: "Label" },
+			}),
+		);
 		expect(result.isValid).toBe(false);
 	});
 
 	test("fails on missing instructions", () => {
-		const result = validateQuestion(makeQuestion({ body: { diagramData: { type: "force-vector", title: "F", data: {} }, instructions: "" } }));
+		const result = validateQuestion(
+			makeQuestion({
+				body: {
+					diagramData: { type: "force-vector", title: "F", data: {} },
+					instructions: "",
+				},
+			}),
+		);
 		expect(result.isValid).toBe(false);
 	});
 });

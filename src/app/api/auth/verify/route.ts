@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { account } from "@/lib/appwrite";
+import { serverAccount } from "@/lib/appwrite";
 
 export async function GET(request: NextRequest) {
 	try {
@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
 			);
 		}
 
-		await account.updateVerification(userId, secret);
+		await serverAccount.updateVerification(userId, secret);
 
 		return NextResponse.redirect(
 			new URL("/settings?verified=true", request.url),

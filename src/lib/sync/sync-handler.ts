@@ -30,7 +30,7 @@ interface CompetencyPayload {
 	subjectId: string;
 	topicId: string;
 	bloomLevel: string;
-	score: number;
+	proficiency: number;
 	attempts: number;
 	lastAssessed: number;
 	level: string;
@@ -102,7 +102,7 @@ async function syncCompetency(payload: CompetencyPayload): Promise<void> {
 
 	if (existing.length > 0) {
 		await updateDocument(COLLECTIONS.COMPETENCIES, existing[0].$id as string, {
-			score: payload.score,
+			proficiency: payload.proficiency,
 			attempts: payload.attempts,
 			level: payload.level,
 			lastAssessed: payload.lastAssessed,
@@ -113,7 +113,7 @@ async function syncCompetency(payload: CompetencyPayload): Promise<void> {
 			subjectId: payload.subjectId,
 			topicId: payload.topicId,
 			bloomLevel: payload.bloomLevel,
-			score: payload.score,
+			proficiency: payload.proficiency,
 			attempts: payload.attempts,
 			level: payload.level,
 			lastAssessed: payload.lastAssessed,
@@ -188,7 +188,7 @@ export async function queueCompetencySync(payload: {
 	subjectId: string;
 	topicId: string;
 	bloomLevel: string;
-	score: number;
+	proficiency: number;
 	attempts: number;
 	level: string;
 	lastAssessed: number;
@@ -212,6 +212,7 @@ export async function flushOfflineData(userId: string): Promise<void> {
 				longestStreak: p.longestStreak,
 			});
 		}
+		await offlineDB.progress.delete(p.id!);
 	}
 
 	const allAttempts = await offlineDB.quizAttempts.toArray();
@@ -225,6 +226,7 @@ export async function flushOfflineData(userId: string): Promise<void> {
 				duration: a.duration,
 				completedAt: a.completedAt,
 			});
+			await offlineDB.quizAttempts.update(a.id!, { userId });
 		}
 	}
 }

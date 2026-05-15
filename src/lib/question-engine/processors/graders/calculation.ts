@@ -1,5 +1,10 @@
 import type { PromptManager } from "../../prompt-manager";
-import type { GradingResult, Question, QuestionBody, UserAnswer } from "../../types";
+import type {
+	GradingResult,
+	Question,
+	QuestionBody,
+	UserAnswer,
+} from "../../types";
 import type { GradeFn, HintFn } from "../types";
 
 export const grade: GradeFn = (q, a) => {
@@ -44,5 +49,3 @@ export const hint: HintFn = (q) => {
 	}
 	return `Recall the formula: ${body.formula}. Make sure your answer includes the correct unit (${body.unit}).`;
 };
-
-export const temperature = 0.6;

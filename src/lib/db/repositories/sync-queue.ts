@@ -61,7 +61,8 @@ export async function addToSyncQueueWithPriority(
 		.toArray();
 
 	const sameAction = existing.find(
-		(item) => safeJsonParse(item.payload) === payload,
+		(item) =>
+			JSON.stringify(safeJsonParse(item.payload)) === JSON.stringify(payload),
 	);
 	if (sameAction) {
 		return sameAction.id!;
@@ -87,14 +88,17 @@ export async function getNextSyncItem(): Promise<SyncQueueItem | null> {
 
 	if (items.length === 0) return null;
 
-	items.sort((a, b) => {
-		const aTime = a.retryAfter || 0;
-		const bTime = b.retryAfter || 0;
-		if (aTime > Date.now() || bTime > Date.now()) return 0;
-		return (b.priority || 0) - (a.priority || 0) || a.createdAt - b.createdAt;
-	});
+	const ready = items.filter(
+		(item) => !item.retryAfter || item.retryAfter <= Date.now(),
+	);
+	if (ready.length === 0) return null;
 
-	return items[0];
+	ready.sort(
+		(a, b) =>
+			(b.priority || 0) - (a.priority || 0) || a.createdAt - b.createdAt,
+	);
+
+	return ready[0];
 }
 
 export async function markSyncItemSyncing(id: number): Promise<void> {
@@ -146,6 +150,26 @@ export async function getSyncQueueStats(): Promise<{
 		failed: all.filter((i) => i.status === "failed").length,
 		total: all.length,
 	};
+}
+
+export async function resetStaleSyncingItems(): Promise<number> {
+	const stuck = await offlineDB.syncQueue
+		.where("status")
+		.equals("syncing")
+		.toArray();
+
+	let reset = 0;
+	for (const item of stuck) {
+		await offlineDB.syncQueue.update(item.id!, {
+			status: "pending",
+			attempts: item.attempts + 1,
+			retryAfter: Date.now() + calculateBackoffDelay(item.attempts),
+			updatedAt: Date.now(),
+		});
+		reset++;
+	}
+
+	return reset;
 }
 
 export async function retryFailedSyncItems(): Promise<number> {

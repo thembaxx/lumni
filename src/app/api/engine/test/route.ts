@@ -49,7 +49,10 @@ export async function GET() {
 		);
 
 		addStep("Testing hint generation...");
-		const hint = await orchestrator.generateHint({ questionId: q.id, question: q });
+		const hint = await orchestrator.generateHint({
+			questionId: q.id,
+			question: q,
+		});
 		addStep(`Hint generated: "${hint.slice(0, 80)}..."`);
 
 		addStep("Testing grading...");

@@ -1,5 +1,10 @@
 import type { PromptManager } from "../../prompt-manager";
-import type { GradingResult, Question, QuestionBody, UserAnswer } from "../../types";
+import type {
+	GradingResult,
+	Question,
+	QuestionBody,
+	UserAnswer,
+} from "../../types";
 import type { GradeFn, HintFn } from "../types";
 import { aiGradeResult } from "./shared";
 
@@ -23,5 +28,3 @@ export const hint: HintFn = (q) => {
 	const body = q.body as QuestionBody["programming"];
 	return `Think about the algorithm first. Consider edge cases. The function should handle ${body.testCases.length} test case(s).`;
 };
-
-export const temperature = 0.7;

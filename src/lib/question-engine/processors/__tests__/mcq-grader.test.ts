@@ -1,9 +1,11 @@
 import { describe, expect, test } from "bun:test";
-import { grade, hint } from "../graders/mcq";
 import { PromptManager } from "../../prompt-manager";
 import type { Question } from "../../types";
+import { grade, hint } from "../graders/mcq";
 
-function makeQuestion(overrides?: Partial<Question<"multiple-choice">>): Question<"multiple-choice"> {
+function makeQuestion(
+	overrides?: Partial<Question<"multiple-choice">>,
+): Question<"multiple-choice"> {
 	return {
 		id: "q1",
 		type: "multiple-choice",
@@ -32,7 +34,11 @@ function makeQuestion(overrides?: Partial<Question<"multiple-choice">>): Questio
 describe("MCQ Grader", () => {
 	test("returns full points for correct single answer", () => {
 		const q = makeQuestion();
-		const result = grade(q, { type: "option-ids", value: ["B"] }, {} as PromptManager);
+		const result = grade(
+			q,
+			{ type: "option-ids", value: ["B"] },
+			{} as PromptManager,
+		);
 		expect(result.correct).toBe(true);
 		expect(result.score).toBe(10);
 		expect(result.maxScore).toBe(10);
@@ -40,7 +46,11 @@ describe("MCQ Grader", () => {
 
 	test("returns zero for incorrect answer", () => {
 		const q = makeQuestion();
-		const result = grade(q, { type: "option-ids", value: ["A"] }, {} as PromptManager);
+		const result = grade(
+			q,
+			{ type: "option-ids", value: ["A"] },
+			{} as PromptManager,
+		);
 		expect(result.correct).toBe(false);
 		expect(result.score).toBe(0);
 	});
@@ -57,7 +67,11 @@ describe("MCQ Grader", () => {
 				allowMultiple: true,
 			},
 		});
-		const result = grade(q, { type: "option-ids", value: ["A", "B"] }, {} as PromptManager);
+		const result = grade(
+			q,
+			{ type: "option-ids", value: ["A", "B"] },
+			{} as PromptManager,
+		);
 		expect(result.correct).toBe(true);
 		expect(result.score).toBe(q.points);
 	});
@@ -74,13 +88,21 @@ describe("MCQ Grader", () => {
 				allowMultiple: true,
 			},
 		});
-		const result = grade(q, { type: "option-ids", value: ["A"] }, {} as PromptManager);
+		const result = grade(
+			q,
+			{ type: "option-ids", value: ["A"] },
+			{} as PromptManager,
+		);
 		expect(result.correct).toBe(false);
 	});
 
 	test("empty answer is incorrect", () => {
 		const q = makeQuestion();
-		const result = grade(q, { type: "option-ids", value: [] }, {} as PromptManager);
+		const result = grade(
+			q,
+			{ type: "option-ids", value: [] },
+			{} as PromptManager,
+		);
 		expect(result.correct).toBe(false);
 	});
 });

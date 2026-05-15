@@ -2,7 +2,9 @@
 
 import { useCallback, useMemo, useRef, useState } from "react";
 import { Confetti, XPGainPopup } from "@/components/celebration";
+import { useGamification } from "@/hooks/use-gamification";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
+import { competencyService } from "@/lib/competency-engine/competency-service";
 import type { Question } from "@/types/questions";
 import { FlashcardsActive } from "./flashcards-active";
 import { FlashcardsEmpty } from "./flashcards-empty";
@@ -31,6 +33,43 @@ export function FlashcardsClient() {
 	const [sessionComplete, setSessionComplete] = useState(false);
 	const [showConfetti, setShowConfetti] = useState(false);
 	const [showXPGain, setShowXPGain] = useState(false);
+
+	const gamification = useGamification();
+
+	const processSessionResults = useCallback(
+		(sessionCards: FlashcardItem[], known: Set<string>, subject: string) => {
+			const totalCards = sessionCards.length;
+			const knownCount = known.size;
+			const accuracy =
+				totalCards > 0 ? Math.round((knownCount / totalCards) * 100) : 0;
+
+			gamification.updateStreak();
+			gamification.addXp(
+				totalCards,
+				accuracy >= 50,
+				gamification.currentStreak,
+			);
+			gamification.checkAndUnlockAchievements(
+				gamification.totalQuestionsAnswered + totalCards,
+				accuracy,
+				gamification.currentStreak,
+				gamification.levelInfo.level,
+				accuracy === 100,
+			);
+
+			for (const card of sessionCards) {
+				const isKnown = known.has(card.id);
+				competencyService.update(
+					subject,
+					card.rawQuestion.topic,
+					card.rawQuestion.bloomTaxonomy,
+					isKnown ? 1 : 0.5,
+					1,
+				);
+			}
+		},
+		[gamification],
+	);
 
 	const engineParams = useMemo(
 		() => ({
@@ -102,9 +141,10 @@ export function FlashcardsClient() {
 			setCurrentIndex((prev) => prev + 1);
 		} else {
 			setSessionComplete(true);
+			processSessionResults(cards, knownCards, selectedSubject.toLowerCase());
 		}
 		setIsFlipped(false);
-	}, [currentIndex, cards.length]);
+	}, [currentIndex, cards, knownCards, selectedSubject, processSessionResults]);
 
 	const handleKnown = useCallback(() => {
 		const currentCard = cards[currentIndex];

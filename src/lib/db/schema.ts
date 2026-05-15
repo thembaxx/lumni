@@ -1,4 +1,5 @@
 import Dexie, { type Table } from "dexie";
+import type { WrongAnswerEntry } from "@/hooks/use-wrong-answer-journal";
 import type { CompetencyRecord } from "@/lib/competency-engine/types";
 import type { JobRecord } from "@/lib/orchestrator/types";
 
@@ -106,6 +107,7 @@ export class LumniOfflineDB extends Dexie {
 	jobs!: Table<JobRecord, number>;
 	competencies!: Table<CompetencyRecord, number>;
 	visuals!: Table<CachedVisual, number>;
+	wrongAnswers!: Table<WrongAnswerEntry, number>;
 
 	constructor() {
 		super("lumni-offline");
@@ -137,6 +139,10 @@ export class LumniOfflineDB extends Dexie {
 
 		this.version(6).stores({
 			visuals: "++id, &cacheKey, subject, createdAt",
+		});
+
+		this.version(7).stores({
+			wrongAnswers: "++id, subject, topic, reviewed, createdAt",
 		});
 	}
 }
