@@ -6,15 +6,15 @@ import type { QuestionProcessor, QuestionType } from "./types";
 export class ProcessorRegistry {
 	private processors = new Map<QuestionType, QuestionProcessor>();
 
-	constructor() {
-		const prompts = new PromptManager();
+	constructor(prompts?: PromptManager) {
+		const pm = prompts ?? new PromptManager();
 		for (const config of processorConfigs) {
 			const processor = new TypedQuestionProcessor(
 				config.type as QuestionType,
 				{ generateTemperature: config.temperature },
 				config.grade,
 				config.hint,
-				prompts,
+				pm,
 			);
 			this.register(config.type as QuestionType, processor);
 		}

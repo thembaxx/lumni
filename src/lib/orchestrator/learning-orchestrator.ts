@@ -6,6 +6,7 @@ import type {
 	Question,
 	UserAnswer,
 } from "@/lib/question-engine/types";
+import { serializeQuestionType } from "@/lib/shared/question-type";
 import { trackEngineEvent } from "@/lib/utils/engine-analytics";
 import { jobQueue } from "./job-queue";
 import type { GenerateResult, GradeResult } from "./types";
@@ -45,11 +46,7 @@ export class LearningOrchestrator {
 		trackEngineEvent({
 			event: "generate",
 			subject,
-			questionType: questionType
-				? Array.isArray(questionType)
-					? questionType.join(",")
-					: questionType
-				: "any",
+			questionType: serializeQuestionType(questionType),
 			count: sliced.length,
 			success: true,
 			duration: Date.now() - startTime,
@@ -58,11 +55,7 @@ export class LearningOrchestrator {
 		return {
 			questions: sliced,
 			count: sliced.length,
-			type: questionType
-				? Array.isArray(questionType)
-					? questionType.join(",")
-					: questionType
-				: "any",
+			type: serializeQuestionType(questionType),
 			jobIds,
 		};
 	}

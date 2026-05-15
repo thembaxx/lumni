@@ -1,5 +1,5 @@
 import { curriculumRegistry } from "@/curriculum";
-import { competencyService } from "@/lib/competency-engine";
+import { competencyService, computeBloomWeight } from "@/lib/competency-engine";
 import { syncQuestionsToAppwrite } from "@/lib/question-engine/persistence";
 import type { Question } from "@/lib/question-engine/types";
 import { analyticsService } from "@/lib/services/analytics-service";
@@ -51,26 +51,7 @@ const handlers: Record<JobType, JobHandler> = {
 		};
 
 		const curriculum = await curriculumRegistry.getSubject(subject);
-		let weight = 1.0;
-
-		if (curriculum) {
-			const topicDef = curriculum.topics.find((t) => t.id === topic);
-			if (topicDef) {
-				const bloomOrder = [
-					"remember",
-					"understand",
-					"apply",
-					"analyze",
-					"evaluate",
-					"create",
-				];
-				const questionLevel = bloomOrder.indexOf(bloomLevel);
-				const targetLevel = bloomOrder.indexOf(topicDef.bloomTarget);
-				if (questionLevel > targetLevel) {
-					weight = 0.5;
-				}
-			}
-		}
+		const weight = computeBloomWeight(curriculum, topic, bloomLevel);
 
 		await competencyService.update(
 			subject,

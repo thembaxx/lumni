@@ -9,7 +9,6 @@ import type {
 	UserAnswer,
 } from "@/lib/question-engine/types";
 import { apiFetch, showBudgetToast } from "@/lib/shared/api-fetch";
-import { trackEngineEvent } from "@/lib/utils/engine-analytics";
 
 interface GenerateResult {
 	questions: Question[];
@@ -77,17 +76,6 @@ export function useQuestionEngine(
 		queryKey: ["questionEngine", params],
 		queryFn: async () => {
 			const result = await generateQuestions(params!);
-			trackEngineEvent({
-				event: "generate",
-				subject: params?.subject,
-				questionType: params?.questionType
-					? Array.isArray(params.questionType)
-						? params.questionType.join(",")
-						: params.questionType
-					: "any",
-				count: result.count,
-				success: true,
-			});
 			return result;
 		},
 		enabled: options?.enabled ?? !!params,
@@ -104,12 +92,6 @@ export function useQuestionEngine(
 			answer: UserAnswer;
 		}) => {
 			const result = await gradeAnswer(question, answer);
-			trackEngineEvent({
-				event: "grade",
-				subject: question.subject,
-				questionType: question.type,
-				success: true,
-			});
 			return result;
 		},
 	});
@@ -117,12 +99,6 @@ export function useQuestionEngine(
 	const hintMutation = useMutation({
 		mutationFn: async (question: Question) => {
 			const result = await generateHint(question);
-			trackEngineEvent({
-				event: "hint",
-				subject: question.subject,
-				questionType: question.type,
-				success: true,
-			});
 			return result;
 		},
 	});
@@ -130,17 +106,6 @@ export function useQuestionEngine(
 	const generate = useCallback(
 		async (generateParams: GenerationParams): Promise<Question[]> => {
 			const result = await generateQuestions(generateParams);
-			trackEngineEvent({
-				event: "generate",
-				subject: generateParams.subject,
-				questionType: generateParams.questionType
-					? Array.isArray(generateParams.questionType)
-						? generateParams.questionType.join(",")
-						: generateParams.questionType
-					: "any",
-				count: result.count,
-				success: true,
-			});
 			return result.questions;
 		},
 		[],

@@ -24,6 +24,28 @@ export function computeCompetencyLevel(score: number): CompetencyLevel {
 	return "novice";
 }
 
+export function computeBloomWeight(
+	curriculum: { topics: Array<{ id: string; bloomTarget: string }> } | null,
+	topic: string,
+	bloomLevel: string,
+): number {
+	if (!curriculum) return 1.0;
+	const topicDef = curriculum.topics.find((t) => t.id === topic);
+	if (!topicDef) return 1.0;
+	const bloomOrder = [
+		"remember",
+		"understand",
+		"apply",
+		"analyze",
+		"evaluate",
+		"create",
+	];
+	const questionLevel = bloomOrder.indexOf(bloomLevel);
+	const targetLevel = bloomOrder.indexOf(topicDef.bloomTarget);
+	if (questionLevel > targetLevel) return 0.5;
+	return 1.0;
+}
+
 export function computeWeightedScore(
 	existingScore: number,
 	existingAttempts: number,

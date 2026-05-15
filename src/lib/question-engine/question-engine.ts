@@ -21,8 +21,8 @@ export class QuestionEngine {
 	private cachingStrategy: CachingStrategy<Question[], GenerationParams>;
 
 	constructor() {
-		this.registry = new ProcessorRegistry();
 		this.prompts = new PromptManager();
+		this.registry = new ProcessorRegistry(this.prompts);
 		this.cachingStrategy = new CachingStrategy<Question[], GenerationParams>(
 			[
 				{

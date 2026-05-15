@@ -36,6 +36,18 @@ Editable user attributes in Settings > Profile: display name, email (read-only +
 
 ## Key modules
 
+**QueueCore** (`src/lib/queue/core.ts`):
+Generic queue class used by both `sync-queue.ts` and `JobQueue`. Provides Dexie-backed enqueue/process/retry lifecycle with exponential backoff and concurrency guard. Two adapters:
+- `src/lib/sync-queue.ts` — client-side action queue for offline mutations
+- `src/lib/orchestrator/job-queue.ts` — typed background job queue for orchestration side effects
+
+**RateLimiter** (`src/lib/rate-limiter/core.ts`):
+Single in-memory rate limiter class used by auth, API, and token-budget subsystems. Three domain-specific configs:
+- Auth sign-in (3 attempts/5min), magic link (1/5min)
+- API routes (10 req/min)
+- AI token budgets (daily per-user + global caps)
+See `src/lib/auth/rate-limit.ts`, `src/lib/shared/rate-limit.ts`, `src/lib/ai/token-tracker.ts`.
+
 **QuestionEngine** (`src/lib/question-engine/`):
 Single deep module for all question operations — generate, grade, hint, validate. Used by `LearningOrchestrator` via composition, not duplication.
 
@@ -45,7 +57,8 @@ Thin orchestration layer over `QuestionEngine`. Adds job-queue side effects (app
 ## Architecture conventions
 
 - **Stores** live in `src/store/`. `src/lib/store.ts` and `src/lib/stores/` are deprecated — do not create new stores in lib.
-- **Shared utilities** (cn, json, id, format, time, network, rate-limit) live in `src/lib/shared/`. Domain-specific utilities (animation, colors, gamification, storage, tts, etc.) remain in `src/lib/utils/`.
+- **Shared utilities** (cn, json, id, format, time, network, rate-limit, question-type) live in `src/lib/shared/`. `serializeQuestionType` in `src/lib/shared/question-type.ts` normalizes `QuestionType | QuestionType[]` to a comma-separated string.
+- **Competency engine** (`src/lib/competency-engine/`) contains `computeBloomWeight` in `types.ts` — computes score weight based on how far a question's bloom level exceeds the curriculum target.
 - **Sync queue** has one processor: `src/lib/sync-queue.ts`. Hooks that duplicate queue processing (`useAutoSync` from hooks, `useEnhancedSync`, `useSyncAll`, `useSyncSingleSubject`) have been removed. Use `src/lib/sync-queue.ts`'s `useSyncQueue` or `useAutoSync` instead.
 
 ## Token budget (`src/lib/ai/token-tracker.ts`)
