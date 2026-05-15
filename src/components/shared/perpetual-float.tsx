@@ -10,22 +10,14 @@ interface PerpetualFloatProps {
 	className?: string;
 	floatRange?: number;
 	speed?: number;
-	/** @deprecated Use floatRange instead */
-	offsetY?: number;
-	/** @deprecated Use speed instead */
-	duration?: number;
 }
 
 export const PerpetualFloat = React.memo(function PerpetualFloat({
 	children,
 	className,
-	floatRange: floatRangeProp,
-	speed: speedProp,
-	offsetY,
-	duration: durationProp,
+	floatRange = 6,
+	speed = 3,
 }: PerpetualFloatProps) {
-	const floatRange = floatRangeProp ?? offsetY ?? 6;
-	const speed = speedProp ?? durationProp ?? 3;
 	const y = useMotionValue(0);
 	const opacity = useTransform(y, [-floatRange, 0, floatRange], [0.7, 1, 0.7]);
 

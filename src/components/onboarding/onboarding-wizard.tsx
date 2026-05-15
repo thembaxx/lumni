@@ -140,8 +140,8 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 									{!shouldReduceMotion && (
 										<PerpetualFloat
 											className="absolute -right-4 top-1/2 -translate-y-1/2"
-											duration={10}
-											offsetY={-12}
+											speed={10}
+											floatRange={12}
 										>
 											<div className="size-20 rounded-2xl bg-[--system-accent]/10 blur-xl" />
 										</PerpetualFloat>
@@ -205,7 +205,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 							</div>
 							<div className="col-span-12 md:col-span-5 flex items-center justify-center">
 								{!shouldReduceMotion && (
-									<PerpetualFloat duration={12} offsetY={-16}>
+									<PerpetualFloat speed={12} floatRange={16}>
 										<div className="size-32 rounded-3xl bg-[--system-accent]/10 blur-2xl" />
 									</PerpetualFloat>
 								)}
@@ -259,7 +259,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 							</div>
 							<div className="col-span-12 md:col-span-5 flex items-center justify-center">
 								{!shouldReduceMotion && (
-									<PerpetualFloat duration={8} offsetY={-10}>
+									<PerpetualFloat speed={8} floatRange={10}>
 										<div className="size-28 rounded-3xl bg-info/10 blur-2xl" />
 									</PerpetualFloat>
 								)}
@@ -333,7 +333,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 							</div>
 							<div className="col-span-12 md:col-span-5 flex items-center justify-center">
 								{!shouldReduceMotion && (
-									<PerpetualFloat duration={9} offsetY={-12}>
+									<PerpetualFloat speed={9} floatRange={12}>
 										<div className="size-24 rounded-full bg-success/10 blur-2xl" />
 									</PerpetualFloat>
 								)}
@@ -388,7 +388,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 							</div>
 							<div className="col-span-12 md:col-span-5 flex items-center justify-center">
 								{!shouldReduceMotion && (
-									<PerpetualFloat duration={11} offsetY={-14}>
+									<PerpetualFloat speed={11} floatRange={14}>
 										<div className="size-20 rounded-3xl bg-warning/10 blur-2xl" />
 									</PerpetualFloat>
 								)}
