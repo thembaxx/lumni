@@ -25,7 +25,14 @@ const SUBJECT_PROMPTS: Record<string, string> = {
 
 export const POST = withRateLimit(async (req: NextRequest) => {
 	try {
-		const { question, imageUrl, mode = "solve", subject } = await req.json();
+		const {
+			question,
+			imageUrl,
+			mode = "solve",
+			subject,
+			context,
+			followUp,
+		} = await req.json();
 
 		if (!question && !imageUrl) {
 			return NextResponse.json(
@@ -57,13 +64,26 @@ export const POST = withRateLimit(async (req: NextRequest) => {
 		const systemPrompt =
 			mode === "extract"
 				? "You are an expert at reading math problems from images. Extract the exact math problem shown in the image. Return the problem text as-is — do not solve it. Format your response as a JSON object with 'solution' (the extracted problem text) and 'steps' (an empty array)."
-				: subjectKey
-					? SUBJECT_PROMPTS[subjectKey]
-					: "You are an expert tutor for South African Matric students. Solve the provided problem and provide a clear, step-by-step explanation. Format your response as a JSON object with 'solution' (string) and 'steps' (array of strings).";
+				: followUp
+					? "You are a helpful tutor. The student is asking a follow-up question about a problem you previously helped them with. Answer their follow-up conversationally and concisely. No JSON — just plain text."
+					: subjectKey
+						? SUBJECT_PROMPTS[subjectKey]
+						: "You are an expert tutor for South African Matric students. Solve the provided problem and provide a clear, step-by-step explanation. Format your response as a JSON object with 'solution' (string) and 'steps' (array of strings).";
+
 		const userPrompt =
 			mode === "extract"
 				? "Extract the math problem from this image."
-				: question || "Solve the problem in the attached image.";
+				: followUp
+					? [
+							"Previous conversation:",
+							...(context || []).map(
+								(c: { role: string; content: string }) =>
+									`${c.role === "user" ? "Student" : "Tutor"}: ${c.content}`,
+							),
+							`Student follow-up: ${question || ""}`,
+							"Answer the student's follow-up question concisely.",
+						].join("\n")
+					: question || "Solve the problem in the attached image.";
 
 		const result = await generateWithSystem(systemPrompt, userPrompt, {
 			temperature: isImageMode && mode === "solve" ? 0.3 : 0.7,
@@ -77,6 +97,14 @@ export const POST = withRateLimit(async (req: NextRequest) => {
 		}
 
 		const response = result as AIResponse;
+
+		if (followUp) {
+			return NextResponse.json({
+				answer: response.content,
+				provider: response.provider,
+			});
+		}
+
 		const cleaned = cleanResponse(response.content);
 
 		try {

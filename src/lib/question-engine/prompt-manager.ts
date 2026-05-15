@@ -28,6 +28,7 @@ export class PromptManager {
 
 Return a JSON array. Each question must have: id (unique string like "q1"), type (the question type), subject, topic, difficulty, bloomTaxonomy, points, questionText, hint, explanation, body (type-specific data).
 
+Each question should include steps: string[] (optional step-by-step solution).
 For multiple-choice body: { options: [{id:"A",text:"...",isCorrect:boolean}], correctOptionId: "A", allowMultiple: false }
 For short-answer body: { modelAnswer: "...", acceptableAnswers: ["..."], maxLength: 200 }
 For calculation body: { formula: "...", correctValue: number, unit: "...", tolerance: number }
@@ -73,6 +74,7 @@ Each question must have:
 - questionText: instructions for matching
 - body.pairs: [{left: string, right: string}] — the correct pairings
 - body.shuffle: true
+- steps: string[] (optional step-by-step explanation of each pairing)
 - hint, explanation
 
 Return ONLY valid JSON array.`,
@@ -88,6 +90,7 @@ Each question must have:
 - body.modelAnswer: the correct answer
 - body.acceptableAnswers: array of acceptable alternative wordings
 - body.maxLength: max character count (100-300)
+- steps: string[] (optional step-by-step explanation)
 - hint, explanation
 
 Return ONLY valid JSON array.`,
@@ -103,6 +106,7 @@ Each question must have:
 - body.rubric: [{name, description, maxScore}]
 - body.modelAnswer: full model answer
 - body.minWords, body.maxWords
+- steps: string[] (optional step-by-step outline of expected response)
 - hint, explanation
 
 Return ONLY valid JSON array.`,
@@ -118,6 +122,7 @@ Each question must have:
 - body.rubric: [{name, description, maxScore}] — 3-5 criteria
 - body.modelAnswer: outline of expected response
 - body.wordLimit: maximum words
+- steps: string[] (optional outline of how to structure the response)
 - hint, explanation
 
 Return ONLY valid JSON array.`,
@@ -149,6 +154,7 @@ Each question must have:
 - questionText: instructions about the diagram
 - body.diagramData: { type: "force-vector"|"circuit"|"wave"|"motion"|"node-flow"|"node"|"custom-svg", title, data: {...} }
 - body.instructions: what the student should do with the diagram
+- steps: string[] (optional step-by-step identification guide)
 - hint, explanation
 
 Return ONLY valid JSON array.`,
@@ -179,6 +185,7 @@ Each question must have:
 - body.starterCode: optional starter code
 - body.testCases: [{input, expectedOutput, description}]
 - body.timeLimit: time limit in ms
+- steps: string[] (optional step-by-step solution approach)
 - hint, explanation
 
 Return ONLY valid JSON array.`,

@@ -5,12 +5,13 @@ import {
 	CheckCircle,
 	CircleNotch,
 	Minus,
+	PaperPlaneRight,
 	Plus,
 	Sparkle,
 	X,
 } from "@phosphor-icons/react";
 import { AnimatePresence, m, motion } from "framer-motion";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Confetti, XPGainPopup } from "@/components/celebration";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Anim } from "@/components/shared/anim";
@@ -106,8 +107,49 @@ export function QuestionCard({
 	const { data: visual, isLoading: visualLoading } = useVisualEngine(question);
 
 	const solver = useSolver();
-	const isSolverType =
-		question.type === "calculation" || question.type === "short-answer";
+	const [followUpMsgs, setFollowUpMsgs] = useState<
+		{ role: "user" | "assistant"; content: string }[]
+	>([]);
+	const [followUpInput, setFollowUpInput] = useState("");
+
+	useEffect(() => {
+		if (solver.followUpData?.answer) {
+			setFollowUpMsgs((prev) => [
+				...prev,
+				{ role: "assistant", content: solver.followUpData!.answer },
+			]);
+		}
+	}, [solver.followUpData]);
+
+	const handleFollowUp = useCallback(() => {
+		const text = followUpInput.trim();
+		if (!text || !solver.data) return;
+		setFollowUpMsgs((prev) => [...prev, { role: "user", content: text }]);
+		setFollowUpInput("");
+		solver.followUp({
+			question: text,
+			context: [
+				{
+					role: "assistant",
+					content: solver.data.solution || solver.data.steps?.join("\n") || "",
+				},
+				{ role: "user", content: question.questionText },
+			],
+			subject: effectiveSubject,
+		});
+	}, [
+		followUpInput,
+		solver.data,
+		solver.followUp,
+		effectiveSubject,
+		question.questionText,
+	]);
+
+	const isMultiPart =
+		question.type === "source-based" ||
+		question.type === "data-response" ||
+		question.type === "mixed";
+	const isSolverEnabled = !isMultiPart;
 
 	const isMCQ = question.type === "multiple-choice";
 	const mcqBody = isMCQ ? (question as Question<"multiple-choice">).body : null;
@@ -510,7 +552,7 @@ export function QuestionCard({
 						/>
 					</div>
 				)}
-				{!isCorrect && isSolverType && (
+				{!isCorrect && isSolverEnabled && (
 					<div className="flex flex-col gap-2 pt-2 border-t border-current/20">
 						{solver.isPending ? (
 							<div className="flex items-center justify-center gap-2 py-3">
@@ -566,6 +608,70 @@ export function QuestionCard({
 								<Sparkle data-icon="inline-start" />
 								Show me the steps
 							</Button>
+						)}
+					</div>
+				)}
+				{solver.data && (
+					<div className="flex flex-col gap-2 pt-2 border-t border-current/20">
+						{followUpMsgs.map((msg, i) => (
+							<div
+								key={i}
+								className={cn(
+									"rounded-xl px-4 py-3 text-sm max-w-[90%]",
+									msg.role === "user"
+										? "bg-[--system-accent]/10 ml-auto"
+										: "bg-card border border-border/50 mr-auto",
+								)}
+							>
+								{msg.content}
+							</div>
+						))}
+						{solver.isSendingFollowUp && (
+							<div className="flex items-center gap-2 py-2 text-sm text-muted-foreground">
+								<CircleNotch className="size-4 animate-spin" />
+								Thinking...
+							</div>
+						)}
+						{solver.followUpError && (
+							<div className="flex items-center gap-2 py-2">
+								<span className="text-sm opacity-80">
+									Couldn't get an answer.
+								</span>
+								<Button
+									variant="ghost"
+									size="sm"
+									onClick={handleFollowUp}
+									className="h-8 text-xs"
+								>
+									Try again
+								</Button>
+							</div>
+						)}
+						{!solver.isSendingFollowUp && (
+							<div className="flex items-center gap-2">
+								<input
+									type="text"
+									value={followUpInput}
+									onChange={(e) => setFollowUpInput(e.target.value)}
+									onKeyDown={(e) => {
+										if (e.key === "Enter" && !e.shiftKey) {
+											e.preventDefault();
+											handleFollowUp();
+										}
+									}}
+									placeholder="Ask a follow-up question..."
+									className="flex-1 h-9 rounded-lg bg-card border border-border px-3 text-sm outline-none focus:border-[--system-accent]/40"
+								/>
+								<Button
+									variant="ghost"
+									size="icon-sm"
+									onClick={handleFollowUp}
+									disabled={!followUpInput.trim()}
+									className="size-9 shrink-0"
+								>
+									<PaperPlaneRight data-icon />
+								</Button>
+							</div>
 						)}
 					</div>
 				)}
