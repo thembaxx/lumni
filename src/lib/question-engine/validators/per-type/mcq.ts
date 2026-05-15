@@ -1,9 +1,10 @@
 import type { Question, QuestionBody, ValidationError } from "../../types";
 import { checkGibberish, checkPlaceholders } from "../shared-quality-checks";
 
-export function validate(
-	question: Question,
-): { errors: ValidationError[]; warnings: ValidationError[] } {
+export function validate(question: Question): {
+	errors: ValidationError[];
+	warnings: ValidationError[];
+} {
 	const body = question.body as QuestionBody["multiple-choice"];
 	const errors: ValidationError[] = [];
 	const warnings: ValidationError[] = [];

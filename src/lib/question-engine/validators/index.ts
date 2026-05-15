@@ -21,19 +21,20 @@ interface ValidatorResult {
 	warnings: ValidationError[];
 }
 
-const typeValidators: Record<string, (question: Question) => ValidatorResult> = {
-	"multiple-choice": validateMcq,
-	matching: validateMatching,
-	"short-answer": validateShortAnswer,
-	"long-answer": validateLongAnswer,
-	essay: validateEssay,
-	calculation: validateCalculation,
-	diagram: validateDiagram,
-	"source-based": validateSourceBased,
-	programming: validateProgramming,
-	"data-response": validateDataResponse,
-	mixed: validateMixed,
-};
+const typeValidators: Record<string, (question: Question) => ValidatorResult> =
+	{
+		"multiple-choice": validateMcq,
+		matching: validateMatching,
+		"short-answer": validateShortAnswer,
+		"long-answer": validateLongAnswer,
+		essay: validateEssay,
+		calculation: validateCalculation,
+		diagram: validateDiagram,
+		"source-based": validateSourceBased,
+		programming: validateProgramming,
+		"data-response": validateDataResponse,
+		mixed: validateMixed,
+	};
 
 function scoreResult(
 	errors: ValidationError[],

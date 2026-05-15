@@ -73,7 +73,9 @@ export function useQuestionEngine(
 	options?: UseQuestionEngineOptions,
 ) {
 	const queryClient = useQueryClient();
-	const [generatedQuestions, setGeneratedQuestions] = useState<Question[] | null>(null);
+	const [generatedQuestions, setGeneratedQuestions] = useState<
+		Question[] | null
+	>(null);
 
 	const query = useQuery({
 		queryKey: ["questionEngine", params],

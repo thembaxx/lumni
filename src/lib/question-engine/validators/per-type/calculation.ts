@@ -1,8 +1,9 @@
 import type { Question, QuestionBody, ValidationError } from "../../types";
 
-export function validate(
-	question: Question,
-): { errors: ValidationError[]; warnings: ValidationError[] } {
+export function validate(question: Question): {
+	errors: ValidationError[];
+	warnings: ValidationError[];
+} {
 	const body = question.body as QuestionBody["calculation"];
 	const errors: ValidationError[] = [];
 	const warnings: ValidationError[] = [];
