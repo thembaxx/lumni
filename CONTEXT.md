@@ -92,6 +92,45 @@ Provider order in `src/lib/ai/client.ts`: Gemini first, Groq second if Gemini fa
 - Runs in batches of 100 documents. Called manually or via a scheduled job.
 - Protects the 50k document limit on Appwrite Free tier.
 
+## Onboarding
+
+**Onboarding Trigger**:
+Onboarding fires on first visit regardless of auth status (anonymous or authenticated). Once completed (`lumni_onboarding.isComplete === true`), it does not re-trigger. Sign-up later does not re-trigger it.
+
+**Onboarding Wizard** (`src/components/onboarding/onboarding-wizard.tsx`):
+5-step flow: Welcome → Subjects → Goals (APS target) → Schedule (daily minutes) → Notifications.
+
+Copy:
+
+| Step | Title | Body | CTA |
+|------|-------|------|-----|
+| Welcome | Welcome to Lumni | Your AI study buddy for Matric. Quizzes, flashcards, past papers — all in one place. Let's get you set up in under a minute. | Let's go |
+| Subjects | Choose Your Subjects | Pick the subjects you're taking this year so we can tailor your practice. | Continue |
+| Goals | Set Your Target | What APS are you working towards? Don't worry — this is just a starting point. | Continue |
+| Schedule | Your Daily Study Time | How much time can you realistically commit each day? Even 10 minutes makes a difference. | Continue |
+| Notifications | Stay on Track | Get gentle reminders so you never miss a study session. | Get Started |
+
+"You can change everything later" reassurance on every step. Skip commits partial data with default values filling gaps.
+
+Visual treatment: Three.js minimal particle field (~200 dots, 0.5 opacity) as fixed full-screen background behind all content, step-reactive (color/tempo changes per step), mouse-responsive. Uses `@react-three/fiber` lazy-loaded via `next/dynamic`. Unique abstract-geometric layered SVG illustration per step rendered as inline React `<svg>` components with 3 layers (background, midground, foreground) that stagger-in via framer-motion. Uses system CSS vars for automatic dark mode.
+
+Transitions: Three.js color shift (800ms) + SVG crossfade (400ms) + staggered text entrance (50ms layer delay). Progress bar fill: 300ms. Initial entrance: no animation (content present immediately). Secondary entrance: 200ms fade. Progress shown via horizontal bars. Data stored in `lumni_onboarding` localStorage key.
+
+Three.js particle color per step: Welcome = `--system-accent` (emerald), Subjects = `--chart-2` (success green), Goals = `--chart-3` (warm amber), Schedule = `--chart-4` (cool blue), Notifications = `--chart-5` (warm red).
+
+**SVG illustrations per step**:
+
+| Step | Foreground | Midground | Background |
+|------|-----------|-----------|------------|
+| Welcome | Graduation cap (geometric triangles + curves) | Orbiting rings / sparkle dots | Soft gradient wash |
+| Subjects | Stacked books (rectilinear blocks, colored spines) | Floating page shapes | Accent halo |
+| Goals | Target rings + centered arrow | Trajectory arc lines | Radial gradient |
+| Schedule | Clock face with arc segments | Orbiting schedule dots | Circular time rings |
+| Notifications | Bell shape with notification dot | Pulse rings expanding outward | Soft wave lines |
+
+**Onboarding Re-entry**:
+A "Guided Setup" ListCell in Settings > Profile > Study Goals section allows users to restart the onboarding wizard. Clicking shows a confirmation sheet ("This will update your subjects, study goals, and preferences. Ready to set them up again?" / Cancel + Let's do it). On confirm, resets `lumni_onboarding` data and wizard overlay appears over settings. Wizard requires explicit click — does not auto-show on settings page load.
+
 ## Flagged ambiguities
 
 - "Auth" was used to mean both admin auth and student auth — resolved: these are separate systems with different flows and routes. Student auth uses anonymous → email/password conversion; admin auth uses server-side magic-link + OTP.

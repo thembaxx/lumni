@@ -3,6 +3,7 @@
 import { QueryClientProvider } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { JoyProvider } from "@/components/celebration";
+import { OnboardingProvider } from "@/components/onboarding/onboarding-provider";
 import { ThemeProvider } from "@/components/theme";
 import { WebVitalsLogger } from "@/components/web-vitals";
 import { useJobProcessor } from "@/hooks/use-job-processor";
@@ -42,7 +43,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
 			<ThemeProvider>
 				<AuthProvider>
 					<JoyProvider>
-						{children}
+						<OnboardingProvider>
+							{children}
+						</OnboardingProvider>
 						<WebVitalsLogger />
 						<OnlineStatusIndicator />
 						<AutoSyncWrapper />

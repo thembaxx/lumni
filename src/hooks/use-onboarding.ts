@@ -43,6 +43,10 @@ export function saveOnboardingData(data: OnboardingData): void {
 	saveToStorage(ONBOARDING_KEY, data);
 }
 
+export function resetOnboardingData(): void {
+	saveToStorage(ONBOARDING_KEY, DEFAULT_ONBOARDING);
+}
+
 export function useOnboarding(): UseOnboardingReturn {
 	const [data, setData] = useState<OnboardingData>(DEFAULT_ONBOARDING);
 	const [isLoaded, setIsLoaded] = useState(false);

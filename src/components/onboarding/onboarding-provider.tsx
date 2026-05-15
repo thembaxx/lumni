@@ -4,53 +4,29 @@ import { useEffect, useState } from "react";
 import { useOnboarding } from "@/hooks/use-onboarding";
 import { OnboardingWizard } from "./onboarding-wizard";
 
+const HAS_VISITED_KEY = "lumni_has_visited";
+
 export function OnboardingProvider({
 	children,
 }: {
 	children: React.ReactNode;
 }) {
 	const { isOnboarding } = useOnboarding();
-	const [showOnboarding, setShowOnboarding] = useState(false);
+	const [showWizard, setShowWizard] = useState(false);
 
 	useEffect(() => {
-		if (typeof window !== "undefined") {
-			const hasVisited = localStorage.getItem("lumni_has_visited");
-			if (!hasVisited) {
-				localStorage.setItem("lumni_has_visited", "true");
-				if (isOnboarding) {
-					setTimeout(() => setShowOnboarding(true), 500);
-				}
+		const hasVisited = localStorage.getItem(HAS_VISITED_KEY);
+		if (!hasVisited) {
+			localStorage.setItem(HAS_VISITED_KEY, "true");
+			if (isOnboarding) {
+				setShowWizard(true);
 			}
 		}
 	}, [isOnboarding]);
 
-	useEffect(() => {
-		if (isOnboarding && localStorage.getItem("lumni_has_visited") === "true") {
-			setShowOnboarding(true);
-		}
-	}, [isOnboarding]);
-
-	if (showOnboarding) {
-		return <OnboardingWizard onComplete={() => setShowOnboarding(false)} />;
+	if (showWizard) {
+		return <OnboardingWizard onComplete={() => setShowWizard(false)} />;
 	}
 
 	return <>{children}</>;
-}
-
-export function useShouldShowOnboarding(): boolean {
-	const { isOnboarding } = useOnboarding();
-	const [shouldShow, setShouldShow] = useState(false);
-
-	useEffect(() => {
-		if (typeof window === "undefined") return;
-
-		const hasProgress = localStorage.getItem("lumni_user_progress");
-		const isFirstVisit = !localStorage.getItem("lumni_has_visited");
-
-		if (isFirstVisit || !hasProgress) {
-			setShouldShow(isOnboarding);
-		}
-	}, [isOnboarding]);
-
-	return shouldShow;
 }

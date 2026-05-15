@@ -3,6 +3,7 @@
 import {
 	Camera,
 	Check,
+	Compass,
 	Envelope,
 	GraduationCap,
 	MapPin,
@@ -17,9 +18,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ListCell, ListSection } from "@/components/ui/list-cell";
+import { OnboardingWizard } from "@/components/onboarding/onboarding-wizard";
 import { account } from "@/lib/appwrite";
 import { useAuth } from "@/lib/auth/auth-context";
 import { useUploadThing } from "@/lib/uploadthing";
+import { resetOnboardingData } from "@/hooks/use-onboarding";
 
 interface EditableFieldProps {
 	value: string;
@@ -164,6 +167,8 @@ export function ProfileTab() {
 	const { user, isAnonymous, updateProfile, verifyEmail, signOut, error } =
 		useAuth();
 	const { startUpload } = useUploadThing("avatarUploader");
+	const [showGuidedSetup, setShowGuidedSetup] = useState(false);
+	const [showConfirmDialog, setShowConfirmDialog] = useState(false);
 
 	const [schoolDraft, setSchoolDraft] = useState("");
 	const [gradeDraft, setGradeDraft] = useState("");
@@ -466,6 +471,56 @@ export function ProfileTab() {
 					</div>
 				)}
 			</ListSection>
+
+			<ListSection header="Study Goals">
+				<ListCell
+					leading={<Compass className="size-5" />}
+					title="Guided Setup"
+					subtitle="Set your subjects, targets, and study schedule"
+					showSeparator={false}
+					trailing={
+						<span className="text-system-accent text-(length:--fs-footnote) font-semibold">
+							Redo
+						</span>
+					}
+					onClick={() => setShowConfirmDialog(true)}
+				/>
+			</ListSection>
+
+			{showConfirmDialog && (
+				<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+					<div className="mx-4 w-full max-w-sm rounded-2xl bg-card shadow-level-3 p-6">
+						<h3 className="ios-title-3 font-extrabold mb-2">
+							Redo Guided Setup?
+						</h3>
+						<p className="ios-subhead text-muted-foreground mb-6">
+							This will update your subjects, study goals, and preferences.
+							Ready to set them up again?
+						</p>
+						<div className="flex gap-3 justify-end">
+							<Button
+								variant="outline"
+								onClick={() => setShowConfirmDialog(false)}
+							>
+								Cancel
+							</Button>
+							<Button
+								onClick={() => {
+									resetOnboardingData();
+									setShowConfirmDialog(false);
+									setShowGuidedSetup(true);
+								}}
+							>
+								Let's do it
+							</Button>
+						</div>
+					</div>
+				</div>
+			)}
+
+			{showGuidedSetup && (
+				<OnboardingWizard onComplete={() => setShowGuidedSetup(false)} />
+			)}
 
 			{isAnonymous && (
 				<div className="px-2 py-4 rounded-xl bg-system-accent/5 border border-system-accent/10">
