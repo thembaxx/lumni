@@ -10,27 +10,37 @@ interface PerpetualFloatProps {
 	className?: string;
 	floatRange?: number;
 	speed?: number;
+	duration?: number;
+	offsetY?: number;
 }
 
 export const PerpetualFloat = React.memo(function PerpetualFloat({
 	children,
 	className,
 	floatRange = 6,
-	speed = 3,
+	speed,
+	duration,
+	offsetY,
 }: PerpetualFloatProps) {
+	const resolvedSpeed = speed ?? duration ?? 3;
+	const resolvedRange = offsetY !== undefined ? Math.abs(offsetY) : floatRange;
 	const y = useMotionValue(0);
-	const opacity = useTransform(y, [-floatRange, 0, floatRange], [0.7, 1, 0.7]);
+	const opacity = useTransform(
+		y,
+		[-resolvedRange, 0, resolvedRange],
+		[0.7, 1, 0.7],
+	);
 
 	useEffect(() => {
-		const controls = animate(y, [0, -floatRange, floatRange, 0], {
-			duration: speed,
+		const controls = animate(y, [0, -resolvedRange, resolvedRange, 0], {
+			duration: resolvedSpeed,
 			repeat: Infinity,
 			repeatType: "reverse",
 			ease: "easeInOut",
 		});
 
 		return () => controls.stop();
-	}, [y, floatRange, speed]);
+	}, [y, resolvedRange, resolvedSpeed]);
 
 	return (
 		<motion.div
