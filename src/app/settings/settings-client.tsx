@@ -56,6 +56,7 @@ function SettingsContent() {
 	const [betaFeatures, setBetaFeatures] = useState<BetaFeatures>(DEFAULT_BETA);
 	const [activeTab, setActiveTab] = useState("profile");
 	const [isSaving, setIsSaving] = useState(false);
+	const [saved, setSaved] = useState(false);
 
 	useEffect(() => {
 		const onboarding = loadFromStorage<{
@@ -92,20 +93,15 @@ function SettingsContent() {
 
 	const handleSave = async () => {
 		setIsSaving(true);
+		setSaved(false);
 		saveToStorage(STUDY_PREFS_KEY, studyPrefs);
 		saveToStorage(NOTIFICATION_SETTINGS_KEY, notifications);
 		saveToStorage(BETA_FEATURES_KEY, betaFeatures);
 
 		await new Promise((resolve) => setTimeout(resolve, 600));
 		setIsSaving(false);
-		// Flash success-check animation briefly
-		const btn = document.activeElement as HTMLElement;
-		if (btn) {
-			btn.textContent = "✓ Saved";
-			setTimeout(() => {
-				btn.textContent = "Save";
-			}, 1200);
-		}
+		setSaved(true);
+		setTimeout(() => setSaved(false), 1200);
 	};
 
 	const handleExportData = () => {
@@ -161,7 +157,7 @@ function SettingsContent() {
 							disabled={isSaving}
 							className="h-10 px-6 rounded-full font-extrabold bg-system-accent hover:bg-system-accent/90 text-white shadow-level-2 transition-[transform,opacity] active:scale-[0.96]"
 						>
-							{isSaving ? "Saving..." : "Save"}
+							{saved ? "✓ Saved" : isSaving ? "Saving..." : "Save"}
 						</Button>
 					</div>
 				</header>
@@ -264,13 +260,7 @@ export function SettingsClient() {
 			fallback={
 				<div className="flex items-center justify-center min-h-[100dvh] bg-system-grouped">
 					<div className="flex flex-col items-center gap-4">
-						<motion.div
-							animate={{ rotate: 360 }}
-							transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
-							className="h-8"
-						>
-							<CircleNotch className="size-8 text-muted-foreground" />
-						</motion.div>
+						<CircleNotch className="size-8 text-muted-foreground animate-spin" />
 						<p className="ios-body text-[--system-text-secondary]">
 							Loading settings...
 						</p>

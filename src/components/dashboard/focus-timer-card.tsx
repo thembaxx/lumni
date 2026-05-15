@@ -11,6 +11,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { RadialChart } from "@/components/ui/charts/radial-chart";
 import { useInterval } from "@/hooks/use-interval";
 import { cn } from "@/lib/shared";
 
@@ -72,34 +73,16 @@ export function FocusTimerCard() {
 		<Card className="overflow-hidden rounded-[1.5rem]">
 			<CardContent className="p-4 flex items-center justify-between gap-4">
 				<div className="flex items-center gap-4">
-					<div className="relative size-14 shrink-0">
-						<svg className="absolute inset-0 size-full -rotate-90">
-							<circle
-								cx="28"
-								cy="28"
-								r="24"
-								fill="none"
-								stroke="currentColor"
-								strokeWidth="4"
-								className="text-muted/20"
-							/>
-							<circle
-								cx="28"
-								cy="28"
-								r="24"
-								fill="none"
-								stroke="currentColor"
-								strokeWidth="4"
-								strokeDasharray={2 * Math.PI * 24}
-								strokeDashoffset={2 * Math.PI * 24 * (1 - progress / 100)}
-								strokeLinecap="round"
-								className="text-system-accent transition-all duration-500"
-							/>
-						</svg>
-						<span className="absolute inset-0 flex items-center justify-center text-[10px] font-extrabold tabular-nums font-mono tracking-tight">
+					<RadialChart
+						value={progress}
+						size={80}
+						color="hsl(var(--system-accent))"
+						className="shrink-0"
+					>
+						<span className="text-[11px] font-extrabold tabular-nums font-mono tracking-tight">
 							{formatTime(timeLeft)}
 						</span>
-					</div>
+					</RadialChart>
 					<div>
 						<h3 className="text-[12.8px] font-semibold">Focus Timer</h3>
 						<p className="text-xs text-muted-foreground">

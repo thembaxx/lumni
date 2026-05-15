@@ -79,7 +79,7 @@ function StatCard({
 				<CardHeader className="flex flex-col items-center justify-center border-t-0 px-5 pt-0">
 					<div className="relative flex items-center justify-center size-10 rounded-full bg-system-surface shadow-level-1">
 						<PerpetualFloat floatRange={2} speed={4}>
-							<HugeiconsIcon icon={Icon} className={`size-5 ${colorClass}`} />
+							<HugeiconsIcon icon={Icon} className={`size-6 ${colorClass}`} />
 						</PerpetualFloat>
 					</div>
 				</CardHeader>

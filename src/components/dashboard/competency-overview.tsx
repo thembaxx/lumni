@@ -1,16 +1,11 @@
 "use client";
 
-import {
-	ArrowRight,
-	BookOpen,
-	ChartBar,
-	GraduationCap,
-	TrendUp,
-} from "@phosphor-icons/react";
+import { GraduationCap, TrendUp } from "@phosphor-icons/react";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { RadialChart } from "@/components/ui/charts/radial-chart";
 import { Skeleton } from "@/components/ui/skeleton";
 import { competencyService } from "@/lib/competency-engine/competency-service";
 import { cn } from "@/lib/shared";
@@ -29,45 +24,17 @@ interface SubjectCompetency {
 }
 
 function CompetencyRing({ score }: { score: number }) {
-	const r = 36;
-	const circ = 2 * Math.PI * r;
-	const offset = circ - (score / 100) * circ;
+	const color =
+		score >= 80
+			? "hsl(var(--success))"
+			: score >= 60
+				? "hsl(var(--warning))"
+				: "hsl(var(--destructive))";
 
 	return (
-		<div className="relative size-20 flex items-center justify-center">
-			<svg className="absolute inset-0 size-20 -rotate-90" viewBox="0 0 80 80">
-				<circle
-					cx="40"
-					cy="40"
-					r={r}
-					fill="none"
-					stroke="currentColor"
-					strokeWidth="6"
-					className="text-muted/20"
-				/>
-				<motion.circle
-					cx="40"
-					cy="40"
-					r={r}
-					fill="none"
-					stroke="currentColor"
-					strokeWidth="6"
-					strokeLinecap="round"
-					strokeDasharray={circ}
-					initial={{ strokeDashoffset: circ }}
-					animate={{ strokeDashoffset: offset }}
-					transition={{ duration: 1, ease: "easeOut" }}
-					className={cn(
-						score >= 80
-							? "text-success"
-							: score >= 60
-								? "text-warning"
-								: "text-destructive",
-					)}
-				/>
-			</svg>
+		<RadialChart value={score} size={80} color={color}>
 			<span className="text-sm font-extrabold tabular-nums">{score}%</span>
-		</div>
+		</RadialChart>
 	);
 }
 

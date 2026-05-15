@@ -165,13 +165,23 @@ export function PeriodicTable() {
 
 	return (
 		<div
-			className="min-h-screen text-white p-4 pb-24"
+			className="h-full flex flex-col overflow-y-auto px-5"
 			style={{
 				backgroundImage:
 					"radial-gradient(ellipse at 50% 0%, oklch(52.5% 0.142 274° / 0.08) 0%, transparent 60%)",
 			}}
 		>
-			<div className="max-w-5xl mx-auto">
+			<div className="max-w-5xl mx-auto w-full">
+				<div className="pt-5 pb-3">
+					<h2 className="ios-title-3 flex items-center gap-2 text-[--system-text-primary]">
+						<svg className="size-5 text-[--system-accent]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/><path d="M2 12h20"/></svg>
+						Periodic Table
+					</h2>
+					<p className="ios-subhead text-[--system-text-secondary] mt-1">
+						Explore the elements — search, filter, and learn.
+					</p>
+				</div>
+
 				<motion.div
 					initial={{ opacity: 0, y: 10 }}
 					animate={{ opacity: 1, y: 0 }}
@@ -188,10 +198,10 @@ export function PeriodicTable() {
 						onBlur={() => setIsSearchFocused(false)}
 						className={`
               w-full pl-12 pr-10 py-3 rounded-2xl
-              bg-white/5 border border-white/10
-              text-white placeholder-gray-400 text-sm
-              focus-visible:border-indigo-500/50 focus-visible:ring-2 focus-visible:ring-indigo-500/20
-              ${isSearchFocused ? "bg-white/10 border-indigo-500/30" : ""}
+              bg-[--system-fill] border border-[--system-separator]
+              text-foreground placeholder-muted-foreground text-sm
+              focus-visible:border-[--system-accent]/50 focus-visible:ring-2 focus-visible:ring-[--system-accent]/20
+              ${isSearchFocused ? "bg-[--system-background-secondary] border-[--system-accent]/30" : ""}
             `}
 					/>
 					{searchQuery && (
@@ -227,8 +237,8 @@ export function PeriodicTable() {
               border transition-colors duration-200
               ${
 								activeCategory === null
-									? "bg-white/20 border-white/30 text-foreground"
-									: "bg-white/5 border-white/10 text-muted-foreground/70 hover:bg-white/10"
+									? "bg-[--system-fill] border-[--system-separator] text-foreground"
+									: "bg-[--system-fill-secondary] border-[--system-separator] text-muted-foreground hover:bg-[--system-fill]"
 							}
             `}
 						whileTap={{ scale: 0.95 }}
@@ -253,8 +263,8 @@ export function PeriodicTable() {
               border transition-colors duration-200 flex items-center gap-1.5
               ${
 								activeCategory === key
-									? "bg-white/20 border-white/30 text-white"
-									: "bg-white/5 border-white/10 text-muted-foreground/70 hover:bg-white/10"
+									? "bg-[--system-fill] border-[--system-separator] text-foreground"
+									: "bg-[--system-fill-secondary] border-[--system-separator] text-muted-foreground hover:bg-[--system-fill]"
 							}
             `}
 							whileTap={{ scale: 0.95 }}
@@ -470,22 +480,6 @@ export function PeriodicTable() {
 				)}
 			</AnimatePresence>
 
-			<style jsx>{`
-				.scrollbar-hide::-webkit-scrollbar {
-					display: none;
-				}
-				.scrollbar-hide {
-					-ms-overflow-style: none;
-					scrollbar-width: none;
-				}
-				@media (prefers-reduced-motion: reduce) {
-					* {
-						animation-duration: 0.01ms !important;
-						animation-iteration-count: 1 !important;
-						transition-duration: 0.01ms !important;
-					}
-				}
-			`}</style>
 		</div>
 	);
 }

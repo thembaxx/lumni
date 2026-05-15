@@ -6,7 +6,6 @@ import {
 	House,
 	MonitorPlay,
 	Notebook,
-	User,
 } from "@phosphor-icons/react";
 
 import { usePathname } from "next/navigation";
@@ -54,7 +53,7 @@ const bottomItems: SidebarItem[] = [
 	{
 		id: "settings",
 		label: "Settings",
-		icon: User,
+		icon: Gear,
 		href: "/settings",
 	},
 ];
@@ -101,6 +100,7 @@ export function DesktopSidebar() {
 				{/* Primary navigation */}
 				<nav aria-label="Primary" className="flex-1 px-3 flex flex-col gap-0.5">
 					{sidebarItems.map((item) => {
+						const Icon = item.icon;
 						const isActive = item.id === activeId;
 						return (
 							<Button
@@ -116,19 +116,14 @@ export function DesktopSidebar() {
 										: "text-system-text-secondary hover:text-system-text-primary hover:bg-system-fill",
 								)}
 							>
-								{(() => {
-									const Icon = item.icon;
-									return (
-										<Icon
-											className={cn(
-												"size-5 shrink-0",
-												isActive
-													? "text-system-accent"
-													: "text-system-text-tertiary",
-											)}
-										/>
-									);
-								})()}
+								<Icon
+									className={cn(
+										"size-5 shrink-0",
+										isActive
+											? "text-system-accent"
+											: "text-system-text-tertiary",
+									)}
+								/>
 								<span>{item.label}</span>
 							</Button>
 						);
@@ -136,8 +131,9 @@ export function DesktopSidebar() {
 				</nav>
 
 				{/* Bottom items */}
-				<div className="px-3 pb-4 border-t border-system-separator/40 pt-2">
+				<div className="px-3 pb-5 pt-2 border-t border-system-separator/40">
 					{bottomItems.map((item) => {
+						const Icon = item.icon;
 						const isActive = item.id === activeId;
 						return (
 							<Button
@@ -153,19 +149,14 @@ export function DesktopSidebar() {
 										: "text-system-text-secondary hover:text-system-text-primary hover:bg-system-fill",
 								)}
 							>
-								{(() => {
-									const Icon = item.icon;
-									return (
-										<Icon
-											className={cn(
-												"size-5 shrink-0",
-												isActive
-													? "text-system-accent"
-													: "text-system-text-tertiary",
-											)}
-										/>
-									);
-								})()}
+								<Icon
+									className={cn(
+										"size-5 shrink-0",
+										isActive
+											? "text-system-accent"
+											: "text-system-text-tertiary",
+									)}
+								/>
 								<span>{item.label}</span>
 							</Button>
 						);

@@ -1,23 +1,11 @@
 "use client";
 
-import {
-	BookOpenIcon,
-	CalendarIcon,
-	ClockIcon,
-	SparkleIcon,
-} from "@phosphor-icons/react";
+import { CalendarBlank, ClockIcon, Sparkle } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
 import { cn } from "@/lib/shared";
 
 interface StudySession {
@@ -260,101 +248,116 @@ export function SmartScheduler() {
 	}));
 
 	return (
-		<div className="p-4 h-full flex flex-col overflow-hidden">
+		<div className="h-full flex flex-col overflow-y-auto">
+			<div className="px-5 pt-5 pb-3">
+				<h2 className="ios-title-3 flex items-center gap-2 text-[--system-text-primary]">
+					<CalendarBlank className="size-5 text-[--system-accent]" />
+					Smart Scheduler
+				</h2>
+				<p className="ios-subhead text-[--system-text-secondary] mt-1">
+					Generate a personalised study plan for your exams.
+				</p>
+			</div>
+
 			{schedule.length === 0 ? (
-				<div className="flex flex-col gap-6">
-					<div>
-						<Label className="mb-3 block">Select Subjects</Label>
-						<div className="grid grid-cols-2 gap-2">
-							{subjectOptions.map((subject) => (
-								<div key={subject.id}>
+				<div className="px-5 pb-10">
+					<div className="bg-system-background-secondary rounded-2xl p-5 space-y-5">
+						<div>
+							<Label className="text-sm mb-3 block">Select Subjects</Label>
+							<div className="grid grid-cols-2 gap-2">
+								{subjectOptions.map((subject) => (
+									<div key={subject.id}>
+										<Button
+											variant={
+												selectedSubjects.includes(subject.id)
+													? "default"
+													: "ghost"
+											}
+											onClick={() => toggleSubject(subject.id)}
+											className="w-full"
+										>
+											{subject.name}
+										</Button>
+										{selectedSubjects.includes(subject.id) && (
+											<div className="flex gap-1 mt-1.5">
+												{(["easy", "medium", "hard"] as const).map((diff) => (
+													<Button
+														key={diff}
+														size="xs"
+														variant={
+															difficultyMap[subject.id] === diff
+																? "default"
+																: "ghost"
+														}
+														onClick={() =>
+															updateDifficulty(subject.id, diff)
+														}
+													>
+														{diff[0].toUpperCase()}
+													</Button>
+												))}
+											</div>
+										)}
+									</div>
+								))}
+							</div>
+						</div>
+
+						<div>
+							<Label className="text-sm">Study Hours Per Day</Label>
+							<div className="flex gap-2 mt-2">
+								{[1, 2, 3, 4, 5].map((h) => (
 									<Button
-										variant={
-											selectedSubjects.includes(subject.id)
-												? "default"
-												: "ghost"
-										}
-										onClick={() => toggleSubject(subject.id)}
+										key={h}
+										variant={hoursPerDay === h ? "default" : "ghost"}
+										onClick={() => setHoursPerDay(h)}
 									>
-										{subject.name}
+										{h}h
 									</Button>
-									{selectedSubjects.includes(subject.id) && (
-										<div className="flex gap-1 mt-1.5">
-											{(["easy", "medium", "hard"] as const).map((diff) => (
-												<Button
-													key={diff}
-													size="xs"
-													variant={
-														difficultyMap[subject.id] === diff
-															? "default"
-															: "ghost"
-													}
-													onClick={() => updateDifficulty(subject.id, diff)}
-												>
-													{diff[0]}
-												</Button>
-											))}
-										</div>
-									)}
-								</div>
-							))}
+								))}
+							</div>
 						</div>
-					</div>
 
-					<div>
-						<Label>Study Hours Per Day</Label>
-						<div className="flex gap-2 mt-2">
-							{[1, 2, 3, 4, 5].map((h) => (
-								<Button
-									key={h}
-									variant={hoursPerDay === h ? "default" : "ghost"}
-									onClick={() => setHoursPerDay(h)}
-								>
-									{h}h
-								</Button>
-							))}
+						<div>
+							<Label className="text-sm">First Exam Date</Label>
+							<Input
+								type="date"
+								value={examDate}
+								onChange={(e) => setExamDate(e.target.value)}
+								className="mt-2 rounded-xl"
+							/>
 						</div>
-					</div>
 
-					<div>
-						<Label>First Exam Date</Label>
-						<Input
-							type="date"
-							value={examDate}
-							onChange={(e) => setExamDate(e.target.value)}
-							className="mt-2 rounded-xl"
-						/>
+						<Button
+							className="w-full rounded-xl"
+							onClick={generateSchedule}
+							disabled={
+								selectedSubjects.length === 0 || !examDate || isGenerating
+							}
+						>
+							{isGenerating ? (
+								<>
+									<div className="animate-spin size-4 border-2 border-current border-t-transparent rounded-full mr-2" />
+									Generating...
+								</>
+							) : (
+								<>
+									<Sparkle data-icon className="mr-2" />
+									Generate Schedule
+								</>
+							)}
+						</Button>
 					</div>
-
-					<Button
-						className="w-full rounded-xl active:scale-[0.96]"
-						onClick={generateSchedule}
-						disabled={
-							selectedSubjects.length === 0 || !examDate || isGenerating
-						}
-					>
-						{isGenerating ? (
-							<>
-								<div className="animate-spin size-4 border-2 border-current border-t-transparent rounded-full mr-2" />
-								Generating...
-							</>
-						) : (
-							<>
-								<SparkleIcon data-icon className="mr-2" />
-								Generate Schedule
-							</>
-						)}
-					</Button>
 				</div>
 			) : (
-				<div className="flex-1 overflow-y-auto">
+				<div className="px-5 pb-10 flex-1 overflow-y-auto">
 					<div className="flex items-center justify-between mb-4">
-						<h3 className="font-semibold text-wrap balance">Your Study Plan</h3>
+						<h3 className="font-semibold">Your Study Plan</h3>
 						<Button
 							variant="outline"
 							size="sm"
 							onClick={() => setSchedule([])}
-							className="rounded-lg active:scale-[0.96]"
+							className="rounded-xl"
 						>
 							Reset
 						</Button>
@@ -370,8 +373,8 @@ export function SmartScheduler() {
 									animate={{ opacity: 1, x: 0 }}
 									transition={{ delay: idx * 0.05 }}
 								>
-									<h4 className="font-medium text-sm mb-2 flex items-center gap-2">
-										<CalendarIcon className="size-4" />
+									<h4 className="font-medium text-sm mb-2 flex items-center gap-2 text-foreground">
+										<CalendarBlank className="size-4 text-[--system-accent]" />
 										{day.day}
 									</h4>
 									<div className="flex flex-col gap-2">
@@ -379,13 +382,13 @@ export function SmartScheduler() {
 											<div
 												key={`${day.day}-${sidx}`}
 												className={cn(
-													"p-3 rounded-xl shadow-[0_2px_8px_oklch(0%_0_0_/_0.04)] overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors",
+													"p-3 rounded-xl border border-border bg-card shadow-sm",
 													session.subject === "Break" && "bg-muted/50",
 												)}
 											>
 												<div className="flex items-center justify-between">
 													<div>
-														<span className="font-medium">
+														<span className="font-medium text-sm">
 															{session.subject}
 														</span>
 														<span className="text-muted-foreground text-sm ml-2">

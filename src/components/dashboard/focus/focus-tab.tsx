@@ -9,11 +9,7 @@ import {
 } from "@phosphor-icons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import {
-	ChartContainer,
-	ChartTooltip,
-	ChartTooltipContent,
-} from "@/components/ui/chart";
+import { RadialChart } from "@/components/ui/charts/radial-chart";
 import { useInterval } from "@/hooks";
 import { cn } from "@/lib/shared";
 
@@ -83,58 +79,13 @@ export function FocusTab({ className }: FocusTabProps) {
 		}
 	};
 
-	const _chartData = [
-		{
-			fill: "var(--color-timer)",
-			value: progress,
-		},
-	];
-
-	const chartConfig = {
-		timer: {
-			label: "Time",
-			color: "hsl(var(--chart-2))",
-		},
-	};
-
 	return (
 		<div className={cn("flex flex-col items-center gap-6", className)}>
-			<div className="relative">
-				<ChartContainer config={chartConfig} className="size-40 sm:size-48">
-					<div className="absolute inset-0 flex items-center justify-center">
-						<span className="text-4xl font-extrabold tabular-nums tracking-tight">
-							{formatTime(timeLeft)}
-						</span>
-					</div>
-					<ChartTooltip
-						content={<ChartTooltipContent hideIndicator />}
-						cursor={false}
-					/>
-				</ChartContainer>
-				<svg className="absolute inset-0 size-full pointer-events-none -rotate-90">
-					<circle
-						cx="50%"
-						cy="50%"
-						r="42%"
-						fill="none"
-						stroke="currentColor"
-						strokeWidth="8"
-						className="text-muted/20"
-					/>
-					<circle
-						cx="50%"
-						cy="50%"
-						r="42%"
-						fill="none"
-						stroke="currentColor"
-						strokeWidth="8"
-						strokeDasharray="264"
-						strokeDashoffset={264 - (264 * progress) / 100}
-						strokeLinecap="round"
-						className="text-foreground transition-colors duration-500 ease-in-out"
-					/>
-				</svg>
-			</div>
+			<RadialChart value={progress} size={192} color="hsl(var(--foreground))">
+				<span className="text-4xl font-extrabold tabular-nums tracking-tight">
+					{formatTime(timeLeft)}
+				</span>
+			</RadialChart>
 
 			<div className="flex items-center gap-3">
 				<Button

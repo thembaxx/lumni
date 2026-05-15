@@ -1,11 +1,10 @@
 "use client";
 
-import { Plus, Trash, X } from "@phosphor-icons/react";
+import { CalendarBlank, Plus, Trash, X } from "@phosphor-icons/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/shared";
 
@@ -116,109 +115,131 @@ export function ExamCalendar() {
 	};
 
 	return (
-		<div className="p-4 h-full flex flex-col">
-			<Calendar
-				mode="single"
-				onSelect={(date) => date && setSelectedDate(date)}
-				selected={selectedDate}
-			/>
-
-			<div className="mt-4 flex justify-between items-center">
-				<h3 className="font-semibold text-wrap balance">
-					{selectedDate
-						? `Exams on ${selectedDate.toLocaleDateString("en-ZA")}`
-						: "Select a date"}
-				</h3>
-				<Button
-					size="sm"
-					onClick={() => setIsAddingExam(true)}
-					className="rounded-lg active:scale-[0.96]"
-				>
-					<Plus data-icon className="mr-1" />
-					Add
-				</Button>
-			</div>
-
-			{examsOnDate.length > 0 ? (
-				<div className="mt-3 flex flex-col gap-2">
-					{examsOnDate.map((exam) => (
-						<div
-							key={exam.id}
-							className="p-3 rounded-xl shadow-[0_2px_8px_oklch(0%_0_0_/_0.06)] overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors"
-						>
-							<div className="flex items-center justify-between">
-								<div className="flex items-center gap-3">
-									<span
-										className={cn(
-											"px-2.5 py-1 rounded-lg text-xs text-white font-medium",
-											getSubjectColor(exam.subject),
-										)}
-									>
-										{getSubjectAbbr(exam.subject)}
-									</span>
-									<div>
-										<p className="font-medium text-sm">
-											{commonSubjects.find((s) => s.id === exam.subject)
-												?.name || exam.subject}
-										</p>
-										<p className="text-xs text-muted-foreground">
-											{exam.paper}
-										</p>
-									</div>
-								</div>
-								<Button
-									variant="ghost"
-									size="icon-sm"
-									onClick={() => deleteExam(exam.id)}
-									className="active:scale-[0.96]"
-								>
-									<Trash data-icon />
-								</Button>
-							</div>
-						</div>
-					))}
-				</div>
-			) : selectedDate ? (
-				<p className="text-center text-muted-foreground mt-4">
-					No exams on this date
+		<div className="h-full flex flex-col overflow-y-auto">
+			<div className="px-5 pt-5 pb-3">
+				<h2 className="ios-title-3 flex items-center gap-2 text-[--system-text-primary]">
+					<CalendarBlank className="size-5 text-[--system-accent]" />
+					Exam Calendar
+				</h2>
+				<p className="ios-subhead text-[--system-text-secondary] mt-1">
+					Track your exam dates and never miss a paper.
 				</p>
-			) : null}
+			</div>
 
-			<div className="mt-4">
-				<h4 className="font-medium text-sm mb-2">Upcoming Exams</h4>
-				<div className="flex flex-col gap-2">
-					{exams
-						.filter((e) => e.date >= new Date())
-						.sort((a, b) => a.date.getTime() - b.date.getTime())
-						.slice(0, 5)
-						.map((exam) => (
-							<motion.div
-								key={exam.id}
-								initial={{ opacity: 0, y: 5 }}
-								animate={{ opacity: 1, y: 0 }}
-								className="flex items-center gap-2 p-2.5 rounded-xl bg-muted shadow-[0_2px_8px_oklch(0%_0_0_/_0.04)]"
-							>
-								<span
-									className={cn(
-										"px-2.5 py-1 rounded-lg text-xs text-white font-medium",
-										getSubjectColor(exam.subject),
-									)}
-								>
-									{getSubjectAbbr(exam.subject)}
-								</span>
-								<span className="text-sm tabular-nums">
-									{exam.date.toLocaleDateString("en-ZA", {
-										month: "short",
-										day: "numeric",
-									})}
-								</span>
-								<span className="text-xs text-muted-foreground">
-									{exam.paper}
-								</span>
-							</motion.div>
-						))}
+			<div className="px-0 sm:px-5 pb-5">
+				<div className="bg-system-background-secondary rounded-2xl sm:rounded-2xl p-5">
+					<Calendar
+						mode="single"
+						onSelect={(date) => date && setSelectedDate(date)}
+						selected={selectedDate}
+						className="w-full"
+					/>
 				</div>
 			</div>
+
+			<div className="px-5 pb-5">
+				<div className="bg-system-background-secondary rounded-2xl p-5 space-y-3">
+					<div className="flex items-center justify-between">
+						<p className="text-sm font-semibold text-foreground">
+							{selectedDate
+								? `Exams on ${selectedDate.toLocaleDateString("en-ZA")}`
+								: "Select a date"}
+						</p>
+						<Button
+							size="sm"
+							onClick={() => setIsAddingExam(true)}
+							className="rounded-xl"
+						>
+							<Plus data-icon className="mr-1" />
+							Add
+						</Button>
+					</div>
+
+					{examsOnDate.length > 0 ? (
+						<div className="flex flex-col gap-2">
+							{examsOnDate.map((exam) => (
+								<div
+									key={exam.id}
+									className="flex items-center justify-between p-3 rounded-xl bg-card border border-border shadow-sm"
+								>
+									<div className="flex items-center gap-3">
+										<span
+											className={cn(
+												"px-2.5 py-1 rounded-lg text-xs text-white font-medium",
+												getSubjectColor(exam.subject),
+											)}
+										>
+											{getSubjectAbbr(exam.subject)}
+										</span>
+										<div>
+											<p className="font-medium text-sm">
+												{commonSubjects.find((s) => s.id === exam.subject)
+													?.name || exam.subject}
+											</p>
+											<p className="text-xs text-muted-foreground">
+												{exam.paper}
+											</p>
+										</div>
+									</div>
+									<Button
+										variant="ghost"
+										size="icon-sm"
+										onClick={() => deleteExam(exam.id)}
+									>
+										<Trash data-icon />
+									</Button>
+								</div>
+							))}
+						</div>
+					) : selectedDate ? (
+						<p className="text-center text-muted-foreground text-sm py-2">
+							No exams on this date
+						</p>
+					) : null}
+				</div>
+			</div>
+
+			{exams.length > 0 && (
+				<div className="px-5 pb-10">
+					<div className="bg-system-background-secondary rounded-2xl p-5">
+						<p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">
+							Upcoming Exams
+						</p>
+						<div className="flex flex-col gap-2">
+							{exams
+								.filter((e) => e.date >= new Date())
+								.sort((a, b) => a.date.getTime() - b.date.getTime())
+								.slice(0, 5)
+								.map((exam) => (
+									<motion.div
+										key={exam.id}
+										initial={{ opacity: 0, y: 5 }}
+										animate={{ opacity: 1, y: 0 }}
+										className="flex items-center gap-2 p-3 rounded-xl bg-card border border-border shadow-sm"
+									>
+										<span
+											className={cn(
+												"px-2.5 py-1 rounded-lg text-xs text-white font-medium",
+												getSubjectColor(exam.subject),
+											)}
+										>
+											{getSubjectAbbr(exam.subject)}
+										</span>
+										<span className="text-sm tabular-nums font-medium">
+											{exam.date.toLocaleDateString("en-ZA", {
+												month: "short",
+												day: "numeric",
+											})}
+										</span>
+										<span className="text-xs text-muted-foreground">
+											{exam.paper}
+										</span>
+									</motion.div>
+								))}
+						</div>
+					</div>
+				</div>
+			)}
 
 			<AnimatePresence initial={false}>
 				{isAddingExam && (
@@ -230,7 +251,7 @@ export function ExamCalendar() {
 						className="fixed inset-0 z-50 flex items-center justify-center p-4"
 					>
 						<div
-							className="absolute inset-0 bg-black/50"
+							className="absolute inset-0 bg-[--system-background]/80 backdrop-blur-sm"
 							onClick={() => setIsAddingExam(false)}
 						/>
 						<motion.div
@@ -238,7 +259,7 @@ export function ExamCalendar() {
 							animate={{ scale: 1, opacity: 1, y: 0 }}
 							exit={{ scale: 0.95, opacity: 0, y: 10 }}
 							transition={{ type: "spring", duration: 0.3, bounce: 0 }}
-							className="relative bg-background rounded-2xl p-6 w-full max-w-sm shadow-[0_8px_30px_oklch(0%_0_0_/_0.12)]"
+							className="relative bg-card rounded-2xl p-6 w-full max-w-sm shadow-level-3"
 						>
 							<Button
 								variant="ghost"
@@ -249,9 +270,7 @@ export function ExamCalendar() {
 								<X data-icon />
 							</Button>
 
-							<h3 className="text-lg font-semibold mb-4 text-wrap balance">
-								Add Exam
-							</h3>
+							<h3 className="text-lg font-semibold mb-4">Add Exam</h3>
 
 							<div className="flex flex-col gap-4">
 								<div>
@@ -289,7 +308,7 @@ export function ExamCalendar() {
 								</div>
 
 								<Button
-									className="w-full rounded-xl active:scale-[0.96]"
+									className="w-full rounded-xl"
 									onClick={addExam}
 									disabled={!newExam.subject}
 								>

@@ -10,11 +10,10 @@ import {
 	TrendUp,
 	WarningCircle,
 } from "@phosphor-icons/react";
-import { useMemo } from "react";
 import { AccuracyBar } from "@/components/shared/accuracy-bar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
+import { BarChart } from "@/components/ui/charts/bar-chart";
 import {
 	type OverallAnalytics,
 	type SubjectAnalytics,
@@ -257,28 +256,30 @@ function WeeklyProgressCard({
 }: {
 	progress: OverallAnalytics["weeklyProgress"];
 }) {
+	const chartData = progress.map((day) => ({
+		day: new Date(day.date).toLocaleDateString("en", { weekday: "short" }),
+		accuracy: Math.round(day.accuracy * 100),
+	}));
+
+	const chartConfig = {
+		accuracy: {
+			label: "Accuracy",
+			color: "hsl(var(--system-accent))",
+		},
+	};
+
 	return (
 		<Card size="sm">
 			<CardHeader>
 				<CardTitle>Weekly Progress</CardTitle>
 			</CardHeader>
 			<CardContent>
-				<div className="flex items-end gap-2 h-32">
-					{progress.map((day, i) => (
-						<div key={i} className="flex-1 flex flex-col items-center gap-1">
-							<div
-								className="w-full bg-[--system-accent]/80 rounded-t"
-								style={{ height: `${day.accuracy * 100}%`, minHeight: "4px" }}
-							/>
-							<span className="text-xs text-muted-foreground">
-								{new Date(day.date).toLocaleDateString("en", {
-									weekday: "short",
-								})}
-							</span>
-							<span className="text-xs">{day.questions}</span>
-						</div>
-					))}
-				</div>
+				<BarChart
+					data={chartData}
+					xKey="day"
+					yKey="accuracy"
+					config={chartConfig}
+				/>
 			</CardContent>
 		</Card>
 	);

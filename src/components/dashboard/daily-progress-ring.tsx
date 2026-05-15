@@ -1,15 +1,13 @@
 "use client";
 
-import { CheckCircle, Flame } from "@phosphor-icons/react";
+import { Fire02FreeIcons } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { CheckCircle } from "@phosphor-icons/react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { AnimatedProgressBar } from "@/components/shared/animated-progress-bar";
+import { RadialChart } from "@/components/ui/charts/radial-chart";
 import { useGamification } from "@/hooks/use-gamification";
 import { iOSEase } from "@/lib/utils/animation";
-
-const SIZE = 136;
-const STROKE = 8;
-const R = (SIZE - STROKE) / 2;
-const C = 2 * Math.PI * R;
 
 export function DailyProgressRing() {
 	const { levelInfo, gamification, currentStreak } = useGamification();
@@ -17,7 +15,6 @@ export function DailyProgressRing() {
 
 	const daily = gamification.dailyChallenges[0];
 	const progress = daily ? Math.min(daily.progress / daily.target, 1) : 0;
-	const offset = C * (1 - progress);
 	const isComplete = daily?.completed ?? false;
 
 	return (
@@ -31,41 +28,12 @@ export function DailyProgressRing() {
 			className="flex flex-col items-center py-4"
 			style={{ willChange: "transform, opacity" }}
 		>
-			<div
-				className="relative max-w-full"
-				style={{ width: SIZE, height: SIZE }}
+			<RadialChart
+				value={progress * 100}
+				size={136}
+				color={isComplete ? "hsl(var(--success))" : "hsl(var(--system-accent))"}
 			>
-				<svg
-					width={SIZE}
-					height={SIZE}
-					className="transform -rotate-90"
-					aria-hidden
-				>
-					<circle
-						cx={SIZE / 2}
-						cy={SIZE / 2}
-						r={R}
-						fill="none"
-						stroke="currentColor"
-						strokeWidth={STROKE}
-						className="text-border/40"
-					/>
-					<motion.circle
-						cx={SIZE / 2}
-						cy={SIZE / 2}
-						r={R}
-						fill="none"
-						stroke="currentColor"
-						strokeWidth={STROKE}
-						strokeLinecap="round"
-						strokeDasharray={C}
-						initial={shouldReduceMotion ? false : { strokeDashoffset: C }}
-						animate={{ strokeDashoffset: offset }}
-						transition={{ duration: 0.8, ease: iOSEase }}
-						className={isComplete ? "text-success" : "text-system-accent"}
-					/>
-				</svg>
-				<div className="absolute inset-0 flex flex-col items-center justify-center">
+				<div className="flex flex-col items-center">
 					<motion.span
 						initial={shouldReduceMotion ? false : { scale: 0.8, opacity: 0 }}
 						animate={{ scale: 1, opacity: 1 }}
@@ -82,7 +50,7 @@ export function DailyProgressRing() {
 						{levelInfo.title}
 					</span>
 				</div>
-			</div>
+			</RadialChart>
 
 			<div className="flex items-center gap-4 mt-4">
 				<div className="flex items-center gap-1.5">
@@ -98,7 +66,8 @@ export function DailyProgressRing() {
 							ease: iOSEase,
 						}}
 					>
-						<Flame
+						<HugeiconsIcon
+							icon={Fire02FreeIcons}
 							className={`size-5 transition-colors duration-300 ${currentStreak > 0 ? "text-warning" : "text-muted-foreground"}`}
 						/>
 					</motion.span>

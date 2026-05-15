@@ -145,7 +145,7 @@ function DashboardContent({
 	return (
 		<div
 			data-scroll-container
-			className="min-h-[100dvh] flex flex-col bg-system-grouped pt-4 pb-[calc(var(--spacing-safe-pb)+var(--space-16)+var(--space-5))] overflow-x-hidden overflow-y-auto w-full"
+			className="min-h-dvh flex flex-col bg-system-grouped pt-4 pb-[calc(var(--spacing-safe-pb)+var(--space-16)+var(--space-5))] overflow-x-hidden overflow-y-auto w-full"
 		>
 			<div className="max-w-3xl mx-auto w-full px-4 flex flex-col gap-8 pb-16">
 				<HeroBanner />
