@@ -6,6 +6,7 @@ import {
 	CircleNotch,
 	Minus,
 	Plus,
+	Sparkle,
 	X,
 } from "@phosphor-icons/react";
 import { AnimatePresence, m, motion } from "framer-motion";
@@ -34,6 +35,7 @@ import {
 } from "@/components/ui/inputs";
 import { VisualContent } from "@/components/visual/visual-content";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
+import { useSolver } from "@/hooks/use-solver";
 import { useVisualEngine } from "@/hooks/use-visual-engine";
 import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";
@@ -102,6 +104,10 @@ export function QuestionCard({
 	const { grade } = useQuestionEngine();
 
 	const { data: visual, isLoading: visualLoading } = useVisualEngine(question);
+
+	const solver = useSolver();
+	const isSolverType =
+		question.type === "calculation" || question.type === "short-answer";
 
 	const isMCQ = question.type === "multiple-choice";
 	const mcqBody = isMCQ ? (question as Question<"multiple-choice">).body : null;
@@ -502,6 +508,65 @@ export function QuestionCard({
 							subject={effectiveSubject}
 							className="text-foreground"
 						/>
+					</div>
+				)}
+				{!isCorrect && isSolverType && (
+					<div className="flex flex-col gap-2 pt-2 border-t border-current/20">
+						{solver.isPending ? (
+							<div className="flex items-center justify-center gap-2 py-3">
+								<CircleNotch className="size-5 animate-spin" />
+								<span className="text-sm">Solving...</span>
+							</div>
+						) : solver.data?.steps?.length ? (
+							<div className="flex flex-col gap-2">
+								<p className="text-xs font-bold uppercase tracking-wider text-foreground/60">
+									Step-by-step solution
+								</p>
+								<StepByStep
+									steps={solver.data.steps}
+									subject={effectiveSubject}
+									className="text-foreground"
+								/>
+							</div>
+						) : solver.data?.solution ? (
+							<div className="rounded-xl bg-card border border-border/50 p-4 text-sm leading-relaxed whitespace-pre-wrap">
+								{solver.data.solution}
+							</div>
+						) : solver.isError ? (
+							<div className="flex items-center gap-2 py-2">
+								<span className="text-sm opacity-80">
+									Couldn't generate steps.
+								</span>
+								<Button
+									variant="ghost"
+									size="sm"
+									onClick={() =>
+										solver.mutate({
+											question: question.questionText,
+											subject: effectiveSubject,
+										})
+									}
+									className="h-8 text-xs"
+								>
+									Try again
+								</Button>
+							</div>
+						) : (
+							<Button
+								variant="ghost"
+								size="sm"
+								onClick={() =>
+									solver.mutate({
+										question: question.questionText,
+										subject: effectiveSubject,
+									})
+								}
+								className="gap-2 h-9 text-sm self-start"
+							>
+								<Sparkle data-icon="inline-start" />
+								Show me the steps
+							</Button>
+						)}
 					</div>
 				)}
 			</m.div>
