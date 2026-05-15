@@ -129,7 +129,10 @@ export class AIClient {
 			r.status === "fulfilled"
 				? r.value
 				: {
-						error: r.reason instanceof Error ? r.reason.message : "Batch generation failed",
+						error:
+							r.reason instanceof Error
+								? r.reason.message
+								: "Batch generation failed",
 						provider: "none",
 						available: false,
 					},

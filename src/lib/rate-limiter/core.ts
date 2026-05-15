@@ -9,8 +9,45 @@ export interface RateLimitResult {
 	resetAt: number;
 }
 
+export interface RateLimitStoreEntry {
+	count: number;
+	resetAt: number;
+}
+
+export interface RateLimitStore {
+	get(key: string): RateLimitStoreEntry | undefined;
+	set(key: string, value: RateLimitStoreEntry): void;
+	delete(key: string): void;
+	entries(): IterableIterator<[string, RateLimitStoreEntry]>;
+	size(): number;
+}
+
+class MapStore implements RateLimitStore {
+	private store = new Map<string, RateLimitStoreEntry>();
+
+	get(key: string): RateLimitStoreEntry | undefined {
+		return this.store.get(key);
+	}
+	set(key: string, value: RateLimitStoreEntry): void {
+		this.store.set(key, value);
+	}
+	delete(key: string): void {
+		this.store.delete(key);
+	}
+	entries(): IterableIterator<[string, RateLimitStoreEntry]> {
+		return this.store.entries();
+	}
+	size(): number {
+		return this.store.size;
+	}
+}
+
 export class RateLimiter {
-	private store = new Map<string, { count: number; resetAt: number }>();
+	private store: RateLimitStore;
+
+	constructor(store?: RateLimitStore) {
+		this.store = store ?? new MapStore();
+	}
 
 	check(key: string, config: RateLimitConfig): RateLimitResult {
 		const now = Date.now();
@@ -27,7 +64,11 @@ export class RateLimiter {
 		}
 
 		record.count++;
-		return { allowed: true, remaining: config.max - record.count, resetAt: record.resetAt };
+		return {
+			allowed: true,
+			remaining: config.max - record.count,
+			resetAt: record.resetAt,
+		};
 	}
 
 	peek(key: string, config: RateLimitConfig): RateLimitResult {
@@ -35,7 +76,11 @@ export class RateLimiter {
 		const record = this.store.get(key);
 
 		if (!record || record.resetAt < now) {
-			return { allowed: true, remaining: config.max, resetAt: now + config.windowMs };
+			return {
+				allowed: true,
+				remaining: config.max,
+				resetAt: now + config.windowMs,
+			};
 		}
 
 		return {
@@ -59,7 +104,7 @@ export class RateLimiter {
 	}
 
 	getStoreSize(): number {
-		return this.store.size;
+		return this.store.size();
 	}
 }
 

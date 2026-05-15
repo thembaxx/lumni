@@ -1,4 +1,8 @@
-import { RateLimiter, getRateLimitHeaders, type RateLimitConfig } from "@/lib/rate-limiter/core";
+import {
+	getRateLimitHeaders,
+	type RateLimitConfig,
+	RateLimiter,
+} from "@/lib/rate-limiter/core";
 
 const API_CONFIG: RateLimitConfig = { max: 10, windowMs: 60 * 1000 };
 

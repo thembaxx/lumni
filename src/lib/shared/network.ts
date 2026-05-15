@@ -5,10 +5,37 @@ export interface RetryOptions {
 	onRetry?: (attempt: number, error: Error) => void;
 }
 
-export interface NetworkError extends Error {
-	statusCode?: number;
-	isRetryable: boolean;
-	isTimeout: boolean;
+const defaultRetryOptions: Required<RetryOptions> = {
+	maxRetries: 3,
+	initialDelay: 1000,
+	maxDelay: 30000,
+	onRetry: () => {},
+};
+
+export async function withRetry<T>(
+	fn: () => Promise<T>,
+	options?: RetryOptions,
+): Promise<T> {
+	const opts = { ...defaultRetryOptions, ...options };
+	let lastError: Error | undefined;
+
+	for (let attempt = 0; attempt <= opts.maxRetries; attempt++) {
+		try {
+			return await fn();
+		} catch (error) {
+			lastError = error instanceof Error ? error : new Error(String(error));
+			if (attempt < opts.maxRetries) {
+				opts.onRetry(attempt, lastError);
+				const delay = Math.min(
+					opts.initialDelay * Math.pow(2, attempt),
+					opts.maxDelay,
+				);
+				await new Promise((resolve) => setTimeout(resolve, delay));
+			}
+		}
+	}
+
+	throw lastError!;
 }
 
 export function isOnline(): boolean {

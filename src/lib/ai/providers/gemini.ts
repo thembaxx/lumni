@@ -85,5 +85,10 @@ export function createGeminiProvider(apiKey: string): AIProvider {
 		};
 	}
 
-	return { name: "gemini", model, generate, capabilities: { systemPrompt: true, images: true } };
+	return {
+		name: "gemini",
+		model,
+		generate,
+		capabilities: { systemPrompt: true, images: true },
+	};
 }

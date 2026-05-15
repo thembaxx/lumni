@@ -3,10 +3,11 @@ import { checkGibberish, checkPlaceholders } from "../shared-quality-checks";
 
 export function validate(
 	question: Question,
-	errors: ValidationError[],
-	warnings: ValidationError[],
-): void {
+): { errors: ValidationError[]; warnings: ValidationError[] } {
 	const body = question.body as QuestionBody["multiple-choice"];
+	const errors: ValidationError[] = [];
+	const warnings: ValidationError[] = [];
+
 	warnings.push(...checkGibberish(question.questionText, "questionText"));
 	warnings.push(...checkPlaceholders(question.questionText, "questionText"));
 
@@ -71,4 +72,6 @@ export function validate(
 			severity: "warning",
 		});
 	}
+
+	return { errors, warnings };
 }

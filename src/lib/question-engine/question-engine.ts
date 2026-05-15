@@ -39,7 +39,11 @@ export class QuestionEngine {
 					},
 					write: async (params, questions) => {
 						const { cacheQuestions } = await import("@/lib/db/offline");
-						await cacheQuestions(params.subject, questions as Question[], params.topic);
+						await cacheQuestions(
+							params.subject,
+							questions as Question[],
+							params.topic,
+						);
 					},
 				},
 				{

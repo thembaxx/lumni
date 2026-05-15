@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect } from "react";
-import { calculateBackoffDelay } from "@/lib/queue/core";
 import {
 	addToSyncQueue,
 	getPendingSyncItems,
@@ -10,6 +9,7 @@ import {
 	type SyncQueueItem,
 	updateSyncItem,
 } from "@/lib/db/offline";
+import { calculateBackoffDelay } from "@/lib/queue/core";
 
 interface SyncConfig {
 	maxRetries?: number;
@@ -66,10 +66,7 @@ export async function processQueue(): Promise<void> {
 				const errorMessage =
 					error instanceof Error ? error.message : "Unknown error";
 
-				if (
-					item.attempts + 1 >=
-					(item.maxRetries || syncConfig.maxRetries!)
-				) {
+				if (item.attempts + 1 >= (item.maxRetries || syncConfig.maxRetries!)) {
 					await updateSyncItem(item.id!, {
 						status: "failed",
 						lastError: errorMessage,

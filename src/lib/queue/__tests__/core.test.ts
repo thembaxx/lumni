@@ -32,8 +32,7 @@ function createTestStore() {
 		},
 		where: (_index: string) => ({
 			equals: (_value: string) => ({
-				count: async () =>
-					items.filter((i) => i.status === _value).length,
+				count: async () => items.filter((i) => i.status === _value).length,
 				toArray: async () => items.filter((i) => i.status === _value),
 			}),
 		}),

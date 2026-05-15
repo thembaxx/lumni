@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { RateLimiter, getRateLimitHeaders } from "../core";
+import { getRateLimitHeaders, RateLimiter } from "../core";
 
 describe("RateLimiter", () => {
 	const config = { max: 3, windowMs: 60000 };

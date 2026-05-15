@@ -1,7 +1,7 @@
 "use client";
 
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { useCallback } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useCallback, useState } from "react";
 import type {
 	GenerationParams,
 	GradingResult,
@@ -72,6 +72,9 @@ export function useQuestionEngine(
 	params?: GenerationParams,
 	options?: UseQuestionEngineOptions,
 ) {
+	const queryClient = useQueryClient();
+	const [generatedQuestions, setGeneratedQuestions] = useState<Question[] | null>(null);
+
 	const query = useQuery({
 		queryKey: ["questionEngine", params],
 		queryFn: async () => {
@@ -106,9 +109,13 @@ export function useQuestionEngine(
 	const generate = useCallback(
 		async (generateParams: GenerationParams): Promise<Question[]> => {
 			const result = await generateQuestions(generateParams);
+			setGeneratedQuestions(result.questions);
+			if (params) {
+				queryClient.invalidateQueries({ queryKey: ["questionEngine", params] });
+			}
 			return result.questions;
 		},
-		[],
+		[queryClient, params],
 	);
 
 	const grade = useCallback(
@@ -127,7 +134,7 @@ export function useQuestionEngine(
 	);
 
 	return {
-		questions: query.data?.questions ?? [],
+		questions: generatedQuestions ?? query.data?.questions ?? [],
 		count: query.data?.count ?? 0,
 		isLoading: query.isLoading,
 		error: query.error,

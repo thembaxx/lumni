@@ -1,4 +1,4 @@
-import { RateLimiter, type RateLimitConfig } from "@/lib/rate-limiter/core";
+import { type RateLimitConfig, RateLimiter } from "@/lib/rate-limiter/core";
 
 const SIGNIN_CONFIG: RateLimitConfig = { max: 3, windowMs: 5 * 60 * 1000 };
 const MAGIC_LINK_CONFIG: RateLimitConfig = { max: 1, windowMs: 5 * 60 * 1000 };

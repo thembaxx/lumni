@@ -49,5 +49,10 @@ export function createGroqProvider(apiKey: string): AIProvider {
 		};
 	}
 
-	return { name: "groq", model, generate, capabilities: { systemPrompt: true, images: false } };
+	return {
+		name: "groq",
+		model,
+		generate,
+		capabilities: { systemPrompt: true, images: false },
+	};
 }

@@ -2,10 +2,10 @@ import { curriculumRegistry } from "@/curriculum";
 import { competencyService, computeBloomWeight } from "@/lib/competency-engine";
 import { syncQuestionsToAppwrite } from "@/lib/question-engine/persistence";
 import type { Question } from "@/lib/question-engine/types";
+import type { ProcessResult } from "@/lib/queue/core";
 import { analyticsService } from "@/lib/services/analytics-service";
 import { progressService } from "@/lib/services/progress-service";
 import { spacedRepService } from "@/lib/services/spaced-rep-service";
-import type { ProcessResult } from "@/lib/queue/core";
 import { jobQueue } from "./job-queue";
 import type { JobRecord, JobType } from "./types";
 

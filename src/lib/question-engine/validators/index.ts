@@ -16,14 +16,12 @@ import {
 	checkPoints,
 } from "./shared-quality-checks";
 
-const typeValidators: Record<
-	string,
-	(
-		question: Question,
-		errors: ValidationError[],
-		warnings: ValidationError[],
-	) => void
-> = {
+interface ValidatorResult {
+	errors: ValidationError[];
+	warnings: ValidationError[];
+}
+
+const typeValidators: Record<string, (question: Question) => ValidatorResult> = {
 	"multiple-choice": validateMcq,
 	matching: validateMatching,
 	"short-answer": validateShortAnswer,
@@ -74,7 +72,9 @@ export function validateQuestion(question: Question): ValidationResult {
 
 	const typeValidator = typeValidators[question.type];
 	if (typeValidator) {
-		typeValidator(question, errors, warnings);
+		const result = typeValidator(question);
+		errors.push(...result.errors);
+		warnings.push(...result.warnings);
 	}
 
 	return scoreResult(errors, warnings);

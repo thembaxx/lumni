@@ -48,10 +48,7 @@ export class QueueCore<T extends QueueItemBase> {
 
 	async next(): Promise<T | null> {
 		const now = Date.now();
-		const items = await this.table
-			.where("status")
-			.equals("pending")
-			.toArray();
+		const items = await this.table.where("status").equals("pending").toArray();
 		const available = items.filter((j) => j.scheduledAt <= now);
 		if (available.length === 0) return null;
 		available.sort(
@@ -136,6 +133,26 @@ export class QueueCore<T extends QueueItemBase> {
 		}
 
 		return { processed: processed.length, succeeded, failed };
+	}
+
+	async resetStaleProcessingItems(staleThreshold = 60000): Promise<number> {
+		const now = Date.now();
+		const all = await this.table.toArray();
+		const stale = all.filter(
+			(j) =>
+				j.status === "processing" &&
+				j.startedAt &&
+				now - j.startedAt > staleThreshold,
+		);
+		for (const item of stale) {
+			if (item.id) {
+				await this.table.update(item.id, {
+					status: "pending",
+					attempts: item.attempts + 1,
+				} as unknown as Partial<T>);
+			}
+		}
+		return stale.length;
 	}
 
 	async getPendingCount(): Promise<number> {

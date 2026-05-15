@@ -2,10 +2,11 @@ import type { Question, QuestionBody, ValidationError } from "../../types";
 
 export function validate(
 	question: Question,
-	errors: ValidationError[],
-	warnings: ValidationError[],
-): void {
+): { errors: ValidationError[]; warnings: ValidationError[] } {
 	const body = question.body as QuestionBody["matching"];
+	const errors: ValidationError[] = [];
+	const warnings: ValidationError[] = [];
+
 	if (!body.pairs || body.pairs.length < 2) {
 		errors.push({
 			type: "schema",
@@ -30,4 +31,6 @@ export function validate(
 			});
 		}
 	}
+
+	return { errors, warnings };
 }
