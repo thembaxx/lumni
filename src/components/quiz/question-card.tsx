@@ -1,6 +1,7 @@
 "use client";
 
 import {
+	Camera,
 	CheckCircle,
 	CircleNotch,
 	Minus,
@@ -38,9 +39,17 @@ import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";
 import { AnimatedIcon, getIconMapping } from "@/lib/utils/icon-mapping";
 import { useBookmarksStore } from "@/store/bookmarks";
+import { useToolsStore } from "@/store/tools";
 import type { Question, QuestionState, UserAnswer } from "@/types/questions";
 import { QuestionDiagram } from "./question-diagram";
 import { StepByStep } from "./step-by-step";
+
+const MATH_SUBJECTS = [
+	"mathematics",
+	"technical-mathematics",
+	"physical-sciences",
+	"mathematical-literacy",
+];
 
 interface QuestionCardProps {
 	question: Question;
@@ -83,6 +92,11 @@ export function QuestionCard({
 	} | null>(null);
 	const [isGrading, setIsGrading] = useState(false);
 	const [calcValue, setCalcValue] = useState("");
+	const effectiveSubjectLower = effectiveSubject.toLowerCase();
+	const isMathSubject = MATH_SUBJECTS.some((s) =>
+		effectiveSubjectLower.includes(s),
+	);
+	const openTools = useToolsStore((s) => s.openTools);
 	const [code, setCode] = useState("");
 
 	const { grade } = useQuestionEngine();
@@ -658,6 +672,17 @@ export function QuestionCard({
 						/>
 						Hint
 					</Button>
+					{isMathSubject && (
+						<Button
+							variant="outline"
+							size="icon"
+							onClick={() => openTools("solver", true)}
+							className="size-10 shrink-0"
+							title="Snap a photo to solve"
+						>
+							<Camera data-icon />
+						</Button>
+					)}
 					{state.isSubmitted && onNext && (
 						<Button onClick={onNext} className="flex-1">
 							Next Question

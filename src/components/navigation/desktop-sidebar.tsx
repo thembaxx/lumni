@@ -1,10 +1,10 @@
 "use client";
 
 import {
+	BookOpen,
 	ChatDots,
 	Gear,
 	House,
-	MonitorPlay,
 	Notebook,
 } from "@phosphor-icons/react";
 
@@ -42,10 +42,10 @@ const sidebarItems: SidebarItem[] = [
 		href: "",
 	},
 	{
-		id: "practice",
-		label: "Practice",
-		icon: MonitorPlay,
-		href: "",
+		id: "problems",
+		label: "Problems",
+		icon: BookOpen,
+		href: "/problems",
 	},
 ];
 
@@ -77,8 +77,6 @@ export function DesktopSidebar() {
 		(item: SidebarItem) => {
 			if (item.id === "chat") {
 				setChatOpen(true);
-			} else if (item.id === "practice") {
-				push("/dashboard");
 			} else {
 				push(item.href);
 			}

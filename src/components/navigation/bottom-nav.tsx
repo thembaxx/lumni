@@ -1,6 +1,7 @@
 "use client";
 
 import {
+	BookOpen01Icon,
 	Chat01Icon,
 	Home01Icon,
 	Quiz01Icon,
@@ -44,10 +45,10 @@ const navItems: NavItem[] = [
 		href: "",
 	},
 	{
-		id: "practice",
-		label: "Practice",
-		icon: Task01Icon,
-		href: "",
+		id: "problems",
+		label: "Problems",
+		icon: BookOpen01Icon,
+		href: "/problems",
 	},
 	{
 		id: "settings",
@@ -171,8 +172,6 @@ export function BottomNav() {
 		(item: NavItem) => {
 			if (item.id === "chat") {
 				setChatDialogOpen(true);
-			} else if (item.id === "practice") {
-				push("/dashboard");
 			} else {
 				push(item.href);
 			}

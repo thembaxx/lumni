@@ -61,7 +61,11 @@ function ActionButton({
 					className="text-accent"
 				>
 					<PerpetualFloat floatRange={1.5} speed={3}>
-						<HugeiconsIcon icon={icon} className="size-4  text-foreground" data-icon />
+						<HugeiconsIcon
+							icon={icon}
+							className="size-4  text-foreground"
+							data-icon
+						/>
 					</PerpetualFloat>
 				</motion.span>
 				<span className="text-sm font-medium">{label}</span>
