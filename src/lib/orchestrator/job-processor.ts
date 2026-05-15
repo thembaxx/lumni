@@ -5,6 +5,7 @@ import type { Question } from "@/lib/question-engine/types";
 import { analyticsService } from "@/lib/services/analytics-service";
 import { progressService } from "@/lib/services/progress-service";
 import { spacedRepService } from "@/lib/services/spaced-rep-service";
+import type { ProcessResult } from "@/lib/queue/core";
 import { jobQueue } from "./job-queue";
 import type { JobRecord, JobType } from "./types";
 
@@ -82,64 +83,19 @@ const handlers: Record<JobType, JobHandler> = {
 };
 
 export class JobProcessor {
-	private isProcessing = false;
+	private concurrencyGuard = { isProcessing: false };
 
-	async processBatch(limit = 5): Promise<{
-		processed: number;
-		succeeded: number;
-		failed: number;
-	}> {
-		if (this.isProcessing) return { processed: 0, succeeded: 0, failed: 0 };
-		this.isProcessing = true;
-
-		let succeeded = 0;
-		let failed = 0;
-		const processed: number[] = [];
-
-		try {
-			for (let i = 0; i < limit; i++) {
-				const job = await jobQueue.next();
-				if (!job || !job.id) break;
-
-				processed.push(job.id);
-				await jobQueue.markProcessing(job.id);
-
-				try {
-					const handler = handlers[job.type];
-					if (!handler) {
-						await jobQueue.markFailed(
-							job.id,
-							`No handler for type: ${job.type}`,
-						);
-						failed++;
-						continue;
-					}
-
-					const payload = JSON.parse(job.payload);
-					await handler(payload);
-					await jobQueue.markCompleted(job.id);
-					succeeded++;
-				} catch (error) {
-					const message =
-						error instanceof Error ? error.message : "Unknown error";
-
-					if (job.attempts + 1 >= job.maxRetries) {
-						await jobQueue.markFailed(job.id, message);
-						failed++;
-					} else {
-						await jobQueue.markForRetry(job.id, message);
-					}
-				}
-			}
-		} finally {
-			this.isProcessing = false;
-		}
-
-		return {
-			processed: processed.length,
-			succeeded,
-			failed,
-		};
+	async processBatch(limit = 5): Promise<ProcessResult> {
+		return jobQueue.core.processBatch(
+			async (job: JobRecord) => {
+				const handler = handlers[job.type];
+				if (!handler) throw new Error(`No handler for type: ${job.type}`);
+				const payload = JSON.parse(job.payload);
+				await handler(payload);
+			},
+			limit,
+			this.concurrencyGuard,
+		);
 	}
 }
 

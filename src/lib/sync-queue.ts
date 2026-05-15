@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect } from "react";
+import { calculateBackoffDelay } from "@/lib/queue/core";
 import {
 	addToSyncQueue,
 	getPendingSyncItems,
@@ -48,6 +49,8 @@ export async function processQueue(): Promise<void> {
 		const pendingItems = await getPendingSyncItems();
 
 		for (const item of pendingItems) {
+			if (item.retryAfter && item.retryAfter > Date.now()) continue;
+
 			try {
 				await updateSyncItem(item.id!, {
 					status: "syncing",
@@ -63,15 +66,21 @@ export async function processQueue(): Promise<void> {
 				const errorMessage =
 					error instanceof Error ? error.message : "Unknown error";
 
-				if (item.attempts + 1 >= (item.maxRetries || syncConfig.maxRetries!)) {
+				if (
+					item.attempts + 1 >=
+					(item.maxRetries || syncConfig.maxRetries!)
+				) {
 					await updateSyncItem(item.id!, {
 						status: "failed",
 						lastError: errorMessage,
 					});
 				} else {
+					const delay = calculateBackoffDelay(item.attempts);
 					await updateSyncItem(item.id!, {
 						status: "pending",
 						lastError: errorMessage,
+						attempts: item.attempts + 1,
+						retryAfter: Date.now() + delay,
 					});
 				}
 			}

@@ -1,4 +1,3 @@
-import { createDeepseekProvider } from "./providers/deepseek";
 import { createGeminiProvider } from "./providers/gemini";
 import { createGroqProvider } from "./providers/groq";
 import {
@@ -123,7 +122,18 @@ export class AIClient {
 		prompts: string[],
 		options?: GenerateOptions,
 	): Promise<AIResult[]> {
-		return Promise.all(prompts.map((prompt) => this.generate(prompt, options)));
+		const results = await Promise.allSettled(
+			prompts.map((prompt) => this.generate(prompt, options)),
+		);
+		return results.map((r) =>
+			r.status === "fulfilled"
+				? r.value
+				: {
+						error: r.reason instanceof Error ? r.reason.message : "Batch generation failed",
+						provider: "none",
+						available: false,
+					},
+		);
 	}
 
 	isConfigured(): boolean {

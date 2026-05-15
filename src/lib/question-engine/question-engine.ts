@@ -15,21 +15,15 @@ import type {
 	ValidationResult,
 } from "./types";
 
-interface CacheParams {
-	subject: string;
-	topic?: string;
-	count: number;
-}
-
 export class QuestionEngine {
 	private registry: ProcessorRegistry;
 	private prompts: PromptManager;
-	private cachingStrategy: CachingStrategy<Question[], CacheParams>;
+	private cachingStrategy: CachingStrategy<Question[], GenerationParams>;
 
 	constructor() {
 		this.registry = new ProcessorRegistry();
 		this.prompts = new PromptManager();
-		this.cachingStrategy = new CachingStrategy<Question[], CacheParams>(
+		this.cachingStrategy = new CachingStrategy<Question[], GenerationParams>(
 			[
 				{
 					name: "dexie",
@@ -43,7 +37,10 @@ export class QuestionEngine {
 						}
 						return null;
 					},
-					write: async () => {},
+					write: async (params, questions) => {
+						const { cacheQuestions } = await import("@/lib/db/offline");
+						await cacheQuestions(params.subject, questions as Question[], params.topic);
+					},
 				},
 				{
 					name: "appwrite",
@@ -116,17 +113,8 @@ export class QuestionEngine {
 	}
 
 	async generate(params: GenerationParams): Promise<Question[]> {
-		const cacheParams: CacheParams = {
-			subject: params.subject,
-			topic: params.topic,
-			count: params.count,
-		};
-		const cached = await this.cachingStrategy.resolve(cacheParams);
-		if (cached !== null) return cached;
-
-		const enriched = await this.enrichParams(params);
-		const questions = await this.generateFromAI(enriched);
-		return questions.slice(0, params.count);
+		const generated = await this.cachingStrategy.resolve(params);
+		return generated ?? [];
 	}
 
 	private withProcessor<T extends QuestionType>(
@@ -169,35 +157,6 @@ export class QuestionEngine {
 
 	listTypes(): QuestionType[] {
 		return this.registry.listTypes();
-	}
-
-	private async generateFromAI(params: GenerationParams): Promise<Question[]> {
-		const { questionType, count } = params;
-
-		if (!questionType || questionType === "any") {
-			return this.generateMixed(params);
-		}
-
-		const types = Array.isArray(questionType) ? questionType : [questionType];
-		const perTypeCount = Math.ceil(count / types.length);
-		const questions: Question[] = [];
-
-		for (const type of types) {
-			try {
-				const processor = this.registry.getProcessor(type);
-				const typeParams = {
-					...params,
-					count: perTypeCount,
-					questionType: type,
-				};
-				const result = await processor.generate(typeParams);
-				questions.push(...result);
-			} catch (error) {
-				console.error(`[QuestionEngine] Failed to generate ${type}:`, error);
-			}
-		}
-
-		return questions.slice(0, count);
 	}
 
 	private async enrichParams(

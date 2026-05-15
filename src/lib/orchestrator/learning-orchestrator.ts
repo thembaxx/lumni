@@ -1,4 +1,3 @@
-import { cacheQuestions } from "@/lib/db/offline";
 import { QuestionEngine } from "@/lib/question-engine/question-engine";
 import type {
 	GenerationParams,
@@ -33,8 +32,6 @@ export class LearningOrchestrator {
 
 		const questions = await this.engine.generate(params);
 		const sliced = questions.slice(0, count);
-
-		await cacheQuestions(subject, sliced, topic);
 
 		const jobIds: number[] = [];
 

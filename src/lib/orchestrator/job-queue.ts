@@ -1,3 +1,4 @@
+import { QueueCore } from "@/lib/queue/core";
 import { offlineDB } from "@/lib/db/offline";
 import { safeJsonStringify } from "@/lib/shared/json";
 import type {
@@ -26,6 +27,8 @@ const DEFAULT_PRIORITY: Record<JobType, number> = {
 };
 
 export class JobQueue {
+	readonly core = new QueueCore<JobRecord>(offlineDB.jobs);
+
 	async enqueue(
 		type: JobType,
 		payload: unknown,
@@ -42,7 +45,7 @@ export class JobQueue {
 			scheduledAt: opts?.scheduledAt ?? now,
 			createdAt: now,
 		};
-		return offlineDB.jobs.add(record as JobRecord);
+		return this.core.enqueue(record);
 	}
 
 	async getStatus(jobId: number): Promise<JobStatusResult | null> {
@@ -52,78 +55,32 @@ export class JobQueue {
 	}
 
 	async getStats(): Promise<JobStats> {
-		const all = await offlineDB.jobs.toArray();
-		const count = (status: JobStatus) =>
-			all.filter((j) => j.status === status).length;
-		return {
-			pending: count("pending"),
-			processing: count("processing"),
-			failed: count("failed"),
-			completed: count("completed"),
-		};
+		return this.core.getStats();
 	}
 
 	async next(): Promise<JobRecord | null> {
-		const now = Date.now();
-		const items = await offlineDB.jobs
-			.where("status")
-			.equals("pending")
-			.filter((j) => j.scheduledAt <= now)
-			.toArray();
-
-		if (items.length === 0) return null;
-
-		items.sort((a, b) => b.priority - a.priority || a.createdAt - b.createdAt);
-		return items[0];
+		return this.core.next();
 	}
 
 	async markProcessing(id: number): Promise<void> {
-		await offlineDB.jobs.update(id, {
-			status: "processing",
-			startedAt: Date.now(),
-		});
+		return this.core.markProcessing(id);
 	}
 
 	async markCompleted(id: number, summary?: string): Promise<void> {
-		await offlineDB.jobs.update(id, {
-			status: "completed",
-			completedAt: Date.now(),
-			resultSummary: summary,
-		});
+		return this.core.markCompleted(id, summary);
 	}
 
 	async markFailed(id: number, error: string): Promise<void> {
-		await offlineDB.jobs.update(id, {
-			status: "failed",
-			lastError: error,
-			completedAt: Date.now(),
-		});
+		return this.core.markFailed(id, error);
 	}
 
 	async markForRetry(id: number, error: string): Promise<void> {
-		const job = await offlineDB.jobs.get(id);
-		if (!job) return;
-
-		const backoff = calculateBackoffDelay(job.attempts);
-
-		await offlineDB.jobs.update(id, {
-			status: "pending",
-			lastError: error,
-			attempts: job.attempts + 1,
-			scheduledAt: Date.now() + backoff,
-		});
+		return this.core.markForRetry(id, error);
 	}
 
 	async getPendingCount(): Promise<number> {
-		return offlineDB.jobs.where("status").equals("pending").count();
+		return this.core.getPendingCount();
 	}
-}
-
-function calculateBackoffDelay(attempts: number): number {
-	const baseDelay = 1000;
-	const maxDelay = 60000;
-	const delay = Math.min(baseDelay * Math.pow(2, attempts), maxDelay);
-	return delay + Math.random() * 1000;
 }
 
 export const jobQueue = new JobQueue();

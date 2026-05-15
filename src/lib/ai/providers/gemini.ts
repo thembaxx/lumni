@@ -45,11 +45,20 @@ export function createGeminiProvider(apiKey: string): AIProvider {
 			}),
 		);
 
+		const body: Record<string, unknown> = {
+			contents,
+			generationConfig: {
+				temperature: request.temperature ?? 0.7,
+				maxOutputTokens: request.maxTokens ?? 2048,
+				topP: 0.95,
+				topK: 40,
+			},
+		};
+
 		if (request.systemPrompt) {
-			contents.unshift({
-				role: "user",
+			body.system_instruction = {
 				parts: [{ text: request.systemPrompt }],
-			});
+			};
 		}
 
 		const response = await fetch(
@@ -57,15 +66,7 @@ export function createGeminiProvider(apiKey: string): AIProvider {
 			{
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
-					contents,
-					generationConfig: {
-						temperature: request.temperature ?? 0.7,
-						maxOutputTokens: request.maxTokens ?? 2048,
-						topP: 0.95,
-						topK: 40,
-					},
-				}),
+				body: JSON.stringify(body),
 			},
 		);
 
@@ -84,5 +85,5 @@ export function createGeminiProvider(apiKey: string): AIProvider {
 		};
 	}
 
-	return { name: "gemini", model, generate };
+	return { name: "gemini", model, generate, capabilities: { systemPrompt: true, images: true } };
 }

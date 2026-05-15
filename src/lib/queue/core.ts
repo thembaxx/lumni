@@ -1,0 +1,161 @@
+export interface QueueItemBase {
+	id?: number;
+	type: string;
+	payload: string;
+	status: "pending" | "processing" | "completed" | "failed" | "cancelled";
+	priority: number;
+	attempts: number;
+	maxRetries: number;
+	scheduledAt: number;
+	createdAt: number;
+	startedAt?: number;
+	completedAt?: number;
+	lastError?: string;
+}
+
+export interface ProcessResult {
+	processed: number;
+	succeeded: number;
+	failed: number;
+}
+
+export interface QueueTable<T extends QueueItemBase> {
+	add(item: Omit<T, "id">): Promise<number>;
+	get(id: number): Promise<T | undefined>;
+	update(id: number, changes: Partial<T>): Promise<number>;
+	where(index: string): {
+		equals(value: string): {
+			count(): Promise<number>;
+			toArray(): Promise<T[]>;
+		};
+	};
+	toArray(): Promise<T[]>;
+}
+
+export function calculateBackoffDelay(attempts: number): number {
+	const baseDelay = 1000;
+	const maxDelay = 60000;
+	const delay = Math.min(baseDelay * Math.pow(2, attempts), maxDelay);
+	return delay + Math.random() * 1000;
+}
+
+export class QueueCore<T extends QueueItemBase> {
+	constructor(private table: QueueTable<T>) {}
+
+	async enqueue(item: Omit<T, "id">): Promise<number> {
+		return this.table.add(item as T);
+	}
+
+	async next(): Promise<T | null> {
+		const now = Date.now();
+		const items = await this.table
+			.where("status")
+			.equals("pending")
+			.toArray();
+		const available = items.filter((j) => j.scheduledAt <= now);
+		if (available.length === 0) return null;
+		available.sort(
+			(a, b) => b.priority - a.priority || a.createdAt - b.createdAt,
+		);
+		return available[0];
+	}
+
+	async markProcessing(id: number): Promise<void> {
+		await this.table.update(id, {
+			status: "processing",
+			startedAt: Date.now(),
+		} as unknown as Partial<T>);
+	}
+
+	async markCompleted(id: number, summary?: string): Promise<void> {
+		await this.table.update(id, {
+			status: "completed",
+			completedAt: Date.now(),
+			resultSummary: summary,
+		} as unknown as Partial<T>);
+	}
+
+	async markFailed(id: number, error: string): Promise<void> {
+		await this.table.update(id, {
+			status: "failed",
+			lastError: error,
+			completedAt: Date.now(),
+		} as unknown as Partial<T>);
+	}
+
+	async markForRetry(id: number, error: string): Promise<void> {
+		const item = await this.table.get(id);
+		if (!item) return;
+		const backoff = calculateBackoffDelay(item.attempts);
+		await this.table.update(id, {
+			status: "pending",
+			lastError: error,
+			attempts: item.attempts + 1,
+			scheduledAt: Date.now() + backoff,
+		} as unknown as Partial<T>);
+	}
+
+	async processBatch(
+		handler: (item: T) => Promise<void>,
+		limit = 5,
+		concurrencyGuard: { isProcessing: boolean } = { isProcessing: false },
+	): Promise<ProcessResult> {
+		if (concurrencyGuard.isProcessing)
+			return { processed: 0, succeeded: 0, failed: 0 };
+		concurrencyGuard.isProcessing = true;
+
+		let succeeded = 0;
+		let failed = 0;
+		const processed: number[] = [];
+
+		try {
+			for (let i = 0; i < limit; i++) {
+				const item = await this.next();
+				if (!item || !item.id) break;
+
+				processed.push(item.id);
+				await this.markProcessing(item.id);
+
+				try {
+					await handler(item);
+					await this.markCompleted(item.id);
+					succeeded++;
+				} catch (error) {
+					const message =
+						error instanceof Error ? error.message : "Unknown error";
+					if (item.attempts + 1 >= item.maxRetries) {
+						await this.markFailed(item.id, message);
+						failed++;
+					} else {
+						await this.markForRetry(item.id, message);
+					}
+				}
+			}
+		} finally {
+			concurrencyGuard.isProcessing = false;
+		}
+
+		return { processed: processed.length, succeeded, failed };
+	}
+
+	async getPendingCount(): Promise<number> {
+		return this.table.where("status").equals("pending").count();
+	}
+
+	async getStats(): Promise<{
+		pending: number;
+		processing: number;
+		failed: number;
+		completed: number;
+	}> {
+		const all = await this.table.toArray();
+		const count = (status: string) =>
+			all.filter((j) => j.status === status).length;
+		return {
+			pending: count("pending"),
+			processing: count("processing"),
+			failed: count("failed"),
+			completed: count("completed"),
+		};
+	}
+}
