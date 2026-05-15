@@ -106,16 +106,24 @@ export function useQuestionEngine(
 		},
 	});
 
+	const generateMutation = useMutation({
+		mutationFn: async (generateParams: GenerationParams) => {
+			const result = await generateQuestions(generateParams);
+			return result;
+		},
+	});
+
 	const generate = useCallback(
 		async (generateParams: GenerationParams): Promise<Question[]> => {
-			const result = await generateQuestions(generateParams);
+			setGeneratedQuestions(null);
+			const result = await generateMutation.mutateAsync(generateParams);
 			setGeneratedQuestions(result.questions);
 			if (params) {
 				queryClient.invalidateQueries({ queryKey: ["questionEngine", params] });
 			}
 			return result.questions;
 		},
-		[queryClient, params],
+		[generateMutation, queryClient, params],
 	);
 
 	const grade = useCallback(
@@ -142,6 +150,7 @@ export function useQuestionEngine(
 		generate,
 		grade,
 		hint,
+		isGenerating: generateMutation.isPending,
 		isGrading: gradeMutation.isPending,
 		gradeResult: gradeMutation.data,
 		gradeError: gradeMutation.error,
