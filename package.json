@@ -15,7 +15,8 @@
 		"markdown:convert": "tsx scripts/pdt-to-mkdwn.ts",
 		"JSON:convert": "tsx scripts/markdown-to-json.ts",
 		"test": "bun test",
-		"database:ensure": "tsx scripts/ensure-appwrite.ts"
+		"database:ensure": "tsx scripts/ensure-appwrite.ts",
+		"admin:create": "tsx scripts/create-admin.ts"
 	},
 	"dependencies": {
 		"@base-ui/react": "^1.4.1",
