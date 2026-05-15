@@ -11,21 +11,6 @@ import type { JobRecord, JobType } from "./types";
 type JobHandler = (payload: unknown) => Promise<void>;
 
 const handlers: Record<JobType, JobHandler> = {
-	"visual-pre-cache": async (payload) => {
-		const { visualEngine } = await import("@/lib/visual-engine");
-		const questions = payload as Question[];
-		await Promise.allSettled(
-			questions.map((q) =>
-				visualEngine.resolve({
-					questionId: q.id,
-					questionText: q.questionText,
-					subject: q.subject,
-					topic: q.topic,
-				}),
-			),
-		);
-	},
-
 	"appwrite-sync": async (payload) => {
 		const { questions, subject, topic } = payload as {
 			questions: Question[];

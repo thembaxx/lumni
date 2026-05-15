@@ -1,10 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
+import { checkBudget, trackUsage } from "@/lib/ai/with-budget";
 import { VisualEngine, visualEngine } from "@/lib/visual-engine";
 
 export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest) {
 	try {
+		const budget = await checkBudget(req, "visual");
+		if (!budget.allowed) return budget.response;
+
 		VisualEngine.initialize();
 
 		const body = (await req.json()) as {
@@ -27,6 +31,8 @@ export async function POST(req: NextRequest) {
 			subject: body.subject,
 			topic: body.topic || "",
 		});
+
+		trackUsage("visual", budget.userId);
 
 		return NextResponse.json({ visual });
 	} catch (error) {

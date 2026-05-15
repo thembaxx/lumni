@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
+import { apiFetch, showBudgetToast } from "@/lib/shared/api-fetch";
 import type { Question } from "@/types/questions";
 
 interface QuestionWithMeta {
@@ -23,12 +24,14 @@ export default function AdminQuestionsPage() {
 	const fetchQuestions = useCallback(async () => {
 		setIsLoading(true);
 		try {
-			const res = await fetch(`/api/engine/generate`, {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ subject, count: 5, questionType: "any" }),
-			});
-			const data = await res.json();
+			const data = await apiFetch<{ questions?: Question[] }>(
+				`/api/engine/generate`,
+				{
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({ subject, count: 5, questionType: "any" }),
+				},
+			);
 			if (data.questions) {
 				setQuestions(
 					data.questions.map((q: Question) => ({
@@ -38,6 +41,7 @@ export default function AdminQuestionsPage() {
 				);
 			}
 		} catch (err) {
+			showBudgetToast(err);
 			console.error("Failed to fetch questions:", err);
 		}
 		setIsLoading(false);
@@ -47,12 +51,14 @@ export default function AdminQuestionsPage() {
 		async (type: string) => {
 			setIsGenerating(true);
 			try {
-				const res = await fetch(`/api/engine/generate`, {
-					method: "POST",
-					headers: { "Content-Type": "application/json" },
-					body: JSON.stringify({ subject, count: 3, questionType: type }),
-				});
-				const data = await res.json();
+				const data = await apiFetch<{ questions?: Question[] }>(
+					`/api/engine/generate`,
+					{
+						method: "POST",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify({ subject, count: 3, questionType: type }),
+					},
+				);
 				if (data.questions) {
 					const newQuestions = data.questions.map((q: Question) => ({
 						question: q,
@@ -61,6 +67,7 @@ export default function AdminQuestionsPage() {
 					setQuestions((prev) => [...newQuestions, ...prev].slice(0, 20));
 				}
 			} catch (err) {
+				showBudgetToast(err);
 				console.error(`Failed to generate ${type}:`, err);
 			}
 			setIsGenerating(false);

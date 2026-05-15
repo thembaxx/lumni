@@ -110,7 +110,6 @@ export class QuestionEngine {
 			initAI({
 				geminiApiKey: process.env.GEMINI_API_KEY,
 				groqApiKey: process.env.GROQ_API_KEY,
-				deepseekApiKey: process.env.DEEPSEEK_API_KEY,
 			});
 		}
 		return new QuestionEngine();

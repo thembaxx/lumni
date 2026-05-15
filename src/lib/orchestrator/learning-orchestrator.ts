@@ -45,11 +45,6 @@ export class LearningOrchestrator {
 		});
 		jobIds.push(syncJobId);
 
-		const visualJobId = await jobQueue.enqueue("visual-pre-cache", sliced, {
-			scheduledAt: Date.now() + 100,
-		});
-		jobIds.push(visualJobId);
-
 		trackEngineEvent({
 			event: "generate",
 			subject,

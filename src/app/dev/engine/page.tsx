@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
+import { apiFetch, showBudgetToast } from "@/lib/shared/api-fetch";
 import type { GradingResult, Question } from "@/types/questions";
 
 export default function DevEnginePage() {
@@ -34,39 +35,44 @@ export default function DevEnginePage() {
 		setQuestions([]);
 		setGrading({});
 		try {
-			const res = await fetch("/api/engine/generate", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
-					subject,
-					topic: topic || undefined,
-					count,
-					questionType: questionType === "any" ? "any" : questionType,
-				}),
-			});
-			const data = await res.json();
+			const data = await apiFetch<{ questions?: Question[]; error?: string }>(
+				"/api/engine/generate",
+				{
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({
+						subject,
+						topic: topic || undefined,
+						count,
+						questionType: questionType === "any" ? "any" : questionType,
+					}),
+				},
+			);
 			setRawJson(JSON.stringify(data, null, 2));
 			if (data.questions) {
 				setQuestions(data.questions);
 			}
-			if (!res.ok) setError(data.error || "Generation failed");
 		} catch (err) {
+			showBudgetToast(err);
 			setError(err instanceof Error ? err.message : "Network error");
 		}
 		setIsLoading(false);
 	}, [subject, topic, count, questionType]);
 
 	const handleGrade = useCallback(async (q: Question) => {
-		const res = await fetch("/api/engine/grade", {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({
-				question: q,
-				answer: { type: "text", value: "test answer" },
-			}),
-		});
-		const result = await res.json();
-		setGrading((prev) => ({ ...prev, [q.id]: result }));
+		try {
+			const result = await apiFetch<GradingResult>("/api/engine/grade", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					question: q,
+					answer: { type: "text", value: "test answer" },
+				}),
+			});
+			setGrading((prev) => ({ ...prev, [q.id]: result }));
+		} catch (err) {
+			showBudgetToast(err);
+		}
 	}, []);
 
 	const types = [

@@ -60,7 +60,6 @@ export class VisualEngine {
 			initAI({
 				geminiApiKey: process.env.GEMINI_API_KEY,
 				groqApiKey: process.env.GROQ_API_KEY,
-				deepseekApiKey: process.env.DEEPSEEK_API_KEY,
 			});
 		}
 	}

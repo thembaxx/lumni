@@ -198,9 +198,25 @@ export function AdminDashboard() {
 				title="Admin"
 				subtitle="Manage exam papers & engine"
 				rightSection={
-					<Button variant="ghost" size="icon-sm" onClick={handleSignOut}>
-						<SignOut className="size-4" />
-					</Button>
+					<div className="flex items-center gap-1">
+						<Button
+							variant="ghost"
+							size="sm"
+							onClick={() => router.push("/admin/questions")}
+						>
+							Questions
+						</Button>
+						<Button
+							variant="ghost"
+							size="sm"
+							onClick={() => router.push("/admin/budget")}
+						>
+							Budget
+						</Button>
+						<Button variant="ghost" size="icon-sm" onClick={handleSignOut}>
+							<SignOut className="size-4" />
+						</Button>
+					</div>
 				}
 			/>
 

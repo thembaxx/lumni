@@ -2,11 +2,15 @@ import { NextRequest, NextResponse } from "next/server";
 import { LearningOrchestrator } from "@/lib/orchestrator";
 import type { GenerationParams } from "@/lib/question-engine/types";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
+import { checkBudget, trackUsage } from "@/lib/ai/with-budget";
 
 export const dynamic = "force-dynamic";
 
 export const POST = withRateLimit(async (req: NextRequest) => {
 	try {
+		const budget = await checkBudget(req, "generate");
+		if (!budget.allowed) return budget.response;
+
 		const body = (await req.json()) as GenerationParams;
 
 		if (!body.subject) {
@@ -25,6 +29,8 @@ export const POST = withRateLimit(async (req: NextRequest) => {
 
 		const orchestrator = await LearningOrchestrator.initialize();
 		const result = await orchestrator.generateQuestionSet(body);
+
+		trackUsage("generate", budget.userId);
 
 		return NextResponse.json({
 			questions: result.questions,

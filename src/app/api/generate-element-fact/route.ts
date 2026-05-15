@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { generateWithSystem, initAI, isAIConfigured } from "@/lib/ai";
 import type { AIResponse } from "@/lib/ai/types";
+import { checkBudget, trackUsage } from "@/lib/ai/with-budget";
 
 export const dynamic = "force-dynamic";
 
@@ -46,7 +47,8 @@ async function generateInterestingFact(
 		.replace(/^[\s\S]*?[.!?]/, (match) => match.trim())
 		.trim();
 
-	// Ensure we return a clean fact
+	trackUsage("generate", budget.userId);
+
 	if (!cleanedContent || cleanedContent.length < 10) {
 		throw new Error("Generated fact is too short or empty");
 	}
@@ -55,12 +57,14 @@ async function generateInterestingFact(
 }
 
 export async function POST(req: NextRequest) {
+	const budget = await checkBudget(req, "generate");
+	if (!budget.allowed) return budget.response;
+
 	// Initialize AI if not already configured
 	if (!isAIConfigured()) {
 		initAI({
 			geminiApiKey: process.env.GEMINI_API_KEY,
 			groqApiKey: process.env.GROQ_API_KEY,
-			deepseekApiKey: process.env.DEEPSEEK_API_KEY,
 		});
 	}
 

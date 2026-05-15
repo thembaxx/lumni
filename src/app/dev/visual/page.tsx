@@ -14,6 +14,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
 import { VisualContent } from "@/components/visual/visual-content";
+import { apiFetch, showBudgetToast } from "@/lib/shared/api-fetch";
 import { STEM_SUBJECTS } from "@/lib/visual-engine";
 import type { VisualContent as VisualContentType } from "@/lib/visual-engine/types";
 
@@ -44,7 +45,10 @@ export default function DevVisualPage() {
 		setVisual(null);
 		setRawJson("");
 		try {
-			const res = await fetch("/api/engine/visual", {
+			const data = await apiFetch<{
+				visual?: VisualContentType;
+				error?: string;
+			}>("/api/engine/visual", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
@@ -54,11 +58,10 @@ export default function DevVisualPage() {
 					topic: topic || undefined,
 				}),
 			});
-			const data = await res.json();
 			setRawJson(JSON.stringify(data, null, 2));
 			if (data.visual) setVisual(data.visual);
-			if (!res.ok) setError(data.error || "Resolution failed");
 		} catch (err) {
+			showBudgetToast(err);
 			setError(err instanceof Error ? err.message : "Network error");
 		}
 		setIsLoading(false);

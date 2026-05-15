@@ -1,5 +1,4 @@
 export type JobType =
-	| "visual-pre-cache"
 	| "appwrite-sync"
 	| "analytics-sync"
 	| "spaced-rep-update"

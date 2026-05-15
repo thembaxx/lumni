@@ -3,6 +3,7 @@ import { curriculumRegistry } from "@/curriculum";
 import { generateWithSystem, initAI, isAIConfigured } from "@/lib/ai";
 import { cleanResponse } from "@/lib/ai/parse-response";
 import type { AIResponse } from "@/lib/ai/types";
+import { checkBudget, trackUsage } from "@/lib/ai/with-budget";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 export const dynamic = "force-dynamic";
@@ -68,6 +69,9 @@ const STEM_SUBJECTS = [
 
 export const POST = withRateLimit(async (req: NextRequest) => {
 	try {
+		const budget = await checkBudget(req, "generate");
+		if (!budget.allowed) return budget.response;
+
 		const { subject, topic, count = 5 } = await req.json();
 
 		if (!subject) {
@@ -81,7 +85,6 @@ export const POST = withRateLimit(async (req: NextRequest) => {
 			initAI({
 				geminiApiKey: process.env.GEMINI_API_KEY,
 				groqApiKey: process.env.GROQ_API_KEY,
-				deepseekApiKey: process.env.DEEPSEEK_API_KEY,
 			});
 		}
 
@@ -141,6 +144,8 @@ Generate exactly ${Math.min(count, 10)} problems at varying difficulty levels.`;
 			const errorMsg = "error" in result ? result.error : "Unknown error";
 			throw new Error(`AI generation failed: ${errorMsg}`);
 		}
+
+		trackUsage("generate", budget.userId);
 
 		const response = result as AIResponse;
 		const cleaned = cleanResponse(response.content);

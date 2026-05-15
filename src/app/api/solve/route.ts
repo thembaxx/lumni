@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { generateWithSystem, initAI, isAIConfigured } from "@/lib/ai";
 import { cleanResponse } from "@/lib/ai/parse-response";
 import type { AIResponse } from "@/lib/ai/types";
+import { checkBudget, trackUsage } from "@/lib/ai/with-budget";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 export const dynamic = "force-dynamic";
@@ -25,6 +26,9 @@ const SUBJECT_PROMPTS: Record<string, string> = {
 
 export const POST = withRateLimit(async (req: NextRequest) => {
 	try {
+		const budget = await checkBudget(req, "generate");
+		if (!budget.allowed) return budget.response;
+
 		const {
 			question,
 			imageUrl,
@@ -45,7 +49,6 @@ export const POST = withRateLimit(async (req: NextRequest) => {
 			initAI({
 				geminiApiKey: process.env.GEMINI_API_KEY,
 				groqApiKey: process.env.GROQ_API_KEY,
-				deepseekApiKey: process.env.DEEPSEEK_API_KEY,
 			});
 		}
 
@@ -95,6 +98,8 @@ export const POST = withRateLimit(async (req: NextRequest) => {
 			const errorMsg = "error" in result ? result.error : "Unknown error";
 			throw new Error(`AI solver failed: ${errorMsg}`);
 		}
+
+		trackUsage("generate", budget.userId);
 
 		const response = result as AIResponse;
 

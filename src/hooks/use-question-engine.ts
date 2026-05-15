@@ -8,6 +8,7 @@ import type {
 	Question,
 	UserAnswer,
 } from "@/lib/question-engine/types";
+import { apiFetch, showBudgetToast } from "@/lib/shared/api-fetch";
 import { trackEngineEvent } from "@/lib/utils/engine-analytics";
 
 interface GenerateResult {
@@ -23,45 +24,45 @@ interface HintResult {
 async function generateQuestions(
 	params: GenerationParams,
 ): Promise<GenerateResult> {
-	const response = await fetch("/api/engine/generate", {
-		method: "POST",
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify(params),
-	});
-	if (!response.ok) {
-		const error = await response.json();
-		throw new Error(error.error || "Failed to generate questions");
+	try {
+		return await apiFetch<GenerateResult>("/api/engine/generate", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(params),
+		});
+	} catch (error) {
+		showBudgetToast(error);
+		throw error;
 	}
-	return response.json();
 }
 
 async function gradeAnswer(
 	question: Question,
 	answer: UserAnswer,
 ): Promise<GradingResult> {
-	const response = await fetch("/api/engine/grade", {
-		method: "POST",
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify({ question, answer }),
-	});
-	if (!response.ok) {
-		const error = await response.json();
-		throw new Error(error.error || "Failed to grade answer");
+	try {
+		return await apiFetch<GradingResult>("/api/engine/grade", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ question, answer }),
+		});
+	} catch (error) {
+		showBudgetToast(error);
+		throw error;
 	}
-	return response.json();
 }
 
 async function generateHint(question: Question): Promise<HintResult> {
-	const response = await fetch("/api/engine/hint", {
-		method: "POST",
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify({ question }),
-	});
-	if (!response.ok) {
-		const error = await response.json();
-		throw new Error(error.error || "Failed to generate hint");
+	try {
+		return await apiFetch<HintResult>("/api/engine/hint", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ question }),
+		});
+	} catch (error) {
+		showBudgetToast(error);
+		throw error;
 	}
-	return response.json();
 }
 
 interface UseQuestionEngineOptions {

@@ -2,11 +2,15 @@ import { NextRequest, NextResponse } from "next/server";
 import { LearningOrchestrator } from "@/lib/orchestrator";
 import type { Question, UserAnswer } from "@/lib/question-engine/types";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
+import { checkBudget, trackUsage } from "@/lib/ai/with-budget";
 
 export const dynamic = "force-dynamic";
 
 export const POST = withRateLimit(async (req: NextRequest) => {
 	try {
+		const budget = await checkBudget(req, "grade");
+		if (!budget.allowed) return budget.response;
+
 		const body = await req.json();
 		const { question, answer } = body as {
 			question: Question;
@@ -25,6 +29,8 @@ export const POST = withRateLimit(async (req: NextRequest) => {
 			question,
 			answer,
 		);
+
+		trackUsage("grade", budget.userId);
 
 		return NextResponse.json({ ...result, jobIds });
 	} catch (error) {

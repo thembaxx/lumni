@@ -12,7 +12,6 @@ import {
 export interface AIConfig {
 	geminiApiKey?: string;
 	groqApiKey?: string;
-	deepseekApiKey?: string;
 }
 
 export interface GenerateOptions {
@@ -35,10 +34,6 @@ function createProviderChain(config: AIConfig): AIProvider[] {
 	if (config.groqApiKey) {
 		providers.push(createGroqProvider(config.groqApiKey));
 	}
-	if (config.deepseekApiKey) {
-		providers.push(createDeepseekProvider(config.deepseekApiKey));
-	}
-
 	return providers;
 }
 

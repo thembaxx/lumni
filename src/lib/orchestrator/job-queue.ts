@@ -10,7 +10,6 @@ import type {
 } from "./types";
 
 const DEFAULT_MAX_RETRIES: Record<JobType, number> = {
-	"visual-pre-cache": 2,
 	"appwrite-sync": 3,
 	"analytics-sync": 1,
 	"spaced-rep-update": 2,
@@ -19,7 +18,6 @@ const DEFAULT_MAX_RETRIES: Record<JobType, number> = {
 };
 
 const DEFAULT_PRIORITY: Record<JobType, number> = {
-	"visual-pre-cache": 60,
 	"appwrite-sync": 70,
 	"analytics-sync": 30,
 	"spaced-rep-update": 50,
