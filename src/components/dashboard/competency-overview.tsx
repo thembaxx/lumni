@@ -26,10 +26,10 @@ interface SubjectCompetency {
 function CompetencyRing({ score }: { score: number }) {
 	const color =
 		score >= 80
-			? "hsl(var(--success))"
+			? "var(--success)"
 			: score >= 60
-				? "hsl(var(--warning))"
-				: "hsl(var(--destructive))";
+				? "var(--warning)"
+				: "var(--destructive)";
 
 	return (
 		<RadialChart value={score} size={80} color={color}>

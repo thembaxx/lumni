@@ -31,7 +31,7 @@ export function DailyProgressRing() {
 			<RadialChart
 				value={progress * 100}
 				size={136}
-				color={isComplete ? "hsl(var(--success))" : "hsl(var(--system-accent))"}
+				color={isComplete ? "var(--success)" : "var(--system-accent)"}
 			>
 				<div className="flex flex-col items-center">
 					<motion.span

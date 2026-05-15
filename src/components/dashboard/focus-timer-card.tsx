@@ -76,7 +76,7 @@ export function FocusTimerCard() {
 					<RadialChart
 						value={progress}
 						size={80}
-						color="hsl(var(--system-accent))"
+						color="var(--system-accent)"
 						className="shrink-0"
 					>
 						<span className="text-[11px] font-extrabold tabular-nums font-mono tracking-tight">

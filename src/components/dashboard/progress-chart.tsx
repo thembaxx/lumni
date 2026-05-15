@@ -17,12 +17,12 @@ export function ProgressChart({ data, title }: ProgressChartProps) {
 	const chartConfig = {
 		accuracy: {
 			label: "Accuracy",
-			color: "hsl(var(--primary))",
+			color: "var(--primary)",
 		},
 	};
 
 	return (
-		<Card className="overflow-hidden">
+		<Card className="overflow-hidden w-full">
 			{title && (
 				<CardHeader>
 					<CardTitle className="text-lg font-semibold text-wrap balance">

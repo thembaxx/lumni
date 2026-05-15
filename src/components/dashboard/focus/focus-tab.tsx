@@ -81,7 +81,7 @@ export function FocusTab({ className }: FocusTabProps) {
 
 	return (
 		<div className={cn("flex flex-col items-center gap-6", className)}>
-			<RadialChart value={progress} size={192} color="hsl(var(--foreground))">
+			<RadialChart value={progress} size={192} color="var(--foreground)">
 				<span className="text-4xl font-extrabold tabular-nums tracking-tight">
 					{formatTime(timeLeft)}
 				</span>

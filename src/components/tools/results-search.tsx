@@ -99,10 +99,7 @@ export function ResultsSearch() {
 								className="pl-10 rounded-xl"
 							/>
 						</div>
-						<Button
-							onClick={handleSearch}
-							className="rounded-xl"
-						>
+						<Button onClick={handleSearch} className="rounded-xl">
 							Search
 						</Button>
 					</div>

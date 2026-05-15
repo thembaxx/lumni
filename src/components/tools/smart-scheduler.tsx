@@ -289,9 +289,7 @@ export function SmartScheduler() {
 																? "default"
 																: "ghost"
 														}
-														onClick={() =>
-															updateDifficulty(subject.id, diff)
-														}
+														onClick={() => updateDifficulty(subject.id, diff)}
 													>
 														{diff[0].toUpperCase()}
 													</Button>

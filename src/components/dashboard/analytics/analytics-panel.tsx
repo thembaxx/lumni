@@ -264,7 +264,7 @@ function WeeklyProgressCard({
 	const chartConfig = {
 		accuracy: {
 			label: "Accuracy",
-			color: "hsl(var(--system-accent))",
+			color: "var(--system-accent)",
 		},
 	};
 

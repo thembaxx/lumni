@@ -35,7 +35,10 @@ function ActionButton({
 	label,
 	onClick,
 }: {
-	icon: readonly (readonly [string, { readonly [key: string]: string | number }])[];
+	icon: readonly (readonly [
+		string,
+		{ readonly [key: string]: string | number },
+	])[];
 	label: string;
 	onClick?: () => void;
 }) {
@@ -58,7 +61,7 @@ function ActionButton({
 					className="text-accent"
 				>
 					<PerpetualFloat floatRange={1.5} speed={3}>
-						<HugeiconsIcon icon={icon} data-icon />
+						<HugeiconsIcon icon={icon} className="size-4  text-foreground" data-icon />
 					</PerpetualFloat>
 				</motion.span>
 				<span className="text-sm font-medium">{label}</span>

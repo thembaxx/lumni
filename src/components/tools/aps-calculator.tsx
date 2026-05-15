@@ -352,9 +352,7 @@ export function APSCalculator() {
 									<div className="absolute left-0 top-0 bottom-0 w-1 bg-success rounded-r-full" />
 								)}
 								<div className="flex justify-between items-start mb-3">
-									<span className="font-medium text-sm">
-										{uni.university}
-									</span>
+									<span className="font-medium text-sm">{uni.university}</span>
 									<span
 										className={cn(
 											"text-sm font-extrabold tabular-nums",

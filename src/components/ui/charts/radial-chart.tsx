@@ -16,8 +16,8 @@ interface RadialChartProps {
 export function RadialChart({
 	value,
 	size = 80,
-	color = "hsl(var(--chart-2))",
-	trackColor = "hsl(var(--muted))",
+	color = "var(--chart-2)",
+	trackColor = "var(--muted)",
 	children,
 	className,
 }: RadialChartProps) {

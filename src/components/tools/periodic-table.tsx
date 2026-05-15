@@ -174,7 +174,17 @@ export function PeriodicTable() {
 			<div className="max-w-5xl mx-auto w-full">
 				<div className="pt-5 pb-3">
 					<h2 className="ios-title-3 flex items-center gap-2 text-[--system-text-primary]">
-						<svg className="size-5 text-[--system-accent]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/><path d="M2 12h20"/></svg>
+						<svg
+							className="size-5 text-[--system-accent]"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							strokeWidth="2"
+						>
+							<circle cx="12" cy="12" r="10" />
+							<path d="M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z" />
+							<path d="M2 12h20" />
+						</svg>
 						Periodic Table
 					</h2>
 					<p className="ios-subhead text-[--system-text-secondary] mt-1">
@@ -479,7 +489,6 @@ export function PeriodicTable() {
 					</motion.div>
 				)}
 			</AnimatePresence>
-
 		</div>
 	);
 }
