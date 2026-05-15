@@ -1,13 +1,14 @@
 "use client";
 
 import {
-	Book,
-	BookmarkSimple,
-	Brain,
-	FileText,
-	MapTrifold,
-	NotePencil,
-} from "@phosphor-icons/react";
+	Book02FreeIcons,
+	Book03FreeIcons,
+	BookOpenCheckFreeIcons,
+	Brain02FreeIcons,
+	Calendar02FreeIcons,
+	DocumentValidationFreeIcons,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { motion, useReducedMotion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { StudyPlanSheet } from "@/components/dashboard/study-plan-sheet";
@@ -17,20 +18,24 @@ import { Button } from "@/components/ui/button";
 import { iOSEase } from "@/lib/utils/animation";
 
 const quickActions = [
-	{ icon: Brain, label: "Practice", route: "/quiz" },
-	{ icon: FileText, label: "Past Papers", route: "/past-papers" },
-	{ icon: MapTrifold, label: "Study Plan" },
-	{ icon: BookmarkSimple, label: "Bookmarks", route: "/bookmarks" },
-	{ icon: NotePencil, label: "Review", route: "/review" },
-	{ icon: Book, label: "Lessons" },
+	{ icon: Brain02FreeIcons, label: "Practice", route: "/quiz" },
+	{
+		icon: DocumentValidationFreeIcons,
+		label: "Exam Papers",
+		route: "/past-papers",
+	},
+	{ icon: Calendar02FreeIcons, label: "Study Plan" },
+	{ icon: Book02FreeIcons, label: "Bookmarks", route: "/bookmarks" },
+	{ icon: BookOpenCheckFreeIcons, label: "Review", route: "/review" },
+	{ icon: Book03FreeIcons, label: "Lessons" },
 ];
 
 function ActionButton({
-	icon: Icon,
+	icon,
 	label,
 	onClick,
 }: {
-	icon: React.ComponentType<{ className?: string }>;
+	icon: readonly (readonly [string, { readonly [key: string]: string | number }])[];
 	label: string;
 	onClick?: () => void;
 }) {
@@ -53,7 +58,7 @@ function ActionButton({
 					className="text-accent"
 				>
 					<PerpetualFloat floatRange={1.5} speed={3}>
-						<Icon data-icon />
+						<HugeiconsIcon icon={icon} data-icon />
 					</PerpetualFloat>
 				</motion.span>
 				<span className="text-sm font-medium">{label}</span>
@@ -76,9 +81,7 @@ export function QuickActions() {
 							<LessonsButton />
 						) : (
 							<ActionButton
-								icon={
-									action.icon as React.ComponentType<{ className?: string }>
-								}
+								icon={action.icon}
 								label={action.label}
 								onClick={() => router.push(action.route!)}
 							/>

@@ -96,6 +96,9 @@
 		0 16px 48px oklch(0% 0 0 / 0.03),
 		0 32px 64px oklch(0% 0 0 / 0.015);
 
+	/* Solver CTA — soft accent glow */
+	--shadow-solver: 0 2px 8px oklch(52% 0.18 146 / 0.15);
+
 	/* Typography Scale (rem-based) */
 	--fs-large-title: 2.125rem;  /* 34px */
 	--fs-title-1: 1.75rem;      /* 28px */
@@ -235,6 +238,7 @@
 	--shadow-level-1: var(--shadow-level-1);
 	--shadow-level-2: var(--shadow-level-2);
 	--shadow-level-3: var(--shadow-level-3);
+	--shadow-solver: var(--shadow-solver);
 
 	/* Radii */
 	--radius-sm: var(--radius-badge);
@@ -319,6 +323,8 @@
 		0 8px 16px oklch(0% 0 0 / 0.15),
 		0 16px 48px oklch(0% 0 0 / 0.1),
 		0 32px 64px oklch(0% 0 0 / 0.06);
+
+	--shadow-solver: 0 2px 8px oklch(65% 0.18 146 / 0.2);
 
 	/* Compat aliases */
 	--background: var(--system-background);

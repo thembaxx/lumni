@@ -34,7 +34,7 @@ export function StepByStep({ steps, subject, className }: StepByStepProps) {
 		<div className={cn("flex flex-col gap-4", className)}>
 			<div className="flex items-center justify-between px-1">
 				<div className="flex items-center gap-2 text-sm font-semibold text-foreground">
-					<div className="bg-[--system-accent]/10 p-1.5 rounded-full shadow-inner">
+					<div className="bg-[--system-accent]/10 p-1.5 rounded-full">
 						<GraduationCap className="size-4" />
 					</div>
 					<span>
@@ -94,7 +94,7 @@ export function StepByStep({ steps, subject, className }: StepByStepProps) {
 						className={cn(
 							"h-1.5 rounded-full p-0 min-h-0",
 							idx === currentStep
-								? "w-8 bg-[--system-accent] shadow-sm shadow-[--system-accent]/30"
+								? "w-10 bg-[--system-accent] shadow-sm shadow-[--system-accent]/30"
 								: "w-2 bg-muted-foreground/20 hover:bg-muted-foreground/40",
 						)}
 						aria-label={`Go to step ${idx + 1}`}

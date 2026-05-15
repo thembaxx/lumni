@@ -6,7 +6,6 @@ import dynamic from "next/dynamic";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { cn } from "@/lib/shared";
 
 const PeriodicTable = dynamic(
 	() => import("./periodic-table").then((mod) => mod.PeriodicTable),
@@ -65,7 +64,7 @@ export function ToolsDialog({ open, onOpenChange }: ToolsDialogProps) {
 							initial={{ opacity: 0, y: -10 }}
 							animate={{ opacity: 1, y: 0 }}
 							transition={{ delay: 0.1, duration: 0.3 }}
-							className="flex items-center justify-between px-4 py-3 ios-separator"
+							className="flex items-center justify-between px-5 py-3 border-b border-border"
 						>
 							<h1 className="ios-title-3 font-semibold text-[--system-text-primary]">
 								Tools
@@ -88,16 +87,14 @@ export function ToolsDialog({ open, onOpenChange }: ToolsDialogProps) {
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
 								transition={{ delay: 0.2, duration: 0.3 }}
-								className="px-4 py-3"
+								className="px-5 py-3"
 							>
-								<TabsList className="h-11 p-1 bg-secondary/50 transition-all duration-300 rounded-lg flex justify-start w-full overflow-x-auto px-2 py-2 gap-2 scrollbar-hide shrink-0">
+								<TabsList className="h-11 p-1 bg-system-background-tertiary transition-all duration-300 rounded-lg flex justify-start w-full overflow-x-auto px-2 py-2 gap-2 scrollbar-hide shrink-0">
 									{tabs.map((tab) => (
 										<TabsTrigger
 											key={tab.id}
 											value={tab.id}
-											className={cn(
-												"shrink-0 px-4 py-2.5 text-sm font-medium rounded-[12px]",
-											)}
+											className="shrink-0 px-4 py-2.5 text-sm font-medium rounded-md dark:data-active:bg-system-surface"
 										>
 											{tab.label}
 										</TabsTrigger>

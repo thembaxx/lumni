@@ -13,7 +13,7 @@ export default function GlobalError({
 	return (
 		<html>
 			<body
-				className="min-h-[100dvh] bg-[--system-background]"
+				className="min-h-[100dvh] bg-[--system-background] p-6"
 				suppressHydrationWarning
 			>
 				<div className="grid grid-cols-12 gap-0 min-h-[100dvh]">

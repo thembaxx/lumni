@@ -1,6 +1,7 @@
 "use client";
 
-import { Calculator, Plus, Trash } from "@phosphor-icons/react";
+import { Calculator, Check, Plus, Trash } from "@phosphor-icons/react";
+import { motion } from "framer-motion";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -75,7 +76,6 @@ export function APSCalculator() {
 		{ id: "1", name: "", percentage: 0 },
 	]);
 	const [includeLifeOrientation, setIncludeLifeOrientation] = useState(false);
-	const [_showResults, _setShowResults] = useState(false);
 
 	const addSubject = () => {
 		setSubjects([
@@ -149,90 +149,134 @@ export function APSCalculator() {
 	};
 
 	const totalAPS = calculateAPS();
+	const hasData = subjects.some((s) => s.percentage > 0);
+
+	const scoreLevel =
+		totalAPS >= 32 ? "high" : totalAPS >= 24 ? "medium" : "low";
 
 	return (
-		<div className="p-4 h-full overflow-y-auto">
-			<div className="flex flex-col gap-3 mb-6">
-				{subjects.map((subject, index) => (
-					<motion.div
-						key={subject.id}
-						initial={{ opacity: 0, y: 10 }}
-						animate={{ opacity: 1, y: 0 }}
-						transition={{ delay: index * 0.05 }}
-						className="flex gap-2 items-center"
-					>
-						<Input
-							placeholder="Subject name"
-							value={subject.name}
-							onChange={(e) =>
-								updateSubject(subject.id, "name", e.target.value)
-							}
-							className="flex-1 rounded-lg"
-						/>
-						<Input
-							type="number"
-							placeholder="%"
-							min={0}
-							max={100}
-							value={subject.percentage || ""}
-							onChange={(e) =>
-								updateSubject(
-									subject.id,
-									"percentage",
-									parseInt(e.target.value) || 0,
-								)
-							}
-							className="w-20 rounded-lg tabular-nums"
-						/>
-						<Button
-							variant="ghost"
-							size="icon-sm"
-							onClick={() => removeSubject(subject.id)}
-							disabled={subjects.length === 1}
-							className="active:scale-[0.96] transition-transform duration-150"
-						>
-							<Trash data-icon />
-						</Button>
-					</motion.div>
-				))}
-			</div>
-
-			<div className="flex gap-2 mb-6">
-				<Button
-					variant="outline"
-					onClick={addSubject}
-					className="flex-1 rounded-lg active:scale-[0.96] transition-transform duration-150"
-				>
-					<Plus data-icon className="mr-2" />
-					Add Subject
-				</Button>
-				<Button
-					variant={includeLifeOrientation ? "default" : "outline"}
-					onClick={() => setIncludeLifeOrientation(!includeLifeOrientation)}
-					className="rounded-lg active:scale-[0.96] transition-transform duration-150"
-				>
-					Include LO
-				</Button>
-			</div>
-
-			<div className="p-5 rounded-2xl bg-muted shadow-[0_2px_8px_oklch(0%_0_0_/_0.08)] mb-6">
-				<div className="flex items-center justify-between mb-2">
-					<span className="text-muted-foreground">Your APS Score</span>
-					<Calculator className="size-5 text-muted-foreground" />
-				</div>
-				<div className="text-4xl font-extrabold text-center tabular-nums">
-					{totalAPS}
-				</div>
-				<p className="text-center text-muted-foreground text-sm mt-2">
-					Max possible: 42 points (6 subjects × 7)
+		<div className="h-full flex flex-col overflow-y-auto">
+			<div className="px-5 pt-5 pb-3">
+				<h2 className="ios-title-3 flex items-center gap-2 text-[--system-text-primary]">
+					<Calculator className="size-5 text-[--system-accent]" />
+					APS Calculator
+				</h2>
+				<p className="ios-subhead text-[--system-text-secondary] mt-1">
+					Calculate your Admission Point Score for university applications.
 				</p>
 			</div>
 
-			{subjects.some((s) => s.percentage > 0) && (
-				<div className="mb-6">
-					<h3 className="font-semibold mb-3 text-wrap balance">
+			<div className="px-5 pb-5">
+				<div className="bg-system-background-secondary rounded-2xl p-5 space-y-3">
+					{subjects.map((subject, index) => (
+						<motion.div
+							key={subject.id}
+							initial={{ opacity: 0, y: 10 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{ delay: index * 0.05 }}
+							className="flex gap-2 items-center"
+						>
+							<Input
+								placeholder="Subject name"
+								value={subject.name}
+								onChange={(e) =>
+									updateSubject(subject.id, "name", e.target.value)
+								}
+								className="flex-1 rounded-xl"
+							/>
+							<div className="relative">
+								<Input
+									type="number"
+									placeholder="%"
+									min={0}
+									max={100}
+									value={subject.percentage || ""}
+									onChange={(e) =>
+										updateSubject(
+											subject.id,
+											"percentage",
+											parseInt(e.target.value) || 0,
+										)
+									}
+									className="w-20 rounded-xl tabular-nums pr-7"
+								/>
+								<span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground pointer-events-none">
+									%
+								</span>
+							</div>
+							<Button
+								variant="ghost"
+								size="icon-sm"
+								onClick={() => removeSubject(subject.id)}
+								disabled={subjects.length === 1}
+								className="size-9"
+							>
+								<Trash data-icon />
+							</Button>
+						</motion.div>
+					))}
+
+					<div className="flex gap-2 pt-1">
+						<Button
+							variant="outline"
+							onClick={addSubject}
+							className="flex-1 rounded-xl"
+						>
+							<Plus data-icon className="mr-2" />
+							Add Subject
+						</Button>
+						<Button
+							variant={includeLifeOrientation ? "default" : "outline"}
+							onClick={() => setIncludeLifeOrientation(!includeLifeOrientation)}
+							className="rounded-xl"
+						>
+							{includeLifeOrientation && <Check data-icon className="mr-1.5" />}
+							Include LO
+						</Button>
+					</div>
+				</div>
+			</div>
+
+			<div className="px-5 pb-5">
+				<div className="rounded-2xl border border-border bg-card shadow-level-2 p-6">
+					<div className="flex items-center justify-between mb-3">
+						<span className="ios-subhead text-[--system-text-secondary]">
+							Your APS Score
+						</span>
+						<Calculator className="size-5 text-[--system-accent]" />
+					</div>
+					<div
+						className={cn(
+							"text-5xl font-extrabold text-center tabular-nums",
+							scoreLevel === "high" && "text-success",
+							scoreLevel === "medium" && "text-warning",
+							scoreLevel === "low" && "text-destructive",
+						)}
+					>
+						{totalAPS}
+					</div>
+					<div className="mt-4 h-2 bg-system-background-tertiary rounded-full overflow-hidden">
+						<div
+							className={cn(
+								"h-full rounded-full transition-all duration-500",
+								scoreLevel === "high" && "bg-success",
+								scoreLevel === "medium" && "bg-warning",
+								scoreLevel === "low" && "bg-destructive",
+							)}
+							style={{ width: `${(totalAPS / 42) * 100}%` }}
+						/>
+					</div>
+					<p className="text-center text-muted-foreground text-sm mt-3 ios-caption-1">
+						Max possible: 42 points (6 subjects × 7)
+					</p>
+				</div>
+			</div>
+
+			{hasData && (
+				<div className="px-5 pb-5">
+					<p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">
 						Subject Breakdown
-					</h3>
+					</p>
 					<div className="flex flex-col gap-2">
 						{subjects
 							.filter((s) => s.percentage > 0)
@@ -241,104 +285,104 @@ export function APSCalculator() {
 									getAPSForSubject(b.percentage) -
 									getAPSForSubject(a.percentage),
 							)
-							.map((subject, idx) => (
-								<div
-									key={subject.id}
-									className="flex justify-between items-center p-3 rounded-xl bg-card shadow-[0_2px_8px_oklch(0%_0_0_/_0.06)]"
-								>
-									<div>
-										<span className="font-medium">
-											{subject.name || `Subject ${idx + 1}`}
-										</span>
-										<span className="text-muted-foreground text-sm ml-2 tabular-nums">
-											({subject.percentage}%)
-										</span>
-									</div>
-									<div className="text-right">
-										<span className="font-extrabold tabular-nums">
-											{getAPSForSubject(subject.percentage)} pts
-										</span>
-										<span className="text-xs text-muted-foreground ml-2 block">
-											{getGrade(subject.percentage)}
-										</span>
-									</div>
-								</div>
-							))}
+							.map((subject, idx) => {
+								const aps = getAPSForSubject(subject.percentage);
+								return (
+									<motion.div
+										key={subject.id}
+										initial={{ opacity: 0, y: 10 }}
+										animate={{ opacity: 1, y: 0 }}
+										transition={{ delay: idx * 0.05 }}
+										className="relative flex justify-between items-center p-4 rounded-xl bg-system-background-secondary overflow-hidden"
+									>
+										<div
+											className={cn(
+												"absolute left-0 top-0 bottom-0 w-1.5",
+												aps >= 6 && "bg-success",
+												aps >= 4 && aps < 6 && "bg-warning",
+												aps < 4 && "bg-destructive",
+											)}
+										/>
+										<div className="pl-3">
+											<span className="font-medium text-sm">
+												{subject.name || `Subject ${idx + 1}`}
+											</span>
+											<span className="text-muted-foreground text-sm ml-2 tabular-nums">
+												({subject.percentage}%)
+											</span>
+										</div>
+										<div className="text-right">
+											<span
+												className={cn(
+													"font-extrabold tabular-nums",
+													aps >= 6 && "text-success",
+													aps >= 4 && aps < 6 && "text-warning",
+													aps < 4 && "text-destructive",
+												)}
+											>
+												{aps} pts
+											</span>
+											<span className="text-xs text-muted-foreground ml-2 block">
+												{getGrade(subject.percentage)}
+											</span>
+										</div>
+									</motion.div>
+								);
+							})}
 					</div>
 				</div>
 			)}
 
-			<div>
-				<h3 className="font-semibold mb-3 text-wrap balance">
+			<div className="px-5 pb-10">
+				<p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">
 					University Requirements
-				</h3>
+				</p>
 				<div className="flex flex-col gap-3">
-					{universityRequirements.map((uni, idx) => (
-						<motion.div
-							key={uni.university}
-							initial={{ opacity: 0, y: 10 }}
-							animate={{ opacity: 1, y: 0 }}
-							transition={{ delay: idx * 0.05 }}
-						>
-							<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors p-3 rounded-xl shadow-[0_2px_8px_oklch(0%_0_0_/_0.06)]">
-								<div className="flex justify-between items-start mb-2">
-									<span className="font-medium text-sm">{uni.university}</span>
+					{universityRequirements.map((uni, idx) => {
+						const meetsMin = totalAPS >= uni.minAPS;
+						return (
+							<motion.div
+								key={uni.university}
+								initial={{ opacity: 0, y: 10 }}
+								animate={{ opacity: 1, y: 0 }}
+								transition={{ delay: idx * 0.05 }}
+								className="relative rounded-xl border border-border bg-card shadow-sm p-4 overflow-hidden"
+							>
+								{meetsMin && (
+									<div className="absolute left-0 top-0 bottom-0 w-1 bg-success rounded-r-full" />
+								)}
+								<div className="flex justify-between items-start mb-3">
+									<span className="font-medium text-sm">
+										{uni.university}
+									</span>
 									<span
 										className={cn(
 											"text-sm font-extrabold tabular-nums",
-											totalAPS >= uni.minAPS
-												? "text-success"
-												: "text-destructive",
+											meetsMin ? "text-success" : "text-destructive",
 										)}
 									>
 										Min: {uni.minAPS}
 									</span>
 								</div>
-								<div className="grid grid-cols-2 gap-2 text-xs">
-									<div
-										className={
-											totalAPS >= uni.courses.medicine
-												? "text-success"
-												: "text-muted-foreground"
-										}
-									>
-										Medicine: {uni.courses.medicine}+
-									</div>
-									<div
-										className={
-											totalAPS >= uni.courses.engineering
-												? "text-success"
-												: "text-muted-foreground"
-										}
-									>
-										Engineering: {uni.courses.engineering}+
-									</div>
-									<div
-										className={
-											totalAPS >= uni.courses.commerce
-												? "text-success"
-												: "text-muted-foreground"
-										}
-									>
-										Commerce: {uni.courses.commerce}+
-									</div>
-									<div
-										className={
-											totalAPS >= uni.courses.science
-												? "text-success"
-												: "text-muted-foreground"
-										}
-									>
-										Science: {uni.courses.science}+
-									</div>
+								<div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-xs">
+									{Object.entries(uni.courses).map(([course, req]) => (
+										<span
+											key={course}
+											className={
+												totalAPS >= req
+													? "text-success capitalize"
+													: "text-muted-foreground capitalize"
+											}
+										>
+											{course}: {req}+
+										</span>
+									))}
 								</div>
-							</div>
-						</motion.div>
-					))}
+							</motion.div>
+						);
+					})}
 				</div>
 			</div>
 		</div>
 	);
 }
-
-import { motion } from "framer-motion";
