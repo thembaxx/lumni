@@ -16,7 +16,13 @@ export function SubjectsSVG() {
 				transition={{ duration: 0.4 }}
 			>
 				<circle cx="120" cy="110" r="90" className="fill-[--chart-2]/5" />
-				<ellipse cx="120" cy="130" rx="60" ry="20" className="fill-[--chart-2]/8" />
+				<ellipse
+					cx="120"
+					cy="130"
+					rx="60"
+					ry="20"
+					className="fill-[--chart-2]/8"
+				/>
 			</motion.g>
 
 			<motion.g

@@ -75,9 +75,7 @@ const Particles = memo(function Particles({ step }: ParticlesProps) {
 			positions2[i3] =
 				baseX + Math.sin(time * 0.3 + i * 0.1) * 0.8 + mouse.current.x * 0.2;
 			positions2[i3 + 1] =
-				baseY +
-				Math.cos(time * 0.2 + i * 0.15) * 0.8 +
-				mouse.current.y * 0.2;
+				baseY + Math.cos(time * 0.2 + i * 0.15) * 0.8 + mouse.current.y * 0.2;
 			positions2[i3 + 2] = Math.sin(time * 0.1 + i * 0.05) * 0.5;
 		}
 		meshRef.current.geometry.attributes.position.needsUpdate = true;
@@ -89,10 +87,7 @@ const Particles = memo(function Particles({ step }: ParticlesProps) {
 	return (
 		<points ref={meshRef}>
 			<bufferGeometry>
-				<bufferAttribute
-					args={[positions, 3]}
-					attach="attributes-position"
-				/>
+				<bufferAttribute args={[positions, 3]} attach="attributes-position" />
 			</bufferGeometry>
 			<pointsMaterial
 				size={0.04}

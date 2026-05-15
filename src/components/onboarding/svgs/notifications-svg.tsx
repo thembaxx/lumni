@@ -16,7 +16,13 @@ export function NotificationsSVG() {
 				transition={{ duration: 0.4 }}
 			>
 				<circle cx="120" cy="110" r="95" className="fill-[--chart-5]/5" />
-				<ellipse cx="120" cy="140" rx="65" ry="20" className="fill-[--chart-5]/4" />
+				<ellipse
+					cx="120"
+					cy="140"
+					rx="65"
+					ry="20"
+					className="fill-[--chart-5]/4"
+				/>
 			</motion.g>
 
 			<motion.g
@@ -24,7 +30,15 @@ export function NotificationsSVG() {
 				animate={{ opacity: 1 }}
 				transition={{ duration: 0.4, delay: 0.05 }}
 			>
-				<circle cx="120" cy="60" r="45" className="stroke-[--chart-5]" strokeWidth={1.5} opacity={0.12} fill="none">
+				<circle
+					cx="120"
+					cy="60"
+					r="45"
+					className="stroke-[--chart-5]"
+					strokeWidth={1.5}
+					opacity={0.12}
+					fill="none"
+				>
 					<animate
 						attributeName="r"
 						values="45;60;45"
@@ -38,7 +52,15 @@ export function NotificationsSVG() {
 						repeatCount="indefinite"
 					/>
 				</circle>
-				<circle cx="120" cy="60" r="45" className="stroke-[--chart-5]" strokeWidth={1.5} opacity={0.08} fill="none">
+				<circle
+					cx="120"
+					cy="60"
+					r="45"
+					className="stroke-[--chart-5]"
+					strokeWidth={1.5}
+					opacity={0.08}
+					fill="none"
+				>
 					<animate
 						attributeName="r"
 						values="45;68;45"

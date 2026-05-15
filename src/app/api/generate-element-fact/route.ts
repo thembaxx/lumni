@@ -15,6 +15,7 @@ interface GenerateFactRequest {
 
 async function generateInterestingFact(
 	element: GenerateFactRequest["element"],
+	userId: string,
 ): Promise<string> {
 	if (!isAIConfigured()) {
 		// Return a static fact when AI is not configured
@@ -47,7 +48,7 @@ async function generateInterestingFact(
 		.replace(/^[\s\S]*?[.!?]/, (match) => match.trim())
 		.trim();
 
-	trackUsage("generate", budget.userId);
+	trackUsage("generate", userId);
 
 	if (!cleanedContent || cleanedContent.length < 10) {
 		throw new Error("Generated fact is too short or empty");
@@ -58,7 +59,7 @@ async function generateInterestingFact(
 
 export async function POST(req: NextRequest) {
 	const budget = await checkBudget(req, "generate");
-	if (!budget.allowed) return budget.response;
+	if (!budget.allowed) return budget.response!;
 
 	// Initialize AI if not already configured
 	if (!isAIConfigured()) {
@@ -90,7 +91,7 @@ export async function POST(req: NextRequest) {
 			);
 		}
 
-		const fact = await generateInterestingFact(element);
+		const fact = await generateInterestingFact(element, budget.userId);
 
 		return NextResponse.json({ fact });
 	} catch (error) {

@@ -27,7 +27,7 @@ const SUBJECT_PROMPTS: Record<string, string> = {
 export const POST = withRateLimit(async (req: NextRequest) => {
 	try {
 		const budget = await checkBudget(req, "generate");
-		if (!budget.allowed) return budget.response;
+		if (!budget.allowed) return budget.response!;
 
 		const {
 			question,

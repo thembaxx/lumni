@@ -14,15 +14,15 @@ import {
 } from "@phosphor-icons/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { FileRouter } from "uploadthing/server";
+import { OnboardingWizard } from "@/components/onboarding/onboarding-wizard";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ListCell, ListSection } from "@/components/ui/list-cell";
-import { OnboardingWizard } from "@/components/onboarding/onboarding-wizard";
+import { resetOnboardingData } from "@/hooks/use-onboarding";
 import { account } from "@/lib/appwrite";
 import { useAuth } from "@/lib/auth/auth-context";
 import { useUploadThing } from "@/lib/uploadthing";
-import { resetOnboardingData } from "@/hooks/use-onboarding";
 
 interface EditableFieldProps {
 	value: string;

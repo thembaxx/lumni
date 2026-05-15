@@ -151,11 +151,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 						<div className="col-span-12 md:col-span-6">
 							<motion.div
 								key={`text-${step}`}
-								initial={
-									shouldReduceMotion
-										? {}
-										: { opacity: 0, y: 12 }
-								}
+								initial={shouldReduceMotion ? {} : { opacity: 0, y: 12 }}
 								animate={{ opacity: 1, y: 0 }}
 								transition={{ duration: 0.4, ease: iOSEase }}
 							>
@@ -168,9 +164,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 
 								{step === 1 && (
 									<motion.div
-										initial={
-											shouldReduceMotion ? {} : { opacity: 0, y: 8 }
-										}
+										initial={shouldReduceMotion ? {} : { opacity: 0, y: 8 }}
 										animate={{ opacity: 1, y: 0 }}
 										transition={{
 											duration: 0.3,
@@ -218,9 +212,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 
 								{step === 2 && (
 									<motion.div
-										initial={
-											shouldReduceMotion ? {} : { opacity: 0, y: 8 }
-										}
+										initial={shouldReduceMotion ? {} : { opacity: 0, y: 8 }}
 										animate={{ opacity: 1, y: 0 }}
 										transition={{
 											duration: 0.3,
@@ -252,9 +244,9 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 										</div>
 										<div className="p-4 rounded-xl bg-system-surface-secondary">
 											<p className="text-sm text-muted-foreground">
-												<strong className="text-foreground">Tip:</strong>{" "}
-												Most universities need 23-27 APS. Medicine and
-												Engineering typically need 35+.
+												<strong className="text-foreground">Tip:</strong> Most
+												universities need 23-27 APS. Medicine and Engineering
+												typically need 35+.
 											</p>
 										</div>
 									</motion.div>
@@ -262,9 +254,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 
 								{step === 3 && (
 									<motion.div
-										initial={
-											shouldReduceMotion ? {} : { opacity: 0, y: 8 }
-										}
+										initial={shouldReduceMotion ? {} : { opacity: 0, y: 8 }}
 										animate={{ opacity: 1, y: 0 }}
 										transition={{
 											duration: 0.3,
@@ -299,9 +289,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 											{[15, 30, 45, 60].map((m) => (
 												<Button
 													key={m}
-													variant={
-														dailyMinutes === m ? "default" : "outline"
-													}
+													variant={dailyMinutes === m ? "default" : "outline"}
 													size="sm"
 													onClick={() => setDailyMinutes(m)}
 													className="flex-1"
@@ -315,9 +303,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 
 								{step === 4 && (
 									<motion.div
-										initial={
-											shouldReduceMotion ? {} : { opacity: 0, y: 8 }
-										}
+										initial={shouldReduceMotion ? {} : { opacity: 0, y: 8 }}
 										animate={{ opacity: 1, y: 0 }}
 										transition={{
 											duration: 0.3,
@@ -366,9 +352,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 						<div className="col-span-12 md:col-span-6 flex items-center justify-center py-8">
 							<motion.div
 								key={`svg-${step}`}
-								initial={
-									shouldReduceMotion ? {} : { opacity: 0, scale: 0.96 }
-								}
+								initial={shouldReduceMotion ? {} : { opacity: 0, scale: 0.96 }}
 								animate={{ opacity: 1, scale: 1 }}
 								transition={{ duration: 0.4, ease: iOSEase }}
 								className="w-64 h-64 md:w-72 md:h-72"

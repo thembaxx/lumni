@@ -15,7 +15,12 @@ export function WelcomeSVG() {
 				animate={{ opacity: 1, scale: 1 }}
 				transition={{ duration: 0.4 }}
 			>
-				<circle cx="120" cy="120" r="100" className="fill-[--system-accent]/5" />
+				<circle
+					cx="120"
+					cy="120"
+					r="100"
+					className="fill-[--system-accent]/5"
+				/>
 				<circle cx="120" cy="120" r="70" className="fill-[--system-accent]/8" />
 			</motion.g>
 
@@ -24,25 +29,30 @@ export function WelcomeSVG() {
 				animate={{ opacity: 1 }}
 				transition={{ duration: 0.4, delay: 0.05 }}
 			>
-				{[[60, 50], [180, 40], [40, 170], [195, 180], [50, 110], [190, 110]].map(
-					([cx, cy], i) => (
-						<circle
-							key={i}
-							cx={cx}
-							cy={cy}
-							r={3 + (i % 2) * 2}
-							className="fill-[--system-accent]"
-							opacity={0.3 + i * 0.08}
-						>
-							<animate
-								attributeName="opacity"
-								values={`${0.3 + i * 0.08};${0.6 + i * 0.05};${0.3 + i * 0.08}`}
-								dur={`${2 + i * 0.5}s`}
-								repeatCount="indefinite"
-							/>
-						</circle>
-					),
-				)}
+				{[
+					[60, 50],
+					[180, 40],
+					[40, 170],
+					[195, 180],
+					[50, 110],
+					[190, 110],
+				].map(([cx, cy], i) => (
+					<circle
+						key={i}
+						cx={cx}
+						cy={cy}
+						r={3 + (i % 2) * 2}
+						className="fill-[--system-accent]"
+						opacity={0.3 + i * 0.08}
+					>
+						<animate
+							attributeName="opacity"
+							values={`${0.3 + i * 0.08};${0.6 + i * 0.05};${0.3 + i * 0.08}`}
+							dur={`${2 + i * 0.5}s`}
+							repeatCount="indefinite"
+						/>
+					</circle>
+				))}
 			</motion.g>
 
 			<motion.g
@@ -60,8 +70,23 @@ export function WelcomeSVG() {
 					className="fill-[--system-accent]"
 					opacity={0.6}
 				/>
-				<rect x="108" y="130" width="24" height="30" rx="3" className="fill-[--system-accent]" opacity={0.4} />
-				<rect x="112" y="135" width="16" height="6" rx="1" className="fill-white" />
+				<rect
+					x="108"
+					y="130"
+					width="24"
+					height="30"
+					rx="3"
+					className="fill-[--system-accent]"
+					opacity={0.4}
+				/>
+				<rect
+					x="112"
+					y="135"
+					width="16"
+					height="6"
+					rx="1"
+					className="fill-white"
+				/>
 			</motion.g>
 		</svg>
 	);

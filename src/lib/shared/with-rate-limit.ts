@@ -3,7 +3,7 @@ import { checkRateLimit, getRateLimitHeaders } from "./rate-limit";
 
 export type RouteHandler = (
 	req: NextRequest,
-) => Promise<NextResponse> | NextResponse;
+) => Promise<NextResponse<unknown>> | NextResponse<unknown>;
 
 export function withRateLimit(handler: RouteHandler): RouteHandler {
 	return async (req: NextRequest) => {

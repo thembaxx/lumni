@@ -43,9 +43,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
 			<ThemeProvider>
 				<AuthProvider>
 					<JoyProvider>
-						<OnboardingProvider>
-							{children}
-						</OnboardingProvider>
+						<OnboardingProvider>{children}</OnboardingProvider>
 						<WebVitalsLogger />
 						<OnlineStatusIndicator />
 						<AutoSyncWrapper />
