@@ -3,7 +3,7 @@
 import { Menu as ListPrimitive } from "@base-ui/react/menu";
 import { ArrowRight, Check } from "@phosphor-icons/react";
 import * as React from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 
 function DropdownMenu({ ...props }: ListPrimitive.Root.Props) {
 	return <ListPrimitive.Root data-slot="dropdown-menu" {...props} />;

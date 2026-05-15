@@ -5,7 +5,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { m, useMotionValueEvent, useScroll } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 
 interface NavigationBarProps {
 	title: string;

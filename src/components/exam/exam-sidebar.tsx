@@ -3,7 +3,7 @@
 import { Flag } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 import type { ExamPaper } from "@/types/exam-paper";
 
 interface ExamSidebarProps {

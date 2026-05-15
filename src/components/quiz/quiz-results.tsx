@@ -12,9 +12,9 @@ import { ProgressDots } from "@/components/shared/progress-dots";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
+import { calculateAccuracy, formatTime } from "@/lib/shared/time";
 import { iOSEase } from "@/lib/utils/animation";
-import { calculateAccuracy, formatTime } from "@/lib/utils/time";
 
 interface QuizResultsCardProps {
 	totalQuestions: number;

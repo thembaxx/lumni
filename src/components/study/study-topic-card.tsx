@@ -10,7 +10,7 @@ import { Anim } from "@/components/shared/anim";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";
 import { getDifficultyColor } from "@/lib/utils/colors";
 import { Badge } from "../ui/badge";

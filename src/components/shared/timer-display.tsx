@@ -1,8 +1,8 @@
 "use client";
 
 import { Timer } from "@phosphor-icons/react";
-import { cn } from "@/lib/utils";
-import { formatTime } from "@/lib/utils/time";
+import { cn } from "@/lib/shared";
+import { formatTime } from "@/lib/shared/time";
 
 export type TimerDisplayVariant = "default" | "inline" | "compact";
 

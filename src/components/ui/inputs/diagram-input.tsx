@@ -3,7 +3,7 @@
 import { CloudArrowUp, TrashSimple } from "@phosphor-icons/react";
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 
 interface DiagramInputProps {
 	value: string | undefined;

@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/empty";
 import { Input } from "@/components/ui/input";
 import { useExams } from "@/hooks/use-exams";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 import { ExamCard } from "./exam-card";
 import { GroupSkeleton } from "./exam-card-skeleton";
 

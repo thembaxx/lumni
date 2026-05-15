@@ -2,7 +2,7 @@
 
 import { m } from "framer-motion";
 import { Progress, ProgressIndicator } from "@/components/ui/progress";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";
 
 export type AccuracyBarVariant = "default" | "animated" | "simple";

@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 
 const PeriodicTable = dynamic(
 	() => import("./periodic-table").then((mod) => mod.PeriodicTable),

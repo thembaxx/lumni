@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion, type Variants } from "framer-motion";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 
 interface StaggerListProps {
 	children: React.ReactNode;

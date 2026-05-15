@@ -27,7 +27,7 @@ import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 import { useViewTransition } from "@/hooks/use-view-transition";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
 import { competencyService } from "@/lib/competency-engine/competency-service";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";
 
 function SectionReveal({

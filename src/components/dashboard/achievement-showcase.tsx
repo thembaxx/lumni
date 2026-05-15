@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useGamification } from "@/hooks/use-gamification";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";
 
 const rarityColors: Record<string, string> = {

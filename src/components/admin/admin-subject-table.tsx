@@ -4,7 +4,7 @@ import { Pencil, Spinner, TrashSimple } from "@phosphor-icons/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 
 interface Subject {
 	id: string;

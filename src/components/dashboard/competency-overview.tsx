@@ -13,7 +13,7 @@ import { useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { competencyService } from "@/lib/competency-engine/competency-service";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 
 interface SubjectCompetency {
 	subjectId: string;

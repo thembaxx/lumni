@@ -1,12 +1,14 @@
 "use client";
 
+import { PlayFreeIcons, PlayIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { Lightning, Play, Timer } from "@phosphor-icons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { SubjectSelect } from "@/components/ui/subject-select";
 import { useQuizSession } from "@/hooks/use-quiz-session";
-import { formatTime } from "@/lib/utils/time";
+import { formatTime } from "@/lib/shared/time";
 
 interface QuizStartCardProps {
 	onStart: (subject: string) => void;
@@ -60,12 +62,16 @@ export function QuizStartCard({ onStart }: QuizStartCardProps) {
 							: "Pick a subject above to begin"}
 					</p>
 					<Button
-						size="lg"
+						size="sm"
+						variant="default"
 						onClick={handleStart}
 						disabled={!selectedSubject}
-						className="rounded-full bg-system-accent hover:bg-system-accent/90 disabled:bg-muted disabled:cursor-not-allowed px-6 gap-2"
+						className="rounded-full bg-system-accent hover:bg-system-accent/90 disabled:opacity-50 disabled:cursor-not-allowed px-6 gap-2"
 					>
-						<Play className="size-4 ml-0.5 fill-current" />
+						<HugeiconsIcon
+							icon={PlayFreeIcons}
+							className="size-4 ml-0.5 fill-current"
+						/>
 						Start
 					</Button>
 				</div>

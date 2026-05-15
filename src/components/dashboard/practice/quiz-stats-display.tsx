@@ -2,7 +2,7 @@
 
 import { Lightning } from "@phosphor-icons/react";
 import { TimerDisplay } from "@/components/shared/timer-display";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 
 interface QuizStatsDisplayProps {
 	elapsedTime: number;

@@ -4,7 +4,7 @@ import { Fire } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { useGamification } from "@/hooks/use-gamification";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 
 export function StreakCard() {
 	const { gamification, currentStreak } = useGamification();

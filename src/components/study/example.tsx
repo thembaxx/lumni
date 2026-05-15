@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import React from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 import { StudyTopicCard } from "./study-topic-card";
 import type { TopicData } from "./study-topic-card.data";
 

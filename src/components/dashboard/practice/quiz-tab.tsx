@@ -21,9 +21,9 @@ import { PerpetualFloat } from "@/components/shared/perpetual-float";
 import { Button } from "@/components/ui/button";
 import { AssessmentHeader } from "@/components/ui/headers/assessment-header";
 import { useQuizSession } from "@/hooks/use-quiz-session";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
+import { formatTime } from "@/lib/shared/time";
 import { iOSEase } from "@/lib/utils/animation";
-import { formatTime } from "@/lib/utils/time";
 
 interface QuizTabProps {
 	className?: string;

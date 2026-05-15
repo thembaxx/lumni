@@ -4,7 +4,7 @@ import { m } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Anim } from "@/components/shared/anim";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 
 interface SegmentedControlProps {
 	value: string;

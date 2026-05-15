@@ -2,7 +2,7 @@
 
 import { type HTMLAttributes, useEffect, useRef } from "react";
 import { useWaveformRenderer } from "@/hooks/use-waveform-renderer";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 
 export type LiveWaveformProps = HTMLAttributes<HTMLDivElement> & {
 	active?: boolean;

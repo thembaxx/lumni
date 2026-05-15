@@ -19,10 +19,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useExamPaper } from "@/hooks/use-exam-paper";
 import { useGamification } from "@/hooks/use-gamification";
 import { competencyService } from "@/lib/competency-engine/competency-service";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
+import { formatTime } from "@/lib/shared/time";
 import { iOSEase } from "@/lib/utils/animation";
 import { addStudySession } from "@/lib/utils/study-planner";
-import { formatTime } from "@/lib/utils/time";
 import { useExamSessionStore } from "@/store/exam-session";
 import type { QuestionPart } from "@/types/exam-paper";
 

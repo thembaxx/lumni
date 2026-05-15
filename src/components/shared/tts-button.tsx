@@ -3,7 +3,7 @@
 import { SpeakerHigh, SpeakerSlash } from "@phosphor-icons/react";
 import { useCallback, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 import { ttsService } from "@/lib/utils/tts-service";
 
 interface TTSButtonProps {

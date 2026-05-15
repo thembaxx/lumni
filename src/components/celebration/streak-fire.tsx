@@ -32,7 +32,7 @@ export function StreakFire({
 					}}
 				>
 					<Flame
-						className={`size-6 ${streak >= 7 ? "text-warning" : "text-warning/80"}`}
+						className={`size-6 ${streak >= 7 ? "fill-warning" : "fill-warning/80"}`}
 						fill={streak >= 7 ? "currentColor" : "none"}
 					/>
 				</motion.div>

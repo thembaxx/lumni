@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 
 export type ProgressDotsVariant = "quiz" | "engine" | "results";
 

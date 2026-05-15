@@ -13,8 +13,8 @@ import { StepByStep } from "@/components/quiz/step-by-step";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
+import { cn } from "@/lib/shared";
 import { UploadButton } from "@/lib/uploadthing";
-import { cn } from "@/lib/utils";
 
 interface SolverResponse {
 	solution: string;

@@ -10,7 +10,7 @@ import { PracticeButton } from "@/components/study/practice-button";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 import { Difficulty } from "@/lib/utils/colors";
 
 export interface ExpandableCardData {

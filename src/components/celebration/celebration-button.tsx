@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { type ButtonHTMLAttributes, forwardRef } from "react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 
 interface CelebrationButtonProps
 	extends ButtonHTMLAttributes<HTMLButtonElement> {

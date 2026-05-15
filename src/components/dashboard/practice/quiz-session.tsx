@@ -8,7 +8,7 @@ import { Anim } from "@/components/shared/anim";
 import { TimerDisplay } from "@/components/shared/timer-display";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";
 import type { Question } from "@/types/questions";
 

@@ -15,7 +15,7 @@ import {
 	ChartTooltipContent,
 } from "@/components/ui/chart";
 import { useInterval } from "@/hooks";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 
 const DEFAULT_TIME = 25 * 60;
 const MAX_TIME = 60 * 60;

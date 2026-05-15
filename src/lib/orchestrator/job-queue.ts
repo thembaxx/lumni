@@ -1,5 +1,5 @@
 import { offlineDB } from "@/lib/db/offline";
-import { safeJsonStringify } from "@/lib/utils/json";
+import { safeJsonStringify } from "@/lib/shared/json";
 import type {
 	EnqueueOptions,
 	JobRecord,

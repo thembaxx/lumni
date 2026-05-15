@@ -18,7 +18,7 @@ import {
 	examYears,
 	mockExamResults,
 } from "@/lib/data/mock-exam-results";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 
 interface Result {
 	name: string;

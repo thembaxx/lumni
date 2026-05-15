@@ -34,6 +34,20 @@ Editable user attributes in Settings > Profile: display name, email (read-only +
 - **Admin auth** (magic-link/OTP for `/admin/*`) is separate from student auth and unchanged by this system.
 - On sign-up, the **Sync Queue** is flushed to move Dexie data to Appwrite.
 
+## Key modules
+
+**QuestionEngine** (`src/lib/question-engine/`):
+Single deep module for all question operations — generate, grade, hint, validate. Used by `LearningOrchestrator` via composition, not duplication.
+
+**LearningOrchestrator** (`src/lib/orchestrator/`):
+Thin orchestration layer over `QuestionEngine`. Adds job-queue side effects (visual pre-cache, analytics, spaced-repetition, progress tracking) but does not duplicate question-generation logic.
+
+## Architecture conventions
+
+- **Stores** live in `src/store/`. `src/lib/store.ts` and `src/lib/stores/` are deprecated — do not create new stores in lib.
+- **Shared utilities** (cn, json, id, format, time, network, rate-limit) live in `src/lib/shared/`. Domain-specific utilities (animation, colors, gamification, storage, tts, etc.) remain in `src/lib/utils/`.
+- **Sync queue** has one processor: `src/lib/sync-queue.ts`. Hooks that duplicate queue processing (`useAutoSync` from hooks, `useEnhancedSync`, `useSyncAll`, `useSyncSingleSubject`) have been removed. Use `src/lib/sync-queue.ts`'s `useSyncQueue` or `useAutoSync` instead.
+
 ## Flagged ambiguities
 
 - "Auth" was used to mean both admin auth and student auth — resolved: these are separate systems with different flows and routes. Student auth uses anonymous → email/password conversion; admin auth uses server-side magic-link + OTP.

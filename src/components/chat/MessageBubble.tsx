@@ -4,9 +4,9 @@ import { useRef, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Button } from "@/components/ui/button";
 import { type ChatMessage } from "@/hooks/use-chat";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
+import { formatBytes } from "@/lib/shared/format";
 import { iOSEase } from "@/lib/utils/animation";
-import { formatBytes } from "@/lib/utils/format";
 import { ImageViewer } from "./ImageViewer";
 import { SmartImage } from "./SmartImage";
 

@@ -2,7 +2,7 @@
 
 import { Icon } from "@phosphor-icons/react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 
 interface IconHeaderCardProps {
 	icon?: React.ComponentType<{ className?: string }>;

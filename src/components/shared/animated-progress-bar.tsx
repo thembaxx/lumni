@@ -1,7 +1,7 @@
 "use client";
 
 import { m } from "framer-motion";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";
 
 type ProgressBarColor = "accent" | "success" | "warning" | "destructive";

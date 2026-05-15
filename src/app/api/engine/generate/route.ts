@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { LearningOrchestrator } from "@/lib/orchestrator";
 import type { GenerationParams } from "@/lib/question-engine/types";
-import { withRateLimit } from "@/lib/utils/with-rate-limit";
+import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 export const dynamic = "force-dynamic";
 

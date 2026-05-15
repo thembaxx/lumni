@@ -1,6 +1,6 @@
 import { databases } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
-import { safeJsonParse, safeJsonStringify } from "@/lib/utils/json";
+import { safeJsonParse, safeJsonStringify } from "@/lib/shared/json";
 import type { Question } from "./types";
 
 const COLLECTION_ID = COLLECTIONS.QUESTIONS;

@@ -9,94 +9,14 @@ import {
 	useContext,
 	useEffect,
 	useRef,
-	useState,
 } from "react";
-import { create } from "zustand";
 import { APPWRITE_ENDPOINT, APPWRITE_PROJECT, account } from "@/lib/appwrite";
 import { flushOfflineData } from "@/lib/sync/sync-handler";
 import { processQueue } from "@/lib/sync-queue";
+import { useAuthStore } from "@/store/auth";
+import { getReadableErrorMessage } from "./errors";
 
 export type AuthStatus = "loading" | "authenticated" | "unauthenticated";
-
-function getReadableErrorMessage(err: unknown): string {
-	const message =
-		err instanceof Error ? err.message.toLowerCase() : "Something went wrong";
-
-	if (
-		message.includes("already exists") ||
-		message.includes("already registered")
-	) {
-		return "An account with this email already exists. Sign in instead.";
-	}
-	if (message.includes("invalid credentials")) {
-		return "Incorrect email or password. Try again.";
-	}
-	if (message.includes("user with this email not found")) {
-		return "No account found with this email. Create an account instead.";
-	}
-	if (message.includes("invalid email")) {
-		return "Enter a valid email address.";
-	}
-	if (message.includes("missing") || message.includes("required")) {
-		return "Please fill in all required fields.";
-	}
-	if (message.includes("network") || message.includes("fetch")) {
-		return "Couldn't connect. Check your internet connection and try again.";
-	}
-	if (message.includes("rate") || message.includes("too many")) {
-		return "Too many attempts. Please wait a moment and try again.";
-	}
-	if (message.includes("password") && message.includes("length")) {
-		return "Password must be at least 8 characters.";
-	}
-	if (message.includes("verification") && message.includes("invalid")) {
-		return "This verification link has expired or is invalid. Request a new one.";
-	}
-	if (message.includes("session") && message.includes("expired")) {
-		return "Your session expired. Please sign in again.";
-	}
-
-	return (
-		message.charAt(0).toUpperCase() + message.slice(1) ||
-		"Something went wrong. Try again."
-	);
-}
-
-interface AuthState {
-	user: Models.User<Models.Preferences> | null;
-	status: AuthStatus;
-	isAnonymous: boolean;
-	error: string | null;
-	authReady: boolean;
-	setUser: (
-		user: Models.User<Models.Preferences> | null,
-		status: AuthStatus,
-		isAnonymous: boolean,
-	) => void;
-	setError: (error: string | null) => void;
-	setAuthReady: (ready: boolean) => void;
-	reset: () => void;
-}
-
-const useAuthStore = create<AuthState>((set) => ({
-	user: null,
-	status: "loading",
-	isAnonymous: false,
-	error: null,
-	authReady: false,
-	setUser: (user, status, isAnonymous) =>
-		set({ user, status, isAnonymous, error: null }),
-	setError: (error) => set({ error }),
-	setAuthReady: (authReady) => set({ authReady }),
-	reset: () =>
-		set({
-			user: null,
-			status: "unauthenticated",
-			isAnonymous: false,
-			error: null,
-			authReady: true,
-		}),
-}));
 
 interface AuthContextValue {
 	user: Models.User<Models.Preferences> | null;

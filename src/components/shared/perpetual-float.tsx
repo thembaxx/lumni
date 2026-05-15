@@ -3,7 +3,7 @@
 import { animate, motion, useMotionValue, useTransform } from "framer-motion";
 import * as React from "react";
 import { useEffect } from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 
 interface PerpetualFloatProps {
 	children: React.ReactNode;

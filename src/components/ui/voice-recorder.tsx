@@ -14,7 +14,7 @@ import { useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { LiveWaveform } from "@/components/ui/live-waveform";
 import { useAudioRecorder } from "@/hooks/use-audio-recorder";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 
 interface VoiceRecorderProps {
 	onRecordingComplete?: (audioBlob: Blob | null) => void;

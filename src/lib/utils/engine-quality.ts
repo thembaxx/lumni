@@ -1,4 +1,4 @@
-import { safeJsonParse, safeJsonStringify } from "./json";
+import { safeJsonParse, safeJsonStringify } from "@/lib/shared";
 
 export interface QualityRecord {
 	timestamp: number;

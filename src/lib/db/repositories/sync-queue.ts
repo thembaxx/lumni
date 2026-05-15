@@ -1,4 +1,4 @@
-import { safeJsonParse, safeJsonStringify } from "@/lib/utils/json";
+import { safeJsonParse, safeJsonStringify } from "@/lib/shared/json";
 import { offlineDB, type SyncQueueItem } from "../schema";
 
 export function calculateBackoffDelay(attempts: number): number {

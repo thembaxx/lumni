@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
 	ACHIEVEMENTS,
 	type Achievement,
@@ -34,66 +34,59 @@ interface StreakMilestone {
 	unlocked: boolean;
 }
 
-function getStoredGamification(): StoredGamification {
-	if (typeof window === "undefined") {
-		return getDefaultGamification();
-	}
+const DEFAULT_GAMIFICATION: StoredGamification = {
+	xp: 0,
+	totalXp: 0,
+	achievements: [],
+	dailyChallenges: generateDailyChallenges(),
+	streakMilestones: STREAK_MILESTONES.map((s) => ({ ...s })),
+	lastPracticeDate: null,
+	currentStreak: 0,
+	totalQuestionsAnswered: 0,
+};
+
+function loadFromStorage(): StoredGamification {
 	try {
 		const stored = localStorage.getItem(GAMIFICATION_KEY);
 		if (stored) {
 			return JSON.parse(stored);
 		}
 	} catch {}
-	return getDefaultGamification();
+	return DEFAULT_GAMIFICATION;
 }
 
-function getDefaultGamification(): StoredGamification {
-	return {
-		xp: 0,
-		totalXp: 0,
-		achievements: [],
-		dailyChallenges: generateDailyChallenges(),
-		streakMilestones: STREAK_MILESTONES.map((s) => ({ ...s })),
-		lastPracticeDate: null,
-		currentStreak: 0,
-		totalQuestionsAnswered: 0,
-	};
-}
-
-function saveGamification(data: StoredGamification) {
-	if (typeof window === "undefined") return;
+function saveToStorage(data: StoredGamification) {
 	localStorage.setItem(GAMIFICATION_KEY, JSON.stringify(data));
 }
 
-function checkDateReset(dailyChallenges: DailyChallenge[]): DailyChallenge[] {
+function resetExpiredChallenges(
+	dailyChallenges: DailyChallenge[],
+): DailyChallenge[] {
 	const today = new Date().toDateString();
 	return dailyChallenges.map((challenge) => {
 		if (challenge.expiresAt !== today) {
-			return {
-				...challenge,
-				progress: 0,
-				completed: false,
-				expiresAt: today,
-			};
+			return { ...challenge, progress: 0, completed: false, expiresAt: today };
 		}
 		return challenge;
 	});
 }
 
-function getInitialGamificationData(): StoredGamification {
-	const stored = getStoredGamification();
-	const resetChallenges = checkDateReset(stored.dailyChallenges);
-	if (resetChallenges !== stored.dailyChallenges) {
-		stored.dailyChallenges = resetChallenges;
-		saveGamification(stored);
-	}
-	return stored;
+function mergeWithDefaults(stored: StoredGamification): StoredGamification {
+	const challenges = resetExpiredChallenges(stored.dailyChallenges);
+	return { ...DEFAULT_GAMIFICATION, ...stored, dailyChallenges: challenges };
 }
 
 export function useGamification() {
-	const [data, setData] = useState<StoredGamification>(
-		getInitialGamificationData,
-	);
+	const [data, setData] = useState<StoredGamification>(DEFAULT_GAMIFICATION);
+
+	useEffect(() => {
+		const stored = loadFromStorage();
+		const merged = mergeWithDefaults(stored);
+		if (merged !== DEFAULT_GAMIFICATION) {
+			saveToStorage(merged);
+		}
+		setData(merged);
+	}, []);
 
 	const levelInfo = calculateLevel(data.totalXp);
 
@@ -146,7 +139,7 @@ export function useGamification() {
 					totalQuestionsAnswered: prev.totalQuestionsAnswered + amount,
 					dailyChallenges: updatedChallenges,
 				};
-				saveGamification(newData);
+				saveToStorage(newData);
 				return newData;
 			});
 		},
@@ -169,7 +162,7 @@ export function useGamification() {
 				totalXp: newTotalXp,
 				xp: prev.xp + achievement.xpReward,
 			};
-			saveGamification(newData);
+			saveToStorage(newData);
 			return newData;
 		});
 	}, []);
@@ -261,7 +254,7 @@ export function useGamification() {
 				lastPracticeDate: today,
 				streakMilestones: updatedMilestones,
 			};
-			saveGamification(newData);
+			saveToStorage(newData);
 			return newData;
 		});
 	}, []);
@@ -283,7 +276,7 @@ export function useGamification() {
 				totalXp: prev.totalXp + challenge.xpReward,
 				dailyChallenges: updatedChallenges,
 			};
-			saveGamification(newData);
+			saveToStorage(newData);
 			return newData;
 		});
 	}, []);

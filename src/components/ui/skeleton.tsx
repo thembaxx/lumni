@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 
 interface SkeletonProps extends React.ComponentProps<"div"> {
 	variant?: "pulse" | "shimmer";

@@ -2,7 +2,7 @@ import { X } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";
 
 interface ImageProcessingIndicatorProps {

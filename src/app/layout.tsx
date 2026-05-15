@@ -12,7 +12,7 @@ import { TopNav } from "@/components/navigation/top-nav";
 import { Providers } from "@/components/providers";
 import { FloatingToolsButton } from "@/components/tools";
 import { UploadDialogRenderer } from "@/components/upload/upload-dialog-renderer";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 import { ourFileRouter } from "./api/uploadthing/core";
 import { fontMono, fontSans } from "./fonts";
 

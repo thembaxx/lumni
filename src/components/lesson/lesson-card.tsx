@@ -8,7 +8,7 @@ import { Anim } from "@/components/shared/anim";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 import { getDifficultyColor } from "@/lib/utils/colors";
 import { ListenToLesson } from "../listen-to-lesson";
 import { PracticeButton } from "../study/practice-button";

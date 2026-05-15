@@ -2,7 +2,7 @@
 
 import { CloudArrowUp, Download, Spinner } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 
 interface AdminActionButtonProps {
 	children: React.ReactNode;

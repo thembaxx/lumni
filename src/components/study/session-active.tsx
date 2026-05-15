@@ -4,7 +4,7 @@ import { House, Target, Timer } from "@phosphor-icons/react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { formatTime } from "@/lib/utils/time";
+import { formatTime } from "@/lib/shared/time";
 
 interface StudySessionStats {
 	total: number;

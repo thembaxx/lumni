@@ -3,7 +3,7 @@
 import { Minus } from "@phosphor-icons/react";
 import { OTPInput, OTPInputContext } from "input-otp";
 import * as React from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 
 function InputOTP({
 	className,

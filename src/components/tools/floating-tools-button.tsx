@@ -5,7 +5,7 @@ import { Icon } from "@iconify/react";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 import { ToolsDialog } from "./tools-dialog";
 
 export function FloatingToolsButton() {

@@ -2,7 +2,7 @@
 
 import { TrendDown, TrendUp } from "@phosphor-icons/react";
 import { m } from "framer-motion";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";
 
 export type StatCardVariant = "default" | "admin" | "dashboard";

@@ -1,4 +1,4 @@
-import { safeJsonParse, safeJsonStringify } from "@/lib/utils/json";
+import { safeJsonParse, safeJsonStringify } from "@/lib/shared/json";
 import type { VisualContent } from "@/lib/visual-engine/types";
 import { type CachedVisual, offlineDB } from "../schema";
 

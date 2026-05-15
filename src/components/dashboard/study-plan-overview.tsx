@@ -4,7 +4,7 @@ import { Calendar, Clock, ListChecks } from "@phosphor-icons/react";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useStudyPlanner } from "@/hooks/use-study-planner";
-import { formatTime } from "@/lib/utils/time";
+import { formatTime } from "@/lib/shared/time";
 
 export function StudyPlanOverview() {
 	const { todaySessions, upcomingExams, stats } = useStudyPlanner();

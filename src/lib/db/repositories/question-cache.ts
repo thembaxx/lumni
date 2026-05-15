@@ -1,4 +1,4 @@
-import { safeJsonParse, safeJsonStringify } from "@/lib/utils/json";
+import { safeJsonParse, safeJsonStringify } from "@/lib/shared/json";
 import { offlineDB } from "../schema";
 
 export async function cacheQuestions(

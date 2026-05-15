@@ -1,4 +1,4 @@
-import { safeJsonStringify } from "@/lib/utils/json";
+import { safeJsonStringify } from "@/lib/shared/json";
 import { offlineDB, type QuizAttempt, type QuizSessionState } from "../schema";
 
 export async function saveQuizAttempt(

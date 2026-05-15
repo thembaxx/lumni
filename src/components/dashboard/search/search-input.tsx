@@ -8,7 +8,7 @@ import { VoiceWaveIcon } from "@/components/icons";
 import { AnimatedDialogContent } from "@/components/ui/animated-dialog-content";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 import { SubjectsDrawer } from "../drawers/subjects-drawer";
 
 interface SearchInputProps {

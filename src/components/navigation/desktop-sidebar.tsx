@@ -14,7 +14,7 @@ import { useCallback, useMemo, useState } from "react";
 import { ChatDialog } from "@/components/dashboard/chat/chat-dialog";
 import { Button } from "@/components/ui/button";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 
 interface SidebarItem {
 	id: string;

@@ -19,7 +19,7 @@ import { LoadingOverlay } from "@/components/shared/loading-spinner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 import type { ExamPaper } from "@/types/exam";
 
 interface PdfViewerProps {

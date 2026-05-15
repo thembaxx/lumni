@@ -4,9 +4,9 @@ import { ArrowCounterClockwise, House, Target } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
 import { AccuracyBar } from "@/components/shared/accuracy-bar";
 import { Button } from "@/components/ui/button";
+import { calculateAccuracy } from "@/lib/shared/time";
 import { iOSEase, springTransition } from "@/lib/utils/animation";
 import { AnimatedIcon } from "@/lib/utils/icon-mapping";
-import { calculateAccuracy } from "@/lib/utils/time";
 
 interface StudySessionStats {
 	total: number;

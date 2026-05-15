@@ -3,7 +3,7 @@
 import { ContentBlockRenderer } from "@/components/exam/content-block-renderer";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 import type { ContentBlock } from "@/types/exam-paper";
 
 interface SourceBasedInputProps {

@@ -28,7 +28,7 @@ import {
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useFilteredSubjects } from "@/hooks";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 import { Input } from "../ui/input";
 import { Skeleton } from "../ui/skeleton";
 

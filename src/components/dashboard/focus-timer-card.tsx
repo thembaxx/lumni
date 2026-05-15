@@ -1,17 +1,18 @@
 "use client";
 
 import {
-	ArrowCounterClockwise,
-	Minus,
-	Pause,
-	Play,
-	Plus,
-} from "@phosphor-icons/react";
+	MinusSignFreeIcons,
+	PauseFreeIcons,
+	PlayFreeIcons,
+	PlusSignFreeIcons,
+	RotateClockwiseFreeIcons,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useInterval } from "@/hooks/use-interval";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 
 const DEFAULT_TIME = 25 * 60;
 const MAX_TIME = 60 * 60;
@@ -95,12 +96,12 @@ export function FocusTimerCard() {
 								className="text-system-accent transition-all duration-500"
 							/>
 						</svg>
-						<span className="absolute inset-0 flex items-center justify-center text-sm font-extrabold tabular-nums tracking-tight">
+						<span className="absolute inset-0 flex items-center justify-center text-[10px] font-extrabold tabular-nums font-mono tracking-tight">
 							{formatTime(timeLeft)}
 						</span>
 					</div>
 					<div>
-						<h3 className="text-sm font-semibold">Focus Timer</h3>
+						<h3 className="text-[12.8px] font-semibold">Focus Timer</h3>
 						<p className="text-xs text-muted-foreground">
 							{isRunning
 								? "Running..."
@@ -120,7 +121,7 @@ export function FocusTimerCard() {
 						className="rounded-full size-8"
 						aria-label="Subtract 5 minutes"
 					>
-						<Minus className="size-4" />
+						<HugeiconsIcon icon={MinusSignFreeIcons} className="size-4" />
 					</Button>
 
 					<Button
@@ -134,9 +135,15 @@ export function FocusTimerCard() {
 						aria-label={isRunning ? "Pause timer" : "Start timer"}
 					>
 						{isRunning ? (
-							<Pause className="size-4 fill-current" />
+							<HugeiconsIcon
+								icon={PauseFreeIcons}
+								className="size-4 fill-current"
+							/>
 						) : (
-							<Play className="size-4 ml-0.5 fill-current" />
+							<HugeiconsIcon
+								icon={PlayFreeIcons}
+								className="size-4 ml-0.5 fill-current"
+							/>
 						)}
 					</Button>
 
@@ -148,7 +155,7 @@ export function FocusTimerCard() {
 						className="rounded-full size-8"
 						aria-label="Add 5 minutes"
 					>
-						<Plus className="size-4" />
+						<HugeiconsIcon icon={PlusSignFreeIcons} className="size-4" />
 					</Button>
 
 					<Button
@@ -158,7 +165,7 @@ export function FocusTimerCard() {
 						className="rounded-full size-8 text-muted-foreground"
 						aria-label="Reset timer"
 					>
-						<ArrowCounterClockwise className="size-4" />
+						<HugeiconsIcon icon={RotateClockwiseFreeIcons} className="size-4" />
 					</Button>
 				</div>
 			</CardContent>

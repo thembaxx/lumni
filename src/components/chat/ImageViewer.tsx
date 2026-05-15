@@ -6,7 +6,7 @@ import {
 	DialogOverlay,
 	DialogPortal,
 } from "@/components/ui/dialog";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 import { SmartImage } from "./SmartImage";
 
 interface ImageViewerProps {

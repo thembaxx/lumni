@@ -34,7 +34,7 @@ import {
 import { VisualContent } from "@/components/visual/visual-content";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
 import { useVisualEngine } from "@/hooks/use-visual-engine";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";
 import { AnimatedIcon, getIconMapping } from "@/lib/utils/icon-mapping";
 import { useBookmarksStore } from "@/store/bookmarks";

@@ -8,7 +8,7 @@ import {
 	EmptyHeader,
 	EmptyTitle,
 } from "@/components/ui/empty";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 
 interface EmptyStateProps {
 	icon?: Icon;

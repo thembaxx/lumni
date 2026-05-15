@@ -1,7 +1,5 @@
 "use client";
 
-import { ArrowDown01Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 import { BookOpen, Search, X } from "lucide-react";
 import { useState } from "react";

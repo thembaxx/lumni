@@ -16,7 +16,7 @@ import {
 import { useGamification } from "@/hooks/use-gamification";
 import { useSyncStatus } from "@/hooks/use-sync-status";
 import { useAuth } from "@/lib/auth/auth-context";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 
 interface TopNavProps {
 	title?: string;

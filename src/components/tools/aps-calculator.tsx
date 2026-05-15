@@ -4,7 +4,7 @@ import { Calculator, Plus, Trash } from "@phosphor-icons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 
 interface Subject {
 	id: string;

@@ -18,7 +18,7 @@ import Link from "next/link";
 import { useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/auth/auth-context";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";
 import { appConfig } from "../../../app.config";
 
