@@ -60,7 +60,7 @@ export default function Loading() {
 			initial={{ opacity: 0 }}
 			animate={{ opacity: 1 }}
 			transition={{ duration: 0.3, ease: iOSEase }}
-			className="min-h-[100dvh] flex flex-col items-center justify-center bg-background"
+			className="min-h-dvh flex flex-col items-center justify-center bg-background"
 		>
 			<div className="flex flex-col items-center gap-[--space-6]">
 				<m.div
