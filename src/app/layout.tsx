@@ -14,6 +14,7 @@ import { TopNav } from "@/components/navigation/top-nav";
 import { Providers } from "@/components/providers";
 import { FloatingToolsButton } from "@/components/tools";
 import { UploadDialogRenderer } from "@/components/upload/upload-dialog-renderer";
+import { WebVitalsLogger } from "@/components/web-vitals";
 import { cn } from "@/lib/shared";
 import { ourFileRouter } from "./api/uploadthing/core";
 import { fontMono, fontSans } from "./fonts";
@@ -105,6 +106,7 @@ export default function RootLayout({
 				<Providers>
 					<UploadDialogRenderer />
 					<FloatingToolsButton />
+					<WebVitalsLogger />
 					<div className="flex flex-1">
 						<DesktopSidebar />
 						<main className="flex-1 min-w-0 flex flex-col">

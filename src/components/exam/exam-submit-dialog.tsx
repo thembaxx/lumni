@@ -30,9 +30,11 @@ export function ExamSubmitDialog({
 		<Dialog open={open} onOpenChange={onOpenChange}>
 			<DialogContent>
 				<DialogHeader>
-					<DialogTitle>Submit Exam</DialogTitle>
+					<DialogTitle>Ready to hand in?</DialogTitle>
 					<DialogDescription>
-						Are you sure you want to submit your exam?
+						{unanswered > 0
+							? `You still have ${unanswered} unanswered questions. Are you sure you want to finish now?`
+							: "You&apos;ve answered all questions. Ready to see how you did?"}
 					</DialogDescription>
 				</DialogHeader>
 				<div className="flex flex-col gap-3 py-2">
@@ -44,8 +46,8 @@ export function ExamSubmitDialog({
 					</div>
 					{unanswered > 0 && (
 						<div className="flex justify-between text-sm">
-							<span className="text-destructive">Unanswered</span>
-							<span className="font-medium text-destructive">{unanswered}</span>
+							<span className="text-destructive font-semibold">Unanswered</span>
+							<span className="font-bold text-destructive">{unanswered}</span>
 						</div>
 					)}
 				</div>
@@ -57,7 +59,7 @@ export function ExamSubmitDialog({
 						variant={unanswered > 0 ? "destructive" : "default"}
 						onClick={onConfirm}
 					>
-						Submit Exam
+						Finish & Submit
 					</Button>
 				</div>
 			</DialogContent>

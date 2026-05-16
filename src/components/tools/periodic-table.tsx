@@ -7,7 +7,7 @@ import {
 	useTransform,
 } from "framer-motion";
 import { Search, X } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 import { Input } from "@/components/ui/input";
 import {
 	elementCategoryConfig,
@@ -18,34 +18,19 @@ import {
 } from "@/lib/data/element-categories";
 import { type Element, elements } from "@/lib/data/elements";
 
-export function PeriodicTable() {
-	const [selectedElement, setSelectedElement] = useState<Element | null>(null);
-	const [searchQuery, setSearchQuery] = useState("");
-	const [activeCategory, setActiveCategory] = useState<string | null>(null);
-	const [isSearchFocused, setIsSearchFocused] = useState(false);
-	const [interestingFact, setInterestingFact] = useState<string | null>(null);
+const getBg = (category: string) =>
+	elementCategoryConfig[category]?.bg || "bg-gray-500/90";
 
-	const filteredElements = useMemo(() => {
-		return elements.filter((el) => {
-			const matchesSearch =
-				searchQuery === "" ||
-				el.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-				el.symbol.toLowerCase().includes(searchQuery.toLowerCase()) ||
-				el.atomicNumber.toString().includes(searchQuery);
-			const matchesCategory = !activeCategory || el.category === activeCategory;
-			return matchesSearch && matchesCategory;
-		});
-	}, [searchQuery, activeCategory]);
-
-	const isFiltered = searchQuery !== "" || activeCategory !== null;
-
-	const getBg = (category: string) =>
-		elementCategoryConfig[category]?.bg || "bg-gray-500/90";
-
-	const ElementCard = ({ el }: { el: Element }) => {
-		const isActive =
-			filteredElements.some((e) => e.atomicNumber === el.atomicNumber) ||
-			isFiltered === false;
+const ElementCard = memo(
+	({
+		el,
+		isActive,
+		onClick,
+	}: {
+		el: Element;
+		isActive: boolean;
+		onClick: () => void;
+	}) => {
 		const [isHovered, setIsHovered] = useState(false);
 		const scale = useSpring(1, { stiffness: 400, damping: 30 });
 		const glowIntensity = useSpring(0, { stiffness: 300, damping: 25 });
@@ -71,8 +56,7 @@ export function PeriodicTable() {
 
 		return (
 			<motion.button
-				key={el.atomicNumber}
-				onClick={() => setSelectedElement(el)}
+				onClick={onClick}
 				onHoverStart={() => setIsHovered(true)}
 				onHoverEnd={() => setIsHovered(false)}
 				style={{ scale, boxShadow }}
@@ -116,9 +100,31 @@ export function PeriodicTable() {
 				/>
 			</motion.button>
 		);
-	};
+	},
+);
 
-	const displayedElements = isFiltered ? filteredElements : elements;
+export function PeriodicTable() {
+	const [selectedElement, setSelectedElement] = useState<Element | null>(null);
+	const [searchQuery, setSearchQuery] = useState("");
+	const [activeCategory, setActiveCategory] = useState<string | null>(null);
+	const [isSearchFocused, setIsSearchFocused] = useState(false);
+	const [interestingFact, setInterestingFact] = useState<string | null>(null);
+
+	const filteredElements = useMemo(() => {
+		return elements.filter((el) => {
+			const matchesSearch =
+				searchQuery === "" ||
+				el.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+				el.symbol.toLowerCase().includes(searchQuery.toLowerCase()) ||
+				el.atomicNumber.toString().includes(searchQuery);
+			const matchesCategory = !activeCategory || el.category === activeCategory;
+			return matchesSearch && matchesCategory;
+		});
+	}, [searchQuery, activeCategory]);
+
+	const isFiltered = searchQuery !== "" || activeCategory !== null;
+
+	const _displayedElements = isFiltered ? filteredElements : elements;
 
 	// Generate interesting fact when element is selected
 	useEffect(() => {
@@ -303,8 +309,16 @@ export function PeriodicTable() {
 						hidden: {},
 					}}
 				>
-					{displayedElements.map((el) => (
-						<ElementCard key={el.atomicNumber} el={el} />
+					{elements.map((el) => (
+						<ElementCard
+							key={el.atomicNumber}
+							el={el}
+							isActive={
+								!isFiltered ||
+								filteredElements.some((e) => e.atomicNumber === el.atomicNumber)
+							}
+							onClick={() => setSelectedElement(el)}
+						/>
 					))}
 				</motion.div>
 			</div>

@@ -23,7 +23,7 @@ export function FlashcardsEmpty({ subject, onGoBack }: FlashcardsEmptyProps) {
 		<div className="min-h-screen bg-background p-4 flex items-center justify-center">
 			<Card className="max-w-md w-full">
 				<CardHeader className="text-center">
-					<CardTitle>No Flashcards</CardTitle>
+					<CardTitle>Deck is Empty</CardTitle>
 				</CardHeader>
 				<CardContent className="space-y-4">
 					<Empty>
@@ -38,7 +38,8 @@ export function FlashcardsEmpty({ subject, onGoBack }: FlashcardsEmptyProps) {
 							</EmptyMedia>
 							<EmptyTitle>No flashcards found</EmptyTitle>
 							<EmptyDescription>
-								Upload questions for {subject} to study
+								Upload some {subject} questions to start studying and ace that
+								exam!
 							</EmptyDescription>
 						</EmptyHeader>
 						<EmptyContent>

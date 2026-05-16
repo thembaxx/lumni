@@ -32,9 +32,9 @@ export function FlashcardsIdle({ onSelect }: FlashcardsIdleProps) {
 								<EmptyMedia variant="icon">
 									<Lightbulb className="size-8" />
 								</EmptyMedia>
-								<EmptyTitle>Start Learning</EmptyTitle>
+								<EmptyTitle>Ready to start studying?</EmptyTitle>
 								<EmptyDescription>
-									Select a subject to study with flashcards
+									Pick a subject below to jump into your flashcard session!
 								</EmptyDescription>
 							</EmptyHeader>
 							<EmptyContent>

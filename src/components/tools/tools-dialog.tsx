@@ -77,11 +77,11 @@ function ToolsDialogInner({ open, onOpenChange }: ToolsDialogProps) {
 
 	return (
 		<motion.div
-			initial={{ opacity: 0 }}
-			animate={{ opacity: open ? 1 : 0 }}
-			exit={{ opacity: 0 }}
+			initial={{ opacity: 0, y: 10 }}
+			animate={{ opacity: 1, y: 0 }}
+			exit={{ opacity: 0, y: 10 }}
 			transition={{ duration: 0.2 }}
-			className="fixed inset-0 z-50 bg-system-surface"
+			className="fixed inset-0 z-[80] bg-system-surface"
 		>
 			<div className="h-full flex flex-col">
 				<motion.header
@@ -163,10 +163,10 @@ function ToolsDialogInner({ open, onOpenChange }: ToolsDialogProps) {
 	);
 }
 
-export function ToolsDialog(props: ToolsDialogProps) {
+export function ToolsDialog({ open, onOpenChange }: ToolsDialogProps) {
 	return (
-		<AnimatePresence initial={false}>
-			<ToolsDialogInner {...props} />
+		<AnimatePresence>
+			{open && <ToolsDialogInner open={open} onOpenChange={onOpenChange} />}
 		</AnimatePresence>
 	);
 }

@@ -362,7 +362,9 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 				const selected = Array.isArray(answer?.value)
 					? answer?.value[0]
 					: answer?.value;
-				correct = item.part.options.some((o) => o.id === selected && o.isCorrect);
+				correct = item.part.options.some(
+					(o) => o.id === selected && o.isCorrect,
+				);
 			}
 			return { partId: item.part.id, correct, score: correct ? 1 : 0 };
 		});
@@ -500,7 +502,9 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 				const selected = Array.isArray(answer?.value)
 					? answer?.value[0]
 					: answer?.value;
-				correct = item.part.options.some((o) => o.id === selected && o.isCorrect);
+				correct = item.part.options.some(
+					(o) => o.id === selected && o.isCorrect,
+				);
 			}
 			return { partId: item.part.id, correct, score: correct ? 1 : 0 };
 		});
@@ -696,7 +700,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 											<ArrowRight data-icon="inline-end" />
 										</Button>
 									) : (
-										<Button onClick={handleSubmit}>Submit</Button>
+										<Button onClick={handleSubmit}>Finish & Submit</Button>
 									)}
 								</div>
 							</motion.div>

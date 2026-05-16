@@ -32,7 +32,7 @@ export function TabNav({
 	onTabChange,
 	"aria-label": ariaLabel = "Main navigation",
 }: TabNavProps) {
-	const [tabSwitch, setTabSwitch] = useState(0);
+	const [_tabSwitch, setTabSwitch] = useState(0);
 
 	const handleTabChange = (value: string) => {
 		setTabSwitch((p) => p + 1);

@@ -3,7 +3,7 @@
 import {
 	domAnimation,
 	LazyMotion,
-	motion,
+	m,
 	type Transition,
 	type Variants,
 } from "framer-motion";
@@ -24,8 +24,8 @@ export function Anim({
 	transition,
 }: AnimProps) {
 	return (
-		<LazyMotion features={domAnimation}>
-			<motion.div
+		<LazyMotion features={domAnimation} strict>
+			<m.div
 				layoutId={layoutId}
 				initial={initial ? "hidden" : false}
 				animate="visible"
@@ -34,7 +34,7 @@ export function Anim({
 				transition={transition}
 			>
 				{children}
-			</motion.div>
+			</m.div>
 		</LazyMotion>
 	);
 }

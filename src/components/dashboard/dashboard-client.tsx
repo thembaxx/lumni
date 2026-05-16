@@ -1,9 +1,9 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import dynamic from "next/dynamic";
 import { useState } from "react";
 import { AchievementShowcase } from "@/components/dashboard/achievement-showcase";
-import { ComparativeAnalyticsPanel } from "@/components/dashboard/analytics/comparative-analytics-panel";
 import { CompetencyOverview } from "@/components/dashboard/competency-overview";
 import { CountdownHeader } from "@/components/dashboard/countdown-header";
 import { DailyChallenges } from "@/components/dashboard/daily-challenges";
@@ -33,6 +33,21 @@ import { competencyService } from "@/lib/competency-engine/competency-service";
 import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";
 import { useOptimizedAnimation } from "@/lib/utils/animation-optimization";
+
+const ComparativeAnalyticsPanel = dynamic(
+	() =>
+		import("@/components/dashboard/analytics/comparative-analytics-panel").then(
+			(mod) => mod.ComparativeAnalyticsPanel,
+		),
+	{
+		ssr: false,
+		loading: () => (
+			<div className="h-64 flex items-center justify-center bg-system-surface rounded-[2rem] border border-dashed">
+				<Skeleton className="h-full w-full rounded-[2rem]" />
+			</div>
+		),
+	},
+);
 
 function SectionReveal({
 	children,

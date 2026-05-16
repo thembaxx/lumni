@@ -191,8 +191,11 @@ export default function ExamsPage() {
 											<EmptyMedia variant="icon">
 												<BookOpen className="size-6 text-destructive" />
 											</EmptyMedia>
-											<EmptyTitle>Failed to load</EmptyTitle>
-											<EmptyDescription>Please try again.</EmptyDescription>
+											<EmptyTitle>We hit a little snag</EmptyTitle>
+											<EmptyDescription>
+												We couldn&apos;t fetch your exams right now. Let&apos;s
+												give it another shot!
+											</EmptyDescription>
 										</EmptyHeader>
 									</Empty>
 								</m.div>
@@ -208,12 +211,12 @@ export default function ExamsPage() {
 												<BookOpen className="size-8 text-muted-foreground/40" />
 											</EmptyMedia>
 											<EmptyTitle className="text-base">
-												No exams found
+												No exams here... yet!
 											</EmptyTitle>
 											<EmptyDescription>
 												{hasActiveFilters
-													? "Try adjusting your filters"
-													: "No exams available yet."}
+													? "Try tweaking your filters to find what you&apos;re looking for."
+													: "We&apos;re still gathering exams for you. Check back soon!"}
 											</EmptyDescription>
 										</EmptyHeader>
 										{hasActiveFilters && (

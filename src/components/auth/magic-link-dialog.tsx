@@ -86,11 +86,12 @@ export function MagicLinkDialog({
 			setCountdown(2 * 60 * 1000);
 			toast({
 				type: "success",
-				message: "Check your inbox",
-				description: `Magic link sent to ${email}`,
+				message: "Magic link on its way!",
+				description: `Check your inbox at ${email}`,
 			});
 		} catch {
-			const msg = "Unable to connect. Check your internet and try again.";
+			const msg =
+				"We couldn&apos;t connect. Check your internet and try again.";
 			setError(msg);
 			toast({ type: "error", message: msg });
 		} finally {
@@ -117,7 +118,9 @@ export function MagicLinkDialog({
 				if (data.locked || data.countdown) {
 					setCountdown(data.lockRemaining || data.countdown);
 				}
-				const msg = data.error || "Could not resend link";
+				const msg =
+					data.error ||
+					"We couldn&apos;t resend that link. Try again in a moment?";
 				setError(msg);
 				toast({ type: "error", message: msg });
 				return;
@@ -126,11 +129,12 @@ export function MagicLinkDialog({
 			setCountdown(2 * 60 * 1000);
 			toast({
 				type: "success",
-				message: "Link sent",
+				message: "Link resent!",
 				description: `Check your inbox for a new sign-in link`,
 			});
 		} catch {
-			const msg = "Unable to connect. Check your internet and try again.";
+			const msg =
+				"We couldn&apos;t connect. Check your internet and try again.";
 			setError(msg);
 			toast({ type: "error", message: msg });
 		} finally {
@@ -326,12 +330,12 @@ export function MagicLinkDialog({
 							{loading ? (
 								<span className="flex items-center gap-2">
 									<LoadingDots />
-									<span>PaperPlaneing...</span>
+									<span>Sending...</span>
 								</span>
 							) : (
 								<span className="flex items-center gap-2">
 									<Lightning className="size-4" />
-									PaperPlane Magic Link
+									Send Magic Link
 								</span>
 							)}
 						</Button>

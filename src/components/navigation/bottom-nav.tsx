@@ -138,8 +138,9 @@ export function BottomNav() {
 		setHidden(false);
 
 		let lastY = window.scrollY;
+		let ticking = false;
 
-		const handleScroll = () => {
+		const updateScroll = () => {
 			const currentY = window.scrollY;
 			const delta = lastY - currentY;
 
@@ -152,6 +153,14 @@ export function BottomNav() {
 			}
 
 			lastY = currentY;
+			ticking = false;
+		};
+
+		const handleScroll = () => {
+			if (!ticking) {
+				window.requestAnimationFrame(updateScroll);
+				ticking = true;
+			}
 		};
 
 		window.addEventListener("scroll", handleScroll, { passive: true });

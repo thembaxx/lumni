@@ -84,8 +84,8 @@ export function ChatInput({
 				open={voiceDialogOpen}
 				onOpenChange={setVoiceDialogOpen}
 				onRecordingComplete={handleVoiceRecording}
-				title="Voice Message"
-				description="Record your voice message and send it."
+				title="Got a question?"
+				description="Record your question and I&apos;ll help you find the answer."
 			/>
 
 			<AnimatePresence initial={false}>
@@ -109,7 +109,7 @@ export function ChatInput({
 					<Input
 						ref={inputRef}
 						type="text"
-						placeholder="Ask me anything..."
+						placeholder="Ask me a question about your studies..."
 						value={input}
 						onChange={(e) => setInput(e.target.value)}
 						onFocus={() => setIsFocused(true)}
