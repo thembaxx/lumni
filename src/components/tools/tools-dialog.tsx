@@ -81,7 +81,7 @@ function ToolsDialogInner({ open, onOpenChange }: ToolsDialogProps) {
 			animate={{ opacity: 1, y: 0 }}
 			exit={{ opacity: 0, y: 10 }}
 			transition={{ duration: 0.2 }}
-			className="fixed inset-0 z-[80] bg-system-surface"
+			className="fixed inset-0 z-80 bg-system-surface"
 		>
 			<div className="h-full flex flex-col">
 				<motion.header

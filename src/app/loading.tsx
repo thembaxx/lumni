@@ -1,10 +1,60 @@
 "use client";
 
 import { CircleNotch } from "@phosphor-icons/react";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useTransform } from "framer-motion";
+import { useEffect, useState } from "react";
 import { iOSEase } from "@/lib/utils/animation";
 
+// Product-specific loading messages for Lumni (educational app for South African students)
+const loadingMessages = [
+	"Crunching your latest numbers...",
+	"Preparing your practice questions...",
+	"Syncing with your study materials...",
+	"Getting you exam-ready...",
+	"Loading your personalized content...",
+	"Just a moment while we set things up...",
+	"Almost ready! One more thing...",
+	"Gathering your flashcards...",
+	"Setting up your quiz session...",
+	"Optimizing your learning experience...",
+];
+
 export default function Loading() {
+	const [_messageIndex, setMessageIndex] = useState(0);
+	const [currentMessage, setCurrentMessage] = useState(loadingMessages[0]);
+
+	// Rotate messages every 3 seconds
+	useEffect(() => {
+		const interval = setInterval(() => {
+			setMessageIndex((prev) => {
+				const nextIndex = (prev + 1) % loadingMessages.length;
+				setCurrentMessage(loadingMessages[nextIndex]);
+				return nextIndex;
+			});
+		}, 3000);
+
+		return () => clearInterval(interval);
+	}, []);
+
+	// Create a subtle pulse animation for the text
+	const pulse = useMotionValue(1);
+	const pulseAnimation = useTransform(
+		pulse,
+		[0, 0.5, 1],
+		[0.98, 1.02, 1], // Subtle scale pulse
+	);
+
+	// Animate the pulse value
+	useEffect(() => {
+		const animatePulse = () => {
+			pulse.set(0);
+			pulse.set(1);
+		};
+
+		const interval = setInterval(animatePulse, 2000); // Pulse every 2 seconds
+		return () => clearInterval(interval);
+	}, [pulse]);
+
 	return (
 		<motion.div
 			initial={{ opacity: 0 }}
@@ -32,7 +82,7 @@ export default function Loading() {
 					transition={{ duration: 0.4, ease: iOSEase, delay: 0.08 }}
 					className="ios-title-2 text-[--system-text-primary] text-center"
 				>
-					Loading
+					Lumni
 				</motion.h2>
 
 				<motion.p
@@ -41,8 +91,13 @@ export default function Loading() {
 					transition={{ duration: 0.35, ease: iOSEase, delay: 0.12 }}
 					className="ios-footnote text-[--system-text-secondary] text-center"
 				>
-					Just a moment
+					{currentMessage}
 				</motion.p>
+
+				{/* Subtle pulsing effect on the loading text */}
+				<motion.span style={{ scale: pulseAnimation }} className="ml-1">
+					.
+				</motion.span>
 			</div>
 		</motion.div>
 	);
