@@ -7,8 +7,9 @@ import {
 	Square,
 	Timer,
 } from "@phosphor-icons/react";
-import { motion, useReducedMotion } from "framer-motion";
+import { m, motion, useReducedMotion } from "framer-motion";
 import { useCallback, useState } from "react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
 import {
 	QuizControls,
@@ -27,18 +28,30 @@ import { iOSEase } from "@/lib/utils/animation";
 import { useOptimizedAnimation } from "@/lib/utils/animation-optimization";
 
 interface QuizTabProps {
-	className?: string;
-	onHeaderChange?: (show: boolean) => void;
+  className?: string;
+  onHeaderChange?: (show: boolean) => void;
 }
 
 const MAX_TIME = 90 * 60;
 const DEFAULT_QUESTION_COUNT = 10;
 
+interface TabConfig {
+  value: string;
+  label: string;
+}
+
+const tabs: TabConfig[] = [
+  { value: "quiz", label: "Quiz" },
+  { value: "notes", label: "Notes" },
+  { value: "flashcards", label: "Flashcards" },
+];
+
 export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
-	const [isTransitioning, setIsTransitioning] = useState(false);
-	const shouldReduceMotion = useReducedMotion();
-	const { shouldReduceMotion: shouldReduceMotionOpt } = useOptimizedAnimation();
-	const finalShouldReduceMotion = shouldReduceMotion || shouldReduceMotionOpt;
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [activeTab, setActiveTab] = useState("quiz");
+  const shouldReduceMotion = useReducedMotion();
+  const { shouldReduceMotion: shouldReduceMotionOpt } = useOptimizedAnimation();
+  const finalShouldReduceMotion = shouldReduceMotion || shouldReduceMotionOpt;
 
 	const { state, actions } = useQuizSession({
 		questionCount: DEFAULT_QUESTION_COUNT,
@@ -97,76 +110,36 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 			<div className="grid grid-cols-12 gap-0 min-h-[calc(100dvh-var(--spacing-safe-pt))]">
 				{/* Main quiz — left column */}
 				<div className="col-span-12 md:col-span-7 col-start-1 p-4 pb-20">
-					<Anim>
-						<div className="w-full max-w-2xl flex flex-col gap-4">
-							<div className="animate-fade-in flex flex-col gap-4">
-								<AssessmentHeader
-									title={selectedSubject}
-									elapsedTime={elapsedTime}
-									currentQuestionIndex={currentQuestionIndex}
-									totalQuestions={totalQuestions}
-									progressValue={
-										((currentQuestionIndex + 1) / totalQuestions) * 100
-									}
-									showAccuracy
-									accuracy={
-										totalQuestions > 0
-											? Math.round(
-													(correctAnswers / (currentQuestionIndex + 1 || 1)) *
-														100,
-												)
-											: 0
-									}
-									onQuit={handleStop}
-								/>
-							</div>
-
-							<motion.div
-								key={currentQuestion.id}
-								initial={{ opacity: 0, y: 12 }}
-								animate={{
-									opacity: 1,
-									y: 0,
-									transition: {
-										duration: 0.28,
-										ease: iOSEase,
-									},
-								}}
-								exit={{
-									opacity: 0,
-									y: -8,
-									transition: {
-										duration: 0.15,
-										ease: iOSEase,
-									},
-								}}
-							>
-								<QuestionCard
-									question={currentQuestion}
-									subject={selectedSubject}
-									questionNumber={currentQuestionIndex + 1}
-									totalQuestions={totalQuestions}
-									onNext={handleNext}
-								/>
-							</motion.div>
-
-							<div
-								className={cn(
-									"flex items-center justify-between gap-3",
-									isTransitioning && "opacity-0",
-								)}
-							>
-								<QuizControls
-									currentQuestionIndex={currentQuestionIndex}
-									totalQuestions={totalQuestions}
-									hasSelected={false}
-									showFeedback={false}
-									onPrevious={handlePrevious}
-									onNext={handleNext}
-								/>
-							</div>
-						</div>
-					</Anim>
+<Anim>
+  <m.div
+    className="relative w-full"
+    initial={{ x: "-100%" }}
+    animate={{ x: "0%" }}
+    exit={{ x: "100%" }}
+    transition={{ duration: 0.5, ease: iOSEase }}
+  >
+     <Tabs
+       value={activeTab}
+       onValueChange={setActiveTab}
+       className="flex flex-wrap w-full"
+     >
+       {tabs.map((tab) => (
+         <TabsTrigger
+           key={tab.value}
+           value={tab.value}
+           className={cn(
+             "relative z-10 px-4 h-8 rounded-xl text-xs font-medium transition-colors duration-200 tab-trigger-item",
+             activeTab === tab.value
+               ? "text-foreground"
+               : "text-muted-foreground hover:text-foreground",
+           )}
+         >
+           {tab.label}
+         </TabsTrigger>
+       ))}
+     </Tabs>
+  </m.div>
+</Anim>
 				</div>
 
 				{/* Decorative accent — right zone */}

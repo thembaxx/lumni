@@ -1,13 +1,13 @@
 "use client";
 
 import { CircleNotch } from "@phosphor-icons/react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Skeleton } from "@/components/ui/skeleton";
 import { iOSEase } from "@/lib/utils/animation";
 
 export default function Loading() {
 	return (
-		<motion.div
+		<m.div
 			initial={{ opacity: 0 }}
 			animate={{ opacity: 1 }}
 			transition={{ duration: 0.3, ease: iOSEase }}
@@ -25,31 +25,31 @@ export default function Loading() {
 			</nav>
 
 			<main className="flex-1 flex flex-col items-center justify-center gap-[--space-6]">
-				<motion.div
+				<m.div
 					animate={{ rotate: 360 }}
 					transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
 					className="size-14"
 				>
 					<CircleNotch className="size-14 text-system-accent" />
-				</motion.div>
+				</m.div>
 
-				<motion.h2
+				<m.h2
 					initial={{ opacity: 0, y: 12, filter: "blur(4px)" }}
 					animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
 					transition={{ duration: 0.4, ease: iOSEase, delay: 0.08 }}
 					className="ios-title-2 text-[--system-text-primary] text-center"
 				>
 					Dashboard
-				</motion.h2>
+				</m.h2>
 
-				<motion.p
+				<m.p
 					initial={{ opacity: 0, y: 8, filter: "blur(4px)" }}
 					animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
 					transition={{ duration: 0.35, ease: iOSEase, delay: 0.12 }}
 					className="ios-footnote text-[--system-text-secondary] text-center"
 				>
 					Loading your content
-				</motion.p>
+				</m.p>
 			</main>
 
 			<div className="px-4 pb-6 space-y-3">
@@ -64,6 +64,6 @@ export default function Loading() {
 					<Skeleton className="h-9 flex-1 rounded-full" />
 				</div>
 			</div>
-		</motion.div>
+		</m.div>
 	);
 }

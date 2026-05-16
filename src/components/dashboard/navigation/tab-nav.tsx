@@ -49,7 +49,7 @@ export function TabNav({
 				onValueChange={handleTabChange}
 				aria-label={ariaLabel}
 			>
-				<motion.div
+				<m.div
 					initial={{ opacity: 0, y: -8 }}
 					animate={{
 						opacity: 1,
@@ -95,7 +95,7 @@ export function TabNav({
 							</TabsTrigger>
 						))}
 					</TabsList>
-				</motion.div>
+				</m.div>
 			</Tabs>
 		</Anim>
 	);

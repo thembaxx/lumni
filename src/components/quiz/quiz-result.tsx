@@ -2,11 +2,10 @@
 
 import { ArrowsClockwise, House } from "@phosphor-icons/react";
 import {
-	AnimatePresence,
-	LazyMotion,
-	m,
-	useSpring,
-	useTransform,
+  AnimatePresence,
+  m,
+  useSpring,
+  useTransform,
 } from "framer-motion";
 import { AccuracyBar } from "@/components/shared/accuracy-bar";
 import { Button } from "@/components/ui/button";
