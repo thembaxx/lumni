@@ -39,9 +39,9 @@ const nextConfig: NextConfig = {
 						value: [
 							"default-src 'self'",
 							"script-src 'self' 'unsafe-inline' 'unsafe-eval'",
-							"style-src 'self' 'unsafe-inline'",
+							"style-src 'self' 'unsafe-inline' fonts.googleapis.com",
 							"img-src 'self' data: blob: https:",
-							"font-src 'self' data:",
+							"font-src 'self' data: fonts.gstatic.com",
 							"connect-src 'self' https://*.cloud.appwrite.io https://*.uploadthing.com https://api.iconify.design https://api.simplesvg.com https://api.unisvg.com",
 							"frame-ancestors 'none'",
 							"base-uri 'self'",

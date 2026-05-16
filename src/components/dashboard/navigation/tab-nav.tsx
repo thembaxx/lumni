@@ -45,7 +45,7 @@ export function TabNav({
 		<Anim>
 			<Tabs
 				value={activeTab}
-				className="flex flex-col items-center"
+				className="flex flex-col items-center pt-6"
 				onValueChange={handleTabChange}
 				aria-label={ariaLabel}
 			>
@@ -94,15 +94,6 @@ export function TabNav({
 								{tab.label}
 							</TabsTrigger>
 						))}
-						<motion.div
-							key={tabSwitch}
-							initial={{ scale: 0, opacity: 0 }}
-							animate={{ scale: 1, opacity: 1 }}
-							transition={{ duration: 0.3, ease: iOSEase }}
-							className="absolute left-1/2 -translate-x-1/2 bottom-0 pointer-events-none"
-						>
-							<Sparkle className="size-6 text-warning" />
-						</motion.div>
 					</TabsList>
 				</motion.div>
 			</Tabs>

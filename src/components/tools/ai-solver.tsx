@@ -222,7 +222,7 @@ export function AiSolver({ cameraFocus }: AiSolverProps) {
 			</div>
 
 			<div className="px-5 pb-5">
-				<div className="bg-system-background-secondary rounded-2xl p-5 space-y-4">
+				<div className="bg-system-background-secondary rounded-xl p-5 space-y-4">
 					{showSymbols && (
 						<div className="flex flex-wrap gap-1.5">
 							{SUBJECTS.map((s) => (
@@ -269,7 +269,7 @@ export function AiSolver({ cameraFocus }: AiSolverProps) {
 							value={question}
 							onChange={(e) => setQuestion(e.target.value)}
 							disabled={textareaDisabled}
-							className="min-h-[100px] rounded-xl px-4 py-3 bg-system-surface focus-visible:ring-[3px] focus-visible:ring-[--system-accent]/30"
+							className="min-h-25 rounded-xl px-4 py-3 bg-system-surface focus-visible:ring-[3px] focus-visible:ring-[--system-accent]/30"
 						/>
 					)}
 
@@ -375,7 +375,7 @@ export function AiSolver({ cameraFocus }: AiSolverProps) {
 				<div className="px-5 pb-6">
 					<Button
 						onClick={handleSolve}
-						className="w-full gap-2 h-12 font-medium rounded-xl text-sm shadow-solver transition-[box-shadow]"
+						className="w-full gap-2 h-12 font-medium rounded-xl text-sm shadow-solver transition-shadow"
 					>
 						<Sparkle data-icon />
 						Solve Problem

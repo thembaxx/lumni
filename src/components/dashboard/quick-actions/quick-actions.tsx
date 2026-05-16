@@ -64,8 +64,8 @@ function ActionButton({
 			aria-label={label}
 		>
 			<Button
-				variant="ghost"
-				className="h-11 px-5 rounded-[2.5rem] border border-border/80 bg-secondary/60 gap-2.5 justify-start text-foreground hover:bg-accent hover:border-accent"
+				variant="secondary"
+				className="h-11 px-5 rounded-[2.5rem] border border-border/80 bg-system-background-secondary gap-2.5 justify-start text-foreground hover:bg-accent hover:border-accent"
 			>
 				<motion.span
 					whileHover={

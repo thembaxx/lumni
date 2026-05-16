@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BarChart } from "@/components/ui/charts/bar-chart";
 import { LineChart } from "@/components/ui/charts/line-chart";
 import { RadarChart } from "@/components/ui/charts/radar-chart";
 import { useAnalytics } from "@/hooks/use-analytics";
@@ -128,7 +127,7 @@ export function ComparativeAnalyticsPanel() {
 	}
 
 	return (
-		<div className="space-y-8">
+		<div className="space-y-8 pt-6">
 			{/* User Percentile */}
 			<Card size="sm">
 				<CardHeader>
