@@ -1,7 +1,4 @@
-import type {
-	DiagramDataMap,
-	DiagramType,
-} from "./types";
+import type { DiagramDataMap, DiagramType } from "./types";
 
 interface DiagramMapping {
 	type: DiagramType;

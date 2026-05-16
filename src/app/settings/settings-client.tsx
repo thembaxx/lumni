@@ -177,7 +177,7 @@ function SettingsContent() {
 									aria-selected={isActive}
 									onClick={() => setActiveTab(tab.value)}
 									className={`
-										relative flex items-center gap-2 px-4 py-2.5 rounded-full whitespace-nowrap transition-all duration-300 active:scale-[0.96]
+										relative flex items-center gap-2 px-4 py-2.5 rounded-full whitespace-nowrap transition-colors duration-300 active:scale-[0.96]
 										${
 											isActive
 												? "bg-system-surface text-system-accent shadow-level-1 border border-border/30"

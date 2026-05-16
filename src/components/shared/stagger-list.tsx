@@ -17,7 +17,7 @@ export function StaggerList({
 	variants,
 }: StaggerListProps) {
 	return (
-		<AnimatePresence mode="wait">
+		<AnimatePresence mode="wait" initial={false}>
 			<motion.div
 				className={cn("flex flex-col gap-0", className)}
 				initial="hidden"

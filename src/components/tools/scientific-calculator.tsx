@@ -436,7 +436,7 @@ export function ScientificCalculator() {
 										size="sm"
 										onClick={() => handleButton(btn.id)}
 										className={cn(
-											"h-9 text-sm rounded-lg font-mono transition-all active:scale-95",
+											"h-9 text-sm rounded-lg font-mono transition-transform active:scale-[0.96]",
 											VARIANT_CLASSES[btn.variant],
 										)}
 									>

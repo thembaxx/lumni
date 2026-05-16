@@ -1,6 +1,5 @@
-import { databases } from "@/lib/appwrite";
-import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
-import { addToSyncQueue, offlineDB } from "@/lib/db/offline";
+import { offlineDB } from "@/lib/db/offline";
+import { safePersist } from "@/lib/db/persist";
 import type { BloomLevel } from "@/lib/question-engine/types";
 import {
 	type CompetencyLevel,
@@ -17,56 +16,61 @@ export class CompetencyService {
 		questionScore: number,
 		weight: number,
 	): Promise<void> {
-		try {
-			const existing = await offlineDB.competencies
-				.where({ subjectId, topicId, bloomLevel })
-				.first();
+		await safePersist(
+			"competency update",
+			async () => {
+				const existing = await offlineDB.competencies
+					.where({ subjectId, topicId, bloomLevel })
+					.first();
 
-			const newScore = existing
-				? computeWeightedScore(
-						existing.score,
-						existing.attempts,
-						questionScore,
-						weight,
-					)
-				: questionScore;
+				const newScore = existing
+					? computeWeightedScore(
+							existing.score,
+							existing.attempts,
+							questionScore,
+							weight,
+						)
+					: questionScore;
 
-			const newAttempts = (existing?.attempts ?? 0) + 1;
-			const level = computeCompetencyLevel(newScore);
-			const now = Date.now();
+				const newAttempts = (existing?.attempts ?? 0) + 1;
+				const level = computeCompetencyLevel(newScore);
+				const now = Date.now();
 
-			if (existing?.id) {
-				await offlineDB.competencies.update(existing.id, {
-					score: newScore,
-					attempts: newAttempts,
-					lastAssessed: now,
-					level,
-				});
-			} else {
-				await offlineDB.competencies.add({
+				if (existing?.id) {
+					await offlineDB.competencies.update(existing.id, {
+						score: newScore,
+						attempts: newAttempts,
+						lastAssessed: now,
+						level,
+					});
+				} else {
+					await offlineDB.competencies.add({
+						subjectId,
+						topicId,
+						bloomLevel,
+						score: newScore,
+						attempts: newAttempts,
+						lastAssessed: now,
+						level,
+					});
+				}
+
+				return { newScore, newAttempts, now, level } as const;
+			},
+			async (result) => {
+				const { addToSyncQueue } = await import("@/lib/db/offline");
+				await addToSyncQueue("sync", {
+					type: "competency",
 					subjectId,
 					topicId,
 					bloomLevel,
-					score: newScore,
-					attempts: newAttempts,
-					lastAssessed: now,
-					level,
+					score: result.newScore,
+					attempts: result.newAttempts,
+					lastAssessed: result.now,
+					level: result.level,
 				});
-			}
-
-			await addToSyncQueue("sync", {
-				type: "competency",
-				subjectId,
-				topicId,
-				bloomLevel,
-				score: newScore,
-				attempts: newAttempts,
-				lastAssessed: now,
-				level,
-			}).catch(() => {});
-		} catch {
-			/* competency update is non-critical */
-		}
+			},
+		);
 	}
 
 	async getCompetencies(subjectId: string): Promise<CompetencyRecord[]> {

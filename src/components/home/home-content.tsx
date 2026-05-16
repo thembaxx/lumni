@@ -1,5 +1,7 @@
 "use client";
 
+import { Activity02Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import {
 	ArrowRight,
 	BookOpen,
@@ -110,9 +112,9 @@ export function HomeContent() {
 					<div className="flex items-center gap-2">
 						{isAuthenticated ? (
 							<Link href="/dashboard">
-								<Button size="sm">
+								<Button size="sm" className="flex items-center">
+									<HugeiconsIcon icon={Activity02Icon} className="size-5" />
 									Dashboard
-									<ArrowRight data-icon="inline-end" weight="bold" />
 								</Button>
 							</Link>
 						) : (
@@ -175,14 +177,12 @@ export function HomeContent() {
 									<Link href="/dashboard">
 										<Button size="lg" className="w-full sm:w-auto">
 											Go to Dashboard
-											<ArrowRight data-icon="inline-end" weight="bold" />
 										</Button>
 									</Link>
 								) : (
 									<Link href="/auth/sign-up">
 										<Button size="lg" className="w-full sm:w-auto">
 											Start Learning Free
-											<Rocket data-icon="inline-end" weight="fill" />
 										</Button>
 									</Link>
 								)}

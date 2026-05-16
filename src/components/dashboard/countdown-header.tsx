@@ -422,7 +422,10 @@ export function CountdownHeader() {
 					</span>
 					<div className="h-1 w-12 overflow-hidden rounded-full bg-border/30">
 						<div
-							className={cn("h-full rounded-full transition-all", cfg.barLight)}
+							className={cn(
+								"h-full rounded-full transition-[width]",
+								cfg.barLight,
+							)}
 							style={{ width: `${yearProgress * 100}%` }}
 						/>
 					</div>

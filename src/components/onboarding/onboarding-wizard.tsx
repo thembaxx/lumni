@@ -1,16 +1,9 @@
 "use client";
 
-import {
-	ArrowLeft,
-	ArrowRight,
-	Bell,
-	BookOpen,
-	Clock,
-	Target,
-} from "@phosphor-icons/react";
+import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "framer-motion";
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
@@ -39,52 +32,89 @@ const STEPS_COPY = [
 		title: "Welcome to Lumni",
 		body: "Your AI study buddy for Matric. Quizzes, flashcards, past papers — all in one place. Let's get you set up in under a minute.",
 		cta: "Let's go",
-		icon: BookOpen,
 		SVG: WelcomeSVG,
 	},
 	{
 		title: "Choose Your Subjects",
 		body: "Pick the subjects you're taking this year so we can tailor your practice.",
 		cta: "Continue",
-		icon: BookOpen,
 		SVG: SubjectsSVG,
 	},
 	{
 		title: "Set Your Target",
 		body: "What APS are you working towards? Don't worry — this is just a starting point.",
 		cta: "Continue",
-		icon: Target,
 		SVG: GoalsSVG,
 	},
 	{
 		title: "Your Daily Study Time",
 		body: "How much time can you realistically commit each day? Even 10 minutes makes a difference.",
 		cta: "Continue",
-		icon: Clock,
 		SVG: ScheduleSVG,
 	},
 	{
 		title: "Stay on Track",
 		body: "Get gentle reminders so you never miss a study session.",
 		cta: "Get Started",
-		icon: Bell,
 		SVG: NotificationsSVG,
 	},
 ];
 
 export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
-	const { data, completeOnboarding } = useOnboarding();
-	const [step, setStep] = useState(0);
+	const { data, completeOnboarding, updateProgress } = useOnboarding();
+	const [step, setStep] = useState(data.currentStep);
 	const [selectedSubjects, setSelectedSubjects] = useState<string[]>(
 		data.selectedSubjects,
 	);
 	const [targetAps, setTargetAps] = useState(data.targetAps);
 	const [dailyMinutes, setDailyMinutes] = useState(data.dailyStudyMinutes);
-	const [notifications, setNotifications] = useState(data.notificationsEnabled);
+	const [notifications, _setNotifications] = useState(
+		data.notificationsEnabled,
+	);
+	const [notificationFrequency, setNotificationFrequency] = useState<
+		"daily" | "every_other_day" | "weekly"
+	>(data.notificationFrequency ?? "daily");
+	const [notificationTimeOfDay, setNotificationTimeOfDay] = useState<
+		"morning" | "afternoon" | "evening" | undefined
+	>(data.notificationTimeOfDay ?? "morning");
+	const [searchTerm, setSearchTerm] = useState("");
 	const shouldReduceMotion = useReducedMotion();
 
+	// Reset search term when leaving step 1
+	useEffect(() => {
+		if (step !== 1) {
+			setSearchTerm("");
+		}
+	}, [step]);
+
+	// Update onboarding progress whenever step or main fields change
+	useEffect(() => {
+		updateProgress({
+			currentStep: step,
+			selectedSubjects,
+			targetAps,
+			dailyStudyMinutes: dailyMinutes,
+			notificationsEnabled: notifications,
+			notificationFrequency,
+			notificationTimeOfDay,
+		});
+	}, [
+		step,
+		selectedSubjects,
+		targetAps,
+		dailyMinutes,
+		notifications,
+		notificationFrequency,
+		notificationTimeOfDay,
+		updateProgress,
+	]);
+
 	const current = STEPS_COPY[step];
-	const SVG = current.SVG;
+
+	// Filter subjects based on search term
+	const filteredSubjects = nscSubjects.filter((subject) =>
+		subject.name.toLowerCase().includes(searchTerm.toLowerCase()),
+	);
 
 	const canProceed = () => {
 		switch (step) {
@@ -97,7 +127,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 			case 3:
 				return dailyMinutes >= 10 && dailyMinutes <= 120;
 			case 4:
-				return true;
+				return true; // Notification step: we can proceed with defaults
 			default:
 				return true;
 		}
@@ -112,6 +142,8 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 				targetAps,
 				dailyStudyMinutes: dailyMinutes,
 				notificationsEnabled: notifications,
+				notificationFrequency,
+				notificationTimeOfDay,
 			});
 			onComplete?.();
 		}
@@ -163,51 +195,73 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 								</p>
 
 								{step === 1 && (
-									<motion.div
-										initial={shouldReduceMotion ? {} : { opacity: 0, y: 8 }}
-										animate={{ opacity: 1, y: 0 }}
-										transition={{
-											duration: 0.3,
-											delay: 0.15,
-											ease: iOSEase,
-										}}
-										className="grid grid-cols-1 sm:grid-cols-2 gap-3"
-									>
-										{nscSubjects.map((subject) => (
-											<Card
-												key={subject.id}
-												className={`cursor-pointer transition-colors duration-200 hover:ring-2 hover:ring-[--system-accent] ${
-													selectedSubjects.includes(subject.id)
-														? "ring-2 ring-[--system-accent] bg-[--system-accent]/5"
-														: ""
-												}`}
-												onClick={() =>
-													setSelectedSubjects((prev) =>
-														prev.includes(subject.id)
-															? prev.filter((s) => s !== subject.id)
-															: [...prev, subject.id],
-													)
-												}
-											>
-												<CardContent className="flex items-center gap-3 py-4">
-													<div
-														className="size-10 rounded-full flex items-center justify-center text-white font-extrabold text-sm"
-														style={{ backgroundColor: subject.color }}
-													>
-														{subject.id.slice(0, 2)}
-													</div>
-													<div className="flex-1 min-w-0">
-														<p className="font-medium truncate text-sm">
-															{subject.name}
-														</p>
-														<p className="text-xs text-muted-foreground">
-															Grade 12
-														</p>
-													</div>
-												</CardContent>
-											</Card>
-										))}
-									</motion.div>
+									<>
+										<div className="mb-4">
+											<label className="block text-sm font-medium text-muted-foreground mb-2">
+												Search subjects
+											</label>
+											<input
+												type="text"
+												value={searchTerm}
+												onChange={(e) => setSearchTerm(e.target.value)}
+												placeholder="Search by subject name..."
+												className="w-full px-3 py-2 rounded-lg border border-bg-muted/50 bg-card/50 text-sm focus:outline-none focus:border-[--system-accent]/50"
+											/>
+										</div>
+
+										{filteredSubjects.length === 0 && searchTerm !== "" ? (
+											<p className="text-xs text-muted-foreground italic mb-4">
+												No subjects match "{searchTerm}". Try a different
+												search.
+											</p>
+										) : null}
+
+										<motion.div
+											initial={shouldReduceMotion ? {} : { opacity: 0, y: 8 }}
+											animate={{ opacity: 1, y: 0 }}
+											transition={{
+												duration: 0.3,
+												delay: 0.15,
+												ease: iOSEase,
+											}}
+											className="grid grid-cols-1 sm:grid-cols-2 gap-3"
+										>
+											{filteredSubjects.map((subject) => (
+												<Card
+													key={subject.id}
+													className={`cursor-pointer transition-colors duration-200 hover:ring-2 hover:ring-[--system-accent] ${
+														selectedSubjects.includes(subject.id)
+															? "ring-2 ring-[--system-accent] bg-[--system-accent]/5"
+															: ""
+													}`}
+													onClick={() =>
+														setSelectedSubjects((prev) =>
+															prev.includes(subject.id)
+																? prev.filter((s) => s !== subject.id)
+																: [...prev, subject.id],
+														)
+													}
+												>
+													<CardContent className="flex items-center gap-3 py-4">
+														<div
+															className="size-10 rounded-full flex items-center justify-center text-white font-extrabold text-sm"
+															style={{ backgroundColor: subject.color }}
+														>
+															{subject.id.slice(0, 2)}
+														</div>
+														<div className="flex-1 min-w-0">
+															<p className="font-medium truncate text-sm">
+																{subject.name}
+															</p>
+															<p className="text-xs text-muted-foreground">
+																Grade 12
+															</p>
+														</div>
+													</CardContent>
+												</Card>
+											))}
+										</motion.div>
+									</>
 								)}
 
 								{step === 2 && (
@@ -311,33 +365,73 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 											ease: iOSEase,
 										}}
 									>
-										<div
-											className={`p-5 rounded-xl border ${
-												notifications
-													? "ring-2 ring-[--system-accent] border-[--system-accent]/20"
-													: "border-border/60"
-											} bg-card transition-all duration-300`}
-										>
-											<div className="flex items-center justify-between">
-												<div className="flex items-center gap-3">
-													<Bell className="size-5 text-foreground" />
-													<div>
-														<p className="font-semibold text-sm">
-															Push Notifications
-														</p>
-														<p className="text-xs text-muted-foreground">
-															Daily reminders and achievement alerts
-														</p>
-													</div>
+										<div className="mb-6">
+											<div className="text-5xl font-extrabold text-foreground mb-1">
+												{notifications ? "On" : "Off"}
+											</div>
+											<p className="ios-subhead text-muted-foreground">
+												Notifications
+											</p>
+										</div>
+										<div className="flex flex-col gap-4 mb-6">
+											<div className="flex items-center gap-3">
+												<p className="font-medium text-sm">Frequency</p>
+												<div className="flex space-x-3">
+													{[
+														["daily", "Daily"],
+														["every_other_day", "Every other day"],
+														["weekly", "Weekly"],
+													].map(([value, label]) => (
+														<Button
+															key={value}
+															variant={
+																notificationFrequency === value
+																	? "default"
+																	: "outline"
+															}
+															size="sm"
+															onClick={() =>
+																setNotificationFrequency(
+																	value as
+																		| "daily"
+																		| "every_other_day"
+																		| "weekly",
+																)
+															}
+															className="px-3 py-1 rounded text-xs"
+														>
+															{label}
+														</Button>
+													))}
 												</div>
-												<Button
-													variant={notifications ? "default" : "outline"}
-													size="sm"
-													onClick={() => setNotifications(!notifications)}
-													className="min-w-[80px]"
-												>
-													{notifications ? "On" : "Off"}
-												</Button>
+											</div>
+											<div className="flex items-center gap-3">
+												<p className="font-medium text-sm">Time of day</p>
+												<div className="flex space-x-3">
+													{[
+														["morning", "Morning"],
+														["afternoon", "Afternoon"],
+														["evening", "Evening"],
+													].map(([value, label]) => (
+														<Button
+															key={value}
+															variant={
+																notificationTimeOfDay === value
+																	? "default"
+																	: "outline"
+															}
+															size="sm"
+															onClick={() =>
+																setNotificationTimeOfDay(
+																	value as "morning" | "afternoon" | "evening",
+																)
+															}
+															className="px-3 py-1 rounded text-xs"
+														>
+															{label}
+														</Button>
+													))}
+												</div>
 											</div>
 										</div>
 									</motion.div>
@@ -357,7 +451,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 								transition={{ duration: 0.4, ease: iOSEase }}
 								className="w-64 h-64 md:w-72 md:h-72"
 							>
-								<SVG />
+								<current.SVG />
 							</motion.div>
 						</div>
 					</div>
@@ -382,6 +476,8 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 										targetAps,
 										dailyStudyMinutes: dailyMinutes,
 										notificationsEnabled: notifications,
+										notificationFrequency,
+										notificationTimeOfDay,
 									});
 									onComplete?.();
 								}}

@@ -14,8 +14,8 @@ import {
 } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
+import type { GradingResult, Question } from "@/lib/question-engine/types";
 import { apiFetch, showBudgetToast } from "@/lib/shared/api-fetch";
-import type { GradingResult, Question } from "@/types/questions";
 
 export default function DevEnginePage() {
 	const [subject, setSubject] = useState("mathematics");

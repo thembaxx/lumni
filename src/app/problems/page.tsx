@@ -210,7 +210,7 @@ function ProblemsClient() {
 						</div>
 					</div>
 
-					<AnimatePresence mode="wait">
+					<AnimatePresence mode="wait" initial={false}>
 						{!fetched && !isLoading && (
 							<motion.div
 								initial={{ opacity: 0 }}

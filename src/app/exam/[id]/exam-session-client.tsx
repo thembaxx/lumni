@@ -69,7 +69,7 @@ function PartAnswerInput({
 						disabled={disabled}
 						onClick={() => onChange(opt.id)}
 						className={cn(
-							"w-full text-left p-3 rounded-xl border-2 transition-all",
+							"w-full text-left p-3 rounded-xl border-2 transition-[border-color,background-color]",
 							selected === opt.id
 								? "border-[--system-accent] bg-[--system-accent]/5"
 								: "border-border hover:border-[--system-accent]/30",
@@ -165,7 +165,7 @@ function QuestionNavigator({
 									key={item.part.id}
 									onClick={() => onNavigate(item.part.id)}
 									className={cn(
-										"size-8 rounded-lg text-xs font-medium transition-all",
+										"size-8 rounded-lg text-xs font-medium transition-colors",
 										isCurrent && "ring-2 ring-[--system-accent]",
 										isAnswered && !isCurrent && "bg-success/20 text-success",
 										!isAnswered &&
@@ -589,7 +589,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 			</header>
 
 			<div className="flex-1 flex">
-				<AnimatePresence>
+				<AnimatePresence initial={false}>
 					{showPalette && (
 						<motion.aside
 							initial={{ width: 0, opacity: 0 }}
@@ -617,7 +617,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 				</AnimatePresence>
 
 				<main className="flex-1 p-4 md:p-6 max-w-3xl mx-auto w-full">
-					<AnimatePresence mode="wait">
+					<AnimatePresence mode="wait" initial={false}>
 						{currentPart && (
 							<motion.div
 								key={currentPart.part.id}
@@ -647,7 +647,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 									>
 										<Flag
 											className={cn(
-												"size-5 transition-all",
+												"size-5 transition-colors",
 												currentPartId && flags.includes(currentPartId)
 													? "text-warning fill-warning"
 													: "text-muted-foreground",

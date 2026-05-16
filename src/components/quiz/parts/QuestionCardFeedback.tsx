@@ -1,0 +1,256 @@
+import {
+	CheckCircle,
+	CircleNotch,
+	PaperPlaneRight,
+	Sparkle,
+	X,
+} from "@phosphor-icons/react";
+import { m, motion } from "framer-motion";
+import { useCallback } from "react";
+import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { Button } from "@/components/ui/button";
+import type { useSolver } from "@/hooks/use-solver";
+import type { GradingResult, UserAnswer } from "@/lib/question-engine/types";
+import { cn } from "@/lib/shared";
+import { iOSEase } from "@/lib/utils/animation";
+import { StepByStep } from "../step-by-step";
+
+type Solver = ReturnType<typeof useSolver>;
+
+interface QuestionCardFeedbackProps {
+	state: {
+		isSubmitted: boolean;
+		isCorrect: boolean | null;
+		showHint: boolean;
+		showExplanation: boolean;
+	};
+	gradeResult: {
+		correct: boolean;
+		score: number;
+		feedback: string;
+	} | null;
+	question: {
+		id: string;
+		questionText: string;
+		explanation: string | undefined;
+		steps?: string[];
+		points: number;
+		type: string;
+		subject: string;
+		hint?: string;
+	};
+	effectiveSubject: string;
+	isCorrect: boolean | null;
+	showExplanation: boolean;
+	isGrading: boolean;
+	solver: Solver;
+	followUpMsgs: {
+		role: "user" | "assistant";
+		content: string;
+	}[];
+	isSolverEnabled: boolean;
+	handleFollowUp: () => void;
+	followUpInput: string;
+	setFollowUpInput: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export function QuestionCardFeedback({
+	state,
+	gradeResult,
+	question,
+	effectiveSubject,
+	isCorrect,
+	showExplanation,
+	isGrading,
+	solver,
+	followUpMsgs,
+	isSolverEnabled,
+	handleFollowUp,
+	followUpInput,
+	setFollowUpInput,
+}: QuestionCardFeedbackProps) {
+	if (!state.showExplanation) {
+		return null;
+	}
+
+	const feedback = gradeResult;
+	const isCorrectAnswer = feedback?.correct ?? false;
+
+	return (
+		<m.div
+			initial={{ opacity: 0, scale: 0.95, y: -8 }}
+			animate={{ opacity: 1, scale: 1, y: 0 }}
+			transition={{ duration: 0.3, ease: iOSEase }}
+			className={cn(
+				"rounded-lg p-4 flex flex-col gap-3",
+				isCorrectAnswer
+					? "bg-success/10 text-success"
+					: "bg-destructive/10 text-destructive",
+			)}
+		>
+			<div className="flex items-center gap-3">
+				<motion.div
+					initial={{ scale: 0 }}
+					animate={{ scale: 1 }}
+					transition={{ duration: 0.3 }}
+				>
+					{isCorrectAnswer ? (
+						<CheckCircle className="size-10 shrink-0" />
+					) : (
+						<X className="size-10 shrink-0" />
+					)}
+				</motion.div>
+				<p className="font-medium">
+					{isCorrectAnswer ? "Correct!" : "Incorrect"}
+				</p>
+			</div>
+			{feedback && (
+				<div className="flex flex-col gap-1">
+					<div className="flex items-center gap-2">
+						<span className="text-sm font-medium">
+							Score: {feedback.score}/{question.points}
+						</span>
+					</div>
+					<div className="text-sm opacity-90">
+						<MarkdownRenderer
+							content={(feedback.feedback || question.explanation) ?? ""}
+							subject={effectiveSubject}
+						/>
+					</div>
+				</div>
+			)}
+			{question.steps && question.steps.length > 0 && (
+				<div className="pt-2 border-t border-current/20">
+					<StepByStep
+						steps={question.steps}
+						subject={effectiveSubject}
+						className="text-foreground"
+					/>
+				</div>
+			)}
+			{!isCorrectAnswer && isSolverEnabled && (
+				<div className="flex flex-col gap-2 pt-2 border-t border-current/20">
+					{solver.isPending ? (
+						<div className="flex items-center justify-center gap-2 py-3">
+							<CircleNotch className="size-5 animate-spin" />
+							<span className="text-sm">Solving...</span>
+						</div>
+					) : solver.data?.steps?.length ? (
+						<div className="flex flex-col gap-2">
+							<p className="text-xs font-bold uppercase tracking-wider text-foreground/60">
+								Step-by-step solution
+							</p>
+							<StepByStep
+								steps={solver.data.steps}
+								subject={effectiveSubject}
+								className="text-foreground"
+							/>
+						</div>
+					) : solver.data?.solution ? (
+						<div className="rounded-xl bg-card border border-border/50 p-4 text-sm leading-relaxed whitespace-pre-wrap">
+							{solver.data.solution}
+						</div>
+					) : solver.isError ? (
+						<div className="flex items-center gap-2 py-2">
+							<span className="text-sm opacity-80">
+								Couldn't generate steps.
+							</span>
+							<Button
+								variant="ghost"
+								size="sm"
+								onClick={() =>
+									solver.mutate({
+										question: question.questionText,
+										subject: effectiveSubject,
+									})
+								}
+								className="h-8 text-xs"
+							>
+								Try again
+							</Button>
+						</div>
+					) : (
+						<Button
+							variant="ghost"
+							size="sm"
+							onClick={() =>
+								solver.mutate({
+									question: question.questionText,
+									subject: effectiveSubject,
+								})
+							}
+							className="gap-2 h-9 text-sm self-start"
+						>
+							<Sparkle data-icon="inline-start" />
+							Show me the steps
+						</Button>
+					)}
+				</div>
+			)}
+			{solver.data && (
+				<div className="flex flex-col gap-2 pt-2 border-t border-current/20">
+					{followUpMsgs.map((msg, i) => (
+						<div
+							key={i}
+							className={cn(
+								"rounded-xl px-4 py-3 text-sm max-w-[90%]",
+								msg.role === "user"
+									? "bg-[--system-accent]/10 ml-auto"
+									: "bg-card border border-border/50 mr-auto",
+							)}
+						>
+							{msg.content}
+						</div>
+					))}
+					{solver.isSendingFollowUp && (
+						<div className="flex items-center gap-2 py-2 text-sm text-muted-foreground">
+							<CircleNotch className="size-4 animate-spin" />
+							Thinking...
+						</div>
+					)}
+					{solver.followUpError && (
+						<div className="flex items-center gap-2 py-2">
+							<span className="text-sm opacity-80">
+								Couldn't get an answer.
+							</span>
+							<Button
+								variant="ghost"
+								size="sm"
+								onClick={handleFollowUp}
+								className="h-8 text-xs"
+							>
+								Try again
+							</Button>
+						</div>
+					)}
+					{!solver.isSendingFollowUp && (
+						<div className="flex items-center gap-2">
+							<input
+								type="text"
+								value={followUpInput}
+								onChange={(e) => setFollowUpInput(e.target.value)}
+								onKeyDown={(e) => {
+									if (e.key === "Enter" && !e.shiftKey) {
+										e.preventDefault();
+										handleFollowUp();
+									}
+								}}
+								placeholder="Ask a follow-up question..."
+								className="flex-1 h-9 rounded-lg bg-card border border-border px-3 text-sm outline-none focus:border-[--system-accent]/40"
+							/>
+							<Button
+								variant="ghost"
+								size="icon-sm"
+								onClick={handleFollowUp}
+								disabled={!followUpInput.trim()}
+								className="size-9 shrink-0"
+							>
+								<PaperPlaneRight data-icon />
+							</Button>
+						</div>
+					)}
+				</div>
+			)}
+		</m.div>
+	);
+}

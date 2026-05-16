@@ -1,5 +1,7 @@
 "use client";
 
+import { ChampionIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { Gear, SignIn, SignOut, Star, User } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
@@ -82,7 +84,10 @@ export function TopNav({ title, className }: TopNavProps) {
 						className="flex items-center gap-2 mr-auto ml-4"
 					>
 						<div className="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-[--system-accent]/10">
-							<Star weight="fill" className="size-3 text-[--system-accent]" />
+							<HugeiconsIcon
+								icon={ChampionIcon}
+								className="size-3 text-[--system-accent]"
+							/>
 							<span className="text-[11px] font-bold tabular-nums text-[--system-accent]">
 								Lv.{levelInfo.level}
 							</span>

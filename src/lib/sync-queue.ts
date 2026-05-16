@@ -96,9 +96,7 @@ const syncQueueTable: QueueTable<QueuedSyncItem> = {
 			},
 			toArray: async () => {
 				const all = await offlineDB.syncQueue.toArray();
-				return all
-					.filter((i) => i.status === "pending")
-					.map(toQueuedItem);
+				return all.filter((i) => i.status === "pending").map(toQueuedItem);
 			},
 		}),
 	}),

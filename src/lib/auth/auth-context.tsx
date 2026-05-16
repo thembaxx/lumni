@@ -15,7 +15,11 @@ import { flushOfflineData } from "@/lib/sync/sync-handler";
 import { processQueue } from "@/lib/sync-queue";
 import { useAuthStore } from "@/store/auth";
 import { getReadableErrorMessage } from "./errors";
-import { attemptMagicLink, attemptSignIn, recordSuccessfulSignIn } from "./rate-limit";
+import {
+	attemptMagicLink,
+	attemptSignIn,
+	recordSuccessfulSignIn,
+} from "./rate-limit";
 
 export type AuthStatus = "loading" | "authenticated" | "unauthenticated";
 

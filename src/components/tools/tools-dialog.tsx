@@ -36,6 +36,22 @@ const SmartScheduler = dynamic(
 	() => import("./smart-scheduler").then((mod) => mod.SmartScheduler),
 	{ ssr: false },
 );
+const FlashcardCreator = dynamic(
+	() =>
+		import("./flashcards/flashcard-creator").then(
+			(mod) => mod.FlashcardCreator,
+		),
+	{ ssr: false },
+);
+const NoteCreator = dynamic(
+	() => import("./notes/note-creator").then((mod) => mod.NoteCreator),
+	{ ssr: false },
+);
+const StudySetCreator = dynamic(
+	() =>
+		import("./study-sets/study-set-creator").then((mod) => mod.StudySetCreator),
+	{ ssr: false },
+);
 
 interface ToolsDialogProps {
 	open: boolean;
@@ -50,18 +66,19 @@ const tabs = [
 	{ id: "calendar", label: "Exams" },
 	{ id: "results", label: "Results" },
 	{ id: "scheduler", label: "Scheduler" },
+	{ id: "flashcards", label: "Flashcards" },
+	{ id: "notes", label: "Notes" },
+	{ id: "study-sets", label: "Study Sets" },
 ];
 
 function ToolsDialogInner({ open, onOpenChange }: ToolsDialogProps) {
 	const initialTab = useToolsStore((s) => s.initialTab);
 	const cameraFocus = useToolsStore((s) => s.cameraFocus);
 
-	if (!open) return null;
-
 	return (
 		<motion.div
 			initial={{ opacity: 0 }}
-			animate={{ opacity: 1 }}
+			animate={{ opacity: open ? 1 : 0 }}
 			exit={{ opacity: 0 }}
 			transition={{ duration: 0.2 }}
 			className="fixed inset-0 z-50 bg-system-surface"
@@ -95,7 +112,7 @@ function ToolsDialogInner({ open, onOpenChange }: ToolsDialogProps) {
 						transition={{ delay: 0.2, duration: 0.3 }}
 						className="px-5 py-3"
 					>
-						<TabsList className="h-11 p-1 bg-system-background-tertiary transition-all duration-300 rounded-lg flex justify-start w-full overflow-x-auto px-2 py-2 gap-2 scrollbar-hide shrink-0">
+						<TabsList className="h-11 p-1 bg-system-background-tertiary transition-colors duration-300 rounded-lg flex justify-start w-full overflow-x-auto px-2 py-2 gap-2 scrollbar-hide shrink-0">
 							{tabs.map((tab) => (
 								<TabsTrigger
 									key={tab.id}
@@ -129,6 +146,15 @@ function ToolsDialogInner({ open, onOpenChange }: ToolsDialogProps) {
 						</TabsContent>
 						<TabsContent value="scheduler" className="h-full m-0">
 							<SmartScheduler />
+						</TabsContent>
+						<TabsContent value="flashcards" className="h-full m-0">
+							<FlashcardCreator />
+						</TabsContent>
+						<TabsContent value="notes" className="h-full m-0">
+							<NoteCreator />
+						</TabsContent>
+						<TabsContent value="study-sets" className="h-full m-0">
+							<StudySetCreator />
 						</TabsContent>
 					</div>
 				</Tabs>

@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { checkBudget, trackUsage } from "@/lib/ai/with-budget";
 import type { AICallType } from "@/lib/ai/token-tracker";
-import { withRateLimit } from "@/lib/shared/with-rate-limit";
+import { checkBudget, trackUsage } from "@/lib/ai/with-budget";
 import type { RouteHandler } from "@/lib/shared/with-rate-limit";
+import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 interface EngineRouteConfig<T> {
 	budgetType: AICallType;
@@ -19,7 +19,14 @@ interface EngineRouteConfig<T> {
 export function createEngineHandler<T = Record<string, unknown>>(
 	config: EngineRouteConfig<T>,
 ): RouteHandler {
-	const { budgetType, useRateLimit = true, errorLabel, parseBody, validate, execute } = config;
+	const {
+		budgetType,
+		useRateLimit = true,
+		errorLabel,
+		parseBody,
+		validate,
+		execute,
+	} = config;
 
 	const handler: RouteHandler = async (req: NextRequest) => {
 		try {

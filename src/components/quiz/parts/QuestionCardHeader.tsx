@@ -1,0 +1,82 @@
+import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { DifficultyBadge } from "@/components/shared/difficulty-badge";
+import { TTSButton } from "@/components/shared/tts-button";
+import { Badge } from "@/components/ui/badge";
+
+interface QuestionCardHeaderProps {
+	question: {
+		id: string;
+		questionText: string;
+		topic: string;
+		type: string;
+		points: number;
+		subject: string;
+		difficulty: string;
+	};
+	effectiveSubject: string;
+	bookmarked: boolean;
+	onBookmarkToggle: () => void;
+	isMathSubject: boolean;
+	onToolClick: () => void;
+}
+
+export function QuestionCardHeader({
+	question,
+	effectiveSubject,
+	bookmarked,
+	onBookmarkToggle,
+}: QuestionCardHeaderProps) {
+	return (
+		<div className="gap-4">
+			<div className="flex items-center justify-between">
+				<div className="flex items-center gap-2">
+					<Badge
+						variant="outline"
+						className="bg-[--system-accent]/10 font-medium"
+					>
+						<span className="opacity-80">{question.topic}</span>
+					</Badge>
+					<DifficultyBadge
+						difficulty={question.difficulty as "easy" | "medium" | "hard"}
+						variant="quiz"
+						className="border font-mono text-xs"
+					/>
+					<Badge
+						variant="outline"
+						className="bg-[--system-accent]/5 text-xs font-mono"
+					>
+						{question.type}
+					</Badge>
+				</div>
+				<div className="flex items-center gap-1">
+					<button
+						onClick={onBookmarkToggle}
+						className="size-8 rounded-full flex items-center justify-center hover:bg-muted transition-colors"
+						aria-label={bookmarked ? "Remove bookmark" : "Bookmark question"}
+					>
+						<svg
+							width="16"
+							height="16"
+							viewBox="0 0 24 24"
+							fill={bookmarked ? "currentColor" : "none"}
+							stroke="currentColor"
+							strokeWidth="2"
+							className={bookmarked ? "text-warning" : "text-muted-foreground"}
+						>
+							<path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+						</svg>
+					</button>
+					<TTSButton text={question.questionText} />
+					<Badge variant="secondary" className="text-xs">
+						{question.points} pts
+					</Badge>
+				</div>
+			</div>
+			<MarkdownRenderer
+				content={question.questionText}
+				subject={effectiveSubject}
+				className="text-lg leading-relaxed"
+			/>
+		</div>
+	);
+}

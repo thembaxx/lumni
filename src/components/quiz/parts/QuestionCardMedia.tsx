@@ -1,0 +1,69 @@
+import { Minus, Plus } from "@phosphor-icons/react";
+import { Button } from "@/components/ui/button";
+import type { MediaContent } from "@/lib/question-engine/types";
+import type { VisualContent as VisualContentType } from "@/lib/visual-engine/types";
+import { QuestionDiagram } from "../question-diagram";
+
+interface QuestionCardMediaProps {
+	visual: VisualContentType | undefined | null;
+	isLoading: boolean;
+	questionMedia: MediaContent[];
+	showDiagram: boolean;
+	onToggleDiagram: () => void;
+	hasDiagram: boolean;
+}
+
+export function QuestionCardMedia({
+	visual,
+	isLoading,
+	questionMedia,
+	showDiagram,
+	onToggleDiagram,
+	hasDiagram,
+}: QuestionCardMediaProps) {
+	// If we are loading the visual, show a skeleton
+	if (isLoading) {
+		return (
+			<div className="relative">
+				<div className="w-full h-48 bg-muted/50 rounded" />
+			</div>
+		);
+	}
+
+	if (!hasDiagram) {
+		return null;
+	}
+
+	return (
+		<div className="mt-2">
+			<div className="flex items-center justify-between">
+				<p className="text-xs font-medium text-muted-foreground">Diagram</p>
+				<Button
+					variant="ghost"
+					size="sm"
+					onClick={onToggleDiagram}
+					className="h-8 gap-1 px-2"
+					aria-label={showDiagram ? "Hide diagram" : "Show diagram"}
+				>
+					{showDiagram ? (
+						<>
+							<Minus data-icon="inline-start" />
+							<span className="text-xs">Hide</span>
+						</>
+					) : (
+						<>
+							<Plus data-icon="inline-start" />
+							<span className="text-xs">Show</span>
+						</>
+					)}
+				</Button>
+			</div>
+			{showDiagram &&
+				questionMedia.map((m, i) => (
+					<div key={i} className="mt-2">
+						{m.diagramData && <QuestionDiagram diagram={m.diagramData} />}
+					</div>
+				))}
+		</div>
+	);
+}

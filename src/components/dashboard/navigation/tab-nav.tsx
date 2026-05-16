@@ -1,6 +1,6 @@
 "use client";
 
-import { GridFour, Snowflake, Sparkle } from "@phosphor-icons/react";
+import { GridFour, Snowflake, Sparkle, TrendUp } from "@phosphor-icons/react";
 import { m, motion } from "framer-motion";
 import { startTransition, useState } from "react";
 import { Anim } from "@/components/shared/anim";
@@ -12,20 +12,26 @@ import type { TabValue } from "../types";
 interface TabConfig {
 	value: TabValue;
 	label: string;
-	icon: typeof Snowflake;
+	icon: typeof Snowflake | typeof TrendUp | typeof GridFour;
 }
 
 const tabs: TabConfig[] = [
 	{ value: "ai", label: "AI", icon: Snowflake },
 	{ value: "spaces", label: "Practice", icon: GridFour },
+	{ value: "analytics", label: "Analytics", icon: TrendUp },
 ];
 
 interface TabNavProps {
 	activeTab: TabValue;
 	onTabChange: (tab: TabValue) => void;
+	"aria-label"?: string;
 }
 
-export function TabNav({ activeTab, onTabChange }: TabNavProps) {
+export function TabNav({
+	activeTab,
+	onTabChange,
+	"aria-label": ariaLabel = "Main navigation",
+}: TabNavProps) {
 	const [tabSwitch, setTabSwitch] = useState(0);
 
 	const handleTabChange = (value: string) => {
@@ -41,8 +47,9 @@ export function TabNav({ activeTab, onTabChange }: TabNavProps) {
 				value={activeTab}
 				className="flex flex-col items-center"
 				onValueChange={handleTabChange}
+				aria-label={ariaLabel}
 			>
-				<m.div
+				<motion.div
 					initial={{ opacity: 0, y: -8 }}
 					animate={{
 						opacity: 1,
@@ -54,8 +61,8 @@ export function TabNav({ activeTab, onTabChange }: TabNavProps) {
 					}}
 				>
 					<TabsList
-						className="bg-secondary/60 backdrop-blur-md border border-border/40 p-1 grid grid-cols-2 rounded-2xl h-10 relative shadow-sm"
-						aria-label="Navigation tabs"
+						className="bg-secondary/60 backdrop-blur-md border border-border/40 p-1 grid grid-cols-3 rounded-2xl h-10 relative shadow-sm"
+						role="tablist"
 					>
 						<span
 							className={cn(
@@ -64,7 +71,9 @@ export function TabNav({ activeTab, onTabChange }: TabNavProps) {
 									? "left-0.5 w-[calc(33.33%-4px)]"
 									: activeTab === "spaces"
 										? "left-[calc(33.33%+2px)] w-[calc(33.33%-4px)]"
-										: "left-[calc(66.66%+2px)] w-[calc(33.33%-4px)]",
+										: activeTab === "analytics"
+											? "left-[calc(66.66%+2px)] w-[calc(33.33%-4px)]"
+											: "left-[calc(66.66%+2px)] w-[calc(33.33%-4px)]",
 							)}
 						/>
 						{tabs.map((tab) => (
@@ -77,13 +86,11 @@ export function TabNav({ activeTab, onTabChange }: TabNavProps) {
 										? "text-foreground"
 										: "text-muted-foreground hover:text-foreground",
 								)}
+								role="tab"
+								aria-selected={activeTab === tab.value}
+								tabIndex={activeTab === tab.value ? 0 : -1}
 							>
-								<tab.icon
-									className={cn(
-										"size-3.5 mr-1.5 transition-transform duration-200",
-										activeTab === tab.value && "tab-icon-active",
-									)}
-								/>
+								<tab.icon />
 								{tab.label}
 							</TabsTrigger>
 						))}
@@ -97,7 +104,7 @@ export function TabNav({ activeTab, onTabChange }: TabNavProps) {
 							<Sparkle className="size-6 text-warning" />
 						</motion.div>
 					</TabsList>
-				</m.div>
+				</motion.div>
 			</Tabs>
 		</Anim>
 	);

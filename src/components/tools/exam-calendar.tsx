@@ -1,6 +1,12 @@
 "use client";
 
-import { CalendarBlank, Plus, Trash, X } from "@phosphor-icons/react";
+import {
+	Calendar03FreeIcons,
+	Cancel01FreeIcons,
+	Delete02FreeIcons,
+	PlusSignFreeIcons,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -118,27 +124,30 @@ export function ExamCalendar() {
 		<div className="h-full flex flex-col overflow-y-auto">
 			<div className="px-5 pt-5 pb-3">
 				<h2 className="ios-title-3 flex items-center gap-2 text-[--system-text-primary]">
-					<CalendarBlank className="size-5 text-[--system-accent]" />
+					<HugeiconsIcon
+						icon={Calendar03FreeIcons}
+						className="size-5 text-[--system-accent]"
+					/>
 					Exam Calendar
 				</h2>
-				<p className="ios-subhead text-[--system-text-secondary] mt-1">
+				<p className="ios-subhead text-[--system-text-secondary]/50 mt-1">
 					Track your exam dates and never miss a paper.
 				</p>
 			</div>
 
-			<div className="px-0 sm:px-5 pb-5">
-				<div className="bg-system-background-secondary rounded-2xl sm:rounded-2xl p-5">
+			<div className="px-5 sm:px-5 pb-5">
+				<div className="bg-system-background-secondary rounded-2xl sm:rounded-2xl p-2">
 					<Calendar
 						mode="single"
 						onSelect={(date) => date && setSelectedDate(date)}
 						selected={selectedDate}
-						className="w-full"
+						className="w-full rounded-xl"
 					/>
 				</div>
 			</div>
 
 			<div className="px-5 pb-5">
-				<div className="bg-system-background-secondary rounded-2xl p-5 space-y-3">
+				<div className="bg-system-background-secondary rounded-2xl py-3 pr-3 pl-6 space-y-3">
 					<div className="flex items-center justify-between">
 						<p className="text-sm font-semibold text-foreground">
 							{selectedDate
@@ -148,9 +157,9 @@ export function ExamCalendar() {
 						<Button
 							size="sm"
 							onClick={() => setIsAddingExam(true)}
-							className="rounded-xl"
+							className="rounded-xl pr-5"
 						>
-							<Plus data-icon className="mr-1" />
+							<HugeiconsIcon icon={PlusSignFreeIcons} data-icon />
 							Add
 						</Button>
 					</div>
@@ -186,7 +195,7 @@ export function ExamCalendar() {
 										size="icon-sm"
 										onClick={() => deleteExam(exam.id)}
 									>
-										<Trash data-icon />
+										<HugeiconsIcon icon={Delete02FreeIcons} data-icon />
 									</Button>
 								</div>
 							))}
@@ -267,7 +276,7 @@ export function ExamCalendar() {
 								onClick={() => setIsAddingExam(false)}
 								className="absolute top-4 right-4"
 							>
-								<X data-icon />
+								<HugeiconsIcon icon={Cancel01FreeIcons} data-icon />
 							</Button>
 
 							<h3 className="text-lg font-semibold mb-4">Add Exam</h3>
@@ -279,6 +288,8 @@ export function ExamCalendar() {
 										{commonSubjects.map((subject) => (
 											<Button
 												key={subject.id}
+												className="border border-border/80"
+												size="sm"
 												variant={
 													newExam.subject === subject.id ? "default" : "ghost"
 												}
@@ -298,6 +309,8 @@ export function ExamCalendar() {
 										{["Paper 1", "Paper 2", "Paper 3"].map((paper) => (
 											<Button
 												key={paper}
+												size="sm"
+												className="border border-border/80"
 												variant={newExam.paper === paper ? "default" : "ghost"}
 												onClick={() => setNewExam({ ...newExam, paper })}
 											>

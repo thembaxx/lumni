@@ -231,7 +231,7 @@ export function AiSolver({ cameraFocus }: AiSolverProps) {
 									type="button"
 									onClick={() => setSubject(s.id)}
 									className={cn(
-										"text-xs h-7 px-2.5 rounded-lg font-medium transition-all border",
+										"text-xs h-7 px-2.5 rounded-lg font-medium transition-colors border",
 										subject === s.id
 											? "bg-[--system-accent] text-white border-[--system-accent]"
 											: "bg-system-fill text-[--system-text-secondary] border-border hover:border-[--system-accent]/40",
@@ -375,7 +375,7 @@ export function AiSolver({ cameraFocus }: AiSolverProps) {
 				<div className="px-5 pb-6">
 					<Button
 						onClick={handleSolve}
-						className="w-full gap-2 h-12 font-medium rounded-xl text-sm shadow-solver transition-all"
+						className="w-full gap-2 h-12 font-medium rounded-xl text-sm shadow-solver transition-[box-shadow]"
 					>
 						<Sparkle data-icon />
 						Solve Problem

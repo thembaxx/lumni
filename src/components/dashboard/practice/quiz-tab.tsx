@@ -24,6 +24,7 @@ import { useQuizSession } from "@/hooks/use-quiz-session";
 import { cn } from "@/lib/shared";
 import { formatTime } from "@/lib/shared/time";
 import { iOSEase } from "@/lib/utils/animation";
+import { useOptimizedAnimation } from "@/lib/utils/animation-optimization";
 
 interface QuizTabProps {
 	className?: string;
@@ -36,6 +37,8 @@ const DEFAULT_QUESTION_COUNT = 10;
 export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 	const [isTransitioning, setIsTransitioning] = useState(false);
 	const shouldReduceMotion = useReducedMotion();
+	const { shouldReduceMotion: shouldReduceMotionOpt } = useOptimizedAnimation();
+	const finalShouldReduceMotion = shouldReduceMotion || shouldReduceMotionOpt;
 
 	const { state, actions } = useQuizSession({
 		questionCount: DEFAULT_QUESTION_COUNT,
@@ -167,12 +170,16 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 				</div>
 
 				{/* Decorative accent — right zone */}
-				<div className="col-span-12 md:col-span-5 col-start-1 md:col-start-8 relative overflow-hidden bg-system-surface/30">
-					{!shouldReduceMotion && (
+				<div
+					className="col-span-12 md:col-span-5 col-start-1 md:col-start-8 relative overflow-hidden bg-system-surface/30"
+					aria-hidden="true"
+				>
+					{!finalShouldReduceMotion && (
 						<PerpetualFloat
 							className="absolute right-8 top-1/2 -translate-y-1/2"
 							duration={10}
 							offsetY={-16}
+							aria-hidden="true"
 						>
 							<div className="size-24 rounded-2xl bg-[--system-accent]/10 blur-xl" />
 						</PerpetualFloat>

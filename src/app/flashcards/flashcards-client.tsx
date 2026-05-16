@@ -5,7 +5,7 @@ import { Confetti, XPGainPopup } from "@/components/celebration";
 import { useGamification } from "@/hooks/use-gamification";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
 import { competencyService } from "@/lib/competency-engine/competency-service";
-import type { Question } from "@/types/questions";
+import type { Question } from "@/lib/question-engine/types";
 import { FlashcardsActive } from "./flashcards-active";
 import { FlashcardsEmpty } from "./flashcards-empty";
 import { FlashcardsIdle } from "./flashcards-idle";

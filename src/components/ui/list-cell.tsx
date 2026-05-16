@@ -38,7 +38,7 @@ function ListCell({
 				"flex w-full items-center gap-4 px-5 py-4 text-left min-h-[56px]",
 				"bg-[--system-surface] transition-[background-color,scale] duration-200",
 				onClick &&
-					"hover:bg-[--system-surface-secondary] active:bg-[--system-surface-secondary] active:scale-[0.98]",
+					"hover:bg-[--system-surface-secondary] active:bg-[--system-surface-secondary] active:scale-[0.96]",
 				disabled && "opacity-50",
 				showSeparator && "ios-separator",
 				className,

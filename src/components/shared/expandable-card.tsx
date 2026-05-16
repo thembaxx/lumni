@@ -185,7 +185,7 @@ function CollapsedContent({
 			<div className="p-5 rounded-2xl border bg-card text-card-foreground shadow-sm w-full text-left">
 				<div
 					onClick={onOpen}
-					className="flex flex-col gap-3 cursor-pointer hover:border-[--system-accent]/20 transition-[scale,colors] duration-200 active:scale-[0.98]"
+					className="flex flex-col gap-3 cursor-pointer hover:border-[--system-accent]/20 transition-[scale,colors] duration-200 active:scale-[0.96]"
 					role="button"
 					tabIndex={0}
 					onKeyDown={(e) => {

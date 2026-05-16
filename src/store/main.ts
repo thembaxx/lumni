@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { QAQuestion } from "@/types/questions";
+import type { Question } from "@/lib/question-engine/types";
 
 export interface UploadSubject {
 	routeKey: string;
@@ -13,15 +13,17 @@ interface UploadStore {
 	subjects: UploadSubject[];
 	isLoading: boolean;
 	error: Error | null;
-	cachedQuestions: Map<string, QAQuestion[]>;
+	cachedQuestions: Map<string, Question[]>;
 
 	setSubjects: (subjects: UploadSubject[]) => void;
 	setLoading: (isLoading: boolean) => void;
 	setError: (error: Error | null) => void;
 	getSubject: (routeKey: string) => UploadSubject | undefined;
-	getCachedQuestions: (subject: string) => QAQuestion[] | undefined;
-	setCachedQuestions: (subject: string, questions: QAQuestion[]) => void;
-	appendCachedQuestions: (subject: string, questions: QAQuestion[]) => void;
+	getCachedQuestions: (subject: string) => Question[] | undefined;
+
+	setCachedQuestions: (subject: string, questions: Question[]) => void;
+
+	appendCachedQuestions: (subject: string, questions: Question[]) => void;
 	clearQuestionCache: () => void;
 }
 
@@ -44,14 +46,14 @@ export const useUploadStore = create<UploadStore>((set, get) => ({
 		return get().cachedQuestions.get(normalizedSubject);
 	},
 
-	setCachedQuestions: (subject: string, questions: QAQuestion[]) => {
+	setCachedQuestions: (subject: string, questions: Question[]) => {
 		const normalizedSubject = subject.toLowerCase();
 		const newCache = new Map(get().cachedQuestions);
 		newCache.set(normalizedSubject, questions);
 		set({ cachedQuestions: newCache });
 	},
 
-	appendCachedQuestions: (subject: string, questions: QAQuestion[]) => {
+	appendCachedQuestions: (subject: string, questions: Question[]) => {
 		const normalizedSubject = subject.toLowerCase();
 		const newCache = new Map(get().cachedQuestions);
 		const existing = newCache.get(normalizedSubject) || [];

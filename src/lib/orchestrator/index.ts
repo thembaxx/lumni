@@ -1,5 +1,5 @@
 export { JobProcessor, jobProcessor } from "./job-processor";
-export { JobQueue, jobQueue } from "./job-queue";
+export { enqueue, queueCore } from "./job-queue";
 export { LearningOrchestrator } from "./learning-orchestrator";
 export type {
 	GenerateResult,

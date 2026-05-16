@@ -1,7 +1,7 @@
 "use client";
 
 import { DiagramRenderer } from "@/components/visual/diagram-renderer";
-import type { DiagramSpec } from "@/types/questions";
+import type { DiagramSpec } from "@/lib/question-engine/types";
 
 export function QuestionDiagram({ diagram }: { diagram: DiagramSpec }) {
 	return (

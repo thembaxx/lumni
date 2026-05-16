@@ -1,4 +1,10 @@
-export { classifyAndMap, getDataForType, getValidator, isKonvaType, KONVA_TYPES } from "./diagram-mapper";
+export {
+	classifyAndMap,
+	getDataForType,
+	getValidator,
+	isKonvaType,
+	KONVA_TYPES,
+} from "./diagram-mapper";
 export { searchImage } from "./image-resolver";
 export { generateDiagram } from "./stem-renderer";
 export type {

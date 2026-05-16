@@ -1,41 +1,18 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useCallback } from "react";
 import { jobProcessor } from "@/lib/orchestrator/job-processor";
+import { useInterval } from "./use-interval";
+import { useOnlineStatus } from "./useOnlineStatus";
 
 const POLL_INTERVAL_MS = 30_000;
 
 export function useJobProcessor() {
-	const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+	const { isOnline } = useOnlineStatus();
 
-	useEffect(() => {
-		if (typeof window === "undefined") return;
-
-		const process = () => {
-			jobProcessor.processBatch(5).catch(() => {});
-		};
-
-		if (navigator.onLine) {
-			process();
-		}
-
-		intervalRef.current = setInterval(() => {
-			if (navigator.onLine) {
-				process();
-			}
-		}, POLL_INTERVAL_MS);
-
-		const handleOnline = () => {
-			process();
-		};
-
-		window.addEventListener("online", handleOnline);
-
-		return () => {
-			if (intervalRef.current) {
-				clearInterval(intervalRef.current);
-			}
-			window.removeEventListener("online", handleOnline);
-		};
+	const process = useCallback(() => {
+		jobProcessor.processBatch(5).catch(() => {});
 	}, []);
+
+	useInterval(process, isOnline ? POLL_INTERVAL_MS : null);
 }

@@ -37,7 +37,7 @@ export function NavigationBar({
 		<header
 			ref={ref}
 			className={cn(
-				"sticky top-0 z-20 w-full transition-all duration-200",
+				"sticky top-0 z-20 w-full transition-[box-shadow] duration-200",
 				isCollapsed ? "shadow-sm" : "",
 				className,
 			)}
@@ -45,7 +45,7 @@ export function NavigationBar({
 			{/* Background layer */}
 			<div
 				className={cn(
-					"absolute inset-0 transition-all duration-200",
+					"absolute inset-0 transition-[background-color,backdrop-filter] duration-200",
 					isCollapsed
 						? "bg-system-background/90 backdrop-blur-xl"
 						: "bg-system-background/0",
@@ -83,7 +83,7 @@ export function NavigationBar({
 					<div className="flex-1 min-w-0">
 						<m.h1
 							className={cn(
-								"font-heading font-extrabold text-system-text-primary truncate transition-all duration-200",
+								"font-heading font-extrabold text-system-text-primary truncate transition-[font-size,line-height] duration-200",
 								isCollapsed
 									? "text-base leading-6"
 									: "text-[34px] leading-[1.2] tracking-[var(--tracking-large-title)]",

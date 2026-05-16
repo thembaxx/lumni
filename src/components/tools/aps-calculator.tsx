@@ -258,7 +258,7 @@ export function APSCalculator() {
 					<div className="mt-4 h-2 bg-system-background-tertiary rounded-full overflow-hidden">
 						<div
 							className={cn(
-								"h-full rounded-full transition-all duration-500",
+								"h-full rounded-full transition-[width] duration-500",
 								scoreLevel === "high" && "bg-success",
 								scoreLevel === "medium" && "bg-warning",
 								scoreLevel === "low" && "bg-destructive",

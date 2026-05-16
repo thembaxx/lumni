@@ -1,9 +1,9 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
+import type { Question } from "@/lib/question-engine/types";
 import { apiFetch, showBudgetToast } from "@/lib/shared/api-fetch";
 import type { VisualContent } from "@/lib/visual-engine/types";
-import type { Question } from "@/types/questions";
 
 interface VisualResult {
 	visual: VisualContent | null;

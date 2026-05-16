@@ -3,11 +3,13 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useState } from "react";
 import { AchievementShowcase } from "@/components/dashboard/achievement-showcase";
+import { ComparativeAnalyticsPanel } from "@/components/dashboard/analytics/comparative-analytics-panel";
 import { CompetencyOverview } from "@/components/dashboard/competency-overview";
 import { CountdownHeader } from "@/components/dashboard/countdown-header";
 import { DailyChallenges } from "@/components/dashboard/daily-challenges";
 import { DailyProgressRing } from "@/components/dashboard/daily-progress-ring";
 import { FocusTimerCard } from "@/components/dashboard/focus-timer-card";
+import { TabNav } from "@/components/dashboard/navigation/tab-nav";
 import { QuickActions } from "@/components/dashboard/quick-actions/quick-actions";
 import { QuizStartCard } from "@/components/dashboard/quiz-start-card";
 import { ScrollAmbient } from "@/components/dashboard/scroll-ambient";
@@ -16,6 +18,7 @@ import { StatsRow } from "@/components/dashboard/stats-row";
 import { StreakCard } from "@/components/dashboard/streak-card";
 import { StudyPlanOverview } from "@/components/dashboard/study-plan-overview";
 import { TodayFocusCard } from "@/components/dashboard/today-focus-card";
+import type { TabValue } from "@/components/dashboard/types";
 import type { QuizResults } from "@/components/quiz/quiz-view";
 import { QuizView } from "@/components/quiz/quiz-view";
 import { PerpetualFloat } from "@/components/shared/perpetual-float";
@@ -29,6 +32,7 @@ import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
 import { competencyService } from "@/lib/competency-engine/competency-service";
 import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";
+import { useOptimizedAnimation } from "@/lib/utils/animation-optimization";
 
 function SectionReveal({
 	children,
@@ -46,17 +50,15 @@ function SectionReveal({
 		<motion.div
 			ref={ref}
 			initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
-			animate={
-				shouldReduceMotion || hasRevealed
-					? { opacity: 1, y: 0 }
-					: { opacity: 0, y: 16 }
-			}
+			animate={{
+				opacity: shouldReduceMotion || hasRevealed ? 1 : 0,
+				y: shouldReduceMotion || hasRevealed ? 0 : 16,
+			}}
 			transition={{
 				duration: 0.4,
 				ease: iOSEase,
 				delay: shouldReduceMotion ? 0 : delay,
 			}}
-			className={className}
 		>
 			{children}
 		</motion.div>
@@ -65,19 +67,24 @@ function SectionReveal({
 
 function HeroBanner() {
 	const shouldReduceMotion = useReducedMotion();
+	const { shouldReduceMotion: shouldReduceMotionOpt } = useOptimizedAnimation();
+	const finalShouldReduceMotion = shouldReduceMotion || shouldReduceMotionOpt;
 
 	return (
 		<motion.div
-			className="relative -mx-4 -mt-4 mb-6 h-40 overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[--system-accent]/10 via-[--system-accent]/5 to-transparent shadow-[0_24px_48px_-16px_rgba(0,0,0,0.06)]"
+			className="relative -mx-4 mt-4 mb-6 h-40 overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[--system-accent]/10 via-[--system-accent]/5 to-transparent shadow-[0_24px_48px_-16px_rgba(0,0,0,0.06)]"
 			initial={{ opacity: 0, y: -12 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.5, ease: iOSEase }}
+			aria-label="Dashboard header showing welcome message"
+			role="banner"
 		>
-			{!shouldReduceMotion && (
+			{!finalShouldReduceMotion && (
 				<PerpetualFloat
 					className="absolute right-8 top-1/2 -translate-y-1/2"
 					duration={8}
 					offsetY={-16}
+					aria-hidden="true"
 				>
 					<div className="size-20 rounded-2xl bg-[--system-accent]/10 blur-xl" />
 				</PerpetualFloat>
@@ -131,8 +138,10 @@ function BentoStatRow({
 
 function DashboardContent({
 	onStartQuiz,
+	activeTab,
 }: {
 	onStartQuiz: (subject: string) => void;
+	activeTab: "ai" | "spaces" | "analytics";
 }) {
 	const { gamification } = useGamification();
 
@@ -145,7 +154,7 @@ function DashboardContent({
 	return (
 		<div
 			data-scroll-container
-			className="min-h-dvh flex flex-col bg-system-grouped pt-4 pb-[calc(var(--spacing-safe-pb)+var(--space-16)+var(--space-5))] overflow-x-hidden overflow-y-auto w-full"
+			className="min-h-dvh flex flex-col bg-system-grouped pt-8 pb-[calc(var(--spacing-safe-pb)+var(--space-16)+var(--space-5))] overflow-x-hidden overflow-y-auto w-full"
 		>
 			<div className="max-w-3xl mx-auto w-full px-4 flex flex-col gap-8 pb-16">
 				<HeroBanner />
@@ -175,7 +184,13 @@ function DashboardContent({
 					<DailyChallenges />
 				</SectionReveal>
 				<SectionReveal delay={0.14}>
-					<QuizStartCard onStart={onStartQuiz} />
+					{activeTab === "ai" ? (
+						<QuizStartCard onStart={onStartQuiz} />
+					) : activeTab === "analytics" ? (
+						<ComparativeAnalyticsPanel />
+					) : (
+						<QuizStartCard onStart={onStartQuiz} />
+					)}
 				</SectionReveal>
 				<SectionReveal delay={0.16}>
 					<StatsRow />
@@ -200,6 +215,7 @@ export function DashboardClient({
 }) {
 	const [quizActive, setQuizActive] = useState(false);
 	const [quizSubject, setQuizSubject] = useState("");
+	const [activeTab, setActiveTab] = useState<TabValue>(initialTab as TabValue);
 	const {
 		isLoaded,
 		addXp,
@@ -268,10 +284,14 @@ export function DashboardClient({
 		setQuizSubject("");
 	};
 
+	const handleTabChange = (tab: TabValue) => {
+		setActiveTab(tab);
+	};
+
 	return (
 		<>
 			<ScrollAmbient />
-			<AnimatePresence initial={false} mode="wait">
+			<div className="flex flex-col h-full">
 				{!isLoaded ? (
 					<motion.div
 						key="loading"
@@ -291,37 +311,49 @@ export function DashboardClient({
 							<Skeleton className="h-20 rounded-[2rem]" />
 						</div>
 					</motion.div>
-				) : quizActive ? (
-					<motion.div
-						key="quiz"
-						initial={{ opacity: 0, y: 8 }}
-						animate={{ opacity: 1, y: 0 }}
-						exit={{ opacity: 0, y: -8 }}
-						transition={{ duration: 0.25, ease: iOSEase }}
-					>
-						<QuizView
-							initialSubject={quizSubject}
-							variant="full"
-							onQuit={handleQuitQuiz}
-							onFinish={handleFinishQuiz}
-						/>
-					</motion.div>
 				) : (
-					<motion.div
-						key="content"
-						initial={{ opacity: 0, y: 4 }}
-						animate={{ opacity: 1, y: 0 }}
-						exit={{
-							opacity: 0,
-							y: -4,
-							transition: { duration: 0.15, ease: iOSEase },
-						}}
-						transition={{ duration: 0.25, ease: iOSEase }}
-					>
-						<DashboardContent onStartQuiz={handleStartQuiz} />
-					</motion.div>
+					<>
+						<TabNav activeTab={activeTab} onTabChange={handleTabChange} />
+						<div className="flex-1">
+							<AnimatePresence initial={false} mode="wait">
+								{quizActive ? (
+									<motion.div
+										key="quiz"
+										initial={{ opacity: 0, y: 8 }}
+										animate={{ opacity: 1, y: 0 }}
+										exit={{ opacity: 0, y: -8 }}
+										transition={{ duration: 0.25, ease: iOSEase }}
+									>
+										<QuizView
+											initialSubject={quizSubject}
+											variant="full"
+											onQuit={handleQuitQuiz}
+											onFinish={handleFinishQuiz}
+										/>
+									</motion.div>
+								) : (
+									<motion.div
+										key="content"
+										initial={{ opacity: 0, y: 4 }}
+										animate={{ opacity: 1, y: 0 }}
+										exit={{
+											opacity: 0,
+											y: -4,
+											transition: { duration: 0.15, ease: iOSEase },
+										}}
+										transition={{ duration: 0.25, ease: iOSEase }}
+									>
+										<DashboardContent
+											onStartQuiz={handleStartQuiz}
+											activeTab={activeTab}
+										/>
+									</motion.div>
+								)}
+							</AnimatePresence>
+						</div>
+					</>
 				)}
-			</AnimatePresence>
+			</div>
 		</>
 	);
 }

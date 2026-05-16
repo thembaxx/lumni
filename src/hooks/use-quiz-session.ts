@@ -1,7 +1,8 @@
 "use client";
 
 import { useCallback, useMemo, useRef, useState } from "react";
-import type { Question } from "@/types/questions";
+import type { Question } from "@/lib/question-engine/types";
+import { useInterval } from "./use-interval";
 import { useQuestionEngine } from "./use-question-engine";
 
 export interface UseQuizSessionOptions {
@@ -84,14 +85,11 @@ export function useQuizSession({
 	const [correctAnswers, setCorrectAnswers] = useState(0);
 	const correctAnswersRef = useRef(correctAnswers);
 	correctAnswersRef.current = correctAnswers;
-	const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-	const startTimer = useCallback(() => {
-		if (timerRef.current) clearInterval(timerRef.current);
-		timerRef.current = setInterval(() => {
+	useInterval(
+		() => {
 			setElapsedTime((prev) => {
 				if (prev >= maxTime) {
-					if (timerRef.current) clearInterval(timerRef.current);
 					onFinish?.({
 						correctAnswers: correctAnswersRef.current,
 						elapsedTime: prev,
@@ -100,23 +98,16 @@ export function useQuizSession({
 				}
 				return prev + 1;
 			});
-		}, 1000);
-	}, [maxTime, onFinish]);
-
-	const stopTimer = useCallback(() => {
-		if (timerRef.current) {
-			clearInterval(timerRef.current);
-			timerRef.current = null;
-		}
-	}, []);
+		},
+		isRunning ? 1000 : null,
+	);
 
 	const handleStart = useCallback(() => {
 		setIsRunning(true);
 		setCurrentQuestionIndex(0);
 		setCorrectAnswers(0);
 		setElapsedTime(0);
-		startTimer();
-	}, [startTimer]);
+	}, []);
 
 	const handleStartWithSubject = useCallback((subject: string) => {
 		setSelectedSubject(subject);
@@ -125,9 +116,8 @@ export function useQuizSession({
 
 	const handleStop = useCallback(() => {
 		setIsRunning(false);
-		stopTimer();
 		onFinish?.({ correctAnswers, elapsedTime });
-	}, [stopTimer, onFinish, correctAnswers, elapsedTime]);
+	}, [onFinish, correctAnswers, elapsedTime]);
 
 	const handleRestart = useCallback(() => {
 		setPoints(Math.floor(Math.random() * 101));
@@ -135,16 +125,14 @@ export function useQuizSession({
 		setCorrectAnswers(0);
 		setElapsedTime(0);
 		setIsRunning(true);
-		startTimer();
-	}, [startTimer]);
+	}, []);
 
 	const reset = useCallback(() => {
 		setIsRunning(false);
 		setElapsedTime(0);
 		setCurrentQuestionIndex(0);
 		setCorrectAnswers(0);
-		stopTimer();
-	}, [stopTimer]);
+	}, []);
 
 	const handleNext = useCallback(() => {
 		if (currentQuestionIndex < questionsToUse.length - 1) {

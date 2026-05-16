@@ -108,7 +108,7 @@ export function DesktopSidebar() {
 								onClick={() => handleClick(item)}
 								aria-current={isActive ? "page" : undefined}
 								className={cn(
-									"flex items-center gap-3 w-full px-3 h-10 rounded-lg text-sm transition-all duration-150 text-left cursor-pointer",
+									"flex items-center gap-3 w-full px-3 h-10 rounded-lg text-sm transition-colors duration-150 text-left cursor-pointer",
 									isActive
 										? "bg-system-accent/10 text-system-accent font-semibold"
 										: "text-system-text-secondary hover:text-system-text-primary hover:bg-system-fill",
@@ -141,7 +141,7 @@ export function DesktopSidebar() {
 								onClick={() => handleClick(item)}
 								aria-current={isActive ? "page" : undefined}
 								className={cn(
-									"flex items-center gap-3 w-full px-3 h-10 rounded-lg text-sm transition-all duration-150 text-left cursor-pointer",
+									"flex items-center gap-3 w-full px-3 h-10 rounded-lg text-sm transition-colors duration-150 text-left cursor-pointer",
 									isActive
 										? "bg-system-accent/10 text-system-accent font-semibold"
 										: "text-system-text-secondary hover:text-system-text-primary hover:bg-system-fill",

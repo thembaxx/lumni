@@ -45,16 +45,10 @@ export class AIClient {
 		this.providers = createProviderChain(config);
 	}
 
-	async generate(prompt: string, options?: GenerateOptions): Promise<AIResult> {
+	private async _callProviders(request: AIRequest): Promise<AIResult> {
 		if (this.providers.length === 0) {
 			return { ...FAILURE_RESPONSE, error: "No AI providers configured" };
 		}
-
-		const request: AIRequest = {
-			messages: [{ role: "user", content: prompt }],
-			temperature: options?.temperature ?? 0.7,
-			maxTokens: options?.maxTokens ?? 2048,
-		};
 
 		let lastError = "";
 
@@ -68,7 +62,6 @@ export class AIClient {
 			} catch (error) {
 				lastError = error instanceof Error ? error.message : String(error);
 				console.error(`[AI] ${provider.name} failed:`, lastError);
-				continue;
 			}
 		}
 
@@ -78,44 +71,27 @@ export class AIClient {
 		};
 	}
 
+	async generate(prompt: string, options?: GenerateOptions): Promise<AIResult> {
+		return this._callProviders({
+			messages: [{ role: "user", content: prompt }],
+			temperature: options?.temperature ?? 0.7,
+			maxTokens: options?.maxTokens ?? 2048,
+		});
+	}
+
 	async generateWithSystem(
 		systemPrompt: string,
 		userPrompt: string,
 		options?: GenerateOptions & { imageUrl?: string },
 	): Promise<AIResult> {
-		if (this.providers.length === 0) {
-			return { ...FAILURE_RESPONSE, error: "No AI providers configured" };
-		}
-
-		const request: AIRequest = {
+		return this._callProviders({
 			messages: [
 				{ role: "user", content: userPrompt, imageUrl: options?.imageUrl },
 			],
 			systemPrompt,
 			temperature: options?.temperature ?? 0.7,
 			maxTokens: options?.maxTokens ?? 2048,
-		};
-
-		let lastError = "";
-
-		for (const provider of this.providers) {
-			try {
-				const response = await provider.generate(request);
-				return {
-					...response,
-					provider: provider.name,
-				};
-			} catch (error) {
-				lastError = error instanceof Error ? error.message : String(error);
-				console.error(`[AI] ${provider.name} failed:`, lastError);
-				continue;
-			}
-		}
-
-		return {
-			...FAILURE_RESPONSE,
-			error: `All providers failed. Last error: ${lastError}`,
-		};
+		});
 	}
 
 	async generateBatch(

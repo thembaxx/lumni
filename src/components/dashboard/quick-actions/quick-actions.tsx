@@ -16,6 +16,7 @@ import { LessonsButton } from "@/components/lesson";
 import { PerpetualFloat } from "@/components/shared/perpetual-float";
 import { Button } from "@/components/ui/button";
 import { iOSEase } from "@/lib/utils/animation";
+import { useOptimizedAnimation } from "@/lib/utils/animation-optimization";
 
 const quickActions = [
 	{ icon: Brain02FreeIcons, label: "Practice", route: "/quiz" },
@@ -43,20 +44,33 @@ function ActionButton({
 	onClick?: () => void;
 }) {
 	const shouldReduceMotion = useReducedMotion();
+	const { shouldReduceMotion: shouldReduceMotionOpt } = useOptimizedAnimation();
+	const finalShouldReduceMotion = shouldReduceMotion || shouldReduceMotionOpt;
 
 	return (
 		<motion.div
-			whileHover={shouldReduceMotion ? {} : { scale: 1.03 }}
-			whileTap={shouldReduceMotion ? {} : { scale: 0.96 }}
+			whileHover={finalShouldReduceMotion ? {} : { scale: 1.03 }}
+			whileTap={finalShouldReduceMotion ? {} : { scale: 0.96 }}
 			transition={{ duration: 0.2, ease: iOSEase }}
+			role="button"
+			tabIndex={onClick ? 0 : -1}
+			onKeyDown={(e) => {
+				if (e.key === "Enter" || e.key === " ") {
+					e.preventDefault();
+					onClick?.();
+				}
+			}}
+			onClick={onClick}
+			aria-label={label}
 		>
 			<Button
 				variant="ghost"
-				onClick={onClick}
 				className="h-11 px-5 rounded-[2.5rem] border border-border/80 bg-secondary/60 gap-2.5 justify-start text-foreground hover:bg-accent hover:border-accent"
 			>
 				<motion.span
-					whileHover={shouldReduceMotion ? {} : { rotate: [0, -10, 10, 0] }}
+					whileHover={
+						finalShouldReduceMotion ? {} : { rotate: [0, -10, 10, 0] }
+					}
 					transition={{ duration: 0.4, ease: iOSEase }}
 					className="text-accent"
 				>
@@ -65,6 +79,7 @@ function ActionButton({
 							icon={icon}
 							className="size-4  text-foreground"
 							data-icon
+							aria-hidden="true"
 						/>
 					</PerpetualFloat>
 				</motion.span>

@@ -1,4 +1,4 @@
-import { addToSyncQueue } from "@/lib/db/offline";
+import { safePersist } from "@/lib/db/persist";
 import type { Question } from "@/lib/question-engine/types";
 import {
 	createFlashcard,
@@ -11,67 +11,72 @@ export class SpacedRepService {
 		question: Question,
 		result: { correct: boolean; score: number },
 	): Promise<void> {
-		try {
-			const quality = result.correct
-				? result.score >= 0.9
-					? 5
-					: result.score >= 0.7
-						? 4
-						: 3
-				: result.score >= 0.5
-					? 2
-					: result.score >= 0.25
-						? 1
-						: 0;
+		await safePersist(
+			"spaced repetition update",
+			async () => {
+				const quality = result.correct
+					? result.score >= 0.9
+						? 5
+						: result.score >= 0.7
+							? 4
+							: 3
+					: result.score >= 0.5
+						? 2
+						: result.score >= 0.25
+							? 1
+							: 0;
 
-			const existingCards = loadFlashcards().filter(
-				(c) => c.front === question.questionText,
-			);
-
-			if (existingCards.length > 0) {
-				const card = existingCards[0];
-				const { calculateNextReview } = await import(
-					"@/lib/utils/spaced-repetition"
-				);
-				const { easeFactor, interval, repetitions } = calculateNextReview(
-					quality,
-					card.easeFactor,
-					card.interval,
-					card.repetitions,
+				const existingCards = loadFlashcards().filter(
+					(c) => c.front === question.questionText,
 				);
 
-				const nextReview = Date.now() + interval * 24 * 60 * 60 * 1000;
-				const cards = loadFlashcards();
-				const index = cards.findIndex((c) => c.id === card.id);
-				if (index >= 0) {
-					cards[index] = {
-						...card,
-						easeFactor,
-						interval,
-						repetitions,
-						nextReview,
-						lastReview: Date.now(),
-					};
-					saveFlashcards(cards);
+				if (existingCards.length > 0) {
+					const card = existingCards[0];
+					const { calculateNextReview } = await import(
+						"@/lib/utils/spaced-repetition"
+					);
+					const { easeFactor, interval, repetitions } = calculateNextReview(
+						quality,
+						card.easeFactor,
+						card.interval,
+						card.repetitions,
+					);
+
+					const nextReview = Date.now() + interval * 24 * 60 * 60 * 1000;
+					const cards = loadFlashcards();
+					const index = cards.findIndex((c) => c.id === card.id);
+					if (index >= 0) {
+						cards[index] = {
+							...card,
+							easeFactor,
+							interval,
+							repetitions,
+							nextReview,
+							lastReview: Date.now(),
+						};
+						saveFlashcards(cards);
+					}
+				} else {
+					const correctOptionText = extractCorrectAnswer(question);
+					createFlashcard(
+						question.questionText,
+						correctOptionText || question.explanation,
+						question.subject,
+						question.topic,
+					);
 				}
-			} else {
-				const correctOptionText = extractCorrectAnswer(question);
-				createFlashcard(
-					question.questionText,
-					correctOptionText || question.explanation,
-					question.subject,
-					question.topic,
-				);
-			}
 
-			await addToSyncQueue("sync", {
-				type: "spaced-rep-update",
-				questionId: question.id,
-				quality,
-			}).catch(() => {});
-		} catch {
-			/* spaced repetition update is non-critical */
-		}
+				return quality;
+			},
+			async (quality) => {
+				const { addToSyncQueue } = await import("@/lib/db/offline");
+				await addToSyncQueue("sync", {
+					type: "spaced-rep-update",
+					questionId: question.id,
+					quality,
+				});
+			},
+		);
 	}
 }
 

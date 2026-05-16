@@ -16,7 +16,7 @@ import { ProgressDots } from "@/components/shared/progress-dots";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AssessmentHeader } from "@/components/ui/headers/assessment-header";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
-import type { Question } from "@/types/questions";
+import type { Question } from "@/lib/question-engine/types";
 
 export interface QuizResults {
 	questions: Question[];
@@ -59,6 +59,7 @@ export function QuizView({
 	const [elapsedTime, setElapsedTime] = useState(0);
 	const [isComplete, setIsComplete] = useState(false);
 	const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+	const _quizContainerRef = useRef<HTMLDivElement>(null);
 
 	const engineParams = useMemo(
 		() => ({
@@ -168,6 +169,74 @@ export function QuizView({
 			if (timerRef.current) clearInterval(timerRef.current);
 		};
 	}, [sessionActive, questions.length, maxTime]);
+
+	// Handle keyboard navigation for quiz controls
+	useEffect(() => {
+		const handleKeyDown = (e: KeyboardEvent) => {
+			if (!sessionActive || !currentQuestion) return;
+
+			// Handle arrow keys for multiple choice
+			if (
+				currentQuestion.type === "multiple-choice" &&
+				currentAnswered === false
+			) {
+				switch (e.key) {
+					case "ArrowLeft":
+					case "ArrowUp":
+						e.preventDefault();
+						// Focus previous option - would need refs to options
+						break;
+					case "ArrowRight":
+					case "ArrowDown":
+						e.preventDefault();
+						// Focus next option - would need refs to options
+						break;
+					case "Enter":
+					case " ":
+						e.preventDefault();
+						// Trigger answer submission - would need to find selected option
+						break;
+				}
+			}
+
+			// Handle quiz navigation
+			switch (e.key) {
+				case "ArrowLeft":
+					if (currentIndex > 0) {
+						e.preventDefault();
+						handlePrevious();
+					}
+					break;
+				case "ArrowRight":
+					if (currentIndex < totalQuestions - 1) {
+						e.preventDefault();
+						handleNext();
+					}
+					break;
+				case "Escape":
+					if (isComplete) {
+						e.preventDefault();
+						handleStop();
+					}
+					break;
+			}
+		};
+
+		document.addEventListener("keydown", handleKeyDown);
+		return () => {
+			document.removeEventListener("keydown", handleKeyDown);
+		};
+	}, [
+		sessionActive,
+		currentQuestion,
+		currentIndex,
+		totalQuestions,
+		currentAnswered,
+		handlePrevious,
+		handleNext,
+		handleStop,
+		isComplete,
+	]);
 
 	if (loadError) {
 		return (
@@ -339,9 +408,16 @@ export function QuizView({
 	}
 
 	return (
-		<div className="min-h-[100dvh] bg-background grid grid-cols-12 gap-0">
+		<div
+			className="min-h-[100dvh] bg-background grid grid-cols-12 gap-0"
+			role="region"
+			aria-labelledby="quiz-title"
+		>
 			{/* Main quiz content — left column */}
-			<main className="col-span-12 md:col-span-7 col-start-1 flex flex-col gap-6 p-4 md:p-6 pb-20">
+			<main
+				className="col-span-12 md:col-span-7 col-start-1 flex flex-col gap-6 p-4 md:p-6 pb-20"
+				tabIndex={-1}
+			>
 				<AssessmentHeader
 					title="Quiz Practice"
 					elapsedTime={elapsedTime}
@@ -387,7 +463,10 @@ export function QuizView({
 			</main>
 
 			{/* Decorative accent — right zone */}
-			<div className="col-span-12 md:col-span-5 col-start-1 md:col-start-8 relative overflow-hidden bg-system-surface/30">
+			<div
+				className="col-span-12 md:col-span-5 col-start-1 md:col-start-8 relative overflow-hidden bg-system-surface/30"
+				aria-hidden="true"
+			>
 				<div className="absolute inset-0 bg-gradient-to-br from-[--system-accent]/10 via-transparent to-transparent" />
 				<div className="absolute inset-0 flex items-center justify-center p-8">
 					<div className="w-full h-full max-w-xs aspect-square rounded-3xl bg-system-accent/10 blur-2xl animate-float-slow" />

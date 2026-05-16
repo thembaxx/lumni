@@ -16,6 +16,7 @@ import { useEffect } from "react";
 import { PerpetualFloat } from "@/components/shared/perpetual-float";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { iOSEase } from "@/lib/utils/animation";
+import { useOptimizedAnimation } from "@/lib/utils/animation-optimization";
 
 interface StatsCardsProps {
 	questionsAnswered: number;
@@ -37,6 +38,8 @@ function AnimatedNumber({
 	value: number;
 	shouldReduceMotion: boolean | null;
 }) {
+	const { shouldReduceMotion: animShouldReduce } = useOptimizedAnimation();
+	const finalShouldReduceMotion = shouldReduceMotion || animShouldReduce;
 	const motionValue = useMotionValue(0);
 	const springValue = useSpring(motionValue, {
 		stiffness: 80,
@@ -48,7 +51,7 @@ function AnimatedNumber({
 		motionValue.set(value);
 	}, [value, motionValue]);
 
-	if (shouldReduceMotion) {
+	if (finalShouldReduceMotion) {
 		return <>{value}</>;
 	}
 
@@ -100,24 +103,52 @@ function StatCard({
 }
 
 export function StatsCards({ questionsAnswered, accuracy }: StatsCardsProps) {
+	const { shouldReduceMotion: shouldReduceMotionOpt } = useOptimizedAnimation();
+	const finalShouldReduceMotion = shouldReduceMotionOpt;
+
 	return (
 		<div className="grid grid-cols-2 gap-2 sm:gap-3">
-			<StatCard
-				label="Answered"
-				value={questionsAnswered}
-				icon={CheckmarkCircle01Icon}
-				colorClass="text-info"
-				accentClass="bg-info"
-				index={0}
-			/>
-			<StatCard
-				label="Accuracy"
-				value={accuracy}
-				icon={Target01Icon}
-				colorClass="text-success"
-				accentClass="bg-success"
-				index={1}
-			/>
+			{[
+				{
+					label: "Questions",
+					value: questionsAnswered,
+					icon: Target01Icon,
+					colorClass: "text-accent",
+					accentClass: "hover:text-accent/80",
+					index: 0,
+				},
+				{
+					label: "Accuracy",
+					value: accuracy,
+					icon: CheckmarkCircle01Icon,
+					colorClass: "text-success",
+					accentClass: "hover:text-success/80",
+					index: 1,
+				},
+			].map(({ label, value, icon, colorClass, accentClass, index }) => (
+				<motion.div
+					key={label}
+					initial={{ opacity: 0, y: 8 }}
+					animate={{
+						opacity: 1,
+						y: 0,
+						transition: {
+							duration: finalShouldReduceMotion ? 0 : 0.35,
+							ease: iOSEase,
+							delay: finalShouldReduceMotion ? 0 : index * 0.05,
+						},
+					}}
+				>
+					<StatCard
+						label={label}
+						value={value}
+						icon={icon}
+						colorClass={colorClass}
+						accentClass={accentClass}
+						index={index}
+					/>
+				</motion.div>
+			))}
 		</div>
 	);
 }

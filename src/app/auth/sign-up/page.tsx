@@ -149,7 +149,7 @@ function SignUpForm() {
 					disabled={
 						loading || !name || !email || !password || password.length < 8
 					}
-					className="w-full h-11 rounded-xl bg-system-accent text-white font-semibold text-sm hover:bg-system-accent/90 active:scale-[0.98] transition-all"
+					className="w-full h-11 rounded-xl bg-system-accent text-white font-semibold text-sm hover:bg-system-accent/90 active:scale-[0.96] transition-[background-color,transform]"
 				>
 					{loading ? "Creating account..." : "Create Account"}
 				</Button>

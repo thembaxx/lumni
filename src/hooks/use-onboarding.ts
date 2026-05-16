@@ -12,6 +12,10 @@ export interface OnboardingData {
 	dailyStudyMinutes: number;
 	studyTimes: number[];
 	notificationsEnabled: boolean;
+	currentStep: number; // Added to track the current step
+	// Notification settings
+	notificationFrequency: "daily" | "every_other_day" | "weekly";
+	notificationTimeOfDay: "morning" | "afternoon" | "evening" | undefined;
 }
 
 export interface UseOnboardingReturn {
@@ -33,10 +37,18 @@ const DEFAULT_ONBOARDING: OnboardingData = {
 	dailyStudyMinutes: 30,
 	studyTimes: [18, 19, 20],
 	notificationsEnabled: true,
+	currentStep: 0, // Start at step 0
+	notificationFrequency: "daily",
+	notificationTimeOfDay: "morning",
 };
 
 export function loadOnboardingData(): OnboardingData {
-	return loadFromStorage<OnboardingData>(ONBOARDING_KEY, DEFAULT_ONBOARDING);
+	const stored = loadFromStorage<OnboardingData>(
+		ONBOARDING_KEY,
+		DEFAULT_ONBOARDING,
+	);
+	// Merge with defaults to ensure we have all fields (for backward compatibility)
+	return { ...DEFAULT_ONBOARDING, ...stored };
 }
 
 export function saveOnboardingData(data: OnboardingData): void {
@@ -64,6 +76,10 @@ export function useOnboarding(): UseOnboardingReturn {
 			...prev,
 			isComplete: false,
 			startedAt: Date.now(),
+			currentStep: 0, // Reset to step 0 when starting
+			// Reset notification settings to default? Or keep existing? We'll reset to default for a fresh start.
+			notificationFrequency: DEFAULT_ONBOARDING.notificationFrequency,
+			notificationTimeOfDay: DEFAULT_ONBOARDING.notificationTimeOfDay,
 		}));
 	}, []);
 
@@ -134,6 +150,7 @@ export function useOnboardingCheck(): { shouldShow: boolean; reason?: string } {
 		const hasProgress = localStorage.getItem("lumni_user_progress");
 		if (!hasProgress) {
 			setResult({ shouldShow: true, reason: "No progress yet" });
+			return;
 		}
 	}, []);
 

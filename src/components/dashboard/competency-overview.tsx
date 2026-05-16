@@ -167,7 +167,7 @@ export function CompetencyOverview() {
 											<div
 												key={level}
 												className={cn(
-													"h-1.5 rounded-full transition-all",
+													"h-1.5 rounded-full transition-[width]",
 													level === "novice" && "bg-destructive",
 													level === "developing" && "bg-warning",
 													level === "proficient" && "bg-[--system-accent]",

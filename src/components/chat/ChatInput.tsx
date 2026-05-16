@@ -99,7 +99,7 @@ export function ChatInput({
 
 			<div
 				className={cn(
-					"bg-secondary/60 rounded-lg p-4 transition-all duration-300 border mt-2",
+					"bg-secondary/60 rounded-lg p-4 transition-[border-color,box-shadow,transform,background-color] duration-300 border mt-2",
 					isFocused
 						? "ring-2 ring-system-accent/20 border-system-accent/40 scale-[1.005] bg-background"
 						: "border-border/30",
@@ -144,7 +144,7 @@ export function ChatInput({
 								className={cn(
 									"inline-flex shrink-0 items-center justify-center rounded-md size-10",
 									"hover:bg-secondary text-muted-foreground cursor-pointer shadow-sm border border-border/30",
-									"transition-all active:scale-[0.96]",
+									"transition-colors active:scale-[0.96]",
 									"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-system-accent/50",
 									isLoading &&
 										"opacity-50 pointer-events-none cursor-not-allowed",

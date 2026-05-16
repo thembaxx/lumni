@@ -168,7 +168,7 @@ function SignInForm() {
 				<Button
 					type="submit"
 					disabled={loading || !email}
-					className="w-full h-11 rounded-xl bg-system-accent text-white font-semibold text-sm hover:bg-system-accent/90 active:scale-[0.98] transition-all"
+					className="w-full h-11 rounded-xl bg-system-accent text-white font-semibold text-sm hover:bg-system-accent/90 active:scale-[0.96] transition-[background-color,transform]"
 				>
 					{loading
 						? "Signing in..."

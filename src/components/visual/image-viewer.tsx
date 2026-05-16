@@ -41,7 +41,7 @@ export function ImageViewer({
 					alt={label}
 					fill
 					unoptimized
-					className="object-contain max-h-96 !relative"
+					className="object-contain max-h-96 !relative outline -outline-offset-1 outline-black/10 dark:outline-white/10"
 					onLoad={() => setLoading(false)}
 					onError={() => {
 						setError(true);

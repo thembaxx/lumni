@@ -6,7 +6,7 @@ import type { ProcessResult } from "@/lib/queue/core";
 import { analyticsService } from "@/lib/services/analytics-service";
 import { progressService } from "@/lib/services/progress-service";
 import { spacedRepService } from "@/lib/services/spaced-rep-service";
-import { jobQueue } from "./job-queue";
+import { queueCore } from "./job-queue";
 import type { JobRecord, JobType } from "./types";
 
 type JobHandler = (payload: unknown) => Promise<void>;
@@ -67,7 +67,7 @@ export class JobProcessor {
 	private concurrencyGuard = { isProcessing: false };
 
 	async processBatch(limit = 5): Promise<ProcessResult> {
-		return jobQueue.core.processBatch(
+		return queueCore.processBatch(
 			async (job: JobRecord) => {
 				const handler = handlers[job.type];
 				if (!handler) throw new Error(`No handler for type: ${job.type}`);

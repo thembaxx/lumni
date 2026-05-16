@@ -6,7 +6,7 @@ import type {
 } from "@/lib/question-engine/types";
 import { serializeQuestionType } from "@/lib/shared/question-type";
 import { trackEngineEvent } from "@/lib/utils/engine-analytics";
-import { jobQueue } from "./job-queue";
+import { enqueue } from "./job-queue";
 import type { GenerateResult, GradeResult } from "./types";
 
 export class LearningOrchestrator {
@@ -30,7 +30,7 @@ export class LearningOrchestrator {
 
 		const jobIds: number[] = [];
 
-		const syncJobId = await jobQueue.enqueue("appwrite-sync", {
+		const syncJobId = await enqueue("appwrite-sync", {
 			questions: sliced,
 			subject,
 			topic,
@@ -63,13 +63,13 @@ export class LearningOrchestrator {
 		const result = await this.engine.grade(question, answer);
 		const jobIds: number[] = [];
 
-		const repJobId = await jobQueue.enqueue("spaced-rep-update", {
+		const repJobId = await enqueue("spaced-rep-update", {
 			question,
 			result: { correct: result.correct, score: result.score },
 		});
 		jobIds.push(repJobId);
 
-		const analyticsJobId = await jobQueue.enqueue("analytics-sync", {
+		const analyticsJobId = await enqueue("analytics-sync", {
 			events: [
 				{
 					event: "grade",
@@ -83,13 +83,13 @@ export class LearningOrchestrator {
 		});
 		jobIds.push(analyticsJobId);
 
-		const progressJobId = await jobQueue.enqueue("progress-update", {
+		const progressJobId = await enqueue("progress-update", {
 			subject: question.subject,
 			result: { correct: result.correct, score: result.score },
 		});
 		jobIds.push(progressJobId);
 
-		const competencyJobId = await jobQueue.enqueue("competency-update", {
+		const competencyJobId = await enqueue("competency-update", {
 			subject: question.subject,
 			topic: question.topic,
 			bloomLevel: question.bloomTaxonomy,

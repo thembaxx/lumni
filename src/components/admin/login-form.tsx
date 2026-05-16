@@ -84,7 +84,7 @@ export function LoginForm({ onSuccess }: { onSuccess: () => void }) {
 											<input
 												id="email"
 												type="email"
-												className="w-full h-11 px-4 rounded-lg border border-border/80 bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[--system-accent] focus:ring-offset-2 transition-all"
+												className="w-full h-11 px-4 rounded-lg border border-border/80 bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[--system-accent] focus:ring-offset-2 transition-[border-color,box-shadow]"
 												placeholder="admin@lumni.co.za"
 											/>
 										</div>
@@ -98,7 +98,7 @@ export function LoginForm({ onSuccess }: { onSuccess: () => void }) {
 											<input
 												id="password"
 												type="password"
-												className="w-full h-11 px-4 rounded-lg border border-border/80 bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[--system-accent] focus:ring-offset-2 transition-all"
+												className="w-full h-11 px-4 rounded-lg border border-border/80 bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[--system-accent] focus:ring-offset-2 transition-[border-color,box-shadow]"
 												placeholder="••••••••"
 											/>
 										</div>

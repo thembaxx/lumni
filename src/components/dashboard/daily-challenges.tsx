@@ -73,7 +73,7 @@ export function DailyChallenges() {
 										<div className="flex items-center gap-2 mt-1.5">
 											<div className="flex-1 h-1 rounded-full bg-muted overflow-hidden">
 												<div
-													className="h-full rounded-full bg-[--system-accent] transition-all"
+													className="h-full rounded-full bg-[--system-accent] transition-[width]"
 													style={{ width: `${Math.min(progress, 100)}%` }}
 												/>
 											</div>
