@@ -16,12 +16,12 @@ import {
 	type GetExamMarkdownResult,
 	getExamMarkdown,
 } from "@/lib/server/exam-markdown";
-import type { ExamPaper } from "@/types/exam";
+import type { PaperListing } from "@/types/exam";
 
 interface SmartViewDialogProps {
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
-	exam: ExamPaper;
+	exam: PaperListing;
 	onViewPdf?: () => void;
 }
 

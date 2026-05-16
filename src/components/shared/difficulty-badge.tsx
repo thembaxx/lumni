@@ -1,18 +1,12 @@
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/shared";
 import {
-	type Difficulty,
+	type DifficultyInput,
 	getDifficultyColor,
 	getQuizDifficultyColor,
 } from "@/lib/utils/colors";
 
 export type DifficultyBadgeVariant = "default" | "quiz";
-
-type DifficultyInput = "easy" | "medium" | "hard" | "Easy" | "Medium" | "Hard";
-
-function normalizeDifficulty(difficulty: DifficultyInput): Difficulty {
-	return difficulty.toLowerCase() as Difficulty;
-}
 
 interface DifficultyBadgeProps {
 	difficulty: DifficultyInput;
@@ -25,7 +19,10 @@ export function DifficultyBadge({
 	variant = "default",
 	className,
 }: DifficultyBadgeProps) {
-	const normalizedDifficulty = normalizeDifficulty(difficulty);
+	const normalizedDifficulty = difficulty.toLowerCase() as
+		| "easy"
+		| "medium"
+		| "hard";
 	const colorClass =
 		variant === "quiz"
 			? getQuizDifficultyColor(normalizedDifficulty)

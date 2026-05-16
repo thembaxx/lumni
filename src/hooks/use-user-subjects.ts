@@ -17,12 +17,10 @@ export interface UserSubjectsResult {
 	selectedSubjectIds: string[];
 }
 
-const DEFAULT_USER_ID = "demo-user";
-
 export function useUserSubjects(
-	userId?: string,
+	userId: string,
 ): UseQueryResult<UserSubjectsResult> {
-	const targetUserId = userId || DEFAULT_USER_ID;
+	const targetUserId = userId;
 
 	return useQuery({
 		queryKey: ["user-subjects", targetUserId],

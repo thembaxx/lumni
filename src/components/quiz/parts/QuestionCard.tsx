@@ -187,7 +187,7 @@ export function QuestionCard({
 		[state.isSubmitted],
 	);
 
-	const handleMCGSubmit = useCallback(() => {
+	const handleMCQSubmit = useCallback(() => {
 		if (!state.selectedOption || !isMCQ) return;
 		const selectedOpt = options.find((opt) => opt.id === state.selectedOption);
 		if (!selectedOpt) return;
@@ -239,7 +239,7 @@ export function QuestionCard({
 				code={code}
 				setCode={setCode}
 				handleMCQSelect={handleMCQSelect}
-				handleMCGSubmit={handleMCGSubmit}
+				handleMCQSubmit={handleMCQSubmit}
 				handleGrade={handleGrade}
 				handleFollowUp={handleFollowUp}
 				followUpInput={followUpInput}
@@ -266,7 +266,7 @@ export function QuestionCard({
 				isMCQ={isMCQ}
 				options={options}
 				handleMCQSelect={handleMCQSelect}
-				handleMCGSubmit={handleMCGSubmit}
+				handleMCQSubmit={handleMCQSubmit}
 				handleGrade={handleGrade}
 				isGrading={isGrading}
 				onNext={onNext}

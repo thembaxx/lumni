@@ -40,8 +40,6 @@ export const ourFileRouter = {
 			return { userId: user.id };
 		})
 		.onUploadComplete(async ({ metadata, file }) => {
-			console.log("Upload complete for userId:", metadata.userId);
-			console.log("file url", file.ufsUrl);
 			return { uploadedBy: metadata.userId };
 		}),
 	avatarUploader: f(["image"])
@@ -58,8 +56,6 @@ export const ourFileRouter = {
 			return { userId: user.id };
 		})
 		.onUploadComplete(async ({ metadata, file }) => {
-			console.log("Exam Paper Upload complete for userId:", metadata.userId);
-			console.log("file url", file.ufsUrl);
 			return { uploadedBy: metadata.userId };
 		}),
 	subjectsUploader: f({
@@ -70,8 +66,6 @@ export const ourFileRouter = {
 			return { userId: user.id };
 		})
 		.onUploadComplete(async ({ metadata, file }) => {
-			console.log("Upload complete for userId:", metadata.userId);
-			console.log("file url", file.ufsUrl);
 			return { uploadedBy: metadata.userId };
 		}),
 	qaUploader: f({
@@ -82,8 +76,6 @@ export const ourFileRouter = {
 			return { userId: user.id };
 		})
 		.onUploadComplete(async ({ metadata, file }) => {
-			console.log("QA Upload complete for userId:", metadata.userId);
-			console.log("file url", file.ufsUrl);
 			return { uploadedBy: metadata.userId };
 		}),
 	generalUploader: f(["image", "video", "pdf", "audio", "text"])
@@ -92,8 +84,6 @@ export const ourFileRouter = {
 			return { userId: user.id };
 		})
 		.onUploadComplete(async ({ metadata, file }) => {
-			console.log("General upload complete for userId:", metadata.userId);
-			console.log("file url", file.ufsUrl);
 			return { uploadedBy: metadata.userId };
 		}),
 } satisfies FileRouter;

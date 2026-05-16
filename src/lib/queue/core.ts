@@ -32,12 +32,7 @@ export interface QueueTable<T extends QueueItemBase> {
 	toArray(): Promise<T[]>;
 }
 
-export function calculateBackoffDelay(attempts: number): number {
-	const baseDelay = 1000;
-	const maxDelay = 60000;
-	const delay = Math.min(baseDelay * Math.pow(2, attempts), maxDelay);
-	return delay + Math.random() * 1000;
-}
+import { calculateBackoffDelay } from "@/lib/shared/backoff";
 
 export class QueueCore<T extends QueueItemBase> {
 	constructor(private table: QueueTable<T>) {}

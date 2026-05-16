@@ -5,6 +5,18 @@ import type { Question } from "./types";
 
 const COLLECTION_ID = COLLECTIONS.QUESTIONS;
 
+function extractCorrectAnswer(q: Question): string {
+	const body = q.body as Record<string, unknown>;
+	if ("correctOptionId" in body) return body.correctOptionId as string;
+	if ("correctValue" in body) return String(body.correctValue);
+	if ("acceptableAnswers" in body) {
+		const answers = body.acceptableAnswers as string[];
+		return answers[0] ?? "";
+	}
+	if ("modelAnswer" in body) return body.modelAnswer as string;
+	return "";
+}
+
 export async function saveQuestionsToAppwrite(
 	questions: Question[],
 	subject: string,
@@ -23,10 +35,7 @@ export async function saveQuestionsToAppwrite(
 						options: safeJsonStringify(
 							"options" in q.body ? q.body.options : [],
 						),
-						correctAnswer:
-							"correctOptionId" in q.body
-								? q.body.correctOptionId
-								: q.explanation,
+						correctAnswer: extractCorrectAnswer(q),
 						explanation: q.explanation,
 						difficulty: q.difficulty,
 						bloomTaxonomy: q.bloomTaxonomy,

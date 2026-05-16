@@ -78,7 +78,7 @@ export function useQuestionEngine(
 	>(null);
 
 	const query = useQuery({
-		queryKey: ["questionEngine", params],
+		queryKey: ["questionEngine", params ? JSON.stringify(params) : undefined],
 		queryFn: async () => {
 			const result = await generateQuestions(params!);
 			return result;
@@ -121,7 +121,9 @@ export function useQuestionEngine(
 			const result = await generateMutation.mutateAsync(generateParams);
 			setGeneratedQuestions(result.questions);
 			if (params) {
-				queryClient.invalidateQueries({ queryKey: ["questionEngine", params] });
+				queryClient.invalidateQueries({
+					queryKey: ["questionEngine", JSON.stringify(params)],
+				});
 			}
 			return result.questions;
 		},

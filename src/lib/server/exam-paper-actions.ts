@@ -10,14 +10,7 @@ import {
 	insertExamPaper,
 	saveExamsDb,
 } from "@/lib/db/exams";
-
-export interface ParsedExamPaperFilename {
-	subjectCode: string;
-	year: number;
-	paperNumber: number;
-	type: "paper" | "memo";
-	originalFileName: string;
-}
+import { parseExamPaperFilename as parseExamPaperFilenameFromSchema } from "@/lib/db/exams/schema";
 
 export interface UploadExamPaperOptions {
 	filePath?: string;
@@ -42,25 +35,6 @@ export interface ExamPaperRecord {
 	fileKey: string;
 	originalFileName: string;
 	uploadedAt: string;
-}
-
-function normalizeSubjectCode(code: string): string {
-	return code.toLowerCase().replace(/_/g, "-").replace(/\s+/g, "-");
-}
-
-function parseExamPaperFilename(
-	filename: string,
-): ParsedExamPaperFilename | null {
-	const match = filename.match(/^(\d{4})_([a-z-]+)_p(\d+)(_memo)?\.pdf$/i);
-	if (!match) return null;
-
-	return {
-		year: parseInt(match[1], 10),
-		subjectCode: match[2],
-		paperNumber: parseInt(match[3], 10),
-		type: match[4] ? "memo" : "paper",
-		originalFileName: filename,
-	};
 }
 
 function toTitleCase(str: string): string {
@@ -116,12 +90,12 @@ export async function uploadExamPaper(
 	let subjectName = "";
 
 	if (!subjectCode && originalFileName) {
-		const parsed = parseExamPaperFilename(originalFileName);
+		const parsed = parseExamPaperFilenameFromSchema(originalFileName);
 		if (!parsed) {
 			throw new Error(`Could not parse filename: ${originalFileName}`);
 		}
-		subjectCode = normalizeSubjectCode(parsed.subjectCode);
-		subjectName = toTitleCase(subjectCode);
+		subjectCode = parsed.subjectCode;
+		subjectName = parsed.subjectName;
 	}
 
 	if (!subjectCode) {

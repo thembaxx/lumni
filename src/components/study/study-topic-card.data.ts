@@ -54,16 +54,3 @@ export const getRandomTopic = (): TopicData => {
 	const randomIndex = Math.floor(Math.random() * mockTopics.length);
 	return mockTopics[randomIndex];
 };
-
-export const getDifficultyColor = (
-	difficulty: TopicData["difficulty"],
-): string => {
-	switch (difficulty) {
-		case "easy":
-			return "bg-green-100 text-green-800";
-		case "medium":
-			return "bg-yellow-100 text-yellow-800";
-		case "hard":
-			return "bg-red-100 text-red-800";
-	}
-};

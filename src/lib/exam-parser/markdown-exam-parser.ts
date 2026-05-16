@@ -568,6 +568,7 @@ export class MarkdownExamParser {
 						options.push({
 							id: opt2[1],
 							text: opt2[2].trim(),
+							isCorrect: false,
 						});
 						j++;
 						continue;
@@ -578,6 +579,7 @@ export class MarkdownExamParser {
 						options.push({
 							id: opt[1],
 							text: opt[2].trim(),
+							isCorrect: false,
 						});
 						j++;
 						continue;
@@ -595,6 +597,7 @@ export class MarkdownExamParser {
 									options.push({
 										id: pendingOptionLetters[k],
 										text: texts[k],
+										isCorrect: false,
 									});
 							}
 							pendingOptionLetters = [];

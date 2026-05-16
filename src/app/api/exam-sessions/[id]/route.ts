@@ -12,7 +12,7 @@ export async function GET(
 		const { id } = await params;
 		const doc = await databases.getDocument(
 			APPWRITE_DATABASE_ID,
-			COLLECTIONS.EXAM_PAPERS,
+			COLLECTIONS.EXAM_SESSIONS,
 			id,
 		);
 
@@ -49,7 +49,7 @@ export async function DELETE(
 		const { id } = await params;
 		await databases.deleteDocument(
 			APPWRITE_DATABASE_ID,
-			COLLECTIONS.EXAM_PAPERS,
+			COLLECTIONS.EXAM_SESSIONS,
 			id,
 		);
 		return NextResponse.json({ success: true });

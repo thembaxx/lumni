@@ -17,10 +17,15 @@ import {
 
 const GAMIFICATION_KEY = "lumni_gamification";
 
+interface StoredAchievement {
+	id: string;
+	earnedAt: string;
+}
+
 interface StoredGamification {
 	xp: number;
 	totalXp: number;
-	achievements: string[];
+	achievements: StoredAchievement[];
 	dailyChallenges: DailyChallenge[];
 	streakMilestones: StreakMilestone[];
 	lastPracticeDate: string | null;
@@ -37,7 +42,7 @@ interface StreakMilestone {
 const DEFAULT_GAMIFICATION: StoredGamification = {
 	xp: 0,
 	totalXp: 0,
-	achievements: [],
+	achievements: [] as StoredAchievement[],
 	dailyChallenges: generateDailyChallenges(),
 	streakMilestones: STREAK_MILESTONES.map((s) => ({ ...s })),
 	lastPracticeDate: null,
@@ -49,7 +54,18 @@ function loadFromStorage(): StoredGamification {
 	try {
 		const stored = localStorage.getItem(GAMIFICATION_KEY);
 		if (stored) {
-			return JSON.parse(stored);
+			const parsed = JSON.parse(stored);
+			if (
+				Array.isArray(parsed.achievements) &&
+				parsed.achievements.length > 0 &&
+				typeof parsed.achievements[0] === "string"
+			) {
+				parsed.achievements = parsed.achievements.map((id: string) => ({
+					id,
+					earnedAt: new Date(0).toISOString(),
+				}));
+			}
+			return parsed;
 		}
 	} catch {}
 	return DEFAULT_GAMIFICATION;
@@ -90,12 +106,13 @@ export function useGamification() {
 
 	const levelInfo = calculateLevel(data.totalXp);
 
-	const earnedAchievements = ACHIEVEMENTS.map((achievement) => ({
-		...achievement,
-		earnedAt: data.achievements.includes(achievement.id)
-			? new Date().toISOString()
-			: null,
-	}));
+	const earnedAchievements = ACHIEVEMENTS.map((achievement) => {
+		const stored = data.achievements.find((a) => a.id === achievement.id);
+		return {
+			...achievement,
+			earnedAt: stored?.earnedAt ?? null,
+		};
+	});
 
 	const gamification: UserGamification = {
 		xp: data.xp,
@@ -148,12 +165,15 @@ export function useGamification() {
 
 	const addAchievement = useCallback((achievementId: string) => {
 		setData((prev) => {
-			if (prev.achievements.includes(achievementId)) return prev;
+			if (prev.achievements.some((a) => a.id === achievementId)) return prev;
 
 			const achievement = ACHIEVEMENTS.find((a) => a.id === achievementId);
 			if (!achievement) return prev;
 
-			const newAchievements = [...prev.achievements, achievementId];
+			const newAchievements = [
+				...prev.achievements,
+				{ id: achievementId, earnedAt: new Date().toISOString() },
+			];
 			const newTotalXp = prev.totalXp + achievement.xpReward;
 
 			const newData = {
@@ -179,50 +199,68 @@ export function useGamification() {
 
 			if (
 				questionsAnswered >= 1 &&
-				!data.achievements.includes("first_question")
+				!data.achievements.some((a) => a.id === "first_question")
 			) {
 				newAchievements.push("first_question");
 			}
-			if (streak >= 3 && !data.achievements.includes("streak_3")) {
+			if (streak >= 3 && !data.achievements.some((a) => a.id === "streak_3")) {
 				newAchievements.push("streak_3");
 			}
-			if (streak >= 7 && !data.achievements.includes("streak_7")) {
+			if (streak >= 7 && !data.achievements.some((a) => a.id === "streak_7")) {
 				newAchievements.push("streak_7");
 			}
-			if (streak >= 30 && !data.achievements.includes("streak_30")) {
+			if (
+				streak >= 30 &&
+				!data.achievements.some((a) => a.id === "streak_30")
+			) {
 				newAchievements.push("streak_30");
 			}
 			if (
 				questionsAnswered >= 50 &&
-				!data.achievements.includes("questions_50")
+				!data.achievements.some((a) => a.id === "questions_50")
 			) {
 				newAchievements.push("questions_50");
 			}
 			if (
 				questionsAnswered >= 100 &&
-				!data.achievements.includes("questions_100")
+				!data.achievements.some((a) => a.id === "questions_100")
 			) {
 				newAchievements.push("questions_100");
 			}
 			if (
 				questionsAnswered >= 500 &&
-				!data.achievements.includes("questions_500")
+				!data.achievements.some((a) => a.id === "questions_500")
 			) {
 				newAchievements.push("questions_500");
 			}
-			if (accuracy >= 80 && !data.achievements.includes("accuracy_80")) {
+			if (
+				accuracy >= 80 &&
+				!data.achievements.some((a) => a.id === "accuracy_80")
+			) {
 				newAchievements.push("accuracy_80");
 			}
-			if (accuracy >= 90 && !data.achievements.includes("accuracy_90")) {
+			if (
+				accuracy >= 90 &&
+				!data.achievements.some((a) => a.id === "accuracy_90")
+			) {
 				newAchievements.push("accuracy_90");
 			}
-			if (perfectQuiz && !data.achievements.includes("perfect_quiz")) {
+			if (
+				perfectQuiz &&
+				!data.achievements.some((a) => a.id === "perfect_quiz")
+			) {
 				newAchievements.push("perfect_quiz");
 			}
-			if (currentLevel >= 5 && !data.achievements.includes("level_5")) {
+			if (
+				currentLevel >= 5 &&
+				!data.achievements.some((a) => a.id === "level_5")
+			) {
 				newAchievements.push("level_5");
 			}
-			if (currentLevel >= 10 && !data.achievements.includes("level_10")) {
+			if (
+				currentLevel >= 10 &&
+				!data.achievements.some((a) => a.id === "level_10")
+			) {
 				newAchievements.push("level_10");
 			}
 

@@ -9,7 +9,7 @@ export async function safePersist<R = void>(
 			await enqueue(result).catch(() => {});
 		}
 		return result;
-	} catch {
-		/* ${label} is non-critical */
+	} catch (err) {
+		console.warn(`[safePersist] ${label} failed:`, err);
 	}
 }

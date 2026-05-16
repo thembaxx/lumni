@@ -26,19 +26,28 @@ export function LoadingScreen({
 	const router = useRouter();
 	const { authReady } = useAuth();
 	const redirectedRef = useRef(false);
+	const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(
+		undefined,
+	);
 
 	const redirect = useCallback(() => {
 		if (redirectedRef.current) return;
 		redirectedRef.current = true;
 		setIsVisible(false);
-		setTimeout(() => router.replace(redirectTo), 400);
+		timeoutRef.current = setTimeout(() => router.replace(redirectTo), 400);
 	}, [router, redirectTo]);
 
 	const handleManualEnter = () => {
 		setProgress(100);
 		if (redirectedRef.current) return;
-		setTimeout(redirect, 300);
+		timeoutRef.current = setTimeout(redirect, 300);
 	};
+
+	useEffect(() => {
+		return () => {
+			if (timeoutRef.current) clearTimeout(timeoutRef.current);
+		};
+	}, []);
 
 	useEffect(() => {
 		const startTime = performance.now();
@@ -69,7 +78,10 @@ export function LoadingScreen({
 
 		frameId = requestAnimationFrame(animate);
 
-		return () => cancelAnimationFrame(frameId);
+		return () => {
+			cancelAnimationFrame(frameId);
+			if (timeoutRef.current) clearTimeout(timeoutRef.current);
+		};
 	}, [duration, authReady, redirect]);
 
 	useEffect(() => {

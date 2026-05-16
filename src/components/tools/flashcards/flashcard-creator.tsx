@@ -190,7 +190,7 @@ function FlashcardForm({
 					value={formData.front || ""}
 					onChange={handleInputChange}
 					placeholder="What is the question or prompt?"
-					className="min-h-[80px]"
+					className="min-h-20"
 					disabled={false}
 				/>
 			</div>
@@ -203,7 +203,7 @@ function FlashcardForm({
 					value={formData.back || ""}
 					onChange={handleInputChange}
 					placeholder="What is the answer or explanation?"
-					className="min-h-[80px]"
+					className="min-h-20"
 					disabled={false}
 				/>
 			</div>
@@ -373,7 +373,7 @@ export function FlashcardCreator({ className }: FlashcardCreatorProps) {
 						<Button
 							variant="outline"
 							onClick={() => setIsCreating(true)}
-							className="flex-shrink-0"
+							className="shrink-0"
 						>
 							New Flashcard
 						</Button>

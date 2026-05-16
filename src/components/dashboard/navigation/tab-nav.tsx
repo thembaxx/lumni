@@ -66,7 +66,7 @@ export function TabNav({
 					>
 						<span
 							className={cn(
-								"absolute top-0.5 bottom-0.5 bg-background rounded-xl shadow-sm transition-transform transition-shadow duration-300 ease-[var(--ease-ios)] border border-border/30",
+								"absolute top-0.5 bottom-0.5 bg-background rounded-xl shadow-sm transition-transform duration-300 ease-ios border border-border/30",
 								activeTab === "ai"
 									? "left-0.5 w-[calc(33.33%-4px)]"
 									: activeTab === "spaces"

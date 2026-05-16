@@ -11,7 +11,6 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ListCell, ListGroup, ListSection } from "@/components/ui/list-cell";
 import { UploadButton } from "@/lib/uploadthing";
-import { AnimatedIcon } from "@/lib/utils/icon-mapping";
 
 function formatSubjectName(subject: string): string {
 	return subject.replace(/\s+/g, "_").toLowerCase();
@@ -31,8 +30,8 @@ function extractSubjectFromFileName(fileName: string): string {
 }
 
 export default function UploadPage() {
-	const [_uploadedUrls, setCloudArrowUpedUrls] = useState<string[]>([]);
-	const [lastCloudArrowUp, setLastCloudArrowUp] = useState<string | null>(null);
+	const [_uploadedUrls, setUploadedUrls] = useState<string[]>([]);
+	const [lastUploadUrl, setLastUploadUrl] = useState<string | null>(null);
 	const [_syncStatus, setSyncStatus] = useState<
 		"idle" | "syncing" | "done" | "error"
 	>("idle");
@@ -59,8 +58,8 @@ export default function UploadPage() {
 		files: { url: string; name: string }[],
 	) => {
 		const urls = files.map((f) => f.url);
-		setCloudArrowUpedUrls(urls);
-		setLastCloudArrowUp(urls[0] || null);
+		setUploadedUrls(urls);
+		setLastUploadUrl(urls[0] || null);
 
 		const fileName = files[0]?.name || "";
 		const subject = extractSubjectFromFileName(fileName);
@@ -93,7 +92,6 @@ export default function UploadPage() {
 					<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
 						<header>
 							<h2 className="font-heading text-sm font-medium flex flex-col items-center gap-3 text-center">
-								<AnimatedIcon name="empty-upload" className="size-20" />
 								<span className="flex items-center gap-2">
 									<CloudArrowUp className="size-4" />
 									Upload
@@ -108,11 +106,11 @@ export default function UploadPage() {
 								endpoint="qaUploader"
 								onClientUploadComplete={handleUploadComplete}
 								onUploadError={(error: Error) => {
-									console.error("CloudArrowUp error:", error);
+									console.error("Upload error:", error);
 								}}
 							/>
 
-							{lastCloudArrowUp && (
+							{lastUploadUrl && (
 								<div className="rounded-[--radius-button] bg-[var(--success)]/10 p-[--space-4] text-center">
 									<motion.div
 										initial={{ scale: 0, opacity: 0 }}
@@ -122,10 +120,10 @@ export default function UploadPage() {
 										<CheckCircle className="size-16 mx-auto mb-2 text-success" />
 									</motion.div>
 									<p className="text-[13px] font-medium text-[var(--success)]">
-										CloudArrowUp successful
+										Upload successful
 									</p>
 									<p className="text-[12px] text-muted-foreground break-all mt-1">
-										{lastCloudArrowUp}
+										{lastUploadUrl}
 									</p>
 								</div>
 							)}

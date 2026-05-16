@@ -20,12 +20,12 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { cn } from "@/lib/shared";
-import type { ExamPaper } from "@/types/exam";
+import type { PaperListing } from "@/types/exam";
 
 interface PdfViewerProps {
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
-	exam: ExamPaper;
+	exam: PaperListing;
 }
 
 const MIN_SCALE = 0.5;

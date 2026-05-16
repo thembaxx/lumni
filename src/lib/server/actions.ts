@@ -12,15 +12,8 @@ import {
 	updateDocument,
 } from "@/lib/db/client";
 
-const DEFAULT_USER_ID = "demo-user";
-
-async function ensureDemoUser() {
-	// Appwrite handles user creation via account.createMagicSession() / createPhoneSession()
-	return DEFAULT_USER_ID;
-}
-
-export async function fetchSubjects(userId?: string) {
-	const targetUserId = userId || (await ensureDemoUser());
+export async function fetchSubjects(userId: string) {
+	const targetUserId = userId;
 
 	const subjects = await listDocuments(COLLECTIONS.SUBJECTS);
 
@@ -35,8 +28,8 @@ export async function fetchSubjects(userId?: string) {
 	return { subjects, selectedSubjectIds: selectedIds };
 }
 
-export async function fetchUserProgress(userId?: string) {
-	const targetUserId = userId || (await ensureDemoUser());
+export async function fetchUserProgress(userId: string) {
+	const targetUserId = userId;
 
 	const progressArr = await listDocuments(COLLECTIONS.USER_PROGRESS, [
 		Query.equal("userId", targetUserId),

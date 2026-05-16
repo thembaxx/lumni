@@ -9,10 +9,8 @@ export interface UserProgress {
 	accuracy: number;
 }
 
-const DEFAULT_USER_ID = "demo-user";
-
-export function useUserProgress(userId?: string): UseQueryResult<UserProgress> {
-	const targetUserId = userId || DEFAULT_USER_ID;
+export function useUserProgress(userId: string): UseQueryResult<UserProgress> {
+	const targetUserId = userId;
 
 	return useQuery({
 		queryKey: ["user-progress", targetUserId],

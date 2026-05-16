@@ -4,7 +4,7 @@ export type ExamPaperType = "paper" | "memo" | "answer-book";
 
 export type ExamLanguage = "english" | "afrikaans";
 
-export interface ExamPaper {
+export interface PaperListing {
 	id: string;
 	subject: string;
 	subjectId: string;
@@ -32,5 +32,5 @@ export interface ExamFilter {
 
 export interface ExamGroup {
 	subject: string;
-	papers: ExamPaper[];
+	papers: PaperListing[];
 }

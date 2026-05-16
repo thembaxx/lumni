@@ -141,7 +141,7 @@ export function HomeContent() {
 				style={{ opacity: heroOpacity, scale: heroScale }}
 				className="relative min-h-[90dvh] flex items-center pt-14"
 			>
-				<div className="absolute inset-0 bg-gradient-to-b from-[--system-accent]/5 via-transparent to-transparent pointer-events-none" />
+				<div className="absolute inset-0 bg-linear-to-b from-[--system-accent]/5 via-transparent to-transparent pointer-events-none" />
 				<div className="max-w-6xl mx-auto px-4 w-full">
 					<div className="grid lg:grid-cols-2 gap-12 items-center py-20">
 						<div className="flex flex-col gap-8">
@@ -217,8 +217,8 @@ export function HomeContent() {
 							className="relative hidden lg:flex items-center justify-center"
 						>
 							<div className="relative w-full aspect-square max-w-md">
-								<div className="absolute inset-0 bg-gradient-to-br from-[--system-accent]/20 via-[--system-accent]/5 to-transparent rounded-[3rem] blur-3xl" />
-								<div className="relative w-full h-full rounded-[2.5rem] bg-gradient-to-br from-[--system-accent]/10 to-background border border-border/50 p-8 flex flex-col gap-4">
+								<div className="absolute inset-0 bg-linear-to-br from-[--system-accent]/20 via-[--system-accent]/5 to-transparent rounded-[3rem] blur-3xl" />
+								<div className="relative w-full h-full rounded-[2.5rem] bg-linear-to-br from-[--system-accent]/10 to-background border border-border/50 p-8 flex flex-col gap-4">
 									<div className="flex items-center gap-3">
 										<div className="size-10 rounded-xl bg-[--system-accent]/20 flex items-center justify-center">
 											<Brain
@@ -293,7 +293,7 @@ export function HomeContent() {
 							>
 								<div
 									className={cn(
-										"absolute inset-0 rounded-[2rem] bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500",
+										"absolute inset-0 rounded-[2rem] bg-linear-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500",
 										feature.gradient,
 									)}
 								/>
@@ -368,7 +368,7 @@ export function HomeContent() {
 						initial={{ opacity: 0, y: 20 }}
 						whileInView={{ opacity: 1, y: 0 }}
 						viewport={{ once: true }}
-						className="relative rounded-[2.5rem] bg-gradient-to-br from-[--system-accent]/10 via-background to-background border border-border/50 p-12 text-center overflow-hidden"
+						className="relative rounded-[2.5rem] bg-linear-to-br from-[--system-accent]/10 via-background to-background border border-border/50 p-12 text-center overflow-hidden"
 					>
 						<div className="absolute top-0 right-0 size-64 bg-[--system-accent]/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
 						<div className="relative">

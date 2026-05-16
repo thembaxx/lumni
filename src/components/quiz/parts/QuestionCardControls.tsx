@@ -12,7 +12,7 @@ interface QuestionCardControlsProps {
 	isMCQ: boolean;
 	options: Option[];
 	handleMCQSelect: (optionId: string) => void;
-	handleMCGSubmit: () => void;
+	handleMCQSubmit: () => void;
 	handleGrade: (answer: UserAnswer) => Promise<void>;
 	isGrading: boolean;
 	onNext?: () => void;
@@ -32,7 +32,7 @@ export function QuestionCardControls({
 	isMCQ,
 	options,
 	handleMCQSelect,
-	handleMCGSubmit,
+	handleMCQSubmit,
 	handleGrade,
 	isGrading,
 	onNext,

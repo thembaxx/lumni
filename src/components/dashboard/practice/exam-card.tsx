@@ -6,12 +6,12 @@ import { FadeIn } from "@/components/shared/fade-in";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/shared";
-import type { ExamPaper } from "@/types/exam";
+import type { PaperListing } from "@/types/exam";
 import { PdfViewer } from "./pdf-viewer-client";
 import { SmartViewDialog } from "./smart-view-dialog";
 
 interface ExamCardProps {
-	exam: ExamPaper;
+	exam: PaperListing;
 }
 
 export function ExamCard({ exam }: ExamCardProps) {

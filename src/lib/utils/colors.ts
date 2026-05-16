@@ -1,7 +1,12 @@
 export type Difficulty = "easy" | "medium" | "hard";
+export type DifficultyInput = Difficulty | "Easy" | "Medium" | "Hard";
 
-export function getDifficultyColor(difficulty: Difficulty): string {
-	switch (difficulty) {
+function normalizeDifficulty(d: DifficultyInput): Difficulty {
+	return d.toLowerCase() as Difficulty;
+}
+
+export function getDifficultyColor(difficulty: DifficultyInput): string {
+	switch (normalizeDifficulty(difficulty)) {
 		case "easy":
 			return "bg-success/10 text-success border-success/20";
 		case "medium":
@@ -11,8 +16,8 @@ export function getDifficultyColor(difficulty: Difficulty): string {
 	}
 }
 
-export function getQuizDifficultyColor(difficulty: Difficulty): string {
-	switch (difficulty) {
+export function getQuizDifficultyColor(difficulty: DifficultyInput): string {
+	switch (normalizeDifficulty(difficulty)) {
 		case "easy":
 			return "bg-success/20 text-success border-success";
 		case "medium":

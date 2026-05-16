@@ -58,7 +58,7 @@ interface QuestionCardInputProps {
 	code: string;
 	setCode: React.Dispatch<React.SetStateAction<string>>;
 	handleMCQSelect: (optionId: string) => void;
-	handleMCGSubmit: () => void;
+	handleMCQSubmit: () => void;
 	handleGrade: (answer: UserAnswer) => Promise<void>;
 	handleFollowUp: () => void;
 	followUpInput: string;
@@ -79,7 +79,7 @@ export function QuestionCardInput({
 	code,
 	setCode,
 	handleMCQSelect,
-	handleMCGSubmit,
+	handleMCQSubmit,
 	handleGrade,
 	handleFollowUp,
 	followUpInput,
@@ -148,7 +148,7 @@ export function QuestionCardInput({
 						);
 					})}
 					<Button
-						onClick={handleMCGSubmit}
+						onClick={handleMCQSubmit}
 						disabled={!state.selectedOption}
 						className="col-span-full mt-2"
 					>

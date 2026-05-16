@@ -64,12 +64,12 @@ Questions are validated against per-type validators (score 0-100). Low-scoring q
 ### TypeScript Types
 
 ```typescript
-// Re-exported from @/types/questions for backward compat:
-import type { Question, QuestionType, GradingResult, Option } from "@/types/questions"
-
-// Or import directly from engine:
-import type { Question, GradingResult } from "@/lib/question-engine/types"
+// Import directly from engine
+import type { Question, QuestionType, GradingResult, Option } from "@/lib/question-engine/types"
+import type { Difficulty } from "@/lib/question-engine/types"   // "Easy" | "Medium" | "Hard"
 ```
+
+> **Note:** The question engine `Difficulty` uses capitalized values (`"Easy"`/`"Medium"`/`"Hard"`). Color utilities (`@/lib/utils/colors`) define a separate lowercase `Difficulty` (`"easy"`/`"medium"`/`"hard"`). Both are in use; the `DifficultyBadge` component normalises with `toLowerCase()`.
 
 ## Visual Engine Architecture
 
@@ -144,3 +144,27 @@ Five canonical labels with default naming. See `docs/agents/triage-labels.md`.
 ### Domain docs
 
 Single-context — one `CONTEXT.md` + `docs/adr/` at the repo root. See `docs/agents/domain.md`.
+
+## Bug-Fix Session (May 2026)
+
+23 bugs fixed across 5 phases. Key changes:
+
+- **Exam scoring**: `Option` type now requires `isCorrect: boolean`; exam parser fixed to set `isCorrect: false` at parse time
+- **Exam sessions**: Now use `exam_sessions` Appwrite collection (not `exam_papers`)
+- **Gamification**: Achievements migrated from `string[]` to `StoredAchievement[]` (`{ id, earnedAt }`) — old format auto-migrates on load
+- **Paper listing type**: Renamed from `ExamPaper` to `PaperListing` in `@/types/exam` to avoid collision with `@/types/exam-paper:ExamPaper`
+- **Upload page**: Fixed text leak (`CloudArrowUp` icon name exposed in success message)
+- **Auth**: Removed `DEFAULT_USER_ID` ("demo-user") hardcoding; `stats-row.tsx` wired to `useAuth()`
+- **Loading screen**: Fixed `setTimeout` leak on unmount (`timeoutRef` cleanup)
+- **Rate limiting**: Added `withRateLimit` wrapper to `POST /api/generate-element-fact`
+- **Backoff**: Consolidated `calculateBackoffDelay` into `src/lib/shared/backoff.ts`
+
+### Known limitations (won't fix)
+
+- `analytics-service.ts` comparative analytics depends on other users' data being present in Appwrite; falls back to estimated values when empty
+
+### TypeScript & Lint
+
+- `npx tsc --noEmit` must pass with zero errors
+- `npx biome check` must pass on all changed files
+- Build: `npx next build` (catches runtime issues)

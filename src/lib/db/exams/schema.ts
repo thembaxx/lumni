@@ -26,7 +26,7 @@ export interface ParsedExamPaperFilename {
 export function parseExamPaperFilename(
 	filename: string,
 ): ParsedExamPaperFilename | null {
-	const match = filename.match(/^(\d{4})_([a-z_]+)(_p(\d+))?(_memo)?\.pdf$/i);
+	const match = filename.match(/^(\d{4})_([a-z_-]+)(_p(\d+))?(_memo)?\.pdf$/i);
 	if (!match) return null;
 
 	const year = parseInt(match[1], 10);

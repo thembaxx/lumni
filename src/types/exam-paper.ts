@@ -72,7 +72,5 @@ export interface DataTable {
 	rows: (string | number | null)[][];
 }
 
-export interface Option {
-	id: string;
-	text: string;
-}
+import type { Option as QuestionEngineOption } from "@/lib/question-engine/types";
+export type Option = QuestionEngineOption;

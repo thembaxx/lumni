@@ -8,7 +8,7 @@ export async function GET() {
 	try {
 		const response = await databases.listDocuments(
 			APPWRITE_DATABASE_ID,
-			COLLECTIONS.EXAM_PAPERS,
+			COLLECTIONS.EXAM_SESSIONS,
 		);
 
 		const sessions = response.documents.map((doc) => ({
@@ -36,7 +36,7 @@ export async function POST(request: Request) {
 
 		const docId = await databases.createDocument(
 			APPWRITE_DATABASE_ID,
-			COLLECTIONS.EXAM_PAPERS,
+			COLLECTIONS.EXAM_SESSIONS,
 			"unique()",
 			{
 				examPaperId: paperId,

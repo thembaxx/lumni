@@ -179,6 +179,24 @@ export const schemaConfig: Record<string, CollectionSchema> = {
 			},
 		],
 	},
+	exam_sessions: {
+		attributes: {
+			examPaperId: { type: "string", size: 100, required: true },
+			answers: { type: "string", size: 50000 },
+			flags: { type: "string", size: 5000 },
+			timeRemaining: { type: "integer" },
+			completed: { type: "boolean" },
+			startedAt: { type: "datetime" },
+			lastSavedAt: { type: "datetime" },
+		},
+		indexes: [
+			{
+				key: "idx_exam_sessions_paper",
+				type: "key",
+				attributes: ["examPaperId"],
+			},
+		],
+	},
 	analytics: {
 		attributes: {
 			eventType: { type: "string", size: 50 },

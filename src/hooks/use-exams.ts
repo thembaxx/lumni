@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import type { ExamFilter, ExamGroup, ExamPaper } from "@/types/exam";
+import type { ExamFilter, ExamGroup, PaperListing } from "@/types/exam";
 
 interface AppwriteExam {
 	id: string;
@@ -18,7 +18,7 @@ interface AppwriteExam {
 }
 
 export function useExams(filter: ExamFilter) {
-	const [exams, setExams] = useState<ExamPaper[]>([]);
+	const [exams, setExams] = useState<PaperListing[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, _setError] = useState<string | null>(null);
 
@@ -31,7 +31,7 @@ export function useExams(filter: ExamFilter) {
 				if (res.ok) {
 					const data = await res.json();
 					const appwriteExams = (data.exams || []) as AppwriteExam[];
-					const mapped: ExamPaper[] = appwriteExams.map((e) => ({
+					const mapped: PaperListing[] = appwriteExams.map((e) => ({
 						id: e.id,
 						subject: e.subject,
 						subjectId: e.subject.toLowerCase().replace(/\s+/g, "-"),
@@ -94,7 +94,7 @@ export function useExams(filter: ExamFilter) {
 	}, [exams, filter]);
 
 	const groupedExams = useMemo<ExamGroup[]>(() => {
-		const grouped = new Map<string, ExamPaper[]>();
+		const grouped = new Map<string, PaperListing[]>();
 
 		filteredExams.forEach((exam) => {
 			const existing = grouped.get(exam.subject) || [];
@@ -120,4 +120,4 @@ export function useExams(filter: ExamFilter) {
 	};
 }
 
-export type { ExamFilter, ExamGroup, ExamPaper } from "@/types/exam";
+export type { ExamFilter, ExamGroup, PaperListing } from "@/types/exam";

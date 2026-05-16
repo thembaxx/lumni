@@ -258,7 +258,7 @@ function StudySetForm({
 					value={formData.description || ""}
 					onChange={handleInputChange}
 					placeholder="Describe what this study set covers"
-					className="min-h-[80px]"
+					className="min-h-20"
 					disabled={false}
 				/>
 			</div>
@@ -610,7 +610,7 @@ export function StudySetCreator({ className }: StudySetCreatorProps) {
 						<Button
 							variant="outline"
 							onClick={() => setIsCreating(true)}
-							className="flex-shrink-0"
+							className="shrink-0"
 						>
 							New Study Set
 						</Button>

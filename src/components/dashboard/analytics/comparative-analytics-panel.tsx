@@ -7,6 +7,7 @@ import { BarChart } from "@/components/ui/charts/bar-chart";
 import { LineChart } from "@/components/ui/charts/line-chart";
 import { RadarChart } from "@/components/ui/charts/radar-chart";
 import { useAnalytics } from "@/hooks/use-analytics";
+import { useAuth } from "@/lib/auth/auth-context";
 import { analyticsService } from "@/lib/services/analytics-service";
 
 interface ComparativeAnalyticsData {
@@ -24,32 +25,34 @@ interface SubjectTrendData {
 
 export function ComparativeAnalyticsPanel() {
 	const { analytics, isLoading } = useAnalytics();
+	const { user } = useAuth();
 	const [comparativeData, setComparativeData] =
 		useState<ComparativeAnalyticsData | null>(null);
 	const [subjectTrends, setSubjectTrends] = useState<
 		Record<string, SubjectTrendData>
 	>({});
+	const [showSubjectDetail, setShowSubjectDetail] = useState(false);
 	const [_isLoadingComparative, setIsLoadingComparative] = useState(false);
 	const [_isLoadingTrends, setIsLoadingTrends] = useState(false);
 
 	const loadComparativeAnalytics = useCallback(async () => {
+		if (!user?.$id) return;
 		setIsLoadingComparative(true);
 		try {
-			const data = await analyticsService.getComparativeAnalytics();
+			const data = await analyticsService.getComparativeAnalytics(user.$id);
 			setComparativeData(data);
 		} catch (error) {
 			console.error("Error loading comparative analytics:", error);
 		} finally {
 			setIsLoadingComparative(false);
 		}
-	}, []);
+	}, [user]);
 
 	const loadSubjectTrends = useCallback(async () => {
-		if (!analytics || !comparativeData) return;
+		if (!analytics || !comparativeData || !user?.$id) return;
 
 		setIsLoadingTrends(true);
 		try {
-			// Get top 3 weak subjects based on rankings (lower percentile = weaker)
 			const weakSubjects = Object.entries(comparativeData.subjectRankings)
 				.sort(([, rankA], [, rankB]) => rankA - rankB)
 				.slice(0, 3)
@@ -57,33 +60,15 @@ export function ComparativeAnalyticsPanel() {
 
 			const trends: Record<string, SubjectTrendData> = {};
 
-			// In a real implementation, we would fetch trends for each subject
-			// For now, we'll simulate some trend data
-			weakSubjects.forEach((subject) => {
-				// Simulate trend data
-				const dates = [];
-				const accuracies = [];
-
-				for (let i = 0; i < 6; i++) {
-					const date = new Date();
-					date.setMonth(date.getMonth() - i);
-					dates.unshift(date.toLocaleDateString(undefined, { month: "short" }));
-					// Simulate accuracy between 40-80% with some randomness
-					const baseAccuracy = 50 + Math.random() * 30;
-					accuracies.unshift(baseAccuracy + (Math.random() - 0.5) * 10);
-				}
-
-				trends[subject] = {
-					dates,
-					accuracies,
-					trend:
-						accuracies[accuracies.length - 1] > accuracies[0]
-							? "improving"
-							: accuracies[accuracies.length - 1] < accuracies[0]
-								? "declining"
-								: "stable",
-				};
-			});
+			await Promise.all(
+				weakSubjects.map(async (subject) => {
+					const data = await analyticsService.getSubjectTrend(
+						user.$id,
+						subject,
+					);
+					trends[subject] = data;
+				}),
+			);
 
 			setSubjectTrends(trends);
 		} catch (error) {
@@ -91,7 +76,7 @@ export function ComparativeAnalyticsPanel() {
 		} finally {
 			setIsLoadingTrends(false);
 		}
-	}, [analytics, comparativeData]);
+	}, [analytics, comparativeData, user]);
 
 	// Load comparative analytics when user analytics loads
 	useEffect(() => {
@@ -221,9 +206,7 @@ export function ComparativeAnalyticsPanel() {
 								<Button
 									variant="ghost"
 									size="icon"
-									onClick={() => {
-										/* TODO: Show detailed view */
-									}}
+									onClick={() => setShowSubjectDetail((v) => !v)}
 								>
 									<svg
 										className="h-4 w-4 text-muted-foreground"
@@ -242,6 +225,40 @@ export function ComparativeAnalyticsPanel() {
 							</CardTitle>
 						</CardHeader>
 						<CardContent>
+							{showSubjectDetail && comparativeData && (
+								<div className="mb-4 overflow-x-auto">
+									<table className="w-full text-xs">
+										<thead>
+											<tr className="border-b text-muted-foreground">
+												<th className="text-left py-1 pr-2">Subject</th>
+												<th className="text-right py-1 px-2">Accuracy</th>
+												<th className="text-right py-1 pl-2">Rank</th>
+											</tr>
+										</thead>
+										<tbody>
+											{Object.entries(comparativeData.subjectRankings)
+												.sort(([, a], [, b]) => b - a)
+												.map(([subject, rank]) => {
+													const accuracy = comparativeData.userAverage;
+													return (
+														<tr
+															key={subject}
+															className="border-b last:border-0"
+														>
+															<td className="py-1 pr-2 font-medium">
+																{subject}
+															</td>
+															<td className="text-right py-1 px-2">
+																{Math.round(accuracy)}%
+															</td>
+															<td className="text-right py-1 pl-2">{rank}th</td>
+														</tr>
+													);
+												})}
+										</tbody>
+									</table>
+								</div>
+							)}
 							<RadarChart
 								data={{
 									labels: Object.keys(comparativeData.subjectRankings),

@@ -6,15 +6,18 @@ import { Achievements } from "@/components/gamification";
 import { Card, CardContent } from "@/components/ui/card";
 import { useGamification } from "@/hooks/use-gamification";
 import { useUserProgress } from "@/hooks/use-user-progress";
+import { useAuth } from "@/lib/auth/auth-context";
 
 export function StatsRow() {
+	const { user } = useAuth();
+	const userId = user?.$id ?? "";
 	const {
 		gamification,
 		currentStreak,
 		isLoaded: isGamificationLoaded,
 	} = useGamification();
 	const { data: progressData, isLoading: isProgressLoading } =
-		useUserProgress("demo-user");
+		useUserProgress(userId);
 
 	if (!isGamificationLoaded || isProgressLoading) return null;
 

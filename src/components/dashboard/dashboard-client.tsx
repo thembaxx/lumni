@@ -72,7 +72,7 @@ function HeroBanner() {
 
 	return (
 		<motion.div
-			className="relative -mx-4 mt-4 mb-6 h-40 overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[--system-accent]/10 via-[--system-accent]/5 to-transparent shadow-[0_24px_48px_-16px_rgba(0,0,0,0.06)]"
+			className="relative -mx-4 mt-4 mb-6 h-40 overflow-hidden rounded-[2.5rem] bg-linear-to-br from-[--system-accent]/10 via-[--system-accent]/5 to-transparent shadow-[0_24px_48px_-16px_rgba(0,0,0,0.06)]"
 			initial={{ opacity: 0, y: -12 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.5, ease: iOSEase }}
@@ -299,7 +299,7 @@ export function DashboardClient({
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0, transition: { duration: 0.15 } }}
 						transition={{ duration: 0.2, ease: iOSEase }}
-						className="min-h-[100dvh] flex items-center justify-center px-4"
+						className="min-h-dvh flex items-center justify-center px-4"
 					>
 						<div className="w-full max-w-md flex flex-col gap-3">
 							<Skeleton className="h-24 rounded-[2rem]" />

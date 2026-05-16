@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { generateWithSystem, initAI, isAIConfigured } from "@/lib/ai";
 import type { AIResponse } from "@/lib/ai/types";
 import { checkBudget, trackUsage } from "@/lib/ai/with-budget";
+import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 export const dynamic = "force-dynamic";
 
@@ -57,7 +58,7 @@ async function generateInterestingFact(
 	return cleanedContent;
 }
 
-export async function POST(req: NextRequest) {
+const postHandler = async (req: NextRequest) => {
 	const budget = await checkBudget(req, "generate");
 	if (!budget.allowed) return budget.response!;
 
@@ -101,4 +102,6 @@ export async function POST(req: NextRequest) {
 			{ status: 500 },
 		);
 	}
-}
+};
+
+export const POST = withRateLimit(postHandler);

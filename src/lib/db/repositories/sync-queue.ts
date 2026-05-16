@@ -1,13 +1,6 @@
+import { calculateBackoffDelay } from "@/lib/shared/backoff";
 import { safeJsonParse, safeJsonStringify } from "@/lib/shared/json";
 import { offlineDB, type SyncQueueItem } from "../schema";
-
-export function calculateBackoffDelay(attempts: number): number {
-	const baseDelay = 1000;
-	const maxDelay = 60000;
-	const delay = Math.min(baseDelay * Math.pow(2, attempts), maxDelay);
-	const jitter = Math.random() * 1000;
-	return delay + jitter;
-}
 
 export async function addToSyncQueue(
 	action: SyncQueueItem["action"],

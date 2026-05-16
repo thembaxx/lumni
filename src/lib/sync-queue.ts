@@ -155,7 +155,6 @@ export function useAutoSync() {
 		if (typeof window === "undefined") return;
 
 		const handleOnline = () => {
-			console.log("[Sync] Network online, processing queue...");
 			processQueue();
 		};
 

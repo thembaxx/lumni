@@ -26,7 +26,7 @@ export function validate(question: Question): {
 		});
 	}
 
-	if (body.tolerance < 0) {
+	if (!(body.tolerance >= 0)) {
 		errors.push({
 			type: "schema",
 			field: "tolerance",

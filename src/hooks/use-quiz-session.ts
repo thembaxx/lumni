@@ -120,7 +120,7 @@ export function useQuizSession({
 	}, [onFinish, correctAnswers, elapsedTime]);
 
 	const handleRestart = useCallback(() => {
-		setPoints(Math.floor(Math.random() * 101));
+		setPoints(0);
 		setCurrentQuestionIndex(0);
 		setCorrectAnswers(0);
 		setElapsedTime(0);

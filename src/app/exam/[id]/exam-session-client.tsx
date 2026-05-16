@@ -362,8 +362,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 				const selected = Array.isArray(answer?.value)
 					? answer?.value[0]
 					: answer?.value;
-				const correctOpt = item.part.options.find((o) => o.id === selected);
-				correct = !!correctOpt;
+				correct = item.part.options.some((o) => o.id === selected && o.isCorrect);
 			}
 			return { partId: item.part.id, correct, score: correct ? 1 : 0 };
 		});
@@ -501,8 +500,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 				const selected = Array.isArray(answer?.value)
 					? answer?.value[0]
 					: answer?.value;
-				const correctOpt = item.part.options.find((o) => o.id === selected);
-				correct = !!correctOpt;
+				correct = item.part.options.some((o) => o.id === selected && o.isCorrect);
 			}
 			return { partId: item.part.id, correct, score: correct ? 1 : 0 };
 		});
