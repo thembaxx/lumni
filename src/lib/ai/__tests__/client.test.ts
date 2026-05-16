@@ -31,4 +31,23 @@ describe("AIClient", () => {
 		const client = new AIClient({});
 		expect(client.getProviders()).toEqual([]);
 	});
+
+	test("getProviders includes nvidia when nvidiaApiKey is set", () => {
+		const client = new AIClient({ nvidiaApiKey: "nvapi-test" });
+		expect(client.getProviders()).toContain("nvidia");
+	});
+
+	test("isConfigured returns true with only nvidiaApiKey", () => {
+		const client = new AIClient({ nvidiaApiKey: "nvapi-test" });
+		expect(client.isConfigured()).toBe(true);
+	});
+
+	test("provider order is gemini, nvidia, groq when all configured", () => {
+		const client = new AIClient({
+			geminiApiKey: "gemini-key",
+			nvidiaApiKey: "nvapi-key",
+			groqApiKey: "groq-key",
+		});
+		expect(client.getProviders()).toEqual(["gemini", "nvidia", "groq"]);
+	});
 });

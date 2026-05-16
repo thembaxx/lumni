@@ -88,10 +88,11 @@ Short-answer grader (`src/lib/question-engine/processors/graders/short-answer.ts
 ## AI provider chain
 
 - **Primary**: Gemini 2.0 Flash Lite
-- **Fallback**: Groq Llama 3.3 70B
+- **Fallback 1**: Nvidia NIM (meta/llama-3.3-70b-instruct)
+- **Fallback 2**: Groq Llama 3.3 70B
 - **Removed**: DeepSeek Reasoner (too expensive for free-tier credits)
 
-Provider order in `src/lib/ai/client.ts`: Gemini first, Groq second if Gemini fails. No DeepSeek.
+Provider order in `src/lib/ai/client.ts`: Gemini → Nvidia → Groq.
 
 ## Auth rate limiting (`src/lib/auth/rate-limit.ts`)
 

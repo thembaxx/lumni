@@ -1,5 +1,6 @@
 import { createGeminiProvider } from "./providers/gemini";
 import { createGroqProvider } from "./providers/groq";
+import { createNvidiaProvider } from "./providers/nvidia";
 import {
 	AIFailure,
 	AIProvider,
@@ -10,6 +11,7 @@ import {
 
 export interface AIConfig {
 	geminiApiKey?: string;
+	nvidiaApiKey?: string;
 	groqApiKey?: string;
 }
 
@@ -29,6 +31,9 @@ function createProviderChain(config: AIConfig): AIProvider[] {
 
 	if (config.geminiApiKey) {
 		providers.push(createGeminiProvider(config.geminiApiKey));
+	}
+	if (config.nvidiaApiKey) {
+		providers.push(createNvidiaProvider(config.nvidiaApiKey));
 	}
 	if (config.groqApiKey) {
 		providers.push(createGroqProvider(config.groqApiKey));
