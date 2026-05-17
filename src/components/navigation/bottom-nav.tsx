@@ -15,6 +15,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { ChatDialog } from "@/components/dashboard/chat/chat-dialog";
 import { Badge } from "@/components/ui/badge";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
+import { useOnboarding } from "@/hooks/use-onboarding";
 import { cn } from "@/lib/shared";
 
 interface NavItem {
@@ -121,6 +122,7 @@ function NavItemComponent({
 export function BottomNav() {
 	const pathname = usePathname();
 	const { push } = useNavigationDirection();
+	const { isOnboarding } = useOnboarding();
 	const [chatDialogOpen, setChatDialogOpen] = useState(false);
 	const [hidden, setHidden] = useState(false);
 	const [reducedMotion, setReducedMotion] = useState(false);
@@ -188,7 +190,7 @@ export function BottomNav() {
 		[push],
 	);
 
-	if (pathname === "/") return null;
+	if (pathname === "/" || isOnboarding) return null;
 
 	return (
 		<>

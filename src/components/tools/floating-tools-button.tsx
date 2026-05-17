@@ -5,6 +5,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { useOnboarding } from "@/hooks/use-onboarding";
 import { cn } from "@/lib/shared";
 import { useToolsStore } from "@/store/tools";
 import { ToolsDialog } from "./tools-dialog";
@@ -12,6 +13,7 @@ import { ToolsDialog } from "./tools-dialog";
 export function FloatingToolsButton() {
 	const [isOpen, setIsOpen] = useState(false);
 	const pathname = usePathname();
+	const { isOnboarding } = useOnboarding();
 	const storeOpen = useToolsStore((s) => s.open);
 	const closeTools = useToolsStore((s) => s.closeTools);
 	const openTools = useToolsStore((s) => s.openTools);
@@ -36,7 +38,7 @@ export function FloatingToolsButton() {
 		setIsOpen(true);
 	};
 
-	if (isHomePage) return null;
+	if (isHomePage || isOnboarding) return null;
 
 	return (
 		<>
