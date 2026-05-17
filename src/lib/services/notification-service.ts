@@ -99,7 +99,6 @@ export function sendLocalNotification(
 	if (Notification.permission !== "granted") return;
 
 	navigator.serviceWorker.ready.then((registration) => {
-		// biome-ignore lint/suspicious/noExplicitAny: TS DOM types lack badge/data/actions for showNotification, valid per Web API
 		registration.showNotification(title, {
 			body,
 			icon: "/web-app-manifest-192x192.png",
@@ -109,6 +108,7 @@ export function sendLocalNotification(
 				{ action: "study", title: "Open" },
 				{ action: "snooze", title: "Later" },
 			],
+			// biome-ignore lint/suspicious/noExplicitAny: TS DOM types lack badge/data/actions for showNotification, valid per Web API
 		} as any);
 	});
 }

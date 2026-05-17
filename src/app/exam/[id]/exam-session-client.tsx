@@ -593,6 +593,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 		totalQuestionsAnswered,
 		levelInfo.level,
 		paperData,
+		addWrongAnswer,
 	]);
 
 	const handleDashboard = useCallback(() => {
