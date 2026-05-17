@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lumni — System Design</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js">
+</script>
+<style>
+  :root {
+    --bg: #0f0f13;
+    --surface: #1a1a24;
+    --surface2: #24243a;
+    --border: #2e2e4a;
+    --text: #e8e8f0;
+    --text-dim: #8888aa;
+    --accent: #7c5cfc;
+    --accent-dim: #5a3fc8;
+    --green: #3dcf8e;
+    --amber: #f5a623;
+    --red: #e55050;
+    --blue: #5090e5;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .header {
+    text-align: center;
+    padding: 4rem 1rem 2rem;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(180deg, rgba(124,92,252,0.08) 0%, transparent 100%);
+  }
+  .header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.25rem;
+  }
+  .header h1 span { color: var(--accent); }
+  .header p {
+    color: var(--text-dim);
+    font-size: 1rem;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  .header .subtitle {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    margin-top: 0.5rem;
+    opacity: 0.7;
+  }
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(15,15,19,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.5rem 1rem;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+  .nav a {
+    display: inline-block;
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    transition: all 0.2s;
+  }
+  .nav a:hover, .nav a.active {
+    color: var(--text);
+    background: var(--surface2);
+  }
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1rem 4rem;
+  }
+  .section {
+    margin-bottom: 3rem;
+    scroll-margin-top: 4rem;
+  }
+  .section h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    color: var(--accent);
+  }
+  .section .desc {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    margin-bottom: 1.25rem;
+  }
+  .diagram-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    overflow-x: auto;
+  }
+  .diagram-wrap svg { max-width: 100%; height: auto; }
+  .diagram-wrap :deep(.label) { color: var(--text) !important; }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1rem 0 2rem;
+    justify-content: center;
+  }
+  .tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    background: var(--surface2);
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+  }
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .swatch {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    display: inline-block;
+  }
+  .swatch.purple { background: var(--accent); }
+  .swatch.green { background: var(--green); }
+  .swatch.amber { background: var(--amber); }
+  .swatch.blue { background: var(--blue); }
+  .swatch.red { background: var(--red); }
+  .footer {
+    text-align: center;
+    padding: 2rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 0.8rem;
+  }
+  @media (max-width: 640px) {
+    .header h1 { font-size: 1.8rem; }
+    .diagram-wrap { padding: 0.75rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Lumni <span>System Design</span></h1>
+  <p>AI-powered Matric exam preparation platform</p>
+  <div class="tags">
+    <span class="tag">Next.js 16</span>
+    <span class="tag">React 19</span>
+    <span class="tag">TypeScript 6</span>
+    <span class="tag">Tailwind CSS 4</span>
+    <span class="tag">Appwrite</span>
+    <span class="tag">Dexie (IndexedDB)</span>
+    <span class="tag">Gemini + Nvidia + Groq</span>
+    <span class="tag">shadcn/ui</span>
+    <span class="tag">Konva + Mermaid</span>
+    <span class="tag">PWA</span>
+  </div>
+  <div class="subtitle">Generated from codebase — May 2026</div>
+</div>
+
+<div class="nav">
+  <a href="#overview">Overview</a>
+  <a href="#caching">Caching</a>
+  <a href="#question-engine">Question Engine</a>
+  <a href="#visual-engine">Visual Engine</a>
+  <a href="#ai-chain">AI Chain</a>
+  <a href="#auth">Auth Flow</a>
+  <a href="#storage">Storage</a>
+  <a href="#quiz">Quiz / Exam</a>
+  <a href="#components">Components</a>
+  <a href="#sync">Sync</a>
+  <a href="#gamification">Gamification</a>
+  <a href="#routes">Routes</a>
+</div>
+
+<div class="container">
+
+<!-- ===== 1. OVERVIEW ===== -->
+<div class="section" id="overview">
+  <h2>1. High-Level Architecture</h2>
+  <p class="desc">Top-down view of how the major subsystems connect. The orchestrator wires everything together.</p>
+  <div class="diagram-wrap">
+    <pre class="mermaid">
+      graph TB
+        subgraph Client["Client Layer"]
+          RSC["Next.js RSC / Pages"]
+          Hooks["33+ React Hooks<br/>(useQuestionEngine, useVisualEngine, etc.)"]
+          Stores["Zustand Stores<br/>(auth, flashcards, exam, app)"]
+        end
+
+        subgraph Engine["Engine Layer"]
+          QE["QuestionEngine<br/>Generation · Grading · Validation"]
+          VE["VisualEngine<br/>Konva · Wikimedia · Mermaid"]
+          CE["CompetencyEngine<br/>Bloom's Taxonomy · 4 Levels"]
+          QS["QuizSession<br/>State Machine · Timer"]
+          LO["LearningOrchestrator<br/>Composition Root"]
+        end
+
+        subgraph Cache["Caching Layer"]
+          D["Dexie (IndexedDB)<br/>11 tables · 24h-7d expiry"]
+          AW["Appwrite Cloud<br/>10+ collections"]
+          AI["AI Generation<br/>On-demand fallback"]
+        end
+
+        subgraph Services["Service Layer"]
+          AS["AnalyticsService"]
+          PS["ProgressService"]
+          SRS["SpacedRepService (SM-2)"]
+          SS["SearchService"]
+          LS["LeaderboardService"]
+          NS["NotificationService"]
+          QRS["QuestionRatingService"]
+        end
+
+        subgraph Infra["Infrastructure"]
+          API["REST API Routes<br/>(/api/*)"]
+          Auth["Appwrite Auth<br/>Anonymous → Email"]
+          Jobs["Background Job Queue<br/>Sync · Analytics · Spaced-Rep"]
+          Budget["Token Budget<br/>Per-user + Global"]
+        end
+
+        Client --> API
+        API --> Engine
+        API --> Services
+        Engine --> LO
+        LO -.-> QE & VE & CE & QS
+        Engine --> Cache
+        Services --> Cache
+        Cache --> D & AW & AI
+        Engine --> Jobs
+        Jobs --> Services
+        Auth --> AW
+        Budget --> API
+    </pre>
+  </div>
+  <div class="legend">
+    <span class="legend-item"><span class="swatch purple"></span> Core engines</span>
+    <span class="legend-item"><span class="swatch blue"></span> Data & services</span>
+    <span class="legend-item"><span class="swatch green"></span> Caching tiers</span>
+    <span class="legend-item"><span class="swatch amber"></span> Infrastructure</span>
+  </div>
+</div>
+
+<!-- ===== 2. CACHING ===== -->
+<div class="section" id="caching">
+  <h2>2. Three-Tier Read-Through Caching</h2>
+  <p class="desc">Every data request follows the same greedy pattern: try the fastest tier first, fall through to the slowest.</p>
+  <div class="diagram-wrap">
+    <pre class="mermaid">
+      flowchart TD
+        Req["Request Data"] --> T1{"Dexie (IndexedDB)<br/>~1ms"}
+        T1 -->|Hit| Return["✅ Return cached"]
+        T1 -->|Miss| T2{"Appwrite Cloud<br/>~50-200ms"}
+        T2 -->|Hit| T2a["Write to Dexie"] --> Return
+        T2 -->|Miss| T3{"Generate<br/>AI / Compute<br/>~2-10s"}
+        T3 --> T3a["Write to Appwrite + Dexie"] --> Return
+
+        subgraph Expiry["Cache Expiry"]
+          Q["Questions: 24h"]
+          V["Visuals: 7d"]
+          S["Subjects: 7d"]
+          P["Progress: immediate"]
+        end
+    </pre>
+  </div>
+</div>
+
+<!-- ===== 3. QUESTION ENGINE ===== -->
+<div class="section" id="question-engine">
+  <h2>3. Question Engine Architecture</h2>
+  <p class="desc">11 question types, each with its own processor, grader, and validator. Discriminated unions enforce type safety across the pipeline.</p>
+  <div class="diagram-wrap">
+    <pre class="mermaid">
+      graph TB
+        subgraph Gen["Generation Pipeline"]
+          direction TB
+          Prompt["PromptManager<br/>Type-specific system prompts"]
+          AI_Gen["AI Generate<br/>(Gemini → Nvidia → Groq)"]
+          Valid["Validator<br/>Schema · Quality · Consistency<br/>Score 0-100"]
+          Retry["Score &lt; 50? → Regenerate"]
+        end
+
+        subgraph Types["11 Question Types"]
+          SR["Selected Response<br/>multiple-choice · matching"]
+          CR["Constructed Response<br/>short-answer · long-answer · essay"]
+          ST["STEM / Technical<br/>calculation · diagram · programming"]
+          CX["Context / Mixed<br/>source-based · data-response · mixed"]
+        end
+
+        subgraph Grade["Grading Strategy"]
+          CG["Client-side<br/>MCQ · Matching<br/>Calculation · Short-answer"]
+          AG["AI Grading<br/>Long-answer · Essay<br/>Diagram · Programming<br/>Source-based · Data-response · Mixed"]
+        end
+
+        subgraph Cache_Q["Cache"]
+          D_Q["Dexie (24h)"]
+          AW_Q["Appwrite"]
+        end
+
+        Req_Q["/api/engine/generate"] --> Cache_Q
+        Cache_Q -->|Miss| Gen
+        Gen --> Types
+        Types --> Grade
+        Req_Q_G["/api/engine/grade"] --> Grade
+        Req_Q_H["/api/engine/hint"] --> AI_Gen
+    </pre>
+  </div>
+</div>
+
+<!-- ===== 4. VISUAL ENGINE ===== -->
+<div class="section" id="visual-engine">
+  <h2>4. Visual Engine Architecture</h2>
+  <p class="desc">STEM subjects get AI-generated Konva diagrams; non-STEM subjects get Wikimedia images. Cross-fallback if primary method fails.</p>
+  <div class="diagram-wrap">
+    <pre class="mermaid">
+      graph TD
+        Req_V["/api/engine/visual"] --> Cache_V["Dexie (7d) → Appwrite"]
+        Cache_V -->|Miss| Classify{"STEM Subject?"}
+
+        Classify -->|Yes| STEM["Generate Diagram"]
+        STEM --> Render["Konva Renderers"]
+        Render --> FV["force-vector"]
+        Render --> CRD["circuit"]
+        Render --> W["wave"]
+        Render --> M["motion"]
+        Render --> G["geometry"]
+        Render --> CH["chart"]
+        Render --> CM["chemistry"]
+        Render --> GR["graph"]
+        Render --> NF["node-flow"]
+        Render --> SVG["custom-svg"]
+
+        Classify -->|No| NonSTEM["Wikimedia Search"]
+        NonSTEM --> Img["Return Image URL"]
+
+        STEM -->|Fail| NonSTEM
+        NonSTEM -->|Fail| Mermaid["mermaid-diagram<br/>(fallback)"]
+
+        Render --> Result["VisualContent Component"]
+        Img --> Result
+        Mermaid --> Result
+    </pre>
+  </div>
+</div>
+
+<!-- ===== 5. AI CHAIN ===== -->
+<div class="section" id="ai-chain">
+  <h2>5. AI Provider Chain & Token Budget</h2>
+  <p class="desc">Cascading provider fallback with per-user and global rate limits enforced at the API route level.</p>
+  <div class="diagram-wrap">
+    <pre class="mermaid">
+      graph LR
+        Start["AI Request"] --> Budget{"Token Budget<br/>Check"}
+        Budget -->|"429 Exceeded"| Blocked["⚠️ 429 Too Many<br/>X-Budget-Remaining-User<br/>X-Budget-Remaining-Global<br/>X-Budget-Reset"]
+
+        Budget -->|OK| P1["🥇 Gemini 2.0 Flash Lite"]
+        P1 -->|Success| Done["✅ Return"]
+        P1 -->|Fail / Timeout| P2["🥈 Nvidia NIM<br/>meta/llama-3.3-70b-instruct"]
+        P2 -->|Success| Done
+        P2 -->|Fail / Timeout| P3["🥉 Groq<br/>Llama 3.3 70B"]
+        P3 -->|Success| Done
+        P3 -->|Fail| Error["❌ All providers failed"]
+
+        subgraph Limits["Daily Limits Per User"]
+          G["Generate: 20/day"]
+          GD["Grade: 100/day"]
+          H["Hint: 20/day"]
+          V["Visual: 50/day"]
+        end
+
+        subgraph Global["Global Limits"]
+          GL["2,000 AI calls/day<br/>resets at midnight"]
+        end
+    </pre>
+  </div>
+</div>
+
+<!-- ===== 6. AUTH ===== -->
+<div class="section" id="auth">
+  <h2>6. Authentication Flow</h2>
+  <p class="desc">Users start anonymously (immediate access) and upgrade to email/password later — same userId preserved across the transition.</p>
+  <div class="diagram-wrap">
+    <pre class="mermaid">
+      flowchart TD
+        Visit["User Visits App"] --> Anon{"Has Anonymous<br/>Session?"}
+        Anon -->|No| CreateAnon["Create Appwrite<br/>Anonymous Session"]
+        Anon -->|Yes| LoadData["Load Dexie data<br/>+ Appwrite sync"]
+
+        LoadData --> Decision{"Sign Up / Sign In?"}
+        Decision -->|No Thanks| Offline["Continue with<br/>Anonymous + Dexie"]
+        Decision -->|Email / Password| Upgrade["Upgrade to<br/>Email/Password Auth<br/>(same userId)"]
+
+        Upgrade --> Linked["Anonymous data<br/>linked to account"]
+        Linked --> Persist["Data syncs to Appwrite<br/>cross-session"]
+
+        subgraph RateLimit["Auth Rate Limiting"]
+          RL1["Sign-in: 3 fails/email/5min"]
+          RL2["Magic link: 1/email/5min"]
+        end
+
+        subgraphs Roles["User Roles"]
+          Student["Student<br/>Anonymous → Email/Password"]
+          Admin["Admin<br/>Magic Link + OTP"]
+        end
+    </pre>
+  </div>
+</div>
+
+<!-- ===== 7. STORAGE ===== -->
+<div class="section" id="storage">
+  <h2>7. Data Storage Architecture</h2>
+  <p class="desc">Three persistence layers with different characteristics. All writes go to Dexie first (offline-safe), then sync to Appwrite.</p>
+  <div class="diagram-wrap">
+    <pre class="mermaid">
+      graph TB
+        subgraph Tier1["Tier 1: Dexie (IndexedDB) — Offline-First"]
+          T1_Q["questions<br/>subject, topic, cachedAt"]
+          T1_P["progress<br/>odSubjectId, userId"]
+          T1_QA["quizAttempts<br/>odSubject, userId"]
+          T1_S["subjects<br/>code"]
+          T1_QS["quizSessions<br/>sessionId, subject"]
+          T1_J["jobs<br/>type, status, priority"]
+          T1_C["competencies<br/>subjectId, topicId, bloomLevel"]
+          T1_V["visuals<br/>cacheKey, subject"]
+          T1_W["wrongAnswers<br/>subject, topic"]
+          T1_QR["questionRatings<br/>questionId, subject"]
+          T1_SYNC["syncQueue<br/>status, priority"]
+          T1_CONF["conflicts<br/>resolvedAt"]
+        end
+
+        subgraph Tier2["Tier 2: Appwrite Cloud"]
+          AW_AUTH["Auth<br/>Sessions, Users"]
+          AW_DB["Database<br/>10+ collections"]
+          AW_STORE["Storage<br/>File uploads"]
+        end
+
+        subgraph Tier3["Tier 3: Local + Static"]
+          SQL["SQLite WASM<br/>exams.db<br/>(past papers)"]
+          LS["localStorage<br/>onboarding, flashcards,<br/>notes, theme"]
+        end
+
+        subgraph WritePath["Write Path"]
+          WP["User Action"] --> DEX["Write to Dexie<br/>(instant, offline)"]
+          DEX --> SQ["Enqueue Sync<br/>to syncQueue"]
+          SQ -->|Online| AW_SYNC["Sync to Appwrite"]
+        end
+
+        Tier1 --- Tier2
+        Tier1 --- Tier3
+    </pre>
+  </div>
+</div>
+
+<!-- ===== 8. QUIZ/EXAM ===== -->
+<div class="section" id="quiz">
+  <h2>8. Quiz & Exam Session Flow</h2>
+  <p class="desc">Three entry points share the same core engine: quiz mode, exam mode, and flashcard review.</p>
+  <div class="diagram-wrap">
+    <pre class="mermaid">
+      stateDiagram-v2
+        state "QuizSession (State Machine)" as QS {
+          [*] --> Start
+          Start --> Active: begin()
+          Active --> Grading: recordAnswer()
+          Grading --> Active: next question
+          Grading --> Results: all answered / time up
+          Results --> [*]: complete
+        }
+
+        state "Entry Points" as EP {
+          Quiz: "/quiz<br/>Subject/Topic → AI Questions"
+          Exam: "/exam/[id]<br/>Past Paper → Timed"
+          Flash: "/flashcards<br/>SM-2 Due Cards"
+        }
+
+        state "Side Effects" as SE {
+          Track: "trackQuestionResult()<br/>→ Competency Update"
+          SM2: "spaced-rep-update<br/>→ SM-2 Schedule"
+          WA: "wrongAnswers journal"
+          Sync: "analytics-sync job"
+          Gam: "XP + Achievements"
+        }
+
+        EP --> QS
+        QS --> SE
+        Exam --> ExamTimer{"Timer<br/>Auto-submit at 0"}
+        ExamTimer --> QS
+    </pre>
+  </div>
+</div>
+
+<!-- ===== 9. COMPONENTS ===== -->
+<div class="section" id="components">
+  <h2>9. Component Hierarchy</h2>
+  <p class="desc">React component tree showing how providers, layout, and page content compose together.</p>
+  <div class="diagram-wrap">
+    <pre class="mermaid">
+      graph TB
+        Root["RootLayout"]
+        Root --> Theme["ThemeProvider"]
+        Root --> Auth["AuthProvider"]
+        Root --> Joy["JoyProvider<br/>(celebrations)"]
+        Root --> Toast["ToastProvider"]
+        Root --> Onboard["OnboardingProvider"]
+        Root --> Premium["PremiumProvider"]
+        Root --> WV["WebVitalsLogger"]
+        Root --> Online["OnlineStatusIndicator"]
+        Root --> Auto["AutoSyncWrapper"]
+        Root --> JobP["JobProcessorWrapper"]
+
+        Root --> Side["DesktopSidebar<br/>(hidden mobile)"]
+        Root --> Main["Main Content Area"]
+        Main --> Nav["TopNav<br/>(iOS-style)"]
+        Main --> Err["ErrorBoundary"]
+        Err --> PT["PageTransition<br/>(framer-motion)"]
+        PT --> Children["{children}"]
+        Root --> BNav["BottomNav<br/>(mobile)"]
+        Root --> UD["UploadDialogRenderer"]
+        Root --> Toaster
+        Root --> FTB["FloatingToolsButton"]
+
+        Children --> HP["/ — Home"]
+        Children --> DP["/dashboard — Dashboard<br/>stats · streaks · challenges<br/>focus · search · analytics"]
+        Children --> QP["/quiz — Quiz"]
+        Children --> FP["/flashcards — SM-2 Review"]
+        Children --> EP["/exam/[id] — Exam Session"]
+        Children --> PP["/past-papers — Paper Browser"]
+        Children --> SP["/study-plan — Planner"]
+        Children --> ST["/settings — Settings"]
+        Children --> AP["/admin — Admin Dashboard"]
+        Children --> UP["/upload — File Upload"]
+    </pre>
+  </div>
+</div>
+
+<!-- ===== 10. SYNC ===== -->
+<div class="section" id="sync">
+  <h2>10. Offline Sync Architecture</h2>
+  <p class="desc">Queue-based sync with exponential backoff, priority ordering, and conflict resolution.</p>
+  <div class="diagram-wrap">
+    <pre class="mermaid">
+      graph LR
+        subgraph Client["Client Offline"]
+          Mutation["User Action"] --> Dexie_W["Write to Dexie"]
+          Dexie_W --> Enqueue["Enqueue to syncQueue<br/>status: pending<br/>priority: 0-10"]
+        end
+
+        subgraph Sync["Sync Engine"]
+          Trigger{"Online Event?"}
+          Trigger -->|"navigator.onLine + useOnlineStatus"| Process["Process Queue<br/>(priority ordered)"]
+          Process --> Send["HTTP Request<br/>to Appwrite"]
+          Send -->|Success| Mark["Mark completed<br/>(status: done)"]
+          Send -->|Failure| Retry["Exponential Backoff<br/>30s → 1m → 2m → 4m ..."]
+          Retry --> Process
+        end
+
+        subgraph Conflict["Conflict Resolution"]
+          ConflictDetect{"Server Rejects?"}
+          ConflictDetect -->|Yes| Log["Log to conflicts table"]
+          Log --> Resolve["Resolve (LWW / Merge)"]
+        end
+
+        AutoSync["useAutoSync Hook<br/>(auto on online)"] --> Trigger
+    </pre>
+  </div>
+</div>
+
+<!-- ===== 11. GAMIFICATION ===== -->
+<div class="section" id="gamification">
+  <h2>11. Gamification System</h2>
+  <p class="desc">XP, levels, achievements, streaks, and daily challenges — all driven by quiz/exam completions.</p>
+  <div class="diagram-wrap">
+    <pre class="mermaid">
+      graph TD
+        subgraph Earning["XP Sources"]
+          Q10["Answer question: +10 XP"]
+          C5["Correct answer: +5 XP bonus"]
+          S20["Streak bonus: +20 XP"]
+          DQ["Daily challenges: +50-200 XP"]
+        end
+
+        subgraph Levels["12 Levels"]
+          L1["Beginner: 0 XP"]
+          L2["Bronze: 500 XP"]
+          L3["Silver: 1,000 XP"]
+          L4["Gold: 2,500 XP"]
+          L5["Platinum: 5,000 XP"]
+          L6["Diamond: 10,000 XP"]
+          L7["Master: 20,000 XP"]
+          L8["Grandmaster: 50,000 XP"]
+        end
+
+        subgraph Achievements["12 Achievements"]
+          A1["Streak (3/7/14/30/100 day)"]
+          A2["Accuracy (80%/90%/100%)"]
+          A3["Volume (100/500/1000 Q's)"]
+          A4["Special (speed, variety, ...)"]
+        end
+
+        subgraph Streaks["Streak Milestones"]
+          S3["3 days: 🔥"]
+          S7["7 days: ⚡"]
+          S14["14 days: 🌟"]
+          S30["30 days: 💎"]
+          S60["60 days: 🏆"]
+          S100["100 days: 👑"]
+        end
+
+        subgraph Daily["Daily Challenges"]
+          D1["Answer 20 questions"]
+          D2["80%+ accuracy"]
+          D3["3-day streak maintained"]
+        end
+
+        QuizAction["Complete Quiz / Exam"] --> Earning
+        Earning --> Levels
+        Earning --> Achievements
+        Earning --> Streaks
+        Earning --> Daily
+    </pre>
+  </div>
+</div>
+
+<!-- ===== 12. ROUTES ===== -->
+<div class="section" id="routes">
+  <h2>12. Full Route Map</h2>
+  <p class="desc">Every app page and API endpoint with their purpose.</p>
+  <div class="diagram-wrap">
+    <pre class="mermaid">
+      mindmap
+        root(("lumni.ai"))
+          Pages
+            "/" Home / Landing
+            "/dashboard" Stats, streaks, search, analytics
+            "/quiz" Subject/topic quiz flow
+            "/flashcards" SM-2 spaced repetition
+            "/past-papers" Browse past exam papers
+            "/exam/[id]" Timed exam simulation
+            "/study-plan" Smart scheduling
+            "/settings" Profile, preferences, data
+            "/auth/sign-in" Sign in
+            "/auth/sign-up" Sign up
+            "/admin" Admin dashboard
+            "/admin/quality" Question ratings
+            "/admin/questions" Question management
+            "/admin/budget" Token budget
+            "/upload" File upload
+            "/premium" Premium upgrade
+            "/bookmarks" Bookmarked questions
+            "/review" Review mistakes
+            "/solve" AI solver
+            "/tools" APS calc, periodic table, calendar
+            "/lesson" Lessons
+            "/dev" Development test page
+          API
+            POST /api/engine/generate
+            POST /api/engine/grade
+            POST /api/engine/hint
+            POST /api/engine/visual
+            GET /api/engine/test
+            GET /api/engine/visual/test
+            GET /api/engine/budget
+            POST /api/engine/next-topics
+            POST /api/engine/study-plan
+            /api/auth/* Sign-in, sign-up, logout
+            /api/exam-papers/* CRUD
+            /api/exam-sessions/* Session management
+            /api/exams/* Exam data
+            /api/solve AI solver
+            /api/chat AI chat
+            /api/analytics/* Stats
+            /api/cron/* Scheduled jobs
+            /api/lessons/* Lesson CRUD
+            /api/subjects/* Subject data
+            /api/sync/* Offline sync
+            /api/tts Text-to-speech
+            /api/uploadthing File upload
+            /api/seed Database seed
+            /api/jobs Background jobs
+    </pre>
+  </div>
+</div>
+
+</div>
+
+<div class="footer">
+  Lumni System Design — Generated from source code — <a href="https://lumni.ai" style="color:var(--accent);">lumni.ai</a>
+</div>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'dark',
+    themeVariables: {
+      background: '#1a1a24',
+      primaryColor: '#7c5cfc',
+      primaryTextColor: '#e8e8f0',
+      primaryBorderColor: '#3a3a5a',
+      lineColor: '#5a5a8a',
+      secondaryColor: '#24243a',
+      tertiaryColor: '#2e2e4a',
+      fontSize: '13px',
+      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", sans-serif',
+    },
+    mindmap: { padding: 8, maxNodeWidth: 200 },
+    flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' },
+    sequence: { useMaxWidth: true, showSequenceNumbers: true },
+    state: { useMaxWidth: true },
+  });
+
+  // Smooth scroll for nav links
+  document.querySelectorAll('.nav a').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const id = a.getAttribute('href').slice(1);
+      document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.querySelectorAll('.nav a').forEach(x => x.classList.remove('active'));
+      a.classList.add('active');
+    });
+  });
+
+  // Highlight current section on scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        document.querySelectorAll('.nav a').forEach(a => {
+          a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { rootMargin: '-50% 0px -50% 0px' });
+
+  document.querySelectorAll('.section').forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
