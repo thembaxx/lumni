@@ -1,13 +1,13 @@
 "use client";
 
-import { ArrowDown01Icon } from "@hugeicons/core-free-icons";
+import {
+	ArrowDown01Icon,
+	BookOpen01Icon,
+	Cancel01Icon,
+	Search01Icon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
-import {
-	BookOpen01Icon,
-	Search01Icon,
-	Cancel01Icon,
-} from "@hugeicons/core-free-icons";
 import { useState } from "react";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
 import { Anim } from "@/components/shared/anim";
@@ -86,7 +86,7 @@ export function ExamTab({ className }: ExamTabProps) {
 							placeholder="Search exams..."
 							value={searchQuery}
 							onChange={(e) => setSearchQuery(e.target.value)}
-							className="h-10 pl-10 pr-10 rounded-full bg-secondary/50 border-0 text-sm placeholder:text-muted-foreground/60 focus-visible:ring-1 focus-visible:ring-[--system-accent]/30"
+							className="h-10 pl-10 pr-10 rounded-full bg-secondary/50 border-0 placeholder:text-muted-foreground/60 focus-visible:ring-1 focus-visible:ring-[--system-accent]/30"
 						/>
 						<AnimatePresence initial={false}>
 							{searchQuery && (

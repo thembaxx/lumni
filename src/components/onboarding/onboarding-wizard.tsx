@@ -3,15 +3,20 @@
 import { ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { motion, useReducedMotion } from "framer-motion";
-import { requestPermission, subscribeToPush, scheduleStudyReminder, saveSettings } from "@/lib/services/notification-service";
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
 import { Card, CardContent } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
+import { Switch } from "@/components/ui/switch";
 import { nscSubjects } from "@/data/nsc-subjects";
 import { useOnboarding } from "@/hooks/use-onboarding";
+import {
+	requestPermission,
+	saveSettings,
+	scheduleStudyReminder,
+	subscribeToPush,
+} from "@/lib/services/notification-service";
 import { iOSEase } from "@/lib/utils/animation";
 import {
 	GoalsSVG,
@@ -71,9 +76,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 	);
 	const [targetAps, setTargetAps] = useState(data.targetAps);
 	const [dailyMinutes, setDailyMinutes] = useState(data.dailyStudyMinutes);
-	const [notifications, setNotifications] = useState(
-		data.notificationsEnabled,
-	);
+	const [notifications, setNotifications] = useState(data.notificationsEnabled);
 	const [notificationFrequency, setNotificationFrequency] = useState<
 		"daily" | "every_other_day" | "weekly"
 	>(data.notificationFrequency ?? "daily");
@@ -141,7 +144,12 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 			requestPermission().then((granted) => {
 				if (granted) {
 					subscribeToPush();
-					const hour = notificationTimeOfDay === "morning" ? 9 : notificationTimeOfDay === "afternoon" ? 14 : 19;
+					const hour =
+						notificationTimeOfDay === "morning"
+							? 9
+							: notificationTimeOfDay === "afternoon"
+								? 14
+								: 19;
 					saveSettings({
 						enabled: true,
 						studyReminders: true,
@@ -224,7 +232,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 												value={searchTerm}
 												onChange={(e) => setSearchTerm(e.target.value)}
 												placeholder="Search by subject name..."
-												className="w-full px-3 py-2 rounded-lg border border-bg-muted/50 bg-card/50 text-sm focus:outline-none focus:border-[--system-accent]/50"
+												className="w-full px-3 py-2 rounded-lg border border-bg-muted/50 bg-card/50 text-base focus:outline-none focus:border-[--system-accent]/50"
 											/>
 										</div>
 

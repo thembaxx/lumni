@@ -1,11 +1,11 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
 import {
 	CheckmarkCircle01Icon,
 	Search01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { useFilteredSubjects } from "@/hooks/use-subjects";
@@ -104,7 +104,7 @@ export function SubjectSelect({
 									placeholder="Search subjects..."
 									value={searchQuery}
 									onChange={(e) => setSearchQuery(e.target.value)}
-									className="h-9 pl-10 pr-4 rounded-lg text-sm"
+									className="h-9 pl-10 pr-4 rounded-lg"
 								/>
 							</div>
 						</div>

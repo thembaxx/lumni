@@ -1,9 +1,9 @@
 import {
-	CheckmarkCircle01Icon,
-	RadialIcon,
-	MailSend01Icon,
-	SparklesIcon,
 	Cancel01Icon,
+	CheckmarkCircle01Icon,
+	MailSend01Icon,
+	RadialIcon,
+	SparklesIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m, motion } from "framer-motion";
@@ -246,7 +246,7 @@ export function QuestionCardFeedback({
 									}
 								}}
 								placeholder="Ask a follow-up question..."
-								className="flex-1 h-9 rounded-lg bg-card border border-border px-3 text-sm outline-none focus:border-[--system-accent]/40"
+								className="flex-1 h-9 rounded-lg bg-card border border-border px-3 text-base outline-none focus:border-[--system-accent]/40"
 							/>
 							<Button
 								variant="ghost"

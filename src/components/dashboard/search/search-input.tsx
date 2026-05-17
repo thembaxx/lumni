@@ -1,8 +1,11 @@
 "use client";
 
-import { Camera01FreeIcons } from "@hugeicons/core-free-icons";
+import {
+	Book01Icon,
+	Camera01FreeIcons,
+	Mic01Icon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Book01Icon, Mic01Icon } from "@hugeicons/core-free-icons";
 import { useState } from "react";
 import { VoiceWaveIcon } from "@/components/icons";
 import { AnimatedDialogContent } from "@/components/ui/animated-dialog-content";
@@ -36,7 +39,7 @@ export function SearchInput({ value, onChange }: SearchInputProps) {
 				onChange={(e) => onChange(e.target.value)}
 				onFocus={() => setIsFocused(true)}
 				onBlur={() => setIsFocused(false)}
-				className="bg-transparent text-foreground placeholder:text-muted-foreground/60 text-sm mb-4 shadow-none border-0 p-0 focus-visible:ring-2 focus-visible:ring-system-accent/30"
+				className="bg-transparent text-foreground placeholder:text-muted-foreground/60 mb-4 shadow-none border-0 p-0 focus-visible:ring-2 focus-visible:ring-system-accent/30"
 			/>
 
 			<div className="flex items-center justify-between">

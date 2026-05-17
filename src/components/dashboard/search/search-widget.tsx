@@ -16,7 +16,8 @@ export function SearchWidget() {
 		<div
 			className={cn(
 				"bg-secondary/60 rounded-2xl p-4 transition-all duration-300 border border-border/30",
-				isFocused && "ring-2 ring-[--system-accent]/20 border-[--system-accent]/30",
+				isFocused &&
+					"ring-2 ring-[--system-accent]/20 border-[--system-accent]/30",
 			)}
 		>
 			<div className="flex items-center gap-2">
@@ -33,7 +34,7 @@ export function SearchWidget() {
 					onChange={(e) => setQuery(e.target.value)}
 					onFocus={() => setIsFocused(true)}
 					onBlur={() => setIsFocused(false)}
-					className="bg-transparent text-foreground placeholder:text-muted-foreground/60 text-sm shadow-none border-0 p-0 focus-visible:ring-0"
+					className="bg-transparent text-foreground placeholder:text-muted-foreground/60 shadow-none border-0 p-0 focus-visible:ring-0"
 				/>
 				<SubjectsDrawer>
 					<button
