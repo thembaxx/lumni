@@ -27,7 +27,7 @@ export function QuizStartCard({ onStart }: QuizStartCardProps) {
 
 	return (
 		<Card
-			className="overflow-hidden rounded-[1.5rem]"
+			className="overflow-visible rounded-[1.5rem]"
 			style={{ viewTransitionName: "practice-trigger" as string }}
 		>
 			<CardContent className="p-5 flex flex-col gap-4">
