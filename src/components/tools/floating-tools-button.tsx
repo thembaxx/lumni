@@ -29,7 +29,7 @@ export function FloatingToolsButton() {
 		}
 	};
 
-	const isHomePage = pathname === "/dashboard" || pathname === "/";
+	const isHomePage = pathname === "/";
 
 	const handleOpen = () => {
 		openTools();
