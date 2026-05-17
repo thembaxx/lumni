@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { FlashcardsClient } from "./flashcards-client";
 
 export const metadata: Metadata = {
@@ -7,5 +8,9 @@ export const metadata: Metadata = {
 };
 
 export default function FlashcardsPage() {
-	return <FlashcardsClient />;
+	return (
+		<ErrorBoundary>
+			<FlashcardsClient />
+		</ErrorBoundary>
+	);
 }

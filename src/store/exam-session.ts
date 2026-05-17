@@ -164,6 +164,7 @@ export const useExamSessionStore = create<ExamSessionState>()(
 		{
 			name: "exam-session-storage",
 			partialize: (state) => ({
+				paper: state.paper,
 				paperId: state.paperId,
 				sessionId: state.sessionId,
 				answers: state.answers,
@@ -173,11 +174,6 @@ export const useExamSessionStore = create<ExamSessionState>()(
 				startedAt: state.startedAt,
 				completed: state.completed,
 			}),
-			onRehydrateStorage: () => (state) => {
-				if (state && state.paperId && !state.paper) {
-					state.paper = null;
-				}
-			},
 		},
 	),
 );

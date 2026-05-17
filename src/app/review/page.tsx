@@ -6,28 +6,73 @@ import {
 	Delete01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
+import {
 	useWrongAnswerJournal,
+	type ErrorType,
 	type WrongAnswerEntry,
+	ERROR_TYPE_LABELS,
 } from "@/hooks/use-wrong-answer-journal";
+import { useSubjects } from "@/hooks/use-subjects";
+
+function ErrorTypeSelect({
+	value,
+	onChange,
+}: {
+	value: string;
+	onChange: (v: ErrorType) => void;
+}) {
+	return (
+		<Select value={value} onValueChange={(v) => v && onChange(v as ErrorType)}>
+			<SelectTrigger className="w-[180px] h-8 text-xs">
+				<SelectValue placeholder="Error type" />
+			</SelectTrigger>
+			<SelectContent>
+				{Object.entries(ERROR_TYPE_LABELS).map(([key, label]) => (
+					<SelectItem key={key} value={key}>
+						{label}
+					</SelectItem>
+				))}
+			</SelectContent>
+		</Select>
+	);
+}
 
 export default function ReviewPage() {
 	const { getWrongAnswers, markReviewed, clearReviewed } =
 		useWrongAnswerJournal();
+	const { data: subjects } = useSubjects();
 	const [entries, setEntries] = useState<WrongAnswerEntry[]>([]);
 	const [loading, setLoading] = useState(true);
+	const [filterSubject, setFilterSubject] = useState<string>("");
+	const [filterTopic, setFilterTopic] = useState<string>("");
+	const [errorTypes, setErrorTypes] = useState<Record<number, ErrorType>>({});
+
+	const uniqueTopics = useMemo(() => {
+		const topics = new Set(entries.map((e) => e.topic));
+		return Array.from(topics).filter(Boolean).sort();
+	}, [entries]);
 
 	const load = useCallback(async () => {
 		setLoading(true);
-		const data = await getWrongAnswers();
+		const data = await getWrongAnswers(
+			filterSubject || undefined,
+			filterTopic || undefined,
+		);
 		setEntries(data);
 		setLoading(false);
-	}, [getWrongAnswers]);
+	}, [getWrongAnswers, filterSubject, filterTopic]);
 
 	useEffect(() => {
 		load();
@@ -41,6 +86,10 @@ export default function ReviewPage() {
 	const handleClearReviewed = async () => {
 		await clearReviewed();
 		load();
+	};
+
+	const handleErrorTypeChange = (entryId: number, type: ErrorType) => {
+		setErrorTypes((prev) => ({ ...prev, [entryId]: type }));
 	};
 
 	if (loading) {
@@ -66,6 +115,51 @@ export default function ReviewPage() {
 					)}
 				</div>
 
+				<div className="flex gap-3 flex-wrap">
+					<Select
+						value={filterSubject || "__all__"}
+						onValueChange={(v) => {
+							if (!v) return;
+							setFilterSubject(v === "__all__" ? "" : v);
+							setFilterTopic("");
+						}}
+					>
+						<SelectTrigger className="w-[160px]">
+							<SelectValue placeholder="All subjects" />
+						</SelectTrigger>
+						<SelectContent>
+							<SelectItem value="__all__">All subjects</SelectItem>
+							{subjects?.map((s) => (
+								<SelectItem key={s.name} value={s.name}>
+									{s.name}
+								</SelectItem>
+							))}
+						</SelectContent>
+					</Select>
+
+					{uniqueTopics.length > 0 && (
+						<Select
+							value={filterTopic || "__all__"}
+							onValueChange={(v) => {
+								if (!v) return;
+								setFilterTopic(v === "__all__" ? "" : v);
+							}}
+						>
+							<SelectTrigger className="w-[160px]">
+								<SelectValue placeholder="All topics" />
+							</SelectTrigger>
+							<SelectContent>
+								<SelectItem value="__all__">All topics</SelectItem>
+								{uniqueTopics.map((t) => (
+									<SelectItem key={t} value={t}>
+										{t}
+									</SelectItem>
+								))}
+							</SelectContent>
+						</Select>
+					)}
+				</div>
+
 				{entries.length === 0 ? (
 					<Card>
 						<CardContent className="p-8 text-center">
@@ -75,8 +169,9 @@ export default function ReviewPage() {
 							/>
 							<p className="text-base font-semibold">No mistakes to review</p>
 							<p className="text-sm text-muted-foreground mt-1">
-								Wrong answers will appear here automatically after quizzes and
-								exams.
+								{filterSubject
+									? `No mistakes found for ${filterSubject}.`
+									: "Wrong answers will appear here automatically after quizzes and exams."}
 							</p>
 						</CardContent>
 					</Card>
@@ -89,11 +184,15 @@ export default function ReviewPage() {
 						{entries.map((entry) => (
 							<Card key={entry.id}>
 								<CardHeader className="pb-2">
-									<div className="flex items-center gap-2">
+									<div className="flex items-center gap-2 flex-wrap">
 										<Badge variant="outline">{entry.subject}</Badge>
 										<Badge variant="secondary" className="text-xs">
 											{entry.topic}
 										</Badge>
+										<ErrorTypeSelect
+											value={errorTypes[entry.id!] ?? entry.errorType ?? "unknown"}
+											onChange={(v) => handleErrorTypeChange(entry.id!, v)}
+										/>
 									</div>
 									<CardTitle className="text-base font-semibold mt-2">
 										<MarkdownRenderer content={entry.questionText} />
@@ -119,20 +218,21 @@ export default function ReviewPage() {
 											<MarkdownRenderer content={entry.explanation} />
 										</div>
 									)}
-									{entry.id && (
-										<Button
-											variant="outline"
-											size="sm"
-											onClick={() => handleReviewed(entry.id!)}
-											className="self-end"
-										>
-											<HugeiconsIcon
-												icon={CheckmarkCircle01Icon}
-												data-icon="inline-start"
-											/>
-											Mark reviewed
-										</Button>
-									)}
+									<div className="flex items-center justify-end gap-2">
+										{entry.id && (
+											<Button
+												variant="outline"
+												size="sm"
+												onClick={() => handleReviewed(entry.id!)}
+											>
+												<HugeiconsIcon
+													icon={CheckmarkCircle01Icon}
+													data-icon="inline-start"
+												/>
+												Mark reviewed
+											</Button>
+										)}
+									</div>
 								</CardContent>
 							</Card>
 						))}

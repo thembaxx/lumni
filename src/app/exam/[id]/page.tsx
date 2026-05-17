@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { ExamSessionClient } from "./exam-session-client";
 
 export const metadata: Metadata = {
@@ -16,6 +17,8 @@ export default async function ExamPage({
 	const { mode } = await searchParams;
 
 	return (
-		<ExamSessionClient id={id} mode={mode === "timed" ? "timed" : "practice"} />
+		<ErrorBoundary>
+			<ExamSessionClient id={id} mode={mode === "timed" ? "timed" : "practice"} />
+		</ErrorBoundary>
 	);
 }

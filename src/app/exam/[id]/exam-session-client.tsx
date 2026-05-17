@@ -8,6 +8,7 @@ import {
 	Home01Icon,
 	Pause,
 	PlayFreeIcons,
+	RefreshIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -19,7 +20,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useExamPaper } from "@/hooks/use-exam-paper";
 import { useGamification } from "@/hooks/use-gamification";
-import { competencyService } from "@/lib/competency-engine/competency-service";
+import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
+import { createFlashcard } from "@/lib/utils/spaced-repetition";
+import { trackQuestionResult } from "@/lib/competency-engine";
 import { cn } from "@/lib/shared";
 import { formatTime } from "@/lib/shared/time";
 import { iOSEase } from "@/lib/utils/animation";
@@ -40,6 +43,28 @@ function parseDuration(duration: string): number {
 	if (hourMatch) total += parseInt(hourMatch[1]) * 60;
 	if (minMatch) total += parseInt(minMatch[1]);
 	return total || 180;
+}
+
+function getCorrectAnswerText(part: QuestionPart): string {
+	if (part.options) {
+		const correct = part.options.find((o) => o.isCorrect);
+		return correct ? `${correct.id}. ${correct.text}` : "";
+	}
+	return "";
+}
+
+function getAnswerText(
+	part: QuestionPart,
+	answer: { value: string | string[] } | undefined,
+): string {
+	if (!answer) return "";
+	const value = answer.value;
+	if (Array.isArray(value)) return value.join(", ");
+	if (part.options) {
+		const opt = part.options.find((o) => o.id === value);
+		return opt ? `${opt.id}. ${opt.text}` : value;
+	}
+	return value;
 }
 
 type SessionPhase =
@@ -79,6 +104,26 @@ function PartAnswerInput({
 						<span className="font-medium">{opt.id}.</span>{" "}
 						<MarkdownRenderer content={opt.text} />
 					</button>
+				))}
+			</div>
+		);
+	}
+
+	if (part.subParts) {
+		return (
+			<div className="flex flex-col gap-4">
+				{part.subParts.map((subPart) => (
+					<div key={subPart.id}>
+						<MarkdownRenderer content={subPart.text ?? ""} />
+						<div className="mt-2">
+							<PartAnswerInput
+								part={subPart}
+								value={value}
+								onChange={onChange}
+								disabled={disabled}
+							/>
+						</div>
+					</div>
 				))}
 			</div>
 		);
@@ -160,7 +205,8 @@ function QuestionNavigator({
 							const isCurrent = item.part.id === currentPartId;
 							const isAnswered = !!answers[item.part.id];
 							const isFlagged = flags.includes(item.part.id);
-							const label = `${key.split("-").pop()}${item.part.id.split("-").pop()}`;
+							const partSuffix = item.part.id.split("-").pop() ?? "";
+							const label = `${item.questionId}.${partSuffix}`;
 							return (
 								<button
 									key={item.part.id}
@@ -188,25 +234,39 @@ function QuestionNavigator({
 
 function ExamResults({
 	results,
+	flatParts,
+	answers,
 	metadata,
 	onDashboard,
+	onReview,
 }: {
 	results: {
 		partResults: { partId: string; correct: boolean; score: number }[];
 	};
+	flatParts: { sectionId: string; questionId: string; part: QuestionPart }[];
+	answers: Record<string, { value: string | string[] }>;
 	metadata: { subject: string; totalMarks: number; duration: string };
 	onDashboard: () => void;
+	onReview?: () => void;
 }) {
+	const [expandedId, setExpandedId] = useState<string | null>(null);
 	const correctCount = results.partResults.filter((r) => r.correct).length;
 	const totalCount = results.partResults.length;
 	const accuracy =
 		totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0;
 
+	const resultMap = useMemo(
+		() => new Map(results.partResults.map((r) => [r.partId, r])),
+		[results.partResults],
+	);
+
+	const failedCount = totalCount - correctCount;
+
 	return (
 		<motion.div
 			initial={{ opacity: 0, y: 20 }}
 			animate={{ opacity: 1, y: 0 }}
-			className="min-h-screen bg-background p-4 flex flex-col gap-6"
+			className="min-h-screen bg-background p-4 flex flex-col gap-6 pb-24"
 		>
 			<Confetti trigger={accuracy >= 70} count={60} duration={2500} />
 			<Card>
@@ -222,30 +282,119 @@ function ExamResults({
 				<CardContent className="flex flex-col gap-4">
 					<div className="grid grid-cols-3 gap-3">
 						<div className="p-3 rounded-lg bg-muted text-center">
-							<p className="text-2xl font-extrabold tabular-nums">
+							<p className="text-2xl font-extrabold tabular-nums text-success">
 								{correctCount}
 							</p>
 							<p className="text-xs text-muted-foreground">Correct</p>
 						</div>
 						<div className="p-3 rounded-lg bg-muted text-center">
-							<p className="text-2xl font-extrabold tabular-nums">
-								{totalCount}
+							<p className="text-2xl font-extrabold tabular-nums text-destructive">
+								{failedCount}
 							</p>
-							<p className="text-xs text-muted-foreground">Questions</p>
+							<p className="text-xs text-muted-foreground">Incorrect</p>
 						</div>
 						<div className="p-3 rounded-lg bg-muted text-center">
-							<p className="text-2xl font-extrabold tabular-nums">
-								{accuracy}%
-							</p>
+							<p className="text-2xl font-extrabold tabular-nums">{accuracy}%</p>
 							<p className="text-xs text-muted-foreground">Accuracy</p>
 						</div>
 					</div>
 				</CardContent>
 			</Card>
-			<Button onClick={onDashboard}>
-				<HugeiconsIcon icon={Home01Icon} data-icon="inline-start" />
-				Dashboard
-			</Button>
+
+			<div className="flex flex-col gap-2">
+				{flatParts.map((item) => {
+					const result = resultMap.get(item.part.id);
+					if (!result) return null;
+					const isExpanded = expandedId === item.part.id;
+					return (
+						<Card
+							key={item.part.id}
+							className={cn(
+								"overflow-hidden transition-shadow",
+								result.correct
+									? "border-success/20"
+									: "border-destructive/20",
+							)}
+						>
+							<button
+								onClick={() =>
+									setExpandedId(isExpanded ? null : item.part.id)
+								}
+								className="w-full flex items-center justify-between p-4 text-left"
+							>
+								<div className="flex items-center gap-3">
+									<span
+										className={cn(
+											"size-7 rounded-full flex items-center justify-center text-xs font-bold",
+											result.correct
+												? "bg-success/20 text-success"
+												: "bg-destructive/20 text-destructive",
+										)}
+									>
+										{result.correct ? "✓" : "✗"}
+									</span>
+									<div>
+										<p className="text-sm font-medium">
+											{item.questionId}.{item.part.id.split("-").pop()}
+										</p>
+										<p className="text-xs text-muted-foreground line-clamp-1">
+											{item.part.text ?? "Question"}
+										</p>
+									</div>
+								</div>
+							</button>
+							{isExpanded && (
+								<div className="px-4 pb-4 border-t border-border pt-3 flex flex-col gap-3">
+									{item.part.text && (
+										<div className="text-sm">
+											<MarkdownRenderer content={item.part.text} />
+										</div>
+									)}
+									<div className="grid grid-cols-2 gap-3 text-sm">
+										<div>
+											<p className="text-xs text-muted-foreground mb-1">
+												Your answer
+											</p>
+											<p className="font-mono text-xs bg-muted p-2 rounded-lg">
+												{getAnswerText(item.part, answers[item.part.id]) ||
+													"(no answer)"}
+											</p>
+										</div>
+										{!result.correct && (
+											<div>
+												<p className="text-xs text-muted-foreground mb-1">
+													Correct answer
+												</p>
+												<p className="font-mono text-xs bg-success/10 text-success p-2 rounded-lg">
+													{getCorrectAnswerText(item.part) || "(not available)"}
+												</p>
+											</div>
+										)}
+									</div>
+									{item.part.marks && (
+										<p className="text-xs text-muted-foreground">
+											Marks: {result.score}/{item.part.marks}
+										</p>
+									)}
+								</div>
+							)}
+						</Card>
+					);
+				})}
+			</div>
+
+			<div className="flex flex-col gap-3">
+				{failedCount > 0 && onReview && (
+				<Button variant="secondary" onClick={onReview}>
+							<HugeiconsIcon icon={RefreshIcon} data-icon="inline-start" />
+							Review Mistakes
+						</Button>
+				)}
+				<Button onClick={onDashboard}>
+					<HugeiconsIcon icon={Home01Icon} data-icon="inline-start" />
+					Dashboard
+				</Button>
+			</div>
 		</motion.div>
 	);
 }
@@ -284,6 +433,8 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 		levelInfo,
 		totalQuestionsAnswered,
 	} = useGamification();
+
+	const { addWrongAnswer } = useWrongAnswerJournal();
 
 	const flatParts = useMemo(() => {
 		if (!paper) return [];
@@ -376,7 +527,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 			totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0;
 
 		updateStreak();
-		addXp(totalCount, accuracy >= 50, currentStreak);
+		addXp(totalCount, accuracy, currentStreak);
 		checkAndUnlockAchievements(
 			totalQuestionsAnswered + totalCount,
 			accuracy,
@@ -385,14 +536,38 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 			accuracy === 100,
 		);
 
-		for (const result of partResults) {
-			competencyService.update(
-				paperData?.metadata.subject ?? "unknown",
-				"exam-practice",
-				"apply",
-				result.score,
-				1,
-			);
+		for (let i = 0; i < flatParts.length; i++) {
+			const item = flatParts[i];
+			const result = partResults[i];
+			const topic = item.sectionId;
+
+			const maxScore = typeof item.part.marks === "number" ? item.part.marks : result.score;
+			trackQuestionResult({
+				subjectId: paperData?.metadata.subject ?? "unknown",
+				topicId: topic,
+				bloomLevel: "apply",
+				score: result.score,
+				maxScore,
+			});
+
+			if (!result.correct) {
+				const partText = item.part.text ?? `Question ${item.questionId}`;
+				addWrongAnswer({
+					questionId: item.part.id,
+					questionText: partText,
+					subject: paperData?.metadata.subject ?? "unknown",
+					topic,
+					correctAnswer: getCorrectAnswerText(item.part),
+					userAnswer: getAnswerText(item.part, answers[item.part.id]),
+					explanation: "",
+				});
+				createFlashcard(
+					partText,
+					getCorrectAnswerText(item.part) || "Review this topic",
+					paperData?.metadata.subject ?? "unknown",
+					topic,
+				);
+			}
 		}
 
 		const weakCount = partResults.filter((r) => !r.correct).length;
@@ -512,12 +687,18 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 		return (
 			<ExamResults
 				results={{ partResults }}
+				flatParts={flatParts}
+				answers={answers}
 				metadata={{
 					subject: paperData?.exam.metadata.subject ?? "",
 					totalMarks: paperData?.exam.metadata.totalMarks ?? 0,
 					duration: paperData?.exam.metadata.duration ?? "",
 				}}
 				onDashboard={handleDashboard}
+				onReview={() => {
+					resetSession();
+					window.location.href = "/flashcards";
+				}}
 			/>
 		);
 	}

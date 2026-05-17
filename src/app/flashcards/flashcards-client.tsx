@@ -4,7 +4,9 @@ import { useCallback, useMemo, useRef, useState } from "react";
 import { Confetti, XPGainPopup } from "@/components/celebration";
 import { useGamification } from "@/hooks/use-gamification";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
-import { competencyService } from "@/lib/competency-engine/competency-service";
+import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
+import { createFlashcard, getDueCards, getNewCards, reviewFlashcard } from "@/lib/utils/spaced-repetition";
+import { trackQuestionResult } from "@/lib/competency-engine";
 import type { Question } from "@/lib/question-engine/types";
 import { FlashcardsActive } from "./flashcards-active";
 import { FlashcardsEmpty } from "./flashcards-empty";
@@ -22,19 +24,26 @@ interface FlashcardItem {
 	rawQuestion: Question;
 }
 
+type FlashcardSource = "ai" | "mistakes";
+
 export function FlashcardsClient() {
 	const [selectedSubject, setSelectedSubject] = useState<string>("");
+	const [source, setSource] = useState<FlashcardSource>("ai");
 	const [isActive, setIsActive] = useState(false);
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [isFlipped, setIsFlipped] = useState(false);
 	const [knownCards, setKnownCards] = useState<Set<string>>(new Set());
 	const [reviewCards, setReviewCards] = useState<Set<string>>(new Set());
+	const [mistakeCards, setMistakeCards] = useState<FlashcardItem[]>([]);
+	const [sm2Cards, setSm2Cards] = useState<FlashcardItem[]>([]);
+	const hasSm2Ref = useRef(false);
 	const hintsRef = useRef<Map<string, string>>(new Map());
 	const [sessionComplete, setSessionComplete] = useState(false);
 	const [showConfetti, setShowConfetti] = useState(false);
 	const [showXPGain, setShowXPGain] = useState(false);
 
 	const gamification = useGamification();
+	const { addWrongAnswer, getWrongAnswers } = useWrongAnswerJournal();
 
 	const processSessionResults = useCallback(
 		(sessionCards: FlashcardItem[], known: Set<string>, subject: string) => {
@@ -46,7 +55,7 @@ export function FlashcardsClient() {
 			gamification.updateStreak();
 			gamification.addXp(
 				totalCards,
-				accuracy >= 50,
+				accuracy,
 				gamification.currentStreak,
 			);
 			gamification.checkAndUnlockAchievements(
@@ -57,18 +66,40 @@ export function FlashcardsClient() {
 				accuracy === 100,
 			);
 
+			const isSm2Session = sessionCards.length > 0 && sessionCards[0].id.startsWith("fc_");
+
 			for (const card of sessionCards) {
 				const isKnown = known.has(card.id);
-				competencyService.update(
-					subject,
-					card.rawQuestion.topic,
-					card.rawQuestion.bloomTaxonomy,
-					isKnown ? 1 : 0.5,
-					1,
-				);
+
+				if (isSm2Session) {
+					reviewFlashcard(card.id, isKnown ? 4 : 1);
+				} else {
+					trackQuestionResult({
+						subjectId: subject,
+						topicId: card.rawQuestion.topic,
+						bloomLevel: card.rawQuestion.bloomTaxonomy,
+						score: isKnown ? 1 : 0,
+						maxScore: 1,
+					});
+				}
+
+				if (!isKnown) {
+					addWrongAnswer({
+						questionId: card.id,
+						questionText: card.front,
+						subject,
+						topic: card.rawQuestion.topic,
+						correctAnswer: card.back,
+						userAnswer: "",
+						explanation: card.back,
+					});
+					if (!isSm2Session) {
+						createFlashcard(card.front, card.back, subject, card.rawQuestion.topic);
+					}
+				}
 			}
 		},
-		[gamification],
+		[gamification, addWrongAnswer],
 	);
 
 	const engineParams = useMemo(
@@ -85,7 +116,7 @@ export function FlashcardsClient() {
 		isLoading,
 		hint: generateHint,
 	} = useQuestionEngine(engineParams, {
-		enabled: isActive && !!selectedSubject,
+		enabled: isActive && !!selectedSubject && source === "ai" && !hasSm2Ref.current,
 	});
 
 	const cards: FlashcardItem[] =
@@ -103,17 +134,76 @@ export function FlashcardsClient() {
 					}))
 			: [];
 
-	const totalCards = cards.length;
+	const sm2Available = source === "ai" && sm2Cards.length > 0;
+	const displayCards = sm2Available ? sm2Cards : source === "mistakes" ? mistakeCards : cards;
+	const totalCards = displayCards.length;
 
-	const startSession = useCallback((subject: string) => {
+	const startSession = useCallback(async (subject: string, src: FlashcardSource = "ai") => {
 		setSelectedSubject(subject);
+		setSource(src);
 		setIsActive(true);
 		setCurrentIndex(0);
 		setIsFlipped(false);
 		setKnownCards(new Set());
 		setReviewCards(new Set());
+		setMistakeCards([]);
+		setSm2Cards([]);
 		setSessionComplete(false);
-	}, []);
+
+		if (src === "mistakes") {
+			const wrongAnswers = await getWrongAnswers(subject.toLowerCase());
+			setMistakeCards(
+				wrongAnswers.map((wa) => ({
+					id: wa.questionId,
+					front: wa.questionText,
+					back: wa.correctAnswer || wa.explanation,
+					topic: wa.topic,
+					difficulty: "Medium",
+					hint: wa.explanation,
+					rawQuestion: {
+						id: wa.questionId,
+						questionText: wa.questionText,
+						explanation: wa.explanation,
+						subject: wa.subject,
+						topic: wa.topic,
+						type: "short-answer",
+						difficulty: "Medium",
+						bloomTaxonomy: "understand",
+						points: 1,
+						body: { modelAnswer: wa.correctAnswer || wa.explanation },
+					} as Question,
+				})),
+			);
+		} else {
+			const sm2Due = getDueCards(subject.toLowerCase());
+			const sm2New = getNewCards(subject.toLowerCase(), 10);
+			const allSm2 = [...sm2Due, ...sm2New];
+			hasSm2Ref.current = allSm2.length > 0;
+			if (allSm2.length > 0) {
+				setSm2Cards(
+					allSm2.map((c) => ({
+						id: c.id,
+						front: c.front,
+						back: c.back,
+						topic: c.topic ?? subject,
+						difficulty: "Medium",
+						rawQuestion: {
+							id: c.id,
+							questionText: c.front,
+							explanation: c.back,
+							subject: c.subject,
+							topic: c.topic ?? subject,
+							type: "short-answer",
+							difficulty: "Medium",
+							bloomTaxonomy: "understand",
+							points: 1,
+							body: { modelAnswer: c.back },
+						} as Question,
+					})),
+				);
+			}
+		}
+	}, [getWrongAnswers]);
 
 	const stopSession = useCallback(() => {
 		setIsActive(false);
@@ -123,7 +213,7 @@ export function FlashcardsClient() {
 	const handleFlip = useCallback(() => {
 		setIsFlipped((prev) => {
 			if (!prev) {
-				const card = cards[currentIndex];
+				const card = displayCards[currentIndex];
 				if (card && !hintsRef.current.has(card.id) && card.rawQuestion) {
 					generateHint(card.rawQuestion)
 						.then((hint) => {
@@ -134,20 +224,20 @@ export function FlashcardsClient() {
 			}
 			return !prev;
 		});
-	}, [currentIndex, cards, generateHint]);
+	}, [currentIndex, displayCards, generateHint]);
 
 	const nextCard = useCallback(() => {
-		if (currentIndex < cards.length - 1) {
+		if (currentIndex < displayCards.length - 1) {
 			setCurrentIndex((prev) => prev + 1);
 		} else {
 			setSessionComplete(true);
-			processSessionResults(cards, knownCards, selectedSubject.toLowerCase());
+			processSessionResults(displayCards, knownCards, selectedSubject.toLowerCase());
 		}
 		setIsFlipped(false);
-	}, [currentIndex, cards, knownCards, selectedSubject, processSessionResults]);
+	}, [currentIndex, displayCards, knownCards, selectedSubject, processSessionResults]);
 
 	const handleKnown = useCallback(() => {
-		const currentCard = cards[currentIndex];
+		const currentCard = displayCards[currentIndex];
 		if (!currentCard) return;
 		setKnownCards((prev) => new Set(prev).add(currentCard.id));
 		setShowConfetti(true);
@@ -155,14 +245,14 @@ export function FlashcardsClient() {
 		setTimeout(() => setShowConfetti(false), 1500);
 		setTimeout(() => setShowXPGain(false), 1000);
 		nextCard();
-	}, [cards, currentIndex, nextCard]);
+	}, [displayCards, currentIndex, nextCard]);
 
 	const handleReview = useCallback(() => {
-		const currentCard = cards[currentIndex];
+		const currentCard = displayCards[currentIndex];
 		if (!currentCard) return;
 		setReviewCards((prev) => new Set(prev).add(currentCard.id));
 		nextCard();
-	}, [cards, currentIndex, nextCard]);
+	}, [displayCards, currentIndex, nextCard]);
 
 	const previousCard = useCallback(() => {
 		if (currentIndex > 0) {
@@ -180,15 +270,15 @@ export function FlashcardsClient() {
 	}, []);
 
 	if (!isActive) {
-		return <FlashcardsIdle onSelect={startSession} />;
+		return <FlashcardsIdle onSelect={(subject) => startSession(subject, "ai")} onReviewMistakes={(subject) => startSession(subject, "mistakes")} />;
 	}
 
-	if (isLoading) {
+	if (isLoading && source === "ai") {
 		return <FlashcardsLoading />;
 	}
 
-	if (cards.length === 0) {
-		return <FlashcardsEmpty subject={selectedSubject} onGoBack={stopSession} />;
+	if (displayCards.length === 0) {
+		return <FlashcardsEmpty subject={selectedSubject} onGoBack={stopSession} mode={source} />;
 	}
 
 	if (sessionComplete) {
@@ -208,7 +298,7 @@ export function FlashcardsClient() {
 			<Confetti trigger={showConfetti} count={20} duration={1200} />
 			<XPGainPopup amount={10} visible={showXPGain} />
 			<FlashcardsActive
-				cards={cards}
+				cards={displayCards}
 				currentIndex={currentIndex}
 				isFlipped={isFlipped}
 				knownCount={knownCards.size}

@@ -3,6 +3,14 @@
 import { useCallback } from "react";
 import { offlineDB } from "@/lib/db/offline";
 
+export type ErrorType =
+	| "concept-misunderstanding"
+	| "calculation-error"
+	| "misread-question"
+	| "careless-mistake"
+	| "time-pressure"
+	| "unknown";
+
 export interface WrongAnswerEntry {
 	id?: number;
 	questionId: string;
@@ -14,11 +22,25 @@ export interface WrongAnswerEntry {
 	explanation: string;
 	createdAt: number;
 	reviewed: boolean;
+	errorType?: ErrorType;
 }
+
+export const ERROR_TYPE_LABELS: Record<ErrorType, string> = {
+	"concept-misunderstanding": "Concept Misunderstanding",
+	"calculation-error": "Calculation Error",
+	"misread-question": "Misread Question",
+	"careless-mistake": "Careless Mistake",
+	"time-pressure": "Time Pressure",
+	unknown: "Unknown",
+};
 
 export function useWrongAnswerJournal() {
 	const addWrongAnswer = useCallback(
-		async (entry: Omit<WrongAnswerEntry, "id" | "createdAt" | "reviewed">) => {
+		async (
+			entry: Omit<WrongAnswerEntry, "id" | "createdAt" | "reviewed"> & {
+				errorType?: ErrorType;
+			},
+		) => {
 			try {
 				await offlineDB.table("wrongAnswers").add({
 					...entry,
@@ -33,14 +55,25 @@ export function useWrongAnswerJournal() {
 	);
 
 	const getWrongAnswers = useCallback(
-		async (subject?: string, limit = 50): Promise<WrongAnswerEntry[]> => {
+		async (
+			subject?: string,
+			topic?: string,
+			limit = 50,
+		): Promise<WrongAnswerEntry[]> => {
 			try {
 				const table = offlineDB.table<WrongAnswerEntry>("wrongAnswers");
-				let collection = table.orderBy("createdAt").reverse();
+				let collection: ReturnType<typeof table.filter> = table
+					.orderBy("createdAt")
+					.reverse();
 				if (subject) {
 					collection = collection.filter(
 						(e) => e.subject === subject,
-					) as typeof collection;
+					) as unknown as ReturnType<typeof table.filter>;
+				}
+				if (topic) {
+					collection = collection.filter(
+						(e) => e.topic === topic,
+					) as unknown as ReturnType<typeof table.filter>;
 				}
 				return collection.limit(limit).toArray();
 			} catch {

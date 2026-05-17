@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { JoyProvider } from "@/components/celebration";
 import { OnboardingProvider } from "@/components/onboarding/onboarding-provider";
 import { ThemeProvider } from "@/components/theme";
+import { ToastProvider } from "@/components/ui/toast";
 import { WebVitalsLogger } from "@/components/web-vitals";
 import { useJobProcessor } from "@/hooks/use-job-processor";
 import { prefetchUploadSubjects } from "@/hooks/use-upload-subjects";
@@ -43,11 +44,13 @@ export function Providers({ children }: { children: React.ReactNode }) {
 			<ThemeProvider>
 				<AuthProvider>
 					<JoyProvider>
-						<OnboardingProvider>{children}</OnboardingProvider>
-						<WebVitalsLogger />
-						<OnlineStatusIndicator />
-						<AutoSyncWrapper />
-						<JobProcessorWrapper />
+						<ToastProvider>
+							<OnboardingProvider>{children}</OnboardingProvider>
+							<WebVitalsLogger />
+							<OnlineStatusIndicator />
+							<AutoSyncWrapper />
+							<JobProcessorWrapper />
+						</ToastProvider>
 					</JoyProvider>
 				</AuthProvider>
 			</ThemeProvider>

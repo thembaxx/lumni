@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowDown01Icon, BulbIcon } from "@hugeicons/core-free-icons";
+import { ArrowDown01Icon, BulbIcon, RefreshIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
 import { Button } from "@/components/ui/button";
@@ -15,9 +15,10 @@ import {
 
 interface FlashcardsIdleProps {
 	onSelect: (subject: string) => void;
+	onReviewMistakes: (subject: string) => void;
 }
 
-export function FlashcardsIdle({ onSelect }: FlashcardsIdleProps) {
+export function FlashcardsIdle({ onSelect, onReviewMistakes }: FlashcardsIdleProps) {
 	return (
 		<div className="min-h-[100dvh] bg-background grid grid-cols-12 gap-0">
 			<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4 pb-20">
@@ -35,19 +36,30 @@ export function FlashcardsIdle({ onSelect }: FlashcardsIdleProps) {
 								</EmptyMedia>
 								<EmptyTitle>Ready to start studying?</EmptyTitle>
 								<EmptyDescription>
-									Pick a subject below to jump into your flashcard session!
+									Generate new flashcards or review your past mistakes.
 								</EmptyDescription>
 							</EmptyHeader>
 							<EmptyContent>
-								<SubjectsDrawer onSelect={onSelect}>
-									<Button>
-										Choose Subject
-										<HugeiconsIcon
-											icon={ArrowDown01Icon}
-											className="w-4 h-4 ml-1"
-										/>
-									</Button>
-								</SubjectsDrawer>
+								<div className="flex flex-col gap-3">
+									<SubjectsDrawer onSelect={onSelect}>
+										<Button>
+											Generate AI Flashcards
+											<HugeiconsIcon
+												icon={BulbIcon}
+												className="w-4 h-4 ml-1"
+											/>
+										</Button>
+									</SubjectsDrawer>
+									<SubjectsDrawer onSelect={onReviewMistakes}>
+										<Button variant="outline">
+											Review Mistakes
+											<HugeiconsIcon
+												icon={RefreshIcon}
+												className="w-4 h-4 ml-1"
+											/>
+										</Button>
+									</SubjectsDrawer>
+								</div>
 							</EmptyContent>
 						</Empty>
 					</div>

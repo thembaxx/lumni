@@ -29,7 +29,9 @@ import { useGamification } from "@/hooks/use-gamification";
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 import { useViewTransition } from "@/hooks/use-view-transition";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
-import { competencyService } from "@/lib/competency-engine/competency-service";
+import { createFlashcard } from "@/lib/utils/spaced-repetition";
+import { trackQuestionResult } from "@/lib/competency-engine";
+import { enqueue } from "@/lib/orchestrator/job-queue";
 import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";
 import { useOptimizedAnimation } from "@/lib/utils/animation-optimization";
@@ -256,9 +258,7 @@ export function DashboardClient({
 			results.totalQuestions > 0
 				? Math.round((results.correctAnswers / results.totalQuestions) * 100)
 				: 0;
-		const isGoodScore = accuracy >= 50;
-
-		addXp(results.totalQuestions, isGoodScore, currentStreak);
+		addXp(results.totalQuestions, accuracy, currentStreak);
 		checkAndUnlockAchievements(
 			totalQuestionsAnswered + results.totalQuestions,
 			accuracy,
@@ -269,13 +269,13 @@ export function DashboardClient({
 
 		for (const [i, question] of results.questions.entries()) {
 			const correct = results.correctness[i] ?? false;
-			competencyService.update(
-				question.subject,
-				question.topic,
-				question.bloomTaxonomy,
-				correct ? 1 : 0,
-				1,
-			);
+			trackQuestionResult({
+				subjectId: question.subject,
+				topicId: question.topic,
+				bloomLevel: question.bloomTaxonomy,
+				score: correct ? 1 : 0,
+				maxScore: 1,
+			});
 
 			if (!correct) {
 				addWrongAnswer({
@@ -287,8 +287,25 @@ export function DashboardClient({
 					userAnswer: "(see quiz history)",
 					explanation: question.explanation,
 				});
+				createFlashcard(
+					question.questionText,
+					question.explanation,
+					question.subject,
+					question.topic,
+				);
 			}
 		}
+
+		enqueue("analytics-sync", {
+			events: results.questions.map((q, i) => ({
+				event: "grade",
+				timestamp: Date.now(),
+				subject: q.subject,
+				questionType: q.type,
+				success: results.correctness[i] ?? false,
+				duration: 0,
+			})),
+		});
 
 		setQuizActive(false);
 		setQuizSubject("");

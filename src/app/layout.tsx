@@ -14,6 +14,7 @@ import { DesktopSidebar } from "@/components/navigation/desktop-sidebar";
 import { TopNav } from "@/components/navigation/top-nav";
 import { Providers } from "@/components/providers";
 import { FloatingToolsButton } from "@/components/tools";
+import { Toaster } from "@/components/ui/toast";
 import { UploadDialogRenderer } from "@/components/upload/upload-dialog-renderer";
 import { WebVitalsLogger } from "@/components/web-vitals";
 import { cn } from "@/lib/shared";
@@ -111,6 +112,7 @@ export default function RootLayout({
 				<Providers>
 					<LazyMotion features={domAnimation}>
 						<UploadDialogRenderer />
+						<Toaster />
 						<FloatingToolsButton />
 						<WebVitalsLogger />
 						<div className="flex flex-1">

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { toast } from "@/components/ui/toast";
 import {
 	ACHIEVEMENTS,
 	type Achievement,
@@ -125,8 +126,9 @@ export function useGamification() {
 	};
 
 	const addXp = useCallback(
-		(amount: number, isCorrect: boolean, streak: number) => {
+		(amount: number, accuracy: number, streak: number, subject?: string) => {
 			setData((prev) => {
+				const isCorrect = accuracy >= 50;
 				const baseXp = XP_PER_QUESTION + (isCorrect ? XP_PER_CORRECT : 0);
 				const streakBonus = streak > 1 ? XP_STREAK_BONUS : 0;
 				const totalXpGain = amount * baseXp + streakBonus;
@@ -135,18 +137,45 @@ export function useGamification() {
 				const newXp = prev.xp + totalXpGain;
 
 				const updatedChallenges = prev.dailyChallenges.map((challenge) => {
-					if (challenge.type === "questions" && !challenge.completed) {
-						const newProgress = Math.min(
-							challenge.progress + amount,
-							challenge.target,
-						);
-						return {
-							...challenge,
-							progress: newProgress,
-							completed: newProgress >= challenge.target,
-						};
+					if (challenge.completed) return challenge;
+					switch (challenge.type) {
+						case "questions":
+							return {
+								...challenge,
+								progress: Math.min(
+									challenge.progress + amount,
+									challenge.target,
+								),
+								completed: challenge.progress + amount >= challenge.target,
+							};
+						case "accuracy":
+							if (accuracy > challenge.progress) {
+								return {
+									...challenge,
+									progress: accuracy,
+									completed: accuracy >= challenge.target,
+								};
+							}
+							return challenge;
+						case "streak":
+							if (streak >= challenge.target) {
+								return { ...challenge, progress: streak, completed: true };
+							}
+							return {
+								...challenge,
+								progress: Math.max(challenge.progress, streak),
+							};
+						case "subject":
+							if (
+								subject &&
+								challenge.title.toLowerCase().includes(subject.toLowerCase())
+							) {
+								return { ...challenge, progress: 1, completed: true };
+							}
+							return challenge;
+						default:
+							return challenge;
 					}
-					return challenge;
 				});
 
 				const newData = {
@@ -182,6 +211,16 @@ export function useGamification() {
 				totalXp: newTotalXp,
 				xp: prev.xp + achievement.xpReward,
 			};
+
+			setTimeout(() => {
+				toast({
+					type: "success",
+					message: `${achievement.icon} New Achievement: ${achievement.name}`,
+					description: achievement.description,
+					duration: 5000,
+				});
+			}, 0);
+
 			saveToStorage(newData);
 			return newData;
 		});
@@ -269,33 +308,60 @@ export function useGamification() {
 		[data.achievements, addAchievement],
 	);
 
+	const streakXpReward = useCallback((streak: number): number => {
+		switch (streak) {
+			case 3:
+				return 50;
+			case 7:
+				return 100;
+			case 14:
+				return 150;
+			case 30:
+				return 200;
+			case 60:
+				return 300;
+			case 100:
+				return 500;
+			default:
+				return 0;
+		}
+	}, []);
+
 	const updateStreak = useCallback(() => {
 		setData((prev) => {
 			const today = new Date().toDateString();
-			const yesterday = new Date(Date.now() - 86400000).toDateString();
+			const yesterday = new Date();
+			yesterday.setDate(yesterday.getDate() - 1);
+			const yesterdayStr = yesterday.toDateString();
 
 			let newStreak = prev.currentStreak;
-			if (prev.lastPracticeDate === yesterday) {
+			if (prev.lastPracticeDate === yesterdayStr) {
 				newStreak = prev.currentStreak + 1;
 			} else if (prev.lastPracticeDate !== today) {
 				newStreak = 1;
 			}
 
-			const updatedMilestones = prev.streakMilestones.map((milestone) => ({
-				...milestone,
-				unlocked: milestone.unlocked || newStreak >= milestone.streak,
-			}));
+			let milestoneXpGain = 0;
+			const updatedMilestones = prev.streakMilestones.map((milestone) => {
+				if (!milestone.unlocked && newStreak >= milestone.streak) {
+					milestoneXpGain += streakXpReward(milestone.streak);
+					return { ...milestone, unlocked: true };
+				}
+				return milestone;
+			});
 
 			const newData = {
 				...prev,
 				currentStreak: newStreak,
 				lastPracticeDate: today,
+				xp: prev.xp + milestoneXpGain,
+				totalXp: prev.totalXp + milestoneXpGain,
 				streakMilestones: updatedMilestones,
 			};
 			saveToStorage(newData);
 			return newData;
 		});
-	}, []);
+	}, [streakXpReward]);
 
 	const completeDailyChallenge = useCallback((challengeId: string) => {
 		setData((prev) => {
