@@ -421,7 +421,7 @@
           RL2["Magic link: 1/email/5min"]
         end
 
-        subgraphs Roles["User Roles"]
+        subgraph Roles["User Roles"]
           Student["Student<br/>Anonymous → Email/Password"]
           Admin["Admin<br/>Magic Link + OTP"]
         end
@@ -506,7 +506,7 @@
 
         EP --> QS
         QS --> SE
-        Exam --> ExamTimer{"Timer<br/>Auto-submit at 0"}
+        Exam --> ExamTimer : "Timer<br/>Auto-submit at 0"
         ExamTimer --> QS
     </pre>
   </div>
@@ -651,55 +651,55 @@
   <div class="diagram-wrap">
     <pre class="mermaid">
       mindmap
-        root(("lumni.ai"))
+        root(("Lumni"))
           Pages
-            "/" Home / Landing
-            "/dashboard" Stats, streaks, search, analytics
-            "/quiz" Subject/topic quiz flow
-            "/flashcards" SM-2 spaced repetition
-            "/past-papers" Browse past exam papers
-            "/exam/[id]" Timed exam simulation
-            "/study-plan" Smart scheduling
-            "/settings" Profile, preferences, data
-            "/auth/sign-in" Sign in
-            "/auth/sign-up" Sign up
-            "/admin" Admin dashboard
-            "/admin/quality" Question ratings
-            "/admin/questions" Question management
-            "/admin/budget" Token budget
-            "/upload" File upload
-            "/premium" Premium upgrade
-            "/bookmarks" Bookmarked questions
-            "/review" Review mistakes
-            "/solve" AI solver
-            "/tools" APS calc, periodic table, calendar
-            "/lesson" Lessons
-            "/dev" Development test page
+            Home(("/"))
+            Dashboard(("/dashboard"))
+            Quiz(("/quiz"))
+            Flashcards(("/flashcards"))
+            PastPapers(("/past-papers"))
+            Exam(("/exam/[id]"))
+            StudyPlan(("/study-plan"))
+            Settings(("/settings"))
+            SignIn(("/auth/sign-in"))
+            SignUp(("/auth/sign-up"))
+            Admin(("/admin"))
+            Quality(("/admin/quality"))
+            Questions(("/admin/questions"))
+            Budget(("/admin/budget"))
+            Upload(("/upload"))
+            Premium(("/premium"))
+            Bookmarks(("/bookmarks"))
+            Review(("/review"))
+            Solve(("/solve"))
+            Tools(("/tools"))
+            Lessons(("/lesson"))
+            Dev(("/dev"))
           API
-            POST /api/engine/generate
-            POST /api/engine/grade
-            POST /api/engine/hint
-            POST /api/engine/visual
-            GET /api/engine/test
-            GET /api/engine/visual/test
-            GET /api/engine/budget
-            POST /api/engine/next-topics
-            POST /api/engine/study-plan
-            /api/auth/* Sign-in, sign-up, logout
-            /api/exam-papers/* CRUD
-            /api/exam-sessions/* Session management
-            /api/exams/* Exam data
-            /api/solve AI solver
-            /api/chat AI chat
-            /api/analytics/* Stats
-            /api/cron/* Scheduled jobs
-            /api/lessons/* Lesson CRUD
-            /api/subjects/* Subject data
-            /api/sync/* Offline sync
-            /api/tts Text-to-speech
-            /api/uploadthing File upload
-            /api/seed Database seed
-            /api/jobs Background jobs
+            Generate(("POST /api/engine/generate"))
+            Grade(("POST /api/engine/grade"))
+            Hint(("POST /api/engine/hint"))
+            Visual(("POST /api/engine/visual"))
+            Test(("GET /api/engine/test"))
+            VisualTest(("GET /api/engine/visual/test"))
+            Budget(("GET /api/engine/budget"))
+            NextTopics(("POST /api/engine/next-topics"))
+            StudyPlan(("POST /api/engine/study-plan"))
+            Auth(("/api/auth/*"))
+            ExamPapers(("/api/exam-papers/*"))
+            ExamSessions(("/api/exam-sessions/*"))
+            Exams(("/api/exams/*"))
+            Solve(("/api/solve"))
+            Chat(("/api/chat"))
+            Analytics(("/api/analytics/*"))
+            Cron(("/api/cron/*"))
+            Lessons(("/api/lessons/*"))
+            Subjects(("/api/subjects/*"))
+            Sync(("/api/sync/*"))
+            TTS(("/api/tts"))
+            UploadThing(("/api/uploadthing"))
+            Seed(("/api/seed"))
+            Jobs(("/api/jobs"))
     </pre>
   </div>
 </div>
