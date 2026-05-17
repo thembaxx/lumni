@@ -17,6 +17,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AssessmentHeader } from "@/components/ui/headers/assessment-header";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
 import type { Question } from "@/lib/question-engine/types";
+import { useQuizSession } from "@/lib/quiz-session";
 
 export interface QuizResults {
 	questions: Question[];
@@ -52,13 +53,7 @@ export function QuizView({
 	const [selectedSubject, setSelectedSubject] = useState(initialSubject ?? "");
 	const [sessionActive, setSessionActive] = useState(false);
 	const [loadError, setLoadError] = useState<string | null>(null);
-	const [currentIndex, setCurrentIndex] = useState(0);
-	const [correctAnswers, setCorrectAnswers] = useState(0);
-	const [correctness, setCorrectness] = useState<boolean[]>([]);
 	const [currentAnswered, setCurrentAnswered] = useState(false);
-	const [elapsedTime, setElapsedTime] = useState(0);
-	const [isComplete, setIsComplete] = useState(false);
-	const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 	const _quizContainerRef = useRef<HTMLDivElement>(null);
 
 	const engineParams = useMemo(
@@ -75,131 +70,101 @@ export function QuizView({
 		enabled: sessionActive && !!selectedSubject,
 	});
 
-	const currentQuestion = questions?.[currentIndex] ?? null;
-	const totalQuestions = questions?.length ?? questionCount;
+	const { state, actions } = useQuizSession(questions ?? [], { maxTime });
+
+	const currentIndex = state.questionNumber - 1;
 
 	const handleStartWithSubject = useCallback((subject: string) => {
 		setSelectedSubject(subject);
 		setSessionActive(true);
-		setCurrentIndex(0);
-		setCorrectAnswers(0);
-		setCorrectness([]);
-		setCurrentAnswered(false);
-		setElapsedTime(0);
-		setIsComplete(false);
 		setLoadError(null);
 	}, []);
 
-	const buildResults = useCallback(
-		(correct: number, time: number) => {
-			const result: QuizResults = {
-				questions: questions ?? [],
-				correctness,
-				correctAnswers: correct,
-				totalQuestions: questions?.length ?? 0,
-				elapsedTime: time,
-			};
-			return result;
-		},
-		[questions, correctness],
-	);
+	useEffect(() => {
+		if (sessionActive && questions.length > 0 && !state.isComplete) {
+			actions.start();
+		}
+	}, [sessionActive, questions.length, state.isComplete, actions]);
+
+	const prevComplete = useRef(state.isComplete);
+	useEffect(() => {
+		if (state.isComplete && !prevComplete.current) {
+			onFinish?.({
+				questions: state.questions,
+				correctness: state.correctness,
+				correctAnswers: state.correctAnswers,
+				totalQuestions: state.totalQuestions,
+				elapsedTime: state.elapsedTime,
+			});
+		}
+		prevComplete.current = state.isComplete;
+	}, [
+		state.isComplete,
+		state.questions,
+		state.correctness,
+		state.correctAnswers,
+		state.totalQuestions,
+		state.elapsedTime,
+		onFinish,
+	]);
 
 	const handleStop = useCallback(() => {
 		setSessionActive(false);
-		if (timerRef.current) clearInterval(timerRef.current);
-		onFinish?.(buildResults(correctAnswers, elapsedTime));
-	}, [onFinish, correctAnswers, elapsedTime, buildResults]);
+		actions.stop();
+		onQuit?.();
+	}, [actions, onQuit]);
 
 	const handleRestart = useCallback(() => {
-		setCurrentIndex(0);
-		setCorrectAnswers(0);
-		setCorrectness([]);
-		setElapsedTime(0);
-		setIsComplete(false);
-	}, []);
+		actions.restart();
+		setCurrentAnswered(false);
+	}, [actions]);
 
 	const handleNext = useCallback(() => {
-		if (currentIndex < totalQuestions - 1) {
-			setCurrentIndex((prev) => prev + 1);
-			setCurrentAnswered(false);
-		} else {
-			setIsComplete(true);
-			if (timerRef.current) clearInterval(timerRef.current);
-			onFinish?.(buildResults(correctAnswers, elapsedTime));
-		}
-	}, [
-		currentIndex,
-		totalQuestions,
-		onFinish,
-		correctAnswers,
-		elapsedTime,
-		buildResults,
-	]);
+		actions.next();
+		setCurrentAnswered(false);
+	}, [actions]);
 
 	const handlePrevious = useCallback(() => {
-		if (currentIndex > 0) setCurrentIndex((prev) => prev - 1);
+		actions.previous();
 		setCurrentAnswered(false);
-	}, [currentIndex]);
+	}, [actions]);
 
 	const handleSkip = useCallback(() => {
 		handleNext();
 	}, [handleNext]);
 
-	const handleAnswered = useCallback((correct: boolean) => {
-		setCurrentAnswered(true);
-		setCorrectness((prev) => [...prev, correct]);
-		if (correct) setCorrectAnswers((prev) => prev + 1);
-	}, []);
+	const handleAnswered = useCallback(
+		(correct: boolean) => {
+			setCurrentAnswered(true);
+			actions.recordAnswer(correct);
+		},
+		[actions],
+	);
 
-	useEffect(() => {
-		if (sessionActive && questions.length > 0) {
-			if (timerRef.current) clearInterval(timerRef.current);
-			timerRef.current = setInterval(() => {
-				setElapsedTime((prev) => {
-					if (prev >= maxTime) {
-						if (timerRef.current) clearInterval(timerRef.current);
-						setIsComplete(true);
-						return prev;
-					}
-					return prev + 1;
-				});
-			}, 1000);
-		}
-		return () => {
-			if (timerRef.current) clearInterval(timerRef.current);
-		};
-	}, [sessionActive, questions.length, maxTime]);
-
-	// Handle keyboard navigation for quiz controls
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {
-			if (!sessionActive || !currentQuestion) return;
+			if (!sessionActive || !state.currentQuestion) return;
 
-			// Handle arrow keys for multiple choice
 			if (
-				currentQuestion.type === "multiple-choice" &&
+				state.currentQuestion.type === "multiple-choice" &&
 				currentAnswered === false
 			) {
 				switch (e.key) {
 					case "ArrowLeft":
 					case "ArrowUp":
 						e.preventDefault();
-						// Focus previous option - would need refs to options
 						break;
 					case "ArrowRight":
 					case "ArrowDown":
 						e.preventDefault();
-						// Focus next option - would need refs to options
 						break;
 					case "Enter":
 					case " ":
 						e.preventDefault();
-						// Trigger answer submission - would need to find selected option
 						break;
 				}
 			}
 
-			// Handle quiz navigation
 			switch (e.key) {
 				case "ArrowLeft":
 					if (currentIndex > 0) {
@@ -208,13 +173,13 @@ export function QuizView({
 					}
 					break;
 				case "ArrowRight":
-					if (currentIndex < totalQuestions - 1) {
+					if (currentIndex < state.totalQuestions - 1) {
 						e.preventDefault();
 						handleNext();
 					}
 					break;
 				case "Escape":
-					if (isComplete) {
+					if (state.isComplete) {
 						e.preventDefault();
 						handleStop();
 					}
@@ -228,14 +193,14 @@ export function QuizView({
 		};
 	}, [
 		sessionActive,
-		currentQuestion,
+		state.currentQuestion,
 		currentIndex,
-		totalQuestions,
+		state.totalQuestions,
 		currentAnswered,
 		handlePrevious,
 		handleNext,
 		handleStop,
-		isComplete,
+		state.isComplete,
 	]);
 
 	if (loadError) {
@@ -385,14 +350,14 @@ export function QuizView({
 		);
 	}
 
-	if (isComplete) {
+	if (state.isComplete) {
 		return (
 			<div className="min-h-dvh bg-background grid grid-cols-12 gap-0">
 				<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4 pb-20">
 					<QuizResultsCard
-						totalQuestions={totalQuestions}
-						correctAnswers={correctAnswers}
-						elapsedTime={elapsedTime}
+						totalQuestions={state.totalQuestions}
+						correctAnswers={state.correctAnswers}
+						elapsedTime={state.elapsedTime}
 						onRestart={handleRestart}
 						onDashboard={handleStop}
 					/>
@@ -413,32 +378,33 @@ export function QuizView({
 			role="region"
 			aria-labelledby="quiz-title"
 		>
-			{/* Main quiz content — left column */}
 			<main
 				className="col-span-12 md:col-span-7 col-start-1 flex flex-col gap-6 p-4 md:p-6 pb-20"
 				tabIndex={-1}
 			>
 				<AssessmentHeader
 					title="Quiz Practice"
-					elapsedTime={elapsedTime}
+					elapsedTime={state.elapsedTime}
 					currentQuestionIndex={currentIndex}
-					totalQuestions={totalQuestions}
-					progressValue={((currentIndex + 1) / totalQuestions) * 100}
+					totalQuestions={state.totalQuestions}
+					progressValue={((currentIndex + 1) / state.totalQuestions) * 100}
 					showAccuracy
 					accuracy={
-						totalQuestions > 0
-							? Math.round((correctAnswers / (currentIndex + 1 || 1)) * 100)
+						state.totalQuestions > 0
+							? Math.round(
+									(state.correctAnswers / (currentIndex + 1 || 1)) * 100,
+								)
 							: 0
 					}
 					onQuit={handleStop}
 				/>
 
-				{currentQuestion && (
+				{state.currentQuestion && (
 					<QuestionCard
-						question={currentQuestion}
+						question={state.currentQuestion}
 						subject={selectedSubject}
-						questionNumber={currentIndex + 1}
-						totalQuestions={totalQuestions}
+						questionNumber={state.questionNumber}
+						totalQuestions={state.totalQuestions}
 						onNext={handleNext}
 						onAnswered={handleAnswered}
 					/>
@@ -446,7 +412,7 @@ export function QuizView({
 
 				<QuizControls
 					currentQuestionIndex={currentIndex}
-					totalQuestions={totalQuestions}
+					totalQuestions={state.totalQuestions}
 					hasSelected={currentAnswered}
 					showFeedback={currentAnswered}
 					onPrevious={handlePrevious}
@@ -456,13 +422,12 @@ export function QuizView({
 				/>
 
 				<ProgressDots
-					total={totalQuestions}
+					total={state.totalQuestions}
 					currentIndex={currentIndex}
 					variant="quiz"
 				/>
 			</main>
 
-			{/* Decorative accent — right zone */}
 			<div
 				className="col-span-12 md:col-span-5 col-start-1 md:col-start-8 relative overflow-hidden bg-system-surface/30"
 				aria-hidden="true"

@@ -54,6 +54,9 @@ Single deep module for all question operations — generate, grade, hint, valida
 **LearningOrchestrator** (`src/lib/orchestrator/`):
 Composition root over `QuestionEngine` with exactly two methods: `generateQuestionSet` and `gradeAndTrack`. Adds job-queue side effects (appwrite-sync, analytics, spaced-repetition, progress tracking) but does not duplicate question-generation logic. Pure pass-through methods (`generate`, `grade`, `generateHint`, `validate`, `listTypes`) were removed — callers that need those use `QuestionEngine` directly.
 
+**QuizSession** (`src/lib/quiz-session/`):
+Deep module for quiz timer, scoring, navigation, and completion semantics. Hides `setInterval` lifecycle, current-index tracking, correct-answer accumulation, and max-time cutoff behind a seam with exactly three entry points: `start`, `recordAnswer`, and `next`. Questions are passed in by the caller (who owns the fetch via `useQuestionEngine`). Composed by two page components that previously duplicated the same logic (`quiz-view.tsx` and `quiz-engine.tsx`). New quiz variants (timed challenge, topic drill) get all behaviour for free.
+
 ## Architecture conventions
 
 - **Stores** live in `src/store/`. `src/lib/store.ts` and `src/lib/stores/` are deprecated — do not create new stores in lib.

@@ -1,19 +1,14 @@
 "use client";
 
-import {
-	CircleNotch,
-	MagnifyingGlass,
-	WarningCircle,
-} from "@phosphor-icons/react";
+import { CircleNotch } from "@phosphor-icons/react";
 import { AnimatePresence, m, motion } from "framer-motion";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Anim } from "@/components/shared/anim";
 import { ProgressDots } from "@/components/shared/progress-dots";
 import { Card, CardContent } from "@/components/ui/card";
 import { AssessmentHeader } from "@/components/ui/headers/assessment-header";
-import { Skeleton } from "@/components/ui/skeleton";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
-import type { Question } from "@/lib/question-engine/types";
+import { useQuizSession } from "@/lib/quiz-session";
 import { iOSEase } from "@/lib/utils/animation";
 import { AnimatedIcon } from "@/lib/utils/icon-mapping";
 import { QuestionCard } from "./question-card";
@@ -70,74 +65,44 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 		enabled: true,
 	});
 
-	// Internal quiz state
-	const [currentIndex, setCurrentIndex] = useState(0);
-	const [correctAnswers, setCorrectAnswers] = useState(0);
-	const [elapsedTime, setElapsedTime] = useState(0);
-	const [isComplete, setIsComplete] = useState(false);
-	const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+	const { state, actions } = useQuizSession(questions ?? []);
 
+	const prevStarted = useRef(false);
 	useEffect(() => {
-		if (questions.length > 0) {
-			timerRef.current = setInterval(() => {
-				setElapsedTime((prev) => {
-					if (prev >= 90 * 60) {
-						if (timerRef.current) clearInterval(timerRef.current);
-						return prev;
-					}
-					return prev + 1;
-				});
-			}, 1000);
+		if (questions.length > 0 && !prevStarted.current) {
+			actions.start();
+			prevStarted.current = true;
 		}
-		return () => {
-			if (timerRef.current) clearInterval(timerRef.current);
-		};
-	}, [questions.length]);
-
-	const currentQuestion = questions?.[currentIndex];
+	}, [questions.length, actions]);
 
 	const handleNext = useCallback(() => {
-		if (currentIndex < questions.length - 1) {
-			setCurrentIndex((prev) => prev + 1);
-		} else {
-			setIsComplete(true);
-		}
-	}, [currentIndex, questions.length]);
+		actions.next();
+	}, [actions]);
 
 	const handlePrevious = useCallback(() => {
-		if (currentIndex > 0) {
-			setCurrentIndex((prev) => prev - 1);
-		}
-	}, [currentIndex]);
+		actions.previous();
+	}, [actions]);
 
 	const handleSkip = useCallback(() => {
-		if (currentIndex < questions.length - 1) {
-			setCurrentIndex((prev) => prev + 1);
-		} else {
-			setIsComplete(true);
-		}
-	}, [currentIndex, questions.length]);
-
-	const handleRestart = () => {
-		setCurrentIndex(0);
-		setCorrectAnswers(0);
-		setElapsedTime(0);
-		setIsComplete(false);
-		setIncorrectAnswers([]);
-	};
+		actions.next();
+	}, [actions]);
 
 	const handleQuit = useCallback(() => {
-		if (questions) {
-			onComplete?.(
-				buildResults(
-					questions.length,
-					correctAnswers,
-					elapsedTime,
-					incorrectAnswers,
-				),
-			);
-		}
-	}, [questions, correctAnswers, elapsedTime, incorrectAnswers, onComplete]);
+		onComplete?.(
+			buildResults(
+				state.totalQuestions,
+				state.correctAnswers,
+				state.elapsedTime,
+				incorrectAnswers,
+			),
+		);
+	}, [
+		state.totalQuestions,
+		state.correctAnswers,
+		state.elapsedTime,
+		incorrectAnswers,
+		onComplete,
+	]);
 
 	if (isLoading) {
 		return (
@@ -209,7 +174,7 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 		);
 	}
 
-	if (isComplete) {
+	if (state.isComplete) {
 		return (
 			<Anim>
 				<AnimatePresence mode="wait" initial={false}>
@@ -222,14 +187,15 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 					>
 						<QuizResult
 							results={buildResults(
-								questions.length,
-								correctAnswers,
-								elapsedTime,
+								state.totalQuestions,
+								state.correctAnswers,
+								state.elapsedTime,
 								incorrectAnswers,
 							)}
 							onRestart={() => {
 								setIncorrectAnswers([]);
-								handleRestart();
+								prevStarted.current = false;
+								actions.restart();
 							}}
 							onClose={handleQuit}
 						/>
@@ -239,19 +205,19 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 		);
 	}
 
-	if (!currentQuestion) return null;
+	if (!state.currentQuestion) return null;
 
 	return (
 		<Anim>
 			<div className="flex flex-col gap-4">
 				<AssessmentHeader
 					title={subjectId}
-					elapsedTime={elapsedTime}
-					currentQuestionIndex={currentIndex}
-					totalQuestions={questions.length}
-					progressValue={((currentIndex + 1) / questions.length) * 100}
+					elapsedTime={state.elapsedTime}
+					currentQuestionIndex={state.questionNumber - 1}
+					totalQuestions={state.totalQuestions}
+					progressValue={(state.questionNumber / state.totalQuestions) * 100}
 					difficulty={
-						currentQuestion.difficulty.toLowerCase() as
+						state.currentQuestion.difficulty.toLowerCase() as
 							| "easy"
 							| "medium"
 							| "hard"
@@ -261,25 +227,25 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 
 				<AnimatePresence mode="wait" initial={false}>
 					<m.div
-						key={currentQuestion.id}
+						key={state.currentQuestion.id}
 						initial={{ opacity: 0, x: 20 }}
 						animate={{ opacity: 1, x: 0 }}
 						exit={{ opacity: 0, x: -20 }}
 						transition={{ duration: 0.2, ease: iOSEase }}
 					>
 						<QuestionCard
-							question={currentQuestion}
+							question={state.currentQuestion}
 							subject={subjectId}
-							questionNumber={currentIndex + 1}
-							totalQuestions={questions.length}
+							questionNumber={state.questionNumber}
+							totalQuestions={state.totalQuestions}
 							onNext={handleNext}
 						/>
 					</m.div>
 				</AnimatePresence>
 
 				<QuizControls
-					currentQuestionIndex={currentIndex}
-					totalQuestions={questions.length}
+					currentQuestionIndex={state.questionNumber - 1}
+					totalQuestions={state.totalQuestions}
 					hasSelected={false}
 					showFeedback={false}
 					onPrevious={handlePrevious}
@@ -289,8 +255,8 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 				/>
 
 				<ProgressDots
-					total={questions.length}
-					currentIndex={currentIndex}
+					total={state.totalQuestions}
+					currentIndex={state.questionNumber - 1}
 					variant="engine"
 				/>
 			</div>
