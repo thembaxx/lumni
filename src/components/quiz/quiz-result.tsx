@@ -1,12 +1,7 @@
 "use client";
 
 import { ArrowsClockwise, House } from "@phosphor-icons/react";
-import {
-  AnimatePresence,
-  m,
-  useSpring,
-  useTransform,
-} from "framer-motion";
+import { AnimatePresence, m, useSpring, useTransform } from "framer-motion";
 import { AccuracyBar } from "@/components/shared/accuracy-bar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";

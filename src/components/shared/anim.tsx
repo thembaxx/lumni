@@ -1,12 +1,6 @@
 "use client";
 
-import {
-	domAnimation,
-	LazyMotion,
-	m,
-	type Transition,
-	type Variants,
-} from "framer-motion";
+import { m, type Transition, type Variants } from "framer-motion";
 
 interface AnimProps {
 	children: React.ReactNode;
@@ -24,17 +18,15 @@ export function Anim({
 	transition,
 }: AnimProps) {
 	return (
-		<LazyMotion features={domAnimation} strict>
-			<m.div
-				layoutId={layoutId}
-				initial={initial ? "hidden" : false}
-				animate="visible"
-				exit="hidden"
-				variants={variants}
-				transition={transition}
-			>
-				{children}
-			</m.div>
-		</LazyMotion>
+		<m.div
+			layoutId={layoutId}
+			initial={initial ? "hidden" : false}
+			animate="visible"
+			exit="hidden"
+			variants={variants}
+			transition={transition}
+		>
+			{children}
+		</m.div>
 	);
 }

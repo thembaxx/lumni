@@ -17,7 +17,6 @@ import {
 } from "@phosphor-icons/react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
-import { useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/auth/auth-context";
 import { cn } from "@/lib/shared";
@@ -106,7 +105,10 @@ export function HomeContent() {
 			{/* Navigation */}
 			<nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/50">
 				<div className="max-w-6xl mx-auto flex items-center justify-between px-4 h-14">
-					<Link href="/" className="text-lg font-extrabold tracking-tight">
+					<Link
+						href="/"
+						className="text-lg font-extrabold tracking-tight py-2 hover:text-[--system-accent] transition-colors"
+					>
 						lumni
 					</Link>
 					<div className="flex items-center gap-2">
@@ -148,7 +150,7 @@ export function HomeContent() {
 							<motion.div
 								initial={{ opacity: 0, y: 20 }}
 								animate={{ opacity: 1, y: 0 }}
-								transition={{ duration: 0.6, ease: iOSEase }}
+								transition={{ duration: 0.4, ease: iOSEase }}
 							>
 								<div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[--system-accent]/10 text-[--system-accent] text-xs font-medium mb-4">
 									<Sparkle weight="fill" className="size-3" />
@@ -170,7 +172,7 @@ export function HomeContent() {
 							<motion.div
 								initial={{ opacity: 0, y: 20 }}
 								animate={{ opacity: 1, y: 0 }}
-								transition={{ duration: 0.6, delay: 0.15, ease: iOSEase }}
+								transition={{ duration: 0.4, delay: 0.1, ease: iOSEase }}
 								className="flex flex-col sm:flex-row gap-3"
 							>
 								{isAuthenticated ? (
@@ -191,7 +193,7 @@ export function HomeContent() {
 							<motion.div
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
-								transition={{ duration: 0.6, delay: 0.3 }}
+								transition={{ duration: 0.4, delay: 0.2 }}
 								className="flex items-center gap-6 text-sm text-muted-foreground"
 							>
 								<div className="flex items-center gap-2">
@@ -213,14 +215,14 @@ export function HomeContent() {
 						<motion.div
 							initial={{ opacity: 0, scale: 0.9 }}
 							animate={{ opacity: 1, scale: 1 }}
-							transition={{ duration: 0.8, delay: 0.2, ease: iOSEase }}
+							transition={{ duration: 0.5, delay: 0.15, ease: iOSEase }}
 							className="relative hidden lg:flex items-center justify-center"
 						>
 							<div className="relative w-full aspect-square max-w-md">
 								<div className="absolute inset-0 bg-linear-to-br from-[--system-accent]/20 via-[--system-accent]/5 to-transparent rounded-[3rem] blur-3xl" />
 								<div className="relative w-full h-full rounded-[2.5rem] bg-linear-to-br from-[--system-accent]/10 to-background border border-border/50 p-8 flex flex-col gap-4">
 									<div className="flex items-center gap-3">
-										<div className="size-10 rounded-xl bg-[--system-accent]/20 flex items-center justify-center">
+										<div className="size-10 rounded-lg bg-[--system-accent]/20 flex items-center justify-center">
 											<Brain
 												className="size-5 text-[--system-accent]"
 												weight="fill"
@@ -233,7 +235,7 @@ export function HomeContent() {
 											</p>
 										</div>
 									</div>
-									<div className="flex-1 rounded-xl bg-muted/30 p-4 flex flex-col gap-3">
+									<div className="flex-1 rounded-lg bg-muted/30 p-4 flex flex-col gap-3">
 										<div className="h-2 w-3/4 rounded-full bg-muted-foreground/10" />
 										<div className="h-2 w-1/2 rounded-full bg-muted-foreground/10" />
 										<div className="flex gap-2 mt-2">
@@ -298,13 +300,16 @@ export function HomeContent() {
 									)}
 								/>
 								<div className="relative p-6 rounded-[2rem] border border-border/50 bg-background/50 backdrop-blur-sm">
-									<div className="size-10 rounded-xl bg-[--system-accent]/10 flex items-center justify-center mb-4">
-										<feature.icon className="size-5 text-[--system-accent]" />
+									<div className="size-10 rounded-lg bg-[--system-accent]/10 flex items-center justify-center mb-4">
+										<feature.icon
+											className="size-5 text-[--system-accent]"
+											weight="bold"
+										/>
 									</div>
-									<h3 className="text-base font-semibold mb-2">
+									<h3 className="text-base sm:text-lg font-semibold mb-2">
 										{feature.title}
 									</h3>
-									<p className="text-sm text-muted-foreground leading-relaxed">
+									<p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
 										{feature.description}
 									</p>
 								</div>
@@ -342,7 +347,7 @@ export function HomeContent() {
 								className="relative text-center"
 							>
 								<div className="size-16 rounded-full bg-[--system-accent]/10 flex items-center justify-center mx-auto mb-4">
-									<span className="text-2xl font-black text-[--system-accent]">
+									<span className="text-2xl font-black text-[--system-accent] tabular-nums">
 										{step.number}
 									</span>
 								</div>
@@ -404,7 +409,10 @@ export function HomeContent() {
 				<div className="max-w-6xl mx-auto px-4">
 					<div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
 						<div>
-							<Link href="/" className="text-lg font-extrabold tracking-tight">
+							<Link
+								href="/"
+								className="text-lg font-extrabold tracking-tight py-1.5"
+							>
 								lumni
 							</Link>
 							<p className="text-sm text-muted-foreground mt-2 max-w-xs">
@@ -413,28 +421,28 @@ export function HomeContent() {
 						</div>
 						<div>
 							<h4 className="text-sm font-semibold mb-3">Product</h4>
-							<div className="flex flex-col gap-2 text-sm text-muted-foreground">
+							<div className="flex flex-col text-sm text-muted-foreground">
 								<Link
 									href="/quiz"
-									className="hover:text-foreground transition-colors"
+									className="hover:text-foreground transition-colors py-1.5"
 								>
 									AI Quizzes
 								</Link>
 								<Link
 									href="/past-papers"
-									className="hover:text-foreground transition-colors"
+									className="hover:text-foreground transition-colors py-1.5"
 								>
 									Past Papers
 								</Link>
 								<Link
 									href="/flashcards"
-									className="hover:text-foreground transition-colors"
+									className="hover:text-foreground transition-colors py-1.5"
 								>
 									Flashcards
 								</Link>
 								<Link
 									href="/study-plan"
-									className="hover:text-foreground transition-colors"
+									className="hover:text-foreground transition-colors py-1.5"
 								>
 									Study Plan
 								</Link>
@@ -442,22 +450,22 @@ export function HomeContent() {
 						</div>
 						<div>
 							<h4 className="text-sm font-semibold mb-3">Support</h4>
-							<div className="flex flex-col gap-2 text-sm text-muted-foreground">
+							<div className="flex flex-col text-sm text-muted-foreground">
 								<a
 									href={appConfig.links.support}
-									className="hover:text-foreground transition-colors"
+									className="hover:text-foreground transition-colors py-1.5"
 								>
 									Help Center
 								</a>
 								<a
 									href={`mailto:${appConfig.contact.supportEmail}`}
-									className="hover:text-foreground transition-colors"
+									className="hover:text-foreground transition-colors py-1.5"
 								>
 									Email Us
 								</a>
 								<a
 									href={appConfig.links.feedback}
-									className="hover:text-foreground transition-colors"
+									className="hover:text-foreground transition-colors py-1.5"
 								>
 									Send Feedback
 								</a>
@@ -465,16 +473,16 @@ export function HomeContent() {
 						</div>
 						<div>
 							<h4 className="text-sm font-semibold mb-3">Legal</h4>
-							<div className="flex flex-col gap-2 text-sm text-muted-foreground">
+							<div className="flex flex-col text-sm text-muted-foreground">
 								<a
 									href={appConfig.links.privacy}
-									className="hover:text-foreground transition-colors"
+									className="hover:text-foreground transition-colors py-1.5"
 								>
 									Privacy Policy
 								</a>
 								<a
 									href={appConfig.links.terms}
-									className="hover:text-foreground transition-colors"
+									className="hover:text-foreground transition-colors py-1.5"
 								>
 									Terms of Service
 								</a>
@@ -488,19 +496,19 @@ export function HomeContent() {
 						<div className="flex items-center gap-4">
 							<a
 								href={appConfig.social.facebook}
-								className="text-muted-foreground hover:text-foreground transition-colors"
+								className="text-muted-foreground hover:text-foreground transition-colors py-1.5"
 							>
 								<span className="text-xs">Facebook</span>
 							</a>
 							<a
 								href={appConfig.social.twitter}
-								className="text-muted-foreground hover:text-foreground transition-colors"
+								className="text-muted-foreground hover:text-foreground transition-colors py-1.5"
 							>
 								<span className="text-xs">Twitter</span>
 							</a>
 							<a
 								href={appConfig.social.instagram}
-								className="text-muted-foreground hover:text-foreground transition-colors"
+								className="text-muted-foreground hover:text-foreground transition-colors py-1.5"
 							>
 								<span className="text-xs">Instagram</span>
 							</a>

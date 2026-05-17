@@ -3,13 +3,13 @@
 import { ChatCenteredText, CloudArrowUp } from "@phosphor-icons/react";
 import { m } from "framer-motion";
 import {
-  BookOpen,
-  Headphones,
-  LucideIcon,
-  RefreshCw,
-  Upload,
-  Wifi,
-  WifiOff,
+	BookOpen,
+	Headphones,
+	LucideIcon,
+	RefreshCw,
+	Upload,
+	Wifi,
+	WifiOff,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/shared";
@@ -232,21 +232,21 @@ export const EmptyStates = {
 		/>
 	),
 
-  loadingSlow: (task = "Loading your data") => (
-    <div className="flex flex-col items-center justify-center py-12 px-4 text-center">
-      <m.div
-        animate={{ rotate: 360 }}
-        transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-        className="size-16 mb-4"
-      >
-        <AnimatedIcon name="loading-lumni" className="size-16" />
-      </m.div>
-      <h3 className="mb-2 text-lg font-semibold">Just a moment</h3>
-      <p className="max-w-sm text-sm text-muted-foreground">
-        {task}. This usually takes a few seconds.
-      </p>
-    </div>
-  ),
+	loadingSlow: (task = "Loading your data") => (
+		<div className="flex flex-col items-center justify-center py-12 px-4 text-center">
+			<m.div
+				animate={{ rotate: 360 }}
+				transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+				className="size-16 mb-4"
+			>
+				<AnimatedIcon name="loading-lumni" className="size-16" />
+			</m.div>
+			<h3 className="mb-2 text-lg font-semibold">Just a moment</h3>
+			<p className="max-w-sm text-sm text-muted-foreground">
+				{task}. This usually takes a few seconds.
+			</p>
+		</div>
+	),
 
 	error: (message: string, onRetry?: () => void) => (
 		<EmptyStateWithIllustration

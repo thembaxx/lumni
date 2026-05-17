@@ -1,4 +1,5 @@
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
+import { domAnimation, LazyMotion } from "framer-motion";
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { connection } from "next/server";
@@ -104,19 +105,21 @@ export default function RootLayout({
 					<UTSSR />
 				</Suspense>
 				<Providers>
-					<UploadDialogRenderer />
-					<FloatingToolsButton />
-					<WebVitalsLogger />
-					<div className="flex flex-1">
-						<DesktopSidebar />
-						<main className="flex-1 min-w-0 flex flex-col">
-							<TopNav />
-							<ErrorBoundary>
-								<PageTransition>{children}</PageTransition>
-							</ErrorBoundary>
-						</main>
-					</div>
-					<BottomNav />
+					<LazyMotion features={domAnimation}>
+						<UploadDialogRenderer />
+						<FloatingToolsButton />
+						<WebVitalsLogger />
+						<div className="flex flex-1">
+							<DesktopSidebar />
+							<main className="flex-1 min-w-0 flex flex-col">
+								<TopNav />
+								<ErrorBoundary>
+									<PageTransition>{children}</PageTransition>
+								</ErrorBoundary>
+							</main>
+						</div>
+						<BottomNav />
+					</LazyMotion>
 				</Providers>
 			</body>
 		</html>

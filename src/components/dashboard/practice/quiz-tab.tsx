@@ -9,7 +9,6 @@ import {
 } from "@phosphor-icons/react";
 import { m, motion, useReducedMotion } from "framer-motion";
 import { useCallback, useState } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
 import {
 	QuizControls,
@@ -21,6 +20,7 @@ import { Anim } from "@/components/shared/anim";
 import { PerpetualFloat } from "@/components/shared/perpetual-float";
 import { Button } from "@/components/ui/button";
 import { AssessmentHeader } from "@/components/ui/headers/assessment-header";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useQuizSession } from "@/hooks/use-quiz-session";
 import { cn } from "@/lib/shared";
 import { formatTime } from "@/lib/shared/time";
@@ -28,30 +28,30 @@ import { iOSEase } from "@/lib/utils/animation";
 import { useOptimizedAnimation } from "@/lib/utils/animation-optimization";
 
 interface QuizTabProps {
-  className?: string;
-  onHeaderChange?: (show: boolean) => void;
+	className?: string;
+	onHeaderChange?: (show: boolean) => void;
 }
 
 const MAX_TIME = 90 * 60;
 const DEFAULT_QUESTION_COUNT = 10;
 
 interface TabConfig {
-  value: string;
-  label: string;
+	value: string;
+	label: string;
 }
 
 const tabs: TabConfig[] = [
-  { value: "quiz", label: "Quiz" },
-  { value: "notes", label: "Notes" },
-  { value: "flashcards", label: "Flashcards" },
+	{ value: "quiz", label: "Quiz" },
+	{ value: "notes", label: "Notes" },
+	{ value: "flashcards", label: "Flashcards" },
 ];
 
 export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [activeTab, setActiveTab] = useState("quiz");
-  const shouldReduceMotion = useReducedMotion();
-  const { shouldReduceMotion: shouldReduceMotionOpt } = useOptimizedAnimation();
-  const finalShouldReduceMotion = shouldReduceMotion || shouldReduceMotionOpt;
+	const [_isTransitioning, setIsTransitioning] = useState(false);
+	const [activeTab, setActiveTab] = useState("quiz");
+	const shouldReduceMotion = useReducedMotion();
+	const { shouldReduceMotion: shouldReduceMotionOpt } = useOptimizedAnimation();
+	const finalShouldReduceMotion = shouldReduceMotion || shouldReduceMotionOpt;
 
 	const { state, actions } = useQuizSession({
 		questionCount: DEFAULT_QUESTION_COUNT,
@@ -65,7 +65,6 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 		isRunning,
 		elapsedTime,
 		currentQuestionIndex,
-		correctAnswers,
 		currentQuestion,
 		hasSubject,
 		selectedSubject,
@@ -82,7 +81,7 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 		}
 	}, [hasSubject, handleStartWithSubject, selectedSubject, onHeaderChange]);
 
-	const handleNext = useCallback(() => {
+	const _handleNext = useCallback(() => {
 		const maxIndex = totalQuestions - 1;
 		if (currentQuestionIndex < maxIndex) {
 			setIsTransitioning(true);
@@ -95,7 +94,7 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 		}
 	}, [currentQuestionIndex, totalQuestions, actions, handleStop]);
 
-	const handlePrevious = useCallback(() => {
+	const _handlePrevious = useCallback(() => {
 		if (currentQuestionIndex > 0) {
 			setIsTransitioning(true);
 			setTimeout(() => {
@@ -110,36 +109,36 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 			<div className="grid grid-cols-12 gap-0 min-h-[calc(100dvh-var(--spacing-safe-pt))]">
 				{/* Main quiz — left column */}
 				<div className="col-span-12 md:col-span-7 col-start-1 p-4 pb-20">
-<Anim>
-  <m.div
-    className="relative w-full"
-    initial={{ x: "-100%" }}
-    animate={{ x: "0%" }}
-    exit={{ x: "100%" }}
-    transition={{ duration: 0.5, ease: iOSEase }}
-  >
-     <Tabs
-       value={activeTab}
-       onValueChange={setActiveTab}
-       className="flex flex-wrap w-full"
-     >
-       {tabs.map((tab) => (
-         <TabsTrigger
-           key={tab.value}
-           value={tab.value}
-           className={cn(
-             "relative z-10 px-4 h-8 rounded-xl text-xs font-medium transition-colors duration-200 tab-trigger-item",
-             activeTab === tab.value
-               ? "text-foreground"
-               : "text-muted-foreground hover:text-foreground",
-           )}
-         >
-           {tab.label}
-         </TabsTrigger>
-       ))}
-     </Tabs>
-  </m.div>
-</Anim>
+					<Anim>
+						<m.div
+							className="relative w-full"
+							initial={{ x: "-100%" }}
+							animate={{ x: "0%" }}
+							exit={{ x: "100%" }}
+							transition={{ duration: 0.5, ease: iOSEase }}
+						>
+							<Tabs
+								value={activeTab}
+								onValueChange={setActiveTab}
+								className="flex flex-wrap w-full"
+							>
+								{tabs.map((tab) => (
+									<TabsTrigger
+										key={tab.value}
+										value={tab.value}
+										className={cn(
+											"relative z-10 px-4 h-8 rounded-xl text-xs font-medium transition-colors duration-200 tab-trigger-item",
+											activeTab === tab.value
+												? "text-foreground"
+												: "text-muted-foreground hover:text-foreground",
+										)}
+									>
+										{tab.label}
+									</TabsTrigger>
+								))}
+							</Tabs>
+						</m.div>
+					</Anim>
 				</div>
 
 				{/* Decorative accent — right zone */}
