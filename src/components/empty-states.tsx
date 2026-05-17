@@ -1,22 +1,22 @@
 "use client";
 
-import { ChatCenteredText, CloudArrowUp } from "@phosphor-icons/react";
-import { m } from "framer-motion";
 import {
 	BookOpen,
+	ChatCenteredText,
+	CloudArrowUp,
 	Headphones,
-	LucideIcon,
-	RefreshCw,
-	Upload,
-	Wifi,
-	WifiOff,
-} from "lucide-react";
+	Icon,
+	UploadSimple,
+	WifiHigh,
+	WifiSlash,
+} from "@phosphor-icons/react";
+import { m } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/shared";
 import { AnimatedIcon } from "@/lib/utils/icon-mapping";
 
 interface EmptyStateProps {
-	icon: LucideIcon;
+	icon: Icon;
 	title: string;
 	description: string;
 	action?: {
@@ -69,7 +69,7 @@ export function EmptyState({
 }
 
 interface EmptyStateWithIllustrationProps {
-	icon?: LucideIcon;
+	icon?: Icon;
 	title: string;
 	description: string;
 	action?: {
@@ -188,7 +188,7 @@ export const EmptyStates = {
 
 	offline: (onRetry?: () => void) => (
 		<EmptyState
-			icon={WifiOff}
+			icon={WifiSlash}
 			title="You're Offline"
 			description="Check your internet connection and try again. Your progress will sync when you're back online."
 			action={onRetry ? { label: "Try Again", onClick: onRetry } : undefined}

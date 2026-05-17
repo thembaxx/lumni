@@ -7,9 +7,9 @@ import {
 	BookOpen,
 	Brain,
 	ChartBar,
+	GlobeHemisphereWest,
 	GraduationCap,
 	Lightbulb,
-	Rocket,
 	Sparkle,
 	Target,
 	Timer,
@@ -42,14 +42,14 @@ const features = [
 		icon: ChartBar,
 		title: "Progress Tracking",
 		description:
-			"Track your mastery per subject and topic. See your strengths and weaknesses at a glance.",
+			"See how you're doing per subject and topic. Spot your strengths and find what needs work at a glance.",
 		gradient: "from-emerald-500/10 to-transparent",
 	},
 	{
 		icon: Lightbulb,
 		title: "Smart Flashcards",
 		description:
-			"Spaced repetition flashcards that adapt to your learning pace. Review what you need, when you need it.",
+			"Flashcards that adapt to your pace. Review what you need, when you need it, and the app remembers what to show you next.",
 		gradient: "from-amber-500/10 to-transparent",
 	},
 	{
@@ -60,8 +60,8 @@ const features = [
 		gradient: "from-rose-500/10 to-transparent",
 	},
 	{
-		icon: Rocket,
-		title: "Offline-First",
+		icon: GlobeHemisphereWest,
+		title: "Study Offline",
 		description:
 			"Study anywhere, anytime. Your progress syncs automatically when you're back online.",
 		gradient: "from-violet-500/10 to-transparent",
@@ -85,7 +85,7 @@ const steps = [
 		number: "03",
 		title: "Track & Improve",
 		description:
-			"Monitor your mastery growth, earn XP, unlock achievements, and walk into exams confident.",
+			"Track your progress, earn points for studying, unlock achievements, and walk into exams confident.",
 	},
 ];
 
@@ -154,7 +154,7 @@ export function HomeContent() {
 							>
 								<div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[--system-accent]/10 text-[--system-accent] text-xs font-medium mb-4">
 									<Sparkle weight="fill" className="size-3" />
-									SA Matric Exam Prep
+									Your Matric advantage
 								</div>
 								<h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1]">
 									Pass your Matric{" "}
@@ -164,8 +164,8 @@ export function HomeContent() {
 								</h1>
 								<p className="text-lg text-muted-foreground mt-4 max-w-lg leading-relaxed">
 									AI-powered quizzes, past exam papers, smart flashcards, and a
-									personalized study planner — all in one place. Built for South
-									African Matric students.
+									personalized study planner. Everything a Matric student needs
+									to prepare, all in one place.
 								</p>
 							</motion.div>
 
@@ -198,15 +198,15 @@ export function HomeContent() {
 							>
 								<div className="flex items-center gap-2">
 									<GraduationCap className="size-4" />
-									<span>CAPS Curriculum</span>
+									<span>CAPS aligned</span>
 								</div>
 								<div className="flex items-center gap-2">
 									<Timer className="size-4" />
-									<span>2021-2025 Papers</span>
+									<span>Past papers 2021-2025</span>
 								</div>
 								<div className="flex items-center gap-2">
 									<TrendUp className="size-4" />
-									<span>AI-Powered</span>
+									<span>AI-powered</span>
 								</div>
 							</motion.div>
 						</div>
@@ -278,12 +278,12 @@ export function HomeContent() {
 							Everything you need to ace your exams
 						</h2>
 						<p className="text-muted-foreground mt-3 max-w-lg mx-auto">
-							From AI-generated practice to real past papers, Lumni has every
-							tool you need to prepare for Matric.
+							AI practice, real past papers, and study tools that adapt to how
+							you learn. Built for the CAPS curriculum.
 						</p>
 					</motion.div>
 
-					<div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+					<div className="grid sm:grid-cols-2 lg:grid-cols-6 gap-4">
 						{features.map((feature, i) => (
 							<motion.div
 								key={feature.title}
@@ -291,7 +291,15 @@ export function HomeContent() {
 								whileInView={{ opacity: 1, y: 0 }}
 								viewport={{ once: true }}
 								transition={{ delay: i * 0.05, duration: 0.4, ease: iOSEase }}
-								className="relative group"
+								className={cn(
+									"relative group",
+									i === 0 && "sm:col-span-2 lg:col-span-4 lg:row-span-2",
+									i === 1 && "lg:col-span-2",
+									i === 2 && "lg:col-span-2",
+									i === 3 && "lg:col-span-2",
+									i === 4 && "sm:col-span-2 lg:col-span-3",
+									i === 5 && "sm:col-span-2 lg:col-span-3",
+								)}
 							>
 								<div
 									className={cn(
@@ -299,7 +307,12 @@ export function HomeContent() {
 										feature.gradient,
 									)}
 								/>
-								<div className="relative p-6 rounded-[2rem] border border-border/50 bg-background/50 backdrop-blur-sm">
+								<div
+									className={cn(
+										"relative rounded-[2rem] border border-border/50 bg-background/50 backdrop-blur-sm",
+										i === 0 ? "p-8 h-full" : "p-6",
+									)}
+								>
 									<div className="size-10 rounded-lg bg-[--system-accent]/10 flex items-center justify-center mb-4">
 										<feature.icon
 											className="size-5 text-[--system-accent]"
@@ -381,8 +394,8 @@ export function HomeContent() {
 								Ready to ace your Matric?
 							</h2>
 							<p className="text-muted-foreground max-w-md mx-auto mb-8">
-								Join thousands of South African students preparing smarter with
-								Lumni.
+								Thousands of South African students trust Lumni to prepare for
+								Matric. You can too.
 							</p>
 							{isAuthenticated ? (
 								<Link href="/dashboard">
@@ -395,7 +408,7 @@ export function HomeContent() {
 								<Link href="/auth/sign-up">
 									<Button size="lg">
 										Start Learning Free
-										<Rocket data-icon="inline-end" weight="fill" />
+										<GraduationCap data-icon="inline-end" weight="fill" />
 									</Button>
 								</Link>
 							)}
@@ -407,7 +420,7 @@ export function HomeContent() {
 			{/* Footer */}
 			<footer className="border-t border-border/50 py-12">
 				<div className="max-w-6xl mx-auto px-4">
-					<div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+					<div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
 						<div>
 							<Link
 								href="/"
@@ -426,7 +439,7 @@ export function HomeContent() {
 									href="/quiz"
 									className="hover:text-foreground transition-colors py-1.5"
 								>
-									AI Quizzes
+									Practice Quizzes
 								</Link>
 								<Link
 									href="/past-papers"
@@ -446,6 +459,12 @@ export function HomeContent() {
 								>
 									Study Plan
 								</Link>
+								<Link
+									href="/solve"
+									className="hover:text-foreground transition-colors py-1.5"
+								>
+									Homework Help
+								</Link>
 							</div>
 						</div>
 						<div>
@@ -463,17 +482,6 @@ export function HomeContent() {
 								>
 									Email Us
 								</a>
-								<a
-									href={appConfig.links.feedback}
-									className="hover:text-foreground transition-colors py-1.5"
-								>
-									Send Feedback
-								</a>
-							</div>
-						</div>
-						<div>
-							<h4 className="text-sm font-semibold mb-3">Legal</h4>
-							<div className="flex flex-col text-sm text-muted-foreground">
 								<a
 									href={appConfig.links.privacy}
 									className="hover:text-foreground transition-colors py-1.5"

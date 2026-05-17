@@ -18,7 +18,7 @@ import { UploadDialogRenderer } from "@/components/upload/upload-dialog-renderer
 import { WebVitalsLogger } from "@/components/web-vitals";
 import { cn } from "@/lib/shared";
 import { ourFileRouter } from "./api/uploadthing/core";
-import { fontMono, fontSans } from "./fonts";
+import { fontHeading, fontMono, fontSans } from "./fonts";
 
 async function UTSSR() {
 	await connection();
@@ -30,7 +30,8 @@ export const metadata: Metadata = {
 		default: "Lumni",
 		template: "%s | Lumni",
 	},
-	description: "Your AI assistant",
+	description:
+		"Pass your Matric with confidence — AI-powered quizzes, past papers, and a personalized study planner for South African students.",
 	metadataBase: new URL("https://lumni.ai"),
 	robots: {
 		index: true,
@@ -43,7 +44,8 @@ export const metadata: Metadata = {
 	},
 	openGraph: {
 		title: "Lumni",
-		description: "Your AI assistant",
+		description:
+			"Pass your Matric with confidence — AI-powered quizzes, past papers, and a personalized study planner for South African students.",
 		type: "website",
 		locale: "en_US",
 		siteName: "Lumni",
@@ -59,7 +61,8 @@ export const metadata: Metadata = {
 	twitter: {
 		card: "summary_large_image",
 		title: "Lumni",
-		description: "Your AI assistant",
+		description:
+			"Pass your Matric with confidence — AI-powered quizzes, past papers, and a personalized study planner for South African students.",
 		images: ["/og-image.png"],
 	},
 };
@@ -89,6 +92,7 @@ export default function RootLayout({
 				"antialiased",
 				fontSans.variable,
 				fontMono.variable,
+				fontHeading.variable,
 			)}
 		>
 			<body
