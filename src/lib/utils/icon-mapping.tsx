@@ -128,7 +128,7 @@ export function AnimatedIcon({
 			transition={transitionProps}
 			{...props}
 		>
-			<HugeiconsIcon icon={Icon} className={`size-${size}`} />
+			<HugeiconsIcon icon={Icon} size={size} />
 		</motion.div>
 	);
 }
