@@ -1,6 +1,7 @@
 "use client";
 
-import { Search } from "lucide-react";
+import { Search01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -60,7 +61,10 @@ export function SubjectsDrawer({
 
 				<div className="px-4 pb-2">
 					<div className="relative">
-						<Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground pointer-events-none" />
+						<HugeiconsIcon
+							icon={Search01Icon}
+							className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground pointer-events-none"
+						/>
 						<Input
 							type="text"
 							placeholder="Search subjects..."
@@ -81,7 +85,7 @@ export function SubjectsDrawer({
 							Failed to load subjects.
 							{error instanceof Error && error.message.includes("readonly") && (
 								<span className="block mt-2 text-xs">
-									Database is read-only. Please contact support.
+									DatabaseIcon is read-only. Please contact support.
 								</span>
 							)}
 						</p>

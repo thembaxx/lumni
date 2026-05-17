@@ -1,17 +1,13 @@
 "use client";
 
 import {
-	Camera01FreeIcons,
 	Image03FreeIcons,
+	Camera01Icon,
+	SparklesIcon,
+	RadialIcon,
+	Cancel01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import {
-	Camera,
-	Image as ImageIcon,
-	Sparkle,
-	Spinner,
-	X,
-} from "@phosphor-icons/react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { StepByStep } from "@/components/quiz/step-by-step";
@@ -275,7 +271,10 @@ export function AiSolver({ cameraFocus }: AiSolverProps) {
 
 					{(phase === "extracting" || phase === "solving") && (
 						<div className="flex items-center justify-center gap-3 py-8 animate-in fade-in">
-							<Spinner className="size-6 animate-spin text-[--system-accent]" />
+							<HugeiconsIcon
+								icon={RadialIcon}
+								className="size-6 animate-spin text-[--system-accent]"
+							/>
 							<span className="text-sm text-[--system-text-secondary]">
 								{phase === "extracting"
 									? "Reading problem from image..."
@@ -303,7 +302,7 @@ export function AiSolver({ cameraFocus }: AiSolverProps) {
 											onClick={() => cameraInputRef.current?.click()}
 											className="gap-2 rounded-xl h-10 px-4"
 										>
-											<Camera data-icon />
+											<HugeiconsIcon icon={Camera01Icon} data-icon />
 											<span className="text-sm">Take Photo</span>
 										</Button>
 										<UploadButton
@@ -343,7 +342,7 @@ export function AiSolver({ cameraFocus }: AiSolverProps) {
 										onClick={handleRetake}
 										className="gap-2 rounded-xl h-10 px-4"
 									>
-										<Camera data-icon />
+										<HugeiconsIcon icon={Camera01Icon} data-icon />
 										<span className="text-sm">Retake</span>
 									</Button>
 								)}
@@ -362,7 +361,7 @@ export function AiSolver({ cameraFocus }: AiSolverProps) {
 										onClick={handleRetake}
 										className="absolute top-1 right-1 size-5"
 									>
-										<X data-icon />
+										<HugeiconsIcon icon={Cancel01Icon} data-icon />
 									</Button>
 								</div>
 							)}
@@ -377,7 +376,7 @@ export function AiSolver({ cameraFocus }: AiSolverProps) {
 						onClick={handleSolve}
 						className="w-full gap-2 h-12 font-medium rounded-xl text-sm shadow-solver transition-shadow"
 					>
-						<Sparkle data-icon />
+						<HugeiconsIcon icon={SparklesIcon} data-icon />
 						Solve Problem
 					</Button>
 				</div>

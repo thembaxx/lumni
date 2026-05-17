@@ -1,6 +1,7 @@
 "use client";
 
-import type { Icon } from "@phosphor-icons/react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import type { IconSvgElement } from "@hugeicons/react";
 import {
 	Empty,
 	EmptyContent,
@@ -11,7 +12,7 @@ import {
 import { cn } from "@/lib/shared";
 
 interface EmptyStateProps {
-	icon?: Icon;
+	icon?: IconSvgElement;
 	title: string;
 	description?: string;
 	action?: React.ReactNode;
@@ -20,7 +21,7 @@ interface EmptyStateProps {
 }
 
 export function EmptyState({
-	icon: Icon,
+	icon,
 	title,
 	description,
 	action,
@@ -37,8 +38,11 @@ export function EmptyState({
 		>
 			<Empty>
 				<EmptyHeader>
-					{Icon && (
-						<Icon className="size-10 mx-auto text-muted-foreground/30" />
+					{icon && (
+						<HugeiconsIcon
+							icon={icon}
+							className="size-10 mx-auto text-muted-foreground/30"
+						/>
 					)}
 					<EmptyTitle>{title}</EmptyTitle>
 				</EmptyHeader>

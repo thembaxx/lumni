@@ -1,4 +1,5 @@
-import { Timer } from "@phosphor-icons/react";
+import { Timer01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import dynamic from "next/dynamic";
 import { useCallback, useState } from "react";
 import { StreakFire } from "@/components/celebration";
@@ -159,7 +160,7 @@ export default function StatsTab() {
 						</div>
 
 						<div className="flex items-center justify-center gap-2 text-muted-foreground">
-							<Timer className="size-4" />
+							<HugeiconsIcon icon={Timer01Icon} className="size-4" />
 							<span className="text-sm">
 								{Math.floor(quizResults.elapsedTime / 60)}m{" "}
 								{quizResults.elapsedTime % 60}s

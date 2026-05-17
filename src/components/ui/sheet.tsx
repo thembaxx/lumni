@@ -1,7 +1,8 @@
 "use client";
 
 import { Dialog as SheetPrimitive } from "@base-ui/react/dialog";
-import { XCircle } from "@phosphor-icons/react";
+import { CancelCircleIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/shared";
@@ -69,7 +70,7 @@ function SheetContent({
 							/>
 						}
 					>
-						<XCircle className="size-4" />
+						<HugeiconsIcon icon={CancelCircleIcon} className="size-4" />
 						<span className="sr-only">Close</span>
 					</SheetPrimitive.Close>
 				)}

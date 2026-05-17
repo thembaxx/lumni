@@ -1,6 +1,11 @@
 "use client";
 
-import { House, Target, Timer } from "@phosphor-icons/react";
+import {
+	Home01Icon,
+	Target01Icon,
+	Timer01Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -45,7 +50,10 @@ export function SessionActive({
 				{activity && (
 					<div className="flex items-center gap-2 flex-wrap">
 						<div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-muted/50">
-							<Timer className="size-3.5 text-muted-foreground" />
+							<HugeiconsIcon
+								icon={Timer01Icon}
+								className="size-3.5 text-muted-foreground"
+							/>
 							<span className="text-sm font-medium tabular-nums font-mono">
 								{formatTime(activity.elapsedTime)}
 							</span>
@@ -58,7 +66,10 @@ export function SessionActive({
 							<>
 								<span className="text-muted-foreground">|</span>
 								<div className="flex items-center gap-1.5">
-									<Target className="size-3.5 text-success" />
+									<HugeiconsIcon
+										icon={Target01Icon}
+										className="size-3.5 text-success"
+									/>
 									<span className="text-sm font-semibold tabular-nums font-mono text-success">
 										{activity.accuracy}%
 									</span>

@@ -1,12 +1,13 @@
 "use client";
 
 import {
-	BookOpen,
-	CaretDown,
-	Check,
-	Sparkle,
-	Spinner,
-} from "@phosphor-icons/react";
+	BookOpen01Icon,
+	ArrowDown01Icon,
+	CheckmarkCircle01Icon,
+	SparklesIcon,
+	RadialIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useMemo, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
@@ -69,7 +70,8 @@ function ProblemCard({
 					className="mt-4 gap-2 h-8 px-3 rounded-lg text-xs"
 				>
 					{showSolution ? "Hide" : "Show"} Solution
-					<CaretDown
+					<HugeiconsIcon
+						icon={ArrowDown01Icon}
 						className={cn(
 							"size-3 transition-transform",
 							showSolution && "rotate-180",
@@ -168,9 +170,17 @@ function ProblemsClient() {
 									className="gap-2 h-11 rounded-xl shrink-0"
 								>
 									{isLoading ? (
-										<Spinner className="size-4 animate-spin" data-icon />
+										<HugeiconsIcon
+											icon={RadialIcon}
+											className="size-4 animate-spin"
+											data-icon
+										/>
 									) : (
-										<Sparkle className="size-4" data-icon />
+										<HugeiconsIcon
+											icon={SparklesIcon}
+											className="size-4"
+											data-icon
+										/>
 									)}
 									Generate
 								</Button>
@@ -217,7 +227,10 @@ function ProblemsClient() {
 								animate={{ opacity: 1 }}
 								className="text-center py-20"
 							>
-								<BookOpen className="size-12 mx-auto text-muted-foreground/20 mb-4" />
+								<HugeiconsIcon
+									icon={BookOpen01Icon}
+									className="size-12 mx-auto text-muted-foreground/20 mb-4"
+								/>
 								<p className="text-sm text-muted-foreground/40">
 									Select a subject and generate curated problems
 								</p>
@@ -269,7 +282,10 @@ function ProblemsClient() {
 										{selectedDifficulty !== "all" && " filtered"}
 									</p>
 									{isFetching && (
-										<Spinner className="size-3.5 animate-spin text-muted-foreground/40" />
+										<HugeiconsIcon
+											icon={RadialIcon}
+											className="size-3.5 animate-spin text-muted-foreground/40"
+										/>
 									)}
 								</div>
 

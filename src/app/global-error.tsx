@@ -1,6 +1,11 @@
 "use client";
 
-import { ArrowsClockwise, House, Warning } from "@phosphor-icons/react";
+import {
+	RefreshIcon,
+	Home01Icon,
+	Alert01Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { Button } from "@/components/ui/button";
 
 export default function GlobalError({
@@ -22,7 +27,10 @@ export default function GlobalError({
 							<div className="relative">
 								<div className="absolute inset-0 animate-pulse rounded-full bg-destructive/10 blur-xl" />
 								<div className="relative flex items-center justify-center w-20 h-20 rounded-[--radius-card] bg-destructive/10 border border-destructive/20">
-									<Warning className="w-10 h-10 text-destructive" />
+									<HugeiconsIcon
+										icon={Alert01Icon}
+										className="w-10 h-10 text-destructive"
+									/>
 								</div>
 							</div>
 
@@ -43,7 +51,7 @@ export default function GlobalError({
 
 							<div className="flex flex-col sm:flex-row gap-3">
 								<Button onClick={() => reset()} className="gap-2">
-									<ArrowsClockwise className="size-4" />
+									<HugeiconsIcon icon={RefreshIcon} className="size-4" />
 									Try again
 								</Button>
 								<Button
@@ -51,7 +59,7 @@ export default function GlobalError({
 									onClick={() => (window.location.href = "/")}
 									className="gap-2"
 								>
-									<House className="size-4" />
+									<HugeiconsIcon icon={Home01Icon} className="size-4" />
 									Go Home
 								</Button>
 							</div>

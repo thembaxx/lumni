@@ -3,13 +3,14 @@
 import {
 	ArrowLeftIcon,
 	Bell,
-	BookOpen,
-	ChatText,
-	CircleNotch,
-	Database,
-	PaintBrush,
-	User,
-} from "@phosphor-icons/react";
+	BookOpen01Icon,
+	Chat01Icon,
+	RadialIcon,
+	DatabaseIcon,
+	PaintBrushIcon,
+	UserIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
@@ -39,12 +40,12 @@ import {
 } from "@/lib/utils/storage";
 
 const tabs = [
-	{ value: "profile", label: "Profile", icon: User },
-	{ value: "appearance", label: "UI", icon: PaintBrush },
-	{ value: "study", label: "Study", icon: BookOpen },
+	{ value: "profile", label: "Profile", icon: UserIcon },
+	{ value: "appearance", label: "UI", icon: PaintBrushIcon },
+	{ value: "study", label: "Study", icon: BookOpen01Icon },
 	{ value: "notifications", label: "Alerts", icon: Bell },
-	{ value: "data", label: "Data", icon: Database },
-	{ value: "beta", label: "Beta", icon: ChatText },
+	{ value: "data", label: "Data", icon: DatabaseIcon },
+	{ value: "beta", label: "Beta", icon: Chat01Icon },
 ];
 
 function SettingsContent() {
@@ -144,7 +145,7 @@ function SettingsContent() {
 								href="/dashboard"
 								className="flex items-center justify-center size-10 rounded-full text-foreground bg-system-surface shadow-sm border border-border/40 hover:bg-secondary transition-colors active:scale-[0.96]"
 							>
-								<ArrowLeftIcon className="size-5" />
+								<HugeiconsIcon icon={ArrowLeftIcon} className="size-5" />
 							</Link>
 							<h1 className="ios-title-3 text-foreground font-extrabold tracking-tight">
 								Settings
@@ -260,7 +261,10 @@ export function SettingsClient() {
 			fallback={
 				<div className="flex items-center justify-center min-h-[100dvh] bg-system-grouped">
 					<div className="flex flex-col items-center gap-4">
-						<CircleNotch className="size-8 text-muted-foreground animate-spin" />
+						<HugeiconsIcon
+							icon={RadialIcon}
+							className="size-8 text-muted-foreground animate-spin"
+						/>
 						<p className="ios-body text-[--system-text-secondary]">
 							Loading settings...
 						</p>

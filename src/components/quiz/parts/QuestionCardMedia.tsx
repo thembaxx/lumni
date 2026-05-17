@@ -1,4 +1,5 @@
-import { Minus, Plus } from "@phosphor-icons/react";
+import { MinusSignIcon, Add01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { Button } from "@/components/ui/button";
 import type { MediaContent } from "@/lib/question-engine/types";
 import type { VisualContent as VisualContentType } from "@/lib/visual-engine/types";
@@ -47,12 +48,12 @@ export function QuestionCardMedia({
 				>
 					{showDiagram ? (
 						<>
-							<Minus data-icon="inline-start" />
+							<HugeiconsIcon icon={MinusSignIcon} data-icon="inline-start" />
 							<span className="text-xs">Hide</span>
 						</>
 					) : (
 						<>
-							<Plus data-icon="inline-start" />
+							<HugeiconsIcon icon={Add01Icon} data-icon="inline-start" />
 							<span className="text-xs">Show</span>
 						</>
 					)}

@@ -1,30 +1,31 @@
 "use client";
 
 import {
-	Atom,
-	BookOpen,
-	Briefcase,
-	Calculator,
-	Dna,
-	Globe,
-	Hammer,
-	Heart,
-	Landmark,
-	Laptop,
-	Leaf,
-	Map,
-	MapPin,
-	Music,
-	Palette,
-	PenTool,
-	Receipt,
-	Search,
-	ShoppingCart,
-	TrendingUp,
-	Utensils,
-	Wrench,
-	Zap,
-} from "lucide-react";
+	PhysicsIcon,
+	BookOpen01Icon,
+	WorkIcon,
+	CalculatorIcon,
+	DnaIcon,
+	GlobeIcon,
+	ConstructionIcon,
+	FavouriteIcon,
+	LandmarkIcon,
+	LaptopIcon,
+	EcoEnergyIcon,
+	MapsIcon,
+	MapPinIcon,
+	MusicNote01Icon,
+	ColorsIcon,
+	PenTool01Icon,
+	ReceiptTextIcon,
+	Search01Icon,
+	ShoppingCart01Icon,
+	ChartUpIcon,
+	Restaurant01Icon,
+	ToolsIcon,
+	FlashIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useFilteredSubjects } from "@/hooks";
@@ -37,36 +38,36 @@ interface SubjectSelectorProps {
 	className?: string;
 }
 
-const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
-	book: BookOpen,
-	"book-open": BookOpen,
-	calculator: Calculator,
-	atom: Atom,
-	dna: Dna,
-	plant: Leaf,
-	receipt: Receipt,
-	briefcase: Briefcase,
-	"chart-line": TrendingUp,
-	globe: Globe,
-	"ancient-pyramids": Landmark,
-	heart: Heart,
-	laptop: Laptop,
-	monitor: Laptop,
-	"pen-tool": PenTool,
-	hammer: Hammer,
-	zap: Zap,
-	wrench: Wrench,
-	palette: Palette,
-	"theater-masks": MapPin,
-	music: Music,
-	"shopping-cart": ShoppingCart,
-	map: Map,
-	utensils: Utensils,
-	tractor: Leaf,
+const iconMap: Record<string, typeof BookOpen01Icon> = {
+	book: BookOpen01Icon,
+	"book-open": BookOpen01Icon,
+	calculator: CalculatorIcon,
+	atom: PhysicsIcon,
+	dna: DnaIcon,
+	plant: EcoEnergyIcon,
+	receipt: ReceiptTextIcon,
+	briefcase: WorkIcon,
+	"chart-line": ChartUpIcon,
+	globe: GlobeIcon,
+	"ancient-pyramids": LandmarkIcon,
+	heart: FavouriteIcon,
+	laptop: LaptopIcon,
+	monitor: LaptopIcon,
+	"pen-tool": PenTool01Icon,
+	hammer: ConstructionIcon,
+	zap: FlashIcon,
+	wrench: ToolsIcon,
+	palette: ColorsIcon,
+	"theater-masks": MapPinIcon,
+	music: MusicNote01Icon,
+	"shopping-cart": ShoppingCart01Icon,
+	map: MapsIcon,
+	utensils: Restaurant01Icon,
+	tractor: EcoEnergyIcon,
 };
 
 function getSubjectIcon(iconName: string) {
-	return iconMap[iconName] || BookOpen;
+	return iconMap[iconName] || BookOpen01Icon;
 }
 
 export function SubjectSelector({ onSelect, className }: SubjectSelectorProps) {
@@ -89,7 +90,10 @@ export function SubjectSelector({ onSelect, className }: SubjectSelectorProps) {
 		<div className={cn("flex flex-col gap-4 w-full", className)}>
 			<div className="pb-2">
 				<div className="relative">
-					<Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground pointer-events-none" />
+					<HugeiconsIcon
+						icon={Search01Icon}
+						className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground pointer-events-none"
+					/>
 					<Input
 						type="text"
 						placeholder="Search subjects..."
@@ -126,7 +130,10 @@ export function SubjectSelector({ onSelect, className }: SubjectSelectorProps) {
 									boxShadow: `0 0 0 1px ${subject.color}20`,
 								}}
 							>
-								<Icon className={cn("size-5", `text-[${subject.color}]`)} />
+								<HugeiconsIcon
+									icon={Icon}
+									className={cn("size-5", `text-[${subject.color}]`)}
+								/>
 							</div>
 							<h3 className="font-semibold text-sm text-foreground group-hover:text-foreground/90">
 								{subject.name}

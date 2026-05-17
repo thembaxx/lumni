@@ -1,6 +1,7 @@
 "use client";
 
-import { Flag } from "@phosphor-icons/react";
+import { Flag01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/shared";
@@ -43,7 +44,11 @@ export function ExamSidebar({
 						<span className="size-2 rounded-full bg-success" /> Answered
 					</span>
 					<span className="flex items-center gap-1">
-						<Flag className="size-2.5 text-warning" /> Flagged
+						<HugeiconsIcon
+							icon={Flag01Icon}
+							className="size-2.5 text-warning"
+						/>{" "}
+						Flagged
 					</span>
 					<span className="flex items-center gap-1">
 						<span className="size-2 rounded-full bg-muted-foreground/30" />{" "}

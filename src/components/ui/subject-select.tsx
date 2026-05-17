@@ -1,7 +1,11 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { Check, Search } from "lucide-react";
+import {
+	CheckmarkCircle01Icon,
+	Search01Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useEffect, useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { useFilteredSubjects } from "@/hooks/use-subjects";
@@ -90,7 +94,10 @@ export function SubjectSelect({
 					>
 						<div className="p-2 pb-0">
 							<div className="relative">
-								<Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground pointer-events-none" />
+								<HugeiconsIcon
+									icon={Search01Icon}
+									className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground pointer-events-none"
+								/>
 								<Input
 									ref={inputRef}
 									type="text"
@@ -136,7 +143,10 @@ export function SubjectSelect({
 											</p>
 										</div>
 										{value === subject.name && (
-											<Check className="size-4 text-system-accent shrink-0" />
+											<HugeiconsIcon
+												icon={CheckmarkCircle01Icon}
+												className="size-4 text-system-accent shrink-0"
+											/>
 										)}
 									</button>
 								))

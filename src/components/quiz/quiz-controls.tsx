@@ -1,6 +1,11 @@
 "use client";
 
-import { CaretLeft, CaretRight, SkipForward } from "@phosphor-icons/react";
+import {
+	ArrowLeft01Icon,
+	ArrowRight01Icon,
+	Forward01Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 
@@ -39,7 +44,9 @@ export function QuizControls({
 			<div className="flex flex-col gap-2">
 				<Button ref={nextButtonRef} className="w-full" onClick={onNext}>
 					{isLast ? "See Results" : "Next Question"}
-					{!isLast && <CaretRight data-icon="inline-end" />}
+					{!isLast && (
+						<HugeiconsIcon icon={ArrowRight01Icon} data-icon="inline-end" />
+					)}
 				</Button>
 			</div>
 		);
@@ -53,13 +60,13 @@ export function QuizControls({
 				disabled={isFirst}
 				className="flex-1"
 			>
-				<CaretLeft data-icon="inline-start" />
+				<HugeiconsIcon icon={ArrowLeft01Icon} data-icon="inline-start" />
 				Previous
 			</Button>
 			{showSkip && onSkip && (
 				<Button variant="outline" onClick={onSkip} className="flex-1">
 					Skip
-					<SkipForward data-icon="inline-end" />
+					<HugeiconsIcon icon={Forward01Icon} data-icon="inline-end" />
 				</Button>
 			)}
 		</div>

@@ -1,11 +1,12 @@
 "use client";
 
 import {
-	ArrowSquareOut,
-	FileText,
-	Spinner,
-	TrashSimple,
-} from "@phosphor-icons/react";
+	ArrowUpRight01Icon,
+	File02Icon,
+	RadialIcon,
+	Delete02Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -83,7 +84,10 @@ export function AdminExamList() {
 			<CardContent className="p-0">
 				{isLoading ? (
 					<div className="flex items-center justify-center py-8">
-						<Spinner className="size-5 animate-spin text-muted-foreground" />
+						<HugeiconsIcon
+							icon={RadialIcon}
+							className="size-5 animate-spin text-muted-foreground"
+						/>
 					</div>
 				) : error ? (
 					<div className="p-4 text-sm text-destructive">
@@ -92,7 +96,10 @@ export function AdminExamList() {
 				) : exams.length === 0 ? (
 					<Empty>
 						<EmptyHeader>
-							<FileText className="size-8 text-muted-foreground/30" />
+							<HugeiconsIcon
+								icon={File02Icon}
+								className="size-8 text-muted-foreground/30"
+							/>
 							<EmptyTitle>No exam papers uploaded yet</EmptyTitle>
 						</EmptyHeader>
 						<EmptyContent>
@@ -126,7 +133,10 @@ export function AdminExamList() {
 											onClick={() => router.push(`/exam/${exam.id}`)}
 											title="Take exam"
 										>
-											<ArrowSquareOut className="size-4" />
+											<HugeiconsIcon
+												icon={ArrowUpRight01Icon}
+												className="size-4"
+											/>
 										</Button>
 										<Button
 											variant="ghost"
@@ -137,9 +147,12 @@ export function AdminExamList() {
 											title="Delete exam"
 										>
 											{deleting === exam.id ? (
-												<Spinner className="size-4 animate-spin" />
+												<HugeiconsIcon
+													icon={RadialIcon}
+													className="size-4 animate-spin"
+												/>
 											) : (
-												<TrashSimple className="size-4" />
+												<HugeiconsIcon icon={Delete02Icon} className="size-4" />
 											)}
 										</Button>
 									</div>

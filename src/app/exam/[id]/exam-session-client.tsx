@@ -1,14 +1,15 @@
 "use client";
 
 import {
-	ArrowLeft,
-	ArrowRight,
-	Clock,
-	Flag,
-	House,
+	ArrowLeft01Icon,
+	ArrowRight01Icon,
+	Clock01Icon,
+	Flag01Icon,
+	Home01Icon,
 	Pause,
-	Play,
-} from "@phosphor-icons/react";
+	PlayFreeIcons,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Confetti } from "@/components/celebration";
@@ -242,7 +243,7 @@ function ExamResults({
 				</CardContent>
 			</Card>
 			<Button onClick={onDashboard}>
-				<House data-icon="inline-start" />
+				<HugeiconsIcon icon={Home01Icon} data-icon="inline-start" />
 				Dashboard
 			</Button>
 		</motion.div>
@@ -474,7 +475,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 					</CardHeader>
 					<CardContent className="flex flex-col gap-3">
 						<Button size="lg" onClick={startSession}>
-							<Play data-icon="inline-start" />
+							<HugeiconsIcon icon={PlayFreeIcons} data-icon="inline-start" />
 							Start Practice Mode
 						</Button>
 						<Button
@@ -485,7 +486,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 								startSession();
 							}}
 						>
-							<Clock data-icon="inline-start" />
+							<HugeiconsIcon icon={Clock01Icon} data-icon="inline-start" />
 							Start Timed Exam
 						</Button>
 					</CardContent>
@@ -533,7 +534,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 							onClick={() => setPhase("submitting")}
 							className="p-2 -ml-2 hover:bg-muted rounded-xl transition-colors"
 						>
-							<ArrowLeft className="size-5" />
+							<HugeiconsIcon icon={ArrowLeft01Icon} className="size-5" />
 						</button>
 						<div>
 							<p className="text-sm font-semibold">
@@ -549,7 +550,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 					<div className="flex items-center gap-3">
 						{sessionMode === "timed" && (
 							<div className="flex items-center gap-2">
-								<Clock className="size-4" />
+								<HugeiconsIcon icon={Clock01Icon} className="size-4" />
 								<span
 									className={cn(
 										"font-mono text-sm tabular-nums",
@@ -567,9 +568,9 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 								className="p-2 hover:bg-muted rounded-xl transition-colors"
 							>
 								{paused ? (
-									<Play className="size-5" />
+									<HugeiconsIcon icon={PlayFreeIcons} className="size-5" />
 								) : (
-									<Pause className="size-5" />
+									<HugeiconsIcon icon={Pause} className="size-5" />
 								)}
 							</button>
 						)}
@@ -647,18 +648,14 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 												: "text-muted-foreground hover:bg-muted",
 										)}
 									>
-										<Flag
+										<HugeiconsIcon
+											icon={Flag01Icon}
 											className={cn(
 												"size-5 transition-colors",
 												currentPartId && flags.includes(currentPartId)
 													? "text-warning fill-warning"
 													: "text-muted-foreground",
 											)}
-											weight={
-												currentPartId && flags.includes(currentPartId)
-													? "fill"
-													: "regular"
-											}
 										/>
 									</button>
 								</div>
@@ -686,7 +683,10 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 										onClick={goToPrevious}
 										disabled={currentPartIndex <= 0}
 									>
-										<ArrowLeft data-icon="inline-start" />
+										<HugeiconsIcon
+											icon={ArrowLeft01Icon}
+											data-icon="inline-start"
+										/>
 										Previous
 									</Button>
 
@@ -697,7 +697,10 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 									{currentPartIndex < totalPartsCount - 1 ? (
 										<Button onClick={goToNext}>
 											Next
-											<ArrowRight data-icon="inline-end" />
+											<HugeiconsIcon
+												icon={ArrowRight01Icon}
+												data-icon="inline-end"
+											/>
 										</Button>
 									) : (
 										<Button onClick={handleSubmit}>Finish & Submit</Button>

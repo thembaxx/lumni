@@ -1,6 +1,12 @@
 "use client";
 
-import { CaretLeft, CaretRight, Check, X } from "@phosphor-icons/react";
+import {
+	ArrowLeft01Icon,
+	ArrowRight01Icon,
+	CheckmarkCircle01Icon,
+	Cancel01Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { useCallback } from "react";
 import { Anim } from "@/components/shared/anim";
@@ -157,11 +163,15 @@ export function FlashcardsActive({
 							className="flex-1 border-amber-500/50 text-amber-700 dark:border-amber-700/50 dark:text-amber-300"
 							onClick={onReview}
 						>
-							<X className="size-4 mr-2" />
+							<HugeiconsIcon icon={Cancel01Icon} className="size-4 mr-2" />
 							Review Later
 						</Button>
 						<Button className="flex-1" onClick={onKnown}>
-							<Check className="size-4 mr-2" />I Know This
+							<HugeiconsIcon
+								icon={CheckmarkCircle01Icon}
+								className="size-4 mr-2"
+							/>
+							I Know This
 						</Button>
 					</div>
 				)}
@@ -172,7 +182,7 @@ export function FlashcardsActive({
 						onClick={onPrevious}
 						disabled={currentIndex === 0}
 					>
-						<CaretLeft className="size-4 mr-2" />
+						<HugeiconsIcon icon={ArrowLeft01Icon} className="size-4 mr-2" />
 						Previous
 					</Button>
 					<Button
@@ -181,7 +191,7 @@ export function FlashcardsActive({
 						disabled={currentIndex === totalCards - 1}
 					>
 						Next
-						<CaretRight className="size-4 ml-2" />
+						<HugeiconsIcon icon={ArrowRight01Icon} className="size-4 ml-2" />
 					</Button>
 				</div>
 			</div>

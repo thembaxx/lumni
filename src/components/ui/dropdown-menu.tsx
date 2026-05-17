@@ -1,7 +1,11 @@
 "use client";
 
 import { Menu as ListPrimitive } from "@base-ui/react/menu";
-import { ArrowRight, Check } from "@phosphor-icons/react";
+import {
+	ArrowRight01Icon,
+	CheckmarkCircle01Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import * as React from "react";
 import { cn } from "@/lib/shared";
 
@@ -121,7 +125,7 @@ function DropdownMenuSubTrigger({
 			{...props}
 		>
 			{children}
-			<ArrowRight className="ml-auto" />
+			<HugeiconsIcon icon={ArrowRight01Icon} className="ml-auto" />
 		</ListPrimitive.SubmenuTrigger>
 	);
 }
@@ -175,7 +179,7 @@ function DropdownMenuCheckboxItem({
 				data-slot="dropdown-menu-checkbox-item-indicator"
 			>
 				<ListPrimitive.CheckboxItemIndicator>
-					<Check />
+					<HugeiconsIcon icon={CheckmarkCircle01Icon} />
 				</ListPrimitive.CheckboxItemIndicator>
 			</span>
 			{children}
@@ -215,7 +219,7 @@ function DropdownMenuRadioItem({
 				data-slot="dropdown-menu-radio-item-indicator"
 			>
 				<ListPrimitive.RadioItemIndicator>
-					<Check />
+					<HugeiconsIcon icon={CheckmarkCircle01Icon} />
 				</ListPrimitive.RadioItemIndicator>
 			</span>
 			{children}

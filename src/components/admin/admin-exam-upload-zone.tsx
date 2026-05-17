@@ -1,12 +1,13 @@
 "use client";
 
 import {
-	Check,
-	CloudArrowUp,
-	FileText,
-	Spinner,
-	WarningCircle,
-} from "@phosphor-icons/react";
+	CheckmarkCircle01Icon,
+	CloudUploadIcon,
+	File02Icon,
+	RadialIcon,
+	AlertCircleIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { UploadDropzone } from "@/lib/uploadthing";
@@ -83,7 +84,10 @@ export function AdminExamUploadZone({
 
 			{state === "uploading" && (
 				<div className="flex items-center gap-3 p-4 border rounded-lg bg-muted/30">
-					<Spinner className="size-5 animate-spin text-muted-foreground" />
+					<HugeiconsIcon
+						icon={RadialIcon}
+						className="size-5 animate-spin text-muted-foreground"
+					/>
 					<div>
 						<p className="text-sm font-medium">Uploading PDF...</p>
 						<p className="text-xs text-muted-foreground">
@@ -95,7 +99,10 @@ export function AdminExamUploadZone({
 
 			{state === "converting" && (
 				<div className="flex items-center gap-3 p-4 border rounded-lg bg-muted/30">
-					<Spinner className="size-5 animate-spin text-foreground" />
+					<HugeiconsIcon
+						icon={RadialIcon}
+						className="size-5 animate-spin text-foreground"
+					/>
 					<div>
 						<p className="text-sm font-medium">Converting...</p>
 						<p className="text-xs text-muted-foreground">
@@ -107,7 +114,10 @@ export function AdminExamUploadZone({
 
 			{state === "success" && (
 				<div className="flex items-center gap-3 p-4 border rounded-lg bg-emerald-50">
-					<Check className="size-5 text-emerald-600" />
+					<HugeiconsIcon
+						icon={CheckmarkCircle01Icon}
+						className="size-5 text-emerald-600"
+					/>
 					<div>
 						<p className="text-sm font-medium text-emerald-700">Success!</p>
 						<p className="text-xs text-emerald-600">{message}</p>
@@ -117,7 +127,10 @@ export function AdminExamUploadZone({
 
 			{state === "error" && (
 				<div className="flex items-center gap-3 p-4 border rounded-lg bg-destructive/5">
-					<WarningCircle className="size-5 text-destructive" />
+					<HugeiconsIcon
+						icon={AlertCircleIcon}
+						className="size-5 text-destructive"
+					/>
 					<div className="flex-1">
 						<p className="text-sm font-medium text-destructive">Error</p>
 						<p className="text-xs text-destructive/80">{message}</p>

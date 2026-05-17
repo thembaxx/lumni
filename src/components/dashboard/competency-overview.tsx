@@ -1,6 +1,7 @@
 "use client";
 
-import { GraduationCap, TrendUp } from "@phosphor-icons/react";
+import { Mortarboard01Icon, ChartUpIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { useMemo } from "react";
@@ -119,11 +120,11 @@ export function CompetencyOverview() {
 			<Card>
 				<CardHeader className="flex flex-row items-center justify-between">
 					<CardTitle className="text-base font-extrabold tracking-tight flex items-center gap-2">
-						<GraduationCap className="size-5" />
+						<HugeiconsIcon icon={Mortarboard01Icon} className="size-5" />
 						Subject Mastery
 					</CardTitle>
 					<div className="flex items-center gap-1 text-xs text-muted-foreground">
-						<TrendUp className="size-3" />
+						<HugeiconsIcon icon={ChartUpIcon} className="size-3" />
 						<span>Progress</span>
 					</div>
 				</CardHeader>

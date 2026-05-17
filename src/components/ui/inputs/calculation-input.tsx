@@ -1,6 +1,7 @@
 "use client";
 
-import { CaretDown, CaretUp } from "@phosphor-icons/react";
+import { ArrowDown01Icon, ArrowUp01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -63,9 +64,9 @@ export function CalculationInput({
 					className="text-xs"
 				>
 					{showWorking ? (
-						<CaretUp data-icon="inline-start" />
+						<HugeiconsIcon icon={ArrowUp01Icon} data-icon="inline-start" />
 					) : (
-						<CaretDown data-icon="inline-start" />
+						<HugeiconsIcon icon={ArrowDown01Icon} data-icon="inline-start" />
 					)}
 					Show working
 				</Button>

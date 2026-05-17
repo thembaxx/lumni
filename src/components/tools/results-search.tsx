@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { SearchIcon, UserIcon } from "lucide-react";
+import { Search01Icon, UserIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -59,11 +60,14 @@ export function ResultsSearch() {
 		<div className="h-full flex flex-col overflow-y-auto">
 			<div className="px-5 pt-5 pb-3">
 				<h2 className="ios-title-3 flex items-center gap-2 text-[--system-text-primary]">
-					<SearchIcon className="size-5 text-[--system-accent]" />
-					Results Search
+					<HugeiconsIcon
+						icon={Search01Icon}
+						className="size-5 text-[--system-accent]"
+					/>
+					Results Search01Icon
 				</h2>
 				<p className="ios-subhead text-[--system-text-secondary] mt-1">
-					Search past matric results by name and year.
+					Search01Icon past matric results by name and year.
 				</p>
 			</div>
 
@@ -90,7 +94,10 @@ export function ResultsSearch() {
 
 					<div className="flex gap-2">
 						<div className="relative flex-1">
-							<SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+							<HugeiconsIcon
+								icon={Search01Icon}
+								className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground"
+							/>
 							<Input
 								placeholder="Search by name..."
 								value={searchQuery}
@@ -100,7 +107,7 @@ export function ResultsSearch() {
 							/>
 						</div>
 						<Button onClick={handleSearch} className="rounded-xl">
-							Search
+							Search01Icon
 						</Button>
 					</div>
 				</div>
@@ -125,7 +132,10 @@ export function ResultsSearch() {
 							<Card className="p-4 rounded-xl shadow-sm border-border">
 								<div className="flex items-start gap-3 mb-3">
 									<div className="size-10 rounded-xl bg-[--system-accent]/10 flex items-center justify-center">
-										<UserIcon className="size-5 text-foreground" />
+										<HugeiconsIcon
+											icon={UserIcon}
+											className="size-5 text-foreground"
+										/>
 									</div>
 									<div>
 										<h3 className="font-semibold">{result.name}</h3>
@@ -166,7 +176,10 @@ export function ResultsSearch() {
 				<div className="px-5 pb-10">
 					<Empty className="border-none">
 						<EmptyMedia>
-							<SearchIcon className="size-12 text-muted-foreground" />
+							<HugeiconsIcon
+								icon={Search01Icon}
+								className="size-12 text-muted-foreground"
+							/>
 						</EmptyMedia>
 						<EmptyTitle>No results found for "{searchQuery}"</EmptyTitle>
 						<EmptyDescription>
@@ -178,11 +191,14 @@ export function ResultsSearch() {
 				<div className="px-5 pb-10">
 					<Empty className="border-none">
 						<EmptyMedia>
-							<SearchIcon className="size-12 text-muted-foreground" />
+							<HugeiconsIcon
+								icon={Search01Icon}
+								className="size-12 text-muted-foreground"
+							/>
 						</EmptyMedia>
 						<EmptyTitle>Enter a name to search</EmptyTitle>
 						<EmptyDescription>
-							Search through {selectedYear} results
+							Search01Icon through {selectedYear} results
 						</EmptyDescription>
 					</Empty>
 				</div>

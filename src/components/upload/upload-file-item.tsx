@@ -1,13 +1,14 @@
 "use client";
 
 import {
-	CheckCircleIcon,
-	CloudArrowUp,
+	CheckmarkCircle01Icon,
+	CloudUploadIcon,
 	FileIcon,
 	ImageIcon,
-	WarningCircle,
-	XCircleIcon,
-} from "@phosphor-icons/react";
+	AlertCircleIcon,
+	CancelCircleIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -67,17 +68,20 @@ export function UploadFileItem({
 					)}
 				>
 					{isComplete ? (
-						<CheckCircleIcon
+						<HugeiconsIcon
+							icon={CheckmarkCircle01Icon}
 							className="size-4 text-success"
 							data-icon="inline-start"
 						/>
 					) : isError ? (
-						<XCircleIcon
+						<HugeiconsIcon
+							icon={CancelCircleIcon}
 							className="size-4 text-destructive"
 							data-icon="inline-start"
 						/>
 					) : (
-						<FileIconComponent
+						<HugeiconsIcon
+							icon={FileIconComponent}
 							className="size-4 text-muted-foreground"
 							data-icon="inline-start"
 						/>
@@ -134,7 +138,11 @@ export function UploadFileItem({
 
 			{isError && (
 				<p className="flex items-center gap-1.5 text-xs text-destructive">
-					<WarningCircle className="size-3 shrink-0" data-icon="inline-start" />
+					<HugeiconsIcon
+						icon={AlertCircleIcon}
+						className="size-3 shrink-0"
+						data-icon="inline-start"
+					/>
 					{item.error ?? "Upload failed"}
 				</p>
 			)}
@@ -153,7 +161,8 @@ export function UploadHeader({
 }) {
 	return (
 		<div className="flex items-center gap-2">
-			<CloudArrowUp
+			<HugeiconsIcon
+				icon={CloudUploadIcon}
 				className="size-5 text-foreground"
 				data-icon="inline-start"
 			/>

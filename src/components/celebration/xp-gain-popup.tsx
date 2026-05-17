@@ -1,6 +1,7 @@
 "use client";
 
-import { Sparkle } from "@phosphor-icons/react";
+import { SparklesIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, motion } from "framer-motion";
 
 interface XPGainPopupProps {
@@ -30,7 +31,7 @@ export function XPGainPopup({ amount, visible }: XPGainPopupProps) {
 							animate={{ rotate: [0, 15, -15, 0] }}
 							transition={{ duration: 0.5, repeat: 3 }}
 						>
-							<Sparkle className="size-5" />
+							<HugeiconsIcon icon={SparklesIcon} className="size-5" />
 						</motion.div>
 						<span className="text-xl font-extrabold">+{amount} XP</span>
 					</motion.div>

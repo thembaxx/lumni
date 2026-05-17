@@ -1,6 +1,7 @@
 "use client";
 
-import { List } from "@phosphor-icons/react";
+import { ListViewIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { ThemeSwitcher } from "@/components/theme";
 import { Button } from "@/components/ui/button";
 import {
@@ -23,7 +24,7 @@ export function Menu({ children }: MenuProps) {
 				className="inline-flex items-center justify-center rounded-full bg-secondary text-secondary-foreground hover:bg-secondary/80 size-10 transition-colors"
 				aria-label="Open menu"
 			>
-				<List className="w-4 h-4" />
+				<HugeiconsIcon icon={ListViewIcon} className="w-4 h-4" />
 			</DrawerTrigger>
 			<DrawerContent className="mx-auto max-w-lg mt-0 rounded-b-2xl min-h-[40dvh] animate-fade-in-scale">
 				<DrawerHeader className="text-left">

@@ -1,6 +1,7 @@
 "use client";
 
-import { CircleNotch } from "@phosphor-icons/react";
+import { RadialIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -125,7 +126,10 @@ export function LoadingScreen({
 								transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
 								className="size-14"
 							>
-								<CircleNotch className="size-14 text-system-accent" />
+								<HugeiconsIcon
+									icon={RadialIcon}
+									className="size-14 text-system-accent"
+								/>
 							</motion.div>
 						</div>
 					</motion.div>

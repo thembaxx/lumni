@@ -1,6 +1,12 @@
 "use client";
 
-import { ArrowCounterClockwise, Brain, Check, X } from "@phosphor-icons/react";
+import {
+	UndoIcon,
+	BrainIcon,
+	CheckmarkCircle01Icon,
+	Cancel01Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -21,7 +27,10 @@ export function SM2StudySession({ subject }: { subject?: string }) {
 	if (allCards.length === 0) {
 		return (
 			<div className="text-center py-12">
-				<Brain className="size-12 mx-auto text-muted-foreground mb-4" />
+				<HugeiconsIcon
+					icon={BrainIcon}
+					className="size-12 mx-auto text-muted-foreground mb-4"
+				/>
 				<h3 className="text-xl font-semibold mb-2">All Caught Up! 🎉</h3>
 				<p className="text-muted-foreground">
 					No cards due for review. Add more flashcards or come back later.

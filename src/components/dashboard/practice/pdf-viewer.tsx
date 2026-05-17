@@ -1,15 +1,16 @@
 "use client";
 
 import {
-	ChevronLeft,
-	ChevronRight,
-	Download,
-	FileText,
-	Maximize2,
-	Minimize,
-	ZoomIn,
-	ZoomOut,
-} from "lucide-react";
+	ArrowLeft01Icon,
+	ArrowRight01Icon,
+	Download01Icon,
+	File02Icon,
+	ExpandIcon,
+	ShrinkDotIcon,
+	SearchAddIcon,
+	SearchMinusIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/Page/AnnotationLayer.css";
@@ -174,11 +175,11 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 								</div>
 							</div>
 						) : (
-							<EmptyState icon={FileText} title="PDF unavailable" />
+							<EmptyState icon={File02Icon} title="PDF unavailable" />
 						)}
 						{error && (
 							<EmptyState
-								icon={FileText}
+								icon={File02Icon}
 								title="Failed to load PDF"
 								description={error}
 								overlay
@@ -204,7 +205,7 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 								disabled={pdfPage <= 1 || totalPages === 0}
 								aria-label="Previous page"
 							>
-								<ChevronLeft data-icon />
+								<HugeiconsIcon icon={ArrowLeft01Icon} data-icon />
 							</Button>
 
 							<div className="shrink-0 px-1.5 min-w-14 text-center">
@@ -225,7 +226,7 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 								disabled={pdfPage >= totalPages || totalPages === 0}
 								aria-label="Next page"
 							>
-								<ChevronRight data-icon />
+								<HugeiconsIcon icon={ArrowRight01Icon} data-icon />
 							</Button>
 
 							<div className="w-px h-5 bg-border shrink-0" />
@@ -238,7 +239,7 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 								disabled={!canZoomOut}
 								aria-label="Zoom out"
 							>
-								<ZoomOut data-icon />
+								<HugeiconsIcon icon={SearchMinusIcon} data-icon />
 							</Button>
 
 							<div className="shrink-0 px-1 min-w-11 text-center">
@@ -255,7 +256,7 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 								disabled={!canZoomIn}
 								aria-label="Zoom in"
 							>
-								<ZoomIn data-icon />
+								<HugeiconsIcon icon={SearchAddIcon} data-icon />
 							</Button>
 
 							<div className="w-px h-5 bg-border shrink-0" />
@@ -279,7 +280,7 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 												: "scale-[0.25] opacity-0 blur-xs",
 										)}
 									>
-										<Minimize data-icon />
+										<HugeiconsIcon icon={ShrinkDotIcon} data-icon />
 									</div>
 									<div
 										className={cn(
@@ -290,7 +291,7 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 												: "scale-100 opacity-100 blur-0",
 										)}
 									>
-										<Maximize2 data-icon />
+										<HugeiconsIcon icon={ExpandIcon} data-icon />
 									</div>
 								</div>
 							</Button>
@@ -302,7 +303,7 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 								onClick={handleDownload}
 								aria-label="Download PDF"
 							>
-								<Download data-icon />
+								<HugeiconsIcon icon={Download01Icon} data-icon />
 							</Button>
 						</div>
 					</div>

@@ -1,6 +1,7 @@
 "use client";
 
-import { CircleNotch, Target } from "@phosphor-icons/react";
+import { RadialIcon, Target01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { motion } from "framer-motion";
 import { AnimatedDots } from "@/components/shared/animated-dots";
 import { Button } from "@/components/ui/button";
@@ -42,7 +43,10 @@ function QuizEmptyStateNotStarted({ onStart }: QuizEmptyStateNotStartedProps) {
 								animate={{ rotate: 360 }}
 								transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
 							>
-								<CircleNotch className="size-12 mx-auto md:mx-0 text-muted-foreground" />
+								<HugeiconsIcon
+									icon={RadialIcon}
+									className="size-12 mx-auto md:mx-0 text-muted-foreground"
+								/>
 							</motion.div>
 						</EmptyMedia>
 						<EmptyTitle>Quiz not started</EmptyTitle>
@@ -79,7 +83,10 @@ function QuizEmptyStateNoQuestions({
 								animate={{ rotate: 360 }}
 								transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
 							>
-								<CircleNotch className="size-12 mx-auto md:mx-0 text-muted-foreground" />
+								<HugeiconsIcon
+									icon={RadialIcon}
+									className="size-12 mx-auto md:mx-0 text-muted-foreground"
+								/>
 							</motion.div>
 						</EmptyMedia>
 						<EmptyTitle>No questions found</EmptyTitle>
@@ -127,7 +134,10 @@ export function QuizStartState({ onSelect }: QuizStartStateProps) {
 								animate={{ rotate: 360 }}
 								transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
 							>
-								<CircleNotch className="size-12 text-muted-foreground" />
+								<HugeiconsIcon
+									icon={RadialIcon}
+									className="size-12 text-muted-foreground"
+								/>
 							</motion.div>
 						</div>
 					</div>
@@ -172,7 +182,10 @@ export function QuizSubjectPrompt({
 								animate={{ rotate: 360 }}
 								transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
 							>
-								<CircleNotch className="size-12 text-muted-foreground" />
+								<HugeiconsIcon
+									icon={RadialIcon}
+									className="size-12 text-muted-foreground"
+								/>
 							</motion.div>
 						</div>
 					</div>
@@ -196,7 +209,7 @@ export function QuizSelectSubject({
 		<Empty className="p-0">
 			<EmptyHeader>
 				<EmptyMedia variant="icon">
-					<Target className="size-8" />
+					<HugeiconsIcon icon={Target01Icon} className="size-8" />
 				</EmptyMedia>
 				<EmptyTitle>Start a Quiz</EmptyTitle>
 				<EmptyDescription>

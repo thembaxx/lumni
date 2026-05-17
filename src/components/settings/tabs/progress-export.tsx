@@ -1,6 +1,7 @@
 "use client";
 
-import { Download } from "@phosphor-icons/react";
+import { Download01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useGamification } from "@/hooks/use-gamification";
@@ -84,7 +85,7 @@ export function ProgressExport() {
 			disabled={isExporting}
 			className="w-full"
 		>
-			<Download data-icon="inline-start" />
+			<HugeiconsIcon icon={Download01Icon} data-icon="inline-start" />
 			{isExporting ? "Generating..." : "Download Progress Report"}
 		</Button>
 	);

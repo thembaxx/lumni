@@ -1,4 +1,5 @@
-import { X } from "@phosphor-icons/react";
+import { Cancel01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -38,7 +39,7 @@ export function ImageViewer({ src, alt, open, onClose }: ImageViewerProps) {
 							className="absolute top-4 right-4 size-10 rounded-full bg-black/40 hover:bg-black/60 text-white"
 							aria-label="Close image viewer"
 						>
-							<X data-icon />
+							<HugeiconsIcon icon={Cancel01Icon} data-icon />
 						</Button>
 					</div>
 				</DialogContent>

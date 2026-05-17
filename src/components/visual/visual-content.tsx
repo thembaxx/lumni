@@ -1,6 +1,7 @@
 "use client";
 
-import { SpinnerGap } from "@phosphor-icons/react";
+import { RadialIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { motion, useReducedMotion } from "framer-motion";
 import type { VisualContent as VisualContentType } from "@/lib/visual-engine/types";
 import { DiagramRenderer } from "./diagram-renderer";
@@ -26,7 +27,10 @@ export function VisualContent({ visual, isLoading }: VisualContentProps) {
 						transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
 						className="size-6"
 					>
-						<SpinnerGap className="size-6 text-muted-foreground" />
+						<HugeiconsIcon
+							icon={RadialIcon}
+							className="size-6 text-muted-foreground"
+						/>
 					</motion.div>
 				)}
 			</div>

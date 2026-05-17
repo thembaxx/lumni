@@ -1,4 +1,5 @@
-import { CaretLeft, CaretRight } from "@phosphor-icons/react";
+import { ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { m, motion } from "framer-motion";
 import { useCallback } from "react";
 import { Button } from "@/components/ui/button";
@@ -61,7 +62,7 @@ export function QuestionCardControls({
 					questionNumber < totalQuestions
 						? "Next"
 						: "Finish"}
-					<CaretRight data-icon />
+					<HugeiconsIcon icon={ArrowRight01Icon} data-icon />
 				</Button>
 			)}
 		</div>

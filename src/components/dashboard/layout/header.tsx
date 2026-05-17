@@ -1,6 +1,7 @@
 "use client";
 
-import { Gear } from "@phosphor-icons/react";
+import { Settings01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { PageHeader } from "@/components/ui/headers/page-header";
@@ -29,7 +30,7 @@ export function DashboardHeader({
 						className="shrink-0"
 						aria-label="Settings"
 					>
-						<Gear className="size-5" />
+						<HugeiconsIcon icon={Settings01Icon} className="size-5" />
 					</Button>
 				</Link>
 			}

@@ -1,6 +1,7 @@
 "use client";
 
-import { MagnifyingGlass } from "@phosphor-icons/react";
+import { Search01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { Command as CommandPrimitive } from "cmdk";
 import * as React from "react";
 import { cn } from "@/lib/shared";
@@ -26,7 +27,10 @@ function CommandInput({
 }: React.ComponentProps<typeof CommandPrimitive.Input>) {
 	return (
 		<div className="flex items-center border-b px-3" cmdk-input-wrapper="">
-			<MagnifyingGlass className="mr-2 size-4 shrink-0 opacity-50" />
+			<HugeiconsIcon
+				icon={Search01Icon}
+				className="mr-2 size-4 shrink-0 opacity-50"
+			/>
 			<CommandPrimitive.Input
 				className={cn(
 					"flex h-10 w-full bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",

@@ -1,6 +1,7 @@
 "use client";
 
-import { Clock, ClockCounterClockwise, Copy } from "@phosphor-icons/react";
+import { Clock01Icon, UndoIcon, Copy01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -310,7 +311,7 @@ export function ScientificCalculator() {
 		>
 			<div className="px-6 pt-5 pb-3">
 				<h2 className="ios-title-3 flex items-center gap-2 text-[--system-text-primary]">
-					Scientific Calculator
+					Scientific CalculatorIcon
 				</h2>
 				<p className="ios-subhead text-[--system-text-secondary]/60 mt-1.5">
 					{state.angleMode === "deg" ? "Degrees" : "Radians"}
@@ -330,7 +331,11 @@ export function ScientificCalculator() {
 								onClick={handleCopy}
 								className="shrink-0 text-muted-foreground/40 hover:text-muted-foreground transition-colors"
 							>
-								<Copy className="size-3.5" data-icon />
+								<HugeiconsIcon
+									icon={Copy01Icon}
+									className="size-3.5"
+									data-icon
+								/>
 							</button>
 							<span
 								className={cn(
@@ -371,7 +376,7 @@ export function ScientificCalculator() {
 								onClick={toggleHistory}
 								className="text-xs h-7 px-2.5 rounded-lg"
 							>
-								<ClockCounterClockwise className="size-3.5" data-icon />
+								<HugeiconsIcon icon={UndoIcon} className="size-3.5" data-icon />
 							</Button>
 							<Button
 								variant="ghost"
@@ -379,7 +384,11 @@ export function ScientificCalculator() {
 								onClick={() => setHistory([])}
 								className="text-xs h-7 px-2.5 rounded-lg"
 							>
-								<Clock className="size-3.5" data-icon />
+								<HugeiconsIcon
+									icon={Clock01Icon}
+									className="size-3.5"
+									data-icon
+								/>
 							</Button>
 						</div>
 					</div>

@@ -1,6 +1,7 @@
 "use client";
 
-import { WarningCircle } from "@phosphor-icons/react";
+import { AlertCircleIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -174,7 +175,8 @@ export function UploadDialogRenderer({
 						</DialogTitle>
 						{hasErrors && (
 							<DialogDescription className="flex items-center gap-1.5 text-destructive">
-								<WarningCircle
+								<HugeiconsIcon
+									icon={AlertCircleIcon}
 									className="size-4 shrink-0"
 									data-icon="inline-start"
 								/>

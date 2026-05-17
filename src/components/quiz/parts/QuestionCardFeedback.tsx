@@ -1,10 +1,11 @@
 import {
-	CheckCircle,
-	CircleNotch,
-	PaperPlaneRight,
-	Sparkle,
-	X,
-} from "@phosphor-icons/react";
+	CheckmarkCircle01Icon,
+	RadialIcon,
+	MailSend01Icon,
+	SparklesIcon,
+	Cancel01Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { m, motion } from "framer-motion";
 import { useCallback } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
@@ -95,9 +96,12 @@ export function QuestionCardFeedback({
 					transition={{ duration: 0.3 }}
 				>
 					{isCorrectAnswer ? (
-						<CheckCircle className="size-10 shrink-0" />
+						<HugeiconsIcon
+							icon={CheckmarkCircle01Icon}
+							className="size-10 shrink-0"
+						/>
 					) : (
-						<X className="size-10 shrink-0" />
+						<HugeiconsIcon icon={Cancel01Icon} className="size-10 shrink-0" />
 					)}
 				</motion.div>
 				<p className="font-medium">
@@ -132,7 +136,10 @@ export function QuestionCardFeedback({
 				<div className="flex flex-col gap-2 pt-2 border-t border-current/20">
 					{solver.isPending ? (
 						<div className="flex items-center justify-center gap-2 py-3">
-							<CircleNotch className="size-5 animate-spin" />
+							<HugeiconsIcon
+								icon={RadialIcon}
+								className="size-5 animate-spin"
+							/>
 							<span className="text-sm">Solving...</span>
 						</div>
 					) : solver.data?.steps?.length ? (
@@ -181,7 +188,7 @@ export function QuestionCardFeedback({
 							}
 							className="gap-2 h-9 text-sm self-start"
 						>
-							<Sparkle data-icon="inline-start" />
+							<HugeiconsIcon icon={SparklesIcon} data-icon="inline-start" />
 							Show me the steps
 						</Button>
 					)}
@@ -204,7 +211,10 @@ export function QuestionCardFeedback({
 					))}
 					{solver.isSendingFollowUp && (
 						<div className="flex items-center gap-2 py-2 text-sm text-muted-foreground">
-							<CircleNotch className="size-4 animate-spin" />
+							<HugeiconsIcon
+								icon={RadialIcon}
+								className="size-4 animate-spin"
+							/>
 							Thinking...
 						</div>
 					)}
@@ -245,7 +255,7 @@ export function QuestionCardFeedback({
 								disabled={!followUpInput.trim()}
 								className="size-9 shrink-0"
 							>
-								<PaperPlaneRight data-icon />
+								<HugeiconsIcon icon={MailSend01Icon} data-icon />
 							</Button>
 						</div>
 					)}

@@ -1,9 +1,10 @@
 import {
-	Camera,
-	Microphone,
-	PaperPlane,
-	UploadSimple,
-} from "@phosphor-icons/react";
+	Camera01Icon,
+	Mic01Icon,
+	MailSend01Icon,
+	Upload01Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { AnimatedDialogContent } from "@/components/ui/animated-dialog-content";
@@ -151,7 +152,7 @@ export function ChatInput({
 								)}
 								aria-label="Add image"
 							>
-								<Camera data-icon />
+								<HugeiconsIcon icon={Camera01Icon} data-icon />
 							</DropdownListTrigger>
 							<DropdownListContent side="top" align="start" className="w-48">
 								<DropdownListItem
@@ -159,7 +160,7 @@ export function ChatInput({
 									disabled={isLoading}
 									className="gap-2 font-extrabold text-xs uppercase tracking-tight"
 								>
-									<Camera data-icon="inline-start" />
+									<HugeiconsIcon icon={Camera01Icon} data-icon="inline-start" />
 									Take a photo
 								</DropdownListItem>
 								<DropdownListItem
@@ -167,7 +168,7 @@ export function ChatInput({
 									disabled={isLoading}
 									className="gap-2 font-extrabold text-xs uppercase tracking-tight"
 								>
-									<UploadSimple data-icon="inline-start" />
+									<HugeiconsIcon icon={Upload01Icon} data-icon="inline-start" />
 									Upload a photo
 								</DropdownListItem>
 							</DropdownListContent>
@@ -182,7 +183,8 @@ export function ChatInput({
 							className="rounded-md hover:bg-secondary size-10 border border-border/40"
 							disabled={isLoading}
 						>
-							<Microphone
+							<HugeiconsIcon
+								icon={Mic01Icon}
 								data-icon
 								className="text-muted-foreground toolbutton-icon"
 							/>
@@ -204,7 +206,8 @@ export function ChatInput({
 							)}
 							aria-label="Send message"
 						>
-							<PaperPlane
+							<HugeiconsIcon
+								icon={MailSend01Icon}
 								data-icon
 								className={cn(voicePressed && "scale-110")}
 							/>

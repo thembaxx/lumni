@@ -2,13 +2,14 @@
 
 import { useQuery } from "@tanstack/react-query";
 import {
-	BookOpen,
-	Clock,
-	Dumbbell,
-	GraduationCap,
-	Target,
-	Trophy,
-} from "lucide-react";
+	BookOpen01Icon,
+	Clock01Icon,
+	WorkoutSportIcon,
+	Mortarboard01Icon,
+	Target01Icon,
+	Award01Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
@@ -28,10 +29,10 @@ const levelColors: Record<string, string> = {
 };
 
 const actionIcons = {
-	study: BookOpen,
-	practice: Dumbbell,
-	review: Clock,
-	skip: Trophy,
+	study: BookOpen01Icon,
+	practice: WorkoutSportIcon,
+	review: Clock01Icon,
+	skip: Award01Icon,
 };
 
 const actionLabels: Record<string, string> = {
@@ -79,7 +80,10 @@ export function LessonLibrary() {
 			<div className="flex items-center justify-between">
 				<div>
 					<h2 className="text-lg font-semibold flex items-center gap-2 text-balance">
-						<Target className="size-5 text-[--system-accent]" />
+						<HugeiconsIcon
+							icon={Target01Icon}
+							className="size-5 text-[--system-accent]"
+						/>
 						Your Learning Path
 					</h2>
 					<p className="text-sm text-muted-foreground mt-0.5 text-pretty">
@@ -95,7 +99,10 @@ export function LessonLibrary() {
 
 			{!selectedSubject && (
 				<Card className="p-8 text-center rounded-3xl">
-					<GraduationCap className="size-10 mx-auto mb-3 text-muted-foreground" />
+					<HugeiconsIcon
+						icon={Mortarboard01Icon}
+						className="size-10 mx-auto mb-3 text-muted-foreground"
+					/>
 					<p className="text-sm text-muted-foreground">
 						Select a subject to see your personalized study recommendations.
 					</p>
@@ -163,7 +170,10 @@ export function LessonLibrary() {
 
 					{summary.averageScore > 0 && (
 						<div className="flex items-center gap-2 text-sm text-muted-foreground">
-							<Trophy className="size-4 text-amber-500" />
+							<HugeiconsIcon
+								icon={Award01Icon}
+								className="size-4 text-amber-500"
+							/>
 							Average competency score:{" "}
 							<span className="tabular-nums">
 								{Math.round(summary.averageScore)}%
@@ -195,7 +205,7 @@ export function LessonLibrary() {
 											<div
 												className={`size-8 rounded-lg flex items-center justify-center ${levelColors[rec.level] ?? "bg-muted"}`}
 											>
-												<Icon className="size-4" />
+												<HugeiconsIcon icon={Icon} className="size-4" />
 											</div>
 											<div className="min-w-0">
 												<p className="text-sm font-medium truncate">
@@ -238,7 +248,10 @@ export function LessonLibrary() {
 
 					{!isLoading && recommendations.length === 0 && selectedSubject && (
 						<Card className="p-6 text-center rounded-3xl">
-							<Trophy className="size-8 mx-auto mb-2 text-emerald-500" />
+							<HugeiconsIcon
+								icon={Award01Icon}
+								className="size-8 mx-auto mb-2 text-emerald-500"
+							/>
 							<p className="text-sm text-muted-foreground">
 								No recommendations available. All topics may be mastered.
 							</p>
@@ -278,11 +291,11 @@ function NextUpCard({
 					<h3 className="font-semibold text-base truncate">{nextUp.name}</h3>
 					<div className="flex items-center gap-3 text-xs text-muted-foreground">
 						<span className="capitalize flex items-center gap-1">
-							<NextActionIcon className="size-3.5" />
+							<HugeiconsIcon icon={NextActionIcon} className="size-3.5" />
 							{actionLabels[nextUp.action]}
 						</span>
 						<span className="flex items-center gap-1">
-							<Clock className="size-3.5" />
+							<HugeiconsIcon icon={Clock01Icon} className="size-3.5" />
 							{nextUp.estimatedMinutes} min
 						</span>
 					</div>

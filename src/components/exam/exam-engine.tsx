@@ -1,6 +1,7 @@
 "use client";
 
-import { List, Spinner } from "@phosphor-icons/react";
+import { ListViewIcon, RadialIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { AssessmentHeader } from "@/components/ui/headers/assessment-header";
@@ -138,7 +139,7 @@ export function ExamEngine({
 					onClick={() => setSidebarOpen(!sidebarOpen)}
 					className="lg:hidden shrink-0 mt-0.5"
 				>
-					<List data-icon />
+					<HugeiconsIcon icon={ListViewIcon} data-icon />
 					<span className="sr-only">Toggle question list</span>
 				</Button>
 				<AssessmentHeader
@@ -225,7 +226,11 @@ export function ExamEngine({
 							>
 								{isSubmitting ? (
 									<>
-										<Spinner data-icon className="mr-2 animate-spin" />
+										<HugeiconsIcon
+											icon={RadialIcon}
+											data-icon
+											className="mr-2 animate-spin"
+										/>
 										Submitting...
 									</>
 								) : (

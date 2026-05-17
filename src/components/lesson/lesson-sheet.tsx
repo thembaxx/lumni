@@ -5,7 +5,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import type { Variants } from "framer-motion";
 import { m } from "framer-motion";
-import { Search } from "lucide-react";
+import { Search01Icon } from "@hugeicons/core-free-icons";
 import { useState } from "react";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
 import { LessonCard } from "@/components/lesson";
@@ -60,7 +60,10 @@ export function LessonSheet() {
 	return (
 		<Sheet open={isOpen} onOpenChange={setIsOpen}>
 			<SheetTrigger className="h-11 px-5 rounded-xl border border-border/80 bg-secondary/80 gap-2.5 inline-flex items-center justify-center hover:bg-accent hover:border-accent transition-colors text-sm font-medium">
-				<Search className="size-4 text-[--system-accent]" />
+				<HugeiconsIcon
+					icon={Search01Icon}
+					className="size-4 text-[--system-accent]"
+				/>
 				<span>Lessons</span>
 			</SheetTrigger>
 			<Anim>
@@ -77,7 +80,10 @@ export function LessonSheet() {
 
 					<div className="flex items-center gap-2 px-4 pb-6 grow">
 						<div className="relative">
-							<Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+							<HugeiconsIcon
+								icon={Search01Icon}
+								className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground"
+							/>
 							<Input
 								placeholder="Filter by title..."
 								value={searchQuery}

@@ -1,6 +1,11 @@
 "use client";
 
-import { CloudArrowUp, Download, Spinner } from "@phosphor-icons/react";
+import {
+	CloudUploadIcon,
+	Download01Icon,
+	RadialIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/shared";
 
@@ -38,7 +43,9 @@ export function AdminActionButton({
 				animate={loading ? { opacity: 0.7 } : { opacity: 1 }}
 				className="flex items-center justify-center gap-2"
 			>
-				{loading && <Spinner className="size-3 animate-spin" />}
+				{loading && (
+					<HugeiconsIcon icon={RadialIcon} className="size-3 animate-spin" />
+				)}
 				{icon && icon}
 				{children}
 			</motion.span>
@@ -66,9 +73,9 @@ export function DownloadButton({
 			onClick={onClick}
 			loading={loading}
 			disabled={disabled}
-			icon={<Download className="size-4" />}
+			icon={<HugeiconsIcon icon={Download01Icon} className="size-4" />}
 		>
-			Download {selectedCount} subject
+			Download01Icon {selectedCount} subject
 			{selectedCount !== 1 ? "s" : ""} ({examTypesCount} exam
 			{examTypesCount !== 1 ? "s" : ""})
 		</AdminActionButton>
@@ -85,7 +92,7 @@ export function UploadButton({ onClick, loading }: UploadButtonProps) {
 		<AdminActionButton
 			onClick={onClick}
 			loading={loading}
-			icon={<CloudArrowUp className="size-4" />}
+			icon={<HugeiconsIcon icon={CloudUploadIcon} className="size-4" />}
 		>
 			Upload Local Exam Papers
 		</AdminActionButton>

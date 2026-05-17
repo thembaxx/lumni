@@ -1,17 +1,18 @@
 "use client";
 
 import {
-	Camera,
-	Check,
-	Compass,
-	Envelope,
-	GraduationCap,
-	MapPin,
-	Pencil,
-	SignOut,
-	User,
-	X,
-} from "@phosphor-icons/react";
+	Camera01Icon,
+	CheckmarkCircle01Icon,
+	CompassIcon,
+	Mail01Icon,
+	Mortarboard01Icon,
+	MapPinIcon,
+	PencilIcon,
+	Logout01Icon,
+	UserIcon,
+	Cancel01Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { FileRouter } from "uploadthing/server";
 import { OnboardingWizard } from "@/components/onboarding/onboarding-wizard";
@@ -97,14 +98,14 @@ function EditableField({
 					disabled={saving || !draft.trim()}
 					className="size-8 rounded-full bg-system-accent text-white flex items-center justify-center hover:bg-system-accent/90 shrink-0 disabled:opacity-50"
 				>
-					<Check className="size-4" />
+					<HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-4" />
 				</button>
 				<button
 					type="button"
 					onClick={handleCancel}
 					className="size-8 rounded-full bg-system-fill text-muted-foreground flex items-center justify-center hover:bg-system-fill/80 shrink-0"
 				>
-					<X className="size-4" />
+					<HugeiconsIcon icon={Cancel01Icon} className="size-4" />
 				</button>
 			</div>
 		);
@@ -119,7 +120,10 @@ function EditableField({
 			<span className="flex-1 text-sm font-medium text-foreground truncate">
 				{value || placeholder || "Not set"}
 			</span>
-			<Pencil className="size-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
+			<HugeiconsIcon
+				icon={PencilIcon}
+				className="size-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity shrink-0"
+			/>
 		</button>
 	);
 }
@@ -258,7 +262,7 @@ export function ProfileTab() {
 							{uploading ? (
 								<div className="size-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
 							) : (
-								<Camera className="size-4" />
+								<HugeiconsIcon icon={Camera01Icon} className="size-4" />
 							)}
 						</div>
 					</label>
@@ -304,7 +308,7 @@ export function ProfileTab() {
 
 			<ListSection header="Personal Information">
 				<ListCell
-					leading={<User className="size-5" />}
+					leading={<HugeiconsIcon icon={UserIcon} className="size-5" />}
 					title="Display Name"
 					showSeparator
 					trailing={
@@ -316,7 +320,7 @@ export function ProfileTab() {
 					}
 				/>
 				<ListCell
-					leading={<Envelope className="size-5" />}
+					leading={<HugeiconsIcon icon={Mail01Icon} className="size-5" />}
 					title="Email Address"
 					subtitle={user?.emailVerification ? "Verified" : "Not verified"}
 					trailing={
@@ -329,7 +333,7 @@ export function ProfileTab() {
 
 			<ListSection header="Password">
 				<ListCell
-					leading={<Envelope className="size-5" />}
+					leading={<HugeiconsIcon icon={Mail01Icon} className="size-5" />}
 					title="Change Password"
 					showSeparator={false}
 					trailing={
@@ -352,7 +356,9 @@ export function ProfileTab() {
 
 			<ListSection header="School Details (Optional)">
 				<ListCell
-					leading={<GraduationCap className="size-5" />}
+					leading={
+						<HugeiconsIcon icon={Mortarboard01Icon} className="size-5" />
+					}
 					title="School"
 					showSeparator
 					trailing={
@@ -367,7 +373,9 @@ export function ProfileTab() {
 					}
 				/>
 				<ListCell
-					leading={<GraduationCap className="size-5" />}
+					leading={
+						<HugeiconsIcon icon={Mortarboard01Icon} className="size-5" />
+					}
 					title="Grade"
 					showSeparator
 					trailing={
@@ -382,7 +390,7 @@ export function ProfileTab() {
 					}
 				/>
 				<ListCell
-					leading={<MapPin className="size-5" />}
+					leading={<HugeiconsIcon icon={MapPinIcon} className="size-5" />}
 					title="Province"
 					showSeparator={false}
 					trailing={
@@ -432,7 +440,7 @@ export function ProfileTab() {
 								onClick={() => handleRemoveSubject(subject)}
 								className="ml-0.5 hover:text-destructive"
 							>
-								<X className="size-3" />
+								<HugeiconsIcon icon={Cancel01Icon} className="size-3" />
 							</button>
 						</span>
 					))}
@@ -474,7 +482,7 @@ export function ProfileTab() {
 
 			<ListSection header="Study Goals">
 				<ListCell
-					leading={<Compass className="size-5" />}
+					leading={<HugeiconsIcon icon={CompassIcon} className="size-5" />}
 					title="Guided Setup"
 					subtitle="Set your subjects, targets, and study schedule"
 					showSeparator={false}
@@ -547,7 +555,7 @@ export function ProfileTab() {
 					onClick={signOut}
 					className="w-full rounded-lg font-medium text-sm shadow-level-2 transition-[transform,opacity] active:scale-[0.96]"
 				>
-					<SignOut data-icon />
+					<HugeiconsIcon icon={Logout01Icon} data-icon />
 					Sign Out
 				</Button>
 				<div className="mt-8 flex flex-col items-center gap-1">

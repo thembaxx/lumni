@@ -1,15 +1,16 @@
 "use client";
 
 import {
-	ArrowsClockwise,
-	ChatCenteredText,
-	CloudArrowUp,
+	RefreshIcon,
+	Chat01Icon,
+	CloudUploadIcon,
 	Microphone,
-	PaperPlane,
-	Play,
-	Square,
-	X,
-} from "@phosphor-icons/react";
+	MailSend01Icon,
+	PlayFreeIcons,
+	SquareIcon,
+	Cancel01Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { ChatInput } from "@/components/chat/ChatInput";
@@ -79,7 +80,10 @@ export function ChatDialog({ open, onOpenChange }: ChatDialogProps) {
 				<div className="pl-4 pr-5 py-4 border-b border-border/30 flex flex-row items-center justify-between shrink-0">
 					<div className="flex items-center gap-1">
 						<div className="size-9 rounded-full bg-system-accent/10 flex items-center grow justify-center">
-							<ChatCenteredText className="size-6 text-system-accent" />
+							<HugeiconsIcon
+								icon={Chat01Icon}
+								className="size-6 text-system-accent"
+							/>
 						</div>
 						<span className="text-base font-extrabold leading-1 text-left tracking-tight">
 							Study Assistant
@@ -91,7 +95,10 @@ export function ChatDialog({ open, onOpenChange }: ChatDialogProps) {
 						onClick={() => onOpenChange(false)}
 						className="rounded-full hover:bg-secondary"
 					>
-						<X className="size-5 text-muted-foreground" />
+						<HugeiconsIcon
+							icon={Cancel01Icon}
+							className="size-5 text-muted-foreground"
+						/>
 					</Button>
 				</div>
 

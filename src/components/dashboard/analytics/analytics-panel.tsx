@@ -1,15 +1,16 @@
 "use client";
 
 import {
-	BookOpen,
-	Brain,
-	Clock,
-	Flame,
-	Target,
-	TrendDown,
-	TrendUp,
-	WarningCircle,
-} from "@phosphor-icons/react";
+	BookOpen01Icon,
+	BrainIcon,
+	Clock01Icon,
+	FireIcon,
+	Target01Icon,
+	ChartDownIcon,
+	ChartUpIcon,
+	AlertCircleIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { AccuracyBar } from "@/components/shared/accuracy-bar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -34,7 +35,10 @@ export function AnalyticsPanel() {
 	if (!analytics || analytics.totalQuestions === 0) {
 		return (
 			<div className="text-center p-8">
-				<Brain className="size-12 mx-auto text-muted-foreground mb-4" />
+				<HugeiconsIcon
+					icon={BrainIcon}
+					className="size-12 mx-auto text-muted-foreground mb-4"
+				/>
 				<h3 className="text-lg font-semibold mb-2">No Analytics Yet</h3>
 				<p className="text-muted-foreground mb-4">
 					Complete some quizzes to see your performance analytics.
@@ -74,23 +78,23 @@ function OverallStatsCard({ analytics }: { analytics: OverallAnalytics }) {
 	return (
 		<div className="grid grid-cols-2 md:grid-cols-4 gap-4">
 			<StatCard
-				icon={Target}
+				icon={Target01Icon}
 				label="Overall Accuracy"
 				value={`${Math.round(analytics.overallAccuracy * 100)}%`}
 				trend={analytics.overallAccuracy >= 0.7 ? "up" : "down"}
 			/>
 			<StatCard
-				icon={Brain}
+				icon={BrainIcon}
 				label="Questions Answered"
 				value={analytics.totalQuestions.toString()}
 			/>
 			<StatCard
-				icon={Clock}
+				icon={Clock01Icon}
 				label="Study Time"
 				value={formatStudyTime(analytics.totalStudyTime)}
 			/>
 			<StatCard
-				icon={Flame}
+				icon={FireIcon}
 				label="Current Streak"
 				value={`${analytics.currentStreak} days`}
 				trend={analytics.currentStreak > 0 ? "up" : "neutral"}
@@ -105,7 +109,7 @@ function StatCard({
 	value,
 	trend,
 }: {
-	icon: typeof Target;
+	icon: typeof Target01Icon;
 	label: string;
 	value: string;
 	trend?: "up" | "down" | "neutral";
@@ -121,15 +125,19 @@ function StatCard({
 		<Card size="sm">
 			<CardContent>
 				<div className="flex items-center gap-2 text-muted-foreground mb-2">
-					<Icon className="size-4" />
+					<HugeiconsIcon icon={Icon} className="size-4" />
 					<span className="text-xs">{label}</span>
 				</div>
 				<div
 					className={`text-2xl font-extrabold flex items-center gap-2 ${trendColor}`}
 				>
 					{value}
-					{trend === "up" && <TrendUp className="size-4" />}
-					{trend === "down" && <TrendDown className="size-4" />}
+					{trend === "up" && (
+						<HugeiconsIcon icon={ChartUpIcon} className="size-4" />
+					)}
+					{trend === "down" && (
+						<HugeiconsIcon icon={ChartDownIcon} className="size-4" />
+					)}
 				</div>
 			</CardContent>
 		</Card>
@@ -144,7 +152,7 @@ function InsightsCard({ insights }: { insights: string[] }) {
 		>
 			<CardHeader>
 				<CardTitle>
-					<Brain className="size-4 text-foreground" />
+					<HugeiconsIcon icon={BrainIcon} className="size-4 text-foreground" />
 					Insights
 				</CardTitle>
 			</CardHeader>
@@ -173,7 +181,7 @@ function RecommendationsCard({
 		<Card size="sm">
 			<CardHeader>
 				<CardTitle>
-					<WarningCircle className="size-4" />
+					<HugeiconsIcon icon={AlertCircleIcon} className="size-4" />
 					Recommendations
 				</CardTitle>
 			</CardHeader>
@@ -214,7 +222,7 @@ function SubjectBreakdownCard({ subjects }: { subjects: SubjectAnalytics[] }) {
 		<Card size="sm">
 			<CardHeader>
 				<CardTitle>
-					<BookOpen className="size-4" />
+					<HugeiconsIcon icon={BookOpen01Icon} className="size-4" />
 					Subject Breakdown
 				</CardTitle>
 			</CardHeader>

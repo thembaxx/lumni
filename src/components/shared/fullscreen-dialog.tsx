@@ -1,6 +1,7 @@
 "use client";
 
-import { X } from "@phosphor-icons/react";
+import { Cancel01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
@@ -62,7 +63,7 @@ export function FullscreenDialog({
 							onClick={handleClose}
 							aria-label="Close"
 						>
-							<X className="size-4" />
+							<HugeiconsIcon icon={Cancel01Icon} className="size-4" />
 						</Button>
 					</div>
 					{children}

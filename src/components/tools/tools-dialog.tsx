@@ -1,7 +1,8 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { XIcon } from "lucide-react";
+import { Cancel01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -98,7 +99,7 @@ function ToolsDialogInner({ open, onOpenChange }: ToolsDialogProps) {
 						size="icon-sm"
 						onClick={() => onOpenChange(false)}
 					>
-						<XIcon data-icon />
+						<HugeiconsIcon icon={Cancel01Icon} data-icon />
 					</Button>
 				</motion.header>
 

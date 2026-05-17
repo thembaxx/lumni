@@ -1,6 +1,7 @@
 "use client";
 
-import { CircleNotch } from "@phosphor-icons/react";
+import { RadialIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { m, useMotionValue, useTransform } from "framer-motion";
 import { useEffect, useState } from "react";
 import { iOSEase } from "@/lib/utils/animation";
@@ -72,7 +73,10 @@ export default function Loading() {
 						animate={{ rotate: 360 }}
 						transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
 					>
-						<CircleNotch className="size-14 text-system-accent" />
+						<HugeiconsIcon
+							icon={RadialIcon}
+							className="size-14 text-system-accent"
+						/>
 					</m.div>
 				</m.div>
 

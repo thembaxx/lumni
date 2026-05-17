@@ -1,6 +1,7 @@
 "use client";
 
-import { CircleNotch } from "@phosphor-icons/react";
+import { RadialIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
@@ -280,7 +281,10 @@ export function QuizView({
 								transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
 								className="w-12 h-3 mx-auto"
 							>
-								<CircleNotch className="size-12 text-muted-foreground" />
+								<HugeiconsIcon
+									icon={RadialIcon}
+									className="size-12 text-muted-foreground"
+								/>
 							</m.div>
 							<p className="text-muted-foreground">Loading questions...</p>
 						</CardContent>

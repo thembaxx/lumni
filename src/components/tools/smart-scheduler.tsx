@@ -1,6 +1,11 @@
 "use client";
 
-import { CalendarBlank, ClockIcon, Sparkle } from "@phosphor-icons/react";
+import {
+	Calendar01Icon,
+	Clock01Icon,
+	SparklesIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -251,7 +256,10 @@ export function SmartScheduler() {
 		<div className="h-full flex flex-col overflow-y-auto">
 			<div className="px-5 pt-5 pb-3">
 				<h2 className="ios-title-3 flex items-center gap-2 text-[--system-text-primary]">
-					<CalendarBlank className="size-5 text-[--system-accent]" />
+					<HugeiconsIcon
+						icon={Calendar01Icon}
+						className="size-5 text-[--system-accent]"
+					/>
 					Smart Scheduler
 				</h2>
 				<p className="ios-subhead text-[--system-text-secondary] mt-1">
@@ -340,7 +348,11 @@ export function SmartScheduler() {
 								</>
 							) : (
 								<>
-									<Sparkle data-icon className="mr-2" />
+									<HugeiconsIcon
+										icon={SparklesIcon}
+										data-icon
+										className="mr-2"
+									/>
 									Generate Schedule
 								</>
 							)}
@@ -372,7 +384,10 @@ export function SmartScheduler() {
 									transition={{ delay: idx * 0.05 }}
 								>
 									<h4 className="font-medium text-sm mb-2 flex items-center gap-2 text-foreground">
-										<CalendarBlank className="size-4 text-[--system-accent]" />
+										<HugeiconsIcon
+											icon={Calendar01Icon}
+											className="size-4 text-[--system-accent]"
+										/>
 										{day.day}
 									</h4>
 									<div className="flex flex-col gap-2">
@@ -403,7 +418,10 @@ export function SmartScheduler() {
 															{session.type}
 														</span>
 														<span className="text-sm text-muted-foreground flex items-center gap-1 tabular-nums">
-															<ClockIcon className="size-3" />
+															<HugeiconsIcon
+																icon={Clock01Icon}
+																className="size-3"
+															/>
 															{session.duration}min
 														</span>
 													</div>

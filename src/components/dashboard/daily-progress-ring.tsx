@@ -2,7 +2,7 @@
 
 import { Fire02FreeIcons } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { CheckCircle } from "@phosphor-icons/react";
+import { CheckmarkCircle01Icon } from "@hugeicons/core-free-icons";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { AnimatedProgressBar } from "@/components/shared/animated-progress-bar";
 import { RadialChart } from "@/components/ui/charts/radial-chart";
@@ -122,7 +122,10 @@ export function DailyProgressRing() {
 							transition={{ type: "spring", duration: 0.3, bounce: 0 }}
 							className="flex items-center gap-1"
 						>
-							<CheckCircle className="size-3.5 text-success" />
+							<HugeiconsIcon
+								icon={CheckmarkCircle01Icon}
+								className="size-3.5 text-success"
+							/>
 							<span className="text-[11px] font-extrabold text-success">
 								Daily goal complete
 							</span>

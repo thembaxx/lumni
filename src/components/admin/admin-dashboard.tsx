@@ -1,6 +1,12 @@
 "use client";
 
-import { BookOpen, Check, FileText, SignOut } from "@phosphor-icons/react";
+import {
+	BookOpen01Icon,
+	CheckmarkCircle01Icon,
+	File02Icon,
+	Logout01Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
@@ -187,7 +193,7 @@ export function AdminDashboard() {
 							animate={{ scale: 1, opacity: 1 }}
 							transition={{ type: "spring", stiffness: 500, damping: 25 }}
 						>
-							<Check className="size-4" />
+							<HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-4" />
 						</motion.div>
 						<span className="text-sm font-medium">Success!</span>
 					</motion.div>
@@ -214,7 +220,7 @@ export function AdminDashboard() {
 							Budget
 						</Button>
 						<Button variant="ghost" size="icon-sm" onClick={handleSignOut}>
-							<SignOut className="size-4" />
+							<HugeiconsIcon icon={Logout01Icon} className="size-4" />
 						</Button>
 					</div>
 				}
@@ -232,12 +238,14 @@ export function AdminDashboard() {
 							{
 								value: "exam",
 								label: "Exam",
-								icon: <FileText className="size-4" />,
+								icon: <HugeiconsIcon icon={File02Icon} className="size-4" />,
 							},
 							{
 								value: "subjects",
 								label: "Subjects",
-								icon: <BookOpen className="size-4" />,
+								icon: (
+									<HugeiconsIcon icon={BookOpen01Icon} className="size-4" />
+								),
 							},
 						]}
 						value={activeTab}

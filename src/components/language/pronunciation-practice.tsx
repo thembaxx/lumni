@@ -1,14 +1,15 @@
 "use client";
 
 import {
-	ArrowsClockwise,
-	Check,
-	Microphone,
-	Pause,
-	Play,
-	SpeakerHigh,
-	Square,
-} from "@phosphor-icons/react";
+	RefreshIcon,
+	CheckmarkCircle01Icon,
+	Mic01Icon,
+	PauseFreeIcons,
+	PlayFreeIcons,
+	VolumeUpIcon,
+	SquareIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -139,7 +140,8 @@ export function PronunciationPractice() {
 							</span>
 							{completed.has(currentExercise.id) && (
 								<span className="flex items-center gap-1 text-success">
-									<Check data-icon /> Completed
+									<HugeiconsIcon icon={CheckmarkCircle01Icon} data-icon />{" "}
+									Completed
 								</span>
 							)}
 						</CardTitle>
@@ -164,7 +166,11 @@ export function PronunciationPractice() {
 								disabled={isSpeaking}
 								className="gap-2"
 							>
-								{isSpeaking ? <Pause data-icon /> : <SpeakerHigh data-icon />}
+								{isSpeaking ? (
+									<HugeiconsIcon icon={PauseFreeIcons} data-icon />
+								) : (
+									<HugeiconsIcon icon={VolumeUpIcon} data-icon />
+								)}
 								{isSpeaking ? "Speaking..." : "Listen"}
 							</Button>
 
@@ -173,7 +179,7 @@ export function PronunciationPractice() {
 								onClick={handleRecord}
 								className={`gap-2 ${isRecording ? "bg-destructive hover:bg-destructive/90" : ""}`}
 							>
-								<Microphone data-icon />
+								<HugeiconsIcon icon={Mic01Icon} data-icon />
 								{isRecording ? `${recordingTime}s` : "Record"}
 							</Button>
 						</div>
@@ -190,14 +196,14 @@ export function PronunciationPractice() {
 
 						<div className="flex justify-center gap-4 pt-4">
 							<Button variant="outline" onClick={nextExercise}>
-								<ArrowsClockwise data-icon />
+								<HugeiconsIcon icon={RefreshIcon} data-icon />
 								Skip
 							</Button>
 							<Button
 								onClick={markComplete}
 								disabled={completed.has(currentExercise.id)}
 							>
-								<Check data-icon />
+								<HugeiconsIcon icon={CheckmarkCircle01Icon} data-icon />
 								Mark Complete
 							</Button>
 						</div>

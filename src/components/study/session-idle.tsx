@@ -1,6 +1,7 @@
 "use client";
 
-import { SpinnerGap } from "@phosphor-icons/react";
+import { RadialIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { motion } from "framer-motion";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
 import { Button } from "@/components/ui/button";
@@ -49,7 +50,10 @@ export function SessionIdle({
 												ease: "linear",
 											}}
 										>
-											<SpinnerGap className="size-16 mx-auto text-muted-foreground" />
+											<HugeiconsIcon
+												icon={RadialIcon}
+												className="size-16 mx-auto text-muted-foreground"
+											/>
 										</motion.div>
 									)}
 								</EmptyMedia>

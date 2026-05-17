@@ -1,6 +1,7 @@
 "use client";
 
-import { ArrowSquareOut } from "@phosphor-icons/react";
+import { ArrowUpRight01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -60,7 +61,7 @@ export function ImageViewer({
 							rel="noopener noreferrer"
 							className="inline-flex items-center gap-0.5 hover:text-muted-foreground"
 						>
-							<ArrowSquareOut className="size-3" />
+							<HugeiconsIcon icon={ArrowUpRight01Icon} className="size-3" />
 						</a>
 					)}
 				</p>

@@ -1,6 +1,7 @@
 "use client";
 
-import { Fire } from "@phosphor-icons/react";
+import { FireIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { useGamification } from "@/hooks/use-gamification";
@@ -29,8 +30,8 @@ export function StreakCard() {
 									: "bg-muted text-muted-foreground",
 							)}
 						>
-							<Fire
-								weight="fill"
+							<HugeiconsIcon
+								icon={FireIcon}
 								className={cn("size-6", currentStreak > 0 && "animate-pulse")}
 							/>
 						</div>

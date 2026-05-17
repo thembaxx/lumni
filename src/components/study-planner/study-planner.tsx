@@ -1,16 +1,17 @@
 "use client";
 
 import {
-	BookOpen,
-	Calendar,
-	CaretLeft,
-	CaretRight,
-	Check,
-	Clock,
-	Plus,
-	TrashSimple,
-	X,
-} from "@phosphor-icons/react";
+	BookOpen01Icon,
+	Calendar01Icon,
+	ArrowLeft01Icon,
+	ArrowRight01Icon,
+	CheckmarkCircle01Icon,
+	Clock01Icon,
+	Add01Icon,
+	Delete02Icon,
+	Cancel01Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -54,7 +55,7 @@ export function StudyPlanner() {
 						size="sm"
 						onClick={() => setShowAddSession(true)}
 					>
-						<Plus className="h-4 w-4 mr-1" />
+						<HugeiconsIcon icon={Add01Icon} className="h-4 w-4 mr-1" />
 						Add Session
 					</Button>
 					<Button
@@ -62,7 +63,7 @@ export function StudyPlanner() {
 						size="sm"
 						onClick={() => setShowAddExam(true)}
 					>
-						<Plus className="h-4 w-4 mr-1" />
+						<HugeiconsIcon icon={Add01Icon} className="h-4 w-4 mr-1" />
 						Add Exam
 					</Button>
 				</div>
@@ -171,7 +172,7 @@ function TodaySessionsCard({
 		<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
 			<header className="rounded-t-[2.5rem] border-t border-border/80 pb-2">
 				<h2 className="font-heading text-sm font-medium text-base flex items-center gap-2">
-					<Calendar className="h-4 w-4" />
+					<HugeiconsIcon icon={Calendar01Icon} className="h-4 w-4" />
 					Today
 				</h2>
 			</header>
@@ -198,7 +199,12 @@ function TodaySessionsCard({
 												: "border-muted-foreground"
 										}`}
 									>
-										{session.completed && <Check className="h-3 w-3" />}
+										{session.completed && (
+											<HugeiconsIcon
+												icon={CheckmarkCircle01Icon}
+												className="h-3 w-3"
+											/>
+										)}
 									</Button>
 									<div>
 										<p className="font-medium text-sm">{session.subject}</p>
@@ -212,7 +218,7 @@ function TodaySessionsCard({
 									size="icon-xs"
 									onClick={() => onDelete(session.id)}
 								>
-									<TrashSimple className="h-4 w-4" />
+									<HugeiconsIcon icon={Delete02Icon} className="h-4 w-4" />
 								</Button>
 							</div>
 						))}
@@ -250,7 +256,7 @@ function UpcomingSessionsCard({
 		<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
 			<header className="rounded-t-[2.5rem] border-t border-border/80 pb-2">
 				<h2 className="font-heading text-sm font-medium text-base flex items-center gap-2">
-					<Clock className="h-4 w-4" />
+					<HugeiconsIcon icon={Clock01Icon} className="h-4 w-4" />
 					Upcoming Sessions
 				</h2>
 			</header>
@@ -284,7 +290,12 @@ function UpcomingSessionsCard({
 																: "border-muted-foreground"
 														}`}
 													>
-														{session.completed && <Check className="h-3 w-3" />}
+														{session.completed && (
+															<HugeiconsIcon
+																icon={CheckmarkCircle01Icon}
+																className="h-3 w-3"
+															/>
+														)}
 													</Button>
 													<div>
 														<p className="font-medium text-sm">
@@ -301,7 +312,10 @@ function UpcomingSessionsCard({
 													size="icon-xs"
 													onClick={() => onDelete(session.id)}
 												>
-													<TrashSimple className="h-4 w-4" />
+													<HugeiconsIcon
+														icon={Delete02Icon}
+														className="h-4 w-4"
+													/>
 												</Button>
 											</div>
 										))}
@@ -327,7 +341,7 @@ function UpcomingExamsCard({
 		<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
 			<header className="rounded-t-[2.5rem] border-t border-border/80 pb-2">
 				<h2 className="font-heading text-sm font-medium text-base flex items-center gap-2">
-					<BookOpen className="h-4 w-4" />
+					<HugeiconsIcon icon={BookOpen01Icon} className="h-4 w-4" />
 					Upcoming Exams
 				</h2>
 			</header>
@@ -354,7 +368,7 @@ function UpcomingExamsCard({
 									size="icon-xs"
 									onClick={() => onDelete(exam.id)}
 								>
-									<TrashSimple className="h-4 w-4" />
+									<HugeiconsIcon icon={Delete02Icon} className="h-4 w-4" />
 								</Button>
 							</div>
 						))}

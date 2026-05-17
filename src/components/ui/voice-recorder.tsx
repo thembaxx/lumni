@@ -1,14 +1,15 @@
 "use client";
 
 import {
-	ArrowCounterClockwise,
-	Check,
-	Microphone,
-	MicrophoneSlash,
-	PaperPlaneRight,
-	Pause,
-	Play,
-} from "@phosphor-icons/react";
+	UndoIcon,
+	CheckmarkCircle01Icon,
+	Mic01Icon,
+	MicOff01Icon,
+	MailSend01Icon,
+	PauseFreeIcons,
+	PlayFreeIcons,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -171,7 +172,7 @@ export function VoiceRecorder({
 					aria-label="Reset recording"
 				>
 					<span className="transition-transform duration-200 active:rotate-180">
-						<ArrowCounterClockwise className="h-4 w-4" />
+						<HugeiconsIcon icon={UndoIcon} className="h-4 w-4" />
 					</span>
 				</Button>
 
@@ -199,7 +200,8 @@ export function VoiceRecorder({
 						)}
 					/>
 					<span className="relative flex items-center justify-center">
-						<MicrophoneSlash
+						<HugeiconsIcon
+							icon={MicOff01Icon}
 							className="absolute h-6 w-6 transition-[opacity,transform] duration-200"
 							style={{
 								opacity: isRecording ? 1 : 0,
@@ -207,7 +209,8 @@ export function VoiceRecorder({
 								transitionTimingFunction: "cubic-bezier(0.2, 0, 0, 1)",
 							}}
 						/>
-						<Microphone
+						<HugeiconsIcon
+							icon={Mic01Icon}
 							className="h-6 w-6 transition-[opacity,transform] duration-200"
 							style={{
 								opacity: isRecording ? 0 : 1,
@@ -233,7 +236,8 @@ export function VoiceRecorder({
 					aria-label={isPlaying ? "Pause playback" : "Play recording"}
 				>
 					<span className="relative flex items-center justify-center">
-						<Pause
+						<HugeiconsIcon
+							icon={PauseFreeIcons}
 							className="absolute h-4 w-4 transition-[opacity,transform] duration-200"
 							style={{
 								opacity: isPlaying ? 1 : 0,
@@ -241,7 +245,8 @@ export function VoiceRecorder({
 								transitionTimingFunction: "cubic-bezier(0.2, 0, 0, 1)",
 							}}
 						/>
-						<Play
+						<HugeiconsIcon
+							icon={PlayFreeIcons}
 							className="h-4 w-4 ml-0.5 transition-[opacity,transform] duration-200"
 							style={{
 								opacity: isPlaying ? 0 : 1,
@@ -284,7 +289,10 @@ export function VoiceRecorder({
 								exit={{ opacity: 0, scale: 0.25, filter: "blur(4px)" }}
 								transition={{ type: "spring", duration: 0.3, bounce: 0 }}
 							>
-								<Check className="h-4 w-4" />
+								<HugeiconsIcon
+									icon={CheckmarkCircle01Icon}
+									className="h-4 w-4"
+								/>
 								<span>Sent!</span>
 							</motion.span>
 						) : isPaperPlaneing ? (
@@ -308,7 +316,7 @@ export function VoiceRecorder({
 								exit={{ opacity: 0, scale: 0.25, filter: "blur(4px)" }}
 								transition={{ type: "spring", duration: 0.3, bounce: 0 }}
 							>
-								<PaperPlaneRight className="h-4 w-4" />
+								<HugeiconsIcon icon={MailSend01Icon} className="h-4 w-4" />
 								<span>Send Voice Message</span>
 							</motion.span>
 						)}

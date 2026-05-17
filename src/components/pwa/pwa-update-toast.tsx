@@ -1,6 +1,7 @@
 "use client";
 
-import { ArrowsClockwise, X } from "@phosphor-icons/react";
+import { RefreshIcon, Cancel01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { usePWAInstall, useServiceWorker } from "@/hooks/use-service-worker";
@@ -15,7 +16,10 @@ export function PWAUpdateToast() {
 		<div className="fixed bottom-4 left-4 right-4 z-50 md:left-auto md:right-4 md:max-w-sm">
 			<div className="bg-background border border-border rounded-lg shadow-lg p-4 flex items-start gap-3">
 				<div className="flex-shrink-0 mt-0.5">
-					<ArrowsClockwise className="h-5 w-5 text-foreground" />
+					<HugeiconsIcon
+						icon={RefreshIcon}
+						className="h-5 w-5 text-foreground"
+					/>
 				</div>
 				<div className="flex-1 min-w-0">
 					<p className="text-sm font-medium">Update Available</p>
@@ -46,7 +50,7 @@ export function PWAUpdateToast() {
 					size="icon-xs"
 					onClick={() => setDismissed(true)}
 				>
-					<X className="h-4 w-4" />
+					<HugeiconsIcon icon={Cancel01Icon} className="h-4 w-4" />
 				</Button>
 			</div>
 		</div>

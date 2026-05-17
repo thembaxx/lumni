@@ -3,18 +3,18 @@
 import { Activity02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
-	ArrowRight,
-	BookOpen,
-	Brain,
+	ArrowRight01Icon,
+	BookOpen01Icon,
+	BrainIcon,
 	ChartBar,
-	GlobeHemisphereWest,
-	GraduationCap,
-	Lightbulb,
-	Sparkle,
-	Target,
-	Timer,
-	TrendUp,
-} from "@phosphor-icons/react";
+	GlobeIcon,
+	Mortarboard01Icon,
+	BulbIcon,
+	SparklesIcon,
+	Target01Icon,
+	Timer01Icon,
+	ChartUpIcon,
+} from "@hugeicons/core-free-icons";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -25,14 +25,14 @@ import { appConfig } from "../../../app.config";
 
 const features = [
 	{
-		icon: Brain,
+		icon: BrainIcon,
 		title: "AI-Powered Practice",
 		description:
 			"Adaptive questions generated for your subjects and topics. Get instant feedback and explanations.",
 		gradient: "from-[--system-accent]/20 to-transparent",
 	},
 	{
-		icon: BookOpen,
+		icon: BookOpen01Icon,
 		title: "Past Exam Papers",
 		description:
 			"Practice with real Matric papers from 2021-2025. Timed exams or free practice mode.",
@@ -46,21 +46,21 @@ const features = [
 		gradient: "from-emerald-500/10 to-transparent",
 	},
 	{
-		icon: Lightbulb,
+		icon: BulbIcon,
 		title: "Smart Flashcards",
 		description:
 			"Flashcards that adapt to your pace. Review what you need, when you need it, and the app remembers what to show you next.",
 		gradient: "from-amber-500/10 to-transparent",
 	},
 	{
-		icon: Target,
+		icon: Target01Icon,
 		title: "Study Planner",
 		description:
 			"Personalized study schedules based on your goals and exam dates. Stay on track with daily sessions.",
 		gradient: "from-rose-500/10 to-transparent",
 	},
 	{
-		icon: GlobeHemisphereWest,
+		icon: GlobeIcon,
 		title: "Study Offline",
 		description:
 			"Study anywhere, anytime. Your progress syncs automatically when you're back online.",
@@ -129,7 +129,10 @@ export function HomeContent() {
 								<Link href="/auth/sign-up">
 									<Button size="sm">
 										Get Started
-										<ArrowRight data-icon="inline-end" weight="bold" />
+										<HugeiconsIcon
+											icon={ArrowRight01Icon}
+											data-icon="inline-end"
+										/>
 									</Button>
 								</Link>
 							</>
@@ -153,7 +156,7 @@ export function HomeContent() {
 								transition={{ duration: 0.4, ease: iOSEase }}
 							>
 								<div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[--system-accent]/10 text-[--system-accent] text-xs font-medium mb-4">
-									<Sparkle weight="fill" className="size-3" />
+									<HugeiconsIcon icon={SparklesIcon} className="size-3" />
 									Your Matric advantage
 								</div>
 								<h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1]">
@@ -197,15 +200,15 @@ export function HomeContent() {
 								className="flex items-center gap-6 text-sm text-muted-foreground"
 							>
 								<div className="flex items-center gap-2">
-									<GraduationCap className="size-4" />
+									<HugeiconsIcon icon={Mortarboard01Icon} className="size-4" />
 									<span>CAPS aligned</span>
 								</div>
 								<div className="flex items-center gap-2">
-									<Timer className="size-4" />
+									<HugeiconsIcon icon={Timer01Icon} className="size-4" />
 									<span>Past papers 2021-2025</span>
 								</div>
 								<div className="flex items-center gap-2">
-									<TrendUp className="size-4" />
+									<HugeiconsIcon icon={ChartUpIcon} className="size-4" />
 									<span>AI-powered</span>
 								</div>
 							</motion.div>
@@ -223,9 +226,9 @@ export function HomeContent() {
 								<div className="relative w-full h-full rounded-[2.5rem] bg-linear-to-br from-[--system-accent]/10 to-background border border-border/50 p-8 flex flex-col gap-4">
 									<div className="flex items-center gap-3">
 										<div className="size-10 rounded-lg bg-[--system-accent]/20 flex items-center justify-center">
-											<Brain
+											<HugeiconsIcon
+												icon={BrainIcon}
 												className="size-5 text-[--system-accent]"
-												weight="fill"
 											/>
 										</div>
 										<div>
@@ -314,9 +317,9 @@ export function HomeContent() {
 									)}
 								>
 									<div className="size-10 rounded-lg bg-[--system-accent]/10 flex items-center justify-center mb-4">
-										<feature.icon
+										<HugeiconsIcon
+											icon={feature.icon}
 											className="size-5 text-[--system-accent]"
-											weight="bold"
 										/>
 									</div>
 									<h3 className="text-base sm:text-lg font-semibold mb-2">
@@ -370,7 +373,7 @@ export function HomeContent() {
 								</p>
 								{i < steps.length - 1 && (
 									<div className="hidden md:block absolute top-8 -right-4 text-muted-foreground/20">
-										<ArrowRight weight="bold" className="size-6" />
+										<HugeiconsIcon icon={ArrowRight01Icon} className="size-6" />
 									</div>
 								)}
 							</motion.div>
@@ -401,14 +404,20 @@ export function HomeContent() {
 								<Link href="/dashboard">
 									<Button size="lg">
 										Go to Dashboard
-										<ArrowRight data-icon="inline-end" weight="bold" />
+										<HugeiconsIcon
+											icon={ArrowRight01Icon}
+											data-icon="inline-end"
+										/>
 									</Button>
 								</Link>
 							) : (
 								<Link href="/auth/sign-up">
 									<Button size="lg">
 										Start Learning Free
-										<GraduationCap data-icon="inline-end" weight="fill" />
+										<HugeiconsIcon
+											icon={Mortarboard01Icon}
+											data-icon="inline-end"
+										/>
 									</Button>
 								</Link>
 							)}

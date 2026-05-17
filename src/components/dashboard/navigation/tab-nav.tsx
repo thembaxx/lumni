@@ -1,6 +1,12 @@
 "use client";
 
-import { GridFour, Snowflake, Sparkle, TrendUp } from "@phosphor-icons/react";
+import {
+	GridIcon,
+	TemperatureIcon,
+	SparklesIcon,
+	ChartUpIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { m, motion } from "framer-motion";
 import { startTransition, useState } from "react";
 import { Anim } from "@/components/shared/anim";
@@ -12,13 +18,13 @@ import type { TabValue } from "../types";
 interface TabConfig {
 	value: TabValue;
 	label: string;
-	icon: typeof Snowflake | typeof TrendUp | typeof GridFour;
+	icon: typeof TemperatureIcon;
 }
 
 const tabs: TabConfig[] = [
-	{ value: "ai", label: "AI", icon: Snowflake },
-	{ value: "spaces", label: "Practice", icon: GridFour },
-	{ value: "analytics", label: "Analytics", icon: TrendUp },
+	{ value: "ai", label: "AI", icon: TemperatureIcon },
+	{ value: "spaces", label: "Practice", icon: GridIcon },
+	{ value: "analytics", label: "Analytics", icon: ChartUpIcon },
 ];
 
 interface TabNavProps {
@@ -90,7 +96,7 @@ export function TabNav({
 								aria-selected={activeTab === tab.value}
 								tabIndex={activeTab === tab.value ? 0 : -1}
 							>
-								<tab.icon />
+								<HugeiconsIcon icon={tab.icon} />
 								{tab.label}
 							</TabsTrigger>
 						))}

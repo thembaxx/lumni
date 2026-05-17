@@ -1,6 +1,7 @@
 "use client";
 
-import { ArrowCounterClockwise, House, Target } from "@phosphor-icons/react";
+import { UndoIcon, Home01Icon, Target01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { Confetti } from "@/components/celebration";
 import { Button } from "@/components/ui/button";
 
@@ -61,7 +62,10 @@ export function FlashcardsResults({
 									</p>
 								</div>
 								<div className="col-span-12 flex items-center gap-2">
-									<Target className="size-4 text-success dark:text-success-foreground" />
+									<HugeiconsIcon
+										icon={Target01Icon}
+										className="size-4 text-success dark:text-success-foreground"
+									/>
 									<span className="text-sm font-medium text-success dark:text-success-foreground">
 										{accuracy}% Mastery
 									</span>
@@ -72,11 +76,11 @@ export function FlashcardsResults({
 										className="flex-1"
 										onClick={onGoHouse}
 									>
-										<House className="size-4 mr-2" />
+										<HugeiconsIcon icon={Home01Icon} className="size-4 mr-2" />
 										Dashboard
 									</Button>
 									<Button className="flex-1" onClick={onRestart}>
-										<ArrowCounterClockwise className="size-4 mr-2" />
+										<HugeiconsIcon icon={UndoIcon} className="size-4 mr-2" />
 										Try Again
 									</Button>
 								</div>

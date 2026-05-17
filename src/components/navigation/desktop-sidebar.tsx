@@ -1,12 +1,13 @@
 "use client";
 
 import {
-	BookOpen,
-	ChatDots,
-	Gear,
-	House,
+	BookOpen01Icon,
+	Chat01Icon,
+	Settings01Icon,
+	Home01Icon,
 	Notebook,
-} from "@phosphor-icons/react";
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 
 import { usePathname } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
@@ -18,7 +19,7 @@ import { cn } from "@/lib/shared";
 interface SidebarItem {
 	id: string;
 	label: string;
-	icon: typeof House;
+	icon: typeof Home01Icon;
 	href: string;
 }
 
@@ -26,7 +27,7 @@ const sidebarItems: SidebarItem[] = [
 	{
 		id: "home",
 		label: "Home",
-		icon: House,
+		icon: Home01Icon,
 		href: "/dashboard",
 	},
 	{
@@ -38,13 +39,13 @@ const sidebarItems: SidebarItem[] = [
 	{
 		id: "chat",
 		label: "Chat",
-		icon: ChatDots,
+		icon: Chat01Icon,
 		href: "",
 	},
 	{
 		id: "problems",
 		label: "Problems",
-		icon: BookOpen,
+		icon: BookOpen01Icon,
 		href: "/problems",
 	},
 ];
@@ -53,7 +54,7 @@ const bottomItems: SidebarItem[] = [
 	{
 		id: "settings",
 		label: "Settings",
-		icon: Gear,
+		icon: Settings01Icon,
 		href: "/settings",
 	},
 ];
@@ -114,7 +115,8 @@ export function DesktopSidebar() {
 										: "text-system-text-secondary hover:text-system-text-primary hover:bg-system-fill",
 								)}
 							>
-								<Icon
+								<HugeiconsIcon
+									icon={Icon}
 									className={cn(
 										"size-5 shrink-0",
 										isActive
@@ -147,7 +149,8 @@ export function DesktopSidebar() {
 										: "text-system-text-secondary hover:text-system-text-primary hover:bg-system-fill",
 								)}
 							>
-								<Icon
+								<HugeiconsIcon
+									icon={Icon}
 									className={cn(
 										"size-5 shrink-0",
 										isActive

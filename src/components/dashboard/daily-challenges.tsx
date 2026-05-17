@@ -1,17 +1,22 @@
 "use client";
 
-import { CheckCircle, Fire, Target } from "@phosphor-icons/react";
+import {
+	CheckmarkCircle01Icon,
+	FireIcon,
+	Target01Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useGamification } from "@/hooks/use-gamification";
 import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";
 
-const challengeIcons: Record<string, typeof Target> = {
-	questions: Target,
-	accuracy: Target,
-	streak: Fire,
-	subject: Target,
+const challengeIcons: Record<string, typeof Target01Icon> = {
+	questions: Target01Icon,
+	accuracy: Target01Icon,
+	streak: FireIcon,
+	subject: Target01Icon,
 };
 
 export function DailyChallenges() {
@@ -36,7 +41,7 @@ export function DailyChallenges() {
 				</CardHeader>
 				<CardContent className="flex flex-col gap-2">
 					{[...active, ...completed].map((challenge) => {
-						const Icon = challengeIcons[challenge.type] || Target;
+						const Icon = challengeIcons[challenge.type] || Target01Icon;
 						const progress =
 							challenge.target > 0
 								? Math.round((challenge.progress / challenge.target) * 100)
@@ -59,9 +64,12 @@ export function DailyChallenges() {
 									)}
 								>
 									{challenge.completed ? (
-										<CheckCircle weight="fill" className="size-5" />
+										<HugeiconsIcon
+											icon={CheckmarkCircle01Icon}
+											className="size-5"
+										/>
 									) : (
-										<Icon className="size-5" />
+										<HugeiconsIcon icon={Icon} className="size-5" />
 									)}
 								</div>
 								<div className="flex-1 min-w-0">

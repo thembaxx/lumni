@@ -1,4 +1,5 @@
-import { CircleNotch } from "@phosphor-icons/react";
+import { RadialIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
@@ -29,7 +30,10 @@ export function LoadingIndicator() {
 					transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
 					className="size-full"
 				>
-					<CircleNotch className="size-7 text-muted-foreground" />
+					<HugeiconsIcon
+						icon={RadialIcon}
+						className="size-7 text-muted-foreground"
+					/>
 				</motion.div>
 			</div>
 			<AnimatePresence mode="wait" initial={false}>

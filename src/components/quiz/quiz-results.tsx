@@ -1,11 +1,12 @@
 "use client";
 
 import {
-	ArrowCounterClockwise,
-	House,
-	Timer,
-	Trophy,
-} from "@phosphor-icons/react";
+	UndoIcon,
+	Home01Icon,
+	Timer01Icon,
+	Award01Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { motion } from "framer-motion";
 import { Confetti } from "@/components/celebration";
 import { ProgressDots } from "@/components/shared/progress-dots";
@@ -78,7 +79,7 @@ export function QuizResultsCard({
 						variant="secondary"
 						className="flex items-center gap-2 px-4 py-2 shadow-lg"
 					>
-						<Trophy className="size-5" />
+						<HugeiconsIcon icon={Award01Icon} className="size-5" />
 						<span className="font-extrabold">Perfect Score!</span>
 					</Badge>
 				</motion.div>

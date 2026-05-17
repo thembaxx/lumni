@@ -1,4 +1,5 @@
-import { Lightning, Sparkle } from "@phosphor-icons/react";
+import { FlashIcon, SparklesIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Anim } from "@/components/shared/anim";
@@ -34,9 +35,15 @@ export function SuccessBadge({ isAdmin }: { isAdmin: boolean }) {
 			>
 				<div className="relative">
 					<div className="absolute inset-0 animate-ping opacity-75">
-						<Sparkle className="size-4 text-warning-foreground" />
+						<HugeiconsIcon
+							icon={SparklesIcon}
+							className="size-4 text-warning-foreground"
+						/>
 					</div>
-					<Sparkle className="size-4 text-warning relative z-10" />
+					<HugeiconsIcon
+						icon={SparklesIcon}
+						className="size-4 text-warning relative z-10"
+					/>
 				</div>
 			</m.div>
 
@@ -62,7 +69,7 @@ export function SuccessBadge({ isAdmin }: { isAdmin: boolean }) {
 						isAdmin && "bg-success/20 text-success-foreground",
 					)}
 				>
-					<Lightning className="size-3" />
+					<HugeiconsIcon icon={FlashIcon} className="size-3" />
 					{isAdmin ? "Admin" : "Welcome"}
 				</Badge>
 			</m.div>

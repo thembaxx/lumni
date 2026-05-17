@@ -1,6 +1,12 @@
 "use client";
 
-import { ArrowLeft, Check, CheckCircle, Flag, X } from "@phosphor-icons/react";
+import {
+	ArrowLeft01Icon,
+	CheckmarkCircle01Icon,
+	Flag01Icon,
+	Cancel01Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -48,7 +54,10 @@ export function ExamResults({
 							animate={{ scale: 1, opacity: 1 }}
 							transition={{ delay: 0.3 }}
 						>
-							<CheckCircle className="size-10 text-success" />
+							<HugeiconsIcon
+								icon={CheckmarkCircle01Icon}
+								className="size-10 text-success"
+							/>
 						</motion.div>
 						<div>
 							<h1 className="ios-title-1 text-[--system-text-primary]">
@@ -64,7 +73,7 @@ export function ExamResults({
 						size="sm"
 						onClick={() => router.push("/dashboard/practice")}
 					>
-						<ArrowLeft data-icon />
+						<HugeiconsIcon icon={ArrowLeft01Icon} data-icon />
 						Back to Exams
 					</Button>
 				</div>
@@ -157,13 +166,22 @@ export function ExamResults({
 																} ${flagged ? "ring-1 ring-warning/30" : ""}`}
 															>
 																{answered ? (
-																	<Check className="size-3" />
+																	<HugeiconsIcon
+																		icon={CheckmarkCircle01Icon}
+																		className="size-3"
+																	/>
 																) : (
-																	<X className="size-3" />
+																	<HugeiconsIcon
+																		icon={Cancel01Icon}
+																		className="size-3"
+																	/>
 																)}
 																{part.id}
 																{flagged && (
-																	<Flag className="size-2.5 text-warning" />
+																	<HugeiconsIcon
+																		icon={Flag01Icon}
+																		className="size-2.5 text-warning"
+																	/>
 																)}
 															</div>
 														);
@@ -182,7 +200,10 @@ export function ExamResults({
 					<Card>
 						<CardHeader>
 							<CardTitle className="ios-headline flex items-center gap-2">
-								<Flag className="size-4 text-warning" />
+								<HugeiconsIcon
+									icon={Flag01Icon}
+									className="size-4 text-warning"
+								/>
 								Flagged for Review
 							</CardTitle>
 						</CardHeader>
@@ -211,7 +232,10 @@ export function ExamResults({
 											key={item.id}
 											className="text-sm text-muted-foreground flex items-center gap-2"
 										>
-											<Flag className="size-3 text-warning-foreground" />
+											<HugeiconsIcon
+												icon={Flag01Icon}
+												className="size-3 text-warning-foreground"
+											/>
 											{item.label}
 										</li>
 									))}

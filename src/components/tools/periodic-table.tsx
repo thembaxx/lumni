@@ -6,7 +6,8 @@ import {
 	useSpring,
 	useTransform,
 } from "framer-motion";
-import { Search, X } from "lucide-react";
+import { Search01Icon, Cancel01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { memo, useEffect, useMemo, useState } from "react";
 import { Input } from "@/components/ui/input";
 import {
@@ -204,7 +205,10 @@ export function PeriodicTable() {
 					transition={{ delay: 0.15, duration: 0.4, ease: elementEaseOutQuart }}
 					className="relative mb-4"
 				>
-					<Search className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-muted-foreground/70" />
+					<HugeiconsIcon
+						icon={Search01Icon}
+						className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-muted-foreground/70"
+					/>
 					<Input
 						type="text"
 						placeholder="Search by name, symbol, or number..."
@@ -229,7 +233,11 @@ export function PeriodicTable() {
 							className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-white/10"
 							whileTap={{ scale: 0.95 }}
 						>
-							<X data-icon className="text-muted-foreground/70" />
+							<HugeiconsIcon
+								icon={Cancel01Icon}
+								data-icon
+								className="text-muted-foreground/70"
+							/>
 						</motion.button>
 					)}
 				</motion.div>
@@ -373,7 +381,7 @@ export function PeriodicTable() {
 								whileTap={{ scale: 0.95 }}
 								transition={{ duration: 0.15 }}
 							>
-								<X data-icon />
+								<HugeiconsIcon icon={Cancel01Icon} data-icon />
 							</motion.button>
 
 							<div className="p-6 pt-8">

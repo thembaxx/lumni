@@ -1,12 +1,13 @@
 "use client";
 
 import {
-	ArrowDown,
-	Lightning,
+	ArrowDown01Icon,
+	FlashIcon,
 	PlayIcon,
-	Square,
-	Timer,
-} from "@phosphor-icons/react";
+	SquareIcon,
+	Timer01Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { m, motion, useReducedMotion } from "framer-motion";
 import { useCallback, useState } from "react";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
@@ -182,7 +183,7 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 					>
 						<div className="flex items-center gap-3">
 							{hasSubject ? selectedSubject : "Subject"}
-							<ArrowDown />
+							<HugeiconsIcon icon={ArrowDown01Icon} />
 						</div>
 					</Button>
 				</SubjectsDrawer>
@@ -194,7 +195,10 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 					)}
 				>
 					<div className="flex items-center gap-2 min-w-16">
-						<Timer className="size-4 text-muted-foreground" />
+						<HugeiconsIcon
+							icon={Timer01Icon}
+							className="size-4 text-muted-foreground"
+						/>
 						<span className="text-sm font-medium -mb-0.5 tabular-nums font-mono tracking-tight">
 							{formatTime(elapsedTime)}
 						</span>
@@ -203,7 +207,7 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 					<div className="w-px h-4 bg-muted" />
 
 					<div className="flex items-center gap-2 min-w-14">
-						<Lightning className="size-4 text-warning" />
+						<HugeiconsIcon icon={FlashIcon} className="size-4 text-warning" />
 						<span className="text-sm font-semibold tabular-nums font-mono">
 							{points}
 						</span>
@@ -216,7 +220,7 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 						onClick={handleStop}
 						className="rounded-full bg-destructive hover:bg-destructive/90"
 					>
-						<Square className="size-4" />
+						<HugeiconsIcon icon={SquareIcon} className="size-4" />
 					</Button>
 				) : (
 					<Button
@@ -230,7 +234,7 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 								: "bg-muted cursor-not-allowed",
 						)}
 					>
-						<PlayIcon className="size-4 ml-0.5" />
+						<HugeiconsIcon icon={PlayIcon} className="size-4 ml-0.5" />
 					</Button>
 				)}
 			</div>

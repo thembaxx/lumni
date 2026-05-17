@@ -2,7 +2,13 @@
 
 import { ChampionIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Gear, SignIn, SignOut, Star, User } from "@phosphor-icons/react";
+import {
+	Settings01Icon,
+	Login01Icon,
+	Logout01Icon,
+	StarIcon,
+	UserIcon,
+} from "@hugeicons/core-free-icons";
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useCallback, useMemo } from "react";
@@ -128,7 +134,7 @@ export function TopNav({ title, className }: TopNavProps) {
 							}}
 							className="h-8 px-3 rounded-full text-sm font-semibold text-system-accent hover:bg-system-accent/10"
 						>
-							<SignIn className="size-4 mr-1.5" />
+							<HugeiconsIcon icon={Login01Icon} className="size-4 mr-1.5" />
 							Sign In
 						</Button>
 					) : (
@@ -165,7 +171,7 @@ export function TopNav({ title, className }: TopNavProps) {
 											window.location.href = "/settings?tab=profile";
 										}}
 									>
-										<User className="size-4" />
+										<HugeiconsIcon icon={UserIcon} className="size-4" />
 										View Profile
 									</DropdownListItem>
 									<DropdownListItem
@@ -174,7 +180,7 @@ export function TopNav({ title, className }: TopNavProps) {
 											window.location.href = "/settings";
 										}}
 									>
-										<Gear className="size-4" />
+										<HugeiconsIcon icon={Settings01Icon} className="size-4" />
 										Settings
 									</DropdownListItem>
 								</div>
@@ -184,7 +190,7 @@ export function TopNav({ title, className }: TopNavProps) {
 										variant="destructive"
 										onClick={handleSignOut}
 									>
-										<SignOut className="size-4" />
+										<HugeiconsIcon icon={Logout01Icon} className="size-4" />
 										Sign Out
 									</DropdownListItem>
 								</div>

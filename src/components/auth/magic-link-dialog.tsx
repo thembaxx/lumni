@@ -1,13 +1,14 @@
 import {
-	ArrowsClockwise,
-	CheckCircle,
-	Clock,
-	Envelope,
-	Lightning,
-	Sparkle,
-	Spinner,
-	WarningCircle,
-} from "@phosphor-icons/react";
+	RefreshIcon,
+	CheckmarkCircle01Icon,
+	Clock01Icon,
+	Mail01Icon,
+	FlashIcon,
+	SparklesIcon,
+	RadialIcon,
+	AlertCircleIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { startTransition, useCallback, useEffect, useState } from "react";
 import { z } from "zod";
@@ -87,11 +88,11 @@ export function MagicLinkDialog({
 			toast({
 				type: "success",
 				message: "Magic link on its way!",
-				description: `Check your inbox at ${email}`,
+				description: `CheckmarkCircle01Icon your inbox at ${email}`,
 			});
 		} catch {
 			const msg =
-				"We couldn&apos;t connect. Check your internet and try again.";
+				"We couldn&apos;t connect. CheckmarkCircle01Icon your internet and try again.";
 			setError(msg);
 			toast({ type: "error", message: msg });
 		} finally {
@@ -130,11 +131,11 @@ export function MagicLinkDialog({
 			toast({
 				type: "success",
 				message: "Link resent!",
-				description: `Check your inbox for a new sign-in link`,
+				description: `CheckmarkCircle01Icon your inbox for a new sign-in link`,
 			});
 		} catch {
 			const msg =
-				"We couldn&apos;t connect. Check your internet and try again.";
+				"We couldn&apos;t connect. CheckmarkCircle01Icon your internet and try again.";
 			setError(msg);
 			toast({ type: "error", message: msg });
 		} finally {
@@ -164,7 +165,10 @@ export function MagicLinkDialog({
 			<DialogContent className="sm:max-w-md shadow-lg">
 				<DialogHeader>
 					<DialogTitle className="flex items-center gap-2">
-						<Envelope className="size-5 text-foreground" />
+						<HugeiconsIcon
+							icon={Mail01Icon}
+							className="size-5 text-foreground"
+						/>
 						Sign in with Magic Link
 					</DialogTitle>
 					<DialogDescription>
@@ -190,7 +194,7 @@ export function MagicLinkDialog({
 							/>
 							{error && (
 								<p className="text-xs text-destructive flex items-center gap-1">
-									<WarningCircle className="size-3" />
+									<HugeiconsIcon icon={AlertCircleIcon} className="size-3" />
 									{error}
 								</p>
 							)}
@@ -223,7 +227,10 @@ export function MagicLinkDialog({
 										}}
 									>
 										<div className="rounded-full bg-success/10 p-4">
-											<CheckCircle className="size-12 text-success" />
+											<HugeiconsIcon
+												icon={CheckmarkCircle01Icon}
+												className="size-12 text-success"
+											/>
 										</div>
 									</m.div>
 									<SuccessBadge isAdmin={false} />
@@ -253,7 +260,7 @@ export function MagicLinkDialog({
 									}}
 								>
 									<p className="text-sm text-warning-foreground flex items-center gap-2">
-										<Clock className="size-4" />
+										<HugeiconsIcon icon={Clock01Icon} className="size-4" />
 										<span className="font-medium">
 											Link expires in 15 minutes
 										</span>
@@ -262,7 +269,7 @@ export function MagicLinkDialog({
 
 								{error && (
 									<p className="text-xs text-destructive flex items-center gap-1">
-										<WarningCircle className="size-3" />
+										<HugeiconsIcon icon={AlertCircleIcon} className="size-3" />
 										{error}
 									</p>
 								)}
@@ -288,7 +295,7 @@ export function MagicLinkDialog({
 											</span>
 										) : (
 											<span className="text-foreground flex items-center gap-1">
-												<Lightning className="size-3" />
+												<HugeiconsIcon icon={FlashIcon} className="size-3" />
 												Ready
 											</span>
 										)}
@@ -302,10 +309,14 @@ export function MagicLinkDialog({
 										className={cn(buttonStyles, loading && "opacity-70")}
 									>
 										{loading ? (
-											<Spinner className="size-4 animate-spin" />
+											<HugeiconsIcon
+												icon={RadialIcon}
+												className="size-4 animate-spin"
+											/>
 										) : (
 											<>
-												<ArrowsClockwise
+												<HugeiconsIcon
+													icon={RefreshIcon}
 													className={cn(
 														"size-4",
 														iconStyles,
@@ -334,7 +345,7 @@ export function MagicLinkDialog({
 								</span>
 							) : (
 								<span className="flex items-center gap-2">
-									<Lightning className="size-4" />
+									<HugeiconsIcon icon={FlashIcon} className="size-4" />
 									Send Magic Link
 								</span>
 							)}

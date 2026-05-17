@@ -1,6 +1,7 @@
 "use client";
 
-import { ArrowsClockwise, House } from "@phosphor-icons/react";
+import { RefreshIcon, Home01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m, useSpring, useTransform } from "framer-motion";
 import { AccuracyBar } from "@/components/shared/accuracy-bar";
 import { Button } from "@/components/ui/button";
@@ -207,12 +208,12 @@ export function QuizResult({ results, onRestart, onClose }: QuizResultProps) {
 				transition={{ delay: 0.9 }}
 			>
 				<Button variant="outline" className="flex-1" onClick={onRestart}>
-					<ArrowsClockwise data-icon="inline-start" />
+					<HugeiconsIcon icon={RefreshIcon} data-icon="inline-start" />
 					Try Again
 				</Button>
 				{onClose && (
 					<Button className="flex-1" onClick={onClose}>
-						<House data-icon="inline-start" />
+						<HugeiconsIcon icon={Home01Icon} data-icon="inline-start" />
 						Dashboard
 					</Button>
 				)}

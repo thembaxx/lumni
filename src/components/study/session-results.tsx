@@ -1,6 +1,7 @@
 "use client";
 
-import { ArrowCounterClockwise, House, Target } from "@phosphor-icons/react";
+import { UndoIcon, Home01Icon, Target01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { motion } from "framer-motion";
 import { AccuracyBar } from "@/components/shared/accuracy-bar";
 import { Button } from "@/components/ui/button";
@@ -68,7 +69,10 @@ export function SessionResults({
 					</div>
 					{stats.correct !== undefined && (
 						<div className="flex items-center gap-2">
-							<Target className="size-4 text-success" />
+							<HugeiconsIcon
+								icon={Target01Icon}
+								className="size-4 text-success"
+							/>
 							<span className="text-sm font-medium text-success">
 								{accuracy}% accuracy
 							</span>
@@ -77,13 +81,13 @@ export function SessionResults({
 					<div className="flex gap-2">
 						{onQuit && (
 							<Button variant="outline" className="flex-1" onClick={onQuit}>
-								<House data-icon="inline-start" />
+								<HugeiconsIcon icon={Home01Icon} data-icon="inline-start" />
 								Dashboard
 							</Button>
 						)}
 						{onRestart && (
 							<Button className="flex-1" onClick={onRestart}>
-								<ArrowCounterClockwise data-icon="inline-start" />
+								<HugeiconsIcon icon={UndoIcon} data-icon="inline-start" />
 								Try Again
 							</Button>
 						)}

@@ -1,6 +1,6 @@
 "use client";
 
-import { FileText } from "@phosphor-icons/react";
+import { File02Icon } from "@hugeicons/core-free-icons";
 import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeKatex from "rehype-katex";
@@ -87,7 +87,7 @@ export function SmartViewDialog({
 					</div>
 				) : result?.source === "error" ? (
 					<EmptyState
-						icon={FileText}
+						icon={File02Icon}
 						title="Failed to load content"
 						description={result.error || "Unable to convert PDF to markdown"}
 						action={
@@ -108,7 +108,7 @@ export function SmartViewDialog({
 						</div>
 					</div>
 				) : (
-					<EmptyState icon={FileText} title="No content available" />
+					<EmptyState icon={File02Icon} title="No content available" />
 				)}
 			</div>
 		</FullscreenDialog>

@@ -1,6 +1,7 @@
 "use client";
 
-import { Spinner } from "@phosphor-icons/react";
+import { RadialIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -114,7 +115,7 @@ export function ExamFilters({
 	return (
 		<Card>
 			<CardHeader>
-				<CardTitle>Download Papers</CardTitle>
+				<CardTitle>Download01Icon Papers</CardTitle>
 			</CardHeader>
 			<CardContent className="flex flex-col gap-6">
 				<div className="flex flex-col gap-3">
@@ -161,7 +162,10 @@ export function ExamFilters({
 					<div className="border rounded-lg divide-y max-h-48 overflow-y-auto">
 						{isLoading ? (
 							<div className="flex items-center justify-center p-4">
-								<Spinner className="size-4 animate-spin text-muted-foreground" />
+								<HugeiconsIcon
+									icon={RadialIcon}
+									className="size-4 animate-spin text-muted-foreground"
+								/>
 							</div>
 						) : (
 							subjects.map((subject) => (

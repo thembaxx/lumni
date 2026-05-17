@@ -1,6 +1,7 @@
 "use client";
 
-import { Target, X } from "@phosphor-icons/react";
+import { Target01Icon, Cancel01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { TimerDisplay } from "@/components/shared/timer-display";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -69,7 +70,7 @@ export function AssessmentHeader({
 					</Button>
 				)}
 
-				{/* Center: Timer + difficulty/accuracy + question counter */}
+				{/* Center: Timer01Icon + difficulty/accuracy + question counter */}
 				<div className="flex items-center gap-2 flex-wrap">
 					<TimerDisplay
 						elapsedTime={elapsedTime}
@@ -108,7 +109,10 @@ export function AssessmentHeader({
 
 					{showAccuracy && accuracy !== undefined && (
 						<>
-							<Target className="size-3.5 text-muted-foreground" />
+							<HugeiconsIcon
+								icon={Target01Icon}
+								className="size-3.5 text-muted-foreground"
+							/>
 							<span className="text-sm font-semibold tabular-nums text-muted-foreground">
 								{accuracy}%
 							</span>

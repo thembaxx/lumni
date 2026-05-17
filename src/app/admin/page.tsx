@@ -1,6 +1,7 @@
 "use client";
 
-import { Database, Spinner } from "@phosphor-icons/react";
+import { DatabaseIcon, RadialIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, domAnimation, m } from "framer-motion";
 import { useEffect, useState } from "react";
 import { AdminDashboard } from "@/components/admin/admin-dashboard";
@@ -130,9 +131,12 @@ export default function AdminPage() {
 								title="Seed Database"
 							>
 								{isSeeding ? (
-									<Spinner className="size-5 animate-spin" />
+									<HugeiconsIcon
+										icon={RadialIcon}
+										className="size-5 animate-spin"
+									/>
 								) : (
-									<Database className="size-5" />
+									<HugeiconsIcon icon={DatabaseIcon} className="size-5" />
 								)}
 							</Button>
 						</m.div>

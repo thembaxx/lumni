@@ -1,6 +1,11 @@
 "use client";
 
-import { Pencil, Spinner, TrashSimple } from "@phosphor-icons/react";
+import {
+	PencilIcon,
+	RadialIcon,
+	Delete02Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -38,7 +43,10 @@ export function SubjectTable({
 		<>
 			{isLoading ? (
 				<div className="flex items-center justify-center p-4">
-					<Spinner className="size-4 animate-spin text-muted-foreground" />
+					<HugeiconsIcon
+						icon={RadialIcon}
+						className="size-4 animate-spin text-muted-foreground"
+					/>
 				</div>
 			) : subjects.length === 0 ? (
 				<div className="p-4 text-center text-sm text-muted-foreground">
@@ -78,7 +86,7 @@ export function SubjectTable({
 										onClick={() => onEditSubject(subject)}
 										className="size-8"
 									>
-										<Pencil className="size-3" />
+										<HugeiconsIcon icon={PencilIcon} className="size-3" />
 									</Button>
 								</motion.div>
 								<motion.div
@@ -93,9 +101,15 @@ export function SubjectTable({
 										className="size-8"
 									>
 										{isDeleting ? (
-											<Spinner className="size-3 animate-spin" />
+											<HugeiconsIcon
+												icon={RadialIcon}
+												className="size-3 animate-spin"
+											/>
 										) : (
-											<TrashSimple className="size-3 text-destructive" />
+											<HugeiconsIcon
+												icon={Delete02Icon}
+												className="size-3 text-destructive"
+											/>
 										)}
 									</Button>
 								</motion.div>

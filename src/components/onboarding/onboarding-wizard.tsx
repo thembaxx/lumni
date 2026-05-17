@@ -1,6 +1,7 @@
 "use client";
 
-import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
+import { ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { motion, useReducedMotion } from "framer-motion";
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -198,7 +199,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 									<>
 										<div className="mb-4">
 											<label className="block text-sm font-medium text-muted-foreground mb-2">
-												Search subjects
+												Search01Icon subjects
 											</label>
 											<input
 												type="text"
@@ -279,7 +280,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 												{targetAps}
 											</div>
 											<p className="ios-subhead text-muted-foreground">
-												Target APS
+												Target01Icon APS
 											</p>
 										</div>
 										<div className="flex flex-col gap-4 mb-6">
@@ -461,7 +462,10 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 					<div>
 						{step > 0 && (
 							<Button variant="ghost" onClick={handleBack}>
-								<ArrowLeft data-icon="inline-start" />
+								<HugeiconsIcon
+									icon={ArrowLeft01Icon}
+									data-icon="inline-start"
+								/>
 								Back
 							</Button>
 						)}
@@ -487,7 +491,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 						)}
 						<Button onClick={handleNext} disabled={!canProceed()}>
 							{current.cta}
-							<ArrowRight data-icon="inline-end" />
+							<HugeiconsIcon icon={ArrowRight01Icon} data-icon="inline-end" />
 						</Button>
 					</div>
 				</div>

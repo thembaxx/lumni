@@ -1,6 +1,7 @@
 "use client";
 
-import { CircleNotch } from "@phosphor-icons/react";
+import { RadialIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { Skeleton } from "@/components/ui/skeleton";
 import { iOSEase } from "@/lib/utils/animation";
@@ -30,7 +31,10 @@ export default function Loading() {
 					transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
 					className="size-14"
 				>
-					<CircleNotch className="size-14 text-system-accent" />
+					<HugeiconsIcon
+						icon={RadialIcon}
+						className="size-14 text-system-accent"
+					/>
 				</m.div>
 
 				<m.h2

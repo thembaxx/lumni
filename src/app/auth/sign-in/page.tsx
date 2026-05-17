@@ -1,6 +1,12 @@
 "use client";
 
-import { Envelope, Eye, EyeSlash, MagicWand } from "@phosphor-icons/react";
+import {
+	Mail01Icon,
+	ViewIcon,
+	ViewOffIcon,
+	SparklesIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -68,11 +74,14 @@ function SignInForm() {
 				className="flex flex-col items-center gap-6 text-center"
 			>
 				<div className="size-16 rounded-full bg-system-accent/10 flex items-center justify-center">
-					<MagicWand className="size-8 text-system-accent" />
+					<HugeiconsIcon
+						icon={SparklesIcon}
+						className="size-8 text-system-accent"
+					/>
 				</div>
 				<div className="flex flex-col gap-2">
 					<h1 className="ios-title-2 font-extrabold text-foreground">
-						Check your email
+						CheckmarkCircle01Icon your email
 					</h1>
 					<p className="ios-subhead text-muted-foreground leading-relaxed">
 						We sent a magic link to{" "}
@@ -115,7 +124,10 @@ function SignInForm() {
 						Email
 					</label>
 					<div className="relative">
-						<Envelope className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+						<HugeiconsIcon
+							icon={Mail01Icon}
+							className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground"
+						/>
 						<Input
 							id="email"
 							type="email"
@@ -152,9 +164,9 @@ function SignInForm() {
 								className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
 							>
 								{showPassword ? (
-									<EyeSlash className="size-4" />
+									<HugeiconsIcon icon={ViewOffIcon} className="size-4" />
 								) : (
-									<Eye className="size-4" />
+									<HugeiconsIcon icon={ViewIcon} className="size-4" />
 								)}
 							</button>
 						</div>

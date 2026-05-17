@@ -1,6 +1,7 @@
 "use client";
 
-import { CaretLeft, CaretRight } from "@phosphor-icons/react";
+import { ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { startTransition, useCallback, useState } from "react";
 import { QuestionCard } from "@/components/quiz/question-card";
@@ -121,12 +122,12 @@ export function QuizSession({
 						disabled={currentQuestionIndex === 0}
 						className="gap-2"
 					>
-						<CaretLeft data-icon />
+						<HugeiconsIcon icon={ArrowLeft01Icon} data-icon />
 						Previous
 					</Button>
 					<Button onClick={onNext} className="gap-2">
 						{currentQuestionIndex < totalQuestions - 1 ? "Next" : "Finish"}
-						<CaretRight data-icon />
+						<HugeiconsIcon icon={ArrowRight01Icon} data-icon />
 					</Button>
 				</div>
 			</div>

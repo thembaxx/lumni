@@ -1,6 +1,7 @@
 "use client";
 
-import { Flame } from "@phosphor-icons/react";
+import { FireIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { motion } from "framer-motion";
 import { getStreakMessage } from "@/lib/utils/gamification";
 
@@ -31,7 +32,8 @@ export function StreakFire({
 						repeatDelay: 2,
 					}}
 				>
-					<Flame
+					<HugeiconsIcon
+						icon={FireIcon}
 						className={`size-6 ${streak >= 7 ? "fill-warning" : "fill-warning/80"}`}
 						fill={streak >= 7 ? "currentColor" : "none"}
 					/>

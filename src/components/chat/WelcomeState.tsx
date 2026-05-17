@@ -1,4 +1,5 @@
-import { Sparkle } from "@phosphor-icons/react";
+import { SparklesIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";
@@ -12,7 +13,10 @@ export function WelcomeState() {
 					transition={{ duration: 1.5, repeat: Infinity }}
 					className="size-full flex items-center justify-center"
 				>
-					<Sparkle className="size-20 text-primary/60" />
+					<HugeiconsIcon
+						icon={SparklesIcon}
+						className="size-20 text-primary/60"
+					/>
 				</motion.div>
 			</div>
 			<div className="text-center">

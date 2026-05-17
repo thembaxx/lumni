@@ -1,4 +1,5 @@
-import { X } from "@phosphor-icons/react";
+import { Cancel01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -48,7 +49,7 @@ export function ImageProcessingIndicator({
 							className="size-6 shrink-0"
 							aria-label="Dismiss error"
 						>
-							<X data-icon />
+							<HugeiconsIcon icon={Cancel01Icon} data-icon />
 						</Button>
 					</>
 				) : (

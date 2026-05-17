@@ -1,12 +1,13 @@
 import {
-	ArrowsClockwise,
-	CheckCircle,
-	Lightning,
+	RefreshIcon,
+	CheckmarkCircle01Icon,
+	FlashIcon,
 	ShieldCheck,
-	Sparkle,
-	Spinner,
-	WarningCircle,
-} from "@phosphor-icons/react";
+	SparklesIcon,
+	RadialIcon,
+	AlertCircleIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { startTransition, useCallback, useEffect, useState } from "react";
 import { z } from "zod";
@@ -244,7 +245,10 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 			<DialogContent className="sm:max-w-md shadow-lg">
 				<DialogHeader>
 					<DialogTitle className="flex items-center gap-2">
-						<ShieldCheck className="size-5 text-foreground" />
+						<HugeiconsIcon
+							icon={ShieldCheck}
+							className="size-5 text-foreground"
+						/>
 						Sign in with Email OTP
 					</DialogTitle>
 					<DialogDescription>
@@ -270,7 +274,7 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 							/>
 							{error && (
 								<p className="text-xs text-destructive flex items-center gap-1">
-									<WarningCircle className="size-3" />
+									<HugeiconsIcon icon={AlertCircleIcon} className="size-3" />
 									{error}
 								</p>
 							)}
@@ -313,7 +317,10 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 												}}
 											>
 												<div className="rounded-full bg-success/10 p-3">
-													<CheckCircle className="size-8 text-success" />
+													<HugeiconsIcon
+														icon={CheckmarkCircle01Icon}
+														className="size-8 text-success"
+													/>
 												</div>
 											</m.div>
 										</div>
@@ -351,7 +358,10 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 
 											{error && (
 												<p className="text-xs text-destructive flex items-center justify-center gap-1">
-													<WarningCircle className="size-3" />
+													<HugeiconsIcon
+														icon={AlertCircleIcon}
+														className="size-3"
+													/>
 													{error}
 												</p>
 											)}
@@ -369,7 +379,7 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 												</span>
 											) : (
 												<span className="flex items-center gap-2">
-													<Lightning className="size-4" />
+													<HugeiconsIcon icon={FlashIcon} className="size-4" />
 													Verify
 												</span>
 											)}
@@ -396,7 +406,10 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 													</span>
 												) : (
 													<span className="text-foreground flex items-center gap-1">
-														<Lightning className="size-3" />
+														<HugeiconsIcon
+															icon={FlashIcon}
+															className="size-3"
+														/>
 														Ready
 													</span>
 												)}
@@ -410,10 +423,14 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 												className={cn(buttonStyles, loading && "opacity-70")}
 											>
 												{loading ? (
-													<Spinner className="size-4 animate-spin" />
+													<HugeiconsIcon
+														icon={RadialIcon}
+														className="size-4 animate-spin"
+													/>
 												) : (
 													<>
-														<ArrowsClockwise
+														<HugeiconsIcon
+															icon={RefreshIcon}
 															className={cn(
 																"size-4",
 																iconStyles,
@@ -457,7 +474,10 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 												}}
 											>
 												<div className="rounded-full bg-success/20 p-6">
-													<CheckCircle className="size-16 text-success" />
+													<HugeiconsIcon
+														icon={CheckmarkCircle01Icon}
+														className="size-16 text-success"
+													/>
 												</div>
 											</m.div>
 											<SuccessBadge isAdmin={true} />
@@ -487,8 +507,8 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 								</span>
 							) : (
 								<span className="flex items-center gap-2">
-									<Lightning className="size-4" />
-									PaperPlane OTP
+									<HugeiconsIcon icon={FlashIcon} className="size-4" />
+									MailSend01Icon OTP
 								</span>
 							)}
 						</Button>

@@ -1,6 +1,7 @@
 "use client";
 
-import { SpeakerHigh, SpeakerSlash } from "@phosphor-icons/react";
+import { VolumeUpIcon, VolumeMute01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/shared";
@@ -37,9 +38,9 @@ export function TTSButton({ text, lang, className }: TTSButtonProps) {
 			aria-label={isPlaying ? "Stop speaking" : "Read aloud"}
 		>
 			{isPlaying ? (
-				<SpeakerSlash className="size-4" />
+				<HugeiconsIcon icon={VolumeMute01Icon} className="size-4" />
 			) : (
-				<SpeakerHigh className="size-4" />
+				<HugeiconsIcon icon={VolumeUpIcon} className="size-4" />
 			)}
 		</Button>
 	);

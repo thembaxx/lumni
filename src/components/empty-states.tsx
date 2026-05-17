@@ -1,22 +1,22 @@
 "use client";
 
 import {
-	BookOpen,
-	ChatCenteredText,
-	CloudArrowUp,
-	Headphones,
-	Icon,
-	UploadSimple,
-	WifiHigh,
-	WifiSlash,
-} from "@phosphor-icons/react";
+	BookOpen01Icon,
+	Chat01Icon,
+	CloudUploadIcon,
+	HeadphonesIcon,
+	Upload01Icon,
+	Wifi01Icon,
+	WifiOff01Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/shared";
 import { AnimatedIcon } from "@/lib/utils/icon-mapping";
 
 interface EmptyStateProps {
-	icon: Icon;
+	icon: typeof BookOpen01Icon;
 	title: string;
 	description: string;
 	action?: {
@@ -46,7 +46,7 @@ export function EmptyState({
 			)}
 		>
 			<div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-muted">
-				<Icon className="h-6 w-6 text-muted-foreground" />
+				<HugeiconsIcon icon={Icon} className="h-6 w-6 text-muted-foreground" />
 			</div>
 			<h3 className="mb-2 text-lg font-semibold text-wrap balance">{title}</h3>
 			<p className="mb-4 max-w-sm text-sm text-muted-foreground">
@@ -69,7 +69,7 @@ export function EmptyState({
 }
 
 interface EmptyStateWithIllustrationProps {
-	icon?: Icon;
+	icon?: typeof BookOpen01Icon;
 	title: string;
 	description: string;
 	action?: {
@@ -112,7 +112,10 @@ export function EmptyStateWithIllustration({
 					{animation ? (
 						<AnimatedIllustration animation={animation} />
 					) : Icon ? (
-						<Icon className="h-8 w-8 text-muted-foreground/60" />
+						<HugeiconsIcon
+							icon={Icon}
+							className="h-8 w-8 text-muted-foreground/60"
+						/>
 					) : null}
 				</div>
 			</div>
@@ -180,7 +183,7 @@ export const EmptyStates = {
 
 	noTopics: () => (
 		<EmptyState
-			icon={BookOpen}
+			icon={BookOpen01Icon}
 			title="No Topics Available"
 			description="Topics will appear here once questions are uploaded for this subject."
 		/>
@@ -188,7 +191,7 @@ export const EmptyStates = {
 
 	offline: (onRetry?: () => void) => (
 		<EmptyState
-			icon={WifiSlash}
+			icon={WifiOff01Icon}
 			title="You're Offline"
 			description="Check your internet connection and try again. Your progress will sync when you're back online."
 			action={onRetry ? { label: "Try Again", onClick: onRetry } : undefined}
@@ -209,7 +212,7 @@ export const EmptyStates = {
 
 	noRecording: () => (
 		<EmptyState
-			icon={Headphones}
+			icon={HeadphonesIcon}
 			title="No Recordings Yet"
 			description="Record your voice to practice pronunciation or create audio notes."
 		/>

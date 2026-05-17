@@ -1,11 +1,12 @@
 "use client";
 
 import {
-	CheckCircle,
-	CloudArrowUp,
-	Database,
-	Spinner,
-} from "@phosphor-icons/react";
+	CheckmarkCircle01Icon,
+	CloudUploadIcon,
+	DatabaseIcon,
+	RadialIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -93,7 +94,7 @@ export default function UploadPage() {
 						<header>
 							<h2 className="font-heading text-sm font-medium flex flex-col items-center gap-3 text-center">
 								<span className="flex items-center gap-2">
-									<CloudArrowUp className="size-4" />
+									<HugeiconsIcon icon={CloudUploadIcon} className="size-4" />
 									Upload
 								</span>
 							</h2>
@@ -117,7 +118,10 @@ export default function UploadPage() {
 										animate={{ scale: 1, opacity: 1 }}
 										transition={{ duration: 0.3 }}
 									>
-										<CheckCircle className="size-16 mx-auto mb-2 text-success" />
+										<HugeiconsIcon
+											icon={CheckmarkCircle01Icon}
+											className="size-16 mx-auto mb-2 text-success"
+										/>
 									</motion.div>
 									<p className="text-[13px] font-medium text-[var(--success)]">
 										Upload successful
@@ -144,8 +148,8 @@ export default function UploadPage() {
 					<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
 						<header>
 							<h2 className="font-heading text-sm font-medium flex items-center gap-2">
-								<Database className="size-4" />
-								Database
+								<HugeiconsIcon icon={DatabaseIcon} className="size-4" />
+								DatabaseIcon
 							</h2>
 							<p className="text-xs/relaxed text-muted-foreground">
 								Seed the database with initial data
@@ -159,9 +163,12 @@ export default function UploadPage() {
 								className="w-full"
 							>
 								{seedStatus === "seeding" ? (
-									<Spinner className="mr-2 h-4 w-4 animate-spin" />
+									<HugeiconsIcon
+										icon={RadialIcon}
+										className="mr-2 h-4 w-4 animate-spin"
+									/>
 								) : (
-									<Database className="size-4 mr-2" />
+									<HugeiconsIcon icon={DatabaseIcon} className="size-4 mr-2" />
 								)}
 								{seedStatus === "seeding"
 									? "Seeding..."

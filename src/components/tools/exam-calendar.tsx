@@ -10,7 +10,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
+import { Calendar01Icon } from "@/components/ui/calendar";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/shared";
 
@@ -137,7 +137,7 @@ export function ExamCalendar() {
 
 			<div className="px-5 sm:px-5 pb-5">
 				<div className="bg-system-background-secondary rounded-2xl sm:rounded-2xl p-2">
-					<Calendar
+					<Calendar01Icon
 						mode="single"
 						onSelect={(date) => date && setSelectedDate(date)}
 						selected={selectedDate}

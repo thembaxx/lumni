@@ -1,6 +1,11 @@
 "use client";
 
-import { CaretLeft, CaretRight, GraduationCap } from "@phosphor-icons/react";
+import {
+	ArrowLeft01Icon,
+	ArrowRight01Icon,
+	Mortarboard01Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
@@ -35,7 +40,7 @@ export function StepByStep({ steps, subject, className }: StepByStepProps) {
 			<div className="flex items-center justify-between px-1">
 				<div className="flex items-center gap-2 text-sm font-semibold text-foreground">
 					<div className="bg-[--system-accent]/10 p-1.5 rounded-full">
-						<GraduationCap className="size-4" />
+						<HugeiconsIcon icon={Mortarboard01Icon} className="size-4" />
 					</div>
 					<span>
 						Step {currentStep + 1} of {steps.length}
@@ -49,7 +54,7 @@ export function StepByStep({ steps, subject, className }: StepByStepProps) {
 						disabled={currentStep === 0}
 						className="size-8 hover:bg-[--system-accent]/10"
 					>
-						<CaretLeft data-icon="inline-start" />
+						<HugeiconsIcon icon={ArrowLeft01Icon} data-icon="inline-start" />
 					</Button>
 					<Button
 						variant="ghost"
@@ -58,7 +63,7 @@ export function StepByStep({ steps, subject, className }: StepByStepProps) {
 						disabled={currentStep === steps.length - 1}
 						className="size-8 hover:bg-[--system-accent]/10 bg-[--system-accent]/5"
 					>
-						<CaretRight data-icon="inline-start" />
+						<HugeiconsIcon icon={ArrowRight01Icon} data-icon="inline-start" />
 					</Button>
 				</div>
 			</div>

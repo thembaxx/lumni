@@ -1,12 +1,13 @@
 "use client";
 
 import {
-	ArrowCounterClockwise,
-	Minus,
-	Play,
-	Plus,
-	Square,
-} from "@phosphor-icons/react";
+	UndoIcon,
+	MinusSignIcon,
+	PlayFreeIcons,
+	Add01Icon,
+	SquareIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { RadialChart } from "@/components/ui/charts/radial-chart";
@@ -94,16 +95,16 @@ export function FocusTab({ className }: FocusTabProps) {
 					onClick={handleMinusFive}
 					disabled={isRunning || timeLeft <= 60}
 				>
-					<Minus className="size-5" />
+					<HugeiconsIcon icon={MinusSignIcon} className="size-5" />
 				</Button>
 
 				{isRunning ? (
 					<Button size="icon" onClick={handleStop} className="rounded-full">
-						<Square className="size-6 fill-current" />
+						<HugeiconsIcon icon={SquareIcon} className="size-6 fill-current" />
 					</Button>
 				) : (
 					<Button size="icon" onClick={handleStart} className="rounded-full">
-						<Play className="size-6 ml-1" />
+						<HugeiconsIcon icon={PlayFreeIcons} className="size-6 ml-1" />
 					</Button>
 				)}
 
@@ -113,7 +114,7 @@ export function FocusTab({ className }: FocusTabProps) {
 					onClick={handleAddFive}
 					disabled={isRunning || timeLeft >= MAX_TIME}
 				>
-					<Plus className="size-5" />
+					<HugeiconsIcon icon={Add01Icon} className="size-5" />
 				</Button>
 			</div>
 
@@ -123,8 +124,8 @@ export function FocusTab({ className }: FocusTabProps) {
 				onClick={handleReset}
 				className="text-muted-foreground hover:text-foreground"
 			>
-				<ArrowCounterClockwise className="size-4 mr-2" />
-				Reset Timer
+				<HugeiconsIcon icon={UndoIcon} className="size-4 mr-2" />
+				Reset Timer01Icon
 			</Button>
 		</div>
 	);

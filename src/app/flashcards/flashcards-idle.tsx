@@ -1,6 +1,7 @@
 "use client";
 
-import { ArrowDown, Lightbulb } from "@phosphor-icons/react";
+import { ArrowDown01Icon, BulbIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
 import { Button } from "@/components/ui/button";
 import {
@@ -30,7 +31,7 @@ export function FlashcardsIdle({ onSelect }: FlashcardsIdleProps) {
 						<Empty>
 							<EmptyHeader>
 								<EmptyMedia variant="icon">
-									<Lightbulb className="size-8" />
+									<HugeiconsIcon icon={BulbIcon} className="size-8" />
 								</EmptyMedia>
 								<EmptyTitle>Ready to start studying?</EmptyTitle>
 								<EmptyDescription>
@@ -41,7 +42,10 @@ export function FlashcardsIdle({ onSelect }: FlashcardsIdleProps) {
 								<SubjectsDrawer onSelect={onSelect}>
 									<Button>
 										Choose Subject
-										<ArrowDown className="w-4 h-4 ml-1" />
+										<HugeiconsIcon
+											icon={ArrowDown01Icon}
+											className="w-4 h-4 ml-1"
+										/>
 									</Button>
 								</SubjectsDrawer>
 							</EmptyContent>

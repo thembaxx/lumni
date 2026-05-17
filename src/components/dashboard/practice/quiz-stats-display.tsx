@@ -1,6 +1,7 @@
 "use client";
 
-import { Lightning } from "@phosphor-icons/react";
+import { FlashIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { TimerDisplay } from "@/components/shared/timer-display";
 import { cn } from "@/lib/shared";
 
@@ -36,7 +37,7 @@ export function QuizStatsDisplay({
 			<div className="w-px h-4 bg-muted" />
 
 			<div className="flex items-center gap-2 min-w-14">
-				<Lightning className="size-4 text-warning" />
+				<HugeiconsIcon icon={FlashIcon} className="size-4 text-warning" />
 				<span className="text-sm font-semibold tabular-nums font-mono">
 					{points}
 				</span>

@@ -1,6 +1,7 @@
 "use client";
 
-import { MagnifyingGlass } from "@phosphor-icons/react";
+import { Search01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -34,7 +35,10 @@ export function SessionEmpty({ subject, onGoBack }: SessionEmptyProps) {
 										animate={{ scale: [1, 1.2, 1] }}
 										transition={{ duration: 1.5, repeat: Infinity }}
 									>
-										<MagnifyingGlass className="size-16 mx-auto text-muted-foreground" />
+										<HugeiconsIcon
+											icon={Search01Icon}
+											className="size-16 mx-auto text-muted-foreground"
+										/>
 									</motion.div>
 								</EmptyMedia>
 								<EmptyTitle>No content found</EmptyTitle>

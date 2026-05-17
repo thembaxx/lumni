@@ -4,7 +4,8 @@ import {
 	ArrowDownIcon,
 	ArrowLeftIcon,
 	ArrowRightIcon,
-} from "@phosphor-icons/react";
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 
 import * as React from "react";
 import {
@@ -16,7 +17,7 @@ import {
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/shared";
 
-function Calendar({
+function Calendar01Icon({
 	className,
 	classNames,
 	showOutsideDays = true,
@@ -153,8 +154,8 @@ function Calendar({
 				Chevron: ({ className, orientation, ...props }) => {
 					if (orientation === "left") {
 						return (
-							<ArrowLeftIcon
-								strokeWidth={2}
+							<HugeiconsIcon
+								icon={ArrowLeftIcon}
 								className={cn("size-4", className)}
 								{...props}
 							/>
@@ -163,8 +164,8 @@ function Calendar({
 
 					if (orientation === "right") {
 						return (
-							<ArrowRightIcon
-								strokeWidth={2}
+							<HugeiconsIcon
+								icon={ArrowRightIcon}
 								className={cn("size-4", className)}
 								{...props}
 							/>
@@ -172,8 +173,8 @@ function Calendar({
 					}
 
 					return (
-						<ArrowDownIcon
-							strokeWidth={2}
+						<HugeiconsIcon
+							icon={ArrowDownIcon}
 							className={cn("size-4", className)}
 							{...props}
 						/>
@@ -236,4 +237,4 @@ function CalendarDayButton({
 	);
 }
 
-export { Calendar, CalendarDayButton };
+export { Calendar01Icon, CalendarDayButton };

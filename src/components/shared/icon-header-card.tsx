@@ -1,11 +1,12 @@
 "use client";
 
-import { Icon } from "@phosphor-icons/react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import type { IconSvgElement } from "@hugeicons/react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/shared";
 
 interface IconHeaderCardProps {
-	icon?: React.ComponentType<{ className?: string }>;
+	icon?: IconSvgElement;
 	title: string;
 	iconClassName?: string;
 	variant?: "default" | "highlighted";
@@ -14,7 +15,7 @@ interface IconHeaderCardProps {
 }
 
 export function IconHeaderCard({
-	icon: Icon,
+	icon,
 	title,
 	iconClassName = "size-4",
 	variant = "default",
@@ -32,8 +33,9 @@ export function IconHeaderCard({
 		>
 			<CardHeader>
 				<CardTitle className="flex items-center gap-2">
-					{Icon && (
-						<Icon
+					{icon && (
+						<HugeiconsIcon
+							icon={icon}
 							className={cn(iconClassName, isHighlighted && "text-foreground")}
 						/>
 					)}

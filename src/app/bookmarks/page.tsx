@@ -1,6 +1,7 @@
 "use client";
 
-import { Bookmark, Trash } from "@phosphor-icons/react";
+import { Bookmark01Icon, Delete01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -20,10 +21,13 @@ export default function BookmarksPage() {
 				{bookmarks.length === 0 ? (
 					<Card>
 						<CardContent className="p-8 text-center">
-							<Bookmark className="size-8 text-muted-foreground/40 mx-auto mb-3" />
+							<HugeiconsIcon
+								icon={Bookmark01Icon}
+								className="size-8 text-muted-foreground/40 mx-auto mb-3"
+							/>
 							<p className="text-base font-semibold">No bookmarks yet</p>
 							<p className="text-sm text-muted-foreground mt-1">
-								Bookmark questions during quizzes to save them here.
+								Bookmark01Icon questions during quizzes to save them here.
 							</p>
 						</CardContent>
 					</Card>
@@ -51,7 +55,10 @@ export default function BookmarksPage() {
 											className="size-8"
 											onClick={() => removeBookmark(bm.id)}
 										>
-											<Trash className="size-4 text-muted-foreground" />
+											<HugeiconsIcon
+												icon={Delete01Icon}
+												className="size-4 text-muted-foreground"
+											/>
 										</Button>
 									</div>
 								</CardHeader>

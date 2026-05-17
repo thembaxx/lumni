@@ -1,6 +1,7 @@
 "use client";
 
-import { CircleNotch } from "@phosphor-icons/react";
+import { RadialIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m, motion } from "framer-motion";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Anim } from "@/components/shared/anim";
@@ -114,7 +115,10 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 							transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
 							className="h-8 w-8 mx-auto"
 						>
-							<CircleNotch className="size-8 text-muted-foreground" />
+							<HugeiconsIcon
+								icon={RadialIcon}
+								className="size-8 text-muted-foreground"
+							/>
 						</motion.div>
 						<p className="text-sm text-muted-foreground">
 							Generating questions...

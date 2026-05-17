@@ -2,7 +2,7 @@
 
 import { Camera01FreeIcons } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Book, Mic } from "lucide-react";
+import { Book01Icon, Mic01Icon } from "@hugeicons/core-free-icons";
 import { useState } from "react";
 import { VoiceWaveIcon } from "@/components/icons";
 import { AnimatedDialogContent } from "@/components/ui/animated-dialog-content";
@@ -58,7 +58,8 @@ export function SearchInput({ value, onChange }: SearchInputProps) {
 							size="icon"
 							className="bg-muted/60 hover:bg-muted toolbutton"
 						>
-							<Book
+							<HugeiconsIcon
+								icon={Book01Icon}
 								className="text-muted-foreground toolbutton-icon"
 								data-icon
 							/>
@@ -73,7 +74,8 @@ export function SearchInput({ value, onChange }: SearchInputProps) {
 							size="icon"
 							className="bg-muted/60 hover:bg-muted toolbutton cursor-pointer"
 						>
-							<Mic
+							<HugeiconsIcon
+								icon={Mic01Icon}
 								className="text-muted-foreground toolbutton-icon"
 								data-icon
 							/>

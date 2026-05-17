@@ -1,6 +1,7 @@
 "use client";
 
-import { Trophy } from "@phosphor-icons/react";
+import { Award01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
 	rarityBorder,
@@ -72,7 +73,10 @@ export function AchievementUnlock({
 								transition={{ delay: 0.3 }}
 							>
 								<div className="flex items-center justify-center gap-2 mb-2">
-									<Trophy className="size-5 text-warning" />
+									<HugeiconsIcon
+										icon={Award01Icon}
+										className="size-5 text-warning"
+									/>
 									<span className="text-sm font-medium text-warning uppercase tracking-wider">
 										Achievement Unlocked!
 									</span>

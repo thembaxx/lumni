@@ -1,6 +1,7 @@
 "use client";
 
-import { Timer } from "@phosphor-icons/react";
+import { Timer01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { cn } from "@/lib/shared";
 import { formatTime } from "@/lib/shared/time";
 
@@ -45,7 +46,10 @@ export function TimerDisplay({
 	return (
 		<div className={cn(styles.container, className)}>
 			{showIcon && (
-				<Timer className={cn("text-muted-foreground", styles.icon)} />
+				<HugeiconsIcon
+					icon={Timer01Icon}
+					className={cn("text-muted-foreground", styles.icon)}
+				/>
 			)}
 			<span className={styles.text}>{formatTimeFn(elapsedTime)}</span>
 		</div>

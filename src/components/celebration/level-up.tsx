@@ -1,6 +1,7 @@
 "use client";
 
-import { Crown, Star } from "@phosphor-icons/react";
+import { CrownIcon, StarIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, motion } from "framer-motion";
 
 interface LevelUpProps {
@@ -56,7 +57,10 @@ export function LevelUp({
 									animate={{ rotate: [0, 10, -10, 0] }}
 									transition={{ duration: 0.5, repeat: 3 }}
 								>
-									<Crown className="size-16 mx-auto text-warning" />
+									<HugeiconsIcon
+										icon={CrownIcon}
+										className="size-16 mx-auto text-warning"
+									/>
 								</motion.div>
 							</motion.div>
 
@@ -74,7 +78,10 @@ export function LevelUp({
 									animate={{ scale: 1 }}
 									transition={{ delay: 0.4, type: "spring" }}
 								>
-									<Star className="size-6 fill-white" />
+									<HugeiconsIcon
+										icon={StarIcon}
+										className="size-6 fill-white"
+									/>
 									<span className="text-4xl font-extrabold">{level}</span>
 								</motion.div>
 								<h2 className="text-2xl font-extrabold mb-2 text-wrap balance">

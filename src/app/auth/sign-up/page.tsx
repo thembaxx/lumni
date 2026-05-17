@@ -1,6 +1,12 @@
 "use client";
 
-import { Envelope, Eye, EyeSlash, User } from "@phosphor-icons/react";
+import {
+	Mail01Icon,
+	ViewIcon,
+	ViewOffIcon,
+	UserIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -71,7 +77,10 @@ function SignUpForm() {
 						Display Name
 					</label>
 					<div className="relative">
-						<User className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+						<HugeiconsIcon
+							icon={UserIcon}
+							className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground"
+						/>
 						<Input
 							id="name"
 							type="text"
@@ -92,7 +101,10 @@ function SignUpForm() {
 						Email
 					</label>
 					<div className="relative">
-						<Envelope className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+						<HugeiconsIcon
+							icon={Mail01Icon}
+							className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground"
+						/>
 						<Input
 							id="email"
 							type="email"
@@ -129,9 +141,9 @@ function SignUpForm() {
 							className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
 						>
 							{showPassword ? (
-								<EyeSlash className="size-4" />
+								<HugeiconsIcon icon={ViewOffIcon} className="size-4" />
 							) : (
-								<Eye className="size-4" />
+								<HugeiconsIcon icon={ViewIcon} className="size-4" />
 							)}
 						</button>
 					</div>

@@ -1,6 +1,11 @@
 "use client";
 
-import { Calendar, Clock, ListChecks } from "@phosphor-icons/react";
+import {
+	Calendar01Icon,
+	Clock01Icon,
+	CheckListIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useStudyPlanner } from "@/hooks/use-study-planner";
@@ -15,7 +20,7 @@ export function StudyPlanOverview() {
 		<Card>
 			<CardHeader className="flex flex-row items-center justify-between">
 				<CardTitle className="text-base font-extrabold tracking-tight flex items-center gap-2">
-					<ListChecks className="size-5" />
+					<HugeiconsIcon icon={CheckListIcon} className="size-5" />
 					Today's Plan
 				</CardTitle>
 				<Link
@@ -33,7 +38,10 @@ export function StudyPlanOverview() {
 							className="flex items-center gap-3 p-2.5 rounded-xl bg-muted/30"
 						>
 							<div className="size-9 rounded-xl bg-[--system-accent]/10 flex items-center justify-center shrink-0">
-								<Clock className="size-4 text-[--system-accent]" />
+								<HugeiconsIcon
+									icon={Clock01Icon}
+									className="size-4 text-[--system-accent]"
+								/>
 							</div>
 							<div className="flex-1 min-w-0">
 								<p className="text-sm font-semibold truncate">
@@ -50,7 +58,10 @@ export function StudyPlanOverview() {
 					))
 				) : (
 					<div className="flex items-center gap-3 p-2.5 rounded-xl bg-muted/30">
-						<Calendar className="size-4 text-muted-foreground" />
+						<HugeiconsIcon
+							icon={Calendar01Icon}
+							className="size-4 text-muted-foreground"
+						/>
 						<p className="text-sm text-muted-foreground">
 							No sessions scheduled today
 						</p>

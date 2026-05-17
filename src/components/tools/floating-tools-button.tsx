@@ -1,6 +1,7 @@
 "use client";
 
-import { Icon } from "@iconify/react";
+import { GridIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -11,7 +12,6 @@ import { ToolsDialog } from "./tools-dialog";
 export function FloatingToolsButton() {
 	const [isOpen, setIsOpen] = useState(false);
 	const pathname = usePathname();
-	const isHousePage = pathname === "/";
 	const storeOpen = useToolsStore((s) => s.open);
 	const closeTools = useToolsStore((s) => s.closeTools);
 	const openTools = useToolsStore((s) => s.openTools);
@@ -29,12 +29,14 @@ export function FloatingToolsButton() {
 		}
 	};
 
+	const isHomePage = pathname === "/dashboard" || pathname === "/";
+
 	const handleOpen = () => {
 		openTools();
 		setIsOpen(true);
 	};
 
-	if (isHousePage) return null;
+	if (isHomePage) return null;
 
 	return (
 		<>
@@ -47,7 +49,7 @@ export function FloatingToolsButton() {
 					"h-11 rounded-lg shadow-level-3 font-medium pr-5 text-white/90",
 				)}
 			>
-				<Icon icon="fluent:board-24-regular" data-icon className="text-white" />
+				<HugeiconsIcon icon={GridIcon} className="text-white" />
 				Open Tools
 			</Button>
 

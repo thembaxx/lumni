@@ -1,6 +1,12 @@
 "use client";
 
-import { Calculator, Check, Plus, Trash } from "@phosphor-icons/react";
+import {
+	CalculatorIcon,
+	CheckmarkCircle01Icon,
+	Add01Icon,
+	Delete01Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -158,8 +164,11 @@ export function APSCalculator() {
 		<div className="h-full flex flex-col overflow-y-auto">
 			<div className="px-5 pt-5 pb-3">
 				<h2 className="ios-title-3 flex items-center gap-2 text-[--system-text-primary]">
-					<Calculator className="size-5 text-[--system-accent]" />
-					APS Calculator
+					<HugeiconsIcon
+						icon={CalculatorIcon}
+						className="size-5 text-[--system-accent]"
+					/>
+					APS CalculatorIcon
 				</h2>
 				<p className="ios-subhead text-[--system-text-secondary] mt-1">
 					Calculate your Admission Point Score for university applications.
@@ -211,7 +220,7 @@ export function APSCalculator() {
 								disabled={subjects.length === 1}
 								className="size-9"
 							>
-								<Trash data-icon />
+								<HugeiconsIcon icon={Delete01Icon} data-icon />
 							</Button>
 						</motion.div>
 					))}
@@ -222,7 +231,7 @@ export function APSCalculator() {
 							onClick={addSubject}
 							className="flex-1 rounded-xl"
 						>
-							<Plus data-icon className="mr-2" />
+							<HugeiconsIcon icon={Add01Icon} data-icon className="mr-2" />
 							Add Subject
 						</Button>
 						<Button
@@ -230,7 +239,13 @@ export function APSCalculator() {
 							onClick={() => setIncludeLifeOrientation(!includeLifeOrientation)}
 							className="rounded-xl"
 						>
-							{includeLifeOrientation && <Check data-icon className="mr-1.5" />}
+							{includeLifeOrientation && (
+								<HugeiconsIcon
+									icon={CheckmarkCircle01Icon}
+									data-icon
+									className="mr-1.5"
+								/>
+							)}
 							Include LO
 						</Button>
 					</div>
@@ -243,7 +258,10 @@ export function APSCalculator() {
 						<span className="ios-subhead text-[--system-text-secondary]">
 							Your APS Score
 						</span>
-						<Calculator className="size-5 text-[--system-accent]" />
+						<HugeiconsIcon
+							icon={CalculatorIcon}
+							className="size-5 text-[--system-accent]"
+						/>
 					</div>
 					<div
 						className={cn(

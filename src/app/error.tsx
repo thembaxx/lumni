@@ -1,6 +1,11 @@
 "use client";
 
-import { ArrowsClockwise, CheckCircle, House } from "@phosphor-icons/react";
+import {
+	RefreshIcon,
+	CheckmarkCircle01Icon,
+	Home01Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { iOSEase } from "@/lib/utils/animation";
@@ -59,7 +64,7 @@ export default function Error({
 
 						<div className="flex flex-col sm:flex-row gap-[--space-3]">
 							<Button onClick={() => reset()} className="gap-2">
-								<ArrowsClockwise className="size-4" />
+								<HugeiconsIcon icon={RefreshIcon} className="size-4" />
 								Try again
 							</Button>
 							<Button
@@ -67,7 +72,7 @@ export default function Error({
 								onClick={() => (window.location.href = "/")}
 								className="gap-2"
 							>
-								<House className="size-4" />
+								<HugeiconsIcon icon={Home01Icon} className="size-4" />
 								Go Home
 							</Button>
 						</div>

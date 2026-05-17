@@ -1,6 +1,11 @@
 "use client";
 
-import { BookOpen, Check, Trash } from "@phosphor-icons/react";
+import {
+	BookOpen01Icon,
+	CheckmarkCircle01Icon,
+	Delete01Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useEffect, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Badge } from "@/components/ui/badge";
@@ -55,7 +60,7 @@ export default function ReviewPage() {
 					</h1>
 					{entries.length > 0 && (
 						<Button variant="ghost" size="sm" onClick={handleClearReviewed}>
-							<Trash data-icon="inline-start" />
+							<HugeiconsIcon icon={Delete01Icon} data-icon="inline-start" />
 							Clear reviewed
 						</Button>
 					)}
@@ -64,7 +69,10 @@ export default function ReviewPage() {
 				{entries.length === 0 ? (
 					<Card>
 						<CardContent className="p-8 text-center">
-							<BookOpen className="size-8 text-muted-foreground/40 mx-auto mb-3" />
+							<HugeiconsIcon
+								icon={BookOpen01Icon}
+								className="size-8 text-muted-foreground/40 mx-auto mb-3"
+							/>
 							<p className="text-base font-semibold">No mistakes to review</p>
 							<p className="text-sm text-muted-foreground mt-1">
 								Wrong answers will appear here automatically after quizzes and
@@ -118,7 +126,10 @@ export default function ReviewPage() {
 											onClick={() => handleReviewed(entry.id!)}
 											className="self-end"
 										>
-											<Check data-icon="inline-start" />
+											<HugeiconsIcon
+												icon={CheckmarkCircle01Icon}
+												data-icon="inline-start"
+											/>
 											Mark reviewed
 										</Button>
 									)}

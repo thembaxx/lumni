@@ -1,6 +1,7 @@
 "use client";
 
-import { CloudArrowUp } from "@phosphor-icons/react";
+import { CloudUploadIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -50,7 +51,7 @@ export function SubjectForm({
 						onClick={onPreload}
 						loading={isPreloading}
 						variant="outline"
-						icon={<CloudArrowUp className="size-3" />}
+						icon={<HugeiconsIcon icon={CloudUploadIcon} className="size-3" />}
 					>
 						Preload
 					</AdminActionButton>

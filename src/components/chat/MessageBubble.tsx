@@ -1,4 +1,9 @@
-import { ArrowsClockwise, Play, Square } from "@phosphor-icons/react";
+import {
+	RefreshIcon,
+	PlayFreeIcons,
+	SquareIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { motion } from "framer-motion";
 import { useRef, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
@@ -108,7 +113,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 									className="rounded-full shrink-0 bg-white/20 hover:bg-white/30"
 									aria-label="Retry"
 								>
-									<ArrowsClockwise data-icon />
+									<HugeiconsIcon icon={RefreshIcon} data-icon />
 								</Button>
 							)}
 						</div>
@@ -176,7 +181,10 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 								: "opacity-0 scale-[0.25] blur-[4px]",
 						)}
 					>
-						<Square className="size-3.5 fill-current" />
+						<HugeiconsIcon
+							icon={SquareIcon}
+							className="size-3.5 fill-current"
+						/>
 					</span>
 					<span
 						className={cn(
@@ -186,7 +194,10 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 								: "opacity-100 scale-100 blur-0",
 						)}
 					>
-						<Play className="size-4 fill-current ml-0.5" />
+						<HugeiconsIcon
+							icon={PlayFreeIcons}
+							className="size-4 fill-current ml-0.5"
+						/>
 					</span>
 				</motion.button>
 				<div className="flex flex-col gap-1 min-w-0">

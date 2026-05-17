@@ -1,6 +1,7 @@
 "use client";
 
-import { Check } from "@phosphor-icons/react";
+import { CheckmarkCircle01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { motion } from "framer-motion";
 import { AnimatedProgressBar } from "@/components/shared/animated-progress-bar";
 import { FadeIn } from "@/components/shared/fade-in";
@@ -94,7 +95,7 @@ export function DailyChallenges({ challenges }: DailyChallengesProps) {
 										transition={{ type: "spring", stiffness: 400, damping: 20 }}
 										className="flex items-center gap-1 text-xs text-success-foreground"
 									>
-										<Check size={12} />
+										<HugeiconsIcon icon={CheckmarkCircle01Icon} size={12} />
 										Completed
 									</motion.div>
 								)}

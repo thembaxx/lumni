@@ -1,4 +1,5 @@
-import { Headphones, StopCircle } from "@phosphor-icons/react";
+import { HeadphonesIcon, StopCircleIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/shared";
@@ -153,9 +154,9 @@ export function ListenToLesson({
 			)}
 		>
 			{isPlaying ? (
-				<StopCircle className="w-4 h-4 mr-1.5" />
+				<HugeiconsIcon icon={StopCircleIcon} className="w-4 h-4 mr-1.5" />
 			) : (
-				<Headphones className="w-4 h-4 mr-1.5" />
+				<HugeiconsIcon icon={HeadphonesIcon} className="w-4 h-4 mr-1.5" />
 			)}
 			{isPlaying
 				? "Stop listening..."

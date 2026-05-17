@@ -1,6 +1,7 @@
 "use client";
 
-import { TrendDown, TrendUp } from "@phosphor-icons/react";
+import { ChartDownIcon, ChartUpIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";
@@ -127,8 +128,12 @@ export function StatCard({
 					)}
 				>
 					{value}
-					{trend === "up" && <TrendUp className="size-4" />}
-					{trend === "down" && <TrendDown className="size-4" />}
+					{trend === "up" && (
+						<HugeiconsIcon icon={ChartUpIcon} className="size-4" />
+					)}
+					{trend === "down" && (
+						<HugeiconsIcon icon={ChartDownIcon} className="size-4" />
+					)}
 				</div>
 			</div>
 		</div>

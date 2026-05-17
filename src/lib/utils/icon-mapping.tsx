@@ -1,18 +1,18 @@
 import {
-	ArrowLeft,
-	CheckCircle,
-	CircleNotch,
-	Crown,
-	Flame,
-	MagnifyingGlass,
+	ArrowLeft01Icon,
+	CheckmarkCircle01Icon,
+	RadialIcon,
+	CrownIcon,
+	FireIcon,
+	Search01Icon,
 	Confetti as PhosphorConfetti,
-	Sparkle,
-	SpinnerGap,
-	Trophy,
-	UploadSimple,
-	WarningCircle,
-	XCircle,
-} from "@phosphor-icons/react";
+	SparklesIcon,
+	Award01Icon,
+	Upload01Icon,
+	AlertCircleIcon,
+	CancelCircleIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { motion } from "framer-motion";
 import type { ComponentProps } from "react";
 
@@ -40,7 +40,7 @@ export const iconAnimations = {
 } as const;
 
 interface IconMappingEntry {
-	icon: typeof CheckCircle;
+	icon: typeof CheckmarkCircle01Icon;
 	size: number;
 	animation?: AnimationPreset;
 }
@@ -72,21 +72,25 @@ const animationTransitions: Record<
 };
 
 const animationMapping: Record<string, IconMappingEntry> = {
-	"achievement-unlock": { icon: Trophy, size: 12, animation: "scale" },
+	"achievement-unlock": { icon: Award01Icon, size: 12, animation: "scale" },
 	confetti: { icon: PhosphorConfetti, size: 16 },
-	"empty-search": { icon: MagnifyingGlass, size: 12, animation: "pulse" },
-	"empty-upload": { icon: UploadSimple, size: 12, animation: "bounce" },
-	"error-state": { icon: WarningCircle, size: 16, animation: "shake" },
-	"level-up": { icon: Crown, size: 16, animation: "rotate" },
-	"loading-dots": { icon: CircleNotch, size: 4, animation: "spin" },
-	"loading-lumni": { icon: SpinnerGap, size: 14, animation: "spin" },
-	"page-404": { icon: ArrowLeft, size: 6 },
-	"quiz-correct": { icon: CheckCircle, size: 5, animation: "scale" },
-	"quiz-incorrect": { icon: XCircle, size: 5, animation: "shake" },
-	"streak-fire": { icon: Flame, size: 6, animation: "sway" },
-	"success-check": { icon: CheckCircle, size: 10, animation: "scale" },
-	"typing-indicator": { icon: CircleNotch, size: 7, animation: "spin" },
-	"xp-burst": { icon: Sparkle, size: 8, animation: "spin" },
+	"empty-search": { icon: Search01Icon, size: 12, animation: "pulse" },
+	"empty-upload": { icon: Upload01Icon, size: 12, animation: "bounce" },
+	"error-state": { icon: AlertCircleIcon, size: 16, animation: "shake" },
+	"level-up": { icon: CrownIcon, size: 16, animation: "rotate" },
+	"loading-dots": { icon: RadialIcon, size: 4, animation: "spin" },
+	"loading-lumni": { icon: RadialIcon, size: 14, animation: "spin" },
+	"page-404": { icon: ArrowLeft01Icon, size: 6 },
+	"quiz-correct": { icon: CheckmarkCircle01Icon, size: 5, animation: "scale" },
+	"quiz-incorrect": { icon: CancelCircleIcon, size: 5, animation: "shake" },
+	"streak-fire": { icon: FireIcon, size: 6, animation: "sway" },
+	"success-check": {
+		icon: CheckmarkCircle01Icon,
+		size: 10,
+		animation: "scale",
+	},
+	"typing-indicator": { icon: RadialIcon, size: 7, animation: "spin" },
+	"xp-burst": { icon: SparklesIcon, size: 8, animation: "spin" },
 };
 
 export type LottieAnimationName = keyof typeof animationMapping;
@@ -124,7 +128,7 @@ export function AnimatedIcon({
 			transition={transitionProps}
 			{...props}
 		>
-			<Icon className={`size-${size}`} />
+			<HugeiconsIcon icon={Icon} className={`size-${size}`} />
 		</motion.div>
 	);
 }

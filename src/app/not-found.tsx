@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft } from "@phosphor-icons/react";
+import { ArrowLeft01Icon } from "@hugeicons/core-free-icons";
 import { m } from "framer-motion";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";

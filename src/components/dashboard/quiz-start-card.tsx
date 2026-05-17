@@ -1,8 +1,11 @@
 "use client";
 
-import { PlayFreeIcons, PlayIcon } from "@hugeicons/core-free-icons";
+import {
+	FlashIcon,
+	PlayFreeIcons,
+	Timer01Icon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Lightning, Play, Timer } from "@phosphor-icons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -34,14 +37,20 @@ export function QuizStartCard({ onStart }: QuizStartCardProps) {
 					</h3>
 					<div className="flex items-center gap-3 px-3 py-1.5 rounded-full bg-muted/30 border border-muted">
 						<div className="flex items-center gap-1.5">
-							<Timer className="size-3.5 text-muted-foreground" />
+							<HugeiconsIcon
+								icon={Timer01Icon}
+								className="size-3.5 text-muted-foreground"
+							/>
 							<span className="text-xs font-medium tabular-nums font-mono tracking-tight text-muted-foreground">
 								{formatTime(state.elapsedTime)}
 							</span>
 						</div>
 						<div className="w-px h-3 bg-muted" />
 						<div className="flex items-center gap-1.5">
-							<Lightning className="size-3.5 text-warning" />
+							<HugeiconsIcon
+								icon={FlashIcon}
+								className="size-3.5 text-warning"
+							/>
 							<span className="text-xs font-semibold tabular-nums font-mono text-muted-foreground">
 								{state.points || 0}
 							</span>

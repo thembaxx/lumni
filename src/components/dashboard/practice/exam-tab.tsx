@@ -3,7 +3,11 @@
 import { ArrowDown01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
-import { BookOpen, Search, X } from "lucide-react";
+import {
+	BookOpen01Icon,
+	Search01Icon,
+	Cancel01Icon,
+} from "@hugeicons/core-free-icons";
 import { useState } from "react";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
 import { Anim } from "@/components/shared/anim";
@@ -73,7 +77,10 @@ export function ExamTab({ className }: ExamTabProps) {
 					className="flex flex-col gap-6"
 				>
 					<div className="relative flex flex-col gap-4 border rounded-2xl shadow-sm">
-						<Search className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-muted-foreground/60" />
+						<HugeiconsIcon
+							icon={Search01Icon}
+							className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-muted-foreground/60"
+						/>
 						<Input
 							type="text"
 							placeholder="Search exams..."
@@ -95,7 +102,7 @@ export function ExamTab({ className }: ExamTabProps) {
 										size="icon"
 										className="rounded-full bg-muted/60 hover:bg-muted text-muted-foreground hover:text-foreground active:scale-[0.96] transition-[scale]"
 									>
-										<X data-icon />
+										<HugeiconsIcon icon={Cancel01Icon} data-icon />
 									</Button>
 								</m.div>
 							)}
@@ -155,7 +162,7 @@ export function ExamTab({ className }: ExamTabProps) {
 										size="sm"
 										className="text-muted-foreground hover:text-foreground active:scale-[0.96] transition-[scale]"
 									>
-										<X data-icon />
+										<HugeiconsIcon icon={Cancel01Icon} data-icon />
 									</Button>
 								</m.div>
 							)}
@@ -208,7 +215,10 @@ export function ExamTab({ className }: ExamTabProps) {
 								<Empty className="border border-dashed border-destructive/30">
 									<EmptyHeader>
 										<EmptyMedia variant="icon">
-											<BookOpen className="size-6 text-destructive" />
+											<HugeiconsIcon
+												icon={BookOpen01Icon}
+												className="size-6 text-destructive"
+											/>
 										</EmptyMedia>
 										<EmptyTitle>Failed to load</EmptyTitle>
 										<EmptyDescription>Please try again.</EmptyDescription>
@@ -224,7 +234,10 @@ export function ExamTab({ className }: ExamTabProps) {
 								<Empty className="border border-dashed">
 									<EmptyHeader>
 										<EmptyMedia variant="icon">
-											<BookOpen className="size-8 text-muted-foreground/40" />
+											<HugeiconsIcon
+												icon={BookOpen01Icon}
+												className="size-8 text-muted-foreground/40"
+											/>
 										</EmptyMedia>
 										<EmptyTitle className="text-base">
 											No exams found

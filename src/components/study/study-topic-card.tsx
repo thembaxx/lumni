@@ -1,6 +1,7 @@
 "use client";
 
-import { DiceFive } from "@phosphor-icons/react";
+import { DiceIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
@@ -163,7 +164,7 @@ export function StudyTopicCard({
 							)}
 							aria-label="Get new topic"
 						>
-							<DiceFive data-icon="inline-start" />
+							<HugeiconsIcon icon={DiceIcon} data-icon="inline-start" />
 						</Button>
 					</m.div>
 				</m.div>
