@@ -2,9 +2,9 @@
 
 import {
 	ArrowLeft01Icon,
+	Cancel01Icon,
 	CheckmarkCircle01Icon,
 	Flag01Icon,
-	Cancel01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { motion } from "framer-motion";

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { QuestionRatingsDashboard } from "@/components/admin/question-ratings-dashboard";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -14,7 +15,6 @@ import {
 	getQualityStats,
 	loadQualityRecords,
 } from "@/lib/utils/engine-quality";
-import { QuestionRatingsDashboard } from "@/components/admin/question-ratings-dashboard";
 
 export default function AdminQualityPage() {
 	const [quality, setQuality] = useState(getQualityStats());

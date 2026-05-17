@@ -5,9 +5,9 @@ import {
 	Bell,
 	BookOpen01Icon,
 	Chat01Icon,
-	RadialIcon,
 	DatabaseIcon,
 	PaintBrushIcon,
+	RadialIcon,
 	UserIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";

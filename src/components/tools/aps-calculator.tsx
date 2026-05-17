@@ -1,9 +1,9 @@
 "use client";
 
 import {
+	Add01Icon,
 	CalculatorIcon,
 	CheckmarkCircle01Icon,
-	Add01Icon,
 	Delete01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";

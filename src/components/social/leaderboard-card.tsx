@@ -21,7 +21,11 @@ export function LeaderboardCard() {
 		<Card className="overflow-hidden">
 			<CardHeader>
 				<CardTitle className="flex items-center gap-2 text-lg">
-					<HugeiconsIcon icon={CrownIcon} size={20} className="text-amber-400" />
+					<HugeiconsIcon
+						icon={CrownIcon}
+						size={20}
+						className="text-amber-400"
+					/>
 					Weekly Leaderboard
 				</CardTitle>
 			</CardHeader>
@@ -54,9 +58,7 @@ export function LeaderboardCard() {
 									)}
 								</div>
 								<div className="flex-1 min-w-0">
-									<p className="text-sm font-medium truncate">
-										{entry.label}
-									</p>
+									<p className="text-sm font-medium truncate">{entry.label}</p>
 								</div>
 								<div className="flex items-center gap-2 shrink-0">
 									<span className="text-sm font-bold tabular-nums">

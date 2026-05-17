@@ -21,11 +21,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useExamPaper } from "@/hooks/use-exam-paper";
 import { useGamification } from "@/hooks/use-gamification";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
-import { createFlashcard } from "@/lib/utils/spaced-repetition";
 import { trackQuestionResult } from "@/lib/competency-engine";
 import { cn } from "@/lib/shared";
 import { formatTime } from "@/lib/shared/time";
 import { iOSEase } from "@/lib/utils/animation";
+import { createFlashcard } from "@/lib/utils/spaced-repetition";
 import { addStudySession } from "@/lib/utils/study-planner";
 import { useExamSessionStore } from "@/store/exam-session";
 import type { QuestionPart } from "@/types/exam-paper";
@@ -294,7 +294,9 @@ function ExamResults({
 							<p className="text-xs text-muted-foreground">Incorrect</p>
 						</div>
 						<div className="p-3 rounded-lg bg-muted text-center">
-							<p className="text-2xl font-extrabold tabular-nums">{accuracy}%</p>
+							<p className="text-2xl font-extrabold tabular-nums">
+								{accuracy}%
+							</p>
 							<p className="text-xs text-muted-foreground">Accuracy</p>
 						</div>
 					</div>
@@ -311,15 +313,11 @@ function ExamResults({
 							key={item.part.id}
 							className={cn(
 								"overflow-hidden transition-shadow",
-								result.correct
-									? "border-success/20"
-									: "border-destructive/20",
+								result.correct ? "border-success/20" : "border-destructive/20",
 							)}
 						>
 							<button
-								onClick={() =>
-									setExpandedId(isExpanded ? null : item.part.id)
-								}
+								onClick={() => setExpandedId(isExpanded ? null : item.part.id)}
 								className="w-full flex items-center justify-between p-4 text-left"
 							>
 								<div className="flex items-center gap-3">
@@ -385,10 +383,10 @@ function ExamResults({
 
 			<div className="flex flex-col gap-3">
 				{failedCount > 0 && onReview && (
-				<Button variant="secondary" onClick={onReview}>
-							<HugeiconsIcon icon={RefreshIcon} data-icon="inline-start" />
-							Review Mistakes
-						</Button>
+					<Button variant="secondary" onClick={onReview}>
+						<HugeiconsIcon icon={RefreshIcon} data-icon="inline-start" />
+						Review Mistakes
+					</Button>
 				)}
 				<Button onClick={onDashboard}>
 					<HugeiconsIcon icon={Home01Icon} data-icon="inline-start" />
@@ -541,7 +539,8 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 			const result = partResults[i];
 			const topic = item.sectionId;
 
-			const maxScore = typeof item.part.marks === "number" ? item.part.marks : result.score;
+			const maxScore =
+				typeof item.part.marks === "number" ? item.part.marks : result.score;
 			trackQuestionResult({
 				subjectId: paperData?.metadata.subject ?? "unknown",
 				topicId: topic,

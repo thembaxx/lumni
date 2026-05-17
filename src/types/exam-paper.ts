@@ -1,4 +1,7 @@
-import type { Option as QuestionEngineOption, QuestionType } from "@/lib/question-engine/types";
+import type {
+	Option as QuestionEngineOption,
+	QuestionType,
+} from "@/lib/question-engine/types";
 
 export interface ExamPaper {
 	metadata: PaperMetadata;

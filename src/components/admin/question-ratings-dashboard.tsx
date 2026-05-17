@@ -5,14 +5,27 @@ import { questionRatingService } from "@/lib/services/question-rating-service";
 
 export function QuestionRatingsDashboard() {
 	const [lowRated, setLowRated] = useState<
-		Array<{ questionId: string; subject: string; avgRating: number; count: number }>
+		Array<{
+			questionId: string;
+			subject: string;
+			avgRating: number;
+			count: number;
+		}>
 	>([]);
 	const [stats, setStats] = useState({
 		total: 0,
 		average: 0,
 		counts: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
 	});
-	const [allRatings, setAllRatings] = useState<Array<{ questionId: string; subject: string; rating: number; feedback?: string; createdAt: number }>>([]);
+	const [allRatings, setAllRatings] = useState<
+		Array<{
+			questionId: string;
+			subject: string;
+			rating: number;
+			feedback?: string;
+			createdAt: number;
+		}>
+	>([]);
 
 	const refresh = useCallback(async () => {
 		const [low, s, ratings] = await Promise.all([
@@ -41,7 +54,10 @@ export function QuestionRatingsDashboard() {
 					<p className="text-2xl font-extrabold">{stats.average}</p>
 				</div>
 				{([1, 2, 3, 4, 5] as const).map((n) => (
-					<div key={n} className="p-4 rounded-2xl border border-border/80 bg-card">
+					<div
+						key={n}
+						className="p-4 rounded-2xl border border-border/80 bg-card"
+					>
 						<p className="text-sm text-muted-foreground">{n} Star</p>
 						<p className="text-2xl font-extrabold">{stats.counts[n]}</p>
 					</div>
@@ -63,8 +79,12 @@ export function QuestionRatingsDashboard() {
 									{q.questionId}
 								</span>
 								<span className="text-muted-foreground">{q.subject}</span>
-								<span className="text-destructive font-bold">{q.avgRating}</span>
-								<span className="text-muted-foreground">({q.count} ratings)</span>
+								<span className="text-destructive font-bold">
+									{q.avgRating}
+								</span>
+								<span className="text-muted-foreground">
+									({q.count} ratings)
+								</span>
 							</div>
 						))}
 					</div>

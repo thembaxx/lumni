@@ -96,9 +96,7 @@ export default function RootLayout({
 				fontHeading.variable,
 			)}
 		>
-			<body
-				className="h-full antialiased min-h-full flex flex-col bg-[--system-background] text-[--system-text-primary]"
-			>
+			<body className="h-full antialiased min-h-full flex flex-col bg-[--system-background] text-[--system-text-primary]">
 				<Script
 					id="theme-init"
 					strategy="beforeInteractive"

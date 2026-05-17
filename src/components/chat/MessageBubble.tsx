@@ -1,6 +1,6 @@
 import {
-	RefreshIcon,
 	PlayFreeIcons,
+	RefreshIcon,
 	SquareIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";

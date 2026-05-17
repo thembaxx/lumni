@@ -1,6 +1,6 @@
 "use client";
 
-import { RefreshIcon, Cancel01Icon } from "@hugeicons/core-free-icons";
+import { Cancel01Icon, RefreshIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";

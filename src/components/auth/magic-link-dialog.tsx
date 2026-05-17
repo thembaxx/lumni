@@ -1,12 +1,12 @@
 import {
-	RefreshIcon,
+	AlertCircleIcon,
 	CheckmarkCircle01Icon,
 	Clock01Icon,
-	Mail01Icon,
 	FlashIcon,
-	SparklesIcon,
+	Mail01Icon,
 	RadialIcon,
-	AlertCircleIcon,
+	RefreshIcon,
+	SparklesIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";

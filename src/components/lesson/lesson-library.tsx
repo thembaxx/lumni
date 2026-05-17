@@ -1,15 +1,15 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
 import {
+	Award01Icon,
 	BookOpen01Icon,
 	Clock01Icon,
-	WorkoutSportIcon,
 	Mortarboard01Icon,
 	Target01Icon,
-	Award01Icon,
+	WorkoutSportIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";

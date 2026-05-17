@@ -4,7 +4,13 @@ import { loadFromStorage } from "@/lib/utils/storage";
 
 export interface SearchResultItem {
 	id: string;
-	type: "question" | "flashcard" | "wrong-answer" | "note" | "study-set" | "exam";
+	type:
+		| "question"
+		| "flashcard"
+		| "wrong-answer"
+		| "note"
+		| "study-set"
+		| "exam";
 	title: string;
 	snippet: string;
 	subject: string;
@@ -22,8 +28,11 @@ function searchDexieQuestions(query: string): Promise<SearchResultItem[]> {
 	return offlineDB.questions.toArray().then((rows) => {
 		const results: SearchResultItem[] = [];
 		for (const row of rows) {
-			const questions: Array<{ id: string; questionText: string; topic: string }> =
-				JSON.parse(row.questions || "[]");
+			const questions: Array<{
+				id: string;
+				questionText: string;
+				topic: string;
+			}> = JSON.parse(row.questions || "[]");
 			for (const q of questions) {
 				if (textRelevant(q.questionText, query)) {
 					results.push({
@@ -43,29 +52,27 @@ function searchDexieQuestions(query: string): Promise<SearchResultItem[]> {
 }
 
 function searchDexieWrongAnswers(query: string): Promise<SearchResultItem[]> {
-	return offlineDB.wrongAnswers
-		.toArray()
-		.then((rows) =>
-			rows
-				.filter(
-					(r) =>
-						textRelevant(r.questionText, query) ||
-						textRelevant(r.correctAnswer, query) ||
-						textRelevant(r.explanation || "", query),
-				)
-				.map(
-					(r): SearchResultItem => ({
-						id: `wa-${r.id}`,
-						type: "wrong-answer",
-						title: r.questionText.slice(0, 120),
-						snippet: `${r.correctAnswer.slice(0, 100)}...`,
-						subject: r.subject,
-						topic: r.topic,
-						createdAt: r.createdAt,
-					}),
-				)
-				.slice(0, 10),
-		);
+	return offlineDB.wrongAnswers.toArray().then((rows) =>
+		rows
+			.filter(
+				(r) =>
+					textRelevant(r.questionText, query) ||
+					textRelevant(r.correctAnswer, query) ||
+					textRelevant(r.explanation || "", query),
+			)
+			.map(
+				(r): SearchResultItem => ({
+					id: `wa-${r.id}`,
+					type: "wrong-answer",
+					title: r.questionText.slice(0, 120),
+					snippet: `${r.correctAnswer.slice(0, 100)}...`,
+					subject: r.subject,
+					topic: r.topic,
+					createdAt: r.createdAt,
+				}),
+			)
+			.slice(0, 10),
+	);
 }
 
 function searchLocalStorageFlashcards(query: string): SearchResultItem[] {
@@ -73,7 +80,9 @@ function searchLocalStorageFlashcards(query: string): SearchResultItem[] {
 	return flashcards
 		.filter(
 			(c) =>
-				textRelevant(c.front, query) || textRelevant(c.back, query) || textRelevant(c.topic || "", query),
+				textRelevant(c.front, query) ||
+				textRelevant(c.back, query) ||
+				textRelevant(c.topic || "", query),
 		)
 		.map(
 			(c): SearchResultItem => ({

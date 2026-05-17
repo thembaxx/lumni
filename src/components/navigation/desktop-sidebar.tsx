@@ -3,9 +3,9 @@
 import {
 	BookOpen01Icon,
 	Chat01Icon,
-	Settings01Icon,
 	Home01Icon,
 	Notebook,
+	Settings01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 

@@ -1,10 +1,10 @@
 "use client";
 
 import {
-	GridIcon,
-	TemperatureIcon,
-	SparklesIcon,
 	ChartUpIcon,
+	GridIcon,
+	SparklesIcon,
+	TemperatureIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m, motion } from "framer-motion";

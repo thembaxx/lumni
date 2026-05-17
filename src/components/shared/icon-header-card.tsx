@@ -1,7 +1,7 @@
 "use client";
 
-import { HugeiconsIcon } from "@hugeicons/react";
 import type { IconSvgElement } from "@hugeicons/react";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/shared";
 

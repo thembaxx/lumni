@@ -1,18 +1,18 @@
 "use client";
 
 import {
-	File01Icon,
-	StarSquareIcon,
 	AlertCircleIcon,
-	NoteIcon,
 	BookOpen01Icon,
+	File01Icon,
+	NoteIcon,
+	StarSquareIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { Badge } from "@/components/ui/badge";
 import type { SearchResultItem } from "@/lib/services/search-service";
 import { searchAll } from "@/lib/services/search-service";
 import { cn } from "@/lib/shared";
-import { Badge } from "@/components/ui/badge";
 
 const typeConfig: Record<
 	SearchResultItem["type"],
@@ -44,7 +44,11 @@ interface SearchResultsProps {
 	className?: string;
 }
 
-export function SearchResults({ query, onClose, className }: SearchResultsProps) {
+export function SearchResults({
+	query,
+	onClose,
+	className,
+}: SearchResultsProps) {
 	const [results, setResults] = useState<SearchResultItem[]>([]);
 	const [loading, setLoading] = useState(false);
 	const [selectedIndex, setSelectedIndex] = useState(0);
@@ -82,7 +86,9 @@ export function SearchResults({ query, onClose, className }: SearchResultsProps)
 	);
 
 	useEffect(() => {
-		const el = listRef.current?.children[selectedIndex] as HTMLElement | undefined;
+		const el = listRef.current?.children[selectedIndex] as
+			| HTMLElement
+			| undefined;
 		el?.scrollIntoView({ block: "nearest" });
 	}, [selectedIndex]);
 
@@ -108,9 +114,7 @@ export function SearchResults({ query, onClose, className }: SearchResultsProps)
 							onClick={onClose}
 							className={cn(
 								"w-full text-left flex items-start gap-3 p-2.5 rounded-xl transition-colors",
-								i === selectedIndex
-									? "bg-accent"
-									: "hover:bg-accent/50",
+								i === selectedIndex ? "bg-accent" : "hover:bg-accent/50",
 							)}
 						>
 							<div className="mt-0.5 shrink-0">
@@ -127,10 +131,7 @@ export function SearchResults({ query, onClose, className }: SearchResultsProps)
 								</p>
 							</div>
 							<div className="shrink-0 flex items-center gap-1.5">
-								<Badge
-									variant="secondary"
-									className="text-[10px] px-1.5 py-0"
-								>
+								<Badge variant="secondary" className="text-[10px] px-1.5 py-0">
 									{config.label}
 								</Badge>
 								{item.subject && (

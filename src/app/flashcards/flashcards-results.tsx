@@ -1,6 +1,6 @@
 "use client";
 
-import { UndoIcon, Home01Icon, Target01Icon } from "@hugeicons/core-free-icons";
+import { Home01Icon, Target01Icon, UndoIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Confetti } from "@/components/celebration";
 import { Button } from "@/components/ui/button";

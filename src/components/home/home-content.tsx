@@ -1,20 +1,20 @@
 "use client";
 
-import { Activity02Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import {
+	Activity02Icon,
 	ArrowRight01Icon,
 	BookOpen01Icon,
 	BrainIcon,
+	BulbIcon,
 	ChartBar,
+	ChartUpIcon,
 	GlobeIcon,
 	Mortarboard01Icon,
-	BulbIcon,
 	SparklesIcon,
 	Target01Icon,
 	Timer01Icon,
-	ChartUpIcon,
 } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";

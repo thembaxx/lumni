@@ -13,6 +13,7 @@ import { TabNav } from "@/components/dashboard/navigation/tab-nav";
 import { QuickActions } from "@/components/dashboard/quick-actions/quick-actions";
 import { QuizStartCard } from "@/components/dashboard/quiz-start-card";
 import { ScrollAmbient } from "@/components/dashboard/scroll-ambient";
+import { SearchWidget } from "@/components/dashboard/search/search-widget";
 import { StatsCards } from "@/components/dashboard/stats-cards";
 import { StatsRow } from "@/components/dashboard/stats-row";
 import { StreakCard } from "@/components/dashboard/streak-card";
@@ -22,7 +23,6 @@ import type { TabValue } from "@/components/dashboard/types";
 import type { QuizResults } from "@/components/quiz/quiz-view";
 import { QuizView } from "@/components/quiz/quiz-view";
 import { PerpetualFloat } from "@/components/shared/perpetual-float";
-import { SearchWidget } from "@/components/dashboard/search/search-widget";
 import { StaggerList } from "@/components/shared/stagger-list";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -30,12 +30,12 @@ import { useGamification } from "@/hooks/use-gamification";
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 import { useViewTransition } from "@/hooks/use-view-transition";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
-import { createFlashcard } from "@/lib/utils/spaced-repetition";
 import { trackQuestionResult } from "@/lib/competency-engine";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";
 import { useOptimizedAnimation } from "@/lib/utils/animation-optimization";
+import { createFlashcard } from "@/lib/utils/spaced-repetition";
 
 const ComparativeAnalyticsPanel = dynamic(
 	() =>

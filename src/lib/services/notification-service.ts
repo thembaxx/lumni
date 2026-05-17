@@ -1,7 +1,8 @@
 import { loadFromStorage, saveToStorage } from "@/lib/utils/storage";
 
 const NOTIF_KEY = "lumni_notification_subscription";
-const VAPID_PUBLIC_KEY = "BAbQ_jX8FJMzVHJyGq4MmQGfARgTABtHF_sbqUCpDZKmL2qOqD6Aq3XK9lVfASVEJNSUQUK_j18vBEx6mJiA46o";
+const VAPID_PUBLIC_KEY =
+	"BAbQ_jX8FJMzVHJyGq4MmQGfARgTABtHF_sbqUCpDZKmL2qOqD6Aq3XK9lVfASVEJNSUQUK_j18vBEx6mJiA46o";
 
 export interface NotificationSettings {
 	enabled: boolean;
@@ -20,7 +21,13 @@ const DEFAULT_SETTINGS: NotificationSettings = {
 };
 
 export function getSettings(): NotificationSettings {
-	return { ...DEFAULT_SETTINGS, ...loadFromStorage<Partial<NotificationSettings>>("lumni_notification_settings", {}) };
+	return {
+		...DEFAULT_SETTINGS,
+		...loadFromStorage<Partial<NotificationSettings>>(
+			"lumni_notification_settings",
+			{},
+		),
+	};
 }
 
 export function saveSettings(settings: NotificationSettings): void {
@@ -83,7 +90,11 @@ export async function requestPermission(): Promise<boolean> {
 	return result === "granted";
 }
 
-export function sendLocalNotification(title: string, body: string, url = "/dashboard"): void {
+export function sendLocalNotification(
+	title: string,
+	body: string,
+	url = "/dashboard",
+): void {
 	if (!("serviceWorker" in navigator) || !("Notification" in window)) return;
 	if (Notification.permission !== "granted") return;
 

@@ -1,4 +1,4 @@
-import { MinusSignIcon, Add01Icon } from "@hugeicons/core-free-icons";
+import { Add01Icon, MinusSignIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Button } from "@/components/ui/button";
 import type { MediaContent } from "@/lib/question-engine/types";

@@ -2,8 +2,8 @@
 
 import {
 	Calendar01Icon,
-	Clock01Icon,
 	CheckListIcon,
+	Clock01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";

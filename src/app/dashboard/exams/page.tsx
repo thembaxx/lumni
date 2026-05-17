@@ -1,12 +1,12 @@
 "use client";
 
-import { AnimatePresence, m } from "framer-motion";
 import {
 	BookOpen01Icon,
-	Search01Icon,
 	Cancel01Icon,
+	Search01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { AnimatePresence, m } from "framer-motion";
 import { useState } from "react";
 import { ExamCard } from "@/components/dashboard/practice/exam-card";
 import { GroupSkeleton } from "@/components/dashboard/practice/exam-card-skeleton";

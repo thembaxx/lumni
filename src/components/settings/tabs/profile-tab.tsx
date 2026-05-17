@@ -2,15 +2,15 @@
 
 import {
 	Camera01Icon,
+	Cancel01Icon,
 	CheckmarkCircle01Icon,
 	CompassIcon,
-	Mail01Icon,
-	Mortarboard01Icon,
-	MapPinIcon,
-	PencilIcon,
 	Logout01Icon,
+	Mail01Icon,
+	MapPinIcon,
+	Mortarboard01Icon,
+	PencilIcon,
 	UserIcon,
-	Cancel01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useEffect, useRef, useState } from "react";

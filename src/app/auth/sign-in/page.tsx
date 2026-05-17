@@ -2,9 +2,9 @@
 
 import {
 	Mail01Icon,
+	SparklesIcon,
 	ViewIcon,
 	ViewOffIcon,
-	SparklesIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { motion } from "framer-motion";

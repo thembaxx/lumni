@@ -1,8 +1,8 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
 import { Cancel01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { AnimatePresence, motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";

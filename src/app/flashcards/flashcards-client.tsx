@@ -5,9 +5,14 @@ import { Confetti, XPGainPopup } from "@/components/celebration";
 import { useGamification } from "@/hooks/use-gamification";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
-import { createFlashcard, getDueCards, getNewCards, reviewFlashcard } from "@/lib/utils/spaced-repetition";
 import { trackQuestionResult } from "@/lib/competency-engine";
 import type { Question } from "@/lib/question-engine/types";
+import {
+	createFlashcard,
+	getDueCards,
+	getNewCards,
+	reviewFlashcard,
+} from "@/lib/utils/spaced-repetition";
 import { FlashcardsActive } from "./flashcards-active";
 import { FlashcardsEmpty } from "./flashcards-empty";
 import { FlashcardsIdle } from "./flashcards-idle";
@@ -53,11 +58,7 @@ export function FlashcardsClient() {
 				totalCards > 0 ? Math.round((knownCount / totalCards) * 100) : 0;
 
 			gamification.updateStreak();
-			gamification.addXp(
-				totalCards,
-				accuracy,
-				gamification.currentStreak,
-			);
+			gamification.addXp(totalCards, accuracy, gamification.currentStreak);
 			gamification.checkAndUnlockAchievements(
 				gamification.totalQuestionsAnswered + totalCards,
 				accuracy,
@@ -66,7 +67,8 @@ export function FlashcardsClient() {
 				accuracy === 100,
 			);
 
-			const isSm2Session = sessionCards.length > 0 && sessionCards[0].id.startsWith("fc_");
+			const isSm2Session =
+				sessionCards.length > 0 && sessionCards[0].id.startsWith("fc_");
 
 			for (const card of sessionCards) {
 				const isKnown = known.has(card.id);
@@ -94,7 +96,12 @@ export function FlashcardsClient() {
 						explanation: card.back,
 					});
 					if (!isSm2Session) {
-						createFlashcard(card.front, card.back, subject, card.rawQuestion.topic);
+						createFlashcard(
+							card.front,
+							card.back,
+							subject,
+							card.rawQuestion.topic,
+						);
 					}
 				}
 			}
@@ -116,7 +123,8 @@ export function FlashcardsClient() {
 		isLoading,
 		hint: generateHint,
 	} = useQuestionEngine(engineParams, {
-		enabled: isActive && !!selectedSubject && source === "ai" && !hasSm2Ref.current,
+		enabled:
+			isActive && !!selectedSubject && source === "ai" && !hasSm2Ref.current,
 	});
 
 	const cards: FlashcardItem[] =
@@ -135,75 +143,82 @@ export function FlashcardsClient() {
 			: [];
 
 	const sm2Available = source === "ai" && sm2Cards.length > 0;
-	const displayCards = sm2Available ? sm2Cards : source === "mistakes" ? mistakeCards : cards;
+	const displayCards = sm2Available
+		? sm2Cards
+		: source === "mistakes"
+			? mistakeCards
+			: cards;
 	const totalCards = displayCards.length;
 
-	const startSession = useCallback(async (subject: string, src: FlashcardSource = "ai") => {
-		setSelectedSubject(subject);
-		setSource(src);
-		setIsActive(true);
-		setCurrentIndex(0);
-		setIsFlipped(false);
-		setKnownCards(new Set());
-		setReviewCards(new Set());
-		setMistakeCards([]);
-		setSm2Cards([]);
-		setSessionComplete(false);
+	const startSession = useCallback(
+		async (subject: string, src: FlashcardSource = "ai") => {
+			setSelectedSubject(subject);
+			setSource(src);
+			setIsActive(true);
+			setCurrentIndex(0);
+			setIsFlipped(false);
+			setKnownCards(new Set());
+			setReviewCards(new Set());
+			setMistakeCards([]);
+			setSm2Cards([]);
+			setSessionComplete(false);
 
-		if (src === "mistakes") {
-			const wrongAnswers = await getWrongAnswers(subject.toLowerCase());
-			setMistakeCards(
-				wrongAnswers.map((wa) => ({
-					id: wa.questionId,
-					front: wa.questionText,
-					back: wa.correctAnswer || wa.explanation,
-					topic: wa.topic,
-					difficulty: "Medium",
-					hint: wa.explanation,
-					rawQuestion: {
+			if (src === "mistakes") {
+				const wrongAnswers = await getWrongAnswers(subject.toLowerCase());
+				setMistakeCards(
+					wrongAnswers.map((wa) => ({
 						id: wa.questionId,
-						questionText: wa.questionText,
-						explanation: wa.explanation,
-						subject: wa.subject,
+						front: wa.questionText,
+						back: wa.correctAnswer || wa.explanation,
 						topic: wa.topic,
-						type: "short-answer",
 						difficulty: "Medium",
-						bloomTaxonomy: "understand",
-						points: 1,
-						body: { modelAnswer: wa.correctAnswer || wa.explanation },
-					} as Question,
-				})),
-			);
-		} else {
-			const sm2Due = getDueCards(subject.toLowerCase());
-			const sm2New = getNewCards(subject.toLowerCase(), 10);
-			const allSm2 = [...sm2Due, ...sm2New];
-			hasSm2Ref.current = allSm2.length > 0;
-			if (allSm2.length > 0) {
-				setSm2Cards(
-					allSm2.map((c) => ({
-						id: c.id,
-						front: c.front,
-						back: c.back,
-						topic: c.topic ?? subject,
-						difficulty: "Medium",
+						hint: wa.explanation,
 						rawQuestion: {
-							id: c.id,
-							questionText: c.front,
-							explanation: c.back,
-							subject: c.subject,
-							topic: c.topic ?? subject,
+							id: wa.questionId,
+							questionText: wa.questionText,
+							explanation: wa.explanation,
+							subject: wa.subject,
+							topic: wa.topic,
 							type: "short-answer",
 							difficulty: "Medium",
 							bloomTaxonomy: "understand",
 							points: 1,
-							body: { modelAnswer: c.back },
+							body: { modelAnswer: wa.correctAnswer || wa.explanation },
 						} as Question,
 					})),
 				);
+			} else {
+				const sm2Due = getDueCards(subject.toLowerCase());
+				const sm2New = getNewCards(subject.toLowerCase(), 10);
+				const allSm2 = [...sm2Due, ...sm2New];
+				hasSm2Ref.current = allSm2.length > 0;
+				if (allSm2.length > 0) {
+					setSm2Cards(
+						allSm2.map((c) => ({
+							id: c.id,
+							front: c.front,
+							back: c.back,
+							topic: c.topic ?? subject,
+							difficulty: "Medium",
+							rawQuestion: {
+								id: c.id,
+								questionText: c.front,
+								explanation: c.back,
+								subject: c.subject,
+								topic: c.topic ?? subject,
+								type: "short-answer",
+								difficulty: "Medium",
+								bloomTaxonomy: "understand",
+								points: 1,
+								body: { modelAnswer: c.back },
+							} as Question,
+						})),
+					);
+				}
 			}
-		}
-	}, [getWrongAnswers]);
+		},
+		[getWrongAnswers],
+	);
 
 	const stopSession = useCallback(() => {
 		setIsActive(false);
@@ -231,10 +246,20 @@ export function FlashcardsClient() {
 			setCurrentIndex((prev) => prev + 1);
 		} else {
 			setSessionComplete(true);
-			processSessionResults(displayCards, knownCards, selectedSubject.toLowerCase());
+			processSessionResults(
+				displayCards,
+				knownCards,
+				selectedSubject.toLowerCase(),
+			);
 		}
 		setIsFlipped(false);
-	}, [currentIndex, displayCards, knownCards, selectedSubject, processSessionResults]);
+	}, [
+		currentIndex,
+		displayCards,
+		knownCards,
+		selectedSubject,
+		processSessionResults,
+	]);
 
 	const handleKnown = useCallback(() => {
 		const currentCard = displayCards[currentIndex];
@@ -270,7 +295,12 @@ export function FlashcardsClient() {
 	}, []);
 
 	if (!isActive) {
-		return <FlashcardsIdle onSelect={(subject) => startSession(subject, "ai")} onReviewMistakes={(subject) => startSession(subject, "mistakes")} />;
+		return (
+			<FlashcardsIdle
+				onSelect={(subject) => startSession(subject, "ai")}
+				onReviewMistakes={(subject) => startSession(subject, "mistakes")}
+			/>
+		);
 	}
 
 	if (isLoading && source === "ai") {
@@ -278,7 +308,13 @@ export function FlashcardsClient() {
 	}
 
 	if (displayCards.length === 0) {
-		return <FlashcardsEmpty subject={selectedSubject} onGoBack={stopSession} mode={source} />;
+		return (
+			<FlashcardsEmpty
+				subject={selectedSubject}
+				onGoBack={stopSession}
+				mode={source}
+			/>
+		);
 	}
 
 	if (sessionComplete) {

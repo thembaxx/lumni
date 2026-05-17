@@ -1,11 +1,11 @@
 "use client";
 
 import {
-	BookOpen01Icon,
 	ArrowDown01Icon,
+	BookOpen01Icon,
 	CheckmarkCircle01Icon,
-	SparklesIcon,
 	RadialIcon,
+	SparklesIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, motion } from "framer-motion";

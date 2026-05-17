@@ -1,10 +1,10 @@
 "use client";
 
 import {
-	UndoIcon,
+	Award01Icon,
 	Home01Icon,
 	Timer01Icon,
-	Award01Icon,
+	UndoIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { motion } from "framer-motion";

@@ -18,13 +18,13 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import {
-	useWrongAnswerJournal,
-	type ErrorType,
-	type WrongAnswerEntry,
-	ERROR_TYPE_LABELS,
-} from "@/hooks/use-wrong-answer-journal";
 import { useSubjects } from "@/hooks/use-subjects";
+import {
+	ERROR_TYPE_LABELS,
+	type ErrorType,
+	useWrongAnswerJournal,
+	type WrongAnswerEntry,
+} from "@/hooks/use-wrong-answer-journal";
 
 function ErrorTypeSelect({
 	value,
@@ -190,7 +190,9 @@ export default function ReviewPage() {
 											{entry.topic}
 										</Badge>
 										<ErrorTypeSelect
-											value={errorTypes[entry.id!] ?? entry.errorType ?? "unknown"}
+											value={
+												errorTypes[entry.id!] ?? entry.errorType ?? "unknown"
+											}
 											onChange={(v) => handleErrorTypeChange(entry.id!, v)}
 										/>
 									</div>

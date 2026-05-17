@@ -1,8 +1,10 @@
 "use client";
 
-import { Fire02FreeIcons } from "@hugeicons/core-free-icons";
+import {
+	CheckmarkCircle01Icon,
+	Fire02FreeIcons,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { CheckmarkCircle01Icon } from "@hugeicons/core-free-icons";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { AnimatedProgressBar } from "@/components/shared/animated-progress-bar";
 import { RadialChart } from "@/components/ui/charts/radial-chart";

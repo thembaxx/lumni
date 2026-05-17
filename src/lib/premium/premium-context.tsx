@@ -19,10 +19,7 @@ export type PremiumFeature =
 	| "exam-simulator"
 	| "priority-support";
 
-const FREE_FEATURES: PremiumFeature[] = [
-	"ai-tutor",
-	"unlimited-flashcards",
-];
+const FREE_FEATURES: PremiumFeature[] = ["ai-tutor", "unlimited-flashcards"];
 
 const PREMIUM_FEATURES: PremiumFeature[] = [
 	"ai-tutor",

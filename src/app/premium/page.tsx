@@ -1,6 +1,11 @@
 "use client";
 
-import { Award01Icon, CrownIcon, FireIcon, StarsIcon } from "@hugeicons/core-free-icons";
+import {
+	Award01Icon,
+	CrownIcon,
+	FireIcon,
+	StarsIcon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -8,10 +13,26 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { usePremium } from "@/lib/premium/premium-context";
 
 const FEATURES = [
-	{ icon: StarsIcon, label: "AI Tutor", desc: "Personalised AI tutoring sessions" },
-	{ icon: FireIcon, label: "Advanced Analytics", desc: "Detailed performance breakdowns" },
-	{ icon: Award01Icon, label: "Exam Simulator", desc: "Full mock exam simulations" },
-	{ icon: CrownIcon, label: "Custom Study Plans", desc: "AI-optimised study schedules" },
+	{
+		icon: StarsIcon,
+		label: "AI Tutor",
+		desc: "Personalised AI tutoring sessions",
+	},
+	{
+		icon: FireIcon,
+		label: "Advanced Analytics",
+		desc: "Detailed performance breakdowns",
+	},
+	{
+		icon: Award01Icon,
+		label: "Exam Simulator",
+		desc: "Full mock exam simulations",
+	},
+	{
+		icon: CrownIcon,
+		label: "Custom Study Plans",
+		desc: "AI-optimised study schedules",
+	},
 ];
 
 export default function PremiumPage() {
@@ -23,7 +44,11 @@ export default function PremiumPage() {
 			<Card>
 				<CardHeader className="text-center">
 					<div className="flex justify-center mb-3">
-						<HugeiconsIcon icon={CrownIcon} size={40} className="text-amber-400" />
+						<HugeiconsIcon
+							icon={CrownIcon}
+							size={40}
+							className="text-amber-400"
+						/>
 					</div>
 					<CardTitle className="text-2xl">
 						{isPremium ? "You're Premium" : "Upgrade to Premium"}

@@ -1,16 +1,16 @@
 import {
+	AlertCircleIcon,
 	ArrowLeft01Icon,
+	Award01Icon,
+	CancelCircleIcon,
 	CheckmarkCircle01Icon,
-	RadialIcon,
 	CrownIcon,
 	FireIcon,
-	Search01Icon,
 	Confetti as PhosphorConfetti,
+	RadialIcon,
+	Search01Icon,
 	SparklesIcon,
-	Award01Icon,
 	Upload01Icon,
-	AlertCircleIcon,
-	CancelCircleIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { motion } from "framer-motion";

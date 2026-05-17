@@ -1,9 +1,9 @@
 "use client";
 
 import {
+	Delete02Icon,
 	PencilIcon,
 	RadialIcon,
-	Delete02Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, motion } from "framer-motion";

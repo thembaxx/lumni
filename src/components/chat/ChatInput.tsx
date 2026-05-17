@@ -1,7 +1,7 @@
 import {
 	Camera01Icon,
-	Mic01Icon,
 	MailSend01Icon,
+	Mic01Icon,
 	Upload01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";

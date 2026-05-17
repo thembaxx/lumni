@@ -1,8 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Search01Icon, UserIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { motion } from "framer-motion";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";

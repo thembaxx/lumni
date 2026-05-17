@@ -26,9 +26,7 @@ export class QuestionRatingService {
 		}
 	}
 
-	async getRatingsForSubject(
-		subject: string,
-	): Promise<QuestionRating[]> {
+	async getRatingsForSubject(subject: string): Promise<QuestionRating[]> {
 		return offlineDB.questionRatings
 			.where("subject")
 			.equals(subject)
@@ -37,10 +35,7 @@ export class QuestionRatingService {
 	}
 
 	async getAllRatings(): Promise<QuestionRating[]> {
-		return offlineDB.questionRatings
-			.orderBy("createdAt")
-			.reverse()
-			.toArray();
+		return offlineDB.questionRatings.orderBy("createdAt").reverse().toArray();
 	}
 
 	async getRatingStats(): Promise<{
@@ -68,13 +63,15 @@ export class QuestionRatingService {
 		threshold = 2,
 		minRatings = 2,
 	): Promise<
-		Array<{ questionId: string; subject: string; avgRating: number; count: number }>
+		Array<{
+			questionId: string;
+			subject: string;
+			avgRating: number;
+			count: number;
+		}>
 	> {
 		const all = await offlineDB.questionRatings.toArray();
-		const grouped = new Map<
-			string,
-			{ ratings: number[]; subject: string }
-		>();
+		const grouped = new Map<string, { ratings: number[]; subject: string }>();
 
 		for (const r of all) {
 			const existing = grouped.get(r.questionId) ?? {

@@ -3,8 +3,8 @@
 import {
 	ArrowLeft01Icon,
 	ArrowRight01Icon,
-	CheckmarkCircle01Icon,
 	Cancel01Icon,
+	CheckmarkCircle01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";

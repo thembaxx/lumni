@@ -1,12 +1,12 @@
 "use client";
 
 import {
+	AlertCircleIcon,
+	CancelCircleIcon,
 	CheckmarkCircle01Icon,
 	CloudUploadIcon,
 	FileIcon,
 	ImageIcon,
-	AlertCircleIcon,
-	CancelCircleIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Badge } from "@/components/ui/badge";

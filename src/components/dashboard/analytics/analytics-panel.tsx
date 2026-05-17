@@ -1,14 +1,14 @@
 "use client";
 
 import {
+	AlertCircleIcon,
 	BookOpen01Icon,
 	BrainIcon,
+	ChartDownIcon,
+	ChartUpIcon,
 	Clock01Icon,
 	FireIcon,
 	Target01Icon,
-	ChartDownIcon,
-	ChartUpIcon,
-	AlertCircleIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AccuracyBar } from "@/components/shared/accuracy-bar";

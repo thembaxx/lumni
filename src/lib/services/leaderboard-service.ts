@@ -46,7 +46,11 @@ export function getWeeklyLeaderboard(): LeaderboardEntry[] {
 	return entries;
 }
 
-export function saveWeeklySnapshot(label: string, xp: number, streak: number): void {
+export function saveWeeklySnapshot(
+	label: string,
+	xp: number,
+	streak: number,
+): void {
 	const data = loadFromStorage<
 		Array<{ label: string; xp: number; streak: number; timestamp: number }>
 	>(LEADERBOARD_KEY, []);

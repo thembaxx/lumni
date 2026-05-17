@@ -20,10 +20,15 @@ interface FlashcardsEmptyProps {
 	mode?: "ai" | "mistakes";
 }
 
-export function FlashcardsEmpty({ subject, onGoBack, mode }: FlashcardsEmptyProps) {
-	const message = mode === "mistakes"
-		? `No past mistakes found for ${subject}. Complete some quizzes first!`
-		: `Upload some ${subject} questions to start studying and ace that exam!`;
+export function FlashcardsEmpty({
+	subject,
+	onGoBack,
+	mode,
+}: FlashcardsEmptyProps) {
+	const message =
+		mode === "mistakes"
+			? `No past mistakes found for ${subject}. Complete some quizzes first!`
+			: `Upload some ${subject} questions to start studying and ace that exam!`;
 
 	return (
 		<div className="min-h-screen bg-background p-4 flex items-center justify-center">
@@ -46,9 +51,7 @@ export function FlashcardsEmpty({ subject, onGoBack, mode }: FlashcardsEmptyProp
 								</m.div>
 							</EmptyMedia>
 							<EmptyTitle>No flashcards found</EmptyTitle>
-							<EmptyDescription>
-								{message}
-							</EmptyDescription>
+							<EmptyDescription>{message}</EmptyDescription>
 						</EmptyHeader>
 						<EmptyContent>
 							<Button variant="outline" className="w-full" onClick={onGoBack}>

@@ -1,13 +1,13 @@
 "use client";
 
+import { Cancel01Icon, Search01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import {
 	AnimatePresence,
 	motion,
 	useSpring,
 	useTransform,
 } from "framer-motion";
-import { Search01Icon, Cancel01Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { memo, useEffect, useMemo, useState } from "react";
 import { Input } from "@/components/ui/input";
 import {

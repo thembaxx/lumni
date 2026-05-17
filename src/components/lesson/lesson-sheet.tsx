@@ -1,11 +1,10 @@
 "use client";
 
-import { ArrowDown01FreeIcons } from "@hugeicons/core-free-icons";
+import { ArrowDown01FreeIcons, Search01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import type { Variants } from "framer-motion";
 import { m } from "framer-motion";
-import { Search01Icon } from "@hugeicons/core-free-icons";
 import { useState } from "react";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
 import { LessonCard } from "@/components/lesson";

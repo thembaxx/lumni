@@ -18,7 +18,10 @@ export default async function ExamPage({
 
 	return (
 		<ErrorBoundary>
-			<ExamSessionClient id={id} mode={mode === "timed" ? "timed" : "practice"} />
+			<ExamSessionClient
+				id={id}
+				mode={mode === "timed" ? "timed" : "practice"}
+			/>
 		</ErrorBoundary>
 	);
 }

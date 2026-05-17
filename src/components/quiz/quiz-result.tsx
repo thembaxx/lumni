@@ -1,6 +1,6 @@
 "use client";
 
-import { RefreshIcon, Home01Icon } from "@hugeicons/core-free-icons";
+import { Home01Icon, RefreshIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m, useSpring, useTransform } from "framer-motion";
 import { AccuracyBar } from "@/components/shared/accuracy-bar";

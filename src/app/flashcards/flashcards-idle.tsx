@@ -1,6 +1,10 @@
 "use client";
 
-import { ArrowDown01Icon, BulbIcon, RefreshIcon } from "@hugeicons/core-free-icons";
+import {
+	ArrowDown01Icon,
+	BulbIcon,
+	RefreshIcon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
 import { Button } from "@/components/ui/button";
@@ -18,7 +22,10 @@ interface FlashcardsIdleProps {
 	onReviewMistakes: (subject: string) => void;
 }
 
-export function FlashcardsIdle({ onSelect, onReviewMistakes }: FlashcardsIdleProps) {
+export function FlashcardsIdle({
+	onSelect,
+	onReviewMistakes,
+}: FlashcardsIdleProps) {
 	return (
 		<div className="min-h-[100dvh] bg-background grid grid-cols-12 gap-0">
 			<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4 pb-20">
@@ -44,10 +51,7 @@ export function FlashcardsIdle({ onSelect, onReviewMistakes }: FlashcardsIdlePro
 									<SubjectsDrawer onSelect={onSelect}>
 										<Button>
 											Generate AI Flashcards
-											<HugeiconsIcon
-												icon={BulbIcon}
-												className="w-4 h-4 ml-1"
-											/>
+											<HugeiconsIcon icon={BulbIcon} className="w-4 h-4 ml-1" />
 										</Button>
 									</SubjectsDrawer>
 									<SubjectsDrawer onSelect={onReviewMistakes}>

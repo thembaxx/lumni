@@ -1,14 +1,14 @@
 "use client";
 
-import { ChampionIcon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import {
-	Settings01Icon,
+	ChampionIcon,
 	Login01Icon,
 	Logout01Icon,
+	Settings01Icon,
 	StarIcon,
 	UserIcon,
 } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useCallback, useMemo } from "react";
