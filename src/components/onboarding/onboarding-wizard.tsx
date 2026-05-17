@@ -3,9 +3,11 @@
 import { ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { motion, useReducedMotion } from "framer-motion";
+import { requestPermission, subscribeToPush, scheduleStudyReminder, saveSettings } from "@/lib/services/notification-service";
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
 import { Card, CardContent } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
 import { nscSubjects } from "@/data/nsc-subjects";
@@ -69,7 +71,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 	);
 	const [targetAps, setTargetAps] = useState(data.targetAps);
 	const [dailyMinutes, setDailyMinutes] = useState(data.dailyStudyMinutes);
-	const [notifications, _setNotifications] = useState(
+	const [notifications, setNotifications] = useState(
 		data.notificationsEnabled,
 	);
 	const [notificationFrequency, setNotificationFrequency] = useState<
@@ -135,6 +137,22 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 	};
 
 	const handleNext = () => {
+		if (step === 4 && notifications) {
+			requestPermission().then((granted) => {
+				if (granted) {
+					subscribeToPush();
+					const hour = notificationTimeOfDay === "morning" ? 9 : notificationTimeOfDay === "afternoon" ? 14 : 19;
+					saveSettings({
+						enabled: true,
+						studyReminders: true,
+						streakAlerts: true,
+						quizReminders: false,
+						reminderHour: hour,
+					});
+					scheduleStudyReminder();
+				}
+			});
+		}
 		if (step < STEPS_COPY.length - 1) {
 			setStep(step + 1);
 		} else {
@@ -366,13 +384,26 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 											ease: iOSEase,
 										}}
 									>
-										<div className="mb-6">
-											<div className="text-5xl font-extrabold text-foreground mb-1">
-												{notifications ? "On" : "Off"}
+										<div className="mb-6 flex items-center justify-between">
+											<div>
+												<div className="text-5xl font-extrabold text-foreground mb-1">
+													{notifications ? "On" : "Off"}
+												</div>
+												<p className="ios-subhead text-muted-foreground">
+													Notifications
+												</p>
 											</div>
-											<p className="ios-subhead text-muted-foreground">
-												Notifications
-											</p>
+											<Switch
+												checked={notifications}
+												onCheckedChange={(checked) => {
+													setNotifications(checked);
+													if (checked) {
+														requestPermission().then((granted) => {
+															if (granted) subscribeToPush();
+														});
+													}
+												}}
+											/>
 										</div>
 										<div className="flex flex-col gap-4 mb-6">
 											<div className="flex items-center gap-3">
@@ -438,7 +469,12 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 									</motion.div>
 								)}
 
-								<p className="text-xs text-muted-foreground mt-6">
+								{step === 4 && notifications && (
+									<p className="text-xs text-muted-foreground mt-2">
+										We'll send you study reminders to keep you on track.
+									</p>
+								)}
+								<p className="text-xs text-muted-foreground mt-2">
 									You can change everything later.
 								</p>
 							</motion.div>

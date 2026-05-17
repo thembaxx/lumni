@@ -22,6 +22,7 @@ import type { TabValue } from "@/components/dashboard/types";
 import type { QuizResults } from "@/components/quiz/quiz-view";
 import { QuizView } from "@/components/quiz/quiz-view";
 import { PerpetualFloat } from "@/components/shared/perpetual-float";
+import { SearchWidget } from "@/components/dashboard/search/search-widget";
 import { StaggerList } from "@/components/shared/stagger-list";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -345,6 +346,9 @@ export function DashboardClient({
 					</motion.div>
 				) : (
 					<>
+						<div className="px-4 pt-2">
+							<SearchWidget />
+						</div>
 						<TabNav activeTab={activeTab} onTabChange={handleTabChange} />
 						<div className="flex-1">
 							<AnimatePresence initial={false} mode="wait">

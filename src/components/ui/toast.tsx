@@ -133,7 +133,7 @@ export function useToast() {
 	return context.toast;
 }
 
-export async function toast(props: Omit<ToastData, "id">) {
+export function toast(props: Omit<ToastData, "id">) {
 	const id = Math.random().toString(36).slice(2);
 	const newToast: ToastData = {
 		...props,

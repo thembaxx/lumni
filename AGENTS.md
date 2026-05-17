@@ -145,23 +145,48 @@ Five canonical labels with default naming. See `docs/agents/triage-labels.md`.
 
 Single-context — one `CONTEXT.md` + `docs/adr/` at the repo root. See `docs/agents/domain.md`.
 
-## Bug-Fix Session (May 2026)
+## Sessions
 
-23 bugs fixed across 5 phases. Key changes:
+### Session 1 — Bug fixes (May 2026)
 
-- **Exam scoring**: `Option` type now requires `isCorrect: boolean`; exam parser fixed to set `isCorrect: false` at parse time
+- **Exam scoring**: `Option` type requires `isCorrect: boolean`; exam parser fixed
 - **Exam sessions**: Now use `exam_sessions` Appwrite collection (not `exam_papers`)
-- **Gamification**: Achievements migrated from `string[]` to `StoredAchievement[]` (`{ id, earnedAt }`) — old format auto-migrates on load
-- **Paper listing type**: Renamed from `ExamPaper` to `PaperListing` in `@/types/exam` to avoid collision with `@/types/exam-paper:ExamPaper`
-- **Upload page**: Fixed text leak (`CloudArrowUp` icon name exposed in success message)
-- **Auth**: Removed `DEFAULT_USER_ID` ("demo-user") hardcoding; `stats-row.tsx` wired to `useAuth()`
-- **Loading screen**: Fixed `setTimeout` leak on unmount (`timeoutRef` cleanup)
-- **Rate limiting**: Added `withRateLimit` wrapper to `POST /api/generate-element-fact`
-- **Backoff**: Consolidated `calculateBackoffDelay` into `src/lib/shared/backoff.ts`
+- **Gamification**: Achievements migrated from `string[]` to `StoredAchievement[]` — old format auto-migrates
+- **Paper listing type**: Renamed to `PaperListing` in `@/types/exam` 
+- **Upload page**: Fixed text leak (`CloudArrowUp` icon exposed in success message)
+- **Auth**: Removed `DEFAULT_USER_ID` hardcoding; `stats-row.tsx` wired to `useAuth()`
+- **Loading screen**: Fixed `setTimeout` leak (`timeoutRef` cleanup)
+- **Rate limiting**: `withRateLimit` wrapper for `POST /api/generate-element-fact`
+- **Backoff**: Consolidated into `src/lib/shared/backoff.ts`
+
+### Session 2 — Data flow connections
+
+- **Exam wrong answers**: Captured from `exam-session-client.tsx` and `flashcards-client.tsx`
+- **Flashcard auto-generation**: SM-2 cards created for all wrong answers
+- **Review Mistakes mode**: Loads wrong-answer journal as flashcard session
+- **Exam competency**: Uses `sectionId` as topic instead of hardcoded "exam-practice"
+
+### Session 3 — Features
+
+- **Exam answer review**: Expanded `ExamResults` with per-question expand/collapse, user vs correct answer, Review Mistakes button
+- **Wrong answer journal**: Subject/topic filters, error type categorization (6 types)
+- **Onboarding restart**: Button in Settings > Data tab
+
+### Session 4 — Architecture consolidation + Phase 5 features
+
+- **Unified competency tracking**: `trackQuestionResult()` across exam/flashcards/dashboard call sites
+- **Dashboard orchestration**: `analytics-sync` background job enqueue on quiz completion
+- **Flashcard merge**: SM-2 due cards loaded before AI fallback; SM-2 `reviewFlashcard()` used for existing cards
+- **7 quality fixes**: Removed unused import, fixed dynamic Tailwind class in `AnimatedIcon`, removed redundant CSS vars, deleted dead barrel file `src/types/questions.ts`, removed recharts `isAnimationActive={true}`, moved import to top of `exam-paper.ts`, re-exported `QuestionType`
+- **Content quality feedback**: `QuestionRating` Dexie table (v8), `QuestionRatingService`, `StarRating` component, `QuestionRatingsDashboard` in admin/quality
+- **Unified search**: `searchAll()` across Dexie questions + wrong answers + localStorage flashcards + notes; `SearchWidget` + `SearchResults` on dashboard
+- **Push notifications**: `notification-service.ts` with permission + subscribe + local notifications; wired into onboarding step 4 Switch toggle and Continue button
+- **Social leaderboard**: `leaderboard-service.ts` (local), `LeaderboardCard` component
+- **Premium gating**: `PremiumProvider` + `usePremium()` hook; `/premium` upgrade page
 
 ### Known limitations (won't fix)
 
-- `analytics-service.ts` comparative analytics depends on other users' data being present in Appwrite; falls back to estimated values when empty
+- `analytics-service.ts` comparative analytics depends on other users' data in Appwrite; falls back to estimates
 
 ### TypeScript & Lint
 
