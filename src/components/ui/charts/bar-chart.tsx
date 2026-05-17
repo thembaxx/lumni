@@ -53,7 +53,6 @@ export function BarChart({
 					dataKey={yKey}
 					fill={`var(--color-${yKey})`}
 					radius={[4, 4, 0, 0]}
-					isAnimationActive={true}
 					animationDuration={300}
 				/>
 			</RechartsPrimitive.BarChart>

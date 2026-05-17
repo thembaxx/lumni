@@ -97,7 +97,7 @@ export default function RootLayout({
 			)}
 		>
 			<body
-				className={`${fontSans.variable} ${fontMono.variable} h-full antialiased min-h-full flex flex-col bg-[--system-background] text-[--system-text-primary]`}
+				className="h-full antialiased min-h-full flex flex-col bg-[--system-background] text-[--system-text-primary]"
 			>
 				<Script
 					id="theme-init"

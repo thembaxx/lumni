@@ -57,7 +57,6 @@ export function RadialChart({
 						fill="var(--color-value)"
 						background={{ fill: trackColor }}
 						cornerRadius={size * 0.06}
-						isAnimationActive={true}
 						animationDuration={300}
 					/>
 				</RechartsPrimitive.RadialBarChart>

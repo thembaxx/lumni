@@ -64,7 +64,6 @@ export function LineChart({
 					strokeWidth={2}
 					dot={showDots ? { r: 4, strokeWidth: 2 } : false}
 					activeDot={{ r: 6, strokeWidth: 2 }}
-					isAnimationActive={true}
 					animationDuration={300}
 				/>
 			</RechartsPrimitive.LineChart>

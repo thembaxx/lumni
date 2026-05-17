@@ -82,6 +82,16 @@ export interface CachedVisual {
 	expiresAt: number;
 }
 
+export interface QuestionRating {
+	id?: number;
+	questionId: string;
+	subject: string;
+	topic?: string;
+	rating: number; // 1-5
+	feedback?: string;
+	createdAt: number;
+}
+
 export interface QuizSessionState {
 	id?: number;
 	sessionId: string;
@@ -108,6 +118,7 @@ export class LumniOfflineDB extends Dexie {
 	competencies!: Table<CompetencyRecord, number>;
 	visuals!: Table<CachedVisual, number>;
 	wrongAnswers!: Table<WrongAnswerEntry, number>;
+	questionRatings!: Table<QuestionRating, number>;
 
 	constructor() {
 		super("lumni-offline");
@@ -143,6 +154,10 @@ export class LumniOfflineDB extends Dexie {
 
 		this.version(7).stores({
 			wrongAnswers: "++id, subject, topic, reviewed, createdAt",
+		});
+
+		this.version(8).stores({
+			questionRatings: "++id, questionId, subject, topic, rating, createdAt",
 		});
 	}
 }

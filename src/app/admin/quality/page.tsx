@@ -14,6 +14,7 @@ import {
 	getQualityStats,
 	loadQualityRecords,
 } from "@/lib/utils/engine-quality";
+import { QuestionRatingsDashboard } from "@/components/admin/question-ratings-dashboard";
 
 export default function AdminQualityPage() {
 	const [quality, setQuality] = useState(getQualityStats());
@@ -241,6 +242,13 @@ export default function AdminQualityPage() {
 						</div>
 					)}
 				</div>
+			</div>
+
+			<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors p-6">
+				<h2 className="font-heading text-lg font-medium mb-4">
+					Question Ratings
+				</h2>
+				<QuestionRatingsDashboard />
 			</div>
 		</div>
 	);

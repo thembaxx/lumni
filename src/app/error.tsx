@@ -1,10 +1,6 @@
 "use client";
 
-import {
-	RefreshIcon,
-	CheckmarkCircle01Icon,
-	Home01Icon,
-} from "@hugeicons/core-free-icons";
+import { RefreshIcon, Home01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { Button } from "@/components/ui/button";

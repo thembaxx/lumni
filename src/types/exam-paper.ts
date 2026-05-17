@@ -1,3 +1,5 @@
+import type { Option as QuestionEngineOption, QuestionType } from "@/lib/question-engine/types";
+
 export interface ExamPaper {
 	metadata: PaperMetadata;
 	instructions: string[];
@@ -45,19 +47,6 @@ export interface QuestionPart {
 	subParts?: QuestionPart[] | null;
 }
 
-export type QuestionType =
-	| "multiple-choice"
-	| "matching"
-	| "short-answer"
-	| "long-answer"
-	| "essay"
-	| "calculation"
-	| "diagram"
-	| "source-based"
-	| "programming"
-	| "data-response"
-	| "mixed";
-
 export interface ContentBlock {
 	type: "text" | "image" | "table" | "formula" | "code";
 	value?: string;
@@ -72,5 +61,5 @@ export interface DataTable {
 	rows: (string | number | null)[][];
 }
 
-import type { Option as QuestionEngineOption } from "@/lib/question-engine/types";
 export type Option = QuestionEngineOption;
+export type { QuestionType };
