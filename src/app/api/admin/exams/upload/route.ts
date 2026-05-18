@@ -3,10 +3,29 @@ import { UTApi } from "uploadthing/server";
 import { databases } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 import { parseMarkdown } from "@/lib/exam-parser";
+import {
+	convertPdfWithMarker,
+	uploadImagesAndRewriteMarkdown,
+} from "@/lib/exams/marker-client";
 
 export const runtime = "nodejs";
 
 const utapi = new UTApi();
+
+async function convertWithMarkdownNew(pdfUrl: string): Promise<string> {
+	const response = await fetch("https://markdown.new/", {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify({ url: pdfUrl }),
+	});
+	if (!response.ok) {
+		throw new Error(`markdown.new conversion failed: ${response.status}`);
+	}
+	const result = await response.json();
+	const content = result.content || result.markdown || "";
+	if (!content?.trim()) throw new Error("Empty markdown from conversion");
+	return content;
+}
 
 export async function POST(request: Request) {
 	try {
@@ -27,29 +46,32 @@ export async function POST(request: Request) {
 		const pdfUrl = pdfFiles[0].url;
 		const filename = (pdfFiles[0]?.key || "exam-paper").replace(/\.pdf$/i, "");
 
-		// Convert PDF to markdown using markdown.new API
-		const encodedUrl = encodeURIComponent(pdfUrl);
-		const convertUrl = `https://markdown.new/${encodedUrl}`;
-
-		const conversionResponse = await fetch(convertUrl, {
-			headers: { Accept: "text/markdown" },
-		});
-
-		if (!conversionResponse.ok) {
+		// Download PDF bytes for Marker
+		const pdfResponse = await fetch(pdfUrl);
+		if (!pdfResponse.ok) {
 			return NextResponse.json(
-				{
-					error: `PDF conversion failed: ${conversionResponse.status}`,
-				},
+				{ error: "Failed to download PDF" },
 				{ status: 502 },
 			);
 		}
+		const pdfBuffer = Buffer.from(await pdfResponse.arrayBuffer());
 
-		const markdownContent = await conversionResponse.text();
-		if (!markdownContent?.trim()) {
-			return NextResponse.json(
-				{ error: "Empty markdown from conversion" },
-				{ status: 502 },
+		let markdownContent: string;
+
+		try {
+			// Try Marker microservice first (extracts images)
+			const markerResult = await convertPdfWithMarker(
+				pdfBuffer,
+				`${filename}.pdf`,
 			);
+			const processed = await uploadImagesAndRewriteMarkdown(
+				markerResult.markdown,
+				markerResult.images,
+			);
+			markdownContent = processed.markdown;
+		} catch {
+			// Fallback to markdown.new (text-only, no images)
+			markdownContent = await convertWithMarkdownNew(pdfUrl);
 		}
 
 		const result = parseMarkdown(markdownContent, filename);
@@ -97,8 +119,6 @@ export async function POST(request: Request) {
 					markdown: mdUpload.data?.key || "",
 					json: jsonUpload.data?.key || "",
 				}),
-				uploadedAt: new Date().toISOString(),
-				uploadedBy: "admin",
 			},
 		);
 

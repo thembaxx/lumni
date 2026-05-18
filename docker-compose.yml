@@ -1,0 +1,13 @@
+services:
+  marker-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.cpu
+    ports:
+      - "8000:8000"
+    environment:
+      - MARKER_OCR_ENGINE=surya
+      - MARKER_LANG=English
+      - TORCH_DEVICE=cpu
+    restart: unless-stopped
+    # For GPU support, use Dockerfile.gpu and deploy on a GPU machine
