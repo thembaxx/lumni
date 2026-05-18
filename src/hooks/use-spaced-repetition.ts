@@ -1,37 +1,35 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { flashcardRepository } from "@/lib/flashcard-repository";
+import type { FlashcardSM2 } from "@/lib/flashcard-repository/types";
 import {
 	convertQuizToFlashcards,
-	createFlashcard,
-	deleteFlashcard,
-	FlashcardSM2,
-	getAllCardsGrouped,
-	getCardStats,
-	getDueCards,
-	getNewCards,
-	loadFlashcards,
-	reviewFlashcard,
 	type SM2Quality,
-	saveFlashcards,
-	updateFlashcard,
 } from "@/lib/utils/spaced-repetition";
 
 export interface UseSpacedRepetitionReturn {
 	cards: FlashcardSM2[];
 	dueCards: FlashcardSM2[];
 	newCards: FlashcardSM2[];
-	stats: ReturnType<typeof getCardStats>;
+	stats: {
+		total: number;
+		due: number;
+		learning: number;
+		mature: number;
+		new: number;
+		avgEaseFactor: number;
+	};
 	groupedCards: Record<string, FlashcardSM2[]>;
 	addCard: (
 		front: string,
 		back: string,
 		subject: string,
 		topic?: string,
-	) => void;
-	removeCard: (id: string) => void;
-	editCard: (id: string, updates: Partial<FlashcardSM2>) => void;
-	review: (id: string, quality: number) => void;
+	) => Promise<void>;
+	removeCard: (id: string) => Promise<void>;
+	editCard: (id: string, updates: Partial<FlashcardSM2>) => Promise<void>;
+	review: (id: string, quality: number) => Promise<void>;
 	importFromQuiz: (
 		questions: Array<{
 			id: string;
@@ -40,25 +38,32 @@ export interface UseSpacedRepetitionReturn {
 			explanation: string;
 		}>,
 		subject: string,
-	) => void;
-	refresh: () => void;
+	) => Promise<void>;
+	refresh: () => Promise<void>;
 }
 
 export function useSpacedRepetition(): UseSpacedRepetitionReturn {
 	const [cards, setCards] = useState<FlashcardSM2[]>([]);
 	const [dueCards, setDueCards] = useState<FlashcardSM2[]>([]);
 	const [newCards, setNewCards] = useState<FlashcardSM2[]>([]);
-	const [stats, setStats] = useState(getCardStats());
+	const [stats, setStats] = useState<{
+		total: number;
+		due: number;
+		learning: number;
+		mature: number;
+		new: number;
+		avgEaseFactor: number;
+	}>({ total: 0, due: 0, learning: 0, mature: 0, new: 0, avgEaseFactor: 2.5 });
 	const [groupedCards, setGroupedCards] = useState<
 		Record<string, FlashcardSM2[]>
 	>({});
 
-	const refresh = useCallback(() => {
-		setCards(loadFlashcards());
-		setDueCards(getDueCards());
-		setNewCards(getNewCards());
-		setStats(getCardStats());
-		setGroupedCards(getAllCardsGrouped());
+	const refresh = useCallback(async () => {
+		setCards(await flashcardRepository.getAll());
+		setDueCards(await flashcardRepository.getDueCards());
+		setNewCards(await flashcardRepository.getNewCards());
+		setStats(await flashcardRepository.getStats());
+		setGroupedCards(await flashcardRepository.getGrouped());
 	}, []);
 
 	useEffect(() => {
@@ -66,39 +71,39 @@ export function useSpacedRepetition(): UseSpacedRepetitionReturn {
 	}, [refresh]);
 
 	const addCard = useCallback(
-		(front: string, back: string, subject: string, topic?: string) => {
-			createFlashcard(front, back, subject, topic);
-			refresh();
+		async (front: string, back: string, subject: string, topic?: string) => {
+			await flashcardRepository.create(front, back, subject, topic);
+			await refresh();
 		},
 		[refresh],
 	);
 
 	const removeCard = useCallback(
-		(id: string) => {
-			deleteFlashcard(id);
-			refresh();
+		async (id: string) => {
+			await flashcardRepository.delete(id);
+			await refresh();
 		},
 		[refresh],
 	);
 
 	const editCard = useCallback(
-		(id: string, updates: Partial<FlashcardSM2>) => {
-			updateFlashcard(id, updates);
-			refresh();
+		async (id: string, updates: Partial<FlashcardSM2>) => {
+			await flashcardRepository.update(id, updates);
+			await refresh();
 		},
 		[refresh],
 	);
 
 	const review = useCallback(
-		(id: string, quality: number) => {
-			reviewFlashcard(id, quality);
-			refresh();
+		async (id: string, quality: number) => {
+			await flashcardRepository.review(id, quality);
+			await refresh();
 		},
 		[refresh],
 	);
 
 	const importFromQuiz = useCallback(
-		(
+		async (
 			questions: Array<{
 				id: string;
 				questionText: string;
@@ -107,8 +112,8 @@ export function useSpacedRepetition(): UseSpacedRepetitionReturn {
 			}>,
 			subject: string,
 		) => {
-			convertQuizToFlashcards(questions, subject);
-			refresh();
+			await convertQuizToFlashcards(questions, subject);
+			await refresh();
 		},
 		[refresh],
 	);

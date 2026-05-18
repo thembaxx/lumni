@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { getAllSyncItems } from "@/lib/db/offline";
+import { offlineDB } from "@/lib/db/schema";
 import { useInterval } from "./use-interval";
 import { useOnlineStatus } from "./useOnlineStatus";
 
@@ -11,8 +11,11 @@ export function useSyncStatus() {
 
 	useInterval(async () => {
 		try {
-			const items = await getAllSyncItems();
-			setPendingCount(items.filter((i) => i.status !== "syncing").length);
+			const items = await offlineDB.jobs
+				.where("status")
+				.equals("pending")
+				.count();
+			setPendingCount(items);
 		} catch {
 			setPendingCount(0);
 		}

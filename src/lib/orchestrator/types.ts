@@ -4,7 +4,11 @@ export type JobType =
 	| "spaced-rep-update"
 	| "progress-update"
 	| "competency-update"
-	| "visual-generation";
+	| "visual-generation"
+	| "appwrite-progress-sync"
+	| "appwrite-attempt-sync"
+	| "appwrite-competency-sync"
+	| "appwrite-rating-sync";
 
 export type JobStatus =
 	| "pending"

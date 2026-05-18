@@ -51,7 +51,11 @@ export function FlashcardsClient() {
 	const { addWrongAnswer, getWrongAnswers } = useWrongAnswerJournal();
 
 	const processSessionResults = useCallback(
-		(sessionCards: FlashcardItem[], known: Set<string>, subject: string) => {
+		async (
+			sessionCards: FlashcardItem[],
+			known: Set<string>,
+			subject: string,
+		) => {
 			const totalCards = sessionCards.length;
 			const knownCount = known.size;
 			const accuracy =
@@ -74,7 +78,7 @@ export function FlashcardsClient() {
 				const isKnown = known.has(card.id);
 
 				if (isSm2Session) {
-					reviewFlashcard(card.id, isKnown ? 4 : 1);
+					await reviewFlashcard(card.id, isKnown ? 4 : 1);
 				} else {
 					trackQuestionResult({
 						subjectId: subject,
@@ -96,7 +100,7 @@ export function FlashcardsClient() {
 						explanation: card.back,
 					});
 					if (!isSm2Session) {
-						createFlashcard(
+						await createFlashcard(
 							card.front,
 							card.back,
 							subject,
@@ -188,8 +192,8 @@ export function FlashcardsClient() {
 					})),
 				);
 			} else {
-				const sm2Due = getDueCards(subject.toLowerCase());
-				const sm2New = getNewCards(subject.toLowerCase(), 10);
+				const sm2Due = await getDueCards(subject.toLowerCase());
+				const sm2New = await getNewCards(subject.toLowerCase(), 10);
 				const allSm2 = [...sm2Due, ...sm2New];
 				hasSm2Ref.current = allSm2.length > 0;
 				if (allSm2.length > 0) {
@@ -250,7 +254,7 @@ export function FlashcardsClient() {
 				displayCards,
 				knownCards,
 				selectedSubject.toLowerCase(),
-			);
+			).catch(() => {});
 		}
 		setIsFlipped(false);
 	}, [

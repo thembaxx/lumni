@@ -1,6 +1,7 @@
 import Dexie, { type Table } from "dexie";
 import type { WrongAnswerEntry } from "@/hooks/use-wrong-answer-journal";
 import type { CompetencyRecord } from "@/lib/competency-engine/types";
+import type { FlashcardSM2 } from "@/lib/flashcard-repository/types";
 import type { JobRecord } from "@/lib/orchestrator/types";
 
 export interface CachedQuestion {
@@ -134,6 +135,7 @@ export class LumniOfflineDB extends Dexie {
 	visuals!: Table<CachedVisual, number>;
 	wrongAnswers!: Table<WrongAnswerEntry, number>;
 	questionRatings!: Table<QuestionRating, number>;
+	flashcards!: Table<FlashcardSM2, string>;
 
 	constructor() {
 		super("lumni-offline");
@@ -177,6 +179,11 @@ export class LumniOfflineDB extends Dexie {
 
 		this.version(9).stores({
 			chatMessages: "++id, role, timestamp",
+		});
+
+		this.version(10).stores({
+			flashcards:
+				"&id, subject, topic, nextReview, easeFactor, interval, repetitions",
 		});
 	}
 }

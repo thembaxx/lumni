@@ -1,5 +1,5 @@
-import { addToSyncQueue } from "@/lib/db/offline";
 import { offlineDB, type QuestionRating } from "@/lib/db/schema";
+import { enqueue } from "@/lib/orchestrator/job-queue";
 
 export class QuestionRatingService {
 	async rate(params: {
@@ -26,7 +26,7 @@ export class QuestionRatingService {
 			await offlineDB.questionRatings.add(record as QuestionRating);
 		}
 
-		await addToSyncQueue("createRating", {
+		await enqueue("appwrite-rating-sync", {
 			questionId: params.questionId,
 			subject: params.subject,
 			rating: record.rating,

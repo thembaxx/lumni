@@ -1,0 +1,79 @@
+export interface FlashcardSM2 {
+	id: string;
+	front: string;
+	back: string;
+	subject: string;
+	topic?: string;
+	easeFactor: number;
+	interval: number;
+	repetitions: number;
+	nextReview: number;
+	lastReview: number | null;
+	createdAt: number;
+}
+
+export interface SM2Quality {
+	quality: number;
+	label: string;
+	description: string;
+}
+
+export const SM2_QUALITIES: SM2Quality[] = [
+	{
+		quality: 0,
+		label: "Complete Blackout",
+		description: "Couldn't recall at all",
+	},
+	{
+		quality: 1,
+		label: "Incorrect - Remembered",
+		description: "Got it wrong but remembered after",
+	},
+	{
+		quality: 2,
+		label: "Incorrect - Easy",
+		description: "Got it wrong, answer seemed easy after",
+	},
+	{
+		quality: 3,
+		label: "Correct - Hard",
+		description: "Got it right with serious difficulty",
+	},
+	{
+		quality: 4,
+		label: "Correct - Good",
+		description: "Got it right with some hesitation",
+	},
+	{
+		quality: 5,
+		label: "Correct - Easy",
+		description: "Got it right instantly and easily",
+	},
+];
+
+export interface FlashcardStats {
+	total: number;
+	due: number;
+	learning: number;
+	mature: number;
+	new: number;
+	avgEaseFactor: number;
+}
+
+export interface FlashcardRepository {
+	getDueCards(subject?: string): Promise<FlashcardSM2[]>;
+	getNewCards(subject?: string, limit?: number): Promise<FlashcardSM2[]>;
+	getAll(subject?: string): Promise<FlashcardSM2[]>;
+	getById(id: string): Promise<FlashcardSM2 | null>;
+	create(
+		front: string,
+		back: string,
+		subject: string,
+		topic?: string,
+	): Promise<FlashcardSM2>;
+	update(id: string, updates: Partial<FlashcardSM2>): Promise<void>;
+	delete(id: string): Promise<void>;
+	review(id: string, quality: number): Promise<FlashcardSM2 | null>;
+	getStats(): Promise<FlashcardStats>;
+	getGrouped(): Promise<Record<string, FlashcardSM2[]>>;
+}

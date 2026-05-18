@@ -8,12 +8,11 @@ import {
 	useCallback,
 	useContext,
 	useEffect,
+	useReducer,
 	useRef,
 } from "react";
 import { APPWRITE_ENDPOINT, APPWRITE_PROJECT, account } from "@/lib/appwrite";
 import { flushOfflineData } from "@/lib/sync/sync-handler";
-import { processQueue } from "@/lib/sync-queue";
-import { useAuthStore } from "@/store/auth";
 import { getReadableErrorMessage } from "./errors";
 import {
 	attemptMagicLink,
@@ -44,8 +43,60 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 
 const ANONYMOUS_ATTEMPTED_KEY = "lumni_anonymous_attempted";
 
+interface AuthState {
+	user: Models.User<Models.Preferences> | null;
+	status: AuthStatus;
+	isAnonymous: boolean;
+	error: string | null;
+	authReady: boolean;
+}
+
+type AuthAction =
+	| {
+			type: "SET_USER";
+			user: Models.User<Models.Preferences> | null;
+			status: AuthStatus;
+			isAnonymous: boolean;
+	  }
+	| { type: "SET_ERROR"; error: string | null }
+	| { type: "SET_AUTH_READY"; authReady: boolean }
+	| { type: "RESET" };
+
+function authReducer(state: AuthState, action: AuthAction): AuthState {
+	switch (action.type) {
+		case "SET_USER":
+			return {
+				...state,
+				user: action.user,
+				status: action.status,
+				isAnonymous: action.isAnonymous,
+				error: null,
+			};
+		case "SET_ERROR":
+			return { ...state, error: action.error };
+		case "SET_AUTH_READY":
+			return { ...state, authReady: action.authReady };
+		case "RESET":
+			return {
+				user: null,
+				status: "unauthenticated",
+				isAnonymous: false,
+				error: null,
+				authReady: true,
+			};
+	}
+}
+
+const INITIAL_AUTH_STATE: AuthState = {
+	user: null,
+	status: "loading",
+	isAnonymous: false,
+	error: null,
+	authReady: false,
+};
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-	const store = useAuthStore();
+	const [state, dispatch] = useReducer(authReducer, INITIAL_AUTH_STATE);
 	const queryClient = useQueryClient();
 	const router = useRouter();
 	const initRef = useRef(false);
@@ -62,10 +113,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 			try {
 				const currentUser = await account.get();
 				const isAnon = currentUser.labels?.includes("anonymous") ?? false;
-				store.setUser(currentUser, "authenticated", isAnon);
+				dispatch({
+					type: "SET_USER",
+					user: currentUser,
+					status: "authenticated",
+					isAnonymous: isAnon,
+				});
 			} catch {
 				if (alreadyAttempted) {
-					store.setAuthReady(true);
+					dispatch({ type: "SET_AUTH_READY", authReady: true });
 					return;
 				}
 
@@ -73,25 +129,35 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 					await account.createAnonymousSession();
 					const anonUser = await account.get();
 					localStorage.setItem(ANONYMOUS_ATTEMPTED_KEY, "true");
-					store.setUser(anonUser, "authenticated", true);
+					dispatch({
+						type: "SET_USER",
+						user: anonUser,
+						status: "authenticated",
+						isAnonymous: true,
+					});
 				} catch {
-					store.setUser(null, "unauthenticated", false);
+					dispatch({
+						type: "SET_USER",
+						user: null,
+						status: "unauthenticated",
+						isAnonymous: false,
+					});
 				}
 			} finally {
-				store.setAuthReady(true);
+				dispatch({ type: "SET_AUTH_READY", authReady: true });
 			}
 		}
 
 		init();
-	}, [store.setUser, store.setAuthReady]);
+	}, []);
 
 	const signIn = useCallback(
 		async (email: string, password: string) => {
-			store.setError(null);
+			dispatch({ type: "SET_ERROR", error: null });
 
 			const rateLimit = attemptSignIn(email);
 			if (!rateLimit.allowed) {
-				store.setError(rateLimit.errorMessage);
+				dispatch({ type: "SET_ERROR", error: rateLimit.errorMessage });
 				return;
 			}
 
@@ -99,59 +165,65 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 				await account.createEmailPasswordSession(email, password);
 				const user = await account.get();
 				recordSuccessfulSignIn(email);
-				store.setUser(user, "authenticated", false);
+				dispatch({
+					type: "SET_USER",
+					user,
+					status: "authenticated",
+					isAnonymous: false,
+				});
 				queryClient.invalidateQueries({ queryKey: ["user"] });
 			} catch (err) {
-				store.setError(getReadableErrorMessage(err));
+				dispatch({ type: "SET_ERROR", error: getReadableErrorMessage(err) });
 				throw err;
 			}
 		},
-		[queryClient, store.setUser, store.setError],
+		[queryClient],
 	);
 
 	const signUp = useCallback(
 		async (email: string, password: string, name: string) => {
-			store.setError(null);
+			dispatch({ type: "SET_ERROR", error: null });
 			try {
 				await account.updateName(name);
 				await account.updateEmail(email, password);
 				const user = await account.get();
-				store.setUser(user, "authenticated", false);
+				dispatch({
+					type: "SET_USER",
+					user,
+					status: "authenticated",
+					isAnonymous: false,
+				});
 
 				await flushOfflineData(user.$id).catch(() => {});
-				await processQueue().catch(() => {});
 			} catch (err) {
-				store.setError(getReadableErrorMessage(err));
+				dispatch({ type: "SET_ERROR", error: getReadableErrorMessage(err) });
 				throw err;
 			}
 		},
-		[store.setUser, store.setError],
+		[],
 	);
 
-	const signInWithMagicLink = useCallback(
-		async (email: string) => {
-			store.setError(null);
+	const signInWithMagicLink = useCallback(async (email: string) => {
+		dispatch({ type: "SET_ERROR", error: null });
 
-			const rateLimit = attemptMagicLink(email);
-			if (!rateLimit.allowed) {
-				store.setError(rateLimit.errorMessage);
-				return;
-			}
+		const rateLimit = attemptMagicLink(email);
+		if (!rateLimit.allowed) {
+			dispatch({ type: "SET_ERROR", error: rateLimit.errorMessage });
+			return;
+		}
 
-			try {
-				const redirectUrl =
-					typeof window !== "undefined"
-						? `${window.location.origin}/api/auth/callback`
-						: `${APPWRITE_ENDPOINT}/auth/magic-link/callback`;
+		try {
+			const redirectUrl =
+				typeof window !== "undefined"
+					? `${window.location.origin}/api/auth/callback`
+					: `${APPWRITE_ENDPOINT}/auth/magic-link/callback`;
 
-				await account.createMagicURLToken(email, redirectUrl);
-			} catch (err) {
-				store.setError(getReadableErrorMessage(err));
-				throw err;
-			}
-		},
-		[store.setError],
-	);
+			await account.createMagicURLToken(email, redirectUrl);
+		} catch (err) {
+			dispatch({ type: "SET_ERROR", error: getReadableErrorMessage(err) });
+			throw err;
+		}
+	}, []);
 
 	const signOut = useCallback(async () => {
 		try {
@@ -159,15 +231,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 		} catch {
 		} finally {
 			localStorage.removeItem(ANONYMOUS_ATTEMPTED_KEY);
-			store.reset();
+			dispatch({ type: "RESET" });
 			queryClient.clear();
 			router.push("/");
 			router.refresh();
 		}
-	}, [queryClient, router, store.reset]);
+	}, [queryClient, router]);
 
 	const verifyEmail = useCallback(async () => {
-		store.setError(null);
+		dispatch({ type: "SET_ERROR", error: null });
 		try {
 			const redirectUrl =
 				typeof window !== "undefined"
@@ -175,14 +247,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 					: "";
 			await account.createVerification(redirectUrl);
 		} catch (err) {
-			store.setError(getReadableErrorMessage(err));
+			dispatch({ type: "SET_ERROR", error: getReadableErrorMessage(err) });
 			throw err;
 		}
-	}, [store.setError]);
+	}, []);
 
 	const updateProfile = useCallback(
 		async (fields: { name?: string; prefs?: Record<string, unknown> }) => {
-			store.setError(null);
+			dispatch({ type: "SET_ERROR", error: null });
 			try {
 				if (fields.name !== undefined) {
 					await account.updateName(fields.name);
@@ -191,23 +263,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 					await account.updatePrefs(fields.prefs);
 				}
 				const user = await account.get();
-				store.setUser(user, "authenticated", store.isAnonymous);
+				dispatch({
+					type: "SET_USER",
+					user,
+					status: "authenticated",
+					isAnonymous: state.isAnonymous,
+				});
 			} catch (err) {
-				store.setError(getReadableErrorMessage(err));
+				dispatch({ type: "SET_ERROR", error: getReadableErrorMessage(err) });
 				throw err;
 			}
 		},
-		[store.isAnonymous, store.setUser, store.setError],
+		[state.isAnonymous],
 	);
 
 	return (
 		<AuthContext
 			value={{
-				user: store.user,
-				status: store.status,
-				isAnonymous: store.isAnonymous,
-				error: store.error,
-				authReady: store.authReady,
+				user: state.user,
+				status: state.status,
+				isAnonymous: state.isAnonymous,
+				error: state.error,
+				authReady: state.authReady,
 				signIn,
 				signUp,
 				signInWithMagicLink,

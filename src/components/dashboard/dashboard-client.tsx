@@ -358,7 +358,7 @@ export function DashboardClient({
 					userAnswer: "(see quiz history)",
 					explanation: question.explanation,
 				});
-				createFlashcard(
+				await createFlashcard(
 					question.questionText,
 					question.explanation,
 					question.subject,

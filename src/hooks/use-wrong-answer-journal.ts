@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback } from "react";
-import { offlineDB } from "@/lib/db/offline";
+import { offlineDB } from "@/lib/db/schema";
 
 export type ErrorType =
 	| "concept-misunderstanding"

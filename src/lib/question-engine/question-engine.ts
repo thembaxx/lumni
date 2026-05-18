@@ -1,7 +1,7 @@
 import { initAI, isAIConfigured } from "@/lib/ai";
 import type { CacheTier } from "@/lib/caching-strategy";
 import { CachingStrategy } from "@/lib/caching-strategy";
-import { getCachedQuestions } from "@/lib/db/offline";
+import { getCachedQuestions } from "@/lib/db/repositories/question-cache";
 import { ProcessorRegistry } from "./processor-registry";
 import { PromptManager } from "./prompt-manager";
 import type {
@@ -38,7 +38,9 @@ export class QuestionEngine {
 						return null;
 					},
 					write: async (params, questions) => {
-						const { cacheQuestions } = await import("@/lib/db/offline");
+						const { cacheQuestions } = await import(
+							"@/lib/db/repositories/question-cache"
+						);
 						await cacheQuestions(
 							params.subject,
 							questions as Question[],

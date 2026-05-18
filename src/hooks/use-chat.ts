@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { generateWithSystem } from "@/lib/ai/client";
+import { CHAT_SYSTEM_PROMPT, generateWithSystem } from "@/lib/ai/client";
 import { loadFromStorage, saveToStorage } from "@/lib/utils/storage";
 
 export interface ChatMessage {
@@ -18,8 +18,6 @@ export interface ChatMessage {
 	error?: string | null;
 	retryCount?: number;
 }
-
-const CHAT_SYSTEM_PROMPT = `You are a helpful study assistant and tutor. Your role is to help students understand their subjects, answer questions, explain concepts, and provide guidance on their studies. Be friendly, encouraging, and patient. Use clear explanations with examples when helpful. If you don't know something, admit it and try to help them find the answer.`;
 
 const CHAT_STORAGE_KEY = "lumni_chat_history";
 

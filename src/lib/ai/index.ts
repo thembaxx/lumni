@@ -1,5 +1,4 @@
 export * from "./client";
-export * from "./prompts";
 export type {
 	AIFailure,
 	AIProvider,

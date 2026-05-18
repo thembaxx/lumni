@@ -1,5 +1,12 @@
+import { Query } from "appwrite";
 import { curriculumRegistry } from "@/curriculum";
 import { competencyService, computeBloomWeight } from "@/lib/competency-engine";
+import {
+	COLLECTIONS,
+	createDocument,
+	listDocuments,
+	updateDocument,
+} from "@/lib/db/client";
 import { syncQuestionsToAppwrite } from "@/lib/question-engine/persistence";
 import type { Question } from "@/lib/question-engine/types";
 import type { ProcessResult } from "@/lib/queue/core";
@@ -75,6 +82,135 @@ const handlers: Record<JobType, JobHandler> = {
 			questionText,
 			subject,
 			topic: topic ?? "",
+		});
+	},
+
+	"appwrite-progress-sync": async (payload) => {
+		const data = payload as {
+			odSubjectId: string;
+			userId: string;
+			questionsAttempted: number;
+			correctCount: number;
+			currentStreak: number;
+			longestStreak: number;
+		};
+		const existing = await listDocuments<Record<string, unknown>>(
+			COLLECTIONS.USER_PROGRESS,
+			[
+				Query.equal("userId", data.userId),
+				Query.equal("subjectId", data.odSubjectId),
+			],
+		);
+		const now = new Date().toISOString();
+		if (existing.length > 0) {
+			const doc = existing[0];
+			const currentAttempted = (doc.questionsAttempted as number) || 0;
+			const currentCorrect = (doc.correctCount as number) || 0;
+			const longestStreak = (doc.longestStreak as number) || 0;
+			await updateDocument(COLLECTIONS.USER_PROGRESS, doc.$id as string, {
+				questionsAttempted: currentAttempted + data.questionsAttempted,
+				correctCount: currentCorrect + data.correctCount,
+				currentStreak: data.currentStreak,
+				longestStreak: Math.max(longestStreak, data.longestStreak),
+				updatedAt: now,
+			});
+		} else {
+			await createDocument(COLLECTIONS.USER_PROGRESS, {
+				userId: data.userId,
+				subjectId: data.odSubjectId,
+				questionsAttempted: data.questionsAttempted,
+				correctCount: data.correctCount,
+				currentStreak: data.currentStreak,
+				longestStreak: data.longestStreak,
+				createdAt: now,
+				updatedAt: now,
+			});
+		}
+	},
+
+	"appwrite-attempt-sync": async (payload) => {
+		const data = payload as {
+			userId: string;
+			subjectId: string;
+			score: number;
+			totalQuestions: number;
+			duration: number;
+			completedAt: number;
+		};
+		await createDocument(COLLECTIONS.STUDY_SESSIONS, {
+			userId: data.userId,
+			subjectId: data.subjectId,
+			questionsAnswered: data.totalQuestions,
+			correctCount: data.score,
+			duration: data.duration,
+			startedAt: new Date(
+				data.completedAt - data.duration * 1000,
+			).toISOString(),
+			endedAt: new Date(data.completedAt).toISOString(),
+		});
+	},
+
+	"appwrite-competency-sync": async (payload) => {
+		const data = payload as {
+			subjectId: string;
+			topicId: string;
+			bloomLevel: string;
+			proficiency: number;
+			attempts: number;
+			level: string;
+			lastAssessed: number;
+		};
+		const existing = await listDocuments<Record<string, unknown>>(
+			COLLECTIONS.COMPETENCIES,
+			[
+				Query.equal("subjectId", data.subjectId),
+				Query.equal("topicId", data.topicId),
+				Query.equal("bloomLevel", data.bloomLevel),
+			],
+		);
+		const now = new Date().toISOString();
+		if (existing.length > 0) {
+			await updateDocument(
+				COLLECTIONS.COMPETENCIES,
+				existing[0].$id as string,
+				{
+					proficiency: data.proficiency,
+					attempts: data.attempts,
+					level: data.level,
+					lastAssessed: data.lastAssessed,
+					updatedAt: now,
+				},
+			);
+		} else {
+			await createDocument(COLLECTIONS.COMPETENCIES, {
+				subjectId: data.subjectId,
+				topicId: data.topicId,
+				bloomLevel: data.bloomLevel,
+				proficiency: data.proficiency,
+				attempts: data.attempts,
+				level: data.level,
+				lastAssessed: data.lastAssessed,
+				createdAt: now,
+				updatedAt: now,
+			});
+		}
+	},
+
+	"appwrite-rating-sync": async (payload) => {
+		const data = payload as {
+			questionId: string;
+			subject: string;
+			rating: number;
+			feedback?: string;
+			createdAt: number;
+		};
+		await createDocument(COLLECTIONS.QUESTIONS, {
+			type: "rating",
+			questionId: data.questionId,
+			subject: data.subject,
+			rating: data.rating,
+			feedback: data.feedback,
+			createdAt: new Date(data.createdAt).toISOString(),
 		});
 	},
 };

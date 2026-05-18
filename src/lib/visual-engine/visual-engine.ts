@@ -1,7 +1,11 @@
 import { initAI, isAIConfigured } from "@/lib/ai";
 import type { CacheTier } from "@/lib/caching-strategy";
 import { CachingStrategy } from "@/lib/caching-strategy";
-import { cacheVisual, getCachedVisual, makeCacheKey } from "@/lib/db/offline";
+import {
+	cacheVisual,
+	getCachedVisual,
+	makeCacheKey,
+} from "@/lib/db/repositories/visual-cache";
 import { searchImage } from "./image-resolver";
 import { generateDiagram } from "./stem-renderer";
 import type { VisualContent, VisualEngineParams } from "./types";

@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { generateWithSystem } from "@/lib/ai/client";
-
-const CHAT_SYSTEM_PROMPT = `You are a helpful study assistant and tutor. Your role is to help students understand their subjects, answer questions, explain concepts, and provide guidance on their studies. Be friendly, encouraging, and patient. Use clear explanations with examples when helpful. If you don't know something, admit it and try to help them find the answer.`;
+import { CHAT_SYSTEM_PROMPT, generateWithSystem } from "@/lib/ai/client";
 
 export async function POST(request: NextRequest) {
 	try {

@@ -1,5 +1,5 @@
 import { offlineDB } from "@/lib/db/schema";
-import { loadFlashcards } from "@/lib/utils/spaced-repetition";
+import { flashcardRepository } from "@/lib/flashcard-repository";
 import { loadFromStorage } from "@/lib/utils/storage";
 
 export interface SearchResultItem {
@@ -75,8 +75,10 @@ function searchDexieWrongAnswers(query: string): Promise<SearchResultItem[]> {
 	);
 }
 
-function searchLocalStorageFlashcards(query: string): SearchResultItem[] {
-	const flashcards = loadFlashcards();
+async function searchDexieFlashcards(
+	query: string,
+): Promise<SearchResultItem[]> {
+	const flashcards = await flashcardRepository.getAll();
 	return flashcards
 		.filter(
 			(c) =>
@@ -137,7 +139,7 @@ export async function searchAll(query: string): Promise<SearchResultItem[]> {
 	const results = await Promise.all([
 		searchDexieQuestions(query),
 		searchDexieWrongAnswers(query),
-		Promise.resolve(searchLocalStorageFlashcards(query)),
+		searchDexieFlashcards(query),
 		Promise.resolve(searchLocalStorageNotes(query)),
 	]);
 
@@ -156,7 +158,7 @@ export async function searchByType(
 		case "wrong-answer":
 			return searchDexieWrongAnswers(query);
 		case "flashcard":
-			return Promise.resolve(searchLocalStorageFlashcards(query));
+			return searchDexieFlashcards(query);
 		case "note":
 			return Promise.resolve(searchLocalStorageNotes(query));
 		default:

@@ -560,7 +560,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 					userAnswer: getAnswerText(item.part, answers[item.part.id]),
 					explanation: "",
 				});
-				createFlashcard(
+				await createFlashcard(
 					partText,
 					getCorrectAnswerText(item.part) || "Review this topic",
 					paperData?.metadata.subject ?? "unknown",

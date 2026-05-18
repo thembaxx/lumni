@@ -1,4 +1,4 @@
-import { offlineDB } from "@/lib/db/offline";
+import { offlineDB } from "@/lib/db/schema";
 import { QueueCore } from "@/lib/queue/core";
 import { safeJsonStringify } from "@/lib/shared/json";
 import type { EnqueueOptions, JobRecord, JobType } from "./types";
@@ -10,6 +10,10 @@ const DEFAULT_MAX_RETRIES: Record<JobType, number> = {
 	"progress-update": 2,
 	"competency-update": 2,
 	"visual-generation": 2,
+	"appwrite-progress-sync": 3,
+	"appwrite-attempt-sync": 3,
+	"appwrite-competency-sync": 3,
+	"appwrite-rating-sync": 3,
 };
 
 const DEFAULT_PRIORITY: Record<JobType, number> = {
@@ -19,6 +23,10 @@ const DEFAULT_PRIORITY: Record<JobType, number> = {
 	"progress-update": 50,
 	"competency-update": 60,
 	"visual-generation": 40,
+	"appwrite-progress-sync": 65,
+	"appwrite-attempt-sync": 65,
+	"appwrite-competency-sync": 65,
+	"appwrite-rating-sync": 50,
 };
 
 export const queueCore = new QueueCore<JobRecord>(offlineDB.jobs);
