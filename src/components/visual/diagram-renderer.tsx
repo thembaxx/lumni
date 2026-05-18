@@ -108,9 +108,18 @@ export function DiagramRenderer({ type, data }: DiagramRendererProps) {
 	}
 }
 
+function sanitizeSvg(svg: string): string {
+	return svg
+		.replace(/<script[\s\S]*?<\/script>/gi, "")
+		.replace(/on\w+="[^"]*"/gi, "")
+		.replace(/on\w+='[^']*'/gi, "")
+		.replace(/javascript:/gi, "")
+		.replace(/<foreignObject[\s\S]*?<\/foreignObject>/gi, "");
+}
+
 function CustomSvgRenderer({ data }: { data: Record<string, unknown> }) {
-	const svg = data.svg as string;
-	if (!svg) {
+	const rawSvg = data.svg as string;
+	if (!rawSvg) {
 		return (
 			<div className="flex h-24 items-center justify-center rounded-lg border bg-muted/10 text-xs text-muted-foreground">
 				No SVG content
@@ -120,7 +129,7 @@ function CustomSvgRenderer({ data }: { data: Record<string, unknown> }) {
 	return (
 		<div
 			className="w-full overflow-auto rounded-lg border bg-background p-4"
-			dangerouslySetInnerHTML={{ __html: svg }}
+			dangerouslySetInnerHTML={{ __html: sanitizeSvg(rawSvg) }}
 		/>
 	);
 }

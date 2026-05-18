@@ -21,7 +21,7 @@ export const grade: GradeFn = (q, a) => {
 	const numericDiff = Math.abs(studentAnswer.value - body.correctValue);
 	const unitCorrect = studentAnswer.unit
 		? studentAnswer.unit.toLowerCase().trim() === body.unit.toLowerCase().trim()
-		: true;
+		: !body.unit;
 	const valueCorrect = numericDiff <= body.tolerance;
 	if (valueCorrect && !unitCorrect) {
 		return {

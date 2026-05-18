@@ -46,10 +46,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
 				<AuthProvider>
 					<JoyProvider>
 						<ToastProvider>
-							<OnboardingProvider>
-								<PremiumProvider>{children}</PremiumProvider>
-							</OnboardingProvider>
-							<WebVitalsLogger />
+							<PremiumProvider>
+								<OnboardingProvider>{children}</OnboardingProvider>
+							</PremiumProvider>
 							<OnlineStatusIndicator />
 							<AutoSyncWrapper />
 							<JobProcessorWrapper />

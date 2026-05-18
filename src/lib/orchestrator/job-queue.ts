@@ -9,6 +9,7 @@ const DEFAULT_MAX_RETRIES: Record<JobType, number> = {
 	"spaced-rep-update": 2,
 	"progress-update": 2,
 	"competency-update": 2,
+	"visual-generation": 2,
 };
 
 const DEFAULT_PRIORITY: Record<JobType, number> = {
@@ -17,6 +18,7 @@ const DEFAULT_PRIORITY: Record<JobType, number> = {
 	"spaced-rep-update": 50,
 	"progress-update": 50,
 	"competency-update": 60,
+	"visual-generation": 40,
 };
 
 export const queueCore = new QueueCore<JobRecord>(offlineDB.jobs);

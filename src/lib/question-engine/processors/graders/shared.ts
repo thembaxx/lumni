@@ -2,6 +2,7 @@ import { getAI } from "@/lib/ai";
 import { getTextResponse, parseAIResponse } from "@/lib/ai/parse-response";
 import type { PromptManager } from "../../prompt-manager";
 import type { GradingResult, Question, UserAnswer } from "../../types";
+import type { GradeFn } from "../types";
 
 export async function aiGradeResult(
 	q: Question,
@@ -52,6 +53,12 @@ export async function aiGradeResult(
 		feedback: "Unable to grade.",
 	};
 }
+
+export const compositeGrade = (
+	ctxBuilder: (q: Question, _a: UserAnswer) => string,
+): GradeFn => {
+	return (q, a, prompts) => aiGradeResult(q, a, prompts, ctxBuilder);
+};
 
 export const aiHintFactory = (): ((
 	q: Question,

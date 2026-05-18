@@ -1,6 +1,12 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+	createContext,
+	useCallback,
+	useContext,
+	useEffect,
+	useState,
+} from "react";
 import { loadFromStorage, saveToStorage } from "@/lib/utils/storage";
 
 const PREMIUM_KEY = "lumni_premium_status";
@@ -30,21 +36,31 @@ const PREMIUM_FEATURES: PremiumFeature[] = [
 	"priority-support",
 ];
 
+const STRIPE_PRICE_ID = "price_premium_yearly";
+
 interface PremiumContextValue {
 	isPremium: boolean;
 	features: PremiumFeature[];
 	hasFeature: (feature: PremiumFeature) => boolean;
-	upgrade: () => void;
-	downgrade: () => void;
+	upgrade: () => Promise<void>;
+	downgrade: () => Promise<void>;
+	createCheckoutSession: () => Promise<string | null>;
+	cancelSubscription: () => Promise<boolean>;
 }
 
 const PremiumContext = createContext<PremiumContextValue>({
 	isPremium: false,
 	features: FREE_FEATURES,
 	hasFeature: () => false,
-	upgrade: () => {},
-	downgrade: () => {},
+	upgrade: async () => {},
+	downgrade: async () => {},
+	createCheckoutSession: async () => null,
+	cancelSubscription: async () => false,
 });
+
+const CHECKOUT_API = "/api/premium/checkout";
+const CANCEL_API = "/api/premium/cancel";
+const VERIFY_API = "/api/premium/verify";
 
 export function PremiumProvider({ children }: { children: React.ReactNode }) {
 	const [state, setState] = useState<PremiumState>(() => {
@@ -63,26 +79,65 @@ export function PremiumProvider({ children }: { children: React.ReactNode }) {
 		saveToStorage(PREMIUM_KEY, state);
 	}, [state]);
 
+	useEffect(() => {
+		if (state.isPremium && state.expiresAt) {
+			fetch(VERIFY_API, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ isPremium: state.isPremium }),
+			}).catch(() => {});
+		}
+	}, [state.isPremium, state.expiresAt]);
+
 	const hasFeature = (feature: PremiumFeature): boolean => {
 		return state.features.includes(feature);
 	};
 
-	const upgrade = () => {
+	const createCheckoutSession = useCallback(async (): Promise<
+		string | null
+	> => {
+		try {
+			const res = await fetch(CHECKOUT_API, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ priceId: STRIPE_PRICE_ID }),
+			});
+			if (!res.ok) return null;
+			const data = await res.json();
+			if (data.url) {
+				return data.url;
+			}
+			return null;
+		} catch {
+			return null;
+		}
+	}, []);
+
+	const upgrade = useCallback(async () => {
 		const expiresAt = Date.now() + 365 * 24 * 60 * 60 * 1000;
 		setState({
 			isPremium: true,
 			expiresAt,
 			features: PREMIUM_FEATURES,
 		});
-	};
+	}, []);
 
-	const downgrade = () => {
+	const cancelSubscription = useCallback(async (): Promise<boolean> => {
+		try {
+			const res = await fetch(CANCEL_API, { method: "POST" });
+			return res.ok;
+		} catch {
+			return false;
+		}
+	}, []);
+
+	const downgrade = useCallback(async () => {
 		setState({
 			isPremium: false,
 			expiresAt: null,
 			features: FREE_FEATURES,
 		});
-	};
+	}, []);
 
 	return (
 		<PremiumContext.Provider
@@ -92,6 +147,8 @@ export function PremiumProvider({ children }: { children: React.ReactNode }) {
 				hasFeature,
 				upgrade,
 				downgrade,
+				createCheckoutSession,
+				cancelSubscription,
 			}}
 		>
 			{children}

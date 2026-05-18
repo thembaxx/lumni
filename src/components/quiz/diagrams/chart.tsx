@@ -188,6 +188,28 @@ function PieChart({ data }: { data: ChartDataPoint[] }) {
 	const cy = CHART_HEIGHT / 2 - 10;
 	const radius = 80;
 
+	if (total === 0) {
+		return (
+			<Layer>
+				<Circle
+					x={cx}
+					y={cy}
+					radius={radius}
+					fill="oklch(90% 0 0)"
+					stroke="oklch(70% 0 0)"
+					strokeWidth={1}
+				/>
+				<Text
+					x={cx - 30}
+					y={cy - 5}
+					text="No data"
+					fontSize={12}
+					fill="oklch(52.9% 0.012 264°)"
+				/>
+			</Layer>
+		);
+	}
+
 	let currentAngle = 0;
 	const slices = data.map((d, i) => {
 		const sliceAngle = (d.value / total) * 360;

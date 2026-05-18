@@ -165,6 +165,13 @@ export interface QuestionBody {
 	};
 }
 
+export interface QuestionMetadata {
+	createdAt?: number;
+	updatedAt?: number;
+	version?: number;
+	source?: "generated" | "imported" | "edited";
+}
+
 export type Question<T extends QuestionType = QuestionType> = {
 	id: string;
 	type: T;
@@ -179,6 +186,7 @@ export type Question<T extends QuestionType = QuestionType> = {
 	steps?: string[];
 	media?: MediaContent[];
 	body: QuestionBody[T];
+	metadata?: QuestionMetadata;
 };
 
 export interface UserAnswer {

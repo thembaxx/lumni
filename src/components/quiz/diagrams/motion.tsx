@@ -2,35 +2,14 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Circle, Group, Layer, Line, Rect, Stage, Text } from "react-konva";
-
-interface MotionData {
-	showMotion?: boolean;
-	motionType?: string;
-	initialVelocity?: number;
-	finalVelocity?: number;
-	objects?: Array<{
-		type: string;
-		x: number;
-		y: number;
-		width?: number;
-		height?: number;
-		radius?: number;
-		fill: string;
-		label?: string;
-	}>;
-	angle?: number;
-	trajectory?: {
-		type: string;
-		apex: { x: number; y: number };
-	};
-}
+import type { MotionData } from "@/lib/visual-engine/types";
 
 export function MotionDiagram({ data }: { data: MotionData }) {
 	const [animationFrame, setAnimationFrame] = useState(0);
 
 	useEffect(() => {
 		let animationId: number;
-		if (data.showMotion) {
+		if (data.projectiles && data.projectiles.length > 0) {
 			const animate = () => {
 				setAnimationFrame((f) => (f + 0.5) % 100);
 				animationId = requestAnimationFrame(animate);
@@ -38,150 +17,70 @@ export function MotionDiagram({ data }: { data: MotionData }) {
 			animationId = requestAnimationFrame(animate);
 		}
 		return () => cancelAnimationFrame(animationId);
-	}, [data.showMotion]);
+	}, [data.projectiles]);
 
-	const objects = useMemo(() => {
-		if (!data.objects) return [];
-		return data.objects.map((obj, index) => {
-			let x = obj.x;
-			let y = obj.y;
+	const projectileElements = useMemo(() => {
+		if (!data.projectiles) return [];
+		return data.projectiles.map((p, i) => {
+			const t = animationFrame / 100;
+			const cx = p.startX + (p.endX - p.startX) * t;
+			const cy = p.startY + (p.endY - p.startY) * t;
 
-			if (obj.type === "rectangle") {
-				x =
-					data.motionType === "free-fall"
-						? obj.x
-						: obj.x + (animationFrame / 100) * 50;
-				y =
-					data.motionType === "vertical-up"
-						? obj.y - (animationFrame / 100) * 80
-						: data.motionType === "free-fall"
-							? obj.y + (animationFrame / 100) * 80
-							: obj.y;
-
-				return (
-					<Group key={`group-${index}`} x={x} y={y}>
-						<Rect
-							width={obj.width || 50}
-							height={obj.height || 30}
-							fill={obj.fill}
-							cornerRadius={4}
-						/>
-						{obj.label && (
-							<Text
-								text={obj.label}
-								x={(obj.width || 50) / 2}
-								y={(obj.height || 30) / 2}
-								fill="oklch(100% 0 0)"
-								fontSize={10}
-								offsetX={(obj.label.length || 0) * 4}
-								offsetY={3}
-							/>
-						)}
-					</Group>
-				);
-			}
-
-			if (obj.type === "circle") {
-				const baseY =
-					data.motionType === "vertical-up"
-						? obj.y - (animationFrame / 100) * 80
-						: data.motionType === "free-fall"
-							? obj.y + (animationFrame / 100) * 80
-							: obj.y;
-				y =
-					data.motionType === "vertical-up"
-						? Math.max(40, baseY)
-						: data.motionType === "free-fall"
-							? Math.min(170, baseY)
-							: baseY;
-
-				return (
-					<Group key={`group-${index}`} x={x} y={y}>
-						<Circle radius={obj.radius || 15} fill={obj.fill} />
-						{obj.label && (
-							<Text
-								text={obj.label}
-								fill="oklch(100% 0 0)"
-								fontSize={10}
-								offsetX={(obj.label.length || 0) * 4}
-								offsetY={3}
-							/>
-						)}
-					</Group>
-				);
-			}
-			return null;
-		});
-	}, [data.objects, data.motionType, animationFrame]);
-
-	const velocityLabel = useMemo(() => {
-		if (data.motionType === "vertical-up" && data.initialVelocity) {
 			return (
-				<Group>
-					<Text
-						text={`v₀ = ${data.initialVelocity} m/s`}
-						x={20}
-						y={30}
-						fill="oklch(57.7% 0.184 264°)"
-						fontSize={12}
-						fontStyle="bold"
+				<Group key={`proj-${i}`}>
+					<Circle
+						x={cx}
+						y={cy}
+						radius={6}
+						fill={p.color || "oklch(55.6% 0.219 264)"}
+						stroke="oklch(100% 0 0)"
+						strokeWidth={1}
 					/>
-					<Text
-						text="↑"
-						x={80}
-						y={35}
-						fill="oklch(57.7% 0.184 264°)"
-						fontSize={12}
-					/>
+					{p.label && (
+						<Text
+							x={cx + 8}
+							y={cy - 10}
+							text={p.label}
+							fontSize={10}
+							fill="oklch(32.5% 0.012 264°)"
+						/>
+					)}
 				</Group>
 			);
-		}
-		return null;
-	}, [data.motionType, data.initialVelocity]);
+		});
+	}, [data.projectiles, animationFrame]);
 
-	const trajectory = useMemo(() => {
-		if (!data.trajectory) return null;
-		return (
-			<Group>
+	const pathElements = useMemo(() => {
+		if (!data.paths) return [];
+		return data.paths.map((path, i) => {
+			const pts = path.points.flatMap((pt) => [pt.x, pt.y]);
+			return (
 				<Line
-					points={[150, 180, 150, 40]}
-					stroke="oklch(52.5% 0.142 274°)"
-					strokeWidth={1}
-					dash={[4, 4]}
+					key={`path-${i}`}
+					points={pts}
+					stroke={path.color || "oklch(52.5% 0.142 274°)"}
+					strokeWidth={2}
+					dash={path.dashed ? [6, 4] : undefined}
+					tension={0.3}
 				/>
-				{data.trajectory.apex && (
-					<Circle
-						x={data.trajectory.apex.x}
-						y={data.trajectory.apex.y}
-						radius={4}
-						fill="oklch(52.5% 0.142 274°)"
-					/>
-				)}
-			</Group>
-		);
-	}, [data.trajectory]);
+			);
+		});
+	}, [data.paths]);
 
-	const angleLine = useMemo(() => {
-		if (!data.angle) return null;
-		return (
-			<Group>
-				<Line
-					points={[80, 130, 180, 130]}
-					stroke="oklch(52.9% 0.012 264°)"
-					strokeWidth={1}
-					dash={[4, 4]}
-				/>
-				<Text
-					text={`${data.angle}°`}
-					x={130}
-					y={145}
-					fill="oklch(52.9% 0.012 264°)"
-					fontSize={11}
-					fontStyle="italic"
-				/>
-			</Group>
-		);
-	}, [data.angle]);
+	const labels = useMemo(() => {
+		if (!data.labels) return [];
+		return data.labels.map((l, i) => (
+			<Text
+				key={`label-${i}`}
+				x={l.x}
+				y={l.y}
+				text={l.text}
+				fontSize={11}
+				fill="oklch(52.9% 0.012 264°)"
+				fontStyle="italic"
+			/>
+		));
+	}, [data.labels]);
 
 	return (
 		<Stage
@@ -189,10 +88,18 @@ export function MotionDiagram({ data }: { data: MotionData }) {
 			height={200}
 			className="w-full rounded-2xl border bg-background/20"
 		>
-			<Layer>{objects}</Layer>
-			<Layer>{velocityLabel}</Layer>
-			<Layer>{trajectory}</Layer>
-			<Layer>{angleLine}</Layer>
+			<Layer>
+				{data.ground && (
+					<Line
+						points={[0, 180, 300, 180]}
+						stroke="oklch(52.9% 0.012 264°)"
+						strokeWidth={2}
+					/>
+				)}
+				{pathElements}
+				{projectileElements}
+				{labels}
+			</Layer>
 		</Stage>
 	);
 }

@@ -126,12 +126,42 @@ export function scheduleStudyReminder(settings = getSettings()): void {
 
 	const msUntilReminder = target.getTime() - now.getTime();
 
+	if (typeof window !== "undefined" && "indexedDB" in window) {
+		const reminder: StudyReminder = {
+			id: crypto.randomUUID(),
+			title: "Study Time!",
+			body: "Time for your daily study session. Stay consistent!",
+			url: "/dashboard",
+			scheduledAt: Date.now() + msUntilReminder,
+			createdAt: Date.now(),
+		};
+		saveToStorage("lumni_next_reminder", reminder);
+	}
+
 	setTimeout(() => {
 		sendLocalNotification(
-			"📚 Study Time!",
+			"Study Time!",
 			"Time for your daily study session. Stay consistent!",
 			"/dashboard",
 		);
+		localStorage.removeItem("lumni_next_reminder");
 		scheduleStudyReminder(settings);
 	}, msUntilReminder);
+}
+
+export function getNextReminder(): StudyReminder | null {
+	return loadFromStorage<StudyReminder | null>("lumni_next_reminder", null);
+}
+
+export function cancelScheduledReminder(): void {
+	localStorage.removeItem("lumni_next_reminder");
+}
+
+export interface StudyReminder {
+	id: string;
+	title: string;
+	body: string;
+	url: string;
+	scheduledAt: number;
+	createdAt: number;
 }

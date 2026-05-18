@@ -1,12 +1,27 @@
 import { create } from "zustand";
 
+interface StoredCardSet {
+	values: string[];
+}
+
+function toStored(set: Set<string>): StoredCardSet {
+	return { values: Array.from(set) };
+}
+
+function fromStored(stored: StoredCardSet | string[] | undefined): Set<string> {
+	if (!stored) return new Set();
+	if (Array.isArray(stored)) return new Set(stored);
+	if (Array.isArray(stored.values)) return new Set(stored.values);
+	return new Set();
+}
+
 interface FlashcardsState {
 	selectedSubject: string;
 	isActive: boolean;
 	currentIndex: number;
 	isFlipped: boolean;
-	knownCards: Set<string>;
-	reviewCards: Set<string>;
+	knownCards: StoredCardSet;
+	reviewCards: StoredCardSet;
 	sessionComplete: boolean;
 
 	setSelectedSubject: (subject: string) => void;
@@ -17,15 +32,18 @@ interface FlashcardsState {
 	markReview: (cardId: string) => void;
 	nextCard: () => void;
 	resetSession: () => void;
+
+	getKnownSet: () => Set<string>;
+	getReviewSet: () => Set<string>;
 }
 
-export const useFlashcardsStore = create<FlashcardsState>((set) => ({
+export const useFlashcardsStore = create<FlashcardsState>((set, get) => ({
 	selectedSubject: "",
 	isActive: false,
 	currentIndex: 0,
 	isFlipped: false,
-	knownCards: new Set<string>(),
-	reviewCards: new Set<string>(),
+	knownCards: { values: [] },
+	reviewCards: { values: [] },
 	sessionComplete: false,
 
 	setSelectedSubject: (selectedSubject) => set({ selectedSubject }),
@@ -35,16 +53,16 @@ export const useFlashcardsStore = create<FlashcardsState>((set) => ({
 
 	markKnown: (cardId: string) =>
 		set((state) => {
-			const newKnown = new Set(state.knownCards);
-			newKnown.add(cardId);
-			return { knownCards: newKnown };
+			const known = fromStored(state.knownCards);
+			known.add(cardId);
+			return { knownCards: toStored(known) };
 		}),
 
 	markReview: (cardId: string) =>
 		set((state) => {
-			const newReview = new Set(state.reviewCards);
-			newReview.add(cardId);
-			return { reviewCards: newReview };
+			const review = fromStored(state.reviewCards);
+			review.add(cardId);
+			return { reviewCards: toStored(review) };
 		}),
 
 	nextCard: () =>
@@ -57,8 +75,11 @@ export const useFlashcardsStore = create<FlashcardsState>((set) => ({
 		set({
 			currentIndex: 0,
 			isFlipped: false,
-			knownCards: new Set(),
-			reviewCards: new Set(),
+			knownCards: { values: [] },
+			reviewCards: { values: [] },
 			sessionComplete: false,
 		}),
+
+	getKnownSet: () => fromStored(get().knownCards),
+	getReviewSet: () => fromStored(get().reviewCards),
 }));

@@ -216,21 +216,33 @@ export class QuestionEngine {
 			const available = batch.filter((t) => this.registry.hasProcessor(t));
 			if (available.length === 0) continue;
 
-			const primaryType = available[0];
-			try {
-				const processor = this.registry.getProcessor(primaryType);
-				const typeParams = {
-					...params,
-					count: itemCount,
-					questionType: primaryType,
-				};
-				const questions = await processor.generate(typeParams);
-				results.push(...questions);
-			} catch (error) {
-				console.error(
-					`[QuestionEngine] Batch generation failed for ${primaryType}:`,
-					error,
-				);
+			const perType = Math.floor(itemCount / available.length);
+			const remainder = itemCount - perType * available.length;
+
+			for (let i = 0; i < available.length && results.length < count; i++) {
+				let needed = perType + (i < remainder ? 1 : 0);
+				needed = Math.min(needed, count - results.length);
+				if (needed <= 0) continue;
+
+				let generated = false;
+				for (let j = 0; j < available.length && !generated; j++) {
+					const tryType = available[(i + j) % available.length];
+					try {
+						const processor = this.registry.getProcessor(tryType);
+						const questions = await processor.generate({
+							...params,
+							count: needed,
+							questionType: tryType,
+						});
+						results.push(...questions);
+						generated = true;
+					} catch (error) {
+						console.error(
+							`[QuestionEngine] Generation failed for ${tryType}:`,
+							error,
+						);
+					}
+				}
 			}
 		}
 

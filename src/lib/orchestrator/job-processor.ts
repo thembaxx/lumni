@@ -6,6 +6,7 @@ import type { ProcessResult } from "@/lib/queue/core";
 import { analyticsService } from "@/lib/services/analytics-service";
 import { progressService } from "@/lib/services/progress-service";
 import { spacedRepService } from "@/lib/services/spaced-rep-service";
+import { visualEngine } from "@/lib/visual-engine/visual-engine";
 import { queueCore } from "./job-queue";
 import type { JobRecord, JobType } from "./types";
 
@@ -60,6 +61,21 @@ const handlers: Record<JobType, JobHandler> = {
 			score,
 			weight,
 		);
+	},
+
+	"visual-generation": async (payload) => {
+		const { questionId, questionText, subject, topic } = payload as {
+			questionId: string;
+			questionText: string;
+			subject: string;
+			topic?: string;
+		};
+		await visualEngine.resolve({
+			questionId,
+			questionText,
+			subject,
+			topic: topic ?? "",
+		});
 	},
 };
 

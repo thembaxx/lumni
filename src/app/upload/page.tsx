@@ -149,7 +149,7 @@ export default function UploadPage() {
 						<header>
 							<h2 className="font-heading text-sm font-medium flex items-center gap-2">
 								<HugeiconsIcon icon={DatabaseIcon} className="size-4" />
-								DatabaseIcon
+								Database
 							</h2>
 							<p className="text-xs/relaxed text-muted-foreground">
 								Seed the database with initial data

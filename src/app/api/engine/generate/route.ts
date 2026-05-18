@@ -19,11 +19,19 @@ export const POST = createEngineHandler({
 	execute: async (body) => {
 		const orchestrator = await LearningOrchestrator.initialize();
 		const result = await orchestrator.generateQuestionSet(body);
+		const requested = body.count;
+		const delivered = result.questions.length;
 		return {
 			questions: result.questions,
-			count: result.count,
+			count: delivered,
+			requested,
 			type: body.questionType || "any",
 			jobIds: result.jobIds,
+			partial: delivered < requested,
+			warning:
+				delivered < requested
+					? `Only ${delivered} of ${requested} questions could be generated.`
+					: undefined,
 		};
 	},
 });

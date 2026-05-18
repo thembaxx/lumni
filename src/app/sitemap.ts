@@ -12,12 +12,28 @@ export default function sitemap(): MetadataRoute.Sitemap {
 		appConfig.paths.pastPapers,
 		appConfig.paths.studyPlan,
 		appConfig.paths.settings,
+		"/chat",
+		"/search",
+		"/premium",
+		"/upload",
+		"/exam",
+		"/auth/sign-in",
+		"/auth/sign-up",
+		"/auth/forgot-password",
+		"/auth/verify-email",
+		"/admin/quality",
+		"/admin/dashboard",
 	];
 
 	return routes.map((route) => ({
 		url: `${baseUrl}${route}`,
 		lastModified: new Date(),
 		changeFrequency: route === "" ? "weekly" : "monthly",
-		priority: route === "" ? 1 : 0.8,
+		priority:
+			route === ""
+				? 1
+				: route.startsWith("/auth") || route.startsWith("/admin")
+					? 0.3
+					: 0.8,
 	}));
 }

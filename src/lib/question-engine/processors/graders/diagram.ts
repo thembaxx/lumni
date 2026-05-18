@@ -1,18 +1,11 @@
-import type { PromptManager } from "../../prompt-manager";
-import type {
-	GradingResult,
-	Question,
-	QuestionBody,
-	UserAnswer,
-} from "../../types";
-import type { GradeFn, HintFn } from "../types";
-import { aiGradeResult } from "./shared";
+import type { Question, QuestionBody, UserAnswer } from "../../types";
+import type { HintFn } from "../types";
+import { compositeGrade } from "./shared";
 
-export const grade: GradeFn = (q, a, prompts) =>
-	aiGradeResult(q, a, prompts, (q: Question, _a: UserAnswer) => {
-		const body = q.body as QuestionBody["diagram"];
-		return `Question: ${q.questionText}\nDiagram: ${JSON.stringify(body.diagramData)}\nInstructions: ${body.instructions}\nStudent answer: ${JSON.stringify(_a.value)}`;
-	});
+export const grade = compositeGrade((q: Question, _a: UserAnswer) => {
+	const body = q.body as QuestionBody["diagram"];
+	return `Question: ${q.questionText}\nDiagram: ${JSON.stringify(body.diagramData)}\nInstructions: ${body.instructions}\nStudent answer: ${JSON.stringify(_a.value)}`;
+});
 
 export const hint: HintFn = (q) => {
 	const body = q.body as QuestionBody["diagram"];

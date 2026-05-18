@@ -123,6 +123,25 @@ async function syncCompetency(payload: CompetencyPayload): Promise<void> {
 	}
 }
 
+interface RatingPayload {
+	questionId: string;
+	subject: string;
+	rating: number;
+	feedback?: string;
+	createdAt: number;
+}
+
+async function syncRating(payload: RatingPayload): Promise<void> {
+	await createDocument(COLLECTIONS.QUESTIONS, {
+		type: "rating",
+		questionId: payload.questionId,
+		subject: payload.subject,
+		rating: payload.rating,
+		feedback: payload.feedback,
+		createdAt: new Date(payload.createdAt).toISOString(),
+	});
+}
+
 export async function handleSync(
 	action: string,
 	payload: unknown,
@@ -135,6 +154,10 @@ export async function handleSync(
 
 		case "createAttempt":
 			await syncAttempt(payload as AttemptPayload);
+			break;
+
+		case "createRating":
+			await syncRating(payload as RatingPayload);
 			break;
 
 		case "sync": {

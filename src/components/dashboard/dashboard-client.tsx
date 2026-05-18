@@ -385,7 +385,7 @@ export function DashboardClient({
 							<SearchWidget />
 							<TabNav activeTab={activeTab} onTabChange={handleTabChange} />
 						</div>
-						
+
 						<div className="flex-1">
 							<AnimatePresence initial={false} mode="wait">
 								{quizActive ? (

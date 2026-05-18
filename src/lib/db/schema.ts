@@ -35,7 +35,12 @@ export interface QuizAttempt {
 
 export interface SyncQueueItem {
 	id?: number;
-	action: "createProgress" | "updateProgress" | "createAttempt" | "sync";
+	action:
+		| "createProgress"
+		| "updateProgress"
+		| "createAttempt"
+		| "createRating"
+		| "sync";
 	payload: string; // JSON stringified payload
 	status: "pending" | "syncing" | "failed";
 	attempts: number;
@@ -82,6 +87,15 @@ export interface CachedVisual {
 	expiresAt: number;
 }
 
+export interface ChatMessageRecord {
+	id?: number;
+	messageId: string;
+	role: "user" | "assistant";
+	content: string;
+	type?: string;
+	timestamp: number;
+}
+
 export interface QuestionRating {
 	id?: number;
 	questionId: string;
@@ -107,6 +121,7 @@ export interface QuizSessionState {
 }
 
 export class LumniOfflineDB extends Dexie {
+	chatMessages!: Table<ChatMessageRecord, number>;
 	questions!: Table<CachedQuestion, number>;
 	progress!: Table<CachedProgress, number>;
 	quizAttempts!: Table<QuizAttempt, number>;
@@ -158,6 +173,10 @@ export class LumniOfflineDB extends Dexie {
 
 		this.version(8).stores({
 			questionRatings: "++id, questionId, subject, topic, rating, createdAt",
+		});
+
+		this.version(9).stores({
+			chatMessages: "++id, role, timestamp",
 		});
 	}
 }

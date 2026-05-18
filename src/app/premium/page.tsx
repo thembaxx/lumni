@@ -8,6 +8,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { usePremium } from "@/lib/premium/premium-context";
@@ -36,8 +37,41 @@ const FEATURES = [
 ];
 
 export default function PremiumPage() {
-	const { isPremium, upgrade, downgrade } = usePremium();
+	const {
+		isPremium,
+		upgrade,
+		downgrade,
+		createCheckoutSession,
+		cancelSubscription,
+	} = usePremium();
 	const router = useRouter();
+	const [loading, setLoading] = useState(false);
+
+	const handleUpgrade = async () => {
+		setLoading(true);
+		try {
+			const url = await createCheckoutSession();
+			if (url) {
+				window.location.href = url;
+			} else {
+				await upgrade();
+				router.refresh();
+			}
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	const handleCancel = async () => {
+		setLoading(true);
+		try {
+			await cancelSubscription();
+			await downgrade();
+			router.refresh();
+		} finally {
+			setLoading(false);
+		}
+	};
 
 	return (
 		<div className="min-h-dvh bg-background p-6 max-w-2xl mx-auto flex flex-col justify-center">
@@ -75,13 +109,17 @@ export default function PremiumPage() {
 					))}
 					<div className="pt-4 flex flex-col gap-2">
 						{isPremium ? (
-							<Button variant="destructive" onClick={downgrade}>
+							<Button
+								variant="destructive"
+								onClick={handleCancel}
+								disabled={loading}
+							>
 								Cancel Premium
 							</Button>
 						) : (
-							<Button onClick={upgrade}>
+							<Button onClick={handleUpgrade} disabled={loading}>
 								<HugeiconsIcon icon={CrownIcon} data-icon="inline-start" />
-								Upgrade Now
+								{loading ? "Redirecting..." : "Upgrade Now"}
 							</Button>
 						)}
 						<Button variant="ghost" onClick={() => router.push("/dashboard")}>

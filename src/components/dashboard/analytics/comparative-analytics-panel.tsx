@@ -121,7 +121,9 @@ export function ComparativeAnalyticsPanel() {
 				<p className="text-muted-foreground mb-4">
 					Complete some quizzes to see your performance analytics.
 				</p>
-				<Button render={<a href="/quiz" />} nativeButton={false}>Start Quiz</Button>
+				<Button render={<a href="/quiz" />} nativeButton={false}>
+					Start Quiz
+				</Button>
 			</div>
 		);
 	}

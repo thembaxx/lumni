@@ -47,14 +47,22 @@ const PAD = { top: 20, right: 20, bottom: 40, left: 50 };
 const PLOT_W = GRAPH_W - PAD.left - PAD.right;
 const PLOT_H = GRAPH_H - PAD.top - PAD.bottom;
 
+function safeAxisRange(min: number, max: number): { min: number; max: number } {
+	if (max - min < 0.001) {
+		const mid = (min + max) / 2;
+		return { min: mid - 5, max: mid + 5 };
+	}
+	return { min, max };
+}
+
 function mapX(x: number, axes: GraphAxes): number {
-	return PAD.left + ((x - axes.xMin) / (axes.xMax - axes.xMin)) * PLOT_W;
+	const r = safeAxisRange(axes.xMin, axes.xMax);
+	return PAD.left + ((x - r.min) / (r.max - r.min)) * PLOT_W;
 }
 
 function mapY(y: number, axes: GraphAxes): number {
-	return (
-		PAD.top + PLOT_H - ((y - axes.yMin) / (axes.yMax - axes.yMin)) * PLOT_H
-	);
+	const r = safeAxisRange(axes.yMin, axes.yMax);
+	return PAD.top + PLOT_H - ((y - r.min) / (r.max - r.min)) * PLOT_H;
 }
 
 export function GraphDiagram({ data }: { data: GraphData }) {

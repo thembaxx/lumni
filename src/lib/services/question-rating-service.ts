@@ -1,3 +1,4 @@
+import { addToSyncQueue } from "@/lib/db/offline";
 import { offlineDB, type QuestionRating } from "@/lib/db/schema";
 
 export class QuestionRatingService {
@@ -24,6 +25,14 @@ export class QuestionRatingService {
 		} else {
 			await offlineDB.questionRatings.add(record as QuestionRating);
 		}
+
+		await addToSyncQueue("createRating", {
+			questionId: params.questionId,
+			subject: params.subject,
+			rating: record.rating,
+			feedback: params.feedback,
+			createdAt: record.createdAt,
+		});
 	}
 
 	async getRatingsForSubject(subject: string): Promise<QuestionRating[]> {

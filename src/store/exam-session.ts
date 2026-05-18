@@ -39,6 +39,38 @@ interface ExamSessionState {
 	isFlagged: (partId: string) => boolean;
 }
 
+const EXAM_SESSION_VERSION = 1;
+
+function validateHydratedState(state: unknown): boolean {
+	if (!state || typeof state !== "object") return false;
+	const s = state as Record<string, unknown>;
+	return (
+		typeof s.paperId === "string" ||
+		s.paperId === null ||
+		s.paperId === undefined
+	);
+}
+
+function setupCrossTabSync() {
+	if (typeof window === "undefined") return;
+	const handleStorage = (e: StorageEvent) => {
+		if (e.key === "exam-session-storage" && e.newValue) {
+			try {
+				const parsed = JSON.parse(e.newValue);
+				if (parsed?.state) {
+					useExamSessionStore.setState(parsed.state);
+				}
+			} catch {}
+		}
+	};
+	window.addEventListener("storage", handleStorage);
+	return () => window.removeEventListener("storage", handleStorage);
+}
+
+if (typeof window !== "undefined") {
+	setupCrossTabSync();
+}
+
 export const useExamSessionStore = create<ExamSessionState>()(
 	persist(
 		(set, get) => ({
@@ -163,6 +195,7 @@ export const useExamSessionStore = create<ExamSessionState>()(
 		}),
 		{
 			name: "exam-session-storage",
+			version: EXAM_SESSION_VERSION,
 			partialize: (state) => ({
 				paper: state.paper,
 				paperId: state.paperId,
@@ -174,6 +207,28 @@ export const useExamSessionStore = create<ExamSessionState>()(
 				startedAt: state.startedAt,
 				completed: state.completed,
 			}),
+			migrate: (persistedState, version) => {
+				if (version < 1) {
+					return {
+						paper: null,
+						paperId: null,
+						sessionId: null,
+						answers: {},
+						flags: [],
+						currentPartId: null,
+						timeRemaining: 0,
+						startedAt: null,
+						completed: false,
+						isSubmitting: false,
+					};
+				}
+				return persistedState as ExamSessionState;
+			},
+			onRehydrateStorage: () => (state) => {
+				if (state && !validateHydratedState(state)) {
+					state.resetSession();
+				}
+			},
 		},
 	),
 );

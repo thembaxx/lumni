@@ -3,7 +3,8 @@ export type JobType =
 	| "analytics-sync"
 	| "spaced-rep-update"
 	| "progress-update"
-	| "competency-update";
+	| "competency-update"
+	| "visual-generation";
 
 export type JobStatus =
 	| "pending"

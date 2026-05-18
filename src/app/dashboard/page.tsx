@@ -1,5 +1,5 @@
 import { DashboardClient } from "@/components/dashboard/dashboard-client";
 
 export default function DashboardPage() {
-	return <DashboardClient 	initialTab="today" />;
+	return <DashboardClient initialTab="today" />;
 }

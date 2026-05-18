@@ -37,6 +37,16 @@ export class LearningOrchestrator {
 		});
 		jobIds.push(syncJobId);
 
+		for (const q of sliced) {
+			const visualJobId = await enqueue("visual-generation", {
+				questionId: q.id,
+				questionText: q.questionText,
+				subject,
+				topic,
+			});
+			jobIds.push(visualJobId);
+		}
+
 		trackEngineEvent({
 			event: "generate",
 			subject,

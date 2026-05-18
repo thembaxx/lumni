@@ -12,7 +12,6 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { ChatDialog } from "@/components/dashboard/chat/chat-dialog";
 import { Badge } from "@/components/ui/badge";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { useOnboarding } from "@/hooks/use-onboarding";
@@ -43,7 +42,7 @@ const navItems: NavItem[] = [
 		id: "chat",
 		label: "Chat",
 		icon: Chat01Icon,
-		href: "",
+		href: "/chat",
 	},
 	{
 		id: "problems",
@@ -123,7 +122,6 @@ export function BottomNav() {
 	const pathname = usePathname();
 	const { push } = useNavigationDirection();
 	const { isOnboarding } = useOnboarding();
-	const [chatDialogOpen, setChatDialogOpen] = useState(false);
 	const [hidden, setHidden] = useState(false);
 	const [reducedMotion, setReducedMotion] = useState(false);
 
@@ -181,11 +179,7 @@ export function BottomNav() {
 
 	const handleItemClick = useCallback(
 		(item: NavItem) => {
-			if (item.id === "chat") {
-				setChatDialogOpen(true);
-			} else {
-				push(item.href);
-			}
+			push(item.href);
 		},
 		[push],
 	);
@@ -218,7 +212,6 @@ export function BottomNav() {
 					))}
 				</div>
 			</nav>
-			<ChatDialog open={chatDialogOpen} onOpenChange={setChatDialogOpen} />
 		</>
 	);
 }

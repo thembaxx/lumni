@@ -64,7 +64,7 @@ export class CompetencyService {
 					subjectId,
 					topicId,
 					bloomLevel,
-					score: result.newScore,
+					proficiency: result.newScore,
 					attempts: result.newAttempts,
 					lastAssessed: result.now,
 					level: result.level,
