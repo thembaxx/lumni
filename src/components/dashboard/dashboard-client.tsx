@@ -343,6 +343,17 @@ export function DashboardClient({
 			})),
 		});
 
+		fetch("/api/study-sessions", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({
+				subject: results.questions[0]?.subject ?? "unknown",
+				questionsAnswered: results.totalQuestions,
+				correctCount: results.correctAnswers,
+				duration: results.elapsedTime,
+			}),
+		}).catch(() => {});
+
 		setQuizActive(false);
 		setQuizSubject("");
 	};

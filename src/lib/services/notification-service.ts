@@ -52,6 +52,7 @@ export async function subscribeToPush(): Promise<PushSubscription | null> {
 		const existing = await registration.pushManager.getSubscription();
 		if (existing) {
 			saveToStorage(NOTIF_KEY, JSON.stringify(existing));
+			syncSubscriptionToServer(existing);
 			return existing;
 		}
 
@@ -62,10 +63,28 @@ export async function subscribeToPush(): Promise<PushSubscription | null> {
 		});
 
 		saveToStorage(NOTIF_KEY, JSON.stringify(subscription));
+		syncSubscriptionToServer(subscription);
 		return subscription;
 	} catch (error) {
 		console.error("Failed to subscribe to push:", error);
 		return null;
+	}
+}
+
+async function syncSubscriptionToServer(
+	subscription: PushSubscription,
+): Promise<void> {
+	try {
+		await fetch("/api/push/subscribe", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({
+				subscription: subscription.toJSON(),
+				userId: loadFromStorage<string>("lumni_user_id", ""),
+			}),
+		});
+	} catch (err) {
+		console.warn("Failed to sync subscription to server:", err);
 	}
 }
 
@@ -74,7 +93,15 @@ export async function unsubscribeFromPush(): Promise<boolean> {
 		const registration = await navigator.serviceWorker.ready;
 		const subscription = await registration.pushManager.getSubscription();
 		if (subscription) {
+			const json = subscription.toJSON();
 			await subscription.unsubscribe();
+			try {
+				await fetch("/api/push/subscribe", {
+					method: "DELETE",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({ endpoint: json.endpoint }),
+				});
+			} catch {}
 		}
 		localStorage.removeItem(NOTIF_KEY);
 		return true;
