@@ -1,3 +1,7 @@
+import {
+	getCompetencyDescription,
+	mapCompetencyToBloomList,
+} from "./competency-mapper";
 import type { GenerationParams, QuestionType } from "./types";
 
 export interface PromptTemplate {
@@ -6,6 +10,20 @@ export interface PromptTemplate {
 }
 
 export class PromptManager {
+	private buildCompetencyContext(params: GenerationParams): string {
+		if (!params.topicCompetencyLevel) return "";
+
+		const desc = getCompetencyDescription(params.topicCompetencyLevel);
+		if (!desc) return "";
+
+		const bloomTargets = mapCompetencyToBloomList(params.topicCompetencyLevel);
+		const bloomStr = bloomTargets.join(", ");
+		const score = params.topicCompetencyScore;
+		const scoreStr = score !== undefined ? ` (score: ${score}%)` : "";
+
+		return `\n\nStudent context: The student has a ${params.topicCompetencyLevel} understanding of this topic${scoreStr} — ${desc}. Focus on the following Bloom's taxonomy levels: ${bloomStr}.`;
+	}
+
 	getPrompt(
 		type: QuestionType | "any",
 		params: GenerationParams,
@@ -13,18 +31,18 @@ export class PromptManager {
 		const difficulty = params.difficulty ?? "Medium";
 		const subject = params.subject;
 		const topic = params.topic ? ` on the topic: ${params.topic}` : "";
-		const bloom = params.bloomLevel
-			? `. Bloom's taxonomy level: ${params.bloomLevel}`
-			: "";
+		const bloom = params.suggestedBloomLevel ?? params.bloomLevel;
+		const bloomStr = bloom ? `. Bloom's taxonomy level: ${bloom}` : "";
 		const unit = params.curriculumUnit
 			? `. Curriculum unit: ${params.curriculumUnit}`
 			: "";
 		const count = params.count;
+		const studentCtx = this.buildCompetencyContext(params);
 
 		if (type === "any") {
 			return {
 				system: `You are an expert educational question generator for ${subject}. Generate a diverse mix of question types appropriate for the subject. Choose the most suitable type for each question based on what is being tested.`,
-				user: `Generate ${count} questions for ${subject}${topic}. Difficulty: ${difficulty}${bloom}${unit}
+				user: `Generate ${count} questions for ${subject}${topic}. Difficulty: ${difficulty}${bloomStr}${unit}${studentCtx}
 
 Return a JSON array. Each question must have: id (unique string like "q1"), type (the question type), subject, topic, difficulty, bloomTaxonomy, points, questionText, hint, explanation, body (type-specific data).
 
@@ -40,7 +58,7 @@ Return ONLY valid JSON array, no markdown.`,
 		const prompts: Record<string, PromptTemplate> = {
 			"multiple-choice": {
 				system: `You are an expert MCQ generator for ${subject}. Create clear, unambiguous multiple-choice questions with plausible distractors.`,
-				user: `Generate ${count} multiple-choice questions for ${subject}${topic}. Difficulty: ${difficulty}${bloom}${unit}
+				user: `Generate ${count} multiple-choice questions for ${subject}${topic}. Difficulty: ${difficulty}${bloomStr}${unit}${studentCtx}
 
 Each question must have:
 - id: string (unique like "q1")
@@ -67,7 +85,7 @@ Return ONLY valid JSON array.`,
 
 			matching: {
 				system: `You are an expert at creating matching questions for ${subject}. Create clear matching exercises where students connect related items.`,
-				user: `Generate ${count} matching question(s) for ${subject}${topic}. Difficulty: ${difficulty}${bloom}${unit}
+				user: `Generate ${count} matching question(s) for ${subject}${topic}. Difficulty: ${difficulty}${bloomStr}${unit}${studentCtx}
 
 Each question must have:
 - id, type: "matching", subject, topic, difficulty, bloomTaxonomy, points
@@ -82,7 +100,7 @@ Return ONLY valid JSON array.`,
 
 			"short-answer": {
 				system: `You are an expert at creating short-answer questions for ${subject}. Create questions that have a concise, specific correct answer.`,
-				user: `Generate ${count} short-answer questions for ${subject}${topic}. Difficulty: ${difficulty}${bloom}${unit}
+				user: `Generate ${count} short-answer questions for ${subject}${topic}. Difficulty: ${difficulty}${bloomStr}${unit}${studentCtx}
 
 Each question must have:
 - id, type: "short-answer", subject, topic, difficulty, bloomTaxonomy, points
@@ -98,7 +116,7 @@ Return ONLY valid JSON array.`,
 
 			"long-answer": {
 				system: `You are an expert at creating long-answer questions for ${subject}. Create questions requiring detailed paragraph responses.`,
-				user: `Generate ${count} long-answer question(s) for ${subject}${topic}. Difficulty: ${difficulty}${bloom}${unit}
+				user: `Generate ${count} long-answer question(s) for ${subject}${topic}. Difficulty: ${difficulty}${bloomStr}${unit}${studentCtx}
 
 Each question must have:
 - id, type: "long-answer", subject, topic, difficulty, bloomTaxonomy, points
@@ -114,7 +132,7 @@ Return ONLY valid JSON array.`,
 
 			essay: {
 				system: `You are an expert at creating essay questions for ${subject}. Create thought-provoking essay prompts with clear rubrics.`,
-				user: `Generate ${count} essay question(s) for ${subject}${topic}. Difficulty: ${difficulty}${bloom}${unit}
+				user: `Generate ${count} essay question(s) for ${subject}${topic}. Difficulty: ${difficulty}${bloomStr}${unit}${studentCtx}
 
 Each question must have:
 - id, type: "essay", subject, topic, difficulty, bloomTaxonomy, points
@@ -130,7 +148,7 @@ Return ONLY valid JSON array.`,
 
 			calculation: {
 				system: `You are an expert at creating calculation questions for ${subject}. Create numerical problems with clear formulas and units. Use $...$ for LaTeX math notation.`,
-				user: `Generate ${count} calculation question(s) for ${subject}${topic}. Difficulty: ${difficulty}${bloom}${unit}
+				user: `Generate ${count} calculation question(s) for ${subject}${topic}. Difficulty: ${difficulty}${bloomStr}${unit}${studentCtx}
 
 Each question must have:
 - id, type: "calculation", subject, topic, difficulty, bloomTaxonomy, points
@@ -147,7 +165,7 @@ Return ONLY valid JSON array.`,
 
 			diagram: {
 				system: `You are an expert at creating diagram-based questions for ${subject}. Create questions that involve labeling, completing, or interpreting diagrams.`,
-				user: `Generate ${count} diagram question(s) for ${subject}${topic}. Difficulty: ${difficulty}${bloom}${unit}
+				user: `Generate ${count} diagram question(s) for ${subject}${topic}. Difficulty: ${difficulty}${bloomStr}${unit}${studentCtx}
 
 Each question must have:
 - id, type: "diagram", subject, topic, difficulty, bloomTaxonomy, points
@@ -162,7 +180,7 @@ Return ONLY valid JSON array.`,
 
 			"source-based": {
 				system: `You are an expert at creating source-based questions for ${subject}. Create multi-part questions based on provided sources (text, images, data).`,
-				user: `Generate ${count} source-based question(s) for ${subject}${topic}. Difficulty: ${difficulty}${bloom}${unit}
+				user: `Generate ${count} source-based question(s) for ${subject}${topic}. Difficulty: ${difficulty}${bloomStr}${unit}${studentCtx}
 
 Each question must have:
 - id, type: "source-based", subject, topic, difficulty, bloomTaxonomy, points
@@ -176,7 +194,7 @@ Return ONLY valid JSON array.`,
 
 			programming: {
 				system: `You are an expert at creating programming questions. Create coding problems with clear specifications and test cases.`,
-				user: `Generate ${count} programming question(s). Difficulty: ${difficulty}${bloom}${unit}
+				user: `Generate ${count} programming question(s). Difficulty: ${difficulty}${bloomStr}${unit}${studentCtx}
 
 Each question must have:
 - id, type: "programming", subject, topic, difficulty, bloomTaxonomy, points
@@ -193,7 +211,7 @@ Return ONLY valid JSON array.`,
 
 			"data-response": {
 				system: `You are an expert at creating data response questions for ${subject}. Create questions that require interpreting tables, charts, and graphs.`,
-				user: `Generate ${count} data response question(s) for ${subject}${topic}. Difficulty: ${difficulty}${bloom}${unit}
+				user: `Generate ${count} data response question(s) for ${subject}${topic}. Difficulty: ${difficulty}${bloomStr}${unit}${studentCtx}
 
 Each question must have:
 - id, type: "data-response", subject, topic, difficulty, bloomTaxonomy, points
@@ -207,7 +225,7 @@ Return ONLY valid JSON array.`,
 
 			mixed: {
 				system: `You are an expert at creating mixed-type questions for ${subject}. Create compound questions that combine multiple question types (e.g., a source with MCQs and a short answer).`,
-				user: `Generate ${count} mixed question(s) for ${subject}${topic}. Difficulty: ${difficulty}${bloom}${unit}
+				user: `Generate ${count} mixed question(s) for ${subject}${topic}. Difficulty: ${difficulty}${bloomStr}${unit}${studentCtx}
 
 Each question must have:
 - id, type: "mixed", subject, topic, difficulty, bloomTaxonomy, points

@@ -17,7 +17,7 @@ import { ProgressDots } from "@/components/shared/progress-dots";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AssessmentHeader } from "@/components/ui/headers/assessment-header";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
-import type { Question } from "@/lib/question-engine/types";
+import type { BloomLevel, Question } from "@/lib/question-engine/types";
 import { useQuizSession } from "@/lib/quiz-session";
 
 export interface QuizResults {
@@ -55,6 +55,11 @@ export function QuizView({
 	const [sessionActive, setSessionActive] = useState(false);
 	const [loadError, setLoadError] = useState<string | null>(null);
 	const [currentAnswered, setCurrentAnswered] = useState(false);
+	const [competencyData, setCompetencyData] = useState<{
+		topicCompetencyLevel?: "novice" | "developing" | "proficient" | "mastered";
+		topicCompetencyScore?: number;
+		suggestedBloomLevel?: BloomLevel;
+	}>({});
 	const _quizContainerRef = useRef<HTMLDivElement>(null);
 
 	const engineParams = useMemo(
@@ -63,8 +68,9 @@ export function QuizView({
 			topic,
 			count: questionCount,
 			questionType: "any" as const,
+			...competencyData,
 		}),
-		[selectedSubject, topic, questionCount],
+		[selectedSubject, topic, questionCount, competencyData],
 	);
 
 	const { questions, isLoading, isError } = useQuestionEngine(engineParams, {
@@ -75,11 +81,56 @@ export function QuizView({
 
 	const currentIndex = state.questionNumber - 1;
 
-	const handleStartWithSubject = useCallback((subject: string) => {
-		setSelectedSubject(subject);
-		setSessionActive(true);
-		setLoadError(null);
-	}, []);
+	const handleStartWithSubject = useCallback(
+		async (subject: string) => {
+			setSelectedSubject(subject);
+
+			let loadedCompData: {
+				topicCompetencyLevel?:
+					| "novice"
+					| "developing"
+					| "proficient"
+					| "mastered";
+				topicCompetencyScore?: number;
+				suggestedBloomLevel?: BloomLevel;
+			} = {};
+
+			if (topic) {
+				try {
+					const { competencyService } = await import("@/lib/competency-engine");
+					const { computeCompetencyLevel } = await import(
+						"@/lib/competency-engine/types"
+					);
+					const { mapCompetencyToBloom } = await import(
+						"@/lib/question-engine/competency-mapper"
+					);
+
+					const normalizedSubject = subject.toLowerCase();
+					const competencies =
+						await competencyService.getCompetencies(normalizedSubject);
+					const topicComps = competencies.filter((c) => c.topicId === topic);
+
+					if (topicComps.length > 0) {
+						const avgScore =
+							topicComps.reduce((s, c) => s + c.score, 0) / topicComps.length;
+						const level = computeCompetencyLevel(avgScore);
+						loadedCompData = {
+							topicCompetencyLevel: level,
+							topicCompetencyScore: Math.round(avgScore),
+							suggestedBloomLevel: mapCompetencyToBloom(level, avgScore),
+						};
+					}
+				} catch {
+					// silent fallback — non-personalized
+				}
+			}
+
+			setCompetencyData(loadedCompData);
+			setSessionActive(true);
+			setLoadError(null);
+		},
+		[topic],
+	);
 
 	useEffect(() => {
 		if (sessionActive && questions.length > 0 && !state.isComplete) {

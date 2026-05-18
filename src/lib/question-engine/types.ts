@@ -221,6 +221,9 @@ export interface GenerationParams {
 	curriculumContext?: string;
 	difficulty?: Difficulty;
 	bloomLevel?: BloomLevel;
+	topicCompetencyLevel?: "novice" | "developing" | "proficient" | "mastered";
+	topicCompetencyScore?: number;
+	suggestedBloomLevel?: BloomLevel;
 	questionType?: QuestionType | QuestionType[] | "any";
 	count: number;
 	sourceExamPaper?: string;
