@@ -4,11 +4,8 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import { AchievementShowcase } from "@/components/dashboard/achievement-showcase";
-import { CompetencyOverview } from "@/components/dashboard/competency-overview";
 import { CountdownHeader } from "@/components/dashboard/countdown-header";
 import { DailyChallenges } from "@/components/dashboard/daily-challenges";
-import { DailyProgressRing } from "@/components/dashboard/daily-progress-ring";
-import { FocusTimerCard } from "@/components/dashboard/focus-timer-card";
 import { TabNav } from "@/components/dashboard/navigation/tab-nav";
 import { QuickActions } from "@/components/dashboard/quick-actions/quick-actions";
 import { QuizStartCard } from "@/components/dashboard/quiz-start-card";
@@ -23,7 +20,6 @@ import type { TabValue } from "@/components/dashboard/types";
 import { GettingStartedCard } from "@/components/onboarding/getting-started-card";
 import { NotificationNudge } from "@/components/onboarding/notification-nudge";
 import type { QuizResults } from "@/components/quiz/quiz-view";
-import { QuizView } from "@/components/quiz/quiz-view";
 import { PerpetualFloat } from "@/components/shared/perpetual-float";
 import { StaggerList } from "@/components/shared/stagger-list";
 import { Card } from "@/components/ui/card";
@@ -37,6 +33,45 @@ import { enqueue } from "@/lib/orchestrator/job-queue";
 import { iOSEase } from "@/lib/utils/animation";
 import { useOptimizedAnimation } from "@/lib/utils/animation-optimization";
 import { createFlashcard } from "@/lib/utils/spaced-repetition";
+
+const QuizView = dynamic(
+	() => import("@/components/quiz/quiz-view").then((m) => m.QuizView),
+	{
+		ssr: false,
+		loading: () => (
+			<div className="flex items-center justify-center min-h-[60dvh]">
+				<Skeleton className="size-full max-w-3xl rounded-[2rem]" />
+			</div>
+		),
+	},
+);
+
+const CompetencyOverview = dynamic(
+	() =>
+		import("@/components/dashboard/competency-overview").then(
+			(m) => m.CompetencyOverview,
+		),
+	{ ssr: false, loading: () => <Skeleton className="h-32 rounded-[2rem]" /> },
+);
+
+const DailyProgressRing = dynamic(
+	() =>
+		import("@/components/dashboard/daily-progress-ring").then(
+			(m) => m.DailyProgressRing,
+		),
+	{
+		ssr: false,
+		loading: () => <Skeleton className="size-full rounded-[2rem]" />,
+	},
+);
+
+const FocusTimerCard = dynamic(
+	() =>
+		import("@/components/dashboard/focus-timer-card").then(
+			(m) => m.FocusTimerCard,
+		),
+	{ ssr: false, loading: () => <Skeleton className="h-20 rounded-[2rem]" /> },
+);
 
 const ComparativeAnalyticsPanel = dynamic(
 	() =>

@@ -1,7 +1,5 @@
 "use client";
 
-import * as RechartsPrimitive from "recharts";
-import { type ChartConfig, ChartContainer } from "@/components/ui/chart";
 import { cn } from "@/lib/shared";
 
 interface RadialChartProps {
@@ -22,45 +20,42 @@ export function RadialChart({
 	className,
 }: RadialChartProps) {
 	const clampedValue = Math.min(100, Math.max(0, value));
-
-	const chartConfig: ChartConfig = {
-		value: {
-			label: "Progress",
-			color,
-		},
-	};
+	const radius = 15.9155;
+	const circumference = 2 * Math.PI * radius;
+	const offset = circumference - (clampedValue / 100) * circumference;
 
 	return (
 		<div
 			className={cn("relative shrink-0", className)}
 			style={{ width: size, height: size }}
 		>
-			<ChartContainer
-				config={chartConfig}
-				className="absolute inset-0 size-full"
+			<svg
+				viewBox="0 0 36 36"
+				className="absolute inset-0 size-full -rotate-90"
 			>
-				<RechartsPrimitive.RadialBarChart
-					data={[{ value: clampedValue }]}
-					startAngle={90}
-					endAngle={-270}
-					innerRadius="72%"
-					outerRadius="100%"
-					barSize={size * 0.12}
-				>
-					<RechartsPrimitive.PolarAngleAxis
-						type="number"
-						domain={[0, 100]}
-						tick={false}
-					/>
-					<RechartsPrimitive.RadialBar
-						dataKey="value"
-						fill="var(--color-value)"
-						background={{ fill: trackColor }}
-						cornerRadius={size * 0.06}
-						animationDuration={300}
-					/>
-				</RechartsPrimitive.RadialBarChart>
-			</ChartContainer>
+				<circle
+					cx="18"
+					cy="18"
+					r={radius}
+					fill="none"
+					stroke={trackColor}
+					strokeWidth="3"
+				/>
+				<circle
+					cx="18"
+					cy="18"
+					r={radius}
+					fill="none"
+					stroke={color}
+					strokeWidth="3"
+					strokeLinecap="round"
+					style={{
+						strokeDasharray: circumference,
+						strokeDashoffset: offset,
+						transition: "stroke-dashoffset 0.3s ease",
+					}}
+				/>
+			</svg>
 			{children && (
 				<div className="absolute inset-0 flex items-center justify-center">
 					{children}

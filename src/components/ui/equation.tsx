@@ -2,6 +2,7 @@
 
 import katex from "katex";
 import { useId, useMemo } from "react";
+import { KatexCSS } from "@/components/katex-css";
 
 interface EquationProps {
 	math: string;
@@ -31,10 +32,13 @@ export function Equation({
 	}, [math, block, errorColor]);
 
 	return (
-		<span
-			className={className}
-			dangerouslySetInnerHTML={{ __html: html }}
-			data-equation-id={uid}
-		/>
+		<>
+			<KatexCSS />
+			<span
+				className={className}
+				dangerouslySetInnerHTML={{ __html: html }}
+				data-equation-id={uid}
+			/>
+		</>
 	);
 }

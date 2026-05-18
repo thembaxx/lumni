@@ -1,12 +1,11 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import rehypeKatex from "rehype-katex";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
+import { KatexCSS } from "@/components/katex-css";
 import {
 	Table,
 	TableBody,
@@ -17,6 +16,65 @@ import {
 } from "@/components/ui/table";
 import { normalizeMathDelimiters } from "@/lib/katex-utils";
 import { cn } from "@/lib/shared";
+
+function LazyCodeBlock({
+	language,
+	children,
+}: {
+	language: string;
+	children: string;
+}) {
+	const [loaded, setLoaded] = useState(false);
+	const modRef = useRef<{
+		SyntaxHighlighter: React.ComponentType<Record<string, unknown>>;
+		style: Record<string, unknown>;
+	} | null>(null);
+
+	useEffect(() => {
+		let cancelled = false;
+		Promise.all([
+			import("react-syntax-highlighter"),
+			import("react-syntax-highlighter/dist/esm/styles/prism"),
+		]).then(([highlighterMod, styleMod]) => {
+			type HighlighterModule = {
+				Prism: React.ComponentType<Record<string, unknown>>;
+			};
+			type StyleModule = { oneDark: Record<string, unknown> };
+			const hMod = highlighterMod as unknown as HighlighterModule;
+			const sMod = styleMod as unknown as StyleModule;
+			if (cancelled) return;
+			modRef.current = {
+				SyntaxHighlighter: hMod.Prism,
+				style: sMod.oneDark,
+			};
+			setLoaded(true);
+		});
+		return () => {
+			cancelled = true;
+		};
+	}, []);
+
+	if (!loaded) {
+		return (
+			<pre className="rounded-lg overflow-hidden my-3 p-4 bg-[#1e1e1e] text-white/80 text-sm font-mono">
+				<code>{children}</code>
+			</pre>
+		);
+	}
+
+	const { SyntaxHighlighter, style } = modRef.current!;
+	return (
+		<SyntaxHighlighter
+			language={language}
+			style={style}
+			PreTag="div"
+			className="rounded-lg overflow-hidden my-3"
+			customStyle={{ margin: 0, padding: "1rem", fontSize: "0.875rem" }}
+		>
+			{children}
+		</SyntaxHighlighter>
+	);
+}
 
 const MATH_SUBJECTS = [
 	"mathematics",
@@ -78,6 +136,7 @@ export function MarkdownRenderer({
 			)}
 			style={containerStyle}
 		>
+			{(isMathSubject || hasMath) && <KatexCSS />}
 			<ReactMarkdown
 				remarkPlugins={[
 					remarkGfm,
@@ -101,19 +160,9 @@ export function MarkdownRenderer({
 						}
 
 						return (
-							<SyntaxHighlighter
-								style={oneDark}
-								language={match[1]}
-								PreTag="div"
-								className="rounded-lg overflow-hidden my-3"
-								customStyle={{
-									margin: 0,
-									padding: "1rem",
-									fontSize: "0.875rem",
-								}}
-							>
+							<LazyCodeBlock language={match[1]}>
 								{String(children).replace(/\n$/, "")}
-							</SyntaxHighlighter>
+							</LazyCodeBlock>
 						);
 					},
 					p({ children }) {
