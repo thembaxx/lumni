@@ -34,7 +34,6 @@ import { useViewTransition } from "@/hooks/use-view-transition";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
 import { trackQuestionResult } from "@/lib/competency-engine";
 import { enqueue } from "@/lib/orchestrator/job-queue";
-import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";
 import { useOptimizedAnimation } from "@/lib/utils/animation-optimization";
 import { createFlashcard } from "@/lib/utils/spaced-repetition";
@@ -382,10 +381,11 @@ export function DashboardClient({
 					</motion.div>
 				) : (
 					<>
-						<div className="px-4 pt-2">
+						<div className="px-4 pt-2 pb-4">
 							<SearchWidget />
+							<TabNav activeTab={activeTab} onTabChange={handleTabChange} />
 						</div>
-						<TabNav activeTab={activeTab} onTabChange={handleTabChange} />
+						
 						<div className="flex-1">
 							<AnimatePresence initial={false} mode="wait">
 								{quizActive ? (
