@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import type {
 	GenerationParams,
 	GradingResult,
@@ -145,8 +145,13 @@ export function useQuestionEngine(
 		[hintMutation],
 	);
 
+	const questions = useMemo(
+		() => generatedQuestions ?? query.data?.questions ?? [],
+		[generatedQuestions, query.data?.questions],
+	);
+
 	return {
-		questions: generatedQuestions ?? query.data?.questions ?? [],
+		questions,
 		count: query.data?.count ?? 0,
 		isLoading: query.isLoading,
 		error: query.error,

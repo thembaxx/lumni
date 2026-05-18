@@ -119,7 +119,7 @@ export function EmptyStateWithIllustration({
 					) : null}
 				</div>
 			</div>
-			<h3 className="mb-2 text-xl font-semibold text-wrap balance">{title}</h3>
+			<h3 className="mb-2 text-xl font-semibold text-wrap balance text-center w-full">{title}</h3>
 			<p className="mb-6 max-w-md text-sm text-muted-foreground">
 				{description}
 			</p>

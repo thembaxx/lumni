@@ -26,9 +26,7 @@ export function useQuizSession(
 	const [isComplete, setIsComplete] = useState(false);
 	const [isActive, setIsActive] = useState(false);
 
-	const prevQuestionsRef = useRef(questions);
-	if (prevQuestionsRef.current !== questions) {
-		prevQuestionsRef.current = questions;
+	useEffect(() => {
 		if (questions.length === 0) {
 			setCurrentIndex(0);
 			setCorrectAnswers(0);
@@ -37,7 +35,7 @@ export function useQuizSession(
 			setIsComplete(false);
 			setIsActive(false);
 		}
-	}
+	}, [questions]);
 
 	const saveRef = useRef({
 		currentIndex,

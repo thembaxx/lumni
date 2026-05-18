@@ -1,7 +1,6 @@
 import { initAI, isAIConfigured } from "@/lib/ai";
 import type { CacheTier } from "@/lib/caching-strategy";
 import { CachingStrategy } from "@/lib/caching-strategy";
-import { getCachedQuestions } from "@/lib/db/repositories/question-cache";
 import { ProcessorRegistry } from "./processor-registry";
 import { PromptManager } from "./prompt-manager";
 import type {
@@ -28,6 +27,9 @@ export class QuestionEngine {
 				{
 					name: "dexie",
 					read: async (p) => {
+						const { getCachedQuestions } = await import(
+							"@/lib/db/repositories/question-cache"
+						);
 						const cached = await getCachedQuestions(p.subject, p.topic);
 						if (cached && cached.length >= p.count) {
 							const shuffled = [...(cached as Question[])].sort(

@@ -420,7 +420,7 @@ export function QuizView({
 				<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4 pb-20">
 					<Card size="sm" className="max-w-md w-full">
 						<CardContent>
-							<CardTitle className="text-xl font-extrabold tracking-tight">
+							<CardTitle className="text-xl font-extrabold tracking-tight text-center">
 								Unable to Load Questions
 							</CardTitle>
 							<QuizEmptyState
