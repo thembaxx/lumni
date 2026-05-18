@@ -20,15 +20,19 @@ export class PromptManager {
 		const bloomStr = bloomTargets.join(", ");
 		const score = params.topicCompetencyScore;
 		const scoreStr = score !== undefined ? ` (score: ${score}%)` : "";
+		const diffNote = params.suggestedDifficulty
+			? ` The difficulty has been set to ${params.suggestedDifficulty} based on current proficiency.`
+			: "";
 
-		return `\n\nStudent context: The student has a ${params.topicCompetencyLevel} understanding of this topic${scoreStr} — ${desc}. Focus on the following Bloom's taxonomy levels: ${bloomStr}.`;
+		return `\n\nStudent context: The student has a ${params.topicCompetencyLevel} understanding of this topic${scoreStr} — ${desc}. Focus on the following Bloom's taxonomy levels: ${bloomStr}.${diffNote}`;
 	}
 
 	getPrompt(
 		type: QuestionType | "any",
 		params: GenerationParams,
 	): PromptTemplate {
-		const difficulty = params.difficulty ?? "Medium";
+		const difficulty =
+			params.suggestedDifficulty ?? params.difficulty ?? "Medium";
 		const subject = params.subject;
 		const topic = params.topic ? ` on the topic: ${params.topic}` : "";
 		const bloom = params.suggestedBloomLevel ?? params.bloomLevel;

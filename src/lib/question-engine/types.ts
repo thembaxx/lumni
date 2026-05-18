@@ -224,6 +224,7 @@ export interface GenerationParams {
 	topicCompetencyLevel?: "novice" | "developing" | "proficient" | "mastered";
 	topicCompetencyScore?: number;
 	suggestedBloomLevel?: BloomLevel;
+	suggestedDifficulty?: Difficulty;
 	questionType?: QuestionType | QuestionType[] | "any";
 	count: number;
 	sourceExamPaper?: string;

@@ -39,7 +39,7 @@ export async function GET(req: NextRequest) {
 					subjectId: d.subjectId as string,
 					topicId: d.topicId as string,
 					bloomLevel: d.bloomLevel as CompetencyRecord["bloomLevel"],
-					score: d.score as number,
+					score: (d.score as number) ?? (d.proficiency as number) ?? 0,
 					attempts: d.attempts as number,
 					lastAssessed: d.lastAssessed as number,
 					level: d.level as CompetencyRecord["level"],

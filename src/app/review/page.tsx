@@ -7,6 +7,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Badge } from "@/components/ui/badge";
@@ -104,12 +105,21 @@ export default function ReviewPage() {
 					<h1 className="ios-title-1 font-extrabold text-foreground tracking-tight">
 						Wrong Answer Journal
 					</h1>
-					{entries.length > 0 && (
-						<Button variant="ghost" size="sm" onClick={handleClearReviewed}>
-							<HugeiconsIcon icon={Delete01Icon} data-icon="inline-start" />
-							Clear reviewed
-						</Button>
-					)}
+					<div className="flex items-center gap-2">
+						{filterSubject && (
+							<Link
+								href={`/quiz?subject=${encodeURIComponent(filterSubject)}${filterTopic ? `&topic=${encodeURIComponent(filterTopic)}` : ""}&count=10`}
+							>
+								<Button size="sm">Practice these topics</Button>
+							</Link>
+						)}
+						{entries.length > 0 && (
+							<Button variant="ghost" size="sm" onClick={handleClearReviewed}>
+								<HugeiconsIcon icon={Delete01Icon} data-icon="inline-start" />
+								Clear reviewed
+							</Button>
+						)}
+					</div>
 				</div>
 
 				<div className="flex gap-3 flex-wrap">
@@ -170,6 +180,17 @@ export default function ReviewPage() {
 									? `No mistakes found for ${filterSubject}.`
 									: "Wrong answers will appear here automatically after quizzes and exams."}
 							</p>
+							{filterSubject && (
+								<div className="mt-4">
+									<Link
+										href={`/quiz?subject=${encodeURIComponent(filterSubject)}${filterTopic ? `&topic=${encodeURIComponent(filterTopic)}` : ""}&count=10`}
+									>
+										<Button size="sm" variant="outline">
+											Practice {filterSubject}
+										</Button>
+									</Link>
+								</div>
+							)}
 						</CardContent>
 					</Card>
 				) : (

@@ -174,7 +174,7 @@ const handlers: Record<JobType, JobHandler> = {
 				COLLECTIONS.COMPETENCIES,
 				existing[0].$id as string,
 				{
-					proficiency: data.proficiency,
+					score: data.proficiency,
 					attempts: data.attempts,
 					level: data.level,
 					lastAssessed: data.lastAssessed,
@@ -186,7 +186,7 @@ const handlers: Record<JobType, JobHandler> = {
 				subjectId: data.subjectId,
 				topicId: data.topicId,
 				bloomLevel: data.bloomLevel,
-				proficiency: data.proficiency,
+				score: data.proficiency,
 				attempts: data.attempts,
 				level: data.level,
 				lastAssessed: data.lastAssessed,

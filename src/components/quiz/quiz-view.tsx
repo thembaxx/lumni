@@ -17,7 +17,11 @@ import { ProgressDots } from "@/components/shared/progress-dots";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AssessmentHeader } from "@/components/ui/headers/assessment-header";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
-import type { BloomLevel, Question } from "@/lib/question-engine/types";
+import type {
+	BloomLevel,
+	Difficulty,
+	Question,
+} from "@/lib/question-engine/types";
 import { useQuizSession } from "@/lib/quiz-session";
 
 export interface QuizResults {
@@ -59,18 +63,24 @@ export function QuizView({
 		topicCompetencyLevel?: "novice" | "developing" | "proficient" | "mastered";
 		topicCompetencyScore?: number;
 		suggestedBloomLevel?: BloomLevel;
+		suggestedDifficulty?: Difficulty;
 	}>({});
+	const [resolvedTopic, setResolvedTopic] = useState<string | undefined>(topic);
+
+	useEffect(() => {
+		setResolvedTopic(topic);
+	}, [topic]);
 	const _quizContainerRef = useRef<HTMLDivElement>(null);
 
 	const engineParams = useMemo(
 		() => ({
 			subject: selectedSubject.toLowerCase(),
-			topic,
+			topic: resolvedTopic,
 			count: questionCount,
 			questionType: "any" as const,
 			...competencyData,
 		}),
-		[selectedSubject, topic, questionCount, competencyData],
+		[selectedSubject, resolvedTopic, questionCount, competencyData],
 	);
 
 	const { questions, isLoading, isError } = useQuestionEngine(engineParams, {
@@ -93,36 +103,58 @@ export function QuizView({
 					| "mastered";
 				topicCompetencyScore?: number;
 				suggestedBloomLevel?: BloomLevel;
+				suggestedDifficulty?: Difficulty;
 			} = {};
+			let targetTopic: string | undefined = topic;
 
-			if (topic) {
-				try {
-					const { competencyService } = await import("@/lib/competency-engine");
-					const { computeCompetencyLevel } = await import(
-						"@/lib/competency-engine/types"
-					);
-					const { mapCompetencyToBloom } = await import(
-						"@/lib/question-engine/competency-mapper"
-					);
+			try {
+				const { competencyService } = await import("@/lib/competency-engine");
+				const { computeCompetencyLevel } = await import(
+					"@/lib/competency-engine/types"
+				);
+				const { mapCompetencyToBloom, mapCompetencyToDifficulty } =
+					await import("@/lib/question-engine/competency-mapper");
 
-					const normalizedSubject = subject.toLowerCase();
-					const competencies =
-						await competencyService.getCompetencies(normalizedSubject);
-					const topicComps = competencies.filter((c) => c.topicId === topic);
+				const normalizedSubject = subject.toLowerCase();
+				const competencies =
+					await competencyService.getCompetencies(normalizedSubject);
 
-					if (topicComps.length > 0) {
-						const avgScore =
-							topicComps.reduce((s, c) => s + c.score, 0) / topicComps.length;
-						const level = computeCompetencyLevel(avgScore);
-						loadedCompData = {
-							topicCompetencyLevel: level,
-							topicCompetencyScore: Math.round(avgScore),
-							suggestedBloomLevel: mapCompetencyToBloom(level, avgScore),
-						};
-					}
-				} catch {
-					// silent fallback — non-personalized
+				if (competencies.length === 0) {
+					setCompetencyData({});
+					setResolvedTopic(topic);
+					setSessionActive(true);
+					setLoadError(null);
+					return;
 				}
+
+				// Cross-topic awareness: when no topic specified,
+				// auto-detect the weakest topic
+				if (!targetTopic) {
+					const weakest = competencies.reduce((prev, curr) =>
+						curr.score < prev.score ? curr : prev,
+					);
+					targetTopic = weakest.topicId;
+				}
+
+				const topicComps = competencies.filter(
+					(c) => c.topicId === targetTopic,
+				);
+
+				if (topicComps.length > 0) {
+					const avgScore =
+						topicComps.reduce((s, c) => s + c.score, 0) / topicComps.length;
+					const level = computeCompetencyLevel(avgScore);
+					loadedCompData = {
+						topicCompetencyLevel: level,
+						topicCompetencyScore: Math.round(avgScore),
+						suggestedBloomLevel: mapCompetencyToBloom(level, avgScore),
+						suggestedDifficulty: mapCompetencyToDifficulty(level),
+					};
+				}
+
+				setResolvedTopic(targetTopic);
+			} catch {
+				// silent fallback — non-personalized
 			}
 
 			setCompetencyData(loadedCompData);
