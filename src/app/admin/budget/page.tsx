@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -25,26 +26,21 @@ const CARD_CLASS =
 	"overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors";
 
 export default function AdminBudgetPage() {
-	const [data, setData] = useState<BudgetData | null>(null);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState("");
-
-	const fetchBudget = useCallback(async () => {
-		setLoading(true);
-		setError("");
-		try {
+	const {
+		data,
+		isLoading: loading,
+		error: queryError,
+		refetch: fetchBudget,
+	} = useQuery({
+		queryKey: ["engine-budget"],
+		queryFn: async () => {
 			const res = await fetch("/api/engine/budget");
 			if (!res.ok) throw new Error("Failed to fetch budget");
-			setData(await res.json());
-		} catch (err) {
-			setError(err instanceof Error ? err.message : "Network error");
-		}
-		setLoading(false);
-	}, []);
+			return res.json() as Promise<BudgetData>;
+		},
+	});
 
-	useEffect(() => {
-		fetchBudget();
-	}, [fetchBudget]);
+	const error = queryError instanceof Error ? queryError.message : "";
 
 	return (
 		<div className="min-h-[100dvh] bg-background p-6 max-w-4xl mx-auto space-y-6">
@@ -58,7 +54,7 @@ export default function AdminBudgetPage() {
 					</p>
 				</div>
 				<Button
-					onClick={fetchBudget}
+					onClick={() => fetchBudget()}
 					disabled={loading}
 					variant="outline"
 					className="shrink-0"

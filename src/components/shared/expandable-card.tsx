@@ -2,7 +2,7 @@
 
 import { AnimatePresence, m } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import { ListenToLesson } from "@/components/listen-to-lesson";
 import { Anim } from "@/components/shared/anim";
 import { DifficultyBadge } from "@/components/shared/difficulty-badge";
@@ -36,11 +36,7 @@ function HighlightedText({
 	text: string;
 	currentWordIndex: number;
 }) {
-	const [words, setWords] = useState<string[]>([]);
-
-	useEffect(() => {
-		setWords(text.split(" "));
-	}, [text]);
+	const words = useMemo(() => text.split(" "), [text]);
 
 	return (
 		<p className="text-sm text-muted-foreground leading-relaxed text-pretty">

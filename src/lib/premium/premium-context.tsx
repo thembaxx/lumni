@@ -1,5 +1,6 @@
 "use client";
 
+import { useMutation } from "@tanstack/react-query";
 import {
 	createContext,
 	useCallback,
@@ -79,15 +80,21 @@ export function PremiumProvider({ children }: { children: React.ReactNode }) {
 		saveToStorage(PREMIUM_KEY, state);
 	}, [state]);
 
-	useEffect(() => {
-		if (state.isPremium && state.expiresAt) {
-			fetch(VERIFY_API, {
+	const { mutate: verifyPremium } = useMutation({
+		mutationFn: async () => {
+			await fetch(VERIFY_API, {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({ isPremium: state.isPremium }),
-			}).catch(() => {});
+			});
+		},
+	});
+
+	useEffect(() => {
+		if (state.isPremium && state.expiresAt) {
+			verifyPremium();
 		}
-	}, [state.isPremium, state.expiresAt]);
+	}, [state.isPremium, state.expiresAt, verifyPremium]);
 
 	const hasFeature = (feature: PremiumFeature): boolean => {
 		return state.features.includes(feature);

@@ -1,7 +1,7 @@
 "use client";
 
 import { File02Icon } from "@hugeicons/core-free-icons";
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import ReactMarkdown from "react-markdown";
 import rehypeKatex from "rehype-katex";
 import remarkGfm from "remark-gfm";
@@ -31,23 +31,12 @@ export function SmartViewDialog({
 	exam,
 	onViewPdf,
 }: SmartViewDialogProps) {
-	const [loading, setLoading] = useState(true);
-	const [result, setResult] = useState<GetExamMarkdownResult | null>(null);
-
-	useEffect(() => {
-		if (open && exam.fileUrl) {
-			setLoading(true);
-			setResult(null);
-
-			getExamMarkdown(exam.fileUrl).then((res) => {
-				setResult(res);
-				setLoading(false);
-			});
-		} else if (!open) {
-			setLoading(true);
-			setResult(null);
-		}
-	}, [open, exam.fileUrl]);
+	const { data: result, isLoading: loading } = useQuery({
+		queryKey: ["exam-markdown", exam.fileUrl],
+		queryFn: () => getExamMarkdown(exam.fileUrl!),
+		enabled: open && !!exam.fileUrl,
+		staleTime: 5 * 60 * 1000,
+	});
 
 	const handleClose = () => {
 		onOpenChange(false);

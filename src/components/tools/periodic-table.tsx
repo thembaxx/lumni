@@ -2,6 +2,7 @@
 
 import { Cancel01Icon, Search01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { useMutation } from "@tanstack/react-query";
 import {
 	AnimatePresence,
 	motion,
@@ -128,47 +129,46 @@ export function PeriodicTable() {
 	const _displayedElements = isFiltered ? filteredElements : elements;
 
 	// Generate interesting fact when element is selected
-	useEffect(() => {
-		if (selectedElement) {
-			setInterestingFact(null); // Reset fact when new element selected
+	const { mutate: generateFact } = useMutation({
+		mutationFn: async (el: Element) => {
+			const response = await fetch(`/api/generate-element-fact`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					element: {
+						atomicNumber: el.atomicNumber,
+						name: el.name,
+						symbol: el.symbol,
+					},
+				}),
+			});
 
-			// Generate interesting fact
-			const generateFact = async () => {
-				try {
-					// Try to generate fact via our API route
-					const response = await fetch(`/api/generate-element-fact`, {
-						method: "POST",
-						headers: {
-							"Content-Type": "application/json",
-						},
-						body: JSON.stringify({
-							element: {
-								atomicNumber: selectedElement.atomicNumber,
-								name: selectedElement.name,
-								symbol: selectedElement.symbol,
-							},
-						}),
-					});
+			if (!response.ok) {
+				throw new Error(`HTTP error! status: ${response.status}`);
+			}
 
-					if (!response.ok) {
-						throw new Error(`HTTP error! status: ${response.status}`);
-					}
+			const data = await response.json();
+			return data.fact as string | null;
+		},
+		onSuccess: (fact) => {
+			setInterestingFact(fact ?? null);
+		},
+		onError: (error) => {
+			console.error("Failed to generate interesting fact:", error);
+			setInterestingFact(null);
+		},
+	});
 
-					const data = await response.json();
-					if (data.fact) {
-						setInterestingFact(data.fact);
-					} else {
-						setInterestingFact(null);
-					}
-				} catch (error) {
-					console.error("Failed to generate interesting fact:", error);
-					setInterestingFact(null);
-				}
-			};
-
-			generateFact();
+	// Reset fact when new element selected and trigger generation
+	const handleElementSelect = (el: Element) => {
+		setSelectedElement(el);
+		setInterestingFact(null);
+		if (el) {
+			generateFact(el);
 		}
-	}, [selectedElement]);
+	};
 
 	return (
 		<div
@@ -325,7 +325,7 @@ export function PeriodicTable() {
 								!isFiltered ||
 								filteredElements.some((e) => e.atomicNumber === el.atomicNumber)
 							}
-							onClick={() => setSelectedElement(el)}
+							onClick={() => handleElementSelect(el)}
 						/>
 					))}
 				</motion.div>

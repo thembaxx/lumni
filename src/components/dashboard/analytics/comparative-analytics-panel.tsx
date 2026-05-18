@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { LineChart } from "@/components/ui/charts/line-chart";
@@ -8,13 +9,6 @@ import { RadarChart } from "@/components/ui/charts/radar-chart";
 import { useAnalytics } from "@/hooks/use-analytics";
 import { useAuth } from "@/lib/auth/auth-context";
 import { analyticsService } from "@/lib/services/analytics-service";
-
-interface ComparativeAnalyticsData {
-	userPercentile: number;
-	subjectRankings: Record<string, number>;
-	globalAverage: number;
-	userAverage: number;
-}
 
 interface SubjectTrendData {
 	dates: string[];
@@ -25,71 +19,45 @@ interface SubjectTrendData {
 export function ComparativeAnalyticsPanel() {
 	const { analytics, isLoading } = useAnalytics();
 	const { user } = useAuth();
-	const [comparativeData, setComparativeData] =
-		useState<ComparativeAnalyticsData | null>(null);
-	const [subjectTrends, setSubjectTrends] = useState<
-		Record<string, SubjectTrendData>
-	>({});
 	const [showSubjectDetail, setShowSubjectDetail] = useState(false);
-	const [_isLoadingComparative, setIsLoadingComparative] = useState(false);
-	const [_isLoadingTrends, setIsLoadingTrends] = useState(false);
 
-	const loadComparativeAnalytics = useCallback(async () => {
-		if (!user?.$id) return;
-		setIsLoadingComparative(true);
-		try {
-			const data = await analyticsService.getComparativeAnalytics(user.$id);
-			setComparativeData(data);
-		} catch (error) {
-			console.error("Error loading comparative analytics:", error);
-		} finally {
-			setIsLoadingComparative(false);
-		}
-	}, [user]);
+	const comparativeQuery = useQuery({
+		queryKey: ["comparative-analytics", user?.$id],
+		queryFn: () => analyticsService.getComparativeAnalytics(user!.$id),
+		enabled: !!user?.$id && !!analytics && !isLoading,
+		staleTime: 5 * 60 * 1000,
+	});
 
-	const loadSubjectTrends = useCallback(async () => {
-		if (!analytics || !comparativeData || !user?.$id) return;
+	const comparativeData = comparativeQuery.data ?? null;
 
-		setIsLoadingTrends(true);
-		try {
-			const weakSubjects = Object.entries(comparativeData.subjectRankings)
-				.sort(([, rankA], [, rankB]) => rankA - rankB)
-				.slice(0, 3)
-				.map(([subject]) => subject);
+	const weakSubjects = useMemo(() => {
+		if (!comparativeData) return [];
+		return Object.entries(comparativeData.subjectRankings)
+			.sort(([, rankA], [, rankB]) => rankA - rankB)
+			.slice(0, 3)
+			.map(([subject]) => subject);
+	}, [comparativeData]);
 
+	const trendsQuery = useQuery({
+		queryKey: ["subject-trends", user?.$id, ...weakSubjects.sort()],
+		queryFn: async () => {
 			const trends: Record<string, SubjectTrendData> = {};
-
 			await Promise.all(
 				weakSubjects.map(async (subject) => {
 					const data = await analyticsService.getSubjectTrend(
-						user.$id,
+						user!.$id,
 						subject,
 					);
 					trends[subject] = data;
 				}),
 			);
+			return trends;
+		},
+		enabled: weakSubjects.length > 0 && !!user?.$id,
+		staleTime: 5 * 60 * 1000,
+	});
 
-			setSubjectTrends(trends);
-		} catch (error) {
-			console.error("Error loading subject trends:", error);
-		} finally {
-			setIsLoadingTrends(false);
-		}
-	}, [analytics, comparativeData, user]);
-
-	// Load comparative analytics when user analytics loads
-	useEffect(() => {
-		if (analytics && !isLoading) {
-			loadComparativeAnalytics();
-		}
-	}, [analytics, isLoading, loadComparativeAnalytics]);
-
-	// Load trends for weak subjects when comparative data loads
-	useEffect(() => {
-		if (comparativeData) {
-			loadSubjectTrends();
-		}
-	}, [comparativeData, loadSubjectTrends]);
+	const subjectTrends = trendsQuery.data ?? {};
 
 	if (isLoading || !analytics) {
 		return (

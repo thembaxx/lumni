@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
 import type { ExamFilter, ExamGroup, PaperListing } from "@/types/exam";
 
 interface AppwriteExam {
@@ -17,56 +18,39 @@ interface AppwriteExam {
 	uploadedAt: string;
 }
 
+async function fetchExams(): Promise<PaperListing[]> {
+	const res = await fetch("/api/admin/exams");
+	if (!res.ok) return [];
+	const data = await res.json();
+	const appwriteExams = (data.exams || []) as AppwriteExam[];
+	return appwriteExams.map((e) => ({
+		id: e.id,
+		subject: e.subject,
+		subjectId: e.subject.toLowerCase().replace(/\s+/g, "-"),
+		year: e.year,
+		session: e.examPeriod.toLowerCase().includes("june")
+			? ("may-june" as const)
+			: ("november" as const),
+		type: "paper" as const,
+		paperNumber: parseInt(e.paperCode?.replace("P", "") || "1"),
+		language: e.language?.toLowerCase() as "english" | "afrikaans" | undefined,
+		title: `${e.subject} ${e.paperCode} ${e.examPeriod}`,
+		url: "",
+		fileUrl: e.fileKeys?.pdf || undefined,
+		fileKey: e.fileKeys?.json || undefined,
+	}));
+}
+
 export function useExams(filter: ExamFilter) {
-	const [exams, setExams] = useState<PaperListing[]>([]);
-	const [isLoading, setIsLoading] = useState(true);
-	const [error, _setError] = useState<string | null>(null);
-
-	useEffect(() => {
-		async function fetchExams() {
-			try {
-				setIsLoading(true);
-
-				const res = await fetch("/api/admin/exams");
-				if (res.ok) {
-					const data = await res.json();
-					const appwriteExams = (data.exams || []) as AppwriteExam[];
-					const mapped: PaperListing[] = appwriteExams.map((e) => ({
-						id: e.id,
-						subject: e.subject,
-						subjectId: e.subject.toLowerCase().replace(/\s+/g, "-"),
-						year: e.year,
-						session: e.examPeriod.toLowerCase().includes("june")
-							? ("may-june" as const)
-							: ("november" as const),
-						type: "paper" as const,
-						paperNumber: parseInt(e.paperCode?.replace("P", "") || "1"),
-						language: e.language?.toLowerCase() as
-							| "english"
-							| "afrikaans"
-							| undefined,
-						title: `${e.subject} ${e.paperCode} ${e.examPeriod}`,
-						url: "",
-						fileUrl: e.fileKeys?.pdf || undefined,
-						fileKey: e.fileKeys?.json || undefined,
-					}));
-					if (mapped.length > 0) {
-						setExams(mapped);
-						setIsLoading(false);
-						return;
-					}
-				}
-
-				setExams([]);
-			} catch {
-				setExams([]);
-			} finally {
-				setIsLoading(false);
-			}
-		}
-
-		fetchExams();
-	}, []);
+	const {
+		data: exams = [],
+		isLoading,
+		error,
+	} = useQuery({
+		queryKey: ["admin-exams"],
+		queryFn: fetchExams,
+		staleTime: 5 * 60 * 1000,
+	});
 
 	const filteredExams = useMemo(() => {
 		let results = exams;
@@ -116,7 +100,7 @@ export function useExams(filter: ExamFilter) {
 		exams: filteredExams,
 		groupedExams,
 		isLoading,
-		error,
+		error: error?.message ?? null,
 	};
 }
 

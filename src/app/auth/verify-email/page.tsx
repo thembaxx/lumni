@@ -2,10 +2,11 @@
 
 import { SparklesIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { useMutation } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { iOSEase } from "@/lib/utils/animation";
 
@@ -14,26 +15,28 @@ function VerifyEmailContent() {
 	const searchParams = useSearchParams();
 	const userId = searchParams.get("userId");
 	const secret = searchParams.get("secret");
-	const [_verified, setVerified] = useState(false);
 	const [error, setError] = useState("");
+	const calledRef = useRef(false);
 
-	useEffect(() => {
-		if (userId && secret) {
-			fetch("/api/auth/verify-email", {
+	const { mutate } = useMutation({
+		mutationFn: async () => {
+			if (!userId || !secret) throw new Error("Invalid verification link");
+			const res = await fetch("/api/auth/verify-email", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({ userId, secret }),
-			})
-				.then((res) => {
-					if (!res.ok) throw new Error("Verification failed");
-					return res.json();
-				})
-				.then(() => setVerified(true))
-				.catch((err) => setError(err.message));
-		} else {
-			setError("Invalid verification link");
-		}
-	}, [userId, secret]);
+			});
+			if (!res.ok) throw new Error("Verification failed");
+			return res.json();
+		},
+		onError: (err) => setError(err.message),
+	});
+
+	// Mount-triggered mutation — safe because the fetch logic lives in react-query
+	if (userId && secret && !calledRef.current) {
+		calledRef.current = true;
+		mutate();
+	}
 
 	if (error) {
 		return (

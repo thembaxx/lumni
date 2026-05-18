@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useCallback } from "react";
 import { QuestionRatingsDashboard } from "@/components/admin/question-ratings-dashboard";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -17,30 +18,38 @@ import {
 } from "@/lib/utils/engine-quality";
 
 export default function AdminQualityPage() {
-	const [quality, setQuality] = useState(getQualityStats());
-	const [analytics, setAnalytics] = useState(getAnalyticsSummary());
-	const [events, setEvents] = useState(loadEvents().slice(-20).reverse());
-	const [recentQuality, setRecentQuality] = useState(
-		loadQualityRecords().slice(-10).reverse(),
-	);
+	const { data: quality = getQualityStats() } = useQuery({
+		queryKey: ["engine-quality", "stats"],
+		queryFn: () => getQualityStats(),
+		refetchInterval: 5000,
+	});
 
-	const refresh = useCallback(() => {
-		setQuality(getQualityStats());
-		setAnalytics(getAnalyticsSummary());
-		setEvents(loadEvents().slice(-20).reverse());
-		setRecentQuality(loadQualityRecords().slice(-10).reverse());
-	}, []);
+	const { data: analytics = getAnalyticsSummary() } = useQuery({
+		queryKey: ["engine-quality", "analytics-summary"],
+		queryFn: () => getAnalyticsSummary(),
+		refetchInterval: 5000,
+	});
 
-	useEffect(() => {
-		const interval = setInterval(refresh, 5000);
-		return () => clearInterval(interval);
-	}, [refresh]);
+	const { data: events = loadEvents().slice(-20).reverse() } = useQuery({
+		queryKey: ["engine-quality", "events"],
+		queryFn: () => loadEvents().slice(-20).reverse(),
+		refetchInterval: 5000,
+	});
+
+	const { data: recentQuality = loadQualityRecords().slice(-10).reverse() } =
+		useQuery({
+			queryKey: ["engine-quality", "recent"],
+			queryFn: () => loadQualityRecords().slice(-10).reverse(),
+			refetchInterval: 5000,
+		});
+
+	const queryClient = useQueryClient();
 
 	const handleClear = useCallback(() => {
 		clearAnalytics();
 		clearQualityRecords();
-		refresh();
-	}, [refresh]);
+		queryClient.invalidateQueries({ queryKey: ["engine-quality"] });
+	}, [queryClient]);
 
 	return (
 		<div className="min-h-[100dvh] bg-background p-6 max-w-5xl mx-auto space-y-6">

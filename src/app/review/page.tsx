@@ -6,7 +6,8 @@ import {
 	Delete01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMemo, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -53,39 +54,35 @@ export default function ReviewPage() {
 	const { getWrongAnswers, markReviewed, clearReviewed } =
 		useWrongAnswerJournal();
 	const { data: subjects } = useSubjects();
-	const [entries, setEntries] = useState<WrongAnswerEntry[]>([]);
-	const [loading, setLoading] = useState(true);
 	const [filterSubject, setFilterSubject] = useState<string>("");
 	const [filterTopic, setFilterTopic] = useState<string>("");
 	const [errorTypes, setErrorTypes] = useState<Record<number, ErrorType>>({});
+
+	const { data: entries = [], isLoading: loading } = useQuery({
+		queryKey: ["wrong-answers", filterSubject, filterTopic],
+		queryFn: () =>
+			getWrongAnswers(filterSubject || undefined, filterTopic || undefined),
+	});
 
 	const uniqueTopics = useMemo(() => {
 		const topics = new Set(entries.map((e) => e.topic));
 		return Array.from(topics).filter(Boolean).sort();
 	}, [entries]);
 
-	const load = useCallback(async () => {
-		setLoading(true);
-		const data = await getWrongAnswers(
-			filterSubject || undefined,
-			filterTopic || undefined,
-		);
-		setEntries(data);
-		setLoading(false);
-	}, [getWrongAnswers, filterSubject, filterTopic]);
-
-	useEffect(() => {
-		load();
-	}, [load]);
-
 	const handleReviewed = async (id: number) => {
 		await markReviewed(id);
-		setEntries((prev) => prev.filter((e) => e.id !== id));
+		refreshEntries();
+	};
+
+	const queryClient = useQueryClient();
+
+	const refreshEntries = () => {
+		queryClient.invalidateQueries({ queryKey: ["wrong-answers"] });
 	};
 
 	const handleClearReviewed = async () => {
 		await clearReviewed();
-		load();
+		refreshEntries();
 	};
 
 	const handleErrorTypeChange = (entryId: number, type: ErrorType) => {

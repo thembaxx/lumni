@@ -1,46 +1,33 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { questionRatingService } from "@/lib/services/question-rating-service";
 
 export function QuestionRatingsDashboard() {
-	const [lowRated, setLowRated] = useState<
-		Array<{
-			questionId: string;
-			subject: string;
-			avgRating: number;
-			count: number;
-		}>
-	>([]);
-	const [stats, setStats] = useState({
-		total: 0,
-		average: 0,
-		counts: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
+	const { data: lowRated = [] } = useQuery({
+		queryKey: ["question-ratings", "low-rated"],
+		queryFn: () => questionRatingService.getLowRatedQuestions(),
 	});
-	const [allRatings, setAllRatings] = useState<
-		Array<{
-			questionId: string;
-			subject: string;
-			rating: number;
-			feedback?: string;
-			createdAt: number;
-		}>
-	>([]);
 
-	const refresh = useCallback(async () => {
-		const [low, s, ratings] = await Promise.all([
-			questionRatingService.getLowRatedQuestions(),
-			questionRatingService.getRatingStats(),
-			questionRatingService.getAllRatings(),
-		]);
-		setLowRated(low);
-		setStats(s as typeof stats);
-		setAllRatings(ratings.slice(-20).reverse());
-	}, []);
+	const {
+		data: stats = {
+			total: 0,
+			average: 0,
+			counts: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
+		},
+	} = useQuery({
+		queryKey: ["question-ratings", "stats"],
+		queryFn: () => questionRatingService.getRatingStats(),
+	});
 
-	useEffect(() => {
-		refresh();
-	}, [refresh]);
+	const { data: allRatings = [] } = useQuery({
+		queryKey: ["question-ratings", "recent"],
+		queryFn: async () => {
+			const ratings = await questionRatingService.getAllRatings();
+			return ratings.slice(-20).reverse();
+		},
+	});
 
 	return (
 		<div className="space-y-6">
