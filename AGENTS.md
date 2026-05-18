@@ -127,9 +127,11 @@ import { DiagramRenderer } from "@/components/visual/diagram-renderer"
 When `POST /api/engine/generate` creates questions, the engine fires background visual generation for each question so visuals are cached and ready when the question card renders.
 
 ### AI Provider Order
-1. Gemini (primary, first attempted)
-2. Groq (fallback)
-3. DeepSeek (last resort)
+1. Gemini 2.0 Flash Lite (primary, first attempted)
+2. Nvidia NIM — meta/llama-3.3-70b-instruct (fallback)
+3. Groq — llama-3.3-70b-versatile (last resort)
+
+> **Note:** DeepSeek was removed as too expensive for free-tier credits. Nvidia NIM was added as the second fallback. The chain is defined in `src/lib/ai/client.ts`.
 
 ## Agent skills
 

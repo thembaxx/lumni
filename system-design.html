@@ -214,13 +214,13 @@
         subgraph Engine["Engine Layer"]
           QE["QuestionEngine<br/>Generation · Grading · Validation"]
           VE["VisualEngine<br/>Konva · Wikimedia · Mermaid"]
-          CE["CompetencyEngine<br/>Bloom's Taxonomy · 4 Levels"]
+          CE["CompetencyEngine<br/>Bloom's Taxonomy · 4 Levels · Paths"]
           QS["QuizSession<br/>State Machine · Timer"]
-          LO["LearningOrchestrator<br/>Composition Root"]
+          LO["LearningOrchestrator<br/>Composition Root · Job Queue"]
         end
 
         subgraph Cache["Caching Layer"]
-          D["Dexie (IndexedDB)<br/>11 tables · 24h-7d expiry"]
+          D["Dexie (IndexedDB)<br/>13 tables · 24h-7d expiry"]
           AW["Appwrite Cloud<br/>10+ collections"]
           AI["AI Generation<br/>On-demand fallback"]
         end
@@ -233,13 +233,15 @@
           LS["LeaderboardService"]
           NS["NotificationService"]
           QRS["QuestionRatingService"]
+          CS["ChatService"]
         end
 
         subgraph Infra["Infrastructure"]
           API["REST API Routes<br/>(/api/*)"]
           Auth["Appwrite Auth<br/>Anonymous → Email"]
-          Jobs["Background Job Queue<br/>Sync · Analytics · Spaced-Rep"]
+          Jobs["Background Job Queue<br/>Sync · Analytics · Spaced-Rep · Cron"]
           Budget["Token Budget<br/>Per-user + Global"]
+          Push["Push Notifications<br/>Web Push API"]
         end
 
         Client --> API
@@ -350,7 +352,7 @@
         Render --> CH["chart"]
         Render --> CM["chemistry"]
         Render --> GR["graph"]
-        Render --> NF["node-flow"]
+        Render --> NF["node-flow<br/>(@xyflow/react)"]
         Render --> SVG["custom-svg"]
 
         Classify -->|No| NonSTEM["Wikimedia Search"]
@@ -380,7 +382,7 @@
         P1 -->|Success| Done["✅ Return"]
         P1 -->|Fail / Timeout| P2["🥈 Nvidia NIM<br/>meta/llama-3.3-70b-instruct"]
         P2 -->|Success| Done
-        P2 -->|Fail / Timeout| P3["🥉 Groq<br/>Llama 3.3 70B"]
+        P2 -->|Fail / Timeout| P3["🥉 Groq<br/>Llama 3.3 70B<br/>llama-3.3-70b-versatile"]
         P3 -->|Success| Done
         P3 -->|Fail| Error["❌ All providers failed"]
 
@@ -393,6 +395,15 @@
 
         subgraph Global["Global Limits"]
           GL["2,000 AI calls/day<br/>resets at midnight"]
+        end
+
+        subgraph Routes["Budget-Checked Routes"]
+          R1["POST /api/engine/*"]
+          R2["POST /api/solve"]
+          R3["POST /api/chat"]
+          R4["POST /api/chat/image"]
+          R5["POST /api/curated-problems"]
+          R6["POST /api/generate-element-fact"]
         end
     </pre>
   </div>
@@ -436,7 +447,7 @@
   <div class="diagram-wrap">
     <pre class="mermaid">
       graph TB
-        subgraph Tier1["Tier 1: Dexie (IndexedDB) — Offline-First"]
+        subgraph Tier1["Tier 1: Dexie (IndexedDB, v9) — Offline-First"]
           T1_Q["questions<br/>subject, topic, cachedAt"]
           T1_P["progress<br/>odSubjectId, userId"]
           T1_QA["quizAttempts<br/>odSubject, userId"]
@@ -449,6 +460,7 @@
           T1_QR["questionRatings<br/>questionId, subject"]
           T1_SYNC["syncQueue<br/>status, priority"]
           T1_CONF["conflicts<br/>resolvedAt"]
+          T1_CM["chatMessages<br/>role, timestamp"]
         end
 
         subgraph Tier2["Tier 2: Appwrite Cloud"]
@@ -530,6 +542,7 @@
         Root --> Online["OnlineStatusIndicator"]
         Root --> Auto["AutoSyncWrapper"]
         Root --> JobP["JobProcessorWrapper"]
+        Root --> Query["QueryProvider"]
 
         Root --> Side["DesktopSidebar<br/>(hidden mobile)"]
         Root --> Main["Main Content Area"]
@@ -542,7 +555,7 @@
         Root --> Toaster
         Root --> FTB["FloatingToolsButton"]
 
-        Children --> HP["/ — Home"]
+        Children --> HP["/ — Home / Landing"]
         Children --> DP["/dashboard — Dashboard<br/>stats · streaks · challenges<br/>focus · search · analytics"]
         Children --> QP["/quiz — Quiz"]
         Children --> FP["/flashcards — SM-2 Review"]
@@ -552,6 +565,15 @@
         Children --> ST["/settings — Settings"]
         Children --> AP["/admin — Admin Dashboard"]
         Children --> UP["/upload — File Upload"]
+        Children --> BP["/bookmarks — Bookmarks"]
+        Children --> RP["/review — Review Mistakes"]
+        Children --> SP2["/solve — AI Solver"]
+        Children --> CP["/chat — AI Chat"]
+        Children --> SCP["/search — Unified Search"]
+        Children --> PRP["/problems — Curated Problems"]
+        Children --> TP["/tools — APS Calc, Periodic Table, ..."]
+        Children --> DVP["/dev — Dev / Testing"]
+        Children --> PMP["/premium — Premium Upgrade"]
     </pre>
   </div>
 </div>
@@ -663,6 +685,8 @@
             Settings(("/settings"))
             SignIn(("/auth/sign-in"))
             SignUp(("/auth/sign-up"))
+            ForgotPassword(("/auth/forgot-password"))
+            VerifyEmail(("/auth/verify-email"))
             Admin(("/admin"))
             Quality(("/admin/quality"))
             Questions(("/admin/questions"))
@@ -672,9 +696,13 @@
             Bookmarks(("/bookmarks"))
             Review(("/review"))
             Solve(("/solve"))
+            Chat(("/chat"))
+            Search(("/search"))
+            Problems(("/problems"))
             Tools(("/tools"))
             Lessons(("/lesson"))
             Dev(("/dev"))
+            Offline(("/_offline"))
           API
             Generate(("POST /api/engine/generate"))
             Grade(("POST /api/engine/grade"))
@@ -691,15 +719,27 @@
             Exams(("/api/exams/*"))
             Solve(("/api/solve"))
             Chat(("/api/chat"))
+            ChatImage(("/api/chat/image"))
             Analytics(("/api/analytics/*"))
-            Cron(("/api/cron/*"))
+            Cron(("/api/cron/cleanup"))
             Lessons(("/api/lessons/*"))
             Subjects(("/api/subjects/*"))
             Sync(("/api/sync/*"))
             TTS(("/api/tts"))
             UploadThing(("/api/uploadthing"))
             Seed(("/api/seed"))
-            Jobs(("/api/jobs"))
+            Jobs(("/api/jobs/process"))
+            GenerateElementFact(("/api/generate-element-fact"))
+            PremiumCheckout(("/api/premium/checkout"))
+            PremiumVerify(("/api/premium/verify"))
+            PremiumCancel(("/api/premium/cancel"))
+            PushSubscribe(("/api/push/subscribe"))
+            PushSend(("/api/push/send"))
+            ImportExamPapers(("/api/import-exam-papers"))
+            MigrateExamPapers(("/api/migrate-exam-papers"))
+            TestExamPapers(("/api/test-exam-papers"))
+            UploadQA(("/api/upload-qa"))
+            DbTest(("/api/db-test"))
     </pre>
   </div>
 </div>

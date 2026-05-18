@@ -69,13 +69,14 @@ Deep module for quiz timer, scoring, navigation, and completion semantics. Hides
 **TokenTracker** enforces daily per-user + global AI call budgets to prevent exhausting free-tier API limits.
 
 | Scope | Limit | Applies to |
-|---|---|---|
+|---|---|---|---|
 | Per-user (per IP) | 20 generate/day, 100 grade/day, 20 hint/day, 50 visual/day | Each `POST /api/engine/*` route |
 | Global | 2,000 total AI calls/day | All routes combined |
 
-- **`/api/engine/visual`**, **`/api/solve`**, **`/api/curated-problems`**, **`/api/generate-element-fact`** all check budget before making AI calls.
+- **`/api/engine/*`**, **`/api/solve`**, **`/api/curated-problems`**, **`/api/generate-element-fact`**, **`/api/chat`**, **`/api/chat/image`** all check budget before making AI calls.
 - Routes return 429 with `X-Budget-Remaining-User`, `X-Budget-Remaining-Global`, `X-Budget-Reset` headers when budget is exceeded.
 - **UX**: Soft block — cached content still accessible, budget resets at midnight.
+- **Budget status** also exposed via `GET /api/engine/budget` for UI consumption.
 
 ## Local grading
 

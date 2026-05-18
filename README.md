@@ -31,15 +31,16 @@ npx next build    # Production build
 | Styling | Tailwind CSS 4, shadcn/ui, class-variance-authority |
 | Animation | framer-motion 12, Three.js (onboarding), view-transitions |
 | State | Zustand 5 (client), TanStack Query 5 (server) |
-| Icons | HugeIcons |
+| Icons | HugeIcons, Lucide |
 | Charts | recharts 3 |
-| Diagrams | Konva, Mermaid.js, React Flow |
+| Diagrams | Konva, Mermaid.js, React Flow (`@xyflow/react`) |
 | Math | KaTeX (remark-math, rehype-katex) |
-| Offline DB | Dexie 4 (IndexedDB), sql.js (SQLite WASM) |
+| Offline DB | Dexie 4 (IndexedDB, 13 tables), sql.js (SQLite WASM) |
 | Backend | Appwrite Cloud (auth, DB, storage, functions) |
 | AI | Gemini 2.0 Flash Lite → Nvidia NIM → Groq (cascading) |
 | Upload | UploadThing |
-| Quality | Biome, eslint, bun test |
+| Push Notifications | Web Push (`web-push`) |
+| Quality | Biome, bun test |
 | Deployment | Vercel |
 
 ---
@@ -49,8 +50,8 @@ npx next build    # Production build
 ```
 src/
 ├── app/                  # Next.js App Router pages & API routes
-│   ├── (auth)/           # Sign-in, sign-up
-│   ├── api/              # REST API (engine, auth, exams, analytics, cron, ...)
+│   ├── (auth)/           # Sign-in, sign-up, forgot/reset password, verify email
+│   ├── api/              # REST API (engine, auth, exams, analytics, cron, chat, ...)
 │   ├── dashboard/        # Main dashboard
 │   ├── quiz/             # Quiz flow
 │   ├── flashcards/       # SM-2 spaced repetition
@@ -63,11 +64,17 @@ src/
 │   ├── review/           # Review mistakes
 │   ├── solve/            # AI problem solver
 │   ├── bookmarks/        # Bookmarked questions
-│   └── tools/            # APS calc, periodic table, calendar, ...
+│   ├── chat/             # AI chat assistant
+│   ├── problems/         # Curated problems
+│   ├── search/           # Unified search page
+│   ├── tools/            # APS calc, periodic table, flashcards, ...
+│   ├── dev/              # Dev/testing pages (engine, visual, test-links)
+│   ├── upload/           # Content upload
+│   └── _offline/         # Offline fallback page
 ├── components/
 │   ├── ui/               # 45+ shadcn-style primitives
 │   ├── quiz/             # Question cards, quiz engine, diagrams
-│   │   └── diagrams/     # Konva renderers (geometry, chart, chemistry, graph, circuit, ...)
+│   │   └── diagrams/     # Konva renderers (geometry, chart, chemistry, graph, circuit, wave, ...)
 │   ├── exam/             # Exam engine, timer, results
 │   ├── dashboard/        # Stats, streaks, challenges, search, focus timer
 │   ├── gamification/     # XP, levels, achievements, leaderboard
@@ -75,22 +82,30 @@ src/
 │   ├── onboarding/       # 5-step wizard with Three.js
 │   ├── navigation/       # TopNav, BottomNav, DesktopSidebar
 │   ├── providers/        # React context providers
-│   └── ...               # Chat, settings, upload, celebration, social, tools
+│   └── ...               # Chat, settings, upload, celebration, social, tools, premium
 ├── lib/
 │   ├── question-engine/  # Question generation, grading, validation (11 types)
-│   ├── visual-engine/    # Diagram generation (Konva/Wikimedia)
-│   ├── competency-engine/# Bloom's taxonomy competency tracking
+│   ├── visual-engine/    # Diagram generation (Konva/Wikimedia/Mermaid)
+│   ├── competency-engine/# Bloom's taxonomy competency tracking + learning paths
 │   ├── quiz-session/     # Quiz state machine (start, recordAnswer, next)
-│   ├── orchestrator/     # Composition root connecting engines + background jobs
-│   ├── db/               # Dexie schema (v8), sync queue
+│   ├── orchestrator/     # Composition root connecting engines + background job queue
+│   ├── db/               # Dexie schema (v9, 13 tables), repositories
 │   ├── services/         # Analytics, progress, spaced-rep, search, leaderboard, notifications
 │   ├── auth/             # Auth context, rate limiting
-│   ├── ai/               # AI provider chain, token tracker, prompts
-│   ├── shared/           # Backoff, queue, sync handlers
+│   ├── ai/               # AI provider chain (Gemini/Nvidia/Groq), token tracker, prompts
+│   ├── shared/           # Backoff, format, rate-limit, time, utils
+│   ├── queue/            # Core queue abstraction
+│   ├── study-planner/    # Study planning algorithms
+│   ├── exam-parser/      # Markdown exam parser
+│   ├── exams/            # Marker client, sync
+│   ├── premium/          # Premium context/provider
+│   ├── server/           # Server actions (quiz, sync, exam, ...)
+│   ├── sync/             # Sync handler
+│   ├── data/             # Element categories, mock data
 │   └── caching-strategy.ts # Tiered read-through cache
-├── hooks/                # 33+ React hooks (useQuestionEngine, useVisualEngine, useAuth, ...)
-├── store/                # Zustand stores (auth, flashcards, exam-session, ...)
-├── types/                # TypeScript type definitions
+├── hooks/                # 33+ React hooks (useQuestionEngine, useVisualEngine, useGamification, ...)
+├── store/                # Zustand stores (auth, bookmarks, exam-session, flashcards, tools, voice-recorder)
+├── types/                # TypeScript type definitions (exam, gamification, upload, ...)
 └── curriculum/           # CAPS curriculum data
 ```
 
@@ -106,7 +121,7 @@ Data flows through a greedy read-through cache:
 Request → Dexie (IndexedDB, 24h) → Appwrite (Cloud) → AI Generation (fallback)
 ```
 
-- **Dexie** (11 tables): questions, progress, quizAttempts, syncQueue, subjects, quizSessions, conflicts, jobs, competencies, visuals, wrongAnswers, questionRatings
+- **Dexie** (13 tables): questions, progress, quizAttempts, syncQueue, subjects, quizSessions, conflicts, jobs, competencies, visuals, wrongAnswers, questionRatings, chatMessages
 - **Appwrite**: 10+ collections for cross-session persistence
 - **AI**: On-demand generation when no cached data exists
 
@@ -152,9 +167,10 @@ Offline-first: all data writes to Dexie immediately, syncs to Appwrite via a pri
 ## Dependencies
 
 - **Runtime**: `next`, `react`, `react-dom`, `@tanstack/react-query`, `zustand`, `dexie`, `framer-motion`, `katex`, `react-markdown`, `konva`, `mermaid`, `recharts`, `three`
-- **UI**: `@hugeicons/react`, `class-variance-authority`, `clsx`, `tailwind-merge`, `cmdk`, `vaul`, `input-otp`, `react-day-picker`, `@base-ui/react`
-- **Backend**: `appwrite`, `node-appwrite`, `uploadthing`
-- **Dev**: `typescript`, `biome`, `eslint`, `bun`, `tailwindcss`, `postcss`
+- **UI**: `@hugeicons/react`, `lucide-react`, `class-variance-authority`, `clsx`, `tailwind-merge`, `cmdk`, `vaul`, `input-otp`, `react-day-picker`, `@base-ui/react`
+- **Backend**: `appwrite`, `node-appwrite`, `uploadthing`, `web-push`
+- **Diagrams**: `react-konva`, `@xyflow/react`
+- **Dev**: `typescript`, `biome`, `bun`, `tailwindcss`, `postcss`
 
 ---
 
