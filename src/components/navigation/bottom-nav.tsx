@@ -93,7 +93,7 @@ function NavItemComponent({
 				<HugeiconsIcon
 					icon={item.icon}
 					className={cn(
-						"size-[22px] transition-[transform,color] duration-200",
+						"size-5.5 transition-[transform,color] duration-200",
 						isActive && "scale-110",
 						isActive ? "text-system-accent" : "text-system-text-tertiary",
 					)}
@@ -101,7 +101,7 @@ function NavItemComponent({
 				{item.badge !== undefined && item.badge > 0 && (
 					<Badge
 						variant="destructive"
-						className="absolute -top-1 -right-1.5 min-w-[16px] h-4 px-1 text-[10px] leading-none border-0"
+						className="absolute -top-1 -right-1.5 min-w-4 h-4 px-1 text-[10px] leading-none border-0"
 					>
 						{item.badge > 99 ? "99+" : item.badge}
 					</Badge>
@@ -109,7 +109,7 @@ function NavItemComponent({
 			</div>
 			<span
 				className={cn(
-					"text-[10px] font-medium leading-none text-center tracking-[var(--tracking-caption-1)] uppercase transition-colors duration-200 relative z-10",
+					"text-[10px] font-medium leading-none text-center tracking-(--tracking-caption-1) uppercase transition-colors duration-200 relative z-10",
 					isActive ? "text-system-accent" : "text-system-text-tertiary",
 				)}
 			>
