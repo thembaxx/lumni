@@ -1,5 +1,6 @@
 import { describe, expect, test } from "bun:test";
-import { calculateBackoffDelay, QueueCore } from "../core";
+import { calculateBackoffDelay } from "@/lib/shared/backoff";
+import { QueueCore } from "../core";
 
 interface TestItem {
 	id?: number;
