@@ -1,10 +1,9 @@
 "use client";
 
 import {
+	Calendar01Icon,
 	ChartUpIcon,
 	GridIcon,
-	SparklesIcon,
-	TemperatureIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m, motion } from "framer-motion";
@@ -18,11 +17,11 @@ import type { TabValue } from "../types";
 interface TabConfig {
 	value: TabValue;
 	label: string;
-	icon: typeof TemperatureIcon;
+	icon: typeof Calendar01Icon;
 }
 
 const tabs: TabConfig[] = [
-	{ value: "ai", label: "AI", icon: TemperatureIcon },
+	{ value: "today", label: "Today", icon: Calendar01Icon },
 	{ value: "spaces", label: "Practice", icon: GridIcon },
 	{ value: "analytics", label: "Analytics", icon: ChartUpIcon },
 ];
@@ -67,13 +66,13 @@ export function TabNav({
 					}}
 				>
 					<TabsList
-						className="bg-secondary/60 backdrop-blur-md border border-border/40 p-1 grid grid-cols-3 rounded-2xl h-10 relative shadow-sm"
+						className="bg-secondary/60 backdrop-blur-md border border-border/40 p-1 grid grid-cols-3 rounded-2xl h-12 relative shadow-sm"
 						role="tablist"
 					>
 						<span
 							className={cn(
-								"absolute top-0.5 bottom-0.5 bg-background rounded-xl shadow-sm transition-transform duration-300 ease-ios border border-border/30",
-								activeTab === "ai"
+								"absolute top-0.5 bottom-0.5 bg-background rounded-xl shadow-sm transition-[left,width] duration-300 ease-ios border border-border/30",
+								activeTab === "today"
 									? "left-0.5 w-[calc(33.33%-4px)]"
 									: activeTab === "spaces"
 										? "left-[calc(33.33%+2px)] w-[calc(33.33%-4px)]"
@@ -87,7 +86,7 @@ export function TabNav({
 								key={tab.value}
 								value={tab.value}
 								className={cn(
-									"relative z-10 px-4 h-8 rounded-xl text-xs font-medium transition-colors duration-200 tab-trigger-item",
+									"relative z-10 px-4 h-10 rounded-xl text-xs font-medium transition-[color,transform] duration-200 active:scale-[0.96] tab-trigger-item",
 									activeTab === tab.value
 										? "text-foreground"
 										: "text-muted-foreground hover:text-foreground",

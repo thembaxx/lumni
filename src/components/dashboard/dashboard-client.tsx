@@ -161,7 +161,7 @@ function DashboardContent({
 	activeTab,
 }: {
 	onStartQuiz: (subject: string) => void;
-	activeTab: "ai" | "spaces" | "analytics";
+	activeTab: TabValue;
 }) {
 	const { gamification } = useGamification();
 
@@ -171,71 +171,99 @@ function DashboardContent({
 		accuracy: 0,
 	};
 
+	const showPractice = activeTab === "today" || activeTab === "spaces";
+	const showAnalytics = activeTab === "today" || activeTab === "analytics";
+
 	return (
 		<div
 			data-scroll-container
 			className="min-h-dvh flex flex-col bg-system-grouped pt-8 pb-[calc(var(--spacing-safe-pb)+var(--space-16)+var(--space-5))] overflow-x-hidden overflow-y-auto w-full"
 		>
 			<div className="max-w-3xl mx-auto w-full px-4 flex flex-col gap-8 pb-16">
-				<HeroBanner />
-				<CountdownHeader />
-				<SectionReveal delay={0.02}>
-					<GettingStartedCard />
-				</SectionReveal>
-				<SectionReveal delay={0.03}>
-					<NotificationNudge />
-				</SectionReveal>
-				<SectionReveal delay={0.05}>
-					<BentoStatRow
-						questionsAnswered={stats.questionsAnswered}
-						accuracy={stats.accuracy}
-					/>
-				</SectionReveal>
-				<SectionReveal delay={0.08}>
-					<FocusTimerCard />
-				</SectionReveal>
-				<SectionReveal delay={0.1}>
-					<TodayFocusCard />
-				</SectionReveal>
-				<SectionReveal delay={0.11}>
-					<StreakCard />
-				</SectionReveal>
-				<SectionReveal delay={0.115}>
-					<StudyPlanOverview />
-				</SectionReveal>
-				<SectionReveal delay={0.12}>
-					<CompetencyOverview />
-				</SectionReveal>
-				<SectionReveal delay={0.13}>
-					<DailyChallenges />
-				</SectionReveal>
-				<SectionReveal delay={0.14}>
-					{activeTab === "ai" ? (
+				{activeTab === "today" && <HeroBanner />}
+				{activeTab === "today" && <CountdownHeader />}
+				{activeTab === "today" && (
+					<SectionReveal delay={0.02}>
+						<GettingStartedCard />
+					</SectionReveal>
+				)}
+				{activeTab === "today" && (
+					<SectionReveal delay={0.03}>
+						<NotificationNudge />
+					</SectionReveal>
+				)}
+				{showAnalytics && (
+					<SectionReveal delay={0.05}>
+						<BentoStatRow
+							questionsAnswered={stats.questionsAnswered}
+							accuracy={stats.accuracy}
+						/>
+					</SectionReveal>
+				)}
+				{showPractice && (
+					<SectionReveal delay={0.08}>
+						<FocusTimerCard />
+					</SectionReveal>
+				)}
+				{showPractice && (
+					<SectionReveal delay={0.1}>
+						<TodayFocusCard />
+					</SectionReveal>
+				)}
+				{showPractice && (
+					<SectionReveal delay={0.11}>
+						<StreakCard />
+					</SectionReveal>
+				)}
+				{showPractice && (
+					<SectionReveal delay={0.115}>
+						<StudyPlanOverview />
+					</SectionReveal>
+				)}
+				{showPractice && (
+					<SectionReveal delay={0.12}>
+						<CompetencyOverview />
+					</SectionReveal>
+				)}
+				{showPractice && (
+					<SectionReveal delay={0.13}>
+						<DailyChallenges />
+					</SectionReveal>
+				)}
+				{showPractice && (
+					<SectionReveal delay={0.14}>
 						<QuizStartCard onStart={onStartQuiz} />
-					) : activeTab === "analytics" ? (
+					</SectionReveal>
+				)}
+				{showAnalytics && (
+					<SectionReveal delay={0.14}>
 						<ComparativeAnalyticsPanel />
-					) : (
-						<QuizStartCard onStart={onStartQuiz} />
-					)}
-				</SectionReveal>
-				<SectionReveal delay={0.16}>
-					<StatsRow />
-				</SectionReveal>
-				<SectionReveal delay={0.18}>
-					<AchievementShowcase />
-				</SectionReveal>
-				<SectionReveal delay={0.19}>
-					<StaggerList>
-						<QuickActions />
-					</StaggerList>
-				</SectionReveal>
+					</SectionReveal>
+				)}
+				{showAnalytics && (
+					<SectionReveal delay={0.16}>
+						<StatsRow />
+					</SectionReveal>
+				)}
+				{showAnalytics && (
+					<SectionReveal delay={0.18}>
+						<AchievementShowcase />
+					</SectionReveal>
+				)}
+				{showPractice && (
+					<SectionReveal delay={0.19}>
+						<StaggerList>
+							<QuickActions />
+						</StaggerList>
+					</SectionReveal>
+				)}
 			</div>
 		</div>
 	);
 }
 
 export function DashboardClient({
-	initialTab = "ai",
+	initialTab = "today",
 }: {
 	initialTab?: string;
 }) {
@@ -377,7 +405,7 @@ export function DashboardClient({
 									</motion.div>
 								) : (
 									<motion.div
-										key="content"
+										key={activeTab}
 										initial={{ opacity: 0, y: 4 }}
 										animate={{ opacity: 1, y: 0 }}
 										exit={{
