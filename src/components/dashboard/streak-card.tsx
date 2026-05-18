@@ -1,14 +1,17 @@
 "use client";
 
-import { FireIcon } from "@hugeicons/core-free-icons";
+import { FireIcon, PlayFreeIcons } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useGamification } from "@/hooks/use-gamification";
 import { cn } from "@/lib/shared";
 
 export function StreakCard() {
 	const { gamification, currentStreak } = useGamification();
+	const router = useRouter();
 
 	const today = new Date().toDateString();
 	const practicedToday = gamification.lastPracticeDate === today;
@@ -48,6 +51,17 @@ export function StreakCard() {
 										? "Study today to keep your streak alive!"
 										: "Start a streak by practicing today."}
 							</p>
+							{currentStreak === 0 && !practicedToday && (
+								<Button
+									size="sm"
+									variant="outline"
+									className="mt-3 h-8 text-xs gap-1.5"
+									onClick={() => router.push("/quiz")}
+								>
+									<HugeiconsIcon icon={PlayFreeIcons} className="size-3.5" />
+									Start practicing
+								</Button>
+							)}
 						</div>
 					</div>
 				</CardContent>

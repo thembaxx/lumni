@@ -20,6 +20,8 @@ import { StreakCard } from "@/components/dashboard/streak-card";
 import { StudyPlanOverview } from "@/components/dashboard/study-plan-overview";
 import { TodayFocusCard } from "@/components/dashboard/today-focus-card";
 import type { TabValue } from "@/components/dashboard/types";
+import { GettingStartedCard } from "@/components/onboarding/getting-started-card";
+import { NotificationNudge } from "@/components/onboarding/notification-nudge";
 import type { QuizResults } from "@/components/quiz/quiz-view";
 import { QuizView } from "@/components/quiz/quiz-view";
 import { PerpetualFloat } from "@/components/shared/perpetual-float";
@@ -177,6 +179,12 @@ function DashboardContent({
 			<div className="max-w-3xl mx-auto w-full px-4 flex flex-col gap-8 pb-16">
 				<HeroBanner />
 				<CountdownHeader />
+				<SectionReveal delay={0.02}>
+					<GettingStartedCard />
+				</SectionReveal>
+				<SectionReveal delay={0.03}>
+					<NotificationNudge />
+				</SectionReveal>
 				<SectionReveal delay={0.05}>
 					<BentoStatRow
 						questionsAnswered={stats.questionsAnswered}

@@ -12,8 +12,7 @@ export interface OnboardingData {
 	dailyStudyMinutes: number;
 	studyTimes: number[];
 	notificationsEnabled: boolean;
-	currentStep: number; // Added to track the current step
-	// Notification settings
+	currentStep: number;
 	notificationFrequency: "daily" | "every_other_day" | "weekly";
 	notificationTimeOfDay: "morning" | "afternoon" | "evening" | undefined;
 }
@@ -36,8 +35,8 @@ const DEFAULT_ONBOARDING: OnboardingData = {
 	targetAps: 30,
 	dailyStudyMinutes: 30,
 	studyTimes: [18, 19, 20],
-	notificationsEnabled: true,
-	currentStep: 0, // Start at step 0
+	notificationsEnabled: false,
+	currentStep: 0,
 	notificationFrequency: "daily",
 	notificationTimeOfDay: "morning",
 };
