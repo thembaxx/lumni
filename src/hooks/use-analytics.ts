@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { loadFromStorage, saveToStorage } from "@/lib/utils/storage";
+import { offlineDB } from "@/lib/db/schema";
 
 export interface SubjectAnalytics {
 	subjectId: string;
@@ -55,197 +55,199 @@ export interface AnalyticsRecommendation {
 	priority: number;
 }
 
-const ANALYTICS_KEY = "lumni_analytics";
-const HISTORY_KEY = "lumni_performance_history";
-
-export function loadAnalytics(): OverallAnalytics | null {
-	return loadFromStorage<OverallAnalytics | null>(ANALYTICS_KEY, null);
+interface TopicGroup {
+	scores: number[];
+	attemptCounts: number[];
+	lastAssessedList: number[];
 }
 
-export function saveAnalytics(data: OverallAnalytics): void {
-	saveToStorage(ANALYTICS_KEY, data);
+function groupByTopic(
+	competencies: Array<{
+		topicId: string;
+		score: number;
+		attempts: number;
+		lastAssessed: number;
+	}>,
+): Map<string, TopicGroup> {
+	const map = new Map<string, TopicGroup>();
+	for (const c of competencies) {
+		const g = map.get(c.topicId) ?? {
+			scores: [],
+			attemptCounts: [],
+			lastAssessedList: [],
+		};
+		g.scores.push(c.score);
+		g.attemptCounts.push(c.attempts);
+		g.lastAssessedList.push(c.lastAssessed);
+		map.set(c.topicId, g);
+	}
+	return map;
+}
+
+function getWeakTopics(topicStats: TopicPerformance[]): TopicPerformance[] {
+	return topicStats
+		.filter((t) => t.accuracy < 0.6)
+		.sort((a, b) => a.accuracy - b.accuracy);
+}
+
+function getStrongTopics(topicStats: TopicPerformance[]): TopicPerformance[] {
+	return topicStats
+		.filter((t) => t.accuracy >= 0.8)
+		.sort((a, b) => b.accuracy - a.accuracy);
 }
 
 export function useAnalytics() {
 	const [analytics, setAnalytics] = useState<OverallAnalytics | null>(null);
 	const [isLoading, setIsLoading] = useState(true);
 
-	const loadFromStorage = useCallback(() => {
-		if (typeof window === "undefined") return null;
-		const stored = localStorage.getItem(ANALYTICS_KEY);
-		return stored ? JSON.parse(stored) : null;
-	}, []);
+	const calculateAnalytics =
+		useCallback(async (): Promise<OverallAnalytics> => {
+			const [competencies, progressRecords, attempts] = await Promise.all([
+				offlineDB.competencies.toArray(),
+				offlineDB.progress.toArray(),
+				offlineDB.quizAttempts.toArray(),
+			]);
 
-	const calculateAnalytics = useCallback((): OverallAnalytics => {
-		const progressData = getUserProgress();
-		const historyData = getPerformanceHistory();
+			const subjectIds = new Set([
+				...competencies.map((c) => c.subjectId),
+				...progressRecords.map((p) => p.odSubjectId),
+				...attempts.map((a) => a.odSubject),
+			]);
 
-		const subjects: SubjectAnalytics[] = progressData.map((p) => {
-			const topicStats: Record<
-				string,
-				{ correct: number; total: number; times: number[] }
-			> = {};
+			const subjects: SubjectAnalytics[] = [];
 
-			const subjectHistory = historyData.filter(
-				(h) => h.subject === p.subjectName,
-			);
+			for (const subjectId of subjectIds) {
+				const subjectComps = competencies.filter(
+					(c) => c.subjectId === subjectId,
+				);
+				const subjectProgress = progressRecords.find(
+					(p) => p.odSubjectId === subjectId,
+				);
+				const subjectAttempts = attempts.filter(
+					(a) => a.odSubject === subjectId,
+				);
 
-			subjectHistory.forEach((h) => {
-				h.topicStats?.forEach((ts) => {
-					if (!topicStats[ts.topic]) {
-						topicStats[ts.topic] = { correct: 0, total: 0, times: [] };
-					}
-					topicStats[ts.topic].total += ts.total;
-					topicStats[ts.topic].correct += ts.correct;
-					topicStats[ts.topic].times.push(ts.avgTime || 0);
+				const topicMap = groupByTopic(subjectComps);
+				const topicStats: TopicPerformance[] = [];
+
+				for (const [topicId, data] of topicMap) {
+					const avgScore =
+						data.scores.reduce((s, v) => s + v, 0) / data.scores.length;
+					const totalAttempts = data.attemptCounts.reduce((s, v) => s + v, 0);
+					topicStats.push({
+						topic: topicId,
+						total: totalAttempts,
+						correct: Math.round(totalAttempts * (avgScore / 100)),
+						accuracy: avgScore / 100,
+						avgTime: 0,
+						lastAttempt: Math.max(...data.lastAssessedList),
+					});
+				}
+
+				const totalQuestions = subjectProgress?.questionsAttempted ?? 0;
+				const correctCount = subjectProgress?.correctCount ?? 0;
+
+				const subjectHistory: PerformanceHistoryItem[] = subjectAttempts.map(
+					(a) => ({
+						date: new Date(a.completedAt).toISOString().split("T")[0],
+						questions: a.totalQuestions,
+						correct: Math.round((a.score / 100) * a.totalQuestions),
+						accuracy: a.totalQuestions > 0 ? a.score / 100 : 0,
+						duration: a.duration,
+					}),
+				);
+
+				subjects.push({
+					subjectId,
+					subjectName: subjectId,
+					totalQuestions,
+					correctCount,
+					accuracy: totalQuestions > 0 ? correctCount / totalQuestions : 0,
+					currentStreak: subjectProgress?.currentStreak ?? 0,
+					longestStreak: subjectProgress?.longestStreak ?? 0,
+					lastAttemptAt:
+						subjectComps.length > 0
+							? Math.max(...subjectComps.map((c) => c.lastAssessed))
+							: null,
+					weakTopics: getWeakTopics(topicStats),
+					strongTopics: getStrongTopics(topicStats),
+					history: subjectHistory.slice(-30),
 				});
-			});
+			}
 
-			const weakTopics = Object.entries(topicStats)
-				.filter(([, stats]) => stats.correct / stats.total < 0.6)
-				.map(([topic, stats]) => ({
-					topic,
-					total: stats.total,
-					correct: stats.correct,
-					accuracy: stats.total > 0 ? stats.correct / stats.total : 0,
-					avgTime:
-						stats.times.length > 0
-							? stats.times.reduce((a, b) => a + b, 0) / stats.times.length
-							: 0,
-					lastAttempt: Date.now(),
-				}))
-				.sort((a, b) => a.accuracy - b.accuracy);
+			subjects.sort((a, b) => a.subjectName.localeCompare(b.subjectName));
 
-			const strongTopics = Object.entries(topicStats)
-				.filter(([, stats]) => stats.correct / stats.total >= 0.8)
-				.map(([topic, stats]) => ({
-					topic,
-					total: stats.total,
-					correct: stats.correct,
-					accuracy: stats.total > 0 ? stats.correct / stats.total : 0,
-					avgTime:
-						stats.times.length > 0
-							? stats.times.reduce((a, b) => a + b, 0) / stats.times.length
-							: 0,
-					lastAttempt: Date.now(),
+			const totalQuestions = subjects.reduce(
+				(sum, s) => sum + s.totalQuestions,
+				0,
+			);
+			const totalCorrect = subjects.reduce((sum, s) => sum + s.correctCount, 0);
+			const totalStudyTime = attempts.reduce((sum, a) => sum + a.duration, 0);
+
+			const sevenDaysAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
+			const dailyMap = new Map<
+				string,
+				{ questions: number; correct: number; duration: number }
+			>();
+			for (const a of attempts) {
+				if (a.completedAt < sevenDaysAgo) continue;
+				const date = new Date(a.completedAt).toISOString().split("T")[0];
+				const existing = dailyMap.get(date) ?? {
+					questions: 0,
+					correct: 0,
+					duration: 0,
+				};
+				existing.questions += a.totalQuestions;
+				existing.correct += Math.round((a.score / 100) * a.totalQuestions);
+				existing.duration += a.duration;
+				dailyMap.set(date, existing);
+			}
+
+			const weeklyProgress: PerformanceHistoryItem[] = Array.from(
+				dailyMap.entries(),
+			)
+				.map(([date, data]) => ({
+					date,
+					questions: data.questions,
+					correct: data.correct,
+					accuracy: data.questions > 0 ? data.correct / data.questions : 0,
+					duration: data.duration,
 				}))
-				.sort((a, b) => b.accuracy - a.accuracy);
+				.sort((a, b) => a.date.localeCompare(b.date));
+
+			const insights = generateInsights(subjects, totalQuestions, totalCorrect);
+			const recommendations = generateRecommendations(subjects);
 
 			return {
-				subjectId: p.subjectId,
-				subjectName: p.subjectName,
-				totalQuestions: p.totalQuestions,
-				correctCount: p.correctCount,
-				accuracy: p.totalQuestions > 0 ? p.correctCount / p.totalQuestions : 0,
-				currentStreak: p.currentStreak,
-				longestStreak: p.currentStreak,
-				lastAttemptAt: p.lastAttemptAt,
-				weakTopics,
-				strongTopics,
-				history: subjectHistory.slice(-30),
+				totalQuestions,
+				totalCorrect,
+				overallAccuracy: totalQuestions > 0 ? totalCorrect / totalQuestions : 0,
+				currentStreak: Math.max(...subjects.map((s) => s.currentStreak), 0),
+				longestStreak: Math.max(...subjects.map((s) => s.longestStreak), 0),
+				totalStudyTime,
+				subjects,
+				weeklyProgress,
+				insights,
+				recommendations,
 			};
-		});
-
-		const totalQuestions = subjects.reduce(
-			(sum, s) => sum + s.totalQuestions,
-			0,
-		);
-		const totalCorrect = subjects.reduce((sum, s) => sum + s.correctCount, 0);
-		const totalStudyTime = historyData.reduce((sum, h) => sum + h.duration, 0);
-
-		const weeklyProgress = historyData
-			.filter(
-				(h) =>
-					Date.now() - new Date(h.date).getTime() < 7 * 24 * 60 * 60 * 1000,
-			)
-			.slice(-7);
-
-		const insights = generateInsights(subjects, totalQuestions, totalCorrect);
-		const recommendations = generateRecommendations(subjects);
-
-		return {
-			totalQuestions,
-			totalCorrect,
-			overallAccuracy: totalQuestions > 0 ? totalCorrect / totalQuestions : 0,
-			currentStreak: Math.max(...subjects.map((s) => s.currentStreak), 0),
-			longestStreak: Math.max(...subjects.map((s) => s.longestStreak), 0),
-			totalStudyTime,
-			subjects,
-			weeklyProgress,
-			insights,
-			recommendations,
-		};
-	}, []);
+		}, []);
 
 	const refresh = useCallback(() => {
-		const data = calculateAnalytics();
-		setAnalytics(data);
-		saveAnalytics(data);
+		setIsLoading(true);
+		calculateAnalytics()
+			.then(setAnalytics)
+			.finally(() => setIsLoading(false));
 	}, [calculateAnalytics]);
 
 	useEffect(() => {
-		const stored = loadFromStorage();
-		if (stored) {
-			setAnalytics(stored);
-		} else {
-			const calculated = calculateAnalytics();
-			setAnalytics(calculated);
-			saveAnalytics(calculated);
-		}
-		setIsLoading(false);
-	}, [loadFromStorage, calculateAnalytics]);
+		refresh();
+	}, [refresh]);
 
 	return {
 		analytics,
 		isLoading,
 		refresh,
 	};
-}
-
-function getUserProgress(): Array<{
-	subjectId: string;
-	subjectName: string;
-	totalQuestions: number;
-	correctCount: number;
-	currentStreak: number;
-	lastAttemptAt: number | null;
-}> {
-	if (typeof window === "undefined") return [];
-
-	const stored = localStorage.getItem("lumni_user_progress");
-	if (!stored) return [];
-
-	try {
-		return JSON.parse(stored);
-	} catch {
-		return [];
-	}
-}
-
-function getPerformanceHistory(): Array<{
-	date: string;
-	subject: string;
-	questions: number;
-	correct: number;
-	accuracy: number;
-	duration: number;
-	topicStats?: Array<{
-		topic: string;
-		total: number;
-		correct: number;
-		avgTime: number;
-	}>;
-}> {
-	if (typeof window === "undefined") return [];
-
-	const stored = localStorage.getItem(HISTORY_KEY);
-	if (!stored) return [];
-
-	try {
-		return JSON.parse(stored);
-	} catch {
-		return [];
-	}
 }
 
 function generateInsights(
@@ -283,7 +285,7 @@ function generateInsights(
 	subjects.forEach((subject) => {
 		if (subject.weakTopics.length > 2) {
 			insights.push(
-				`${subject.subjectName}: Focus on ${subject.weakTopics[0].topic} - it's your weakest area.`,
+				`${subject.subjectName}: Focus on ${subject.weakTopics[0].topic} \u2014 it's your weakest area.`,
 			);
 		}
 		if (subject.accuracy >= 0.9) {
@@ -325,7 +327,7 @@ function generateRecommendations(
 			type: "practice",
 			subject: worst.subjectName,
 			topic: worst.weakTopics[0]?.topic,
-			message: `Practice ${worst.weakTopics[0]?.topic} in ${worst.subjectName} - only ${Math.round(worst.weakTopics[0]?.accuracy * 100)}% accuracy`,
+			message: `Practice ${worst.weakTopics[0]?.topic} in ${worst.subjectName} \u2014 only ${Math.round(worst.weakTopics[0]?.accuracy * 100)}% accuracy`,
 			priority: 1,
 		});
 	}
@@ -353,102 +355,16 @@ function generateRecommendations(
 		recommendations.push({
 			type: "practice",
 			subject: inactiveSubjects[0].subjectName,
-			message: `Time to review ${inactiveSubjects[0].subjectName} - haven't practiced in 3+ days!`,
+			message: `Time to review ${inactiveSubjects[0].subjectName} \u2014 haven't practiced in 3+ days!`,
 			priority: 3,
 		});
 	}
 
 	recommendations.push({
 		type: "rest",
-		message: "Remember to take breaks - study smarter, not just harder!",
+		message: "Remember to take breaks \u2014 study smarter, not just harder!",
 		priority: 10,
 	});
 
 	return recommendations.sort((a, b) => a.priority - b.priority);
-}
-
-export function trackQuizResult(
-	subject: string,
-	questions: number,
-	correct: number,
-	duration: number,
-	topicStats?: Array<{
-		topic: string;
-		total: number;
-		correct: number;
-		avgTime: number;
-	}>,
-): void {
-	if (typeof window === "undefined") return;
-
-	const history = getPerformanceHistory();
-	const today = new Date().toISOString().split("T")[0];
-
-	const existingToday = history.find(
-		(h) => h.date === today && h.subject === subject,
-	);
-
-	if (existingToday) {
-		existingToday.questions += questions;
-		existingToday.correct += correct;
-		existingToday.accuracy = existingToday.correct / existingToday.questions;
-		existingToday.duration += duration;
-		if (topicStats) {
-			existingToday.topicStats = mergeTopicStats(
-				existingToday.topicStats || [],
-				topicStats,
-			);
-		}
-	} else {
-		history.push({
-			date: today,
-			subject,
-			questions,
-			correct,
-			accuracy: correct / questions,
-			duration,
-			topicStats,
-		});
-	}
-
-	const trimmedHistory = history.slice(-90);
-	localStorage.setItem(HISTORY_KEY, JSON.stringify(trimmedHistory));
-
-	localStorage.removeItem(ANALYTICS_KEY);
-}
-
-function mergeTopicStats(
-	existing: Array<{
-		topic: string;
-		total: number;
-		correct: number;
-		avgTime: number;
-	}>,
-	incoming: Array<{
-		topic: string;
-		total: number;
-		correct: number;
-		avgTime: number;
-	}>,
-): Array<{ topic: string; total: number; correct: number; avgTime: number }> {
-	const merged = [...existing];
-
-	incoming.forEach((incomingStat) => {
-		const existingIndex = merged.findIndex(
-			(e) => e.topic === incomingStat.topic,
-		);
-		if (existingIndex >= 0) {
-			merged[existingIndex].total += incomingStat.total;
-			merged[existingIndex].correct += incomingStat.correct;
-			merged[existingIndex].avgTime =
-				(merged[existingIndex].avgTime *
-					(merged[existingIndex].total - incomingStat.total) +
-					incomingStat.avgTime * incomingStat.total) /
-				merged[existingIndex].total;
-		} else {
-			merged.push(incomingStat);
-		}
-	});
-
-	return merged;
 }
