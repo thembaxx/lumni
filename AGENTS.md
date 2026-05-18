@@ -186,6 +186,21 @@ Single-context — one `CONTEXT.md` + `docs/adr/` at the repo root. See `docs/ag
 - **Social leaderboard**: `leaderboard-service.ts` (local), `LeaderboardCard` component
 - **Premium gating**: `PremiumProvider` + `usePremium()` hook; `/premium` upgrade page
 
+### Session 5 — Personalization loop + competency pipe (May 2026)
+
+- **Competency → quiz pipe**: `GenerationParams` extended with `topicCompetencyLevel`, `suggestedBloomLevel`, `suggestedDifficulty` — injected by route handler/orchestrator, read by PromptManager for AI prompt personalization
+- **Competency mapper**: `src/lib/question-engine/competency-mapper.ts` maps novice→remember/understand/Easy, developing→understand/apply/Medium, proficient→apply/analyze/evaluate/Medium, mastered→evaluate/create/Hard
+- **Difficulty override**: `suggestedDifficulty` overrides `params.difficulty` in prompts when competency data is available
+- **Cross-topic awareness**: Quiz auto-selects weakest topic when none specified (uses `resolvedTopic` state)
+- **Wrong-answer → targeted quiz**: "Practice these topics" button on review page (`/quiz?subject=X&topic=Y&count=10`)
+- **Competency sync field fix**: `job-processor.ts` wrote `proficiency` but API routes read `score` → all competencies showed as 0. Fixed both write paths + added backward-compat fallback in `next-topics/route.ts` and `study-plan/route.ts`
+
+### Session 6 — Study planner activation (May 2026)
+
+- **Algorithmic planner activated**: `useStudyPlanner()` hook extended with `generatePlan()` — calls `StudyPlannerService.generateStudyPlan()` (reads Dexie competencies, runs inverse-competency-weighted round-robin scheduling), converts `TopicPlan[]` to `StudySession[]`, persists to localStorage
+- **Dashboard integration**: `StudyPlanOverview` shows "Generate Plan" button + inline form (target APS, daily minutes) when empty instead of returning null
+- **Defaults**: 25 APS target, 30 min/day, weekdays-only, 30-day horizon
+
 ### Known limitations (won't fix)
 
 - `analytics-service.ts` comparative analytics depends on other users' data in Appwrite; falls back to estimates

@@ -70,7 +70,17 @@ export function QuizView({
 	useEffect(() => {
 		setResolvedTopic(topic);
 	}, [topic]);
+	const hasAutoStarted = useRef(false);
 	const _quizContainerRef = useRef<HTMLDivElement>(null);
+
+	// Auto-start when a subject is provided via URL params (e.g., from TodayFocusCard)
+	useEffect(() => {
+		if (initialSubject && !hasAutoStarted.current) {
+			hasAutoStarted.current = true;
+			handleStartWithSubject(initialSubject);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const engineParams = useMemo(
 		() => ({
@@ -369,7 +379,28 @@ export function QuizView({
 									className="size-12 text-muted-foreground"
 								/>
 							</m.div>
-							<p className="text-muted-foreground">Loading questions...</p>
+							<p className="text-muted-foreground">
+								Preparing your questions...
+							</p>
+							{resolvedTopic && competencyData.topicCompetencyLevel && (
+								<div className="flex flex-col items-center gap-1">
+									<p className="text-xs text-muted-foreground">
+										Focusing on{" "}
+										<span className="font-semibold text-foreground">
+											{resolvedTopic}
+										</span>
+									</p>
+									<p className="text-xs text-muted-foreground">
+										Level:{" "}
+										<span className="font-semibold capitalize text-foreground">
+											{competencyData.topicCompetencyLevel}
+										</span>
+										{competencyData.topicCompetencyScore !== undefined && (
+											<> · Score: {competencyData.topicCompetencyScore}%</>
+										)}
+									</p>
+								</div>
+							)}
 						</CardContent>
 					</Card>
 				</div>

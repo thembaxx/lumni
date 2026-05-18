@@ -19,6 +19,11 @@ import {
 	updateStudySession,
 } from "@/lib/utils/study-planner";
 
+export interface GeneratePlanSettings {
+	targetAps?: number;
+	dailyStudyMinutes?: number;
+}
+
 export interface UseStudyPlannerReturn {
 	plan: StudyPlan;
 	todaySessions: StudySession[];
@@ -35,6 +40,8 @@ export interface UseStudyPlannerReturn {
 		subjects: string[],
 		weakTopics: Record<string, string[]>,
 	) => void;
+	generatePlan: (settings?: GeneratePlanSettings) => Promise<void>;
+	isGenerating: boolean;
 	refresh: () => void;
 }
 
@@ -44,6 +51,7 @@ export function useStudyPlanner(): UseStudyPlannerReturn {
 	const [upcomingSessions, setUpcomingSessions] = useState<StudySession[]>([]);
 	const [upcomingExams, setUpcomingExams] = useState<ExamDate[]>([]);
 	const [stats, setStats] = useState(getStudyStats());
+	const [isGenerating, setIsGenerating] = useState(false);
 
 	const refresh = useCallback(() => {
 		setPlan(loadStudyPlan());
@@ -118,6 +126,64 @@ export function useStudyPlanner(): UseStudyPlannerReturn {
 		[refresh],
 	);
 
+	const generatePlan = useCallback(
+		async (settings?: GeneratePlanSettings) => {
+			setIsGenerating(true);
+			try {
+				const { getStudyPlannerService } = await import(
+					"@/lib/study-planner/study-planner-service"
+				);
+
+				const today = new Date();
+				const endDate = new Date(today);
+				endDate.setDate(endDate.getDate() + 30);
+
+				const planSettings = {
+					targetAps: settings?.targetAps ?? 25,
+					dailyStudyMinutes: settings?.dailyStudyMinutes ?? 30,
+					preferredStudyTime: "morning" as const,
+					studyDays: [1, 2, 3, 4, 5],
+					startDate: today.toISOString().split("T")[0],
+					endDate: endDate.toISOString().split("T")[0],
+				};
+
+				const service = getStudyPlannerService();
+				const algorithmPlan = await service.generateStudyPlan(planSettings);
+
+				const existingPlan = loadStudyPlan();
+				const newSessions: Omit<StudySession, "id">[] = algorithmPlan.topics
+					.filter((t) => t.scheduledDate)
+					.map((t) => ({
+						subject: t.subjectId,
+						topic: t.topicId,
+						type: "quiz" as const,
+						scheduledAt: new Date(t.scheduledDate!).getTime(),
+						duration: Math.round(t.estimatedMinutes),
+						completed: t.isCompleted,
+					}));
+
+				// Replace old auto-scheduled sessions
+				existingPlan.sessions = existingPlan.sessions.filter(
+					(s) => s.type !== "quiz" || s.topic === undefined,
+				);
+				for (const s of newSessions) {
+					existingPlan.sessions.push({
+						...s,
+						id: `plan_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+					});
+				}
+				existingPlan.generatedAt = Date.now();
+				saveStudyPlan(existingPlan);
+				refresh();
+			} catch (error) {
+				console.error("Failed to generate study plan:", error);
+			} finally {
+				setIsGenerating(false);
+			}
+		},
+		[refresh],
+	);
+
 	return {
 		plan,
 		todaySessions,
@@ -131,6 +197,8 @@ export function useStudyPlanner(): UseStudyPlannerReturn {
 		addExam,
 		removeExam,
 		autoSchedule,
+		generatePlan,
+		isGenerating,
 		refresh,
 	};
 }

@@ -121,7 +121,7 @@ export function TodayFocusCard() {
 		setShowSuccess(true);
 		setTimeout(() => {
 			router.push(
-				`/quiz?subject=${encodeURIComponent(subjectName)}&topic=${encodeURIComponent(topic)}`,
+				`/quiz?subject=${encodeURIComponent(subjectName)}&topic=${encodeURIComponent(topic)}&count=10`,
 			);
 		}, 600);
 	}
