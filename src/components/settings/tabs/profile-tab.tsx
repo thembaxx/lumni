@@ -20,7 +20,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ListCell, ListSection } from "@/components/ui/list-cell";
-import { resetOnboardingData } from "@/hooks/use-onboarding";
 import { account } from "@/lib/appwrite";
 import { useAuth } from "@/lib/auth/auth-context";
 import { useUploadThing } from "@/lib/uploadthing";
@@ -319,40 +318,44 @@ export function ProfileTab() {
 						/>
 					}
 				/>
-				<ListCell
-					leading={<HugeiconsIcon icon={Mail01Icon} className="size-5" />}
-					title="Email Address"
-					subtitle={user?.emailVerification ? "Verified" : "Not verified"}
-					trailing={
-						<span className="text-sm text-muted-foreground truncate max-w-[160px]">
-							{user?.email}
-						</span>
-					}
-				/>
+				{!isAnonymous && (
+					<ListCell
+						leading={<HugeiconsIcon icon={Mail01Icon} className="size-5" />}
+						title="Email Address"
+						subtitle={user?.emailVerification ? "Verified" : "Not verified"}
+						trailing={
+							<span className="text-sm text-muted-foreground truncate max-w-[160px]">
+								{user?.email}
+							</span>
+						}
+					/>
+				)}
 			</ListSection>
 
-			<ListSection header="Password">
-				<ListCell
-					leading={<HugeiconsIcon icon={Mail01Icon} className="size-5" />}
-					title="Change Password"
-					showSeparator={false}
-					trailing={
-						<span className="text-system-accent text-(length:--fs-footnote) font-semibold">
-							Update
-						</span>
-					}
-					onClick={() => {
-						const current = prompt("Current password");
-						if (!current) return;
-						const newPwd = prompt("New password (min 8 chars)");
-						if (!newPwd || newPwd.length < 8) return;
-						account
-							.updatePassword(newPwd, current)
-							.then(() => alert("Password updated"))
-							.catch((err) => alert(err.message));
-					}}
-				/>
-			</ListSection>
+			{!isAnonymous && (
+				<ListSection header="Password">
+					<ListCell
+						leading={<HugeiconsIcon icon={Mail01Icon} className="size-5" />}
+						title="Change Password"
+						showSeparator={false}
+						trailing={
+							<span className="text-system-accent text-(length:--fs-footnote) font-semibold">
+								Update
+							</span>
+						}
+						onClick={() => {
+							const current = prompt("Current password");
+							if (!current) return;
+							const newPwd = prompt("New password (min 8 chars)");
+							if (!newPwd || newPwd.length < 8) return;
+							account
+								.updatePassword(newPwd, current)
+								.then(() => alert("Password updated"))
+								.catch((err) => alert(err.message));
+						}}
+					/>
+				</ListSection>
+			)}
 
 			<ListSection header="School Details (Optional)">
 				<ListCell
@@ -514,7 +517,6 @@ export function ProfileTab() {
 							</Button>
 							<Button
 								onClick={() => {
-									resetOnboardingData();
 									setShowConfirmDialog(false);
 									setShowGuidedSetup(true);
 								}}
@@ -549,15 +551,17 @@ export function ProfileTab() {
 			)}
 
 			<div className="px-2 pt-4">
-				<Button
-					size="default"
-					variant="destructive"
-					onClick={signOut}
-					className="w-full rounded-lg font-medium text-sm shadow-level-2 transition-[transform,opacity] active:scale-[0.96]"
-				>
-					<HugeiconsIcon icon={Logout01Icon} data-icon />
-					Sign Out
-				</Button>
+				{!isAnonymous && (
+					<Button
+						size="default"
+						variant="destructive"
+						onClick={signOut}
+						className="w-full rounded-lg font-medium text-sm shadow-level-2 transition-[transform,opacity] active:scale-[0.96]"
+					>
+						<HugeiconsIcon icon={Logout01Icon} data-icon />
+						Sign Out
+					</Button>
+				)}
 				<div className="mt-8 flex flex-col items-center gap-1">
 					<p className="text-(length:--fs-footnote) text-[--system-text-tertiary] font-extrabold tracking-widest uppercase">
 						Lumni Mobile
