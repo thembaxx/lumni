@@ -96,6 +96,13 @@ export default function RootLayout({
 				fontHeading.variable,
 			)}
 		>
+			<head>
+				<link
+					rel="preconnect"
+					href="https://fonts.gstatic.com"
+					crossOrigin="anonymous"
+				/>
+			</head>
 			<body className="h-full antialiased min-h-full flex flex-col bg-[--system-background] text-[--system-text-primary]">
 				<Script
 					id="theme-init"

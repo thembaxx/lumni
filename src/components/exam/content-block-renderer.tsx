@@ -32,6 +32,8 @@ export function ContentBlockRenderer({ block }: ContentBlockRendererProps) {
 					<img
 						src={block.imagePath}
 						alt={block.altText || ""}
+						width={800}
+						height={600}
 						loading="lazy"
 						className="max-w-full h-auto rounded border"
 					/>

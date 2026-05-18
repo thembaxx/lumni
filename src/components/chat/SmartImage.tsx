@@ -15,6 +15,8 @@ export function SmartImage({ src, alt, className }: SmartImageProps) {
 			<img
 				src={src}
 				alt={alt}
+				width={800}
+				height={600}
 				className={cn(
 					"outline -outline-offset-1 outline-black/10 dark:outline-white/10",
 					className,
@@ -23,17 +25,17 @@ export function SmartImage({ src, alt, className }: SmartImageProps) {
 		);
 	}
 	return (
-		<Image
-			src={src}
-			alt={alt}
-			fill={false}
-			width={0}
-			height={0}
-			className={cn(
-				"outline -outline-offset-1 outline-black/10 dark:outline-white/10",
-				className,
-			)}
-			unoptimized
-		/>
+		<div
+			className={cn("relative overflow-hidden", className)}
+			style={{ minHeight: 200, minWidth: 200 }}
+		>
+			<Image
+				src={src}
+				alt={alt}
+				fill
+				className="object-contain outline -outline-offset-1 outline-black/10 dark:outline-white/10"
+				unoptimized
+			/>
+		</div>
 	);
 }

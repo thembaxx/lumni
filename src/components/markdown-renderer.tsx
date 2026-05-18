@@ -1,10 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { memo, useEffect, useMemo, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
-import rehypeKatex from "rehype-katex";
 import remarkGfm from "remark-gfm";
-import remarkMath from "remark-math";
 import { KatexCSS } from "@/components/katex-css";
 import {
 	Table,
@@ -99,7 +97,18 @@ interface MarkdownRendererProps {
 	subject?: string;
 }
 
-export function MarkdownRenderer({
+async function loadMathPlugins() {
+	const [rk, rm] = await Promise.all([
+		import("rehype-katex"),
+		import("remark-math"),
+	]);
+	return {
+		rehypeKatex: rk.default,
+		remarkMath: rm.default,
+	};
+}
+
+export const MarkdownRenderer = memo(function MarkdownRenderer({
 	content,
 	className,
 	subject,
@@ -123,6 +132,27 @@ export function MarkdownRenderer({
 		[normalizedContent],
 	);
 
+	const needsMath = isMathSubject || hasMath;
+
+	const [mathPlugins, setMathPlugins] = useState<{
+		// biome-ignore lint/suspicious/noExplicitAny: dynamic remark/rehype plugin
+		rehypeKatex: any;
+		// biome-ignore lint/suspicious/noExplicitAny: dynamic remark/rehype plugin
+		remarkMath: any;
+	} | null>(null);
+
+	useEffect(() => {
+		if (!needsMath || mathPlugins) return;
+		let cancelled = false;
+		loadMathPlugins().then((plugins) => {
+			if (cancelled) return;
+			setMathPlugins(plugins);
+		});
+		return () => {
+			cancelled = true;
+		};
+	}, [needsMath, mathPlugins]);
+
 	const containerStyle = subjectColor
 		? ({ "--subject-accent": subjectColor } as React.CSSProperties)
 		: undefined;
@@ -138,11 +168,15 @@ export function MarkdownRenderer({
 		>
 			{(isMathSubject || hasMath) && <KatexCSS />}
 			<ReactMarkdown
-				remarkPlugins={[
-					remarkGfm,
-					...(isMathSubject || hasMath ? [remarkMath] : []),
-				]}
-				rehypePlugins={isMathSubject || hasMath ? [rehypeKatex] : []}
+				remarkPlugins={
+					[
+						remarkGfm,
+						...(needsMath && mathPlugins ? [mathPlugins.remarkMath] : []),
+					] as const
+				}
+				rehypePlugins={
+					needsMath && mathPlugins ? ([mathPlugins.rehypeKatex] as const) : []
+				}
 				components={{
 					code({ className, children, ...props }) {
 						const match = /language-(\w+)/.exec(className || "");
@@ -259,4 +293,4 @@ export function MarkdownRenderer({
 			</ReactMarkdown>
 		</div>
 	);
-}
+});
