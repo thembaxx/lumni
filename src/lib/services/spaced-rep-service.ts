@@ -53,7 +53,7 @@ export class SpacedRepService {
 	}
 }
 
-function extractCorrectAnswer(question: Question): string | null {
+export function extractCorrectAnswer(question: Question): string | null {
 	const body = question.body;
 	if ("options" in body) {
 		const options = body.options as Array<{ text: string; isCorrect: boolean }>;
