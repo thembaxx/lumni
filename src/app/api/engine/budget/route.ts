@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import type { AICallType } from "@/lib/ai/token-tracker";
-import { tokenTracker } from "@/lib/ai/token-tracker";
+import type { AICallType } from "@/lib/ai/daily-call-tracker";
+import { dailyCallTracker } from "@/lib/ai/daily-call-tracker";
 
 export const dynamic = "force-dynamic";
 
@@ -10,8 +10,8 @@ export async function GET(req: NextRequest) {
 		req.headers.get("x-real-ip")?.trim() ||
 		"anonymous";
 
-	const usage = tokenTracker.getUsage(userId);
-	const globalUsage = tokenTracker.getGlobalUsage();
+	const usage = dailyCallTracker.getUsage(userId);
+	const globalUsage = dailyCallTracker.getGlobalUsage();
 
 	return NextResponse.json({
 		user: { id: userId, usage },

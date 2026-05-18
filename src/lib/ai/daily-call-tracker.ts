@@ -18,7 +18,7 @@ function getDateKey(): string {
 	return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 }
 
-export class TokenTracker {
+export class DailyCallTracker {
 	private perUserLimiters = new Map<string, Map<AICallType, RateLimiter>>();
 	private globalLimiter = new RateLimiter();
 	private tokensByUser = new Map<string, Map<AICallType, number>>();
@@ -143,4 +143,4 @@ export class TokenTracker {
 	}
 }
 
-export const tokenTracker = new TokenTracker();
+export const dailyCallTracker = new DailyCallTracker();

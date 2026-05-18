@@ -13,7 +13,7 @@ import { OnlineStatusIndicator } from "@/hooks/useOnlineStatus";
 import { AuthProvider } from "@/lib/auth/auth-context";
 import { PremiumProvider } from "@/lib/premium/premium-context";
 import { queryClient } from "@/lib/query-client";
-import { useAppStore } from "@/store";
+import { setAppInitialized } from "@/store";
 
 function JobProcessorWrapper() {
 	useJobProcessor();
@@ -21,15 +21,13 @@ function JobProcessorWrapper() {
 }
 
 export function Providers({ children }: { children: React.ReactNode }) {
-	const setInitialized = useAppStore((s) => s.setInitialized);
-
 	useEffect(() => {
 		const handlePrefetch = async () => {
 			await prefetchUploadSubjects(queryClient);
-			setInitialized(true);
+			setAppInitialized(true);
 		};
 		handlePrefetch();
-	}, [setInitialized]);
+	}, []);
 
 	return (
 		<QueryClientProvider client={queryClient}>

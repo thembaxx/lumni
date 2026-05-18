@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { type AICallType, tokenTracker } from "./token-tracker";
+import { type AICallType, dailyCallTracker } from "./daily-call-tracker";
 
 export async function checkBudget(
 	req: NextRequest,
@@ -14,7 +14,7 @@ export async function checkBudget(
 		req.headers.get("x-real-ip")?.trim() ||
 		"anonymous";
 
-	const result = tokenTracker.check(type, userId);
+	const result = dailyCallTracker.check(type, userId);
 
 	if (!result.allowed) {
 		return {
@@ -45,5 +45,5 @@ export function trackUsage(
 	userId: string,
 	tokens?: number,
 ): void {
-	tokenTracker.increment(type, userId, tokens);
+	dailyCallTracker.increment(type, userId, tokens);
 }

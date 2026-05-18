@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import type { AICallType } from "@/lib/ai/token-tracker";
+import type { AICallType } from "@/lib/ai/daily-call-tracker";
 import { checkBudget, trackUsage } from "@/lib/ai/with-budget";
 import type { RouteHandler } from "@/lib/shared/with-rate-limit";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";

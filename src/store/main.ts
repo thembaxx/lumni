@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import type { Question } from "@/lib/question-engine/types";
 
 export interface UploadSubject {
 	routeKey: string;
@@ -13,25 +12,17 @@ interface UploadStore {
 	subjects: UploadSubject[];
 	isLoading: boolean;
 	error: Error | null;
-	cachedQuestions: Map<string, Question[]>;
 
 	setSubjects: (subjects: UploadSubject[]) => void;
 	setLoading: (isLoading: boolean) => void;
 	setError: (error: Error | null) => void;
 	getSubject: (routeKey: string) => UploadSubject | undefined;
-	getCachedQuestions: (subject: string) => Question[] | undefined;
-
-	setCachedQuestions: (subject: string, questions: Question[]) => void;
-
-	appendCachedQuestions: (subject: string, questions: Question[]) => void;
-	clearQuestionCache: () => void;
 }
 
 export const useUploadStore = create<UploadStore>((set, get) => ({
 	subjects: [],
 	isLoading: false,
 	error: null,
-	cachedQuestions: new Map(),
 
 	setSubjects: (subjects) => set({ subjects, error: null }),
 	setLoading: (isLoading) => set({ isLoading }),
@@ -40,36 +31,21 @@ export const useUploadStore = create<UploadStore>((set, get) => ({
 	getSubject: (routeKey) => {
 		return get().subjects.find((s) => s.routeKey === routeKey);
 	},
-
-	getCachedQuestions: (subject: string) => {
-		const normalizedSubject = subject.toLowerCase();
-		return get().cachedQuestions.get(normalizedSubject);
-	},
-
-	setCachedQuestions: (subject: string, questions: Question[]) => {
-		const normalizedSubject = subject.toLowerCase();
-		const newCache = new Map(get().cachedQuestions);
-		newCache.set(normalizedSubject, questions);
-		set({ cachedQuestions: newCache });
-	},
-
-	appendCachedQuestions: (subject: string, questions: Question[]) => {
-		const normalizedSubject = subject.toLowerCase();
-		const newCache = new Map(get().cachedQuestions);
-		const existing = newCache.get(normalizedSubject) || [];
-		newCache.set(normalizedSubject, [...existing, ...questions]);
-		set({ cachedQuestions: newCache });
-	},
-
-	clearQuestionCache: () => set({ cachedQuestions: new Map() }),
 }));
 
-interface AppStore {
-	isInitialized: boolean;
-	setInitialized: (initialized: boolean) => void;
+let appInitialized = false;
+const initListeners = new Set<(v: boolean) => void>();
+
+export function setAppInitialized(v: boolean) {
+	appInitialized = v;
+	for (const fn of initListeners) fn(v);
 }
 
-export const useAppStore = create<AppStore>((set) => ({
-	isInitialized: false,
-	setInitialized: (isInitialized) => set({ isInitialized }),
-}));
+export function isAppInitialized(): boolean {
+	return appInitialized;
+}
+
+export function onAppInit(fn: (v: boolean) => void) {
+	initListeners.add(fn);
+	return () => initListeners.delete(fn);
+}
