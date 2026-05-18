@@ -157,7 +157,7 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 							<div className="size-24 rounded-2xl bg-[--system-accent]/10 blur-xl" />
 						</PerpetualFloat>
 					)}
-					<div className="absolute inset-0 bg-gradient-to-br from-[--system-accent]/10 via-transparent to-transparent" />
+					<div className="absolute inset-0 bg-linear-to-br from-[--system-accent]/10 via-transparent to-transparent" />
 					<div className="absolute inset-0 flex items-center justify-center p-8">
 						<div className="w-full h-full max-w-xs aspect-square rounded-3xl bg-system-accent/10 blur-2xl animate-float-slow" />
 					</div>

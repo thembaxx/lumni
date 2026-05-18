@@ -220,7 +220,7 @@ function NoteForm({
 					value={formData.content || ""}
 					onChange={handleInputChange}
 					placeholder="Write your note content here..."
-					className="min-h-[200px]"
+					className="min-h-50"
 					disabled={false}
 				/>
 			</div>
@@ -436,7 +436,7 @@ export function NoteCreator({ className }: NoteCreatorProps) {
 						<Button
 							variant="outline"
 							onClick={() => setIsCreating(true)}
-							className="flex-shrink-0"
+							className="shrink-0"
 						>
 							New Note
 						</Button>

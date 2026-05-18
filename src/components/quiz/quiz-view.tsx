@@ -73,15 +73,6 @@ export function QuizView({
 	const hasAutoStarted = useRef(false);
 	const _quizContainerRef = useRef<HTMLDivElement>(null);
 
-	// Auto-start when a subject is provided via URL params (e.g., from TodayFocusCard)
-	useEffect(() => {
-		if (initialSubject && !hasAutoStarted.current) {
-			hasAutoStarted.current = true;
-			handleStartWithSubject(initialSubject);
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
-
 	const engineParams = useMemo(
 		() => ({
 			subject: selectedSubject.toLowerCase(),
@@ -173,6 +164,14 @@ export function QuizView({
 		},
 		[topic],
 	);
+
+	// Auto-start when a subject is provided via URL params (e.g., from TodayFocusCard)
+	useEffect(() => {
+		if (initialSubject && !hasAutoStarted.current) {
+			hasAutoStarted.current = true;
+			handleStartWithSubject(initialSubject);
+		}
+	}, [initialSubject, handleStartWithSubject]);
 
 	useEffect(() => {
 		if (sessionActive && questions.length > 0 && !state.isComplete) {
