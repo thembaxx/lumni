@@ -31,7 +31,7 @@ export function FlashcardsIdle({
 			<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4 pb-20">
 				<div className="max-w-md w-full mx-auto card-elevated overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] p-6">
 					<header className="text-left pb-4">
-						<h2 className="text-2xl font-extrabold tracking-tight">
+						<h2 className="text-2xl font-semibold tracking-tight">
 							Flashcards
 						</h2>
 					</header>
@@ -51,7 +51,7 @@ export function FlashcardsIdle({
 									<SubjectsDrawer onSelect={onSelect}>
 										<Button>
 											Generate AI Flashcards
-											<HugeiconsIcon icon={BulbIcon} className="w-4 h-4 ml-1" />
+											<HugeiconsIcon icon={BulbIcon} className="size-4 ml-1" />
 										</Button>
 									</SubjectsDrawer>
 									<SubjectsDrawer onSelect={onReviewMistakes}>
@@ -59,7 +59,7 @@ export function FlashcardsIdle({
 											Review Mistakes
 											<HugeiconsIcon
 												icon={RefreshIcon}
-												className="w-4 h-4 ml-1"
+												className="size-4 ml-1"
 											/>
 										</Button>
 									</SubjectsDrawer>

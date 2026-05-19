@@ -202,7 +202,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 				</motion.button>
 				<div className="flex flex-col gap-1 min-w-0">
 					<span className="text-[10px] font-extrabold uppercase tracking-widest opacity-80">
-						{isPlaying ? "Playing..." : "Voice message"}
+						{isPlaying ? "Playing…" : "Voice message"}
 					</span>
 					<div className="flex items-center gap-2">
 						<div className="flex gap-1 h-5 items-center">

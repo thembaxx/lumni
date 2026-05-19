@@ -114,7 +114,7 @@ export function StudyPlanOverview() {
 								setShowForm(false);
 							}}
 						>
-							{isGenerating ? "Generating..." : "Generate"}
+							{isGenerating ? "Generating…" : "Generate"}
 						</Button>
 					</div>
 				</CardContent>

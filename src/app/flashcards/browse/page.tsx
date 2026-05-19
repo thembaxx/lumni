@@ -90,13 +90,13 @@ export default function FlashcardBrowsePage() {
 
 	return (
 		<div className="container mx-auto py-8 px-4 max-w-4xl">
-			<h1 className="text-2xl font-extrabold mb-6">Browse Flashcards</h1>
+			<h1 className="text-2xl font-semibold mb-6">Browse Flashcards</h1>
 
 			<div className="flex gap-3 mb-6 flex-wrap">
 				<div className="relative flex-1 min-w-[200px]">
 					<HugeiconsIcon
 						icon={Search01Icon}
-						className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground"
+						className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground"
 					/>
 					<Input
 						placeholder="Search cards..."
@@ -124,7 +124,7 @@ export default function FlashcardBrowsePage() {
 					))}
 				</select>
 				<Button variant="outline" size="sm" onClick={loadCards}>
-					<HugeiconsIcon icon={FilterIcon} className="h-4 w-4 mr-1" />
+					<HugeiconsIcon icon={FilterIcon} className="size-4 mr-1" />
 					Refresh
 				</Button>
 				<Button
@@ -133,7 +133,7 @@ export default function FlashcardBrowsePage() {
 					onClick={handleExport}
 					disabled={cards.length === 0}
 				>
-					<HugeiconsIcon icon={Download03Icon} className="h-4 w-4 mr-1" />
+					<HugeiconsIcon icon={Download03Icon} className="size-4 mr-1" />
 					Export CSV
 				</Button>
 				<Button
@@ -142,7 +142,7 @@ export default function FlashcardBrowsePage() {
 					onClick={() => fileInputRef.current?.click()}
 					disabled={importing}
 				>
-					<HugeiconsIcon icon={Upload04Icon} className="h-4 w-4 mr-1" />
+					<HugeiconsIcon icon={Upload04Icon} className="size-4 mr-1" />
 					{importing ? "Importing..." : "Import CSV"}
 				</Button>
 				<input
@@ -220,7 +220,7 @@ export default function FlashcardBrowsePage() {
 										>
 											<HugeiconsIcon
 												icon={Delete02Icon}
-												className="h-4 w-4 text-destructive"
+												className="size-4 text-destructive"
 											/>
 										</Button>
 									</div>
@@ -239,7 +239,7 @@ export default function FlashcardBrowsePage() {
 							>
 								<HugeiconsIcon
 									icon={ArrowLeft01Icon}
-									className="h-4 w-4 mr-1"
+									className="size-4 mr-1"
 								/>{" "}
 								Previous
 							</Button>
@@ -255,7 +255,7 @@ export default function FlashcardBrowsePage() {
 								Next{" "}
 								<HugeiconsIcon
 									icon={ArrowRight01Icon}
-									className="h-4 w-4 ml-1"
+									className="size-4 ml-1"
 								/>
 							</Button>
 						</div>

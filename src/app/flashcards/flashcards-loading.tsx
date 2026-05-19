@@ -21,7 +21,7 @@ export function FlashcardsLoading() {
 						animate={{ scale: [1, 1.15, 1] }}
 						transition={{ duration: 2.5, repeat: Infinity, ease: iOSEase }}
 					/>
-					<div className="relative flex items-center justify-center w-20 h-20 rounded-2xl bg-[--system-accent]/10 border border-[--system-accent]/20">
+					<div className="relative flex items-center justify-center size-20 rounded-2xl bg-[--system-accent]/10 border border-[--system-accent]/20">
 						<motion.div
 							animate={{ rotate: 360 }}
 							transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}

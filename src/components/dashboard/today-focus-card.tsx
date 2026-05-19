@@ -183,7 +183,7 @@ export function TodayFocusCard() {
 								</div>
 							</SubjectsDrawer>
 						</div>
-						<h3 className="text-lg font-extrabold text-foreground leading-tight tracking-tight text-wrap balance">
+						<h3 className="text-lg font-semibold text-foreground leading-tight tracking-tight text-wrap balance">
 							{topic}
 						</h3>
 					</div>

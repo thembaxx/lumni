@@ -52,7 +52,7 @@ export function AnalyticsClient() {
 							</CardHeader>
 							<CardContent>
 								<p className="text-2xl font-bold tabular-nums">
-									{isLoading ? "..." : stat.value}
+									{isLoading ? "…" : stat.value}
 								</p>
 							</CardContent>
 						</Card>

@@ -99,7 +99,7 @@ export function ResultsSearch() {
 								className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground"
 							/>
 							<Input
-								placeholder="Search by name..."
+								placeholder="Search by name…"
 								value={searchQuery}
 								onChange={(e) => setSearchQuery(e.target.value)}
 								onKeyDown={(e) => e.key === "Enter" && handleSearch()}

@@ -179,7 +179,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 										animate={{ opacity: 1, y: 0 }}
 										transition={{ duration: 0.4, ease: iOSEase }}
 									>
-										<h1 className="ios-title-1 font-extrabold mb-3 tracking-tight text-balance">
+										<h1 className="ios-title-1 font-semibold mb-3 tracking-tight text-balance">
 											{current.title}
 										</h1>
 										<p className="ios-body text-muted-foreground mb-8 leading-relaxed text-pretty">
@@ -193,7 +193,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 														type="text"
 														value={searchTerm}
 														onChange={(e) => setSearchTerm(e.target.value)}
-														placeholder="Search subjects..."
+														placeholder="Search subjects…"
 														className="w-full px-3 py-2 rounded-lg border border-bg-muted/50 bg-card/50 text-base focus:outline-none focus:border-[--system-accent]/50"
 													/>
 												</div>
@@ -368,7 +368,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 									transition={{ duration: 0.4, delay: 0.15, ease: iOSEase }}
 									className="max-w-md"
 								>
-									<h1 className="ios-title-1 font-extrabold mb-3 tracking-tight text-balance">
+									<h1 className="ios-title-1 font-semibold mb-3 tracking-tight text-balance">
 										{current.title}
 									</h1>
 									<p className="ios-body text-muted-foreground mb-6 leading-relaxed text-pretty">

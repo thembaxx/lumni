@@ -87,7 +87,7 @@ export function FocusTimerCard() {
 						<h3 className="text-[12.8px] font-semibold">Focus Timer</h3>
 						<p className="text-xs text-muted-foreground">
 							{isRunning
-								? "Running..."
+								? "Running…"
 								: timeLeft === 0
 									? "Time's up!"
 									: "Paused"}

@@ -32,13 +32,13 @@ export default function Error({
 							className="relative"
 						>
 							<div className="absolute inset-0 rounded-full bg-destructive/10 blur-xl" />
-							<div className="relative flex items-center justify-center w-28 h-28 rounded-[--radius-card] bg-destructive/10 border border-destructive/20">
+							<div className="relative flex items-center justify-center size-28 rounded-[--radius-card] bg-destructive/10 border border-destructive/20">
 								<m.div
 									initial={{ scale: 0, opacity: 0 }}
 									animate={{ scale: 1, opacity: 1 }}
 									transition={{ delay: 0.3 }}
 								>
-									<AnimatedIcon name="error-state" className="w-20 h-20" />
+									<AnimatedIcon name="error-state" className="size-20" />
 								</m.div>
 							</div>
 						</m.div>

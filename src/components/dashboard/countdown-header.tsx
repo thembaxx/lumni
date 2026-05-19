@@ -300,7 +300,7 @@ export function CountdownHeader() {
 					)}
 
 					<div className="relative z-10">
-						<h1 className="text-xl sm:text-2xl font-extrabold text-foreground leading-tight tracking-tight text-wrap balance">
+						<h1 className="text-xl sm:text-2xl font-semibold text-foreground leading-tight tracking-tight text-wrap balance">
 							{greeting}
 							{isLoggedIn && name ? (
 								<span className="text-system-accent">, {firstName}</span>

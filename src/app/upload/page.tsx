@@ -165,13 +165,13 @@ export default function UploadPage() {
 								{seedStatus === "seeding" ? (
 									<HugeiconsIcon
 										icon={RadialIcon}
-										className="mr-2 h-4 w-4 animate-spin"
+										className="mr-2 size-4 animate-spin"
 									/>
 								) : (
 									<HugeiconsIcon icon={DatabaseIcon} className="size-4 mr-2" />
 								)}
 								{seedStatus === "seeding"
-									? "Seeding..."
+									? "Seeding…"
 									: seedStatus === "done"
 										? "Seeded!"
 										: "Seed Database"}

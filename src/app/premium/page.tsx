@@ -143,7 +143,7 @@ export default function PremiumPage() {
 						) : (
 							<Button onClick={handleUpgrade} disabled={loading}>
 								<HugeiconsIcon icon={CrownIcon} data-icon="inline-start" />
-								{loading ? "Redirecting..." : "Upgrade Now"}
+								{loading ? "Redirecting…" : "Upgrade Now"}
 							</Button>
 						)}
 						<Button variant="ghost" onClick={() => router.push("/dashboard")}>

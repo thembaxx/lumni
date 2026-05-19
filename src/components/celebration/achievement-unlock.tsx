@@ -81,7 +81,7 @@ export function AchievementUnlock({
 										Achievement Unlocked!
 									</span>
 								</div>
-								<h2 className="text-2xl font-extrabold mb-2 text-wrap balance">
+								<h2 className="text-2xl font-semibold mb-2 text-wrap balance">
 									{name}
 								</h2>
 								<p className="text-muted-foreground mb-4">{description}</p>

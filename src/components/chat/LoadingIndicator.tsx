@@ -5,9 +5,9 @@ import { useEffect, useState } from "react";
 
 export function LoadingIndicator() {
 	const loadingMessages = [
-		"Thinking...",
-		"Finding the right words...",
-		"Just a sec...",
+		"Thinking…",
+		"Finding the right words…",
+		"Just a sec…",
 	] as const;
 	const [messageIndex, setMessageIndex] = useState(0);
 

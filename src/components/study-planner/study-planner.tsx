@@ -67,7 +67,7 @@ function StudyPlannerInner() {
 	return (
 		<div className="space-y-6">
 			<div className="flex items-center justify-between">
-				<h2 className="text-2xl font-extrabold">Study Planner</h2>
+				<h2 className="text-2xl font-semibold">Study Planner</h2>
 				<div className="flex gap-2">
 					<Button
 						variant="outline"

@@ -56,7 +56,7 @@ export default function ExamsPage() {
 			<div className="max-w-3xl mx-auto w-full px-4 flex flex-col gap-8">
 				<Anim>
 					<div className="flex flex-col gap-6">
-						<h1 className="ios-title-1 font-extrabold text-foreground tracking-tight">
+						<h1 className="ios-title-1 font-semibold text-foreground tracking-tight">
 							Past Exam Papers
 						</h1>
 
@@ -68,7 +68,7 @@ export default function ExamsPage() {
 								/>
 								<Input
 									type="text"
-									placeholder="Search exams..."
+									placeholder="Search exams…"
 									value={searchQuery}
 									onChange={(e) => setSearchQuery(e.target.value)}
 									className="h-10 pl-10 pr-10 rounded-full bg-secondary/50 border-0 text-sm placeholder:text-muted-foreground/60 focus-visible:ring-1 focus-visible:ring-[--system-accent]/30"

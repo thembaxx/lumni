@@ -81,8 +81,8 @@ function SignInForm() {
 					/>
 				</div>
 				<div className="flex flex-col gap-2">
-					<h1 className="ios-title-2 font-extrabold text-foreground">
-						CheckmarkCircle01Icon your email
+<h1 className="ios-title-2 font-semibold text-foreground">
+					CheckmarkCircle01Icon your email
 					</h1>
 					<p className="ios-subhead text-muted-foreground leading-relaxed">
 						We sent a magic link to{" "}
@@ -110,7 +110,7 @@ function SignInForm() {
 			className="flex flex-col gap-8"
 		>
 			<div className="flex flex-col gap-2">
-				<h1 className="ios-title-2 font-extrabold text-foreground">Sign In</h1>
+				<h1 className="ios-title-2 font-semibold text-foreground">Sign In</h1>
 				<p className="ios-subhead text-muted-foreground">
 					Welcome back to Lumni
 				</p>

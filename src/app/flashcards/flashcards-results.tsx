@@ -32,7 +32,7 @@ export function FlashcardsResults({
 					<div className="max-w-md w-full mx-auto">
 						<div className="space-y-4">
 							<header className="text-left">
-								<h2 className="text-xl font-extrabold tracking-tight">
+								<h2 className="text-xl font-semibold tracking-tight">
 									{accuracy === 100
 										? "Perfect! You&apos;re a pro."
 										: didWell

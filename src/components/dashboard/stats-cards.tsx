@@ -113,8 +113,8 @@ export function StatsCards({ questionsAnswered, accuracy }: StatsCardsProps) {
 					label: "Questions",
 					value: questionsAnswered,
 					icon: Target01Icon,
-					colorClass: "text-accent",
-					accentClass: "hover:text-accent/80",
+					colorClass: "text-purple-600",
+					accentClass: "hover:text-purple-400/80",
 					index: 0,
 				},
 				{

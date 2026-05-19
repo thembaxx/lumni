@@ -148,7 +148,7 @@ function ProblemsClient() {
 				<Anim>
 					<div className="flex flex-col gap-6">
 						<div>
-							<h1 className="ios-title-1 font-extrabold text-foreground tracking-tight">
+							<h1 className="ios-title-1 font-semibold text-foreground tracking-tight">
 								Problem Library
 							</h1>
 							<p className="ios-subhead text-muted-foreground/60 mt-1.5">
@@ -209,7 +209,7 @@ function ProblemsClient() {
 												variant={problemCount === n ? "default" : "outline"}
 												size="xs"
 												onClick={() => setProblemCount(n)}
-												className="text-xs h-7 w-7 p-0 rounded-lg"
+												className="text-xs size-7 p-0 rounded-lg"
 											>
 												{n}
 											</Button>

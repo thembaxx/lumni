@@ -25,8 +25,8 @@ export default function NotFound() {
 						className="relative"
 					>
 						<div className="absolute inset-0 rounded-full bg-secondary blur-xl" />
-						<div className="relative w-24 h-24 rounded-full bg-secondary/60 flex items-center justify-center">
-							<AnimatedIcon name="page-404" className="w-16 h-16" />
+						<div className="relative size-24 rounded-full bg-secondary/60 flex items-center justify-center">
+							<AnimatedIcon name="page-404" className="size-16" />
 						</div>
 					</m.div>
 					<m.div

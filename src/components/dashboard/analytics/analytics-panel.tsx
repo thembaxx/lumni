@@ -51,7 +51,7 @@ export function AnalyticsPanel() {
 	return (
 		<div className="flex flex-col gap-6">
 			<div className="flex items-center justify-between">
-				<h2 className="text-2xl font-extrabold">Analytics</h2>
+				<h2 className="text-2xl font-semibold">Analytics</h2>
 				<Button variant="ghost" onClick={refresh}>
 					Refresh
 				</Button>

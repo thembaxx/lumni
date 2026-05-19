@@ -249,15 +249,15 @@ export function ProfileTab() {
 				<div className="relative group">
 					<label htmlFor="avatar-upload" className="cursor-pointer block">
 						<Avatar className="size-24 shadow-level-3 border-[6px] border-system-surface transition-transform duration-500 group-hover:scale-105">
-							{prefs.avatarUrl ? (
+						
 								<AvatarImage
 									src={
-										(prefs.avatarUrl as string) ??
+										(prefs?.avatarUrl as string) ??
 										`https://api.dicebear.com/9.x/fun-emoji/svg?seed=${getRandomName()}`
 									}
 									alt={user?.name || "User"}
 								/>
-							) : null}
+					
 							<AvatarFallback className="text-3xl font-extrabold bg-system-accent text-white">
 								{user?.name?.charAt(0)?.toUpperCase() || "U"}
 							</AvatarFallback>
@@ -280,7 +280,7 @@ export function ProfileTab() {
 					/>
 				</div>
 				<div className="text-center flex flex-col gap-1">
-					<h2 className="text-(length:--fs-title-2) font-extrabold text-foreground">
+					<h2 className="text-(length:--fs-title-2) font-semibold text-foreground">
 						{user?.name || "User"}
 					</h2>
 					{user?.email && (
@@ -330,7 +330,7 @@ export function ProfileTab() {
 						title="Email Address"
 						subtitle={user?.emailVerification ? "Verified" : "Not verified"}
 						trailing={
-							<span className="text-sm text-muted-foreground truncate max-w-[160px]">
+							<span className="text-sm text-muted-foreground truncate max-w-40">
 								{user?.email}
 							</span>
 						}
@@ -508,7 +508,7 @@ export function ProfileTab() {
 			{showConfirmDialog && (
 				<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
 					<div className="mx-4 w-full max-w-sm rounded-2xl bg-card shadow-level-3 p-6">
-						<h3 className="ios-title-3 font-extrabold mb-2">
+						<h3 className="ios-title-3 font-semibold mb-2">
 							Redo Guided Setup?
 						</h3>
 						<p className="ios-subhead text-muted-foreground mb-6">

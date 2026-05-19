@@ -14,7 +14,7 @@ export default function SearchPage() {
 
 	return (
 		<div className="flex flex-col h-full bg-background">
-			<div className="px-4 py-4 border-b border-border/30 shrink-0">
+			<div className="p-4 border-b border-border/30 shrink-0">
 				<div className="flex items-center gap-2">
 					<HugeiconsIcon
 						icon={Search01Icon}
@@ -23,7 +23,7 @@ export default function SearchPage() {
 					/>
 					<Input
 						type="text"
-						placeholder="Ask anything about your studies..."
+						placeholder="Ask anything about your studies…"
 						aria-label="Search your study materials"
 						value={query}
 						onChange={(e) => setQuery(e.target.value)}

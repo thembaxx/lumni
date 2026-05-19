@@ -171,7 +171,7 @@ export function PronunciationPractice() {
 								) : (
 									<HugeiconsIcon icon={VolumeUpIcon} data-icon />
 								)}
-								{isSpeaking ? "Speaking..." : "Listen"}
+								{isSpeaking ? "Speaking…" : "Listen"}
 							</Button>
 
 							<Button

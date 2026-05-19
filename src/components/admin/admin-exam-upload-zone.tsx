@@ -32,7 +32,7 @@ export function AdminExamUploadZone({
 		}
 
 		setState("converting");
-		setMessage("Converting PDF to structured exam...");
+		setMessage("Converting PDF to structured exam…");
 
 		try {
 			const response = await fetch("/api/admin/exams/upload", {
@@ -69,7 +69,7 @@ export function AdminExamUploadZone({
 					endpoint="examPapersUploader"
 					onUploadBegin={() => {
 						setState("uploading");
-						setMessage("Uploading PDF...");
+						setMessage("Uploading PDF…");
 					}}
 					onClientUploadComplete={(res) => {
 						handleUploadComplete(res.map((f) => ({ key: f.key })));

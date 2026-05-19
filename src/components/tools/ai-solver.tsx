@@ -268,8 +268,8 @@ function AiSolverInner({ cameraFocus }: AiSolverProps) {
 							ref={textareaRef}
 							placeholder={
 								phase === "confirm"
-									? "Edit the extracted problem if needed..."
-									: "Type your question here..."
+									? "Edit the extracted problem if needed…"
+									: "Type your question here…"
 							}
 							value={question}
 							onChange={(e) => setQuestion(e.target.value)}
@@ -286,8 +286,8 @@ function AiSolverInner({ cameraFocus }: AiSolverProps) {
 							/>
 							<span className="text-sm text-[--system-text-secondary]">
 								{phase === "extracting"
-									? "Reading problem from image..."
-									: "Solving step-by-step..."}
+									? "Reading problem from image…"
+									: "Solving step-by-step…"}
 							</span>
 						</div>
 					)}
@@ -338,7 +338,7 @@ function AiSolverInner({ cameraFocus }: AiSolverProps) {
 																<span>Upload</span>
 															</div>
 														);
-													return "Working on it...";
+													return "Working on it…";
 												},
 											}}
 										/>

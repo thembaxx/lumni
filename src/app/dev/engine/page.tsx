@@ -92,7 +92,7 @@ export default function DevEnginePage() {
 
 	return (
 		<div className="min-h-[100dvh] bg-background p-4 max-w-4xl mx-auto space-y-4 pb-20">
-			<h1 className="text-xl font-extrabold">Engine Integration Test</h1>
+			<h1 className="text-xl font-semibold">Engine Integration Test</h1>
 
 			<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
 				<div className="px-4 group-data-[size=sm]/card:px-3 p-4 space-y-3">

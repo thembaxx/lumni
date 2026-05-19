@@ -70,7 +70,7 @@ function SignUpForm() {
 			className="flex flex-col gap-8"
 		>
 			<div className="flex flex-col gap-2">
-				<h1 className="ios-title-2 font-extrabold text-foreground">
+				<h1 className="ios-title-2 font-semibold text-foreground">
 					Create Account
 				</h1>
 				<p className="ios-subhead text-muted-foreground">

@@ -110,7 +110,7 @@ export function ChatInput({
 					<Input
 						ref={inputRef}
 						type="text"
-						placeholder="Ask me a question about your studies..."
+						placeholder="Ask me a question about your studies…"
 						value={input}
 						onChange={(e) => setInput(e.target.value)}
 						onFocus={() => setIsFocused(true)}

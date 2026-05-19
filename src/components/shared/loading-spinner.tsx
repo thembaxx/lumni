@@ -33,7 +33,7 @@ interface LoadingOverlayProps {
 }
 
 export function LoadingOverlay({
-	message = "Loading...",
+	message = "Loading…",
 	spinnerSize = "md",
 	className,
 }: LoadingOverlayProps) {

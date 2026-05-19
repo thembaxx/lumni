@@ -211,7 +211,7 @@ export function PeriodicTable() {
 					/>
 					<Input
 						type="text"
-						placeholder="Search by name, symbol, or number..."
+						placeholder="Search by name, symbol, or number…"
 						value={searchQuery}
 						onChange={(e) => setSearchQuery(e.target.value)}
 						onFocus={() => setIsSearchFocused(true)}
@@ -416,7 +416,7 @@ export function PeriodicTable() {
 										</span>
 									</motion.div>
 									<div className="flex-1 pt-1">
-										<h2 className="text-2xl font-extrabold mb-1">
+										<h2 className="text-2xl font-semibold mb-1">
 											{selectedElement.name}
 										</h2>
 										<p className="text-sm text-muted-foreground/70">

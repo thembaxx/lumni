@@ -72,6 +72,16 @@ export function TopNav({ title, className }: TopNavProps) {
 
 	if (isAuthPage || isLanding || hasOwnHeader) return null;
 
+	let imgSrc = null;
+	if (
+		(user?.prefs as Record<string, unknown>)?.avatarUrl &&
+		typeof (user?.prefs as Record<string, unknown>)?.avatarUrl === "string"
+	) {
+		imgSrc = (user?.prefs as Record<string, unknown>).avatarUrl as string;
+	} else {
+		imgSrc = `https://api.dicebear.com/9.x/fun-emoji/svg?seed=${getRandomName()}`;
+	}
+
 	return (
 		<header
 			className={cn(
@@ -142,16 +152,7 @@ export function TopNav({ title, className }: TopNavProps) {
 						<DropdownList>
 							<DropdownListTrigger className="outline-none">
 								<Avatar className="size-8 cursor-pointer ring-2 ring-transparent hover:ring-system-accent/30 transition-shadow">
-									{(user?.prefs as Record<string, unknown>)?.avatarUrl ? (
-										<AvatarImage
-											src={
-												((user?.prefs as Record<string, unknown>)
-													.avatarUrl as string) ??
-												`https://api.dicebear.com/9.x/fun-emoji/svg?seed=${getRandomName()}`
-											}
-											alt={user?.name || "User"}
-										/>
-									) : null}
+									<AvatarImage src={imgSrc} alt={user?.name || "User"} />
 									<AvatarFallback className="text-xs font-bold bg-system-accent text-white">
 										{user?.name?.charAt(0)?.toUpperCase() || "U"}
 									</AvatarFallback>

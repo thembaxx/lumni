@@ -101,7 +101,7 @@ export function SubjectSelect({
 								<Input
 									ref={inputRef}
 									type="text"
-									placeholder="Search subjects..."
+									placeholder="Search subjects…"
 									value={searchQuery}
 									onChange={(e) => setSearchQuery(e.target.value)}
 									className="h-9 pl-10 pr-4 rounded-lg"

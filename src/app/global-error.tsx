@@ -26,10 +26,10 @@ export default function GlobalError({
 						<main className="space-y-8 max-w-md text-left">
 							<div className="relative">
 								<div className="absolute inset-0 animate-pulse rounded-full bg-destructive/10 blur-xl" />
-								<div className="relative flex items-center justify-center w-20 h-20 rounded-[--radius-card] bg-destructive/10 border border-destructive/20">
+								<div className="relative flex items-center justify-center size-20 rounded-[--radius-card] bg-destructive/10 border border-destructive/20">
 									<HugeiconsIcon
 										icon={Alert01Icon}
-										className="w-10 h-10 text-destructive"
+										className="size-10 text-destructive"
 									/>
 								</div>
 							</div>

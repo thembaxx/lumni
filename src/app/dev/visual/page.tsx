@@ -71,7 +71,7 @@ export default function DevVisualPage() {
 
 	return (
 		<div className="min-h-[100dvh] bg-background p-4 max-w-4xl mx-auto space-y-4 pb-20">
-			<h1 className="text-xl font-extrabold">Visual Engine Test</h1>
+			<h1 className="text-xl font-semibold">Visual Engine Test</h1>
 
 			<div className="rounded-[2.5rem] bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] overflow-hidden">
 				<div className="p-4 space-y-3">
@@ -113,7 +113,7 @@ export default function DevVisualPage() {
 			{testResult && (
 				<div className="rounded-[2.5rem] bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] overflow-hidden">
 					<div className="p-4 pb-2">
-						<h3 className="text-sm font-extrabold tracking-tight">
+						<h3 className="text-sm font-semibold tracking-tight">
 							Test Results
 						</h3>
 					</div>
@@ -133,7 +133,7 @@ export default function DevVisualPage() {
 				<>
 					<div className="rounded-[2.5rem] bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] overflow-hidden">
 						<div className="p-4 pb-2">
-							<h3 className="text-sm font-extrabold tracking-tight flex items-center gap-2">
+							<h3 className="text-sm font-semibold tracking-tight flex items-center gap-2">
 								Rendered Visual
 								<Badge variant="secondary" className="text-xs">
 									{visual.type}
@@ -152,7 +152,7 @@ export default function DevVisualPage() {
 
 					<div className="rounded-[2.5rem] bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] overflow-hidden">
 						<div className="p-4 pb-2">
-							<h3 className="text-sm font-extrabold tracking-tight">
+							<h3 className="text-sm font-semibold tracking-tight">
 								Raw Response
 							</h3>
 						</div>

@@ -102,7 +102,7 @@ export default function ReviewPage() {
 		<div className="min-h-screen bg-system-grouped pt-4 pb-24">
 			<div className="max-w-3xl mx-auto w-full px-4 flex flex-col gap-6">
 				<div className="flex items-center justify-between">
-					<h1 className="ios-title-1 font-extrabold text-foreground tracking-tight">
+					<h1 className="ios-title-1 font-semibold text-foreground tracking-tight">
 						Wrong Answer Journal
 					</h1>
 					<div className="flex items-center gap-2">

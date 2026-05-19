@@ -128,7 +128,7 @@ export function GettingStartedCard() {
 						<div className="p-5">
 							<div className="flex items-start justify-between mb-4">
 								<div>
-									<h2 className="text-lg font-extrabold tracking-tight text-balance">
+									<h2 className="text-lg font-semibold tracking-tight text-balance">
 										Getting started
 									</h2>
 									<p className="text-sm text-muted-foreground mt-0.5">

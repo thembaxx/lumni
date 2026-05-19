@@ -28,7 +28,7 @@ export default function ChatPage() {
 
 	return (
 		<div className="flex flex-col h-full bg-background/95">
-			<div className="px-4 py-4 border-b border-border/30 flex items-center justify-between shrink-0">
+			<div className="p-4 border-b border-border/30 flex items-center justify-between shrink-0">
 				<div className="flex items-center gap-2">
 					<div className="size-9 rounded-full bg-system-accent/10 flex items-center justify-center">
 						<HugeiconsIcon

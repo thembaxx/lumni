@@ -228,12 +228,12 @@ export const MarkdownRenderer = memo(function MarkdownRenderer({
 					},
 					h1({ children }) {
 						return (
-							<h1 className="text-2xl font-extrabold mb-3 mt-4">{children}</h1>
+							<h1 className="text-2xl font-semibold mb-3 mt-4">{children}</h1>
 						);
 					},
 					h2({ children }) {
 						return (
-							<h2 className="text-xl font-extrabold mb-2 mt-3">{children}</h2>
+							<h2 className="text-xl font-semibold mb-2 mt-3">{children}</h2>
 						);
 					},
 					h3({ children }) {

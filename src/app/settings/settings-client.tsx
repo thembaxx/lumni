@@ -150,7 +150,7 @@ function SettingsContent() {
 							>
 								<HugeiconsIcon icon={ArrowLeftIcon} className="size-5" />
 							</Link>
-							<h1 className="ios-title-3 text-foreground font-extrabold tracking-tight">
+							<h1 className="ios-title-3 text-foreground font-semibold tracking-tight">
 								Settings
 							</h1>
 						</div>
@@ -161,7 +161,7 @@ function SettingsContent() {
 							disabled={isSaving}
 							className="h-10 px-6 rounded-full font-extrabold bg-system-accent hover:bg-system-accent/90 text-white shadow-level-2 transition-[transform,opacity] active:scale-[0.96]"
 						>
-							{saved ? "✓ Saved" : isSaving ? "Saving..." : "Save"}
+							{saved ? "✓ Saved" : isSaving ? "Saving…" : "Save"}
 						</Button>
 					</div>
 				</header>
@@ -201,7 +201,7 @@ function SettingsContent() {
 				</nav>
 
 				{/* Content Area - Rhythmic Spacing */}
-				<main className="flex-1 px-6 py-6 pb-24">
+				<main className="flex-1 p-6 pb-24">
 					<AnimatePresence mode="wait" initial={false}>
 						<motion.div
 							key={activeTab}
@@ -272,7 +272,7 @@ export function SettingsClient() {
 								className="size-8 text-muted-foreground animate-spin"
 							/>
 							<p className="ios-body text-[--system-text-secondary]">
-								Loading settings...
+								Loading settings…
 							</p>
 						</div>
 					</div>
