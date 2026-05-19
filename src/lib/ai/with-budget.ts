@@ -14,7 +14,7 @@ export async function checkBudget(
 		req.headers.get("x-real-ip")?.trim() ||
 		"anonymous";
 
-	const result = dailyCallTracker.check(type, userId);
+	const result = await dailyCallTracker.check(type, userId);
 
 	if (!result.allowed) {
 		return {
@@ -40,10 +40,10 @@ export async function checkBudget(
 	return { allowed: true, userId };
 }
 
-export function trackUsage(
+export async function trackUsage(
 	type: AICallType,
 	userId: string,
 	tokens?: number,
-): void {
-	dailyCallTracker.increment(type, userId, tokens);
+): Promise<void> {
+	await dailyCallTracker.increment(type, userId, tokens);
 }

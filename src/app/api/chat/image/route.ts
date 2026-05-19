@@ -37,7 +37,7 @@ const handler = async (request: NextRequest) => {
 			imageUrl,
 		});
 
-		trackUsage("generate", userId);
+		await trackUsage("generate", userId);
 
 		if (!("available" in result) || !result.available) {
 			const errorResult = result as { error?: string };

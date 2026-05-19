@@ -1,4 +1,7 @@
 import { RateLimiter } from "@/lib/rate-limiter/core";
+import { databases } from "@/lib/appwrite";
+import { Query } from "appwrite";
+import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 
 export type AICallType = "generate" | "grade" | "hint" | "visual";
 
@@ -13,11 +16,6 @@ const USER_LIMITS: Record<AICallType, { maxPerDay: number }> = {
 
 const GLOBAL_LIMIT_TOTAL = 2000;
 
-function getDateKey(): string {
-	const d = new Date();
-	return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-}
-
 export class DailyCallTracker {
 	private perUserLimiters = new Map<string, Map<AICallType, RateLimiter>>();
 	private globalLimiter = new RateLimiter();
@@ -25,7 +23,7 @@ export class DailyCallTracker {
 	private currentDate = "";
 
 	private ensureDate() {
-		const today = getDateKey();
+		const today = new Date().toISOString().split("T")[0];
 		if (today !== this.currentDate) {
 			this.perUserLimiters.clear();
 			this.globalLimiter = new RateLimiter();
@@ -57,16 +55,67 @@ export class DailyCallTracker {
 		return m;
 	}
 
-	check(
+	async check(
 		type: AICallType,
 		userId: string = "anonymous",
-	): {
+	): Promise<{
 		allowed: boolean;
 		remaining: { user: number; global: number };
 		resetAt: number;
-	} {
-		this.ensureDate();
+	}> {
+		const startOfToday = new Date();
+		startOfToday.setHours(0, 0, 0, 0);
+		const todayStr = startOfToday.toISOString();
 
+		const endOfToday = new Date();
+		endOfToday.setHours(23, 59, 59, 999);
+		const resetAt = endOfToday.getTime();
+
+		if (APPWRITE_DATABASE_ID && databases) {
+			try {
+				const userRes = await databases.listDocuments(
+					APPWRITE_DATABASE_ID,
+					COLLECTIONS.ANALYTICS || "analytics",
+					[
+						Query.equal("eventType", "ai_call"),
+						Query.equal("userId", userId),
+						Query.equal("subjectId", type),
+						Query.greaterThanEqual("timestamp", todayStr),
+						Query.limit(1),
+					],
+				);
+
+				const globalRes = await databases.listDocuments(
+					APPWRITE_DATABASE_ID,
+					COLLECTIONS.ANALYTICS || "analytics",
+					[
+						Query.equal("eventType", "ai_call"),
+						Query.greaterThanEqual("timestamp", todayStr),
+						Query.limit(1),
+					],
+				);
+
+				const userCount = userRes.total;
+				const globalCount = globalRes.total;
+
+				const userAllowed = userCount < USER_LIMITS[type].maxPerDay;
+				const globalAllowed = globalCount < GLOBAL_LIMIT_TOTAL;
+
+				return {
+					allowed: userAllowed && globalAllowed,
+					remaining: {
+						user: Math.max(0, USER_LIMITS[type].maxPerDay - userCount),
+						global: Math.max(0, GLOBAL_LIMIT_TOTAL - globalCount),
+					},
+					resetAt,
+				};
+			} catch (error) {
+				console.warn("[DailyCallTracker] Appwrite query failed, falling back to in-memory:", error);
+			}
+		}
+
+		// Fallback to in-memory
+		this.ensureDate();
 		const limiter = this.getLimiter(userId, type);
 		const userResult = limiter.peek(`${userId}:${type}`, {
 			max: USER_LIMITS[type].maxPerDay,
@@ -84,13 +133,33 @@ export class DailyCallTracker {
 		};
 	}
 
-	increment(
+	async increment(
 		type: AICallType,
 		userId: string = "anonymous",
 		tokens: number = 0,
-	): void {
-		this.ensureDate();
+	): Promise<void> {
+		if (APPWRITE_DATABASE_ID && databases) {
+			try {
+				await databases.createDocument(
+					APPWRITE_DATABASE_ID,
+					COLLECTIONS.ANALYTICS || "analytics",
+					"unique()",
+					{
+						eventType: "ai_call",
+						userId: userId,
+						subjectId: type,
+						metadata: JSON.stringify({ tokens }),
+						timestamp: new Date().toISOString(),
+					},
+				);
+				return;
+			} catch (error) {
+				console.warn("[DailyCallTracker] Appwrite increment failed, falling back to in-memory:", error);
+			}
+		}
 
+		// Fallback to in-memory
+		this.ensureDate();
 		const limiter = this.getLimiter(userId, type);
 		limiter.check(`${userId}:${type}`, {
 			max: USER_LIMITS[type].maxPerDay,
@@ -106,9 +175,56 @@ export class DailyCallTracker {
 		tokenMap.set(type, current + tokens);
 	}
 
-	getUsage(
+	async getUsage(
 		userId: string = "anonymous",
-	): Record<AICallType, { count: number; tokens: number; limit: number }> {
+	): Promise<Record<AICallType, { count: number; tokens: number; limit: number }>> {
+		const startOfToday = new Date();
+		startOfToday.setHours(0, 0, 0, 0);
+		const todayStr = startOfToday.toISOString();
+
+		if (APPWRITE_DATABASE_ID && databases) {
+			try {
+				const result = {} as Record<
+					AICallType,
+					{ count: number; tokens: number; limit: number }
+				>;
+
+				for (const type of Object.keys(USER_LIMITS) as AICallType[]) {
+					const res = await databases.listDocuments(
+						APPWRITE_DATABASE_ID,
+						COLLECTIONS.ANALYTICS || "analytics",
+						[
+							Query.equal("eventType", "ai_call"),
+							Query.equal("userId", userId),
+							Query.equal("subjectId", type),
+							Query.greaterThanEqual("timestamp", todayStr),
+							Query.limit(100),
+						],
+					);
+
+					const count = res.total;
+					const tokens = res.documents.reduce((sum, doc) => {
+						try {
+							const meta = JSON.parse((doc as Record<string, unknown>).metadata as string);
+							return sum + ((meta as Record<string, number>).tokens || 0);
+						} catch {
+							return sum;
+						}
+					}, 0);
+
+					result[type] = {
+						count,
+						tokens,
+						limit: USER_LIMITS[type].maxPerDay,
+					};
+				}
+				return result;
+			} catch (error) {
+				console.warn("[DailyCallTracker] Appwrite getUsage failed, falling back to in-memory:", error);
+			}
+		}
+
+		// Fallback to in-memory
 		this.ensureDate();
 		const tokenMap = this.getTokenMap(userId);
 		const result = {} as Record<
@@ -130,7 +246,32 @@ export class DailyCallTracker {
 		return result;
 	}
 
-	getGlobalUsage(): { totalCalls: number; limit: number } {
+	async getGlobalUsage(): Promise<{ totalCalls: number; limit: number }> {
+		const startOfToday = new Date();
+		startOfToday.setHours(0, 0, 0, 0);
+		const todayStr = startOfToday.toISOString();
+
+		if (APPWRITE_DATABASE_ID && databases) {
+			try {
+				const res = await databases.listDocuments(
+					APPWRITE_DATABASE_ID,
+					COLLECTIONS.ANALYTICS || "analytics",
+					[
+						Query.equal("eventType", "ai_call"),
+						Query.greaterThanEqual("timestamp", todayStr),
+						Query.limit(1),
+					],
+				);
+				return {
+					totalCalls: res.total,
+					limit: GLOBAL_LIMIT_TOTAL,
+				};
+			} catch (error) {
+				console.warn("[DailyCallTracker] Appwrite getGlobalUsage failed, falling back to in-memory:", error);
+			}
+		}
+
+		// Fallback to in-memory
 		this.ensureDate();
 		const result = this.globalLimiter.peek("global", {
 			max: GLOBAL_LIMIT_TOTAL,

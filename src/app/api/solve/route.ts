@@ -107,7 +107,7 @@ export const POST = withRateLimit(async (req: NextRequest) => {
 			throw new Error(`AI solver failed: ${errorMsg}`);
 		}
 
-		trackUsage("generate", budget.userId);
+		await trackUsage("generate", budget.userId);
 
 		const response = result as AIResponse;
 

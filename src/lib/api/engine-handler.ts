@@ -42,7 +42,7 @@ export function createEngineHandler<T = Record<string, unknown>>(
 
 			const result = await execute(body, { userId: budget.userId });
 
-			trackUsage(budgetType, budget.userId);
+			await trackUsage(budgetType, budget.userId);
 
 			return NextResponse.json(result);
 		} catch (error) {

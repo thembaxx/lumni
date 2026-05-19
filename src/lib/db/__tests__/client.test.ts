@@ -24,8 +24,8 @@ const {
 } = await import("../client");
 
 describe("COLLECTIONS", () => {
-	test("has 14 keys", () => {
-		expect(Object.keys(COLLECTIONS)).toHaveLength(14);
+	test("has 15 keys", () => {
+		expect(Object.keys(COLLECTIONS)).toHaveLength(15);
 	});
 
 	test("contains all expected collection keys", () => {
@@ -43,6 +43,7 @@ describe("COLLECTIONS", () => {
 		expect(COLLECTIONS.REFERRALS).toBe("referrals");
 		expect(COLLECTIONS.STUDY_PLANS).toBe("study_plans");
 		expect(COLLECTIONS.QUESTION_FLAGS).toBe("question_flags");
+		expect(COLLECTIONS.ANALYTICS).toBe("analytics");
 	});
 
 	test("all values are non-empty strings", () => {

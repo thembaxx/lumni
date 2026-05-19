@@ -13,8 +13,24 @@ type RateLimitResult =
 	| { allowed: true }
 	| { allowed: false; errorMessage: string; resetAt: number };
 
-export function attemptSignIn(email: string): RateLimitResult {
+export async function attemptSignIn(email: string): Promise<RateLimitResult> {
 	const key = normalizeEmail(email);
+
+	try {
+		// Server-side check via API route
+		const res = await fetch("/api/auth/rate-limit", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ email, action: "signin" }),
+		});
+		if (res.ok) {
+			return await res.json();
+		}
+	} catch (error) {
+		console.warn("[RateLimit] Server check failed, falling back to in-memory:", error);
+	}
+
+	// Fallback to in-memory RateLimiter
 	const result = rateLimiter.check(key, SIGNIN_CONFIG);
 	if (!result.allowed) {
 		const waitMinutes = Math.ceil((result.resetAt - Date.now()) / 60000);
@@ -27,13 +43,46 @@ export function attemptSignIn(email: string): RateLimitResult {
 	return { allowed: true };
 }
 
-export function recordSuccessfulSignIn(email: string): void {
+export async function recordSuccessfulSignIn(email: string): Promise<void> {
 	const key = normalizeEmail(email);
+
+	try {
+		// Server-side logging of successful sign-in
+		const res = await fetch("/api/auth/rate-limit", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ email, action: "success" }),
+		});
+		if (res.ok) {
+			rateLimiter.reset(key);
+			return;
+		}
+	} catch (error) {
+		console.warn("[RateLimit] Server success log failed, falling back to in-memory:", error);
+	}
+
+	// Fallback to in-memory RateLimiter
 	rateLimiter.reset(key);
 }
 
-export function attemptMagicLink(email: string): RateLimitResult {
+export async function attemptMagicLink(email: string): Promise<RateLimitResult> {
 	const key = normalizeEmail(email);
+
+	try {
+		// Server-side check via API route
+		const res = await fetch("/api/auth/rate-limit", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ email, action: "magiclink" }),
+		});
+		if (res.ok) {
+			return await res.json();
+		}
+	} catch (error) {
+		console.warn("[RateLimit] Server magic-link check failed, falling back to in-memory:", error);
+	}
+
+	// Fallback to in-memory RateLimiter
 	const result = rateLimiter.check(key, MAGIC_LINK_CONFIG);
 	if (!result.allowed) {
 		const waitMinutes = Math.ceil((result.resetAt - Date.now()) / 60000);

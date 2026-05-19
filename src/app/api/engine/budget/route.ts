@@ -10,8 +10,8 @@ export async function GET(req: NextRequest) {
 			req.headers.get("x-real-ip")?.trim() ||
 			"anonymous";
 
-		const usage = dailyCallTracker.getUsage(userId);
-		const globalUsage = dailyCallTracker.getGlobalUsage();
+		const usage = await dailyCallTracker.getUsage(userId);
+		const globalUsage = await dailyCallTracker.getGlobalUsage();
 
 		return NextResponse.json({
 			user: { id: userId, usage },

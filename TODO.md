@@ -88,3 +88,50 @@
 
 ### Other
 - [ ] Replace `https://lumni-psi.vercel.app` with custom domain in referral links
+
+---
+
+## Architectural Weak Points & Security Gaps
+
+### P1 — Serverless Session Ephemerality & Limit Resilience
+- [ ] **Persist Daily AI Call Token Budget**: Migrate `dailyCallTracker` (`src/lib/ai/daily-call-tracker.ts`) from ephemeral, in-memory Maps to a shared KV-store or Appwrite collection to prevent resets on serverless container recycles and stop multi-instance bypass.
+- [ ] **Secure Auth Rate Limiting**: Move auth rate limiting (`src/lib/auth/rate-limit.ts`) from client-side in-memory Map to server-side Redis or Appwrite collections to secure authentication and magic-link flows from bot spamming.
+- [ ] **Validate Regenerated Questions**: Strengthen `"question-regen"` job processor handler to validate that regenerated question text preserves structural consistency (options IDs, acceptable answers, diagrams) to avoid database mismatches.
+
+### P1 — Offline Sync Queue Data Durability
+- [ ] **Transactional Synced Flags**: Prevent eager deletion of local IndexedDB `progress` data in `flushOfflineData` (`src/lib/sync/sync-handler.ts`). Keep local data intact and mark as synced, only deleting after background synchronization tasks succeed.
+
+---
+
+## Functional Gaps & Disconnects
+
+### P2 — Complete Upgraded Anonymous User Migration
+- [ ] **Sync Competency History**: Extend `flushOfflineData` to migrate offline Bloom competency records (`competencies` table) to Appwrite upon student sign-up.
+- [ ] **Sync Spaced Repetition Cards**: Sync offline SM-2 flashcard profiles (`flashcards` table) to Appwrite on sign-up so learners don't lose custom card histories.
+- [ ] **Sync Wrong Answer Journal**: Synchronize wrong answers (`wrongAnswers` table) and content ratings (`questionRatings` table) to keep historical mistakes lists consistent across devices.
+- [ ] **Sync Chat History**: Migrate historical AI tutor interactions (`chatMessages` table) to the Appwrite backend on conversion.
+
+### P2 — Subject Sync Logic Implementation
+- [ ] **Implement syncSubject Actions**: Replace mock methods in `src/lib/server/sync-actions.ts` with real offline-sync logic to download and seed subjects metadata and offline question banks directly to Dexie.
+
+---
+
+## Architectural Synergies & Unification
+
+### P3 — System Unifications
+- [ ] **Consolidate Spaced Repetition Logic**: Merge overlapping SM-2 spaced repetition recalculations between `spaced-rep-service.ts` and `spaced-repetition.ts` into a single high-leverage module.
+- [ ] **Standardize Difficulty Types**: Unify capitalized (`"Easy" | "Medium" | "Hard"`) and lowercase difficulty types into a shared, normalized enum with automatic parsing in `src/lib/shared/question-type.ts`.
+- [ ] **Shared Rate-Limit Provider**: Combine `RateLimiter` cores so that token-budget trackers, APIs, and auth routes leverage a unified persistent adapter seam.
+
+---
+
+## Missing & Value-Add Features
+
+### P2 — Offline PWA Enhancements & Resilient Exam Sessions
+- [ ] **Offline Past Paper PDF Downloader & Pre-caching**: Allow users to cache past exam papers locally and view them through a customized, offline-capable PDF viewer.
+- [ ] **Exam Session Recovery**: Hook into `IndexedDB` to auto-save and restore timed exam sessions upon browser crash or reload, avoiding progress loss.
+
+### P3 — AI Personalization & Retention Loops
+- [ ] **Bloom's Taxonomy Recommendations**: Build a dashboard widget recommending specific learning formats based on topic Bloom competency (e.g., recommend calculations if numerical understanding is weak).
+- [ ] **Spaced Repetition Due Notifications**: Schedule push notifications or reminders when spaced repetition cards become due for review.
+

@@ -82,21 +82,21 @@ describe("checkBudget", () => {
 });
 
 describe("trackUsage", () => {
-	test("calls dailyCallTracker.increment with type and user", () => {
+	test("calls dailyCallTracker.increment with type and user", async () => {
 		mockIncrement.mockReset();
-		trackUsage("grade", "user-123", 50);
+		await trackUsage("grade", "user-123", 50);
 		expect(mockIncrement).toHaveBeenCalledWith("grade", "user-123", 50);
 	});
 
-	test("calls increment with defaults", () => {
+	test("calls increment with defaults", async () => {
 		mockIncrement.mockReset();
-		trackUsage("hint", "anonymous");
+		await trackUsage("hint", "anonymous");
 		expect(mockIncrement).toHaveBeenCalledWith("hint", "anonymous", undefined);
 	});
 
-	test("handles visual call type", () => {
+	test("handles visual call type", async () => {
 		mockIncrement.mockReset();
-		trackUsage("visual", "user-456", 200);
+		await trackUsage("visual", "user-456", 200);
 		expect(mockIncrement).toHaveBeenCalledWith("visual", "user-456", 200);
 	});
 });

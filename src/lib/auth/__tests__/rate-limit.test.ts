@@ -10,64 +10,64 @@ function uniqueEmail(): string {
 }
 
 describe("attemptSignIn", () => {
-	test("returns allowed on first attempt", () => {
-		const result = attemptSignIn(uniqueEmail());
+	test("returns allowed on first attempt", async () => {
+		const result = await attemptSignIn(uniqueEmail());
 		expect(result).toEqual({ allowed: true });
 	});
 
-	test("blocks after too many attempts", () => {
+	test("blocks after too many attempts", async () => {
 		const email = uniqueEmail();
-		attemptSignIn(email);
-		attemptSignIn(email);
-		attemptSignIn(email);
-		const result = attemptSignIn(email);
+		await attemptSignIn(email);
+		await attemptSignIn(email);
+		await attemptSignIn(email);
+		const result = await attemptSignIn(email);
 		expect(result.allowed).toBe(false);
 		expect((result as { errorMessage: string }).errorMessage).toContain(
 			"sign-in",
 		);
 	});
 
-	test("normalizes email case", () => {
+	test("normalizes email case", async () => {
 		const email = uniqueEmail();
-		attemptSignIn(email.toUpperCase());
-		attemptSignIn(email);
-		attemptSignIn(email.toUpperCase());
-		const result = attemptSignIn(email);
+		await attemptSignIn(email.toUpperCase());
+		await attemptSignIn(email);
+		await attemptSignIn(email.toUpperCase());
+		const result = await attemptSignIn(email);
 		expect(result.allowed).toBe(false);
 	});
 
-	test("normalizes email with whitespace", () => {
+	test("normalizes email with whitespace", async () => {
 		const email = uniqueEmail();
-		attemptSignIn(email);
-		attemptSignIn(email);
-		attemptSignIn(`  ${email}  `);
-		const result = attemptSignIn(email);
+		await attemptSignIn(email);
+		await attemptSignIn(email);
+		await attemptSignIn(`  ${email}  `);
+		const result = await attemptSignIn(email);
 		expect(result.allowed).toBe(false);
 	});
 });
 
 describe("recordSuccessfulSignIn", () => {
-	test("resets rate limit for the email", () => {
+	test("resets rate limit for the email", async () => {
 		const email = uniqueEmail();
-		attemptSignIn(email);
-		attemptSignIn(email);
-		attemptSignIn(email);
-		recordSuccessfulSignIn(email);
-		const result = attemptSignIn(email);
+		await attemptSignIn(email);
+		await attemptSignIn(email);
+		await attemptSignIn(email);
+		await recordSuccessfulSignIn(email);
+		const result = await attemptSignIn(email);
 		expect(result).toEqual({ allowed: true });
 	});
 });
 
 describe("attemptMagicLink", () => {
-	test("returns allowed on first attempt", () => {
-		const result = attemptMagicLink(uniqueEmail());
+	test("returns allowed on first attempt", async () => {
+		const result = await attemptMagicLink(uniqueEmail());
 		expect(result).toEqual({ allowed: true });
 	});
 
-	test("blocks on second attempt", () => {
+	test("blocks on second attempt", async () => {
 		const email = uniqueEmail();
-		attemptMagicLink(email);
-		const result = attemptMagicLink(email);
+		await attemptMagicLink(email);
+		const result = await attemptMagicLink(email);
 		expect(result.allowed).toBe(false);
 		expect((result as { errorMessage: string }).errorMessage).toContain(
 			"magic link",

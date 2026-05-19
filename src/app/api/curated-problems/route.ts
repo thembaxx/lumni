@@ -153,7 +153,7 @@ Generate exactly ${Math.min(count, 10)} problems at varying difficulty levels.`;
 			throw new Error(`AI generation failed: ${errorMsg}`);
 		}
 
-		trackUsage("generate", budget.userId);
+		await trackUsage("generate", budget.userId);
 
 		const response = result as AIResponse;
 		const cleaned = cleanResponse(response.content);

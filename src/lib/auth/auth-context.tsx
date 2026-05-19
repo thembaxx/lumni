@@ -159,7 +159,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 		async (email: string, password: string) => {
 			dispatch({ type: "SET_ERROR", error: null });
 
-			const rateLimit = attemptSignIn(email);
+			const rateLimit = await attemptSignIn(email);
 			if (!rateLimit.allowed) {
 				dispatch({ type: "SET_ERROR", error: rateLimit.errorMessage });
 				return;
@@ -168,7 +168,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 			try {
 				await account.createEmailPasswordSession(email, password);
 				const user = await account.get();
-				recordSuccessfulSignIn(email);
+				await recordSuccessfulSignIn(email);
 				dispatch({
 					type: "SET_USER",
 					user,
@@ -211,7 +211,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 	const signInWithMagicLink = useCallback(async (email: string) => {
 		dispatch({ type: "SET_ERROR", error: null });
 
-		const rateLimit = attemptMagicLink(email);
+		const rateLimit = await attemptMagicLink(email);
 		if (!rateLimit.allowed) {
 			dispatch({ type: "SET_ERROR", error: rateLimit.errorMessage });
 			return;
