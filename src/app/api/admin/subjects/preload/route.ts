@@ -2,6 +2,7 @@ import fs from "fs";
 import { NextRequest, NextResponse } from "next/server";
 import path from "path";
 import { COLLECTIONS, createDocument } from "@/lib/db/client";
+import { requireAdmin } from "@/lib/server/auth";
 
 interface ExamPaperEntry {
 	subjectId: string;
@@ -40,6 +41,8 @@ async function getSubjectsFromJson() {
 
 export async function POST(request: NextRequest) {
 	try {
+		await requireAdmin();
+
 		const { searchParams } = new URL(request.url);
 		const action = searchParams.get("action");
 

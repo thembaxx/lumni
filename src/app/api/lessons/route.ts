@@ -49,6 +49,11 @@ export async function GET(request: NextRequest) {
 		return NextResponse.json({ lessons: filteredLessons });
 	} catch (error) {
 		console.error("Lessons API error:", error);
-		return NextResponse.json({ lessons: [] });
+		return NextResponse.json(
+			{
+				error: error instanceof Error ? error.message : "Failed to get lessons",
+			},
+			{ status: 500 },
+		);
 	}
 }

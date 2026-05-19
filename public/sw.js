@@ -63,7 +63,7 @@ async function cacheFirst(request, cacheName) {
     }
     return response;
   } catch (error) {
-    return caches.match('/offline.html') || new Response('Offline', { status: 503 });
+    return caches.match('/_offline') || new Response('Offline', { status: 503 });
   }
 }
 

@@ -7,9 +7,12 @@ import {
 	listDocuments,
 	updateDocument,
 } from "@/lib/db/client";
+import { requireAdmin } from "@/lib/server/auth";
 
 export async function GET() {
 	try {
+		await requireAdmin();
+
 		const subjects = await listDocuments(COLLECTIONS.SUBJECTS);
 		return NextResponse.json({ subjects });
 	} catch (error) {
@@ -26,6 +29,8 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
 	try {
+		await requireAdmin();
+
 		const body = await request.json();
 		const { name, code, description, category, color } = body;
 
@@ -60,6 +65,8 @@ export async function POST(request: NextRequest) {
 
 export async function PATCH(request: NextRequest) {
 	try {
+		await requireAdmin();
+
 		const body = await request.json();
 		const { id, name, code, description, category } = body;
 
@@ -92,6 +99,8 @@ export async function PATCH(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
 	try {
+		await requireAdmin();
+
 		const { searchParams } = new URL(request.url);
 		const id = searchParams.get("id");
 

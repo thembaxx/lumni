@@ -1,8 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import { CHAT_SYSTEM_PROMPT, generateWithSystem } from "@/lib/ai/client";
+import { checkBudget, trackUsage } from "@/lib/ai/with-budget";
+import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
-export async function POST(request: NextRequest) {
+const handler = async (request: NextRequest) => {
 	try {
+		const {
+			allowed,
+			response: budgetResponse,
+			userId,
+		} = await checkBudget(request, "generate");
+		if (!allowed) return budgetResponse!;
+
 		const body = await request.json();
 		const { imageUrl, imageName } = body;
 
@@ -19,6 +28,8 @@ export async function POST(request: NextRequest) {
 			maxTokens: 1024,
 			imageUrl,
 		});
+
+		trackUsage("generate", userId);
 
 		if (!("available" in result) || !result.available) {
 			const errorResult = result as { error?: string };
@@ -58,4 +69,6 @@ export async function POST(request: NextRequest) {
 			{ status: 500 },
 		);
 	}
-}
+};
+
+export const POST = withRateLimit(handler);

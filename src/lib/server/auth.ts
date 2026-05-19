@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { Account, Client } from "node-appwrite";
+import { Account, Client, Databases, Query } from "node-appwrite";
 import { APPWRITE_ENDPOINT, APPWRITE_PROJECT } from "@/lib/appwrite";
 
 export async function verifyAuth(userId: string): Promise<void> {
@@ -39,6 +39,24 @@ export async function getAuthenticatedUserId(): Promise<string | null> {
 	} catch {
 		return null;
 	}
+}
+
+export async function requireAdmin(): Promise<string> {
+	const userId = await getAuthenticatedUserId();
+	if (!userId) throw new Error("Authentication required");
+
+	const adminIds = process.env.ADMIN_USER_IDS;
+	if (adminIds) {
+		const ids = adminIds
+			.split(",")
+			.map((s) => s.trim())
+			.filter(Boolean);
+		if (ids.length > 0 && !ids.includes(userId)) {
+			throw new Error("Admin access required");
+		}
+	}
+
+	return userId;
 }
 
 export async function getAuthenticatedUserName(): Promise<string | null> {

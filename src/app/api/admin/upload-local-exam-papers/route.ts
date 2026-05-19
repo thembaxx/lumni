@@ -3,6 +3,7 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { UTApi, UTFile } from "uploadthing/server";
 import { getExamsDb, insertExamPaper, saveExamsDb } from "@/lib/db/exams";
+import { requireAdmin } from "@/lib/server/auth";
 
 async function getDefaultFolderPath(): Promise<string> {
 	const path = await import("path");
@@ -114,6 +115,8 @@ function dbExecOne(
 
 export async function POST(request: NextRequest) {
 	try {
+		await requireAdmin();
+
 		const [{ default: fs }, { default: path }] = await Promise.all([
 			import("fs"),
 			import("path"),

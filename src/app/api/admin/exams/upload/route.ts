@@ -7,6 +7,7 @@ import {
 	convertPdfWithMarker,
 	uploadImagesAndRewriteMarkdown,
 } from "@/lib/exams/marker-client";
+import { requireAdmin } from "@/lib/server/auth";
 
 export const runtime = "nodejs";
 
@@ -29,6 +30,8 @@ async function convertWithMarkdownNew(pdfUrl: string): Promise<string> {
 
 export async function POST(request: Request) {
 	try {
+		await requireAdmin();
+
 		const { fileKey } = await request.json();
 		if (!fileKey) {
 			return NextResponse.json({ error: "Missing fileKey" }, { status: 400 });

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { databases } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
+import { getAuthenticatedUserId } from "@/lib/server/auth";
 
 export const runtime = "nodejs";
 
@@ -9,6 +10,11 @@ export async function GET(
 	{ params }: { params: Promise<{ id: string }> },
 ) {
 	try {
+		const userId = await getAuthenticatedUserId();
+		if (!userId) {
+			return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+		}
+
 		const { id } = await params;
 		const doc = await databases.getDocument(
 			APPWRITE_DATABASE_ID,
@@ -18,6 +24,10 @@ export async function GET(
 
 		if (!doc) {
 			return NextResponse.json({ error: "Session not found" }, { status: 404 });
+		}
+
+		if (doc.userId && doc.userId !== userId) {
+			return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
 		}
 
 		return NextResponse.json({
@@ -46,7 +56,22 @@ export async function DELETE(
 	{ params }: { params: Promise<{ id: string }> },
 ) {
 	try {
+		const userId = await getAuthenticatedUserId();
+		if (!userId) {
+			return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+		}
+
 		const { id } = await params;
+		const doc = await databases.getDocument(
+			APPWRITE_DATABASE_ID,
+			COLLECTIONS.EXAM_SESSIONS,
+			id,
+		);
+
+		if (doc.userId && doc.userId !== userId) {
+			return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+		}
+
 		await databases.deleteDocument(
 			APPWRITE_DATABASE_ID,
 			COLLECTIONS.EXAM_SESSIONS,
@@ -54,6 +79,7 @@ export async function DELETE(
 		);
 		return NextResponse.json({ success: true });
 	} catch (error) {
+		console.error("Failed to delete session:", error);
 		return NextResponse.json(
 			{
 				error:

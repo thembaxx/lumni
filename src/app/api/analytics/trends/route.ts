@@ -2,11 +2,17 @@ import { Query } from "appwrite";
 import { NextRequest, NextResponse } from "next/server";
 import type { StudySession } from "@/lib/db/client";
 import { COLLECTIONS, listDocuments } from "@/lib/db/client";
+import { getAuthenticatedUserId } from "@/lib/server/auth";
 
 export const dynamic = "force-dynamic";
 
 export async function GET(req: NextRequest) {
 	try {
+		const authenticatedUserId = await getAuthenticatedUserId();
+		if (!authenticatedUserId) {
+			return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+		}
+
 		const { searchParams } = new URL(req.url);
 		const userId = searchParams.get("userId");
 		const subject = searchParams.get("subject");
@@ -16,6 +22,10 @@ export async function GET(req: NextRequest) {
 				{ error: "userId and subject are required" },
 				{ status: 400 },
 			);
+		}
+
+		if (userId !== authenticatedUserId) {
+			return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
 		}
 
 		const sessions = await listDocuments<StudySession>(
@@ -65,7 +75,11 @@ export async function GET(req: NextRequest) {
 		}
 
 		return NextResponse.json({ dates, accuracies, trend });
-	} catch {
-		return NextResponse.json({ dates: [], accuracies: [], trend: "stable" });
+	} catch (error) {
+		console.error("[/api/analytics/trends] Error:", error);
+		return NextResponse.json(
+			{ error: "Failed to get analytics trends" },
+			{ status: 500 },
+		);
 	}
 }

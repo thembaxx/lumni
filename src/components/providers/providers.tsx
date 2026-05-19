@@ -4,10 +4,15 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { JoyProvider } from "@/components/celebration";
 import { OnboardingProvider } from "@/components/onboarding/onboarding-provider";
+import {
+	PWAInstallPrompt,
+	PWAUpdateToast,
+} from "@/components/pwa/pwa-update-toast";
 import { ThemeProvider } from "@/components/theme";
 import { ToastProvider } from "@/components/ui/toast";
 import { WebVitalsLogger } from "@/components/web-vitals";
 import { useJobProcessor } from "@/hooks/use-job-processor";
+import { useServiceWorker } from "@/hooks/use-service-worker";
 import { prefetchUploadSubjects } from "@/hooks/use-upload-subjects";
 import { OnlineStatusIndicator } from "@/hooks/useOnlineStatus";
 import { AuthProvider } from "@/lib/auth/auth-context";
@@ -17,6 +22,11 @@ import { setAppInitialized } from "@/store";
 
 function JobProcessorWrapper() {
 	useJobProcessor();
+	return null;
+}
+
+function ServiceWorkerWrapper() {
+	useServiceWorker();
 	return null;
 }
 
@@ -40,6 +50,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
 							</PremiumProvider>
 							<OnlineStatusIndicator />
 							<JobProcessorWrapper />
+							<ServiceWorkerWrapper />
+							<PWAUpdateToast />
+							<PWAInstallPrompt />
 						</ToastProvider>
 					</JoyProvider>
 				</AuthProvider>

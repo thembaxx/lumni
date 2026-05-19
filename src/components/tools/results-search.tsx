@@ -64,10 +64,10 @@ export function ResultsSearch() {
 						icon={Search01Icon}
 						className="size-5 text-[--system-accent]"
 					/>
-					Results Search01Icon
+					Results Search
 				</h2>
 				<p className="ios-subhead text-[--system-text-secondary] mt-1">
-					Search01Icon past matric results by name and year.
+					Search past matric results by name and year.
 				</p>
 			</div>
 
@@ -107,7 +107,7 @@ export function ResultsSearch() {
 							/>
 						</div>
 						<Button onClick={handleSearch} className="rounded-xl">
-							Search01Icon
+							Search
 						</Button>
 					</div>
 				</div>
@@ -198,7 +198,7 @@ export function ResultsSearch() {
 						</EmptyMedia>
 						<EmptyTitle>Enter a name to search</EmptyTitle>
 						<EmptyDescription>
-							Search01Icon through {selectedYear} results
+							Search through {selectedYear} results
 						</EmptyDescription>
 					</Empty>
 				</div>

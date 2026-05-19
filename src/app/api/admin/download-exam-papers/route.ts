@@ -10,6 +10,7 @@ import {
 	listDocuments,
 	updateDocument,
 } from "@/lib/db/client";
+import { requireAdmin } from "@/lib/server/auth";
 
 interface DownloadRequest {
 	year: number;
@@ -192,6 +193,8 @@ async function saveToDatabase(
 
 export async function POST(request: NextRequest) {
 	try {
+		await requireAdmin();
+
 		const body: DownloadRequest = await request.json();
 		const { year, examTypes, includeMemo, subjectIds } = body;
 

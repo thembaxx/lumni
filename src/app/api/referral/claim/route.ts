@@ -9,18 +9,17 @@ import {
 	getReferralByReferee,
 	getReferralCountThisMonth,
 } from "@/lib/referral/service";
+import { getAuthenticatedUserId } from "@/lib/server/auth";
 
 export async function POST(request: Request) {
 	try {
+		const userId = await getAuthenticatedUserId();
+		if (!userId) {
+			return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+		}
+
 		const body = await request.json();
 		const { code, refereeId } = body;
-
-		if (!code || !refereeId) {
-			return NextResponse.json(
-				{ error: "Missing code or refereeId" },
-				{ status: 400 },
-			);
-		}
 
 		const existing = await getReferralByReferee(refereeId);
 		if (existing) {

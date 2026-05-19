@@ -1,11 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import type { StudySession } from "@/lib/db/client";
 import { COLLECTIONS, listDocuments } from "@/lib/db/client";
+import { getAuthenticatedUserId } from "@/lib/server/auth";
 
 export const dynamic = "force-dynamic";
 
 export async function GET(req: NextRequest) {
 	try {
+		const authenticatedUserId = await getAuthenticatedUserId();
+		if (!authenticatedUserId) {
+			return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+		}
+
 		const { searchParams } = new URL(req.url);
 		const userId = searchParams.get("userId");
 
@@ -14,6 +20,10 @@ export async function GET(req: NextRequest) {
 				{ error: "userId is required" },
 				{ status: 400 },
 			);
+		}
+
+		if (userId !== authenticatedUserId) {
+			return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
 		}
 
 		const allSessions = await listDocuments<StudySession>(
@@ -85,12 +95,11 @@ export async function GET(req: NextRequest) {
 			globalAverage,
 			userAverage: Math.round(userAverage * 10) / 10,
 		});
-	} catch {
-		return NextResponse.json({
-			userPercentile: 50,
-			subjectRankings: {},
-			globalAverage: 65,
-			userAverage: 0,
-		});
+	} catch (error) {
+		console.error("[/api/analytics/comparative] Error:", error);
+		return NextResponse.json(
+			{ error: "Failed to get comparative analytics" },
+			{ status: 500 },
+		);
 	}
 }

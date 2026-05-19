@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { UTApi } from "uploadthing/server";
 import { databases } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
+import { requireAdmin } from "@/lib/server/auth";
 
 export const runtime = "nodejs";
 
@@ -12,6 +13,8 @@ export async function DELETE(
 	{ params }: { params: Promise<{ id: string }> },
 ) {
 	try {
+		await requireAdmin();
+
 		const { id } = await params;
 
 		const doc = await databases.getDocument(
