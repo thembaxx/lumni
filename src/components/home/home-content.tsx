@@ -103,11 +103,11 @@ export function HomeContent() {
 	return (
 		<div className="min-h-screen overflow-x-hidden bg-background">
 			{/* Navigation */}
-			<nav className="fixed top-0 right-0 left-0 z-50 border-border/50 border-b bg-background/80 backdrop-blur-xl">
+			<nav className="glass-regular fixed top-0 right-0 left-0 z-50 border-border/50 border-b bg-background/80">
 				<div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
 					<Link
 						href="/"
-						className="py-2 font-extrabold text-lg tracking-tight transition-colors hover:text-[--system-accent]"
+						className="py-2 font-extrabold text-lg tracking-tight transition-colors hover:text-primary"
 					>
 						lumni
 					</Link>
@@ -146,7 +146,8 @@ export function HomeContent() {
 				style={{ opacity: heroOpacity, scale: heroScale }}
 				className="relative flex min-h-[90dvh] items-center pt-14"
 			>
-				<div className="pointer-events-none absolute inset-0 bg-linear-to-b from-[--system-accent]/5 via-transparent to-transparent" />
+				<div className="pointer-events-none absolute inset-0 bg-linear-to-b from-primary/5 via-transparent to-transparent" />
+				<div className="absolute top-1/4 -left-20 size-96 animate-blob-orbit rounded-full bg-primary/10 blur-3xl" />
 				<div className="mx-auto w-full max-w-6xl px-4">
 					<div className="grid items-center gap-12 py-20 lg:grid-cols-2">
 						<div className="flex flex-col gap-8">
@@ -155,15 +156,13 @@ export function HomeContent() {
 								animate={{ opacity: 1, y: 0 }}
 								transition={{ duration: 0.4, ease: iOSEase }}
 							>
-								<div className="mb-4 inline-flex items-center gap-2 rounded-full bg-[--system-accent]/10 px-3 py-1 font-medium text-[--system-accent] text-xs">
+								<div className="mb-4 inline-flex items-center gap-2 rounded-full bg-(--system-accent-alpha-10) px-3 py-1 font-medium text-primary text-xs">
 									<HugeiconsIcon icon={SparklesIcon} className="size-3" />
 									Your Matric advantage
 								</div>
-								<h1 className="font-extrabold text-4xl leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl">
+								<h1 className="ios-large-title leading-[1.1] sm:text-5xl lg:text-6xl">
 									Pass your Matric{" "}
-									<span className="text-[--system-accent]">
-										with confidence
-									</span>
+									<span className="text-primary">with confidence</span>
 								</h1>
 								<p className="mt-4 max-w-lg text-lg text-muted-foreground leading-relaxed">
 									AI-powered quizzes, past exam papers, smart flashcards, and a
@@ -222,13 +221,13 @@ export function HomeContent() {
 							className="relative hidden items-center justify-center lg:flex"
 						>
 							<div className="relative aspect-square w-full max-w-md">
-								<div className="absolute inset-0 rounded-[3rem] bg-linear-to-br from-[--system-accent]/20 via-[--system-accent]/5 to-transparent blur-3xl" />
-								<div className="relative flex h-full w-full flex-col gap-4 rounded-[2.5rem] border border-border/50 bg-linear-to-br from-[--system-accent]/10 to-background p-8">
+								<div className="absolute inset-0 rounded-[3rem] bg-linear-to-br from-primary/20 via-primary/5 to-transparent blur-3xl" />
+								<div className="relative flex h-full w-full flex-col gap-4 rounded-lg border border-border/50 bg-linear-to-br from-primary/10 to-background p-8 shadow-level-2">
 									<div className="flex items-center gap-3">
-										<div className="flex size-10 items-center justify-center rounded-lg bg-[--system-accent]/20">
+										<div className="flex size-10 items-center justify-center rounded-md bg-(--system-accent-alpha-10)">
 											<HugeiconsIcon
 												icon={BrainIcon}
-												className="size-5 text-[--system-accent]"
+												className="size-5 text-primary"
 											/>
 										</div>
 										<div>
@@ -277,10 +276,10 @@ export function HomeContent() {
 						viewport={{ once: true }}
 						className="mb-16 text-center"
 					>
-						<h2 className="font-extrabold text-3xl tracking-tight sm:text-4xl">
+						<h2 className="ios-title-1 mb-3">
 							Everything you need to ace your exams
 						</h2>
-						<p className="mx-auto mt-3 max-w-lg text-muted-foreground">
+						<p className="ios-body mx-auto max-w-lg text-muted-foreground">
 							AI practice, real past papers, and study tools that adapt to how
 							you learn. Built for the CAPS curriculum.
 						</p>
@@ -306,20 +305,20 @@ export function HomeContent() {
 							>
 								<div
 									className={cn(
-										"absolute inset-0 rounded-[2rem] bg-linear-to-br opacity-0 transition-opacity duration-500 group-hover:opacity-100",
+										"absolute inset-0 rounded-lg bg-linear-to-br opacity-0 transition-opacity duration-500 group-hover:opacity-100",
 										feature.gradient,
 									)}
 								/>
 								<div
 									className={cn(
-										"relative rounded-[2rem] border border-border/50 bg-background/50 backdrop-blur-sm",
+										"relative rounded-lg border border-border/50 bg-system-background-secondary shadow-level-1",
 										i === 0 ? "h-full p-8" : "p-6",
 									)}
 								>
-									<div className="mb-4 flex size-10 items-center justify-center rounded-lg bg-[--system-accent]/10">
+									<div className="mb-4 flex size-10 items-center justify-center rounded-md bg-(--system-accent-alpha-10)">
 										<HugeiconsIcon
 											icon={feature.icon}
-											className="size-5 text-[--system-accent]"
+											className="size-5 text-primary"
 										/>
 									</div>
 									<h3 className="mb-2 font-semibold text-base sm:text-lg">
@@ -336,7 +335,7 @@ export function HomeContent() {
 			</section>
 
 			{/* How it works */}
-			<section className="bg-muted/30 py-24">
+			<section className="bg-system-background-secondary py-24">
 				<div className="mx-auto max-w-6xl px-4">
 					<motion.div
 						initial={{ opacity: 0, y: 20 }}
@@ -344,10 +343,8 @@ export function HomeContent() {
 						viewport={{ once: true }}
 						className="mb-16 text-center"
 					>
-						<h2 className="font-extrabold text-3xl tracking-tight sm:text-4xl">
-							How it works
-						</h2>
-						<p className="mx-auto mt-3 max-w-lg text-muted-foreground">
+						<h2 className="ios-title-1 mb-3">How it works</h2>
+						<p className="ios-body mx-auto max-w-lg text-muted-foreground">
 							Three simple steps to start mastering your subjects.
 						</p>
 					</motion.div>
@@ -362,13 +359,13 @@ export function HomeContent() {
 								transition={{ delay: i * 0.1, duration: 0.4, ease: iOSEase }}
 								className="relative text-center"
 							>
-								<div className="mx-auto mb-4 flex size-16 items-center justify-center rounded-full bg-[--system-accent]/10">
-									<span className="font-black text-2xl text-[--system-accent] tabular-nums">
+								<div className="mx-auto mb-4 flex size-16 items-center justify-center rounded-full bg-(--system-accent-alpha-10)">
+									<span className="font-black text-2xl text-primary tabular-nums">
 										{step.number}
 									</span>
 								</div>
 								<h3 className="mb-2 font-semibold text-lg">{step.title}</h3>
-								<p className="text-muted-foreground text-sm leading-relaxed">
+								<p className="ios-body text-muted-foreground">
 									{step.description}
 								</p>
 								{i < steps.length - 1 && (
@@ -389,14 +386,12 @@ export function HomeContent() {
 						initial={{ opacity: 0, y: 20 }}
 						whileInView={{ opacity: 1, y: 0 }}
 						viewport={{ once: true }}
-						className="relative overflow-hidden rounded-[2.5rem] border border-border/50 bg-linear-to-br from-[--system-accent]/10 via-background to-background p-12 text-center"
+						className="relative overflow-hidden rounded-2xl border border-border/50 bg-linear-to-br from-primary/10 via-background to-background p-12 text-center shadow-level-3"
 					>
-						<div className="absolute top-0 right-0 size-64 translate-x-1/2 -translate-y-1/2 rounded-full bg-[--system-accent]/5 blur-3xl" />
+						<div className="absolute top-0 right-0 size-64 translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/5 blur-3xl" />
 						<div className="relative">
-							<h2 className="mb-4 font-extrabold text-3xl tracking-tight sm:text-4xl">
-								Ready to ace your Matric?
-							</h2>
-							<p className="mx-auto mb-8 max-w-md text-muted-foreground">
+							<h2 className="ios-title-1 mb-4">Ready to ace your Matric?</h2>
+							<p className="ios-body mx-auto mb-8 max-w-md text-muted-foreground">
 								Thousands of South African students trust Lumni to prepare for
 								Matric. You can too.
 							</p>
