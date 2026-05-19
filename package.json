@@ -90,7 +90,7 @@
 		"@types/three": "^0.184.1",
 		"@types/web-push": "^3.6.4",
 		"archiver": "^8.0.0",
-		"eslint": "^10.4.0",
+		"eslint": "^9.21.0",
 		"eslint-config-next": "16.2.6",
 		"happy-dom": "^20.9.0",
 		"tailwindcss": "^4.3.0",
