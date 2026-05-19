@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { serverAccount } from "@/lib/appwrite";
 import { REFERRAL_REWARD_DAYS } from "@/lib/referral/constants";
 import {

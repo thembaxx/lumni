@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { jobProcessor } from "@/lib/orchestrator/job-processor";
 
 export const dynamic = "force-dynamic";

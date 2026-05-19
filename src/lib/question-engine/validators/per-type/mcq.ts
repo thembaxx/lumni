@@ -42,8 +42,7 @@ export function validate(question: Question): {
 	const optLengths = body.options.map((o) => o.text.length);
 	const avg = optLengths.reduce((a, b) => a + b, 0) / optLengths.length;
 	const variance =
-		optLengths.reduce((s, l) => s + Math.pow(l - avg, 2), 0) /
-		optLengths.length;
+		optLengths.reduce((s, l) => s + (l - avg) ** 2, 0) / optLengths.length;
 	if (variance > 100) {
 		warnings.push({
 			type: "quality",

@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { COLLECTIONS, listDocuments } from "@/lib/db/client";
 import { requireAdmin } from "@/lib/server/auth";
 

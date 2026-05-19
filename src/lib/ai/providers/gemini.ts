@@ -1,4 +1,4 @@
-import { AIProvider, AIRequest, AIResponse } from "../types";
+import type { AIProvider, AIRequest, AIResponse } from "../types";
 
 const GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models";
 

@@ -237,10 +237,7 @@ export default function FlashcardBrowsePage() {
 								disabled={page === 0}
 								onClick={() => setPage((p) => p - 1)}
 							>
-								<HugeiconsIcon
-									icon={ArrowLeft01Icon}
-									className="size-4 mr-1"
-								/>{" "}
+								<HugeiconsIcon icon={ArrowLeft01Icon} className="size-4 mr-1" />{" "}
 								Previous
 							</Button>
 							<span className="text-sm text-muted-foreground">

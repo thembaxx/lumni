@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { getAuthenticatedUserId } from "@/lib/server/auth";
 import {
 	checkSubjectStatus,

@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { type AICallType, dailyCallTracker } from "./daily-call-tracker";
 
 export async function checkBudget(

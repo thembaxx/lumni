@@ -1,6 +1,6 @@
 "use client";
 
-import { QueryClient, useQuery } from "@tanstack/react-query";
+import { type QueryClient, useQuery } from "@tanstack/react-query";
 import { type UploadSubject, useUploadStore } from "@/store";
 
 export interface UTFileConfig {

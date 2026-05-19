@@ -1,5 +1,5 @@
 import { Query } from "appwrite";
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { pathEngine } from "@/lib/competency-engine";
 import type { CompetencyRecord } from "@/lib/competency-engine/types";
 import { COLLECTIONS, listDocuments } from "@/lib/db/client";

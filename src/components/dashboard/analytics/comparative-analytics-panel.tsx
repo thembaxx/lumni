@@ -71,11 +71,11 @@ export function ComparativeAnalyticsPanel() {
 		return (
 			<div className="text-center p-8">
 				<div className="mb-6">
-<svg
-										className="size-4 text-[--system-accent]"
-										fill="none"
-										stroke="currentColor"
-										viewBox="0 0 24 24"
+					<svg
+						className="size-4 text-[--system-accent]"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
 					>
 						<path
 							strokeLinecap="round"
@@ -103,12 +103,12 @@ export function ComparativeAnalyticsPanel() {
 				<CardHeader>
 					<CardTitle className="flex items-center justify-between">
 						<span className="flex items-center gap-2">
-<svg
-										className="size-4 text-[--system-accent]"
-										fill="none"
-										stroke="currentColor"
-										viewBox="0 0 24 24"
-									>
+							<svg
+								className="size-4 text-[--system-accent]"
+								fill="none"
+								stroke="currentColor"
+								viewBox="0 0 24 24"
+							>
 								<path
 									strokeLinecap="round"
 									strokeLinejoin="round"

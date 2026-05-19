@@ -1,11 +1,11 @@
 "use client";
 
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { QuestionRatingsDashboard } from "@/components/admin/question-ratings-dashboard";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/shared";
 import {
 	clearAnalytics,
 	getAnalyticsSummary,
@@ -16,6 +16,18 @@ import {
 	getQualityStats,
 	loadQualityRecords,
 } from "@/lib/utils/engine-quality";
+
+function Timestamp({ time }: { time: string }) {
+	const [label, setLabel] = useState("");
+
+	useEffect(() => {
+		setLabel(new Date(time).toLocaleTimeString());
+	}, [time]);
+
+	return (
+		<span className={cn("text-muted-foreground")}>{label || "Loading..."}</span>
+	);
+}
 
 export default function AdminQualityPage() {
 	const { data: quality = getQualityStats() } = useQuery({
@@ -52,62 +64,199 @@ export default function AdminQualityPage() {
 	}, [queryClient]);
 
 	return (
-		<div className="min-h-[100dvh] bg-background p-6 max-w-5xl mx-auto space-y-6">
-			<div className="flex items-center justify-between">
-				<h1 className="text-2xl font-extrabold">Engine Quality & Analytics</h1>
+		<div
+			className={cn(
+				"min-h-dvh",
+				"mx-auto",
+				"max-w-5xl",
+				"bg-background",
+				"p-6",
+				"space-y-6",
+			)}
+		>
+			<div className={cn("flex", "items-center", "justify-between")}>
+				<h1 className={cn("font-extrabold", "text-2xl")}>
+					Engine Quality & Analytics
+				</h1>
 				<Button variant="outline" size="sm" onClick={handleClear}>
 					Clear Data
 				</Button>
 			</div>
 
-			<div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-				<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
-					<header className="rounded-t-[2.5rem] border-t border-border/80 p-4 pb-2">
-						<h2 className="font-heading text-sm font-medium text-sm text-muted-foreground">
+			<div className={cn("grid", "grid-cols-2", "gap-4", "lg:grid-cols-4")}>
+				<div
+					className={cn(
+						"overflow-hidden",
+						"rounded-[2.5rem]",
+						"border",
+						"border-border/80",
+						"bg-card",
+						"shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]",
+						"transition-colors",
+					)}
+				>
+					<header
+						className={cn(
+							"rounded-t-[2.5rem]",
+							"border-t",
+							"border-border/80",
+							"p-4",
+							"pb-2",
+						)}
+					>
+						<h2
+							className={cn(
+								"font-heading",
+								"font-medium",
+								"text-sm",
+								"text-muted-foreground",
+							)}
+						>
 							Total Requests
 						</h2>
 					</header>
-					<div className="px-4 group-data-[size=sm]/card:px-3 p-4 pt-0">
-						<p className="text-3xl font-extrabold">{analytics.totalRequests}</p>
+					<div className={cn("group-data-[size=sm]/card:px-3", "p-4", "pt-0")}>
+						<p className={cn("font-extrabold", "text-3xl")}>
+							{analytics.totalRequests}
+						</p>
 					</div>
 				</div>
-				<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
-					<header className="rounded-t-[2.5rem] border-t border-border/80 p-4 pb-2">
-						<h2 className="font-heading text-sm font-medium text-sm text-muted-foreground">
+				<div
+					className={cn(
+						"overflow-hidden",
+						"rounded-[2.5rem]",
+						"border",
+						"border-border/80",
+						"bg-card",
+						"shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]",
+						"transition-colors",
+					)}
+				>
+					<header
+						className={cn(
+							"rounded-t-[2.5rem]",
+							"border-t",
+							"border-border/80",
+							"p-4",
+							"pb-2",
+						)}
+					>
+						<h2
+							className={cn(
+								"font-heading",
+								"font-medium",
+								"text-sm",
+								"text-muted-foreground",
+							)}
+						>
 							Success Rate
 						</h2>
 					</header>
-					<div className="px-4 group-data-[size=sm]/card:px-3 p-4 pt-0">
+					<div className={cn("group-data-[size=sm]/card:px-3", "p-4", "pt-0")}>
 						<p
-							className={`text-3xl font-extrabold ${analytics.successRate >= 80 ? "text-success" : analytics.successRate >= 50 ? "text-warning" : "text-destructive"}`}
+							className={cn(
+								"text-3xl",
+								"font-extrabold",
+								analytics.successRate >= 80
+									? "text-success"
+									: analytics.successRate >= 50
+										? "text-warning"
+										: "text-destructive",
+							)}
 						>
 							{analytics.successRate}%
 						</p>
 					</div>
 				</div>
-				<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
-					<header className="rounded-t-[2.5rem] border-t border-border/80 p-4 pb-2">
-						<h2 className="font-heading text-sm font-medium text-sm text-muted-foreground">
+				<div
+					className={cn(
+						"overflow-hidden",
+						"rounded-[2.5rem]",
+						"border",
+						"border-border/80",
+						"bg-card",
+						"shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]",
+						"transition-colors",
+					)}
+				>
+					<header
+						className={cn(
+							"rounded-t-[2.5rem]",
+							"border-t",
+							"border-border/80",
+							"p-4",
+							"pb-2",
+						)}
+					>
+						<h2
+							className={cn(
+								"font-heading",
+								"font-medium",
+								"text-sm",
+								"text-muted-foreground",
+							)}
+						>
 							Avg Validation Score
 						</h2>
 					</header>
-					<div className="px-4 group-data-[size=sm]/card:px-3 p-4 pt-0">
+					<div className={cn("group-data-[size=sm]/card:px-3", "p-4", "pt-0")}>
 						<p
-							className={`text-3xl font-extrabold ${quality.avgScore >= 80 ? "text-success" : quality.avgScore >= 50 ? "text-warning" : "text-destructive"}`}
+							className={cn(
+								"text-3xl",
+								"font-extrabold",
+								quality.avgScore >= 80
+									? "text-success"
+									: quality.avgScore >= 50
+										? "text-warning"
+										: "text-destructive",
+							)}
 						>
 							{quality.avgScore}
 						</p>
 					</div>
 				</div>
-				<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
-					<header className="rounded-t-[2.5rem] border-t border-border/80 p-4 pb-2">
-						<h2 className="font-heading text-sm font-medium text-sm text-muted-foreground">
+				<div
+					className={cn(
+						"overflow-hidden",
+						"rounded-[2.5rem]",
+						"border",
+						"border-border/80",
+						"bg-card",
+						"shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]",
+						"transition-colors",
+					)}
+				>
+					<header
+						className={cn(
+							"rounded-t-[2.5rem]",
+							"border-t",
+							"border-border/80",
+							"p-4",
+							"pb-2",
+						)}
+					>
+						<h2
+							className={cn(
+								"font-heading",
+								"font-medium",
+								"text-sm",
+								"text-muted-foreground",
+							)}
+						>
 							Question Pass Rate
 						</h2>
 					</header>
-					<div className="px-4 group-data-[size=sm]/card:px-3 p-4 pt-0">
+					<div className={cn("group-data-[size=sm]/card:px-3", "p-4", "pt-0")}>
 						<p
-							className={`text-3xl font-extrabold ${quality.passRate >= 80 ? "text-success" : quality.passRate >= 50 ? "text-warning" : "text-destructive"}`}
+							className={cn(
+								"text-3xl",
+								"font-extrabold",
+								quality.passRate >= 80
+									? "text-success"
+									: quality.passRate >= 50
+										? "text-warning"
+										: "text-destructive",
+							)}
 						>
 							{quality.passRate}%
 						</p>
@@ -115,38 +264,70 @@ export default function AdminQualityPage() {
 				</div>
 			</div>
 
-			<div className="grid grid-cols-2 gap-6">
-				<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+			<div className={cn("grid", "grid-cols-2", "gap-6")}>
+				<div
+					className={cn(
+						"overflow-hidden",
+						"rounded-[2.5rem]",
+						"border",
+						"border-border/80",
+						"bg-card",
+						"shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]",
+						"transition-colors",
+					)}
+				>
 					<header>
-						<h2 className="font-heading text-sm font-medium text-lg">
+						<h2 className={cn("font-heading", "text-lg", "font-medium")}>
 							Requests Breakdown
 						</h2>
 					</header>
-					<div className="px-4 group-data-[size=sm]/card:px-3 space-y-3">
-						<div className="flex justify-between text-sm">
+					<div
+						className={cn(
+							"group-data-[size=sm]/card:px-3",
+							"px-4",
+							"space-y-3",
+						)}
+					>
+						<div className={cn("flex", "justify-between", "text-sm")}>
 							<span>Generate</span>
-							<span className="font-mono">{analytics.generateCount}</span>
+							<span className={cn("font-mono")}>{analytics.generateCount}</span>
 						</div>
-						<div className="flex justify-between text-sm">
+						<div className={cn("flex", "justify-between", "text-sm")}>
 							<span>Grade</span>
-							<span className="font-mono">{analytics.gradeCount}</span>
+							<span className={cn("font-mono")}>{analytics.gradeCount}</span>
 						</div>
-						<div className="flex justify-between text-sm">
+						<div className={cn("flex", "justify-between", "text-sm")}>
 							<span>Hint</span>
-							<span className="font-mono">{analytics.hintCount}</span>
+							<span className={cn("font-mono")}>{analytics.hintCount}</span>
 						</div>
 					</div>
 				</div>
 
-				<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+				<div
+					className={cn(
+						"overflow-hidden",
+						"rounded-[2.5rem]",
+						"border",
+						"border-border/80",
+						"bg-card",
+						"shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]",
+						"transition-colors",
+					)}
+				>
 					<header>
-						<h2 className="font-heading text-sm font-medium text-lg">
+						<h2 className={cn("font-heading", "text-lg", "font-medium")}>
 							Quality by Type
 						</h2>
 					</header>
-					<div className="px-4 group-data-[size=sm]/card:px-3 space-y-2">
+					<div
+						className={cn(
+							"group-data-[size=sm]/card:px-3",
+							"px-4",
+							"space-y-2",
+						)}
+					>
 						{Object.entries(quality.byType).length === 0 && (
-							<p className="text-sm text-muted-foreground">
+							<p className={cn("text-sm", "text-muted-foreground")}>
 								No quality data yet
 							</p>
 						)}
@@ -158,13 +339,20 @@ export default function AdminQualityPage() {
 						).map(([type, stats]) => (
 							<div
 								key={type}
-								className="flex items-center justify-between text-sm"
+								className={cn(
+									"flex",
+									"items-center",
+									"justify-between",
+									"text-sm",
+								)}
 							>
-								<Badge variant="outline" className="font-mono text-xs">
+								<Badge variant="outline" className={cn("font-mono", "text-xs")}>
 									{type}
 								</Badge>
-								<div className="flex gap-3">
-									<span className="text-muted-foreground">{stats.count}x</span>
+								<div className={cn("flex", "gap-3")}>
+									<span className={cn("text-muted-foreground")}>
+										{stats.count}x
+									</span>
 									<span
 										className={`font-mono ${stats.avgScore >= 80 ? "text-success" : "text-warning"}`}
 									>
@@ -177,38 +365,54 @@ export default function AdminQualityPage() {
 				</div>
 			</div>
 
-			<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+			<div
+				className={cn(
+					"overflow-hidden",
+					"rounded-[2.5rem]",
+					"border",
+					"border-border/80",
+					"bg-card",
+					"shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]",
+					"transition-colors",
+				)}
+			>
 				<header>
-					<h2 className="font-heading text-sm font-medium text-lg">
+					<h2 className={cn("font-heading", "text-lg", "font-medium")}>
 						Recent Events
 					</h2>
 				</header>
-				<div className="px-4 group-data-[size=sm]/card:px-3">
+				<div className={cn("px-4", "group-data-[size=sm]/card:px-3")}>
 					{events.length === 0 ? (
-						<p className="text-sm text-muted-foreground">
+						<p className={cn("text-sm", "text-muted-foreground")}>
 							No events recorded yet
 						</p>
 					) : (
-						<div className="space-y-1 max-h-60 overflow-y-auto">
+						<div className={cn("max-h-60", "overflow-y-auto", "space-y-1")}>
 							{events.map((e) => (
 								<div
 									key={`${e.event}-${e.timestamp}`}
-									className="flex items-center gap-2 text-xs font-mono"
+									className={cn(
+										"flex",
+										"items-center",
+										"gap-2",
+										"text-xs",
+										"font-mono",
+									)}
 								>
 									<Badge
 										variant={e.success ? "secondary" : "destructive"}
-										className="text-[10px] px-1 py-0"
+										className={cn("px-1", "py-0", "text-[10px]")}
 									>
 										{e.event}
 									</Badge>
-									<span className="text-muted-foreground">
+									<span className={cn("text-muted-foreground")}>
 										{e.subject || "-"}
 									</span>
-									<span className="text-muted-foreground">
+									<span className={cn("text-muted-foreground")}>
 										{e.questionType || "-"}
 									</span>
-									<span className="text-muted-foreground ml-auto">
-										{new Date(e.timestamp).toLocaleTimeString()}
+									<span className={cn("ml-auto", "text-muted-foreground")}>
+										<Timestamp time={e.timestamp} />
 									</span>
 								</div>
 							))}
@@ -217,34 +421,54 @@ export default function AdminQualityPage() {
 				</div>
 			</div>
 
-			<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+			<div
+				className={cn(
+					"overflow-hidden",
+					"rounded-[2.5rem]",
+					"border",
+					"border-border/80",
+					"bg-card",
+					"shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]",
+					"transition-colors",
+				)}
+			>
 				<header>
-					<h2 className="font-heading text-sm font-medium text-lg">
+					<h2 className={cn("font-heading", "text-lg", "font-medium")}>
 						Recent Quality Records
 					</h2>
 				</header>
-				<div className="px-4 group-data-[size=sm]/card:px-3">
+				<div className={cn("px-4", "group-data-[size=sm]/card:px-3")}>
 					{recentQuality.length === 0 ? (
-						<p className="text-sm text-muted-foreground">No quality data yet</p>
+						<p className={cn("text-sm", "text-muted-foreground")}>
+							No quality data yet
+						</p>
 					) : (
-						<div className="space-y-1 max-h-60 overflow-y-auto">
+						<div className={cn("max-h-60", "overflow-y-auto", "space-y-1")}>
 							{recentQuality.map((r) => (
 								<div
 									key={`${r.questionType}-${r.timestamp}`}
-									className="flex items-center gap-2 text-xs font-mono"
+									className={cn(
+										"flex",
+										"items-center",
+										"gap-2",
+										"text-xs",
+										"font-mono",
+									)}
 								>
 									<Badge
 										variant={r.isValid ? "secondary" : "destructive"}
-										className="text-[10px] px-1 py-0"
+										className={cn("px-1", "py-0", "text-[10px]")}
 									>
 										{r.validationScore}
 									</Badge>
-									<span className="text-muted-foreground">
+									<span className={cn("text-muted-foreground")}>
 										{r.questionType}
 									</span>
-									<span className="text-muted-foreground">{r.subject}</span>
-									<span className="text-muted-foreground ml-auto">
-										{new Date(r.timestamp).toLocaleTimeString()}
+									<span className={cn("text-muted-foreground")}>
+										{r.subject}
+									</span>
+									<span className={cn("ml-auto", "text-muted-foreground")}>
+										<Timestamp time={r.timestamp} />
 									</span>
 								</div>
 							))}
@@ -253,8 +477,19 @@ export default function AdminQualityPage() {
 				</div>
 			</div>
 
-			<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors p-6">
-				<h2 className="font-heading text-lg font-medium mb-4">
+			<div
+				className={cn(
+					"overflow-hidden",
+					"rounded-[2.5rem]",
+					"border",
+					"border-border/80",
+					"bg-card",
+					"shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]",
+					"p-6",
+					"transition-colors",
+				)}
+			>
+				<h2 className={cn("font-heading", "font-medium", "text-lg", "mb-4")}>
 					Question Ratings
 				</h2>
 				<QuestionRatingsDashboard />

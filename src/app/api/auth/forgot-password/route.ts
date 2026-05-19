@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 const APPWRITE_ENDPOINT =

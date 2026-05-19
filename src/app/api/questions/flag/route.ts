@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import { getAuthenticatedUserId } from "@/lib/server/auth";
 

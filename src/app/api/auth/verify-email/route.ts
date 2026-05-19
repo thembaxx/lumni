@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { account } from "@/lib/appwrite";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 

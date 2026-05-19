@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { Users } from "node-appwrite";
 import { serverClient } from "@/lib/appwrite";
 import { requireAdmin } from "@/lib/server/auth";

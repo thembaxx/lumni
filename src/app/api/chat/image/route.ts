@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { CHAT_SYSTEM_PROMPT, generateWithSystem } from "@/lib/ai/client";
 import { checkBudget, trackUsage } from "@/lib/ai/with-budget";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";

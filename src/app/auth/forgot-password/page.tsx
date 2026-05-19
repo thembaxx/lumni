@@ -1,8 +1,13 @@
-"use client";
+export const metadata = {
+	title: "Forgot password",
+	description: "Reset your password",
+};
+
+("use client");
 
 import { Mail01Icon, SparklesIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -29,7 +34,7 @@ export default function ForgotPasswordPage() {
 
 	if (sent) {
 		return (
-			<motion.div
+			<m.div
 				initial={{ opacity: 0, y: 12 }}
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.35, ease: iOSEase }}
@@ -42,7 +47,7 @@ export default function ForgotPasswordPage() {
 					/>
 				</div>
 				<div className="flex flex-col gap-2">
-					<h1 className="text-xl font-bold">Check your email</h1>
+					<h1 className="text-xl font-semibold">Check your email</h1>
 					<p className="text-sm text-muted-foreground">
 						If an account exists for <strong>{email}</strong>, we sent password
 						reset instructions.
@@ -54,12 +59,12 @@ export default function ForgotPasswordPage() {
 				>
 					Back to sign in
 				</Link>
-			</motion.div>
+			</m.div>
 		);
 	}
 
 	return (
-		<motion.form
+		<m.form
 			initial={{ opacity: 0, y: 12 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.35, ease: iOSEase }}
@@ -67,7 +72,7 @@ export default function ForgotPasswordPage() {
 			className="flex flex-col gap-8"
 		>
 			<div className="flex flex-col gap-2">
-				<h1 className="text-xl font-bold">Reset password</h1>
+				<h1 className="text-xl font-semibold">Reset password</h1>
 				<p className="text-sm text-muted-foreground">
 					Enter your email and we&apos;ll send you a reset link.
 				</p>
@@ -111,6 +116,6 @@ export default function ForgotPasswordPage() {
 					Sign in
 				</Link>
 			</p>
-		</motion.form>
+		</m.form>
 	);
 }

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { PromptManager } from "../../prompt-manager";
+import type { PromptManager } from "../../prompt-manager";
 import type { Question } from "../../types";
 import { grade } from "../graders/calculation";
 

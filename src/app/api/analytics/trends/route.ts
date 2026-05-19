@@ -1,5 +1,5 @@
 import { Query } from "appwrite";
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import type { StudySession } from "@/lib/db/client";
 import { COLLECTIONS, listDocuments } from "@/lib/db/client";
 import { getAuthenticatedUserId } from "@/lib/server/auth";

@@ -1,5 +1,5 @@
 import fs from "fs";
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import path from "path";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 

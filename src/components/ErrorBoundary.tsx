@@ -1,6 +1,10 @@
 "use client";
 
-import React, { ComponentType, PropsWithChildren, ReactNode } from "react";
+import React, {
+	type ComponentType,
+	PropsWithChildren,
+	type ReactNode,
+} from "react";
 
 interface ErrorBoundaryProps {
 	fallback?: ComponentType<{ error: Error; resetError: () => void }>;

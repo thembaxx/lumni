@@ -8,7 +8,7 @@ import {
 	CheckmarkCircle01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import * as React from "react";
+import type * as React from "react";
 import { cn } from "@/lib/shared";
 
 const Select = SelectPrimitive.Root;

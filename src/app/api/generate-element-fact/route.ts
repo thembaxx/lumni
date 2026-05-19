@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { generateWithSystem, initAI, isAIConfigured } from "@/lib/ai";
 import type { AIResponse } from "@/lib/ai/types";
 import { checkBudget, trackUsage } from "@/lib/ai/with-budget";

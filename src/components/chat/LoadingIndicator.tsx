@@ -1,6 +1,6 @@
 import { RadialIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { useEffect, useState } from "react";
 
 export function LoadingIndicator() {
@@ -19,13 +19,13 @@ export function LoadingIndicator() {
 	}, []);
 
 	return (
-		<motion.div
+		<m.div
 			initial={{ opacity: 0, y: 10 }}
 			animate={{ opacity: 1, y: 0 }}
 			className="flex items-center gap-3 p-4 rounded-lg bg-system-surface-secondary text-muted-foreground border border-border/40 shadow-sm"
 		>
 			<div className="size-7 flex-shrink-0">
-				<motion.div
+				<m.div
 					animate={{ rotate: 360 }}
 					transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
 					className="size-full"
@@ -34,10 +34,10 @@ export function LoadingIndicator() {
 						icon={RadialIcon}
 						className="size-7 text-muted-foreground"
 					/>
-				</motion.div>
+				</m.div>
 			</div>
 			<AnimatePresence mode="wait" initial={false}>
-				<motion.span
+				<m.span
 					key={messageIndex}
 					initial={{ opacity: 0, y: 4 }}
 					animate={{ opacity: 1, y: 0 }}
@@ -46,8 +46,8 @@ export function LoadingIndicator() {
 					className="text-xs font-extrabold uppercase tracking-widest"
 				>
 					{loadingMessages[messageIndex]}
-				</motion.span>
+				</m.span>
 			</AnimatePresence>
-		</motion.div>
+		</m.div>
 	);
 }

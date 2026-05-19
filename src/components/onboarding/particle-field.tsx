@@ -2,7 +2,12 @@
 
 import { Canvas, useFrame } from "@react-three/fiber";
 import { memo, useEffect, useMemo, useRef } from "react";
-import { AdditiveBlending, Color, Points, PointsMaterial } from "three";
+import {
+	AdditiveBlending,
+	Color,
+	type Points,
+	type PointsMaterial,
+} from "three";
 
 const STEP_COLORS: Record<number, string> = {
 	0: "#3d9970",

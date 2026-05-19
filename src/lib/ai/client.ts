@@ -2,11 +2,11 @@ import { createGeminiProvider } from "./providers/gemini";
 import { createGroqProvider } from "./providers/groq";
 import { createNvidiaProvider } from "./providers/nvidia";
 import {
-	AIFailure,
-	AIProvider,
-	AIRequest,
+	type AIFailure,
+	type AIProvider,
+	type AIRequest,
 	AIResponse,
-	AIResult,
+	type AIResult,
 } from "./types";
 
 export interface AIConfig {

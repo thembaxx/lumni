@@ -19,8 +19,17 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"recommended": false,
+			"recommended": true,
 			"complexity": { "noUselessTypeConstraint": "error" },
+			"nursery": {
+				"useSortedClasses": {
+					"level": "error",
+					"options": {
+						"attributes": ["className", "class"],
+						"functions": ["clsx", "cva", "twMerge"]
+					}
+				}
+			},
 			"correctness": {
 				"noNextAsyncClientComponent": "warn",
 				"noUnusedVariables": "error"

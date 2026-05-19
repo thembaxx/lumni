@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 import { useRef, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Button } from "@/components/ui/button";
-import { type ChatMessage } from "@/hooks/use-chat";
+import type { ChatMessage } from "@/hooks/use-chat";
 import { cn } from "@/lib/shared";
 import { formatBytes } from "@/lib/shared/format";
 import { iOSEase } from "@/lib/utils/animation";

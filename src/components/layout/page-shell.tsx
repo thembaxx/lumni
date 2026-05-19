@@ -1,4 +1,4 @@
-import * as React from "react";
+import type * as React from "react";
 
 import { NavigationBar } from "@/components/ui/navigation-bar";
 import { cn } from "@/lib/shared";

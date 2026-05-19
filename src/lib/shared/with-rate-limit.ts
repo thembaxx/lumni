@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import type { RateLimitConfig } from "@/lib/rate-limiter/core";
 import { checkRateLimit, getRateLimitHeaders } from "./rate-limit";
 

@@ -16,7 +16,7 @@ import { iOSEase } from "@/lib/utils/animation";
 import { getDifficultyColor } from "@/lib/utils/colors";
 import { Badge } from "../ui/badge";
 import { PracticeButton } from "./practice-button";
-import { getRandomTopic, TopicData } from "./study-topic-card.data";
+import { getRandomTopic, type TopicData } from "./study-topic-card.data";
 
 interface StudyTopicCardProps {
 	className?: string;

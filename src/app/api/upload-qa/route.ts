@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 
 function formatSubjectName(subject: string): string {
 	return subject.replace(/\s+/g, "_").toLowerCase();

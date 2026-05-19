@@ -1,4 +1,4 @@
-import { AIProvider, AIRequest, AIResponse } from "../types";
+import type { AIProvider, AIRequest, AIResponse } from "../types";
 
 const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
 

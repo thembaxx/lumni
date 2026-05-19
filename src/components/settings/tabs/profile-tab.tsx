@@ -249,15 +249,14 @@ export function ProfileTab() {
 				<div className="relative group">
 					<label htmlFor="avatar-upload" className="cursor-pointer block">
 						<Avatar className="size-24 shadow-level-3 border-[6px] border-system-surface transition-transform duration-500 group-hover:scale-105">
-						
-								<AvatarImage
-									src={
-										(prefs?.avatarUrl as string) ??
-										`https://api.dicebear.com/9.x/fun-emoji/svg?seed=${getRandomName()}`
-									}
-									alt={user?.name || "User"}
-								/>
-					
+							<AvatarImage
+								src={
+									(prefs?.avatarUrl as string) ??
+									`https://api.dicebear.com/9.x/fun-emoji/svg?backgroundColor=ecad80,d1d4f9,b6e3f4,c0aede,ffdfbf&seed=${getRandomName()}`
+								}
+								alt={user?.name || "User"}
+							/>
+
 							<AvatarFallback className="text-3xl font-extrabold bg-system-accent text-white">
 								{user?.name?.charAt(0)?.toUpperCase() || "U"}
 							</AvatarFallback>

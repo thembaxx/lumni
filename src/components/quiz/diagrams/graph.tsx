@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useMemo } from "react";
+import type React from "react";
+import { useMemo } from "react";
 import { Circle, Group, Layer, Line, Stage, Text } from "react-konva";
 
 interface GraphFunction {

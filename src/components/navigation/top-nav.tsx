@@ -79,7 +79,7 @@ export function TopNav({ title, className }: TopNavProps) {
 	) {
 		imgSrc = (user?.prefs as Record<string, unknown>).avatarUrl as string;
 	} else {
-		imgSrc = `https://api.dicebear.com/9.x/fun-emoji/svg?seed=${getRandomName()}`;
+		imgSrc = `https://api.dicebear.com/9.x/fun-emoji/svg?backgroundColor=ecad80,d1d4f9,b6e3f4,c0aede,ffdfbf&seed=${getRandomName()}`;
 	}
 
 	return (

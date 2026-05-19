@@ -1,7 +1,7 @@
 import { Query } from "appwrite";
 import { randomUUID } from "crypto";
 import fs from "fs";
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import path from "path";
 import { UTApi, UTFile } from "uploadthing/server";
 import {

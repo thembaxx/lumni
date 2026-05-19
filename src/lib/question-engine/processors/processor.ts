@@ -1,6 +1,6 @@
 import { getAI } from "@/lib/ai";
 import { ensureArray, parseAIResponse } from "@/lib/ai/parse-response";
-import { PromptManager } from "../prompt-manager";
+import type { PromptManager } from "../prompt-manager";
 import type {
 	GenerationParams,
 	GradingResult,

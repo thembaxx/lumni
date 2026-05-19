@@ -26,10 +26,7 @@ export async function withRetry<T>(
 			lastError = error instanceof Error ? error : new Error(String(error));
 			if (attempt < opts.maxRetries) {
 				opts.onRetry(attempt, lastError);
-				const delay = Math.min(
-					opts.initialDelay * Math.pow(2, attempt),
-					opts.maxDelay,
-				);
+				const delay = Math.min(opts.initialDelay * 2 ** attempt, opts.maxDelay);
 				await new Promise((resolve) => setTimeout(resolve, delay));
 			}
 		}

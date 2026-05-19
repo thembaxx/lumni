@@ -3,7 +3,7 @@
 import { Search01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Command as CommandPrimitive } from "cmdk";
-import * as React from "react";
+import type * as React from "react";
 import { cn } from "@/lib/shared";
 
 function Command({

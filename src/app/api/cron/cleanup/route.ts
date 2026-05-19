@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { cleanupOldQuestions } from "@/lib/db/cleanup";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 

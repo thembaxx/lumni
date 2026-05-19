@@ -1,4 +1,4 @@
-import { AIProvider, AIRequest, AIResponse } from "../types";
+import type { AIProvider, AIRequest, AIResponse } from "../types";
 
 const NVIDIA_URL = "https://integrate.api.nvidia.com/v1/chat/completions";
 
