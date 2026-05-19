@@ -78,9 +78,6 @@ function useStudySetStorage() {
 		return [];
 	});
 
-	const { flashcards: _flashcardList } = useFlashcardStorage();
-	const { notes: _noteList } = useNoteStorage();
-
 	const writeLocalStorage = useCallback((sets: StudySet[]) => {
 		if (typeof window !== "undefined") {
 			localStorage.setItem("lumni-study-sets", JSON.stringify(sets));
@@ -147,8 +144,6 @@ function useStudySetStorage() {
 
 	return {
 		studySets,
-		flashcards: _flashcardList,
-		notes: _noteList,
 		addStudySet,
 		removeStudySet,
 		updateStudySet,
@@ -180,9 +175,6 @@ function StudySetForm({
 		isFavorite: false,
 		...initialValues,
 	});
-
-	const { shouldReduceMotion: shouldReduceMotionOpt } = useOptimizedAnimation();
-	const _shouldReduceMotion = useReducedMotion() || shouldReduceMotionOpt;
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
@@ -503,14 +495,12 @@ export function StudySetCreator({ className }: StudySetCreatorProps) {
 		updateStudySet,
 		toggleFavorite,
 	} = useStudySetStorage();
-	const [_isCreating, setIsCreating] = useState(false);
+	const [, setIsCreating] = useState(false);
 	const [editingStudySetId, setEditingStudySetId] = useState<string | null>(
 		null,
 	);
 	const [searchQuery, setSearchQuery] = useState("");
 	const [filter, setFilter] = useState<"all" | "favorites">("all");
-	const { shouldReduceMotion: shouldReduceMotionOpt } = useOptimizedAnimation();
-	const _finalShouldReduceMotion = useReducedMotion() || shouldReduceMotionOpt;
 
 	const handleCreateStudySet = (studySet: StudySet) => {
 		addStudySet(studySet);

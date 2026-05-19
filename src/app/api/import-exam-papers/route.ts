@@ -2,6 +2,8 @@ import { Query } from "appwrite";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { COLLECTIONS, createDocument, listDocuments } from "@/lib/db/client";
+import { requireAdmin } from "@/lib/server/auth";
+import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 function normalizeSubjectCode(code: string) {
 	return code.toLowerCase().replace(/_/g, "-").replace(/\s+/g, "-");
@@ -11,7 +13,9 @@ function toTitleCase(str: string) {
 	return str.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
-export async function POST(request: NextRequest) {
+async function importHandler(request: NextRequest) {
+	await requireAdmin();
+
 	try {
 		const body = await request.json();
 		const { uploads } = body;
@@ -101,3 +105,8 @@ export async function POST(request: NextRequest) {
 		);
 	}
 }
+
+export const POST = withRateLimit(importHandler, {
+	max: 3,
+	windowMs: 60000,
+});

@@ -1,0 +1,119 @@
+import { Query } from "appwrite";
+import { NextResponse } from "next/server";
+import { COLLECTIONS, listDocuments } from "@/lib/db/client";
+import { requireAdmin } from "@/lib/server/auth";
+
+export async function GET() {
+	try {
+		await requireAdmin();
+
+		const sevenDaysAgo = new Date(
+			Date.now() - 7 * 24 * 60 * 60 * 1000,
+		).toISOString();
+		const thirtyDaysAgo = new Date(
+			Date.now() - 30 * 24 * 60 * 60 * 1000,
+		).toISOString();
+
+		const [
+			questions,
+			studySessions,
+			examSessions,
+			recentStudy,
+			recentExam,
+			monthlyStudy,
+			subjects,
+		] = await Promise.all([
+			listDocuments<Record<string, unknown>>(COLLECTIONS.QUESTIONS, [
+				Query.limit(1),
+			]),
+			listDocuments<Record<string, unknown>>(COLLECTIONS.STUDY_SESSIONS, [
+				Query.limit(1),
+			]),
+			listDocuments<Record<string, unknown>>(COLLECTIONS.EXAM_SESSIONS, [
+				Query.limit(1),
+			]),
+			listDocuments<Record<string, unknown>>(COLLECTIONS.STUDY_SESSIONS, [
+				Query.greaterThan("startedAt", sevenDaysAgo),
+			]),
+			listDocuments<Record<string, unknown>>(COLLECTIONS.EXAM_SESSIONS, [
+				Query.greaterThan("startedAt", sevenDaysAgo),
+			]),
+			listDocuments<Record<string, unknown>>(COLLECTIONS.STUDY_SESSIONS, [
+				Query.greaterThan("startedAt", thirtyDaysAgo),
+			]),
+			listDocuments<Record<string, unknown>>(COLLECTIONS.SUBJECTS),
+		]);
+
+		const totalQuestions = questions.length;
+		const totalStudySessions = studySessions.length;
+		const totalExamSessions = examSessions.length;
+		const activeUsers = Math.max(recentStudy.length, recentExam.length);
+		const monthlySessions = monthlyStudy.length;
+
+		const subjectPopularity = subjects
+			.map((s) => ({
+				subject: s.name as string,
+				code: s.code as string,
+			}))
+			.slice(0, 10);
+
+		const subjectSessionCounts = await Promise.all(
+			subjectPopularity.map(async (s) => {
+				const count = await listDocuments<Record<string, unknown>>(
+					COLLECTIONS.STUDY_SESSIONS,
+					[Query.equal("subjectId", s.code), Query.limit(100)],
+				);
+				return { ...s, sessions: count.length };
+			}),
+		);
+
+		const recentSessionDocs = await listDocuments<Record<string, unknown>>(
+			COLLECTIONS.STUDY_SESSIONS,
+			[Query.greaterThan("startedAt", thirtyDaysAgo), Query.limit(500)],
+		);
+
+		const completedSessions = recentSessionDocs.filter(
+			(s) => s.endedAt || s.startedAt,
+		);
+		const completionRate =
+			recentSessionDocs.length > 0
+				? Math.round(
+						(completedSessions.length / recentSessionDocs.length) * 100,
+					)
+				: 0;
+
+		const totalCorrect = completedSessions.reduce(
+			(sum, s) => sum + ((s.correctCount as number) || 0),
+			0,
+		);
+		const totalAnswered = completedSessions.reduce(
+			(sum, s) => sum + ((s.questionsAnswered as number) || 0),
+			0,
+		);
+		const overallAccuracy =
+			totalAnswered > 0 ? Math.round((totalCorrect / totalAnswered) * 100) : 0;
+
+		return NextResponse.json({
+			totalUsers: 0,
+			activeUsers,
+			totalQuestions,
+			totalStudySessions,
+			totalExamSessions,
+			monthlySessions,
+			completionRate,
+			overallAccuracy,
+			subjectPopularity: subjectSessionCounts.sort(
+				(a, b) => b.sessions - a.sessions,
+			),
+		});
+	} catch (error) {
+		console.error("Analytics error:", error);
+		return NextResponse.json(
+			{
+				error:
+					error instanceof Error ? error.message : "Failed to fetch analytics",
+			},
+			{ status: 500 },
+		);
+	}
+}

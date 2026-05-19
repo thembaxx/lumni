@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, test, mock } from "bun:test";
+import { beforeEach, describe, expect, mock, test } from "bun:test";
 
 const mockCheckBudget = mock<(req: unknown, type: string) => unknown>();
 const mockTrackUsage = mock<(type: string, userId: string) => void>();
@@ -13,9 +13,8 @@ mock.module("@/lib/shared/with-rate-limit", () => ({
 	withRateLimit: mockWithRateLimit,
 }));
 
-const mockGenerateQuestionSet = mock<
-	(params: { subject: string; count: number }) => unknown
->();
+const mockGenerateQuestionSet =
+	mock<(params: { subject: string; count: number }) => unknown>();
 
 mock.module("@/lib/orchestrator", () => ({
 	LearningOrchestrator: {
@@ -99,9 +98,7 @@ describe("POST /api/engine/generate", () => {
 	test("execute returns questions with count and type", async () => {
 		mockCheckBudget.mockResolvedValue({ allowed: true, userId: "test-user" });
 		mockGenerateQuestionSet.mockResolvedValue({
-			questions: [
-				{ id: "q1", questionText: "What is 2+2?", subject: "math" },
-			],
+			questions: [{ id: "q1", questionText: "What is 2+2?", subject: "math" }],
 			count: 1,
 			type: "multiple-choice",
 			jobIds: [42, 43],

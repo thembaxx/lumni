@@ -150,9 +150,6 @@ function FlashcardForm({
 		...initialValues,
 	});
 
-	const { shouldReduceMotion: shouldReduceMotionOpt } = useOptimizedAnimation();
-	const _shouldReduceMotion = useReducedMotion() || shouldReduceMotionOpt;
-
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
 		const flashcard: Flashcard = {
@@ -309,16 +306,9 @@ function FlashcardForm({
 
 export function FlashcardCreator({ className }: FlashcardCreatorProps) {
 	const { flashcards, addFlashcard, removeFlashcard } = useFlashcardStorage();
-	const [_isCreating, setIsCreating] = useState(false);
+	const [, setIsCreating] = useState(false);
 	const [editingCardId, setEditingCardId] = useState<string | null>(null);
 	const [searchQuery, setSearchQuery] = useState("");
-	const { shouldReduceMotion: shouldReduceMotionOpt } = useOptimizedAnimation();
-	const _finalShouldReduceMotion = useReducedMotion() || shouldReduceMotionOpt;
-
-	const _handleCreateFlashcard = (flashcard: Flashcard) => {
-		addFlashcard(flashcard);
-		setIsCreating(false);
-	};
 
 	const handleEditFlashcard = (card: Flashcard) => {
 		setEditingCardId(card.id);

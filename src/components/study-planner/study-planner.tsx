@@ -212,6 +212,7 @@ function TodaySessionsCard({
 										variant="ghost"
 										size="icon-xs"
 										onClick={() => onComplete(session.id)}
+										aria-label="Mark session as complete"
 										className={`rounded-full ${
 											session.completed
 												? "bg-success text-success-foreground hover:bg-success/90 dark:bg-success/70 dark:hover:bg-success/60"
@@ -236,6 +237,7 @@ function TodaySessionsCard({
 									variant="ghost"
 									size="icon-xs"
 									onClick={() => onDelete(session.id)}
+									aria-label="Delete study session"
 								>
 									<HugeiconsIcon icon={Delete02Icon} className="h-4 w-4" />
 								</Button>
@@ -303,6 +305,7 @@ function UpcomingSessionsCard({
 														variant="ghost"
 														size="icon-xs"
 														onClick={() => onComplete(session.id)}
+														aria-label="Mark session as complete"
 														className={`rounded-full ${
 															session.completed
 																? "bg-success text-success-foreground hover:bg-success/90 dark:bg-success/70 dark:hover:bg-success/60"
@@ -330,6 +333,7 @@ function UpcomingSessionsCard({
 													variant="ghost"
 													size="icon-xs"
 													onClick={() => onDelete(session.id)}
+													aria-label="Delete study session"
 												>
 													<HugeiconsIcon
 														icon={Delete02Icon}
@@ -386,6 +390,7 @@ function UpcomingExamsCard({
 									variant="ghost"
 									size="icon-xs"
 									onClick={() => onDelete(exam.id)}
+									aria-label="Delete study session"
 								>
 									<HugeiconsIcon icon={Delete02Icon} className="h-4 w-4" />
 								</Button>

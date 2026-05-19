@@ -1,0 +1,144 @@
+"use client";
+
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { PageHeader } from "@/components/ui/headers/page-header";
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow,
+} from "@/components/ui/table";
+
+interface AdminUser {
+	$id: string;
+	email: string;
+	name: string;
+	status: boolean;
+	registration: string;
+	accessedAt: string | null;
+}
+
+export function UsersClient() {
+	const queryClient = useQueryClient();
+
+	const { data, isLoading } = useQuery({
+		queryKey: ["admin-users"],
+		queryFn: async () => {
+			const res = await fetch("/api/admin/users");
+			if (!res.ok) throw new Error("Failed to fetch users");
+			return res.json() as Promise<{ users: AdminUser[] }>;
+		},
+	});
+
+	const updateMutation = useMutation({
+		mutationFn: async ({
+			userId,
+			action,
+		}: {
+			userId: string;
+			action: string;
+		}) => {
+			const res = await fetch("/api/admin/users", {
+				method: "PATCH",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ userId, action }),
+			});
+			if (!res.ok) throw new Error("Failed to update user");
+			return res.json();
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["admin-users"] });
+		},
+	});
+
+	const users = data?.users || [];
+
+	return (
+		<div className="min-h-[100dvh] bg-background">
+			<PageHeader title="User Management" subtitle="Manage registered users" />
+			<div className="p-4 flex flex-col gap-4">
+				<Card>
+					<CardHeader>
+						<CardTitle>All Users ({users.length})</CardTitle>
+					</CardHeader>
+					<CardContent className="p-0">
+						<Table>
+							<TableHeader>
+								<TableRow>
+									<TableHead>Email</TableHead>
+									<TableHead>Name</TableHead>
+									<TableHead>Status</TableHead>
+									<TableHead>Registered</TableHead>
+									<TableHead>Last Active</TableHead>
+									<TableHead>Actions</TableHead>
+								</TableRow>
+							</TableHeader>
+							<TableBody>
+								{isLoading && (
+									<TableRow>
+										<TableCell
+											colSpan={6}
+											className="text-center py-8 text-muted-foreground"
+										>
+											Loading...
+										</TableCell>
+									</TableRow>
+								)}
+								{!isLoading && users.length === 0 && (
+									<TableRow>
+										<TableCell
+											colSpan={6}
+											className="text-center py-8 text-muted-foreground"
+										>
+											No users found
+										</TableCell>
+									</TableRow>
+								)}
+								{users.map((user) => (
+									<TableRow key={user.$id}>
+										<TableCell className="font-mono text-xs">
+											{user.email}
+										</TableCell>
+										<TableCell>{user.name || "—"}</TableCell>
+										<TableCell>
+											<Badge variant={user.status ? "default" : "destructive"}>
+												{user.status ? "Active" : "Suspended"}
+											</Badge>
+										</TableCell>
+										<TableCell className="text-xs">
+											{new Date(user.registration).toLocaleDateString()}
+										</TableCell>
+										<TableCell className="text-xs">
+											{user.accessedAt
+												? new Date(user.accessedAt).toLocaleDateString()
+												: "—"}
+										</TableCell>
+										<TableCell>
+											<Button
+												size="sm"
+												variant={user.status ? "destructive" : "default"}
+												onClick={() =>
+													updateMutation.mutate({
+														userId: user.$id,
+														action: user.status ? "suspend" : "activate",
+													})
+												}
+											>
+												{user.status ? "Suspend" : "Activate"}
+											</Button>
+										</TableCell>
+									</TableRow>
+								))}
+							</TableBody>
+						</Table>
+					</CardContent>
+				</Card>
+			</div>
+		</div>
+	);
+}

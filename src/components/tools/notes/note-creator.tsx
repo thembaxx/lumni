@@ -167,9 +167,6 @@ function NoteForm({
 		...initialValues,
 	});
 
-	const { shouldReduceMotion: shouldReduceMotionOpt } = useOptimizedAnimation();
-	const _shouldReduceMotion = useReducedMotion() || shouldReduceMotionOpt;
-
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
 		const note: Note = {
@@ -333,12 +330,10 @@ function NoteForm({
 export function NoteCreator({ className }: NoteCreatorProps) {
 	const { notes, addNote, removeNote, updateNote, toggleFavorite } =
 		useNoteStorage();
-	const [_isCreating, setIsCreating] = useState(false);
+	const [, setIsCreating] = useState(false);
 	const [editingNoteId, setEditingNoteId] = useState<string | null>(null);
 	const [searchQuery, setSearchQuery] = useState("");
 	const [filter, setFilter] = useState<"all" | "favorites">("all");
-	const { shouldReduceMotion: shouldReduceMotionOpt } = useOptimizedAnimation();
-	const _finalShouldReduceMotion = useReducedMotion() || shouldReduceMotionOpt;
 
 	const handleCreateNote = (note: Note) => {
 		addNote(note);

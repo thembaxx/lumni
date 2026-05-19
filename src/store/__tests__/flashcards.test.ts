@@ -1,4 +1,4 @@
-import { describe, expect, test, beforeEach } from "bun:test";
+import { beforeEach, describe, expect, test } from "bun:test";
 import { useFlashcardsStore } from "../flashcards";
 
 beforeEach(() => {
@@ -8,8 +8,13 @@ beforeEach(() => {
 
 describe("useFlashcardsStore", () => {
 	test("initial state is empty", () => {
-		const { selectedSubject, isActive, currentIndex, isFlipped, sessionComplete } =
-			useFlashcardsStore.getState();
+		const {
+			selectedSubject,
+			isActive,
+			currentIndex,
+			isFlipped,
+			sessionComplete,
+		} = useFlashcardsStore.getState();
 		expect(selectedSubject).toBe("");
 		expect(isActive).toBe(false);
 		expect(currentIndex).toBe(0);

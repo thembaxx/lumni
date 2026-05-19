@@ -68,6 +68,8 @@ export function ProgressDots({
 						type="button"
 						variant="ghost"
 						onClick={() => onDotClick?.(idx)}
+						aria-label={`Go to question ${idx + 1}`}
+						aria-current={isCurrent ? "step" : undefined}
 						className={cn(
 							"size-1.5 rounded-full p-0 min-h-0",
 							dotClass,

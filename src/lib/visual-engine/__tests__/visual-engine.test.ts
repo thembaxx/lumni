@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
-import { visualEngine } from "../visual-engine";
 import { STEM_SUBJECTS } from "../types";
+import { visualEngine } from "../visual-engine";
 
 describe("VisualEngine", () => {
 	test("exports singleton", () => {

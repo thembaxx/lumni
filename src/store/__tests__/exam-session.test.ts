@@ -1,7 +1,10 @@
-import { describe, expect, test, beforeEach } from "bun:test";
+import { beforeEach, describe, expect, test } from "bun:test";
 import type { ExamPaper, QuestionPart } from "@/types/exam-paper";
 
-function makePart(id: string, overrides: Partial<QuestionPart> = {}): QuestionPart {
+function makePart(
+	id: string,
+	overrides: Partial<QuestionPart> = {},
+): QuestionPart {
 	return { id, type: "short-answer", marks: 2, ...overrides };
 }
 
@@ -78,7 +81,9 @@ describe("useExamSessionStore", () => {
 	test("initSession sets currentPartId to first part", () => {
 		const paper = makePaper();
 		useExamSessionStore.getState().initSession(paper, "paper-1", 180);
-		expect(useExamSessionStore.getState().currentPartId).toBe("section-a-q1-p1");
+		expect(useExamSessionStore.getState().currentPartId).toBe(
+			"section-a-q1-p1",
+		);
 	});
 
 	test("initSession initialises answers and flags empty", () => {
@@ -110,7 +115,9 @@ describe("useExamSessionStore", () => {
 		useExamSessionStore.getState().initSession(paper, "paper-1", 180);
 		useExamSessionStore.getState().setAnswer("section-a-q1-p1", "42");
 		useExamSessionStore.getState().setAnswer("section-a-q1-p1", "100");
-		expect(useExamSessionStore.getState().answers["section-a-q1-p1"].value).toBe("100");
+		expect(
+			useExamSessionStore.getState().answers["section-a-q1-p1"].value,
+		).toBe("100");
 	});
 
 	test("toggleFlag adds a flag", () => {
@@ -125,7 +132,9 @@ describe("useExamSessionStore", () => {
 		useExamSessionStore.getState().initSession(paper, "paper-1", 180);
 		useExamSessionStore.getState().toggleFlag("section-a-q1-p1");
 		useExamSessionStore.getState().toggleFlag("section-a-q1-p1");
-		expect(useExamSessionStore.getState().flags).not.toContain("section-a-q1-p1");
+		expect(useExamSessionStore.getState().flags).not.toContain(
+			"section-a-q1-p1",
+		);
 	});
 
 	test("getFlatParts returns all parts with section and question ids", () => {
@@ -167,21 +176,29 @@ describe("useExamSessionStore", () => {
 		const paper = makePaper();
 		useExamSessionStore.getState().initSession(paper, "paper-1", 180);
 		useExamSessionStore.getState().setAnswer("section-a-q1-p1", "42");
-		expect(useExamSessionStore.getState().getAnswer("section-a-q1-p1")).toBe("42");
+		expect(useExamSessionStore.getState().getAnswer("section-a-q1-p1")).toBe(
+			"42",
+		);
 	});
 
 	test("getAnswer returns undefined for unanswered part", () => {
 		const paper = makePaper();
 		useExamSessionStore.getState().initSession(paper, "paper-1", 180);
-		expect(useExamSessionStore.getState().getAnswer("nonexistent")).toBeUndefined();
+		expect(
+			useExamSessionStore.getState().getAnswer("nonexistent"),
+		).toBeUndefined();
 	});
 
 	test("isFlagged returns correct status", () => {
 		const paper = makePaper();
 		useExamSessionStore.getState().initSession(paper, "paper-1", 180);
-		expect(useExamSessionStore.getState().isFlagged("section-a-q1-p1")).toBe(false);
+		expect(useExamSessionStore.getState().isFlagged("section-a-q1-p1")).toBe(
+			false,
+		);
 		useExamSessionStore.getState().toggleFlag("section-a-q1-p1");
-		expect(useExamSessionStore.getState().isFlagged("section-a-q1-p1")).toBe(true);
+		expect(useExamSessionStore.getState().isFlagged("section-a-q1-p1")).toBe(
+			true,
+		);
 	});
 
 	test("tick decrements timeRemaining", () => {
@@ -211,7 +228,9 @@ describe("useExamSessionStore", () => {
 
 	test("setCurrentPart updates currentPartId", () => {
 		useExamSessionStore.getState().setCurrentPart("section-a-q2-p2");
-		expect(useExamSessionStore.getState().currentPartId).toBe("section-a-q2-p2");
+		expect(useExamSessionStore.getState().currentPartId).toBe(
+			"section-a-q2-p2",
+		);
 	});
 
 	test("completeSession marks session as completed", () => {

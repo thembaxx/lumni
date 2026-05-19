@@ -11,7 +11,9 @@ const mockShowBudgetToast = mock<(error: unknown) => void>();
 mock.module("@/lib/shared/api-fetch", () => ({
 	apiFetch: mockApiFetch,
 	isBudgetExceeded: (err: unknown) =>
-		err instanceof Error && "limitReached" in err && (err as Record<string, unknown>).limitReached === true,
+		err instanceof Error &&
+		"limitReached" in err &&
+		(err as Record<string, unknown>).limitReached === true,
 	showBudgetToast: mockShowBudgetToast,
 }));
 

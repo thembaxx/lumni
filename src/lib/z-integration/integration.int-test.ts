@@ -1,4 +1,4 @@
-import { describe, expect, test, mock, beforeEach } from "bun:test";
+import { beforeEach, describe, expect, mock, test } from "bun:test";
 
 // ── Helpers ──────────────────────────────────────────────────────────
 function createInMemoryStore<T extends { id?: number }>() {
@@ -17,9 +17,13 @@ function createInMemoryStore<T extends { id?: number }>() {
 		},
 		where: (index: string) => ({
 			equals: (value: string) => ({
-				first: async () => items.find((i) => (i as Record<string, unknown>)[index] === value),
-				count: async () => items.filter((i) => (i as Record<string, unknown>)[index] === value).length,
-				toArray: async () => items.filter((i) => (i as Record<string, unknown>)[index] === value),
+				first: async () =>
+					items.find((i) => (i as Record<string, unknown>)[index] === value),
+				count: async () =>
+					items.filter((i) => (i as Record<string, unknown>)[index] === value)
+						.length,
+				toArray: async () =>
+					items.filter((i) => (i as Record<string, unknown>)[index] === value),
 			}),
 		}),
 		toArray: async () => [...items],
@@ -73,7 +77,11 @@ mock.module("@/lib/ai", () => ({
 	AIClient: class {},
 }));
 
-const mockDailyCheck = mock(() => ({ allowed: true, remaining: { user: 20, global: 2000 }, resetAt: Date.now() + 86400000 }));
+const mockDailyCheck = mock(() => ({
+	allowed: true,
+	remaining: { user: 20, global: 2000 },
+	resetAt: Date.now() + 86400000,
+}));
 const mockDailyIncrement = mock(() => {});
 
 mock.module("@/lib/ai/daily-call-tracker", () => ({
@@ -124,7 +132,13 @@ mock.module("@/lib/question-engine/persistence", () => ({
 }));
 
 mock.module("@/lib/db/client", () => ({
-	COLLECTIONS: { TOPICS: "topics", USER_PROGRESS: "user_progress", STUDY_SESSIONS: "study_sessions", COMPETENCIES: "competencies", QUESTIONS: "questions" },
+	COLLECTIONS: {
+		TOPICS: "topics",
+		USER_PROGRESS: "user_progress",
+		STUDY_SESSIONS: "study_sessions",
+		COMPETENCIES: "competencies",
+		QUESTIONS: "questions",
+	},
 	listDocuments: mock(() => []),
 	createDocument: mock(() => "doc-id"),
 	updateDocument: mock(() => {}),
@@ -205,16 +219,27 @@ mock.module("@/lib/competency-engine/types", () => ({}));
 const mockCurriculumGetSubject = mock(() => ({
 	subjectId: "mathematics",
 	subjectName: "Mathematics",
-	topics: [{ id: "algebra", name: "Algebra", order: 1, prerequisites: [], bloomTarget: "remember", subtopics: [] }],
+	topics: [
+		{
+			id: "algebra",
+			name: "Algebra",
+			order: 1,
+			prerequisites: [],
+			bloomTarget: "remember",
+			subtopics: [],
+		},
+	],
 }));
 mock.module("@/curriculum", () => ({
 	curriculumRegistry: { getSubject: mockCurriculumGetSubject },
 }));
 
 // ── Tests ────────────────────────────────────────────────────────────
-const { LearningOrchestrator } = await import("../orchestrator/learning-orchestrator");
-const { enqueue, queueCore } = await import("../orchestrator/job-queue");
-const { JobProcessor, jobProcessor } = await import("../orchestrator/job-processor");
+const { LearningOrchestrator } = await import(
+	"../orchestrator/learning-orchestrator"
+);
+const { enqueue } = await import("../orchestrator/job-queue");
+const { JobProcessor } = await import("../orchestrator/job-processor");
 
 describe("Integration: Orchestrator → VisualEngine → Dexie caching", () => {
 	beforeEach(() => {
@@ -284,10 +309,18 @@ describe("Integration: Orchestrator → VisualEngine → Dexie caching", () => {
 		const jobs = await mockJobsStore.toArray();
 		expect(jobs.length).toBeGreaterThanOrEqual(4);
 
-		const analyticsJob = jobs.find((j) => (j as { type: string }).type === "analytics-sync");
-		const spacedRepJob = jobs.find((j) => (j as { type: string }).type === "spaced-rep-update");
-		const progressJob = jobs.find((j) => (j as { type: string }).type === "progress-update");
-		const competencyJob = jobs.find((j) => (j as { type: string }).type === "competency-update");
+		const analyticsJob = jobs.find(
+			(j) => (j as { type: string }).type === "analytics-sync",
+		);
+		const spacedRepJob = jobs.find(
+			(j) => (j as { type: string }).type === "spaced-rep-update",
+		);
+		const progressJob = jobs.find(
+			(j) => (j as { type: string }).type === "progress-update",
+		);
+		const competencyJob = jobs.find(
+			(j) => (j as { type: string }).type === "competency-update",
+		);
 
 		expect(analyticsJob).toBeDefined();
 		expect(spacedRepJob).toBeDefined();
@@ -313,12 +346,12 @@ describe("Integration: Orchestrator → VisualEngine → Dexie caching", () => {
 	test("5. Job processor processes batch of queued jobs", async () => {
 		const processor = new JobProcessor();
 
-		const syncId = await enqueue("appwrite-sync", {
+		const _syncId = await enqueue("appwrite-sync", {
 			questions: [cannedQuestion],
 			subject: "mathematics",
 			topic: "algebra",
 		});
-		const visId = await enqueue("visual-generation", {
+		const _visId = await enqueue("visual-generation", {
 			questionId: cannedQuestion.id,
 			questionText: cannedQuestion.questionText,
 			subject: "mathematics",

@@ -71,7 +71,6 @@ export function QuizView({
 		setResolvedTopic(topic);
 	}, [topic]);
 	const hasAutoStarted = useRef(false);
-	const _quizContainerRef = useRef<HTMLDivElement>(null);
 
 	const engineParams = useMemo(
 		() => ({

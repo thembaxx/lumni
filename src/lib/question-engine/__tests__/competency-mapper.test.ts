@@ -1,9 +1,9 @@
 import { describe, expect, test } from "bun:test";
 import {
-	mapCompetencyToBloom,
-	mapCompetencyToDifficulty,
-	mapCompetencyToBloomList,
 	getCompetencyDescription,
+	mapCompetencyToBloom,
+	mapCompetencyToBloomList,
+	mapCompetencyToDifficulty,
 } from "../competency-mapper";
 
 describe("mapCompetencyToBloom", () => {

@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, test, mock } from "bun:test";
+import { beforeEach, describe, expect, mock, test } from "bun:test";
 
 const mockCheckBudget = mock<(req: unknown, type: string) => unknown>();
 const mockTrackUsage = mock<(type: string, userId: string) => void>();
@@ -13,7 +13,8 @@ mock.module("@/lib/shared/with-rate-limit", () => ({
 	withRateLimit: mockWithRateLimit,
 }));
 
-const mockGenerateHint = mock<(params: { questionId: string; question: unknown }) => string>();
+const mockGenerateHint =
+	mock<(params: { questionId: string; question: unknown }) => string>();
 
 mock.module("@/lib/question-engine/question-engine", () => ({
 	QuestionEngine: {

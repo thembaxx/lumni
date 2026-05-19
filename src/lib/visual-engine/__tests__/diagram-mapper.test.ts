@@ -1,10 +1,10 @@
 import { describe, expect, test } from "bun:test";
 import {
-	KONVA_TYPES,
-	getValidator,
-	getDataForType,
 	classifyAndMap,
+	getDataForType,
+	getValidator,
 	isKonvaType,
+	KONVA_TYPES,
 } from "../diagram-mapper";
 
 describe("KONVA_TYPES", () => {
@@ -61,9 +61,7 @@ describe("validators", () => {
 		test("accepts valid force-vector data", () => {
 			expect(
 				validate({
-					objects: [
-						{ type: "arrow", x: 0, y: 0, fill: "red" },
-					],
+					objects: [{ type: "arrow", x: 0, y: 0, fill: "red" }],
 				}),
 			).toBe(true);
 		});
@@ -99,9 +97,9 @@ describe("validators", () => {
 		const validate = getValidator("wave")!;
 
 		test("accepts valid wave data", () => {
-			expect(
-				validate({ amplitude: 10, frequency: 5, type: "sine" }),
-			).toBe(true);
+			expect(validate({ amplitude: 10, frequency: 5, type: "sine" })).toBe(
+				true,
+			);
 		});
 
 		test("rejects missing amplitude", () => {
@@ -162,9 +160,9 @@ describe("validators", () => {
 		});
 
 		test("accepts line chart with data", () => {
-			expect(
-				validate({ chartType: "line", data: [{ x: 1, y: 2 }] }),
-			).toBe(true);
+			expect(validate({ chartType: "line", data: [{ x: 1, y: 2 }] })).toBe(
+				true,
+			);
 		});
 
 		test("accepts pie chart with data", () => {
@@ -190,9 +188,7 @@ describe("validators", () => {
 		const validate = getValidator("chemistry")!;
 
 		test("accepts valid chemistry data", () => {
-			expect(
-				validate({ molecules: [{ formula: "H2O" }] }),
-			).toBe(true);
+			expect(validate({ molecules: [{ formula: "H2O" }] })).toBe(true);
 		});
 
 		test("rejects empty molecules", () => {
@@ -217,11 +213,18 @@ describe("validators", () => {
 		});
 
 		test("rejects missing functions", () => {
-			expect(validate({ axes: { xMin: -10, xMax: 10, yMin: -10, yMax: 10 } })).toBe(false);
+			expect(
+				validate({ axes: { xMin: -10, xMax: 10, yMin: -10, yMax: 10 } }),
+			).toBe(false);
 		});
 
 		test("accepts empty functions array (validator only checks type)", () => {
-			expect(validate({ functions: [], axes: { xMin: -10, xMax: 10, yMin: -10, yMax: 10 } })).toBe(true);
+			expect(
+				validate({
+					functions: [],
+					axes: { xMin: -10, xMax: 10, yMin: -10, yMax: 10 },
+				}),
+			).toBe(true);
 		});
 
 		test("rejects missing axes properties", () => {

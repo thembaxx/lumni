@@ -1,3 +1,4 @@
+import { enqueue } from "@/lib/orchestrator/job-queue";
 import { loadFromStorage, saveToStorage } from "./storage";
 
 export interface StudySession {
@@ -190,6 +191,16 @@ export function autoScheduleSessions(
 	saveStudyPlan(plan);
 
 	return plan;
+}
+
+export async function syncStudyPlanToAppwrite(userId: string): Promise<void> {
+	const plan = loadStudyPlan();
+	await enqueue("appwrite-study-plan-sync", {
+		userId,
+		sessions: plan.sessions,
+		examDates: plan.examDates,
+		generatedAt: plan.generatedAt,
+	});
 }
 
 export function getStudyStats(): {

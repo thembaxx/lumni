@@ -4,7 +4,10 @@ import {
 	generateReferralCode,
 } from "@/lib/referral/constants";
 import { createReferralCode, getReferralCode } from "@/lib/referral/service";
-import { getAuthenticatedUserId, getAuthenticatedUserName } from "@/lib/server/auth";
+import {
+	getAuthenticatedUserId,
+	getAuthenticatedUserName,
+} from "@/lib/server/auth";
 
 export async function POST() {
 	try {

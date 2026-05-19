@@ -1,10 +1,9 @@
-import { beforeEach, describe, expect, test, mock } from "bun:test";
+import { beforeEach, describe, expect, mock, test } from "bun:test";
 
 const mockGenerateQuestionSet = mock<(params: unknown) => unknown>();
 const mockValidate = mock<(q: unknown) => unknown>();
-const mockGenerateHint = mock<
-	(params: { questionId: string; question: unknown }) => string
->();
+const mockGenerateHint =
+	mock<(params: { questionId: string; question: unknown }) => string>();
 const mockGrade = mock<(question: unknown, answer: unknown) => unknown>();
 const mockListTypes = mock<() => string[]>();
 

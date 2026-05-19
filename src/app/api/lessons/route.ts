@@ -1,6 +1,7 @@
 import fs from "fs";
 import { NextRequest, NextResponse } from "next/server";
 import path from "path";
+import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 export const dynamic = "force-dynamic";
 
@@ -12,7 +13,7 @@ interface Lesson {
 	difficulty: string;
 }
 
-export async function GET(request: NextRequest) {
+async function lessonsHandler(request: NextRequest) {
 	try {
 		const { searchParams } = new URL(request.url);
 		const subject = searchParams.get("subject");
@@ -57,3 +58,8 @@ export async function GET(request: NextRequest) {
 		);
 	}
 }
+
+export const GET = withRateLimit(lessonsHandler, {
+	max: 20,
+	windowMs: 60000,
+});

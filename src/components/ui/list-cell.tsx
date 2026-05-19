@@ -44,11 +44,6 @@ function ListCell({
 				className,
 			)}
 		>
-			{/* {leading && (
-				<div className="flex shrink-0 items-center justify-center size-8 rounded-lg bg-secondary/30 text-system-accent">
-					{leading}
-				</div>
-			)} */}
 			<div className="flex-1 min-w-0">
 				<div
 					className={cn(

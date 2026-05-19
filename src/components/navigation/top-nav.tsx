@@ -145,8 +145,9 @@ export function TopNav({ title, className }: TopNavProps) {
 									{(user?.prefs as Record<string, unknown>)?.avatarUrl ? (
 										<AvatarImage
 											src={
-												(user?.prefs as Record<string, unknown>)
-													.avatarUrl as string ?? `https://api.dicebear.com/9.x/fun-emoji/svg?seed=${getRandomName()}`
+												((user?.prefs as Record<string, unknown>)
+													.avatarUrl as string) ??
+												`https://api.dicebear.com/9.x/fun-emoji/svg?seed=${getRandomName()}`
 											}
 											alt={user?.name || "User"}
 										/>

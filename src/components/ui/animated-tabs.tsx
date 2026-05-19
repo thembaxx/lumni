@@ -50,11 +50,30 @@ function AnimatedTabs({
 		requestAnimationFrame(measure);
 	}, [measure]);
 
+	const handleKeyDown = useCallback(
+		(e: React.KeyboardEvent) => {
+			const currentIndex = tabs.findIndex((t) => t.value === value);
+			let nextIndex: number | null = null;
+			if (e.key === "ArrowRight") {
+				nextIndex = (currentIndex + 1) % tabs.length;
+			} else if (e.key === "ArrowLeft") {
+				nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+			}
+			if (nextIndex !== null) {
+				e.preventDefault();
+				onValueChange(tabs[nextIndex].value);
+			}
+		},
+		[tabs, value, onValueChange],
+	);
+
 	return (
 		<Anim>
 			<div className={cn("flex flex-col gap-2", className)}>
 				<div
 					ref={listRef}
+					role="tablist"
+					onKeyDown={handleKeyDown}
 					className={cn(
 						"relative inline-flex gap-1 p-1 rounded-lg bg-muted",
 						listClassName,
@@ -65,6 +84,9 @@ function AnimatedTabs({
 							key={tab.value}
 							data-tab
 							type="button"
+							role="tab"
+							aria-selected={value === tab.value}
+							aria-controls={`tabpanel-${tab.value}`}
 							onClick={() => onValueChange(tab.value)}
 							className={cn(
 								"relative z-10 inline-flex items-center justify-center gap-1.5 rounded-md px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors duration-150",

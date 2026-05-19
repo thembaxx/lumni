@@ -1,5 +1,10 @@
 import { describe, expect, test } from "bun:test";
-import { getStreakMessage, rarityColors, rarityGlow, raritySolid } from "../gamification";
+import {
+	getStreakMessage,
+	rarityColors,
+	rarityGlow,
+	raritySolid,
+} from "../gamification";
 
 describe("getStreakMessage", () => {
 	test('streak <= 0 returns "Start your streak!"', () => {

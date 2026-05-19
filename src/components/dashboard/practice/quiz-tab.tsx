@@ -8,20 +8,15 @@ import {
 	Timer01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m, motion, useReducedMotion } from "framer-motion";
+import { m, useReducedMotion } from "framer-motion";
 import { useCallback, useState } from "react";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
-import {
-	QuizControls,
-	QuizStartState,
-	QuizSubjectPrompt,
-} from "@/components/quiz";
-import { QuestionCard } from "@/components/quiz/question-card";
+import { QuizStartState, QuizSubjectPrompt } from "@/components/quiz";
 import { Anim } from "@/components/shared/anim";
 import { PerpetualFloat } from "@/components/shared/perpetual-float";
 import { Button } from "@/components/ui/button";
-import { AssessmentHeader } from "@/components/ui/headers/assessment-header";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
+import { Tabs, TabsTrigger } from "@/components/ui/tabs";
 import { useQuizSession } from "@/hooks/use-quiz-session";
 import { cn } from "@/lib/shared";
 import { formatTime } from "@/lib/shared/time";
@@ -48,7 +43,6 @@ const tabs: TabConfig[] = [
 ];
 
 export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
-	const [_isTransitioning, setIsTransitioning] = useState(false);
 	const [activeTab, setActiveTab] = useState("quiz");
 	const shouldReduceMotion = useReducedMotion();
 	const { shouldReduceMotion: shouldReduceMotionOpt } = useOptimizedAnimation();
@@ -65,11 +59,9 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 	const {
 		isRunning,
 		elapsedTime,
-		currentQuestionIndex,
 		currentQuestion,
 		hasSubject,
 		selectedSubject,
-		totalQuestions,
 		points,
 	} = state;
 
@@ -81,29 +73,6 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 			onHeaderChange?.(false);
 		}
 	}, [hasSubject, handleStartWithSubject, selectedSubject, onHeaderChange]);
-
-	const _handleNext = useCallback(() => {
-		const maxIndex = totalQuestions - 1;
-		if (currentQuestionIndex < maxIndex) {
-			setIsTransitioning(true);
-			setTimeout(() => {
-				actions.handleNext();
-				setIsTransitioning(false);
-			}, 150);
-		} else {
-			handleStop();
-		}
-	}, [currentQuestionIndex, totalQuestions, actions, handleStop]);
-
-	const _handlePrevious = useCallback(() => {
-		if (currentQuestionIndex > 0) {
-			setIsTransitioning(true);
-			setTimeout(() => {
-				actions.handlePrevious();
-				setIsTransitioning(false);
-			}, 150);
-		}
-	}, [currentQuestionIndex, actions]);
 
 	if (isRunning && currentQuestion) {
 		return (

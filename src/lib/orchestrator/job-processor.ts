@@ -196,6 +196,37 @@ const handlers: Record<JobType, JobHandler> = {
 		}
 	},
 
+	"appwrite-study-plan-sync": async (payload) => {
+		const { userId, sessions, examDates, generatedAt } = payload as {
+			userId: string;
+			sessions: unknown[];
+			examDates: unknown[];
+			generatedAt: number;
+		};
+		const existing = await listDocuments<Record<string, unknown>>(
+			COLLECTIONS.STUDY_PLANS,
+			[Query.equal("userId", userId)],
+		);
+		const now = new Date().toISOString();
+		if (existing.length > 0) {
+			await updateDocument(COLLECTIONS.STUDY_PLANS, existing[0].$id as string, {
+				planData: JSON.stringify(sessions),
+				examDates: JSON.stringify(examDates),
+				generatedAt: new Date(generatedAt).toISOString(),
+				updatedAt: now,
+			});
+		} else {
+			await createDocument(COLLECTIONS.STUDY_PLANS, {
+				userId,
+				planData: JSON.stringify(sessions),
+				examDates: JSON.stringify(examDates),
+				generatedAt: new Date(generatedAt).toISOString(),
+				updatedAt: now,
+				createdAt: now,
+			});
+		}
+	},
+
 	"appwrite-rating-sync": async (payload) => {
 		const data = payload as {
 			questionId: string;
@@ -211,6 +242,91 @@ const handlers: Record<JobType, JobHandler> = {
 			rating: data.rating,
 			feedback: data.feedback,
 			createdAt: new Date(data.createdAt).toISOString(),
+		});
+
+		const ratings = await listDocuments<Record<string, unknown>>(
+			COLLECTIONS.QUESTIONS,
+			[
+				Query.equal("questionId", data.questionId),
+				Query.equal("type", "rating"),
+			],
+		);
+
+		if (ratings.length >= 3) {
+			const avgRating =
+				ratings.reduce((sum, r) => sum + ((r.rating as number) || 0), 0) /
+				ratings.length;
+			if (avgRating < 2) {
+				await queueCore.enqueue({
+					type: "question-regen",
+					payload: JSON.stringify({
+						questionId: data.questionId,
+						subject: data.subject,
+					}),
+					status: "pending",
+					priority: 40,
+					attempts: 0,
+					maxRetries: 2,
+					scheduledAt: Date.now(),
+					createdAt: Date.now(),
+				});
+			}
+		}
+	},
+
+	"appwrite-question-flag": async (payload) => {
+		const data = payload as {
+			questionId: string;
+			userId: string;
+			reason: string;
+			details?: string;
+			createdAt: number;
+		};
+		await createDocument(COLLECTIONS.QUESTION_FLAGS, {
+			questionId: data.questionId,
+			userId: data.userId,
+			reason: data.reason,
+			details: data.details || "",
+			status: "pending",
+			createdAt: new Date(data.createdAt).toISOString(),
+		});
+	},
+
+	"question-regen": async (payload) => {
+		const data = payload as {
+			questionId: string;
+			subject: string;
+		};
+
+		const existingDocs = await listDocuments<Record<string, unknown>>(
+			COLLECTIONS.QUESTIONS,
+			[Query.equal("$id", data.questionId)],
+		);
+
+		if (existingDocs.length === 0) return;
+
+		const existing = existingDocs[0];
+		const currentText = (existing.questionText as string) || "";
+		const currentTopic = (existing.topicId as string) || "";
+
+		const { getAI } = await import("@/lib/ai/client");
+		const ai = getAI();
+		const result = await ai.generateWithSystem(
+			"You are a question regeneration assistant. Improve the quality of the given question while keeping the same topic, type, and difficulty.",
+			`Regenerate this question to improve its quality:\n\nSubject: ${data.subject}\nTopic: ${currentTopic}\nCurrent question: ${currentText}`,
+		);
+
+		if (!("content" in result) || !result.content) {
+			console.error(
+				"[JobProcessor] AI regen failed for question:",
+				data.questionId,
+			);
+			return;
+		}
+
+		await updateDocument(COLLECTIONS.QUESTIONS, data.questionId, {
+			questionText: result.content.trim(),
+			updatedAt: new Date().toISOString(),
 		});
 	},
 };

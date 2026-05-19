@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import {
-	calculateSubjectWeights,
 	allocateDailyMinutes,
+	calculateSubjectWeights,
 	generateStudyPlan,
 } from "../algorithms";
 import type { StudyPlanSettings, SubjectCompetency } from "../types";
@@ -9,8 +9,20 @@ import type { StudyPlanSettings, SubjectCompetency } from "../types";
 describe("calculateSubjectWeights", () => {
 	test("returns equal weights when all subjects have same level", () => {
 		const subjects: SubjectCompetency[] = [
-			{ subjectId: "math", level: 50, targetLevel: 80, weight: 0, topics: ["a"] },
-			{ subjectId: "eng", level: 50, targetLevel: 80, weight: 0, topics: ["b"] },
+			{
+				subjectId: "math",
+				level: 50,
+				targetLevel: 80,
+				weight: 0,
+				topics: ["a"],
+			},
+			{
+				subjectId: "eng",
+				level: 50,
+				targetLevel: 80,
+				weight: 0,
+				topics: ["b"],
+			},
 		];
 		const weights = calculateSubjectWeights(subjects, 25);
 		expect(weights).toHaveLength(2);
@@ -20,8 +32,20 @@ describe("calculateSubjectWeights", () => {
 
 	test("weights weaker subjects higher", () => {
 		const subjects: SubjectCompetency[] = [
-			{ subjectId: "weak", level: 20, targetLevel: 80, weight: 0, topics: ["a"] },
-			{ subjectId: "strong", level: 80, targetLevel: 80, weight: 0, topics: ["b"] },
+			{
+				subjectId: "weak",
+				level: 20,
+				targetLevel: 80,
+				weight: 0,
+				topics: ["a"],
+			},
+			{
+				subjectId: "strong",
+				level: 80,
+				targetLevel: 80,
+				weight: 0,
+				topics: ["b"],
+			},
 		];
 		const weights = calculateSubjectWeights(subjects, 25);
 		expect(weights[0]).toBeGreaterThan(weights[1]);
@@ -41,7 +65,13 @@ describe("calculateSubjectWeights", () => {
 
 	test("handles single subject", () => {
 		const subjects: SubjectCompetency[] = [
-			{ subjectId: "math", level: 50, targetLevel: 80, weight: 0, topics: ["a"] },
+			{
+				subjectId: "math",
+				level: 50,
+				targetLevel: 80,
+				weight: 0,
+				topics: ["a"],
+			},
 		];
 		const weights = calculateSubjectWeights(subjects, 25);
 		expect(weights).toHaveLength(1);
@@ -50,8 +80,20 @@ describe("calculateSubjectWeights", () => {
 
 	test("clamps minimum level to 0.1 to avoid division by zero", () => {
 		const subjects: SubjectCompetency[] = [
-			{ subjectId: "zero", level: 0, targetLevel: 80, weight: 0, topics: ["a"] },
-			{ subjectId: "normal", level: 50, targetLevel: 80, weight: 0, topics: ["b"] },
+			{
+				subjectId: "zero",
+				level: 0,
+				targetLevel: 80,
+				weight: 0,
+				topics: ["a"],
+			},
+			{
+				subjectId: "normal",
+				level: 50,
+				targetLevel: 80,
+				weight: 0,
+				topics: ["b"],
+			},
 		];
 		const weights = calculateSubjectWeights(subjects, 25);
 		expect(weights[0]).toBeGreaterThan(0);
@@ -131,7 +173,9 @@ describe("generateStudyPlan", () => {
 		];
 		// Jan 5 2026 is a Monday, Jan 9 is Friday — 5 weekdays
 		const plan = generateStudyPlan(baseSettings, subjects);
-		const scheduledDates = plan.topics.map((t) => t.scheduledDate).filter(Boolean);
+		const scheduledDates = plan.topics
+			.map((t) => t.scheduledDate)
+			.filter(Boolean);
 		expect(scheduledDates.length).toBe(5);
 		for (const date of scheduledDates) {
 			const day = new Date(date!).getDay();
@@ -199,7 +243,9 @@ describe("generateStudyPlan", () => {
 		];
 		const plan = generateStudyPlan(weekendSettings, subjects);
 		// Jan 3 2026 = Saturday (6), Jan 4 2026 = Sunday (0)
-		const scheduledDates = plan.topics.map((t) => t.scheduledDate).filter(Boolean);
+		const scheduledDates = plan.topics
+			.map((t) => t.scheduledDate)
+			.filter(Boolean);
 		for (const date of scheduledDates) {
 			const day = new Date(date!).getDay();
 			expect([0, 6]).toContain(day);
@@ -235,7 +281,9 @@ describe("generateStudyPlan", () => {
 		];
 		const plan = generateStudyPlan(baseSettings, subjects);
 		expect(plan.settings.targetAps).toBe(baseSettings.targetAps);
-		expect(plan.settings.dailyStudyMinutes).toBe(baseSettings.dailyStudyMinutes);
+		expect(plan.settings.dailyStudyMinutes).toBe(
+			baseSettings.dailyStudyMinutes,
+		);
 		expect(plan.settings.studyDays).toEqual(baseSettings.studyDays);
 	});
 });

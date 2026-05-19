@@ -1,5 +1,3 @@
-"use client";
-
 import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { cn } from "@/lib/shared";
 

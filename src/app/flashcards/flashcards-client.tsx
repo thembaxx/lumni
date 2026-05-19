@@ -1,11 +1,12 @@
 "use client";
 
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Confetti, XPGainPopup } from "@/components/celebration";
 import { useGamification } from "@/hooks/use-gamification";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
 import { trackQuestionResult } from "@/lib/competency-engine";
+import { migrateLegacyFlashcards } from "@/lib/flashcard-repository/migrate";
 import type { Question } from "@/lib/question-engine/types";
 import {
 	createFlashcard,
@@ -32,6 +33,10 @@ interface FlashcardItem {
 type FlashcardSource = "ai" | "mistakes";
 
 export function FlashcardsClient() {
+	useEffect(() => {
+		migrateLegacyFlashcards().catch(() => {});
+	}, []);
+
 	const [selectedSubject, setSelectedSubject] = useState<string>("");
 	const [source, setSource] = useState<FlashcardSource>("ai");
 	const [isActive, setIsActive] = useState(false);

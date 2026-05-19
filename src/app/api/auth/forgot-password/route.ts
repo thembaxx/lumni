@@ -1,10 +1,11 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 const APPWRITE_ENDPOINT =
 	process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT || "https://cloud.appwrite.io/v1";
 const APPWRITE_PROJECT = process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID || "";
 
-export async function POST(request: Request) {
+async function forgotPasswordHandler(request: NextRequest) {
 	try {
 		const { email } = await request.json();
 
@@ -34,3 +35,8 @@ export async function POST(request: Request) {
 		return NextResponse.json({ ok: true });
 	}
 }
+
+export const POST = withRateLimit(forgotPasswordHandler, {
+	max: 3,
+	windowMs: 60000,
+});

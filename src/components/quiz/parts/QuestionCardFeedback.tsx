@@ -1,3 +1,5 @@
+"use client";
+
 import {
 	Cancel01Icon,
 	CheckmarkCircle01Icon,

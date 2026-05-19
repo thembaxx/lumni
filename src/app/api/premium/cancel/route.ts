@@ -1,6 +1,10 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { requireAdmin } from "@/lib/server/auth";
+import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
-export async function POST() {
+async function cancelHandler(_req: NextRequest) {
+	await requireAdmin();
+
 	try {
 		const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
 		const STRIPE_SUBSCRIPTION_ID = process.env.STRIPE_SUBSCRIPTION_ID;
@@ -32,3 +36,8 @@ export async function POST() {
 		);
 	}
 }
+
+export const POST = withRateLimit(cancelHandler, {
+	max: 3,
+	windowMs: 60000,
+});

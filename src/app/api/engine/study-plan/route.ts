@@ -3,10 +3,17 @@ import { NextRequest, NextResponse } from "next/server";
 import { pathEngine } from "@/lib/competency-engine";
 import type { CompetencyRecord } from "@/lib/competency-engine/types";
 import { COLLECTIONS, listDocuments } from "@/lib/db/client";
+import { getAuthenticatedUserId } from "@/lib/server/auth";
+import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 export const dynamic = "force-dynamic";
 
-export async function GET(req: NextRequest) {
+async function studyPlanHandler(req: NextRequest) {
+	const userId = await getAuthenticatedUserId();
+	if (!userId) {
+		return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+	}
+
 	try {
 		const { searchParams } = new URL(req.url);
 		const subjectsParam = searchParams.get("subjects");
@@ -73,3 +80,8 @@ export async function GET(req: NextRequest) {
 		);
 	}
 }
+
+export const GET = withRateLimit(studyPlanHandler, {
+	max: 5,
+	windowMs: 60000,
+});

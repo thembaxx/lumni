@@ -1,3 +1,5 @@
+"use client";
+
 import { m, motion } from "framer-motion";
 import { useCallback } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";

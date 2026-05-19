@@ -1,4 +1,4 @@
-import { describe, expect, test, mock, beforeEach } from "bun:test";
+import { beforeEach, describe, expect, mock, test } from "bun:test";
 import type { CachedProgress } from "@/lib/db/schema";
 
 const enqueueMock = mock(async () => 1);
@@ -6,7 +6,8 @@ const enqueueMock = mock(async () => 1);
 const mockProgressStore = new Map<string, CachedProgress>();
 
 mock.module("@/lib/db/repositories/progress", () => ({
-	getProgress: async (subject: string) => mockProgressStore.get(subject) ?? undefined,
+	getProgress: async (subject: string) =>
+		mockProgressStore.get(subject) ?? undefined,
 	saveProgress: async (subject: string, data: Partial<CachedProgress>) => {
 		const existing = mockProgressStore.get(subject) ?? {
 			odSubjectId: subject,

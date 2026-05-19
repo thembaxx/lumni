@@ -1,8 +1,8 @@
 import { describe, expect, test } from "bun:test";
 import {
 	calculateNextReview,
-	getMasteryLevel,
 	getIntervalLabel,
+	getMasteryLevel,
 } from "@/lib/utils/spaced-repetition";
 
 describe("calculateNextReview (SM-2)", () => {
@@ -63,7 +63,12 @@ describe("calculateNextReview (SM-2)", () => {
 		expect(fail.repetitions).toBe(0);
 		expect(fail.interval).toBe(1);
 
-		const pass = calculateNextReview(4, fail.easeFactor, fail.interval, fail.repetitions);
+		const pass = calculateNextReview(
+			4,
+			fail.easeFactor,
+			fail.interval,
+			fail.repetitions,
+		);
 		expect(pass.repetitions).toBe(1);
 		expect(pass.interval).toBe(1);
 	});
@@ -76,7 +81,8 @@ describe("calculateNextReview (SM-2)", () => {
 
 	test("ease factor is rounded to 2 decimal places", () => {
 		const result = calculateNextReview(3, 2.0, 5, 3);
-		const decimalPlaces = result.easeFactor.toString().split(".")[1]?.length ?? 0;
+		const decimalPlaces =
+			result.easeFactor.toString().split(".")[1]?.length ?? 0;
 		expect(decimalPlaces).toBeLessThanOrEqual(2);
 	});
 });

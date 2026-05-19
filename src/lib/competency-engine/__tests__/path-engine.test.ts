@@ -15,7 +15,13 @@ function makeCompetency(
 		attempts: 3,
 		lastAssessed: Date.now(),
 		level:
-			score >= 85 ? "mastered" : score >= 65 ? "proficient" : score >= 40 ? "developing" : "novice",
+			score >= 85
+				? "mastered"
+				: score >= 65
+					? "proficient"
+					: score >= 40
+						? "developing"
+						: "novice",
 	};
 }
 
@@ -69,7 +75,9 @@ describe("PathEngine", () => {
 			expect(functions?.action).toBe("study");
 			expect(functions?.reason).toBe("ready-to-start");
 
-			const analytical = result.find((r) => r.topicId === "analytical-geometry");
+			const analytical = result.find(
+				(r) => r.topicId === "analytical-geometry",
+			);
 			expect(analytical?.action).toBe("skip");
 			expect(analytical?.reason).toBe("prerequisite-not-met");
 		});
@@ -142,7 +150,9 @@ describe("PathEngine", () => {
 				]),
 			);
 
-			const analytical = result.find((r) => r.topicId === "analytical-geometry");
+			const analytical = result.find(
+				(r) => r.topicId === "analytical-geometry",
+			);
 			expect(analytical?.action).toBe("study");
 			expect(analytical?.reason).toBe("ready-to-start");
 
@@ -156,10 +166,7 @@ describe("PathEngine", () => {
 
 	describe("getNextAction", () => {
 		test("returns null for unknown subject", async () => {
-			const result = await engine.getNextAction(
-				["nonexistent"],
-				new Map(),
-			);
+			const result = await engine.getNextAction(["nonexistent"], new Map());
 			expect(result).toBeNull();
 		});
 

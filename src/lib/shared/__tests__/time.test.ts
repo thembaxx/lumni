@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { formatTime, calculateAccuracy } from "../time";
+import { calculateAccuracy, formatTime } from "../time";
 
 describe("formatTime", () => {
 	test("formats 0 seconds as 00:00", () => {

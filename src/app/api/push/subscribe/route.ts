@@ -1,12 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import { databases } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID } from "@/lib/db/client";
+import { getAuthenticatedUserId } from "@/lib/server/auth";
+import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 const PUSH_SUBSCRIPTIONS_COLLECTION = "push_subscriptions";
 
-export async function POST(req: NextRequest) {
+async function subscribeHandler(req: NextRequest) {
+	const userId = await getAuthenticatedUserId();
+	if (!userId) {
+		return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+	}
+
 	try {
-		const { subscription, userId } = await req.json();
+		const { subscription } = await req.json();
 
 		if (!subscription || !subscription.endpoint) {
 			return NextResponse.json(
@@ -20,7 +27,7 @@ export async function POST(req: NextRequest) {
 			PUSH_SUBSCRIPTIONS_COLLECTION,
 			"unique()",
 			{
-				userId: userId || "anonymous",
+				userId,
 				endpoint: subscription.endpoint,
 				auth: subscription.keys?.auth || "",
 				p256dh: subscription.keys?.p256dh || "",
@@ -35,7 +42,12 @@ export async function POST(req: NextRequest) {
 	}
 }
 
-export async function DELETE(req: NextRequest) {
+async function unsubscribeHandler(req: NextRequest) {
+	const userId = await getAuthenticatedUserId();
+	if (!userId) {
+		return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+	}
+
 	try {
 		const { endpoint } = await req.json();
 
@@ -68,3 +80,13 @@ export async function DELETE(req: NextRequest) {
 		return NextResponse.json({ success: false }, { status: 500 });
 	}
 }
+
+export const POST = withRateLimit(subscribeHandler, {
+	max: 5,
+	windowMs: 60000,
+});
+
+export const DELETE = withRateLimit(unsubscribeHandler, {
+	max: 5,
+	windowMs: 60000,
+});

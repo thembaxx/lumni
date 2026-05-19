@@ -1,4 +1,4 @@
-import { describe, expect, test, beforeEach, beforeAll } from "bun:test";
+import { beforeAll, beforeEach, describe, expect, test } from "bun:test";
 
 const mockStore = new Map<string, string>();
 
@@ -28,12 +28,8 @@ beforeAll(async () => {
 	});
 });
 
-const {
-	trackEngineEvent,
-	loadEvents,
-	getAnalyticsSummary,
-	clearAnalytics,
-} = await import("../engine-analytics");
+const { trackEngineEvent, loadEvents, getAnalyticsSummary, clearAnalytics } =
+	await import("../engine-analytics");
 
 beforeEach(() => {
 	mockStore.clear();

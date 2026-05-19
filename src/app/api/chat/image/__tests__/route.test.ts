@@ -1,4 +1,4 @@
-import { describe, expect, test, mock, beforeEach } from "bun:test";
+import { beforeEach, describe, expect, mock, test } from "bun:test";
 
 const mockGenerateWithSystem = mock<(...args: unknown[]) => unknown>();
 
@@ -7,7 +7,7 @@ mock.module("@/lib/ai/client", () => ({
 	generateWithSystem: mockGenerateWithSystem,
 }));
 
-const { NextRequest, NextResponse } = await import("next/server");
+const { NextRequest } = await import("next/server");
 const { POST } = await import("../route");
 
 describe("POST /api/chat/image", () => {
@@ -72,7 +72,10 @@ describe("POST /api/chat/image", () => {
 
 		const req = new NextRequest("http://localhost/api/chat/image", {
 			method: "POST",
-			body: JSON.stringify({ imageUrl: "http://example.com/cell.png", imageName: "cell-diagram" }),
+			body: JSON.stringify({
+				imageUrl: "http://example.com/cell.png",
+				imageName: "cell-diagram",
+			}),
 		});
 		await POST(req);
 
@@ -98,7 +101,9 @@ describe("POST /api/chat/image", () => {
 		const body = await res.json();
 
 		expect(res.status).toBe(200);
-		expect(body.content).toBe("I can see your image. How can I help you with it?");
+		expect(body.content).toBe(
+			"I can see your image. How can I help you with it?",
+		);
 	});
 
 	test("invalid JSON body returns 400", async () => {

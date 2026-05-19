@@ -1,12 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getAuthenticatedUserId } from "@/lib/server/auth";
 import {
 	checkSubjectStatus,
 	refreshSubject,
 	syncAllSubjects,
 	syncSubject,
 } from "@/lib/server/sync-actions";
+import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
-export async function POST(req: NextRequest) {
+async function syncPostHandler(req: NextRequest) {
+	const userId = await getAuthenticatedUserId();
+	if (!userId) {
+		return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+	}
+
 	try {
 		const body = await req.json();
 		const { subject, action } = body;
@@ -62,10 +69,25 @@ export async function POST(req: NextRequest) {
 	}
 }
 
-export async function GET() {
+async function syncGetHandler(_req: NextRequest) {
+	const userId = await getAuthenticatedUserId();
+	if (!userId) {
+		return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+	}
+
 	return NextResponse.json({
 		status: "ok",
 		message:
 			"Question Engine v2 active. Generate questions via POST /api/engine/generate",
 	});
 }
+
+export const POST = withRateLimit(syncPostHandler, {
+	max: 5,
+	windowMs: 60000,
+});
+
+export const GET = withRateLimit(syncGetHandler, {
+	max: 5,
+	windowMs: 60000,
+});

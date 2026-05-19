@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import {
-	attemptSignIn,
 	attemptMagicLink,
+	attemptSignIn,
 	recordSuccessfulSignIn,
 } from "../rate-limit";
 
@@ -22,9 +22,9 @@ describe("attemptSignIn", () => {
 		attemptSignIn(email);
 		const result = attemptSignIn(email);
 		expect(result.allowed).toBe(false);
-		expect(
-			(result as { errorMessage: string }).errorMessage,
-		).toContain("sign-in");
+		expect((result as { errorMessage: string }).errorMessage).toContain(
+			"sign-in",
+		);
 	});
 
 	test("normalizes email case", () => {
@@ -69,8 +69,8 @@ describe("attemptMagicLink", () => {
 		attemptMagicLink(email);
 		const result = attemptMagicLink(email);
 		expect(result.allowed).toBe(false);
-		expect(
-			(result as { errorMessage: string }).errorMessage,
-		).toContain("magic link");
+		expect((result as { errorMessage: string }).errorMessage).toContain(
+			"magic link",
+		);
 	});
 });

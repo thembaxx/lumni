@@ -1,8 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getAuthenticatedUserId } from "@/lib/server/auth";
+import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 const FREE_TTS_API_URL = "https://api.freetts.org/v1/synthesizes";
 
-export async function POST(request: NextRequest) {
+async function ttsHandler(request: NextRequest) {
+	const userId = await getAuthenticatedUserId();
+	if (!userId) {
+		return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+	}
+
 	try {
 		const { text, voice, lang } = await request.json();
 
@@ -56,3 +63,8 @@ export async function POST(request: NextRequest) {
 		);
 	}
 }
+
+export const POST = withRateLimit(ttsHandler, {
+	max: 5,
+	windowMs: 60000,
+});

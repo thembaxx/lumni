@@ -16,7 +16,9 @@ describe("serializeQuestionType", () => {
 	});
 
 	test("joins array with commas", () => {
-		expect(serializeQuestionType(["mcq", "short-answer"])).toBe("mcq,short-answer");
+		expect(serializeQuestionType(["mcq", "short-answer"])).toBe(
+			"mcq,short-answer",
+		);
 		expect(serializeQuestionType(["a", "b", "c"])).toBe("a,b,c");
 	});
 

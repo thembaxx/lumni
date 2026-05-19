@@ -2,7 +2,7 @@
 
 import { Award01Icon, CrownIcon, FireIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getWeeklyLeaderboard } from "@/lib/services/leaderboard-service";
 import { cn } from "@/lib/shared";
@@ -15,7 +15,10 @@ const rankColors = [
 ];
 
 export function LeaderboardCard() {
-	const entries = useMemo(() => getWeeklyLeaderboard(), []);
+	const { data: entries = [] } = useQuery({
+		queryKey: ["leaderboard"],
+		queryFn: () => getWeeklyLeaderboard(),
+	});
 
 	return (
 		<Card className="overflow-hidden">

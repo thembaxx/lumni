@@ -1,7 +1,9 @@
-import { beforeEach, describe, expect, test, mock } from "bun:test";
+import { beforeEach, describe, expect, mock, test } from "bun:test";
 
-const mockGetNextTopics = mock<(subject: string, competencyMap: unknown) => unknown>();
-const mockListDocuments = mock<(collection: string, queries: unknown[]) => unknown>();
+const mockGetNextTopics =
+	mock<(subject: string, competencyMap: unknown) => unknown>();
+const mockListDocuments =
+	mock<(collection: string, queries: unknown[]) => unknown>();
 
 mock.module("@/lib/competency-engine", () => ({
 	pathEngine: {
@@ -24,9 +26,7 @@ describe("GET /api/engine/next-topics", () => {
 	});
 
 	test("returns 400 when subject is missing", async () => {
-		const req = new NextRequest(
-			"http://localhost/api/engine/next-topics",
-		);
+		const req = new NextRequest("http://localhost/api/engine/next-topics");
 
 		const res = await GET(req);
 		const body = await res.json();

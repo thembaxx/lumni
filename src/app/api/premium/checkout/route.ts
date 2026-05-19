@@ -1,11 +1,18 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { getAuthenticatedUserId } from "@/lib/server/auth";
+import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
-export async function POST(_req: Request) {
+async function checkoutHandler(req: NextRequest) {
+	const userId = await getAuthenticatedUserId();
+	if (!userId) {
+		return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+	}
+
 	try {
 		const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
 
 		if (STRIPE_SECRET_KEY) {
-			const { priceId } = await _req.json();
+			const { priceId } = await req.json();
 			const stripeRes = await fetch(
 				"https://api.stripe.com/v1/checkout/sessions",
 				{
@@ -18,8 +25,8 @@ export async function POST(_req: Request) {
 						mode: "subscription",
 						"line_items[0][price]": priceId || "price_premium_yearly",
 						"line_items[0][quantity]": "1",
-						success_url: `${new URL(_req.url).origin}/premium?success=true`,
-						cancel_url: `${new URL(_req.url).origin}/premium?canceled=true`,
+						success_url: `${new URL(req.url).origin}/premium?success=true`,
+						cancel_url: `${new URL(req.url).origin}/premium?canceled=true`,
 					}),
 				},
 			);
@@ -34,7 +41,7 @@ export async function POST(_req: Request) {
 			return NextResponse.json({ url: session.url });
 		}
 
-		const body = await _req.json();
+		const body = await req.json();
 		return NextResponse.json({
 			url: `/premium?checkout=${encodeURIComponent(JSON.stringify(body))}`,
 		});
@@ -46,3 +53,8 @@ export async function POST(_req: Request) {
 		);
 	}
 }
+
+export const POST = withRateLimit(checkoutHandler, {
+	max: 5,
+	windowMs: 60000,
+});

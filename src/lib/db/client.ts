@@ -15,6 +15,8 @@ export const COLLECTIONS = {
 	EXAM_SESSIONS: "exam_sessions",
 	REFERRAL_CODES: "referral_codes",
 	REFERRALS: "referrals",
+	STUDY_PLANS: "study_plans",
+	QUESTION_FLAGS: "question_flags",
 } as const;
 
 export type Subject = {

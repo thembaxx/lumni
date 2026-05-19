@@ -41,11 +41,29 @@ function SegmentedControl({
 		requestAnimationFrame(measure);
 	}, [measure]);
 
+	const handleKeyDown = useCallback(
+		(e: React.KeyboardEvent) => {
+			const currentIndex = items.findIndex((item) => item.value === value);
+			let nextIndex: number | null = null;
+			if (e.key === "ArrowRight") {
+				nextIndex = (currentIndex + 1) % items.length;
+			} else if (e.key === "ArrowLeft") {
+				nextIndex = (currentIndex - 1 + items.length) % items.length;
+			}
+			if (nextIndex !== null) {
+				e.preventDefault();
+				onValueChange(items[nextIndex].value);
+			}
+		},
+		[items, value, onValueChange],
+	);
+
 	return (
 		<Anim>
 			<div
 				ref={listRef}
-				role="radiogroup"
+				role="tablist"
+				onKeyDown={handleKeyDown}
 				className={cn(
 					"relative inline-flex items-center rounded-[10px] bg-[--system-surface-secondary] p-[3px]",
 					className,
@@ -54,8 +72,9 @@ function SegmentedControl({
 				{items.map((item) => (
 					<button
 						key={item.value}
-						role="radio"
-						aria-checked={value === item.value}
+						role="tab"
+						aria-selected={value === item.value}
+						aria-controls={`tabpanel-${item.value}`}
 						onClick={() => onValueChange(item.value)}
 						className={cn(
 							"relative z-10 flex-1 rounded-[7px] px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors duration-150",

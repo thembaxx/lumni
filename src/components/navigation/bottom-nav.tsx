@@ -71,6 +71,7 @@ function NavItemComponent({
 		<motion.button
 			type="button"
 			onClick={onClick}
+			aria-label={item.label}
 			aria-current={isActive ? "page" : undefined}
 			className="flex flex-1 flex-col items-center justify-center gap-0.5 h-full min-w-0 relative cursor-pointer bg-transparent border-none outline-none p-0 m-0 text-inherit"
 			whileTap={{ scale: 0.96 }}

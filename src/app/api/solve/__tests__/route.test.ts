@@ -1,4 +1,4 @@
-import { describe, expect, test, mock, beforeEach } from "bun:test";
+import { beforeEach, describe, expect, mock, test } from "bun:test";
 
 const mockGenerateWithSystem = mock<(...args: unknown[]) => unknown>();
 const mockInitAI = mock<(...args: unknown[]) => unknown>();
@@ -88,7 +88,10 @@ describe("POST /api/solve", () => {
 		mockCheckBudget.mockResolvedValue({ allowed: true, userId: "test-user" });
 		mockIsAIConfigured.mockReturnValue(true);
 		mockGenerateWithSystem.mockResolvedValue({
-			content: JSON.stringify({ solution: "4", steps: ["Add 2 + 2", "Result is 4"] }),
+			content: JSON.stringify({
+				solution: "4",
+				steps: ["Add 2 + 2", "Result is 4"],
+			}),
 			provider: "gemini",
 			available: true,
 		});
@@ -134,14 +137,21 @@ describe("POST /api/solve", () => {
 		mockCheckBudget.mockResolvedValue({ allowed: true, userId: "test-user" });
 		mockIsAIConfigured.mockReturnValue(true);
 		mockGenerateWithSystem.mockResolvedValue({
-			content: JSON.stringify({ solution: "Solve for x: 2x + 3 = 7", steps: [] }),
+			content: JSON.stringify({
+				solution: "Solve for x: 2x + 3 = 7",
+				steps: [],
+			}),
 			provider: "gemini",
 			available: true,
 		});
 
 		const req = new NextRequest("http://localhost/api/solve", {
 			method: "POST",
-			body: JSON.stringify({ question: "", imageUrl: "http://example.com/math.png", mode: "extract" }),
+			body: JSON.stringify({
+				question: "",
+				imageUrl: "http://example.com/math.png",
+				mode: "extract",
+			}),
 		});
 		const res = await POST(req);
 		const body = await res.json();
@@ -166,7 +176,9 @@ describe("POST /api/solve", () => {
 		const res = await POST(req);
 		const body = await res.json();
 
-		expect(body.solution).toBe("The answer is 4\n\nExplanation: Add them together");
+		expect(body.solution).toBe(
+			"The answer is 4\n\nExplanation: Add them together",
+		);
 		expect(body.steps).toEqual([]);
 		expect(body.provider).toBe("gemini");
 	});
@@ -175,7 +187,10 @@ describe("POST /api/solve", () => {
 		mockCheckBudget.mockResolvedValue({ allowed: true, userId: "test-user" });
 		mockIsAIConfigured.mockReturnValue(true);
 		mockGenerateWithSystem.mockResolvedValue({
-			content: JSON.stringify({ solution: "x = 2", steps: ["Subtract 3", "Divide by 2"] }),
+			content: JSON.stringify({
+				solution: "x = 2",
+				steps: ["Subtract 3", "Divide by 2"],
+			}),
 			provider: "gemini",
 			available: true,
 		});
@@ -204,7 +219,10 @@ describe("POST /api/solve", () => {
 
 		const req = new NextRequest("http://localhost/api/solve", {
 			method: "POST",
-			body: JSON.stringify({ question: "Derivative of x^2", subject: "calculus" }),
+			body: JSON.stringify({
+				question: "Derivative of x^2",
+				subject: "calculus",
+			}),
 		});
 		await POST(req);
 

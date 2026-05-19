@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
+import { requireAdmin } from "@/lib/server/auth";
+import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
-export async function POST(req: NextRequest) {
+async function pushSendHandler(req: NextRequest) {
+	await requireAdmin();
+
 	try {
 		const { title, body, url, userId } = await req.json();
 
@@ -66,3 +70,8 @@ export async function POST(req: NextRequest) {
 		);
 	}
 }
+
+export const POST = withRateLimit(pushSendHandler, {
+	max: 3,
+	windowMs: 60000,
+});

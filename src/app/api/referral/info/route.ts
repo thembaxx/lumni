@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import {
 	buildReferralLink,
 	generateReferralCode,
@@ -11,9 +11,13 @@ import {
 	getReferralCountThisMonth,
 	getReferralsByReferrer,
 } from "@/lib/referral/service";
-import { getAuthenticatedUserId, getAuthenticatedUserName } from "@/lib/server/auth";
+import {
+	getAuthenticatedUserId,
+	getAuthenticatedUserName,
+} from "@/lib/server/auth";
+import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
-export async function GET() {
+async function referralInfoHandler(_req: NextRequest) {
 	try {
 		const userId = await getAuthenticatedUserId();
 		if (!userId) {
@@ -63,3 +67,8 @@ export async function GET() {
 		);
 	}
 }
+
+export const GET = withRateLimit(referralInfoHandler, {
+	max: 10,
+	windowMs: 60000,
+});

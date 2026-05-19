@@ -1,9 +1,10 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { account } from "@/lib/appwrite";
+import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
-export async function POST(_req: Request) {
+async function verifyEmailHandler(req: NextRequest) {
 	try {
-		const { userId, secret } = await _req.json();
+		const { userId, secret } = await req.json();
 
 		if (!userId || !secret) {
 			return NextResponse.json(
@@ -23,3 +24,8 @@ export async function POST(_req: Request) {
 		);
 	}
 }
+
+export const POST = withRateLimit(verifyEmailHandler, {
+	max: 5,
+	windowMs: 60000,
+});

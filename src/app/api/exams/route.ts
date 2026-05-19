@@ -1,10 +1,11 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { databases } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
+import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 export const runtime = "nodejs";
 
-export async function GET(request: Request) {
+async function examsHandler(request: NextRequest) {
 	const { searchParams } = new URL(request.url);
 	const subjectCode = searchParams.get("subject");
 	const year = searchParams.get("year");
@@ -78,3 +79,8 @@ export async function GET(request: Request) {
 		);
 	}
 }
+
+export const GET = withRateLimit(examsHandler, {
+	max: 15,
+	windowMs: 60000,
+});

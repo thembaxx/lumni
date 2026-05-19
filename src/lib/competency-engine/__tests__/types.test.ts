@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import {
-	computeCompetencyLevel,
 	computeBloomWeight,
+	computeCompetencyLevel,
 	computeWeightedScore,
 } from "../types";
 

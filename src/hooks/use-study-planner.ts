@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { useAuth } from "@/lib/auth/auth-context";
 import { schedulePlanAwareReminder } from "@/lib/services/notification-service";
 import {
 	addExamDate,
@@ -17,6 +18,7 @@ import {
 	type StudyPlan,
 	type StudySession,
 	saveStudyPlan,
+	syncStudyPlanToAppwrite,
 	updateStudySession,
 } from "@/lib/utils/study-planner";
 
@@ -47,6 +49,7 @@ export interface UseStudyPlannerReturn {
 }
 
 export function useStudyPlanner(): UseStudyPlannerReturn {
+	const { user } = useAuth();
 	const [plan, setPlan] = useState<StudyPlan>(loadStudyPlan());
 	const [todaySessions, setTodaySessions] = useState<StudySession[]>([]);
 	const [upcomingSessions, setUpcomingSessions] = useState<StudySession[]>([]);
@@ -72,9 +75,10 @@ export function useStudyPlanner(): UseStudyPlannerReturn {
 		(session: Omit<StudySession, "id">) => {
 			addStudySession(session);
 			schedulePlanAwareReminder();
+			if (user?.$id) syncStudyPlanToAppwrite(user.$id).catch(() => {});
 			refresh();
 		},
-		[refresh],
+		[refresh, user],
 	);
 
 	const updateSession = useCallback(
@@ -88,9 +92,10 @@ export function useStudyPlanner(): UseStudyPlannerReturn {
 	const removeSession = useCallback(
 		(id: string) => {
 			deleteStudySession(id);
+			if (user?.$id) syncStudyPlanToAppwrite(user.$id).catch(() => {});
 			refresh();
 		},
-		[refresh],
+		[refresh, user],
 	);
 
 	const markComplete = useCallback(
@@ -99,25 +104,28 @@ export function useStudyPlanner(): UseStudyPlannerReturn {
 				completed: true,
 				completedAt: Date.now(),
 			});
+			if (user?.$id) syncStudyPlanToAppwrite(user.$id).catch(() => {});
 			refresh();
 		},
-		[refresh],
+		[refresh, user],
 	);
 
 	const addExam = useCallback(
 		(exam: Omit<ExamDate, "id" | "daysUntil">) => {
 			addExamDate(exam);
+			if (user?.$id) syncStudyPlanToAppwrite(user.$id).catch(() => {});
 			refresh();
 		},
-		[refresh],
+		[refresh, user],
 	);
 
 	const removeExam = useCallback(
 		(id: string) => {
 			deleteExamDate(id);
+			if (user?.$id) syncStudyPlanToAppwrite(user.$id).catch(() => {});
 			refresh();
 		},
-		[refresh],
+		[refresh, user],
 	);
 
 	const autoSchedule = useCallback(
@@ -178,6 +186,7 @@ export function useStudyPlanner(): UseStudyPlannerReturn {
 				existingPlan.generatedAt = Date.now();
 				saveStudyPlan(existingPlan);
 				schedulePlanAwareReminder();
+				if (user?.$id) syncStudyPlanToAppwrite(user.$id).catch(() => {});
 				refresh();
 			} catch (error) {
 				console.error("Failed to generate study plan:", error);
@@ -185,7 +194,7 @@ export function useStudyPlanner(): UseStudyPlannerReturn {
 				setIsGenerating(false);
 			}
 		},
-		[refresh],
+		[refresh, user?.$id],
 	);
 
 	return {

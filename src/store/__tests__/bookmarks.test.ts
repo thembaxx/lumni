@@ -1,4 +1,4 @@
-import { describe, expect, test, beforeEach } from "bun:test";
+import { beforeEach, describe, expect, test } from "bun:test";
 import { useBookmarksStore } from "../bookmarks";
 
 beforeEach(() => {
@@ -11,14 +11,12 @@ describe("useBookmarksStore", () => {
 	});
 
 	test("addBookmark adds a bookmark with savedAt timestamp", () => {
-		useBookmarksStore
-			.getState()
-			.addBookmark({
-				id: "q1",
-				questionText: "What is 2+2?",
-				subject: "mathematics",
-				topic: "algebra",
-			});
+		useBookmarksStore.getState().addBookmark({
+			id: "q1",
+			questionText: "What is 2+2?",
+			subject: "mathematics",
+			topic: "algebra",
+		});
 		const { bookmarks } = useBookmarksStore.getState();
 		expect(bookmarks).toHaveLength(1);
 		expect(bookmarks[0].id).toBe("q1");

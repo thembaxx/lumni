@@ -1,8 +1,12 @@
-import { describe, expect, test, beforeEach } from "bun:test";
+import { beforeEach, describe, expect, test } from "bun:test";
 import { useToolsStore } from "../tools";
 
 beforeEach(() => {
-	useToolsStore.setState({ open: false, initialTab: "solver", cameraFocus: false });
+	useToolsStore.setState({
+		open: false,
+		initialTab: "solver",
+		cameraFocus: false,
+	});
 });
 
 describe("useToolsStore", () => {

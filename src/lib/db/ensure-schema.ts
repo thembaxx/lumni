@@ -218,9 +218,44 @@ export const schemaConfig: Record<string, CollectionSchema> = {
 			createdAt: { type: "datetime" },
 		},
 		indexes: [
-			{ key: "idx_referrals_referrerId", type: "key", attributes: ["referrerId"] },
-			{ key: "idx_referrals_refereeId", type: "key", attributes: ["refereeId"] },
+			{
+				key: "idx_referrals_referrerId",
+				type: "key",
+				attributes: ["referrerId"],
+			},
+			{
+				key: "idx_referrals_refereeId",
+				type: "key",
+				attributes: ["refereeId"],
+			},
 			{ key: "idx_referrals_status", type: "key", attributes: ["status"] },
+		],
+	},
+	study_plans: {
+		attributes: {
+			userId: { type: "string", size: 100, required: true },
+			planData: { type: "string", size: 100000 },
+			examDates: { type: "string", size: 50000 },
+			generatedAt: { type: "datetime" },
+			updatedAt: { type: "datetime" },
+		},
+		indexes: [
+			{ key: "idx_study_plans_userId", type: "key", attributes: ["userId"] },
+		],
+	},
+	question_flags: {
+		attributes: {
+			questionId: { type: "string", size: 100, required: true },
+			userId: { type: "string", size: 100, required: true },
+			reason: { type: "string", size: 50, required: true },
+			details: { type: "string", size: 2000 },
+			status: { type: "string", size: 20, required: true },
+			createdAt: { type: "datetime" },
+		},
+		indexes: [
+			{ key: "idx_flags_questionId", type: "key", attributes: ["questionId"] },
+			{ key: "idx_flags_userId", type: "key", attributes: ["userId"] },
+			{ key: "idx_flags_status", type: "key", attributes: ["status"] },
 		],
 	},
 	analytics: {

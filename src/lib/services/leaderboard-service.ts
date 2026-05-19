@@ -1,6 +1,6 @@
 import { loadFromStorage, saveToStorage } from "@/lib/utils/storage";
 
-interface LeaderboardEntry {
+export interface LeaderboardEntry {
 	rank: number;
 	label: string;
 	xp: number;
@@ -10,7 +10,27 @@ interface LeaderboardEntry {
 
 const LEADERBOARD_KEY = "lumni_leaderboard_history";
 
-export function getWeeklyLeaderboard(): LeaderboardEntry[] {
+export async function fetchLeaderboardFromServer(): Promise<
+	LeaderboardEntry[]
+> {
+	try {
+		const res = await fetch("/api/leaderboard");
+		if (!res.ok) throw new Error("Server unavailable");
+		const data = await res.json();
+		return (data.entries as LeaderboardEntry[]) || [];
+	} catch {
+		return [];
+	}
+}
+
+export async function getWeeklyLeaderboard(): Promise<LeaderboardEntry[]> {
+	const serverData = await fetchLeaderboardFromServer();
+	if (serverData.length > 0) return serverData;
+
+	return getLocalLeaderboard();
+}
+
+export function getLocalLeaderboard(): LeaderboardEntry[] {
 	const currentXp = loadFromStorage<number>("lumni_total_xp", 0);
 	const currentStreak = loadFromStorage<number>("lumni_streak", 0);
 

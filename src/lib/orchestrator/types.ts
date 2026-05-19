@@ -8,7 +8,10 @@ export type JobType =
 	| "appwrite-progress-sync"
 	| "appwrite-attempt-sync"
 	| "appwrite-competency-sync"
-	| "appwrite-rating-sync";
+	| "appwrite-rating-sync"
+	| "appwrite-study-plan-sync"
+	| "appwrite-question-flag"
+	| "question-regen";
 
 export type JobStatus =
 	| "pending"

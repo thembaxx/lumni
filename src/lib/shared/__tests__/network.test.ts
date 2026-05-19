@@ -1,11 +1,4 @@
-import {
-	describe,
-	expect,
-	test,
-	mock,
-	beforeAll,
-	beforeEach,
-} from "bun:test";
+import { beforeAll, beforeEach, describe, expect, mock, test } from "bun:test";
 
 let setTimeoutCalls: Array<{ fn: Function }>;
 let callCount = 0;

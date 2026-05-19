@@ -1,22 +1,26 @@
-import { describe, expect, test, mock, beforeEach } from "bun:test";
+import { beforeEach, describe, expect, mock, test } from "bun:test";
 import type { FlashcardSM2 } from "@/lib/flashcard-repository/types";
 import type { Question } from "@/lib/question-engine/types";
 
-const createMock = mock(async (_front: string, _back: string, _subject: string, _topic?: string) => ({
-	id: "fc_new",
-	front: _front,
-	back: _back,
-	subject: _subject,
-	topic: _topic,
-	easeFactor: 2.5,
-	interval: 0,
-	repetitions: 0,
-	nextReview: Date.now(),
-	lastReview: null,
-	createdAt: Date.now(),
-}));
+const createMock = mock(
+	async (_front: string, _back: string, _subject: string, _topic?: string) => ({
+		id: "fc_new",
+		front: _front,
+		back: _back,
+		subject: _subject,
+		topic: _topic,
+		easeFactor: 2.5,
+		interval: 0,
+		repetitions: 0,
+		nextReview: Date.now(),
+		lastReview: null,
+		createdAt: Date.now(),
+	}),
+);
 
-const updateMock = mock(async (_id: string, _updates: Partial<FlashcardSM2>) => {});
+const updateMock = mock(
+	async (_id: string, _updates: Partial<FlashcardSM2>) => {},
+);
 
 let mockCards: FlashcardSM2[] = [];
 
@@ -91,19 +95,21 @@ describe("SpacedRepService", () => {
 		});
 
 		test("updates existing card with new SM-2 values", async () => {
-			mockCards = [{
-				id: "fc_existing",
-				front: "What is 2+2?",
-				back: "4",
-				subject: "mathematics",
-				topic: "algebra",
-				easeFactor: 2.5,
-				interval: 6,
-				repetitions: 2,
-				nextReview: Date.now(),
-				lastReview: Date.now(),
-				createdAt: Date.now(),
-			}];
+			mockCards = [
+				{
+					id: "fc_existing",
+					front: "What is 2+2?",
+					back: "4",
+					subject: "mathematics",
+					topic: "algebra",
+					easeFactor: 2.5,
+					interval: 6,
+					repetitions: 2,
+					nextReview: Date.now(),
+					lastReview: Date.now(),
+					createdAt: Date.now(),
+				},
+			];
 
 			await service.update(makeQuestion(), { correct: true, score: 0.95 });
 			expect(updateMock).toHaveBeenCalledTimes(1);
@@ -114,19 +120,21 @@ describe("SpacedRepService", () => {
 		});
 
 		test("does not create duplicate when card already exists", async () => {
-			mockCards = [{
-				id: "fc_existing",
-				front: "What is 2+2?",
-				back: "4",
-				subject: "mathematics",
-				topic: "algebra",
-				easeFactor: 2.5,
-				interval: 0,
-				repetitions: 0,
-				nextReview: Date.now(),
-				lastReview: null,
-				createdAt: Date.now(),
-			}];
+			mockCards = [
+				{
+					id: "fc_existing",
+					front: "What is 2+2?",
+					back: "4",
+					subject: "mathematics",
+					topic: "algebra",
+					easeFactor: 2.5,
+					interval: 0,
+					repetitions: 0,
+					nextReview: Date.now(),
+					lastReview: null,
+					createdAt: Date.now(),
+				},
+			];
 
 			await service.update(makeQuestion(), { correct: false, score: 0.2 });
 			expect(createMock).not.toHaveBeenCalled();
@@ -134,19 +142,21 @@ describe("SpacedRepService", () => {
 		});
 
 		test("quality 5 for near-perfect correct answers", async () => {
-			mockCards = [{
-				id: "fc_q",
-				front: "What is 2+2?",
-				back: "4",
-				subject: "mathematics",
-				topic: "algebra",
-				easeFactor: 2.5,
-				interval: 0,
-				repetitions: 0,
-				nextReview: Date.now(),
-				lastReview: null,
-				createdAt: Date.now(),
-			}];
+			mockCards = [
+				{
+					id: "fc_q",
+					front: "What is 2+2?",
+					back: "4",
+					subject: "mathematics",
+					topic: "algebra",
+					easeFactor: 2.5,
+					interval: 0,
+					repetitions: 0,
+					nextReview: Date.now(),
+					lastReview: null,
+					createdAt: Date.now(),
+				},
+			];
 
 			await service.update(makeQuestion(), { correct: true, score: 0.95 });
 			const updates = updateMock.mock.calls[0][1] as FlashcardSM2;
@@ -154,19 +164,21 @@ describe("SpacedRepService", () => {
 		});
 
 		test("quality 0 for complete blackout", async () => {
-			mockCards = [{
-				id: "fc_q0",
-				front: "What is 2+2?",
-				back: "4",
-				subject: "mathematics",
-				topic: "algebra",
-				easeFactor: 2.5,
-				interval: 0,
-				repetitions: 0,
-				nextReview: Date.now(),
-				lastReview: null,
-				createdAt: Date.now(),
-			}];
+			mockCards = [
+				{
+					id: "fc_q0",
+					front: "What is 2+2?",
+					back: "4",
+					subject: "mathematics",
+					topic: "algebra",
+					easeFactor: 2.5,
+					interval: 0,
+					repetitions: 0,
+					nextReview: Date.now(),
+					lastReview: null,
+					createdAt: Date.now(),
+				},
+			];
 
 			await service.update(makeQuestion(), { correct: false, score: 0 });
 			const updates = updateMock.mock.calls[0][1] as FlashcardSM2;
@@ -179,7 +191,6 @@ describe("SpacedRepService", () => {
 const { extractCorrectAnswer } = await import("../spaced-rep-service");
 
 describe("extractCorrectAnswer", () => {
-
 	test("extracts from MCQ options", () => {
 		const q = makeQuestion();
 		expect(extractCorrectAnswer(q)).toBe("4");
@@ -211,7 +222,11 @@ describe("extractCorrectAnswer", () => {
 
 	test("returns null when no correct option in MCQ", () => {
 		const q = makeQuestion({
-			body: { options: [{ id: "A", text: "3", isCorrect: false }], correctOptionId: "A", allowMultiple: false },
+			body: {
+				options: [{ id: "A", text: "3", isCorrect: false }],
+				correctOptionId: "A",
+				allowMultiple: false,
+			},
 		});
 		expect(extractCorrectAnswer(q)).toBeNull();
 	});

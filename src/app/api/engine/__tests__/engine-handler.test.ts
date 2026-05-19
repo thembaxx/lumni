@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, test, mock } from "bun:test";
+import { beforeEach, describe, expect, mock, test } from "bun:test";
 
 const mockCheckBudget = mock<(req: unknown, type: string) => unknown>();
 const mockTrackUsage = mock<(type: string, userId: string) => void>();
@@ -14,9 +14,7 @@ mock.module("@/lib/shared/with-rate-limit", () => ({
 }));
 
 const { NextRequest, NextResponse } = await import("next/server");
-const { createEngineHandler } = await import(
-	"@/lib/api/engine-handler"
-);
+const { createEngineHandler } = await import("@/lib/api/engine-handler");
 
 describe("createEngineHandler", () => {
 	beforeEach(() => {
@@ -167,7 +165,7 @@ describe("createEngineHandler", () => {
 	});
 
 	test("useRateLimit false skips rate limit wrapping", async () => {
-		const handler = createEngineHandler({
+		const _handler = createEngineHandler({
 			budgetType: "generate",
 			useRateLimit: false,
 			errorLabel: "Test",

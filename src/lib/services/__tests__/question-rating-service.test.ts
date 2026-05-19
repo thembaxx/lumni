@@ -1,4 +1,4 @@
-import { describe, expect, test, mock, beforeEach } from "bun:test";
+import { beforeEach, describe, expect, mock, test } from "bun:test";
 import type { QuestionRating } from "@/lib/db/schema";
 
 const enqueueMock = mock(async () => 1);
@@ -22,10 +22,13 @@ const mockRatingsTable = {
 	where: (field: string) => ({
 		equals: (value: string) => ({
 			first: async () =>
-				ratingStore.find((r) => r[field as keyof QuestionRating] === value) ?? null,
+				ratingStore.find((r) => r[field as keyof QuestionRating] === value) ??
+				null,
 			reverse: () => ({
 				toArray: async () =>
-					[...ratingStore].filter((r) => r[field as keyof QuestionRating] === value).reverse(),
+					[...ratingStore]
+						.filter((r) => r[field as keyof QuestionRating] === value)
+						.reverse(),
 			}),
 		}),
 	}),
@@ -93,10 +96,19 @@ describe("QuestionRatingService", () => {
 		});
 
 		test("enqueues appwrite-rating-sync", async () => {
-			await service.rate({ questionId: "q1", subject: "math", rating: 4, feedback: "Good" });
+			await service.rate({
+				questionId: "q1",
+				subject: "math",
+				rating: 4,
+				feedback: "Good",
+			});
 			expect(enqueueMock).toHaveBeenCalledWith(
 				"appwrite-rating-sync",
-				expect.objectContaining({ questionId: "q1", rating: 4, feedback: "Good" }),
+				expect.objectContaining({
+					questionId: "q1",
+					rating: 4,
+					feedback: "Good",
+				}),
 			);
 		});
 	});
@@ -147,9 +159,7 @@ describe("QuestionRatingService", () => {
 		});
 
 		test("ignores questions with fewer than minRatings", async () => {
-			ratingStore.push(
-				makeRating({ id: 1, questionId: "q1", rating: 1 }),
-			);
+			ratingStore.push(makeRating({ id: 1, questionId: "q1", rating: 1 }));
 			const low = await service.getLowRatedQuestions(2, 2);
 			expect(low).toHaveLength(0);
 		});

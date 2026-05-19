@@ -1,10 +1,11 @@
 import { Query } from "appwrite";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { account } from "@/lib/appwrite";
 import { COLLECTIONS, listDocuments } from "@/lib/db/client";
+import { getAuthenticatedUserId } from "@/lib/server/auth";
+import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
-export async function GET(request: NextRequest) {
+async function subjectsHandler(request: NextRequest) {
 	let allSubjects;
 	try {
 		allSubjects = await listDocuments(COLLECTIONS.SUBJECTS);
@@ -20,18 +21,12 @@ export async function GET(request: NextRequest) {
 	const { searchParams } = new URL(request.url);
 	const requestedUserId = searchParams.get("userId");
 
-	let sessionUser;
-	try {
-		sessionUser = await account.get();
-	} catch {
+	const authenticatedUserId = await getAuthenticatedUserId();
+
+	if (!authenticatedUserId) {
 		return NextResponse.json({ subjects: allSubjects }, { status: 200 });
 	}
 
-	if (!sessionUser) {
-		return NextResponse.json({ subjects: allSubjects }, { status: 200 });
-	}
-
-	const authenticatedUserId = sessionUser.$id;
 	const targetUserId = requestedUserId ?? authenticatedUserId;
 
 	if (targetUserId !== authenticatedUserId) {
@@ -85,3 +80,8 @@ export async function GET(request: NextRequest) {
 		},
 	});
 }
+
+export const GET = withRateLimit(subjectsHandler, {
+	max: 30,
+	windowMs: 60000,
+});

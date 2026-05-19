@@ -1,5 +1,3 @@
-"use client";
-
 import { m } from "framer-motion";
 import { Progress, ProgressIndicator } from "@/components/ui/progress";
 import { cn } from "@/lib/shared";

@@ -1,5 +1,3 @@
-"use client";
-
 import { m } from "framer-motion";
 import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";

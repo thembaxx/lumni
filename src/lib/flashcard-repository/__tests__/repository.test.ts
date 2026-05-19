@@ -1,4 +1,4 @@
-import { describe, expect, test, mock } from "bun:test";
+import { describe, expect, mock, test } from "bun:test";
 import type { FlashcardSM2 } from "../types";
 
 function makeCard(overrides: Partial<FlashcardSM2> = {}): FlashcardSM2 {
@@ -128,7 +128,12 @@ describe("DexieFlashcardRepository", () => {
 	});
 
 	test("create adds a new card with default SM-2 values", async () => {
-		const card = await repo.create("test front", "test back", "mathematics", "algebra");
+		const card = await repo.create(
+			"test front",
+			"test back",
+			"mathematics",
+			"algebra",
+		);
 		expect(card.front).toBe("test front");
 		expect(card.back).toBe("test back");
 		expect(card.easeFactor).toBe(2.5);

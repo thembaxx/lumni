@@ -1,4 +1,4 @@
-import { describe, expect, test, mock, beforeEach } from "bun:test";
+import { beforeEach, describe, expect, mock, test } from "bun:test";
 
 const mockGenerateWithSystem = mock<(...args: unknown[]) => unknown>();
 const mockInitAI = mock<(...args: unknown[]) => unknown>();
@@ -88,7 +88,8 @@ describe("POST /api/generate-element-fact", () => {
 		mockCheckBudget.mockResolvedValue({ allowed: true, userId: "test-user" });
 		mockIsAIConfigured.mockReturnValue(true);
 		mockGenerateWithSystem.mockResolvedValue({
-			content: "Hydrogen is the most abundant element in the universe, making up about 75% of its elemental mass.",
+			content:
+				"Hydrogen is the most abundant element in the universe, making up about 75% of its elemental mass.",
 			provider: "gemini",
 			available: true,
 		});
@@ -109,7 +110,10 @@ describe("POST /api/generate-element-fact", () => {
 	});
 
 	test("budget exceeded returns 429", async () => {
-		const mockResponse = new Response(JSON.stringify({ error: "Daily generation limit reached" }), { status: 429 });
+		const mockResponse = new Response(
+			JSON.stringify({ error: "Daily generation limit reached" }),
+			{ status: 429 },
+		);
 		mockCheckBudget.mockResolvedValue({
 			allowed: false,
 			userId: "test-user",

@@ -14,6 +14,9 @@ const DEFAULT_MAX_RETRIES: Record<JobType, number> = {
 	"appwrite-attempt-sync": 3,
 	"appwrite-competency-sync": 3,
 	"appwrite-rating-sync": 3,
+	"appwrite-study-plan-sync": 3,
+	"appwrite-question-flag": 3,
+	"question-regen": 2,
 };
 
 const DEFAULT_PRIORITY: Record<JobType, number> = {
@@ -27,6 +30,9 @@ const DEFAULT_PRIORITY: Record<JobType, number> = {
 	"appwrite-attempt-sync": 65,
 	"appwrite-competency-sync": 65,
 	"appwrite-rating-sync": 50,
+	"appwrite-study-plan-sync": 60,
+	"appwrite-question-flag": 50,
+	"question-regen": 40,
 };
 
 export const queueCore = new QueueCore<JobRecord>(offlineDB.jobs);

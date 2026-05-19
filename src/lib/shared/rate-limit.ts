@@ -10,12 +10,15 @@ const rateLimiter = new RateLimiter();
 
 setInterval(() => rateLimiter.cleanup(), API_CONFIG.windowMs);
 
-export function checkRateLimit(ip: string): {
+export function checkRateLimit(
+	ip: string,
+	config?: RateLimitConfig,
+): {
 	allowed: boolean;
 	remaining: number;
 	resetAt: number;
 } {
-	return rateLimiter.check(ip, API_CONFIG);
+	return rateLimiter.check(ip, config ?? API_CONFIG);
 }
 
 export { getRateLimitHeaders };

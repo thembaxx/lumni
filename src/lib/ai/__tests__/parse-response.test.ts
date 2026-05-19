@@ -1,10 +1,10 @@
 import { describe, expect, test } from "bun:test";
 import {
-	isAIFailure,
 	cleanResponse,
-	parseAIResponse,
-	getTextResponse,
 	ensureArray,
+	getTextResponse,
+	isAIFailure,
+	parseAIResponse,
 } from "../parse-response";
 
 describe("isAIFailure", () => {
@@ -27,7 +27,7 @@ describe("cleanResponse", () => {
 	});
 
 	test("removes plain code fence", () => {
-		expect(cleanResponse('```\ntext\n```')).toBe("text");
+		expect(cleanResponse("```\ntext\n```")).toBe("text");
 	});
 
 	test("trims whitespace", () => {
@@ -50,18 +50,12 @@ describe("parseAIResponse", () => {
 	});
 
 	test("returns null for invalid JSON", () => {
-		const result = parseAIResponse(
-			{ content: "not json" },
-			"fallback",
-		);
+		const result = parseAIResponse({ content: "not json" }, "fallback");
 		expect(result).toBeNull();
 	});
 
 	test("parses valid JSON response", () => {
-		const result = parseAIResponse(
-			{ content: '{"key":"val"}' },
-			"fallback",
-		);
+		const result = parseAIResponse({ content: '{"key":"val"}' }, "fallback");
 		expect(result).toEqual({
 			data: { key: "val" },
 			raw: '{"key":"val"}',
@@ -70,7 +64,7 @@ describe("parseAIResponse", () => {
 
 	test("cleans response before parsing", () => {
 		const result = parseAIResponse(
-			{ content: "```json\n{\"a\":1}\n```" },
+			{ content: '```json\n{"a":1}\n```' },
 			"fallback",
 		);
 		expect(result).toEqual({ data: { a: 1 }, raw: '{"a":1}' });

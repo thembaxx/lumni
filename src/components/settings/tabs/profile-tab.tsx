@@ -96,6 +96,7 @@ function EditableField({
 					type="button"
 					onClick={handleSave}
 					disabled={saving || !draft.trim()}
+					aria-label="Save profile changes"
 					className="size-8 rounded-full bg-system-accent text-white flex items-center justify-center hover:bg-system-accent/90 shrink-0 disabled:opacity-50"
 				>
 					<HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-4" />
@@ -103,6 +104,7 @@ function EditableField({
 				<button
 					type="button"
 					onClick={handleCancel}
+					aria-label="Cancel editing"
 					className="size-8 rounded-full bg-system-fill text-muted-foreground flex items-center justify-center hover:bg-system-fill/80 shrink-0"
 				>
 					<HugeiconsIcon icon={Cancel01Icon} className="size-4" />
@@ -249,7 +251,10 @@ export function ProfileTab() {
 						<Avatar className="size-24 shadow-level-3 border-[6px] border-system-surface transition-transform duration-500 group-hover:scale-105">
 							{prefs.avatarUrl ? (
 								<AvatarImage
-									src={prefs.avatarUrl as string ?? `https://api.dicebear.com/9.x/fun-emoji/svg?seed=${getRandomName()}`}
+									src={
+										(prefs.avatarUrl as string) ??
+										`https://api.dicebear.com/9.x/fun-emoji/svg?seed=${getRandomName()}`
+									}
 									alt={user?.name || "User"}
 								/>
 							) : null}
@@ -442,6 +447,7 @@ export function ProfileTab() {
 							<button
 								type="button"
 								onClick={() => handleRemoveSubject(subject)}
+								aria-label={`Remove ${subject}`}
 								className="ml-0.5 hover:text-destructive"
 							>
 								<HugeiconsIcon icon={Cancel01Icon} className="size-3" />

@@ -1,4 +1,4 @@
-import { describe, expect, test, mock, beforeEach } from "bun:test";
+import { beforeEach, describe, expect, mock, test } from "bun:test";
 
 const mockGenerateWithSystem = mock<(...args: unknown[]) => unknown>();
 const mockInitAI = mock<(...args: unknown[]) => unknown>();
@@ -31,7 +31,7 @@ mock.module("@/curriculum", () => ({
 	},
 }));
 
-const { NextRequest, NextResponse } = await import("next/server");
+const { NextRequest } = await import("next/server");
 const { POST } = await import("../route");
 
 describe("POST /api/curated-problems", () => {
@@ -104,7 +104,11 @@ describe("POST /api/curated-problems", () => {
 
 		const req = new NextRequest("http://localhost/api/curated-problems", {
 			method: "POST",
-			body: JSON.stringify({ subject: "mathematics", topic: "algebra", count: 2 }),
+			body: JSON.stringify({
+				subject: "mathematics",
+				topic: "algebra",
+				count: 2,
+			}),
 		});
 		const res = await POST(req);
 		const body = await res.json();
@@ -125,22 +129,54 @@ describe("POST /api/curated-problems", () => {
 		mockGetSubject.mockResolvedValue({
 			subjectId: "mathematics",
 			subjectName: "Mathematics",
-			topics: [{ id: "algebra", name: "Algebra", order: 1, prerequisites: [], bloomTarget: "apply", subtopics: [{ id: "algebra-expressions", name: "Expressions and Equations", order: 1 }] }],
+			topics: [
+				{
+					id: "algebra",
+					name: "Algebra",
+					order: 1,
+					prerequisites: [],
+					bloomTarget: "apply",
+					subtopics: [
+						{
+							id: "algebra-expressions",
+							name: "Expressions and Equations",
+							order: 1,
+						},
+					],
+				},
+			],
 		});
 		mockGetTopic.mockResolvedValue({
 			id: "algebra",
 			name: "Algebra",
-			subtopics: [{ id: "algebra-expressions", name: "Expressions and Equations", order: 1 }],
+			subtopics: [
+				{
+					id: "algebra-expressions",
+					name: "Expressions and Equations",
+					order: 1,
+				},
+			],
 		});
 		mockGenerateWithSystem.mockResolvedValue({
-			content: JSON.stringify([{ questionText: "Test", solution: "Ans", steps: [], difficulty: "Easy" }]),
+			content: JSON.stringify([
+				{
+					questionText: "Test",
+					solution: "Ans",
+					steps: [],
+					difficulty: "Easy",
+				},
+			]),
 			provider: "gemini",
 			available: true,
 		});
 
 		const req = new NextRequest("http://localhost/api/curated-problems", {
 			method: "POST",
-			body: JSON.stringify({ subject: "mathematics", topic: "algebra", count: 1 }),
+			body: JSON.stringify({
+				subject: "mathematics",
+				topic: "algebra",
+				count: 1,
+			}),
 		});
 		await POST(req);
 
@@ -169,7 +205,9 @@ describe("POST /api/curated-problems", () => {
 		const body = await res.json();
 
 		expect(body.problems).toHaveLength(1);
-		expect(body.problems[0].questionText).toBe("Raw non-JSON response with problem text");
+		expect(body.problems[0].questionText).toBe(
+			"Raw non-JSON response with problem text",
+		);
 		expect(body.problems[0].difficulty).toBe("Medium");
 	});
 
@@ -182,7 +220,14 @@ describe("POST /api/curated-problems", () => {
 			topics: [],
 		});
 		mockGenerateWithSystem.mockResolvedValue({
-			content: JSON.stringify([{ questionText: "Test", solution: "Ans", steps: [], difficulty: "Easy" }]),
+			content: JSON.stringify([
+				{
+					questionText: "Test",
+					solution: "Ans",
+					steps: [],
+					difficulty: "Easy",
+				},
+			]),
 			provider: "gemini",
 			available: true,
 		});
@@ -209,7 +254,14 @@ describe("POST /api/curated-problems", () => {
 			topics: [],
 		});
 		mockGenerateWithSystem.mockResolvedValue({
-			content: JSON.stringify([{ questionText: "Test", solution: "Ans", steps: [], difficulty: "Easy" }]),
+			content: JSON.stringify([
+				{
+					questionText: "Test",
+					solution: "Ans",
+					steps: [],
+					difficulty: "Easy",
+				},
+			]),
 			provider: "gemini",
 			available: true,
 		});

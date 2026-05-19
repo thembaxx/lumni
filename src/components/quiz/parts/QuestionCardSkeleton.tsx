@@ -1,6 +1,3 @@
-import { m, motion } from "framer-motion";
-import { cn } from "@/lib/shared";
-
 export function QuestionCardSkeleton() {
 	return (
 		<div className="w-full max-w-2xl">
