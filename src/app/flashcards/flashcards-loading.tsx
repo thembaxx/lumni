@@ -21,7 +21,7 @@ export function FlashcardsLoading() {
 						animate={{ scale: [1, 1.15, 1] }}
 						transition={{ duration: 2.5, repeat: Infinity, ease: iOSEase }}
 					/>
-					<div className="relative flex items-center justify-center size-20 rounded-2xl bg-[--system-accent]/10 border border-[--system-accent]/20">
+					<div className="relative flex size-20 items-center justify-center rounded-2xl border border-[--system-accent]/20 bg-[--system-accent]/10">
 						<motion.div
 							animate={{ rotate: 360 }}
 							transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
@@ -39,7 +39,7 @@ export function FlashcardsLoading() {
 					initial={{ opacity: 0, y: 12, filter: "blur(4px)" }}
 					animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
 					transition={{ duration: 0.4, ease: iOSEase, delay: 0.08 }}
-					className="ios-title-2 text-[--system-text-primary] text-center"
+					className="ios-title-2 text-center text-[--system-text-primary]"
 				>
 					Flashcards
 				</motion.h2>
@@ -48,7 +48,7 @@ export function FlashcardsLoading() {
 					initial={{ opacity: 0, y: 8, filter: "blur(4px)" }}
 					animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
 					transition={{ duration: 0.35, ease: iOSEase, delay: 0.12 }}
-					className="ios-footnote text-[--system-text-secondary] text-center"
+					className="ios-footnote text-center text-[--system-text-secondary]"
 				>
 					Loading your cards...
 				</motion.p>

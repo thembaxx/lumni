@@ -2,7 +2,7 @@
 
 import { VolumeMute01Icon, VolumeUpIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/shared";
 import { ttsService } from "@/lib/utils/tts-service";

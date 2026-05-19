@@ -35,7 +35,7 @@ export function RadarChart({ data, className }: RadarChartProps) {
 	}, [data]);
 
 	return (
-		<div className={cn("w-full h-64", className)}>
+		<div className={cn("h-64 w-full", className)}>
 			<ResponsiveContainer width="100%" height="100%">
 				<RechartsRadarChart data={chartData}>
 					<PolarGrid />

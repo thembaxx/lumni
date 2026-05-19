@@ -89,7 +89,7 @@ function SignUpForm() {
 					<div className="relative">
 						<HugeiconsIcon
 							icon={UserIcon}
-							className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground"
+							className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
 						/>
 						<Input
 							id="name"
@@ -98,7 +98,7 @@ function SignUpForm() {
 							value={name}
 							onChange={(e) => setName(e.target.value)}
 							required
-							className="pl-10 h-11 rounded-xl bg-system-surface border-border/40"
+							className="h-11 rounded-xl border-border/40 bg-system-surface pl-10"
 						/>
 					</div>
 				</div>
@@ -113,7 +113,7 @@ function SignUpForm() {
 					<div className="relative">
 						<HugeiconsIcon
 							icon={Mail01Icon}
-							className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground"
+							className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
 						/>
 						<Input
 							id="email"
@@ -122,7 +122,7 @@ function SignUpForm() {
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
 							required
-							className="pl-10 h-11 rounded-xl bg-system-surface border-border/40"
+							className="h-11 rounded-xl border-border/40 bg-system-surface pl-10"
 						/>
 					</div>
 				</div>
@@ -143,12 +143,12 @@ function SignUpForm() {
 							onChange={(e) => setPassword(e.target.value)}
 							required
 							minLength={8}
-							className="pr-10 h-11 rounded-xl bg-system-surface border-border/40"
+							className="h-11 rounded-xl border-border/40 bg-system-surface pr-10"
 						/>
 						<button
 							type="button"
 							onClick={() => setShowPassword(!showPassword)}
-							className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+							className="absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground hover:text-foreground"
 						>
 							{showPassword ? (
 								<HugeiconsIcon icon={ViewOffIcon} className="size-4" />
@@ -157,13 +157,13 @@ function SignUpForm() {
 							)}
 						</button>
 					</div>
-					<p className="ios-caption-1 text-muted-foreground mt-1">
+					<p className="ios-caption-1 mt-1 text-muted-foreground">
 						At least 8 characters
 					</p>
 				</div>
 
 				{error && (
-					<p className="ios-footnote text-destructive font-medium">{error}</p>
+					<p className="ios-footnote font-medium text-destructive">{error}</p>
 				)}
 
 				<Button
@@ -171,13 +171,13 @@ function SignUpForm() {
 					disabled={
 						loading || !name || !email || !password || password.length < 8
 					}
-					className="w-full h-11 rounded-xl bg-system-accent text-white font-semibold text-sm hover:bg-system-accent/90 active:scale-[0.96] transition-[background-color,transform]"
+					className="h-11 w-full rounded-xl bg-system-accent font-semibold text-sm text-white transition-[background-color,transform] hover:bg-system-accent/90 active:scale-[0.96]"
 				>
 					{loading ? "Creating account..." : "Create Account"}
 				</Button>
 			</div>
 
-			<p className="text-sm text-muted-foreground text-center">
+			<p className="text-center text-muted-foreground text-sm">
 				Already have an account?{" "}
 				<Link
 					href={`/auth/sign-in?redirect=${encodeURIComponent(redirect)}`}

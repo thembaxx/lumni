@@ -54,7 +54,7 @@ function VisualContentInner({ visual, isLoading }: VisualContentProps) {
 			return (
 				<div className="flex flex-col gap-1">
 					{visual.label && (
-						<p className="text-xs font-medium text-muted-foreground">
+						<p className="font-medium text-muted-foreground text-xs">
 							{visual.label}
 						</p>
 					)}

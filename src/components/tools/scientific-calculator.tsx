@@ -502,30 +502,30 @@ export function ScientificCalculator() {
 
 	return (
 		<div
-			className="h-full flex flex-col overflow-y-auto"
+			className="flex h-full flex-col overflow-y-auto"
 			onKeyDown={handleKeyDown}
 		>
 			<div className="px-6 pt-5 pb-3">
 				<h2 className="ios-title-3 flex items-center gap-2 text-[--system-text-primary]">
 					Scientific CalculatorIcon
 				</h2>
-				<p className="ios-subhead text-[--system-text-secondary]/60 mt-1.5">
+				<p className="ios-subhead mt-1.5 text-[--system-text-secondary]/60">
 					{state.angleMode === "deg" ? "Degrees" : "Radians"}
 					{state.memorySet && " · Memory stored"}
 				</p>
 			</div>
 
-			<div className="px-5 pb-5 flex-1">
-				<div className="bg-system-background-secondary rounded-2xl p-5 h-full flex flex-col">
-					<div className="bg-system-surface rounded-xl p-4 border border-border/50 mb-4 min-h-[88px] flex flex-col justify-end">
-						<div className="text-right text-xs text-muted-foreground/60 font-mono truncate mb-1 select-all">
+			<div className="flex-1 px-5 pb-5">
+				<div className="flex h-full flex-col rounded-2xl bg-system-background-secondary p-5">
+					<div className="mb-4 flex min-h-[88px] flex-col justify-end rounded-xl border border-border/50 bg-system-surface p-4">
+						<div className="mb-1 select-all truncate text-right font-mono text-muted-foreground/60 text-xs">
 							{state.expression || "0"}
 						</div>
 						<div className="flex items-center justify-between gap-2">
 							<button
 								type="button"
 								onClick={handleCopy}
-								className="shrink-0 text-muted-foreground/40 hover:text-muted-foreground transition-colors"
+								className="shrink-0 text-muted-foreground/40 transition-colors hover:text-muted-foreground"
 							>
 								<HugeiconsIcon
 									icon={Copy01Icon}
@@ -535,7 +535,7 @@ export function ScientificCalculator() {
 							</button>
 							<span
 								className={cn(
-									"text-2xl font-mono font-semibold tracking-tight select-all",
+									"select-all font-mono font-semibold text-2xl tracking-tight",
 									state.error
 										? "text-destructive"
 										: "text-[--system-text-primary]",
@@ -546,13 +546,13 @@ export function ScientificCalculator() {
 						</div>
 					</div>
 
-					<div className="flex items-center justify-between mb-3">
+					<div className="mb-3 flex items-center justify-between">
 						<div className="flex items-center gap-1.5">
 							<Button
 								variant={state.angleMode === "deg" ? "default" : "ghost"}
 								size="xs"
 								onClick={toggleAngle}
-								className="text-xs h-7 px-2.5 rounded-lg font-mono"
+								className="h-7 rounded-lg px-2.5 font-mono text-xs"
 							>
 								DEG
 							</Button>
@@ -560,7 +560,7 @@ export function ScientificCalculator() {
 								variant={state.angleMode === "rad" ? "default" : "ghost"}
 								size="xs"
 								onClick={toggleAngle}
-								className="text-xs h-7 px-2.5 rounded-lg font-mono"
+								className="h-7 rounded-lg px-2.5 font-mono text-xs"
 							>
 								RAD
 							</Button>
@@ -570,7 +570,7 @@ export function ScientificCalculator() {
 								variant="ghost"
 								size="xs"
 								onClick={toggleHistory}
-								className="text-xs h-7 px-2.5 rounded-lg"
+								className="h-7 rounded-lg px-2.5 text-xs"
 							>
 								<HugeiconsIcon icon={UndoIcon} className="size-3.5" data-icon />
 							</Button>
@@ -578,7 +578,7 @@ export function ScientificCalculator() {
 								variant="ghost"
 								size="xs"
 								onClick={() => setHistory([])}
-								className="text-xs h-7 px-2.5 rounded-lg"
+								className="h-7 rounded-lg px-2.5 text-xs"
 							>
 								<HugeiconsIcon
 									icon={Clock01Icon}
@@ -595,11 +595,11 @@ export function ScientificCalculator() {
 								initial={{ opacity: 0, height: 0 }}
 								animate={{ opacity: 1, height: "auto" }}
 								exit={{ opacity: 0, height: 0 }}
-								className="overflow-hidden mb-3"
+								className="mb-3 overflow-hidden"
 							>
-								<div className="bg-system-surface rounded-xl border border-border/50 max-h-32 overflow-y-auto p-3 space-y-1">
+								<div className="max-h-32 space-y-1 overflow-y-auto rounded-xl border border-border/50 bg-system-surface p-3">
 									{history.length === 0 && (
-										<p className="text-xs text-muted-foreground/40 text-center py-2">
+										<p className="py-2 text-center text-muted-foreground/40 text-xs">
 											No history yet
 										</p>
 									)}
@@ -618,7 +618,7 @@ export function ScientificCalculator() {
 													}));
 												}
 											}}
-											className="text-xs font-mono text-muted-foreground/60 py-0.5 w-full text-left hover:text-muted-foreground transition-colors cursor-pointer"
+											className="w-full cursor-pointer py-0.5 text-left font-mono text-muted-foreground/60 text-xs transition-colors hover:text-muted-foreground"
 										>
 											{entry}
 										</button>
@@ -628,11 +628,11 @@ export function ScientificCalculator() {
 						)}
 					</AnimatePresence>
 
-					<div className="flex-1 flex flex-col gap-1.5">
+					<div className="flex flex-1 flex-col gap-1.5">
 						{ROWS.map((row, rowIndex) => (
 							<div
 								key={rowIndex}
-								className="grid grid-cols-5 gap-1.5 flex-none"
+								className="grid flex-none grid-cols-5 gap-1.5"
 							>
 								{row.map((btn) => (
 									<Button
@@ -641,7 +641,7 @@ export function ScientificCalculator() {
 										size="sm"
 										onClick={() => handleButton(btn.id)}
 										className={cn(
-											"h-9 text-sm rounded-lg font-mono transition-transform active:scale-[0.96]",
+											"h-9 rounded-lg font-mono text-sm transition-transform active:scale-[0.96]",
 											VARIANT_CLASSES[btn.variant],
 										)}
 									>

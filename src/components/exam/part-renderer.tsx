@@ -14,7 +14,6 @@ import {
 	SourceBasedInput,
 } from "@/components/ui/inputs";
 import type { QuestionPart } from "@/types/exam-paper";
-import { ContentBlockRenderer } from "./content-block-renderer";
 
 interface PartRendererProps {
 	part: QuestionPart;

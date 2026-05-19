@@ -274,9 +274,9 @@ export function CountdownHeader() {
 								duration: shouldReduceMotion ? 0 : 0.4,
 								ease: iOSEase,
 							}}
-							className="absolute -top-px left-4 right-4 flex items-center justify-center"
+							className="absolute -top-px right-4 left-4 flex items-center justify-center"
 						>
-							<div className="inline-flex items-center gap-1.5 rounded-b-xl bg-warning/20 border border-warning/30 px-3 py-1">
+							<div className="inline-flex items-center gap-1.5 rounded-b-xl border border-warning/30 bg-warning/20 px-3 py-1">
 								<motion.span
 									animate={
 										shouldReduceMotion
@@ -292,7 +292,7 @@ export function CountdownHeader() {
 								>
 									{milestone.emoji}
 								</motion.span>
-								<span className="text-xs font-extrabold text-warning uppercase tracking-tight">
+								<span className="font-extrabold text-warning text-xs uppercase tracking-tight">
 									{milestone.label}
 								</span>
 							</div>
@@ -300,7 +300,7 @@ export function CountdownHeader() {
 					)}
 
 					<div className="relative z-10">
-						<h1 className="text-xl sm:text-2xl font-semibold text-foreground leading-tight tracking-tight text-wrap balance">
+						<h1 className="balance text-wrap font-semibold text-foreground text-xl leading-tight tracking-tight sm:text-2xl">
 							{greeting}
 							{isLoggedIn && name ? (
 								<span className="text-system-accent">, {firstName}</span>
@@ -316,7 +316,7 @@ export function CountdownHeader() {
 									initial="hidden"
 									animate="visible"
 									className={cn(
-										"inline-block text-4xl md:text-5xl font-extrabold tracking-tighter tabular-nums font-mono text-system-accent",
+										"inline-block font-extrabold font-mono text-4xl text-system-accent tabular-nums tracking-tighter md:text-5xl",
 									)}
 									aria-live="polite"
 								>
@@ -325,10 +325,10 @@ export function CountdownHeader() {
 							)}
 							{!isLoading && mounted && (
 								<div>
-									<p className="text-[12px] font-medium text-muted-foreground tabular-nums">
+									<p className="font-medium text-[12px] text-muted-foreground tabular-nums">
 										{daysLeft === 1 ? "day" : "days"}
 									</p>
-									<p className="text-[12px] font-extrabold text-muted-foreground tabular-nums">
+									<p className="font-extrabold text-[12px] text-muted-foreground tabular-nums">
 										until finals
 									</p>
 								</div>
@@ -359,7 +359,7 @@ export function CountdownHeader() {
 									duration: shouldReduceMotion ? 0 : 0.3,
 									delay: shouldReduceMotion ? 0 : 0.5,
 								}}
-								className="mt-1 text-xs text-muted-foreground leading-snug text-pretty font-medium"
+								className="mt-1 text-pretty font-medium text-muted-foreground text-xs leading-snug"
 							>
 								<span className="font-extrabold text-foreground/80">
 									{msg.primary}
@@ -378,14 +378,14 @@ export function CountdownHeader() {
 							delay: shouldReduceMotion ? 0 : 0.2,
 						}}
 						className={cn(
-							"pointer-events-none absolute -right-6 -top-6 size-32 rounded-full blur-2xl",
+							"pointer-events-none absolute -top-6 -right-6 size-32 rounded-full blur-2xl",
 							cfg.glowClass,
 						)}
 						aria-hidden="true"
 					/>
 					<div
 						className={cn(
-							"pointer-events-none absolute -bottom-4 -right-4 size-20 rounded-full blur-xl",
+							"pointer-events-none absolute -right-4 -bottom-4 size-20 rounded-full blur-xl",
 							cfg.glow2Class,
 						)}
 						aria-hidden="true"
@@ -404,19 +404,19 @@ export function CountdownHeader() {
 					duration: shouldReduceMotion ? 0 : 0.2,
 					ease: iOSEase,
 				}}
-				className="sticky top-0 z-20 -mx-4 px-4 pt-2 pb-2 bg-system-grouped-background/80 backdrop-blur-xl border-b border-border/10"
+				className="sticky top-0 z-20 -mx-4 border-border/10 border-b bg-system-grouped-background/80 px-4 pt-2 pb-2 backdrop-blur-xl"
 				style={{ viewTransitionName: "countdown-compact" }}
 			>
-				<div className="max-w-md mx-auto flex items-center gap-3">
-					<span className="text-[13px] font-extrabold text-foreground/70">
+				<div className="mx-auto flex max-w-md items-center gap-3">
+					<span className="font-extrabold text-[13px] text-foreground/70">
 						{greeting}
 						{isLoggedIn && name ? `, ${firstName}` : ""}
 					</span>
 					<span className="ml-auto flex items-baseline gap-1">
-						<span className="text-lg font-extrabold tabular-nums text-system-accent">
+						<span className="font-extrabold text-lg text-system-accent tabular-nums">
 							{daysLeft}
 						</span>
-						<span className="text-[11px] text-muted-foreground font-medium">
+						<span className="font-medium text-[11px] text-muted-foreground">
 							{daysLeft === 1 ? "day" : "days"}
 						</span>
 					</span>

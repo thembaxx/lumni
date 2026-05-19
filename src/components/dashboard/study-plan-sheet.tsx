@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { LessonLibrary } from "@/components/lesson";
-import { Button } from "@/components/ui/button";
 import {
 	Sheet,
 	SheetContent,
@@ -17,7 +16,7 @@ export function StudyPlanSheet() {
 
 	return (
 		<Sheet open={open} onOpenChange={setOpen}>
-			<SheetTrigger className="h-11 px-5 rounded-lg border border-border/80 bg-secondary/60 gap-2.5 inline-flex items-center justify-center text-foreground hover:bg-accent hover:border-accent transition-colors">
+			<SheetTrigger className="inline-flex h-11 items-center justify-center gap-2.5 rounded-lg border border-border/80 bg-secondary/60 px-5 text-foreground transition-colors hover:border-accent hover:bg-accent">
 				<span className="text-[--system-accent]">
 					<svg
 						className="size-4"
@@ -33,10 +32,10 @@ export function StudyPlanSheet() {
 						<path d="M2 12l10 5 10-5" />
 					</svg>
 				</span>
-				<span className="text-sm font-medium">Study Plan</span>
+				<span className="font-medium text-sm">Study Plan</span>
 			</SheetTrigger>
 			<SheetContent
-				className="sm:max-w-135 w-full h-dvh px-4 rounded-t-none"
+				className="h-dvh w-full rounded-t-none px-4 sm:max-w-135"
 				side="bottom"
 			>
 				<SheetHeader className="text-left">
@@ -45,7 +44,7 @@ export function StudyPlanSheet() {
 						Personalized learning path based on your progress
 					</SheetDescription>
 				</SheetHeader>
-				<div className="px-4 pb-4 grow max-h-[95dvh] overflow-y-auto">
+				<div className="max-h-[95dvh] grow overflow-y-auto px-4 pb-4">
 					<LessonLibrary />
 				</div>
 			</SheetContent>

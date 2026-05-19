@@ -186,7 +186,7 @@ export function AdminDashboard() {
 						initial={{ opacity: 0, y: -20, scale: 0.95 }}
 						animate={{ opacity: 1, y: 0, scale: 1 }}
 						exit={{ opacity: 0, y: -20, scale: 0.95 }}
-						className="fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-foreground text-background px-4 py-2 rounded-lg shadow-lg flex items-center gap-2"
+						className="fixed top-4 left-1/2 z-50 flex -translate-x-1/2 items-center gap-2 rounded-lg bg-foreground px-4 py-2 text-background shadow-lg"
 					>
 						<motion.div
 							initial={{ scale: 0.95, opacity: 0 }}
@@ -195,7 +195,7 @@ export function AdminDashboard() {
 						>
 							<HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-4" />
 						</motion.div>
-						<span className="text-sm font-medium">Success!</span>
+						<span className="font-medium text-sm">Success!</span>
 					</motion.div>
 				)}
 			</AnimatePresence>
@@ -226,7 +226,7 @@ export function AdminDashboard() {
 				}
 			/>
 
-			<div className="p-4 flex flex-col gap-4">
+			<div className="flex flex-col gap-4 p-4">
 				<AdminStatCards
 					subjectsCount={subjects.length}
 					selectedCount={selectedSubjects.size}

@@ -13,7 +13,7 @@ export async function getUnresolvedConflicts(): Promise<SyncConflict[]> {
 export async function resolveConflict(
 	id: number,
 	resolution: "local" | "server" | "merged",
-	mergedData?: unknown,
+	_mergedData?: unknown,
 ): Promise<void> {
 	await offlineDB.conflicts.update(id, {
 		resolvedAt: Date.now(),

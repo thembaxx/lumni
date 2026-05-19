@@ -5,70 +5,70 @@ export function QuestionCardSkeleton() {
 				{/* Header Skeleton */}
 				<div className="flex items-center justify-between">
 					<div className="flex items-center gap-2">
-						<div className="h-2 w-10 bg-muted/50 rounded"></div>
-						<div className="h-2 w-6 bg-muted/50 rounded"></div>
-						<div className="h-2 w-6 bg-muted/50 rounded"></div>
+						<div className="h-2 w-10 rounded bg-muted/50"></div>
+						<div className="h-2 w-6 rounded bg-muted/50"></div>
+						<div className="h-2 w-6 rounded bg-muted/50"></div>
 					</div>
 					<div className="flex items-center gap-1">
-						<div className="h-2 w-6 bg-muted/50 rounded"></div>
-						<div className="h-2 w-6 bg-muted/50 rounded"></div>
-						<div className="h-2 w-6 bg-muted/50 rounded"></div>
+						<div className="h-2 w-6 rounded bg-muted/50"></div>
+						<div className="h-2 w-6 rounded bg-muted/50"></div>
+						<div className="h-2 w-6 rounded bg-muted/50"></div>
 					</div>
 				</div>
-				<div className="h-4 w-32 bg-muted/50 rounded"></div>
+				<div className="h-4 w-32 rounded bg-muted/50"></div>
 
 				{/* Media Skeleton (if applicable) */}
 				<div className="space-y-2">
 					<div className="flex items-center justify-between">
-						<div className="h-2 w-16 bg-muted/50 rounded"></div>
-						<button className="h-8 w-20 bg-muted/50 rounded flex items-center justify-center">
-							<div className="h-4 w-4 bg-muted/300 rounded"></div>
+						<div className="h-2 w-16 rounded bg-muted/50"></div>
+						<button className="flex h-8 w-20 items-center justify-center rounded bg-muted/50">
+							<div className="h-4 w-4 rounded bg-muted/300"></div>
 						</button>
 					</div>
 					<div className="space-y-2">
-						<div className="h-2 w-24 bg-muted/50 rounded"></div>
-						<div className="h-2 w-24 bg-muted/50 rounded"></div>
+						<div className="h-2 w-24 rounded bg-muted/50"></div>
+						<div className="h-2 w-24 rounded bg-muted/50"></div>
 					</div>
 				</div>
 
 				{/* Content Skeleton */}
 				<div className="space-y-4">
-					<div className="h-4 w-48 bg-muted/50 rounded"></div>
-					<div className="h-4 w-64 bg-muted/50 rounded"></div>
-					<div className="h-4 w-72 bg-muted/50 rounded"></div>
+					<div className="h-4 w-48 rounded bg-muted/50"></div>
+					<div className="h-4 w-64 rounded bg-muted/50"></div>
+					<div className="h-4 w-72 rounded bg-muted/50"></div>
 				</div>
 
 				{/* Input Skeleton (varies by question type, but we show a generic one) */}
 				<div className="space-y-4">
 					{/* For MCQ: show two options */}
-					<div className="grid gap-2 grid-cols-2">
-						<div className="h-10 bg-muted/50 rounded"></div>
-						<div className="h-10 bg-muted/50 rounded"></div>
-						<div className="h-10 bg-muted/50 rounded"></div>
-						<div className="h-10 bg-muted/50 rounded"></div>
+					<div className="grid grid-cols-2 gap-2">
+						<div className="h-10 rounded bg-muted/50"></div>
+						<div className="h-10 rounded bg-muted/50"></div>
+						<div className="h-10 rounded bg-muted/50"></div>
+						<div className="h-10 rounded bg-muted/50"></div>
 					</div>
-					<div className="h-10 w-full bg-muted/50 rounded"></div>
+					<div className="h-10 w-full rounded bg-muted/50"></div>
 				</div>
 
 				{/* Feedback Skeleton */}
 				<div className="space-y-4">
 					<div className="flex items-center gap-2">
-						<div className="h-4 w-4 bg-muted/50 rounded"></div>
-						<div className="h-4 w-4 bg-muted/50 rounded"></div>
+						<div className="h-4 w-4 rounded bg-muted/50"></div>
+						<div className="h-4 w-4 rounded bg-muted/50"></div>
 					</div>
 					<div className="space-y-2">
-						<div className="h-2 w-16 bg-muted/50 rounded"></div>
-						<div className="h-2 w-24 bg-muted/50 rounded"></div>
+						<div className="h-2 w-16 rounded bg-muted/50"></div>
+						<div className="h-2 w-24 rounded bg-muted/50"></div>
 					</div>
-					<div className="h-2 w-24 bg-muted/50 rounded"></div>
-					<div className="h-2 w-24 bg-muted/50 rounded"></div>
-					<div className="h-2 w-24 bg-muted/50 rounded"></div>
+					<div className="h-2 w-24 rounded bg-muted/50"></div>
+					<div className="h-2 w-24 rounded bg-muted/50"></div>
+					<div className="h-2 w-24 rounded bg-muted/50"></div>
 				</div>
 
 				{/* Controls Skeleton */}
 				<div className="flex items-center justify-between">
-					<div className="h-8 w-24 bg-muted/50 rounded"></div>
-					<div className="h-8 w-24 bg-muted/50 rounded"></div>
+					<div className="h-8 w-24 rounded bg-muted/50"></div>
+					<div className="h-8 w-24 rounded bg-muted/50"></div>
 				</div>
 			</div>
 		</div>

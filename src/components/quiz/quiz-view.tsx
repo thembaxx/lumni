@@ -11,7 +11,7 @@ import {
 	QuizSelectSubject,
 	QuizSubjectPrompt,
 } from "@/components/quiz";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import type { Question } from "@/lib/question-engine/types";
 import { useQuizView } from "./hooks/use-quiz-view";
 import { QuizFooter } from "./quiz-footer";
@@ -79,11 +79,11 @@ export function QuizView({
 
 	if (loadError) {
 		return (
-			<div className="min-h-dvh bg-background grid grid-cols-12 gap-0">
-				<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4 pb-20">
-					<Card size="sm" className="max-w-md w-full">
+			<div className="grid min-h-dvh grid-cols-12 gap-0 bg-background">
+				<div className="col-span-12 col-start-1 flex items-center justify-center p-4 pb-20 md:col-span-7">
+					<Card size="sm" className="w-full max-w-md">
 						<CardContent className="flex flex-col gap-4">
-							<CardTitle className="text-xl font-extrabold tracking-tight">
+							<CardTitle className="font-extrabold text-xl tracking-tight">
 								Unable to Load
 							</CardTitle>
 							<EmptyStateWithIllustration
@@ -102,10 +102,10 @@ export function QuizView({
 						</CardContent>
 					</Card>
 				</div>
-				<div className="col-span-12 md:col-span-5 col-start-1 md:col-start-8 relative overflow-hidden bg-system-surface/30">
+				<div className="relative col-span-12 col-start-1 overflow-hidden bg-system-surface/30 md:col-span-5 md:col-start-8">
 					<div className="absolute inset-0 bg-linear-to-br from-destructive/5 via-transparent to-transparent" />
 					<div className="absolute inset-0 flex items-center justify-center p-8">
-						<div className="w-full h-full max-w-xs aspect-square rounded-3xl bg-destructive/10 blur-2xl animate-float-slow" />
+						<div className="aspect-square h-full w-full max-w-xs animate-float-slow rounded-3xl bg-destructive/10 blur-2xl" />
 					</div>
 				</div>
 			</div>
@@ -122,9 +122,9 @@ export function QuizView({
 			);
 		}
 		return (
-			<div className="min-h-dvh bg-background grid grid-cols-12 gap-0">
-				<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4 pb-20">
-					<Card size="sm" className="max-w-md w-full">
+			<div className="grid min-h-dvh grid-cols-12 gap-0 bg-background">
+				<div className="col-span-12 col-start-1 flex items-center justify-center p-4 pb-20 md:col-span-7">
+					<Card size="sm" className="w-full max-w-md">
 						<CardContent className="flex flex-col gap-4">
 							<CardTitle className="ios-title-2 font-extrabold tracking-tight">
 								Quiz Practice
@@ -133,10 +133,10 @@ export function QuizView({
 						</CardContent>
 					</Card>
 				</div>
-				<div className="col-span-12 md:col-span-5 col-start-1 md:col-start-8 relative overflow-hidden bg-system-surface/30">
+				<div className="relative col-span-12 col-start-1 overflow-hidden bg-system-surface/30 md:col-span-5 md:col-start-8">
 					<div className="absolute inset-0 bg-linear-to-br from-[--system-accent]/10 via-transparent to-transparent" />
 					<div className="absolute inset-0 flex items-center justify-center p-8">
-						<div className="w-full h-full max-w-xs aspect-square rounded-3xl bg-system-accent/10 blur-2xl animate-float-slow" />
+						<div className="aspect-square h-full w-full max-w-xs animate-float-slow rounded-3xl bg-system-accent/10 blur-2xl" />
 					</div>
 				</div>
 			</div>
@@ -145,14 +145,14 @@ export function QuizView({
 
 	if (isLoading) {
 		return (
-			<div className="min-h-dvh bg-background grid grid-cols-12 gap-0">
-				<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4 pb-20">
-					<Card size="sm" className="max-w-md w-full">
+			<div className="grid min-h-dvh grid-cols-12 gap-0 bg-background">
+				<div className="col-span-12 col-start-1 flex items-center justify-center p-4 pb-20 md:col-span-7">
+					<Card size="sm" className="w-full max-w-md">
 						<CardContent className="flex flex-col items-center gap-4 p-8 text-left">
 							<m.div
 								animate={{ rotate: 360 }}
 								transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
-								className="w-12 h-3 mx-auto"
+								className="mx-auto h-3 w-12"
 							>
 								<HugeiconsIcon
 									icon={RadialIcon}
@@ -164,15 +164,15 @@ export function QuizView({
 							</p>
 							{resolvedTopic && competencyData.topicCompetencyLevel && (
 								<div className="flex flex-col items-center gap-1">
-									<p className="text-xs text-muted-foreground">
+									<p className="text-muted-foreground text-xs">
 										Focusing on{" "}
 										<span className="font-semibold text-foreground">
 											{resolvedTopic}
 										</span>
 									</p>
-									<p className="text-xs text-muted-foreground">
+									<p className="text-muted-foreground text-xs">
 										Level:{" "}
-										<span className="font-semibold capitalize text-foreground">
+										<span className="font-semibold text-foreground capitalize">
 											{competencyData.topicCompetencyLevel}
 										</span>
 										{competencyData.topicCompetencyScore !== undefined && (
@@ -184,10 +184,10 @@ export function QuizView({
 						</CardContent>
 					</Card>
 				</div>
-				<div className="col-span-12 md:col-span-5 col-start-1 md:col-start-8 relative overflow-hidden bg-system-surface/30">
+				<div className="relative col-span-12 col-start-1 overflow-hidden bg-system-surface/30 md:col-span-5 md:col-start-8">
 					<div className="absolute inset-0 bg-linear-to-br from-[--system-accent]/10 via-transparent to-transparent" />
 					<div className="absolute inset-0 flex items-center justify-center p-8">
-						<div className="w-full h-full max-w-xs aspect-square rounded-3xl bg-system-accent/10 blur-2xl animate-float-slow" />
+						<div className="aspect-square h-full w-full max-w-xs animate-float-slow rounded-3xl bg-system-accent/10 blur-2xl" />
 					</div>
 				</div>
 			</div>
@@ -196,11 +196,11 @@ export function QuizView({
 
 	if (isError) {
 		return (
-			<div className="min-h-dvh bg-background grid grid-cols-12 gap-0">
-				<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4 pb-20">
-					<Card size="sm" className="max-w-md w-full">
+			<div className="grid min-h-dvh grid-cols-12 gap-0 bg-background">
+				<div className="col-span-12 col-start-1 flex items-center justify-center p-4 pb-20 md:col-span-7">
+					<Card size="sm" className="w-full max-w-md">
 						<CardContent>
-							<CardTitle className="text-xl font-extrabold tracking-tight text-center">
+							<CardTitle className="text-center font-extrabold text-xl tracking-tight">
 								Unable to Load Questions
 							</CardTitle>
 							<QuizEmptyState
@@ -211,10 +211,10 @@ export function QuizView({
 						</CardContent>
 					</Card>
 				</div>
-				<div className="col-span-12 md:col-span-5 col-start-1 md:col-start-8 relative overflow-hidden bg-system-surface/30">
+				<div className="relative col-span-12 col-start-1 overflow-hidden bg-system-surface/30 md:col-span-5 md:col-start-8">
 					<div className="absolute inset-0 bg-linear-to-br from-destructive/5 via-transparent to-transparent" />
 					<div className="absolute inset-0 flex items-center justify-center p-8">
-						<div className="w-full h-full max-w-xs aspect-square rounded-3xl bg-destructive/10 blur-2xl animate-float-slow" />
+						<div className="aspect-square h-full w-full max-w-xs animate-float-slow rounded-3xl bg-destructive/10 blur-2xl" />
 					</div>
 				</div>
 			</div>
@@ -223,11 +223,11 @@ export function QuizView({
 
 	if (questions.length === 0) {
 		return (
-			<div className="min-h-dvh bg-background grid grid-cols-12 gap-0">
-				<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4 pb-20">
-					<Card size="sm" className="max-w-md w-full">
+			<div className="grid min-h-dvh grid-cols-12 gap-0 bg-background">
+				<div className="col-span-12 col-start-1 flex items-center justify-center p-4 pb-20 md:col-span-7">
+					<Card size="sm" className="w-full max-w-md">
 						<CardContent>
-							<CardTitle className="text-xl font-extrabold tracking-tight">
+							<CardTitle className="font-extrabold text-xl tracking-tight">
 								No Questions
 							</CardTitle>
 							<QuizEmptyState
@@ -238,10 +238,10 @@ export function QuizView({
 						</CardContent>
 					</Card>
 				</div>
-				<div className="col-span-12 md:col-span-5 col-start-1 md:col-start-8 relative overflow-hidden bg-system-surface/30">
+				<div className="relative col-span-12 col-start-1 overflow-hidden bg-system-surface/30 md:col-span-5 md:col-start-8">
 					<div className="absolute inset-0 bg-linear-to-br from-[--system-accent]/10 via-transparent to-transparent" />
 					<div className="absolute inset-0 flex items-center justify-center p-8">
-						<div className="w-full h-full max-w-xs aspect-square rounded-3xl bg-system-accent/10 blur-2xl animate-float-slow" />
+						<div className="aspect-square h-full w-full max-w-xs animate-float-slow rounded-3xl bg-system-accent/10 blur-2xl" />
 					</div>
 				</div>
 			</div>
@@ -250,8 +250,8 @@ export function QuizView({
 
 	if (state.isComplete) {
 		return (
-			<div className="min-h-dvh bg-background grid grid-cols-12 gap-0">
-				<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4 pb-20">
+			<div className="grid min-h-dvh grid-cols-12 gap-0 bg-background">
+				<div className="col-span-12 col-start-1 flex items-center justify-center p-4 pb-20 md:col-span-7">
 					<QuizResultsCard
 						totalQuestions={state.totalQuestions}
 						correctAnswers={state.correctAnswers}
@@ -260,10 +260,10 @@ export function QuizView({
 						onDashboard={handleStop}
 					/>
 				</div>
-				<div className="col-span-12 md:col-span-5 col-start-1 md:col-start-8 relative overflow-hidden bg-system-surface/30">
+				<div className="relative col-span-12 col-start-1 overflow-hidden bg-system-surface/30 md:col-span-5 md:col-start-8">
 					<div className="absolute inset-0 bg-linear-to-br from-[--system-accent]/10 via-transparent to-transparent" />
 					<div className="absolute inset-0 flex items-center justify-center p-8">
-						<div className="w-full h-full max-w-xs aspect-square rounded-3xl bg-system-accent/10 blur-2xl animate-float-slow" />
+						<div className="aspect-square h-full w-full max-w-xs animate-float-slow rounded-3xl bg-system-accent/10 blur-2xl" />
 					</div>
 				</div>
 			</div>
@@ -272,12 +272,12 @@ export function QuizView({
 
 	return (
 		<div
-			className="min-h-dvh bg-background grid grid-cols-12 gap-0"
+			className="grid min-h-dvh grid-cols-12 gap-0 bg-background"
 			role="region"
 			aria-labelledby="quiz-title"
 		>
 			<main
-				className="col-span-12 md:col-span-7 col-start-1 flex flex-col gap-6 p-4 md:p-6 pb-20"
+				className="col-span-12 col-start-1 flex flex-col gap-6 p-4 pb-20 md:col-span-7 md:p-6"
 				tabIndex={-1}
 			>
 				<QuizHeader
@@ -312,12 +312,12 @@ export function QuizView({
 			</main>
 
 			<div
-				className="col-span-12 md:col-span-5 col-start-1 md:col-start-8 relative overflow-hidden bg-system-surface/30"
+				className="relative col-span-12 col-start-1 overflow-hidden bg-system-surface/30 md:col-span-5 md:col-start-8"
 				aria-hidden="true"
 			>
 				<div className="absolute inset-0 bg-linear-to-br from-[--system-accent]/10 via-transparent to-transparent" />
 				<div className="absolute inset-0 flex items-center justify-center p-8">
-					<div className="w-full h-full max-w-xs aspect-square rounded-3xl bg-system-accent/10 blur-2xl animate-float-slow" />
+					<div className="aspect-square h-full w-full max-w-xs animate-float-slow rounded-3xl bg-system-accent/10 blur-2xl" />
 				</div>
 			</div>
 		</div>

@@ -42,7 +42,7 @@ function CompetencyRing({ score }: { score: number }) {
 
 	return (
 		<RadialChart value={score} size={80} color={color}>
-			<span className="text-sm font-extrabold tabular-nums">{score}%</span>
+			<span className="font-extrabold text-sm tabular-nums">{score}%</span>
 		</RadialChart>
 	);
 }
@@ -150,11 +150,11 @@ export function CompetencyOverview() {
 		>
 			<Card>
 				<CardHeader className="flex flex-row items-center justify-between">
-					<CardTitle className="text-base font-extrabold tracking-tight flex items-center gap-2">
+					<CardTitle className="flex items-center gap-2 font-extrabold text-base tracking-tight">
 						<HugeiconsIcon icon={Mortarboard01Icon} className="size-5" />
 						Subject Mastery
 					</CardTitle>
-					<div className="flex items-center gap-1 text-xs text-muted-foreground">
+					<div className="flex items-center gap-1 text-muted-foreground text-xs">
 						<HugeiconsIcon icon={ChartUpIcon} className="size-3" />
 						<span>Progress</span>
 					</div>
@@ -175,29 +175,29 @@ export function CompetencyOverview() {
 									initial={{ opacity: 0, x: -8 }}
 									animate={{ opacity: 1, x: 0 }}
 									transition={{ delay: i * 0.05, duration: 0.3 }}
-									className="flex items-center gap-4 p-3 rounded-xl bg-muted/30 hover:bg-muted/50 transition-colors"
+									className="flex items-center gap-4 rounded-xl bg-muted/30 p-3 transition-colors hover:bg-muted/50"
 								>
 									<CompetencyRing score={sc.averageScore} />
 
-									<div className="flex-1 min-w-0">
-										<p className="text-sm font-semibold truncate">
+									<div className="min-w-0 flex-1">
+										<p className="truncate font-semibold text-sm">
 											{sc.subjectName}
 										</p>
-										<div className="flex items-center gap-2 mt-1">
+										<div className="mt-1 flex items-center gap-2">
 											<div className="flex items-center gap-1">
 												{sc.mastered > 0 && (
-													<span className="text-xs text-success font-medium">
+													<span className="font-medium text-success text-xs">
 														{sc.mastered} mastered
 													</span>
 												)}
 												{sc.novice > 0 && (
-													<span className="text-xs text-destructive font-medium">
+													<span className="font-medium text-destructive text-xs">
 														{sc.novice} weak
 													</span>
 												)}
 											</div>
 										</div>
-										<div className="flex gap-1 mt-1.5">
+										<div className="mt-1.5 flex gap-1">
 											{(
 												[
 													"novice",
@@ -226,8 +226,8 @@ export function CompetencyOverview() {
 										</div>
 									</div>
 
-									<div className="text-right shrink-0">
-										<p className="text-xs font-bold tabular-nums">
+									<div className="shrink-0 text-right">
+										<p className="font-bold text-xs tabular-nums">
 											{sc.total} topics
 										</p>
 										<p className="text-[10px] text-muted-foreground">
@@ -242,19 +242,19 @@ export function CompetencyOverview() {
 									initial={{ opacity: 0, height: 0 }}
 									animate={{ opacity: 1, height: "auto" }}
 									exit={{ opacity: 0, height: 0 }}
-									className="ml-4 mt-1 mb-2 flex flex-col gap-0.5 pl-4 border-l-2 border-muted"
+									className="mt-1 mb-2 ml-4 flex flex-col gap-0.5 border-muted border-l-2 pl-4"
 								>
 									{sc.topics.map((t) => (
 										<div
 											key={t.topicId}
-											className="flex items-center justify-between text-xs py-1"
+											className="flex items-center justify-between py-1 text-xs"
 										>
 											<span className="truncate capitalize">
 												{t.topicId.replace(/-/g, " ")}
 											</span>
 											<span
 												className={cn(
-													"tabular-nums font-medium shrink-0 ml-2",
+													"ml-2 shrink-0 font-medium tabular-nums",
 													t.level === "novice" && "text-destructive",
 													t.level === "developing" && "text-warning",
 													t.level === "proficient" && "text-[--system-accent]",

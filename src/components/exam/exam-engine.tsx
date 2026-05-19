@@ -130,14 +130,14 @@ export function ExamEngine({
 	}
 
 	return (
-		<div className="h-dvh flex flex-col bg-background">
+		<div className="flex h-dvh flex-col bg-background">
 			<ExamTimer />
 			<div className="flex items-start gap-2 px-4 pt-4">
 				<Button
 					variant="ghost"
 					size="sm"
 					onClick={() => setSidebarOpen(!sidebarOpen)}
-					className="lg:hidden shrink-0 mt-0.5"
+					className="mt-0.5 shrink-0 lg:hidden"
 				>
 					<HugeiconsIcon icon={ListViewIcon} data-icon />
 					<span className="sr-only">Toggle question list</span>
@@ -160,12 +160,12 @@ export function ExamEngine({
 				/>
 			</div>
 
-			<div className="flex flex-1 min-h-0">
+			<div className="flex min-h-0 flex-1">
 				<aside
-					className={`w-64 border-r bg-muted/20 shrink-0 overflow-hidden transition-[width,opacity] ${
+					className={`w-64 shrink-0 overflow-hidden border-r bg-muted/20 transition-[width,opacity] ${
 						sidebarOpen
 							? "max-lg:fixed max-lg:inset-0 max-lg:z-50"
-							: "max-lg:w-0 max-lg:hidden"
+							: "max-lg:hidden max-lg:w-0"
 					}`}
 				>
 					<ExamSidebar
@@ -178,23 +178,23 @@ export function ExamEngine({
 					/>
 				</aside>
 
-				<main className="flex-1 overflow-auto min-w-0">
-					<div className="max-w-3xl mx-auto p-4 sm:p-6 flex flex-col gap-8">
+				<main className="min-w-0 flex-1 overflow-auto">
+					<div className="mx-auto flex max-w-3xl flex-col gap-8 p-4 sm:p-6">
 						{paper.sections.map((section) => (
 							<div key={section.id}>
-								<h2 className="text-xl font-extrabold mb-4">
+								<h2 className="mb-4 font-extrabold text-xl">
 									SECTION {section.id}
 									{section.title ? `: ${section.title}` : ""}
 								</h2>
 
 								{section.instructions && section.instructions.length > 0 && (
-									<div className="mb-4 p-3 bg-muted/50 rounded-lg">
-										<p className="text-xs font-semibold text-muted-foreground uppercase mb-1">
+									<div className="mb-4 rounded-lg bg-muted/50 p-3">
+										<p className="mb-1 font-semibold text-muted-foreground text-xs uppercase">
 											Instructions
 										</p>
 										<ul className="flex flex-col gap-1">
 											{section.instructions.map((inst, idx) => (
-												<li key={idx} className="text-xs text-muted-foreground">
+												<li key={idx} className="text-muted-foreground text-xs">
 													{inst}
 												</li>
 											))}
@@ -218,7 +218,7 @@ export function ExamEngine({
 							</div>
 						))}
 
-						<div className="flex justify-center py-6 border-t">
+						<div className="flex justify-center border-t py-6">
 							<Button
 								size="lg"
 								onClick={() => setShowSubmit(true)}

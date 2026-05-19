@@ -34,8 +34,8 @@ interface QuizEmptyStateNoQuestionsProps {
 
 function QuizEmptyStateNotStarted({ onStart }: QuizEmptyStateNotStartedProps) {
 	return (
-		<Empty className="border border-dashed mt-2">
-			<div className="grid grid-cols-12 gap-4 items-center">
+		<Empty className="mt-2 border border-dashed">
+			<div className="grid grid-cols-12 items-center gap-4">
 				<div className="col-span-12 md:col-span-6">
 					<EmptyHeader>
 						<EmptyMedia variant="icon">
@@ -45,7 +45,7 @@ function QuizEmptyStateNotStarted({ onStart }: QuizEmptyStateNotStartedProps) {
 							>
 								<HugeiconsIcon
 									icon={RadialIcon}
-									className="size-12 mx-auto md:mx-0 text-muted-foreground"
+									className="mx-auto size-12 text-muted-foreground md:mx-0"
 								/>
 							</motion.div>
 						</EmptyMedia>
@@ -61,8 +61,8 @@ function QuizEmptyStateNotStarted({ onStart }: QuizEmptyStateNotStartedProps) {
 						</Button>
 					</EmptyContent>
 				</div>
-				<div className="col-span-12 md:col-span-6 hidden md:block">
-					<div className="w-full h-48 rounded-3xl bg-muted/40 animate-float-slow" />
+				<div className="col-span-12 hidden md:col-span-6 md:block">
+					<div className="h-48 w-full animate-float-slow rounded-3xl bg-muted/40" />
 				</div>
 			</div>
 		</Empty>
@@ -75,7 +75,7 @@ function QuizEmptyStateNoQuestions({
 }: QuizEmptyStateNoQuestionsProps) {
 	return (
 		<Empty>
-			<div className="grid grid-cols-12 gap-4 items-center">
+			<div className="grid grid-cols-12 items-center gap-4">
 				<div className="col-span-12 md:col-span-6">
 					<EmptyHeader>
 						<EmptyMedia variant="icon">
@@ -85,7 +85,7 @@ function QuizEmptyStateNoQuestions({
 							>
 								<HugeiconsIcon
 									icon={RadialIcon}
-									className="size-12 mx-auto md:mx-0 text-muted-foreground"
+									className="mx-auto size-12 text-muted-foreground md:mx-0"
 								/>
 							</motion.div>
 						</EmptyMedia>
@@ -100,8 +100,8 @@ function QuizEmptyStateNoQuestions({
 						</Button>
 					</EmptyContent>
 				</div>
-				<div className="col-span-12 md:col-span-6 hidden md:block">
-					<div className="w-full h-48 rounded-3xl bg-destructive/10 animate-float-slow" />
+				<div className="col-span-12 hidden md:col-span-6 md:block">
+					<div className="h-48 w-full animate-float-slow rounded-3xl bg-destructive/10" />
 				</div>
 			</div>
 		</Empty>
@@ -115,21 +115,21 @@ interface QuizStartStateProps {
 export function QuizStartState({ onSelect }: QuizStartStateProps) {
 	return (
 		<div className="mt-24 flex flex-col gap-4">
-			<div className="grid grid-cols-12 gap-4 items-center">
+			<div className="grid grid-cols-12 items-center gap-4">
 				<div className="col-span-12 md:col-span-6">
 					<div className="flex flex-col gap-4 text-center md:text-left">
-						<p className="text-sm font-medium text-muted-foreground">
+						<p className="font-medium text-muted-foreground text-sm">
 							Select a subject to begin
 						</p>
-						<p className="text-xs text-muted-foreground/60">
+						<p className="text-muted-foreground/60 text-xs">
 							Choose a subject above to start your quiz
 						</p>
 					</div>
 				</div>
-				<div className="col-span-12 md:col-span-6 flex justify-center">
+				<div className="col-span-12 flex justify-center md:col-span-6">
 					<div className="relative">
 						<Skeleton shape="circle" className="absolute size-20" />
-						<div className="relative flex items-center justify-center size-20 rounded-full border border-dashed border-muted-foreground/20 bg-muted/20">
+						<div className="relative flex size-20 items-center justify-center rounded-full border border-muted-foreground/20 border-dashed bg-muted/20">
 							<motion.div
 								animate={{ rotate: 360 }}
 								transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
@@ -161,23 +161,23 @@ export function QuizSubjectPrompt({
 }: QuizSubjectPromptProps) {
 	return (
 		<div className="mt-24 flex flex-col gap-4">
-			<div className="grid grid-cols-12 gap-4 items-center">
+			<div className="grid grid-cols-12 items-center gap-4">
 				<div className="col-span-12 md:col-span-6">
 					<div className="flex flex-col gap-4 text-center md:text-left">
-						<p className="text-sm font-medium text-muted-foreground">
+						<p className="font-medium text-muted-foreground text-sm">
 							{hasSubject ? "Ready to begin" : "Select a subject to begin"}
 						</p>
-						<p className="text-xs text-muted-foreground/60">
+						<p className="text-muted-foreground/60 text-xs">
 							{hasSubject
 								? "Press play to start your quiz"
 								: "Choose a subject above to start your quiz"}
 						</p>
 					</div>
 				</div>
-				<div className="col-span-12 md:col-span-6 flex justify-center">
+				<div className="col-span-12 flex justify-center md:col-span-6">
 					<div className="relative">
 						<Skeleton shape="circle" className="absolute size-20" />
-						<div className="relative flex items-center justify-center size-20 rounded-full border border-dashed border-muted-foreground/20 bg-muted/20">
+						<div className="relative flex size-20 items-center justify-center rounded-full border border-muted-foreground/20 border-dashed bg-muted/20">
 							<motion.div
 								animate={{ rotate: 360 }}
 								transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
@@ -232,7 +232,6 @@ export function QuizEmptyState({
 	switch (variant) {
 		case "no-questions":
 			return <QuizEmptyStateNoQuestions subject={subject} onBack={onBack} />;
-		case "not-started":
 		default:
 			return <QuizEmptyStateNotStarted onStart={onStart} />;
 	}

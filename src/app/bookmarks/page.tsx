@@ -13,7 +13,7 @@ export default function BookmarksPage() {
 
 	return (
 		<div className="min-h-screen bg-system-grouped pt-4 pb-24">
-			<div className="max-w-3xl mx-auto w-full px-4 flex flex-col gap-6">
+			<div className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-4">
 				<h1 className="ios-title-1 font-semibold text-foreground tracking-tight">
 					Bookmarked Questions
 				</h1>
@@ -23,17 +23,17 @@ export default function BookmarksPage() {
 						<CardContent className="p-8 text-center">
 							<HugeiconsIcon
 								icon={Bookmark01Icon}
-								className="size-8 text-muted-foreground/40 mx-auto mb-3"
+								className="mx-auto mb-3 size-8 text-muted-foreground/40"
 							/>
-							<p className="text-base font-semibold">No bookmarks yet</p>
-							<p className="text-sm text-muted-foreground mt-1">
+							<p className="font-semibold text-base">No bookmarks yet</p>
+							<p className="mt-1 text-muted-foreground text-sm">
 								Bookmark01Icon questions during quizzes to save them here.
 							</p>
 						</CardContent>
 					</Card>
 				) : (
 					<div className="flex flex-col gap-3">
-						<p className="text-sm text-muted-foreground">
+						<p className="text-muted-foreground text-sm">
 							{bookmarks.length} saved question
 							{bookmarks.length !== 1 ? "s" : ""}
 						</p>
@@ -63,12 +63,12 @@ export default function BookmarksPage() {
 									</div>
 								</CardHeader>
 								<CardContent>
-									<CardTitle className="text-base font-semibold">
+									<CardTitle className="font-semibold text-base">
 										<MarkdownRenderer content={bm.questionText} />
 									</CardTitle>
 									{bm.note && (
-										<div className="mt-3 p-3 rounded-lg bg-muted/30">
-											<p className="text-xs font-medium text-muted-foreground mb-1">
+										<div className="mt-3 rounded-lg bg-muted/30 p-3">
+											<p className="mb-1 font-medium text-muted-foreground text-xs">
 												Note
 											</p>
 											<p className="text-sm">{bm.note}</p>

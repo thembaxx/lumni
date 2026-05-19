@@ -41,7 +41,7 @@ export function ShortAnswerInput({
 						className={cn(
 							"text-xs",
 							charCount >= maxLength
-								? "text-destructive font-medium"
+								? "font-medium text-destructive"
 								: "text-muted-foreground",
 						)}
 					>

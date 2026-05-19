@@ -27,8 +27,8 @@ export function MultipleChoiceInput({
 			{options.map((opt) => (
 				<div key={opt.id} className="flex items-center gap-3">
 					<RadioGroupItem value={opt.id} id={`mc-${opt.id}`} />
-					<Label htmlFor={`mc-${opt.id}`} className="text-sm cursor-pointer">
-						<span className="font-medium mr-1">{opt.id}.</span>
+					<Label htmlFor={`mc-${opt.id}`} className="cursor-pointer text-sm">
+						<span className="mr-1 font-medium">{opt.id}.</span>
 						{opt.text}
 					</Label>
 				</div>

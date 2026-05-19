@@ -78,7 +78,7 @@ export function ContentClient() {
 				title="Content Moderation"
 				subtitle="Review flagged questions"
 			/>
-			<div className="p-4 flex flex-col gap-4">
+			<div className="flex flex-col gap-4 p-4">
 				<Card>
 					<CardHeader>
 						<div className="flex items-center justify-between">
@@ -114,7 +114,7 @@ export function ContentClient() {
 									<TableRow>
 										<TableCell
 											colSpan={6}
-											className="text-center py-8 text-muted-foreground"
+											className="py-8 text-center text-muted-foreground"
 										>
 											Loading...
 										</TableCell>
@@ -124,7 +124,7 @@ export function ContentClient() {
 									<TableRow>
 										<TableCell
 											colSpan={6}
-											className="text-center py-8 text-muted-foreground"
+											className="py-8 text-center text-muted-foreground"
 										>
 											No flags found
 										</TableCell>

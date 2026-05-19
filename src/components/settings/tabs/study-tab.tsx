@@ -34,7 +34,7 @@ export function StudyTab({ studyPrefs, onStudyPrefsChange }: StudyTabProps) {
 								})
 							}
 						>
-							<SelectTrigger className="w-25 h-9 border-none bg-secondary/50 focus:ring-0">
+							<SelectTrigger className="h-9 w-25 border-none bg-secondary/50 focus:ring-0">
 								<SelectValue />
 							</SelectTrigger>
 							<SelectContent>
@@ -54,11 +54,11 @@ export function StudyTab({ studyPrefs, onStudyPrefsChange }: StudyTabProps) {
 							onValueChange={(v) =>
 								onStudyPrefsChange({
 									...studyPrefs,
-									questionCount: parseInt(v || "10"),
+									questionCount: parseInt(v || "10", 10),
 								})
 							}
 						>
-							<SelectTrigger className="w-[120px] h-9 border-none bg-secondary/50 focus:ring-0">
+							<SelectTrigger className="h-9 w-[120px] border-none bg-secondary/50 focus:ring-0">
 								<SelectValue />
 							</SelectTrigger>
 							<SelectContent>
@@ -119,11 +119,11 @@ export function StudyTab({ studyPrefs, onStudyPrefsChange }: StudyTabProps) {
 								onValueChange={(v) =>
 									onStudyPrefsChange({
 										...studyPrefs,
-										timerDuration: parseInt(v || "30"),
+										timerDuration: parseInt(v || "30", 10),
 									})
 								}
 							>
-								<SelectTrigger className="w-[120px] h-9 border-none bg-secondary/50 focus:ring-0">
+								<SelectTrigger className="h-9 w-[120px] border-none bg-secondary/50 focus:ring-0">
 									<SelectValue />
 								</SelectTrigger>
 								<SelectContent>

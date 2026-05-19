@@ -89,14 +89,14 @@ export default function FlashcardBrowsePage() {
 	const totalPages = Math.ceil(cards.length / PAGE_SIZE);
 
 	return (
-		<div className="container mx-auto py-8 px-4 max-w-4xl">
-			<h1 className="text-2xl font-semibold mb-6">Browse Flashcards</h1>
+		<div className="container mx-auto max-w-4xl px-4 py-8">
+			<h1 className="mb-6 font-semibold text-2xl">Browse Flashcards</h1>
 
-			<div className="flex gap-3 mb-6 flex-wrap">
-				<div className="relative flex-1 min-w-[200px]">
+			<div className="mb-6 flex flex-wrap gap-3">
+				<div className="relative min-w-[200px] flex-1">
 					<HugeiconsIcon
 						icon={Search01Icon}
-						className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground"
+						className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
 					/>
 					<Input
 						placeholder="Search cards..."
@@ -114,7 +114,7 @@ export default function FlashcardBrowsePage() {
 						setSubjectFilter(e.target.value);
 						setPage(0);
 					}}
-					className="px-3 py-2 rounded-lg border border-input bg-background text-sm"
+					className="rounded-lg border border-input bg-background px-3 py-2 text-sm"
 				>
 					<option value="all">All subjects</option>
 					{subjects.map((s) => (
@@ -124,7 +124,7 @@ export default function FlashcardBrowsePage() {
 					))}
 				</select>
 				<Button variant="outline" size="sm" onClick={loadCards}>
-					<HugeiconsIcon icon={FilterIcon} className="size-4 mr-1" />
+					<HugeiconsIcon icon={FilterIcon} className="mr-1 size-4" />
 					Refresh
 				</Button>
 				<Button
@@ -133,7 +133,7 @@ export default function FlashcardBrowsePage() {
 					onClick={handleExport}
 					disabled={cards.length === 0}
 				>
-					<HugeiconsIcon icon={Download03Icon} className="size-4 mr-1" />
+					<HugeiconsIcon icon={Download03Icon} className="mr-1 size-4" />
 					Export CSV
 				</Button>
 				<Button
@@ -142,7 +142,7 @@ export default function FlashcardBrowsePage() {
 					onClick={() => fileInputRef.current?.click()}
 					disabled={importing}
 				>
-					<HugeiconsIcon icon={Upload04Icon} className="size-4 mr-1" />
+					<HugeiconsIcon icon={Upload04Icon} className="mr-1 size-4" />
 					{importing ? "Importing..." : "Import CSV"}
 				</Button>
 				<input
@@ -159,54 +159,54 @@ export default function FlashcardBrowsePage() {
 					{Array.from({ length: 5 }).map((_, i) => (
 						<div
 							key={i}
-							className="h-24 rounded-xl bg-muted/30 animate-pulse"
+							className="h-24 animate-pulse rounded-xl bg-muted/30"
 						/>
 					))}
 				</div>
 			) : paginated.length === 0 ? (
-				<div className="text-center py-12 text-muted-foreground">
+				<div className="py-12 text-center text-muted-foreground">
 					{search || subjectFilter !== "all"
 						? "No cards match your filters."
 						: "No flashcards yet. Create some from the study page!"}
 				</div>
 			) : (
 				<>
-					<p className="text-sm text-muted-foreground mb-4">
+					<p className="mb-4 text-muted-foreground text-sm">
 						{cards.length} card{cards.length !== 1 ? "s" : ""}
 					</p>
 					<div className="space-y-3">
 						{paginated.map((card) => (
 							<Card key={card.id} className="overflow-hidden">
 								<CardContent className="p-4">
-									<div className="flex justify-between items-start gap-4">
-										<div className="flex-1 min-w-0">
-											<div className="font-medium mb-1 line-clamp-2">
+									<div className="flex items-start justify-between gap-4">
+										<div className="min-w-0 flex-1">
+											<div className="mb-1 line-clamp-2 font-medium">
 												{card.front}
 											</div>
-											<div className="text-sm text-muted-foreground line-clamp-2">
+											<div className="line-clamp-2 text-muted-foreground text-sm">
 												{card.back}
 											</div>
-											<div className="flex gap-2 mt-2 flex-wrap">
-												<span className="text-[10px] px-1.5 py-0.5 rounded bg-primary/10 text-primary">
+											<div className="mt-2 flex flex-wrap gap-2">
+												<span className="rounded bg-primary/10 px-1.5 py-0.5 text-[10px] text-primary">
 													{card.subject}
 												</span>
 												{card.topic && (
-													<span className="text-[10px] px-1.5 py-0.5 rounded bg-secondary/30 text-muted-foreground">
+													<span className="rounded bg-secondary/30 px-1.5 py-0.5 text-[10px] text-muted-foreground">
 														{card.topic}
 													</span>
 												)}
-												<span className="text-[10px] px-1.5 py-0.5 rounded bg-muted/30 text-muted-foreground">
+												<span className="rounded bg-muted/30 px-1.5 py-0.5 text-[10px] text-muted-foreground">
 													Ease: {card.easeFactor.toFixed(1)}
 												</span>
-												<span className="text-[10px] px-1.5 py-0.5 rounded bg-muted/30 text-muted-foreground">
+												<span className="rounded bg-muted/30 px-1.5 py-0.5 text-[10px] text-muted-foreground">
 													Interval: {card.interval}d
 												</span>
 												{card.nextReview > Date.now() ? (
-													<span className="text-[10px] px-1.5 py-0.5 rounded bg-green-500/10 text-green-600">
+													<span className="rounded bg-green-500/10 px-1.5 py-0.5 text-[10px] text-green-600">
 														Due {new Date(card.nextReview).toLocaleDateString()}
 													</span>
 												) : (
-													<span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-600">
+													<span className="rounded bg-amber-500/10 px-1.5 py-0.5 text-[10px] text-amber-600">
 														Overdue
 													</span>
 												)}
@@ -230,17 +230,17 @@ export default function FlashcardBrowsePage() {
 					</div>
 
 					{totalPages > 1 && (
-						<div className="flex items-center justify-center gap-4 mt-6">
+						<div className="mt-6 flex items-center justify-center gap-4">
 							<Button
 								variant="outline"
 								size="sm"
 								disabled={page === 0}
 								onClick={() => setPage((p) => p - 1)}
 							>
-								<HugeiconsIcon icon={ArrowLeft01Icon} className="size-4 mr-1" />{" "}
+								<HugeiconsIcon icon={ArrowLeft01Icon} className="mr-1 size-4" />{" "}
 								Previous
 							</Button>
-							<span className="text-sm text-muted-foreground">
+							<span className="text-muted-foreground text-sm">
 								Page {page + 1} of {totalPages}
 							</span>
 							<Button
@@ -252,7 +252,7 @@ export default function FlashcardBrowsePage() {
 								Next{" "}
 								<HugeiconsIcon
 									icon={ArrowRight01Icon}
-									className="size-4 ml-1"
+									className="ml-1 size-4"
 								/>
 							</Button>
 						</div>

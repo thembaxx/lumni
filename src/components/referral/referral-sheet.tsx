@@ -42,12 +42,12 @@ export function ReferralSheet() {
 
 	return (
 		<Sheet open={open} onOpenChange={setOpen}>
-			<SheetTrigger className="h-11 px-5 rounded-[2.5rem] border border-border/80 bg-secondary/80 gap-2.5 inline-flex items-center justify-start text-foreground hover:bg-accent hover:border-accent transition-colors">
+			<SheetTrigger className="inline-flex h-11 items-center justify-start gap-2.5 rounded-[2.5rem] border border-border/80 bg-secondary/80 px-5 text-foreground transition-colors hover:border-accent hover:bg-accent">
 				<HugeiconsIcon icon={Share07Icon} className="size-4 text-accent" />
-				<span className="text-sm font-medium">Invite Friend</span>
+				<span className="font-medium text-sm">Invite Friend</span>
 			</SheetTrigger>
 			<SheetContent
-				className="sm:max-w-135 w-full h-dvh px-4 rounded-t-none"
+				className="h-dvh w-full rounded-t-none px-4 sm:max-w-135"
 				side="bottom"
 			>
 				<SheetHeader className="text-left">
@@ -57,24 +57,24 @@ export function ReferralSheet() {
 					</SheetDescription>
 				</SheetHeader>
 
-				<div className="px-4 pb-4 grow max-h-[95dvh] overflow-y-auto flex flex-col gap-6 pt-2">
+				<div className="flex max-h-[95dvh] grow flex-col gap-6 overflow-y-auto px-4 pt-2 pb-4">
 					{isLoading ? (
 						<div className="flex items-center justify-center py-12">
-							<p className="text-sm text-muted-foreground">Loading...</p>
+							<p className="text-muted-foreground text-sm">Loading...</p>
 						</div>
 					) : info ? (
 						<>
 							{/* Code Display */}
-							<div className="flex flex-col items-center gap-3 bg-secondary/20 rounded-xl p-5 border border-border/40">
-								<p className="text-xs text-muted-foreground font-medium">
+							<div className="flex flex-col items-center gap-3 rounded-xl border border-border/40 bg-secondary/20 p-5">
+								<p className="font-medium text-muted-foreground text-xs">
 									Your referral code
 								</p>
-								<div className="text-xl font-mono font-bold tracking-wider text-foreground select-all">
+								<div className="select-all font-bold font-mono text-foreground text-xl tracking-wider">
 									{info.code}
 								</div>
 								<button
 									onClick={handleCopy}
-									className="flex items-center gap-1.5 text-xs text-accent font-medium hover:underline"
+									className="flex items-center gap-1.5 font-medium text-accent text-xs hover:underline"
 								>
 									<HugeiconsIcon
 										icon={copied ? Tick01Icon : Copy01Icon}
@@ -86,7 +86,7 @@ export function ReferralSheet() {
 
 							{/* Share Button */}
 							<Button
-								className="w-full h-12 rounded-xl gap-2"
+								className="h-12 w-full gap-2 rounded-xl"
 								onClick={handleShare}
 							>
 								<HugeiconsIcon icon={Share07Icon} className="size-4" />
@@ -104,8 +104,8 @@ export function ReferralSheet() {
 							</div>
 
 							{/* How It Works */}
-							<div className="flex flex-col gap-3 bg-secondary/10 rounded-xl p-4 border border-border/20">
-								<p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+							<div className="flex flex-col gap-3 rounded-xl border border-border/20 bg-secondary/10 p-4">
+								<p className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">
 									How it works
 								</p>
 								<div className="flex flex-col gap-2 text-sm">
@@ -118,23 +118,23 @@ export function ReferralSheet() {
 							{/* Stats */}
 							<div className="flex justify-center gap-6 text-center">
 								<div>
-									<p className="text-lg font-bold">{info.referrals.length}</p>
-									<p className="text-xs text-muted-foreground">Sent</p>
+									<p className="font-bold text-lg">{info.referrals.length}</p>
+									<p className="text-muted-foreground text-xs">Sent</p>
 								</div>
 								<div>
-									<p className="text-lg font-bold">
+									<p className="font-bold text-lg">
 										{
 											info.referrals.filter((r) => r.status === "rewarded")
 												.length
 										}
 									</p>
-									<p className="text-xs text-muted-foreground">Earned</p>
+									<p className="text-muted-foreground text-xs">Earned</p>
 								</div>
 								<div>
-									<p className="text-lg font-bold">
+									<p className="font-bold text-lg">
 										{info.monthlyLimit - info.monthlyCount}
 									</p>
-									<p className="text-xs text-muted-foreground">
+									<p className="text-muted-foreground text-xs">
 										Left this month
 									</p>
 								</div>
@@ -142,7 +142,7 @@ export function ReferralSheet() {
 						</>
 					) : (
 						<div className="flex items-center justify-center py-12">
-							<p className="text-sm text-muted-foreground">
+							<p className="text-muted-foreground text-sm">
 								Could not load referral info
 							</p>
 						</div>

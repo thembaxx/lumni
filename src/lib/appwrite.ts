@@ -1,11 +1,8 @@
 import { Account, Client, Functions, Storage } from "appwrite";
 import {
-	Models,
 	Account as NodeAccount,
 	Client as NodeClient,
 	Databases as NodeDatabases,
-	Functions as NodeFunctions,
-	Storage as NodeStorage,
 } from "node-appwrite";
 
 export const APPWRITE_ENDPOINT =

@@ -121,7 +121,7 @@ export default function RootLayout({
 					crossOrigin="anonymous"
 				/>
 			</head>
-			<body className="h-full antialiased min-h-full flex flex-col bg-[--system-background] text-[--system-text-primary]">
+			<body className="flex h-full min-h-full flex-col bg-[--system-background] text-[--system-text-primary] antialiased">
 				<Script
 					id="theme-init"
 					strategy="beforeInteractive"
@@ -139,7 +139,7 @@ export default function RootLayout({
 						<FloatingToolsButton />
 						<div className="flex flex-1">
 							<DesktopSidebar />
-							<main className="flex-1 min-w-0 flex flex-col">
+							<main className="flex min-w-0 flex-1 flex-col">
 								<TopNav />
 								<ErrorBoundary>
 									<PageTransition>{children}</PageTransition>

@@ -89,20 +89,20 @@ export default function UploadPage() {
 					</h1>
 				</div>
 
-				<div className="px-[--space-4] space-y-[--space-4] pb-[--space-8]">
+				<div className="space-y-[--space-4] px-[--space-4] pb-[--space-8]">
 					<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
 						<header>
-							<h2 className="font-heading text-sm font-medium flex flex-col items-center gap-3 text-center">
+							<h2 className="flex flex-col items-center gap-3 text-center font-heading font-medium text-sm">
 								<span className="flex items-center gap-2">
 									<HugeiconsIcon icon={CloudUploadIcon} className="size-4" />
 									Upload
 								</span>
 							</h2>
-							<p className="text-xs/relaxed text-muted-foreground">
+							<p className="text-muted-foreground text-xs/relaxed">
 								Upload JSON question files for subjects
 							</p>
 						</header>
-						<div className="px-4 group-data-[size=sm]/card:px-3 space-y-[--space-3]">
+						<div className="space-y-[--space-3] px-4 group-data-[size=sm]/card:px-3">
 							<UploadButton
 								endpoint="qaUploader"
 								onClientUploadComplete={handleUploadComplete}
@@ -120,13 +120,13 @@ export default function UploadPage() {
 									>
 										<HugeiconsIcon
 											icon={CheckmarkCircle01Icon}
-											className="size-16 mx-auto mb-2 text-success"
+											className="mx-auto mb-2 size-16 text-success"
 										/>
 									</motion.div>
-									<p className="text-[13px] font-medium text-[var(--success)]">
+									<p className="font-medium text-[13px] text-[var(--success)]">
 										Upload successful
 									</p>
-									<p className="text-[12px] text-muted-foreground break-all mt-1">
+									<p className="mt-1 break-all text-[12px] text-muted-foreground">
 										{lastUploadUrl}
 									</p>
 								</div>
@@ -147,11 +147,11 @@ export default function UploadPage() {
 
 					<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
 						<header>
-							<h2 className="font-heading text-sm font-medium flex items-center gap-2">
+							<h2 className="flex items-center gap-2 font-heading font-medium text-sm">
 								<HugeiconsIcon icon={DatabaseIcon} className="size-4" />
 								Database
 							</h2>
-							<p className="text-xs/relaxed text-muted-foreground">
+							<p className="text-muted-foreground text-xs/relaxed">
 								Seed the database with initial data
 							</p>
 						</header>
@@ -168,7 +168,7 @@ export default function UploadPage() {
 										className="mr-2 size-4 animate-spin"
 									/>
 								) : (
-									<HugeiconsIcon icon={DatabaseIcon} className="size-4 mr-2" />
+									<HugeiconsIcon icon={DatabaseIcon} className="mr-2 size-4" />
 								)}
 								{seedStatus === "seeding"
 									? "Seeding…"

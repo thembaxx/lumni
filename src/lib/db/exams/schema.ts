@@ -1,5 +1,3 @@
-import { randomUUID } from "crypto";
-
 export interface ExamPaperRecord {
 	id: string;
 	subjectCode: string;

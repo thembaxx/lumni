@@ -3,7 +3,7 @@
 import { ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
-import { startTransition, useCallback, useState } from "react";
+import { startTransition, useCallback } from "react";
 import { QuestionCard } from "@/components/quiz/question-card";
 import { Anim } from "@/components/shared/anim";
 import { TimerDisplay } from "@/components/shared/timer-display";
@@ -52,14 +52,14 @@ export function QuizSession({
 
 	return (
 		<Anim>
-			<div className="w-full max-w-2xl px-4 pb-6 flex flex-col gap-4">
-				<div className="animate-fade-in flex flex-col gap-4">
+			<div className="flex w-full max-w-2xl flex-col gap-4 px-4 pb-6">
+				<div className="flex animate-fade-in flex-col gap-4">
 					<div className="flex items-center justify-between">
 						<Button
 							variant="ghost"
 							size="sm"
 							onClick={onQuit}
-							className="font-medium hover:text-foreground hover:bg-destructive/10"
+							className="font-medium hover:bg-destructive/10 hover:text-foreground"
 						>
 							Quit
 						</Button>
@@ -143,7 +143,7 @@ function QuestionCounter({
 	totalQuestions: number;
 }) {
 	return (
-		<span className="font-mono text-sm font-medium">
+		<span className="font-medium font-mono text-sm">
 			{currentQuestionIndex + 1}/{totalQuestions}
 		</span>
 	);
@@ -152,7 +152,7 @@ function QuestionCounter({
 function AccuracyDisplay({ accuracy }: { accuracy: number }) {
 	return (
 		<div className="flex items-center gap-1.5">
-			<span className="text-sm font-semibold tabular-nums font-mono text-success">
+			<span className="font-mono font-semibold text-sm text-success tabular-nums">
 				{accuracy}%
 			</span>
 		</div>

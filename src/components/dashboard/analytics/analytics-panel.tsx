@@ -27,20 +27,20 @@ export function AnalyticsPanel() {
 	if (isLoading) {
 		return (
 			<div className="flex items-center justify-center p-8">
-				<div className="animate-spin rounded-full size-8 border-b-2 border-foreground" />
+				<div className="size-8 animate-spin rounded-full border-foreground border-b-2" />
 			</div>
 		);
 	}
 
 	if (!analytics || analytics.totalQuestions === 0) {
 		return (
-			<div className="text-center p-8">
+			<div className="p-8 text-center">
 				<HugeiconsIcon
 					icon={BrainIcon}
-					className="size-12 mx-auto text-muted-foreground mb-4"
+					className="mx-auto mb-4 size-12 text-muted-foreground"
 				/>
-				<h3 className="text-lg font-semibold mb-2">No Analytics Yet</h3>
-				<p className="text-muted-foreground mb-4">
+				<h3 className="mb-2 font-semibold text-lg">No Analytics Yet</h3>
+				<p className="mb-4 text-muted-foreground">
 					Complete some quizzes to see your performance analytics.
 				</p>
 				<Button render={<a href="/quiz" />}>Start Quiz</Button>
@@ -51,7 +51,7 @@ export function AnalyticsPanel() {
 	return (
 		<div className="flex flex-col gap-6">
 			<div className="flex items-center justify-between">
-				<h2 className="text-2xl font-semibold">Analytics</h2>
+				<h2 className="font-semibold text-2xl">Analytics</h2>
 				<Button variant="ghost" onClick={refresh}>
 					Refresh
 				</Button>
@@ -76,7 +76,7 @@ export function AnalyticsPanel() {
 
 function OverallStatsCard({ analytics }: { analytics: OverallAnalytics }) {
 	return (
-		<div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+		<div className="grid grid-cols-2 gap-4 md:grid-cols-4">
 			<StatCard
 				icon={Target01Icon}
 				label="Overall Accuracy"
@@ -124,12 +124,12 @@ function StatCard({
 	return (
 		<Card size="sm">
 			<CardContent>
-				<div className="flex items-center gap-2 text-muted-foreground mb-2">
+				<div className="mb-2 flex items-center gap-2 text-muted-foreground">
 					<HugeiconsIcon icon={Icon} className="size-4" />
 					<span className="text-xs">{label}</span>
 				</div>
 				<div
-					className={`text-2xl font-extrabold flex items-center gap-2 ${trendColor}`}
+					className={`flex items-center gap-2 font-extrabold text-2xl ${trendColor}`}
 				>
 					{value}
 					{trend === "up" && (
@@ -148,7 +148,7 @@ function InsightsCard({ insights }: { insights: string[] }) {
 	return (
 		<Card
 			size="sm"
-			className="bg-[--system-accent]/5 border-[--system-accent]/20"
+			className="border-[--system-accent]/20 bg-[--system-accent]/5"
 		>
 			<CardHeader>
 				<CardTitle>
@@ -159,7 +159,7 @@ function InsightsCard({ insights }: { insights: string[] }) {
 			<CardContent>
 				<ul className="flex flex-col gap-2">
 					{insights.map((insight, i) => (
-						<li key={i} className="text-sm flex items-start gap-2">
+						<li key={i} className="flex items-start gap-2 text-sm">
 							<span className="text-foreground">•</span>
 							{insight}
 						</li>
@@ -190,10 +190,10 @@ function RecommendationsCard({
 					{topRecommendations.map((rec, i) => (
 						<div
 							key={i}
-							className="flex items-start gap-3 p-3 rounded-lg bg-muted/50"
+							className="flex items-start gap-3 rounded-lg bg-muted/50 p-3"
 						>
 							<div
-								className={`size-2 rounded-full mt-2 ${
+								className={`mt-2 size-2 rounded-full ${
 									rec.type === "practice"
 										? "bg-[--system-accent]"
 										: rec.type === "exam"
@@ -202,9 +202,9 @@ function RecommendationsCard({
 								}`}
 							/>
 							<div>
-								<p className="text-sm font-medium">{rec.message}</p>
+								<p className="font-medium text-sm">{rec.message}</p>
 								{rec.topic && (
-									<p className="text-xs text-muted-foreground">
+									<p className="text-muted-foreground text-xs">
 										Topic: {rec.topic}
 									</p>
 								)}
@@ -232,7 +232,7 @@ function SubjectBreakdownCard({ subjects }: { subjects: SubjectAnalytics[] }) {
 						<div key={subject.subjectId} className="flex flex-col gap-2">
 							<div className="flex items-center justify-between">
 								<span className="font-medium">{subject.subjectName}</span>
-								<span className="text-sm text-muted-foreground">
+								<span className="text-muted-foreground text-sm">
 									{Math.round(subject.accuracy * 100)}%
 								</span>
 							</div>
@@ -242,7 +242,7 @@ function SubjectBreakdownCard({ subjects }: { subjects: SubjectAnalytics[] }) {
 								variant="simple"
 								size="md"
 							/>
-							<div className="flex gap-4 text-xs text-muted-foreground">
+							<div className="flex gap-4 text-muted-foreground text-xs">
 								<span>{subject.totalQuestions} questions</span>
 								<span>{subject.currentStreak} day streak</span>
 								{subject.weakTopics.length > 0 && (

@@ -185,7 +185,7 @@ export function UploadDialogRenderer({
 						)}
 					</DialogHeader>
 
-					<div className="flex flex-col gap-2 max-h-64 overflow-y-auto -mx-1 px-1">
+					<div className="-mx-1 flex max-h-64 flex-col gap-2 overflow-y-auto px-1">
 						{items.map((item) => (
 							<UploadFileItem
 								key={`${item.name}-${item.size}`}

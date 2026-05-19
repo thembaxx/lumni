@@ -87,19 +87,19 @@ export function SubjectSelector({ onSelect, className }: SubjectSelectorProps) {
 	};
 
 	return (
-		<div className={cn("flex flex-col gap-4 w-full", className)}>
+		<div className={cn("flex w-full flex-col gap-4", className)}>
 			<div className="pb-2">
 				<div className="relative">
 					<HugeiconsIcon
 						icon={Search01Icon}
-						className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground pointer-events-none"
+						className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
 					/>
 					<Input
 						type="text"
 						placeholder="Search subjects…"
 						value={searchQuery}
 						onChange={(e) => setSearchQuery(e.target.value)}
-						className="h-10 pl-10 pr-4 rounded-lg"
+						className="h-10 rounded-lg pr-4 pl-10"
 					/>
 				</div>
 			</div>
@@ -115,18 +115,18 @@ export function SubjectSelector({ onSelect, className }: SubjectSelectorProps) {
 							onClick={() => handleSelect(subject.id)}
 							disabled={isGenerating}
 							className={cn(
-								"group p-4 rounded-2xl border border-border/60 text-left flex flex-col items-start justify-start h-auto w-full",
-								"hover:-translate-y-0.5 hover:border-border hover:shadow-lg hover:shadow-black/5 dark:hover:shadow-black/20",
-								"focus-visible:ring-2 focus-visible:ring-[--system-accent]/30 focus-visible:border-[--system-accent]/50",
-								"disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none",
+								"group flex h-auto w-full flex-col items-start justify-start rounded-2xl border border-border/60 p-4 text-left",
+								"hover:-translate-y-0.5 hover:border-border hover:shadow-black/5 hover:shadow-lg dark:hover:shadow-black/20",
+								"focus-visible:border-[--system-accent]/50 focus-visible:ring-2 focus-visible:ring-[--system-accent]/30",
+								"disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none",
 								isSelected &&
-									"border-[--system-accent] bg-[--system-accent]/5 dark:bg-[--system-accent]/10 shadow-md shadow-[--system-accent]/10",
+									"border-[--system-accent] bg-[--system-accent]/5 shadow-[--system-accent]/10 shadow-md dark:bg-[--system-accent]/10",
 							)}
 						>
 							<div
-								className="size-11 rounded-xl flex items-center justify-center mb-3 transition-transform duration-200 group-hover:scale-110"
+								className="mb-3 flex size-11 items-center justify-center rounded-xl transition-transform duration-200 group-hover:scale-110"
 								style={{
-									backgroundColor: subject.color + "15",
+									backgroundColor: `${subject.color}15`,
 									boxShadow: `0 0 0 1px ${subject.color}20`,
 								}}
 							>
@@ -135,10 +135,10 @@ export function SubjectSelector({ onSelect, className }: SubjectSelectorProps) {
 									className={cn("size-5", `text-[${subject.color}]`)}
 								/>
 							</div>
-							<h3 className="font-semibold text-sm text-foreground group-hover:text-foreground/90">
+							<h3 className="font-semibold text-foreground text-sm group-hover:text-foreground/90">
 								{subject.name}
 							</h3>
-							<p className="text-xs text-muted-foreground mt-1.5 line-clamp-2 leading-relaxed">
+							<p className="mt-1.5 line-clamp-2 text-muted-foreground text-xs leading-relaxed">
 								{subject.description}
 							</p>
 						</Button>
@@ -149,7 +149,7 @@ export function SubjectSelector({ onSelect, className }: SubjectSelectorProps) {
 				<div className="flex justify-center">
 					<div className="flex items-center gap-2">
 						<Skeleton className="size-4 rounded-full" />
-						<span className="text-sm text-muted-foreground">
+						<span className="text-muted-foreground text-sm">
 							Generating questions with AI...
 						</span>
 					</div>

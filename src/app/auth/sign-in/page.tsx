@@ -74,7 +74,7 @@ function SignInForm() {
 				transition={{ duration: 0.35, ease: iOSEase }}
 				className="flex flex-col items-center gap-6 text-center"
 			>
-				<div className="size-16 rounded-full bg-system-accent/10 flex items-center justify-center">
+				<div className="flex size-16 items-center justify-center rounded-full bg-system-accent/10">
 					<HugeiconsIcon
 						icon={SparklesIcon}
 						className="size-8 text-system-accent"
@@ -93,7 +93,7 @@ function SignInForm() {
 				<button
 					type="button"
 					onClick={() => setMagicLinkSent(false)}
-					className="text-sm font-semibold text-system-accent hover:underline"
+					className="font-semibold text-sm text-system-accent hover:underline"
 				>
 					Use a different email
 				</button>
@@ -127,7 +127,7 @@ function SignInForm() {
 					<div className="relative">
 						<HugeiconsIcon
 							icon={Mail01Icon}
-							className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground"
+							className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
 						/>
 						<Input
 							id="email"
@@ -136,7 +136,7 @@ function SignInForm() {
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
 							required
-							className="pl-10 h-11 rounded-xl bg-system-surface border-border/40"
+							className="h-11 rounded-xl border-border/40 bg-system-surface pl-10"
 						/>
 					</div>
 				</div>
@@ -157,12 +157,12 @@ function SignInForm() {
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}
 								required
-								className="pr-10 h-11 rounded-xl bg-system-surface border-border/40"
+								className="h-11 rounded-xl border-border/40 bg-system-surface pr-10"
 							/>
 							<button
 								type="button"
 								onClick={() => setShowPassword(!showPassword)}
-								className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+								className="absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground hover:text-foreground"
 							>
 								{showPassword ? (
 									<HugeiconsIcon icon={ViewOffIcon} className="size-4" />
@@ -175,13 +175,13 @@ function SignInForm() {
 				)}
 
 				{error && (
-					<p className="ios-footnote text-destructive font-medium">{error}</p>
+					<p className="ios-footnote font-medium text-destructive">{error}</p>
 				)}
 
 				<Button
 					type="submit"
 					disabled={loading || !email}
-					className="w-full h-11 rounded-xl bg-system-accent text-white font-semibold text-sm hover:bg-system-accent/90 active:scale-[0.96] transition-[background-color,transform]"
+					className="h-11 w-full rounded-xl bg-system-accent font-semibold text-sm text-white transition-[background-color,transform] hover:bg-system-accent/90 active:scale-[0.96]"
 				>
 					{loading
 						? "Signing in..."
@@ -196,7 +196,7 @@ function SignInForm() {
 						setIsMagicLink(!isMagicLink);
 						setPassword("");
 					}}
-					className="text-sm font-medium text-system-accent hover:underline text-center"
+					className="text-center font-medium text-sm text-system-accent hover:underline"
 				>
 					{isMagicLink
 						? "Sign in with password instead"
@@ -204,7 +204,7 @@ function SignInForm() {
 				</button>
 			</div>
 
-			<p className="text-sm text-muted-foreground text-center">
+			<p className="text-center text-muted-foreground text-sm">
 				Don&apos;t have an account?{" "}
 				<Link
 					href={`/auth/sign-up?redirect=${encodeURIComponent(redirect)}`}

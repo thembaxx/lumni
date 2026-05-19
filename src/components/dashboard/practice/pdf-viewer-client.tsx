@@ -7,10 +7,10 @@ export const PdfViewer = dynamic(
 	{
 		ssr: false,
 		loading: () => (
-			<div className="flex items-center justify-center h-full">
+			<div className="flex h-full items-center justify-center">
 				<div className="flex flex-col items-center gap-2">
-					<div className="w-5 h-5 rounded-full border border-muted border-t-foreground animate-spin" />
-					<span className="text-xs text-muted-foreground">
+					<div className="h-5 w-5 animate-spin rounded-full border border-muted border-t-foreground" />
+					<span className="text-muted-foreground text-xs">
 						Loading PDF viewer...
 					</span>
 				</div>

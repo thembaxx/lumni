@@ -1,20 +1,10 @@
 import { describe, expect, test } from "bun:test";
 import type {
-	ChartData,
-	ChemistryData,
-	CircuitData,
-	CustomSvgData,
 	DiagramDataMap,
 	DiagramType,
-	ForceVectorData,
-	GeometryData,
-	GraphData,
-	MotionData,
-	NodeFlowData,
 	VisualContent,
 	VisualContentType,
 	VisualEngineParams,
-	WaveData,
 } from "../types";
 import { STEM_SUBJECTS } from "../types";
 

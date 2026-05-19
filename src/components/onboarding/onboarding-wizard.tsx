@@ -4,7 +4,7 @@ import { ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import dynamic from "next/dynamic";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Confetti } from "@/components/celebration/confetti";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -135,16 +135,16 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 	};
 
 	return (
-		<div className="fixed inset-0 bg-system-grouped z-50 overflow-y-auto">
+		<div className="fixed inset-0 z-50 overflow-y-auto bg-system-grouped">
 			{showConfetti && <Confetti trigger={showConfetti} />}
 			<ParticleField step={step} />
 
-			<div className="relative z-10 min-h-full flex flex-col p-4 md:p-8 max-w-4xl mx-auto w-full">
-				<div className="flex items-center gap-2 mb-8">
+			<div className="relative z-10 mx-auto flex min-h-full w-full max-w-4xl flex-col p-4 md:p-8">
+				<div className="mb-8 flex items-center gap-2">
 					{STEPS_COPY.map((_, i) => (
 						<motion.div
 							key={i}
-							className={`flex-1 h-1 rounded-full ${
+							className={`h-1 flex-1 rounded-full ${
 								i <= step ? "bg-[--system-accent]" : "bg-[--system-separator]"
 							}`}
 							animate={{
@@ -172,17 +172,17 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 						className="flex-1"
 					>
 						{step < 3 ? (
-							<div className="grid grid-cols-12 gap-6 items-center">
+							<div className="grid grid-cols-12 items-center gap-6">
 								<div className="col-span-12 md:col-span-6">
 									<motion.div
 										initial={shouldReduceMotion ? {} : { opacity: 0, y: 12 }}
 										animate={{ opacity: 1, y: 0 }}
 										transition={{ duration: 0.4, ease: iOSEase }}
 									>
-										<h1 className="ios-title-1 font-semibold mb-3 tracking-tight text-balance">
+										<h1 className="ios-title-1 mb-3 text-balance font-semibold tracking-tight">
 											{current.title}
 										</h1>
-										<p className="ios-body text-muted-foreground mb-8 leading-relaxed text-pretty">
+										<p className="ios-body mb-8 text-pretty text-muted-foreground leading-relaxed">
 											{current.body}
 										</p>
 
@@ -194,12 +194,12 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 														value={searchTerm}
 														onChange={(e) => setSearchTerm(e.target.value)}
 														placeholder="Search subjects…"
-														className="w-full px-3 py-2 rounded-lg border border-bg-muted/50 bg-card/50 text-base focus:outline-none focus:border-[--system-accent]/50"
+														className="w-full rounded-lg border border-bg-muted/50 bg-card/50 px-3 py-2 text-base focus:border-[--system-accent]/50 focus:outline-none"
 													/>
 												</div>
 
 												{filteredSubjects.length === 0 && searchTerm !== "" ? (
-													<p className="text-xs text-muted-foreground italic mb-4">
+													<p className="mb-4 text-muted-foreground text-xs italic">
 														No subjects match &quot;{searchTerm}&quot;. Try a
 														different search.
 													</p>
@@ -215,14 +215,14 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 														delay: 0.15,
 														ease: iOSEase,
 													}}
-													className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-80 overflow-y-auto pr-1"
+													className="grid max-h-80 grid-cols-1 gap-3 overflow-y-auto pr-1 sm:grid-cols-2"
 												>
 													{filteredSubjects.map((subject) => (
 														<Card
 															key={subject.id}
 															className={`cursor-pointer transition-colors duration-150 hover:ring-2 hover:ring-[--system-accent] active:scale-[0.97] ${
 																selectedSubjects.includes(subject.id)
-																	? "ring-2 ring-[--system-accent] bg-[--system-accent]/5"
+																	? "bg-[--system-accent]/5 ring-2 ring-[--system-accent]"
 																	: ""
 															}`}
 															onClick={() =>
@@ -235,16 +235,16 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 														>
 															<CardContent className="flex items-center gap-3 py-4">
 																<div
-																	className="size-10 rounded-full flex items-center justify-center text-white font-extrabold text-sm"
+																	className="flex size-10 items-center justify-center rounded-full font-extrabold text-sm text-white"
 																	style={{ backgroundColor: subject.color }}
 																>
 																	{subject.id.slice(0, 2)}
 																</div>
-																<div className="flex-1 min-w-0">
-																	<p className="font-medium truncate text-sm">
+																<div className="min-w-0 flex-1">
+																	<p className="truncate font-medium text-sm">
 																		{subject.name}
 																	</p>
-																	<p className="text-xs text-muted-foreground">
+																	<p className="text-muted-foreground text-xs">
 																		Grade 12
 																	</p>
 																</div>
@@ -266,7 +266,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 												}}
 											>
 												<div className="mb-6">
-													<div className="text-4xl font-extrabold text-foreground mb-1 tabular-nums">
+													<div className="mb-1 font-extrabold text-4xl text-foreground tabular-nums">
 														{targetAps}
 													</div>
 													<p className="ios-subhead text-muted-foreground">
@@ -281,7 +281,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 																setTargetAps(Array.isArray(v) ? v[0] : v)
 															}
 														/>
-														<div className="flex justify-between text-xs text-muted-foreground mt-1">
+														<div className="mt-1 flex justify-between text-muted-foreground text-xs">
 															<span>20 (Minimum)</span>
 															<span>50 (Top)</span>
 														</div>
@@ -289,7 +289,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 												</div>
 
 												<div className="mb-6">
-													<div className="text-4xl font-extrabold text-foreground mb-1 tabular-nums">
+													<div className="mb-1 font-extrabold text-4xl text-foreground tabular-nums">
 														{dailyMinutes}
 													</div>
 													<p className="ios-subhead text-muted-foreground">
@@ -305,12 +305,12 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 																setDailyMinutes(Array.isArray(v) ? v[0] : v)
 															}
 														/>
-														<div className="flex justify-between text-xs text-muted-foreground mt-1">
+														<div className="mt-1 flex justify-between text-muted-foreground text-xs">
 															<span>10 min</span>
 															<span>120 min</span>
 														</div>
 													</div>
-													<div className="flex gap-2 mt-3">
+													<div className="mt-3 flex gap-2">
 														{[15, 30, 45, 60].map((m) => (
 															<Button
 																key={m}
@@ -327,8 +327,8 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 													</div>
 												</div>
 
-												<div className="p-4 rounded-xl bg-system-surface-secondary">
-													<p className="text-sm text-muted-foreground">
+												<div className="rounded-xl bg-system-surface-secondary p-4">
+													<p className="text-muted-foreground text-sm">
 														<strong className="text-foreground">Tip:</strong>{" "}
 														Most universities need 23-27 APS. Medicine and
 														Engineering typically need 35+.
@@ -339,14 +339,14 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 									</motion.div>
 								</div>
 
-								<div className="col-span-12 md:col-span-6 flex items-center justify-center py-8">
+								<div className="col-span-12 flex items-center justify-center py-8 md:col-span-6">
 									<motion.div
 										initial={
 											shouldReduceMotion ? {} : { opacity: 0, scale: 0.96 }
 										}
 										animate={{ opacity: 1, scale: 1 }}
 										transition={{ duration: 0.4, ease: iOSEase, delay: 0.08 }}
-										className="w-56 h-56 md:w-64 md:h-64"
+										className="h-56 w-56 md:h-64 md:w-64"
 									>
 										<current.SVG />
 									</motion.div>
@@ -358,7 +358,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 									initial={shouldReduceMotion ? {} : { opacity: 0, scale: 0.9 }}
 									animate={{ opacity: 1, scale: 1 }}
 									transition={{ duration: 0.5, ease: iOSEase }}
-									className="w-48 h-48 mb-8"
+									className="mb-8 h-48 w-48"
 								>
 									<WelcomeSVG />
 								</motion.div>
@@ -368,10 +368,10 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 									transition={{ duration: 0.4, delay: 0.15, ease: iOSEase }}
 									className="max-w-md"
 								>
-									<h1 className="ios-title-1 font-semibold mb-3 tracking-tight text-balance">
+									<h1 className="ios-title-1 mb-3 text-balance font-semibold tracking-tight">
 										{current.title}
 									</h1>
-									<p className="ios-body text-muted-foreground mb-6 leading-relaxed text-pretty">
+									<p className="ios-body mb-6 text-pretty text-muted-foreground leading-relaxed">
 										{current.body}
 									</p>
 
@@ -384,7 +384,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 													transition: { staggerChildren: 0.04 },
 												},
 											}}
-											className="flex flex-wrap justify-center gap-2 mb-8"
+											className="mb-8 flex flex-wrap justify-center gap-2"
 										>
 											{selectedSubjects.map((id) => {
 												const sub = nscSubjects.find((s) => s.id === id);
@@ -395,7 +395,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 															hidden: { opacity: 0, scale: 0.9 },
 															visible: { opacity: 1, scale: 1 },
 														}}
-														className="text-xs font-medium px-3 py-1 rounded-full border border-border/40"
+														className="rounded-full border border-border/40 px-3 py-1 font-medium text-xs"
 													>
 														{sub.name}
 													</motion.span>
@@ -404,7 +404,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 										</motion.div>
 									)}
 
-									<p className="text-xs text-muted-foreground text-pretty">
+									<p className="text-pretty text-muted-foreground text-xs">
 										You can change everything later in Settings.
 									</p>
 								</motion.div>
@@ -413,7 +413,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 					</motion.div>
 				</AnimatePresence>
 
-				<div className="flex items-center justify-between mt-8 pt-4 border-t border-border/40">
+				<div className="mt-8 flex items-center justify-between border-border/40 border-t pt-4">
 					<div>
 						{step > 0 && step < 3 && (
 							<Button variant="ghost" onClick={handleBack}>

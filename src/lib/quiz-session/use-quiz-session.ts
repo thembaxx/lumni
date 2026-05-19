@@ -119,7 +119,7 @@ export function useQuizSession(
 	}, []);
 
 	const recordAnswer = useCallback(
-		(correct: boolean, detail?: AnswerDetail) => {
+		(correct: boolean, _detail?: AnswerDetail) => {
 			setCorrectness((prev) => [...prev, correct]);
 			if (correct) setCorrectAnswers((prev) => prev + 1);
 		},

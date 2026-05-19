@@ -68,7 +68,7 @@ export function QuestionRenderer({
 	return (
 		<div className="flex flex-col gap-6">
 			<div className="flex items-center gap-2">
-				<h3 className="text-lg font-semibold">
+				<h3 className="font-semibold text-lg">
 					QUESTION {question.id}
 					{question.title ? `: ${question.title}` : ""}
 				</h3>
@@ -80,13 +80,13 @@ export function QuestionRenderer({
 			<VisualContent visual={visual} isLoading={visualLoading} />
 
 			{question.context?.map((block, idx) => (
-				<div key={idx} className="pl-4 border-l-2 border-muted">
+				<div key={idx} className="border-muted border-l-2 pl-4">
 					<ContentBlockRenderer block={block} />
 				</div>
 			))}
 
 			{question.parts.length === 0 && (
-				<p className="text-sm text-muted-foreground italic">No sub-questions</p>
+				<p className="text-muted-foreground text-sm italic">No sub-questions</p>
 			)}
 
 			{question.parts.map((part) => {
@@ -99,13 +99,13 @@ export function QuestionRenderer({
 						id={fullId}
 						className={`rounded-lg p-4 transition-colors ${
 							isCurrent
-								? "ring-1 ring-[--system-accent] bg-[--system-accent]/5"
+								? "bg-[--system-accent]/5 ring-1 ring-[--system-accent]"
 								: ""
 						}`}
 					>
-						<div className="flex items-start justify-between gap-2 mb-3">
-							<div className="flex items-center gap-2 flex-1">
-								<span className="text-sm font-medium">
+						<div className="mb-3 flex items-start justify-between gap-2">
+							<div className="flex flex-1 items-center gap-2">
+								<span className="font-medium text-sm">
 									{question.id}.{part.id}
 								</span>
 								{part.text && <p className="text-sm">{part.text}</p>}
@@ -114,7 +114,7 @@ export function QuestionRenderer({
 							<button
 								type="button"
 								onClick={() => onFlag(fullId)}
-								className={`shrink-0 text-xs px-2 py-0.5 rounded transition-colors ${
+								className={`shrink-0 rounded px-2 py-0.5 text-xs transition-colors ${
 									flags.includes(fullId)
 										? "bg-amber-100 text-amber-700"
 										: "bg-muted text-muted-foreground hover:bg-muted/80"
@@ -138,13 +138,13 @@ export function QuestionRenderer({
 						</div>
 
 						{part.subParts && part.subParts.length > 0 && (
-							<div className="mt-4 flex flex-col gap-4 pl-4 border-l-2 border-muted">
+							<div className="mt-4 flex flex-col gap-4 border-muted border-l-2 pl-4">
 								{part.subParts.map((subPart) => {
 									const subFullId = `${fullId}(${subPart.id})`;
 									return (
 										<div key={subPart.id}>
-											<div className="flex items-center gap-2 mb-2">
-												<span className="text-sm font-medium">
+											<div className="mb-2 flex items-center gap-2">
+												<span className="font-medium text-sm">
 													{subPart.id}
 												</span>
 												{subPart.text && (

@@ -32,7 +32,7 @@ async function fetchExams(): Promise<PaperListing[]> {
 			? ("may-june" as const)
 			: ("november" as const),
 		type: "paper" as const,
-		paperNumber: parseInt(e.paperCode?.replace("P", "") || "1"),
+		paperNumber: parseInt(e.paperCode?.replace("P", "") || "1", 10),
 		language: e.language?.toLowerCase() as "english" | "afrikaans" | undefined,
 		title: `${e.subject} ${e.paperCode} ${e.examPeriod}`,
 		url: "",

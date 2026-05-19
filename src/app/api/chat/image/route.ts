@@ -10,7 +10,15 @@ const handler = async (request: NextRequest) => {
 			response: budgetResponse,
 			userId,
 		} = await checkBudget(request, "generate");
-		if (!allowed) return budgetResponse!;
+		if (!allowed) {
+			return (
+				budgetResponse ??
+				NextResponse.json(
+					{ error: "Budget response unavailable" },
+					{ status: 500 },
+				)
+			);
+		}
 
 		const body = await request.json();
 		const { imageUrl, imageName } = body;

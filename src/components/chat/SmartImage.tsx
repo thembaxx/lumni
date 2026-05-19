@@ -18,7 +18,7 @@ export function SmartImage({ src, alt, className }: SmartImageProps) {
 				width={800}
 				height={600}
 				className={cn(
-					"outline -outline-offset-1 outline-black/10 dark:outline-white/10",
+					"outline outline-black/10 -outline-offset-1 dark:outline-white/10",
 					className,
 				)}
 			/>
@@ -34,7 +34,7 @@ export function SmartImage({ src, alt, className }: SmartImageProps) {
 				alt={alt}
 				fill
 				sizes="100vw"
-				className="object-contain outline -outline-offset-1 outline-black/10 dark:outline-white/10"
+				className="object-contain outline outline-black/10 -outline-offset-1 dark:outline-white/10"
 				unoptimized
 			/>
 		</div>

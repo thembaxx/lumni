@@ -85,7 +85,7 @@ export function StudyTopicCard({
 					exit="hidden"
 					transition={{ duration: 0.2, ease: iOSEase }}
 					className={cn(
-						"p-5 rounded-2xl border bg-transparent text-card-foreground shadow-sm",
+						"rounded-2xl border bg-transparent p-5 text-card-foreground shadow-sm",
 						"flex flex-col gap-4",
 						className,
 					)}
@@ -93,17 +93,17 @@ export function StudyTopicCard({
 					<m.div
 						variants={variants}
 						transition={{ delay: 0.05 }}
-						className="flex justify-between items-start"
+						className="flex items-start justify-between"
 					>
 						<Badge
 							variant="outline"
-							className="px-3 py-0.5 text-[10px] font-medium bg-[--system-accent]/10 rounded-full border-none"
+							className="rounded-full border-none bg-[--system-accent]/10 px-3 py-0.5 font-medium text-[10px]"
 						>
 							{topic.subject}
 						</Badge>
 						<Badge
 							className={cn(
-								"px-3 py-0.5 text-[10px] uppercase font-medium rounded-full",
+								"rounded-full px-3 py-0.5 font-medium text-[10px] uppercase",
 								getDifficultyColor(topic.difficulty),
 							)}
 						>
@@ -114,7 +114,7 @@ export function StudyTopicCard({
 					<m.h3
 						variants={variants}
 						transition={{ delay: 0.1 }}
-						className="text-lg font-semibold leading-tight text-foreground text-wrap balance tracking-tight"
+						className="balance text-wrap font-semibold text-foreground text-lg leading-tight tracking-tight"
 					>
 						{topic.topicTitle}
 					</m.h3>
@@ -127,14 +127,14 @@ export function StudyTopicCard({
 						<MarkdownRenderer
 							content={topic.summary}
 							subject={topic.subject}
-							className="text-sm text-muted-foreground leading-relaxed"
+							className="text-muted-foreground text-sm leading-relaxed"
 						/>
 					</m.div>
 
 					<m.div
 						variants={variants}
 						transition={{ delay: 0.2 }}
-						className="flex gap-2 justify-between items-center pt-1"
+						className="flex items-center justify-between gap-2 pt-1"
 					>
 						<div className={isPlaying ? "animate-pulse" : ""}>
 							<ListenToLesson
@@ -158,8 +158,8 @@ export function StudyTopicCard({
 							variant="ghost"
 							onClick={handleRefresh}
 							className={cn(
-								"px-3 text-xs rounded-lg",
-								"active:scale-[0.96] transition-transform",
+								"rounded-lg px-3 text-xs",
+								"transition-transform active:scale-[0.96]",
 								"transition-colors duration-150 ease-[var(--ease-ios)]",
 							)}
 							aria-label="Get new topic"

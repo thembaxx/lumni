@@ -3,7 +3,6 @@
 import { m } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";
 import type { StudySet } from "./hooks/use-study-set-storage";
 
@@ -29,29 +28,27 @@ export function StudySetList({
 					animate={{ opacity: 1, x: 0 }}
 					exit={{ opacity: 0, x: -10 }}
 					transition={{ duration: 0.2, ease: iOSEase }}
-					className="border rounded-[2rem] p-4 cursor-pointer hover:bg-accent/5 transition-colors"
+					className="cursor-pointer rounded-[2rem] border p-4 transition-colors hover:bg-accent/5"
 					tabIndex={0}
 					role="button"
 					aria-label={`Study set: ${set.title}`}
 				>
-					<div className="flex justify-between items-start">
+					<div className="flex items-start justify-between">
 						<div className="flex-1">
-							<h3 className="font-semibold mb-1">{set.title}</h3>
+							<h3 className="mb-1 font-semibold">{set.title}</h3>
 							{set.description && (
-								<p className="text-sm text-muted-foreground line-clamp-2">
+								<p className="line-clamp-2 text-muted-foreground text-sm">
 									{set.description}
 								</p>
 							)}
 							<div className="mt-2 flex flex-wrap gap-1">
-								{set.tags && set.tags.length > 0 && (
-									<>
-										{set.tags.map((tag) => (
-											<Badge key={tag} variant="secondary" className="text-xs">
-												{tag}
-											</Badge>
-										))}
-									</>
-								)}
+								{set.tags &&
+									set.tags.length > 0 &&
+									set.tags.map((tag) => (
+										<Badge key={tag} variant="secondary" className="text-xs">
+											{tag}
+										</Badge>
+									))}
 								{set.subject && (
 									<Badge variant="secondary" className="text-xs">
 										{set.subject}

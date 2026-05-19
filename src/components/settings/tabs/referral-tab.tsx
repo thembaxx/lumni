@@ -22,7 +22,7 @@ export function ReferralTab() {
 	if (isLoading) {
 		return (
 			<div className="flex items-center justify-center py-16">
-				<p className="text-sm text-muted-foreground">Loading...</p>
+				<p className="text-muted-foreground text-sm">Loading...</p>
 			</div>
 		);
 	}
@@ -30,7 +30,7 @@ export function ReferralTab() {
 	if (!info) {
 		return (
 			<div className="flex items-center justify-center py-16">
-				<p className="text-sm text-muted-foreground">
+				<p className="text-muted-foreground text-sm">
 					Could not load referral info
 				</p>
 			</div>
@@ -62,11 +62,11 @@ export function ReferralTab() {
 				header="Your Referral Code"
 				footer="Share this code with friends to earn rewards"
 			>
-				<div className="px-5 py-6 flex flex-col items-center gap-4">
-					<div className="text-2xl font-mono font-bold tracking-wider text-foreground select-all bg-secondary/30 px-6 py-3 rounded-xl border border-border/40">
+				<div className="flex flex-col items-center gap-4 px-5 py-6">
+					<div className="select-all rounded-xl border border-border/40 bg-secondary/30 px-6 py-3 font-bold font-mono text-2xl text-foreground tracking-wider">
 						{info.code}
 					</div>
-					<div className="flex items-center gap-2 text-xs text-muted-foreground">
+					<div className="flex items-center gap-2 text-muted-foreground text-xs">
 						<span>Sent: {info.referrals.length}</span>
 						<span className="opacity-30">|</span>
 						<span>Earned: {rewardedCount}</span>

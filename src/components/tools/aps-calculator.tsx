@@ -161,7 +161,7 @@ export function APSCalculator() {
 		totalAPS >= 32 ? "high" : totalAPS >= 24 ? "medium" : "low";
 
 	return (
-		<div className="h-full flex flex-col overflow-y-auto">
+		<div className="flex h-full flex-col overflow-y-auto">
 			<div className="px-5 pt-5 pb-3">
 				<h2 className="ios-title-3 flex items-center gap-2 text-[--system-text-primary]">
 					<HugeiconsIcon
@@ -170,20 +170,20 @@ export function APSCalculator() {
 					/>
 					APS CalculatorIcon
 				</h2>
-				<p className="ios-subhead text-[--system-text-secondary] mt-1">
+				<p className="ios-subhead mt-1 text-[--system-text-secondary]">
 					Calculate your Admission Point Score for university applications.
 				</p>
 			</div>
 
 			<div className="px-5 pb-5">
-				<div className="bg-system-background-secondary rounded-2xl p-5 space-y-3">
+				<div className="space-y-3 rounded-2xl bg-system-background-secondary p-5">
 					{subjects.map((subject, index) => (
 						<motion.div
 							key={subject.id}
 							initial={{ opacity: 0, y: 10 }}
 							animate={{ opacity: 1, y: 0 }}
 							transition={{ delay: index * 0.05 }}
-							className="flex gap-2 items-center"
+							className="flex items-center gap-2"
 						>
 							<Input
 								placeholder="Subject name"
@@ -204,12 +204,12 @@ export function APSCalculator() {
 										updateSubject(
 											subject.id,
 											"percentage",
-											parseInt(e.target.value) || 0,
+											parseInt(e.target.value, 10) || 0,
 										)
 									}
-									className="w-20 rounded-xl tabular-nums pr-7"
+									className="w-20 rounded-xl pr-7 tabular-nums"
 								/>
-								<span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground pointer-events-none">
+								<span className="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground text-xs">
 									%
 								</span>
 							</div>
@@ -253,8 +253,8 @@ export function APSCalculator() {
 			</div>
 
 			<div className="px-5 pb-5">
-				<div className="rounded-2xl border border-border bg-card shadow-level-2 p-6">
-					<div className="flex items-center justify-between mb-3">
+				<div className="rounded-2xl border border-border bg-card p-6 shadow-level-2">
+					<div className="mb-3 flex items-center justify-between">
 						<span className="ios-subhead text-[--system-text-secondary]">
 							Your APS Score
 						</span>
@@ -265,7 +265,7 @@ export function APSCalculator() {
 					</div>
 					<div
 						className={cn(
-							"text-5xl font-extrabold text-center tabular-nums",
+							"text-center font-extrabold text-5xl tabular-nums",
 							scoreLevel === "high" && "text-success",
 							scoreLevel === "medium" && "text-warning",
 							scoreLevel === "low" && "text-destructive",
@@ -273,7 +273,7 @@ export function APSCalculator() {
 					>
 						{totalAPS}
 					</div>
-					<div className="mt-4 h-2 bg-system-background-tertiary rounded-full overflow-hidden">
+					<div className="mt-4 h-2 overflow-hidden rounded-full bg-system-background-tertiary">
 						<div
 							className={cn(
 								"h-full rounded-full transition-[width] duration-500",
@@ -284,7 +284,7 @@ export function APSCalculator() {
 							style={{ width: `${(totalAPS / 42) * 100}%` }}
 						/>
 					</div>
-					<p className="text-center text-muted-foreground text-sm mt-3 ios-caption-1">
+					<p className="ios-caption-1 mt-3 text-center text-muted-foreground text-sm">
 						Max possible: 42 points (6 subjects × 7)
 					</p>
 				</div>
@@ -292,7 +292,7 @@ export function APSCalculator() {
 
 			{hasData && (
 				<div className="px-5 pb-5">
-					<p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">
+					<p className="mb-3 font-bold text-muted-foreground text-xs uppercase tracking-wider">
 						Subject Breakdown
 					</p>
 					<div className="flex flex-col gap-2">
@@ -311,11 +311,11 @@ export function APSCalculator() {
 										initial={{ opacity: 0, y: 10 }}
 										animate={{ opacity: 1, y: 0 }}
 										transition={{ delay: idx * 0.05 }}
-										className="relative flex justify-between items-center p-4 rounded-xl bg-system-background-secondary overflow-hidden"
+										className="relative flex items-center justify-between overflow-hidden rounded-xl bg-system-background-secondary p-4"
 									>
 										<div
 											className={cn(
-												"absolute left-0 top-0 bottom-0 w-1.5",
+												"absolute top-0 bottom-0 left-0 w-1.5",
 												aps >= 6 && "bg-success",
 												aps >= 4 && aps < 6 && "bg-warning",
 												aps < 4 && "bg-destructive",
@@ -325,7 +325,7 @@ export function APSCalculator() {
 											<span className="font-medium text-sm">
 												{subject.name || `Subject ${idx + 1}`}
 											</span>
-											<span className="text-muted-foreground text-sm ml-2 tabular-nums">
+											<span className="ml-2 text-muted-foreground text-sm tabular-nums">
 												({subject.percentage}%)
 											</span>
 										</div>
@@ -340,7 +340,7 @@ export function APSCalculator() {
 											>
 												{aps} pts
 											</span>
-											<span className="text-xs text-muted-foreground ml-2 block">
+											<span className="ml-2 block text-muted-foreground text-xs">
 												{getGrade(subject.percentage)}
 											</span>
 										</div>
@@ -352,7 +352,7 @@ export function APSCalculator() {
 			)}
 
 			<div className="px-5 pb-10">
-				<p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">
+				<p className="mb-3 font-bold text-muted-foreground text-xs uppercase tracking-wider">
 					University Requirements
 				</p>
 				<div className="flex flex-col gap-3">
@@ -364,16 +364,16 @@ export function APSCalculator() {
 								initial={{ opacity: 0, y: 10 }}
 								animate={{ opacity: 1, y: 0 }}
 								transition={{ delay: idx * 0.05 }}
-								className="relative rounded-xl border border-border bg-card shadow-sm p-4 overflow-hidden"
+								className="relative overflow-hidden rounded-xl border border-border bg-card p-4 shadow-sm"
 							>
 								{meetsMin && (
-									<div className="absolute left-0 top-0 bottom-0 w-1 bg-success rounded-r-full" />
+									<div className="absolute top-0 bottom-0 left-0 w-1 rounded-r-full bg-success" />
 								)}
-								<div className="flex justify-between items-start mb-3">
+								<div className="mb-3 flex items-start justify-between">
 									<span className="font-medium text-sm">{uni.university}</span>
 									<span
 										className={cn(
-											"text-sm font-extrabold tabular-nums",
+											"font-extrabold text-sm tabular-nums",
 											meetsMin ? "text-success" : "text-destructive",
 										)}
 									>

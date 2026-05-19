@@ -5,7 +5,6 @@ import {
 	Login01Icon,
 	Logout01Icon,
 	Settings01Icon,
-	StarIcon,
 	UserIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -85,12 +84,12 @@ export function TopNav({ title, className }: TopNavProps) {
 	return (
 		<header
 			className={cn(
-				"sticky top-0 z-40 bg-system-background/80 backdrop-blur-xl border-b border-system-separator/30",
+				"sticky top-0 z-40 border-system-separator/30 border-b bg-system-background/80 backdrop-blur-xl",
 				className,
 			)}
 		>
-			<div className="flex items-center justify-between h-12 px-4">
-				<h1 className="ios-headline text-foreground font-semibold tracking-tight">
+			<div className="flex h-12 items-center justify-between px-4">
+				<h1 className="ios-headline font-semibold text-foreground tracking-tight">
 					{pageTitle}
 				</h1>
 
@@ -98,18 +97,18 @@ export function TopNav({ title, className }: TopNavProps) {
 					<motion.div
 						initial={{ opacity: 0, x: -8 }}
 						animate={{ opacity: 1, x: 0 }}
-						className="flex items-center gap-2 mr-auto ml-4"
+						className="mr-auto ml-4 flex items-center gap-2"
 					>
-						<div className="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-[--system-accent]/10">
+						<div className="flex items-center gap-1.5 rounded-lg bg-[--system-accent]/10 px-2 py-1">
 							<HugeiconsIcon
 								icon={ChampionIcon}
 								className="size-3 text-[--system-accent]"
 							/>
-							<span className="text-[11px] font-bold tabular-nums text-[--system-accent]">
+							<span className="font-bold text-[--system-accent] text-[11px] tabular-nums">
 								Lv.{levelInfo.level}
 							</span>
 						</div>
-						<div className="w-16 h-1.5 rounded-full bg-muted overflow-hidden">
+						<div className="h-1.5 w-16 overflow-hidden rounded-full bg-muted">
 							<motion.div
 								initial={{ width: 0 }}
 								animate={{ width: `${levelInfo.progress}%` }}
@@ -122,19 +121,19 @@ export function TopNav({ title, className }: TopNavProps) {
 
 				<div className="flex items-center gap-2">
 					{!isOnline && (
-						<div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-warning/10 text-warning">
-							<div className="size-1.5 rounded-full bg-warning animate-pulse" />
-							<span className="text-[10px] font-medium">Offline</span>
+						<div className="flex items-center gap-1 rounded-full bg-warning/10 px-2 py-0.5 text-warning">
+							<div className="size-1.5 animate-pulse rounded-full bg-warning" />
+							<span className="font-medium text-[10px]">Offline</span>
 						</div>
 					)}
 					{pendingCount > 0 && (
-						<div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-[--system-accent]/10 text-[--system-accent]">
+						<div className="flex items-center gap-1 rounded-full bg-[--system-accent]/10 px-2 py-0.5 text-[--system-accent]">
 							<div className="size-1.5 rounded-full bg-[--system-accent]" />
-							<span className="text-[10px] font-medium">{pendingCount}</span>
+							<span className="font-medium text-[10px]">{pendingCount}</span>
 						</div>
 					)}
 					{status === "loading" ? (
-						<div className="size-8 rounded-full bg-system-fill animate-pulse" />
+						<div className="size-8 animate-pulse rounded-full bg-system-fill" />
 					) : status === "unauthenticated" ? (
 						<Button
 							variant="ghost"
@@ -143,27 +142,27 @@ export function TopNav({ title, className }: TopNavProps) {
 								const redirect = encodeURIComponent(pathname);
 								window.location.href = `/auth/sign-in?redirect=${redirect}`;
 							}}
-							className="h-8 px-3 rounded-full text-sm font-semibold text-system-accent hover:bg-system-accent/10"
+							className="h-8 rounded-full px-3 font-semibold text-sm text-system-accent hover:bg-system-accent/10"
 						>
-							<HugeiconsIcon icon={Login01Icon} className="size-4 mr-1.5" />
+							<HugeiconsIcon icon={Login01Icon} className="mr-1.5 size-4" />
 							Sign In
 						</Button>
 					) : (
 						<DropdownList>
 							<DropdownListTrigger className="outline-none">
-								<Avatar className="size-8 cursor-pointer ring-2 ring-transparent hover:ring-system-accent/30 transition-shadow">
+								<Avatar className="size-8 cursor-pointer ring-2 ring-transparent transition-shadow hover:ring-system-accent/30">
 									<AvatarImage src={imgSrc} alt={user?.name || "User"} />
-									<AvatarFallback className="text-xs font-bold bg-system-accent text-white">
+									<AvatarFallback className="bg-system-accent font-bold text-white text-xs">
 										{user?.name?.charAt(0)?.toUpperCase() || "U"}
 									</AvatarFallback>
 								</Avatar>
 							</DropdownListTrigger>
 							<DropdownListContent align="end" sideOffset={8} className="w-56">
-								<div className="px-3 py-2.5 border-b border-border/30">
-									<div className="text-sm font-semibold text-foreground">
+								<div className="border-border/30 border-b px-3 py-2.5">
+									<div className="font-semibold text-foreground text-sm">
 										{user?.name || "Anonymous"}
 									</div>
-									<div className="text-xs text-muted-foreground mt-0.5">
+									<div className="mt-0.5 text-muted-foreground text-xs">
 										{user?.email || "Email not available"}
 									</div>
 								</div>

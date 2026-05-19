@@ -70,12 +70,12 @@ export default function DevVisualPage() {
 	const _isSTEM = STEM_SUBJECTS.has(subject);
 
 	return (
-		<div className="min-h-[100dvh] bg-background p-4 max-w-4xl mx-auto space-y-4 pb-20">
-			<h1 className="text-xl font-semibold">Visual Engine Test</h1>
+		<div className="mx-auto min-h-[100dvh] max-w-4xl space-y-4 bg-background p-4 pb-20">
+			<h1 className="font-semibold text-xl">Visual Engine Test</h1>
 
-			<div className="rounded-[2.5rem] bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] overflow-hidden">
-				<div className="p-4 space-y-3">
-					<div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+			<div className="overflow-hidden rounded-[2.5rem] bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
+				<div className="space-y-3 p-4">
+					<div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
 						<Select value={subject} onValueChange={(v) => v && setSubject(v)}>
 							<SelectTrigger>
 								<SelectValue />
@@ -105,15 +105,15 @@ export default function DevVisualPage() {
 			</div>
 
 			{error && (
-				<div className="rounded-[2.5rem] border border-destructive bg-destructive/5 overflow-hidden">
+				<div className="overflow-hidden rounded-[2.5rem] border border-destructive bg-destructive/5">
 					<div className="p-4 text-destructive text-sm">{error}</div>
 				</div>
 			)}
 
 			{testResult && (
-				<div className="rounded-[2.5rem] bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] overflow-hidden">
+				<div className="overflow-hidden rounded-[2.5rem] bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
 					<div className="p-4 pb-2">
-						<h3 className="text-sm font-semibold tracking-tight">
+						<h3 className="font-semibold text-sm tracking-tight">
 							Test Results
 						</h3>
 					</div>
@@ -131,9 +131,9 @@ export default function DevVisualPage() {
 
 			{visual && (
 				<>
-					<div className="rounded-[2.5rem] bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] overflow-hidden">
+					<div className="overflow-hidden rounded-[2.5rem] bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
 						<div className="p-4 pb-2">
-							<h3 className="text-sm font-semibold tracking-tight flex items-center gap-2">
+							<h3 className="flex items-center gap-2 font-semibold text-sm tracking-tight">
 								Rendered Visual
 								<Badge variant="secondary" className="text-xs">
 									{visual.type}
@@ -150,9 +150,9 @@ export default function DevVisualPage() {
 						</div>
 					</div>
 
-					<div className="rounded-[2.5rem] bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] overflow-hidden">
+					<div className="overflow-hidden rounded-[2.5rem] bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
 						<div className="p-4 pb-2">
-							<h3 className="text-sm font-semibold tracking-tight">
+							<h3 className="font-semibold text-sm tracking-tight">
 								Raw Response
 							</h3>
 						</div>
@@ -168,8 +168,8 @@ export default function DevVisualPage() {
 			)}
 
 			{!visual && !isLoading && !error && !testResult && (
-				<div className="rounded-[2.5rem] bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] overflow-hidden">
-					<div className="p-8 text-center text-sm text-muted-foreground">
+				<div className="overflow-hidden rounded-[2.5rem] bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
+					<div className="p-8 text-center text-muted-foreground text-sm">
 						Enter a question above and click "Resolve Visual" to see the result.
 						Use "Run All Tests" to test all subjects at once.
 					</div>

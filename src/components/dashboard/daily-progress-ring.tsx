@@ -44,17 +44,17 @@ export function DailyProgressRing() {
 							ease: iOSEase,
 							delay: shouldReduceMotion ? 0 : 0.2,
 						}}
-						className="text-3xl font-extrabold text-foreground tabular-nums"
+						className="font-extrabold text-3xl text-foreground tabular-nums"
 					>
 						{levelInfo.level}
 					</motion.span>
-					<span className="text-[11px] font-extrabold text-muted-foreground uppercase tracking-wider">
+					<span className="font-extrabold text-[11px] text-muted-foreground uppercase tracking-wider">
 						{levelInfo.title}
 					</span>
 				</div>
 			</RadialChart>
 
-			<div className="flex items-center gap-4 mt-4">
+			<div className="mt-4 flex items-center gap-4">
 				<div className="flex items-center gap-1.5">
 					<motion.span
 						animate={
@@ -73,19 +73,19 @@ export function DailyProgressRing() {
 							className={`size-5 transition-colors duration-300 ${currentStreak > 0 ? "text-warning" : "text-muted-foreground"}`}
 						/>
 					</motion.span>
-					<span className="text-lg font-extrabold text-foreground tabular-nums">
+					<span className="font-extrabold text-foreground text-lg tabular-nums">
 						{currentStreak}
 					</span>
-					<span className="text-xs text-muted-foreground font-medium">
+					<span className="font-medium text-muted-foreground text-xs">
 						day streak
 					</span>
 				</div>
 				<div className="h-6 w-px bg-border/40" />
 				<div className="text-right">
-					<p className="text-lg font-extrabold text-foreground tabular-nums">
+					<p className="font-extrabold text-foreground text-lg tabular-nums">
 						{gamification.totalXp.toLocaleString("en-ZA")}
 					</p>
-					<p className="text-xs text-muted-foreground font-medium">total XP</p>
+					<p className="font-medium text-muted-foreground text-xs">total XP</p>
 				</div>
 			</div>
 
@@ -109,11 +109,11 @@ export function DailyProgressRing() {
 					trackClassName="bg-border/40"
 					className="w-32"
 				/>
-				<span className="text-xs text-muted-foreground font-medium tabular-nums">
+				<span className="font-medium text-muted-foreground text-xs tabular-nums">
 					{daily?.progress ?? 0} / {daily?.target ?? 10}
 				</span>
 			</motion.div>
-			<div className="relative h-5 mt-0.5 flex items-center justify-center">
+			<div className="relative mt-0.5 flex h-5 items-center justify-center">
 				<AnimatePresence mode="wait">
 					{isComplete ? (
 						<motion.div
@@ -128,7 +128,7 @@ export function DailyProgressRing() {
 								icon={CheckmarkCircle01Icon}
 								className="size-3.5 text-success"
 							/>
-							<span className="text-[11px] font-extrabold text-success">
+							<span className="font-extrabold text-[11px] text-success">
 								Daily goal complete
 							</span>
 						</motion.div>
@@ -138,7 +138,7 @@ export function DailyProgressRing() {
 							initial={{ opacity: 0 }}
 							animate={{ opacity: 1 }}
 							exit={{ opacity: 0 }}
-							className="text-[11px] text-muted-foreground font-medium"
+							className="font-medium text-[11px] text-muted-foreground"
 						>
 							questions today
 						</motion.p>

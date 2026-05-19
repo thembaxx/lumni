@@ -12,7 +12,7 @@ export function MarksDisplay({ marks, className = "" }: MarksDisplayProps) {
 
 	return (
 		<span
-			className={`inline-flex items-center text-xs font-medium text-muted-foreground ${className}`}
+			className={`inline-flex items-center font-medium text-muted-foreground text-xs ${className}`}
 		>
 			{display}
 		</span>

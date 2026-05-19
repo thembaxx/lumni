@@ -97,14 +97,14 @@ export function SearchResults({
 	return (
 		<div className={cn("mt-2 space-y-1", className)} onKeyDown={handleKeyDown}>
 			{loading && (
-				<p className="text-xs text-muted-foreground px-1">Searching...</p>
+				<p className="px-1 text-muted-foreground text-xs">Searching...</p>
 			)}
 			{!loading && results.length === 0 && (
-				<p className="text-xs text-muted-foreground px-1">
+				<p className="px-1 text-muted-foreground text-xs">
 					No results for "{query}"
 				</p>
 			)}
-			<div ref={listRef} className="max-h-80 overflow-y-auto space-y-0.5">
+			<div ref={listRef} className="max-h-80 space-y-0.5 overflow-y-auto">
 				{results.map((item, i) => {
 					const config = typeConfig[item.type];
 					return (
@@ -113,7 +113,7 @@ export function SearchResults({
 							key={item.id}
 							onClick={onClose}
 							className={cn(
-								"w-full text-left flex items-start gap-3 p-2.5 rounded-xl transition-colors",
+								"flex w-full items-start gap-3 rounded-xl p-2.5 text-left transition-colors",
 								i === selectedIndex ? "bg-accent" : "hover:bg-accent/50",
 							)}
 						>
@@ -125,17 +125,17 @@ export function SearchResults({
 								/>
 							</div>
 							<div className="min-w-0 flex-1">
-								<p className="text-sm font-medium truncate">{item.title}</p>
-								<p className="text-xs text-muted-foreground truncate mt-0.5">
+								<p className="truncate font-medium text-sm">{item.title}</p>
+								<p className="mt-0.5 truncate text-muted-foreground text-xs">
 									{item.snippet}
 								</p>
 							</div>
-							<div className="shrink-0 flex items-center gap-1.5">
-								<Badge variant="secondary" className="text-[10px] px-1.5 py-0">
+							<div className="flex shrink-0 items-center gap-1.5">
+								<Badge variant="secondary" className="px-1.5 py-0 text-[10px]">
 									{config.label}
 								</Badge>
 								{item.subject && (
-									<span className="text-[10px] text-muted-foreground font-mono truncate max-w-[60px]">
+									<span className="max-w-[60px] truncate font-mono text-[10px] text-muted-foreground">
 										{item.subject}
 									</span>
 								)}

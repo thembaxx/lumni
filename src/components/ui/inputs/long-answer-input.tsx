@@ -40,7 +40,7 @@ export function LongAnswerInput({
 				className={cn("min-h-[120px]", onSubmit && "pr-4")}
 			/>
 			<div className="flex items-center justify-between">
-				<div className="flex gap-3 text-xs text-muted-foreground">
+				<div className="flex gap-3 text-muted-foreground text-xs">
 					<span>Words: {wordCount}</span>
 					{minWords !== undefined && (
 						<span className={belowMin ? "text-destructive" : ""}>

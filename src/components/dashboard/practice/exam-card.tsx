@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { FadeIn } from "@/components/shared/fade-in";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -38,17 +38,17 @@ export function ExamCard({ exam }: ExamCardProps) {
 			<FadeIn
 				duration={0.25}
 				distance={6}
-				className="flex flex-col w-full justify-between p-3 gap-3 overflow-hidden rounded-xl bg-secondary/40 border-0 hover:bg-secondary/60 transition-colors"
+				className="flex w-full flex-col justify-between gap-3 overflow-hidden rounded-xl border-0 bg-secondary/40 p-3 transition-colors hover:bg-secondary/60"
 			>
-				<div className="flex-1 min-w-0 pr-2">
-					<p className="text-sm font-medium truncate">{exam.title}</p>
-					<div className="flex items-center gap-1.5 mt-1">
-						<span className="text-xs text-muted-foreground">{exam.year}</span>
-						<span className="text-xs text-muted-foreground/50">·</span>
+				<div className="min-w-0 flex-1 pr-2">
+					<p className="truncate font-medium text-sm">{exam.title}</p>
+					<div className="mt-1 flex items-center gap-1.5">
+						<span className="text-muted-foreground text-xs">{exam.year}</span>
+						<span className="text-muted-foreground/50 text-xs">·</span>
 						<Badge
 							variant="outline"
 							className={cn(
-								"text-[10px] px-1.5 py-0.5",
+								"px-1.5 py-0.5 text-[10px]",
 								exam.session === "november"
 									? "bg-success/15 text-success-foreground"
 									: "bg-[--system-accent]/10 text-muted-foreground",
@@ -58,8 +58,8 @@ export function ExamCard({ exam }: ExamCardProps) {
 						</Badge>
 						{exam.language && (
 							<>
-								<span className="text-xs text-muted-foreground/50">·</span>
-								<span className="text-xs text-muted-foreground capitalize">
+								<span className="text-muted-foreground/50 text-xs">·</span>
+								<span className="text-muted-foreground text-xs capitalize">
 									{exam.language}
 								</span>
 							</>
@@ -67,7 +67,7 @@ export function ExamCard({ exam }: ExamCardProps) {
 						{exam.downloadedAt ? (
 							<Badge
 								variant="outline"
-								className="text-[9px] h-5 px-1.5 text-muted-foreground/70"
+								className="h-5 px-1.5 text-[9px] text-muted-foreground/70"
 							>
 								Saved
 							</Badge>
@@ -75,7 +75,7 @@ export function ExamCard({ exam }: ExamCardProps) {
 					</div>
 				</div>
 
-				<div className="flex items-center gap-1.5 flex-wrap">
+				<div className="flex flex-wrap items-center gap-1.5">
 					<Button variant="default" size="sm" onClick={handleViewPdf}>
 						View
 					</Button>

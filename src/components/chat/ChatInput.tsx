@@ -6,7 +6,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { AnimatedDialogContent } from "@/components/ui/animated-dialog-content";
 import { Button } from "@/components/ui/button";
 import {
@@ -66,7 +66,7 @@ export function ChatInput({
 	};
 
 	const handleFileSelect =
-		(type: "camera" | "upload") =>
+		(_type: "camera" | "upload") =>
 		(event: React.ChangeEvent<HTMLInputElement>) => {
 			const file = event.target.files?.[0];
 			if (!file) return;
@@ -80,7 +80,7 @@ export function ChatInput({
 		};
 
 	return (
-		<div className="p-4 border-t border-border/50 bg-background/80 backdrop-blur-xl">
+		<div className="border-border/50 border-t bg-background/80 p-4 backdrop-blur-xl">
 			<AnimatedDialogContent
 				open={voiceDialogOpen}
 				onOpenChange={setVoiceDialogOpen}
@@ -100,9 +100,9 @@ export function ChatInput({
 
 			<div
 				className={cn(
-					"bg-secondary/60 rounded-lg p-4 transition-[border-color,box-shadow,transform,background-color] duration-300 border mt-2",
+					"mt-2 rounded-lg border bg-secondary/60 p-4 transition-[border-color,box-shadow,transform,background-color] duration-300",
 					isFocused
-						? "ring-2 ring-system-accent/20 border-system-accent/40 scale-[1.005] bg-background"
+						? "scale-[1.005] border-system-accent/40 bg-background ring-2 ring-system-accent/20"
 						: "border-border/30",
 				)}
 			>
@@ -116,7 +116,7 @@ export function ChatInput({
 						onFocus={() => setIsFocused(true)}
 						onBlur={() => setIsFocused(false)}
 						disabled={isLoading}
-						className="bg-transparent text-foreground placeholder:text-muted-foreground/50 border-0 shadow-none p-0 focus-visible:ring-2 focus-visible:ring-system-accent/30"
+						className="border-0 bg-transparent p-0 text-foreground shadow-none placeholder:text-muted-foreground/50 focus-visible:ring-2 focus-visible:ring-system-accent/30"
 					/>
 				</div>
 
@@ -143,12 +143,12 @@ export function ChatInput({
 						<DropdownList>
 							<DropdownListTrigger
 								className={cn(
-									"inline-flex shrink-0 items-center justify-center rounded-md size-10",
-									"hover:bg-secondary text-muted-foreground cursor-pointer shadow-sm border border-border/30",
+									"inline-flex size-10 shrink-0 items-center justify-center rounded-md",
+									"cursor-pointer border border-border/30 text-muted-foreground shadow-sm hover:bg-secondary",
 									"transition-colors active:scale-[0.96]",
 									"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-system-accent/50",
 									isLoading &&
-										"opacity-50 pointer-events-none cursor-not-allowed",
+										"pointer-events-none cursor-not-allowed opacity-50",
 								)}
 								aria-label="Add image"
 							>
@@ -180,13 +180,13 @@ export function ChatInput({
 							variant="ghost"
 							size="icon"
 							onClick={() => setVoiceDialogOpen(true)}
-							className="rounded-md hover:bg-secondary size-10 border border-border/40"
+							className="size-10 rounded-md border border-border/40 hover:bg-secondary"
 							disabled={isLoading}
 						>
 							<HugeiconsIcon
 								icon={Mic01Icon}
 								data-icon
-								className="text-muted-foreground toolbutton-icon"
+								className="toolbutton-icon text-muted-foreground"
 							/>
 						</Button>
 						<Button
@@ -201,7 +201,7 @@ export function ChatInput({
 							}}
 							disabled={!input.trim() || isLoading}
 							className={cn(
-								"size-10 rounded-md bg-system-accent text-white hover:bg-system-accent/90 shadow-level-2",
+								"size-10 rounded-md bg-system-accent text-white shadow-level-2 hover:bg-system-accent/90",
 								voicePressed && "scale-[0.95] brightness-90",
 							)}
 							aria-label="Send message"

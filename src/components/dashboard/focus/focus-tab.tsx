@@ -83,7 +83,7 @@ export function FocusTab({ className }: FocusTabProps) {
 	return (
 		<div className={cn("flex flex-col items-center gap-6", className)}>
 			<RadialChart value={progress} size={192} color="var(--foreground)">
-				<span className="text-4xl font-extrabold tabular-nums tracking-tight">
+				<span className="font-extrabold text-4xl tabular-nums tracking-tight">
 					{formatTime(timeLeft)}
 				</span>
 			</RadialChart>
@@ -104,7 +104,7 @@ export function FocusTab({ className }: FocusTabProps) {
 					</Button>
 				) : (
 					<Button size="icon" onClick={handleStart} className="rounded-full">
-						<HugeiconsIcon icon={PlayFreeIcons} className="size-6 ml-1" />
+						<HugeiconsIcon icon={PlayFreeIcons} className="ml-1 size-6" />
 					</Button>
 				)}
 
@@ -124,7 +124,7 @@ export function FocusTab({ className }: FocusTabProps) {
 				onClick={handleReset}
 				className="text-muted-foreground hover:text-foreground"
 			>
-				<HugeiconsIcon icon={UndoIcon} className="size-4 mr-2" />
+				<HugeiconsIcon icon={UndoIcon} className="mr-2 size-4" />
 				Reset Timer01Icon
 			</Button>
 		</div>

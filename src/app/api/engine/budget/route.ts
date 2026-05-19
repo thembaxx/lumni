@@ -1,5 +1,4 @@
 import { type NextRequest, NextResponse } from "next/server";
-import type { AICallType } from "@/lib/ai/daily-call-tracker";
 import { dailyCallTracker } from "@/lib/ai/daily-call-tracker";
 
 export const dynamic = "force-dynamic";

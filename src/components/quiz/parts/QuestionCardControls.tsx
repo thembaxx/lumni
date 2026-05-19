@@ -1,9 +1,7 @@
 "use client";
 
-import { ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
+import { ArrowRight01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m, motion } from "framer-motion";
-import { useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import type { useSolver } from "@/hooks/use-solver";
 import type { Option, UserAnswer } from "@/lib/question-engine/types";

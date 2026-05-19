@@ -180,7 +180,7 @@ describe("createGroqProvider", () => {
 
 		const callArgs = (globalThis.fetch as ReturnType<typeof mock>).mock
 			.calls[0] as unknown as [string, { headers?: Record<string, string> }];
-		expect(callArgs[1].headers!.Authorization).toBe("Bearer groq-secret-123");
+		expect(callArgs[1].headers?.Authorization).toBe("Bearer groq-secret-123");
 		restoreFetch(orig);
 	});
 

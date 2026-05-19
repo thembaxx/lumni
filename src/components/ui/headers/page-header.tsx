@@ -30,11 +30,11 @@ function PageHeader({
 			<div className="flex h-14 items-center gap-3 px-4">
 				{leftSection && <div className="shrink-0">{leftSection}</div>}
 				<div className="flex min-w-0 flex-1 flex-col justify-center">
-					<h1 className="truncate text-base font-semibold text-foreground">
+					<h1 className="truncate font-semibold text-base text-foreground">
 						{title}
 					</h1>
 					{subtitle && (
-						<p className="truncate text-xs text-muted-foreground">{subtitle}</p>
+						<p className="truncate text-muted-foreground text-xs">{subtitle}</p>
 					)}
 				</div>
 				{rightSection && (

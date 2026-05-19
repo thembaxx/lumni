@@ -34,7 +34,7 @@ export default function ReactFlowDiagram({
 	}));
 
 	return (
-		<div className="h-60 w-full rounded-2xl border bg-background/20 overflow-hidden">
+		<div className="h-60 w-full overflow-hidden rounded-2xl border bg-background/20">
 			<ReactFlow nodes={nodes} edges={edges} fitView>
 				<Background />
 				<Controls />

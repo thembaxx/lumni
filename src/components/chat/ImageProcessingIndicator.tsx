@@ -32,10 +32,10 @@ export function ImageProcessingIndicator({
 			transition={{ duration: 0.2, ease: iOSEase }}
 			style={{ transformOrigin: "top" }}
 			className={cn(
-				"px-3 py-2 rounded-lg border text-sm",
+				"rounded-lg border px-3 py-2 text-sm",
 				isError
-					? "bg-destructive/10 border-destructive/30 text-destructive"
-					: "bg-secondary/60 border-border/30 text-foreground",
+					? "border-destructive/30 bg-destructive/10 text-destructive"
+					: "border-border/30 bg-secondary/60 text-foreground",
 			)}
 		>
 			<div className="flex items-center gap-2">
@@ -55,13 +55,13 @@ export function ImageProcessingIndicator({
 				) : (
 					<>
 						<div className="size-4 shrink-0">
-							<div className="size-4 border-2 border-[--system-accent] border-t-transparent rounded-full animate-spin" />
+							<div className="size-4 animate-spin rounded-full border-2 border-[--system-accent] border-t-transparent" />
 						</div>
 						<span className="flex-1 truncate text-xs">
 							{state.progressMessage}
 						</span>
 						{state.status !== "success" && (
-							<span className="text-xs tabular-nums text-muted-foreground">
+							<span className="text-muted-foreground text-xs tabular-nums">
 								{state.progress}%
 							</span>
 						)}
@@ -71,7 +71,7 @@ export function ImageProcessingIndicator({
 			{state.status !== "error" && state.status !== "success" && (
 				<Progress
 					value={state.progress}
-					className="h-1 mt-1.5 [&>div]:bg-[--system-accent]"
+					className="mt-1.5 h-1 [&>div]:bg-[--system-accent]"
 				/>
 			)}
 		</motion.div>

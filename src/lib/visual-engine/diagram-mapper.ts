@@ -108,7 +108,7 @@ export function getDataForType<K extends keyof DiagramDataMap>(
 	data: Record<string, unknown>,
 ): DiagramDataMap[K] | null {
 	const validator = VALIDATORS[type as string];
-	if (!validator || !validator(data)) return null;
+	if (!validator?.(data)) return null;
 	return data as unknown as DiagramDataMap[K];
 }
 

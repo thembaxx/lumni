@@ -62,7 +62,7 @@ export function LessonSheet() {
 
 	return (
 		<Sheet open={isOpen} onOpenChange={setIsOpen}>
-			<SheetTrigger className="h-11 px-5 rounded-xl border border-border/80 bg-secondary/80 gap-2.5 inline-flex items-center justify-center hover:bg-accent hover:border-accent transition-colors text-sm font-medium">
+			<SheetTrigger className="inline-flex h-11 items-center justify-center gap-2.5 rounded-xl border border-border/80 bg-secondary/80 px-5 font-medium text-sm transition-colors hover:border-accent hover:bg-accent">
 				<HugeiconsIcon
 					icon={Search01Icon}
 					className="size-4 text-[--system-accent]"
@@ -71,7 +71,7 @@ export function LessonSheet() {
 			</SheetTrigger>
 			<Anim>
 				<SheetContent
-					className="sm:max-w-135 w-full h-dvh px-4 rounded-t-none"
+					className="h-dvh w-full rounded-t-none px-4 sm:max-w-135"
 					side="bottom"
 				>
 					<SheetHeader className="text-left">
@@ -81,11 +81,11 @@ export function LessonSheet() {
 						</SheetDescription>
 					</SheetHeader>
 
-					<div className="flex items-center gap-2 px-4 pb-6 grow">
+					<div className="flex grow items-center gap-2 px-4 pb-6">
 						<div className="relative">
 							<HugeiconsIcon
 								icon={Search01Icon}
-								className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground"
+								className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
 							/>
 							<Input
 								placeholder="Filter by title…"
@@ -102,7 +102,7 @@ export function LessonSheet() {
 							<Button
 								variant="outline"
 								size="sm"
-								className="flex items-center gap-3 h-8"
+								className="flex h-8 items-center gap-3"
 							>
 								{selectedSubject ? selectedSubject : "All subjects"}
 								<HugeiconsIcon icon={ArrowDown01FreeIcons} data-icon />
@@ -110,7 +110,7 @@ export function LessonSheet() {
 						</SubjectsDrawer>
 					</div>
 
-					<div className="px-4 pb-4 grow max-h-[95dvh] overflow-y-auto flex flex-col gap-4">
+					<div className="flex max-h-[95dvh] grow flex-col gap-4 overflow-y-auto px-4 pb-4">
 						{isLoading && (
 							<div className="flex flex-col gap-2">
 								{[...Array(5)].map((_, i) => (
@@ -121,7 +121,7 @@ export function LessonSheet() {
 
 						{error && (
 							<div
-								className="text-center text-destructive py-8 text-sm"
+								className="py-8 text-center text-destructive text-sm"
 								role="alert"
 							>
 								Failed to load lessons.
@@ -155,7 +155,7 @@ export function LessonSheet() {
 						)}
 					</div>
 
-					<SheetClose className="py-4 w-full text-sm font-medium text-center text-foreground hover:bg-accent/50 rounded-lg transition-colors">
+					<SheetClose className="w-full rounded-lg py-4 text-center font-medium text-foreground text-sm transition-colors hover:bg-accent/50">
 						Close
 					</SheetClose>
 				</SheetContent>

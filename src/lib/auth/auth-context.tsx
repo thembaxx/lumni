@@ -11,7 +11,7 @@ import {
 	useReducer,
 	useRef,
 } from "react";
-import { APPWRITE_ENDPOINT, APPWRITE_PROJECT, account } from "@/lib/appwrite";
+import { APPWRITE_ENDPOINT, account } from "@/lib/appwrite";
 import { flushOfflineData } from "@/lib/sync/sync-handler";
 import { getReadableErrorMessage } from "./errors";
 import {
@@ -33,7 +33,7 @@ interface AuthContextValue {
 		email: string,
 		password: string,
 		name: string,
-	) => Promise<string | void>;
+	) => Promise<string | undefined>;
 	signInWithMagicLink: (email: string) => Promise<void>;
 	signOut: () => Promise<void>;
 	verifyEmail: () => Promise<void>;

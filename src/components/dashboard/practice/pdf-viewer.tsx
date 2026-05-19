@@ -132,19 +132,19 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 			<DialogContent
 				ref={containerRef}
 				showCloseButton={false}
-				className="max-w-[100vw] h-dvh max-h-dvh p-0 gap-0 rounded-none overflow-hidden"
+				className="h-dvh max-h-dvh max-w-[100vw] gap-0 overflow-hidden rounded-none p-0"
 			>
-				<div className="flex flex-col h-full w-full">
-					<div className="flex items-center gap-2 px-4 py-3 border-b shrink-0 bg-background">
-						<h2 className="text-sm font-semibold truncate text-wrap balance">
+				<div className="flex h-full w-full flex-col">
+					<div className="flex shrink-0 items-center gap-2 border-b bg-background px-4 py-3">
+						<h2 className="balance truncate text-wrap font-semibold text-sm">
 							{exam.title}
 						</h2>
-						<Badge variant="secondary" className="text-[10px] px-1.5 shrink-0">
+						<Badge variant="secondary" className="shrink-0 px-1.5 text-[10px]">
 							{exam.year}
 						</Badge>
 					</div>
 
-					<div className="flex-1 overflow-hidden relative min-h-0">
+					<div className="relative min-h-0 flex-1 overflow-hidden">
 						{!workerReady ? (
 							<LoadingOverlay
 								message="Initializing PDF viewer..."
@@ -156,8 +156,8 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 								spinnerSize="lg"
 							/>
 						) : pdfUrl ? (
-							<div className="w-full h-full overflow-auto">
-								<div className="min-h-full flex items-start justify-center p-3 sm:p-4">
+							<div className="h-full w-full overflow-auto">
+								<div className="flex min-h-full items-start justify-center p-3 sm:p-4">
 									<Document
 										file={pdfUrl}
 										onLoadSuccess={onDocumentLoadSuccess}
@@ -169,7 +169,7 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 											scale={scale}
 											renderTextLayer={false}
 											renderAnnotationLayer={false}
-											className="shadow-lg bg-background"
+											className="bg-background shadow-lg"
 										/>
 									</Document>
 								</div>
@@ -189,7 +189,7 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 
 					<div className="shrink-0 border-t bg-background pb-safe">
 						<div
-							className="flex items-center gap-0.5 px-2 py-2 overflow-x-auto scrollbar-hide [-webkit-overflow-scrolling:touch] scrollbar-none [-ms-overflow-style:none]"
+							className="scrollbar-hide scrollbar-none flex items-center gap-0.5 overflow-x-auto px-2 py-2 [-ms-overflow-style:none] [-webkit-overflow-scrolling:touch]"
 							style={
 								{
 									scrollbarWidth: "none",
@@ -208,11 +208,11 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 								<HugeiconsIcon icon={ArrowLeft01Icon} data-icon />
 							</Button>
 
-							<div className="shrink-0 px-1.5 min-w-14 text-center">
-								<span className="text-sm font-medium tabular-nums">
+							<div className="min-w-14 shrink-0 px-1.5 text-center">
+								<span className="font-medium text-sm tabular-nums">
 									{totalPages > 0 ? `${pdfPage}` : "—"}
 								</span>
-								<span className="text-xs text-muted-foreground">
+								<span className="text-muted-foreground text-xs">
 									{" / "}
 									{totalPages > 0 ? `${totalPages}` : "—"}
 								</span>
@@ -229,7 +229,7 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 								<HugeiconsIcon icon={ArrowRight01Icon} data-icon />
 							</Button>
 
-							<div className="w-px h-5 bg-border shrink-0" />
+							<div className="h-5 w-px shrink-0 bg-border" />
 
 							<Button
 								variant="ghost"
@@ -242,8 +242,8 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 								<HugeiconsIcon icon={SearchMinusIcon} data-icon />
 							</Button>
 
-							<div className="shrink-0 px-1 min-w-11 text-center">
-								<span className="text-xs text-muted-foreground tabular-nums font-medium">
+							<div className="min-w-11 shrink-0 px-1 text-center">
+								<span className="font-medium text-muted-foreground text-xs tabular-nums">
 									{zoomPercent}%
 								</span>
 							</div>
@@ -259,12 +259,12 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 								<HugeiconsIcon icon={SearchAddIcon} data-icon />
 							</Button>
 
-							<div className="w-px h-5 bg-border shrink-0" />
+							<div className="h-5 w-px shrink-0 bg-border" />
 
 							<Button
 								variant="ghost"
 								size="icon"
-								className={cn("shrink-0 relative", controlTap)}
+								className={cn("relative shrink-0", controlTap)}
 								onClick={toggleFullscreen}
 								aria-label={
 									isFullscreen ? "Exit fullscreen" : "Enter fullscreen"

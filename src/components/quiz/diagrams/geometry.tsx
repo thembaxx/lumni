@@ -5,7 +5,6 @@ import { useMemo } from "react";
 import {
 	Arc,
 	Circle,
-	Group,
 	Layer,
 	Line,
 	RegularPolygon,

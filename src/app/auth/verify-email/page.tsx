@@ -6,7 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useRef, useState } from "react";
+import { Suspense, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { FormSkeleton } from "@/components/ui/skeletons";
 import { iOSEase } from "@/lib/utils/animation";
@@ -42,11 +42,11 @@ function VerifyEmailContent() {
 	if (error) {
 		return (
 			<div className="flex flex-col items-center gap-4 text-center">
-				<h1 className="text-xl font-bold">Verification failed</h1>
-				<p className="text-sm text-muted-foreground">{error}</p>
+				<h1 className="font-bold text-xl">Verification failed</h1>
+				<p className="text-muted-foreground text-sm">{error}</p>
 				<Link
 					href="/auth/sign-in"
-					className="text-sm font-semibold text-system-accent hover:underline"
+					className="font-semibold text-sm text-system-accent hover:underline"
 				>
 					Back to sign in
 				</Link>
@@ -61,12 +61,12 @@ function VerifyEmailContent() {
 			transition={{ duration: 0.35, ease: iOSEase }}
 			className="flex flex-col items-center gap-6 text-center"
 		>
-			<div className="size-16 rounded-full bg-green-500/10 flex items-center justify-center">
+			<div className="flex size-16 items-center justify-center rounded-full bg-green-500/10">
 				<HugeiconsIcon icon={SparklesIcon} className="size-8 text-green-500" />
 			</div>
 			<div className="flex flex-col gap-2">
-				<h1 className="text-xl font-bold">Email verified</h1>
-				<p className="text-sm text-muted-foreground">
+				<h1 className="font-bold text-xl">Email verified</h1>
+				<p className="text-muted-foreground text-sm">
 					Your email has been verified successfully.
 				</p>
 			</div>

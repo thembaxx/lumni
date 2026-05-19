@@ -46,7 +46,7 @@ export function ExamSubmitDialog({
 					</div>
 					{unanswered > 0 && (
 						<div className="flex justify-between text-sm">
-							<span className="text-destructive font-semibold">Unanswered</span>
+							<span className="font-semibold text-destructive">Unanswered</span>
 							<span className="font-bold text-destructive">{unanswered}</span>
 						</div>
 					)}

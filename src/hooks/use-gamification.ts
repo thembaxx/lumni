@@ -4,11 +4,9 @@ import { useCallback, useEffect, useState } from "react";
 import { toast } from "@/components/ui/toast";
 import {
 	ACHIEVEMENTS,
-	type Achievement,
 	calculateLevel,
 	type DailyChallenge,
 	generateDailyChallenges,
-	type LevelInfo,
 	STREAK_MILESTONES,
 	type UserGamification,
 	XP_PER_CORRECT,

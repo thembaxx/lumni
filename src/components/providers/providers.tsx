@@ -10,7 +10,6 @@ import {
 } from "@/components/pwa/pwa-update-toast";
 import { ThemeProvider } from "@/components/theme";
 import { ToastProvider } from "@/components/ui/toast";
-import { WebVitalsLogger } from "@/components/web-vitals";
 import { useJobProcessor } from "@/hooks/use-job-processor";
 import { useServiceWorker } from "@/hooks/use-service-worker";
 import { prefetchUploadSubjects } from "@/hooks/use-upload-subjects";

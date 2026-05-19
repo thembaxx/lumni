@@ -1,5 +1,4 @@
 import { initAI, isAIConfigured } from "@/lib/ai";
-import type { CacheTier } from "@/lib/caching-strategy";
 import { CachingStrategy } from "@/lib/caching-strategy";
 import { ProcessorRegistry } from "./processor-registry";
 import { PromptManager } from "./prompt-manager";
@@ -179,7 +178,7 @@ export class QuestionEngine {
 	}
 
 	private async retrieveCurriculumContext(
-		subject: string,
+		_subject: string,
 		topic?: string,
 	): Promise<string | null> {
 		if (!topic) return null;

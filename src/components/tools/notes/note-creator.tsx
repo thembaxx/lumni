@@ -1,26 +1,10 @@
 "use client";
 
-import { m, motion, useReducedMotion } from "framer-motion";
+import { m, motion } from "framer-motion";
 import { useCallback, useState } from "react";
-import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Button } from "@/components/ui/button";
-import {
-	Card,
-	CardContent,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
-import {
-	Command,
-	CommandEmpty,
-	CommandGroup,
-	CommandGroupItems,
-	CommandInput,
-	CommandItem,
-	CommandList,
-} from "@/components/ui/command";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
 	Dialog,
 	DialogContent,
@@ -32,11 +16,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
-	Popover,
-	PopoverContent,
-	PopoverTrigger,
-} from "@/components/ui/popover";
-import {
 	Select,
 	SelectContent,
 	SelectItem,
@@ -46,7 +25,6 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";
-import { useOptimizedAnimation } from "@/lib/utils/animation-optimization";
 
 interface Note {
 	id: string;
@@ -233,7 +211,7 @@ function NoteForm({
 					placeholder="e.g., biology, mitosis, cell-division"
 					disabled={false}
 				/>
-				<p className="text-xs text-muted-foreground mt-1">
+				<p className="mt-1 text-muted-foreground text-xs">
 					Separate tags with commas
 				</p>
 			</div>
@@ -276,7 +254,7 @@ function NoteForm({
 			<div className="flex items-center space-x-3">
 				<Label
 					htmlFor="favorite"
-					className="text-sm font-medium flex items-center"
+					className="flex items-center font-medium text-sm"
 				>
 					<input
 						type="checkbox"
@@ -285,13 +263,13 @@ function NoteForm({
 						onChange={(e) =>
 							setFormData((prev) => ({ ...prev, isFavorite: e.target.checked }))
 						}
-						className="h-4 w-4 text-primary rounded border-gray-300"
+						className="h-4 w-4 rounded border-gray-300 text-primary"
 					/>
 					Mark as favorite
 				</Label>
 			</div>
 
-			<div className="flex justify-end space-x-3 mt-4">
+			<div className="mt-4 flex justify-end space-x-3">
 				<Button
 					variant="outline"
 					size="icon"
@@ -383,7 +361,7 @@ function NoteCreatorInner({ className }: NoteCreatorProps) {
 
 	return (
 		<motion.div
-			className={cn("w-full max-w-2xl mx-auto", className)}
+			className={cn("mx-auto w-full max-w-2xl", className)}
 			initial={{ opacity: 0, y: 8 }}
 			animate={{ opacity: 1, y: 0 }}
 			exit={{ opacity: 0, y: -8 }}
@@ -391,14 +369,14 @@ function NoteCreatorInner({ className }: NoteCreatorProps) {
 		>
 			<Card className="mb-6">
 				<CardHeader className="pb-4">
-					<CardTitle className="text-2xl font-bold">Note Creator</CardTitle>
+					<CardTitle className="font-bold text-2xl">Note Creator</CardTitle>
 					<p className="text-muted-foreground">
 						Create, organize, and review your study notes
 					</p>
 				</CardHeader>
 				<CardContent className="space-y-4">
-					<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-						<div className="flex-1 min-w-0">
+					<div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+						<div className="min-w-0 flex-1">
 							<Input
 								placeholder="Search notes..."
 								value={searchQuery}
@@ -406,7 +384,7 @@ function NoteCreatorInner({ className }: NoteCreatorProps) {
 								className="mb-2"
 							/>
 							{notes.length > 0 && (
-								<p className="text-xs text-muted-foreground">
+								<p className="text-muted-foreground text-xs">
 									{notes.length} notes total
 								</p>
 							)}
@@ -416,7 +394,7 @@ function NoteCreatorInner({ className }: NoteCreatorProps) {
 								variant="outline"
 								onClick={() => setFilter("all")}
 								className={cn(
-									"px-3 py-1 rounded text-sm",
+									"rounded px-3 py-1 text-sm",
 									filter === "all"
 										? "bg-accent/20 text-accent"
 										: "text-muted-foreground hover:bg-accent/10",
@@ -428,7 +406,7 @@ function NoteCreatorInner({ className }: NoteCreatorProps) {
 								variant="outline"
 								onClick={() => setFilter("favorites")}
 								className={cn(
-									"px-3 py-1 rounded text-sm",
+									"rounded px-3 py-1 text-sm",
 									filter === "favorites"
 										? "bg-accent/20 text-accent"
 										: "text-muted-foreground hover:bg-accent/10",
@@ -452,7 +430,7 @@ function NoteCreatorInner({ className }: NoteCreatorProps) {
 			{filteredNotes.length > 0 && (
 				<Card>
 					<CardHeader className="pb-4">
-						<CardTitle className="text-lg font-medium">Your Notes</CardTitle>
+						<CardTitle className="font-medium text-lg">Your Notes</CardTitle>
 					</CardHeader>
 					<CardContent className="space-y-3">
 						{filteredNotes.map((note) => (
@@ -462,15 +440,15 @@ function NoteCreatorInner({ className }: NoteCreatorProps) {
 								animate={{ opacity: 1, x: 0 }}
 								exit={{ opacity: 0, x: -10 }}
 								transition={{ duration: 0.2, ease: iOSEase }}
-								className="border rounded-[2rem] p-4 cursor-pointer hover:bg-accent/5 transition-colors"
+								className="cursor-pointer rounded-[2rem] border p-4 transition-colors hover:bg-accent/5"
 								tabIndex={0}
 								role="button"
 								aria-label={`Note: ${note.title}`}
 							>
-								<div className="flex justify-between items-start">
+								<div className="flex items-start justify-between">
 									<div className="flex-1">
-										<h3 className="font-semibold mb-1">{note.title}</h3>
-										<div className="text-sm text-muted-foreground line-clamp-2">
+										<h3 className="mb-1 font-semibold">{note.title}</h3>
+										<div className="line-clamp-2 text-muted-foreground text-sm">
 											{note.content.substring(0, 100)}
 											{note.content.length > 100 ? "..." : ""}
 										</div>
@@ -479,7 +457,7 @@ function NoteCreatorInner({ className }: NoteCreatorProps) {
 												{note.tags.map((tag) => (
 													<span
 														key={tag}
-														className="px-2 py-0.5 text-xs rounded bg-secondary/50"
+														className="rounded bg-secondary/50 px-2 py-0.5 text-xs"
 													>
 														{tag}
 													</span>
@@ -593,13 +571,13 @@ function NoteCreatorInner({ className }: NoteCreatorProps) {
 
 			{/* Empty State */}
 			{filteredNotes.length === 0 && notes.length > 0 && (
-				<Card className="text-center py-8">
+				<Card className="py-8 text-center">
 					<p className="text-muted-foreground">No notes match your search</p>
 				</Card>
 			)}
 
 			{filteredNotes.length === 0 && notes.length === 0 && (
-				<Card className="text-center py-8">
+				<Card className="py-8 text-center">
 					<p className="text-muted-foreground">
 						You haven't created any notes yet. Click "New Note" to get started!
 					</p>

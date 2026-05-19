@@ -3,10 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { flashcardRepository } from "@/lib/flashcard-repository";
 import type { FlashcardSM2 } from "@/lib/flashcard-repository/types";
-import {
-	convertQuizToFlashcards,
-	type SM2Quality,
-} from "@/lib/utils/spaced-repetition";
+import { convertQuizToFlashcards } from "@/lib/utils/spaced-repetition";
 
 export interface UseSpacedRepetitionReturn {
 	cards: FlashcardSM2[];

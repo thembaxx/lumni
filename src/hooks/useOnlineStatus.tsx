@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useSyncExternalStore } from "react";
+import { useSyncExternalStore } from "react";
 
 function getOnlineStatus(): boolean {
 	if (typeof navigator === "undefined") return true;
@@ -54,7 +54,7 @@ export function OnlineStatusIndicator() {
 
 	return (
 		<div
-			className="fixed bottom-4 left-1/2 -translate-x-1/2 bg-warning w-full text-pretty text-primary-foreground px-4 py-2 rounded-lg text-sm font-medium z-[50] shadow-lg"
+			className="fixed bottom-4 left-1/2 z-[50] w-full -translate-x-1/2 text-pretty rounded-lg bg-warning px-4 py-2 font-medium text-primary-foreground text-sm shadow-lg"
 			role="status"
 			aria-live="polite"
 		>

@@ -4,7 +4,6 @@ import { CloudUploadIcon, Delete02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/shared";
 
 interface DiagramInputProps {
 	value: string | undefined;
@@ -42,7 +41,7 @@ export function DiagramInput({ value, onChange, disabled }: DiagramInputProps) {
 						src={preview}
 						alt="Uploaded diagram"
 						loading="lazy"
-						className="max-w-sm max-h-48 rounded border"
+						className="max-h-48 max-w-sm rounded border"
 					/>
 					{!disabled && (
 						<Button
@@ -57,14 +56,14 @@ export function DiagramInput({ value, onChange, disabled }: DiagramInputProps) {
 				</div>
 			) : (
 				<div
-					className="border-2 border-dashed rounded-lg p-8 text-center cursor-pointer hover:bg-muted/50 transition-colors"
+					className="cursor-pointer rounded-lg border-2 border-dashed p-8 text-center transition-colors hover:bg-muted/50"
 					onClick={() => !disabled && fileRef.current?.click()}
 				>
 					<HugeiconsIcon
 						icon={CloudUploadIcon}
-						className="size-8 mx-auto mb-2 text-muted-foreground"
+						className="mx-auto mb-2 size-8 text-muted-foreground"
 					/>
-					<p className="text-sm text-muted-foreground">
+					<p className="text-muted-foreground text-sm">
 						Click to upload a diagram or sketch
 					</p>
 				</div>

@@ -46,27 +46,27 @@ export function NotificationNudge() {
 			initial={{ opacity: 0, y: -6 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.3, ease: iOSEase }}
-			className="flex items-center gap-3 px-4 py-3 rounded-xl bg-system-accent/8 border border-system-accent/15"
+			className="flex items-center gap-3 rounded-xl border border-system-accent/15 bg-system-accent/8 px-4 py-3"
 		>
-			<div className="size-8 rounded-full bg-system-accent/15 flex items-center justify-center shrink-0">
+			<div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-system-accent/15">
 				<HugeiconsIcon
 					icon={BellElectricIcon}
 					className="size-4 text-system-accent"
 				/>
 			</div>
-			<div className="flex-1 min-w-0">
-				<p className="text-sm font-semibold text-balance">
+			<div className="min-w-0 flex-1">
+				<p className="text-balance font-semibold text-sm">
 					Enable study reminders
 				</p>
-				<p className="text-xs text-muted-foreground">
+				<p className="text-muted-foreground text-xs">
 					Get daily nudges to keep your streak alive.
 				</p>
 			</div>
-			<div className="flex items-center gap-1 shrink-0">
+			<div className="flex shrink-0 items-center gap-1">
 				<Button
 					size="sm"
 					variant="default"
-					className="text-xs h-8 px-3"
+					className="h-8 px-3 text-xs"
 					onClick={handleEnable}
 				>
 					Enable
@@ -74,7 +74,7 @@ export function NotificationNudge() {
 				<button
 					type="button"
 					onClick={handleDismiss}
-					className="-mr-1.5 p-2 rounded-md hover:bg-muted/50 transition-colors"
+					className="-mr-1.5 rounded-md p-2 transition-colors hover:bg-muted/50"
 					aria-label="Dismiss"
 				>
 					<HugeiconsIcon

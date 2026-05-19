@@ -122,7 +122,7 @@ export function StudySetForm({
 			<div className="space-y-2">
 				<Label htmlFor="flashcards">Flashcards</Label>
 				<div className="space-y-2">
-					<p className="text-sm font-medium mb-1">
+					<p className="mb-1 font-medium text-sm">
 						Select flashcards to include:
 					</p>
 					{formData.flashcardIds.length > 0 ? (
@@ -134,7 +134,7 @@ export function StudySetForm({
 									return (
 										<span
 											key={id}
-											className="px-2 py-0.5 text-xs rounded bg-accent/20"
+											className="rounded bg-accent/20 px-2 py-0.5 text-xs"
 										>
 											{card.front.substring(0, 20)}...
 											<Button
@@ -164,7 +164,7 @@ export function StudySetForm({
 								.filter(Boolean)}
 						</div>
 					) : (
-						<p className="text-xs text-muted-foreground italic">
+						<p className="text-muted-foreground text-xs italic">
 							No flashcards selected
 						</p>
 					)}
@@ -181,7 +181,7 @@ export function StudySetForm({
 			<div className="space-y-2">
 				<Label htmlFor="notes">Notes</Label>
 				<div className="space-y-2">
-					<p className="text-sm font-medium mb-1">Select notes to include:</p>
+					<p className="mb-1 font-medium text-sm">Select notes to include:</p>
 					{formData.noteIds.length > 0 ? (
 						<div className="flex flex-wrap gap-1">
 							{formData.noteIds
@@ -191,7 +191,7 @@ export function StudySetForm({
 									return (
 										<span
 											key={id}
-											className="px-2 py-0.5 text-xs rounded bg-accent/20"
+											className="rounded bg-accent/20 px-2 py-0.5 text-xs"
 										>
 											{note.title.substring(0, 20)}...
 											<Button
@@ -221,7 +221,7 @@ export function StudySetForm({
 								.filter(Boolean)}
 						</div>
 					) : (
-						<p className="text-xs text-muted-foreground italic">
+						<p className="text-muted-foreground text-xs italic">
 							No notes selected
 						</p>
 					)}
@@ -244,7 +244,7 @@ export function StudySetForm({
 					onChange={handleInputChange}
 					placeholder="e.g., biology, exam-prep, chapter-5"
 				/>
-				<p className="text-xs text-muted-foreground mt-1">
+				<p className="mt-1 text-muted-foreground text-xs">
 					Separate tags with commas
 				</p>
 			</div>
@@ -286,7 +286,7 @@ export function StudySetForm({
 			<div className="flex items-center space-x-3">
 				<Label
 					htmlFor="favorite"
-					className="text-sm font-medium flex items-center"
+					className="flex items-center font-medium text-sm"
 				>
 					<input
 						type="checkbox"
@@ -295,13 +295,13 @@ export function StudySetForm({
 						onChange={(e) =>
 							setFormData((prev) => ({ ...prev, isFavorite: e.target.checked }))
 						}
-						className="h-4 w-4 text-primary rounded border-gray-300"
+						className="h-4 w-4 rounded border-gray-300 text-primary"
 					/>
 					Mark as favorite
 				</Label>
 			</div>
 
-			<div className="flex justify-end space-x-3 mt-4">
+			<div className="mt-4 flex justify-end space-x-3">
 				<Button
 					variant="outline"
 					size="icon"

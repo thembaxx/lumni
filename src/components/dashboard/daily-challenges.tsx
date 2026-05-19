@@ -35,7 +35,7 @@ export function DailyChallenges() {
 		>
 			<Card>
 				<CardHeader className="flex flex-row items-center justify-between">
-					<CardTitle className="text-base font-extrabold tracking-tight">
+					<CardTitle className="font-extrabold text-base tracking-tight">
 						Daily Challenges
 					</CardTitle>
 				</CardHeader>
@@ -51,13 +51,13 @@ export function DailyChallenges() {
 							<div
 								key={challenge.id}
 								className={cn(
-									"flex items-center gap-3 p-3 rounded-xl transition-colors",
+									"flex items-center gap-3 rounded-xl p-3 transition-colors",
 									challenge.completed ? "bg-success/10" : "bg-muted/30",
 								)}
 							>
 								<div
 									className={cn(
-										"size-9 rounded-xl flex items-center justify-center shrink-0",
+										"flex size-9 shrink-0 items-center justify-center rounded-xl",
 										challenge.completed
 											? "bg-success/20 text-success"
 											: "bg-[--system-accent]/10 text-[--system-accent]",
@@ -72,27 +72,27 @@ export function DailyChallenges() {
 										<HugeiconsIcon icon={Icon} className="size-5" />
 									)}
 								</div>
-								<div className="flex-1 min-w-0">
-									<p className="text-sm font-semibold">{challenge.title}</p>
-									<p className="text-xs text-muted-foreground">
+								<div className="min-w-0 flex-1">
+									<p className="font-semibold text-sm">{challenge.title}</p>
+									<p className="text-muted-foreground text-xs">
 										{challenge.description}
 									</p>
 									{!challenge.completed && (
-										<div className="flex items-center gap-2 mt-1.5">
-											<div className="flex-1 h-1 rounded-full bg-muted overflow-hidden">
+										<div className="mt-1.5 flex items-center gap-2">
+											<div className="h-1 flex-1 overflow-hidden rounded-full bg-muted">
 												<div
 													className="h-full rounded-full bg-[--system-accent] transition-[width]"
 													style={{ width: `${Math.min(progress, 100)}%` }}
 												/>
 											</div>
-											<span className="text-[10px] font-medium tabular-nums text-muted-foreground">
+											<span className="font-medium text-[10px] text-muted-foreground tabular-nums">
 												{challenge.progress}/{challenge.target}
 											</span>
 										</div>
 									)}
 								</div>
 								{challenge.completed && (
-									<span className="text-xs font-semibold text-success shrink-0">
+									<span className="shrink-0 font-semibold text-success text-xs">
 										+{challenge.xpReward} XP
 									</span>
 								)}

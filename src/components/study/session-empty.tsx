@@ -21,9 +21,9 @@ interface SessionEmptyProps {
 
 export function SessionEmpty({ subject, onGoBack }: SessionEmptyProps) {
 	return (
-		<div className="min-h-[100dvh] bg-background grid grid-cols-12 gap-0">
-			<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4">
-				<Card className="max-w-md w-full mx-auto">
+		<div className="grid min-h-[100dvh] grid-cols-12 gap-0 bg-background">
+			<div className="col-span-12 col-start-1 flex items-center justify-center p-4 md:col-span-7">
+				<Card className="mx-auto w-full max-w-md">
 					<CardHeader>
 						<CardTitle>No Content</CardTitle>
 					</CardHeader>
@@ -37,7 +37,7 @@ export function SessionEmpty({ subject, onGoBack }: SessionEmptyProps) {
 									>
 										<HugeiconsIcon
 											icon={Search01Icon}
-											className="size-16 mx-auto text-muted-foreground"
+											className="mx-auto size-16 text-muted-foreground"
 										/>
 									</motion.div>
 								</EmptyMedia>
@@ -55,10 +55,10 @@ export function SessionEmpty({ subject, onGoBack }: SessionEmptyProps) {
 					</CardContent>
 				</Card>
 			</div>
-			<div className="col-span-12 md:col-span-5 col-start-1 md:col-start-8 relative overflow-hidden bg-system-surface/30">
+			<div className="relative col-span-12 col-start-1 overflow-hidden bg-system-surface/30 md:col-span-5 md:col-start-8">
 				<div className="absolute inset-0 bg-gradient-to-br from-destructive/5 via-transparent to-transparent" />
 				<div className="absolute inset-0 flex items-center justify-center p-8">
-					<div className="w-full h-full max-w-xs aspect-square rounded-3xl bg-destructive/10 blur-2xl animate-float-slow" />
+					<div className="aspect-square h-full w-full max-w-xs animate-float-slow rounded-3xl bg-destructive/10 blur-2xl" />
 				</div>
 			</div>
 		</div>

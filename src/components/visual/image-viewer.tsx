@@ -23,7 +23,7 @@ export function ImageViewer({
 
 	if (error) {
 		return (
-			<div className="flex h-40 items-center justify-center rounded-lg border bg-muted/20 text-sm text-muted-foreground">
+			<div className="flex h-40 items-center justify-center rounded-lg border bg-muted/20 text-muted-foreground text-sm">
 				Could not load image
 			</div>
 		);
@@ -31,7 +31,7 @@ export function ImageViewer({
 
 	return (
 		<div className="flex flex-col gap-1">
-			<div className="relative overflow-hidden rounded-lg border bg-background/20 min-h-48">
+			<div className="relative min-h-48 overflow-hidden rounded-lg border bg-background/20">
 				{loading && (
 					<div className="absolute inset-0 flex items-center justify-center bg-muted/10">
 						<div className="size-6 animate-spin rounded-full border-2 border-muted-foreground/30 border-t-muted-foreground" />
@@ -43,7 +43,7 @@ export function ImageViewer({
 					fill
 					sizes="100vw"
 					unoptimized
-					className="object-contain max-h-96 !relative outline -outline-offset-1 outline-black/10 dark:outline-white/10"
+					className="!relative max-h-96 object-contain outline outline-black/10 -outline-offset-1 dark:outline-white/10"
 					onLoad={() => setLoading(false)}
 					onError={() => {
 						setError(true);

@@ -139,7 +139,7 @@ export function FlashcardsClient() {
 	const cards: FlashcardItem[] =
 		isLoading === false && questions?.length
 			? questions
-					.filter((q) => q && q.id)
+					.filter((q) => q?.id)
 					.map((q) => ({
 						id: q.id,
 						front: q.questionText,

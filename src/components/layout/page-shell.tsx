@@ -32,7 +32,7 @@ function PageShell({
 					className,
 				)}
 			>
-				<div className={cn("max-w-md mx-auto", innerClassName)}>{children}</div>
+				<div className={cn("mx-auto max-w-md", innerClassName)}>{children}</div>
 			</div>
 		);
 	}
@@ -51,7 +51,7 @@ function PageShell({
 				rightAction={rightAction}
 				bottomSection={bottomSection}
 			/>
-			<div className={cn("max-w-md mx-auto", innerClassName)}>{children}</div>
+			<div className={cn("mx-auto max-w-md", innerClassName)}>{children}</div>
 		</div>
 	);
 }

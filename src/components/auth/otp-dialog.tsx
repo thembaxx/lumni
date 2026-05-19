@@ -7,7 +7,6 @@ import {
 	RadialIcon,
 	RefreshIcon,
 	ShieldCheck,
-	SparklesIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
@@ -244,7 +243,7 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange}>
-			<DialogContent className="sm:max-w-md shadow-lg">
+			<DialogContent className="shadow-lg sm:max-w-md">
 				<DialogHeader>
 					<DialogTitle className="flex items-center gap-2">
 						<HugeiconsIcon
@@ -272,10 +271,10 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 									setError("");
 								}}
 								autoComplete="email"
-								className="-webkit-font-smoothing antialiased h-11 rounded-md ring-1 ring-transparent focus-within:ring-[--system-accent]/30 transition-[ring-color,box-shadow] duration-150"
+								className="-webkit-font-smoothing h-11 rounded-md antialiased ring-1 ring-transparent transition-[ring-color,box-shadow] duration-150 focus-within:ring-[--system-accent]/30"
 							/>
 							{error && (
-								<p className="text-xs text-destructive flex items-center gap-1">
+								<p className="flex items-center gap-1 text-destructive text-xs">
 									<HugeiconsIcon icon={AlertCircleIcon} className="size-3" />
 									{error}
 								</p>
@@ -328,7 +327,7 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 										</div>
 
 										<div className="text-center">
-											<p className="text-sm text-muted-foreground">
+											<p className="text-muted-foreground text-sm">
 												We&apos;ve sent a verification code to:{" "}
 												<span className="font-medium text-foreground">
 													{email}
@@ -336,7 +335,7 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 											</p>
 										</div>
 
-										<div className="w-full flex flex-col gap-3">
+										<div className="flex w-full flex-col gap-3">
 											<div className="flex justify-center">
 												<InputOTP
 													value={otp}
@@ -359,7 +358,7 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 											</div>
 
 											{error && (
-												<p className="text-xs text-destructive flex items-center justify-center gap-1">
+												<p className="flex items-center justify-center gap-1 text-destructive text-xs">
 													<HugeiconsIcon
 														icon={AlertCircleIcon}
 														className="size-3"
@@ -387,18 +386,18 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 											)}
 										</Button>
 
-										<div className="flex items-center gap-4 w-full">
-											<div className="flex-1 h-px bg-border" />
-											<span className="text-xs text-muted-foreground">
+										<div className="flex w-full items-center gap-4">
+											<div className="h-px flex-1 bg-border" />
+											<span className="text-muted-foreground text-xs">
 												Didn&apos;t receive it?
 											</span>
-											<div className="flex-1 h-px bg-border" />
+											<div className="h-px flex-1 bg-border" />
 										</div>
 
-										<div className="flex items-center justify-between w-full">
+										<div className="flex w-full items-center justify-between">
 											<p
 												className={cn(
-													"text-sm text-muted-foreground",
+													"text-muted-foreground text-sm",
 													countdownStyles,
 												)}
 											>
@@ -407,7 +406,7 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 														{formatCountdown(countdown)}
 													</span>
 												) : (
-													<span className="text-foreground flex items-center gap-1">
+													<span className="flex items-center gap-1 text-foreground">
 														<HugeiconsIcon
 															icon={FlashIcon}
 															className="size-3"
@@ -484,10 +483,10 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 											</m.div>
 											<SuccessBadge isAdmin={true} />
 										</div>
-										<p className="text-lg font-medium text-foreground">
+										<p className="font-medium text-foreground text-lg">
 											You&apos;re in!
 										</p>
-										<p className="text-sm text-muted-foreground animate-pulse">
+										<p className="animate-pulse text-muted-foreground text-sm">
 											Redirecting...
 										</p>
 									</m.div>

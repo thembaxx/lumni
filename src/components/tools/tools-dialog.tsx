@@ -84,12 +84,12 @@ function ToolsDialogInner({ open, onOpenChange }: ToolsDialogProps) {
 			transition={{ duration: 0.2 }}
 			className="fixed inset-0 z-80 bg-system-surface"
 		>
-			<div className="h-full flex flex-col">
+			<div className="flex h-full flex-col">
 				<motion.header
 					initial={{ opacity: 0, y: -10 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ delay: 0.1, duration: 0.3 }}
-					className="flex items-center justify-between px-5 py-3 border-b border-border"
+					className="flex items-center justify-between border-border border-b px-5 py-3"
 				>
 					<h1 className="ios-title-3 font-semibold text-[--system-text-primary]">
 						Tools
@@ -105,7 +105,7 @@ function ToolsDialogInner({ open, onOpenChange }: ToolsDialogProps) {
 
 				<Tabs
 					defaultValue={initialTab}
-					className="flex-1 flex flex-col overflow-hidden"
+					className="flex flex-1 flex-col overflow-hidden"
 				>
 					<motion.div
 						initial={{ opacity: 0 }}
@@ -113,12 +113,12 @@ function ToolsDialogInner({ open, onOpenChange }: ToolsDialogProps) {
 						transition={{ delay: 0.2, duration: 0.3 }}
 						className="px-5 py-3"
 					>
-						<TabsList className="h-11 p-1 bg-system-background-tertiary transition-colors duration-300 rounded-lg flex justify-start w-full overflow-x-auto px-2 py-2 gap-2 scrollbar-hide shrink-0">
+						<TabsList className="scrollbar-hide flex h-11 w-full shrink-0 justify-start gap-2 overflow-x-auto rounded-lg bg-system-background-tertiary p-1 px-2 py-2 transition-colors duration-300">
 							{tabs.map((tab) => (
 								<TabsTrigger
 									key={tab.id}
 									value={tab.id}
-									className="shrink-0 px-4 py-2.5 text-sm font-medium rounded-md dark:data-active:bg-system-surface"
+									className="shrink-0 rounded-md px-4 py-2.5 font-medium text-sm dark:data-active:bg-system-surface"
 								>
 									{tab.label}
 								</TabsTrigger>
@@ -127,34 +127,34 @@ function ToolsDialogInner({ open, onOpenChange }: ToolsDialogProps) {
 					</motion.div>
 
 					<div className="grow overflow-y-auto">
-						<TabsContent value="solver" className="h-full m-0">
+						<TabsContent value="solver" className="m-0 h-full">
 							<AiSolver cameraFocus={cameraFocus} />
 						</TabsContent>
-						<TabsContent value="scientific" className="h-full m-0">
+						<TabsContent value="scientific" className="m-0 h-full">
 							<ScientificCalculator />
 						</TabsContent>
-						<TabsContent value="periodic" className="h-full m-0">
+						<TabsContent value="periodic" className="m-0 h-full">
 							<PeriodicTable />
 						</TabsContent>
-						<TabsContent value="calculator" className="h-full m-0">
+						<TabsContent value="calculator" className="m-0 h-full">
 							<APSCalculator />
 						</TabsContent>
-						<TabsContent value="calendar" className="h-full m-0">
+						<TabsContent value="calendar" className="m-0 h-full">
 							<ExamCalendar />
 						</TabsContent>
-						<TabsContent value="results" className="h-full m-0">
+						<TabsContent value="results" className="m-0 h-full">
 							<ResultsSearch />
 						</TabsContent>
-						<TabsContent value="scheduler" className="h-full m-0">
+						<TabsContent value="scheduler" className="m-0 h-full">
 							<SmartScheduler />
 						</TabsContent>
-						<TabsContent value="flashcards" className="h-full m-0">
+						<TabsContent value="flashcards" className="m-0 h-full">
 							<FlashcardCreator />
 						</TabsContent>
-						<TabsContent value="notes" className="h-full m-0">
+						<TabsContent value="notes" className="m-0 h-full">
 							<NoteCreator />
 						</TabsContent>
-						<TabsContent value="study-sets" className="h-full m-0">
+						<TabsContent value="study-sets" className="m-0 h-full">
 							<StudySetCreator />
 						</TabsContent>
 					</div>

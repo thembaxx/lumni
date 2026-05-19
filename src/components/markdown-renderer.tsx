@@ -54,7 +54,7 @@ function LazyCodeBlock({
 
 	if (!loaded) {
 		return (
-			<pre className="rounded-lg overflow-hidden my-3 p-4 bg-[#1e1e1e] text-white/80 text-sm font-mono">
+			<pre className="my-3 overflow-hidden rounded-lg bg-[#1e1e1e] p-4 font-mono text-sm text-white/80">
 				<code>{children}</code>
 			</pre>
 		);
@@ -66,7 +66,7 @@ function LazyCodeBlock({
 			language={language}
 			style={style}
 			PreTag="div"
-			className="rounded-lg overflow-hidden my-3"
+			className="my-3 overflow-hidden rounded-lg"
 			customStyle={{ margin: 0, padding: "1rem", fontSize: "0.875rem" }}
 		>
 			{children}
@@ -185,7 +185,7 @@ export const MarkdownRenderer = memo(function MarkdownRenderer({
 						if (isInline) {
 							return (
 								<code
-									className="px-1.5 py-0.5 rounded-md bg-muted font-mono text-sm"
+									className="rounded-md bg-muted px-1.5 py-0.5 font-mono text-sm"
 									{...props}
 								>
 									{children}
@@ -204,14 +204,14 @@ export const MarkdownRenderer = memo(function MarkdownRenderer({
 					},
 					ul({ children }) {
 						return (
-							<ul className="list-disc list-inside mb-3 space-y-1">
+							<ul className="mb-3 list-inside list-disc space-y-1">
 								{children}
 							</ul>
 						);
 					},
 					ol({ children }) {
 						return (
-							<ol className="list-decimal list-inside mb-3 space-y-1">
+							<ol className="mb-3 list-inside list-decimal space-y-1">
 								{children}
 							</ol>
 						);
@@ -221,24 +221,24 @@ export const MarkdownRenderer = memo(function MarkdownRenderer({
 					},
 					blockquote({ children }) {
 						return (
-							<blockquote className="border-l-4 border-[--system-accent]/30 pl-4 italic my-3">
+							<blockquote className="my-3 border-[--system-accent]/30 border-l-4 pl-4 italic">
 								{children}
 							</blockquote>
 						);
 					},
 					h1({ children }) {
 						return (
-							<h1 className="text-2xl font-semibold mb-3 mt-4">{children}</h1>
+							<h1 className="mt-4 mb-3 font-semibold text-2xl">{children}</h1>
 						);
 					},
 					h2({ children }) {
 						return (
-							<h2 className="text-xl font-semibold mb-2 mt-3">{children}</h2>
+							<h2 className="mt-3 mb-2 font-semibold text-xl">{children}</h2>
 						);
 					},
 					h3({ children }) {
 						return (
-							<h3 className="text-lg font-semibold mb-2 mt-2">{children}</h3>
+							<h3 className="mt-2 mb-2 font-semibold text-lg">{children}</h3>
 						);
 					},
 					a({ href, children }) {
@@ -255,7 +255,7 @@ export const MarkdownRenderer = memo(function MarkdownRenderer({
 					},
 					table({ children }) {
 						return (
-							<div className="overflow-x-auto my-3">
+							<div className="my-3 overflow-x-auto">
 								<Table>{children}</Table>
 							</div>
 						);

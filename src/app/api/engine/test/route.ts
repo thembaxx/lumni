@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { LearningOrchestrator } from "@/lib/orchestrator";
 import { QuestionEngine } from "@/lib/question-engine/question-engine";
-import type { GradingResult, Question } from "@/lib/question-engine/types";
+import type { Question } from "@/lib/question-engine/types";
 
 export const dynamic = "force-dynamic";
 

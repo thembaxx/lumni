@@ -1,7 +1,6 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import type { ComponentType } from "react";
 
 const ForceVectorDiagram = dynamic(
 	() =>
@@ -101,7 +100,7 @@ export function DiagramRenderer({ type, data }: DiagramRendererProps) {
 			return <CustomSvgRenderer data={data} />;
 		default:
 			return (
-				<div className="flex h-24 items-center justify-center rounded-lg border bg-muted/10 text-xs text-muted-foreground">
+				<div className="flex h-24 items-center justify-center rounded-lg border bg-muted/10 text-muted-foreground text-xs">
 					Unsupported diagram type: {type}
 				</div>
 			);
@@ -121,7 +120,7 @@ function CustomSvgRenderer({ data }: { data: Record<string, unknown> }) {
 	const rawSvg = data.svg as string;
 	if (!rawSvg) {
 		return (
-			<div className="flex h-24 items-center justify-center rounded-lg border bg-muted/10 text-xs text-muted-foreground">
+			<div className="flex h-24 items-center justify-center rounded-lg border bg-muted/10 text-muted-foreground text-xs">
 				No SVG content
 			</div>
 		);

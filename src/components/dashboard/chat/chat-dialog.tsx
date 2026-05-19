@@ -1,45 +1,17 @@
 "use client";
 
-import {
-	Cancel01Icon,
-	Chat01Icon,
-	CloudUploadIcon,
-	MailSend01Icon,
-	Microphone,
-	PlayFreeIcons,
-	RefreshIcon,
-	SquareIcon,
-} from "@hugeicons/core-free-icons";
+import { Cancel01Icon, Chat01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { ChatInput } from "@/components/chat/ChatInput";
-import { ImageProcessingIndicator } from "@/components/chat/ImageProcessingIndicator";
-import { ImageViewer } from "@/components/chat/ImageViewer";
 import { LoadingIndicator } from "@/components/chat/LoadingIndicator";
 import { MessageBubble } from "@/components/chat/MessageBubble";
-import { SmartImage } from "@/components/chat/SmartImage";
 import { WelcomeState } from "@/components/chat/WelcomeState";
-import { AnimatedDialogContent } from "@/components/ui/animated-dialog-content";
 import { Button } from "@/components/ui/button";
-import {
-	Dialog,
-	DialogContent,
-	DialogOverlay,
-	DialogPortal,
-} from "@/components/ui/dialog";
-import {
-	DropdownList,
-	DropdownListContent,
-	DropdownListItem,
-	DropdownListTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
-import { Progress } from "@/components/ui/progress";
-import { type ChatMessage, useChat } from "@/hooks/use-chat";
-import { useImageChat, useImageChatWithSend } from "@/hooks/use-image-chat";
-import { cn } from "@/lib/shared";
-import { formatBytes } from "@/lib/shared/format";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { useChat } from "@/hooks/use-chat";
+import { useImageChatWithSend } from "@/hooks/use-image-chat";
 
 interface ChatDialogProps {
 	open: boolean;
@@ -75,17 +47,17 @@ export function ChatDialog({ open, onOpenChange }: ChatDialogProps) {
 		>
 			<DialogContent
 				showCloseButton={false}
-				className="flex flex-col translate-x-0 translate-y-0 size-full max-w-none rounded-none p-0 m-0 top-0 left-0 bg-background/95 backdrop-blur-xl border-0 gap-0"
+				className="top-0 left-0 m-0 flex size-full max-w-none translate-x-0 translate-y-0 flex-col gap-0 rounded-none border-0 bg-background/95 p-0 backdrop-blur-xl"
 			>
-				<div className="pl-4 pr-5 py-4 border-b border-border/30 flex flex-row items-center justify-between shrink-0">
+				<div className="flex shrink-0 flex-row items-center justify-between border-border/30 border-b py-4 pr-5 pl-4">
 					<div className="flex items-center gap-1">
-						<div className="size-9 rounded-full bg-system-accent/10 flex items-center grow justify-center">
+						<div className="flex size-9 grow items-center justify-center rounded-full bg-system-accent/10">
 							<HugeiconsIcon
 								icon={Chat01Icon}
 								className="size-6 text-system-accent"
 							/>
 						</div>
-						<span className="text-base font-extrabold leading-1 text-left tracking-tight">
+						<span className="text-left font-extrabold text-base leading-1 tracking-tight">
 							Study Assistant
 						</span>
 					</div>
@@ -102,11 +74,11 @@ export function ChatDialog({ open, onOpenChange }: ChatDialogProps) {
 					</Button>
 				</div>
 
-				<div className="flex-1 flex flex-col overflow-hidden">
+				<div className="flex flex-1 flex-col overflow-hidden">
 					{chat.messages.length === 0 ? (
 						<WelcomeState />
 					) : (
-						<div className="flex-1 overflow-y-auto p-4 flex flex-col gap-4">
+						<div className="flex flex-1 flex-col gap-4 overflow-y-auto p-4">
 							<AnimatePresence mode="popLayout" initial={false}>
 								{chat.messages.map((message) => (
 									<MessageBubble

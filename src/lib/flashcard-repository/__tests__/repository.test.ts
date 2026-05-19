@@ -97,7 +97,7 @@ describe("DexieFlashcardRepository", () => {
 	test("getById returns card by id", async () => {
 		const card = await repo.getById("fc_1");
 		expect(card).not.toBeNull();
-		expect(card!.id).toBe("fc_1");
+		expect(card?.id).toBe("fc_1");
 	});
 
 	test("getById returns null for missing card", async () => {
@@ -168,16 +168,16 @@ describe("DexieFlashcardRepository", () => {
 	test("review with quality >= 3 increments repetitions", async () => {
 		const card = await repo.review("fc_3", 4);
 		expect(card).not.toBeNull();
-		expect(card!.repetitions).toBe(1);
-		expect(card!.interval).toBe(1);
-		expect(card!.lastReview).not.toBeNull();
+		expect(card?.repetitions).toBe(1);
+		expect(card?.interval).toBe(1);
+		expect(card?.lastReview).not.toBeNull();
 	});
 
 	test("review with quality < 3 resets repetitions", async () => {
 		const card = await repo.review("fc_4", 1);
 		expect(card).not.toBeNull();
-		expect(card!.repetitions).toBe(0);
-		expect(card!.interval).toBe(1);
+		expect(card?.repetitions).toBe(0);
+		expect(card?.interval).toBe(1);
 	});
 
 	test("getStats returns correct counts", async () => {

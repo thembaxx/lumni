@@ -7,16 +7,19 @@ export const metadata: Metadata = {
 
 export default function OfflinePage() {
 	return (
-		<div className="min-h-dvh bg-background flex flex-col items-center justify-center p-6 text-center">
+		<div className="flex min-h-dvh flex-col items-center justify-center bg-background p-6 text-center">
 			<div className="max-w-md space-y-4">
-				<div className="size-20 mx-auto rounded-full bg-muted flex items-center justify-center">
+				<div className="mx-auto flex size-20 items-center justify-center rounded-full bg-muted">
 					<svg
 						className="size-10 text-muted-foreground"
+						role="img"
+						aria-labelledby="offline-icon-title"
 						fill="none"
 						viewBox="0 0 24 24"
 						strokeWidth={1.5}
 						stroke="currentColor"
-					>
+						>
+						<title id="offline-icon-title">Offline status icon</title>
 						<path
 							strokeLinecap="round"
 							strokeLinejoin="round"
@@ -24,21 +27,21 @@ export default function OfflinePage() {
 						/>
 					</svg>
 				</div>
-				<h1 className="text-2xl font-semibold">You&apos;re offline</h1>
-				<p className="text-sm text-muted-foreground">
+				<h1 className="font-semibold text-2xl">You&apos;re offline</h1>
+				<p className="text-muted-foreground text-sm">
 					Don&apos;t worry - your saved progress and cached questions are
 					available. Results will sync when you reconnect.
 				</p>
 				<div className="flex flex-col gap-2 pt-4">
 					<Link
 						href="/dashboard"
-						className="inline-flex h-11 items-center justify-center rounded-xl bg-foreground text-background px-6 text-sm font-semibold"
+						className="inline-flex h-11 items-center justify-center rounded-xl bg-foreground px-6 font-semibold text-background text-sm"
 					>
 						Go to Dashboard
 					</Link>
 					<Link
 						href="/quiz"
-						className="inline-flex h-11 items-center justify-center rounded-xl border border-border px-6 text-sm font-semibold"
+						className="inline-flex h-11 items-center justify-center rounded-xl border border-border px-6 font-semibold text-sm"
 					>
 						Continue Studying
 					</Link>

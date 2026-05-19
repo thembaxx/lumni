@@ -52,9 +52,7 @@ class MockAccount {
 mock.module("node-appwrite", () => ({
 	Client: MockClient,
 	Account: MockAccount,
-	Databases: class MockDatabases {
-		constructor(_client: MockClient) {}
-	},
+	Databases: class MockDatabases {},
 	Query: {
 		equal: (_field: string, _value: string) => `${_field}=${_value}`,
 	},

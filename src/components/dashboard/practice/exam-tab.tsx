@@ -68,7 +68,7 @@ export function ExamTab({ className }: ExamTabProps) {
 	return (
 		<Anim>
 			<div
-				className={cn("w-full px-4 pb-6 flex flex-col h-full gap-8", className)}
+				className={cn("flex h-full w-full flex-col gap-8 px-4 pb-6", className)}
 			>
 				<m.div
 					initial={{ opacity: 0, y: -10 }}
@@ -76,17 +76,17 @@ export function ExamTab({ className }: ExamTabProps) {
 					transition={{ duration: 0.3, ease: "easeOut" }}
 					className="flex flex-col gap-6"
 				>
-					<div className="relative flex flex-col gap-4 border rounded-2xl shadow-sm">
+					<div className="relative flex flex-col gap-4 rounded-2xl border shadow-sm">
 						<HugeiconsIcon
 							icon={Search01Icon}
-							className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-muted-foreground/60"
+							className="absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted-foreground/60"
 						/>
 						<Input
 							type="text"
 							placeholder="Search exams..."
 							value={searchQuery}
 							onChange={(e) => setSearchQuery(e.target.value)}
-							className="h-10 pl-10 pr-10 rounded-full bg-secondary/50 border-0 placeholder:text-muted-foreground/60 focus-visible:ring-1 focus-visible:ring-[--system-accent]/30"
+							className="h-10 rounded-full border-0 bg-secondary/50 pr-10 pl-10 placeholder:text-muted-foreground/60 focus-visible:ring-1 focus-visible:ring-[--system-accent]/30"
 						/>
 						<AnimatePresence initial={false}>
 							{searchQuery && (
@@ -94,13 +94,13 @@ export function ExamTab({ className }: ExamTabProps) {
 									initial={{ opacity: 0, scale: 0.8 }}
 									animate={{ opacity: 1, scale: 1 }}
 									exit={{ opacity: 0, scale: 0.8 }}
-									className="absolute right-3 top-1/2 -translate-y-1/2"
+									className="absolute top-1/2 right-3 -translate-y-1/2"
 								>
 									<Button
 										onClick={() => setSearchQuery("")}
 										variant="ghost"
 										size="icon"
-										className="rounded-full bg-muted/60 hover:bg-muted text-muted-foreground hover:text-foreground active:scale-[0.96] transition-[scale]"
+										className="rounded-full bg-muted/60 text-muted-foreground transition-[scale] hover:bg-muted hover:text-foreground active:scale-[0.96]"
 									>
 										<HugeiconsIcon icon={Cancel01Icon} data-icon />
 									</Button>
@@ -109,7 +109,7 @@ export function ExamTab({ className }: ExamTabProps) {
 						</AnimatePresence>
 					</div>
 
-					<div className="flex items-center justify-between gap-2 flex-wrap">
+					<div className="flex flex-wrap items-center justify-between gap-2">
 						<SubjectsDrawer onSelect={handleSubjectSelect}>
 							<Button
 								variant={selectedSubject ? "default" : "secondary"}
@@ -125,7 +125,7 @@ export function ExamTab({ className }: ExamTabProps) {
 							</Button>
 						</SubjectsDrawer>
 
-						<ButtonGroup className="border rounded-full h-9">
+						<ButtonGroup className="h-9 rounded-full border">
 							<Button
 								variant={selectedSession === "all" ? "default" : "secondary"}
 								size="sm"
@@ -160,7 +160,7 @@ export function ExamTab({ className }: ExamTabProps) {
 										onClick={clearFilters}
 										variant="ghost"
 										size="sm"
-										className="text-muted-foreground hover:text-foreground active:scale-[0.96] transition-[scale]"
+										className="text-muted-foreground transition-[scale] hover:text-foreground active:scale-[0.96]"
 									>
 										<HugeiconsIcon icon={Cancel01Icon} data-icon />
 									</Button>
@@ -169,7 +169,7 @@ export function ExamTab({ className }: ExamTabProps) {
 						</AnimatePresence>
 					</div>
 
-					<div className="flex items-center gap-1.5 overflow-x-auto pb-1 -mx-4 px-4 scrollbar-hide">
+					<div className="scrollbar-hide -mx-4 flex items-center gap-1.5 overflow-x-auto px-4 pb-1">
 						<Button
 							variant={selectedYear === null ? "default" : "secondary"}
 							size="sm"
@@ -200,7 +200,7 @@ export function ExamTab({ className }: ExamTabProps) {
 								animate={{ opacity: 1 }}
 								exit={{ opacity: 0 }}
 								transition={{ staggerChildren: 0.08 }}
-								className="flex flex-col gap-5 grow"
+								className="flex grow flex-col gap-5"
 							>
 								<GroupSkeleton />
 								<GroupSkeleton />
@@ -212,7 +212,7 @@ export function ExamTab({ className }: ExamTabProps) {
 								animate={{ opacity: 1, y: 0 }}
 								className="grow"
 							>
-								<Empty className="border border-dashed border-destructive/30">
+								<Empty className="border border-destructive/30 border-dashed">
 									<EmptyHeader>
 										<EmptyMedia variant="icon">
 											<HugeiconsIcon
@@ -262,7 +262,7 @@ export function ExamTab({ className }: ExamTabProps) {
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
 								transition={{ staggerChildren: 0.08 }}
-								className="flex flex-col gap-5 grow"
+								className="flex grow flex-col gap-5"
 							>
 								{groupedExams.map((group, groupIndex) => (
 									<m.div
@@ -272,19 +272,19 @@ export function ExamTab({ className }: ExamTabProps) {
 										transition={{ delay: groupIndex * 0.08 }}
 										className="flex flex-col gap-2.5"
 									>
-										<div className="flex items-center justify-between px-0.5 gap-4">
-											<h3 className="text-lg font-semibold text-foreground text-pretty">
+										<div className="flex items-center justify-between gap-4 px-0.5">
+											<h3 className="text-pretty font-semibold text-foreground text-lg">
 												{group.subject}
 											</h3>
 											<Badge
 												variant="secondary"
-												className="text-[10px] font-medium px-2 py-0"
+												className="px-2 py-0 font-medium text-[10px]"
 											>
 												{group.papers.length}
 											</Badge>
 										</div>
 										<div className="grid gap-2">
-											{group.papers.slice(0, 4).map((exam, examIndex) => (
+											{group.papers.slice(0, 4).map((exam, _examIndex) => (
 												<ExamCard key={exam.id} exam={exam} />
 											))}
 											{group.papers.length > 4 && (

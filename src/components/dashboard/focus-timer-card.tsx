@@ -71,7 +71,7 @@ export function FocusTimerCard() {
 
 	return (
 		<Card className="overflow-hidden rounded-[1.5rem]">
-			<CardContent className="p-4 flex items-center justify-between gap-4">
+			<CardContent className="flex items-center justify-between gap-4 p-4">
 				<div className="flex items-center gap-4">
 					<RadialChart
 						value={progress}
@@ -79,13 +79,13 @@ export function FocusTimerCard() {
 						color="var(--system-accent)"
 						className="shrink-0"
 					>
-						<span className="text-[11px] font-extrabold tabular-nums font-mono tracking-tight">
+						<span className="font-extrabold font-mono text-[11px] tabular-nums tracking-tight">
 							{formatTime(timeLeft)}
 						</span>
 					</RadialChart>
 					<div>
-						<h3 className="text-[12.8px] font-semibold">Focus Timer</h3>
-						<p className="text-xs text-muted-foreground">
+						<h3 className="font-semibold text-[12.8px]">Focus Timer</h3>
+						<p className="text-muted-foreground text-xs">
 							{isRunning
 								? "Running…"
 								: timeLeft === 0
@@ -101,7 +101,7 @@ export function FocusTimerCard() {
 						size="icon-sm"
 						onClick={handleMinusFive}
 						disabled={isRunning || timeLeft <= 60}
-						className="rounded-full size-8"
+						className="size-8 rounded-full"
 						aria-label="Subtract 5 minutes"
 					>
 						<HugeiconsIcon icon={MinusSignFreeIcons} className="size-4" />
@@ -112,7 +112,7 @@ export function FocusTimerCard() {
 						size="icon-sm"
 						onClick={isRunning ? handleStop : handleStart}
 						className={cn(
-							"rounded-full size-10",
+							"size-10 rounded-full",
 							!isRunning && "bg-system-accent hover:bg-system-accent/90",
 						)}
 						aria-label={isRunning ? "Pause timer" : "Start timer"}
@@ -125,7 +125,7 @@ export function FocusTimerCard() {
 						) : (
 							<HugeiconsIcon
 								icon={PlayFreeIcons}
-								className="size-4 ml-0.5 fill-current"
+								className="ml-0.5 size-4 fill-current"
 							/>
 						)}
 					</Button>
@@ -135,7 +135,7 @@ export function FocusTimerCard() {
 						size="icon-sm"
 						onClick={handleAddFive}
 						disabled={isRunning || timeLeft >= MAX_TIME}
-						className="rounded-full size-8"
+						className="size-8 rounded-full"
 						aria-label="Add 5 minutes"
 					>
 						<HugeiconsIcon icon={PlusSignFreeIcons} className="size-4" />
@@ -145,7 +145,7 @@ export function FocusTimerCard() {
 						variant="ghost"
 						size="icon-sm"
 						onClick={handleReset}
-						className="rounded-full size-8 text-muted-foreground"
+						className="size-8 rounded-full text-muted-foreground"
 						aria-label="Reset timer"
 					>
 						<HugeiconsIcon icon={RotateClockwiseFreeIcons} className="size-4" />

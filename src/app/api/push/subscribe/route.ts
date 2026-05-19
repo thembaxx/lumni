@@ -15,7 +15,7 @@ async function subscribeHandler(req: NextRequest) {
 	try {
 		const { subscription } = await req.json();
 
-		if (!subscription || !subscription.endpoint) {
+		if (!subscription?.endpoint) {
 			return NextResponse.json(
 				{ error: "Invalid subscription" },
 				{ status: 400 },

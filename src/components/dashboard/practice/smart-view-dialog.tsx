@@ -12,10 +12,7 @@ import { LoadingSpinner } from "@/components/shared/loading-spinner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { normalizeMathDelimiters } from "@/lib/katex-utils";
-import {
-	type GetExamMarkdownResult,
-	getExamMarkdown,
-} from "@/lib/server/exam-markdown";
+import { getExamMarkdown } from "@/lib/server/exam-markdown";
 import type { PaperListing } from "@/types/exam";
 
 interface SmartViewDialogProps {
@@ -57,19 +54,19 @@ export function SmartViewDialog({
 				result && result.source !== "error" ? (
 					<Badge
 						variant="outline"
-						className="text-[9px] px-1.5 shrink-0 capitalize"
+						className="shrink-0 px-1.5 text-[9px] capitalize"
 					>
 						{result.source}
 					</Badge>
 				) : undefined
 			}
 		>
-			<div className="flex-1 overflow-auto min-h-0">
+			<div className="min-h-0 flex-1 overflow-auto">
 				{loading ? (
-					<div className="flex items-center justify-center h-full">
+					<div className="flex h-full items-center justify-center">
 						<div className="flex flex-col items-center gap-3">
 							<LoadingSpinner size="lg" />
-							<span className="text-xs text-muted-foreground">
+							<span className="text-muted-foreground text-xs">
 								Loading smart view...
 							</span>
 						</div>
@@ -87,7 +84,7 @@ export function SmartViewDialog({
 					/>
 				) : result?.content ? (
 					<div className="p-4 sm:p-6">
-						<div className="prose prose-sm sm:prose max-w-none dark:prose-invert">
+						<div className="prose prose-sm sm:prose dark:prose-invert max-w-none">
 							<ReactMarkdown
 								remarkPlugins={[remarkGfm, remarkMath]}
 								rehypePlugins={[rehypeKatex]}

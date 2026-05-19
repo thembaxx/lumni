@@ -26,9 +26,9 @@ export function SearchInput({ value, onChange }: SearchInputProps) {
 	return (
 		<div
 			className={cn(
-				"bg-secondary/60 rounded-2xl p-4 animate-fade-in-up delay-400 transition-colors duration-300 border border-border/30",
+				"animate-fade-in-up rounded-2xl border border-border/30 bg-secondary/60 p-4 transition-colors delay-400 duration-300",
 				isFocused &&
-					"ring-2 ring-[--system-accent]/20 border-[--system-accent]/30",
+					"border-[--system-accent]/30 ring-2 ring-[--system-accent]/20",
 			)}
 		>
 			<Input
@@ -39,7 +39,7 @@ export function SearchInput({ value, onChange }: SearchInputProps) {
 				onChange={(e) => onChange(e.target.value)}
 				onFocus={() => setIsFocused(true)}
 				onBlur={() => setIsFocused(false)}
-				className="bg-transparent text-foreground placeholder:text-muted-foreground/60 mb-4 shadow-none border-0 p-0 focus-visible:ring-2 focus-visible:ring-system-accent/30"
+				className="mb-4 border-0 bg-transparent p-0 text-foreground shadow-none placeholder:text-muted-foreground/60 focus-visible:ring-2 focus-visible:ring-system-accent/30"
 			/>
 
 			<div className="flex items-center justify-between">
@@ -47,11 +47,11 @@ export function SearchInput({ value, onChange }: SearchInputProps) {
 					<Button
 						variant="ghost"
 						size="icon"
-						className="bg-muted/60 hover:bg-muted toolbutton"
+						className="toolbutton bg-muted/60 hover:bg-muted"
 					>
 						<HugeiconsIcon
 							icon={Camera01FreeIcons}
-							className="text-muted-foreground toolbutton-icon"
+							className="toolbutton-icon text-muted-foreground"
 							data-icon
 						/>
 					</Button>
@@ -59,11 +59,11 @@ export function SearchInput({ value, onChange }: SearchInputProps) {
 						<Button
 							variant="ghost"
 							size="icon"
-							className="bg-muted/60 hover:bg-muted toolbutton"
+							className="toolbutton bg-muted/60 hover:bg-muted"
 						>
 							<HugeiconsIcon
 								icon={Book01Icon}
-								className="text-muted-foreground toolbutton-icon"
+								className="toolbutton-icon text-muted-foreground"
 								data-icon
 							/>
 						</Button>
@@ -75,11 +75,11 @@ export function SearchInput({ value, onChange }: SearchInputProps) {
 						<Button
 							variant="ghost"
 							size="icon"
-							className="bg-muted/60 hover:bg-muted toolbutton cursor-pointer"
+							className="toolbutton cursor-pointer bg-muted/60 hover:bg-muted"
 						>
 							<HugeiconsIcon
 								icon={Mic01Icon}
-								className="text-muted-foreground toolbutton-icon"
+								className="toolbutton-icon text-muted-foreground"
 								data-icon
 							/>
 						</Button>

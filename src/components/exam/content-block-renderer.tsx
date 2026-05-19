@@ -21,7 +21,7 @@ export function ContentBlockRenderer({ block }: ContentBlockRendererProps) {
 	switch (block.type) {
 		case "text":
 			return (
-				<p className="text-sm leading-relaxed whitespace-pre-wrap">
+				<p className="whitespace-pre-wrap text-sm leading-relaxed">
 					{block.value}
 				</p>
 			);
@@ -35,10 +35,10 @@ export function ContentBlockRenderer({ block }: ContentBlockRendererProps) {
 						width={800}
 						height={600}
 						loading="lazy"
-						className="max-w-full h-auto rounded border"
+						className="h-auto max-w-full rounded border"
 					/>
 					{block.altText && (
-						<p className="text-xs text-muted-foreground mt-1">
+						<p className="mt-1 text-muted-foreground text-xs">
 							{block.altText}
 						</p>
 					)}
@@ -83,7 +83,7 @@ export function ContentBlockRenderer({ block }: ContentBlockRendererProps) {
 
 		case "code":
 			return block.value ? (
-				<div className="my-3 rounded border overflow-hidden">
+				<div className="my-3 overflow-hidden rounded border">
 					<SyntaxHighlighter
 						language={block.language || "text"}
 						style={oneLight}

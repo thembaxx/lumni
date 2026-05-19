@@ -21,12 +21,12 @@ export default function GlobalError({
 				className="min-h-[100dvh] bg-[--system-background] p-6"
 				suppressHydrationWarning
 			>
-				<div className="grid grid-cols-12 gap-0 min-h-[100dvh]">
-					<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4 pb-20">
-						<main className="space-y-8 max-w-md text-left">
+				<div className="grid min-h-[100dvh] grid-cols-12 gap-0">
+					<div className="col-span-12 col-start-1 flex items-center justify-center p-4 pb-20 md:col-span-7">
+						<main className="max-w-md space-y-8 text-left">
 							<div className="relative">
 								<div className="absolute inset-0 animate-pulse rounded-full bg-destructive/10 blur-xl" />
-								<div className="relative flex items-center justify-center size-20 rounded-[--radius-card] bg-destructive/10 border border-destructive/20">
+								<div className="relative flex size-20 items-center justify-center rounded-[--radius-card] border border-destructive/20 bg-destructive/10">
 									<HugeiconsIcon
 										icon={Alert01Icon}
 										className="size-10 text-destructive"
@@ -43,13 +43,13 @@ export default function GlobalError({
 										"An unexpected error occurred. Please try again."}
 								</p>
 								{error.digest && (
-									<p className="ios-footnote text-[--system-text-tertiary] font-mono">
+									<p className="ios-footnote font-mono text-[--system-text-tertiary]">
 										Error ID: {error.digest}
 									</p>
 								)}
 							</div>
 
-							<div className="flex flex-col sm:flex-row gap-3">
+							<div className="flex flex-col gap-3 sm:flex-row">
 								<Button onClick={() => reset()} className="gap-2">
 									<HugeiconsIcon icon={RefreshIcon} className="size-4" />
 									Try again
@@ -70,10 +70,10 @@ export default function GlobalError({
 						</main>
 					</div>
 
-					<div className="col-span-12 md:col-span-5 col-start-1 md:col-start-8 relative overflow-hidden bg-system-surface/30">
+					<div className="relative col-span-12 col-start-1 overflow-hidden bg-system-surface/30 md:col-span-5 md:col-start-8">
 						<div className="absolute inset-0 bg-gradient-to-br from-destructive/5 via-transparent to-transparent" />
 						<div className="absolute inset-0 flex items-center justify-center p-8">
-							<div className="w-full h-full max-w-xs aspect-square rounded-3xl bg-destructive/10 blur-2xl animate-float-slow" />
+							<div className="aspect-square h-full w-full max-w-xs animate-float-slow rounded-3xl bg-destructive/10 blur-2xl" />
 						</div>
 					</div>
 				</div>

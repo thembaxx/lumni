@@ -18,7 +18,7 @@ export function LoadingSpinner({
 	return (
 		<div
 			className={cn(
-				"rounded-full border-muted border-t-foreground animate-spin",
+				"animate-spin rounded-full border-muted border-t-foreground",
 				spinnerSizes[size],
 				className,
 			)}
@@ -46,7 +46,7 @@ export function LoadingOverlay({
 		>
 			<div className="flex flex-col items-center gap-3">
 				<LoadingSpinner size={spinnerSize} />
-				<span className="text-xs text-muted-foreground">{message}</span>
+				<span className="text-muted-foreground text-xs">{message}</span>
 			</div>
 		</div>
 	);

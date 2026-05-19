@@ -7,9 +7,9 @@ interface ExamCardSkeletonProps {
 export function ExamCardSkeleton({ className }: ExamCardSkeletonProps) {
 	return (
 		<div
-			className={`flex items-center justify-between p-3 rounded-xl bg-secondary/40 border-0 ${className ?? ""}`}
+			className={`flex items-center justify-between rounded-xl border-0 bg-secondary/40 p-3 ${className ?? ""}`}
 		>
-			<div className="flex-1 min-w-0 pr-2 flex flex-col gap-1">
+			<div className="flex min-w-0 flex-1 flex-col gap-1 pr-2">
 				<Skeleton className="h-4 w-3/4 rounded" />
 				<div className="flex items-center gap-1.5">
 					<Skeleton className="h-3 w-8 rounded" />
@@ -19,7 +19,7 @@ export function ExamCardSkeleton({ className }: ExamCardSkeletonProps) {
 				</div>
 			</div>
 
-			<div className="flex items-center gap-1.5 shrink-0">
+			<div className="flex shrink-0 items-center gap-1.5">
 				<Skeleton className="h-8 w-[54px] rounded-md" />
 				<Skeleton className="h-8 w-[70px] rounded-md" />
 			</div>

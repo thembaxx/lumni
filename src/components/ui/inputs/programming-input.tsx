@@ -29,8 +29,8 @@ export function ProgrammingInput({
 	return (
 		<div className="flex flex-col gap-3">
 			{starterCode && (
-				<div className="rounded border overflow-hidden">
-					<div className="bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">
+				<div className="overflow-hidden rounded border">
+					<div className="bg-muted px-3 py-1 font-medium text-muted-foreground text-xs">
 						Starter Code ({language})
 					</div>
 					<SyntaxHighlighter

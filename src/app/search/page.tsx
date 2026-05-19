@@ -13,13 +13,13 @@ export default function SearchPage() {
 	const router = useRouter();
 
 	return (
-		<div className="flex flex-col h-full bg-background">
-			<div className="p-4 border-b border-border/30 shrink-0">
+		<div className="flex h-full flex-col bg-background">
+			<div className="shrink-0 border-border/30 border-b p-4">
 				<div className="flex items-center gap-2">
 					<HugeiconsIcon
 						icon={Search01Icon}
 						size={16}
-						className="text-muted-foreground shrink-0"
+						className="shrink-0 text-muted-foreground"
 					/>
 					<Input
 						type="text"
@@ -28,12 +28,12 @@ export default function SearchPage() {
 						value={query}
 						onChange={(e) => setQuery(e.target.value)}
 						autoFocus
-						className="bg-transparent text-foreground placeholder:text-muted-foreground/60 shadow-none border-0 p-0 focus-visible:ring-0 text-base"
+						className="border-0 bg-transparent p-0 text-base text-foreground shadow-none placeholder:text-muted-foreground/60 focus-visible:ring-0"
 					/>
 					<SubjectsDrawer>
 						<button
 							type="button"
-							className="bg-muted/60 hover:bg-muted rounded-lg p-1.5 transition-colors"
+							className="rounded-lg bg-muted/60 p-1.5 transition-colors hover:bg-muted"
 							aria-label="Browse subjects"
 						>
 							<HugeiconsIcon

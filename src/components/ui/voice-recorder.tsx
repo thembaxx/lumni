@@ -106,9 +106,9 @@ export function VoiceRecorder({
 
 	return (
 		<div
-			className={cn("flex flex-col items-center gap-6 w-full mt-4", className)}
+			className={cn("mt-4 flex w-full flex-col items-center gap-6", className)}
 		>
-			<div className="w-full relative overflow-hidden rounded-lg bg-muted/20 p-2">
+			<div className="relative w-full overflow-hidden rounded-lg bg-muted/20 p-2">
 				<LiveWaveform
 					active={isRecording}
 					processing={!isRecording && !audioBlob}
@@ -125,9 +125,9 @@ export function VoiceRecorder({
 				/>
 			</div>
 
-			<div className="flex flex-col items-center gap-1 min-h-14">
+			<div className="flex min-h-14 flex-col items-center gap-1">
 				{showValidationError && (
-					<span className="text-xs text-destructive animate-fade-in-up">
+					<span className="animate-fade-in-up text-destructive text-xs">
 						{isTooShort && `Recording too short (min 1s)`}
 						{isTooLong && "Maximum duration reached"}
 						{recordingError && !isTooShort && !isTooLong && recordingError}
@@ -135,13 +135,13 @@ export function VoiceRecorder({
 				)}
 				<span
 					className={cn(
-						"text-xs uppercase tracking-widest font-medium transition-colors duration-200",
+						"font-medium text-xs uppercase tracking-widest transition-colors duration-200",
 						sendSuccess
 							? "text-success dark:text-success-foreground"
 							: isRecording
-								? "text-destructive animate-pulse"
+								? "animate-pulse text-destructive"
 								: isPlaying
-									? "text-[--system-accent] animate-pulse"
+									? "animate-pulse text-[--system-accent]"
 									: showPermissionError
 										? "text-destructive"
 										: "text-muted-foreground",
@@ -150,7 +150,7 @@ export function VoiceRecorder({
 					{showPermissionError ? "Permission Required" : getStatusText()}
 				</span>
 				{(isRecording || isPlaying || (audioBlob && totalDuration > 0)) && (
-					<span className="text-2xl font-mono font-extrabold tabular-nums text-foreground animate-fade-in-up">
+					<span className="animate-fade-in-up font-extrabold font-mono text-2xl text-foreground tabular-nums">
 						{getTimerDisplay()}
 					</span>
 				)}
@@ -165,9 +165,9 @@ export function VoiceRecorder({
 					className={cn(
 						"rounded-lg",
 						audioBlob || isRecording
-							? "bg-muted/80 hover:bg-muted text-muted-foreground hover:text-foreground hover:scale-105"
+							? "bg-muted/80 text-muted-foreground hover:scale-105 hover:bg-muted hover:text-foreground"
 							: "bg-muted/30 text-muted-foreground/30",
-						isPaperPlaneing && "opacity-50 pointer-events-none",
+						isPaperPlaneing && "pointer-events-none opacity-50",
 					)}
 					aria-label="Reset recording"
 				>
@@ -185,9 +185,9 @@ export function VoiceRecorder({
 						isRecording
 							? "bg-destructive text-destructive-foreground shadow-[0_0_30px_oklch(59.3%_0.194_28°_/_0.6)]"
 							: showPermissionError
-								? "bg-muted text-muted-foreground cursor-not-allowed"
-								: "bg-foreground text-background hover:scale-105 hover:shadow-xl hover:shadow-foreground/20",
-						isPaperPlaneing && "opacity-50 pointer-events-none",
+								? "cursor-not-allowed bg-muted text-muted-foreground"
+								: "bg-foreground text-background hover:scale-105 hover:shadow-foreground/20 hover:shadow-xl",
+						isPaperPlaneing && "pointer-events-none opacity-50",
 					)}
 					aria-label={isRecording ? "Stop recording" : "Start recording"}
 				>
@@ -229,9 +229,9 @@ export function VoiceRecorder({
 					className={cn(
 						"rounded-lg",
 						audioBlob && !isRecording
-							? "bg-[--system-accent] text-background hover:scale-105 hover:shadow-xl hover:shadow-[--system-accent]/20"
+							? "bg-[--system-accent] text-background hover:scale-105 hover:shadow-[--system-accent]/20 hover:shadow-xl"
 							: "bg-muted/30 text-muted-foreground/30",
-						isPaperPlaneing && "opacity-50 pointer-events-none",
+						isPaperPlaneing && "pointer-events-none opacity-50",
 					)}
 					aria-label={isPlaying ? "Pause playback" : "Play recording"}
 				>
@@ -247,7 +247,7 @@ export function VoiceRecorder({
 						/>
 						<HugeiconsIcon
 							icon={PlayFreeIcons}
-							className="h-4 w-4 ml-0.5 transition-[opacity,transform] duration-200"
+							className="ml-0.5 h-4 w-4 transition-[opacity,transform] duration-200"
 							style={{
 								opacity: isPlaying ? 0 : 1,
 								transform: `scale(${isPlaying ? 0.25 : 1})`,

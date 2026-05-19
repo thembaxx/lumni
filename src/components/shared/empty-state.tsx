@@ -20,7 +20,7 @@ function Empty({ className, ...props }: React.ComponentProps<"div">) {
 		<div
 			data-slot="empty"
 			className={cn(
-				"flex w-full min-w-0 flex-1 flex-col items-center justify-center gap-4 rounded-xl border-dashed p-6 text-center text-balance",
+				"flex w-full min-w-0 flex-1 flex-col items-center justify-center gap-4 text-balance rounded-xl border-dashed p-6 text-center",
 				className,
 			)}
 			{...props}
@@ -77,7 +77,7 @@ function EmptyTitle({ className, ...props }: React.ComponentProps<"div">) {
 		<div
 			data-slot="empty-title"
 			className={cn(
-				"font-heading text-sm font-medium tracking-tight",
+				"font-heading font-medium text-sm tracking-tight",
 				className,
 			)}
 			{...props}
@@ -90,7 +90,7 @@ function EmptyDescription({ className, ...props }: React.ComponentProps<"p">) {
 		<div
 			data-slot="empty-description"
 			className={cn(
-				"text-xs/relaxed text-muted-foreground [&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-primary",
+				"text-muted-foreground text-xs/relaxed [&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4",
 				className,
 			)}
 			{...props}
@@ -103,7 +103,7 @@ function EmptyContent({ className, ...props }: React.ComponentProps<"div">) {
 		<div
 			data-slot="empty-content"
 			className={cn(
-				"flex w-full max-w-sm min-w-0 flex-col items-center gap-2 text-xs/relaxed text-balance",
+				"flex w-full min-w-0 max-w-sm flex-col items-center gap-2 text-balance text-xs/relaxed",
 				className,
 			)}
 			{...props}
@@ -133,7 +133,7 @@ export function EmptyState({
 	return (
 		<div
 			className={cn(
-				"flex items-center justify-center h-full",
+				"flex h-full items-center justify-center",
 				overlay && "absolute inset-0 z-20 bg-background/90 backdrop-blur-sm",
 				className,
 			)}
@@ -143,7 +143,7 @@ export function EmptyState({
 					{icon && (
 						<HugeiconsIcon
 							icon={icon}
-							className="size-10 mx-auto text-muted-foreground/30"
+							className="mx-auto size-10 text-muted-foreground/30"
 						/>
 					)}
 					<EmptyTitle>{title}</EmptyTitle>
@@ -190,10 +190,10 @@ export function EmptyStateWithIllustration({
 	animation,
 }: EmptyStateWithIllustrationProps) {
 	return (
-		<div className="flex flex-col items-center justify-center py-16 px-4 text-center">
+		<div className="flex flex-col items-center justify-center px-4 py-16 text-center">
 			<div className="relative mb-6">
 				<div className="absolute inset-0 rounded-full bg-muted/50 blur-xl" />
-				<div className="relative flex h-20 w-20 items-center justify-center rounded-full border border-dashed border-muted-foreground/30 bg-muted/30">
+				<div className="relative flex h-20 w-20 items-center justify-center rounded-full border border-muted-foreground/30 border-dashed bg-muted/30">
 					{animation ? (
 						<AnimatedIllustration animation={animation} />
 					) : icon ? (
@@ -204,10 +204,10 @@ export function EmptyStateWithIllustration({
 					) : null}
 				</div>
 			</div>
-			<h3 className="mb-2 text-xl font-semibold text-wrap balance text-center w-full">
+			<h3 className="balance mb-2 w-full text-wrap text-center font-semibold text-xl">
 				{title}
 			</h3>
-			<p className="mb-6 max-w-md text-sm text-muted-foreground">
+			<p className="mb-6 max-w-md text-muted-foreground text-sm">
 				{description}
 			</p>
 			<div className="flex gap-2">
@@ -327,16 +327,16 @@ export const EmptyStates = {
 	),
 
 	loadingSlow: (task = "Loading your data") => (
-		<div className="flex flex-col items-center justify-center py-12 px-4 text-center">
+		<div className="flex flex-col items-center justify-center px-4 py-12 text-center">
 			<m.div
 				animate={{ rotate: 360 }}
 				transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-				className="size-16 mb-4"
+				className="mb-4 size-16"
 			>
 				<AnimatedIcon name="loading-lumni" className="size-16" />
 			</m.div>
-			<h3 className="mb-2 text-lg font-semibold">Just a moment</h3>
-			<p className="max-w-sm text-sm text-muted-foreground">
+			<h3 className="mb-2 font-semibold text-lg">Just a moment</h3>
+			<p className="max-w-sm text-muted-foreground text-sm">
 				{task}. This usually takes a few seconds.
 			</p>
 		</div>

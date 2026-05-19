@@ -1,7 +1,6 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
 import { questionRatingService } from "@/lib/services/question-rating-service";
 
 export function QuestionRatingsDashboard() {
@@ -31,42 +30,42 @@ export function QuestionRatingsDashboard() {
 
 	return (
 		<div className="space-y-6">
-			<div className="grid grid-cols-2 lg:grid-cols-6 gap-4">
-				<div className="p-4 rounded-2xl border border-border/80 bg-card">
-					<p className="text-sm text-muted-foreground">Total Ratings</p>
-					<p className="text-2xl font-extrabold">{stats.total}</p>
+			<div className="grid grid-cols-2 gap-4 lg:grid-cols-6">
+				<div className="rounded-2xl border border-border/80 bg-card p-4">
+					<p className="text-muted-foreground text-sm">Total Ratings</p>
+					<p className="font-extrabold text-2xl">{stats.total}</p>
 				</div>
-				<div className="p-4 rounded-2xl border border-border/80 bg-card">
-					<p className="text-sm text-muted-foreground">Avg Rating</p>
-					<p className="text-2xl font-extrabold">{stats.average}</p>
+				<div className="rounded-2xl border border-border/80 bg-card p-4">
+					<p className="text-muted-foreground text-sm">Avg Rating</p>
+					<p className="font-extrabold text-2xl">{stats.average}</p>
 				</div>
 				{([1, 2, 3, 4, 5] as const).map((n) => (
 					<div
 						key={n}
-						className="p-4 rounded-2xl border border-border/80 bg-card"
+						className="rounded-2xl border border-border/80 bg-card p-4"
 					>
-						<p className="text-sm text-muted-foreground">{n} Star</p>
-						<p className="text-2xl font-extrabold">{stats.counts[n]}</p>
+						<p className="text-muted-foreground text-sm">{n} Star</p>
+						<p className="font-extrabold text-2xl">{stats.counts[n]}</p>
 					</div>
 				))}
 			</div>
 
 			{lowRated.length > 0 && (
 				<div className="rounded-2xl border border-destructive/30 bg-card p-4">
-					<h3 className="font-heading text-sm font-medium text-destructive mb-3">
+					<h3 className="mb-3 font-heading font-medium text-destructive text-sm">
 						Low-Rated Questions ({lowRated.length})
 					</h3>
 					<div className="space-y-2">
 						{lowRated.map((q) => (
 							<div
 								key={q.questionId}
-								className="flex items-center justify-between text-sm font-mono"
+								className="flex items-center justify-between font-mono text-sm"
 							>
-								<span className="text-muted-foreground truncate max-w-[300px]">
+								<span className="max-w-[300px] truncate text-muted-foreground">
 									{q.questionId}
 								</span>
 								<span className="text-muted-foreground">{q.subject}</span>
-								<span className="text-destructive font-bold">
+								<span className="font-bold text-destructive">
 									{q.avgRating}
 								</span>
 								<span className="text-muted-foreground">
@@ -79,29 +78,29 @@ export function QuestionRatingsDashboard() {
 			)}
 
 			<div className="rounded-2xl border border-border/80 bg-card p-4">
-				<h3 className="font-heading text-sm font-medium mb-3">
+				<h3 className="mb-3 font-heading font-medium text-sm">
 					Recent Ratings
 				</h3>
 				{allRatings.length === 0 ? (
-					<p className="text-sm text-muted-foreground">No ratings yet</p>
+					<p className="text-muted-foreground text-sm">No ratings yet</p>
 				) : (
-					<div className="space-y-1 max-h-60 overflow-y-auto">
+					<div className="max-h-60 space-y-1 overflow-y-auto">
 						{allRatings.map((r, i) => (
 							<div
 								key={i}
-								className="flex items-center gap-2 text-xs font-mono"
+								className="flex items-center gap-2 font-mono text-xs"
 							>
-								<span className="text-amber-500 font-bold">{r.rating}/5</span>
-								<span className="text-muted-foreground truncate max-w-[200px]">
+								<span className="font-bold text-amber-500">{r.rating}/5</span>
+								<span className="max-w-[200px] truncate text-muted-foreground">
 									{r.questionId}
 								</span>
 								<span className="text-muted-foreground">{r.subject}</span>
 								{r.feedback && (
-									<span className="text-muted-foreground truncate max-w-[200px]">
+									<span className="max-w-[200px] truncate text-muted-foreground">
 										"{r.feedback}"
 									</span>
 								)}
-								<span className="text-muted-foreground ml-auto">
+								<span className="ml-auto text-muted-foreground">
 									{new Date(r.createdAt).toLocaleDateString()}
 								</span>
 							</div>

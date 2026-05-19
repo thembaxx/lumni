@@ -39,7 +39,7 @@ export function StarRating({
 						size="icon"
 						type="button"
 						disabled={disabled}
-						className="p-0.5 h-auto w-auto"
+						className="h-auto w-auto p-0.5"
 						onMouseEnter={() => !disabled && setHovered(star)}
 						onMouseLeave={() => setHovered(0)}
 						onClick={() => handleClick(star)}
@@ -50,7 +50,7 @@ export function StarRating({
 							className={cn(
 								"transition-colors",
 								active
-									? "text-amber-400 fill-amber-400"
+									? "fill-amber-400 text-amber-400"
 									: "text-muted-foreground/30",
 							)}
 						/>

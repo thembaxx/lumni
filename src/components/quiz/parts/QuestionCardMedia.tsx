@@ -26,7 +26,7 @@ export function QuestionCardMedia({
 	if (isLoading) {
 		return (
 			<div className="relative">
-				<div className="w-full h-48 bg-muted/50 rounded" />
+				<div className="h-48 w-full rounded bg-muted/50" />
 			</div>
 		);
 	}
@@ -38,7 +38,7 @@ export function QuestionCardMedia({
 	return (
 		<div className="mt-2">
 			<div className="flex items-center justify-between">
-				<p className="text-xs font-medium text-muted-foreground">Diagram</p>
+				<p className="font-medium text-muted-foreground text-xs">Diagram</p>
 				<Button
 					variant="ghost"
 					size="sm"

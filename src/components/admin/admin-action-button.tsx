@@ -33,7 +33,7 @@ export function AdminActionButton({
 			whileHover={!disabled && !loading ? { scale: 1.02 } : {}}
 			whileTap={!disabled && !loading ? { scale: 0.98 } : {}}
 			className={cn(
-				"flex-1 py-2 px-3 rounded-md text-sm font-medium transition-colors disabled:opacity-50",
+				"flex-1 rounded-md px-3 py-2 font-medium text-sm transition-colors disabled:opacity-50",
 				variant === "default"
 					? "bg-foreground text-background"
 					: "border bg-transparent",

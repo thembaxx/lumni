@@ -48,7 +48,7 @@ describe("checkBudget", () => {
 		const result = await checkBudget(req as never, "generate");
 		expect(result.allowed).toBe(false);
 		expect(result.response).toBeDefined();
-		expect(result.response!.status).toBe(429);
+		expect(result.response?.status).toBe(429);
 	});
 
 	test("falls back to anonymous when no IP headers present", async () => {
@@ -74,7 +74,7 @@ describe("checkBudget", () => {
 			headers: { "x-forwarded-for": "10.0.0.1" },
 		});
 		const result = await checkBudget(req as never, "generate");
-		const headers = result.response!.headers;
+		const headers = result.response?.headers;
 		expect(headers.get("X-Budget-Remaining-User")).toBe("0");
 		expect(headers.get("X-Budget-Remaining-Global")).toBe("50");
 		expect(headers.get("X-Budget-Reset")).toBe("9999999999999");

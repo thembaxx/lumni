@@ -3,8 +3,6 @@
 import {
 	AlertCircleIcon,
 	CheckmarkCircle01Icon,
-	CloudUploadIcon,
-	File02Icon,
 	RadialIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -62,7 +60,7 @@ export function AdminExamUploadZone({
 
 	return (
 		<div className="flex flex-col gap-3">
-			<div className="text-sm font-medium">Upload Exam Paper</div>
+			<div className="font-medium text-sm">Upload Exam Paper</div>
 
 			{state === "idle" && (
 				<UploadDropzone
@@ -78,19 +76,19 @@ export function AdminExamUploadZone({
 						setState("error");
 						setMessage(err.message);
 					}}
-					className="border-2 border-dashed rounded-lg py-8 ut-button:bg-[--system-accent] ut-button:text-background ut-button:text-sm ut-allowed-content:text-muted-foreground ut-label:text-foreground"
+					className="rounded-lg border-2 border-dashed ut-button:bg-[--system-accent] py-8 ut-allowed-content:text-muted-foreground ut-button:text-background ut-button:text-sm ut-label:text-foreground"
 				/>
 			)}
 
 			{state === "uploading" && (
-				<div className="flex items-center gap-3 p-4 border rounded-lg bg-muted/30">
+				<div className="flex items-center gap-3 rounded-lg border bg-muted/30 p-4">
 					<HugeiconsIcon
 						icon={RadialIcon}
 						className="size-5 animate-spin text-muted-foreground"
 					/>
 					<div>
-						<p className="text-sm font-medium">Uploading PDF...</p>
-						<p className="text-xs text-muted-foreground">
+						<p className="font-medium text-sm">Uploading PDF...</p>
+						<p className="text-muted-foreground text-xs">
 							Uploading to storage
 						</p>
 					</div>
@@ -98,14 +96,14 @@ export function AdminExamUploadZone({
 			)}
 
 			{state === "converting" && (
-				<div className="flex items-center gap-3 p-4 border rounded-lg bg-muted/30">
+				<div className="flex items-center gap-3 rounded-lg border bg-muted/30 p-4">
 					<HugeiconsIcon
 						icon={RadialIcon}
 						className="size-5 animate-spin text-foreground"
 					/>
 					<div>
-						<p className="text-sm font-medium">Converting...</p>
-						<p className="text-xs text-muted-foreground">
+						<p className="font-medium text-sm">Converting...</p>
+						<p className="text-muted-foreground text-xs">
 							Extracting text, parsing questions, building structured exam
 						</p>
 					</div>
@@ -113,27 +111,27 @@ export function AdminExamUploadZone({
 			)}
 
 			{state === "success" && (
-				<div className="flex items-center gap-3 p-4 border rounded-lg bg-emerald-50">
+				<div className="flex items-center gap-3 rounded-lg border bg-emerald-50 p-4">
 					<HugeiconsIcon
 						icon={CheckmarkCircle01Icon}
 						className="size-5 text-emerald-600"
 					/>
 					<div>
-						<p className="text-sm font-medium text-emerald-700">Success!</p>
-						<p className="text-xs text-emerald-600">{message}</p>
+						<p className="font-medium text-emerald-700 text-sm">Success!</p>
+						<p className="text-emerald-600 text-xs">{message}</p>
 					</div>
 				</div>
 			)}
 
 			{state === "error" && (
-				<div className="flex items-center gap-3 p-4 border rounded-lg bg-destructive/5">
+				<div className="flex items-center gap-3 rounded-lg border bg-destructive/5 p-4">
 					<HugeiconsIcon
 						icon={AlertCircleIcon}
 						className="size-5 text-destructive"
 					/>
 					<div className="flex-1">
-						<p className="text-sm font-medium text-destructive">Error</p>
-						<p className="text-xs text-destructive/80">{message}</p>
+						<p className="font-medium text-destructive text-sm">Error</p>
+						<p className="text-destructive/80 text-xs">{message}</p>
 					</div>
 					<Button variant="outline" size="sm" onClick={() => setState("idle")}>
 						Try Again

@@ -53,18 +53,18 @@ export function AccuracyBar({
 		return (
 			<div className={cn("w-full", className)}>
 				{showLabel && (
-					<div className="flex items-center justify-between mb-2">
-						<span className="text-sm text-muted-foreground">
+					<div className="mb-2 flex items-center justify-between">
+						<span className="text-muted-foreground text-sm">
 							{getAccuracyLabel(accuracy)}
 						</span>
-						<span className="text-sm font-medium tabular-nums">
+						<span className="font-medium text-sm tabular-nums">
 							{accuracy}%
 						</span>
 					</div>
 				)}
 				<div
 					className={cn(
-						"bg-muted rounded-full overflow-hidden",
+						"overflow-hidden rounded-full bg-muted",
 						sizeStyles[size],
 					)}
 				>
@@ -85,14 +85,14 @@ export function AccuracyBar({
 	return (
 		<div className={cn("w-full", className)}>
 			{showLabel && (
-				<div className="flex items-center justify-between mb-2">
-					<span className="text-sm text-muted-foreground">Accuracy</span>
-					<span className="text-sm font-medium tabular-nums">{accuracy}%</span>
+				<div className="mb-2 flex items-center justify-between">
+					<span className="text-muted-foreground text-sm">Accuracy</span>
+					<span className="font-medium text-sm tabular-nums">{accuracy}%</span>
 				</div>
 			)}
 			<div
 				className={cn(
-					"bg-muted rounded-full overflow-hidden",
+					"overflow-hidden rounded-full bg-muted",
 					sizeStyles[size],
 				)}
 			>

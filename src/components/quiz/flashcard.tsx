@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, m } from "framer-motion";
+import { m } from "framer-motion";
 import { useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Anim } from "@/components/shared/anim";
@@ -72,7 +72,7 @@ export function Flashcard({
 
 	if (cards.length === 0) {
 		return (
-			<Card className="max-w-md w-full mx-auto p-8 flex flex-col items-center justify-center gap-4">
+			<Card className="mx-auto flex w-full max-w-md flex-col items-center justify-center gap-4 p-8">
 				<p className="text-muted-foreground">No flashcards available.</p>
 			</Card>
 		);
@@ -83,11 +83,10 @@ export function Flashcard({
 			<div
 				className="flex flex-col gap-4"
 				onKeyDown={handleKeyDown}
-				tabIndex={0}
 				role="region"
 				aria-label="Flashcard quiz"
 			>
-				<div className="flex items-center justify-between text-sm text-muted-foreground">
+				<div className="flex items-center justify-between text-muted-foreground text-sm">
 					<span>
 						Card {currentIndex + 1} of {cards.length}
 					</span>
@@ -97,7 +96,7 @@ export function Flashcard({
 				</div>
 
 				<div
-					className="perspective-1000 cursor-pointer min-h-75"
+					className="perspective-1000 min-h-75 cursor-pointer"
 					onClick={handleFlip}
 					onKeyDown={(e) => {
 						if (e.key === " " || e.key === "Enter") {
@@ -110,41 +109,41 @@ export function Flashcard({
 					aria-label={isFlipped ? "Flip card to front" : "Flip card to back"}
 				>
 					<m.div
-						className="relative w-full h-full preserve-3d transition-transform duration-500"
+						className="preserve-3d relative h-full w-full transition-transform duration-500"
 						style={{
 							transformStyle: "preserve-3d",
 							transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
 						}}
 					>
 						<div
-							className="absolute inset-0 backface-hidden p-6 flex flex-col items-center justify-center rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]"
+							className="backface-hidden absolute inset-0 flex flex-col items-center justify-center rounded-[2.5rem] border border-border/80 bg-card p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]"
 							style={{ backfaceVisibility: "hidden" }}
 						>
-							<div className="text-lg font-medium text-center">
+							<div className="text-center font-medium text-lg">
 								<MarkdownRenderer
 									content={currentCard.front}
 									subject={subject}
 								/>
 							</div>
 							{currentCard.hint && (
-								<div className="text-xs text-muted-foreground mt-4">
+								<div className="mt-4 text-muted-foreground text-xs">
 									<MarkdownRenderer
 										content={`Hint: ${currentCard.hint}`}
 										subject={subject}
 									/>
 								</div>
 							)}
-							<p className="text-xs text-muted-foreground mt-8">Tap to flip</p>
+							<p className="mt-8 text-muted-foreground text-xs">Tap to flip</p>
 						</div>
 
 						<div
-							className="absolute inset-0 backface-hidden p-6 flex flex-col items-center justify-center rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]"
+							className="backface-hidden absolute inset-0 flex flex-col items-center justify-center rounded-[2.5rem] border border-border/80 bg-card p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]"
 							style={{
 								transform: "rotateY(180deg)",
 								backfaceVisibility: "hidden",
 							}}
 						>
-							<div className="text-lg font-medium text-center">
+							<div className="text-center font-medium text-lg">
 								<MarkdownRenderer
 									content={currentCard.back}
 									subject={subject}

@@ -2,11 +2,8 @@
 
 import {
 	Add01Icon,
-	ArrowLeft01Icon,
-	ArrowRight01Icon,
 	BookOpen01Icon,
 	Calendar01Icon,
-	Cancel01Icon,
 	CheckmarkCircle01Icon,
 	Clock01Icon,
 	Delete02Icon,
@@ -67,7 +64,7 @@ function StudyPlannerInner() {
 	return (
 		<div className="space-y-6">
 			<div className="flex items-center justify-between">
-				<h2 className="text-2xl font-semibold">Study Planner</h2>
+				<h2 className="font-semibold text-2xl">Study Planner</h2>
 				<div className="flex gap-2">
 					<Button
 						variant="outline"
@@ -75,7 +72,7 @@ function StudyPlannerInner() {
 						onClick={exportCalendar}
 						aria-label="Export calendar"
 					>
-						<HugeiconsIcon icon={Download03Icon} className="h-4 w-4 mr-1" />
+						<HugeiconsIcon icon={Download03Icon} className="mr-1 h-4 w-4" />
 						Export
 					</Button>
 					<Button
@@ -83,7 +80,7 @@ function StudyPlannerInner() {
 						size="sm"
 						onClick={() => setShowAddSession(true)}
 					>
-						<HugeiconsIcon icon={Add01Icon} className="h-4 w-4 mr-1" />
+						<HugeiconsIcon icon={Add01Icon} className="mr-1 h-4 w-4" />
 						Add Session
 					</Button>
 					<Button
@@ -91,7 +88,7 @@ function StudyPlannerInner() {
 						size="sm"
 						onClick={() => setShowAddExam(true)}
 					>
-						<HugeiconsIcon icon={Add01Icon} className="h-4 w-4 mr-1" />
+						<HugeiconsIcon icon={Add01Icon} className="mr-1 h-4 w-4" />
 						Add Exam
 					</Button>
 				</div>
@@ -99,7 +96,7 @@ function StudyPlannerInner() {
 
 			<StatsRow stats={stats} />
 
-			<div className="grid md:grid-cols-2 gap-6">
+			<div className="grid gap-6 md:grid-cols-2">
 				<TodaySessionsCard
 					sessions={todaySessions}
 					onComplete={markComplete}
@@ -152,35 +149,35 @@ function StatsRow({
 	return (
 		<div className="grid grid-cols-4 gap-4">
 			<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
-				<div className="px-4 group-data-[size=sm]/card:px-3 p-4 text-center">
-					<div className="text-2xl font-extrabold">
+				<div className="p-4 px-4 text-center group-data-[size=sm]/card:px-3">
+					<div className="font-extrabold text-2xl">
 						{stats.completedSessions}
 					</div>
-					<div className="text-xs text-muted-foreground">Completed</div>
+					<div className="text-muted-foreground text-xs">Completed</div>
 				</div>
 			</div>
 			<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
-				<div className="px-4 group-data-[size=sm]/card:px-3 p-4 text-center">
-					<div className="text-2xl font-extrabold">
+				<div className="p-4 px-4 text-center group-data-[size=sm]/card:px-3">
+					<div className="font-extrabold text-2xl">
 						{stats.upcomingSessions}
 					</div>
-					<div className="text-xs text-muted-foreground">Upcoming</div>
+					<div className="text-muted-foreground text-xs">Upcoming</div>
 				</div>
 			</div>
 			<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
-				<div className="px-4 group-data-[size=sm]/card:px-3 p-4 text-center">
-					<div className="text-2xl font-extrabold">
+				<div className="p-4 px-4 text-center group-data-[size=sm]/card:px-3">
+					<div className="font-extrabold text-2xl">
 						{Math.round(stats.studyTimeMinutes / 60)}h
 					</div>
-					<div className="text-xs text-muted-foreground">Study Time</div>
+					<div className="text-muted-foreground text-xs">Study Time</div>
 				</div>
 			</div>
 			<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
-				<div className="px-4 group-data-[size=sm]/card:px-3 p-4 text-center">
-					<div className="text-2xl font-extrabold">
+				<div className="p-4 px-4 text-center group-data-[size=sm]/card:px-3">
+					<div className="font-extrabold text-2xl">
 						{stats.daysUntilNextExam !== null ? stats.daysUntilNextExam : "-"}
 					</div>
-					<div className="text-xs text-muted-foreground">Days to Exam</div>
+					<div className="text-muted-foreground text-xs">Days to Exam</div>
 				</div>
 			</div>
 		</div>
@@ -198,15 +195,15 @@ function TodaySessionsCard({
 }) {
 	return (
 		<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
-			<header className="rounded-t-[2.5rem] border-t border-border/80 pb-2">
-				<h2 className="font-heading text-sm font-medium text-base flex items-center gap-2">
+			<header className="rounded-t-[2.5rem] border-border/80 border-t pb-2">
+				<h2 className="flex items-center gap-2 font-heading font-medium text-base text-sm">
 					<HugeiconsIcon icon={Calendar01Icon} className="h-4 w-4" />
 					Today
 				</h2>
 			</header>
 			<div className="px-4 group-data-[size=sm]/card:px-3">
 				{sessions.length === 0 ? (
-					<p className="text-sm text-muted-foreground py-4 text-center">
+					<p className="py-4 text-center text-muted-foreground text-sm">
 						No sessions scheduled for today
 					</p>
 				) : (
@@ -214,7 +211,7 @@ function TodaySessionsCard({
 						{sessions.map((session) => (
 							<div
 								key={session.id}
-								className="flex items-center justify-between p-3 rounded-lg bg-muted"
+								className="flex items-center justify-between rounded-lg bg-muted p-3"
 							>
 								<div className="flex items-center gap-3">
 									<Button
@@ -237,7 +234,7 @@ function TodaySessionsCard({
 									</Button>
 									<div>
 										<p className="font-medium text-sm">{session.subject}</p>
-										<p className="text-xs text-muted-foreground">
+										<p className="text-muted-foreground text-xs">
 											{session.topic || session.type} • {session.duration}min
 										</p>
 									</div>
@@ -284,15 +281,15 @@ function UpcomingSessionsCard({
 
 	return (
 		<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
-			<header className="rounded-t-[2.5rem] border-t border-border/80 pb-2">
-				<h2 className="font-heading text-sm font-medium text-base flex items-center gap-2">
+			<header className="rounded-t-[2.5rem] border-border/80 border-t pb-2">
+				<h2 className="flex items-center gap-2 font-heading font-medium text-base text-sm">
 					<HugeiconsIcon icon={Clock01Icon} className="h-4 w-4" />
 					Upcoming Sessions
 				</h2>
 			</header>
 			<div className="px-4 group-data-[size=sm]/card:px-3">
 				{Object.keys(groupedByDate).length === 0 ? (
-					<p className="text-sm text-muted-foreground py-4 text-center">
+					<p className="py-4 text-center text-muted-foreground text-sm">
 						No upcoming sessions
 					</p>
 				) : (
@@ -300,14 +297,14 @@ function UpcomingSessionsCard({
 						{Object.entries(groupedByDate).map(
 							([date, daySessions]: [string, StudySessionType[]]) => (
 								<div key={date}>
-									<h3 className="text-sm font-medium text-muted-foreground mb-2">
+									<h3 className="mb-2 font-medium text-muted-foreground text-sm">
 										{date}
 									</h3>
 									<div className="space-y-2">
 										{daySessions.map((session) => (
 											<div
 												key={session.id}
-												className="flex items-center justify-between p-3 rounded-lg bg-muted"
+												className="flex items-center justify-between rounded-lg bg-muted p-3"
 											>
 												<div className="flex items-center gap-3">
 													<Button
@@ -332,7 +329,7 @@ function UpcomingSessionsCard({
 														<p className="font-medium text-sm">
 															{session.subject}
 														</p>
-														<p className="text-xs text-muted-foreground">
+														<p className="text-muted-foreground text-xs">
 															{session.topic || session.type} •{" "}
 															{session.duration}min
 														</p>
@@ -371,15 +368,15 @@ function UpcomingExamsCard({
 }) {
 	return (
 		<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
-			<header className="rounded-t-[2.5rem] border-t border-border/80 pb-2">
-				<h2 className="font-heading text-sm font-medium text-base flex items-center gap-2">
+			<header className="rounded-t-[2.5rem] border-border/80 border-t pb-2">
+				<h2 className="flex items-center gap-2 font-heading font-medium text-base text-sm">
 					<HugeiconsIcon icon={BookOpen01Icon} className="h-4 w-4" />
 					Upcoming Exams
 				</h2>
 			</header>
 			<div className="px-4 group-data-[size=sm]/card:px-3">
 				{exams.length === 0 ? (
-					<p className="text-sm text-muted-foreground py-4 text-center">
+					<p className="py-4 text-center text-muted-foreground text-sm">
 						No exams scheduled
 					</p>
 				) : (
@@ -387,11 +384,11 @@ function UpcomingExamsCard({
 						{exams.map((exam) => (
 							<div
 								key={exam.id}
-								className="flex items-center justify-between p-3 rounded-lg bg-muted"
+								className="flex items-center justify-between rounded-lg bg-muted p-3"
 							>
 								<div>
 									<p className="font-medium text-sm">{exam.subject}</p>
-									<p className="text-xs text-muted-foreground">
+									<p className="text-muted-foreground text-xs">
 										{exam.paper} • {exam.daysUntil} days left
 									</p>
 								</div>
@@ -428,14 +425,14 @@ function AddSessionModal({
 	const [repeat, setRepeat] = useState<"none" | "daily" | "weekly">("none");
 
 	return (
-		<div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-			<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors w-full max-w-md">
+		<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+			<div className="w-full max-w-md overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
 				<header>
-					<h2 className="font-heading text-sm font-medium">
+					<h2 className="font-heading font-medium text-sm">
 						Add Study Session
 					</h2>
 				</header>
-				<div className="px-4 group-data-[size=sm]/card:px-3 space-y-4">
+				<div className="space-y-4 px-4 group-data-[size=sm]/card:px-3">
 					<div>
 						<Label>Subject</Label>
 						<Input
@@ -476,7 +473,7 @@ function AddSessionModal({
 						<Input
 							type="number"
 							value={duration}
-							onChange={(e) => setDuration(parseInt(e.target.value) || 30)}
+							onChange={(e) => setDuration(parseInt(e.target.value, 10) || 30)}
 							min={5}
 							max={120}
 						/>
@@ -537,12 +534,12 @@ function AddExamModal({
 	const [date, setDate] = useState("");
 
 	return (
-		<div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-			<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors w-full max-w-md">
+		<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+			<div className="w-full max-w-md overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
 				<header>
-					<h2 className="font-heading text-sm font-medium">Add Exam Date</h2>
+					<h2 className="font-heading font-medium text-sm">Add Exam Date</h2>
 				</header>
-				<div className="px-4 group-data-[size=sm]/card:px-3 space-y-4">
+				<div className="space-y-4 px-4 group-data-[size=sm]/card:px-3">
 					<div>
 						<Label>Subject</Label>
 						<Input

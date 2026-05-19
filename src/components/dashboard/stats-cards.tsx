@@ -14,7 +14,7 @@ import {
 } from "framer-motion";
 import { useEffect } from "react";
 import { PerpetualFloat } from "@/components/shared/perpetual-float";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { iOSEase } from "@/lib/utils/animation";
 import { useOptimizedAnimation } from "@/lib/utils/animation-optimization";
 
@@ -78,22 +78,22 @@ function StatCard({
 				delay: shouldReduceMotion ? 0 : index * 0.05,
 			}}
 		>
-			<Card className="relative h-full cursor-default hover:border-border/80 transition-colors gap-3 py-5">
+			<Card className="relative h-full cursor-default gap-3 py-5 transition-colors hover:border-border/80">
 				<CardHeader className="flex flex-col items-center justify-center border-t-0 px-5 pt-0">
-					<div className="relative flex items-center justify-center size-10 rounded-full bg-system-surface shadow-level-1">
+					<div className="relative flex size-10 items-center justify-center rounded-full bg-system-surface shadow-level-1">
 						<PerpetualFloat floatRange={2} speed={4}>
 							<HugeiconsIcon icon={Icon} className={`size-6 ${colorClass}`} />
 						</PerpetualFloat>
 					</div>
 				</CardHeader>
-				<CardContent className="text-center space-y-1 px-5 pb-0">
-					<p className="text-2xl font-extrabold tracking-tight text-foreground tabular-nums text-wrap balance">
+				<CardContent className="space-y-1 px-5 pb-0 text-center">
+					<p className="balance text-wrap font-extrabold text-2xl text-foreground tabular-nums tracking-tight">
 						<AnimatedNumber
 							value={value}
 							shouldReduceMotion={shouldReduceMotion}
 						/>
 					</p>
-					<p className="text-[11px] uppercase tracking-wider text-muted-foreground font-extrabold leading-tight">
+					<p className="font-extrabold text-[11px] text-muted-foreground uppercase leading-tight tracking-wider">
 						{label}
 					</p>
 				</CardContent>

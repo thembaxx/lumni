@@ -6,7 +6,7 @@ import { AnimatePresence, m, motion } from "framer-motion";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Anim } from "@/components/shared/anim";
 import { ProgressDots } from "@/components/shared/progress-dots";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { AssessmentHeader } from "@/components/ui/headers/assessment-header";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
 import { useQuizSession } from "@/lib/quiz-session";
@@ -108,27 +108,27 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 	if (isLoading) {
 		return (
 			<div className="grid grid-cols-12 gap-0">
-				<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4 pb-20">
-					<Card className="max-w-md w-full p-6 flex flex-col items-center gap-4">
+				<div className="col-span-12 col-start-1 flex items-center justify-center p-4 pb-20 md:col-span-7">
+					<Card className="flex w-full max-w-md flex-col items-center gap-4 p-6">
 						<motion.div
 							animate={{ rotate: 360 }}
 							transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
-							className="h-8 w-8 mx-auto"
+							className="mx-auto h-8 w-8"
 						>
 							<HugeiconsIcon
 								icon={RadialIcon}
 								className="size-8 text-muted-foreground"
 							/>
 						</motion.div>
-						<p className="text-sm text-muted-foreground">
+						<p className="text-muted-foreground text-sm">
 							Generating questions...
 						</p>
 					</Card>
 				</div>
-				<div className="col-span-12 md:col-span-5 col-start-1 md:col-start-8 relative overflow-hidden bg-system-surface/30">
+				<div className="relative col-span-12 col-start-1 overflow-hidden bg-system-surface/30 md:col-span-5 md:col-start-8">
 					<div className="absolute inset-0 bg-gradient-to-br from-[--system-accent]/10 via-transparent to-transparent" />
 					<div className="absolute inset-0 flex items-center justify-center p-8">
-						<div className="w-full h-full max-w-xs aspect-square rounded-3xl bg-[--system-accent]/10 blur-2xl animate-float-slow" />
+						<div className="aspect-square h-full w-full max-w-xs animate-float-slow rounded-3xl bg-[--system-accent]/10 blur-2xl" />
 					</div>
 				</div>
 			</div>
@@ -138,18 +138,18 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 	if (isError) {
 		return (
 			<div className="grid grid-cols-12 gap-0">
-				<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4 pb-20">
-					<Card className="max-w-md w-full p-8 flex flex-col items-center gap-4">
+				<div className="col-span-12 col-start-1 flex items-center justify-center p-4 pb-20 md:col-span-7">
+					<Card className="flex w-full max-w-md flex-col items-center gap-4 p-8">
 						<AnimatedIcon name="error-state" className="size-16" />
-						<p className="text-destructive font-medium">
+						<p className="font-medium text-destructive">
 							Failed to load questions.
 						</p>
 					</Card>
 				</div>
-				<div className="col-span-12 md:col-span-5 col-start-1 md:col-start-8 relative overflow-hidden bg-system-surface/30">
+				<div className="relative col-span-12 col-start-1 overflow-hidden bg-system-surface/30 md:col-span-5 md:col-start-8">
 					<div className="absolute inset-0 bg-gradient-to-br from-destructive/5 via-transparent to-transparent" />
 					<div className="absolute inset-0 flex items-center justify-center p-8">
-						<div className="w-full h-full max-w-xs aspect-square rounded-3xl bg-destructive/10 blur-2xl animate-float-slow" />
+						<div className="aspect-square h-full w-full max-w-xs animate-float-slow rounded-3xl bg-destructive/10 blur-2xl" />
 					</div>
 				</div>
 			</div>
@@ -159,8 +159,8 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 	if (!questions?.length) {
 		return (
 			<div className="grid grid-cols-12 gap-0">
-				<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4 pb-20">
-					<Card className="max-w-md w-full p-8 flex flex-col items-center gap-4">
+				<div className="col-span-12 col-start-1 flex items-center justify-center p-4 pb-20 md:col-span-7">
+					<Card className="flex w-full max-w-md flex-col items-center gap-4 p-8">
 						<AnimatedIcon name="empty-search" className="size-16" />
 						<p className="text-muted-foreground">
 							No questions available for this subject.
@@ -168,10 +168,10 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 						<p className="text-sm">Select a subject to start practicing.</p>
 					</Card>
 				</div>
-				<div className="col-span-12 md:col-span-5 col-start-1 md:col-start-8 relative overflow-hidden bg-system-surface/30">
+				<div className="relative col-span-12 col-start-1 overflow-hidden bg-system-surface/30 md:col-span-5 md:col-start-8">
 					<div className="absolute inset-0 bg-gradient-to-br from-[--system-accent]/10 via-transparent to-transparent" />
 					<div className="absolute inset-0 flex items-center justify-center p-8">
-						<div className="w-full h-full max-w-xs aspect-square rounded-3xl bg-[--system-accent]/10 blur-2xl animate-float-slow" />
+						<div className="aspect-square h-full w-full max-w-xs animate-float-slow rounded-3xl bg-[--system-accent]/10 blur-2xl" />
 					</div>
 				</div>
 			</div>

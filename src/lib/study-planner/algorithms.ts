@@ -14,7 +14,7 @@ import type {
  */
 export function calculateSubjectWeights(
 	subjects: SubjectCompetency[],
-	targetAps: number,
+	_targetAps: number,
 ): number[] {
 	// We'll use the inverse of the current competency level (with a minimum of 0.1 to avoid division by zero)
 	const inverseLevels = subjects.map((sub) => 1 / Math.max(sub.level, 0.1));

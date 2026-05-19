@@ -29,13 +29,13 @@ export function AchievementShowcase() {
 		>
 			<Card>
 				<CardHeader>
-					<CardTitle className="text-base font-extrabold tracking-tight flex items-center gap-2">
+					<CardTitle className="flex items-center gap-2 font-extrabold text-base tracking-tight">
 						Achievements
 					</CardTitle>
 				</CardHeader>
 				<CardContent className="flex flex-col gap-2">
 					{earned.length > 0 && (
-						<p className="text-xs text-muted-foreground mb-1">
+						<p className="mb-1 text-muted-foreground text-xs">
 							{earned.length} of {gamification.achievements.length} unlocked
 						</p>
 					)}
@@ -44,7 +44,7 @@ export function AchievementShowcase() {
 							<div
 								key={achievement.id}
 								className={cn(
-									"flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium",
+									"flex items-center gap-2 rounded-full px-3 py-1.5 font-medium text-xs",
 									rarityColors[achievement.rarity] || rarityColors.common,
 								)}
 							>
@@ -53,7 +53,7 @@ export function AchievementShowcase() {
 							</div>
 						))}
 						{earned.length > 3 && (
-							<div className="flex items-center px-3 py-1.5 rounded-full bg-muted text-xs font-medium text-muted-foreground">
+							<div className="flex items-center rounded-full bg-muted px-3 py-1.5 font-medium text-muted-foreground text-xs">
 								+{earned.length - 3} more
 							</div>
 						)}

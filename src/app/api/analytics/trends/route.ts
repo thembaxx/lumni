@@ -51,7 +51,10 @@ export async function GET(req: NextRequest) {
 		const sortedMonths = Object.keys(monthlyGroups).sort();
 		const dates = sortedMonths.map((m) => {
 			const [year, month] = m.split("-");
-			const date = new Date(Number.parseInt(year), Number.parseInt(month) - 1);
+			const date = new Date(
+				Number.parseInt(year, 10),
+				Number.parseInt(month, 10) - 1,
+			);
 			return date.toLocaleDateString(undefined, {
 				month: "short",
 				year: "2-digit",

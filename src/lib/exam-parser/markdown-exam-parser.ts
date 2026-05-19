@@ -416,7 +416,7 @@ export class MarkdownExamParser {
 		return context;
 	}
 
-	private parseParts(lines: string[], parentId: string): QuestionPart[] {
+	private parseParts(lines: string[], _parentId: string): QuestionPart[] {
 		const parts: QuestionPart[] = [];
 		let i = 0;
 
@@ -804,8 +804,8 @@ export class MarkdownExamParser {
 
 	private determineAnswerFormat(
 		type: QuestionType,
-		options: Option[],
-		table: DataTable | null,
+		_options: Option[],
+		_table: DataTable | null,
 	): string | null {
 		switch (type) {
 			case "multiple-choice":

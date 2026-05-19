@@ -152,7 +152,7 @@ describe("createNvidiaProvider", () => {
 		});
 
 		const [, opts] = getFetchCallArgs();
-		expect(opts.headers!.Authorization).toBe("Bearer nvapi-secret-123");
+		expect(opts.headers?.Authorization).toBe("Bearer nvapi-secret-123");
 		restoreFetch(orig);
 	});
 });

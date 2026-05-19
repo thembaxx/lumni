@@ -25,7 +25,6 @@ import {
 	ERROR_TYPE_LABELS,
 	type ErrorType,
 	useWrongAnswerJournal,
-	type WrongAnswerEntry,
 } from "@/hooks/use-wrong-answer-journal";
 
 function ErrorTypeSelect({
@@ -37,7 +36,7 @@ function ErrorTypeSelect({
 }) {
 	return (
 		<Select value={value} onValueChange={(v) => v && onChange(v as ErrorType)}>
-			<SelectTrigger className="w-[180px] h-8 text-xs">
+			<SelectTrigger className="h-8 w-[180px] text-xs">
 				<SelectValue placeholder="Error type" />
 			</SelectTrigger>
 			<SelectContent>
@@ -92,15 +91,15 @@ export default function ReviewPage() {
 
 	if (loading) {
 		return (
-			<div className="min-h-screen bg-background flex items-center justify-center">
-				<p className="text-muted-foreground animate-pulse">Loading...</p>
+			<div className="flex min-h-screen items-center justify-center bg-background">
+				<p className="animate-pulse text-muted-foreground">Loading...</p>
 			</div>
 		);
 	}
 
 	return (
 		<div className="min-h-screen bg-system-grouped pt-4 pb-24">
-			<div className="max-w-3xl mx-auto w-full px-4 flex flex-col gap-6">
+			<div className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-4">
 				<div className="flex items-center justify-between">
 					<h1 className="ios-title-1 font-semibold text-foreground tracking-tight">
 						Wrong Answer Journal
@@ -122,7 +121,7 @@ export default function ReviewPage() {
 					</div>
 				</div>
 
-				<div className="flex gap-3 flex-wrap">
+				<div className="flex flex-wrap gap-3">
 					<Select
 						value={filterSubject || "__all__"}
 						onValueChange={(v) => {
@@ -172,10 +171,10 @@ export default function ReviewPage() {
 						<CardContent className="p-8 text-center">
 							<HugeiconsIcon
 								icon={BookOpen01Icon}
-								className="size-8 text-muted-foreground/40 mx-auto mb-3"
+								className="mx-auto mb-3 size-8 text-muted-foreground/40"
 							/>
-							<p className="text-base font-semibold">No mistakes to review</p>
-							<p className="text-sm text-muted-foreground mt-1">
+							<p className="font-semibold text-base">No mistakes to review</p>
+							<p className="mt-1 text-muted-foreground text-sm">
 								{filterSubject
 									? `No mistakes found for ${filterSubject}.`
 									: "Wrong answers will appear here automatically after quizzes and exams."}
@@ -195,14 +194,14 @@ export default function ReviewPage() {
 					</Card>
 				) : (
 					<div className="flex flex-col gap-3">
-						<p className="text-sm text-muted-foreground">
+						<p className="text-muted-foreground text-sm">
 							{entries.length} question{entries.length !== 1 ? "s" : ""} to
 							review
 						</p>
 						{entries.map((entry) => (
 							<Card key={entry.id}>
 								<CardHeader className="pb-2">
-									<div className="flex items-center gap-2 flex-wrap">
+									<div className="flex flex-wrap items-center gap-2">
 										<Badge variant="outline">{entry.subject}</Badge>
 										<Badge variant="secondary" className="text-xs">
 											{entry.topic}
@@ -214,27 +213,27 @@ export default function ReviewPage() {
 											onChange={(v) => handleErrorTypeChange(entry.id!, v)}
 										/>
 									</div>
-									<CardTitle className="text-base font-semibold mt-2">
+									<CardTitle className="mt-2 font-semibold text-base">
 										<MarkdownRenderer content={entry.questionText} />
 									</CardTitle>
 								</CardHeader>
 								<CardContent className="flex flex-col gap-3">
 									<div className="grid grid-cols-2 gap-3">
-										<div className="p-3 rounded-lg bg-destructive/5">
-											<p className="text-xs font-medium text-destructive mb-1">
+										<div className="rounded-lg bg-destructive/5 p-3">
+											<p className="mb-1 font-medium text-destructive text-xs">
 												Your answer
 											</p>
 											<p className="text-sm">{entry.userAnswer}</p>
 										</div>
-										<div className="p-3 rounded-lg bg-success/5">
-											<p className="text-xs font-medium text-success mb-1">
+										<div className="rounded-lg bg-success/5 p-3">
+											<p className="mb-1 font-medium text-success text-xs">
 												Correct answer
 											</p>
 											<p className="text-sm">{entry.correctAnswer}</p>
 										</div>
 									</div>
 									{entry.explanation && (
-										<div className="p-3 rounded-lg bg-muted/30 text-sm">
+										<div className="rounded-lg bg-muted/30 p-3 text-sm">
 											<MarkdownRenderer content={entry.explanation} />
 										</div>
 									)}

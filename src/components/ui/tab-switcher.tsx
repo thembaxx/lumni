@@ -79,7 +79,7 @@ export function TabSwitcher({
 					onKeyDown={handleKeyDown}
 					className={cn(
 						variant === "tabs"
-							? "relative inline-flex gap-1 p-1 rounded-lg bg-muted"
+							? "relative inline-flex gap-1 rounded-lg bg-muted p-1"
 							: "relative inline-flex items-center rounded-[10px] bg-[--system-surface-secondary] p-[3px]",
 						listClassName,
 					)}
@@ -96,8 +96,8 @@ export function TabSwitcher({
 							className={cn(
 								"relative z-10 inline-flex items-center justify-center gap-1.5 whitespace-nowrap transition-colors duration-150",
 								variant === "tabs"
-									? "rounded-md px-4 py-2 text-sm font-medium"
-									: "flex-1 rounded-[7px] px-4 py-2 text-sm font-medium",
+									? "rounded-md px-4 py-2 font-medium text-sm"
+									: "flex-1 rounded-[7px] px-4 py-2 font-medium text-sm",
 								variant === "tabs"
 									? value === tab.value
 										? "text-background"
@@ -114,7 +114,7 @@ export function TabSwitcher({
 					<m.div
 						className={
 							variant === "tabs"
-								? "absolute inset-y-1 bg-[--system-accent] rounded-md z-0"
+								? "absolute inset-y-1 z-0 rounded-md bg-[--system-accent]"
 								: "absolute inset-y-[3px] z-0 rounded-[7px] bg-[--system-surface] shadow-[--shadow-level-1]"
 						}
 						initial={false}

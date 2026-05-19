@@ -1,12 +1,11 @@
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
-import { join } from "path";
+import { join } from "node:path";
 import { UTApi, UTFile } from "uploadthing/server";
 import {
 	findPaperForMemo,
 	getExamPaperCount,
 	insertExamPaper,
 	updateExamPaperMemoLink,
-	updateExamPaperPaperLink,
 } from "@/lib/db/exams";
 import { getSubjectName, parseExamPaperFilename } from "@/lib/db/exams/schema";
 

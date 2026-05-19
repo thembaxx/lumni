@@ -38,19 +38,19 @@ export function FullscreenDialog({
 			<DialogContent
 				showCloseButton={false}
 				className={cn(
-					"max-w-[100vw] h-dvh max-h-dvh p-0 gap-0 rounded-none overflow-hidden",
+					"h-dvh max-h-dvh max-w-[100vw] gap-0 overflow-hidden rounded-none p-0",
 					className,
 				)}
 			>
-				<div className="flex flex-col h-full w-full">
-					<div className="flex items-center gap-2 px-4 py-3 border-b shrink-0 bg-background">
-						<h2 className="text-sm font-semibold truncate text-wrap balance flex-1">
+				<div className="flex h-full w-full flex-col">
+					<div className="flex shrink-0 items-center gap-2 border-b bg-background px-4 py-3">
+						<h2 className="balance flex-1 truncate text-wrap font-semibold text-sm">
 							{title}
 						</h2>
 						{badge && (
 							<Badge
 								variant="secondary"
-								className="text-[10px] px-1.5 shrink-0"
+								className="shrink-0 px-1.5 text-[10px]"
 							>
 								{badge}
 							</Badge>

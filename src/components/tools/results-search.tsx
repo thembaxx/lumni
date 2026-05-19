@@ -14,12 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-	type ExamResult,
-	examYears,
-	mockExamResults,
-} from "@/lib/data/mock-exam-results";
-import { cn } from "@/lib/shared";
+import { examYears, mockExamResults } from "@/lib/data/mock-exam-results";
 
 interface Result {
 	name: string;
@@ -57,7 +52,7 @@ export function ResultsSearch() {
 	};
 
 	return (
-		<div className="h-full flex flex-col overflow-y-auto">
+		<div className="flex h-full flex-col overflow-y-auto">
 			<div className="px-5 pt-5 pb-3">
 				<h2 className="ios-title-3 flex items-center gap-2 text-[--system-text-primary]">
 					<HugeiconsIcon
@@ -66,13 +61,13 @@ export function ResultsSearch() {
 					/>
 					Results Search
 				</h2>
-				<p className="ios-subhead text-[--system-text-secondary] mt-1">
+				<p className="ios-subhead mt-1 text-[--system-text-secondary]">
 					Search past matric results by name and year.
 				</p>
 			</div>
 
 			<div className="px-5 pb-5">
-				<div className="bg-system-background-secondary rounded-2xl p-5 space-y-4">
+				<div className="space-y-4 rounded-2xl bg-system-background-secondary p-5">
 					<div>
 						<Label className="mb-2 text-sm">Year</Label>
 						<div className="flex gap-2 overflow-x-auto pb-1">
@@ -96,14 +91,14 @@ export function ResultsSearch() {
 						<div className="relative flex-1">
 							<HugeiconsIcon
 								icon={Search01Icon}
-								className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground"
+								className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
 							/>
 							<Input
 								placeholder="Search by name…"
 								value={searchQuery}
 								onChange={(e) => setSearchQuery(e.target.value)}
 								onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-								className="pl-10 rounded-xl"
+								className="rounded-xl pl-10"
 							/>
 						</div>
 						<Button onClick={handleSearch} className="rounded-xl">
@@ -114,12 +109,12 @@ export function ResultsSearch() {
 			</div>
 
 			{isSearching ? (
-				<div className="flex-1 flex items-center justify-center">
-					<div className="animate-spin size-8 border-2 border-[--system-accent] border-t-transparent rounded-full" />
+				<div className="flex flex-1 items-center justify-center">
+					<div className="size-8 animate-spin rounded-full border-2 border-[--system-accent] border-t-transparent" />
 				</div>
 			) : results.length > 0 ? (
-				<div className="px-5 pb-10 flex flex-col gap-4 flex-1">
-					<p className="text-sm text-muted-foreground">
+				<div className="flex flex-1 flex-col gap-4 px-5 pb-10">
+					<p className="text-muted-foreground text-sm">
 						{results.length} results found
 					</p>
 					{results.map((result, idx) => (
@@ -129,9 +124,9 @@ export function ResultsSearch() {
 							animate={{ opacity: 1, y: 0 }}
 							transition={{ delay: idx * 0.05 }}
 						>
-							<Card className="p-4 rounded-xl shadow-sm border-border">
-								<div className="flex items-start gap-3 mb-3">
-									<div className="size-10 rounded-xl bg-[--system-accent]/10 flex items-center justify-center">
+							<Card className="rounded-xl border-border p-4 shadow-sm">
+								<div className="mb-3 flex items-start gap-3">
+									<div className="flex size-10 items-center justify-center rounded-xl bg-[--system-accent]/10">
 										<HugeiconsIcon
 											icon={UserIcon}
 											className="size-5 text-foreground"
@@ -139,20 +134,20 @@ export function ResultsSearch() {
 									</div>
 									<div>
 										<h3 className="font-semibold">{result.name}</h3>
-										<p className="text-xs text-muted-foreground">
+										<p className="text-muted-foreground text-xs">
 											{result.school}, {result.province}
 										</p>
-										<p className="text-xs text-muted-foreground tabular-nums">
+										<p className="text-muted-foreground text-xs tabular-nums">
 											Exam No: {result.examNumber}
 										</p>
 									</div>
 								</div>
 
-								<div className="grid grid-cols-2 gap-2 mb-3">
+								<div className="mb-3 grid grid-cols-2 gap-2">
 									{result.subjects.map((subj) => (
 										<div
 											key={subj.name}
-											className="flex justify-between text-sm p-2.5 rounded-lg bg-system-background-secondary"
+											className="flex justify-between rounded-lg bg-system-background-secondary p-2.5 text-sm"
 										>
 											<span className="text-muted-foreground">{subj.name}</span>
 											<span className="font-medium tabular-nums">
@@ -162,9 +157,9 @@ export function ResultsSearch() {
 									))}
 								</div>
 
-								<div className="flex justify-between items-center pt-2 border-t border-border">
-									<span className="text-sm text-muted-foreground">Overall</span>
-									<span className="text-lg font-extrabold tabular-nums">
+								<div className="flex items-center justify-between border-border border-t pt-2">
+									<span className="text-muted-foreground text-sm">Overall</span>
+									<span className="font-extrabold text-lg tabular-nums">
 										{result.overall}%
 									</span>
 								</div>

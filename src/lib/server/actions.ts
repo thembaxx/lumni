@@ -1,21 +1,16 @@
 "use server";
 
+import { randomUUID } from "node:crypto";
 import { Query } from "appwrite";
-import { randomUUID } from "crypto";
 import { UTApi, UTFile } from "uploadthing/server";
 import {
 	COLLECTIONS,
 	createDocument,
 	deleteDocument,
-	getDocument,
 	listDocuments,
 	updateDocument,
 } from "@/lib/db/client";
-import {
-	getAuthenticatedUserId,
-	requireAdmin,
-	verifyAuth,
-} from "@/lib/server/auth";
+import { requireAdmin, verifyAuth } from "@/lib/server/auth";
 
 export async function fetchSubjects(userId: string) {
 	await verifyAuth(userId);

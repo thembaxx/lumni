@@ -6,7 +6,6 @@ import {
 	Home01Icon,
 	Quiz01Icon,
 	Settings01Icon,
-	Task01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -73,7 +72,7 @@ function NavItemComponent({
 			onClick={onClick}
 			aria-label={item.label}
 			aria-current={isActive ? "page" : undefined}
-			className="flex flex-1 flex-col items-center justify-center gap-0.5 h-full min-w-0 relative cursor-pointer bg-transparent border-none outline-none p-0 m-0 text-inherit"
+			className="relative m-0 flex h-full min-w-0 flex-1 cursor-pointer flex-col items-center justify-center gap-0.5 border-none bg-transparent p-0 text-inherit outline-none"
 			whileTap={{ scale: 0.96 }}
 			transition={{ type: "spring", duration: 0.25, bounce: 0 }}
 		>
@@ -89,7 +88,7 @@ function NavItemComponent({
 					/>
 				)}
 			</AnimatePresence>
-			<div className="relative z-10 flex items-center justify-center size-6 mb-1.5">
+			<div className="relative z-10 mb-1.5 flex size-6 items-center justify-center">
 				<HugeiconsIcon
 					icon={item.icon}
 					className={cn(
@@ -101,7 +100,7 @@ function NavItemComponent({
 				{item.badge !== undefined && item.badge > 0 && (
 					<Badge
 						variant="destructive"
-						className="absolute -top-1 -right-1.5 min-w-4 h-4 px-1 text-[10px] leading-none border-0"
+						className="absolute -top-1 -right-1.5 h-4 min-w-4 border-0 px-1 text-[10px] leading-none"
 					>
 						{item.badge > 99 ? "99+" : item.badge}
 					</Badge>
@@ -109,7 +108,7 @@ function NavItemComponent({
 			</div>
 			<span
 				className={cn(
-					"text-[10px] font-medium leading-none text-center tracking-(--tracking-caption-1) uppercase transition-colors duration-200 relative z-10",
+					"relative z-10 text-center font-medium text-[10px] uppercase leading-none tracking-(--tracking-caption-1) transition-colors duration-200",
 					isActive ? "text-system-accent" : "text-system-text-tertiary",
 				)}
 			>
@@ -188,31 +187,29 @@ export function BottomNav() {
 	if (pathname === "/" || isOnboarding) return null;
 
 	return (
-		<>
-			<nav
-				aria-label="Main navigation"
-				className="fixed bottom-0 left-0 right-0 z-50 md:hidden w-full flex"
-				style={{
-					height: "calc(49px + env(safe-area-inset-bottom, 0px))",
-					transform: hidden ? "translateY(100%)" : "translateY(0)",
-					transition: reducedMotion
-						? "none"
-						: hidden
-							? "transform 0.225s cubic-bezier(0.22, 1, 0.36, 1)"
-							: "transform 0.3s cubic-bezier(0.22, 1, 0.36, 1)",
-				}}
-			>
-				<div className="grid grid-cols-5 w-full h-12.25 grow items-stretch bg-system-background/80 backdrop-blur-xl border-t border-system-separator/30">
-					{navItems.map((item, index) => (
-						<NavItemComponent
-							key={item.id}
-							item={item}
-							isActive={index === activeIndex}
-							onClick={() => handleItemClick(item)}
-						/>
-					))}
-				</div>
-			</nav>
-		</>
+		<nav
+			aria-label="Main navigation"
+			className="fixed right-0 bottom-0 left-0 z-50 flex w-full md:hidden"
+			style={{
+				height: "calc(49px + env(safe-area-inset-bottom, 0px))",
+				transform: hidden ? "translateY(100%)" : "translateY(0)",
+				transition: reducedMotion
+					? "none"
+					: hidden
+						? "transform 0.225s cubic-bezier(0.22, 1, 0.36, 1)"
+						: "transform 0.3s cubic-bezier(0.22, 1, 0.36, 1)",
+			}}
+		>
+			<div className="grid h-12.25 w-full grow grid-cols-5 items-stretch border-system-separator/30 border-t bg-system-background/80 backdrop-blur-xl">
+				{navItems.map((item, index) => (
+					<NavItemComponent
+						key={item.id}
+						item={item}
+						isActive={index === activeIndex}
+						onClick={() => handleItemClick(item)}
+					/>
+				))}
+			</div>
+		</nav>
 	);
 }

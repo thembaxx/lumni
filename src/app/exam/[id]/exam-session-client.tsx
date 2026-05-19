@@ -40,8 +40,8 @@ function parseDuration(duration: string): number {
 	const hourMatch = lower.match(/(\d+)\s*hour/);
 	const minMatch = lower.match(/(\d+)\s*min/);
 	let total = 0;
-	if (hourMatch) total += parseInt(hourMatch[1]) * 60;
-	if (minMatch) total += parseInt(minMatch[1]);
+	if (hourMatch) total += parseInt(hourMatch[1], 10) * 60;
+	if (minMatch) total += parseInt(minMatch[1], 10);
 	return total || 180;
 }
 
@@ -95,7 +95,7 @@ function PartAnswerInput({
 						disabled={disabled}
 						onClick={() => onChange(opt.id)}
 						className={cn(
-							"w-full text-left p-3 rounded-xl border-2 transition-[border-color,background-color]",
+							"w-full rounded-xl border-2 p-3 text-left transition-[border-color,background-color]",
 							selected === opt.id
 								? "border-[--system-accent] bg-[--system-accent]/5"
 								: "border-border hover:border-[--system-accent]/30",
@@ -136,7 +136,7 @@ function PartAnswerInput({
 				value={(Array.isArray(value) ? value[0] : value) ?? ""}
 				onChange={(e) => onChange(e.target.value)}
 				disabled={disabled}
-				className="w-full p-3 rounded-xl border-2 border-border bg-background focus:border-[--system-accent] outline-none"
+				className="w-full rounded-xl border-2 border-border bg-background p-3 outline-none focus:border-[--system-accent]"
 				placeholder="Type your answer..."
 			/>
 		);
@@ -149,7 +149,7 @@ function PartAnswerInput({
 				onChange={(e) => onChange(e.target.value)}
 				disabled={disabled}
 				rows={6}
-				className="w-full p-3 rounded-xl border-2 border-border bg-background focus:border-[--system-accent] outline-none resize-y"
+				className="w-full resize-y rounded-xl border-2 border-border bg-background p-3 outline-none focus:border-[--system-accent]"
 				placeholder="Write your answer..."
 			/>
 		);
@@ -163,14 +163,14 @@ function PartAnswerInput({
 				value={(Array.isArray(value) ? value[0] : value) ?? ""}
 				onChange={(e) => onChange(e.target.value)}
 				disabled={disabled}
-				className="w-full p-3 rounded-xl border-2 border-border bg-background focus:border-[--system-accent] outline-none font-mono"
+				className="w-full rounded-xl border-2 border-border bg-background p-3 font-mono outline-none focus:border-[--system-accent]"
 				placeholder="Enter your answer..."
 			/>
 		);
 	}
 
 	return (
-		<p className="text-sm text-muted-foreground">
+		<p className="text-muted-foreground text-sm">
 			Answer type not yet supported in exam mode.
 		</p>
 	);
@@ -197,7 +197,7 @@ function QuestionNavigator({
 	}
 
 	return (
-		<div className="flex flex-col gap-2 max-h-80 overflow-y-auto">
+		<div className="flex max-h-80 flex-col gap-2 overflow-y-auto">
 			{Object.entries(groups).map(([key, items]) => {
 				return (
 					<div key={key} className="flex flex-wrap gap-1.5">
@@ -212,7 +212,7 @@ function QuestionNavigator({
 									key={item.part.id}
 									onClick={() => onNavigate(item.part.id)}
 									className={cn(
-										"size-8 rounded-lg text-xs font-medium transition-colors",
+										"size-8 rounded-lg font-medium text-xs transition-colors",
 										isCurrent && "ring-2 ring-[--system-accent]",
 										isAnswered && !isCurrent && "bg-success/20 text-success",
 										!isAnswered &&
@@ -266,12 +266,12 @@ function ExamResults({
 		<motion.div
 			initial={{ opacity: 0, y: 20 }}
 			animate={{ opacity: 1, y: 0 }}
-			className="min-h-screen bg-background p-4 flex flex-col gap-6 pb-24"
+			className="flex min-h-screen flex-col gap-6 bg-background p-4 pb-24"
 		>
 			<Confetti trigger={accuracy >= 70} count={60} duration={2500} />
 			<Card>
 				<CardHeader>
-					<CardTitle className="text-xl font-extrabold">
+					<CardTitle className="font-extrabold text-xl">
 						{accuracy >= 80
 							? "Great job!"
 							: accuracy >= 50
@@ -281,23 +281,23 @@ function ExamResults({
 				</CardHeader>
 				<CardContent className="flex flex-col gap-4">
 					<div className="grid grid-cols-3 gap-3">
-						<div className="p-3 rounded-lg bg-muted text-center">
-							<p className="text-2xl font-extrabold tabular-nums text-success">
+						<div className="rounded-lg bg-muted p-3 text-center">
+							<p className="font-extrabold text-2xl text-success tabular-nums">
 								{correctCount}
 							</p>
-							<p className="text-xs text-muted-foreground">Correct</p>
+							<p className="text-muted-foreground text-xs">Correct</p>
 						</div>
-						<div className="p-3 rounded-lg bg-muted text-center">
-							<p className="text-2xl font-extrabold tabular-nums text-destructive">
+						<div className="rounded-lg bg-muted p-3 text-center">
+							<p className="font-extrabold text-2xl text-destructive tabular-nums">
 								{failedCount}
 							</p>
-							<p className="text-xs text-muted-foreground">Incorrect</p>
+							<p className="text-muted-foreground text-xs">Incorrect</p>
 						</div>
-						<div className="p-3 rounded-lg bg-muted text-center">
-							<p className="text-2xl font-extrabold tabular-nums">
+						<div className="rounded-lg bg-muted p-3 text-center">
+							<p className="font-extrabold text-2xl tabular-nums">
 								{accuracy}%
 							</p>
-							<p className="text-xs text-muted-foreground">Accuracy</p>
+							<p className="text-muted-foreground text-xs">Accuracy</p>
 						</div>
 					</div>
 				</CardContent>
@@ -318,12 +318,12 @@ function ExamResults({
 						>
 							<button
 								onClick={() => setExpandedId(isExpanded ? null : item.part.id)}
-								className="w-full flex items-center justify-between p-4 text-left"
+								className="flex w-full items-center justify-between p-4 text-left"
 							>
 								<div className="flex items-center gap-3">
 									<span
 										className={cn(
-											"size-7 rounded-full flex items-center justify-center text-xs font-bold",
+											"flex size-7 items-center justify-center rounded-full font-bold text-xs",
 											result.correct
 												? "bg-success/20 text-success"
 												: "bg-destructive/20 text-destructive",
@@ -332,17 +332,17 @@ function ExamResults({
 										{result.correct ? "✓" : "✗"}
 									</span>
 									<div>
-										<p className="text-sm font-medium">
+										<p className="font-medium text-sm">
 											{item.questionId}.{item.part.id.split("-").pop()}
 										</p>
-										<p className="text-xs text-muted-foreground line-clamp-1">
+										<p className="line-clamp-1 text-muted-foreground text-xs">
 											{item.part.text ?? "Question"}
 										</p>
 									</div>
 								</div>
 							</button>
 							{isExpanded && (
-								<div className="px-4 pb-4 border-t border-border pt-3 flex flex-col gap-3">
+								<div className="flex flex-col gap-3 border-border border-t px-4 pt-3 pb-4">
 									{item.part.text && (
 										<div className="text-sm">
 											<MarkdownRenderer content={item.part.text} />
@@ -350,27 +350,27 @@ function ExamResults({
 									)}
 									<div className="grid grid-cols-2 gap-3 text-sm">
 										<div>
-											<p className="text-xs text-muted-foreground mb-1">
+											<p className="mb-1 text-muted-foreground text-xs">
 												Your answer
 											</p>
-											<p className="font-mono text-xs bg-muted p-2 rounded-lg">
+											<p className="rounded-lg bg-muted p-2 font-mono text-xs">
 												{getAnswerText(item.part, answers[item.part.id]) ||
 													"(no answer)"}
 											</p>
 										</div>
 										{!result.correct && (
 											<div>
-												<p className="text-xs text-muted-foreground mb-1">
+												<p className="mb-1 text-muted-foreground text-xs">
 													Correct answer
 												</p>
-												<p className="font-mono text-xs bg-success/10 text-success p-2 rounded-lg">
+												<p className="rounded-lg bg-success/10 p-2 font-mono text-success text-xs">
 													{getCorrectAnswerText(item.part) || "(not available)"}
 												</p>
 											</div>
 										)}
 									</div>
 									{item.part.marks && (
-										<p className="text-xs text-muted-foreground">
+										<p className="text-muted-foreground text-xs">
 											Marks: {result.score}/{item.part.marks}
 										</p>
 									)}
@@ -603,8 +603,8 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 
 	if (paperLoading) {
 		return (
-			<div className="min-h-screen bg-background flex items-center justify-center">
-				<p className="text-muted-foreground animate-pulse">
+			<div className="flex min-h-screen items-center justify-center bg-background">
+				<p className="animate-pulse text-muted-foreground">
 					Loading exam paper...
 				</p>
 			</div>
@@ -613,10 +613,10 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 
 	if (!paperData && !paperLoading) {
 		return (
-			<div className="min-h-screen bg-background flex items-center justify-center p-4">
+			<div className="flex min-h-screen items-center justify-center bg-background p-4">
 				<Card>
 					<CardContent className="p-8 text-center">
-						<p className="text-destructive font-medium">
+						<p className="font-medium text-destructive">
 							Exam paper not found.
 						</p>
 						<Button className="mt-4" onClick={handleDashboard}>
@@ -633,15 +633,15 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 			<motion.div
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
-				className="min-h-screen bg-background flex items-center justify-center p-4"
+				className="flex min-h-screen items-center justify-center bg-background p-4"
 			>
-				<Card className="max-w-md w-full">
+				<Card className="w-full max-w-md">
 					<CardHeader>
-						<CardTitle className="text-xl font-extrabold tracking-tight">
+						<CardTitle className="font-extrabold text-xl tracking-tight">
 							{paperData?.exam.metadata.subject} -{" "}
 							{paperData?.exam.metadata.paperCode}
 						</CardTitle>
-						<p className="text-sm text-muted-foreground">
+						<p className="text-muted-foreground text-sm">
 							{paperData?.exam.metadata.year}{" "}
 							{paperData?.exam.metadata.examPeriod} |{" "}
 							{paperData?.exam.metadata.totalMarks} marks |{" "}
@@ -707,21 +707,21 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 	const totalPartsCount = getTotalPartsCount();
 
 	return (
-		<div className="min-h-screen bg-background flex flex-col">
-			<header className="sticky top-0 z-10 bg-background/80 backdrop-blur-xl border-b border-border">
-				<div className="flex items-center justify-between px-4 py-3 max-w-5xl mx-auto w-full">
+		<div className="flex min-h-screen flex-col bg-background">
+			<header className="sticky top-0 z-10 border-border border-b bg-background/80 backdrop-blur-xl">
+				<div className="mx-auto flex w-full max-w-5xl items-center justify-between px-4 py-3">
 					<div className="flex items-center gap-3">
 						<button
 							onClick={() => setPhase("submitting")}
-							className="p-2 -ml-2 hover:bg-muted rounded-xl transition-colors"
+							className="-ml-2 rounded-xl p-2 transition-colors hover:bg-muted"
 						>
 							<HugeiconsIcon icon={ArrowLeft01Icon} className="size-5" />
 						</button>
 						<div>
-							<p className="text-sm font-semibold">
+							<p className="font-semibold text-sm">
 								{paperData?.exam.metadata.paperCode}
 							</p>
-							<p className="text-xs text-muted-foreground">
+							<p className="text-muted-foreground text-xs">
 								{sessionMode === "timed" ? "Timed" : "Practice"} ·{" "}
 								{answeredCount}/{totalPartsCount}
 							</p>
@@ -746,7 +746,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 						{sessionMode === "practice" && (
 							<button
 								onClick={() => setPaused((p) => !p)}
-								className="p-2 hover:bg-muted rounded-xl transition-colors"
+								className="rounded-xl p-2 transition-colors hover:bg-muted"
 							>
 								{paused ? (
 									<HugeiconsIcon icon={PlayFreeIcons} className="size-5" />
@@ -758,9 +758,9 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 
 						<button
 							onClick={() => setShowPalette((p) => !p)}
-							className="p-2 hover:bg-muted rounded-xl transition-colors relative"
+							className="relative rounded-xl p-2 transition-colors hover:bg-muted"
 						>
-							<span className="text-sm font-mono tabular-nums">
+							<span className="font-mono text-sm tabular-nums">
 								{currentPartIndex + 1}/{totalPartsCount}
 							</span>
 						</button>
@@ -772,17 +772,17 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 				</div>
 			</header>
 
-			<div className="flex-1 flex">
+			<div className="flex flex-1">
 				<AnimatePresence initial={false}>
 					{showPalette && (
 						<motion.aside
 							initial={{ width: 0, opacity: 0 }}
 							animate={{ width: 260, opacity: 1 }}
 							exit={{ width: 0, opacity: 0 }}
-							className="border-r border-border overflow-hidden bg-muted/20"
+							className="overflow-hidden border-border border-r bg-muted/20"
 						>
-							<div className="p-4 w-[260px]">
-								<p className="text-xs font-semibold text-muted-foreground mb-3">
+							<div className="w-[260px] p-4">
+								<p className="mb-3 font-semibold text-muted-foreground text-xs">
 									Question Navigator
 								</p>
 								<QuestionNavigator
@@ -800,7 +800,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 					)}
 				</AnimatePresence>
 
-				<main className="flex-1 p-4 md:p-6 max-w-3xl mx-auto w-full">
+				<main className="mx-auto w-full max-w-3xl flex-1 p-4 md:p-6">
 					<AnimatePresence mode="wait" initial={false}>
 						{currentPart && (
 							<motion.div
@@ -823,9 +823,9 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 									<button
 										onClick={() => currentPartId && toggleFlag(currentPartId)}
 										className={cn(
-											"p-2 rounded-xl transition-colors",
+											"rounded-xl p-2 transition-colors",
 											currentPartId && flags.includes(currentPartId)
-												? "text-warning bg-warning/10"
+												? "bg-warning/10 text-warning"
 												: "text-muted-foreground hover:bg-muted",
 										)}
 									>
@@ -834,7 +834,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 											className={cn(
 												"size-5 transition-colors",
 												currentPartId && flags.includes(currentPartId)
-													? "text-warning fill-warning"
+													? "fill-warning text-warning"
 													: "text-muted-foreground",
 											)}
 										/>
@@ -858,7 +858,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 									/>
 								</div>
 
-								<div className="flex items-center justify-between pt-4 border-t border-border">
+								<div className="flex items-center justify-between border-border border-t pt-4">
 									<Button
 										variant="outline"
 										onClick={goToPrevious}
@@ -871,7 +871,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 										Previous
 									</Button>
 
-									<span className="text-xs text-muted-foreground">
+									<span className="text-muted-foreground text-xs">
 										{currentPartIndex + 1} of {totalPartsCount}
 									</span>
 

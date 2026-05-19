@@ -1,10 +1,4 @@
-import type { PromptManager } from "../../prompt-manager";
-import type {
-	GradingResult,
-	Question,
-	QuestionBody,
-	UserAnswer,
-} from "../../types";
+import type { Question, QuestionBody, UserAnswer } from "../../types";
 import type { GradeFn, HintFn } from "../types";
 import { aiGradeResult, aiHintFactory } from "./shared";
 

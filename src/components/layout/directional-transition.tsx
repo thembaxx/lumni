@@ -3,7 +3,7 @@
 import { m } from "framer-motion";
 import { createContext, useContext, useState } from "react";
 import { Anim } from "@/components/shared/anim";
-import { easeOutQuint, iOSEase } from "@/lib/utils/animation";
+import { iOSEase } from "@/lib/utils/animation";
 
 interface DirectionalTransitionContextValue {
 	direction: "forward" | "back";

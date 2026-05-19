@@ -21,22 +21,22 @@ export function CelebrationOverlay({ onComplete }: CelebrationOverlayProps) {
 	}, []);
 
 	return (
-		<div className="fixed inset-0 bg-system-grouped z-50 flex items-center justify-center">
+		<div className="fixed inset-0 z-50 flex items-center justify-center bg-system-grouped">
 			<Confetti trigger={true} />
 			<motion.div
 				initial={shouldReduceMotion ? {} : { opacity: 0, scale: 0.9 }}
 				animate={{ opacity: 1, scale: 1 }}
 				transition={{ duration: 0.6, ease: iOSEase }}
-				className="flex flex-col items-center text-center px-6 max-w-sm"
+				className="flex max-w-sm flex-col items-center px-6 text-center"
 			>
-				<div className="w-36 h-36 mb-6">
+				<div className="mb-6 h-36 w-36">
 					<WelcomeSVG />
 				</div>
 				<motion.h1
 					initial={shouldReduceMotion ? {} : { opacity: 0, y: 12 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.4, delay: 0.3, ease: iOSEase }}
-					className="ios-title-1 font-extrabold mb-3 tracking-tight text-balance"
+					className="ios-title-1 mb-3 text-balance font-extrabold tracking-tight"
 				>
 					You&apos;re ready to learn
 				</motion.h1>
@@ -44,7 +44,7 @@ export function CelebrationOverlay({ onComplete }: CelebrationOverlayProps) {
 					initial={shouldReduceMotion ? {} : { opacity: 0, y: 12 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.4, delay: 0.45, ease: iOSEase }}
-					className="ios-body text-muted-foreground mb-8 leading-relaxed text-pretty"
+					className="ios-body mb-8 text-pretty text-muted-foreground leading-relaxed"
 				>
 					Your subjects and goals are saved. Start practicing, track your
 					progress, and ace your exams.

@@ -1,5 +1,4 @@
 import { initAI, isAIConfigured } from "@/lib/ai";
-import type { CacheTier } from "@/lib/caching-strategy";
 import { CachingStrategy } from "@/lib/caching-strategy";
 import {
 	cacheVisual,

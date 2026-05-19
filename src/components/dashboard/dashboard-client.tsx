@@ -40,7 +40,7 @@ const QuizView = dynamic(
 	{
 		ssr: false,
 		loading: () => (
-			<div className="flex items-center justify-center min-h-[60dvh]">
+			<div className="flex min-h-[60dvh] items-center justify-center">
 				<Skeleton className="size-full max-w-3xl rounded-[2rem]" />
 			</div>
 		),
@@ -82,7 +82,7 @@ const ComparativeAnalyticsPanel = dynamic(
 	{
 		ssr: false,
 		loading: () => (
-			<div className="h-64 flex items-center justify-center bg-system-surface rounded-[2rem] border border-dashed">
+			<div className="flex h-64 items-center justify-center rounded-[2rem] border border-dashed bg-system-surface">
 				<Skeleton className="h-full w-full rounded-[2rem]" />
 			</div>
 		),
@@ -136,7 +136,7 @@ function HeroBanner() {
 		>
 			{!finalShouldReduceMotion && (
 				<PerpetualFloat
-					className="absolute right-8 top-1/2 -translate-y-1/2"
+					className="absolute top-1/2 right-8 -translate-y-1/2"
 					duration={8}
 					offsetY={-16}
 					aria-hidden="true"
@@ -145,9 +145,9 @@ function HeroBanner() {
 				</PerpetualFloat>
 			)}
 
-			<div className="relative p-8 flex flex-col justify-center h-full max-w-3xl">
+			<div className="relative flex h-full max-w-3xl flex-col justify-center p-8">
 				<motion.h1
-					className="ios-title-1 font-extrabold text-foreground leading-tight tracking-tight max-w-lg"
+					className="ios-title-1 max-w-lg font-extrabold text-foreground leading-tight tracking-tight"
 					initial={{ opacity: 0, x: -20 }}
 					animate={{ opacity: 1, x: 0 }}
 					transition={{ duration: 0.5, delay: 0.1, ease: iOSEase }}
@@ -155,7 +155,7 @@ function HeroBanner() {
 					Your Learning Dashboard
 				</motion.h1>
 				<motion.p
-					className="text-sm text-muted-foreground mt-2 max-w-md"
+					className="mt-2 max-w-md text-muted-foreground text-sm"
 					initial={{ opacity: 0, x: -20 }}
 					animate={{ opacity: 1, x: 0 }}
 					transition={{ duration: 0.5, delay: 0.2, ease: iOSEase }}
@@ -182,7 +182,7 @@ function BentoStatRow({
 			</div>
 			<div className="col-span-12 sm:col-span-4">
 				<SectionReveal delay={0.12}>
-					<Card className="h-full rounded-[2rem] shadow-level-1 p-4 flex items-center justify-center">
+					<Card className="flex h-full items-center justify-center rounded-[2rem] p-4 shadow-level-1">
 						<DailyProgressRing />
 					</Card>
 				</SectionReveal>
@@ -212,9 +212,9 @@ function DashboardContent({
 	return (
 		<div
 			data-scroll-container
-			className="min-h-dvh flex flex-col bg-system-grouped pt-8 pb-[calc(var(--spacing-safe-pb)+var(--space-16)+var(--space-5))] overflow-x-hidden overflow-y-auto w-full"
+			className="flex min-h-dvh w-full flex-col overflow-y-auto overflow-x-hidden bg-system-grouped pt-8 pb-[calc(var(--spacing-safe-pb)+var(--space-16)+var(--space-5))]"
 		>
-			<div className="max-w-3xl mx-auto w-full px-4 flex flex-col gap-8 pb-16">
+			<div className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-4 pb-16">
 				{activeTab === "today" && <HeroBanner />}
 				{activeTab === "today" && <CountdownHeader />}
 				{activeTab === "today" && (
@@ -406,7 +406,7 @@ export function DashboardClient({
 	return (
 		<AppErrorBoundary>
 			<ScrollAmbient />
-			<div className="flex flex-col h-full">
+			<div className="flex h-full flex-col">
 				{!isLoaded ? (
 					<motion.div
 						key="loading"
@@ -414,9 +414,9 @@ export function DashboardClient({
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0, transition: { duration: 0.15 } }}
 						transition={{ duration: 0.2, ease: iOSEase }}
-						className="min-h-dvh flex items-center justify-center px-4"
+						className="flex min-h-dvh items-center justify-center px-4"
 					>
-						<div className="w-full max-w-md flex flex-col gap-3">
+						<div className="flex w-full max-w-md flex-col gap-3">
 							<Skeleton className="h-24 rounded-[2rem]" />
 							<div className="grid grid-cols-12 gap-3">
 								<Skeleton className="col-span-8 h-24 rounded-[2rem]" />

@@ -33,7 +33,7 @@ export function NotificationsClient() {
 				total: number;
 			}>;
 		},
-		onSuccess: (data) => {
+		onSuccess: (_data) => {
 			setTitle("");
 			setBody("");
 			setUrl("");
@@ -48,7 +48,7 @@ export function NotificationsClient() {
 				title="Broadcast Notification"
 				subtitle="Send push notifications to users"
 			/>
-			<div className="p-4 max-w-xl mx-auto">
+			<div className="mx-auto max-w-xl p-4">
 				<Card>
 					<CardHeader>
 						<CardTitle>Compose Notification</CardTitle>
@@ -57,7 +57,7 @@ export function NotificationsClient() {
 						<div className="flex flex-col gap-1.5">
 							<label
 								htmlFor="notif-title"
-								className="text-xs font-medium text-muted-foreground"
+								className="font-medium text-muted-foreground text-xs"
 							>
 								Title *
 							</label>
@@ -71,7 +71,7 @@ export function NotificationsClient() {
 						<div className="flex flex-col gap-1.5">
 							<label
 								htmlFor="notif-body"
-								className="text-xs font-medium text-muted-foreground"
+								className="font-medium text-muted-foreground text-xs"
 							>
 								Body *
 							</label>
@@ -85,7 +85,7 @@ export function NotificationsClient() {
 						<div className="flex flex-col gap-1.5">
 							<label
 								htmlFor="notif-url"
-								className="text-xs font-medium text-muted-foreground"
+								className="font-medium text-muted-foreground text-xs"
 							>
 								URL (optional)
 							</label>
@@ -99,7 +99,7 @@ export function NotificationsClient() {
 						<div className="flex flex-col gap-1.5">
 							<label
 								htmlFor="notif-subject"
-								className="text-xs font-medium text-muted-foreground"
+								className="font-medium text-muted-foreground text-xs"
 							>
 								Subject filter (optional)
 							</label>

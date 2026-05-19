@@ -58,7 +58,7 @@ export function StreakFire({
 						initial={{ opacity: 0, y: -10 }}
 						animate={{ opacity: 1, y: 0 }}
 					>
-						<div className="bg-warning text-primary-foreground text-[10px] font-extrabold px-2 py-0.5 rounded-full whitespace-nowrap">
+						<div className="whitespace-nowrap rounded-full bg-warning px-2 py-0.5 font-extrabold text-[10px] text-primary-foreground">
 							{getStreakMessage(milestone)}
 						</div>
 					</motion.div>

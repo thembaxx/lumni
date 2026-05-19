@@ -33,9 +33,9 @@ export class AppErrorBoundary extends Component<Props, State> {
 		if (this.state.hasError) {
 			if (this.props.fallback) return this.props.fallback;
 			return (
-				<div className="flex flex-col items-center justify-center min-h-[200px] p-6 text-center">
-					<h2 className="text-lg font-semibold mb-2">Something went wrong</h2>
-					<p className="text-sm text-muted-foreground mb-4">
+				<div className="flex min-h-[200px] flex-col items-center justify-center p-6 text-center">
+					<h2 className="mb-2 font-semibold text-lg">Something went wrong</h2>
+					<p className="mb-4 text-muted-foreground text-sm">
 						{this.state.error?.message || "An unexpected error occurred"}
 					</p>
 					<Button

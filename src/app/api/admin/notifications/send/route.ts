@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { COLLECTIONS, listDocuments } from "@/lib/db/client";
+import { listDocuments } from "@/lib/db/client";
 import { requireAdmin } from "@/lib/server/auth";
 
 export async function POST(request: NextRequest) {

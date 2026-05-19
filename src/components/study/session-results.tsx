@@ -3,10 +3,8 @@
 import { Home01Icon, Target01Icon, UndoIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { motion } from "framer-motion";
-import { AccuracyBar } from "@/components/shared/accuracy-bar";
 import { Button } from "@/components/ui/button";
 import { calculateAccuracy } from "@/lib/shared/time";
-import { iOSEase, springTransition } from "@/lib/utils/animation";
 import { AnimatedIcon } from "@/lib/utils/icon-mapping";
 
 interface StudySessionStats {
@@ -29,9 +27,9 @@ export function SessionResults({
 	const accuracy = calculateAccuracy(stats.correct ?? 0, stats.total);
 
 	return (
-		<div className="min-h-[100dvh] bg-background grid grid-cols-12 gap-0">
-			<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4">
-				<div className="max-w-md w-full mx-auto flex flex-col gap-4">
+		<div className="grid min-h-[100dvh] grid-cols-12 gap-0 bg-background">
+			<div className="col-span-12 col-start-1 flex items-center justify-center p-4 md:col-span-7">
+				<div className="mx-auto flex w-full max-w-md flex-col gap-4">
 					<header className="text-left">
 						<motion.div
 							initial={{ scale: 0, opacity: 0 }}
@@ -39,31 +37,31 @@ export function SessionResults({
 							transition={{ duration: 0.3 }}
 							className="mb-2"
 						>
-							<AnimatedIcon name="success-check" className="size-16 mx-auto" />
+							<AnimatedIcon name="success-check" className="mx-auto size-16" />
 						</motion.div>
-						<h2 className="text-xl font-extrabold tracking-tight">
+						<h2 className="font-extrabold text-xl tracking-tight">
 							Session Complete!
 						</h2>
 					</header>
 					<div className="grid grid-cols-12 gap-3">
-						<div className="col-span-5 p-4 rounded-lg bg-muted">
-							<p className="text-2xl font-extrabold">{stats.total}</p>
-							<p className="text-xs text-muted-foreground">Total</p>
+						<div className="col-span-5 rounded-lg bg-muted p-4">
+							<p className="font-extrabold text-2xl">{stats.total}</p>
+							<p className="text-muted-foreground text-xs">Total</p>
 						</div>
 						{stats.correct !== undefined && (
-							<div className="col-span-3 p-4 rounded-lg bg-success/10">
-								<p className="text-2xl font-extrabold text-success">
+							<div className="col-span-3 rounded-lg bg-success/10 p-4">
+								<p className="font-extrabold text-2xl text-success">
 									{stats.correct}
 								</p>
-								<p className="text-xs text-success">Known</p>
+								<p className="text-success text-xs">Known</p>
 							</div>
 						)}
 						{stats.review !== undefined && (
-							<div className="col-span-4 p-4 rounded-lg bg-warning/10">
-								<p className="text-2xl font-extrabold text-warning">
+							<div className="col-span-4 rounded-lg bg-warning/10 p-4">
+								<p className="font-extrabold text-2xl text-warning">
 									{stats.review}
 								</p>
-								<p className="text-xs text-warning">Review</p>
+								<p className="text-warning text-xs">Review</p>
 							</div>
 						)}
 					</div>
@@ -73,7 +71,7 @@ export function SessionResults({
 								icon={Target01Icon}
 								className="size-4 text-success"
 							/>
-							<span className="text-sm font-medium text-success">
+							<span className="font-medium text-sm text-success">
 								{accuracy}% accuracy
 							</span>
 						</div>
@@ -94,10 +92,10 @@ export function SessionResults({
 					</div>
 				</div>
 			</div>
-			<div className="col-span-12 md:col-span-5 col-start-1 md:col-start-8 relative overflow-hidden bg-system-surface/30">
+			<div className="relative col-span-12 col-start-1 overflow-hidden bg-system-surface/30 md:col-span-5 md:col-start-8">
 				<div className="absolute inset-0 bg-gradient-to-br from-success/10 via-transparent to-transparent" />
 				<div className="absolute inset-0 flex items-center justify-center p-8">
-					<div className="w-full h-full max-w-xs aspect-square rounded-3xl bg-success/10 blur-2xl animate-float-slow" />
+					<div className="aspect-square h-full w-full max-w-xs animate-float-slow rounded-3xl bg-success/10 blur-2xl" />
 				</div>
 			</div>
 		</div>

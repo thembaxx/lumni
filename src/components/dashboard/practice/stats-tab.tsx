@@ -86,7 +86,7 @@ export default function StatsTab() {
 
 	if (isProgressLoading || isSubjectsLoading || !isGamificationLoaded) {
 		return (
-			<div className="px-4 pb-6 flex flex-col gap-3">
+			<div className="flex flex-col gap-3 px-4 pb-6">
 				<Skeleton className="h-24 rounded-lg" />
 				<Skeleton className="h-24 rounded-lg" />
 				<Skeleton className="h-48 rounded-lg" />
@@ -99,7 +99,7 @@ export default function StatsTab() {
 		const isPerfect = quizResults.accuracy === 100;
 
 		return (
-			<div className="px-4 pb-6 flex flex-col gap-3">
+			<div className="flex flex-col gap-3 px-4 pb-6">
 				<SubjectsDrawer
 					userId={userId}
 					selectedSubjects={selectedSubjects}
@@ -109,53 +109,53 @@ export default function StatsTab() {
 
 				<Card className="overflow-visible border-0">
 					{isPerfect && (
-						<div className="flex items-center justify-center -mt-2">
-							<div className="flex items-center gap-2 rounded-full bg-warning text-warning-foreground px-4 py-1.5 shadow-lg">
-								<span className="text-sm font-extrabold">Perfect Score!</span>
+						<div className="-mt-2 flex items-center justify-center">
+							<div className="flex items-center gap-2 rounded-full bg-warning px-4 py-1.5 text-warning-foreground shadow-lg">
+								<span className="font-extrabold text-sm">Perfect Score!</span>
 							</div>
 						</div>
 					)}
 					<CardHeader className="p-6 pb-2 md:text-left">
-						<h3 className="text-xl font-extrabold tracking-tight">
+						<h3 className="font-extrabold text-xl tracking-tight">
 							{isPerfect
 								? "Flawless!"
 								: isGreatScore
 									? "Great Job!"
 									: "Quiz Complete!"}
 						</h3>
-						<p className="text-sm text-muted-foreground mt-1">
+						<p className="mt-1 text-muted-foreground text-sm">
 							Here are your results:
 						</p>
 					</CardHeader>
-					<CardContent className="px-6 pb-6 flex flex-col gap-4">
+					<CardContent className="flex flex-col gap-4 px-6 pb-6">
 						<div className="grid grid-cols-12 gap-3 md:text-left">
-							<div className="col-span-5 p-3 rounded-lg bg-muted">
-								<p className="text-xl font-extrabold tabular-nums">
+							<div className="col-span-5 rounded-lg bg-muted p-3">
+								<p className="font-extrabold text-xl tabular-nums">
 									{quizResults.totalQuestions}
 								</p>
-								<p className="text-xs text-muted-foreground">Questions</p>
+								<p className="text-muted-foreground text-xs">Questions</p>
 							</div>
-							<div className="col-span-3 p-3 rounded-lg bg-muted">
+							<div className="col-span-3 rounded-lg bg-muted p-3">
 								<p
 									className={
-										"text-xl font-extrabold tabular-nums" +
-										(isGreatScore ? " text-success" : "")
+										"font-extrabold text-xl tabular-nums" +
+										(isGreatScore ? "text-success" : "")
 									}
 								>
 									{quizResults.correctAnswers}
 								</p>
-								<p className="text-xs text-muted-foreground">Correct</p>
+								<p className="text-muted-foreground text-xs">Correct</p>
 							</div>
-							<div className="col-span-4 p-3 rounded-lg bg-muted">
+							<div className="col-span-4 rounded-lg bg-muted p-3">
 								<p
 									className={
-										"text-xl font-extrabold tabular-nums" +
-										(isGreatScore ? " text-success" : "")
+										"font-extrabold text-xl tabular-nums" +
+										(isGreatScore ? "text-success" : "")
 									}
 								>
 									{quizResults.accuracy}%
 								</p>
-								<p className="text-xs text-muted-foreground">Accuracy</p>
+								<p className="text-muted-foreground text-xs">Accuracy</p>
 							</div>
 						</div>
 
@@ -172,11 +172,11 @@ export default function StatsTab() {
 				{quizResults.incorrectAnswers.length > 0 && (
 					<Card className="overflow-hidden border-0">
 						<CardHeader className="p-4 pb-2">
-							<h3 className="text-base font-extrabold tracking-tight">
+							<h3 className="font-extrabold text-base tracking-tight">
 								Review Mistakes
 							</h3>
 						</CardHeader>
-						<CardContent className="p-4 flex flex-col gap-2">
+						<CardContent className="flex flex-col gap-2 p-4">
 							{quizResults.incorrectAnswers.slice(0, 3).map((item, idx) => (
 								<div
 									key={item.questionId || idx}
@@ -202,7 +202,7 @@ export default function StatsTab() {
 	}
 
 	return (
-		<div className="px-4 pb-6 flex flex-col gap-3">
+		<div className="flex flex-col gap-3 px-4 pb-6">
 			<SubjectsDrawer
 				userId={userId}
 				selectedSubjects={selectedSubjects}

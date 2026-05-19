@@ -13,20 +13,20 @@ export function PWAUpdateToast() {
 	if (!isUpdated || dismissed) return null;
 
 	return (
-		<div className="fixed bottom-4 left-4 right-4 z-50 md:left-auto md:right-4 md:max-w-sm">
-			<div className="bg-background border border-border rounded-lg shadow-lg p-4 flex items-start gap-3">
-				<div className="flex-shrink-0 mt-0.5">
+		<div className="fixed right-4 bottom-4 left-4 z-50 md:right-4 md:left-auto md:max-w-sm">
+			<div className="flex items-start gap-3 rounded-lg border border-border bg-background p-4 shadow-lg">
+				<div className="mt-0.5 flex-shrink-0">
 					<HugeiconsIcon
 						icon={RefreshIcon}
 						className="h-5 w-5 text-foreground"
 					/>
 				</div>
-				<div className="flex-1 min-w-0">
-					<p className="text-sm font-medium">Update Available</p>
-					<p className="text-xs text-muted-foreground mt-1">
+				<div className="min-w-0 flex-1">
+					<p className="font-medium text-sm">Update Available</p>
+					<p className="mt-1 text-muted-foreground text-xs">
 						A new version is ready. Refresh to get the latest features.
 					</p>
-					<div className="flex gap-2 mt-3">
+					<div className="mt-3 flex gap-2">
 						<Button
 							size="sm"
 							onClick={() => {
@@ -63,22 +63,22 @@ export function PWAInstallPrompt() {
 	if (!isInstallable || dismissed) return null;
 
 	return (
-		<div className="fixed bottom-4 left-4 right-4 z-50 md:left-auto md:right-4 md:max-w-sm">
-			<div className="bg-background border border-border rounded-lg shadow-lg p-4">
+		<div className="fixed right-4 bottom-4 left-4 z-50 md:right-4 md:left-auto md:max-w-sm">
+			<div className="rounded-lg border border-border bg-background p-4 shadow-lg">
 				<div className="flex items-center gap-3">
 					<div className="flex-shrink-0">
-						<div className="w-10 h-10 bg-[--system-accent]/10 rounded-lg flex items-center justify-center">
+						<div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[--system-accent]/10">
 							<span className="text-xl">📱</span>
 						</div>
 					</div>
 					<div className="flex-1">
-						<p className="text-sm font-medium">Install Lumni</p>
-						<p className="text-xs text-muted-foreground">
+						<p className="font-medium text-sm">Install Lumni</p>
+						<p className="text-muted-foreground text-xs">
 							Add to home screen for offline access
 						</p>
 					</div>
 				</div>
-				<div className="flex gap-2 mt-3">
+				<div className="mt-3 flex gap-2">
 					<Button size="sm" onClick={install}>
 						Install
 					</Button>

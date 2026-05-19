@@ -22,9 +22,9 @@ export function LoadingIndicator() {
 		<m.div
 			initial={{ opacity: 0, y: 10 }}
 			animate={{ opacity: 1, y: 0 }}
-			className="flex items-center gap-3 p-4 rounded-lg bg-system-surface-secondary text-muted-foreground border border-border/40 shadow-sm"
+			className="flex items-center gap-3 rounded-lg border border-border/40 bg-system-surface-secondary p-4 text-muted-foreground shadow-sm"
 		>
-			<div className="size-7 flex-shrink-0">
+			<div className="size-7 shrink-0">
 				<m.div
 					animate={{ rotate: 360 }}
 					transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
@@ -43,7 +43,7 @@ export function LoadingIndicator() {
 					animate={{ opacity: 1, y: 0 }}
 					exit={{ opacity: 0, y: -4 }}
 					transition={{ duration: 0.2 }}
-					className="text-xs font-extrabold uppercase tracking-widest"
+					className="font-extrabold text-xs uppercase tracking-widest"
 				>
 					{loadingMessages[messageIndex]}
 				</m.span>

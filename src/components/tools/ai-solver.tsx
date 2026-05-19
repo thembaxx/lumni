@@ -208,9 +208,9 @@ function AiSolverInner({ cameraFocus }: AiSolverProps) {
 	const textareaDisabled = phase === "extracting" || phase === "solving";
 
 	return (
-		<div className="h-full flex flex-col overflow-y-auto">
+		<div className="flex h-full flex-col overflow-y-auto">
 			{error && (
-				<div className="mx-5 mt-5 bg-destructive/10 text-destructive text-sm p-4 rounded-xl border border-destructive/20 animate-in fade-in slide-in-from-top-1">
+				<div className="fade-in slide-in-from-top-1 mx-5 mt-5 animate-in rounded-xl border border-destructive/20 bg-destructive/10 p-4 text-destructive text-sm">
 					{error}
 				</div>
 			)}
@@ -219,7 +219,7 @@ function AiSolverInner({ cameraFocus }: AiSolverProps) {
 				<h2 className="ios-title-3 flex items-center gap-2 text-[--system-text-primary]">
 					AI Solver
 				</h2>
-				<p className="ios-subhead text-[--system-text-secondary]/60 mt-1.5">
+				<p className="ios-subhead mt-1.5 text-[--system-text-secondary]/60">
 					{phase === "confirm"
 						? "Verify the extracted problem then solve it."
 						: "Snap a photo of your homework or type a question."}
@@ -227,7 +227,7 @@ function AiSolverInner({ cameraFocus }: AiSolverProps) {
 			</div>
 
 			<div className="px-5 pb-5">
-				<div className="bg-system-background-secondary rounded-xl p-5 space-y-4">
+				<div className="space-y-4 rounded-xl bg-system-background-secondary p-5">
 					{showSymbols && (
 						<div className="flex flex-wrap gap-1.5">
 							{SUBJECTS.map((s) => (
@@ -236,10 +236,10 @@ function AiSolverInner({ cameraFocus }: AiSolverProps) {
 									type="button"
 									onClick={() => setSubject(s.id)}
 									className={cn(
-										"text-xs h-7 px-2.5 rounded-lg font-medium transition-colors border",
+										"h-7 rounded-lg border px-2.5 font-medium text-xs transition-colors",
 										subject === s.id
-											? "bg-[--system-accent] text-white border-[--system-accent]"
-											: "bg-system-fill text-[--system-text-secondary] border-border hover:border-[--system-accent]/40",
+											? "border-[--system-accent] bg-[--system-accent] text-white"
+											: "border-border bg-system-fill text-[--system-text-secondary] hover:border-[--system-accent]/40",
 									)}
 								>
 									{s.label}
@@ -255,7 +255,7 @@ function AiSolverInner({ cameraFocus }: AiSolverProps) {
 									variant="ghost"
 									size="sm"
 									onClick={() => insertSymbol(s.value)}
-									className="h-6 w-7 p-0 ios-footnote text-[--system-text-secondary] hover:text-[--system-accent]"
+									className="ios-footnote h-6 w-7 p-0 text-[--system-text-secondary] hover:text-[--system-accent]"
 								>
 									{s.label}
 								</Button>
@@ -274,17 +274,17 @@ function AiSolverInner({ cameraFocus }: AiSolverProps) {
 							value={question}
 							onChange={(e) => setQuestion(e.target.value)}
 							disabled={textareaDisabled}
-							className="min-h-25 rounded-xl px-4 py-3 bg-system-surface focus-visible:ring-[3px] focus-visible:ring-[--system-accent]/30"
+							className="min-h-25 rounded-xl bg-system-surface px-4 py-3 focus-visible:ring-[--system-accent]/30 focus-visible:ring-[3px]"
 						/>
 					)}
 
 					{(phase === "extracting" || phase === "solving") && (
-						<div className="flex items-center justify-center gap-3 py-8 animate-in fade-in">
+						<div className="fade-in flex animate-in items-center justify-center gap-3 py-8">
 							<HugeiconsIcon
 								icon={RadialIcon}
 								className="size-6 animate-spin text-[--system-accent]"
 							/>
-							<span className="text-sm text-[--system-text-secondary]">
+							<span className="text-[--system-text-secondary] text-sm">
 								{phase === "extracting"
 									? "Reading problem from image…"
 									: "Solving step-by-step…"}
@@ -294,7 +294,7 @@ function AiSolverInner({ cameraFocus }: AiSolverProps) {
 
 					{(phase === "input" || phase === "confirm") && (
 						<div className="flex items-center gap-4">
-							<div className="flex-1 flex gap-2">
+							<div className="flex flex-1 gap-2">
 								{phase === "input" && (
 									<>
 										<input
@@ -309,7 +309,7 @@ function AiSolverInner({ cameraFocus }: AiSolverProps) {
 											variant="outline"
 											size="sm"
 											onClick={() => cameraInputRef.current?.click()}
-											className="gap-2 rounded-xl h-10 px-4"
+											className="h-10 gap-2 rounded-xl px-4"
 										>
 											<HugeiconsIcon icon={Camera01Icon} data-icon />
 											<span className="text-sm">Take Photo</span>
@@ -332,7 +332,7 @@ function AiSolverInner({ cameraFocus }: AiSolverProps) {
 															<div className="flex items-center gap-2 text-foreground text-sm">
 																<HugeiconsIcon
 																	icon={Image03FreeIcons}
-																	className="w-4 h-4"
+																	className="h-4 w-4"
 																	data-icon
 																/>
 																<span>Upload</span>
@@ -349,7 +349,7 @@ function AiSolverInner({ cameraFocus }: AiSolverProps) {
 										variant="outline"
 										size="sm"
 										onClick={handleRetake}
-										className="gap-2 rounded-xl h-10 px-4"
+										className="h-10 gap-2 rounded-xl px-4"
 									>
 										<HugeiconsIcon icon={Camera01Icon} data-icon />
 										<span className="text-sm">Retake</span>
@@ -357,7 +357,7 @@ function AiSolverInner({ cameraFocus }: AiSolverProps) {
 								)}
 							</div>
 							{imageUrl && (
-								<div className="relative size-20 rounded-xl overflow-hidden border-2 border-[--system-accent]/20 shadow-level-2 group shrink-0">
+								<div className="group relative size-20 shrink-0 overflow-hidden rounded-xl border-2 border-[--system-accent]/20 shadow-level-2">
 									<Image
 										src={imageUrl}
 										alt="Uploaded problem"
@@ -384,7 +384,7 @@ function AiSolverInner({ cameraFocus }: AiSolverProps) {
 				<div className="px-5 pb-6">
 					<Button
 						onClick={handleSolve}
-						className="w-full gap-2 h-12 font-medium rounded-xl text-sm shadow-solver transition-shadow"
+						className="h-12 w-full gap-2 rounded-xl font-medium text-sm shadow-solver transition-shadow"
 					>
 						<HugeiconsIcon icon={SparklesIcon} data-icon />
 						Solve Problem
@@ -393,25 +393,25 @@ function AiSolverInner({ cameraFocus }: AiSolverProps) {
 			)}
 
 			{phase === "result" && result && (
-				<div className="px-5 pb-10 animate-fade-in-up">
-					<div className="rounded-2xl border border-border bg-card shadow-level-2 overflow-hidden">
+				<div className="animate-fade-in-up px-5 pb-10">
+					<div className="overflow-hidden rounded-2xl border border-border bg-card shadow-level-2">
 						<div className="p-6">
 							{subject !== "general" && (
 								<div className="mb-4">
-									<span className="text-xs font-medium px-2.5 py-1 rounded-full bg-[--system-accent]/10 text-[--system-accent]">
+									<span className="rounded-full bg-[--system-accent]/10 px-2.5 py-1 font-medium text-[--system-accent] text-xs">
 										{SUBJECTS.find((s) => s.id === subject)?.label}
 									</span>
 								</div>
 							)}
-							<div className="bg-system-background rounded-xl p-5 border border-border/50">
-								<div className="whitespace-pre-wrap text-sm leading-relaxed font-medium text-foreground">
+							<div className="rounded-xl border border-border/50 bg-system-background p-5">
+								<div className="whitespace-pre-wrap font-medium text-foreground text-sm leading-relaxed">
 									{result.solution}
 								</div>
 							</div>
 
 							{result.steps && result.steps.length > 0 && (
 								<div className="mt-6">
-									<p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-4">
+									<p className="mb-4 font-bold text-muted-foreground text-xs uppercase tracking-wider">
 										Steps
 									</p>
 									<StepByStep steps={result.steps} />
@@ -423,7 +423,7 @@ function AiSolverInner({ cameraFocus }: AiSolverProps) {
 					<Button
 						variant="outline"
 						onClick={handleReset}
-						className="mt-4 w-full gap-2 h-10 rounded-xl"
+						className="mt-4 h-10 w-full gap-2 rounded-xl"
 					>
 						Solve Another Problem
 					</Button>

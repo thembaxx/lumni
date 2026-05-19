@@ -1,6 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
 import {
-	APPWRITE_DATABASE_ID,
 	COLLECTIONS,
 	createDocument,
 	deleteDocument,

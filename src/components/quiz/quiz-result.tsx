@@ -2,10 +2,10 @@
 
 import { Home01Icon, RefreshIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, m, useSpring, useTransform } from "framer-motion";
+import { m, useSpring, useTransform } from "framer-motion";
 import { AccuracyBar } from "@/components/shared/accuracy-bar";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { iOSEase, springTransition } from "@/lib/utils/animation";
 import { AnimatedIcon } from "@/lib/utils/icon-mapping";
 
@@ -51,11 +51,11 @@ function Confetti() {
 		][i % 5],
 	}));
 	return (
-		<div className="absolute inset-0 pointer-events-none overflow-hidden">
+		<div className="pointer-events-none absolute inset-0 overflow-hidden">
 			{particles.map((p) => (
 				<m.div
 					key={p.id}
-					className="absolute w-2 h-2 rounded-full"
+					className="absolute h-2 w-2 rounded-full"
 					style={{
 						left: "50%",
 						top: "50%",
@@ -119,7 +119,7 @@ export function QuizResult({ results, onRestart, onClose }: QuizResultProps) {
 			transition={{ duration: 0.4, ease: iOSEase }}
 			className="flex flex-col gap-6"
 		>
-			<Card className="p-8 flex flex-col items-center text-center gap-4 overflow-visible">
+			<Card className="flex flex-col items-center gap-4 overflow-visible p-8 text-center">
 				{message.celebration && <Confetti />}
 				<m.div
 					initial={{ scale: 0.95, opacity: 0 }}
@@ -129,7 +129,7 @@ export function QuizResult({ results, onRestart, onClose }: QuizResultProps) {
 					<AnimatedIcon name={message.icon} className="size-20" />
 				</m.div>
 				<m.h2
-					className="text-2xl font-extrabold"
+					className="font-extrabold text-2xl"
 					initial={{ opacity: 0, y: 10 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ delay: 0.3 }}
@@ -137,17 +137,17 @@ export function QuizResult({ results, onRestart, onClose }: QuizResultProps) {
 					{message.title}
 				</m.h2>
 
-				<div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-xs">
+				<div className="grid w-full max-w-xs grid-cols-1 gap-6 sm:grid-cols-2">
 					<m.div
 						className="flex flex-col items-center"
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ delay: 0.4 }}
 					>
-						<p className="text-3xl font-extrabold text-success">
+						<p className="font-extrabold text-3xl text-success">
 							<AnimatedCounter value={correctAnswers} delay={500} />
 						</p>
-						<p className="text-xs text-muted-foreground">Correct</p>
+						<p className="text-muted-foreground text-xs">Correct</p>
 					</m.div>
 					<m.div
 						className="flex flex-col items-center"
@@ -155,13 +155,13 @@ export function QuizResult({ results, onRestart, onClose }: QuizResultProps) {
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ delay: 0.5 }}
 					>
-						<p className="text-3xl font-extrabold text-destructive">
+						<p className="font-extrabold text-3xl text-destructive">
 							<AnimatedCounter
 								value={totalQuestions - correctAnswers}
 								delay={600}
 							/>
 						</p>
-						<p className="text-xs text-muted-foreground">Incorrect</p>
+						<p className="text-muted-foreground text-xs">Incorrect</p>
 					</m.div>
 				</div>
 
@@ -180,17 +180,17 @@ export function QuizResult({ results, onRestart, onClose }: QuizResultProps) {
 
 				{incorrectAnswers.length > 0 && (
 					<m.div
-						className="w-full pt-4 border-t"
+						className="w-full border-t pt-4"
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						transition={{ delay: 0.8 }}
 					>
-						<p className="text-sm font-medium mb-2">Review:</p>
+						<p className="mb-2 font-medium text-sm">Review:</p>
 						<div className="flex flex-col gap-1 text-left">
 							{incorrectAnswers.slice(0, 3).map((item, idx) => (
 								<p
 									key={`review-${item.questionId || idx}`}
-									className="text-xs text-muted-foreground"
+									className="text-muted-foreground text-xs"
 								>
 									Q{idx + 1}: You answered {item.selectedAnswer}, correct was{" "}
 									{item.correctAnswer}

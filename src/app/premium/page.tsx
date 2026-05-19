@@ -75,10 +75,10 @@ export default function PremiumPage() {
 	};
 
 	return (
-		<div className="min-h-dvh bg-background p-6 max-w-2xl mx-auto flex flex-col justify-center">
+		<div className="mx-auto flex min-h-dvh max-w-2xl flex-col justify-center bg-background p-6">
 			<Card>
 				<CardHeader className="text-center">
-					<div className="flex justify-center mb-3">
+					<div className="mb-3 flex justify-center">
 						<HugeiconsIcon
 							icon={CrownIcon}
 							size={40}
@@ -88,7 +88,7 @@ export default function PremiumPage() {
 					<CardTitle className="text-2xl">
 						{isPremium ? "You're Premium" : "Upgrade to Premium"}
 					</CardTitle>
-					<p className="text-muted-foreground text-sm mt-1">
+					<p className="mt-1 text-muted-foreground text-sm">
 						{isPremium
 							? "Enjoy all premium features"
 							: "Unlock the full Lumni experience"}
@@ -100,19 +100,19 @@ export default function PremiumPage() {
 							<HugeiconsIcon
 								icon={f.icon}
 								size={18}
-								className="text-amber-400 mt-0.5"
+								className="mt-0.5 text-amber-400"
 							/>
 							<div>
 								<p className="font-medium text-sm">{f.label}</p>
-								<p className="text-xs text-muted-foreground">{f.desc}</p>
+								<p className="text-muted-foreground text-xs">{f.desc}</p>
 							</div>
 						</div>
 					))}
 
-					<div className="pt-4 border-t border-border/30">
+					<div className="border-border/30 border-t pt-4">
 						<button
 							onClick={() => router.push("/settings")}
-							className="w-full flex items-center justify-between p-3 rounded-xl bg-accent/5 hover:bg-accent/10 border border-accent/20 transition-colors text-left"
+							className="flex w-full items-center justify-between rounded-xl border border-accent/20 bg-accent/5 p-3 text-left transition-colors hover:bg-accent/10"
 						>
 							<div className="flex items-center gap-3">
 								<HugeiconsIcon
@@ -122,16 +122,16 @@ export default function PremiumPage() {
 								/>
 								<div>
 									<p className="font-medium text-sm">Get Premium free</p>
-									<p className="text-xs text-muted-foreground">
+									<p className="text-muted-foreground text-xs">
 										Refer a friend and earn 7 days each
 									</p>
 								</div>
 							</div>
-							<span className="text-xs font-medium text-accent">Invite →</span>
+							<span className="font-medium text-accent text-xs">Invite →</span>
 						</button>
 					</div>
 
-					<div className="pt-2 flex flex-col gap-2">
+					<div className="flex flex-col gap-2 pt-2">
 						{isPremium ? (
 							<Button
 								variant="destructive"

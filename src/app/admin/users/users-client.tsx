@@ -61,7 +61,7 @@ export function UsersClient() {
 	return (
 		<div className="min-h-[100dvh] bg-background">
 			<PageHeader title="User Management" subtitle="Manage registered users" />
-			<div className="p-4 flex flex-col gap-4">
+			<div className="flex flex-col gap-4 p-4">
 				<Card>
 					<CardHeader>
 						<CardTitle>All Users ({users.length})</CardTitle>
@@ -83,7 +83,7 @@ export function UsersClient() {
 									<TableRow>
 										<TableCell
 											colSpan={6}
-											className="text-center py-8 text-muted-foreground"
+											className="py-8 text-center text-muted-foreground"
 										>
 											Loading...
 										</TableCell>
@@ -93,7 +93,7 @@ export function UsersClient() {
 									<TableRow>
 										<TableCell
 											colSpan={6}
-											className="text-center py-8 text-muted-foreground"
+											className="py-8 text-center text-muted-foreground"
 										>
 											No users found
 										</TableCell>

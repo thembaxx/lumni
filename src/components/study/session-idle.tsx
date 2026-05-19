@@ -29,11 +29,11 @@ export function SessionIdle({
 	onSelect,
 }: SessionIdleProps) {
 	return (
-		<div className="min-h-[100dvh] bg-background grid grid-cols-12 gap-0">
-			<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4 pb-20">
-				<Card className="max-w-md w-full mx-auto p-6">
+		<div className="grid min-h-[100dvh] grid-cols-12 gap-0 bg-background">
+			<div className="col-span-12 col-start-1 flex items-center justify-center p-4 pb-20 md:col-span-7">
+				<Card className="mx-auto w-full max-w-md p-6">
 					<CardHeader className="px-0 pt-0 pb-4">
-						<CardTitle className="text-2xl font-extrabold tracking-tight">
+						<CardTitle className="font-extrabold text-2xl tracking-tight">
 							{title}
 						</CardTitle>
 					</CardHeader>
@@ -52,7 +52,7 @@ export function SessionIdle({
 										>
 											<HugeiconsIcon
 												icon={RadialIcon}
-												className="size-16 mx-auto text-muted-foreground"
+												className="mx-auto size-16 text-muted-foreground"
 											/>
 										</motion.div>
 									)}
@@ -71,10 +71,10 @@ export function SessionIdle({
 					</CardContent>
 				</Card>
 			</div>
-			<div className="col-span-12 md:col-span-5 col-start-1 md:col-start-8 relative overflow-hidden bg-system-surface/30">
+			<div className="relative col-span-12 col-start-1 overflow-hidden bg-system-surface/30 md:col-span-5 md:col-start-8">
 				<div className="absolute inset-0 bg-gradient-to-br from-[--system-accent]/10 via-transparent to-transparent" />
 				<div className="absolute inset-0 flex items-center justify-center p-8">
-					<div className="w-full h-full max-w-xs aspect-square rounded-3xl bg-[--system-accent]/10 blur-2xl animate-float-slow" />
+					<div className="aspect-square h-full w-full max-w-xs animate-float-slow rounded-3xl bg-[--system-accent]/10 blur-2xl" />
 				</div>
 			</div>
 		</div>

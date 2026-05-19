@@ -1,13 +1,6 @@
 import { getAI } from "@/lib/ai";
 import { getTextResponse } from "@/lib/ai/parse-response";
-import type { PromptManager } from "../../prompt-manager";
-import type {
-	GradingResult,
-	Option,
-	Question,
-	QuestionBody,
-	UserAnswer,
-} from "../../types";
+import type { Option, QuestionBody } from "../../types";
 import type { GradeFn, HintFn } from "../types";
 
 export const grade: GradeFn = (q, a) => {

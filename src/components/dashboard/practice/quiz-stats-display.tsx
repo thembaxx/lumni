@@ -23,8 +23,8 @@ export function QuizStatsDisplay({
 	return (
 		<div
 			className={cn(
-				"flex items-center gap-3 pl-4 py-2 rounded-full bg-muted/30 border border-muted transition-opacity duration-300",
-				isDisabled && "opacity-30 pointer-events-none",
+				"flex items-center gap-3 rounded-full border border-muted bg-muted/30 py-2 pl-4 transition-opacity duration-300",
+				isDisabled && "pointer-events-none opacity-30",
 				className,
 			)}
 		>
@@ -34,11 +34,11 @@ export function QuizStatsDisplay({
 				showIcon={false}
 			/>
 
-			<div className="w-px h-4 bg-muted" />
+			<div className="h-4 w-px bg-muted" />
 
-			<div className="flex items-center gap-2 min-w-14">
+			<div className="flex min-w-14 items-center gap-2">
 				<HugeiconsIcon icon={FlashIcon} className="size-4 text-warning" />
-				<span className="text-sm font-semibold tabular-nums font-mono">
+				<span className="font-mono font-semibold text-sm tabular-nums">
 					{points}
 				</span>
 			</div>

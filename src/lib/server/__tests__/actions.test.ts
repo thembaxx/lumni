@@ -89,11 +89,11 @@ beforeEach(() => {
 
 describe("fetchSubjects", () => {
 	test("returns subjects and selected subject IDs", async () => {
-		mockListDocumentsResults["subjects"] = [
+		mockListDocumentsResults.subjects = [
 			{ $id: "s1", name: "Mathematics", code: "math" },
 			{ $id: "s2", name: "Physics", code: "physics" },
 		];
-		mockListDocumentsResults["user_subjects"] = [
+		mockListDocumentsResults.user_subjects = [
 			{ $id: "us1", userId: "user_abc", subjectId: "s1" },
 		];
 
@@ -106,8 +106,8 @@ describe("fetchSubjects", () => {
 
 describe("fetchUserProgress", () => {
 	test("returns aggregated progress from sessions", async () => {
-		mockListDocumentsResults["user_progress"] = [{ currentStreak: 3 }];
-		mockListDocumentsResults["study_sessions"] = [
+		mockListDocumentsResults.user_progress = [{ currentStreak: 3 }];
+		mockListDocumentsResults.study_sessions = [
 			{ questionsAnswered: 10, correctCount: 7 },
 			{ questionsAnswered: 5, correctCount: 3 },
 		];
@@ -120,8 +120,8 @@ describe("fetchUserProgress", () => {
 	});
 
 	test("handles empty progress and sessions", async () => {
-		mockListDocumentsResults["user_progress"] = [];
-		mockListDocumentsResults["study_sessions"] = [];
+		mockListDocumentsResults.user_progress = [];
+		mockListDocumentsResults.study_sessions = [];
 
 		const result = await fetchUserProgress("user_abc");
 
@@ -131,8 +131,8 @@ describe("fetchUserProgress", () => {
 	});
 
 	test("handles null progress with existing sessions", async () => {
-		mockListDocumentsResults["user_progress"] = [];
-		mockListDocumentsResults["study_sessions"] = [
+		mockListDocumentsResults.user_progress = [];
+		mockListDocumentsResults.study_sessions = [
 			{ questionsAnswered: 20, correctCount: 15 },
 		];
 
@@ -146,7 +146,7 @@ describe("fetchUserProgress", () => {
 
 describe("toggleUserSubject", () => {
 	test("deletes existing user subject and returns false", async () => {
-		mockListDocumentsResults["user_subjects"] = [
+		mockListDocumentsResults.user_subjects = [
 			{ $id: "us1", userId: "user_abc", subjectId: "s1" },
 		];
 
@@ -158,7 +158,7 @@ describe("toggleUserSubject", () => {
 	});
 
 	test("creates new user subject and returns true", async () => {
-		mockListDocumentsResults["user_subjects"] = [];
+		mockListDocumentsResults.user_subjects = [];
 
 		const result = await toggleUserSubject("user_abc", "s1");
 
@@ -224,7 +224,7 @@ describe("adminUploadExamPaper", () => {
 				url: "https://utfs.io/f/memo.pdf",
 			},
 		};
-		mockListDocumentsResults["exam_papers"] = [
+		mockListDocumentsResults.exam_papers = [
 			{
 				$id: "paper1",
 				subjectId: "math",

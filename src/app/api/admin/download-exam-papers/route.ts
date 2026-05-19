@@ -1,8 +1,8 @@
+import { randomUUID } from "node:crypto";
+import fs from "node:fs";
+import path from "node:path";
 import { Query } from "appwrite";
-import { randomUUID } from "crypto";
-import fs from "fs";
 import { type NextRequest, NextResponse } from "next/server";
-import path from "path";
 import { UTApi, UTFile } from "uploadthing/server";
 import {
 	COLLECTIONS,
@@ -81,7 +81,7 @@ async function findExamPaperUrl(
 		(e) => e.paperNumber === paperNumber && e.type === type,
 	);
 
-	if (exam && exam.url) {
+	if (exam?.url) {
 		return { url: exam.url, title: exam.title };
 	}
 

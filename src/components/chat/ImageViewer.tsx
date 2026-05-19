@@ -7,7 +7,6 @@ import {
 	DialogOverlay,
 	DialogPortal,
 } from "@/components/ui/dialog";
-import { cn } from "@/lib/shared";
 import { SmartImage } from "./SmartImage";
 
 interface ImageViewerProps {
@@ -23,20 +22,20 @@ export function ImageViewer({ src, alt, open, onClose }: ImageViewerProps) {
 			<DialogPortal>
 				<DialogOverlay className="bg-black/95" />
 				<DialogContent
-					className="max-w-none w-screen h-[100dvh] p-0 border-0 rounded-none m-0 inset-0"
+					className="inset-0 m-0 h-[100dvh] w-screen max-w-none rounded-none border-0 p-0"
 					showCloseButton={false}
 				>
-					<div className="relative w-full h-full flex items-center justify-center">
+					<div className="relative flex h-full w-full items-center justify-center">
 						<SmartImage
 							src={src}
 							alt={alt}
-							className="max-w-full max-h-full object-contain"
+							className="max-h-full max-w-full object-contain"
 						/>
 						<Button
 							variant="ghost"
 							size="icon"
 							onClick={onClose}
-							className="absolute top-4 right-4 size-10 rounded-full bg-black/40 hover:bg-black/60 text-white"
+							className="absolute top-4 right-4 size-10 rounded-full bg-black/40 text-white hover:bg-black/60"
 							aria-label="Close image viewer"
 						>
 							<HugeiconsIcon icon={Cancel01Icon} data-icon />

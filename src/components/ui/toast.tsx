@@ -1,12 +1,6 @@
 "use client";
 
-import {
-	createContext,
-	useCallback,
-	useContext,
-	useEffect,
-	useState,
-} from "react";
+import { createContext, useCallback, useContext, useState } from "react";
 import { cn } from "@/lib/shared";
 
 export type ToastType = "success" | "error" | "warning" | "info";
@@ -77,7 +71,7 @@ function ToastContainer({ toasts }: { toasts: ToastData[] }) {
 	if (toasts.length === 0) return null;
 
 	return (
-		<div className="fixed bottom-4 right-4 z-[100] flex flex-col gap-2 max-w-sm w-full pointer-events-none">
+		<div className="pointer-events-none fixed right-4 bottom-4 z-[100] flex w-full max-w-sm flex-col gap-2">
 			{toasts.map((t) => (
 				<ToastItem key={t.id} toast={t} />
 			))}
@@ -107,18 +101,18 @@ export function ToastItem({ toast: t }: { toast: ToastData }) {
 			className={cn(
 				"pointer-events-auto flex w-full items-center gap-3 rounded-lg border p-4 shadow-lg transition-[opacity,transform] duration-200",
 				t.exiting
-					? "opacity-0 translate-y-2 scale-95"
-					: "animate-in slide-in-from-bottom-4",
+					? "translate-y-2 scale-95 opacity-0"
+					: "slide-in-from-bottom-4 animate-in",
 				toastStyles[t.type],
 			)}
 		>
-			<span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-current/10 text-xs font-extrabold">
+			<span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-current/10 font-extrabold text-xs">
 				{toastIcons[t.type]}
 			</span>
-			<div className="flex-1 min-w-0">
-				<p className="text-sm font-medium">{t.message}</p>
+			<div className="min-w-0 flex-1">
+				<p className="font-medium text-sm">{t.message}</p>
 				{t.description && (
-					<p className="text-xs opacity-80 mt-0.5">{t.description}</p>
+					<p className="mt-0.5 text-xs opacity-80">{t.description}</p>
 				)}
 			</div>
 		</div>

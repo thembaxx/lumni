@@ -1,7 +1,6 @@
 "use client";
 
 import { type HTMLAttributes, useEffect, useRef } from "react";
-import { useWaveformRenderer } from "@/hooks/use-waveform-renderer";
 import { cn } from "@/lib/shared";
 
 export type LiveWaveformProps = HTMLAttributes<HTMLDivElement> & {
@@ -529,13 +528,9 @@ export const LiveWaveform = ({
 			{...props}
 		>
 			{!active && !processing && (
-				<div className="border-muted-foreground/20 absolute top-1/2 right-0 left-0 -translate-y-1/2 border-t-2 border-dotted" />
+				<div className="absolute top-1/2 right-0 left-0 -translate-y-1/2 border-muted-foreground/20 border-t-2 border-dotted" />
 			)}
-			<canvas
-				className="block h-full w-full"
-				ref={canvasRef}
-				aria-hidden="true"
-			/>
+			<canvas className="block h-full w-full" ref={canvasRef} />
 		</div>
 	);
 };

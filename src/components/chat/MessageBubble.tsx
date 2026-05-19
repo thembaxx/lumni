@@ -55,20 +55,20 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 					initial={{ opacity: 0, y: 10, scale: 0.95 }}
 					animate={{ opacity: 1, y: 0, scale: 1 }}
 					transition={{ type: "spring", stiffness: 300, damping: 25 }}
-					className={cn("max-w-[85%] ml-auto", isUser ? "mr-0" : "mr-auto")}
+					className={cn("ml-auto max-w-[85%]", isUser ? "mr-0" : "mr-auto")}
 				>
 					<div
 						className={cn(
-							"rounded-lg overflow-hidden",
+							"overflow-hidden rounded-lg",
 							isUser
 								? "bg-system-accent text-white"
-								: "bg-system-surface-secondary text-foreground border border-border/40",
+								: "border border-border/40 bg-system-surface-secondary text-foreground",
 						)}
 					>
 						{message.imageUrl ? (
 							<motion.button
 								onClick={() => setImageViewerOpen(true)}
-								className="relative w-full max-w-70 cursor-pointer group block"
+								className="group relative block w-full max-w-70 cursor-pointer"
 								whileTap={{ scale: 0.98 }}
 								transition={{ duration: 0.15 }}
 							>
@@ -76,31 +76,31 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 									src={message.imageUrl}
 									alt={message.imageFileName || "User uploaded image"}
 									className={cn(
-										"w-full max-h-50 object-cover",
+										"max-h-50 w-full object-cover",
 										isError && "opacity-50 grayscale",
 									)}
 								/>
 								<div
 									className={cn(
-										"absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/30 transition-colors",
+										"absolute inset-0 flex items-center justify-center bg-black/0 transition-colors group-hover:bg-black/30",
 										isPaperPlaneing && "bg-black/30",
 									)}
 								>
 									{isPaperPlaneing && (
-										<div className="size-10 rounded-full bg-black/40 flex items-center justify-center">
-											<div className="size-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+										<div className="flex size-10 items-center justify-center rounded-full bg-black/40">
+											<div className="size-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
 										</div>
 									)}
 								</div>
 							</motion.button>
 						) : (
-							<div className="size-48 bg-muted flex items-center justify-center">
-								<div className="size-6 border-2 border-muted-foreground border-t-transparent rounded-full animate-spin" />
+							<div className="flex size-48 items-center justify-center bg-muted">
+								<div className="size-6 animate-spin rounded-full border-2 border-muted-foreground border-t-transparent" />
 							</div>
 						)}
 
-						<div className="p-2 px-3 flex items-center justify-between gap-3">
-							<span className="text-[10px] font-extrabold opacity-80 truncate max-w-30 uppercase tracking-tight">
+						<div className="flex items-center justify-between gap-3 p-2 px-3">
+							<span className="max-w-30 truncate font-extrabold text-[10px] uppercase tracking-tight opacity-80">
 								{message.imageFileName || "Image"}
 								{message.imageFileSize &&
 									` (${formatBytes(message.imageFileSize)})`}
@@ -110,7 +110,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 									variant="ghost"
 									size="icon"
 									onClick={() => onRetry(message.id)}
-									className="rounded-full shrink-0 bg-white/20 hover:bg-white/30"
+									className="shrink-0 rounded-full bg-white/20 hover:bg-white/30"
 									aria-label="Retry"
 								>
 									<HugeiconsIcon icon={RefreshIcon} data-icon />
@@ -120,13 +120,13 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 
 						{isError && message.error && (
 							<div className="px-3 pb-2">
-								<p className="text-xs text-destructive">{message.error}</p>
+								<p className="text-destructive text-xs">{message.error}</p>
 								{onRetry && (
 									<Button
 										variant="link"
 										size="sm"
 										onClick={() => onRetry(message.id)}
-										className="h-auto p-0 text-xs text-background/80 hover:text-background"
+										className="h-auto p-0 text-background/80 text-xs hover:text-background"
 									>
 										Try again
 									</Button>
@@ -155,19 +155,19 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 				animate={{ opacity: 1, y: 0, scale: 1 }}
 				transition={{ type: "spring", stiffness: 300, damping: 25 }}
 				className={cn(
-					"max-w-[85%] p-4 rounded-lg text-sm flex items-center gap-4",
+					"flex max-w-[85%] items-center gap-4 rounded-lg p-4 text-sm",
 					isUser
-						? "bg-system-accent text-white ml-auto rounded-br-none shadow-level-2"
-						: "bg-system-surface-secondary text-foreground mr-auto rounded-bl-none border border-border/40 shadow-sm",
+						? "ml-auto rounded-br-none bg-system-accent text-white shadow-level-2"
+						: "mr-auto rounded-bl-none border border-border/40 bg-system-surface-secondary text-foreground shadow-sm",
 				)}
 			>
 				<motion.button
 					onClick={togglePlay}
 					className={cn(
-						"relative flex items-center justify-center size-11 rounded-full shrink-0 transition-colors shadow-sm",
+						"relative flex size-11 shrink-0 items-center justify-center rounded-full shadow-sm transition-colors",
 						isUser
 							? "bg-white/20 hover:bg-white/30"
-							: "bg-white hover:bg-secondary border border-border/40",
+							: "border border-border/40 bg-white hover:bg-secondary",
 					)}
 					aria-label={isPlaying ? "Pause" : "Play"}
 					whileTap={{ scale: 0.96 }}
@@ -177,8 +177,8 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 						className={cn(
 							"absolute inset-0 flex items-center justify-center transition-[opacity,scale,filter] duration-300 ease-[cubic-bezier(0.2,0,0,1)]",
 							isPlaying
-								? "opacity-100 scale-100 blur-0"
-								: "opacity-0 scale-[0.25] blur-[4px]",
+								? "scale-100 opacity-100 blur-0"
+								: "scale-[0.25] opacity-0 blur-[4px]",
 						)}
 					>
 						<HugeiconsIcon
@@ -190,22 +190,22 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 						className={cn(
 							"absolute inset-0 flex items-center justify-center transition-[opacity,scale,filter] duration-300 ease-[cubic-bezier(0.2,0,0,1)]",
 							isPlaying
-								? "opacity-0 scale-[0.25] blur-[4px]"
-								: "opacity-100 scale-100 blur-0",
+								? "scale-[0.25] opacity-0 blur-[4px]"
+								: "scale-100 opacity-100 blur-0",
 						)}
 					>
 						<HugeiconsIcon
 							icon={PlayFreeIcons}
-							className="size-4 fill-current ml-0.5"
+							className="ml-0.5 size-4 fill-current"
 						/>
 					</span>
 				</motion.button>
-				<div className="flex flex-col gap-1 min-w-0">
-					<span className="text-[10px] font-extrabold uppercase tracking-widest opacity-80">
+				<div className="flex min-w-0 flex-col gap-1">
+					<span className="font-extrabold text-[10px] uppercase tracking-widest opacity-80">
 						{isPlaying ? "Playing…" : "Voice message"}
 					</span>
 					<div className="flex items-center gap-2">
-						<div className="flex gap-1 h-5 items-center">
+						<div className="flex h-5 items-center gap-1">
 							{bars.map((height, i) => (
 								<motion.div
 									key={i}
@@ -255,10 +255,10 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 			animate={{ opacity: 1, y: 0, scale: 1 }}
 			transition={{ type: "spring", stiffness: 300, damping: 25 }}
 			className={cn(
-				"max-w-[85%] p-4 rounded-lg text-sm leading-relaxed font-medium",
+				"max-w-[85%] rounded-lg p-4 font-medium text-sm leading-relaxed",
 				isUser
-					? "bg-system-accent text-white ml-auto rounded-br-none shadow-level-2"
-					: "bg-system-surface-secondary text-foreground mr-auto rounded-bl-none border border-border/40 shadow-sm",
+					? "ml-auto rounded-br-none bg-system-accent text-white shadow-level-2"
+					: "mr-auto rounded-bl-none border border-border/40 bg-system-surface-secondary text-foreground shadow-sm",
 			)}
 		>
 			<MarkdownRenderer content={message.content} />

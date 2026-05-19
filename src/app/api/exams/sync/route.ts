@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { getExamPaperCount } from "@/lib/db/exams";
 import {
 	ensureExamPapersSynced,
-	forceSyncExamPapers,
 	isSyncCompleted,
 } from "@/lib/exams/sync-exam-papers";
 

@@ -23,7 +23,6 @@ export interface TTSState {
 
 class TTSService {
 	private synth: SpeechSynthesis | null = null;
-	private utterance: SpeechSynthesisUtterance | null = null;
 	private onStartCallback: (() => void) | null = null;
 	private onEndCallback: (() => void) | null = null;
 	private onErrorCallback: ((error: string) => void) | null = null;
@@ -210,5 +209,5 @@ export const SAMPLE_EXERCISES: Record<string, PronunciationExercise[]> = {
 
 export function getExercisesForLanguage(lang: string): PronunciationExercise[] {
 	const langCode = lang.split("-")[0];
-	return SAMPLE_EXERCISES[langCode] || SAMPLE_EXERCISES["en"];
+	return SAMPLE_EXERCISES[langCode] || SAMPLE_EXERCISES.en;
 }

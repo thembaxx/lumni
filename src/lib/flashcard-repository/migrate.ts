@@ -1,5 +1,4 @@
 import { flashcardRepository } from "./repository";
-import type { FlashcardSM2 } from "./types";
 
 interface LegacyFlashcard {
 	id: string;

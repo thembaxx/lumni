@@ -332,7 +332,7 @@ describe("getExamPapersWithFallback", () => {
 
 		const result = await getExamPapersWithFallback();
 		expect(result).toHaveLength(1);
-		expect(result![0].session).toBe("november");
+		expect(result?.[0].session).toBe("november");
 	});
 
 	test("uses may-june session for papers 3+", async () => {
@@ -352,7 +352,7 @@ describe("getExamPapersWithFallback", () => {
 		];
 
 		const result = await getExamPapersWithFallback();
-		expect(result![0].session).toBe("may-june");
+		expect(result?.[0].session).toBe("may-june");
 	});
 
 	test("returns null when db has no data", async () => {

@@ -4,9 +4,7 @@ import {
 	CheckmarkCircle01Icon,
 	Mic01Icon,
 	PauseFreeIcons,
-	PlayFreeIcons,
 	RefreshIcon,
-	SquareIcon,
 	VolumeUpIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -14,10 +12,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useTTS, useVoiceRecorder } from "@/hooks/use-tts";
-import {
-	type PronunciationExercise,
-	SUPPORTED_LANGUAGES,
-} from "@/lib/utils/tts-service";
+import type { PronunciationExercise } from "@/lib/utils/tts-service";
 
 export function PronunciationPractice() {
 	const { isSupported, speak, isSpeaking, availableLanguages } = useTTS();
@@ -37,7 +32,7 @@ export function PronunciationPractice() {
 
 	if (!isSupported) {
 		return (
-			<div className="text-center py-8">
+			<div className="py-8 text-center">
 				<p className="text-muted-foreground">
 					Text-to-speech is not supported in your browser.
 				</p>
@@ -97,9 +92,9 @@ export function PronunciationPractice() {
 			: 0;
 
 	return (
-		<div className="flex flex-col gap-6 max-w-2xl mx-auto">
+		<div className="mx-auto flex max-w-2xl flex-col gap-6">
 			<div className="flex items-center justify-between">
-				<h2 className="text-2xl font-extrabold">Pronunciation Practice</h2>
+				<h2 className="font-extrabold text-2xl">Pronunciation Practice</h2>
 				<div className="flex gap-2">
 					{availableLanguages.map((lang) => (
 						<Button
@@ -116,13 +111,13 @@ export function PronunciationPractice() {
 
 			{progress > 0 && (
 				<div className="flex flex-col gap-2">
-					<div className="flex justify-between text-sm text-muted-foreground">
+					<div className="flex justify-between text-muted-foreground text-sm">
 						<span>Progress</span>
 						<span>
 							{completed.size}/{exercises.length}
 						</span>
 					</div>
-					<div className="h-2 bg-muted rounded-full overflow-hidden">
+					<div className="h-2 overflow-hidden rounded-full bg-muted">
 						<div
 							className="h-full bg-[--system-accent] transition-[width] duration-300"
 							style={{ width: `${progress}%` }}
@@ -147,8 +142,8 @@ export function PronunciationPractice() {
 						</CardTitle>
 					</CardHeader>
 					<CardContent className="flex flex-col gap-6">
-						<div className="text-center py-4">
-							<p className="text-2xl font-medium mb-2">
+						<div className="py-4 text-center">
+							<p className="mb-2 font-medium text-2xl">
 								{currentExercise.text}
 							</p>
 							{currentExercise.translation && (
@@ -210,7 +205,7 @@ export function PronunciationPractice() {
 					</CardContent>
 				</Card>
 			) : (
-				<div className="text-center py-8">
+				<div className="py-8 text-center">
 					<p className="text-muted-foreground">Loading exercises...</p>
 				</div>
 			)}
@@ -220,7 +215,7 @@ export function PronunciationPractice() {
 					<CardTitle>Tips</CardTitle>
 				</CardHeader>
 				<CardContent>
-					<ul className="flex flex-col gap-2 text-sm text-muted-foreground">
+					<ul className="flex flex-col gap-2 text-muted-foreground text-sm">
 						<li>• Click "Listen" to hear the correct pronunciation</li>
 						<li>• Click "Record" and try to match the pronunciation</li>
 						<li>• Listen to your recording and compare</li>
@@ -300,5 +295,5 @@ function getLanguageExercises(langCode: string): PronunciationExercise[] {
 		],
 	};
 
-	return exercises[langCode] || exercises["en"];
+	return exercises[langCode] || exercises.en;
 }

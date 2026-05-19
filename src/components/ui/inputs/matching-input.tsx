@@ -1,6 +1,5 @@
 "use client";
 
-import { Label } from "@/components/ui/label";
 import {
 	Select,
 	SelectContent,
@@ -38,7 +37,7 @@ export function MatchingInput({
 
 	return (
 		<div className="flex flex-col gap-3">
-			<div className="grid grid-cols-[1fr_auto_1fr] gap-3 items-center text-sm font-medium text-muted-foreground mb-1">
+			<div className="mb-1 grid grid-cols-[1fr_auto_1fr] items-center gap-3 font-medium text-muted-foreground text-sm">
 				<span>{colA}</span>
 				<span />
 				<span>{colB}</span>
@@ -48,12 +47,12 @@ export function MatchingInput({
 				return (
 					<div
 						key={idx}
-						className="grid grid-cols-[1fr_auto_1fr] gap-3 items-center"
+						className="grid grid-cols-[1fr_auto_1fr] items-center gap-3"
 					>
 						<span className="text-sm">{itemLeft}</span>
 						<span className="text-muted-foreground">↔</span>
 						<Select
-							value={(value && value[itemLeft]) || ""}
+							value={value?.[itemLeft] || ""}
 							onValueChange={(v) => {
 								if (v) onChange({ ...value, [itemLeft]: v });
 							}}

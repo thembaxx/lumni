@@ -54,7 +54,7 @@ export function NavigationBar({
 
 			{/* Separator — appears when collapsed */}
 			<m.div
-				className="absolute bottom-0 left-0 right-0 h-[0.5px] bg-system-separator/50"
+				className="absolute right-0 bottom-0 left-0 h-[0.5px] bg-system-separator/50"
 				animate={{ opacity: isCollapsed ? 1 : 0 }}
 				transition={{ duration: 0.2 }}
 			/>
@@ -62,13 +62,13 @@ export function NavigationBar({
 			{/* Content */}
 			<div className="relative px-4 pt-safe">
 				{/* Main row */}
-				<div className="flex items-center gap-3 h-[52px]">
+				<div className="flex h-[52px] items-center gap-3">
 					{/* Back button */}
 					{showBack && (
 						<button
 							type="button"
 							onClick={() => router.back()}
-							className="flex items-center justify-center size-9 -ml-1.5 text-system-accent active:opacity-60 transition-opacity"
+							className="-ml-1.5 flex size-9 items-center justify-center text-system-accent transition-opacity active:opacity-60"
 							aria-label="Go back"
 						>
 							<HugeiconsIcon
@@ -80,10 +80,10 @@ export function NavigationBar({
 					)}
 
 					{/* Title area */}
-					<div className="flex-1 min-w-0">
+					<div className="min-w-0 flex-1">
 						<m.h1
 							className={cn(
-								"font-heading font-extrabold text-system-text-primary truncate transition-[font-size,line-height] duration-200",
+								"truncate font-extrabold font-heading text-system-text-primary transition-[font-size,line-height] duration-200",
 								isCollapsed
 									? "text-base leading-6"
 									: "text-[34px] leading-[1.2] tracking-[var(--tracking-large-title)]",
@@ -92,7 +92,7 @@ export function NavigationBar({
 							{title}
 						</m.h1>
 						{subtitle && !isCollapsed && (
-							<p className="text-sm text-system-text-secondary mt-0.5">
+							<p className="mt-0.5 text-sm text-system-text-secondary">
 								{subtitle}
 							</p>
 						)}
@@ -100,7 +100,7 @@ export function NavigationBar({
 
 					{/* Right action */}
 					{rightAction && (
-						<div className="flex items-center gap-2 shrink-0">
+						<div className="flex shrink-0 items-center gap-2">
 							{rightAction}
 						</div>
 					)}

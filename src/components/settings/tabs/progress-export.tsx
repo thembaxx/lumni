@@ -5,7 +5,6 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useGamification } from "@/hooks/use-gamification";
-import { competencyService } from "@/lib/competency-engine/competency-service";
 import { offlineDB } from "@/lib/db/schema";
 
 export function ProgressExport() {

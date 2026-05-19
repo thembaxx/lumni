@@ -79,7 +79,7 @@ export function StudySetCreator({ className }: StudySetCreatorProps) {
 
 	return (
 		<motion.div
-			className={cn("w-full max-w-2xl mx-auto", className)}
+			className={cn("mx-auto w-full max-w-2xl", className)}
 			initial={{ opacity: 0, y: 8 }}
 			animate={{ opacity: 1, y: 0 }}
 			exit={{ opacity: 0, y: -8 }}
@@ -87,7 +87,7 @@ export function StudySetCreator({ className }: StudySetCreatorProps) {
 		>
 			<Card className="mb-6">
 				<CardHeader className="pb-4">
-					<CardTitle className="text-2xl font-bold">
+					<CardTitle className="font-bold text-2xl">
 						Study Set Creator
 					</CardTitle>
 					<p className="text-muted-foreground">
@@ -95,8 +95,8 @@ export function StudySetCreator({ className }: StudySetCreatorProps) {
 					</p>
 				</CardHeader>
 				<CardContent className="space-y-4">
-					<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-						<div className="flex-1 min-w-0">
+					<div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+						<div className="min-w-0 flex-1">
 							<Input
 								placeholder="Search study sets..."
 								value={searchQuery}
@@ -104,7 +104,7 @@ export function StudySetCreator({ className }: StudySetCreatorProps) {
 								className="mb-2"
 							/>
 							{studySets.length > 0 && (
-								<p className="text-xs text-muted-foreground">
+								<p className="text-muted-foreground text-xs">
 									{studySets.length} study sets total
 								</p>
 							)}
@@ -114,7 +114,7 @@ export function StudySetCreator({ className }: StudySetCreatorProps) {
 								variant="outline"
 								onClick={() => setFilter("all")}
 								className={cn(
-									"px-3 py-1 rounded text-sm",
+									"rounded px-3 py-1 text-sm",
 									filter === "all"
 										? "bg-accent/20 text-accent"
 										: "text-muted-foreground hover:bg-accent/10",
@@ -126,7 +126,7 @@ export function StudySetCreator({ className }: StudySetCreatorProps) {
 								variant="outline"
 								onClick={() => setFilter("favorites")}
 								className={cn(
-									"px-3 py-1 rounded text-sm",
+									"rounded px-3 py-1 text-sm",
 									filter === "favorites"
 										? "bg-accent/20 text-accent"
 										: "text-muted-foreground hover:bg-accent/10",
@@ -150,7 +150,7 @@ export function StudySetCreator({ className }: StudySetCreatorProps) {
 			{filteredStudySets.length > 0 && (
 				<Card>
 					<CardHeader className="pb-4">
-						<CardTitle className="text-lg font-medium">
+						<CardTitle className="font-medium text-lg">
 							Your Study Sets
 						</CardTitle>
 					</CardHeader>
@@ -170,7 +170,7 @@ export function StudySetCreator({ className }: StudySetCreatorProps) {
 
 			{/* Empty State */}
 			{filteredStudySets.length === 0 && studySets.length > 0 && (
-				<Card className="text-center py-8">
+				<Card className="py-8 text-center">
 					<p className="text-muted-foreground">
 						No study sets match your search
 					</p>
@@ -178,7 +178,7 @@ export function StudySetCreator({ className }: StudySetCreatorProps) {
 			)}
 
 			{filteredStudySets.length === 0 && studySets.length === 0 && (
-				<Card className="text-center py-8">
+				<Card className="py-8 text-center">
 					<p className="text-muted-foreground">
 						You haven't created any study sets yet. Click "New Study Set" to get
 						started!

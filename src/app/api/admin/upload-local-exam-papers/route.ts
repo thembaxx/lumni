@@ -1,14 +1,14 @@
-import { randomUUID } from "crypto";
-import fs from "fs";
+import { randomUUID } from "node:crypto";
+import fs from "node:fs";
+import path from "node:path";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import path from "path";
 import { UTApi, UTFile } from "uploadthing/server";
 import { getExamsDb, insertExamPaper, saveExamsDb } from "@/lib/db/exams";
 import { requireAdmin } from "@/lib/server/auth";
 
 async function getDefaultFolderPath(): Promise<string> {
-	const path = await import("path");
+	const path = await import("node:path");
 	return path.join(process.cwd(), "downloads", "exam-papers-2025");
 }
 
@@ -76,7 +76,7 @@ async function uploadToUploadThing(
 	fileName: string,
 ): Promise<{ url: string; key: string } | null> {
 	try {
-		const fsPromises = await import("fs/promises");
+		const fsPromises = await import("node:fs/promises");
 		const fileBuffer = await fsPromises.readFile(filePath);
 		const uint8Array = new Uint8Array(fileBuffer);
 		const utFile = new UTFile([uint8Array], fileName);

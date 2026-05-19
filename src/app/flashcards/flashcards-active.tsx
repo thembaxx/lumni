@@ -66,9 +66,9 @@ export function FlashcardsActive({
 	);
 
 	return (
-		<div className="min-h-[100dvh] bg-background grid grid-cols-12 gap-0">
-			<div className="col-span-12 md:col-span-7 col-start-1 flex flex-col">
-				<div className="flex items-center justify-between mb-6 p-4">
+		<div className="grid min-h-[100dvh] grid-cols-12 gap-0 bg-background">
+			<div className="col-span-12 col-start-1 flex flex-col md:col-span-7">
+				<div className="mb-6 flex items-center justify-between p-4">
 					<Button variant="ghost" size="sm" onClick={onQuit}>
 						Quit
 					</Button>
@@ -91,10 +91,10 @@ export function FlashcardsActive({
 					</div>
 				</div>
 
-				<div className="flex-1 flex items-center justify-center p-4">
+				<div className="flex flex-1 items-center justify-center p-4">
 					<Anim>
 						<m.div
-							className="perspective-1000 cursor-pointer w-full max-w-md"
+							className="perspective-1000 w-full max-w-md cursor-pointer"
 							onClick={onFlip}
 							onKeyDown={handleKeyDown}
 							role="button"
@@ -106,12 +106,12 @@ export function FlashcardsActive({
 						>
 							<div
 								className={cn(
-									"absolute inset-0 backface-hidden p-6 flex flex-col rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors",
+									"backface-hidden absolute inset-0 flex flex-col rounded-[2.5rem] border border-border/80 bg-card p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors",
 									!isFlipped &&
 										"border-[--system-accent]/50 bg-[--system-accent]/5",
 								)}
 							>
-								<div className="flex items-center gap-2 mb-4">
+								<div className="mb-4 flex items-center gap-2">
 									<Badge variant="outline" className="bg-[--system-accent]/10">
 										{currentCard.topic}
 									</Badge>
@@ -122,31 +122,31 @@ export function FlashcardsActive({
 										<TTSButton text={currentCard.front} />
 									</div>
 								</div>
-								<div className="flex-1 flex items-center justify-center">
-									<p className="text-lg font-medium text-center">
+								<div className="flex flex-1 items-center justify-center">
+									<p className="text-center font-medium text-lg">
 										{currentCard.front}
 									</p>
 								</div>
-								<div className="text-center mt-4">
-									<p className="text-xs text-muted-foreground">Tap to flip</p>
+								<div className="mt-4 text-center">
+									<p className="text-muted-foreground text-xs">Tap to flip</p>
 								</div>
 							</div>
 
 							<div
-								className="absolute inset-0 backface-hidden p-6 flex flex-col rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]"
+								className="backface-hidden absolute inset-0 flex flex-col rounded-[2.5rem] border border-border/80 bg-card p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]"
 								style={{ transform: "rotateY(180deg)" }}
 							>
-								<div className="flex items-center justify-end mb-2">
+								<div className="mb-2 flex items-center justify-end">
 									<TTSButton text={currentCard.back} />
 								</div>
-								<div className="flex-1 flex items-center justify-center">
-									<p className="text-lg font-medium text-center">
+								<div className="flex flex-1 items-center justify-center">
+									<p className="text-center font-medium text-lg">
 										{currentCard.back}
 									</p>
 								</div>
 								{currentCard.hint && (
-									<div className="mt-4 p-3 rounded-lg bg-warning/10 dark:bg-warning/20">
-										<p className="text-xs text-amber-700 dark:text-amber-300">
+									<div className="mt-4 rounded-lg bg-warning/10 p-3 dark:bg-warning/20">
+										<p className="text-amber-700 text-xs dark:text-amber-300">
 											Hint: {currentCard.hint}
 										</p>
 									</div>
@@ -157,32 +157,32 @@ export function FlashcardsActive({
 				</div>
 
 				{isFlipped && (
-					<div className="flex gap-2 mt-4 px-4 pb-4">
+					<div className="mt-4 flex gap-2 px-4 pb-4">
 						<Button
 							variant="outline"
 							className="flex-1 border-amber-500/50 text-amber-700 dark:border-amber-700/50 dark:text-amber-300"
 							onClick={onReview}
 						>
-							<HugeiconsIcon icon={Cancel01Icon} className="size-4 mr-2" />
+							<HugeiconsIcon icon={Cancel01Icon} className="mr-2 size-4" />
 							Review Later
 						</Button>
 						<Button className="flex-1" onClick={onKnown}>
 							<HugeiconsIcon
 								icon={CheckmarkCircle01Icon}
-								className="size-4 mr-2"
+								className="mr-2 size-4"
 							/>
 							I Know This
 						</Button>
 					</div>
 				)}
 
-				<div className="flex justify-between mt-4 px-4 pb-4">
+				<div className="mt-4 flex justify-between px-4 pb-4">
 					<Button
 						variant="ghost"
 						onClick={onPrevious}
 						disabled={currentIndex === 0}
 					>
-						<HugeiconsIcon icon={ArrowLeft01Icon} className="size-4 mr-2" />
+						<HugeiconsIcon icon={ArrowLeft01Icon} className="mr-2 size-4" />
 						Previous
 					</Button>
 					<Button
@@ -191,15 +191,15 @@ export function FlashcardsActive({
 						disabled={currentIndex === totalCards - 1}
 					>
 						Next
-						<HugeiconsIcon icon={ArrowRight01Icon} className="size-4 ml-2" />
+						<HugeiconsIcon icon={ArrowRight01Icon} className="ml-2 size-4" />
 					</Button>
 				</div>
 			</div>
 
-			<div className="col-span-12 md:col-span-5 col-start-1 md:col-start-8 relative overflow-hidden bg-system-surface/30">
+			<div className="relative col-span-12 col-start-1 overflow-hidden bg-system-surface/30 md:col-span-5 md:col-start-8">
 				<div className="absolute inset-0 bg-gradient-to-br from-[--system-accent]/10 via-transparent to-transparent" />
 				<div className="absolute inset-0 flex items-center justify-center p-8">
-					<div className="w-full h-full max-w-xs aspect-square rounded-3xl bg-[--system-accent]/10 blur-2xl animate-float-slow" />
+					<div className="aspect-square h-full w-full max-w-xs animate-float-slow rounded-3xl bg-[--system-accent]/10 blur-2xl" />
 				</div>
 			</div>
 		</div>

@@ -47,8 +47,8 @@ export function FloatingToolsButton() {
 				variant="default"
 				onClick={handleOpen}
 				className={cn(
-					"fixed bottom-17.25 right-5 z-[60]",
-					"h-11 rounded-lg shadow-level-3 font-medium pr-5 text-white/90",
+					"fixed right-5 bottom-17.25 z-[60]",
+					"h-11 rounded-lg pr-5 font-medium text-white/90 shadow-level-3",
 				)}
 			>
 				<HugeiconsIcon icon={GridIcon} className="text-white" />

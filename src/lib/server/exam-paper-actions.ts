@@ -1,6 +1,6 @@
 "use server";
 
-import { randomUUID } from "crypto";
+import { randomUUID } from "node:crypto";
 import { UTApi, UTFile } from "uploadthing/server";
 import {
 	getAllExamPapers as getAllExamPapersFromDb,
@@ -114,7 +114,7 @@ export async function uploadExamPaper(
 	if (fileContent) {
 		fileBuffer = fileContent;
 	} else {
-		const fs = await import("fs/promises");
+		const fs = await import("node:fs/promises");
 		fileBuffer = await fs.readFile(filePath!);
 	}
 

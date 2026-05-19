@@ -15,16 +15,16 @@ export function SearchWidget() {
 	return (
 		<div
 			className={cn(
-				"bg-secondary/60 rounded-2xl p-4 transition-all duration-300 border border-border/30",
+				"rounded-2xl border border-border/30 bg-secondary/60 p-4 transition-all duration-300",
 				isFocused &&
-					"ring-2 ring-[--system-accent]/20 border-[--system-accent]/30",
+					"border-[--system-accent]/30 ring-2 ring-[--system-accent]/20",
 			)}
 		>
 			<div className="flex items-center gap-2">
 				<HugeiconsIcon
 					icon={Search01Icon}
 					size={16}
-					className="text-muted-foreground shrink-0"
+					className="shrink-0 text-muted-foreground"
 				/>
 				<Input
 					type="text"
@@ -34,12 +34,12 @@ export function SearchWidget() {
 					onChange={(e) => setQuery(e.target.value)}
 					onFocus={() => setIsFocused(true)}
 					onBlur={() => setIsFocused(false)}
-					className="bg-transparent text-foreground placeholder:text-muted-foreground/60 shadow-none border-0 p-0 focus-visible:ring-0"
+					className="border-0 bg-transparent p-0 text-foreground shadow-none placeholder:text-muted-foreground/60 focus-visible:ring-0"
 				/>
 				<SubjectsDrawer>
 					<button
 						type="button"
-						className="bg-muted/60 hover:bg-muted rounded-lg p-1.5 transition-colors"
+						className="rounded-lg bg-muted/60 p-1.5 transition-colors hover:bg-muted"
 						aria-label="Browse subjects"
 					>
 						<HugeiconsIcon

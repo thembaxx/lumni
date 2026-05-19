@@ -30,7 +30,7 @@ function RestartOnboarding() {
 			}}
 			showSeparator={false}
 			trailing={
-				<span className="ios-footnote text-[--system-destructive] font-semibold">
+				<span className="ios-footnote font-semibold text-[--system-destructive]">
 					Restart
 				</span>
 			}
@@ -52,7 +52,7 @@ export function DataTab({ onExport, onClear }: DataTabProps) {
 					subtitle="Download your preferences as JSON"
 					onClick={onExport}
 					trailing={
-						<span className="ios-footnote text-[--system-accent] font-semibold">
+						<span className="ios-footnote font-semibold text-[--system-accent]">
 							Export
 						</span>
 					}
@@ -64,7 +64,7 @@ export function DataTab({ onExport, onClear }: DataTabProps) {
 					onClick={onClear}
 					showSeparator={false}
 					trailing={
-						<span className="ios-footnote text-[--system-destructive] font-semibold">
+						<span className="ios-footnote font-semibold text-[--system-destructive]">
 							Clear
 						</span>
 					}

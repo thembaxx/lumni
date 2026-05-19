@@ -52,7 +52,7 @@ export function useAudioRecorder(
 	const isTooLong = duration >= maxDuration;
 
 	const checkBrowserSupport = useCallback(() => {
-		if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+		if (!navigator.mediaDevices?.getUserMedia) {
 			setPermissionStatus("unsupported");
 			setRecordingError("Your browser doesn't support audio recording");
 			return false;
@@ -81,7 +81,7 @@ export function useAudioRecorder(
 				);
 			} else {
 				setPermissionStatus("denied");
-				setRecordingError("Failed to access microphone: " + err.message);
+				setRecordingError(`Failed to access microphone: ${err.message}`);
 			}
 			return false;
 		}
@@ -194,7 +194,7 @@ export function useAudioRecorder(
 						"Microphone access denied. Please enable it in your browser settings.",
 					);
 				} else {
-					setRecordingError("Failed to start recording: " + err.message);
+					setRecordingError(`Failed to start recording: ${err.message}`);
 				}
 				console.error("Failed to start recording:", error);
 			}

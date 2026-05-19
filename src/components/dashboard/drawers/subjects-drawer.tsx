@@ -50,7 +50,7 @@ export function SubjectsDrawer({
 			>
 				{children}
 			</DrawerTrigger>
-			<DrawerContent className="mx-auto max-w-lg mt-0 rounded-b-2xl min-h-[60dvh] animate-fade-in-scale">
+			<DrawerContent className="mx-auto mt-0 min-h-[60dvh] max-w-lg animate-fade-in-scale rounded-b-2xl">
 				<DrawerClose ref={drawerCloseRef} className="hidden" />
 				<DrawerHeader className="text-left">
 					<DrawerTitle className="text-left">Select Subject</DrawerTitle>
@@ -63,34 +63,34 @@ export function SubjectsDrawer({
 					<div className="relative">
 						<HugeiconsIcon
 							icon={Search01Icon}
-							className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground pointer-events-none"
+							className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
 						/>
 						<Input
 							type="text"
 							placeholder="Search subjects..."
 							value={searchQuery}
 							onChange={(e) => setSearchQuery(e.target.value)}
-							className="h-10 pl-10 pr-4 rounded-lg"
+							className="h-10 rounded-lg pr-4 pl-10"
 						/>
 					</div>
 				</div>
 
-				<div className="px-4 pb-4 pt-0 grow max-h-[50dvh] overflow-y-auto">
+				<div className="max-h-[50dvh] grow overflow-y-auto px-4 pt-0 pb-4">
 					{isLoading ? (
-						<p className="text-center text-muted-foreground py-8 text-sm">
+						<p className="py-8 text-center text-muted-foreground text-sm">
 							Loading subjects...
 						</p>
 					) : error ? (
-						<p className="text-center text-destructive py-8 text-sm">
+						<p className="py-8 text-center text-destructive text-sm">
 							Failed to load subjects.
 							{error instanceof Error && error.message.includes("readonly") && (
-								<span className="block mt-2 text-xs">
+								<span className="mt-2 block text-xs">
 									DatabaseIcon is read-only. Please contact support.
 								</span>
 							)}
 						</p>
 					) : subjects?.length === 0 ? (
-						<p className="text-center text-muted-foreground py-8 text-sm">
+						<p className="py-8 text-center text-muted-foreground text-sm">
 							No subjects found.
 						</p>
 					) : (
@@ -99,14 +99,14 @@ export function SubjectsDrawer({
 								<Button
 									key={subject.id + subject.name}
 									variant="ghost"
-									className="w-full justify-start p-3 rounded-lg hover:bg-secondary"
+									className="w-full justify-start rounded-lg p-3 hover:bg-secondary"
 									onClick={() => handleSelect(subject.name)}
 								>
-									<div className="text-left w-full overflow-hidden flex flex-col">
+									<div className="flex w-full flex-col overflow-hidden text-left">
 										<p className="font-medium text-foreground">
 											{subject.name}
 										</p>
-										<p className="text-xs text-muted-foreground mt-0.5 line-clamp-2 whitespace-pre-line text-pretty">
+										<p className="mt-0.5 line-clamp-2 whitespace-pre-line text-pretty text-muted-foreground text-xs">
 											{subject.description}
 										</p>
 									</div>

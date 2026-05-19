@@ -47,15 +47,15 @@ export function StreakCelebration({
 	return (
 		<FadeIn
 			distance={10}
-			className={`relative overflow-hidden rounded-2xl p-4 transition-colors transition-background ${
+			className={`relative overflow-hidden rounded-2xl p-4 transition-background transition-colors ${
 				isMilestone
-					? "bg-warning/20 border border-warning/30"
-					: "bg-card border border-border/50"
+					? "border border-warning/30 bg-warning/20"
+					: "border border-border/50 bg-card"
 			}`}
 		>
 			{isMilestone && (
 				<motion.div
-					className="absolute inset-0 pointer-events-none"
+					className="pointer-events-none absolute inset-0"
 					initial={{ opacity: 0 }}
 					animate={{ opacity: [0, 0.3, 0] }}
 					transition={{ duration: 2, repeat: Infinity }}
@@ -83,12 +83,12 @@ export function StreakCelebration({
 				</motion.div>
 
 				<div className="flex-1">
-					<div className="flex items-center justify-between mb-1">
-						<span className="text-lg font-extrabold text-foreground">
+					<div className="mb-1 flex items-center justify-between">
+						<span className="font-extrabold text-foreground text-lg">
 							{currentStreak} day{currentStreak !== 1 ? "s" : ""}
 						</span>
 						<span
-							className={`text-xs font-medium ${
+							className={`font-medium text-xs ${
 								isMilestone ? "text-warning" : "text-muted-foreground"
 							}`}
 						>
@@ -104,7 +104,7 @@ export function StreakCelebration({
 								color="warning"
 								trackClassName="bg-secondary"
 							/>
-							<p className="text-xs text-muted-foreground mt-1">
+							<p className="mt-1 text-muted-foreground text-xs">
 								{nextMilestone.streak - currentStreak} days to unlock:{" "}
 								{nextMilestone.reward}
 							</p>
@@ -115,7 +115,7 @@ export function StreakCelebration({
 						<motion.p
 							initial={{ opacity: 0, y: 5 }}
 							animate={{ opacity: 1, y: 0 }}
-							className="text-xs text-success-foreground mt-1"
+							className="mt-1 text-success-foreground text-xs"
 						>
 							Milestone reached!
 						</motion.p>

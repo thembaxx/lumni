@@ -138,19 +138,19 @@ function SettingsContent() {
 	};
 
 	return (
-		<div className="min-h-[100dvh] bg-system-grouped flex flex-col antialiased">
-			<div className="mx-auto w-full max-w-md flex flex-col flex-1">
+		<div className="flex min-h-[100dvh] flex-col bg-system-grouped antialiased">
+			<div className="mx-auto flex w-full max-w-md flex-1 flex-col">
 				{/* Refined Header */}
-				<header className="sticky top-0 z-30 bg-system-grouped/90 backdrop-blur-xl px-6 pt-6 pb-4">
-					<div className="flex items-center justify-between h-14">
+				<header className="sticky top-0 z-30 bg-system-grouped/90 px-6 pt-6 pb-4 backdrop-blur-xl">
+					<div className="flex h-14 items-center justify-between">
 						<div className="flex items-center gap-4">
 							<Link
 								href="/dashboard"
-								className="flex items-center justify-center size-10 rounded-full text-foreground bg-system-surface shadow-sm border border-border/40 hover:bg-secondary transition-colors active:scale-[0.96]"
+								className="flex size-10 items-center justify-center rounded-full border border-border/40 bg-system-surface text-foreground shadow-sm transition-colors hover:bg-secondary active:scale-[0.96]"
 							>
 								<HugeiconsIcon icon={ArrowLeftIcon} className="size-5" />
 							</Link>
-							<h1 className="ios-title-3 text-foreground font-semibold tracking-tight">
+							<h1 className="ios-title-3 font-semibold text-foreground tracking-tight">
 								Settings
 							</h1>
 						</div>
@@ -159,7 +159,7 @@ function SettingsContent() {
 							size="sm"
 							onClick={handleSave}
 							disabled={isSaving}
-							className="h-10 px-6 rounded-full font-extrabold bg-system-accent hover:bg-system-accent/90 text-white shadow-level-2 transition-[transform,opacity] active:scale-[0.96]"
+							className="h-10 rounded-full bg-system-accent px-6 font-extrabold text-white shadow-level-2 transition-[transform,opacity] hover:bg-system-accent/90 active:scale-[0.96]"
 						>
 							{saved ? "✓ Saved" : isSaving ? "Saving…" : "Save"}
 						</Button>
@@ -167,9 +167,9 @@ function SettingsContent() {
 				</header>
 
 				{/* Tabs Navigation - Elevated Horizontal Scroll */}
-				<nav className="sticky top-[calc(var(--spacing-safe-pt)+56px)] z-20 bg-system-grouped/90 backdrop-blur-xl px-6 py-2 border-b border-border/5">
+				<nav className="sticky top-[calc(var(--spacing-safe-pt)+56px)] z-20 border-border/5 border-b bg-system-grouped/90 px-6 py-2 backdrop-blur-xl">
 					<div
-						className="flex gap-0 overflow-x-auto scrollbar-hide py-1 -mx-2 px-2"
+						className="scrollbar-hide -mx-2 flex gap-0 overflow-x-auto px-2 py-1"
 						role="tablist"
 					>
 						{tabs.map((tab) => {
@@ -180,13 +180,11 @@ function SettingsContent() {
 									role="tab"
 									aria-selected={isActive}
 									onClick={() => setActiveTab(tab.value)}
-									className={`
-										relative flex items-center gap-2 px-4 py-2.5 rounded-full whitespace-nowrap transition-colors duration-300 active:scale-[0.96]
-										${
-											isActive
-												? "bg-system-surface text-system-accent shadow-level-1 border border-border/30"
-												: "text-[--system-text-secondary] hover:text-foreground hover:bg-system-surface/50"
-										}
+									className={`relative flex items-center gap-2 whitespace-nowrap rounded-full px-4 py-2.5 transition-colors duration-300 active:scale-[0.96]${
+										isActive
+											? "border border-border/30 bg-system-surface text-system-accent shadow-level-1"
+											: "text-[--system-text-secondary] hover:bg-system-surface/50 hover:text-foreground"
+									}
 									`}
 								>
 									<span
@@ -265,11 +263,11 @@ export function SettingsClient() {
 		<AppErrorBoundary>
 			<Suspense
 				fallback={
-					<div className="flex items-center justify-center min-h-[100dvh] bg-system-grouped">
+					<div className="flex min-h-[100dvh] items-center justify-center bg-system-grouped">
 						<div className="flex flex-col items-center gap-4">
 							<HugeiconsIcon
 								icon={RadialIcon}
-								className="size-8 text-muted-foreground animate-spin"
+								className="size-8 animate-spin text-muted-foreground"
 							/>
 							<p className="ios-body text-[--system-text-secondary]">
 								Loading settings…

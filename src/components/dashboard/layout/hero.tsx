@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export function DashboardHero() {
 	return (
-		<main className="flex-1 flex flex-col items-center justify-center px-4">
+		<main className="flex flex-1 flex-col items-center justify-center px-4">
 			<Image
 				src="/logo.png"
 				alt=""

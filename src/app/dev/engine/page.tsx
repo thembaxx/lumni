@@ -91,12 +91,12 @@ export default function DevEnginePage() {
 	];
 
 	return (
-		<div className="min-h-[100dvh] bg-background p-4 max-w-4xl mx-auto space-y-4 pb-20">
-			<h1 className="text-xl font-semibold">Engine Integration Test</h1>
+		<div className="mx-auto min-h-[100dvh] max-w-4xl space-y-4 bg-background p-4 pb-20">
+			<h1 className="font-semibold text-xl">Engine Integration Test</h1>
 
 			<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
-				<div className="px-4 group-data-[size=sm]/card:px-3 p-4 space-y-3">
-					<div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+				<div className="space-y-3 p-4 px-4 group-data-[size=sm]/card:px-3">
+					<div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
 						<Input
 							value={subject}
 							onChange={(e) => setSubject(e.target.value)}
@@ -142,8 +142,8 @@ export default function DevEnginePage() {
 			</div>
 
 			{error && (
-				<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors border-destructive">
-					<div className="px-4 group-data-[size=sm]/card:px-3 p-4 text-destructive text-sm">
+				<div className="overflow-hidden rounded-[2.5rem] border border-border/80 border-destructive bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+					<div className="p-4 px-4 text-destructive text-sm group-data-[size=sm]/card:px-3">
 						{error}
 					</div>
 				</div>
@@ -154,25 +154,25 @@ export default function DevEnginePage() {
 			{questions.length > 0 && (
 				<>
 					<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
-						<header className="rounded-t-[2.5rem] border-t border-border/80 p-4 pb-2">
-							<h2 className="font-heading text-sm font-medium text-sm">
+						<header className="rounded-t-[2.5rem] border-border/80 border-t p-4 pb-2">
+							<h2 className="font-heading font-medium text-sm text-sm">
 								Questions ({questions.length})
 							</h2>
 						</header>
-						<div className="px-4 group-data-[size=sm]/card:px-3 p-4 pt-0 space-y-3">
-							{questions.map((q, i) => (
+						<div className="space-y-3 p-4 px-4 pt-0 group-data-[size=sm]/card:px-3">
+							{questions.map((q, _i) => (
 								<div
 									key={q.id}
-									className="px-4 group-data-[size=sm]/card:px-3 p-3 space-y-2"
+									className="space-y-2 p-3 px-4 group-data-[size=sm]/card:px-3"
 								>
-									<div className="flex items-center gap-2 flex-wrap">
+									<div className="flex flex-wrap items-center gap-2">
 										<Badge variant="outline" className="text-xs">
 											{q.type}
 										</Badge>
 										<Badge variant="secondary" className="text-xs">
 											{q.difficulty}
 										</Badge>
-										<span className="text-xs text-muted-foreground">
+										<span className="text-muted-foreground text-xs">
 											{q.points} pts
 										</span>
 									</div>
@@ -182,9 +182,9 @@ export default function DevEnginePage() {
 											subject={subject}
 										/>
 									</div>
-									<div className="text-xs text-muted-foreground line-clamp-2">
+									<div className="line-clamp-2 text-muted-foreground text-xs">
 										Hint: {q.hint}
-										<div className="flex gap-2 flex-wrap">
+										<div className="flex flex-wrap gap-2">
 											<Button
 												size="sm"
 												variant="outline"
@@ -208,12 +208,12 @@ export default function DevEnginePage() {
 					</div>
 
 					<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
-						<header className="rounded-t-[2.5rem] border-t border-border/80 p-4 pb-2">
-							<h2 className="font-heading text-sm font-medium text-sm">
+						<header className="rounded-t-[2.5rem] border-border/80 border-t p-4 pb-2">
+							<h2 className="font-heading font-medium text-sm text-sm">
 								Raw Response
 							</h2>
 						</header>
-						<div className="px-4 group-data-[size=sm]/card:px-3 p-4 pt-0">
+						<div className="p-4 px-4 pt-0 group-data-[size=sm]/card:px-3">
 							<Textarea
 								value={rawJson}
 								readOnly

@@ -1,6 +1,6 @@
 "use client";
 
-import { Cancel01Icon, Target01Icon } from "@hugeicons/core-free-icons";
+import { Target01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { TimerDisplay } from "@/components/shared/timer-display";
 import { Badge } from "@/components/ui/badge";
@@ -56,14 +56,14 @@ export function AssessmentHeader({
 
 	return (
 		<div className={cn("space-y-4", className)}>
-			<div className="flex items-center justify-between gap-2 flex-wrap">
+			<div className="flex flex-wrap items-center justify-between gap-2">
 				{/* Left: Quit button */}
 				{onQuit && (
 					<Button
 						variant="ghost"
 						size="sm"
 						onClick={onQuit}
-						className="font-medium text-muted-foreground hover:text-foreground hover:bg-destructive/10"
+						className="font-medium text-muted-foreground hover:bg-destructive/10 hover:text-foreground"
 					>
 						<span className="text-lg leading-none">×</span>
 						<span className="ml-1">Quit</span>
@@ -71,7 +71,7 @@ export function AssessmentHeader({
 				)}
 
 				{/* Center: Timer01Icon + difficulty/accuracy + question counter */}
-				<div className="flex items-center gap-2 flex-wrap">
+				<div className="flex flex-wrap items-center gap-2">
 					<TimerDisplay
 						elapsedTime={elapsedTime}
 						variant="inline"
@@ -82,7 +82,7 @@ export function AssessmentHeader({
 					{isExam && timeRemaining !== undefined && (
 						<>
 							<span className="text-muted-foreground">·</span>
-							<span className="text-sm font-mono text-muted-foreground">
+							<span className="font-mono text-muted-foreground text-sm">
 								{typeof formatTime === "function"
 									? formatTime(timeRemaining)
 									: `${Math.floor(timeRemaining / 60)}m ${timeRemaining % 60}s`}
@@ -97,7 +97,7 @@ export function AssessmentHeader({
 							<Badge
 								variant="outline"
 								className={cn(
-									"font-mono text-xs border",
+									"border font-mono text-xs",
 									difficultyColors[difficulty],
 								)}
 							>
@@ -113,14 +113,14 @@ export function AssessmentHeader({
 								icon={Target01Icon}
 								className="size-3.5 text-muted-foreground"
 							/>
-							<span className="text-sm font-semibold tabular-nums text-muted-foreground">
+							<span className="font-semibold text-muted-foreground text-sm tabular-nums">
 								{accuracy}%
 							</span>
 							<span className="text-muted-foreground">·</span>
 						</>
 					)}
 
-					<span className="text-sm font-mono text-muted-foreground">
+					<span className="font-mono text-muted-foreground text-sm">
 						{currentQuestionIndex + 1}/{totalQuestions}
 					</span>
 				</div>
@@ -128,8 +128,8 @@ export function AssessmentHeader({
 				{/* Right: Marks display (exam context) */}
 				{showMarks && marks !== undefined && totalMarks !== undefined && (
 					<div className="flex items-center gap-1.5">
-						<span className="text-sm text-muted-foreground">Marks:</span>
-						<span className="text-sm font-semibold tabular-nums text-muted-foreground">
+						<span className="text-muted-foreground text-sm">Marks:</span>
+						<span className="font-semibold text-muted-foreground text-sm tabular-nums">
 							{marks}/{totalMarks}
 						</span>
 					</div>

@@ -142,11 +142,11 @@ export function TodayFocusCard() {
 				ease: iOSEase,
 			}}
 		>
-			<Card className="border border-border/80 hover:border-border/80 transition-colors">
-				<div className="p-5 flex flex-col gap-4">
+			<Card className="border border-border/80 transition-colors hover:border-border/80">
+				<div className="flex flex-col gap-4 p-5">
 					<div className="flex items-center gap-3">
 						<div
-							className={`flex items-center justify-center border size-10 rounded-xl ${cfg.bgAlpha}`}
+							className={`flex size-10 items-center justify-center rounded-xl border ${cfg.bgAlpha}`}
 						>
 							<HugeiconsIcon
 								icon={CheckmarkCircle01Icon}
@@ -154,18 +154,18 @@ export function TodayFocusCard() {
 							/>
 						</div>
 						<div className="flex flex-col gap-0.5">
-							<span className="text-[13px] font-extrabold text-foreground tracking-tight block">
+							<span className="block font-extrabold text-[13px] text-foreground tracking-tight">
 								Today&apos;s Focus
 							</span>
-							<span className={`text-[12px] font-medium ${cfg.iconColor}`}>
+							<span className={`font-medium text-[12px] ${cfg.iconColor}`}>
 								{cfg.tag}
 							</span>
 						</div>
 					</div>
 
 					<div className="flex flex-col gap-4">
-						<div className="flex justify-between items-center gap-2">
-							<p className="text-[13px] text-primary font-semibold">
+						<div className="flex items-center justify-between gap-2">
+							<p className="font-semibold text-[13px] text-primary">
 								{subjectName}
 							</p>
 							<SubjectsDrawer
@@ -174,28 +174,28 @@ export function TodayFocusCard() {
 									if (found) setSelectedSubjectId(found.id);
 								}}
 							>
-								<div className="flex items-center font-medium text-[12px] text-muted-foreground border rounded-sm pl-2 pr-1.5 py-1 hover:text-foreground cursor-pointer transition-colors font-medium p-2 -m-2">
+								<div className="-m-2 flex cursor-pointer items-center rounded-sm border p-2 py-1 pr-1.5 pl-2 font-medium text-[12px] text-muted-foreground transition-colors hover:text-foreground">
 									Change subject
 									<HugeiconsIcon
 										icon={ArrowDown01Icon}
-										className="size-4 ml-2"
+										className="ml-2 size-4"
 									/>
 								</div>
 							</SubjectsDrawer>
 						</div>
-						<h3 className="text-lg font-semibold text-foreground leading-tight tracking-tight text-wrap balance">
+						<h3 className="balance text-wrap font-semibold text-foreground text-lg leading-tight tracking-tight">
 							{topic}
 						</h3>
 					</div>
 
-					<p className="text-xs text-muted-foreground leading-relaxed font-medium">
+					<p className="font-medium text-muted-foreground text-xs leading-relaxed">
 						{reason}
 					</p>
 
 					<Button
 						size="sm"
 						variant="secondary"
-						className="w-full font-extrabold bg-black/10 text-[13px] hover:opacity-90"
+						className="w-full bg-black/10 font-extrabold text-[13px] hover:opacity-90"
 						onClick={handleStart}
 						disabled={showSuccess}
 					>

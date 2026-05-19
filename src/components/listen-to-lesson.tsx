@@ -147,16 +147,16 @@ export function ListenToLesson({
 			variant="outline"
 			onClick={handleListen}
 			className={cn(
-				"px-3 text-xs rounded-lg",
-				"active:scale-[0.96] transition-transform",
+				"rounded-lg px-3 text-xs",
+				"transition-transform active:scale-[0.96]",
 				"transition-colors duration-150 ease-[var(--ease-ios)]",
 				className,
 			)}
 		>
 			{isPlaying ? (
-				<HugeiconsIcon icon={StopCircleIcon} className="w-4 h-4 mr-1.5" />
+				<HugeiconsIcon icon={StopCircleIcon} className="mr-1.5 h-4 w-4" />
 			) : (
-				<HugeiconsIcon icon={HeadphonesIcon} className="w-4 h-4 mr-1.5" />
+				<HugeiconsIcon icon={HeadphonesIcon} className="mr-1.5 h-4 w-4" />
 			)}
 			{isPlaying
 				? "Stop listening..."

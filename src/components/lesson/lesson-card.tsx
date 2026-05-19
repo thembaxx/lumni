@@ -2,7 +2,7 @@
 
 import { AnimatePresence, m } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Anim } from "@/components/shared/anim";
 import { Badge } from "@/components/ui/badge";
@@ -54,20 +54,20 @@ export function LessonCard({
 					<m.div
 						key={`lesson-${id}-open`}
 						layoutId={`lesson-${id}`}
-						className="fixed left-1/2 top-1/2 z-50 w-[calc(100%-2rem)] max-w-sm -translate-x-1/2 -translate-y-1/2"
+						className="fixed top-1/2 left-1/2 z-50 w-[calc(100%-2rem)] max-w-sm -translate-x-1/2 -translate-y-1/2"
 					>
 						<Card className="max-h-[80dvh] overflow-y-auto p-4">
 							<div className="flex flex-col gap-3">
-								<div className="flex justify-between items-start">
+								<div className="flex items-start justify-between">
 									<Badge
 										variant="outline"
-										className="px-3 py-0.5 text-xs font-medium bg-[--system-accent]/10 rounded-full"
+										className="rounded-full bg-[--system-accent]/10 px-3 py-0.5 font-medium text-xs"
 									>
 										{subject}
 									</Badge>
 									<Badge
 										className={cn(
-											"px-3 py-0.5 text-[10px] uppercase font-medium bg-[--system-accent]/10 rounded-full",
+											"rounded-full bg-[--system-accent]/10 px-3 py-0.5 font-medium text-[10px] uppercase",
 											getDifficultyColor(difficulty),
 										)}
 									>
@@ -76,15 +76,15 @@ export function LessonCard({
 								</div>
 
 								<div className="flex flex-col gap-1">
-									<h3 className="text-xl font-semibold leading-tight text-foreground text-wrap balance">
+									<h3 className="balance text-wrap font-semibold text-foreground text-xl leading-tight">
 										{title}
 									</h3>
-									<div className="text-sm text-muted-foreground leading-relaxed text-pretty">
+									<div className="text-pretty text-muted-foreground text-sm leading-relaxed">
 										<MarkdownRenderer content={summary} />
 									</div>
 								</div>
 
-								<div className="flex gap-2 items-center pt-2">
+								<div className="flex items-center gap-2 pt-2">
 									<div className={isPlaying ? "animate-pulse" : ""}>
 										<ListenToLesson
 											text={summary}
@@ -102,7 +102,7 @@ export function LessonCard({
 
 								<Button
 									variant="outline"
-									className="w-full mt-6"
+									className="mt-6 w-full"
 									onClick={() => setOpenId(null)}
 								>
 									Close
@@ -112,10 +112,10 @@ export function LessonCard({
 					</m.div>
 				) : (
 					<m.div key={`lesson-${id}-closed`} layoutId={`lesson-${id}`}>
-						<Card className="p-5 rounded-2xl shadow-sm w-full text-left">
+						<Card className="w-full rounded-2xl p-5 text-left shadow-sm">
 							<div
 								onClick={() => setOpenId(id)}
-								className="flex flex-col gap-3 cursor-pointer hover:border-[--system-accent]/20 transition-[scale,colors] duration-200 active:scale-[0.96]"
+								className="flex cursor-pointer flex-col gap-3 transition-[scale,colors] duration-200 hover:border-[--system-accent]/20 active:scale-[0.96]"
 								role="button"
 								tabIndex={0}
 								onKeyDown={(e) => {
@@ -126,16 +126,16 @@ export function LessonCard({
 								}}
 								aria-label={`${title} - ${difficulty} lesson`}
 							>
-								<div className="flex justify-between items-start">
+								<div className="flex items-start justify-between">
 									<Badge
 										variant="outline"
-										className="px-3 py-0.5 text-xs font-medium bg-[--system-accent]/10 rounded-full"
+										className="rounded-full bg-[--system-accent]/10 px-3 py-0.5 font-medium text-xs"
 									>
 										{subject}
 									</Badge>
 									<Badge
 										className={cn(
-											"px-3 py-0.5 text-[10px] uppercase font-medium bg-[--system-accent]/10 rounded-full",
+											"rounded-full bg-[--system-accent]/10 px-3 py-0.5 font-medium text-[10px] uppercase",
 											getDifficultyColor(difficulty),
 										)}
 									>
@@ -144,16 +144,16 @@ export function LessonCard({
 								</div>
 
 								<div className="flex flex-col gap-1">
-									<h3 className="text-md font-semibold leading-tight text-foreground text-wrap balance">
+									<h3 className="balance text-wrap font-semibold text-foreground text-md leading-tight">
 										{title}
 									</h3>
-									<div className="text-[13px] text-muted-foreground leading-relaxed text-pretty line-clamp-2">
+									<div className="line-clamp-2 text-pretty text-[13px] text-muted-foreground leading-relaxed">
 										<MarkdownRenderer content={summary} />
 									</div>
 								</div>
 							</div>
 
-							<div className="flex gap-2 items-center mt-3">
+							<div className="mt-3 flex items-center gap-2">
 								<div className={isPlaying ? "animate-pulse" : ""}>
 									<ListenToLesson
 										text={summary}

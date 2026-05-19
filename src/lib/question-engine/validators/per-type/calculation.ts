@@ -8,7 +8,7 @@ export function validate(question: Question): {
 	const errors: ValidationError[] = [];
 	const warnings: ValidationError[] = [];
 
-	if (body.correctValue == null || isNaN(body.correctValue)) {
+	if (body.correctValue == null || Number.isNaN(body.correctValue)) {
 		errors.push({
 			type: "schema",
 			field: "correctValue",

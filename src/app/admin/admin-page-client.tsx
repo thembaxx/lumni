@@ -2,7 +2,7 @@
 
 import { DatabaseIcon, RadialIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, domAnimation, m } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { useEffect, useState } from "react";
 import { AdminDashboard } from "@/components/admin/admin-dashboard";
 import { LoginForm } from "@/components/admin/login-form";
@@ -33,10 +33,10 @@ function Preloader({ onComplete }: { onComplete: () => void }) {
 			exit={{ opacity: 0 }}
 			transition={{ duration: 0.3 }}
 		>
-			<div className="size-12 rounded-xl bg-foreground flex items-center justify-center">
-				<span className="text-2xl font-extrabold text-background">L</span>
+			<div className="flex size-12 items-center justify-center rounded-xl bg-foreground">
+				<span className="font-extrabold text-2xl text-background">L</span>
 			</div>
-			<div className="w-32 h-1 bg-secondary rounded-full mt-6 overflow-hidden">
+			<div className="mt-6 h-1 w-32 overflow-hidden rounded-full bg-secondary">
 				<m.div
 					className="h-full bg-foreground"
 					initial={{ width: 0 }}
@@ -114,7 +114,7 @@ export function AdminPageClient() {
 						<m.div
 							whileHover={{ scale: 1.05 }}
 							whileTap={{ scale: 0.95 }}
-							className="fixed bottom-6 right-6 z-50"
+							className="fixed right-6 bottom-6 z-50"
 						>
 							<Button
 								size="icon-lg"
@@ -127,7 +127,7 @@ export function AdminPageClient() {
 								}
 								onClick={handleSeed}
 								disabled={isSeeding}
-								className="shadow-lg shadow-shadow/20 rounded-full size-14"
+								className="size-14 rounded-full shadow-lg shadow-shadow/20"
 								title="Seed Database"
 							>
 								{isSeeding ? (

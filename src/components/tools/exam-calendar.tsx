@@ -121,7 +121,7 @@ export function ExamCalendar() {
 	};
 
 	return (
-		<div className="h-full flex flex-col overflow-y-auto">
+		<div className="flex h-full flex-col overflow-y-auto">
 			<div className="px-5 pt-5 pb-3">
 				<h2 className="ios-title-3 flex items-center gap-2 text-[--system-text-primary]">
 					<HugeiconsIcon
@@ -130,13 +130,13 @@ export function ExamCalendar() {
 					/>
 					Exam Calendar
 				</h2>
-				<p className="ios-subhead text-[--system-text-secondary]/50 mt-1">
+				<p className="ios-subhead mt-1 text-[--system-text-secondary]/50">
 					Track your exam dates and never miss a paper.
 				</p>
 			</div>
 
-			<div className="px-5 sm:px-5 pb-5">
-				<div className="bg-system-background-secondary rounded-2xl sm:rounded-2xl p-2">
+			<div className="px-5 pb-5 sm:px-5">
+				<div className="rounded-2xl bg-system-background-secondary p-2 sm:rounded-2xl">
 					<Calendar01Icon
 						mode="single"
 						onSelect={(date) => date && setSelectedDate(date)}
@@ -147,9 +147,9 @@ export function ExamCalendar() {
 			</div>
 
 			<div className="px-5 pb-5">
-				<div className="bg-system-background-secondary rounded-2xl py-3 pr-3 pl-6 space-y-3">
+				<div className="space-y-3 rounded-2xl bg-system-background-secondary py-3 pr-3 pl-6">
 					<div className="flex items-center justify-between">
-						<p className="text-sm font-semibold text-foreground">
+						<p className="font-semibold text-foreground text-sm">
 							{selectedDate
 								? `Exams on ${selectedDate.toLocaleDateString("en-ZA")}`
 								: "Select a date"}
@@ -169,12 +169,12 @@ export function ExamCalendar() {
 							{examsOnDate.map((exam) => (
 								<div
 									key={exam.id}
-									className="flex items-center justify-between p-3 rounded-xl bg-card border border-border shadow-sm"
+									className="flex items-center justify-between rounded-xl border border-border bg-card p-3 shadow-sm"
 								>
 									<div className="flex items-center gap-3">
 										<span
 											className={cn(
-												"px-2.5 py-1 rounded-lg text-xs text-white font-medium",
+												"rounded-lg px-2.5 py-1 font-medium text-white text-xs",
 												getSubjectColor(exam.subject),
 											)}
 										>
@@ -185,7 +185,7 @@ export function ExamCalendar() {
 												{commonSubjects.find((s) => s.id === exam.subject)
 													?.name || exam.subject}
 											</p>
-											<p className="text-xs text-muted-foreground">
+											<p className="text-muted-foreground text-xs">
 												{exam.paper}
 											</p>
 										</div>
@@ -201,7 +201,7 @@ export function ExamCalendar() {
 							))}
 						</div>
 					) : selectedDate ? (
-						<p className="text-center text-muted-foreground text-sm py-2">
+						<p className="py-2 text-center text-muted-foreground text-sm">
 							No exams on this date
 						</p>
 					) : null}
@@ -210,8 +210,8 @@ export function ExamCalendar() {
 
 			{exams.length > 0 && (
 				<div className="px-5 pb-10">
-					<div className="bg-system-background-secondary rounded-2xl p-5">
-						<p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">
+					<div className="rounded-2xl bg-system-background-secondary p-5">
+						<p className="mb-3 font-bold text-muted-foreground text-xs uppercase tracking-wider">
 							Upcoming Exams
 						</p>
 						<div className="flex flex-col gap-2">
@@ -224,23 +224,23 @@ export function ExamCalendar() {
 										key={exam.id}
 										initial={{ opacity: 0, y: 5 }}
 										animate={{ opacity: 1, y: 0 }}
-										className="flex items-center gap-2 p-3 rounded-xl bg-card border border-border shadow-sm"
+										className="flex items-center gap-2 rounded-xl border border-border bg-card p-3 shadow-sm"
 									>
 										<span
 											className={cn(
-												"px-2.5 py-1 rounded-lg text-xs text-white font-medium",
+												"rounded-lg px-2.5 py-1 font-medium text-white text-xs",
 												getSubjectColor(exam.subject),
 											)}
 										>
 											{getSubjectAbbr(exam.subject)}
 										</span>
-										<span className="text-sm tabular-nums font-medium">
+										<span className="font-medium text-sm tabular-nums">
 											{exam.date.toLocaleDateString("en-ZA", {
 												month: "short",
 												day: "numeric",
 											})}
 										</span>
-										<span className="text-xs text-muted-foreground">
+										<span className="text-muted-foreground text-xs">
 											{exam.paper}
 										</span>
 									</motion.div>
@@ -268,7 +268,7 @@ export function ExamCalendar() {
 							animate={{ scale: 1, opacity: 1, y: 0 }}
 							exit={{ scale: 0.95, opacity: 0, y: 10 }}
 							transition={{ type: "spring", duration: 0.3, bounce: 0 }}
-							className="relative bg-card rounded-2xl p-6 w-full max-w-sm shadow-level-3"
+							className="relative w-full max-w-sm rounded-2xl bg-card p-6 shadow-level-3"
 						>
 							<Button
 								variant="ghost"
@@ -279,12 +279,12 @@ export function ExamCalendar() {
 								<HugeiconsIcon icon={Cancel01FreeIcons} data-icon />
 							</Button>
 
-							<h3 className="text-lg font-semibold mb-4">Add Exam</h3>
+							<h3 className="mb-4 font-semibold text-lg">Add Exam</h3>
 
 							<div className="flex flex-col gap-4">
 								<div>
 									<Label>Subject</Label>
-									<div className="grid grid-cols-2 gap-2 mt-2">
+									<div className="mt-2 grid grid-cols-2 gap-2">
 										{commonSubjects.map((subject) => (
 											<Button
 												key={subject.id}
@@ -305,7 +305,7 @@ export function ExamCalendar() {
 
 								<div>
 									<Label>Paper</Label>
-									<div className="flex gap-2 mt-2">
+									<div className="mt-2 flex gap-2">
 										{["Paper 1", "Paper 2", "Paper 3"].map((paper) => (
 											<Button
 												key={paper}

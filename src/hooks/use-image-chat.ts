@@ -3,7 +3,6 @@
 import { useCallback, useRef, useState } from "react";
 import type { ChatMessage, useChat } from "@/hooks/use-chat";
 import { formatBytes } from "@/lib/shared/format";
-import { useUploadThing } from "@/lib/uploadthing";
 
 export type ImageProcessingStatus =
 	| "idle"

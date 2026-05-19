@@ -195,8 +195,8 @@ describe("PathEngine", () => {
 				competencyMap([["algebra", 50]]),
 			);
 			expect(result).not.toBeNull();
-			expect(result!.topicId).toBe("algebra");
-			expect(result!.action).toBe("practice");
+			expect(result?.topicId).toBe("algebra");
+			expect(result?.action).toBe("practice");
 		});
 
 		test("returns study for ready topics", async () => {
@@ -205,8 +205,8 @@ describe("PathEngine", () => {
 				competencyMap([["algebra", 90]]),
 			);
 			expect(result).not.toBeNull();
-			expect(result!.topicId).toBe("functions");
-			expect(result!.action).toBe("study");
+			expect(result?.topicId).toBe("functions");
+			expect(result?.action).toBe("study");
 		});
 	});
 

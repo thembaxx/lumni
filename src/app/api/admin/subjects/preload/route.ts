@@ -1,6 +1,6 @@
-import fs from "fs";
+import fs from "node:fs";
+import path from "node:path";
 import { type NextRequest, NextResponse } from "next/server";
-import path from "path";
 import { COLLECTIONS, createDocument } from "@/lib/db/client";
 import { requireAdmin } from "@/lib/server/auth";
 
@@ -72,7 +72,7 @@ export async function POST(request: NextRequest) {
 							return {
 								added: false,
 								skipped: false,
-								error: sub.code + ": " + err.message,
+								error: `${sub.code}: ${err.message}`,
 							};
 						}
 					}

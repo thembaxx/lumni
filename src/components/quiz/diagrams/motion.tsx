@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Circle, Group, Layer, Line, Rect, Stage, Text } from "react-konva";
+import { Circle, Group, Layer, Line, Stage, Text } from "react-konva";
 import type { MotionData } from "@/lib/visual-engine/types";
 
 export function MotionDiagram({ data }: { data: MotionData }) {

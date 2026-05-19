@@ -34,7 +34,7 @@ export function ThemeSwitcher() {
 	const CurrentIcon = iconMap[theme];
 
 	return (
-		<div className="flex items-center gap-3 justify-between">
+		<div className="flex items-center justify-between gap-3">
 			{/* <p className="text-xs font-medium text-foreground">{labels[theme]}</p> */}
 			<Button
 				onClick={() => setTheme(nextTheme())}

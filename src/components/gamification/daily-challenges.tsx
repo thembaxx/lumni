@@ -19,20 +19,20 @@ export function DailyChallenges({ challenges }: DailyChallengesProps) {
 		<div className="flex flex-col gap-3">
 			<div className="flex items-center justify-between">
 				<div className="flex items-center gap-2">
-					<span className="text-sm font-semibold text-foreground">
+					<span className="font-semibold text-foreground text-sm">
 						Daily Challenges
 					</span>
 					{allCompleted && (
 						<motion.span
 							initial={{ scale: 0, opacity: 0 }}
 							animate={{ scale: 1, opacity: 1 }}
-							className="text-xs bg-success/20 text-success-foreground px-2 py-0.5 rounded-full"
+							className="rounded-full bg-success/20 px-2 py-0.5 text-success-foreground text-xs"
 						>
 							Complete!
 						</motion.span>
 					)}
 				</div>
-				<span className="text-xs text-muted-foreground">
+				<span className="text-muted-foreground text-xs">
 					{completedCount} / {challenges.length}
 				</span>
 			</div>
@@ -46,8 +46,8 @@ export function DailyChallenges({ challenges }: DailyChallengesProps) {
 						delay={index * 0.1}
 						className={`relative overflow-hidden rounded-xl p-3 transition-colors ${
 							challenge.completed
-								? "bg-success/20 border border-success/20"
-								: "bg-card border border-border/50 hover:border-[--system-accent]/30"
+								? "border border-success/20 bg-success/20"
+								: "border border-border/50 bg-card hover:border-[--system-accent]/30"
 						}`}
 					>
 						<div className="flex items-center gap-3">
@@ -59,10 +59,10 @@ export function DailyChallenges({ challenges }: DailyChallengesProps) {
 								{challenge.completed ? "✓" : challenge.icon}
 							</div>
 
-							<div className="flex-1 min-w-0">
-								<div className="flex items-center justify-between mb-1">
+							<div className="min-w-0 flex-1">
+								<div className="mb-1 flex items-center justify-between">
 									<span
-										className={`text-sm font-medium ${
+										className={`font-medium text-sm ${
 											challenge.completed
 												? "text-success-foreground"
 												: "text-foreground"
@@ -70,12 +70,12 @@ export function DailyChallenges({ challenges }: DailyChallengesProps) {
 									>
 										{challenge.title}
 									</span>
-									<span className="text-xs text-muted-foreground">
+									<span className="text-muted-foreground text-xs">
 										+{challenge.xpReward} XP
 									</span>
 								</div>
 
-								<p className="text-xs text-muted-foreground mb-2">
+								<p className="mb-2 text-muted-foreground text-xs">
 									{challenge.description}
 								</p>
 
@@ -93,7 +93,7 @@ export function DailyChallenges({ challenges }: DailyChallengesProps) {
 										initial={{ scale: 0, opacity: 0 }}
 										animate={{ scale: 1, opacity: 1 }}
 										transition={{ type: "spring", stiffness: 400, damping: 20 }}
-										className="flex items-center gap-1 text-xs text-success-foreground"
+										className="flex items-center gap-1 text-success-foreground text-xs"
 									>
 										<HugeiconsIcon icon={CheckmarkCircle01Icon} size={12} />
 										Completed

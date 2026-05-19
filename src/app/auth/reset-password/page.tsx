@@ -37,13 +37,13 @@ function ResetPasswordForm() {
 	if (!token) {
 		return (
 			<div className="flex flex-col items-center gap-4 text-center">
-				<h1 className="text-xl font-bold">Invalid reset link</h1>
-				<p className="text-sm text-muted-foreground">
+				<h1 className="font-bold text-xl">Invalid reset link</h1>
+				<p className="text-muted-foreground text-sm">
 					This password reset link is invalid or has expired.
 				</p>
 				<Link
 					href="/auth/forgot-password"
-					className="text-sm font-semibold text-system-accent hover:underline"
+					className="font-semibold text-sm text-system-accent hover:underline"
 				>
 					Request a new reset link
 				</Link>
@@ -60,15 +60,15 @@ function ResetPasswordForm() {
 			className="flex flex-col gap-8"
 		>
 			<div className="flex flex-col gap-2">
-				<h1 className="text-xl font-bold">Set new password</h1>
-				<p className="text-sm text-muted-foreground">
+				<h1 className="font-bold text-xl">Set new password</h1>
+				<p className="text-muted-foreground text-sm">
 					Must be at least 8 characters.
 				</p>
 			</div>
 
 			<div className="flex flex-col gap-4">
 				<div className="flex flex-col gap-1.5">
-					<label htmlFor="password" className="text-sm font-semibold">
+					<label htmlFor="password" className="font-semibold text-sm">
 						New password
 					</label>
 					<div className="relative">
@@ -79,12 +79,12 @@ function ResetPasswordForm() {
 							onChange={(e) => setPassword(e.target.value)}
 							required
 							minLength={8}
-							className="pr-10 h-11 rounded-xl bg-system-surface"
+							className="h-11 rounded-xl bg-system-surface pr-10"
 						/>
 						<button
 							type="button"
 							onClick={() => setShowPassword(!showPassword)}
-							className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+							className="absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground"
 						>
 							<HugeiconsIcon
 								icon={showPassword ? ViewOffIcon : ViewIcon}
@@ -95,7 +95,7 @@ function ResetPasswordForm() {
 				</div>
 
 				<div className="flex flex-col gap-1.5">
-					<label htmlFor="confirm" className="text-sm font-semibold">
+					<label htmlFor="confirm" className="font-semibold text-sm">
 						Confirm password
 					</label>
 					<Input
@@ -110,14 +110,14 @@ function ResetPasswordForm() {
 				</div>
 
 				{error && (
-					<p className="text-sm text-destructive font-medium">{error}</p>
+					<p className="font-medium text-destructive text-sm">{error}</p>
 				)}
 			</div>
 
 			<Button
 				type="submit"
 				disabled={!password || !confirmPassword}
-				className="w-full h-11 rounded-xl"
+				className="h-11 w-full rounded-xl"
 			>
 				Reset password
 			</Button>

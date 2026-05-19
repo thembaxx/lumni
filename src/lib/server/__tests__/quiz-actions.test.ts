@@ -45,19 +45,17 @@ describe("fetchQuestions", () => {
 	});
 
 	test("returns empty array when no topics match subjectIds", async () => {
-		mockListDocumentsResults["topics"] = [
-			{ $id: "topic1", subjectId: "physics" },
-		];
+		mockListDocumentsResults.topics = [{ $id: "topic1", subjectId: "physics" }];
 		const result = await fetchQuestions(["math"]);
 		expect(result).toEqual([]);
 	});
 
 	test("returns questions filtered by matching topicIds", async () => {
-		mockListDocumentsResults["topics"] = [
+		mockListDocumentsResults.topics = [
 			{ $id: "topic1", subjectId: "math" },
 			{ $id: "topic2", subjectId: "physics" },
 		];
-		mockListDocumentsResults["questions"] = [
+		mockListDocumentsResults.questions = [
 			{ $id: "q1", topicId: "topic1", options: '{"a":"1","b":"2"}' },
 			{ $id: "q2", topicId: "topic2", options: null },
 			{ $id: "q3", topicId: "topic1", options: '{"c":"3"}' },
@@ -72,8 +70,8 @@ describe("fetchQuestions", () => {
 	});
 
 	test("parses options JSON for each question", async () => {
-		mockListDocumentsResults["topics"] = [{ $id: "topic1", subjectId: "math" }];
-		mockListDocumentsResults["questions"] = [
+		mockListDocumentsResults.topics = [{ $id: "topic1", subjectId: "math" }];
+		mockListDocumentsResults.questions = [
 			{ $id: "q1", topicId: "topic1", options: '{"key":"value"}' },
 		];
 
@@ -83,8 +81,8 @@ describe("fetchQuestions", () => {
 	});
 
 	test("handles a question with null options", async () => {
-		mockListDocumentsResults["topics"] = [{ $id: "topic1", subjectId: "math" }];
-		mockListDocumentsResults["questions"] = [
+		mockListDocumentsResults.topics = [{ $id: "topic1", subjectId: "math" }];
+		mockListDocumentsResults.questions = [
 			{ $id: "q1", topicId: "topic1", options: null },
 		];
 

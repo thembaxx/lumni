@@ -14,7 +14,7 @@ export function XpLevelCard({ levelInfo, totalXp }: XpLevelCardProps) {
 	return (
 		<FadeIn
 			distance={10}
-			className="relative overflow-hidden rounded-lg bg-system-accent/10 border border-border/50 p-5"
+			className="relative overflow-hidden rounded-lg border border-border/50 bg-system-accent/10 p-5"
 		>
 			<div className="flex items-center gap-4">
 				<motion.div
@@ -23,17 +23,17 @@ export function XpLevelCard({ levelInfo, totalXp }: XpLevelCardProps) {
 					animate={{ scale: 1 }}
 					transition={{ type: "spring", stiffness: 300, damping: 20 }}
 				>
-					<span className="text-2xl font-extrabold text-white">
+					<span className="font-extrabold text-2xl text-white">
 						{levelInfo.level}
 					</span>
 				</motion.div>
 
 				<div className="flex-1">
-					<div className="flex items-center justify-between mb-1">
-						<span className="text-sm font-extrabold text-foreground">
+					<div className="mb-1 flex items-center justify-between">
+						<span className="font-extrabold text-foreground text-sm">
 							{levelInfo.title}
 						</span>
-						<span className="text-xs text-muted-foreground font-medium">
+						<span className="font-medium text-muted-foreground text-xs">
 							{totalXp.toLocaleString("en-ZA")} XP
 						</span>
 					</div>
@@ -44,7 +44,7 @@ export function XpLevelCard({ levelInfo, totalXp }: XpLevelCardProps) {
 						color="accent"
 					/>
 
-					<p className="text-xs text-muted-foreground mt-1 font-medium">
+					<p className="mt-1 font-medium text-muted-foreground text-xs">
 						{levelInfo.currentXp} / {levelInfo.xpToNextLevel} XP to Level{" "}
 						{levelInfo.level + 1}
 					</p>

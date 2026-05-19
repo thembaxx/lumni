@@ -6,7 +6,7 @@ import { getAuthenticatedUserId } from "@/lib/server/auth";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 async function subjectsHandler(request: NextRequest) {
-	let allSubjects;
+	let allSubjects: unknown[] = [];
 	try {
 		allSubjects = await listDocuments(COLLECTIONS.SUBJECTS);
 	} catch (dbError: unknown) {

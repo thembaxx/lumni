@@ -80,8 +80,8 @@ describe("generateDiagram", () => {
 	test("returns konva-diagram for valid diagram data", async () => {
 		const result = await generateDiagram("valid", "physical-sciences", "waves");
 		expect(result).not.toBeNull();
-		expect(result!.type).toBe("konva-diagram");
-		expect(result!.diagramType).toBe("wave");
+		expect(result?.type).toBe("konva-diagram");
+		expect(result?.diagramType).toBe("wave");
 	});
 
 	test("returns null when AI fails", async () => {
@@ -91,7 +91,7 @@ describe("generateDiagram", () => {
 
 	test("returns konva-diagram with label from title", async () => {
 		const result = await generateDiagram("valid", "physical-sciences", "waves");
-		expect(result!.label).toBe("Wave Diagram");
+		expect(result?.label).toBe("Wave Diagram");
 	});
 });
 

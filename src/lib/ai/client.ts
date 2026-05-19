@@ -1,13 +1,7 @@
 import { createGeminiProvider } from "./providers/gemini";
 import { createGroqProvider } from "./providers/groq";
 import { createNvidiaProvider } from "./providers/nvidia";
-import {
-	type AIFailure,
-	type AIProvider,
-	type AIRequest,
-	AIResponse,
-	type AIResult,
-} from "./types";
+import type { AIFailure, AIProvider, AIRequest, AIResult } from "./types";
 
 export interface AIConfig {
 	geminiApiKey?: string;
@@ -43,7 +37,6 @@ function createProviderChain(config: AIConfig): AIProvider[] {
 
 export class AIClient {
 	private providers: AIProvider[];
-	private config: AIConfig;
 
 	constructor(config: AIConfig) {
 		this.config = config;

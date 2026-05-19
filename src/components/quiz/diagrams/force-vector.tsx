@@ -50,7 +50,7 @@ function getDirectionVector(direction: string): {
 	};
 
 	if (direction.includes("°") && !angles[direction]) {
-		const deg = parseInt(direction.replace("°", ""));
+		const deg = parseInt(direction.replace("°", ""), 10);
 		const rad = (deg * Math.PI) / 180;
 		return { x: Math.cos(rad), y: Math.sin(rad), rotation: deg - 90 };
 	}

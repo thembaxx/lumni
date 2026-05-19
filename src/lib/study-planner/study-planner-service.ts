@@ -20,7 +20,7 @@ const KNOWN_SUBJECTS = [
 export class StudyPlannerService {
 	constructor(
 		private competencyService: CompetencyService = defaultCompetencyService,
-		private progressService: ProgressService = defaultProgressService,
+		_progressService: ProgressService = defaultProgressService,
 	) {}
 
 	async generateStudyPlan(settings: StudyPlanSettings): Promise<StudyPlan> {

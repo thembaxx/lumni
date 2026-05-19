@@ -76,9 +76,9 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 
 	if (isRunning && currentQuestion) {
 		return (
-			<div className="grid grid-cols-12 gap-0 min-h-[calc(100dvh-var(--spacing-safe-pt))]">
+			<div className="grid min-h-[calc(100dvh-var(--spacing-safe-pt))] grid-cols-12 gap-0">
 				{/* Main quiz — left column */}
-				<div className="col-span-12 md:col-span-7 col-start-1 p-4 pb-20">
+				<div className="col-span-12 col-start-1 p-4 pb-20 md:col-span-7">
 					<Anim>
 						<m.div
 							className="relative w-full"
@@ -90,14 +90,14 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 							<Tabs
 								value={activeTab}
 								onValueChange={setActiveTab}
-								className="flex flex-wrap w-full"
+								className="flex w-full flex-wrap"
 							>
 								{tabs.map((tab) => (
 									<TabsTrigger
 										key={tab.value}
 										value={tab.value}
 										className={cn(
-											"relative z-10 px-4 h-8 rounded-xl text-xs font-medium transition-colors duration-200 tab-trigger-item",
+											"tab-trigger-item relative z-10 h-8 rounded-xl px-4 font-medium text-xs transition-colors duration-200",
 											activeTab === tab.value
 												? "text-foreground"
 												: "text-muted-foreground hover:text-foreground",
@@ -113,12 +113,12 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 
 				{/* Decorative accent — right zone */}
 				<div
-					className="col-span-12 md:col-span-5 col-start-1 md:col-start-8 relative overflow-hidden bg-system-surface/30"
+					className="relative col-span-12 col-start-1 overflow-hidden bg-system-surface/30 md:col-span-5 md:col-start-8"
 					aria-hidden="true"
 				>
 					{!finalShouldReduceMotion && (
 						<PerpetualFloat
-							className="absolute right-8 top-1/2 -translate-y-1/2"
+							className="absolute top-1/2 right-8 -translate-y-1/2"
 							duration={10}
 							offsetY={-16}
 							aria-hidden="true"
@@ -128,7 +128,7 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 					)}
 					<div className="absolute inset-0 bg-linear-to-br from-[--system-accent]/10 via-transparent to-transparent" />
 					<div className="absolute inset-0 flex items-center justify-center p-8">
-						<div className="w-full h-full max-w-xs aspect-square rounded-3xl bg-system-accent/10 blur-2xl animate-float-slow" />
+						<div className="aspect-square h-full w-full max-w-xs animate-float-slow rounded-3xl bg-system-accent/10 blur-2xl" />
 					</div>
 				</div>
 			</div>
@@ -136,10 +136,10 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 	}
 
 	return (
-		<div className="w-full h-full flex flex-col">
+		<div className="flex h-full w-full flex-col">
 			<div
 				className={cn(
-					"flex items-center gap-3 justify-between w-full",
+					"flex w-full items-center justify-between gap-3",
 					className,
 				)}
 			>
@@ -147,7 +147,7 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 					<Button
 						variant="secondary"
 						size="sm"
-						className="rounded-md pl-3 border-muted bg-muted/50"
+						className="rounded-md border-muted bg-muted/50 pl-3"
 						disabled={isRunning}
 					>
 						<div className="flex items-center gap-3">
@@ -159,25 +159,25 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 
 				<div
 					className={cn(
-						"flex items-center gap-3 pl-4 py-2 rounded-full bg-muted/30 border border-muted transition-opacity duration-300",
-						!hasSubject && "opacity-30 pointer-events-none",
+						"flex items-center gap-3 rounded-full border border-muted bg-muted/30 py-2 pl-4 transition-opacity duration-300",
+						!hasSubject && "pointer-events-none opacity-30",
 					)}
 				>
-					<div className="flex items-center gap-2 min-w-16">
+					<div className="flex min-w-16 items-center gap-2">
 						<HugeiconsIcon
 							icon={Timer01Icon}
 							className="size-4 text-muted-foreground"
 						/>
-						<span className="text-sm font-medium -mb-0.5 tabular-nums font-mono tracking-tight">
+						<span className="-mb-0.5 font-medium font-mono text-sm tabular-nums tracking-tight">
 							{formatTime(elapsedTime)}
 						</span>
 					</div>
 
-					<div className="w-px h-4 bg-muted" />
+					<div className="h-4 w-px bg-muted" />
 
-					<div className="flex items-center gap-2 min-w-14">
+					<div className="flex min-w-14 items-center gap-2">
 						<HugeiconsIcon icon={FlashIcon} className="size-4 text-warning" />
-						<span className="text-sm font-semibold tabular-nums font-mono">
+						<span className="font-mono font-semibold text-sm tabular-nums">
 							{points}
 						</span>
 					</div>
@@ -199,11 +199,11 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 						className={cn(
 							"rounded-full",
 							hasSubject
-								? "bg-[--system-accent] hover:bg-[--system-accent]/90 animate-fade-in-scale"
-								: "bg-muted cursor-not-allowed",
+								? "animate-fade-in-scale bg-[--system-accent] hover:bg-[--system-accent]/90"
+								: "cursor-not-allowed bg-muted",
 						)}
 					>
-						<HugeiconsIcon icon={PlayIcon} className="size-4 ml-0.5" />
+						<HugeiconsIcon icon={PlayIcon} className="ml-0.5 size-4" />
 					</Button>
 				)}
 			</div>

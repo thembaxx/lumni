@@ -30,28 +30,28 @@ export function QuizStartCard({ onStart }: QuizStartCardProps) {
 			className="overflow-visible rounded-[1.5rem]"
 			style={{ viewTransitionName: "practice-trigger" as string }}
 		>
-			<CardContent className="p-5 flex flex-col gap-4">
+			<CardContent className="flex flex-col gap-4 p-5">
 				<div className="flex items-center justify-between">
-					<h3 className="text-lg font-extrabold tracking-tight">
+					<h3 className="font-extrabold text-lg tracking-tight">
 						Start a Quiz
 					</h3>
-					<div className="flex items-center gap-3 px-3 py-1.5 rounded-full bg-muted/30 border border-muted">
+					<div className="flex items-center gap-3 rounded-full border border-muted bg-muted/30 px-3 py-1.5">
 						<div className="flex items-center gap-1.5">
 							<HugeiconsIcon
 								icon={Timer01Icon}
 								className="size-3.5 text-muted-foreground"
 							/>
-							<span className="text-xs font-medium tabular-nums font-mono tracking-tight text-muted-foreground">
+							<span className="font-medium font-mono text-muted-foreground text-xs tabular-nums tracking-tight">
 								{formatTime(state.elapsedTime)}
 							</span>
 						</div>
-						<div className="w-px h-3 bg-muted" />
+						<div className="h-3 w-px bg-muted" />
 						<div className="flex items-center gap-1.5">
 							<HugeiconsIcon
 								icon={FlashIcon}
 								className="size-3.5 text-warning"
 							/>
-							<span className="text-xs font-semibold tabular-nums font-mono text-muted-foreground">
+							<span className="font-mono font-semibold text-muted-foreground text-xs tabular-nums">
 								{state.points || 0}
 							</span>
 						</div>
@@ -65,7 +65,7 @@ export function QuizStartCard({ onStart }: QuizStartCardProps) {
 				/>
 
 				<div className="flex items-center justify-between gap-4">
-					<p className="text-sm text-muted-foreground">
+					<p className="text-muted-foreground text-sm">
 						{selectedSubject
 							? "Ready to test your knowledge?"
 							: "Pick a subject above to begin"}
@@ -75,11 +75,11 @@ export function QuizStartCard({ onStart }: QuizStartCardProps) {
 						variant="default"
 						onClick={handleStart}
 						disabled={!selectedSubject}
-						className="rounded-full bg-system-accent hover:bg-system-accent/90 disabled:opacity-50 disabled:cursor-not-allowed px-6 gap-2"
+						className="gap-2 rounded-full bg-system-accent px-6 hover:bg-system-accent/90 disabled:cursor-not-allowed disabled:opacity-50"
 					>
 						<HugeiconsIcon
 							icon={PlayFreeIcons}
-							className="size-4 ml-0.5 fill-current"
+							className="ml-0.5 size-4 fill-current"
 						/>
 						Start
 					</Button>

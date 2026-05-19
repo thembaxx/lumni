@@ -22,12 +22,12 @@ export function StreakCard() {
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
 		>
-			<Card className="rounded-[2rem] shadow-level-1 overflow-hidden">
+			<Card className="overflow-hidden rounded-[2rem] shadow-level-1">
 				<CardContent className="p-5">
 					<div className="flex items-center gap-4">
 						<div
 							className={cn(
-								"size-12 rounded-2xl flex items-center justify-center transition-colors",
+								"flex size-12 items-center justify-center rounded-2xl transition-colors",
 								currentStreak > 0
 									? "bg-orange-500/15 text-orange-500"
 									: "bg-muted text-muted-foreground",
@@ -39,12 +39,12 @@ export function StreakCard() {
 							/>
 						</div>
 						<div className="flex-1">
-							<p className="text-lg font-extrabold tabular-nums">
+							<p className="font-extrabold text-lg tabular-nums">
 								{currentStreak > 0
 									? `${currentStreak} day streak`
 									: "No streak yet"}
 							</p>
-							<p className="text-xs text-muted-foreground mt-0.5">
+							<p className="mt-0.5 text-muted-foreground text-xs">
 								{practicedToday
 									? "Studied today! Keep it going."
 									: currentStreak > 0
@@ -55,7 +55,7 @@ export function StreakCard() {
 								<Button
 									size="sm"
 									variant="outline"
-									className="mt-3 h-8 text-xs gap-1.5"
+									className="mt-3 h-8 gap-1.5 text-xs"
 									onClick={() => router.push("/quiz")}
 								>
 									<HugeiconsIcon icon={PlayFreeIcons} className="size-3.5" />

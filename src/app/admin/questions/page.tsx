@@ -90,14 +90,14 @@ export default function AdminQuestionsPage() {
 	];
 
 	return (
-		<div className="min-h-[100dvh] bg-background p-6 max-w-4xl mx-auto space-y-6">
+		<div className="mx-auto min-h-dvh max-w-4xl space-y-6 bg-background p-6">
 			<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
 				<header>
-					<h2 className="font-heading text-sm font-medium">
+					<h2 className="font-heading font-medium text-sm">
 						Question Engine Admin
 					</h2>
 				</header>
-				<div className="px-4 group-data-[size=sm]/card:px-3 space-y-4">
+				<div className="space-y-4 px-4 group-data-[size=sm]/card:px-3">
 					<div className="flex gap-2">
 						<Input
 							value={subject}
@@ -127,7 +127,7 @@ export default function AdminQuestionsPage() {
 
 			{isLoading && (
 				<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
-					<div className="px-4 group-data-[size=sm]/card:px-3 p-6 space-y-4">
+					<div className="space-y-4 p-6 px-4 group-data-[size=sm]/card:px-3">
 						<Skeleton className="h-6 w-3/4" />
 						<Skeleton className="h-4 w-1/2" />
 						<Skeleton className="h-24 w-full" />
@@ -144,34 +144,30 @@ export default function AdminQuestionsPage() {
 						key={itemKey}
 						className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors"
 					>
-						<div className="px-4 group-data-[size=sm]/card:px-3 p-4">
-							<div
-								role="button"
+						<div className="p-4 px-4 group-data-[size=sm]/card:px-3">
+							<button
+								type="button"
 								tabIndex={0}
-								className="flex items-center gap-3 cursor-pointer"
+								className="flex cursor-pointer items-center gap-3"
 								onClick={() => setExpandedId(isExpanded ? null : itemKey)}
-								onKeyDown={(e) => {
-									if (e.key === "Enter" || e.key === " ") {
-										setExpandedId(isExpanded ? null : itemKey);
-									}
-								}}
+								aria-expanded={isExpanded}
 							>
 								<Badge variant="outline" className="font-mono text-xs">
 									{q.type}
 								</Badge>
-								<span className="text-sm font-medium truncate flex-1">
+								<span className="flex-1 truncate font-medium text-sm">
 									{q.questionText.slice(0, 120)}...
 								</span>
-							</div>
+							</button>
 							{isExpanded && (
-								<div className="pt-4 space-y-4 border-t mt-3">
+								<div className="mt-3 space-y-4 border-t pt-4">
 									<div className="text-sm">
 										<MarkdownRenderer
 											content={q.questionText}
 											subject={subject}
 										/>
 									</div>
-									<div className="grid grid-cols-2 gap-4 text-xs text-muted-foreground">
+									<div className="grid grid-cols-2 gap-4 text-muted-foreground text-xs">
 										<div>
 											<span className="font-medium">Difficulty:</span>{" "}
 											{q.difficulty}
@@ -188,13 +184,13 @@ export default function AdminQuestionsPage() {
 										</div>
 									</div>
 									<div className="rounded-lg bg-muted/30 p-3 text-sm">
-										<p className="font-medium text-xs text-muted-foreground mb-1">
+										<p className="mb-1 font-medium text-muted-foreground text-xs">
 											Hint:
 										</p>
 										{q.hint}
 									</div>
 									<div className="rounded-lg bg-success/10 p-3 text-sm">
-										<p className="font-medium text-xs text-muted-foreground mb-1">
+										<p className="mb-1 font-medium text-muted-foreground text-xs">
 											Explanation:
 										</p>
 										<MarkdownRenderer
@@ -204,12 +200,12 @@ export default function AdminQuestionsPage() {
 									</div>
 									{q.steps && q.steps.length > 0 && (
 										<div className="rounded-lg bg-muted/20 p-3 text-sm">
-											<p className="font-medium text-xs text-muted-foreground mb-1">
+											<p className="mb-1 font-medium text-muted-foreground text-xs">
 												Steps:
 											</p>
-											<ol className="list-decimal list-inside space-y-1">
-												{q.steps.map((s, si) => (
-													<li key={si}>{s}</li>
+											<ol className="list-inside list-decimal space-y-1">
+												{q.steps.map((s) => (
+													<li key={s}>{s}</li>
 												))}
 											</ol>
 										</div>

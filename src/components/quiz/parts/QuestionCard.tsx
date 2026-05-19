@@ -1,6 +1,5 @@
 "use client";
 
-import { AnimatePresence, m, motion } from "framer-motion";
 import { useCallback, useEffect, useState } from "react";
 import { Confetti, XPGainPopup } from "@/components/celebration";
 import { Anim } from "@/components/shared/anim";
@@ -8,8 +7,6 @@ import { useQuestionEngine } from "@/hooks/use-question-engine";
 import { useSolver } from "@/hooks/use-solver";
 import { useVisualEngine } from "@/hooks/use-visual-engine";
 import type { Question, UserAnswer } from "@/lib/question-engine/types";
-import { cn } from "@/lib/shared";
-import { iOSEase } from "@/lib/utils/animation";
 import { useBookmarksStore } from "@/store/bookmarks";
 import { useToolsStore } from "@/store/tools";
 
@@ -24,8 +21,6 @@ interface QuestionState {
 	code: string;
 }
 
-import { QuestionDiagram } from "../question-diagram";
-import { StepByStep } from "../step-by-step";
 import { QuestionCardControls } from "./QuestionCardControls";
 import { QuestionCardFeedback } from "./QuestionCardFeedback";
 import { QuestionCardHeader } from "./QuestionCardHeader";
@@ -103,7 +98,7 @@ export function QuestionCard({
 		if (solver.followUpData?.answer) {
 			setFollowUpMsgs((prev) => [
 				...prev,
-				{ role: "assistant", content: solver.followUpData!.answer },
+				{ role: "assistant", content: solver.followUpData?.answer },
 			]);
 		}
 	}, [solver.followUpData]);

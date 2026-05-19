@@ -44,13 +44,13 @@ export function SuccessBadge({ isAdmin }: { isAdmin: boolean }) {
 					</div>
 					<HugeiconsIcon
 						icon={SparklesIcon}
-						className="size-4 text-warning relative z-10"
+						className="relative z-10 size-4 text-warning"
 					/>
 				</div>
 			</m.div>
 
 			<m.div
-				className="absolute -bottom-1 -right-1"
+				className="absolute -right-1 -bottom-1"
 				initial={{ scale: 0, opacity: 0 }}
 				animate={{
 					scale: 1,
@@ -67,7 +67,7 @@ export function SuccessBadge({ isAdmin }: { isAdmin: boolean }) {
 				<Badge
 					variant={isAdmin ? "default" : "secondary"}
 					className={cn(
-						"gap-1 px-2 text-[10px] font-medium",
+						"gap-1 px-2 font-medium text-[10px]",
 						isAdmin && "bg-success/20 text-success-foreground",
 					)}
 				>

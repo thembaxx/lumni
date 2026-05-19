@@ -281,7 +281,7 @@ describe("useQuizSession", () => {
 			// Fire enough times to exceed maxTime (5)
 			for (let i = 0; i < 6; i++) {
 				act(() => {
-					capturedIntervalCallback!();
+					capturedIntervalCallback?.();
 				});
 			}
 		}

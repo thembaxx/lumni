@@ -50,7 +50,7 @@ export function MermaidDiagram({ code, label }: MermaidDiagramProps) {
 
 	if (error) {
 		return (
-			<div className="flex h-32 items-center justify-center rounded-lg border bg-muted/10 text-xs text-muted-foreground">
+			<div className="flex h-32 items-center justify-center rounded-lg border bg-muted/10 text-muted-foreground text-xs">
 				Could not render diagram
 			</div>
 		);
@@ -59,7 +59,7 @@ export function MermaidDiagram({ code, label }: MermaidDiagramProps) {
 	return (
 		<div className="flex flex-col gap-1">
 			{label && (
-				<p className="text-xs font-medium text-muted-foreground">{label}</p>
+				<p className="font-medium text-muted-foreground text-xs">{label}</p>
 			)}
 			<div className="overflow-auto rounded-lg border bg-background/20 p-4">
 				{loading && (

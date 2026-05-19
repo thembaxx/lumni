@@ -6,7 +6,7 @@ import {
 	GridIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m, motion } from "framer-motion";
+import { m } from "framer-motion";
 import { startTransition, useState } from "react";
 import { Anim } from "@/components/shared/anim";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -66,12 +66,12 @@ export function TabNav({
 					}}
 				>
 					<TabsList
-						className="bg-secondary/60 backdrop-blur-md border border-border/40 p-1 grid grid-cols-3 rounded-2xl h-12 relative shadow-sm"
+						className="relative grid h-12 grid-cols-3 rounded-2xl border border-border/40 bg-secondary/60 p-1 shadow-sm backdrop-blur-md"
 						role="tablist"
 					>
 						<span
 							className={cn(
-								"absolute top-0.5 bottom-0.5 bg-background rounded-xl shadow-sm transition-[left,width] duration-300 ease-ios border border-border/30",
+								"absolute top-0.5 bottom-0.5 rounded-xl border border-border/30 bg-background shadow-sm transition-[left,width] duration-300 ease-ios",
 								activeTab === "today"
 									? "left-0.5 w-[calc(33.33%-4px)]"
 									: activeTab === "spaces"
@@ -86,7 +86,7 @@ export function TabNav({
 								key={tab.value}
 								value={tab.value}
 								className={cn(
-									"relative z-10 px-4 h-10 rounded-xl text-xs font-medium transition-[color,transform] duration-200 active:scale-[0.96] tab-trigger-item",
+									"tab-trigger-item relative z-10 h-10 rounded-xl px-4 font-medium text-xs transition-[color,transform] duration-200 active:scale-[0.96]",
 									activeTab === tab.value
 										? "text-foreground"
 										: "text-muted-foreground hover:text-foreground",

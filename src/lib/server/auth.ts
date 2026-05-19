@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { Account, Client, Databases, Query } from "node-appwrite";
+import { Account, Client } from "node-appwrite";
 import { APPWRITE_ENDPOINT, APPWRITE_PROJECT } from "@/lib/appwrite";
 
 export async function verifyAuth(userId: string): Promise<void> {

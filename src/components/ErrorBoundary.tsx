@@ -1,10 +1,6 @@
 "use client";
 
-import React, {
-	type ComponentType,
-	PropsWithChildren,
-	type ReactNode,
-} from "react";
+import React, { type ComponentType, type ReactNode } from "react";
 
 interface ErrorBoundaryProps {
 	fallback?: ComponentType<{ error: Error; resetError: () => void }>;
@@ -60,7 +56,7 @@ const ErrorFallback: ComponentType<{
 	return (
 		<div className="flex min-h-[20rem] flex-col items-center justify-center p-6">
 			<h2 className="mb-4 text-foreground text-xl">Something went wrong.</h2>
-			<p className="mb-6 text-muted-foreground max-w-xl text-center">
+			<p className="mb-6 max-w-xl text-center text-muted-foreground">
 				{error.message}
 			</p>
 			<button onClick={resetError} className="btn btn-primary">

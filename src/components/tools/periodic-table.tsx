@@ -74,14 +74,9 @@ const ElementCard = memo(
 					ease: elementEaseOutQuint,
 				}}
 				whileTap={isActive ? { scale: 0.95 } : {}}
-				className={`
-          relative flex flex-col items-center justify-center
-          ${getBg(el.category)}
-          rounded-2xl border border-white/10
-          aspect-square p-2 cursor-pointer
-        `}
+				className={`relative flex flex-col items-center justify-center ${getBg(el.category)}rounded-2xl aspect-square cursor-pointer border border-white/10 p-2`}
 			>
-				<span className="absolute top-1.5 left-2 text-[10px] font-extrabold opacity-50 tabular-nums">
+				<span className="absolute top-1.5 left-2 font-extrabold text-[10px] tabular-nums opacity-50">
 					{el.atomicNumber}
 				</span>
 				<motion.span
@@ -90,11 +85,11 @@ const ElementCard = memo(
 				>
 					{el.symbol}
 				</motion.span>
-				<span className="text-[9px] opacity-60 mt-0.5 text-center leading-tight">
+				<span className="mt-0.5 text-center text-[9px] leading-tight opacity-60">
 					{el.name}
 				</span>
 				<div
-					className="absolute inset-0 rounded-2xl pointer-events-none"
+					className="pointer-events-none absolute inset-0 rounded-2xl"
 					style={{
 						background:
 							"radial-gradient(circle at 50% 0%, oklch(100% 0 0 / 0.12) 0%, transparent 50%)",
@@ -172,13 +167,13 @@ export function PeriodicTable() {
 
 	return (
 		<div
-			className="h-full flex flex-col overflow-y-auto px-5"
+			className="flex h-full flex-col overflow-y-auto px-5"
 			style={{
 				backgroundImage:
 					"radial-gradient(ellipse at 50% 0%, oklch(52.5% 0.142 274° / 0.08) 0%, transparent 60%)",
 			}}
 		>
-			<div className="max-w-5xl mx-auto w-full">
+			<div className="mx-auto w-full max-w-5xl">
 				<div className="pt-5 pb-3">
 					<h2 className="ios-title-3 flex items-center gap-2 text-[--system-text-primary]">
 						<svg
@@ -194,7 +189,7 @@ export function PeriodicTable() {
 						</svg>
 						Periodic Table
 					</h2>
-					<p className="ios-subhead text-[--system-text-secondary] mt-1">
+					<p className="ios-subhead mt-1 text-[--system-text-secondary]">
 						Explore the elements — search, filter, and learn.
 					</p>
 				</div>
@@ -207,7 +202,7 @@ export function PeriodicTable() {
 				>
 					<HugeiconsIcon
 						icon={Search01Icon}
-						className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-muted-foreground/70"
+						className="absolute top-1/2 left-4 size-5 -translate-y-1/2 text-muted-foreground/70"
 					/>
 					<Input
 						type="text"
@@ -216,12 +211,7 @@ export function PeriodicTable() {
 						onChange={(e) => setSearchQuery(e.target.value)}
 						onFocus={() => setIsSearchFocused(true)}
 						onBlur={() => setIsSearchFocused(false)}
-						className={`
-              w-full pl-12 pr-10 py-3 rounded-2xl
-              bg-[--system-fill] border border-[--system-separator]
-              text-foreground placeholder-muted-foreground text-sm
-              focus-visible:border-[--system-accent]/50 focus-visible:ring-2 focus-visible:ring-[--system-accent]/20
-              ${isSearchFocused ? "bg-[--system-background-secondary] border-[--system-accent]/30" : ""}
+						className={`w-full rounded-2xl border border-[--system-separator] bg-[--system-fill] py-3 pr-10 pl-12 text-foreground text-sm placeholder-muted-foreground focus-visible:border-[--system-accent]/50 focus-visible:ring-2 focus-visible:ring-[--system-accent]/20 ${isSearchFocused ? "border-[--system-accent]/30 bg-[--system-background-secondary]" : ""}
             `}
 					/>
 					{searchQuery && (
@@ -230,7 +220,7 @@ export function PeriodicTable() {
 							animate={{ opacity: 1, scale: 1 }}
 							exit={{ opacity: 0, scale: 0.5 }}
 							onClick={() => setSearchQuery("")}
-							className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-white/10"
+							className="absolute top-1/2 right-3 -translate-y-1/2 rounded-full p-1 hover:bg-white/10"
 							whileTap={{ scale: 0.95 }}
 						>
 							<HugeiconsIcon
@@ -250,20 +240,17 @@ export function PeriodicTable() {
 						duration: 0.35,
 						ease: elementEaseOutQuart,
 					}}
-					className="flex gap-2 overflow-x-auto pb-3 mb-4 scrollbar-hide"
+					className="scrollbar-hide mb-4 flex gap-2 overflow-x-auto pb-3"
 				>
 					<motion.button
 						onClick={() =>
 							setActiveCategory(activeCategory === null ? null : null)
 						}
-						className={`
-              shrink-0 px-3 py-1.5 rounded-full text-xs font-medium
-              border transition-colors duration-200
-              ${
-								activeCategory === null
-									? "bg-[--system-fill] border-[--system-separator] text-foreground"
-									: "bg-[--system-fill-secondary] border-[--system-separator] text-muted-foreground hover:bg-[--system-fill]"
-							}
+						className={`shrink-0 rounded-full border px-3 py-1.5 font-medium text-xs transition-colors duration-200 ${
+							activeCategory === null
+								? "border-[--system-separator] bg-[--system-fill] text-foreground"
+								: "border-[--system-separator] bg-[--system-fill-secondary] text-muted-foreground hover:bg-[--system-fill]"
+						}
             `}
 						whileTap={{ scale: 0.95 }}
 					>
@@ -282,13 +269,10 @@ export function PeriodicTable() {
 								duration: 0.3,
 								ease: elementEaseOutQuint,
 							}}
-							className={`
-              shrink-0 px-3 py-1.5 rounded-full text-xs font-medium
-              border transition-colors duration-200 flex items-center gap-1.5
-              ${
+							className={`flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1.5 font-medium text-xs transition-colors duration-200 ${
 								activeCategory === key
-									? "bg-[--system-fill] border-[--system-separator] text-foreground"
-									: "bg-[--system-fill-secondary] border-[--system-separator] text-muted-foreground hover:bg-[--system-fill]"
+									? "border-[--system-separator] bg-[--system-fill] text-foreground"
+									: "border-[--system-separator] bg-[--system-fill-secondary] text-muted-foreground hover:bg-[--system-fill]"
 							}
             `}
 							whileTap={{ scale: 0.95 }}
@@ -354,18 +338,14 @@ export function PeriodicTable() {
 								ease: elementEaseOutExpo,
 							}}
 							onClick={(e) => e.stopPropagation()}
-							className={`
-                relative w-full max-w-md rounded-3xl overflow-hidden
-                bg-linear-to-b from-[oklch(11.8%_0.005_264°)] to-[oklch(7.8%_0.003_264°)]
-                border
-              `}
+							className={`relative w-full max-w-md overflow-hidden rounded-3xl border bg-linear-to-b from-[oklch(11.8%_0.005_264°)] to-[oklch(7.8%_0.003_264°)]`}
 							style={{
 								borderColor: `oklch(${elementCategoryConfig[selectedElement.category]?.rgb} / 0.25)`,
 								boxShadow: `0 0 80px oklch(${elementCategoryConfig[selectedElement.category]?.rgb} / 0.2), 0 0 160px oklch(${elementCategoryConfig[selectedElement.category]?.rgb} / 0.08)`,
 							}}
 						>
 							<div
-								className={`absolute top-0 left-0 right-0 h-1`}
+								className={`absolute top-0 right-0 left-0 h-1`}
 								style={{
 									background: `linear-gradient(90deg, oklch(${elementCategoryConfig[selectedElement.category]?.rgb} / 0.6), oklch(${elementCategoryConfig[selectedElement.category]?.rgb} / 1))`,
 								}}
@@ -373,7 +353,7 @@ export function PeriodicTable() {
 
 							<motion.button
 								onClick={() => setSelectedElement(null)}
-								className="absolute top-4 right-4 p-2 rounded-xl bg-white/5 hover:bg-white/10 z-10"
+								className="absolute top-4 right-4 z-10 rounded-xl bg-white/5 p-2 hover:bg-white/10"
 								whileHover={{
 									scale: 1.1,
 									backgroundColor: "oklch(100% 0 0 / 0.15)",
@@ -393,7 +373,7 @@ export function PeriodicTable() {
 										duration: 0.35,
 										ease: elementEaseOutQuint,
 									}}
-									className="flex items-start gap-5 mb-6"
+									className="mb-6 flex items-start gap-5"
 								>
 									<motion.div
 										initial={{ scale: 0.8, rotate: -10 }}
@@ -403,32 +383,30 @@ export function PeriodicTable() {
 											duration: 0.4,
 											ease: elementEaseOutBack,
 										}}
-										className={`
-                    size-20 rounded-2xl flex items-center justify-center
-                    ${getBg(selectedElement.category)}
+										className={`flex size-20 items-center justify-center rounded-2xl ${getBg(selectedElement.category)}
                   `}
 										style={{
 											boxShadow: `0 0 30px oklch(${elementCategoryConfig[selectedElement.category]?.rgb} / 0.5), 0 0 60px oklch(${elementCategoryConfig[selectedElement.category]?.rgb} / 0.25)`,
 										}}
 									>
-										<span className="text-3xl font-extrabold text-white">
+										<span className="font-extrabold text-3xl text-white">
 											{selectedElement.symbol}
 										</span>
 									</motion.div>
 									<div className="flex-1 pt-1">
-										<h2 className="text-2xl font-semibold mb-1">
+										<h2 className="mb-1 font-semibold text-2xl">
 											{selectedElement.name}
 										</h2>
-										<p className="text-sm text-muted-foreground/70">
+										<p className="text-muted-foreground/70 text-sm">
 											Atomic Number {selectedElement.atomicNumber}
 										</p>
-										<p className="text-sm text-muted-foreground/70 tabular-nums">
+										<p className="text-muted-foreground/70 text-sm tabular-nums">
 											{selectedElement.atomicMass} u
 										</p>
 									</div>
 								</motion.div>
 
-								<div className="grid grid-cols-2 gap-3 mb-4">
+								<div className="mb-4 grid grid-cols-2 gap-3">
 									<motion.div
 										initial={{ opacity: 0, y: 15 }}
 										animate={{ opacity: 1, y: 0 }}
@@ -437,9 +415,9 @@ export function PeriodicTable() {
 											duration: 0.3,
 											ease: elementEaseOutQuart,
 										}}
-										className="p-4 rounded-xl bg-white/5 border border-white/5"
+										className="rounded-xl border border-white/5 bg-white/5 p-4"
 									>
-										<p className="text-xs text-muted-foreground mb-1.5">
+										<p className="mb-1.5 text-muted-foreground text-xs">
 											Category
 										</p>
 										<p className="font-semibold text-sm">
@@ -455,9 +433,9 @@ export function PeriodicTable() {
 											duration: 0.3,
 											ease: elementEaseOutQuart,
 										}}
-										className="p-4 rounded-xl bg-white/5 border border-white/5"
+										className="rounded-xl border border-white/5 bg-white/5 p-4"
 									>
-										<p className="text-xs text-muted-foreground mb-1.5">
+										<p className="mb-1.5 text-muted-foreground text-xs">
 											Electron Config
 										</p>
 										<p className="font-semibold text-sm">
@@ -474,15 +452,15 @@ export function PeriodicTable() {
 										duration: 0.3,
 										ease: elementEaseOutQuart,
 									}}
-									className="p-4 rounded-xl bg-white/5 border border-white/5"
+									className="rounded-xl border border-white/5 bg-white/5 p-4"
 								>
-									<p className="text-xs text-muted-foreground mb-1.5">
+									<p className="mb-1.5 text-muted-foreground text-xs">
 										Discovery
 									</p>
-									<p className="font-semibold text-sm mb-1">
+									<p className="mb-1 font-semibold text-sm">
 										{selectedElement.discoveryYear}
 									</p>
-									<p className="text-xs text-muted-foreground/70 leading-relaxed">
+									<p className="text-muted-foreground/70 text-xs leading-relaxed">
 										{selectedElement.namedAfter}
 									</p>
 								</motion.div>
@@ -496,12 +474,12 @@ export function PeriodicTable() {
 											duration: 0.3,
 											ease: elementEaseOutQuart,
 										}}
-										className="p-4 rounded-xl bg-white/5 border border-white/5"
+										className="rounded-xl border border-white/5 bg-white/5 p-4"
 									>
-										<p className="text-xs text-muted-foreground mb-1.5">
+										<p className="mb-1.5 text-muted-foreground text-xs">
 											Did You Know?
 										</p>
-										<p className="text-sm text-muted-foreground/80 leading-relaxed">
+										<p className="text-muted-foreground/80 text-sm leading-relaxed">
 											{interestingFact}
 										</p>
 									</motion.div>

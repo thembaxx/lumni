@@ -1,7 +1,6 @@
 "use client";
 
-import { m, motion } from "framer-motion";
-import { useCallback } from "react";
+import { m } from "framer-motion";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Button } from "@/components/ui/button";
 import {
@@ -124,14 +123,14 @@ export function QuestionCardInput({
 									type="button"
 									onClick={() => handleMCQSelect(option.id)}
 									className={cn(
-										"quiz-option-btn flex w-full items-center gap-3 rounded-lg border border-border bg-card p-4 text-left h-auto",
+										"quiz-option-btn flex h-auto w-full items-center gap-3 rounded-lg border border-border bg-card p-4 text-left",
 										isSelected &&
 											"border-[--system-accent] bg-[--system-accent]/10",
 									)}
 								>
 									<span
 										className={cn(
-											"flex h-6 w-6 items-center justify-center rounded-full border text-sm font-medium",
+											"flex h-6 w-6 items-center justify-center rounded-full border font-medium text-sm",
 											isSelected
 												? "border-[--system-accent] bg-[--system-accent] text-background"
 												: "border-muted-foreground/30",
@@ -257,7 +256,7 @@ export function QuestionCardInput({
 			const body = question as Record<string, unknown>;
 			const qBody = body.body as Record<string, unknown>;
 			return (
-				<div className="text-center text-muted-foreground text-sm py-4">
+				<div className="py-4 text-center text-muted-foreground text-sm">
 					{(qBody.instructions as string | undefined) ||
 						"Interact with the diagram above and submit your answer."}
 				</div>
@@ -301,14 +300,14 @@ export function QuestionCardInput({
 							subject={effectiveSubject}
 						/>
 						{!!source?.attribution && (
-							<p className="text-xs text-muted-foreground mt-2">
+							<p className="mt-2 text-muted-foreground text-xs">
 								— {String(source.attribution)}
 							</p>
 						)}
 					</div>
 					{subQuestions?.map((sq, i: number) => (
 						<div key={i} className="rounded-lg border p-3">
-							<p className="text-sm font-medium mb-2">
+							<p className="mb-2 font-medium text-sm">
 								{String((sq as Record<string, unknown>).questionText ?? "")}
 							</p>
 						</div>
@@ -341,14 +340,14 @@ export function QuestionCardInput({
 				| undefined;
 			return (
 				<div className="flex flex-col gap-3">
-					<div className="rounded-lg bg-muted/30 p-4 text-sm font-mono whitespace-pre-wrap">
+					<div className="whitespace-pre-wrap rounded-lg bg-muted/30 p-4 font-mono text-sm">
 						{typeof qBody.data === "string"
 							? qBody.data
 							: JSON.stringify(qBody.data, null, 2)}
 					</div>
 					{questions?.map((q, i: number) => (
 						<div key={i} className="rounded-lg border p-3">
-							<p className="text-sm font-medium mb-2">
+							<p className="mb-2 font-medium text-sm">
 								{String((q as Record<string, unknown>).questionText ?? "")}
 							</p>
 						</div>
@@ -383,9 +382,9 @@ export function QuestionCardInput({
 						const p = part as Record<string, unknown>;
 						return (
 							<div key={String(p.id)} className="rounded-lg border p-3">
-								<p className="text-sm font-medium mb-2">
+								<p className="mb-2 font-medium text-sm">
 									{i + 1}. {String(p.questionText ?? "")}{" "}
-									<span className="text-xs text-muted-foreground">
+									<span className="text-muted-foreground text-xs">
 										({String(p.points ?? "")} pts)
 									</span>
 								</p>

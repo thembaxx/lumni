@@ -2,13 +2,12 @@
 
 import { RadialIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { cn } from "@/lib/shared";
 
 interface Subject {
 	id: string;
@@ -87,7 +86,7 @@ function SubjectCheckboxItem({
 }) {
 	return (
 		<motion.label
-			className="flex items-center gap-3 p-3 cursor-pointer hover:bg-muted/50 transition-colors"
+			className="flex cursor-pointer items-center gap-3 p-3 transition-colors hover:bg-muted/50"
 			initial={{ opacity: 0 }}
 			animate={{ opacity: 1 }}
 			whileHover={{ backgroundColor: "oklch(0% 0 0 / 0.02)" }}
@@ -119,7 +118,7 @@ export function ExamFilters({
 			</CardHeader>
 			<CardContent className="flex flex-col gap-6">
 				<div className="flex flex-col gap-3">
-					<Label className="text-sm font-medium text-foreground">Year</Label>
+					<Label className="font-medium text-foreground text-sm">Year</Label>
 					<div className="flex flex-wrap gap-1">
 						{YEARS.map((year) => (
 							<AnimatedYearButton
@@ -134,7 +133,7 @@ export function ExamFilters({
 
 				<div className="flex flex-col gap-3">
 					<div className="flex items-center justify-between">
-						<Label className="text-sm font-medium text-foreground">
+						<Label className="font-medium text-foreground text-sm">
 							Subjects
 						</Label>
 						<motion.div
@@ -151,7 +150,7 @@ export function ExamFilters({
 										? onDeselectAll
 										: onSelectAll
 								}
-								className="text-sm font-medium text-foreground hover:underline"
+								className="font-medium text-foreground text-sm hover:underline"
 							>
 								{selectedSubjects.size === subjects.length
 									? "Deselect all"
@@ -159,7 +158,7 @@ export function ExamFilters({
 							</Button>
 						</motion.div>
 					</div>
-					<div className="border rounded-lg divide-y max-h-48 overflow-y-auto">
+					<div className="max-h-48 divide-y overflow-y-auto rounded-lg border">
 						{isLoading ? (
 							<div className="flex items-center justify-center p-4">
 								<HugeiconsIcon
@@ -181,7 +180,7 @@ export function ExamFilters({
 				</div>
 
 				<div className="flex flex-col gap-3">
-					<Label className="text-sm font-medium text-foreground">
+					<Label className="font-medium text-foreground text-sm">
 						Exam Type
 					</Label>
 					<div className="flex gap-1">
@@ -208,7 +207,7 @@ export function ExamFilters({
 				<div className="flex items-center justify-between py-2">
 					<div>
 						<Label className="text-sm">Include Memo</Label>
-						<p className="text-xs text-muted-foreground">
+						<p className="text-muted-foreground text-xs">
 							With marking guidelines
 						</p>
 					</div>

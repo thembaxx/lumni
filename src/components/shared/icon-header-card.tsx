@@ -25,7 +25,7 @@ export function IconHeaderCard({
 	return (
 		<Card
 			className={cn(
-				isHighlighted && "bg-[--system-accent]/5 border-[--system-accent]/20",
+				isHighlighted && "border-[--system-accent]/20 bg-[--system-accent]/5",
 				className,
 			)}
 		>

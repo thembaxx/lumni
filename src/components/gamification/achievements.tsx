@@ -16,13 +16,13 @@ export function Achievements({ achievements }: AchievementsProps) {
 	return (
 		<div className="flex flex-col gap-3">
 			<div className="flex items-center justify-between">
-				<h3 className="text-sm font-semibold text-foreground">Achievements</h3>
-				<span className="text-xs text-muted-foreground">
+				<h3 className="font-semibold text-foreground text-sm">Achievements</h3>
+				<span className="text-muted-foreground text-xs">
 					{earnedCount} / {achievements.length}
 				</span>
 			</div>
 
-			<div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+			<div className="scrollbar-hide flex gap-2 overflow-x-auto pb-2">
 				{earnedAchievements.slice(0, 6).map((achievement, index) => (
 					<motion.button
 						key={achievement.id}
@@ -31,7 +31,7 @@ export function Achievements({ achievements }: AchievementsProps) {
 						transition={{ delay: index * 0.05 }}
 						whileHover={{ scale: 1.08 }}
 						whileTap={{ scale: 0.95 }}
-						className={`relative shrink-0 size-14 rounded-xl border-2 ${rarityColors[achievement.rarity]} ${rarityGlow[achievement.rarity]} shadow-lg flex items-center justify-center transition-transform`}
+						className={`relative size-14 shrink-0 rounded-xl border-2 ${rarityColors[achievement.rarity]} ${rarityGlow[achievement.rarity]} flex items-center justify-center shadow-lg transition-transform`}
 						title={`${achievement.name}: ${achievement.description}`}
 					>
 						<span className="text-2xl">{achievement.icon}</span>
@@ -54,7 +54,7 @@ export function Achievements({ achievements }: AchievementsProps) {
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 0.5 }}
 						transition={{ delay: (earnedAchievements.length + index) * 0.05 }}
-						className="relative shrink-0 size-14 rounded-xl border-2 border-dashed border-border bg-muted/30 flex items-center justify-center"
+						className="relative flex size-14 shrink-0 items-center justify-center rounded-xl border-2 border-border border-dashed bg-muted/30"
 						title={`Locked: ${achievement.name}`}
 					>
 						<span className="text-xl grayscale">🔒</span>
@@ -65,7 +65,7 @@ export function Achievements({ achievements }: AchievementsProps) {
 					<motion.div
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 0.7 }}
-						className="shrink-0 size-14 rounded-xl border border-border bg-muted/30 flex items-center justify-center text-xs text-muted-foreground"
+						className="flex size-14 shrink-0 items-center justify-center rounded-xl border border-border bg-muted/30 text-muted-foreground text-xs"
 					>
 						+{achievements.length - 9}
 					</motion.div>

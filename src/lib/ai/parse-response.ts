@@ -13,7 +13,7 @@ export function cleanResponse(content: string): string {
 
 export function parseAIResponse<T>(
 	result: AIResult,
-	fallback: T,
+	_fallback: T,
 ): { data: T; raw: string } | null {
 	if (isAIFailure(result)) return null;
 	const raw = cleanResponse((result as AIResponse).content);

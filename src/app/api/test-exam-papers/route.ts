@@ -1,4 +1,3 @@
-import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { COLLECTIONS, listDocuments } from "@/lib/db/client";
 

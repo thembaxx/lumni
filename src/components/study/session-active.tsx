@@ -1,10 +1,6 @@
 "use client";
 
-import {
-	Home01Icon,
-	Target01Icon,
-	Timer01Icon,
-} from "@hugeicons/core-free-icons";
+import { Target01Icon, Timer01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -40,21 +36,21 @@ export function SessionActive({
 	const progressValue = activity?.progress ?? 0;
 
 	return (
-		<div className="min-h-[100dvh] bg-background p-4 flex flex-col gap-4">
-			<div className="flex items-center justify-between gap-2 flex-wrap">
+		<div className="flex min-h-[100dvh] flex-col gap-4 bg-background p-4">
+			<div className="flex flex-wrap items-center justify-between gap-2">
 				{onQuit && (
 					<Button variant="ghost" size="sm" onClick={onQuit}>
 						Quit
 					</Button>
 				)}
 				{activity && (
-					<div className="flex items-center gap-2 flex-wrap">
-						<div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-muted/50">
+					<div className="flex flex-wrap items-center gap-2">
+						<div className="flex items-center gap-1.5 rounded-full bg-muted/50 px-2.5 py-1">
 							<HugeiconsIcon
 								icon={Timer01Icon}
 								className="size-3.5 text-muted-foreground"
 							/>
-							<span className="text-sm font-medium tabular-nums font-mono">
+							<span className="font-medium font-mono text-sm tabular-nums">
 								{formatTime(activity.elapsedTime)}
 							</span>
 						</div>
@@ -70,7 +66,7 @@ export function SessionActive({
 										icon={Target01Icon}
 										className="size-3.5 text-success"
 									/>
-									<span className="text-sm font-semibold tabular-nums font-mono text-success">
+									<span className="font-mono font-semibold text-sm text-success tabular-nums">
 										{activity.accuracy}%
 									</span>
 								</div>

@@ -5,11 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Anim } from "@/components/shared/anim";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
-import {
-	iOSAccelerate,
-	iOSDecelerate,
-	pageSpring,
-} from "@/lib/utils/animation";
+import { iOSAccelerate, iOSDecelerate } from "@/lib/utils/animation";
 
 interface PageTransitionProps {
 	children: React.ReactNode;

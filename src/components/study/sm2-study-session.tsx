@@ -1,13 +1,8 @@
 "use client";
 
-import {
-	BrainIcon,
-	Cancel01Icon,
-	CheckmarkCircle01Icon,
-	UndoIcon,
-} from "@hugeicons/core-free-icons";
+import { BrainIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -26,12 +21,12 @@ export function SM2StudySession({ subject }: { subject?: string }) {
 
 	if (allCards.length === 0) {
 		return (
-			<div className="text-center py-12">
+			<div className="py-12 text-center">
 				<HugeiconsIcon
 					icon={BrainIcon}
-					className="size-12 mx-auto text-muted-foreground mb-4"
+					className="mx-auto mb-4 size-12 text-muted-foreground"
 				/>
-				<h3 className="text-xl font-semibold mb-2">All Caught Up! 🎉</h3>
+				<h3 className="mb-2 font-semibold text-xl">All Caught Up! 🎉</h3>
 				<p className="text-muted-foreground">
 					No cards due for review. Add more flashcards or come back later.
 				</p>
@@ -41,13 +36,13 @@ export function SM2StudySession({ subject }: { subject?: string }) {
 
 	if (sessionComplete) {
 		return (
-			<div className="text-center py-12">
-				<div className="text-6xl mb-4">🎉</div>
-				<h3 className="text-xl font-semibold mb-2">Session Complete!</h3>
-				<p className="text-muted-foreground mb-4">
+			<div className="py-12 text-center">
+				<div className="mb-4 text-6xl">🎉</div>
+				<h3 className="mb-2 font-semibold text-xl">Session Complete!</h3>
+				<p className="mb-4 text-muted-foreground">
 					You reviewed {reviewed} card{reviewed !== 1 ? "s" : ""}.
 				</p>
-				<p className="text-sm text-muted-foreground">
+				<p className="text-muted-foreground text-sm">
 					{stats.due} more cards due later
 				</p>
 			</div>
@@ -67,9 +62,9 @@ export function SM2StudySession({ subject }: { subject?: string }) {
 	};
 
 	return (
-		<div className="max-w-xl mx-auto">
+		<div className="mx-auto max-w-xl">
 			<div className="mb-4 flex items-center justify-between">
-				<span className="text-sm text-muted-foreground">
+				<span className="text-muted-foreground text-sm">
 					Card {currentIndex + 1} of {allCards.length}
 				</span>
 				<div className="flex gap-2">
@@ -83,18 +78,18 @@ export function SM2StudySession({ subject }: { subject?: string }) {
 			</div>
 
 			<Card className="min-h-[300px] p-0">
-				<CardContent className="flex flex-col items-center justify-center min-h-[300px] p-6">
-					<p className="text-lg text-center mb-8 font-medium">
+				<CardContent className="flex min-h-[300px] flex-col items-center justify-center p-6">
+					<p className="mb-8 text-center font-medium text-lg">
 						{currentCard?.front}
 					</p>
 
 					{showAnswer ? (
 						<div className="w-full">
-							<div className="p-4 bg-muted rounded-lg mb-6 text-center">
+							<div className="mb-6 rounded-lg bg-muted p-4 text-center">
 								<p className="text-lg">{currentCard?.back}</p>
 							</div>
 
-							<p className="text-sm text-muted-foreground text-center mb-4">
+							<p className="mb-4 text-center text-muted-foreground text-sm">
 								How well did you know this?
 							</p>
 
@@ -110,7 +105,7 @@ export function SM2StudySession({ subject }: { subject?: string }) {
 									</Button>
 								))}
 							</div>
-							<div className="grid grid-cols-3 gap-2 mt-2">
+							<div className="mt-2 grid grid-cols-3 gap-2">
 								{SM2_QUALITIES.slice(3).map((q) => (
 									<Button
 										key={q.quality}
@@ -163,33 +158,33 @@ export function FlashcardStats() {
 
 	return (
 		<div className="grid grid-cols-5 gap-2">
-			<div className="text-center p-2 bg-muted rounded">
-				<div className="text-lg font-extrabold">{stats.total}</div>
-				<div className="text-xs text-muted-foreground">Total</div>
+			<div className="rounded bg-muted p-2 text-center">
+				<div className="font-extrabold text-lg">{stats.total}</div>
+				<div className="text-muted-foreground text-xs">Total</div>
 			</div>
-			<div className="text-center p-2 bg-destructive/10 rounded">
-				<div className="text-lg font-extrabold text-destructive">
+			<div className="rounded bg-destructive/10 p-2 text-center">
+				<div className="font-extrabold text-destructive text-lg">
 					{stats.due}
 				</div>
-				<div className="text-xs text-destructive">Due</div>
+				<div className="text-destructive text-xs">Due</div>
 			</div>
-			<div className="text-center p-2 bg-warning/10 rounded">
-				<div className="text-lg font-extrabold text-warning">
+			<div className="rounded bg-warning/10 p-2 text-center">
+				<div className="font-extrabold text-lg text-warning">
 					{stats.learning}
 				</div>
-				<div className="text-xs text-warning">Learning</div>
+				<div className="text-warning text-xs">Learning</div>
 			</div>
-			<div className="text-center p-2 bg-success/10 rounded">
-				<div className="text-lg font-extrabold text-success">
+			<div className="rounded bg-success/10 p-2 text-center">
+				<div className="font-extrabold text-lg text-success">
 					{stats.mature}
 				</div>
-				<div className="text-xs text-success">Mastered</div>
+				<div className="text-success text-xs">Mastered</div>
 			</div>
-			<div className="text-center p-2 bg-muted rounded">
-				<div className="text-lg font-extrabold text-foreground">
+			<div className="rounded bg-muted p-2 text-center">
+				<div className="font-extrabold text-foreground text-lg">
 					{stats.new}
 				</div>
-				<div className="text-xs text-muted-foreground">New</div>
+				<div className="text-muted-foreground text-xs">New</div>
 			</div>
 		</div>
 	);

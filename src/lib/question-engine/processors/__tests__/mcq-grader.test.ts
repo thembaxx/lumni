@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import type { PromptManager } from "../../prompt-manager";
 import type { Question } from "../../types";
-import { grade, hint } from "../graders/mcq";
+import { grade } from "../graders/mcq";
 
 function makeQuestion(
 	overrides?: Partial<Question<"multiple-choice">>,

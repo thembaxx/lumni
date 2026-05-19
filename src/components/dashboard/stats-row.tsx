@@ -32,9 +32,9 @@ export function StatsRow() {
 	];
 
 	return (
-		<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+		<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
 			<Card className="overflow-hidden rounded-[1.5rem]">
-				<CardContent className="p-5 flex flex-col gap-4">
+				<CardContent className="flex flex-col gap-4 p-5">
 					<StreakFire streak={currentStreak} showMilestone />
 					<Achievements achievements={gamification.achievements} />
 				</CardContent>

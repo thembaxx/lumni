@@ -15,14 +15,14 @@ export function ProgressMilestones({
 }: ProgressMilestonesProps) {
 	return (
 		<div className="flex flex-col gap-3">
-			<h3 className="text-sm font-semibold text-foreground">
+			<h3 className="font-semibold text-foreground text-sm">
 				Streak Milestones
 			</h3>
 
 			<div className="relative">
-				<div className="absolute top-5 left-0 right-0 h-1 bg-secondary rounded-full" />
+				<div className="absolute top-5 right-0 left-0 h-1 rounded-full bg-secondary" />
 
-				<div className="flex justify-between relative">
+				<div className="relative flex justify-between">
 					{milestones.map((milestone, index) => {
 						const isUnlocked = milestone.unlocked;
 						const isCurrent =
@@ -38,12 +38,12 @@ export function ProgressMilestones({
 								className="flex flex-col items-center"
 							>
 								<motion.div
-									className={`relative z-10 flex size-10 items-center justify-center rounded-full border-4 transition-colors transition-border-color ${
+									className={`relative z-10 flex size-10 items-center justify-center rounded-full border-4 transition-border-color transition-colors ${
 										isUnlocked
-											? "bg-[--system-accent] border-[--system-accent] text-background"
+											? "border-[--system-accent] bg-[--system-accent] text-background"
 											: isCurrent
-												? "bg-[--system-accent]/20 border-[--system-accent]"
-												: "bg-card border-border"
+												? "border-[--system-accent] bg-[--system-accent]/20"
+												: "border-border bg-card"
 									}`}
 									whileHover={{ scale: 1.1 }}
 								>
@@ -56,7 +56,7 @@ export function ProgressMilestones({
 											✓
 										</motion.span>
 									) : (
-										<span className="text-xs font-medium text-muted-foreground">
+										<span className="font-medium text-muted-foreground text-xs">
 											{milestone.streak}
 										</span>
 									)}
@@ -64,7 +64,7 @@ export function ProgressMilestones({
 
 								<div className="mt-2 text-center">
 									<p
-										className={`text-xs font-medium ${
+										className={`font-medium text-xs ${
 											isUnlocked
 												? "text-[--system-accent]"
 												: "text-muted-foreground"
@@ -72,7 +72,7 @@ export function ProgressMilestones({
 									>
 										{milestone.streak} days
 									</p>
-									<p className="text-[10px] text-muted-foreground max-w-[60px] leading-tight">
+									<p className="max-w-[60px] text-[10px] text-muted-foreground leading-tight">
 										{milestone.reward.split(" ")[0]}
 									</p>
 								</div>

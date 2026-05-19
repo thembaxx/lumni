@@ -39,14 +39,14 @@ function HighlightedText({
 	const words = useMemo(() => text.split(" "), [text]);
 
 	return (
-		<p className="text-sm text-muted-foreground leading-relaxed text-pretty">
+		<p className="text-pretty text-muted-foreground text-sm leading-relaxed">
 			{words.map((word, index) => (
 				<span
 					key={`${currentWordIndex}-${index}`}
 					className={cn(
 						"transition-colors duration-150 ease-[var(--ease-ios)]",
 						index === currentWordIndex &&
-							"text-foreground font-medium bg-[--system-accent]/10 rounded px-0.5 -mx-0.5",
+							"-mx-0.5 rounded bg-[--system-accent]/10 px-0.5 font-medium text-foreground",
 					)}
 				>
 					{word}
@@ -103,14 +103,14 @@ function ExpandedContent({
 		<m.div
 			key={`${data.id}-open`}
 			layoutId={`card-${data.id}`}
-			className="fixed left-1/2 top-1/2 z-50 w-[calc(100%-2rem)] max-w-sm -translate-x-1/2 -translate-y-1/2"
+			className="fixed top-1/2 left-1/2 z-50 w-[calc(100%-2rem)] max-w-sm -translate-x-1/2 -translate-y-1/2"
 		>
-			<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors p-4 rounded-2xl bg-card text-card-foreground shadow-2xl shadow-black/20 max-h-[80dvh] overflow-y-auto">
+			<div className="max-h-[80dvh] overflow-hidden overflow-y-auto rounded-2xl rounded-[2.5rem] border border-border/80 bg-card bg-card p-4 text-card-foreground shadow-2xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] shadow-black/20 transition-colors">
 				<div className="flex flex-col gap-3">
-					<div className="flex justify-between items-start">
+					<div className="flex items-start justify-between">
 						<Badge
 							variant="outline"
-							className="px-3 py-0.5 text-xs font-medium bg-[--system-accent]/10 rounded-full"
+							className="rounded-full bg-[--system-accent]/10 px-3 py-0.5 font-medium text-xs"
 						>
 							{data.subject}
 						</Badge>
@@ -118,15 +118,15 @@ function ExpandedContent({
 					</div>
 
 					<div className="flex flex-col gap-1">
-						<h3 className="text-xl font-semibold leading-tight text-foreground text-wrap balance">
+						<h3 className="balance text-wrap font-semibold text-foreground text-xl leading-tight">
 							{data.title}
 						</h3>
 						<HighlightedText text={data.summary} currentWordIndex={-1} />
 					</div>
 
-					<div className="flex gap-2 items-center pt-2">
+					<div className="flex items-center gap-2 pt-2">
 						{isPlaying ? (
-							<Skeleton className="rounded-full inline-flex">
+							<Skeleton className="inline-flex rounded-full">
 								<ListenToLesson
 									text={data.summary}
 									onPlayingChange={onPlayingChange}
@@ -150,7 +150,7 @@ function ExpandedContent({
 						/>
 					</div>
 
-					<Button variant="outline" className="w-full mt-6" onClick={onClose}>
+					<Button variant="outline" className="mt-6 w-full" onClick={onClose}>
 						Close
 					</Button>
 				</div>
@@ -178,10 +178,10 @@ function CollapsedContent({
 
 	return (
 		<m.div key={`${data.id}-closed`} layoutId={`card-${data.id}`}>
-			<div className="p-5 rounded-2xl border bg-card text-card-foreground shadow-sm w-full text-left">
+			<div className="w-full rounded-2xl border bg-card p-5 text-left text-card-foreground shadow-sm">
 				<div
 					onClick={onOpen}
-					className="flex flex-col gap-3 cursor-pointer hover:border-[--system-accent]/20 transition-[scale,colors] duration-200 active:scale-[0.96]"
+					className="flex cursor-pointer flex-col gap-3 transition-[scale,colors] duration-200 hover:border-[--system-accent]/20 active:scale-[0.96]"
 					role="button"
 					tabIndex={0}
 					onKeyDown={(e) => {
@@ -192,10 +192,10 @@ function CollapsedContent({
 					}}
 					aria-label={`${data.title} - ${data.difficulty} topic`}
 				>
-					<div className="flex justify-between items-start">
+					<div className="flex items-start justify-between">
 						<Badge
 							variant="outline"
-							className="px-3 py-0.5 text-xs font-medium bg-[--system-accent]/10 rounded-full"
+							className="rounded-full bg-[--system-accent]/10 px-3 py-0.5 font-medium text-xs"
 						>
 							{data.subject}
 						</Badge>
@@ -203,7 +203,7 @@ function CollapsedContent({
 					</div>
 
 					<div className="flex flex-col gap-1">
-						<h3 className="text-md font-semibold leading-tight text-foreground text-wrap balance">
+						<h3 className="balance text-wrap font-semibold text-foreground text-md leading-tight">
 							{data.title}
 						</h3>
 						<HighlightedText
@@ -213,9 +213,9 @@ function CollapsedContent({
 					</div>
 				</div>
 
-				<div className="flex gap-2 items-center mt-3">
+				<div className="mt-3 flex items-center gap-2">
 					{isPlaying ? (
-						<Skeleton className="rounded-full inline-flex">
+						<Skeleton className="inline-flex rounded-full">
 							<ListenToLesson
 								text={data.summary}
 								onPlayingChange={onPlayingChange}

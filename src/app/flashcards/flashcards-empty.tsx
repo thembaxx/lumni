@@ -31,8 +31,8 @@ export function FlashcardsEmpty({
 			: `Upload some ${subject} questions to start studying and ace that exam!`;
 
 	return (
-		<div className="min-h-screen bg-background p-4 flex items-center justify-center">
-			<Card className="max-w-md w-full">
+		<div className="flex min-h-screen items-center justify-center bg-background p-4">
+			<Card className="w-full max-w-md">
 				<CardHeader className="text-center">
 					<CardTitle>Deck is Empty</CardTitle>
 				</CardHeader>
@@ -46,7 +46,7 @@ export function FlashcardsEmpty({
 								>
 									<HugeiconsIcon
 										icon={Search01Icon}
-										className="size-10 mx-auto text-muted-foreground"
+										className="mx-auto size-10 text-muted-foreground"
 									/>
 								</m.div>
 							</EmptyMedia>

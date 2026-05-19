@@ -1,7 +1,6 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -43,11 +42,11 @@ export default function AdminBudgetPage() {
 	const error = queryError instanceof Error ? queryError.message : "";
 
 	return (
-		<div className="min-h-[100dvh] bg-background p-6 max-w-4xl mx-auto space-y-6">
+		<div className="mx-auto min-h-[100dvh] max-w-4xl space-y-6 bg-background p-6">
 			<div className="flex items-center justify-between">
 				<div className="min-w-0">
-					<h1 className="text-xl font-semibold tracking-tight">Token Budget</h1>
-					<p className="text-sm text-muted-foreground mt-1">
+					<h1 className="font-semibold text-xl tracking-tight">Token Budget</h1>
+					<p className="mt-1 text-muted-foreground text-sm">
 						AI call usage for this session. Resets at midnight.
 					</p>
 				</div>
@@ -62,7 +61,7 @@ export default function AdminBudgetPage() {
 			</div>
 
 			{error && (
-				<div className="overflow-hidden rounded-[2.5rem] border border-destructive bg-destructive/5 p-4 text-sm text-destructive">
+				<div className="overflow-hidden rounded-[2.5rem] border border-destructive bg-destructive/5 p-4 text-destructive text-sm">
 					{error}
 				</div>
 			)}
@@ -73,11 +72,11 @@ export default function AdminBudgetPage() {
 				<>
 					<div className={CARD_CLASS}>
 						<header className="px-6 pt-5 pb-3">
-							<h2 className="text-sm font-semibold tracking-tight">Global</h2>
+							<h2 className="font-semibold text-sm tracking-tight">Global</h2>
 						</header>
 						<div className="px-6 pb-5">
 							<div className="flex items-center gap-3">
-								<div className="flex-1 h-2.5 rounded-full bg-secondary overflow-hidden">
+								<div className="h-2.5 flex-1 overflow-hidden rounded-full bg-secondary">
 									<div
 										className="h-full rounded-full bg-foreground transition-[width] duration-500 ease-ios-decelerate"
 										style={{
@@ -85,7 +84,7 @@ export default function AdminBudgetPage() {
 										}}
 									/>
 								</div>
-								<span className="text-sm tabular-nums text-muted-foreground whitespace-nowrap">
+								<span className="whitespace-nowrap text-muted-foreground text-sm tabular-nums">
 									{data.global.totalCalls} / {data.global.limit}
 								</span>
 							</div>
@@ -94,11 +93,11 @@ export default function AdminBudgetPage() {
 
 					<div className={CARD_CLASS}>
 						<header className="px-6 pt-5 pb-3">
-							<h2 className="text-sm font-semibold tracking-tight">
+							<h2 className="font-semibold text-sm tracking-tight">
 								Usage by type
 							</h2>
 						</header>
-						<div className="px-6 pb-5 space-y-4">
+						<div className="space-y-4 px-6 pb-5">
 							{Object.entries(data.user.usage).map(([type, usage]) => {
 								const pct =
 									usage.limit > 0 ? (usage.count / usage.limit) * 100 : 0;
@@ -106,14 +105,14 @@ export default function AdminBudgetPage() {
 								const warning = pct >= 50 && !exhausted;
 								return (
 									<div key={type}>
-										<div className="flex items-center justify-between text-sm mb-1.5">
+										<div className="mb-1.5 flex items-center justify-between text-sm">
 											<span className="font-medium capitalize">{type}</span>
 											<span className="text-muted-foreground tabular-nums">
 												{usage.count} / {usage.limit}
 												{usage.tokens > 0 && ` \u00B7 ${usage.tokens} tokens`}
 											</span>
 										</div>
-										<div className="h-2 rounded-full bg-secondary overflow-hidden">
+										<div className="h-2 overflow-hidden rounded-full bg-secondary">
 											<div
 												className={`h-full rounded-full transition-[width,background-color] duration-500 ease-ios-decelerate ${
 													exhausted

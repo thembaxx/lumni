@@ -9,11 +9,9 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m, motion } from "framer-motion";
-import { useCallback } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Button } from "@/components/ui/button";
 import type { useSolver } from "@/hooks/use-solver";
-import type { GradingResult, UserAnswer } from "@/lib/question-engine/types";
 import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";
 import { StepByStep } from "../step-by-step";
@@ -85,7 +83,7 @@ export function QuestionCardFeedback({
 			animate={{ opacity: 1, scale: 1, y: 0 }}
 			transition={{ duration: 0.3, ease: iOSEase }}
 			className={cn(
-				"rounded-lg p-4 flex flex-col gap-3",
+				"flex flex-col gap-3 rounded-lg p-4",
 				isCorrectAnswer
 					? "bg-success/10 text-success"
 					: "bg-destructive/10 text-destructive",
@@ -113,7 +111,7 @@ export function QuestionCardFeedback({
 			{feedback && (
 				<div className="flex flex-col gap-1">
 					<div className="flex items-center gap-2">
-						<span className="text-sm font-medium">
+						<span className="font-medium text-sm">
 							Score: {feedback.score}/{question.points}
 						</span>
 					</div>
@@ -126,7 +124,7 @@ export function QuestionCardFeedback({
 				</div>
 			)}
 			{question.steps && question.steps.length > 0 && (
-				<div className="pt-2 border-t border-current/20">
+				<div className="border-current/20 border-t pt-2">
 					<StepByStep
 						steps={question.steps}
 						subject={effectiveSubject}
@@ -135,7 +133,7 @@ export function QuestionCardFeedback({
 				</div>
 			)}
 			{!isCorrectAnswer && isSolverEnabled && (
-				<div className="flex flex-col gap-2 pt-2 border-t border-current/20">
+				<div className="flex flex-col gap-2 border-current/20 border-t pt-2">
 					{solver.isPending ? (
 						<div className="flex items-center justify-center gap-2 py-3">
 							<HugeiconsIcon
@@ -146,7 +144,7 @@ export function QuestionCardFeedback({
 						</div>
 					) : solver.data?.steps?.length ? (
 						<div className="flex flex-col gap-2">
-							<p className="text-xs font-bold uppercase tracking-wider text-foreground/60">
+							<p className="font-bold text-foreground/60 text-xs uppercase tracking-wider">
 								Step-by-step solution
 							</p>
 							<StepByStep
@@ -156,7 +154,7 @@ export function QuestionCardFeedback({
 							/>
 						</div>
 					) : solver.data?.solution ? (
-						<div className="rounded-xl bg-card border border-border/50 p-4 text-sm leading-relaxed whitespace-pre-wrap">
+						<div className="whitespace-pre-wrap rounded-xl border border-border/50 bg-card p-4 text-sm leading-relaxed">
 							{solver.data.solution}
 						</div>
 					) : solver.isError ? (
@@ -188,7 +186,7 @@ export function QuestionCardFeedback({
 									subject: effectiveSubject,
 								})
 							}
-							className="gap-2 h-9 text-sm self-start"
+							className="h-9 gap-2 self-start text-sm"
 						>
 							<HugeiconsIcon icon={SparklesIcon} data-icon="inline-start" />
 							Show me the steps
@@ -197,22 +195,22 @@ export function QuestionCardFeedback({
 				</div>
 			)}
 			{solver.data && (
-				<div className="flex flex-col gap-2 pt-2 border-t border-current/20">
+				<div className="flex flex-col gap-2 border-current/20 border-t pt-2">
 					{followUpMsgs.map((msg, i) => (
 						<div
 							key={i}
 							className={cn(
-								"rounded-xl px-4 py-3 text-sm max-w-[90%]",
+								"max-w-[90%] rounded-xl px-4 py-3 text-sm",
 								msg.role === "user"
-									? "bg-[--system-accent]/10 ml-auto"
-									: "bg-card border border-border/50 mr-auto",
+									? "ml-auto bg-[--system-accent]/10"
+									: "mr-auto border border-border/50 bg-card",
 							)}
 						>
 							{msg.content}
 						</div>
 					))}
 					{solver.isSendingFollowUp && (
-						<div className="flex items-center gap-2 py-2 text-sm text-muted-foreground">
+						<div className="flex items-center gap-2 py-2 text-muted-foreground text-sm">
 							<HugeiconsIcon
 								icon={RadialIcon}
 								className="size-4 animate-spin"
@@ -248,7 +246,7 @@ export function QuestionCardFeedback({
 									}
 								}}
 								placeholder="Ask a follow-up question..."
-								className="flex-1 h-9 rounded-lg bg-card border border-border px-3 text-base outline-none focus:border-[--system-accent]/40"
+								className="h-9 flex-1 rounded-lg border border-border bg-card px-3 text-base outline-none focus:border-[--system-accent]/40"
 							/>
 							<Button
 								variant="ghost"

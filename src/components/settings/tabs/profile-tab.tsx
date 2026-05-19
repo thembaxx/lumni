@@ -14,7 +14,6 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { FileRouter } from "uploadthing/server";
 import { OnboardingWizard } from "@/components/onboarding/onboarding-wizard";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -76,7 +75,7 @@ function EditableField({
 			<div className="flex items-center gap-2">
 				<div className="relative flex-1">
 					{icon && (
-						<div className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+						<div className="absolute top-1/2 left-3 -translate-y-1/2 text-muted-foreground">
 							{icon}
 						</div>
 					)}
@@ -89,7 +88,7 @@ function EditableField({
 							if (e.key === "Escape") handleCancel();
 						}}
 						placeholder={placeholder}
-						className={`h-9 text-sm rounded-lg bg-system-surface border-border/40 ${icon ? "pl-9" : ""}`}
+						className={`h-9 rounded-lg border-border/40 bg-system-surface text-sm ${icon ? "pl-9" : ""}`}
 					/>
 				</div>
 				<button
@@ -97,7 +96,7 @@ function EditableField({
 					onClick={handleSave}
 					disabled={saving || !draft.trim()}
 					aria-label="Save profile changes"
-					className="size-8 rounded-full bg-system-accent text-white flex items-center justify-center hover:bg-system-accent/90 shrink-0 disabled:opacity-50"
+					className="flex size-8 shrink-0 items-center justify-center rounded-full bg-system-accent text-white hover:bg-system-accent/90 disabled:opacity-50"
 				>
 					<HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-4" />
 				</button>
@@ -105,7 +104,7 @@ function EditableField({
 					type="button"
 					onClick={handleCancel}
 					aria-label="Cancel editing"
-					className="size-8 rounded-full bg-system-fill text-muted-foreground flex items-center justify-center hover:bg-system-fill/80 shrink-0"
+					className="flex size-8 shrink-0 items-center justify-center rounded-full bg-system-fill text-muted-foreground hover:bg-system-fill/80"
 				>
 					<HugeiconsIcon icon={Cancel01Icon} className="size-4" />
 				</button>
@@ -117,14 +116,14 @@ function EditableField({
 		<button
 			type="button"
 			onClick={() => setEditing(true)}
-			className="flex items-center gap-2 text-left w-full group"
+			className="group flex w-full items-center gap-2 text-left"
 		>
-			<span className="flex-1 text-sm font-medium text-foreground truncate">
+			<span className="flex-1 truncate font-medium text-foreground text-sm">
 				{value || placeholder || "Not set"}
 			</span>
 			<HugeiconsIcon
 				icon={PencilIcon}
-				className="size-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity shrink-0"
+				className="size-3.5 shrink-0 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100"
 			/>
 		</button>
 	);
@@ -245,10 +244,10 @@ export function ProfileTab() {
 
 	return (
 		<div className="flex flex-col gap-10">
-			<div className="flex flex-col items-center justify-center py-8 gap-4">
-				<div className="relative group">
-					<label htmlFor="avatar-upload" className="cursor-pointer block">
-						<Avatar className="size-24 shadow-level-3 border-[6px] border-system-surface transition-transform duration-500 group-hover:scale-105">
+			<div className="flex flex-col items-center justify-center gap-4 py-8">
+				<div className="group relative">
+					<label htmlFor="avatar-upload" className="block cursor-pointer">
+						<Avatar className="size-24 border-[6px] border-system-surface shadow-level-3 transition-transform duration-500 group-hover:scale-105">
 							<AvatarImage
 								src={
 									(prefs?.avatarUrl as string) ??
@@ -257,14 +256,14 @@ export function ProfileTab() {
 								alt={user?.name || "User"}
 							/>
 
-							<AvatarFallback className="text-3xl font-extrabold bg-system-accent text-white">
+							<AvatarFallback className="bg-system-accent font-extrabold text-3xl text-white">
 								{user?.name?.charAt(0)?.toUpperCase() || "U"}
 							</AvatarFallback>
 						</Avatar>
-						<div className="absolute inset-0 rounded-full ring-1 ring-black/10 pointer-events-none" />
-						<div className="absolute -bottom-1 -right-1 size-9 rounded-full bg-system-accent shadow-level-2 border-[3px] border-system-surface flex items-center justify-center text-white group-hover:scale-110 transition-transform">
+						<div className="pointer-events-none absolute inset-0 rounded-full ring-1 ring-black/10" />
+						<div className="absolute -right-1 -bottom-1 flex size-9 items-center justify-center rounded-full border-[3px] border-system-surface bg-system-accent text-white shadow-level-2 transition-transform group-hover:scale-110">
 							{uploading ? (
-								<div className="size-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
+								<div className="size-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
 							) : (
 								<HugeiconsIcon icon={Camera01Icon} className="size-4" />
 							)}
@@ -278,7 +277,7 @@ export function ProfileTab() {
 						onChange={handleAvatarUpload}
 					/>
 				</div>
-				<div className="text-center flex flex-col gap-1">
+				<div className="flex flex-col gap-1 text-center">
 					<h2 className="text-(length:--fs-title-2) font-semibold text-foreground">
 						{user?.name || "User"}
 					</h2>
@@ -289,13 +288,13 @@ export function ProfileTab() {
 								<button
 									type="button"
 									onClick={verifyEmail}
-									className="ml-2 text-xs font-semibold text-system-accent hover:underline"
+									className="ml-2 font-semibold text-system-accent text-xs hover:underline"
 								>
 									Verify
 								</button>
 							)}
 							{user.emailVerification && (
-								<span className="ml-2 text-xs font-semibold text-emerald-500">
+								<span className="ml-2 font-semibold text-emerald-500 text-xs">
 									Verified
 								</span>
 							)}
@@ -305,7 +304,7 @@ export function ProfileTab() {
 			</div>
 
 			{error && (
-				<p className="ios-footnote text-destructive font-medium text-center -mt-6">
+				<p className="ios-footnote -mt-6 text-center font-medium text-destructive">
 					{error}
 				</p>
 			)}
@@ -329,7 +328,7 @@ export function ProfileTab() {
 						title="Email Address"
 						subtitle={user?.emailVerification ? "Verified" : "Not verified"}
 						trailing={
-							<span className="text-sm text-muted-foreground truncate max-w-40">
+							<span className="max-w-40 truncate text-muted-foreground text-sm">
 								{user?.email}
 							</span>
 						}
@@ -344,7 +343,7 @@ export function ProfileTab() {
 						title="Change Password"
 						showSeparator={false}
 						trailing={
-							<span className="text-system-accent text-(length:--fs-footnote) font-semibold">
+							<span className="text-(length:--fs-footnote) font-semibold text-system-accent">
 								Update
 							</span>
 						}
@@ -406,12 +405,12 @@ export function ProfileTab() {
 							<button
 								type="button"
 								onClick={() => setShowProvincePicker(!showProvincePicker)}
-								className="text-sm font-medium text-system-accent hover:underline"
+								className="font-medium text-sm text-system-accent hover:underline"
 							>
 								{provinceDraft || "Select"}
 							</button>
 							{showProvincePicker && (
-								<div className="absolute right-0 top-8 z-50 w-48 max-h-48 overflow-y-auto rounded-xl bg-popover shadow-level-3 ring-1 ring-foreground/10 p-1">
+								<div className="absolute top-8 right-0 z-50 max-h-48 w-48 overflow-y-auto rounded-xl bg-popover p-1 shadow-level-3 ring-1 ring-foreground/10">
 									{SOUTH_AFRICAN_PROVINCES.map((p) => (
 										<button
 											key={p}
@@ -421,7 +420,7 @@ export function ProfileTab() {
 												await handleSaveField("province", p);
 												setShowProvincePicker(false);
 											}}
-											className={`w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-accent ${
+											className={`w-full rounded-lg px-3 py-2 text-left text-sm hover:bg-accent ${
 												provinceDraft === p ? "bg-accent font-semibold" : ""
 											}`}
 										>
@@ -440,7 +439,7 @@ export function ProfileTab() {
 					{subjects.map((subject) => (
 						<span
 							key={subject}
-							className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-system-accent/10 text-system-accent text-xs font-semibold"
+							className="inline-flex items-center gap-1 rounded-full bg-system-accent/10 px-3 py-1.5 font-semibold text-system-accent text-xs"
 						>
 							{subject}
 							<button
@@ -456,20 +455,20 @@ export function ProfileTab() {
 					<button
 						type="button"
 						onClick={() => setShowSubjectPicker(!showSubjectPicker)}
-						className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-system-fill text-muted-foreground text-xs font-semibold hover:bg-system-fill/80"
+						className="inline-flex items-center gap-1 rounded-full bg-system-fill px-3 py-1.5 font-semibold text-muted-foreground text-xs hover:bg-system-fill/80"
 					>
 						+ Add subject
 					</button>
 				</div>
 				{showSubjectPicker && (
-					<div className="mt-2 p-2 rounded-xl bg-popover shadow-level-2 ring-1 ring-foreground/10">
+					<div className="mt-2 rounded-xl bg-popover p-2 shadow-level-2 ring-1 ring-foreground/10">
 						<Input
 							value={subjectInput}
 							onChange={(e) => setSubjectInput(e.target.value)}
 							placeholder="Search subjects..."
-							className="h-9 text-sm rounded-lg mb-2"
+							className="mb-2 h-9 rounded-lg text-sm"
 						/>
-						<div className="max-h-40 overflow-y-auto flex flex-col gap-0.5">
+						<div className="flex max-h-40 flex-col gap-0.5 overflow-y-auto">
 							{COMMON_SUBJECTS.filter(
 								(s) =>
 									!subjects.includes(s) &&
@@ -479,7 +478,7 @@ export function ProfileTab() {
 									key={s}
 									type="button"
 									onClick={() => handleAddSubject(s)}
-									className="w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-accent"
+									className="w-full rounded-lg px-3 py-2 text-left text-sm hover:bg-accent"
 								>
 									{s}
 								</button>
@@ -496,7 +495,7 @@ export function ProfileTab() {
 					subtitle="Set your subjects, targets, and study schedule"
 					showSeparator={false}
 					trailing={
-						<span className="text-system-accent text-(length:--fs-footnote) font-semibold">
+						<span className="text-(length:--fs-footnote) font-semibold text-system-accent">
 							Redo
 						</span>
 					}
@@ -506,15 +505,15 @@ export function ProfileTab() {
 
 			{showConfirmDialog && (
 				<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-					<div className="mx-4 w-full max-w-sm rounded-2xl bg-card shadow-level-3 p-6">
-						<h3 className="ios-title-3 font-semibold mb-2">
+					<div className="mx-4 w-full max-w-sm rounded-2xl bg-card p-6 shadow-level-3">
+						<h3 className="ios-title-3 mb-2 font-semibold">
 							Redo Guided Setup?
 						</h3>
-						<p className="ios-subhead text-muted-foreground mb-6">
+						<p className="ios-subhead mb-6 text-muted-foreground">
 							This will update your subjects, study goals, and preferences.
 							Ready to set them up again?
 						</p>
-						<div className="flex gap-3 justify-end">
+						<div className="flex justify-end gap-3">
 							<Button
 								variant="outline"
 								onClick={() => setShowConfirmDialog(false)}
@@ -539,8 +538,8 @@ export function ProfileTab() {
 			)}
 
 			{isAnonymous && (
-				<div className="px-2 py-4 rounded-xl bg-system-accent/5 border border-system-accent/10">
-					<p className="text-sm text-center text-muted-foreground">
+				<div className="rounded-xl border border-system-accent/10 bg-system-accent/5 px-2 py-4">
+					<p className="text-center text-muted-foreground text-sm">
 						You&apos;re browsing as a guest.{" "}
 						<button
 							type="button"
@@ -569,10 +568,10 @@ export function ProfileTab() {
 					</Button>
 				)}
 				<div className="mt-8 flex flex-col items-center gap-1">
-					<p className="text-(length:--fs-footnote) text-[--system-text-tertiary] font-extrabold tracking-widest uppercase">
+					<p className="text-(length:--fs-footnote) font-extrabold text-[--system-text-tertiary] uppercase tracking-widest">
 						Lumni Mobile
 					</p>
-					<p className="text-(length:--fs-caption-2) text-[--system-text-tertiary] tabular-nums font-medium">
+					<p className="text-(length:--fs-caption-2) font-medium text-[--system-text-tertiary] tabular-nums">
 						Version 1.0.4 (Stable-RC)
 					</p>
 				</div>

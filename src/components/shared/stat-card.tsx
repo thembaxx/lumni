@@ -45,11 +45,11 @@ export function StatCard({
 				initial={{ opacity: 0, scale: 0.95 }}
 				animate={{ opacity: 1, scale: 1 }}
 				transition={{ delay, duration: 0.3, ease: iOSEase }}
-				className={cn("p-3 rounded-lg bg-muted/50", className)}
+				className={cn("rounded-lg bg-muted/50 p-3", className)}
 			>
-				<p className="text-xs text-muted-foreground">{label}</p>
+				<p className="text-muted-foreground text-xs">{label}</p>
 				<m.p
-					className="text-xl font-semibold tabular-nums"
+					className="font-semibold text-xl tabular-nums"
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
 					transition={{ delay: delay + 0.15 }}
@@ -70,12 +70,12 @@ export function StatCard({
 			>
 				<div
 					className={cn(
-						"p-4 flex flex-col items-center justify-center gap-2 overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors",
+						"flex flex-col items-center justify-center gap-2 overflow-hidden rounded-[2.5rem] border border-border/80 bg-card p-4 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors",
 						className,
 					)}
 				>
 					<m.div
-						className={cn("p-2 rounded-full", bgClass)}
+						className={cn("rounded-full p-2", bgClass)}
 						initial={{ scale: 0.95, opacity: 0 }}
 						animate={{ scale: 1, opacity: 1 }}
 						whileHover={{ scale: 1.1 }}
@@ -94,10 +94,10 @@ export function StatCard({
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ delay: delay + 0.3 }}
 					>
-						<span className="text-xs text-muted-foreground">{label}</span>
+						<span className="text-muted-foreground text-xs">{label}</span>
 					</m.div>
 					<m.span
-						className={cn("text-xl font-extrabold tabular-nums", colorClass)}
+						className={cn("font-extrabold text-xl tabular-nums", colorClass)}
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						transition={{ delay: delay + 0.35 }}
@@ -117,13 +117,13 @@ export function StatCard({
 			)}
 		>
 			<div className="p-4">
-				<div className="flex items-center gap-2 text-muted-foreground mb-2">
+				<div className="mb-2 flex items-center gap-2 text-muted-foreground">
 					{Icon && <Icon className="size-4" />}
 					<span className="text-xs">{label}</span>
 				</div>
 				<div
 					className={cn(
-						"text-2xl font-extrabold flex items-center gap-2 tabular-nums",
+						"flex items-center gap-2 font-extrabold text-2xl tabular-nums",
 						trendColor,
 					)}
 				>

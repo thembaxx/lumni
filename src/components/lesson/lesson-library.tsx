@@ -79,14 +79,14 @@ export function LessonLibrary() {
 		<div className="flex flex-col gap-6">
 			<div className="flex items-center justify-between">
 				<div>
-					<h2 className="text-lg font-semibold flex items-center gap-2 text-balance">
+					<h2 className="flex items-center gap-2 text-balance font-semibold text-lg">
 						<HugeiconsIcon
 							icon={Target01Icon}
 							className="size-5 text-[--system-accent]"
 						/>
 						Your Learning Path
 					</h2>
-					<p className="text-sm text-muted-foreground mt-0.5 text-pretty">
+					<p className="mt-0.5 text-pretty text-muted-foreground text-sm">
 						Personalized recommendations based on your progress
 					</p>
 				</div>
@@ -98,12 +98,12 @@ export function LessonLibrary() {
 			</div>
 
 			{!selectedSubject && (
-				<Card className="p-8 text-center rounded-3xl">
+				<Card className="rounded-3xl p-8 text-center">
 					<HugeiconsIcon
 						icon={Mortarboard01Icon}
-						className="size-10 mx-auto mb-3 text-muted-foreground"
+						className="mx-auto mb-3 size-10 text-muted-foreground"
 					/>
-					<p className="text-sm text-muted-foreground">
+					<p className="text-muted-foreground text-sm">
 						Select a subject to see your personalized study recommendations.
 					</p>
 				</Card>
@@ -118,8 +118,8 @@ export function LessonLibrary() {
 			)}
 
 			{error && selectedSubject && (
-				<Card className="p-6 text-center rounded-3xl">
-					<p className="text-sm text-destructive">
+				<Card className="rounded-3xl p-6 text-center">
+					<p className="text-destructive text-sm">
 						Failed to load recommendations.
 					</p>
 				</Card>
@@ -159,17 +159,17 @@ export function LessonLibrary() {
 						).map((s) => (
 							<Card key={s.label} className="p-3 text-center">
 								<div
-									className={`text-lg font-extrabold tabular-nums ${s.color}`}
+									className={`font-extrabold text-lg tabular-nums ${s.color}`}
 								>
 									{s.value}
 								</div>
-								<div className="text-xs text-muted-foreground">{s.label}</div>
+								<div className="text-muted-foreground text-xs">{s.label}</div>
 							</Card>
 						))}
 					</div>
 
 					{summary.averageScore > 0 && (
-						<div className="flex items-center gap-2 text-sm text-muted-foreground">
+						<div className="flex items-center gap-2 text-muted-foreground text-sm">
 							<HugeiconsIcon
 								icon={Award01Icon}
 								className="size-4 text-amber-500"
@@ -191,7 +191,7 @@ export function LessonLibrary() {
 
 					{recommendations.length > 0 && (
 						<div className="flex flex-col gap-2">
-							<h3 className="text-sm font-medium text-muted-foreground">
+							<h3 className="font-medium text-muted-foreground text-sm">
 								All Topics
 							</h3>
 							{recommendations.map((rec) => {
@@ -199,22 +199,22 @@ export function LessonLibrary() {
 								return (
 									<Card
 										key={rec.topicId}
-										className={`p-4 flex items-center justify-between gap-3 rounded-3xl ${rec.action === "skip" ? "opacity-50" : ""}`}
+										className={`flex items-center justify-between gap-3 rounded-3xl p-4 ${rec.action === "skip" ? "opacity-50" : ""}`}
 									>
-										<div className="flex items-center gap-3 min-w-0">
+										<div className="flex min-w-0 items-center gap-3">
 											<div
-												className={`size-8 rounded-lg flex items-center justify-center ${levelColors[rec.level] ?? "bg-muted"}`}
+												className={`flex size-8 items-center justify-center rounded-lg ${levelColors[rec.level] ?? "bg-muted"}`}
 											>
 												<HugeiconsIcon icon={Icon} className="size-4" />
 											</div>
 											<div className="min-w-0">
-												<p className="text-sm font-medium truncate">
+												<p className="truncate font-medium text-sm">
 													{rec.name}
 												</p>
-												<div className="flex items-center gap-2 text-xs text-muted-foreground">
+												<div className="flex items-center gap-2 text-muted-foreground text-xs">
 													<Badge
 														variant="outline"
-														className={`text-[10px] px-1.5 py-0 capitalize ${levelColors[rec.level] ?? ""}`}
+														className={`px-1.5 py-0 text-[10px] capitalize ${levelColors[rec.level] ?? ""}`}
 													>
 														{rec.level}
 													</Badge>
@@ -247,12 +247,12 @@ export function LessonLibrary() {
 					)}
 
 					{!isLoading && recommendations.length === 0 && selectedSubject && (
-						<Card className="p-6 text-center rounded-3xl">
+						<Card className="rounded-3xl p-6 text-center">
 							<HugeiconsIcon
 								icon={Award01Icon}
-								className="size-8 mx-auto mb-2 text-emerald-500"
+								className="mx-auto mb-2 size-8 text-emerald-500"
 							/>
-							<p className="text-sm text-muted-foreground">
+							<p className="text-muted-foreground text-sm">
 								No recommendations available. All topics may be mastered.
 							</p>
 						</Card>
@@ -274,9 +274,9 @@ function NextUpCard({
 }) {
 	const NextActionIcon = actionIcons[nextUp.action];
 	return (
-		<Card className="p-5 border-[--system-accent]/20 bg-[--system-accent]/5 rounded-3xl">
+		<Card className="rounded-3xl border-[--system-accent]/20 bg-[--system-accent]/5 p-5">
 			<div className="flex items-start justify-between gap-4">
-				<div className="flex flex-col gap-1 min-w-0">
+				<div className="flex min-w-0 flex-col gap-1">
 					<div className="flex items-center gap-2">
 						<Badge variant="outline" className="text-xs">
 							Next Up
@@ -288,9 +288,9 @@ function NextUpCard({
 							{nextUp.level}
 						</Badge>
 					</div>
-					<h3 className="font-semibold text-base truncate">{nextUp.name}</h3>
-					<div className="flex items-center gap-3 text-xs text-muted-foreground">
-						<span className="capitalize flex items-center gap-1">
+					<h3 className="truncate font-semibold text-base">{nextUp.name}</h3>
+					<div className="flex items-center gap-3 text-muted-foreground text-xs">
+						<span className="flex items-center gap-1 capitalize">
 							<HugeiconsIcon icon={NextActionIcon} className="size-3.5" />
 							{actionLabels[nextUp.action]}
 						</span>

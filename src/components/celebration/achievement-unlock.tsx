@@ -51,7 +51,7 @@ export function AchievementUnlock({
 						/>
 
 						<div
-							className={`relative bg-card border-2 ${rarityBorder[rarity]} rounded-3xl p-8 text-center shadow-2xl ${rarityGlowStrong[rarity]}`}
+							className={`relative border-2 bg-card ${rarityBorder[rarity]} rounded-3xl p-8 text-center shadow-2xl ${rarityGlowStrong[rarity]}`}
 						>
 							<m.div
 								initial={{ opacity: 0, scale: 0.95, rotate: -180 }}
@@ -63,7 +63,7 @@ export function AchievementUnlock({
 									animate={{ scale: [0.95, 1.2, 1] }}
 									transition={{ duration: 0.3 }}
 								>
-									<div className="text-7xl mb-4">{icon}</div>
+									<div className="mb-4 text-7xl">{icon}</div>
 								</m.div>
 							</m.div>
 
@@ -72,21 +72,21 @@ export function AchievementUnlock({
 								animate={{ opacity: 1, y: 0 }}
 								transition={{ delay: 0.3 }}
 							>
-								<div className="flex items-center justify-center gap-2 mb-2">
+								<div className="mb-2 flex items-center justify-center gap-2">
 									<HugeiconsIcon
 										icon={Award01Icon}
 										className="size-5 text-warning"
 									/>
-									<span className="text-sm font-medium text-warning uppercase tracking-wider">
+									<span className="font-medium text-sm text-warning uppercase tracking-wider">
 										Achievement Unlocked!
 									</span>
 								</div>
-								<h2 className="text-2xl font-semibold mb-2 text-wrap balance">
+								<h2 className="balance mb-2 text-wrap font-semibold text-2xl">
 									{name}
 								</h2>
-								<p className="text-muted-foreground mb-4">{description}</p>
-								<div className="inline-flex items-center gap-2 bg-warning/20 text-warning-foreground px-4 py-2 rounded-full">
-									<span className="text-lg font-semibold">+{xpReward} XP</span>
+								<p className="mb-4 text-muted-foreground">{description}</p>
+								<div className="inline-flex items-center gap-2 rounded-full bg-warning/20 px-4 py-2 text-warning-foreground">
+									<span className="font-semibold text-lg">+{xpReward} XP</span>
 								</div>
 							</m.div>
 						</div>

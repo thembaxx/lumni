@@ -60,7 +60,15 @@ async function generateInterestingFact(
 
 const postHandler = async (req: NextRequest) => {
 	const budget = await checkBudget(req, "generate");
-	if (!budget.allowed) return budget.response!;
+	if (!budget.allowed) {
+		return (
+			budget.response ??
+			NextResponse.json(
+				{ error: "Budget response unavailable" },
+				{ status: 500 },
+			)
+		);
+	}
 
 	// Initialize AI if not already configured
 	if (!isAIConfigured()) {
@@ -85,7 +93,7 @@ const postHandler = async (req: NextRequest) => {
 		const body: GenerateFactRequest = await req.json();
 		const { element } = body;
 
-		if (!element || !element.name || !element.symbol) {
+		if (!element?.name || !element.symbol) {
 			return NextResponse.json(
 				{ error: "Invalid element data" },
 				{ status: 400 },

@@ -15,17 +15,20 @@ declare module "next/server.js" {
 
 declare module "node-appwrite/inputFile" {
 	type BlobLike = Blob | Buffer | Uint8Array;
-	class InputFile {
-		static fromBuffer(
+	interface InputFile {
+		// Marker interface for Appwrite input file objects.
+	}
+	interface InputFileConstructor {
+		fromBuffer(
 			parts: BlobLike | Uint8Array | ArrayBuffer | string,
 			name: string,
 		): InputFile;
-		static fromBlob(blob: Blob, name?: string): InputFile;
-		static fromPath(path: string, name?: string): InputFile;
-		static fromPlainText(content: string, name: string): InputFile;
+		fromBlob(blob: Blob, name?: string): InputFile;
+		fromPath(path: string, name?: string): InputFile;
+		fromPlainText(content: string, name: string): InputFile;
 	}
 
-	export { InputFile };
+	export const InputFile: InputFileConstructor;
 }
 
 declare module "sql.js" {

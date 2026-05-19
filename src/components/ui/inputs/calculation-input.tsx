@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { cn } from "@/lib/shared";
 
 interface CalculationInputProps {
 	value?: string;
@@ -43,7 +42,7 @@ export function CalculationInput({
 					placeholder="Enter your answer..."
 					className="max-w-[200px]"
 				/>
-				{unit && <span className="text-sm text-muted-foreground">{unit}</span>}
+				{unit && <span className="text-muted-foreground text-sm">{unit}</span>}
 				{onUnitChange && (
 					<Input
 						value={unit || ""}

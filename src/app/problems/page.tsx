@@ -3,7 +3,6 @@
 import {
 	ArrowDown01Icon,
 	BookOpen01Icon,
-	CheckmarkCircle01Icon,
 	RadialIcon,
 	SparklesIcon,
 } from "@hugeicons/core-free-icons";
@@ -44,22 +43,22 @@ function ProblemCard({
 			initial={{ opacity: 0, y: 12 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ delay: index * 0.06, duration: 0.3 }}
-			className="rounded-2xl border border-border bg-card shadow-level-2 overflow-hidden"
+			className="overflow-hidden rounded-2xl border border-border bg-card shadow-level-2"
 		>
 			<div className="p-5">
-				<div className="flex items-center justify-between gap-3 mb-3">
+				<div className="mb-3 flex items-center justify-between gap-3">
 					<Badge
 						variant="outline"
-						className={cn("text-xs font-mono border-0", difficultyColor)}
+						className={cn("border-0 font-mono text-xs", difficultyColor)}
 					>
 						{problem.difficulty}
 					</Badge>
-					<span className="text-xs text-muted-foreground/50 font-mono">
+					<span className="font-mono text-muted-foreground/50 text-xs">
 						#{index + 1}
 					</span>
 				</div>
 
-				<div className="text-sm leading-relaxed text-foreground font-medium">
+				<div className="font-medium text-foreground text-sm leading-relaxed">
 					<MarkdownRenderer content={problem.questionText} />
 				</div>
 
@@ -67,7 +66,7 @@ function ProblemCard({
 					variant="ghost"
 					size="sm"
 					onClick={() => setShowSolution(!showSolution)}
-					className="mt-4 gap-2 h-8 px-3 rounded-lg text-xs"
+					className="mt-4 h-8 gap-2 rounded-lg px-3 text-xs"
 				>
 					{showSolution ? "Hide" : "Show"} Solution
 					<HugeiconsIcon
@@ -88,19 +87,19 @@ function ProblemCard({
 							exit={{ opacity: 0, height: 0 }}
 							className="overflow-hidden"
 						>
-							<div className="mt-4 pt-4 border-t border-border/50 space-y-4">
-								<div className="bg-system-background rounded-xl p-4 border border-border/50">
-									<p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+							<div className="mt-4 space-y-4 border-border/50 border-t pt-4">
+								<div className="rounded-xl border border-border/50 bg-system-background p-4">
+									<p className="mb-2 font-semibold text-muted-foreground text-xs uppercase tracking-wider">
 										Solution
 									</p>
-									<div className="text-sm leading-relaxed text-foreground/80">
+									<div className="text-foreground/80 text-sm leading-relaxed">
 										<MarkdownRenderer content={problem.solution} />
 									</div>
 								</div>
 
 								{problem.steps && problem.steps.length > 0 && (
 									<div>
-										<p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+										<p className="mb-3 font-semibold text-muted-foreground text-xs uppercase tracking-wider">
 											Steps
 										</p>
 										<StepByStep steps={problem.steps} />
@@ -144,14 +143,14 @@ function ProblemsClient() {
 
 	return (
 		<div className="min-h-[100dvh] bg-system-grouped pt-4 pb-24">
-			<div className="max-w-3xl mx-auto w-full px-4 flex flex-col gap-8">
+			<div className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-4">
 				<Anim>
 					<div className="flex flex-col gap-6">
 						<div>
 							<h1 className="ios-title-1 font-semibold text-foreground tracking-tight">
 								Problem Library
 							</h1>
-							<p className="ios-subhead text-muted-foreground/60 mt-1.5">
+							<p className="ios-subhead mt-1.5 text-muted-foreground/60">
 								Browse curated practice problems with step-by-step solutions
 							</p>
 						</div>
@@ -167,7 +166,7 @@ function ProblemsClient() {
 								<Button
 									onClick={handleGenerate}
 									disabled={!selectedSubject || isLoading}
-									className="gap-2 h-11 rounded-xl shrink-0"
+									className="h-11 shrink-0 gap-2 rounded-xl"
 								>
 									{isLoading ? (
 										<HugeiconsIcon
@@ -187,20 +186,20 @@ function ProblemsClient() {
 							</div>
 
 							{selectedSubject && (
-								<div className="flex items-center gap-2 overflow-x-auto scrollbar-hide">
+								<div className="scrollbar-hide flex items-center gap-2 overflow-x-auto">
 									{DIFFICULTIES.map((d) => (
 										<Button
 											key={d}
 											variant={selectedDifficulty === d ? "default" : "outline"}
 											size="sm"
 											onClick={() => setSelectedDifficulty(d)}
-											className="text-xs h-8 px-3 rounded-lg shrink-0"
+											className="h-8 shrink-0 rounded-lg px-3 text-xs"
 										>
 											{d === "all" ? "All Levels" : d}
 										</Button>
 									))}
 									<div className="ml-auto flex items-center gap-2">
-										<span className="text-xs text-muted-foreground/50">
+										<span className="text-muted-foreground/50 text-xs">
 											Problems:
 										</span>
 										{[3, 5, 10].map((n) => (
@@ -209,7 +208,7 @@ function ProblemsClient() {
 												variant={problemCount === n ? "default" : "outline"}
 												size="xs"
 												onClick={() => setProblemCount(n)}
-												className="text-xs size-7 p-0 rounded-lg"
+												className="size-7 rounded-lg p-0 text-xs"
 											>
 												{n}
 											</Button>
@@ -225,13 +224,13 @@ function ProblemsClient() {
 							<motion.div
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
-								className="text-center py-20"
+								className="py-20 text-center"
 							>
 								<HugeiconsIcon
 									icon={BookOpen01Icon}
-									className="size-12 mx-auto text-muted-foreground/20 mb-4"
+									className="mx-auto mb-4 size-12 text-muted-foreground/20"
 								/>
-								<p className="text-sm text-muted-foreground/40">
+								<p className="text-muted-foreground/40 text-sm">
 									Select a subject and generate curated problems
 								</p>
 							</motion.div>
@@ -248,11 +247,11 @@ function ProblemsClient() {
 								{[1, 2, 3].map((i) => (
 									<div
 										key={i}
-										className="rounded-2xl border border-border/50 bg-card p-5 animate-pulse space-y-3"
+										className="animate-pulse space-y-3 rounded-2xl border border-border/50 bg-card p-5"
 									>
-										<div className="h-4 bg-muted/30 rounded w-16" />
-										<div className="h-4 bg-muted/30 rounded w-full" />
-										<div className="h-4 bg-muted/30 rounded w-3/4" />
+										<div className="h-4 w-16 rounded bg-muted/30" />
+										<div className="h-4 w-full rounded bg-muted/30" />
+										<div className="h-4 w-3/4 rounded bg-muted/30" />
 									</div>
 								))}
 							</motion.div>
@@ -263,7 +262,7 @@ function ProblemsClient() {
 								key="error"
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
-								className="bg-destructive/10 text-destructive text-sm p-4 rounded-xl border border-destructive/20"
+								className="rounded-xl border border-destructive/20 bg-destructive/10 p-4 text-destructive text-sm"
 							>
 								Failed to generate problems. Please try again.
 							</motion.div>
@@ -277,7 +276,7 @@ function ProblemsClient() {
 								className="flex flex-col gap-4"
 							>
 								<div className="flex items-center justify-between">
-									<p className="text-xs text-muted-foreground/50">
+									<p className="text-muted-foreground/50 text-xs">
 										{filteredProblems.length} of {data.problems.length} problems
 										{selectedDifficulty !== "all" && " filtered"}
 									</p>
@@ -290,8 +289,8 @@ function ProblemsClient() {
 								</div>
 
 								{filteredProblems.length === 0 ? (
-									<div className="text-center py-12">
-										<p className="text-sm text-muted-foreground/40">
+									<div className="py-12 text-center">
+										<p className="text-muted-foreground/40 text-sm">
 											No problems match the selected difficulty.
 										</p>
 									</div>

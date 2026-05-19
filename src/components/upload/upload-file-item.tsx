@@ -107,7 +107,7 @@ export function UploadFileItem({
 						{isComplete && (
 							<Badge
 								variant="default"
-								className="text-[0.7rem] bg-success text-success-foreground"
+								className="bg-success text-[0.7rem] text-success-foreground"
 							>
 								Done
 							</Badge>
@@ -120,7 +120,7 @@ export function UploadFileItem({
 						variant="outline"
 						size="xs"
 						onClick={onRetry}
-						className="shrink-0 opacity-0 group-hover:opacity-100 transition-opacity"
+						className="shrink-0 opacity-0 transition-opacity group-hover:opacity-100"
 					>
 						Retry
 					</Button>
@@ -130,14 +130,14 @@ export function UploadFileItem({
 			{isUploading && (
 				<div className="flex flex-col gap-1">
 					<Progress value={item.progress} className="h-1.5" />
-					<span className="text-xs text-muted-foreground tabular-nums">
+					<span className="text-muted-foreground text-xs tabular-nums">
 						{item.progress}%
 					</span>
 				</div>
 			)}
 
 			{isError && (
-				<p className="flex items-center gap-1.5 text-xs text-destructive">
+				<p className="flex items-center gap-1.5 text-destructive text-xs">
 					<HugeiconsIcon
 						icon={AlertCircleIcon}
 						className="size-3 shrink-0"

@@ -1,10 +1,6 @@
 "use client";
 
-import {
-	ArrowDown01Icon,
-	BulbIcon,
-	RefreshIcon,
-} from "@hugeicons/core-free-icons";
+import { BulbIcon, RefreshIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
 import {
@@ -27,11 +23,11 @@ export function FlashcardsIdle({
 	onReviewMistakes,
 }: FlashcardsIdleProps) {
 	return (
-		<div className="min-h-[100dvh] bg-background grid grid-cols-12 gap-0">
-			<div className="col-span-12 md:col-span-7 col-start-1 flex items-center justify-center p-4 pb-20">
-				<div className="max-w-md w-full mx-auto card-elevated overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] p-6">
-					<header className="text-left pb-4">
-						<h2 className="text-2xl font-semibold tracking-tight">
+		<div className="grid min-h-[100dvh] grid-cols-12 gap-0 bg-background">
+			<div className="col-span-12 col-start-1 flex items-center justify-center p-4 pb-20 md:col-span-7">
+				<div className="card-elevated mx-auto w-full max-w-md overflow-hidden rounded-[2.5rem] border border-border/80 bg-card p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
+					<header className="pb-4 text-left">
+						<h2 className="font-semibold text-2xl tracking-tight">
 							Flashcards
 						</h2>
 					</header>
@@ -51,7 +47,7 @@ export function FlashcardsIdle({
 									<SubjectsDrawer onSelect={onSelect}>
 										<Button>
 											Generate AI Flashcards
-											<HugeiconsIcon icon={BulbIcon} className="size-4 ml-1" />
+											<HugeiconsIcon icon={BulbIcon} className="ml-1 size-4" />
 										</Button>
 									</SubjectsDrawer>
 									<SubjectsDrawer onSelect={onReviewMistakes}>
@@ -59,7 +55,7 @@ export function FlashcardsIdle({
 											Review Mistakes
 											<HugeiconsIcon
 												icon={RefreshIcon}
-												className="size-4 ml-1"
+												className="ml-1 size-4"
 											/>
 										</Button>
 									</SubjectsDrawer>
@@ -69,10 +65,10 @@ export function FlashcardsIdle({
 					</div>
 				</div>
 			</div>
-			<div className="col-span-12 md:col-span-5 col-start-1 md:col-start-8 relative overflow-hidden bg-system-surface/30">
+			<div className="relative col-span-12 col-start-1 overflow-hidden bg-system-surface/30 md:col-span-5 md:col-start-8">
 				<div className="absolute inset-0 bg-gradient-to-br from-[--system-accent]/10 via-transparent to-transparent" />
 				<div className="absolute inset-0 flex items-center justify-center p-8">
-					<div className="w-full h-full max-w-xs aspect-square rounded-3xl bg-[--system-accent]/10 blur-2xl animate-float-slow" />
+					<div className="aspect-square h-full w-full max-w-xs animate-float-slow rounded-3xl bg-[--system-accent]/10 blur-2xl" />
 				</div>
 			</div>
 		</div>

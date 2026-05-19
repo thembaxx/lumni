@@ -34,7 +34,7 @@ export function LeaderboardCard() {
 			</CardHeader>
 			<CardContent>
 				{entries.length === 0 ? (
-					<p className="text-sm text-muted-foreground text-center py-4">
+					<p className="py-4 text-center text-muted-foreground text-sm">
 						No rankings yet. Start studying to appear here!
 					</p>
 				) : (
@@ -43,11 +43,11 @@ export function LeaderboardCard() {
 							<div
 								key={entry.rank}
 								className={cn(
-									"flex items-center gap-3 p-2.5 rounded-xl transition-colors",
+									"flex items-center gap-3 rounded-xl p-2.5 transition-colors",
 									entry.isCurrentUser && "bg-accent",
 								)}
 							>
-								<div className="w-6 text-center shrink-0">
+								<div className="w-6 shrink-0 text-center">
 									{i < 3 ? (
 										<HugeiconsIcon
 											icon={Award01Icon}
@@ -55,20 +55,20 @@ export function LeaderboardCard() {
 											className={rankColors[i]}
 										/>
 									) : (
-										<span className="text-xs font-mono text-muted-foreground">
+										<span className="font-mono text-muted-foreground text-xs">
 											{entry.rank}
 										</span>
 									)}
 								</div>
-								<div className="flex-1 min-w-0">
-									<p className="text-sm font-medium truncate">{entry.label}</p>
+								<div className="min-w-0 flex-1">
+									<p className="truncate font-medium text-sm">{entry.label}</p>
 								</div>
-								<div className="flex items-center gap-2 shrink-0">
-									<span className="text-sm font-bold tabular-nums">
+								<div className="flex shrink-0 items-center gap-2">
+									<span className="font-bold text-sm tabular-nums">
 										{entry.xp.toLocaleString()} XP
 									</span>
 									{entry.streak > 0 && (
-										<div className="flex items-center gap-0.5 text-xs text-muted-foreground">
+										<div className="flex items-center gap-0.5 text-muted-foreground text-xs">
 											<HugeiconsIcon icon={FireIcon} size={12} />
 											<span>{entry.streak}</span>
 										</div>

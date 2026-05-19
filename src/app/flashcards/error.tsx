@@ -8,14 +8,15 @@ export default function FlashcardsError({
 	reset: () => void;
 }) {
 	return (
-		<div className="flex flex-col items-center justify-center min-h-[60vh] gap-4 p-8">
-			<h2 className="text-xl font-semibold">Flashcards error</h2>
-			<p className="text-muted-foreground text-sm max-w-md text-center">
+		<div className="flex min-h-[60vh] flex-col items-center justify-center gap-4 p-8">
+			<h2 className="font-semibold text-xl">Flashcards error</h2>
+			<p className="max-w-md text-center text-muted-foreground text-sm">
 				{error.message || "Something went wrong loading flashcards."}
 			</p>
 			<button
+				type="button"
 				onClick={() => reset()}
-				className="px-4 py-2 rounded-lg bg-system-accent text-white text-sm font-semibold hover:bg-system-accent/90"
+				className="rounded-lg bg-system-accent px-4 py-2 font-semibold text-sm text-white hover:bg-system-accent/90"
 			>
 				Try again
 			</button>

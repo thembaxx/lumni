@@ -113,7 +113,7 @@ describe("getReferralByCode", () => {
 		const result = await getReferralByCode("LUMNI-ABC");
 
 		expect(result).not.toBeNull();
-		expect(result!.code).toBe("LUMNI-ABC");
+		expect(result?.code).toBe("LUMNI-ABC");
 	});
 
 	test("returns null when code not found", async () => {
@@ -245,7 +245,7 @@ describe("getReferralByReferee", () => {
 		const result = await getReferralByReferee("user2");
 
 		expect(result).not.toBeNull();
-		expect(result!.refereeId).toBe("user2");
+		expect(result?.refereeId).toBe("user2");
 	});
 
 	test("returns null when referee not found", async () => {

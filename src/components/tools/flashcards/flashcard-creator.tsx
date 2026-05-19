@@ -1,26 +1,11 @@
 "use client";
 
-import { m, motion, useReducedMotion } from "framer-motion";
+import { m, motion } from "framer-motion";
 import { useCallback, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Button } from "@/components/ui/button";
-import {
-	Card,
-	CardContent,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
-import {
-	Command,
-	CommandEmpty,
-	CommandGroup,
-	CommandGroupItems,
-	CommandInput,
-	CommandItem,
-	CommandList,
-} from "@/components/ui/command";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
 	Dialog,
 	DialogContent,
@@ -32,11 +17,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
-	Popover,
-	PopoverContent,
-	PopoverTrigger,
-} from "@/components/ui/popover";
-import {
 	Select,
 	SelectContent,
 	SelectItem,
@@ -44,10 +24,8 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { useQuestionEngine } from "@/hooks/use-question-engine";
 import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";
-import { useOptimizedAnimation } from "@/lib/utils/animation-optimization";
 
 interface Flashcard {
 	id: string;
@@ -228,7 +206,7 @@ function FlashcardForm({
 					placeholder="e.g., biology, mitosis, cell-division"
 					disabled={false}
 				/>
-				<p className="text-xs text-muted-foreground mt-1">
+				<p className="mt-1 text-muted-foreground text-xs">
 					Separate tags with commas
 				</p>
 			</div>
@@ -339,7 +317,7 @@ function FlashcardCreatorInner({ className }: FlashcardCreatorProps) {
 
 	return (
 		<motion.div
-			className={cn("w-full max-w-2xl mx-auto", className)}
+			className={cn("mx-auto w-full max-w-2xl", className)}
 			initial={{ opacity: 0, y: 8 }}
 			animate={{ opacity: 1, y: 0 }}
 			exit={{ opacity: 0, y: -8 }}
@@ -347,7 +325,7 @@ function FlashcardCreatorInner({ className }: FlashcardCreatorProps) {
 		>
 			<Card className="mb-6">
 				<CardHeader className="pb-4">
-					<CardTitle className="text-2xl font-bold">
+					<CardTitle className="font-bold text-2xl">
 						Flashcard Creator
 					</CardTitle>
 					<p className="text-muted-foreground">
@@ -355,8 +333,8 @@ function FlashcardCreatorInner({ className }: FlashcardCreatorProps) {
 					</p>
 				</CardHeader>
 				<CardContent className="space-y-4">
-					<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-						<div className="flex-1 min-w-0">
+					<div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+						<div className="min-w-0 flex-1">
 							<Input
 								placeholder="Search flashcards..."
 								value={searchQuery}
@@ -364,7 +342,7 @@ function FlashcardCreatorInner({ className }: FlashcardCreatorProps) {
 								className="mb-2"
 							/>
 							{flashcards.length > 0 && (
-								<p className="text-xs text-muted-foreground">
+								<p className="text-muted-foreground text-xs">
 									{flashcards.length} flashcards total
 								</p>
 							)}
@@ -384,7 +362,7 @@ function FlashcardCreatorInner({ className }: FlashcardCreatorProps) {
 			{filteredFlashcards.length > 0 && (
 				<Card>
 					<CardHeader className="pb-4">
-						<CardTitle className="text-lg font-medium">
+						<CardTitle className="font-medium text-lg">
 							Your Flashcards
 						</CardTitle>
 					</CardHeader>
@@ -396,12 +374,12 @@ function FlashcardCreatorInner({ className }: FlashcardCreatorProps) {
 								animate={{ opacity: 1, x: 0 }}
 								exit={{ opacity: 0, x: -10 }}
 								transition={{ duration: 0.2, ease: iOSEase }}
-								className="border rounded-[2rem] p-4 cursor-pointer hover:bg-accent/5 transition-colors"
+								className="cursor-pointer rounded-[2rem] border p-4 transition-colors hover:bg-accent/5"
 								tabIndex={0}
 								role="button"
 								aria-label={`Flashcard: ${card.front.substring(0, 50)}...`}
 							>
-								<div className="flex justify-between items-start">
+								<div className="flex items-start justify-between">
 									<div className="flex-1">
 										<MarkdownRenderer
 											content={card.front}
@@ -409,7 +387,7 @@ function FlashcardCreatorInner({ className }: FlashcardCreatorProps) {
 											className="mb-2 font-medium"
 										/>
 										{card.hint && (
-											<div className="text-xs text-muted-foreground">
+											<div className="text-muted-foreground text-xs">
 												Hint:{" "}
 												<MarkdownRenderer
 													content={card.hint}
@@ -420,30 +398,28 @@ function FlashcardCreatorInner({ className }: FlashcardCreatorProps) {
 									</div>
 									<div className="flex items-center gap-2 text-xs">
 										{card.subject && (
-											<span className="px-2 py-0.5 text-xs rounded bg-secondary/50">
+											<span className="rounded bg-secondary/50 px-2 py-0.5 text-xs">
 												{card.subject}
 											</span>
 										)}
 										{card.topic && (
-											<span className="px-2 py-0.5 text-xs rounded bg-secondary/50">
+											<span className="rounded bg-secondary/50 px-2 py-0.5 text-xs">
 												{card.topic}
 											</span>
 										)}
-										{Array.isArray(card.tags) && card.tags.length > 0 && (
-											<>
-												{card.tags.map((tag) => (
-													<span
-														key={tag}
-														className="px-2 py-0.5 text-xs rounded bg-secondary/50"
-													>
-														{tag}
-													</span>
-												))}
-											</>
-										)}
+										{Array.isArray(card.tags) &&
+											card.tags.length > 0 &&
+											card.tags.map((tag) => (
+												<span
+													key={tag}
+													className="rounded bg-secondary/50 px-2 py-0.5 text-xs"
+												>
+													{tag}
+												</span>
+											))}
 									</div>
 								</div>
-								<div className="mt-2 text-right text-xs text-muted-foreground">
+								<div className="mt-2 text-right text-muted-foreground text-xs">
 									{new Date(card.createdAt).toLocaleDateString()}
 								</div>
 								<div className="mt-3 flex justify-end space-x-2">
@@ -510,7 +486,7 @@ function FlashcardCreatorInner({ className }: FlashcardCreatorProps) {
 
 			{/* Empty State */}
 			{filteredFlashcards.length === 0 && flashcards.length > 0 && (
-				<Card className="text-center py-8">
+				<Card className="py-8 text-center">
 					<p className="text-muted-foreground">
 						No flashcards match your search
 					</p>
@@ -518,7 +494,7 @@ function FlashcardCreatorInner({ className }: FlashcardCreatorProps) {
 			)}
 
 			{filteredFlashcards.length === 0 && flashcards.length === 0 && (
-				<Card className="text-center py-8">
+				<Card className="py-8 text-center">
 					<p className="text-muted-foreground">
 						You haven't created any flashcards yet. Click "New Flashcard" to get
 						started!

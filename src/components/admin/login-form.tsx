@@ -6,7 +6,7 @@ import { MagicLinkDialog } from "@/components/admin/login-dialogs";
 import { OTPDialog } from "@/components/auth/otp-dialog";
 import { Anim } from "@/components/shared/anim";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";
@@ -37,9 +37,9 @@ export function LoginForm({ onSuccess }: { onSuccess: () => void }) {
 
 	return (
 		<>
-			<div className="min-h-[100dvh] flex items-center justify-center p-4 bg-background -webkit-font-smoothing antialiased">
+			<div className="-webkit-font-smoothing flex min-h-[100dvh] items-center justify-center bg-background p-4 antialiased">
 				<Anim>
-					<div className="w-full max-w-sm flex flex-col gap-6">
+					<div className="flex w-full max-w-sm flex-col gap-6">
 						<m.div
 							initial={{ opacity: 0, y: -12 }}
 							animate={{
@@ -51,9 +51,9 @@ export function LoginForm({ onSuccess }: { onSuccess: () => void }) {
 								},
 							}}
 						>
-							<div className="text-center mb-8">
-								<h1 className="text-2xl font-semibold tracking-tight">Admin</h1>
-								<p className="text-sm text-muted-foreground mt-1">
+							<div className="mb-8 text-center">
+								<h1 className="font-semibold text-2xl tracking-tight">Admin</h1>
+								<p className="mt-1 text-muted-foreground text-sm">
 									Sign in to continue
 								</p>
 							</div>
@@ -84,7 +84,7 @@ export function LoginForm({ onSuccess }: { onSuccess: () => void }) {
 											<input
 												id="email"
 												type="email"
-												className="w-full h-11 px-4 rounded-lg border border-border/80 bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[--system-accent] focus:ring-offset-2 transition-[border-color,box-shadow]"
+												className="h-11 w-full rounded-lg border border-border/80 bg-background px-4 text-foreground text-sm transition-[border-color,box-shadow] focus:outline-none focus:ring-2 focus:ring-[--system-accent] focus:ring-offset-2"
 												placeholder="admin@lumni.co.za"
 											/>
 										</div>
@@ -98,13 +98,13 @@ export function LoginForm({ onSuccess }: { onSuccess: () => void }) {
 											<input
 												id="password"
 												type="password"
-												className="w-full h-11 px-4 rounded-lg border border-border/80 bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[--system-accent] focus:ring-offset-2 transition-[border-color,box-shadow]"
+												className="h-11 w-full rounded-lg border border-border/80 bg-background px-4 text-foreground text-sm transition-[border-color,box-shadow] focus:outline-none focus:ring-2 focus:ring-[--system-accent] focus:ring-offset-2"
 												placeholder="••••••••"
 											/>
 										</div>
 										<Button
 											size="default"
-											className="w-full rounded-lg font-medium text-sm bg-[--system-accent] hover:bg-[--system-accent]/90 text-white shadow-level-2 transition-[transform,opacity] active:scale-[0.96]"
+											className="w-full rounded-lg bg-[--system-accent] font-medium text-sm text-white shadow-level-2 transition-[transform,opacity] hover:bg-[--system-accent]/90 active:scale-[0.96]"
 										>
 											Sign In
 										</Button>
@@ -127,11 +127,11 @@ export function LoginForm({ onSuccess }: { onSuccess: () => void }) {
 							}}
 						>
 							<div className="flex items-center gap-2 pt-2">
-								<div className="flex-1 h-px bg-border" />
-								<span className="text-xs text-muted-foreground uppercase tracking-wider">
+								<div className="h-px flex-1 bg-border" />
+								<span className="text-muted-foreground text-xs uppercase tracking-wider">
 									Or
 								</span>
-								<div className="flex-1 h-px bg-border" />
+								<div className="h-px flex-1 bg-border" />
 							</div>
 							<div className="grid grid-cols-2 gap-2 pt-2">
 								<Button
@@ -162,7 +162,7 @@ export function LoginForm({ onSuccess }: { onSuccess: () => void }) {
 								},
 							}}
 						>
-							<p className="text-xs text-muted-foreground text-center mt-6">
+							<p className="mt-6 text-center text-muted-foreground text-xs">
 								Authorized personnel only
 							</p>
 						</m.div>

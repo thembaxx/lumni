@@ -30,10 +30,10 @@ export function EssayInput({
 		<div className="flex flex-col gap-4">
 			{rubric && rubric.length > 0 && (
 				<div className="rounded-lg bg-muted/30 p-3">
-					<p className="text-sm font-medium mb-2">Grading Criteria:</p>
+					<p className="mb-2 font-medium text-sm">Grading Criteria:</p>
 					<ul className="flex flex-col gap-1">
 						{rubric.map((c, i) => (
-							<li key={i} className="text-sm text-muted-foreground">
+							<li key={i} className="text-muted-foreground text-sm">
 								<span className="font-medium">{c.name}</span> ({c.maxScore}{" "}
 								pts): {c.description}
 							</li>
@@ -53,11 +53,11 @@ export function EssayInput({
 				className={cn("min-h-[250px]", onSubmit && "pr-4")}
 			/>
 			<div className="flex items-center justify-between">
-				<div className="flex gap-3 text-xs text-muted-foreground">
+				<div className="flex gap-3 text-muted-foreground text-xs">
 					<span>Words: {wordCount}</span>
 					{wordLimit !== undefined && (
 						<span
-							className={cn(overLimit ? "text-destructive font-medium" : "")}
+							className={cn(overLimit ? "font-medium text-destructive" : "")}
 						>
 							Limit: {wordLimit}
 						</span>

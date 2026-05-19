@@ -124,21 +124,21 @@ export function GettingStartedCard() {
 					exit={shouldReduceMotion ? {} : { opacity: 0, y: -8, scale: 0.97 }}
 					transition={{ duration: 0.25, ease: iOSEase }}
 				>
-					<Card className="border border-system-accent/20 bg-system-accent/3 overflow-hidden">
+					<Card className="overflow-hidden border border-system-accent/20 bg-system-accent/3">
 						<div className="p-5">
-							<div className="flex items-start justify-between mb-4">
+							<div className="mb-4 flex items-start justify-between">
 								<div>
-									<h2 className="text-lg font-semibold tracking-tight text-balance">
+									<h2 className="text-balance font-semibold text-lg tracking-tight">
 										Getting started
 									</h2>
-									<p className="text-sm text-muted-foreground mt-0.5">
+									<p className="mt-0.5 text-muted-foreground text-sm">
 										Complete these steps to make the most of Lumni.
 									</p>
 								</div>
 								<button
 									type="button"
 									onClick={handleDismiss}
-									className="-mr-1 p-2 rounded-md hover:bg-muted/50 transition-colors"
+									className="-mr-1 rounded-md p-2 transition-colors hover:bg-muted/50"
 									aria-label="Dismiss"
 								>
 									<HugeiconsIcon
@@ -156,15 +156,15 @@ export function GettingStartedCard() {
 											key={item.key}
 											whileTap={done ? {} : { scale: 0.96 }}
 											transition={{ type: "spring", duration: 0.3, bounce: 0 }}
-											className={`flex items-center gap-3 p-3 rounded-xl transition-colors ${
-												done ? "opacity-50" : "hover:bg-muted/20 cursor-pointer"
+											className={`flex items-center gap-3 rounded-xl p-3 transition-colors ${
+												done ? "opacity-50" : "cursor-pointer hover:bg-muted/20"
 											}`}
 											onClick={
 												done ? undefined : () => markDone(item.key, item.href)
 											}
 										>
 											<div
-												className={`size-8 rounded-full flex items-center justify-center ${
+												className={`flex size-8 items-center justify-center rounded-full ${
 													done
 														? "bg-success/20 text-success"
 														: "bg-system-accent/10 text-system-accent"
@@ -236,15 +236,15 @@ export function GettingStartedCard() {
 													</AnimatePresence>
 												</div>
 											</div>
-											<div className="flex-1 min-w-0">
+											<div className="min-w-0 flex-1">
 												<p
-													className={`text-sm font-semibold ${
+													className={`font-semibold text-sm ${
 														done ? "line-through" : ""
 													}`}
 												>
 													{item.label}
 												</p>
-												<p className="text-xs text-muted-foreground truncate text-pretty">
+												<p className="truncate text-pretty text-muted-foreground text-xs">
 													{item.desc}
 												</p>
 											</div>
@@ -252,7 +252,7 @@ export function GettingStartedCard() {
 												<Button
 													size="sm"
 													variant="outline"
-													className="shrink-0 text-xs h-8 px-3"
+													className="h-8 shrink-0 px-3 text-xs"
 													onClick={() => markDone(item.key, item.href)}
 												>
 													{item.action}

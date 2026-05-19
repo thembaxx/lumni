@@ -1,6 +1,5 @@
 "use server";
 
-import { Query } from "appwrite";
 import { COLLECTIONS, listDocuments } from "@/lib/db/client";
 import { getAuthenticatedUserId } from "@/lib/server/auth";
 

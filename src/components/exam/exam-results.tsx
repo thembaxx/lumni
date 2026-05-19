@@ -46,7 +46,7 @@ export function ExamResults({
 
 	return (
 		<div className="min-h-dvh bg-[--system-grouped-background]">
-			<div className="max-w-3xl mx-auto p-[--space-6] flex flex-col gap-[--space-6]">
+			<div className="mx-auto flex max-w-3xl flex-col gap-[--space-6] p-[--space-6]">
 				<div className="flex items-center justify-between">
 					<div className="flex items-center gap-3">
 						<motion.div
@@ -78,7 +78,7 @@ export function ExamResults({
 					</Button>
 				</div>
 
-				<div className="grid grid-cols-2 md:grid-cols-4 gap-[--space-3]">
+				<div className="grid grid-cols-2 gap-[--space-3] md:grid-cols-4">
 					<Card>
 						<CardHeader>
 							<CardTitle className="ios-caption-1 font-semibold text-[--system-text-secondary]">
@@ -101,7 +101,7 @@ export function ExamResults({
 							</CardTitle>
 						</CardHeader>
 						<CardContent>
-							<p className="text-2xl font-extrabold text-destructive">
+							<p className="font-extrabold text-2xl text-destructive">
 								{totalParts - answeredCount}
 							</p>
 						</CardContent>
@@ -113,7 +113,7 @@ export function ExamResults({
 							</CardTitle>
 						</CardHeader>
 						<CardContent>
-							<p className="text-2xl font-extrabold text-warning">
+							<p className="font-extrabold text-2xl text-warning">
 								{flaggedCount}
 							</p>
 						</CardContent>
@@ -145,8 +145,8 @@ export function ExamResults({
 											Section {section.id}
 										</h3>
 										{section.questions.map((question) => (
-											<div key={question.id} className="ml-2 mb-3">
-												<p className="text-sm font-medium mb-1">
+											<div key={question.id} className="mb-3 ml-2">
+												<p className="mb-1 font-medium text-sm">
 													Q{question.id}
 													{question.title ? `: ${question.title}` : ""}
 												</p>
@@ -159,7 +159,7 @@ export function ExamResults({
 														return (
 															<div
 																key={part.id}
-																className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs ${
+																className={`inline-flex items-center gap-1 rounded px-2 py-0.5 text-xs ${
 																	answered
 																		? "bg-success/10 text-success-foreground"
 																		: "bg-muted text-muted-foreground"
@@ -230,7 +230,7 @@ export function ExamResults({
 									.map((item) => (
 										<li
 											key={item.id}
-											className="text-sm text-muted-foreground flex items-center gap-2"
+											className="flex items-center gap-2 text-muted-foreground text-sm"
 										>
 											<HugeiconsIcon
 												icon={Flag01Icon}

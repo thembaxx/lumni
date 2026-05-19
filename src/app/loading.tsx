@@ -58,7 +58,7 @@ export default function Loading() {
 			initial={{ opacity: 0 }}
 			animate={{ opacity: 1 }}
 			transition={{ duration: 0.3, ease: iOSEase }}
-			className="min-h-dvh flex flex-col items-center justify-center bg-background"
+			className="flex min-h-dvh flex-col items-center justify-center bg-background"
 		>
 			<div className="flex flex-col items-center gap-[--space-6]">
 				<m.div
@@ -81,7 +81,7 @@ export default function Loading() {
 					initial={{ opacity: 0, y: 12, filter: "blur(4px)" }}
 					animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
 					transition={{ duration: 0.4, ease: iOSEase, delay: 0.08 }}
-					className="ios-title-2 text-[--system-text-primary] text-center"
+					className="ios-title-2 text-center text-[--system-text-primary]"
 				>
 					Lumni
 				</m.h2>
@@ -90,7 +90,7 @@ export default function Loading() {
 					initial={{ opacity: 0, y: 8, filter: "blur(4px)" }}
 					animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
 					transition={{ duration: 0.35, ease: iOSEase, delay: 0.12 }}
-					className="ios-footnote text-[--system-text-secondary] text-center"
+					className="ios-footnote text-center text-[--system-text-secondary]"
 				>
 					{currentMessage}
 				</m.p>

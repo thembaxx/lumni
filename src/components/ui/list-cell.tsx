@@ -35,26 +35,26 @@ function ListCell({
 			onClick={onClick}
 			disabled={disabled}
 			className={cn(
-				"flex w-full items-center gap-4 px-5 py-4 text-left min-h-[56px]",
+				"flex min-h-[56px] w-full items-center gap-4 px-5 py-4 text-left",
 				"bg-[--system-surface] transition-[background-color,scale] duration-200",
 				onClick &&
-					"hover:bg-[--system-surface-secondary] active:bg-[--system-surface-secondary] active:scale-[0.96]",
+					"hover:bg-[--system-surface-secondary] active:scale-[0.96] active:bg-[--system-surface-secondary]",
 				disabled && "opacity-50",
 				showSeparator && "ios-separator",
 				className,
 			)}
 		>
-			<div className="flex-1 min-w-0">
+			<div className="min-w-0 flex-1">
 				<div
 					className={cn(
-						"text-(length:--fs-body) font-medium text-sm text-foreground truncate",
+						"text-(length:--fs-body) truncate font-medium text-foreground text-sm",
 						destructive && "text-[--system-destructive]",
 					)}
 				>
 					{title}
 				</div>
 				{subtitle && (
-					<div className="text-(length:--fs-footnote) font-medium text-sm text-[--system-text-secondary] mt-0.5 leading-snug">
+					<div className="text-(length:--fs-footnote) mt-0.5 font-medium text-[--system-text-secondary] text-sm leading-snug">
 						{subtitle}
 					</div>
 				)}
@@ -74,7 +74,7 @@ function ListGroup({ children, className }: ListGroupProps) {
 		<div
 			className={cn(
 				"overflow-hidden rounded-[24px] bg-[--system-surface]",
-				"shadow-level-1 border border-border/60",
+				"border border-border/60 shadow-level-1",
 				className,
 			)}
 		>
@@ -99,13 +99,13 @@ function ListSection({
 	return (
 		<section className={cn("mb-8 last:mb-0", className)}>
 			{header && (
-				<div className="text-(length:--fs-footnote) text-[--system-text-tertiary] text-sm opacity-70 font-medium tracking-wider px-6 py-3">
+				<div className="text-(length:--fs-footnote) px-6 py-3 font-medium text-[--system-text-tertiary] text-sm tracking-wider opacity-70">
 					{header}
 				</div>
 			)}
 			<ListGroup>{children}</ListGroup>
 			{footer && (
-				<div className="text-(length:--fs-caption-1) font-medium text-[--system-text-tertiary] px-6 py-3 leading-relaxed">
+				<div className="text-(length:--fs-caption-1) px-6 py-3 font-medium text-[--system-text-tertiary] leading-relaxed">
 					{footer}
 				</div>
 			)}

@@ -53,7 +53,7 @@ export default function ExamsPage() {
 
 	return (
 		<div className="min-h-[100dvh] bg-system-grouped pt-4 pb-24">
-			<div className="max-w-3xl mx-auto w-full px-4 flex flex-col gap-8">
+			<div className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-4">
 				<Anim>
 					<div className="flex flex-col gap-6">
 						<h1 className="ios-title-1 font-semibold text-foreground tracking-tight">
@@ -64,14 +64,14 @@ export default function ExamsPage() {
 							<div className="relative">
 								<HugeiconsIcon
 									icon={Search01Icon}
-									className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-muted-foreground/60"
+									className="absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted-foreground/60"
 								/>
 								<Input
 									type="text"
 									placeholder="Search exams…"
 									value={searchQuery}
 									onChange={(e) => setSearchQuery(e.target.value)}
-									className="h-10 pl-10 pr-10 rounded-full bg-secondary/50 border-0 text-sm placeholder:text-muted-foreground/60 focus-visible:ring-1 focus-visible:ring-[--system-accent]/30"
+									className="h-10 rounded-full border-0 bg-secondary/50 pr-10 pl-10 text-sm placeholder:text-muted-foreground/60 focus-visible:ring-1 focus-visible:ring-[--system-accent]/30"
 								/>
 								<AnimatePresence initial={false}>
 									{searchQuery && (
@@ -79,13 +79,13 @@ export default function ExamsPage() {
 											initial={{ opacity: 0, scale: 0.8 }}
 											animate={{ opacity: 1, scale: 1 }}
 											exit={{ opacity: 0, scale: 0.8 }}
-											className="absolute right-3 top-1/2 -translate-y-1/2"
+											className="absolute top-1/2 right-3 -translate-y-1/2"
 										>
 											<Button
 												onClick={() => setSearchQuery("")}
 												variant="ghost"
 												size="icon"
-												className="rounded-full bg-muted/60 hover:bg-muted text-muted-foreground hover:text-foreground active:scale-[0.96] transition-[scale]"
+												className="rounded-full bg-muted/60 text-muted-foreground transition-[scale] hover:bg-muted hover:text-foreground active:scale-[0.96]"
 											>
 												<HugeiconsIcon icon={Cancel01Icon} data-icon />
 											</Button>
@@ -94,14 +94,14 @@ export default function ExamsPage() {
 								</AnimatePresence>
 							</div>
 
-							<div className="flex items-center justify-between gap-2 flex-wrap">
+							<div className="flex flex-wrap items-center justify-between gap-2">
 								<SubjectSelect
 									value={selectedSubject}
 									onChange={setSelectedSubject}
 									placeholder="Subject"
 								/>
 
-								<ButtonGroup className="border rounded-full h-9">
+								<ButtonGroup className="h-9 rounded-full border">
 									<Button
 										variant={
 											selectedSession === "all" ? "default" : "secondary"
@@ -142,7 +142,7 @@ export default function ExamsPage() {
 												onClick={clearFilters}
 												variant="ghost"
 												size="sm"
-												className="text-muted-foreground hover:text-foreground active:scale-[0.96] transition-[scale]"
+												className="text-muted-foreground transition-[scale] hover:text-foreground active:scale-[0.96]"
 											>
 												<HugeiconsIcon icon={Cancel01Icon} data-icon />
 											</Button>
@@ -151,7 +151,7 @@ export default function ExamsPage() {
 								</AnimatePresence>
 							</div>
 
-							<div className="flex items-center gap-1.5 overflow-x-auto pb-1 -mx-4 px-4 scrollbar-hide">
+							<div className="scrollbar-hide -mx-4 flex items-center gap-1.5 overflow-x-auto px-4 pb-1">
 								<Button
 									variant={selectedYear === null ? "default" : "secondary"}
 									size="sm"
@@ -182,7 +182,7 @@ export default function ExamsPage() {
 									initial={{ opacity: 0 }}
 									animate={{ opacity: 1 }}
 									exit={{ opacity: 0 }}
-									className="flex flex-col gap-5 grow"
+									className="flex grow flex-col gap-5"
 								>
 									<GroupSkeleton />
 									<GroupSkeleton />
@@ -194,7 +194,7 @@ export default function ExamsPage() {
 									animate={{ opacity: 1, y: 0 }}
 									className="grow"
 								>
-									<Empty className="border border-dashed border-destructive/30">
+									<Empty className="border border-destructive/30 border-dashed">
 										<EmptyHeader>
 											<EmptyMedia variant="icon">
 												<HugeiconsIcon
@@ -246,7 +246,7 @@ export default function ExamsPage() {
 								<m.div
 									initial={{ opacity: 0 }}
 									animate={{ opacity: 1 }}
-									className="flex flex-col gap-5 grow"
+									className="flex grow flex-col gap-5"
 								>
 									{groupedExams.map((group, groupIndex) => (
 										<m.div
@@ -256,19 +256,19 @@ export default function ExamsPage() {
 											transition={{ delay: groupIndex * 0.08 }}
 											className="flex flex-col gap-2.5"
 										>
-											<div className="flex items-center justify-between px-0.5 gap-4">
-												<h3 className="text-lg font-semibold text-foreground text-pretty">
+											<div className="flex items-center justify-between gap-4 px-0.5">
+												<h3 className="text-pretty font-semibold text-foreground text-lg">
 													{group.subject}
 												</h3>
 												<Badge
 													variant="secondary"
-													className="text-[10px] font-medium px-2 py-0"
+													className="px-2 py-0 font-medium text-[10px]"
 												>
 													{group.papers.length}
 												</Badge>
 											</div>
 											<div className="grid gap-2">
-												{group.papers.slice(0, 4).map((exam, examIndex) => (
+												{group.papers.slice(0, 4).map((exam, _examIndex) => (
 													<ExamCard key={exam.id} exam={exam} />
 												))}
 												{group.papers.length > 4 && (

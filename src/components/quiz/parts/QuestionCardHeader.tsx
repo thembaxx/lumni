@@ -43,7 +43,7 @@ export function QuestionCardHeader({
 					/>
 					<Badge
 						variant="outline"
-						className="bg-[--system-accent]/5 text-xs font-mono"
+						className="bg-[--system-accent]/5 font-mono text-xs"
 					>
 						{question.type}
 					</Badge>
@@ -51,7 +51,7 @@ export function QuestionCardHeader({
 				<div className="flex items-center gap-1">
 					<button
 						onClick={onBookmarkToggle}
-						className="size-8 rounded-full flex items-center justify-center hover:bg-muted transition-colors"
+						className="flex size-8 items-center justify-center rounded-full transition-colors hover:bg-muted"
 						aria-label={bookmarked ? "Remove bookmark" : "Bookmark question"}
 					>
 						<svg

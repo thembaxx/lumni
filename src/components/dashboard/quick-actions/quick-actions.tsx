@@ -68,7 +68,7 @@ function ActionButton({
 		>
 			<Button
 				variant="secondary"
-				className="h-11 px-5 rounded-[2.5rem] border border-border/80 bg-system-background-secondary gap-2.5 justify-start text-foreground hover:bg-accent hover:border-accent"
+				className="h-11 justify-start gap-2.5 rounded-[2.5rem] border border-border/80 bg-system-background-secondary px-5 text-foreground hover:border-accent hover:bg-accent"
 			>
 				<motion.span
 					whileHover={
@@ -80,13 +80,13 @@ function ActionButton({
 					<PerpetualFloat floatRange={1.5} speed={3}>
 						<HugeiconsIcon
 							icon={icon}
-							className="size-4  text-foreground"
+							className="size-4 text-foreground"
 							data-icon
 							aria-hidden="true"
 						/>
 					</PerpetualFloat>
 				</motion.span>
-				<span className="text-sm font-medium">{label}</span>
+				<span className="font-medium text-sm">{label}</span>
 			</Button>
 		</motion.div>
 	);
@@ -97,7 +97,7 @@ export function QuickActions() {
 
 	return (
 		<div className="w-full">
-			<ul className="flex items-center gap-3 overflow-x-auto scrollbar-hide py-1">
+			<ul className="scrollbar-hide flex items-center gap-3 overflow-x-auto py-1">
 				{quickActions.map((action) => (
 					<li key={action.label} className="shrink-0">
 						{action.label === "Study Plan" ? (

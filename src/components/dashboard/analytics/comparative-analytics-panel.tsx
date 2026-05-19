@@ -23,7 +23,7 @@ export function ComparativeAnalyticsPanel() {
 
 	const comparativeQuery = useQuery({
 		queryKey: ["comparative-analytics", user?.$id],
-		queryFn: () => analyticsService.getComparativeAnalytics(user!.$id),
+		queryFn: () => analyticsService.getComparativeAnalytics(user?.$id),
 		enabled: !!user?.$id && !!analytics && !isLoading,
 		staleTime: 5 * 60 * 1000,
 	});
@@ -45,7 +45,7 @@ export function ComparativeAnalyticsPanel() {
 			await Promise.all(
 				weakSubjects.map(async (subject) => {
 					const data = await analyticsService.getSubjectTrend(
-						user!.$id,
+						user?.$id,
 						subject,
 					);
 					trends[subject] = data;
@@ -62,14 +62,14 @@ export function ComparativeAnalyticsPanel() {
 	if (isLoading || !analytics) {
 		return (
 			<div className="flex items-center justify-center p-8">
-				<div className="animate-spin rounded-full size-8 border-b-2 border-foreground" />
+				<div className="size-8 animate-spin rounded-full border-foreground border-b-2" />
 			</div>
 		);
 	}
 
 	if (!analytics || analytics.totalQuestions === 0) {
 		return (
-			<div className="text-center p-8">
+			<div className="p-8 text-center">
 				<div className="mb-6">
 					<svg
 						className="size-4 text-[--system-accent]"
@@ -85,8 +85,8 @@ export function ComparativeAnalyticsPanel() {
 						/>
 					</svg>
 				</div>
-				<h3 className="text-lg font-semibold mb-2">No Analytics Yet</h3>
-				<p className="text-muted-foreground mb-4">
+				<h3 className="mb-2 font-semibold text-lg">No Analytics Yet</h3>
+				<p className="mb-4 text-muted-foreground">
 					Complete some quizzes to see your performance analytics.
 				</p>
 				<Button render={<a href="/quiz" />} nativeButton={false}>
@@ -119,7 +119,7 @@ export function ComparativeAnalyticsPanel() {
 							<span>Your Performance Percentile</span>
 						</span>
 						{comparativeData && (
-							<span className="text-2xl font-extrabold">
+							<span className="font-extrabold text-2xl">
 								{comparativeData.userPercentile}%
 							</span>
 						)}
@@ -127,22 +127,22 @@ export function ComparativeAnalyticsPanel() {
 				</CardHeader>
 				{comparativeData && (
 					<CardContent className="pt-4">
-						<p className="text-sm text-muted-foreground">
+						<p className="text-muted-foreground text-sm">
 							You scored better than {comparativeData.userPercentile}% of users
 						</p>
-						<div className="flex items-center justify-between mt-2">
-							<span className="text-xs text-muted-foreground">
+						<div className="mt-2 flex items-center justify-between">
+							<span className="text-muted-foreground text-xs">
 								Global Average:
 							</span>
-							<span className="text-xs font-mono">
+							<span className="font-mono text-xs">
 								{comparativeData.globalAverage}%
 							</span>
 						</div>
-						<div className="flex items-center justify-between mt-1">
-							<span className="text-xs text-muted-foreground">
+						<div className="mt-1 flex items-center justify-between">
+							<span className="text-muted-foreground text-xs">
 								Your Average:
 							</span>
-							<span className="text-xs font-mono">
+							<span className="font-mono text-xs">
 								{comparativeData.userAverage.toFixed(1)}%
 							</span>
 						</div>
@@ -199,9 +199,9 @@ export function ComparativeAnalyticsPanel() {
 									<table className="w-full text-xs">
 										<thead>
 											<tr className="border-b text-muted-foreground">
-												<th className="text-left py-1 pr-2">Subject</th>
-												<th className="text-right py-1 px-2">Accuracy</th>
-												<th className="text-right py-1 pl-2">Rank</th>
+												<th className="py-1 pr-2 text-left">Subject</th>
+												<th className="px-2 py-1 text-right">Accuracy</th>
+												<th className="py-1 pl-2 text-right">Rank</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -217,10 +217,10 @@ export function ComparativeAnalyticsPanel() {
 															<td className="py-1 pr-2 font-medium">
 																{subject}
 															</td>
-															<td className="text-right py-1 px-2">
+															<td className="px-2 py-1 text-right">
 																{Math.round(accuracy)}%
 															</td>
-															<td className="text-right py-1 pl-2">{rank}th</td>
+															<td className="py-1 pl-2 text-right">{rank}th</td>
 														</tr>
 													);
 												})}
@@ -257,69 +257,67 @@ export function ComparativeAnalyticsPanel() {
 
 			{/* Subject Trends (Line Charts) */}
 			{Object.keys(subjectTrends).length > 0 && (
-				<>
-					<Card size="sm">
-						<CardHeader>
-							<CardTitle className="flex items-center justify-between">
-								<span className="flex items-center gap-2">
-									<svg
-										className="h-4 w-4 text-[--system-accent]"
-										fill="none"
-										stroke="currentColor"
-										viewBox="0 0 24 24"
-									>
-										<path
-											strokeLinecap="round"
-											strokeLinejoin="round"
-											strokeWidth={2}
-											d="M12 8v4l3 3"
-										/>
-									</svg>
-									<span>Performance Trends</span>
-								</span>
-							</CardTitle>
-						</CardHeader>
-						<CardContent className="grid gap-4 md:grid-cols-2">
-							{Object.entries(subjectTrends).map(([subject, trendData]) => (
-								<div key={subject}>
-									<div className="flex items-center justify-between mb-2">
-										<h3 className="text-lg font-semibold">{subject}</h3>
-										<span
-											className={`text-xs font-medium ${
-												trendData.trend === "improving"
-													? "text-success"
-													: trendData.trend === "declining"
-														? "text-destructive"
-														: "text-muted-foreground"
-											}`}
-										>
-											{trendData.trend === "improving"
-												? "Improving"
-												: trendData.trend === "declining"
-													? "Declining"
-													: "Stable"}
-										</span>
-									</div>
-									<LineChart
-										data={trendData.dates.map((date, i) => ({
-											date,
-											accuracy: trendData.accuracies[i],
-										}))}
-										xKey="date"
-										yKey="accuracy"
-										config={{
-											accuracy: {
-												label: "Accuracy %",
-												color: "var(--system-accent)",
-											},
-										}}
-										height={192}
+				<Card size="sm">
+					<CardHeader>
+						<CardTitle className="flex items-center justify-between">
+							<span className="flex items-center gap-2">
+								<svg
+									className="h-4 w-4 text-[--system-accent]"
+									fill="none"
+									stroke="currentColor"
+									viewBox="0 0 24 24"
+								>
+									<path
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										strokeWidth={2}
+										d="M12 8v4l3 3"
 									/>
+								</svg>
+								<span>Performance Trends</span>
+							</span>
+						</CardTitle>
+					</CardHeader>
+					<CardContent className="grid gap-4 md:grid-cols-2">
+						{Object.entries(subjectTrends).map(([subject, trendData]) => (
+							<div key={subject}>
+								<div className="mb-2 flex items-center justify-between">
+									<h3 className="font-semibold text-lg">{subject}</h3>
+									<span
+										className={`font-medium text-xs ${
+											trendData.trend === "improving"
+												? "text-success"
+												: trendData.trend === "declining"
+													? "text-destructive"
+													: "text-muted-foreground"
+										}`}
+									>
+										{trendData.trend === "improving"
+											? "Improving"
+											: trendData.trend === "declining"
+												? "Declining"
+												: "Stable"}
+									</span>
 								</div>
-							))}
-						</CardContent>
-					</Card>
-				</>
+								<LineChart
+									data={trendData.dates.map((date, i) => ({
+										date,
+										accuracy: trendData.accuracies[i],
+									}))}
+									xKey="date"
+									yKey="accuracy"
+									config={{
+										accuracy: {
+											label: "Accuracy %",
+											color: "var(--system-accent)",
+										},
+									}}
+									height={192}
+								/>
+							</div>
+						))}
+					</CardContent>
+				</Card>
 			)}
 		</div>
 	);

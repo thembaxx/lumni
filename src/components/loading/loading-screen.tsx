@@ -120,7 +120,7 @@ export function LoadingScreen({
 								ease: iOSEase,
 							}}
 						/>
-						<div className="relative flex items-center justify-center w-20 h-20 rounded-2xl bg-[--system-accent]/10 border border-[--system-accent]/20">
+						<div className="relative flex h-20 w-20 items-center justify-center rounded-2xl border border-[--system-accent]/20 bg-[--system-accent]/10">
 							<motion.div
 								animate={{ rotate: 360 }}
 								transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
@@ -138,7 +138,7 @@ export function LoadingScreen({
 						initial={{ opacity: 0, y: 12, filter: "blur(4px)" }}
 						animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
 						transition={{ duration: 0.4, ease: iOSEase, delay: 0.08 }}
-						className="ios-title-2 text-[--system-text-primary] mt-[--space-6] text-center"
+						className="ios-title-2 mt-[--space-6] text-center text-[--system-text-primary]"
 					>
 						Lumni
 					</motion.h2>
@@ -147,7 +147,7 @@ export function LoadingScreen({
 						initial={{ opacity: 0, y: 8, filter: "blur(4px)" }}
 						animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
 						transition={{ duration: 0.35, ease: iOSEase, delay: 0.12 }}
-						className="ios-footnote text-[--system-text-secondary] mt-[--space-2] text-center"
+						className="ios-footnote mt-[--space-2] text-center text-[--system-text-secondary]"
 					>
 						Preparing your study experience...
 					</motion.p>
@@ -173,7 +173,7 @@ export function LoadingScreen({
 						>
 							<Button
 								onClick={handleManualEnter}
-								className="rounded-full bg-[--system-accent] text-background hover:scale-105 h-10 px-8"
+								className="h-10 rounded-full bg-[--system-accent] px-8 text-background hover:scale-105"
 							>
 								Skip & Enter
 							</Button>

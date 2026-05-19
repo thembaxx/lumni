@@ -12,7 +12,7 @@ export const POST = createEngineHandler({
 		return body;
 	},
 	validate: (body) => {
-		if (!body.question || !body.question.id) return "Question is required";
+		if (!body.question?.id) return "Question is required";
 		return null;
 	},
 	execute: async (body) => {

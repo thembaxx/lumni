@@ -41,17 +41,17 @@ export function AnalyticsClient() {
 	return (
 		<div className="min-h-[100dvh] bg-background">
 			<PageHeader title="Analytics" subtitle="Platform usage statistics" />
-			<div className="p-4 flex flex-col gap-4">
-				<div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+			<div className="flex flex-col gap-4 p-4">
+				<div className="grid grid-cols-2 gap-3 md:grid-cols-3">
 					{stats.map((stat) => (
 						<Card key={stat.label} size="sm">
 							<CardHeader>
-								<CardTitle className="text-xs text-muted-foreground font-normal">
+								<CardTitle className="font-normal text-muted-foreground text-xs">
 									{stat.label}
 								</CardTitle>
 							</CardHeader>
 							<CardContent>
-								<p className="text-2xl font-bold tabular-nums">
+								<p className="font-bold text-2xl tabular-nums">
 									{isLoading ? "…" : stat.value}
 								</p>
 							</CardContent>
@@ -65,12 +65,12 @@ export function AnalyticsClient() {
 					</CardHeader>
 					<CardContent>
 						{isLoading && (
-							<p className="text-xs text-muted-foreground">Loading...</p>
+							<p className="text-muted-foreground text-xs">Loading...</p>
 						)}
 						{!isLoading &&
 							(!data?.subjectPopularity ||
 								data.subjectPopularity.length === 0) && (
-								<p className="text-xs text-muted-foreground">No data yet</p>
+								<p className="text-muted-foreground text-xs">No data yet</p>
 							)}
 						{data?.subjectPopularity && data.subjectPopularity.length > 0 && (
 							<div className="flex flex-col gap-2">

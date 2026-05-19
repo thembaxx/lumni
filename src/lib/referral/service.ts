@@ -1,7 +1,5 @@
 import { Query } from "appwrite";
-import { databases } from "@/lib/appwrite";
 import {
-	APPWRITE_DATABASE_ID,
 	COLLECTIONS,
 	createDocument,
 	listDocuments,

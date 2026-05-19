@@ -129,8 +129,8 @@ describe("loadVisualFromAppwrite", () => {
 
 		const result = await loadVisualFromAppwrite("q1", "mathematics");
 		expect(result).not.toBeNull();
-		expect(result!.type).toBe("konva-diagram");
-		expect(result!.diagramType).toBe("wave");
+		expect(result?.type).toBe("konva-diagram");
+		expect(result?.diagramType).toBe("wave");
 	});
 
 	test("returns null when document is expired", async () => {

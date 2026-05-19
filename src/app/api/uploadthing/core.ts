@@ -39,7 +39,7 @@ export const ourFileRouter = {
 			const user = await requireAuth(req);
 			return { userId: user.id };
 		})
-		.onUploadComplete(async ({ metadata, file }) => {
+		.onUploadComplete(async ({ metadata }) => {
 			return { uploadedBy: metadata.userId };
 		}),
 	avatarUploader: f(["image"])
@@ -55,7 +55,7 @@ export const ourFileRouter = {
 			const user = await requireAuth(req);
 			return { userId: user.id };
 		})
-		.onUploadComplete(async ({ metadata, file }) => {
+		.onUploadComplete(async ({ metadata }) => {
 			return { uploadedBy: metadata.userId };
 		}),
 	subjectsUploader: f({
@@ -65,7 +65,7 @@ export const ourFileRouter = {
 			const user = await requireAuth(req);
 			return { userId: user.id };
 		})
-		.onUploadComplete(async ({ metadata, file }) => {
+		.onUploadComplete(async ({ metadata }) => {
 			return { uploadedBy: metadata.userId };
 		}),
 	qaUploader: f({
@@ -75,7 +75,7 @@ export const ourFileRouter = {
 			const user = await requireAuth(req);
 			return { userId: user.id };
 		})
-		.onUploadComplete(async ({ metadata, file }) => {
+		.onUploadComplete(async ({ metadata }) => {
 			return { uploadedBy: metadata.userId };
 		}),
 	generalUploader: f(["image", "video", "pdf", "audio", "text"])
@@ -83,7 +83,7 @@ export const ourFileRouter = {
 			const user = await requireAuth(req);
 			return { userId: user.id };
 		})
-		.onUploadComplete(async ({ metadata, file }) => {
+		.onUploadComplete(async ({ metadata }) => {
 			return { uploadedBy: metadata.userId };
 		}),
 } satisfies FileRouter;

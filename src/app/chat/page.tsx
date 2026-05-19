@@ -6,11 +6,8 @@ import { AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { ChatInput } from "@/components/chat/ChatInput";
-import { ImageProcessingIndicator } from "@/components/chat/ImageProcessingIndicator";
-import { ImageViewer } from "@/components/chat/ImageViewer";
 import { LoadingIndicator } from "@/components/chat/LoadingIndicator";
 import { MessageBubble } from "@/components/chat/MessageBubble";
-import { SmartImage } from "@/components/chat/SmartImage";
 import { WelcomeState } from "@/components/chat/WelcomeState";
 import { Button } from "@/components/ui/button";
 import { useChat } from "@/hooks/use-chat";
@@ -27,16 +24,16 @@ export default function ChatPage() {
 	});
 
 	return (
-		<div className="flex flex-col h-full bg-background/95">
-			<div className="p-4 border-b border-border/30 flex items-center justify-between shrink-0">
+		<div className="flex h-full flex-col bg-background/95">
+			<div className="flex shrink-0 items-center justify-between border-border/30 border-b p-4">
 				<div className="flex items-center gap-2">
-					<div className="size-9 rounded-full bg-system-accent/10 flex items-center justify-center">
+					<div className="flex size-9 items-center justify-center rounded-full bg-system-accent/10">
 						<HugeiconsIcon
 							icon={Chat01Icon}
 							className="size-6 text-system-accent"
 						/>
 					</div>
-					<span className="text-base font-extrabold tracking-tight">
+					<span className="font-extrabold text-base tracking-tight">
 						Study Assistant
 					</span>
 				</div>
@@ -50,11 +47,11 @@ export default function ChatPage() {
 				</Link>
 			</div>
 
-			<div className="flex-1 flex flex-col overflow-hidden">
+			<div className="flex flex-1 flex-col overflow-hidden">
 				{chat.messages.length === 0 ? (
 					<WelcomeState />
 				) : (
-					<div className="flex-1 overflow-y-auto p-4 flex flex-col gap-4">
+					<div className="flex flex-1 flex-col gap-4 overflow-y-auto p-4">
 						<AnimatePresence mode="popLayout" initial={false}>
 							{chat.messages.map((message) => (
 								<MessageBubble

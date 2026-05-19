@@ -18,10 +18,10 @@ export function XPGainPopup({ amount, visible }: XPGainPopupProps) {
 					animate={{ opacity: 1, y: 0, scale: 1 }}
 					exit={{ opacity: 0, y: -20, scale: 0.8 }}
 					transition={{ type: "spring", stiffness: 400, damping: 20 }}
-					className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 pointer-events-none"
+					className="pointer-events-none fixed top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2"
 				>
 					<motion.div
-						className="flex items-center gap-2 bg-warning text-primary-foreground px-6 py-3 rounded-full shadow-lg"
+						className="flex items-center gap-2 rounded-full bg-warning px-6 py-3 text-primary-foreground shadow-lg"
 						animate={{
 							scale: [1, 1.1, 1],
 						}}
@@ -33,7 +33,7 @@ export function XPGainPopup({ amount, visible }: XPGainPopupProps) {
 						>
 							<HugeiconsIcon icon={SparklesIcon} className="size-5" />
 						</motion.div>
-						<span className="text-xl font-extrabold">+{amount} XP</span>
+						<span className="font-extrabold text-xl">+{amount} XP</span>
 					</motion.div>
 				</motion.div>
 			)}

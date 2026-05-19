@@ -27,33 +27,33 @@ export function ProgressChart({ data, title }: ProgressChartProps) {
 	};
 
 	return (
-		<Card className="overflow-hidden w-full">
+		<Card className="w-full overflow-hidden">
 			{title && (
 				<CardHeader>
-					<CardTitle className="text-lg font-semibold text-wrap balance">
+					<CardTitle className="balance text-wrap font-semibold text-lg">
 						{title}
 					</CardTitle>
 				</CardHeader>
 			)}
 			<CardContent>
 				{data.length === 0 ? (
-					<div className="flex flex-col items-center justify-center h-62.5 text-center px-6">
-						<div className="size-10 rounded-full bg-muted flex items-center justify-center mb-3">
+					<div className="flex h-62.5 flex-col items-center justify-center px-6 text-center">
+						<div className="mb-3 flex size-10 items-center justify-center rounded-full bg-muted">
 							<HugeiconsIcon
 								icon={Chart03Icon}
 								className="size-5 text-muted-foreground"
 							/>
 						</div>
-						<p className="text-sm font-semibold text-foreground mb-1">
+						<p className="mb-1 font-semibold text-foreground text-sm">
 							Your accuracy over time
 						</p>
-						<p className="text-xs text-muted-foreground mb-4 max-w-50 text-pretty">
+						<p className="mb-4 max-w-50 text-pretty text-muted-foreground text-xs">
 							Complete a quiz to start tracking your performance.
 						</p>
 						<Button
 							size="sm"
 							variant="outline"
-							className="h-8 text-xs gap-1.5"
+							className="h-8 gap-1.5 text-xs"
 							onClick={() => router.push("/quiz")}
 						>
 							<HugeiconsIcon icon={PlayFreeIcons} className="size-3.5" />

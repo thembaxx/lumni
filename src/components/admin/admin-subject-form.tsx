@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { cn } from "@/lib/shared";
 import { AdminActionButton } from "./admin-action-button";
 
 interface SubjectFormData {
@@ -60,10 +59,10 @@ export function SubjectForm({
 			<CardContent className="flex flex-col gap-4">
 				<div className="grid grid-cols-2 gap-4">
 					<div className="flex flex-col gap-2">
-						<Label className="text-sm font-medium text-foreground">Name</Label>
+						<Label className="font-medium text-foreground text-sm">Name</Label>
 						<motion.div
 							whileFocus={{ scale: 1.01 }}
-							className="transition-shadow ring-1 ring-transparent focus-within:ring-[--system-accent]/30 rounded-md"
+							className="rounded-md ring-1 ring-transparent transition-shadow focus-within:ring-[--system-accent]/30"
 						>
 							<Input
 								placeholder="Accounting"
@@ -76,10 +75,10 @@ export function SubjectForm({
 						</motion.div>
 					</div>
 					<div className="flex flex-col gap-2">
-						<Label className="text-sm font-medium text-foreground">Code</Label>
+						<Label className="font-medium text-foreground text-sm">Code</Label>
 						<motion.div
 							whileFocus={{ scale: 1.01 }}
-							className="transition-shadow ring-1 ring-transparent focus-within:ring-[--system-accent]/30 rounded-md"
+							className="rounded-md ring-1 ring-transparent transition-shadow focus-within:ring-[--system-accent]/30"
 						>
 							<Input
 								placeholder="accounting"
@@ -93,12 +92,12 @@ export function SubjectForm({
 					</div>
 				</div>
 				<div className="flex flex-col gap-2">
-					<Label className="text-sm font-medium text-foreground">
+					<Label className="font-medium text-foreground text-sm">
 						Description
 					</Label>
 					<motion.div
 						whileFocus={{ scale: 1.01 }}
-						className="transition-shadow ring-1 ring-transparent focus-within:ring-[--system-accent]/30 rounded-md"
+						className="rounded-md ring-1 ring-transparent transition-shadow focus-within:ring-[--system-accent]/30"
 					>
 						<Input
 							placeholder="Brief description"

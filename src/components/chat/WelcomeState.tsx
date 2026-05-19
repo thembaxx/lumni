@@ -1,17 +1,16 @@
 import { SparklesIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { motion } from "framer-motion";
-import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";
 
 export function WelcomeState() {
 	return (
-		<div className="flex-1 flex flex-col items-center justify-center p-8">
-			<div className="size-48 mb-6">
+		<div className="flex flex-1 flex-col items-center justify-center p-8">
+			<div className="mb-6 size-48">
 				<motion.div
 					animate={{ scale: [1, 1.2, 1] }}
 					transition={{ duration: 1.5, repeat: Infinity }}
-					className="size-full flex items-center justify-center"
+					className="flex size-full items-center justify-center"
 				>
 					<HugeiconsIcon
 						icon={SparklesIcon}
@@ -24,7 +23,7 @@ export function WelcomeState() {
 					initial={{ opacity: 0, y: 8, filter: "blur(4px)" }}
 					animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
 					transition={{ delay: 0.1, duration: 0.35, ease: iOSEase }}
-					className="text-2xl font-semibold text-foreground mb-2 tracking-tight"
+					className="mb-2 font-semibold text-2xl text-foreground tracking-tight"
 				>
 					Hi! I&apos;m your study assistant
 				</motion.h2>
@@ -32,7 +31,7 @@ export function WelcomeState() {
 					initial={{ opacity: 0, y: 8, filter: "blur(4px)" }}
 					animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
 					transition={{ delay: 0.2, duration: 0.35, ease: iOSEase }}
-					className="text-muted-foreground/60 text-[13px] font-medium opacity-60 text-pretty"
+					className="text-pretty font-medium text-[13px] text-muted-foreground/60 opacity-60"
 				>
 					Ask me anything about your studies!
 				</motion.p>

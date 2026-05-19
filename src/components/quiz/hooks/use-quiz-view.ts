@@ -2,13 +2,9 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
-import type {
-	BloomLevel,
-	Difficulty,
-	Question,
-} from "@/lib/question-engine/types";
+import type { BloomLevel, Difficulty } from "@/lib/question-engine/types";
 import { useQuizSession } from "@/lib/quiz-session";
-import type { QuizResults, QuizViewProps } from "../quiz-view";
+import type { QuizViewProps } from "../quiz-view";
 
 export function useQuizView({
 	initialSubject,

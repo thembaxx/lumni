@@ -42,7 +42,7 @@ describe("leaderboard-service", () => {
 		expect(entries.length).toBeGreaterThanOrEqual(2);
 		const studentA = entries.find((e) => e.label === "Student A");
 		expect(studentA).toBeDefined();
-		expect(studentA!.xp).toBe(200);
+		expect(studentA?.xp).toBe(200);
 	});
 
 	test("entries sorted by XP descending", async () => {

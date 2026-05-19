@@ -25,8 +25,8 @@ export function MixedInput({
 				<ContentBlockRenderer key={idx} block={block} />
 			))}
 			{subParts?.map((part) => (
-				<div key={part.id} className="pl-4 border-l-2 border-muted">
-					<p className="text-sm font-medium mb-2">
+				<div key={part.id} className="border-muted border-l-2 pl-4">
+					<p className="mb-2 font-medium text-sm">
 						{part.id}. {part.text}
 					</p>
 					<PartRenderer

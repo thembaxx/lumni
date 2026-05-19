@@ -89,7 +89,7 @@ export function DesktopSidebar() {
 		<>
 			<aside
 				aria-label="Sidebar navigation"
-				className="hidden md:flex flex-col w-64 h-[100dvh] bg-system-grouped border-r border-system-separator/50 pt-safe"
+				className="hidden h-[100dvh] w-64 flex-col border-system-separator/50 border-r bg-system-grouped pt-safe md:flex"
 			>
 				{/* App brand */}
 				<div className="px-5 py-4">
@@ -97,7 +97,7 @@ export function DesktopSidebar() {
 				</div>
 
 				{/* Primary navigation */}
-				<nav aria-label="Primary" className="flex-1 px-3 flex flex-col gap-0.5">
+				<nav aria-label="Primary" className="flex flex-1 flex-col gap-0.5 px-3">
 					{sidebarItems.map((item) => {
 						const Icon = item.icon;
 						const isActive = item.id === activeId;
@@ -109,10 +109,10 @@ export function DesktopSidebar() {
 								onClick={() => handleClick(item)}
 								aria-current={isActive ? "page" : undefined}
 								className={cn(
-									"flex items-center gap-3 w-full px-3 h-10 rounded-lg text-sm transition-colors duration-150 text-left cursor-pointer",
+									"flex h-10 w-full cursor-pointer items-center gap-3 rounded-lg px-3 text-left text-sm transition-colors duration-150",
 									isActive
-										? "bg-system-accent/10 text-system-accent font-semibold"
-										: "text-system-text-secondary hover:text-system-text-primary hover:bg-system-fill",
+										? "bg-system-accent/10 font-semibold text-system-accent"
+										: "text-system-text-secondary hover:bg-system-fill hover:text-system-text-primary",
 								)}
 							>
 								<HugeiconsIcon
@@ -131,7 +131,7 @@ export function DesktopSidebar() {
 				</nav>
 
 				{/* Bottom items */}
-				<div className="px-3 pb-5 pt-2 border-t border-system-separator/40">
+				<div className="border-system-separator/40 border-t px-3 pt-2 pb-5">
 					{bottomItems.map((item) => {
 						const Icon = item.icon;
 						const isActive = item.id === activeId;
@@ -143,10 +143,10 @@ export function DesktopSidebar() {
 								onClick={() => handleClick(item)}
 								aria-current={isActive ? "page" : undefined}
 								className={cn(
-									"flex items-center gap-3 w-full px-3 h-10 rounded-lg text-sm transition-colors duration-150 text-left cursor-pointer",
+									"flex h-10 w-full cursor-pointer items-center gap-3 rounded-lg px-3 text-left text-sm transition-colors duration-150",
 									isActive
-										? "bg-system-accent/10 text-system-accent font-semibold"
-										: "text-system-text-secondary hover:text-system-text-primary hover:bg-system-fill",
+										? "bg-system-accent/10 font-semibold text-system-accent"
+										: "text-system-text-secondary hover:bg-system-fill hover:text-system-text-primary",
 								)}
 							>
 								<HugeiconsIcon

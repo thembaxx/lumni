@@ -50,14 +50,14 @@ describe("searchImage", () => {
 		);
 
 		expect(result).not.toBeNull();
-		expect(result!.url).toBe(
+		expect(result?.url).toBe(
 			"https://upload.wikimedia.org/wikipedia/commons/photo.png",
 		);
-		expect(result!.title).toBe("File:Photosynthesis.png");
-		expect(result!.attribution).toBe("John Doe");
-		expect(result!.license).toBe("CC-BY-SA");
-		expect(result!.width).toBe(800);
-		expect(result!.height).toBe(600);
+		expect(result?.title).toBe("File:Photosynthesis.png");
+		expect(result?.attribution).toBe("John Doe");
+		expect(result?.license).toBe("CC-BY-SA");
+		expect(result?.width).toBe(800);
+		expect(result?.height).toBe(600);
 		restoreFetch(orig);
 	});
 
@@ -103,7 +103,7 @@ describe("searchImage", () => {
 		const orig = mockFetchResponse(noInfoResponse);
 		const result = await searchImage("test", "mathematics", "algebra");
 		expect(result).not.toBeNull();
-		expect(result!.url).toContain("img.png");
+		expect(result?.url).toContain("img.png");
 		restoreFetch(orig);
 	});
 
@@ -142,8 +142,8 @@ describe("searchImage", () => {
 		const orig = mockFetchResponse(noMetaResponse);
 		const result = await searchImage("test", "mathematics", "algebra");
 		expect(result).not.toBeNull();
-		expect(result!.attribution).toBe("File:Image.png");
-		expect(result!.license).toBe("unknown");
+		expect(result?.attribution).toBe("File:Image.png");
+		expect(result?.license).toBe("unknown");
 		restoreFetch(orig);
 	});
 
@@ -153,7 +153,7 @@ describe("searchImage", () => {
 
 		const callArgs = (globalThis.fetch as ReturnType<typeof mock>).mock
 			.calls[0] as unknown as [string, { headers?: Record<string, string> }];
-		expect(callArgs[1].headers!["User-Agent"]).toBe(
+		expect(callArgs[1].headers?.["User-Agent"]).toBe(
 			"Lumni/1.0 (educational app)",
 		);
 		restoreFetch(orig);

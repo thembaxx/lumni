@@ -24,7 +24,7 @@ export function SourceBasedInput({
 	return (
 		<div className="flex flex-col gap-4">
 			{sourceRefs && sourceRefs.length > 0 && (
-				<div className="flex gap-2 flex-wrap">
+				<div className="flex flex-wrap gap-2">
 					{sourceRefs.map((ref) => (
 						<Badge key={ref} variant="secondary">
 							Source {ref}

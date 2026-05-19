@@ -1,20 +1,14 @@
 "use client";
 
-import {
-	Award01Icon,
-	Home01Icon,
-	Timer01Icon,
-	UndoIcon,
-} from "@hugeicons/core-free-icons";
+import { Award01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { motion } from "framer-motion";
 import { Confetti } from "@/components/celebration";
 import { ProgressDots } from "@/components/shared/progress-dots";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/shared";
-import { calculateAccuracy, formatTime } from "@/lib/shared/time";
+import { calculateAccuracy } from "@/lib/shared/time";
 import { iOSEase } from "@/lib/utils/animation";
 
 interface QuizResultsCardProps {
@@ -87,7 +81,7 @@ export function QuizResultsCard({
 
 			<Card className={cn("relative", className)}>
 				<motion.div
-					className="absolute inset-0 pointer-events-none rounded-[2.5rem] overflow-hidden"
+					className="pointer-events-none absolute inset-0 overflow-hidden rounded-[2.5rem]"
 					initial={{ opacity: 0 }}
 					animate={isGreatScore ? { opacity: [0, 0.3, 0] } : { opacity: 0 }}
 					transition={{ duration: 2, repeat: Infinity }}
@@ -101,7 +95,7 @@ export function QuizResultsCard({
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ delay: 0.1 }}
 					>
-						<CardTitle className="text-xl font-extrabold tracking-tight">
+						<CardTitle className="font-extrabold text-xl tracking-tight">
 							{isPerfect
 								? "Flawless!"
 								: isGreatScore
@@ -109,7 +103,7 @@ export function QuizResultsCard({
 									: "Quiz Complete!"}
 						</CardTitle>
 					</motion.div>
-					<p className="text-sm text-muted-foreground">
+					<p className="text-muted-foreground text-sm">
 						Here are your results:
 					</p>
 				</CardHeader>
@@ -127,52 +121,52 @@ export function QuizResultsCard({
 								variants={itemVariants}
 							>
 								<motion.div
-									className="col-span-5 p-4 rounded-lg bg-muted"
+									className="col-span-5 rounded-lg bg-muted p-4"
 									initial={{ opacity: 0 }}
 									animate={{ opacity: 1 }}
 									transition={{ delay: 0.3 }}
 								>
 									<motion.p
-										className="text-2xl font-extrabold tabular-nums"
+										className="font-extrabold text-2xl tabular-nums"
 										initial={{ opacity: 0 }}
 										animate={{ opacity: 1 }}
 										transition={{ delay: 0.3 }}
 									>
 										{totalQuestions}
 									</motion.p>
-									<p className="text-xs text-muted-foreground">Questions</p>
+									<p className="text-muted-foreground text-xs">Questions</p>
 								</motion.div>
 								<motion.div
-									className="col-span-3 p-4 rounded-lg bg-muted"
+									className="col-span-3 rounded-lg bg-muted p-4"
 									initial={{ opacity: 0 }}
 									animate={{ opacity: 1 }}
 									transition={{ delay: 0.4 }}
 								>
 									<p
 										className={cn(
-											"text-2xl font-extrabold tabular-nums",
+											"font-extrabold text-2xl tabular-nums",
 											isGreatScore && "text-success",
 										)}
 									>
 										{correctAnswers}
 									</p>
-									<p className="text-xs text-muted-foreground">Correct</p>
+									<p className="text-muted-foreground text-xs">Correct</p>
 								</motion.div>
 								<motion.div
-									className="col-span-4 p-4 rounded-lg bg-muted"
+									className="col-span-4 rounded-lg bg-muted p-4"
 									initial={{ opacity: 0 }}
 									animate={{ opacity: 1 }}
 									transition={{ delay: 0.5 }}
 								>
 									<p
 										className={cn(
-											"text-2xl font-extrabold tabular-nums",
+											"font-extrabold text-2xl tabular-nums",
 											isGreatScore && "text-success",
 										)}
 									>
 										{accuracy}%
 									</p>
-									<p className="text-xs text-muted-foreground">Accuracy</p>
+									<p className="text-muted-foreground text-xs">Accuracy</p>
 								</motion.div>
 							</motion.div>
 						</section>

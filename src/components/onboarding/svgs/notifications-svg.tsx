@@ -7,7 +7,7 @@ export function NotificationsSVG() {
 		<svg
 			viewBox="0 0 240 240"
 			fill="none"
-			className="w-full h-full"
+			className="h-full w-full"
 			preserveAspectRatio="xMidYMid meet"
 		>
 			<motion.g
