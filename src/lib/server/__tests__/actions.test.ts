@@ -19,7 +19,11 @@ mock.module("@/lib/server/auth", () => ({
 let mockListDocumentsResults: Record<string, Record<string, unknown>[]> = {};
 let mockCreateDocumentResult = "new-doc-id";
 let mockDeleteDocumentCalls: { collection: string; documentId: string }[] = [];
-let mockUpdateDocumentCalls: { collection: string; documentId: string; data: Record<string, unknown> }[] = [];
+let mockUpdateDocumentCalls: {
+	collection: string;
+	documentId: string;
+	data: Record<string, unknown>;
+}[] = [];
 
 mock.module("@/lib/db/client", () => ({
 	COLLECTIONS: {
@@ -29,16 +33,25 @@ mock.module("@/lib/db/client", () => ({
 		STUDY_SESSIONS: "study_sessions",
 		EXAM_PAPERS: "exam_papers",
 	},
-	createDocument: mock(async (_collection: string, _data: Record<string, unknown>) => mockCreateDocumentResult),
+	createDocument: mock(
+		async (_collection: string, _data: Record<string, unknown>) =>
+			mockCreateDocumentResult,
+	),
 	listDocuments: mock(async (collection: string, _queries?: string[]) => {
 		return mockListDocumentsResults[collection] || [];
 	}),
 	deleteDocument: mock(async (collection: string, documentId: string) => {
 		mockDeleteDocumentCalls.push({ collection, documentId });
 	}),
-	updateDocument: mock(async (collection: string, documentId: string, data: Record<string, unknown>) => {
-		mockUpdateDocumentCalls.push({ collection, documentId, data });
-	}),
+	updateDocument: mock(
+		async (
+			collection: string,
+			documentId: string,
+			data: Record<string, unknown>,
+		) => {
+			mockUpdateDocumentCalls.push({ collection, documentId, data });
+		},
+	),
 }));
 
 let mockUploadFilesResult: Record<string, unknown> = {};
@@ -93,9 +106,7 @@ describe("fetchSubjects", () => {
 
 describe("fetchUserProgress", () => {
 	test("returns aggregated progress from sessions", async () => {
-		mockListDocumentsResults["user_progress"] = [
-			{ currentStreak: 3 },
-		];
+		mockListDocumentsResults["user_progress"] = [{ currentStreak: 3 }];
 		mockListDocumentsResults["study_sessions"] = [
 			{ questionsAnswered: 10, correctCount: 7 },
 			{ questionsAnswered: 5, correctCount: 3 },
@@ -184,7 +195,11 @@ describe("adminUploadExamPaper", () => {
 		formData.append("type", "paper");
 
 		mockUploadFilesResult = {
-			data: { ufsUrl: "https://utfs.io/f/exam.pdf", key: "file-key", url: "https://utfs.io/f/exam.pdf" },
+			data: {
+				ufsUrl: "https://utfs.io/f/exam.pdf",
+				key: "file-key",
+				url: "https://utfs.io/f/exam.pdf",
+			},
 		};
 
 		const result = await adminUploadExamPaper(formData);
@@ -203,10 +218,20 @@ describe("adminUploadExamPaper", () => {
 		formData.append("type", "memo");
 
 		mockUploadFilesResult = {
-			data: { ufsUrl: "https://utfs.io/f/memo.pdf", key: "memo-key", url: "https://utfs.io/f/memo.pdf" },
+			data: {
+				ufsUrl: "https://utfs.io/f/memo.pdf",
+				key: "memo-key",
+				url: "https://utfs.io/f/memo.pdf",
+			},
 		};
 		mockListDocumentsResults["exam_papers"] = [
-			{ $id: "paper1", subjectId: "math", year: 2024, paperNumber: 1, type: "paper" },
+			{
+				$id: "paper1",
+				subjectId: "math",
+				year: 2024,
+				paperNumber: 1,
+				type: "paper",
+			},
 		];
 
 		const result = await adminUploadExamPaper(formData);

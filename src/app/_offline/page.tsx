@@ -24,9 +24,9 @@ export default function OfflinePage() {
 						/>
 					</svg>
 				</div>
-				<h1 className="text-2xl font-bold">You&apos;re offline</h1>
+				<h1 className="text-2xl font-semibold">You&apos;re offline</h1>
 				<p className="text-sm text-muted-foreground">
-					Don&apos;t worry — your saved progress and cached questions are
+					Don&apos;t worry - your saved progress and cached questions are
 					available. Results will sync when you reconnect.
 				</p>
 				<div className="flex flex-col gap-2 pt-4">

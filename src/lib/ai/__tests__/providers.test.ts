@@ -117,9 +117,7 @@ describe("createGeminiProvider", () => {
 		const callArgs = (globalThis.fetch as ReturnType<typeof mock>).mock
 			.calls[0] as unknown as [string, { body?: string }];
 		const body = JSON.parse(callArgs[1].body!);
-		const roles = body.contents.map(
-			(c: { role: string }) => c.role,
-		);
+		const roles = body.contents.map((c: { role: string }) => c.role);
 		expect(roles[0]).toBe("model");
 		expect(roles[1]).toBe("user");
 		restoreFetch(orig);

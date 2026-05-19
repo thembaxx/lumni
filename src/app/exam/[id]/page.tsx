@@ -13,8 +13,7 @@ export default async function ExamPage({
 	params: Promise<{ id: string }>;
 	searchParams: Promise<{ mode?: string }>;
 }) {
-	const { id } = await params;
-	const { mode } = await searchParams;
+	const [{ id }, { mode }] = await Promise.all([params, searchParams]);
 
 	return (
 		<ErrorBoundary>

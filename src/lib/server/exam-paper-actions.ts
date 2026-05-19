@@ -210,6 +210,8 @@ export async function getExamPapers(
 	subjectCode: string,
 	year?: number,
 ): Promise<ExamPaperRecord[]> {
+	const userId = await getAuthenticatedUserId();
+	if (!userId) throw new Error("Authentication required");
 	const records = year
 		? getExamPapersBySubject(subjectCode, year)
 		: getExamPapersBySubject(subjectCode);
@@ -236,6 +238,8 @@ export async function getExamPaperUrl(
 	paperNumber: number,
 	type: "paper" | "memo",
 ): Promise<string | null> {
+	const userId = await getAuthenticatedUserId();
+	if (!userId) throw new Error("Authentication required");
 	const db = await getExamsDb();
 	const record = dbExecOne(
 		db,
@@ -270,6 +274,8 @@ export async function deleteExamPaper(id: string): Promise<void> {
 }
 
 export async function getExamPapersWithFallback() {
+	const userId = await getAuthenticatedUserId();
+	if (!userId) throw new Error("Authentication required");
 	try {
 		const dbRecords = getAllExamPapersFromDb() as {
 			id: string;
@@ -317,6 +323,8 @@ export async function getExamPapersWithFallback() {
 }
 
 export async function checkAndPopulateExamsDb() {
+	const userId = await getAuthenticatedUserId();
+	if (!userId) throw new Error("Authentication required");
 	try {
 		const count = getExamPaperCount();
 

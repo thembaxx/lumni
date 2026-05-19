@@ -190,9 +190,9 @@ export default function AdminQualityPage() {
 						</p>
 					) : (
 						<div className="space-y-1 max-h-60 overflow-y-auto">
-							{events.map((e, i) => (
+							{events.map((e) => (
 								<div
-									key={i}
+									key={`${e.event}-${e.timestamp}`}
 									className="flex items-center gap-2 text-xs font-mono"
 								>
 									<Badge
@@ -228,9 +228,9 @@ export default function AdminQualityPage() {
 						<p className="text-sm text-muted-foreground">No quality data yet</p>
 					) : (
 						<div className="space-y-1 max-h-60 overflow-y-auto">
-							{recentQuality.map((r, i) => (
+							{recentQuality.map((r) => (
 								<div
-									key={i}
+									key={`${r.questionType}-${r.timestamp}`}
 									className="flex items-center gap-2 text-xs font-mono"
 								>
 									<Badge

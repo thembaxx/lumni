@@ -51,26 +51,37 @@ export async function POST(request: NextRequest) {
 
 			const results = { added: 0, skipped: 0, errors: [] as string[] };
 
-			for (const sub of subjects) {
-				try {
-					await createDocument(COLLECTIONS.SUBJECTS, {
-						name: sub.name,
-						code: sub.code,
-						description: sub.description,
-						category: sub.category,
-					});
-					results.added++;
-				} catch (e) {
-					const err = e as Error;
-					if (
-						err.message.includes("already exists") ||
-						err.message.includes("duplicate")
-					) {
-						results.skipped++;
-					} else {
-						results.errors.push(sub.code + ": " + err.message);
+			const results_arr = await Promise.all(
+				subjects.map(async (sub) => {
+					try {
+						await createDocument(COLLECTIONS.SUBJECTS, {
+							name: sub.name,
+							code: sub.code,
+							description: sub.description,
+							category: sub.category,
+						});
+						return { added: true, skipped: false, error: null };
+					} catch (e) {
+						const err = e as Error;
+						if (
+							err.message.includes("already exists") ||
+							err.message.includes("duplicate")
+						) {
+							return { added: false, skipped: true, error: null };
+						} else {
+							return {
+								added: false,
+								skipped: false,
+								error: sub.code + ": " + err.message,
+							};
+						}
 					}
-				}
+				}),
+			);
+			for (const r of results_arr) {
+				if (r.added) results.added++;
+				if (r.skipped) results.skipped++;
+				if (r.error) results.errors.push(r.error);
 			}
 
 			return NextResponse.json({

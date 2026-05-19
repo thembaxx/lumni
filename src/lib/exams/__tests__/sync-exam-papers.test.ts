@@ -1,13 +1,16 @@
 import { beforeEach, describe, expect, mock, test } from "bun:test";
 
 const mockUploadFiles = mock(
-	async (): Promise<{ data: { ufsUrl: string; key: string }; error: null }> => ({
+	async (): Promise<{
+		data: { ufsUrl: string; key: string };
+		error: null;
+	}> => ({
 		data: { ufsUrl: "https://utfs.io/f/test-key", key: "test-key" },
 		error: null,
 	}),
 );
 
-let mockExistsSync = mock((_path: string) => false);
+const mockExistsSync = mock((_path: string) => false);
 const mockReadFileSync = mock((_path: string) => Buffer.from("fake-pdf"));
 const mockReaddirSync = mock((_path: string) => [] as string[]);
 const mockWriteFileSync = mock((_path: string, _data: string) => {});
@@ -91,7 +94,7 @@ describe("ensureExamPapersSynced", () => {
 	test("does not call internal sync when syncCompleted", async () => {
 		getExamPaperCountMock.mockReturnValue(5);
 		await ensureExamPapersSynced();
-		const spy = mock(() => {});
+		const _spy = mock(() => {});
 		const countBefore = getExamPaperCountMock.mock.calls.length;
 		await ensureExamPapersSynced();
 		expect(getExamPaperCountMock.mock.calls.length).toBe(countBefore);

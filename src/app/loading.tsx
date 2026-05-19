@@ -3,7 +3,7 @@
 import { RadialIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m, useMotionValue, useTransform } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { iOSEase } from "@/lib/utils/animation";
 
 // Product-specific loading messages for Lumni (educational app for South African students)
@@ -21,17 +21,14 @@ const loadingMessages = [
 ];
 
 export default function Loading() {
-	const [_messageIndex, setMessageIndex] = useState(0);
+	const messageIndexRef = useRef(0);
 	const [currentMessage, setCurrentMessage] = useState(loadingMessages[0]);
 
-	// Rotate messages every 3 seconds
 	useEffect(() => {
 		const interval = setInterval(() => {
-			setMessageIndex((prev) => {
-				const nextIndex = (prev + 1) % loadingMessages.length;
-				setCurrentMessage(loadingMessages[nextIndex]);
-				return nextIndex;
-			});
+			messageIndexRef.current =
+				(messageIndexRef.current + 1) % loadingMessages.length;
+			setCurrentMessage(loadingMessages[messageIndexRef.current]);
 		}, 3000);
 
 		return () => clearInterval(interval);

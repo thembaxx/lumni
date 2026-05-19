@@ -31,7 +31,10 @@ mock.module("@/lib/shared/json", () => ({
 	safeJsonStringify: (value: unknown) => JSON.stringify(value),
 }));
 
-import { loadVisualFromAppwrite, saveVisualToAppwrite } from "../visual-persistence";
+import {
+	loadVisualFromAppwrite,
+	saveVisualToAppwrite,
+} from "../visual-persistence";
 
 const sampleVisual = {
 	type: "konva-diagram" as const,
@@ -66,10 +69,7 @@ describe("saveVisualToAppwrite", () => {
 
 		await saveVisualToAppwrite("q1", "math", sampleVisual);
 
-		const data = mockCreateDocument.mock.calls[0][3] as Record<
-			string,
-			unknown
-		>;
+		const data = mockCreateDocument.mock.calls[0][3] as Record<string, unknown>;
 		expect(data.createdAt).toBeString();
 		expect(data.expiresAt).toBeString();
 		expect(new Date(data.createdAt as string).getTime()).toBeGreaterThanOrEqual(

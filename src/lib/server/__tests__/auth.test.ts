@@ -96,17 +96,23 @@ describe("verifyAuth", () => {
 
 	test("throws when userId does not match", async () => {
 		mockUserId = "other_user";
-		await expect(verifyAuth("user_abc")).rejects.toThrow("Authentication required");
+		await expect(verifyAuth("user_abc")).rejects.toThrow(
+			"Authentication required",
+		);
 	});
 
 	test("throws when no session cookie exists", async () => {
 		mockSessionCookieValue = null;
-		await expect(verifyAuth("user_abc")).rejects.toThrow("Authentication required");
+		await expect(verifyAuth("user_abc")).rejects.toThrow(
+			"Authentication required",
+		);
 	});
 
 	test("throws when account.get fails", async () => {
 		mockGetRejects = true;
-		await expect(verifyAuth("user_abc")).rejects.toThrow("Authentication required");
+		await expect(verifyAuth("user_abc")).rejects.toThrow(
+			"Authentication required",
+		);
 	});
 });
 

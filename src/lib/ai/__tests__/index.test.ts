@@ -4,7 +4,7 @@ const GEMINI_RESP = {
 	candidates: [{ content: { parts: [{ text: "gemini-answer" }] } }],
 };
 
-const GROQ_RESP = {
+const _GROQ_RESP = {
 	choices: [{ message: { content: "groq-answer" } }],
 	usage: { prompt_tokens: 5, completion_tokens: 10 },
 };
@@ -27,6 +27,7 @@ function restoreFetch(original: typeof globalThis.fetch) {
 }
 
 import {
+	CHAT_SYSTEM_PROMPT,
 	generate,
 	generateBatch,
 	generateWithSystem,
@@ -34,7 +35,6 @@ import {
 	getAIProviders,
 	initAI,
 	isAIConfigured,
-	CHAT_SYSTEM_PROMPT,
 } from "../client";
 
 describe("AI module (client)", () => {

@@ -1,7 +1,10 @@
 import { afterAll, beforeEach, describe, expect, mock, test } from "bun:test";
 
 const mockUploadFiles = mock(
-	async (): Promise<{ data: { ufsUrl: string; key: string }; error: null }> => ({
+	async (): Promise<{
+		data: { ufsUrl: string; key: string };
+		error: null;
+	}> => ({
 		data: { ufsUrl: "https://example.com/img.png", key: "img-key" },
 		error: null,
 	}),
@@ -27,10 +30,7 @@ afterAll(() => {
 describe("convertPdfWithMarker", () => {
 	beforeEach(() => {
 		globalThis.fetch = mock(
-			async (
-				_url: string | URL,
-				_opts?: RequestInit,
-			): Promise<Response> =>
+			async (_url: string | URL, _opts?: RequestInit): Promise<Response> =>
 				new Response(
 					JSON.stringify({
 						markdown: "# Converted PDF",
@@ -57,9 +57,12 @@ describe("convertPdfWithMarker", () => {
 				expect(url.toString()).toMatch(/\/convert$/);
 				expect(opts?.method).toBe("POST");
 				expect(opts?.body).toBeInstanceOf(FormData);
-				return new Response(JSON.stringify({ markdown: "", images: [], metadata: {} }), {
-					status: 200,
-				});
+				return new Response(
+					JSON.stringify({ markdown: "", images: [], metadata: {} }),
+					{
+						status: 200,
+					},
+				);
 			},
 		);
 		globalThis.fetch = fetchMock;
@@ -69,7 +72,8 @@ describe("convertPdfWithMarker", () => {
 
 	test("throws on non-ok response", async () => {
 		globalThis.fetch = mock(
-			async (): Promise<Response> => new Response("Bad Request", { status: 400 }),
+			async (): Promise<Response> =>
+				new Response("Bad Request", { status: 400 }),
 		);
 		await expect(
 			convertPdfWithMarker(Buffer.from("test"), "bad.pdf"),
@@ -98,7 +102,9 @@ describe("uploadImagesAndRewriteMarkdown", () => {
 			{ filename: "diagram.png", data: "base64,iVBORw0KGgo=" },
 		]);
 		expect(result.markdown).toBe("![diagram](https://example.com/img.png)");
-		expect(result.imageUrlMap["diagram.png"]).toBe("https://example.com/img.png");
+		expect(result.imageUrlMap["diagram.png"]).toBe(
+			"https://example.com/img.png",
+		);
 	});
 
 	test("uploads multiple images", async () => {
@@ -116,7 +122,9 @@ describe("uploadImagesAndRewriteMarkdown", () => {
 			{ filename: "a.png", data: "base64,aaaa" },
 			{ filename: "b.png", data: "base64,bbbb" },
 		]);
-		expect(result.markdown).toBe("![a](https://example.com/a.png) ![b](https://example.com/b.png)");
+		expect(result.markdown).toBe(
+			"![a](https://example.com/a.png) ![b](https://example.com/b.png)",
+		);
 	});
 
 	test("handles images with special regex chars in filename", async () => {

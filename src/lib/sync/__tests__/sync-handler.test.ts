@@ -2,9 +2,24 @@ import { beforeEach, describe, expect, mock, test } from "bun:test";
 
 const enqueueMock = mock(async () => 1);
 
-const progressStore: { id: number; odSubjectId: string; questionsAttempted: number; correctCount: number; currentStreak: number; longestStreak: number }[] = [];
+const progressStore: {
+	id: number;
+	odSubjectId: string;
+	questionsAttempted: number;
+	correctCount: number;
+	currentStreak: number;
+	longestStreak: number;
+}[] = [];
 
-const attemptsStore: { id: number; odSubject: string; userId?: string; score: number; totalQuestions: number; duration: number; completedAt: number }[] = [];
+const attemptsStore: {
+	id: number;
+	odSubject: string;
+	userId?: string;
+	score: number;
+	totalQuestions: number;
+	duration: number;
+	completedAt: number;
+}[] = [];
 
 const mockProgressTable = {
 	toArray: async () => [...progressStore],
@@ -161,7 +176,13 @@ describe("flushOfflineData", () => {
 		});
 		await flushOfflineData("multi-user");
 		expect(enqueueMock).toHaveBeenCalledTimes(2);
-		expect(enqueueMock).toHaveBeenCalledWith("appwrite-progress-sync", expect.any(Object));
-		expect(enqueueMock).toHaveBeenCalledWith("appwrite-attempt-sync", expect.any(Object));
+		expect(enqueueMock).toHaveBeenCalledWith(
+			"appwrite-progress-sync",
+			expect.any(Object),
+		);
+		expect(enqueueMock).toHaveBeenCalledWith(
+			"appwrite-attempt-sync",
+			expect.any(Object),
+		);
 	});
 });

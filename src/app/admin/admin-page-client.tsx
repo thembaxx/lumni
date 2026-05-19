@@ -33,7 +33,7 @@ function Preloader({ onComplete }: { onComplete: () => void }) {
 			exit={{ opacity: 0 }}
 			transition={{ duration: 0.3 }}
 		>
-			<div className="w-12 h-12 rounded-xl bg-foreground flex items-center justify-center">
+			<div className="size-12 rounded-xl bg-foreground flex items-center justify-center">
 				<span className="text-2xl font-extrabold text-background">L</span>
 			</div>
 			<div className="w-32 h-1 bg-secondary rounded-full mt-6 overflow-hidden">
@@ -127,7 +127,7 @@ export function AdminPageClient() {
 								}
 								onClick={handleSeed}
 								disabled={isSeeding}
-								className="shadow-lg shadow-shadow/20 rounded-full h-14 w-14"
+								className="shadow-lg shadow-shadow/20 rounded-full size-14"
 								title="Seed Database"
 							>
 								{isSeeding ? (

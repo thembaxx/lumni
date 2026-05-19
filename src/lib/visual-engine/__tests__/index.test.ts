@@ -7,8 +7,8 @@ import {
 	getValidator,
 	isKonvaType,
 	KONVA_TYPES,
-	searchImage,
 	STEM_SUBJECTS,
+	searchImage,
 	VisualEngine,
 	visualEngine,
 } from "../index";

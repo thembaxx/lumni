@@ -16,6 +16,7 @@ const utapi = new UTApi();
 async function convertWithMarkdownNew(pdfUrl: string): Promise<string> {
 	const response = await fetch("https://markdown.new/", {
 		method: "POST",
+		cache: "no-store",
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify({ url: pdfUrl }),
 	});
@@ -50,7 +51,7 @@ export async function POST(request: Request) {
 		const filename = (pdfFiles[0]?.key || "exam-paper").replace(/\.pdf$/i, "");
 
 		// Download PDF bytes for Marker
-		const pdfResponse = await fetch(pdfUrl);
+		const pdfResponse = await fetch(pdfUrl, { cache: "no-store" });
 		if (!pdfResponse.ok) {
 			return NextResponse.json(
 				{ error: "Failed to download PDF" },

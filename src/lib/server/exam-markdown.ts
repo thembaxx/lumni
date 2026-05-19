@@ -1,5 +1,7 @@
 "use server";
 
+import { getAuthenticatedUserId } from "@/lib/server/auth";
+
 export interface GetExamMarkdownResult {
 	content: string;
 	source: "uploadthing" | "markdown.new" | "error";
@@ -9,6 +11,14 @@ export interface GetExamMarkdownResult {
 export async function getExamMarkdown(
 	fileUrl: string,
 ): Promise<GetExamMarkdownResult> {
+	const userId = await getAuthenticatedUserId();
+	if (!userId) {
+		return {
+			content: "",
+			source: "error",
+			error: "Authentication required",
+		};
+	}
 	if (!fileUrl) {
 		return {
 			content: "",

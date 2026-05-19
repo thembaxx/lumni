@@ -15,6 +15,7 @@ async function forgotPasswordHandler(request: NextRequest) {
 
 		const res = await fetch(`${APPWRITE_ENDPOINT}/account/password/recovery`, {
 			method: "POST",
+			cache: "no-store",
 			headers: {
 				"Content-Type": "application/json",
 				"X-Appwrite-Project": APPWRITE_PROJECT,

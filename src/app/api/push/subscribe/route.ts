@@ -22,6 +22,18 @@ async function subscribeHandler(req: NextRequest) {
 			);
 		}
 
+		const { Query } = await import("appwrite");
+		const { listDocuments } = await import("@/lib/db/client");
+
+		const existing = await listDocuments<Record<string, unknown>>(
+			PUSH_SUBSCRIPTIONS_COLLECTION,
+			[Query.equal("endpoint", subscription.endpoint)],
+		);
+
+		if (existing.length > 0) {
+			return NextResponse.json({ success: true });
+		}
+
 		await databases.createDocument(
 			APPWRITE_DATABASE_ID,
 			PUSH_SUBSCRIPTIONS_COLLECTION,

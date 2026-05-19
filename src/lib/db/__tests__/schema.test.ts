@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { offlineDB, LumniOfflineDB } from "../schema";
+import { LumniOfflineDB, offlineDB } from "../schema";
 
 describe("LumniOfflineDB", () => {
 	test("offlineDB singleton is defined", () => {

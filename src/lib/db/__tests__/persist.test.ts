@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { safePersist, SafePersistError } from "../persist";
+import { SafePersistError, safePersist } from "../persist";
 
 describe("safePersist", () => {
 	test("returns function result on success", async () => {

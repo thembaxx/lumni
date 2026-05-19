@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, mock, test } from "bun:test";
 
-const mockShare = mock<(data: { title: string; text: string; url: string }) => Promise<void>>();
+const mockShare =
+	mock<(data: { title: string; text: string; url: string }) => Promise<void>>();
 const mockClipboardWrite = mock<(text: string) => Promise<void>>();
 
 Object.defineProperty(globalThis, "navigator", {
@@ -14,7 +15,9 @@ Object.defineProperty(globalThis, "navigator", {
 	configurable: true,
 });
 
-const { shareReferral, copyToClipboard, generateQRDataUrl } = await import("../client");
+const { shareReferral, copyToClipboard, generateQRDataUrl } = await import(
+	"../client"
+);
 
 describe("shareReferral", () => {
 	beforeEach(() => {
@@ -52,7 +55,9 @@ describe("shareReferral", () => {
 		await shareReferral("https://lumni.vercel.app", "LUMNI-ABC");
 
 		expect(mockClipboardWrite).toHaveBeenCalledTimes(1);
-		expect(mockClipboardWrite).toHaveBeenCalledWith("LUMNI-ABC — https://lumni.vercel.app");
+		expect(mockClipboardWrite).toHaveBeenCalledWith(
+			"LUMNI-ABC — https://lumni.vercel.app",
+		);
 	});
 });
 
@@ -81,10 +86,14 @@ describe("copyToClipboard", () => {
 
 describe("generateQRDataUrl", () => {
 	test("returns a QR code URL with encoded link", () => {
-		const url = generateQRDataUrl("https://lumni.vercel.app/auth/sign-up?ref=LUMNI-ABC");
+		const url = generateQRDataUrl(
+			"https://lumni.vercel.app/auth/sign-up?ref=LUMNI-ABC",
+		);
 		expect(url).toContain("api.qrserver.com");
 		expect(url).toContain("size=200x200");
-		expect(url).toContain(encodeURIComponent("https://lumni.vercel.app/auth/sign-up?ref=LUMNI-ABC"));
+		expect(url).toContain(
+			encodeURIComponent("https://lumni.vercel.app/auth/sign-up?ref=LUMNI-ABC"),
+		);
 	});
 
 	test("encodes special characters in link", () => {

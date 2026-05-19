@@ -1,14 +1,14 @@
 import { describe, expect, test } from "bun:test";
 import type {
-	ChatMessage,
+	AIFailure,
+	AIProvider,
+	AIProviderCapabilities,
 	AIRequest,
 	AIResponse,
-	AIFailure,
 	AIResult,
-	AIProviderCapabilities,
-	AIProvider,
-	TaskType,
+	ChatMessage,
 	TaskRequest,
+	TaskType,
 } from "../types";
 
 describe("AI types", () => {

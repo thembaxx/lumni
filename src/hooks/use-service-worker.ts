@@ -23,31 +23,41 @@ export function useServiceWorker(): UseServiceWorkerReturn {
 		}
 
 		let cancelled = false;
+		let activeReg: ServiceWorkerRegistration | null = null;
+		let trackedWorker: ServiceWorker | null = null;
+		let trackedStateHandler: (() => void) | null = null;
+
+		const updateFoundHandler = () => {
+			const newWorker = activeReg?.installing;
+			if (newWorker) {
+				if (trackedWorker && trackedStateHandler) {
+					trackedWorker.removeEventListener("statechange", trackedStateHandler);
+				}
+				trackedStateHandler = () => {
+					if (
+						newWorker.state === "installed" &&
+						navigator.serviceWorker.controller
+					) {
+						if (!cancelled) setIsUpdated(true);
+					}
+				};
+				newWorker.addEventListener("statechange", trackedStateHandler);
+				trackedWorker = newWorker;
+			}
+		};
 
 		navigator.serviceWorker
 			.register("/sw.js")
 			.then((reg) => {
 				if (cancelled) return;
+				activeReg = reg;
 				setRegistration(reg);
 
 				if (reg.waiting) {
 					setIsUpdated(true);
 				}
 
-				reg.addEventListener("updatefound", () => {
-					const newWorker = reg.installing;
-					if (newWorker) {
-						newWorker.addEventListener("statechange", () => {
-							if (
-								newWorker.state === "installed" &&
-								navigator.serviceWorker.controller
-							) {
-								setIsUpdated(true);
-							}
-						});
-					}
-				});
-
+				reg.addEventListener("updatefound", updateFoundHandler);
 				setIsReady(true);
 			})
 			.catch((error) => {
@@ -57,6 +67,12 @@ export function useServiceWorker(): UseServiceWorkerReturn {
 
 		return () => {
 			cancelled = true;
+			if (activeReg) {
+				activeReg.removeEventListener("updatefound", updateFoundHandler);
+			}
+			if (trackedWorker && trackedStateHandler) {
+				trackedWorker.removeEventListener("statechange", trackedStateHandler);
+			}
 		};
 	}, []);
 

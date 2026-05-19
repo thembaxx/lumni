@@ -21,6 +21,7 @@ async function ttsHandler(request: NextRequest) {
 
 		const response = await fetch(FREE_TTS_API_URL, {
 			method: "POST",
+			cache: "no-store",
 			headers: {
 				"Content-Type": "application/json",
 			},

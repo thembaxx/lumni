@@ -17,6 +17,7 @@ async function checkoutHandler(req: NextRequest) {
 				"https://api.stripe.com/v1/checkout/sessions",
 				{
 					method: "POST",
+					cache: "no-store",
 					headers: {
 						Authorization: `Bearer ${STRIPE_SECRET_KEY}`,
 						"Content-Type": "application/x-www-form-urlencoded",

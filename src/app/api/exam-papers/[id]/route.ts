@@ -49,7 +49,7 @@ export async function GET(
 			);
 		}
 
-		const response = await fetch(urlData[0].url);
+		const response = await fetch(urlData[0].url, { cache: "no-store" });
 		if (!response.ok) {
 			return NextResponse.json(
 				{ error: "Failed to fetch exam JSON" },

@@ -164,5 +164,9 @@ export async function adminUploadExamPaper(
 }
 
 export async function getUserAccounts(_userId: string) {
+	const userId = await getAuthenticatedUserId();
+	if (!userId) {
+		return [];
+	}
 	return [];
 }

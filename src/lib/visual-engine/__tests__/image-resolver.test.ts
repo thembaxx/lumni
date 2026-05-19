@@ -153,7 +153,9 @@ describe("searchImage", () => {
 
 		const callArgs = (globalThis.fetch as ReturnType<typeof mock>).mock
 			.calls[0] as unknown as [string, { headers?: Record<string, string> }];
-		expect(callArgs[1].headers!["User-Agent"]).toBe("Lumni/1.0 (educational app)");
+		expect(callArgs[1].headers!["User-Agent"]).toBe(
+			"Lumni/1.0 (educational app)",
+		);
 		restoreFetch(orig);
 	});
 });

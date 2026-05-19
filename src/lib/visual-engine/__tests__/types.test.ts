@@ -53,7 +53,11 @@ describe("VisualContent type", () => {
 	});
 
 	test("VisualContentType union values", () => {
-		const types: VisualContentType[] = ["konva-diagram", "mermaid-diagram", "image"];
+		const types: VisualContentType[] = [
+			"konva-diagram",
+			"mermaid-diagram",
+			"image",
+		];
 		expect(types).toHaveLength(3);
 	});
 });
@@ -137,9 +141,7 @@ describe("DiagramDataMap", () => {
 
 	test("maps motion to MotionData", () => {
 		const data: DiagramDataMap["motion"] = {
-			projectiles: [
-				{ startX: 0, startY: 0, endX: 10, endY: 20, color: "red" },
-			],
+			projectiles: [{ startX: 0, startY: 0, endX: 10, endY: 20, color: "red" }],
 			ground: true,
 		};
 		expect(data.projectiles).toHaveLength(1);

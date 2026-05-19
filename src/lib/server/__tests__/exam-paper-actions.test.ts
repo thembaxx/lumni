@@ -33,7 +33,9 @@ mock.module("@/lib/db/exams", () => ({
 	getExamsDb: async () => mockDb,
 	getExamPaperCount: mock(() => mockExamPaperCount),
 	getAllExamPapers: mock(() => mockAllExamPapers),
-	getExamPapersBySubject: mock((_subjectCode: string, _year?: number) => mockExamPapersBySubject),
+	getExamPapersBySubject: mock(
+		(_subjectCode: string, _year?: number) => mockExamPapersBySubject,
+	),
 	insertExamPaper: mock(() => {}),
 	saveExamsDb: mock(() => {}),
 }));
@@ -99,11 +101,13 @@ describe("uploadExamPaper", () => {
 	});
 
 	test("throws when exam paper already exists", async () => {
-		mockExecQueue = [
-			{ columns: ["id"], values: [["existing-id"]] },
-		];
+		mockExecQueue = [{ columns: ["id"], values: [["existing-id"]] }];
 		mockUploadResult = {
-			data: { ufsUrl: "https://utfs.io/f/file.pdf", key: "file-key", url: "https://utfs.io/f/file.pdf" },
+			data: {
+				ufsUrl: "https://utfs.io/f/file.pdf",
+				key: "file-key",
+				url: "https://utfs.io/f/file.pdf",
+			},
 		};
 
 		await expect(
@@ -121,12 +125,42 @@ describe("uploadExamPaper", () => {
 		mockExecQueue = [
 			{ columns: ["id"], values: [] },
 			{
-				columns: ["id", "subject_code", "subject_name", "year", "paper_number", "type", "memo_id", "file_url", "file_key", "original_file_name", "uploaded_at"],
-				values: [["uuid-1", "mathematics", "Mathematics", 2024, 1, "paper", null, "https://utfs.io/f/file.pdf", "file-key", "exam.pdf", "2025-01-01T00:00:00Z"]],
+				columns: [
+					"id",
+					"subject_code",
+					"subject_name",
+					"year",
+					"paper_number",
+					"type",
+					"memo_id",
+					"file_url",
+					"file_key",
+					"original_file_name",
+					"uploaded_at",
+				],
+				values: [
+					[
+						"uuid-1",
+						"mathematics",
+						"Mathematics",
+						2024,
+						1,
+						"paper",
+						null,
+						"https://utfs.io/f/file.pdf",
+						"file-key",
+						"exam.pdf",
+						"2025-01-01T00:00:00Z",
+					],
+				],
 			},
 		];
 		mockUploadResult = {
-			data: { ufsUrl: "https://utfs.io/f/file.pdf", key: "file-key", url: "https://utfs.io/f/file.pdf" },
+			data: {
+				ufsUrl: "https://utfs.io/f/file.pdf",
+				key: "file-key",
+				url: "https://utfs.io/f/file.pdf",
+			},
 		};
 
 		const result = await uploadExamPaper({
@@ -151,12 +185,42 @@ describe("uploadExamPaper", () => {
 				values: [["paper-id-1"]],
 			},
 			{
-				columns: ["id", "subject_code", "subject_name", "year", "paper_number", "type", "memo_id", "file_url", "file_key", "original_file_name", "uploaded_at"],
-				values: [["uuid-1", "mathematics", "Mathematics", 2024, 1, "memo", "paper-id-1", "https://utfs.io/f/memo.pdf", "memo-key", "memo.pdf", "2025-01-01T00:00:00Z"]],
+				columns: [
+					"id",
+					"subject_code",
+					"subject_name",
+					"year",
+					"paper_number",
+					"type",
+					"memo_id",
+					"file_url",
+					"file_key",
+					"original_file_name",
+					"uploaded_at",
+				],
+				values: [
+					[
+						"uuid-1",
+						"mathematics",
+						"Mathematics",
+						2024,
+						1,
+						"memo",
+						"paper-id-1",
+						"https://utfs.io/f/memo.pdf",
+						"memo-key",
+						"memo.pdf",
+						"2025-01-01T00:00:00Z",
+					],
+				],
 			},
 		];
 		mockUploadResult = {
-			data: { ufsUrl: "https://utfs.io/f/memo.pdf", key: "memo-key", url: "https://utfs.io/f/memo.pdf" },
+			data: {
+				ufsUrl: "https://utfs.io/f/memo.pdf",
+				key: "memo-key",
+				url: "https://utfs.io/f/memo.pdf",
+			},
 		};
 
 		const result = await uploadExamPaper({
@@ -174,12 +238,42 @@ describe("uploadExamPaper", () => {
 		mockExecQueue = [
 			{ columns: ["id"], values: [] },
 			{
-				columns: ["id", "subject_code", "subject_name", "year", "paper_number", "type", "memo_id", "file_url", "file_key", "original_file_name", "uploaded_at"],
-				values: [["uuid-1", "mathematics", "Mathematics", 2024, 1, "paper", null, "https://utfs.io/f/file.pdf", "file-key", "exam.pdf", "2025-01-01T00:00:00Z"]],
+				columns: [
+					"id",
+					"subject_code",
+					"subject_name",
+					"year",
+					"paper_number",
+					"type",
+					"memo_id",
+					"file_url",
+					"file_key",
+					"original_file_name",
+					"uploaded_at",
+				],
+				values: [
+					[
+						"uuid-1",
+						"mathematics",
+						"Mathematics",
+						2024,
+						1,
+						"paper",
+						null,
+						"https://utfs.io/f/file.pdf",
+						"file-key",
+						"exam.pdf",
+						"2025-01-01T00:00:00Z",
+					],
+				],
 			},
 		];
 		mockUploadResult = {
-			data: { ufsUrl: "https://utfs.io/f/file.pdf", key: "file-key", url: "https://utfs.io/f/file.pdf" },
+			data: {
+				ufsUrl: "https://utfs.io/f/file.pdf",
+				key: "file-key",
+				url: "https://utfs.io/f/file.pdf",
+			},
 		};
 
 		const result = await uploadExamPaper({
@@ -197,18 +291,20 @@ describe("uploadExamPaper", () => {
 describe("deleteExamPaper", () => {
 	test("throws when not authenticated", async () => {
 		mockUserId = null;
-		await expect(deleteExamPaper("p1")).rejects.toThrow("Authentication required");
+		await expect(deleteExamPaper("p1")).rejects.toThrow(
+			"Authentication required",
+		);
 	});
 
 	test("throws when exam paper not found", async () => {
-	mockExecQueue = [];
-		await expect(deleteExamPaper("nonexistent")).rejects.toThrow("Exam paper not found");
+		mockExecQueue = [];
+		await expect(deleteExamPaper("nonexistent")).rejects.toThrow(
+			"Exam paper not found",
+		);
 	});
 
 	test("deletes exam paper successfully", async () => {
-		mockExecQueue = [
-			{ columns: ["file_key"], values: [["file-key-123"]] },
-		];
+		mockExecQueue = [{ columns: ["file_key"], values: [["file-key-123"]] }];
 		mockDeleteResult = {};
 
 		await deleteExamPaper("p1");
@@ -220,7 +316,18 @@ describe("deleteExamPaper", () => {
 describe("getExamPapersWithFallback", () => {
 	test("returns mapped records when db has data", async () => {
 		mockAllExamPapers = [
-			{ id: "p1", subject_code: "math", subject_name: "Mathematics", year: 2024, paper_number: 1, type: "paper", file_url: "url", file_key: "key", original_file_name: "file.pdf", uploaded_at: "now" },
+			{
+				id: "p1",
+				subject_code: "math",
+				subject_name: "Mathematics",
+				year: 2024,
+				paper_number: 1,
+				type: "paper",
+				file_url: "url",
+				file_key: "key",
+				original_file_name: "file.pdf",
+				uploaded_at: "now",
+			},
 		];
 
 		const result = await getExamPapersWithFallback();
@@ -230,7 +337,18 @@ describe("getExamPapersWithFallback", () => {
 
 	test("uses may-june session for papers 3+", async () => {
 		mockAllExamPapers = [
-			{ id: "p1", subject_code: "math", subject_name: "Mathematics", year: 2024, paper_number: 3, type: "paper", file_url: "url", file_key: "key", original_file_name: "file.pdf", uploaded_at: "now" },
+			{
+				id: "p1",
+				subject_code: "math",
+				subject_name: "Mathematics",
+				year: 2024,
+				paper_number: 3,
+				type: "paper",
+				file_url: "url",
+				file_key: "key",
+				original_file_name: "file.pdf",
+				uploaded_at: "now",
+			},
 		];
 
 		const result = await getExamPapersWithFallback();

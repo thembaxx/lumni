@@ -26,12 +26,8 @@ mock.module("@/lib/db/client", () => ({
 	}),
 }));
 
-const {
-	syncSubject,
-	syncAllSubjects,
-	checkSubjectStatus,
-	refreshSubject,
-} = await import("../sync-actions");
+const { syncSubject, syncAllSubjects, checkSubjectStatus, refreshSubject } =
+	await import("../sync-actions");
 
 beforeEach(() => {
 	mockUserId = "user_abc";
@@ -89,9 +85,7 @@ describe("checkSubjectStatus", () => {
 	});
 
 	test("returns exists=true when subject found in Appwrite", async () => {
-		mockSubjectDocs = [
-			{ $id: "subj1", sourceVersion: "v1" },
-		];
+		mockSubjectDocs = [{ $id: "subj1", sourceVersion: "v1" }];
 
 		const result = await checkSubjectStatus("mathematics");
 
@@ -101,9 +95,7 @@ describe("checkSubjectStatus", () => {
 	});
 
 	test("returns needsSync=true when subject has no sourceVersion", async () => {
-		mockSubjectDocs = [
-			{ $id: "subj1", sourceVersion: "" },
-		];
+		mockSubjectDocs = [{ $id: "subj1", sourceVersion: "" }];
 
 		const result = await checkSubjectStatus("mathematics");
 

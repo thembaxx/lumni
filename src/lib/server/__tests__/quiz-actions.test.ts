@@ -34,7 +34,9 @@ beforeEach(() => {
 describe("fetchQuestions", () => {
 	test("throws when user not authenticated", async () => {
 		mockUserId = null;
-		await expect(fetchQuestions(["math"])).rejects.toThrow("Authentication required");
+		await expect(fetchQuestions(["math"])).rejects.toThrow(
+			"Authentication required",
+		);
 	});
 
 	test("returns empty array when no subjectIds provided", async () => {
@@ -70,9 +72,7 @@ describe("fetchQuestions", () => {
 	});
 
 	test("parses options JSON for each question", async () => {
-		mockListDocumentsResults["topics"] = [
-			{ $id: "topic1", subjectId: "math" },
-		];
+		mockListDocumentsResults["topics"] = [{ $id: "topic1", subjectId: "math" }];
 		mockListDocumentsResults["questions"] = [
 			{ $id: "q1", topicId: "topic1", options: '{"key":"value"}' },
 		];
@@ -83,9 +83,7 @@ describe("fetchQuestions", () => {
 	});
 
 	test("handles a question with null options", async () => {
-		mockListDocumentsResults["topics"] = [
-			{ $id: "topic1", subjectId: "math" },
-		];
+		mockListDocumentsResults["topics"] = [{ $id: "topic1", subjectId: "math" }];
 		mockListDocumentsResults["questions"] = [
 			{ $id: "q1", topicId: "topic1", options: null },
 		];

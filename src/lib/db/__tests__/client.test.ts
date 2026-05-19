@@ -14,8 +14,14 @@ mock.module("@/lib/appwrite", () => ({
 	databases: mockDb,
 }));
 
-const { COLLECTIONS, listDocuments, createDocument, getDocument, updateDocument, deleteDocument } =
-	await import("../client");
+const {
+	COLLECTIONS,
+	listDocuments,
+	createDocument,
+	getDocument,
+	updateDocument,
+	deleteDocument,
+} = await import("../client");
 
 describe("COLLECTIONS", () => {
 	test("has 14 keys", () => {
@@ -40,7 +46,7 @@ describe("COLLECTIONS", () => {
 	});
 
 	test("all values are non-empty strings", () => {
-		for (const [key, value] of Object.entries(COLLECTIONS)) {
+		for (const [_key, value] of Object.entries(COLLECTIONS)) {
 			expect(typeof value).toBe("string");
 			expect(value.length).toBeGreaterThan(0);
 		}
@@ -68,7 +74,11 @@ describe("listDocuments", () => {
 
 	test("defaults queries to empty array", async () => {
 		await listDocuments("subjects");
-		expect(mockDb.listDocuments).toHaveBeenCalledWith("test-db-id", "subjects", []);
+		expect(mockDb.listDocuments).toHaveBeenCalledWith(
+			"test-db-id",
+			"subjects",
+			[],
+		);
 	});
 
 	test("returns documents array", async () => {

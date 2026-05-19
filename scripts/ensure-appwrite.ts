@@ -39,8 +39,10 @@ async function main() {
 	console.log(`  Database: ${databaseId}`);
 	console.log();
 
-	const { ensureAppwrite } = await import("@/lib/db/ensure");
-	const { seedConfig } = await import("@/lib/db/ensure-config");
+	const [{ ensureAppwrite }, { seedConfig }] = await Promise.all([
+		import("@/lib/db/ensure"),
+		import("@/lib/db/ensure-config"),
+	]);
 
 	const report: EnsureReport = await ensureAppwrite(seedConfig, adminDatabases);
 

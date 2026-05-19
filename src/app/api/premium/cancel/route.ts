@@ -14,6 +14,7 @@ async function cancelHandler(_req: NextRequest) {
 				`https://api.stripe.com/v1/subscriptions/${STRIPE_SUBSCRIPTION_ID}`,
 				{
 					method: "DELETE",
+					cache: "no-store",
 					headers: { Authorization: `Bearer ${STRIPE_SECRET_KEY}` },
 				},
 			);

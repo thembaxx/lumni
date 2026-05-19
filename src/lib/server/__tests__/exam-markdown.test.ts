@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, mock, test } from "bun:test";
 
-const mockFetch = mock<(url: string | URL, options?: RequestInit) => Promise<Response>>();
+const mockFetch =
+	mock<(url: string | URL, options?: RequestInit) => Promise<Response>>();
 
 beforeEach(() => {
 	mockFetch.mockReset();
@@ -20,13 +21,15 @@ describe("getExamMarkdown", () => {
 
 	test("returns content from uploadthing when markdown exists", async () => {
 		let callCount = 0;
-		mockFetch.mockImplementation(async (_url: string | URL, options?: RequestInit) => {
-			callCount++;
-			if (callCount === 1 && options?.method === "HEAD") {
-				return new Response(null, { status: 200 });
-			}
-			return new Response("# Exam Content\n\nQuestion 1", { status: 200 });
-		});
+		mockFetch.mockImplementation(
+			async (_url: string | URL, options?: RequestInit) => {
+				callCount++;
+				if (callCount === 1 && options?.method === "HEAD") {
+					return new Response(null, { status: 200 });
+				}
+				return new Response("# Exam Content\n\nQuestion 1", { status: 200 });
+			},
+		);
 
 		const result = await getExamMarkdown("https://utfs.io/f/exam.pdf");
 
@@ -36,16 +39,18 @@ describe("getExamMarkdown", () => {
 
 	test("falls back to markdown.new converter when uploadthing HEAD fails", async () => {
 		let callCount = 0;
-		mockFetch.mockImplementation(async (_url: string | URL, _options?: RequestInit) => {
-			callCount++;
-			if (callCount === 1) {
-				return new Response(null, { status: 404 });
-			}
-			return new Response("Converted markdown content", {
-				status: 200,
-				headers: { "Content-Type": "text/markdown" },
-			});
-		});
+		mockFetch.mockImplementation(
+			async (_url: string | URL, _options?: RequestInit) => {
+				callCount++;
+				if (callCount === 1) {
+					return new Response(null, { status: 404 });
+				}
+				return new Response("Converted markdown content", {
+					status: 200,
+					headers: { "Content-Type": "text/markdown" },
+				});
+			},
+		);
 
 		const result = await getExamMarkdown("https://utfs.io/f/exam.pdf");
 
@@ -55,13 +60,15 @@ describe("getExamMarkdown", () => {
 
 	test("falls back to markdown.new when uploadthing GET throws", async () => {
 		let callCount = 0;
-		mockFetch.mockImplementation(async (_url: string | URL, _options?: RequestInit) => {
-			callCount++;
-			if (callCount === 1) {
-				throw new Error("Network error");
-			}
-			return new Response("Converted content", { status: 200 });
-		});
+		mockFetch.mockImplementation(
+			async (_url: string | URL, _options?: RequestInit) => {
+				callCount++;
+				if (callCount === 1) {
+					throw new Error("Network error");
+				}
+				return new Response("Converted content", { status: 200 });
+			},
+		);
 
 		const result = await getExamMarkdown("https://utfs.io/f/exam.pdf");
 
@@ -70,11 +77,13 @@ describe("getExamMarkdown", () => {
 
 	test("returns error when markdown.new conversion fails", async () => {
 		let callCount = 0;
-		mockFetch.mockImplementation(async (_url: string | URL, _options?: RequestInit) => {
-			callCount++;
-			if (callCount === 1) return new Response(null, { status: 404 });
-			return new Response("Not Found", { status: 404 });
-		});
+		mockFetch.mockImplementation(
+			async (_url: string | URL, _options?: RequestInit) => {
+				callCount++;
+				if (callCount === 1) return new Response(null, { status: 404 });
+				return new Response("Not Found", { status: 404 });
+			},
+		);
 
 		const result = await getExamMarkdown("https://utfs.io/f/exam.pdf");
 
@@ -84,11 +93,13 @@ describe("getExamMarkdown", () => {
 
 	test("returns error when markdown.new returns empty content", async () => {
 		let callCount = 0;
-		mockFetch.mockImplementation(async (_url: string | URL, _options?: RequestInit) => {
-			callCount++;
-			if (callCount === 1) return new Response(null, { status: 404 });
-			return new Response("", { status: 200 });
-		});
+		mockFetch.mockImplementation(
+			async (_url: string | URL, _options?: RequestInit) => {
+				callCount++;
+				if (callCount === 1) return new Response(null, { status: 404 });
+				return new Response("", { status: 200 });
+			},
+		);
 
 		const result = await getExamMarkdown("https://utfs.io/f/exam.pdf");
 
@@ -98,17 +109,19 @@ describe("getExamMarkdown", () => {
 
 	test("replaces .pdf extension with .md for uploadthing check", async () => {
 		let callCount = 0;
-		mockFetch.mockImplementation(async (url: string | URL, options?: RequestInit) => {
-			callCount++;
-			const urlStr = url.toString();
-			if (options?.method === "HEAD" && urlStr.endsWith(".md")) {
-				return new Response(null, { status: 200 });
-			}
-			if (callCount === 2) {
-				return new Response("markdown content", { status: 200 });
-			}
-			return new Response(null, { status: 404 });
-		});
+		mockFetch.mockImplementation(
+			async (url: string | URL, options?: RequestInit) => {
+				callCount++;
+				const urlStr = url.toString();
+				if (options?.method === "HEAD" && urlStr.endsWith(".md")) {
+					return new Response(null, { status: 200 });
+				}
+				if (callCount === 2) {
+					return new Response("markdown content", { status: 200 });
+				}
+				return new Response(null, { status: 404 });
+			},
+		);
 
 		const result = await getExamMarkdown("https://utfs.io/f/exam.PDF");
 

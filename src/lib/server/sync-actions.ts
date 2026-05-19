@@ -4,16 +4,18 @@ import { Query } from "appwrite";
 import { COLLECTIONS, listDocuments } from "@/lib/db/client";
 import { getAuthenticatedUserId } from "@/lib/server/auth";
 
-const ALL_SUBJECTS = [
-	"mathematics",
-	"physical-sciences",
-	"life-sciences",
-	"accounting",
-	"business-studies",
-	"economics",
-	"geography",
-	"history",
-];
+function getAllSubjects(): string[] {
+	return [
+		"mathematics",
+		"physical-sciences",
+		"life-sciences",
+		"accounting",
+		"business-studies",
+		"economics",
+		"geography",
+		"history",
+	];
+}
 
 export async function syncSubject(_subject: string): Promise<{
 	success: boolean;
@@ -44,7 +46,11 @@ export async function syncAllSubjects(): Promise<{
 		error?: string;
 	}[];
 }> {
-	const results = ALL_SUBJECTS.map((s) => ({
+	const userId = await getAuthenticatedUserId();
+	if (!userId) {
+		return { results: [] };
+	}
+	const results = getAllSubjects().map((s) => ({
 		subject: s,
 		success: true,
 		synced: 0,

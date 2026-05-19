@@ -6,9 +6,18 @@ mock.module("@/lib/appwrite", () => ({
 	APPWRITE_API_KEY: "test-key",
 }));
 
-const mockListDocuments = mock<(collection: string, queries: string[]) => unknown[]>();
-const mockCreateDocument = mock<(collection: string, data: Record<string, unknown>) => string>();
-const mockUpdateDocument = mock<(collection: string, documentId: string, data: Record<string, unknown>) => void>();
+const mockListDocuments =
+	mock<(collection: string, queries: string[]) => unknown[]>();
+const mockCreateDocument =
+	mock<(collection: string, data: Record<string, unknown>) => string>();
+const mockUpdateDocument =
+	mock<
+		(
+			collection: string,
+			documentId: string,
+			data: Record<string, unknown>,
+		) => void
+	>();
 
 mock.module("@/lib/db/client", () => ({
 	APPWRITE_DATABASE_ID: "test-db-id",
@@ -42,7 +51,12 @@ beforeEach(() => {
 describe("getReferralCode", () => {
 	test("returns referral code doc when found", async () => {
 		mockListDocuments.mockResolvedValue([
-			{ $id: "rc1", userId: "user1", code: "LUMNI-ABC", createdAt: "2025-01-01T00:00:00Z" },
+			{
+				$id: "rc1",
+				userId: "user1",
+				code: "LUMNI-ABC",
+				createdAt: "2025-01-01T00:00:00Z",
+			},
 		]);
 
 		const result = await getReferralCode("user1");
@@ -71,7 +85,10 @@ describe("createReferralCode", () => {
 	test("creates a referral code document", async () => {
 		mockCreateDocument.mockResolvedValue("rc_new");
 
-		const result = await createReferralCode({ userId: "user1", code: "LUMNI-ABC" });
+		const result = await createReferralCode({
+			userId: "user1",
+			code: "LUMNI-ABC",
+		});
 
 		expect(result).toBe("rc_new");
 		expect(mockCreateDocument).toHaveBeenCalledWith("referral_codes", {
@@ -85,7 +102,12 @@ describe("createReferralCode", () => {
 describe("getReferralByCode", () => {
 	test("returns referral code doc for given code", async () => {
 		mockListDocuments.mockResolvedValue([
-			{ $id: "rc1", userId: "user1", code: "LUMNI-ABC", createdAt: "2025-01-01T00:00:00Z" },
+			{
+				$id: "rc1",
+				userId: "user1",
+				code: "LUMNI-ABC",
+				createdAt: "2025-01-01T00:00:00Z",
+			},
 		]);
 
 		const result = await getReferralByCode("LUMNI-ABC");
@@ -105,7 +127,14 @@ describe("getReferralByCode", () => {
 describe("getReferralsByReferrer", () => {
 	test("returns referrals for a referrer", async () => {
 		mockListDocuments.mockResolvedValue([
-			{ $id: "r1", referrerId: "user1", refereeId: "user2", code: "LUMNI-ABC", status: "pending", createdAt: "2025-01-01T00:00:00Z" },
+			{
+				$id: "r1",
+				referrerId: "user1",
+				refereeId: "user2",
+				code: "LUMNI-ABC",
+				status: "pending",
+				createdAt: "2025-01-01T00:00:00Z",
+			},
 		]);
 
 		const result = await getReferralsByReferrer("user1");
@@ -125,7 +154,14 @@ describe("getReferralsByReferrer", () => {
 describe("getReferralCountThisMonth", () => {
 	test("returns count of referrals this month", async () => {
 		mockListDocuments.mockResolvedValue([
-			{ $id: "r1", referrerId: "user1", refereeId: "user2", code: "LUMNI-ABC", status: "pending", createdAt: new Date().toISOString() },
+			{
+				$id: "r1",
+				referrerId: "user1",
+				refereeId: "user2",
+				code: "LUMNI-ABC",
+				status: "pending",
+				createdAt: new Date().toISOString(),
+			},
 		]);
 
 		const count = await getReferralCountThisMonth("user1");
@@ -166,7 +202,14 @@ describe("createReferral", () => {
 describe("updateReferralStatus", () => {
 	test("updates status to rewarded and sets rewardedAt", async () => {
 		mockListDocuments.mockResolvedValue([
-			{ $id: "ref1", referrerId: "user1", refereeId: "user2", code: "LUMNI-ABC", status: "pending", createdAt: "2025-01-01T00:00:00Z" },
+			{
+				$id: "ref1",
+				referrerId: "user1",
+				refereeId: "user2",
+				code: "LUMNI-ABC",
+				status: "pending",
+				createdAt: "2025-01-01T00:00:00Z",
+			},
 		]);
 
 		await updateReferralStatus("user2", "rewarded");
@@ -189,7 +232,14 @@ describe("updateReferralStatus", () => {
 describe("getReferralByReferee", () => {
 	test("returns referral doc for referee", async () => {
 		mockListDocuments.mockResolvedValue([
-			{ $id: "ref1", referrerId: "user1", refereeId: "user2", code: "LUMNI-ABC", status: "pending", createdAt: "2025-01-01T00:00:00Z" },
+			{
+				$id: "ref1",
+				referrerId: "user1",
+				refereeId: "user2",
+				code: "LUMNI-ABC",
+				status: "pending",
+				createdAt: "2025-01-01T00:00:00Z",
+			},
 		]);
 
 		const result = await getReferralByReferee("user2");
@@ -209,7 +259,12 @@ describe("getReferralByReferee", () => {
 describe("getReferrerCodeForUserId", () => {
 	test("returns code from getReferralCode result", async () => {
 		mockListDocuments.mockResolvedValue([
-			{ $id: "rc1", userId: "user1", code: "LUMNI-ABC", createdAt: "2025-01-01T00:00:00Z" },
+			{
+				$id: "rc1",
+				userId: "user1",
+				code: "LUMNI-ABC",
+				createdAt: "2025-01-01T00:00:00Z",
+			},
 		]);
 
 		const code = await getReferrerCodeForUserId("user1");

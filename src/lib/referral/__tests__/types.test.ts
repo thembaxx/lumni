@@ -2,9 +2,9 @@ import { describe, expect, test } from "bun:test";
 
 describe("referral types", () => {
 	test("ReferralStatus is a string union", () => {
-		const pending: "pending" = "pending";
-		const rewarded: "rewarded" = "rewarded";
-		const expired: "expired" = "expired";
+		const pending = "pending" as const;
+		const rewarded = "rewarded" as const;
+		const expired = "expired" as const;
 		expect(pending).toBe("pending");
 		expect(rewarded).toBe("rewarded");
 		expect(expired).toBe("expired");

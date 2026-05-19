@@ -63,8 +63,12 @@ export function SubjectTable({
 							transition={{ delay: index * 0.03 }}
 							className="flex items-center justify-between p-3 border-b last:border-b-0"
 						>
-							<label className="flex items-center gap-3 flex-1 min-w-0 cursor-pointer">
+							<label
+								htmlFor={`subject-${subject.id}`}
+								className="flex items-center gap-3 flex-1 min-w-0 cursor-pointer"
+							>
 								<Checkbox
+									id={`subject-${subject.id}`}
 									checked={selectedSubjects.has(subject.id)}
 									onCheckedChange={() => onToggleSubject(subject.id)}
 								/>

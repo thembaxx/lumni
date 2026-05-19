@@ -1,6 +1,6 @@
 "use client";
 
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,6 +8,7 @@ import { PageHeader } from "@/components/ui/headers/page-header";
 import { Input } from "@/components/ui/input";
 
 export function NotificationsClient() {
+	const queryClient = useQueryClient();
 	const [title, setTitle] = useState("");
 	const [body, setBody] = useState("");
 	const [url, setUrl] = useState("");
@@ -37,6 +38,7 @@ export function NotificationsClient() {
 			setBody("");
 			setUrl("");
 			setSubject("");
+			queryClient.invalidateQueries();
 		},
 	});
 
@@ -53,40 +55,56 @@ export function NotificationsClient() {
 					</CardHeader>
 					<CardContent className="flex flex-col gap-4">
 						<div className="flex flex-col gap-1.5">
-							<label className="text-xs font-medium text-muted-foreground">
+							<label
+								htmlFor="notif-title"
+								className="text-xs font-medium text-muted-foreground"
+							>
 								Title *
 							</label>
 							<Input
+								id="notif-title"
 								value={title}
 								onChange={(e) => setTitle(e.target.value)}
 								placeholder="Notification title"
 							/>
 						</div>
 						<div className="flex flex-col gap-1.5">
-							<label className="text-xs font-medium text-muted-foreground">
+							<label
+								htmlFor="notif-body"
+								className="text-xs font-medium text-muted-foreground"
+							>
 								Body *
 							</label>
 							<Input
+								id="notif-body"
 								value={body}
 								onChange={(e) => setBody(e.target.value)}
 								placeholder="Notification body text"
 							/>
 						</div>
 						<div className="flex flex-col gap-1.5">
-							<label className="text-xs font-medium text-muted-foreground">
+							<label
+								htmlFor="notif-url"
+								className="text-xs font-medium text-muted-foreground"
+							>
 								URL (optional)
 							</label>
 							<Input
+								id="notif-url"
 								value={url}
 								onChange={(e) => setUrl(e.target.value)}
 								placeholder="/dashboard"
 							/>
 						</div>
 						<div className="flex flex-col gap-1.5">
-							<label className="text-xs font-medium text-muted-foreground">
+							<label
+								htmlFor="notif-subject"
+								className="text-xs font-medium text-muted-foreground"
+							>
 								Subject filter (optional)
 							</label>
 							<Input
+								id="notif-subject"
 								value={subject}
 								onChange={(e) => setSubject(e.target.value)}
 								placeholder="mathematics"

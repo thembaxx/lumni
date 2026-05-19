@@ -135,18 +135,26 @@ export default function AdminQuestionsPage() {
 				</div>
 			)}
 
-			{questions.map((item, i) => {
+			{questions.map((item) => {
 				const q = item.question;
-				const isExpanded = expandedId === `${i}`;
+				const itemKey = `${q.type}-${q.topic}-${item.generatedAt}`;
+				const isExpanded = expandedId === itemKey;
 				return (
 					<div
-						key={i}
+						key={itemKey}
 						className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors"
 					>
 						<div className="px-4 group-data-[size=sm]/card:px-3 p-4">
 							<div
+								role="button"
+								tabIndex={0}
 								className="flex items-center gap-3 cursor-pointer"
-								onClick={() => setExpandedId(isExpanded ? null : `${i}`)}
+								onClick={() => setExpandedId(isExpanded ? null : itemKey)}
+								onKeyDown={(e) => {
+									if (e.key === "Enter" || e.key === " ") {
+										setExpandedId(isExpanded ? null : itemKey);
+									}
+								}}
 							>
 								<Badge variant="outline" className="font-mono text-xs">
 									{q.type}
