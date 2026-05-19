@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import { QuestionCardSkeleton } from "@/components/quiz/parts/QuestionCardSkeleton";
 import { QuizClient } from "./quiz-client";
 
 export const metadata: Metadata = {
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function QuizPage() {
 	return (
-		<Suspense fallback={null}>
+		<Suspense fallback={<QuestionCardSkeleton />}>
 			<QuizClient />
 		</Suspense>
 	);

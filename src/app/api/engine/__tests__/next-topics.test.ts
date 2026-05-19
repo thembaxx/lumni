@@ -16,6 +16,14 @@ mock.module("@/lib/db/client", () => ({
 	listDocuments: mockListDocuments,
 }));
 
+mock.module("@/lib/server/auth", () => ({
+	getAuthenticatedUserId: () => "test-user-id",
+}));
+
+mock.module("@/lib/shared/with-rate-limit", () => ({
+	withRateLimit: (handler: unknown) => handler,
+}));
+
 const { NextRequest } = await import("next/server");
 const { GET } = await import("@/app/api/engine/next-topics/route");
 

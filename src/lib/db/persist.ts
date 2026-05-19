@@ -1,7 +1,7 @@
 export class SafePersistError extends Error {
 	constructor(
 		public label: string,
-		cause: unknown,
+		public cause: unknown,
 	) {
 		super(`[safePersist] ${label} failed`);
 		this.name = "SafePersistError";

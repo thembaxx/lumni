@@ -5,36 +5,39 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Anim } from "@/components/shared/anim";
 import { cn } from "@/lib/shared";
 
-interface TabConfig {
+interface TabItem {
 	value: string;
 	label: string;
 	icon?: React.ReactNode;
 }
 
-interface AnimatedTabsProps {
-	tabs: TabConfig[];
+interface TabSwitcherProps {
+	tabs: TabItem[];
 	value: string;
 	onValueChange: (value: string) => void;
+	variant?: "tabs" | "segmented";
 	className?: string;
 	listClassName?: string;
 	children?: React.ReactNode;
 }
 
-function AnimatedTabs({
+export function TabSwitcher({
 	tabs,
 	value,
 	onValueChange,
+	variant = "tabs",
 	className,
 	listClassName,
 	children,
-}: AnimatedTabsProps) {
+}: TabSwitcherProps) {
 	const listRef = useRef<HTMLDivElement>(null);
 	const [indicator, setIndicator] = useState({ left: 0, width: 0 });
 
 	const measure = useCallback(() => {
 		if (!listRef.current) return;
-		const buttons =
-			listRef.current.querySelectorAll<HTMLButtonElement>("button[data-tab]");
+		const buttons = listRef.current.querySelectorAll<HTMLButtonElement>(
+			variant === "tabs" ? "button[data-tab]" : "button",
+		);
 		const activeIndex = tabs.findIndex((t) => t.value === value);
 		const btn = buttons[activeIndex];
 		if (!btn) return;
@@ -44,7 +47,7 @@ function AnimatedTabs({
 			left: btnRect.left - listRect.left,
 			width: btnRect.width,
 		});
-	}, [tabs, value]);
+	}, [tabs, value, variant]);
 
 	useEffect(() => {
 		requestAnimationFrame(measure);
@@ -75,24 +78,33 @@ function AnimatedTabs({
 					role="tablist"
 					onKeyDown={handleKeyDown}
 					className={cn(
-						"relative inline-flex gap-1 p-1 rounded-lg bg-muted",
+						variant === "tabs"
+							? "relative inline-flex gap-1 p-1 rounded-lg bg-muted"
+							: "relative inline-flex items-center rounded-[10px] bg-[--system-surface-secondary] p-[3px]",
 						listClassName,
 					)}
 				>
 					{tabs.map((tab) => (
 						<button
 							key={tab.value}
-							data-tab
+							{...(variant === "tabs" ? { "data-tab": true } : {})}
 							type="button"
 							role="tab"
 							aria-selected={value === tab.value}
 							aria-controls={`tabpanel-${tab.value}`}
 							onClick={() => onValueChange(tab.value)}
 							className={cn(
-								"relative z-10 inline-flex items-center justify-center gap-1.5 rounded-md px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors duration-150",
-								value === tab.value
-									? "text-background"
-									: "text-muted-foreground hover:text-foreground",
+								"relative z-10 inline-flex items-center justify-center gap-1.5 whitespace-nowrap transition-colors duration-150",
+								variant === "tabs"
+									? "rounded-md px-4 py-2 text-sm font-medium"
+									: "flex-1 rounded-[7px] px-4 py-2 text-sm font-medium",
+								variant === "tabs"
+									? value === tab.value
+										? "text-background"
+										: "text-muted-foreground hover:text-foreground"
+									: value === tab.value
+										? "text-[--system-accent]"
+										: "text-[--system-text-secondary] hover:text-[--system-text-primary]",
 							)}
 						>
 							{tab.icon}
@@ -100,7 +112,11 @@ function AnimatedTabs({
 						</button>
 					))}
 					<m.div
-						className="absolute inset-y-1 bg-[--system-accent] rounded-md z-0"
+						className={
+							variant === "tabs"
+								? "absolute inset-y-1 bg-[--system-accent] rounded-md z-0"
+								: "absolute inset-y-[3px] z-0 rounded-[7px] bg-[--system-surface] shadow-[--shadow-level-1]"
+						}
 						initial={false}
 						animate={{
 							left: indicator.left,
@@ -113,10 +129,8 @@ function AnimatedTabs({
 						}}
 					/>
 				</div>
-				{value && children}
+				{variant === "tabs" && value && children}
 			</div>
 		</Anim>
 	);
 }
-
-export { AnimatedTabs };

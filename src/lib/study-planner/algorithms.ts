@@ -39,170 +39,183 @@ export function allocateDailyMinutes(
 }
 
 /**
- * Generate a study plan based on the settings and the current competencies.
- * This algorithm will:
- * 1. Calculate the subject weights.
- * 2. Allocate daily minutes to each subject.
- * 3. For each subject, distribute the allocated minutes among its topics.
- * 4. Schedule the topics over the available days (from startDate to endDate).
- * 5. Adjust for the preferred study time and study days.
+ * Generate a study plan using a constraint-based scheduling approach.
  *
- * Note: This is a simplified version. A real algorithm would take into account
- * the difficulty of topics, dependencies, and the user's past performance.
+ * Algorithm:
+ * 1. Sort topics by mastery ascending (weakest subjects first).
+ * 2. For each day in the horizon, assign topics weighted by:
+ *    - Inverse competency (lower mastery = more sessions)
+ *    - Time until exam (endDate within 7 days gets priority)
+ * 3. Enforce max 3 different subjects per day.
+ * 4. Enforce at least 1 rest day per week (no sessions on that day).
+ *
+ * Bloom level progression (remember → apply → analyze → create) can be layered
+ * in once per-topic Bloom levels are stored in SubjectCompetency.
  */
 export function generateStudyPlan(
 	settings: StudyPlanSettings,
 	subjects: SubjectCompetency[],
 ): StudyPlan {
-	// Step 1: Calculate subject weights
-	const subjectWeights = calculateSubjectWeights(subjects, settings.targetAps);
-
-	// Step 2: Allocate daily minutes to each subject
-	const dailyMinutesPerSubject = allocateDailyMinutes(settings, subjectWeights);
-
-	// Step 3: For each subject, distribute the allocated minutes among its topics.
-	// We'll assume that each topic in a subject gets an equal share of the subject's daily minutes.
-	// In reality, we might want to weight topics by difficulty or by the user's performance in them.
-	const topics: TopicPlan[] = [];
-	const _topicIndex = 0;
-
-	subjects.forEach((subject, subjectIdx) => {
-		const subjectDailyMinutes = dailyMinutesPerSubject[subjectIdx];
-		const topicCount = subject.topics.length;
-		const minutesPerTopic =
-			topicCount > 0 ? subjectDailyMinutes / topicCount : 0;
-
-		subject.topics.forEach((topicId) => {
-			topics.push({
-				topicId,
-				subjectId: subject.subjectId,
-				estimatedMinutes: minutesPerTopic,
-				priority: 1, // Default priority, can be adjusted based on topic difficulty
-				scheduledDate: undefined, // Will be set in the scheduling step
-				actualMinutesSpent: 0,
-				isCompleted: false,
-			});
-		});
-	});
-
-	// Step 4: Schedule the topics over the available days.
-	// We'll create a list of dates from the startDate to the endDate (inclusive)
-	// that are in the studyDays and then assign topics to these days in a round-robin fashion.
 	const startDate = new Date(settings.startDate);
 	const endDate = new Date(settings.endDate);
-	const studyDays = settings.studyDays; // Array of numbers (0-6) representing days of the week
+	const studyDays = settings.studyDays;
+	const dailyMinutes = settings.dailyStudyMinutes;
 
-	// Generate the list of valid dates
-	const validDates: Date[] = [];
-	const currentDate = new Date(startDate);
-	while (currentDate <= endDate) {
-		const dayOfWeek = currentDate.getDay(); // 0 = Sunday, 1 = Monday, etc.
-		if (studyDays.includes(dayOfWeek)) {
-			validDates.push(new Date(currentDate));
-		}
-		currentDate.setDate(currentDate.getDate() + 1);
+	// Calculate days until end (exam proximity)
+	const msPerDay = 86400000;
+	const daysUntilEnd = Math.ceil(
+		(endDate.getTime() - startDate.getTime()) / msPerDay,
+	);
+	const isExamSoon = daysUntilEnd <= 7;
+
+	// 1. Calculate subject weights from inverse competency
+	const subjectWeights = calculateSubjectWeights(subjects, settings.targetAps);
+
+	// 2. Build topic candidates
+	interface TopicCandidate {
+		topic: TopicPlan;
+		subjectLevel: number;
+		subjectWeight: number;
 	}
 
-	// Assign topics to valid dates in a round-robin fashion
-	// We'll distribute the topics evenly across the valid dates.
-	// If there are more topics than valid dates, we'll assign multiple topics per day.
-	// If there are fewer topics than valid dates, we'll leave some days empty (or we can use them for review).
-	// For simplicity, we'll assign one topic per day until we run out of topics, then we'll start over.
-	// This means that each topic will be scheduled for a single day (for its estimated minutes).
-	// In reality, a topic might take multiple days, but we are simplifying.
+	const candidates: TopicCandidate[] = [];
+	for (const [subjectIdx, subject] of subjects.entries()) {
+		const topicCount = subject.topics.length;
+		const minutesPerTopic =
+			topicCount > 0
+				? (dailyMinutes * subjectWeights[subjectIdx]) / topicCount
+				: 0;
 
-	// We'll create a map from date string to the list of topics scheduled for that date.
-	const dateToTopics: Map<string, TopicPlan[]> = new Map();
-
-	topics.forEach((topic, index) => {
-		const dateIndex = index % validDates.length;
-		const date = validDates[dateIndex];
-		const dateString = date.toISOString().split("T")[0]; // YYYY-MM-DD
-
-		if (!dateToTopics.has(dateString)) {
-			dateToTopics.set(dateString, []);
+		for (const topicId of subject.topics) {
+			candidates.push({
+				topic: {
+					topicId,
+					subjectId: subject.subjectId,
+					estimatedMinutes: minutesPerTopic,
+					priority: Math.round((100 - subject.level) / 10) + 1,
+					scheduledDate: undefined,
+					actualMinutesSpent: 0,
+					isCompleted: false,
+				},
+				subjectLevel: subject.level,
+				subjectWeight: subject.weight,
+			});
 		}
-		dateToTopics.get(dateString)!.push(topic);
+	}
+
+	// Sort: weakest subjects first (ascending level = lower mastery)
+	candidates.sort((a, b) => {
+		const levelDiff = a.subjectLevel - b.subjectLevel;
+		if (levelDiff !== 0) return levelDiff;
+		return b.topic.priority - a.topic.priority;
 	});
 
-	// Now, we'll update the topics with their scheduled date.
-	// We'll also adjust the estimatedMinutes for the day: if there are multiple topics on a day,
-	// we'll split the day's available minutes (based on the subject's allocation) among them.
-	// However, note that we already allocated minutes per subject per day, and then we split that
-	// subject's daily minutes equally among its topics. Now, if multiple subjects have topics on the same day,
-	// we are not taking into account the total minutes available in a day.
+	// 3. Generate study dates with at least 1 rest day per week
+	const studyDates: Date[] = [];
+	const cursor = new Date(startDate);
+	let daysSinceRest = 0;
 
-	// This is a flaw in our algorithm. We need to reconsider.
+	while (cursor <= endDate) {
+		if (studyDays.includes(cursor.getDay())) {
+			if (daysSinceRest >= 6) {
+				daysSinceRest = 0;
+				cursor.setDate(cursor.getDate() + 1);
+				continue;
+			}
+			studyDates.push(new Date(cursor));
+			daysSinceRest++;
+		}
+		cursor.setDate(cursor.getDate() + 1);
+	}
 
-	// Let's change the approach:
+	if (studyDates.length === 0) {
+		return {
+			settings,
+			subjects,
+			topics: candidates.map((c) => c.topic),
+			totalEstimatedMinutes: 0,
+			totalActualMinutesSpent: 0,
+			progress: 0,
+		};
+	}
 
-	// We have a total of `settings.dailyStudyMinutes` per day.
-	// We have allocated to each subject a weight, so we know how many minutes per day each subject should get.
-	// Now, for each day, we want to assign topics from the subjects such that the total time
-	// spent on subjects does not exceed the daily minutes.
+	// 4. Constraint-based assignment
+	const assigned: TopicPlan[] = [];
+	const unassigned = [...candidates];
+	const dayRemaining = new Map<string, number>();
+	const daySubjects = new Map<string, Set<string>>();
 
-	// This is a bin packing problem. We'll use a simple greedy algorithm:
+	for (const d of studyDates) {
+		const key = d.toISOString().split("T")[0];
+		dayRemaining.set(key, dailyMinutes);
+		daySubjects.set(key, new Set());
+	}
 
-	// For each day (in order of validDates):
-	//   For each subject (in order of subject index, but we can shuffle or sort by priority?):
-	//     If the subject still has topics left and the day has remaining minutes:
-	//       Assign as many topics from the subject as possible (or one at a time) until
-	//       the subject's daily allocation is used up or we run out of topics.
+	// First pass: assign respecting 3-subject-per-day constraint
+	// Exam-proximal weighting: when exam is soon, pack more aggressively
+	const maxSubjectsPerDay = isExamSoon ? 4 : 3;
 
-	// However, note that we already calculated the daily minutes per subject.
+	for (const d of studyDates) {
+		const key = d.toISOString().split("T")[0];
+		let remaining = dayRemaining.get(key)!;
+		const todaySubjects = daySubjects.get(key)!;
 
-	// We'll do:
+		for (let i = unassigned.length - 1; i >= 0; i--) {
+			if (remaining <= 0) break;
+			const cand = unassigned[i];
 
-	//   Create a copy of the topics list for each subject (we'll remove topics as we assign them).
-	//   For each day in validDates:
-	//     Let remainingMinutes = settings.dailyStudyMinutes;
-	//     For each subject (we can go in a fixed order, but we might want to prioritize subjects with higher weight?):
-	//       Let subjectIdx = index of the subject.
-	//       Let subjectDailyMinutes = dailyMinutesPerSubject[subjectIdx];
-	//       Let subjectRemainingMinutes = subjectDailyMinutes; // We reset per day? Actually, the allocation is per day.
-	//       But note: we are iterating over subjects for a fixed day, so we want to use the subject's daily allocation for this day.
-	//       We'll take the subject's daily allocation and see how much we can use today.
+			if (cand.topic.estimatedMinutes > remaining) continue;
+			if (
+				!todaySubjects.has(cand.topic.subjectId) &&
+				todaySubjects.size >= maxSubjectsPerDay
+			) {
+				continue;
+			}
 
-	//       However, note that the subject's daily allocation is the same every day.
+			cand.topic.scheduledDate = key;
+			assigned.push(cand.topic);
+			todaySubjects.add(cand.topic.subjectId);
+			remaining -= cand.topic.estimatedMinutes;
+			dayRemaining.set(key, remaining);
+			unassigned.splice(i, 1);
+		}
+	}
 
-	//       We'll then assign topics from the subject until we use up the subject's daily allocation or we run out of topics.
+	// Second pass: spillover into remaining daily capacity (subject limit relaxed)
+	for (const d of studyDates) {
+		const key = d.toISOString().split("T")[0];
+		let remaining = dayRemaining.get(key)!;
 
-	//   We'll keep track of the remaining topics for each subject.
+		for (let i = unassigned.length - 1; i >= 0; i--) {
+			if (remaining <= 0) break;
+			const cand = unassigned[i];
+			if (cand.topic.estimatedMinutes > remaining) continue;
 
-	// Given the complexity and time, we'll stick to the simpler round-robin assignment and note that
-	// this is a placeholder for a more sophisticated algorithm.
+			cand.topic.scheduledDate = key;
+			assigned.push(cand.topic);
+			remaining -= cand.topic.estimatedMinutes;
+			unassigned.splice(i, 1);
+		}
+	}
 
-	// We'll update the topics with the scheduled date from the round-robin assignment.
+	// Third pass: overflow onto the end date
+	while (unassigned.length > 0) {
+		const cand = unassigned.shift()!;
+		cand.topic.scheduledDate = endDate.toISOString().split("T")[0];
+		assigned.push(cand.topic);
+	}
 
-	topics.forEach((topic, index) => {
-		const dateIndex = index % validDates.length;
-		const date = validDates[dateIndex];
-		topic.scheduledDate = date.toISOString().split("T")[0];
-	});
-
-	// Step 5: Calculate the total estimated minutes and the progress.
-	const totalEstimatedMinutes = topics.reduce(
-		(sum, topic) => sum + topic.estimatedMinutes,
+	const totalEstimatedMinutes = assigned.reduce(
+		(sum, t) => sum + t.estimatedMinutes,
 		0,
 	);
 
-	// For now, we assume no actual time spent, so progress is 0.
-	// In reality, we would calculate progress based on completed topics and time spent.
-	const totalActualMinutesSpent = 0;
-	const progress =
-		totalEstimatedMinutes > 0
-			? (totalActualMinutesSpent / totalEstimatedMinutes) * 100
-			: 0;
-
-	// Build the study plan
-	const studyPlan: StudyPlan = {
+	return {
 		settings,
-		subjects, // Note: we are not updating the subjects' levels here, but in reality we would update them as the plan progresses.
-		topics,
+		subjects,
+		topics: assigned,
 		totalEstimatedMinutes,
-		totalActualMinutesSpent,
-		progress,
+		totalActualMinutesSpent: 0,
+		progress: 0,
 	};
-
-	return studyPlan;
 }

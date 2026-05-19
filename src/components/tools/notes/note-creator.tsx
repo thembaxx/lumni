@@ -3,6 +3,7 @@
 import { m, motion, useReducedMotion } from "framer-motion";
 import { useCallback, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -328,6 +329,14 @@ function NoteForm({
 }
 
 export function NoteCreator({ className }: NoteCreatorProps) {
+	return (
+		<AppErrorBoundary>
+			<NoteCreatorInner className={className} />
+		</AppErrorBoundary>
+	);
+}
+
+function NoteCreatorInner({ className }: NoteCreatorProps) {
 	const { notes, addNote, removeNote, updateNote, toggleFavorite } =
 		useNoteStorage();
 	const [, setIsCreating] = useState(false);

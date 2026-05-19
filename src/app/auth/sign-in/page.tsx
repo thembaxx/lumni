@@ -13,6 +13,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { FormSkeleton } from "@/components/ui/skeletons";
 import { useAuth } from "@/lib/auth/auth-context";
 import { iOSEase } from "@/lib/utils/animation";
 
@@ -218,7 +219,7 @@ function SignInForm() {
 
 export default function SignInPage() {
 	return (
-		<Suspense fallback={null}>
+		<Suspense fallback={<FormSkeleton />}>
 			<SignInForm />
 		</Suspense>
 	);

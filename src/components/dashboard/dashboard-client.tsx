@@ -20,6 +20,7 @@ import type { TabValue } from "@/components/dashboard/types";
 import { GettingStartedCard } from "@/components/onboarding/getting-started-card";
 import { NotificationNudge } from "@/components/onboarding/notification-nudge";
 import type { QuizResults } from "@/components/quiz/quiz-view";
+import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { PerpetualFloat } from "@/components/shared/perpetual-float";
 import { StaggerList } from "@/components/shared/stagger-list";
 import { Card } from "@/components/ui/card";
@@ -403,7 +404,7 @@ export function DashboardClient({
 	};
 
 	return (
-		<>
+		<AppErrorBoundary>
 			<ScrollAmbient />
 			<div className="flex flex-col h-full">
 				{!isLoaded ? (
@@ -472,6 +473,6 @@ export function DashboardClient({
 					</>
 				)}
 			</div>
-		</>
+		</AppErrorBoundary>
 	);
 }

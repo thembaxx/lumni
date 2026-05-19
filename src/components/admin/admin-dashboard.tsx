@@ -11,10 +11,10 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { AnimatedTabs } from "@/components/ui/animated-tabs";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PageHeader } from "@/components/ui/headers/page-header";
+import { TabSwitcher } from "@/components/ui/tab-switcher";
 import { iOSEase } from "@/lib/utils/animation";
 import { AdminExamList } from "./admin-exam-list";
 import { AdminExamUploadZone } from "./admin-exam-upload-zone";
@@ -233,7 +233,7 @@ export function AdminDashboard() {
 				/>
 
 				<AnimatedCard delay={0.1}>
-					<AnimatedTabs
+					<TabSwitcher
 						tabs={[
 							{
 								value: "exam",
@@ -313,7 +313,7 @@ export function AdminDashboard() {
 								</AnimatedCard>
 							</motion.div>
 						)}
-					</AnimatedTabs>
+					</TabSwitcher>
 				</AnimatedCard>
 			</div>
 		</div>

@@ -3,6 +3,7 @@
 import { m, motion, useReducedMotion } from "framer-motion";
 import { useCallback, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -305,6 +306,14 @@ function FlashcardForm({
 }
 
 export function FlashcardCreator({ className }: FlashcardCreatorProps) {
+	return (
+		<AppErrorBoundary>
+			<FlashcardCreatorInner className={className} />
+		</AppErrorBoundary>
+	);
+}
+
+function FlashcardCreatorInner({ className }: FlashcardCreatorProps) {
 	const { flashcards, addFlashcard, removeFlashcard } = useFlashcardStorage();
 	const [, setIsCreating] = useState(false);
 	const [editingCardId, setEditingCardId] = useState<string | null>(null);

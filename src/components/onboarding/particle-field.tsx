@@ -2,7 +2,7 @@
 
 import { Canvas, useFrame } from "@react-three/fiber";
 import { memo, useEffect, useMemo, useRef } from "react";
-import * as THREE from "three";
+import { AdditiveBlending, Color, Points, PointsMaterial } from "three";
 
 const STEP_COLORS: Record<number, string> = {
 	0: "#3d9970",
@@ -13,7 +13,7 @@ const STEP_COLORS: Record<number, string> = {
 };
 
 function parseColor(hex: string) {
-	const c = new THREE.Color(hex);
+	const c = new Color(hex);
 	return [c.r, c.g, c.b] as const;
 }
 
@@ -32,7 +32,7 @@ interface ParticlesProps {
 }
 
 const Particles = memo(function Particles({ step }: ParticlesProps) {
-	const meshRef = useRef<THREE.Points>(null);
+	const meshRef = useRef<Points>(null);
 	const positions = useMemo(() => {
 		const pos = new Float32Array(PARTICLE_COUNT * 3);
 		for (let i = 0; i < PARTICLE_COUNT; i++) {
@@ -47,7 +47,7 @@ const Particles = memo(function Particles({ step }: ParticlesProps) {
 		() => COLORS[step as keyof typeof COLORS] ?? COLORS[0],
 		[step],
 	);
-	const currentColor = useRef(new THREE.Color(...COLORS[0]));
+	const currentColor = useRef(new Color(...COLORS[0]));
 	const mouse = useRef({ x: 0, y: 0 });
 
 	useEffect(() => {
@@ -61,8 +61,8 @@ const Particles = memo(function Particles({ step }: ParticlesProps) {
 
 	useFrame((state, delta) => {
 		if (!meshRef.current) return;
-		const material = meshRef.current.material as THREE.PointsMaterial;
-		currentColor.current.lerp(new THREE.Color(...targetColor), delta * 0.8);
+		const material = meshRef.current.material as PointsMaterial;
+		currentColor.current.lerp(new Color(...targetColor), delta * 0.8);
 		material.color.copy(currentColor.current);
 
 		const time = state.clock.elapsedTime;
@@ -95,7 +95,7 @@ const Particles = memo(function Particles({ step }: ParticlesProps) {
 				opacity={0.5}
 				sizeAttenuation
 				depthWrite={false}
-				blending={THREE.AdditiveBlending}
+				blending={AdditiveBlending}
 			/>
 		</points>
 	);

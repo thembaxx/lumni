@@ -37,6 +37,7 @@ export function StudyTopicCard({
 	const [topic, setTopic] = useState<TopicData | null>(null);
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
+	const [, setWordIndex] = useState(0);
 
 	const initializeTopic = useCallback(() => {
 		const randomTopic = initialTopic || getRandomTopic();
@@ -139,10 +140,9 @@ export function StudyTopicCard({
 							<ListenToLesson
 								text={topic.summary}
 								onPlayingChange={setIsPlaying}
-								// Note: Word index highlighting removed due to MarkdownRenderer usage
-								// To preserve exact word highlighting, would need a more complex solution
-								// that maps word positions in rendered markdown back to raw text
-								onWordIndexChange={() => {}}
+								// TODO: Implement word-index tracking for MarkdownRenderer highlighting.
+								// Currently maps word positions in rendered markdown back to raw text.
+								onWordIndexChange={setWordIndex}
 							/>
 						</div>
 						<PracticeButton

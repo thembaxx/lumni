@@ -4,7 +4,6 @@ import { RadialIcon, Target01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { motion } from "framer-motion";
 import { AnimatedDots } from "@/components/shared/animated-dots";
-import { Button } from "@/components/ui/button";
 import {
 	Empty,
 	EmptyContent,
@@ -12,7 +11,8 @@ import {
 	EmptyHeader,
 	EmptyMedia,
 	EmptyTitle,
-} from "@/components/ui/empty";
+} from "@/components/shared/empty-state";
+import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { SubjectSelector } from "./subject-selector";
 

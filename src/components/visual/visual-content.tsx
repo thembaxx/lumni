@@ -3,6 +3,7 @@
 import { RadialIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { motion, useReducedMotion } from "framer-motion";
+import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import type { VisualContent as VisualContentType } from "@/lib/visual-engine/types";
 import { DiagramRenderer } from "./diagram-renderer";
 import { ImageViewer } from "./image-viewer";
@@ -14,6 +15,14 @@ interface VisualContentProps {
 }
 
 export function VisualContent({ visual, isLoading }: VisualContentProps) {
+	return (
+		<AppErrorBoundary>
+			<VisualContentInner visual={visual} isLoading={isLoading} />
+		</AppErrorBoundary>
+	);
+}
+
+function VisualContentInner({ visual, isLoading }: VisualContentProps) {
 	const shouldReduceMotion = useReducedMotion();
 
 	if (isLoading) {

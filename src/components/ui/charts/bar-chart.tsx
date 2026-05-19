@@ -1,6 +1,12 @@
 "use client";
 
-import * as RechartsPrimitive from "recharts";
+import {
+	Bar,
+	CartesianGrid,
+	BarChart as RechartsBarChart,
+	XAxis,
+	YAxis,
+} from "recharts";
 import {
 	type ChartConfig,
 	ChartContainer,
@@ -28,34 +34,29 @@ export function BarChart({
 }: BarChartProps) {
 	return (
 		<ChartContainer config={config} className="w-full" style={{ height }}>
-			<RechartsPrimitive.BarChart
+			<RechartsBarChart
 				data={data}
 				margin={{ top: 10, right: 10, bottom: 24, left: 10 }}
 			>
-				{showGrid && (
-					<RechartsPrimitive.CartesianGrid
-						strokeDasharray="3 3"
-						vertical={false}
-					/>
-				)}
-				<RechartsPrimitive.XAxis
+				{showGrid && <CartesianGrid strokeDasharray="3 3" vertical={false} />}
+				<XAxis
 					dataKey={xKey}
 					tickLine={false}
 					axisLine={false}
 					tickMargin={8}
 				/>
-				<RechartsPrimitive.YAxis hide />
+				<YAxis hide />
 				<ChartTooltip
 					cursor={false}
 					content={<ChartTooltipContent indicator="dot" hideLabel />}
 				/>
-				<RechartsPrimitive.Bar
+				<Bar
 					dataKey={yKey}
 					fill={`var(--color-${yKey})`}
 					radius={[4, 4, 0, 0]}
 					animationDuration={300}
 				/>
-			</RechartsPrimitive.BarChart>
+			</RechartsBarChart>
 		</ChartContainer>
 	);
 }

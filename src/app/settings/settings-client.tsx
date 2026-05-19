@@ -12,7 +12,6 @@ import {
 	UserIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { Suspense, useEffect, useState } from "react";
@@ -25,6 +24,7 @@ import {
 	ReferralTab,
 	StudyTab,
 } from "@/components/settings/tabs";
+import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Button } from "@/components/ui/button";
 import { iOSEase } from "@/lib/utils/animation";
 import {
@@ -262,22 +262,24 @@ function SettingsContent() {
 
 export function SettingsClient() {
 	return (
-		<Suspense
-			fallback={
-				<div className="flex items-center justify-center min-h-[100dvh] bg-system-grouped">
-					<div className="flex flex-col items-center gap-4">
-						<HugeiconsIcon
-							icon={RadialIcon}
-							className="size-8 text-muted-foreground animate-spin"
-						/>
-						<p className="ios-body text-[--system-text-secondary]">
-							Loading settings...
-						</p>
+		<AppErrorBoundary>
+			<Suspense
+				fallback={
+					<div className="flex items-center justify-center min-h-[100dvh] bg-system-grouped">
+						<div className="flex flex-col items-center gap-4">
+							<HugeiconsIcon
+								icon={RadialIcon}
+								className="size-8 text-muted-foreground animate-spin"
+							/>
+							<p className="ios-body text-[--system-text-secondary]">
+								Loading settings...
+							</p>
+						</div>
 					</div>
-				</div>
-			}
-		>
-			<SettingsContent />
-		</Suspense>
+				}
+			>
+				<SettingsContent />
+			</Suspense>
+		</AppErrorBoundary>
 	);
 }

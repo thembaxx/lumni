@@ -7,7 +7,6 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
-import { Button } from "@/components/ui/button";
 import {
 	Empty,
 	EmptyContent,
@@ -15,7 +14,8 @@ import {
 	EmptyHeader,
 	EmptyMedia,
 	EmptyTitle,
-} from "@/components/ui/empty";
+} from "@/components/shared/empty-state";
+import { Button } from "@/components/ui/button";
 
 interface FlashcardsIdleProps {
 	onSelect: (subject: string) => void;

@@ -11,8 +11,12 @@ import { LessonCard } from "@/components/lesson";
 import type { LessonCardData } from "@/components/lesson/lesson-card";
 import { LessonCardProvider } from "@/components/lesson/lesson-card-context";
 import { Anim } from "@/components/shared/anim";
+import {
+	Empty,
+	EmptyDescription,
+	EmptyTitle,
+} from "@/components/shared/empty-state";
 import { Button } from "@/components/ui/button";
-import { Empty, EmptyDescription, EmptyTitle } from "@/components/ui/empty";
 import { Input } from "@/components/ui/input";
 import {
 	Sheet,

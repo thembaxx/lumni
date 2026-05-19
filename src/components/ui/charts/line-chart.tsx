@@ -1,6 +1,12 @@
 "use client";
 
-import * as RechartsPrimitive from "recharts";
+import {
+	CartesianGrid,
+	Line,
+	LineChart as RechartsLineChart,
+	XAxis,
+	YAxis,
+} from "recharts";
 import {
 	type ChartConfig,
 	ChartContainer,
@@ -30,23 +36,18 @@ export function LineChart({
 }: LineChartProps) {
 	return (
 		<ChartContainer config={config} className="w-full" style={{ height }}>
-			<RechartsPrimitive.LineChart
+			<RechartsLineChart
 				data={data}
 				margin={{ top: 10, right: 10, bottom: 24, left: 28 }}
 			>
-				{showGrid && (
-					<RechartsPrimitive.CartesianGrid
-						strokeDasharray="3 3"
-						vertical={false}
-					/>
-				)}
-				<RechartsPrimitive.XAxis
+				{showGrid && <CartesianGrid strokeDasharray="3 3" vertical={false} />}
+				<XAxis
 					dataKey={xKey}
 					tickLine={false}
 					axisLine={false}
 					tickMargin={8}
 				/>
-				<RechartsPrimitive.YAxis
+				<YAxis
 					domain={[0, 100]}
 					tickLine={false}
 					axisLine={false}
@@ -57,7 +58,7 @@ export function LineChart({
 					cursor={false}
 					content={<ChartTooltipContent indicator="dot" />}
 				/>
-				<RechartsPrimitive.Line
+				<Line
 					dataKey={yKey}
 					type="monotone"
 					stroke={`var(--color-${yKey})`}
@@ -66,7 +67,7 @@ export function LineChart({
 					activeDot={{ r: 6, strokeWidth: 2 }}
 					animationDuration={300}
 				/>
-			</RechartsPrimitive.LineChart>
+			</RechartsLineChart>
 		</ChartContainer>
 	);
 }

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { apiError } from "@/lib/api-error";
 import { databases } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
@@ -19,10 +20,7 @@ async function examsHandler(request: NextRequest) {
 				id,
 			);
 			if (!doc) {
-				return NextResponse.json(
-					{ error: "Exam paper not found" },
-					{ status: 404 },
-				);
+				return apiError("Exam paper not found", 404);
 			}
 			return NextResponse.json({
 				id: doc.$id,
@@ -67,16 +65,8 @@ async function examsHandler(request: NextRequest) {
 		}));
 
 		return NextResponse.json({ papers: exams, count: exams.length });
-	} catch (error) {
-		return NextResponse.json(
-			{
-				error:
-					error instanceof Error
-						? error.message
-						: "Failed to fetch exam papers",
-			},
-			{ status: 500 },
-		);
+	} catch {
+		return apiError("Failed to fetch exams", 500);
 	}
 }
 

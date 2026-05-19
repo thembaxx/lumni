@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { FormSkeleton } from "@/components/ui/skeletons";
 import { iOSEase } from "@/lib/utils/animation";
 
 function VerifyEmailContent() {
@@ -78,7 +79,7 @@ function VerifyEmailContent() {
 
 export default function VerifyEmailPage() {
 	return (
-		<Suspense fallback={null}>
+		<Suspense fallback={<FormSkeleton />}>
 			<VerifyEmailContent />
 		</Suspense>
 	);

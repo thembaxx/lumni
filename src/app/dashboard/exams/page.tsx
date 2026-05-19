@@ -11,9 +11,6 @@ import { useState } from "react";
 import { ExamCard } from "@/components/dashboard/practice/exam-card";
 import { GroupSkeleton } from "@/components/dashboard/practice/exam-card-skeleton";
 import { Anim } from "@/components/shared/anim";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { ButtonGroup } from "@/components/ui/button-group";
 import {
 	Empty,
 	EmptyContent,
@@ -21,7 +18,10 @@ import {
 	EmptyHeader,
 	EmptyMedia,
 	EmptyTitle,
-} from "@/components/ui/empty";
+} from "@/components/shared/empty-state";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
 import { Input } from "@/components/ui/input";
 import { SubjectSelect } from "@/components/ui/subject-select";
 import { useExams } from "@/hooks/use-exams";

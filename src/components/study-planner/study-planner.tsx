@@ -14,6 +14,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
+import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -32,6 +33,14 @@ import type {
 } from "@/lib/utils/study-planner";
 
 export function StudyPlanner() {
+	return (
+		<AppErrorBoundary>
+			<StudyPlannerInner />
+		</AppErrorBoundary>
+	);
+}
+
+function StudyPlannerInner() {
 	const {
 		todaySessions,
 		upcomingSessions,

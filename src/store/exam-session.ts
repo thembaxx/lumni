@@ -51,6 +51,8 @@ function validateHydratedState(state: unknown): boolean {
 	);
 }
 
+let cleanupCrossTabSync: (() => void) | null = null;
+
 function setupCrossTabSync() {
 	if (typeof window === "undefined") return;
 	const handleStorage = (e: StorageEvent) => {
@@ -64,7 +66,12 @@ function setupCrossTabSync() {
 		}
 	};
 	window.addEventListener("storage", handleStorage);
-	return () => window.removeEventListener("storage", handleStorage);
+	cleanupCrossTabSync = () =>
+		window.removeEventListener("storage", handleStorage);
+}
+
+export function cleanupExamSessionSync() {
+	cleanupCrossTabSync?.();
 }
 
 if (typeof window !== "undefined") {

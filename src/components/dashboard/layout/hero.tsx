@@ -10,6 +10,7 @@ export function DashboardHero() {
 				alt=""
 				width={48}
 				height={48}
+				sizes="48px"
 				className="mb-6 animate-fade-in-up delay-50"
 			/>
 		</main>

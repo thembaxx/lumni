@@ -40,9 +40,17 @@ export function useTTS(): UseTTSReturn {
 		loadVoices();
 
 		if ("speechSynthesis" in window) {
-			window.speechSynthesis.onvoiceschanged = loadVoices;
+			window.speechSynthesis.addEventListener("voiceschanged", loadVoices);
 		}
 
+		return () => {
+			if ("speechSynthesis" in window) {
+				window.speechSynthesis.removeEventListener("voiceschanged", loadVoices);
+			}
+		};
+	}, []);
+
+	useEffect(() => {
 		ttsService.onStart(() => {
 			setIsSpeaking(true);
 			setIsPaused(false);
@@ -57,6 +65,12 @@ export function useTTS(): UseTTSReturn {
 			setIsSpeaking(false);
 			setIsPaused(false);
 		});
+
+		return () => {
+			ttsService.onStart(() => {});
+			ttsService.onEnd(() => {});
+			ttsService.onError(() => {});
+		};
 	}, []);
 
 	const speak = useCallback(async (text: string, options?: TTSOptions) => {

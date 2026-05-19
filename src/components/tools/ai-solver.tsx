@@ -11,6 +11,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { StepByStep } from "@/components/quiz/step-by-step";
+import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/shared";
@@ -66,6 +67,14 @@ interface AiSolverProps {
 }
 
 export function AiSolver({ cameraFocus }: AiSolverProps) {
+	return (
+		<AppErrorBoundary>
+			<AiSolverInner cameraFocus={cameraFocus} />
+		</AppErrorBoundary>
+	);
+}
+
+function AiSolverInner({ cameraFocus }: AiSolverProps) {
 	const [subject, setSubject] = useState<Subject>("general");
 	const [question, setQuestion] = useState("");
 	const [imageUrl, setImageUrl] = useState<string | null>(null);
@@ -353,6 +362,7 @@ export function AiSolver({ cameraFocus }: AiSolverProps) {
 										src={imageUrl}
 										alt="Uploaded problem"
 										fill
+										sizes="80px"
 										className="object-cover transition-transform group-hover:scale-110"
 									/>
 									<Button

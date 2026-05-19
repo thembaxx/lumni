@@ -8,6 +8,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { FormSkeleton } from "@/components/ui/skeletons";
 import { iOSEase } from "@/lib/utils/animation";
 
 function ResetPasswordForm() {
@@ -126,7 +127,7 @@ function ResetPasswordForm() {
 
 export default function ResetPasswordPage() {
 	return (
-		<Suspense fallback={null}>
+		<Suspense fallback={<FormSkeleton />}>
 			<ResetPasswordForm />
 		</Suspense>
 	);

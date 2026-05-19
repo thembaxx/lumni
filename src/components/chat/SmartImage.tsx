@@ -33,6 +33,7 @@ export function SmartImage({ src, alt, className }: SmartImageProps) {
 				src={src}
 				alt={alt}
 				fill
+				sizes="100vw"
 				className="object-contain outline -outline-offset-1 outline-black/10 dark:outline-white/10"
 				unoptimized
 			/>

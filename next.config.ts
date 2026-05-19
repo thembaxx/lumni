@@ -13,7 +13,11 @@ const nextConfig: NextConfig = {
 		remotePatterns: [
 			{
 				protocol: "https",
-				hostname: "**",
+				hostname: "cloud.appwrite.io",
+			},
+			{
+				protocol: "https",
+				hostname: "utfs.io",
 			},
 		],
 	},

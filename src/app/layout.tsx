@@ -1,6 +1,7 @@
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { domAnimation, LazyMotion } from "framer-motion";
 import type { Metadata, Viewport } from "next";
+import dynamic from "next/dynamic";
 import Script from "next/script";
 import { connection } from "next/server";
 import { Suspense } from "react";
@@ -9,17 +10,34 @@ import { extractRouterConfig } from "uploadthing/server";
 import "./globals.css";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { PageTransition } from "@/components/layout/page-transition";
-import { BottomNav } from "@/components/navigation/bottom-nav";
-import { DesktopSidebar } from "@/components/navigation/desktop-sidebar";
-import { TopNav } from "@/components/navigation/top-nav";
 import { Providers } from "@/components/providers";
-import { FloatingToolsButton } from "@/components/tools";
+import { CardSkeleton } from "@/components/ui/skeletons";
 import { Toaster } from "@/components/ui/toast";
 import { UploadDialogRenderer } from "@/components/upload/upload-dialog-renderer";
-
 import { cn } from "@/lib/shared";
 import { ourFileRouter } from "./api/uploadthing/core";
 import { fontHeading, fontMono, fontSans } from "./fonts";
+
+const DesktopSidebar = dynamic(() =>
+	import("@/components/navigation/desktop-sidebar").then((m) => ({
+		default: m.DesktopSidebar,
+	})),
+);
+const TopNav = dynamic(() =>
+	import("@/components/navigation/top-nav").then((m) => ({
+		default: m.TopNav,
+	})),
+);
+const BottomNav = dynamic(() =>
+	import("@/components/navigation/bottom-nav").then((m) => ({
+		default: m.BottomNav,
+	})),
+);
+const FloatingToolsButton = dynamic(() =>
+	import("@/components/tools/floating-tools-button").then((m) => ({
+		default: m.FloatingToolsButton,
+	})),
+);
 
 async function UTSSR() {
 	await connection();
@@ -111,7 +129,7 @@ export default function RootLayout({
 						__html: `(function(){try{var t=localStorage.getItem("theme");if(t==="dark"){document.documentElement.classList.add("dark");document.documentElement.style.colorScheme="dark"}else if(t==="light"){document.documentElement.classList.remove("dark");document.documentElement.style.colorScheme="light"}else{if(window.matchMedia("(prefers-color-scheme:dark)").matches){document.documentElement.classList.add("dark");document.documentElement.style.colorScheme="dark"}else{document.documentElement.classList.remove("dark");document.documentElement.style.colorScheme="light"}}}catch(e){}})()`,
 					}}
 				/>
-				<Suspense fallback={null}>
+				<Suspense fallback={<CardSkeleton />}>
 					<UTSSR />
 				</Suspense>
 				<Providers>
