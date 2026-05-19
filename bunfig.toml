@@ -1,0 +1,3 @@
+[test]
+dom = false
+preload = "C:/Users/Rattlehub/Documents/org1128/lumni/src/hooks/__tests__/setup.ts"

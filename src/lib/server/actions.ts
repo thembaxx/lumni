@@ -11,8 +11,10 @@ import {
 	listDocuments,
 	updateDocument,
 } from "@/lib/db/client";
+import { getAuthenticatedUserId, verifyAuth } from "@/lib/server/auth";
 
 export async function fetchSubjects(userId: string) {
+	await verifyAuth(userId);
 	const targetUserId = userId;
 
 	const subjects = await listDocuments(COLLECTIONS.SUBJECTS);
@@ -29,6 +31,7 @@ export async function fetchSubjects(userId: string) {
 }
 
 export async function fetchUserProgress(userId: string) {
+	await verifyAuth(userId);
 	const targetUserId = userId;
 
 	const progressArr = await listDocuments(COLLECTIONS.USER_PROGRESS, [
@@ -65,6 +68,7 @@ export async function fetchUserProgress(userId: string) {
 }
 
 export async function toggleUserSubject(userId: string, subjectId: string) {
+	await verifyAuth(userId);
 	const existing = await listDocuments(COLLECTIONS.USER_SUBJECTS, [
 		Query.equal("userId", userId),
 		Query.equal("subjectId", subjectId),
@@ -89,6 +93,8 @@ export async function toggleUserSubject(userId: string, subjectId: string) {
 export async function adminUploadExamPaper(
 	formData: FormData,
 ): Promise<{ success: boolean; url?: string; error?: string }> {
+	const userId = await getAuthenticatedUserId();
+	if (!userId) return { success: false, error: "Authentication required" };
 	try {
 		const file = formData.get("file") as File | null;
 		const subjectId = formData.get("subjectId") as string;

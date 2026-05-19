@@ -22,9 +22,12 @@ export function useServiceWorker(): UseServiceWorkerReturn {
 			return;
 		}
 
+		let cancelled = false;
+
 		navigator.serviceWorker
 			.register("/sw.js")
 			.then((reg) => {
+				if (cancelled) return;
 				setRegistration(reg);
 
 				if (reg.waiting) {
@@ -48,8 +51,13 @@ export function useServiceWorker(): UseServiceWorkerReturn {
 				setIsReady(true);
 			})
 			.catch((error) => {
+				if (cancelled) return;
 				console.error("Service worker registration failed:", error);
 			});
+
+		return () => {
+			cancelled = true;
+		};
 	}, []);
 
 	const update = useCallback(() => {

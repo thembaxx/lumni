@@ -11,6 +11,7 @@ import {
 	saveExamsDb,
 } from "@/lib/db/exams";
 import { parseExamPaperFilename as parseExamPaperFilenameFromSchema } from "@/lib/db/exams/schema";
+import { getAuthenticatedUserId } from "@/lib/server/auth";
 
 export interface UploadExamPaperOptions {
 	filePath?: string;
@@ -70,6 +71,9 @@ function dbExecOne(
 export async function uploadExamPaper(
 	options: UploadExamPaperOptions,
 ): Promise<ExamPaperRecord> {
+	const userId = await getAuthenticatedUserId();
+	if (!userId) throw new Error("Authentication required");
+
 	const utapi = new UTApi();
 
 	const {
@@ -243,6 +247,9 @@ export async function getExamPaperUrl(
 }
 
 export async function deleteExamPaper(id: string): Promise<void> {
+	const userId = await getAuthenticatedUserId();
+	if (!userId) throw new Error("Authentication required");
+
 	const db = await getExamsDb();
 	const utapi = new UTApi();
 

@@ -2,6 +2,7 @@
 
 import { Query } from "appwrite";
 import { COLLECTIONS, listDocuments } from "@/lib/db/client";
+import { getAuthenticatedUserId } from "@/lib/server/auth";
 
 const ALL_SUBJECTS = [
 	"mathematics",
@@ -21,6 +22,15 @@ export async function syncSubject(_subject: string): Promise<{
 	version: string;
 	error?: string;
 }> {
+	const userId = await getAuthenticatedUserId();
+	if (!userId)
+		return {
+			success: false,
+			synced: 0,
+			local: 0,
+			version: "v2",
+			error: "Authentication required",
+		};
 	return { success: true, synced: 0, local: 0, version: "v2" };
 }
 
@@ -45,6 +55,23 @@ export async function syncAllSubjects(): Promise<{
 }
 
 export async function checkSubjectStatus(subject: string): Promise<{
+	exists: boolean;
+	localQuestions: number;
+	version: string | null;
+	needsSync: boolean;
+}> {
+	const userId = await getAuthenticatedUserId();
+	if (!userId)
+		return {
+			exists: false,
+			localQuestions: 0,
+			version: null,
+			needsSync: false,
+		};
+	return checkSubjectStatusInternal(subject);
+}
+
+async function checkSubjectStatusInternal(subject: string): Promise<{
 	exists: boolean;
 	localQuestions: number;
 	version: string | null;
@@ -85,6 +112,16 @@ export async function refreshSubject(subject: string): Promise<{
 	isFresh: boolean;
 	error?: string;
 }> {
+	const userId = await getAuthenticatedUserId();
+	if (!userId)
+		return {
+			success: false,
+			synced: 0,
+			local: 0,
+			version: "v2",
+			isFresh: false,
+			error: "Authentication required",
+		};
 	const result = await syncSubject(subject);
 	return {
 		success: result.success,

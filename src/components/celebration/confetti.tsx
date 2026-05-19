@@ -46,7 +46,8 @@ export function Confetti({
 				delay: Math.random() * 0.3,
 			}));
 			setPieces(newPieces);
-			setTimeout(() => setPieces([]), duration);
+			const timeoutId = setTimeout(() => setPieces([]), duration);
+			return () => clearTimeout(timeoutId);
 		}
 	}, [trigger, count, duration]);
 

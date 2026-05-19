@@ -2,8 +2,11 @@
 
 import { Query } from "appwrite";
 import { COLLECTIONS, listDocuments } from "@/lib/db/client";
+import { getAuthenticatedUserId } from "@/lib/server/auth";
 
 export async function fetchQuestions(subjectIds: string[]) {
+	const userId = await getAuthenticatedUserId();
+	if (!userId) throw new Error("Authentication required");
 	if (subjectIds.length === 0) return [];
 
 	const topicDocs = await listDocuments(COLLECTIONS.TOPICS);

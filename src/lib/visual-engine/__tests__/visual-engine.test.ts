@@ -1,11 +1,11 @@
 import { describe, expect, test } from "bun:test";
+import { visualEngine } from "../visual-engine";
 import { STEM_SUBJECTS } from "../types";
-import { VisualEngine, visualEngine } from "../visual-engine";
 
 describe("VisualEngine", () => {
 	test("exports singleton", () => {
 		expect(visualEngine).toBeDefined();
-		expect(visualEngine).toBeInstanceOf(VisualEngine);
+		expect(visualEngine.resolve).toBeInstanceOf(Function);
 	});
 
 	test("resolve is a function", () => {

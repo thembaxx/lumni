@@ -15,6 +15,8 @@
 		"markdown:convert": "tsx scripts/pdt-to-mkdwn.ts",
 		"JSON:convert": "tsx scripts/markdown-to-json.ts",
 		"test": "bun test",
+		"test:int": "bun test ./src/lib/z-integration/integration.int-test.ts",
+		"test:all": "bun test && bun test ./src/lib/z-integration/integration.int-test.ts",
 		"database:ensure": "tsx scripts/ensure-appwrite.ts",
 		"admin:create": "tsx scripts/create-admin.ts",
 		"analyze": "ANALYZE=true next build"
@@ -78,6 +80,8 @@
 		"@biomejs/biome": "2.4.15",
 		"@next/bundle-analyzer": "^16.2.6",
 		"@tailwindcss/postcss": "^4.3.0",
+		"@testing-library/jest-dom": "^6.9.1",
+		"@testing-library/react": "^16.3.2",
 		"@types/bun": "^1.3.14",
 		"@types/node": "^25.9.0",
 		"@types/react": "^19.2.14",
@@ -88,6 +92,7 @@
 		"archiver": "^8.0.0",
 		"eslint": "^10.4.0",
 		"eslint-config-next": "16.2.6",
+		"happy-dom": "^20.9.0",
 		"tailwindcss": "^4.3.0",
 		"typescript": "^6.0.3"
 	}
