@@ -47,7 +47,7 @@ const nextConfig: NextConfig = {
 							"style-src 'self' 'unsafe-inline' fonts.googleapis.com",
 							"img-src 'self' data: blob: https:",
 							"font-src 'self' data: fonts.gstatic.com",
-							"connect-src 'self' https://*.cloud.appwrite.io https://*.uploadthing.com https://api.iconify.design https://api.simplesvg.com https://api.unisvg.com",
+							"connect-src 'self' https://*.cloud.appwrite.io https://*.uploadthing.com https://api.iconify.design https://api.simplesvg.com https://api.unisvg.com https://api.dicebear.com",
 							"frame-ancestors 'none'",
 							"base-uri 'self'",
 							"form-action 'self'",

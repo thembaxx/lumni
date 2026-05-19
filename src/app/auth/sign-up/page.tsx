@@ -35,12 +35,21 @@ function SignUpForm() {
 	const [showPassword, setShowPassword] = useState(false);
 	const [loading, setLoading] = useState(false);
 
+	const referralCode = searchParams.get("ref");
+
 	const handleSignUp = useCallback(
 		async (e: React.FormEvent) => {
 			e.preventDefault();
 			setLoading(true);
 			try {
-				await signUp(email, password, name);
+				const userId = await signUp(email, password, name);
+				if (referralCode && userId) {
+					fetch("/api/referral/claim", {
+						method: "POST",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify({ code: referralCode, refereeId: userId }),
+					}).catch(() => {});
+				}
 				router.push(redirect);
 				router.refresh();
 			} catch {
@@ -48,7 +57,7 @@ function SignUpForm() {
 				setLoading(false);
 			}
 		},
-		[email, password, name, signUp, router, redirect],
+		[email, password, name, signUp, router, redirect, referralCode],
 	);
 
 	return (

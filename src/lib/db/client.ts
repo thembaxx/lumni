@@ -13,6 +13,8 @@ export const COLLECTIONS = {
 	VISUALS: "visuals",
 	COMPETENCIES: "competencies",
 	EXAM_SESSIONS: "exam_sessions",
+	REFERRAL_CODES: "referral_codes",
+	REFERRALS: "referrals",
 } as const;
 
 export type Subject = {

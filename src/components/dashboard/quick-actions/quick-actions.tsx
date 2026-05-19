@@ -7,12 +7,14 @@ import {
 	Brain02FreeIcons,
 	Calendar02FreeIcons,
 	DocumentValidationFreeIcons,
+	Share07Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { motion, useReducedMotion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { StudyPlanSheet } from "@/components/dashboard/study-plan-sheet";
 import { LessonsButton } from "@/components/lesson";
+import { ReferralSheet } from "@/components/referral/referral-sheet";
 import { PerpetualFloat } from "@/components/shared/perpetual-float";
 import { Button } from "@/components/ui/button";
 import { iOSEase } from "@/lib/utils/animation";
@@ -29,6 +31,7 @@ const quickActions = [
 	{ icon: Book02FreeIcons, label: "Bookmarks", route: "/bookmarks" },
 	{ icon: BookOpenCheckFreeIcons, label: "Review", route: "/review" },
 	{ icon: Book03FreeIcons, label: "Lessons" },
+	{ icon: Share07Icon, label: "Invite Friend" },
 ];
 
 function ActionButton({
@@ -101,6 +104,8 @@ export function QuickActions() {
 							<StudyPlanSheet />
 						) : action.label === "Lessons" ? (
 							<LessonsButton />
+						) : action.label === "Invite Friend" ? (
+							<ReferralSheet />
 						) : (
 							<ActionButton
 								icon={action.icon}

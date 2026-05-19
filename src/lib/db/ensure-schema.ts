@@ -197,6 +197,32 @@ export const schemaConfig: Record<string, CollectionSchema> = {
 			},
 		],
 	},
+	referral_codes: {
+		attributes: {
+			userId: { type: "string", size: 100, required: true },
+			code: { type: "string", size: 100, required: true },
+			createdAt: { type: "datetime" },
+		},
+		indexes: [
+			{ key: "idx_referral_codes_userId", type: "key", attributes: ["userId"] },
+			{ key: "idx_referral_codes_code", type: "unique", attributes: ["code"] },
+		],
+	},
+	referrals: {
+		attributes: {
+			referrerId: { type: "string", size: 100, required: true },
+			refereeId: { type: "string", size: 100, required: true },
+			code: { type: "string", size: 100, required: true },
+			status: { type: "string", size: 20, required: true },
+			rewardedAt: { type: "datetime" },
+			createdAt: { type: "datetime" },
+		},
+		indexes: [
+			{ key: "idx_referrals_referrerId", type: "key", attributes: ["referrerId"] },
+			{ key: "idx_referrals_refereeId", type: "key", attributes: ["refereeId"] },
+			{ key: "idx_referrals_status", type: "key", attributes: ["status"] },
+		],
+	},
 	analytics: {
 		attributes: {
 			eventType: { type: "string", size: 50 },

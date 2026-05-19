@@ -25,6 +25,7 @@ import { useGamification } from "@/hooks/use-gamification";
 import { useSyncStatus } from "@/hooks/use-sync-status";
 import { useAuth } from "@/lib/auth/auth-context";
 import { cn } from "@/lib/shared";
+import { getRandomName } from "@/lib/utils/random-name";
 
 interface TopNavProps {
 	title?: string;
@@ -145,7 +146,7 @@ export function TopNav({ title, className }: TopNavProps) {
 										<AvatarImage
 											src={
 												(user?.prefs as Record<string, unknown>)
-													.avatarUrl as string
+													.avatarUrl as string ?? `https://api.dicebear.com/9.x/fun-emoji/svg?seed=${getRandomName()}`
 											}
 											alt={user?.name || "User"}
 										/>

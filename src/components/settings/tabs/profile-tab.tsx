@@ -23,6 +23,7 @@ import { ListCell, ListSection } from "@/components/ui/list-cell";
 import { account } from "@/lib/appwrite";
 import { useAuth } from "@/lib/auth/auth-context";
 import { useUploadThing } from "@/lib/uploadthing";
+import { getRandomName } from "@/lib/utils/random-name";
 
 interface EditableFieldProps {
 	value: string;
@@ -248,7 +249,7 @@ export function ProfileTab() {
 						<Avatar className="size-24 shadow-level-3 border-[6px] border-system-surface transition-transform duration-500 group-hover:scale-105">
 							{prefs.avatarUrl ? (
 								<AvatarImage
-									src={prefs.avatarUrl as string}
+									src={prefs.avatarUrl as string ?? `https://api.dicebear.com/9.x/fun-emoji/svg?seed=${getRandomName()}`}
 									alt={user?.name || "User"}
 								/>
 							) : null}

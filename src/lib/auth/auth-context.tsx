@@ -29,7 +29,11 @@ interface AuthContextValue {
 	error: string | null;
 	authReady: boolean;
 	signIn: (email: string, password: string) => Promise<void>;
-	signUp: (email: string, password: string, name: string) => Promise<void>;
+	signUp: (
+		email: string,
+		password: string,
+		name: string,
+	) => Promise<string | void>;
 	signInWithMagicLink: (email: string) => Promise<void>;
 	signOut: () => Promise<void>;
 	verifyEmail: () => Promise<void>;
@@ -195,6 +199,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 				});
 
 				await flushOfflineData(user.$id).catch(() => {});
+				return user.$id;
 			} catch (err) {
 				dispatch({ type: "SET_ERROR", error: getReadableErrorMessage(err) });
 				throw err;

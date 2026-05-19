@@ -8,6 +8,7 @@ import {
 	DatabaseIcon,
 	PaintBrushIcon,
 	RadialIcon,
+	Share07Icon,
 	UserIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -21,6 +22,7 @@ import {
 	DataTab,
 	NotificationsTab,
 	ProfileTab,
+	ReferralTab,
 	StudyTab,
 } from "@/components/settings/tabs";
 import { Button } from "@/components/ui/button";
@@ -44,6 +46,7 @@ const tabs = [
 	{ value: "appearance", label: "UI", icon: PaintBrushIcon },
 	{ value: "study", label: "Study", icon: BookOpen01Icon },
 	{ value: "notifications", label: "Alerts", icon: Bell },
+	{ value: "referrals", label: "Referrals", icon: Share07Icon },
 	{ value: "data", label: "Data", icon: DatabaseIcon },
 	{ value: "beta", label: "Beta", icon: Chat01Icon },
 ];
@@ -240,6 +243,8 @@ function SettingsContent() {
 									onClear={handleClearCache}
 								/>
 							)}
+
+							{activeTab === "referrals" && <ReferralTab />}
 
 							{activeTab === "beta" && (
 								<BetaTab

@@ -4,6 +4,7 @@ import {
 	Award01Icon,
 	CrownIcon,
 	FireIcon,
+	Share07Icon,
 	StarsIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -107,7 +108,30 @@ export default function PremiumPage() {
 							</div>
 						</div>
 					))}
-					<div className="pt-4 flex flex-col gap-2">
+
+					<div className="pt-4 border-t border-border/30">
+						<button
+							onClick={() => router.push("/settings")}
+							className="w-full flex items-center justify-between p-3 rounded-xl bg-accent/5 hover:bg-accent/10 border border-accent/20 transition-colors text-left"
+						>
+							<div className="flex items-center gap-3">
+								<HugeiconsIcon
+									icon={Share07Icon}
+									size={18}
+									className="text-accent"
+								/>
+								<div>
+									<p className="font-medium text-sm">Get Premium free</p>
+									<p className="text-xs text-muted-foreground">
+										Refer a friend and earn 7 days each
+									</p>
+								</div>
+							</div>
+							<span className="text-xs font-medium text-accent">Invite →</span>
+						</button>
+					</div>
+
+					<div className="pt-2 flex flex-col gap-2">
 						{isPremium ? (
 							<Button
 								variant="destructive"
