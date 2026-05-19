@@ -17,14 +17,14 @@ export default function DashboardError({
 			<div className="flex gap-3">
 				<button
 					type="button"
-                    onClick={() => reset()}
+					onClick={() => reset()}
 					className="rounded-lg bg-system-accent px-4 py-2 font-semibold text-sm text-white hover:bg-system-accent/90"
 				>
 					Try again
 				</button>
 				<button
 					type="button"
-                    onClick={() => (window.location.href = "/")}
+					onClick={() => (window.location.href = "/")}
 					className="rounded-lg border px-4 py-2 font-semibold text-sm"
 				>
 					Go Home

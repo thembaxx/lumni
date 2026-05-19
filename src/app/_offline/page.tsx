@@ -18,7 +18,7 @@ export default function OfflinePage() {
 						viewBox="0 0 24 24"
 						strokeWidth={1.5}
 						stroke="currentColor"
-						>
+					>
 						<title id="offline-icon-title">Offline status icon</title>
 						<path
 							strokeLinecap="round"
