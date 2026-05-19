@@ -42,13 +42,37 @@ export function saveStudyPlan(plan: StudyPlan): void {
 	saveToStorage(STUDY_PLAN_KEY, plan);
 }
 
+function generateRecurringSessions(
+	session: Omit<StudySession, "id">,
+): Omit<StudySession, "id">[] {
+	if (!session.repeat || session.repeat === "none") return [session];
+
+	const results: Omit<StudySession, "id">[] = [session];
+	const interval = session.repeat === "daily" ? 1 : 7;
+
+	for (let i = 1; i <= 4; i++) {
+		results.push({
+			...session,
+			scheduledAt: session.scheduledAt + i * interval * 24 * 60 * 60 * 1000,
+		});
+	}
+
+	return results;
+}
+
 export function addStudySession(session: Omit<StudySession, "id">): StudyPlan {
 	const plan = loadStudyPlan();
-	const newSession: StudySession = {
-		...session,
-		id: `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-	};
-	plan.sessions.push(newSession);
+	const sessions = generateRecurringSessions(session);
+
+	for (const s of sessions) {
+		const newSession: StudySession = {
+			...s,
+			repeat: "none",
+			id: `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+		};
+		plan.sessions.push(newSession);
+	}
+
 	plan.generatedAt = Date.now();
 	saveStudyPlan(plan);
 	return plan;

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { schedulePlanAwareReminder } from "@/lib/services/notification-service";
 import {
 	addExamDate,
 	addStudySession,
@@ -70,6 +71,7 @@ export function useStudyPlanner(): UseStudyPlannerReturn {
 	const addSession = useCallback(
 		(session: Omit<StudySession, "id">) => {
 			addStudySession(session);
+			schedulePlanAwareReminder();
 			refresh();
 		},
 		[refresh],
@@ -121,6 +123,7 @@ export function useStudyPlanner(): UseStudyPlannerReturn {
 	const autoSchedule = useCallback(
 		(subjects: string[], weakTopics: Record<string, string[]>) => {
 			autoScheduleSessions(subjects, weakTopics);
+			schedulePlanAwareReminder();
 			refresh();
 		},
 		[refresh],
@@ -174,6 +177,7 @@ export function useStudyPlanner(): UseStudyPlannerReturn {
 				}
 				existingPlan.generatedAt = Date.now();
 				saveStudyPlan(existingPlan);
+				schedulePlanAwareReminder();
 				refresh();
 			} catch (error) {
 				console.error("Failed to generate study plan:", error);

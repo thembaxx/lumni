@@ -10,6 +10,7 @@ import {
 	CheckmarkCircle01Icon,
 	Clock01Icon,
 	Delete02Icon,
+	Download03Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
@@ -24,6 +25,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { useStudyPlanner } from "@/hooks/use-study-planner";
+import { downloadICal, exportToICal } from "@/lib/utils/calendar-export";
 import type {
 	ExamDate as ExamDateType,
 	StudySession as StudySessionType,
@@ -45,11 +47,28 @@ export function StudyPlanner() {
 	const [showAddSession, setShowAddSession] = useState(false);
 	const [showAddExam, setShowAddExam] = useState(false);
 
+	const exportCalendar = () => {
+		const ics = exportToICal(
+			[...todaySessions, ...upcomingSessions],
+			upcomingExams,
+		);
+		downloadICal(ics);
+	};
+
 	return (
 		<div className="space-y-6">
 			<div className="flex items-center justify-between">
 				<h2 className="text-2xl font-extrabold">Study Planner</h2>
 				<div className="flex gap-2">
+					<Button
+						variant="outline"
+						size="sm"
+						onClick={exportCalendar}
+						aria-label="Export calendar"
+					>
+						<HugeiconsIcon icon={Download03Icon} className="h-4 w-4 mr-1" />
+						Export
+					</Button>
 					<Button
 						variant="outline"
 						size="sm"
@@ -392,6 +411,7 @@ function AddSessionModal({
 		"quiz",
 	);
 	const [duration, setDuration] = useState(30);
+	const [repeat, setRepeat] = useState<"none" | "daily" | "weekly">("none");
 
 	return (
 		<div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
@@ -447,6 +467,22 @@ function AddSessionModal({
 							max={120}
 						/>
 					</div>
+					<div>
+						<Label>Repeat</Label>
+						<Select
+							value={repeat}
+							onValueChange={(v) => setRepeat(v as "none" | "daily" | "weekly")}
+						>
+							<SelectTrigger>
+								<SelectValue />
+							</SelectTrigger>
+							<SelectContent>
+								<SelectItem value="none">No repeat</SelectItem>
+								<SelectItem value="daily">Daily</SelectItem>
+								<SelectItem value="weekly">Weekly</SelectItem>
+							</SelectContent>
+						</Select>
+					</div>
 					<div className="flex gap-2 pt-4">
 						<Button variant="outline" onClick={onClose} className="flex-1">
 							Cancel
@@ -460,6 +496,7 @@ function AddSessionModal({
 									scheduledAt: Date.now() + 60 * 60 * 1000,
 									duration,
 									completed: false,
+									repeat,
 								})
 							}
 							disabled={!subject}

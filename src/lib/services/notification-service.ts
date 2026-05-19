@@ -143,6 +143,58 @@ export function sendLocalNotification(
 export function scheduleStudyReminder(settings = getSettings()): void {
 	if (!settings.enabled || !settings.studyReminders) return;
 
+	if (typeof window !== "undefined" && "indexedDB" in window) {
+		const reminder = buildReminder(settings);
+		if (reminder) {
+			saveToStorage("lumni_next_reminder", reminder);
+			scheduleTimeout(reminder, settings);
+		}
+	}
+}
+
+export function schedulePlanAwareReminder(settings = getSettings()): void {
+	if (!settings.enabled || !settings.studyReminders) return;
+
+	if (typeof window !== "undefined" && "indexedDB" in window) {
+		const sessions = getTodayPlanSessions();
+		const reminder = buildReminder(settings, sessions);
+		if (reminder) {
+			const existing = getNextReminder();
+			if (existing && existing.scheduledAt > Date.now()) {
+				// Don't override an already-scheduled reminder
+				return;
+			}
+			saveToStorage("lumni_next_reminder", reminder);
+			scheduleTimeout(reminder, settings);
+		}
+	}
+}
+
+function getTodayPlanSessions(): { subject: string; topic?: string }[] {
+	try {
+		const raw = localStorage.getItem("lumni_study_plan");
+		if (!raw) return [];
+		const plan = JSON.parse(raw);
+		const today = new Date();
+		const startOfDay = new Date(
+			today.getFullYear(),
+			today.getMonth(),
+			today.getDate(),
+		).getTime();
+		const endOfDay = startOfDay + 24 * 60 * 60 * 1000;
+		return (plan.sessions || []).filter(
+			(s: { scheduledAt: number }) =>
+				s.scheduledAt >= startOfDay && s.scheduledAt < endOfDay,
+		);
+	} catch {
+		return [];
+	}
+}
+
+function buildReminder(
+	settings: NotificationSettings,
+	sessions?: { subject: string; topic?: string }[],
+): StudyReminder | null {
 	const now = new Date();
 	const target = new Date(now);
 	target.setHours(settings.reminderHour, 0, 0, 0);
@@ -153,27 +205,40 @@ export function scheduleStudyReminder(settings = getSettings()): void {
 
 	const msUntilReminder = target.getTime() - now.getTime();
 
-	if (typeof window !== "undefined" && "indexedDB" in window) {
-		const reminder: StudyReminder = {
+	if (sessions && sessions.length > 0) {
+		const names = sessions.map((s) => s.topic || s.subject).join(", ");
+		return {
 			id: crypto.randomUUID(),
 			title: "Study Time!",
-			body: "Time for your daily study session. Stay consistent!",
+			body: `You have sessions today: ${names}`,
 			url: "/dashboard",
 			scheduledAt: Date.now() + msUntilReminder,
 			createdAt: Date.now(),
 		};
-		saveToStorage("lumni_next_reminder", reminder);
 	}
 
+	return {
+		id: crypto.randomUUID(),
+		title: "Study Time!",
+		body: "Time for your daily study session. Stay consistent!",
+		url: "/dashboard",
+		scheduledAt: Date.now() + msUntilReminder,
+		createdAt: Date.now(),
+	};
+}
+
+function scheduleTimeout(
+	reminder: StudyReminder,
+	settings: NotificationSettings,
+): void {
+	const delay = reminder.scheduledAt - Date.now();
+	if (delay <= 0) return;
+
 	setTimeout(() => {
-		sendLocalNotification(
-			"Study Time!",
-			"Time for your daily study session. Stay consistent!",
-			"/dashboard",
-		);
+		sendLocalNotification(reminder.title, reminder.body, reminder.url);
 		localStorage.removeItem("lumni_next_reminder");
 		scheduleStudyReminder(settings);
-	}, msUntilReminder);
+	}, delay);
 }
 
 export function getNextReminder(): StudyReminder | null {

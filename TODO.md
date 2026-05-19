@@ -15,10 +15,10 @@
 ## P1 — Missing Core Features
 
 ### PWA & Offline
-- [ ] Remove unused `public/` SVGs: `file.svg`, `globe.svg`, `window.svg`, `next.svg`, `vercel.svg`
-- [ ] Add `worker-src 'self'` to CSP in `next.config.ts`
-- [ ] Add more icon sizes to manifest.json (144x144, 96x96)
-- [ ] Add `apple-touch-icon.png` to `public/` (referenced in layout.tsx:44 but missing)
+- [x] Remove unused `public/` SVGs: `file.svg`, `globe.svg`, `window.svg`, `next.svg`, `vercel.svg`
+- [x] Add `worker-src 'self'` to CSP in `next.config.ts`
+- [x] Add more icon sizes to manifest.json (144x144, 96x96)
+- [x] Add `apple-touch-icon.png` to `public/` (referenced in layout.tsx:44 but missing)
 
 ### Flashcards — Unified system
 - [ ] Merge custom localStorage flashcards (FlashcardCreator) with SM-2 Dexie-backed flashcards — currently two parallel, non-interoperable systems
@@ -27,9 +27,9 @@
 - [ ] Add KaTeX/image support in custom flashcard creation forms
 
 ### Study Planner — Notification & persistence
-- [ ] Wire `scheduleStudyReminder()` into study plan — currently fires generic reminders with no plan linkage
-- [ ] iCal/Google Calendar export for planned sessions and exam dates
-- [ ] Recurring sessions: `repeat` field exists on `StudySession` type but is dead code — no UI or generation logic
+- [x] Wire `scheduleStudyReminder()` into study plan — `schedulePlanAwareReminder()` now reads today's sessions and includes session details in notification body
+- [x] iCal/Google Calendar export — `exportToICal()` + `downloadICal()` utility with Export button in planner header
+- [x] Recurring sessions — Repeat dropdown (none/daily/weekly) in AddSessionModal; `generateRecurringSessions()` creates 4 future instances
 - [ ] Sync study plan to Appwrite (currently localStorage-only, lost on device change)
 - [ ] Improve algorithm from acknowledged placeholder (round-robin) to constraint-based bin-packing
 
