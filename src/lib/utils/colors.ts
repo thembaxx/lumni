@@ -1,9 +1,7 @@
-export type Difficulty = "easy" | "medium" | "hard";
-export type DifficultyInput = Difficulty | "Easy" | "Medium" | "Hard";
+import type { DifficultyInput } from "@/lib/shared/difficulty";
+import { normalizeDifficulty } from "@/lib/shared/difficulty";
 
-function normalizeDifficulty(d: DifficultyInput): Difficulty {
-	return d.toLowerCase() as Difficulty;
-}
+export type { Difficulty, DifficultyInput } from "@/lib/shared/difficulty";
 
 export function getDifficultyColor(difficulty: DifficultyInput): string {
 	switch (normalizeDifficulty(difficulty)) {

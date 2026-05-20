@@ -56,6 +56,17 @@ const CompetencyOverview = dynamic(
 	{ ssr: false, loading: () => <Skeleton className="h-32 rounded-[2rem]" /> },
 );
 
+const BloomTaxonomyWidget = dynamic(
+	() =>
+		import("@/components/dashboard/bloom-taxonomy-widget").then(
+			(m) => m.BloomTaxonomyWidget,
+		),
+	{
+		ssr: false,
+		loading: () => <Skeleton className="h-48 rounded-[2rem]" />,
+	},
+);
+
 const DailyProgressRing = dynamic(
 	() =>
 		import("@/components/dashboard/daily-progress-ring").then(
@@ -263,6 +274,11 @@ function DashboardContent({
 				)}
 				{showPractice && (
 					<SectionReveal delay={0.13}>
+						<BloomTaxonomyWidget />
+					</SectionReveal>
+				)}
+				{showPractice && (
+					<SectionReveal delay={0.14}>
 						<DailyChallenges />
 					</SectionReveal>
 				)}

@@ -37,12 +37,21 @@ export async function updateFlashcard(
 	return flashcardRepository.update(id, updates);
 }
 
+export function computeNextReviewDate(interval: number): number {
+	return Date.now() + interval * 24 * 60 * 60 * 1000;
+}
+
 export function calculateNextReview(
 	quality: number,
 	currentEaseFactor: number,
 	currentInterval: number,
 	currentRepetitions: number,
-): { easeFactor: number; interval: number; repetitions: number } {
+): {
+	easeFactor: number;
+	interval: number;
+	repetitions: number;
+	nextReview: number;
+} {
 	let easeFactor = currentEaseFactor;
 	let interval = currentInterval;
 	let repetitions = currentRepetitions;
@@ -70,6 +79,7 @@ export function calculateNextReview(
 		easeFactor: Math.round(easeFactor * 100) / 100,
 		interval,
 		repetitions,
+		nextReview: computeNextReviewDate(interval),
 	};
 }
 

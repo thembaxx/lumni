@@ -1,3 +1,4 @@
+import { flashcardRepository } from "@/lib/flashcard-repository";
 import { loadFromStorage, saveToStorage } from "@/lib/utils/storage";
 
 const NOTIF_KEY = "lumni_notification_subscription";
@@ -143,11 +144,13 @@ export function sendLocalNotification(
 	});
 }
 
-export function scheduleStudyReminder(settings = getSettings()): void {
+export async function scheduleStudyReminder(
+	settings = getSettings(),
+): Promise<void> {
 	if (!settings.enabled || !settings.studyReminders) return;
 
 	if (typeof window !== "undefined" && "indexedDB" in window) {
-		const reminder = buildReminder(settings);
+		const reminder = await buildReminder(settings);
 		if (reminder) {
 			saveToStorage("lumni_next_reminder", reminder);
 			scheduleTimeout(reminder, settings);
@@ -155,16 +158,17 @@ export function scheduleStudyReminder(settings = getSettings()): void {
 	}
 }
 
-export function schedulePlanAwareReminder(settings = getSettings()): void {
+export async function schedulePlanAwareReminder(
+	settings = getSettings(),
+): Promise<void> {
 	if (!settings.enabled || !settings.studyReminders) return;
 
 	if (typeof window !== "undefined" && "indexedDB" in window) {
 		const sessions = getTodayPlanSessions();
-		const reminder = buildReminder(settings, sessions);
+		const reminder = await buildReminder(settings, sessions);
 		if (reminder) {
 			const existing = getNextReminder();
 			if (existing && existing.scheduledAt > Date.now()) {
-				// Don't override an already-scheduled reminder
 				return;
 			}
 			saveToStorage("lumni_next_reminder", reminder);
@@ -194,10 +198,19 @@ function getTodayPlanSessions(): { subject: string; topic?: string }[] {
 	}
 }
 
-function buildReminder(
+async function getDueCardCount(): Promise<number> {
+	try {
+		const cards = await flashcardRepository.getDueCards();
+		return cards.length;
+	} catch {
+		return 0;
+	}
+}
+
+async function buildReminder(
 	settings: NotificationSettings,
 	sessions?: { subject: string; topic?: string }[],
-): StudyReminder | null {
+): Promise<StudyReminder | null> {
 	const now = new Date();
 	const target = new Date(now);
 	target.setHours(settings.reminderHour, 0, 0, 0);
@@ -207,14 +220,27 @@ function buildReminder(
 	}
 
 	const msUntilReminder = target.getTime() - now.getTime();
+	const dueCount = await getDueCardCount();
+	const dueSuffix = dueCount > 0 ? ` · ${dueCount} flashcards due` : "";
 
 	if (sessions && sessions.length > 0) {
 		const names = sessions.map((s) => s.topic || s.subject).join(", ");
 		return {
 			id: crypto.randomUUID(),
 			title: "Study Time!",
-			body: `You have sessions today: ${names}`,
+			body: `You have sessions today: ${names}${dueSuffix}`,
 			url: "/dashboard",
+			scheduledAt: Date.now() + msUntilReminder,
+			createdAt: Date.now(),
+		};
+	}
+
+	if (dueCount > 0) {
+		return {
+			id: crypto.randomUUID(),
+			title: `${dueCount} flashcards due!`,
+			body: "You have flashcards waiting for review. Keep your streak going!",
+			url: "/flashcards",
 			scheduledAt: Date.now() + msUntilReminder,
 			createdAt: Date.now(),
 		};

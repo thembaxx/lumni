@@ -48,6 +48,7 @@ export async function flushOfflineData(userId: string): Promise<void> {
 		}),
 		...allCompetencies.map(async (c) => {
 			await enqueue("appwrite-competency-sync", {
+				userId,
 				subjectId: c.subjectId,
 				topicId: c.topicId,
 				bloomLevel: c.bloomLevel,
@@ -59,6 +60,7 @@ export async function flushOfflineData(userId: string): Promise<void> {
 		}),
 		...allFlashcards.map(async (f) => {
 			await enqueue("appwrite-flashcard-sync", {
+				userId,
 				id: f.id,
 				front: f.front,
 				back: f.back,
@@ -74,6 +76,7 @@ export async function flushOfflineData(userId: string): Promise<void> {
 		}),
 		...allWrongAnswers.map(async (w) => {
 			await enqueue("appwrite-wrong-answer-sync", {
+				userId,
 				questionId: w.questionId,
 				questionText: w.questionText,
 				subject: w.subject,
@@ -88,6 +91,7 @@ export async function flushOfflineData(userId: string): Promise<void> {
 		}),
 		...allChatMessages.map(async (m) => {
 			await enqueue("appwrite-chat-sync", {
+				userId,
 				messageId: m.messageId,
 				role: m.role,
 				content: m.content,

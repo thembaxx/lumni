@@ -26,14 +26,14 @@ export class SpacedRepService {
 
 		if (existingCards.length > 0) {
 			const card = existingCards[0];
-			const { easeFactor, interval, repetitions } = calculateNextReview(
-				quality,
-				card.easeFactor,
-				card.interval,
-				card.repetitions,
-			);
+			const { easeFactor, interval, repetitions, nextReview } =
+				calculateNextReview(
+					quality,
+					card.easeFactor,
+					card.interval,
+					card.repetitions,
+				);
 
-			const nextReview = Date.now() + interval * 24 * 60 * 60 * 1000;
 			await flashcardRepository.update(card.id, {
 				easeFactor,
 				interval,

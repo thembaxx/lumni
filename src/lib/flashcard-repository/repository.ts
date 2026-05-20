@@ -78,14 +78,14 @@ export class DexieFlashcardRepository implements FlashcardRepository {
 		const card = await offlineDB.flashcards.get(id);
 		if (!card) return null;
 
-		const { easeFactor, interval, repetitions } = calculateNextReview(
-			quality,
-			card.easeFactor,
-			card.interval,
-			card.repetitions,
-		);
+		const { easeFactor, interval, repetitions, nextReview } =
+			calculateNextReview(
+				quality,
+				card.easeFactor,
+				card.interval,
+				card.repetitions,
+			);
 
-		const nextReview = Date.now() + interval * 24 * 60 * 60 * 1000;
 		const updatedCard: FlashcardSM2 = {
 			...card,
 			easeFactor,

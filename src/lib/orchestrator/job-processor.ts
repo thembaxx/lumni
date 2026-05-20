@@ -152,6 +152,7 @@ const handlers: Record<JobType, JobHandler> = {
 
 	"appwrite-competency-sync": async (payload) => {
 		const data = payload as {
+			userId?: string;
 			subjectId: string;
 			topicId: string;
 			bloomLevel: string;
@@ -183,6 +184,7 @@ const handlers: Record<JobType, JobHandler> = {
 			);
 		} else {
 			await createDocument(COLLECTIONS.COMPETENCIES, {
+				userId: data.userId,
 				subjectId: data.subjectId,
 				topicId: data.topicId,
 				bloomLevel: data.bloomLevel,
@@ -229,6 +231,7 @@ const handlers: Record<JobType, JobHandler> = {
 
 	"appwrite-flashcard-sync": async (payload) => {
 		const data = payload as {
+			userId?: string;
 			id: string;
 			front: string;
 			back: string;
@@ -242,6 +245,7 @@ const handlers: Record<JobType, JobHandler> = {
 			createdAt: number;
 		};
 		await createDocument(COLLECTIONS.FLASHCARDS, {
+			userId: data.userId,
 			flashcardId: data.id,
 			front: data.front,
 			back: data.back,
@@ -260,6 +264,7 @@ const handlers: Record<JobType, JobHandler> = {
 
 	"appwrite-wrong-answer-sync": async (payload) => {
 		const data = payload as {
+			userId?: string;
 			questionId: string;
 			questionText: string;
 			subject: string;
@@ -272,6 +277,7 @@ const handlers: Record<JobType, JobHandler> = {
 			errorType?: string;
 		};
 		await createDocument(COLLECTIONS.WRONG_ANSWERS, {
+			userId: data.userId,
 			questionId: data.questionId,
 			questionText: data.questionText,
 			subject: data.subject,
@@ -287,6 +293,7 @@ const handlers: Record<JobType, JobHandler> = {
 
 	"appwrite-chat-sync": async (payload) => {
 		const data = payload as {
+			userId?: string;
 			messageId: string;
 			role: string;
 			content: string;
@@ -294,6 +301,7 @@ const handlers: Record<JobType, JobHandler> = {
 			timestamp: number;
 		};
 		await createDocument(COLLECTIONS.CHAT_MESSAGES, {
+			userId: data.userId,
 			messageId: data.messageId,
 			role: data.role,
 			content: data.content,
