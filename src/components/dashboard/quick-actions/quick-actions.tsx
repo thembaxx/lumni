@@ -10,7 +10,7 @@ import {
 	Share07Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { motion, useReducedMotion } from "framer-motion";
+import { m, useReducedMotion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { StudyPlanSheet } from "@/components/dashboard/study-plan-sheet";
 import { LessonsButton } from "@/components/lesson";
@@ -51,7 +51,7 @@ function ActionButton({
 	const finalShouldReduceMotion = shouldReduceMotion || shouldReduceMotionOpt;
 
 	return (
-		<motion.div
+		<m.div
 			whileHover={finalShouldReduceMotion ? {} : { scale: 1.03 }}
 			whileTap={finalShouldReduceMotion ? {} : { scale: 0.96 }}
 			transition={{ duration: 0.2, ease: iOSEase }}
@@ -70,7 +70,7 @@ function ActionButton({
 				variant="secondary"
 				className="h-11 justify-start gap-2.5 rounded-[2.5rem] border border-border/80 bg-system-background-secondary px-5 text-foreground hover:border-accent hover:bg-accent"
 			>
-				<motion.span
+				<m.span
 					whileHover={
 						finalShouldReduceMotion ? {} : { rotate: [0, -10, 10, 0] }
 					}
@@ -85,10 +85,10 @@ function ActionButton({
 							aria-hidden="true"
 						/>
 					</PerpetualFloat>
-				</motion.span>
+				</m.span>
 				<span className="font-medium text-sm">{label}</span>
 			</Button>
-		</motion.div>
+		</m.div>
 	);
 }
 

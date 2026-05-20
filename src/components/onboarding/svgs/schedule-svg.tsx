@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 
 export function ScheduleSVG() {
 	return (
@@ -11,16 +11,16 @@ export function ScheduleSVG() {
 			preserveAspectRatio="xMidYMid meet"
 		>
 			<title>Schedule</title>
-			<motion.g
+			<m.g
 				initial={{ opacity: 0, scale: 0.9 }}
 				animate={{ opacity: 1, scale: 1 }}
 				transition={{ duration: 0.4 }}
 			>
 				<circle cx="120" cy="120" r="100" className="fill-[--chart-4]/5" />
 				<circle cx="120" cy="120" r="78" className="fill-[--chart-4]/4" />
-			</motion.g>
+			</m.g>
 
-			<motion.g
+			<m.g
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
 				transition={{ duration: 0.4, delay: 0.05 }}
@@ -67,9 +67,9 @@ export function ScheduleSVG() {
 						</circle>
 					);
 				})}
-			</motion.g>
+			</m.g>
 
-			<motion.g
+			<m.g
 				initial={{ opacity: 0, y: 8 }}
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.4, delay: 0.1 }}
@@ -129,7 +129,7 @@ export function ScheduleSVG() {
 					className="fill-[--chart-4]"
 					opacity={0.9}
 				/>
-			</motion.g>
+			</m.g>
 		</svg>
 	);
 }

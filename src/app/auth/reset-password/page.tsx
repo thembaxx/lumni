@@ -2,7 +2,7 @@
 
 import { ViewIcon, ViewOffIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
@@ -52,7 +52,7 @@ function ResetPasswordForm() {
 	}
 
 	return (
-		<motion.form
+		<m.form
 			initial={{ opacity: 0, y: 12 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.35, ease: iOSEase }}
@@ -121,7 +121,7 @@ function ResetPasswordForm() {
 			>
 				Reset password
 			</Button>
-		</motion.form>
+		</m.form>
 	);
 }
 

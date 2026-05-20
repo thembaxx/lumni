@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useMotionValue, useTransform } from "framer-motion";
+import { m, useMotionValue, useTransform } from "framer-motion";
 import { useEffect, useRef } from "react";
 
 interface MagneticWrapperProps {
@@ -51,12 +51,12 @@ export function Magnetic({
 	}, [x, y]);
 
 	return (
-		<motion.div
+		<m.div
 			ref={ref}
 			className={className}
 			style={{ perspective: 400, x, y, rotateX, rotateY }}
 		>
 			{children}
-		</motion.div>
+		</m.div>
 	);
 }

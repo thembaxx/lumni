@@ -30,22 +30,22 @@ export class LearningOrchestrator {
 
 		const jobIds: number[] = [];
 
+		const visualJobIds = await Promise.all(
+			sliced.map((q) =>
+				enqueue("visual-generation", {
+					questionId: q.id,
+					questionText: q.questionText,
+					subject,
+					topic,
+				}),
+			),
+		);
 		const syncJobId = await enqueue("appwrite-sync", {
 			questions: sliced,
 			subject,
 			topic,
 		});
-		jobIds.push(syncJobId);
-
-		for (const q of sliced) {
-			const visualJobId = await enqueue("visual-generation", {
-				questionId: q.id,
-				questionText: q.questionText,
-				subject,
-				topic,
-			});
-			jobIds.push(visualJobId);
-		}
+		jobIds.push(syncJobId, ...visualJobIds);
 
 		trackEngineEvent({
 			event: "generate",
@@ -73,39 +73,37 @@ export class LearningOrchestrator {
 		const result = await this.engine.grade(question, answer);
 		const jobIds: number[] = [];
 
-		const repJobId = await enqueue("spaced-rep-update", {
-			question,
-			result: { correct: result.correct, score: result.score },
-		});
-		jobIds.push(repJobId);
-
-		const analyticsJobId = await enqueue("analytics-sync", {
-			events: [
-				{
-					event: "grade",
-					timestamp: startTime,
+		const [repJobId, analyticsJobId, progressJobId, competencyJobId] =
+			await Promise.all([
+				enqueue("spaced-rep-update", {
+					question,
+					result: { correct: result.correct, score: result.score },
+				}),
+				enqueue("analytics-sync", {
+					events: [
+						{
+							event: "grade",
+							timestamp: startTime,
+							subject: question.subject,
+							questionType: question.type,
+							success: result.correct,
+							duration: Date.now() - startTime,
+						},
+					],
+				}),
+				enqueue("progress-update", {
 					subject: question.subject,
-					questionType: question.type,
-					success: result.correct,
-					duration: Date.now() - startTime,
-				},
-			],
-		});
-		jobIds.push(analyticsJobId);
-
-		const progressJobId = await enqueue("progress-update", {
-			subject: question.subject,
-			result: { correct: result.correct, score: result.score },
-		});
-		jobIds.push(progressJobId);
-
-		const competencyJobId = await enqueue("competency-update", {
-			subject: question.subject,
-			topic: question.topic,
-			bloomLevel: question.bloomTaxonomy,
-			score: result.maxScore > 0 ? (result.score / result.maxScore) * 100 : 0,
-		});
-		jobIds.push(competencyJobId);
+					result: { correct: result.correct, score: result.score },
+				}),
+				enqueue("competency-update", {
+					subject: question.subject,
+					topic: question.topic,
+					bloomLevel: question.bloomTaxonomy,
+					score:
+						result.maxScore > 0 ? (result.score / result.maxScore) * 100 : 0,
+				}),
+			]);
+		jobIds.push(repJobId, analyticsJobId, progressJobId, competencyJobId);
 
 		trackEngineEvent({
 			event: "grade",

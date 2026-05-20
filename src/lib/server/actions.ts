@@ -16,10 +16,11 @@ export async function fetchSubjects(userId: string) {
 	await verifyAuth(userId);
 	const targetUserId = userId;
 
-	const subjects = await listDocuments(COLLECTIONS.SUBJECTS);
-
-	const selectedUserSubjects = await listDocuments(COLLECTIONS.USER_SUBJECTS, [
-		Query.equal("userId", targetUserId),
+	const [subjects, selectedUserSubjects] = await Promise.all([
+		listDocuments(COLLECTIONS.SUBJECTS),
+		listDocuments(COLLECTIONS.USER_SUBJECTS, [
+			Query.equal("userId", targetUserId),
+		]),
 	]);
 
 	const selectedIds = selectedUserSubjects.map(
@@ -33,16 +34,17 @@ export async function fetchUserProgress(userId: string) {
 	await verifyAuth(userId);
 	const targetUserId = userId;
 
-	const progressArr = await listDocuments(COLLECTIONS.USER_PROGRESS, [
-		Query.equal("userId", targetUserId),
-		Query.limit(1),
+	const [progressArr, sessions] = await Promise.all([
+		listDocuments(COLLECTIONS.USER_PROGRESS, [
+			Query.equal("userId", targetUserId),
+			Query.limit(1),
+		]),
+		listDocuments(COLLECTIONS.STUDY_SESSIONS, [
+			Query.equal("userId", targetUserId),
+		]),
 	]);
 
 	const progress = progressArr[0] || null;
-
-	const sessions = await listDocuments(COLLECTIONS.STUDY_SESSIONS, [
-		Query.equal("userId", targetUserId),
-	]);
 
 	const totalAnswered = sessions.reduce(
 		(sum: number, s) =>

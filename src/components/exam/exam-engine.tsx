@@ -28,21 +28,19 @@ export function ExamEngine({
 	const [showSubmit, setShowSubmit] = useState(false);
 	const initialized = useRef(false);
 
-	const {
-		currentPartId,
-		answers,
-		flags,
-		timeRemaining,
-		completed,
-		startedAt,
-		isSubmitting,
-		initSession,
-		setAnswer,
-		toggleFlag,
-		setCurrentPart,
-		setSubmitting,
-		completeSession,
-	} = useExamSessionStore();
+	const currentPartId = useExamSessionStore((s) => s.currentPartId);
+	const answers = useExamSessionStore((s) => s.answers);
+	const flags = useExamSessionStore((s) => s.flags);
+	const timeRemaining = useExamSessionStore((s) => s.timeRemaining);
+	const completed = useExamSessionStore((s) => s.completed);
+	const startedAt = useExamSessionStore((s) => s.startedAt);
+	const isSubmitting = useExamSessionStore((s) => s.isSubmitting);
+	const initSession = useExamSessionStore((s) => s.initSession);
+	const setAnswer = useExamSessionStore((s) => s.setAnswer);
+	const toggleFlag = useExamSessionStore((s) => s.toggleFlag);
+	const setCurrentPart = useExamSessionStore((s) => s.setCurrentPart);
+	const setSubmitting = useExamSessionStore((s) => s.setSubmitting);
+	const completeSession = useExamSessionStore((s) => s.completeSession);
 
 	useEffect(() => {
 		if (!initialized.current) {

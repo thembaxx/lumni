@@ -7,7 +7,7 @@ import {
 	SparklesIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { useMemo, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { StepByStep } from "@/components/quiz/step-by-step";
@@ -39,7 +39,7 @@ function ProblemCard({
 				: "text-warning bg-warning/10";
 
 	return (
-		<motion.div
+		<m.div
 			initial={{ opacity: 0, y: 12 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ delay: index * 0.06, duration: 0.3 }}
@@ -81,7 +81,7 @@ function ProblemCard({
 
 				<AnimatePresence initial={false}>
 					{showSolution && (
-						<motion.div
+						<m.div
 							initial={{ opacity: 0, height: 0 }}
 							animate={{ opacity: 1, height: "auto" }}
 							exit={{ opacity: 0, height: 0 }}
@@ -106,11 +106,11 @@ function ProblemCard({
 									</div>
 								)}
 							</div>
-						</motion.div>
+						</m.div>
 					)}
 				</AnimatePresence>
 			</div>
-		</motion.div>
+		</m.div>
 	);
 }
 
@@ -221,7 +221,7 @@ function ProblemsClient() {
 
 					<AnimatePresence mode="wait" initial={false}>
 						{!fetched && !isLoading && (
-							<motion.div
+							<m.div
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
 								className="py-20 text-center"
@@ -233,11 +233,11 @@ function ProblemsClient() {
 								<p className="text-muted-foreground/40 text-sm">
 									Select a subject and generate curated problems
 								</p>
-							</motion.div>
+							</m.div>
 						)}
 
 						{isLoading && (
-							<motion.div
+							<m.div
 								key="loading"
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
@@ -254,22 +254,22 @@ function ProblemsClient() {
 										<div className="h-4 w-3/4 rounded bg-muted/30" />
 									</div>
 								))}
-							</motion.div>
+							</m.div>
 						)}
 
 						{error && (
-							<motion.div
+							<m.div
 								key="error"
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
 								className="rounded-xl border border-destructive/20 bg-destructive/10 p-4 text-destructive text-sm"
 							>
 								Failed to generate problems. Please try again.
-							</motion.div>
+							</m.div>
 						)}
 
 						{data && !isLoading && !error && (
-							<motion.div
+							<m.div
 								key="results"
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
@@ -299,7 +299,7 @@ function ProblemsClient() {
 										<ProblemCard key={problem.id} problem={problem} index={i} />
 									))
 								)}
-							</motion.div>
+							</m.div>
 						)}
 					</AnimatePresence>
 				</Anim>

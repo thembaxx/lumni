@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import { AchievementShowcase } from "@/components/dashboard/achievement-showcase";
@@ -102,7 +102,7 @@ function SectionReveal({
 	const shouldReduceMotion = useReducedMotion();
 
 	return (
-		<motion.div
+		<m.div
 			ref={ref}
 			initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
 			animate={{
@@ -116,7 +116,7 @@ function SectionReveal({
 			}}
 		>
 			{children}
-		</motion.div>
+		</m.div>
 	);
 }
 
@@ -126,7 +126,7 @@ function HeroBanner() {
 	const finalShouldReduceMotion = shouldReduceMotion || shouldReduceMotionOpt;
 
 	return (
-		<motion.div
+		<m.div
 			className="relative -mx-4 mt-4 mb-6 h-40 overflow-hidden rounded-[2.5rem] bg-linear-to-br from-[--system-accent]/10 via-[--system-accent]/5 to-transparent shadow-[0_24px_48px_-16px_rgba(0,0,0,0.06)]"
 			initial={{ opacity: 0, y: -12 }}
 			animate={{ opacity: 1, y: 0 }}
@@ -146,15 +146,15 @@ function HeroBanner() {
 			)}
 
 			<div className="relative flex h-full max-w-3xl flex-col justify-center p-8">
-				<motion.h1
+				<m.h1
 					className="ios-title-1 max-w-lg font-semibold text-foreground leading-tight tracking-tight"
 					initial={{ opacity: 0, x: -20 }}
 					animate={{ opacity: 1, x: 0 }}
 					transition={{ duration: 0.5, delay: 0.1, ease: iOSEase }}
 				>
 					Your Learning Dashboard
-				</motion.h1>
-				<motion.p
+				</m.h1>
+				<m.p
 					className="mt-2 max-w-md text-muted-foreground text-sm"
 					initial={{ opacity: 0, x: -20 }}
 					animate={{ opacity: 1, x: 0 }}
@@ -162,9 +162,9 @@ function HeroBanner() {
 				>
 					Continue where you left off. Track progress, practice, and master your
 					subjects.
-				</motion.p>
+				</m.p>
 			</div>
-		</motion.div>
+		</m.div>
 	);
 }
 
@@ -408,7 +408,7 @@ export function DashboardClient({
 			<ScrollAmbient />
 			<div className="flex h-full flex-col">
 				{!isLoaded ? (
-					<motion.div
+					<m.div
 						key="loading"
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
@@ -425,7 +425,7 @@ export function DashboardClient({
 							<Skeleton className="h-32 rounded-[2rem]" />
 							<Skeleton className="h-20 rounded-[2rem]" />
 						</div>
-					</motion.div>
+					</m.div>
 				) : (
 					<>
 						<div className="px-4 pt-2 pb-4">
@@ -436,7 +436,7 @@ export function DashboardClient({
 						<div className="flex-1">
 							<AnimatePresence initial={false} mode="wait">
 								{quizActive ? (
-									<motion.div
+									<m.div
 										key="quiz"
 										initial={{ opacity: 0, y: 8 }}
 										animate={{ opacity: 1, y: 0 }}
@@ -449,9 +449,9 @@ export function DashboardClient({
 											onQuit={handleQuitQuiz}
 											onFinish={handleFinishQuiz}
 										/>
-									</motion.div>
+									</m.div>
 								) : (
-									<motion.div
+									<m.div
 										key={activeTab}
 										initial={{ opacity: 0, y: 4 }}
 										animate={{ opacity: 1, y: 0 }}
@@ -466,7 +466,7 @@ export function DashboardClient({
 											onStartQuiz={handleStartQuiz}
 											activeTab={activeTab}
 										/>
-									</motion.div>
+									</m.div>
 								)}
 							</AnimatePresence>
 						</div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { animate, motion, useMotionValue, useTransform } from "framer-motion";
+import { animate, m, useMotionValue, useTransform } from "framer-motion";
 import * as React from "react";
 import { useEffect } from "react";
 import { cn } from "@/lib/shared";
@@ -56,11 +56,11 @@ export const PerpetualFloat = React.memo(function PerpetualFloat({
 	}, [y, resolvedRange, resolvedSpeed, isAnimated]);
 
 	return (
-		<motion.div
+		<m.div
 			className={cn("will-change-transform", className)}
 			style={{ y, opacity }}
 		>
 			{children}
-		</motion.div>
+		</m.div>
 	);
 });

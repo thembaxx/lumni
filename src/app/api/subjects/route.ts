@@ -36,24 +36,24 @@ async function subjectsHandler(request: NextRequest) {
 		);
 	}
 
-	const selectedUserSubjects = await listDocuments(COLLECTIONS.USER_SUBJECTS, [
-		Query.equal("userId", targetUserId),
+	const [selectedUserSubjects, progressArr, sessions] = await Promise.all([
+		listDocuments(COLLECTIONS.USER_SUBJECTS, [
+			Query.equal("userId", targetUserId),
+		]),
+		listDocuments(COLLECTIONS.USER_PROGRESS, [
+			Query.equal("userId", targetUserId),
+			Query.limit(1),
+		]),
+		listDocuments(COLLECTIONS.STUDY_SESSIONS, [
+			Query.equal("userId", targetUserId),
+		]),
 	]);
 
 	const selectedIds = selectedUserSubjects.map(
 		(us) => (us as Record<string, unknown>).subjectId as string,
 	);
 
-	const progressArr = await listDocuments(COLLECTIONS.USER_PROGRESS, [
-		Query.equal("userId", targetUserId),
-		Query.limit(1),
-	]);
-
 	const progress = progressArr[0] || null;
-
-	const sessions = await listDocuments(COLLECTIONS.STUDY_SESSIONS, [
-		Query.equal("userId", targetUserId),
-	]);
 
 	const totalAnswered = sessions.reduce(
 		(sum: number, s) =>

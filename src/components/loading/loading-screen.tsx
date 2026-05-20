@@ -2,7 +2,7 @@
 
 import { RadialIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useEffect, useEffectEvent, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -97,7 +97,7 @@ export function LoadingScreen({
 	return (
 		<AnimatePresence>
 			{isVisible && (
-				<motion.div
+				<m.div
 					key="loading-screen"
 					initial={{ opacity: 0, scale: 0.96 }}
 					animate={{ opacity: 1, scale: 1 }}
@@ -105,13 +105,13 @@ export function LoadingScreen({
 					transition={{ duration: 0.15, ease: "easeIn" }}
 					className="flex flex-col items-center"
 				>
-					<motion.div
+					<m.div
 						initial={{ opacity: 0, scale: 0.8, filter: "blur(4px)" }}
 						animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
 						transition={{ duration: 0.5, ease: iOSEase, delay: 0 }}
 						className="relative"
 					>
-						<motion.div
+						<m.div
 							className="absolute inset-0 rounded-full bg-[--system-accent]/20 blur-xl"
 							animate={{ scale: [1, 1.15, 1] }}
 							transition={{
@@ -121,7 +121,7 @@ export function LoadingScreen({
 							}}
 						/>
 						<div className="relative flex size-20 items-center justify-center rounded-2xl border border-[--system-accent]/20 bg-[--system-accent]/10">
-							<motion.div
+							<m.div
 								animate={{ rotate: 360 }}
 								transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
 								className="size-14"
@@ -130,29 +130,29 @@ export function LoadingScreen({
 									icon={RadialIcon}
 									className="size-14 text-system-accent"
 								/>
-							</motion.div>
+							</m.div>
 						</div>
-					</motion.div>
+					</m.div>
 
-					<motion.h2
+					<m.h2
 						initial={{ opacity: 0, y: 12, filter: "blur(4px)" }}
 						animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
 						transition={{ duration: 0.4, ease: iOSEase, delay: 0.08 }}
 						className="ios-title-2 mt-[--space-6] text-center text-[--system-text-primary]"
 					>
 						Lumni
-					</motion.h2>
+					</m.h2>
 
-					<motion.p
+					<m.p
 						initial={{ opacity: 0, y: 8, filter: "blur(4px)" }}
 						animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
 						transition={{ duration: 0.35, ease: iOSEase, delay: 0.12 }}
 						className="ios-footnote mt-[--space-2] text-center text-[--system-text-secondary]"
 					>
 						Preparing your study experience…
-					</motion.p>
+					</m.p>
 
-					<motion.div
+					<m.div
 						initial={{ opacity: 0, y: 12, filter: "blur(4px)" }}
 						animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
 						transition={{ duration: 0.4, ease: iOSEase, delay: 0.2 }}
@@ -162,10 +162,10 @@ export function LoadingScreen({
 							value={progress}
 							className="w-56 transition-[width] duration-[var(--duration-slow)] ease-[var(--ease-ios)]"
 						/>
-					</motion.div>
+					</m.div>
 
 					{showSkipButton && progress < 100 && (
-						<motion.div
+						<m.div
 							initial={{ opacity: 0, y: 12, filter: "blur(4px)" }}
 							animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
 							transition={{ duration: 0.35, ease: iOSEase }}
@@ -177,9 +177,9 @@ export function LoadingScreen({
 							>
 								Skip & Enter
 							</Button>
-						</motion.div>
+						</m.div>
 					)}
-				</motion.div>
+				</m.div>
 			)}
 		</AnimatePresence>
 	);

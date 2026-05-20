@@ -7,7 +7,7 @@ import {
 	Flag01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -49,7 +49,7 @@ export function ExamResults({
 			<div className="mx-auto flex max-w-3xl flex-col gap-[--space-6] p-[--space-6]">
 				<div className="flex items-center justify-between">
 					<div className="flex items-center gap-3">
-						<motion.div
+						<m.div
 							initial={{ scale: 0.95, opacity: 0 }}
 							animate={{ scale: 1, opacity: 1 }}
 							transition={{ delay: 0.3 }}
@@ -58,7 +58,7 @@ export function ExamResults({
 								icon={CheckmarkCircle01Icon}
 								className="size-10 text-success"
 							/>
-						</motion.div>
+						</m.div>
 						<div>
 							<h1 className="ios-title-1 text-[--system-text-primary]">
 								Exam Submitted

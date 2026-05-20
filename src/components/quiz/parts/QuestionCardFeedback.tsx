@@ -8,7 +8,7 @@ import {
 	SparklesIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m, motion } from "framer-motion";
+import { m } from "framer-motion";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Button } from "@/components/ui/button";
 import type { useSolver } from "@/hooks/use-solver";
@@ -90,7 +90,7 @@ export function QuestionCardFeedback({
 			)}
 		>
 			<div className="flex items-center gap-3">
-				<motion.div
+				<m.div
 					initial={{ scale: 0 }}
 					animate={{ scale: 1 }}
 					transition={{ duration: 0.3 }}
@@ -103,7 +103,7 @@ export function QuestionCardFeedback({
 					) : (
 						<HugeiconsIcon icon={Cancel01Icon} className="size-10 shrink-0" />
 					)}
-				</motion.div>
+				</m.div>
 				<p className="font-medium">
 					{isCorrectAnswer ? "Correct!" : "Incorrect"}
 				</p>

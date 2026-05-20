@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { AnimatedProgressBar } from "@/components/shared/animated-progress-bar";
 import { FadeIn } from "@/components/shared/fade-in";
 import { getStreakMessage } from "@/lib/utils/gamification";
@@ -54,33 +54,33 @@ export function StreakCelebration({
 			}`}
 		>
 			{isMilestone && (
-				<motion.div
+				<m.div
 					className="pointer-events-none absolute inset-0"
 					initial={{ opacity: 0 }}
 					animate={{ opacity: [0, 0.3, 0] }}
 					transition={{ duration: 2, repeat: Infinity }}
 				>
 					<div className="absolute inset-0 bg-warning/20" />
-				</motion.div>
+				</m.div>
 			)}
 
 			<div className="flex items-center gap-4">
-				<motion.div
+				<m.div
 					className="relative flex size-12 items-center justify-center rounded-xl bg-warning shadow-lg"
 					animate={currentStreak >= 3 ? { scale: [1, 1.05, 1] } : {}}
 					transition={{ duration: 1.5, repeat: Infinity }}
 				>
 					<span className="text-2xl">{getStreakEmoji(currentStreak)}</span>
 					{currentStreak >= 3 && (
-						<motion.span
+						<m.span
 							className="absolute -top-1 -right-1 text-lg"
 							animate={{ scale: [1, 1.2, 1], rotate: [0, 10, -10, 0] }}
 							transition={{ duration: 2, repeat: Infinity }}
 						>
 							✨
-						</motion.span>
+						</m.span>
 					)}
-				</motion.div>
+				</m.div>
 
 				<div className="flex-1">
 					<div className="mb-1 flex items-center justify-between">
@@ -112,13 +112,13 @@ export function StreakCelebration({
 					)}
 
 					{currentStreak >= (nextMilestone?.streak || 0) && (
-						<motion.p
+						<m.p
 							initial={{ opacity: 0, y: 5 }}
 							animate={{ opacity: 1, y: 0 }}
 							className="mt-1 text-success-foreground text-xs"
 						>
 							Milestone reached!
-						</motion.p>
+						</m.p>
 					)}
 				</div>
 			</div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { m, motion } from "framer-motion";
+import { m } from "framer-motion";
 import { useCallback, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
@@ -317,7 +317,7 @@ function FlashcardCreatorInner({ className }: FlashcardCreatorProps) {
 	);
 
 	return (
-		<motion.div
+		<m.div
 			className={cn("mx-auto w-full max-w-2xl", className)}
 			initial={{ opacity: 0, y: 8 }}
 			animate={{ opacity: 1, y: 0 }}
@@ -369,7 +369,7 @@ function FlashcardCreatorInner({ className }: FlashcardCreatorProps) {
 					</CardHeader>
 					<CardContent className="space-y-3">
 						{filteredFlashcards.map((card) => (
-							<motion.div
+							<m.div
 								key={card.id}
 								initial={{ opacity: 0, x: -10 }}
 								animate={{ opacity: 1, x: 0 }}
@@ -481,7 +481,7 @@ function FlashcardCreatorInner({ className }: FlashcardCreatorProps) {
 										</m.div>
 									</Button>
 								</div>
-							</motion.div>
+							</m.div>
 						))}
 					</CardContent>
 				</Card>
@@ -549,6 +549,6 @@ function FlashcardCreatorInner({ className }: FlashcardCreatorProps) {
 					/>
 				</DialogContent>
 			</Dialog>
-		</motion.div>
+		</m.div>
 	);
 }

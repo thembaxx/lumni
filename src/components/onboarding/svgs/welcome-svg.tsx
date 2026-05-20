@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 
 export function WelcomeSVG() {
 	return (
@@ -11,7 +11,7 @@ export function WelcomeSVG() {
 			preserveAspectRatio="xMidYMid meet"
 		>
 			<title>Welcome</title>
-			<motion.g
+			<m.g
 				initial={{ opacity: 0, scale: 0.9 }}
 				animate={{ opacity: 1, scale: 1 }}
 				transition={{ duration: 0.4 }}
@@ -23,9 +23,9 @@ export function WelcomeSVG() {
 					className="fill-[--system-accent]/5"
 				/>
 				<circle cx="120" cy="120" r="70" className="fill-[--system-accent]/8" />
-			</motion.g>
+			</m.g>
 
-			<motion.g
+			<m.g
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
 				transition={{ duration: 0.4, delay: 0.05 }}
@@ -55,9 +55,9 @@ export function WelcomeSVG() {
 						/>
 					</circle>
 				))}
-			</motion.g>
+			</m.g>
 
-			<motion.g
+			<m.g
 				initial={{ opacity: 0, y: 8 }}
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.4, delay: 0.1 }}
@@ -89,7 +89,7 @@ export function WelcomeSVG() {
 					rx="1"
 					className="fill-white"
 				/>
-			</motion.g>
+			</m.g>
 		</svg>
 	);
 }

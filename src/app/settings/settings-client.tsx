@@ -12,7 +12,7 @@ import {
 	UserIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import Link from "next/link";
 import { Suspense, useEffect, useState } from "react";
 import {
@@ -202,7 +202,7 @@ function SettingsContent() {
 				{/* Content Area - Rhythmic Spacing */}
 				<main className="flex-1 p-6 pb-24">
 					<AnimatePresence mode="wait" initial={false}>
-						<motion.div
+						<m.div
 							key={activeTab}
 							initial={{ opacity: 0, y: 10 }}
 							animate={{ opacity: 1, y: 0 }}
@@ -251,7 +251,7 @@ function SettingsContent() {
 									onBetaFeaturesChange={setBetaFeatures}
 								/>
 							)}
-						</motion.div>
+						</m.div>
 					</AnimatePresence>
 				</main>
 			</div>

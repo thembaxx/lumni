@@ -5,7 +5,7 @@ import {
 	Fire02FreeIcons,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 import { AnimatedProgressBar } from "@/components/shared/animated-progress-bar";
 import { RadialChart } from "@/components/ui/charts/radial-chart";
 import { useGamification } from "@/hooks/use-gamification";
@@ -20,7 +20,7 @@ export function DailyProgressRing() {
 	const isComplete = daily?.completed ?? false;
 
 	return (
-		<motion.div
+		<m.div
 			initial={{ opacity: 0, scale: 0.92 }}
 			animate={{ opacity: 1, scale: 1 }}
 			transition={{
@@ -36,7 +36,7 @@ export function DailyProgressRing() {
 				color={isComplete ? "var(--success)" : "var(--system-accent)"}
 			>
 				<div className="flex flex-col items-center">
-					<motion.span
+					<m.span
 						initial={shouldReduceMotion ? false : { scale: 0.8, opacity: 0 }}
 						animate={{ scale: 1, opacity: 1 }}
 						transition={{
@@ -47,7 +47,7 @@ export function DailyProgressRing() {
 						className="font-extrabold text-3xl text-foreground tabular-nums"
 					>
 						{levelInfo.level}
-					</motion.span>
+					</m.span>
 					<span className="font-extrabold text-[11px] text-muted-foreground uppercase tracking-wider">
 						{levelInfo.title}
 					</span>
@@ -56,7 +56,7 @@ export function DailyProgressRing() {
 
 			<div className="mt-4 flex items-center gap-4">
 				<div className="flex items-center gap-1.5">
-					<motion.span
+					<m.span
 						animate={
 							shouldReduceMotion || currentStreak === 0
 								? {}
@@ -72,7 +72,7 @@ export function DailyProgressRing() {
 							icon={Fire02FreeIcons}
 							className={`size-5 transition-colors duration-300 ${currentStreak > 0 ? "text-warning" : "text-muted-foreground"}`}
 						/>
-					</motion.span>
+					</m.span>
 					<span className="font-extrabold text-foreground text-lg tabular-nums">
 						{currentStreak}
 					</span>
@@ -89,7 +89,7 @@ export function DailyProgressRing() {
 				</div>
 			</div>
 
-			<motion.div
+			<m.div
 				className="mt-3 flex items-center gap-2"
 				animate={
 					isComplete && !shouldReduceMotion
@@ -112,11 +112,11 @@ export function DailyProgressRing() {
 				<span className="font-medium text-muted-foreground text-xs tabular-nums">
 					{daily?.progress ?? 0} / {daily?.target ?? 10}
 				</span>
-			</motion.div>
+			</m.div>
 			<div className="relative mt-0.5 flex h-5 items-center justify-center">
 				<AnimatePresence mode="wait">
 					{isComplete ? (
-						<motion.div
+						<m.div
 							key="complete"
 							initial={{ scale: 0, opacity: 0 }}
 							animate={{ scale: 1, opacity: 1 }}
@@ -131,9 +131,9 @@ export function DailyProgressRing() {
 							<span className="font-extrabold text-[11px] text-success">
 								Daily goal complete
 							</span>
-						</motion.div>
+						</m.div>
 					) : (
-						<motion.p
+						<m.p
 							key="incomplete"
 							initial={{ opacity: 0 }}
 							animate={{ opacity: 1 }}
@@ -141,10 +141,10 @@ export function DailyProgressRing() {
 							className="font-medium text-[11px] text-muted-foreground"
 						>
 							questions today
-						</motion.p>
+						</m.p>
 					)}
 				</AnimatePresence>
 			</div>
-		</motion.div>
+		</m.div>
 	);
 }

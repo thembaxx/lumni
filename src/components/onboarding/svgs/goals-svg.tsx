@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 
 export function GoalsSVG() {
 	return (
@@ -11,16 +11,16 @@ export function GoalsSVG() {
 			preserveAspectRatio="xMidYMid meet"
 		>
 			<title>Goals</title>
-			<motion.g
+			<m.g
 				initial={{ opacity: 0, scale: 0.9 }}
 				animate={{ opacity: 1, scale: 1 }}
 				transition={{ duration: 0.4 }}
 			>
 				<circle cx="120" cy="120" r="100" className="fill-[--chart-3]/5" />
 				<circle cx="120" cy="120" r="70" className="fill-[--chart-3]/4" />
-			</motion.g>
+			</m.g>
 
-			<motion.g
+			<m.g
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
 				transition={{ duration: 0.4, delay: 0.05 }}
@@ -100,9 +100,9 @@ export function GoalsSVG() {
 					opacity={0.2}
 					strokeDasharray="3 3"
 				/>
-			</motion.g>
+			</m.g>
 
-			<motion.g
+			<m.g
 				initial={{ opacity: 0, y: 8 }}
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.4, delay: 0.1 }}
@@ -117,7 +117,7 @@ export function GoalsSVG() {
 				/>
 				<polygon points="160,55 168,65 155,68" className="fill-[--chart-3]" />
 				<circle cx="85" cy="130" r="4" className="fill-[--chart-3]" />
-			</motion.g>
+			</m.g>
 		</svg>
 	);
 }

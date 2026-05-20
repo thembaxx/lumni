@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { m, useReducedMotion } from "framer-motion";
 import type { ReactNode } from "react";
 import { normalTransition } from "@/lib/utils/animation";
 
@@ -18,7 +18,7 @@ export function AnimatedCard({
 	const shouldReduceMotion = useReducedMotion();
 
 	return (
-		<motion.div
+		<m.div
 			initial={{ opacity: 0, y: 10 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{
@@ -28,6 +28,6 @@ export function AnimatedCard({
 			className={className}
 		>
 			{children}
-		</motion.div>
+		</m.div>
 	);
 }

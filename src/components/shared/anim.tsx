@@ -1,3 +1,5 @@
+"use client";
+
 import { m, type Transition, type Variants } from "framer-motion";
 
 interface AnimProps {

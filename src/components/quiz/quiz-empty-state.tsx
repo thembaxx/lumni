@@ -2,7 +2,7 @@
 
 import { RadialIcon, Target01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { AnimatedDots } from "@/components/shared/animated-dots";
 import {
 	Empty,
@@ -39,7 +39,7 @@ function QuizEmptyStateNotStarted({ onStart }: QuizEmptyStateNotStartedProps) {
 				<div className="col-span-12 md:col-span-6">
 					<EmptyHeader>
 						<EmptyMedia variant="icon">
-							<motion.div
+							<m.div
 								animate={{ rotate: 360 }}
 								transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
 							>
@@ -47,7 +47,7 @@ function QuizEmptyStateNotStarted({ onStart }: QuizEmptyStateNotStartedProps) {
 									icon={RadialIcon}
 									className="mx-auto size-12 text-muted-foreground md:mx-0"
 								/>
-							</motion.div>
+							</m.div>
 						</EmptyMedia>
 						<EmptyTitle>Quiz not started</EmptyTitle>
 						<EmptyDescription>
@@ -79,7 +79,7 @@ function QuizEmptyStateNoQuestions({
 				<div className="col-span-12 md:col-span-6">
 					<EmptyHeader>
 						<EmptyMedia variant="icon">
-							<motion.div
+							<m.div
 								animate={{ rotate: 360 }}
 								transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
 							>
@@ -87,7 +87,7 @@ function QuizEmptyStateNoQuestions({
 									icon={RadialIcon}
 									className="mx-auto size-12 text-muted-foreground md:mx-0"
 								/>
-							</motion.div>
+							</m.div>
 						</EmptyMedia>
 						<EmptyTitle>No questions found</EmptyTitle>
 						<EmptyDescription>
@@ -130,7 +130,7 @@ export function QuizStartState({ onSelect: _onSelect }: QuizStartStateProps) {
 					<div className="relative">
 						<Skeleton shape="circle" className="absolute size-20" />
 						<div className="relative flex size-20 items-center justify-center rounded-full border border-muted-foreground/20 border-dashed bg-muted/20">
-							<motion.div
+							<m.div
 								animate={{ rotate: 360 }}
 								transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
 							>
@@ -138,7 +138,7 @@ export function QuizStartState({ onSelect: _onSelect }: QuizStartStateProps) {
 									icon={RadialIcon}
 									className="size-12 text-muted-foreground"
 								/>
-							</motion.div>
+							</m.div>
 						</div>
 					</div>
 				</div>
@@ -178,7 +178,7 @@ export function QuizSubjectPrompt({
 					<div className="relative">
 						<Skeleton shape="circle" className="absolute size-20" />
 						<div className="relative flex size-20 items-center justify-center rounded-full border border-muted-foreground/20 border-dashed bg-muted/20">
-							<motion.div
+							<m.div
 								animate={{ rotate: 360 }}
 								transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
 							>
@@ -186,7 +186,7 @@ export function QuizSubjectPrompt({
 									icon={RadialIcon}
 									className="size-12 text-muted-foreground"
 								/>
-							</motion.div>
+							</m.div>
 						</div>
 					</div>
 				</div>

@@ -2,7 +2,7 @@
 
 import { Search01Icon, UserIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { useState } from "react";
 import {
 	Empty,
@@ -118,7 +118,7 @@ export function ResultsSearch() {
 						{results.length} results found
 					</p>
 					{results.map((result, idx) => (
-						<motion.div
+						<m.div
 							key={result.examNumber}
 							initial={{ opacity: 0, y: 10 }}
 							animate={{ opacity: 1, y: 0 }}
@@ -164,7 +164,7 @@ export function ResultsSearch() {
 									</span>
 								</div>
 							</Card>
-						</motion.div>
+						</m.div>
 					))}
 				</div>
 			) : searchQuery ? (

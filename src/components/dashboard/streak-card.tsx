@@ -2,7 +2,7 @@
 
 import { FireIcon, PlayFreeIcons } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -17,7 +17,7 @@ export function StreakCard() {
 	const practicedToday = gamification.lastPracticeDate === today;
 
 	return (
-		<motion.div
+		<m.div
 			initial={{ opacity: 0, y: 16 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
@@ -66,6 +66,6 @@ export function StreakCard() {
 					</div>
 				</CardContent>
 			</Card>
-		</motion.div>
+		</m.div>
 	);
 }

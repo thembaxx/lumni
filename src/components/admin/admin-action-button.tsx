@@ -6,7 +6,7 @@ import {
 	RadialIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { cn } from "@/lib/shared";
 
 interface AdminActionButtonProps {
@@ -27,7 +27,7 @@ export function AdminActionButton({
 	icon,
 }: AdminActionButtonProps) {
 	return (
-		<motion.button
+		<m.button
 			onClick={onClick}
 			disabled={loading || disabled}
 			whileHover={!disabled && !loading ? { scale: 1.02 } : {}}
@@ -39,7 +39,7 @@ export function AdminActionButton({
 					: "border bg-transparent",
 			)}
 		>
-			<motion.span
+			<m.span
 				animate={loading ? { opacity: 0.7 } : { opacity: 1 }}
 				className="flex items-center justify-center gap-2"
 			>
@@ -48,8 +48,8 @@ export function AdminActionButton({
 				)}
 				{icon && icon}
 				{children}
-			</motion.span>
-		</motion.button>
+			</m.span>
+		</m.button>
 	);
 }
 

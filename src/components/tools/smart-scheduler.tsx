@@ -6,7 +6,7 @@ import {
 	SparklesIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -377,7 +377,7 @@ export function SmartScheduler() {
 						{scheduleByDay
 							.filter((d) => d.sessions.length > 0)
 							.map((day, idx) => (
-								<motion.div
+								<m.div
 									key={day.day}
 									initial={{ opacity: 0, x: -10 }}
 									animate={{ opacity: 1, x: 0 }}
@@ -429,7 +429,7 @@ export function SmartScheduler() {
 											</div>
 										))}
 									</div>
-								</motion.div>
+								</m.div>
 							))}
 					</div>
 				</div>

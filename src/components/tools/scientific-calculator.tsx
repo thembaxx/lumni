@@ -2,7 +2,7 @@
 
 import { Clock01Icon, Copy01Icon, UndoIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
@@ -592,7 +592,7 @@ export function ScientificCalculator() {
 
 					<AnimatePresence mode="wait">
 						{state.showHistory && (
-							<motion.div
+							<m.div
 								initial={{ opacity: 0, height: 0 }}
 								animate={{ opacity: 1, height: "auto" }}
 								exit={{ opacity: 0, height: 0 }}
@@ -625,7 +625,7 @@ export function ScientificCalculator() {
 										</button>
 									))}
 								</div>
-							</motion.div>
+							</m.div>
 						)}
 					</AnimatePresence>
 

@@ -2,7 +2,7 @@
 
 import { ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useState } from "react";
 import { Confetti } from "@/components/celebration/confetti";
@@ -144,7 +144,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 			<div className="relative z-10 mx-auto flex min-h-full w-full max-w-4xl flex-col p-4 md:p-8">
 				<div className="mb-8 flex items-center gap-2">
 					{STEPS_COPY.map((_, i) => (
-						<motion.div
+						<m.div
 							// biome-ignore lint/suspicious/noArrayIndexKey: static steps array
 							key={i}
 							className={`h-1 flex-1 rounded-full ${
@@ -166,7 +166,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 				</div>
 
 				<AnimatePresence mode="wait">
-					<motion.div
+					<m.div
 						key={`step-${step}`}
 						initial={shouldReduceMotion ? {} : { opacity: 0, y: 12 }}
 						animate={{ opacity: 1, y: 0 }}
@@ -177,7 +177,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 						{step < 3 ? (
 							<div className="grid grid-cols-12 items-center gap-6">
 								<div className="col-span-12 md:col-span-6">
-									<motion.div
+									<m.div
 										initial={shouldReduceMotion ? {} : { opacity: 0, y: 12 }}
 										animate={{ opacity: 1, y: 0 }}
 										transition={{ duration: 0.4, ease: iOSEase }}
@@ -208,7 +208,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 													</p>
 												) : null}
 
-												<motion.div
+												<m.div
 													initial={
 														shouldReduceMotion ? {} : { opacity: 0, y: 8 }
 													}
@@ -254,12 +254,12 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 															</CardContent>
 														</Card>
 													))}
-												</motion.div>
+												</m.div>
 											</>
 										)}
 
 										{step === 2 && (
-											<motion.div
+											<m.div
 												initial={shouldReduceMotion ? {} : { opacity: 0, y: 8 }}
 												animate={{ opacity: 1, y: 0 }}
 												transition={{
@@ -337,13 +337,13 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 														Engineering typically need 35+.
 													</p>
 												</div>
-											</motion.div>
+											</m.div>
 										)}
-									</motion.div>
+									</m.div>
 								</div>
 
 								<div className="col-span-12 flex items-center justify-center py-8 md:col-span-6">
-									<motion.div
+									<m.div
 										initial={
 											shouldReduceMotion ? {} : { opacity: 0, scale: 0.96 }
 										}
@@ -352,20 +352,20 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 										className="h-56 w-56 md:h-64 md:w-64"
 									>
 										<current.SVG />
-									</motion.div>
+									</m.div>
 								</div>
 							</div>
 						) : (
 							<div className="flex flex-col items-center justify-center py-12 text-center">
-								<motion.div
+								<m.div
 									initial={shouldReduceMotion ? {} : { opacity: 0, scale: 0.9 }}
 									animate={{ opacity: 1, scale: 1 }}
 									transition={{ duration: 0.5, ease: iOSEase }}
 									className="mb-8 size-48"
 								>
 									<WelcomeSVG />
-								</motion.div>
-								<motion.div
+								</m.div>
+								<m.div
 									initial={shouldReduceMotion ? {} : { opacity: 0, y: 12 }}
 									animate={{ opacity: 1, y: 0 }}
 									transition={{ duration: 0.4, delay: 0.15, ease: iOSEase }}
@@ -379,7 +379,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 									</p>
 
 									{selectedSubjects.length > 0 && (
-										<motion.div
+										<m.div
 											initial="hidden"
 											animate="visible"
 											variants={{
@@ -392,7 +392,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 											{selectedSubjects.map((id) => {
 												const sub = nscSubjects.find((s) => s.id === id);
 												return sub ? (
-													<motion.span
+													<m.span
 														key={id}
 														variants={{
 															hidden: { opacity: 0, scale: 0.9 },
@@ -401,19 +401,19 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 														className="rounded-full border border-border/40 px-3 py-1 font-medium text-xs"
 													>
 														{sub.name}
-													</motion.span>
+													</m.span>
 												) : null;
 											})}
-										</motion.div>
+										</m.div>
 									)}
 
 									<p className="text-pretty text-muted-foreground text-xs">
 										You can change everything later in Settings.
 									</p>
-								</motion.div>
+								</m.div>
 							</div>
 						)}
-					</motion.div>
+					</m.div>
 				</AnimatePresence>
 
 				<div className="mt-8 flex items-center justify-between border-border/40 border-t pt-4">

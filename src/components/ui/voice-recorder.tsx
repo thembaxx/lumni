@@ -10,7 +10,7 @@ import {
 	UndoIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { LiveWaveform } from "@/components/ui/live-waveform";
@@ -281,7 +281,7 @@ export function VoiceRecorder({
 				<span className="flex items-center gap-2">
 					<AnimatePresence mode="wait" initial={false}>
 						{sendSuccess ? (
-							<motion.span
+							<m.span
 								key="success"
 								className="flex items-center gap-2"
 								initial={{ opacity: 0, scale: 0.25, filter: "blur(4px)" }}
@@ -294,9 +294,9 @@ export function VoiceRecorder({
 									className="h-4 w-4"
 								/>
 								<span>Sent!</span>
-							</motion.span>
+							</m.span>
 						) : isPaperPlaneing ? (
-							<motion.span
+							<m.span
 								key="sending"
 								className="flex items-center gap-2"
 								initial={{ opacity: 0, scale: 0.25, filter: "blur(4px)" }}
@@ -306,9 +306,9 @@ export function VoiceRecorder({
 							>
 								<span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
 								<span>Sending...</span>
-							</motion.span>
+							</m.span>
 						) : (
-							<motion.span
+							<m.span
 								key="idle"
 								className="flex items-center gap-2"
 								initial={{ opacity: 0, scale: 0.25, filter: "blur(4px)" }}
@@ -318,7 +318,7 @@ export function VoiceRecorder({
 							>
 								<HugeiconsIcon icon={MailSend01Icon} className="h-4 w-4" />
 								<span>Send Voice Message</span>
-							</motion.span>
+							</m.span>
 						)}
 					</AnimatePresence>
 				</span>

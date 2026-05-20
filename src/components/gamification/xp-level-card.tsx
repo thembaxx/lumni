@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { AnimatedProgressBar } from "@/components/shared/animated-progress-bar";
 import { FadeIn } from "@/components/shared/fade-in";
 import type { LevelInfo } from "@/types/gamification";
@@ -17,7 +17,7 @@ export function XpLevelCard({ levelInfo, totalXp }: XpLevelCardProps) {
 			className="relative overflow-hidden rounded-lg border border-border/50 bg-system-accent/10 p-5"
 		>
 			<div className="flex items-center gap-4">
-				<motion.div
+				<m.div
 					className="relative flex size-14 items-center justify-center rounded-full bg-system-accent shadow-lg"
 					initial={{ scale: 0.8 }}
 					animate={{ scale: 1 }}
@@ -26,7 +26,7 @@ export function XpLevelCard({ levelInfo, totalXp }: XpLevelCardProps) {
 					<span className="font-extrabold text-2xl text-white">
 						{levelInfo.level}
 					</span>
-				</motion.div>
+				</m.div>
 
 				<div className="flex-1">
 					<div className="mb-1 flex items-center justify-between">

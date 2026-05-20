@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 
 export function SubjectsSVG() {
 	return (
@@ -11,7 +11,7 @@ export function SubjectsSVG() {
 			preserveAspectRatio="xMidYMid meet"
 		>
 			<title>Subjects</title>
-			<motion.g
+			<m.g
 				initial={{ opacity: 0, scale: 0.9 }}
 				animate={{ opacity: 1, scale: 1 }}
 				transition={{ duration: 0.4 }}
@@ -24,9 +24,9 @@ export function SubjectsSVG() {
 					ry="20"
 					className="fill-[--chart-2]/8"
 				/>
-			</motion.g>
+			</m.g>
 
-			<motion.g
+			<m.g
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
 				transition={{ duration: 0.4, delay: 0.05 }}
@@ -77,9 +77,9 @@ export function SubjectsSVG() {
 						</g>
 					);
 				})}
-			</motion.g>
+			</m.g>
 
-			<motion.g
+			<m.g
 				initial={{ opacity: 0, y: 8 }}
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.4, delay: 0.1 }}
@@ -103,7 +103,7 @@ export function SubjectsSVG() {
 						transform={`rotate(${i * 30 + 10} ${x + 6} ${y + 4})`}
 					/>
 				))}
-			</motion.g>
+			</m.g>
 		</svg>
 	);
 }

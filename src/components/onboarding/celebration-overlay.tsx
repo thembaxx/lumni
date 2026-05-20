@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { m, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Confetti } from "@/components/celebration/confetti";
 import { Button } from "@/components/ui/button";
@@ -23,7 +23,7 @@ export function CelebrationOverlay({ onComplete }: CelebrationOverlayProps) {
 	return (
 		<div className="fixed inset-0 z-50 flex items-center justify-center bg-system-grouped">
 			<Confetti trigger={true} />
-			<motion.div
+			<m.div
 				initial={shouldReduceMotion ? {} : { opacity: 0, scale: 0.9 }}
 				animate={{ opacity: 1, scale: 1 }}
 				transition={{ duration: 0.6, ease: iOSEase }}
@@ -32,15 +32,15 @@ export function CelebrationOverlay({ onComplete }: CelebrationOverlayProps) {
 				<div className="mb-6 size-36">
 					<WelcomeSVG />
 				</div>
-				<motion.h1
+				<m.h1
 					initial={shouldReduceMotion ? {} : { opacity: 0, y: 12 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.4, delay: 0.3, ease: iOSEase }}
 					className="ios-title-1 mb-3 text-balance font-semibold tracking-tight"
 				>
 					You&apos;re ready to learn
-				</motion.h1>
-				<motion.p
+				</m.h1>
+				<m.p
 					initial={shouldReduceMotion ? {} : { opacity: 0, y: 12 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.4, delay: 0.45, ease: iOSEase }}
@@ -48,8 +48,8 @@ export function CelebrationOverlay({ onComplete }: CelebrationOverlayProps) {
 				>
 					Your subjects and goals are saved. Start practicing, track your
 					progress, and ace your exams.
-				</motion.p>
-				<motion.div
+				</m.p>
+				<m.div
 					initial={shouldReduceMotion ? {} : { opacity: 0, y: 12 }}
 					animate={{
 						opacity: phase === "ready" ? 1 : 0,
@@ -62,8 +62,8 @@ export function CelebrationOverlay({ onComplete }: CelebrationOverlayProps) {
 							Go to dashboard
 						</Button>
 					)}
-				</motion.div>
-			</motion.div>
+				</m.div>
+			</m.div>
 		</div>
 	);
 }

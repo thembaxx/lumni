@@ -1,6 +1,6 @@
 import { Cancel01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/shared";
@@ -25,7 +25,7 @@ export function ImageProcessingIndicator({
 	const isError = state.status === "error";
 
 	return (
-		<motion.div
+		<m.div
 			initial={{ opacity: 0, y: -8, scaleY: 0.8 }}
 			animate={{ opacity: 1, y: 0, scaleY: 1 }}
 			exit={{ opacity: 0, y: -8, scaleY: 0.8 }}
@@ -74,6 +74,6 @@ export function ImageProcessingIndicator({
 					className="mt-1.5 h-1 [&>div]:bg-[--system-accent]"
 				/>
 			)}
-		</motion.div>
+		</m.div>
 	);
 }

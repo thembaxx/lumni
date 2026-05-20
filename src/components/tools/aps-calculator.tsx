@@ -7,7 +7,7 @@ import {
 	Delete01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -178,7 +178,7 @@ export function APSCalculator() {
 			<div className="px-5 pb-5">
 				<div className="space-y-3 rounded-2xl bg-system-background-secondary p-5">
 					{subjects.map((subject, index) => (
-						<motion.div
+						<m.div
 							key={subject.id}
 							initial={{ opacity: 0, y: 10 }}
 							animate={{ opacity: 1, y: 0 }}
@@ -222,7 +222,7 @@ export function APSCalculator() {
 							>
 								<HugeiconsIcon icon={Delete01Icon} data-icon />
 							</Button>
-						</motion.div>
+						</m.div>
 					))}
 
 					<div className="flex gap-2 pt-1">
@@ -306,7 +306,7 @@ export function APSCalculator() {
 							.map((subject, idx) => {
 								const aps = getAPSForSubject(subject.percentage);
 								return (
-									<motion.div
+									<m.div
 										key={subject.id}
 										initial={{ opacity: 0, y: 10 }}
 										animate={{ opacity: 1, y: 0 }}
@@ -344,7 +344,7 @@ export function APSCalculator() {
 												{getGrade(subject.percentage)}
 											</span>
 										</div>
-									</motion.div>
+									</m.div>
 								);
 							})}
 					</div>
@@ -359,7 +359,7 @@ export function APSCalculator() {
 					{universityRequirements.map((uni, idx) => {
 						const meetsMin = totalAPS >= uni.minAPS;
 						return (
-							<motion.div
+							<m.div
 								key={uni.university}
 								initial={{ opacity: 0, y: 10 }}
 								animate={{ opacity: 1, y: 0 }}
@@ -394,7 +394,7 @@ export function APSCalculator() {
 										</span>
 									))}
 								</div>
-							</motion.div>
+							</m.div>
 						);
 					})}
 				</div>

@@ -8,7 +8,7 @@ import {
 	UserIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useCallback, useMemo } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -94,7 +94,7 @@ export function TopNav({ title, className }: TopNavProps) {
 				</h1>
 
 				{status === "authenticated" && !user?.labels?.includes("anonymous") && (
-					<motion.div
+					<m.div
 						initial={{ opacity: 0, x: -8 }}
 						animate={{ opacity: 1, x: 0 }}
 						className="mr-auto ml-4 flex items-center gap-2"
@@ -109,14 +109,14 @@ export function TopNav({ title, className }: TopNavProps) {
 							</span>
 						</div>
 						<div className="h-1.5 w-16 overflow-hidden rounded-full bg-muted">
-							<motion.div
+							<m.div
 								initial={{ width: 0 }}
 								animate={{ width: `${levelInfo.progress}%` }}
 								transition={{ duration: 1, ease: "easeOut" }}
 								className="h-full rounded-full bg-[--system-accent]"
 							/>
 						</div>
-					</motion.div>
+					</m.div>
 				)}
 
 				<div className="flex items-center gap-2">

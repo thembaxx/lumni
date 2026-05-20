@@ -2,7 +2,7 @@
 
 import { Cancel01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -77,7 +77,7 @@ function ToolsDialogInner({ open: _open, onOpenChange }: ToolsDialogProps) {
 	const cameraFocus = useToolsStore((s) => s.cameraFocus);
 
 	return (
-		<motion.div
+		<m.div
 			initial={{ opacity: 0, y: 10 }}
 			animate={{ opacity: 1, y: 0 }}
 			exit={{ opacity: 0, y: 10 }}
@@ -85,7 +85,7 @@ function ToolsDialogInner({ open: _open, onOpenChange }: ToolsDialogProps) {
 			className="fixed inset-0 z-80 bg-system-surface"
 		>
 			<div className="flex h-full flex-col">
-				<motion.header
+				<m.header
 					initial={{ opacity: 0, y: -10 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ delay: 0.1, duration: 0.3 }}
@@ -101,13 +101,13 @@ function ToolsDialogInner({ open: _open, onOpenChange }: ToolsDialogProps) {
 					>
 						<HugeiconsIcon icon={Cancel01Icon} data-icon />
 					</Button>
-				</motion.header>
+				</m.header>
 
 				<Tabs
 					defaultValue={initialTab}
 					className="flex flex-1 flex-col overflow-hidden"
 				>
-					<motion.div
+					<m.div
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						transition={{ delay: 0.2, duration: 0.3 }}
@@ -124,7 +124,7 @@ function ToolsDialogInner({ open: _open, onOpenChange }: ToolsDialogProps) {
 								</TabsTrigger>
 							))}
 						</TabsList>
-					</motion.div>
+					</m.div>
 
 					<div className="grow overflow-y-auto">
 						<TabsContent value="solver" className="m-0 h-full">
@@ -160,7 +160,7 @@ function ToolsDialogInner({ open: _open, onOpenChange }: ToolsDialogProps) {
 					</div>
 				</Tabs>
 			</div>
-		</motion.div>
+		</m.div>
 	);
 }
 

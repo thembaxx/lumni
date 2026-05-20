@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { cn } from "@/lib/shared";
 
 interface ShimmerSkeletonProps {
@@ -17,7 +17,7 @@ export function ShimmerSkeleton({
 	borderRadius = "0.5rem",
 }: ShimmerSkeletonProps) {
 	return (
-		<motion.div
+		<m.div
 			className={cn(
 				"relative overflow-hidden bg-[--system-surface-secondary]",
 				className,
@@ -27,7 +27,7 @@ export function ShimmerSkeleton({
 			animate={{ opacity: 1 }}
 			transition={{ duration: 0.3 }}
 		>
-			<motion.div
+			<m.div
 				className="absolute inset-0 bg-gradient-to-r from-transparent via-[--system-accent]/10 to-transparent"
 				initial={{ x: "-100%" }}
 				animate={{ x: "100%" }}
@@ -38,6 +38,6 @@ export function ShimmerSkeleton({
 					ease: "easeInOut",
 				}}
 			/>
-		</motion.div>
+		</m.div>
 	);
 }

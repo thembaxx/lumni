@@ -7,7 +7,7 @@ import {
 	ViewOffIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useCallback, useState } from "react";
@@ -62,7 +62,7 @@ function SignUpForm() {
 	);
 
 	return (
-		<motion.form
+		<m.form
 			initial={{ opacity: 0, y: 12 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.35, ease: iOSEase }}
@@ -186,7 +186,7 @@ function SignUpForm() {
 					Sign in
 				</Link>
 			</p>
-		</motion.form>
+		</m.form>
 	);
 }
 

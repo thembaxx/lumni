@@ -2,7 +2,7 @@
 
 import { RadialIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
 import {
 	Empty,
@@ -42,7 +42,7 @@ export function SessionIdle({
 							<EmptyHeader>
 								<EmptyMedia variant="icon">
 									{icon ?? (
-										<motion.div
+										<m.div
 											animate={{ rotate: 360 }}
 											transition={{
 												duration: 1,
@@ -54,7 +54,7 @@ export function SessionIdle({
 												icon={RadialIcon}
 												className="mx-auto size-16 text-muted-foreground"
 											/>
-										</motion.div>
+										</m.div>
 									)}
 								</EmptyMedia>
 								<EmptyTitle>{title}</EmptyTitle>

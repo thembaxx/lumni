@@ -3,12 +3,7 @@
 import { Cancel01Icon, Search01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useMutation } from "@tanstack/react-query";
-import {
-	AnimatePresence,
-	motion,
-	useSpring,
-	useTransform,
-} from "framer-motion";
+import { AnimatePresence, m, useSpring, useTransform } from "framer-motion";
 import { memo, useEffect, useMemo, useState } from "react";
 import { Input } from "@/components/ui/input";
 import {
@@ -57,7 +52,7 @@ const ElementCard = memo(
 		const symbolScale = useTransform(glowIntensity, [0, 1], [1, 1.05]);
 
 		return (
-			<motion.button
+			<m.button
 				onClick={onClick}
 				onHoverStart={() => setIsHovered(true)}
 				onHoverEnd={() => setIsHovered(false)}
@@ -79,12 +74,12 @@ const ElementCard = memo(
 				<span className="absolute top-1.5 left-2 font-extrabold text-[10px] tabular-nums opacity-50">
 					{el.atomicNumber}
 				</span>
-				<motion.span
+				<m.span
 					style={{ scale: symbolScale }}
 					className="font-extrabold text-white text-xl drop-shadow-lg"
 				>
 					{el.symbol}
-				</motion.span>
+				</m.span>
 				<span className="mt-0.5 text-center text-[9px] leading-tight opacity-60">
 					{el.name}
 				</span>
@@ -95,7 +90,7 @@ const ElementCard = memo(
 							"radial-gradient(circle at 50% 0%, oklch(100% 0 0 / 0.12) 0%, transparent 50%)",
 					}}
 				/>
-			</motion.button>
+			</m.button>
 		);
 	},
 );
@@ -195,7 +190,7 @@ export function PeriodicTable() {
 					</p>
 				</div>
 
-				<motion.div
+				<m.div
 					initial={{ opacity: 0, y: 10 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ delay: 0.15, duration: 0.4, ease: elementEaseOutQuart }}
@@ -216,7 +211,7 @@ export function PeriodicTable() {
             `}
 					/>
 					{searchQuery && (
-						<motion.button
+						<m.button
 							initial={{ opacity: 0, scale: 0.5 }}
 							animate={{ opacity: 1, scale: 1 }}
 							exit={{ opacity: 0, scale: 0.5 }}
@@ -229,11 +224,11 @@ export function PeriodicTable() {
 								data-icon
 								className="text-muted-foreground/70"
 							/>
-						</motion.button>
+						</m.button>
 					)}
-				</motion.div>
+				</m.div>
 
-				<motion.div
+				<m.div
 					initial={{ opacity: 0, y: 10 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{
@@ -243,7 +238,7 @@ export function PeriodicTable() {
 					}}
 					className="scrollbar-hide mb-4 flex gap-2 overflow-x-auto pb-3"
 				>
-					<motion.button
+					<m.button
 						onClick={() =>
 							setActiveCategory(activeCategory === null ? null : null)
 						}
@@ -256,9 +251,9 @@ export function PeriodicTable() {
 						whileTap={{ scale: 0.95 }}
 					>
 						All
-					</motion.button>
+					</m.button>
 					{Object.entries(elementCategoryConfig).map(([key, config], index) => (
-						<motion.button
+						<m.button
 							key={key}
 							onClick={() =>
 								setActiveCategory(activeCategory === key ? null : key)
@@ -278,7 +273,7 @@ export function PeriodicTable() {
             `}
 							whileTap={{ scale: 0.95 }}
 						>
-							<motion.span
+							<m.span
 								className={`size-2.5 rounded-full ${config.bg.replace(
 									"/90",
 									"",
@@ -289,11 +284,11 @@ export function PeriodicTable() {
 								transition={{ duration: 0.2 }}
 							/>
 							{config.label}
-						</motion.button>
+						</m.button>
 					))}
-				</motion.div>
+				</m.div>
 
-				<motion.div
+				<m.div
 					className="grid grid-cols-4 gap-2 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 xl:grid-cols-8 2xl:grid-cols-9"
 					initial="hidden"
 					animate="visible"
@@ -313,12 +308,12 @@ export function PeriodicTable() {
 							onClick={() => handleElementSelect(el)}
 						/>
 					))}
-				</motion.div>
+				</m.div>
 			</div>
 
 			<AnimatePresence initial={false}>
 				{selectedElement && (
-					<motion.div
+					<m.div
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0 }}
@@ -330,7 +325,7 @@ export function PeriodicTable() {
 						}}
 						onClick={() => setSelectedElement(null)}
 					>
-						<motion.div
+						<m.div
 							initial={{ opacity: 0, scale: 0.85, y: 30 }}
 							animate={{ opacity: 1, scale: 1, y: 0 }}
 							exit={{ opacity: 0, scale: 0.92, y: 15 }}
@@ -352,7 +347,7 @@ export function PeriodicTable() {
 								}}
 							/>
 
-							<motion.button
+							<m.button
 								onClick={() => setSelectedElement(null)}
 								className="absolute top-4 right-4 z-10 rounded-xl bg-white/5 p-2 hover:bg-white/10"
 								whileHover={{
@@ -363,10 +358,10 @@ export function PeriodicTable() {
 								transition={{ duration: 0.15 }}
 							>
 								<HugeiconsIcon icon={Cancel01Icon} data-icon />
-							</motion.button>
+							</m.button>
 
 							<div className="p-6 pt-8">
-								<motion.div
+								<m.div
 									initial={{ opacity: 0, x: -20 }}
 									animate={{ opacity: 1, x: 0 }}
 									transition={{
@@ -376,7 +371,7 @@ export function PeriodicTable() {
 									}}
 									className="mb-6 flex items-start gap-5"
 								>
-									<motion.div
+									<m.div
 										initial={{ scale: 0.8, rotate: -10 }}
 										animate={{ scale: 1, rotate: 0 }}
 										transition={{
@@ -393,7 +388,7 @@ export function PeriodicTable() {
 										<span className="font-extrabold text-3xl text-white">
 											{selectedElement.symbol}
 										</span>
-									</motion.div>
+									</m.div>
 									<div className="flex-1 pt-1">
 										<h2 className="mb-1 font-semibold text-2xl">
 											{selectedElement.name}
@@ -405,10 +400,10 @@ export function PeriodicTable() {
 											{selectedElement.atomicMass} u
 										</p>
 									</div>
-								</motion.div>
+								</m.div>
 
 								<div className="mb-4 grid grid-cols-2 gap-3">
-									<motion.div
+									<m.div
 										initial={{ opacity: 0, y: 15 }}
 										animate={{ opacity: 1, y: 0 }}
 										transition={{
@@ -425,8 +420,8 @@ export function PeriodicTable() {
 											{elementCategoryConfig[selectedElement.category]?.label ||
 												selectedElement.category}
 										</p>
-									</motion.div>
-									<motion.div
+									</m.div>
+									<m.div
 										initial={{ opacity: 0, y: 15 }}
 										animate={{ opacity: 1, y: 0 }}
 										transition={{
@@ -442,10 +437,10 @@ export function PeriodicTable() {
 										<p className="font-semibold text-sm">
 											{selectedElement.electronConfig}
 										</p>
-									</motion.div>
+									</m.div>
 								</div>
 
-								<motion.div
+								<m.div
 									initial={{ opacity: 0, y: 15 }}
 									animate={{ opacity: 1, y: 0 }}
 									transition={{
@@ -464,10 +459,10 @@ export function PeriodicTable() {
 									<p className="text-muted-foreground/70 text-xs leading-relaxed">
 										{selectedElement.namedAfter}
 									</p>
-								</motion.div>
+								</m.div>
 
 								{interestingFact && (
-									<motion.div
+									<m.div
 										initial={{ opacity: 0, y: 15 }}
 										animate={{ opacity: 1, y: 0 }}
 										transition={{
@@ -483,11 +478,11 @@ export function PeriodicTable() {
 										<p className="text-muted-foreground/80 text-sm leading-relaxed">
 											{interestingFact}
 										</p>
-									</motion.div>
+									</m.div>
 								)}
 							</div>
-						</motion.div>
-					</motion.div>
+						</m.div>
+					</m.div>
 				)}
 			</AnimatePresence>
 		</div>

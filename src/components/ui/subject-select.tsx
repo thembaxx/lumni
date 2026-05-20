@@ -5,7 +5,7 @@ import {
 	Search01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { useFilteredSubjects } from "@/hooks/use-subjects";
@@ -64,7 +64,7 @@ export function SubjectSelect({
 						<span className="text-muted-foreground">{placeholder}</span>
 					)}
 				</span>
-				<motion.svg
+				<m.svg
 					animate={{ rotate: open ? 180 : 0 }}
 					transition={{ type: "spring", stiffness: 300, damping: 30 }}
 					width="16"
@@ -80,12 +80,12 @@ export function SubjectSelect({
 						strokeLinecap="round"
 						strokeLinejoin="round"
 					/>
-				</motion.svg>
+				</m.svg>
 			</button>
 
 			<AnimatePresence>
 				{open && (
-					<motion.div
+					<m.div
 						initial={{ opacity: 0, scale: 0.95, y: -4 }}
 						animate={{ opacity: 1, scale: 1, y: 0 }}
 						exit={{ opacity: 0, scale: 0.95, y: -4 }}
@@ -152,7 +152,7 @@ export function SubjectSelect({
 								))
 							)}
 						</div>
-					</motion.div>
+					</m.div>
 				)}
 			</AnimatePresence>
 		</div>

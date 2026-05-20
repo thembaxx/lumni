@@ -2,7 +2,7 @@
 
 import { CheckmarkCircle01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { AnimatedProgressBar } from "@/components/shared/animated-progress-bar";
 import { FadeIn } from "@/components/shared/fade-in";
 import type { DailyChallenge } from "@/types/gamification";
@@ -23,13 +23,13 @@ export function DailyChallenges({ challenges }: DailyChallengesProps) {
 						Daily Challenges
 					</span>
 					{allCompleted && (
-						<motion.span
+						<m.span
 							initial={{ scale: 0, opacity: 0 }}
 							animate={{ scale: 1, opacity: 1 }}
 							className="rounded-full bg-success/20 px-2 py-0.5 text-success-foreground text-xs"
 						>
 							Complete!
-						</motion.span>
+						</m.span>
 					)}
 				</div>
 				<span className="text-muted-foreground text-xs">
@@ -89,7 +89,7 @@ export function DailyChallenges({ challenges }: DailyChallengesProps) {
 								)}
 
 								{challenge.completed && (
-									<motion.div
+									<m.div
 										initial={{ scale: 0, opacity: 0 }}
 										animate={{ scale: 1, opacity: 1 }}
 										transition={{ type: "spring", stiffness: 400, damping: 20 }}
@@ -97,7 +97,7 @@ export function DailyChallenges({ challenges }: DailyChallengesProps) {
 									>
 										<HugeiconsIcon icon={CheckmarkCircle01Icon} size={12} />
 										Completed
-									</motion.div>
+									</m.div>
 								)}
 							</div>
 						</div>

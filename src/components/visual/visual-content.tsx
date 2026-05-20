@@ -2,7 +2,7 @@
 
 import { RadialIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { motion, useReducedMotion } from "framer-motion";
+import { m, useReducedMotion } from "framer-motion";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import type { VisualContent as VisualContentType } from "@/lib/visual-engine/types";
 import { DiagramRenderer } from "./diagram-renderer";
@@ -31,7 +31,7 @@ function VisualContentInner({ visual, isLoading }: VisualContentProps) {
 				{shouldReduceMotion ? (
 					<div className="size-6 animate-spin rounded-full border-2 border-muted-foreground/30 border-t-muted-foreground" />
 				) : (
-					<motion.div
+					<m.div
 						animate={{ rotate: 360 }}
 						transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
 						className="size-6"
@@ -40,7 +40,7 @@ function VisualContentInner({ visual, isLoading }: VisualContentProps) {
 							icon={RadialIcon}
 							className="size-6 text-muted-foreground"
 						/>
-					</motion.div>
+					</m.div>
 				)}
 			</div>
 		);

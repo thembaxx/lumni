@@ -1,4 +1,6 @@
-import { AnimatePresence, motion, type Variants } from "framer-motion";
+"use client";
+
+import { AnimatePresence, m, type Variants } from "framer-motion";
 import { cn } from "@/lib/shared";
 
 interface StaggerListProps {
@@ -16,7 +18,7 @@ export function StaggerList({
 }: StaggerListProps) {
 	return (
 		<AnimatePresence mode="wait" initial={false}>
-			<motion.div
+			<m.div
 				className={cn("flex flex-col gap-0", className)}
 				initial="hidden"
 				animate="visible"
@@ -32,7 +34,7 @@ export function StaggerList({
 				}
 			>
 				{children}
-			</motion.div>
+			</m.div>
 		</AnimatePresence>
 	);
 }

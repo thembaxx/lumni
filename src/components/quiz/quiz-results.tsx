@@ -2,7 +2,7 @@
 
 import { Award01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Confetti } from "@/components/celebration";
 import { ProgressDots } from "@/components/shared/progress-dots";
 import { Badge } from "@/components/ui/badge";
@@ -55,7 +55,7 @@ export function QuizResultsCard({
 	};
 
 	return (
-		<motion.div
+		<m.div
 			initial={{ opacity: 0, scale: 0.95 }}
 			animate={{ opacity: 1, scale: 1 }}
 			transition={{ duration: 0.3, ease: iOSEase }}
@@ -63,7 +63,7 @@ export function QuizResultsCard({
 		>
 			<Confetti trigger={isGreatScore} count={60} duration={2500} />
 			{isPerfect && (
-				<motion.div
+				<m.div
 					className="absolute -top-4 left-1/2 -translate-x-1/2"
 					initial={{ opacity: 0, scale: 0 }}
 					animate={{ opacity: 1, scale: 1 }}
@@ -76,21 +76,21 @@ export function QuizResultsCard({
 						<HugeiconsIcon icon={Award01Icon} className="size-5" />
 						<span className="font-extrabold">Perfect Score!</span>
 					</Badge>
-				</motion.div>
+				</m.div>
 			)}
 
 			<Card className={cn("relative", className)}>
-				<motion.div
+				<m.div
 					className="pointer-events-none absolute inset-0 overflow-hidden rounded-[2.5rem]"
 					initial={{ opacity: 0 }}
 					animate={isGreatScore ? { opacity: [0, 0.3, 0] } : { opacity: 0 }}
 					transition={{ duration: 2, repeat: Infinity }}
 				>
 					<div className="absolute inset-0 bg-success/10" />
-				</motion.div>
+				</m.div>
 
 				<CardHeader className="flex flex-col gap-2 p-6 pb-0 md:text-left">
-					<motion.div
+					<m.div
 						initial={{ opacity: 0, y: -10 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ delay: 0.1 }}
@@ -102,41 +102,41 @@ export function QuizResultsCard({
 									? "Great Job!"
 									: "Quiz Complete!"}
 						</CardTitle>
-					</motion.div>
+					</m.div>
 					<p className="text-muted-foreground text-sm">
 						Here are your results:
 					</p>
 				</CardHeader>
 
 				<CardContent>
-					<motion.div
+					<m.div
 						className="flex flex-col gap-4"
 						variants={containerVariants}
 						initial="hidden"
 						animate="visible"
 					>
 						<section className="flex flex-col gap-4">
-							<motion.div
+							<m.div
 								className="grid grid-cols-12 gap-4 md:text-left"
 								variants={itemVariants}
 							>
-								<motion.div
+								<m.div
 									className="col-span-5 rounded-lg bg-muted p-4"
 									initial={{ opacity: 0 }}
 									animate={{ opacity: 1 }}
 									transition={{ delay: 0.3 }}
 								>
-									<motion.p
+									<m.p
 										className="font-extrabold text-2xl tabular-nums"
 										initial={{ opacity: 0 }}
 										animate={{ opacity: 1 }}
 										transition={{ delay: 0.3 }}
 									>
 										{totalQuestions}
-									</motion.p>
+									</m.p>
 									<p className="text-muted-foreground text-xs">Questions</p>
-								</motion.div>
-								<motion.div
+								</m.div>
+								<m.div
 									className="col-span-3 rounded-lg bg-muted p-4"
 									initial={{ opacity: 0 }}
 									animate={{ opacity: 1 }}
@@ -151,8 +151,8 @@ export function QuizResultsCard({
 										{correctAnswers}
 									</p>
 									<p className="text-muted-foreground text-xs">Correct</p>
-								</motion.div>
-								<motion.div
+								</m.div>
+								<m.div
 									className="col-span-4 rounded-lg bg-muted p-4"
 									initial={{ opacity: 0 }}
 									animate={{ opacity: 1 }}
@@ -167,13 +167,13 @@ export function QuizResultsCard({
 										{accuracy}%
 									</p>
 									<p className="text-muted-foreground text-xs">Accuracy</p>
-								</motion.div>
-							</motion.div>
+								</m.div>
+							</m.div>
 						</section>
-					</motion.div>
+					</m.div>
 				</CardContent>
 			</Card>
-		</motion.div>
+		</m.div>
 	);
 }
 

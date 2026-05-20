@@ -7,7 +7,7 @@ import {
 	ViewOffIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useCallback, useState } from "react";
@@ -69,7 +69,7 @@ function SignInForm() {
 
 	if (magicLinkSent) {
 		return (
-			<motion.div
+			<m.div
 				initial={{ opacity: 0, y: 12 }}
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.35, ease: iOSEase }}
@@ -98,12 +98,12 @@ function SignInForm() {
 				>
 					Use a different email
 				</button>
-			</motion.div>
+			</m.div>
 		);
 	}
 
 	return (
-		<motion.form
+		<m.form
 			initial={{ opacity: 0, y: 12 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.35, ease: iOSEase }}
@@ -214,7 +214,7 @@ function SignInForm() {
 					Sign up
 				</Link>
 			</p>
-		</motion.form>
+		</m.form>
 	);
 }
 

@@ -4,7 +4,7 @@ import {
 	SquareIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { useRef, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Button } from "@/components/ui/button";
@@ -51,7 +51,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 
 		return (
 			<>
-				<motion.div
+				<m.div
 					initial={{ opacity: 0, y: 10, scale: 0.95 }}
 					animate={{ opacity: 1, y: 0, scale: 1 }}
 					transition={{ type: "spring", stiffness: 300, damping: 25 }}
@@ -66,7 +66,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 						)}
 					>
 						{message.imageUrl ? (
-							<motion.button
+							<m.button
 								onClick={() => setImageViewerOpen(true)}
 								className="group relative block w-full max-w-70 cursor-pointer"
 								whileTap={{ scale: 0.98 }}
@@ -92,7 +92,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 										</div>
 									)}
 								</div>
-							</motion.button>
+							</m.button>
 						) : (
 							<div className="flex size-48 items-center justify-center bg-muted">
 								<div className="size-6 animate-spin rounded-full border-2 border-muted-foreground border-t-transparent" />
@@ -134,7 +134,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 							</div>
 						)}
 					</div>
-				</motion.div>
+				</m.div>
 
 				<ImageViewer
 					src={message.imageUrl || ""}
@@ -150,7 +150,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 		const bars = [0.4, 0.65, 0.85, 0.55, 0.3];
 
 		return (
-			<motion.div
+			<m.div
 				initial={{ opacity: 0, y: 10, scale: 0.95 }}
 				animate={{ opacity: 1, y: 0, scale: 1 }}
 				transition={{ type: "spring", stiffness: 300, damping: 25 }}
@@ -161,7 +161,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 						: "mr-auto rounded-bl-none border border-border/40 bg-system-surface-secondary text-foreground shadow-sm",
 				)}
 			>
-				<motion.button
+				<m.button
 					onClick={togglePlay}
 					className={cn(
 						"relative flex size-11 shrink-0 items-center justify-center rounded-full shadow-sm transition-colors",
@@ -199,7 +199,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 							className="ml-0.5 size-4 fill-current"
 						/>
 					</span>
-				</motion.button>
+				</m.button>
 				<div className="flex min-w-0 flex-col gap-1">
 					<span className="font-extrabold text-[10px] uppercase tracking-widest opacity-80">
 						{isPlaying ? "Playing…" : "Voice message"}
@@ -207,7 +207,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 					<div className="flex items-center gap-2">
 						<div className="flex h-5 items-center gap-1">
 							{bars.map((height, i) => (
-								<motion.div
+								<m.div
 									// biome-ignore lint/suspicious/noArrayIndexKey: static bar array
 									key={i}
 									className={cn(
@@ -246,12 +246,12 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 						</div>
 					</div>
 				</div>
-			</motion.div>
+			</m.div>
 		);
 	}
 
 	return (
-		<motion.div
+		<m.div
 			initial={{ opacity: 0, y: 10, scale: 0.95 }}
 			animate={{ opacity: 1, y: 0, scale: 1 }}
 			transition={{ type: "spring", stiffness: 300, damping: 25 }}
@@ -263,6 +263,6 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 			)}
 		>
 			<MarkdownRenderer content={message.content} />
-		</motion.div>
+		</m.div>
 	);
 }

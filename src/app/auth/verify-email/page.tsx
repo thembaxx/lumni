@@ -3,7 +3,7 @@
 import { SparklesIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useMutation } from "@tanstack/react-query";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useRef, useState } from "react";
@@ -55,7 +55,7 @@ function VerifyEmailContent() {
 	}
 
 	return (
-		<motion.div
+		<m.div
 			initial={{ opacity: 0, y: 12 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.35, ease: iOSEase }}
@@ -73,7 +73,7 @@ function VerifyEmailContent() {
 			<Button onClick={() => push("/dashboard")} className="rounded-xl">
 				Go to Dashboard
 			</Button>
-		</motion.div>
+		</m.div>
 	);
 }
 

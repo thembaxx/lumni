@@ -11,7 +11,7 @@ import {
 	RefreshIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Confetti } from "@/components/celebration";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
@@ -265,7 +265,7 @@ function ExamResults({
 	const failedCount = totalCount - correctCount;
 
 	return (
-		<motion.div
+		<m.div
 			initial={{ opacity: 0, y: 20 }}
 			animate={{ opacity: 1, y: 0 }}
 			className="flex min-h-screen flex-col gap-6 bg-background p-4 pb-24"
@@ -396,7 +396,7 @@ function ExamResults({
 					Dashboard
 				</Button>
 			</div>
-		</motion.div>
+		</m.div>
 	);
 }
 
@@ -633,7 +633,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 
 	if (phase === "mode-select") {
 		return (
-			<motion.div
+			<m.div
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
 				className="flex min-h-screen items-center justify-center bg-background p-4"
@@ -669,7 +669,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 						</Button>
 					</CardContent>
 				</Card>
-			</motion.div>
+			</m.div>
 		);
 	}
 
@@ -781,7 +781,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 			<div className="flex flex-1">
 				<AnimatePresence initial={false}>
 					{showPalette && (
-						<motion.aside
+						<m.aside
 							initial={{ width: 0, opacity: 0 }}
 							animate={{ width: 260, opacity: 1 }}
 							exit={{ width: 0, opacity: 0 }}
@@ -802,14 +802,14 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 									}}
 								/>
 							</div>
-						</motion.aside>
+						</m.aside>
 					)}
 				</AnimatePresence>
 
 				<main className="mx-auto w-full max-w-3xl flex-1 p-4 md:p-6">
 					<AnimatePresence mode="wait" initial={false}>
 						{currentPart && (
-							<motion.div
+							<m.div
 								key={currentPart.part.id}
 								initial={{ opacity: 0, x: 20 }}
 								animate={{ opacity: 1, x: 0 }}
@@ -894,7 +894,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 										<Button onClick={handleSubmit}>Finish & Submit</Button>
 									)}
 								</div>
-							</motion.div>
+							</m.div>
 						)}
 					</AnimatePresence>
 				</main>

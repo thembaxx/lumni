@@ -116,6 +116,130 @@ async function loadMathPlugins() {
 	};
 }
 
+function InlineCode({
+	className,
+	children,
+	...props
+}: React.ComponentPropsWithoutRef<"code">) {
+	const match = /language-(\w+)/.exec(className || "");
+	if (match) {
+		return (
+			<LazyCodeBlock language={match[1]}>
+				{String(children).replace(/\n$/, "")}
+			</LazyCodeBlock>
+		);
+	}
+	return (
+		<code
+			className="rounded-md bg-muted px-1.5 py-0.5 font-mono text-sm"
+			{...props}
+		>
+			{children}
+		</code>
+	);
+}
+
+function Paragraph({ children }: { children?: React.ReactNode }) {
+	return <p className="mb-3 last:mb-0">{children}</p>;
+}
+
+function UnorderedList({ children }: { children?: React.ReactNode }) {
+	return <ul className="mb-3 list-inside list-disc space-y-1">{children}</ul>;
+}
+
+function OrderedList({ children }: { children?: React.ReactNode }) {
+	return (
+		<ol className="mb-3 list-inside list-decimal space-y-1">{children}</ol>
+	);
+}
+
+function ListItem({ children }: { children?: React.ReactNode }) {
+	return <li className="mb-1">{children}</li>;
+}
+
+function BlockQuote({ children }: { children?: React.ReactNode }) {
+	return (
+		<blockquote className="my-3 border-[--system-accent]/30 border-l-4 pl-4 italic">
+			{children}
+		</blockquote>
+	);
+}
+
+function Heading1({ children }: { children?: React.ReactNode }) {
+	return <h1 className="mt-4 mb-3 font-semibold text-2xl">{children}</h1>;
+}
+
+function Heading2({ children }: { children?: React.ReactNode }) {
+	return <h2 className="mt-3 mb-2 font-semibold text-xl">{children}</h2>;
+}
+
+function Heading3({ children }: { children?: React.ReactNode }) {
+	return <h3 className="mt-2 mb-2 font-semibold text-lg">{children}</h3>;
+}
+
+function MarkdownLink({
+	href,
+	children,
+}: {
+	href?: string;
+	children?: React.ReactNode;
+}) {
+	return (
+		<a
+			href={href}
+			className="text-foreground underline hover:text-foreground/80"
+			target="_blank"
+			rel="noopener noreferrer"
+		>
+			{children}
+		</a>
+	);
+}
+
+function MarkdownTable({ children }: { children?: React.ReactNode }) {
+	return (
+		<div className="my-3 overflow-x-auto">
+			<Table>{children}</Table>
+		</div>
+	);
+}
+
+function MarkdownThead({ children }: { children?: React.ReactNode }) {
+	return <TableHeader>{children}</TableHeader>;
+}
+
+function MarkdownTh({ children }: { children?: React.ReactNode }) {
+	return <TableHead>{children}</TableHead>;
+}
+
+function MarkdownTr({ children }: { children?: React.ReactNode }) {
+	return <TableRow>{children}</TableRow>;
+}
+
+function MarkdownTd({ children }: { children?: React.ReactNode }) {
+	return <TableCell>{children}</TableCell>;
+}
+
+function MarkdownTbody({ children }: { children?: React.ReactNode }) {
+	return <TableBody>{children}</TableBody>;
+}
+
+function MarkdownHr() {
+	return <hr className="my-4 border-border" />;
+}
+
+function MarkdownStrong({ children }: { children?: React.ReactNode }) {
+	return <strong className="font-semibold">{children}</strong>;
+}
+
+function MarkdownEm({ children }: { children?: React.ReactNode }) {
+	return <em className="italic">{children}</em>;
+}
+
+function MarkdownDel({ children }: { children?: React.ReactNode }) {
+	return <del className="line-through opacity-70">{children}</del>;
+}
+
 export const MarkdownRenderer = memo(function MarkdownRenderer({
 	content,
 	className,
@@ -186,115 +310,26 @@ export const MarkdownRenderer = memo(function MarkdownRenderer({
 					needsMath && mathPlugins ? ([mathPlugins.rehypeKatex] as const) : []
 				}
 				components={{
-					code({ className, children, ...props }) {
-						const match = /language-(\w+)/.exec(className || "");
-						const isInline = !match;
-
-						if (isInline) {
-							return (
-								<code
-									className="rounded-md bg-muted px-1.5 py-0.5 font-mono text-sm"
-									{...props}
-								>
-									{children}
-								</code>
-							);
-						}
-
-						return (
-							<LazyCodeBlock language={match[1]}>
-								{String(children).replace(/\n$/, "")}
-							</LazyCodeBlock>
-						);
-					},
-					p({ children }) {
-						return <p className="mb-3 last:mb-0">{children}</p>;
-					},
-					ul({ children }) {
-						return (
-							<ul className="mb-3 list-inside list-disc space-y-1">
-								{children}
-							</ul>
-						);
-					},
-					ol({ children }) {
-						return (
-							<ol className="mb-3 list-inside list-decimal space-y-1">
-								{children}
-							</ol>
-						);
-					},
-					li({ children }) {
-						return <li className="mb-1">{children}</li>;
-					},
-					blockquote({ children }) {
-						return (
-							<blockquote className="my-3 border-[--system-accent]/30 border-l-4 pl-4 italic">
-								{children}
-							</blockquote>
-						);
-					},
-					h1({ children }) {
-						return (
-							<h1 className="mt-4 mb-3 font-semibold text-2xl">{children}</h1>
-						);
-					},
-					h2({ children }) {
-						return (
-							<h2 className="mt-3 mb-2 font-semibold text-xl">{children}</h2>
-						);
-					},
-					h3({ children }) {
-						return (
-							<h3 className="mt-2 mb-2 font-semibold text-lg">{children}</h3>
-						);
-					},
-					a({ href, children }) {
-						return (
-							<a
-								href={href}
-								className="text-foreground underline hover:text-foreground/80"
-								target="_blank"
-								rel="noopener noreferrer"
-							>
-								{children}
-							</a>
-						);
-					},
-					table({ children }) {
-						return (
-							<div className="my-3 overflow-x-auto">
-								<Table>{children}</Table>
-							</div>
-						);
-					},
-					thead({ children }) {
-						return <TableHeader>{children}</TableHeader>;
-					},
-					th({ children }) {
-						return <TableHead>{children}</TableHead>;
-					},
-					tr({ children }) {
-						return <TableRow>{children}</TableRow>;
-					},
-					td({ children }) {
-						return <TableCell>{children}</TableCell>;
-					},
-					tbody({ children }) {
-						return <TableBody>{children}</TableBody>;
-					},
-					hr() {
-						return <hr className="my-4 border-border" />;
-					},
-					strong({ children }) {
-						return <strong className="font-semibold">{children}</strong>;
-					},
-					em({ children }) {
-						return <em className="italic">{children}</em>;
-					},
-					del({ children }) {
-						return <del className="line-through opacity-70">{children}</del>;
-					},
+					code: InlineCode,
+					p: Paragraph,
+					ul: UnorderedList,
+					ol: OrderedList,
+					li: ListItem,
+					blockquote: BlockQuote,
+					h1: Heading1,
+					h2: Heading2,
+					h3: Heading3,
+					a: MarkdownLink,
+					table: MarkdownTable,
+					thead: MarkdownThead,
+					th: MarkdownTh,
+					tr: MarkdownTr,
+					td: MarkdownTd,
+					tbody: MarkdownTbody,
+					hr: MarkdownHr,
+					strong: MarkdownStrong,
+					em: MarkdownEm,
+					del: MarkdownDel,
 				}}
 			>
 				{normalizedContent}

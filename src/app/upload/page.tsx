@@ -7,7 +7,7 @@ import {
 	RadialIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ListCell, ListGroup, ListSection } from "@/components/ui/list-cell";
@@ -95,7 +95,7 @@ export default function UploadPage() {
 
 							{lastUploadUrl && (
 								<div className="rounded-[--radius-button] bg-[var(--success)]/10 p-[--space-4] text-center">
-									<motion.div
+									<m.div
 										initial={{ scale: 0.95, opacity: 0 }}
 										animate={{ scale: 1, opacity: 1 }}
 										transition={{ duration: 0.3 }}
@@ -104,7 +104,7 @@ export default function UploadPage() {
 											icon={CheckmarkCircle01Icon}
 											className="mx-auto mb-2 size-16 text-success"
 										/>
-									</motion.div>
+									</m.div>
 									<p className="font-medium text-[13px] text-[var(--success)]">
 										Upload successful
 									</p>

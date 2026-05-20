@@ -6,7 +6,7 @@ import {
 	Target01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useGamification } from "@/hooks/use-gamification";
 import { cn } from "@/lib/shared";
@@ -28,7 +28,7 @@ export function DailyChallenges() {
 	if (active.length === 0 && completed.length === 0) return null;
 
 	return (
-		<motion.div
+		<m.div
 			initial={{ opacity: 0, y: 16 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.4, ease: iOSEase }}
@@ -101,6 +101,6 @@ export function DailyChallenges() {
 					})}
 				</CardContent>
 			</Card>
-		</motion.div>
+		</m.div>
 	);
 }

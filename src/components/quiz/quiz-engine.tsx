@@ -2,7 +2,7 @@
 
 import { RadialIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, m, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Anim } from "@/components/shared/anim";
 import { ProgressDots } from "@/components/shared/progress-dots";
@@ -110,7 +110,7 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 			<div className="grid grid-cols-12 gap-0">
 				<div className="col-span-12 col-start-1 flex items-center justify-center p-4 pb-20 md:col-span-7">
 					<Card className="flex w-full max-w-md flex-col items-center gap-4 p-6">
-						<motion.div
+						<m.div
 							animate={{ rotate: 360 }}
 							transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
 							className="mx-auto h-8 w-8"
@@ -119,7 +119,7 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 								icon={RadialIcon}
 								className="size-8 text-muted-foreground"
 							/>
-						</motion.div>
+						</m.div>
 						<p className="text-muted-foreground text-sm">
 							Generating questions...
 						</p>

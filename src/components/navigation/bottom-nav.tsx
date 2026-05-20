@@ -8,7 +8,7 @@ import {
 	Settings01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
@@ -67,7 +67,7 @@ function NavItemComponent({
 	onClick: () => void;
 }) {
 	return (
-		<motion.button
+		<m.button
 			type="button"
 			onClick={onClick}
 			aria-label={item.label}
@@ -78,7 +78,7 @@ function NavItemComponent({
 		>
 			<AnimatePresence initial={false} mode="wait">
 				{isActive && (
-					<motion.div
+					<m.div
 						layoutId="activeIndicator"
 						className="absolute inset-0 mx-1.5 mb-1 rounded-md bg-system-accent/10"
 						initial={{ opacity: 0 }}
@@ -114,7 +114,7 @@ function NavItemComponent({
 			>
 				{item.label}
 			</span>
-		</motion.button>
+		</m.button>
 	);
 }
 

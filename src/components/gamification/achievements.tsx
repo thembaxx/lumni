@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { rarityColors, rarityGlow } from "@/lib/utils/gamification";
 import type { Achievement } from "@/types/gamification";
 
@@ -24,7 +24,7 @@ export function Achievements({ achievements }: AchievementsProps) {
 
 			<div className="scrollbar-hide flex gap-2 overflow-x-auto pb-2">
 				{earnedAchievements.slice(0, 6).map((achievement, index) => (
-					<motion.button
+					<m.button
 						key={achievement.id}
 						initial={{ opacity: 0, scale: 0.8 }}
 						animate={{ opacity: 1, scale: 1 }}
@@ -36,7 +36,7 @@ export function Achievements({ achievements }: AchievementsProps) {
 					>
 						<span className="text-2xl">{achievement.icon}</span>
 						{achievement.rarity === "legendary" && (
-							<motion.span
+							<m.span
 								className="absolute inset-0 rounded-xl"
 								animate={{ opacity: [0.3, 0.6, 0.3] }}
 								transition={{ duration: 2, repeat: Infinity }}
@@ -45,11 +45,11 @@ export function Achievements({ achievements }: AchievementsProps) {
 								}}
 							/>
 						)}
-					</motion.button>
+					</m.button>
 				))}
 
 				{lockedAchievements.slice(0, 3).map((achievement, index) => (
-					<motion.div
+					<m.div
 						key={achievement.id}
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 0.5 }}
@@ -58,17 +58,17 @@ export function Achievements({ achievements }: AchievementsProps) {
 						title={`Locked: ${achievement.name}`}
 					>
 						<span className="text-xl grayscale">🔒</span>
-					</motion.div>
+					</m.div>
 				))}
 
 				{achievements.length > 9 && (
-					<motion.div
+					<m.div
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 0.7 }}
 						className="flex size-14 shrink-0 items-center justify-center rounded-xl border border-border bg-muted/30 text-muted-foreground text-xs"
 					>
 						+{achievements.length - 9}
-					</motion.div>
+					</m.div>
 				)}
 			</div>
 		</div>

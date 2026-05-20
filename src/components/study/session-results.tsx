@@ -2,7 +2,7 @@
 
 import { Home01Icon, Target01Icon, UndoIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { calculateAccuracy } from "@/lib/shared/time";
 import { AnimatedIcon } from "@/lib/utils/icon-mapping";
@@ -31,14 +31,14 @@ export function SessionResults({
 			<div className="col-span-12 col-start-1 flex items-center justify-center p-4 md:col-span-7">
 				<div className="mx-auto flex w-full max-w-md flex-col gap-4">
 					<header className="text-left">
-						<motion.div
+						<m.div
 							initial={{ scale: 0, opacity: 0 }}
 							animate={{ scale: 1, opacity: 1 }}
 							transition={{ duration: 0.3 }}
 							className="mb-2"
 						>
 							<AnimatedIcon name="success-check" className="mx-auto size-16" />
-						</motion.div>
+						</m.div>
 						<h2 className="font-extrabold text-xl tracking-tight">
 							Session Complete!
 						</h2>

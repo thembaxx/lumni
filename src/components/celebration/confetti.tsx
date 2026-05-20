@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { useEffect, useState } from "react";
 
 interface ConfettiPiece {
@@ -56,7 +56,7 @@ export function Confetti({
 	return (
 		<div className="pointer-events-none fixed inset-0 z-50 overflow-hidden">
 			{pieces.map((piece) => (
-				<motion.div
+				<m.div
 					key={piece.id}
 					className="absolute size-3"
 					style={{

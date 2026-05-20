@@ -15,7 +15,7 @@ import {
 	Timer01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { m, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/auth/auth-context";
@@ -142,7 +142,7 @@ export function HomeContent() {
 			</nav>
 
 			{/* Hero */}
-			<motion.section
+			<m.section
 				style={{ opacity: heroOpacity, scale: heroScale }}
 				className="relative flex min-h-[90dvh] items-center pt-14"
 			>
@@ -151,7 +151,7 @@ export function HomeContent() {
 				<div className="mx-auto w-full max-w-6xl px-4">
 					<div className="grid items-center gap-12 py-20 lg:grid-cols-2">
 						<div className="flex flex-col gap-8">
-							<motion.div
+							<m.div
 								initial={{ opacity: 0, y: 20 }}
 								animate={{ opacity: 1, y: 0 }}
 								transition={{ duration: 0.4, ease: iOSEase }}
@@ -169,9 +169,9 @@ export function HomeContent() {
 									personalized study planner. Everything a Matric student needs
 									to prepare, all in one place.
 								</p>
-							</motion.div>
+							</m.div>
 
-							<motion.div
+							<m.div
 								initial={{ opacity: 0, y: 20 }}
 								animate={{ opacity: 1, y: 0 }}
 								transition={{ duration: 0.4, delay: 0.1, ease: iOSEase }}
@@ -190,9 +190,9 @@ export function HomeContent() {
 										</Button>
 									</Link>
 								)}
-							</motion.div>
+							</m.div>
 
-							<motion.div
+							<m.div
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
 								transition={{ duration: 0.4, delay: 0.2 }}
@@ -210,11 +210,11 @@ export function HomeContent() {
 									<HugeiconsIcon icon={ChartUpIcon} className="size-4" />
 									<span>AI-powered</span>
 								</div>
-							</motion.div>
+							</m.div>
 						</div>
 
 						{/* Hero visual */}
-						<motion.div
+						<m.div
 							initial={{ opacity: 0, scale: 0.9 }}
 							animate={{ opacity: 1, scale: 1 }}
 							transition={{ duration: 0.5, delay: 0.15, ease: iOSEase }}
@@ -262,15 +262,15 @@ export function HomeContent() {
 									</div>
 								</div>
 							</div>
-						</motion.div>
+						</m.div>
 					</div>
 				</div>
-			</motion.section>
+			</m.section>
 
 			{/* Features */}
 			<section className="relative py-24">
 				<div className="mx-auto max-w-6xl px-4">
-					<motion.div
+					<m.div
 						initial={{ opacity: 0, y: 20 }}
 						whileInView={{ opacity: 1, y: 0 }}
 						viewport={{ once: true }}
@@ -283,11 +283,11 @@ export function HomeContent() {
 							AI practice, real past papers, and study tools that adapt to how
 							you learn. Built for the CAPS curriculum.
 						</p>
-					</motion.div>
+					</m.div>
 
 					<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
 						{features.map((feature, i) => (
-							<motion.div
+							<m.div
 								key={feature.title}
 								initial={{ opacity: 0, y: 20 }}
 								whileInView={{ opacity: 1, y: 0 }}
@@ -328,7 +328,7 @@ export function HomeContent() {
 										{feature.description}
 									</p>
 								</div>
-							</motion.div>
+							</m.div>
 						))}
 					</div>
 				</div>
@@ -337,7 +337,7 @@ export function HomeContent() {
 			{/* How it works */}
 			<section className="bg-system-background-secondary py-24">
 				<div className="mx-auto max-w-6xl px-4">
-					<motion.div
+					<m.div
 						initial={{ opacity: 0, y: 20 }}
 						whileInView={{ opacity: 1, y: 0 }}
 						viewport={{ once: true }}
@@ -347,11 +347,11 @@ export function HomeContent() {
 						<p className="ios-body mx-auto max-w-lg text-muted-foreground">
 							Three simple steps to start mastering your subjects.
 						</p>
-					</motion.div>
+					</m.div>
 
 					<div className="mx-auto grid max-w-4xl gap-8 md:grid-cols-3">
 						{steps.map((step, i) => (
-							<motion.div
+							<m.div
 								key={step.number}
 								initial={{ opacity: 0, y: 20 }}
 								whileInView={{ opacity: 1, y: 0 }}
@@ -373,7 +373,7 @@ export function HomeContent() {
 										<HugeiconsIcon icon={ArrowRight01Icon} className="size-6" />
 									</div>
 								)}
-							</motion.div>
+							</m.div>
 						))}
 					</div>
 				</div>
@@ -382,7 +382,7 @@ export function HomeContent() {
 			{/* CTA */}
 			<section className="py-24">
 				<div className="mx-auto max-w-6xl px-4">
-					<motion.div
+					<m.div
 						initial={{ opacity: 0, y: 20 }}
 						whileInView={{ opacity: 1, y: 0 }}
 						viewport={{ once: true }}
@@ -417,7 +417,7 @@ export function HomeContent() {
 								</Link>
 							)}
 						</div>
-					</motion.div>
+					</m.div>
 				</div>
 			</section>
 

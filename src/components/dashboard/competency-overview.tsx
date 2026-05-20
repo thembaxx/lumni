@@ -3,7 +3,7 @@
 import { ChartUpIcon, Mortarboard01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { useMemo, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RadialChart } from "@/components/ui/charts/radial-chart";
@@ -143,7 +143,7 @@ export function CompetencyOverview() {
 	}
 
 	return (
-		<motion.div
+		<m.div
 			initial={{ opacity: 0, y: 16 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
@@ -171,7 +171,7 @@ export function CompetencyOverview() {
 								}
 								className="w-full text-left"
 							>
-								<motion.div
+								<m.div
 									initial={{ opacity: 0, x: -8 }}
 									animate={{ opacity: 1, x: 0 }}
 									transition={{ delay: i * 0.05, duration: 0.3 }}
@@ -234,11 +234,11 @@ export function CompetencyOverview() {
 											assessed
 										</p>
 									</div>
-								</motion.div>
+								</m.div>
 							</button>
 
 							{expandedSubject === sc.subjectId && sc.topics.length > 0 && (
-								<motion.div
+								<m.div
 									initial={{ opacity: 0, height: 0 }}
 									animate={{ opacity: 1, height: "auto" }}
 									exit={{ opacity: 0, height: 0 }}
@@ -265,12 +265,12 @@ export function CompetencyOverview() {
 											</span>
 										</div>
 									))}
-								</motion.div>
+								</m.div>
 							)}
 						</div>
 					))}
 				</CardContent>
 			</Card>
-		</motion.div>
+		</m.div>
 	);
 }

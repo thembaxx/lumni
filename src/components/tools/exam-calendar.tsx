@@ -7,7 +7,7 @@ import {
 	PlusSignFreeIcons,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Calendar01Icon } from "@/components/ui/calendar";
@@ -220,7 +220,7 @@ export function ExamCalendar() {
 								.sort((a, b) => a.date.getTime() - b.date.getTime())
 								.slice(0, 5)
 								.map((exam) => (
-									<motion.div
+									<m.div
 										key={exam.id}
 										initial={{ opacity: 0, y: 5 }}
 										animate={{ opacity: 1, y: 0 }}
@@ -243,7 +243,7 @@ export function ExamCalendar() {
 										<span className="text-muted-foreground text-xs">
 											{exam.paper}
 										</span>
-									</motion.div>
+									</m.div>
 								))}
 						</div>
 					</div>
@@ -252,7 +252,7 @@ export function ExamCalendar() {
 
 			<AnimatePresence initial={false}>
 				{isAddingExam && (
-					<motion.div
+					<m.div
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0 }}
@@ -271,7 +271,7 @@ export function ExamCalendar() {
 							}}
 							aria-label="Close"
 						/>
-						<motion.div
+						<m.div
 							initial={{ scale: 0.95, opacity: 0, y: 10 }}
 							animate={{ scale: 1, opacity: 1, y: 0 }}
 							exit={{ scale: 0.95, opacity: 0, y: 10 }}
@@ -336,8 +336,8 @@ export function ExamCalendar() {
 									Add Exam
 								</Button>
 							</div>
-						</motion.div>
-					</motion.div>
+						</m.div>
+					</m.div>
 				)}
 			</AnimatePresence>
 		</div>

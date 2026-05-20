@@ -1,7 +1,6 @@
 "use client";
 
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { type ComponentType, useEffect, useRef, useState } from "react";
 import { Equation } from "@/components/ui/equation";
 import {
 	Table,
@@ -15,6 +14,61 @@ import type { ContentBlock } from "@/types/exam-paper";
 
 interface ContentBlockRendererProps {
 	block: ContentBlock;
+}
+
+function LazyCodeBlock({
+	language,
+	value,
+}: {
+	language?: string;
+	value: string;
+}) {
+	const [loaded, setLoaded] = useState(false);
+	const HighlighterRef = useRef<ComponentType<Record<string, unknown>> | null>(
+		null,
+	);
+	const styleRef = useRef<Record<string, unknown> | null>(null);
+
+	useEffect(() => {
+		let cancelled = false;
+		Promise.all([
+			import("react-syntax-highlighter"),
+			import("react-syntax-highlighter/dist/esm/styles/prism"),
+		]).then(([highlighterMod, styleMod]) => {
+			type HighlighterModule = {
+				Prism: ComponentType<Record<string, unknown>>;
+			};
+			type StyleModule = { oneLight: Record<string, unknown> };
+			if (cancelled) return;
+			HighlighterRef.current = (
+				highlighterMod as unknown as HighlighterModule
+			).Prism;
+			styleRef.current = (styleMod as unknown as StyleModule).oneLight;
+			setLoaded(true);
+		});
+		return () => {
+			cancelled = true;
+		};
+	}, []);
+
+	if (!loaded || !HighlighterRef.current || !styleRef.current) {
+		return (
+			<pre className="my-3 overflow-hidden rounded border bg-muted p-4 font-mono text-sm">
+				<code>{value}</code>
+			</pre>
+		);
+	}
+
+	const Highlighter = HighlighterRef.current;
+	return (
+		<Highlighter
+			language={language || "text"}
+			style={styleRef.current}
+			customStyle={{ margin: 0, fontSize: "0.8rem" }}
+		>
+			{value}
+		</Highlighter>
+	);
 }
 
 export function ContentBlockRenderer({ block }: ContentBlockRendererProps) {
@@ -86,13 +140,7 @@ export function ContentBlockRenderer({ block }: ContentBlockRendererProps) {
 		case "code":
 			return block.value ? (
 				<div className="my-3 overflow-hidden rounded border">
-					<SyntaxHighlighter
-						language={block.language || "text"}
-						style={oneLight}
-						customStyle={{ margin: 0, fontSize: "0.8rem" }}
-					>
-						{block.value}
-					</SyntaxHighlighter>
+					<LazyCodeBlock language={block.language} value={block.value} />
 				</div>
 			) : null;
 

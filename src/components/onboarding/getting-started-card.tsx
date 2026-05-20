@@ -8,7 +8,7 @@ import {
 	Settings01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { FIRST_VISITS_KEY } from "@/components/onboarding/onboarding-provider";
@@ -117,7 +117,7 @@ export function GettingStartedCard() {
 	return (
 		<AnimatePresence>
 			{!collapsing && (
-				<motion.div
+				<m.div
 					key="card"
 					initial={shouldReduceMotion ? {} : { opacity: 0, y: 8 }}
 					animate={{ opacity: 1, y: 0 }}
@@ -152,7 +152,7 @@ export function GettingStartedCard() {
 								{actions.map((item) => {
 									const done = steps[item.key];
 									return (
-										<motion.div
+										<m.div
 											key={item.key}
 											whileTap={done ? {} : { scale: 0.96 }}
 											transition={{ type: "spring", duration: 0.3, bounce: 0 }}
@@ -173,7 +173,7 @@ export function GettingStartedCard() {
 												<div className="relative size-4">
 													<AnimatePresence mode="wait">
 														{done ? (
-															<motion.div
+															<m.div
 																key="check"
 																initial={{
 																	scale: 0.25,
@@ -201,9 +201,9 @@ export function GettingStartedCard() {
 																	icon={CheckmarkCircle01Icon}
 																	className="size-4"
 																/>
-															</motion.div>
+															</m.div>
 														) : (
-															<motion.div
+															<m.div
 																key="action"
 																initial={{
 																	scale: 0.25,
@@ -231,7 +231,7 @@ export function GettingStartedCard() {
 																	icon={item.icon}
 																	className="size-4"
 																/>
-															</motion.div>
+															</m.div>
 														)}
 													</AnimatePresence>
 												</div>
@@ -258,13 +258,13 @@ export function GettingStartedCard() {
 													{item.action}
 												</Button>
 											)}
-										</motion.div>
+										</m.div>
 									);
 								})}
 							</div>
 						</div>
 					</Card>
-				</motion.div>
+				</m.div>
 			)}
 		</AnimatePresence>
 	);

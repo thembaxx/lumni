@@ -6,7 +6,7 @@ import {
 	Mortarboard01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Button } from "@/components/ui/button";
@@ -70,7 +70,7 @@ export function StepByStep({ steps, subject, className }: StepByStepProps) {
 
 			<div className="relative overflow-hidden">
 				<AnimatePresence mode="wait" initial={false}>
-					<motion.div
+					<m.div
 						key={currentStep}
 						initial={{ opacity: 0, y: 10 }}
 						animate={{ opacity: 1, y: 0 }}
@@ -85,7 +85,7 @@ export function StepByStep({ steps, subject, className }: StepByStepProps) {
 								subject={subject}
 							/>
 						</div>
-					</motion.div>
+					</m.div>
 				</AnimatePresence>
 			</div>
 

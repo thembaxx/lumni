@@ -2,7 +2,7 @@
 
 import { Search01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import {
 	Empty,
 	EmptyContent,
@@ -31,7 +31,7 @@ export function SessionEmpty({ subject, onGoBack }: SessionEmptyProps) {
 						<Empty>
 							<EmptyHeader>
 								<EmptyMedia variant="icon">
-									<motion.div
+									<m.div
 										animate={{ scale: [1, 1.2, 1] }}
 										transition={{ duration: 1.5, repeat: Infinity }}
 									>
@@ -39,7 +39,7 @@ export function SessionEmpty({ subject, onGoBack }: SessionEmptyProps) {
 											icon={Search01Icon}
 											className="mx-auto size-16 text-muted-foreground"
 										/>
-									</motion.div>
+									</m.div>
 								</EmptyMedia>
 								<EmptyTitle>No content found</EmptyTitle>
 								<EmptyDescription>

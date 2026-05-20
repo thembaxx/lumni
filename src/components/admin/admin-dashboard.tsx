@@ -8,7 +8,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -47,14 +47,14 @@ function AnimatedCard({
 	className?: string;
 }) {
 	return (
-		<motion.div
+		<m.div
 			initial={{ opacity: 0, y: 10 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ delay, duration: 0.3, ease: iOSEase }}
 			className={className}
 		>
 			{children}
-		</motion.div>
+		</m.div>
 	);
 }
 
@@ -182,21 +182,21 @@ export function AdminDashboard() {
 		<div className="min-h-[100dvh] bg-background">
 			<AnimatePresence initial={false}>
 				{showSuccess && (
-					<motion.div
+					<m.div
 						initial={{ opacity: 0, y: -20, scale: 0.95 }}
 						animate={{ opacity: 1, y: 0, scale: 1 }}
 						exit={{ opacity: 0, y: -20, scale: 0.95 }}
 						className="fixed top-4 left-1/2 z-50 flex -translate-x-1/2 items-center gap-2 rounded-lg bg-foreground px-4 py-2 text-background shadow-lg"
 					>
-						<motion.div
+						<m.div
 							initial={{ scale: 0.95, opacity: 0 }}
 							animate={{ scale: 1, opacity: 1 }}
 							transition={{ type: "spring", stiffness: 500, damping: 25 }}
 						>
 							<HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-4" />
-						</motion.div>
+						</m.div>
 						<span className="font-medium text-sm">Success!</span>
-					</motion.div>
+					</m.div>
 				)}
 			</AnimatePresence>
 
@@ -253,7 +253,7 @@ export function AdminDashboard() {
 						listClassName="w-full"
 					>
 						{activeTab === "exam" && (
-							<motion.div
+							<m.div
 								{...fadeInUp}
 								transition={{ duration: 0.25 }}
 								className="flex flex-col gap-4"
@@ -271,11 +271,11 @@ export function AdminDashboard() {
 								<AnimatedCard delay={0.2}>
 									<AdminExamList />
 								</AnimatedCard>
-							</motion.div>
+							</m.div>
 						)}
 
 						{activeTab === "subjects" && (
-							<motion.div
+							<m.div
 								{...fadeInUp}
 								transition={{ duration: 0.25 }}
 								className="flex flex-col gap-4"
@@ -311,7 +311,7 @@ export function AdminDashboard() {
 										</CardContent>
 									</Card>
 								</AnimatedCard>
-							</motion.div>
+							</m.div>
 						)}
 					</TabSwitcher>
 				</AnimatedCard>

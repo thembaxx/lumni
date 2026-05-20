@@ -6,7 +6,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -134,7 +134,7 @@ export function TodayFocusCard() {
 	}, [showSuccess]);
 
 	return (
-		<motion.div
+		<m.div
 			initial={{ opacity: 0, y: 8 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{
@@ -201,7 +201,7 @@ export function TodayFocusCard() {
 					>
 						<AnimatePresence mode="wait" initial={false}>
 							{showSuccess ? (
-								<motion.span
+								<m.span
 									key="success"
 									initial={{ scale: 0.8, opacity: 0 }}
 									animate={{ scale: 1, opacity: 1 }}
@@ -214,9 +214,9 @@ export function TodayFocusCard() {
 								>
 									<HugeiconsIcon icon={CheckmarkCircle01Icon} data-icon />
 									Starting quiz…
-								</motion.span>
+								</m.span>
 							) : (
-								<motion.span
+								<m.span
 									key="action"
 									initial={{ scale: 0.8, opacity: 0 }}
 									animate={{ scale: 1, opacity: 1 }}
@@ -227,12 +227,12 @@ export function TodayFocusCard() {
 									}}
 								>
 									{cfg.action}
-								</motion.span>
+								</m.span>
 							)}
 						</AnimatePresence>
 					</Button>
 				</div>
 			</Card>
-		</motion.div>
+		</m.div>
 	);
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { m, useReducedMotion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAppwriteSession } from "@/hooks/use-appwrite-session";
@@ -259,7 +259,7 @@ export function CountdownHeader() {
 		<>
 			<div ref={sentinelRef} className="pointer-events-none h-px" aria-hidden />
 
-			<motion.div
+			<m.div
 				variants={headerVariants}
 				initial="hidden"
 				animate="visible"
@@ -267,7 +267,7 @@ export function CountdownHeader() {
 			>
 				<div className="relative overflow-hidden rounded-lg bg-secondary/60 px-5 py-5 sm:px-6 sm:py-6">
 					{milestone && (
-						<motion.div
+						<m.div
 							initial={{ opacity: 0, y: -8, scale: 0.9 }}
 							animate={{ opacity: 1, y: 0, scale: 1 }}
 							transition={{
@@ -277,7 +277,7 @@ export function CountdownHeader() {
 							className="absolute -top-px right-4 left-4 flex items-center justify-center"
 						>
 							<div className="inline-flex items-center gap-1.5 rounded-b-xl border border-warning/30 bg-warning/20 px-3 py-1">
-								<motion.span
+								<m.span
 									animate={
 										shouldReduceMotion
 											? {}
@@ -291,12 +291,12 @@ export function CountdownHeader() {
 									className="text-sm"
 								>
 									{milestone.emoji}
-								</motion.span>
+								</m.span>
 								<span className="font-extrabold text-warning text-xs uppercase tracking-tight">
 									{milestone.label}
 								</span>
 							</div>
-						</motion.div>
+						</m.div>
 					)}
 
 					<div className="relative z-10">
@@ -311,7 +311,7 @@ export function CountdownHeader() {
 							{isLoading || !mounted ? (
 								<Skeleton className="h-8 w-24 rounded-md" />
 							) : (
-								<motion.span
+								<m.span
 									variants={numberVariants}
 									initial="hidden"
 									animate="visible"
@@ -321,7 +321,7 @@ export function CountdownHeader() {
 									aria-live="polite"
 								>
 									{daysLeft}
-								</motion.span>
+								</m.span>
 							)}
 							{!isLoading && mounted && (
 								<div>
@@ -343,7 +343,7 @@ export function CountdownHeader() {
 							aria-valuemax={100}
 							aria-label="Year progress: days studied vs total"
 						>
-							<motion.div
+							<m.div
 								variants={barGlowVariants}
 								initial="hidden"
 								animate="visible"
@@ -352,7 +352,7 @@ export function CountdownHeader() {
 						</div>
 
 						{mounted && (
-							<motion.p
+							<m.p
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
 								transition={{
@@ -365,11 +365,11 @@ export function CountdownHeader() {
 									{msg.primary}
 								</span>
 								. {msg.subtitle}
-							</motion.p>
+							</m.p>
 						)}
 					</div>
 
-					<motion.div
+					<m.div
 						initial={{ opacity: 0, scale: 0.5 }}
 						animate={{ opacity: 1, scale: 1 }}
 						transition={{
@@ -391,9 +391,9 @@ export function CountdownHeader() {
 						aria-hidden="true"
 					/>
 				</div>
-			</motion.div>
+			</m.div>
 
-			<motion.div
+			<m.div
 				initial={false}
 				animate={{
 					opacity: isCompact ? 1 : 0,
@@ -430,7 +430,7 @@ export function CountdownHeader() {
 						/>
 					</div>
 				</div>
-			</motion.div>
+			</m.div>
 		</>
 	);
 }

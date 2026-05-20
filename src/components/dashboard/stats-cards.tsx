@@ -6,7 +6,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
-	motion,
+	m,
 	useMotionValue,
 	useReducedMotion,
 	useSpring,
@@ -55,7 +55,7 @@ function AnimatedNumber({
 		return <>{value}</>;
 	}
 
-	return <motion.span aria-live="polite">{rounded}</motion.span>;
+	return <m.span aria-live="polite">{rounded}</m.span>;
 }
 
 function StatCard({
@@ -69,7 +69,7 @@ function StatCard({
 	const shouldReduceMotion = useReducedMotion();
 
 	return (
-		<motion.div
+		<m.div
 			initial={{ opacity: 0, y: 8 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{
@@ -98,7 +98,7 @@ function StatCard({
 					</p>
 				</CardContent>
 			</Card>
-		</motion.div>
+		</m.div>
 	);
 }
 
@@ -126,7 +126,7 @@ export function StatsCards({ questionsAnswered, accuracy }: StatsCardsProps) {
 					index: 1,
 				},
 			].map(({ label, value, icon, colorClass, accentClass, index }) => (
-				<motion.div
+				<m.div
 					key={label}
 					initial={{ opacity: 0, y: 8 }}
 					animate={{
@@ -147,7 +147,7 @@ export function StatsCards({ questionsAnswered, accuracy }: StatsCardsProps) {
 						accentClass={accentClass}
 						index={index}
 					/>
-				</motion.div>
+				</m.div>
 			))}
 		</div>
 	);

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { FadeIn } from "@/components/shared/fade-in";
 import type { StreakMilestone } from "@/types/gamification";
 
@@ -37,7 +37,7 @@ export function ProgressMilestones({
 								delay={index * 0.1}
 								className="flex flex-col items-center"
 							>
-								<motion.div
+								<m.div
 									className={`relative z-10 flex size-10 items-center justify-center rounded-full border-4 transition-border-color transition-colors ${
 										isUnlocked
 											? "border-[--system-accent] bg-[--system-accent] text-background"
@@ -48,19 +48,19 @@ export function ProgressMilestones({
 									whileHover={{ scale: 1.1 }}
 								>
 									{isUnlocked ? (
-										<motion.span
+										<m.span
 											initial={{ scale: 0 }}
 											animate={{ scale: 1 }}
 											className="text-lg"
 										>
 											✓
-										</motion.span>
+										</m.span>
 									) : (
 										<span className="font-medium text-muted-foreground text-xs">
 											{milestone.streak}
 										</span>
 									)}
-								</motion.div>
+								</m.div>
 
 								<div className="mt-2 text-center">
 									<p

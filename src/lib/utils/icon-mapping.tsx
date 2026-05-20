@@ -13,7 +13,7 @@ import {
 	Upload01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import type { ComponentProps } from "react";
 
 export type AnimationPreset =
@@ -47,7 +47,7 @@ interface IconMappingEntry {
 
 const animationPresets: Record<
 	AnimationPreset,
-	ComponentProps<typeof motion.div>["animate"]
+	ComponentProps<typeof m.div>["animate"]
 > = {
 	spin: { rotate: 360 },
 	pulse: { scale: [1, 1.1, 1] },
@@ -60,7 +60,7 @@ const animationPresets: Record<
 
 const animationTransitions: Record<
 	AnimationPreset,
-	ComponentProps<typeof motion.div>["transition"]
+	ComponentProps<typeof m.div>["transition"]
 > = {
 	spin: { duration: 1, repeat: Infinity, ease: "linear" },
 	pulse: { duration: 1.5, repeat: Infinity },
@@ -108,7 +108,7 @@ export function AnimatedIcon({
 	name: LottieAnimationName;
 	className?: string;
 	loop?: boolean;
-} & Omit<ComponentProps<typeof motion.div>, "animate" | "transition">) {
+} & Omit<ComponentProps<typeof m.div>, "animate" | "transition">) {
 	const mapping = animationMapping[name];
 	if (!mapping) return null;
 
@@ -122,13 +122,13 @@ export function AnimatedIcon({
 		: undefined;
 
 	return (
-		<motion.div
+		<m.div
 			className={className}
 			animate={animateProps}
 			transition={transitionProps}
 			{...props}
 		>
 			<HugeiconsIcon icon={Icon} size={size} />
-		</motion.div>
+		</m.div>
 	);
 }

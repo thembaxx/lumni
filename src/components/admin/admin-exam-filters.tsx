@@ -2,7 +2,7 @@
 
 import { RadialIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -56,7 +56,7 @@ function AnimatedYearButton({
 	onClick: () => void;
 }) {
 	return (
-		<motion.div
+		<m.div
 			initial={{ opacity: 0, scale: 0.8 }}
 			animate={{ opacity: 1, scale: 1 }}
 			transition={{ delay: year * 0.03, ...springTransition }}
@@ -71,7 +71,7 @@ function AnimatedYearButton({
 			>
 				{year}
 			</Button>
-		</motion.div>
+		</m.div>
 	);
 }
 
@@ -85,7 +85,7 @@ function SubjectCheckboxItem({
 	label: string;
 }) {
 	return (
-		<motion.div
+		<m.div
 			className="flex cursor-pointer items-center gap-3 p-3 transition-colors hover:bg-muted/50"
 			initial={{ opacity: 0 }}
 			animate={{ opacity: 1 }}
@@ -93,7 +93,7 @@ function SubjectCheckboxItem({
 		>
 			<Checkbox checked={checked} onCheckedChange={onChange} />
 			<span>{label}</span>
-		</motion.div>
+		</m.div>
 	);
 }
 
@@ -136,7 +136,7 @@ export function ExamFilters({
 						<Label className="font-medium text-foreground text-sm">
 							Subjects
 						</Label>
-						<motion.div
+						<m.div
 							initial={{ opacity: 0, scale: 0.8 }}
 							animate={{ opacity: 1, scale: 1 }}
 							whileHover={{ scale: 1.05 }}
@@ -156,7 +156,7 @@ export function ExamFilters({
 									? "Deselect all"
 									: "Select all"}
 							</Button>
-						</motion.div>
+						</m.div>
 					</div>
 					<div className="max-h-48 divide-y overflow-y-auto rounded-lg border">
 						{isLoading ? (
@@ -185,7 +185,7 @@ export function ExamFilters({
 					</Label>
 					<div className="flex gap-1">
 						{EXAM_TYPES.map((type) => (
-							<motion.div
+							<m.div
 								key={type.value}
 								whileHover={{ scale: 1.02 }}
 								whileTap={{ scale: 0.98 }}
@@ -199,7 +199,7 @@ export function ExamFilters({
 								>
 									{type.label}
 								</Button>
-							</motion.div>
+							</m.div>
 						))}
 					</div>
 				</div>

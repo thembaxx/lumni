@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -78,7 +78,7 @@ export function StudySetCreator({ className }: StudySetCreatorProps) {
 		});
 
 	return (
-		<motion.div
+		<m.div
 			className={cn("mx-auto w-full max-w-2xl", className)}
 			initial={{ opacity: 0, y: 8 }}
 			animate={{ opacity: 1, y: 0 }}
@@ -219,6 +219,6 @@ export function StudySetCreator({ className }: StudySetCreatorProps) {
 					/>
 				</DialogContent>
 			</Dialog>
-		</motion.div>
+		</m.div>
 	);
 }

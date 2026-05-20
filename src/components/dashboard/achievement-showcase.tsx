@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useGamification } from "@/hooks/use-gamification";
 import { cn } from "@/lib/shared";
@@ -22,7 +22,7 @@ export function AchievementShowcase() {
 	const latest = earned.slice(-3).reverse();
 
 	return (
-		<motion.div
+		<m.div
 			initial={{ opacity: 0, y: 16 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.4, ease: iOSEase }}
@@ -60,6 +60,6 @@ export function AchievementShowcase() {
 					</div>
 				</CardContent>
 			</Card>
-		</motion.div>
+		</m.div>
 	);
 }
