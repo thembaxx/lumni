@@ -17,8 +17,11 @@ export class AppError extends Error {
 		return new AppError(message, "NOT_FOUND", 404, context);
 	}
 
-	static unauthorized(message = "Unauthorized") {
-		return new AppError(message, "UNAUTHORIZED", 401);
+	static unauthorized(
+		message = "Unauthorized",
+		context?: Record<string, unknown>,
+	) {
+		return new AppError(message, "UNAUTHORIZED", 401, context);
 	}
 
 	static internal(message: string, context?: Record<string, unknown>) {

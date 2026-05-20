@@ -23,18 +23,25 @@ function LazySyntaxHighlighter({
 		Promise.all([
 			import("react-syntax-highlighter"),
 			import("react-syntax-highlighter/dist/esm/styles/prism"),
-		]).then(([highlighterMod, styleMod]) => {
-			if (cancelled) return;
-			type HighlighterMod = {
-				Prism: React.ComponentType<Record<string, unknown>>;
-			};
-			type StyleMod = { oneLight: Record<string, unknown> };
-			ref.current = {
-				SyntaxHighlighter: (highlighterMod as unknown as HighlighterMod).Prism,
-				style: (styleMod as unknown as StyleMod).oneLight,
-			};
-			setLoaded(true);
-		});
+		])
+			.then(([highlighterMod, styleMod]) => {
+				if (cancelled) return;
+				type HighlighterMod = {
+					Prism: React.ComponentType<Record<string, unknown>>;
+				};
+				type StyleMod = { oneLight: Record<string, unknown> };
+				ref.current = {
+					SyntaxHighlighter: (highlighterMod as unknown as HighlighterMod)
+						.Prism,
+					style: (styleMod as unknown as StyleMod).oneLight,
+				};
+				setLoaded(true);
+			})
+			.catch((error) => {
+				if (cancelled) return;
+				console.error("Failed to load syntax highlighter:", error);
+				setLoaded(true);
+			});
 		return () => {
 			cancelled = true;
 		};

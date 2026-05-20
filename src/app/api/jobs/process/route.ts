@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
+import { AppError } from "@/lib/errors";
 import { jobProcessor } from "@/lib/orchestrator/job-processor";
 
 export const dynamic = "force-dynamic";
@@ -7,10 +8,7 @@ export async function POST(req: NextRequest) {
 	try {
 		const raw = await req.json().catch(() => null);
 		if (!raw || typeof raw !== "object") {
-			return NextResponse.json(
-				{ error: "Invalid request body" },
-				{ status: 400 },
-			);
+			throw AppError.badRequest("Invalid request body");
 		}
 		const body = raw as Record<string, unknown>;
 		const limit =

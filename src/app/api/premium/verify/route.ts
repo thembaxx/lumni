@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
+import { AppError } from "@/lib/errors";
 
 export async function POST(_req: Request) {
 	try {
 		const body = await _req.json();
 		if (!body || typeof body !== "object") {
-			return NextResponse.json({ error: "Invalid body" }, { status: 400 });
+			throw AppError.badRequest("Invalid body");
 		}
 		const isPremium = body.isPremium === true;
 

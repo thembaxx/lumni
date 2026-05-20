@@ -17,8 +17,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
 		"/premium",
 		"/upload",
 		"/exam",
-		"/bookmarks",
-		"/review",
 		"/solve",
 		"/problems",
 		"/flashcards/browse",

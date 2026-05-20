@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { listDocuments } from "@/lib/db/client";
+import { AppError } from "@/lib/errors";
 import { requireAdmin } from "@/lib/server/auth";
 
 export async function POST(request: NextRequest) {
@@ -14,15 +15,13 @@ export async function POST(request: NextRequest) {
 			typeof title !== "string" ||
 			typeof body !== "string"
 		) {
-			return NextResponse.json(
-				{ error: "title and body are required and must be strings" },
-				{ status: 400 },
+			throw AppError.badRequest(
+				"title and body are required and must be strings",
 			);
 		}
 		if (title.length > 100 || body.length > 500) {
-			return NextResponse.json(
-				{ error: "title (max 100) or body (max 500) too long" },
-				{ status: 400 },
+			throw AppError.badRequest(
+				"title must be 100 characters or less and body must be 500 characters or less",
 			);
 		}
 
