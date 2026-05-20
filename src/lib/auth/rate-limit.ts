@@ -27,7 +27,10 @@ export async function attemptSignIn(email: string): Promise<RateLimitResult> {
 			return await res.json();
 		}
 	} catch (error) {
-		console.warn("[RateLimit] Server check failed, falling back to in-memory:", error);
+		console.warn(
+			"[RateLimit] Server check failed, falling back to in-memory:",
+			error,
+		);
 	}
 
 	// Fallback to in-memory RateLimiter
@@ -58,14 +61,19 @@ export async function recordSuccessfulSignIn(email: string): Promise<void> {
 			return;
 		}
 	} catch (error) {
-		console.warn("[RateLimit] Server success log failed, falling back to in-memory:", error);
+		console.warn(
+			"[RateLimit] Server success log failed, falling back to in-memory:",
+			error,
+		);
 	}
 
 	// Fallback to in-memory RateLimiter
 	rateLimiter.reset(key);
 }
 
-export async function attemptMagicLink(email: string): Promise<RateLimitResult> {
+export async function attemptMagicLink(
+	email: string,
+): Promise<RateLimitResult> {
 	const key = normalizeEmail(email);
 
 	try {
@@ -79,7 +87,10 @@ export async function attemptMagicLink(email: string): Promise<RateLimitResult> 
 			return await res.json();
 		}
 	} catch (error) {
-		console.warn("[RateLimit] Server magic-link check failed, falling back to in-memory:", error);
+		console.warn(
+			"[RateLimit] Server magic-link check failed, falling back to in-memory:",
+			error,
+		);
 	}
 
 	// Fallback to in-memory RateLimiter

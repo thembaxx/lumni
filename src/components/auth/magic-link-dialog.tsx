@@ -44,7 +44,7 @@ type AuthDialogProps = {
 export function MagicLinkDialog({
 	open,
 	onOpenChange,
-	onSuccess,
+	onSuccess: _onSuccess,
 }: AuthDialogProps) {
 	const [email, setEmail] = useState("");
 	const [error, setError] = useState("");

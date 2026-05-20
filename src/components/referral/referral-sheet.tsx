@@ -73,6 +73,7 @@ export function ReferralSheet() {
 									{info.code}
 								</div>
 								<button
+									type="button"
 									onClick={handleCopy}
 									className="flex items-center gap-1.5 font-medium text-accent text-xs hover:underline"
 								>

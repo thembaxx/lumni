@@ -50,6 +50,7 @@ export function QuestionCardHeader({
 				</div>
 				<div className="flex items-center gap-1">
 					<button
+						type="button"
 						onClick={onBookmarkToggle}
 						className="flex size-8 items-center justify-center rounded-full transition-colors hover:bg-muted"
 						aria-label={bookmarked ? "Remove bookmark" : "Bookmark question"}
@@ -63,6 +64,7 @@ export function QuestionCardHeader({
 							strokeWidth="2"
 							className={bookmarked ? "text-warning" : "text-muted-foreground"}
 						>
+							<title>Bookmark</title>
 							<path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
 						</svg>
 					</button>

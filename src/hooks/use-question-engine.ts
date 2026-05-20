@@ -80,7 +80,7 @@ export function useQuestionEngine(
 	const query = useQuery({
 		queryKey: ["questionEngine", params ? JSON.stringify(params) : undefined],
 		queryFn: async () => {
-			const result = await generateQuestions(params!);
+			const result = await generateQuestions(params as GenerationParams);
 			return result;
 		},
 		enabled: options?.enabled ?? !!params,

@@ -158,6 +158,7 @@ export default function FlashcardBrowsePage() {
 				<div className="space-y-3">
 					{Array.from({ length: 5 }).map((_, i) => (
 						<div
+							// biome-ignore lint/suspicious/noArrayIndexKey: static skeleton loader
 							key={i}
 							className="h-24 animate-pulse rounded-xl bg-muted/30"
 						/>

@@ -92,6 +92,7 @@ function PartAnswerInput({
 				{part.options.map((opt) => (
 					<button
 						key={opt.id}
+						type="button"
 						disabled={disabled}
 						onClick={() => onChange(opt.id)}
 						className={cn(
@@ -210,6 +211,7 @@ function QuestionNavigator({
 							return (
 								<button
 									key={item.part.id}
+									type="button"
 									onClick={() => onNavigate(item.part.id)}
 									className={cn(
 										"size-8 rounded-lg font-medium text-xs transition-colors",
@@ -236,7 +238,7 @@ function ExamResults({
 	results,
 	flatParts,
 	answers,
-	metadata,
+	metadata: _metadata,
 	onDashboard,
 	onReview,
 }: {
@@ -317,6 +319,7 @@ function ExamResults({
 							)}
 						>
 							<button
+								type="button"
 								onClick={() => setExpandedId(isExpanded ? null : item.part.id)}
 								className="flex w-full items-center justify-between p-4 text-left"
 							>
@@ -712,6 +715,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 				<div className="mx-auto flex w-full max-w-5xl items-center justify-between px-4 py-3">
 					<div className="flex items-center gap-3">
 						<button
+							type="button"
 							onClick={() => setPhase("submitting")}
 							className="-ml-2 rounded-xl p-2 transition-colors hover:bg-muted"
 						>
@@ -745,6 +749,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 
 						{sessionMode === "practice" && (
 							<button
+								type="button"
 								onClick={() => setPaused((p) => !p)}
 								className="rounded-xl p-2 transition-colors hover:bg-muted"
 							>
@@ -757,6 +762,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 						)}
 
 						<button
+							type="button"
 							onClick={() => setShowPalette((p) => !p)}
 							className="relative rounded-xl p-2 transition-colors hover:bg-muted"
 						>
@@ -821,6 +827,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 									</div>
 
 									<button
+										type="button"
 										onClick={() => currentPartId && toggleFlag(currentPartId)}
 										className={cn(
 											"rounded-xl p-2 transition-colors",

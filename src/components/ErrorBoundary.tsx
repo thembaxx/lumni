@@ -59,7 +59,7 @@ const ErrorFallback: ComponentType<{
 			<p className="mb-6 max-w-xl text-center text-muted-foreground">
 				{error.message}
 			</p>
-			<button onClick={resetError} className="btn btn-primary">
+			<button type="button" onClick={resetError} className="btn btn-primary">
 				Try again
 			</button>
 		</div>

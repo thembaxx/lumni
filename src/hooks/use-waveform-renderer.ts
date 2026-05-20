@@ -37,9 +37,9 @@ export function useWaveformRenderer({
 	baseBarHeight,
 	fadeEdges,
 	fadeWidth,
-	sensitivity,
+	sensitivity: _sensitivity,
 	updateRate,
-	historySize,
+	historySize: _historySize,
 	mode,
 }: UseWaveformRendererOptions): UseWaveformRendererReturn {
 	const canvasRef = useRef<HTMLCanvasElement>(null);

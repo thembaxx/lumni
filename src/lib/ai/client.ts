@@ -39,7 +39,6 @@ export class AIClient {
 	private providers: AIProvider[];
 
 	constructor(config: AIConfig) {
-		this.config = config;
 		this.providers = createProviderChain(config);
 	}
 

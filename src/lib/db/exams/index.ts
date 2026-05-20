@@ -2,6 +2,8 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import initSqlJs, { type Database } from "sql.js";
 
+type QueryExecResult = { columns: string[]; values: unknown[][] };
+
 let db: Database | null = null;
 let dbPath: string = "";
 
@@ -102,7 +104,7 @@ export function getAllExamPapers() {
 
 export function getExamPapersBySubject(subjectCode: string, year?: number) {
 	if (!db) return [];
-	let result;
+	let result: QueryExecResult[];
 	if (year) {
 		result = db.exec(
 			"SELECT id, subject_code, subject_name, year, paper_number, type, paper_id, memo_id, file_url, file_key, original_file_name, uploaded_at FROM exam_papers WHERE subject_code = ? AND year = ? ORDER BY paper_number",

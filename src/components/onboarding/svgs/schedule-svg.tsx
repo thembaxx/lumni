@@ -10,6 +10,7 @@ export function ScheduleSVG() {
 			className="h-full w-full"
 			preserveAspectRatio="xMidYMid meet"
 		>
+			<title>Schedule</title>
 			<motion.g
 				initial={{ opacity: 0, scale: 0.9 }}
 				animate={{ opacity: 1, scale: 1 }}
@@ -50,7 +51,7 @@ export function ScheduleSVG() {
 					const y = 120 + 50 * Math.sin(rad);
 					return (
 						<circle
-							key={i}
+							key={`angle-${angle}`}
 							cx={x}
 							cy={y}
 							r={3 + (i % 2)}

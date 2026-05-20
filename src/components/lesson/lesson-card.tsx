@@ -113,17 +113,10 @@ export function LessonCard({
 				) : (
 					<m.div key={`lesson-${id}-closed`} layoutId={`lesson-${id}`}>
 						<Card className="w-full rounded-2xl p-5 text-left shadow-sm">
-							<div
+							<button
+								type="button"
 								onClick={() => setOpenId(id)}
-								className="flex cursor-pointer flex-col gap-3 transition-[scale,colors] duration-200 hover:border-[--system-accent]/20 active:scale-[0.96]"
-								role="button"
-								tabIndex={0}
-								onKeyDown={(e) => {
-									if (e.key === "Enter" || e.key === " ") {
-										e.preventDefault();
-										setOpenId(id);
-									}
-								}}
+								className="flex w-full flex-col gap-3 text-left transition-[scale,colors] duration-200 hover:border-[--system-accent]/20 active:scale-[0.96]"
 								aria-label={`${title} - ${difficulty} lesson`}
 							>
 								<div className="flex items-start justify-between">
@@ -151,7 +144,7 @@ export function LessonCard({
 										<MarkdownRenderer content={summary} />
 									</div>
 								</div>
-							</div>
+							</button>
 
 							<div className="mt-3 flex items-center gap-2">
 								<div className={isPlaying ? "animate-pulse" : ""}>

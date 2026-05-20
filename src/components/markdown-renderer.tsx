@@ -60,7 +60,15 @@ function LazyCodeBlock({
 		);
 	}
 
-	const { SyntaxHighlighter, style } = modRef.current!;
+	const mod = modRef.current;
+	if (!mod) {
+		return (
+			<pre className="my-3 overflow-hidden rounded-lg bg-[#1e1e1e] p-4 font-mono text-sm text-white/80">
+				<code>{children}</code>
+			</pre>
+		);
+	}
+	const { SyntaxHighlighter, style } = mod;
 	return (
 		<SyntaxHighlighter
 			language={language}

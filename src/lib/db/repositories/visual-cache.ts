@@ -30,7 +30,7 @@ export async function cacheVisual(
 	};
 
 	if (existing) {
-		await offlineDB.visuals.update(existing.id!, record);
+		await offlineDB.visuals.update(existing.id ?? 0, record);
 	} else {
 		await offlineDB.visuals.add(record as CachedVisual);
 	}
@@ -47,7 +47,7 @@ export async function getCachedVisual(
 	if (!entry) return null;
 
 	if (Date.now() > entry.expiresAt) {
-		await offlineDB.visuals.delete(entry.id!);
+		await offlineDB.visuals.delete(entry.id ?? 0);
 		return null;
 	}
 

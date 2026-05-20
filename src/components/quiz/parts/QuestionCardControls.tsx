@@ -30,22 +30,22 @@ interface QuestionCardControlsProps {
 }
 
 export function QuestionCardControls({
-	isMCQ,
-	options,
-	handleMCQSelect,
-	handleMCQSubmit,
-	handleGrade,
-	isGrading,
+	isMCQ: _isMCQ,
+	options: _options,
+	handleMCQSelect: _handleMCQSelect,
+	handleMCQSubmit: _handleMCQSubmit,
+	handleGrade: _handleGrade,
+	isGrading: _isGrading,
 	onNext,
 	isSubmitted,
 	questionNumber,
 	totalQuestions,
-	effectiveSubject,
-	solver,
-	isSolverEnabled,
-	handleFollowUp,
-	followUpInput,
-	setFollowUpInput,
+	effectiveSubject: _effectiveSubject,
+	solver: _solver,
+	isSolverEnabled: _isSolverEnabled,
+	handleFollowUp: _handleFollowUp,
+	followUpInput: _followUpInput,
+	setFollowUpInput: _setFollowUpInput,
 }: QuestionCardControlsProps) {
 	return (
 		<div

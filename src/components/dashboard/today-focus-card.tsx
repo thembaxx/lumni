@@ -80,7 +80,7 @@ export function TodayFocusCard() {
 		queryKey: ["next-topics", selectedSubjectId],
 		queryFn: async () => {
 			const res = await fetch(
-				`/api/engine/next-topics?subject=${encodeURIComponent(selectedSubjectId!)}`,
+				`/api/engine/next-topics?subject=${encodeURIComponent(selectedSubjectId ?? "")}`,
 			);
 			if (!res.ok) throw new Error("Failed to fetch focus");
 			return res.json() as Promise<{

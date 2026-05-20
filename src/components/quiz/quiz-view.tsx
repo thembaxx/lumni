@@ -46,7 +46,7 @@ export function QuizView({
 	maxTime = 90 * 60,
 	onQuit,
 	onFinish,
-	className,
+	className: _className,
 }: QuizViewProps) {
 	const {
 		selectedSubject,
@@ -271,9 +271,8 @@ export function QuizView({
 	}
 
 	return (
-		<div
+		<section
 			className="grid min-h-dvh grid-cols-12 gap-0 bg-background"
-			role="region"
 			aria-labelledby="quiz-title"
 		>
 			<main
@@ -320,6 +319,6 @@ export function QuizView({
 					<div className="aspect-square h-full w-full max-w-xs animate-float-slow rounded-3xl bg-system-accent/10 blur-2xl" />
 				</div>
 			</div>
-		</div>
+		</section>
 	);
 }

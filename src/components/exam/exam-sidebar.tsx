@@ -22,7 +22,7 @@ export function ExamSidebar({
 	flags,
 	currentPartId,
 	onNavigate,
-	onClose,
+	onClose: _onClose,
 }: ExamSidebarProps) {
 	const getStatus = (
 		sectionId: string,

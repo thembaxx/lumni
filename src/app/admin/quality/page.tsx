@@ -17,7 +17,7 @@ import {
 	loadQualityRecords,
 } from "@/lib/utils/engine-quality";
 
-function Timestamp({ time }: { time: string }) {
+function Timestamp({ time }: { time: string | number }) {
 	const [label, setLabel] = useState("");
 
 	useEffect(() => {

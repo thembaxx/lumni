@@ -35,7 +35,7 @@ const difficultyColors = {
 };
 
 export function AssessmentHeader({
-	title,
+	title: _title,
 	elapsedTime,
 	currentQuestionIndex,
 	totalQuestions,

@@ -73,7 +73,7 @@ describe("createGeminiProvider", () => {
 
 		const callArgs = (globalThis.fetch as ReturnType<typeof mock>).mock
 			.calls[0] as unknown as [string, { body?: string }];
-		const body = JSON.parse(callArgs[1].body!);
+		const body = JSON.parse(callArgs[1].body ?? "{}");
 		expect(body.system_instruction).toBeDefined();
 		expect(body.system_instruction.parts[0].text).toBe("be concise");
 		restoreFetch(orig);
@@ -116,7 +116,7 @@ describe("createGeminiProvider", () => {
 
 		const callArgs = (globalThis.fetch as ReturnType<typeof mock>).mock
 			.calls[0] as unknown as [string, { body?: string }];
-		const body = JSON.parse(callArgs[1].body!);
+		const body = JSON.parse(callArgs[1].body ?? "{}");
 		const roles = body.contents.map((c: { role: string }) => c.role);
 		expect(roles[0]).toBe("model");
 		expect(roles[1]).toBe("user");
@@ -163,7 +163,7 @@ describe("createGroqProvider", () => {
 
 		const callArgs = (globalThis.fetch as ReturnType<typeof mock>).mock
 			.calls[0] as unknown as [string, { body?: string }];
-		const body = JSON.parse(callArgs[1].body!);
+		const body = JSON.parse(callArgs[1].body ?? "{}");
 		expect(body.messages[0].role).toBe("system");
 		expect(body.messages[0].content).toBe("be helpful");
 		expect(body.messages[1].role).toBe("user");
@@ -194,7 +194,7 @@ describe("createGroqProvider", () => {
 
 		const callArgs = (globalThis.fetch as ReturnType<typeof mock>).mock
 			.calls[0] as unknown as [string, { body?: string }];
-		const body = JSON.parse(callArgs[1].body!);
+		const body = JSON.parse(callArgs[1].body ?? "{}");
 		expect(body.temperature).toBe(0.7);
 		expect(body.max_tokens).toBe(2048);
 		restoreFetch(orig);
@@ -213,7 +213,7 @@ describe("createGroqProvider", () => {
 
 		const callArgs = (globalThis.fetch as ReturnType<typeof mock>).mock
 			.calls[0] as unknown as [string, { body?: string }];
-		const body = JSON.parse(callArgs[1].body!);
+		const body = JSON.parse(callArgs[1].body ?? "{}");
 		expect(body.messages[0].role).toBe("assistant");
 		restoreFetch(orig);
 	});

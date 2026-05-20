@@ -193,8 +193,8 @@ export function ExamEngine({
 											Instructions
 										</p>
 										<ul className="flex flex-col gap-1">
-											{section.instructions.map((inst, idx) => (
-												<li key={idx} className="text-muted-foreground text-xs">
+											{section.instructions.map((inst) => (
+												<li key={inst} className="text-muted-foreground text-xs">
 													{inst}
 												</li>
 											))}

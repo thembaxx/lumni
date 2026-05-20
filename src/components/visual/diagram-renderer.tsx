@@ -128,6 +128,7 @@ function CustomSvgRenderer({ data }: { data: Record<string, unknown> }) {
 	return (
 		<div
 			className="w-full overflow-auto rounded-lg border bg-background p-4"
+			// biome-ignore lint/security/noDangerouslySetInnerHtml: sanitized SVG rendering
 			dangerouslySetInnerHTML={{ __html: sanitizeSvg(rawSvg) }}
 		/>
 	);

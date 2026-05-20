@@ -157,8 +157,8 @@ export function generateStudyPlan(
 
 	for (const d of studyDates) {
 		const key = d.toISOString().split("T")[0];
-		let remaining = dayRemaining.get(key)!;
-		const todaySubjects = daySubjects.get(key)!;
+		let remaining = dayRemaining.get(key) ?? 0;
+		const todaySubjects = daySubjects.get(key) ?? new Set<string>();
 
 		for (let i = unassigned.length - 1; i >= 0; i--) {
 			if (remaining <= 0) break;
@@ -184,7 +184,7 @@ export function generateStudyPlan(
 	// Second pass: spillover into remaining daily capacity (subject limit relaxed)
 	for (const d of studyDates) {
 		const key = d.toISOString().split("T")[0];
-		let remaining = dayRemaining.get(key)!;
+		let remaining = dayRemaining.get(key) ?? 0;
 
 		for (let i = unassigned.length - 1; i >= 0; i--) {
 			if (remaining <= 0) break;
@@ -200,7 +200,8 @@ export function generateStudyPlan(
 
 	// Third pass: overflow onto the end date
 	while (unassigned.length > 0) {
-		const cand = unassigned.shift()!;
+		const cand = unassigned.shift();
+		if (!cand) break;
 		cand.topic.scheduledDate = endDate.toISOString().split("T")[0];
 		assigned.push(cand.topic);
 	}

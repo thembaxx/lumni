@@ -63,7 +63,7 @@ function StatCard({
 	value,
 	icon: Icon,
 	colorClass,
-	accentClass,
+	accentClass: _accentClass,
 	index,
 }: StatItemProps) {
 	const shouldReduceMotion = useReducedMotion();

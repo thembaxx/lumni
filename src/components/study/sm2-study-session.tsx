@@ -9,7 +9,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useSpacedRepetition } from "@/hooks/use-spaced-repetition";
 import { SM2_QUALITIES } from "@/lib/utils/spaced-repetition";
 
-export function SM2StudySession({ subject }: { subject?: string }) {
+export function SM2StudySession({ subject: _subject }: { subject?: string }) {
 	const { dueCards, newCards, review, stats } = useSpacedRepetition();
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [showAnswer, setShowAnswer] = useState(false);

@@ -29,9 +29,9 @@ type SubjectsDrawerProps = {
 export function SubjectsDrawer({
 	children,
 	onSelect,
-	userId,
-	selectedSubjects = EMPTY_SELECTION,
-	onSelectionChange,
+	userId: _userId,
+	selectedSubjects: _selectedSubjects = EMPTY_SELECTION,
+	onSelectionChange: _onSelectionChange,
 }: SubjectsDrawerProps) {
 	const [searchQuery, setSearchQuery] = useState("");
 	const { data: subjects, isLoading, error } = useFilteredSubjects(searchQuery);

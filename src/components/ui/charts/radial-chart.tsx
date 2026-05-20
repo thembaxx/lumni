@@ -33,6 +33,7 @@ export function RadialChart({
 				viewBox="0 0 36 36"
 				className="absolute inset-0 size-full -rotate-90"
 			>
+				<title>Progress</title>
 				<circle
 					cx="18"
 					cy="18"

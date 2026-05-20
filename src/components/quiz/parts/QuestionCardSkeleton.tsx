@@ -21,7 +21,10 @@ export function QuestionCardSkeleton() {
 				<div className="space-y-2">
 					<div className="flex items-center justify-between">
 						<div className="h-2 w-16 rounded bg-muted/50"></div>
-						<button className="flex h-8 w-20 items-center justify-center rounded bg-muted/50">
+						<button
+							type="button"
+							className="flex h-8 w-20 items-center justify-center rounded bg-muted/50"
+						>
 							<div className="h-4 w-4 rounded bg-muted/300"></div>
 						</button>
 					</div>

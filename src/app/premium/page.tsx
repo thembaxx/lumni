@@ -111,6 +111,7 @@ export default function PremiumPage() {
 
 					<div className="border-border/30 border-t pt-4">
 						<button
+							type="button"
 							onClick={() => router.push("/settings")}
 							className="flex w-full items-center justify-between rounded-xl border border-accent/20 bg-accent/5 p-3 text-left transition-colors hover:bg-accent/10"
 						>

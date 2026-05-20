@@ -10,6 +10,7 @@ export function WelcomeSVG() {
 			className="h-full w-full"
 			preserveAspectRatio="xMidYMid meet"
 		>
+			<title>Welcome</title>
 			<motion.g
 				initial={{ opacity: 0, scale: 0.9 }}
 				animate={{ opacity: 1, scale: 1 }}
@@ -38,6 +39,7 @@ export function WelcomeSVG() {
 					[190, 110],
 				].map(([cx, cy], i) => (
 					<circle
+						// biome-ignore lint/suspicious/noArrayIndexKey: static SVG array
 						key={i}
 						cx={cx}
 						cy={cy}

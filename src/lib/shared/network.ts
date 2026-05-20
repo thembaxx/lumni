@@ -32,7 +32,7 @@ export async function withRetry<T>(
 		}
 	}
 
-	throw lastError!;
+	throw lastError ?? new Error("Request failed after retries");
 }
 
 export function isOnline(): boolean {

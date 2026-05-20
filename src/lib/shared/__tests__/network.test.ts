@@ -1,11 +1,11 @@
 import { beforeAll, beforeEach, describe, expect, mock, test } from "bun:test";
 
-let setTimeoutCalls: Array<{ fn: Function }>;
+let setTimeoutCalls: Array<{ fn: (...args: unknown[]) => void }>;
 let callCount = 0;
 
 beforeAll(() => {
 	setTimeoutCalls = [];
-	globalThis.setTimeout = ((fn: Function) => {
+	globalThis.setTimeout = ((fn: (...args: unknown[]) => void) => {
 		callCount++;
 		setTimeoutCalls.push({ fn });
 		fn();

@@ -85,7 +85,7 @@ function SubjectCheckboxItem({
 	label: string;
 }) {
 	return (
-		<motion.label
+		<motion.div
 			className="flex cursor-pointer items-center gap-3 p-3 transition-colors hover:bg-muted/50"
 			initial={{ opacity: 0 }}
 			animate={{ opacity: 1 }}
@@ -93,7 +93,7 @@ function SubjectCheckboxItem({
 		>
 			<Checkbox checked={checked} onCheckedChange={onChange} />
 			<span>{label}</span>
-		</motion.label>
+		</motion.div>
 	);
 }
 

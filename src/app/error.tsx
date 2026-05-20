@@ -53,7 +53,7 @@ export default function AppError({
 							</p>
 							{caughtError.digest && (
 								<p className="ios-footnote font-mono text-[--system-text-tertiary]">
-									Error ID: {error.digest}
+									Error ID: {caughtError.digest}
 								</p>
 							)}
 						</div>

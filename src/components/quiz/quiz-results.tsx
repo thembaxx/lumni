@@ -23,9 +23,9 @@ interface QuizResultsCardProps {
 export function QuizResultsCard({
 	totalQuestions,
 	correctAnswers,
-	elapsedTime,
-	onRestart,
-	onDashboard,
+	elapsedTime: _elapsedTime,
+	onRestart: _onRestart,
+	onDashboard: _onDashboard,
 	className,
 }: QuizResultsCardProps) {
 	const accuracy = calculateAccuracy(correctAnswers, totalQuestions);
@@ -186,7 +186,7 @@ interface QuizResultsInlineProps {
 export function QuizResultsInline({
 	currentQuestionIndex,
 	totalQuestions,
-	correctAnswers,
+	correctAnswers: _correctAnswers,
 }: QuizResultsInlineProps) {
 	return (
 		<ProgressDots

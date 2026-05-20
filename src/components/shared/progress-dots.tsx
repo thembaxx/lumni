@@ -64,6 +64,7 @@ export function ProgressDots({
 
 				return (
 					<Button
+						// biome-ignore lint/suspicious/noArrayIndexKey: static progress dots
 						key={idx}
 						type="button"
 						variant="ghost"

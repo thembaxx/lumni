@@ -1,7 +1,7 @@
-import { RateLimiter } from "@/lib/rate-limiter/core";
-import { databases } from "@/lib/appwrite";
 import { Query } from "appwrite";
+import { databases } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
+import { RateLimiter } from "@/lib/rate-limiter/core";
 
 export type AICallType = "generate" | "grade" | "hint" | "visual";
 
@@ -110,7 +110,10 @@ export class DailyCallTracker {
 					resetAt,
 				};
 			} catch (error) {
-				console.warn("[DailyCallTracker] Appwrite query failed, falling back to in-memory:", error);
+				console.warn(
+					"[DailyCallTracker] Appwrite query failed, falling back to in-memory:",
+					error,
+				);
 			}
 		}
 
@@ -154,7 +157,10 @@ export class DailyCallTracker {
 				);
 				return;
 			} catch (error) {
-				console.warn("[DailyCallTracker] Appwrite increment failed, falling back to in-memory:", error);
+				console.warn(
+					"[DailyCallTracker] Appwrite increment failed, falling back to in-memory:",
+					error,
+				);
 			}
 		}
 
@@ -177,7 +183,9 @@ export class DailyCallTracker {
 
 	async getUsage(
 		userId: string = "anonymous",
-	): Promise<Record<AICallType, { count: number; tokens: number; limit: number }>> {
+	): Promise<
+		Record<AICallType, { count: number; tokens: number; limit: number }>
+	> {
 		const startOfToday = new Date();
 		startOfToday.setHours(0, 0, 0, 0);
 		const todayStr = startOfToday.toISOString();
@@ -205,7 +213,9 @@ export class DailyCallTracker {
 					const count = res.total;
 					const tokens = res.documents.reduce((sum, doc) => {
 						try {
-							const meta = JSON.parse((doc as Record<string, unknown>).metadata as string);
+							const meta = JSON.parse(
+								(doc as Record<string, unknown>).metadata as string,
+							);
 							return sum + ((meta as Record<string, number>).tokens || 0);
 						} catch {
 							return sum;
@@ -220,7 +230,10 @@ export class DailyCallTracker {
 				}
 				return result;
 			} catch (error) {
-				console.warn("[DailyCallTracker] Appwrite getUsage failed, falling back to in-memory:", error);
+				console.warn(
+					"[DailyCallTracker] Appwrite getUsage failed, falling back to in-memory:",
+					error,
+				);
 			}
 		}
 
@@ -267,7 +280,10 @@ export class DailyCallTracker {
 					limit: GLOBAL_LIMIT_TOTAL,
 				};
 			} catch (error) {
-				console.warn("[DailyCallTracker] Appwrite getGlobalUsage failed, falling back to in-memory:", error);
+				console.warn(
+					"[DailyCallTracker] Appwrite getGlobalUsage failed, falling back to in-memory:",
+					error,
+				);
 			}
 		}
 

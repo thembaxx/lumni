@@ -98,7 +98,7 @@ export function QuestionCard({
 		if (solver.followUpData?.answer) {
 			setFollowUpMsgs((prev) => [
 				...prev,
-				{ role: "assistant", content: solver.followUpData?.answer },
+				{ role: "assistant", content: solver.followUpData?.answer ?? "" },
 			]);
 		}
 	}, [solver.followUpData]);

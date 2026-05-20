@@ -17,7 +17,7 @@ interface ListCellProps {
 }
 
 function ListCell({
-	leading,
+	leading: _leading,
 	title,
 	subtitle,
 	trailing,

@@ -10,6 +10,7 @@ export function SubjectsSVG() {
 			className="h-full w-full"
 			preserveAspectRatio="xMidYMid meet"
 		>
+			<title>Subjects</title>
 			<motion.g
 				initial={{ opacity: 0, scale: 0.9 }}
 				animate={{ opacity: 1, scale: 1 }}
@@ -35,6 +36,7 @@ export function SubjectsSVG() {
 					const y = 85 - i * 4;
 					const hues = ["var(--chart-2)", "var(--chart-3)", "var(--chart-4)"];
 					return (
+						// biome-ignore lint/suspicious/noArrayIndexKey: static SVG array
 						<g key={i}>
 							<rect
 								x={x}
@@ -89,6 +91,7 @@ export function SubjectsSVG() {
 					[190, 160, 0.8],
 				].map(([x, y, s], i) => (
 					<rect
+						// biome-ignore lint/suspicious/noArrayIndexKey: static SVG array
 						key={i}
 						x={x}
 						y={y}

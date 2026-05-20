@@ -44,7 +44,7 @@ export function PartRenderer({
 		case "matching":
 			return (
 				<MatchingInput
-					table={part.table!}
+					table={part.table ?? { headers: [], rows: [] }}
 					value={(value as Record<string, string>) || {}}
 					onChange={(pairs) => onChange(JSON.stringify(pairs))}
 					disabled={disabled}

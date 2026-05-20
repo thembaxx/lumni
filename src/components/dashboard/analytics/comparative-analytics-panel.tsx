@@ -23,7 +23,7 @@ export function ComparativeAnalyticsPanel() {
 
 	const comparativeQuery = useQuery({
 		queryKey: ["comparative-analytics", user?.$id],
-		queryFn: () => analyticsService.getComparativeAnalytics(user?.$id),
+		queryFn: () => analyticsService.getComparativeAnalytics(user?.$id ?? ""),
 		enabled: !!user?.$id && !!analytics && !isLoading,
 		staleTime: 5 * 60 * 1000,
 	});
@@ -45,7 +45,7 @@ export function ComparativeAnalyticsPanel() {
 			await Promise.all(
 				weakSubjects.map(async (subject) => {
 					const data = await analyticsService.getSubjectTrend(
-						user?.$id,
+						user?.$id ?? "",
 						subject,
 					);
 					trends[subject] = data;
@@ -77,6 +77,7 @@ export function ComparativeAnalyticsPanel() {
 						stroke="currentColor"
 						viewBox="0 0 24 24"
 					>
+						<title>No data</title>
 						<path
 							strokeLinecap="round"
 							strokeLinejoin="round"
@@ -89,7 +90,7 @@ export function ComparativeAnalyticsPanel() {
 				<p className="mb-4 text-muted-foreground">
 					Complete some quizzes to see your performance analytics.
 				</p>
-				<Button render={<a href="/quiz" />} nativeButton={false}>
+				<Button render={<a href="/quiz">Start Quiz</a>} nativeButton={false}>
 					Start Quiz
 				</Button>
 			</div>
@@ -109,6 +110,7 @@ export function ComparativeAnalyticsPanel() {
 								stroke="currentColor"
 								viewBox="0 0 24 24"
 							>
+								<title>Performance percentile</title>
 								<path
 									strokeLinecap="round"
 									strokeLinejoin="round"
@@ -163,6 +165,7 @@ export function ComparativeAnalyticsPanel() {
 										stroke="currentColor"
 										viewBox="0 0 24 24"
 									>
+										<title>Subject performance comparison</title>
 										<path
 											strokeLinecap="round"
 											strokeLinejoin="round"
@@ -183,6 +186,7 @@ export function ComparativeAnalyticsPanel() {
 										stroke="currentColor"
 										viewBox="0 0 24 24"
 									>
+										<title>Toggle details</title>
 										<path
 											strokeLinecap="round"
 											strokeLinejoin="round"
@@ -267,6 +271,7 @@ export function ComparativeAnalyticsPanel() {
 									stroke="currentColor"
 									viewBox="0 0 24 24"
 								>
+									<title>Performance trends</title>
 									<path
 										strokeLinecap="round"
 										strokeLinejoin="round"

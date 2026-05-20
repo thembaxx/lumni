@@ -21,13 +21,13 @@ export function MotionDiagram({ data }: { data: MotionData }) {
 
 	const projectileElements = useMemo(() => {
 		if (!data.projectiles) return [];
-		return data.projectiles.map((p, i) => {
+		return data.projectiles.map((p) => {
 			const t = animationFrame / 100;
 			const cx = p.startX + (p.endX - p.startX) * t;
 			const cy = p.startY + (p.endY - p.startY) * t;
 
 			return (
-				<Group key={`proj-${i}`}>
+				<Group key={`proj-${p.startX}-${p.startY}-${p.endX}-${p.endY}`}>
 					<Circle
 						x={cx}
 						y={cy}
@@ -52,11 +52,11 @@ export function MotionDiagram({ data }: { data: MotionData }) {
 
 	const pathElements = useMemo(() => {
 		if (!data.paths) return [];
-		return data.paths.map((path, i) => {
+		return data.paths.map((path) => {
 			const pts = path.points.flatMap((pt) => [pt.x, pt.y]);
 			return (
 				<Line
-					key={`path-${i}`}
+					key={`path-${path.color}-${path.dashed}`}
 					points={pts}
 					stroke={path.color || "oklch(52.5% 0.142 274°)"}
 					strokeWidth={2}
@@ -69,9 +69,9 @@ export function MotionDiagram({ data }: { data: MotionData }) {
 
 	const labels = useMemo(() => {
 		if (!data.labels) return [];
-		return data.labels.map((l, i) => (
+		return data.labels.map((l) => (
 			<Text
-				key={`label-${i}`}
+				key={`label-${l.text}-${l.x}-${l.y}`}
 				x={l.x}
 				y={l.y}
 				text={l.text}

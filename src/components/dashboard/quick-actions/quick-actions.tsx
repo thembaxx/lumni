@@ -110,7 +110,7 @@ export function QuickActions() {
 							<ActionButton
 								icon={action.icon}
 								label={action.label}
-								onClick={() => router.push(action.route!)}
+								onClick={() => router.push(action.route ?? "/")}
 							/>
 						)}
 					</li>

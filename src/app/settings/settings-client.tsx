@@ -177,6 +177,7 @@ function SettingsContent() {
 							return (
 								<button
 									key={tab.value}
+									type="button"
 									role="tab"
 									aria-selected={isActive}
 									onClick={() => setActiveTab(tab.value)}

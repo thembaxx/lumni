@@ -43,7 +43,7 @@ export function AnalyticsPanel() {
 				<p className="mb-4 text-muted-foreground">
 					Complete some quizzes to see your performance analytics.
 				</p>
-				<Button render={<a href="/quiz" />}>Start Quiz</Button>
+				<Button render={<a href="/quiz">Start Quiz</a>}>Start Quiz</Button>
 			</div>
 		);
 	}
@@ -158,8 +158,8 @@ function InsightsCard({ insights }: { insights: string[] }) {
 			</CardHeader>
 			<CardContent>
 				<ul className="flex flex-col gap-2">
-					{insights.map((insight, i) => (
-						<li key={i} className="flex items-start gap-2 text-sm">
+					{insights.map((insight) => (
+						<li key={insight} className="flex items-start gap-2 text-sm">
 							<span className="text-foreground">•</span>
 							{insight}
 						</li>
@@ -187,9 +187,9 @@ function RecommendationsCard({
 			</CardHeader>
 			<CardContent>
 				<div className="flex flex-col gap-3">
-					{topRecommendations.map((rec, i) => (
+					{topRecommendations.map((rec) => (
 						<div
-							key={i}
+							key={`rec-${rec.message}`}
 							className="flex items-start gap-3 rounded-lg bg-muted/50 p-3"
 						>
 							<div

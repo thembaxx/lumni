@@ -25,8 +25,8 @@ interface QuizResultProps {
 }
 
 function AnimatedCounter({
-	value,
-	delay = 0,
+	value: _value,
+	delay: _delay = 0,
 }: {
 	value: number;
 	delay?: number;

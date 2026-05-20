@@ -115,7 +115,7 @@ export async function uploadExamPaper(
 		fileBuffer = fileContent;
 	} else {
 		const fs = await import("node:fs/promises");
-		fileBuffer = await fs.readFile(filePath!);
+		fileBuffer = await fs.readFile(filePath ?? "");
 	}
 
 	const bufferObj = Buffer.from(

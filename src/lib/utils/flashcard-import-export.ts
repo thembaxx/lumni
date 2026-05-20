@@ -3,12 +3,12 @@ import type { FlashcardSM2 } from "@/lib/flashcard-repository/types";
 export function exportToCSV(cards: FlashcardSM2[]): string {
 	const header = "front,back,subject,topic";
 	const rows = cards.map((c) => {
-		const escape = (s: string) => `"${s.replace(/"/g, '""')}"`;
+		const escapeCsv = (s: string) => `"${s.replace(/"/g, '""')}"`;
 		return [
-			escape(c.front),
-			escape(c.back),
-			escape(c.subject),
-			escape(c.topic || ""),
+			escapeCsv(c.front),
+			escapeCsv(c.back),
+			escapeCsv(c.subject),
+			escapeCsv(c.topic || ""),
 		].join(",");
 	});
 	return [header, ...rows].join("\n");

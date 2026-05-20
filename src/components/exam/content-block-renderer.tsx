@@ -53,15 +53,17 @@ export function ContentBlockRenderer({ block }: ContentBlockRendererProps) {
 					<Table>
 						<TableHeader>
 							<TableRow>
-								{headers.map((h, i) => (
-									<TableHead key={i}>{h}</TableHead>
+								{headers.map((h, _i) => (
+									<TableHead key={`hdr-${h}`}>{h}</TableHead>
 								))}
 							</TableRow>
 						</TableHeader>
 						<TableBody>
 							{rows.map((row, ri) => (
+								// biome-ignore lint/suspicious/noArrayIndexKey: table rows are positional
 								<TableRow key={ri}>
 									{row.map((cell, ci) => (
+										// biome-ignore lint/suspicious/noArrayIndexKey: table cells are positional
 										<TableCell key={ci}>
 											{cell !== null && cell !== undefined ? String(cell) : ""}
 										</TableCell>

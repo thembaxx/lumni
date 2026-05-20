@@ -72,7 +72,7 @@ const tabs = [
 	{ id: "study-sets", label: "Study Sets" },
 ];
 
-function ToolsDialogInner({ open, onOpenChange }: ToolsDialogProps) {
+function ToolsDialogInner({ open: _open, onOpenChange }: ToolsDialogProps) {
 	const initialTab = useToolsStore((s) => s.initialTab);
 	const cameraFocus = useToolsStore((s) => s.cameraFocus);
 

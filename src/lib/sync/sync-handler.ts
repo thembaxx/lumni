@@ -14,7 +14,7 @@ export async function flushOfflineData(userId: string): Promise<void> {
 				longestStreak: p.longestStreak,
 			});
 		}
-		await offlineDB.progress.delete(p.id!);
+		await offlineDB.progress.delete(p.id ?? 0);
 	}
 
 	const allAttempts = await offlineDB.quizAttempts.toArray();
@@ -28,7 +28,7 @@ export async function flushOfflineData(userId: string): Promise<void> {
 				duration: a.duration,
 				completedAt: a.completedAt,
 			});
-			await offlineDB.quizAttempts.update(a.id!, { userId });
+			await offlineDB.quizAttempts.update(a.id ?? 0, { userId });
 		}
 	}
 }

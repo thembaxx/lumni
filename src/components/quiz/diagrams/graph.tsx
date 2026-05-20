@@ -234,7 +234,7 @@ export function GraphDiagram({ data }: { data: GraphData }) {
 
 			return (
 				<Line
-					key={`fn-${i}`}
+					key={`fn-${fn.label ?? fn.color ?? fn.points.length}`}
 					points={pts}
 					stroke={fn.color || COLORS[i % COLORS.length]}
 					strokeWidth={2.5}
@@ -246,12 +246,12 @@ export function GraphDiagram({ data }: { data: GraphData }) {
 	}, [data.functions, axes]);
 
 	const asymptoteLines = useMemo(() => {
-		return (data.asymptotes || []).map((a, i) => {
+		return (data.asymptotes || []).map((a) => {
 			if (a.type === "vertical") {
 				const x = mapX(a.value, axes);
 				return (
 					<Line
-						key={`as-${i}`}
+						key={`as-${a.type}-${a.value}`}
 						points={[x, PAD.top, x, PAD.top + PLOT_H]}
 						stroke={a.color || "oklch(60% 0.2 30)"}
 						strokeWidth={1.5}
@@ -262,7 +262,7 @@ export function GraphDiagram({ data }: { data: GraphData }) {
 			const y = mapY(a.value, axes);
 			return (
 				<Line
-					key={`as-${i}`}
+					key={`as-${a.type}-${a.value}`}
 					points={[PAD.left, y, PAD.left + PLOT_W, y]}
 					stroke={a.color || "oklch(60% 0.2 30)"}
 					strokeWidth={1.5}
@@ -273,11 +273,11 @@ export function GraphDiagram({ data }: { data: GraphData }) {
 	}, [data.asymptotes, axes]);
 
 	const markedPoints = useMemo(() => {
-		return (data.points || []).map((p, i) => {
+		return (data.points || []).map((p) => {
 			const px = mapX(p.x, axes);
 			const py = mapY(p.y, axes);
 			return (
-				<Group key={`pt-${i}`}>
+				<Group key={`pt-${p.x}-${p.y}`}>
 					<Circle
 						x={px}
 						y={py}

@@ -16,7 +16,7 @@ export default function GlobalError({
 	reset: () => void;
 }) {
 	return (
-		<html>
+		<html lang="en">
 			<body
 				className="min-h-[100dvh] bg-[--system-background] p-6"
 				suppressHydrationWarning

@@ -32,8 +32,8 @@ export function EssayInput({
 				<div className="rounded-lg bg-muted/30 p-3">
 					<p className="mb-2 font-medium text-sm">Grading Criteria:</p>
 					<ul className="flex flex-col gap-1">
-						{rubric.map((c, i) => (
-							<li key={i} className="text-muted-foreground text-sm">
+						{rubric.map((c) => (
+							<li key={c.name} className="text-muted-foreground text-sm">
 								<span className="font-medium">{c.name}</span> ({c.maxScore}{" "}
 								pts): {c.description}
 							</li>

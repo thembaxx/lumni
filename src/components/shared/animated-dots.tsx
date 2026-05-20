@@ -18,6 +18,7 @@ export function AnimatedDots({
 		<div className={cn("flex items-center gap-1.5", className)}>
 			{Array.from({ length: count }).map((_, i) => (
 				<span
+					// biome-ignore lint/suspicious/noArrayIndexKey: static animation dots
 					key={i}
 					className={cn(
 						"size-1.5 rounded-full bg-muted-foreground/40",
@@ -43,6 +44,7 @@ export function AnimatedDotsMotion({
 		<div className={cn("flex items-center gap-1.5", className)}>
 			{Array.from({ length: count }).map((_, i) => (
 				<m.span
+					// biome-ignore lint/suspicious/noArrayIndexKey: static animation dots
 					key={i}
 					className={cn(
 						"size-1.5 rounded-full bg-muted-foreground/40",

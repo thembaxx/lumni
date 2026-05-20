@@ -31,7 +31,11 @@ export function createEngineHandler<T = Record<string, unknown>>(
 	const handler: RouteHandler = async (req: NextRequest) => {
 		try {
 			const budget = await checkBudget(req, budgetType);
-			if (!budget.allowed) return budget.response!;
+			if (!budget.allowed)
+				return (
+					budget.response ??
+					NextResponse.json({ error: "Budget exceeded" }, { status: 429 })
+				);
 
 			const body = await parseBody(req);
 

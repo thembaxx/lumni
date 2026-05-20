@@ -33,6 +33,7 @@ export function SourceBasedInput({
 				</div>
 			)}
 			{content?.map((block, idx) => (
+				// biome-ignore lint/suspicious/noArrayIndexKey: ContentBlock has no stable id
 				<ContentBlockRenderer key={idx} block={block} />
 			))}
 			<Textarea

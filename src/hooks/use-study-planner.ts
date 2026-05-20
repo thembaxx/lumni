@@ -168,7 +168,7 @@ export function useStudyPlanner(): UseStudyPlannerReturn {
 						subject: t.subjectId,
 						topic: t.topicId,
 						type: "quiz" as const,
-						scheduledAt: new Date(t.scheduledDate!).getTime(),
+						scheduledAt: new Date(t.scheduledDate ?? Date.now()).getTime(),
 						duration: Math.round(t.estimatedMinutes),
 						completed: t.isCompleted,
 					}));

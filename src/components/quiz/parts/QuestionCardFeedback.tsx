@@ -60,9 +60,9 @@ export function QuestionCardFeedback({
 	gradeResult,
 	question,
 	effectiveSubject,
-	isCorrect,
-	showExplanation,
-	isGrading,
+	isCorrect: _isCorrect,
+	showExplanation: _showExplanation,
+	isGrading: _isGrading,
 	solver,
 	followUpMsgs,
 	isSolverEnabled,
@@ -196,9 +196,9 @@ export function QuestionCardFeedback({
 			)}
 			{solver.data && (
 				<div className="flex flex-col gap-2 border-current/20 border-t pt-2">
-					{followUpMsgs.map((msg, i) => (
+					{followUpMsgs.map((msg) => (
 						<div
-							key={i}
+							key={`followup-${msg.content}`}
 							className={cn(
 								"max-w-[90%] rounded-xl px-4 py-3 text-sm",
 								msg.role === "user"

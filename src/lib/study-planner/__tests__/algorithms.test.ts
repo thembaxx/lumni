@@ -178,7 +178,7 @@ describe("generateStudyPlan", () => {
 			.filter(Boolean);
 		expect(scheduledDates.length).toBe(5);
 		for (const date of scheduledDates) {
-			const day = new Date(date!).getDay();
+			const day = new Date(date as string).getDay();
 			expect([1, 2, 3, 4, 5]).toContain(day);
 		}
 	});
@@ -247,7 +247,7 @@ describe("generateStudyPlan", () => {
 			.map((t) => t.scheduledDate)
 			.filter(Boolean);
 		for (const date of scheduledDates) {
-			const day = new Date(date!).getDay();
+			const day = new Date(date as string).getDay();
 			expect([0, 6]).toContain(day);
 		}
 	});

@@ -33,7 +33,7 @@ export function QuizSession({
 	totalQuestions,
 	isTransitioning,
 	elapsedTime,
-	correctAnswers,
+	correctAnswers: _correctAnswers,
 	onNext,
 	onPrevious,
 	onQuit,

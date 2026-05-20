@@ -52,7 +52,9 @@ export function StudySessionLayout({
 	}
 
 	if (state === "empty") {
-		return <SessionEmpty subject={selectedSubject} onGoBack={onQuit!} />;
+		return (
+			<SessionEmpty subject={selectedSubject} onGoBack={onQuit ?? (() => {})} />
+		);
 	}
 
 	if (state === "loading" || isLoading) {

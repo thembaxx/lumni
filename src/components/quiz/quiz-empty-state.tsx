@@ -112,7 +112,7 @@ interface QuizStartStateProps {
 	onSelect: () => void;
 }
 
-export function QuizStartState({ onSelect }: QuizStartStateProps) {
+export function QuizStartState({ onSelect: _onSelect }: QuizStartStateProps) {
 	return (
 		<div className="mt-24 flex flex-col gap-4">
 			<div className="grid grid-cols-12 items-center gap-4">
@@ -156,7 +156,7 @@ interface QuizSubjectPromptProps {
 }
 
 export function QuizSubjectPrompt({
-	onSelect,
+	onSelect: _onSelect,
 	hasSubject,
 }: QuizSubjectPromptProps) {
 	return (
@@ -200,7 +200,7 @@ export function QuizSubjectPrompt({
 
 export function QuizSelectSubject({
 	onSelect,
-	buttonLabel = "Choose Subject",
+	buttonLabel: _buttonLabel = "Choose Subject",
 }: {
 	onSelect: (subject: string) => void;
 	buttonLabel?: string;

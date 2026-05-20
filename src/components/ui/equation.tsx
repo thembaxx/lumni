@@ -49,6 +49,7 @@ export const Equation = memo(function Equation({
 			{html ? (
 				<span
 					className={className}
+					// biome-ignore lint/security/noDangerouslySetInnerHtml: KaTeX math rendering
 					dangerouslySetInnerHTML={{ __html: html }}
 					data-equation-id={uid}
 				/>

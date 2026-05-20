@@ -39,7 +39,7 @@ export function CircuitDiagram({ data }: { data: CircuitData }) {
 
 	const components = useMemo(() => {
 		if (!data.components) return [];
-		return data.components.map((comp, index) => {
+		return data.components.map((comp, _index) => {
 			if (comp.type === "resistor") {
 				const rx = comp.x || 200;
 				const ry = comp.y || 120;
@@ -51,7 +51,7 @@ export function CircuitDiagram({ data }: { data: CircuitData }) {
 				}
 				points.push(rx + 20, ry);
 				return (
-					<Group key={`component-${index}`}>
+					<Group key={`comp-${comp.type}-${comp.x}-${comp.y}`}>
 						<Line
 							points={points}
 							stroke={componentColor}
@@ -74,7 +74,7 @@ export function CircuitDiagram({ data }: { data: CircuitData }) {
 			if (comp.label?.includes("ε") || comp.label?.includes("V")) {
 				return (
 					<Text
-						key={`text-${index}`}
+						key={`text-${comp.label}-${comp.x}-${comp.y}`}
 						text={comp.label}
 						x={x + 20}
 						y={95}

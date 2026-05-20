@@ -15,7 +15,7 @@ interface QuestionCardMediaProps {
 }
 
 export function QuestionCardMedia({
-	visual,
+	visual: _visual,
 	isLoading,
 	questionMedia,
 	showDiagram,
@@ -60,8 +60,8 @@ export function QuestionCardMedia({
 				</Button>
 			</div>
 			{showDiagram &&
-				questionMedia.map((m, i) => (
-					<div key={i} className="mt-2">
+				questionMedia.map((m) => (
+					<div key={`media-${m.label}`} className="mt-2">
 						{m.diagramData && <QuestionDiagram diagram={m.diagramData} />}
 					</div>
 				))}

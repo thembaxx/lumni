@@ -13,7 +13,7 @@ export async function cacheQuestions(
 		.first();
 
 	if (existing) {
-		return offlineDB.questions.update(existing.id!, {
+		return offlineDB.questions.update(existing.id ?? 0, {
 			questions: safeJsonStringify(questions),
 			cachedAt: Date.now(),
 		});

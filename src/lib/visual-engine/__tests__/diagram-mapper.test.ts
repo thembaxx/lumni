@@ -1,4 +1,5 @@
 import { describe, expect, test } from "bun:test";
+import type { Validator } from "../diagram-mapper";
 import {
 	classifyAndMap,
 	getDataForType,
@@ -56,7 +57,7 @@ describe("getValidator", () => {
 
 describe("validators", () => {
 	describe("force-vector", () => {
-		const validate = getValidator("force-vector")!;
+		const validate = getValidator("force-vector") as Validator;
 
 		test("accepts valid force-vector data", () => {
 			expect(
@@ -78,7 +79,7 @@ describe("validators", () => {
 	});
 
 	describe("circuit", () => {
-		const validate = getValidator("circuit")!;
+		const validate = getValidator("circuit") as Validator;
 
 		test("accepts valid circuit data", () => {
 			expect(validate({ components: [{ id: "r1" }] })).toBe(true);
@@ -94,7 +95,7 @@ describe("validators", () => {
 	});
 
 	describe("wave", () => {
-		const validate = getValidator("wave")!;
+		const validate = getValidator("wave") as Validator;
 
 		test("accepts valid wave data", () => {
 			expect(validate({ amplitude: 10, frequency: 5, type: "sine" })).toBe(
@@ -116,7 +117,7 @@ describe("validators", () => {
 	});
 
 	describe("motion", () => {
-		const validate = getValidator("motion")!;
+		const validate = getValidator("motion") as Validator;
 
 		test("accepts projectiles array", () => {
 			expect(validate({ projectiles: [{ x: 0, y: 0 }] })).toBe(true);
@@ -132,7 +133,7 @@ describe("validators", () => {
 	});
 
 	describe("geometry", () => {
-		const validate = getValidator("geometry")!;
+		const validate = getValidator("geometry") as Validator;
 
 		test("accepts valid geometry data", () => {
 			expect(validate({ shapes: [{ type: "circle", radius: 5 }] })).toBe(true);
@@ -148,7 +149,7 @@ describe("validators", () => {
 	});
 
 	describe("chart", () => {
-		const validate = getValidator("chart")!;
+		const validate = getValidator("chart") as Validator;
 
 		test("accepts bar chart with data", () => {
 			expect(
@@ -185,7 +186,7 @@ describe("validators", () => {
 	});
 
 	describe("chemistry", () => {
-		const validate = getValidator("chemistry")!;
+		const validate = getValidator("chemistry") as Validator;
 
 		test("accepts valid chemistry data", () => {
 			expect(validate({ molecules: [{ formula: "H2O" }] })).toBe(true);
@@ -201,7 +202,7 @@ describe("validators", () => {
 	});
 
 	describe("graph", () => {
-		const validate = getValidator("graph")!;
+		const validate = getValidator("graph") as Validator;
 
 		test("accepts valid graph data", () => {
 			expect(
@@ -238,7 +239,7 @@ describe("validators", () => {
 	});
 
 	describe("node-flow", () => {
-		const validate = getValidator("node-flow")!;
+		const validate = getValidator("node-flow") as Validator;
 
 		test("accepts valid node-flow data", () => {
 			expect(validate({ nodes: [{ id: "n1" }] })).toBe(true);
@@ -254,7 +255,7 @@ describe("validators", () => {
 	});
 
 	describe("node", () => {
-		const validate = getValidator("node")!;
+		const validate = getValidator("node") as Validator;
 
 		test("accepts valid node data", () => {
 			expect(validate({ nodes: [{ id: "n1" }] })).toBe(true);
@@ -266,7 +267,7 @@ describe("validators", () => {
 	});
 
 	describe("custom-svg", () => {
-		const validate = getValidator("custom-svg")!;
+		const validate = getValidator("custom-svg") as Validator;
 
 		test("accepts SVG string containing svg tag", () => {
 			expect(validate({ svg: "<svg><circle/></svg>" })).toBe(true);

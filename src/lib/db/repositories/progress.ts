@@ -16,7 +16,7 @@ export async function saveProgress(
 		.first();
 
 	if (existing) {
-		return offlineDB.progress.update(existing.id!, {
+		return offlineDB.progress.update(existing.id ?? 0, {
 			...data,
 			updatedAt: Date.now(),
 		});

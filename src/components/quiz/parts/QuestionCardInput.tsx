@@ -72,8 +72,8 @@ export function QuestionCardInput({
 	question,
 	effectiveSubject,
 	state,
-	setState,
-	isMCQ,
+	setState: _setState,
+	isMCQ: _isMCQ,
 	options,
 	calcValue,
 	setCalcValue,
@@ -82,11 +82,11 @@ export function QuestionCardInput({
 	handleMCQSelect,
 	handleMCQSubmit,
 	handleGrade,
-	handleFollowUp,
-	followUpInput,
-	setFollowUpInput,
-	solver,
-	isSolverEnabled,
+	handleFollowUp: _handleFollowUp,
+	followUpInput: _followUpInput,
+	setFollowUpInput: _setFollowUpInput,
+	solver: _solver,
+	isSolverEnabled: _isSolverEnabled,
 }: QuestionCardInputProps) {
 	if (state.isSubmitted) {
 		return null;
@@ -306,7 +306,7 @@ export function QuestionCardInput({
 						)}
 					</div>
 					{subQuestions?.map((sq, i: number) => (
-						<div key={i} className="rounded-lg border p-3">
+						<div key={String((sq as Record<string, unknown>).id ?? i)} className="rounded-lg border p-3">
 							<p className="mb-2 font-medium text-sm">
 								{String((sq as Record<string, unknown>).questionText ?? "")}
 							</p>
@@ -346,7 +346,7 @@ export function QuestionCardInput({
 							: JSON.stringify(qBody.data, null, 2)}
 					</div>
 					{questions?.map((q, i: number) => (
-						<div key={i} className="rounded-lg border p-3">
+						<div key={String((q as Record<string, unknown>).id ?? i)} className="rounded-lg border p-3">
 							<p className="mb-2 font-medium text-sm">
 								{String((q as Record<string, unknown>).questionText ?? "")}
 							</p>

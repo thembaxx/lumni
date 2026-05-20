@@ -42,11 +42,11 @@ export function MatchingInput({
 				<span />
 				<span>{colB}</span>
 			</div>
-			{items.map((item, idx) => {
+			{items.map((item) => {
 				const itemLeft = item.left;
 				return (
 					<div
-						key={idx}
+						key={item.left}
 						className="grid grid-cols-[1fr_auto_1fr] items-center gap-3"
 					>
 						<span className="text-sm">{itemLeft}</span>

@@ -14,6 +14,7 @@ export default function SettingsError({
 				{error.message || "Something went wrong loading settings."}
 			</p>
 			<button
+				type="button"
 				onClick={() => reset()}
 				className="rounded-lg bg-system-accent px-4 py-2 font-semibold text-sm text-white hover:bg-system-accent/90"
 			>

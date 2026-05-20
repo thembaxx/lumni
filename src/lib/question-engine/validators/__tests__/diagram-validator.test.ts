@@ -33,7 +33,10 @@ describe("Diagram Validator", () => {
 	test("fails on missing diagramData", () => {
 		const result = validateQuestion(
 			makeQuestion({
-				body: { diagramData: undefined!, instructions: "Label" },
+				body: {
+					diagramData: undefined as unknown as never,
+					instructions: "Label",
+				},
 			}),
 		);
 		expect(result.isValid).toBe(false);

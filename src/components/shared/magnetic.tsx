@@ -13,8 +13,8 @@ interface MagneticWrapperProps {
 export function Magnetic({
 	children,
 	className,
-	stiffness = 150,
-	damping = 20,
+	stiffness: _stiffness = 150,
+	damping: _damping = 20,
 }: MagneticWrapperProps) {
 	const ref = useRef<HTMLDivElement>(null);
 	const x = useMotionValue(0);

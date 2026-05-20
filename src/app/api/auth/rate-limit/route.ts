@@ -1,6 +1,6 @@
+import { Query } from "appwrite";
 import { type NextRequest, NextResponse } from "next/server";
 import { databases } from "@/lib/appwrite";
-import { Query } from "appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 
 export const dynamic = "force-dynamic";
@@ -14,7 +14,10 @@ export async function POST(req: NextRequest) {
 		const { email: rawEmail, action } = await req.json();
 
 		if (!rawEmail || !action) {
-			return NextResponse.json({ error: "Missing email or action" }, { status: 400 });
+			return NextResponse.json(
+				{ error: "Missing email or action" },
+				{ status: 400 },
+			);
 		}
 
 		const email = normalizeEmail(rawEmail);

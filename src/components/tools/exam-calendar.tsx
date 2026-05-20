@@ -259,9 +259,17 @@ export function ExamCalendar() {
 						transition={{ duration: 0.2 }}
 						className="fixed inset-0 z-50 flex items-center justify-center p-4"
 					>
-						<div
+						<button
+							type="button"
 							className="absolute inset-0 bg-[--system-background]/80 backdrop-blur-sm"
 							onClick={() => setIsAddingExam(false)}
+							onKeyDown={(e) => {
+								if (e.key === "Enter" || e.key === " ") {
+									e.preventDefault();
+									setIsAddingExam(false);
+								}
+							}}
+							aria-label="Close"
 						/>
 						<motion.div
 							initial={{ scale: 0.95, opacity: 0, y: 10 }}

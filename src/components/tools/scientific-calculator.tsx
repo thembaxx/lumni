@@ -504,6 +504,7 @@ export function ScientificCalculator() {
 		<div
 			className="flex h-full flex-col overflow-y-auto"
 			onKeyDown={handleKeyDown}
+			role="application"
 		>
 			<div className="px-6 pt-5 pb-3">
 				<h2 className="ios-title-3 flex items-center gap-2 text-[--system-text-primary]">
@@ -603,10 +604,10 @@ export function ScientificCalculator() {
 											No history yet
 										</p>
 									)}
-									{history.map((entry, i) => (
+									{history.map((entry, _i) => (
 										<button
 											type="button"
-											key={`${i}`}
+											key={`hist-${entry}`}
 											onClick={() => {
 												const parts = entry.split(" = ");
 												if (parts[1]) {
@@ -631,6 +632,7 @@ export function ScientificCalculator() {
 					<div className="flex flex-1 flex-col gap-1.5">
 						{ROWS.map((row, rowIndex) => (
 							<div
+								// biome-ignore lint/suspicious/noArrayIndexKey: static keyboard rows
 								key={rowIndex}
 								className="grid flex-none grid-cols-5 gap-1.5"
 							>

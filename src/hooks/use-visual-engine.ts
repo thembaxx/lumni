@@ -30,7 +30,10 @@ async function fetchVisual(question: Question): Promise<VisualResult> {
 export function useVisualEngine(question: Question | null) {
 	return useQuery({
 		queryKey: ["visualEngine", question?.id],
-		queryFn: () => fetchVisual(question!),
+		queryFn: () => {
+			if (!question) throw new Error("No question provided");
+			return fetchVisual(question);
+		},
 		enabled: !!question,
 		staleTime: 1000 * 60 * 60,
 		retry: 1,

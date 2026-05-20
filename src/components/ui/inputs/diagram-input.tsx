@@ -55,9 +55,16 @@ export function DiagramInput({ value, onChange, disabled }: DiagramInputProps) {
 					)}
 				</div>
 			) : (
-				<div
-					className="cursor-pointer rounded-lg border-2 border-dashed p-8 text-center transition-colors hover:bg-muted/50"
+				<button
+					type="button"
+					className="w-full cursor-pointer rounded-lg border-2 border-dashed p-8 text-center transition-colors hover:bg-muted/50"
 					onClick={() => !disabled && fileRef.current?.click()}
+					onKeyDown={(e) => {
+						if (e.key === "Enter" || e.key === " ") {
+							e.preventDefault();
+							if (!disabled) fileRef.current?.click();
+						}
+					}}
 				>
 					<HugeiconsIcon
 						icon={CloudUploadIcon}
@@ -66,7 +73,7 @@ export function DiagramInput({ value, onChange, disabled }: DiagramInputProps) {
 					<p className="text-muted-foreground text-sm">
 						Click to upload a diagram or sketch
 					</p>
-				</div>
+				</button>
 			)}
 			<input
 				ref={fileRef}

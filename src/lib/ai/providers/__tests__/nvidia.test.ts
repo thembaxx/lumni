@@ -74,7 +74,7 @@ describe("createNvidiaProvider", () => {
 		});
 
 		const [, opts] = getFetchCallArgs();
-		const body = JSON.parse(opts.body!);
+		const body = JSON.parse(opts.body ?? "{}");
 		expect(body.model).toBe("meta/llama-3.3-70b-instruct");
 		expect(body.messages).toEqual([
 			{ role: "system", content: "be helpful" },
@@ -97,7 +97,7 @@ describe("createNvidiaProvider", () => {
 		});
 
 		const [, opts] = getFetchCallArgs();
-		const body = JSON.parse(opts.body!);
+		const body = JSON.parse(opts.body ?? "{}");
 		expect((body.messages as Array<{ role: string }>)[0].role).toBe(
 			"assistant",
 		);
@@ -125,7 +125,7 @@ describe("createNvidiaProvider", () => {
 		});
 
 		const [, opts] = getFetchCallArgs();
-		const body = JSON.parse(opts.body!);
+		const body = JSON.parse(opts.body ?? "{}");
 		expect(body.temperature).toBe(0.7);
 		expect(body.max_tokens).toBe(2048);
 		restoreFetch(orig);

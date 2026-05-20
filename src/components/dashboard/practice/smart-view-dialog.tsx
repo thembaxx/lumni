@@ -30,7 +30,7 @@ export function SmartViewDialog({
 }: SmartViewDialogProps) {
 	const { data: result, isLoading: loading } = useQuery({
 		queryKey: ["exam-markdown", exam.fileUrl],
-		queryFn: () => getExamMarkdown(exam.fileUrl!),
+		queryFn: () => getExamMarkdown(exam.fileUrl ?? ""),
 		enabled: open && !!exam.fileUrl,
 		staleTime: 5 * 60 * 1000,
 	});

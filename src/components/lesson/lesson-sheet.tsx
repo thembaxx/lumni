@@ -114,7 +114,8 @@ export function LessonSheet() {
 						{isLoading && (
 							<div className="flex flex-col gap-2">
 								{[...Array(5)].map((_, i) => (
-									<Skeleton key={`skeleton-${i}`} className="h-20 rounded-xl" />
+									// biome-ignore lint/suspicious/noArrayIndexKey: static skeleton loader
+									<Skeleton key={i} className="h-20 rounded-xl" />
 								))}
 							</div>
 						)}

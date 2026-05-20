@@ -42,7 +42,8 @@ function HighlightedText({
 		<p className="text-pretty text-muted-foreground text-sm leading-relaxed">
 			{words.map((word, index) => (
 				<span
-					key={`${currentWordIndex}-${index}`}
+					// biome-ignore lint/suspicious/noArrayIndexKey: position in text is the stable identifier
+					key={index}
 					className={cn(
 						"transition-colors duration-150 ease-[var(--ease-ios)]",
 						index === currentWordIndex &&
@@ -86,7 +87,7 @@ function ExpandedContent({
 	onPlayingChange,
 	onWordIndexChange,
 	onClose,
-	onPracticeClick,
+	onPracticeClick: _onPracticeClick,
 	quizUrl,
 }: {
 	data: ExpandableCardData;
@@ -179,17 +180,10 @@ function CollapsedContent({
 	return (
 		<m.div key={`${data.id}-closed`} layoutId={`card-${data.id}`}>
 			<div className="w-full rounded-2xl border bg-card p-5 text-left text-card-foreground shadow-sm">
-				<div
+				<button
+					type="button"
 					onClick={onOpen}
-					className="flex cursor-pointer flex-col gap-3 transition-[scale,colors] duration-200 hover:border-[--system-accent]/20 active:scale-[0.96]"
-					role="button"
-					tabIndex={0}
-					onKeyDown={(e) => {
-						if (e.key === "Enter" || e.key === " ") {
-							e.preventDefault();
-							onOpen();
-						}
-					}}
+					className="flex w-full flex-col gap-3 text-left transition-[scale,colors] duration-200 hover:border-[--system-accent]/20 active:scale-[0.96]"
 					aria-label={`${data.title} - ${data.difficulty} topic`}
 				>
 					<div className="flex items-start justify-between">
@@ -211,7 +205,7 @@ function CollapsedContent({
 							currentWordIndex={currentWordIndex}
 						/>
 					</div>
-				</div>
+				</button>
 
 				<div className="mt-3 flex items-center gap-2">
 					{isPlaying ? (

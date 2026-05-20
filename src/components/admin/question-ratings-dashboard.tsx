@@ -85,9 +85,9 @@ export function QuestionRatingsDashboard() {
 					<p className="text-muted-foreground text-sm">No ratings yet</p>
 				) : (
 					<div className="max-h-60 space-y-1 overflow-y-auto">
-						{allRatings.map((r, i) => (
+						{allRatings.map((r) => (
 							<div
-								key={i}
+								key={`${r.questionId}-${r.createdAt}`}
 								className="flex items-center gap-2 font-mono text-xs"
 							>
 								<span className="font-bold text-amber-500">{r.rating}/5</span>

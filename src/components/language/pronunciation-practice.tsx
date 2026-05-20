@@ -185,7 +185,9 @@ export function PronunciationPractice() {
 									controls
 									src={URL.createObjectURL(audioBlob)}
 									className="w-full max-w-md"
-								/>
+								>
+									<track kind="captions" />
+								</audio>
 							</div>
 						)}
 

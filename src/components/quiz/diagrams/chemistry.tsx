@@ -84,7 +84,7 @@ function renderMolecule(mol: Molecule, molIndex: number, offsetX: number) {
 		{ dx1: 0, dy1: -3, dx2: 0, dy2: 3 },
 	];
 
-	mol.bonds.forEach((bond, bIdx) => {
+	mol.bonds.forEach((bond, _bIdx) => {
 		const from = mol.atoms[bond.fromIndex];
 		const to = mol.atoms[bond.toIndex];
 		if (!from || !to) return;
@@ -98,7 +98,7 @@ function renderMolecule(mol: Molecule, molIndex: number, offsetX: number) {
 			const offset = bondOffsets[i] || { dx1: 0, dy1: 0, dx2: 0, dy2: 0 };
 			elements.push(
 				<Line
-					key={`mol-${molIndex}-bond-${bIdx}-${i}`}
+					key={`mol-${molIndex}-bond-${bond.fromIndex}-${bond.toIndex}-${i}`}
 					points={[
 						offsetX + from.x + offset.dx1,
 						from.y + offset.dy1,
@@ -113,10 +113,10 @@ function renderMolecule(mol: Molecule, molIndex: number, offsetX: number) {
 		}
 	});
 
-	mol.atoms.forEach((atom, aIdx) => {
+	mol.atoms.forEach((atom, _aIdx) => {
 		const r = getAtomRadius(atom.element);
 		elements.push(
-			<Group key={`mol-${molIndex}-atom-${aIdx}`}>
+			<Group key={`mol-${molIndex}-atom-${atom.element}-${atom.x}-${atom.y}`}>
 				<Circle
 					x={offsetX + atom.x}
 					y={atom.y}
@@ -164,11 +164,11 @@ export function ChemistryDiagram({ data }: { data: ChemistryData }) {
 			result.push(...renderMolecule(mol, i, offsetX));
 		});
 
-		reactions.forEach((r, i) => {
+		reactions.forEach((r, _i) => {
 			const midY = (r.fromY + r.toY) / 2;
 			result.push(
 				<Arrow
-					key={`rxn-${i}`}
+					key={`rxn-${r.fromX}-${r.fromY}-${r.toX}-${r.toY}`}
 					points={[r.fromX, r.fromY, r.toX, r.toY]}
 					stroke="oklch(55.6% 0.219 264)"
 					fill="oklch(55.6% 0.219 264)"
@@ -180,7 +180,7 @@ export function ChemistryDiagram({ data }: { data: ChemistryData }) {
 			if (r.label) {
 				result.push(
 					<Text
-						key={`rxn-${i}-label`}
+						key={`rxn-label-${r.fromX}-${r.fromY}-${r.toX}-${r.toY}`}
 						x={(r.fromX + r.toX) / 2 - 20}
 						y={midY - 18}
 						text={r.label}

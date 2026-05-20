@@ -10,6 +10,7 @@ export function NotificationsSVG() {
 			className="h-full w-full"
 			preserveAspectRatio="xMidYMid meet"
 		>
+			<title>Notifications</title>
 			<motion.g
 				initial={{ opacity: 0, scale: 0.9 }}
 				animate={{ opacity: 1, scale: 1 }}

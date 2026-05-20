@@ -44,7 +44,9 @@ describe("Source-based Validator", () => {
 
 	test("fails on missing source", () => {
 		const result = validateQuestion(
-			makeQuestion({ body: { source: undefined!, subQuestions: [] } }),
+			makeQuestion({
+				body: { source: undefined as unknown as never, subQuestions: [] },
+			}),
 		);
 		expect(result.isValid).toBe(false);
 	});

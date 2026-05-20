@@ -208,9 +208,11 @@ export default function ReviewPage() {
 										</Badge>
 										<ErrorTypeSelect
 											value={
-												errorTypes[entry.id!] ?? entry.errorType ?? "unknown"
+												errorTypes[entry.id ?? 0] ??
+												entry.errorType ??
+												"unknown"
 											}
-											onChange={(v) => handleErrorTypeChange(entry.id!, v)}
+											onChange={(v) => handleErrorTypeChange(entry.id ?? 0, v)}
 										/>
 									</div>
 									<CardTitle className="mt-2 font-semibold text-base">
@@ -242,7 +244,7 @@ export default function ReviewPage() {
 											<Button
 												variant="outline"
 												size="sm"
-												onClick={() => handleReviewed(entry.id!)}
+												onClick={() => handleReviewed(entry.id ?? 0)}
 											>
 												<HugeiconsIcon
 													icon={CheckmarkCircle01Icon}

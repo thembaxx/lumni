@@ -80,10 +80,9 @@ export function Flashcard({
 
 	return (
 		<Anim>
-			<div
+			<section
 				className="flex flex-col gap-4"
 				onKeyDown={handleKeyDown}
-				role="region"
 				aria-label="Flashcard quiz"
 			>
 				<div className="flex items-center justify-between text-muted-foreground text-sm">
@@ -95,17 +94,10 @@ export function Flashcard({
 					</span>
 				</div>
 
-				<div
-					className="perspective-1000 min-h-75 cursor-pointer"
+				<button
+					type="button"
+					className="perspective-1000 min-h-75 w-full"
 					onClick={handleFlip}
-					onKeyDown={(e) => {
-						if (e.key === " " || e.key === "Enter") {
-							e.preventDefault();
-							handleFlip();
-						}
-					}}
-					role="button"
-					tabIndex={0}
 					aria-label={isFlipped ? "Flip card to front" : "Flip card to back"}
 				>
 					<m.div
@@ -131,7 +123,7 @@ export function Flashcard({
 										content={`Hint: ${currentCard.hint}`}
 										subject={subject}
 									/>
-								</div>
+							</div>
 							)}
 							<p className="mt-8 text-muted-foreground text-xs">Tap to flip</p>
 						</div>
@@ -151,7 +143,7 @@ export function Flashcard({
 							</div>
 						</div>
 					</m.div>
-				</div>
+				</button>
 
 				<div className="flex gap-2">
 					<Button variant="outline" className="flex-1" onClick={handleReview}>
@@ -167,7 +159,7 @@ export function Flashcard({
 						Restart
 					</Button>
 				</div>
-			</div>
+			</section>
 		</Anim>
 	);
 }

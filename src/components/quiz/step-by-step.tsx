@@ -90,8 +90,9 @@ export function StepByStep({ steps, subject, className }: StepByStepProps) {
 			</div>
 
 			<div className="flex justify-center gap-2 pt-1">
-				{steps.map((_, idx) => (
+				{steps.map((_step, idx) => (
 					<Button
+						// biome-ignore lint/suspicious/noArrayIndexKey: step dots are navigation indicators
 						key={idx}
 						type="button"
 						variant="ghost"

@@ -43,7 +43,7 @@ export async function saveQuizSession(
 		.first();
 
 	if (existing) {
-		return offlineDB.quizSessions.update(existing.id!, {
+		return offlineDB.quizSessions.update(existing.id ?? 0, {
 			...session,
 			lastSavedAt: Date.now(),
 		});
@@ -85,7 +85,7 @@ export async function resumeQuizSession(
 	const session = await getQuizSession(sessionId);
 	if (!session) return undefined;
 
-	await offlineDB.quizSessions.update(session.id!, {
+	await offlineDB.quizSessions.update(session.id ?? 0, {
 		isPaused: false,
 		lastSavedAt: Date.now(),
 	});
@@ -97,7 +97,7 @@ export async function pauseQuizSession(sessionId: string): Promise<void> {
 	const session = await getQuizSession(sessionId);
 	if (!session) return;
 
-	await offlineDB.quizSessions.update(session.id!, {
+	await offlineDB.quizSessions.update(session.id ?? 0, {
 		isPaused: true,
 		lastSavedAt: Date.now(),
 	});

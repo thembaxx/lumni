@@ -49,7 +49,9 @@ describe("Data Response Validator", () => {
 
 	test("fails on missing data", () => {
 		const result = validateQuestion(
-			makeQuestion({ body: { data: undefined!, questions: [] } }),
+			makeQuestion({
+				body: { data: undefined as unknown as never, questions: [] },
+			}),
 		);
 		expect(result.isValid).toBe(false);
 	});

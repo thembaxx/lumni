@@ -391,9 +391,9 @@ export function SmartScheduler() {
 										{day.day}
 									</h4>
 									<div className="flex flex-col gap-2">
-										{day.sessions.map((session, sidx) => (
+										{day.sessions.map((session) => (
 											<div
-												key={`${day.day}-${sidx}`}
+												key={`${day.day}-${session.subject}-${session.topic}-${session.duration}-${session.type}`}
 												className={cn(
 													"rounded-xl border border-border bg-card p-3 shadow-sm",
 													session.subject === "Break" && "bg-muted/50",

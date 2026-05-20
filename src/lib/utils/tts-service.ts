@@ -94,7 +94,6 @@ class TTSService {
 			this.onErrorCallback?.(event.error);
 		};
 
-		this.utterance = utterance;
 		this.synth.speak(utterance);
 	}
 

@@ -65,7 +65,7 @@ export function useAudioRecorder(
 
 		try {
 			const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-			stream.getTracks().forEach((track) => track.stop());
+			stream.getTracks().forEach((track) => { track.stop(); });
 			setPermissionStatus("granted");
 			setRecordingError(null);
 			return true;
@@ -158,7 +158,7 @@ export function useAudioRecorder(
 					totalDurationRef.current = duration;
 					setTotalDuration(duration);
 					onRecordingComplete?.(blob);
-					stream.getTracks().forEach((track) => track.stop());
+					stream.getTracks().forEach((track) => { track.stop(); });
 				};
 
 				mediaRecorder.start(100);

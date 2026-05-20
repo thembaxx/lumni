@@ -91,7 +91,7 @@ const ComparativeAnalyticsPanel = dynamic(
 
 function SectionReveal({
 	children,
-	className,
+	className: _className,
 	delay = 0,
 }: {
 	children: React.ReactNode;

@@ -50,7 +50,7 @@ function BarChart({ data }: { data: ChartDataPoint[] }) {
 		const x = PADDING.left + i * (barWidth + 8) + 4;
 		const y = PADDING.top + PLOT_HEIGHT - barH;
 		return (
-			<Group key={i}>
+			<Group key={d.label}>
 				<Rect
 					x={x}
 					y={y}
@@ -118,7 +118,7 @@ function LineChart({ data }: { data: ChartDataPoint[] }) {
 
 	const labels = data.map((d, i) => (
 		<Text
-			key={i}
+			key={`label-${d.label}`}
 			x={PADDING.left + i * stepX - 15}
 			y={PADDING.top + PLOT_HEIGHT + 4}
 			text={d.label}
@@ -133,7 +133,7 @@ function LineChart({ data }: { data: ChartDataPoint[] }) {
 		const cx = PADDING.left + i * stepX;
 		const cy = PADDING.top + PLOT_HEIGHT - (d.value / maxVal) * PLOT_HEIGHT;
 		return (
-			<Group key={i}>
+			<Group key={`dot-${d.label}`}>
 				<Circle x={cx} y={cy} radius={4} fill="oklch(52.5% 0.142 274°)" />
 				<Text
 					x={cx - 10}
@@ -221,7 +221,7 @@ function PieChart({ data }: { data: ChartDataPoint[] }) {
 		const labelY = cy + Math.sin(midRad) * (radius * 0.65);
 
 		return (
-			<Group key={i}>
+			<Group key={d.label}>
 				<Arc
 					x={cx}
 					y={cy}
@@ -248,7 +248,7 @@ function PieChart({ data }: { data: ChartDataPoint[] }) {
 	});
 
 	const legend = data.map((d, i) => (
-		<Group key={`leg-${i}`}>
+		<Group key={`leg-${d.label}`}>
 			<Rect
 				x={PADDING.left + 10}
 				y={CHART_HEIGHT - 30 + i * 12}

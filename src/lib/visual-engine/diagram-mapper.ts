@@ -23,7 +23,7 @@ export const KONVA_TYPES: ReadonlySet<string> = new Set([
 
 const MIN_CONFIDENCE = 0.3;
 
-type Validator = (data: Record<string, unknown>) => boolean;
+export type Validator = (data: Record<string, unknown>) => boolean;
 
 const VALIDATORS: Record<string, Validator> = {
 	"force-vector": (d) => {

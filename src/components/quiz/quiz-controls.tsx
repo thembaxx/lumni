@@ -23,7 +23,7 @@ interface QuizControlsProps {
 export function QuizControls({
 	currentQuestionIndex,
 	totalQuestions,
-	hasSelected,
+	hasSelected: _hasSelected,
 	showFeedback,
 	onPrevious,
 	onNext,
