@@ -1,9 +1,4 @@
-export const metadata = {
-	title: "Forgot password",
-	description: "Reset your password",
-};
-
-("use client");
+"use client";
 
 import { Mail01Icon, SparklesIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
