@@ -138,7 +138,9 @@ export function useVoiceRecorder() {
 			recorder.onstop = () => {
 				const blob = new Blob(chunks, { type: "audio/webm" });
 				setAudioBlob(blob);
-				stream.getTracks().forEach((track) => { track.stop(); });
+				stream.getTracks().forEach((track) => {
+					track.stop();
+				});
 			};
 
 			recorder.start();

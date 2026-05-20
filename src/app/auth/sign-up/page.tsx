@@ -25,9 +25,9 @@ function safeRedirect(url: string | null): string {
 }
 
 function SignUpForm() {
-	const router = useRouter();
-	const searchParams = useSearchParams();
-	const redirect = safeRedirect(searchParams.get("redirect"));
+	const { push, refresh } = useRouter();
+	const { get } = useSearchParams();
+	const redirect = safeRedirect(get("redirect"));
 	const { signUp, error } = useAuth();
 
 	const [name, setName] = useState("");
@@ -36,7 +36,7 @@ function SignUpForm() {
 	const [showPassword, setShowPassword] = useState(false);
 	const [loading, setLoading] = useState(false);
 
-	const referralCode = searchParams.get("ref");
+	const referralCode = get("ref");
 
 	const handleSignUp = useCallback(
 		async (e: React.FormEvent) => {
@@ -51,14 +51,14 @@ function SignUpForm() {
 						body: JSON.stringify({ code: referralCode, refereeId: userId }),
 					}).catch(() => {});
 				}
-				router.push(redirect);
-				router.refresh();
+				push(redirect);
+				refresh();
 			} catch {
 			} finally {
 				setLoading(false);
 			}
 		},
-		[email, password, name, signUp, router, redirect, referralCode],
+		[email, password, name, signUp, push, redirect, referralCode, refresh],
 	);
 
 	return (

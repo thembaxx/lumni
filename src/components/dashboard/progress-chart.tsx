@@ -18,7 +18,7 @@ interface ProgressChartProps {
 }
 
 export function ProgressChart({ data, title }: ProgressChartProps) {
-	const router = useRouter();
+	const { push } = useRouter();
 	const chartConfig = {
 		accuracy: {
 			label: "Accuracy",
@@ -54,7 +54,7 @@ export function ProgressChart({ data, title }: ProgressChartProps) {
 							size="sm"
 							variant="outline"
 							className="h-8 gap-1.5 text-xs"
-							onClick={() => router.push("/quiz")}
+							onClick={() => push("/quiz")}
 						>
 							<HugeiconsIcon icon={PlayFreeIcons} className="size-3.5" />
 							Take a quiz

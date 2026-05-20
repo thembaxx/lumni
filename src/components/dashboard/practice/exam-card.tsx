@@ -15,9 +15,14 @@ interface ExamCardProps {
 }
 
 export function ExamCard({ exam }: ExamCardProps) {
-	const router = useRouter();
+	const { push } = useRouter();
 	const [pdfOpen, setPdfOpen] = useState(false);
 	const [smartViewOpen, setSmartViewOpen] = useState(false);
+
+	const handleTakeExam = (e: React.MouseEvent) => {
+		e.stopPropagation();
+		push(`/exam/${exam.id}`);
+	};
 
 	const handleViewPdf = (e: React.MouseEvent) => {
 		e.stopPropagation();
@@ -26,11 +31,6 @@ export function ExamCard({ exam }: ExamCardProps) {
 
 	const handlePractice = (e: React.MouseEvent) => {
 		e.stopPropagation();
-	};
-
-	const handleTakeExam = (e: React.MouseEvent) => {
-		e.stopPropagation();
-		router.push(`/exam/${exam.id}`);
 	};
 
 	return (

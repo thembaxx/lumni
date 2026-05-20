@@ -301,7 +301,9 @@ export function useGamification() {
 				newAchievements.push("level_10");
 			}
 
-			newAchievements.forEach((id) => { addAchievement(id); });
+			newAchievements.forEach((id) => {
+				addAchievement(id);
+			});
 		},
 		[data.achievements, addAchievement],
 	);

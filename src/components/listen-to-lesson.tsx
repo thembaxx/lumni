@@ -154,9 +154,9 @@ export function ListenToLesson({
 			)}
 		>
 			{isPlaying ? (
-				<HugeiconsIcon icon={StopCircleIcon} className="mr-1.5 h-4 w-4" />
+				<HugeiconsIcon icon={StopCircleIcon} className="mr-1.5 size-4" />
 			) : (
-				<HugeiconsIcon icon={HeadphonesIcon} className="mr-1.5 h-4 w-4" />
+				<HugeiconsIcon icon={HeadphonesIcon} className="mr-1.5 size-4" />
 			)}
 			{isPlaying
 				? "Stop listening..."

@@ -67,7 +67,7 @@ export function SmartViewDialog({
 						<div className="flex flex-col items-center gap-3">
 							<LoadingSpinner size="lg" />
 							<span className="text-muted-foreground text-xs">
-								Loading smart view...
+								Loading smart view…
 							</span>
 						</div>
 					</div>

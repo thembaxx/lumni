@@ -59,7 +59,7 @@ function AnimatedCard({
 }
 
 export function AdminDashboard() {
-	const router = useRouter();
+	const { push } = useRouter();
 	const queryClient = useQueryClient();
 	const [selectedSubjects, setSelectedSubjects] = useState<Set<string>>(
 		new Set(),
@@ -149,7 +149,7 @@ export function AdminDashboard() {
 	const handleSignOut = () => {
 		localStorage.removeItem("admin_session");
 		localStorage.removeItem("admin_email");
-		router.push("/admin");
+		push("/admin");
 	};
 
 	const handleSaveSubject = () => {
@@ -208,14 +208,14 @@ export function AdminDashboard() {
 						<Button
 							variant="ghost"
 							size="sm"
-							onClick={() => router.push("/admin/questions")}
+							onClick={() => push("/admin/questions")}
 						>
 							Questions
 						</Button>
 						<Button
 							variant="ghost"
 							size="sm"
-							onClick={() => router.push("/admin/budget")}
+							onClick={() => push("/admin/budget")}
 						>
 							Budget
 						</Button>

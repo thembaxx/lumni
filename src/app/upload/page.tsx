@@ -8,34 +8,16 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ListCell, ListGroup, ListSection } from "@/components/ui/list-cell";
+import { extractSubjectFromFileName } from "@/lib/upload";
 import { UploadButton } from "@/lib/uploadthing";
 
-function formatSubjectName(subject: string): string {
-	return subject.replace(/\s+/g, "_").toLowerCase();
-}
-
-function _generateFileName(subject: string, number: number): string {
-	const formattedSubject = formatSubjectName(subject);
-	return `${formattedSubject}_qa_${number}.json`;
-}
-
-function extractSubjectFromFileName(fileName: string): string {
-	const match = fileName.match(/^([a-z_-]+)_qa_\d+\.json$/i);
-	if (match) {
-		return match[1].replace(/_/g, "-").toLowerCase();
-	}
-	return "";
-}
-
 export default function UploadPage() {
-	const [_uploadedUrls, setUploadedUrls] = useState<string[]>([]);
+	const _uploadedUrls = useRef<string[]>([]);
 	const [lastUploadUrl, setLastUploadUrl] = useState<string | null>(null);
-	const [_syncStatus, setSyncStatus] = useState<
-		"idle" | "syncing" | "done" | "error"
-	>("idle");
+	const _syncStatus = useRef<"idle" | "syncing" | "done" | "error">("idle");
 	const [seedStatus, setSeedStatus] = useState<
 		"idle" | "seeding" | "done" | "error"
 	>("idle");
@@ -59,23 +41,23 @@ export default function UploadPage() {
 		files: { url: string; name: string }[],
 	) => {
 		const urls = files.map((f) => f.url);
-		setUploadedUrls(urls);
+		_uploadedUrls.current = urls;
 		setLastUploadUrl(urls[0] || null);
 
 		const fileName = files[0]?.name || "";
 		const subject = extractSubjectFromFileName(fileName);
 
 		if (subject) {
-			setSyncStatus("syncing");
+			_syncStatus.current = "syncing";
 			try {
 				await fetch("/api/sync", {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({ subject, action: "sync" }),
 				});
-				setSyncStatus("done");
+				_syncStatus.current = "done";
 			} catch {
-				setSyncStatus("error");
+				_syncStatus.current = "error";
 			}
 		}
 	};
@@ -114,7 +96,7 @@ export default function UploadPage() {
 							{lastUploadUrl && (
 								<div className="rounded-[--radius-button] bg-[var(--success)]/10 p-[--space-4] text-center">
 									<motion.div
-										initial={{ scale: 0, opacity: 0 }}
+										initial={{ scale: 0.95, opacity: 0 }}
 										animate={{ scale: 1, opacity: 1 }}
 										transition={{ duration: 0.3 }}
 									>

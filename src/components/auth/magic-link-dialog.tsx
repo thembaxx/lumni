@@ -342,7 +342,7 @@ export function MagicLinkDialog({
 							{loading ? (
 								<span className="flex items-center gap-2">
 									<LoadingDots />
-									<span>Sending...</span>
+									<span>Sending…</span>
 								</span>
 							) : (
 								<span className="flex items-center gap-2">

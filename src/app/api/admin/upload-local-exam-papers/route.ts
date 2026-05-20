@@ -7,9 +7,10 @@ import { UTApi, UTFile } from "uploadthing/server";
 import { getExamsDb, insertExamPaper, saveExamsDb } from "@/lib/db/exams";
 import { requireAdmin } from "@/lib/server/auth";
 
+const EXAM_PAPERS_DIR = `${process.cwd()}/downloads/exam-papers-2025`;
+
 async function getDefaultFolderPath(): Promise<string> {
-	const path = await import("node:path");
-	return path.join(process.cwd(), "downloads", "exam-papers-2025");
+	return EXAM_PAPERS_DIR;
 }
 
 interface ParsedFile {

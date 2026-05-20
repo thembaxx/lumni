@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Confetti } from "@/components/celebration/confetti";
 import { Button } from "@/components/ui/button";
 import { iOSEase } from "@/lib/utils/animation";
-import { WelcomeSVG } from "./svgs";
+import { WelcomeSVG } from "./svgs/welcome-svg";
 
 interface CelebrationOverlayProps {
 	onComplete: () => void;
@@ -29,14 +29,14 @@ export function CelebrationOverlay({ onComplete }: CelebrationOverlayProps) {
 				transition={{ duration: 0.6, ease: iOSEase }}
 				className="flex max-w-sm flex-col items-center px-6 text-center"
 			>
-				<div className="mb-6 h-36 w-36">
+				<div className="mb-6 size-36">
 					<WelcomeSVG />
 				</div>
 				<motion.h1
 					initial={shouldReduceMotion ? {} : { opacity: 0, y: 12 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.4, delay: 0.3, ease: iOSEase }}
-					className="ios-title-1 mb-3 text-balance font-extrabold tracking-tight"
+					className="ios-title-1 mb-3 text-balance font-semibold tracking-tight"
 				>
 					You&apos;re ready to learn
 				</motion.h1>

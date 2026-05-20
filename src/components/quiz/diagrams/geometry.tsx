@@ -44,12 +44,13 @@ function renderShape(shape: GeometryShape, i: number) {
 	const stroke = shape.stroke || "oklch(32.5% 0.012 264°)";
 	const fill = shape.fill || "transparent";
 	const sw = shape.strokeWidth ?? 2;
+	const shapeKey = `${shape.type}-${i}`;
 
 	switch (shape.type) {
 		case "circle":
 			return (
 				<Circle
-					key={i}
+					key={shapeKey}
 					x={shape.x}
 					y={shape.y}
 					radius={(shape.props.radius as number) || 30}
@@ -63,7 +64,7 @@ function renderShape(shape: GeometryShape, i: number) {
 		case "line":
 			return (
 				<Line
-					key={i}
+					key={shapeKey}
 					points={[
 						shape.x,
 						shape.y,
@@ -79,7 +80,7 @@ function renderShape(shape: GeometryShape, i: number) {
 		case "polygon":
 			return (
 				<RegularPolygon
-					key={i}
+					key={shapeKey}
 					x={shape.x}
 					y={shape.y}
 					sides={(shape.props.sides as number) || 3}
@@ -94,7 +95,7 @@ function renderShape(shape: GeometryShape, i: number) {
 		case "arc":
 			return (
 				<Arc
-					key={i}
+					key={shapeKey}
 					x={shape.x}
 					y={shape.y}
 					innerRadius={0}
@@ -108,13 +109,19 @@ function renderShape(shape: GeometryShape, i: number) {
 
 		case "point":
 			return (
-				<Circle key={i} x={shape.x} y={shape.y} radius={3} fill={stroke} />
+				<Circle
+					key={shapeKey}
+					x={shape.x}
+					y={shape.y}
+					radius={3}
+					fill={stroke}
+				/>
 			);
 
 		case "angle-mark":
 			return (
 				<Arc
-					key={i}
+					key={shapeKey}
 					x={shape.x}
 					y={shape.y}
 					innerRadius={0}
@@ -130,7 +137,7 @@ function renderShape(shape: GeometryShape, i: number) {
 		case "right-angle-mark":
 			return (
 				<Line
-					key={i}
+					key={shapeKey}
 					points={[
 						shape.x,
 						shape.y,
@@ -164,7 +171,7 @@ function renderLabel(shape: GeometryShape, i: number) {
 	if (!shape.label) return null;
 	return (
 		<Text
-			key={`label-${i}`}
+			key={`label-${i}-${shape.label}`}
 			x={shape.labelX ?? shape.x + 5}
 			y={shape.labelY ?? shape.y - 20}
 			text={shape.label}

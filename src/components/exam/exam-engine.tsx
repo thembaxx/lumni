@@ -182,7 +182,7 @@ export function ExamEngine({
 					<div className="mx-auto flex max-w-3xl flex-col gap-8 p-4 sm:p-6">
 						{paper.sections.map((section) => (
 							<div key={section.id}>
-								<h2 className="mb-4 font-extrabold text-xl">
+								<h2 className="mb-4 font-semibold text-xl">
 									SECTION {section.id}
 									{section.title ? `: ${section.title}` : ""}
 								</h2>
@@ -194,7 +194,10 @@ export function ExamEngine({
 										</p>
 										<ul className="flex flex-col gap-1">
 											{section.instructions.map((inst) => (
-												<li key={inst} className="text-muted-foreground text-xs">
+												<li
+													key={inst}
+													className="text-muted-foreground text-xs"
+												>
 													{inst}
 												</li>
 											))}
@@ -231,7 +234,7 @@ export function ExamEngine({
 											data-icon
 											className="mr-2 animate-spin"
 										/>
-										Submitting...
+										Submitting…
 									</>
 								) : (
 									"Submit Exam"

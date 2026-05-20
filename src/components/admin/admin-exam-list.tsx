@@ -36,7 +36,7 @@ interface ExamListItem {
 }
 
 export function AdminExamList() {
-	const router = useRouter();
+	const { push } = useRouter();
 	const queryClient = useQueryClient();
 	const [deleting, setDeleting] = useState<string | null>(null);
 
@@ -130,7 +130,7 @@ export function AdminExamList() {
 										<Button
 											variant="ghost"
 											size="icon"
-											onClick={() => router.push(`/exam/${exam.id}`)}
+											onClick={() => push(`/exam/${exam.id}`)}
 											title="Take exam"
 										>
 											<HugeiconsIcon

@@ -4,7 +4,7 @@ import { RadialIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useEffectEvent, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { useAuth } from "@/lib/auth/auth-context";
@@ -24,19 +24,19 @@ export function LoadingScreen({
 	const [progress, setProgress] = useState(0);
 	const [isVisible, setIsVisible] = useState(true);
 	const [showSkipButton, setShowSkipButton] = useState(false);
-	const router = useRouter();
+	const { replace } = useRouter();
 	const { authReady } = useAuth();
 	const redirectedRef = useRef(false);
 	const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(
 		undefined,
 	);
 
-	const redirect = useCallback(() => {
+	const redirect = useEffectEvent(() => {
 		if (redirectedRef.current) return;
 		redirectedRef.current = true;
 		setIsVisible(false);
-		timeoutRef.current = setTimeout(() => router.replace(redirectTo), 400);
-	}, [router, redirectTo]);
+		timeoutRef.current = setTimeout(() => replace(redirectTo), 400);
+	});
 
 	const handleManualEnter = () => {
 		setProgress(100);
@@ -83,7 +83,7 @@ export function LoadingScreen({
 			cancelAnimationFrame(frameId);
 			if (timeoutRef.current) clearTimeout(timeoutRef.current);
 		};
-	}, [duration, authReady, redirect]);
+	}, [duration, authReady]);
 
 	useEffect(() => {
 		const timer = setTimeout(() => {
@@ -120,7 +120,7 @@ export function LoadingScreen({
 								ease: iOSEase,
 							}}
 						/>
-						<div className="relative flex h-20 w-20 items-center justify-center rounded-2xl border border-[--system-accent]/20 bg-[--system-accent]/10">
+						<div className="relative flex size-20 items-center justify-center rounded-2xl border border-[--system-accent]/20 bg-[--system-accent]/10">
 							<motion.div
 								animate={{ rotate: 360 }}
 								transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
@@ -149,7 +149,7 @@ export function LoadingScreen({
 						transition={{ duration: 0.35, ease: iOSEase, delay: 0.12 }}
 						className="ios-footnote mt-[--space-2] text-center text-[--system-text-secondary]"
 					>
-						Preparing your study experience...
+						Preparing your study experience…
 					</motion.p>
 
 					<motion.div

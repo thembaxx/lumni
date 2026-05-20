@@ -323,14 +323,14 @@ export function StudySetForm({
 							fill="none"
 							stroke="currentColor"
 							strokeWidth={2}
-strokeLinecap="round"
-						strokeLinejoin="round"
-					>
-						<title>Cancel</title>
-						<path d="M18 6L6 18" />
-						<path d="M6 6l12 12" />
-					</svg>
-				</m.div>
+							strokeLinecap="round"
+							strokeLinejoin="round"
+						>
+							<title>Cancel</title>
+							<path d="M18 6L6 18" />
+							<path d="M6 6l12 12" />
+						</svg>
+					</m.div>
 				</Button>
 
 				<Button type="submit" className="btn-primary">

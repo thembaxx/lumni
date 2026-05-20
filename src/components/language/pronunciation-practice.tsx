@@ -94,7 +94,7 @@ export function PronunciationPractice() {
 	return (
 		<div className="mx-auto flex max-w-2xl flex-col gap-6">
 			<div className="flex items-center justify-between">
-				<h2 className="font-extrabold text-2xl">Pronunciation Practice</h2>
+				<h2 className="font-semibold text-2xl">Pronunciation Practice</h2>
 				<div className="flex gap-2">
 					{availableLanguages.map((lang) => (
 						<Button

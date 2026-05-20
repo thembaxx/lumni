@@ -12,7 +12,9 @@ import { Slider } from "@/components/ui/slider";
 import { nscSubjects } from "@/data/nsc-subjects";
 import { useOnboarding } from "@/hooks/use-onboarding";
 import { iOSEase } from "@/lib/utils/animation";
-import { GoalsSVG, SubjectsSVG, WelcomeSVG } from "./svgs";
+import { GoalsSVG } from "./svgs/goals-svg";
+import { SubjectsSVG } from "./svgs/subjects-svg";
+import { WelcomeSVG } from "./svgs/welcome-svg";
 
 const ParticleField = dynamic(
 	() => import("./particle-field").then((m) => ({ default: m.ParticleField })),
@@ -359,7 +361,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 									initial={shouldReduceMotion ? {} : { opacity: 0, scale: 0.9 }}
 									animate={{ opacity: 1, scale: 1 }}
 									transition={{ duration: 0.5, ease: iOSEase }}
-									className="mb-8 h-48 w-48"
+									className="mb-8 size-48"
 								>
 									<WelcomeSVG />
 								</motion.div>

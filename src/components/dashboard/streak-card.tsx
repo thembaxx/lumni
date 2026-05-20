@@ -11,7 +11,7 @@ import { cn } from "@/lib/shared";
 
 export function StreakCard() {
 	const { gamification, currentStreak } = useGamification();
-	const router = useRouter();
+	const { push } = useRouter();
 
 	const today = new Date().toDateString();
 	const practicedToday = gamification.lastPracticeDate === today;
@@ -56,7 +56,7 @@ export function StreakCard() {
 									size="sm"
 									variant="outline"
 									className="mt-3 h-8 gap-1.5 text-xs"
-									onClick={() => router.push("/quiz")}
+									onClick={() => push("/quiz")}
 								>
 									<HugeiconsIcon icon={PlayFreeIcons} className="size-3.5" />
 									Start practicing

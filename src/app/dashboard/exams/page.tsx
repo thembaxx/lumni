@@ -225,7 +225,7 @@ export default function ExamsPage() {
 												/>
 											</EmptyMedia>
 											<EmptyTitle className="text-base">
-												No exams here... yet!
+												No exams here… yet!
 											</EmptyTitle>
 											<EmptyDescription>
 												{hasActiveFilters

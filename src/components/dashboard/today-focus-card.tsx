@@ -60,7 +60,7 @@ const actionConfig: Record<
 };
 
 export function TodayFocusCard() {
-	const router = useRouter();
+	const { push } = useRouter();
 	const [selectedSubjectId, setSelectedSubjectId] = useState<string | null>(
 		null,
 	);
@@ -120,7 +120,7 @@ export function TodayFocusCard() {
 	function handleStart() {
 		setShowSuccess(true);
 		setTimeout(() => {
-			router.push(
+			push(
 				`/quiz?subject=${encodeURIComponent(subjectName)}&topic=${encodeURIComponent(topic)}&count=10`,
 			);
 		}, 600);
@@ -213,7 +213,7 @@ export function TodayFocusCard() {
 									className="flex items-center gap-1.5"
 								>
 									<HugeiconsIcon icon={CheckmarkCircle01Icon} data-icon />
-									Starting quiz...
+									Starting quiz…
 								</motion.span>
 							) : (
 								<motion.span

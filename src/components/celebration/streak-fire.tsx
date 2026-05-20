@@ -42,8 +42,8 @@ export function StreakFire({
 				{streak >= 3 && (
 					<motion.div
 						className="absolute -top-1 -right-1"
-						initial={{ scale: 0 }}
-						animate={{ scale: 1 }}
+						initial={{ scale: 0.95, opacity: 0 }}
+						animate={{ scale: 1, opacity: 1 }}
 						transition={{ delay: 0.3, type: "spring" }}
 					>
 						<span className="text-lg">

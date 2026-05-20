@@ -608,7 +608,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 		return (
 			<div className="flex min-h-screen items-center justify-center bg-background">
 				<p className="animate-pulse text-muted-foreground">
-					Loading exam paper...
+					Loading exam paper…
 				</p>
 			</div>
 		);

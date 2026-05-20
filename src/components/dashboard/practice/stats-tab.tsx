@@ -116,7 +116,7 @@ export default function StatsTab() {
 						</div>
 					)}
 					<CardHeader className="p-6 pb-2 md:text-left">
-						<h3 className="font-extrabold text-xl tracking-tight">
+						<h3 className="font-semibold text-xl tracking-tight">
 							{isPerfect
 								? "Flawless!"
 								: isGreatScore
@@ -172,7 +172,7 @@ export default function StatsTab() {
 				{quizResults.incorrectAnswers.length > 0 && (
 					<Card className="overflow-hidden border-0">
 						<CardHeader className="p-4 pb-2">
-							<h3 className="font-extrabold text-base tracking-tight">
+							<h3 className="font-semibold text-base tracking-tight">
 								Review Mistakes
 							</h3>
 						</CardHeader>

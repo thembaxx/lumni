@@ -23,7 +23,7 @@ export function SuccessBadge({ isAdmin }: { isAdmin: boolean }) {
 		<Anim>
 			<m.div
 				className="absolute -top-1 -right-1"
-				initial={{ scale: 0, opacity: 0 }}
+				initial={{ scale: 0.95, opacity: 0 }}
 				animate={{
 					scale: 1,
 					opacity: 1,
@@ -33,7 +33,7 @@ export function SuccessBadge({ isAdmin }: { isAdmin: boolean }) {
 						damping: 15,
 					},
 				}}
-				exit={{ scale: 0, opacity: 0 }}
+				exit={{ scale: 0.95, opacity: 0 }}
 			>
 				<div className="relative">
 					<div className="absolute inset-0 animate-ping opacity-75">
@@ -51,7 +51,7 @@ export function SuccessBadge({ isAdmin }: { isAdmin: boolean }) {
 
 			<m.div
 				className="absolute -right-1 -bottom-1"
-				initial={{ scale: 0, opacity: 0 }}
+				initial={{ scale: 0.95, opacity: 0 }}
 				animate={{
 					scale: 1,
 					opacity: 1,
@@ -62,7 +62,7 @@ export function SuccessBadge({ isAdmin }: { isAdmin: boolean }) {
 						delay: 0.1,
 					},
 				}}
-				exit={{ scale: 0, opacity: 0 }}
+				exit={{ scale: 0.95, opacity: 0 }}
 			>
 				<Badge
 					variant={isAdmin ? "default" : "secondary"}

@@ -92,7 +92,7 @@ export default function ReviewPage() {
 	if (loading) {
 		return (
 			<div className="flex min-h-screen items-center justify-center bg-background">
-				<p className="animate-pulse text-muted-foreground">Loading...</p>
+				<p className="animate-pulse text-muted-foreground">Loading…</p>
 			</div>
 		);
 	}

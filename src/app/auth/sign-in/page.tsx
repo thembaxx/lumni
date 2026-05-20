@@ -25,9 +25,9 @@ function safeRedirect(url: string | null): string {
 }
 
 function SignInForm() {
-	const router = useRouter();
-	const searchParams = useSearchParams();
-	const redirect = safeRedirect(searchParams.get("redirect"));
+	const { push, refresh } = useRouter();
+	const { get } = useSearchParams();
+	const redirect = safeRedirect(get("redirect"));
 	const { signIn, signInWithMagicLink, error } = useAuth();
 
 	const [email, setEmail] = useState("");
@@ -47,8 +47,8 @@ function SignInForm() {
 					setMagicLinkSent(true);
 				} else {
 					await signIn(email, password);
-					router.push(redirect);
-					router.refresh();
+					push(redirect);
+					refresh();
 				}
 			} catch {
 			} finally {
@@ -61,8 +61,9 @@ function SignInForm() {
 			isMagicLink,
 			signIn,
 			signInWithMagicLink,
-			router,
+			push,
 			redirect,
+			refresh,
 		],
 	);
 

@@ -65,7 +65,7 @@ export function AnalyticsClient() {
 					</CardHeader>
 					<CardContent>
 						{isLoading && (
-							<p className="text-muted-foreground text-xs">Loading...</p>
+							<p className="text-muted-foreground text-xs">Loading…</p>
 						)}
 						{!isLoading &&
 							(!data?.subjectPopularity ||

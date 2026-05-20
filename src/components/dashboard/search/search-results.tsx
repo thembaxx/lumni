@@ -95,9 +95,14 @@ export function SearchResults({
 	if (!query || query.length < 2) return null;
 
 	return (
-		<div className={cn("mt-2 space-y-1", className)} onKeyDown={handleKeyDown} role="listbox" tabIndex={0}>
+		<div
+			className={cn("mt-2 space-y-1", className)}
+			onKeyDown={handleKeyDown}
+			role="listbox"
+			tabIndex={0}
+		>
 			{loading && (
-				<p className="px-1 text-muted-foreground text-xs">Searching...</p>
+				<p className="px-1 text-muted-foreground text-xs">Searching…</p>
 			)}
 			{!loading && results.length === 0 && (
 				<p className="px-1 text-muted-foreground text-xs">

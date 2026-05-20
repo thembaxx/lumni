@@ -43,7 +43,7 @@ const actionLabels: Record<string, string> = {
 };
 
 export function LessonLibrary() {
-	const router = useRouter();
+	const { push } = useRouter();
 	const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
 	useFilteredSubjects("");
 
@@ -182,11 +182,7 @@ export function LessonLibrary() {
 					)}
 
 					{nextUp && (
-						<NextUpCard
-							nextUp={nextUp}
-							selectedSubject={selectedSubject}
-							router={router}
-						/>
+						<NextUpCard nextUp={nextUp} selectedSubject={selectedSubject} />
 					)}
 
 					{recommendations.length > 0 && (
@@ -232,7 +228,7 @@ export function LessonLibrary() {
 												size="sm"
 												variant="outline"
 												onClick={() =>
-													router.push(
+													push(
 														`/quiz?subject=${encodeURIComponent(selectedSubject)}&topic=${encodeURIComponent(rec.topicId)}`,
 													)
 												}
@@ -266,12 +262,11 @@ export function LessonLibrary() {
 function NextUpCard({
 	nextUp,
 	selectedSubject,
-	router,
 }: {
 	nextUp: TopicRecommendation;
 	selectedSubject: string;
-	router: ReturnType<typeof useRouter>;
 }) {
+	const { push } = useRouter();
 	const NextActionIcon = actionIcons[nextUp.action];
 	return (
 		<Card className="rounded-3xl border-[--system-accent]/20 bg-[--system-accent]/5 p-5">
@@ -303,7 +298,7 @@ function NextUpCard({
 				<Button
 					size="sm"
 					onClick={() =>
-						router.push(
+						push(
 							`/quiz?subject=${encodeURIComponent(selectedSubject)}&topic=${encodeURIComponent(nextUp.topicId)}`,
 						)
 					}

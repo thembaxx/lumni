@@ -35,7 +35,7 @@ export function ExamResults({
 	flags,
 	timeTaken,
 }: ExamResultsProps) {
-	const router = useRouter();
+	const { push } = useRouter();
 
 	const totalParts = paper.sections.reduce(
 		(sum, s) => sum + s.questions.reduce((qsum, q) => qsum + q.parts.length, 0),
@@ -50,7 +50,7 @@ export function ExamResults({
 				<div className="flex items-center justify-between">
 					<div className="flex items-center gap-3">
 						<motion.div
-							initial={{ scale: 0, opacity: 0 }}
+							initial={{ scale: 0.95, opacity: 0 }}
 							animate={{ scale: 1, opacity: 1 }}
 							transition={{ delay: 0.3 }}
 						>
@@ -71,7 +71,7 @@ export function ExamResults({
 					<Button
 						variant="outline"
 						size="sm"
-						onClick={() => router.push("/dashboard/practice")}
+						onClick={() => push("/dashboard/practice")}
 					>
 						<HugeiconsIcon icon={ArrowLeft01Icon} data-icon />
 						Back to Exams
@@ -212,19 +212,17 @@ export function ExamResults({
 								{paper.sections
 									.flatMap((section) =>
 										section.questions.flatMap((question) =>
-											question.parts
-												.map((part) => {
-													const fullId = `${section.id}-${question.id}-${part.id}`;
-													return flags.includes(fullId)
-														? {
+											question.parts.flatMap((part) => {
+												const fullId = `${section.id}-${question.id}-${part.id}`;
+												return flags.includes(fullId)
+													? [
+															{
 																id: fullId,
 																label: `Section ${section.id}, Q${question.id}.${part.id}`,
-															}
-														: null;
-												})
-												.filter(
-													(x): x is { id: string; label: string } => x !== null,
-												),
+															},
+														]
+													: [];
+											}),
 										),
 									)
 									.map((item) => (

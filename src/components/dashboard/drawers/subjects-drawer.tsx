@@ -78,7 +78,7 @@ export function SubjectsDrawer({
 				<div className="max-h-[50dvh] grow overflow-y-auto px-4 pt-0 pb-4">
 					{isLoading ? (
 						<p className="py-8 text-center text-muted-foreground text-sm">
-							Loading subjects...
+							Loading subjects…
 						</p>
 					) : error ? (
 						<p className="py-8 text-center text-destructive text-sm">

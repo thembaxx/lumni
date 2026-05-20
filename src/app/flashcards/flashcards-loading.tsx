@@ -50,7 +50,7 @@ export function FlashcardsLoading() {
 					transition={{ duration: 0.35, ease: iOSEase, delay: 0.12 }}
 					className="ios-footnote text-center text-[--system-text-secondary]"
 				>
-					Loading your cards...
+					Loading your cards…
 				</motion.p>
 			</div>
 		</LoadingShell>

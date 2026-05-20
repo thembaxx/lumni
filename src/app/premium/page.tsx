@@ -45,7 +45,7 @@ export default function PremiumPage() {
 		createCheckoutSession,
 		cancelSubscription,
 	} = usePremium();
-	const router = useRouter();
+	const { push, refresh } = useRouter();
 	const [loading, setLoading] = useState(false);
 
 	const handleUpgrade = async () => {
@@ -56,7 +56,7 @@ export default function PremiumPage() {
 				window.location.href = url;
 			} else {
 				await upgrade();
-				router.refresh();
+				refresh();
 			}
 		} finally {
 			setLoading(false);
@@ -68,7 +68,7 @@ export default function PremiumPage() {
 		try {
 			await cancelSubscription();
 			await downgrade();
-			router.refresh();
+			refresh();
 		} finally {
 			setLoading(false);
 		}
@@ -112,7 +112,7 @@ export default function PremiumPage() {
 					<div className="border-border/30 border-t pt-4">
 						<button
 							type="button"
-							onClick={() => router.push("/settings")}
+							onClick={() => push("/settings")}
 							className="flex w-full items-center justify-between rounded-xl border border-accent/20 bg-accent/5 p-3 text-left transition-colors hover:bg-accent/10"
 						>
 							<div className="flex items-center gap-3">
@@ -147,7 +147,7 @@ export default function PremiumPage() {
 								{loading ? "Redirecting…" : "Upgrade Now"}
 							</Button>
 						)}
-						<Button variant="ghost" onClick={() => router.push("/dashboard")}>
+						<Button variant="ghost" onClick={() => push("/dashboard")}>
 							Back to Dashboard
 						</Button>
 					</div>

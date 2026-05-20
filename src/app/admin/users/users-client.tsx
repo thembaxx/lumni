@@ -85,7 +85,7 @@ export function UsersClient() {
 											colSpan={6}
 											className="py-8 text-center text-muted-foreground"
 										>
-											Loading...
+											Loading…
 										</TableCell>
 									</TableRow>
 								)}

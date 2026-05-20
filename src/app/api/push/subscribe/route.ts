@@ -22,8 +22,10 @@ async function subscribeHandler(req: NextRequest) {
 			);
 		}
 
-		const { Query } = await import("appwrite");
-		const { listDocuments } = await import("@/lib/db/client");
+		const [{ Query }, { listDocuments }] = await Promise.all([
+			import("appwrite"),
+			import("@/lib/db/client"),
+		]);
 
 		const existing = await listDocuments<Record<string, unknown>>(
 			PUSH_SUBSCRIPTIONS_COLLECTION,
@@ -70,8 +72,10 @@ async function unsubscribeHandler(req: NextRequest) {
 			);
 		}
 
-		const { Query } = await import("appwrite");
-		const { listDocuments } = await import("@/lib/db/client");
+		const [{ Query }, { listDocuments }] = await Promise.all([
+			import("appwrite"),
+			import("@/lib/db/client"),
+		]);
 
 		const existing = await listDocuments<Record<string, unknown>>(
 			PUSH_SUBSCRIPTIONS_COLLECTION,

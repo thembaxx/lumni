@@ -49,11 +49,11 @@ async function generateInterestingFact(
 		.replace(/^[\s\S]*?[.!?]/, (match) => match.trim())
 		.trim();
 
-	await trackUsage("generate", userId);
-
 	if (!cleanedContent || cleanedContent.length < 10) {
 		throw new Error("Generated fact is too short or empty");
 	}
+
+	await trackUsage("generate", userId);
 
 	return cleanedContent;
 }

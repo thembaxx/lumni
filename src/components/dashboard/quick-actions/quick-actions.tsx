@@ -93,7 +93,7 @@ function ActionButton({
 }
 
 export function QuickActions() {
-	const router = useRouter();
+	const { push } = useRouter();
 
 	return (
 		<div className="w-full">
@@ -110,7 +110,7 @@ export function QuickActions() {
 							<ActionButton
 								icon={action.icon}
 								label={action.label}
-								onClick={() => router.push(action.route ?? "/")}
+								onClick={() => push(action.route ?? "/")}
 							/>
 						)}
 					</li>

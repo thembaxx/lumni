@@ -123,7 +123,7 @@ export function Flashcard({
 										content={`Hint: ${currentCard.hint}`}
 										subject={subject}
 									/>
-							</div>
+								</div>
 							)}
 							<p className="mt-8 text-muted-foreground text-xs">Tap to flip</p>
 						</div>

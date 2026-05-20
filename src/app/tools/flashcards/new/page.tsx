@@ -1,4 +1,9 @@
+import type { Metadata } from "next";
 import { FlashcardCreator } from "@/components/tools/flashcards/flashcard-creator";
+
+export const metadata: Metadata = {
+	title: "New Flashcard",
+};
 
 export default function NewFlashcardPage() {
 	return (

@@ -189,7 +189,7 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 
 					<div className="shrink-0 border-t bg-background pb-safe">
 						<div
-							className="scrollbar-hide scrollbar-none flex items-center gap-0.5 overflow-x-auto px-2 py-2 [-ms-overflow-style:none] [-webkit-overflow-scrolling:touch]"
+							className="scrollbar-hide scrollbar-none flex items-center gap-0.5 overflow-x-auto p-2 [-ms-overflow-style:none] [-webkit-overflow-scrolling:touch]"
 							style={
 								{
 									scrollbarWidth: "none",

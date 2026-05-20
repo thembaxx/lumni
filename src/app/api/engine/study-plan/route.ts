@@ -35,12 +35,15 @@ async function studyPlanHandler(req: NextRequest) {
 
 		const subjects = subjectsParam.split(",").map((s) => s.trim());
 
+		const allDocs = await Promise.all(
+			subjects.map((subject) =>
+				listDocuments<Record<string, unknown>>(COLLECTIONS.COMPETENCIES, [
+					Query.equal("subjectId", subject),
+				]),
+			),
+		);
 		const allCompetencies: [string, CompetencyRecord][] = [];
-		for (const subject of subjects) {
-			const docs = await listDocuments<Record<string, unknown>>(
-				COLLECTIONS.COMPETENCIES,
-				[Query.equal("subjectId", subject)],
-			);
+		for (const docs of allDocs) {
 			for (const d of docs) {
 				const record: CompetencyRecord = {
 					subjectId: d.subjectId as string,

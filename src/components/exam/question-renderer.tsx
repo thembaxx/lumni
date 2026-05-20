@@ -21,12 +21,10 @@ interface QuestionRendererProps {
 
 function buildQuestionText(question: ExamQuestion): string {
 	const parts = question.parts
-		.map((p) => p.text || "")
-		.filter(Boolean)
+		.flatMap((p) => (p.text ? [p.text] : []))
 		.join(" ");
 	const context = question.context
-		?.map((c) => c.value || "")
-		.filter(Boolean)
+		?.flatMap((c) => (c.value ? [c.value] : []))
 		.join(" ");
 	return [context, parts].filter(Boolean).join(" ") || question.title || "";
 }

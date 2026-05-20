@@ -12,10 +12,10 @@ import { FormSkeleton } from "@/components/ui/skeletons";
 import { iOSEase } from "@/lib/utils/animation";
 
 function VerifyEmailContent() {
-	const router = useRouter();
-	const searchParams = useSearchParams();
-	const userId = searchParams.get("userId");
-	const secret = searchParams.get("secret");
+	const { push } = useRouter();
+	const { get } = useSearchParams();
+	const userId = get("userId");
+	const secret = get("secret");
 	const [error, setError] = useState("");
 	const calledRef = useRef(false);
 
@@ -42,7 +42,7 @@ function VerifyEmailContent() {
 	if (error) {
 		return (
 			<div className="flex flex-col items-center gap-4 text-center">
-				<h1 className="font-bold text-xl">Verification failed</h1>
+				<h1 className="font-semibold text-xl">Verification failed</h1>
 				<p className="text-muted-foreground text-sm">{error}</p>
 				<Link
 					href="/auth/sign-in"
@@ -65,12 +65,12 @@ function VerifyEmailContent() {
 				<HugeiconsIcon icon={SparklesIcon} className="size-8 text-green-500" />
 			</div>
 			<div className="flex flex-col gap-2">
-				<h1 className="font-bold text-xl">Email verified</h1>
+				<h1 className="font-semibold text-xl">Email verified</h1>
 				<p className="text-muted-foreground text-sm">
 					Your email has been verified successfully.
 				</p>
 			</div>
-			<Button onClick={() => router.push("/dashboard")} className="rounded-xl">
+			<Button onClick={() => push("/dashboard")} className="rounded-xl">
 				Go to Dashboard
 			</Button>
 		</motion.div>

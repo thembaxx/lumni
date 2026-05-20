@@ -4,7 +4,11 @@ import type * as React from "react";
 
 import { cn } from "@/lib/shared";
 
-function Label({ className, htmlFor, ...props }: React.ComponentProps<"label">) {
+function Label({
+	className,
+	htmlFor,
+	...props
+}: React.ComponentProps<"label">) {
 	return (
 		// biome-ignore lint/a11y/noLabelWithoutControl: htmlFor is passed dynamically by consumers
 		<label

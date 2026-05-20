@@ -12,9 +12,9 @@ import { FormSkeleton } from "@/components/ui/skeletons";
 import { iOSEase } from "@/lib/utils/animation";
 
 function ResetPasswordForm() {
-	const router = useRouter();
-	const searchParams = useSearchParams();
-	const token = searchParams.get("token");
+	const { push } = useRouter();
+	const { get } = useSearchParams();
+	const token = get("token");
 
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
@@ -31,13 +31,13 @@ function ResetPasswordForm() {
 			setError("Password must be at least 8 characters");
 			return;
 		}
-		router.push("/auth/sign-in");
+		push("/auth/sign-in");
 	};
 
 	if (!token) {
 		return (
 			<div className="flex flex-col items-center gap-4 text-center">
-				<h1 className="font-bold text-xl">Invalid reset link</h1>
+				<h1 className="font-semibold text-xl">Invalid reset link</h1>
 				<p className="text-muted-foreground text-sm">
 					This password reset link is invalid or has expired.
 				</p>
@@ -60,7 +60,7 @@ function ResetPasswordForm() {
 			className="flex flex-col gap-8"
 		>
 			<div className="flex flex-col gap-2">
-				<h1 className="font-bold text-xl">Set new password</h1>
+				<h1 className="font-semibold text-xl">Set new password</h1>
 				<p className="text-muted-foreground text-sm">
 					Must be at least 8 characters.
 				</p>

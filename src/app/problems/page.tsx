@@ -246,7 +246,7 @@ function ProblemsClient() {
 							>
 								{[1, 2, 3].map((i) => (
 									<div
-										key={i}
+										key={`skeleton-${i}`}
 										className="animate-pulse space-y-3 rounded-2xl border border-border/50 bg-card p-5"
 									>
 										<div className="h-4 w-16 rounded bg-muted/30" />

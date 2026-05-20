@@ -87,7 +87,7 @@ export function AdminExamUploadZone({
 						className="size-5 animate-spin text-muted-foreground"
 					/>
 					<div>
-						<p className="font-medium text-sm">Uploading PDF...</p>
+						<p className="font-medium text-sm">Uploading PDF…</p>
 						<p className="text-muted-foreground text-xs">
 							Uploading to storage
 						</p>
@@ -102,7 +102,7 @@ export function AdminExamUploadZone({
 						className="size-5 animate-spin text-foreground"
 					/>
 					<div>
-						<p className="font-medium text-sm">Converting...</p>
+						<p className="font-medium text-sm">Converting…</p>
 						<p className="text-muted-foreground text-xs">
 							Extracting text, parsing questions, building structured exam
 						</p>
