@@ -55,7 +55,7 @@ function Confetti() {
 			{particles.map((p) => (
 				<m.div
 					key={p.id}
-					className="absolute h-2 w-2 rounded-full"
+					className="absolute size-2 rounded-full"
 					style={{
 						left: "50%",
 						top: "50%",
@@ -129,7 +129,7 @@ export function QuizResult({ results, onRestart, onClose }: QuizResultProps) {
 					<AnimatedIcon name={message.icon} className="size-20" />
 				</m.div>
 				<m.h2
-					className="font-extrabold text-2xl"
+					className="font-semibold text-2xl"
 					initial={{ opacity: 0, y: 10 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ delay: 0.3 }}

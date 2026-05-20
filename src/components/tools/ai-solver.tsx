@@ -332,7 +332,7 @@ function AiSolverInner({ cameraFocus }: AiSolverProps) {
 															<div className="flex items-center gap-2 text-foreground text-sm">
 																<HugeiconsIcon
 																	icon={Image03FreeIcons}
-																	className="h-4 w-4"
+																	className="size-4"
 																	data-icon
 																/>
 																<span>Upload</span>

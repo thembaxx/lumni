@@ -2,9 +2,9 @@
 
 import { Cancel01Icon, Search01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AnimatePresence, m, useSpring, useTransform } from "framer-motion";
-import { memo, useEffect, useMemo, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { Input } from "@/components/ui/input";
 import {
 	elementCategoryConfig,
@@ -117,6 +117,7 @@ export function PeriodicTable() {
 	const isFiltered = searchQuery !== "" || activeCategory !== null;
 
 	const _displayedElements = isFiltered ? filteredElements : elements;
+	const queryClient = useQueryClient();
 
 	// Generate interesting fact when element is selected
 	const { mutate: generateFact } = useMutation({
@@ -144,6 +145,7 @@ export function PeriodicTable() {
 		},
 		onSuccess: (fact) => {
 			setInterestingFact(fact ?? null);
+			queryClient.invalidateQueries({ queryKey: ["element-facts"] });
 		},
 		onError: (error) => {
 			console.error("Failed to generate interesting fact:", error);
@@ -152,13 +154,16 @@ export function PeriodicTable() {
 	});
 
 	// Reset fact when new element selected and trigger generation
-	const handleElementSelect = (el: Element) => {
-		setSelectedElement(el);
-		setInterestingFact(null);
-		if (el) {
-			generateFact(el);
-		}
-	};
+	const handleElementSelect = useCallback(
+		(el: Element) => {
+			setSelectedElement(el);
+			setInterestingFact(null);
+			if (el) {
+				generateFact(el);
+			}
+		},
+		[generateFact],
+	);
 
 	return (
 		<div
@@ -186,7 +191,7 @@ export function PeriodicTable() {
 						Periodic Table
 					</h2>
 					<p className="ios-subhead mt-1 text-[--system-text-secondary]">
-						Explore the elements — search, filter, and learn.
+						Explore the elements: search, filter, and learn.
 					</p>
 				</div>
 
@@ -321,7 +326,7 @@ export function PeriodicTable() {
 						className="fixed inset-0 z-50 flex items-center justify-center p-4"
 						style={{
 							background: "oklch(0% 0 0 / 0.8)",
-							backdropFilter: "blur(12px)",
+							backdropFilter: "blur(8px)",
 						}}
 						onClick={() => setSelectedElement(null)}
 					>

@@ -1,7 +1,7 @@
 "use client";
 
 import { m } from "framer-motion";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -45,7 +45,7 @@ interface NoteCreatorProps {
 export function useNoteStorage() {
 	const [notes, setNotes] = useState<Note[]>(() => {
 		if (typeof window !== "undefined") {
-			const saved = localStorage.getItem("lumni-notes");
+			const saved = localStorage.getItem("lumni-notes:v1");
 			return saved ? JSON.parse(saved) : [];
 		}
 		return [];
@@ -54,13 +54,13 @@ export function useNoteStorage() {
 	const saveNotes = useCallback((notes: Note[]) => {
 		setNotes(notes);
 		if (typeof window !== "undefined") {
-			localStorage.setItem("lumni-notes", JSON.stringify(notes));
+			localStorage.setItem("lumni-notes:v1", JSON.stringify(notes));
 		}
 	}, []);
 
 	const writeLocalStorage = useCallback((notes: Note[]) => {
 		if (typeof window !== "undefined") {
-			localStorage.setItem("lumni-notes", JSON.stringify(notes));
+			localStorage.setItem("lumni-notes:v1", JSON.stringify(notes));
 		}
 	}, []);
 
@@ -164,10 +164,11 @@ function NoteForm({
 		if (name === "tags") {
 			setFormData((prev) => ({
 				...prev,
-				[name]: value
-					.split(",")
-					.map((tag) => tag.trim())
-					.filter((tag) => tag.length > 0),
+				[name]: value.split(",").reduce((acc, tag) => {
+					const trimmed = tag.trim();
+					if (trimmed.length > 0) acc.push(trimmed);
+					return acc;
+				}, [] as string[]),
 			}));
 		} else {
 			setFormData((prev) => ({ ...prev, [name]: value }));
@@ -251,7 +252,7 @@ function NoteForm({
 				/>
 			</div>
 
-			<div className="flex items-center space-x-3">
+			<div className="flex items-center gap-x-3">
 				<Label
 					htmlFor="favorite"
 					className="flex items-center font-medium text-sm"
@@ -263,13 +264,13 @@ function NoteForm({
 						onChange={(e) =>
 							setFormData((prev) => ({ ...prev, isFavorite: e.target.checked }))
 						}
-						className="h-4 w-4 rounded border-gray-300 text-primary"
+						className="size-4 rounded border-zinc-300 text-primary"
 					/>
 					Mark as favorite
 				</Label>
 			</div>
 
-			<div className="mt-4 flex justify-end space-x-3">
+			<div className="mt-4 flex justify-end gap-x-3">
 				<Button
 					variant="outline"
 					size="icon"
@@ -307,6 +308,62 @@ function NoteForm({
 	);
 }
 
+function _NoteItem({
+	note,
+	onEdit,
+	onDelete,
+	onToggleFavorite,
+	mounted,
+}: {
+	note: any;
+	onEdit: any;
+	onDelete: any;
+	onToggleFavorite: any;
+	mounted: boolean;
+}) {
+	return (
+		<Card key={note.id}>
+			<CardHeader>
+				<div className="flex items-center justify-between">
+					<CardTitle className="text-sm">{note.title}</CardTitle>
+					<div className="flex items-center gap-2">
+						{note.favorite && (
+							<Button
+								variant="ghost"
+								size="icon"
+								onClick={() => onToggleFavorite(note.id)}
+								aria-label="Remove from favorites"
+							>
+								<m.div
+									whileTap={{ scale: 0.95 }}
+									transition={{ duration: 0.15, ease: iOSEase }}
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="16"
+										height="16"
+										viewBox="0 0 24 24"
+										fill="currentColor"
+										stroke="currentColor"
+										strokeWidth="2"
+										strokeLinecap="round"
+										strokeLinejoin="round"
+									>
+										<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+									</svg>
+								</m.div>
+							</Button>
+						)}
+						<span className="ml-2">
+							{mounted ? new Date(note.createdAt).toLocaleDateString() : ""}
+						</span>
+					</div>
+				</div>
+			</CardHeader>
+		</Card>
+	);
+}
+
 export function NoteCreator({ className }: NoteCreatorProps) {
 	return (
 		<AppErrorBoundary>
@@ -316,6 +373,10 @@ export function NoteCreator({ className }: NoteCreatorProps) {
 }
 
 function NoteCreatorInner({ className }: NoteCreatorProps) {
+	const [mounted, setMounted] = useState(false);
+	useEffect(() => {
+		setMounted(true);
+	}, []);
 	const { notes, addNote, removeNote, updateNote, toggleFavorite } =
 		useNoteStorage();
 	const [, setIsCreating] = useState(false);
@@ -344,21 +405,19 @@ function NoteCreatorInner({ className }: NoteCreatorProps) {
 		toggleFavorite(id);
 	};
 
-	const filteredNotes = notes
-		.filter(
-			(note) =>
-				note.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-				note.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
-				(note.tags || []).some((tag) =>
-					tag.toLowerCase().includes(searchQuery.toLowerCase()),
-				),
-		)
-		.filter((note) => {
-			if (filter === "favorites") {
-				return note.isFavorite === true;
-			}
-			return true;
-		});
+	const filteredNotes = notes.filter((note) => {
+		const matchesSearch =
+			note.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+			note.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
+			(note.tags || []).some((tag) =>
+				tag.toLowerCase().includes(searchQuery.toLowerCase()),
+			);
+		if (!matchesSearch) return false;
+		if (filter === "favorites") {
+			return note.isFavorite === true;
+		}
+		return true;
+	});
 
 	return (
 		<m.div
@@ -467,7 +526,7 @@ function NoteCreatorInner({ className }: NoteCreatorProps) {
 										)}
 										{note.subject && (
 											<div className="mt-1 flex items-center gap-1 text-xs">
-												<div className="h-2 w-2 rounded bg-accent/20" />
+												<div className="size-2 rounded bg-accent/20" />
 												<span>{note.subject}</span>
 											</div>
 										)}
@@ -502,11 +561,13 @@ function NoteCreatorInner({ className }: NoteCreatorProps) {
 											</Button>
 										)}
 										<span className="ml-2">
-											{new Date(note.createdAt).toLocaleDateString()}
+											{mounted
+												? new Date(note.createdAt).toLocaleDateString()
+												: ""}
 										</span>
 									</div>
 								</div>
-								<div className="mt-3 flex justify-end space-x-2">
+								<div className="mt-3 flex justify-end gap-x-2">
 									<Button
 										variant="ghost"
 										size="icon"

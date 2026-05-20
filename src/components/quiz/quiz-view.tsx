@@ -159,9 +159,7 @@ export function QuizView({
 									className="size-12 text-muted-foreground"
 								/>
 							</m.div>
-							<p className="text-muted-foreground">
-								Preparing your questions...
-							</p>
+							<p className="text-muted-foreground">Preparing your questions…</p>
 							{resolvedTopic && competencyData.topicCompetencyLevel && (
 								<div className="flex flex-col items-center gap-1">
 									<p className="text-muted-foreground text-xs">

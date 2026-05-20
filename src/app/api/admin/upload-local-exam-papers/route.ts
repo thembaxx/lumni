@@ -1,4 +1,6 @@
 import { randomUUID } from "node:crypto";
+import fs from "node:fs";
+import path from "node:path";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { UTApi, UTFile } from "uploadthing/server";
@@ -121,16 +123,15 @@ export async function POST(request: NextRequest) {
 		const { folderPath } = body;
 
 		const targetFolder = folderPath || (await getDefaultFolderPath());
-		const nodeFs = await import("node:fs");
 
-		if (!nodeFs.existsSync(targetFolder)) {
+		if (!fs.existsSync(targetFolder)) {
 			return NextResponse.json(
 				{ error: `Folder not found: ${targetFolder}` },
 				{ status: 400 },
 			);
 		}
 
-		const files = nodeFs
+		const files = fs
 			.readdirSync(targetFolder)
 			.filter((f) => f.endsWith(".pdf"));
 
@@ -157,8 +158,7 @@ export async function POST(request: NextRequest) {
 			const normalizedCode = normalizeSubjectCode(subjectCode);
 			const subjectName = toTitleCase(normalizedCode);
 
-			const nodePath = await import("node:path");
-			const filePath = nodePath.join(targetFolder, fileName);
+			const filePath = path.join(targetFolder, fileName);
 
 			const uploadResult = await uploadToUploadThing(
 				filePath,

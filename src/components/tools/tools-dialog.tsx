@@ -113,7 +113,7 @@ function ToolsDialogInner({ open: _open, onOpenChange }: ToolsDialogProps) {
 						transition={{ delay: 0.2, duration: 0.3 }}
 						className="px-5 py-3"
 					>
-						<TabsList className="scrollbar-hide flex h-11 w-full shrink-0 justify-start gap-2 overflow-x-auto rounded-lg bg-system-background-tertiary p-1 px-2 py-2 transition-colors duration-300">
+						<TabsList className="scrollbar-hide flex h-11 w-full shrink-0 justify-start gap-2 overflow-x-auto rounded-lg bg-system-background-tertiary p-2 transition-colors duration-300">
 							{tabs.map((tab) => (
 								<TabsTrigger
 									key={tab.id}

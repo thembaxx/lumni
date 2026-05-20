@@ -11,6 +11,7 @@ import {
 	Target01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import Link from "next/link";
 import { AccuracyBar } from "@/components/shared/accuracy-bar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -43,7 +44,9 @@ export function AnalyticsPanel() {
 				<p className="mb-4 text-muted-foreground">
 					Complete some quizzes to see your performance analytics.
 				</p>
-				<Button render={<a href="/quiz">Start Quiz</a>}>Start Quiz</Button>
+				<Button render={<Link href="/quiz">Start Quiz</Link>}>
+					Start Quiz
+				</Button>
 			</div>
 		);
 	}

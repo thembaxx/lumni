@@ -1,7 +1,7 @@
 "use client";
 
 import { m, useReducedMotion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAppwriteSession } from "@/hooks/use-appwrite-session";
 import { cn } from "@/lib/shared";
@@ -155,15 +155,46 @@ function getMilestone(daysLeft: number): Milestone {
 	return null;
 }
 
+type CountdownState = {
+	mounted: boolean;
+	daysLeft: number;
+	yearProgress: number;
+};
+
+type CountdownAction = { type: "MOUNT" } | { type: "TICK" };
+
+function countdownReducer(
+	state: CountdownState,
+	action: CountdownAction,
+): CountdownState {
+	switch (action.type) {
+		case "MOUNT":
+			return {
+				mounted: true,
+				daysLeft: getDaysUntil(),
+				yearProgress: getYearProgress(),
+			};
+		case "TICK":
+			return {
+				...state,
+				daysLeft: getDaysUntil(),
+				yearProgress: getYearProgress(),
+			};
+	}
+}
+
 export function CountdownHeader() {
 	const {
 		user: { name },
 		isLoggedIn,
-		isLoading,
+		isLoading: _sessionLoading,
 	} = useAppwriteSession();
-	const [daysLeft, setDaysLeft] = useState(0);
-	const [yearProgress, setYearProgress] = useState(0);
-	const [mounted, setMounted] = useState(false);
+	const [cdState, dispatchCd] = useReducer(countdownReducer, {
+		mounted: false,
+		daysLeft: 0,
+		yearProgress: 0,
+	});
+	const { mounted, daysLeft, yearProgress } = cdState;
 	const [isCompact, setIsCompact] = useState(false);
 	const sentinelRef = useRef<HTMLDivElement>(null);
 	const shouldReduceMotion = useReducedMotion();
@@ -178,21 +209,18 @@ export function CountdownHeader() {
 	const milestone = mounted ? getMilestone(daysLeft) : null;
 
 	useEffect(() => {
-		setMounted(true);
-		setDaysLeft(getDaysUntil());
-		setYearProgress(getYearProgress());
-		function tick() {
-			setDaysLeft(getDaysUntil());
-			setYearProgress(getYearProgress());
-		}
+		dispatchCd({ type: "MOUNT" });
 
 		const midnight = new Date();
 		midnight.setDate(midnight.getDate() + 1);
 		midnight.setHours(0, 0, 0, 0);
 		const msUntilMidnight = midnight.getTime() - Date.now();
 		const timeout = setTimeout(() => {
-			tick();
-			const interval = setInterval(tick, 1000 * 60 * 60 * 24);
+			dispatchCd({ type: "TICK" });
+			const interval = setInterval(
+				() => dispatchCd({ type: "TICK" }),
+				1000 * 60 * 60 * 24,
+			);
 			return () => clearInterval(interval);
 		}, msUntilMidnight);
 		return () => clearTimeout(timeout);
@@ -308,7 +336,7 @@ export function CountdownHeader() {
 						</h1>
 
 						<div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1">
-							{isLoading || !mounted ? (
+							{_sessionLoading || !mounted ? (
 								<Skeleton className="h-8 w-24 rounded-md" />
 							) : (
 								<m.span
@@ -323,7 +351,7 @@ export function CountdownHeader() {
 									{daysLeft}
 								</m.span>
 							)}
-							{!isLoading && mounted && (
+							{!_sessionLoading && mounted && (
 								<div>
 									<p className="font-medium text-[12px] text-muted-foreground tabular-nums">
 										{daysLeft === 1 ? "day" : "days"}

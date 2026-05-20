@@ -36,22 +36,27 @@ function HighlightedText({
 	text: string;
 	currentWordIndex: number;
 }) {
-	const words = useMemo(() => text.split(" "), [text]);
+	const wordEntries = useMemo(() => {
+		return text.split(" ").map((word, idx) => ({
+			word,
+			pos: idx,
+			key: `w-${idx}`,
+		}));
+	}, [text]);
 
 	return (
 		<p className="text-pretty text-muted-foreground text-sm leading-relaxed">
-			{words.map((word, index) => (
+			{wordEntries.map((entry) => (
 				<span
-					// biome-ignore lint/suspicious/noArrayIndexKey: position in text is the stable identifier
-					key={index}
+					key={entry.key}
 					className={cn(
 						"transition-colors duration-150 ease-[var(--ease-ios)]",
-						index === currentWordIndex &&
+						entry.pos === currentWordIndex &&
 							"-mx-0.5 rounded bg-[--system-accent]/10 px-0.5 font-medium text-foreground",
 					)}
 				>
-					{word}
-					{index < words.length - 1 && " "}
+					{entry.word}
+					{entry.pos < wordEntries.length - 1 && " "}
 				</span>
 			))}
 		</p>
@@ -98,7 +103,7 @@ function ExpandedContent({
 	onPracticeClick?: () => void;
 	quizUrl?: string;
 }) {
-	const router = useRouter();
+	const { push } = useRouter();
 
 	return (
 		<m.div
@@ -143,7 +148,7 @@ function ExpandedContent({
 						)}
 						<PracticeButton
 							onClick={() =>
-								router.push(
+								push(
 									quizUrl ||
 										`/quiz?subject=${encodeURIComponent(data.subject)}&topic=${encodeURIComponent(data.title)}`,
 								)
@@ -175,7 +180,7 @@ function CollapsedContent({
 	onOpen: () => void;
 	currentWordIndex: number;
 }) {
-	const router = useRouter();
+	const { push } = useRouter();
 
 	return (
 		<m.div key={`${data.id}-closed`} layoutId={`card-${data.id}`}>
@@ -225,7 +230,7 @@ function CollapsedContent({
 					)}
 					<PracticeButton
 						onClick={() =>
-							router.push(
+							push(
 								`/quiz?subject=${encodeURIComponent(data.subject)}&topic=${encodeURIComponent(data.title)}`,
 							)
 						}

@@ -10,6 +10,8 @@ interface ConfettiPiece {
 	rotation: number;
 	scale: number;
 	delay: number;
+	borderRadiusType: "round" | "square";
+	xOffset: number;
 }
 
 const CONFETTI_COLORS = [
@@ -44,6 +46,10 @@ export function Confetti({
 				rotation: Math.random() * 360,
 				scale: Math.random() * 0.5 + 0.5,
 				delay: Math.random() * 0.3,
+				borderRadiusType: (Math.random() > 0.5 ? "round" : "square") as
+					| "round"
+					| "square",
+				xOffset: (Math.random() - 0.5) * 30,
 			}));
 			setPieces(newPieces);
 			const timeoutId = setTimeout(() => setPieces([]), duration);
@@ -63,7 +69,7 @@ export function Confetti({
 						left: `${piece.x}%`,
 						top: "-20px",
 						backgroundColor: piece.color,
-						borderRadius: Math.random() > 0.5 ? "50%" : "2px",
+						borderRadius: piece.borderRadiusType === "round" ? "50%" : "2px",
 						rotate: piece.rotation,
 						transform: `scale(${piece.scale})`,
 					}}
@@ -72,7 +78,7 @@ export function Confetti({
 						y: typeof window !== "undefined" ? window.innerHeight + 100 : 800,
 						opacity: 0,
 						rotate: piece.rotation + 720,
-						x: piece.x + (Math.random() - 0.5) * 30,
+						x: piece.x + piece.xOffset,
 					}}
 					transition={{
 						duration: duration / 1000,

@@ -40,11 +40,11 @@ interface GeometryData {
 	viewBox?: { x: number; y: number; width: number; height: number };
 }
 
-function renderShape(shape: GeometryShape, i: number) {
+function renderShape(shape: GeometryShape) {
 	const stroke = shape.stroke || "oklch(32.5% 0.012 264°)";
 	const fill = shape.fill || "transparent";
 	const sw = shape.strokeWidth ?? 2;
-	const shapeKey = `${shape.type}-${i}`;
+	const shapeKey = `${shape.type}-${shape.x}-${shape.y}`;
 
 	switch (shape.type) {
 		case "circle":
@@ -167,11 +167,11 @@ function renderShape(shape: GeometryShape, i: number) {
 	}
 }
 
-function renderLabel(shape: GeometryShape, i: number) {
+function renderLabel(shape: GeometryShape) {
 	if (!shape.label) return null;
 	return (
 		<Text
-			key={`label-${i}-${shape.label}`}
+			key={`label-${shape.type}-${shape.x}-${shape.y}`}
 			x={shape.labelX ?? shape.x + 5}
 			y={shape.labelY ?? shape.y - 20}
 			text={shape.label}
@@ -220,8 +220,8 @@ export function GeometryDiagram({ data }: { data: GeometryData }) {
 		>
 			<Layer>
 				{gridLines}
-				{shapes.map((s, i) => renderShape(s, i))}
-				{shapes.map((s, i) => renderLabel(s, i))}
+				{shapes.map((s) => renderShape(s))}
+				{shapes.map((s) => renderLabel(s))}
 			</Layer>
 		</Stage>
 	);

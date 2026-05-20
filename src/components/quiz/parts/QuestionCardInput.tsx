@@ -301,7 +301,7 @@ export function QuestionCardInput({
 						/>
 						{!!source?.attribution && (
 							<p className="mt-2 text-muted-foreground text-xs">
-								— {String(source.attribution)}
+								: {String(source.attribution)}
 							</p>
 						)}
 					</div>

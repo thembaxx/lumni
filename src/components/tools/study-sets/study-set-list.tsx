@@ -1,6 +1,7 @@
 "use client";
 
 import { m } from "framer-motion";
+import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { iOSEase } from "@/lib/utils/animation";
@@ -19,6 +20,10 @@ export function StudySetList({
 	onDelete,
 	onToggleFavorite,
 }: StudySetListProps) {
+	const [mounted, setMounted] = useState(false);
+	useEffect(() => {
+		setMounted(true);
+	}, []);
 	return (
 		<div className="space-y-3">
 			{studySets.map((set) => (
@@ -97,11 +102,11 @@ export function StudySetList({
 								</Button>
 							)}
 							<span className="ml-2">
-								{new Date(set.createdAt).toLocaleDateString()}
+								{mounted ? new Date(set.createdAt).toLocaleDateString() : ""}
 							</span>
 						</div>
 					</div>
-					<div className="mt-3 flex justify-end space-x-2">
+					<div className="mt-3 flex justify-end gap-x-2">
 						<Button
 							variant="ghost"
 							size="icon"

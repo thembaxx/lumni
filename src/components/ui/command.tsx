@@ -26,7 +26,7 @@ function CommandInput({
 	...props
 }: React.ComponentProps<typeof CommandPrimitive.Input>) {
 	return (
-		<div className="flex items-center border-b px-3" cmdk-input-wrapper="">
+		<div className="flex items-center border-b px-3" data-cmdk-input-wrapper="">
 			<HugeiconsIcon
 				icon={Search01Icon}
 				className="mr-2 size-4 shrink-0 opacity-50"

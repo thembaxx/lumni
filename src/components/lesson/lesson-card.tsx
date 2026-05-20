@@ -29,7 +29,7 @@ export function LessonCard({
 	title,
 	summary,
 }: LessonCardData) {
-	const router = useRouter();
+	const { push } = useRouter();
 	const { setOpenId, isOpen } = useLessonCardContext();
 	const isCardOpen = isOpen(id);
 	const [isPlaying, setIsPlaying] = useState(false);
@@ -93,7 +93,7 @@ export function LessonCard({
 									</div>
 									<PracticeButton
 										onClick={() =>
-											router.push(
+											push(
 												`/quiz?subject=${encodeURIComponent(subject)}&topic=${encodeURIComponent(title)}`,
 											)
 										}
@@ -155,7 +155,7 @@ export function LessonCard({
 								</div>
 								<PracticeButton
 									onClick={() =>
-										router.push(
+										push(
 											`/quiz?subject=${encodeURIComponent(subject)}&topic=${encodeURIComponent(title)}`,
 										)
 									}

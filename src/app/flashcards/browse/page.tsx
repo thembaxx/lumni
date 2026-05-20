@@ -26,6 +26,10 @@ export default function FlashcardBrowsePage() {
 	const [loading, setLoading] = useState(true);
 	const [importing, setImporting] = useState(false);
 	const [page, setPage] = useState(0);
+	const [mounted, setMounted] = useState(false);
+	useEffect(() => {
+		setMounted(true);
+	}, []);
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const PAGE_SIZE = 20;
 
@@ -202,15 +206,18 @@ export default function FlashcardBrowsePage() {
 												<span className="rounded bg-muted/30 px-1.5 py-0.5 text-[10px] text-muted-foreground">
 													Interval: {card.interval}d
 												</span>
-												{card.nextReview > Date.now() ? (
-													<span className="rounded bg-green-500/10 px-1.5 py-0.5 text-[10px] text-green-600">
-														Due {new Date(card.nextReview).toLocaleDateString()}
-													</span>
-												) : (
-													<span className="rounded bg-amber-500/10 px-1.5 py-0.5 text-[10px] text-amber-600">
-														Overdue
-													</span>
-												)}
+												{mounted ? (
+													card.nextReview > Date.now() ? (
+														<span className="rounded bg-green-500/10 px-1.5 py-0.5 text-[10px] text-green-600">
+															Due{" "}
+															{new Date(card.nextReview).toLocaleDateString()}
+														</span>
+													) : (
+														<span className="rounded bg-amber-500/10 px-1.5 py-0.5 text-[10px] text-amber-600">
+															Overdue
+														</span>
+													)
+												) : null}
 											</div>
 										</div>
 										<Button

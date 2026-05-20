@@ -60,10 +60,11 @@ export function StudySetForm({
 		if (name === "tags") {
 			setFormData((prev) => ({
 				...prev,
-				[name]: value
-					.split(",")
-					.map((tag) => tag.trim())
-					.filter((tag) => tag.length > 0),
+				[name]: value.split(",").reduce((acc, tag) => {
+					const trimmed = tag.trim();
+					if (trimmed.length > 0) acc.push(trimmed);
+					return acc;
+				}, [] as string[]),
 			}));
 		} else {
 			setFormData((prev) => ({ ...prev, [name]: value }));
@@ -127,42 +128,40 @@ export function StudySetForm({
 					</p>
 					{formData.flashcardIds.length > 0 ? (
 						<div className="flex flex-wrap gap-1">
-							{formData.flashcardIds
-								.map((id) => {
-									const card = formData.flashcards?.find((c) => c.id === id);
-									if (!card) return null;
-									return (
-										<span
-											key={id}
-											className="rounded bg-accent/20 px-2 py-0.5 text-xs"
+							{formData.flashcardIds.flatMap((id) => {
+								const card = formData.flashcards?.find((c) => c.id === id);
+								if (!card) return [];
+								return [
+									<span
+										key={id}
+										className="rounded bg-accent/20 px-2 py-0.5 text-xs"
+									>
+										{card.front.substring(0, 20)}...
+										<Button
+											variant="ghost"
+											size="icon"
+											onClick={() => handleFlashcardSelect(id)}
+											aria-label="Remove flashcard"
 										>
-											{card.front.substring(0, 20)}...
-											<Button
-												variant="ghost"
-												size="icon"
-												onClick={() => handleFlashcardSelect(id)}
-												aria-label="Remove flashcard"
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												width="12"
+												height="12"
+												viewBox="0 0 24 24"
+												fill="none"
+												stroke="currentColor"
+												strokeWidth={1}
+												strokeLinecap="round"
+												strokeLinejoin="round"
 											>
-												<svg
-													xmlns="http://www.w3.org/2000/svg"
-													width="12"
-													height="12"
-													viewBox="0 0 24 24"
-													fill="none"
-													stroke="currentColor"
-													strokeWidth={1}
-													strokeLinecap="round"
-													strokeLinejoin="round"
-												>
-													<title>Remove flashcard</title>
-													<path d="M18 6L6 18" />
-													<path d="M6 6l12 12" />
-												</svg>
-											</Button>
-										</span>
-									);
-								})
-								.filter(Boolean)}
+												<title>Remove flashcard</title>
+												<path d="M18 6L6 18" />
+												<path d="M6 6l12 12" />
+											</svg>
+										</Button>
+									</span>,
+								];
+							})}
 						</div>
 					) : (
 						<p className="text-muted-foreground text-xs italic">
@@ -185,42 +184,40 @@ export function StudySetForm({
 					<p className="mb-1 font-medium text-sm">Select notes to include:</p>
 					{formData.noteIds.length > 0 ? (
 						<div className="flex flex-wrap gap-1">
-							{formData.noteIds
-								.map((id) => {
-									const note = formData.notes?.find((n) => n.id === id);
-									if (!note) return null;
-									return (
-										<span
-											key={id}
-											className="rounded bg-accent/20 px-2 py-0.5 text-xs"
+							{formData.noteIds.flatMap((id) => {
+								const note = formData.notes?.find((n) => n.id === id);
+								if (!note) return [];
+								return [
+									<span
+										key={id}
+										className="rounded bg-accent/20 px-2 py-0.5 text-xs"
+									>
+										{note.title.substring(0, 20)}...
+										<Button
+											variant="ghost"
+											size="icon"
+											onClick={() => handleNoteSelect(id)}
+											aria-label="Remove note"
 										>
-											{note.title.substring(0, 20)}...
-											<Button
-												variant="ghost"
-												size="icon"
-												onClick={() => handleNoteSelect(id)}
-												aria-label="Remove note"
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												width="12"
+												height="12"
+												viewBox="0 0 24 24"
+												fill="none"
+												stroke="currentColor"
+												strokeWidth={1}
+												strokeLinecap="round"
+												strokeLinejoin="round"
 											>
-												<svg
-													xmlns="http://www.w3.org/2000/svg"
-													width="12"
-													height="12"
-													viewBox="0 0 24 24"
-													fill="none"
-													stroke="currentColor"
-													strokeWidth={1}
-													strokeLinecap="round"
-													strokeLinejoin="round"
-												>
-													<title>Remove note</title>
-													<path d="M18 6L6 18" />
-													<path d="M6 6l12 12" />
-												</svg>
-											</Button>
-										</span>
-									);
-								})
-								.filter(Boolean)}
+												<title>Remove note</title>
+												<path d="M18 6L6 18" />
+												<path d="M6 6l12 12" />
+											</svg>
+										</Button>
+									</span>,
+								];
+							})}
 						</div>
 					) : (
 						<p className="text-muted-foreground text-xs italic">
@@ -285,7 +282,7 @@ export function StudySetForm({
 				/>
 			</div>
 
-			<div className="flex items-center space-x-3">
+			<div className="flex items-center gap-x-3">
 				<Label
 					htmlFor="favorite"
 					className="flex items-center font-medium text-sm"
@@ -297,13 +294,13 @@ export function StudySetForm({
 						onChange={(e) =>
 							setFormData((prev) => ({ ...prev, isFavorite: e.target.checked }))
 						}
-						className="h-4 w-4 rounded border-gray-300 text-primary"
+						className="size-4 rounded border-zinc-300 text-primary"
 					/>
 					Mark as favorite
 				</Label>
 			</div>
 
-			<div className="mt-4 flex justify-end space-x-3">
+			<div className="mt-4 flex justify-end gap-x-3">
 				<Button
 					variant="outline"
 					size="icon"

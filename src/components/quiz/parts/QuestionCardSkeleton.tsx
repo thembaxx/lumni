@@ -25,7 +25,7 @@ export function QuestionCardSkeleton() {
 							type="button"
 							className="flex h-8 w-20 items-center justify-center rounded bg-muted/50"
 						>
-							<div className="h-4 w-4 rounded bg-muted/300"></div>
+							<div className="size-4 rounded bg-muted/300"></div>
 						</button>
 					</div>
 					<div className="space-y-2">
@@ -56,8 +56,8 @@ export function QuestionCardSkeleton() {
 				{/* Feedback Skeleton */}
 				<div className="space-y-4">
 					<div className="flex items-center gap-2">
-						<div className="h-4 w-4 rounded bg-muted/50"></div>
-						<div className="h-4 w-4 rounded bg-muted/50"></div>
+						<div className="size-4 rounded bg-muted/50"></div>
+						<div className="size-4 rounded bg-muted/50"></div>
 					</div>
 					<div className="space-y-2">
 						<div className="h-2 w-16 rounded bg-muted/50"></div>

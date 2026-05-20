@@ -8,8 +8,9 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+
 import { Calendar01Icon } from "@/components/ui/calendar";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/shared";
@@ -63,25 +64,31 @@ const commonSubjects = [
 const STORAGE_KEY = "lumni-exams";
 
 export function ExamCalendar() {
+	const [now, setNow] = useState(0);
+	useEffect(() => {
+		setNow(Date.now());
+	}, []);
 	const [exams, setExams] = useState<Exam[]>([]);
 	const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
 	const [isAddingExam, setIsAddingExam] = useState(false);
 	const [newExam, setNewExam] = useState({ subject: "", paper: "Paper 1" });
+	const loaded = useRef(false);
 
 	useEffect(() => {
-		const stored = localStorage.getItem(STORAGE_KEY);
-		if (stored) {
-			try {
-				const parsed = JSON.parse(stored);
-				setExams(parsed.map((e: Exam) => ({ ...e, date: new Date(e.date) })));
-			} catch (e) {
-				console.error("Failed to load exams:", e);
+		if (!loaded.current) {
+			const stored = localStorage.getItem(STORAGE_KEY);
+			if (stored) {
+				try {
+					const parsed = JSON.parse(stored);
+					setExams(parsed.map((e: Exam) => ({ ...e, date: new Date(e.date) })));
+				} catch (e) {
+					console.error("Failed to load exams:", e);
+				}
 			}
+			loaded.current = true;
+		} else {
+			localStorage.setItem(STORAGE_KEY, JSON.stringify(exams));
 		}
-	}, []);
-
-	useEffect(() => {
-		localStorage.setItem(STORAGE_KEY, JSON.stringify(exams));
 	}, [exams]);
 
 	const addExam = () => {
@@ -94,7 +101,7 @@ export function ExamCalendar() {
 			paper: newExam.paper,
 		};
 
-		setExams([...exams, exam]);
+		setExams((prev) => [...prev, exam]);
 		setIsAddingExam(false);
 		setNewExam({ subject: "", paper: "Paper 1" });
 	};
@@ -216,7 +223,7 @@ export function ExamCalendar() {
 						</p>
 						<div className="flex flex-col gap-2">
 							{exams
-								.filter((e) => e.date >= new Date())
+								.filter((e) => e.date >= new Date(now))
 								.sort((a, b) => a.date.getTime() - b.date.getTime())
 								.slice(0, 5)
 								.map((exam) => (
@@ -302,7 +309,10 @@ export function ExamCalendar() {
 													newExam.subject === subject.id ? "default" : "ghost"
 												}
 												onClick={() =>
-													setNewExam({ ...newExam, subject: subject.id })
+													setNewExam((prev) => ({
+														...prev,
+														subject: subject.id,
+													}))
 												}
 											>
 												{subject.name.slice(0, 10)}
@@ -320,7 +330,9 @@ export function ExamCalendar() {
 												size="sm"
 												className="border border-border/80"
 												variant={newExam.paper === paper ? "default" : "ghost"}
-												onClick={() => setNewExam({ ...newExam, paper })}
+												onClick={() =>
+													setNewExam((prev) => ({ ...prev, paper }))
+												}
 											>
 												{paper}
 											</Button>

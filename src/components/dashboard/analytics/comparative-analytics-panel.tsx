@@ -1,6 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -90,7 +91,10 @@ export function ComparativeAnalyticsPanel() {
 				<p className="mb-4 text-muted-foreground">
 					Complete some quizzes to see your performance analytics.
 				</p>
-				<Button render={<a href="/quiz">Start Quiz</a>} nativeButton={false}>
+				<Button
+					render={<Link href="/quiz">Start Quiz</Link>}
+					nativeButton={false}
+				>
 					Start Quiz
 				</Button>
 			</div>

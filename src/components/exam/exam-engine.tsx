@@ -26,6 +26,10 @@ export function ExamEngine({
 }: ExamEngineProps) {
 	const [sidebarOpen, setSidebarOpen] = useState(false);
 	const [showSubmit, setShowSubmit] = useState(false);
+	const [now, setNow] = useState(0);
+	useEffect(() => {
+		setNow(Date.now());
+	}, []);
 	const initialized = useRef(false);
 
 	const currentPartId = useExamSessionStore((s) => s.currentPartId);
@@ -122,7 +126,7 @@ export function ExamEngine({
 				paper={paper}
 				answers={answers}
 				flags={flags}
-				timeTaken={startedAt ? Math.floor((Date.now() - startedAt) / 1000) : 0}
+				timeTaken={startedAt ? Math.floor((now - startedAt) / 1000) : 0}
 			/>
 		);
 	}
@@ -142,9 +146,7 @@ export function ExamEngine({
 				</Button>
 				<AssessmentHeader
 					title={`${paper.metadata.subject} ${paper.metadata.paperCode}`}
-					elapsedTime={
-						startedAt ? Math.floor((Date.now() - startedAt) / 1000) : 0
-					}
+					elapsedTime={startedAt ? Math.floor((now - startedAt) / 1000) : 0}
 					currentQuestionIndex={answeredCount}
 					totalQuestions={totalParts}
 					progressValue={

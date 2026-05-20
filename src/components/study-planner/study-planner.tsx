@@ -10,7 +10,7 @@ import {
 	Download03Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -52,6 +52,10 @@ function StudyPlannerInner() {
 
 	const [showAddSession, setShowAddSession] = useState(false);
 	const [showAddExam, setShowAddExam] = useState(false);
+	const [_now, setNow] = useState(0);
+	useEffect(() => {
+		setNow(Date.now());
+	}, []);
 
 	const exportCalendar = () => {
 		const ics = exportToICal(
@@ -72,7 +76,7 @@ function StudyPlannerInner() {
 						onClick={exportCalendar}
 						aria-label="Export calendar"
 					>
-						<HugeiconsIcon icon={Download03Icon} className="mr-1 h-4 w-4" />
+						<HugeiconsIcon icon={Download03Icon} className="mr-1 size-4" />
 						Export
 					</Button>
 					<Button
@@ -80,7 +84,7 @@ function StudyPlannerInner() {
 						size="sm"
 						onClick={() => setShowAddSession(true)}
 					>
-						<HugeiconsIcon icon={Add01Icon} className="mr-1 h-4 w-4" />
+						<HugeiconsIcon icon={Add01Icon} className="mr-1 size-4" />
 						Add Session
 					</Button>
 					<Button
@@ -88,7 +92,7 @@ function StudyPlannerInner() {
 						size="sm"
 						onClick={() => setShowAddExam(true)}
 					>
-						<HugeiconsIcon icon={Add01Icon} className="mr-1 h-4 w-4" />
+						<HugeiconsIcon icon={Add01Icon} className="mr-1 size-4" />
 						Add Exam
 					</Button>
 				</div>
@@ -197,7 +201,7 @@ function TodaySessionsCard({
 		<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
 			<header className="rounded-t-[2.5rem] border-border/80 border-t pb-2">
 				<h2 className="flex items-center gap-2 font-heading font-medium text-base text-sm">
-					<HugeiconsIcon icon={Calendar01Icon} className="h-4 w-4" />
+					<HugeiconsIcon icon={Calendar01Icon} className="size-4" />
 					Today
 				</h2>
 			</header>
@@ -228,7 +232,7 @@ function TodaySessionsCard({
 										{session.completed && (
 											<HugeiconsIcon
 												icon={CheckmarkCircle01Icon}
-												className="h-3 w-3"
+												className="size-3"
 											/>
 										)}
 									</Button>
@@ -245,7 +249,7 @@ function TodaySessionsCard({
 									onClick={() => onDelete(session.id)}
 									aria-label="Delete study session"
 								>
-									<HugeiconsIcon icon={Delete02Icon} className="h-4 w-4" />
+									<HugeiconsIcon icon={Delete02Icon} className="size-4" />
 								</Button>
 							</div>
 						))}
@@ -283,7 +287,7 @@ function UpcomingSessionsCard({
 		<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
 			<header className="rounded-t-[2.5rem] border-border/80 border-t pb-2">
 				<h2 className="flex items-center gap-2 font-heading font-medium text-base text-sm">
-					<HugeiconsIcon icon={Clock01Icon} className="h-4 w-4" />
+					<HugeiconsIcon icon={Clock01Icon} className="size-4" />
 					Upcoming Sessions
 				</h2>
 			</header>
@@ -321,7 +325,7 @@ function UpcomingSessionsCard({
 														{session.completed && (
 															<HugeiconsIcon
 																icon={CheckmarkCircle01Icon}
-																className="h-3 w-3"
+																className="size-3"
 															/>
 														)}
 													</Button>
@@ -343,7 +347,7 @@ function UpcomingSessionsCard({
 												>
 													<HugeiconsIcon
 														icon={Delete02Icon}
-														className="h-4 w-4"
+														className="size-4"
 													/>
 												</Button>
 											</div>
@@ -370,7 +374,7 @@ function UpcomingExamsCard({
 		<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
 			<header className="rounded-t-[2.5rem] border-border/80 border-t pb-2">
 				<h2 className="flex items-center gap-2 font-heading font-medium text-base text-sm">
-					<HugeiconsIcon icon={BookOpen01Icon} className="h-4 w-4" />
+					<HugeiconsIcon icon={BookOpen01Icon} className="size-4" />
 					Upcoming Exams
 				</h2>
 			</header>
@@ -398,7 +402,7 @@ function UpcomingExamsCard({
 									onClick={() => onDelete(exam.id)}
 									aria-label="Delete study session"
 								>
-									<HugeiconsIcon icon={Delete02Icon} className="h-4 w-4" />
+									<HugeiconsIcon icon={Delete02Icon} className="size-4" />
 								</Button>
 							</div>
 						))}

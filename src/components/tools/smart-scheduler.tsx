@@ -111,7 +111,7 @@ function generateDeterministicSchedule(input: SchedulerInput): StudySession[] {
 
 		let remainingMinutes = effectiveHours * 60;
 
-		const sortedSubjects = [...subjects].sort((a, b) => {
+		const sortedSubjects = subjects.toSorted((a, b) => {
 			const aWeight =
 				difficultyWeights[a.difficulty] * (Math.random() * 0.3 + 0.7);
 			const bWeight =
@@ -190,8 +190,8 @@ export function SmartScheduler() {
 			delete newMap[subjectId];
 			setDifficultyMap(newMap);
 		} else {
-			setSelectedSubjects([...selectedSubjects, subjectId]);
-			setDifficultyMap({ ...difficultyMap, [subjectId]: "medium" });
+			setSelectedSubjects((prev) => [...prev, subjectId]);
+			setDifficultyMap((prev) => ({ ...prev, [subjectId]: "medium" }));
 		}
 	};
 
@@ -199,7 +199,7 @@ export function SmartScheduler() {
 		subjectId: string,
 		difficulty: "easy" | "medium" | "hard",
 	) => {
-		setDifficultyMap({ ...difficultyMap, [subjectId]: difficulty });
+		setDifficultyMap((prev) => ({ ...prev, [subjectId]: difficulty }));
 	};
 
 	const generateSchedule = async () => {
@@ -344,7 +344,7 @@ export function SmartScheduler() {
 							{isGenerating ? (
 								<>
 									<div className="mr-2 size-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-									Generating...
+									Generating…
 								</>
 							) : (
 								<>
@@ -374,63 +374,65 @@ export function SmartScheduler() {
 					</div>
 
 					<div className="flex flex-col gap-4">
-						{scheduleByDay
-							.filter((d) => d.sessions.length > 0)
-							.map((day, idx) => (
-								<m.div
-									key={day.day}
-									initial={{ opacity: 0, x: -10 }}
-									animate={{ opacity: 1, x: 0 }}
-									transition={{ delay: idx * 0.05 }}
-								>
-									<h4 className="mb-2 flex items-center gap-2 font-medium text-foreground text-sm">
-										<HugeiconsIcon
-											icon={Calendar01Icon}
-											className="size-4 text-[--system-accent]"
-										/>
-										{day.day}
-									</h4>
-									<div className="flex flex-col gap-2">
-										{day.sessions.map((session) => (
-											<div
-												key={`${day.day}-${session.subject}-${session.topic}-${session.duration}-${session.type}`}
-												className={cn(
-													"rounded-xl border border-border bg-card p-3 shadow-sm",
-													session.subject === "Break" && "bg-muted/50",
-												)}
-											>
-												<div className="flex items-center justify-between">
-													<div>
-														<span className="font-medium text-sm">
-															{session.subject}
-														</span>
-														<span className="ml-2 text-muted-foreground text-sm">
-															- {session.topic}
-														</span>
+						{scheduleByDay.flatMap((day, idx) =>
+							day.sessions.length > 0
+								? [
+										<m.div
+											key={day.day}
+											initial={{ opacity: 0, x: -10 }}
+											animate={{ opacity: 1, x: 0 }}
+											transition={{ delay: idx * 0.05 }}
+										>
+											<h4 className="mb-2 flex items-center gap-2 font-medium text-foreground text-sm">
+												<HugeiconsIcon
+													icon={Calendar01Icon}
+													className="size-4 text-[--system-accent]"
+												/>
+												{day.day}
+											</h4>
+											<div className="flex flex-col gap-2">
+												{day.sessions.map((session) => (
+													<div
+														key={`${day.day}-${session.subject}-${session.topic}-${session.duration}-${session.type}`}
+														className={cn(
+															"rounded-xl border border-border bg-card p-3 shadow-sm",
+															session.subject === "Break" && "bg-muted/50",
+														)}
+													>
+														<div className="flex items-center justify-between">
+															<div>
+																<span className="font-medium text-sm">
+																	{session.subject}
+																</span>
+																<span className="ml-2 text-muted-foreground text-sm">
+																	- {session.topic}
+																</span>
+															</div>
+															<div className="flex items-center gap-2">
+																<span
+																	className={cn(
+																		"rounded-lg px-2.5 py-0.5 text-[10px] capitalize",
+																		getTypeColor(session.type),
+																	)}
+																>
+																	{session.type}
+																</span>
+																<span className="flex items-center gap-1 text-muted-foreground text-sm tabular-nums">
+																	<HugeiconsIcon
+																		icon={Clock01Icon}
+																		className="size-3"
+																	/>
+																	{session.duration}min
+																</span>
+															</div>
+														</div>
 													</div>
-													<div className="flex items-center gap-2">
-														<span
-															className={cn(
-																"rounded-lg px-2.5 py-0.5 text-[10px] capitalize",
-																getTypeColor(session.type),
-															)}
-														>
-															{session.type}
-														</span>
-														<span className="flex items-center gap-1 text-muted-foreground text-sm tabular-nums">
-															<HugeiconsIcon
-																icon={Clock01Icon}
-																className="size-3"
-															/>
-															{session.duration}min
-														</span>
-													</div>
-												</div>
+												))}
 											</div>
-										))}
-									</div>
-								</m.div>
-							))}
+										</m.div>,
+									]
+								: [],
+						)}
 					</div>
 				</div>
 			)}

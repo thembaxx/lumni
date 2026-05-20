@@ -208,8 +208,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 						<div className="flex h-5 items-center gap-1">
 							{bars.map((height, i) => (
 								<m.div
-									// biome-ignore lint/suspicious/noArrayIndexKey: static bar array
-									key={i}
+									key={`bar-${height}`}
 									className={cn(
 										"w-1.25 rounded-full",
 										isUser ? "bg-white/40" : "bg-system-accent/40",

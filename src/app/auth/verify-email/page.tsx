@@ -2,7 +2,7 @@
 
 import { SparklesIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { m } from "framer-motion";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -19,6 +19,7 @@ function VerifyEmailContent() {
 	const [error, setError] = useState("");
 	const calledRef = useRef(false);
 
+	const queryClient = useQueryClient();
 	const { mutate } = useMutation({
 		mutationFn: async () => {
 			if (!userId || !secret) throw new Error("Invalid verification link");
@@ -30,6 +31,7 @@ function VerifyEmailContent() {
 			if (!res.ok) throw new Error("Verification failed");
 			return res.json();
 		},
+		onSuccess: () => queryClient.invalidateQueries(),
 		onError: (err) => setError(err.message),
 	});
 

@@ -113,7 +113,7 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 						<m.div
 							animate={{ rotate: 360 }}
 							transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
-							className="mx-auto h-8 w-8"
+							className="mx-auto size-8"
 						>
 							<HugeiconsIcon
 								icon={RadialIcon}
@@ -121,7 +121,7 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 							/>
 						</m.div>
 						<p className="text-muted-foreground text-sm">
-							Generating questions...
+							Generating questions…
 						</p>
 					</Card>
 				</div>

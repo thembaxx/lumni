@@ -150,7 +150,7 @@ export function SubjectSelector({ onSelect, className }: SubjectSelectorProps) {
 					<div className="flex items-center gap-2">
 						<Skeleton className="size-4 rounded-full" />
 						<span className="text-muted-foreground text-sm">
-							Generating questions with AI...
+							Generating questions with AI…
 						</span>
 					</div>
 				</div>

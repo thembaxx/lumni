@@ -77,7 +77,6 @@ function SettingsContent() {
 		) {
 			stored.timerDuration = onboarding.dailyStudyMinutes * 60;
 		}
-		setStudyPrefs(stored);
 
 		const notifPrefs = loadFromStorage(
 			NOTIFICATION_SETTINGS_KEY,
@@ -90,9 +89,12 @@ function SettingsContent() {
 			notifPrefs.studyReminders = onboarding.notificationsEnabled;
 			notifPrefs.streakAlerts = onboarding.notificationsEnabled;
 		}
-		setNotifications(notifPrefs);
 
-		setBetaFeatures(loadFromStorage(BETA_FEATURES_KEY, DEFAULT_BETA));
+		const betaPrefs = loadFromStorage(BETA_FEATURES_KEY, DEFAULT_BETA);
+
+		setStudyPrefs(stored);
+		setNotifications(notifPrefs);
+		setBetaFeatures(betaPrefs);
 	}, []);
 
 	const handleSave = async () => {

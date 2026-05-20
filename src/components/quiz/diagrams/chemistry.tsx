@@ -98,7 +98,7 @@ function renderMolecule(mol: Molecule, molIndex: number, offsetX: number) {
 			const offset = bondOffsets[i] || { dx1: 0, dy1: 0, dx2: 0, dy2: 0 };
 			elements.push(
 				<Line
-					key={`mol-${molIndex}-bond-${bond.fromIndex}-${bond.toIndex}-${i}`}
+					key={`mol-${molIndex}-bond-${bond.fromIndex}-${bond.toIndex}-${offset.dx1}-${offset.dy1}-${offset.dx2}-${offset.dy2}`}
 					points={[
 						offsetX + from.x + offset.dx1,
 						from.y + offset.dy1,

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { type ComponentType, useEffect, useRef, useState } from "react";
 import { Equation } from "@/components/ui/equation";
 import {
@@ -81,14 +82,14 @@ export function ContentBlockRenderer({ block }: ContentBlockRendererProps) {
 			);
 
 		case "image":
+			if (!block.imagePath) return null;
 			return (
 				<div className="my-3">
-					<img
+					<Image
 						src={block.imagePath}
 						alt={block.altText || ""}
 						width={800}
 						height={600}
-						loading="lazy"
 						className="h-auto max-w-full rounded border"
 					/>
 					{block.altText && (

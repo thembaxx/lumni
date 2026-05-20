@@ -33,7 +33,7 @@ export function StudyTopicCard({
 	className,
 	initialTopic,
 }: StudyTopicCardProps) {
-	const router = useRouter();
+	const { push } = useRouter();
 	const [topic, setTopic] = useState<TopicData | null>(null);
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
@@ -148,7 +148,7 @@ export function StudyTopicCard({
 						<PracticeButton
 							onClick={() =>
 								topic &&
-								router.push(
+								push(
 									`/quiz?subject=${encodeURIComponent(topic.subject)}&topic=${encodeURIComponent(topic.topicTitle)}`,
 								)
 							}

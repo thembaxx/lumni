@@ -159,7 +159,7 @@ function ListItem({ children }: { children?: React.ReactNode }) {
 
 function BlockQuote({ children }: { children?: React.ReactNode }) {
 	return (
-		<blockquote className="my-3 border-[--system-accent]/30 border-l-4 pl-4 italic">
+		<blockquote className="my-3 border-[--system-accent]/30 border-l-2 pl-4 italic">
 			{children}
 		</blockquote>
 	);

@@ -3,7 +3,7 @@
 import { Clock01Icon, Copy01Icon, UndoIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
 import { cn } from "@/lib/shared";
@@ -349,7 +349,7 @@ export function ScientificCalculator() {
 		error: false,
 	});
 	const [history, setHistory] = useState<string[]>([]);
-	const [lastResult, setLastResult] = useState<number | null>(null);
+	const lastResult = useRef<number | null>(null);
 
 	const evaluateExpression = useCallback(
 		(expr: string): string => {
@@ -412,7 +412,7 @@ export function ScientificCalculator() {
 						if (!prev.expression || prev.result === "Error") return prev;
 						const entry = `${prev.expression} = ${prev.result}`;
 						setHistory((h) => [entry, ...h].slice(0, 50));
-						setLastResult(Number.parseFloat(prev.result));
+						lastResult.current = Number.parseFloat(prev.result);
 						return { ...prev, expression: prev.result, result: prev.result };
 					});
 					break;
@@ -463,13 +463,14 @@ export function ScientificCalculator() {
 					}));
 					break;
 				case "ans":
-					if (lastResult !== null) appendToExpr(String(lastResult));
+					if (lastResult.current !== null)
+						appendToExpr(String(lastResult.current));
 					break;
 				default:
 					appendToExpr(id);
 			}
 		},
-		[appendToExpr, evaluateExpression, state.memory, lastResult],
+		[appendToExpr, evaluateExpression, state.memory],
 	);
 
 	const handleCopy = useCallback(() => {

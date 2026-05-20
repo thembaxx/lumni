@@ -5,7 +5,7 @@ import {
 	type Dispatch,
 	type ReactNode,
 	type SetStateAction,
-	useContext,
+	use,
 	useState,
 } from "react";
 
@@ -30,7 +30,7 @@ export function LessonCardProvider({ children }: { children: ReactNode }) {
 }
 
 export function useLessonCardContext() {
-	const context = useContext(LessonCardContext);
+	const context = use(LessonCardContext);
 	if (!context) {
 		throw new Error(
 			"useLessonCardContext must be used within LessonCardProvider",

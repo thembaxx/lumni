@@ -145,8 +145,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 				<div className="mb-8 flex items-center gap-2">
 					{STEPS_COPY.map((_, i) => (
 						<m.div
-							// biome-ignore lint/suspicious/noArrayIndexKey: static steps array
-							key={i}
+							key={STEPS_COPY[i].title}
 							className={`h-1 flex-1 rounded-full ${
 								i <= step ? "bg-[--system-accent]" : "bg-[--system-separator]"
 							}`}

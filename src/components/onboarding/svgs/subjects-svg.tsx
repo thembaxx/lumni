@@ -36,8 +36,7 @@ export function SubjectsSVG() {
 					const y = 85 - i * 4;
 					const hues = ["var(--chart-2)", "var(--chart-3)", "var(--chart-4)"];
 					return (
-						// biome-ignore lint/suspicious/noArrayIndexKey: static SVG array
-						<g key={i}>
+						<g key={`book-${w}`}>
 							<rect
 								x={x}
 								y={y}
@@ -91,8 +90,7 @@ export function SubjectsSVG() {
 					[190, 160, 0.8],
 				].map(([x, y, s], i) => (
 					<rect
-						// biome-ignore lint/suspicious/noArrayIndexKey: static SVG array
-						key={i}
+						key={`decor-${x}-${y}`}
 						x={x}
 						y={y}
 						width={12 * (s as number)}

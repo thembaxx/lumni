@@ -101,7 +101,7 @@ export function WaveDiagram({ data }: { data: WaveData }) {
 			const yOffset = (i - 1) * 15;
 			lines.push(
 				<Line
-					key={`photon-${i}`}
+					key={`photon-${yOffset}`}
 					points={[0, 100 + yOffset, 300, 100 + yOffset]}
 					stroke="oklch(81.9% 0.145 80° 0.5)"
 					strokeWidth={2}

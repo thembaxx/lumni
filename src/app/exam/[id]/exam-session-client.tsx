@@ -403,7 +403,10 @@ function ExamResults({
 export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 	const { data: paperData, isLoading: paperLoading } = useExamPaper(id);
 	const [phase, setPhase] = useState<SessionPhase>("loading");
-	const [sessionMode, setSessionMode] = useState<"timed" | "practice">(mode);
+	const [sessionModeOverride, setSessionModeOverride] = useState<
+		"timed" | "practice" | null
+	>(null);
+	const sessionMode = sessionModeOverride ?? mode;
 	const [showPalette, setShowPalette] = useState(false);
 	const [paused, setPaused] = useState(false);
 	const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -451,6 +454,10 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 	}, [paperLoading, paperData, initSession]);
 
 	useEffect(() => {
+		if (timeRemaining <= 0 && phase === "active" && sessionMode === "timed") {
+			completeSession();
+			setPhase("submitting");
+		}
 		if (phase === "active" && sessionMode === "timed" && !paused) {
 			timerRef.current = setInterval(() => {
 				tick();
@@ -459,14 +466,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 		return () => {
 			if (timerRef.current) clearInterval(timerRef.current);
 		};
-	}, [phase, sessionMode, paused, tick]);
-
-	useEffect(() => {
-		if (timeRemaining <= 0 && phase === "active" && sessionMode === "timed") {
-			completeSession();
-			setPhase("submitting");
-		}
-	}, [timeRemaining, phase, sessionMode, completeSession]);
+	}, [phase, sessionMode, paused, tick, timeRemaining, completeSession]);
 
 	const startSession = useCallback(() => {
 		const first = flatParts[0];
@@ -541,11 +541,12 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 			const item = flatParts[i];
 			const result = partResults[i];
 			const topic = item.sectionId;
+			const subject = paperData?.metadata.subject ?? "unknown";
 
 			const maxScore =
 				typeof item.part.marks === "number" ? item.part.marks : result.score;
 			trackQuestionResult({
-				subjectId: paperData?.metadata.subject ?? "unknown",
+				subjectId: subject,
 				topicId: topic,
 				bloomLevel: "apply",
 				score: result.score,
@@ -557,7 +558,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 				addWrongAnswer({
 					questionId: item.part.id,
 					questionText: partText,
-					subject: paperData?.metadata.subject ?? "unknown",
+					subject,
 					topic,
 					correctAnswer: getCorrectAnswerText(item.part),
 					userAnswer: getAnswerText(item.part, answers[item.part.id]),
@@ -566,8 +567,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 				await createFlashcard(
 					partText,
 					getCorrectAnswerText(item.part) || "Review this topic",
-					paperData?.metadata.subject ?? "unknown",
-					topic,
+					subject,
 				);
 			}
 		}
@@ -660,7 +660,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 							variant="outline"
 							size="lg"
 							onClick={() => {
-								setSessionMode("timed");
+								setSessionModeOverride("timed");
 								startSession();
 							}}
 						>
@@ -772,7 +772,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 						</button>
 
 						<Button size="sm" onClick={handleSubmit}>
-							Submit
+							Submit Exam
 						</Button>
 					</div>
 				</div>

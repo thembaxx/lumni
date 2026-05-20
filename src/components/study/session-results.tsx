@@ -32,14 +32,14 @@ export function SessionResults({
 				<div className="mx-auto flex w-full max-w-md flex-col gap-4">
 					<header className="text-left">
 						<m.div
-							initial={{ scale: 0, opacity: 0 }}
+							initial={{ scale: 0.95, opacity: 0 }}
 							animate={{ scale: 1, opacity: 1 }}
 							transition={{ duration: 0.3 }}
 							className="mb-2"
 						>
 							<AnimatedIcon name="success-check" className="mx-auto size-16" />
 						</m.div>
-						<h2 className="font-extrabold text-xl tracking-tight">
+						<h2 className="font-semibold text-xl tracking-tight">
 							Session Complete!
 						</h2>
 					</header>

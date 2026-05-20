@@ -81,15 +81,16 @@ export function FlashcardsClient() {
 			const isSm2Session =
 				sessionCards.length > 0 && sessionCards[0].id.startsWith("fc_");
 
-			for (const card of sessionCards) {
+			const cardPromises = sessionCards.map(async (card) => {
 				const isKnown = known.has(card.id);
+				const cardTopic = card.rawQuestion.topic;
 
 				if (isSm2Session) {
 					await reviewFlashcard(card.id, isKnown ? 4 : 1);
 				} else {
 					trackQuestionResult({
 						subjectId: subject,
-						topicId: card.rawQuestion.topic,
+						topicId: cardTopic,
 						bloomLevel: card.rawQuestion.bloomTaxonomy,
 						score: isKnown ? 1 : 0,
 						maxScore: 1,
@@ -101,21 +102,18 @@ export function FlashcardsClient() {
 						questionId: card.id,
 						questionText: card.front,
 						subject,
-						topic: card.rawQuestion.topic,
+						topic: cardTopic,
 						correctAnswer: card.back,
 						userAnswer: "",
 						explanation: card.back,
 					});
 					if (!isSm2Session) {
-						await createFlashcard(
-							card.front,
-							card.back,
-							subject,
-							card.rawQuestion.topic,
-						);
+						await createFlashcard(card.front, card.back, subject, cardTopic);
 					}
 				}
-			}
+			});
+
+			await Promise.all(cardPromises);
 		},
 		[gamification, addWrongAnswer],
 	);
@@ -140,9 +138,9 @@ export function FlashcardsClient() {
 
 	const cards: FlashcardItem[] =
 		isLoading === false && questions?.length
-			? questions
-					.filter((q) => q?.id)
-					.map((q) => ({
+			? questions.reduce<FlashcardItem[]>((acc, q) => {
+					if (!q?.id) return acc;
+					acc.push({
 						id: q.id,
 						front: q.questionText,
 						back: q.explanation,
@@ -150,7 +148,9 @@ export function FlashcardsClient() {
 						difficulty: q.difficulty,
 						hint: hintsRef.current.get(q.id) || q.hint,
 						rawQuestion: q,
-					}))
+					});
+					return acc;
+				}, [])
 			: [];
 
 	const sm2Available = source === "ai" && sm2Cards.length > 0;

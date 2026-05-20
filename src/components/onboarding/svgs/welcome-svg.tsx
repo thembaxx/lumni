@@ -39,8 +39,7 @@ export function WelcomeSVG() {
 					[190, 110],
 				].map(([cx, cy], i) => (
 					<circle
-						// biome-ignore lint/suspicious/noArrayIndexKey: static SVG array
-						key={i}
+						key={`dot-${cx}-${cy}`}
 						cx={cx}
 						cy={cy}
 						r={3 + (i % 2) * 2}

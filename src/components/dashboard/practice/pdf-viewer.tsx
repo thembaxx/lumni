@@ -11,7 +11,7 @@ import {
 	ShrinkDotIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
@@ -22,6 +22,65 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { cn } from "@/lib/shared";
 import type { PaperListing } from "@/types/exam";
+
+type PdfState = {
+	pdfPage: number;
+	totalPages: number;
+	isLoading: boolean;
+	error: string | null;
+	scale: number;
+};
+
+type PdfAction =
+	| { type: "RESET" }
+	| { type: "PREV_PAGE" }
+	| { type: "NEXT_PAGE" }
+	| { type: "LOAD_SUCCESS"; numPages: number }
+	| { type: "LOAD_ERROR"; message: string }
+	| { type: "ZOOM_IN" }
+	| { type: "ZOOM_OUT" };
+
+function pdfReducer(state: PdfState, action: PdfAction): PdfState {
+	switch (action.type) {
+		case "RESET":
+			return {
+				pdfPage: 1,
+				totalPages: 0,
+				isLoading: true,
+				error: null,
+				scale: 1,
+			};
+		case "PREV_PAGE":
+			return { ...state, pdfPage: Math.max(1, state.pdfPage - 1) };
+		case "NEXT_PAGE":
+			return {
+				...state,
+				pdfPage: Math.min(state.totalPages, state.pdfPage + 1),
+			};
+		case "LOAD_SUCCESS":
+			return { ...state, totalPages: action.numPages, isLoading: false };
+		case "LOAD_ERROR":
+			return { ...state, error: action.message, isLoading: false };
+		case "ZOOM_IN":
+			return {
+				...state,
+				scale: Math.min(MAX_SCALE, +(state.scale + SCALE_STEP).toFixed(2)),
+			};
+		case "ZOOM_OUT":
+			return {
+				...state,
+				scale: Math.max(MIN_SCALE, +(state.scale - SCALE_STEP).toFixed(2)),
+			};
+	}
+}
+
+const initialPdfState: PdfState = {
+	pdfPage: 1,
+	totalPages: 0,
+	isLoading: true,
+	error: null,
+	scale: 1,
+};
 
 interface PdfViewerProps {
 	open: boolean;
@@ -39,12 +98,9 @@ const iconTransition =
 	"transition-[opacity,filter,scale] duration-300 cubic-bezier(0.2, 0, 0, 1)";
 
 export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
-	const [pdfPage, setPdfPage] = useState(1);
-	const [totalPages, setTotalPages] = useState(0);
-	const [isLoading, setIsLoading] = useState(true);
-	const [error, setError] = useState<string | null>(null);
+	const [pdfState, dispatchPdf] = useReducer(pdfReducer, initialPdfState);
+	const { pdfPage, totalPages, isLoading, error, scale } = pdfState;
 	const [workerReady, setWorkerReady] = useState(false);
-	const [scale, setScale] = useState(1);
 	const [isFullscreen, setIsFullscreen] = useState(false);
 	const containerRef = useRef<HTMLDivElement>(null);
 	const initRef = useRef(false);
@@ -60,11 +116,7 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 
 	useEffect(() => {
 		if (!open) {
-			setPdfPage(1);
-			setTotalPages(0);
-			setIsLoading(true);
-			setError(null);
-			setScale(1);
+			dispatchPdf({ type: "RESET" });
 		}
 	}, [open]);
 
@@ -78,20 +130,17 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 	}, []);
 
 	const handlePrevPage = useCallback(
-		() => setPdfPage((p) => Math.max(1, p - 1)),
+		() => dispatchPdf({ type: "PREV_PAGE" }),
 		[],
 	);
 	const handleNextPage = useCallback(
-		() => setPdfPage((p) => Math.min(totalPages, p + 1)),
-		[totalPages],
-	);
-
-	const handleZoomIn = useCallback(
-		() => setScale((s) => Math.min(MAX_SCALE, +(s + SCALE_STEP).toFixed(2))),
+		() => dispatchPdf({ type: "NEXT_PAGE" }),
 		[],
 	);
+
+	const handleZoomIn = useCallback(() => dispatchPdf({ type: "ZOOM_IN" }), []);
 	const handleZoomOut = useCallback(
-		() => setScale((s) => Math.max(MIN_SCALE, +(s - SCALE_STEP).toFixed(2))),
+		() => dispatchPdf({ type: "ZOOM_OUT" }),
 		[],
 	);
 
@@ -111,16 +160,14 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 
 	const onDocumentLoadSuccess = useCallback(
 		({ numPages }: { numPages: number }) => {
-			setTotalPages(numPages);
-			setIsLoading(false);
+			dispatchPdf({ type: "LOAD_SUCCESS", numPages });
 		},
 		[],
 	);
 
 	const onDocumentLoadError = useCallback((err: Error) => {
 		console.error("PDF load error:", err);
-		setError(err.message);
-		setIsLoading(false);
+		dispatchPdf({ type: "LOAD_ERROR", message: err.message });
 	}, []);
 
 	const canZoomIn = scale < MAX_SCALE;

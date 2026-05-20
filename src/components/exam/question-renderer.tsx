@@ -77,9 +77,11 @@ export function QuestionRenderer({
 
 			<VisualContent visual={visual} isLoading={visualLoading} />
 
-			{question.context?.map((block, idx) => (
-				// biome-ignore lint/suspicious/noArrayIndexKey: ContentBlock has no stable id
-				<div key={idx} className="border-muted border-l-2 pl-4">
+			{question.context?.map((block) => (
+				<div
+					key={block.value || block.imagePath || block.type}
+					className="border-muted border-l-2 pl-4"
+				>
 					<ContentBlockRenderer block={block} />
 				</div>
 			))}
@@ -123,9 +125,11 @@ export function QuestionRenderer({
 							</button>
 						</div>
 
-						{part.content?.map((block, idx) => (
-							// biome-ignore lint/suspicious/noArrayIndexKey: ContentBlock has no stable id
-							<ContentBlockRenderer key={idx} block={block} />
+						{part.content?.map((block) => (
+							<ContentBlockRenderer
+								key={`content-${block.type}-${block.value?.slice(0, 30) || block.imagePath || ""}`}
+								block={block}
+							/>
 						))}
 
 						<div className="mt-3">

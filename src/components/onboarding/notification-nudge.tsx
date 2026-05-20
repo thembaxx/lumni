@@ -12,21 +12,16 @@ import { iOSEase } from "@/lib/utils/animation";
 const NUDGE_DISMISSED_KEY = "lumni_notification_nudge_dismissed";
 
 export function NotificationNudge() {
-	const router = useRouter();
+	const { push } = useRouter();
 	const { data } = useOnboarding();
 	const [dismissed, setDismissed] = useState(true);
 
 	useEffect(() => {
 		const dismissedRaw = localStorage.getItem(NUDGE_DISMISSED_KEY);
-		if (dismissedRaw === "true") {
-			setDismissed(true);
-			return;
-		}
-		if (data.isComplete && !data.notificationsEnabled) {
-			setDismissed(false);
-		} else {
-			setDismissed(true);
-		}
+		const isDismissed =
+			dismissedRaw === "true" ||
+			!(data.isComplete && !data.notificationsEnabled);
+		setDismissed(isDismissed);
 	}, [data.isComplete, data.notificationsEnabled]);
 
 	if (dismissed) return null;
@@ -37,7 +32,7 @@ export function NotificationNudge() {
 	};
 
 	const handleEnable = () => {
-		router.push("/settings");
+		push("/settings");
 		handleDismiss();
 	};
 

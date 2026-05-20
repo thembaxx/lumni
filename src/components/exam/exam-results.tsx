@@ -209,34 +209,27 @@ export function ExamResults({
 						</CardHeader>
 						<CardContent>
 							<ul className="flex flex-col gap-1">
-								{paper.sections
-									.flatMap((section) =>
-										section.questions.flatMap((question) =>
-											question.parts.flatMap((part) => {
-												const fullId = `${section.id}-${question.id}-${part.id}`;
-												return flags.includes(fullId)
-													? [
-															{
-																id: fullId,
-																label: `Section ${section.id}, Q${question.id}.${part.id}`,
-															},
-														]
-													: [];
-											}),
-										),
-									)
-									.map((item) => (
-										<li
-											key={item.id}
-											className="flex items-center gap-2 text-muted-foreground text-sm"
-										>
-											<HugeiconsIcon
-												icon={Flag01Icon}
-												className="size-3 text-warning-foreground"
-											/>
-											{item.label}
-										</li>
-									))}
+								{paper.sections.flatMap((section) =>
+									section.questions.flatMap((question) =>
+										question.parts.flatMap((part) => {
+											const fullId = `${section.id}-${question.id}-${part.id}`;
+											return flags.includes(fullId)
+												? [
+														<li
+															key={fullId}
+															className="flex items-center gap-2 text-muted-foreground text-sm"
+														>
+															<HugeiconsIcon
+																icon={Flag01Icon}
+																className="size-3 text-warning-foreground"
+															/>
+															{`Section ${section.id}, Q${question.id}.${part.id}`}
+														</li>,
+													]
+												: [];
+										}),
+									),
+								)}
 							</ul>
 						</CardContent>
 					</Card>

@@ -30,13 +30,18 @@ export function ProgressExport() {
 					totalXp: gamification.totalXp,
 					currentStreak: 0,
 				},
-				achievements: gamification.achievements
-					.filter((a) => a.earnedAt)
-					.map((a) => ({
-						name: a.name,
-						rarity: a.rarity,
-						earnedAt: a.earnedAt,
-					})),
+				achievements: gamification.achievements.reduce(
+					(acc, a) => {
+						if (a.earnedAt)
+							acc.push({
+								name: a.name,
+								rarity: a.rarity,
+								earnedAt: a.earnedAt,
+							});
+						return acc;
+					},
+					[] as { name: string; rarity: string; earnedAt: string }[],
+				),
 				quizHistory: quizAttempts.map((a) => ({
 					subject: a.odSubject,
 					score: a.score,

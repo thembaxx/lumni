@@ -28,7 +28,6 @@ export function DailyProgressRing() {
 				ease: iOSEase,
 			}}
 			className="flex flex-col items-center py-4"
-			style={{ willChange: "transform, opacity" }}
 		>
 			<RadialChart
 				value={progress * 100}
@@ -118,9 +117,9 @@ export function DailyProgressRing() {
 					{isComplete ? (
 						<m.div
 							key="complete"
-							initial={{ scale: 0, opacity: 0 }}
+							initial={{ scale: 0.95, opacity: 0 }}
 							animate={{ scale: 1, opacity: 1 }}
-							exit={{ scale: 0, opacity: 0 }}
+							exit={{ scale: 0.95, opacity: 0 }}
 							transition={{ type: "spring", duration: 0.3, bounce: 0 }}
 							className="flex items-center gap-1"
 						>

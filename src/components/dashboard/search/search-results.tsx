@@ -8,7 +8,7 @@ import {
 	StarSquareIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useReducer, useRef } from "react";
 import { Badge } from "@/components/ui/badge";
 import type { SearchResultItem } from "@/lib/services/search-service";
 import { searchAll } from "@/lib/services/search-service";
@@ -44,28 +44,70 @@ interface SearchResultsProps {
 	className?: string;
 }
 
+type SearchState = {
+	results: SearchResultItem[];
+	loading: boolean;
+	selectedIndex: number;
+};
+
+type SearchAction =
+	| { type: "CLEAR" }
+	| { type: "START_LOADING" }
+	| { type: "LOAD_RESULTS"; items: SearchResultItem[] }
+	| { type: "SELECT_NEXT" }
+	| { type: "SELECT_PREV" };
+
+function searchReducer(state: SearchState, action: SearchAction): SearchState {
+	switch (action.type) {
+		case "CLEAR":
+			return { results: [], loading: false, selectedIndex: 0 };
+		case "START_LOADING":
+			return { ...state, loading: true };
+		case "LOAD_RESULTS":
+			return {
+				results: action.items,
+				loading: false,
+				selectedIndex: 0,
+			};
+		case "SELECT_NEXT":
+			return {
+				...state,
+				selectedIndex: Math.min(
+					state.selectedIndex + 1,
+					state.results.length - 1,
+				),
+			};
+		case "SELECT_PREV":
+			return {
+				...state,
+				selectedIndex: Math.max(state.selectedIndex - 1, 0),
+			};
+	}
+}
+
 export function SearchResults({
 	query,
 	onClose,
 	className,
 }: SearchResultsProps) {
-	const [results, setResults] = useState<SearchResultItem[]>([]);
-	const [loading, setLoading] = useState(false);
-	const [selectedIndex, setSelectedIndex] = useState(0);
+	const [searchState, dispatch] = useReducer(searchReducer, {
+		results: [],
+		loading: false,
+		selectedIndex: 0,
+	});
+	const { results, loading, selectedIndex } = searchState;
 	const listRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
 		if (!query || query.length < 2) {
-			setResults([]);
+			dispatch({ type: "CLEAR" });
 			return;
 		}
 
-		setLoading(true);
+		dispatch({ type: "START_LOADING" });
 		const timer = setTimeout(async () => {
 			const items = await searchAll(query);
-			setResults(items);
-			setSelectedIndex(0);
-			setLoading(false);
+			dispatch({ type: "LOAD_RESULTS", items });
 		}, 200);
 
 		return () => clearTimeout(timer);
@@ -76,10 +118,10 @@ export function SearchResults({
 			if (results.length === 0) return;
 			if (e.key === "ArrowDown") {
 				e.preventDefault();
-				setSelectedIndex((i) => Math.min(i + 1, results.length - 1));
+				dispatch({ type: "SELECT_NEXT" });
 			} else if (e.key === "ArrowUp") {
 				e.preventDefault();
-				setSelectedIndex((i) => Math.max(i - 1, 0));
+				dispatch({ type: "SELECT_PREV" });
 			}
 		},
 		[results.length],

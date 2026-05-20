@@ -21,7 +21,7 @@ export function SessionLoading() {
 						animate={{ scale: [1, 1.15, 1] }}
 						transition={{ duration: 2.5, repeat: Infinity, ease: iOSEase }}
 					/>
-					<div className="relative flex h-20 w-20 items-center justify-center rounded-2xl border border-[--system-accent]/20 bg-[--system-accent]/10">
+					<div className="relative flex size-20 items-center justify-center rounded-2xl border border-[--system-accent]/20 bg-[--system-accent]/10">
 						<m.div
 							animate={{ rotate: 360 }}
 							transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
@@ -50,7 +50,7 @@ export function SessionLoading() {
 					transition={{ duration: 0.35, ease: iOSEase, delay: 0.12 }}
 					className="ios-footnote text-center text-[--system-text-secondary]"
 				>
-					Setting up your session...
+					Setting up your session…
 				</m.p>
 			</div>
 		</LoadingShell>

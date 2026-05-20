@@ -25,13 +25,13 @@ export function StepByStep({ steps, subject, className }: StepByStepProps) {
 
 	const nextStep = () => {
 		if (currentStep < steps.length - 1) {
-			setCurrentStep(currentStep + 1);
+			setCurrentStep((prev) => prev + 1);
 		}
 	};
 
 	const prevStep = () => {
 		if (currentStep > 0) {
-			setCurrentStep(currentStep - 1);
+			setCurrentStep((prev) => prev - 1);
 		}
 	};
 
@@ -90,10 +90,9 @@ export function StepByStep({ steps, subject, className }: StepByStepProps) {
 			</div>
 
 			<div className="flex justify-center gap-2 pt-1">
-				{steps.map((_step, idx) => (
+				{steps.map((step, idx) => (
 					<Button
-						// biome-ignore lint/suspicious/noArrayIndexKey: step dots are navigation indicators
-						key={idx}
+						key={step}
 						type="button"
 						variant="ghost"
 						onClick={() => setCurrentStep(idx)}

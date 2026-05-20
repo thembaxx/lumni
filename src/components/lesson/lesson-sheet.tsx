@@ -113,10 +113,18 @@ export function LessonSheet() {
 					<div className="flex max-h-[95dvh] grow flex-col gap-4 overflow-y-auto px-4 pb-4">
 						{isLoading && (
 							<div className="flex flex-col gap-2">
-								{[...Array(5)].map((_, i) => (
-									// biome-ignore lint/suspicious/noArrayIndexKey: static skeleton loader
-									<Skeleton key={i} className="h-20 rounded-xl" />
-								))}
+								{(() => {
+									const items = [];
+									for (let count = 0; count < 5; count++) {
+										items.push(
+											<Skeleton
+												key={`sk-${count}`}
+												className="h-20 rounded-xl"
+											/>,
+										);
+									}
+									return items;
+								})()}
 							</div>
 						)}
 

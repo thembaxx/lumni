@@ -1,7 +1,7 @@
 "use client";
 
 import { m } from "framer-motion";
-import { createContext, useContext, useState } from "react";
+import { createContext, use, useState } from "react";
 import { Anim } from "@/components/shared/anim";
 import { iOSEase } from "@/lib/utils/animation";
 
@@ -17,7 +17,7 @@ const DirectionalTransitionContext =
 	});
 
 export function useDirectionalTransition() {
-	return useContext(DirectionalTransitionContext);
+	return use(DirectionalTransitionContext);
 }
 
 interface DirectionalTransitionProviderProps {

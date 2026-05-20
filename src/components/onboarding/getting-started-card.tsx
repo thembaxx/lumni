@@ -45,7 +45,7 @@ function saveSteps(steps: StepState) {
 }
 
 export function GettingStartedCard() {
-	const router = useRouter();
+	const { push } = useRouter();
 	const [dismissed, setDismissed] = useState(false);
 	const [collapsing, setCollapsing] = useState(false);
 	const [steps, setSteps] = useState<StepState>(defaultSteps);
@@ -80,9 +80,9 @@ export function GettingStartedCard() {
 			const next = { ...steps, [key]: true };
 			setSteps(next);
 			saveSteps(next);
-			if (href) router.push(href);
+			if (href) push(href);
 		},
-		[steps, router],
+		[steps, push],
 	);
 
 	if (dismissed || allDone || visitsLeft <= 0) return null;

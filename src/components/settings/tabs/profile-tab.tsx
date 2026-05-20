@@ -13,7 +13,7 @@ import {
 	UserIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import { OnboardingWizard } from "@/components/onboarding/onboarding-wizard";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -41,6 +41,10 @@ function EditableField({
 	const [draft, setDraft] = useState(value);
 	const [saving, setSaving] = useState(false);
 	const inputRef = useRef<HTMLInputElement>(null);
+
+	useEffect(() => {
+		setDraft(value);
+	}, [value]);
 
 	useEffect(() => {
 		if (editing && inputRef.current) {
@@ -175,10 +179,36 @@ export function ProfileTab() {
 	const [showGuidedSetup, setShowGuidedSetup] = useState(false);
 	const [showConfirmDialog, setShowConfirmDialog] = useState(false);
 
-	const [schoolDraft, setSchoolDraft] = useState("");
-	const [gradeDraft, setGradeDraft] = useState("");
-	const [provinceDraft, setProvinceDraft] = useState("");
-	const [subjects, setSubjects] = useState<string[]>([]);
+	type ProfileDraftState = {
+		schoolDraft: string;
+		gradeDraft: string;
+		provinceDraft: string;
+		subjects: string[];
+	};
+
+	const initialDrafts: ProfileDraftState = {
+		schoolDraft: "",
+		gradeDraft: "",
+		provinceDraft: "",
+		subjects: [],
+	};
+
+	function draftReducer(
+		state: ProfileDraftState,
+		action:
+			| { type: "SET_ALL"; drafts: ProfileDraftState }
+			| { type: "SET_FIELD"; field: keyof ProfileDraftState; value: unknown },
+	): ProfileDraftState {
+		switch (action.type) {
+			case "SET_ALL":
+				return action.drafts;
+			case "SET_FIELD":
+				return { ...state, [action.field]: action.value };
+		}
+	}
+
+	const [drafts, dispatchDrafts] = useReducer(draftReducer, initialDrafts);
+	const { schoolDraft, gradeDraft, provinceDraft, subjects } = drafts;
 	const [subjectInput, setSubjectInput] = useState("");
 	const [showProvincePicker, setShowProvincePicker] = useState(false);
 	const [showSubjectPicker, setShowSubjectPicker] = useState(false);
@@ -187,10 +217,15 @@ export function ProfileTab() {
 	const prefs = (user?.prefs as Record<string, unknown>) || {};
 
 	useEffect(() => {
-		setSchoolDraft((prefs.school as string) || "");
-		setGradeDraft((prefs.grade as string) || "");
-		setProvinceDraft((prefs.province as string) || "");
-		setSubjects((prefs.subjects as string[]) || []);
+		dispatchDrafts({
+			type: "SET_ALL",
+			drafts: {
+				schoolDraft: (prefs.school as string) || "",
+				gradeDraft: (prefs.grade as string) || "",
+				provinceDraft: (prefs.province as string) || "",
+				subjects: (prefs.subjects as string[]) || [],
+			},
+		});
 	}, [prefs.school, prefs.grade, prefs.province, prefs.subjects]);
 
 	const handleAvatarUpload = useCallback(
@@ -225,7 +260,7 @@ export function ProfileTab() {
 		async (subject: string) => {
 			if (subjects.includes(subject)) return;
 			const updated = [...subjects, subject];
-			setSubjects(updated);
+			dispatchDrafts({ type: "SET_FIELD", field: "subjects", value: updated });
 			await handleSaveField("subjects", updated);
 			setShowSubjectPicker(false);
 			setSubjectInput("");
@@ -236,7 +271,7 @@ export function ProfileTab() {
 	const handleRemoveSubject = useCallback(
 		async (subject: string) => {
 			const updated = subjects.filter((s) => s !== subject);
-			setSubjects(updated);
+			dispatchDrafts({ type: "SET_FIELD", field: "subjects", value: updated });
 			await handleSaveField("subjects", updated);
 		},
 		[subjects, handleSaveField],
@@ -372,7 +407,11 @@ export function ProfileTab() {
 						<EditableField
 							value={schoolDraft}
 							onSave={async (v) => {
-								setSchoolDraft(v);
+								dispatchDrafts({
+									type: "SET_FIELD",
+									field: "schoolDraft",
+									value: v,
+								});
 								await handleSaveField("school", v);
 							}}
 							placeholder="Your school name"
@@ -389,7 +428,11 @@ export function ProfileTab() {
 						<EditableField
 							value={gradeDraft}
 							onSave={async (v) => {
-								setGradeDraft(v);
+								dispatchDrafts({
+									type: "SET_FIELD",
+									field: "gradeDraft",
+									value: v,
+								});
 								await handleSaveField("grade", v);
 							}}
 							placeholder="e.g. Grade 12"
@@ -416,7 +459,11 @@ export function ProfileTab() {
 											key={p}
 											type="button"
 											onClick={async () => {
-												setProvinceDraft(p);
+												dispatchDrafts({
+													type: "SET_FIELD",
+													field: "provinceDraft",
+													value: p,
+												});
 												await handleSaveField("province", p);
 												setShowProvincePicker(false);
 											}}
@@ -469,20 +516,21 @@ export function ProfileTab() {
 							className="mb-2 h-9 rounded-lg text-sm"
 						/>
 						<div className="flex max-h-40 flex-col gap-0.5 overflow-y-auto">
-							{COMMON_SUBJECTS.filter(
-								(s) =>
-									!subjects.includes(s) &&
-									s.toLowerCase().includes(subjectInput.toLowerCase()),
-							).map((s) => (
-								<button
-									key={s}
-									type="button"
-									onClick={() => handleAddSubject(s)}
-									className="w-full rounded-lg px-3 py-2 text-left text-sm hover:bg-accent"
-								>
-									{s}
-								</button>
-							))}
+							{COMMON_SUBJECTS.flatMap((s) =>
+								!subjects.includes(s) &&
+								s.toLowerCase().includes(subjectInput.toLowerCase())
+									? [
+											<button
+												key={s}
+												type="button"
+												onClick={() => handleAddSubject(s)}
+												className="w-full rounded-lg px-3 py-2 text-left text-sm hover:bg-accent"
+											>
+												{s}
+											</button>,
+										]
+									: [],
+							)}
 						</div>
 					</div>
 				)}

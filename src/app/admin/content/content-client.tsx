@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -28,6 +28,10 @@ interface Flag {
 export function ContentClient() {
 	const queryClient = useQueryClient();
 	const [statusFilter, setStatusFilter] = useState<string>("pending");
+	const [mounted, setMounted] = useState(false);
+	useEffect(() => {
+		setMounted(true);
+	}, []);
 
 	const { data, isLoading } = useQuery({
 		queryKey: ["admin-content-flags"],
@@ -151,7 +155,9 @@ export function ContentClient() {
 											{flag.userId.slice(0, 12)}...
 										</TableCell>
 										<TableCell className="text-xs">
-											{new Date(flag.createdAt).toLocaleDateString()}
+											{mounted
+												? new Date(flag.createdAt).toLocaleDateString()
+												: ""}
 										</TableCell>
 										<TableCell>
 											<Badge

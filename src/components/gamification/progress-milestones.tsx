@@ -49,8 +49,8 @@ export function ProgressMilestones({
 								>
 									{isUnlocked ? (
 										<m.span
-											initial={{ scale: 0 }}
-											animate={{ scale: 1 }}
+											initial={{ scale: 0.95, opacity: 0 }}
+											animate={{ scale: 1, opacity: 1 }}
 											className="text-lg"
 										>
 											✓

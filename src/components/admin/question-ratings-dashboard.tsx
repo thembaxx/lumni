@@ -1,9 +1,14 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 import { questionRatingService } from "@/lib/services/question-rating-service";
 
 export function QuestionRatingsDashboard() {
+	const [mounted, setMounted] = useState(false);
+	useEffect(() => {
+		setMounted(true);
+	}, []);
 	const { data: lowRated = [] } = useQuery({
 		queryKey: ["question-ratings", "low-rated"],
 		queryFn: () => questionRatingService.getLowRatedQuestions(),
@@ -101,7 +106,7 @@ export function QuestionRatingsDashboard() {
 									</span>
 								)}
 								<span className="ml-auto text-muted-foreground">
-									{new Date(r.createdAt).toLocaleDateString()}
+									{mounted ? new Date(r.createdAt).toLocaleDateString() : ""}
 								</span>
 							</div>
 						))}

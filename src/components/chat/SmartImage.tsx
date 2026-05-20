@@ -11,8 +11,7 @@ export function SmartImage({ src, alt, className }: SmartImageProps) {
 	const isDataUrl = src.startsWith("data:");
 	if (isDataUrl) {
 		return (
-			// biome-ignore lint/performance/noImgElement: data URLs cannot be optimized by next/image
-			<img
+			<Image
 				src={src}
 				alt={alt}
 				width={800}

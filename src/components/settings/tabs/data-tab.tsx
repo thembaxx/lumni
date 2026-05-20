@@ -11,7 +11,7 @@ interface DataTabProps {
 }
 
 function RestartOnboarding() {
-	const router = useRouter();
+	const { push } = useRouter();
 	return (
 		<ListCell
 			title="Restart Onboarding"
@@ -25,7 +25,7 @@ function RestartOnboarding() {
 				) {
 					localStorage.removeItem("lumni_has_visited");
 					localStorage.removeItem("lumni_onboarding");
-					router.push("/dashboard");
+					push("/dashboard");
 				}
 			}}
 			showSeparator={false}

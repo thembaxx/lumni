@@ -208,7 +208,7 @@ export function PronunciationPractice() {
 				</Card>
 			) : (
 				<div className="py-8 text-center">
-					<p className="text-muted-foreground">Loading exercises...</p>
+					<p className="text-muted-foreground">Loading exercises…</p>
 				</div>
 			)}
 

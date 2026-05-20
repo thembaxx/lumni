@@ -65,7 +65,7 @@ export function QuizResultsCard({
 			{isPerfect && (
 				<m.div
 					className="absolute -top-4 left-1/2 -translate-x-1/2"
-					initial={{ opacity: 0, scale: 0 }}
+					initial={{ opacity: 0, scale: 0.95 }}
 					animate={{ opacity: 1, scale: 1 }}
 					transition={{ delay: 0.5, type: "spring", stiffness: 300 }}
 				>

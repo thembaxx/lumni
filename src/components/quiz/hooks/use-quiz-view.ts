@@ -25,10 +25,12 @@ export function useQuizView({
 		suggestedDifficulty?: Difficulty;
 	}>({});
 	const [resolvedTopic, setResolvedTopic] = useState<string | undefined>(topic);
+	const prevTopicRef = useRef(topic);
 
-	useEffect(() => {
+	if (topic !== prevTopicRef.current) {
+		prevTopicRef.current = topic;
 		setResolvedTopic(topic);
-	}, [topic]);
+	}
 
 	const hasAutoStarted = useRef(false);
 

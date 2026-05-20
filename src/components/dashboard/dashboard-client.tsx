@@ -339,6 +339,8 @@ export function DashboardClient({
 			accuracy === 100,
 		);
 
+		const flashcardPromises: Promise<unknown>[] = [];
+
 		for (const [i, question] of results.questions.entries()) {
 			const correct = results.correctness[i] ?? false;
 			trackQuestionResult({
@@ -359,14 +361,18 @@ export function DashboardClient({
 					userAnswer: "(see quiz history)",
 					explanation: question.explanation,
 				});
-				await createFlashcard(
-					question.questionText,
-					question.explanation,
-					question.subject,
-					question.topic,
+				flashcardPromises.push(
+					createFlashcard(
+						question.questionText,
+						question.explanation,
+						question.subject,
+						question.topic,
+					),
 				);
 			}
 		}
+
+		await Promise.all(flashcardPromises);
 
 		enqueue("analytics-sync", {
 			events: results.questions.map((q, i) => ({

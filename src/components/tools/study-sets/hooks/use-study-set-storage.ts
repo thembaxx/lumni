@@ -19,7 +19,7 @@ export interface StudySet {
 export function useStudySetStorage() {
 	const [studySets, setStudySets] = useState<StudySet[]>(() => {
 		if (typeof window !== "undefined") {
-			const saved = localStorage.getItem("lumni-study-sets");
+			const saved = localStorage.getItem("lumni-study-sets:v1");
 			return saved ? JSON.parse(saved) : [];
 		}
 		return [];
@@ -27,7 +27,7 @@ export function useStudySetStorage() {
 
 	const writeLocalStorage = useCallback((sets: StudySet[]) => {
 		if (typeof window !== "undefined") {
-			localStorage.setItem("lumni-study-sets", JSON.stringify(sets));
+			localStorage.setItem("lumni-study-sets:v1", JSON.stringify(sets));
 		}
 	}, []);
 

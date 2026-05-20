@@ -1,7 +1,7 @@
 "use client";
 
 import { m } from "framer-motion";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Button } from "@/components/ui/button";
@@ -45,7 +45,7 @@ interface FlashcardCreatorProps {
 export function useFlashcardStorage() {
 	const [flashcards, setFlashcards] = useState<Flashcard[]>(() => {
 		if (typeof window !== "undefined") {
-			const saved = localStorage.getItem("lumni-flashcards");
+			const saved = localStorage.getItem("lumni-flashcards:v1");
 			return saved ? JSON.parse(saved) : [];
 		}
 		return [];
@@ -54,13 +54,13 @@ export function useFlashcardStorage() {
 	const saveFlashcards = useCallback((cards: Flashcard[]) => {
 		setFlashcards(cards);
 		if (typeof window !== "undefined") {
-			localStorage.setItem("lumni-flashcards", JSON.stringify(cards));
+			localStorage.setItem("lumni-flashcards:v1", JSON.stringify(cards));
 		}
 	}, []);
 
 	const writeLocalStorage = useCallback((cards: Flashcard[]) => {
 		if (typeof window !== "undefined") {
-			localStorage.setItem("lumni-flashcards", JSON.stringify(cards));
+			localStorage.setItem("lumni-flashcards:v1", JSON.stringify(cards));
 		}
 	}, []);
 
@@ -146,10 +146,11 @@ function FlashcardForm({
 		if (name === "tags") {
 			setFormData((prev) => ({
 				...prev,
-				[name]: value
-					.split(",")
-					.map((tag) => tag.trim())
-					.filter((tag) => tag.length > 0),
+				[name]: value.split(",").reduce((acc, tag) => {
+					const trimmed = tag.trim();
+					if (trimmed.length > 0) acc.push(trimmed);
+					return acc;
+				}, [] as string[]),
 			}));
 		} else {
 			setFormData((prev) => ({ ...prev, [name]: value }));
@@ -246,7 +247,7 @@ function FlashcardForm({
 				/>
 			</div>
 
-			<div className="flex justify-end space-x-3">
+			<div className="flex justify-end gap-x-3">
 				<Button
 					variant="outline"
 					size="icon"
@@ -293,6 +294,10 @@ export function FlashcardCreator({ className }: FlashcardCreatorProps) {
 }
 
 function FlashcardCreatorInner({ className }: FlashcardCreatorProps) {
+	const [mounted, setMounted] = useState(false);
+	useEffect(() => {
+		setMounted(true);
+	}, []);
 	const { flashcards, addFlashcard, removeFlashcard } = useFlashcardStorage();
 	const [, setIsCreating] = useState(false);
 	const [editingCardId, setEditingCardId] = useState<string | null>(null);
@@ -421,9 +426,9 @@ function FlashcardCreatorInner({ className }: FlashcardCreatorProps) {
 									</div>
 								</div>
 								<div className="mt-2 text-right text-muted-foreground text-xs">
-									{new Date(card.createdAt).toLocaleDateString()}
+									{mounted ? new Date(card.createdAt).toLocaleDateString() : ""}
 								</div>
-								<div className="mt-3 flex justify-end space-x-2">
+								<div className="mt-3 flex justify-end gap-x-2">
 									<Button
 										variant="ghost"
 										size="icon"

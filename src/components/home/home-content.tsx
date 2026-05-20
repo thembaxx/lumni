@@ -17,6 +17,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/auth/auth-context";
 import { cn } from "@/lib/shared";
@@ -95,6 +96,11 @@ export function HomeContent() {
 		authReady &&
 		status === "authenticated" &&
 		!user?.labels?.includes("anonymous");
+
+	const [mounted, setMounted] = useState(false);
+	useEffect(() => {
+		setMounted(true);
+	}, []);
 
 	const { scrollYProgress } = useScroll();
 	const heroOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
@@ -503,7 +509,8 @@ export function HomeContent() {
 					</div>
 					<div className="mt-8 flex flex-col items-center justify-between gap-4 border-border/50 border-t pt-8 sm:flex-row">
 						<p className="text-muted-foreground text-xs">
-							&copy; {new Date().getFullYear()} Lumni. All rights reserved.
+							&copy; {mounted ? new Date().getFullYear() : ""} Lumni. All rights
+							reserved.
 						</p>
 						<div className="flex items-center gap-4">
 							<a

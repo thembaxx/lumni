@@ -24,7 +24,7 @@ export function DailyChallenges({ challenges }: DailyChallengesProps) {
 					</span>
 					{allCompleted && (
 						<m.span
-							initial={{ scale: 0, opacity: 0 }}
+							initial={{ scale: 0.95, opacity: 0 }}
 							animate={{ scale: 1, opacity: 1 }}
 							className="rounded-full bg-success/20 px-2 py-0.5 text-success-foreground text-xs"
 						>
@@ -90,7 +90,7 @@ export function DailyChallenges({ challenges }: DailyChallengesProps) {
 
 								{challenge.completed && (
 									<m.div
-										initial={{ scale: 0, opacity: 0 }}
+										initial={{ scale: 0.95, opacity: 0 }}
 										animate={{ scale: 1, opacity: 1 }}
 										transition={{ type: "spring", stiffness: 400, damping: 20 }}
 										className="flex items-center gap-1 text-success-foreground text-xs"

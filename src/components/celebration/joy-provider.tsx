@@ -3,8 +3,8 @@
 import {
 	createContext,
 	type ReactNode,
+	use,
 	useCallback,
-	useContext,
 	useState,
 } from "react";
 
@@ -58,7 +58,7 @@ export function JoyProvider({ children }: { children: ReactNode }) {
 }
 
 export function useJoy() {
-	const context = useContext(JoyContext);
+	const context = use(JoyContext);
 	if (!context) throw new Error("useJoy must be used within JoyProvider");
 	return context;
 }

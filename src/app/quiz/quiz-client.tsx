@@ -1,9 +1,10 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import { QuizView } from "@/components/quiz";
 
-export function QuizClient() {
+function QuizClientContent() {
 	const { get } = useSearchParams();
 	const initialSubject = get("subject") || undefined;
 	const topic = get("topic") || undefined;
@@ -21,5 +22,19 @@ export function QuizClient() {
 			questionCount={questionCount}
 			onQuit={handleQuit}
 		/>
+	);
+}
+
+export function QuizClient() {
+	return (
+		<Suspense
+			fallback={
+				<div className="flex items-center justify-center p-8">
+					<div className="size-8 animate-spin rounded-full border-foreground border-b-2" />
+				</div>
+			}
+		>
+			<QuizClientContent />
+		</Suspense>
 	);
 }

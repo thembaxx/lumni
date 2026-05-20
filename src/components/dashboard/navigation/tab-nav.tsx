@@ -7,7 +7,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
-import { startTransition, useState } from "react";
+import { startTransition, useRef } from "react";
 import { Anim } from "@/components/shared/anim";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/shared";
@@ -37,10 +37,10 @@ export function TabNav({
 	onTabChange,
 	"aria-label": ariaLabel = "Main navigation",
 }: TabNavProps) {
-	const [_tabSwitch, setTabSwitch] = useState(0);
+	const tabSwitchRef = useRef(0);
 
 	const handleTabChange = (value: string) => {
-		setTabSwitch((p) => p + 1);
+		tabSwitchRef.current += 1;
 		startTransition(() => {
 			onTabChange(value as TabValue);
 		});

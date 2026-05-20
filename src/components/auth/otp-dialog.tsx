@@ -10,7 +10,13 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
-import { startTransition, useCallback, useEffect, useState } from "react";
+import {
+	startTransition,
+	useCallback,
+	useEffect,
+	useReducer,
+	useState,
+} from "react";
 import { z } from "zod";
 import { Anim } from "@/components/shared/anim";
 import { Button } from "@/components/ui/button";
@@ -45,30 +51,89 @@ type AuthDialogProps = {
 	onSuccess: (isAdmin: boolean) => void;
 };
 
+type OTPForm = {
+	email: string;
+	otp: string;
+	error: string;
+	sent: boolean;
+	countdown: number;
+	remainingAttempts: number | null;
+	verified: boolean;
+};
+
+type OTPAction =
+	| { type: "SET_EMAIL"; email: string }
+	| { type: "SET_OTP"; otp: string }
+	| { type: "SET_ERROR"; error: string }
+	| { type: "SET_SENT" }
+	| { type: "SET_COUNTDOWN"; countdown: number }
+	| { type: "SET_REMAINING_ATTEMPTS"; remainingAttempts: number | null }
+	| { type: "SET_VERIFIED" }
+	| { type: "TICK" }
+	| { type: "RESET" };
+
+function otpReducer(state: OTPForm, action: OTPAction): OTPForm {
+	switch (action.type) {
+		case "SET_EMAIL":
+			return { ...state, email: action.email };
+		case "SET_OTP":
+			return { ...state, otp: action.otp };
+		case "SET_ERROR":
+			return { ...state, error: action.error };
+		case "SET_SENT":
+			return { ...state, sent: true, countdown: 2 * 60 * 1000 };
+		case "SET_COUNTDOWN":
+			return { ...state, countdown: action.countdown };
+		case "SET_REMAINING_ATTEMPTS":
+			return { ...state, remainingAttempts: action.remainingAttempts };
+		case "SET_VERIFIED":
+			return { ...state, verified: true };
+		case "TICK":
+			return {
+				...state,
+				countdown: Math.max(0, state.countdown - 1000),
+			};
+		case "RESET":
+			return {
+				email: "",
+				otp: "",
+				error: "",
+				sent: false,
+				countdown: 0,
+				remainingAttempts: null,
+				verified: false,
+			};
+	}
+}
+
+const initialOTPState: OTPForm = {
+	email: "",
+	otp: "",
+	error: "",
+	sent: false,
+	countdown: 0,
+	remainingAttempts: null,
+	verified: false,
+};
+
 export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
-	const [email, setEmail] = useState("");
-	const [otp, setOtp] = useState("");
-	const [error, setError] = useState("");
+	const [form, dispatch] = useReducer(otpReducer, initialOTPState);
+	const { email, otp, error, sent, countdown, remainingAttempts, verified } =
+		form;
 	const [loading, setLoading] = useState(false);
-	const [sent, setSent] = useState(false);
-	const [countdown, setCountdown] = useState(0);
-	const [remainingAttempts, setRemainingAttempts] = useState<number | null>(
-		null,
-	);
-	const [verified, setVerified] = useState(false);
 
 	const handlePaperPlane = useCallback(async () => {
 		const result = otpSendSchema.safeParse({ email });
 		if (!result.success) {
 			const msg =
 				result.error.errors[0]?.message || "Enter a valid email address";
-			setError(msg);
+			dispatch({ type: "SET_ERROR", error: msg });
 			toast({ type: "error", message: msg });
 			return;
 		}
 
 		setLoading(true);
-		setError("");
+		dispatch({ type: "SET_ERROR", error: "" });
 
 		try {
 			const res = await fetch("/api/admin/auth/otp", {
@@ -81,16 +146,18 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 
 			if (!res.ok || !data.success) {
 				if (data.locked || data.countdown) {
-					setCountdown(data.lockRemaining || data.countdown);
+					dispatch({
+						type: "SET_COUNTDOWN",
+						countdown: data.lockRemaining || data.countdown,
+					});
 				}
 				const msg = data.error || "Could not send code";
-				setError(msg);
+				dispatch({ type: "SET_ERROR", error: msg });
 				toast({ type: "error", message: msg });
 				return;
 			}
 
-			setSent(true);
-			setCountdown(2 * 60 * 1000);
+			dispatch({ type: "SET_SENT" });
 			toast({
 				type: "success",
 				message: "Check your inbox",
@@ -98,7 +165,7 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 			});
 		} catch {
 			const msg = "Connection failed. Try again.";
-			setError(msg);
+			dispatch({ type: "SET_ERROR", error: msg });
 			toast({ type: "error", message: msg });
 		} finally {
 			setLoading(false);
@@ -108,13 +175,13 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 	const handleVerify = useCallback(async () => {
 		if (otp.length !== 6) {
 			const msg = "Enter all 6 digits from your email";
-			setError(msg);
+			dispatch({ type: "SET_ERROR", error: msg });
 			toast({ type: "error", message: msg });
 			return;
 		}
 
 		setLoading(true);
-		setError("");
+		dispatch({ type: "SET_ERROR", error: "" });
 
 		try {
 			const res = await fetch("/api/admin/auth/verify", {
@@ -127,13 +194,19 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 
 			if (!res.ok || !data.success) {
 				if (data.locked) {
-					setCountdown(data.lockDuration);
+					dispatch({
+						type: "SET_COUNTDOWN",
+						countdown: data.lockDuration,
+					});
 				}
 				if (data.remainingAttempts !== undefined) {
-					setRemainingAttempts(data.remainingAttempts);
+					dispatch({
+						type: "SET_REMAINING_ATTEMPTS",
+						remainingAttempts: data.remainingAttempts,
+					});
 				}
 				const msg = data.error || "Incorrect code";
-				setError(msg);
+				dispatch({ type: "SET_ERROR", error: msg });
 				toast({
 					type: "error",
 					message: msg,
@@ -141,7 +214,7 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 						? `${data.remainingAttempts} attempt(s) left`
 						: "Try again or request a new code",
 				});
-				setOtp("");
+				dispatch({ type: "SET_OTP", otp: "" });
 				return;
 			}
 
@@ -152,7 +225,7 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 				data.isFullAccess ? "full" : "limited",
 			);
 
-			setVerified(true);
+			dispatch({ type: "SET_VERIFIED" });
 			toast({
 				type: "success",
 				message: data.isAdmin
@@ -169,12 +242,12 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 			});
 		} catch {
 			const msg = "Connection failed";
-			setError(msg);
+			dispatch({ type: "SET_ERROR", error: msg });
 			toast({
 				type: "error",
 				message: msg,
 			});
-			setOtp("");
+			dispatch({ type: "SET_OTP", otp: "" });
 		} finally {
 			setLoading(false);
 		}
@@ -184,8 +257,8 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 		if (countdown > 0) return;
 
 		setLoading(true);
-		setError("");
-		setOtp("");
+		dispatch({ type: "SET_ERROR", error: "" });
+		dispatch({ type: "SET_OTP", otp: "" });
 
 		try {
 			const res = await fetch("/api/admin/auth/resend", {
@@ -198,15 +271,18 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 
 			if (!res.ok || !data.success) {
 				if (data.locked || data.countdown) {
-					setCountdown(data.lockRemaining || data.countdown);
+					dispatch({
+						type: "SET_COUNTDOWN",
+						countdown: data.lockRemaining || data.countdown,
+					});
 				}
 				const msg = data.error || "Could not resend code";
-				setError(msg);
+				dispatch({ type: "SET_ERROR", error: msg });
 				toast({ type: "error", message: msg });
 				return;
 			}
 
-			setCountdown(2 * 60 * 1000);
+			dispatch({ type: "SET_COUNTDOWN", countdown: 2 * 60 * 1000 });
 			toast({
 				type: "success",
 				message: "Code resent",
@@ -214,7 +290,7 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 			});
 		} catch {
 			const msg = "Connection failed. Try again.";
-			setError(msg);
+			dispatch({ type: "SET_ERROR", error: msg });
 			toast({ type: "error", message: msg });
 		} finally {
 			setLoading(false);
@@ -224,20 +300,14 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 	useEffect(() => {
 		if (!sent || countdown <= 0) return;
 		const interval = setInterval(() => {
-			setCountdown((prev) => Math.max(0, prev - 1000));
+			dispatch({ type: "TICK" });
 		}, 1000);
 		return () => clearInterval(interval);
 	}, [sent, countdown]);
 
 	useEffect(() => {
 		if (!open) {
-			setEmail("");
-			setOtp("");
-			setError("");
-			setSent(false);
-			setCountdown(0);
-			setRemainingAttempts(null);
-			setVerified(false);
+			dispatch({ type: "RESET" });
 		}
 	}, [open]);
 
@@ -267,8 +337,8 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 								placeholder="email@example.com"
 								value={email}
 								onChange={(e) => {
-									setEmail(e.target.value);
-									setError("");
+									dispatch({ type: "SET_EMAIL", email: e.target.value });
+									dispatch({ type: "SET_ERROR", error: "" });
 								}}
 								autoComplete="email"
 								className="-webkit-font-smoothing h-11 rounded-md antialiased ring-1 ring-transparent transition-[ring-color,box-shadow] duration-150 focus-within:ring-[--system-accent]/30"
@@ -339,7 +409,9 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 											<div className="flex justify-center">
 												<InputOTP
 													value={otp}
-													onChange={setOtp}
+													onChange={(value) =>
+														dispatch({ type: "SET_OTP", otp: value })
+													}
 													maxLength={6}
 													aria-invalid={
 														remainingAttempts !== null && remainingAttempts < 3
@@ -376,7 +448,7 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 											{loading ? (
 												<span className="flex items-center gap-2">
 													<LoadingDots />
-													<span>Verifying...</span>
+													<span>Verifying…</span>
 												</span>
 											) : (
 												<span className="flex items-center gap-2">
@@ -487,7 +559,7 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 											You&apos;re in!
 										</p>
 										<p className="animate-pulse text-muted-foreground text-sm">
-											Redirecting...
+											Redirecting…
 										</p>
 									</m.div>
 								)}
@@ -504,7 +576,7 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 							{loading ? (
 								<span className="flex items-center gap-2">
 									<LoadingDots />
-									<span>PaperPlaneing...</span>
+									<span>PaperPlaneing…</span>
 								</span>
 							) : (
 								<span className="flex items-center gap-2">

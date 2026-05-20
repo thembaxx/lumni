@@ -91,8 +91,8 @@ export function QuestionCardFeedback({
 		>
 			<div className="flex items-center gap-3">
 				<m.div
-					initial={{ scale: 0 }}
-					animate={{ scale: 1 }}
+					initial={{ scale: 0.95, opacity: 0 }}
+					animate={{ scale: 1, opacity: 1 }}
 					transition={{ duration: 0.3 }}
 				>
 					{isCorrectAnswer ? (
@@ -140,7 +140,7 @@ export function QuestionCardFeedback({
 								icon={RadialIcon}
 								className="size-5 animate-spin"
 							/>
-							<span className="text-sm">Solving...</span>
+							<span className="text-sm">Solving…</span>
 						</div>
 					) : solver.data?.steps?.length ? (
 						<div className="flex flex-col gap-2">
@@ -215,7 +215,7 @@ export function QuestionCardFeedback({
 								icon={RadialIcon}
 								className="size-4 animate-spin"
 							/>
-							Thinking...
+							Thinking…
 						</div>
 					)}
 					{solver.followUpError && (
