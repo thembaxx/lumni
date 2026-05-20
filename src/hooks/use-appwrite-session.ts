@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 interface SessionUser {
 	userId: string | null;
@@ -14,45 +14,22 @@ interface UseAppwriteSessionReturn {
 	isLoggedIn: boolean;
 }
 
+async function fetchSession(): Promise<SessionUser> {
+	const res = await fetch("/api/session");
+	return res.json();
+}
+
 export function useAppwriteSession(): UseAppwriteSessionReturn {
-	const [user, setUser] = useState<SessionUser>({
-		userId: null,
-		name: null,
-		email: null,
+	const { data: user, isLoading } = useQuery({
+		queryKey: ["appwrite-session"],
+		queryFn: fetchSession,
+		staleTime: 5 * 60 * 1000,
+		retry: false,
 	});
-	const [isLoading, setIsLoading] = useState(true);
-
-	useEffect(() => {
-		let cancelled = false;
-
-		async function fetchSession() {
-			try {
-				const res = await fetch("/api/session");
-				const data: SessionUser = await res.json();
-				if (!cancelled) {
-					setUser(data);
-				}
-			} catch {
-				if (!cancelled) {
-					setUser({ userId: null, name: null, email: null });
-				}
-			} finally {
-				if (!cancelled) {
-					setIsLoading(false);
-				}
-			}
-		}
-
-		fetchSession();
-
-		return () => {
-			cancelled = true;
-		};
-	}, []);
 
 	return {
-		user,
+		user: user ?? { userId: null, name: null, email: null },
 		isLoading,
-		isLoggedIn: user.userId !== null,
+		isLoggedIn: user?.userId !== null,
 	};
 }

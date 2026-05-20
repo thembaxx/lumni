@@ -6,9 +6,10 @@ import type { GradeFn, HintFn } from "../types";
 export const grade: GradeFn = (q, a) => {
 	const selectedIds = a.value as string[];
 	const opts = q.body as QuestionBody["multiple-choice"];
-	const correctIds = opts.options
-		.filter((o: Option) => o.isCorrect)
-		.map((o: Option) => o.id);
+	const correctIds = opts.options.reduce((acc: string[], o: Option) => {
+		if (o.isCorrect) acc.push(o.id);
+		return acc;
+	}, []);
 	const correct =
 		selectedIds.length === correctIds.length &&
 		selectedIds.every((id: string) => correctIds.includes(id));

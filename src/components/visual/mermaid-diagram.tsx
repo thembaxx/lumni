@@ -7,10 +7,11 @@ interface MermaidDiagramProps {
 	label?: string;
 }
 
+type DiagramStatus = "loading" | "ready" | "error";
+
 export function MermaidDiagram({ code, label }: MermaidDiagramProps) {
 	const containerRef = useRef<HTMLDivElement>(null);
-	const [error, setError] = useState(false);
-	const [loading, setLoading] = useState(true);
+	const [status, setStatus] = useState<DiagramStatus>("loading");
 
 	useEffect(() => {
 		let cancelled = false;
@@ -31,12 +32,11 @@ export function MermaidDiagram({ code, label }: MermaidDiagramProps) {
 
 				if (!cancelled && containerRef.current) {
 					containerRef.current.innerHTML = svg;
-					setLoading(false);
+					setStatus("ready");
 				}
 			} catch {
 				if (!cancelled) {
-					setError(true);
-					setLoading(false);
+					setStatus("error");
 				}
 			}
 		}
@@ -48,7 +48,7 @@ export function MermaidDiagram({ code, label }: MermaidDiagramProps) {
 		};
 	}, [code]);
 
-	if (error) {
+	if (status === "error") {
 		return (
 			<div className="flex h-32 items-center justify-center rounded-lg border bg-muted/10 text-muted-foreground text-xs">
 				Could not render diagram
@@ -62,7 +62,7 @@ export function MermaidDiagram({ code, label }: MermaidDiagramProps) {
 				<p className="font-medium text-muted-foreground text-xs">{label}</p>
 			)}
 			<div className="overflow-auto rounded-lg border bg-background/20 p-4">
-				{loading && (
+				{status === "loading" && (
 					<div className="flex h-32 items-center justify-center">
 						<div className="size-6 animate-spin rounded-full border-2 border-muted-foreground/30 border-t-muted-foreground" />
 					</div>
@@ -70,7 +70,7 @@ export function MermaidDiagram({ code, label }: MermaidDiagramProps) {
 				<div
 					ref={containerRef}
 					className="mermaid-svg-container"
-					style={loading ? { display: "none" } : undefined}
+					style={status === "loading" ? { display: "none" } : undefined}
 				/>
 			</div>
 		</div>

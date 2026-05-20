@@ -203,86 +203,38 @@ export async function POST(request: NextRequest) {
 			Query.equal("code", subjectIds.join(",")),
 		]);
 
-		let downloaded = 0;
 		const errors: string[] = [];
 		const results: { subject: string; papers: number; status: string }[] = [];
 
-		for (const examType of examTypes) {
-			const session = examType === "november" ? "november" : "may-june";
+		const taskResults = await Promise.all(
+			examTypes.flatMap((examType) => {
+				const session = examType === "november" ? "november" : "may-june";
+				return subjects.map(async (subj) => {
+					const paperNumbers = examType === "november" ? [1, 2] : [1];
 
-			for (const subj of subjects) {
-				const paperNumbers = examType === "november" ? [1, 2] : [1];
+					const paperResults = await Promise.all(
+						paperNumbers.map(async (paperNum) => {
+							const fileName = `${year}_${examType}_${(subj as Record<string, unknown>).code}_p${paperNum}.pdf`;
+							const memoFileName = `${year}_${examType}_${(subj as Record<string, unknown>).code}_p${paperNum}_memo.pdf`;
 
-				const paperResults = await Promise.all(
-					paperNumbers.map(async (paperNum) => {
-						const fileName = `${year}_${examType}_${(subj as Record<string, unknown>).code}_p${paperNum}.pdf`;
-						const memoFileName = `${year}_${examType}_${(subj as Record<string, unknown>).code}_p${paperNum}_memo.pdf`;
+							let paperDownloaded = 0;
+							const localErrors: string[] = [];
 
-						let paperDownloaded = 0;
-
-						const examInfo = await findExamPaperUrl(
-							(subj as Record<string, unknown>).name as string,
-							year,
-							paperNum,
-							"paper",
-							session,
-						);
-
-						if (examInfo) {
-							const pdfData = await downloadPdf(examInfo.url);
-
-							if (pdfData) {
-								const uploadResult = await uploadToUploadThing(
-									pdfData.buffer,
-									fileName,
-								);
-
-								if (uploadResult) {
-									const saved = await saveToDatabase(
-										(subj as Record<string, unknown>).$id as string,
-										year,
-										paperNum,
-										"paper",
-										uploadResult.url,
-										uploadResult.key,
-										fileName,
-									);
-
-									if (saved) {
-										paperDownloaded++;
-									}
-								} else {
-									errors.push(
-										`${(subj as Record<string, unknown>).name} ${examType} P${paperNum}: Upload to server failed`,
-									);
-								}
-							} else {
-								errors.push(
-									`${(subj as Record<string, unknown>).name} ${examType} P${paperNum}: Could not download PDF`,
-								);
-							}
-						} else {
-							errors.push(
-								`${(subj as Record<string, unknown>).name} ${examType} P${paperNum}: No source URL found`,
-							);
-						}
-
-						if (includeMemo) {
-							const memoInfo = await findExamPaperUrl(
+							const examInfo = await findExamPaperUrl(
 								(subj as Record<string, unknown>).name as string,
 								year,
 								paperNum,
-								"memo",
+								"paper",
 								session,
 							);
 
-							if (memoInfo) {
-								const memoData = await downloadPdf(memoInfo.url);
+							if (examInfo) {
+								const pdfData = await downloadPdf(examInfo.url);
 
-								if (memoData) {
+								if (pdfData) {
 									const uploadResult = await uploadToUploadThing(
-										memoData.buffer,
-										memoFileName,
+										pdfData.buffer,
+										fileName,
 									);
 
 									if (uploadResult) {
@@ -290,36 +242,103 @@ export async function POST(request: NextRequest) {
 											(subj as Record<string, unknown>).$id as string,
 											year,
 											paperNum,
-											"memo",
+											"paper",
 											uploadResult.url,
 											uploadResult.key,
-											memoFileName,
+											fileName,
 										);
 
 										if (saved) {
 											paperDownloaded++;
 										}
+									} else {
+										localErrors.push(
+											`${(subj as Record<string, unknown>).name} ${examType} P${paperNum}: Upload to server failed`,
+										);
 									}
+								} else {
+									localErrors.push(
+										`${(subj as Record<string, unknown>).name} ${examType} P${paperNum}: Could not download PDF`,
+									);
+								}
+							} else {
+								localErrors.push(
+									`${(subj as Record<string, unknown>).name} ${examType} P${paperNum}: No source URL found`,
+								);
+							}
+
+							if (includeMemo) {
+								const memoInfo = await findExamPaperUrl(
+									(subj as Record<string, unknown>).name as string,
+									year,
+									paperNum,
+									"memo",
+									session,
+								);
+
+								if (memoInfo) {
+									const memoData = await downloadPdf(memoInfo.url);
+
+									if (memoData) {
+										const uploadResult = await uploadToUploadThing(
+											memoData.buffer,
+											memoFileName,
+										);
+
+										if (uploadResult) {
+											const saved = await saveToDatabase(
+												(subj as Record<string, unknown>).$id as string,
+												year,
+												paperNum,
+												"memo",
+												uploadResult.url,
+												uploadResult.key,
+												memoFileName,
+											);
+
+											if (saved) {
+												paperDownloaded++;
+											}
+										} else {
+											localErrors.push(
+												`${(subj as Record<string, unknown>).name} ${examType} Memo P${paperNum}: Upload to server failed`,
+											);
+										}
+									} else {
+										localErrors.push(
+											`${(subj as Record<string, unknown>).name} ${examType} Memo P${paperNum}: Could not download PDF`,
+										);
+									}
+								} else {
+									localErrors.push(
+										`${(subj as Record<string, unknown>).name} ${examType} Memo P${paperNum}: No source URL found`,
+									);
 								}
 							}
-						}
 
-						return paperDownloaded;
-					}),
-				);
+							return { paperDownloaded, localErrors };
+						}),
+					);
 
-				const subjectPapersDownloaded = paperResults.reduce(
-					(sum, d) => sum + d,
-					0,
-				);
-				downloaded += subjectPapersDownloaded;
-
-				results.push({
-					subject: (subj as Record<string, unknown>).name as string,
-					papers: subjectPapersDownloaded,
-					status: subjectPapersDownloaded > 0 ? "success" : "failed",
+					const downloadedForSubj = paperResults.reduce(
+						(sum, r) => sum + r.paperDownloaded,
+						0,
+					);
+					const allErrors = paperResults.flatMap((r) => r.localErrors);
+					return { subj, downloadedForSubj, allErrors };
 				});
-			}
+			}),
+		);
+
+		let downloaded = 0;
+		for (const { subj, downloadedForSubj, allErrors } of taskResults) {
+			errors.push(...allErrors);
+			results.push({
+				subject: (subj as Record<string, unknown>).name as string,
+				papers: downloadedForSubj,
+				status: allErrors.length === 0 ? "success" : "partial",
+			});
+			downloaded += downloadedForSubj;
 		}
 
 		return NextResponse.json({

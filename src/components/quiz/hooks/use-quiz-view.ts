@@ -70,12 +70,15 @@ export function useQuizView({
 			let targetTopic: string | undefined = topic;
 
 			try {
-				const { competencyService } = await import("@/lib/competency-engine");
-				const { computeCompetencyLevel } = await import(
-					"@/lib/competency-engine/types"
-				);
-				const { mapCompetencyToBloom, mapCompetencyToDifficulty } =
-					await import("@/lib/question-engine/competency-mapper");
+				const [
+					{ competencyService },
+					{ computeCompetencyLevel },
+					{ mapCompetencyToBloom, mapCompetencyToDifficulty },
+				] = await Promise.all([
+					import("@/lib/competency-engine"),
+					import("@/lib/competency-engine/types"),
+					import("@/lib/question-engine/competency-mapper"),
+				]);
 
 				const normalizedSubject = subject.toLowerCase();
 				const competencies =

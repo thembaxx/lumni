@@ -8,6 +8,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
+import type { Metadata } from "next";
 import { useMemo, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { StepByStep } from "@/components/quiz/step-by-step";
@@ -20,6 +21,10 @@ import {
 	useCuratedProblems,
 } from "@/hooks/use-curated-problems";
 import { cn } from "@/lib/shared";
+
+export const metadata: Metadata = {
+	title: "Problems",
+};
 
 const DIFFICULTIES = ["all", "Easy", "Medium", "Hard"] as const;
 
@@ -119,18 +124,14 @@ function ProblemsClient() {
 	const [selectedDifficulty, setSelectedDifficulty] = useState<string>("all");
 	const [problemCount, setProblemCount] = useState(5);
 
-	const { data, isLoading, isFetching, error, refetch } = useCuratedProblems({
-		subject: selectedSubject,
-		count: problemCount,
-		enabled: false,
-	});
+	const { data, isPending, error, mutate } = useCuratedProblems();
 
 	const [fetched, setFetched] = useState(false);
 
 	const handleGenerate = async () => {
 		if (!selectedSubject) return;
 		setFetched(true);
-		refetch();
+		mutate({ subject: selectedSubject, count: problemCount });
 	};
 
 	const filteredProblems = useMemo(() => {
@@ -165,10 +166,10 @@ function ProblemsClient() {
 								</div>
 								<Button
 									onClick={handleGenerate}
-									disabled={!selectedSubject || isLoading}
+									disabled={!selectedSubject || isPending}
 									className="h-11 shrink-0 gap-2 rounded-xl"
 								>
-									{isLoading ? (
+									{isPending ? (
 										<HugeiconsIcon
 											icon={RadialIcon}
 											className="size-4 animate-spin"
@@ -220,7 +221,7 @@ function ProblemsClient() {
 					</div>
 
 					<AnimatePresence mode="wait" initial={false}>
-						{!fetched && !isLoading && (
+						{!fetched && !isPending && (
 							<m.div
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
@@ -236,7 +237,7 @@ function ProblemsClient() {
 							</m.div>
 						)}
 
-						{isLoading && (
+						{isPending && (
 							<m.div
 								key="loading"
 								initial={{ opacity: 0 }}
@@ -268,7 +269,7 @@ function ProblemsClient() {
 							</m.div>
 						)}
 
-						{data && !isLoading && !error && (
+						{data && !isPending && !error && (
 							<m.div
 								key="results"
 								initial={{ opacity: 0 }}
@@ -280,7 +281,7 @@ function ProblemsClient() {
 										{filteredProblems.length} of {data.problems.length} problems
 										{selectedDifficulty !== "all" && " filtered"}
 									</p>
-									{isFetching && (
+									{isPending && (
 										<HugeiconsIcon
 											icon={RadialIcon}
 											className="size-3.5 animate-spin text-muted-foreground/40"

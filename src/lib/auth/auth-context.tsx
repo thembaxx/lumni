@@ -2,11 +2,10 @@
 
 import { useQueryClient } from "@tanstack/react-query";
 import type { Models } from "appwrite";
-import { useRouter } from "next/navigation";
 import {
 	createContext,
+	use,
 	useCallback,
-	useContext,
 	useEffect,
 	useReducer,
 	useRef,
@@ -102,7 +101,6 @@ const INITIAL_AUTH_STATE: AuthState = {
 export function AuthProvider({ children }: { children: React.ReactNode }) {
 	const [state, dispatch] = useReducer(authReducer, INITIAL_AUTH_STATE);
 	const queryClient = useQueryClient();
-	const router = useRouter();
 	const initRef = useRef(false);
 
 	useEffect(() => {
@@ -167,8 +165,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
 			try {
 				await account.createEmailPasswordSession(email, password);
-				const user = await account.get();
-				await recordSuccessfulSignIn(email);
+				const [user] = await Promise.all([
+					account.get(),
+					recordSuccessfulSignIn(email),
+				]);
 				dispatch({
 					type: "SET_USER",
 					user,
@@ -188,8 +188,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 		async (email: string, password: string, name: string) => {
 			dispatch({ type: "SET_ERROR", error: null });
 			try {
-				await account.updateName(name);
-				await account.updateEmail(email, password);
+				await Promise.all([
+					account.updateName(name),
+					account.updateEmail(email, password),
+				]);
 				const user = await account.get();
 				dispatch({
 					type: "SET_USER",
@@ -240,10 +242,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 			localStorage.removeItem(ANONYMOUS_ATTEMPTED_KEY);
 			dispatch({ type: "RESET" });
 			queryClient.clear();
-			router.push("/");
-			router.refresh();
 		}
-	}, [queryClient, router]);
+	}, [queryClient]);
 
 	const verifyEmail = useCallback(async () => {
 		dispatch({ type: "SET_ERROR", error: null });
@@ -306,7 +306,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 }
 
 export function useAuth(): AuthContextValue {
-	const ctx = useContext(AuthContext);
+	const ctx = use(AuthContext);
 	if (!ctx) {
 		throw new Error("useAuth must be used within an AuthProvider");
 	}

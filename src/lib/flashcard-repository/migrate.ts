@@ -20,18 +20,22 @@ export async function migrateLegacyFlashcards(): Promise<number> {
 	let migrated = 0;
 	const legacy: LegacyFlashcard[] = JSON.parse(raw);
 
-	for (const card of legacy) {
-		const existing = await flashcardRepository.getById(card.id);
-		if (!existing) {
-			await flashcardRepository.create(
-				card.front,
-				card.back,
-				card.subject || "General",
-				card.topic,
-			);
-			migrated++;
-		}
-	}
+	const results = await Promise.all(
+		legacy.map(async (card) => {
+			const existing = await flashcardRepository.getById(card.id);
+			if (!existing) {
+				await flashcardRepository.create(
+					card.front,
+					card.back,
+					card.subject || "General",
+					card.topic,
+				);
+				return 1;
+			}
+			return 0;
+		}),
+	);
+	migrated = results.reduce<number>((sum, v) => sum + v, 0);
 
 	localStorage.removeItem(LEGACY_KEY);
 	return migrated;

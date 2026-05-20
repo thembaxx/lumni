@@ -41,10 +41,7 @@ function EditableField({
 	const [draft, setDraft] = useState(value);
 	const [saving, setSaving] = useState(false);
 	const inputRef = useRef<HTMLInputElement>(null);
-
-	useEffect(() => {
-		setDraft(value);
-	}, [value]);
+	const previousValue = useRef(value);
 
 	useEffect(() => {
 		if (editing && inputRef.current) {
@@ -62,19 +59,21 @@ function EditableField({
 		try {
 			await onSave(draft);
 			setEditing(false);
+			previousValue.current = draft;
 		} catch {
-			setDraft(value);
+			setDraft(previousValue.current);
 		} finally {
 			setSaving(false);
 		}
 	}, [draft, value, onSave]);
 
 	const handleCancel = useCallback(() => {
-		setDraft(value);
+		setDraft(previousValue.current);
 		setEditing(false);
-	}, [value]);
+	}, []);
 
 	if (editing) {
+		// Only use draft during editing; value is the source of truth when not editing
 		return (
 			<div className="flex items-center gap-2">
 				<div className="relative flex-1">
@@ -119,7 +118,10 @@ function EditableField({
 	return (
 		<button
 			type="button"
-			onClick={() => setEditing(true)}
+			onClick={() => {
+				setDraft(value);
+				setEditing(true);
+			}}
 			className="group flex w-full items-center gap-2 text-left"
 		>
 			<span className="flex-1 truncate font-medium text-foreground text-sm">

@@ -247,34 +247,29 @@ export function QuestionCard({
 				gradeResult={gradeResult}
 				question={question}
 				effectiveSubject={effectiveSubject}
-				isCorrect={state.isCorrect}
-				showExplanation={state.showExplanation}
-				isGrading={isGrading}
+				options={{
+					isCorrect: state.isCorrect,
+					showExplanation: state.showExplanation,
+					isGrading,
+					isSolverEnabled,
+				}}
 				solver={solver}
 				followUpMsgs={followUpMsgs}
-				isSolverEnabled={isSolverEnabled}
 				handleFollowUp={handleFollowUp}
 				followUpInput={followUpInput}
 				setFollowUpInput={setFollowUpInput}
 			/>
 			<QuestionCardControls
-				isMCQ={isMCQ}
-				options={options}
-				handleMCQSelect={handleMCQSelect}
-				handleMCQSubmit={handleMCQSubmit}
-				handleGrade={handleGrade}
-				isGrading={isGrading}
+				options={{
+					isMCQ,
+					isGrading,
+					isSubmitted: state.isSubmitted,
+					isSolverEnabled,
+				}}
 				onNext={onNext}
 				onAnswered={onAnswered}
-				isSubmitted={state.isSubmitted}
 				questionNumber={questionNumber}
 				totalQuestions={totalQuestions}
-				effectiveSubject={effectiveSubject}
-				solver={solver}
-				isSolverEnabled={isSolverEnabled}
-				handleFollowUp={handleFollowUp}
-				followUpInput={followUpInput}
-				setFollowUpInput={setFollowUpInput}
 			/>
 		</Anim>
 	);

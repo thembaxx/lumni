@@ -10,6 +10,7 @@ import {
 	Upload04Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import type { Metadata } from "next";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -17,6 +18,10 @@ import { Input } from "@/components/ui/input";
 import { flashcardRepository } from "@/lib/flashcard-repository";
 import type { FlashcardSM2 } from "@/lib/flashcard-repository/types";
 import { downloadCSV, parseCSV } from "@/lib/utils/flashcard-import-export";
+
+export const metadata: Metadata = {
+	title: "Browse Flashcards",
+};
 
 export default function FlashcardBrowsePage() {
 	const [cards, setCards] = useState<FlashcardSM2[]>([]);
@@ -47,7 +52,7 @@ export default function FlashcardBrowsePage() {
 					)
 				: all;
 			setCards(filtered);
-			const uniqueSubjects = [...new Set(all.map((c) => c.subject))].sort();
+			const uniqueSubjects = [...new Set(all.map((c) => c.subject))].toSorted();
 			setSubjects(uniqueSubjects);
 		} finally {
 			setLoading(false);
@@ -74,14 +79,16 @@ export default function FlashcardBrowsePage() {
 		try {
 			const text = await file.text();
 			const imported = parseCSV(text);
-			for (const card of imported) {
-				await flashcardRepository.create(
-					card.front,
-					card.back,
-					card.subject,
-					card.topic,
-				);
-			}
+			await Promise.all(
+				imported.map((card) =>
+					flashcardRepository.create(
+						card.front,
+						card.back,
+						card.subject,
+						card.topic,
+					),
+				),
+			);
 			loadCards();
 		} finally {
 			setImporting(false);

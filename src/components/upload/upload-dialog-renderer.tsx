@@ -39,7 +39,7 @@ export function UploadDialogRenderer({
 	const [isOpen, setIsOpen] = useState(false);
 	const [items, setItems] = useState<FileUploadState[]>([]);
 	const [endpoint, setEndpoint] = useState("generalUploader" as const);
-	const [pendingFiles, setPendingFiles] = useState<File[]>([]);
+	const pendingFilesRef = useRef<File[]>([]);
 	const startUploadRef = useRef<
 		((files: File[]) => Promise<UploadedFile[] | undefined> | undefined) | null
 	>(null);
@@ -95,24 +95,18 @@ export function UploadDialogRenderer({
 		});
 		fileNameToItemRef.current = nameMap;
 		setItems(newItems);
-		setPendingFiles(files);
+		pendingFilesRef.current = files;
 		setIsOpen(true);
+		setTimeout(() => {
+			if (startUploadRef.current) {
+				startUploadRef.current(files);
+			}
+		}, 50);
 	}, []);
 
 	useEffect(() => {
 		openUploadRef = open;
 	}, [open]);
-
-	useEffect(() => {
-		if (pendingFiles.length > 0 && startUploadRef.current) {
-			const files = pendingFiles;
-			setPendingFiles([]);
-			const timer = setTimeout(() => {
-				startUploadRef.current?.(files);
-			}, 50);
-			return () => clearTimeout(timer);
-		}
-	}, [pendingFiles]);
 
 	useEffect(() => {
 		if (items.length === 0 || isUploading) return;
@@ -128,19 +122,20 @@ export function UploadDialogRenderer({
 	const close = useCallback(() => {
 		setIsOpen(false);
 		setItems([]);
-		setPendingFiles([]);
+		pendingFilesRef.current = [];
 	}, []);
 
 	const cancel = useCallback(() => {
 		setIsOpen(false);
 		setItems([]);
-		setPendingFiles([]);
+		pendingFilesRef.current = [];
 	}, []);
 
 	const retryFailed = useCallback(() => {
-		const failedFiles = items
-			.filter((item) => item.status === "error")
-			.map((item) => item.file);
+		const failedFiles = items.reduce((acc, item) => {
+			if (item.status === "error") acc.push(item.file);
+			return acc;
+		}, [] as File[]);
 		if (failedFiles.length === 0) return;
 
 		setItems((prev) =>

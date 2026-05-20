@@ -1,6 +1,6 @@
 "use client";
 
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface SolverResult {
 	solution: string;
@@ -77,14 +77,22 @@ interface UseSolverOptions {
 }
 
 export function useSolver(options?: UseSolverOptions) {
+	const queryClient = useQueryClient();
+
 	const solve = useMutation({
 		mutationFn: solveProblem,
-		onSuccess: options?.onSuccess,
+		onSuccess: (result) => {
+			options?.onSuccess?.(result);
+			queryClient.invalidateQueries({ queryKey: ["solver"] });
+		},
 		onError: options?.onError,
 	});
 
 	const followUp = useMutation({
 		mutationFn: sendFollowUp,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["solver"] });
+		},
 	});
 
 	return {

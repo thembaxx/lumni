@@ -190,6 +190,7 @@ describe("QueueCore", () => {
 			scheduledAt: Date.now(),
 			createdAt: Date.now(),
 		});
+		// Sequential: processBatch must complete before checking store state
 		const result = await queue.processBatch(async () => {
 			throw new Error("fail");
 		});
@@ -214,6 +215,7 @@ describe("QueueCore", () => {
 			scheduledAt: Date.now(),
 			createdAt: Date.now(),
 		});
+		// Sequential: processBatch must complete before checking store state
 		const result = await queue.processBatch(async () => {
 			throw new Error("fail");
 		});

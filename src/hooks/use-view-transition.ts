@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useRef } from "react";
+import { startViewTransition as svt } from "@/lib/utils/view-transition";
 
 export function useViewTransition() {
 	const pendingRef = useRef(false);
@@ -9,18 +10,18 @@ export function useViewTransition() {
 		if (pendingRef.current) return;
 		pendingRef.current = true;
 
-		if (typeof document !== "undefined" && document.startViewTransition) {
-			const transition = document.startViewTransition(() => {
-				return new Promise<void>((resolve) => {
-					callback();
+		const transition = svt(() => {
+			return new Promise<void>((resolve) => {
+				callback();
+				requestAnimationFrame(() => {
 					requestAnimationFrame(() => {
-						requestAnimationFrame(() => {
-							resolve();
-						});
+						resolve();
 					});
 				});
 			});
+		});
 
+		if (transition) {
 			transition.finished.finally(() => {
 				pendingRef.current = false;
 			});

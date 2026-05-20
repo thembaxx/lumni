@@ -47,10 +47,10 @@ export async function requireAdmin(): Promise<string> {
 
 	const adminIds = process.env.ADMIN_USER_IDS;
 	if (adminIds) {
-		const ids = adminIds
-			.split(",")
-			.map((s) => s.trim())
-			.filter(Boolean);
+		const ids = adminIds.split(",").flatMap((s) => {
+			const trimmed = s.trim();
+			return trimmed ? [trimmed] : [];
+		});
 		if (ids.length > 0 && !ids.includes(userId)) {
 			throw new Error("Admin access required");
 		}

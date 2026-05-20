@@ -53,7 +53,13 @@ export class PathEngine {
 
 		const recommendations: TopicRecommendation[] = [];
 
-		for (const topic of subject.topics) {
+		const topicLevels = await Promise.all(
+			subject.topics.map((topic) =>
+				this.getTopicLevel(subjectId, topic.id, competencies),
+			),
+		);
+
+		for (const [idx, topic] of subject.topics.entries()) {
 			const prereqsMet = topic.prerequisites.every((p) =>
 				masteredTopics.has(p),
 			);
@@ -69,7 +75,7 @@ export class PathEngine {
 				continue;
 			}
 
-			const level = await this.getTopicLevel(subjectId, topic.id, competencies);
+			const level = topicLevels[idx];
 
 			if (level === "mastered") {
 				recommendations.push({
@@ -138,13 +144,17 @@ export class PathEngine {
 			rec: TopicRecommendation;
 		}[] = [];
 
-		for (const subjectId of subjects) {
-			const recs = await this.getNextTopics(subjectId, competencyMap);
-			for (const rec of recs) {
-				if (rec.action !== "skip") {
-					allRecommendations.push({ subjectId, rec });
-				}
-			}
+		const subjectRecs = await Promise.all(
+			subjects.map((subjectId) =>
+				this.getNextTopics(subjectId, competencyMap).then((recs) =>
+					recs
+						.filter((rec) => rec.action !== "skip")
+						.map((rec) => ({ subjectId, rec })),
+				),
+			),
+		);
+		for (const recs of subjectRecs) {
+			allRecommendations.push(...recs);
 		}
 
 		if (allRecommendations.length === 0) return null;
@@ -175,10 +185,16 @@ export class PathEngine {
 			const sessions: StudyPlanDay["sessions"] = [];
 			let minutesUsed = 0;
 
-			for (const subjectId of subjects) {
+			const subjectRecs = await Promise.all(
+				subjects.map((subjectId) =>
+					this.getNextTopics(subjectId, competencyMap).then((recs) => ({
+						subjectId,
+						recs,
+					})),
+				),
+			);
+			for (const { subjectId, recs } of subjectRecs) {
 				if (minutesUsed >= dailyGoalMinutes) break;
-
-				const recs = await this.getNextTopics(subjectId, competencyMap);
 				for (const rec of recs) {
 					if (minutesUsed >= dailyGoalMinutes) break;
 					if (rec.action === "skip") continue;

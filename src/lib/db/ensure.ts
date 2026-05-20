@@ -61,102 +61,106 @@ async function ensureCollectionSchema(
 	let attributesCreated = 0;
 	let indexesCreated = 0;
 
-	let existingAttrs: string[] = [];
-	let existingIndexes: string[] = [];
+	let existingAttrs = new Set<string>();
+	let existingIndexes = new Set<string>();
 	try {
 		const listAttrs = await db.listAttributes(
 			APPWRITE_DATABASE_ID,
 			collectionId,
 		);
-		existingAttrs = listAttrs.attributes.map((a) => a.key);
+		existingAttrs = new Set(listAttrs.attributes.map((a) => a.key));
 	} catch {
 		// collection might not exist yet — proceed with creation
 	}
 
 	// Create missing attributes
-	for (const [attrName, attrConfig] of Object.entries(schema.attributes)) {
-		if (existingAttrs.includes(attrName)) continue;
-		try {
-			if (attrConfig.type === "string") {
-				await db.createStringAttribute(
-					APPWRITE_DATABASE_ID,
-					collectionId,
-					attrName,
-					attrConfig.size ?? 255,
-					attrConfig.required ?? false,
-				);
-				attributesCreated++;
-			} else if (attrConfig.type === "integer") {
-				await db.createIntegerAttribute(
-					APPWRITE_DATABASE_ID,
-					collectionId,
-					attrName,
-					attrConfig.required ?? false,
-				);
-				attributesCreated++;
-			} else if (attrConfig.type === "boolean") {
-				await db.createBooleanAttribute(
-					APPWRITE_DATABASE_ID,
-					collectionId,
-					attrName,
-					attrConfig.required ?? false,
-				);
-				attributesCreated++;
-			} else if (attrConfig.type === "datetime") {
-				await db.createDatetimeAttribute(
-					APPWRITE_DATABASE_ID,
-					collectionId,
-					attrName,
-					attrConfig.required ?? false,
-				);
-				attributesCreated++;
+	await Promise.all(
+		Object.entries(schema.attributes).map(async ([attrName, attrConfig]) => {
+			if (existingAttrs.has(attrName)) return;
+			try {
+				if (attrConfig.type === "string") {
+					await db.createStringAttribute(
+						APPWRITE_DATABASE_ID,
+						collectionId,
+						attrName,
+						attrConfig.size ?? 255,
+						attrConfig.required ?? false,
+					);
+					attributesCreated++;
+				} else if (attrConfig.type === "integer") {
+					await db.createIntegerAttribute(
+						APPWRITE_DATABASE_ID,
+						collectionId,
+						attrName,
+						attrConfig.required ?? false,
+					);
+					attributesCreated++;
+				} else if (attrConfig.type === "boolean") {
+					await db.createBooleanAttribute(
+						APPWRITE_DATABASE_ID,
+						collectionId,
+						attrName,
+						attrConfig.required ?? false,
+					);
+					attributesCreated++;
+				} else if (attrConfig.type === "datetime") {
+					await db.createDatetimeAttribute(
+						APPWRITE_DATABASE_ID,
+						collectionId,
+						attrName,
+						attrConfig.required ?? false,
+					);
+					attributesCreated++;
+				}
+			} catch (e) {
+				if (!(e instanceof AppwriteException && e.code === 409)) {
+					console.error(`Failed to create attribute ${attrName}:`, String(e));
+				}
 			}
-		} catch (e) {
-			if (!(e instanceof AppwriteException && e.code === 409)) {
-				console.error(`Failed to create attribute ${attrName}:`, String(e));
-			}
-		}
-	}
+		}),
+	);
 
 	try {
 		const listIndexes = await db.listIndexes(
 			APPWRITE_DATABASE_ID,
 			collectionId,
 		);
-		existingIndexes = listIndexes.indexes.map((i) => i.key);
+		existingIndexes = new Set(listIndexes.indexes.map((i) => i.key));
 	} catch (e) {
 		console.warn("Failed to list indexes (collection may not exist):", e);
 	}
 
 	// Create missing indexes
-	for (const idx of schema.indexes) {
-		if (existingIndexes.includes(idx.key)) continue;
+	await Promise.all(
+		schema.indexes.map(async (idx) => {
+			if (existingIndexes.has(idx.key)) return;
 
-		const allAttrsAvailable = idx.attributes.every((a) =>
-			existingAttrs.includes(a),
-		);
-		if (!allAttrsAvailable) {
-			console.error(
-				`Failed to create index ${idx.key}: required attributes not yet available: ${idx.attributes.filter((a) => !existingAttrs.includes(a)).join(", ")}`,
+			const allAttrsAvailable = idx.attributes.every((a) =>
+				existingAttrs.has(a),
 			);
-			continue;
-		}
-
-		try {
-			await db.createIndex(
-				APPWRITE_DATABASE_ID,
-				collectionId,
-				idx.key,
-				idx.type as unknown as DatabasesIndexType,
-				idx.attributes,
-			);
-			indexesCreated++;
-		} catch (e) {
-			if (!(e instanceof AppwriteException && e.code === 409)) {
-				console.error(`Failed to create index ${idx.key}:`, String(e));
+			if (!allAttrsAvailable) {
+				console.error(
+					`Failed to create index ${idx.key}: required attributes not yet available: ${idx.attributes.filter((a) => !existingAttrs.has(a)).join(", ")}`,
+				);
+				return;
 			}
-		}
-	}
+
+			try {
+				await db.createIndex(
+					APPWRITE_DATABASE_ID,
+					collectionId,
+					idx.key,
+					idx.type as unknown as DatabasesIndexType,
+					idx.attributes,
+				);
+				indexesCreated++;
+			} catch (e) {
+				if (!(e instanceof AppwriteException && e.code === 409)) {
+					console.error(`Failed to create index ${idx.key}:`, String(e));
+				}
+			}
+		}),
+	);
 
 	return { attributesCreated, indexesCreated };
 }
@@ -190,65 +194,72 @@ export async function ensureAppwrite(
 		}
 	}
 
-	for (const collectionId of ALL_COLLECTIONS) {
-		let schemaResult = { attributesCreated: 0, indexesCreated: 0 };
-		report.collections[collectionId] = { status: "exists" };
-		try {
-			await ensureCollection(db, collectionId);
-		} catch (e) {
-			if (e instanceof AppwriteException && e.code === 404) {
-				try {
-					await db.createCollection(
-						APPWRITE_DATABASE_ID,
-						collectionId,
-						collectionId,
-					);
-					report.collections[collectionId] = { status: "created" };
-					schemaResult = await ensureCollectionSchema(db, collectionId);
+	const collectionResults = await Promise.all(
+		ALL_COLLECTIONS.map(async (collectionId) => {
+			let schemaResult = { attributesCreated: 0, indexesCreated: 0 };
+			const colReport: {
+				status: string;
+				error?: string;
+				attributesCreated?: number;
+				indexesCreated?: number;
+			} = { status: "exists" };
+			try {
+				await ensureCollection(db, collectionId);
+			} catch (e) {
+				if (e instanceof AppwriteException && e.code === 404) {
+					try {
+						await db.createCollection(
+							APPWRITE_DATABASE_ID,
+							collectionId,
+							collectionId,
+						);
+						colReport.status = "created";
+						schemaResult = await ensureCollectionSchema(db, collectionId);
+						colReport.attributesCreated = schemaResult.attributesCreated;
+						colReport.indexesCreated = schemaResult.indexesCreated;
+					} catch (err) {
+						colReport.status = "error";
+						colReport.error = String(err);
+						report.success = false;
+					}
+				} else {
+					colReport.status = "error";
+					colReport.error = String(e);
+					report.success = false;
+				}
+			}
+			return { collectionId, colReport };
+		}),
+	);
+	for (const { collectionId, colReport } of collectionResults) {
+		report.collections[collectionId] =
+			colReport as EnsureReport["collections"][string];
+	}
+
+	// Ensure schema for existing collections (in case they were created without schema)
+	await Promise.all(
+		ALL_COLLECTIONS.map(async (collectionId) => {
+			const status = report.collections[collectionId].status;
+			if (status === "exists") {
+				const schemaResult = await ensureCollectionSchema(db, collectionId);
+				if (
+					schemaResult.attributesCreated > 0 ||
+					schemaResult.indexesCreated > 0
+				) {
 					(
 						report.collections[collectionId] as Record<string, unknown>
 					).attributesCreated = schemaResult.attributesCreated;
 					(
 						report.collections[collectionId] as Record<string, unknown>
 					).indexesCreated = schemaResult.indexesCreated;
-				} catch (err) {
-					report.collections[collectionId] = {
-						status: "error",
-						error: String(err),
-					};
-					report.success = false;
 				}
-			} else {
-				report.collections[collectionId] = {
-					status: "error",
-					error: String(e),
-				};
-				report.success = false;
 			}
-		}
-	}
-
-	// Ensure schema for existing collections (in case they were created without schema)
-	for (const collectionId of ALL_COLLECTIONS) {
-		const status = report.collections[collectionId].status;
-		if (status === "exists") {
-			const schemaResult = await ensureCollectionSchema(db, collectionId);
-			if (
-				schemaResult.attributesCreated > 0 ||
-				schemaResult.indexesCreated > 0
-			) {
-				(
-					report.collections[collectionId] as Record<string, unknown>
-				).attributesCreated = schemaResult.attributesCreated;
-				(
-					report.collections[collectionId] as Record<string, unknown>
-				).indexesCreated = schemaResult.indexesCreated;
-			}
-		}
-	}
+		}),
+	);
 
 	if (config) {
 		const seeded: Record<string, SeededDoc[]> = {};
+		// Sequential: seeded data from prior collections may be needed by dependent collections
 		for (const [collectionId, collectionConfig] of Object.entries(config)) {
 			const localReport = {
 				inserted: 0,
@@ -269,40 +280,52 @@ export async function ensureAppwrite(
 				continue;
 			}
 
-			const seededDocs: SeededDoc[] = [];
-			for (const doc of docs) {
-				try {
-					const existing = await db.listDocuments(
-						APPWRITE_DATABASE_ID,
-						collectionId,
-						[
-							Query.equal(
-								collectionConfig.matchField,
-								doc[collectionConfig.matchField] as string,
-							),
-							Query.limit(1),
-						],
-					);
+			const docResults = await Promise.all(
+				docs.map(async (doc) => {
+					try {
+						const existing = await db.listDocuments(
+							APPWRITE_DATABASE_ID,
+							collectionId,
+							[
+								Query.equal(
+									collectionConfig.matchField,
+									doc[collectionConfig.matchField] as string,
+								),
+								Query.limit(1),
+							],
+						);
 
-					if (existing.documents.length > 0) {
-						seededDocs.push(existing.documents[0] as unknown as SeededDoc);
-						localReport.skipped++;
-					} else {
+						if (existing.documents.length > 0) {
+							return {
+								seededDoc: existing.documents[0] as unknown as SeededDoc,
+								action: "skipped" as const,
+							};
+						}
 						const created = await db.createDocument(
 							APPWRITE_DATABASE_ID,
 							collectionId,
 							"unique()",
 							doc,
 						);
-						seededDocs.push({
-							$id: created.$id,
-							...doc,
-						} as SeededDoc);
-						localReport.inserted++;
+						return {
+							seededDoc: { $id: created.$id, ...doc } as SeededDoc,
+							action: "inserted" as const,
+						};
+					} catch (err) {
+						return { err: String(err), action: "error" as const };
 					}
-				} catch (err) {
-					localReport.errors.push(String(err));
+				}),
+			);
+
+			const seededDocs: SeededDoc[] = [];
+			for (const r of docResults) {
+				if (r.action === "error") {
+					localReport.errors.push(r.err);
 					report.success = false;
+				} else {
+					seededDocs.push(r.seededDoc);
+					if (r.action === "inserted") localReport.inserted++;
+					else localReport.skipped++;
 				}
 			}
 			seeded[collectionId] = seededDocs;

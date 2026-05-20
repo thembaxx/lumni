@@ -50,11 +50,11 @@ export interface UseStudyPlannerReturn {
 
 export function useStudyPlanner(): UseStudyPlannerReturn {
 	const { user } = useAuth();
-	const [plan, setPlan] = useState<StudyPlan>(loadStudyPlan());
+	const [plan, setPlan] = useState<StudyPlan>(() => loadStudyPlan());
 	const [todaySessions, setTodaySessions] = useState<StudySession[]>([]);
 	const [upcomingSessions, setUpcomingSessions] = useState<StudySession[]>([]);
 	const [upcomingExams, setUpcomingExams] = useState<ExamDate[]>([]);
-	const [stats, setStats] = useState(getStudyStats());
+	const [stats, setStats] = useState(() => getStudyStats());
 	const [isGenerating, setIsGenerating] = useState(false);
 
 	const refresh = useCallback(() => {
@@ -177,16 +177,20 @@ export function useStudyPlanner(): UseStudyPlannerReturn {
 				const algorithmPlan = await service.generateStudyPlan(planSettings);
 
 				const existingPlan = loadStudyPlan();
-				const newSessions: Omit<StudySession, "id">[] = algorithmPlan.topics
-					.filter((t) => t.scheduledDate)
-					.map((t) => ({
-						subject: t.subjectId,
-						topic: t.topicId,
-						type: "quiz" as const,
-						scheduledAt: new Date(t.scheduledDate ?? Date.now()).getTime(),
-						duration: Math.round(t.estimatedMinutes),
-						completed: t.isCompleted,
-					}));
+				const newSessions: Omit<StudySession, "id">[] = [];
+				for (const t of algorithmPlan.topics) {
+					const scheduledDate = t.scheduledDate;
+					if (scheduledDate) {
+						newSessions.push({
+							subject: t.subjectId,
+							topic: t.topicId,
+							type: "quiz" as const,
+							scheduledAt: new Date(scheduledDate).getTime(),
+							duration: Math.round(t.estimatedMinutes),
+							completed: t.isCompleted,
+						});
+					}
+				}
 
 				// Replace old auto-scheduled sessions
 				existingPlan.sessions = existingPlan.sessions.filter(

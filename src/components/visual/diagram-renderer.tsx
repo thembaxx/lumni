@@ -116,6 +116,8 @@ function sanitizeSvg(svg: string): string {
 		.replace(/<foreignObject[\s\S]*?<\/foreignObject>/gi, "");
 }
 
+import { SafeHTML } from "@/components/ui/safe-html";
+
 function CustomSvgRenderer({ data }: { data: Record<string, unknown> }) {
 	const rawSvg = data.svg as string;
 	if (!rawSvg) {
@@ -126,10 +128,9 @@ function CustomSvgRenderer({ data }: { data: Record<string, unknown> }) {
 		);
 	}
 	return (
-		<div
+		<SafeHTML
+			html={sanitizeSvg(rawSvg)}
 			className="w-full overflow-auto rounded-lg border bg-background p-4"
-			// biome-ignore lint/security/noDangerouslySetInnerHtml: sanitized SVG rendering
-			dangerouslySetInnerHTML={{ __html: sanitizeSvg(rawSvg) }}
 		/>
 	);
 }

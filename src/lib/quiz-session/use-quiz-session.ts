@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useReducer, useRef } from "react";
 import { useInterval } from "@/hooks/use-interval";
 import { saveQuizSession } from "@/lib/db/repositories/quiz-session";
 import type { Question } from "@/lib/question-engine/types";
@@ -11,6 +11,61 @@ import type {
 	QuizSessionState,
 } from "./types";
 
+interface QuizState {
+	currentIndex: number;
+	correctAnswers: number;
+	correctness: boolean[];
+	elapsedTime: number;
+	isComplete: boolean;
+	isActive: boolean;
+}
+
+type QuizAction =
+	| { type: "RESET" }
+	| { type: "SET_INDEX"; index: number }
+	| { type: "RECORD_ANSWER"; correct: boolean }
+	| { type: "TICK" }
+	| { type: "FINISH" }
+	| { type: "START" }
+	| { type: "SET_ACTIVE"; active: boolean };
+
+function quizReducer(state: QuizState, action: QuizAction): QuizState {
+	switch (action.type) {
+		case "RESET":
+			return {
+				currentIndex: 0,
+				correctAnswers: 0,
+				correctness: [],
+				elapsedTime: 0,
+				isComplete: false,
+				isActive: false,
+			};
+		case "SET_INDEX":
+			return { ...state, currentIndex: action.index };
+		case "RECORD_ANSWER":
+			return {
+				...state,
+				correctness: [...state.correctness, action.correct],
+				correctAnswers: state.correctAnswers + (action.correct ? 1 : 0),
+			};
+		case "TICK":
+			return { ...state, elapsedTime: state.elapsedTime + 1 };
+		case "FINISH":
+			return { ...state, isComplete: true, isActive: false };
+		case "START":
+			return {
+				currentIndex: 0,
+				correctAnswers: 0,
+				correctness: [],
+				elapsedTime: 0,
+				isComplete: false,
+				isActive: true,
+			};
+		case "SET_ACTIVE":
+			return { ...state, isActive: action.active };
+	}
+}
+
 export function useQuizSession(
 	questions: Question[],
 	config?: QuizSessionConfig,
@@ -19,43 +74,33 @@ export function useQuizSession(
 	const maxTime = config?.maxTime ?? 90 * 60;
 	const sessionId = options?.sessionId ?? crypto.randomUUID();
 
-	const [currentIndex, setCurrentIndex] = useState(0);
-	const [correctAnswers, setCorrectAnswers] = useState(0);
-	const [correctness, setCorrectness] = useState<boolean[]>([]);
-	const [elapsedTime, setElapsedTime] = useState(0);
-	const [isComplete, setIsComplete] = useState(false);
-	const [isActive, setIsActive] = useState(false);
+	const [quizState, dispatch] = useReducer(quizReducer, {
+		currentIndex: 0,
+		correctAnswers: 0,
+		correctness: [],
+		elapsedTime: 0,
+		isComplete: false,
+		isActive: false,
+	});
 
-	useEffect(() => {
-		if (questions.length === 0) {
-			setCurrentIndex(0);
-			setCorrectAnswers(0);
-			setCorrectness([]);
-			setElapsedTime(0);
-			setIsComplete(false);
-			setIsActive(false);
-		}
-	}, [questions]);
-
-	const saveRef = useRef({
+	const {
 		currentIndex,
 		correctAnswers,
 		correctness,
 		elapsedTime,
 		isComplete,
 		isActive,
-		questions,
-	});
+	} = quizState;
+
 	useEffect(() => {
-		saveRef.current = {
-			currentIndex,
-			correctAnswers,
-			correctness,
-			elapsedTime,
-			isComplete,
-			isActive,
-			questions,
-		};
+		if (questions.length === 0) {
+			dispatch({ type: "RESET" });
+		}
+	}, [questions]);
+
+	const saveRef = useRef({ ...quizState, questions });
+	useEffect(() => {
+		saveRef.current = { ...quizState, questions };
 	});
 
 	const persist = useCallback(() => {
@@ -94,14 +139,10 @@ export function useQuizSession(
 
 	useInterval(
 		() => {
-			setElapsedTime((prev) => {
-				if (prev >= maxTime) {
-					setIsComplete(true);
-					setIsActive(false);
-					return prev;
-				}
-				return prev + 1;
-			});
+			dispatch({ type: "TICK" });
+			if (quizState.elapsedTime + 1 >= maxTime) {
+				dispatch({ type: "FINISH" });
+			}
 		},
 		isActive && questions.length > 0 && !isComplete ? 1000 : null,
 	);
@@ -110,38 +151,30 @@ export function useQuizSession(
 	const totalQuestions = questions.length;
 
 	const start = useCallback(() => {
-		setCurrentIndex(0);
-		setCorrectAnswers(0);
-		setCorrectness([]);
-		setElapsedTime(0);
-		setIsComplete(false);
-		setIsActive(true);
+		dispatch({ type: "START" });
 	}, []);
 
 	const recordAnswer = useCallback(
 		(correct: boolean, _detail?: AnswerDetail) => {
-			setCorrectness((prev) => [...prev, correct]);
-			if (correct) setCorrectAnswers((prev) => prev + 1);
+			dispatch({ type: "RECORD_ANSWER", correct });
 		},
 		[],
 	);
 
 	const next = useCallback(() => {
 		if (currentIndex < totalQuestions - 1) {
-			setCurrentIndex((prev) => prev + 1);
+			dispatch({ type: "SET_INDEX", index: currentIndex + 1 });
 		} else {
-			setIsComplete(true);
-			setIsActive(false);
+			dispatch({ type: "FINISH" });
 		}
 	}, [currentIndex, totalQuestions]);
 
 	const previous = useCallback(() => {
-		setCurrentIndex((prev) => Math.max(0, prev - 1));
-	}, []);
+		dispatch({ type: "SET_INDEX", index: Math.max(0, currentIndex - 1) });
+	}, [currentIndex]);
 
 	const stop = useCallback(() => {
-		setIsComplete(true);
-		setIsActive(false);
+		dispatch({ type: "FINISH" });
 	}, []);
 
 	const restart = useCallback(() => start(), [start]);

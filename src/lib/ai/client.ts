@@ -49,6 +49,7 @@ export class AIClient {
 
 		let lastError = "";
 
+		// Sequential fallback: try each provider in priority order until one succeeds
 		for (const provider of this.providers) {
 			try {
 				const response = await provider.generate(request);

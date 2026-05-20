@@ -99,6 +99,9 @@ export function useQuestionEngine(
 			const result = await gradeAnswer(question, answer);
 			return result;
 		},
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["questionEngine"] });
+		},
 	});
 
 	const hintMutation = useMutation({
@@ -106,12 +109,18 @@ export function useQuestionEngine(
 			const result = await generateHint(question);
 			return result;
 		},
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["questionEngine"] });
+		},
 	});
 
 	const generateMutation = useMutation({
 		mutationFn: async (generateParams: GenerationParams) => {
 			const result = await generateQuestions(generateParams);
 			return result;
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["questionEngine"] });
 		},
 	});
 

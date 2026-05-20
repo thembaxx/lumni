@@ -1,6 +1,6 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 
 export interface CuratedProblem {
 	id: string;
@@ -22,18 +22,11 @@ interface UseCuratedProblemsParams {
 	subject: string;
 	topic?: string;
 	count?: number;
-	enabled?: boolean;
 }
 
-export function useCuratedProblems({
-	subject,
-	topic,
-	count = 5,
-	enabled = true,
-}: UseCuratedProblemsParams) {
-	return useQuery<CuratedProblemsResponse>({
-		queryKey: ["curated-problems", subject, topic, count],
-		queryFn: async () => {
+export function useCuratedProblems() {
+	return useMutation<CuratedProblemsResponse, Error, UseCuratedProblemsParams>({
+		mutationFn: async ({ subject, topic, count = 5 }) => {
 			const res = await fetch("/api/curated-problems", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
@@ -45,9 +38,5 @@ export function useCuratedProblems({
 			}
 			return res.json();
 		},
-		enabled: enabled && !!subject,
-		staleTime: 1000 * 60 * 60,
-		gcTime: 1000 * 60 * 60 * 24,
-		retry: 1,
 	});
 }

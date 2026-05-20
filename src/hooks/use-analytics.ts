@@ -116,13 +116,15 @@ export function useAnalytics() {
 
 			const subjects: SubjectAnalytics[] = [];
 
+			const progressBySubject = new Map(
+				progressRecords.map((p) => [p.odSubjectId, p]),
+			);
+
 			for (const subjectId of subjectIds) {
 				const subjectComps = competencies.filter(
 					(c) => c.subjectId === subjectId,
 				);
-				const subjectProgress = progressRecords.find(
-					(p) => p.odSubjectId === subjectId,
-				);
+				const subjectProgress = progressBySubject.get(subjectId);
 				const subjectAttempts = attempts.filter(
 					(a) => a.odSubject === subjectId,
 				);

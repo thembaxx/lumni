@@ -2,11 +2,16 @@
 
 import { Book01Icon, Search01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import type { Metadata } from "next";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
 import { SearchResults } from "@/components/dashboard/search/search-results";
 import { Input } from "@/components/ui/input";
+
+export const metadata: Metadata = {
+	title: "Search",
+};
 
 export default function SearchPage() {
 	const [query, setQuery] = useState("");

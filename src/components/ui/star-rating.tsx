@@ -20,18 +20,16 @@ export function StarRating({
 	size = 20,
 }: StarRatingProps) {
 	const [hovered, setHovered] = useState(0);
-	const [selected, setSelected] = useState(initialRating);
 
 	const handleClick = (rating: number) => {
 		if (disabled) return;
-		setSelected(rating);
 		onRate(rating);
 	};
 
 	return (
 		<div className="flex items-center gap-0.5">
 			{[1, 2, 3, 4, 5].map((star) => {
-				const active = star <= (hovered || selected);
+				const active = star <= (hovered || initialRating);
 				return (
 					<Button
 						key={star}

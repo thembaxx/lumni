@@ -3,6 +3,7 @@
 import { ViewIcon, ViewOffIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
@@ -10,6 +11,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FormSkeleton } from "@/components/ui/skeletons";
 import { iOSEase } from "@/lib/utils/animation";
+
+export const metadata: Metadata = {
+	title: "Reset Password",
+};
 
 function ResetPasswordForm() {
 	const { push } = useRouter();

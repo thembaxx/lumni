@@ -88,8 +88,6 @@ export function ProgrammingInput({
 	disabled,
 	onSubmit,
 }: ProgrammingInputProps) {
-	const [code, setCode] = useState(value);
-
 	return (
 		<div className="flex flex-col gap-3">
 			{starterCode && (
@@ -103,9 +101,8 @@ export function ProgrammingInput({
 				</div>
 			)}
 			<Textarea
-				value={code}
+				value={value}
 				onChange={(e) => {
-					setCode(e.target.value);
 					onChange(e.target.value);
 				}}
 				disabled={disabled}
@@ -114,8 +111,8 @@ export function ProgrammingInput({
 			/>
 			{onSubmit && (
 				<Button
-					onClick={() => onSubmit(code.trim())}
-					disabled={disabled || !code.trim()}
+					onClick={() => onSubmit(value.trim())}
+					disabled={disabled || !value.trim()}
 					size="sm"
 				>
 					Submit Answer

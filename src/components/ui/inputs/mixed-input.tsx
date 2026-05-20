@@ -4,6 +4,8 @@ import { ContentBlockRenderer } from "@/components/exam/content-block-renderer";
 import { PartRenderer } from "@/components/exam/part-renderer";
 import type { ContentBlock, QuestionPart } from "@/types/exam-paper";
 
+const EMPTY_VALUE: Record<string, string | string[]> = {};
+
 interface MixedInputProps {
 	value: Record<string, string | string[]> | undefined;
 	onChange: (partId: string, value: string | string[]) => void;
@@ -13,7 +15,7 @@ interface MixedInputProps {
 }
 
 export function MixedInput({
-	value = {},
+	value = EMPTY_VALUE,
 	onChange,
 	content,
 	subParts,

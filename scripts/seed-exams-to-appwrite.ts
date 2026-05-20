@@ -312,24 +312,27 @@ Examples:
 	let success = 0;
 	let failed = 0;
 
-	for (let i = 0; i < filtered.length; i++) {
-		const pdf = filtered[i];
-		console.log(
-			`[${i + 1}/${filtered.length}] ${pdf.fileName} (${
-				pdf.subject || "unknown"
-			})`,
-		);
+	const results = await Promise.all(
+		filtered.map(async (pdf, i) => {
+			console.log(
+				`[${i + 1}/${filtered.length}] ${pdf.fileName} (${
+					pdf.subject || "unknown"
+				})`,
+			);
 
-		const buffer = fs.readFileSync(pdf.filePath);
-		const result = await processPdf(buffer, pdf.fileName, utapi, adminDatabases);
+			const buffer = fs.readFileSync(pdf.filePath);
+			const result = await processPdf(buffer, pdf.fileName, utapi, adminDatabases);
 
-		if (result.success) {
-			success++;
-		} else {
-			failed++;
+			if (result.success) {
+				return { success: true };
+			}
 			console.error(`  ✗ ${result.error}`);
-		}
-	}
+			return { success: false };
+		}),
+	);
+
+	success = results.filter((r) => r.success).length;
+	failed = results.filter((r) => !r.success).length;
 
 	console.log(`\nDone: ${success} succeeded, ${failed} failed`);
 	process.exit(failed > 0 ? 1 : 0);

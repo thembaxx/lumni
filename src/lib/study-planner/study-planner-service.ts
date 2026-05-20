@@ -36,15 +36,15 @@ export class StudyPlannerService {
 	private async getAllSubjectsCompetency(): Promise<SubjectCompetency[]> {
 		const results = await Promise.allSettled(
 			KNOWN_SUBJECTS.map(async (subject) => {
-				const summary = await this.competencyService.getMasterySummary(
-					subject.id,
-				);
-				const records = await this.competencyService.getCompetencies(
-					subject.id,
-				);
-				const uniqueTopics = [
-					...new Set(records.map((r) => r.topicId).filter(Boolean)),
-				];
+				const [summary, records] = await Promise.all([
+					this.competencyService.getMasterySummary(subject.id),
+					this.competencyService.getCompetencies(subject.id),
+				]);
+				const topicIds: string[] = [];
+				for (const r of records) {
+					if (r.topicId) topicIds.push(r.topicId);
+				}
+				const uniqueTopics = [...new Set(topicIds)];
 
 				return {
 					subjectId: subject.id,

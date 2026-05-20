@@ -10,7 +10,7 @@ import {
 	Download03Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useEffect, useState } from "react";
+import { useRef, useState } from "react";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -52,10 +52,7 @@ function StudyPlannerInner() {
 
 	const [showAddSession, setShowAddSession] = useState(false);
 	const [showAddExam, setShowAddExam] = useState(false);
-	const [_now, setNow] = useState(0);
-	useEffect(() => {
-		setNow(Date.now());
-	}, []);
+	const _now = useRef(Date.now());
 
 	const exportCalendar = () => {
 		const ics = exportToICal(

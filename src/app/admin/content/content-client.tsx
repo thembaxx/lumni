@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -28,10 +28,6 @@ interface Flag {
 export function ContentClient() {
 	const queryClient = useQueryClient();
 	const [statusFilter, setStatusFilter] = useState<string>("pending");
-	const [mounted, setMounted] = useState(false);
-	useEffect(() => {
-		setMounted(true);
-	}, []);
 
 	const { data, isLoading } = useQuery({
 		queryKey: ["admin-content-flags"],
@@ -77,7 +73,7 @@ export function ContentClient() {
 	};
 
 	return (
-		<div className="min-h-[100dvh] bg-background">
+		<div className="min-h-[100dvh] bg-background" suppressHydrationWarning>
 			<PageHeader
 				title="Content Moderation"
 				subtitle="Review flagged questions"
@@ -155,9 +151,7 @@ export function ContentClient() {
 											{flag.userId.slice(0, 12)}...
 										</TableCell>
 										<TableCell className="text-xs">
-											{mounted
-												? new Date(flag.createdAt).toLocaleDateString()
-												: ""}
+											{new Date(flag.createdAt).toLocaleDateString()}
 										</TableCell>
 										<TableCell>
 											<Badge

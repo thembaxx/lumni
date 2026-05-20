@@ -31,7 +31,7 @@ export class QuestionEngine {
 						);
 						const cached = await getCachedQuestions(p.subject, p.topic);
 						if (cached && cached.length >= p.count) {
-							const shuffled = [...(cached as Question[])].sort(
+							const shuffled = (cached as Question[]).toSorted(
 								() => Math.random() - 0.5,
 							);
 							return shuffled.slice(0, p.count);
@@ -84,22 +84,28 @@ export class QuestionEngine {
 						const perTypeCount = Math.ceil(count / types.length);
 						questions = [];
 
-						for (const type of types) {
-							try {
-								const processor = this.registry.getProcessor(type);
-								const typeParams = {
-									...enriched,
-									count: perTypeCount,
-									questionType: type,
-								};
-								const result = await processor.generate(typeParams);
-								questions.push(...result);
-							} catch (error) {
-								console.error(
-									`[QuestionEngine] Failed to generate ${type}:`,
-									error,
-								);
-							}
+						const typeResults = await Promise.all(
+							types.map(async (type) => {
+								try {
+									const processor = this.registry.getProcessor(type);
+									const typeParams = {
+										...enriched,
+										count: perTypeCount,
+										questionType: type,
+									};
+									const result = await processor.generate(typeParams);
+									return result;
+								} catch (error) {
+									console.error(
+										`[QuestionEngine] Failed to generate ${type}:`,
+										error,
+									);
+									return [];
+								}
+							}),
+						);
+						for (const result of typeResults) {
+							questions.push(...result);
 						}
 					}
 
@@ -183,9 +189,13 @@ export class QuestionEngine {
 	): Promise<string | null> {
 		if (!topic) return null;
 		try {
-			const { listDocuments } = await import("@/lib/db/client");
-			const { Query } = await import("appwrite");
-			const { COLLECTIONS } = await import("@/lib/db/client");
+			const [{ listDocuments }, { Query }, { COLLECTIONS }] = await Promise.all(
+				[
+					import("@/lib/db/client"),
+					import("appwrite"),
+					import("@/lib/db/client"),
+				],
+			);
 			const results = await listDocuments(COLLECTIONS.TOPICS, [
 				Query.equal("name", topic),
 				Query.limit(1),
@@ -228,6 +238,7 @@ export class QuestionEngine {
 				needed = Math.min(needed, count - results.length);
 				if (needed <= 0) continue;
 
+				// Sequential: tries types in order until one succeeds
 				let generated = false;
 				for (let j = 0; j < available.length && !generated; j++) {
 					const tryType = available[(i + j) % available.length];

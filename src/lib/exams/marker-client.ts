@@ -53,7 +53,8 @@ export async function uploadImagesAndRewriteMarkdown(
 	const utapi = new UTApi();
 	const imageUrlMap: Record<string, string> = {};
 
-	const uploads = images.map(async (img) => {
+	const uploadPromises: Promise<{ filename: string; url: string }>[] = [];
+	for (const img of images) {
 		const base64Data = img.data.includes("base64,")
 			? img.data.split("base64,")[1]
 			: img.data;
@@ -62,26 +63,33 @@ export async function uploadImagesAndRewriteMarkdown(
 
 		const utFile = new UTFile([uint8Array], img.filename);
 
-		const result = await utapi.uploadFiles(utFile);
-		if (result.error) {
-			throw new Error(
-				`Failed to upload image ${img.filename}: ${result.error}`,
-			);
-		}
+		uploadPromises.push(
+			utapi.uploadFiles(utFile).then((result) => {
+				if (result.error) {
+					throw new Error(
+						`Failed to upload image ${img.filename}: ${result.error}`,
+					);
+				}
 
-		const url = result.data?.ufsUrl || result.data?.url || "";
-		imageUrlMap[img.filename] = url;
-		return { filename: img.filename, url };
-	});
+				const url = result.data?.ufsUrl || result.data?.url || "";
+				imageUrlMap[img.filename] = url;
+				return { filename: img.filename, url };
+			}),
+		);
+	}
 
-	await Promise.all(uploads);
+	const _uploads = await Promise.all(uploadPromises);
 
 	let updatedMarkdown = markdown;
-	for (const [origPath, uploadUrl] of Object.entries(imageUrlMap)) {
-		updatedMarkdown = updatedMarkdown.replace(
-			new RegExp(`\\(${escapeRegex(origPath)}\\)`, "g"),
-			`(${uploadUrl})`,
+	const entries = Object.entries(imageUrlMap);
+	if (entries.length > 0) {
+		const pattern = new RegExp(
+			`\\((${entries.map(([p]) => escapeRegex(p)).join("|")})\\)`,
+			"g",
 		);
+		updatedMarkdown = updatedMarkdown.replace(pattern, (_match, path) => {
+			return `(${imageUrlMap[path as string]})`;
+		});
 	}
 
 	return { markdown: updatedMarkdown, imageUrlMap };

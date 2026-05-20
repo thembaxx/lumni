@@ -26,7 +26,7 @@ const ElementCard = memo(
 	}: {
 		el: Element;
 		isActive: boolean;
-		onClick: () => void;
+		onClick: (atomicNumber: number) => void;
 	}) => {
 		const [isHovered, setIsHovered] = useState(false);
 		const scale = useSpring(1, { stiffness: 400, damping: 30 });
@@ -53,7 +53,7 @@ const ElementCard = memo(
 
 		return (
 			<m.button
-				onClick={onClick}
+				onClick={() => onClick(el.atomicNumber)}
 				onHoverStart={() => setIsHovered(true)}
 				onHoverEnd={() => setIsHovered(false)}
 				style={{ scale, boxShadow }}
@@ -163,6 +163,14 @@ export function PeriodicTable() {
 			}
 		},
 		[generateFact],
+	);
+
+	const handleCardClick = useCallback(
+		(atomicNumber: number) => {
+			const el = elements.find((e) => e.atomicNumber === atomicNumber);
+			if (el) handleElementSelect(el);
+		},
+		[handleElementSelect],
 	);
 
 	return (
@@ -310,7 +318,7 @@ export function PeriodicTable() {
 								!isFiltered ||
 								filteredElements.some((e) => e.atomicNumber === el.atomicNumber)
 							}
-							onClick={() => handleElementSelect(el)}
+							onClick={handleCardClick}
 						/>
 					))}
 				</m.div>

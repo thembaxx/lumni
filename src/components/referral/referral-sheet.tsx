@@ -60,7 +60,7 @@ export function ReferralSheet() {
 				<div className="flex max-h-[95dvh] grow flex-col gap-6 overflow-y-auto px-4 pt-2 pb-4">
 					{isLoading ? (
 						<div className="flex items-center justify-center py-12">
-							<p className="text-muted-foreground text-sm">Loading...</p>
+							<p className="text-muted-foreground text-sm">Loading…</p>
 						</div>
 					) : info ? (
 						<>

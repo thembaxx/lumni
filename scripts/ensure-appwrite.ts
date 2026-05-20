@@ -39,6 +39,7 @@ async function main() {
 	console.log(`  Database: ${databaseId}`);
 	console.log();
 
+	// Imports already parallelized above; ensureAppwrite depends on seedConfig
 	const [{ ensureAppwrite }, { seedConfig }] = await Promise.all([
 		import("@/lib/db/ensure"),
 		import("@/lib/db/ensure-config"),

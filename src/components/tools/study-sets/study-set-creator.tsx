@@ -61,21 +61,16 @@ export function StudySetCreator({ className }: StudySetCreatorProps) {
 		toggleFavorite(id);
 	};
 
-	const filteredStudySets = studySets
-		.filter(
-			(set) =>
-				set.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-				set.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-				(set.tags || []).some((tag) =>
-					tag.toLowerCase().includes(searchQuery.toLowerCase()),
-				),
-		)
-		.filter((set) => {
-			if (filter === "favorites") {
-				return set.isFavorite === true;
-			}
-			return true;
-		});
+	const filteredStudySets = studySets.filter((set) => {
+		const matchesSearch =
+			set.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+			set.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+			(set.tags || []).some((tag) =>
+				tag.toLowerCase().includes(searchQuery.toLowerCase()),
+			);
+		const matchesFilter = filter !== "favorites" || set.isFavorite === true;
+		return matchesSearch && matchesFilter;
+	});
 
 	return (
 		<m.div

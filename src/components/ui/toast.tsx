@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useCallback, useContext, useState } from "react";
+import { createContext, use, useCallback, useState } from "react";
 import { cn } from "@/lib/shared";
 
 export type ToastType = "success" | "error" | "warning" | "info";
@@ -23,7 +23,7 @@ interface ToastContextType {
 const ToastContext = createContext<ToastContextType | null>(null);
 
 export function useToastContext() {
-	const context = useContext(ToastContext);
+	const context = use(ToastContext);
 	if (!context) {
 		return null;
 	}
@@ -106,7 +106,7 @@ export function ToastItem({ toast: t }: { toast: ToastData }) {
 				toastStyles[t.type],
 			)}
 		>
-			<span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-current/10 font-extrabold text-xs">
+			<span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-current/10 font-extrabold text-xs">
 				{toastIcons[t.type]}
 			</span>
 			<div className="min-w-0 flex-1">

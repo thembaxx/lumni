@@ -10,6 +10,7 @@ describe("DailyCallTracker", () => {
 
 	test("blocks after exhausting per-user limit", async () => {
 		const tracker = new DailyCallTracker();
+		// Sequential: simulating sequential user requests to exhaust the limit
 		for (let i = 0; i < 20; i++) {
 			await tracker.increment("generate", "127.0.0.1", 100);
 		}
@@ -19,6 +20,7 @@ describe("DailyCallTracker", () => {
 
 	test("different users have independent budgets", async () => {
 		const tracker = new DailyCallTracker();
+		// Sequential: simulating sequential requests from one user to exhaust their budget
 		for (let i = 0; i < 20; i++) {
 			await tracker.increment("generate", "user-a", 100);
 		}
@@ -37,6 +39,7 @@ describe("DailyCallTracker", () => {
 
 	test("global budget is shared across users", async () => {
 		const tracker = new DailyCallTracker();
+		// Sequential: each increment must complete before the next to track state correctly
 		for (let i = 0; i < 1000; i++) {
 			await tracker.increment("generate", `user-${i}`, 100);
 		}

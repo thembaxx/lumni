@@ -9,10 +9,9 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/shared";
 
 export function SuccessBadge({ isAdmin }: { isAdmin: boolean }) {
-	const [show, setShow] = useState(false);
+	const [show, setShow] = useState(true);
 
 	useEffect(() => {
-		setShow(true);
 		const timer = setTimeout(() => setShow(false), 2000);
 		return () => clearTimeout(timer);
 	}, []);

@@ -30,31 +30,31 @@ export async function trackQuestionResult(
 	const isCorrect =
 		correct ?? (maxScore > 0 ? score / maxScore >= 0.5 : score >= 0.5);
 
-	await competencyService.update(
-		subjectId,
-		topicId,
-		bloomLevel,
-		competencyScore,
-		1,
-	);
-
-	await enqueue("analytics-sync", {
-		events: [
-			{
-				event: "grade",
-				timestamp: Date.now(),
-				subject: subjectId,
-				questionType: questionType ?? "short-answer",
-				success: isCorrect,
-				duration: 0,
-			},
-		],
-	});
-
-	await enqueue("progress-update", {
-		subject: subjectId,
-		result: { correct: isCorrect, score },
-	});
+	await Promise.all([
+		competencyService.update(
+			subjectId,
+			topicId,
+			bloomLevel,
+			competencyScore,
+			1,
+		),
+		enqueue("analytics-sync", {
+			events: [
+				{
+					event: "grade",
+					timestamp: Date.now(),
+					subject: subjectId,
+					questionType: questionType ?? "short-answer",
+					success: isCorrect,
+					duration: 0,
+				},
+			],
+		}),
+		enqueue("progress-update", {
+			subject: subjectId,
+			result: { correct: isCorrect, score },
+		}),
+	]);
 }
 
 export function isPassingScore(

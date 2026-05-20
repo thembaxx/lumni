@@ -12,9 +12,10 @@ export async function fetchQuestions(subjectIds: string[]) {
 
 	const typedTopicDocs = topicDocs as { $id: string; subjectId: string }[];
 
-	const topicIds = typedTopicDocs
-		.filter((t) => subjectIds.includes(t.subjectId))
-		.map((t) => t.$id);
+	const topicIds = typedTopicDocs.reduce((acc, t) => {
+		if (subjectIds.includes(t.subjectId)) acc.push(t.$id);
+		return acc;
+	}, [] as string[]);
 
 	if (topicIds.length === 0) return [];
 

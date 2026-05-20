@@ -24,11 +24,15 @@ export interface UseTTSReturn {
 	getExercises: (lang: string) => PronunciationExercise[];
 }
 
+type TTSStatus = "idle" | "speaking" | "paused";
+
 export function useTTS(): UseTTSReturn {
 	const [isSupported, setIsSupported] = useState(false);
-	const [isSpeaking, setIsSpeaking] = useState(false);
-	const [isPaused, setIsPaused] = useState(false);
+	const [ttsStatus, setTtsStatus] = useState<TTSStatus>("idle");
 	const [voices, setVoices] = useState<TTSVoice[]>([]);
+
+	const isSpeaking = ttsStatus === "speaking";
+	const isPaused = ttsStatus === "paused";
 
 	useEffect(() => {
 		setIsSupported(ttsService.isSupported());
@@ -51,20 +55,9 @@ export function useTTS(): UseTTSReturn {
 	}, []);
 
 	useEffect(() => {
-		ttsService.onStart(() => {
-			setIsSpeaking(true);
-			setIsPaused(false);
-		});
-
-		ttsService.onEnd(() => {
-			setIsSpeaking(false);
-			setIsPaused(false);
-		});
-
-		ttsService.onError(() => {
-			setIsSpeaking(false);
-			setIsPaused(false);
-		});
+		ttsService.onStart(() => setTtsStatus("speaking"));
+		ttsService.onEnd(() => setTtsStatus("idle"));
+		ttsService.onError(() => setTtsStatus("idle"));
 
 		return () => {
 			ttsService.onStart(() => {});
@@ -80,18 +73,17 @@ export function useTTS(): UseTTSReturn {
 
 	const pause = useCallback(() => {
 		ttsService.pause();
-		setIsPaused(true);
+		setTtsStatus("paused");
 	}, []);
 
 	const resume = useCallback(() => {
 		ttsService.resume();
-		setIsPaused(false);
+		setTtsStatus("speaking");
 	}, []);
 
 	const stop = useCallback(() => {
 		ttsService.cancel();
-		setIsSpeaking(false);
-		setIsPaused(false);
+		setTtsStatus("idle");
 	}, []);
 
 	const getExercises = useCallback((lang: string): PronunciationExercise[] => {

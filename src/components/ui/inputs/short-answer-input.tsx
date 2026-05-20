@@ -36,7 +36,7 @@ export function ShortAnswerInput({
 				className={cn("max-w-md", onSubmit && "pr-24")}
 			/>
 			<div className="flex items-center justify-between">
-				{maxLength && (
+				{maxLength != null && maxLength > 0 && (
 					<span
 						className={cn(
 							"text-xs",

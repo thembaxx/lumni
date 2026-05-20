@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useReducer, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -14,15 +14,33 @@ interface QuestionWithMeta {
 	generatedAt: string;
 }
 
+type LoadingState = { fetch: boolean; generate: boolean };
+
+function loadingReducer(
+	_state: LoadingState,
+	action: "fetch" | "generate" | "done",
+): LoadingState {
+	switch (action) {
+		case "fetch":
+			return { fetch: true, generate: false };
+		case "generate":
+			return { fetch: false, generate: true };
+		case "done":
+			return { fetch: false, generate: false };
+	}
+}
+
 export default function AdminQuestionsPage() {
 	const [subject, setSubject] = useState("mathematics");
 	const [questions, setQuestions] = useState<QuestionWithMeta[]>([]);
-	const [isLoading, setIsLoading] = useState(false);
-	const [isGenerating, setIsGenerating] = useState(false);
+	const [loading, dispatchLoading] = useReducer(loadingReducer, {
+		fetch: false,
+		generate: false,
+	});
 	const [expandedId, setExpandedId] = useState<string | null>(null);
 
 	const fetchQuestions = useCallback(async () => {
-		setIsLoading(true);
+		dispatchLoading("fetch");
 		try {
 			const data = await apiFetch<{ questions?: Question[] }>(
 				`/api/engine/generate`,
@@ -44,12 +62,12 @@ export default function AdminQuestionsPage() {
 			showBudgetToast(err);
 			console.error("Failed to fetch questions:", err);
 		}
-		setIsLoading(false);
+		dispatchLoading("done");
 	}, [subject]);
 
 	const generateSingleType = useCallback(
 		async (type: string) => {
-			setIsGenerating(true);
+			dispatchLoading("generate");
 			try {
 				const data = await apiFetch<{ questions?: Question[] }>(
 					`/api/engine/generate`,
@@ -70,7 +88,7 @@ export default function AdminQuestionsPage() {
 				showBudgetToast(err);
 				console.error(`Failed to generate ${type}:`, err);
 			}
-			setIsGenerating(false);
+			dispatchLoading("done");
 		},
 		[subject],
 	);
@@ -105,8 +123,8 @@ export default function AdminQuestionsPage() {
 							placeholder="Subject (e.g. mathematics)"
 							className="flex-1"
 						/>
-						<Button onClick={fetchQuestions} disabled={isLoading}>
-							{isLoading ? "Loading..." : "Generate Mixed"}
+						<Button onClick={fetchQuestions} disabled={loading.fetch}>
+							{loading.fetch ? "Loading..." : "Generate Mixed"}
 						</Button>
 					</div>
 					<div className="flex flex-wrap gap-2">
@@ -116,7 +134,7 @@ export default function AdminQuestionsPage() {
 								variant="outline"
 								size="sm"
 								onClick={() => generateSingleType(type)}
-								disabled={isGenerating}
+								disabled={loading.generate}
 							>
 								{type}
 							</Button>
@@ -125,7 +143,7 @@ export default function AdminQuestionsPage() {
 				</div>
 			</div>
 
-			{isLoading && (
+			{loading.fetch && (
 				<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
 					<div className="space-y-4 p-6 px-4 group-data-[size=sm]/card:px-3">
 						<Skeleton className="h-6 w-3/4" />

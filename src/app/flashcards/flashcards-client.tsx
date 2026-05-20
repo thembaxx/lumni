@@ -81,12 +81,13 @@ export function FlashcardsClient() {
 			const isSm2Session =
 				sessionCards.length > 0 && sessionCards[0].id.startsWith("fc_");
 
-			const cardPromises = sessionCards.map(async (card) => {
+			const cardPromises: Promise<unknown>[] = [];
+			for (const card of sessionCards) {
 				const isKnown = known.has(card.id);
 				const cardTopic = card.rawQuestion.topic;
 
 				if (isSm2Session) {
-					await reviewFlashcard(card.id, isKnown ? 4 : 1);
+					cardPromises.push(reviewFlashcard(card.id, isKnown ? 4 : 1));
 				} else {
 					trackQuestionResult({
 						subjectId: subject,
@@ -108,10 +109,12 @@ export function FlashcardsClient() {
 						explanation: card.back,
 					});
 					if (!isSm2Session) {
-						await createFlashcard(card.front, card.back, subject, cardTopic);
+						cardPromises.push(
+							createFlashcard(card.front, card.back, subject, cardTopic),
+						);
 					}
 				}
-			});
+			}
 
 			await Promise.all(cardPromises);
 		},

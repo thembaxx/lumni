@@ -52,16 +52,15 @@ function searchDexieQuestions(query: string): Promise<SearchResultItem[]> {
 }
 
 function searchDexieWrongAnswers(query: string): Promise<SearchResultItem[]> {
-	return offlineDB.wrongAnswers.toArray().then((rows) =>
-		rows
-			.filter(
-				(r) =>
-					textRelevant(r.questionText, query) ||
-					textRelevant(r.correctAnswer, query) ||
-					textRelevant(r.explanation || "", query),
-			)
-			.map(
-				(r): SearchResultItem => ({
+	return offlineDB.wrongAnswers.toArray().then((rows) => {
+		const results: SearchResultItem[] = [];
+		for (const r of rows) {
+			if (
+				textRelevant(r.questionText, query) ||
+				textRelevant(r.correctAnswer, query) ||
+				textRelevant(r.explanation || "", query)
+			) {
+				results.push({
 					id: `wa-${r.id}`,
 					type: "wrong-answer",
 					title: r.questionText.slice(0, 120),
@@ -69,25 +68,26 @@ function searchDexieWrongAnswers(query: string): Promise<SearchResultItem[]> {
 					subject: r.subject,
 					topic: r.topic,
 					createdAt: r.createdAt,
-				}),
-			)
-			.slice(0, 10),
-	);
+				});
+				if (results.length >= 10) break;
+			}
+		}
+		return results;
+	});
 }
 
 async function searchDexieFlashcards(
 	query: string,
 ): Promise<SearchResultItem[]> {
 	const flashcards = await flashcardRepository.getAll();
-	return flashcards
-		.filter(
-			(c) =>
-				textRelevant(c.front, query) ||
-				textRelevant(c.back, query) ||
-				textRelevant(c.topic || "", query),
-		)
-		.map(
-			(c): SearchResultItem => ({
+	const results: SearchResultItem[] = [];
+	for (const c of flashcards) {
+		if (
+			textRelevant(c.front, query) ||
+			textRelevant(c.back, query) ||
+			textRelevant(c.topic || "", query)
+		) {
+			results.push({
 				id: `fc-${c.id}`,
 				type: "flashcard",
 				title: c.front.slice(0, 120),
@@ -95,9 +95,11 @@ async function searchDexieFlashcards(
 				subject: c.subject,
 				topic: c.topic,
 				createdAt: c.createdAt,
-			}),
-		)
-		.slice(0, 10);
+			});
+			if (results.length >= 10) break;
+		}
+	}
+	return results;
 }
 
 interface LocalNote {
@@ -112,15 +114,14 @@ interface LocalNote {
 
 function searchLocalStorageNotes(query: string): SearchResultItem[] {
 	const notes = loadFromStorage<LocalNote[]>("lumni-notes", []);
-	return notes
-		.filter(
-			(n) =>
-				textRelevant(n.title, query) ||
-				textRelevant(n.content, query) ||
-				(n.tags || []).some((t) => textRelevant(t, query)),
-		)
-		.map(
-			(n): SearchResultItem => ({
+	const results: SearchResultItem[] = [];
+	for (const n of notes) {
+		if (
+			textRelevant(n.title, query) ||
+			textRelevant(n.content, query) ||
+			(n.tags || []).some((t) => textRelevant(t, query))
+		) {
+			results.push({
 				id: `note-${n.id}`,
 				type: "note",
 				title: n.title,
@@ -128,9 +129,11 @@ function searchLocalStorageNotes(query: string): SearchResultItem[] {
 				subject: n.subject || "",
 				topic: n.topic,
 				createdAt: new Date(n.createdAt).getTime(),
-			}),
-		)
-		.slice(0, 10);
+			});
+			if (results.length >= 10) break;
+		}
+	}
+	return results;
 }
 
 export async function searchAll(query: string): Promise<SearchResultItem[]> {

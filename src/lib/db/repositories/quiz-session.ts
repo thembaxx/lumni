@@ -72,7 +72,7 @@ export async function getActiveQuizSession(
 	const active = sessions.find((s) => !s.isPaused);
 	if (active) return active;
 
-	return sessions.sort((a, b) => b.lastSavedAt - a.lastSavedAt)[0];
+	return sessions.reduce((a, b) => (a.lastSavedAt > b.lastSavedAt ? a : b));
 }
 
 export async function getAllPausedSessions(): Promise<QuizSessionState[]> {

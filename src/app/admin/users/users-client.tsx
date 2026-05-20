@@ -1,7 +1,6 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -26,10 +25,6 @@ interface AdminUser {
 
 export function UsersClient() {
 	const queryClient = useQueryClient();
-	const [mounted, setMounted] = useState(false);
-	useEffect(() => {
-		setMounted(true);
-	}, []);
 
 	const { data, isLoading } = useQuery({
 		queryKey: ["admin-users"],
@@ -64,7 +59,7 @@ export function UsersClient() {
 	const users = data?.users || [];
 
 	return (
-		<div className="min-h-[100dvh] bg-background">
+		<div className="min-h-[100dvh] bg-background" suppressHydrationWarning>
 			<PageHeader title="User Management" subtitle="Manage registered users" />
 			<div className="flex flex-col gap-4 p-4">
 				<Card>
@@ -116,15 +111,11 @@ export function UsersClient() {
 											</Badge>
 										</TableCell>
 										<TableCell className="text-xs">
-											{mounted
-												? new Date(user.registration).toLocaleDateString()
-												: ""}
+											{new Date(user.registration).toLocaleDateString()}
 										</TableCell>
 										<TableCell className="text-xs">
 											{user.accessedAt
-												? mounted
-													? new Date(user.accessedAt).toLocaleDateString()
-													: ""
+												? new Date(user.accessedAt).toLocaleDateString()
 												: "—"}
 										</TableCell>
 										<TableCell>

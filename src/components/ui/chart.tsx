@@ -318,6 +318,35 @@ function ChartLegendContent({
 		return null;
 	}
 
+	const legendItems: React.ReactNode[] = [];
+	for (let index = 0; index < payload.length; index++) {
+		const item = payload[index];
+		if (item.type === "none") continue;
+		const key = `${nameKey ?? item.dataKey ?? "value"}`;
+		const itemConfig = getPayloadConfigFromPayload(config, item, key);
+
+		legendItems.push(
+			<div
+				key={`${nameKey ?? item.dataKey ?? item.value ?? index}`}
+				className={cn(
+					"flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3 [&>svg]:text-muted-foreground",
+				)}
+			>
+				{itemConfig?.icon && !hideIcon ? (
+					<itemConfig.icon />
+				) : (
+					<div
+						className="size-2 shrink-0 rounded-[2px]"
+						style={{
+							backgroundColor: item.color,
+						}}
+					/>
+				)}
+				{itemConfig?.label}
+			</div>,
+		);
+	}
+
 	return (
 		<div
 			className={cn(
@@ -326,33 +355,7 @@ function ChartLegendContent({
 				className,
 			)}
 		>
-			{payload
-				.filter((item) => item.type !== "none")
-				.map((item, index) => {
-					const key = `${nameKey ?? item.dataKey ?? "value"}`;
-					const itemConfig = getPayloadConfigFromPayload(config, item, key);
-
-					return (
-						<div
-							key={`${nameKey ?? item.dataKey ?? item.value ?? index}`}
-							className={cn(
-								"flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3 [&>svg]:text-muted-foreground",
-							)}
-						>
-							{itemConfig?.icon && !hideIcon ? (
-								<itemConfig.icon />
-							) : (
-								<div
-									className="h-2 w-2 shrink-0 rounded-[2px]"
-									style={{
-										backgroundColor: item.color,
-									}}
-								/>
-							)}
-							{itemConfig?.label}
-						</div>
-					);
-				})}
+			{legendItems}
 		</div>
 	);
 }

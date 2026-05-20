@@ -9,6 +9,8 @@ import {
 } from "@/components/ui/select";
 import type { DataTable } from "@/types/exam-paper";
 
+const EMPTY_PAIRS: Record<string, string> = {};
+
 interface MatchingInputProps {
 	table: DataTable;
 	value?: Record<string, string>;
@@ -18,7 +20,7 @@ interface MatchingInputProps {
 
 export function MatchingInput({
 	table,
-	value = {},
+	value = EMPTY_PAIRS,
 	onChange,
 	disabled,
 }: MatchingInputProps) {

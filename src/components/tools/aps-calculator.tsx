@@ -84,8 +84,8 @@ export function APSCalculator() {
 	const [includeLifeOrientation, setIncludeLifeOrientation] = useState(false);
 
 	const addSubject = () => {
-		setSubjects([
-			...subjects,
+		setSubjects((prev) => [
+			...prev,
 			{ id: Date.now().toString(), name: "", percentage: 0 },
 		]);
 	};
@@ -121,13 +121,18 @@ export function APSCalculator() {
 		});
 
 		const filtered = scoredSubjects
-			.map((score, idx) => ({
-				score,
-				isLO: validSubjects[idx].name
-					.toLowerCase()
-					.includes("life orientation"),
-			}))
-			.filter((s) => !s.isLO || includeLifeOrientation)
+			.reduce(
+				(acc, score, idx) => {
+					const isLO = validSubjects[idx].name
+						.toLowerCase()
+						.includes("life orientation");
+					if (!isLO || includeLifeOrientation) {
+						acc.push({ score, isLO });
+					}
+					return acc;
+				},
+				[] as Array<{ score: number; isLO: boolean }>,
+			)
 			.sort((a, b) => b.score - a.score)
 			.slice(0, 6);
 

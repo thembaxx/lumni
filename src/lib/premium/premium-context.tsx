@@ -1,13 +1,7 @@
 "use client";
 
-import { useMutation } from "@tanstack/react-query";
-import {
-	createContext,
-	useCallback,
-	useContext,
-	useEffect,
-	useState,
-} from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createContext, use, useCallback, useEffect, useState } from "react";
 import { loadFromStorage, saveToStorage } from "@/lib/utils/storage";
 
 const PREMIUM_KEY = "lumni_premium_status";
@@ -80,6 +74,8 @@ export function PremiumProvider({ children }: { children: React.ReactNode }) {
 		saveToStorage(PREMIUM_KEY, state);
 	}, [state]);
 
+	const queryClient = useQueryClient();
+
 	const { mutate: verifyPremium } = useMutation({
 		mutationFn: async () => {
 			await fetch(VERIFY_API, {
@@ -87,6 +83,9 @@ export function PremiumProvider({ children }: { children: React.ReactNode }) {
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({ isPremium: state.isPremium }),
 			});
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["premium"] });
 		},
 	});
 
@@ -164,5 +163,5 @@ export function PremiumProvider({ children }: { children: React.ReactNode }) {
 }
 
 export function usePremium(): PremiumContextValue {
-	return useContext(PremiumContext);
+	return use(PremiumContext);
 }

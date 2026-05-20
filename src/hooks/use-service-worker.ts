@@ -1,6 +1,31 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useReducer, useState } from "react";
+
+interface ServiceWorkerState {
+	registration: ServiceWorkerRegistration | null;
+	isReady: boolean;
+	isUpdated: boolean;
+}
+
+type ServiceWorkerAction =
+	| { type: "REGISTERED"; registration: ServiceWorkerRegistration }
+	| { type: "UPDATED" }
+	| { type: "READY" };
+
+function swReducer(
+	state: ServiceWorkerState,
+	action: ServiceWorkerAction,
+): ServiceWorkerState {
+	switch (action.type) {
+		case "REGISTERED":
+			return { ...state, registration: action.registration };
+		case "UPDATED":
+			return { ...state, isUpdated: true };
+		case "READY":
+			return { ...state, isReady: true };
+	}
+}
 
 export interface UseServiceWorkerReturn {
 	registration: ServiceWorkerRegistration | null;
@@ -12,10 +37,14 @@ export interface UseServiceWorkerReturn {
 }
 
 export function useServiceWorker(): UseServiceWorkerReturn {
-	const [registration, setRegistration] =
-		useState<ServiceWorkerRegistration | null>(null);
-	const [isReady, setIsReady] = useState(false);
-	const [isUpdated, setIsUpdated] = useState(false);
+	const [{ registration, isReady, isUpdated }, dispatch] = useReducer(
+		swReducer,
+		{
+			registration: null,
+			isReady: false,
+			isUpdated: false,
+		},
+	);
 
 	useEffect(() => {
 		if (typeof window === "undefined" || !("serviceWorker" in navigator)) {
@@ -38,7 +67,7 @@ export function useServiceWorker(): UseServiceWorkerReturn {
 						newWorker.state === "installed" &&
 						navigator.serviceWorker.controller
 					) {
-						if (!cancelled) setIsUpdated(true);
+						if (!cancelled) dispatch({ type: "UPDATED" });
 					}
 				};
 				newWorker.addEventListener("statechange", trackedStateHandler);
@@ -51,14 +80,14 @@ export function useServiceWorker(): UseServiceWorkerReturn {
 			.then((reg) => {
 				if (cancelled) return;
 				activeReg = reg;
-				setRegistration(reg);
+				dispatch({ type: "REGISTERED", registration: reg });
 
 				if (reg.waiting) {
-					setIsUpdated(true);
+					dispatch({ type: "UPDATED" });
 				}
 
 				reg.addEventListener("updatefound", updateFoundHandler);
-				setIsReady(true);
+				dispatch({ type: "READY" });
 			})
 			.catch((error) => {
 				if (cancelled) return;

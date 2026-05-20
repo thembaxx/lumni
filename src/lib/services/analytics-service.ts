@@ -19,18 +19,23 @@ export class AnalyticsService {
 	async sync(events: unknown[]): Promise<void> {
 		await safePersist("analytics sync", async () => {
 			const batchSize = 50;
+			const batchPromises = [];
 			for (let i = 0; i < events.length; i += batchSize) {
 				const batch = events.slice(i, i + batchSize);
-				const promises = batch.map((event) =>
-					databases
-						.createDocument(APPWRITE_DATABASE_ID, "analytics", "unique()", {
-							event: JSON.stringify(event),
-							createdAt: new Date().toISOString(),
-						})
-						.catch((e) => console.warn("Analytics write failed:", e)),
+				batchPromises.push(
+					Promise.allSettled(
+						batch.map((event) =>
+							databases
+								.createDocument(APPWRITE_DATABASE_ID, "analytics", "unique()", {
+									event: JSON.stringify(event),
+									createdAt: new Date().toISOString(),
+								})
+								.catch((e) => console.warn("Analytics write failed:", e)),
+						),
+					),
 				);
-				await Promise.allSettled(promises);
 			}
+			await Promise.all(batchPromises);
 		});
 	}
 

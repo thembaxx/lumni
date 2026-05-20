@@ -135,8 +135,6 @@ export function BottomNav() {
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: re-run on route change to reset scroll/hidden state
 	useEffect(() => {
-		setHidden(false);
-
 		let lastY = window.scrollY;
 		let ticking = false;
 

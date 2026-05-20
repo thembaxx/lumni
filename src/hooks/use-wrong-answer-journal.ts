@@ -97,9 +97,11 @@ export function useWrongAnswerJournal() {
 				.table<WrongAnswerEntry>("wrongAnswers")
 				.filter((e) => e.reviewed)
 				.toArray();
-			for (const e of entries) {
-				if (e.id) await offlineDB.table("wrongAnswers").delete(e.id);
-			}
+			await Promise.all(
+				entries
+					.filter((e): e is typeof e & { id: string } => !!e.id)
+					.map((e) => offlineDB.table("wrongAnswers").delete(e.id)),
+			);
 		} catch {
 			/* non-critical */
 		}

@@ -30,8 +30,13 @@ export class LearningOrchestrator {
 
 		const jobIds: number[] = [];
 
-		const visualJobIds = await Promise.all(
-			sliced.map((q) =>
+		const [_syncJobId, ..._visualJobIds] = await Promise.all([
+			enqueue("appwrite-sync", {
+				questions: sliced,
+				subject,
+				topic,
+			}),
+			...sliced.map((q) =>
 				enqueue("visual-generation", {
 					questionId: q.id,
 					questionText: q.questionText,
@@ -39,13 +44,7 @@ export class LearningOrchestrator {
 					topic,
 				}),
 			),
-		);
-		const syncJobId = await enqueue("appwrite-sync", {
-			questions: sliced,
-			subject,
-			topic,
-		});
-		jobIds.push(syncJobId, ...visualJobIds);
+		]);
 
 		trackEngineEvent({
 			event: "generate",

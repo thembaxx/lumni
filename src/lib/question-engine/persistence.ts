@@ -24,33 +24,38 @@ export async function saveQuestionsToAppwrite(
 ): Promise<void> {
 	try {
 		const batchSize = 25;
+		const batchPromises = [];
 		for (let i = 0; i < questions.length; i += batchSize) {
 			const batch = questions.slice(i, i + batchSize);
-			const promises = batch.map((q) =>
-				databases
-					.createDocument(APPWRITE_DATABASE_ID, COLLECTION_ID, "unique()", {
-						topicId: topic || subject,
-						type: q.type,
-						questionText: q.questionText,
-						options: safeJsonStringify(
-							"options" in q.body ? q.body.options : [],
-						),
-						correctAnswer: extractCorrectAnswer(q),
-						explanation: q.explanation,
-						difficulty: q.difficulty,
-						bloomTaxonomy: q.bloomTaxonomy,
-						points: q.points,
-						hint: q.hint,
-						steps: safeJsonStringify(q.steps || []),
-						fullData: safeJsonStringify(q),
-						createdAt: new Date().toISOString(),
-					})
-					.catch((err: Error) =>
-						console.error("[Persistence] Save error:", err.message),
+			batchPromises.push(
+				Promise.allSettled(
+					batch.map((q) =>
+						databases
+							.createDocument(APPWRITE_DATABASE_ID, COLLECTION_ID, "unique()", {
+								topicId: topic || subject,
+								type: q.type,
+								questionText: q.questionText,
+								options: safeJsonStringify(
+									"options" in q.body ? q.body.options : [],
+								),
+								correctAnswer: extractCorrectAnswer(q),
+								explanation: q.explanation,
+								difficulty: q.difficulty,
+								bloomTaxonomy: q.bloomTaxonomy,
+								points: q.points,
+								hint: q.hint,
+								steps: safeJsonStringify(q.steps || []),
+								fullData: safeJsonStringify(q),
+								createdAt: new Date().toISOString(),
+							})
+							.catch((err: Error) =>
+								console.error("[Persistence] Save error:", err.message),
+							),
 					),
+				),
 			);
-			await Promise.allSettled(promises);
 		}
+		await Promise.all(batchPromises);
 	} catch (error) {
 		console.error("[Persistence] Failed to save to Appwrite:", error);
 	}
@@ -72,15 +77,17 @@ export async function loadQuestionsFromAppwrite(
 			COLLECTION_ID,
 			queries,
 		);
-		return response.documents
-			.map((doc: Record<string, unknown>) => {
+		return response.documents.reduce(
+			(acc: Question[], doc: Record<string, unknown>) => {
 				const fullData = doc.fullData as string | undefined;
 				if (fullData) {
-					return safeJsonParse(fullData, null) as Question | null;
+					const q = safeJsonParse(fullData, null) as Question | null;
+					if (q !== null) acc.push(q);
 				}
-				return null;
-			})
-			.filter((q: Question | null): q is Question => q !== null);
+				return acc;
+			},
+			[],
+		);
 	} catch (error) {
 		console.error("[Persistence] Failed to load from Appwrite:", error);
 		return [];

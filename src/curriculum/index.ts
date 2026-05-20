@@ -1,58 +1,178 @@
 import type { CurriculumTopic, SubjectCurriculum } from "./types";
 
-const CURRICULUM_IDS = [
-	"accounting",
-	"afrikaans-first-additional-language",
-	"afrikaans-home-language",
-	"agricultural-management-practices",
-	"agricultural-sciences",
-	"agricultural-technology",
-	"business-studies",
-	"civil-technology",
-	"computer-applications-technology",
-	"consumer-studies",
-	"dance-studies",
-	"design",
-	"dramatic-arts",
-	"economics",
-	"electrical-technology",
-	"engineering-graphics-and-design",
-	"english-first-additional-language",
-	"english-home-language",
-	"geography",
-	"history",
-	"hospitality-studies",
-	"information-technology",
-	"isi-ndebele-home-language",
-	"isi-xhosa-first-additional-language",
-	"isi-xhosa-home-language",
-	"isi-zulu-first-additional-language",
-	"isi-zulu-home-language",
-	"life-orientation",
-	"life-sciences",
-	"mathematical-literacy",
-	"mathematics",
-	"mechanical-technology",
-	"music",
-	"physical-sciences",
-	"religion-studies",
-	"sepedi-first-additional-language",
-	"sepedi-home-language",
-	"sesotho-first-additional-language",
-	"sesotho-home-language",
-	"setswana-first-additional-language",
-	"setswana-home-language",
-	"si-swati-home-language",
-	"technical-mathematics",
-	"technical-sciences",
-	"tourism",
-	"tshivenda-home-language",
-	"visual-arts",
-	"xitsonga-home-language",
-];
-
 const curricula = new Map<string, SubjectCurriculum>();
 let loaded = false;
+
+const CURRICULUM_IMPORTS: Record<string, () => Promise<SubjectCurriculum>> = {
+	accounting: () =>
+		import("./accounting.json").then((m) => m.default as SubjectCurriculum),
+	"afrikaans-first-additional-language": () =>
+		import("./afrikaans-first-additional-language.json").then(
+			(m) => m.default as SubjectCurriculum,
+		),
+	"afrikaans-home-language": () =>
+		import("./afrikaans-home-language.json").then(
+			(m) => m.default as SubjectCurriculum,
+		),
+	"agricultural-management-practices": () =>
+		import("./agricultural-management-practices.json").then(
+			(m) => m.default as SubjectCurriculum,
+		),
+	"agricultural-sciences": () =>
+		import("./agricultural-sciences.json").then(
+			(m) => m.default as SubjectCurriculum,
+		),
+	"agricultural-technology": () =>
+		import("./agricultural-technology.json").then(
+			(m) => m.default as SubjectCurriculum,
+		),
+	"business-studies": () =>
+		import("./business-studies.json").then(
+			(m) => m.default as SubjectCurriculum,
+		),
+	"civil-technology": () =>
+		import("./civil-technology.json").then(
+			(m) => m.default as SubjectCurriculum,
+		),
+	"computer-applications-technology": () =>
+		import("./computer-applications-technology.json").then(
+			(m) => m.default as SubjectCurriculum,
+		),
+	"consumer-studies": () =>
+		import("./consumer-studies.json").then(
+			(m) => m.default as SubjectCurriculum,
+		),
+	"dance-studies": () =>
+		import("./dance-studies.json").then((m) => m.default as SubjectCurriculum),
+	design: () =>
+		import("./design.json").then((m) => m.default as SubjectCurriculum),
+	"dramatic-arts": () =>
+		import("./dramatic-arts.json").then((m) => m.default as SubjectCurriculum),
+	economics: () =>
+		import("./economics.json").then((m) => m.default as SubjectCurriculum),
+	"electrical-technology": () =>
+		import("./electrical-technology.json").then(
+			(m) => m.default as SubjectCurriculum,
+		),
+	"engineering-graphics-and-design": () =>
+		import("./engineering-graphics-and-design.json").then(
+			(m) => m.default as SubjectCurriculum,
+		),
+	"english-first-additional-language": () =>
+		import("./english-first-additional-language.json").then(
+			(m) => m.default as SubjectCurriculum,
+		),
+	"english-home-language": () =>
+		import("./english-home-language.json").then(
+			(m) => m.default as SubjectCurriculum,
+		),
+	geography: () =>
+		import("./geography.json").then((m) => m.default as SubjectCurriculum),
+	history: () =>
+		import("./history.json").then((m) => m.default as SubjectCurriculum),
+	"hospitality-studies": () =>
+		import("./hospitality-studies.json").then(
+			(m) => m.default as SubjectCurriculum,
+		),
+	"information-technology": () =>
+		import("./information-technology.json").then(
+			(m) => m.default as SubjectCurriculum,
+		),
+	"isi-ndebele-home-language": () =>
+		import("./isi-ndebele-home-language.json").then(
+			(m) => m.default as SubjectCurriculum,
+		),
+	"isi-xhosa-first-additional-language": () =>
+		import("./isi-xhosa-first-additional-language.json").then(
+			(m) => m.default as SubjectCurriculum,
+		),
+	"isi-xhosa-home-language": () =>
+		import("./isi-xhosa-home-language.json").then(
+			(m) => m.default as SubjectCurriculum,
+		),
+	"isi-zulu-first-additional-language": () =>
+		import("./isi-zulu-first-additional-language.json").then(
+			(m) => m.default as SubjectCurriculum,
+		),
+	"isi-zulu-home-language": () =>
+		import("./isi-zulu-home-language.json").then(
+			(m) => m.default as SubjectCurriculum,
+		),
+	"life-orientation": () =>
+		import("./life-orientation.json").then(
+			(m) => m.default as SubjectCurriculum,
+		),
+	"life-sciences": () =>
+		import("./life-sciences.json").then((m) => m.default as SubjectCurriculum),
+	"mathematical-literacy": () =>
+		import("./mathematical-literacy.json").then(
+			(m) => m.default as SubjectCurriculum,
+		),
+	mathematics: () =>
+		import("./mathematics.json").then((m) => m.default as SubjectCurriculum),
+	"mechanical-technology": () =>
+		import("./mechanical-technology.json").then(
+			(m) => m.default as SubjectCurriculum,
+		),
+	music: () =>
+		import("./music.json").then((m) => m.default as SubjectCurriculum),
+	"physical-sciences": () =>
+		import("./physical-sciences.json").then(
+			(m) => m.default as SubjectCurriculum,
+		),
+	"religion-studies": () =>
+		import("./religion-studies.json").then(
+			(m) => m.default as SubjectCurriculum,
+		),
+	"sepedi-first-additional-language": () =>
+		import("./sepedi-first-additional-language.json").then(
+			(m) => m.default as SubjectCurriculum,
+		),
+	"sepedi-home-language": () =>
+		import("./sepedi-home-language.json").then(
+			(m) => m.default as SubjectCurriculum,
+		),
+	"sesotho-first-additional-language": () =>
+		import("./sesotho-first-additional-language.json").then(
+			(m) => m.default as SubjectCurriculum,
+		),
+	"sesotho-home-language": () =>
+		import("./sesotho-home-language.json").then(
+			(m) => m.default as SubjectCurriculum,
+		),
+	"setswana-first-additional-language": () =>
+		import("./setswana-first-additional-language.json").then(
+			(m) => m.default as SubjectCurriculum,
+		),
+	"setswana-home-language": () =>
+		import("./setswana-home-language.json").then(
+			(m) => m.default as SubjectCurriculum,
+		),
+	"si-swati-home-language": () =>
+		import("./si-swati-home-language.json").then(
+			(m) => m.default as SubjectCurriculum,
+		),
+	"technical-mathematics": () =>
+		import("./technical-mathematics.json").then(
+			(m) => m.default as SubjectCurriculum,
+		),
+	"technical-sciences": () =>
+		import("./technical-sciences.json").then(
+			(m) => m.default as SubjectCurriculum,
+		),
+	tourism: () =>
+		import("./tourism.json").then((m) => m.default as SubjectCurriculum),
+	"tshivenda-home-language": () =>
+		import("./tshivenda-home-language.json").then(
+			(m) => m.default as SubjectCurriculum,
+		),
+	"visual-arts": () =>
+		import("./visual-arts.json").then((m) => m.default as SubjectCurriculum),
+	"xitsonga-home-language": () =>
+		import("./xitsonga-home-language.json").then(
+			(m) => m.default as SubjectCurriculum,
+		),
+};
 
 async function ensureLoaded() {
 	if (loaded) return;
@@ -60,9 +180,7 @@ async function ensureLoaded() {
 
 	const subjects = (
 		await Promise.all(
-			CURRICULUM_IDS.map((id) =>
-				import(`./${id}.json`).then((m) => m.default as SubjectCurriculum),
-			),
+			Object.values(CURRICULUM_IMPORTS).map((loader) => loader()),
 		)
 	).filter(Boolean);
 

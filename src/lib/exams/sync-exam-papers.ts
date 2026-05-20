@@ -110,7 +110,7 @@ async function syncExamPapersInternal(
 	let inserted = 0;
 
 	if (!force && tracker.length > 0) {
-		const sortedTracker = [...tracker].sort((a, b) => {
+		const sortedTracker = tracker.toSorted((a, b) => {
 			if (a.type === "paper" && b.type === "memo") return -1;
 			if (a.type === "memo" && b.type === "paper") return 1;
 			return 0;
@@ -183,86 +183,102 @@ async function syncExamPapersInternal(
 	let uploaded = 0;
 	let skipped = 0;
 
-	for (const { filename, parsed } of toUpload) {
-		if (!parsed) continue;
+	const uploadResults = await Promise.all(
+		toUpload.map(async ({ filename, parsed }) => {
+			if (!parsed) return { action: "skip" as const };
 
-		const trackKey = `${parsed.year}_${parsed.subjectCode}_p${parsed.paperNumber}_${parsed.type}`;
-		if (!force && trackerSet.has(trackKey)) {
-			skipped++;
-			continue;
-		}
-
-		try {
-			const filePath = join(DOWNLOADS_DIR, filename);
-			const buffer = readFileSync(filePath);
-			const uint8Array = new Uint8Array(buffer);
-			const utFile = new UTFile([uint8Array], filename);
-
-			const result = await utapi.uploadFiles(utFile);
-
-			if (!result?.data) {
-				errors.push(`${filename}: upload failed`);
-				continue;
+			const trackKey = `${parsed.year}_${parsed.subjectCode}_p${parsed.paperNumber}_${parsed.type}`;
+			if (!force && trackerSet.has(trackKey)) {
+				return { action: "skip" as const };
 			}
 
-			const fileUrl = result.data.ufsUrl || result.data.url;
-			const fileKey = result.data.key;
-			const id = crypto.randomUUID();
+			try {
+				const filePath = join(DOWNLOADS_DIR, filename);
+				const buffer = readFileSync(filePath);
+				const uint8Array = new Uint8Array(buffer);
+				const utFile = new UTFile([uint8Array], filename);
 
-			if (parsed.type === "paper") {
-				insertExamPaper({
-					id,
-					subjectCode: parsed.subjectCode,
-					subjectName: getSubjectName(parsed.subjectCode),
-					year: parsed.year,
-					paperNumber: parsed.paperNumber,
-					type: "paper",
-					paperId: null,
-					fileUrl,
-					fileKey,
-					originalFileName: filename,
-				});
-			} else {
-				const existingPaperId = findPaperForMemo(
-					parsed.subjectCode,
-					parsed.year,
-					parsed.paperNumber,
-				);
+				const result = await utapi.uploadFiles(utFile);
 
-				insertExamPaper({
-					id,
-					subjectCode: parsed.subjectCode,
-					subjectName: getSubjectName(parsed.subjectCode),
-					year: parsed.year,
-					paperNumber: parsed.paperNumber,
-					type: "memo",
-					paperId: existingPaperId,
-					fileUrl,
-					fileKey,
-					originalFileName: filename,
-				});
-
-				if (existingPaperId) {
-					updateExamPaperMemoLink(existingPaperId, id);
+				if (!result?.data) {
+					return {
+						action: "error" as const,
+						error: `${filename}: upload failed`,
+					};
 				}
+
+				const fileUrl = result.data.ufsUrl || result.data.url;
+				const fileKey = result.data.key;
+				const id = crypto.randomUUID();
+
+				if (parsed.type === "paper") {
+					insertExamPaper({
+						id,
+						subjectCode: parsed.subjectCode,
+						subjectName: getSubjectName(parsed.subjectCode),
+						year: parsed.year,
+						paperNumber: parsed.paperNumber,
+						type: "paper",
+						paperId: null,
+						fileUrl,
+						fileKey,
+						originalFileName: filename,
+					});
+				} else {
+					const existingPaperId = findPaperForMemo(
+						parsed.subjectCode,
+						parsed.year,
+						parsed.paperNumber,
+					);
+
+					insertExamPaper({
+						id,
+						subjectCode: parsed.subjectCode,
+						subjectName: getSubjectName(parsed.subjectCode),
+						year: parsed.year,
+						paperNumber: parsed.paperNumber,
+						type: "memo",
+						paperId: existingPaperId,
+						fileUrl,
+						fileKey,
+						originalFileName: filename,
+					});
+
+					if (existingPaperId) {
+						updateExamPaperMemoLink(existingPaperId, id);
+					}
+				}
+
+				return {
+					action: "uploaded" as const,
+					entry: {
+						year: parsed.year,
+						subjectCode: parsed.subjectCode,
+						paperNumber: parsed.paperNumber,
+						type: parsed.type,
+						originalFileName: filename,
+						fileUrl,
+						fileKey,
+					},
+				};
+			} catch (error) {
+				return {
+					action: "error" as const,
+					error: `${filename}: ${error instanceof Error ? error.message : "unknown"}`,
+				};
 			}
+		}),
+	);
 
-			tracker.push({
-				year: parsed.year,
-				subjectCode: parsed.subjectCode,
-				paperNumber: parsed.paperNumber,
-				type: parsed.type,
-				originalFileName: filename,
-				fileUrl,
-				fileKey,
-			});
+	for (const r of uploadResults) {
+		if (r.action === "skip") {
+			skipped++;
+		} else if (r.action === "error") {
+			errors.push(r.error);
+		} else {
+			tracker.push(r.entry);
 			saveTracker(tracker);
-
 			uploaded++;
-		} catch (error) {
-			errors.push(
-				`${filename}: ${error instanceof Error ? error.message : "unknown"}`,
-			);
 		}
 	}
 

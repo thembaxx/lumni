@@ -58,8 +58,9 @@ describe("usePremium", () => {
 		for (const f of FREE_FEATURES) {
 			expect(result.current.hasFeature(f as never)).toBe(true);
 		}
+		const freeSet = new Set(FREE_FEATURES);
 		for (const f of PREMIUM_FEATURES) {
-			if (!FREE_FEATURES.includes(f)) {
+			if (!freeSet.has(f)) {
 				expect(result.current.hasFeature(f as never)).toBe(false);
 			}
 		}

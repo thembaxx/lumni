@@ -2,6 +2,7 @@
 
 import { memo, useEffect, useId, useRef, useState } from "react";
 import { KatexCSS } from "@/components/katex-css";
+import { SafeHTML } from "@/components/ui/safe-html";
 
 interface EquationProps {
 	math: string;
@@ -47,12 +48,7 @@ export const Equation = memo(function Equation({
 		<>
 			<KatexCSS />
 			{html ? (
-				<span
-					className={className}
-					// biome-ignore lint/security/noDangerouslySetInnerHtml: KaTeX math rendering
-					dangerouslySetInnerHTML={{ __html: html }}
-					data-equation-id={uid}
-				/>
+				<SafeHTML html={html} className={className} as="span" />
 			) : (
 				<span className={className} data-equation-id={uid}>
 					{math}

@@ -8,11 +8,16 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
+import type { Metadata } from "next";
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ListCell, ListGroup, ListSection } from "@/components/ui/list-cell";
 import { extractSubjectFromFileName } from "@/lib/upload";
 import { UploadButton } from "@/lib/uploadthing";
+
+export const metadata: Metadata = {
+	title: "Upload",
+};
 
 export default function UploadPage() {
 	const _uploadedUrls = useRef<string[]>([]);

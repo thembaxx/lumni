@@ -173,9 +173,9 @@ describe("generateStudyPlan", () => {
 		];
 		// Jan 5 2026 is a Monday, Jan 9 is Friday — 5 weekdays
 		const plan = generateStudyPlan(baseSettings, subjects);
-		const scheduledDates = plan.topics
-			.map((t) => t.scheduledDate)
-			.filter(Boolean);
+		const scheduledDates = plan.topics.flatMap((t) =>
+			t.scheduledDate ? [t.scheduledDate] : [],
+		);
 		expect(scheduledDates.length).toBe(5);
 		for (const date of scheduledDates) {
 			const day = new Date(date as string).getDay();
@@ -243,9 +243,9 @@ describe("generateStudyPlan", () => {
 		];
 		const plan = generateStudyPlan(weekendSettings, subjects);
 		// Jan 3 2026 = Saturday (6), Jan 4 2026 = Sunday (0)
-		const scheduledDates = plan.topics
-			.map((t) => t.scheduledDate)
-			.filter(Boolean);
+		const scheduledDates = plan.topics.flatMap((t) =>
+			t.scheduledDate ? [t.scheduledDate] : [],
+		);
 		for (const date of scheduledDates) {
 			const day = new Date(date as string).getDay();
 			expect([0, 6]).toContain(day);

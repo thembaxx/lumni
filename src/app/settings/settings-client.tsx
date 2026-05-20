@@ -14,7 +14,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 import Link from "next/link";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useCallback, useEffect, useState } from "react";
 import {
 	AppearanceTab,
 	BetaTab,
@@ -52,15 +52,41 @@ const tabs = [
 ];
 
 function SettingsContent() {
-	const [studyPrefs, setStudyPrefs] =
-		useState<StudyPreferences>(DEFAULT_PREFERENCES);
-	const [notifications, setNotifications] = useState<NotificationSettings>(
-		DEFAULT_NOTIFICATIONS,
-	);
-	const [betaFeatures, setBetaFeatures] = useState<BetaFeatures>(DEFAULT_BETA);
 	const [activeTab, setActiveTab] = useState("profile");
 	const [isSaving, setIsSaving] = useState(false);
 	const [saved, setSaved] = useState(false);
+
+	type AppSettings = {
+		studyPrefs: StudyPreferences;
+		notifications: NotificationSettings;
+		betaFeatures: BetaFeatures;
+	};
+
+	const [appSettings, setAppSettings] = useState<AppSettings>({
+		studyPrefs: DEFAULT_PREFERENCES,
+		notifications: DEFAULT_NOTIFICATIONS,
+		betaFeatures: DEFAULT_BETA,
+	});
+
+	const { studyPrefs, notifications, betaFeatures } = appSettings;
+
+	const setStudyPrefs = useCallback(
+		(prefs: StudyPreferences) =>
+			setAppSettings((prev) => ({ ...prev, studyPrefs: prefs })),
+		[],
+	);
+
+	const setNotifications = useCallback(
+		(notif: NotificationSettings) =>
+			setAppSettings((prev) => ({ ...prev, notifications: notif })),
+		[],
+	);
+
+	const setBetaFeatures = useCallback(
+		(beta: BetaFeatures) =>
+			setAppSettings((prev) => ({ ...prev, betaFeatures: beta })),
+		[],
+	);
 
 	useEffect(() => {
 		const onboarding = loadFromStorage<{
@@ -92,9 +118,11 @@ function SettingsContent() {
 
 		const betaPrefs = loadFromStorage(BETA_FEATURES_KEY, DEFAULT_BETA);
 
-		setStudyPrefs(stored);
-		setNotifications(notifPrefs);
-		setBetaFeatures(betaPrefs);
+		setAppSettings({
+			studyPrefs: stored,
+			notifications: notifPrefs,
+			betaFeatures: betaPrefs,
+		});
 	}, []);
 
 	const handleSave = async () => {
@@ -133,9 +161,11 @@ function SettingsContent() {
 			localStorage.removeItem(STUDY_PREFS_KEY);
 			localStorage.removeItem(NOTIFICATION_SETTINGS_KEY);
 			localStorage.removeItem(BETA_FEATURES_KEY);
-			setStudyPrefs(DEFAULT_PREFERENCES);
-			setNotifications(DEFAULT_NOTIFICATIONS);
-			setBetaFeatures(DEFAULT_BETA);
+			setAppSettings({
+				studyPrefs: DEFAULT_PREFERENCES,
+				notifications: DEFAULT_NOTIFICATIONS,
+				betaFeatures: DEFAULT_BETA,
+			});
 		}
 	};
 

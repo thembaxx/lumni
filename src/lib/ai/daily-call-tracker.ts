@@ -197,36 +197,43 @@ export class DailyCallTracker {
 					{ count: number; tokens: number; limit: number }
 				>;
 
-				for (const type of Object.keys(USER_LIMITS) as AICallType[]) {
-					const res = await databases.listDocuments(
-						APPWRITE_DATABASE_ID,
-						COLLECTIONS.ANALYTICS || "analytics",
-						[
-							Query.equal("eventType", "ai_call"),
-							Query.equal("userId", userId),
-							Query.equal("subjectId", type),
-							Query.greaterThanEqual("timestamp", todayStr),
-							Query.limit(100),
-						],
-					);
+				const typeResults = await Promise.all(
+					(Object.keys(USER_LIMITS) as AICallType[]).map(async (type) => {
+						const res = await databases.listDocuments(
+							APPWRITE_DATABASE_ID,
+							COLLECTIONS.ANALYTICS || "analytics",
+							[
+								Query.equal("eventType", "ai_call"),
+								Query.equal("userId", userId),
+								Query.equal("subjectId", type),
+								Query.greaterThanEqual("timestamp", todayStr),
+								Query.limit(100),
+							],
+						);
 
-					const count = res.total;
-					const tokens = res.documents.reduce((sum, doc) => {
-						try {
-							const meta = JSON.parse(
-								(doc as Record<string, unknown>).metadata as string,
-							);
-							return sum + ((meta as Record<string, number>).tokens || 0);
-						} catch {
-							return sum;
-						}
-					}, 0);
+						const count = res.total;
+						const tokens = res.documents.reduce((sum, doc) => {
+							try {
+								const meta = JSON.parse(
+									(doc as Record<string, unknown>).metadata as string,
+								);
+								return sum + ((meta as Record<string, number>).tokens || 0);
+							} catch {
+								return sum;
+							}
+						}, 0);
 
-					result[type] = {
-						count,
-						tokens,
-						limit: USER_LIMITS[type].maxPerDay,
-					};
+						return {
+							type,
+							count,
+							tokens,
+							limit: USER_LIMITS[type].maxPerDay,
+						};
+					}),
+				);
+
+				for (const { type, count, tokens, limit } of typeResults) {
+					result[type] = { count, tokens, limit };
 				}
 				return result;
 			} catch (error) {

@@ -1,5 +1,6 @@
 "use client";
 
+import type { Metadata } from "next";
 import Link from "next/link";
 import { PageShell } from "@/components/layout/page-shell";
 import {
@@ -8,6 +9,10 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
+
+export const metadata: Metadata = {
+	title: "Test Links",
+};
 
 const PAGES = [
 	{ name: "Home", path: "/" },

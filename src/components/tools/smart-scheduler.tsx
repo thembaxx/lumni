@@ -126,6 +126,8 @@ function generateDeterministicSchedule(input: SchedulerInput): StudySession[] {
 			];
 		});
 
+		const subjectIndexMap = new Map(sortedSubjects.map((s, i) => [s, i]));
+
 		for (const subject of sortedSubjects) {
 			if (remainingMinutes <= 0) break;
 
@@ -138,7 +140,7 @@ function generateDeterministicSchedule(input: SchedulerInput): StudySession[] {
 			const sessionDuration = Math.min(
 				Math.floor(
 					remainingMinutes /
-						(subjects.length - sortedSubjects.indexOf(subject) || 1),
+						(subjects.length - (subjectIndexMap.get(subject) ?? 0) || 1),
 				),
 				subject.difficulty === "hard"
 					? 60

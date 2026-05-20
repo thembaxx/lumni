@@ -101,6 +101,7 @@ export class QueueCore<T extends QueueItemBase> {
 		const processed: number[] = [];
 
 		try {
+			// Sequential: each item depends on previous queue state (next() consumes from queue)
 			for (let i = 0; i < limit; i++) {
 				const item = await this.next();
 				if (!item?.id) break;
@@ -139,14 +140,16 @@ export class QueueCore<T extends QueueItemBase> {
 				j.startedAt &&
 				now - j.startedAt > staleThreshold,
 		);
-		for (const item of stale) {
-			if (item.id) {
-				await this.table.update(item.id, {
-					status: "pending",
-					attempts: item.attempts + 1,
-				} as unknown as Partial<T>);
-			}
-		}
+		await Promise.all(
+			stale
+				.filter((item): item is typeof item & { id: string } => !!item.id)
+				.map((item) =>
+					this.table.update(item.id, {
+						status: "pending",
+						attempts: item.attempts + 1,
+					} as unknown as Partial<T>),
+				),
+		);
 		return stale.length;
 	}
 

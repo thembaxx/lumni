@@ -37,25 +37,28 @@ export function Confetti({
 	const [pieces, setPieces] = useState<ConfettiPiece[]>([]);
 
 	useEffect(() => {
-		if (trigger) {
-			const newPieces = Array.from({ length: count }, (_, i) => ({
-				id: i,
-				x: Math.random() * 100,
-				color:
-					CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)],
-				rotation: Math.random() * 360,
-				scale: Math.random() * 0.5 + 0.5,
-				delay: Math.random() * 0.3,
-				borderRadiusType: (Math.random() > 0.5 ? "round" : "square") as
-					| "round"
-					| "square",
-				xOffset: (Math.random() - 0.5) * 30,
-			}));
-			setPieces(newPieces);
-			const timeoutId = setTimeout(() => setPieces([]), duration);
-			return () => clearTimeout(timeoutId);
-		}
-	}, [trigger, count, duration]);
+		if (!trigger) return;
+		const newPieces = Array.from({ length: count }, (_, i) => ({
+			id: i,
+			x: Math.random() * 100,
+			color:
+				CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)],
+			rotation: Math.random() * 360,
+			scale: Math.random() * 0.5 + 0.5,
+			delay: Math.random() * 0.3,
+			borderRadiusType: (Math.random() > 0.5 ? "round" : "square") as
+				| "round"
+				| "square",
+			xOffset: (Math.random() - 0.5) * 30,
+		}));
+		setPieces(newPieces);
+	}, [trigger, count]);
+
+	useEffect(() => {
+		if (pieces.length === 0) return;
+		const timeoutId = setTimeout(() => setPieces([]), duration);
+		return () => clearTimeout(timeoutId);
+	}, [pieces, duration]);
 
 	if (pieces.length === 0) return null;
 

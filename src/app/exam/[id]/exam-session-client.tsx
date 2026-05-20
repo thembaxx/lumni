@@ -537,6 +537,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 			accuracy === 100,
 		);
 
+		const flashcardPromises: Promise<unknown>[] = [];
 		for (let i = 0; i < flatParts.length; i++) {
 			const item = flatParts[i];
 			const result = partResults[i];
@@ -564,13 +565,16 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 					userAnswer: getAnswerText(item.part, answers[item.part.id]),
 					explanation: "",
 				});
-				await createFlashcard(
-					partText,
-					getCorrectAnswerText(item.part) || "Review this topic",
-					subject,
+				flashcardPromises.push(
+					createFlashcard(
+						partText,
+						getCorrectAnswerText(item.part) || "Review this topic",
+						subject,
+					),
 				);
 			}
 		}
+		await Promise.all(flashcardPromises);
 
 		const weakCount = partResults.filter((r) => !r.correct).length;
 		if (weakCount > 0) {

@@ -18,6 +18,13 @@ import { StepByStep } from "../step-by-step";
 
 type Solver = ReturnType<typeof useSolver>;
 
+interface QuestionCardFeedbackOptions {
+	isCorrect?: boolean | null;
+	showExplanation?: boolean;
+	isGrading?: boolean;
+	isSolverEnabled?: boolean;
+}
+
 interface QuestionCardFeedbackProps {
 	state: {
 		isSubmitted: boolean;
@@ -41,15 +48,12 @@ interface QuestionCardFeedbackProps {
 		hint?: string;
 	};
 	effectiveSubject: string;
-	isCorrect: boolean | null;
-	showExplanation: boolean;
-	isGrading: boolean;
+	options: QuestionCardFeedbackOptions;
 	solver: Solver;
 	followUpMsgs: {
 		role: "user" | "assistant";
 		content: string;
 	}[];
-	isSolverEnabled: boolean;
 	handleFollowUp: () => void;
 	followUpInput: string;
 	setFollowUpInput: React.Dispatch<React.SetStateAction<string>>;
@@ -60,12 +64,14 @@ export function QuestionCardFeedback({
 	gradeResult,
 	question,
 	effectiveSubject,
-	isCorrect: _isCorrect,
-	showExplanation: _showExplanation,
-	isGrading: _isGrading,
+	options: {
+		isCorrect: _isCorrect,
+		showExplanation: _showExplanation,
+		isGrading: _isGrading,
+		isSolverEnabled,
+	} = {},
 	solver,
 	followUpMsgs,
-	isSolverEnabled,
 	handleFollowUp,
 	followUpInput,
 	setFollowUpInput,

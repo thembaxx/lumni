@@ -99,9 +99,9 @@ export class QuestionRatingService {
 		}> = [];
 
 		for (const [questionId, data] of grouped) {
-			if (data.ratings.length >= minRatings) {
-				const avg =
-					data.ratings.reduce((s, r) => s + r, 0) / data.ratings.length;
+			const ratings = data.ratings;
+			if (ratings.length >= minRatings) {
+				const avg = ratings.reduce((s, r) => s + r, 0) / ratings.length;
 				if (avg <= threshold) {
 					result.push({
 						questionId,

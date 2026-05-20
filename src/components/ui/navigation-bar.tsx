@@ -3,7 +3,6 @@
 import { ArrowLeft01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m, useMotionValueEvent, useScroll } from "framer-motion";
-import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { cn } from "@/lib/shared";
 
@@ -24,7 +23,6 @@ export function NavigationBar({
 	bottomSection,
 	className,
 }: NavigationBarProps) {
-	const router = useRouter();
 	const ref = useRef<HTMLDivElement>(null);
 	const { scrollY } = useScroll();
 	const [isCollapsed, setIsCollapsed] = useState(false);
@@ -67,7 +65,7 @@ export function NavigationBar({
 					{showBack && (
 						<button
 							type="button"
-							onClick={() => router.back()}
+							onClick={() => window.history.back()}
 							className="-ml-1.5 flex size-9 items-center justify-center text-system-accent transition-opacity active:opacity-60"
 							aria-label="Go back"
 						>

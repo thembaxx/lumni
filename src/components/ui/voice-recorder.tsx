@@ -172,7 +172,7 @@ export function VoiceRecorder({
 					aria-label="Reset recording"
 				>
 					<span className="transition-transform duration-200 active:rotate-180">
-						<HugeiconsIcon icon={UndoIcon} className="h-4 w-4" />
+						<HugeiconsIcon icon={UndoIcon} className="size-4" />
 					</span>
 				</Button>
 
@@ -202,7 +202,7 @@ export function VoiceRecorder({
 					<span className="relative flex items-center justify-center">
 						<HugeiconsIcon
 							icon={MicOff01Icon}
-							className="absolute h-6 w-6 transition-[opacity,transform] duration-200"
+							className="absolute size-6 transition-[opacity,transform] duration-200"
 							style={{
 								opacity: isRecording ? 1 : 0,
 								transform: `scale(${isRecording ? 1 : 0.25})`,
@@ -211,7 +211,7 @@ export function VoiceRecorder({
 						/>
 						<HugeiconsIcon
 							icon={Mic01Icon}
-							className="h-6 w-6 transition-[opacity,transform] duration-200"
+							className="size-6 transition-[opacity,transform] duration-200"
 							style={{
 								opacity: isRecording ? 0 : 1,
 								transform: `scale(${isRecording ? 0.25 : 1})`,
@@ -238,7 +238,7 @@ export function VoiceRecorder({
 					<span className="relative flex items-center justify-center">
 						<HugeiconsIcon
 							icon={PauseFreeIcons}
-							className="absolute h-4 w-4 transition-[opacity,transform] duration-200"
+							className="absolute size-4 transition-[opacity,transform] duration-200"
 							style={{
 								opacity: isPlaying ? 1 : 0,
 								transform: `scale(${isPlaying ? 1 : 0.25})`,
@@ -247,7 +247,7 @@ export function VoiceRecorder({
 						/>
 						<HugeiconsIcon
 							icon={PlayFreeIcons}
-							className="ml-0.5 h-4 w-4 transition-[opacity,transform] duration-200"
+							className="ml-0.5 size-4 transition-[opacity,transform] duration-200"
 							style={{
 								opacity: isPlaying ? 0 : 1,
 								transform: `scale(${isPlaying ? 0.25 : 1})`,
@@ -291,7 +291,7 @@ export function VoiceRecorder({
 							>
 								<HugeiconsIcon
 									icon={CheckmarkCircle01Icon}
-									className="h-4 w-4"
+									className="size-4"
 								/>
 								<span>Sent!</span>
 							</m.span>
@@ -304,8 +304,8 @@ export function VoiceRecorder({
 								exit={{ opacity: 0, scale: 0.25, filter: "blur(4px)" }}
 								transition={{ type: "spring", duration: 0.3, bounce: 0 }}
 							>
-								<span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-								<span>Sending...</span>
+								<span className="size-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+								<span>Sending…</span>
 							</m.span>
 						) : (
 							<m.span
@@ -316,7 +316,7 @@ export function VoiceRecorder({
 								exit={{ opacity: 0, scale: 0.25, filter: "blur(4px)" }}
 								transition={{ type: "spring", duration: 0.3, bounce: 0 }}
 							>
-								<HugeiconsIcon icon={MailSend01Icon} className="h-4 w-4" />
+								<HugeiconsIcon icon={MailSend01Icon} className="size-4" />
 								<span>Send Voice Message</span>
 							</m.span>
 						)}

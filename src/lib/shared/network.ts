@@ -19,6 +19,7 @@ export async function withRetry<T>(
 	const opts = { ...defaultRetryOptions, ...options };
 	let lastError: Error | undefined;
 
+	// Sequential retry: each attempt depends on the failure of the previous
 	for (let attempt = 0; attempt <= opts.maxRetries; attempt++) {
 		try {
 			return await fn();

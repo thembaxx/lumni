@@ -193,13 +193,13 @@ export function EmptyStateWithIllustration({
 		<div className="flex flex-col items-center justify-center px-4 py-16 text-center">
 			<div className="relative mb-6">
 				<div className="absolute inset-0 rounded-full bg-muted/50 blur-xl" />
-				<div className="relative flex h-20 w-20 items-center justify-center rounded-full border border-muted-foreground/30 border-dashed bg-muted/30">
+				<div className="relative flex size-20 items-center justify-center rounded-full border border-muted-foreground/30 border-dashed bg-muted/30">
 					{animation ? (
 						<AnimatedIllustration animation={animation} />
 					) : icon ? (
 						<HugeiconsIcon
 							icon={icon}
-							className="h-8 w-8 text-muted-foreground/60"
+							className="size-8 text-muted-foreground/60"
 						/>
 					) : null}
 				</div>

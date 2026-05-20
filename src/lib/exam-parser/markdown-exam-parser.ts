@@ -105,6 +105,7 @@ export class MarkdownExamParser {
 
 	private parseInstructions(): string[] {
 		const instructions: string[] = [];
+		const instructionSet = new Set<string>();
 		let inBlock = false;
 		let endIdx = 0;
 
@@ -132,7 +133,10 @@ export class MarkdownExamParser {
 					text.length > 10 &&
 					!/Copyright|Please turn over|Confidential/i.test(text)
 				) {
-					if (!instructions.includes(text)) instructions.push(text);
+					if (!instructionSet.has(text)) {
+						instructionSet.add(text);
+						instructions.push(text);
+					}
 				}
 			}
 		}
@@ -174,6 +178,7 @@ export class MarkdownExamParser {
 		let currentSection: Section | null = null;
 		let currentQuestion: { id: string; title: string | null } | null = null;
 		let questionStartLine: number | null = null;
+		const lines = this.lines;
 
 		for (let idx = 0; idx < markers.length; idx++) {
 			const { lineIdx, type, id, title } = markers[idx];
@@ -181,10 +186,11 @@ export class MarkdownExamParser {
 			if (type === "section") {
 				if (currentSection) {
 					if (currentQuestion && questionStartLine !== null) {
-						currentSection.questions.push(
+						const sectionQuestions = currentSection.questions;
+						sectionQuestions.push(
 							this.buildQuestion(
 								currentQuestion,
-								this.lines.slice(questionStartLine, lineIdx),
+								lines.slice(questionStartLine, lineIdx),
 							),
 						);
 						currentQuestion = null;
@@ -353,16 +359,19 @@ export class MarkdownExamParser {
 
 		if (parts.length === 0) {
 			const bodyText = lines
-				.filter((l) => {
+				.reduce((acc, l) => {
 					const s = l.trim();
-					return s && !s.startsWith("#") && !s.startsWith("![");
-				})
-				.map((l) => this.cleanText(l))
-				.filter(
-					(t) =>
-						t.length > 20 &&
-						!/Copyright|Please turn over|Confidential/i.test(t),
-				)
+					if (s && !s.startsWith("#") && !s.startsWith("![")) {
+						const t = this.cleanText(l);
+						if (
+							t.length > 20 &&
+							!/Copyright|Please turn over|Confidential/i.test(t)
+						) {
+							acc.push(t);
+						}
+					}
+					return acc;
+				}, [] as string[])
 				.join(" ");
 			if (bodyText) {
 				parts.push({
@@ -386,8 +395,8 @@ export class MarkdownExamParser {
 
 	private extractContext(lines: string[]): ContentBlock[] {
 		const context: ContentBlock[] = [];
-		for (const line of lines) {
-			const s = line.trim();
+		for (let i = 0; i < lines.length; i++) {
+			const s = lines[i].trim();
 			if (!s) continue;
 			if (/^#{1,6}\s+/.test(s)) continue;
 
@@ -402,7 +411,7 @@ export class MarkdownExamParser {
 			}
 
 			if (s.startsWith("|") && !/---/.test(s)) {
-				const table = this.extractTable(lines, lines.indexOf(line));
+				const table = this.extractTable(lines, i);
 				if (table) {
 					context.push({ type: "table", tableData: table });
 				}
@@ -447,7 +456,7 @@ export class MarkdownExamParser {
 				const contentBlocks: ContentBlock[] = [];
 				const options: Option[] = [];
 				let table: DataTable | null = null;
-				const sourceRefs: string[] = [];
+				const sourceRefs = new Set<string>();
 				let pendingOptionLetters: string[] = [];
 				const subParts: QuestionPart[] = [];
 				let hasSubParts = false;
@@ -587,10 +596,11 @@ export class MarkdownExamParser {
 
 					if (pendingOptionLetters.length > 0) {
 						const clean = this.cleanText(ns);
-						const texts = clean
-							.split(/\.\s+/)
-							.map((t) => t.trim())
-							.filter((t) => t.length > 0);
+						const texts = clean.split(/\.\s+/).reduce((acc, t) => {
+							const trimmed = t.trim();
+							if (trimmed.length > 0) acc.push(trimmed);
+							return acc;
+						}, [] as string[]);
 						if (texts.length >= pendingOptionLetters.length) {
 							for (let k = 0; k < pendingOptionLetters.length; k++) {
 								if (texts[k])
@@ -608,16 +618,17 @@ export class MarkdownExamParser {
 
 					const sources = ns.matchAll(/Source\s+(\d+[A-Z])/g);
 					for (const s of sources) {
-						if (!sourceRefs.includes(s[1])) sourceRefs.push(s[1]);
+						if (!sourceRefs.has(s[1])) sourceRefs.add(s[1]);
 					}
 
 					if (ns.length > 2) {
 						const clean = this.cleanText(ns);
 						if (clean && !/Copyright/i.test(clean)) {
-							const existing = contentBlocks
-								.filter((c) => c.type === "text")
-								.map((c) => c.value);
-							if (!existing.includes(clean))
+							const existingTexts = new Set<string>();
+							for (const cb of contentBlocks) {
+								if (cb.type === "text" && cb.value) existingTexts.add(cb.value);
+							}
+							if (!existingTexts.has(clean))
 								contentBlocks.push({
 									type: "text",
 									value: clean,
@@ -637,7 +648,7 @@ export class MarkdownExamParser {
 					content: contentBlocks.length > 0 ? contentBlocks : null,
 					options: options.length > 0 ? options : null,
 					table: table,
-					sourceRefs: sourceRefs.length > 0 ? sourceRefs : null,
+					sourceRefs: sourceRefs.size > 0 ? [...sourceRefs] : null,
 					subParts: hasSubParts ? subParts : null,
 				};
 
