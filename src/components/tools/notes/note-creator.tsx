@@ -310,15 +310,15 @@ function NoteForm({
 
 function _NoteItem({
 	note,
-	onEdit,
-	onDelete,
+	_onEdit,
+	_onDelete,
 	onToggleFavorite,
 	mounted,
 }: {
-	note: any;
-	onEdit: any;
-	onDelete: any;
-	onToggleFavorite: any;
+	note: Note;
+	_onEdit: (id: string) => void;
+	_onDelete: (id: string) => void;
+	onToggleFavorite: (id: string) => void;
 	mounted: boolean;
 }) {
 	return (
@@ -327,7 +327,7 @@ function _NoteItem({
 				<div className="flex items-center justify-between">
 					<CardTitle className="text-sm">{note.title}</CardTitle>
 					<div className="flex items-center gap-2">
-						{note.favorite && (
+						{note.isFavorite && (
 							<Button
 								variant="ghost"
 								size="icon"
@@ -348,6 +348,7 @@ function _NoteItem({
 										strokeWidth="2"
 										strokeLinecap="round"
 										strokeLinejoin="round"
+										aria-label="Favorite"
 									>
 										<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
 									</svg>
