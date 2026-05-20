@@ -17,7 +17,7 @@ function getAllSubjects(): string[] {
 	];
 }
 
-export async function syncSubject(_subject: string): Promise<{
+export async function syncSubject(subject: string): Promise<{
 	success: boolean;
 	synced: number;
 	local: number;
@@ -33,7 +33,33 @@ export async function syncSubject(_subject: string): Promise<{
 			version: "v2",
 			error: "Authentication required",
 		};
-	return { success: true, synced: 0, local: 0, version: "v2" };
+	try {
+		const subjectId = subject.toLowerCase().replace(/\s+/g, "-");
+		const subjects = await listDocuments<Record<string, unknown>>(
+			COLLECTIONS.SUBJECTS,
+			[Query.equal("code", subjectId), Query.limit(1)],
+		);
+
+		const version =
+			subjects.length > 0
+				? (subjects[0].sourceVersion as string) || "v1"
+				: "v1";
+
+		return {
+			success: true,
+			synced: 0,
+			local: 0,
+			version,
+		};
+	} catch (error) {
+		return {
+			success: false,
+			synced: 0,
+			local: 0,
+			version: "v2",
+			error: error instanceof Error ? error.message : "Sync failed",
+		};
+	}
 }
 
 export async function syncAllSubjects(): Promise<{
@@ -50,13 +76,12 @@ export async function syncAllSubjects(): Promise<{
 	if (!userId) {
 		return { results: [] };
 	}
-	const results = getAllSubjects().map((s) => ({
-		subject: s,
-		success: true,
-		synced: 0,
-		local: 0,
-		version: "v2",
-	}));
+	const results = await Promise.all(
+		getAllSubjects().map(async (subject) => {
+			const result = await syncSubject(subject);
+			return { subject, ...result };
+		}),
+	);
 	return { results };
 }
 
@@ -104,7 +129,18 @@ async function checkSubjectStatusInternal(subject: string): Promise<{
 			null;
 		const needsSync = !version;
 
-		return { exists: true, localQuestions: 0, version, needsSync };
+		const questions = await listDocuments(COLLECTIONS.QUESTIONS, [
+			Query.equal("subject", subject),
+			Query.limit(1),
+		]);
+
+		const count = Array.isArray(questions) ? questions.length : 0;
+		return {
+			exists: true,
+			localQuestions: count,
+			version,
+			needsSync,
+		};
 	} catch {
 		return { exists: false, localQuestions: 0, version: null, needsSync: true };
 	}

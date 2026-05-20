@@ -18,6 +18,9 @@ export const COLLECTIONS = {
 	STUDY_PLANS: "study_plans",
 	QUESTION_FLAGS: "question_flags",
 	ANALYTICS: "analytics",
+	FLASHCARDS: "flashcards",
+	WRONG_ANSWERS: "wrong_answers",
+	CHAT_MESSAGES: "chat_messages",
 } as const;
 
 export type Subject = {

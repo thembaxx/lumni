@@ -227,6 +227,81 @@ const handlers: Record<JobType, JobHandler> = {
 		}
 	},
 
+	"appwrite-flashcard-sync": async (payload) => {
+		const data = payload as {
+			id: string;
+			front: string;
+			back: string;
+			subject: string;
+			topic?: string;
+			easeFactor: number;
+			interval: number;
+			repetitions: number;
+			nextReview: number;
+			lastReview: number | null;
+			createdAt: number;
+		};
+		await createDocument(COLLECTIONS.FLASHCARDS, {
+			flashcardId: data.id,
+			front: data.front,
+			back: data.back,
+			subject: data.subject,
+			topic: data.topic || "",
+			easeFactor: data.easeFactor,
+			interval: data.interval,
+			repetitions: data.repetitions,
+			nextReview: new Date(data.nextReview).toISOString(),
+			lastReview: data.lastReview
+				? new Date(data.lastReview).toISOString()
+				: null,
+			createdAt: new Date(data.createdAt).toISOString(),
+		});
+	},
+
+	"appwrite-wrong-answer-sync": async (payload) => {
+		const data = payload as {
+			questionId: string;
+			questionText: string;
+			subject: string;
+			topic: string;
+			correctAnswer: string;
+			userAnswer: string;
+			explanation: string;
+			createdAt: number;
+			reviewed: boolean;
+			errorType?: string;
+		};
+		await createDocument(COLLECTIONS.WRONG_ANSWERS, {
+			questionId: data.questionId,
+			questionText: data.questionText,
+			subject: data.subject,
+			topic: data.topic,
+			correctAnswer: data.correctAnswer,
+			userAnswer: data.userAnswer,
+			explanation: data.explanation,
+			errorType: data.errorType || "unknown",
+			reviewed: data.reviewed,
+			createdAt: new Date(data.createdAt).toISOString(),
+		});
+	},
+
+	"appwrite-chat-sync": async (payload) => {
+		const data = payload as {
+			messageId: string;
+			role: string;
+			content: string;
+			type?: string;
+			timestamp: number;
+		};
+		await createDocument(COLLECTIONS.CHAT_MESSAGES, {
+			messageId: data.messageId,
+			role: data.role,
+			content: data.content,
+			type: data.type || "",
+			createdAt: new Date(data.timestamp).toISOString(),
+		});
+	},
+
 	"appwrite-rating-sync": async (payload) => {
 		const data = payload as {
 			questionId: string;
