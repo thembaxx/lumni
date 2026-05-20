@@ -1,9 +1,4 @@
-import withBundleAnalyzer from "@next/bundle-analyzer";
 import type { NextConfig } from "next";
-
-const analyzer = withBundleAnalyzer({
-	enabled: process.env.ANALYZE === "true",
-});
 
 const nextConfig: NextConfig = {
 	experimental: {
@@ -71,4 +66,4 @@ const nextConfig: NextConfig = {
 	},
 };
 
-export default analyzer(nextConfig);
+export default nextConfig;

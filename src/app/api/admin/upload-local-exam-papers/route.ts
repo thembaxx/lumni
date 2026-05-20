@@ -1,16 +1,13 @@
 import { randomUUID } from "node:crypto";
-import fs from "node:fs";
-import path from "node:path";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { UTApi, UTFile } from "uploadthing/server";
 import { getExamsDb, insertExamPaper, saveExamsDb } from "@/lib/db/exams";
 import { requireAdmin } from "@/lib/server/auth";
 
-const EXAM_PAPERS_DIR = `${process.cwd()}/downloads/exam-papers-2025`;
-
 async function getDefaultFolderPath(): Promise<string> {
-	return EXAM_PAPERS_DIR;
+	const cwd = (process as { cwd(): string }).cwd();
+	return `${cwd}/downloads/exam-papers-2025`;
 }
 
 interface ParsedFile {
@@ -124,15 +121,16 @@ export async function POST(request: NextRequest) {
 		const { folderPath } = body;
 
 		const targetFolder = folderPath || (await getDefaultFolderPath());
+		const nodeFs = await import("node:fs");
 
-		if (!fs.existsSync(targetFolder)) {
+		if (!nodeFs.existsSync(targetFolder)) {
 			return NextResponse.json(
 				{ error: `Folder not found: ${targetFolder}` },
 				{ status: 400 },
 			);
 		}
 
-		const files = fs
+		const files = nodeFs
 			.readdirSync(targetFolder)
 			.filter((f) => f.endsWith(".pdf"));
 
@@ -159,7 +157,8 @@ export async function POST(request: NextRequest) {
 			const normalizedCode = normalizeSubjectCode(subjectCode);
 			const subjectName = toTitleCase(normalizedCode);
 
-			const filePath = path.join(targetFolder, fileName);
+			const nodePath = await import("node:path");
+			const filePath = nodePath.join(targetFolder, fileName);
 
 			const uploadResult = await uploadToUploadThing(
 				filePath,
