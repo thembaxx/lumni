@@ -121,6 +121,26 @@ export interface QuizSessionState {
 	duration: number;
 }
 
+export interface ExamSessionSnapshot {
+	id?: number;
+	paperId: string;
+	answers: string; // JSON stringified Record<string, ExamAnswer>
+	flags: string; // JSON stringified string[]
+	currentPartId: string | null;
+	timeRemaining: number;
+	startedAt: number;
+	lastSavedAt: number;
+	completed: boolean;
+}
+
+export interface CachedPdf {
+	id?: number;
+	paperId: string;
+	pdfData: Blob;
+	fileName: string;
+	cachedAt: number;
+}
+
 export class LumniOfflineDB extends Dexie {
 	chatMessages!: Table<ChatMessageRecord, number>;
 	questions!: Table<CachedQuestion, number>;
@@ -136,6 +156,8 @@ export class LumniOfflineDB extends Dexie {
 	wrongAnswers!: Table<WrongAnswerEntry, number>;
 	questionRatings!: Table<QuestionRating, number>;
 	flashcards!: Table<FlashcardSM2, string>;
+	examSessions!: Table<ExamSessionSnapshot, number>;
+	cachedPdfs!: Table<CachedPdf, number>;
 
 	constructor() {
 		super("lumni-offline");
@@ -184,6 +206,11 @@ export class LumniOfflineDB extends Dexie {
 		this.version(10).stores({
 			flashcards:
 				"&id, subject, topic, nextReview, easeFactor, interval, repetitions",
+		});
+
+		this.version(11).stores({
+			examSessions: "++id, &paperId, startedAt, lastSavedAt, completed",
+			cachedPdfs: "++id, &paperId, cachedAt",
 		});
 	}
 }

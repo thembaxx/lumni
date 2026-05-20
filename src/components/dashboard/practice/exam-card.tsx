@@ -1,10 +1,13 @@
 "use client";
 
+import { CloudDownloadIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FadeIn } from "@/components/shared/fade-in";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { usePdfCache } from "@/hooks/use-pdf-cache";
 import { cn } from "@/lib/shared";
 import type { PaperListing } from "@/types/exam";
 import { PdfViewer } from "./pdf-viewer-client";
@@ -18,6 +21,7 @@ export function ExamCard({ exam }: ExamCardProps) {
 	const { push } = useRouter();
 	const [pdfOpen, setPdfOpen] = useState(false);
 	const [smartViewOpen, setSmartViewOpen] = useState(false);
+	const { cached, downloading, download, remove } = usePdfCache(exam.id);
 
 	const handleTakeExam = (e: React.MouseEvent) => {
 		e.stopPropagation();
@@ -31,6 +35,17 @@ export function ExamCard({ exam }: ExamCardProps) {
 
 	const handlePractice = (e: React.MouseEvent) => {
 		e.stopPropagation();
+	};
+
+	const handleDownloadPdf = async (e: React.MouseEvent) => {
+		e.stopPropagation();
+		const pdfUrl = exam.fileUrl || exam.src || exam.url;
+		if (!pdfUrl) return;
+		if (cached) {
+			await remove();
+		} else {
+			await download(pdfUrl, exam.title);
+		}
 	};
 
 	return (
@@ -64,7 +79,7 @@ export function ExamCard({ exam }: ExamCardProps) {
 								</span>
 							</>
 						)}
-						{exam.downloadedAt ? (
+						{cached || exam.downloadedAt ? (
 							<Badge
 								variant="outline"
 								className="h-5 px-1.5 text-[9px] text-muted-foreground/70"
@@ -91,6 +106,27 @@ export function ExamCard({ exam }: ExamCardProps) {
 					</Button>
 					<Button variant="default" size="sm" onClick={handleTakeExam}>
 						Take Exam
+					</Button>
+					<Button
+						variant="ghost"
+						size="icon"
+						className="size-8"
+						onClick={handleDownloadPdf}
+						disabled={downloading}
+						title={cached ? "Remove offline copy" : "Save for offline"}
+					>
+						{cached || downloading ? (
+							<span
+								className={cn(
+									"block size-4 rounded-full border-2",
+									downloading
+										? "animate-spin border-r-transparent"
+										: "border-destructive",
+								)}
+							/>
+						) : (
+							<HugeiconsIcon icon={CloudDownloadIcon} className="size-4" />
+						)}
 					</Button>
 				</div>
 			</FadeIn>

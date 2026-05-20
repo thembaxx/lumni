@@ -13,6 +13,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
+import { useCachedPdfUrl } from "@/hooks/use-pdf-cache";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
 import { EmptyState } from "@/components/shared/empty-state";
@@ -105,7 +106,9 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 	const containerRef = useRef<HTMLDivElement>(null);
 	const initRef = useRef(false);
 
-	const pdfUrl = exam.fileUrl || exam.src || exam.localPath || exam.url;
+	const cachedUrl = useCachedPdfUrl(exam.id);
+	const pdfUrl =
+		cachedUrl || exam.fileUrl || exam.src || exam.localPath || exam.url;
 
 	useEffect(() => {
 		if (initRef.current) return;
@@ -145,10 +148,11 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 	);
 
 	const handleDownload = useCallback(() => {
-		if (pdfUrl) {
-			window.open(pdfUrl, "_blank");
+		const downloadUrl = exam.fileUrl || exam.src || exam.url || pdfUrl;
+		if (downloadUrl) {
+			window.open(downloadUrl, "_blank");
 		}
-	}, [pdfUrl]);
+	}, [exam.fileUrl, exam.src, exam.url, pdfUrl]);
 
 	const toggleFullscreen = useCallback(async () => {
 		if (!document.fullscreenElement) {

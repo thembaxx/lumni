@@ -18,7 +18,19 @@ import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogHeader,
+	DialogTitle,
+} from "@/components/ui/dialog";
 import { useExamPaper } from "@/hooks/use-exam-paper";
+import {
+	clearSavedSession,
+	hasSavedSession,
+	useExamSessionAutoSave,
+} from "@/hooks/use-exam-session-persistence";
 import { useGamification } from "@/hooks/use-gamification";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
 import { trackQuestionResult } from "@/lib/competency-engine";
@@ -400,6 +412,85 @@ function ExamResults({
 	);
 }
 
+export function ExamSessionWithResume({ id, mode }: ExamSessionClientProps) {
+	const [resumeData, setResumeData] =
+		useState<Awaited<ReturnType<typeof hasSavedSession>>>(null);
+	const [resumeChecked, setResumeChecked] = useState(false);
+
+	useEffect(() => {
+		hasSavedSession(id).then((data) => {
+			setResumeData(data);
+			setResumeChecked(true);
+		});
+	}, [id]);
+
+	const handleResume = useCallback(() => {
+		if (!resumeData) return;
+		const parsedAnswers = JSON.parse(resumeData.answers as string);
+		useExamSessionStore.setState({
+			answers: parsedAnswers,
+			flags: JSON.parse(resumeData.flags as string),
+			currentPartId: resumeData.currentPartId,
+			timeRemaining: resumeData.timeRemaining,
+			startedAt: resumeData.startedAt,
+			completed: false,
+			isSubmitting: false,
+			paperId: id,
+		});
+		setResumeData(null);
+	}, [resumeData, id]);
+
+	const handleStartNew = useCallback(async () => {
+		await clearSavedSession(id);
+		setResumeData(null);
+	}, [id]);
+
+	if (!resumeChecked) {
+		return (
+			<div className="flex min-h-screen items-center justify-center bg-background">
+				<p className="animate-pulse text-muted-foreground">
+					Checking for saved session…
+				</p>
+			</div>
+		);
+	}
+
+	if (resumeData) {
+		return (
+			<div className="flex min-h-screen items-center justify-center bg-background p-4">
+				<Dialog open modal>
+					<DialogContent className="sm:max-w-md">
+						<DialogHeader>
+							<DialogTitle>Resume Exam?</DialogTitle>
+							<DialogDescription>
+								You have an unfinished exam session. Pick up where you left off,
+								or start a new attempt.
+							</DialogDescription>
+						</DialogHeader>
+						<div className="flex flex-col gap-3 pt-2">
+							<div className="rounded-lg bg-muted p-3 text-sm">
+								{resumeData.answers
+									? `${Object.keys(JSON.parse(resumeData.answers)).length} questions answered`
+									: "No answers recorded yet"}
+							</div>
+							<div className="flex flex-col gap-2">
+								<Button size="lg" onClick={handleResume}>
+									Resume Session
+								</Button>
+								<Button variant="outline" size="lg" onClick={handleStartNew}>
+									Start New
+								</Button>
+							</div>
+						</div>
+					</DialogContent>
+				</Dialog>
+			</div>
+		);
+	}
+
+	return <ExamSessionClient id={id} mode={mode} />;
+}
+
 export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 	const { data: paperData, isLoading: paperLoading } = useExamPaper(id);
 	const [phase, setPhase] = useState<SessionPhase>("loading");
@@ -439,6 +530,8 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 	} = useGamification();
 
 	const { addWrongAnswer } = useWrongAnswerJournal();
+
+	useExamSessionAutoSave(id);
 
 	const flatParts = useMemo(() => {
 		if (!paper) return [];

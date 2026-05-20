@@ -5,6 +5,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { AssessmentHeader } from "@/components/ui/headers/assessment-header";
+import { useExamSessionAutoSave } from "@/hooks/use-exam-session-persistence";
 import { useExamSessionStore } from "@/store/exam-session";
 import type { ExamPaper } from "@/types/exam-paper";
 import { ExamResults } from "./exam-results";
@@ -25,6 +26,8 @@ export function ExamEngine({
 	durationMinutes,
 }: ExamEngineProps) {
 	const [sidebarOpen, setSidebarOpen] = useState(false);
+
+	useExamSessionAutoSave(paperId);
 	const [showSubmit, setShowSubmit] = useState(false);
 	const [now, setNow] = useState(0);
 	useEffect(() => {
