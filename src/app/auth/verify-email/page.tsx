@@ -4,17 +4,12 @@ import { SparklesIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { m } from "framer-motion";
-import type { Metadata } from "next";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { FormSkeleton } from "@/components/ui/skeletons";
 import { iOSEase } from "@/lib/utils/animation";
-
-export const metadata: Metadata = {
-	title: "Verify Email",
-};
 
 function VerifyEmailContent() {
 	const { push } = useRouter();

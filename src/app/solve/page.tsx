@@ -1,12 +1,7 @@
 "use client";
 
-import type { Metadata } from "next";
 import { Anim } from "@/components/shared/anim";
 import { AiSolver } from "@/components/tools/ai-solver";
-
-export const metadata: Metadata = {
-	title: "Solve",
-};
 
 export default function SolvePage() {
 	return (

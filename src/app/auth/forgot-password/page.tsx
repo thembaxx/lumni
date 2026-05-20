@@ -3,16 +3,11 @@
 import { Mail01Icon, SparklesIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
-import type { Metadata } from "next";
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { iOSEase } from "@/lib/utils/animation";
-
-export const metadata: Metadata = {
-	title: "Forgot Password",
-};
 
 export default function ForgotPasswordPage() {
 	const [email, setEmail] = useState("");

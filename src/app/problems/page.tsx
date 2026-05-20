@@ -8,7 +8,6 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
-import type { Metadata } from "next";
 import { useMemo, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { StepByStep } from "@/components/quiz/step-by-step";
@@ -21,10 +20,6 @@ import {
 	useCuratedProblems,
 } from "@/hooks/use-curated-problems";
 import { cn } from "@/lib/shared";
-
-export const metadata: Metadata = {
-	title: "Problems",
-};
 
 const DIFFICULTIES = ["all", "Easy", "Medium", "Hard"] as const;
 

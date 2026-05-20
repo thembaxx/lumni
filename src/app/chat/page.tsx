@@ -3,7 +3,6 @@
 import { Cancel01Icon, Chat01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence } from "framer-motion";
-import type { Metadata } from "next";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { ChatInput } from "@/components/chat/ChatInput";
@@ -13,10 +12,6 @@ import { WelcomeState } from "@/components/chat/WelcomeState";
 import { Button } from "@/components/ui/button";
 import { useChat } from "@/hooks/use-chat";
 import { useImageChatWithSend } from "@/hooks/use-image-chat";
-
-export const metadata: Metadata = {
-	title: "Chat",
-};
 
 export default function ChatPage() {
 	const chat = useChat();

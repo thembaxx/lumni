@@ -1,6 +1,5 @@
 "use client";
 
-import type { Metadata } from "next";
 import { useCallback, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -18,10 +17,6 @@ import { VisualContent } from "@/components/visual/visual-content";
 import { apiFetch, showBudgetToast } from "@/lib/shared/api-fetch";
 import { STEM_SUBJECTS } from "@/lib/visual-engine";
 import type { VisualContent as VisualContentType } from "@/lib/visual-engine/types";
-
-export const metadata: Metadata = {
-	title: "Visual Dev",
-};
 
 const SUBJECTS = [...STEM_SUBJECTS].toSorted();
 const ALL_SUBJECTS = [

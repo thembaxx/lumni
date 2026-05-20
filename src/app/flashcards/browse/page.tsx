@@ -10,7 +10,6 @@ import {
 	Upload04Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import type { Metadata } from "next";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -18,10 +17,6 @@ import { Input } from "@/components/ui/input";
 import { flashcardRepository } from "@/lib/flashcard-repository";
 import type { FlashcardSM2 } from "@/lib/flashcard-repository/types";
 import { downloadCSV, parseCSV } from "@/lib/utils/flashcard-import-export";
-
-export const metadata: Metadata = {
-	title: "Browse Flashcards",
-};
 
 export default function FlashcardBrowsePage() {
 	const [cards, setCards] = useState<FlashcardSM2[]>([]);

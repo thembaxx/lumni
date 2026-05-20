@@ -1,6 +1,5 @@
 "use client";
 
-import type { Metadata } from "next";
 import { useCallback, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Badge } from "@/components/ui/badge";
@@ -17,10 +16,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
 import type { GradingResult, Question } from "@/lib/question-engine/types";
 import { apiFetch, showBudgetToast } from "@/lib/shared/api-fetch";
-
-export const metadata: Metadata = {
-	title: "Engine Dev",
-};
 
 export default function DevEnginePage() {
 	const [subject, setSubject] = useState("mathematics");

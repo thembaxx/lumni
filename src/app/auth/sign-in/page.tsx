@@ -8,7 +8,6 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
-import type { Metadata } from "next";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useCallback, useState } from "react";
@@ -17,10 +16,6 @@ import { Input } from "@/components/ui/input";
 import { FormSkeleton } from "@/components/ui/skeletons";
 import { useAuth } from "@/lib/auth/auth-context";
 import { iOSEase } from "@/lib/utils/animation";
-
-export const metadata: Metadata = {
-	title: "Sign In",
-};
 
 function safeRedirect(url: string | null): string {
 	if (!url) return "/dashboard";

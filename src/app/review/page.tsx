@@ -7,7 +7,6 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import type { Metadata } from "next";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
@@ -27,10 +26,6 @@ import {
 	type ErrorType,
 	useWrongAnswerJournal,
 } from "@/hooks/use-wrong-answer-journal";
-
-export const metadata: Metadata = {
-	title: "Review",
-};
 
 function ErrorTypeSelect({
 	value,

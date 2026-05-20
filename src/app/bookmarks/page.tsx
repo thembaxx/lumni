@@ -2,16 +2,11 @@
 
 import { Bookmark01Icon, Delete01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import type { Metadata } from "next";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useBookmarksStore } from "@/store/bookmarks";
-
-export const metadata: Metadata = {
-	title: "Bookmarks",
-};
 
 export default function BookmarksPage() {
 	const { bookmarks, removeBookmark } = useBookmarksStore();
