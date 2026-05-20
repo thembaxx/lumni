@@ -44,6 +44,27 @@ async function UTSSR() {
 	return <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />;
 }
 
+const jsonLd = {
+	"@context": "https://schema.org",
+	"@type": "WebApplication",
+	name: "Lumni",
+	url: "https://lumni.ai",
+	description:
+		"Pass your Matric with confidence — AI-powered quizzes, past papers, and a personalized study planner for South African students.",
+	applicationCategory: "EducationalApplication",
+	operatingSystem: "Web",
+	offers: {
+		"@type": "Offer",
+		price: "0",
+		priceCurrency: "ZAR",
+	},
+	author: {
+		"@type": "Organization",
+		name: "Lumni",
+		url: "https://lumni.ai",
+	},
+};
+
 export const metadata: Metadata = {
 	title: {
 		default: "Lumni",
@@ -68,6 +89,7 @@ export const metadata: Metadata = {
 		type: "website",
 		locale: "en_US",
 		siteName: "Lumni",
+		url: "https://lumni.ai",
 		images: [
 			{
 				url: "/og-image.png",
@@ -115,6 +137,12 @@ export default function RootLayout({
 			)}
 		>
 			<body className="flex h-full min-h-full flex-col bg-[--system-background] text-[--system-text-primary] antialiased">
+				<a
+					href="#main-content"
+					className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[9999] focus:rounded-lg focus:bg-background focus:px-4 focus:py-2 focus:text-foreground focus:shadow-lg focus:outline-2 focus:outline-system-accent focus:outline-offset-2"
+				>
+					Skip to content
+				</a>
 				<Script
 					id="theme-init"
 					strategy="beforeInteractive"
@@ -126,6 +154,11 @@ export default function RootLayout({
 				<Suspense fallback={<CardSkeleton />}>
 					<UTSSR />
 				</Suspense>
+				<script
+					type="application/ld+json"
+					// biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD structured data (static, no user input)
+					dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+				/>
 				<Providers>
 					<LazyMotion features={domAnimation}>
 						<UploadDialogRenderer />
@@ -133,7 +166,7 @@ export default function RootLayout({
 						<FloatingToolsButton />
 						<div className="flex flex-1">
 							<DesktopSidebar />
-							<main className="flex min-w-0 flex-1 flex-col">
+							<main id="main-content" className="flex min-w-0 flex-1 flex-col">
 								<TopNav />
 								<ErrorBoundary>
 									<PageTransition>{children}</PageTransition>

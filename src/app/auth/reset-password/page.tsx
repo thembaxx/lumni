@@ -83,6 +83,7 @@ function ResetPasswordForm() {
 						/>
 						<button
 							type="button"
+							aria-label={showPassword ? "Hide password" : "Show password"}
 							onClick={() => setShowPassword(!showPassword)}
 							className="absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground"
 						>

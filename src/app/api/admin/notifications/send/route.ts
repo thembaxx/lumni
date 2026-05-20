@@ -8,9 +8,20 @@ export async function POST(request: NextRequest) {
 
 		const { title, body, url, subject } = await request.json();
 
-		if (!title || !body) {
+		if (
+			!title ||
+			!body ||
+			typeof title !== "string" ||
+			typeof body !== "string"
+		) {
 			return NextResponse.json(
-				{ error: "title and body are required" },
+				{ error: "title and body are required and must be strings" },
+				{ status: 400 },
+			);
+		}
+		if (title.length > 100 || body.length > 500) {
+			return NextResponse.json(
+				{ error: "title (max 100) or body (max 500) too long" },
 				{ status: 400 },
 			);
 		}

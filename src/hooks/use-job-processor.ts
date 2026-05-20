@@ -11,7 +11,9 @@ export function useJobProcessor() {
 	const { isOnline } = useOnlineStatus();
 
 	const process = useCallback(() => {
-		jobProcessor.processBatch(5).catch(() => {});
+		jobProcessor
+			.processBatch(5)
+			.catch((e) => console.warn("Job processor batch:", e));
 	}, []);
 
 	useInterval(process, isOnline ? POLL_INTERVAL_MS : null);

@@ -31,7 +31,11 @@ export class CachingStrategy<T, P> {
 		const generated = await this.generator.generate(params);
 		if (generated !== null && generated !== undefined) {
 			await Promise.allSettled(
-				this.tiers.map((t) => t.write(params, generated).catch(() => {})),
+				this.tiers.map((t) =>
+					t
+						.write(params, generated)
+						.catch((e) => console.warn(`Cache write to ${t.name} failed:`, e)),
+				),
 			);
 		}
 

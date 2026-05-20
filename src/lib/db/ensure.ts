@@ -124,8 +124,8 @@ async function ensureCollectionSchema(
 			collectionId,
 		);
 		existingIndexes = listIndexes.indexes.map((i) => i.key);
-	} catch {
-		// collection might not exist yet
+	} catch (e) {
+		console.warn("Failed to list indexes (collection may not exist):", e);
 	}
 
 	// Create missing indexes

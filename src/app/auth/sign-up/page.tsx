@@ -49,7 +49,7 @@ function SignUpForm() {
 						method: "POST",
 						headers: { "Content-Type": "application/json" },
 						body: JSON.stringify({ code: referralCode, refereeId: userId }),
-					}).catch(() => {});
+					}).catch((e) => console.warn("Referral claim:", e));
 				}
 				push(redirect);
 				refresh();

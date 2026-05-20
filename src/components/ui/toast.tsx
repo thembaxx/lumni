@@ -142,15 +142,26 @@ export function toast(props: Omit<ToastData, "id">) {
 			"pointer-events-auto flex w-full max-w-sm items-center gap-3 rounded-lg border p-4 shadow-lg animate-in slide-in-from-bottom-4 transition-[opacity,transform] duration-200",
 			toastStyles[props.type],
 		);
-		toastEl.innerHTML = `
-			<span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-current/10 text-xs font-extrabold">
-				${toastIcons[props.type]}
-			</span>
-			<div class="flex-1 min-w-0">
-				<p class="text-sm font-medium">${props.message}</p>
-				${props.description ? `<p class="text-xs opacity-80 mt-0.5">${props.description}</p>` : ""}
-			</div>
-		`;
+		const iconSpan = document.createElement("span");
+		iconSpan.className =
+			"flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-current/10 text-xs font-extrabold";
+		iconSpan.textContent = toastIcons[props.type];
+
+		const textDiv = document.createElement("div");
+		textDiv.className = "flex-1 min-w-0";
+		const msgP = document.createElement("p");
+		msgP.className = "text-sm font-medium";
+		msgP.textContent = props.message;
+		textDiv.appendChild(msgP);
+		if (props.description) {
+			const descP = document.createElement("p");
+			descP.className = "text-xs opacity-80 mt-0.5";
+			descP.textContent = props.description;
+			textDiv.appendChild(descP);
+		}
+
+		toastEl.appendChild(iconSpan);
+		toastEl.appendChild(textDiv);
 		container.appendChild(toastEl);
 
 		setTimeout(() => {

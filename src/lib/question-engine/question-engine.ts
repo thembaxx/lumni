@@ -195,7 +195,8 @@ export class QuestionEngine {
 				return (doc.description as string) ?? null;
 			}
 			return null;
-		} catch {
+		} catch (e) {
+			console.warn("Retrieve curriculum context failed:", e);
 			return null;
 		}
 	}

@@ -1,8 +1,65 @@
 "use client";
 
-import { useState } from "react";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
+import type { ReactNode } from "react";
+import { useEffect, useRef, useState } from "react";
+
+interface LazySyntaxHighlighterProps {
+	language: string;
+	children: ReactNode;
+}
+
+function LazySyntaxHighlighter({
+	language,
+	children,
+}: LazySyntaxHighlighterProps) {
+	const ref = useRef<{
+		SyntaxHighlighter: React.ComponentType<Record<string, unknown>>;
+		style: Record<string, unknown>;
+	} | null>(null);
+	const [loaded, setLoaded] = useState(false);
+
+	useEffect(() => {
+		let cancelled = false;
+		Promise.all([
+			import("react-syntax-highlighter"),
+			import("react-syntax-highlighter/dist/esm/styles/prism"),
+		]).then(([highlighterMod, styleMod]) => {
+			if (cancelled) return;
+			type HighlighterMod = {
+				Prism: React.ComponentType<Record<string, unknown>>;
+			};
+			type StyleMod = { oneLight: Record<string, unknown> };
+			ref.current = {
+				SyntaxHighlighter: (highlighterMod as unknown as HighlighterMod).Prism,
+				style: (styleMod as unknown as StyleMod).oneLight,
+			};
+			setLoaded(true);
+		});
+		return () => {
+			cancelled = true;
+		};
+	}, []);
+
+	if (!loaded || !ref.current) {
+		return (
+			<pre className="m-0 max-h-[200px] overflow-auto bg-muted p-3 text-xs">
+				<code>{children}</code>
+			</pre>
+		);
+	}
+
+	const { SyntaxHighlighter: SH, style } = ref.current;
+	return (
+		<SH
+			language={language}
+			style={style}
+			customStyle={{ margin: 0, fontSize: "0.8rem", maxHeight: 200 }}
+		>
+			{children}
+		</SH>
+	);
+}
+
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/shared";
@@ -33,13 +90,9 @@ export function ProgrammingInput({
 					<div className="bg-muted px-3 py-1 font-medium text-muted-foreground text-xs">
 						Starter Code ({language})
 					</div>
-					<SyntaxHighlighter
-						language={language}
-						style={oneLight}
-						customStyle={{ margin: 0, fontSize: "0.8rem", maxHeight: 200 }}
-					>
+					<LazySyntaxHighlighter language={language}>
 						{starterCode}
-					</SyntaxHighlighter>
+					</LazySyntaxHighlighter>
 				</div>
 			)}
 			<Textarea

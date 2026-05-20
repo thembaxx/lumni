@@ -66,7 +66,9 @@ function loadFromStorage(): StoredGamification {
 			}
 			return parsed;
 		}
-	} catch {}
+	} catch (e) {
+		console.warn("Failed to load gamification data:", e);
+	}
 	return DEFAULT_GAMIFICATION;
 }
 

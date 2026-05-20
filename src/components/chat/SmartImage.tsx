@@ -33,9 +33,8 @@ export function SmartImage({ src, alt, className }: SmartImageProps) {
 				src={src}
 				alt={alt}
 				fill
-				sizes="100vw"
+				sizes="(max-width: 768px) 100vw, 50vw"
 				className="object-contain outline outline-black/10 -outline-offset-1 dark:outline-white/10"
-				unoptimized
 			/>
 		</div>
 	);

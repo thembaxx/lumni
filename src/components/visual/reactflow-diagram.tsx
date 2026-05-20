@@ -1,7 +1,6 @@
 "use client";
 
 import { Background, Controls, MiniMap, ReactFlow } from "@xyflow/react";
-import "@xyflow/react/dist/style.css";
 
 interface ReactFlowData {
 	nodes?: Array<{

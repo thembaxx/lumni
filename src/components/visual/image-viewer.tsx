@@ -41,8 +41,7 @@ export function ImageViewer({
 					src={url}
 					alt={label}
 					fill
-					sizes="100vw"
-					unoptimized
+					sizes="(max-width: 768px) 100vw, 50vw"
 					className="!relative max-h-96 object-contain outline outline-black/10 -outline-offset-1 dark:outline-white/10"
 					onLoad={() => setLoading(false)}
 					onError={() => {

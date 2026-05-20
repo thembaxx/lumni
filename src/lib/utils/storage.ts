@@ -3,7 +3,8 @@ export function loadFromStorage<T>(key: string, defaultValue: T): T {
 	try {
 		const stored = localStorage.getItem(key);
 		return stored ? JSON.parse(stored) : defaultValue;
-	} catch {
+	} catch (e) {
+		console.warn("localStorage read failed:", e);
 		return defaultValue;
 	}
 }

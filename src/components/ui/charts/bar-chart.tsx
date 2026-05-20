@@ -15,8 +15,7 @@ import {
 } from "@/components/ui/chart";
 
 interface BarChartProps {
-	// biome-ignore lint/suspicious/noExplicitAny: recharts accepts any record-like data
-	data: any[];
+	data: Record<string, unknown>[];
 	xKey: string;
 	yKey: string;
 	config: ChartConfig;

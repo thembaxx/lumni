@@ -1,12 +1,6 @@
 "use client";
 
-import {
-	CartesianGrid,
-	Line,
-	LineChart as RechartsLineChart,
-	XAxis,
-	YAxis,
-} from "recharts";
+import dynamic from "next/dynamic";
 import {
 	type ChartConfig,
 	ChartContainer,
@@ -14,9 +8,27 @@ import {
 	ChartTooltipContent,
 } from "@/components/ui/chart";
 
-interface LineChartProps {
-	// biome-ignore lint/suspicious/noExplicitAny: recharts accepts any record-like data
-	data: any[];
+const RechartsLineChart = dynamic(
+	() => import("recharts").then((m) => m.LineChart),
+	{ ssr: false },
+);
+const CartesianGrid = dynamic(
+	() => import("recharts").then((m) => m.CartesianGrid),
+	{ ssr: false },
+);
+const XAxis = dynamic(() => import("recharts").then((m) => m.XAxis), {
+	ssr: false,
+});
+const YAxis = dynamic(() => import("recharts").then((m) => m.YAxis), {
+	ssr: false,
+});
+const Line = dynamic(() => import("recharts").then((m) => m.Line), {
+	ssr: false,
+});
+
+// biome-ignore lint/suspicious/noExplicitAny: recharts accepts any record-like data
+interface LineChartProps<T = any> {
+	data: T[];
 	xKey: string;
 	yKey: string;
 	config: ChartConfig;
@@ -25,7 +37,7 @@ interface LineChartProps {
 	showDots?: boolean;
 }
 
-export function LineChart({
+export function LineChart<T>({
 	data,
 	xKey,
 	yKey,
@@ -33,7 +45,7 @@ export function LineChart({
 	height = 250,
 	showGrid = true,
 	showDots = true,
-}: LineChartProps) {
+}: LineChartProps<T>) {
 	return (
 		<ChartContainer config={config} className="w-full" style={{ height }}>
 			<RechartsLineChart

@@ -19,6 +19,8 @@
 		"test:all": "bun test && bun test ./src/lib/z-integration/integration.int-test.ts",
 		"database:ensure": "tsx scripts/ensure-appwrite.ts",
 		"admin:create": "tsx scripts/create-admin.ts",
+		"typecheck": "tsc --noEmit",
+		"prepare": "husky",
 		"analyze": "ANALYZE=true next build"
 	},
 	"dependencies": {

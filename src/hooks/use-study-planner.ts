@@ -75,7 +75,10 @@ export function useStudyPlanner(): UseStudyPlannerReturn {
 		(session: Omit<StudySession, "id">) => {
 			addStudySession(session);
 			schedulePlanAwareReminder();
-			if (user?.$id) syncStudyPlanToAppwrite(user.$id).catch(() => {});
+			if (user?.$id)
+				syncStudyPlanToAppwrite(user.$id).catch((e) =>
+					console.warn("Sync session failed:", e),
+				);
 			refresh();
 		},
 		[refresh, user],
@@ -92,7 +95,10 @@ export function useStudyPlanner(): UseStudyPlannerReturn {
 	const removeSession = useCallback(
 		(id: string) => {
 			deleteStudySession(id);
-			if (user?.$id) syncStudyPlanToAppwrite(user.$id).catch(() => {});
+			if (user?.$id)
+				syncStudyPlanToAppwrite(user.$id).catch((e) =>
+					console.warn("Sync session failed:", e),
+				);
 			refresh();
 		},
 		[refresh, user],
@@ -104,7 +110,10 @@ export function useStudyPlanner(): UseStudyPlannerReturn {
 				completed: true,
 				completedAt: Date.now(),
 			});
-			if (user?.$id) syncStudyPlanToAppwrite(user.$id).catch(() => {});
+			if (user?.$id)
+				syncStudyPlanToAppwrite(user.$id).catch((e) =>
+					console.warn("Sync markComplete failed:", e),
+				);
 			refresh();
 		},
 		[refresh, user],
@@ -113,7 +122,10 @@ export function useStudyPlanner(): UseStudyPlannerReturn {
 	const addExam = useCallback(
 		(exam: Omit<ExamDate, "id" | "daysUntil">) => {
 			addExamDate(exam);
-			if (user?.$id) syncStudyPlanToAppwrite(user.$id).catch(() => {});
+			if (user?.$id)
+				syncStudyPlanToAppwrite(user.$id).catch((e) =>
+					console.warn("Sync addExam failed:", e),
+				);
 			refresh();
 		},
 		[refresh, user],
@@ -122,7 +134,10 @@ export function useStudyPlanner(): UseStudyPlannerReturn {
 	const removeExam = useCallback(
 		(id: string) => {
 			deleteExamDate(id);
-			if (user?.$id) syncStudyPlanToAppwrite(user.$id).catch(() => {});
+			if (user?.$id)
+				syncStudyPlanToAppwrite(user.$id).catch((e) =>
+					console.warn("Sync removeExam failed:", e),
+				);
 			refresh();
 		},
 		[refresh, user],
@@ -186,7 +201,10 @@ export function useStudyPlanner(): UseStudyPlannerReturn {
 				existingPlan.generatedAt = Date.now();
 				saveStudyPlan(existingPlan);
 				schedulePlanAwareReminder();
-				if (user?.$id) syncStudyPlanToAppwrite(user.$id).catch(() => {});
+				if (user?.$id)
+					syncStudyPlanToAppwrite(user.$id).catch((e) =>
+						console.warn("Sync plan failed:", e),
+					);
 				refresh();
 			} catch (error) {
 				console.error("Failed to generate study plan:", error);

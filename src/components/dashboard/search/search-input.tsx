@@ -47,6 +47,7 @@ export function SearchInput({ value, onChange }: SearchInputProps) {
 					<Button
 						variant="ghost"
 						size="icon"
+						aria-label="Search by image"
 						className="toolbutton bg-muted/60 hover:bg-muted"
 					>
 						<HugeiconsIcon
@@ -59,6 +60,7 @@ export function SearchInput({ value, onChange }: SearchInputProps) {
 						<Button
 							variant="ghost"
 							size="icon"
+							aria-label="Select subject"
 							className="toolbutton bg-muted/60 hover:bg-muted"
 						>
 							<HugeiconsIcon

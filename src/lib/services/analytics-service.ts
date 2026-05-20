@@ -27,7 +27,7 @@ export class AnalyticsService {
 							event: JSON.stringify(event),
 							createdAt: new Date().toISOString(),
 						})
-						.catch(() => {}),
+						.catch((e) => console.warn("Analytics write failed:", e)),
 				);
 				await Promise.allSettled(promises);
 			}

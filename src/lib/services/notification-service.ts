@@ -101,11 +101,14 @@ export async function unsubscribeFromPush(): Promise<boolean> {
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({ endpoint: json.endpoint }),
 				});
-			} catch {}
+			} catch (e) {
+				console.warn("Failed to sync unsubscribe to server:", e);
+			}
 		}
 		localStorage.removeItem(NOTIF_KEY);
 		return true;
-	} catch {
+	} catch (e) {
+		console.warn("Failed to unsubscribe from push:", e);
 		return false;
 	}
 }

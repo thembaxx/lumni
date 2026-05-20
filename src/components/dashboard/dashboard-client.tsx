@@ -388,7 +388,7 @@ export function DashboardClient({
 				correctCount: results.correctAnswers,
 				duration: results.elapsedTime,
 			}),
-		}).catch(() => {});
+		}).catch((e) => console.warn("Analytics event failed:", e));
 
 		setQuizActive(false);
 		setQuizSubject("");

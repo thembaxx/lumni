@@ -34,7 +34,9 @@ type FlashcardSource = "ai" | "mistakes";
 
 export function FlashcardsClient() {
 	useEffect(() => {
-		migrateLegacyFlashcards().catch(() => {});
+		migrateLegacyFlashcards().catch((e) =>
+			console.warn("Legacy flashcard migration:", e),
+		);
 	}, []);
 
 	const [selectedSubject, setSelectedSubject] = useState<string>("");
@@ -243,7 +245,7 @@ export function FlashcardsClient() {
 						.then((hint) => {
 							hintsRef.current.set(card.id, hint);
 						})
-						.catch(() => {});
+						.catch((e) => console.warn("Hint generation:", e));
 				}
 			}
 			return !prev;
@@ -259,7 +261,7 @@ export function FlashcardsClient() {
 				displayCards,
 				knownCards,
 				selectedSubject.toLowerCase(),
-			).catch(() => {});
+			).catch((e) => console.warn("Session processing:", e));
 		}
 		setIsFlipped(false);
 	}, [

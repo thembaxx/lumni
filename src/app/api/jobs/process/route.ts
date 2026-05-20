@@ -5,8 +5,18 @@ export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest) {
 	try {
-		const body = await req.json().catch(() => ({}));
-		const limit = typeof body.limit === "number" ? body.limit : 5;
+		const raw = await req.json().catch(() => null);
+		if (!raw || typeof raw !== "object") {
+			return NextResponse.json(
+				{ error: "Invalid request body" },
+				{ status: 400 },
+			);
+		}
+		const body = raw as Record<string, unknown>;
+		const limit =
+			typeof body.limit === "number" && body.limit > 0
+				? Math.min(body.limit, 50)
+				: 5;
 
 		const result = await jobProcessor.processBatch(limit);
 
