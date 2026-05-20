@@ -2,79 +2,126 @@
 
 ## Done (May 2026)
 
-### P0 Critical
+### Phase 1: Core Learning Loop
+- [x] **1.1 Gamification Runtime** — hook-based XP/levels/streaks/achievements/daily challenges with localStorage persistence
+- [x] **1.2 Quiz → Competency** — `trackQuestionResult()` → `CompetencyService.update()` → Dexie + Appwrite sync
+- [x] **1.3 Quiz → Gamification** — XP/streak/achievements awarded on quiz finish (dashboard, exam, flashcards)
+- [x] **1.4 Flashcards → Competency + XP** — SM-2 + AI sources, competency tracking, gamification, wrong answer journal
+- [x] **1.5 `/exam/[id]` Session Player** — Two-mode (timed/practice) with timer, hints, MCQ/written, flagging, navigator palette, results view, all downstream systems wired
+- [x] **1.6 Competency Dashboard UI** — Radial charts, per-subject/topic mastery breakdown, auto-hides when empty
+
+### Phase 2: Content & Discovery
+- [x] **2.1 `/past-papers` Browse Page** — Full filter UI exists at `/dashboard/exams` (search, subject, year, session). `/past-papers` currently redirects.
+- [x] **2.2 `/study-plan` Route** — Algorithmic planner, manual CRUD, calendar export, dashboard integration, competency-driven recommendations
+- [x] **2.3 Exam → All Systems** — Competency + XP + wrong answers + flashcards + study plan on exam submit
+
+### Phase 3: Engagement & Polish
+- [x] **3.1 Marketing Landing Page** — Hero, features grid, how-it-works steps, CTA, footer. Full production page at `/`
+- [x] **3.3 Push Notifications** — Full service worker, API, notification service, dashboard nudge, settings tab
+- [x] **3.4 Text-to-Speech** — Browser + server TTS, wired into questions and flashcards
+- [x] **3.5 Onboarding → Settings Flow** — Onboarding selections (study time, notifications) pre-populate Settings
+- [x] **3.6 Dashboard Enhancements** — Weak topic focus card, study plan overview, achievement showcase
+
+### Phase 4: Production Readiness
+- [x] **4.3 Offline UX** — Service worker, offline fallback UI, offline badge, pending sync badge, IndexedDB persistence
+- [x] **4.4 Wrong Answer Journal** — Full journal with 6 error types, dedicated review page, flashcard feedback
+- [x] **4.5 Bookmarking + Notes** — Dedicated pages, in-quiz bookmarking, note attachment
+
+### Previous Sessions (Sessions 1-6)
+- [x] Exam scoring: `isCorrect` type fix, exam parser fixed
+- [x] Exam sessions: `exam_sessions` collection (not `exam_papers`)
+- [x] Achievements: migrated to `StoredAchievement[]` with auto-migration
+- [x] Upload page text leak fixed
+- [x] Auth: `DEFAULT_USER_ID` removed, `stats-row.tsx` wired to `useAuth()`
+- [x] Loading screen timeout leak fixed
+- [x] Rate limiting: `withRateLimit` wrapper, 16 routes secured
+- [x] Backoff consolidated into `src/lib/shared/backoff.ts`
+- [x] Exam wrong answers captured, flashcard auto-generation, Review Mistakes mode
+- [x] Exam answer review with expand/collapse, user vs correct answer
+- [x] Unified competency tracking across exam/flashcards/dashboard
+- [x] Dashboard orchestration: analytics-sync background job
+- [x] Flashcard merge: SM-2 due cards before AI fallback
+- [x] Content quality feedback: `QuestionRating` Dexie table, `StarRating`, admin dashboard
+- [x] Unified search across Dexie questions + wrong answers + flashcards + notes
+- [x] Social leaderboard service + component
+- [x] Premium gating: `PremiumProvider`, `usePremium()`, `/premium` page
+- [x] Competency → quiz pipe with personalized prompts
+- [x] Wrong-answer → targeted quiz button
+- [x] Study planner activation with algorithm
 - [x] SW registration + PWA components
-- [x] AI budget bypass: `/api/chat/image`
-- [x] Admin routes auth — `requireAdmin()` on all 8 admin routes
-- [x] User-scoped data auth — exam-sessions, analytics, referral
-- [x] Error-swallowing routes — proper 500 instead of 200 fallback
+- [x] AI budget bypass for `/api/chat/image`
+- [x] Admin routes auth on all 8 admin routes
+- [x] User-scoped data auth (exam-sessions, analytics, referral)
+- [x] Error-swallowing routes fixed
 - [x] `engine/budget` error handling
 - [x] Search01Icon text leak fix
 - [x] `tsconfig.json` int-test exclusion
-
-### PWA & Offline
-- [x] Remove unused SVGs, add `worker-src 'self'`, icon sizes, apple-touch-icon
-
-### P2 — API Security & Rate Limiting
-- [x] 16 routes secured with auth + per-route rate limits
-- [x] `withRateLimit` config parameter for custom limits
-
-### Flashcards
-- [x] Legacy localStorage → SM-2 Dexie migration
+- [x] PWA cleanup: unused SVGs, worker-src, icon sizes, apple-touch-icon
+- [x] Flashcard legacy localStorage → SM-2 Dexie migration
 - [x] `/flashcards/browse` page with search/filter/pagination
-- [x] CSV import/export
-
-### Study Planner
-- [x] Plan-aware reminders, iCal export, recurring sessions
-- [x] Appwrite sync (STUDY_PLANS collection, job queue handler)
-- [x] Constraint-based scheduling algorithm
-
-### Content Moderation
-- [x] Question flagging API (`POST /api/questions/flag`)
-- [x] Admin review queue (`/admin/content`)
-- [x] Auto-regen for low-rated questions
-
-### Social
+- [x] CSV import/export for flashcards
+- [x] Study planner: plan-aware reminders, iCal export, recurring sessions, Appwrite sync
+- [x] Content moderation: question flagging API, admin review queue, auto-regen
 - [x] Real leaderboard from Appwrite aggregation
 - [x] Activity feed service
-
-### Admin Panels
-- [x] User management (`/admin/users`)
-- [x] Content moderation (`/admin/content`)
-- [x] Notification broadcast (`/admin/notifications`)
-- [x] Analytics dashboard (`/admin/analytics`)
-
-### P3 Code Quality
-- [x] Menu component deleted, list-cell dead code removed
-- [x] 16 unused vars + 6 unused imports removed
-- [x] "use client" fixes (10 removed, 6 added)
-- [x] Empty event handlers fixed
-
-### P3 Accessibility
-- [x] bottom-nav, progress-dots, animated-tabs, segmented-control, profile-tab, study-planner
-
-### P3 Performance
-- [x] Namespace → named imports (THREE, RechartsPrimitive)
-- [x] `sizes` on `<Image>`, restricted `remotePatterns`
-- [x] Suspense skeletons instead of `fallback={null}`
-- [x] Memory leak fixes (use-tts.ts, exam-session.ts)
-
-### P3 Architecture
-- [x] Merged 3 empty-state systems into 1
-- [x] Split study-set-creator (802→181 lines)
-- [x] Split quiz-view (558→327 lines)
-- [x] Merged animated-tabs + segmented-control → TabSwitcher
-- [x] AppErrorBoundary on 9 pages
-- [x] Lazy-loaded nav via next/dynamic
-- [x] Streaming SSR for dashboard + admin pages
-- [x] API error standardization (`apiError`/`apiSuccess`)
-- [x] Constraint-based study planner algorithm
+- [x] Admin panels: users, content, notifications, analytics
+- [x] Code quality: dead code removed, unused vars/imports, "use client" fixes, empty handlers
+- [x] Accessibility: bottom-nav, progress-dots, animated-tabs, segmented-control, profile-tab, study-planner
+- [x] Performance: named imports, Image sizes, Suspense skeletons, memory leak fixes
+- [x] Architecture: empty-state merge, study-set-creator split, quiz-view split, TabSwitcher, AppErrorBoundary, lazy-loaded nav, streaming SSR, API error standardization, constraint-based planner
 
 ---
 
 ## Remaining
 
-### Test coverage
+### P0 — Phase 2 Cleanup
+- [ ] **2.1 `/past-papers` direct route** — Make `/past-papers` host the browse UI directly instead of redirecting to `/dashboard/exams`. Add language filter (PaperListing type already has `language` field).
+
+### P0 — Gamification UI Polish (3.2)
+- [ ] **Wire LevelUp modal** — `level-up.tsx` modal exists but is never triggered. Wire it into `useGamification` hook when `addXp()` causes a level change.
+- [ ] **Wire AchievementUnlock modal** — `achievement-unlock.tsx` modal exists but is never triggered. Wire it when `checkAndUnlockAchievements()` unlocks a new achievement.
+- [ ] **Wire level-up confetti** — Confetti component used in quiz/exam/flashcard results but not auto-triggered on level-up events.
+
+### P1 — Observability (4.1)
+- [ ] **Error tracking (Sentry)** — No Sentry integration exists. Add `@sentry/nextjs` and wire error reporting.
+- [ ] **AI latency monitoring** — `engine-analytics.ts` has `duration` field but never populates it. Add timing instrumentation around AI calls.
+- [ ] **Usage analytics dashboard** — Analytics are collected but there's no admin-facing dashboard to view them.
+
+### P1 — Progress Export (4.2)
+- [ ] **PDF export** — JSON export exists; add PDF generation (e.g., `@react-pdf/renderer` or server-side) for progress reports.
+
+### P1 — Architectural Weak Points
+- [ ] **Persist daily AI call token budget** — Migrate `dailyCallTracker` from in-memory Maps to shared KV-store or Appwrite collection (serverless container recycles reset counters).
+- [ ] **Secure auth rate limiting** — Move auth rate limiting from client-side in-memory Map to server-side (Appwrite/Redis).
+- [ ] **Validate regenerated questions** — Strengthen `"question-regen"` job processor to validate structural consistency (option IDs, acceptable answers, diagrams).
+- [ ] **Transactional synced flags** — Prevent eager deletion of local IndexedDB progress data in `flushOfflineData`. Keep local data intact, mark as synced, delete only after background sync succeeds.
+
+### P2 — Anonymous User Migration (complete on sign-up)
+- [ ] **Sync competency history** — Migrate offline Bloom competency records to Appwrite on sign-up.
+- [ ] **Sync spaced repetition cards** — Sync offline SM-2 flashcard profiles to Appwrite on sign-up.
+- [ ] **Sync wrong answer journal** — Synchronize wrong answers and content ratings to Appwrite on sign-up.
+- [ ] **Sync chat history** — Migrate AI tutor chat messages to Appwrite on sign-up.
+
+### P2 — Subject Sync Logic
+- [ ] **Implement syncSubject Actions** — Replace mock methods in `src/lib/server/sync-actions.ts` with real offline-sync logic for subjects metadata and question banks.
+
+### P2 — Offline PWA Enhancements
+- [ ] **Offline past paper PDF downloader** — Allow caching past exam papers locally for offline viewing.
+- [ ] **Exam session recovery** — Auto-save timed exam sessions to IndexedDB for crash/reload recovery.
+
+### P3 — System Unifications
+- [ ] **Consolidate spaced repetition** — Merge overlapping SM-2 logic between `spaced-rep-service.ts` and `spaced-repetition.ts`.
+- [ ] **Standardize difficulty types** — Unify capitalized and lowercase difficulty types into shared normalized enum.
+- [ ] **Shared rate-limit provider** — Combine RateLimiter cores for token-tracker, APIs, and auth routes.
+
+### P3 — AI Personalization & Retention
+- [ ] **Bloom's Taxonomy recommendations** — Dashboard widget recommending learning formats based on topic Bloom competency.
+- [ ] **Spaced repetition due notifications** — Push reminders when SM-2 cards become due for review.
+
+### P3 — Custom Domain
+- [ ] **Replace Vercel domain** — Change `https://lumni-psi.vercel.app` to custom domain in referral links.
+
+### Test Coverage
 - [ ] `src/lib/db/` (15 files) — persistence layer
 - [ ] `src/lib/sync/` — offline/online sync handler
 - [ ] `src/lib/exams/` — marker client, exam paper sync
@@ -85,53 +132,3 @@
 - [ ] Integration tests (orchestrator ↔ engine pipelines)
 - [ ] E2E tests (Playwright/Cypress)
 - [ ] Component tests (`src/components/`)
-
-### Other
-- [ ] Replace `https://lumni-psi.vercel.app` with custom domain in referral links
-
----
-
-## Architectural Weak Points & Security Gaps
-
-### P1 — Serverless Session Ephemerality & Limit Resilience
-- [ ] **Persist Daily AI Call Token Budget**: Migrate `dailyCallTracker` (`src/lib/ai/daily-call-tracker.ts`) from ephemeral, in-memory Maps to a shared KV-store or Appwrite collection to prevent resets on serverless container recycles and stop multi-instance bypass.
-- [ ] **Secure Auth Rate Limiting**: Move auth rate limiting (`src/lib/auth/rate-limit.ts`) from client-side in-memory Map to server-side Redis or Appwrite collections to secure authentication and magic-link flows from bot spamming.
-- [ ] **Validate Regenerated Questions**: Strengthen `"question-regen"` job processor handler to validate that regenerated question text preserves structural consistency (options IDs, acceptable answers, diagrams) to avoid database mismatches.
-
-### P1 — Offline Sync Queue Data Durability
-- [ ] **Transactional Synced Flags**: Prevent eager deletion of local IndexedDB `progress` data in `flushOfflineData` (`src/lib/sync/sync-handler.ts`). Keep local data intact and mark as synced, only deleting after background synchronization tasks succeed.
-
----
-
-## Functional Gaps & Disconnects
-
-### P2 — Complete Upgraded Anonymous User Migration
-- [ ] **Sync Competency History**: Extend `flushOfflineData` to migrate offline Bloom competency records (`competencies` table) to Appwrite upon student sign-up.
-- [ ] **Sync Spaced Repetition Cards**: Sync offline SM-2 flashcard profiles (`flashcards` table) to Appwrite on sign-up so learners don't lose custom card histories.
-- [ ] **Sync Wrong Answer Journal**: Synchronize wrong answers (`wrongAnswers` table) and content ratings (`questionRatings` table) to keep historical mistakes lists consistent across devices.
-- [ ] **Sync Chat History**: Migrate historical AI tutor interactions (`chatMessages` table) to the Appwrite backend on conversion.
-
-### P2 — Subject Sync Logic Implementation
-- [ ] **Implement syncSubject Actions**: Replace mock methods in `src/lib/server/sync-actions.ts` with real offline-sync logic to download and seed subjects metadata and offline question banks directly to Dexie.
-
----
-
-## Architectural Synergies & Unification
-
-### P3 — System Unifications
-- [ ] **Consolidate Spaced Repetition Logic**: Merge overlapping SM-2 spaced repetition recalculations between `spaced-rep-service.ts` and `spaced-repetition.ts` into a single high-leverage module.
-- [ ] **Standardize Difficulty Types**: Unify capitalized (`"Easy" | "Medium" | "Hard"`) and lowercase difficulty types into a shared, normalized enum with automatic parsing in `src/lib/shared/question-type.ts`.
-- [ ] **Shared Rate-Limit Provider**: Combine `RateLimiter` cores so that token-budget trackers, APIs, and auth routes leverage a unified persistent adapter seam.
-
----
-
-## Missing & Value-Add Features
-
-### P2 — Offline PWA Enhancements & Resilient Exam Sessions
-- [ ] **Offline Past Paper PDF Downloader & Pre-caching**: Allow users to cache past exam papers locally and view them through a customized, offline-capable PDF viewer.
-- [ ] **Exam Session Recovery**: Hook into `IndexedDB` to auto-save and restore timed exam sessions upon browser crash or reload, avoiding progress loss.
-
-### P3 — AI Personalization & Retention Loops
-- [ ] **Bloom's Taxonomy Recommendations**: Build a dashboard widget recommending specific learning formats based on topic Bloom competency (e.g., recommend calculations if numerical understanding is weak).
-- [ ] **Spaced Repetition Due Notifications**: Schedule push notifications or reminders when spaced repetition cards become due for review.
-

@@ -1,7 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "@/components/ui/toast";
+import type { Achievement, LevelInfo } from "@/types/gamification";
 import {
 	ACHIEVEMENTS,
 	calculateLevel,
@@ -95,6 +96,10 @@ function mergeWithDefaults(stored: StoredGamification): StoredGamification {
 
 export function useGamification() {
 	const [data, setData] = useState<StoredGamification>(DEFAULT_GAMIFICATION);
+	const prevLevelRef = useRef<number>(0);
+	const [leveledUp, setLeveledUp] = useState<LevelInfo | null>(null);
+	const [pendingAchievement, setPendingAchievement] =
+		useState<Achievement | null>(null);
 
 	useEffect(() => {
 		const stored = loadFromStorage();
@@ -103,9 +108,13 @@ export function useGamification() {
 			saveToStorage(merged);
 		}
 		setData(merged);
+		prevLevelRef.current = calculateLevel(merged.totalXp).level;
 	}, []);
 
 	const levelInfo = calculateLevel(data.totalXp);
+
+	const clearLevelUp = useCallback(() => setLeveledUp(null), []);
+	const clearAchievement = useCallback(() => setPendingAchievement(null), []);
 
 	const earnedAchievements = ACHIEVEMENTS.map((achievement) => {
 		const stored = data.achievements.find((a) => a.id === achievement.id);
@@ -135,6 +144,13 @@ export function useGamification() {
 
 				const newTotalXp = prev.totalXp + totalXpGain;
 				const newXp = prev.xp + totalXpGain;
+
+				const oldLevel = prevLevelRef.current;
+				const newLevelInfo = calculateLevel(newTotalXp);
+				if (newLevelInfo.level > oldLevel) {
+					setLeveledUp(newLevelInfo);
+					prevLevelRef.current = newLevelInfo.level;
+				}
 
 				const updatedChallenges = prev.dailyChallenges.map((challenge) => {
 					if (challenge.completed) return challenge;
@@ -211,6 +227,8 @@ export function useGamification() {
 				totalXp: newTotalXp,
 				xp: prev.xp + achievement.xpReward,
 			};
+
+			setPendingAchievement(achievement);
 
 			setTimeout(() => {
 				toast({
@@ -398,5 +416,9 @@ export function useGamification() {
 		completeDailyChallenge,
 		currentStreak: data.currentStreak,
 		totalQuestionsAnswered: data.totalQuestionsAnswered,
+		leveledUp,
+		pendingAchievement,
+		clearLevelUp,
+		clearAchievement,
 	};
 }

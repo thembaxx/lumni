@@ -28,6 +28,7 @@ export interface ExamFilter {
 	year: number | null;
 	subject: string | null;
 	session: string;
+	language?: string;
 }
 
 export interface ExamGroup {

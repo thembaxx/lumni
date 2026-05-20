@@ -1,6 +1,7 @@
 export { AchievementUnlock } from "./achievement-unlock";
 export { CelebrationButton } from "./celebration-button";
 export { Confetti } from "./confetti";
+export { GamificationCelebration } from "./gamification-celebration";
 export {
 	type Celebration,
 	type CelebrationType,

@@ -1,7 +1,11 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Confetti, XPGainPopup } from "@/components/celebration";
+import {
+	Confetti,
+	GamificationCelebration,
+	XPGainPopup,
+} from "@/components/celebration";
 import { useGamification } from "@/hooks/use-gamification";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
@@ -345,6 +349,7 @@ export function FlashcardsClient() {
 
 	return (
 		<>
+			<GamificationCelebration />
 			<Confetti trigger={showConfetti} count={20} duration={1200} />
 			<XPGainPopup amount={10} visible={showXPGain} />
 			<FlashcardsActive

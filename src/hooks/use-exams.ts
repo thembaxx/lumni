@@ -74,6 +74,13 @@ export function useExams(filter: ExamFilter) {
 			);
 		}
 
+		if (filter.language) {
+			results = results.filter(
+				(exam) =>
+					exam.language?.toLowerCase() === filter.language?.toLowerCase(),
+			);
+		}
+
 		return results;
 	}, [exams, filter]);
 

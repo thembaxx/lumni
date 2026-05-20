@@ -15,7 +15,6 @@ export async function flushOfflineData(userId: string): Promise<void> {
 					longestStreak: p.longestStreak,
 				});
 			}
-			await offlineDB.progress.delete(p.id ?? 0);
 		}),
 	);
 

@@ -3,6 +3,7 @@
 import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 import dynamic from "next/dynamic";
 import { useState } from "react";
+import { GamificationCelebration } from "@/components/celebration";
 import { AchievementShowcase } from "@/components/dashboard/achievement-showcase";
 import { CountdownHeader } from "@/components/dashboard/countdown-header";
 import { DailyChallenges } from "@/components/dashboard/daily-challenges";
@@ -479,6 +480,7 @@ export function DashboardClient({
 					</>
 				)}
 			</div>
+			<GamificationCelebration />
 		</AppErrorBoundary>
 	);
 }

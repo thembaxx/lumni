@@ -13,7 +13,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Confetti } from "@/components/celebration";
+import { Confetti, GamificationCelebration } from "@/components/celebration";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -903,6 +903,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 					</AnimatePresence>
 				</main>
 			</div>
+			<GamificationCelebration />
 		</div>
 	);
 }

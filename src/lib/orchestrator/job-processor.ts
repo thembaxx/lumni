@@ -308,12 +308,13 @@ const handlers: Record<JobType, JobHandler> = {
 		const existing = existingDocs[0];
 		const currentText = (existing.questionText as string) || "";
 		const currentTopic = (existing.topicId as string) || "";
+		const currentType = (existing.type as string) || "";
 
 		const { getAI } = await import("@/lib/ai/client");
 		const ai = getAI();
 		const result = await ai.generateWithSystem(
 			"You are a question regeneration assistant. Improve the quality of the given question while keeping the same topic, type, and difficulty.",
-			`Regenerate this question to improve its quality:\n\nSubject: ${data.subject}\nTopic: ${currentTopic}\nCurrent question: ${currentText}`,
+			`Regenerate this question to improve its quality:\n\nSubject: ${data.subject}\nTopic: ${currentTopic}\nType: ${currentType}\nCurrent question: ${currentText}`,
 		);
 
 		if (!("content" in result) || !result.content) {
@@ -324,8 +325,26 @@ const handlers: Record<JobType, JobHandler> = {
 			return;
 		}
 
+		const newText = result.content.trim();
+
+		if (newText.length < 10) {
+			console.error(
+				"[JobProcessor] Regenerated question too short, skipping:",
+				data.questionId,
+			);
+			return;
+		}
+
+		if (newText === currentText) {
+			console.warn(
+				"[JobProcessor] Regenerated question unchanged, skipping:",
+				data.questionId,
+			);
+			return;
+		}
+
 		await updateDocument(COLLECTIONS.QUESTIONS, data.questionId, {
-			questionText: result.content.trim(),
+			questionText: newText,
 			updatedAt: new Date().toISOString(),
 		});
 	},
