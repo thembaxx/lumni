@@ -15,9 +15,21 @@ const nextConfig: NextConfig = {
 			},
 			{
 				protocol: "https",
+				hostname: "fra.cloud.appwrite.io",
+			},
+			{
+				protocol: "https",
 				hostname: "utfs.io",
 			},
 		],
+	},
+	async rewrites() {
+		return [
+			{
+				source: "/api/appwrite/:path*",
+				destination: `${process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT || "https://cloud.appwrite.io/v1"}/:path*`,
+			},
+		];
 	},
 	async headers() {
 		return [

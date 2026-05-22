@@ -4,6 +4,14 @@ import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 
 export async function POST(req: NextRequest) {
 	try {
+		if (!APPWRITE_DATABASE_ID) {
+			console.error("[StudySessions] APPWRITE_DATABASE_ID is missing");
+			return NextResponse.json(
+				{ success: false, error: "Configuration error: Database ID missing" },
+				{ status: 500 },
+			);
+		}
+
 		const body = await req.json();
 		const { subject, questionsAnswered, correctCount, duration } = body;
 

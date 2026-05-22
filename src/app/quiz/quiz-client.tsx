@@ -5,10 +5,10 @@ import { Suspense } from "react";
 import { QuizView } from "@/components/quiz";
 
 function QuizClientContent() {
-	const { get } = useSearchParams();
-	const initialSubject = get("subject") || undefined;
-	const topic = get("topic") || undefined;
-	const countParam = get("count");
+	const searchParams = useSearchParams();
+	const initialSubject = searchParams.get("subject") || undefined;
+	const topic = searchParams.get("topic") || undefined;
+	const countParam = searchParams.get("count");
 	const questionCount = countParam ? parseInt(countParam, 10) : 20;
 
 	const handleQuit = () => {

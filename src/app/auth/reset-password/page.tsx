@@ -13,8 +13,8 @@ import { iOSEase } from "@/lib/utils/animation";
 
 function ResetPasswordForm() {
 	const { push } = useRouter();
-	const { get } = useSearchParams();
-	const token = get("token");
+	const searchParams = useSearchParams();
+	const token = searchParams.get("token");
 
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");

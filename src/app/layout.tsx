@@ -154,8 +154,10 @@ export default function RootLayout({
 				<Suspense fallback={<CardSkeleton />}>
 					<UTSSR />
 				</Suspense>
-				<script
+				<Script
+					id="json-ld"
 					type="application/ld+json"
+					strategy="afterInteractive"
 					// biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD structured data (static, no user input)
 					dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
 				/>

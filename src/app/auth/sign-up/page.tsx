@@ -26,8 +26,8 @@ function safeRedirect(url: string | null): string {
 
 function SignUpForm() {
 	const { push, refresh } = useRouter();
-	const { get } = useSearchParams();
-	const redirect = safeRedirect(get("redirect"));
+	const searchParams = useSearchParams();
+	const redirect = safeRedirect(searchParams.get("redirect"));
 	const { signUp, error } = useAuth();
 
 	const [name, setName] = useState("");
@@ -36,7 +36,7 @@ function SignUpForm() {
 	const [showPassword, setShowPassword] = useState(false);
 	const [loading, setLoading] = useState(false);
 
-	const referralCode = get("ref");
+	const referralCode = searchParams.get("ref");
 
 	const handleSignUp = useCallback(
 		async (e: React.FormEvent) => {

@@ -48,21 +48,32 @@ export class AnalyticsService {
 		globalAverage: number;
 		userAverage: number;
 	}> {
-		try {
-			const res = await fetch(
-				`/api/analytics/comparative?userId=${encodeURIComponent(userId)}`,
-			);
-			if (!res.ok) throw new Error(`HTTP ${res.status}`);
-			return await res.json();
-		} catch (error) {
-			console.error("Failed to get comparative analytics:", error);
-			return {
-				userPercentile: 50,
-				subjectRankings: {},
-				globalAverage: 65,
-				userAverage: 0,
-			};
+		let lastError: Error | null = null;
+		for (let attempt = 1; attempt <= 2; attempt++) {
+			try {
+				const res = await fetch(
+					`/api/analytics/comparative?userId=${encodeURIComponent(userId)}`,
+				);
+				if (!res.ok) throw new Error(`HTTP ${res.status}`);
+				return await res.json();
+			} catch (error) {
+				lastError = error instanceof Error ? error : new Error(String(error));
+				if (attempt < 2) {
+					await new Promise((resolve) => setTimeout(resolve, 1000 * attempt));
+				}
+			}
 		}
+
+		console.error(
+			"Failed to get comparative analytics after retries:",
+			lastError,
+		);
+		return {
+			userPercentile: 50,
+			subjectRankings: {},
+			globalAverage: 65,
+			userAverage: 0,
+		};
 	}
 
 	/**

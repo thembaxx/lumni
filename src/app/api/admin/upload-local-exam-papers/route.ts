@@ -8,7 +8,7 @@ import { getExamsDb, insertExamPaper, saveExamsDb } from "@/lib/db/exams";
 import { requireAdmin } from "@/lib/server/auth";
 
 async function getDefaultFolderPath(): Promise<string> {
-	const cwd = (process as { cwd(): string }).cwd();
+	const cwd = /* turbopackIgnore: true */ (process as { cwd(): string }).cwd();
 	return `${cwd}/downloads/exam-papers-2025`;
 }
 
@@ -124,7 +124,7 @@ export async function POST(request: NextRequest) {
 
 		const targetFolder = folderPath || (await getDefaultFolderPath());
 
-		if (!fs.existsSync(targetFolder)) {
+		if (!fs.existsSync(/* turbopackIgnore: true */ targetFolder)) {
 			return NextResponse.json(
 				{ error: `Folder not found: ${targetFolder}` },
 				{ status: 400 },
@@ -132,7 +132,7 @@ export async function POST(request: NextRequest) {
 		}
 
 		const files = fs
-			.readdirSync(targetFolder)
+			.readdirSync(/* turbopackIgnore: true */ targetFolder)
 			.filter((f) => f.endsWith(".pdf"));
 
 		if (files.length === 0) {
@@ -158,7 +158,7 @@ export async function POST(request: NextRequest) {
 			const normalizedCode = normalizeSubjectCode(subjectCode);
 			const subjectName = toTitleCase(normalizedCode);
 
-			const filePath = path.join(targetFolder, fileName);
+			const filePath = path.join(/* turbopackIgnore: true */ targetFolder, fileName);
 
 			const uploadResult = await uploadToUploadThing(
 				filePath,
