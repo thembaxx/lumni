@@ -48,6 +48,47 @@ The premium page is a marketing/upsell page — it should be visible to everyone
 ### Redirect behavior
 All upsell buttons redirect with `?redirect=/settings` or `?redirect=/dashboard` so users land back where they were after signing in.
 
+---
+
+# Implementation Notes — National Exam Dates Tracker
+
+## Summary
+
+### New Files
+
+| File | Purpose |
+|------|---------|
+| `src/lib/exam-dates/types.ts` | `ExamSlot` type, `getCurrentSession()` |
+| `src/lib/exam-dates/service.ts` | CRUD + Dexie caching + formatting utils |
+| `src/lib/exam-dates/data-2026-may.ts` | Seed timetable (~90 exam slots for May/June 2026 NSC) |
+| `src/lib/exam-dates/index.ts` | Barrel exports |
+| `src/components/tools/national-exam-calendar.tsx` | Main component: Apple widget + agenda view |
+| `src/components/tools/exam-detail-dialog.tsx` | Detail Dialog with Practice / Mock / Common Q actions |
+| `src/app/api/exam-dates/route.ts` | GET endpoint for seed data |
+
+### Modified Files
+
+| File | Change |
+|------|--------|
+| `src/lib/db/schema.ts` | Added `examDates` table (version 12) |
+| `src/components/tools/tools-dialog.tsx` | Replaced old `ExamCalendar` with `NationalExamCalendar` |
+| `src/components/tools/index.ts` | Added `NationalExamCalendar` export |
+| `src/components/dashboard/practice/exams-browse.tsx` | Added "Exam Dates" button (opens tools dialog → calendar tab) |
+
+### Decisions not in the spec
+
+1. **PDF parsing skipped for now**: The education.gov.za PDF is image-based (contains embedded JPEGs). Text extraction via `@opendataloader/pdf` or `pdfjs-dist` failed. Instead, I manually extracted the timetable from search results (studentdaily.co.za article that had the full table) and wrote seed data. The `POST /api/exam-dates/refresh` endpoint is not implemented — added to TODO.
+
+2. **Dexie-only caching (no Appwrite write path)**: The service reads from Dexie L1 and falls back to the seed array. I designed the API route to be the always-fresh source, but the Appwrite write path for `exam_dates` collection is not implemented — data lives in seed + Dexie. For a production rollout, a server-side cron would scrape the PDF, store in Appwrite, and the client would sync from there.
+
+3. **Icon availability**: `@hugeicons/core-free-icons` doesn't have `ClockForwardIcon`. Used `TimeScheduleIcon` instead. Also doesn't have `Calendar01FreeIcons` (that was used in old component) but `Calendar01Icon` is fine.
+
+4. **Toast hook usage**: The `useToast()` hook returns `null | ((props) => void)`. This project also exports a top-level `toast()` function that works outside React context. Used the direct `toast()` import for the "Coming Soon" toasts.
+
+5. **Reused subject colors from old component**: The `subjectColors` and `subjectAbbrs` maps are duplicated in the new service. In a future refactor they should be moved to a shared location.
+
+6. **Old `ExamCalendar` preserved**: The old manual exam calendar is still at `src/components/tools/exam-calendar.tsx` and exported. It's not deleted — just no longer used in the tools dialog. Can be removed in a future cleanup.
+
 ## Verification
 - `npx tsc --noEmit`: ✅ 0 errors
-- `npx @biomejs/biome check`: ✅ 0 errors on changed files
+- `npx @biomejs/biome check --write --unsafe`: ✅ 0 errors on changed files

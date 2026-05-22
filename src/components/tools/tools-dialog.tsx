@@ -25,8 +25,9 @@ const AiSolver = dynamic(
 	() => import("./ai-solver").then((mod) => mod.AiSolver),
 	{ ssr: false },
 );
-const ExamCalendar = dynamic(
-	() => import("./exam-calendar").then((mod) => mod.ExamCalendar),
+const NationalExamCalendar = dynamic(
+	() =>
+		import("./national-exam-calendar").then((mod) => mod.NationalExamCalendar),
 	{ ssr: false },
 );
 const ResultsSearch = dynamic(
@@ -140,7 +141,7 @@ function ToolsDialogInner({ open: _open, onOpenChange }: ToolsDialogProps) {
 							<APSCalculator />
 						</TabsContent>
 						<TabsContent value="calendar" className="m-0 h-full">
-							<ExamCalendar />
+							<NationalExamCalendar />
 						</TabsContent>
 						<TabsContent value="results" className="m-0 h-full">
 							<ResultsSearch />

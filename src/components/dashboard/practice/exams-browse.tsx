@@ -2,6 +2,7 @@
 
 import {
 	BookOpen01Icon,
+	Calendar01Icon,
 	Cancel01Icon,
 	Search01Icon,
 } from "@hugeicons/core-free-icons";
@@ -24,6 +25,7 @@ import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Input } from "@/components/ui/input";
 import { useExams } from "@/hooks/use-exams";
+import { useToolsStore } from "@/store/tools";
 
 const YEARS = [2025, 2024, 2023, 2022, 2021] as const;
 const LANGUAGES = ["all", "english", "afrikaans"] as const;
@@ -34,6 +36,7 @@ export function ExamsBrowse() {
 	const [selectedSession, setSelectedSession] = useState<string>("all");
 	const [selectedLanguage, setSelectedLanguage] = useState<string>("all");
 	const [searchQuery, setSearchQuery] = useState("");
+	const openTools = useToolsStore((s) => s.openTools);
 
 	const { exams, groupedExams, isLoading, error } = useExams({
 		search: searchQuery,
@@ -63,9 +66,20 @@ export function ExamsBrowse() {
 			<div className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-4">
 				<Anim>
 					<div className="flex flex-col gap-6">
-						<h1 className="ios-title-1 font-semibold text-foreground tracking-tight">
-							Past Exam Papers
-						</h1>
+						<div className="flex items-center justify-between">
+							<h1 className="ios-title-1 font-semibold text-foreground tracking-tight">
+								Past Exam Papers
+							</h1>
+							<Button
+								size="sm"
+								variant="outline"
+								onClick={() => openTools("calendar")}
+								className="gap-1.5 rounded-full border-border/60 text-xs"
+							>
+								<HugeiconsIcon icon={Calendar01Icon} className="size-3.5" />
+								Exam Dates
+							</Button>
+						</div>
 
 						<div className="relative flex flex-col gap-4">
 							<div className="relative">

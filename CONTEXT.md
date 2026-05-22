@@ -34,6 +34,15 @@ Editable user attributes in Settings > Profile: display name, email (read-only +
 - **Admin auth** (magic-link/OTP for `/admin/*`) is separate from student auth and unchanged by this system.
 - On sign-up, the **Sync Queue** is flushed to move Dexie data to Appwrite.
 
+## Exam Dates Module (`src/lib/exam-dates/`)
+
+Auto-detects current NSC/SC exam session (May/June or Oct/Nov), caches timetable data from official DBE sources.
+- **Types**: `ExamSlot` — subject, paper, date, time range, duration, SC availability.
+- **Session detection**: `getCurrentSession()` — Jan-Jun → current year's May/June; Jul-Sep → Oct/Nov; Oct-Dec → Oct/Nov.
+- **Seed data**: `data-2026-may.ts` — ~90 slots extracted from official DBE timetable PDF via web search (PDF is image-based, not text-extractable).
+- **Caching**: Dexie L1 (`examDates` table, version 12 in schema), seed array L2 fallback.
+- **Service**: `getExamDates()`, `getNextExams()`, `getExamsGroupedByDate()`, formatting utils.
+
 ## Key modules
 
 **QueueCore** (`src/lib/queue/core.ts`):

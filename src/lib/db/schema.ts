@@ -141,6 +141,15 @@ export interface CachedPdf {
 	cachedAt: number;
 }
 
+export interface CachedExamDates {
+	id?: number;
+	cacheKey: string;
+	session: string;
+	year: number;
+	slots: string;
+	updatedAt: number;
+}
+
 export class LumniOfflineDB extends Dexie {
 	chatMessages!: Table<ChatMessageRecord, number>;
 	questions!: Table<CachedQuestion, number>;
@@ -158,6 +167,7 @@ export class LumniOfflineDB extends Dexie {
 	flashcards!: Table<FlashcardSM2, string>;
 	examSessions!: Table<ExamSessionSnapshot, number>;
 	cachedPdfs!: Table<CachedPdf, number>;
+	examDates!: Table<CachedExamDates, number>;
 
 	constructor() {
 		super("lumni-offline");
@@ -211,6 +221,10 @@ export class LumniOfflineDB extends Dexie {
 		this.version(11).stores({
 			examSessions: "++id, &paperId, startedAt, lastSavedAt, completed",
 			cachedPdfs: "++id, &paperId, cachedAt",
+		});
+
+		this.version(12).stores({
+			examDates: "++id, &cacheKey, session, year, updatedAt",
 		});
 	}
 }
