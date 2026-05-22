@@ -1,9 +1,6 @@
 import type { ExamSlot } from "./types";
 
-export function generateIcal(
-	slots: ExamSlot[],
-	sessionLabel: string,
-): string {
+export function generateIcal(slots: ExamSlot[], sessionLabel: string): string {
 	const lines: string[] = [
 		"BEGIN:VCALENDAR",
 		"VERSION:2.0",

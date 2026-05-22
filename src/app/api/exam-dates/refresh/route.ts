@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { withRateLimit } from "@/lib/shared/with-rate-limit";
 import { getSeedData, syncExamDatesToAppwrite } from "@/lib/exam-dates/service";
+import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 async function refreshHandler(): Promise<NextResponse> {
 	try {

@@ -15,15 +15,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: oven-sh/setup-bun@v2
         with:
-          node-version: 22
-          cache: npm
-      - run: npm ci
-      - run: npx tsc --noEmit
-      - run: npx biome check src/
-      - run: npm test
-      - run: npm run build
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+      - run: bun run typecheck
+      - run: bunx @biomejs/biome check .
+      - run: bun test
+      - run: bun run build
         env:
           NEXT_PUBLIC_SENTRY_DSN: ${{ secrets.SENTRY_DSN || '' }}
 
@@ -31,12 +30,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: oven-sh/setup-bun@v2
         with:
-          node-version: 22
-          cache: npm
-      - run: npm ci
-      - run: npx next build
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+      - run: bun run analyze
         env:
           ANALYZE: true
           NEXT_PUBLIC_SENTRY_DSN: ${{ secrets.SENTRY_DSN || '' }}
@@ -54,12 +52,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: oven-sh/setup-bun@v2
         with:
-          node-version: 22
-          cache: npm
-      - run: npm ci
-      - run: npx tsx scripts/sync-todo-to-linear.ts
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+      - run: bun scripts/sync-todo-to-linear.ts
         env:
           LINEAR_API_KEY: ${{ secrets.LINEAR_API_KEY }}
 

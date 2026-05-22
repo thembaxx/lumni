@@ -292,11 +292,14 @@ export async function scheduleExamAlerts(
 		if (alertTime <= now) continue;
 
 		const delay = alertTime - now;
-		const existing = loadFromStorage<{ examSubject: string; scheduledAt: number }[]>(
-			"lumni_exam_alerts",
-			[],
-		);
-		if (existing.some((e) => e.examSubject === slot.subject && e.scheduledAt === alertTime)) {
+		const existing = loadFromStorage<
+			{ examSubject: string; scheduledAt: number }[]
+		>("lumni_exam_alerts", []);
+		if (
+			existing.some(
+				(e) => e.examSubject === slot.subject && e.scheduledAt === alertTime,
+			)
+		) {
 			continue;
 		}
 

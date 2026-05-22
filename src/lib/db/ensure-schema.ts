@@ -268,7 +268,11 @@ export const schemaConfig: Record<string, CollectionSchema> = {
 			source: { type: "string", size: 20 },
 		},
 		indexes: [
-			{ key: "idx_exam_dates_cacheKey", type: "unique", attributes: ["cacheKey"] },
+			{
+				key: "idx_exam_dates_cacheKey",
+				type: "unique",
+				attributes: ["cacheKey"],
+			},
 			{ key: "idx_exam_dates_session", type: "key", attributes: ["session"] },
 			{ key: "idx_exam_dates_year", type: "key", attributes: ["year"] },
 		],

@@ -3,9 +3,7 @@ export const REFERRAL_REWARD_DAYS = 7;
 export const REFERRAL_MONTHLY_LIMIT = 10;
 
 export function getReferralDomain(): string {
-	return (
-		process.env.NEXT_PUBLIC_APP_URL || "https://lumni-psi.vercel.app"
-	);
+	return process.env.NEXT_PUBLIC_APP_URL || "https://lumni-psi.vercel.app";
 }
 
 export function buildReferralLink(code: string): string {
