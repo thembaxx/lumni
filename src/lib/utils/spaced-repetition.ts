@@ -145,20 +145,20 @@ export async function convertQuizToFlashcards(
 	}>,
 	subject: string,
 ): Promise<FlashcardSM2[]> {
-	const newCards: FlashcardSM2[] = [];
-
-	for (const q of questions) {
-		const correctOption = q.options.find((o) => o.isCorrect);
-		if (!correctOption) continue;
-
-		const card = await flashcardRepository.create(
-			q.questionText,
-			correctOption.text,
-			subject,
-			q.id,
-		);
-		newCards.push(card);
-	}
+	const newCards = await Promise.all(
+		questions.flatMap((q) => {
+			const correctOption = q.options.find((o) => o.isCorrect);
+			if (!correctOption) return [];
+			return [
+				flashcardRepository.create(
+					q.questionText,
+					correctOption.text,
+					subject,
+					q.id,
+				),
+			];
+		}),
+	);
 
 	return newCards;
 }

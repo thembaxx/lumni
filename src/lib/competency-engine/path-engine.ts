@@ -147,9 +147,9 @@ export class PathEngine {
 		const subjectRecs = await Promise.all(
 			subjects.map((subjectId) =>
 				this.getNextTopics(subjectId, competencyMap).then((recs) =>
-					recs
-						.filter((rec) => rec.action !== "skip")
-						.map((rec) => ({ subjectId, rec })),
+					recs.flatMap((rec) =>
+						rec.action !== "skip" ? [{ subjectId, rec }] : [],
+					),
 				),
 			),
 		);

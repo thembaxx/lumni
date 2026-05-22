@@ -20,6 +20,7 @@
 		"database:ensure": "tsx scripts/ensure-appwrite.ts",
 		"admin:create": "tsx scripts/create-admin.ts",
 		"typecheck": "tsc --noEmit",
+		"postinstall": "patch-package",
 		"prepare": "husky",
 		"analyze": "ANALYZE=true next build"
 	},
@@ -37,6 +38,7 @@
 		"@sentry/nextjs": "^10.53.1",
 		"@tanstack/react-query": "^5.100.11",
 		"@types/katex": "^0.16.8",
+		"@types/next": "^9.0.0",
 		"@uploadthing/react": "^7.3.3",
 		"@xyflow/react": "^12.10.2",
 		"appwrite": "^25.0.0",
@@ -97,6 +99,7 @@
 		"eslint-config-next": "16.2.6",
 		"happy-dom": "^20.9.0",
 		"husky": "^9.1.7",
+		"patch-package": "^8.0.1",
 		"tailwindcss": "^4.3.0",
 		"typescript": "^6.0.3"
 	},

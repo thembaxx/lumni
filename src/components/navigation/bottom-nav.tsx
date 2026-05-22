@@ -142,13 +142,12 @@ export function BottomNav() {
 			const currentY = window.scrollY;
 			const delta = lastY - currentY;
 
-			if (currentY <= 0) {
-				setHidden(false);
-			} else if (delta < -8) {
-				setHidden(true);
-			} else if (delta > 0) {
-				setHidden(false);
-			}
+			setHidden((prev) => {
+				if (currentY <= 0) return false;
+				if (delta < -8) return true;
+				if (delta > 0) return false;
+				return prev;
+			});
 
 			lastY = currentY;
 			ticking = false;

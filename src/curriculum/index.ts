@@ -203,12 +203,14 @@ export class CurriculumRegistry {
 		const subject = curricula.get(subjectId);
 		if (!subject) return null;
 
+		const topicMap = new Map<string, CurriculumTopic & { isSub?: boolean }>();
 		for (const topic of subject.topics) {
-			if (topic.id === topicId) return topic;
-			const sub = topic.subtopics.find((st) => st.id === topicId);
-			if (sub) return { ...topic, subtopics: [] };
+			topicMap.set(topic.id, topic);
+			for (const st of topic.subtopics) {
+				topicMap.set(st.id, { ...topic, subtopics: [] });
+			}
 		}
-		return null;
+		return topicMap.get(topicId) ?? null;
 	}
 
 	async getAvailableTopics(
@@ -235,16 +237,19 @@ export class CurriculumRegistry {
 		const subject = curricula.get(subjectId);
 		if (!subject) return [];
 
-		const topic = subject.topics.find((t) => t.id === topicId);
+		const topicsMap = new Map<string, (typeof subject.topics)[number]>();
+		for (const t of subject.topics) {
+			topicsMap.set(t.id, t);
+		}
+
+		const topic = topicsMap.get(topicId);
 		if (!topic || topic.prerequisites.length === 0) return [];
 
 		const resolveLevel = (ids: string[]): string[][] => {
-			const direct = ids.filter((id) =>
-				subject.topics.some((t) => t.id === id),
-			);
+			const direct = ids.filter((id) => topicsMap.has(id));
 			const indirect: string[][] = [];
 			for (const id of direct) {
-				const t = subject.topics.find((t) => t.id === id);
+				const t = topicsMap.get(id);
 				if (t && t.prerequisites.length > 0) {
 					indirect.push(...resolveLevel(t.prerequisites));
 				}

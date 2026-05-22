@@ -141,14 +141,16 @@ export class QueueCore<T extends QueueItemBase> {
 				now - j.startedAt > staleThreshold,
 		);
 		await Promise.all(
-			stale
-				.filter((item): item is typeof item & { id: string } => !!item.id)
-				.map((item) =>
-					this.table.update(item.id, {
-						status: "pending",
-						attempts: item.attempts + 1,
-					} as unknown as Partial<T>),
-				),
+			stale.flatMap((item) =>
+				item.id
+					? [
+							this.table.update(item.id, {
+								status: "pending",
+								attempts: item.attempts + 1,
+							} as unknown as Partial<T>),
+						]
+					: [],
+			),
 		);
 		return stale.length;
 	}

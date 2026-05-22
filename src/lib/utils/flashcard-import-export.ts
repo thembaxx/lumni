@@ -35,6 +35,25 @@ export interface ImportedCard {
 	topic?: string;
 }
 
+function parseCSVLine(l: string): string[] {
+	const result: string[] = [];
+	let current = "";
+	let inQuotes = false;
+	for (let i = 0; i < l.length; i++) {
+		if (l[i] === '"') {
+			if (inQuotes && l[i + 1] === '"') {
+				current += '"';
+				i++;
+			} else inQuotes = !inQuotes;
+		} else if (l[i] === "," && !inQuotes) {
+			result.push(current.trim());
+			current = "";
+		} else current += l[i];
+	}
+	result.push(current.trim());
+	return result;
+}
+
 export function parseCSV(text: string): ImportedCard[] {
 	const lines = text.trim().split("\n");
 	if (lines.length < 2) return [];
@@ -47,36 +66,19 @@ export function parseCSV(text: string): ImportedCard[] {
 
 	if (frontIdx === -1 || backIdx === -1) return [];
 
-	return dataLines
-		.map((line) => {
-			const parseCSVLine = (l: string): string[] => {
-				const result: string[] = [];
-				let current = "";
-				let inQuotes = false;
-				for (let i = 0; i < l.length; i++) {
-					if (l[i] === '"') {
-						if (inQuotes && l[i + 1] === '"') {
-							current += '"';
-							i++;
-						} else inQuotes = !inQuotes;
-					} else if (l[i] === "," && !inQuotes) {
-						result.push(current.trim());
-						current = "";
-					} else current += l[i];
-				}
-				result.push(current.trim());
-				return result;
-			};
-			const fields = parseCSVLine(line);
-			return {
-				front: fields[frontIdx] || "",
-				back: fields[backIdx] || "",
-				subject:
-					subjectIdx >= 0 && fields[subjectIdx]
-						? fields[subjectIdx]
-						: "General",
-				topic: topicIdx >= 0 ? fields[topicIdx] : undefined,
-			};
-		})
-		.filter((c) => c.front && c.back);
+	const cards: ImportedCard[] = [];
+	for (const line of dataLines) {
+		const fields = parseCSVLine(line);
+		const front = fields[frontIdx] || "";
+		const back = fields[backIdx] || "";
+		if (!front || !back) continue;
+		cards.push({
+			front,
+			back,
+			subject:
+				subjectIdx >= 0 && fields[subjectIdx] ? fields[subjectIdx] : "General",
+			topic: topicIdx >= 0 ? fields[topicIdx] : undefined,
+		});
+	}
+	return cards;
 }

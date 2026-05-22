@@ -13,9 +13,10 @@ import {
 
 const isBrowser = typeof window !== "undefined";
 
-export const APPWRITE_ENDPOINT = isBrowser
-	? "/api/appwrite"
-	: process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT || "https://cloud.appwrite.io/v1";
+const API_ENDPOINT =
+	process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT || "https://cloud.appwrite.io/v1";
+
+export const APPWRITE_ENDPOINT = API_ENDPOINT;
 
 export const APPWRITE_PROJECT =
 	process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID ||
@@ -35,8 +36,7 @@ export const account = new Account(appwriteClient);
 export const browserDatabases = new BrowserDatabases(appwriteClient);
 
 // Server Client (Always uses absolute URL and API key)
-const SERVER_ENDPOINT =
-	process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT || "https://cloud.appwrite.io/v1";
+const SERVER_ENDPOINT = API_ENDPOINT;
 
 const serverClient = new NodeClient()
 	.setEndpoint(SERVER_ENDPOINT)

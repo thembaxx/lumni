@@ -59,6 +59,8 @@ interface QuestionCardFeedbackProps {
 	setFollowUpInput: React.Dispatch<React.SetStateAction<string>>;
 }
 
+const DEFAULT_FEEDBACK_OPTIONS: QuestionCardFeedbackOptions = {};
+
 export function QuestionCardFeedback({
 	state,
 	gradeResult,
@@ -69,7 +71,7 @@ export function QuestionCardFeedback({
 		showExplanation: _showExplanation,
 		isGrading: _isGrading,
 		isSolverEnabled,
-	} = {},
+	} = DEFAULT_FEEDBACK_OPTIONS,
 	solver,
 	followUpMsgs,
 	handleFollowUp,

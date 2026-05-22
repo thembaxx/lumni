@@ -22,13 +22,15 @@ interface QuestionCardControlsProps {
 	totalQuestions?: number;
 }
 
+const DEFAULT_OPTIONS: QuestionCardControlsOptions = {};
+
 export function QuestionCardControls({
 	options: {
 		isMCQ: _isMCQ,
 		isGrading: _isGrading,
 		isSubmitted,
 		isSolverEnabled: _isSolverEnabled,
-	} = {},
+	} = DEFAULT_OPTIONS,
 	onNext,
 	questionNumber,
 	totalQuestions,

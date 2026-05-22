@@ -2,16 +2,14 @@ import { describe, expect, test } from "bun:test";
 
 import {
 	classifyAndMap,
-	generateDiagram,
 	getDataForType,
 	getValidator,
 	isKonvaType,
-	KONVA_TYPES,
-	STEM_SUBJECTS,
-	searchImage,
-	VisualEngine,
-	visualEngine,
-} from "../index";
+} from "../diagram-mapper";
+import { searchImage } from "../image-resolver";
+import { generateDiagram } from "../stem-renderer";
+import { KONVA_TYPES, STEM_SUBJECTS } from "../types";
+import { VisualEngine, visualEngine } from "../visual-engine";
 
 describe("barrel exports", () => {
 	test("exports diagram-mapper functions", () => {

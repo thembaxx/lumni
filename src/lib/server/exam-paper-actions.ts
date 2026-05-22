@@ -236,8 +236,7 @@ export async function getExamPaperUrl(
 	paperNumber: number,
 	type: "paper" | "memo",
 ): Promise<string | null> {
-	const _userId = await auth();
-	const db = await getExamsDb();
+	const [_userId, db] = await Promise.all([auth(), getExamsDb()]);
 	const record = dbExecOne(
 		db,
 		"SELECT file_url FROM exam_papers WHERE subject_code = ? AND year = ? AND paper_number = ? AND type = ? LIMIT 1",
@@ -248,9 +247,7 @@ export async function getExamPaperUrl(
 }
 
 export async function deleteExamPaper(id: string): Promise<void> {
-	const _userId = await auth();
-
-	const db = await getExamsDb();
+	const [_userId, db] = await Promise.all([auth(), getExamsDb()]);
 	const utapi = new UTApi();
 
 	const record = dbExecOne(

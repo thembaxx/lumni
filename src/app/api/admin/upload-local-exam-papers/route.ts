@@ -7,10 +7,7 @@ import { UTApi, UTFile } from "uploadthing/server";
 import { getExamsDb, insertExamPaper, saveExamsDb } from "@/lib/db/exams";
 import { requireAdmin } from "@/lib/server/auth";
 
-async function getDefaultFolderPath(): Promise<string> {
-	const cwd = /* turbopackIgnore: true */ (process as { cwd(): string }).cwd();
-	return `${cwd}/downloads/exam-papers-2025`;
-}
+const DEFAULT_FOLDER_PATH = `${(process as { cwd(): string }).cwd()}/downloads/exam-papers-2025`;
 
 interface ParsedFile {
 	year: number;
@@ -122,7 +119,7 @@ export async function POST(request: NextRequest) {
 		const body = await request.json();
 		const { folderPath } = body;
 
-		const targetFolder = folderPath || (await getDefaultFolderPath());
+		const targetFolder = folderPath || DEFAULT_FOLDER_PATH;
 
 		if (!fs.existsSync(/* turbopackIgnore: true */ targetFolder)) {
 			return NextResponse.json(
@@ -147,29 +144,59 @@ export async function POST(request: NextRequest) {
 		let updated = 0;
 		const errors: string[] = [];
 
-		for (const fileName of files) {
-			const parsed = parseFilename(fileName);
-			if (!parsed) {
-				errors.push(`Could not parse filename: ${fileName}`);
-				continue;
-			}
+		const parsedFiles = files
+			.map((fileName) => {
+				const parsed = parseFilename(fileName);
+				if (!parsed) {
+					errors.push(`Could not parse filename: ${fileName}`);
+					return null;
+				}
+				const { year, subjectCode, paperNumber, type, originalFileName } =
+					parsed;
+				const normalizedCode = normalizeSubjectCode(subjectCode);
+				const subjectName = toTitleCase(normalizedCode);
+				const filePath = path.join(
+					/* turbopackIgnore: true */ targetFolder,
+					fileName,
+				);
+				return {
+					fileName,
+					year,
+					normalizedCode,
+					subjectName,
+					paperNumber,
+					type,
+					originalFileName,
+					filePath,
+				};
+			})
+			.filter(Boolean) as {
+			fileName: string;
+			year: number;
+			normalizedCode: string;
+			subjectName: string;
+			paperNumber: number;
+			type: "paper" | "memo";
+			originalFileName: string;
+			filePath: string;
+		}[];
 
-			const { year, subjectCode, paperNumber, type, originalFileName } = parsed;
-			const normalizedCode = normalizeSubjectCode(subjectCode);
-			const subjectName = toTitleCase(normalizedCode);
+		const uploadResults = await Promise.all(
+			parsedFiles.map(async (f) => {
+				const uploadResult = await uploadToUploadThing(
+					f.filePath,
+					f.originalFileName,
+				);
+				if (!uploadResult) {
+					return { ...f, uploadResult: null };
+				}
+				return { ...f, uploadResult };
+			}),
+		);
 
-			const filePath = path.join(
-				/* turbopackIgnore: true */ targetFolder,
-				fileName,
-			);
-
-			const uploadResult = await uploadToUploadThing(
-				filePath,
-				originalFileName,
-			);
-
-			if (!uploadResult) {
-				errors.push(`${fileName}: Upload to uploadthing failed`);
+		for (const result of uploadResults) {
+			if (!result.uploadResult) {
+				errors.push(`${result.fileName}: Upload to uploadthing failed`);
 				continue;
 			}
 
@@ -177,7 +204,7 @@ export async function POST(request: NextRequest) {
 				db,
 				`SELECT id FROM exam_papers
 					 WHERE subject_code = ? AND year = ? AND paper_number = ? AND type = ?`,
-				[normalizedCode, year, paperNumber, type],
+				[result.normalizedCode, result.year, result.paperNumber, result.type],
 			);
 
 			if (existingPaper) {
@@ -186,9 +213,9 @@ export async function POST(request: NextRequest) {
 						 SET file_url = ?, file_key = ?, original_file_name = ?, uploaded_at = datetime('now')
 						 WHERE id = ?`,
 					[
-						uploadResult.url,
-						uploadResult.key,
-						originalFileName,
+						result.uploadResult.url,
+						result.uploadResult.key,
+						result.originalFileName,
 						existingPaper.id as string,
 					],
 				);
@@ -198,23 +225,23 @@ export async function POST(request: NextRequest) {
 				const id = randomUUID();
 				insertExamPaper({
 					id,
-					subjectCode: normalizedCode,
-					subjectName,
-					year,
-					paperNumber,
-					type,
+					subjectCode: result.normalizedCode,
+					subjectName: result.subjectName,
+					year: result.year,
+					paperNumber: result.paperNumber,
+					type: result.type,
 					paperId: null,
-					fileUrl: uploadResult.url,
-					fileKey: uploadResult.key,
-					originalFileName,
+					fileUrl: result.uploadResult.url,
+					fileKey: result.uploadResult.key,
+					originalFileName: result.originalFileName,
 				});
 
-				if (type === "memo") {
+				if (result.type === "memo") {
 					const paperResult = dbExecOne(
 						db,
 						`SELECT id FROM exam_papers
 						 WHERE subject_code = ? AND year = ? AND paper_number = ? AND type = 'paper'`,
-						[normalizedCode, year, paperNumber],
+						[result.normalizedCode, result.year, result.paperNumber],
 					);
 
 					if (paperResult) {

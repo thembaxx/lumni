@@ -98,9 +98,9 @@ export function useWrongAnswerJournal() {
 				.filter((e) => e.reviewed)
 				.toArray();
 			await Promise.all(
-				entries
-					.filter((e): e is typeof e & { id: string } => !!e.id)
-					.map((e) => offlineDB.table("wrongAnswers").delete(e.id)),
+				entries.flatMap((e) =>
+					e.id ? [offlineDB.table("wrongAnswers").delete(e.id)] : [],
+				),
 			);
 		} catch {
 			/* non-critical */

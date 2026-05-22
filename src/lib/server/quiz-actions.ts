@@ -4,8 +4,8 @@ import { COLLECTIONS, listDocuments } from "@/lib/db/client";
 import { auth } from "@/lib/server/auth";
 
 export async function fetchQuestions(subjectIds: string[]) {
-	const _userId = await auth();
 	if (subjectIds.length === 0) return [];
+	const _userId = await auth();
 
 	const topicDocs = await listDocuments(COLLECTIONS.TOPICS);
 

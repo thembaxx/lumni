@@ -46,22 +46,24 @@ function Countdown({ targetDate }: { targetDate: string }) {
 			const now = new Date();
 			const diff = target.getTime() - now.getTime();
 
+			let newText: string;
+
 			if (diff < 0) {
 				const daysPast = Math.floor(Math.abs(diff) / 86400000);
-				setText(`Passed ${daysPast} day${daysPast === 1 ? "" : "s"} ago`);
-				return;
-			}
-
-			const days = Math.floor(diff / 86400000);
-			const hours = Math.floor((diff % 86400000) / 3600000);
-
-			if (days > 0) {
-				setText(`${days}d ${hours}h until this exam`);
-			} else if (hours > 0) {
-				setText(`${hours}h until this exam`);
+				newText = `Passed ${daysPast} day${daysPast === 1 ? "" : "s"} ago`;
 			} else {
-				setText("Today!");
+				const days = Math.floor(diff / 86400000);
+				const hours = Math.floor((diff % 86400000) / 3600000);
+				if (days > 0) {
+					newText = `${days}d ${hours}h until this exam`;
+				} else if (hours > 0) {
+					newText = `${hours}h until this exam`;
+				} else {
+					newText = "Today!";
+				}
 			}
+
+			setText(newText);
 		}
 
 		update();
@@ -79,13 +81,13 @@ export function ExamDetailDialog({
 	open,
 	onOpenChange,
 }: ExamDetailDialogProps) {
-	const router = useRouter();
+	const { push } = useRouter();
 
 	const handlePractice = useCallback(() => {
 		if (!exam) return;
 		onOpenChange(false);
-		router.push(`/quiz?subject=${exam.subjectId}&count=10`);
-	}, [exam, onOpenChange, router]);
+		push(`/quiz?subject=${exam.subjectId}&count=10`);
+	}, [exam, onOpenChange, push]);
 
 	const handleMockExam = useCallback(() => {
 		onOpenChange(false);

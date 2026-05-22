@@ -46,6 +46,10 @@ function EditableField({
 	const previousValue = useRef(value);
 
 	useEffect(() => {
+		setDraft(value);
+	}, [value]);
+
+	useEffect(() => {
 		if (editing && inputRef.current) {
 			inputRef.current.focus();
 			inputRef.current.select();
