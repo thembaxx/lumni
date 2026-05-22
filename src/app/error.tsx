@@ -8,10 +8,10 @@ import { iOSEase } from "@/lib/utils/animation";
 import { AnimatedIcon } from "@/lib/utils/icon-mapping";
 
 export default function AppError({
-	caughtError,
+	error,
 	reset,
 }: {
-	caughtError: Error & { digest?: string };
+	error: Error & { digest?: string };
 	reset: () => void;
 }) {
 	return (
@@ -48,12 +48,12 @@ export default function AppError({
 								Something went wrong
 							</h2>
 							<p className="ios-callout text-[--system-text-secondary]">
-								{caughtError.message ||
+								{error?.message ||
 									"An unexpected error occurred. Please try again."}
 							</p>
-							{caughtError.digest && (
+							{error?.digest && (
 								<p className="ios-footnote font-mono text-[--system-text-tertiary]">
-									Error ID: {caughtError.digest}
+									Error ID: {error.digest}
 								</p>
 							)}
 						</div>

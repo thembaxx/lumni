@@ -38,15 +38,15 @@ export default function GlobalError({
 								<h2 className="ios-title-2 text-[--system-text-primary]">
 									Something went wrong
 								</h2>
-								<p className="ios-callout text-[--system-text-secondary]">
-									{error.message ||
-										"An unexpected error occurred. Please try again."}
+							<p className="ios-callout text-[--system-text-secondary]">
+								{error?.message ||
+									"An unexpected error occurred. Please try again."}
+							</p>
+							{error?.digest && (
+								<p className="ios-footnote font-mono text-[--system-text-tertiary]">
+									Error ID: {error.digest}
 								</p>
-								{error.digest && (
-									<p className="ios-footnote font-mono text-[--system-text-tertiary]">
-										Error ID: {error.digest}
-									</p>
-								)}
+							)}
 							</div>
 
 							<div className="flex flex-col gap-3 sm:flex-row">
