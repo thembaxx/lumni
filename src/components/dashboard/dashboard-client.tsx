@@ -1,5 +1,6 @@
 "use client";
 
+import { Login01Icon } from "@hugeicons/core-free-icons";
 import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 import dynamic from "next/dynamic";
 import { useState } from "react";
@@ -22,6 +23,8 @@ import { GettingStartedCard } from "@/components/onboarding/getting-started-card
 import { NotificationNudge } from "@/components/onboarding/notification-nudge";
 import type { QuizResults } from "@/components/quiz/quiz-view";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
+import { EmptyStateWithIllustration } from "@/components/shared/empty-state";
+import { LocalDataNotice } from "@/components/shared/local-data-notice";
 import { PerpetualFloat } from "@/components/shared/perpetual-float";
 import { StaggerList } from "@/components/shared/stagger-list";
 import { Card } from "@/components/ui/card";
@@ -30,6 +33,7 @@ import { useGamification } from "@/hooks/use-gamification";
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 import { useViewTransition } from "@/hooks/use-view-transition";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
+import { useAuth } from "@/lib/auth/auth-context";
 import { trackQuestionResult } from "@/lib/competency-engine";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import { iOSEase } from "@/lib/utils/animation";
@@ -203,6 +207,30 @@ function BentoStatRow({
 	);
 }
 
+function AnonymousUpsell() {
+	return (
+		<div className="rounded-[2rem] border border-dashed bg-system-surface p-8 shadow-level-1">
+			<EmptyStateWithIllustration
+				icon={Login01Icon}
+				title="Sign in to track your progress"
+				description="Create an account or sign in to save your study history, track your XP and streaks, unlock achievements, and compare your performance across subjects."
+				action={{
+					label: "Sign In",
+					onClick: () => {
+						window.location.href = "/auth/sign-in?redirect=/dashboard";
+					},
+				}}
+				secondaryAction={{
+					label: "Create Account",
+					onClick: () => {
+						window.location.href = "/auth/sign-up?redirect=/dashboard";
+					},
+				}}
+			/>
+		</div>
+	);
+}
+
 function DashboardContent({
 	onStartQuiz,
 	activeTab,
@@ -210,6 +238,7 @@ function DashboardContent({
 	onStartQuiz: (subject: string) => void;
 	activeTab: TabValue;
 }) {
+	const { isAnonymous } = useAuth();
 	const { gamification } = useGamification();
 
 	const stats = {
@@ -228,7 +257,13 @@ function DashboardContent({
 		>
 			<div className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-4 pb-16">
 				{activeTab === "today" && <HeroBanner />}
-				{activeTab === "today" && <CountdownHeader />}
+				{isAnonymous && (
+					<LocalDataNotice
+						page="dashboard"
+						description="Your progress, XP, and streaks are stored on this device. Sign in to keep them across all your devices."
+					/>
+				)}
+				{activeTab === "today" && !isAnonymous && <CountdownHeader />}
 				{activeTab === "today" && (
 					<SectionReveal delay={0.02}>
 						<GettingStartedCard />
@@ -239,7 +274,7 @@ function DashboardContent({
 						<NotificationNudge />
 					</SectionReveal>
 				)}
-				{showAnalytics && (
+				{showAnalytics && !isAnonymous && (
 					<SectionReveal delay={0.05}>
 						<BentoStatRow
 							questionsAnswered={stats.questionsAnswered}
@@ -252,32 +287,37 @@ function DashboardContent({
 						<FocusTimerCard />
 					</SectionReveal>
 				)}
-				{showPractice && (
+				{isAnonymous && (
+					<SectionReveal delay={0.09}>
+						<AnonymousUpsell />
+					</SectionReveal>
+				)}
+				{showPractice && !isAnonymous && (
 					<SectionReveal delay={0.1}>
 						<TodayFocusCard />
 					</SectionReveal>
 				)}
-				{showPractice && (
+				{showPractice && !isAnonymous && (
 					<SectionReveal delay={0.11}>
 						<StreakCard />
 					</SectionReveal>
 				)}
-				{showPractice && (
+				{showPractice && !isAnonymous && (
 					<SectionReveal delay={0.115}>
 						<StudyPlanOverview />
 					</SectionReveal>
 				)}
-				{showPractice && (
+				{showPractice && !isAnonymous && (
 					<SectionReveal delay={0.12}>
 						<CompetencyOverview />
 					</SectionReveal>
 				)}
-				{showPractice && (
+				{showPractice && !isAnonymous && (
 					<SectionReveal delay={0.13}>
 						<BloomTaxonomyWidget />
 					</SectionReveal>
 				)}
-				{showPractice && (
+				{showPractice && !isAnonymous && (
 					<SectionReveal delay={0.14}>
 						<DailyChallenges />
 					</SectionReveal>
@@ -287,17 +327,17 @@ function DashboardContent({
 						<QuizStartCard onStart={onStartQuiz} />
 					</SectionReveal>
 				)}
-				{showAnalytics && (
+				{showAnalytics && !isAnonymous && (
 					<SectionReveal delay={0.14}>
 						<ComparativeAnalyticsPanel />
 					</SectionReveal>
 				)}
-				{showAnalytics && (
+				{showAnalytics && !isAnonymous && (
 					<SectionReveal delay={0.16}>
 						<StatsRow />
 					</SectionReveal>
 				)}
-				{showAnalytics && (
+				{showAnalytics && !isAnonymous && (
 					<SectionReveal delay={0.18}>
 						<AchievementShowcase />
 					</SectionReveal>

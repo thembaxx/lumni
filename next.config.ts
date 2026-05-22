@@ -79,10 +79,15 @@ const nextConfig: NextConfig = {
 	},
 };
 
-export default withSentryConfig(nextConfig, {
-	org: process.env.SENTRY_ORG,
-	project: process.env.SENTRY_PROJECT,
-	silent: !process.env.CI,
-	widenClientFileUpload: true,
-	telemetry: false,
-});
+const config =
+	process.env.SENTRY_ORG && process.env.SENTRY_PROJECT
+		? withSentryConfig(nextConfig, {
+				org: process.env.SENTRY_ORG,
+				project: process.env.SENTRY_PROJECT,
+				silent: !process.env.CI,
+				widenClientFileUpload: true,
+				telemetry: false,
+			})
+		: nextConfig;
+
+export default config;

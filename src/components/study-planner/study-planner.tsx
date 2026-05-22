@@ -12,6 +12,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useRef, useState } from "react";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
+import { LocalDataNotice } from "@/components/shared/local-data-notice";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -64,6 +65,10 @@ function StudyPlannerInner() {
 
 	return (
 		<div className="space-y-6">
+			<LocalDataNotice
+				page="study-plan"
+				description="Your study plan and schedule are stored on this device. Sign in to access your plan from anywhere."
+			/>
 			<div className="flex items-center justify-between">
 				<h2 className="font-semibold text-2xl">Study Planner</h2>
 				<div className="flex gap-2">

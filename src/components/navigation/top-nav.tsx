@@ -41,7 +41,7 @@ const routeTitles: Record<string, string> = {
 
 export function TopNav({ title, className }: TopNavProps) {
 	const pathname = usePathname();
-	const { user, status, signOut } = useAuth();
+	const { user, status, isAnonymous, signOut } = useAuth();
 	const { levelInfo } = useGamification();
 	const { isOnline, pendingCount } = useSyncStatus();
 
@@ -134,7 +134,7 @@ export function TopNav({ title, className }: TopNavProps) {
 					)}
 					{status === "loading" ? (
 						<div className="size-8 animate-pulse rounded-full bg-system-fill" />
-					) : status === "unauthenticated" ? (
+					) : status === "unauthenticated" || isAnonymous ? (
 						<Button
 							variant="ghost"
 							size="sm"
@@ -147,7 +147,7 @@ export function TopNav({ title, className }: TopNavProps) {
 							<HugeiconsIcon icon={Login01Icon} className="mr-1.5 size-4" />
 							Sign In
 						</Button>
-					) : (
+					) : status === "authenticated" && !isAnonymous ? (
 						<DropdownList>
 							<DropdownListTrigger className="outline-none">
 								<Avatar className="size-8 cursor-pointer ring-2 ring-transparent transition-shadow hover:ring-system-accent/30">
@@ -198,7 +198,7 @@ export function TopNav({ title, className }: TopNavProps) {
 								</div>
 							</DropdownListContent>
 						</DropdownList>
-					)}
+					) : null}
 				</div>
 			</div>
 		</header>

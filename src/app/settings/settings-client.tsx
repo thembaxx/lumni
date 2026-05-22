@@ -14,7 +14,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 import Link from "next/link";
-import { Suspense, useCallback, useEffect, useState } from "react";
+import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import {
 	AppearanceTab,
 	BetaTab,
@@ -26,6 +26,7 @@ import {
 } from "@/components/settings/tabs";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/lib/auth/auth-context";
 import { iOSEase } from "@/lib/utils/animation";
 import {
 	BETA_FEATURES_KEY,
@@ -52,8 +53,14 @@ const tabs = [
 ];
 
 function SettingsContent() {
+	const { isAnonymous } = useAuth();
 	const [activeTab, setActiveTab] = useState("profile");
 	const [isSaving, setIsSaving] = useState(false);
+
+	const visibleTabs = useMemo(
+		() => tabs.filter((t) => !(isAnonymous && t.value === "referrals")),
+		[isAnonymous],
+	);
 	const [saved, setSaved] = useState(false);
 
 	type AppSettings = {
@@ -87,6 +94,12 @@ function SettingsContent() {
 			setAppSettings((prev) => ({ ...prev, betaFeatures: beta })),
 		[],
 	);
+
+	useEffect(() => {
+		if (isAnonymous && activeTab === "referrals") {
+			setActiveTab("profile");
+		}
+	}, [isAnonymous, activeTab]);
 
 	useEffect(() => {
 		const onboarding = loadFromStorage<{
@@ -204,7 +217,7 @@ function SettingsContent() {
 						className="scrollbar-hide -mx-2 flex gap-0 overflow-x-auto px-2 py-1"
 						role="tablist"
 					>
-						{tabs.map((tab) => {
+						{visibleTabs.map((tab) => {
 							const isActive = activeTab === tab.value;
 							return (
 								<button
@@ -275,7 +288,7 @@ function SettingsContent() {
 								/>
 							)}
 
-							{activeTab === "referrals" && <ReferralTab />}
+							{activeTab === "referrals" && !isAnonymous && <ReferralTab />}
 
 							{activeTab === "beta" && (
 								<BetaTab

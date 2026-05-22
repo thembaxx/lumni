@@ -5,6 +5,7 @@ import {
 	Cancel01Icon,
 	CheckmarkCircle01Icon,
 	CompassIcon,
+	Login01Icon,
 	Logout01Icon,
 	Mail01Icon,
 	MapPinIcon,
@@ -15,6 +16,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import { OnboardingWizard } from "@/components/onboarding/onboarding-wizard";
+import { EmptyStateWithIllustration } from "@/components/shared/empty-state";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -278,6 +280,38 @@ export function ProfileTab() {
 		},
 		[subjects, handleSaveField],
 	);
+
+	if (isAnonymous) {
+		return (
+			<div className="flex flex-col gap-10 pt-8">
+				<EmptyStateWithIllustration
+					icon={Login01Icon}
+					title="Sign in to manage your profile"
+					description="Create an account or sign in to update your name, change your password, manage your school details, and sync your progress across all your devices."
+					action={{
+						label: "Sign In",
+						onClick: () => {
+							window.location.href = "/auth/sign-in?redirect=/settings";
+						},
+					}}
+					secondaryAction={{
+						label: "Create Account",
+						onClick: () => {
+							window.location.href = "/auth/sign-up?redirect=/settings";
+						},
+					}}
+				/>
+				<div className="flex flex-col items-center gap-1 px-2">
+					<p className="text-(length:--fs-footnote) font-extrabold text-[--system-text-tertiary] uppercase tracking-widest">
+						Lumni Mobile
+					</p>
+					<p className="text-(length:--fs-caption-2) font-medium text-[--system-text-tertiary] tabular-nums">
+						Version 1.0.4 (Stable-RC)
+					</p>
+				</div>
+			</div>
+		);
+	}
 
 	return (
 		<div className="flex flex-col gap-10">

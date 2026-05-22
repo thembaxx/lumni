@@ -6,6 +6,7 @@ import {
 	GamificationCelebration,
 	XPGainPopup,
 } from "@/components/celebration";
+import { LocalDataNotice } from "@/components/shared/local-data-notice";
 import { useGamification } from "@/hooks/use-gamification";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
@@ -314,10 +315,16 @@ export function FlashcardsClient() {
 
 	if (!isActive) {
 		return (
-			<FlashcardsIdle
-				onSelect={(subject) => startSession(subject, "ai")}
-				onReviewMistakes={(subject) => startSession(subject, "mistakes")}
-			/>
+			<div className="flex flex-col gap-4">
+				<LocalDataNotice
+					page="flashcards"
+					description="Your flashcards are saved on this device. Sign in to sync them across devices."
+				/>
+				<FlashcardsIdle
+					onSelect={(subject) => startSession(subject, "ai")}
+					onReviewMistakes={(subject) => startSession(subject, "mistakes")}
+				/>
+			</div>
 		);
 	}
 

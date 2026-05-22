@@ -10,6 +10,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { LocalDataNotice } from "@/components/shared/local-data-notice";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -100,6 +101,10 @@ export default function ReviewPage() {
 	return (
 		<div className="min-h-screen bg-system-grouped pt-4 pb-24">
 			<div className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-4">
+				<LocalDataNotice
+					page="review"
+					description="Your mistake journal is stored on this device. Sign in to access your review history from any device."
+				/>
 				<div className="flex items-center justify-between">
 					<h1 className="ios-title-1 font-semibold text-foreground tracking-tight">
 						Wrong Answer Journal

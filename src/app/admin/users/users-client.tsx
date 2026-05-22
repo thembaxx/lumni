@@ -77,7 +77,7 @@ export function UsersClient() {
 	}, [users]);
 
 	return (
-		<div className="min-h-[100dvh] bg-background" suppressHydrationWarning>
+		<div className="min-h-dvh bg-background" suppressHydrationWarning>
 			<PageHeader title="User Management" subtitle="Manage registered users" />
 			<div className="flex flex-col gap-4 p-4">
 				<Card>

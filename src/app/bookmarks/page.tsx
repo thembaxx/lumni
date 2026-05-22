@@ -3,6 +3,7 @@
 import { Bookmark01Icon, Delete01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { LocalDataNotice } from "@/components/shared/local-data-notice";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,6 +15,10 @@ export default function BookmarksPage() {
 	return (
 		<div className="min-h-screen bg-system-grouped pt-4 pb-24">
 			<div className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-4">
+				<LocalDataNotice
+					page="bookmarks"
+					description="Your bookmarked questions are saved on this device. Sign in to keep them across all your devices."
+				/>
 				<h1 className="ios-title-1 font-semibold text-foreground tracking-tight">
 					Bookmarked Questions
 				</h1>
