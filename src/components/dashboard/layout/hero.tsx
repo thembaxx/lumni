@@ -11,7 +11,7 @@ export function DashboardHero() {
 				width={48}
 				height={48}
 				sizes="48px"
-				className="mb-6 animate-fade-in-up delay-50"
+				className="mb-6 animate-fade-in-up outline outline-black/10 -outline-offset-1 delay-50 dark:outline-white/10"
 			/>
 		</main>
 	);

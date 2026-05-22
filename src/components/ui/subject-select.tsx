@@ -83,7 +83,7 @@ export function SubjectSelect({
 				</m.svg>
 			</button>
 
-			<AnimatePresence>
+			<AnimatePresence initial={false}>
 				{open && (
 					<m.div
 						initial={{ opacity: 0, scale: 0.95, y: -4 }}

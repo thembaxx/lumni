@@ -167,7 +167,7 @@ function ToolsDialogInner({ open: _open, onOpenChange }: ToolsDialogProps) {
 
 export function ToolsDialog({ open, onOpenChange }: ToolsDialogProps) {
 	return (
-		<AnimatePresence>
+		<AnimatePresence initial={false}>
 			{open && <ToolsDialogInner open={open} onOpenChange={onOpenChange} />}
 		</AnimatePresence>
 	);

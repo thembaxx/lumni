@@ -171,7 +171,7 @@ export function GettingStartedCard() {
 												}`}
 											>
 												<div className="relative size-4">
-													<AnimatePresence mode="wait">
+													<AnimatePresence mode="wait" initial={false}>
 														{done ? (
 															<m.div
 																key="check"

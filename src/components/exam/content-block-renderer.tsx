@@ -90,7 +90,7 @@ export function ContentBlockRenderer({ block }: ContentBlockRendererProps) {
 						alt={block.altText || ""}
 						width={800}
 						height={600}
-						className="h-auto max-w-full rounded border"
+						className="h-auto max-w-full rounded border outline outline-black/10 -outline-offset-1 dark:outline-white/10"
 					/>
 					{block.altText && (
 						<p className="mt-1 text-muted-foreground text-xs">

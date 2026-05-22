@@ -100,7 +100,7 @@ export function ReferralSheet() {
 								<img
 									src={generateQRDataUrl(info.link)}
 									alt="QR Code"
-									className="size-32 rounded-lg border border-border/30"
+									className="size-32 rounded-lg border border-border/30 outline outline-black/10 -outline-offset-1 dark:outline-white/10"
 								/>
 							</div>
 

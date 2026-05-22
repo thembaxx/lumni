@@ -113,7 +113,7 @@ export function DailyProgressRing() {
 				</span>
 			</m.div>
 			<div className="relative mt-0.5 flex h-5 items-center justify-center">
-				<AnimatePresence mode="wait">
+				<AnimatePresence mode="wait" initial={false}>
 					{isComplete ? (
 						<m.div
 							key="complete"

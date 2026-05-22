@@ -95,7 +95,7 @@ export function LoadingScreen({
 	}, [skipDelay, progress]);
 
 	return (
-		<AnimatePresence>
+		<AnimatePresence initial={false}>
 			{isVisible && (
 				<m.div
 					key="loading-screen"

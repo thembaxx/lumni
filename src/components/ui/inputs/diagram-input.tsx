@@ -41,7 +41,7 @@ export function DiagramInput({ value, onChange, disabled }: DiagramInputProps) {
 						src={preview}
 						alt="Uploaded diagram"
 						loading="lazy"
-						className="max-h-48 max-w-sm rounded border"
+						className="max-h-48 max-w-sm rounded border outline outline-black/10 -outline-offset-1 dark:outline-white/10"
 					/>
 					{!disabled && (
 						<Button

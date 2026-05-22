@@ -137,7 +137,7 @@ export function NationalExamCalendar() {
 				)}
 			</div>
 
-			<AnimatePresence mode="wait">
+			<AnimatePresence mode="wait" initial={false}>
 				<m.div
 					key={sessionLabel}
 					initial={{ opacity: 0, y: 10 }}

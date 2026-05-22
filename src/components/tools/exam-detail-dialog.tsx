@@ -19,7 +19,6 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
-import { toast } from "@/hooks/use-toast";
 import {
 	formatDuration,
 	formatFriendlyDate,
@@ -93,9 +92,7 @@ export function ExamDetailDialog({
 		if (!exam) return;
 		onOpenChange(false);
 		const examDuration = exam.durationHours * 3600;
-		push(
-			`/quiz?subject=${exam.subjectId}&count=30&time=${examDuration}`,
-		);
+		push(`/quiz?subject=${exam.subjectId}&count=30&time=${examDuration}`);
 	}, [exam, onOpenChange, push]);
 
 	const handleCommonQuestions = useCallback(() => {
@@ -203,7 +200,7 @@ export function ExamDetailDialog({
 					<button
 						type="button"
 						onClick={handlePractice}
-						className="flex cursor-pointer items-center justify-between rounded-xl bg-[--system-accent] px-4 py-3 text-left text-white transition-all hover:brightness-110 active:scale-[0.98]"
+						className="flex cursor-pointer items-center justify-between rounded-xl bg-[--system-accent] px-4 py-3 text-left text-white transition-[scale,background-color,box-shadow] hover:brightness-110 active:scale-[0.96]"
 					>
 						<div className="flex items-center gap-2.5">
 							<HugeiconsIcon icon={Quiz02Icon} className="size-4" />
@@ -219,7 +216,7 @@ export function ExamDetailDialog({
 					<button
 						type="button"
 						onClick={handleMockExam}
-						className="flex cursor-pointer items-center justify-between rounded-xl border border-border bg-card px-4 py-3 text-left transition-all hover:bg-muted/50 active:scale-[0.98]"
+						className="flex cursor-pointer items-center justify-between rounded-xl border border-border bg-card px-4 py-3 text-left transition-[scale,background-color,box-shadow] hover:bg-muted/50 active:scale-[0.96]"
 					>
 						<div className="flex items-center gap-2.5">
 							<HugeiconsIcon
@@ -238,7 +235,7 @@ export function ExamDetailDialog({
 					<button
 						type="button"
 						onClick={handleCommonQuestions}
-						className="flex cursor-pointer items-center justify-between rounded-xl border border-border bg-card px-4 py-3 text-left transition-all hover:bg-muted/50 active:scale-[0.98]"
+						className="flex cursor-pointer items-center justify-between rounded-xl border border-border bg-card px-4 py-3 text-left transition-[scale,background-color,box-shadow] hover:bg-muted/50 active:scale-[0.96]"
 					>
 						<div className="flex items-center gap-2.5">
 							<HugeiconsIcon

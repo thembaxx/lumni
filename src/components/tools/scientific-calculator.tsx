@@ -591,7 +591,7 @@ export function ScientificCalculator() {
 						</div>
 					</div>
 
-					<AnimatePresence mode="wait">
+					<AnimatePresence mode="wait" initial={false}>
 						{state.showHistory && (
 							<m.div
 								initial={{ opacity: 0, height: 0 }}

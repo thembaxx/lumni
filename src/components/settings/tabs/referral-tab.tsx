@@ -103,7 +103,7 @@ export function ReferralTab() {
 					<img
 						src={generateQRDataUrl(info.link)}
 						alt="Referral QR Code"
-						className="size-40 rounded-xl border border-border/40"
+						className="size-40 rounded-xl border border-border/40 outline outline-black/10 -outline-offset-1 dark:outline-white/10"
 					/>
 				</div>
 			</ListSection>

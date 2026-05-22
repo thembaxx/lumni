@@ -164,7 +164,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 					))}
 				</div>
 
-				<AnimatePresence mode="wait">
+				<AnimatePresence mode="wait" initial={false}>
 					<m.div
 						key={`step-${step}`}
 						initial={shouldReduceMotion ? {} : { opacity: 0, y: 12 }}

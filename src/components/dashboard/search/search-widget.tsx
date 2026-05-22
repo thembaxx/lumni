@@ -15,7 +15,7 @@ export function SearchWidget() {
 	return (
 		<div
 			className={cn(
-				"rounded-2xl border border-border/30 bg-secondary/60 p-4 transition-all duration-300",
+				"rounded-2xl border border-border/30 bg-secondary/60 p-4 transition-[border-color,box-shadow] duration-300",
 				isFocused &&
 					"border-[--system-accent]/30 ring-2 ring-[--system-accent]/20",
 			)}
