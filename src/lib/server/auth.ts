@@ -2,6 +2,12 @@ import { cookies } from "next/headers";
 import { Account, Client, type Models } from "node-appwrite";
 import { APPWRITE_ENDPOINT, APPWRITE_PROJECT } from "@/lib/appwrite";
 
+export async function auth(): Promise<string> {
+	const userId = await getAuthenticatedUserId();
+	if (!userId) throw new Error("Authentication required");
+	return userId;
+}
+
 export async function verifyAuth(userId: string): Promise<void> {
 	try {
 		const cookieStore = await cookies();
@@ -127,8 +133,7 @@ export async function getAuthenticatedUserId(): Promise<string | null> {
 }
 
 export async function requireAdmin(): Promise<string> {
-	const userId = await getAuthenticatedUserId();
-	if (!userId) throw new Error("Authentication required");
+	const userId = await auth();
 
 	const adminIds = process.env.ADMIN_USER_IDS;
 	if (adminIds) {

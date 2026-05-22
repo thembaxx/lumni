@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -64,6 +64,18 @@ export function ContentClient() {
 	const flags = (data?.flags || []).filter(
 		(f) => statusFilter === "all" || f.status === statusFilter,
 	);
+
+	const [formattedDates, setFormattedDates] = useState<Record<string, string>>(
+		{},
+	);
+
+	useEffect(() => {
+		const nextDates: Record<string, string> = {};
+		flags.forEach((flag) => {
+			nextDates[flag.$id] = new Date(flag.createdAt).toLocaleDateString();
+		});
+		setFormattedDates(nextDates);
+	}, [flags]);
 
 	const reasonColors: Record<string, string> = {
 		wrong: "destructive",
@@ -151,7 +163,7 @@ export function ContentClient() {
 											{flag.userId.slice(0, 12)}...
 										</TableCell>
 										<TableCell className="text-xs">
-											{new Date(flag.createdAt).toLocaleDateString()}
+											{formattedDates[flag.$id] || "..."}
 										</TableCell>
 										<TableCell>
 											<Badge

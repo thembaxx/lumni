@@ -2,7 +2,7 @@
 
 import { Query } from "appwrite";
 import { COLLECTIONS, listDocuments } from "@/lib/db/client";
-import { getAuthenticatedUserId } from "@/lib/server/auth";
+import { auth } from "@/lib/server/auth";
 
 function getAllSubjects(): string[] {
 	return [
@@ -24,7 +24,7 @@ export async function syncSubject(subject: string): Promise<{
 	version: string;
 	error?: string;
 }> {
-	const userId = await getAuthenticatedUserId();
+	const userId = await auth();
 	if (!userId)
 		return {
 			success: false,
@@ -72,7 +72,7 @@ export async function syncAllSubjects(): Promise<{
 		error?: string;
 	}[];
 }> {
-	const userId = await getAuthenticatedUserId();
+	const userId = await auth();
 	if (!userId) {
 		return { results: [] };
 	}
@@ -91,7 +91,7 @@ export async function checkSubjectStatus(subject: string): Promise<{
 	version: string | null;
 	needsSync: boolean;
 }> {
-	const userId = await getAuthenticatedUserId();
+	const userId = await auth();
 	if (!userId)
 		return {
 			exists: false,
@@ -154,7 +154,7 @@ export async function refreshSubject(subject: string): Promise<{
 	isFresh: boolean;
 	error?: string;
 }> {
-	const userId = await getAuthenticatedUserId();
+	const userId = await auth();
 	if (!userId)
 		return {
 			success: false,

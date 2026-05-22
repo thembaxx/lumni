@@ -1,6 +1,7 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -57,6 +58,23 @@ export function UsersClient() {
 	});
 
 	const users = data?.users || [];
+	const [formattedDates, setFormattedDates] = useState<
+		Record<string, { registered: string; accessed: string }>
+	>({});
+
+	useEffect(() => {
+		const nextDates: Record<string, { registered: string; accessed: string }> =
+			{};
+		users.forEach((user) => {
+			nextDates[user.$id] = {
+				registered: new Date(user.registration).toLocaleDateString(),
+				accessed: user.accessedAt
+					? new Date(user.accessedAt).toLocaleDateString()
+					: "—",
+			};
+		});
+		setFormattedDates(nextDates);
+	}, [users]);
 
 	return (
 		<div className="min-h-[100dvh] bg-background" suppressHydrationWarning>
@@ -111,12 +129,10 @@ export function UsersClient() {
 											</Badge>
 										</TableCell>
 										<TableCell className="text-xs">
-											{new Date(user.registration).toLocaleDateString()}
+											{formattedDates[user.$id]?.registered ?? "..."}
 										</TableCell>
 										<TableCell className="text-xs">
-											{user.accessedAt
-												? new Date(user.accessedAt).toLocaleDateString()
-												: "—"}
+											{formattedDates[user.$id]?.accessed ?? "—"}
 										</TableCell>
 										<TableCell>
 											<Button

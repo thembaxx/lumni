@@ -1,1 +1,6 @@
 src/lib/data/**/*.json
+.agents/
+node_modules/
+.next/
+out/
+build/

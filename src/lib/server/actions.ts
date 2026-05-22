@@ -10,7 +10,7 @@ import {
 	listDocuments,
 	updateDocument,
 } from "@/lib/db/client";
-import { requireAdmin, verifyAuth } from "@/lib/server/auth";
+import { auth, requireAdmin, verifyAuth } from "@/lib/server/auth";
 
 export async function fetchSubjects(userId: string) {
 	await verifyAuth(userId);
@@ -94,6 +94,7 @@ export async function toggleUserSubject(userId: string, subjectId: string) {
 export async function adminUploadExamPaper(
 	formData: FormData,
 ): Promise<{ success: boolean; url?: string; error?: string }> {
+	await auth();
 	await requireAdmin();
 	try {
 		const file = formData.get("file") as File | null;
@@ -164,6 +165,7 @@ export async function adminUploadExamPaper(
 }
 
 export async function getUserAccounts(_userId: string) {
+	await auth();
 	await requireAdmin();
 	return [];
 }

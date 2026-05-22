@@ -1,6 +1,6 @@
 "use server";
 
-import { getAuthenticatedUserId } from "@/lib/server/auth";
+import { auth } from "@/lib/server/auth";
 
 export interface GetExamMarkdownResult {
 	content: string;
@@ -11,7 +11,7 @@ export interface GetExamMarkdownResult {
 export async function getExamMarkdown(
 	fileUrl: string,
 ): Promise<GetExamMarkdownResult> {
-	const userId = await getAuthenticatedUserId();
+	const userId = await auth();
 	if (!userId) {
 		return {
 			content: "",

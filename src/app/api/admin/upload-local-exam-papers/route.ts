@@ -158,7 +158,10 @@ export async function POST(request: NextRequest) {
 			const normalizedCode = normalizeSubjectCode(subjectCode);
 			const subjectName = toTitleCase(normalizedCode);
 
-			const filePath = path.join(/* turbopackIgnore: true */ targetFolder, fileName);
+			const filePath = path.join(
+				/* turbopackIgnore: true */ targetFolder,
+				fileName,
+			);
 
 			const uploadResult = await uploadToUploadThing(
 				filePath,

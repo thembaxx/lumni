@@ -11,7 +11,7 @@ import {
 	saveExamsDb,
 } from "@/lib/db/exams";
 import { parseExamPaperFilename as parseExamPaperFilenameFromSchema } from "@/lib/db/exams/schema";
-import { getAuthenticatedUserId } from "@/lib/server/auth";
+import { auth } from "@/lib/server/auth";
 
 export interface UploadExamPaperOptions {
 	filePath?: string;
@@ -71,8 +71,7 @@ function dbExecOne(
 export async function uploadExamPaper(
 	options: UploadExamPaperOptions,
 ): Promise<ExamPaperRecord> {
-	const userId = await getAuthenticatedUserId();
-	if (!userId) throw new Error("Authentication required");
+	const _userId = await auth();
 
 	const utapi = new UTApi();
 
@@ -210,8 +209,7 @@ export async function getExamPapers(
 	subjectCode: string,
 	year?: number,
 ): Promise<ExamPaperRecord[]> {
-	const userId = await getAuthenticatedUserId();
-	if (!userId) throw new Error("Authentication required");
+	const _userId = await auth();
 	const records = year
 		? getExamPapersBySubject(subjectCode, year)
 		: getExamPapersBySubject(subjectCode);
@@ -238,8 +236,7 @@ export async function getExamPaperUrl(
 	paperNumber: number,
 	type: "paper" | "memo",
 ): Promise<string | null> {
-	const userId = await getAuthenticatedUserId();
-	if (!userId) throw new Error("Authentication required");
+	const _userId = await auth();
 	const db = await getExamsDb();
 	const record = dbExecOne(
 		db,
@@ -251,8 +248,7 @@ export async function getExamPaperUrl(
 }
 
 export async function deleteExamPaper(id: string): Promise<void> {
-	const userId = await getAuthenticatedUserId();
-	if (!userId) throw new Error("Authentication required");
+	const _userId = await auth();
 
 	const db = await getExamsDb();
 	const utapi = new UTApi();
@@ -274,8 +270,7 @@ export async function deleteExamPaper(id: string): Promise<void> {
 }
 
 export async function getExamPapersWithFallback() {
-	const userId = await getAuthenticatedUserId();
-	if (!userId) throw new Error("Authentication required");
+	const _userId = await auth();
 	try {
 		const dbRecords = getAllExamPapersFromDb() as {
 			id: string;
@@ -323,8 +318,7 @@ export async function getExamPapersWithFallback() {
 }
 
 export async function checkAndPopulateExamsDb() {
-	const userId = await getAuthenticatedUserId();
-	if (!userId) throw new Error("Authentication required");
+	const _userId = await auth();
 	try {
 		const count = getExamPaperCount();
 
