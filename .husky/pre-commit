@@ -1,2 +1,2 @@
 npx biome check --write src/
-npx tsc --noEmit
+bun run typecheck
