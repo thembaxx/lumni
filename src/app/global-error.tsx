@@ -18,10 +18,10 @@ export default function GlobalError({
 	return (
 		<html lang="en">
 			<body
-				className="min-h-[100dvh] bg-[--system-background] p-6"
+				className="min-h-dvh bg-[--system-background] p-6"
 				suppressHydrationWarning
 			>
-				<div className="grid min-h-[100dvh] grid-cols-12 gap-0">
+				<div className="grid min-h-dvh grid-cols-12 gap-0">
 					<div className="col-span-12 col-start-1 flex items-center justify-center p-4 pb-20 md:col-span-7">
 						<main className="max-w-md space-y-8 text-left">
 							<div className="relative">
@@ -38,15 +38,15 @@ export default function GlobalError({
 								<h2 className="ios-title-2 text-[--system-text-primary]">
 									Something went wrong
 								</h2>
-							<p className="ios-callout text-[--system-text-secondary]">
-								{error?.message ||
-									"An unexpected error occurred. Please try again."}
-							</p>
-							{error?.digest && (
-								<p className="ios-footnote font-mono text-[--system-text-tertiary]">
-									Error ID: {error.digest}
+								<p className="ios-callout text-[--system-text-secondary]">
+									{error?.message ||
+										"An unexpected error occurred. Please try again."}
 								</p>
-							)}
+								{error?.digest && (
+									<p className="ios-footnote font-mono text-[--system-text-tertiary]">
+										Error ID: {error.digest}
+									</p>
+								)}
 							</div>
 
 							<div className="flex flex-col gap-3 sm:flex-row">
@@ -71,7 +71,7 @@ export default function GlobalError({
 					</div>
 
 					<div className="relative col-span-12 col-start-1 overflow-hidden bg-system-surface/30 md:col-span-5 md:col-start-8">
-						<div className="absolute inset-0 bg-gradient-to-br from-destructive/5 via-transparent to-transparent" />
+						<div className="absolute inset-0 bg-linear-to-br from-destructive/5 via-transparent to-transparent" />
 						<div className="absolute inset-0 flex items-center justify-center p-8">
 							<div className="aspect-square h-full w-full max-w-xs animate-float-slow rounded-3xl bg-destructive/10 blur-2xl" />
 						</div>
