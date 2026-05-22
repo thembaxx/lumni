@@ -1,0 +1,375 @@
+# System Design — Lumni
+
+**Generated:** 2026-05-22  
+**Last synced:** HEAD~0 (bf36441)
+
+---
+
+## Overview
+
+Lumni is a mobile-first, offline-capable SA Matric exam preparation platform. It generates AI-powered questions with visuals, tracks student competency across subjects, and schedules personalized study plans — all while supporting anonymous-to-authenticated progression and free-tier budget constraints. The system uses a 3-tier caching architecture (Dexie → Appwrite → AI/Wikimedia) to minimize API costs and enable offline use.
+
+---
+
+## High-Level Architecture
+
+```mermaid
+graph TB
+    subgraph Client [Browser / PWA]
+        A[React 19 + Next.js 16]
+        B[Zustand Stores]
+        C[Dexie IndexedDB]
+        D[Zustand Persist<br/>localStorage]
+    end
+
+    subgraph Server [Next.js API Routes + RSC]
+        E[Route Handlers]
+        F[Server Actions]
+        G[QueueCore<br/>JobQueue]
+        H[RateLimiter<br/>TokenTracker]
+    end
+
+    subgraph AI [AI Provider Chain]
+        I[Gemini 2.0 Flash Lite]
+        J[Nvidia NIM<br/>Llama 3.3 70B]
+        K[Groq<br/>Llama 3.3 70B]
+    end
+
+    subgraph Backend [Appwrite BaaS]
+        L[Auth<br/>anonymous → email/password]
+        M[Database<br/>questions, exams, users]
+        N[Storage<br/>exam papers, avatars]
+    end
+
+    subgraph External
+        O[Wikimedia Commons]
+        P[UploadThing<br/>file uploads]
+        Q[Sentry<br/>error tracking]
+    end
+
+    A --> E
+    A --> F
+    A --> C
+    A --> B
+    B --> D
+    E --> H
+    E --> G
+    E --> I --> J --> K
+    E --> L
+    E --> M
+    E --> N
+    E --> O
+    A --> P
+    A --> Q
+    F --> M
+    
+    classDef client fill:#e1f5fe
+    classDef server fill:#fff3e0
+    classDef ai fill:#f3e5f5
+    classDef backend fill:#e8f5e9
+    classDef external fill:#ffebee
+    
+    class A,B,C,D client
+    class E,F,G,H server
+    class I,J,K ai
+    class L,M,N backend
+    class O,P,Q external
+```
+
+---
+
+## Data Model
+
+```mermaid
+erDiagram
+    USER ||--o{ EXAM_SESSION : takes
+    USER ||--o{ FLASHCARD : reviews
+    USER ||--o{ WRONG_ANSWER : records
+    USER ||--o{ COMPETENCY : tracks
+    EXAM_PAPER ||--o{ EXAM_SESSION : generates
+    QUESTION ||--o{ VISUAL : has
+    QUESTION ||--o{ RATING : receives
+    
+    USER {
+        string id PK
+        string email
+        string displayName
+        string school
+        string grade
+        string province
+        string[] subjects
+        bool isAnonymous
+    }
+    
+    QUESTION {
+        string id PK
+        string type "11 question types"
+        string subject
+        string topic
+        string difficulty "Easy|Medium|Hard"
+        string bloomLevel
+        json content
+        number points
+    }
+    
+    EXAM_PAPER {
+        string id PK
+        string subject
+        string paper
+        string year
+        string session "may-june|oct-nov"
+        blob pdf
+    }
+    
+    EXAM_SESSION {
+        string id PK
+        string userId FK
+        string paperId FK
+        string answers
+        number score
+        string status "in-progress|completed|paused"
+        datetime startedAt
+        datetime completedAt
+    }
+    
+    FLASHCARD {
+        string id PK
+        string userId FK
+        string questionText
+        string answer
+        number easeFactor "SM-2 parameter"
+        number interval "SM-2 parameter"
+        number repetitions "SM-2 parameter"
+        datetime nextReview
+    }
+    
+    WRONG_ANSWER {
+        string id PK
+        string userId FK
+        string questionId FK
+        string subject
+        string topic
+        string errorType "misconception|careless|knowledge-gap|application|misread|time-pressure"
+        string userAnswer
+        string correctAnswer
+        datetime createdAt
+    }
+    
+    COMPETENCY {
+        string id PK
+        string userId FK
+        string subject
+        string topic
+        number score "0-100"
+        string level "novice|developing|proficient|mastered"
+    }
+```
+
+---
+
+## Component Dictionary
+
+### Client Layer
+
+| Module | Responsibility | Tech | Key File(s) |
+|--------|---------------|------|-------------|
+| **Dashboard** | Landing page: stats, study plan, quick actions, search, analytics | React, recharts | `src/components/dashboard/` |
+| **Quiz** | Question display, answer capture, timer, feedback, diagrams | React, Konva, Framer Motion | `src/components/quiz/` |
+| **Exam** | Past paper viewer, session management, results & review | React, sql.js, react-pdf | `src/components/exam/` |
+| **Flashcards** | SM-2 spaced repetition, browse, auto-generation | React, Dexie | `src/components/tools/flashcards/` |
+| **Study Planner** | Algorithmic scheduling, weekly overview | React, localStorage | `src/components/study-planner/` |
+| **Onboarding** | 5-step wizard with Three.js particles | React, Three.js, Framer Motion | `src/components/onboarding/` |
+| **Auth** | Sign-in/sign-up, magic link, anonymous upgrade | React, Appwrite SDK | `src/components/auth/` |
+| **Settings** | Profile, preferences, data management, theme | React | `src/components/settings/` |
+| **Visual** | Diagram/image rendering for questions | Konva, Mermaid, Wikimedia | `src/components/visual/` |
+
+### State Layer
+
+| Store | Responsibility | Tech | Location |
+|-------|---------------|------|----------|
+| Zustand (multiple) | Quiz session, exam session, sync queue, search, notifications | Zustand | `src/store/` |
+| Dexie | Offline cache: questions, visuals, exam dates, ratings, flashcard SM-2 state | Dexie + dexie-react-hooks | `src/lib/db/` |
+| React Query | Server state: API data caching, background refetch | TanStack React Query | `src/lib/query-client.ts` |
+
+### Server / API Layer
+
+| Module | Responsibility | Tech | Location |
+|--------|---------------|------|----------|
+| **API Route Handlers** | ~30 route groups: engine, auth, exams, admin, sync | Next.js App Router | `src/app/api/` |
+| **Server Actions** | Exam paper actions, quiz actions | Next.js Server Actions | `src/lib/server/` |
+| **RateLimiter** | Auth rate limits (3 sign-in/5min, 1 magic link/5min) | In-memory Map | `src/lib/rate-limiter/` |
+| **TokenTracker** | AI budget: per-user + global caps | In-memory counter | `src/lib/ai/token-tracker.ts` |
+| **QueueCore** | Background job processing with retry | Dexie-backed | `src/lib/queue/core.ts` |
+| **Sentry** | Error tracking (client + server + edge) | @sentry/nextjs | `sentry.*.config.ts` |
+
+### Business Logic Layer
+
+| Module | Responsibility | Tech | Location |
+|--------|---------------|------|----------|
+| **QuestionEngine** | AI question generation, grading, hinting, validation | 11-type processor pipeline | `src/lib/question-engine/` |
+| **VisualEngine** | AI diagram generation (Konva) + Wikimedia search | STEM vs non-STEM routing | `src/lib/visual-engine/` |
+| **CompetencyEngine** | Bloom's taxonomy scoring, PathEngine routing | Score→Level mapping | `src/lib/competency-engine/` |
+| **LearningOrchestrator** | Orchestrates generate+grade+queue side effects | Composes QuestionEngine | `src/lib/orchestrator/` |
+| **StudyPlannerService** | Inverse-competency-weighted scheduling | Round-robin algorithm | `src/lib/study-planner/` |
+| **SyncService** | Offline-to-online data reconciliation | Dexie→Appwrite flush | `src/lib/sync/` |
+| **AuthService** | Anonymous→authenticated upgrade, magic link | Appwrite SDK | `src/lib/auth/` |
+| **PremiumService** | Premium gating, checkout, verification | localStorage + API | `src/lib/premium/` |
+
+### Backend (External)
+
+| Service | Responsibility | Free Tier Limit |
+|---------|---------------|-----------------|
+| **Appwrite** | Auth, DB (questions, users, sessions), storage (exam PDFs, avatars) | 50k docs, 10GB storage |
+| **Gemini 2.0 Flash Lite** | Primary AI: question gen, grading, visuals | 60 req/min |
+| **Nvidia NIM** | Fallback AI: Llama 3.3 70B | Pay-as-you-go |
+| **Groq** | Last-resort AI: Llama 3.3 70B | 30 req/min |
+| **UploadThing** | File upload infrastructure | 2GB free |
+| **Sentry** | Error tracking (DSN configured) | 5k events/month |
+
+---
+
+## Interfaces (Key APIs)
+
+### Public API Routes
+
+| Route | Method | Purpose |
+|-------|--------|---------|
+| `/api/engine/generate` | POST | Generate questions (subject, topic, count, type, difficulty) |
+| `/api/engine/grade` | POST | Grade a question answer |
+| `/api/engine/hint` | POST | Get a hint for a question |
+| `/api/engine/visual` | POST | Generate diagram/visual for a question |
+| `/api/engine/test` | GET | Health check |
+| `/api/engine/budget` | GET | Get current token budget status |
+| `/api/engine/next-topics` | POST | Get next recommended topics based on competency |
+| `/api/engine/study-plan` | POST | Generate study plan |
+| `/api/auth/verify` | POST | Verify sign-in session |
+| `/api/auth/rate-limit` | GET | Check auth rate limit status |
+| `/api/exam-sessions` | GET/POST | List / create exam sessions |
+| `/api/exam-sessions/[id]` | GET/PUT | Get / update exam session |
+| `/api/sync` | POST | Flush offline mutation queue |
+| `/api/premium/checkout` | POST | Create premium checkout session |
+| `/api/leaderboard` | GET | Get social leaderboard |
+| `/api/push/subscribe` | POST | Subscribe to push notifications |
+
+### Key Event Flows
+
+**Question Generation (orchestrated):**
+```
+Client -> POST /api/engine/generate
+  -> LearningOrchestrator.generateQuestionSet()
+    -> QuestionEngine.generate() [AI call via Gemini->Nvidia->Groq]
+    -> Validator: per-type validation (score 0-100)
+    -> Cache: Dexie L1 + Appwrite L2
+    -> VisualEngine: background pre-cache for each question
+    -> Analytics: enqueue analytics-sync job
+    -> Response: Question[]
+```
+
+**Quiz Answer + Grade:**
+```
+Client -> POST /api/engine/grade
+  -> LearningOrchestrator.gradeAndTrack()
+    -> QuestionEngine.grade() [local for 4 types, AI for 7]
+    -> trackQuestionResult()
+      -> CompetencyEngine: update score + bloom level
+      -> WrongAnswerJournal: save if incorrect
+      -> Flashcards: SM-2 review (existing) or create (new)
+      -> Analytics: enqueue analytics-sync job
+    -> Response: GradingResult
+```
+
+### Database Collections (Appwrite)
+
+| Collection | Purpose | Documents |
+|------------|---------|-----------|
+| `users` | User profiles + auth | Auth-managed |
+| `questions` | Cached AI-generated questions | ~10k (cleaned >30d) |
+| `visuals` | Cached AI-generated diagrams | ~5k (cleaned >30d) |
+| `exam_sessions` | In-progress + completed exam sessions | Per-user |
+| `exam_papers` | Uploaded past exam PDFs | ~500 |
+
+### Database Tables (Dexie / IndexedDB) — v12 Schema
+
+| Table | Purpose | Expiry |
+|-------|---------|--------|
+| `questions` | Cached generated questions | 24h |
+| `visuals` | Cached generated diagrams | 7d |
+| `examDates` | Exam timetable slots | 7d |
+| `questionRatings` | User star ratings on questions | Permanent |
+| `wrongAnswers` | Wrong answer journal | Permanent |
+| `flashcards` | SM-2 spaced repetition state | Permanent |
+
+---
+
+## Non-Functional Requirements
+
+| Area | Target | Implementation |
+|------|--------|----------------|
+| **Offline support** | Full read access, queued writes | Dexie + SyncQueue |
+| **AI budget** | 2000 calls/day global, per-user caps | TokenTracker + 429 responses |
+| **Auth security** | 3 attempts/5min sign-in, 1/5min magic link | In-memory rate limiter |
+| **Cache freshness** | Questions: 24h, Visuals: 7d, ExamDates: 7d | Dexie TTL + Appwrite cleanup cron |
+| **Appwrite limits** | <50k documents | Cleanup cron deletes >30d |
+| **Page load** | Mobile-first, Core Web Vitals tracked | Sentry + web-vitals |
+| **Error monitoring** | Client + server + edge | Sentry DSN configured |
+| **Build quality** | Zero tsc errors, zero Biome errors | Pre-commit hook (Bun) |
+
+### Scalability Bottlenecks
+
+- **AI provider chain**: Sequential fallback (Gemini → Nvidia → Groq) adds latency when primary fails
+- **RateLimiter**: In-memory — does not survive server restart (no Redis)
+- **Appwrite 50k doc limit**: Cleanup cron mitigates but doesn't scale past free tier
+- **SyncQueue**: Sequential flush per user — large queues may timeout
+- **Comparative analytics**: Falls back to estimates without other users' data in Appwrite
+
+### Security Boundaries
+
+| Boundary | Enforcement |
+|----------|-------------|
+| API routes → Appwrite DB | Server-side API key (not exposed to client) |
+| Anonymous → authenticated | `updateEmail()` preserves same userId — no data leak |
+| Admin routes | Separate magic-link + OTP auth (localStorage session) |
+| File uploads | UploadThing server-side verification |
+| Push notifications | VAPID key, subscription-based (web-push) |
+
+---
+
+## Evolution Roadmap
+
+| Priority | Change | Rationale | Target |
+|----------|--------|-----------|--------|
+| P1 | Appwrite write path for exam_dates + server-side cron scraping | Productionize exam dates (currently seed-only + Dexie) | Phase 3 |
+| P2 | Redis-backed RateLimiter + TokenTracker | Survives server restarts, shared across instances | Phase 4 |
+| P3 | E2E tests (Playwright) + component tests | Coverage gap: only unit tests exist | Phase 4 |
+| P4 | Custom domain + production deployment | Current: Vercel preview; needs custom domain | Phase 4 |
+| P5 | OCR-based PDF scraping for DBE timetables | Automated exam date extraction without manual data entry | Phase 3 |
+| P6 | Shared subject color/abbreviation maps | Remove duplication between old `exam-calendar.tsx` and `exam-dates/service.ts` | Tech debt |
+
+---
+
+## Deployment
+
+```mermaid
+graph LR
+    A[Vercel Edge/Serverless] --> B[Next.js API Routes]
+    A --> C[Next.js SSR/RSC Pages]
+    A --> D[Next.js Static Assets]
+    A --> E[Sentry Monitoring]
+    
+    B --> F[Appwrite Cloud]
+    B --> G[Gemini API]
+    B --> H[Nvidia NIM API]
+    B --> I[Groq API]
+    B --> J[Wikimedia Commons]
+    
+    C --> K[UploadThing]
+    C --> L[Client Dexie/IDB]
+    
+    M[GitHub] --> N[Vercel Git Deploy]
+    M --> O[GitHub Actions<br/>(Biome + tsc)]
+    
+    style A fill:#e1f5fe
+    style F fill:#e8f5e9
+    style G,H,I fill:#f3e5f5
+    style M fill:#fff3e0
+```

@@ -23,13 +23,17 @@ const mockDatabases = {
 	},
 };
 
-mock.module("@/lib/db/client", () => ({
-	APPWRITE_DATABASE_ID: "test-db",
-	COLLECTIONS: { QUESTIONS: "questions" },
-}));
-
 mock.module("@/lib/appwrite", () => ({
 	databases: mockDatabases,
+	browserDatabases: mockDatabases,
+	storage: {},
+	functions: {},
+	account: {},
+	serverAccount: {},
+	serverClient: {},
+	APPWRITE_ENDPOINT: "https://cloud.appwrite.io/v1",
+	APPWRITE_PROJECT: "test-project",
+	APPWRITE_API_KEY: "test-key",
 }));
 
 const { cleanupOldQuestions } = await import("../cleanup");

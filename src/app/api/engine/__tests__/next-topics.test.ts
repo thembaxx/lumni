@@ -17,7 +17,11 @@ mock.module("@/lib/db/client", () => ({
 }));
 
 mock.module("@/lib/server/auth", () => ({
+	auth: () => "test-user-id",
+	verifyAuth: () => {},
 	getAuthenticatedUserId: () => "test-user-id",
+	requireAdmin: () => "test-user-id",
+	getAuthenticatedUserName: () => "Test User",
 }));
 
 mock.module("@/lib/shared/with-rate-limit", () => ({

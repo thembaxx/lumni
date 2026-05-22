@@ -1,9 +1,10 @@
 "use client";
 
-import { Calendar01Icon } from "@hugeicons/core-free-icons";
+import { Calendar01Icon, Download02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
 	formatDuration,
@@ -12,6 +13,11 @@ import {
 	getSubjectAbbr,
 	getSubjectColor,
 } from "@/lib/exam-dates";
+import {
+	buildExportFilename,
+	downloadIcal,
+	generateIcal,
+} from "@/lib/exam-dates/calendar-export";
 import type { ExamSlot } from "@/lib/exam-dates/types";
 import { cn } from "@/lib/shared";
 import { ExamDetailDialog } from "./exam-detail-dialog";
@@ -66,6 +72,13 @@ export function NationalExamCalendar() {
 		setDialogOpen(true);
 	}, []);
 
+	const handleExportIcal = useCallback(() => {
+		if (allSlots.length === 0) return;
+		const ical = generateIcal(allSlots, sessionLabel);
+		const filename = buildExportFilename(session.session, session.year);
+		downloadIcal(ical, filename);
+	}, [allSlots, sessionLabel, session.session, session.year]);
+
 	const countdownText = useMemo(() => {
 		if (nextExams.length === 0) {
 			if (allSlots.length === 0) return "";
@@ -111,6 +124,17 @@ export function NationalExamCalendar() {
 				<p className="ios-subhead mt-1 text-[--system-text-secondary]/50">
 					{sessionLabel}
 				</p>
+				{allSlots.length > 0 && (
+					<Button
+						variant="outline"
+						size="sm"
+						onClick={handleExportIcal}
+						className="mt-2 gap-1.5 text-xs"
+					>
+						<HugeiconsIcon icon={Download02Icon} className="size-3.5" />
+						Export Calendar
+					</Button>
+				)}
 			</div>
 
 			<AnimatePresence mode="wait">

@@ -29,6 +29,7 @@ export const COLLECTIONS = {
 	FLASHCARDS: "flashcards",
 	WRONG_ANSWERS: "wrong_answers",
 	CHAT_MESSAGES: "chat_messages",
+	EXAM_DATES: "exam_dates",
 } as const;
 
 export type Subject = {

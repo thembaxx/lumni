@@ -1,5 +1,7 @@
 import { beforeEach, describe, expect, mock, test } from "bun:test";
-import type { NodeDatabases } from "node-appwrite";
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+type NodeDatabases = unknown;
 
 class MockAppwriteException extends Error {
 	code: number;
@@ -149,10 +151,24 @@ const mockDb = {
 mock.module("@/lib/db/client", () => ({
 	APPWRITE_DATABASE_ID: "test-db",
 	COLLECTIONS: { QUESTIONS: "questions" },
+	listDocuments: mockDb.listDocuments,
+	getDocument: mockDb.getDocument,
+	createDocument: mockDb.createDocument,
+	updateDocument: mockDb.updateDocument,
+	deleteDocument: mockDb.deleteDocument,
 }));
 
 mock.module("@/lib/appwrite", () => ({
 	databases: mockDb,
+	browserDatabases: mockDb,
+	storage: {},
+	functions: {},
+	account: {},
+	serverAccount: {},
+	serverClient: {},
+	APPWRITE_ENDPOINT: "https://cloud.appwrite.io/v1",
+	APPWRITE_PROJECT: "test-project",
+	APPWRITE_API_KEY: "test-key",
 }));
 
 mock.module("node-appwrite", () => ({

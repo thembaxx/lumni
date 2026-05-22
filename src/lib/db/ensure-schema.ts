@@ -258,6 +258,21 @@ export const schemaConfig: Record<string, CollectionSchema> = {
 			{ key: "idx_flags_status", type: "key", attributes: ["status"] },
 		],
 	},
+	exam_dates: {
+		attributes: {
+			cacheKey: { type: "string", size: 255, required: true },
+			session: { type: "string", size: 20, required: true },
+			year: { type: "integer", required: true },
+			slots: { type: "string", size: 100000 },
+			updatedAt: { type: "datetime" },
+			source: { type: "string", size: 20 },
+		},
+		indexes: [
+			{ key: "idx_exam_dates_cacheKey", type: "unique", attributes: ["cacheKey"] },
+			{ key: "idx_exam_dates_session", type: "key", attributes: ["session"] },
+			{ key: "idx_exam_dates_year", type: "key", attributes: ["year"] },
+		],
+	},
 	analytics: {
 		attributes: {
 			eventType: { type: "string", size: 50 },

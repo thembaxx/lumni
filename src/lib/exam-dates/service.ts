@@ -1,9 +1,14 @@
 import { offlineDB } from "@/lib/db/schema";
 import { EXAM_SLOTS_2026_MAY } from "./data-2026-may";
+import { EXAM_SLOTS_2026_NOV } from "./data-2026-nov";
+import { getSubjectAbbr, getSubjectColor } from "./subject-maps";
 import type { ExamSlot } from "./types";
+
+export { getSubjectAbbr, getSubjectColor };
 
 const SEED_DATA: Record<string, ExamSlot[]> = {
 	"may-june_2026": EXAM_SLOTS_2026_MAY,
+	"oct-nov_2026": EXAM_SLOTS_2026_NOV,
 };
 
 export function getSeedData(session: string, year: number): ExamSlot[] {
@@ -76,48 +81,6 @@ export async function getExamsGroupedByDate(
 		.map(([date, slots]) => ({ date, slots }));
 }
 
-const subjectColors: Record<string, string> = {
-	mathematics: "bg-[--system-accent]",
-	"physical-sciences": "bg-success",
-	"life-sciences": "bg-accent",
-	"english-home-language": "bg-warning",
-	"afrikaans-home-language": "bg-destructive",
-	geography: "bg-info",
-	history: "bg-warning",
-	accounting: "bg-warning-foreground",
-	"business-studies": "bg-accent",
-	economics: "bg-info",
-	"mathematical-literacy": "bg-[--chart-3]",
-	"computer-applications-technology": "bg-[--chart-4]",
-	"information-technology": "bg-[--chart-5]",
-};
-
-const subjectAbbrs: Record<string, string> = {
-	mathematics: "Math",
-	"physical-sciences": "PhySci",
-	"life-sciences": "LifeSci",
-	"english-home-language": "EngHL",
-	"english-first-additional-language": "EngFAL",
-	"afrikaans-home-language": "AfrHL",
-	"afrikaans-first-additional-language": "AfrFAL",
-	geography: "Geo",
-	history: "Hist",
-	accounting: "Acc",
-	"business-studies": "Bus",
-	economics: "Econ",
-	"mathematical-literacy": "MathLit",
-	"computer-applications-technology": "CAT",
-	"information-technology": "IT",
-};
-
-export function getSubjectColor(subjectId: string): string {
-	return subjectColors[subjectId] || "bg-muted";
-}
-
-export function getSubjectAbbr(subjectId: string): string {
-	return subjectAbbrs[subjectId] || subjectId.slice(0, 4).toUpperCase();
-}
-
 export function getSessionLabel(session: string, year: number): string {
 	if (session === "may-june") return `May/June ${year}`;
 	return `Oct/Nov ${year}`;
@@ -144,4 +107,32 @@ export function formatDuration(hours: number): string {
 	if (hours === 2.5) return "2h 30m";
 	if (hours === 3) return "3 hours";
 	return `${hours}h`;
+}
+
+export function refreshExamDatesFromAppwrite(
+	session: string,
+	year: number,
+): Promise<ExamSlot[]> {
+	return getExamDates(session, year);
+}
+
+export async function syncExamDatesToAppwrite(
+	session: string,
+	year: number,
+	slots: ExamSlot[],
+): Promise<void> {
+	try {
+		const { createDocument } = await import("@/lib/db/client");
+		const key = `${session}_${year}`;
+		await createDocument("exam_dates", {
+			cacheKey: key,
+			session,
+			year,
+			slots: JSON.stringify(slots),
+			updatedAt: new Date().toISOString(),
+			source: "seed",
+		});
+	} catch (err) {
+		console.warn("[exam-dates] Failed to sync to Appwrite:", err);
+	}
 }

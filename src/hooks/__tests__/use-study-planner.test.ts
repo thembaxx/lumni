@@ -6,6 +6,11 @@ import type {
 	StudySession,
 } from "@/lib/utils/study-planner";
 
+mock.module("@/lib/auth/auth-context", () => ({
+	AuthProvider: ({ children }: { children: React.ReactNode }) => children,
+	useAuth: () => ({ user: { $id: "test-user" } }),
+}));
+
 let mockPlan: StudyPlan = { sessions: [], examDates: [], generatedAt: 0 };
 let mockSessions: StudySession[] = [];
 let mockUpcoming: StudySession[] = [];
@@ -92,6 +97,7 @@ mock.module("@/lib/utils/study-planner", () => ({
 			generatedAt: mockPlan.generatedAt,
 		};
 	},
+	syncStudyPlanToAppwrite: async () => {},
 }));
 
 mock.module("@/lib/study-planner/study-planner-service", () => ({

@@ -10,6 +10,8 @@ function QuizClientContent() {
 	const topic = searchParams.get("topic") || undefined;
 	const countParam = searchParams.get("count");
 	const questionCount = countParam ? parseInt(countParam, 10) : 20;
+	const timeParam = searchParams.get("time");
+	const maxTime = timeParam ? parseInt(timeParam, 10) : undefined;
 
 	const handleQuit = () => {
 		window.history.back();
@@ -20,6 +22,7 @@ function QuizClientContent() {
 			initialSubject={initialSubject}
 			topic={topic}
 			questionCount={questionCount}
+			maxTime={maxTime}
 			onQuit={handleQuit}
 		/>
 	);

@@ -1,16 +1,16 @@
 import { describe, expect, test } from "bun:test";
 
 const {
-	REFERRAL_DOMAIN,
 	REFERRAL_REWARD_DAYS,
 	REFERRAL_MONTHLY_LIMIT,
+	getReferralDomain,
 	buildReferralLink,
 	generateReferralCode,
 } = await import("../constants");
 
 describe("referral constants", () => {
-	test("REFERRAL_DOMAIN is correct URL", () => {
-		expect(REFERRAL_DOMAIN).toBe("https://lumni-psi.vercel.app");
+	test("getReferralDomain returns a URL", () => {
+		expect(getReferralDomain()).toMatch(/^https?:\/\//);
 	});
 
 	test("REFERRAL_REWARD_DAYS is 7", () => {
@@ -23,9 +23,7 @@ describe("referral constants", () => {
 
 	test("buildReferralLink creates URL with encoded code", () => {
 		const link = buildReferralLink("LUMNI-ABC123");
-		expect(link).toBe(
-			"https://lumni-psi.vercel.app/auth/sign-up?ref=LUMNI-ABC123",
-		);
+		expect(link).toContain("/auth/sign-up?ref=LUMNI-ABC123");
 	});
 
 	test("buildReferralLink encodes special characters", () => {

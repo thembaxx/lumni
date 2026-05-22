@@ -1,77 +1,13 @@
-import { afterAll, beforeEach, describe, expect, mock, test } from "bun:test";
-
-let mockSessionCookieValue: string | null = "session123";
-let mockUserId = "user_abc";
-let mockUserName = "Test User";
-let mockGetRejects = false;
-
-const mockCookieGet = mock((_name: string) => {
-	if (mockSessionCookieValue) {
-		return { value: mockSessionCookieValue };
-	}
-	return undefined;
-});
-
-mock.module("next/headers", () => ({
-	cookies: async () => ({
-		get: mockCookieGet,
-	}),
-}));
-
-class MockClient {
-	setEndpoint(_ep: string) {
-		return this;
-	}
-	setProject(_p: string) {
-		return this;
-	}
-	setSession(_s: string) {
-		return this;
-	}
-	setKey(_key: string) {
-		return this;
-	}
-}
-
-const mockAccountGet = mock(async () => ({
-	$id: mockUserId,
-	name: mockUserName,
-}));
-
-class MockAccount {
-	_client: MockClient;
-	constructor(client: MockClient) {
-		this._client = client;
-	}
-	async get() {
-		if (mockGetRejects) throw new Error("Not authenticated");
-		return mockAccountGet();
-	}
-}
-
-mock.module("node-appwrite", () => ({
-	Client: MockClient,
-	Account: MockAccount,
-	Databases: class MockDatabases {},
-	Query: {
-		equal: (_field: string, _value: string) => `${_field}=${_value}`,
-	},
-}));
-
-mock.module("@/lib/appwrite", () => ({
-	APPWRITE_ENDPOINT: "https://cloud.appwrite.io/v1",
-	APPWRITE_PROJECT: "test-project",
-	APPWRITE_API_KEY: "test-key",
-	databases: {},
-}));
+import { afterAll, beforeEach, describe, expect, test } from "bun:test";
+import { authState } from "./setup";
 
 const OLD_ENV = process.env;
 
 beforeEach(() => {
-	mockSessionCookieValue = "session123";
-	mockUserId = "user_abc";
-	mockUserName = "Test User";
-	mockGetRejects = false;
+	authState.sessionCookieValue = "session123";
+	authState.userId = "user_abc";
+	authState.userName = "Test User";
+	authState.getRejects = false;
 	process.env = { ...OLD_ENV };
 	delete process.env.ADMIN_USER_IDS;
 });
@@ -93,21 +29,21 @@ describe("verifyAuth", () => {
 	});
 
 	test("throws when userId does not match", async () => {
-		mockUserId = "other_user";
+		authState.userId = "other_user";
 		await expect(verifyAuth("user_abc")).rejects.toThrow(
 			"Authentication required",
 		);
 	});
 
 	test("throws when no session cookie exists", async () => {
-		mockSessionCookieValue = null;
+		authState.sessionCookieValue = null;
 		await expect(verifyAuth("user_abc")).rejects.toThrow(
 			"Authentication required",
 		);
 	});
 
 	test("throws when account.get fails", async () => {
-		mockGetRejects = true;
+		authState.getRejects = true;
 		await expect(verifyAuth("user_abc")).rejects.toThrow(
 			"Authentication required",
 		);
@@ -121,13 +57,13 @@ describe("getAuthenticatedUserId", () => {
 	});
 
 	test("returns null when no session cookie", async () => {
-		mockSessionCookieValue = null;
+		authState.sessionCookieValue = null;
 		const id = await getAuthenticatedUserId();
 		expect(id).toBeNull();
 	});
 
 	test("returns null when account.get throws", async () => {
-		mockGetRejects = true;
+		authState.getRejects = true;
 		const id = await getAuthenticatedUserId();
 		expect(id).toBeNull();
 	});
@@ -141,7 +77,7 @@ describe("requireAdmin", () => {
 	});
 
 	test("throws when not authenticated", async () => {
-		mockSessionCookieValue = null;
+		authState.sessionCookieValue = null;
 		await expect(requireAdmin()).rejects.toThrow("Authentication required");
 	});
 
@@ -170,19 +106,19 @@ describe("getAuthenticatedUserName", () => {
 	});
 
 	test("returns null when no session cookie", async () => {
-		mockSessionCookieValue = null;
+		authState.sessionCookieValue = null;
 		const name = await getAuthenticatedUserName();
 		expect(name).toBeNull();
 	});
 
 	test("returns null when account.get throws", async () => {
-		mockGetRejects = true;
+		authState.getRejects = true;
 		const name = await getAuthenticatedUserName();
 		expect(name).toBeNull();
 	});
 
 	test("returns null when user has no name", async () => {
-		mockUserName = "";
+		authState.userName = "";
 		const name = await getAuthenticatedUserName();
 		expect(name).toBeNull();
 	});

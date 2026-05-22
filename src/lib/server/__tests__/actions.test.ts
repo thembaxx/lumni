@@ -7,13 +7,26 @@ mock.module("@/lib/appwrite", () => ({
 	APPWRITE_ENDPOINT: "https://cloud.appwrite.io/v1",
 	APPWRITE_PROJECT: "test-project",
 	APPWRITE_API_KEY: "test-key",
+	databases: {},
+	browserDatabases: {},
+	storage: {},
+	functions: {},
+	account: {},
+	serverAccount: {},
+	serverClient: {},
 }));
 
 mock.module("@/lib/server/auth", () => ({
+	auth: async () => {
+		if (!mockUserId) throw new Error("Authentication required");
+		return mockUserId;
+	},
 	getAuthenticatedUserId: async () => mockUserId,
 	verifyAuth: mock(async (_userId: string) => {
 		if (!mockVerifyAuthResolves) throw new Error("Authentication required");
 	}),
+	requireAdmin: async () => mockUserId,
+	getAuthenticatedUserName: async () => "Test User",
 }));
 
 let mockListDocumentsResults: Record<string, Record<string, unknown>[]> = {};
@@ -170,10 +183,9 @@ describe("adminUploadExamPaper", () => {
 	test("returns auth error when not authenticated", async () => {
 		mockUserId = null;
 		const formData = new FormData();
-		const result = await adminUploadExamPaper(formData);
-
-		expect(result.success).toBe(false);
-		expect(result.error).toBe("Authentication required");
+		await expect(adminUploadExamPaper(formData)).rejects.toThrow(
+			"Authentication required",
+		);
 	});
 
 	test("returns error when required fields missing", async () => {

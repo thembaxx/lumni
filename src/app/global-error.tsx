@@ -6,6 +6,8 @@ import {
 	RefreshIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import * as Sentry from "@sentry/nextjs";
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 
 export default function GlobalError({
@@ -15,6 +17,10 @@ export default function GlobalError({
 	error: Error & { digest?: string };
 	reset: () => void;
 }) {
+	useEffect(() => {
+		Sentry.captureException(error);
+	}, [error]);
+
 	return (
 		<html lang="en">
 			<body

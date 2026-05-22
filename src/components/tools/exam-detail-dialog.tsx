@@ -90,24 +90,19 @@ export function ExamDetailDialog({
 	}, [exam, onOpenChange, push]);
 
 	const handleMockExam = useCallback(() => {
+		if (!exam) return;
 		onOpenChange(false);
-		toast({
-			type: "info",
-			message: "Coming Soon",
-			description:
-				"Mock exams with timed past papers are being built. Check back soon!",
-		});
-	}, [onOpenChange]);
+		const examDuration = exam.durationHours * 3600;
+		push(
+			`/quiz?subject=${exam.subjectId}&count=30&time=${examDuration}`,
+		);
+	}, [exam, onOpenChange, push]);
 
 	const handleCommonQuestions = useCallback(() => {
+		if (!exam) return;
 		onOpenChange(false);
-		toast({
-			type: "info",
-			message: "Coming Soon",
-			description:
-				"Common exam questions based on past paper analysis are on the way!",
-		});
-	}, [onOpenChange]);
+		push(`/quiz?subject=${exam.subjectId}&count=10`);
+	}, [exam, onOpenChange, push]);
 
 	if (!exam) return null;
 
@@ -234,7 +229,7 @@ export function ExamDetailDialog({
 							<div>
 								<p className="font-medium text-xs">Mock Exam</p>
 								<p className="text-[10px] text-muted-foreground">
-									Timed past-paper exam (coming soon)
+									Timed practice with exam-format questions
 								</p>
 							</div>
 						</div>
@@ -251,9 +246,9 @@ export function ExamDetailDialog({
 								className="size-4 text-muted-foreground"
 							/>
 							<div>
-								<p className="font-medium text-xs">View Common Questions</p>
+								<p className="font-medium text-xs">Common Questions</p>
 								<p className="text-[10px] text-muted-foreground">
-									Based on past paper analysis (coming soon)
+									Frequently tested questions in this subject
 								</p>
 							</div>
 						</div>

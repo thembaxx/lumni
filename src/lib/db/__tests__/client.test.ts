@@ -12,6 +12,15 @@ process.env.APPWRITE_DATABASE_ID = "test-db-id";
 
 mock.module("@/lib/appwrite", () => ({
 	databases: mockDb,
+	browserDatabases: mockDb,
+	storage: {},
+	functions: {},
+	account: {},
+	serverAccount: {},
+	serverClient: {},
+	APPWRITE_ENDPOINT: "https://cloud.appwrite.io/v1",
+	APPWRITE_PROJECT: "test-project",
+	APPWRITE_API_KEY: "test-key",
 }));
 
 const {
@@ -24,8 +33,8 @@ const {
 } = await import("../client");
 
 describe("COLLECTIONS", () => {
-	test("has 15 keys", () => {
-		expect(Object.keys(COLLECTIONS)).toHaveLength(15);
+	test("has 19 keys", () => {
+		expect(Object.keys(COLLECTIONS)).toHaveLength(19);
 	});
 
 	test("contains all expected collection keys", () => {
@@ -44,6 +53,10 @@ describe("COLLECTIONS", () => {
 		expect(COLLECTIONS.STUDY_PLANS).toBe("study_plans");
 		expect(COLLECTIONS.QUESTION_FLAGS).toBe("question_flags");
 		expect(COLLECTIONS.ANALYTICS).toBe("analytics");
+		expect(COLLECTIONS.FLASHCARDS).toBe("flashcards");
+		expect(COLLECTIONS.WRONG_ANSWERS).toBe("wrong_answers");
+		expect(COLLECTIONS.CHAT_MESSAGES).toBe("chat_messages");
+		expect(COLLECTIONS.EXAM_DATES).toBe("exam_dates");
 	});
 
 	test("all values are non-empty strings", () => {

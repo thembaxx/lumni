@@ -278,6 +278,41 @@ export function cancelScheduledReminder(): void {
 	localStorage.removeItem("lumni_next_reminder");
 }
 
+export async function scheduleExamAlerts(
+	slots: { subject: string; date: string; startTime: string }[],
+): Promise<void> {
+	if (!("serviceWorker" in navigator) || !("Notification" in window)) return;
+	if (Notification.permission !== "granted") return;
+
+	for (const slot of slots) {
+		const examDate = new Date(`${slot.date}T${slot.startTime}:00`);
+		const now = Date.now();
+		const alertTime = examDate.getTime() - 24 * 60 * 60 * 1000;
+
+		if (alertTime <= now) continue;
+
+		const delay = alertTime - now;
+		const existing = loadFromStorage<{ examSubject: string; scheduledAt: number }[]>(
+			"lumni_exam_alerts",
+			[],
+		);
+		if (existing.some((e) => e.examSubject === slot.subject && e.scheduledAt === alertTime)) {
+			continue;
+		}
+
+		setTimeout(() => {
+			sendLocalNotification(
+				`${slot.subject} exam tomorrow!`,
+				`Your ${slot.subject} exam starts at ${slot.startTime}. Good luck!`,
+				"/tools?tool=exam-calendar",
+			);
+		}, delay);
+
+		existing.push({ examSubject: slot.subject, scheduledAt: alertTime });
+		saveToStorage("lumni_exam_alerts", existing);
+	}
+}
+
 export interface StudyReminder {
 	id: string;
 	title: string;

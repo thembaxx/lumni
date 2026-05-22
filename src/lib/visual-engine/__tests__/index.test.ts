@@ -5,10 +5,11 @@ import {
 	getDataForType,
 	getValidator,
 	isKonvaType,
+	KONVA_TYPES,
 } from "../diagram-mapper";
 import { searchImage } from "../image-resolver";
 import { generateDiagram } from "../stem-renderer";
-import { KONVA_TYPES, STEM_SUBJECTS } from "../types";
+import { STEM_SUBJECTS } from "../types";
 import { VisualEngine, visualEngine } from "../visual-engine";
 
 describe("barrel exports", () => {

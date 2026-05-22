@@ -42,6 +42,11 @@ mock.module("@/lib/db/schema", () => ({
 	offlineDB: {
 		progress: mockProgressTable,
 		quizAttempts: mockAttemptsTable,
+		competencies: { toArray: async () => [] },
+		flashcards: { toArray: async () => [] },
+		wrongAnswers: { toArray: async () => [] },
+		chatMessages: { toArray: async () => [] },
+		questionRatings: { toArray: async () => [] },
 	},
 }));
 
@@ -83,7 +88,7 @@ describe("flushOfflineData", () => {
 		});
 	});
 
-	test("deletes progress after enqueuing", async () => {
+	test("does not delete progress after enqueuing", async () => {
 		progressStore.push({
 			id: 1,
 			odSubjectId: "physics",
@@ -93,7 +98,7 @@ describe("flushOfflineData", () => {
 			longestStreak: 1,
 		});
 		await flushOfflineData("user-1");
-		expect(progressStore).toHaveLength(0);
+		expect(progressStore).toHaveLength(1);
 	});
 
 	test("skips progress items with zero questionsAttempted and correctCount", async () => {

@@ -44,11 +44,18 @@ const updateExamPaperMemoLinkMock = mock(
 );
 
 mock.module("@/lib/db/exams", () => ({
-	findPaperForMemo: findPaperForMemoMock,
+	resetExamsDb: () => {},
+	getExamsDb: async () => ({}),
+	saveExamsDb: () => {},
 	getExamPaperCount: getExamPaperCountMock,
+	getAllExamPapers: () => [],
+	getExamPapersBySubject: () => [],
+	getExamPaperById: () => null,
 	insertExamPaper: insertExamPaperMock,
 	updateExamPaperMemoLink: updateExamPaperMemoLinkMock,
 	updateExamPaperPaperLink: mock(() => {}),
+	findPaperForMemo: findPaperForMemoMock,
+	findMemoForPaper: () => null,
 }));
 
 mock.module("@/lib/db/exams/schema", () => ({

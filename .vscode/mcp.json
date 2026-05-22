@@ -1,0 +1,8 @@
+{
+  "servers": {
+    "Sentry": {
+      "url": "https://mcp.sentry.dev/mcp/org1128/lumni",
+      "type": "http"
+    }
+  }
+}

@@ -147,6 +147,10 @@ Five canonical labels with default naming. See `docs/agents/triage-labels.md`.
 
 Single-context — one `CONTEXT.md` + `docs/adr/` at the repo root. See `docs/agents/domain.md`.
 
+### Workflow
+
+TODO.md, Linear, GitHub, and Sentry are integrated. See `docs/agents/workflow.md`.
+
 ## Sessions
 
 ### Session 1 — Bug fixes (May 2026)
