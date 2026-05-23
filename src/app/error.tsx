@@ -23,7 +23,7 @@ export default function AppError({
 						initial={{ opacity: 0, x: -20 }}
 						animate={{ opacity: 1, x: 0 }}
 						transition={{ duration: 0.4, ease: iOSEase }}
-						className="max-w-md space-y-[--space-8]"
+						className="flex max-w-md flex-col gap-[--space-8]"
 					>
 						<m.div
 							initial={{ scale: 0.8 }}
@@ -43,7 +43,7 @@ export default function AppError({
 							</div>
 						</m.div>
 
-						<div className="space-y-[--space-2]">
+						<div className="flex flex-col gap-[--space-2]">
 							<h2 className="ios-title-2 text-[--system-text-primary]">
 								Something went wrong
 							</h2>

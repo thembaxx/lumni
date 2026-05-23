@@ -138,7 +138,7 @@ export function SearchResults({
 
 	return (
 		<div
-			className={cn("mt-2 space-y-1", className)}
+			className={cn("flex", "flex-col", "mt-2 gap-1", className)}
 			onKeyDown={handleKeyDown}
 			role="listbox"
 			tabIndex={0}
@@ -151,7 +151,10 @@ export function SearchResults({
 					No results for "{query}"
 				</p>
 			)}
-			<div ref={listRef} className="max-h-80 space-y-0.5 overflow-y-auto">
+			<div
+				ref={listRef}
+				className="flex max-h-80 flex-col gap-0.5 overflow-y-auto"
+			>
 				{results.map((item, i) => {
 					const config = typeConfig[item.type];
 					return (

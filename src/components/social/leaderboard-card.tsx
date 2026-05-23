@@ -38,7 +38,7 @@ export function LeaderboardCard() {
 						No rankings yet. Start studying to appear here!
 					</p>
 				) : (
-					<div className="space-y-2">
+					<div className="flex flex-col gap-2">
 						{entries.map((entry, i) => (
 							<div
 								key={entry.rank}

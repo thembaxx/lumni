@@ -102,7 +102,7 @@ export function ComparativeAnalyticsPanel() {
 	}
 
 	return (
-		<div className="space-y-8 pt-6">
+		<div className="flex flex-col gap-8 pt-6">
 			{/* User Percentile */}
 			<Card size="sm">
 				<CardHeader>

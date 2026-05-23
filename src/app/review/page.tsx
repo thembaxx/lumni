@@ -27,6 +27,7 @@ import {
 	type ErrorType,
 	useWrongAnswerJournal,
 } from "@/hooks/use-wrong-answer-journal";
+import { PageContainer } from "@/components/layout/page-container";
 
 function ErrorTypeSelect({
 	value,
@@ -100,7 +101,7 @@ export default function ReviewPage() {
 
 	return (
 		<div className="min-h-screen bg-system-grouped pt-4 pb-24">
-			<div className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-4">
+			<PageContainer className="flex flex-col gap-6">
 				<LocalDataNotice
 					page="review"
 					description="Your mistake journal is stored on this device. Sign in to access your review history from any device."
@@ -264,7 +265,7 @@ export default function ReviewPage() {
 						))}
 					</div>
 				)}
-			</div>
+			</PageContainer>
 		</div>
 	);
 }

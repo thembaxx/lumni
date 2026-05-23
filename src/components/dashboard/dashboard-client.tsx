@@ -39,6 +39,7 @@ import { enqueue } from "@/lib/orchestrator/job-queue";
 import { iOSEase } from "@/lib/utils/animation";
 import { useOptimizedAnimation } from "@/lib/utils/animation-optimization";
 import { createFlashcard } from "@/lib/utils/spaced-repetition";
+import { PageContainer } from "@/components/layout/page-container";
 
 const QuizView = dynamic(
 	() => import("@/components/quiz/quiz-view").then((m) => m.QuizView),
@@ -143,7 +144,7 @@ function HeroBanner() {
 
 	return (
 		<m.div
-			className="relative -mx-4 mt-4 mb-6 h-40 overflow-hidden rounded-[2.5rem] bg-linear-to-br from-[--system-accent]/10 via-[--system-accent]/5 to-transparent shadow-[0_24px_48px_-16px_rgba(0,0,0,0.06)]"
+			className="relative mt-4 mb-6 h-40 overflow-hidden rounded-card-lg bg-linear-to-br from-[--system-accent]/10 via-[--system-accent]/5 to-transparent shadow-level-2"
 			initial={{ opacity: 0, y: -12 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.5, ease: iOSEase }}
@@ -255,7 +256,7 @@ function DashboardContent({
 			data-scroll-container
 			className="flex min-h-dvh w-full flex-col overflow-y-auto overflow-x-hidden bg-system-grouped pt-8 pb-[calc(var(--spacing-safe-pb)+var(--space-16)+var(--space-5))]"
 		>
-			<div className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-4 pb-16">
+			<PageContainer className="gap-8 pb-16">
 				{activeTab === "today" && <HeroBanner />}
 				{isAnonymous && (
 					<LocalDataNotice
@@ -349,7 +350,7 @@ function DashboardContent({
 						</StaggerList>
 					</SectionReveal>
 				)}
-			</div>
+			</PageContainer>
 		</div>
 	);
 }

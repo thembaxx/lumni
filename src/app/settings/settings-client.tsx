@@ -28,6 +28,7 @@ import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/auth/auth-context";
 import { iOSEase } from "@/lib/utils/animation";
+import { PageContainer } from "@/components/layout/page-container";
 import {
 	BETA_FEATURES_KEY,
 	type BetaFeatures,
@@ -184,9 +185,9 @@ function SettingsContent() {
 
 	return (
 		<div className="flex min-h-[100dvh] flex-col bg-system-grouped antialiased">
-			<div className="mx-auto flex w-full max-w-md flex-1 flex-col">
+			<PageContainer className="flex-1">
 				{/* Refined Header */}
-				<header className="sticky top-0 z-30 bg-system-grouped/90 px-6 pt-6 pb-4 backdrop-blur-xl">
+				<header className="sticky top-0 z-header bg-system-grouped/90 px-6 pt-6 pb-4 backdrop-blur-xl">
 					<div className="flex h-14 items-center justify-between">
 						<div className="flex items-center gap-4">
 							<Link
@@ -204,7 +205,7 @@ function SettingsContent() {
 							size="sm"
 							onClick={handleSave}
 							disabled={isSaving}
-							className="h-10 rounded-full bg-system-accent px-6 font-extrabold text-white shadow-level-2 transition-[transform,opacity] hover:bg-system-accent/90 active:scale-[0.96]"
+							className="h-10 rounded-full bg-system-accent px-6 font-extrabold text-system-background-elevated shadow-level-2 transition-[transform,opacity] hover:bg-system-accent/90 active:scale-[0.96]"
 						>
 							{saved ? "✓ Saved" : isSaving ? "Saving…" : "Save"}
 						</Button>
@@ -212,7 +213,7 @@ function SettingsContent() {
 				</header>
 
 				{/* Tabs Navigation - Elevated Horizontal Scroll */}
-				<nav className="sticky top-[calc(var(--spacing-safe-pt)+56px)] z-20 border-border/5 border-b bg-system-grouped/90 px-6 py-2 backdrop-blur-xl">
+				<nav className="sticky top-[calc(var(--spacing-safe-pt)+56px)] z-sticky border-border/5 border-b bg-system-grouped/90 px-6 py-2 backdrop-blur-xl">
 					<div
 						className="scrollbar-hide -mx-2 flex gap-0 overflow-x-auto px-2 py-1"
 						role="tablist"
@@ -299,7 +300,7 @@ function SettingsContent() {
 						</m.div>
 					</AnimatePresence>
 				</main>
-			</div>
+			</PageContainer>
 		</div>
 	);
 }

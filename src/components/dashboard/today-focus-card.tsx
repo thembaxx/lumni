@@ -195,7 +195,7 @@ export function TodayFocusCard() {
 					<Button
 						size="sm"
 						variant="secondary"
-						className="w-full bg-black/10 font-extrabold text-[13px] hover:opacity-90"
+						className="w-full bg-system-fill font-extrabold text-[13px] hover:opacity-90"
 						onClick={handleStart}
 						disabled={showSuccess}
 					>

@@ -36,7 +36,7 @@ export function FlashcardsEmpty({
 				<CardHeader className="text-center">
 					<CardTitle>Deck is Empty</CardTitle>
 				</CardHeader>
-				<CardContent className="space-y-4">
+				<CardContent className="flex flex-col gap-4">
 					<Empty>
 						<EmptyHeader>
 							<EmptyMedia variant="icon">

@@ -12,6 +12,7 @@ import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ListCell, ListGroup, ListSection } from "@/components/ui/list-cell";
 import { extractSubjectFromFileName } from "@/lib/upload";
+import { PageContainer } from "@/components/layout/page-container";
 import { UploadButton } from "@/lib/uploadthing";
 
 export default function UploadPage() {
@@ -64,15 +65,15 @@ export default function UploadPage() {
 
 	return (
 		<div className="min-h-[100dvh] bg-[--system-grouped-background]">
-			<div className="mx-auto max-w-md">
-				<div className="px-[--space-4] pt-safe pb-[--space-2]">
+			<PageContainer>
+				<div className="pt-safe pb-[--space-2]">
 					<h1 className="ios-large-title text-[--system-text-primary]">
 						Upload QA Files
 					</h1>
 				</div>
 
-				<div className="space-y-[--space-4] px-[--space-4] pb-[--space-8]">
-					<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+				<div className="flex flex-col gap-[--space-4] pb-[--space-8]">
+					<div className="overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors">
 						<header>
 							<h2 className="flex flex-col items-center gap-3 text-center font-heading font-medium text-sm">
 								<span className="flex items-center gap-2">
@@ -84,7 +85,7 @@ export default function UploadPage() {
 								Upload JSON question files for subjects
 							</p>
 						</header>
-						<div className="space-y-[--space-3] px-4 group-data-[size=sm]/card:px-3">
+						<div className="flex flex-col gap-[--space-3] px-4 group-data-[size=sm]/card:px-3">
 							<UploadButton
 								endpoint="qaUploader"
 								onClientUploadComplete={handleUploadComplete}
@@ -127,7 +128,7 @@ export default function UploadPage() {
 						</ListGroup>
 					</ListSection>
 
-					<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+					<div className="overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors">
 						<header>
 							<h2 className="flex items-center gap-2 font-heading font-medium text-sm">
 								<HugeiconsIcon icon={DatabaseIcon} className="size-4" />
@@ -161,7 +162,7 @@ export default function UploadPage() {
 						</div>
 					</div>
 				</div>
-			</div>
+			</PageContainer>
 		</div>
 	);
 }

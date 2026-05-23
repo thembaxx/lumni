@@ -33,7 +33,7 @@ export function QuizLauncher({
 				</CardTitle>
 				<CardDescription>Pick a subject and start a quiz.</CardDescription>
 			</CardHeader>
-			<CardContent className="space-y-3">
+			<CardContent className="flex flex-col gap-3">
 				<SubjectSelect
 					value={defaultSubject ?? ""}
 					onChange={(value) => onLaunch(value)}

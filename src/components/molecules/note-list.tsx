@@ -30,7 +30,7 @@ export function NoteList({
 	return (
 		<div className={cn("flex flex-col gap-2", className)} {...props}>
 			<ScrollArea className="h-96">
-				<div className="space-y-2 pr-3">
+				<div className="flex flex-col gap-2 pr-3">
 					{notes.map((note) => (
 						<Card
 							key={note.id}

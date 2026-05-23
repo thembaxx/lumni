@@ -186,7 +186,7 @@ export function AdminDashboard() {
 						initial={{ opacity: 0, y: -20, scale: 0.95 }}
 						animate={{ opacity: 1, y: 0, scale: 1 }}
 						exit={{ opacity: 0, y: -20, scale: 0.95 }}
-						className="fixed top-4 left-1/2 z-50 flex -translate-x-1/2 items-center gap-2 rounded-lg bg-foreground px-4 py-2 text-background shadow-lg"
+						className="fixed top-4 left-1/2 z-toast flex -translate-x-1/2 items-center gap-2 rounded-lg bg-foreground px-4 py-2 text-background shadow-lg"
 					>
 						<m.div
 							initial={{ scale: 0.95, opacity: 0 }}

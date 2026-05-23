@@ -68,7 +68,7 @@ function ActionButton({
 		>
 			<Button
 				variant="secondary"
-				className="h-11 justify-start gap-2.5 rounded-[2.5rem] border border-border/80 bg-system-background-secondary px-5 text-foreground hover:border-accent hover:bg-accent"
+				className="h-11 justify-start gap-2.5 rounded-card-lg border border-border/80 bg-system-background-secondary px-5 text-foreground hover:border-accent hover:bg-accent"
 			>
 				<m.span
 					whileHover={

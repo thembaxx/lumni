@@ -22,7 +22,7 @@ function PageHeader({
 	return (
 		<header
 			className={cn(
-				"sticky top-0 z-10 flex flex-col gap-2 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60",
+				"sticky top-0 z-elevated flex flex-col gap-2 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60",
 				"animate-fade-in-up",
 				className,
 			)}

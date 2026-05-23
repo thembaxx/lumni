@@ -91,11 +91,11 @@ export default function DevEnginePage() {
 	];
 
 	return (
-		<div className="mx-auto min-h-[100dvh] max-w-4xl space-y-4 bg-background p-4 pb-20">
+		<div className="mx-auto flex min-h-[100dvh] max-w-4xl flex-col gap-4 bg-background p-4 pb-20">
 			<h1 className="font-semibold text-xl">Engine Integration Test</h1>
 
-			<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
-				<div className="space-y-3 p-4 px-4 group-data-[size=sm]/card:px-3">
+			<div className="overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors">
+				<div className="flex flex-col gap-3 p-4 px-4 group-data-[size=sm]/card:px-3">
 					<div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
 						<Input
 							value={subject}
@@ -142,7 +142,7 @@ export default function DevEnginePage() {
 			</div>
 
 			{error && (
-				<div className="overflow-hidden rounded-[2.5rem] border border-border/80 border-destructive bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+				<div className="overflow-hidden rounded-card-lg border border-border/80 border-destructive bg-card shadow-level-2 transition-colors">
 					<div className="p-4 px-4 text-destructive text-sm group-data-[size=sm]/card:px-3">
 						{error}
 					</div>
@@ -153,17 +153,17 @@ export default function DevEnginePage() {
 
 			{questions.length > 0 && (
 				<>
-					<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+					<div className="overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors">
 						<header className="rounded-t-[2.5rem] border-border/80 border-t p-4 pb-2">
 							<h2 className="font-heading font-medium text-sm text-sm">
 								Questions ({questions.length})
 							</h2>
 						</header>
-						<div className="space-y-3 p-4 px-4 pt-0 group-data-[size=sm]/card:px-3">
+						<div className="flex flex-col gap-3 p-4 px-4 pt-0 group-data-[size=sm]/card:px-3">
 							{questions.map((q, _i) => (
 								<div
 									key={q.id}
-									className="space-y-2 p-3 px-4 group-data-[size=sm]/card:px-3"
+									className="flex flex-col gap-2 p-3 px-4 group-data-[size=sm]/card:px-3"
 								>
 									<div className="flex flex-wrap items-center gap-2">
 										<Badge variant="outline" className="text-xs">
@@ -207,7 +207,7 @@ export default function DevEnginePage() {
 						</div>
 					</div>
 
-					<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+					<div className="overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors">
 						<header className="rounded-t-[2.5rem] border-border/80 border-t p-4 pb-2">
 							<h2 className="font-heading font-medium text-sm text-sm">
 								Raw Response

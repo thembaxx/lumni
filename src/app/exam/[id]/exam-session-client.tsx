@@ -808,7 +808,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 
 	return (
 		<div className="flex min-h-screen flex-col bg-background">
-			<header className="sticky top-0 z-10 border-border border-b bg-background/80 backdrop-blur-xl">
+			<header className="sticky top-0 z-sticky border-border border-b bg-background/80 backdrop-blur-xl">
 				<div className="mx-auto flex w-full max-w-5xl items-center justify-between px-4 py-3">
 					<div className="flex items-center gap-3">
 						<button

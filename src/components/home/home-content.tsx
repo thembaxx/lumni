@@ -109,7 +109,7 @@ export function HomeContent() {
 	return (
 		<div className="min-h-screen overflow-x-hidden bg-background">
 			{/* Navigation */}
-			<nav className="glass-regular fixed top-0 right-0 left-0 z-50 border-border/50 border-b bg-background/80">
+			<nav className="glass-regular fixed top-0 right-0 left-0 z-header border-border/50 border-b bg-background/80">
 				<div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
 					<Link
 						href="/"

@@ -100,17 +100,33 @@ export function ProgressExport() {
 				<head>
 					<title>Lumni Progress Report</title>
 					<style>
-						body { font-family: system-ui, sans-serif; padding: 40px; color: #1a1a2e; }
+						:root {
+							--text-primary: #1a1a2e;
+							--text-secondary: #666;
+							--border-color: #e2e8f0;
+							--bg-secondary: #f8fafc;
+							--bg-primary: #ffffff;
+						}
+						@media (prefers-color-scheme: dark) {
+							:root {
+								--text-primary: #e2e8f0;
+								--text-secondary: #94a3b8;
+								--border-color: #334155;
+								--bg-secondary: #1e293b;
+								--bg-primary: #0f172a;
+							}
+						}
+						body { font-family: system-ui, sans-serif; padding: 40px; color: var(--text-primary); background: var(--bg-primary); }
 						h1 { font-size: 24px; margin-bottom: 8px; }
-						.subtitle { color: #666; margin-bottom: 24px; }
+						.subtitle { color: var(--text-secondary); margin-bottom: 24px; }
 						.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px; }
-						.stat-card { border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; }
-						.stat-value { font-size: 28px; font-weight: 700; }
-						.stat-label { font-size: 12px; color: #666; text-transform: uppercase; letter-spacing: 0.5px; }
+						.stat-card { border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; background: var(--bg-primary); }
+						.stat-value { font-size: 28px; font-weight: 700; color: var(--text-primary); }
+						.stat-label { font-size: 12px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
 						table { width: 100%; border-collapse: collapse; margin-bottom: 32px; }
-						th { text-align: left; padding: 8px 12px; background: #f8fafc; border-bottom: 2px solid #e2e8f0; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: #666; }
-						td { padding: 8px 12px; border-bottom: 1px solid #e2e8f0; font-size: 14px; }
-						.section-title { font-size: 18px; font-weight: 600; margin: 24px 0 12px; }
+						th { text-align: left; padding: 8px 12px; background: var(--bg-secondary); border-bottom: 2px solid var(--border-color); font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-secondary); }
+						td { padding: 8px 12px; border-bottom: 1px solid var(--border-color); font-size: 14px; color: var(--text-primary); }
+						.section-title { font-size: 18px; font-weight: 600; margin: 24px 0 12px; color: var(--text-primary); }
 						@media print { body { padding: 20px; } }
 					</style>
 				</head>

@@ -181,7 +181,7 @@ export function APSCalculator() {
 			</div>
 
 			<div className="px-5 pb-5">
-				<div className="space-y-3 rounded-2xl bg-system-background-secondary p-5">
+				<div className="flex flex-col gap-3 rounded-2xl bg-system-background-secondary p-5">
 					{subjects.map((subject, index) => (
 						<m.div
 							key={subject.id}

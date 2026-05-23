@@ -82,12 +82,12 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 								/>
 								<div
 									className={cn(
-										"absolute inset-0 flex items-center justify-center bg-black/0 transition-colors group-hover:bg-black/30",
-										isPaperPlaneing && "bg-black/30",
+										"absolute inset-0 flex items-center justify-center bg-black/0 transition-colors group-hover:bg-black/30 dark:bg-white/0 dark:group-hover:bg-white/10",
+										isPaperPlaneing && "bg-black/30 dark:bg-white/10",
 									)}
 								>
 									{isPaperPlaneing && (
-										<div className="flex size-10 items-center justify-center rounded-full bg-black/40">
+										<div className="flex size-10 items-center justify-center rounded-full bg-black/40 dark:bg-white/15">
 											<div className="size-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
 										</div>
 									)}
@@ -110,7 +110,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 									variant="ghost"
 									size="icon"
 									onClick={() => onRetry(message.id)}
-									className="shrink-0 rounded-full bg-white/20 hover:bg-white/30"
+									className="shrink-0 rounded-full bg-white/20 hover:bg-white/30 dark:bg-black/20 dark:hover:bg-black/30"
 									aria-label="Retry"
 								>
 									<HugeiconsIcon icon={RefreshIcon} data-icon />
@@ -166,8 +166,8 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 					className={cn(
 						"relative flex size-11 shrink-0 items-center justify-center rounded-full shadow-sm transition-colors",
 						isUser
-							? "bg-white/20 hover:bg-white/30"
-							: "border border-border/40 bg-white hover:bg-secondary",
+							? "bg-white/20 hover:bg-white/30 dark:bg-black/20 dark:hover:bg-black/30"
+							: "border border-border/40 bg-white hover:bg-secondary dark:bg-system-surface dark:hover:bg-system-surface-secondary",
 					)}
 					aria-label={isPlaying ? "Pause" : "Play"}
 					whileTap={{ scale: 0.96 }}
@@ -211,7 +211,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 									key={`bar-${height}`}
 									className={cn(
 										"w-1.25 rounded-full",
-										isUser ? "bg-white/40" : "bg-system-accent/40",
+										isUser ? "bg-white/40 dark:bg-black/20" : "bg-system-accent/40",
 									)}
 									animate={
 										isPlaying

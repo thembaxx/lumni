@@ -7,6 +7,7 @@ import { LocalDataNotice } from "@/components/shared/local-data-notice";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { PageContainer } from "@/components/layout/page-container";
 import { useBookmarksStore } from "@/store/bookmarks";
 
 export default function BookmarksPage() {
@@ -14,7 +15,7 @@ export default function BookmarksPage() {
 
 	return (
 		<div className="min-h-screen bg-system-grouped pt-4 pb-24">
-			<div className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-4">
+			<PageContainer className="flex flex-col gap-6">
 				<LocalDataNotice
 					page="bookmarks"
 					description="Your bookmarked questions are saved on this device. Sign in to keep them across all your devices."
@@ -84,7 +85,7 @@ export default function BookmarksPage() {
 						))}
 					</div>
 				)}
-			</div>
+			</PageContainer>
 		</div>
 	);
 }

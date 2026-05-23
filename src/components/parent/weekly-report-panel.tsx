@@ -72,7 +72,7 @@ export function WeeklyReportPanel({
 					<TabsTrigger value="subjects">By Subject</TabsTrigger>
 					<TabsTrigger value="topics">Topics</TabsTrigger>
 				</TabsList>
-				<TabsContent value="subjects" className="mt-4 space-y-3">
+				<TabsContent value="subjects" className="mt-4 flex flex-col gap-3">
 					{subjects.map((subject) => (
 						<SubjectRow key={subject.subject} {...subject} />
 					))}

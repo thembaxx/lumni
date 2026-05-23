@@ -20,7 +20,7 @@ export function StatsGrid({ stats, className, ...props }: StatsGridProps) {
 			<CardHeader className="pb-3">
 				<CardTitle className="font-heading text-base">Study Stats</CardTitle>
 			</CardHeader>
-			<CardContent className="space-y-4">
+			<CardContent className="flex flex-col gap-4">
 				<div className="grid grid-cols-2 gap-3">
 					{stats.map((stat) => (
 						<div key={stat.label} className="rounded-lg bg-muted/50 p-3">

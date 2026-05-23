@@ -21,7 +21,7 @@ export function CelebrationOverlay({ onComplete }: CelebrationOverlayProps) {
 	}, []);
 
 	return (
-		<div className="fixed inset-0 z-50 flex items-center justify-center bg-system-grouped">
+		<div className="fixed inset-0 z-modal flex items-center justify-center bg-system-grouped">
 			<Confetti trigger={true} />
 			<m.div
 				initial={shouldReduceMotion ? {} : { opacity: 0, scale: 0.9 }}

@@ -96,8 +96,8 @@ export function StudySetForm({
 	};
 
 	return (
-		<form onSubmit={handleSubmit} className="space-y-4">
-			<div className="space-y-2">
+		<form onSubmit={handleSubmit} className="flex flex-col gap-4">
+			<div className="flex flex-col gap-2">
 				<Label htmlFor="title">Title</Label>
 				<Input
 					id="title"
@@ -108,7 +108,7 @@ export function StudySetForm({
 				/>
 			</div>
 
-			<div className="space-y-2">
+			<div className="flex flex-col gap-2">
 				<Label htmlFor="description">Description (Optional)</Label>
 				<Textarea
 					id="description"
@@ -120,9 +120,9 @@ export function StudySetForm({
 				/>
 			</div>
 
-			<div className="space-y-2">
+			<div className="flex flex-col gap-2">
 				<Label htmlFor="flashcards">Flashcards</Label>
-				<div className="space-y-2">
+				<div className="flex flex-col gap-2">
 					<p className="mb-1 font-medium text-sm">
 						Select flashcards to include:
 					</p>
@@ -178,9 +178,9 @@ export function StudySetForm({
 				</div>
 			</div>
 
-			<div className="space-y-2">
+			<div className="flex flex-col gap-2">
 				<Label htmlFor="notes">Notes</Label>
-				<div className="space-y-2">
+				<div className="flex flex-col gap-2">
 					<p className="mb-1 font-medium text-sm">Select notes to include:</p>
 					{formData.noteIds.length > 0 ? (
 						<div className="flex flex-wrap gap-1">
@@ -234,7 +234,7 @@ export function StudySetForm({
 				</div>
 			</div>
 
-			<div className="space-y-2">
+			<div className="flex flex-col gap-2">
 				<Label htmlFor="tags">Tags (Optional)</Label>
 				<Input
 					id="tags"
@@ -248,7 +248,7 @@ export function StudySetForm({
 				</p>
 			</div>
 
-			<div className="space-y-2">
+			<div className="flex flex-col gap-2">
 				<Label htmlFor="subject">Subject (Optional)</Label>
 				<Select
 					id="subject"
@@ -271,7 +271,7 @@ export function StudySetForm({
 				</Select>
 			</div>
 
-			<div className="space-y-2">
+			<div className="flex flex-col gap-2">
 				<Label htmlFor="topic">Topic (Optional)</Label>
 				<Input
 					id="topic"

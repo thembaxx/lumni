@@ -69,6 +69,9 @@ rounded:
   md: "12px"
   lg: "20px"
   xl: "24px"
+  2xl: "28px"
+  3xl: "32px"
+  "card-lg": "40px"
 spacing:
   1: "4px"
   2: "8px"
@@ -226,10 +229,10 @@ Buttons answer when you touch them. Every variant scales down on press (`scale-[
 ### Cards
 Cards have corners so generous (20px, 40px at the shell) they feel safe to rest on. A near-invisible Separator border and level-1 shadow do the quiet work of containment. Cards are containers, not navigation. Content grouped inside them reads as belonging together.
 
-- **Corner Style:** 40px (`rounded-[2.5rem]`) at the outermost wrapper.
+- **Corner Style:** `rounded-card-lg` (40px) at the outermost wrapper. Use `rounded-lg` (20px) for standard cards.
 - **Background:** `--system-surface` (white in light mode).
 - **Border:** 1px `--system-separator` at 80% opacity.
-- **Shadow:** Custom `0 20px 40px -15px rgba(0,0,0,0.05)` for a soft upward float.
+- **Shadow:** `shadow-level-2` (multi-layer oklch shadow). Never hardcode shadow values — always reference the design token so dark mode shadows render correctly.
 - **Internal Padding:** 16px horizontal (`px-4`), 16px vertical (`py-4`). Reduced to 12px in `data-[size=sm]`.
 - **States:** None at rest. Hover not applicable (cards are containers, not interactive targets).
 
@@ -264,10 +267,41 @@ Two systems, two densities. Both feel alive under your finger.
 ### Glass Materials
 Liquid Glass is not for permanent architecture. It is for moments that come and go: a sheet sliding up, a popover dismissing with a tap, a navigation bar that blurs the content behind it. Six tiers from barely frosted (10px blur) to fully opaque (40px blur) let transient surfaces exist in their own layer without pretending to be solid. A card is never glass. Glass is for things that do not stay.
 
+### PageContainer
+Every page that is not the home feed or admin dashboard should be wrapped in `<PageContainer>`. This ensures consistent max-width, horizontal padding, and responsive behavior across the app. No page should declare its own `max-w-*` or `px-*` — that is the container's job.
+
+- **Default:** `mx-auto w-full max-w-3xl px-4 sm:px-6 lg:max-w-4xl xl:max-w-6xl`
+- **Wide variant:** `max-w-6xl xl:max-w-7xl` (home feed, admin dashboards)
+- **No bleed:** Hero banners and full-blee sections stay inside the container. Apple HIG avoids full-bleed banners inside narrow content zones.
+
 ### Chips / Badges
 Small, fast, expressive. 20px tall with 8px radius, they label without taking space. Five variants mirror the button vocabulary so a chip feels like a button's smaller cousin: default (Study Green) for active filters, secondary for neutral tags, destructive for error badges, outline for boundaries, ghost for the quietest annotation. Difficulty labels, subject tags, status indicators: chips tell you what something is without asking you to stop.
 
-## 6. Do's and Don'ts
+## 6. Z-Index Hierarchy
+All z-index values must reference semantic CSS custom properties. No magic numbers.
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--z-content` | 0 | Default content, text, images |
+| `--z-elevated` | 10 | Cards on hover, floating labels |
+| `--z-sticky` | 20 | Sticky headers, pinned columns |
+| `--z-header` | 30 | Top navigation bar |
+| `--z-drawer` | 40 | Side drawers, bottom sheets |
+| `--z-modal` | 50 | Dialogs, overlays, popovers |
+| `--z-toast` | 60 | Notification toasts |
+| `--z-skip-link` | 100 | Accessibility skip link (always on top) |
+
+**Rule:** If you need a z-index, import `--z-*` from the design system. Never write `z-50` directly in a component.
+
+## 7. Spacing & Layout Rules
+
+### Vertical Rhythm
+Use `gap-*` (flexbox/grid `gap`) for all vertical spacing between siblings. Do not use `space-y-*` or manual `mt-*` / `mb-*` combinations. `gap` is the modern standard, works uniformly in flex and grid, and avoids Tailwind `space-y` specificity gotchas.
+
+### Arbitrary Values
+Do not write arbitrary pixel values (`w-[200px]`, `text-[13px]`, `min-h-[250px]`). Use the design system's spacing scale (`--space-1` through `--space-16`) and typography scale (`--fs-caption-2` through `--fs-large-title`). If a value does not exist in the token set, add the token rather than hardcoding the value.
+
+## 8. Do's and Don'ts
 
 ### Do:
 - Do let Study Green be rare. 10% or less of any surface. When it appears, it should mean something: a button, a focus ring, a selected state. Rarity is its authority.
@@ -279,6 +313,9 @@ Small, fast, expressive. 20px tall with 8px radius, they label without taking sp
 - Do animate only `transform` and `opacity`. Layout properties (`width`, `height`, `top`, `left`) cause reflow. The page should not stutter.
 - Do show skeleton shapes while content loads. A spinner in the middle of the page says "wait." A skeleton says "something is coming."
 - Do set `aspect-ratio` on every image and embedded media. A layout that jumps when an image loads is a layout that broke trust.
+- Do use `gap-*` for all vertical and horizontal spacing between siblings. `gap` is the modern standard; it works in flex and grid and avoids `space-y` specificity gotchas.
+- Do wrap every page in `<PageContainer>` (except home feed and admin dashboards). Never declare `max-w-*` or `px-*` at the page level.
+- Do use design tokens for shadows (`shadow-level-2`), radii (`rounded-card-lg`), and z-index (`--z-*`). Tokens keep dark mode, responsive behaviour, and accessibility in sync automatically.
 
 ### Don't:
 - Don't use gradient text. Not once. `background-clip: text` with a gradient is decoration pretending to be typography. Use solid Study Green or Ink. Emphasis comes from weight and size.
@@ -294,6 +331,11 @@ Small, fast, expressive. 20px tall with 8px radius, they label without taking sp
 - Don't use dark mode as an excuse for purple gradients, neon accents, or glassmorphism. Dark mode shifts cooler (264deg hue) and lifts the accent (Study Green Bright at 65% lightness). The voice stays the same.
 - Don't spray `will-change` across elements. Apply it to one or two specific properties that genuinely benefit from GPU compositing. Every new layer costs memory.
 - Don't lazy load the hero. Above-fold content, the page title, the primary CTA: these load eagerly. Lazy loading is for the content below the fold, not the reason someone opened the page.
+- Don't write arbitrary pixel values (`w-[200px]`, `text-[13px]`, `min-h-[250px]`). They bypass the design system and break dark mode, responsive scaling, and dynamic type. Use tokens.
+- Don't hardcode shadow values (`shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]`). The design system provides `shadow-level-1`, `shadow-level-2`, and `shadow-level-3` with proper dark-mode-aware oklch values.
+- Don't use `space-y-*` or manual `mt-* mb-*` pairs for sibling spacing. Use `gap-*` on the parent container. One source of truth, no specificity wars.
+- Don't write magic z-index numbers (`z-50`, `z-[100]`). Use `--z-content`, `--z-elevated`, `--z-sticky`, `--z-header`, `--z-drawer`, `--z-modal`, `--z-toast`, `--z-skip-link`.
+- Don't create page-level layout rules (`max-w-3xl`, `px-4`) outside of `<PageContainer>`. The container owns the canvas; pages own the content.
 
 ---
 

@@ -90,7 +90,7 @@ export function SubjectSelect({
 						animate={{ opacity: 1, scale: 1, y: 0 }}
 						exit={{ opacity: 0, scale: 0.95, y: -4 }}
 						transition={{ type: "spring", stiffness: 300, damping: 30 }}
-						className="absolute z-50 mt-2 w-full min-w-64 overflow-hidden rounded-xl border border-border/60 bg-popover shadow-lg"
+						className="absolute z-drawer mt-2 w-full min-w-64 overflow-hidden rounded-xl border border-border/60 bg-popover shadow-lg"
 					>
 						<div className="p-2 pb-0">
 							<div className="relative">

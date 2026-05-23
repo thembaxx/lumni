@@ -54,7 +54,7 @@ function LazyCodeBlock({
 
 	if (!loaded) {
 		return (
-			<pre className="my-3 overflow-hidden rounded-lg bg-[#1e1e1e] p-4 font-mono text-sm text-white/80">
+			<pre className="my-3 overflow-hidden rounded-lg bg-system-background-tertiary p-4 font-mono text-sm text-system-text-primary">
 				<code>{children}</code>
 			</pre>
 		);
@@ -63,7 +63,7 @@ function LazyCodeBlock({
 	const mod = modRef.current;
 	if (!mod) {
 		return (
-			<pre className="my-3 overflow-hidden rounded-lg bg-[#1e1e1e] p-4 font-mono text-sm text-white/80">
+			<pre className="my-3 overflow-hidden rounded-lg bg-system-background-tertiary p-4 font-mono text-sm text-system-text-primary">
 				<code>{children}</code>
 			</pre>
 		);

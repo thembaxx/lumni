@@ -89,7 +89,7 @@ export function StudySetCreator({ className }: StudySetCreatorProps) {
 						Organize your flashcards and notes into study sets
 					</p>
 				</CardHeader>
-				<CardContent className="space-y-4">
+				<CardContent className="flex flex-col gap-4">
 					<div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
 						<div className="min-w-0 flex-1">
 							<Input
@@ -149,7 +149,7 @@ export function StudySetCreator({ className }: StudySetCreatorProps) {
 							Your Study Sets
 						</CardTitle>
 					</CardHeader>
-					<CardContent className="space-y-3">
+					<CardContent className="flex flex-col gap-3">
 						<StudySetList
 							studySets={filteredStudySets}
 							onEdit={(id) => {

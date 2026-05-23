@@ -176,8 +176,8 @@ function NoteForm({
 	};
 
 	return (
-		<form onSubmit={handleSubmit} className="space-y-4">
-			<div className="space-y-2">
+		<form onSubmit={handleSubmit} className="flex flex-col gap-4">
+			<div className="flex flex-col gap-2">
 				<Label htmlFor="title">Title</Label>
 				<Input
 					id="title"
@@ -189,7 +189,7 @@ function NoteForm({
 				/>
 			</div>
 
-			<div className="space-y-2">
+			<div className="flex flex-col gap-2">
 				<Label htmlFor="content">Content</Label>
 				<Textarea
 					id="content"
@@ -202,7 +202,7 @@ function NoteForm({
 				/>
 			</div>
 
-			<div className="space-y-2">
+			<div className="flex flex-col gap-2">
 				<Label htmlFor="hint">Tags (Optional)</Label>
 				<Input
 					id="tags"
@@ -217,7 +217,7 @@ function NoteForm({
 				</p>
 			</div>
 
-			<div className="space-y-2">
+			<div className="flex flex-col gap-2">
 				<Label htmlFor="subject">Subject (Optional)</Label>
 				<Select
 					id="subject"
@@ -240,7 +240,7 @@ function NoteForm({
 				</Select>
 			</div>
 
-			<div className="space-y-2">
+			<div className="flex flex-col gap-2">
 				<Label htmlFor="topic">Topic (Optional)</Label>
 				<Input
 					id="topic"
@@ -435,7 +435,7 @@ function NoteCreatorInner({ className }: NoteCreatorProps) {
 						Create, organize, and review your study notes
 					</p>
 				</CardHeader>
-				<CardContent className="space-y-4">
+				<CardContent className="flex flex-col gap-4">
 					<div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
 						<div className="min-w-0 flex-1">
 							<Input
@@ -493,7 +493,7 @@ function NoteCreatorInner({ className }: NoteCreatorProps) {
 					<CardHeader className="pb-4">
 						<CardTitle className="font-medium text-lg">Your Notes</CardTitle>
 					</CardHeader>
-					<CardContent className="space-y-3">
+					<CardContent className="flex flex-col gap-3">
 						{filteredNotes.map((note) => (
 							<m.div
 								key={note.id}

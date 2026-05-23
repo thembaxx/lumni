@@ -43,7 +43,7 @@ export function SuccessBadge({ isAdmin }: { isAdmin: boolean }) {
 					</div>
 					<HugeiconsIcon
 						icon={SparklesIcon}
-						className="relative z-10 size-4 text-warning"
+						className="relative z-elevated size-4 text-warning"
 					/>
 				</div>
 			</m.div>

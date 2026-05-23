@@ -49,7 +49,7 @@ export function PlannerPreview({
 					{completed} / {total} sessions completed
 				</CardDescription>
 			</CardHeader>
-			<CardContent className="space-y-3">
+			<CardContent className="flex flex-col gap-3">
 				{sessions.length === 0 && (
 					<p className="text-muted-foreground text-sm">
 						No sessions scheduled for today.

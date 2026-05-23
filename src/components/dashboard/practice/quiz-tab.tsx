@@ -97,7 +97,7 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 										key={tab.value}
 										value={tab.value}
 										className={cn(
-											"tab-trigger-item relative z-10 h-8 rounded-xl px-4 font-medium text-xs transition-colors duration-200",
+											"tab-trigger-item relative z-elevated h-8 rounded-xl px-4 font-medium text-xs transition-colors duration-200",
 											activeTab === tab.value
 												? "text-foreground"
 												: "text-muted-foreground hover:text-foreground",

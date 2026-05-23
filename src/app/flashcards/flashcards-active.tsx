@@ -106,7 +106,7 @@ export function FlashcardsActive({
 						>
 							<div
 								className={cn(
-									"backface-hidden absolute inset-0 flex flex-col rounded-[2.5rem] border border-border/80 bg-card p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors",
+									"backface-hidden absolute inset-0 flex flex-col rounded-card-lg border border-border/80 bg-card p-6 shadow-level-2 transition-colors",
 									!isFlipped &&
 										"border-[--system-accent]/50 bg-[--system-accent]/5",
 								)}
@@ -133,7 +133,7 @@ export function FlashcardsActive({
 							</div>
 
 							<div
-								className="backface-hidden absolute inset-0 flex flex-col rounded-[2.5rem] border border-border/80 bg-card p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]"
+								className="backface-hidden absolute inset-0 flex flex-col rounded-card-lg border border-border/80 bg-card p-6 shadow-level-2"
 								style={{ transform: "rotateY(180deg)" }}
 							>
 								<div className="mb-2 flex items-center justify-end">

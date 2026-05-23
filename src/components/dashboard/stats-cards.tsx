@@ -86,7 +86,7 @@ function StatCard({
 						</PerpetualFloat>
 					</div>
 				</CardHeader>
-				<CardContent className="space-y-1 px-5 pb-0 text-center">
+				<CardContent className="flex flex-col gap-1 px-5 pb-0 text-center">
 					<p className="balance text-wrap font-extrabold text-2xl text-foreground tabular-nums tracking-tight">
 						<AnimatedNumber
 							value={value}

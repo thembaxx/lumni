@@ -69,7 +69,7 @@ export function ActivityTimeline({
 				Recent Activity
 			</h3>
 			<ScrollArea className="h-72">
-				<div className="relative space-y-4 pl-4">
+				<div className="relative flex flex-col gap-4 pl-4">
 					{items.map((item, index) => (
 						<TimelineItem
 							key={item.id}
@@ -101,7 +101,7 @@ function TimelineItem({
 			<div
 				className={cn(
 					activityIconVariants({ variant: item.type }),
-					"z-10 shrink-0",
+					"z-elevated shrink-0",
 				)}
 			>
 				<HugeiconsIcon icon={BookOpen01Icon} size={16} />

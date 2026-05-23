@@ -81,7 +81,7 @@ export function QuizResultsCard({
 
 			<Card className={cn("relative", className)}>
 				<m.div
-					className="pointer-events-none absolute inset-0 overflow-hidden rounded-[2.5rem]"
+					className="pointer-events-none absolute inset-0 overflow-hidden rounded-card-lg"
 					initial={{ opacity: 0 }}
 					animate={isGreatScore ? { opacity: [0, 0.3, 0] } : { opacity: 0 }}
 					transition={{ duration: 2, repeat: Infinity }}

@@ -12,6 +12,7 @@ import { Slider } from "@/components/ui/slider";
 import { nscSubjects } from "@/data/nsc-subjects";
 import { useOnboarding } from "@/hooks/use-onboarding";
 import { iOSEase } from "@/lib/utils/animation";
+import { PageContainer } from "@/components/layout/page-container";
 import { GoalsSVG } from "./svgs/goals-svg";
 import { SubjectsSVG } from "./svgs/subjects-svg";
 import { WelcomeSVG } from "./svgs/welcome-svg";
@@ -137,11 +138,11 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 	};
 
 	return (
-		<div className="fixed inset-0 z-50 overflow-y-auto bg-system-grouped">
+		<div className="fixed inset-0 z-modal overflow-y-auto bg-system-grouped">
 			{showConfetti && <Confetti trigger={showConfetti} />}
 			<ParticleField step={step} />
 
-			<div className="relative z-10 mx-auto flex min-h-full w-full max-w-4xl flex-col p-4 md:p-8">
+			<PageContainer className="relative z-elevated min-h-full py-4 md:py-8">
 				<div className="mb-8 flex items-center gap-2">
 					{STEPS_COPY.map((_, i) => (
 						<m.div
@@ -238,7 +239,12 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 															<CardContent className="flex items-center gap-3 py-4">
 																<div
 																	className="flex size-10 items-center justify-center rounded-full font-extrabold text-sm text-white"
-																	style={{ backgroundColor: subject.color }}
+																	style={
+																		{
+																			"--subject-color": subject.color,
+																			backgroundColor: "var(--subject-color)",
+																		} as React.CSSProperties
+																	}
 																>
 																	{subject.id.slice(0, 2)}
 																</div>
@@ -446,7 +452,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 						</Button>
 					</div>
 				</div>
-			</div>
+			</PageContainer>
 		</div>
 	);
 }

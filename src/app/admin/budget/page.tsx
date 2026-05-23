@@ -22,7 +22,7 @@ interface BudgetData {
 }
 
 const CARD_CLASS =
-	"overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors";
+	"overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors";
 
 export default function AdminBudgetPage() {
 	const {
@@ -42,7 +42,7 @@ export default function AdminBudgetPage() {
 	const error = queryError instanceof Error ? queryError.message : "";
 
 	return (
-		<div className="mx-auto min-h-[100dvh] max-w-4xl space-y-6 bg-background p-6">
+		<div className="mx-auto flex min-h-[100dvh] max-w-4xl flex-col gap-6 bg-background p-6">
 			<div className="flex items-center justify-between">
 				<div className="min-w-0">
 					<h1 className="font-semibold text-xl tracking-tight">Token Budget</h1>
@@ -61,7 +61,7 @@ export default function AdminBudgetPage() {
 			</div>
 
 			{error && (
-				<div className="overflow-hidden rounded-[2.5rem] border border-destructive bg-destructive/5 p-4 text-destructive text-sm">
+				<div className="overflow-hidden rounded-card-lg border border-destructive bg-destructive/5 p-4 text-destructive text-sm">
 					{error}
 				</div>
 			)}
@@ -97,7 +97,7 @@ export default function AdminBudgetPage() {
 								Usage by type
 							</h2>
 						</header>
-						<div className="space-y-4 px-6 pb-5">
+						<div className="flex flex-col gap-4 px-6 pb-5">
 							{Object.entries(data.user.usage).map(([type, usage]) => {
 								const pct =
 									usage.limit > 0 ? (usage.count / usage.limit) * 100 : 0;

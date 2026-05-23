@@ -1,16 +1,17 @@
 "use client";
 
-import { UserAccountIcon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
+import { ConsentGate } from "@/components/consent/consent-gate";
+import { ParentInvitationDialog } from "@/components/consent/parent-invitation-dialog";
 import { ActivityTimeline } from "@/components/parent/activity-timeline";
 import { ChildSelector } from "@/components/parent/child-selector";
 import { ParentShell } from "@/components/parent/parent-shell";
 import { WeeklyReportPanel } from "@/components/parent/weekly-report-panel";
+import { PageContainer } from "@/components/layout/page-container";
+import { Button } from "@/components/ui/button";
 
 const MOCK_CHILDREN = [
 	{ id: "1", name: "Thando Molefe", initials: "TM", grade: "Matric" },
-	{ id: "2", name: "Sipho Molefe", initials: "SM", grade: "Grade 11" },
 ];
 
 const MOCK_SUBJECTS = [
@@ -63,46 +64,70 @@ const MOCK_ACTIVITIES = [
 ];
 
 export default function ParentDashboardPage() {
-	const [selectedChild, setSelectedChild] = useState(MOCK_CHILDREN[0].id);
+	const [selectedChild] = useState(MOCK_CHILDREN[0].id);
+	const [consentStatus, setConsentStatus] = useState<
+		"pending" | "granted" | "revoked"
+	>("pending");
+	const [showInvite, setShowInvite] = useState(false);
 	const selectedChildData =
 		MOCK_CHILDREN.find((c) => c.id === selectedChild) ?? MOCK_CHILDREN[0];
 
 	return (
-		<ParentShell>
-			<div className="mx-auto max-w-5xl space-y-6">
-				<div className="flex items-center gap-3">
-					<HugeiconsIcon
-						icon={UserAccountIcon}
-						size={28}
-						className="text-primary"
-					/>
+		<ParentShell hasConsent={consentStatus === "granted"}>
+			<PageContainer className="flex flex-col gap-6">
+				<div className="flex items-center justify-between">
 					<h1 className="font-bold font-heading text-2xl tracking-tight">
 						Parent Dashboard
 					</h1>
+					<Button
+						variant="outline"
+						size="sm"
+						onClick={() => setShowInvite(true)}
+					>
+						Invite Another Parent
+					</Button>
 				</div>
 
-				<ChildSelector
-					students={MOCK_CHILDREN}
-					selectedId={selectedChild}
-					onValueChange={setSelectedChild}
+				<ConsentGate
+					studentName={selectedChildData.name}
+					parentEmail="parent@example.com"
+					status={consentStatus}
+					onGrant={async () => setConsentStatus("granted")}
+					onRevoke={async () => setConsentStatus("revoked")}
 				/>
 
-				<div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-					<div className="lg:col-span-2">
-						<WeeklyReportPanel
-							childName={selectedChildData.name}
-							weekRange="19 May – 25 May 2026"
-							subjects={MOCK_SUBJECTS}
-							totalMinutes={420}
-							quizzesCompleted={12}
-							streakDays={5}
+				{consentStatus === "granted" && (
+					<>
+						<ChildSelector
+							students={MOCK_CHILDREN}
+							selectedId={selectedChild}
+							onValueChange={() => {}}
 						/>
-					</div>
-					<div>
-						<ActivityTimeline items={MOCK_ACTIVITIES} />
-					</div>
-				</div>
-			</div>
+						<div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+							<div className="lg:col-span-2">
+								<WeeklyReportPanel
+									childName={selectedChildData.name}
+									weekRange="19 May – 25 May 2026"
+									subjects={MOCK_SUBJECTS}
+									totalMinutes={420}
+									quizzesCompleted={12}
+									streakDays={5}
+								/>
+							</div>
+							<div>
+								<ActivityTimeline items={MOCK_ACTIVITIES} />
+							</div>
+						</div>
+					</>
+				)}
+			</PageContainer>
+
+			<ParentInvitationDialog
+				open={showInvite}
+				onOpenChange={setShowInvite}
+				studentName={selectedChildData.name}
+				onSend={async () => {}}
+			/>
 		</ParentShell>
 	);
 }

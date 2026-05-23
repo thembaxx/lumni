@@ -38,13 +38,13 @@ export function CompetencyWidget({
 					{subject} Competency
 				</CardTitle>
 			</CardHeader>
-			<CardContent className="space-y-3">
+			<CardContent className="flex flex-col gap-3">
 				<div className="flex items-center justify-between">
 					<span className="text-muted-foreground text-sm">Overall</span>
 					<span className="font-semibold text-sm">{average}%</span>
 				</div>
 				<Progress value={average} className="h-2" />
-				<div className="space-y-2 pt-2">
+				<div className="flex flex-col gap-2 pt-2">
 					{topics.slice(0, 5).map((topic) => (
 						<div
 							key={topic.topic}

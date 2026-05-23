@@ -493,7 +493,7 @@ export function ProfileTab() {
 								{provinceDraft || "Select"}
 							</button>
 							{showProvincePicker && (
-								<div className="absolute top-8 right-0 z-50 max-h-48 w-48 overflow-y-auto rounded-xl bg-popover p-1 shadow-level-3 ring-1 ring-foreground/10">
+								<div className="absolute top-8 right-0 z-drawer max-h-48 w-48 overflow-y-auto rounded-xl bg-popover p-1 shadow-level-3 ring-1 ring-foreground/10">
 									{SOUTH_AFRICAN_PROVINCES.map((p) => (
 										<button
 											key={p}
@@ -592,7 +592,7 @@ export function ProfileTab() {
 			</ListSection>
 
 			{showConfirmDialog && (
-				<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+				<div className="fixed inset-0 z-modal flex items-center justify-center bg-black/40">
 					<div className="mx-4 w-full max-w-sm rounded-2xl bg-card p-6 shadow-level-3">
 						<h3 className="ios-title-3 mb-2 font-semibold">
 							Redo Guided Setup?
