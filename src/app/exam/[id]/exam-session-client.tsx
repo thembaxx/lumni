@@ -199,7 +199,8 @@ function PartAnswerInput({
 	if (part.type === "diagram") {
 		return (
 			<p className="text-muted-foreground text-sm">
-				{(part as unknown as Record<string, unknown>).instructions as string ??
+				{((part as unknown as Record<string, unknown>)
+					.instructions as string) ??
 					"Refer to the diagram and type your answer below."}
 			</p>
 		);

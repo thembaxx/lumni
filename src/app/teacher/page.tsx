@@ -111,7 +111,7 @@ export default function TeacherDashboardPage() {
 
 			{students.length === 0 ? (
 				<div className="flex flex-col items-center justify-center gap-3 py-16 text-center">
-					<p className="font-medium text-muted-foreground text-lg">
+					<p className="font-medium text-lg text-muted-foreground">
 						No students linked yet
 					</p>
 					<p className="max-w-md text-muted-foreground text-sm">

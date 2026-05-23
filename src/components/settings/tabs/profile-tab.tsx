@@ -745,7 +745,7 @@ function RoleSelector({ currentLabels }: { currentLabels: string[] }) {
 					type="button"
 					onClick={() => setRole.mutate(role)}
 					disabled={setRole.isPending}
-					className={`rounded-lg px-2.5 py-1 text-xs font-semibold capitalize transition-colors ${
+					className={`rounded-lg px-2.5 py-1 font-semibold text-xs capitalize transition-colors ${
 						currentRole === role
 							? "bg-system-accent text-white"
 							: "bg-system-fill text-muted-foreground hover:bg-system-fill/80"
@@ -788,7 +788,7 @@ function ParentConsentSection({ userId }: { userId: string }) {
 				showSeparator={false}
 				trailing={
 					<span
-						className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${
+						className={`rounded-full px-2.5 py-0.5 font-semibold text-xs ${
 							requests.status === "granted"
 								? "bg-emerald-500/10 text-emerald-600"
 								: "bg-muted text-muted-foreground"

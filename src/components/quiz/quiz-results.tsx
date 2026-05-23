@@ -1,6 +1,10 @@
 "use client";
 
-import { Award01Icon, DashboardSquare01Icon, Refresh01Icon } from "@hugeicons/core-free-icons";
+import {
+	Award01Icon,
+	DashboardSquare01Icon,
+	Refresh01Icon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { Confetti } from "@/components/celebration";
@@ -216,10 +220,7 @@ export function QuizResultsCard({
 						</section>
 
 						{(onRestart || onDashboard) && (
-							<m.div
-								className="flex gap-3 pt-2"
-								variants={itemVariants}
-							>
+							<m.div className="flex gap-3 pt-2" variants={itemVariants}>
 								{onRestart && (
 									<Button
 										variant="default"
@@ -236,7 +237,10 @@ export function QuizResultsCard({
 										onClick={onDashboard}
 										className="flex-1 gap-2"
 									>
-										<HugeiconsIcon icon={DashboardSquare01Icon} className="size-4" />
+										<HugeiconsIcon
+											icon={DashboardSquare01Icon}
+											className="size-4"
+										/>
 										Dashboard
 									</Button>
 								)}

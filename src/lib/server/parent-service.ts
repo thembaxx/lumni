@@ -124,7 +124,7 @@ export async function getChildSubjectProgress(
 		Query.equal("userId", studentId),
 	]);
 
-	const progressDocs = await listDocuments(COLLECTIONS.USER_PROGRESS, [
+	const _progressDocs = await listDocuments(COLLECTIONS.USER_PROGRESS, [
 		Query.equal("userId", studentId),
 	]);
 
@@ -148,7 +148,7 @@ export async function getChildSubjectProgress(
 		const sid = (doc.subjectId as string) || "unknown";
 		const score = (doc.proficiency as number) || 0;
 		if (!compBySubject.has(sid)) compBySubject.set(sid, []);
-		compBySubject.get(sid)!.push(score);
+		compBySubject.get(sid)?.push(score);
 	}
 
 	const results: ChildSubjectProgress[] = [];

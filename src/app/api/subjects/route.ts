@@ -1,7 +1,12 @@
 import { Query } from "appwrite";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import type { StudySession, Subject, UserProgress, UserSubject } from "@/lib/db/client";
+import type {
+	StudySession,
+	Subject,
+	UserProgress,
+	UserSubject,
+} from "@/lib/db/client";
 import { COLLECTIONS, listDocuments } from "@/lib/db/client";
 import { getAuthenticatedUserId } from "@/lib/server/auth";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";

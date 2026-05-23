@@ -132,7 +132,7 @@ export default function ParentDashboardPage() {
 
 				{!selectedChild ? (
 					<div className="flex flex-col items-center justify-center gap-3 py-24 text-center">
-						<p className="font-medium text-muted-foreground text-lg">
+						<p className="font-medium text-lg text-muted-foreground">
 							No children linked yet
 						</p>
 						<p className="max-w-md text-muted-foreground text-sm">

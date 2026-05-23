@@ -1,21 +1,16 @@
 "use client";
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import type { UserAnswer } from "@/lib/question-engine/types";
-import { useState } from "react";
 
 interface DataResponseInputProps {
 	body: Record<string, unknown>;
 	onGrade: (answer: UserAnswer) => Promise<void>;
 }
 
-export function DataResponseInput({
-	body,
-	onGrade,
-}: DataResponseInputProps) {
-	const questions = body.questions as
-		| Record<string, unknown>[]
-		| undefined;
+export function DataResponseInput({ body, onGrade }: DataResponseInputProps) {
+	const questions = body.questions as Record<string, unknown>[] | undefined;
 	const [partAnswers, setPartAnswers] = useState<Record<string, string>>({});
 
 	return (
@@ -28,10 +23,7 @@ export function DataResponseInput({
 			{questions?.map((q, i: number) => {
 				const qId = String((q as Record<string, unknown>).id ?? i);
 				return (
-					<div
-						key={qId}
-						className="flex flex-col gap-2 rounded-lg border p-3"
-					>
+					<div key={qId} className="flex flex-col gap-2 rounded-lg border p-3">
 						<p className="mb-1 font-medium text-sm">
 							{String((q as Record<string, unknown>).questionText ?? "")}
 						</p>

@@ -1,8 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import type { UserAnswer } from "@/lib/question-engine/types";
-import { useState } from "react";
 
 interface MixedPartsInputProps {
 	parts: Record<string, unknown>[] | undefined;
@@ -18,10 +18,7 @@ export function MixedPartsInput({ parts, onGrade }: MixedPartsInputProps) {
 				const p = part as Record<string, unknown>;
 				const pId = String(p.id ?? i);
 				return (
-					<div
-						key={pId}
-						className="flex flex-col gap-2 rounded-lg border p-3"
-					>
+					<div key={pId} className="flex flex-col gap-2 rounded-lg border p-3">
 						<p className="mb-1 font-medium text-sm">
 							{i + 1}. {String(p.questionText ?? "")}{" "}
 							<span className="text-muted-foreground text-xs">

@@ -30,7 +30,10 @@ export async function fetchSubjects(userId: string) {
 
 	const selectedIds = userSubjectDocs.map((us) => us.subjectId);
 
-	return { subjects: subjectDocs.map(mapSubject), selectedSubjectIds: selectedIds };
+	return {
+		subjects: subjectDocs.map(mapSubject),
+		selectedSubjectIds: selectedIds,
+	};
 }
 
 export async function fetchUserProgress(userId: string) {

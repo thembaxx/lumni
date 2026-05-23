@@ -109,7 +109,7 @@ export async function getTeacherStudents(
 	]);
 
 	const competencies = allCompetencies.flat();
-	const progressDocs = allProgress.flat();
+	const _progressDocs = allProgress.flat();
 	const sessions = allSessions.flat();
 
 	const compByUser = new Map<string, Record<string, number[]>>();
@@ -119,7 +119,7 @@ export async function getTeacherStudents(
 		const topic = (doc.topicId as string) || "unknown";
 		const score = (doc.proficiency as number) || 0;
 		if (!compByUser.has(uid)) compByUser.set(uid, {});
-		const topics = compByUser.get(uid)!;
+		const topics = compByUser.get(uid) as Record<string, number[]>;
 		if (!topics[topic]) topics[topic] = [];
 		topics[topic].push(score);
 	}
@@ -131,7 +131,8 @@ export async function getTeacherStudents(
 		const ended = doc.endedAt as string | undefined;
 		if (
 			ended &&
-			(!lastActiveByUser.has(uid) || ended > lastActiveByUser.get(uid)!)
+			(!lastActiveByUser.has(uid) ||
+				ended > (lastActiveByUser.get(uid) as string))
 		) {
 			lastActiveByUser.set(uid, ended);
 		}
@@ -193,7 +194,7 @@ export async function getTeacherTopicMastery(
 			const topic = (doc.topicId as string) || "unknown";
 			const score = (doc.proficiency as number) || 0;
 			if (!topicScores.has(topic)) topicScores.set(topic, []);
-			topicScores.get(topic)!.push(score);
+			topicScores.get(topic)?.push(score);
 		}
 	}
 

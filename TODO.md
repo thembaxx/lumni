@@ -43,6 +43,10 @@ Remaining brainstorm items (i18n, gamification expansion, share/export, spaced r
 
 ## Completed
 
-### TypeScript & Lint
-- `npx tsc --noEmit` — passes with zero errors
-- `npx biome check` — clean
+### TypeScript & Lint (Session 8 — cleanup sweep)
+- [x] **Biome lint** — fixed 22 issues:
+  - 11 auto-fixed (formatting, import organization, sorted classes)
+  - 7 unsafe-fixed (unused imports `useState`, non-null assertions `!.` → `?.`, unused vars `_progressDocs`)
+  - 3 manual fixes (non-null assertions in `teacher-service.ts` → `as` casts, array index key in `weekly-report-panel.tsx` → biome-ignore)
+- [x] **TypeScript** — `tsc --noEmit` passes with zero errors
+- [x] **Build — middleware/proxy migration**: `src/middleware.ts` and `src/proxy.ts` coexisted, causing Next.js 16.2.6 build error. Merged auth logic into `proxy.ts`, deleted `middleware.ts`. Build compiles successfully (Turbopack Google Fonts issue is pre-existing/environmental).

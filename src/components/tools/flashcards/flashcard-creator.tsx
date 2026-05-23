@@ -297,7 +297,8 @@ function FlashcardCreatorInner({ className }: FlashcardCreatorProps) {
 	useEffect(() => {
 		setMounted(true);
 	}, []);
-	const { flashcards, addFlashcard, removeFlashcard, updateFlashcard } = useFlashcardStorage();
+	const { flashcards, addFlashcard, removeFlashcard, updateFlashcard } =
+		useFlashcardStorage();
 	const [isCreating, setIsCreating] = useState(false);
 	const [editingCardId, setEditingCardId] = useState<string | null>(null);
 	const [searchQuery, setSearchQuery] = useState("");

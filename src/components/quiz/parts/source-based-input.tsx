@@ -1,9 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Button } from "@/components/ui/button";
 import type { UserAnswer } from "@/lib/question-engine/types";
-import { useState } from "react";
 
 interface SourceBasedInputProps {
 	body: Record<string, unknown>;
@@ -38,10 +38,7 @@ export function SourceBasedInput({
 			{subQuestions?.map((sq, i: number) => {
 				const sqId = String((sq as Record<string, unknown>).id ?? i);
 				return (
-					<div
-						key={sqId}
-						className="flex flex-col gap-2 rounded-lg border p-3"
-					>
+					<div key={sqId} className="flex flex-col gap-2 rounded-lg border p-3">
 						<p className="mb-1 font-medium text-sm">
 							{String((sq as Record<string, unknown>).questionText ?? "")}
 						</p>
@@ -65,18 +62,16 @@ export function SourceBasedInput({
 					onGrade({
 						type: "mixed",
 						value:
-							subQuestions?.map(
-								(sq: Record<string, unknown>, i: number) => {
-									const sqId = String(sq.id ?? i);
-									return {
-										partId: sqId,
-										answer: {
-											type: "text",
-											value: partAnswers[sqId] ?? "",
-										},
-									};
-								},
-							) ?? [],
+							subQuestions?.map((sq: Record<string, unknown>, i: number) => {
+								const sqId = String(sq.id ?? i);
+								return {
+									partId: sqId,
+									answer: {
+										type: "text",
+										value: partAnswers[sqId] ?? "",
+									},
+								};
+							}) ?? [],
 					});
 				}}
 				disabled={

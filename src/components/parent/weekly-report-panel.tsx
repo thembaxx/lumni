@@ -89,6 +89,7 @@ export function WeeklyReportPanel({
 										const mastery = 40 + (hash % 55);
 										return (
 											<div
+												// biome-ignore lint/suspicious/noArrayIndexKey: generated mock data, no real entity ID
 												key={i}
 												className="flex items-center justify-between"
 											>
@@ -97,7 +98,7 @@ export function WeeklyReportPanel({
 												</span>
 												<div className="flex items-center gap-2">
 													<Progress value={mastery} className="h-1.5 w-20" />
-													<span className="text-muted-foreground text-[10px]">
+													<span className="text-[10px] text-muted-foreground">
 														{mastery}%
 													</span>
 												</div>

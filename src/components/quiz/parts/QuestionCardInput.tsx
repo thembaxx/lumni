@@ -1,13 +1,12 @@
 "use client";
 
 import { m } from "framer-motion";
-import { useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
-import { TTSButton } from "@/components/shared/tts-button";
-import { Button } from "@/components/ui/button";
 import { DataResponseInput } from "@/components/quiz/parts/data-response-input";
 import { MixedPartsInput } from "@/components/quiz/parts/mixed-parts-input";
 import { SourceBasedInput } from "@/components/quiz/parts/source-based-input";
+import { TTSButton } from "@/components/shared/tts-button";
+import { Button } from "@/components/ui/button";
 import {
 	CalculationInput,
 	EssayInput,
@@ -278,24 +277,14 @@ export function QuestionCardInput({
 		case "data-response": {
 			const body = question as Record<string, unknown>;
 			const qBody = body.body as Record<string, unknown>;
-			return (
-				<DataResponseInput
-					body={qBody}
-					onGrade={handleGrade}
-				/>
-			);
+			return <DataResponseInput body={qBody} onGrade={handleGrade} />;
 		}
 
 		case "mixed": {
 			const body = question as Record<string, unknown>;
 			const qBody = body.body as Record<string, unknown>;
 			const parts = qBody.parts as Record<string, unknown>[] | undefined;
-			return (
-				<MixedPartsInput
-					parts={parts}
-					onGrade={handleGrade}
-				/>
-			);
+			return <MixedPartsInput parts={parts} onGrade={handleGrade} />;
 		}
 
 		default:

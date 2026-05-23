@@ -38,7 +38,10 @@ export function NoteEditor({
 		setContent(before + insertion + after);
 		requestAnimationFrame(() => {
 			textarea.focus();
-			textarea.setSelectionRange(start + insertion.length, start + insertion.length);
+			textarea.setSelectionRange(
+				start + insertion.length,
+				start + insertion.length,
+			);
 		});
 	};
 
