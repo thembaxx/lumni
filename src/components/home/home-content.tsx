@@ -44,7 +44,7 @@ export function HomeContent() {
 										Sign In
 									</Button>
 								</Link>
-								<Link href="/dashboard">
+								<Link href="/auth/sign-up">
 									<Button size="sm">
 										Get Started
 										<HugeiconsIcon

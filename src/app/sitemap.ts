@@ -26,7 +26,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 		"/auth/forgot-password",
 		"/auth/verify-email",
 		"/admin/quality",
-		"/admin/dashboard",
+		"/admin",
 	];
 
 	return routes.map((route) => ({

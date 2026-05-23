@@ -75,18 +75,18 @@ export function SiteFooter() {
 							>
 								Email Us
 							</a>
-							<a
+							<Link
 								href={appConfig.links.privacy}
 								className="py-1.5 transition-colors hover:text-foreground"
 							>
 								Privacy Policy
-							</a>
-							<a
+							</Link>
+							<Link
 								href={appConfig.links.terms}
 								className="py-1.5 transition-colors hover:text-foreground"
 							>
 								Terms of Service
-							</a>
+							</Link>
 						</div>
 					</div>
 				</div>
@@ -97,22 +97,10 @@ export function SiteFooter() {
 					</p>
 					<div className="flex items-center gap-4">
 						<a
-							href={appConfig.social.facebook}
+							href={`mailto:${appConfig.contact.email}`}
 							className="py-1.5 text-muted-foreground transition-colors hover:text-foreground"
 						>
-							<span className="text-xs">Facebook</span>
-						</a>
-						<a
-							href={appConfig.social.twitter}
-							className="py-1.5 text-muted-foreground transition-colors hover:text-foreground"
-						>
-							<span className="text-xs">Twitter</span>
-						</a>
-						<a
-							href={appConfig.social.instagram}
-							className="py-1.5 text-muted-foreground transition-colors hover:text-foreground"
-						>
-							<span className="text-xs">Instagram</span>
+							<span className="text-xs">Contact</span>
 						</a>
 					</div>
 				</div>
