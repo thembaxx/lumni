@@ -1,0 +1,5431 @@
+[
+  {
+    "path": "src/lib/appwrite-storage.ts",
+    "exports": [
+      {
+        "name": "APPWRITE_BUCKET_ID",
+        "kind": "const"
+      },
+      {
+        "name": "AppwriteUploadResult",
+        "kind": "interface"
+      },
+      {
+        "name": "uploadFile",
+        "kind": "async function"
+      },
+      {
+        "name": "getFile",
+        "kind": "async function"
+      },
+      {
+        "name": "deleteFile",
+        "kind": "async function"
+      },
+      {
+        "name": "listFiles",
+        "kind": "async function"
+      },
+      {
+        "name": "getFileDownloadUrl",
+        "kind": "async function"
+      },
+      {
+        "name": "getFilePreviewUrl",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "./appwrite"
+    ]
+  },
+  {
+    "path": "src/lib/query-client.ts",
+    "exports": [
+      {
+        "name": "queryClient",
+        "kind": "const"
+      },
+      {
+        "name": "getQueryClient",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/api-error.ts",
+    "exports": [
+      {
+        "name": "ApiErrorBody",
+        "kind": "interface"
+      },
+      {
+        "name": "apiError",
+        "kind": "function"
+      },
+      {
+        "name": "apiSuccess",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/katex-utils.ts",
+    "exports": [
+      {
+        "name": "normalizeMathDelimiters",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/caching-strategy.ts",
+    "exports": [
+      {
+        "name": "CacheReadAdapter",
+        "kind": "interface"
+      },
+      {
+        "name": "CacheWriteAdapter",
+        "kind": "interface"
+      },
+      {
+        "name": "CacheTier",
+        "kind": "interface"
+      },
+      {
+        "name": "Generator",
+        "kind": "interface"
+      },
+      {
+        "name": "CachingStrategy",
+        "kind": "class"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/uploadthing.ts",
+    "exports": [
+      {
+        "name": "UploadButton",
+        "kind": "const"
+      },
+      {
+        "name": "UploadDropzone",
+        "kind": "const"
+      },
+      {
+        "name": "UploadedFile",
+        "kind": "type"
+      }
+    ],
+    "internal_dependencies": [
+      "@/app/api/uploadthing/core"
+    ]
+  },
+  {
+    "path": "src/lib/errors.ts",
+    "exports": [
+      {
+        "name": "AppError",
+        "kind": "class"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/utils.ts",
+    "exports": [
+      {
+        "name": "cn",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/appwrite.ts",
+    "exports": [
+      {
+        "name": "APPWRITE_ENDPOINT",
+        "kind": "const"
+      },
+      {
+        "name": "APPWRITE_PROJECT",
+        "kind": "const"
+      },
+      {
+        "name": "APPWRITE_API_KEY",
+        "kind": "const"
+      },
+      {
+        "name": "storage",
+        "kind": "const"
+      },
+      {
+        "name": "functions",
+        "kind": "const"
+      },
+      {
+        "name": "account",
+        "kind": "const"
+      },
+      {
+        "name": "browserDatabases",
+        "kind": "const"
+      },
+      {
+        "name": "serverAccount",
+        "kind": "const"
+      },
+      {
+        "name": "databases",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/seed.ts",
+    "exports": [
+      {
+        "name": "seedDatabase",
+        "kind": "async function"
+      },
+      {
+        "name": "getUserStats",
+        "kind": "async function"
+      },
+      {
+        "name": "selectSubject",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "./db/ensure",
+      "./db/ensure-config"
+    ]
+  },
+  {
+    "path": "src/lib/upload.ts",
+    "exports": [
+      {
+        "name": "extractSubjectFromFileName",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/services/notification-service.ts",
+    "exports": [
+      {
+        "name": "NotificationSettings",
+        "kind": "interface"
+      },
+      {
+        "name": "getSettings",
+        "kind": "function"
+      },
+      {
+        "name": "saveSettings",
+        "kind": "function"
+      },
+      {
+        "name": "subscribeToPush",
+        "kind": "async function"
+      },
+      {
+        "name": "unsubscribeFromPush",
+        "kind": "async function"
+      },
+      {
+        "name": "requestPermission",
+        "kind": "async function"
+      },
+      {
+        "name": "sendLocalNotification",
+        "kind": "function"
+      },
+      {
+        "name": "scheduleStudyReminder",
+        "kind": "async function"
+      },
+      {
+        "name": "schedulePlanAwareReminder",
+        "kind": "async function"
+      },
+      {
+        "name": "getNextReminder",
+        "kind": "function"
+      },
+      {
+        "name": "cancelScheduledReminder",
+        "kind": "function"
+      },
+      {
+        "name": "scheduleExamAlerts",
+        "kind": "async function"
+      },
+      {
+        "name": "StudyReminder",
+        "kind": "interface"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/flashcard-repository",
+      "@/lib/utils/storage"
+    ]
+  },
+  {
+    "path": "src/lib/services/analytics-service.ts",
+    "exports": [
+      {
+        "name": "AnalyticsService",
+        "kind": "class"
+      },
+      {
+        "name": "analyticsService",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/appwrite",
+      "@/lib/db/client",
+      "@/lib/db/persist",
+      "@/lib/utils/engine-analytics"
+    ]
+  },
+  {
+    "path": "src/lib/services/progress-service.ts",
+    "exports": [
+      {
+        "name": "ProgressService",
+        "kind": "class"
+      },
+      {
+        "name": "progressService",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/db/repositories/progress",
+      "@/lib/orchestrator/job-queue"
+    ]
+  },
+  {
+    "path": "src/lib/services/search-service.ts",
+    "exports": [
+      {
+        "name": "SearchResultItem",
+        "kind": "interface"
+      },
+      {
+        "name": "searchAll",
+        "kind": "async function"
+      },
+      {
+        "name": "searchByType",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/db/schema",
+      "@/lib/flashcard-repository",
+      "@/lib/utils/storage"
+    ]
+  },
+  {
+    "path": "src/lib/services/leaderboard-service.ts",
+    "exports": [
+      {
+        "name": "LeaderboardEntry",
+        "kind": "interface"
+      },
+      {
+        "name": "fetchLeaderboardFromServer",
+        "kind": "async function"
+      },
+      {
+        "name": "getWeeklyLeaderboard",
+        "kind": "async function"
+      },
+      {
+        "name": "getLocalLeaderboard",
+        "kind": "function"
+      },
+      {
+        "name": "saveWeeklySnapshot",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/utils/storage"
+    ]
+  },
+  {
+    "path": "src/lib/services/question-rating-service.ts",
+    "exports": [
+      {
+        "name": "QuestionRatingService",
+        "kind": "class"
+      },
+      {
+        "name": "questionRatingService",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/db/schema",
+      "@/lib/orchestrator/job-queue"
+    ]
+  },
+  {
+    "path": "src/lib/services/spaced-rep-service.ts",
+    "exports": [
+      {
+        "name": "SpacedRepService",
+        "kind": "class"
+      },
+      {
+        "name": "extractCorrectAnswer",
+        "kind": "function"
+      },
+      {
+        "name": "spacedRepService",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/flashcard-repository",
+      "@/lib/question-engine/types",
+      "@/lib/utils/spaced-repetition"
+    ]
+  },
+  {
+    "path": "src/lib/services/activity-service.ts",
+    "exports": [
+      {
+        "name": "ActivityItem",
+        "kind": "interface"
+      },
+      {
+        "name": "getActivityFeed",
+        "kind": "function"
+      },
+      {
+        "name": "addActivityItem",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/question-engine/competency-mapper.ts",
+    "exports": [
+      {
+        "name": "mapCompetencyToBloom",
+        "kind": "function"
+      },
+      {
+        "name": "mapCompetencyToDifficulty",
+        "kind": "function"
+      },
+      {
+        "name": "mapCompetencyToBloomList",
+        "kind": "function"
+      },
+      {
+        "name": "getCompetencyDescription",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "./types"
+    ]
+  },
+  {
+    "path": "src/lib/question-engine/types.ts",
+    "exports": [
+      {
+        "name": "QuestionType",
+        "kind": "type"
+      },
+      {
+        "name": "Difficulty",
+        "kind": "type"
+      },
+      {
+        "name": "BloomLevel",
+        "kind": "type"
+      },
+      {
+        "name": "Option",
+        "kind": "interface"
+      },
+      {
+        "name": "RubricCriterion",
+        "kind": "interface"
+      },
+      {
+        "name": "TestCase",
+        "kind": "interface"
+      },
+      {
+        "name": "SubQuestion",
+        "kind": "interface"
+      },
+      {
+        "name": "Source",
+        "kind": "interface"
+      },
+      {
+        "name": "DataSet",
+        "kind": "interface"
+      },
+      {
+        "name": "MixedPart",
+        "kind": "interface"
+      },
+      {
+        "name": "DiagramSpec",
+        "kind": "interface"
+      },
+      {
+        "name": "MediaContent",
+        "kind": "interface"
+      },
+      {
+        "name": "QuestionBody",
+        "kind": "interface"
+      },
+      {
+        "name": "QuestionMetadata",
+        "kind": "interface"
+      },
+      {
+        "name": "Question",
+        "kind": "type"
+      },
+      {
+        "name": "UserAnswer",
+        "kind": "interface"
+      },
+      {
+        "name": "GradingResult",
+        "kind": "interface"
+      },
+      {
+        "name": "GenerationParams",
+        "kind": "interface"
+      },
+      {
+        "name": "HintParams",
+        "kind": "interface"
+      },
+      {
+        "name": "QuestionProcessor",
+        "kind": "type"
+      },
+      {
+        "name": "ValidationError",
+        "kind": "interface"
+      },
+      {
+        "name": "ValidationResult",
+        "kind": "interface"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/question-engine/question-engine.ts",
+    "exports": [
+      {
+        "name": "QuestionEngine",
+        "kind": "class"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/ai",
+      "@/lib/caching-strategy",
+      "./processor-registry",
+      "./prompt-manager"
+    ]
+  },
+  {
+    "path": "src/lib/question-engine/persistence.ts",
+    "exports": [
+      {
+        "name": "saveQuestionsToAppwrite",
+        "kind": "async function"
+      },
+      {
+        "name": "loadQuestionsFromAppwrite",
+        "kind": "async function"
+      },
+      {
+        "name": "syncQuestionsToAppwrite",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/appwrite",
+      "@/lib/db/client",
+      "@/lib/shared/json",
+      "./types"
+    ]
+  },
+  {
+    "path": "src/lib/question-engine/processor-registry.ts",
+    "exports": [
+      {
+        "name": "ProcessorRegistry",
+        "kind": "class"
+      }
+    ],
+    "internal_dependencies": [
+      "./processors/processor",
+      "./processors/processor-configs",
+      "./prompt-manager",
+      "./types"
+    ]
+  },
+  {
+    "path": "src/lib/question-engine/prompt-manager.ts",
+    "exports": [
+      {
+        "name": "PromptTemplate",
+        "kind": "interface"
+      },
+      {
+        "name": "PromptManager",
+        "kind": "class"
+      }
+    ],
+    "internal_dependencies": [
+      "./types"
+    ]
+  },
+  {
+    "path": "src/lib/question-engine/validators/index.ts",
+    "exports": [
+      {
+        "name": "validateQuestion",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "../types",
+      "./per-type/calculation",
+      "./per-type/data-response",
+      "./per-type/diagram",
+      "./per-type/essay",
+      "./per-type/long-answer",
+      "./per-type/matching",
+      "./per-type/mcq",
+      "./per-type/mixed",
+      "./per-type/programming",
+      "./per-type/short-answer",
+      "./per-type/source-based"
+    ]
+  },
+  {
+    "path": "src/lib/question-engine/validators/shared-quality-checks.ts",
+    "exports": [
+      {
+        "name": "checkGibberish",
+        "kind": "function"
+      },
+      {
+        "name": "checkPlaceholders",
+        "kind": "function"
+      },
+      {
+        "name": "checkLength",
+        "kind": "function"
+      },
+      {
+        "name": "checkDifficulty",
+        "kind": "function"
+      },
+      {
+        "name": "checkPoints",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "../types"
+    ]
+  },
+  {
+    "path": "src/lib/question-engine/validators/per-type/source-based.ts",
+    "exports": [
+      {
+        "name": "validate",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "../../types"
+    ]
+  },
+  {
+    "path": "src/lib/question-engine/validators/per-type/mcq.ts",
+    "exports": [
+      {
+        "name": "validate",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "../../types",
+      "../shared-quality-checks"
+    ]
+  },
+  {
+    "path": "src/lib/question-engine/validators/per-type/diagram.ts",
+    "exports": [
+      {
+        "name": "validate",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "../../types"
+    ]
+  },
+  {
+    "path": "src/lib/question-engine/validators/per-type/essay.ts",
+    "exports": [
+      {
+        "name": "validate",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "../../types"
+    ]
+  },
+  {
+    "path": "src/lib/question-engine/validators/per-type/long-answer.ts",
+    "exports": [
+      {
+        "name": "validate",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "../../types"
+    ]
+  },
+  {
+    "path": "src/lib/question-engine/validators/per-type/data-response.ts",
+    "exports": [
+      {
+        "name": "validate",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "../../types"
+    ]
+  },
+  {
+    "path": "src/lib/question-engine/validators/per-type/short-answer.ts",
+    "exports": [
+      {
+        "name": "validate",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "../../types"
+    ]
+  },
+  {
+    "path": "src/lib/question-engine/validators/per-type/mixed.ts",
+    "exports": [
+      {
+        "name": "validate",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "../../types"
+    ]
+  },
+  {
+    "path": "src/lib/question-engine/validators/per-type/programming.ts",
+    "exports": [
+      {
+        "name": "validate",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "../../types"
+    ]
+  },
+  {
+    "path": "src/lib/question-engine/validators/per-type/calculation.ts",
+    "exports": [
+      {
+        "name": "validate",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "../../types"
+    ]
+  },
+  {
+    "path": "src/lib/question-engine/validators/per-type/matching.ts",
+    "exports": [
+      {
+        "name": "validate",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "../../types"
+    ]
+  },
+  {
+    "path": "src/lib/question-engine/processors/processor-configs.ts",
+    "exports": [
+      {
+        "name": "processorConfigs",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "./graders/calculation",
+      "./graders/data-response",
+      "./graders/diagram",
+      "./graders/essay",
+      "./graders/long-answer",
+      "./graders/matching",
+      "./graders/mcq",
+      "./graders/mixed",
+      "./graders/programming",
+      "./graders/short-answer",
+      "./graders/source-based",
+      "./types"
+    ]
+  },
+  {
+    "path": "src/lib/question-engine/processors/types.ts",
+    "exports": [
+      {
+        "name": "GradeFn",
+        "kind": "type"
+      },
+      {
+        "name": "HintFn",
+        "kind": "type"
+      },
+      {
+        "name": "ProcessorConfig",
+        "kind": "interface"
+      }
+    ],
+    "internal_dependencies": [
+      "../prompt-manager",
+      "../types"
+    ]
+  },
+  {
+    "path": "src/lib/question-engine/processors/processor.ts",
+    "exports": [
+      {
+        "name": "TypedQuestionProcessor",
+        "kind": "class"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/ai",
+      "@/lib/ai/parse-response",
+      "../prompt-manager",
+      "../validators",
+      "./types"
+    ]
+  },
+  {
+    "path": "src/lib/question-engine/processors/graders/source-based.ts",
+    "exports": [
+      {
+        "name": "grade",
+        "kind": "const"
+      },
+      {
+        "name": "hint",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "../../types",
+      "../types",
+      "./shared"
+    ]
+  },
+  {
+    "path": "src/lib/question-engine/processors/graders/shared.ts",
+    "exports": [
+      {
+        "name": "aiGradeResult",
+        "kind": "async function"
+      },
+      {
+        "name": "compositeGrade",
+        "kind": "const"
+      },
+      {
+        "name": "aiHintFactory",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/ai",
+      "@/lib/ai/parse-response",
+      "../../prompt-manager",
+      "../../types",
+      "../types"
+    ]
+  },
+  {
+    "path": "src/lib/question-engine/processors/graders/mcq.ts",
+    "exports": [
+      {
+        "name": "grade",
+        "kind": "const"
+      },
+      {
+        "name": "hint",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/ai",
+      "@/lib/ai/parse-response",
+      "../../types",
+      "../types"
+    ]
+  },
+  {
+    "path": "src/lib/question-engine/processors/graders/diagram.ts",
+    "exports": [
+      {
+        "name": "grade",
+        "kind": "const"
+      },
+      {
+        "name": "hint",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "../../types",
+      "../types",
+      "./shared"
+    ]
+  },
+  {
+    "path": "src/lib/question-engine/processors/graders/essay.ts",
+    "exports": [
+      {
+        "name": "grade",
+        "kind": "const"
+      },
+      {
+        "name": "hint",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "../../types",
+      "../types",
+      "./shared"
+    ]
+  },
+  {
+    "path": "src/lib/question-engine/processors/graders/long-answer.ts",
+    "exports": [
+      {
+        "name": "grade",
+        "kind": "const"
+      },
+      {
+        "name": "hint",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "../../types",
+      "../types",
+      "./shared"
+    ]
+  },
+  {
+    "path": "src/lib/question-engine/processors/graders/data-response.ts",
+    "exports": [
+      {
+        "name": "grade",
+        "kind": "const"
+      },
+      {
+        "name": "hint",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "../../types",
+      "../types",
+      "./shared"
+    ]
+  },
+  {
+    "path": "src/lib/question-engine/processors/graders/short-answer.ts",
+    "exports": [
+      {
+        "name": "grade",
+        "kind": "const"
+      },
+      {
+        "name": "hint",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "../../types",
+      "../types",
+      "./shared"
+    ]
+  },
+  {
+    "path": "src/lib/question-engine/processors/graders/mixed.ts",
+    "exports": [
+      {
+        "name": "grade",
+        "kind": "const"
+      },
+      {
+        "name": "hint",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "../../types",
+      "../types",
+      "./shared"
+    ]
+  },
+  {
+    "path": "src/lib/question-engine/processors/graders/programming.ts",
+    "exports": [
+      {
+        "name": "grade",
+        "kind": "const"
+      },
+      {
+        "name": "hint",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "../../types",
+      "../types",
+      "./shared"
+    ]
+  },
+  {
+    "path": "src/lib/question-engine/processors/graders/calculation.ts",
+    "exports": [
+      {
+        "name": "grade",
+        "kind": "const"
+      },
+      {
+        "name": "hint",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "../../types",
+      "../types"
+    ]
+  },
+  {
+    "path": "src/lib/question-engine/processors/graders/matching.ts",
+    "exports": [
+      {
+        "name": "grade",
+        "kind": "const"
+      },
+      {
+        "name": "hint",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "../../types",
+      "../types"
+    ]
+  },
+  {
+    "path": "src/lib/orchestrator/job-processor.ts",
+    "exports": [
+      {
+        "name": "JobProcessor",
+        "kind": "class"
+      },
+      {
+        "name": "jobProcessor",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "@/curriculum",
+      "@/lib/competency-engine",
+      "@/lib/question-engine/persistence",
+      "@/lib/question-engine/types",
+      "@/lib/queue/core",
+      "@/lib/services/analytics-service",
+      "@/lib/services/progress-service",
+      "@/lib/services/spaced-rep-service",
+      "@/lib/visual-engine/visual-engine",
+      "./job-queue",
+      "./types"
+    ]
+  },
+  {
+    "path": "src/lib/orchestrator/types.ts",
+    "exports": [
+      {
+        "name": "JobType",
+        "kind": "type"
+      },
+      {
+        "name": "JobStatus",
+        "kind": "type"
+      },
+      {
+        "name": "JobRecord",
+        "kind": "interface"
+      },
+      {
+        "name": "EnqueueOptions",
+        "kind": "interface"
+      },
+      {
+        "name": "JobStats",
+        "kind": "interface"
+      },
+      {
+        "name": "JobStatusResult",
+        "kind": "interface"
+      },
+      {
+        "name": "GenerateResult",
+        "kind": "interface"
+      },
+      {
+        "name": "GradeResult",
+        "kind": "interface"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/orchestrator/learning-orchestrator.ts",
+    "exports": [
+      {
+        "name": "LearningOrchestrator",
+        "kind": "class"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/question-engine/question-engine",
+      "@/lib/shared/question-type",
+      "@/lib/utils/engine-analytics",
+      "./job-queue",
+      "./types"
+    ]
+  },
+  {
+    "path": "src/lib/orchestrator/job-queue.ts",
+    "exports": [
+      {
+        "name": "queueCore",
+        "kind": "const"
+      },
+      {
+        "name": "enqueue",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/db/schema",
+      "@/lib/queue/core",
+      "@/lib/shared/json",
+      "./types"
+    ]
+  },
+  {
+    "path": "src/lib/db/persist.ts",
+    "exports": [
+      {
+        "name": "SafePersistError",
+        "kind": "class"
+      },
+      {
+        "name": "safePersist",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/db/client.ts",
+    "exports": [
+      {
+        "name": "APPWRITE_DATABASE_ID",
+        "kind": "const"
+      },
+      {
+        "name": "COLLECTIONS",
+        "kind": "const"
+      },
+      {
+        "name": "Subject",
+        "kind": "type"
+      },
+      {
+        "name": "Topic",
+        "kind": "type"
+      },
+      {
+        "name": "Question",
+        "kind": "type"
+      },
+      {
+        "name": "UserSubject",
+        "kind": "type"
+      },
+      {
+        "name": "UserProgress",
+        "kind": "type"
+      },
+      {
+        "name": "StudySession",
+        "kind": "type"
+      },
+      {
+        "name": "ExamPaperRecord",
+        "kind": "type"
+      },
+      {
+        "name": "listDocuments",
+        "kind": "async function"
+      },
+      {
+        "name": "getDocument",
+        "kind": "async function"
+      },
+      {
+        "name": "createDocument",
+        "kind": "async function"
+      },
+      {
+        "name": "updateDocument",
+        "kind": "async function"
+      },
+      {
+        "name": "deleteDocument",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/appwrite"
+    ]
+  },
+  {
+    "path": "src/lib/db/schema.ts",
+    "exports": [
+      {
+        "name": "CachedQuestion",
+        "kind": "interface"
+      },
+      {
+        "name": "CachedProgress",
+        "kind": "interface"
+      },
+      {
+        "name": "QuizAttempt",
+        "kind": "interface"
+      },
+      {
+        "name": "SyncQueueItem",
+        "kind": "interface"
+      },
+      {
+        "name": "SyncConflict",
+        "kind": "interface"
+      },
+      {
+        "name": "CachedSubject",
+        "kind": "interface"
+      },
+      {
+        "name": "QuizAnswer",
+        "kind": "interface"
+      },
+      {
+        "name": "CachedVisual",
+        "kind": "interface"
+      },
+      {
+        "name": "ChatMessageRecord",
+        "kind": "interface"
+      },
+      {
+        "name": "QuestionRating",
+        "kind": "interface"
+      },
+      {
+        "name": "QuizSessionState",
+        "kind": "interface"
+      },
+      {
+        "name": "ExamSessionSnapshot",
+        "kind": "interface"
+      },
+      {
+        "name": "CachedPdf",
+        "kind": "interface"
+      },
+      {
+        "name": "CachedExamDates",
+        "kind": "interface"
+      },
+      {
+        "name": "LumniOfflineDB",
+        "kind": "class"
+      },
+      {
+        "name": "offlineDB",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "@/hooks/use-wrong-answer-journal",
+      "@/lib/competency-engine/types",
+      "@/lib/flashcard-repository/types",
+      "@/lib/orchestrator/types"
+    ]
+  },
+  {
+    "path": "src/lib/db/cleanup.ts",
+    "exports": [
+      {
+        "name": "cleanupOldQuestions",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/appwrite",
+      "@/lib/db/client"
+    ]
+  },
+  {
+    "path": "src/lib/db/ensure.ts",
+    "exports": [
+      {
+        "name": "EnsureReport",
+        "kind": "type"
+      },
+      {
+        "name": "SeededDoc",
+        "kind": "type"
+      },
+      {
+        "name": "SeedCollectionConfig",
+        "kind": "type"
+      },
+      {
+        "name": "SeedConfig",
+        "kind": "type"
+      },
+      {
+        "name": "ensureAppwrite",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/appwrite",
+      "@/lib/db/client",
+      "./ensure-schema"
+    ]
+  },
+  {
+    "path": "src/lib/db/ensure-config.ts",
+    "exports": [
+      {
+        "name": "seedConfig",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "./ensure"
+    ]
+  },
+  {
+    "path": "src/lib/db/ensure-schema.ts",
+    "exports": [
+      {
+        "name": "AttributeType",
+        "kind": "type"
+      },
+      {
+        "name": "AttributeConfig",
+        "kind": "type"
+      },
+      {
+        "name": "IndexConfig",
+        "kind": "type"
+      },
+      {
+        "name": "CollectionSchema",
+        "kind": "type"
+      },
+      {
+        "name": "schemaConfig",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/db/repositories/quiz-session.ts",
+    "exports": [
+      {
+        "name": "saveQuizAttempt",
+        "kind": "async function"
+      },
+      {
+        "name": "getQuizAttempts",
+        "kind": "async function"
+      },
+      {
+        "name": "saveQuizSession",
+        "kind": "async function"
+      },
+      {
+        "name": "getQuizSession",
+        "kind": "async function"
+      },
+      {
+        "name": "getActiveQuizSession",
+        "kind": "async function"
+      },
+      {
+        "name": "getAllPausedSessions",
+        "kind": "async function"
+      },
+      {
+        "name": "resumeQuizSession",
+        "kind": "async function"
+      },
+      {
+        "name": "pauseQuizSession",
+        "kind": "async function"
+      },
+      {
+        "name": "deleteQuizSession",
+        "kind": "async function"
+      },
+      {
+        "name": "clearOldQuizSessions",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/shared/json",
+      "../schema"
+    ]
+  },
+  {
+    "path": "src/lib/db/repositories/progress.ts",
+    "exports": [
+      {
+        "name": "saveProgress",
+        "kind": "async function"
+      },
+      {
+        "name": "getProgress",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "../schema"
+    ]
+  },
+  {
+    "path": "src/lib/db/repositories/question-cache.ts",
+    "exports": [
+      {
+        "name": "cacheQuestions",
+        "kind": "async function"
+      },
+      {
+        "name": "getCachedQuestions",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/shared/json",
+      "../schema"
+    ]
+  },
+  {
+    "path": "src/lib/db/repositories/exam-session.ts",
+    "exports": [
+      {
+        "name": "saveExamSession",
+        "kind": "async function"
+      },
+      {
+        "name": "getExamSession",
+        "kind": "async function"
+      },
+      {
+        "name": "clearExamSession",
+        "kind": "async function"
+      },
+      {
+        "name": "clearOldExamSessions",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/shared/json",
+      "../schema"
+    ]
+  },
+  {
+    "path": "src/lib/db/repositories/pdf-cache.ts",
+    "exports": [
+      {
+        "name": "cachePdf",
+        "kind": "async function"
+      },
+      {
+        "name": "getCachedPdf",
+        "kind": "async function"
+      },
+      {
+        "name": "removeCachedPdf",
+        "kind": "async function"
+      },
+      {
+        "name": "isPdfCached",
+        "kind": "async function"
+      },
+      {
+        "name": "getCachedPdfUrl",
+        "kind": "async function"
+      },
+      {
+        "name": "clearOldPdfCache",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "../schema"
+    ]
+  },
+  {
+    "path": "src/lib/db/repositories/conflicts.ts",
+    "exports": [
+      {
+        "name": "saveConflict",
+        "kind": "async function"
+      },
+      {
+        "name": "getUnresolvedConflicts",
+        "kind": "async function"
+      },
+      {
+        "name": "resolveConflict",
+        "kind": "async function"
+      },
+      {
+        "name": "clearResolvedConflicts",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "../schema"
+    ]
+  },
+  {
+    "path": "src/lib/db/repositories/visual-cache.ts",
+    "exports": [
+      {
+        "name": "makeCacheKey",
+        "kind": "function"
+      },
+      {
+        "name": "cacheVisual",
+        "kind": "async function"
+      },
+      {
+        "name": "getCachedVisual",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/shared/json",
+      "@/lib/visual-engine/types",
+      "../schema"
+    ]
+  },
+  {
+    "path": "src/lib/db/exams/index.ts",
+    "exports": [
+      {
+        "name": "resetExamsDb",
+        "kind": "function"
+      },
+      {
+        "name": "getExamsDb",
+        "kind": "async function"
+      },
+      {
+        "name": "saveExamsDb",
+        "kind": "function"
+      },
+      {
+        "name": "getExamPaperCount",
+        "kind": "function"
+      },
+      {
+        "name": "getAllExamPapers",
+        "kind": "function"
+      },
+      {
+        "name": "getExamPapersBySubject",
+        "kind": "function"
+      },
+      {
+        "name": "getExamPaperById",
+        "kind": "function"
+      },
+      {
+        "name": "insertExamPaper",
+        "kind": "function"
+      },
+      {
+        "name": "updateExamPaperMemoLink",
+        "kind": "function"
+      },
+      {
+        "name": "updateExamPaperPaperLink",
+        "kind": "function"
+      },
+      {
+        "name": "findPaperForMemo",
+        "kind": "function"
+      },
+      {
+        "name": "findMemoForPaper",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/db/exams/schema.ts",
+    "exports": [
+      {
+        "name": "ExamPaperRecord",
+        "kind": "interface"
+      },
+      {
+        "name": "ParsedExamPaperFilename",
+        "kind": "interface"
+      },
+      {
+        "name": "parseExamPaperFilename",
+        "kind": "function"
+      },
+      {
+        "name": "getSubjectName",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/api/engine-handler.ts",
+    "exports": [
+      {
+        "name": "createEngineHandler",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/ai/daily-call-tracker",
+      "@/lib/ai/with-budget",
+      "@/lib/shared/with-rate-limit",
+      "@/lib/shared/with-rate-limit"
+    ]
+  },
+  {
+    "path": "src/lib/study-planner/algorithms.ts",
+    "exports": [
+      {
+        "name": "calculateSubjectWeights",
+        "kind": "function"
+      },
+      {
+        "name": "allocateDailyMinutes",
+        "kind": "function"
+      },
+      {
+        "name": "generateStudyPlan",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/study-planner/types.ts",
+    "exports": [
+      {
+        "name": "SubjectId",
+        "kind": "type"
+      },
+      {
+        "name": "TopicId",
+        "kind": "type"
+      },
+      {
+        "name": "StudyPlanSettings",
+        "kind": "interface"
+      },
+      {
+        "name": "SubjectCompetency",
+        "kind": "interface"
+      },
+      {
+        "name": "TopicPlan",
+        "kind": "interface"
+      },
+      {
+        "name": "StudyPlan",
+        "kind": "interface"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/study-planner/study-planner-service.ts",
+    "exports": [
+      {
+        "name": "StudyPlannerService",
+        "kind": "class"
+      },
+      {
+        "name": "getStudyPlannerService",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/competency-engine/competency-service",
+      "@/lib/competency-engine/competency-service",
+      "@/lib/services/progress-service",
+      "@/lib/services/progress-service",
+      "./algorithms",
+      "./types"
+    ]
+  },
+  {
+    "path": "src/lib/utils/flashcard-import-export.ts",
+    "exports": [
+      {
+        "name": "exportToCSV",
+        "kind": "function"
+      },
+      {
+        "name": "downloadCSV",
+        "kind": "function"
+      },
+      {
+        "name": "ImportedCard",
+        "kind": "interface"
+      },
+      {
+        "name": "parseCSV",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/flashcard-repository/types"
+    ]
+  },
+  {
+    "path": "src/lib/utils/view-transition.ts",
+    "exports": [
+      {
+        "name": "startViewTransition",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/utils/study-planner.ts",
+    "exports": [
+      {
+        "name": "StudySession",
+        "kind": "interface"
+      },
+      {
+        "name": "ExamDate",
+        "kind": "interface"
+      },
+      {
+        "name": "StudyPlan",
+        "kind": "interface"
+      },
+      {
+        "name": "loadStudyPlan",
+        "kind": "function"
+      },
+      {
+        "name": "saveStudyPlan",
+        "kind": "function"
+      },
+      {
+        "name": "addStudySession",
+        "kind": "function"
+      },
+      {
+        "name": "updateStudySession",
+        "kind": "function"
+      },
+      {
+        "name": "deleteStudySession",
+        "kind": "function"
+      },
+      {
+        "name": "addExamDate",
+        "kind": "function"
+      },
+      {
+        "name": "deleteExamDate",
+        "kind": "function"
+      },
+      {
+        "name": "getUpcomingSessions",
+        "kind": "function"
+      },
+      {
+        "name": "getUpcomingExams",
+        "kind": "function"
+      },
+      {
+        "name": "getTodaySessions",
+        "kind": "function"
+      },
+      {
+        "name": "autoScheduleSessions",
+        "kind": "function"
+      },
+      {
+        "name": "syncStudyPlanToAppwrite",
+        "kind": "async function"
+      },
+      {
+        "name": "getStudyStats",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/orchestrator/job-queue",
+      "./storage"
+    ]
+  },
+  {
+    "path": "src/lib/utils/gamification.ts",
+    "exports": [
+      {
+        "name": "Rarity",
+        "kind": "type"
+      },
+      {
+        "name": "rarityColors",
+        "kind": "const"
+      },
+      {
+        "name": "rarityGlow",
+        "kind": "const"
+      },
+      {
+        "name": "raritySolid",
+        "kind": "const"
+      },
+      {
+        "name": "rarityBorder",
+        "kind": "const"
+      },
+      {
+        "name": "rarityGlowStrong",
+        "kind": "const"
+      },
+      {
+        "name": "getStreakMessage",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/utils/engine-analytics.ts",
+    "exports": [
+      {
+        "name": "AnalyticsEvent",
+        "kind": "interface"
+      },
+      {
+        "name": "trackEngineEvent",
+        "kind": "function"
+      },
+      {
+        "name": "loadEvents",
+        "kind": "function"
+      },
+      {
+        "name": "getAnalyticsSummary",
+        "kind": "function"
+      },
+      {
+        "name": "clearAnalytics",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/shared"
+    ]
+  },
+  {
+    "path": "src/lib/utils/icon-mapping.tsx",
+    "exports": [
+      {
+        "name": "AnimationPreset",
+        "kind": "type"
+      },
+      {
+        "name": "iconAnimations",
+        "kind": "const"
+      },
+      {
+        "name": "LottieAnimationName",
+        "kind": "type"
+      },
+      {
+        "name": "getIconMapping",
+        "kind": "function"
+      },
+      {
+        "name": "AnimatedIcon",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/utils/random-name.ts",
+    "exports": [
+      {
+        "name": "getRandomName",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/utils/calendar-export.ts",
+    "exports": [
+      {
+        "name": "exportToICal",
+        "kind": "function"
+      },
+      {
+        "name": "downloadICal",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "./study-planner"
+    ]
+  },
+  {
+    "path": "src/lib/utils/engine-quality.ts",
+    "exports": [
+      {
+        "name": "QualityRecord",
+        "kind": "interface"
+      },
+      {
+        "name": "recordQuality",
+        "kind": "function"
+      },
+      {
+        "name": "loadQualityRecords",
+        "kind": "function"
+      },
+      {
+        "name": "getQualityStats",
+        "kind": "function"
+      },
+      {
+        "name": "clearQualityRecords",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/shared"
+    ]
+  },
+  {
+    "path": "src/lib/utils/tts-service.ts",
+    "exports": [
+      {
+        "name": "TTSOptions",
+        "kind": "interface"
+      },
+      {
+        "name": "TTSVoice",
+        "kind": "interface"
+      },
+      {
+        "name": "TTSState",
+        "kind": "interface"
+      },
+      {
+        "name": "ttsService",
+        "kind": "const"
+      },
+      {
+        "name": "SUPPORTED_LANGUAGES",
+        "kind": "const"
+      },
+      {
+        "name": "getLanguageForText",
+        "kind": "function"
+      },
+      {
+        "name": "PronunciationExercise",
+        "kind": "interface"
+      },
+      {
+        "name": "SAMPLE_EXERCISES",
+        "kind": "const"
+      },
+      {
+        "name": "getExercisesForLanguage",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/utils/spaced-repetition.ts",
+    "exports": [
+      {
+        "name": "loadFlashcards",
+        "kind": "function"
+      },
+      {
+        "name": "saveFlashcards",
+        "kind": "function"
+      },
+      {
+        "name": "createFlashcard",
+        "kind": "async function"
+      },
+      {
+        "name": "deleteFlashcard",
+        "kind": "async function"
+      },
+      {
+        "name": "updateFlashcard",
+        "kind": "async function"
+      },
+      {
+        "name": "computeNextReviewDate",
+        "kind": "function"
+      },
+      {
+        "name": "calculateNextReview",
+        "kind": "function"
+      },
+      {
+        "name": "reviewFlashcard",
+        "kind": "async function"
+      },
+      {
+        "name": "getDueCards",
+        "kind": "async function"
+      },
+      {
+        "name": "getNewCards",
+        "kind": "async function"
+      },
+      {
+        "name": "getAllCardsGrouped",
+        "kind": "async function"
+      },
+      {
+        "name": "getCardStats",
+        "kind": "async function"
+      },
+      {
+        "name": "getMasteryLevel",
+        "kind": "function"
+      },
+      {
+        "name": "getIntervalLabel",
+        "kind": "function"
+      },
+      {
+        "name": "convertQuizToFlashcards",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/flashcard-repository",
+      "@/lib/flashcard-repository/types"
+    ]
+  },
+  {
+    "path": "src/lib/utils/storage.ts",
+    "exports": [
+      {
+        "name": "loadFromStorage",
+        "kind": "function"
+      },
+      {
+        "name": "saveToStorage",
+        "kind": "function"
+      },
+      {
+        "name": "StudyPreferences",
+        "kind": "type"
+      },
+      {
+        "name": "NotificationSettings",
+        "kind": "type"
+      },
+      {
+        "name": "BetaFeatures",
+        "kind": "type"
+      },
+      {
+        "name": "DEFAULT_PREFERENCES",
+        "kind": "const"
+      },
+      {
+        "name": "DEFAULT_NOTIFICATIONS",
+        "kind": "const"
+      },
+      {
+        "name": "DEFAULT_BETA",
+        "kind": "const"
+      },
+      {
+        "name": "STUDY_PREFS_KEY",
+        "kind": "const"
+      },
+      {
+        "name": "NOTIFICATION_SETTINGS_KEY",
+        "kind": "const"
+      },
+      {
+        "name": "BETA_FEATURES_KEY",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/utils/animation.ts",
+    "exports": [
+      {
+        "name": "iOSEase",
+        "kind": "const"
+      },
+      {
+        "name": "iOSDecelerate",
+        "kind": "const"
+      },
+      {
+        "name": "iOSAccelerate",
+        "kind": "const"
+      },
+      {
+        "name": "iOSSpring",
+        "kind": "const"
+      },
+      {
+        "name": "easeOutQuint",
+        "kind": "const"
+      },
+      {
+        "name": "fastTransition",
+        "kind": "const"
+      },
+      {
+        "name": "normalTransition",
+        "kind": "const"
+      },
+      {
+        "name": "slowTransition",
+        "kind": "const"
+      },
+      {
+        "name": "pageEnterForward",
+        "kind": "const"
+      },
+      {
+        "name": "pageExitBack",
+        "kind": "const"
+      },
+      {
+        "name": "pageSpring",
+        "kind": "const"
+      },
+      {
+        "name": "springTransition",
+        "kind": "const"
+      },
+      {
+        "name": "springStiffTransition",
+        "kind": "const"
+      },
+      {
+        "name": "springGesture",
+        "kind": "const"
+      },
+      {
+        "name": "stagger",
+        "kind": "function"
+      },
+      {
+        "name": "fadeInUp",
+        "kind": "const"
+      },
+      {
+        "name": "fadeInScale",
+        "kind": "const"
+      },
+      {
+        "name": "fadeInLeft",
+        "kind": "const"
+      },
+      {
+        "name": "tabContent",
+        "kind": "const"
+      },
+      {
+        "name": "pageSlideVariants",
+        "kind": "const"
+      },
+      {
+        "name": "sheetVariants",
+        "kind": "const"
+      },
+      {
+        "name": "popoverVariants",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/utils/colors.ts",
+    "exports": [
+      {
+        "name": "getDifficultyColor",
+        "kind": "function"
+      },
+      {
+        "name": "getQuizDifficultyColor",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/shared/difficulty",
+      "@/lib/shared/difficulty"
+    ]
+  },
+  {
+    "path": "src/lib/utils/animation-optimization.ts",
+    "exports": [
+      {
+        "name": "AnimationBudget",
+        "kind": "interface"
+      },
+      {
+        "name": "DEFAULT_ANIMATION_BUDGET",
+        "kind": "const"
+      },
+      {
+        "name": "useAnimationBudget",
+        "kind": "function"
+      },
+      {
+        "name": "createOptimizedPresets",
+        "kind": "const"
+      },
+      {
+        "name": "useOptimizedAnimation",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/queue/core.ts",
+    "exports": [
+      {
+        "name": "QueueItemBase",
+        "kind": "interface"
+      },
+      {
+        "name": "ProcessResult",
+        "kind": "interface"
+      },
+      {
+        "name": "QueueTable",
+        "kind": "interface"
+      },
+      {
+        "name": "QueueCore",
+        "kind": "class"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/shared/backoff"
+    ]
+  },
+  {
+    "path": "src/lib/exam-dates/data-2026-may.ts",
+    "exports": [
+      {
+        "name": "EXAM_SLOTS_2026_MAY",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "./types"
+    ]
+  },
+  {
+    "path": "src/lib/exam-dates/subject-maps.ts",
+    "exports": [
+      {
+        "name": "subjectColors",
+        "kind": "const"
+      },
+      {
+        "name": "subjectAbbrs",
+        "kind": "const"
+      },
+      {
+        "name": "getSubjectColor",
+        "kind": "function"
+      },
+      {
+        "name": "getSubjectAbbr",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/exam-dates/calendar-export.ts",
+    "exports": [
+      {
+        "name": "generateIcal",
+        "kind": "function"
+      },
+      {
+        "name": "downloadIcal",
+        "kind": "function"
+      },
+      {
+        "name": "buildGoogleCalendarUrl",
+        "kind": "function"
+      },
+      {
+        "name": "buildExportFilename",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "./types"
+    ]
+  },
+  {
+    "path": "src/lib/exam-dates/service.ts",
+    "exports": [
+      {
+        "name": "getSeedData",
+        "kind": "function"
+      },
+      {
+        "name": "getExamDates",
+        "kind": "async function"
+      },
+      {
+        "name": "getNextExams",
+        "kind": "async function"
+      },
+      {
+        "name": "getExamsGroupedByDate",
+        "kind": "async function"
+      },
+      {
+        "name": "getSessionLabel",
+        "kind": "function"
+      },
+      {
+        "name": "formatFriendlyDate",
+        "kind": "function"
+      },
+      {
+        "name": "formatTimeRange",
+        "kind": "function"
+      },
+      {
+        "name": "formatDuration",
+        "kind": "function"
+      },
+      {
+        "name": "refreshExamDatesFromAppwrite",
+        "kind": "function"
+      },
+      {
+        "name": "syncExamDatesToAppwrite",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/db/schema",
+      "./data-2026-may",
+      "./data-2026-nov",
+      "./subject-maps",
+      "./types"
+    ]
+  },
+  {
+    "path": "src/lib/exam-dates/data-2026-nov.ts",
+    "exports": [
+      {
+        "name": "EXAM_SLOTS_2026_NOV",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "./types"
+    ]
+  },
+  {
+    "path": "src/lib/exam-dates/types.ts",
+    "exports": [
+      {
+        "name": "ExamSlot",
+        "kind": "interface"
+      },
+      {
+        "name": "ExamDateCollection",
+        "kind": "interface"
+      },
+      {
+        "name": "getCurrentSession",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/shared/network.ts",
+    "exports": [
+      {
+        "name": "RetryOptions",
+        "kind": "interface"
+      },
+      {
+        "name": "withRetry",
+        "kind": "async function"
+      },
+      {
+        "name": "isOnline",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/shared/api-fetch.ts",
+    "exports": [
+      {
+        "name": "isBudgetExceeded",
+        "kind": "function"
+      },
+      {
+        "name": "apiFetch",
+        "kind": "async function"
+      },
+      {
+        "name": "showBudgetToast",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/shared/rate-limit.ts",
+    "exports": [
+      {
+        "name": "checkRateLimit",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/shared/backoff.ts",
+    "exports": [
+      {
+        "name": "calculateBackoffDelay",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/shared/format.ts",
+    "exports": [
+      {
+        "name": "formatBytes",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/shared/with-rate-limit.ts",
+    "exports": [
+      {
+        "name": "RouteHandler",
+        "kind": "type"
+      },
+      {
+        "name": "withRateLimit",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/rate-limiter/core",
+      "./rate-limit"
+    ]
+  },
+  {
+    "path": "src/lib/shared/json.ts",
+    "exports": [
+      {
+        "name": "safeJsonParse",
+        "kind": "function"
+      },
+      {
+        "name": "safeJsonStringify",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/shared/question-type.ts",
+    "exports": [
+      {
+        "name": "serializeQuestionType",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/shared/difficulty.ts",
+    "exports": [
+      {
+        "name": "Difficulty",
+        "kind": "type"
+      },
+      {
+        "name": "DifficultyInput",
+        "kind": "type"
+      },
+      {
+        "name": "normalizeDifficulty",
+        "kind": "function"
+      },
+      {
+        "name": "DIFFICULTY_VALUES",
+        "kind": "const"
+      },
+      {
+        "name": "DIFFICULTY_INPUT_VALUES",
+        "kind": "const"
+      },
+      {
+        "name": "isValidDifficulty",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/shared/time.ts",
+    "exports": [
+      {
+        "name": "formatTime",
+        "kind": "function"
+      },
+      {
+        "name": "calculateAccuracy",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/visual-engine/visual-persistence.ts",
+    "exports": [
+      {
+        "name": "saveVisualToAppwrite",
+        "kind": "async function"
+      },
+      {
+        "name": "loadVisualFromAppwrite",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/appwrite",
+      "@/lib/db/client",
+      "@/lib/db/repositories/visual-cache",
+      "@/lib/shared/json",
+      "./types"
+    ]
+  },
+  {
+    "path": "src/lib/visual-engine/image-resolver.ts",
+    "exports": [
+      {
+        "name": "searchImage",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "./prompts"
+    ]
+  },
+  {
+    "path": "src/lib/visual-engine/prompts.ts",
+    "exports": [
+      {
+        "name": "getDiagramPrompt",
+        "kind": "function"
+      },
+      {
+        "name": "getMermaidPrompt",
+        "kind": "function"
+      },
+      {
+        "name": "getImageSearchQuery",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/visual-engine/visual-engine.ts",
+    "exports": [
+      {
+        "name": "VisualEngine",
+        "kind": "class"
+      },
+      {
+        "name": "visualEngine",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/ai",
+      "@/lib/caching-strategy",
+      "./image-resolver",
+      "./stem-renderer",
+      "./types",
+      "./types"
+    ]
+  },
+  {
+    "path": "src/lib/visual-engine/types.ts",
+    "exports": [
+      {
+        "name": "VisualContentType",
+        "kind": "type"
+      },
+      {
+        "name": "VisualContent",
+        "kind": "interface"
+      },
+      {
+        "name": "STEM_SUBJECTS",
+        "kind": "const"
+      },
+      {
+        "name": "VisualEngineParams",
+        "kind": "interface"
+      },
+      {
+        "name": "DiagramType",
+        "kind": "type"
+      },
+      {
+        "name": "ForceVectorData",
+        "kind": "interface"
+      },
+      {
+        "name": "CircuitData",
+        "kind": "interface"
+      },
+      {
+        "name": "WaveData",
+        "kind": "interface"
+      },
+      {
+        "name": "MotionData",
+        "kind": "interface"
+      },
+      {
+        "name": "GeometryData",
+        "kind": "interface"
+      },
+      {
+        "name": "ChartData",
+        "kind": "interface"
+      },
+      {
+        "name": "ChemistryData",
+        "kind": "interface"
+      },
+      {
+        "name": "GraphData",
+        "kind": "interface"
+      },
+      {
+        "name": "NodeFlowData",
+        "kind": "interface"
+      },
+      {
+        "name": "CustomSvgData",
+        "kind": "interface"
+      },
+      {
+        "name": "DiagramDataMap",
+        "kind": "type"
+      },
+      {
+        "name": "VisualCacheEntry",
+        "kind": "interface"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/visual-engine/diagram-mapper.ts",
+    "exports": [
+      {
+        "name": "KONVA_TYPES",
+        "kind": "const"
+      },
+      {
+        "name": "Validator",
+        "kind": "type"
+      },
+      {
+        "name": "getValidator",
+        "kind": "function"
+      },
+      {
+        "name": "getDataForType",
+        "kind": "function"
+      },
+      {
+        "name": "classifyAndMap",
+        "kind": "function"
+      },
+      {
+        "name": "isKonvaType",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "./types"
+    ]
+  },
+  {
+    "path": "src/lib/visual-engine/stem-renderer.ts",
+    "exports": [
+      {
+        "name": "generateDiagram",
+        "kind": "async function"
+      },
+      {
+        "name": "isDiagramType",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/ai",
+      "@/lib/ai/parse-response",
+      "@/lib/ai/types",
+      "./diagram-mapper",
+      "./prompts",
+      "./types"
+    ]
+  },
+  {
+    "path": "src/lib/premium/premium-context.tsx",
+    "exports": [
+      {
+        "name": "PremiumState",
+        "kind": "interface"
+      },
+      {
+        "name": "PremiumFeature",
+        "kind": "type"
+      },
+      {
+        "name": "PremiumProvider",
+        "kind": "function"
+      },
+      {
+        "name": "usePremium",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/utils/storage"
+    ]
+  },
+  {
+    "path": "src/lib/data/element-categories.ts",
+    "exports": [
+      {
+        "name": "ElementCategoryConfig",
+        "kind": "interface"
+      },
+      {
+        "name": "elementCategoryConfig",
+        "kind": "const"
+      },
+      {
+        "name": "elementEaseOutQuart",
+        "kind": "const"
+      },
+      {
+        "name": "elementEaseOutQuint",
+        "kind": "const"
+      },
+      {
+        "name": "elementEaseOutExpo",
+        "kind": "const"
+      },
+      {
+        "name": "elementEaseOutBack",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/data/mock-exam-results.ts",
+    "exports": [
+      {
+        "name": "ExamResult",
+        "kind": "interface"
+      },
+      {
+        "name": "examYears",
+        "kind": "const"
+      },
+      {
+        "name": "mockExamResults",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/data/types.ts",
+    "exports": [
+      {
+        "name": "Subject",
+        "kind": "interface"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/data/elements.ts",
+    "exports": [
+      {
+        "name": "Element",
+        "kind": "interface"
+      },
+      {
+        "name": "elements",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/server/quiz-actions.ts",
+    "exports": [
+      {
+        "name": "fetchQuestions",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/db/client",
+      "@/lib/server/auth"
+    ]
+  },
+  {
+    "path": "src/lib/server/exam-paper-actions.ts",
+    "exports": [
+      {
+        "name": "UploadExamPaperOptions",
+        "kind": "interface"
+      },
+      {
+        "name": "ExamPaperRecord",
+        "kind": "interface"
+      },
+      {
+        "name": "uploadExamPaper",
+        "kind": "async function"
+      },
+      {
+        "name": "getExamPapers",
+        "kind": "async function"
+      },
+      {
+        "name": "getExamPaperUrl",
+        "kind": "async function"
+      },
+      {
+        "name": "deleteExamPaper",
+        "kind": "async function"
+      },
+      {
+        "name": "getExamPapersWithFallback",
+        "kind": "async function"
+      },
+      {
+        "name": "checkAndPopulateExamsDb",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/db/exams/schema",
+      "@/lib/server/auth"
+    ]
+  },
+  {
+    "path": "src/lib/server/auth.ts",
+    "exports": [
+      {
+        "name": "auth",
+        "kind": "async function"
+      },
+      {
+        "name": "verifyAuth",
+        "kind": "async function"
+      },
+      {
+        "name": "getAuthenticatedUserId",
+        "kind": "async function"
+      },
+      {
+        "name": "requireAdmin",
+        "kind": "async function"
+      },
+      {
+        "name": "getAuthenticatedUserName",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/appwrite"
+    ]
+  },
+  {
+    "path": "src/lib/server/actions.ts",
+    "exports": [
+      {
+        "name": "fetchSubjects",
+        "kind": "async function"
+      },
+      {
+        "name": "fetchUserProgress",
+        "kind": "async function"
+      },
+      {
+        "name": "toggleUserSubject",
+        "kind": "async function"
+      },
+      {
+        "name": "adminUploadExamPaper",
+        "kind": "async function"
+      },
+      {
+        "name": "getUserAccounts",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/server/auth"
+    ]
+  },
+  {
+    "path": "src/lib/server/sync-actions.ts",
+    "exports": [
+      {
+        "name": "syncSubject",
+        "kind": "async function"
+      },
+      {
+        "name": "syncAllSubjects",
+        "kind": "async function"
+      },
+      {
+        "name": "checkSubjectStatus",
+        "kind": "async function"
+      },
+      {
+        "name": "refreshSubject",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/db/client",
+      "@/lib/server/auth"
+    ]
+  },
+  {
+    "path": "src/lib/server/exam-markdown.ts",
+    "exports": [
+      {
+        "name": "GetExamMarkdownResult",
+        "kind": "interface"
+      },
+      {
+        "name": "getExamMarkdown",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/server/auth"
+    ]
+  },
+  {
+    "path": "src/lib/exam-parser/index.ts",
+    "exports": [
+      {
+        "name": "parseMarkdown",
+        "kind": "function"
+      },
+      {
+        "name": "convertMarkdownToJson",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/types/exam-paper",
+      "./markdown-exam-parser"
+    ]
+  },
+  {
+    "path": "src/lib/exam-parser/markdown-exam-parser.ts",
+    "exports": [
+      {
+        "name": "MarkdownExamParser",
+        "kind": "class"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/referral/client.ts",
+    "exports": [
+      {
+        "name": "shareReferral",
+        "kind": "async function"
+      },
+      {
+        "name": "copyToClipboard",
+        "kind": "async function"
+      },
+      {
+        "name": "generateQRDataUrl",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/referral/constants.ts",
+    "exports": [
+      {
+        "name": "REFERRAL_REWARD_DAYS",
+        "kind": "const"
+      },
+      {
+        "name": "REFERRAL_MONTHLY_LIMIT",
+        "kind": "const"
+      },
+      {
+        "name": "getReferralDomain",
+        "kind": "function"
+      },
+      {
+        "name": "buildReferralLink",
+        "kind": "function"
+      },
+      {
+        "name": "generateReferralCode",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/referral/service.ts",
+    "exports": [
+      {
+        "name": "getReferralCode",
+        "kind": "async function"
+      },
+      {
+        "name": "createReferralCode",
+        "kind": "async function"
+      },
+      {
+        "name": "getReferralByCode",
+        "kind": "async function"
+      },
+      {
+        "name": "getReferralsByReferrer",
+        "kind": "async function"
+      },
+      {
+        "name": "getReferralCountThisMonth",
+        "kind": "async function"
+      },
+      {
+        "name": "createReferral",
+        "kind": "async function"
+      },
+      {
+        "name": "updateReferralStatus",
+        "kind": "async function"
+      },
+      {
+        "name": "getReferralByReferee",
+        "kind": "async function"
+      },
+      {
+        "name": "getReferrerCodeForUserId",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "./types"
+    ]
+  },
+  {
+    "path": "src/lib/referral/types.ts",
+    "exports": [
+      {
+        "name": "ReferralStatus",
+        "kind": "type"
+      },
+      {
+        "name": "ReferralCodeDoc",
+        "kind": "type"
+      },
+      {
+        "name": "ReferralDoc",
+        "kind": "type"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/quiz-session/types.ts",
+    "exports": [
+      {
+        "name": "QuizSessionConfig",
+        "kind": "interface"
+      },
+      {
+        "name": "AnswerDetail",
+        "kind": "interface"
+      },
+      {
+        "name": "QuizSessionState",
+        "kind": "interface"
+      },
+      {
+        "name": "QuizSessionActions",
+        "kind": "interface"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/question-engine/types"
+    ]
+  },
+  {
+    "path": "src/lib/quiz-session/use-quiz-session.ts",
+    "exports": [
+      {
+        "name": "useQuizSession",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/hooks/use-interval",
+      "@/lib/db/repositories/quiz-session",
+      "@/lib/question-engine/types"
+    ]
+  },
+  {
+    "path": "src/lib/competency-engine/competency-service.ts",
+    "exports": [
+      {
+        "name": "CompetencyService",
+        "kind": "class"
+      },
+      {
+        "name": "competencyService",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/db/schema",
+      "@/lib/orchestrator/job-queue",
+      "@/lib/question-engine/types"
+    ]
+  },
+  {
+    "path": "src/lib/competency-engine/path-engine.ts",
+    "exports": [
+      {
+        "name": "TopicRecommendation",
+        "kind": "interface"
+      },
+      {
+        "name": "StudyPlanDay",
+        "kind": "interface"
+      },
+      {
+        "name": "NextAction",
+        "kind": "interface"
+      },
+      {
+        "name": "PathEngine",
+        "kind": "class"
+      },
+      {
+        "name": "pathEngine",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "@/curriculum",
+      "./types"
+    ]
+  },
+  {
+    "path": "src/lib/competency-engine/types.ts",
+    "exports": [
+      {
+        "name": "CompetencyLevel",
+        "kind": "type"
+      },
+      {
+        "name": "CompetencyRecord",
+        "kind": "interface"
+      },
+      {
+        "name": "computeCompetencyLevel",
+        "kind": "function"
+      },
+      {
+        "name": "computeBloomWeight",
+        "kind": "function"
+      },
+      {
+        "name": "computeWeightedScore",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/question-engine/types"
+    ]
+  },
+  {
+    "path": "src/lib/competency-engine/track-result.ts",
+    "exports": [
+      {
+        "name": "TrackResultParams",
+        "kind": "interface"
+      },
+      {
+        "name": "trackQuestionResult",
+        "kind": "async function"
+      },
+      {
+        "name": "isPassingScore",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/orchestrator/job-queue",
+      "@/lib/question-engine/types",
+      "./competency-service"
+    ]
+  },
+  {
+    "path": "src/lib/flashcard-repository/types.ts",
+    "exports": [
+      {
+        "name": "FlashcardSM2",
+        "kind": "interface"
+      },
+      {
+        "name": "SM2Quality",
+        "kind": "interface"
+      },
+      {
+        "name": "SM2_QUALITIES",
+        "kind": "const"
+      },
+      {
+        "name": "FlashcardStats",
+        "kind": "interface"
+      },
+      {
+        "name": "FlashcardRepository",
+        "kind": "interface"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/flashcard-repository/migrate.ts",
+    "exports": [
+      {
+        "name": "migrateLegacyFlashcards",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "./repository"
+    ]
+  },
+  {
+    "path": "src/lib/flashcard-repository/repository.ts",
+    "exports": [
+      {
+        "name": "DexieFlashcardRepository",
+        "kind": "class"
+      },
+      {
+        "name": "flashcardRepository",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/db/schema",
+      "@/lib/utils/spaced-repetition"
+    ]
+  },
+  {
+    "path": "src/lib/ai/parse-response.ts",
+    "exports": [
+      {
+        "name": "isAIFailure",
+        "kind": "function"
+      },
+      {
+        "name": "cleanResponse",
+        "kind": "function"
+      },
+      {
+        "name": "parseAIResponse",
+        "kind": "function"
+      },
+      {
+        "name": "getTextResponse",
+        "kind": "function"
+      },
+      {
+        "name": "ensureArray",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "./types"
+    ]
+  },
+  {
+    "path": "src/lib/ai/client.ts",
+    "exports": [
+      {
+        "name": "AIConfig",
+        "kind": "interface"
+      },
+      {
+        "name": "GenerateOptions",
+        "kind": "interface"
+      },
+      {
+        "name": "AIClient",
+        "kind": "class"
+      },
+      {
+        "name": "initAI",
+        "kind": "function"
+      },
+      {
+        "name": "getAI",
+        "kind": "function"
+      },
+      {
+        "name": "generate",
+        "kind": "async function"
+      },
+      {
+        "name": "generateWithSystem",
+        "kind": "async function"
+      },
+      {
+        "name": "generateBatch",
+        "kind": "async function"
+      },
+      {
+        "name": "isAIConfigured",
+        "kind": "function"
+      },
+      {
+        "name": "getAIProviders",
+        "kind": "function"
+      },
+      {
+        "name": "CHAT_SYSTEM_PROMPT",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "./providers/gemini",
+      "./providers/groq",
+      "./providers/nvidia",
+      "./types"
+    ]
+  },
+  {
+    "path": "src/lib/ai/with-budget.ts",
+    "exports": [
+      {
+        "name": "checkBudget",
+        "kind": "async function"
+      },
+      {
+        "name": "trackUsage",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "./daily-call-tracker"
+    ]
+  },
+  {
+    "path": "src/lib/ai/types.ts",
+    "exports": [
+      {
+        "name": "ChatMessage",
+        "kind": "interface"
+      },
+      {
+        "name": "AIRequest",
+        "kind": "interface"
+      },
+      {
+        "name": "AIResponse",
+        "kind": "interface"
+      },
+      {
+        "name": "AIFailure",
+        "kind": "interface"
+      },
+      {
+        "name": "AIResult",
+        "kind": "type"
+      },
+      {
+        "name": "AIProviderCapabilities",
+        "kind": "interface"
+      },
+      {
+        "name": "AIProvider",
+        "kind": "interface"
+      },
+      {
+        "name": "TaskType",
+        "kind": "type"
+      },
+      {
+        "name": "TaskRequest",
+        "kind": "interface"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/ai/daily-call-tracker.ts",
+    "exports": [
+      {
+        "name": "AICallType",
+        "kind": "type"
+      },
+      {
+        "name": "DailyCallTracker",
+        "kind": "class"
+      },
+      {
+        "name": "dailyCallTracker",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/appwrite",
+      "@/lib/db/client",
+      "@/lib/rate-limiter/core"
+    ]
+  },
+  {
+    "path": "src/lib/ai/providers/gemini.ts",
+    "exports": [
+      {
+        "name": "createGeminiProvider",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "../types"
+    ]
+  },
+  {
+    "path": "src/lib/ai/providers/groq.ts",
+    "exports": [
+      {
+        "name": "createGroqProvider",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "../types"
+    ]
+  },
+  {
+    "path": "src/lib/ai/providers/nvidia.ts",
+    "exports": [
+      {
+        "name": "createNvidiaProvider",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "../types"
+    ]
+  },
+  {
+    "path": "src/lib/sync/sync-handler.ts",
+    "exports": [
+      {
+        "name": "flushOfflineData",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/db/schema",
+      "@/lib/orchestrator/job-queue"
+    ]
+  },
+  {
+    "path": "src/lib/auth/rate-limit.ts",
+    "exports": [
+      {
+        "name": "attemptSignIn",
+        "kind": "async function"
+      },
+      {
+        "name": "recordSuccessfulSignIn",
+        "kind": "async function"
+      },
+      {
+        "name": "attemptMagicLink",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/rate-limiter/core"
+    ]
+  },
+  {
+    "path": "src/lib/auth/errors.ts",
+    "exports": [
+      {
+        "name": "getReadableErrorMessage",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/auth/auth-context.tsx",
+    "exports": [
+      {
+        "name": "AuthStatus",
+        "kind": "type"
+      },
+      {
+        "name": "AuthProvider",
+        "kind": "function"
+      },
+      {
+        "name": "useAuth",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/appwrite",
+      "@/lib/sync/sync-handler",
+      "./errors"
+    ]
+  },
+  {
+    "path": "src/lib/rate-limiter/core.ts",
+    "exports": [
+      {
+        "name": "RateLimitConfig",
+        "kind": "interface"
+      },
+      {
+        "name": "RateLimitResult",
+        "kind": "interface"
+      },
+      {
+        "name": "RateLimitStoreEntry",
+        "kind": "interface"
+      },
+      {
+        "name": "RateLimitStore",
+        "kind": "interface"
+      },
+      {
+        "name": "RateLimiter",
+        "kind": "class"
+      },
+      {
+        "name": "getRateLimitHeaders",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/lib/exams/sync-exam-papers.ts",
+    "exports": [
+      {
+        "name": "isSyncCompleted",
+        "kind": "function"
+      },
+      {
+        "name": "ensureExamPapersSynced",
+        "kind": "async function"
+      },
+      {
+        "name": "syncExamPapers",
+        "kind": "async function"
+      },
+      {
+        "name": "forceSyncExamPapers",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/db/exams/schema"
+    ]
+  },
+  {
+    "path": "src/lib/exams/marker-client.ts",
+    "exports": [
+      {
+        "name": "MarkerImage",
+        "kind": "interface"
+      },
+      {
+        "name": "MarkerResult",
+        "kind": "interface"
+      },
+      {
+        "name": "ProcessedMarkdown",
+        "kind": "interface"
+      },
+      {
+        "name": "convertPdfWithMarker",
+        "kind": "async function"
+      },
+      {
+        "name": "uploadImagesAndRewriteMarkdown",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/hooks/use-appwrite-session.ts",
+    "exports": [
+      {
+        "name": "useAppwriteSession",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/hooks/use-scroll-reveal.ts",
+    "exports": [
+      {
+        "name": "useScrollReveal",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/hooks/use-interval.ts",
+    "exports": [
+      {
+        "name": "useInterval",
+        "kind": "function"
+      },
+      {
+        "name": "useTimer",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/hooks/use-navigation-direction.ts",
+    "exports": [
+      {
+        "name": "useNavigationDirection",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/hooks/use-curated-problems.ts",
+    "exports": [
+      {
+        "name": "CuratedProblem",
+        "kind": "interface"
+      },
+      {
+        "name": "useCuratedProblems",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/hooks/use-audio-recorder.ts",
+    "exports": [
+      {
+        "name": "UseAudioRecorderReturn",
+        "kind": "interface"
+      },
+      {
+        "name": "useAudioRecorder",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/hooks/use-pdf-cache.ts",
+    "exports": [
+      {
+        "name": "usePdfCache",
+        "kind": "function"
+      },
+      {
+        "name": "useCachedPdfUrl",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/hooks/use-user-subjects.ts",
+    "exports": [
+      {
+        "name": "UserSubject",
+        "kind": "interface"
+      },
+      {
+        "name": "UserSubjectsResult",
+        "kind": "interface"
+      },
+      {
+        "name": "useUserSubjects",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/server"
+    ]
+  },
+  {
+    "path": "src/hooks/use-view-transition.ts",
+    "exports": [
+      {
+        "name": "useViewTransition",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/utils/view-transition"
+    ]
+  },
+  {
+    "path": "src/hooks/use-user-progress.ts",
+    "exports": [
+      {
+        "name": "UserProgress",
+        "kind": "interface"
+      },
+      {
+        "name": "useUserProgress",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/server"
+    ]
+  },
+  {
+    "path": "src/hooks/use-analytics.ts",
+    "exports": [
+      {
+        "name": "SubjectAnalytics",
+        "kind": "interface"
+      },
+      {
+        "name": "TopicPerformance",
+        "kind": "interface"
+      },
+      {
+        "name": "PerformanceHistoryItem",
+        "kind": "interface"
+      },
+      {
+        "name": "OverallAnalytics",
+        "kind": "interface"
+      },
+      {
+        "name": "AnalyticsRecommendation",
+        "kind": "interface"
+      },
+      {
+        "name": "useAnalytics",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/db/schema"
+    ]
+  },
+  {
+    "path": "src/hooks/use-upload-subjects.ts",
+    "exports": [
+      {
+        "name": "UTFileConfig",
+        "kind": "interface"
+      },
+      {
+        "name": "UTRouteConfig",
+        "kind": "interface"
+      },
+      {
+        "name": "UploadThingConfig",
+        "kind": "type"
+      },
+      {
+        "name": "useUploadSubjects",
+        "kind": "function"
+      },
+      {
+        "name": "useUploadSubject",
+        "kind": "function"
+      },
+      {
+        "name": "prefetchUploadSubjects",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/store"
+    ]
+  },
+  {
+    "path": "src/hooks/use-image-chat.ts",
+    "exports": [
+      {
+        "name": "ImageProcessingStatus",
+        "kind": "type"
+      },
+      {
+        "name": "ImageProcessingState",
+        "kind": "interface"
+      },
+      {
+        "name": "ImageData",
+        "kind": "interface"
+      },
+      {
+        "name": "useImageChat",
+        "kind": "function"
+      },
+      {
+        "name": "useImageChatWithSend",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/hooks/use-chat",
+      "@/lib/shared/format"
+    ]
+  },
+  {
+    "path": "src/hooks/use-exam-paper.ts",
+    "exports": [
+      {
+        "name": "useExamPaper",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/types/exam-paper"
+    ]
+  },
+  {
+    "path": "src/hooks/use-visual-engine.ts",
+    "exports": [
+      {
+        "name": "useVisualEngine",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/question-engine/types",
+      "@/lib/shared/api-fetch",
+      "@/lib/visual-engine/types"
+    ]
+  },
+  {
+    "path": "src/hooks/use-question-engine.ts",
+    "exports": [
+      {
+        "name": "useQuestionEngine",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/shared/api-fetch"
+    ]
+  },
+  {
+    "path": "src/hooks/use-wrong-answer-journal.ts",
+    "exports": [
+      {
+        "name": "ErrorType",
+        "kind": "type"
+      },
+      {
+        "name": "WrongAnswerEntry",
+        "kind": "interface"
+      },
+      {
+        "name": "ERROR_TYPE_LABELS",
+        "kind": "const"
+      },
+      {
+        "name": "useWrongAnswerJournal",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/db/schema"
+    ]
+  },
+  {
+    "path": "src/hooks/use-exams.ts",
+    "exports": [
+      {
+        "name": "useExams",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/types/exam"
+    ]
+  },
+  {
+    "path": "src/hooks/use-onboarding.ts",
+    "exports": [
+      {
+        "name": "OnboardingData",
+        "kind": "interface"
+      },
+      {
+        "name": "UseOnboardingReturn",
+        "kind": "interface"
+      },
+      {
+        "name": "loadOnboardingData",
+        "kind": "function"
+      },
+      {
+        "name": "saveOnboardingData",
+        "kind": "function"
+      },
+      {
+        "name": "resetOnboardingData",
+        "kind": "function"
+      },
+      {
+        "name": "useOnboarding",
+        "kind": "function"
+      },
+      {
+        "name": "useOnboardingCheck",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/utils/storage"
+    ]
+  },
+  {
+    "path": "src/hooks/use-study-planner.ts",
+    "exports": [
+      {
+        "name": "GeneratePlanSettings",
+        "kind": "interface"
+      },
+      {
+        "name": "UseStudyPlannerReturn",
+        "kind": "interface"
+      },
+      {
+        "name": "useStudyPlanner",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/auth/auth-context",
+      "@/lib/services/notification-service"
+    ]
+  },
+  {
+    "path": "src/hooks/use-gamification.ts",
+    "exports": [
+      {
+        "name": "useGamification",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/components/ui/toast",
+      "@/types/gamification"
+    ]
+  },
+  {
+    "path": "src/hooks/use-solver.ts",
+    "exports": [
+      {
+        "name": "useSolver",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/hooks/use-job-processor.ts",
+    "exports": [
+      {
+        "name": "useJobProcessor",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/orchestrator/job-processor",
+      "./use-interval",
+      "./useOnlineStatus"
+    ]
+  },
+  {
+    "path": "src/hooks/use-spaced-repetition.ts",
+    "exports": [
+      {
+        "name": "UseSpacedRepetitionReturn",
+        "kind": "interface"
+      },
+      {
+        "name": "useSpacedRepetition",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/flashcard-repository",
+      "@/lib/flashcard-repository/types",
+      "@/lib/utils/spaced-repetition"
+    ]
+  },
+  {
+    "path": "src/hooks/use-subjects.ts",
+    "exports": [
+      {
+        "name": "Subject",
+        "kind": "interface"
+      },
+      {
+        "name": "useSubjects",
+        "kind": "function"
+      },
+      {
+        "name": "useFilteredSubjects",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/data/subjects.json"
+    ]
+  },
+  {
+    "path": "src/hooks/use-chat.ts",
+    "exports": [
+      {
+        "name": "ChatMessage",
+        "kind": "interface"
+      },
+      {
+        "name": "useChat",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/ai/client",
+      "@/lib/utils/storage"
+    ]
+  },
+  {
+    "path": "src/hooks/useOnlineStatus.tsx",
+    "exports": [
+      {
+        "name": "useOnlineStatus",
+        "kind": "function"
+      },
+      {
+        "name": "OnlineStatusIndicator",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/hooks/use-waveform-renderer.ts",
+    "exports": [
+      {
+        "name": "UseWaveformRendererOptions",
+        "kind": "interface"
+      },
+      {
+        "name": "UseWaveformRendererReturn",
+        "kind": "interface"
+      },
+      {
+        "name": "useWaveformRenderer",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/hooks/use-referral.ts",
+    "exports": [
+      {
+        "name": "ReferralInfo",
+        "kind": "interface"
+      },
+      {
+        "name": "useReferral",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/hooks/use-tts.ts",
+    "exports": [
+      {
+        "name": "UseTTSReturn",
+        "kind": "interface"
+      },
+      {
+        "name": "useTTS",
+        "kind": "function"
+      },
+      {
+        "name": "useVoiceRecorder",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/hooks/use-service-worker.ts",
+    "exports": [
+      {
+        "name": "UseServiceWorkerReturn",
+        "kind": "interface"
+      },
+      {
+        "name": "useServiceWorker",
+        "kind": "function"
+      },
+      {
+        "name": "usePWAInstall",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/hooks/use-quiz-session.ts",
+    "exports": [
+      {
+        "name": "UseQuizSessionOptions",
+        "kind": "interface"
+      },
+      {
+        "name": "QuizSessionState",
+        "kind": "interface"
+      },
+      {
+        "name": "UseQuizSessionActions",
+        "kind": "interface"
+      },
+      {
+        "name": "UseQuizSessionResult",
+        "kind": "interface"
+      },
+      {
+        "name": "useQuizSession",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/question-engine/types",
+      "./use-interval",
+      "./use-question-engine"
+    ]
+  },
+  {
+    "path": "src/hooks/use-sync-status.ts",
+    "exports": [
+      {
+        "name": "useSyncStatus",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/db/schema",
+      "./use-interval",
+      "./useOnlineStatus"
+    ]
+  },
+  {
+    "path": "src/hooks/use-exam-session-persistence.ts",
+    "exports": [
+      {
+        "name": "useExamSessionAutoSave",
+        "kind": "function"
+      },
+      {
+        "name": "hasSavedSession",
+        "kind": "async function"
+      },
+      {
+        "name": "clearSavedSession",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/db/schema",
+      "@/store/exam-session"
+    ]
+  },
+  {
+    "path": "src/hooks/__tests__/test-utils.tsx",
+    "exports": [
+      {
+        "name": "createWrapper",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/store/main.ts",
+    "exports": [
+      {
+        "name": "UploadSubject",
+        "kind": "interface"
+      },
+      {
+        "name": "useUploadStore",
+        "kind": "const"
+      },
+      {
+        "name": "setAppInitialized",
+        "kind": "function"
+      },
+      {
+        "name": "isAppInitialized",
+        "kind": "function"
+      },
+      {
+        "name": "onAppInit",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/store/voice-recorder.ts",
+    "exports": [
+      {
+        "name": "useVoiceRecorderStore",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/store/flashcards.ts",
+    "exports": [
+      {
+        "name": "useFlashcardsStore",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/store/bookmarks.ts",
+    "exports": [
+      {
+        "name": "Bookmark",
+        "kind": "interface"
+      },
+      {
+        "name": "useBookmarksStore",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/store/tools.ts",
+    "exports": [
+      {
+        "name": "useToolsStore",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/store/exam-session.ts",
+    "exports": [
+      {
+        "name": "cleanupExamSessionSync",
+        "kind": "function"
+      },
+      {
+        "name": "useExamSessionStore",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "@/types/exam-paper",
+      "@/types/exam-session"
+    ]
+  },
+  {
+    "path": "src/app/api/solve/route.ts",
+    "exports": [
+      {
+        "name": "dynamic",
+        "kind": "const"
+      },
+      {
+        "name": "POST",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/ai",
+      "@/lib/ai/parse-response",
+      "@/lib/ai/types",
+      "@/lib/ai/with-budget",
+      "@/lib/shared/with-rate-limit"
+    ]
+  },
+  {
+    "path": "src/app/api/lessons/route.ts",
+    "exports": [
+      {
+        "name": "dynamic",
+        "kind": "const"
+      },
+      {
+        "name": "GET",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/shared/with-rate-limit"
+    ]
+  },
+  {
+    "path": "src/app/api/questions/flag/route.ts",
+    "exports": [
+      {
+        "name": "POST",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/orchestrator/job-queue",
+      "@/lib/server/auth"
+    ]
+  },
+  {
+    "path": "src/app/api/push/subscribe/route.ts",
+    "exports": [
+      {
+        "name": "POST",
+        "kind": "const"
+      },
+      {
+        "name": "DELETE",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/appwrite",
+      "@/lib/db/client",
+      "@/lib/server/auth",
+      "@/lib/shared/with-rate-limit"
+    ]
+  },
+  {
+    "path": "src/app/api/push/send/route.ts",
+    "exports": [
+      {
+        "name": "POST",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/server/auth",
+      "@/lib/shared/with-rate-limit"
+    ]
+  },
+  {
+    "path": "src/app/api/cron/cleanup/route.ts",
+    "exports": [
+      {
+        "name": "dynamic",
+        "kind": "const"
+      },
+      {
+        "name": "GET",
+        "kind": "const"
+      },
+      {
+        "name": "POST",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/db/cleanup",
+      "@/lib/shared/with-rate-limit"
+    ]
+  },
+  {
+    "path": "src/app/api/upload-qa/route.ts",
+    "exports": [
+      {
+        "name": "POST",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/app/api/exam-dates/route.ts",
+    "exports": [
+      {
+        "name": "GET",
+        "kind": "async function"
+      },
+      {
+        "name": "POST",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/exam-dates/service",
+      "@/lib/exam-dates/types"
+    ]
+  },
+  {
+    "path": "src/app/api/exam-dates/refresh/route.ts",
+    "exports": [
+      {
+        "name": "POST",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/exam-dates/service",
+      "@/lib/shared/with-rate-limit"
+    ]
+  },
+  {
+    "path": "src/app/api/premium/checkout/route.ts",
+    "exports": [
+      {
+        "name": "POST",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/server/auth",
+      "@/lib/shared/with-rate-limit"
+    ]
+  },
+  {
+    "path": "src/app/api/premium/verify/route.ts",
+    "exports": [
+      {
+        "name": "POST",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/errors"
+    ]
+  },
+  {
+    "path": "src/app/api/premium/cancel/route.ts",
+    "exports": [
+      {
+        "name": "POST",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/server/auth",
+      "@/lib/shared/with-rate-limit"
+    ]
+  },
+  {
+    "path": "src/app/api/import-exam-papers/route.ts",
+    "exports": [
+      {
+        "name": "POST",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/db/client",
+      "@/lib/server/auth",
+      "@/lib/shared/with-rate-limit"
+    ]
+  },
+  {
+    "path": "src/app/api/uploadthing/core.ts",
+    "exports": [
+      {
+        "name": "ourFileRouter",
+        "kind": "const"
+      },
+      {
+        "name": "OurFileRouter",
+        "kind": "type"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/app/api/leaderboard/route.ts",
+    "exports": [
+      {
+        "name": "GET",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/db/client",
+      "@/lib/server/auth"
+    ]
+  },
+  {
+    "path": "src/app/api/tts/route.ts",
+    "exports": [
+      {
+        "name": "POST",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/server/auth",
+      "@/lib/shared/with-rate-limit"
+    ]
+  },
+  {
+    "path": "src/app/api/sentry-example-api/route.ts",
+    "exports": [
+      {
+        "name": "dynamic",
+        "kind": "const"
+      },
+      {
+        "name": "GET",
+        "kind": "function"
+      }
+    ],
+    "internal_dependencies": []
+  },
+  {
+    "path": "src/app/api/referral/claim/route.ts",
+    "exports": [
+      {
+        "name": "POST",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/server/auth"
+    ]
+  },
+  {
+    "path": "src/app/api/referral/info/route.ts",
+    "exports": [
+      {
+        "name": "GET",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/shared/with-rate-limit"
+    ]
+  },
+  {
+    "path": "src/app/api/referral/generate/route.ts",
+    "exports": [
+      {
+        "name": "POST",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/referral/service"
+    ]
+  },
+  {
+    "path": "src/app/api/chat/image/route.ts",
+    "exports": [
+      {
+        "name": "POST",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/ai/client",
+      "@/lib/ai/with-budget",
+      "@/lib/shared/with-rate-limit"
+    ]
+  },
+  {
+    "path": "src/app/api/exam-papers/[id]/route.ts",
+    "exports": [
+      {
+        "name": "runtime",
+        "kind": "const"
+      },
+      {
+        "name": "GET",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/appwrite",
+      "@/lib/db/client",
+      "@/types/exam-paper"
+    ]
+  },
+  {
+    "path": "src/app/api/generate-element-fact/route.ts",
+    "exports": [
+      {
+        "name": "dynamic",
+        "kind": "const"
+      },
+      {
+        "name": "POST",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/ai",
+      "@/lib/ai/types",
+      "@/lib/ai/with-budget",
+      "@/lib/shared/with-rate-limit"
+    ]
+  },
+  {
+    "path": "src/app/api/seed/route.ts",
+    "exports": [
+      {
+        "name": "POST",
+        "kind": "async function"
+      },
+      {
+        "name": "GET",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/seed"
+    ]
+  },
+  {
+    "path": "src/app/api/test-exam-papers/route.ts",
+    "exports": [
+      {
+        "name": "GET",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/db/client"
+    ]
+  },
+  {
+    "path": "src/app/api/jobs/process/route.ts",
+    "exports": [
+      {
+        "name": "dynamic",
+        "kind": "const"
+      },
+      {
+        "name": "POST",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/errors",
+      "@/lib/orchestrator/job-processor"
+    ]
+  },
+  {
+    "path": "src/app/api/session/route.ts",
+    "exports": [
+      {
+        "name": "GET",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/appwrite"
+    ]
+  },
+  {
+    "path": "src/app/api/admin/notifications/send/route.ts",
+    "exports": [
+      {
+        "name": "POST",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/db/client",
+      "@/lib/errors",
+      "@/lib/server/auth"
+    ]
+  },
+  {
+    "path": "src/app/api/admin/content/route.ts",
+    "exports": [
+      {
+        "name": "GET",
+        "kind": "async function"
+      },
+      {
+        "name": "PATCH",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/db/client",
+      "@/lib/server/auth"
+    ]
+  },
+  {
+    "path": "src/app/api/admin/analytics/route.ts",
+    "exports": [
+      {
+        "name": "GET",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/db/client",
+      "@/lib/server/auth"
+    ]
+  },
+  {
+    "path": "src/app/api/admin/users/route.ts",
+    "exports": [
+      {
+        "name": "GET",
+        "kind": "async function"
+      },
+      {
+        "name": "PATCH",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/appwrite",
+      "@/lib/server/auth"
+    ]
+  },
+  {
+    "path": "src/app/api/admin/download-exam-papers/route.ts",
+    "exports": [
+      {
+        "name": "POST",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/server/auth"
+    ]
+  },
+  {
+    "path": "src/app/api/admin/upload-local-exam-papers/route.ts",
+    "exports": [
+      {
+        "name": "POST",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/db/exams",
+      "@/lib/server/auth"
+    ]
+  },
+  {
+    "path": "src/app/api/admin/auth/magic-link/route.ts",
+    "exports": [
+      {
+        "name": "POST",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/appwrite"
+    ]
+  },
+  {
+    "path": "src/app/api/admin/auth/resend/route.ts",
+    "exports": [
+      {
+        "name": "POST",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/appwrite"
+    ]
+  },
+  {
+    "path": "src/app/api/admin/subjects/route.ts",
+    "exports": [
+      {
+        "name": "GET",
+        "kind": "async function"
+      },
+      {
+        "name": "POST",
+        "kind": "async function"
+      },
+      {
+        "name": "PATCH",
+        "kind": "async function"
+      },
+      {
+        "name": "DELETE",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/server/auth"
+    ]
+  },
+  {
+    "path": "src/app/api/admin/subjects/preload/route.ts",
+    "exports": [
+      {
+        "name": "POST",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/db/client",
+      "@/lib/server/auth"
+    ]
+  },
+  {
+    "path": "src/app/api/admin/exams/route.ts",
+    "exports": [
+      {
+        "name": "runtime",
+        "kind": "const"
+      },
+      {
+        "name": "GET",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/appwrite",
+      "@/lib/db/client",
+      "@/lib/server/auth"
+    ]
+  },
+  {
+    "path": "src/app/api/admin/exams/[id]/route.ts",
+    "exports": [
+      {
+        "name": "runtime",
+        "kind": "const"
+      },
+      {
+        "name": "DELETE",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/appwrite",
+      "@/lib/db/client",
+      "@/lib/server/auth"
+    ]
+  },
+  {
+    "path": "src/app/api/admin/exams/upload/route.ts",
+    "exports": [
+      {
+        "name": "runtime",
+        "kind": "const"
+      },
+      {
+        "name": "POST",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/appwrite",
+      "@/lib/db/client",
+      "@/lib/exam-parser",
+      "@/lib/server/auth"
+    ]
+  },
+  {
+    "path": "src/app/api/analytics/trends/route.ts",
+    "exports": [
+      {
+        "name": "dynamic",
+        "kind": "const"
+      },
+      {
+        "name": "GET",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/db/client",
+      "@/lib/db/client",
+      "@/lib/server/auth"
+    ]
+  },
+  {
+    "path": "src/app/api/analytics/comparative/route.ts",
+    "exports": [
+      {
+        "name": "dynamic",
+        "kind": "const"
+      },
+      {
+        "name": "GET",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/db/client",
+      "@/lib/db/client",
+      "@/lib/server/auth"
+    ]
+  },
+  {
+    "path": "src/app/api/exam-sessions/route.ts",
+    "exports": [
+      {
+        "name": "runtime",
+        "kind": "const"
+      },
+      {
+        "name": "GET",
+        "kind": "async function"
+      },
+      {
+        "name": "POST",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/appwrite",
+      "@/lib/db/client",
+      "@/lib/server/auth"
+    ]
+  },
+  {
+    "path": "src/app/api/exam-sessions/[id]/route.ts",
+    "exports": [
+      {
+        "name": "runtime",
+        "kind": "const"
+      },
+      {
+        "name": "GET",
+        "kind": "async function"
+      },
+      {
+        "name": "DELETE",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/appwrite",
+      "@/lib/db/client",
+      "@/lib/server/auth"
+    ]
+  },
+  {
+    "path": "src/app/api/study-sessions/route.ts",
+    "exports": [
+      {
+        "name": "POST",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/appwrite",
+      "@/lib/db/client"
+    ]
+  },
+  {
+    "path": "src/app/api/engine/test/route.ts",
+    "exports": [
+      {
+        "name": "dynamic",
+        "kind": "const"
+      },
+      {
+        "name": "GET",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/orchestrator",
+      "@/lib/question-engine/question-engine",
+      "@/lib/question-engine/types"
+    ]
+  },
+  {
+    "path": "src/app/api/engine/next-topics/route.ts",
+    "exports": [
+      {
+        "name": "dynamic",
+        "kind": "const"
+      },
+      {
+        "name": "GET",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/competency-engine",
+      "@/lib/competency-engine/types",
+      "@/lib/db/client",
+      "@/lib/server/auth",
+      "@/lib/shared/with-rate-limit"
+    ]
+  },
+  {
+    "path": "src/app/api/engine/study-plan/route.ts",
+    "exports": [
+      {
+        "name": "dynamic",
+        "kind": "const"
+      },
+      {
+        "name": "GET",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/competency-engine",
+      "@/lib/competency-engine/types",
+      "@/lib/db/client",
+      "@/lib/server/auth",
+      "@/lib/shared/with-rate-limit"
+    ]
+  },
+  {
+    "path": "src/app/api/engine/budget/route.ts",
+    "exports": [
+      {
+        "name": "dynamic",
+        "kind": "const"
+      },
+      {
+        "name": "GET",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/ai/daily-call-tracker"
+    ]
+  },
+  {
+    "path": "src/app/api/engine/visual/route.ts",
+    "exports": [
+      {
+        "name": "dynamic",
+        "kind": "const"
+      },
+      {
+        "name": "POST",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/api/engine-handler",
+      "@/lib/visual-engine"
+    ]
+  },
+  {
+    "path": "src/app/api/engine/visual/test/route.ts",
+    "exports": [
+      {
+        "name": "dynamic",
+        "kind": "const"
+      },
+      {
+        "name": "GET",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/visual-engine"
+    ]
+  },
+  {
+    "path": "src/app/api/engine/hint/route.ts",
+    "exports": [
+      {
+        "name": "dynamic",
+        "kind": "const"
+      },
+      {
+        "name": "POST",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/api/engine-handler",
+      "@/lib/question-engine/question-engine",
+      "@/lib/question-engine/types"
+    ]
+  },
+  {
+    "path": "src/app/api/engine/grade/route.ts",
+    "exports": [
+      {
+        "name": "dynamic",
+        "kind": "const"
+      },
+      {
+        "name": "POST",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/api/engine-handler",
+      "@/lib/orchestrator",
+      "@/lib/question-engine/types"
+    ]
+  },
+  {
+    "path": "src/app/api/engine/generate/route.ts",
+    "exports": [
+      {
+        "name": "dynamic",
+        "kind": "const"
+      },
+      {
+        "name": "POST",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/api/engine-handler",
+      "@/lib/orchestrator",
+      "@/lib/question-engine/types"
+    ]
+  },
+  {
+    "path": "src/app/api/sync/route.ts",
+    "exports": [
+      {
+        "name": "POST",
+        "kind": "const"
+      },
+      {
+        "name": "GET",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/server/auth",
+      "@/lib/shared/with-rate-limit"
+    ]
+  },
+  {
+    "path": "src/app/api/curated-problems/route.ts",
+    "exports": [
+      {
+        "name": "dynamic",
+        "kind": "const"
+      },
+      {
+        "name": "POST",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "@/curriculum",
+      "@/lib/ai",
+      "@/lib/ai/parse-response",
+      "@/lib/ai/types",
+      "@/lib/ai/with-budget",
+      "@/lib/shared/with-rate-limit"
+    ]
+  },
+  {
+    "path": "src/app/api/auth/verify/route.ts",
+    "exports": [
+      {
+        "name": "GET",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/appwrite",
+      "@/lib/referral/constants"
+    ]
+  },
+  {
+    "path": "src/app/api/auth/verify-email/route.ts",
+    "exports": [
+      {
+        "name": "POST",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/appwrite",
+      "@/lib/shared/with-rate-limit"
+    ]
+  },
+  {
+    "path": "src/app/api/auth/callback/route.ts",
+    "exports": [
+      {
+        "name": "GET",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/appwrite"
+    ]
+  },
+  {
+    "path": "src/app/api/auth/forgot-password/route.ts",
+    "exports": [
+      {
+        "name": "POST",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/shared/with-rate-limit"
+    ]
+  },
+  {
+    "path": "src/app/api/auth/rate-limit/route.ts",
+    "exports": [
+      {
+        "name": "dynamic",
+        "kind": "const"
+      },
+      {
+        "name": "POST",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/appwrite",
+      "@/lib/db/client"
+    ]
+  },
+  {
+    "path": "src/app/api/subjects/route.ts",
+    "exports": [
+      {
+        "name": "GET",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/db/client",
+      "@/lib/server/auth",
+      "@/lib/shared/with-rate-limit"
+    ]
+  },
+  {
+    "path": "src/app/api/exams/route.ts",
+    "exports": [
+      {
+        "name": "runtime",
+        "kind": "const"
+      },
+      {
+        "name": "GET",
+        "kind": "const"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/api-error",
+      "@/lib/appwrite",
+      "@/lib/db/client",
+      "@/lib/shared/with-rate-limit"
+    ]
+  },
+  {
+    "path": "src/app/api/exams/sync/route.ts",
+    "exports": [
+      {
+        "name": "runtime",
+        "kind": "const"
+      },
+      {
+        "name": "POST",
+        "kind": "async function"
+      },
+      {
+        "name": "GET",
+        "kind": "async function"
+      }
+    ],
+    "internal_dependencies": [
+      "@/lib/db/exams"
+    ]
+  }
+]
