@@ -1,4 +1,5 @@
 import type { Question } from "@/lib/question-engine/types";
+import type { QueueItemBase } from "@/lib/queue/core";
 
 export type JobType =
 	| "appwrite-sync"
@@ -132,19 +133,9 @@ export type JobStatus =
 	| "failed"
 	| "cancelled";
 
-export interface JobRecord {
-	id?: number;
+export interface JobRecord extends QueueItemBase {
 	type: JobType;
-	payload: string;
 	status: JobStatus;
-	priority: number;
-	attempts: number;
-	maxRetries: number;
-	lastError?: string;
-	scheduledAt: number;
-	createdAt: number;
-	startedAt?: number;
-	completedAt?: number;
 	resultSummary?: string;
 }
 

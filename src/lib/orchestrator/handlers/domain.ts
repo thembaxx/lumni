@@ -11,7 +11,7 @@ import {
 import { safePersist } from "@/lib/db/persist";
 import { getProgress, saveProgress } from "@/lib/db/repositories/progress";
 import { flashcardRepository } from "@/lib/flashcard-repository";
-import { queueCore } from "@/lib/orchestrator/job-queue";
+import { enqueue } from "@/lib/orchestrator/job-queue";
 import type { JobPayloadByType } from "@/lib/orchestrator/types";
 import { extractCorrectAnswer } from "@/lib/shared/question-utils";
 import { calculateNextReview } from "@/lib/utils/spaced-repetition";
@@ -105,25 +105,16 @@ export const progressUpdate: JobHandler = async (payload) => {
 				result.correct ? (existing?.currentStreak ?? 0) + 1 : 0,
 			),
 		}),
-		queueCore.enqueue({
-			type: "appwrite-progress-sync",
-			payload: JSON.stringify({
-				odSubjectId: subject,
-				userId: "",
-				questionsAttempted: (existing?.questionsAttempted ?? 0) + 1,
-				correctCount: (existing?.correctCount ?? 0) + (result.correct ? 1 : 0),
-				currentStreak: result.correct ? (existing?.currentStreak ?? 0) + 1 : 0,
-				longestStreak: Math.max(
-					existing?.longestStreak ?? 0,
-					result.correct ? (existing?.currentStreak ?? 0) + 1 : 0,
-				),
-			}),
-			status: "pending",
-			priority: 65,
-			attempts: 0,
-			maxRetries: 3,
-			scheduledAt: Date.now(),
-			createdAt: Date.now(),
+		enqueue("appwrite-progress-sync", {
+			odSubjectId: subject,
+			userId: "",
+			questionsAttempted: (existing?.questionsAttempted ?? 0) + 1,
+			correctCount: (existing?.correctCount ?? 0) + (result.correct ? 1 : 0),
+			currentStreak: result.correct ? (existing?.currentStreak ?? 0) + 1 : 0,
+			longestStreak: Math.max(
+				existing?.longestStreak ?? 0,
+				result.correct ? (existing?.currentStreak ?? 0) + 1 : 0,
+			),
 		}),
 	]);
 };

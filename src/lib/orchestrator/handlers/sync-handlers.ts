@@ -5,7 +5,7 @@ import {
 	listDocuments,
 	updateDocument,
 } from "@/lib/db/client";
-import { queueCore } from "@/lib/orchestrator/job-queue";
+import { enqueue } from "@/lib/orchestrator/job-queue";
 import type { JobPayloadByType } from "@/lib/orchestrator/types";
 import { syncQuestionsToAppwrite } from "@/lib/question-engine/persistence";
 import type { JobHandler } from "./index";
@@ -163,18 +163,9 @@ export const appwriteRatingSync: JobHandler = async (payload) => {
 			ratings.reduce((sum, r) => sum + ((r.rating as number) || 0), 0) /
 			ratings.length;
 		if (avgRating < 2) {
-			await queueCore.enqueue({
-				type: "question-regen",
-				payload: JSON.stringify({
-					questionId: data.questionId,
-					subject: data.subject,
-				}),
-				status: "pending",
-				priority: 40,
-				attempts: 0,
-				maxRetries: 2,
-				scheduledAt: Date.now(),
-				createdAt: Date.now(),
+			await enqueue("question-regen", {
+				questionId: data.questionId,
+				subject: data.subject,
 			});
 		}
 	}
