@@ -84,7 +84,7 @@ export function TopNav({ title, className }: TopNavProps) {
 	return (
 		<header
 			className={cn(
-				"sticky top-0 z-40 border-system-separator/30 border-b bg-system-background/80 backdrop-blur-xl",
+				"sticky top-0 z-header border-system-separator/30 border-b bg-system-background/80 backdrop-blur-xl",
 				className,
 			)}
 		>

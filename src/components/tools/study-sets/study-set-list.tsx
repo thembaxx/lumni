@@ -25,7 +25,7 @@ export function StudySetList({
 		setMounted(true);
 	}, []);
 	return (
-		<div className="space-y-3">
+		<div className="flex flex-col gap-3">
 			{studySets.map((set) => (
 				<m.div
 					key={set.id}

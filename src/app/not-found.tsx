@@ -16,7 +16,7 @@ export default function NotFound() {
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.4, ease: iOSEase }}
 			>
-				<main className="max-w-md space-y-6 text-left">
+				<main className="flex max-w-md flex-col gap-6 text-left">
 					<m.div
 						initial={{ scale: 0.8 }}
 						animate={{ scale: 1 }}
@@ -32,7 +32,7 @@ export default function NotFound() {
 						initial={{ opacity: 0, y: 8 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.4, ease: iOSEase, delay: 0.2 }}
-						className="space-y-2"
+						className="flex flex-col gap-2"
 					>
 						<h2 className="ios-title-2 text-[--system-text-primary]">
 							Page not found

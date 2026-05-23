@@ -16,6 +16,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { flashcardRepository } from "@/lib/flashcard-repository";
 import type { FlashcardSM2 } from "@/lib/flashcard-repository/types";
+import { PageContainer } from "@/components/layout/page-container";
 import { downloadCSV, parseCSV } from "@/lib/utils/flashcard-import-export";
 
 export default function FlashcardBrowsePage() {
@@ -95,7 +96,7 @@ export default function FlashcardBrowsePage() {
 	const totalPages = Math.ceil(cards.length / PAGE_SIZE);
 
 	return (
-		<div className="container mx-auto max-w-4xl px-4 py-8">
+		<PageContainer className="py-8">
 			<h1 className="mb-6 font-semibold text-2xl">Browse Flashcards</h1>
 
 			<div className="mb-6 flex flex-wrap gap-3">
@@ -161,7 +162,7 @@ export default function FlashcardBrowsePage() {
 			</div>
 
 			{loading ? (
-				<div className="space-y-3">
+				<div className="flex flex-col gap-3">
 					{Array.from({ length: 5 }).map((_, i) => (
 						<div
 							// biome-ignore lint/suspicious/noArrayIndexKey: static skeleton loader
@@ -181,7 +182,7 @@ export default function FlashcardBrowsePage() {
 					<p className="mb-4 text-muted-foreground text-sm">
 						{cards.length} card{cards.length !== 1 ? "s" : ""}
 					</p>
-					<div className="space-y-3">
+					<div className="flex flex-col gap-3">
 						{paginated.map((card) => (
 							<Card key={card.id} className="overflow-hidden">
 								<CardContent className="p-4">
@@ -269,6 +270,6 @@ export default function FlashcardBrowsePage() {
 					)}
 				</>
 			)}
-		</div>
+		</PageContainer>
 	);
 }

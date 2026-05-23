@@ -151,6 +151,29 @@ Single-context — one `CONTEXT.md` + `docs/adr/` at the repo root. See `docs/ag
 
 TODO.md, Linear, GitHub, and Sentry are integrated. See `docs/agents/workflow.md`.
 
+## Design System Enforcement
+
+Established 2026-05-23 after a codebase-wide audit. All decisions below are non-negotiable and are tracked in `docs/adr/0005-theming-strategy.md`.
+
+### No Arbitrary Values
+- **No pixel hacks**: `w-[200px]`, `text-[13px]`, `min-h-[250px]` are prohibited. Use `--space-*` and `--fs-*` tokens.
+- **No magic z-index**: `z-50`, `z-[100]` are prohibited. Use `--z-content` → `--z-skip-link` scale.
+- **No hardcoded shadows**: `shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]` is prohibited. Use `shadow-level-1/2/3`.
+- **No arbitrary radii**: `rounded-[2.5rem]` is prohibited. Use `rounded-card-lg` (40px), `rounded-lg` (20px), etc.
+
+### Spacing Standard
+- Use `gap-*` on parent containers for all sibling spacing. `space-y-*` and manual `mt-* mb-*` pairs are deprecated.
+- Wrap block containers in `flex flex-col` when `gap` is needed.
+
+### Page Layout
+- Every page must use `<PageContainer>` (except home feed and admin dashboards).
+- `PageContainer` owns `max-w-*` and `px-*`. Pages must not declare their own.
+
+### Dark Mode
+- All page-level components (`dashboard-client`, `exam-session-client`, `study-planner`, `settings-client`) must include `dark:` variants.
+- All hardcoded light-mode colors (`bg-[#1e1e1e]`, `bg-black/10`, inline hex styles) must use CSS variables or `dark:` overrides.
+- Apple HIG dark mode principles: base layer dimmer, elevated layers brighter, separators lighter, accent lifted.
+
 ## Sessions
 
 ### Session 1 — Bug fixes (May 2026)
@@ -204,6 +227,16 @@ TODO.md, Linear, GitHub, and Sentry are integrated. See `docs/agents/workflow.md
 - **Algorithmic planner activated**: `useStudyPlanner()` hook extended with `generatePlan()` — calls `StudyPlannerService.generateStudyPlan()` (reads Dexie competencies, runs inverse-competency-weighted round-robin scheduling), converts `TopicPlan[]` to `StudySession[]`, persists to localStorage
 - **Dashboard integration**: `StudyPlanOverview` shows "Generate Plan" button + inline form (target APS, daily minutes) when empty instead of returning null
 - **Defaults**: 25 APS target, 30 min/day, weekdays-only, 30-day horizon
+
+### Session 7 — Design system enforcement (May 2026)
+
+- **Token expansion**: Added `--z-*` semantic scale, `--radius-card-lg: 2.5rem`, mapped `shadow-level-2` and `radius-4xl` in `@theme inline`
+- **Shadow standardization**: Replaced 43+ hardcoded `shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]` with `shadow-level-2` (dark-mode aware)
+- **Radius standardization**: Replaced 34 `rounded-[2.5rem]` with `rounded-card-lg`
+- **Spacing standardization**: Replaced `space-y-*` and manual margins with `gap-*` on parent containers
+- **Page layout**: Created `<PageContainer>` component; standardized all page max-width/padding
+- **Z-index**: Replaced magic numbers with `--z-content` → `--z-skip-link` semantic scale
+- **Dark mode (Critical + High tiers)**: Added `dark:` variants to `dashboard-client`, `exam-session-client`, `study-planner`, `settings-client`, fixed `bg-[#1e1e1e]` in markdown-renderer, `bg-black/10` in today-focus-card, inline hex styles in onboarding-wizard, and HTML export template in progress-export
 
 ### Known limitations (won't fix)
 

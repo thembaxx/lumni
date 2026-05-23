@@ -134,7 +134,8 @@ export function EmptyState({
 		<div
 			className={cn(
 				"flex h-full items-center justify-center",
-				overlay && "absolute inset-0 z-20 bg-background/90 backdrop-blur-sm",
+				overlay &&
+					"absolute inset-0 z-sticky bg-background/90 backdrop-blur-sm",
 				className,
 			)}
 		>

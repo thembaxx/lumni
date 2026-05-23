@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { PageContainer } from "@/components/layout/page-container";
 import { usePremium } from "@/lib/premium/premium-context";
 
 const FEATURES = [
@@ -75,7 +76,7 @@ export default function PremiumPage() {
 	};
 
 	return (
-		<div className="mx-auto flex min-h-dvh max-w-2xl flex-col justify-center bg-background p-6">
+		<PageContainer className="flex min-h-dvh justify-center bg-background py-6">
 			<Card>
 				<CardHeader className="text-center">
 					<div className="mb-3 flex justify-center">
@@ -94,7 +95,7 @@ export default function PremiumPage() {
 							: "Unlock the full Lumni experience"}
 					</p>
 				</CardHeader>
-				<CardContent className="space-y-4">
+				<CardContent className="flex flex-col gap-4">
 					{FEATURES.map((f) => (
 						<div key={f.label} className="flex items-start gap-3">
 							<HugeiconsIcon
@@ -153,6 +154,6 @@ export default function PremiumPage() {
 					</div>
 				</CardContent>
 			</Card>
-		</div>
+		</PageContainer>
 	);
 }

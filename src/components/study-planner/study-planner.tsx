@@ -64,7 +64,7 @@ function StudyPlannerInner() {
 	};
 
 	return (
-		<div className="space-y-6">
+		<div className="flex flex-col gap-6">
 			<LocalDataNotice
 				page="study-plan"
 				description="Your study plan and schedule are stored on this device. Sign in to access your plan from anywhere."
@@ -154,7 +154,7 @@ function StatsRow({
 }) {
 	return (
 		<div className="grid grid-cols-4 gap-4">
-			<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+			<div className="overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors">
 				<div className="p-4 px-4 text-center group-data-[size=sm]/card:px-3">
 					<div className="font-extrabold text-2xl">
 						{stats.completedSessions}
@@ -162,7 +162,7 @@ function StatsRow({
 					<div className="text-muted-foreground text-xs">Completed</div>
 				</div>
 			</div>
-			<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+			<div className="overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors">
 				<div className="p-4 px-4 text-center group-data-[size=sm]/card:px-3">
 					<div className="font-extrabold text-2xl">
 						{stats.upcomingSessions}
@@ -170,7 +170,7 @@ function StatsRow({
 					<div className="text-muted-foreground text-xs">Upcoming</div>
 				</div>
 			</div>
-			<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+			<div className="overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors">
 				<div className="p-4 px-4 text-center group-data-[size=sm]/card:px-3">
 					<div className="font-extrabold text-2xl">
 						{Math.round(stats.studyTimeMinutes / 60)}h
@@ -178,7 +178,7 @@ function StatsRow({
 					<div className="text-muted-foreground text-xs">Study Time</div>
 				</div>
 			</div>
-			<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+			<div className="overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors">
 				<div className="p-4 px-4 text-center group-data-[size=sm]/card:px-3">
 					<div className="font-extrabold text-2xl">
 						{stats.daysUntilNextExam !== null ? stats.daysUntilNextExam : "-"}
@@ -200,8 +200,8 @@ function TodaySessionsCard({
 	onDelete: (id: string) => void;
 }) {
 	return (
-		<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
-			<header className="rounded-t-[2.5rem] border-border/80 border-t pb-2">
+		<div className="overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors">
+			<header className="rounded-t-card-lg border-border/80 border-t pb-2">
 				<h2 className="flex items-center gap-2 font-heading font-medium text-base text-sm">
 					<HugeiconsIcon icon={Calendar01Icon} className="size-4" />
 					Today
@@ -213,7 +213,7 @@ function TodaySessionsCard({
 						No sessions scheduled for today
 					</p>
 				) : (
-					<div className="space-y-2">
+					<div className="flex flex-col gap-2">
 						{sessions.map((session) => (
 							<div
 								key={session.id}
@@ -286,8 +286,8 @@ function UpcomingSessionsCard({
 	);
 
 	return (
-		<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
-			<header className="rounded-t-[2.5rem] border-border/80 border-t pb-2">
+		<div className="overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors">
+			<header className="rounded-t-card-lg border-border/80 border-t pb-2">
 				<h2 className="flex items-center gap-2 font-heading font-medium text-base text-sm">
 					<HugeiconsIcon icon={Clock01Icon} className="size-4" />
 					Upcoming Sessions
@@ -299,14 +299,14 @@ function UpcomingSessionsCard({
 						No upcoming sessions
 					</p>
 				) : (
-					<div className="space-y-4">
+					<div className="flex flex-col gap-4">
 						{Object.entries(groupedByDate).map(
 							([date, daySessions]: [string, StudySessionType[]]) => (
 								<div key={date}>
 									<h3 className="mb-2 font-medium text-muted-foreground text-sm">
 										{date}
 									</h3>
-									<div className="space-y-2">
+									<div className="flex flex-col gap-2">
 										{daySessions.map((session) => (
 											<div
 												key={session.id}
@@ -373,8 +373,8 @@ function UpcomingExamsCard({
 	onDelete: (id: string) => void;
 }) {
 	return (
-		<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
-			<header className="rounded-t-[2.5rem] border-border/80 border-t pb-2">
+		<div className="overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors">
+			<header className="rounded-t-card-lg border-border/80 border-t pb-2">
 				<h2 className="flex items-center gap-2 font-heading font-medium text-base text-sm">
 					<HugeiconsIcon icon={BookOpen01Icon} className="size-4" />
 					Upcoming Exams
@@ -386,7 +386,7 @@ function UpcomingExamsCard({
 						No exams scheduled
 					</p>
 				) : (
-					<div className="space-y-2">
+					<div className="flex flex-col gap-2">
 						{exams.map((exam) => (
 							<div
 								key={exam.id}
@@ -431,14 +431,14 @@ function AddSessionModal({
 	const [repeat, setRepeat] = useState<"none" | "daily" | "weekly">("none");
 
 	return (
-		<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-			<div className="w-full max-w-md overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+		<div className="fixed inset-0 z-modal flex items-center justify-center bg-black/50">
+			<div className="w-full max-w-md overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors">
 				<header>
 					<h2 className="font-heading font-medium text-sm">
 						Add Study Session
 					</h2>
 				</header>
-				<div className="space-y-4 px-4 group-data-[size=sm]/card:px-3">
+				<div className="flex flex-col gap-4 px-4 group-data-[size=sm]/card:px-3">
 					<div>
 						<Label>Subject</Label>
 						<Input
@@ -540,12 +540,12 @@ function AddExamModal({
 	const [date, setDate] = useState("");
 
 	return (
-		<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-			<div className="w-full max-w-md overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+		<div className="fixed inset-0 z-modal flex items-center justify-center bg-black/50">
+			<div className="w-full max-w-md overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors">
 				<header>
 					<h2 className="font-heading font-medium text-sm">Add Exam Date</h2>
 				</header>
-				<div className="space-y-4 px-4 group-data-[size=sm]/card:px-3">
+				<div className="flex flex-col gap-4 px-4 group-data-[size=sm]/card:px-3">
 					<div>
 						<Label>Subject</Label>
 						<Input

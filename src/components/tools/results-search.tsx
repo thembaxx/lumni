@@ -67,7 +67,7 @@ export function ResultsSearch() {
 			</div>
 
 			<div className="px-5 pb-5">
-				<div className="space-y-4 rounded-2xl bg-system-background-secondary p-5">
+				<div className="flex flex-col gap-4 rounded-2xl bg-system-background-secondary p-5">
 					<div>
 						<Label className="mb-2 text-sm">Year</Label>
 						<div className="flex gap-2 overflow-x-auto pb-1">

@@ -35,7 +35,7 @@ export function NavigationBar({
 		<header
 			ref={ref}
 			className={cn(
-				"sticky top-0 z-20 w-full transition-[box-shadow] duration-200",
+				"sticky top-0 z-sticky w-full transition-[box-shadow] duration-200",
 				isCollapsed ? "shadow-sm" : "",
 				className,
 			)}

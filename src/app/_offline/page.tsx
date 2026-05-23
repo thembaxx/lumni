@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { PageContainer } from "@/components/layout/page-container";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -7,8 +8,8 @@ export const metadata: Metadata = {
 
 export default function OfflinePage() {
 	return (
-		<div className="flex min-h-dvh flex-col items-center justify-center bg-background p-6 text-center">
-			<div className="max-w-md space-y-4">
+		<div className="flex min-h-dvh flex-col items-center justify-center bg-background py-6 text-center">
+			<PageContainer className="gap-4">
 				<div className="mx-auto flex size-20 items-center justify-center rounded-full bg-muted">
 					<svg
 						className="size-10 text-muted-foreground"
@@ -46,7 +47,7 @@ export default function OfflinePage() {
 						Continue Studying
 					</Link>
 				</div>
-			</div>
+			</PageContainer>
 		</div>
 	);
 }

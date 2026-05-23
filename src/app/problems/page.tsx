@@ -19,6 +19,7 @@ import {
 	type CuratedProblem,
 	useCuratedProblems,
 } from "@/hooks/use-curated-problems";
+import { PageContainer } from "@/components/layout/page-container";
 import { cn } from "@/lib/shared";
 
 const DIFFICULTIES = ["all", "Easy", "Medium", "Hard"] as const;
@@ -87,7 +88,7 @@ function ProblemCard({
 							exit={{ opacity: 0, height: 0 }}
 							className="overflow-hidden"
 						>
-							<div className="mt-4 space-y-4 border-border/50 border-t pt-4">
+							<div className="mt-4 flex flex-col gap-4 border-border/50 border-t pt-4">
 								<div className="rounded-xl border border-border/50 bg-system-background p-4">
 									<p className="mb-2 font-semibold text-muted-foreground text-xs uppercase tracking-wider">
 										Solution
@@ -139,7 +140,7 @@ function ProblemsClient() {
 
 	return (
 		<div className="min-h-[100dvh] bg-system-grouped pt-4 pb-24">
-			<div className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-4">
+			<PageContainer className="flex flex-col gap-8">
 				<Anim>
 					<div className="flex flex-col gap-6">
 						<div>
@@ -238,12 +239,12 @@ function ProblemsClient() {
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
 								exit={{ opacity: 0 }}
-								className="space-y-4"
+								className="flex flex-col gap-4"
 							>
 								{[1, 2, 3].map((i) => (
 									<div
 										key={`skeleton-${i}`}
-										className="animate-pulse space-y-3 rounded-2xl border border-border/50 bg-card p-5"
+										className="flex animate-pulse flex-col gap-3 rounded-2xl border border-border/50 bg-card p-5"
 									>
 										<div className="h-4 w-16 rounded bg-muted/30" />
 										<div className="h-4 w-full rounded bg-muted/30" />
@@ -299,7 +300,7 @@ function ProblemsClient() {
 						)}
 					</AnimatePresence>
 				</Anim>
-			</div>
+			</PageContainer>
 		</div>
 	);
 }

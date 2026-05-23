@@ -227,7 +227,7 @@ function AiSolverInner({ cameraFocus }: AiSolverProps) {
 			</div>
 
 			<div className="px-5 pb-5">
-				<div className="space-y-4 rounded-xl bg-system-background-secondary p-5">
+				<div className="flex flex-col gap-4 rounded-xl bg-system-background-secondary p-5">
 					{showSymbols && (
 						<div className="flex flex-wrap gap-1.5">
 							{SUBJECTS.map((s) => (

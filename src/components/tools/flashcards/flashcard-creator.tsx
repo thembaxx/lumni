@@ -158,8 +158,8 @@ function FlashcardForm({
 	};
 
 	return (
-		<form onSubmit={handleSubmit} className="space-y-4">
-			<div className="space-y-2">
+		<form onSubmit={handleSubmit} className="flex flex-col gap-4">
+			<div className="flex flex-col gap-2">
 				<Label htmlFor="front">Front</Label>
 				<Textarea
 					id="front"
@@ -172,7 +172,7 @@ function FlashcardForm({
 				/>
 			</div>
 
-			<div className="space-y-2">
+			<div className="flex flex-col gap-2">
 				<Label htmlFor="back">Back</Label>
 				<Textarea
 					id="back"
@@ -185,7 +185,7 @@ function FlashcardForm({
 				/>
 			</div>
 
-			<div className="space-y-2">
+			<div className="flex flex-col gap-2">
 				<Label htmlFor="hint">Hint (Optional)</Label>
 				<Input
 					id="hint"
@@ -197,7 +197,7 @@ function FlashcardForm({
 				/>
 			</div>
 
-			<div className="space-y-2">
+			<div className="flex flex-col gap-2">
 				<Label htmlFor="tags">Tags (Optional)</Label>
 				<Input
 					id="tags"
@@ -212,7 +212,7 @@ function FlashcardForm({
 				</p>
 			</div>
 
-			<div className="space-y-2">
+			<div className="flex flex-col gap-2">
 				<Label htmlFor="subject">Subject (Optional)</Label>
 				<Select
 					id="subject"
@@ -235,7 +235,7 @@ function FlashcardForm({
 				</Select>
 			</div>
 
-			<div className="space-y-2">
+			<div className="flex flex-col gap-2">
 				<Label htmlFor="topic">Topic (Optional)</Label>
 				<Input
 					id="topic"
@@ -338,7 +338,7 @@ function FlashcardCreatorInner({ className }: FlashcardCreatorProps) {
 						Create, organize, and study with custom flashcards
 					</p>
 				</CardHeader>
-				<CardContent className="space-y-4">
+				<CardContent className="flex flex-col gap-4">
 					<div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
 						<div className="min-w-0 flex-1">
 							<Input
@@ -372,7 +372,7 @@ function FlashcardCreatorInner({ className }: FlashcardCreatorProps) {
 							Your Flashcards
 						</CardTitle>
 					</CardHeader>
-					<CardContent className="space-y-3">
+					<CardContent className="flex flex-col gap-3">
 						{filteredFlashcards.map((card) => (
 							<m.div
 								key={card.id}

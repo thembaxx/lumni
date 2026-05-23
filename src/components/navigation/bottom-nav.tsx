@@ -88,7 +88,7 @@ function NavItemComponent({
 					/>
 				)}
 			</AnimatePresence>
-			<div className="relative z-10 mb-1.5 flex size-6 items-center justify-center">
+			<div className="relative z-elevated mb-1.5 flex size-6 items-center justify-center">
 				<HugeiconsIcon
 					icon={item.icon}
 					className={cn(
@@ -108,7 +108,7 @@ function NavItemComponent({
 			</div>
 			<span
 				className={cn(
-					"relative z-10 text-center font-medium text-[10px] uppercase leading-none tracking-(--tracking-caption-1) transition-colors duration-200",
+					"relative z-elevated text-center font-medium text-[10px] uppercase leading-none tracking-(--tracking-caption-1) transition-colors duration-200",
 					isActive ? "text-system-accent" : "text-system-text-tertiary",
 				)}
 			>
@@ -186,7 +186,7 @@ export function BottomNav() {
 	return (
 		<nav
 			aria-label="Main navigation"
-			className="fixed right-0 bottom-0 left-0 z-50 flex w-full md:hidden"
+			className="fixed right-0 bottom-0 left-0 z-header flex w-full md:hidden"
 			style={{
 				height: "calc(49px + env(safe-area-inset-bottom, 0px))",
 				transform: hidden ? "translateY(100%)" : "translateY(0)",

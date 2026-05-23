@@ -29,7 +29,7 @@ export default function GlobalError({
 			>
 				<div className="grid min-h-dvh grid-cols-12 gap-0">
 					<div className="col-span-12 col-start-1 flex items-center justify-center p-4 pb-20 md:col-span-7">
-						<main className="max-w-md space-y-8 text-left">
+						<main className="flex max-w-md flex-col gap-8 text-left">
 							<div className="relative">
 								<div className="absolute inset-0 animate-pulse rounded-full bg-destructive/10 blur-xl" />
 								<div className="relative flex size-20 items-center justify-center rounded-[--radius-card] border border-destructive/20 bg-destructive/10">
@@ -40,7 +40,7 @@ export default function GlobalError({
 								</div>
 							</div>
 
-							<div className="space-y-2">
+							<div className="flex flex-col gap-2">
 								<h2 className="ios-title-2 text-[--system-text-primary]">
 									Something went wrong
 								</h2>

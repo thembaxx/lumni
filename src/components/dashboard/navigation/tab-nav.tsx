@@ -86,7 +86,7 @@ export function TabNav({
 								key={tab.value}
 								value={tab.value}
 								className={cn(
-									"tab-trigger-item relative z-10 h-10 rounded-xl px-4 font-medium text-xs transition-[color,transform] duration-200 active:scale-[0.96]",
+									"tab-trigger-item relative z-elevated h-10 rounded-xl px-4 font-medium text-xs transition-[color,transform] duration-200 active:scale-[0.96]",
 									activeTab === tab.value
 										? "text-foreground"
 										: "text-muted-foreground hover:text-foreground",

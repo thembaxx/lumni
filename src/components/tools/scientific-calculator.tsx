@@ -599,7 +599,7 @@ export function ScientificCalculator() {
 								exit={{ opacity: 0, height: 0 }}
 								className="mb-3 overflow-hidden"
 							>
-								<div className="max-h-32 space-y-1 overflow-y-auto rounded-xl border border-border/50 bg-system-surface p-3">
+								<div className="flex max-h-32 flex-col gap-1 overflow-y-auto rounded-xl border border-border/50 bg-system-surface p-3">
 									{history.length === 0 && (
 										<p className="py-2 text-center text-muted-foreground/40 text-xs">
 											No history yet

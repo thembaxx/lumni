@@ -108,14 +108,14 @@ export default function AdminQuestionsPage() {
 	];
 
 	return (
-		<div className="mx-auto min-h-dvh max-w-4xl space-y-6 bg-background p-6">
-			<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
+		<div className="mx-auto flex min-h-dvh max-w-4xl flex-col gap-6 bg-background p-6">
+			<div className="overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors">
 				<header>
 					<h2 className="font-heading font-medium text-sm">
 						Question Engine Admin
 					</h2>
 				</header>
-				<div className="space-y-4 px-4 group-data-[size=sm]/card:px-3">
+				<div className="flex flex-col gap-4 px-4 group-data-[size=sm]/card:px-3">
 					<div className="flex gap-2">
 						<Input
 							value={subject}
@@ -144,8 +144,8 @@ export default function AdminQuestionsPage() {
 			</div>
 
 			{loading.fetch && (
-				<div className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors">
-					<div className="space-y-4 p-6 px-4 group-data-[size=sm]/card:px-3">
+				<div className="overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors">
+					<div className="flex flex-col gap-4 p-6 px-4 group-data-[size=sm]/card:px-3">
 						<Skeleton className="h-6 w-3/4" />
 						<Skeleton className="h-4 w-1/2" />
 						<Skeleton className="h-24 w-full" />
@@ -160,7 +160,7 @@ export default function AdminQuestionsPage() {
 				return (
 					<div
 						key={itemKey}
-						className="overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors"
+						className="overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors"
 					>
 						<div className="p-4 px-4 group-data-[size=sm]/card:px-3">
 							<button
@@ -178,7 +178,7 @@ export default function AdminQuestionsPage() {
 								</span>
 							</button>
 							{isExpanded && (
-								<div className="mt-3 space-y-4 border-t pt-4">
+								<div className="mt-3 flex flex-col gap-4 border-t pt-4">
 									<div className="text-sm">
 										<MarkdownRenderer
 											content={q.questionText}

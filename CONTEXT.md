@@ -41,6 +41,8 @@ Appwrite Cloud
 
 | File/Dir | What I'm touching |
 |----------|-------------------|
+| `src/app/globals.css` | Design token enforcement: z-index scale, shadow/radius utilities, spacing mapping |
+| `src/components/layout/page-container.tsx` | New unified page layout component |
 | `src/app/error.tsx`, `src/app/global-error.tsx` | Error boundary standardization |
 | `src/components/navigation/bottom-nav.tsx` | Fixed transparent bg + border |
 | `src/components/quiz/parts/` | QuestionCardControls, QuestionCardFeedback |
@@ -75,6 +77,11 @@ Appwrite Cloud
 - ❌ Do NOT duplicate QuestionEngine logic in LearningOrchestrator — compose, don't duplicate
 - ❌ Do NOT use `lottie-react` — already migrated to `@lottiefiles/dotlottie-react`
 - ❌ Do NOT add route-level auth guards — anonymous users exist at every route; use component-level `isAnonymous` checks
+- ❌ Do NOT use arbitrary pixel values (`w-[200px]`, `text-[13px]`) — use design tokens (`--space-*`, `--fs-*`)
+- ❌ Do NOT hardcode shadows (`shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]`) — use `shadow-level-1/2/3`
+- ❌ Do NOT use `space-y-*` or manual `mt-* mb-*` pairs — use `gap-*` on the parent container
+- ❌ Do NOT write magic z-index numbers (`z-50`, `z-[100]`) — use `--z-*` semantic tokens
+- ❌ Do NOT declare `max-w-*` or `px-*` at the page level — wrap pages in `<PageContainer>`
 
 ## Memory References
 

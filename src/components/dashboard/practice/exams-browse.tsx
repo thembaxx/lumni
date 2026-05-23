@@ -25,6 +25,7 @@ import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Input } from "@/components/ui/input";
 import { useExams } from "@/hooks/use-exams";
+import { PageContainer } from "@/components/layout/page-container";
 import { useToolsStore } from "@/store/tools";
 
 const YEARS = [2025, 2024, 2023, 2022, 2021] as const;
@@ -63,7 +64,7 @@ export function ExamsBrowse() {
 
 	return (
 		<div className="min-h-[100dvh] bg-system-grouped pt-4 pb-24">
-			<div className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-4">
+			<PageContainer className="flex flex-col gap-8">
 				<Anim>
 					<div className="flex flex-col gap-6">
 						<div className="flex items-center justify-between">
@@ -320,7 +321,7 @@ export function ExamsBrowse() {
 						</div>
 					</AnimatePresence>
 				</Anim>
-			</div>
+			</PageContainer>
 		</div>
 	);
 }

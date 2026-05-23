@@ -75,6 +75,7 @@
 	/* Corner Radii */
 	--radius-button: 12px;
 	--radius-card: 20px; /* More playful, slightly larger */
+	--radius-card-lg: 2.5rem; /* 40px — large shell wrappers */
 	--radius-sheet: 24px;
 	--radius-input: 12px;
 	--radius-badge: 8px;
@@ -129,6 +130,16 @@
 	/* Set via JS: document.documentElement.style.setProperty('--text-scale', '1.25') */
 	/* Default 1.0 = normal, matches system base font-size */
 	--text-scale: 1;
+
+	/* Z-Index Scale — semantic hierarchy */
+	--z-content: 0;
+	--z-elevated: 10;
+	--z-sticky: 20;
+	--z-header: 30;
+	--z-drawer: 40;
+	--z-modal: 50;
+	--z-toast: 60;
+	--z-skip-link: 100;
 
 	/* Animation Timing */
 	--ease-ios: cubic-bezier(0.16, 1, 0.3, 1);
@@ -233,12 +244,6 @@
 	--material-glass: var(--material-glass);
 	--material-glass-strong: var(--material-glass-strong);
 
-	/* Shadows */
-	--shadow-level-1: var(--shadow-level-1);
-	--shadow-level-2: var(--shadow-level-2);
-	--shadow-level-3: var(--shadow-level-3);
-	--shadow-solver: var(--shadow-solver);
-
 	/* Radii */
 	--radius-sm: var(--radius-badge);
 	--radius-md: var(--radius-button);
@@ -246,6 +251,17 @@
 	--radius-xl: var(--radius-sheet);
 	--radius-2xl: 28px;
 	--radius-3xl: 32px;
+	--radius-4xl: var(--radius-card-lg);
+
+	/* Z-Index Scale */
+	--z-content: var(--z-content);
+	--z-elevated: var(--z-elevated);
+	--z-sticky: var(--z-sticky);
+	--z-header: var(--z-header);
+	--z-drawer: var(--z-drawer);
+	--z-modal: var(--z-modal);
+	--z-toast: var(--z-toast);
+	--z-skip-link: var(--z-skip-link);
 
 	/* Fonts - Using fallbacks to avoid circularity issues in some environments */
 	--font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -577,6 +593,26 @@
 /* Section spacing pattern */
 .section-gap { padding-top: var(--space-4); padding-bottom: var(--space-4); }
 .section-gap-lg { padding-top: var(--space-6); padding-bottom: var(--space-6); }
+
+/* ========================================
+   SHADOW UTILITIES — dark-mode aware via CSS vars
+   ======================================== */
+.shadow-level-1 { box-shadow: var(--shadow-level-1); }
+.shadow-level-2 { box-shadow: var(--shadow-level-2); }
+.shadow-level-3 { box-shadow: var(--shadow-level-3); }
+.shadow-solver { box-shadow: var(--shadow-solver); }
+
+/* ========================================
+   Z-INDEX UTILITIES — semantic scale
+   ======================================== */
+.z-content { z-index: var(--z-content); }
+.z-elevated { z-index: var(--z-elevated); }
+.z-sticky { z-index: var(--z-sticky); }
+.z-header { z-index: var(--z-header); }
+.z-drawer { z-index: var(--z-drawer); }
+.z-modal { z-index: var(--z-modal); }
+.z-toast { z-index: var(--z-toast); }
+.z-skip-link { z-index: var(--z-skip-link); }
 
 /* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {

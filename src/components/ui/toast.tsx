@@ -71,7 +71,7 @@ function ToastContainer({ toasts }: { toasts: ToastData[] }) {
 	if (toasts.length === 0) return null;
 
 	return (
-		<div className="pointer-events-none fixed right-4 bottom-4 z-[100] flex w-full max-w-sm flex-col gap-2">
+		<div className="pointer-events-none fixed right-4 bottom-4 z-toast flex w-full max-w-sm flex-col gap-2">
 			{toasts.map((t) => (
 				<ToastItem key={t.id} toast={t} />
 			))}

@@ -30,7 +30,7 @@ export function FlashcardsResults({
 			<div className="grid min-h-[100dvh] grid-cols-12 gap-0 bg-background">
 				<div className="col-span-12 col-start-1 flex items-center justify-center p-4 md:col-span-7">
 					<div className="mx-auto w-full max-w-md">
-						<div className="space-y-4">
+						<div className="flex flex-col gap-4">
 							<header className="text-left">
 								<h2 className="font-semibold text-xl tracking-tight">
 									{accuracy === 100

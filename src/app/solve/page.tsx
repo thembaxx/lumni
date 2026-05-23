@@ -1,12 +1,13 @@
 "use client";
 
 import { Anim } from "@/components/shared/anim";
+import { PageContainer } from "@/components/layout/page-container";
 import { AiSolver } from "@/components/tools/ai-solver";
 
 export default function SolvePage() {
 	return (
 		<div className="min-h-[100dvh] bg-system-grouped pt-4 pb-24">
-			<div className="mx-auto w-full max-w-3xl px-4">
+			<PageContainer>
 				<Anim>
 					<div className="flex flex-col gap-6">
 						<div>
@@ -23,7 +24,7 @@ export default function SolvePage() {
 						</div>
 					</div>
 				</Anim>
-			</div>
+			</PageContainer>
 		</div>
 	);
 }

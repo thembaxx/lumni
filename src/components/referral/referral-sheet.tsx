@@ -42,7 +42,7 @@ export function ReferralSheet() {
 
 	return (
 		<Sheet open={open} onOpenChange={setOpen}>
-			<SheetTrigger className="inline-flex h-11 items-center justify-start gap-2.5 rounded-[2.5rem] border border-border/80 bg-secondary/80 px-5 text-foreground transition-colors hover:border-accent hover:bg-accent">
+			<SheetTrigger className="inline-flex h-11 items-center justify-start gap-2.5 rounded-card-lg border border-border/80 bg-secondary/80 px-5 text-foreground transition-colors hover:border-accent hover:bg-accent">
 				<HugeiconsIcon icon={Share07Icon} className="size-4 text-accent" />
 				<span className="font-medium text-sm">Invite Friend</span>
 			</SheetTrigger>

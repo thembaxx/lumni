@@ -34,7 +34,7 @@ export function QuestionRatingsDashboard() {
 	});
 
 	return (
-		<div className="space-y-6">
+		<div className="flex flex-col gap-6">
 			<div className="grid grid-cols-2 gap-4 lg:grid-cols-6">
 				<div className="rounded-2xl border border-border/80 bg-card p-4">
 					<p className="text-muted-foreground text-sm">Total Ratings</p>
@@ -60,7 +60,7 @@ export function QuestionRatingsDashboard() {
 					<h3 className="mb-3 font-heading font-medium text-destructive text-sm">
 						Low-Rated Questions ({lowRated.length})
 					</h3>
-					<div className="space-y-2">
+					<div className="flex flex-col gap-2">
 						{lowRated.map((q) => (
 							<div
 								key={q.questionId}
@@ -89,7 +89,7 @@ export function QuestionRatingsDashboard() {
 				{allRatings.length === 0 ? (
 					<p className="text-muted-foreground text-sm">No ratings yet</p>
 				) : (
-					<div className="max-h-60 space-y-1 overflow-y-auto">
+					<div className="flex max-h-60 flex-col gap-1 overflow-y-auto">
 						{allRatings.map((r) => (
 							<div
 								key={`${r.questionId}-${r.createdAt}`}

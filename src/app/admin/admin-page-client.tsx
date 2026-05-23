@@ -31,7 +31,7 @@ function Preloader({ onComplete }: { onComplete: () => void }) {
 
 	return (
 		<m.div
-			className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-background"
+			className="fixed inset-0 z-modal flex flex-col items-center justify-center bg-background"
 			initial={{ opacity: 1 }}
 			exit={{ opacity: 0 }}
 			transition={{ duration: 0.3 }}
@@ -117,7 +117,7 @@ export function AdminPageClient() {
 						<m.div
 							whileHover={{ scale: 1.05 }}
 							whileTap={{ scale: 0.95 }}
-							className="fixed right-6 bottom-6 z-50"
+							className="fixed right-6 bottom-6 z-modal"
 						>
 							<Button
 								size="icon-lg"

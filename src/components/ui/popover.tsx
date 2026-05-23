@@ -17,7 +17,7 @@ function PopoverContent({ className, ...props }: PopoverPrimitive.Popup.Props) {
 			<PopoverPrimitive.Positioner>
 				<PopoverPrimitive.Popup
 					className={cn(
-						"z-50 w-72 rounded-xl border bg-popover p-4 text-popover-foreground shadow-md outline-none",
+						"z-drawer w-72 rounded-xl border bg-popover p-4 text-popover-foreground shadow-md outline-none",
 						className,
 					)}
 					{...props}

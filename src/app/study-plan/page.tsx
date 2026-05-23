@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { PageContainer } from "@/components/layout/page-container";
 import { StudyPlanner } from "@/components/study-planner/study-planner";
 
 export const metadata: Metadata = {
@@ -8,9 +9,9 @@ export const metadata: Metadata = {
 export default function StudyPlanPage() {
 	return (
 		<div className="min-h-[100dvh] bg-system-grouped pt-4 pb-24">
-			<div className="mx-auto w-full max-w-3xl px-4">
+			<PageContainer>
 				<StudyPlanner />
-			</div>
+			</PageContainer>
 		</div>
 	);
 }

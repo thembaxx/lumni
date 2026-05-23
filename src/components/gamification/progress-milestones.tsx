@@ -38,7 +38,7 @@ export function ProgressMilestones({
 								className="flex flex-col items-center"
 							>
 								<m.div
-									className={`relative z-10 flex size-10 items-center justify-center rounded-full border-4 transition-border-color transition-colors ${
+									className={`relative z-elevated flex size-10 items-center justify-center rounded-full border-4 transition-border-color transition-colors ${
 										isUnlocked
 											? "border-[--system-accent] bg-[--system-accent] text-background"
 											: isCurrent

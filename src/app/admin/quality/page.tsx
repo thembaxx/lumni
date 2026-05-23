@@ -66,12 +66,14 @@ export default function AdminQualityPage() {
 	return (
 		<div
 			className={cn(
+				"flex",
+				"flex-col",
 				"min-h-dvh",
 				"mx-auto",
 				"max-w-5xl",
 				"bg-background",
 				"p-6",
-				"space-y-6",
+				"gap-6",
 			)}
 		>
 			<div className={cn("flex", "items-center", "justify-between")}>
@@ -87,11 +89,11 @@ export default function AdminQualityPage() {
 				<div
 					className={cn(
 						"overflow-hidden",
-						"rounded-[2.5rem]",
+						"rounded-card-lg",
 						"border",
 						"border-border/80",
 						"bg-card",
-						"shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]",
+						"shadow-level-2",
 						"transition-colors",
 					)}
 				>
@@ -124,11 +126,11 @@ export default function AdminQualityPage() {
 				<div
 					className={cn(
 						"overflow-hidden",
-						"rounded-[2.5rem]",
+						"rounded-card-lg",
 						"border",
 						"border-border/80",
 						"bg-card",
-						"shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]",
+						"shadow-level-2",
 						"transition-colors",
 					)}
 				>
@@ -171,11 +173,11 @@ export default function AdminQualityPage() {
 				<div
 					className={cn(
 						"overflow-hidden",
-						"rounded-[2.5rem]",
+						"rounded-card-lg",
 						"border",
 						"border-border/80",
 						"bg-card",
-						"shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]",
+						"shadow-level-2",
 						"transition-colors",
 					)}
 				>
@@ -218,11 +220,11 @@ export default function AdminQualityPage() {
 				<div
 					className={cn(
 						"overflow-hidden",
-						"rounded-[2.5rem]",
+						"rounded-card-lg",
 						"border",
 						"border-border/80",
 						"bg-card",
-						"shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]",
+						"shadow-level-2",
 						"transition-colors",
 					)}
 				>
@@ -268,11 +270,11 @@ export default function AdminQualityPage() {
 				<div
 					className={cn(
 						"overflow-hidden",
-						"rounded-[2.5rem]",
+						"rounded-card-lg",
 						"border",
 						"border-border/80",
 						"bg-card",
-						"shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]",
+						"shadow-level-2",
 						"transition-colors",
 					)}
 				>
@@ -283,9 +285,11 @@ export default function AdminQualityPage() {
 					</header>
 					<div
 						className={cn(
+							"flex",
+							"flex-col",
 							"group-data-[size=sm]/card:px-3",
 							"px-4",
-							"space-y-3",
+							"gap-3",
 						)}
 					>
 						<div className={cn("flex", "justify-between", "text-sm")}>
@@ -306,11 +310,11 @@ export default function AdminQualityPage() {
 				<div
 					className={cn(
 						"overflow-hidden",
-						"rounded-[2.5rem]",
+						"rounded-card-lg",
 						"border",
 						"border-border/80",
 						"bg-card",
-						"shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]",
+						"shadow-level-2",
 						"transition-colors",
 					)}
 				>
@@ -321,9 +325,11 @@ export default function AdminQualityPage() {
 					</header>
 					<div
 						className={cn(
+							"flex",
+							"flex-col",
 							"group-data-[size=sm]/card:px-3",
 							"px-4",
-							"space-y-2",
+							"gap-2",
 						)}
 					>
 						{Object.entries(quality.byType).length === 0 && (
@@ -368,11 +374,11 @@ export default function AdminQualityPage() {
 			<div
 				className={cn(
 					"overflow-hidden",
-					"rounded-[2.5rem]",
+					"rounded-card-lg",
 					"border",
 					"border-border/80",
 					"bg-card",
-					"shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]",
+					"shadow-level-2",
 					"transition-colors",
 				)}
 			>
@@ -387,7 +393,15 @@ export default function AdminQualityPage() {
 							No events recorded yet
 						</p>
 					) : (
-						<div className={cn("max-h-60", "overflow-y-auto", "space-y-1")}>
+						<div
+							className={cn(
+								"flex",
+								"flex-col",
+								"max-h-60",
+								"overflow-y-auto",
+								"gap-1",
+							)}
+						>
 							{events.map((e) => (
 								<div
 									key={`${e.event}-${e.timestamp}`}
@@ -424,11 +438,11 @@ export default function AdminQualityPage() {
 			<div
 				className={cn(
 					"overflow-hidden",
-					"rounded-[2.5rem]",
+					"rounded-card-lg",
 					"border",
 					"border-border/80",
 					"bg-card",
-					"shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]",
+					"shadow-level-2",
 					"transition-colors",
 				)}
 			>
@@ -443,7 +457,15 @@ export default function AdminQualityPage() {
 							No quality data yet
 						</p>
 					) : (
-						<div className={cn("max-h-60", "overflow-y-auto", "space-y-1")}>
+						<div
+							className={cn(
+								"flex",
+								"flex-col",
+								"max-h-60",
+								"overflow-y-auto",
+								"gap-1",
+							)}
+						>
 							{recentQuality.map((r) => (
 								<div
 									key={`${r.questionType}-${r.timestamp}`}
@@ -480,11 +502,11 @@ export default function AdminQualityPage() {
 			<div
 				className={cn(
 					"overflow-hidden",
-					"rounded-[2.5rem]",
+					"rounded-card-lg",
 					"border",
 					"border-border/80",
 					"bg-card",
-					"shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]",
+					"shadow-level-2",
 					"p-6",
 					"transition-colors",
 				)}

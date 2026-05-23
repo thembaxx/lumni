@@ -25,13 +25,13 @@ export function FlashcardsIdle({
 	return (
 		<div className="grid min-h-[100dvh] grid-cols-12 gap-0 bg-background">
 			<div className="col-span-12 col-start-1 flex items-center justify-center p-4 pb-20 md:col-span-7">
-				<div className="card-elevated mx-auto w-full max-w-md overflow-hidden rounded-[2.5rem] border border-border/80 bg-card p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
+				<div className="card-elevated mx-auto w-full max-w-md overflow-hidden rounded-card-lg border border-border/80 bg-card p-6 shadow-level-2">
 					<header className="pb-4 text-left">
 						<h2 className="font-semibold text-2xl tracking-tight">
 							Flashcards
 						</h2>
 					</header>
-					<div className="space-y-4">
+					<div className="flex flex-col gap-4">
 						<Empty>
 							<EmptyHeader>
 								<EmptyMedia variant="icon">

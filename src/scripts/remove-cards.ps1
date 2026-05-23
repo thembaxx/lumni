@@ -4,7 +4,7 @@
 
 $files = Get-ChildItem -Path "C:\Users\Rattlehub\Documents\org1128\lumni\src" -Recurse -Filter "*.tsx" | Select-Object -ExpandProperty FullName
 
-$baseCardClasses = "overflow-hidden rounded-[2.5rem] border border-border/80 bg-card shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-colors"
+$baseCardClasses = "overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors"
 
 foreach ($file in $files) {
     $content = Get-Content $file -Raw

@@ -108,7 +108,7 @@ export function Flashcard({
 						}}
 					>
 						<div
-							className="backface-hidden absolute inset-0 flex flex-col items-center justify-center rounded-[2.5rem] border border-border/80 bg-card p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]"
+							className="backface-hidden absolute inset-0 flex flex-col items-center justify-center rounded-card-lg border border-border/80 bg-card p-6 shadow-level-2"
 							style={{ backfaceVisibility: "hidden" }}
 						>
 							<div className="text-center font-medium text-lg">
@@ -129,7 +129,7 @@ export function Flashcard({
 						</div>
 
 						<div
-							className="backface-hidden absolute inset-0 flex flex-col items-center justify-center rounded-[2.5rem] border border-border/80 bg-card p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]"
+							className="backface-hidden absolute inset-0 flex flex-col items-center justify-center rounded-card-lg border border-border/80 bg-card p-6 shadow-level-2"
 							style={{
 								transform: "rotateY(180deg)",
 								backfaceVisibility: "hidden",

@@ -327,7 +327,7 @@ export function CountdownHeader() {
 						</m.div>
 					)}
 
-					<div className="relative z-10">
+					<div className="relative z-elevated">
 						<h1 className="balance text-wrap font-semibold text-foreground text-xl leading-tight tracking-tight sm:text-2xl">
 							{greeting}
 							{isLoggedIn && name ? (
@@ -432,7 +432,7 @@ export function CountdownHeader() {
 					duration: shouldReduceMotion ? 0 : 0.2,
 					ease: iOSEase,
 				}}
-				className="sticky top-0 z-20 -mx-4 border-border/10 border-b bg-system-grouped-background/80 px-4 pt-2 pb-2 backdrop-blur-xl"
+				className="sticky top-0 z-sticky -mx-4 border-border/10 border-b bg-system-grouped-background/80 px-4 pt-2 pb-2 backdrop-blur-xl"
 				style={{ viewTransitionName: "countdown-compact" }}
 			>
 				<div className="mx-auto flex max-w-md items-center gap-3">

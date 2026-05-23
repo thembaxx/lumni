@@ -167,7 +167,7 @@ export function ExamEngine({
 				<aside
 					className={`w-64 shrink-0 overflow-hidden border-r bg-muted/20 transition-[width,opacity] ${
 						sidebarOpen
-							? "max-lg:fixed max-lg:inset-0 max-lg:z-50"
+							? "max-lg:fixed max-lg:inset-0 max-lg:z-modal"
 							: "max-lg:hidden max-lg:w-0"
 					}`}
 				>

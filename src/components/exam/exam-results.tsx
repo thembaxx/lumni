@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import type { ExamPaper } from "@/types/exam-paper";
+import { PageContainer } from "@/components/layout/page-container";
 import type { ExamAnswer } from "@/types/exam-session";
 
 interface ExamResultsProps {
@@ -46,7 +47,7 @@ export function ExamResults({
 
 	return (
 		<div className="min-h-dvh bg-[--system-grouped-background]">
-			<div className="mx-auto flex max-w-3xl flex-col gap-[--space-6] p-[--space-6]">
+			<PageContainer className="flex flex-col gap-[--space-6] py-[--space-6]">
 				<div className="flex items-center justify-between">
 					<div className="flex items-center gap-3">
 						<m.div
@@ -234,7 +235,7 @@ export function ExamResults({
 						</CardContent>
 					</Card>
 				)}
-			</div>
+			</PageContainer>
 		</div>
 	);
 }

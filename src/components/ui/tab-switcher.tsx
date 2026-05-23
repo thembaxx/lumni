@@ -94,7 +94,7 @@ export function TabSwitcher({
 							aria-controls={`tabpanel-${tab.value}`}
 							onClick={() => onValueChange(tab.value)}
 							className={cn(
-								"relative z-10 inline-flex items-center justify-center gap-1.5 whitespace-nowrap transition-colors duration-150",
+								"relative z-elevated inline-flex items-center justify-center gap-1.5 whitespace-nowrap transition-colors duration-150",
 								variant === "tabs"
 									? "rounded-md px-4 py-2 font-medium text-sm"
 									: "flex-1 rounded-[7px] px-4 py-2 font-medium text-sm",

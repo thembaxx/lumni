@@ -69,7 +69,7 @@ const ElementCard = memo(
 					ease: elementEaseOutQuint,
 				}}
 				whileTap={isActive ? { scale: 0.95 } : {}}
-				className={`relative flex flex-col items-center justify-center ${getBg(el.category)}rounded-2xl aspect-square cursor-pointer border border-white/10 p-2`}
+				className={`relative flex flex-col items-center justify-center ${getBg(el.category)}rounded-2xl aspect-square cursor-pointer border border-white/10 p-2 dark:border-white/20`}
 			>
 				<span className="absolute top-1.5 left-2 font-extrabold text-[10px] tabular-nums opacity-50">
 					{el.atomicNumber}
@@ -229,7 +229,7 @@ export function PeriodicTable() {
 							animate={{ opacity: 1, scale: 1 }}
 							exit={{ opacity: 0, scale: 0.5 }}
 							onClick={() => setSearchQuery("")}
-							className="absolute top-1/2 right-3 -translate-y-1/2 rounded-full p-1 hover:bg-white/10"
+							className="absolute top-1/2 right-3 -translate-y-1/2 rounded-full p-1 hover:bg-white/10 dark:hover:bg-white/20"
 							whileTap={{ scale: 0.95 }}
 						>
 							<HugeiconsIcon
@@ -331,9 +331,8 @@ export function PeriodicTable() {
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0 }}
 						transition={{ duration: 0.25, ease: elementEaseOutQuart }}
-						className="fixed inset-0 z-50 flex items-center justify-center p-4"
+						className="fixed inset-0 z-modal flex items-center justify-center bg-black/80 p-4"
 						style={{
-							background: "oklch(0% 0 0 / 0.8)",
 							backdropFilter: "blur(8px)",
 						}}
 						onClick={() => setSelectedElement(null)}
@@ -347,7 +346,7 @@ export function PeriodicTable() {
 								ease: elementEaseOutExpo,
 							}}
 							onClick={(e) => e.stopPropagation()}
-							className={`relative w-full max-w-md overflow-hidden rounded-3xl border bg-linear-to-b from-[oklch(11.8%_0.005_264°)] to-[oklch(7.8%_0.003_264°)]`}
+							className={`relative w-full max-w-md overflow-hidden rounded-3xl border bg-[--system-background-secondary]`}
 							style={{
 								borderColor: `oklch(${elementCategoryConfig[selectedElement.category]?.rgb} / 0.25)`,
 								boxShadow: `0 0 80px oklch(${elementCategoryConfig[selectedElement.category]?.rgb} / 0.2), 0 0 160px oklch(${elementCategoryConfig[selectedElement.category]?.rgb} / 0.08)`,
@@ -362,7 +361,7 @@ export function PeriodicTable() {
 
 							<m.button
 								onClick={() => setSelectedElement(null)}
-								className="absolute top-4 right-4 z-10 rounded-xl bg-white/5 p-2 hover:bg-white/10"
+								className="absolute top-4 right-4 z-elevated rounded-xl bg-white/5 p-2 hover:bg-white/10 dark:bg-white/10 dark:hover:bg-white/15"
 								whileHover={{
 									scale: 1.1,
 									backgroundColor: "oklch(100% 0 0 / 0.15)",
@@ -424,7 +423,7 @@ export function PeriodicTable() {
 											duration: 0.3,
 											ease: elementEaseOutQuart,
 										}}
-										className="rounded-xl border border-white/5 bg-white/5 p-4"
+										className="rounded-xl border border-white/5 bg-white/5 p-4 dark:border-white/10 dark:bg-white/10"
 									>
 										<p className="mb-1.5 text-muted-foreground text-xs">
 											Category
@@ -442,7 +441,7 @@ export function PeriodicTable() {
 											duration: 0.3,
 											ease: elementEaseOutQuart,
 										}}
-										className="rounded-xl border border-white/5 bg-white/5 p-4"
+										className="rounded-xl border border-white/5 bg-white/5 p-4 dark:border-white/10 dark:bg-white/10"
 									>
 										<p className="mb-1.5 text-muted-foreground text-xs">
 											Electron Config
@@ -461,7 +460,7 @@ export function PeriodicTable() {
 										duration: 0.3,
 										ease: elementEaseOutQuart,
 									}}
-									className="rounded-xl border border-white/5 bg-white/5 p-4"
+									className="rounded-xl border border-white/5 bg-white/5 p-4 dark:border-white/10 dark:bg-white/10"
 								>
 									<p className="mb-1.5 text-muted-foreground text-xs">
 										Discovery
@@ -483,7 +482,7 @@ export function PeriodicTable() {
 											duration: 0.3,
 											ease: elementEaseOutQuart,
 										}}
-										className="rounded-xl border border-white/5 bg-white/5 p-4"
+										className="rounded-xl border border-white/5 bg-white/5 p-4 dark:border-white/10 dark:bg-white/10"
 									>
 										<p className="mb-1.5 text-muted-foreground text-xs">
 											Did You Know?
