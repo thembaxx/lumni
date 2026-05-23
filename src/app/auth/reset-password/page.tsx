@@ -14,15 +14,20 @@ import { iOSEase } from "@/lib/utils/animation";
 function ResetPasswordForm() {
 	const { push } = useRouter();
 	const searchParams = useSearchParams();
-	const token = searchParams.get("token");
+	const userId = searchParams.get("userId");
+	const secret = searchParams.get("secret");
 
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [showPassword, setShowPassword] = useState(false);
 	const [error, setError] = useState("");
+	const [loading, setLoading] = useState(false);
+	const [success, setSuccess] = useState(false);
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
+		setError("");
+
 		if (password !== confirmPassword) {
 			setError("Passwords do not match");
 			return;
@@ -31,10 +36,29 @@ function ResetPasswordForm() {
 			setError("Password must be at least 8 characters");
 			return;
 		}
-		push("/auth/sign-in");
+
+		setLoading(true);
+		try {
+			const res = await fetch("/api/auth/reset-password", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ userId, secret, password }),
+			});
+			const data = await res.json();
+			if (!res.ok) {
+				setError(data.error || "Failed to reset password");
+				return;
+			}
+			setSuccess(true);
+			setTimeout(() => push("/auth/sign-in"), 2000);
+		} catch {
+			setError("Network error. Please try again.");
+		} finally {
+			setLoading(false);
+		}
 	};
 
-	if (!token) {
+	if (!userId || !secret) {
 		return (
 			<div className="flex flex-col items-center gap-4 text-center">
 				<h1 className="font-semibold text-xl">Invalid reset link</h1>
@@ -62,7 +86,9 @@ function ResetPasswordForm() {
 			<div className="flex flex-col gap-2">
 				<h1 className="font-semibold text-xl">Set new password</h1>
 				<p className="text-muted-foreground text-sm">
-					Must be at least 8 characters.
+					{success
+						? "Password reset successful! Redirecting..."
+						: "Must be at least 8 characters."}
 				</p>
 			</div>
 
@@ -79,6 +105,7 @@ function ResetPasswordForm() {
 							onChange={(e) => setPassword(e.target.value)}
 							required
 							minLength={8}
+							disabled={success}
 							className="h-11 rounded-xl bg-system-surface pr-10"
 						/>
 						<button
@@ -106,6 +133,7 @@ function ResetPasswordForm() {
 						onChange={(e) => setConfirmPassword(e.target.value)}
 						required
 						minLength={8}
+						disabled={success}
 						className="h-11 rounded-xl bg-system-surface"
 					/>
 				</div>
@@ -117,10 +145,10 @@ function ResetPasswordForm() {
 
 			<Button
 				type="submit"
-				disabled={!password || !confirmPassword}
+				disabled={!password || !confirmPassword || loading || success}
 				className="h-11 w-full rounded-xl"
 			>
-				Reset password
+				{loading ? "Resetting..." : success ? "Done!" : "Reset password"}
 			</Button>
 		</m.form>
 	);

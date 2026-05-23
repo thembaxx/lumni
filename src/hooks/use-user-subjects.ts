@@ -22,16 +22,16 @@ export function useUserSubjects(
 ): UseQueryResult<UserSubjectsResult> {
 	const targetUserId = userId;
 
-	return useQuery({
+	return useQuery<UserSubjectsResult>({
 		queryKey: ["user-subjects", targetUserId],
 		queryFn: async () => {
 			const result = await fetchSubjects(targetUserId);
-			return result as UserSubjectsResult;
+			return result;
 		},
 		staleTime: 1000 * 60 * 5,
 		retry: 3,
 		retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 10000),
 		refetchOnWindowFocus: true,
 		refetchOnMount: true,
-	}) as UseQueryResult<UserSubjectsResult>;
+	});
 }

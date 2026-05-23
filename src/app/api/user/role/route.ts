@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { Users } from "node-appwrite";
 import { serverClient } from "@/lib/appwrite";
-import { auth, getAuthenticatedUserId } from "@/lib/server/auth";
+import { auth } from "@/lib/server/auth";
 
 const VALID_ROLES = ["teacher", "parent", "student"] as const;
 

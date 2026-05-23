@@ -5,6 +5,9 @@ import { useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { TTSButton } from "@/components/shared/tts-button";
 import { Button } from "@/components/ui/button";
+import { DataResponseInput } from "@/components/quiz/parts/data-response-input";
+import { MixedPartsInput } from "@/components/quiz/parts/mixed-parts-input";
+import { SourceBasedInput } from "@/components/quiz/parts/source-based-input";
 import {
 	CalculationInput,
 	EssayInput,
@@ -263,146 +266,23 @@ export function QuestionCardInput({
 		case "source-based": {
 			const body = question as Record<string, unknown>;
 			const qBody = body.body as Record<string, unknown>;
-			const source = qBody.source as Record<string, unknown> | undefined;
-			const subQuestions = qBody.subQuestions as
-				| Record<string, unknown>[]
-				| undefined;
-			const [partAnswers, setPartAnswers] = useState<Record<string, string>>(
-				{},
-			);
 			return (
-				<div className="flex flex-col gap-3">
-					<div className="rounded-lg bg-muted/30 p-4 text-sm">
-						<MarkdownRenderer
-							content={(source?.content as string) ?? ""}
-							subject={effectiveSubject}
-						/>
-						{!!source?.attribution && (
-							<p className="mt-2 text-muted-foreground text-xs">
-								: {String(source.attribution)}
-							</p>
-						)}
-					</div>
-					{subQuestions?.map((sq, i: number) => {
-						const sqId = String((sq as Record<string, unknown>).id ?? i);
-						return (
-							<div
-								key={sqId}
-								className="flex flex-col gap-2 rounded-lg border p-3"
-							>
-								<p className="mb-1 font-medium text-sm">
-									{String((sq as Record<string, unknown>).questionText ?? "")}
-								</p>
-								<input
-									type="text"
-									className="w-full rounded-md border bg-transparent px-3 py-1.5 text-sm outline-none focus:ring-2 focus:ring-[--system-accent]"
-									placeholder="Your answer..."
-									value={partAnswers[sqId] ?? ""}
-									onChange={(e) =>
-										setPartAnswers((prev) => ({
-											...prev,
-											[sqId]: e.target.value,
-										}))
-									}
-								/>
-							</div>
-						);
-					})}
-					<Button
-						onClick={() => {
-							handleGrade({
-								type: "mixed",
-								value:
-									subQuestions?.map(
-										(sq: Record<string, unknown>, i: number) => {
-											const sqId = String(sq.id ?? i);
-											return {
-												partId: sqId,
-												answer: {
-													type: "text",
-													value: partAnswers[sqId] ?? "",
-												},
-											};
-										},
-									) ?? [],
-							});
-						}}
-						disabled={
-							!subQuestions ||
-							subQuestions.length === 0 ||
-							Object.values(partAnswers).every((v) => !v.trim())
-						}
-					>
-						Submit Answer
-					</Button>
-				</div>
+				<SourceBasedInput
+					body={qBody}
+					effectiveSubject={effectiveSubject}
+					onGrade={handleGrade}
+				/>
 			);
 		}
 
 		case "data-response": {
 			const body = question as Record<string, unknown>;
 			const qBody = body.body as Record<string, unknown>;
-			const questions = qBody.questions as
-				| Record<string, unknown>[]
-				| undefined;
-			const [partAnswers, setPartAnswers] = useState<Record<string, string>>(
-				{},
-			);
 			return (
-				<div className="flex flex-col gap-3">
-					<div className="whitespace-pre-wrap rounded-lg bg-muted/30 p-4 font-mono text-sm">
-						{typeof qBody.data === "string"
-							? qBody.data
-							: JSON.stringify(qBody.data, null, 2)}
-					</div>
-					{questions?.map((q, i: number) => {
-						const qId = String((q as Record<string, unknown>).id ?? i);
-						return (
-							<div
-								key={qId}
-								className="flex flex-col gap-2 rounded-lg border p-3"
-							>
-								<p className="mb-1 font-medium text-sm">
-									{String((q as Record<string, unknown>).questionText ?? "")}
-								</p>
-								<input
-									type="text"
-									className="w-full rounded-md border bg-transparent px-3 py-1.5 text-sm outline-none focus:ring-2 focus:ring-[--system-accent]"
-									placeholder="Your answer..."
-									value={partAnswers[qId] ?? ""}
-									onChange={(e) =>
-										setPartAnswers((prev) => ({
-											...prev,
-											[qId]: e.target.value,
-										}))
-									}
-								/>
-							</div>
-						);
-					})}
-					<Button
-						onClick={() => {
-							handleGrade({
-								type: "mixed",
-								value:
-									questions?.map((q: Record<string, unknown>, i: number) => {
-										const qId = String(q.id ?? i);
-										return {
-											partId: qId,
-											answer: { type: "text", value: partAnswers[qId] ?? "" },
-										};
-									}) ?? [],
-							});
-						}}
-						disabled={
-							!questions ||
-							questions.length === 0 ||
-							Object.values(partAnswers).every((v) => !v.trim())
-						}
-					>
-						Submit Answer
-					</Button>
-				</div>
+				<DataResponseInput
+					body={qBody}
+					onGrade={handleGrade}
+				/>
 			);
 		}
 
@@ -410,65 +290,11 @@ export function QuestionCardInput({
 			const body = question as Record<string, unknown>;
 			const qBody = body.body as Record<string, unknown>;
 			const parts = qBody.parts as Record<string, unknown>[] | undefined;
-			const [partAnswers, setPartAnswers] = useState<Record<string, string>>(
-				{},
-			);
 			return (
-				<div className="flex flex-col gap-4">
-					{parts?.map((part, i: number) => {
-						const p = part as Record<string, unknown>;
-						const pId = String(p.id ?? i);
-						return (
-							<div
-								key={pId}
-								className="flex flex-col gap-2 rounded-lg border p-3"
-							>
-								<p className="mb-1 font-medium text-sm">
-									{i + 1}. {String(p.questionText ?? "")}{" "}
-									<span className="text-muted-foreground text-xs">
-										({String(p.points ?? "")} pts)
-									</span>
-								</p>
-								<input
-									type="text"
-									className="w-full rounded-md border bg-transparent px-3 py-1.5 text-sm outline-none focus:ring-2 focus:ring-[--system-accent]"
-									placeholder="Your answer..."
-									value={partAnswers[pId] ?? ""}
-									onChange={(e) =>
-										setPartAnswers((prev) => ({
-											...prev,
-											[pId]: e.target.value,
-										}))
-									}
-								/>
-							</div>
-						);
-					})}
-					<Button
-						onClick={() =>
-							handleGrade({
-								type: "mixed",
-								value:
-									parts?.map((p, i: number) => {
-										const part = p as Record<string, unknown>;
-										const pId = String(part.id ?? i);
-										return {
-											partId: pId,
-											answer: { type: "text", value: partAnswers[pId] ?? "" },
-										};
-									}) ?? [],
-							})
-						}
-						disabled={
-							!parts ||
-							parts.length === 0 ||
-							Object.values(partAnswers).every((v) => !v.trim())
-						}
-						className="w-full"
-					>
-						Submit All Parts
-					</Button>
-				</div>
+				<MixedPartsInput
+					parts={parts}
+					onGrade={handleGrade}
+				/>
 			);
 		}
 

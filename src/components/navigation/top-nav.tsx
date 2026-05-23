@@ -24,7 +24,7 @@ import { useGamification } from "@/hooks/use-gamification";
 import { useSyncStatus } from "@/hooks/use-sync-status";
 import { useAuth } from "@/lib/auth/auth-context";
 import { cn } from "@/lib/shared";
-import { getRandomName } from "@/lib/utils/random-name";
+import { getRandomName as _getRandomName } from "@/lib/utils/random-name";
 
 interface TopNavProps {
 	title?: string;
@@ -48,6 +48,8 @@ export function TopNav({ title, className }: TopNavProps) {
 	const handleSignOut = useCallback(async () => {
 		await signOut();
 	}, [signOut]);
+
+	const diceBearSeed = useMemo(() => _getRandomName(), []);
 
 	const pageTitle = useMemo(() => {
 		if (title) return title;
@@ -78,7 +80,7 @@ export function TopNav({ title, className }: TopNavProps) {
 	) {
 		imgSrc = (user?.prefs as Record<string, unknown>).avatarUrl as string;
 	} else {
-		imgSrc = `https://api.dicebear.com/9.x/fun-emoji/svg?backgroundColor=ecad80,d1d4f9,b6e3f4,c0aede,ffdfbf&seed=${getRandomName()}`;
+		imgSrc = `https://api.dicebear.com/9.x/fun-emoji/svg?backgroundColor=ecad80,d1d4f9,b6e3f4,c0aede,ffdfbf&seed=${diceBearSeed}`;
 	}
 
 	return (

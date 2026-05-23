@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
+import type { Subject } from "@/lib/db/client";
 import {
 	COLLECTIONS,
 	createDocument,
@@ -8,12 +9,16 @@ import {
 } from "@/lib/db/client";
 import { requireAdmin } from "@/lib/server/auth";
 
+function mapSubject(s: Subject) {
+	return { ...s, id: s.code || s.$id };
+}
+
 export async function GET() {
 	try {
 		await requireAdmin();
 
-		const subjects = await listDocuments(COLLECTIONS.SUBJECTS);
-		return NextResponse.json({ subjects });
+		const subjects = await listDocuments<Subject>(COLLECTIONS.SUBJECTS);
+		return NextResponse.json({ subjects: subjects.map(mapSubject) });
 	} catch (error) {
 		console.error("Server error:", error);
 		return NextResponse.json(

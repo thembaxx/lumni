@@ -12,16 +12,16 @@ export interface UserProgress {
 export function useUserProgress(userId: string): UseQueryResult<UserProgress> {
 	const targetUserId = userId;
 
-	return useQuery({
+	return useQuery<UserProgress>({
 		queryKey: ["user-progress", targetUserId],
 		queryFn: async () => {
 			const progress = await fetchUserProgress(targetUserId);
-			return progress as UserProgress;
+			return progress;
 		},
 		staleTime: 1000 * 60 * 5,
 		retry: 3,
 		retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 10000),
 		refetchOnWindowFocus: true,
 		refetchOnMount: true,
-	}) as UseQueryResult<UserProgress>;
+	});
 }

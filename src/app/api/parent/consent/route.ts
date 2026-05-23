@@ -60,7 +60,7 @@ export async function DELETE(request: Request) {
 	try {
 		await revokeParentConsent(userId, studentId);
 		return NextResponse.json({ success: true });
-	} catch (error) {
+	} catch (_error) {
 		return NextResponse.json(
 			{ error: "Failed to revoke consent" },
 			{ status: 500 },

@@ -83,8 +83,8 @@ export default function ParentDashboardPage() {
 
 	const handleSendInvite = async (
 		parentEmail: string,
-		canViewProgress: boolean,
-		canViewScores: boolean,
+		_canViewProgress: boolean,
+		_canViewScores: boolean,
 	) => {
 		if (!selectedId) {
 			toast({ type: "error", message: "No child selected" });

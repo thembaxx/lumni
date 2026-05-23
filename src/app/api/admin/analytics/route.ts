@@ -1,6 +1,6 @@
 import { Query } from "appwrite";
-import { Users } from "node-appwrite";
 import { NextResponse } from "next/server";
+import { Users } from "node-appwrite";
 import { serverClient } from "@/lib/appwrite";
 import { COLLECTIONS, listDocuments } from "@/lib/db/client";
 import { requireAdmin } from "@/lib/server/auth";
@@ -26,7 +26,9 @@ export async function GET() {
 			monthlyStudy,
 			subjects,
 		] = await Promise.all([
-			new Users(serverClient).list([Query.limit(1)]).catch(() => ({ total: 0 })),
+			new Users(serverClient)
+				.list([Query.limit(1)])
+				.catch(() => ({ total: 0 })),
 			listDocuments<Record<string, unknown>>(COLLECTIONS.QUESTIONS, [
 				Query.limit(1),
 			]),

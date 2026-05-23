@@ -2,11 +2,17 @@ import { type NextRequest, NextResponse } from "next/server";
 import { apiError } from "@/lib/api-error";
 import { databases } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
+import { getAuthenticatedUserId } from "@/lib/server/auth";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 export const runtime = "nodejs";
 
 async function examsHandler(request: NextRequest) {
+	const userId = await getAuthenticatedUserId();
+	if (!userId) {
+		return apiError("Not authenticated", 401);
+	}
+
 	const { searchParams } = new URL(request.url);
 	const subjectCode = searchParams.get("subject");
 	const year = searchParams.get("year");

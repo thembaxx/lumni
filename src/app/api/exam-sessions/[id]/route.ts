@@ -26,7 +26,7 @@ export async function GET(
 			return NextResponse.json({ error: "Session not found" }, { status: 404 });
 		}
 
-		if (doc.userId && doc.userId !== userId) {
+		if (!doc.userId || doc.userId !== userId) {
 			return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
 		}
 
@@ -68,7 +68,7 @@ export async function DELETE(
 			id,
 		);
 
-		if (doc.userId && doc.userId !== userId) {
+		if (!doc.userId || doc.userId !== userId) {
 			return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
 		}
 

@@ -16,7 +16,7 @@ export async function POST(_req: Request) {
 		if (STRIPE_SECRET_KEY) {
 			try {
 				const stripeRes = await fetch(
-					"https://api.stripe.com/v1/subscriptions",
+					`https://api.stripe.com/v1/subscriptions?client_reference_id=${userId}`,
 					{
 						cache: "no-store",
 						headers: {

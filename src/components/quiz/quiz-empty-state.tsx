@@ -3,7 +3,6 @@
 import { RadialIcon, Target01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
-import { AnimatedDots } from "@/components/shared/animated-dots";
 import {
 	Empty,
 	EmptyContent,

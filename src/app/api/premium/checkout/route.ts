@@ -26,6 +26,7 @@ async function checkoutHandler(req: NextRequest) {
 						mode: "subscription",
 						"line_items[0][price]": priceId || "price_premium_yearly",
 						"line_items[0][quantity]": "1",
+						client_reference_id: userId,
 						success_url: `${new URL(req.url).origin}/premium?success=true`,
 						cancel_url: `${new URL(req.url).origin}/premium?canceled=true`,
 					}),

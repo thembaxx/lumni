@@ -3,6 +3,7 @@
 import { randomUUID } from "node:crypto";
 import { Query } from "appwrite";
 import { UTApi, UTFile } from "uploadthing/server";
+import type { Subject, UserSubject } from "@/lib/db/client";
 import {
 	COLLECTIONS,
 	createDocument,
@@ -12,22 +13,24 @@ import {
 } from "@/lib/db/client";
 import { auth, requireAdmin, verifyAuth } from "@/lib/server/auth";
 
+function mapSubject(s: Subject) {
+	return { ...s, id: s.code || s.$id };
+}
+
 export async function fetchSubjects(userId: string) {
 	await verifyAuth(userId);
 	const targetUserId = userId;
 
-	const [subjects, selectedUserSubjects] = await Promise.all([
-		listDocuments(COLLECTIONS.SUBJECTS),
-		listDocuments(COLLECTIONS.USER_SUBJECTS, [
+	const [subjectDocs, userSubjectDocs] = await Promise.all([
+		listDocuments<Subject>(COLLECTIONS.SUBJECTS),
+		listDocuments<UserSubject>(COLLECTIONS.USER_SUBJECTS, [
 			Query.equal("userId", targetUserId),
 		]),
 	]);
 
-	const selectedIds = selectedUserSubjects.map(
-		(us) => (us as Record<string, unknown>).subjectId as string,
-	);
+	const selectedIds = userSubjectDocs.map((us) => us.subjectId);
 
-	return { subjects, selectedSubjectIds: selectedIds };
+	return { subjects: subjectDocs.map(mapSubject), selectedSubjectIds: selectedIds };
 }
 
 export async function fetchUserProgress(userId: string) {

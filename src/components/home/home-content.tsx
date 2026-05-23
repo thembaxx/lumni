@@ -3,7 +3,6 @@
 import { Activity02Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/auth/auth-context";
 import { FeaturesGrid } from "./features-grid";
@@ -19,11 +18,6 @@ export function HomeContent() {
 		authReady &&
 		status === "authenticated" &&
 		!user?.labels?.includes("anonymous");
-
-	const [_mounted, setMounted] = useState(false);
-	useEffect(() => {
-		setMounted(true);
-	}, []);
 
 	return (
 		<div className="min-h-screen overflow-x-hidden bg-background">

@@ -75,7 +75,7 @@ export function DownloadButton({
 			disabled={disabled}
 			icon={<HugeiconsIcon icon={Download01Icon} className="size-4" />}
 		>
-			Download01Icon {selectedCount} subject
+			Download {selectedCount} subject
 			{selectedCount !== 1 ? "s" : ""} ({examTypesCount} exam
 			{examTypesCount !== 1 ? "s" : ""})
 		</AdminActionButton>

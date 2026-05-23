@@ -41,7 +41,7 @@ export async function DELETE(request: Request) {
 	try {
 		await unlinkStudentFromTeacher(userId, studentId);
 		return NextResponse.json({ success: true });
-	} catch (error) {
+	} catch (_error) {
 		return NextResponse.json(
 			{ error: "Failed to unlink student" },
 			{ status: 500 },
