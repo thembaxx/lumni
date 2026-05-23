@@ -3,6 +3,7 @@
 import { Home01Icon, RefreshIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m, useSpring, useTransform } from "framer-motion";
+import { useEffect } from "react";
 import { AccuracyBar } from "@/components/shared/accuracy-bar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -25,14 +26,19 @@ interface QuizResultProps {
 }
 
 function AnimatedCounter({
-	value: _value,
-	delay: _delay = 0,
+	value,
+	delay = 0,
 }: {
 	value: number;
 	delay?: number;
 }) {
 	const spring = useSpring(0, { stiffness: 100, damping: 20 });
 	const display = useTransform(spring, (current) => Math.round(current));
+
+	useEffect(() => {
+		const timer = setTimeout(() => spring.set(value), delay);
+		return () => clearTimeout(timer);
+	}, [value, delay, spring]);
 
 	return <m.span>{display}</m.span>;
 }

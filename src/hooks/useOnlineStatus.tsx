@@ -38,14 +38,7 @@ export function useOnlineStatus(): {
 	};
 }
 
-const _Z_INDEX = {
-	toast: 50,
-	dropdown: 40,
-	modal: 30,
-	popover: 20,
-	header: 10,
-	base: 1,
-} as const;
+
 
 export function OnlineStatusIndicator() {
 	const { isOnline } = useOnlineStatus();
@@ -54,7 +47,7 @@ export function OnlineStatusIndicator() {
 
 	return (
 		<div
-			className="fixed bottom-4 left-1/2 z-[50] w-full -translate-x-1/2 text-pretty rounded-lg bg-warning px-4 py-2 font-medium text-primary-foreground text-sm shadow-lg"
+			className="fixed bottom-4 left-1/2 z-toast w-full -translate-x-1/2 text-pretty rounded-lg bg-warning px-4 py-2 font-medium text-primary-foreground text-sm shadow-level-2"
 			role="status"
 			aria-live="polite"
 		>

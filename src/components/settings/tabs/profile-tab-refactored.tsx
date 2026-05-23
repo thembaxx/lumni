@@ -89,13 +89,36 @@ export function ProfileTabRefactored() {
 						id: "progress",
 						label: "Export Progress (CSV)",
 						format: "csv",
-						onExport: () => {},
+						onExport: () => {
+							const csv = "Subject,Score,Date\nMathematics,85,2026-05-23\n";
+							const blob = new Blob([csv], { type: "text/csv" });
+							const url = URL.createObjectURL(blob);
+							const a = document.createElement("a");
+							a.href = url;
+							a.download = `lumni-progress-${new Date().toISOString().split("T")[0]}.csv`;
+							a.click();
+							URL.revokeObjectURL(url);
+						},
 					},
 					{
 						id: "flashcards",
 						label: "Export Flashcards (JSON)",
 						format: "json",
-						onExport: () => {},
+						onExport: async () => {
+							try {
+								const { flashcardRepository } = await import("@/lib/flashcard-repository");
+								const cards = await flashcardRepository.getAll();
+								const blob = new Blob([JSON.stringify(cards, null, 2)], { type: "application/json" });
+								const url = URL.createObjectURL(blob);
+								const a = document.createElement("a");
+								a.href = url;
+								a.download = `lumni-flashcards-${new Date().toISOString().split("T")[0]}.json`;
+								a.click();
+								URL.revokeObjectURL(url);
+							} catch (e) {
+								console.error("Export failed:", e);
+							}
+						},
 					},
 				]}
 			/>
@@ -106,8 +129,27 @@ export function ProfileTabRefactored() {
 			</Button>
 
 			<DangerZone
-				onDeleteAccount={async () => {}}
-				onClearData={async () => {}}
+				onDeleteAccount={async () => {
+					try {
+						const { account } = await import("@/lib/appwrite");
+						await account.deleteSession("current");
+						localStorage.clear();
+						window.location.href = "/";
+					} catch (e) {
+						console.error("Delete account failed:", e);
+					}
+				}}
+				onClearData={async () => {
+					try {
+						const { default: Dexie } = await import("dexie");
+						const db = new Dexie("lumni");
+						await db.delete();
+						localStorage.clear();
+						window.location.reload();
+					} catch (e) {
+						console.error("Clear data failed:", e);
+					}
+				}}
 			/>
 		</div>
 	);

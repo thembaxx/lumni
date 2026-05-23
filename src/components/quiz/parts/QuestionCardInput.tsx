@@ -12,7 +12,6 @@ import {
 	ProgrammingInput,
 	ShortAnswerInput,
 } from "@/components/ui/inputs";
-import type { useSolver } from "@/hooks/use-solver";
 import type {
 	MediaContent,
 	Option,
@@ -20,8 +19,7 @@ import type {
 } from "@/lib/question-engine/types";
 import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";
-
-type Solver = ReturnType<typeof useSolver>;
+import { useState } from "react";
 
 interface QuestionCardInputProps {
 	question: {
@@ -41,19 +39,6 @@ interface QuestionCardInputProps {
 		calcValue: string;
 		code: string;
 	};
-	setState: React.Dispatch<
-		React.SetStateAction<{
-			isSubmitted: boolean;
-			selectedOption: string | null;
-			calcValue: string;
-			code: string;
-			isCorrect: boolean | null;
-			showHint: boolean;
-			showExplanation: boolean;
-			showDiagram: boolean;
-		}>
-	>;
-	isMCQ: boolean;
 	options: Option[];
 	calcValue: string;
 	setCalcValue: React.Dispatch<React.SetStateAction<string>>;
@@ -62,19 +47,12 @@ interface QuestionCardInputProps {
 	handleMCQSelect: (optionId: string) => void;
 	handleMCQSubmit: () => void;
 	handleGrade: (answer: UserAnswer) => Promise<void>;
-	handleFollowUp: () => void;
-	followUpInput: string;
-	setFollowUpInput: React.Dispatch<React.SetStateAction<string>>;
-	solver: Solver;
-	isSolverEnabled: boolean;
 }
 
 export function QuestionCardInput({
 	question,
 	effectiveSubject,
 	state,
-	setState: _setState,
-	isMCQ: _isMCQ,
 	options,
 	calcValue,
 	setCalcValue,
@@ -83,11 +61,6 @@ export function QuestionCardInput({
 	handleMCQSelect,
 	handleMCQSubmit,
 	handleGrade,
-	handleFollowUp: _handleFollowUp,
-	followUpInput: _followUpInput,
-	setFollowUpInput: _setFollowUpInput,
-	solver: _solver,
-	isSolverEnabled: _isSolverEnabled,
 }: QuestionCardInputProps) {
 	if (state.isSubmitted) {
 		return null;
@@ -294,6 +267,7 @@ export function QuestionCardInput({
 			const subQuestions = qBody.subQuestions as
 				| Record<string, unknown>[]
 				| undefined;
+			const [partAnswers, setPartAnswers] = useState<Record<string, string>>({});
 			return (
 				<div className="flex flex-col gap-3">
 					<div className="rounded-lg bg-muted/30 p-4 text-sm">
@@ -307,29 +281,44 @@ export function QuestionCardInput({
 							</p>
 						)}
 					</div>
-					{subQuestions?.map((sq, i: number) => (
-						<div
-							key={String((sq as Record<string, unknown>).id ?? i)}
-							className="rounded-lg border p-3"
-						>
-							<p className="mb-2 font-medium text-sm">
-								{String((sq as Record<string, unknown>).questionText ?? "")}
-							</p>
-						</div>
-					))}
+					{subQuestions?.map((sq, i: number) => {
+						const sqId = String((sq as Record<string, unknown>).id ?? i);
+						return (
+							<div key={sqId} className="flex flex-col gap-2 rounded-lg border p-3">
+								<p className="mb-1 font-medium text-sm">
+									{String((sq as Record<string, unknown>).questionText ?? "")}
+								</p>
+								<input
+									type="text"
+									className="w-full rounded-md border bg-transparent px-3 py-1.5 text-sm outline-none focus:ring-2 focus:ring-[--system-accent]"
+									placeholder="Your answer..."
+									value={partAnswers[sqId] ?? ""}
+									onChange={(e) =>
+										setPartAnswers((prev) => ({ ...prev, [sqId]: e.target.value }))
+									}
+								/>
+							</div>
+						);
+					})}
 					<Button
 						onClick={() => {
 							handleGrade({
 								type: "mixed",
 								value:
-									subQuestions?.map((sq: Record<string, unknown>) => ({
-										partId: sq.id,
-										answer: { type: "text", value: "" },
-									})) ?? [],
+									subQuestions?.map((sq: Record<string, unknown>, i: number) => {
+										const sqId = String(sq.id ?? i);
+										return {
+											partId: sqId,
+											answer: { type: "text", value: partAnswers[sqId] ?? "" },
+										};
+									}) ?? [],
 							});
 						}}
-						disabled={true}
-						title="Interactive sub-questions not yet implemented"
+						disabled={
+							!subQuestions ||
+							subQuestions.length === 0 ||
+							Object.values(partAnswers).every((v) => !v.trim())
+						}
 					>
 						Submit Answer
 					</Button>
@@ -343,6 +332,7 @@ export function QuestionCardInput({
 			const questions = qBody.questions as
 				| Record<string, unknown>[]
 				| undefined;
+			const [partAnswers, setPartAnswers] = useState<Record<string, string>>({});
 			return (
 				<div className="flex flex-col gap-3">
 					<div className="whitespace-pre-wrap rounded-lg bg-muted/30 p-4 font-mono text-sm">
@@ -350,29 +340,44 @@ export function QuestionCardInput({
 							? qBody.data
 							: JSON.stringify(qBody.data, null, 2)}
 					</div>
-					{questions?.map((q, i: number) => (
-						<div
-							key={String((q as Record<string, unknown>).id ?? i)}
-							className="rounded-lg border p-3"
-						>
-							<p className="mb-2 font-medium text-sm">
-								{String((q as Record<string, unknown>).questionText ?? "")}
-							</p>
-						</div>
-					))}
+					{questions?.map((q, i: number) => {
+						const qId = String((q as Record<string, unknown>).id ?? i);
+						return (
+							<div key={qId} className="flex flex-col gap-2 rounded-lg border p-3">
+								<p className="mb-1 font-medium text-sm">
+									{String((q as Record<string, unknown>).questionText ?? "")}
+								</p>
+								<input
+									type="text"
+									className="w-full rounded-md border bg-transparent px-3 py-1.5 text-sm outline-none focus:ring-2 focus:ring-[--system-accent]"
+									placeholder="Your answer..."
+									value={partAnswers[qId] ?? ""}
+									onChange={(e) =>
+										setPartAnswers((prev) => ({ ...prev, [qId]: e.target.value }))
+									}
+								/>
+							</div>
+						);
+					})}
 					<Button
 						onClick={() => {
 							handleGrade({
 								type: "mixed",
 								value:
-									questions?.map((q: Record<string, unknown>) => ({
-										partId: q.id,
-										answer: { type: "text", value: "" },
-									})) ?? [],
+									questions?.map((q: Record<string, unknown>, i: number) => {
+										const qId = String(q.id ?? i);
+										return {
+											partId: qId,
+											answer: { type: "text", value: partAnswers[qId] ?? "" },
+										};
+									}) ?? [],
 							});
 						}}
-						disabled={true}
-						title="Interactive sub-questions not yet implemented"
+						disabled={
+							!questions ||
+							questions.length === 0 ||
+							Object.values(partAnswers).every((v) => !v.trim())
+						}
 					>
 						Submit Answer
 					</Button>
@@ -384,18 +389,29 @@ export function QuestionCardInput({
 			const body = question as Record<string, unknown>;
 			const qBody = body.body as Record<string, unknown>;
 			const parts = qBody.parts as Record<string, unknown>[] | undefined;
+			const [partAnswers, setPartAnswers] = useState<Record<string, string>>({});
 			return (
 				<div className="flex flex-col gap-4">
 					{parts?.map((part, i: number) => {
 						const p = part as Record<string, unknown>;
+						const pId = String(p.id ?? i);
 						return (
-							<div key={String(p.id)} className="rounded-lg border p-3">
-								<p className="mb-2 font-medium text-sm">
+							<div key={pId} className="flex flex-col gap-2 rounded-lg border p-3">
+								<p className="mb-1 font-medium text-sm">
 									{i + 1}. {String(p.questionText ?? "")}{" "}
 									<span className="text-muted-foreground text-xs">
 										({String(p.points ?? "")} pts)
 									</span>
 								</p>
+								<input
+									type="text"
+									className="w-full rounded-md border bg-transparent px-3 py-1.5 text-sm outline-none focus:ring-2 focus:ring-[--system-accent]"
+									placeholder="Your answer..."
+									value={partAnswers[pId] ?? ""}
+									onChange={(e) =>
+										setPartAnswers((prev) => ({ ...prev, [pId]: e.target.value }))
+									}
+								/>
 							</div>
 						);
 					})}
@@ -404,17 +420,21 @@ export function QuestionCardInput({
 							handleGrade({
 								type: "mixed",
 								value:
-									parts?.map((p) => {
+									parts?.map((p, i: number) => {
 										const part = p as Record<string, unknown>;
+										const pId = String(part.id ?? i);
 										return {
-											partId: String(part.id),
-											answer: { type: "text", value: "" },
+											partId: pId,
+											answer: { type: "text", value: partAnswers[pId] ?? "" },
 										};
 									}) ?? [],
 							})
 						}
-						disabled={true}
-						title="Interactive sub-questions not yet implemented"
+						disabled={
+							!parts ||
+							parts.length === 0 ||
+							Object.values(partAnswers).every((v) => !v.trim())
+						}
 						className="w-full"
 					>
 						Submit All Parts

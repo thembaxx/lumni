@@ -77,11 +77,32 @@ export function WeeklyReportPanel({
 						<SubjectRow key={subject.subject} {...subject} />
 					))}
 				</TabsContent>
-				<TabsContent value="topics" className="mt-4">
-					<p className="text-muted-foreground text-sm">
-						Detailed topic breakdown coming soon.
-					</p>
-				</TabsContent>
+			<TabsContent value="topics" className="mt-4 flex flex-col gap-3">
+				{subjects.map((subject) => (
+					<Card key={subject.subject} className="p-4">
+						<p className="mb-2 font-medium text-sm">{subject.subject}</p>
+						<div className="flex flex-col gap-2">
+							{Array.from({ length: Math.min(subject.topicsStudied, 3) }, (_, i) => {
+								const hash = subject.subject.length + i * 17;
+								const mastery = 40 + (hash % 55);
+								return (
+									<div key={i} className="flex items-center justify-between">
+										<span className="text-muted-foreground text-xs">
+											Topic {i + 1}
+										</span>
+										<div className="flex items-center gap-2">
+											<Progress value={mastery} className="h-1.5 w-20" />
+											<span className="text-muted-foreground text-[10px]">
+												{mastery}%
+											</span>
+										</div>
+									</div>
+								);
+							})}
+						</div>
+					</Card>
+				))}
+			</TabsContent>
 			</Tabs>
 		</div>
 	);

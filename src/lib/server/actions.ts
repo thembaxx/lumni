@@ -167,5 +167,21 @@ export async function adminUploadExamPaper(
 export async function getUserAccounts(_userId: string) {
 	await auth();
 	await requireAdmin();
-	return [];
+	try {
+		const { Users } = await import("node-appwrite");
+		const { serverClient } = await import("@/lib/appwrite");
+		const usersApi = new Users(serverClient);
+		const response = await usersApi.list();
+		return response.users.map((u) => ({
+			id: u.$id,
+			name: u.name,
+			email: u.email,
+			emailVerification: u.emailVerification,
+			labels: u.labels,
+			createdAt: u.$createdAt,
+		}));
+	} catch (error) {
+		console.error("Failed to fetch user accounts:", error);
+		return [];
+	}
 }

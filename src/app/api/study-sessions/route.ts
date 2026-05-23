@@ -1,6 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { databases } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
+import { getAuthenticatedUserId } from "@/lib/server/auth";
 
 export async function POST(req: NextRequest) {
 	try {
@@ -11,6 +12,8 @@ export async function POST(req: NextRequest) {
 				{ status: 500 },
 			);
 		}
+
+		const userId = await getAuthenticatedUserId();
 
 		const body = await req.json();
 		const { subject, questionsAnswered, correctCount, duration } = body;
@@ -29,7 +32,7 @@ export async function POST(req: NextRequest) {
 			COLLECTIONS.STUDY_SESSIONS,
 			"unique()",
 			{
-				userId: "anonymous",
+				userId: userId || "anonymous",
 				subjectId: subject,
 				questionsAnswered: questionsAnswered ?? 0,
 				correctCount: correctCount ?? 0,

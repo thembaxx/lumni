@@ -30,6 +30,8 @@ export const COLLECTIONS = {
 	WRONG_ANSWERS: "wrong_answers",
 	CHAT_MESSAGES: "chat_messages",
 	EXAM_DATES: "exam_dates",
+	TEACHER_STUDENTS: "teacher_students",
+	PARENT_STUDENTS: "parent_students",
 } as const;
 
 export type Subject = {
