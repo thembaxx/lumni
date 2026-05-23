@@ -1,7 +1,5 @@
 import { Query } from "appwrite";
-import { curriculumRegistry } from "@/curriculum";
 import { databases } from "@/lib/appwrite";
-import { competencyService, computeBloomWeight } from "@/lib/competency-engine";
 import {
 	APPWRITE_DATABASE_ID,
 	COLLECTIONS,
@@ -119,22 +117,6 @@ export const progressUpdate: JobHandler = async (payload) => {
 	]);
 };
 
-export const competencyUpdate: JobHandler = async (payload) => {
-	const { subject, topic, bloomLevel, score } =
-		payload as JobPayloadByType["competency-update"];
-
-	const curriculum = await curriculumRegistry.getSubject(subject);
-	const weight = computeBloomWeight(curriculum, topic, bloomLevel);
-
-	await competencyService.update(
-		subject,
-		topic,
-		bloomLevel as import("@/lib/question-engine/types").BloomLevel,
-		score,
-		weight,
-	);
-};
-
 export const visualGeneration: JobHandler = async (payload) => {
 	const { questionId, questionText, subject, topic } =
 		payload as JobPayloadByType["visual-generation"];
@@ -204,7 +186,6 @@ export const domainHandlers: Partial<Record<string, JobHandler>> = {
 	"analytics-sync": analyticsSync,
 	"spaced-rep-update": spacedRepUpdate,
 	"progress-update": progressUpdate,
-	"competency-update": competencyUpdate,
 	"visual-generation": visualGeneration,
 	"question-regen": questionRegen,
 };

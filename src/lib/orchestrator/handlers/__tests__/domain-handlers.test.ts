@@ -29,7 +29,7 @@ mock.module("@/lib/db/client", () => ({
 }));
 
 mock.module("@/lib/db/persist", () => ({
-	safePersist: async (label: string, fn: () => Promise<void>) => fn(),
+	safePersist: async (_label: string, fn: () => Promise<void>) => fn(),
 }));
 
 mock.module("@/lib/curriculum", () => ({
@@ -62,7 +62,7 @@ mock.module("@/lib/flashcard-repository", () => ({
 
 mock.module("@/lib/orchestrator/job-queue", () => ({
 	enqueue: async () => 1,
-	queueCore: { enqueue: async (item: { type: string }) => 1 },
+	queueCore: { enqueue: async (_item: { type: string }) => 1 },
 }));
 
 mock.module("@/lib/shared/question-utils", () => ({
@@ -90,9 +90,7 @@ mock.module("@/lib/db/schema", () => ({
 	},
 }));
 
-const { analyticsSync, visualGeneration, competencyUpdate } = await import(
-	"../domain"
-);
+const { analyticsSync, visualGeneration } = await import("../domain");
 const { getHandler } = await import("../index");
 
 describe("analyticsSync", () => {
@@ -112,17 +110,6 @@ describe("visualGeneration", () => {
 	});
 });
 
-describe("competencyUpdate", () => {
-	test("accepts valid payload", async () => {
-		await competencyUpdate({
-			subject: "mathematics",
-			topic: "algebra",
-			bloomLevel: "apply",
-			score: 80,
-		});
-	});
-});
-
 describe("handler registry", () => {
 	test("getHandler returns a function for every job type", () => {
 		const types = [
@@ -130,7 +117,6 @@ describe("handler registry", () => {
 			"analytics-sync",
 			"spaced-rep-update",
 			"progress-update",
-			"competency-update",
 			"visual-generation",
 			"appwrite-progress-sync",
 			"appwrite-attempt-sync",

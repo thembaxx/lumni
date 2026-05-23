@@ -6,7 +6,6 @@ export type JobType =
 	| "analytics-sync"
 	| "spaced-rep-update"
 	| "progress-update"
-	| "competency-update"
 	| "visual-generation"
 	| "appwrite-progress-sync"
 	| "appwrite-attempt-sync"
@@ -29,12 +28,6 @@ export type JobPayloadByType = {
 	"progress-update": {
 		subject: string;
 		result: { correct: boolean; score: number };
-	};
-	"competency-update": {
-		subject: string;
-		topic: string;
-		bloomLevel: string;
-		score: number;
 	};
 	"visual-generation": {
 		questionId: string;

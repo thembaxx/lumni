@@ -1,6 +1,5 @@
-import { enqueue } from "@/lib/orchestrator/job-queue";
+import { enqueueGradeSideEffects } from "@/lib/orchestrator/grading";
 import type { BloomLevel, QuestionType } from "@/lib/question-engine/types";
-import { competencyService } from "./competency-service";
 
 export interface TrackResultParams {
 	subjectId: string;
@@ -26,35 +25,18 @@ export async function trackQuestionResult(
 		correct,
 	} = params;
 
-	const competencyScore = maxScore > 0 ? (score / maxScore) * 100 : score;
 	const isCorrect =
 		correct ?? (maxScore > 0 ? score / maxScore >= 0.5 : score >= 0.5);
 
-	await Promise.all([
-		competencyService.update(
-			subjectId,
-			topicId,
-			bloomLevel,
-			competencyScore,
-			1,
-		),
-		enqueue("analytics-sync", {
-			events: [
-				{
-					event: "grade",
-					timestamp: Date.now(),
-					subject: subjectId,
-					questionType: questionType ?? "short-answer",
-					success: isCorrect,
-					duration: 0,
-				},
-			],
-		}),
-		enqueue("progress-update", {
-			subject: subjectId,
-			result: { correct: isCorrect, score },
-		}),
-	]);
+	await enqueueGradeSideEffects({
+		subject: subjectId,
+		topic: topicId,
+		bloomLevel,
+		questionType: questionType ?? "short-answer",
+		score,
+		maxScore,
+		correct: isCorrect,
+	});
 }
 
 export function isPassingScore(
