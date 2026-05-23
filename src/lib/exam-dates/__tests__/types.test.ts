@@ -1,12 +1,8 @@
 import { describe, expect, test } from "bun:test";
+import { getCurrentSession } from "../types";
 
 describe("exam-dates types", () => {
 	test("getCurrentSession returns may-june before July", () => {
-		const now = new Date();
-		const month = now.getMonth() + 1;
-		// Can't mock Date easily — just verify the shape
-		const { getCurrentSession } =
-			require("../types") as typeof import("../types");
 		const result = getCurrentSession();
 		expect(["may-june", "oct-nov"]).toContain(result.session);
 		expect(result.year).toBeGreaterThanOrEqual(2026);

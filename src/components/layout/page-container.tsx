@@ -24,7 +24,7 @@ function PageContainer({
 	return (
 		<div
 			className={cn(
-				"mx-auto w-full flex flex-col",
+				"mx-auto flex w-full flex-col",
 				variant === "default"
 					? "max-w-3xl px-4 sm:px-6 lg:max-w-4xl xl:max-w-6xl"
 					: "max-w-6xl px-4 sm:px-6 xl:max-w-7xl",

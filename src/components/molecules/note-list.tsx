@@ -2,6 +2,7 @@
 
 import { Delete01Icon, Edit01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { TTSButton } from "@/components/shared/tts-button";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -46,23 +47,26 @@ export function NoteList({
 										{new Date(note.updatedAt).toLocaleDateString()}
 									</p>
 								</div>
-								<div className="flex items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100">
-									<Button
-										variant="ghost"
-										size="icon-xs"
-										onClick={() => onEdit(note.id)}
-										aria-label={`Edit ${note.title}`}
-									>
-										<HugeiconsIcon icon={Edit01Icon} size={14} />
-									</Button>
-									<Button
-										variant="ghost"
-										size="icon-xs"
-										onClick={() => onDelete(note.id)}
-										aria-label={`Delete ${note.title}`}
-									>
-										<HugeiconsIcon icon={Delete01Icon} size={14} />
-									</Button>
+								<div className="flex items-center gap-1">
+									<TTSButton text={note.content} />
+									<div className="flex items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100">
+										<Button
+											variant="ghost"
+											size="icon-xs"
+											onClick={() => onEdit(note.id)}
+											aria-label={`Edit ${note.title}`}
+										>
+											<HugeiconsIcon icon={Edit01Icon} size={14} />
+										</Button>
+										<Button
+											variant="ghost"
+											size="icon-xs"
+											onClick={() => onDelete(note.id)}
+											aria-label={`Delete ${note.title}`}
+										>
+											<HugeiconsIcon icon={Delete01Icon} size={14} />
+										</Button>
+									</div>
 								</div>
 							</CardContent>
 						</Card>

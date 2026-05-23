@@ -2,9 +2,9 @@
 
 import { BookOpen01Icon, TeacherIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { PageContainer } from "@/components/layout/page-container";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Skeleton } from "@/components/ui/skeleton";
-import { PageContainer } from "@/components/layout/page-container";
 import { cn } from "@/lib/shared";
 
 interface ClassShellProps extends React.ComponentProps<"div"> {

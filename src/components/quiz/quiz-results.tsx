@@ -8,6 +8,7 @@ import { ProgressDots } from "@/components/shared/progress-dots";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/shared";
+import { getAPSForSubject, getGrade } from "@/lib/shared/aps";
 import { calculateAccuracy } from "@/lib/shared/time";
 import { iOSEase } from "@/lib/utils/animation";
 
@@ -121,7 +122,7 @@ export function QuizResultsCard({
 								variants={itemVariants}
 							>
 								<m.div
-									className="col-span-5 rounded-lg bg-muted p-4"
+									className="col-span-4 rounded-lg bg-muted p-4"
 									initial={{ opacity: 0 }}
 									animate={{ opacity: 1 }}
 									transition={{ delay: 0.3 }}
@@ -137,7 +138,7 @@ export function QuizResultsCard({
 									<p className="text-muted-foreground text-xs">Questions</p>
 								</m.div>
 								<m.div
-									className="col-span-3 rounded-lg bg-muted p-4"
+									className="col-span-2 rounded-lg bg-muted p-4"
 									initial={{ opacity: 0 }}
 									animate={{ opacity: 1 }}
 									transition={{ delay: 0.4 }}
@@ -153,7 +154,7 @@ export function QuizResultsCard({
 									<p className="text-muted-foreground text-xs">Correct</p>
 								</m.div>
 								<m.div
-									className="col-span-4 rounded-lg bg-muted p-4"
+									className="col-span-3 rounded-lg bg-muted p-4"
 									initial={{ opacity: 0 }}
 									animate={{ opacity: 1 }}
 									transition={{ delay: 0.5 }}
@@ -168,6 +169,31 @@ export function QuizResultsCard({
 									</p>
 									<p className="text-muted-foreground text-xs">Accuracy</p>
 								</m.div>
+								{(() => {
+									const aps = getAPSForSubject(accuracy);
+									return (
+										<m.div
+											className="col-span-3 rounded-lg bg-muted p-4"
+											initial={{ opacity: 0 }}
+											animate={{ opacity: 1 }}
+											transition={{ delay: 0.6 }}
+										>
+											<p
+												className={cn(
+													"font-extrabold text-2xl tabular-nums",
+													aps >= 6 && "text-success",
+													aps >= 4 && aps < 6 && "text-warning",
+													aps < 4 && "text-destructive",
+												)}
+											>
+												{aps}/7
+											</p>
+											<p className="text-muted-foreground text-xs">
+												{getGrade(accuracy)}
+											</p>
+										</m.div>
+									);
+								})()}
 							</m.div>
 						</section>
 					</m.div>

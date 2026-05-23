@@ -1,3 +1,5 @@
+import { Camera01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { DifficultyBadge } from "@/components/shared/difficulty-badge";
 import { TTSButton } from "@/components/shared/tts-button";
@@ -25,6 +27,8 @@ export function QuestionCardHeader({
 	effectiveSubject,
 	bookmarked,
 	onBookmarkToggle,
+	isMathSubject,
+	onToolClick,
 }: QuestionCardHeaderProps) {
 	return (
 		<div className="gap-4">
@@ -49,6 +53,19 @@ export function QuestionCardHeader({
 					</Badge>
 				</div>
 				<div className="flex items-center gap-1">
+					{isMathSubject && onToolClick && (
+						<button
+							type="button"
+							onClick={onToolClick}
+							className="flex size-8 items-center justify-center rounded-full transition-colors hover:bg-muted"
+							aria-label="Snap photo to solve"
+						>
+							<HugeiconsIcon
+								icon={Camera01Icon}
+								className="size-4 text-muted-foreground"
+							/>
+						</button>
+					)}
 					<button
 						type="button"
 						onClick={onBookmarkToggle}

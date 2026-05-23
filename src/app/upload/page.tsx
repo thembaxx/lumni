@@ -9,10 +9,10 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { useRef, useState } from "react";
+import { PageContainer } from "@/components/layout/page-container";
 import { Button } from "@/components/ui/button";
 import { ListCell, ListGroup, ListSection } from "@/components/ui/list-cell";
 import { extractSubjectFromFileName } from "@/lib/upload";
-import { PageContainer } from "@/components/layout/page-container";
 import { UploadButton } from "@/lib/uploadthing";
 
 export default function UploadPage() {

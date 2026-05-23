@@ -12,6 +12,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/shared";
+import { getAPSForSubject, getGrade } from "@/lib/shared/aps";
 
 interface Subject {
 	id: string;
@@ -109,23 +110,13 @@ export function APSCalculator() {
 	const calculateAPS = (): number => {
 		const validSubjects = subjects.filter((s) => s.name && s.percentage > 0);
 
-		const scoredSubjects = validSubjects.map((s) => {
-			const pct = s.percentage;
-			if (pct >= 80) return 7;
-			if (pct >= 70) return 6;
-			if (pct >= 60) return 5;
-			if (pct >= 50) return 4;
-			if (pct >= 40) return 3;
-			if (pct >= 30) return 2;
-			return 1;
-		});
-
-		const filtered = scoredSubjects
+		const filtered = validSubjects
+			.map((s) => ({
+				score: getAPSForSubject(s.percentage),
+				isLO: s.name.toLowerCase().includes("life orientation"),
+			}))
 			.reduce(
-				(acc, score, idx) => {
-					const isLO = validSubjects[idx].name
-						.toLowerCase()
-						.includes("life orientation");
+				(acc, { score, isLO }) => {
 					if (!isLO || includeLifeOrientation) {
 						acc.push({ score, isLO });
 					}
@@ -137,26 +128,6 @@ export function APSCalculator() {
 			.slice(0, 6);
 
 		return filtered.reduce((sum, s) => sum + s.score, 0);
-	};
-
-	const getGrade = (percentage: number): string => {
-		if (percentage >= 80) return "A - Outstanding";
-		if (percentage >= 70) return "B - Meritorious";
-		if (percentage >= 60) return "C - Substantial";
-		if (percentage >= 50) return "D - Adequate";
-		if (percentage >= 40) return "E - Moderate";
-		if (percentage >= 30) return "F - Elementary";
-		return "G - Not Achieved";
-	};
-
-	const getAPSForSubject = (percentage: number): number => {
-		if (percentage >= 80) return 7;
-		if (percentage >= 70) return 6;
-		if (percentage >= 60) return 5;
-		if (percentage >= 50) return 4;
-		if (percentage >= 40) return 3;
-		if (percentage >= 30) return 2;
-		return 1;
 	};
 
 	const totalAPS = calculateAPS();

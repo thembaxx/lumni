@@ -10,6 +10,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { TTSButton } from "@/components/shared/tts-button";
 import { Button } from "@/components/ui/button";
 import type { useSolver } from "@/hooks/use-solver";
 import { cn } from "@/lib/shared";
@@ -129,6 +130,11 @@ export function QuestionCardFeedback({
 							subject={effectiveSubject}
 						/>
 					</div>
+				</div>
+			)}
+			{feedback?.feedback && (
+				<div className="flex justify-end">
+					<TTSButton text={feedback.feedback} />
 				</div>
 			)}
 			{question.steps && question.steps.length > 0 && (

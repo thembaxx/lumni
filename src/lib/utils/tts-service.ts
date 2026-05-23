@@ -21,11 +21,13 @@ export interface TTSState {
 	currentVoice: TTSVoice | null;
 }
 
+type Listener<T> = (data: T) => void;
+
 class TTSService {
 	private synth: SpeechSynthesis | null = null;
-	private onStartCallback: (() => void) | null = null;
-	private onEndCallback: (() => void) | null = null;
-	private onErrorCallback: ((error: string) => void) | null = null;
+	private startListeners = new Set<Listener<void>>();
+	private endListeners = new Set<Listener<void>>();
+	private errorListeners = new Set<Listener<string>>();
 
 	constructor() {
 		if (typeof window !== "undefined" && "speechSynthesis" in window) {
@@ -57,7 +59,8 @@ class TTSService {
 
 	async speak(text: string, options: TTSOptions = {}): Promise<void> {
 		if (!this.synth) {
-			this.onErrorCallback?.("Speech synthesis not supported");
+			for (const cb of this.errorListeners)
+				cb("Speech synthesis not supported");
 			return;
 		}
 
@@ -83,15 +86,15 @@ class TTSService {
 		}
 
 		utterance.onstart = () => {
-			this.onStartCallback?.();
+			for (const cb of this.startListeners) cb();
 		};
 
 		utterance.onend = () => {
-			this.onEndCallback?.();
+			for (const cb of this.endListeners) cb();
 		};
 
 		utterance.onerror = (event) => {
-			this.onErrorCallback?.(event.error);
+			for (const cb of this.errorListeners) cb(event.error);
 		};
 
 		this.synth.speak(utterance);
@@ -123,16 +126,19 @@ class TTSService {
 		return this.synth?.paused ?? false;
 	}
 
-	onStart(callback: () => void): void {
-		this.onStartCallback = callback;
+	onStart(callback: () => void): () => void {
+		this.startListeners.add(callback);
+		return () => this.startListeners.delete(callback);
 	}
 
-	onEnd(callback: () => void): void {
-		this.onEndCallback = callback;
+	onEnd(callback: () => void): () => void {
+		this.endListeners.add(callback);
+		return () => this.endListeners.delete(callback);
 	}
 
-	onError(callback: (error: string) => void): void {
-		this.onErrorCallback = callback;
+	onError(callback: (error: string) => void): () => void {
+		this.errorListeners.add(callback);
+		return () => this.errorListeners.delete(callback);
 	}
 }
 

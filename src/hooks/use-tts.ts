@@ -55,14 +55,14 @@ export function useTTS(): UseTTSReturn {
 	}, []);
 
 	useEffect(() => {
-		ttsService.onStart(() => setTtsStatus("speaking"));
-		ttsService.onEnd(() => setTtsStatus("idle"));
-		ttsService.onError(() => setTtsStatus("idle"));
+		const unsubStart = ttsService.onStart(() => setTtsStatus("speaking"));
+		const unsubEnd = ttsService.onEnd(() => setTtsStatus("idle"));
+		const unsubError = ttsService.onError(() => setTtsStatus("idle"));
 
 		return () => {
-			ttsService.onStart(() => {});
-			ttsService.onEnd(() => {});
-			ttsService.onError(() => {});
+			unsubStart();
+			unsubEnd();
+			unsubError();
 		};
 	}, []);
 

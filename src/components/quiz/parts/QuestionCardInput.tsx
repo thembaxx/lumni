@@ -2,6 +2,7 @@
 
 import { m } from "framer-motion";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { TTSButton } from "@/components/shared/tts-button";
 import { Button } from "@/components/ui/button";
 import {
 	CalculationInput,
@@ -144,6 +145,7 @@ export function QuestionCardInput({
 											subject={effectiveSubject}
 										/>
 									</span>
+									{option.text.length > 80 && <TTSButton text={option.text} />}
 								</Button>
 							</m.div>
 						);

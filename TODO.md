@@ -27,6 +27,22 @@ All 21 items across P2 and P3 are implemented. Total changes:
 - 1 file deleted (old ExamCalendar)
 - 22 new tests added (all passing)
 
+### Batch 1 — Superpowers (ICE: 392/252/240/240)
+- [x] **APS badge** — `src/lib/shared/aps.ts` shared util; badge in exam session and quiz results
+- [x] **TTS expansion** — Fixed multi-subscriber callback bug in `TTSService`; wired `TTSButton` to note-list, note-editor, flashcard, QuestionCardInput, QuestionCardFeedback
+- [x] **Snap FAB** — Camera button on math question cards (`QuestionCardHeader.tsx`)
+- [x] **Home page decomposition** — 6 section files (hero, features, how-it-works, testimonials, pricing, footer); rewritten `home-content.tsx` as thin orchestrator
+
+## Next Up
+
+### P2 — Upcoming Features <!-- linear-priority: 2 -->
+
+Remaining brainstorm items (i18n, gamification expansion, share/export, spaced repetition v2, study groups, photo math implementation, etc.) — not yet scheduled.
+
+### P3 — Bug Fixes <!-- linear-priority: 3 -->
+
+## Completed
+
 ### TypeScript & Lint
-- `npx tsc --noEmit` — 1 pre-existing error (global-error.tsx, unrelated)
+- `npx tsc --noEmit` — passes with zero errors
 - `npx biome check` — clean

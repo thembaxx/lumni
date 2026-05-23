@@ -35,6 +35,7 @@ import { useGamification } from "@/hooks/use-gamification";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
 import { trackQuestionResult } from "@/lib/competency-engine";
 import { cn } from "@/lib/shared";
+import { getAPSForSubject, getGrade } from "@/lib/shared/aps";
 import { formatTime } from "@/lib/shared/time";
 import { iOSEase } from "@/lib/utils/animation";
 import { createFlashcard } from "@/lib/utils/spaced-repetition";
@@ -294,7 +295,7 @@ function ExamResults({
 					</CardTitle>
 				</CardHeader>
 				<CardContent className="flex flex-col gap-4">
-					<div className="grid grid-cols-3 gap-3">
+					<div className="grid grid-cols-4 gap-3">
 						<div className="rounded-lg bg-muted p-3 text-center">
 							<p className="font-extrabold text-2xl text-success tabular-nums">
 								{correctCount}
@@ -313,6 +314,26 @@ function ExamResults({
 							</p>
 							<p className="text-muted-foreground text-xs">Accuracy</p>
 						</div>
+						{(() => {
+							const aps = getAPSForSubject(accuracy);
+							return (
+								<div className="rounded-lg bg-muted p-3 text-center">
+									<p
+										className={cn(
+											"font-extrabold text-2xl tabular-nums",
+											aps >= 6 && "text-success",
+											aps >= 4 && aps < 6 && "text-warning",
+											aps < 4 && "text-destructive",
+										)}
+									>
+										{aps}/7
+									</p>
+									<p className="text-muted-foreground text-xs">
+										{getGrade(accuracy)}
+									</p>
+								</div>
+							);
+						})()}
 					</div>
 				</CardContent>
 			</Card>

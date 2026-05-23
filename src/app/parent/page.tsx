@@ -3,11 +3,11 @@
 import { useState } from "react";
 import { ConsentGate } from "@/components/consent/consent-gate";
 import { ParentInvitationDialog } from "@/components/consent/parent-invitation-dialog";
+import { PageContainer } from "@/components/layout/page-container";
 import { ActivityTimeline } from "@/components/parent/activity-timeline";
 import { ChildSelector } from "@/components/parent/child-selector";
 import { ParentShell } from "@/components/parent/parent-shell";
 import { WeeklyReportPanel } from "@/components/parent/weekly-report-panel";
-import { PageContainer } from "@/components/layout/page-container";
 import { Button } from "@/components/ui/button";
 
 const MOCK_CHILDREN = [

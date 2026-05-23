@@ -3,6 +3,7 @@
 import { ListViewIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
+import { TTSButton } from "@/components/shared/tts-button";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -43,6 +44,9 @@ export function NoteEditor({
 				>
 					<HugeiconsIcon icon={ListViewIcon} size={14} />
 				</Button>
+				<div className="ml-auto">
+					<TTSButton text={content} />
+				</div>
 			</div>
 			<Textarea
 				placeholder="Start writing..."

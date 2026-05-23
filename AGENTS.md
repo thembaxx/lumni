@@ -139,6 +139,8 @@ When `POST /api/engine/generate` creates questions, the engine fires background 
 
 Issues are tracked as GitHub issues, managed via the `gh` CLI. See `docs/agents/issue-tracker.md`.
 
+For agents: **TODO.md is the single source of truth for planned work.** Never create issues directly on GitHub without updating TODO.md.
+
 ### Triage labels
 
 Five canonical labels with default naming. See `docs/agents/triage-labels.md`.
@@ -149,7 +151,13 @@ Single-context — one `CONTEXT.md` + `docs/adr/` at the repo root. See `docs/ag
 
 ### Workflow
 
-TODO.md, Linear, GitHub, and Sentry are integrated. See `docs/agents/workflow.md`.
+TODO.md ↔ Linear ↔ GitHub ↔ Sentry are integrated. See `docs/agents/workflow.md`.
+
+**Key commands for agents:**
+- `npm run todo:sync` — Push TODO.md → Linear (creates/updates issues)
+- New task? Add to TODO.md under "Next Up" or "Bug Fixes", then run sync
+- For bugs from Sentry: check Linear Backlog first (Sentry auto-creates LUM-xxx once integrated)
+- Labels: `Bug`, `Feature`, `Improvement` — applied in Linear, synced to GitHub
 
 ## Design System Enforcement
 

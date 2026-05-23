@@ -2,7 +2,7 @@
 
 import { VolumeMute01Icon, VolumeUpIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/shared";
 import { ttsService } from "@/lib/utils/tts-service";
@@ -15,6 +15,15 @@ interface TTSButtonProps {
 
 export function TTSButton({ text, lang, className }: TTSButtonProps) {
 	const [isPlaying, setIsPlaying] = useState(false);
+	const endUnsubscribeRef = useRef<(() => void) | null>(null);
+	const errorUnsubscribeRef = useRef<(() => void) | null>(null);
+
+	useEffect(() => {
+		return () => {
+			endUnsubscribeRef.current?.();
+			errorUnsubscribeRef.current?.();
+		};
+	}, []);
 
 	const handleToggle = useCallback(() => {
 		if (isPlaying) {
@@ -23,8 +32,11 @@ export function TTSButton({ text, lang, className }: TTSButtonProps) {
 			return;
 		}
 
-		ttsService.onEnd(() => setIsPlaying(false));
-		ttsService.onError(() => setIsPlaying(false));
+		endUnsubscribeRef.current?.();
+		errorUnsubscribeRef.current?.();
+
+		endUnsubscribeRef.current = ttsService.onEnd(() => setIsPlaying(false));
+		errorUnsubscribeRef.current = ttsService.onError(() => setIsPlaying(false));
 		ttsService.speak(text, { lang });
 		setIsPlaying(true);
 	}, [text, lang, isPlaying]);
