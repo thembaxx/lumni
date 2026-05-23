@@ -1,12 +1,12 @@
 import { Query } from "appwrite";
 import { Users } from "node-appwrite";
+import { serverClient } from "@/lib/appwrite";
 import {
 	COLLECTIONS,
-	listDocuments,
 	createDocument,
+	listDocuments,
 	updateDocument,
 } from "@/lib/db/client";
-import { serverClient } from "@/lib/appwrite";
 
 export interface ParentStudent {
 	id: string;
@@ -106,7 +106,10 @@ export async function getChildSubjectProgress(
 
 	const subjects = await listDocuments(COLLECTIONS.SUBJECTS);
 	const subjectNames = new Map(
-		subjects.map((s) => [(s as Record<string, unknown>).$id as string, (s as Record<string, unknown>).name as string]),
+		subjects.map((s) => [
+			(s as Record<string, unknown>).$id as string,
+			(s as Record<string, unknown>).name as string,
+		]),
 	);
 
 	const topics = await listDocuments(COLLECTIONS.TOPICS);
@@ -114,10 +117,7 @@ export async function getChildSubjectProgress(
 	for (const t of topics) {
 		const doc = t as Record<string, unknown>;
 		const sid = doc.subjectId as string;
-		topicCountBySubject.set(
-			sid,
-			(topicCountBySubject.get(sid) || 0) + 1,
-		);
+		topicCountBySubject.set(sid, (topicCountBySubject.get(sid) || 0) + 1);
 	}
 
 	const sessions = await listDocuments(COLLECTIONS.STUDY_SESSIONS, [
@@ -128,7 +128,10 @@ export async function getChildSubjectProgress(
 		Query.equal("userId", studentId),
 	]);
 
-	const sessionsBySubject = new Map<string, { count: number; lastDate: string }>();
+	const sessionsBySubject = new Map<
+		string,
+		{ count: number; lastDate: string }
+	>();
 	for (const s of sessions) {
 		const doc = s as Record<string, unknown>;
 		const sid = (doc.subjectId as string) || "unknown";
@@ -258,5 +261,8 @@ export async function getParentConsentStatus(
 		Query.limit(1),
 	]);
 	if (existing.length === 0) return "pending";
-	return (existing[0] as Record<string, unknown>).consentStatus as "pending" | "granted" | "revoked";
+	return (existing[0] as Record<string, unknown>).consentStatus as
+		| "pending"
+		| "granted"
+		| "revoked";
 }

@@ -1,5 +1,7 @@
 import { Query } from "appwrite";
+import { Users } from "node-appwrite";
 import { NextResponse } from "next/server";
+import { serverClient } from "@/lib/appwrite";
 import { COLLECTIONS, listDocuments } from "@/lib/db/client";
 import { requireAdmin } from "@/lib/server/auth";
 
@@ -15,6 +17,7 @@ export async function GET() {
 		).toISOString();
 
 		const [
+			usersResult,
 			questions,
 			studySessions,
 			examSessions,
@@ -23,6 +26,7 @@ export async function GET() {
 			monthlyStudy,
 			subjects,
 		] = await Promise.all([
+			new Users(serverClient).list([Query.limit(1)]).catch(() => ({ total: 0 })),
 			listDocuments<Record<string, unknown>>(COLLECTIONS.QUESTIONS, [
 				Query.limit(1),
 			]),
@@ -44,6 +48,7 @@ export async function GET() {
 			listDocuments<Record<string, unknown>>(COLLECTIONS.SUBJECTS),
 		]);
 
+		const totalUsers = usersResult.total;
 		const totalQuestions = questions.length;
 		const totalStudySessions = studySessions.length;
 		const totalExamSessions = examSessions.length;
@@ -94,7 +99,7 @@ export async function GET() {
 			totalAnswered > 0 ? Math.round((totalCorrect / totalAnswered) * 100) : 0;
 
 		return NextResponse.json({
-			totalUsers: 0,
+			totalUsers,
 			activeUsers,
 			totalQuestions,
 			totalStudySessions,

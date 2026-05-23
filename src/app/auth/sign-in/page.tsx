@@ -83,7 +83,7 @@ function SignInForm() {
 				</div>
 				<div className="flex flex-col gap-2">
 					<h1 className="ios-title-2 font-semibold text-foreground">
-						CheckmarkCircle01Icon your email
+						Check your email
 					</h1>
 					<p className="ios-subhead text-muted-foreground leading-relaxed">
 						We sent a magic link to{" "}

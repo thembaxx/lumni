@@ -1,15 +1,16 @@
 "use client";
 
-import { Award01Icon } from "@hugeicons/core-free-icons";
+import { Award01Icon, DashboardSquare01Icon, Refresh01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { Confetti } from "@/components/celebration";
 import { ProgressDots } from "@/components/shared/progress-dots";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/shared";
 import { getAPSForSubject, getGrade } from "@/lib/shared/aps";
-import { calculateAccuracy } from "@/lib/shared/time";
+import { calculateAccuracy, formatTime } from "@/lib/shared/time";
 import { iOSEase } from "@/lib/utils/animation";
 
 interface QuizResultsCardProps {
@@ -24,9 +25,9 @@ interface QuizResultsCardProps {
 export function QuizResultsCard({
 	totalQuestions,
 	correctAnswers,
-	elapsedTime: _elapsedTime,
-	onRestart: _onRestart,
-	onDashboard: _onDashboard,
+	elapsedTime,
+	onRestart,
+	onDashboard,
 	className,
 }: QuizResultsCardProps) {
 	const accuracy = calculateAccuracy(correctAnswers, totalQuestions);
@@ -195,7 +196,52 @@ export function QuizResultsCard({
 									);
 								})()}
 							</m.div>
+
+							<m.div
+								className="grid grid-cols-12 gap-4"
+								variants={itemVariants}
+							>
+								<m.div
+									className="col-span-12 rounded-lg bg-muted p-4"
+									initial={{ opacity: 0 }}
+									animate={{ opacity: 1 }}
+									transition={{ delay: 0.7 }}
+								>
+									<p className="font-extrabold text-2xl tabular-nums">
+										{formatTime(elapsedTime)}
+									</p>
+									<p className="text-muted-foreground text-xs">Time</p>
+								</m.div>
+							</m.div>
 						</section>
+
+						{(onRestart || onDashboard) && (
+							<m.div
+								className="flex gap-3 pt-2"
+								variants={itemVariants}
+							>
+								{onRestart && (
+									<Button
+										variant="default"
+										onClick={onRestart}
+										className="flex-1 gap-2"
+									>
+										<HugeiconsIcon icon={Refresh01Icon} className="size-4" />
+										Try Again
+									</Button>
+								)}
+								{onDashboard && (
+									<Button
+										variant="outline"
+										onClick={onDashboard}
+										className="flex-1 gap-2"
+									>
+										<HugeiconsIcon icon={DashboardSquare01Icon} className="size-4" />
+										Dashboard
+									</Button>
+								)}
+							</m.div>
+						)}
 					</m.div>
 				</CardContent>
 			</Card>

@@ -1,6 +1,7 @@
 "use client";
 
 import { m } from "framer-motion";
+import { useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { TTSButton } from "@/components/shared/tts-button";
 import { Button } from "@/components/ui/button";
@@ -19,7 +20,6 @@ import type {
 } from "@/lib/question-engine/types";
 import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";
-import { useState } from "react";
 
 interface QuestionCardInputProps {
 	question: {
@@ -267,7 +267,9 @@ export function QuestionCardInput({
 			const subQuestions = qBody.subQuestions as
 				| Record<string, unknown>[]
 				| undefined;
-			const [partAnswers, setPartAnswers] = useState<Record<string, string>>({});
+			const [partAnswers, setPartAnswers] = useState<Record<string, string>>(
+				{},
+			);
 			return (
 				<div className="flex flex-col gap-3">
 					<div className="rounded-lg bg-muted/30 p-4 text-sm">
@@ -284,7 +286,10 @@ export function QuestionCardInput({
 					{subQuestions?.map((sq, i: number) => {
 						const sqId = String((sq as Record<string, unknown>).id ?? i);
 						return (
-							<div key={sqId} className="flex flex-col gap-2 rounded-lg border p-3">
+							<div
+								key={sqId}
+								className="flex flex-col gap-2 rounded-lg border p-3"
+							>
 								<p className="mb-1 font-medium text-sm">
 									{String((sq as Record<string, unknown>).questionText ?? "")}
 								</p>
@@ -294,7 +299,10 @@ export function QuestionCardInput({
 									placeholder="Your answer..."
 									value={partAnswers[sqId] ?? ""}
 									onChange={(e) =>
-										setPartAnswers((prev) => ({ ...prev, [sqId]: e.target.value }))
+										setPartAnswers((prev) => ({
+											...prev,
+											[sqId]: e.target.value,
+										}))
 									}
 								/>
 							</div>
@@ -305,13 +313,18 @@ export function QuestionCardInput({
 							handleGrade({
 								type: "mixed",
 								value:
-									subQuestions?.map((sq: Record<string, unknown>, i: number) => {
-										const sqId = String(sq.id ?? i);
-										return {
-											partId: sqId,
-											answer: { type: "text", value: partAnswers[sqId] ?? "" },
-										};
-									}) ?? [],
+									subQuestions?.map(
+										(sq: Record<string, unknown>, i: number) => {
+											const sqId = String(sq.id ?? i);
+											return {
+												partId: sqId,
+												answer: {
+													type: "text",
+													value: partAnswers[sqId] ?? "",
+												},
+											};
+										},
+									) ?? [],
 							});
 						}}
 						disabled={
@@ -332,7 +345,9 @@ export function QuestionCardInput({
 			const questions = qBody.questions as
 				| Record<string, unknown>[]
 				| undefined;
-			const [partAnswers, setPartAnswers] = useState<Record<string, string>>({});
+			const [partAnswers, setPartAnswers] = useState<Record<string, string>>(
+				{},
+			);
 			return (
 				<div className="flex flex-col gap-3">
 					<div className="whitespace-pre-wrap rounded-lg bg-muted/30 p-4 font-mono text-sm">
@@ -343,7 +358,10 @@ export function QuestionCardInput({
 					{questions?.map((q, i: number) => {
 						const qId = String((q as Record<string, unknown>).id ?? i);
 						return (
-							<div key={qId} className="flex flex-col gap-2 rounded-lg border p-3">
+							<div
+								key={qId}
+								className="flex flex-col gap-2 rounded-lg border p-3"
+							>
 								<p className="mb-1 font-medium text-sm">
 									{String((q as Record<string, unknown>).questionText ?? "")}
 								</p>
@@ -353,7 +371,10 @@ export function QuestionCardInput({
 									placeholder="Your answer..."
 									value={partAnswers[qId] ?? ""}
 									onChange={(e) =>
-										setPartAnswers((prev) => ({ ...prev, [qId]: e.target.value }))
+										setPartAnswers((prev) => ({
+											...prev,
+											[qId]: e.target.value,
+										}))
 									}
 								/>
 							</div>
@@ -389,14 +410,19 @@ export function QuestionCardInput({
 			const body = question as Record<string, unknown>;
 			const qBody = body.body as Record<string, unknown>;
 			const parts = qBody.parts as Record<string, unknown>[] | undefined;
-			const [partAnswers, setPartAnswers] = useState<Record<string, string>>({});
+			const [partAnswers, setPartAnswers] = useState<Record<string, string>>(
+				{},
+			);
 			return (
 				<div className="flex flex-col gap-4">
 					{parts?.map((part, i: number) => {
 						const p = part as Record<string, unknown>;
 						const pId = String(p.id ?? i);
 						return (
-							<div key={pId} className="flex flex-col gap-2 rounded-lg border p-3">
+							<div
+								key={pId}
+								className="flex flex-col gap-2 rounded-lg border p-3"
+							>
 								<p className="mb-1 font-medium text-sm">
 									{i + 1}. {String(p.questionText ?? "")}{" "}
 									<span className="text-muted-foreground text-xs">
@@ -409,7 +435,10 @@ export function QuestionCardInput({
 									placeholder="Your answer..."
 									value={partAnswers[pId] ?? ""}
 									onChange={(e) =>
-										setPartAnswers((prev) => ({ ...prev, [pId]: e.target.value }))
+										setPartAnswers((prev) => ({
+											...prev,
+											[pId]: e.target.value,
+										}))
 									}
 								/>
 							</div>

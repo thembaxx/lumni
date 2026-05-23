@@ -1,7 +1,7 @@
 import { Client, Databases, Query } from "appwrite";
 import { NextResponse } from "next/server";
-import { APPWRITE_DATABASE_ID } from "@/lib/db/client";
 import { APPWRITE_ENDPOINT, APPWRITE_PROJECT } from "@/lib/appwrite";
+import { APPWRITE_DATABASE_ID } from "@/lib/db/client";
 import { getAuthenticatedUserId } from "@/lib/server/auth";
 
 export async function POST(_req: Request) {
@@ -36,8 +36,8 @@ export async function POST(_req: Request) {
 						isPremium: !!activeSub,
 					});
 				}
-			} catch {
-				// Fall through to Appwrite check
+			} catch (stripeErr) {
+				console.error("Stripe verify error:", stripeErr);
 			}
 		}
 
@@ -56,7 +56,8 @@ export async function POST(_req: Request) {
 				verified: true,
 				isPremium: premiumDocs.total > 0,
 			});
-		} catch {
+		} catch (dbErr) {
+			console.error("Premium DB query error:", dbErr);
 			return NextResponse.json({
 				verified: true,
 				isPremium: false,

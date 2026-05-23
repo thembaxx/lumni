@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
-import { getAuthenticatedUserId, auth } from "@/lib/server/auth";
+import { auth, getAuthenticatedUserId } from "@/lib/server/auth";
 import {
+	getParentConsentStatus,
 	grantParentConsent,
 	revokeParentConsent,
-	getParentConsentStatus,
 } from "@/lib/server/parent-service";
 
 export async function GET(request: Request) {
@@ -32,10 +32,7 @@ export async function POST(request: Request) {
 			canViewScores?: boolean;
 		};
 	if (!studentId) {
-		return NextResponse.json(
-			{ error: "studentId required" },
-			{ status: 400 },
-		);
+		return NextResponse.json({ error: "studentId required" }, { status: 400 });
 	}
 	try {
 		await grantParentConsent(
@@ -58,10 +55,7 @@ export async function DELETE(request: Request) {
 	const userId = await auth();
 	const { studentId } = (await request.json()) as { studentId?: string };
 	if (!studentId) {
-		return NextResponse.json(
-			{ error: "studentId required" },
-			{ status: 400 },
-		);
+		return NextResponse.json({ error: "studentId required" }, { status: 400 });
 	}
 	try {
 		await revokeParentConsent(userId, studentId);

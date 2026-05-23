@@ -38,8 +38,6 @@ export function useOnlineStatus(): {
 	};
 }
 
-
-
 export function OnlineStatusIndicator() {
 	const { isOnline } = useOnlineStatus();
 

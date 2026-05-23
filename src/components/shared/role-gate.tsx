@@ -1,8 +1,8 @@
 "use client";
 
-import { useAuth } from "@/lib/auth/auth-context";
 import { useQuery } from "@tanstack/react-query";
 import type { ReactNode } from "react";
+import { useAuth } from "@/lib/auth/auth-context";
 
 interface RoleGateProps {
 	role: "teacher" | "parent" | "student";

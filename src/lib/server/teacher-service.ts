@@ -1,12 +1,12 @@
 import { Query } from "appwrite";
 import { Users } from "node-appwrite";
+import { serverClient } from "@/lib/appwrite";
 import {
 	COLLECTIONS,
-	listDocuments,
 	createDocument,
 	deleteDocument,
+	listDocuments,
 } from "@/lib/db/client";
-import { serverClient } from "@/lib/appwrite";
 
 export interface TeacherStudent {
 	id: string;
@@ -90,9 +90,7 @@ export async function getTeacherStudents(
 	const [allCompetencies, allProgress, allSessions] = await Promise.all([
 		Promise.all(
 			studentIds.map((sid) =>
-				listDocuments(COLLECTIONS.COMPETENCIES, [
-					Query.equal("userId", sid),
-				]),
+				listDocuments(COLLECTIONS.COMPETENCIES, [Query.equal("userId", sid)]),
 			),
 		),
 		Promise.all(
@@ -105,9 +103,7 @@ export async function getTeacherStudents(
 		),
 		Promise.all(
 			studentIds.map((sid) =>
-				listDocuments(COLLECTIONS.STUDY_SESSIONS, [
-					Query.equal("userId", sid),
-				]),
+				listDocuments(COLLECTIONS.STUDY_SESSIONS, [Query.equal("userId", sid)]),
 			),
 		),
 	]);
@@ -133,7 +129,10 @@ export async function getTeacherStudents(
 		const doc = s as Record<string, unknown>;
 		const uid = doc.userId as string;
 		const ended = doc.endedAt as string | undefined;
-		if (ended && (!lastActiveByUser.has(uid) || ended > lastActiveByUser.get(uid)!)) {
+		if (
+			ended &&
+			(!lastActiveByUser.has(uid) || ended > lastActiveByUser.get(uid)!)
+		) {
 			lastActiveByUser.set(uid, ended);
 		}
 	}
@@ -183,9 +182,7 @@ export async function getTeacherTopicMastery(
 
 	const allCompetencies = await Promise.all(
 		studentIds.map((sid) =>
-			listDocuments(COLLECTIONS.COMPETENCIES, [
-				Query.equal("userId", sid),
-			]),
+			listDocuments(COLLECTIONS.COMPETENCIES, [Query.equal("userId", sid)]),
 		),
 	);
 

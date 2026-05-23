@@ -11,7 +11,6 @@ import {
 	DialogDescription,
 	DialogHeader,
 	DialogTitle,
-	DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -380,7 +379,7 @@ function NoteCreatorInner({ className }: NoteCreatorProps) {
 	}, []);
 	const { notes, addNote, removeNote, updateNote, toggleFavorite } =
 		useNoteStorage();
-	const [, setIsCreating] = useState(false);
+	const [isCreating, setIsCreating] = useState(false);
 	const [editingNoteId, setEditingNoteId] = useState<string | null>(null);
 	const [searchQuery, setSearchQuery] = useState("");
 	const [filter, setFilter] = useState<"all" | "favorites">("all");
@@ -651,16 +650,7 @@ function NoteCreatorInner({ className }: NoteCreatorProps) {
 			)}
 
 			{/* Create/Edit Note Modal */}
-			<Dialog>
-				<DialogTrigger>
-					<Button
-						variant="outline"
-						onClick={() => setIsCreating(true)}
-						className="hidden sm:block"
-					>
-						New Note
-					</Button>
-				</DialogTrigger>
+			<Dialog open={isCreating} onOpenChange={setIsCreating}>
 				<DialogContent className="w-full max-w-md sm:max-w-lg">
 					<DialogHeader>
 						<DialogTitle>

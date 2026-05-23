@@ -2,7 +2,7 @@
 
 import { ListViewIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { TTSButton } from "@/components/shared/tts-button";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -26,6 +26,21 @@ export function NoteEditor({
 }: NoteEditorProps) {
 	const [title, setTitle] = useState(initialTitle);
 	const [content, setContent] = useState(initialContent);
+	const contentRef = useRef<HTMLTextAreaElement>(null);
+
+	const insertBulletList = () => {
+		const textarea = contentRef.current;
+		if (!textarea) return;
+		const start = textarea.selectionStart;
+		const before = content.slice(0, start);
+		const after = content.slice(start);
+		const insertion = "\n- ";
+		setContent(before + insertion + after);
+		requestAnimationFrame(() => {
+			textarea.focus();
+			textarea.setSelectionRange(start + insertion.length, start + insertion.length);
+		});
+	};
 
 	return (
 		<div className={cn("flex flex-col gap-3", className)} {...props}>
@@ -41,6 +56,7 @@ export function NoteEditor({
 					size="icon-xs"
 					type="button"
 					aria-label="Bullet list"
+					onClick={insertBulletList}
 				>
 					<HugeiconsIcon icon={ListViewIcon} size={14} />
 				</Button>
@@ -49,6 +65,7 @@ export function NoteEditor({
 				</div>
 			</div>
 			<Textarea
+				ref={contentRef}
 				placeholder="Start writing..."
 				value={content}
 				onChange={(e) => setContent(e.target.value)}

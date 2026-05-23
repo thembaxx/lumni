@@ -12,7 +12,6 @@ import {
 	DialogDescription,
 	DialogHeader,
 	DialogTitle,
-	DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -298,8 +297,8 @@ function FlashcardCreatorInner({ className }: FlashcardCreatorProps) {
 	useEffect(() => {
 		setMounted(true);
 	}, []);
-	const { flashcards, addFlashcard, removeFlashcard } = useFlashcardStorage();
-	const [, setIsCreating] = useState(false);
+	const { flashcards, addFlashcard, removeFlashcard, updateFlashcard } = useFlashcardStorage();
+	const [isCreating, setIsCreating] = useState(false);
 	const [editingCardId, setEditingCardId] = useState<string | null>(null);
 	const [searchQuery, setSearchQuery] = useState("");
 
@@ -511,16 +510,7 @@ function FlashcardCreatorInner({ className }: FlashcardCreatorProps) {
 			)}
 
 			{/* Create/Edit Flashcard Modal */}
-			<Dialog>
-				<DialogTrigger>
-					<Button
-						variant="outline"
-						onClick={() => setIsCreating(true)}
-						className="hidden sm:block"
-					>
-						New Flashcard
-					</Button>
-				</DialogTrigger>
+			<Dialog open={isCreating} onOpenChange={setIsCreating}>
 				<DialogContent className="w-full max-w-md sm:max-w-lg">
 					<DialogHeader>
 						<DialogTitle>
@@ -538,10 +528,8 @@ function FlashcardCreatorInner({ className }: FlashcardCreatorProps) {
 						}
 						onSubmit={(flashcard) => {
 							if (editingCardId) {
-								// Update existing flashcard
-								// updateFlashcard(editingCardId, flashcard);
+								updateFlashcard(editingCardId, flashcard);
 							} else {
-								// Add new flashcard
 								addFlashcard(flashcard);
 							}
 							setIsCreating(false);

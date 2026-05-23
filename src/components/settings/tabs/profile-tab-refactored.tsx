@@ -106,9 +106,13 @@ export function ProfileTabRefactored() {
 						format: "json",
 						onExport: async () => {
 							try {
-								const { flashcardRepository } = await import("@/lib/flashcard-repository");
+								const { flashcardRepository } = await import(
+									"@/lib/flashcard-repository"
+								);
 								const cards = await flashcardRepository.getAll();
-								const blob = new Blob([JSON.stringify(cards, null, 2)], { type: "application/json" });
+								const blob = new Blob([JSON.stringify(cards, null, 2)], {
+									type: "application/json",
+								});
 								const url = URL.createObjectURL(blob);
 								const a = document.createElement("a");
 								a.href = url;

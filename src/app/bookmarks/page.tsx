@@ -33,7 +33,7 @@ export default function BookmarksPage() {
 							/>
 							<p className="font-semibold text-base">No bookmarks yet</p>
 							<p className="mt-1 text-muted-foreground text-sm">
-								Bookmark01Icon questions during quizzes to save them here.
+								Bookmark questions during quizzes to save them here.
 							</p>
 						</CardContent>
 					</Card>

@@ -99,7 +99,7 @@ export default function AdminQualityPage() {
 				>
 					<header
 						className={cn(
-							"rounded-t-[2.5rem]",
+							"rounded-t-card-lg",
 							"border-t",
 							"border-border/80",
 							"p-4",
@@ -136,7 +136,7 @@ export default function AdminQualityPage() {
 				>
 					<header
 						className={cn(
-							"rounded-t-[2.5rem]",
+							"rounded-t-card-lg",
 							"border-t",
 							"border-border/80",
 							"p-4",
@@ -183,7 +183,7 @@ export default function AdminQualityPage() {
 				>
 					<header
 						className={cn(
-							"rounded-t-[2.5rem]",
+							"rounded-t-card-lg",
 							"border-t",
 							"border-border/80",
 							"p-4",
@@ -230,7 +230,7 @@ export default function AdminQualityPage() {
 				>
 					<header
 						className={cn(
-							"rounded-t-[2.5rem]",
+							"rounded-t-card-lg",
 							"border-t",
 							"border-border/80",
 							"p-4",

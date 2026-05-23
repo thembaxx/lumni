@@ -16,6 +16,7 @@ import {
 	UserIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import { OnboardingWizard } from "@/components/onboarding/onboarding-wizard";
 import { EmptyStateWithIllustration } from "@/components/shared/empty-state";
@@ -23,12 +24,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ListCell, ListSection } from "@/components/ui/list-cell";
+import { toast } from "@/hooks/use-toast";
 import { account } from "@/lib/appwrite";
 import { useAuth } from "@/lib/auth/auth-context";
 import { useUploadThing } from "@/lib/uploadthing";
 import { getRandomName } from "@/lib/utils/random-name";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { toast } from "@/hooks/use-toast";
 
 interface EditableFieldProps {
 	value: string;
@@ -586,9 +586,7 @@ export function ProfileTab() {
 					title="Role"
 					subtitle="Controls which dashboard you see"
 					showSeparator={false}
-					trailing={
-						<RoleSelector currentLabels={user?.labels ?? []} />
-					}
+					trailing={<RoleSelector currentLabels={user?.labels ?? []} />}
 				/>
 			</ListSection>
 
@@ -604,7 +602,10 @@ export function ProfileTab() {
 							onClick={async () => {
 								if (user?.$id) {
 									await navigator.clipboard.writeText(user.$id);
-									toast({ type: "success", message: "User ID copied to clipboard" });
+									toast({
+										type: "success",
+										message: "User ID copied to clipboard",
+									});
 								}
 							}}
 							className="flex size-8 shrink-0 items-center justify-center rounded-full bg-system-accent text-white hover:bg-system-accent/90"
@@ -714,11 +715,7 @@ export function ProfileTab() {
 
 const VALID_ROLES = ["teacher", "parent", "student"] as const;
 
-function RoleSelector({
-	currentLabels,
-}: {
-	currentLabels: string[];
-}) {
+function RoleSelector({ currentLabels }: { currentLabels: string[] }) {
 	const queryClient = useQueryClient();
 	const currentRole =
 		VALID_ROLES.find((r) => currentLabels.includes(r)) ?? "student";
@@ -737,8 +734,7 @@ function RoleSelector({
 			queryClient.invalidateQueries({ queryKey: ["session"] });
 			toast({ type: "success", message: "Role updated" });
 		},
-		onError: () =>
-			toast({ type: "error", message: "Failed to update role" }),
+		onError: () => toast({ type: "error", message: "Failed to update role" }),
 	});
 
 	return (

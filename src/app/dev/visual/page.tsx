@@ -171,7 +171,6 @@ export default function DevVisualPage() {
 				<div className="overflow-hidden rounded-card-lg bg-card shadow-level-2">
 					<div className="p-8 text-center text-muted-foreground text-sm">
 						Enter a question above and click "Resolve Visual" to see the result.
-						Use "Run All Tests" to test all subjects at once.
 					</div>
 				</div>
 			)}

@@ -14,7 +14,8 @@ export async function GET(_request: NextRequest) {
 			prefs: user.prefs,
 			isAnonymous: user.labels?.includes("anonymous") ?? false,
 		});
-	} catch {
+	} catch (err) {
+		console.error("Session fetch error:", err);
 		return NextResponse.json({
 			userId: null,
 			name: null,

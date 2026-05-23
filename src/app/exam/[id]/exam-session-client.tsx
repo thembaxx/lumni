@@ -183,6 +183,58 @@ function PartAnswerInput({
 		);
 	}
 
+	if (part.type === "matching") {
+		return (
+			<input
+				type="text"
+				value={(Array.isArray(value) ? value[0] : value) ?? ""}
+				onChange={(e) => onChange(e.target.value)}
+				disabled={disabled}
+				className="w-full rounded-xl border-2 border-border bg-background p-3 outline-none focus:border-[--system-accent]"
+				placeholder="Enter matching pairs (e.g. A-1, B-2)..."
+			/>
+		);
+	}
+
+	if (part.type === "diagram") {
+		return (
+			<p className="text-muted-foreground text-sm">
+				{(part as unknown as Record<string, unknown>).instructions as string ??
+					"Refer to the diagram and type your answer below."}
+			</p>
+		);
+	}
+
+	if (part.type === "programming") {
+		return (
+			<textarea
+				value={(Array.isArray(value) ? value[0] : value) ?? ""}
+				onChange={(e) => onChange(e.target.value)}
+				disabled={disabled}
+				rows={8}
+				className="w-full resize-y rounded-xl border-2 border-border bg-background p-3 font-mono text-sm outline-none focus:border-[--system-accent]"
+				placeholder="Write your code here..."
+			/>
+		);
+	}
+
+	if (
+		part.type === "source-based" ||
+		part.type === "data-response" ||
+		part.type === "mixed"
+	) {
+		return (
+			<textarea
+				value={(Array.isArray(value) ? value[0] : value) ?? ""}
+				onChange={(e) => onChange(e.target.value)}
+				disabled={disabled}
+				rows={4}
+				className="w-full resize-y rounded-xl border-2 border-border bg-background p-3 outline-none focus:border-[--system-accent]"
+				placeholder="Type your answer..."
+			/>
+		);
+	}
+
 	return (
 		<p className="text-muted-foreground text-sm">
 			Answer type not yet supported in exam mode.

@@ -1,6 +1,7 @@
 "use client";
 
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import { ConsentGate } from "@/components/consent/consent-gate";
 import { ParentInvitationDialog } from "@/components/consent/parent-invitation-dialog";
 import { PageContainer } from "@/components/layout/page-container";
@@ -10,9 +11,8 @@ import { ParentShell } from "@/components/parent/parent-shell";
 import { WeeklyReportPanel } from "@/components/parent/weekly-report-panel";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useAuth } from "@/lib/auth/auth-context";
-import { useState } from "react";
 import { toast } from "@/hooks/use-toast";
+import { useAuth } from "@/lib/auth/auth-context";
 
 export default function ParentDashboardPage() {
 	const { user } = useAuth();
@@ -27,7 +27,12 @@ export default function ParentDashboardPage() {
 			if (!res.ok) throw new Error("Failed to fetch");
 			return res.json() as Promise<{
 				children: {
-					student: { id: string; name: string; initials: string; grade: string };
+					student: {
+						id: string;
+						name: string;
+						initials: string;
+						grade: string;
+					};
 					subjects: {
 						subject: string;
 						score: number;

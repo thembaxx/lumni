@@ -1,7 +1,7 @@
 "use client";
 
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { AssignmentBuilder } from "@/components/teacher/assignment-builder";
 import { ClassRosterTable } from "@/components/teacher/class-roster-table";
 import { ClassShell } from "@/components/teacher/class-shell";
@@ -115,8 +115,8 @@ export default function TeacherDashboardPage() {
 						No students linked yet
 					</p>
 					<p className="max-w-md text-muted-foreground text-sm">
-						Ask your students to share their User ID from Settings &gt;
-						Profile &gt; Share Profile, then paste it above.
+						Ask your students to share their User ID from Settings &gt; Profile
+						&gt; Share Profile, then paste it above.
 					</p>
 				</div>
 			) : (

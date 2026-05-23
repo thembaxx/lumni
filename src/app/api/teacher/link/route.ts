@@ -15,10 +15,7 @@ export async function POST(request: Request) {
 		subjectId?: string;
 	};
 	if (!studentId) {
-		return NextResponse.json(
-			{ error: "studentId required" },
-			{ status: 400 },
-		);
+		return NextResponse.json({ error: "studentId required" }, { status: 400 });
 	}
 	try {
 		await linkStudentToTeacher(userId, studentId, subjectId);
@@ -39,10 +36,7 @@ export async function DELETE(request: Request) {
 	}
 	const { studentId } = (await request.json()) as { studentId?: string };
 	if (!studentId) {
-		return NextResponse.json(
-			{ error: "studentId required" },
-			{ status: 400 },
-		);
+		return NextResponse.json({ error: "studentId required" }, { status: 400 });
 	}
 	try {
 		await unlinkStudentFromTeacher(userId, studentId);

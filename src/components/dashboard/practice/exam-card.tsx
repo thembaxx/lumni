@@ -35,6 +35,7 @@ export function ExamCard({ exam }: ExamCardProps) {
 
 	const handlePractice = (e: React.MouseEvent) => {
 		e.stopPropagation();
+		push(`/quiz?subject=${encodeURIComponent(exam.subject ?? exam.title)}&count=10`);
 	};
 
 	const handleDownloadPdf = async (e: React.MouseEvent) => {

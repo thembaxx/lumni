@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import { getAuthenticatedUserId } from "@/lib/server/auth";
 import {
-	getParentStudents,
-	getChildSubjectProgress,
 	getChildActivityTimeline,
+	getChildSubjectProgress,
+	getParentStudents,
 } from "@/lib/server/parent-service";
 
 export async function GET() {

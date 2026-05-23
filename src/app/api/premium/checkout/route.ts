@@ -42,10 +42,10 @@ async function checkoutHandler(req: NextRequest) {
 			return NextResponse.json({ url: session.url });
 		}
 
-		const body = await req.json();
-		return NextResponse.json({
-			url: `/premium?checkout=${encodeURIComponent(JSON.stringify(body))}`,
-		});
+		return NextResponse.json(
+			{ error: "Payment not configured" },
+			{ status: 503 },
+		);
 	} catch (error) {
 		console.error("Checkout error:", error);
 		return NextResponse.json(
