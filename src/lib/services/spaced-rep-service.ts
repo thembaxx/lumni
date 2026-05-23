@@ -1,5 +1,6 @@
 import { flashcardRepository } from "@/lib/flashcard-repository";
 import type { Question } from "@/lib/question-engine/types";
+import { extractCorrectAnswer } from "@/lib/shared/question-utils";
 import { calculateNextReview } from "@/lib/utils/spaced-repetition";
 
 export class SpacedRepService {
@@ -51,22 +52,6 @@ export class SpacedRepService {
 			);
 		}
 	}
-}
-
-export function extractCorrectAnswer(question: Question): string | null {
-	const body = question.body;
-	if ("options" in body) {
-		const options = body.options as Array<{ text: string; isCorrect: boolean }>;
-		const correct = options.find((o) => o.isCorrect);
-		return correct?.text ?? null;
-	}
-	if ("modelAnswer" in body) {
-		return (body as { modelAnswer: string }).modelAnswer;
-	}
-	if ("correctValue" in body) {
-		return String((body as { correctValue: number }).correctValue);
-	}
-	return null;
 }
 
 export const spacedRepService = new SpacedRepService();

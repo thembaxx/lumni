@@ -188,7 +188,7 @@ describe("SpacedRepService", () => {
 	});
 });
 
-const { extractCorrectAnswer } = await import("../spaced-rep-service");
+const { extractCorrectAnswer } = await import("@/lib/shared/question-utils");
 
 describe("extractCorrectAnswer", () => {
 	test("extracts from MCQ options", () => {

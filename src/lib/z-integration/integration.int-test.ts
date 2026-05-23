@@ -108,7 +108,6 @@ mock.module("@/lib/db/schema", () => ({
 		wrongAnswers: mockWrongAnswersStore,
 		questionRatings: mockQuestionRatingsStore,
 		progress: createInMemoryStore(),
-		syncQueue: createInMemoryStore(),
 		quizSessions: createInMemoryStore(),
 	},
 	LumniOfflineDB: class {},

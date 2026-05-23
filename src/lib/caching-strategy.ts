@@ -23,7 +23,6 @@ export class CachingStrategy<T, P> {
 	) {}
 
 	async resolve(params: P): Promise<T | null> {
-		// Sequential: check cache tiers in priority order (L1 → L2 → remote), stop at first hit
 		for (const tier of this.tiers) {
 			const cached = await tier.read(params);
 			if (cached !== null && cached !== undefined) return cached;
@@ -42,4 +41,11 @@ export class CachingStrategy<T, P> {
 
 		return generated;
 	}
+}
+
+export function createCachingStrategy<T, P>(
+	tiers: CacheTier<T, P>[],
+	generate: (params: P) => Promise<T | null>,
+): CachingStrategy<T, P> {
+	return new CachingStrategy(tiers, { generate });
 }

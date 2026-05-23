@@ -18,12 +18,11 @@ describe("LumniOfflineDB", () => {
 		expect(offlineDB.verno).toBe(12);
 	});
 
-	test("has all 17 expected tables", () => {
+	test("has all 16 expected tables", () => {
 		expect(offlineDB.chatMessages).toBeDefined();
 		expect(offlineDB.questions).toBeDefined();
 		expect(offlineDB.progress).toBeDefined();
 		expect(offlineDB.quizAttempts).toBeDefined();
-		expect(offlineDB.syncQueue).toBeDefined();
 		expect(offlineDB.subjects).toBeDefined();
 		expect(offlineDB.quizSessions).toBeDefined();
 		expect(offlineDB.conflicts).toBeDefined();
@@ -46,7 +45,6 @@ describe("LumniOfflineDB", () => {
 		expect(tables).toContain("questions");
 		expect(tables).toContain("progress");
 		expect(tables).toContain("quizAttempts");
-		expect(tables).toContain("syncQueue");
 		expect(tables).toContain("subjects");
 		expect(tables).toContain("quizSessions");
 		expect(tables).toContain("conflicts");
@@ -57,7 +55,7 @@ describe("LumniOfflineDB", () => {
 		expect(tables).toContain("examSessions");
 		expect(tables).toContain("cachedPdfs");
 		expect(tables).toContain("examDates");
-		expect(tables).toHaveLength(17);
+		expect(tables).toHaveLength(16);
 	});
 
 	test("flashcards table has string primary key", () => {
