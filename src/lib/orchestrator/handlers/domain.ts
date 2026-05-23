@@ -12,14 +12,14 @@ import { safePersist } from "@/lib/db/persist";
 import { getProgress, saveProgress } from "@/lib/db/repositories/progress";
 import { flashcardRepository } from "@/lib/flashcard-repository";
 import { queueCore } from "@/lib/orchestrator/job-queue";
-import type { Question } from "@/lib/question-engine/types";
+import type { JobPayloadByType } from "@/lib/orchestrator/types";
 import { extractCorrectAnswer } from "@/lib/shared/question-utils";
 import { calculateNextReview } from "@/lib/utils/spaced-repetition";
 import { visualEngine } from "@/lib/visual-engine/visual-engine";
 import type { JobHandler } from "./index";
 
 export const analyticsSync: JobHandler = async (payload) => {
-	const { events } = payload as { events: unknown[] };
+	const { events } = payload as JobPayloadByType["analytics-sync"];
 	await safePersist("analytics sync", async () => {
 		const batchSize = 50;
 		const batchPromises = [];
@@ -43,10 +43,7 @@ export const analyticsSync: JobHandler = async (payload) => {
 };
 
 export const spacedRepUpdate: JobHandler = async (payload) => {
-	const { question, result } = payload as {
-		question: Question;
-		result: { correct: boolean; score: number };
-	};
+	const { question, result } = payload as JobPayloadByType["spaced-rep-update"];
 
 	const quality = result.correct
 		? result.score >= 0.9
@@ -94,10 +91,7 @@ export const spacedRepUpdate: JobHandler = async (payload) => {
 };
 
 export const progressUpdate: JobHandler = async (payload) => {
-	const { subject, result } = payload as {
-		subject: string;
-		result: { correct: boolean; score: number };
-	};
+	const { subject, result } = payload as JobPayloadByType["progress-update"];
 
 	const existing = await getProgress(subject);
 
@@ -135,12 +129,8 @@ export const progressUpdate: JobHandler = async (payload) => {
 };
 
 export const competencyUpdate: JobHandler = async (payload) => {
-	const { subject, topic, bloomLevel, score } = payload as {
-		subject: string;
-		topic: string;
-		bloomLevel: string;
-		score: number;
-	};
+	const { subject, topic, bloomLevel, score } =
+		payload as JobPayloadByType["competency-update"];
 
 	const curriculum = await curriculumRegistry.getSubject(subject);
 	const weight = computeBloomWeight(curriculum, topic, bloomLevel);
@@ -155,12 +145,8 @@ export const competencyUpdate: JobHandler = async (payload) => {
 };
 
 export const visualGeneration: JobHandler = async (payload) => {
-	const { questionId, questionText, subject, topic } = payload as {
-		questionId: string;
-		questionText: string;
-		subject: string;
-		topic?: string;
-	};
+	const { questionId, questionText, subject, topic } =
+		payload as JobPayloadByType["visual-generation"];
 	await visualEngine.resolve({
 		questionId,
 		questionText,
@@ -170,10 +156,7 @@ export const visualGeneration: JobHandler = async (payload) => {
 };
 
 export const questionRegen: JobHandler = async (payload) => {
-	const data = payload as {
-		questionId: string;
-		subject: string;
-	};
+	const data = payload as JobPayloadByType["question-regen"];
 
 	const existingDocs = await listDocuments<Record<string, unknown>>(
 		COLLECTIONS.QUESTIONS,

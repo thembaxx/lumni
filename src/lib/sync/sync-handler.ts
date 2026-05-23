@@ -103,7 +103,6 @@ export async function flushOfflineData(userId: string): Promise<void> {
 			await enqueue("appwrite-rating-sync", {
 				questionId: r.questionId,
 				subject: r.subject,
-				topic: r.topic,
 				rating: r.rating,
 				feedback: r.feedback,
 				createdAt: r.createdAt,

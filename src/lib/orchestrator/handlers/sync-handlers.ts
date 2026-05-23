@@ -6,8 +6,8 @@ import {
 	updateDocument,
 } from "@/lib/db/client";
 import { queueCore } from "@/lib/orchestrator/job-queue";
+import type { JobPayloadByType } from "@/lib/orchestrator/types";
 import { syncQuestionsToAppwrite } from "@/lib/question-engine/persistence";
-import type { Question } from "@/lib/question-engine/types";
 import type { JobHandler } from "./index";
 
 async function upsertDocument(
@@ -35,23 +35,12 @@ async function upsertDocument(
 }
 
 export const appwriteSync: JobHandler = async (payload) => {
-	const { questions, subject, topic } = payload as {
-		questions: Question[];
-		subject: string;
-		topic?: string;
-	};
-	await syncQuestionsToAppwrite(questions, subject, topic);
+	const data = payload as JobPayloadByType["appwrite-sync"];
+	await syncQuestionsToAppwrite(data.questions, data.subject, data.topic);
 };
 
 export const appwriteProgressSync: JobHandler = async (payload) => {
-	const data = payload as {
-		odSubjectId: string;
-		userId: string;
-		questionsAttempted: number;
-		correctCount: number;
-		currentStreak: number;
-		longestStreak: number;
-	};
+	const data = payload as JobPayloadByType["appwrite-progress-sync"];
 	await upsertDocument(
 		COLLECTIONS.USER_PROGRESS,
 		[
@@ -70,14 +59,7 @@ export const appwriteProgressSync: JobHandler = async (payload) => {
 };
 
 export const appwriteAttemptSync: JobHandler = async (payload) => {
-	const data = payload as {
-		userId: string;
-		subjectId: string;
-		score: number;
-		totalQuestions: number;
-		duration: number;
-		completedAt: number;
-	};
+	const data = payload as JobPayloadByType["appwrite-attempt-sync"];
 	await createDocument(COLLECTIONS.STUDY_SESSIONS, {
 		userId: data.userId,
 		subjectId: data.subjectId,
@@ -90,16 +72,7 @@ export const appwriteAttemptSync: JobHandler = async (payload) => {
 };
 
 export const appwriteCompetencySync: JobHandler = async (payload) => {
-	const data = payload as {
-		userId?: string;
-		subjectId: string;
-		topicId: string;
-		bloomLevel: string;
-		proficiency: number;
-		attempts: number;
-		level: string;
-		lastAssessed: number;
-	};
+	const data = payload as JobPayloadByType["appwrite-competency-sync"];
 	await upsertDocument(
 		COLLECTIONS.COMPETENCIES,
 		[
@@ -121,20 +94,7 @@ export const appwriteCompetencySync: JobHandler = async (payload) => {
 };
 
 export const appwriteFlashcardSync: JobHandler = async (payload) => {
-	const data = payload as {
-		userId?: string;
-		id: string;
-		front: string;
-		back: string;
-		subject: string;
-		topic?: string;
-		easeFactor: number;
-		interval: number;
-		repetitions: number;
-		nextReview: number;
-		lastReview: number | null;
-		createdAt: number;
-	};
+	const data = payload as JobPayloadByType["appwrite-flashcard-sync"];
 	await createDocument(COLLECTIONS.FLASHCARDS, {
 		userId: data.userId,
 		flashcardId: data.id,
@@ -154,19 +114,7 @@ export const appwriteFlashcardSync: JobHandler = async (payload) => {
 };
 
 export const appwriteWrongAnswerSync: JobHandler = async (payload) => {
-	const data = payload as {
-		userId?: string;
-		questionId: string;
-		questionText: string;
-		subject: string;
-		topic: string;
-		correctAnswer: string;
-		userAnswer: string;
-		explanation: string;
-		createdAt: number;
-		reviewed: boolean;
-		errorType?: string;
-	};
+	const data = payload as JobPayloadByType["appwrite-wrong-answer-sync"];
 	await createDocument(COLLECTIONS.WRONG_ANSWERS, {
 		userId: data.userId,
 		questionId: data.questionId,
@@ -183,14 +131,7 @@ export const appwriteWrongAnswerSync: JobHandler = async (payload) => {
 };
 
 export const appwriteChatSync: JobHandler = async (payload) => {
-	const data = payload as {
-		userId?: string;
-		messageId: string;
-		role: string;
-		content: string;
-		type?: string;
-		timestamp: number;
-	};
+	const data = payload as JobPayloadByType["appwrite-chat-sync"];
 	await createDocument(COLLECTIONS.CHAT_MESSAGES, {
 		userId: data.userId,
 		messageId: data.messageId,
@@ -202,13 +143,7 @@ export const appwriteChatSync: JobHandler = async (payload) => {
 };
 
 export const appwriteRatingSync: JobHandler = async (payload) => {
-	const data = payload as {
-		questionId: string;
-		subject: string;
-		rating: number;
-		feedback?: string;
-		createdAt: number;
-	};
+	const data = payload as JobPayloadByType["appwrite-rating-sync"];
 	await createDocument(COLLECTIONS.QUESTIONS, {
 		type: "rating",
 		questionId: data.questionId,
@@ -246,12 +181,7 @@ export const appwriteRatingSync: JobHandler = async (payload) => {
 };
 
 export const appwriteStudyPlanSync: JobHandler = async (payload) => {
-	const data = payload as {
-		userId: string;
-		sessions: unknown[];
-		examDates: unknown[];
-		generatedAt: number;
-	};
+	const data = payload as JobPayloadByType["appwrite-study-plan-sync"];
 
 	const existing = await listDocuments<Record<string, unknown>>(
 		COLLECTIONS.STUDY_PLANS,
@@ -278,13 +208,7 @@ export const appwriteStudyPlanSync: JobHandler = async (payload) => {
 };
 
 export const appwriteQuestionFlag: JobHandler = async (payload) => {
-	const data = payload as {
-		questionId: string;
-		userId: string;
-		reason: string;
-		details?: string;
-		createdAt: number;
-	};
+	const data = payload as JobPayloadByType["appwrite-question-flag"];
 	await createDocument(COLLECTIONS.QUESTION_FLAGS, {
 		questionId: data.questionId,
 		userId: data.userId,

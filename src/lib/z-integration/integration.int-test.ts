@@ -192,21 +192,6 @@ mock.module("@/lib/visual-engine/visual-engine", () => ({
 	visualEngine: { resolve: mockVisualResolve },
 }));
 
-const mockAnalyticsSync = mock(() => {});
-mock.module("@/lib/services/analytics-service", () => ({
-	analyticsService: { sync: mockAnalyticsSync },
-}));
-
-const mockSpacedRepUpdate = mock(() => {});
-mock.module("@/lib/services/spaced-rep-service", () => ({
-	spacedRepService: { update: mockSpacedRepUpdate },
-}));
-
-const mockProgressUpdate = mock(() => {});
-mock.module("@/lib/services/progress-service", () => ({
-	progressService: { update: mockProgressUpdate },
-}));
-
 const mockCompUpdate = mock(() => {});
 mock.module("@/lib/competency-engine", () => ({
 	competencyService: { update: mockCompUpdate },
@@ -252,9 +237,6 @@ describe("Integration: Orchestrator → VisualEngine → Dexie caching", () => {
 		mockCacheQuestions.mockClear();
 		mockLoadFromAppwrite.mockClear();
 		mockSyncToAppwrite.mockClear();
-		mockAnalyticsSync.mockClear();
-		mockSpacedRepUpdate.mockClear();
-		mockProgressUpdate.mockClear();
 		mockCompUpdate.mockClear();
 		mockGenerateDiagram.mockClear();
 		mockSearchImage.mockClear();

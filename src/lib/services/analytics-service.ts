@@ -1,6 +1,3 @@
-import { databases } from "@/lib/appwrite";
-import { APPWRITE_DATABASE_ID } from "@/lib/db/client";
-import { safePersist } from "@/lib/db/persist";
 import { trackEngineEvent } from "@/lib/utils/engine-analytics";
 
 export class AnalyticsService {
@@ -16,32 +13,6 @@ export class AnalyticsService {
 		trackEngineEvent({ event, ...data });
 	}
 
-	async sync(events: unknown[]): Promise<void> {
-		await safePersist("analytics sync", async () => {
-			const batchSize = 50;
-			const batchPromises = [];
-			for (let i = 0; i < events.length; i += batchSize) {
-				const batch = events.slice(i, i + batchSize);
-				batchPromises.push(
-					Promise.allSettled(
-						batch.map((event) =>
-							databases
-								.createDocument(APPWRITE_DATABASE_ID, "analytics", "unique()", {
-									event: JSON.stringify(event),
-									createdAt: new Date().toISOString(),
-								})
-								.catch((e) => console.warn("Analytics write failed:", e)),
-						),
-					),
-				);
-			}
-			await Promise.all(batchPromises);
-		});
-	}
-
-	/**
-	 * Get comparative analytics compared to other users (anonymized)
-	 */
 	async getComparativeAnalytics(userId: string): Promise<{
 		userPercentile: number;
 		subjectRankings: Record<string, number>;
@@ -76,9 +47,6 @@ export class AnalyticsService {
 		};
 	}
 
-	/**
-	 * Get trends over time for subject performance
-	 */
 	async getSubjectTrend(
 		userId: string,
 		subject: string,

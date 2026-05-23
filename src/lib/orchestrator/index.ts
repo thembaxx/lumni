@@ -4,6 +4,7 @@ export { LearningOrchestrator } from "./learning-orchestrator";
 export type {
 	GenerateResult,
 	GradeResult,
+	JobPayloadByType,
 	JobRecord,
 	JobStats,
 	JobStatus,
