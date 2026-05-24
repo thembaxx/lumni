@@ -1,6 +1,9 @@
 import { describe, expect, test } from "bun:test";
 import { calculateNextReview } from "@/lib/orchestrator/sm2";
-import { getIntervalLabel, getMasteryLevel } from "@/lib/utils/spaced-repetition";
+import {
+	getIntervalLabel,
+	getMasteryLevel,
+} from "@/lib/utils/spaced-repetition";
 
 describe("calculateNextReview (SM-2)", () => {
 	test("quality < 3 resets repetitions to 0 and interval to 1", () => {

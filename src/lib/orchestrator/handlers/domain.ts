@@ -10,9 +10,9 @@ import { safePersist } from "@/lib/db/persist";
 import { getProgress, saveProgress } from "@/lib/db/repositories/progress";
 import { flashcardRepository } from "@/lib/flashcard-repository";
 import { enqueue } from "@/lib/orchestrator/job-queue";
+import { calculateNextReview } from "@/lib/orchestrator/sm2";
 import type { JobPayloadByType } from "@/lib/orchestrator/types";
 import { extractCorrectAnswer } from "@/lib/shared/question-utils";
-import { calculateNextReview } from "@/lib/orchestrator/sm2";
 import { visualEngine } from "@/lib/visual-engine/visual-engine";
 import type { JobHandler } from "./index";
 

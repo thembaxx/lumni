@@ -1,12 +1,10 @@
 import { offlineDB } from "@/lib/db/schema";
 import type {
+	AnalyticsRecommendation,
 	OverallAnalytics,
+	PerformanceHistoryItem,
 	SubjectAnalytics,
 	TopicPerformance,
-	PerformanceHistoryItem,
-	AnalyticsRecommendation,
-	ComparativeAnalytics,
-	SubjectTrend,
 } from "./types";
 
 interface TopicGroup {
@@ -170,7 +168,7 @@ function generateRecommendations(
 }
 
 export class AnalyticsEngine {
-	async compute(userId?: string): Promise<OverallAnalytics> {
+	async compute(_userId?: string): Promise<OverallAnalytics> {
 		const [competencies, progressRecords, attempts] = await Promise.all([
 			offlineDB.competencies.toArray(),
 			offlineDB.progress.toArray(),
@@ -194,9 +192,7 @@ export class AnalyticsEngine {
 				(c) => c.subjectId === subjectId,
 			);
 			const subjectProgress = progressBySubject.get(subjectId);
-			const subjectAttempts = attempts.filter(
-				(a) => a.odSubject === subjectId,
-			);
+			const subjectAttempts = attempts.filter((a) => a.odSubject === subjectId);
 
 			const topicMap = groupByTopic(subjectComps);
 			const topicStats: TopicPerformance[] = [];

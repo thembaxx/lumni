@@ -2,16 +2,14 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "@/components/ui/toast";
+import type { StoredGamification } from "@/lib/gamification-engine";
+import { gamificationEngine } from "@/lib/gamification-engine";
 import type { Achievement, LevelInfo } from "@/types/gamification";
 import {
 	ACHIEVEMENTS,
 	calculateLevel,
-	type DailyChallenge,
-	STREAK_MILESTONES,
 	type UserGamification,
 } from "@/types/gamification";
-import { gamificationEngine } from "@/lib/gamification-engine";
-import type { StoredGamification } from "@/lib/gamification-engine";
 
 export function useGamification() {
 	const [data, setData] = useState<StoredGamification>(
@@ -58,8 +56,13 @@ export function useGamification() {
 	const addXp = useCallback(
 		(amount: number, accuracy: number, streak: number, subject?: string) => {
 			setData((prev) => {
-				const { data: newData, leveledUp: newLevel } =
-					gamificationEngine.addXp(prev, amount, accuracy, streak, subject);
+				const { data: newData, leveledUp: newLevel } = gamificationEngine.addXp(
+					prev,
+					amount,
+					accuracy,
+					streak,
+					subject,
+				);
 				if (newLevel !== null) {
 					setLeveledUp(calculateLevel(newData.totalXp));
 					prevLevelRef.current = newLevel;
@@ -73,8 +76,10 @@ export function useGamification() {
 
 	const addAchievement = useCallback((achievementId: string) => {
 		setData((prev) => {
-			const { data: newData, achievement } =
-				gamificationEngine.addAchievement(prev, achievementId);
+			const { data: newData, achievement } = gamificationEngine.addAchievement(
+				prev,
+				achievementId,
+			);
 			if (achievement) {
 				setPendingAchievement(achievement);
 				setTimeout(() => {
@@ -107,12 +112,12 @@ export function useGamification() {
 				currentLevel,
 				perfectQuiz,
 			);
-			newAchievements.forEach((id: string) => addAchievement(id));
+			for (const id of newAchievements) addAchievement(id);
 		},
 		[data, addAchievement],
 	);
 
-	const streakXpReward = useCallback(
+	const _streakXpReward = useCallback(
 		(streak: number): number => gamificationEngine.getStreakXpReward(streak),
 		[],
 	);

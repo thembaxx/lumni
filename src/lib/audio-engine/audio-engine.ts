@@ -70,7 +70,7 @@ export class AudioEngine {
 
 		try {
 			const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-			stream.getTracks().forEach((t) => t.stop());
+			for (const t of stream.getTracks()) t.stop();
 			this.permissionStatus = "granted";
 			this._error = null;
 			this.notify();
@@ -119,7 +119,7 @@ export class AudioEngine {
 				const blob = new Blob(this.audioChunks, { type: "audio/webm" });
 				this._audioBlob = blob;
 				this._totalDuration = this._duration;
-				stream.getTracks().forEach((t) => t.stop());
+				for (const t of stream.getTracks()) t.stop();
 				this.notify();
 			};
 
