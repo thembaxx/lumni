@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { UTApi } from "uploadthing/server";
 import { databases } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
+import { getAuthenticatedUserId } from "@/lib/server/auth";
 import type { ExamPaper as ExamPaperData } from "@/types/exam-paper";
 
 export const runtime = "nodejs";
@@ -12,6 +13,11 @@ export async function GET(
 	_request: Request,
 	{ params }: { params: Promise<{ id: string }> },
 ) {
+	const userId = await getAuthenticatedUserId();
+	if (!userId) {
+		return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+	}
+
 	try {
 		const { id } = await params;
 

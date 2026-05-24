@@ -294,4 +294,60 @@ export const schemaConfig: Record<string, CollectionSchema> = {
 			},
 		],
 	},
+	teacher_students: {
+		attributes: {
+			teacherId: { type: "string", size: 100, required: true },
+			studentId: { type: "string", size: 100, required: true },
+			subjectId: { type: "string", size: 100 },
+			createdAt: { type: "datetime" },
+		},
+		indexes: [
+			{
+				key: "idx_teacher_students_teacherId",
+				type: "key",
+				attributes: ["teacherId"],
+			},
+			{
+				key: "idx_teacher_students_studentId",
+				type: "key",
+				attributes: ["studentId"],
+			},
+			{
+				key: "idx_teacher_students_pair",
+				type: "unique",
+				attributes: ["teacherId", "studentId"],
+			},
+		],
+	},
+	parent_students: {
+		attributes: {
+			parentId: { type: "string", size: 100, required: true },
+			studentId: { type: "string", size: 100, required: true },
+			consentStatus: {
+				type: "string",
+				size: 20,
+				required: true,
+			},
+			canViewProgress: { type: "boolean" },
+			canViewScores: { type: "boolean" },
+			createdAt: { type: "datetime" },
+		},
+		indexes: [
+			{
+				key: "idx_parent_students_parentId",
+				type: "key",
+				attributes: ["parentId"],
+			},
+			{
+				key: "idx_parent_students_studentId",
+				type: "key",
+				attributes: ["studentId"],
+			},
+			{
+				key: "idx_parent_students_pair",
+				type: "unique",
+				attributes: ["parentId", "studentId"],
+			},
+		],
+	},
 };

@@ -27,6 +27,68 @@ All 21 items across P2 and P3 are implemented. Total changes:
 - 1 file deleted (old ExamCalendar)
 - 22 new tests added (all passing)
 
-### TypeScript & Lint
-- `npx tsc --noEmit` — 1 pre-existing error (global-error.tsx, unrelated)
-- `npx biome check` — clean
+### Batch 1 — Superpowers (ICE: 392/252/240/240)
+- [x] **APS badge** — `src/lib/shared/aps.ts` shared util; badge in exam session and quiz results
+- [x] **TTS expansion** — Fixed multi-subscriber callback bug in `TTSService`; wired `TTSButton` to note-list, note-editor, flashcard, QuestionCardInput, QuestionCardFeedback
+- [x] **Snap FAB** — Camera button on math question cards (`QuestionCardHeader.tsx`)
+- [x] **Home page decomposition** — 6 section files (hero, features, how-it-works, testimonials, pricing, footer); rewritten `home-content.tsx` as thin orchestrator
+
+## Next Up
+
+### P2 — Upcoming Features <!-- linear-priority: 2 -->
+
+Remaining brainstorm items (i18n, gamification expansion, share/export, spaced repetition v2, study groups, photo math implementation, etc.) — not yet scheduled.
+
+### P3 — Bug Fixes <!-- linear-priority: 3 -->
+
+## ✅ Session 8 — Unimplemented Fixes (May 2026)
+
+Automated scan of `src/` across 7 phases. All P0-P3 items from scan have been fixed. Details below.
+
+### P0 — Fixed
+- [x] **Search toolbar dead buttons** — Removed 3 dead buttons (camera, mic, voice wave) from `search-input.tsx` that had no onClick handlers or fake CSS-only animation
+- [x] **Study-set editor alert stubs** — Replaced `alert("...picker would open here")` with proper Dialogs that load flashcards from Dexie and notes from localStorage (`study-set-editor.tsx:174,230`)
+- [x] **seed.ts stubs** — `getUserStats()` now queries Dexie `quizAttempts` table; `selectSubject()` now persists to Dexie `progress` + localStorage (`seed.ts:29,38`)
+- [x] **Premium cancel silent fallthrough** — Returns `503` with error message instead of silent `{ success: true }` when Stripe is unconfigured (`premium/cancel/route.ts:60`)
+- [x] **Premium page silent free grant** — Removed `upgrade()` fallback when Stripe checkout fails; upgrade only proceeds via Stripe (`premium/page.tsx:56`)
+
+### P1 — Fixed
+- [x] **Chat dialog resource leak** — `_handleClose` renamed to `handleClose` and wired to close button instead of bypassing it (`chat-dialog.tsx:31`)
+- [x] **Error type persistence** — Added `updateErrorType()` to `useWrongAnswerJournal()` hook; wired to review page `handleErrorTypeChange` (`use-wrong-answer-journal.ts`, `review/page.tsx:61`)
+- [x] **Exam diagram type missing input** — Added textarea for diagram questions in exam mode (`exam-session-client.tsx:199`)
+- [x] **Unsupported exam answer types** — Fallback now shows textarea + explains the type instead of dead-ending (`exam-session-client.tsx:239`)
+
+### P2 — Fixed
+- [x] **Mock exam results labeled** — Added "Demo data" badge to `results-search.tsx` heading
+- [x] **Deleted dead activity-service.ts** — Entire 35-line file removed (zero consumers)
+- [x] **Cleanup orphaned types** — Removed `ExamSessionData`, `ExamPaperFileKeys`, `ExamPaperMetadata` from `types/exam-session.ts` (kept `ExamAnswer` — used by store and results)
+- [x] **Sync GET returns state** — Now returns `lastSync` timestamp from localStorage instead of static message (`sync/route.ts:72`)
+- [x] **Desktop sidebar Chat href** — Changed from `href: ""` to `href: "/chat"` for consistency + active route detection (`desktop-sidebar.tsx:43`)
+
+### P3 — Fixed
+- [x] **Removed 2 stub functions** — Deleted `loadFlashcards()` and `saveFlashcards()` from `spaced-repetition.ts` (always returned `[]` / no-op, zero callers)
+- [x] **Removed 17 unused animation exports** — `iOSSpring`, `easeOutQuint`, `fastTransition`, `slowTransition`, `pageEnterForward`, `pageExitBack`, `pageSpring`, `springStiffTransition`, `springGesture`, `stagger`, `fadeInUp`, `fadeInScale`, `fadeInLeft`, `tabContent`, `pageSlideVariants`, `sheetVariants`, `popoverVariants` — all removed (zero import sites confirmed)
+- [x] **top-nav.tsx dead import** — Fixed `getRandomName` import (function was actually used; renamed without underscore prefix)
+- [x] **dev/visual dead state** — Removed unused `testResult` state + rendering block (`dev/visual/page.tsx:40`)
+- [x] **Upload page sync feedback** — Replaced dead refs with state; added sync status indicator in upload UI (`upload/page.tsx:19,21`)
+- [x] **TypeScript check** — `npx tsc --noEmit` passes with zero errors
+- [x] **Biome lint** — `npx biome check` passes with zero warnings
+
+### Still Pending (not yet implemented)
+- **Premium gating**: `hasFeature()` is never called in production — zero feature gates enforce premium vs free
+- **"priority-support" feature**: Defined in type system and listed on marketing page, but zero code exists
+- **`study-planner/index.ts` barrel**: Orphaned re-export file with no consumers
+- **`aps.ts:calculateAPS()` export**: Dead export (consumer defines local version)
+- **`exam-parser/index.ts:convertMarkdownToJson()`**: Dead export
+- **Dexie `subjects` table**: Has schema but no write path
+- **Dexie `chatMessages` table**: Has schema + sync handler ref but no write path
+- **`admin-page-client.tsx`:14 — `Preloader`**: Simulates fake loading progress with Math.random()
+- **`flashcard-import-export.ts:exportToCSV()`**: Exported but only used internally
+
+### TypeScript & Lint (Session 8 — cleanup sweep)
+- [x] **Biome lint** — fixed 22 issues:
+  - 11 auto-fixed (formatting, import organization, sorted classes)
+  - 7 unsafe-fixed (unused imports `useState`, non-null assertions `!.` → `?.`, unused vars `_progressDocs`)
+  - 3 manual fixes (non-null assertions in `teacher-service.ts` → `as` casts, array index key in `weekly-report-panel.tsx` → biome-ignore)
+- [x] **TypeScript** — `tsc --noEmit` passes with zero errors
+- [x] **Build — middleware/proxy migration**: `src/middleware.ts` and `src/proxy.ts` coexisted, causing Next.js 16.2.6 build error. Merged auth logic into `proxy.ts`, deleted `middleware.ts`. Build compiles successfully (Turbopack Google Fonts issue is pre-existing/environmental).

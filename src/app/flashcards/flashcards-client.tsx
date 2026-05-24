@@ -10,7 +10,7 @@ import { LocalDataNotice } from "@/components/shared/local-data-notice";
 import { useGamification } from "@/hooks/use-gamification";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
-import { trackQuestionResult } from "@/lib/competency-engine";
+import { trackQuestionResult } from "@/lib/orchestrator";
 import { migrateLegacyFlashcards } from "@/lib/flashcard-repository/migrate";
 import type { Question } from "@/lib/question-engine/types";
 import {

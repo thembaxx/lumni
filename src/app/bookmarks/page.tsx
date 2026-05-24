@@ -2,12 +2,12 @@
 
 import { Bookmark01Icon, Delete01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { PageContainer } from "@/components/layout/page-container";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { LocalDataNotice } from "@/components/shared/local-data-notice";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { PageContainer } from "@/components/layout/page-container";
 import { useBookmarksStore } from "@/store/bookmarks";
 
 export default function BookmarksPage() {
@@ -33,7 +33,7 @@ export default function BookmarksPage() {
 							/>
 							<p className="font-semibold text-base">No bookmarks yet</p>
 							<p className="mt-1 text-muted-foreground text-sm">
-								Bookmark01Icon questions during quizzes to save them here.
+								Bookmark questions during quizzes to save them here.
 							</p>
 						</CardContent>
 					</Card>

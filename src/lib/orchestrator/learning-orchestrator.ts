@@ -6,6 +6,7 @@ import type {
 } from "@/lib/question-engine/types";
 import { serializeQuestionType } from "@/lib/shared/question-type";
 import { trackEngineEvent } from "@/lib/utils/engine-analytics";
+import { enqueueGradeSideEffects } from "./grading";
 import { enqueue } from "./job-queue";
 import type { GenerateResult, GradeResult } from "./types";
 
@@ -28,9 +29,7 @@ export class LearningOrchestrator {
 		const questions = await this.engine.generate(params);
 		const sliced = questions.slice(0, count);
 
-		const jobIds: number[] = [];
-
-		const [_syncJobId, ..._visualJobIds] = await Promise.all([
+		const [syncJobId, ...visualJobIds] = await Promise.all([
 			enqueue("appwrite-sync", {
 				questions: sliced,
 				subject,
@@ -45,6 +44,8 @@ export class LearningOrchestrator {
 				}),
 			),
 		]);
+
+		const jobIds = [syncJobId, ...visualJobIds];
 
 		trackEngineEvent({
 			event: "generate",
@@ -70,39 +71,17 @@ export class LearningOrchestrator {
 		const startTime = Date.now();
 
 		const result = await this.engine.grade(question, answer);
-		const jobIds: number[] = [];
 
-		const [repJobId, analyticsJobId, progressJobId, competencyJobId] =
-			await Promise.all([
-				enqueue("spaced-rep-update", {
-					question,
-					result: { correct: result.correct, score: result.score },
-				}),
-				enqueue("analytics-sync", {
-					events: [
-						{
-							event: "grade",
-							timestamp: startTime,
-							subject: question.subject,
-							questionType: question.type,
-							success: result.correct,
-							duration: Date.now() - startTime,
-						},
-					],
-				}),
-				enqueue("progress-update", {
-					subject: question.subject,
-					result: { correct: result.correct, score: result.score },
-				}),
-				enqueue("competency-update", {
-					subject: question.subject,
-					topic: question.topic,
-					bloomLevel: question.bloomTaxonomy,
-					score:
-						result.maxScore > 0 ? (result.score / result.maxScore) * 100 : 0,
-				}),
-			]);
-		jobIds.push(repJobId, analyticsJobId, progressJobId, competencyJobId);
+		await enqueueGradeSideEffects({
+			subject: question.subject,
+			topic: question.topic,
+			bloomLevel: question.bloomTaxonomy,
+			questionType: question.type,
+			score: result.score,
+			maxScore: result.maxScore,
+			correct: result.correct,
+			question,
+		});
 
 		trackEngineEvent({
 			event: "grade",
@@ -112,6 +91,6 @@ export class LearningOrchestrator {
 			duration: Date.now() - startTime,
 		});
 
-		return { result, jobIds };
+		return { result, jobIds: [] };
 	}
 }

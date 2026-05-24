@@ -1,5 +1,8 @@
 import { initAI, isAIConfigured } from "@/lib/ai";
-import { CachingStrategy } from "@/lib/caching-strategy";
+import {
+	type CachingStrategy,
+	createCachingStrategy,
+} from "@/lib/caching-strategy";
 import {
 	cacheVisual,
 	getCachedVisual,
@@ -18,7 +21,7 @@ export class VisualEngine {
 	private cachingStrategy: CachingStrategy<VisualContent, VisualEngineParams>;
 
 	constructor() {
-		this.cachingStrategy = new CachingStrategy<
+		this.cachingStrategy = createCachingStrategy<
 			VisualContent,
 			VisualEngineParams
 		>(
@@ -52,9 +55,7 @@ export class VisualEngine {
 					},
 				},
 			],
-			{
-				generate: async (params) => this.generate(params),
-			},
+			(params) => this.generate(params),
 		);
 	}
 

@@ -9,6 +9,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 import { useMemo, useState } from "react";
+import { PageContainer } from "@/components/layout/page-container";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { StepByStep } from "@/components/quiz/step-by-step";
 import { Anim } from "@/components/shared/anim";
@@ -19,7 +20,6 @@ import {
 	type CuratedProblem,
 	useCuratedProblems,
 } from "@/hooks/use-curated-problems";
-import { PageContainer } from "@/components/layout/page-container";
 import { cn } from "@/lib/shared";
 
 const DIFFICULTIES = ["all", "Easy", "Medium", "Hard"] as const;

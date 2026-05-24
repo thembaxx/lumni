@@ -3,6 +3,7 @@
 import { randomUUID } from "node:crypto";
 import { Query } from "appwrite";
 import { UTApi, UTFile } from "uploadthing/server";
+import type { Subject, UserSubject } from "@/lib/db/client";
 import {
 	COLLECTIONS,
 	createDocument,
@@ -12,22 +13,27 @@ import {
 } from "@/lib/db/client";
 import { auth, requireAdmin, verifyAuth } from "@/lib/server/auth";
 
+function mapSubject(s: Subject) {
+	return { ...s, id: s.code || s.$id };
+}
+
 export async function fetchSubjects(userId: string) {
 	await verifyAuth(userId);
 	const targetUserId = userId;
 
-	const [subjects, selectedUserSubjects] = await Promise.all([
-		listDocuments(COLLECTIONS.SUBJECTS),
-		listDocuments(COLLECTIONS.USER_SUBJECTS, [
+	const [subjectDocs, userSubjectDocs] = await Promise.all([
+		listDocuments<Subject>(COLLECTIONS.SUBJECTS),
+		listDocuments<UserSubject>(COLLECTIONS.USER_SUBJECTS, [
 			Query.equal("userId", targetUserId),
 		]),
 	]);
 
-	const selectedIds = selectedUserSubjects.map(
-		(us) => (us as Record<string, unknown>).subjectId as string,
-	);
+	const selectedIds = userSubjectDocs.map((us) => us.subjectId);
 
-	return { subjects, selectedSubjectIds: selectedIds };
+	return {
+		subjects: subjectDocs.map(mapSubject),
+		selectedSubjectIds: selectedIds,
+	};
 }
 
 export async function fetchUserProgress(userId: string) {
@@ -167,5 +173,21 @@ export async function adminUploadExamPaper(
 export async function getUserAccounts(_userId: string) {
 	await auth();
 	await requireAdmin();
-	return [];
+	try {
+		const { Users } = await import("node-appwrite");
+		const { serverClient } = await import("@/lib/appwrite");
+		const usersApi = new Users(serverClient);
+		const response = await usersApi.list();
+		return response.users.map((u) => ({
+			id: u.$id,
+			name: u.name,
+			email: u.email,
+			emailVerification: u.emailVerification,
+			labels: u.labels,
+			createdAt: u.$createdAt,
+		}));
+	} catch (error) {
+		console.error("Failed to fetch user accounts:", error);
+		return [];
+	}
 }

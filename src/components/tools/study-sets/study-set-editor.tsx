@@ -1,8 +1,14 @@
 "use client";
 
 import { m } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import {
+	Dialog,
+	DialogContent,
+	DialogHeader,
+	DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -52,6 +58,56 @@ export function StudySetForm({
 		};
 		onSubmit(studySet);
 	};
+
+	const [showFlashcardPicker, setShowFlashcardPicker] = useState(false);
+	const [showNotesPicker, setShowNotesPicker] = useState(false);
+	const [availableFlashcards, setAvailableFlashcards] = useState<
+		{ id: string; front: string }[]
+	>([]);
+	const [availableNotes, setAvailableNotes] = useState<
+		{ id: string; title: string }[]
+	>([]);
+
+	useEffect(() => {
+		if (showFlashcardPicker) {
+			import("@/lib/db/schema").then(({ offlineDB }) =>
+				offlineDB
+					.table("flashcards")
+					.toArray()
+					.then((cards) =>
+						setAvailableFlashcards(
+							cards.map((c: { id: string; front: string }) => ({
+								id: c.id,
+								front: c.front,
+							})),
+						),
+					),
+			);
+		}
+	}, [showFlashcardPicker]);
+
+	useEffect(() => {
+		if (showNotesPicker) {
+			(async () => {
+				const raw = localStorage.getItem("lumni_notes");
+				if (raw) {
+					try {
+						const notes = JSON.parse(raw);
+						setAvailableNotes(
+							(Array.isArray(notes) ? notes : []).map(
+								(n: { id: string; title: string }) => ({
+									id: n.id,
+									title: n.title,
+								}),
+							),
+						);
+					} catch {
+						setAvailableNotes([]);
+					}
+				}
+			})();
+		}
+	}, [showNotesPicker]);
 
 	const handleInputChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -171,12 +227,55 @@ export function StudySetForm({
 					<Button
 						variant="outline"
 						size="sm"
-						onClick={() => alert("Flashcard picker would open here")}
+						type="button"
+						onClick={() => setShowFlashcardPicker(true)}
 					>
 						Add Flashcards
 					</Button>
 				</div>
 			</div>
+
+			<Dialog open={showFlashcardPicker} onOpenChange={setShowFlashcardPicker}>
+				<DialogContent>
+					<DialogHeader>
+						<DialogTitle>Select Flashcards</DialogTitle>
+					</DialogHeader>
+					<div className="flex max-h-60 flex-col gap-1 overflow-y-auto">
+						{availableFlashcards.length === 0 ? (
+							<p className="text-muted-foreground text-xs italic">
+								No flashcards available. Create some first.
+							</p>
+						) : (
+							availableFlashcards.map((card) => {
+								const selected = formData.flashcardIds.includes(card.id);
+								return (
+									<button
+										key={card.id}
+										type="button"
+										onClick={() => handleFlashcardSelect(card.id)}
+										className={`flex items-center gap-2 rounded-lg px-3 py-2 text-left text-sm transition-colors hover:bg-muted ${
+											selected ? "bg-accent/20 font-medium" : ""
+										}`}
+									>
+										<input
+											type="checkbox"
+											checked={selected}
+											readOnly
+											className="size-4"
+										/>
+										<span className="truncate">{card.front}</span>
+									</button>
+								);
+							})
+						)}
+					</div>
+					<div className="flex justify-end pt-2">
+						<Button size="sm" onClick={() => setShowFlashcardPicker(false)}>
+							Done
+						</Button>
+					</div>
+				</DialogContent>
+			</Dialog>
 
 			<div className="flex flex-col gap-2">
 				<Label htmlFor="notes">Notes</Label>
@@ -227,12 +326,55 @@ export function StudySetForm({
 					<Button
 						variant="outline"
 						size="sm"
-						onClick={() => alert("Notes picker would open here")}
+						type="button"
+						onClick={() => setShowNotesPicker(true)}
 					>
 						Add Notes
 					</Button>
 				</div>
 			</div>
+
+			<Dialog open={showNotesPicker} onOpenChange={setShowNotesPicker}>
+				<DialogContent>
+					<DialogHeader>
+						<DialogTitle>Select Notes</DialogTitle>
+					</DialogHeader>
+					<div className="flex max-h-60 flex-col gap-1 overflow-y-auto">
+						{availableNotes.length === 0 ? (
+							<p className="text-muted-foreground text-xs italic">
+								No notes available. Create some first.
+							</p>
+						) : (
+							availableNotes.map((note) => {
+								const selected = formData.noteIds.includes(note.id);
+								return (
+									<button
+										key={note.id}
+										type="button"
+										onClick={() => handleNoteSelect(note.id)}
+										className={`flex items-center gap-2 rounded-lg px-3 py-2 text-left text-sm transition-colors hover:bg-muted ${
+											selected ? "bg-accent/20 font-medium" : ""
+										}`}
+									>
+										<input
+											type="checkbox"
+											checked={selected}
+											readOnly
+											className="size-4"
+										/>
+										<span className="truncate">{note.title}</span>
+									</button>
+								);
+							})
+						)}
+					</div>
+					<div className="flex justify-end pt-2">
+						<Button size="sm" onClick={() => setShowNotesPicker(false)}>
+							Done
+						</Button>
+					</div>
+				</DialogContent>
+			</Dialog>
 
 			<div className="flex flex-col gap-2">
 				<Label htmlFor="tags">Tags (Optional)</Label>

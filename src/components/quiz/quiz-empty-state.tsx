@@ -3,7 +3,6 @@
 import { RadialIcon, Target01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
-import { AnimatedDots } from "@/components/shared/animated-dots";
 import {
 	Empty,
 	EmptyContent,
@@ -112,7 +111,7 @@ interface QuizStartStateProps {
 	onSelect: () => void;
 }
 
-export function QuizStartState({ onSelect: _onSelect }: QuizStartStateProps) {
+export function QuizStartState({ onSelect }: QuizStartStateProps) {
 	return (
 		<div className="mt-24 flex flex-col gap-4">
 			<div className="grid grid-cols-12 items-center gap-4">
@@ -144,7 +143,13 @@ export function QuizStartState({ onSelect: _onSelect }: QuizStartStateProps) {
 				</div>
 			</div>
 			<div className="flex justify-center md:justify-start">
-				<AnimatedDots />
+				<button
+					type="button"
+					onClick={onSelect}
+					className="rounded-lg bg-system-accent px-4 py-2 font-medium text-sm text-white hover:bg-system-accent/90"
+				>
+					Select Subject
+				</button>
 			</div>
 		</div>
 	);
@@ -156,7 +161,7 @@ interface QuizSubjectPromptProps {
 }
 
 export function QuizSubjectPrompt({
-	onSelect: _onSelect,
+	onSelect,
 	hasSubject,
 }: QuizSubjectPromptProps) {
 	return (
@@ -192,7 +197,13 @@ export function QuizSubjectPrompt({
 				</div>
 			</div>
 			<div className="flex justify-center md:justify-start">
-				<AnimatedDots />
+				<button
+					type="button"
+					onClick={onSelect}
+					className="rounded-lg bg-system-accent px-4 py-2 font-medium text-sm text-white hover:bg-system-accent/90"
+				>
+					{hasSubject ? "Start Quiz" : "Select Subject"}
+				</button>
 			</div>
 		</div>
 	);

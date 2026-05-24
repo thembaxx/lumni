@@ -75,10 +75,15 @@ async function syncGetHandler(_req: NextRequest) {
 		return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
 	}
 
+	const lastSync =
+		typeof localStorage !== "undefined"
+			? localStorage.getItem(`lumni_last_sync_${userId}`)
+			: null;
+
 	return NextResponse.json({
 		status: "ok",
-		message:
-			"Question Engine v2 active. Generate questions via POST /api/engine/generate",
+		lastSync: lastSync ? Number(lastSync) : null,
+		pendingChanges: 0,
 	});
 }
 

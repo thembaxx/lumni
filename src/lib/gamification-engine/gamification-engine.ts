@@ -1,0 +1,293 @@
+import {
+	ACHIEVEMENTS,
+	calculateLevel,
+	generateDailyChallenges,
+	STREAK_MILESTONES as STREAK_MILESTONE_DEFS,
+	XP_PER_QUESTION,
+	XP_PER_CORRECT,
+	XP_STREAK_BONUS,
+} from "@/types/gamification";
+import type {
+	StoredGamification,
+	StoredAchievement,
+	StreakMilestone,
+	GamificationResult,
+} from "./types";
+
+const GAMIFICATION_KEY = "lumni_gamification";
+
+const DEFAULT_GAMIFICATION: StoredGamification = {
+	xp: 0,
+	totalXp: 0,
+	achievements: [],
+	dailyChallenges: generateDailyChallenges(),
+	streakMilestones: STREAK_MILESTONE_DEFS.map((s) => ({ ...s, unlocked: false })),
+	lastPracticeDate: null,
+	currentStreak: 0,
+	totalQuestionsAnswered: 0,
+};
+
+export class GamificationEngine {
+	load(): StoredGamification {
+		try {
+			const stored = localStorage.getItem(GAMIFICATION_KEY);
+			if (stored) {
+				const parsed = JSON.parse(stored) as StoredGamification;
+				if (
+					Array.isArray(parsed.achievements) &&
+					parsed.achievements.length > 0 &&
+					typeof parsed.achievements[0] === "string"
+				) {
+					parsed.achievements = (
+						parsed.achievements as unknown as string[]
+					).map((id: string) => ({
+						id,
+						earnedAt: new Date(0).toISOString(),
+					}));
+				}
+				return this.mergeWithDefaults(parsed);
+			}
+		} catch {
+			// ignore
+		}
+		return DEFAULT_GAMIFICATION;
+	}
+
+	save(data: StoredGamification): void {
+		localStorage.setItem(GAMIFICATION_KEY, JSON.stringify(data));
+	}
+
+	resetExpiredChallenges(
+		dailyChallenges: StoredGamification["dailyChallenges"],
+	): StoredGamification["dailyChallenges"] {
+		const today = new Date().toDateString();
+		return dailyChallenges.map((challenge) => {
+			if (challenge.expiresAt !== today) {
+				return { ...challenge, progress: 0, completed: false, expiresAt: today };
+			}
+			return challenge;
+		});
+	}
+
+	mergeWithDefaults(stored: StoredGamification): StoredGamification {
+		const challenges = this.resetExpiredChallenges(stored.dailyChallenges);
+		return { ...DEFAULT_GAMIFICATION, ...stored, dailyChallenges: challenges };
+	}
+
+	addXp(
+		data: StoredGamification,
+		amount: number,
+		accuracy: number,
+		streak: number,
+		subject?: string,
+	): { data: StoredGamification; leveledUp: number | null; xpGained: number } {
+		const isCorrect = accuracy >= 50;
+		const baseXp = XP_PER_QUESTION + (isCorrect ? XP_PER_CORRECT : 0);
+		const streakBonus = streak > 1 ? XP_STREAK_BONUS : 0;
+		const totalXpGain = amount * baseXp + streakBonus;
+
+		const newTotalXp = data.totalXp + totalXpGain;
+		const newXp = data.xp + totalXpGain;
+
+		const oldLevel = calculateLevel(data.totalXp).level;
+		const newLevelInfo = calculateLevel(newTotalXp);
+		const leveledUp =
+			newLevelInfo.level > oldLevel ? newLevelInfo.level : null;
+
+		const updatedChallenges = data.dailyChallenges.map((challenge) => {
+			if (challenge.completed) return challenge;
+			switch (challenge.type) {
+				case "questions":
+					return {
+						...challenge,
+						progress: Math.min(
+							challenge.progress + amount,
+							challenge.target,
+						),
+						completed: challenge.progress + amount >= challenge.target,
+					};
+				case "accuracy":
+					if (accuracy > challenge.progress) {
+						return {
+							...challenge,
+							progress: accuracy,
+							completed: accuracy >= challenge.target,
+						};
+					}
+					return challenge;
+				case "streak":
+					if (streak >= challenge.target) {
+						return { ...challenge, progress: streak, completed: true };
+					}
+					return {
+						...challenge,
+						progress: Math.max(challenge.progress, streak),
+					};
+				case "subject":
+					if (
+						subject &&
+						challenge.title.toLowerCase().includes(subject.toLowerCase())
+					) {
+						return { ...challenge, progress: 1, completed: true };
+					}
+					return challenge;
+				default:
+					return challenge;
+			}
+		});
+
+		return {
+			data: {
+				...data,
+				xp: newXp,
+				totalXp: newTotalXp,
+				totalQuestionsAnswered: data.totalQuestionsAnswered + amount,
+				dailyChallenges: updatedChallenges,
+			},
+			leveledUp,
+			xpGained: totalXpGain,
+		};
+	}
+
+	addAchievement(
+		data: StoredGamification,
+		achievementId: string,
+	): {
+		data: StoredGamification;
+		achievement: (typeof ACHIEVEMENTS)[number] | null;
+	} {
+		if (data.achievements.some((a) => a.id === achievementId)) {
+			return { data, achievement: null };
+		}
+
+		const achievement = ACHIEVEMENTS.find((a) => a.id === achievementId);
+		if (!achievement) return { data, achievement: null };
+
+		const newAchievements: StoredAchievement[] = [
+			...data.achievements,
+			{ id: achievementId, earnedAt: new Date().toISOString() },
+		];
+		const newTotalXp = data.totalXp + achievement.xpReward;
+
+		return {
+			data: {
+				...data,
+				achievements: newAchievements,
+				totalXp: newTotalXp,
+				xp: data.xp + achievement.xpReward,
+			},
+			achievement,
+		};
+	}
+
+	checkAndUnlockAchievements(
+		data: StoredGamification,
+		questionsAnswered: number,
+		accuracy: number,
+		streak: number,
+		currentLevel: number,
+		perfectQuiz: boolean,
+	): string[] {
+		const newAchievements: string[] = [];
+		const earned = data.achievements.map((a) => a.id);
+
+		const checks: [string, boolean][] = [
+			["first_question", questionsAnswered >= 1 && !earned.includes("first_question")],
+			["streak_3", streak >= 3 && !earned.includes("streak_3")],
+			["streak_7", streak >= 7 && !earned.includes("streak_7")],
+			["streak_30", streak >= 30 && !earned.includes("streak_30")],
+			["questions_50", questionsAnswered >= 50 && !earned.includes("questions_50")],
+			["questions_100", questionsAnswered >= 100 && !earned.includes("questions_100")],
+			["questions_500", questionsAnswered >= 500 && !earned.includes("questions_500")],
+			["accuracy_80", accuracy >= 80 && !earned.includes("accuracy_80")],
+			["accuracy_90", accuracy >= 90 && !earned.includes("accuracy_90")],
+			["perfect_quiz", perfectQuiz && !earned.includes("perfect_quiz")],
+			["level_5", currentLevel >= 5 && !earned.includes("level_5")],
+			["level_10", currentLevel >= 10 && !earned.includes("level_10")],
+		];
+
+		for (const [id, shouldUnlock] of checks) {
+			if (shouldUnlock) newAchievements.push(id);
+		}
+
+		return newAchievements;
+	}
+
+	updateStreak(
+		data: StoredGamification,
+	): { data: StoredGamification; milestoneXpGained: number } {
+		const today = new Date().toDateString();
+		const yesterday = new Date();
+		yesterday.setDate(yesterday.getDate() - 1);
+		const yesterdayStr = yesterday.toDateString();
+
+		let newStreak = data.currentStreak;
+		if (data.lastPracticeDate === yesterdayStr) {
+			newStreak = data.currentStreak + 1;
+		} else if (data.lastPracticeDate !== today) {
+			newStreak = 1;
+		}
+
+		let milestoneXpGain = 0;
+		const updatedMilestones = data.streakMilestones.map((ms) => {
+			if (!ms.unlocked && newStreak >= ms.streak) {
+				const reward = this.getStreakXpReward(ms.streak);
+				milestoneXpGain += reward;
+				return { ...ms, unlocked: true };
+			}
+			return ms;
+		});
+
+		return {
+			data: {
+				...data,
+				currentStreak: newStreak,
+				lastPracticeDate: today,
+				xp: data.xp + milestoneXpGain,
+				totalXp: data.totalXp + milestoneXpGain,
+				streakMilestones: updatedMilestones,
+			},
+			milestoneXpGained: milestoneXpGain,
+		};
+	}
+
+	completeDailyChallenge(
+		data: StoredGamification,
+		challengeId: string,
+	): { data: StoredGamification; xpReward: number } {
+		const challenge = data.dailyChallenges.find((c) => c.id === challengeId);
+		if (!challenge || challenge.completed) {
+			return { data, xpReward: 0 };
+		}
+
+		const updatedChallenges = data.dailyChallenges.map((c) =>
+			c.id === challengeId
+				? { ...c, completed: true, progress: c.target }
+				: c,
+		);
+
+		return {
+			data: {
+				...data,
+				xp: data.xp + challenge.xpReward,
+				totalXp: data.totalXp + challenge.xpReward,
+				dailyChallenges: updatedChallenges,
+			},
+			xpReward: challenge.xpReward,
+		};
+	}
+
+	getStreakXpReward(streak: number): number {
+		switch (streak) {
+			case 3: return 50;
+			case 7: return 100;
+			case 14: return 150;
+			case 30: return 200;
+			case 60: return 300;
+			case 100: return 500;
+			default: return 0;
+		}
+	}
+}
+
+export const gamificationEngine = new GamificationEngine();

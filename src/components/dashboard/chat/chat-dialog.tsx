@@ -28,7 +28,7 @@ export function ChatDialog({ open, onOpenChange }: ChatDialogProps) {
 		messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
 	});
 
-	const _handleClose = () => {
+	const handleClose = () => {
 		cleanup();
 		chat.clearChat();
 		onOpenChange(false);
@@ -64,7 +64,7 @@ export function ChatDialog({ open, onOpenChange }: ChatDialogProps) {
 					<Button
 						variant="ghost"
 						size="icon"
-						onClick={() => onOpenChange(false)}
+						onClick={handleClose}
 						className="rounded-full hover:bg-secondary"
 					>
 						<HugeiconsIcon

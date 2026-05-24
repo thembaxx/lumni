@@ -33,8 +33,9 @@ import {
 } from "@/hooks/use-exam-session-persistence";
 import { useGamification } from "@/hooks/use-gamification";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
-import { trackQuestionResult } from "@/lib/competency-engine";
+import { trackQuestionResult } from "@/lib/orchestrator";
 import { cn } from "@/lib/shared";
+import { getAPSForSubject, getGrade } from "@/lib/shared/aps";
 import { formatTime } from "@/lib/shared/time";
 import { iOSEase } from "@/lib/utils/animation";
 import { createFlashcard } from "@/lib/utils/spaced-repetition";
@@ -182,10 +183,83 @@ function PartAnswerInput({
 		);
 	}
 
+	if (part.type === "matching") {
+		return (
+			<input
+				type="text"
+				value={(Array.isArray(value) ? value[0] : value) ?? ""}
+				onChange={(e) => onChange(e.target.value)}
+				disabled={disabled}
+				className="w-full rounded-xl border-2 border-border bg-background p-3 outline-none focus:border-[--system-accent]"
+				placeholder="Enter matching pairs (e.g. A-1, B-2)..."
+			/>
+		);
+	}
+
+	if (part.type === "diagram") {
+		const instructions =
+			((part as unknown as Record<string, unknown>).instructions as string) ??
+			"Refer to the diagram and type your answer below.";
+		return (
+			<div className="flex flex-col gap-2">
+				<p className="text-muted-foreground text-sm">{instructions}</p>
+				<textarea
+					value={(Array.isArray(value) ? value[0] : value) ?? ""}
+					onChange={(e) => onChange(e.target.value)}
+					disabled={disabled}
+					rows={4}
+					className="w-full resize-y rounded-xl border-2 border-border bg-background p-3 outline-none focus:border-[--system-accent]"
+					placeholder="Type your answer..."
+				/>
+			</div>
+		);
+	}
+
+	if (part.type === "programming") {
+		return (
+			<textarea
+				value={(Array.isArray(value) ? value[0] : value) ?? ""}
+				onChange={(e) => onChange(e.target.value)}
+				disabled={disabled}
+				rows={8}
+				className="w-full resize-y rounded-xl border-2 border-border bg-background p-3 font-mono text-sm outline-none focus:border-[--system-accent]"
+				placeholder="Write your code here..."
+			/>
+		);
+	}
+
+	if (
+		part.type === "source-based" ||
+		part.type === "data-response" ||
+		part.type === "mixed"
+	) {
+		return (
+			<textarea
+				value={(Array.isArray(value) ? value[0] : value) ?? ""}
+				onChange={(e) => onChange(e.target.value)}
+				disabled={disabled}
+				rows={4}
+				className="w-full resize-y rounded-xl border-2 border-border bg-background p-3 outline-none focus:border-[--system-accent]"
+				placeholder="Type your answer..."
+			/>
+		);
+	}
+
 	return (
-		<p className="text-muted-foreground text-sm">
-			Answer type not yet supported in exam mode.
-		</p>
+		<div className="flex flex-col gap-2">
+			<p className="text-muted-foreground text-sm">
+				This question type ({part.type}) is not fully supported yet. You can
+				type a freeform answer below.
+			</p>
+			<textarea
+				value={(Array.isArray(value) ? value[0] : value) ?? ""}
+				onChange={(e) => onChange(e.target.value)}
+				disabled={disabled}
+				rows={4}
+				className="w-full resize-y rounded-xl border-2 border-border bg-background p-3 outline-none focus:border-[--system-accent]"
+				placeholder="Type your answer..."
+			/>
+		</div>
 	);
 }
 
@@ -294,7 +368,7 @@ function ExamResults({
 					</CardTitle>
 				</CardHeader>
 				<CardContent className="flex flex-col gap-4">
-					<div className="grid grid-cols-3 gap-3">
+					<div className="grid grid-cols-4 gap-3">
 						<div className="rounded-lg bg-muted p-3 text-center">
 							<p className="font-extrabold text-2xl text-success tabular-nums">
 								{correctCount}
@@ -313,6 +387,26 @@ function ExamResults({
 							</p>
 							<p className="text-muted-foreground text-xs">Accuracy</p>
 						</div>
+						{(() => {
+							const aps = getAPSForSubject(accuracy);
+							return (
+								<div className="rounded-lg bg-muted p-3 text-center">
+									<p
+										className={cn(
+											"font-extrabold text-2xl tabular-nums",
+											aps >= 6 && "text-success",
+											aps >= 4 && aps < 6 && "text-warning",
+											aps < 4 && "text-destructive",
+										)}
+									>
+										{aps}/7
+									</p>
+									<p className="text-muted-foreground text-xs">
+										{getGrade(accuracy)}
+									</p>
+								</div>
+							);
+						})()}
 					</div>
 				</CardContent>
 			</Card>

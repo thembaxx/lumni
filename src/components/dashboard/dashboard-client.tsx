@@ -19,6 +19,7 @@ import { StreakCard } from "@/components/dashboard/streak-card";
 import { StudyPlanOverview } from "@/components/dashboard/study-plan-overview";
 import { TodayFocusCard } from "@/components/dashboard/today-focus-card";
 import type { TabValue } from "@/components/dashboard/types";
+import { PageContainer } from "@/components/layout/page-container";
 import { GettingStartedCard } from "@/components/onboarding/getting-started-card";
 import { NotificationNudge } from "@/components/onboarding/notification-nudge";
 import type { QuizResults } from "@/components/quiz/quiz-view";
@@ -34,12 +35,11 @@ import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 import { useViewTransition } from "@/hooks/use-view-transition";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
 import { useAuth } from "@/lib/auth/auth-context";
-import { trackQuestionResult } from "@/lib/competency-engine";
+import { trackQuestionResult } from "@/lib/orchestrator";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import { iOSEase } from "@/lib/utils/animation";
 import { useOptimizedAnimation } from "@/lib/utils/animation-optimization";
 import { createFlashcard } from "@/lib/utils/spaced-repetition";
-import { PageContainer } from "@/components/layout/page-container";
 
 const QuizView = dynamic(
 	() => import("@/components/quiz/quiz-view").then((m) => m.QuizView),

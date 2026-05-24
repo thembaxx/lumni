@@ -94,12 +94,37 @@ Sentry → Settings → Integrations → Linear → Connect Workspace
 
 ### Setup steps
 
-1. Go to **Settings > Integrations > Linear** in Sentry
-2. Click **Connect Workspace** and authorize with your Linear account
-3. Select the **Lumni (LUM)** team as the target
-4. Configure thresholds (defaults are sane: new issue → create bug)
+1. **Navigate** to `sentry.io` → **Settings** → **Integrations** → **Linear**
+2. **Click "Connect Workspace"** → authorise with your Linear account in the popup
+3. **Select project**: Pick the **Lumni (LUM)** team from the dropdown
+4. **Configure thresholds** (defaults are sane, but review):
+
+   | Setting | Recommended | Notes |
+   |---------|------------|-------|
+   | Create issue on new error group | ✅ Enabled | Auto-creates LUM-xxx bug |
+   | Minimum users affected | `10` | Avoids noise from isolated errors |
+   | Reopen when error reoccurs | ✅ Enabled | Reopens a Done issue |
+   | Label | `Bug` | Applies the Bug label automatically |
+
+5. **Save** the configuration
 
 ### After setup
+
+Verify by triggering a test error in production or staging. Within ~5 minutes a new `LUM-xxx` issue should appear in the Linear Backlog with:
+- Sentry error title as the issue title
+- Stack trace in the description
+- Environment, release version, user count
+- **Bug** label applied
+- Link back to the Sentry issue
+
+### Troubleshooting
+
+| Issue | Fix |
+|-------|-----|
+| No issues created after errors | Check Sentry → Settings → Integrations → Linear → Activity Log |
+| Wrong Linear team | Disconnect and reconnect, selecting the correct team |
+| Duplicate issues | Linear deduplicates by default — check if errors are grouped in Sentry |
+| Issues created but no stack trace | Ensure source maps are uploaded in the CI `sentry-release` job |
 
 Every new error that reaches the threshold auto-creates a `LUM-xxx` issue with:
 - Stack trace in the description
@@ -187,6 +212,47 @@ After first deploy with the GitHub secrets set:
 1. Merge a PR to main
 2. The `sentry-release` job creates a release
 3. Sentry links errors to that release
+
+---
+
+---
+
+## 5. Workflow Rhythm
+
+### Daily
+
+1. **Check Sentry issues** → any new errors auto-create Linear bugs (once Sentry ↔ Linear is connected)
+2. **Scan Linear Backlog** → drag unassigned items to Todo if they're actionable
+3. **Update TODO.md** → add/check off items as you work
+4. **Run `npm run todo:sync`** → pushes TODO.md state to Linear (optional daily, but do before a PR)
+
+### Weekly
+
+1. **Review Sentry → Linear bugs** → triage new issues, assign priority
+2. **Prioritise Backlog** → move P2 items to "Next Up" in TODO.md, push lower to P3
+3. **Sync TODO.md → Linear** → `npm run todo:sync` ensures Linear reflects your plan
+4. **Check CI** → verify GitHub Actions secrets are set, `todo-sync` job ran on last merge
+
+### Starting new work
+
+```
+1. Add task to TODO.md under "Next Up" or "Bug Fixes"
+2. Run `npm run todo:sync` → creates Linear issue
+3. Linear automatically creates a LUM-xxx branch when moved to In Progress
+4. Commit with "LUM-xxx" in the message for auto-linking
+5. PR description includes "Closes LUM-xxx"
+6. Merge → Linear issue → Done, Sentry release created
+```
+
+### Receiving a bug report
+
+```
+1. Bug → TODO.md under "Bug Fixes" section
+2. `npm run todo:sync` → Linear bug ticket
+3. Fix → branch → PR → merge
+4. Sentry release automatically deploys
+5. Error reoccurs? Sentry reopens the Linear issue
+```
 
 ---
 

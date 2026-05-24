@@ -34,25 +34,6 @@ export interface QuizAttempt {
 	completedAt: number;
 }
 
-export interface SyncQueueItem {
-	id?: number;
-	action:
-		| "createProgress"
-		| "updateProgress"
-		| "createAttempt"
-		| "createRating"
-		| "sync";
-	payload: string; // JSON stringified payload
-	status: "pending" | "syncing" | "failed";
-	attempts: number;
-	maxRetries: number;
-	lastError?: string;
-	createdAt: number;
-	updatedAt: number;
-	retryAfter?: number;
-	priority?: number;
-}
-
 export interface SyncConflict {
 	id: number;
 	localData: unknown;
@@ -155,7 +136,6 @@ export class LumniOfflineDB extends Dexie {
 	questions!: Table<CachedQuestion, number>;
 	progress!: Table<CachedProgress, number>;
 	quizAttempts!: Table<QuizAttempt, number>;
-	syncQueue!: Table<SyncQueueItem, number>;
 	subjects!: Table<CachedSubject, number>;
 	quizSessions!: Table<QuizSessionState, number>;
 	conflicts!: Table<SyncConflict, number>;
@@ -176,7 +156,6 @@ export class LumniOfflineDB extends Dexie {
 			questions: "++id, &subject, topic, cachedAt",
 			progress: "++id, &odSubjectId, userId, updatedAt",
 			quizAttempts: "++id, &odSubject, userId, completedAt",
-			syncQueue: "++id, status, createdAt",
 			subjects: "++id, &code, cachedAt",
 		});
 
@@ -185,7 +164,6 @@ export class LumniOfflineDB extends Dexie {
 		});
 
 		this.version(3).stores({
-			syncQueue: "++id, status, priority, createdAt",
 			conflicts: "++id, resolvedAt",
 		});
 

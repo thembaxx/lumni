@@ -4,6 +4,7 @@ import { m } from "framer-motion";
 import { useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Anim } from "@/components/shared/anim";
+import { TTSButton } from "@/components/shared/tts-button";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
@@ -117,6 +118,9 @@ export function Flashcard({
 									subject={subject}
 								/>
 							</div>
+							<div className="mt-2">
+								<TTSButton text={currentCard.front} />
+							</div>
 							{currentCard.hint && (
 								<div className="mt-4 text-muted-foreground text-xs">
 									<MarkdownRenderer
@@ -140,6 +144,9 @@ export function Flashcard({
 									content={currentCard.back}
 									subject={subject}
 								/>
+							</div>
+							<div className="mt-2">
+								<TTSButton text={currentCard.back} />
 							</div>
 						</div>
 					</m.div>

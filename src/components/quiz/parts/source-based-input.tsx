@@ -1,0 +1,87 @@
+"use client";
+
+import { useState } from "react";
+import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { Button } from "@/components/ui/button";
+import type { UserAnswer } from "@/lib/question-engine/types";
+
+interface SourceBasedInputProps {
+	body: Record<string, unknown>;
+	effectiveSubject: string;
+	onGrade: (answer: UserAnswer) => Promise<void>;
+}
+
+export function SourceBasedInput({
+	body,
+	effectiveSubject,
+	onGrade,
+}: SourceBasedInputProps) {
+	const source = body.source as Record<string, unknown> | undefined;
+	const subQuestions = body.subQuestions as
+		| Record<string, unknown>[]
+		| undefined;
+	const [partAnswers, setPartAnswers] = useState<Record<string, string>>({});
+
+	return (
+		<div className="flex flex-col gap-3">
+			<div className="rounded-lg bg-muted/30 p-4 text-sm">
+				<MarkdownRenderer
+					content={(source?.content as string) ?? ""}
+					subject={effectiveSubject}
+				/>
+				{!!source?.attribution && (
+					<p className="mt-2 text-muted-foreground text-xs">
+						: {String(source.attribution)}
+					</p>
+				)}
+			</div>
+			{subQuestions?.map((sq, i: number) => {
+				const sqId = String((sq as Record<string, unknown>).id ?? i);
+				return (
+					<div key={sqId} className="flex flex-col gap-2 rounded-lg border p-3">
+						<p className="mb-1 font-medium text-sm">
+							{String((sq as Record<string, unknown>).questionText ?? "")}
+						</p>
+						<input
+							type="text"
+							className="w-full rounded-md border bg-transparent px-3 py-1.5 text-sm outline-none focus:ring-2 focus:ring-[--system-accent]"
+							placeholder="Your answer..."
+							value={partAnswers[sqId] ?? ""}
+							onChange={(e) =>
+								setPartAnswers((prev) => ({
+									...prev,
+									[sqId]: e.target.value,
+								}))
+							}
+						/>
+					</div>
+				);
+			})}
+			<Button
+				onClick={() => {
+					onGrade({
+						type: "mixed",
+						value:
+							subQuestions?.map((sq: Record<string, unknown>, i: number) => {
+								const sqId = String(sq.id ?? i);
+								return {
+									partId: sqId,
+									answer: {
+										type: "text",
+										value: partAnswers[sqId] ?? "",
+									},
+								};
+							}) ?? [],
+					});
+				}}
+				disabled={
+					!subQuestions ||
+					subQuestions.length === 0 ||
+					Object.values(partAnswers).every((v) => !v.trim())
+				}
+			>
+				Submit Answer
+			</Button>
+		</div>
+	);
+}

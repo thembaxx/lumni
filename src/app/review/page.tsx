@@ -9,6 +9,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { PageContainer } from "@/components/layout/page-container";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { LocalDataNotice } from "@/components/shared/local-data-notice";
 import { Badge } from "@/components/ui/badge";
@@ -27,7 +28,6 @@ import {
 	type ErrorType,
 	useWrongAnswerJournal,
 } from "@/hooks/use-wrong-answer-journal";
-import { PageContainer } from "@/components/layout/page-container";
 
 function ErrorTypeSelect({
 	value,
@@ -53,7 +53,7 @@ function ErrorTypeSelect({
 }
 
 export default function ReviewPage() {
-	const { getWrongAnswers, markReviewed, clearReviewed } =
+	const { getWrongAnswers, markReviewed, clearReviewed, updateErrorType } =
 		useWrongAnswerJournal();
 	const { data: subjects } = useSubjects();
 	const [filterSubject, setFilterSubject] = useState<string>("");
@@ -87,8 +87,9 @@ export default function ReviewPage() {
 		refreshEntries();
 	};
 
-	const handleErrorTypeChange = (entryId: number, type: ErrorType) => {
+	const handleErrorTypeChange = async (entryId: number, type: ErrorType) => {
 		setErrorTypes((prev) => ({ ...prev, [entryId]: type }));
+		await updateErrorType(entryId, type);
 	};
 
 	if (loading) {

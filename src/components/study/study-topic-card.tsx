@@ -140,8 +140,6 @@ export function StudyTopicCard({
 							<ListenToLesson
 								text={topic.summary}
 								onPlayingChange={setIsPlaying}
-								// TODO: Implement word-index tracking for MarkdownRenderer highlighting.
-								// Currently maps word positions in rendered markdown back to raw text.
 								onWordIndexChange={setWordIndex}
 							/>
 						</div>

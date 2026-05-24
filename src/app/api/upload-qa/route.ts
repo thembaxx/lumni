@@ -1,4 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
+import { requireAdmin } from "@/lib/server/auth";
+import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 function formatSubjectName(subject: string): string {
 	return subject.replace(/\s+/g, "_").toLowerCase();
@@ -9,7 +11,8 @@ function generateFileName(subject: string, number: number): string {
 	return `${formattedSubject}_qa_${number}.json`;
 }
 
-export async function POST(req: NextRequest) {
+async function handler(req: NextRequest) {
+	await requireAdmin();
 	const formData = await req.formData();
 	const file = formData.get("file") as File | null;
 	const subject = formData.get("subject") as string | null;
@@ -52,3 +55,5 @@ export async function POST(req: NextRequest) {
 		);
 	}
 }
+
+export const POST = withRateLimit(handler, { max: 10, windowMs: 60000 });

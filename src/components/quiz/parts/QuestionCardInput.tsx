@@ -2,6 +2,10 @@
 
 import { m } from "framer-motion";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { DataResponseInput } from "@/components/quiz/parts/data-response-input";
+import { MixedPartsInput } from "@/components/quiz/parts/mixed-parts-input";
+import { SourceBasedInput } from "@/components/quiz/parts/source-based-input";
+import { TTSButton } from "@/components/shared/tts-button";
 import { Button } from "@/components/ui/button";
 import {
 	CalculationInput,
@@ -11,7 +15,6 @@ import {
 	ProgrammingInput,
 	ShortAnswerInput,
 } from "@/components/ui/inputs";
-import type { useSolver } from "@/hooks/use-solver";
 import type {
 	MediaContent,
 	Option,
@@ -19,8 +22,6 @@ import type {
 } from "@/lib/question-engine/types";
 import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";
-
-type Solver = ReturnType<typeof useSolver>;
 
 interface QuestionCardInputProps {
 	question: {
@@ -40,19 +41,6 @@ interface QuestionCardInputProps {
 		calcValue: string;
 		code: string;
 	};
-	setState: React.Dispatch<
-		React.SetStateAction<{
-			isSubmitted: boolean;
-			selectedOption: string | null;
-			calcValue: string;
-			code: string;
-			isCorrect: boolean | null;
-			showHint: boolean;
-			showExplanation: boolean;
-			showDiagram: boolean;
-		}>
-	>;
-	isMCQ: boolean;
 	options: Option[];
 	calcValue: string;
 	setCalcValue: React.Dispatch<React.SetStateAction<string>>;
@@ -61,19 +49,12 @@ interface QuestionCardInputProps {
 	handleMCQSelect: (optionId: string) => void;
 	handleMCQSubmit: () => void;
 	handleGrade: (answer: UserAnswer) => Promise<void>;
-	handleFollowUp: () => void;
-	followUpInput: string;
-	setFollowUpInput: React.Dispatch<React.SetStateAction<string>>;
-	solver: Solver;
-	isSolverEnabled: boolean;
 }
 
 export function QuestionCardInput({
 	question,
 	effectiveSubject,
 	state,
-	setState: _setState,
-	isMCQ: _isMCQ,
 	options,
 	calcValue,
 	setCalcValue,
@@ -82,11 +63,6 @@ export function QuestionCardInput({
 	handleMCQSelect,
 	handleMCQSubmit,
 	handleGrade,
-	handleFollowUp: _handleFollowUp,
-	followUpInput: _followUpInput,
-	setFollowUpInput: _setFollowUpInput,
-	solver: _solver,
-	isSolverEnabled: _isSolverEnabled,
 }: QuestionCardInputProps) {
 	if (state.isSubmitted) {
 		return null;
@@ -144,6 +120,7 @@ export function QuestionCardInput({
 											subject={effectiveSubject}
 										/>
 									</span>
+									{option.text.length > 80 && <TTSButton text={option.text} />}
 								</Button>
 							</m.div>
 						);
@@ -288,137 +265,26 @@ export function QuestionCardInput({
 		case "source-based": {
 			const body = question as Record<string, unknown>;
 			const qBody = body.body as Record<string, unknown>;
-			const source = qBody.source as Record<string, unknown> | undefined;
-			const subQuestions = qBody.subQuestions as
-				| Record<string, unknown>[]
-				| undefined;
 			return (
-				<div className="flex flex-col gap-3">
-					<div className="rounded-lg bg-muted/30 p-4 text-sm">
-						<MarkdownRenderer
-							content={(source?.content as string) ?? ""}
-							subject={effectiveSubject}
-						/>
-						{!!source?.attribution && (
-							<p className="mt-2 text-muted-foreground text-xs">
-								: {String(source.attribution)}
-							</p>
-						)}
-					</div>
-					{subQuestions?.map((sq, i: number) => (
-						<div
-							key={String((sq as Record<string, unknown>).id ?? i)}
-							className="rounded-lg border p-3"
-						>
-							<p className="mb-2 font-medium text-sm">
-								{String((sq as Record<string, unknown>).questionText ?? "")}
-							</p>
-						</div>
-					))}
-					<Button
-						onClick={() => {
-							handleGrade({
-								type: "mixed",
-								value:
-									subQuestions?.map((sq: Record<string, unknown>) => ({
-										partId: sq.id,
-										answer: { type: "text", value: "" },
-									})) ?? [],
-							});
-						}}
-						disabled={true}
-						title="Interactive sub-questions not yet implemented"
-					>
-						Submit Answer
-					</Button>
-				</div>
+				<SourceBasedInput
+					body={qBody}
+					effectiveSubject={effectiveSubject}
+					onGrade={handleGrade}
+				/>
 			);
 		}
 
 		case "data-response": {
 			const body = question as Record<string, unknown>;
 			const qBody = body.body as Record<string, unknown>;
-			const questions = qBody.questions as
-				| Record<string, unknown>[]
-				| undefined;
-			return (
-				<div className="flex flex-col gap-3">
-					<div className="whitespace-pre-wrap rounded-lg bg-muted/30 p-4 font-mono text-sm">
-						{typeof qBody.data === "string"
-							? qBody.data
-							: JSON.stringify(qBody.data, null, 2)}
-					</div>
-					{questions?.map((q, i: number) => (
-						<div
-							key={String((q as Record<string, unknown>).id ?? i)}
-							className="rounded-lg border p-3"
-						>
-							<p className="mb-2 font-medium text-sm">
-								{String((q as Record<string, unknown>).questionText ?? "")}
-							</p>
-						</div>
-					))}
-					<Button
-						onClick={() => {
-							handleGrade({
-								type: "mixed",
-								value:
-									questions?.map((q: Record<string, unknown>) => ({
-										partId: q.id,
-										answer: { type: "text", value: "" },
-									})) ?? [],
-							});
-						}}
-						disabled={true}
-						title="Interactive sub-questions not yet implemented"
-					>
-						Submit Answer
-					</Button>
-				</div>
-			);
+			return <DataResponseInput body={qBody} onGrade={handleGrade} />;
 		}
 
 		case "mixed": {
 			const body = question as Record<string, unknown>;
 			const qBody = body.body as Record<string, unknown>;
 			const parts = qBody.parts as Record<string, unknown>[] | undefined;
-			return (
-				<div className="flex flex-col gap-4">
-					{parts?.map((part, i: number) => {
-						const p = part as Record<string, unknown>;
-						return (
-							<div key={String(p.id)} className="rounded-lg border p-3">
-								<p className="mb-2 font-medium text-sm">
-									{i + 1}. {String(p.questionText ?? "")}{" "}
-									<span className="text-muted-foreground text-xs">
-										({String(p.points ?? "")} pts)
-									</span>
-								</p>
-							</div>
-						);
-					})}
-					<Button
-						onClick={() =>
-							handleGrade({
-								type: "mixed",
-								value:
-									parts?.map((p) => {
-										const part = p as Record<string, unknown>;
-										return {
-											partId: String(part.id),
-											answer: { type: "text", value: "" },
-										};
-									}) ?? [],
-							})
-						}
-						disabled={true}
-						title="Interactive sub-questions not yet implemented"
-						className="w-full"
-					>
-						Submit All Parts
-					</Button>
-				</div>
-			);
+			return <MixedPartsInput parts={parts} onGrade={handleGrade} />;
 		}
 
 		default:

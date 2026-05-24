@@ -1,9 +1,30 @@
+import { Query } from "appwrite";
 import { type NextRequest, NextResponse } from "next/server";
 import type { StudySession } from "@/lib/db/client";
 import { COLLECTIONS, listDocuments } from "@/lib/db/client";
 import { getAuthenticatedUserId } from "@/lib/server/auth";
 
 export const dynamic = "force-dynamic";
+
+const PAGE_LIMIT = 100;
+const MAX_SESSIONS = 10000;
+
+async function fetchAllSessions(): Promise<StudySession[]> {
+	const allSessions: StudySession[] = [];
+	let offset = 0;
+
+	while (allSessions.length < MAX_SESSIONS) {
+		const page = await listDocuments<StudySession>(COLLECTIONS.STUDY_SESSIONS, [
+			Query.limit(PAGE_LIMIT),
+			Query.offset(offset),
+		]);
+		allSessions.push(...page);
+		if (page.length < PAGE_LIMIT) break;
+		offset += PAGE_LIMIT;
+	}
+
+	return allSessions;
+}
 
 export async function GET(req: NextRequest) {
 	try {
@@ -26,9 +47,7 @@ export async function GET(req: NextRequest) {
 			return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
 		}
 
-		const allSessions = await listDocuments<StudySession>(
-			COLLECTIONS.STUDY_SESSIONS,
-		);
+		const allSessions = await fetchAllSessions();
 
 		let globalTotalAnswered = 0;
 		let globalTotalCorrect = 0;

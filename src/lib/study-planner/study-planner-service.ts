@@ -1,7 +1,5 @@
 import type { CompetencyService } from "@/lib/competency-engine/competency-service";
 import { competencyService as defaultCompetencyService } from "@/lib/competency-engine/competency-service";
-import type { ProgressService } from "@/lib/services/progress-service";
-import { progressService as defaultProgressService } from "@/lib/services/progress-service";
 import { generateStudyPlan } from "./algorithms";
 import type { StudyPlan, StudyPlanSettings, SubjectCompetency } from "./types";
 
@@ -20,7 +18,6 @@ const KNOWN_SUBJECTS = [
 export class StudyPlannerService {
 	constructor(
 		private competencyService: CompetencyService = defaultCompetencyService,
-		_progressService: ProgressService = defaultProgressService,
 	) {}
 
 	async generateStudyPlan(settings: StudyPlanSettings): Promise<StudyPlan> {

@@ -1,0 +1,23 @@
+{
+	"lessons": [],
+	"meta": {
+		"description": "Curriculum lesson data for Lumni. Populate with subject-specific lessons for South African Matric (NSC/CAPS) curriculum.",
+		"version": 1,
+		"subjects": [
+			"mathematics",
+			"physical-sciences",
+			"accounting",
+			"life-sciences",
+			"english",
+			"afrikaans",
+			"history",
+			"geography",
+			"business-studies",
+			"economics",
+			"agricultural-sciences",
+			"computer-applications-technology",
+			"technical-mathematics",
+			"technical-sciences"
+		]
+	}
+}

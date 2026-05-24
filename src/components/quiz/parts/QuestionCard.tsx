@@ -226,8 +226,6 @@ export function QuestionCard({
 				question={question}
 				effectiveSubject={effectiveSubject}
 				state={state}
-				setState={setState}
-				isMCQ={isMCQ}
 				options={options}
 				calcValue={calcValue}
 				setCalcValue={setCalcValue}
@@ -236,11 +234,6 @@ export function QuestionCard({
 				handleMCQSelect={handleMCQSelect}
 				handleMCQSubmit={handleMCQSubmit}
 				handleGrade={handleGrade}
-				handleFollowUp={handleFollowUp}
-				followUpInput={followUpInput}
-				setFollowUpInput={setFollowUpInput}
-				solver={solver}
-				isSolverEnabled={isSolverEnabled}
 			/>
 			<QuestionCardFeedback
 				state={state}

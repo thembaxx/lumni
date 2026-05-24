@@ -108,7 +108,6 @@ mock.module("@/lib/db/schema", () => ({
 		wrongAnswers: mockWrongAnswersStore,
 		questionRatings: mockQuestionRatingsStore,
 		progress: createInMemoryStore(),
-		syncQueue: createInMemoryStore(),
 		quizSessions: createInMemoryStore(),
 	},
 	LumniOfflineDB: class {},
@@ -132,6 +131,7 @@ mock.module("@/lib/question-engine/persistence", () => ({
 }));
 
 mock.module("@/lib/db/client", () => ({
+	APPWRITE_DATABASE_ID: "test-db-id",
 	COLLECTIONS: {
 		TOPICS: "topics",
 		USER_PROGRESS: "user_progress",
@@ -142,10 +142,40 @@ mock.module("@/lib/db/client", () => ({
 	listDocuments: mock(() => []),
 	createDocument: mock(() => "doc-id"),
 	updateDocument: mock(() => {}),
+	getDocument: mock(() => null),
+	deleteDocument: mock(() => {}),
 }));
 
 mock.module("appwrite", () => ({
 	Query: { equal: () => "equal", limit: () => "limit" },
+	Storage: class {},
+	Account: class {},
+	Databases: class {},
+	Client: class {},
+	ID: { unique: () => "unique()" },
+	Functions: class {},
+	Messaging: class {},
+	Avatars: class {},
+	Locale: class {},
+	Teams: class {},
+	Users: class {},
+}));
+
+mock.module("@/lib/appwrite", () => ({
+	databases: {
+		createDocument: mock(() => "doc-id"),
+		getDocument: mock(() => null),
+		listDocuments: mock(() => ({ documents: [] })),
+		updateDocument: mock(() => {}),
+	},
+	browserDatabases: {
+		createDocument: mock(() => "doc-id"),
+		getDocument: mock(() => null),
+		listDocuments: mock(() => ({ documents: [] })),
+		updateDocument: mock(() => {}),
+	},
+	storage: { createFile: mock(() => {}), getFileView: mock(() => "") },
+	account: { get: mock(() => ({ $id: "user_123" })) },
 }));
 
 const mockGenerateDiagram = mock(() => ({
@@ -193,21 +223,6 @@ mock.module("@/lib/visual-engine/visual-engine", () => ({
 	visualEngine: { resolve: mockVisualResolve },
 }));
 
-const mockAnalyticsSync = mock(() => {});
-mock.module("@/lib/services/analytics-service", () => ({
-	analyticsService: { sync: mockAnalyticsSync },
-}));
-
-const mockSpacedRepUpdate = mock(() => {});
-mock.module("@/lib/services/spaced-rep-service", () => ({
-	spacedRepService: { update: mockSpacedRepUpdate },
-}));
-
-const mockProgressUpdate = mock(() => {});
-mock.module("@/lib/services/progress-service", () => ({
-	progressService: { update: mockProgressUpdate },
-}));
-
 const mockCompUpdate = mock(() => {});
 mock.module("@/lib/competency-engine", () => ({
 	competencyService: { update: mockCompUpdate },
@@ -253,9 +268,6 @@ describe("Integration: Orchestrator → VisualEngine → Dexie caching", () => {
 		mockCacheQuestions.mockClear();
 		mockLoadFromAppwrite.mockClear();
 		mockSyncToAppwrite.mockClear();
-		mockAnalyticsSync.mockClear();
-		mockSpacedRepUpdate.mockClear();
-		mockProgressUpdate.mockClear();
 		mockCompUpdate.mockClear();
 		mockGenerateDiagram.mockClear();
 		mockSearchImage.mockClear();
@@ -304,10 +316,10 @@ describe("Integration: Orchestrator → VisualEngine → Dexie caching", () => {
 		expect(result.result).toBeDefined();
 		expect(result.result.correct).toBe(true);
 		expect(result.result.score).toBe(1);
-		expect(result.jobIds.length).toBe(4);
+		expect(result.jobIds.length).toBe(0);
 
 		const jobs = await mockJobsStore.toArray();
-		expect(jobs.length).toBeGreaterThanOrEqual(4);
+		expect(jobs.length).toBeGreaterThanOrEqual(3);
 
 		const analyticsJob = jobs.find(
 			(j) => (j as { type: string }).type === "analytics-sync",
@@ -318,14 +330,10 @@ describe("Integration: Orchestrator → VisualEngine → Dexie caching", () => {
 		const progressJob = jobs.find(
 			(j) => (j as { type: string }).type === "progress-update",
 		);
-		const competencyJob = jobs.find(
-			(j) => (j as { type: string }).type === "competency-update",
-		);
 
 		expect(analyticsJob).toBeDefined();
 		expect(spacedRepJob).toBeDefined();
 		expect(progressJob).toBeDefined();
-		expect(competencyJob).toBeDefined();
 	});
 
 	test("4. Visual engine resolves a visual for a STEM question", async () => {

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { PageContainer } from "@/components/layout/page-container";
 import Link from "next/link";
+import { PageContainer } from "@/components/layout/page-container";
 
 export const metadata: Metadata = {
 	title: "Offline - Lumni",

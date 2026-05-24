@@ -212,7 +212,7 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 				<QuizStartState onSelect={doStart} />
 			) : (
 				<QuizSubjectPrompt
-					onSelect={() => console.warn("No subject selected")}
+					onSelect={() => (window.location.href = "/quiz")}
 					hasSubject={false}
 				/>
 			)}

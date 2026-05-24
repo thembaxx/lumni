@@ -10,9 +10,9 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { PageContainer } from "@/components/layout/page-container";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { PageContainer } from "@/components/layout/page-container";
 import { usePremium } from "@/lib/premium/premium-context";
 
 const FEATURES = [
@@ -39,13 +39,8 @@ const FEATURES = [
 ];
 
 export default function PremiumPage() {
-	const {
-		isPremium,
-		upgrade,
-		downgrade,
-		createCheckoutSession,
-		cancelSubscription,
-	} = usePremium();
+	const { isPremium, downgrade, createCheckoutSession, cancelSubscription } =
+		usePremium();
 	const { push, refresh } = useRouter();
 	const [loading, setLoading] = useState(false);
 
@@ -55,9 +50,6 @@ export default function PremiumPage() {
 			const url = await createCheckoutSession();
 			if (url) {
 				window.location.href = url;
-			} else {
-				await upgrade();
-				refresh();
 			}
 		} finally {
 			setLoading(false);

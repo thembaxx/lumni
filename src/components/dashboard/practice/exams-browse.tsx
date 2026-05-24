@@ -1,6 +1,7 @@
 "use client";
 
 import {
+	ArrowDown01Icon,
 	BookOpen01Icon,
 	Calendar01Icon,
 	Cancel01Icon,
@@ -9,8 +10,10 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 import { useState } from "react";
+import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
 import { ExamCard } from "@/components/dashboard/practice/exam-card";
 import { GroupSkeleton } from "@/components/dashboard/practice/exam-card-skeleton";
+import { PageContainer } from "@/components/layout/page-container";
 import { Anim } from "@/components/shared/anim";
 import {
 	Empty,
@@ -25,7 +28,6 @@ import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Input } from "@/components/ui/input";
 import { useExams } from "@/hooks/use-exams";
-import { PageContainer } from "@/components/layout/page-container";
 import { useToolsStore } from "@/store/tools";
 
 const YEARS = [2025, 2024, 2023, 2022, 2021] as const;
@@ -37,6 +39,7 @@ export function ExamsBrowse() {
 	const [selectedSession, setSelectedSession] = useState<string>("all");
 	const [selectedLanguage, setSelectedLanguage] = useState<string>("all");
 	const [searchQuery, setSearchQuery] = useState("");
+	const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
 	const openTools = useToolsStore((s) => s.openTools);
 
 	const { exams, groupedExams, isLoading, error } = useExams({
@@ -118,6 +121,20 @@ export function ExamsBrowse() {
 
 							<div className="flex flex-wrap items-center justify-between gap-2">
 								<div className="flex items-center gap-2">
+									<SubjectsDrawer onSelect={setSelectedSubject}>
+										<Button
+											variant={selectedSubject ? "default" : "secondary"}
+											size="sm"
+											className="border"
+										>
+											{selectedSubject || "Subject"}
+											<HugeiconsIcon
+												icon={ArrowDown01Icon}
+												className="ml-1"
+												data-icon
+											/>
+										</Button>
+									</SubjectsDrawer>
 									<ButtonGroup className="h-9 rounded-full border">
 										{LANGUAGES.map((lang) => (
 											<Button
@@ -305,12 +322,31 @@ export function ExamsBrowse() {
 												</Badge>
 											</div>
 											<div className="grid gap-2">
-												{group.papers.slice(0, 4).map((exam, _examIndex) => (
+												{(expandedGroups.has(group.subject)
+													? group.papers
+													: group.papers.slice(0, 4)
+												).map((exam, _examIndex) => (
 													<ExamCard key={exam.id} exam={exam} />
 												))}
 												{group.papers.length > 4 && (
-													<Button variant="secondary" size="sm">
-														+{group.papers.length - 4} more
+													<Button
+														variant="secondary"
+														size="sm"
+														onClick={() =>
+															setExpandedGroups((prev) => {
+																const next = new Set(prev);
+																if (next.has(group.subject)) {
+																	next.delete(group.subject);
+																} else {
+																	next.add(group.subject);
+																}
+																return next;
+															})
+														}
+													>
+														{expandedGroups.has(group.subject)
+															? "Show less"
+															: `+${group.papers.length - 4} more`}
 													</Button>
 												)}
 											</div>

@@ -1,14 +1,18 @@
 import { offlineDB } from "@/lib/db/schema";
 import { QueueCore } from "@/lib/queue/core";
 import { safeJsonStringify } from "@/lib/shared/json";
-import type { EnqueueOptions, JobRecord, JobType } from "./types";
+import type {
+	EnqueueOptions,
+	JobPayloadByType,
+	JobRecord,
+	JobType,
+} from "./types";
 
 const DEFAULT_MAX_RETRIES: Record<JobType, number> = {
 	"appwrite-sync": 3,
 	"analytics-sync": 1,
 	"spaced-rep-update": 2,
 	"progress-update": 2,
-	"competency-update": 2,
 	"visual-generation": 2,
 	"appwrite-progress-sync": 3,
 	"appwrite-attempt-sync": 3,
@@ -27,7 +31,6 @@ const DEFAULT_PRIORITY: Record<JobType, number> = {
 	"analytics-sync": 30,
 	"spaced-rep-update": 50,
 	"progress-update": 50,
-	"competency-update": 60,
 	"visual-generation": 40,
 	"appwrite-progress-sync": 65,
 	"appwrite-attempt-sync": 65,
@@ -43,9 +46,9 @@ const DEFAULT_PRIORITY: Record<JobType, number> = {
 
 export const queueCore = new QueueCore<JobRecord>(offlineDB.jobs);
 
-export async function enqueue(
-	type: JobType,
-	payload: unknown,
+export async function enqueue<T extends JobType>(
+	type: T,
+	payload: JobPayloadByType[T],
 	opts?: EnqueueOptions,
 ): Promise<number> {
 	const now = Date.now();

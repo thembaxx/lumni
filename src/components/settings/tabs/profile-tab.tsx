@@ -5,6 +5,8 @@ import {
 	Cancel01Icon,
 	CheckmarkCircle01Icon,
 	CompassIcon,
+	Copy01Icon,
+	LinkSquare01Icon,
 	Login01Icon,
 	Logout01Icon,
 	Mail01Icon,
@@ -14,6 +16,7 @@ import {
 	UserIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import { OnboardingWizard } from "@/components/onboarding/onboarding-wizard";
 import { EmptyStateWithIllustration } from "@/components/shared/empty-state";
@@ -21,6 +24,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ListCell, ListSection } from "@/components/ui/list-cell";
+import { toast } from "@/hooks/use-toast";
 import { account } from "@/lib/appwrite";
 import { useAuth } from "@/lib/auth/auth-context";
 import { useUploadThing } from "@/lib/uploadthing";
@@ -576,6 +580,47 @@ export function ProfileTab() {
 				)}
 			</ListSection>
 
+			<ListSection header="Account Role">
+				<ListCell
+					leading={<HugeiconsIcon icon={UserIcon} className="size-5" />}
+					title="Role"
+					subtitle="Controls which dashboard you see"
+					showSeparator={false}
+					trailing={<RoleSelector currentLabels={user?.labels ?? []} />}
+				/>
+			</ListSection>
+
+			<ListSection header="Share Profile">
+				<ListCell
+					leading={<HugeiconsIcon icon={LinkSquare01Icon} className="size-5" />}
+					title="Your User ID"
+					subtitle="Share this with your teacher or parent to link accounts"
+					showSeparator={false}
+					trailing={
+						<button
+							type="button"
+							onClick={async () => {
+								if (user?.$id) {
+									await navigator.clipboard.writeText(user.$id);
+									toast({
+										type: "success",
+										message: "User ID copied to clipboard",
+									});
+								}
+							}}
+							className="flex size-8 shrink-0 items-center justify-center rounded-full bg-system-accent text-white hover:bg-system-accent/90"
+							aria-label="Copy user ID"
+						>
+							<HugeiconsIcon icon={Copy01Icon} className="size-4" />
+						</button>
+					}
+				/>
+			</ListSection>
+
+			{user?.labels?.includes("student") && (
+				<ParentConsentSection userId={user.$id} />
+			)}
+
 			<ListSection header="Study Goals">
 				<ListCell
 					leading={<HugeiconsIcon icon={CompassIcon} className="size-5" />}
@@ -665,5 +710,94 @@ export function ProfileTab() {
 				</div>
 			</div>
 		</div>
+	);
+}
+
+const VALID_ROLES = ["teacher", "parent", "student"] as const;
+
+function RoleSelector({ currentLabels }: { currentLabels: string[] }) {
+	const queryClient = useQueryClient();
+	const currentRole =
+		VALID_ROLES.find((r) => currentLabels.includes(r)) ?? "student";
+
+	const setRole = useMutation({
+		mutationFn: async (role: string) => {
+			const res = await fetch("/api/user/role", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ role }),
+			});
+			if (!res.ok) throw new Error("Failed to set role");
+			return res.json();
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["session"] });
+			toast({ type: "success", message: "Role updated" });
+		},
+		onError: () => toast({ type: "error", message: "Failed to update role" }),
+	});
+
+	return (
+		<div className="flex gap-1">
+			{VALID_ROLES.map((role) => (
+				<button
+					key={role}
+					type="button"
+					onClick={() => setRole.mutate(role)}
+					disabled={setRole.isPending}
+					className={`rounded-lg px-2.5 py-1 font-semibold text-xs capitalize transition-colors ${
+						currentRole === role
+							? "bg-system-accent text-white"
+							: "bg-system-fill text-muted-foreground hover:bg-system-fill/80"
+					}`}
+				>
+					{role}
+				</button>
+			))}
+		</div>
+	);
+}
+
+function ParentConsentSection({ userId }: { userId: string }) {
+	const { data: requests } = useQuery({
+		queryKey: ["parent-consent-requests", userId],
+		queryFn: async () => {
+			const res = await fetch(
+				`/api/parent/consent?studentId=${encodeURIComponent(userId)}`,
+			);
+			if (!res.ok) return null;
+			const data = (await res.json()) as { status: string };
+			return data;
+		},
+	});
+
+	if (!requests) return null;
+
+	return (
+		<ListSection header="Parental Consent">
+			<ListCell
+				leading={<HugeiconsIcon icon={LinkSquare01Icon} className="size-5" />}
+				title="Consent Status"
+				subtitle={
+					requests.status === "granted"
+						? "A parent can view your progress"
+						: requests.status === "revoked"
+							? "Parent access has been revoked"
+							: "No parent link active"
+				}
+				showSeparator={false}
+				trailing={
+					<span
+						className={`rounded-full px-2.5 py-0.5 font-semibold text-xs ${
+							requests.status === "granted"
+								? "bg-emerald-500/10 text-emerald-600"
+								: "bg-muted text-muted-foreground"
+						}`}
+					>
+						{requests.status}
+					</span>
+				}
+			/>
+		</ListSection>
 	);
 }

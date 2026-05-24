@@ -307,7 +307,7 @@ export async function scheduleExamAlerts(
 			sendLocalNotification(
 				`${slot.subject} exam tomorrow!`,
 				`Your ${slot.subject} exam starts at ${slot.startTime}. Good luck!`,
-				"/tools?tool=exam-calendar",
+				"/dashboard",
 			);
 		}, delay);
 

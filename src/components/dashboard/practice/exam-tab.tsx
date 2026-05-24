@@ -39,6 +39,7 @@ export function ExamTab({ className }: ExamTabProps) {
 	const [selectedYear, setSelectedYear] = useState<number | null>(null);
 	const [selectedSession, setSelectedSession] = useState<string>("all");
 	const [searchQuery, setSearchQuery] = useState("");
+	const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
 
 	const { exams, groupedExams, isLoading, error } = useExams({
 		search: searchQuery,
@@ -284,12 +285,31 @@ export function ExamTab({ className }: ExamTabProps) {
 											</Badge>
 										</div>
 										<div className="grid gap-2">
-											{group.papers.slice(0, 4).map((exam, _examIndex) => (
+											{(expandedGroups.has(group.subject)
+												? group.papers
+												: group.papers.slice(0, 4)
+											).map((exam, _examIndex) => (
 												<ExamCard key={exam.id} exam={exam} />
 											))}
 											{group.papers.length > 4 && (
-												<Button variant="secondary" size="sm">
-													+{group.papers.length - 4} more
+												<Button
+													variant="secondary"
+													size="sm"
+													onClick={() =>
+														setExpandedGroups((prev) => {
+															const next = new Set(prev);
+															if (next.has(group.subject)) {
+																next.delete(group.subject);
+															} else {
+																next.add(group.subject);
+															}
+															return next;
+														})
+													}
+												>
+													{expandedGroups.has(group.subject)
+														? "Show less"
+														: `+${group.papers.length - 4} more`}
 												</Button>
 											)}
 										</div>

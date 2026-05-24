@@ -91,6 +91,17 @@ export function useWrongAnswerJournal() {
 		}
 	}, []);
 
+	const updateErrorType = useCallback(
+		async (id: number, errorType: ErrorType) => {
+			try {
+				await offlineDB.table("wrongAnswers").update(id, { errorType });
+			} catch {
+				/* non-critical */
+			}
+		},
+		[],
+	);
+
 	const clearReviewed = useCallback(async () => {
 		try {
 			const entries = await offlineDB
@@ -112,5 +123,6 @@ export function useWrongAnswerJournal() {
 		getWrongAnswers,
 		markReviewed,
 		clearReviewed,
+		updateErrorType,
 	};
 }

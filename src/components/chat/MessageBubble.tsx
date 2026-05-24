@@ -211,7 +211,9 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 									key={`bar-${height}`}
 									className={cn(
 										"w-1.25 rounded-full",
-										isUser ? "bg-white/40 dark:bg-black/20" : "bg-system-accent/40",
+										isUser
+											? "bg-white/40 dark:bg-black/20"
+											: "bg-system-accent/40",
 									)}
 									animate={
 										isPlaying

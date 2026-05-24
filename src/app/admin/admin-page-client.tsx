@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import { AdminDashboard } from "@/components/admin/admin-dashboard";
 import { LoginForm } from "@/components/admin/login-form";
 import { Button } from "@/components/ui/button";
-import { Toaster, ToastProvider } from "@/components/ui/toast";
 
 function Preloader({ onComplete }: { onComplete: () => void }) {
 	const [progress, setProgress] = useState(0);
@@ -93,7 +92,7 @@ export function AdminPageClient() {
 	}
 
 	return (
-		<ToastProvider>
+		<>
 			<AnimatePresence initial={false}>
 				{!isAuthenticated && (
 					<m.div
@@ -147,8 +146,6 @@ export function AdminPageClient() {
 					</m.div>
 				</AnimatePresence>
 			)}
-
-			<Toaster />
-		</ToastProvider>
+		</>
 	);
 }

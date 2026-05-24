@@ -1,17 +1,46 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { requireAdmin } from "@/lib/server/auth";
+import { getAuthenticatedUserId } from "@/lib/server/auth";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
-async function cancelHandler(_req: NextRequest) {
-	await requireAdmin();
+async function cancelHandler(req: NextRequest) {
+	const userId = await getAuthenticatedUserId();
+	if (!userId) {
+		return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+	}
 
 	try {
-		const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
-		const STRIPE_SUBSCRIPTION_ID = process.env.STRIPE_SUBSCRIPTION_ID;
+		const { subscriptionId } = await req.json();
 
-		if (STRIPE_SECRET_KEY && STRIPE_SUBSCRIPTION_ID) {
+		if (!subscriptionId) {
+			return NextResponse.json(
+				{ error: "Missing subscriptionId" },
+				{ status: 400 },
+			);
+		}
+
+		const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
+
+		if (STRIPE_SECRET_KEY) {
+			const validateRes = await fetch(
+				`https://api.stripe.com/v1/subscriptions/${subscriptionId}`,
+				{
+					cache: "no-store",
+					headers: { Authorization: `Bearer ${STRIPE_SECRET_KEY}` },
+				},
+			);
+
+			if (validateRes.ok) {
+				const sub = await validateRes.json();
+				if (
+					sub.metadata?.client_reference_id &&
+					sub.metadata.client_reference_id !== userId
+				) {
+					return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+				}
+			}
+
 			const stripeRes = await fetch(
-				`https://api.stripe.com/v1/subscriptions/${STRIPE_SUBSCRIPTION_ID}`,
+				`https://api.stripe.com/v1/subscriptions/${subscriptionId}`,
 				{
 					method: "DELETE",
 					cache: "no-store",
@@ -28,7 +57,10 @@ async function cancelHandler(_req: NextRequest) {
 			return NextResponse.json({ success: true });
 		}
 
-		return NextResponse.json({ success: true });
+		return NextResponse.json(
+			{ error: "Payment provider not configured", success: false },
+			{ status: 503 },
+		);
 	} catch (error) {
 		console.error("Cancel subscription error:", error);
 		return NextResponse.json(
