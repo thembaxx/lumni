@@ -261,4 +261,4 @@ Established 2026-05-23 after a codebase-wide audit. All decisions below are non-
 
 - `npx tsc --noEmit` must pass with zero errors
 - `npx biome check` must pass on all changed files
-- Build: `npx next build` (catches runtime issues)
+- Build: `npx next build` (catches runtime issues; `bunx --bun next build` may fail due to Next.js worker git-clone compat, use `npx` instead)
