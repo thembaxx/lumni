@@ -2,8 +2,14 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { flashcardRepository } from "@/lib/flashcard-repository";
-import type { FlashcardSM2 } from "@/lib/flashcard-repository/types";
-import { convertQuizToFlashcards } from "@/lib/utils/spaced-repetition";
+import type {
+	FlashcardReview,
+	FlashcardSM2,
+} from "@/lib/flashcard-repository/types";
+import {
+	convertQuizToFlashcards,
+	getReviewHistory,
+} from "@/lib/utils/spaced-repetition";
 
 export interface UseSpacedRepetitionReturn {
 	cards: FlashcardSM2[];
@@ -36,6 +42,10 @@ export interface UseSpacedRepetitionReturn {
 		}>,
 		subject: string,
 	) => Promise<void>;
+	bury: (id: string) => Promise<void>;
+	suspend: (id: string) => Promise<void>;
+	activate: (id: string) => Promise<void>;
+	getReviewHistory: (cardId: string) => Promise<FlashcardReview[]>;
 	refresh: () => Promise<void>;
 }
 
@@ -99,6 +109,34 @@ export function useSpacedRepetition(): UseSpacedRepetitionReturn {
 		[refresh],
 	);
 
+	const bury = useCallback(
+		async (id: string) => {
+			await flashcardRepository.bury(id);
+			await refresh();
+		},
+		[refresh],
+	);
+
+	const suspend = useCallback(
+		async (id: string) => {
+			await flashcardRepository.suspend(id);
+			await refresh();
+		},
+		[refresh],
+	);
+
+	const activate = useCallback(
+		async (id: string) => {
+			await flashcardRepository.activate(id);
+			await refresh();
+		},
+		[refresh],
+	);
+
+	const getReviewHistory_ = useCallback(async (cardId: string) => {
+		return getReviewHistory(cardId);
+	}, []);
+
 	const importFromQuiz = useCallback(
 		async (
 			questions: Array<{
@@ -126,6 +164,10 @@ export function useSpacedRepetition(): UseSpacedRepetitionReturn {
 		editCard,
 		review,
 		importFromQuiz,
+		bury,
+		suspend,
+		activate,
+		getReviewHistory: getReviewHistory_,
 		refresh,
 	};
 }

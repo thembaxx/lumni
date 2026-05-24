@@ -38,6 +38,11 @@ const FloatingToolsButton = dynamic(() =>
 		default: m.FloatingToolsButton,
 	})),
 );
+const SnapFab = dynamic(() =>
+	import("@/components/tools/snap-fab").then((m) => ({
+		default: m.SnapFab,
+	})),
+);
 
 async function UTSSR() {
 	await connection();
@@ -166,6 +171,7 @@ export default function RootLayout({
 						<UploadDialogRenderer />
 						<Toaster />
 						<FloatingToolsButton />
+						<SnapFab />
 						<div className="flex flex-1">
 							<DesktopSidebar />
 							<main id="main-content" className="flex min-w-0 flex-1 flex-col">

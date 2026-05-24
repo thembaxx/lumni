@@ -1,7 +1,10 @@
 import Dexie, { type Table } from "dexie";
 import type { WrongAnswerEntry } from "@/hooks/use-wrong-answer-journal";
 import type { CompetencyRecord } from "@/lib/competency-engine/types";
-import type { FlashcardSM2 } from "@/lib/flashcard-repository/types";
+import type {
+	FlashcardReview,
+	FlashcardSM2,
+} from "@/lib/flashcard-repository/types";
 import type { JobRecord } from "@/lib/orchestrator/types";
 
 export interface CachedQuestion {
@@ -131,6 +134,14 @@ export interface CachedExamDates {
 	updatedAt: number;
 }
 
+export interface ExtractionCache {
+	id?: number;
+	imageHash: string;
+	extractedText: string;
+	subject?: string;
+	createdAt: number;
+}
+
 export class LumniOfflineDB extends Dexie {
 	chatMessages!: Table<ChatMessageRecord, number>;
 	questions!: Table<CachedQuestion, number>;
@@ -148,6 +159,8 @@ export class LumniOfflineDB extends Dexie {
 	examSessions!: Table<ExamSessionSnapshot, number>;
 	cachedPdfs!: Table<CachedPdf, number>;
 	examDates!: Table<CachedExamDates, number>;
+	reviewHistory!: Table<FlashcardReview, number>;
+	extractionCache!: Table<ExtractionCache, number>;
 
 	constructor() {
 		super("lumni-offline");
@@ -203,6 +216,13 @@ export class LumniOfflineDB extends Dexie {
 
 		this.version(12).stores({
 			examDates: "++id, &cacheKey, session, year, updatedAt",
+		});
+
+		this.version(13).stores({
+			flashcards:
+				"&id, subject, topic, nextReview, easeFactor, interval, repetitions, status",
+			reviewHistory: "++id, cardId, reviewedAt",
+			extractionCache: "++id, &imageHash, createdAt",
 		});
 	}
 }

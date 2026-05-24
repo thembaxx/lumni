@@ -1,3 +1,6 @@
+export type CardStatus = "active" | "buried" | "suspended";
+export type SRSAlgorithm = "sm2" | "fsrs";
+
 export interface FlashcardSM2 {
 	id: string;
 	front: string;
@@ -10,6 +13,23 @@ export interface FlashcardSM2 {
 	nextReview: number;
 	lastReview: number | null;
 	createdAt: number;
+	algorithm: SRSAlgorithm;
+	stability: number;
+	difficulty: number;
+	status: CardStatus;
+	lapses: number;
+}
+
+export interface FlashcardReview {
+	id?: number;
+	cardId: string;
+	quality: number;
+	algorithm: SRSAlgorithm;
+	easeFactor: number;
+	stability: number;
+	difficulty: number;
+	interval: number;
+	reviewedAt: number;
 }
 
 export interface SM2Quality {
@@ -76,4 +96,8 @@ export interface FlashcardRepository {
 	review(id: string, quality: number): Promise<FlashcardSM2 | null>;
 	getStats(): Promise<FlashcardStats>;
 	getGrouped(): Promise<Record<string, FlashcardSM2[]>>;
+	bury(id: string): Promise<void>;
+	suspend(id: string): Promise<void>;
+	activate(id: string): Promise<void>;
+	getReviewHistory(cardId: string): Promise<FlashcardReview[]>;
 }

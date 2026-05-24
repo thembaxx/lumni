@@ -80,6 +80,11 @@ export const aiSolver = {
 
 		if ("available" in result && !result.available) {
 			const errorMsg = "error" in result ? result.error : "Unknown error";
+			if (isImageMode) {
+				throw new Error(
+					`Could not read the image. Only Gemini supports image processing, and it was unavailable: ${errorMsg}. Please type the problem text instead.`,
+				);
+			}
 			throw new Error(`AI solver failed: ${errorMsg}`);
 		}
 

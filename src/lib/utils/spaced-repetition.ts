@@ -1,15 +1,29 @@
 import { flashcardRepository } from "@/lib/flashcard-repository";
 import type {
+	CardStatus,
+	FlashcardReview,
 	FlashcardSM2,
 	SM2Quality,
+	SRSAlgorithm,
 } from "@/lib/flashcard-repository/types";
 import { SM2_QUALITIES } from "@/lib/flashcard-repository/types";
 
 export {
+	calculateNextReviewFSRS,
+	getRetrievability,
+	initFSRS,
+} from "@/lib/orchestrator/fsrs";
+export {
 	calculateNextReview,
 	computeNextReviewDate,
 } from "@/lib/orchestrator/sm2";
-export type { FlashcardSM2, SM2Quality };
+export type {
+	CardStatus,
+	FlashcardReview,
+	FlashcardSM2,
+	SM2Quality,
+	SRSAlgorithm,
+};
 export { SM2_QUALITIES };
 
 export async function createFlashcard(
@@ -83,6 +97,24 @@ export function getIntervalLabel(interval: number): string {
 	if (interval < 30) return `${Math.round(interval / 7)} weeks`;
 	if (interval < 365) return `${Math.round(interval / 30)} months`;
 	return `${Math.round(interval / 365)} years`;
+}
+
+export async function buryFlashcard(id: string): Promise<void> {
+	return flashcardRepository.bury(id);
+}
+
+export async function suspendFlashcard(id: string): Promise<void> {
+	return flashcardRepository.suspend(id);
+}
+
+export async function activateFlashcard(id: string): Promise<void> {
+	return flashcardRepository.activate(id);
+}
+
+export async function getReviewHistory(
+	cardId: string,
+): Promise<FlashcardReview[]> {
+	return flashcardRepository.getReviewHistory(cardId);
 }
 
 export async function convertQuizToFlashcards(

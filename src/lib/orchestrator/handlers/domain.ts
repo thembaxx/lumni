@@ -10,7 +10,6 @@ import { safePersist } from "@/lib/db/persist";
 import { getProgress, saveProgress } from "@/lib/db/repositories/progress";
 import { flashcardRepository } from "@/lib/flashcard-repository";
 import { enqueue } from "@/lib/orchestrator/job-queue";
-import { calculateNextReview } from "@/lib/orchestrator/sm2";
 import type { JobPayloadByType } from "@/lib/orchestrator/types";
 import { extractCorrectAnswer } from "@/lib/shared/question-utils";
 import { visualEngine } from "@/lib/visual-engine/visual-engine";
@@ -61,22 +60,7 @@ export const spacedRepUpdate: JobHandler = async (payload) => {
 	);
 
 	if (existingCards.length > 0) {
-		const card = existingCards[0];
-		const { easeFactor, interval, repetitions, nextReview } =
-			calculateNextReview(
-				quality,
-				card.easeFactor,
-				card.interval,
-				card.repetitions,
-			);
-
-		await flashcardRepository.update(card.id, {
-			easeFactor,
-			interval,
-			repetitions,
-			nextReview,
-			lastReview: Date.now(),
-		});
+		await flashcardRepository.review(existingCards[0].id, quality);
 	} else {
 		const correctOptionText = extractCorrectAnswer(question);
 		await flashcardRepository.create(
