@@ -3,14 +3,18 @@
 import {
 	Calendar01Icon,
 	Clock01Icon,
+	CrownIcon,
 	SparklesIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
+import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { usePremium } from "@/lib/premium/premium-context";
 import { cn } from "@/lib/shared";
 
 interface StudySession {
@@ -176,6 +180,7 @@ function generateDeterministicSchedule(input: SchedulerInput): StudySession[] {
 }
 
 export function SmartScheduler() {
+	const { hasFeature } = usePremium();
 	const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
 	const [hoursPerDay, setHoursPerDay] = useState(2);
 	const [examDate, setExamDate] = useState("");
@@ -253,6 +258,28 @@ export function SmartScheduler() {
 		day,
 		sessions: schedule.filter((s) => s.day === day),
 	}));
+
+	if (!hasFeature("custom-study-plans")) {
+		return (
+			<div className="flex h-full flex-col items-center justify-center gap-4 p-8">
+				<Card className="flex max-w-md flex-col items-center gap-4 p-8 text-center">
+					<HugeiconsIcon icon={CrownIcon} className="size-10 text-amber-400" />
+					<div>
+						<p className="font-semibold text-lg">Premium Feature</p>
+						<p className="mt-1 text-muted-foreground text-sm">
+							AI-powered study scheduling is available on Premium.
+						</p>
+					</div>
+					<Button asChild>
+						<Link href="/premium">
+							<HugeiconsIcon icon={CrownIcon} data-icon="inline-start" />
+							Upgrade Now
+						</Link>
+					</Button>
+				</Card>
+			</div>
+		);
+	}
 
 	return (
 		<div className="flex h-full flex-col overflow-y-auto">

@@ -9,24 +9,10 @@ import { LoginForm } from "@/components/admin/login-form";
 import { Button } from "@/components/ui/button";
 
 function Preloader({ onComplete }: { onComplete: () => void }) {
-	const [progress, setProgress] = useState(0);
-
 	useEffect(() => {
-		const interval = setInterval(() => {
-			setProgress((prev) => {
-				if (prev >= 100) return 100;
-				return Math.min(prev + Math.random() * 20 + 10, 100);
-			});
-		}, 60);
-		return () => clearInterval(interval);
-	}, []);
-
-	useEffect(() => {
-		if (progress >= 100) {
-			const timer = setTimeout(onComplete, 300);
-			return () => clearTimeout(timer);
-		}
-	}, [progress, onComplete]);
+		const timer = setTimeout(onComplete, 400);
+		return () => clearTimeout(timer);
+	}, [onComplete]);
 
 	return (
 		<m.div
@@ -40,9 +26,14 @@ function Preloader({ onComplete }: { onComplete: () => void }) {
 			</div>
 			<div className="mt-6 h-1 w-32 overflow-hidden rounded-full bg-secondary">
 				<m.div
-					className="h-full bg-foreground"
-					initial={{ width: 0 }}
-					animate={{ width: `${progress}%` }}
+					className="h-full w-1/2 animate-pulse rounded-full bg-foreground"
+					initial={{ opacity: 0.4 }}
+					animate={{ opacity: 1 }}
+					transition={{
+						duration: 0.6,
+						repeat: Infinity,
+						repeatType: "reverse",
+					}}
 				/>
 			</div>
 		</m.div>

@@ -4,10 +4,12 @@ import {
 	Award01Icon,
 	CrownIcon,
 	FireIcon,
+	HeadphonesIcon,
 	Share07Icon,
 	StarsIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
@@ -35,6 +37,11 @@ const FEATURES = [
 		icon: CrownIcon,
 		label: "Custom Study Plans",
 		desc: "AI-optimised study schedules",
+	},
+	{
+		icon: HeadphonesIcon,
+		label: "Priority Support",
+		desc: "Faster response times and dedicated help",
 	},
 ];
 
@@ -127,13 +134,24 @@ export default function PremiumPage() {
 
 					<div className="flex flex-col gap-2 pt-2">
 						{isPremium ? (
-							<Button
-								variant="destructive"
-								onClick={handleCancel}
-								disabled={loading}
-							>
-								Cancel Premium
-							</Button>
+							<>
+								<Button asChild variant="outline">
+									<Link href="/support">
+										<HugeiconsIcon
+											icon={HeadphonesIcon}
+											data-icon="inline-start"
+										/>
+										Get Support
+									</Link>
+								</Button>
+								<Button
+									variant="destructive"
+									onClick={handleCancel}
+									disabled={loading}
+								>
+									Cancel Premium
+								</Button>
+							</>
 						) : (
 							<Button onClick={handleUpgrade} disabled={loading}>
 								<HugeiconsIcon icon={CrownIcon} data-icon="inline-start" />

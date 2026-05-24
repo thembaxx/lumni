@@ -4,6 +4,7 @@ import {
 	Calendar01Icon,
 	CheckListIcon,
 	Clock01Icon,
+	CrownIcon,
 	MagicWand01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -14,8 +15,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useStudyPlanner } from "@/hooks/use-study-planner";
+import { usePremium } from "@/lib/premium/premium-context";
 
 export function StudyPlanOverview() {
+	const { hasFeature } = usePremium();
 	const { todaySessions, upcomingExams, stats, generatePlan, isGenerating } =
 		useStudyPlanner();
 	const [targetAps, setTargetAps] = useState("25");
@@ -52,6 +55,37 @@ export function StudyPlanOverview() {
 	}
 
 	if (showForm) {
+		if (!hasFeature("custom-study-plans")) {
+			return (
+				<Card>
+					<CardHeader className="flex flex-row items-center justify-between">
+						<CardTitle className="flex items-center gap-2 font-extrabold text-base tracking-tight">
+							<HugeiconsIcon icon={CheckListIcon} className="size-5" />
+							Generate Study Plan
+						</CardTitle>
+					</CardHeader>
+					<CardContent className="flex flex-col items-center gap-4 py-8 text-center">
+						<HugeiconsIcon
+							icon={CrownIcon}
+							className="size-10 text-amber-400"
+						/>
+						<div>
+							<p className="font-semibold text-lg">Premium Feature</p>
+							<p className="mt-1 text-muted-foreground text-sm">
+								AI-optimised study plans are available on Premium.
+							</p>
+						</div>
+						<Button asChild>
+							<Link href="/premium">
+								<HugeiconsIcon icon={CrownIcon} data-icon="inline-start" />
+								Upgrade Now
+							</Link>
+						</Button>
+					</CardContent>
+				</Card>
+			);
+		}
+
 		return (
 			<Card>
 				<CardHeader className="flex flex-row items-center justify-between">

@@ -1,11 +1,18 @@
 "use client";
 
-import { ListViewIcon, RadialIcon } from "@hugeicons/core-free-icons";
+import {
+	CrownIcon,
+	ListViewIcon,
+	RadialIcon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { AssessmentHeader } from "@/components/ui/headers/assessment-header";
 import { useExamSessionAutoSave } from "@/hooks/use-exam-session-persistence";
+import { usePremium } from "@/lib/premium/premium-context";
 import { useExamSessionStore } from "@/store/exam-session";
 import type { ExamPaper } from "@/types/exam-paper";
 import { ExamResults } from "./exam-results";
@@ -25,6 +32,7 @@ export function ExamEngine({
 	paperId,
 	durationMinutes,
 }: ExamEngineProps) {
+	const { hasFeature } = usePremium();
 	const [sidebarOpen, setSidebarOpen] = useState(false);
 
 	useExamSessionAutoSave(paperId);
@@ -122,6 +130,27 @@ export function ExamEngine({
 		0,
 	);
 	const answeredCount = Object.keys(answers).length;
+
+	if (!hasFeature("exam-simulator")) {
+		return (
+			<Card className="flex flex-col items-center gap-4 p-8 text-center">
+				<HugeiconsIcon icon={CrownIcon} className="size-10 text-amber-400" />
+				<div>
+					<p className="font-semibold text-lg">Premium Feature</p>
+					<p className="mt-1 text-muted-foreground text-sm">
+						Full exam simulations with timers and marking guides are available
+						on Premium.
+					</p>
+				</div>
+				<Button asChild>
+					<Link href="/premium">
+						<HugeiconsIcon icon={CrownIcon} data-icon="inline-start" />
+						Upgrade Now
+					</Link>
+				</Button>
+			</Card>
+		);
+	}
 
 	if (completed) {
 		return (

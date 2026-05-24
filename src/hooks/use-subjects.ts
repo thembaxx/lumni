@@ -2,6 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import subjectsData from "@/data/subjects.json";
+import { offlineDB } from "@/lib/db/schema";
 
 export interface Subject {
 	id: string;
@@ -33,7 +34,21 @@ async function fetchSubjects(): Promise<Subject[]> {
 export function useSubjects() {
 	return useQuery({
 		queryKey: ["subjects"],
-		queryFn: fetchSubjects,
+		queryFn: async () => {
+			const data = await fetchSubjects();
+			await offlineDB.subjects
+				.bulkPut(
+					data.map((s) => ({
+						code: s.code,
+						name: s.name,
+						category: s.category,
+						data: JSON.stringify(s),
+						cachedAt: Date.now(),
+					})),
+				)
+				.catch(() => {});
+			return data;
+		},
 		staleTime: 1000 * 60 * 60,
 		retry: 2,
 		initialData: subjectsData as Subject[],

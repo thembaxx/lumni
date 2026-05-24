@@ -74,16 +74,15 @@ Automated scan of `src/` across 7 phases. All P0-P3 items from scan have been fi
 - [x] **TypeScript check** — `npx tsc --noEmit` passes with zero errors
 - [x] **Biome lint** — `npx biome check` passes with zero warnings
 
-### Still Pending (not yet implemented)
-- **Premium gating**: `hasFeature()` is never called in production — zero feature gates enforce premium vs free
-- **"priority-support" feature**: Defined in type system and listed on marketing page, but zero code exists
-- **`study-planner/index.ts` barrel**: Orphaned re-export file with no consumers
-- **`aps.ts:calculateAPS()` export**: Dead export (consumer defines local version)
-- **`exam-parser/index.ts:convertMarkdownToJson()`**: Dead export
-- **Dexie `subjects` table**: Has schema but no write path
-- **Dexie `chatMessages` table**: Has schema + sync handler ref but no write path
-- **`admin-page-client.tsx`:14 — `Preloader`**: Simulates fake loading progress with Math.random()
-- **`flashcard-import-export.ts:exportToCSV()`**: Exported but only used internally
+### Session 9 — Pending implementation sweep (May 2026)
+- [x] **`study-planner/index.ts` barrel**: Deleted file (no consumers)
+- [x] **`aps.ts:calculateAPS()` export**: Removed dead function
+- [x] **`admin-page-client.tsx` Preloader**: Replaced fake Math.random() with simple pulse animation + 400ms timeout
+- [x] **Dexie `subjects` table write path**: Added `offlineDB.subjects.bulkPut()` in `use-subjects.ts` on fetch
+- [x] **Dexie `chatMessages` table write path**: Added `offlineDB.chatMessages.bulkPut()` in `use-chat.ts` on message change
+- [x] **Premium gating**: `PremiumGate` component created; `hasFeature()` wired into `exam-engine` (`exam-simulator`), `analytics-panel` + `comparative-analytics-panel` (`advanced-analytics`), `study-plan-overview` + `smart-scheduler` (`custom-study-plans`)
+- [x] **Priority support**: Support page at `/support` with priority-aware channel cards; added to premium upgrade page FEATURES array
+- [x] **TypeScript & biome**: `tsc --noEmit` passes with zero errors; `npx biome check` passes on all changed files
 
 ### TypeScript & Lint (Session 8 — cleanup sweep)
 - [x] **Biome lint** — fixed 22 issues:

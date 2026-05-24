@@ -7,6 +7,7 @@ import {
 	ChartDownIcon,
 	ChartUpIcon,
 	Clock01Icon,
+	CrownIcon,
 	FireIcon,
 	Target01Icon,
 } from "@hugeicons/core-free-icons";
@@ -21,9 +22,32 @@ import {
 	type SubjectAnalytics,
 	useAnalytics,
 } from "@/hooks/use-analytics";
+import { usePremium } from "@/lib/premium/premium-context";
 
 export function AnalyticsPanel() {
+	const { hasFeature } = usePremium();
 	const { analytics, isLoading, refresh } = useAnalytics();
+
+	if (!hasFeature("advanced-analytics")) {
+		return (
+			<Card className="flex flex-col items-center gap-4 p-8 text-center">
+				<HugeiconsIcon icon={CrownIcon} className="size-10 text-amber-400" />
+				<div>
+					<p className="font-semibold text-lg">Premium Feature</p>
+					<p className="mt-1 text-muted-foreground text-sm">
+						Advanced analytics with detailed performance breakdowns are
+						available on Premium.
+					</p>
+				</div>
+				<Button asChild>
+					<Link href="/premium">
+						<HugeiconsIcon icon={CrownIcon} data-icon="inline-start" />
+						Upgrade Now
+					</Link>
+				</Button>
+			</Card>
+		);
+	}
 
 	if (isLoading) {
 		return (
