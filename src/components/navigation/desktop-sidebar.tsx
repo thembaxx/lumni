@@ -40,7 +40,7 @@ const sidebarItems: SidebarItem[] = [
 		id: "chat",
 		label: "Chat",
 		icon: Chat01Icon,
-		href: "",
+		href: "/chat",
 	},
 	{
 		id: "problems",

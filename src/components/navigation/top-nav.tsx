@@ -24,7 +24,7 @@ import { useGamification } from "@/hooks/use-gamification";
 import { useSyncStatus } from "@/hooks/use-sync-status";
 import { useAuth } from "@/lib/auth/auth-context";
 import { cn } from "@/lib/shared";
-import { getRandomName as _getRandomName } from "@/lib/utils/random-name";
+import { getRandomName } from "@/lib/utils/random-name";
 
 interface TopNavProps {
 	title?: string;
@@ -49,7 +49,7 @@ export function TopNav({ title, className }: TopNavProps) {
 		await signOut();
 	}, [signOut]);
 
-	const diceBearSeed = useMemo(() => _getRandomName(), []);
+	const diceBearSeed = useMemo(() => getRandomName(), []);
 
 	const pageTitle = useMemo(() => {
 		if (title) return title;

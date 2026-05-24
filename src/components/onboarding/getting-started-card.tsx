@@ -115,7 +115,7 @@ export function GettingStartedCard() {
 	];
 
 	return (
-		<AnimatePresence>
+		<AnimatePresence initial={false}>
 			{!collapsing && (
 				<m.div
 					key="card"
@@ -138,7 +138,7 @@ export function GettingStartedCard() {
 								<button
 									type="button"
 									onClick={handleDismiss}
-									className="-mr-1 rounded-md p-2 transition-colors hover:bg-muted/50"
+									className="-mr-1 rounded-md p-3 transition-[scale,background-color] hover:bg-muted/50 active:scale-[0.96]"
 									aria-label="Dismiss"
 								>
 									<HugeiconsIcon

@@ -110,24 +110,20 @@ export function APSCalculator() {
 	const calculateAPS = (): number => {
 		const validSubjects = subjects.filter((s) => s.name && s.percentage > 0);
 
-		const filtered = validSubjects
+		return validSubjects
 			.map((s) => ({
 				score: getAPSForSubject(s.percentage),
 				isLO: s.name.toLowerCase().includes("life orientation"),
 			}))
-			.reduce(
-				(acc, { score, isLO }) => {
-					if (!isLO || includeLifeOrientation) {
-						acc.push({ score, isLO });
-					}
-					return acc;
-				},
-				[] as Array<{ score: number; isLO: boolean }>,
-			)
-			.sort((a, b) => b.score - a.score)
-			.slice(0, 6);
-
-		return filtered.reduce((sum, s) => sum + s.score, 0);
+			.reduce((acc, { score, isLO }) => {
+				if (!isLO || includeLifeOrientation) {
+					acc.push(score);
+				}
+				return acc;
+			}, [] as number[])
+			.sort((a, b) => b - a)
+			.slice(0, 6)
+			.reduce((sum, s) => sum + s, 0);
 	};
 
 	const totalAPS = calculateAPS();

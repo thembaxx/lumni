@@ -53,7 +53,7 @@ function ErrorTypeSelect({
 }
 
 export default function ReviewPage() {
-	const { getWrongAnswers, markReviewed, clearReviewed } =
+	const { getWrongAnswers, markReviewed, clearReviewed, updateErrorType } =
 		useWrongAnswerJournal();
 	const { data: subjects } = useSubjects();
 	const [filterSubject, setFilterSubject] = useState<string>("");
@@ -87,8 +87,9 @@ export default function ReviewPage() {
 		refreshEntries();
 	};
 
-	const handleErrorTypeChange = (entryId: number, type: ErrorType) => {
+	const handleErrorTypeChange = async (entryId: number, type: ErrorType) => {
 		setErrorTypes((prev) => ({ ...prev, [entryId]: type }));
+		await updateErrorType(entryId, type);
 	};
 
 	if (loading) {

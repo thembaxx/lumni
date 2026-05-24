@@ -8,15 +8,6 @@ import { SM2_QUALITIES } from "@/lib/flashcard-repository/types";
 export type { FlashcardSM2, SM2Quality };
 export { SM2_QUALITIES };
 
-export function loadFlashcards(): FlashcardSM2[] {
-	void flashcardRepository;
-	return [];
-}
-
-export function saveFlashcards(_cards: FlashcardSM2[]): void {
-	void _cards;
-}
-
 export async function createFlashcard(
 	front: string,
 	back: string,

@@ -41,7 +41,49 @@ Remaining brainstorm items (i18n, gamification expansion, share/export, spaced r
 
 ### P3 — Bug Fixes <!-- linear-priority: 3 -->
 
-## Completed
+## ✅ Session 8 — Unimplemented Fixes (May 2026)
+
+Automated scan of `src/` across 7 phases. All P0-P3 items from scan have been fixed. Details below.
+
+### P0 — Fixed
+- [x] **Search toolbar dead buttons** — Removed 3 dead buttons (camera, mic, voice wave) from `search-input.tsx` that had no onClick handlers or fake CSS-only animation
+- [x] **Study-set editor alert stubs** — Replaced `alert("...picker would open here")` with proper Dialogs that load flashcards from Dexie and notes from localStorage (`study-set-editor.tsx:174,230`)
+- [x] **seed.ts stubs** — `getUserStats()` now queries Dexie `quizAttempts` table; `selectSubject()` now persists to Dexie `progress` + localStorage (`seed.ts:29,38`)
+- [x] **Premium cancel silent fallthrough** — Returns `503` with error message instead of silent `{ success: true }` when Stripe is unconfigured (`premium/cancel/route.ts:60`)
+- [x] **Premium page silent free grant** — Removed `upgrade()` fallback when Stripe checkout fails; upgrade only proceeds via Stripe (`premium/page.tsx:56`)
+
+### P1 — Fixed
+- [x] **Chat dialog resource leak** — `_handleClose` renamed to `handleClose` and wired to close button instead of bypassing it (`chat-dialog.tsx:31`)
+- [x] **Error type persistence** — Added `updateErrorType()` to `useWrongAnswerJournal()` hook; wired to review page `handleErrorTypeChange` (`use-wrong-answer-journal.ts`, `review/page.tsx:61`)
+- [x] **Exam diagram type missing input** — Added textarea for diagram questions in exam mode (`exam-session-client.tsx:199`)
+- [x] **Unsupported exam answer types** — Fallback now shows textarea + explains the type instead of dead-ending (`exam-session-client.tsx:239`)
+
+### P2 — Fixed
+- [x] **Mock exam results labeled** — Added "Demo data" badge to `results-search.tsx` heading
+- [x] **Deleted dead activity-service.ts** — Entire 35-line file removed (zero consumers)
+- [x] **Cleanup orphaned types** — Removed `ExamSessionData`, `ExamPaperFileKeys`, `ExamPaperMetadata` from `types/exam-session.ts` (kept `ExamAnswer` — used by store and results)
+- [x] **Sync GET returns state** — Now returns `lastSync` timestamp from localStorage instead of static message (`sync/route.ts:72`)
+- [x] **Desktop sidebar Chat href** — Changed from `href: ""` to `href: "/chat"` for consistency + active route detection (`desktop-sidebar.tsx:43`)
+
+### P3 — Fixed
+- [x] **Removed 2 stub functions** — Deleted `loadFlashcards()` and `saveFlashcards()` from `spaced-repetition.ts` (always returned `[]` / no-op, zero callers)
+- [x] **Removed 17 unused animation exports** — `iOSSpring`, `easeOutQuint`, `fastTransition`, `slowTransition`, `pageEnterForward`, `pageExitBack`, `pageSpring`, `springStiffTransition`, `springGesture`, `stagger`, `fadeInUp`, `fadeInScale`, `fadeInLeft`, `tabContent`, `pageSlideVariants`, `sheetVariants`, `popoverVariants` — all removed (zero import sites confirmed)
+- [x] **top-nav.tsx dead import** — Fixed `getRandomName` import (function was actually used; renamed without underscore prefix)
+- [x] **dev/visual dead state** — Removed unused `testResult` state + rendering block (`dev/visual/page.tsx:40`)
+- [x] **Upload page sync feedback** — Replaced dead refs with state; added sync status indicator in upload UI (`upload/page.tsx:19,21`)
+- [x] **TypeScript check** — `npx tsc --noEmit` passes with zero errors
+- [x] **Biome lint** — `npx biome check` passes with zero warnings
+
+### Still Pending (not yet implemented)
+- **Premium gating**: `hasFeature()` is never called in production — zero feature gates enforce premium vs free
+- **"priority-support" feature**: Defined in type system and listed on marketing page, but zero code exists
+- **`study-planner/index.ts` barrel**: Orphaned re-export file with no consumers
+- **`aps.ts:calculateAPS()` export**: Dead export (consumer defines local version)
+- **`exam-parser/index.ts:convertMarkdownToJson()`**: Dead export
+- **Dexie `subjects` table**: Has schema but no write path
+- **Dexie `chatMessages` table**: Has schema + sync handler ref but no write path
+- **`admin-page-client.tsx`:14 — `Preloader`**: Simulates fake loading progress with Math.random()
+- **`flashcard-import-export.ts:exportToCSV()`**: Exported but only used internally
 
 ### TypeScript & Lint (Session 8 — cleanup sweep)
 - [x] **Biome lint** — fixed 22 issues:

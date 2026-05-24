@@ -197,12 +197,21 @@ function PartAnswerInput({
 	}
 
 	if (part.type === "diagram") {
+		const instructions =
+			((part as unknown as Record<string, unknown>).instructions as string) ??
+			"Refer to the diagram and type your answer below.";
 		return (
-			<p className="text-muted-foreground text-sm">
-				{((part as unknown as Record<string, unknown>)
-					.instructions as string) ??
-					"Refer to the diagram and type your answer below."}
-			</p>
+			<div className="flex flex-col gap-2">
+				<p className="text-muted-foreground text-sm">{instructions}</p>
+				<textarea
+					value={(Array.isArray(value) ? value[0] : value) ?? ""}
+					onChange={(e) => onChange(e.target.value)}
+					disabled={disabled}
+					rows={4}
+					className="w-full resize-y rounded-xl border-2 border-border bg-background p-3 outline-none focus:border-[--system-accent]"
+					placeholder="Type your answer..."
+				/>
+			</div>
 		);
 	}
 
@@ -237,9 +246,20 @@ function PartAnswerInput({
 	}
 
 	return (
-		<p className="text-muted-foreground text-sm">
-			Answer type not yet supported in exam mode.
-		</p>
+		<div className="flex flex-col gap-2">
+			<p className="text-muted-foreground text-sm">
+				This question type ({part.type}) is not fully supported yet. You can
+				type a freeform answer below.
+			</p>
+			<textarea
+				value={(Array.isArray(value) ? value[0] : value) ?? ""}
+				onChange={(e) => onChange(e.target.value)}
+				disabled={disabled}
+				rows={4}
+				className="w-full resize-y rounded-xl border-2 border-border bg-background p-3 outline-none focus:border-[--system-accent]"
+				placeholder="Type your answer..."
+			/>
+		</div>
 	);
 }
 

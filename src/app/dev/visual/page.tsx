@@ -37,8 +37,6 @@ export default function DevVisualPage() {
 	const [rawJson, setRawJson] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState("");
-	const [testResult] = useState<string>("");
-
 	const handleResolve = useCallback(async () => {
 		setIsLoading(true);
 		setError("");
@@ -52,10 +50,10 @@ export default function DevVisualPage() {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
-					questionId: `dev-${Date.now()}`,
+					questionId: "dev-test",
 					questionText,
 					subject,
-					topic: topic || undefined,
+					topic,
 				}),
 			});
 			setRawJson(JSON.stringify(data, null, 2));
@@ -66,8 +64,6 @@ export default function DevVisualPage() {
 		}
 		setIsLoading(false);
 	}, [questionText, subject, topic]);
-
-	const _isSTEM = STEM_SUBJECTS.has(subject);
 
 	return (
 		<div className="mx-auto flex min-h-[100dvh] max-w-4xl flex-col gap-4 bg-background p-4 pb-20">
@@ -110,24 +106,7 @@ export default function DevVisualPage() {
 				</div>
 			)}
 
-			{testResult && (
-				<div className="overflow-hidden rounded-card-lg bg-card shadow-level-2">
-					<div className="p-4 pb-2">
-						<h3 className="font-semibold text-sm tracking-tight">
-							Test Results
-						</h3>
-					</div>
-					<div className="p-4 pt-0">
-						<Textarea
-							value={testResult}
-							readOnly
-							className="min-h-[200px] font-mono text-xs"
-						/>
-					</div>
-				</div>
-			)}
-
-			{isLoading && !testResult && <Skeleton className="h-48 w-full" />}
+			{isLoading && <Skeleton className="h-48 w-full" />}
 
 			{visual && (
 				<>
@@ -167,7 +146,7 @@ export default function DevVisualPage() {
 				</>
 			)}
 
-			{!visual && !isLoading && !error && !testResult && (
+			{!visual && !isLoading && !error && (
 				<div className="overflow-hidden rounded-card-lg bg-card shadow-level-2">
 					<div className="p-8 text-center text-muted-foreground text-sm">
 						Enter a question above and click "Resolve Visual" to see the result.

@@ -57,7 +57,10 @@ async function cancelHandler(req: NextRequest) {
 			return NextResponse.json({ success: true });
 		}
 
-		return NextResponse.json({ success: true });
+		return NextResponse.json(
+			{ error: "Payment provider not configured", success: false },
+			{ status: 503 },
+		);
 	} catch (error) {
 		console.error("Cancel subscription error:", error);
 		return NextResponse.json(

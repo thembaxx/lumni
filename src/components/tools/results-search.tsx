@@ -10,6 +10,7 @@ import {
 	EmptyMedia,
 	EmptyTitle,
 } from "@/components/shared/empty-state";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -30,6 +31,7 @@ export function ResultsSearch() {
 	const [searchQuery, setSearchQuery] = useState("");
 	const [results, setResults] = useState<Result[]>([]);
 	const [isSearching, setIsSearching] = useState(false);
+	const isDemoData = true;
 
 	const handleSearch = () => {
 		setIsSearching(true);
@@ -60,6 +62,11 @@ export function ResultsSearch() {
 						className="size-5 text-[--system-accent]"
 					/>
 					Results Search
+					{isDemoData && (
+						<Badge variant="outline" className="text-[10px]">
+							Demo data
+						</Badge>
+					)}
 				</h2>
 				<p className="ios-subhead mt-1 text-[--system-text-secondary]">
 					Search past matric results by name and year.

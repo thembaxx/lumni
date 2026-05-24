@@ -8,7 +8,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import { Button } from "@/components/ui/button";
 import { ListCell, ListGroup, ListSection } from "@/components/ui/list-cell";
@@ -16,9 +16,10 @@ import { extractSubjectFromFileName } from "@/lib/upload";
 import { UploadButton } from "@/lib/uploadthing";
 
 export default function UploadPage() {
-	const _uploadedUrls = useRef<string[]>([]);
 	const [lastUploadUrl, setLastUploadUrl] = useState<string | null>(null);
-	const _syncStatus = useRef<"idle" | "syncing" | "done" | "error">("idle");
+	const [syncStatus, setSyncStatus] = useState<
+		"idle" | "syncing" | "done" | "error"
+	>("idle");
 	const [seedStatus, setSeedStatus] = useState<
 		"idle" | "seeding" | "done" | "error"
 	>("idle");
@@ -42,23 +43,22 @@ export default function UploadPage() {
 		files: { url: string; name: string }[],
 	) => {
 		const urls = files.map((f) => f.url);
-		_uploadedUrls.current = urls;
 		setLastUploadUrl(urls[0] || null);
 
 		const fileName = files[0]?.name || "";
 		const subject = extractSubjectFromFileName(fileName);
 
 		if (subject) {
-			_syncStatus.current = "syncing";
+			setSyncStatus("syncing");
 			try {
 				await fetch("/api/sync", {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({ subject, action: "sync" }),
 				});
-				_syncStatus.current = "done";
+				setSyncStatus("done");
 			} catch {
-				_syncStatus.current = "error";
+				setSyncStatus("error");
 			}
 		}
 	};
@@ -112,6 +112,23 @@ export default function UploadPage() {
 									<p className="mt-1 break-all text-[12px] text-muted-foreground">
 										{lastUploadUrl}
 									</p>
+								</div>
+							)}
+							{syncStatus !== "idle" && (
+								<div
+									className={`rounded-[--radius-button] p-[--space-3] text-center text-xs ${
+										syncStatus === "syncing"
+											? "bg-accent/10 text-accent"
+											: syncStatus === "done"
+												? "bg-success/10 text-success"
+												: "bg-destructive/10 text-destructive"
+									}`}
+								>
+									{syncStatus === "syncing"
+										? "Syncing subject data..."
+										: syncStatus === "done"
+											? "Subject data synced"
+											: "Sync failed"}
 								</div>
 							)}
 						</div>
