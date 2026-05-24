@@ -1,5 +1,5 @@
 import { offlineDB } from "@/lib/db/schema";
-import { calculateNextReview } from "@/lib/utils/spaced-repetition";
+import { calculateNextReview } from "@/lib/orchestrator/sm2";
 import type {
 	FlashcardRepository,
 	FlashcardSM2,

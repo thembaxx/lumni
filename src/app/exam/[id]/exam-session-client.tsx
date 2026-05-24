@@ -33,7 +33,7 @@ import {
 } from "@/hooks/use-exam-session-persistence";
 import { useGamification } from "@/hooks/use-gamification";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
-import { trackQuestionResult } from "@/lib/competency-engine";
+import { trackQuestionResult } from "@/lib/orchestrator";
 import { cn } from "@/lib/shared";
 import { getAPSForSubject, getGrade } from "@/lib/shared/aps";
 import { formatTime } from "@/lib/shared/time";

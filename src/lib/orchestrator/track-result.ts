@@ -1,4 +1,4 @@
-import { enqueueGradeSideEffects } from "@/lib/orchestrator/grading";
+import { enqueueGradeSideEffects } from "./grading";
 import type { BloomLevel, QuestionType } from "@/lib/question-engine/types";
 
 export interface TrackResultParams {

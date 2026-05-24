@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { audioEngine } from "@/lib/audio-engine";
 import {
 	getExercisesForLanguage,
 	getLanguageForText,
@@ -104,62 +105,29 @@ export function useTTS(): UseTTSReturn {
 	};
 }
 
-interface MediaRecorderWithInterval extends MediaRecorder {
-	_interval?: NodeJS.Timeout;
-}
-
 export function useVoiceRecorder() {
 	const [isRecording, setIsRecording] = useState(false);
-	const [mediaRecorder, setMediaRecorder] =
-		useState<MediaRecorderWithInterval | null>(null);
 	const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
 	const [recordingTime, setRecordingTime] = useState(0);
 
 	const startRecording = useCallback(async () => {
-		try {
-			const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-			const recorder = new MediaRecorder(stream);
-			const chunks: Blob[] = [];
-
-			recorder.ondataavailable = (e) => {
-				if (e.data.size > 0) {
-					chunks.push(e.data);
-				}
-			};
-
-			recorder.onstop = () => {
-				const blob = new Blob(chunks, { type: "audio/webm" });
-				setAudioBlob(blob);
-				stream.getTracks().forEach((track) => {
-					track.stop();
-				});
-			};
-
-			recorder.start();
-			setMediaRecorder(recorder);
-			setIsRecording(true);
-			setRecordingTime(0);
-
-			const interval = setInterval(() => {
-				setRecordingTime((t) => t + 1);
-			}, 1000);
-
-			(recorder as MediaRecorderWithInterval)._interval = interval;
-		} catch (error) {
-			console.error("Failed to start recording:", error);
-		}
+		await audioEngine.startRecording();
+		setIsRecording(true);
+		setRecordingTime(0);
 	}, []);
 
 	const stopRecording = useCallback(() => {
-		if (mediaRecorder && isRecording) {
-			mediaRecorder.stop();
-			setIsRecording(false);
-			const interval = (mediaRecorder as MediaRecorderWithInterval)._interval;
-			if (interval) clearInterval(interval);
+		audioEngine.stopRecording();
+		setIsRecording(false);
+		const result = audioEngine.getRecordingResult();
+		if (result) {
+			setAudioBlob(result.blob);
+			setRecordingTime(result.duration);
 		}
-	}, [mediaRecorder, isRecording]);
+	}, []);
 
 	const clearRecording = useCallback(() => {
+		audioEngine.resetRecording();
 		setAudioBlob(null);
 		setRecordingTime(0);
 	}, []);
