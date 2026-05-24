@@ -1,0 +1,94 @@
+{
+  "LAST_SYNC": "2026-05-24",
+  "src/lib/question-engine": {
+    "exports": [
+      {
+        "name": "QuestionEngine",
+        "signature": "class QuestionEngine",
+        "description": "Core engine for generating, grading, and validating educational questions."
+      },
+      {
+        "name": "ProcessorRegistry",
+        "signature": "class ProcessorRegistry",
+        "description": "Registry for question type processors."
+      },
+      {
+        "name": "PromptManager",
+        "signature": "class PromptManager",
+        "description": "Manages AI prompts for generation, grading, and hints."
+      }
+    ],
+    "dependencies": [
+      "@/lib/ai",
+      "@/lib/caching-strategy",
+      "@/lib/shared/question-type"
+    ]
+  },
+  "src/lib/visual-engine": {
+    "exports": [
+      {
+        "name": "VisualEngine",
+        "signature": "class VisualEngine",
+        "description": "Engine for generating diagrams (Konva) or searching for images (Wikimedia)."
+      },
+      {
+        "name": "visualEngine",
+        "signature": "const visualEngine: VisualEngine",
+        "description": "Singleton instance of VisualEngine."
+      }
+    ],
+    "dependencies": [
+      "@/lib/ai",
+      "@/lib/caching-strategy",
+      "@/lib/db/repositories/visual-cache"
+    ]
+  },
+  "src/lib/orchestrator": {
+    "exports": [
+      {
+        "name": "LearningOrchestrator",
+        "signature": "class LearningOrchestrator",
+        "description": "Orchestrates question generation/grading with side effects like sync and progress tracking."
+      },
+      {
+        "name": "jobProcessor",
+        "signature": "const jobProcessor: JobProcessor",
+        "description": "Processor for background jobs in the queue."
+      }
+    ],
+    "dependencies": [
+      "@/lib/question-engine/question-engine",
+      "@/lib/orchestrator/job-queue"
+    ]
+  },
+  "src/hooks/use-question-engine.ts": {
+    "exports": [
+      {
+        "name": "useQuestionEngine",
+        "signature": "function useQuestionEngine(params?: GenerationParams, options?: UseQuestionEngineOptions)",
+        "description": "React hook for interacting with the QuestionEngine API."
+      }
+    ],
+    "dependencies": [
+      "@/lib/shared/api-fetch",
+      "@tanstack/react-query"
+    ]
+  },
+  "src/store/main.ts": {
+    "exports": [
+      {
+        "name": "useUploadStore",
+        "signature": "const useUploadStore",
+        "description": "Zustand store for subject upload configurations."
+      },
+      {
+        "name": "setAppInitialized",
+        "signature": "function setAppInitialized(v: boolean)",
+        "description": "Sets the application initialization state."
+      }
+    ],
+    "dependencies": [
+      "zustand"
+    ]
+  }
+}
