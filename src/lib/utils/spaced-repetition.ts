@@ -7,6 +7,14 @@ import type {
 	SRSAlgorithm,
 } from "@/lib/flashcard-repository/types";
 import { SM2_QUALITIES } from "@/lib/flashcard-repository/types";
+import type { SRSettings } from "@/lib/spaced-repetition";
+import {
+	DEFAULT_SR_SETTINGS,
+	loadSRSettings,
+	resetDailyBudget,
+	resetSRSettings,
+	saveSRSettings,
+} from "@/lib/spaced-repetition";
 
 export {
 	calculateNextReviewFSRS,
@@ -23,8 +31,16 @@ export type {
 	FlashcardSM2,
 	SM2Quality,
 	SRSAlgorithm,
+	SRSettings,
 };
-export { SM2_QUALITIES };
+export {
+	DEFAULT_SR_SETTINGS,
+	loadSRSettings,
+	resetDailyBudget,
+	resetSRSettings,
+	SM2_QUALITIES,
+	saveSRSettings,
+};
 
 export async function createFlashcard(
 	front: string,

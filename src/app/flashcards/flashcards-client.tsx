@@ -49,8 +49,7 @@ export function FlashcardsClient() {
 	const [isActive, setIsActive] = useState(false);
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [isFlipped, setIsFlipped] = useState(false);
-	const [knownCards, setKnownCards] = useState<Set<string>>(new Set());
-	const [reviewCards, setReviewCards] = useState<Set<string>>(new Set());
+	const [qualityMap, setQualityMap] = useState<Map<string, number>>(new Map());
 	const [mistakeCards, setMistakeCards] = useState<FlashcardItem[]>([]);
 	const [sm2Cards, setSm2Cards] = useState<FlashcardItem[]>([]);
 	const hasSm2Ref = useRef(false);
@@ -62,16 +61,23 @@ export function FlashcardsClient() {
 	const gamification = useGamification();
 	const { addWrongAnswer, getWrongAnswers } = useWrongAnswerJournal();
 
+	const knownCount = Array.from(qualityMap.values()).filter(
+		(q) => q >= 3,
+	).length;
+	const reviewCount = qualityMap.size - knownCount;
+
 	const processSessionResults = useCallback(
 		async (
 			sessionCards: FlashcardItem[],
-			known: Set<string>,
+			qualities: Map<string, number>,
 			subject: string,
 		) => {
 			const totalCards = sessionCards.length;
-			const knownCount = known.size;
+			const passedCount = Array.from(qualities.values()).filter(
+				(q) => q >= 3,
+			).length;
 			const accuracy =
-				totalCards > 0 ? Math.round((knownCount / totalCards) * 100) : 0;
+				totalCards > 0 ? Math.round((passedCount / totalCards) * 100) : 0;
 
 			gamification.updateStreak();
 			gamification.addXp(totalCards, accuracy, gamification.currentStreak);
@@ -88,11 +94,12 @@ export function FlashcardsClient() {
 
 			const cardPromises: Promise<unknown>[] = [];
 			for (const card of sessionCards) {
-				const isKnown = known.has(card.id);
+				const quality = qualities.get(card.id) ?? 0;
+				const isKnown = quality >= 3;
 				const cardTopic = card.rawQuestion.topic;
 
 				if (isSm2Session) {
-					cardPromises.push(reviewFlashcard(card.id, isKnown ? 4 : 1));
+					cardPromises.push(reviewFlashcard(card.id, quality));
 				} else {
 					trackQuestionResult({
 						subjectId: subject,
@@ -176,8 +183,7 @@ export function FlashcardsClient() {
 			setIsActive(true);
 			setCurrentIndex(0);
 			setIsFlipped(false);
-			setKnownCards(new Set());
-			setReviewCards(new Set());
+			setQualityMap(new Map());
 			setMistakeCards([]);
 			setSm2Cards([]);
 			setSessionComplete(false);
@@ -267,7 +273,7 @@ export function FlashcardsClient() {
 			setSessionComplete(true);
 			processSessionResults(
 				displayCards,
-				knownCards,
+				qualityMap,
 				selectedSubject.toLowerCase(),
 			).catch((e) => console.warn("Session processing:", e));
 		}
@@ -275,28 +281,26 @@ export function FlashcardsClient() {
 	}, [
 		currentIndex,
 		displayCards,
-		knownCards,
+		qualityMap,
 		selectedSubject,
 		processSessionResults,
 	]);
 
-	const handleKnown = useCallback(() => {
-		const currentCard = displayCards[currentIndex];
-		if (!currentCard) return;
-		setKnownCards((prev) => new Set(prev).add(currentCard.id));
-		setShowConfetti(true);
-		setShowXPGain(true);
-		setTimeout(() => setShowConfetti(false), 1500);
-		setTimeout(() => setShowXPGain(false), 1000);
-		nextCard();
-	}, [displayCards, currentIndex, nextCard]);
-
-	const handleReview = useCallback(() => {
-		const currentCard = displayCards[currentIndex];
-		if (!currentCard) return;
-		setReviewCards((prev) => new Set(prev).add(currentCard.id));
-		nextCard();
-	}, [displayCards, currentIndex, nextCard]);
+	const handleReview = useCallback(
+		(quality: number) => {
+			const currentCard = displayCards[currentIndex];
+			if (!currentCard) return;
+			setQualityMap((prev) => new Map(prev).set(currentCard.id, quality));
+			if (quality >= 3) {
+				setShowConfetti(true);
+				setShowXPGain(true);
+				setTimeout(() => setShowConfetti(false), 1500);
+				setTimeout(() => setShowXPGain(false), 1000);
+			}
+			nextCard();
+		},
+		[displayCards, currentIndex, nextCard],
+	);
 
 	const previousCard = useCallback(() => {
 		if (currentIndex > 0) {
@@ -308,8 +312,7 @@ export function FlashcardsClient() {
 	const handleRestart = useCallback(() => {
 		setCurrentIndex(0);
 		setIsFlipped(false);
-		setKnownCards(new Set());
-		setReviewCards(new Set());
+		setQualityMap(new Map());
 		setSessionComplete(false);
 	}, []);
 
@@ -346,8 +349,8 @@ export function FlashcardsClient() {
 		return (
 			<FlashcardsResults
 				totalCards={totalCards}
-				knownCount={knownCards.size}
-				reviewCount={reviewCards.size}
+				knownCount={knownCount}
+				reviewCount={reviewCount}
 				onGoHouse={stopSession}
 				onRestart={handleRestart}
 			/>
@@ -363,10 +366,9 @@ export function FlashcardsClient() {
 				cards={displayCards}
 				currentIndex={currentIndex}
 				isFlipped={isFlipped}
-				knownCount={knownCards.size}
-				reviewCount={reviewCards.size}
+				knownCount={knownCount}
+				reviewCount={reviewCount}
 				onFlip={handleFlip}
-				onKnown={handleKnown}
 				onReview={handleReview}
 				onPrevious={previousCard}
 				onNext={nextCard}

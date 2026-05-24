@@ -1,6 +1,19 @@
 import { offlineDB } from "@/lib/db/schema";
 import { calculateNextReviewFSRS, initFSRS } from "@/lib/orchestrator/fsrs";
 import { calculateNextReview } from "@/lib/orchestrator/sm2";
+import {
+	advanceLearningStep,
+	checkEaseHellRecovery,
+	checkLeech,
+	computeLearningReviewTime,
+	getLearningStepDelay,
+	getNewCardLimit,
+	getReviewLimit,
+	isGraduated,
+	isInLearning,
+	loadSRSettings,
+	resetLearningStep,
+} from "@/lib/spaced-repetition";
 import type {
 	FlashcardRepository,
 	FlashcardReview,
@@ -23,23 +36,33 @@ function pickAlgorithm(): "sm2" | "fsrs" {
 export class DexieFlashcardRepository implements FlashcardRepository {
 	async getDueCards(subject?: string): Promise<FlashcardSM2[]> {
 		const now = Date.now();
+		const settings = loadSRSettings();
 		const cards = await offlineDB.flashcards
 			.where("nextReview")
 			.belowOrEqual(now)
 			.toArray();
-		return cards
+		const active = cards
 			.filter((c) => c.status === "active" && subjectFilter(c, subject))
 			.sort((a, b) => a.nextReview - b.nextReview);
+		const limit = getReviewLimit(settings.dailyReviewLimit, active.length);
+		if (limit >= active.length) return active;
+		return active.slice(0, limit);
 	}
 
 	async getNewCards(subject?: string, limit = 20): Promise<FlashcardSM2[]> {
+		const settings = loadSRSettings();
 		const cards = await offlineDB.flashcards
 			.where("repetitions")
 			.equals(0)
 			.toArray();
-		return cards
-			.filter((c) => c.status === "active" && subjectFilter(c, subject))
-			.slice(0, limit);
+		const active = cards.filter(
+			(c) => c.status === "active" && subjectFilter(c, subject),
+		);
+		const newLimit = getNewCardLimit(
+			settings.dailyNewLimit,
+			Math.min(limit, active.length),
+		);
+		return active.slice(0, newLimit);
 	}
 
 	async getAll(subject?: string): Promise<FlashcardSM2[]> {
@@ -75,6 +98,8 @@ export class DexieFlashcardRepository implements FlashcardRepository {
 			difficulty: 5,
 			status: "active",
 			lapses: 0,
+			learningStep: 0,
+			leeched: false,
 		};
 		await offlineDB.flashcards.add(card);
 		return card;
@@ -88,53 +113,132 @@ export class DexieFlashcardRepository implements FlashcardRepository {
 		await offlineDB.flashcards.delete(id);
 	}
 
+	private async countConsecutivePasses(cardId: string): Promise<number> {
+		const history = await offlineDB.reviewHistory
+			.where("cardId")
+			.equals(cardId)
+			.reverse()
+			.sortBy("reviewedAt");
+		const recent = history.reverse().slice(-10);
+		let count = 0;
+		for (let i = recent.length - 1; i >= 0; i--) {
+			if (recent[i].quality >= 3) {
+				count++;
+			} else {
+				break;
+			}
+		}
+		return count;
+	}
+
 	async review(id: string, quality: number): Promise<FlashcardSM2 | null> {
 		const card = await offlineDB.flashcards.get(id);
 		if (!card) return null;
 
 		const now = Date.now();
+		const settings = loadSRSettings();
+		const passed = quality >= 3;
+		const failed = quality < 3;
 
-		if (card.algorithm === "fsrs") {
+		let updatedCard: FlashcardSM2 = { ...card };
+
+		const inLearning = isInLearning(card.learningStep);
+
+		if (inLearning && passed) {
+			const { learningStep, delayMinutes } = advanceLearningStep(
+				card.learningStep,
+				settings.learningSteps,
+			);
+			updatedCard.learningStep = learningStep;
+			if (isGraduated(learningStep)) {
+				updatedCard.interval = 1;
+				updatedCard.repetitions = 1;
+				updatedCard.nextReview = now + 86_400_000;
+			} else {
+				updatedCard.interval = 0;
+				updatedCard.repetitions = 0;
+				updatedCard.nextReview = computeLearningReviewTime(delayMinutes);
+			}
+			updatedCard.lapses = card.lapses;
+		} else if (inLearning && failed) {
+			updatedCard.learningStep = resetLearningStep();
+			updatedCard.interval = 0;
+			updatedCard.repetitions = 0;
+			updatedCard.nextReview =
+				now + getLearningStepDelay(0, settings.learningSteps) * 60_000;
+			updatedCard.lapses = card.lapses + 1;
+		} else if (card.algorithm === "fsrs") {
 			const init = card.repetitions === 0 ? initFSRS(quality) : null;
 			const stability = init?.stability ?? card.stability;
 			const difficulty = init?.difficulty ?? card.difficulty;
 
 			const result = calculateNextReviewFSRS(quality, stability, difficulty);
 
-			const updatedCard: FlashcardSM2 = {
-				...card,
+			updatedCard = {
+				...updatedCard,
 				easeFactor: result.difficulty > 7 ? 1.3 : 2.5,
 				interval: result.interval,
-				repetitions: quality < 3 ? 0 : card.repetitions + 1,
+				repetitions: failed ? 0 : card.repetitions + 1,
 				nextReview: result.nextReview,
-				lastReview: now,
 				stability: result.stability,
 				difficulty: result.difficulty,
-				lapses: quality < 3 ? card.lapses + 1 : card.lapses,
+				lapses: failed ? card.lapses + 1 : card.lapses,
+				learningStep: -1,
 			};
+		} else {
+			const { easeFactor, interval, repetitions, nextReview } =
+				calculateNextReview(
+					quality,
+					card.easeFactor,
+					card.interval,
+					card.repetitions,
+				);
 
-			await offlineDB.flashcards.put(updatedCard);
-			await this.saveReview(card.id, quality, updatedCard);
-			return updatedCard;
+			updatedCard = {
+				...updatedCard,
+				easeFactor,
+				interval,
+				repetitions,
+				nextReview,
+				lapses: failed ? card.lapses + 1 : card.lapses,
+				learningStep: -1,
+			};
 		}
 
-		const { easeFactor, interval, repetitions, nextReview } =
-			calculateNextReview(
-				quality,
-				card.easeFactor,
-				card.interval,
-				card.repetitions,
+		if (passed && updatedCard.easeFactor < 2.5 && !inLearning) {
+			const consecutivePasses = await this.countConsecutivePasses(card.id);
+			const { shouldBoost, newEaseFactor } = checkEaseHellRecovery(
+				updatedCard.easeFactor,
+				consecutivePasses,
+				{
+					consecutivePasses: settings.easeHellPasses,
+					boost: settings.easeHellBoost,
+				},
 			);
+			if (shouldBoost) {
+				updatedCard.easeFactor = newEaseFactor;
+			}
+		}
 
-		const updatedCard: FlashcardSM2 = {
-			...card,
-			easeFactor,
-			interval,
-			repetitions,
-			nextReview,
-			lastReview: now,
-			lapses: quality < 3 ? card.lapses + 1 : card.lapses,
-		};
+		if (failed) {
+			const leechResult = checkLeech(
+				updatedCard.lapses,
+				updatedCard.status,
+				updatedCard.leeched,
+				{
+					threshold: settings.leechThreshold,
+					action: settings.leechAction,
+				},
+			);
+			if (leechResult.isLeech) {
+				updatedCard.leeched = true;
+				if (leechResult.newStatus) {
+					updatedCard.status = leechResult.newStatus;
+				}
+			}
+		}
+
+		updatedCard.lastReview = now;
 
 		await offlineDB.flashcards.put(updatedCard);
 		await this.saveReview(card.id, quality, updatedCard);
@@ -185,7 +289,8 @@ export class DexieFlashcardRepository implements FlashcardRepository {
 		const active = cards.filter((c) => c.status === "active");
 		const due = active.filter((c) => c.nextReview <= now).length;
 		const learning = active.filter(
-			(c) => c.repetitions > 0 && c.interval < 21,
+			(c) =>
+				isInLearning(c.learningStep) || (c.repetitions > 0 && c.interval < 21),
 		).length;
 		const mature = active.filter((c) => c.interval >= 21).length;
 		const newCards = active.filter((c) => c.repetitions === 0).length;

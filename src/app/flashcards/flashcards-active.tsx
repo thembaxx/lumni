@@ -1,11 +1,6 @@
 "use client";
 
-import {
-	ArrowLeft01Icon,
-	ArrowRight01Icon,
-	Cancel01Icon,
-	CheckmarkCircle01Icon,
-} from "@hugeicons/core-free-icons";
+import { ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { useCallback } from "react";
@@ -15,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";
+import { SM2_QUALITIES } from "@/lib/utils/spaced-repetition";
 
 interface FlashcardItem {
 	id: string;
@@ -32,8 +28,7 @@ interface FlashcardsActiveProps {
 	knownCount: number;
 	reviewCount: number;
 	onFlip: () => void;
-	onKnown: () => void;
-	onReview: () => void;
+	onReview: (quality: number) => void;
 	onPrevious: () => void;
 	onNext: () => void;
 	onQuit: () => void;
@@ -46,7 +41,6 @@ export function FlashcardsActive({
 	knownCount,
 	reviewCount,
 	onFlip,
-	onKnown,
 	onReview,
 	onPrevious,
 	onNext,
@@ -157,22 +151,36 @@ export function FlashcardsActive({
 				</div>
 
 				{isFlipped && (
-					<div className="mt-4 flex gap-2 px-4 pb-4">
-						<Button
-							variant="outline"
-							className="flex-1 border-amber-500/50 text-amber-700 dark:border-amber-700/50 dark:text-amber-300"
-							onClick={onReview}
-						>
-							<HugeiconsIcon icon={Cancel01Icon} className="mr-2 size-4" />
-							Review Later
-						</Button>
-						<Button className="flex-1" onClick={onKnown}>
-							<HugeiconsIcon
-								icon={CheckmarkCircle01Icon}
-								className="mr-2 size-4"
-							/>
-							I Know This
-						</Button>
+					<div className="mt-4 flex flex-col gap-2 px-4 pb-4">
+						<p className="text-center text-muted-foreground text-xs">
+							How well did you know this?
+						</p>
+						<div className="grid grid-cols-3 gap-2">
+							{SM2_QUALITIES.slice(0, 3).map((q) => (
+								<Button
+									key={q.quality}
+									variant="outline"
+									size="sm"
+									onClick={() => onReview(q.quality)}
+									className="border-destructive/30 text-destructive text-xs hover:bg-destructive/10"
+								>
+									{q.label}
+								</Button>
+							))}
+						</div>
+						<div className="grid grid-cols-3 gap-2">
+							{SM2_QUALITIES.slice(3).map((q) => (
+								<Button
+									key={q.quality}
+									variant="outline"
+									size="sm"
+									onClick={() => onReview(q.quality)}
+									className="border-success/30 text-success text-xs hover:bg-success/10"
+								>
+									{q.label}
+								</Button>
+							))}
+						</div>
 					</div>
 				)}
 

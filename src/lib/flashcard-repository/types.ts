@@ -18,6 +18,8 @@ export interface FlashcardSM2 {
 	difficulty: number;
 	status: CardStatus;
 	lapses: number;
+	learningStep: number;
+	leeched: boolean;
 }
 
 export interface FlashcardReview {
