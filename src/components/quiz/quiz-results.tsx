@@ -9,6 +9,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { Confetti } from "@/components/celebration";
 import { ProgressDots } from "@/components/shared/progress-dots";
+import { ShareResultButton } from "@/components/shared/share-button";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -21,6 +22,7 @@ interface QuizResultsCardProps {
 	totalQuestions: number;
 	correctAnswers: number;
 	elapsedTime: number;
+	subject: string;
 	onRestart?: () => void;
 	onDashboard?: () => void;
 	className?: string;
@@ -30,6 +32,7 @@ export function QuizResultsCard({
 	totalQuestions,
 	correctAnswers,
 	elapsedTime,
+	subject,
 	onRestart,
 	onDashboard,
 	className,
@@ -220,30 +223,43 @@ export function QuizResultsCard({
 						</section>
 
 						{(onRestart || onDashboard) && (
-							<m.div className="flex gap-3 pt-2" variants={itemVariants}>
-								{onRestart && (
-									<Button
-										variant="default"
-										onClick={onRestart}
-										className="flex-1 gap-2"
-									>
-										<HugeiconsIcon icon={Refresh01Icon} className="size-4" />
-										Try Again
-									</Button>
-								)}
-								{onDashboard && (
-									<Button
-										variant="outline"
-										onClick={onDashboard}
-										className="flex-1 gap-2"
-									>
-										<HugeiconsIcon
-											icon={DashboardSquare01Icon}
-											className="size-4"
-										/>
-										Dashboard
-									</Button>
-								)}
+							<m.div className="flex flex-col gap-3 pt-2" variants={itemVariants}>
+								<div className="flex gap-3">
+									{onRestart && (
+										<Button
+											variant="default"
+											onClick={onRestart}
+											className="flex-1 gap-2"
+										>
+											<HugeiconsIcon icon={Refresh01Icon} className="size-4" />
+											Try Again
+										</Button>
+									)}
+									{onDashboard && (
+										<Button
+											variant="outline"
+											onClick={onDashboard}
+											className="flex-1 gap-2"
+										>
+											<HugeiconsIcon
+												icon={DashboardSquare01Icon}
+												className="size-4"
+											/>
+											Dashboard
+										</Button>
+									)}
+								</div>
+								<ShareResultButton
+									cardParams={{
+										score: correctAnswers,
+										total: totalQuestions,
+										percentage: accuracy,
+										title: `${subject} Quiz`,
+										subtitle: `${getAPSForSubject(accuracy)}/7 APS · ${getGrade(accuracy)}`,
+										type: "quiz",
+									}}
+									text={`I scored ${accuracy}% on my ${subject} quiz on Lumni!`}
+								/>
 							</m.div>
 						)}
 					</m.div>

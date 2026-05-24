@@ -351,6 +351,7 @@ export function FlashcardsClient() {
 				totalCards={totalCards}
 				knownCount={knownCount}
 				reviewCount={reviewCount}
+				subject={selectedSubject || "Flashcards"}
 				onGoHouse={stopSession}
 				onRestart={handleRestart}
 			/>

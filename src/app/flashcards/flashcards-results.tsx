@@ -3,12 +3,14 @@
 import { Home01Icon, Target01Icon, UndoIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Confetti } from "@/components/celebration";
+import { ShareResultButton } from "@/components/shared/share-button";
 import { Button } from "@/components/ui/button";
 
 interface FlashcardsResultsProps {
 	totalCards: number;
 	knownCount: number;
 	reviewCount: number;
+	subject: string;
 	onGoHouse: () => void;
 	onRestart: () => void;
 }
@@ -17,6 +19,7 @@ export function FlashcardsResults({
 	totalCards,
 	knownCount,
 	reviewCount,
+	subject,
 	onGoHouse,
 	onRestart,
 }: FlashcardsResultsProps) {
@@ -83,6 +86,19 @@ export function FlashcardsResults({
 										<HugeiconsIcon icon={UndoIcon} className="mr-2 size-4" />
 										Try Again
 									</Button>
+								</div>
+								<div className="col-span-12">
+									<ShareResultButton
+										cardParams={{
+											score: knownCount,
+											total: totalCards,
+											percentage: accuracy,
+											title: `${subject} Flashcards`,
+											subtitle: `${knownCount} / ${totalCards} Mastered`,
+											type: "flashcard",
+										}}
+										text={`I mastered ${accuracy}% of my ${subject} flashcards on Lumni!`}
+									/>
 								</div>
 							</div>
 						</div>

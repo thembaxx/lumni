@@ -15,6 +15,7 @@ import { AnimatePresence, m } from "framer-motion";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Confetti, GamificationCelebration } from "@/components/celebration";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { ShareResultButton } from "@/components/shared/share-button";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -497,6 +498,17 @@ function ExamResults({
 						Review Mistakes
 					</Button>
 				)}
+				<ShareResultButton
+					cardParams={{
+						score: correctCount,
+						total: totalCount,
+						percentage: accuracy,
+						title: `${_metadata.subject} Exam`,
+						subtitle: `${getAPSForSubject(accuracy)}/7 APS · ${getGrade(accuracy)}`,
+						type: "exam",
+					}}
+					text={`I scored ${accuracy}% on my ${_metadata.subject} exam on Lumni!`}
+				/>
 				<Button onClick={onDashboard}>
 					<HugeiconsIcon icon={Home01Icon} data-icon="inline-start" />
 					Dashboard

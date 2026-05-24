@@ -254,6 +254,7 @@ export function QuizView({
 						totalQuestions={state.totalQuestions}
 						correctAnswers={state.correctAnswers}
 						elapsedTime={state.elapsedTime}
+						subject={selectedSubject ?? "Quiz"}
 						onRestart={handleRestart}
 						onDashboard={handleStop}
 					/>
