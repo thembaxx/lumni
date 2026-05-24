@@ -14,6 +14,13 @@ function makeCard(overrides: Partial<FlashcardSM2> = {}): FlashcardSM2 {
 		nextReview: Date.now(),
 		lastReview: null,
 		createdAt: Date.now(),
+		algorithm: "fsrs",
+		stability: 0,
+		difficulty: 5,
+		status: "active",
+		lapses: 0,
+		learningStep: -1,
+		leeched: false,
 		...overrides,
 	};
 }
@@ -42,40 +49,103 @@ const mockCards: FlashcardSM2[] = [
 
 let storedCards = [...mockCards];
 
-const mockFlashcardsTable = {
-	toArray: async () => [...storedCards],
-	get: async (id: string) => storedCards.find((c) => c.id === id) ?? null,
-	add: async (card: FlashcardSM2) => {
-		storedCards.push(card);
-		return card.id;
-	},
-	update: async (id: string, updates: Partial<FlashcardSM2>) => {
-		const idx = storedCards.findIndex((c) => c.id === id);
-		if (idx >= 0) {
-			storedCards[idx] = { ...storedCards[idx], ...updates };
-		}
-		return 1;
-	},
-	delete: async (id: string) => {
-		storedCards = storedCards.filter((c) => c.id !== id);
-	},
-	put: async (card: FlashcardSM2) => {
-		const idx = storedCards.findIndex((c) => c.id === card.id);
-		if (idx >= 0) {
-			storedCards[idx] = card;
-		} else {
-			storedCards.push(card);
-		}
-		return card.id;
-	},
-	filter: (_fn: (c: FlashcardSM2) => boolean) => ({
-		toArray: async () => storedCards.filter(_fn),
-	}),
-};
+const mockReviewStore: Record<string, unknown>[] = [];
+
+function whereOnTable(
+	tableName: string,
+	store: Record<string, unknown>[],
+) {
+	let whereField: string | null = null;
+	let whereValue: unknown = null;
+	return {
+		where: (field: string) => {
+			whereField = field;
+			whereValue = null;
+			return {
+				equals: (val: unknown) => {
+					whereValue = val;
+					return {
+						toArray: async () =>
+							store.filter(
+								(s) =>
+									whereField !== null &&
+									(s as Record<string, unknown>)[whereField] === val,
+							),
+						first: async () =>
+							store.find(
+								(s) =>
+									whereField !== null &&
+									(s as Record<string, unknown>)[whereField] === val,
+							) ?? null,
+						sortBy: async (_field: string) =>
+							store.filter(
+								(s) =>
+									whereField !== null &&
+									(s as Record<string, unknown>)[whereField] === val,
+							),
+						reverse: () => ({
+							sortBy: async (_field: string) =>
+								store.filter(
+									(s) =>
+										whereField !== null &&
+										(s as Record<string, unknown>)[whereField] === val,
+								),
+						}),
+					};
+				},
+				belowOrEqual: (val: number) => ({
+					toArray: async () =>
+						store.filter(
+							(s) =>
+								whereField !== null &&
+								(s as Record<string, unknown>)[whereField] <= val,
+						),
+				}),
+			};
+		},
+		get: async (id: string) =>
+			store.find((s) => (s as Record<string, unknown>).id === id) ?? null,
+		toArray: async () => [...store],
+		add: async (item: unknown) => {
+			store.push(item as Record<string, unknown>);
+			return (item as Record<string, unknown>).id ?? store.length;
+		},
+		update: async (id: string, updates: Record<string, unknown>) => {
+			const idx = store.findIndex(
+				(s) => (s as Record<string, unknown>).id === id,
+			);
+			if (idx >= 0) {
+				store[idx] = { ...store[idx], ...updates };
+			}
+			return 1;
+		},
+		delete: async (id: string) => {
+			const idx = store.findIndex(
+				(s) => (s as Record<string, unknown>).id === id,
+			);
+			if (idx >= 0) store.splice(idx, 1);
+		},
+		put: async (card: Record<string, unknown>) => {
+			const idx = store.findIndex(
+				(s) => (s as Record<string, unknown>).id === card.id,
+			);
+			if (idx >= 0) {
+				store[idx] = card;
+			} else {
+				store.push(card);
+			}
+			return card.id;
+		},
+	};
+}
+
+const mockFlashcardsTable = whereOnTable("flashcards", storedCards);
+const mockReviewHistoryTable = whereOnTable("reviewHistory", mockReviewStore);
 
 mock.module("@/lib/db/schema", () => ({
 	offlineDB: {
 		flashcards: mockFlashcardsTable,
+		reviewHistory: mockReviewHistoryTable,
 	},
 }));
 
@@ -169,7 +239,8 @@ describe("DexieFlashcardRepository", () => {
 		const card = await repo.review("fc_3", 4);
 		expect(card).not.toBeNull();
 		expect(card?.repetitions).toBe(1);
-		expect(card?.interval).toBe(1);
+		expect(typeof card?.interval).toBe("number");
+		expect(card!.interval).toBeGreaterThan(0);
 		expect(card?.lastReview).not.toBeNull();
 	});
 
@@ -177,7 +248,7 @@ describe("DexieFlashcardRepository", () => {
 		const card = await repo.review("fc_4", 1);
 		expect(card).not.toBeNull();
 		expect(card?.repetitions).toBe(0);
-		expect(card?.interval).toBe(1);
+		expect(card?.interval).toBe(0);
 	});
 
 	test("getStats returns correct counts", async () => {

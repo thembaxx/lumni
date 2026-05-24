@@ -8,5 +8,7 @@ globalThis.location = window.location as unknown as Location;
 globalThis.HTMLElement = window.HTMLElement as unknown as typeof HTMLElement;
 globalThis.HTMLDivElement =
 	window.HTMLDivElement as unknown as typeof HTMLDivElement;
+globalThis.HTMLCanvasElement =
+	window.HTMLCanvasElement as unknown as typeof HTMLCanvasElement;
 globalThis.customElements =
 	window.customElements as unknown as CustomElementRegistry;

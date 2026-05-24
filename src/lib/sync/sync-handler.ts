@@ -72,6 +72,7 @@ export async function flushOfflineData(userId: string): Promise<void> {
 				nextReview: f.nextReview,
 				lastReview: f.lastReview,
 				createdAt: f.createdAt,
+			updatedAt: f.updatedAt,
 			});
 		}),
 		...allWrongAnswers.map(async (w) => {

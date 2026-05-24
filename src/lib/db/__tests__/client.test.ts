@@ -33,8 +33,8 @@ const {
 } = await import("../client");
 
 describe("COLLECTIONS", () => {
-	test("has 19 keys", () => {
-		expect(Object.keys(COLLECTIONS)).toHaveLength(19);
+	test("has 22 keys", () => {
+		expect(Object.keys(COLLECTIONS)).toHaveLength(22);
 	});
 
 	test("contains all expected collection keys", () => {

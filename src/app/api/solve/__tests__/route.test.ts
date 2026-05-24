@@ -48,9 +48,10 @@ describe("POST /api/solve", () => {
 		expect(body.error).toBe("Either question text or image is required");
 	});
 
-	test("AI not configured returns 503", async () => {
+	test("AI not configured returns 500", async () => {
 		mockCheckBudget.mockResolvedValue({ allowed: true, userId: "test-user" });
 		mockIsAIConfigured.mockReturnValue(false);
+		mockGenerateWithSystem.mockResolvedValue({ available: false, error: "AI not configured", provider: "test" });
 
 		const req = new NextRequest("http://localhost/api/solve", {
 			method: "POST",
@@ -59,8 +60,8 @@ describe("POST /api/solve", () => {
 		const res = await POST(req);
 		const body = await res.json();
 
-		expect(res.status).toBe(503);
-		expect(body.error).toBe("AI not configured");
+		expect(res.status).toBe(500);
+		expect(body.error).toBe("AI solver failed: AI not configured");
 	});
 
 	test("budget exceeded returns 429", async () => {

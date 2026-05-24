@@ -67,8 +67,7 @@ describe("POST /api/generate-element-fact", () => {
 		mockCheckBudget.mockResolvedValue({ allowed: true, userId: "test-user" });
 		mockIsAIConfigured
 			.mockReturnValueOnce(true)
-			.mockReturnValueOnce(true)
-			.mockReturnValue(false);
+			.mockReturnValueOnce(false);
 
 		const req = new NextRequest("http://localhost/api/generate-element-fact", {
 			method: "POST",
@@ -150,7 +149,7 @@ describe("POST /api/generate-element-fact", () => {
 		const body = await res.json();
 
 		expect(res.status).toBe(500);
-		expect(body.error).toBe("Failed to generate interesting fact");
+		expect(body.error).toBe("Generated fact is too short or empty");
 	});
 
 	test("AI failure returns 500", async () => {
@@ -172,6 +171,6 @@ describe("POST /api/generate-element-fact", () => {
 		const body = await res.json();
 
 		expect(res.status).toBe(500);
-		expect(body.error).toBe("Failed to generate interesting fact");
+		expect(body.error).toBe("AI generation failed: All providers failed");
 	});
 });

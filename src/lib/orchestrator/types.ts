@@ -11,6 +11,8 @@ export type JobType =
 	| "appwrite-attempt-sync"
 	| "appwrite-competency-sync"
 	| "appwrite-flashcard-sync"
+	| "appwrite-flashcard-pull"
+	| "appwrite-flashcard-delete"
 	| "appwrite-wrong-answer-sync"
 	| "appwrite-chat-sync"
 	| "appwrite-rating-sync"
@@ -74,6 +76,11 @@ export type JobPayloadByType = {
 		nextReview: number;
 		lastReview: number | null;
 		createdAt: number;
+		updatedAt: number;
+	};
+	"appwrite-flashcard-pull": Record<string, never>;
+	"appwrite-flashcard-delete": {
+		id: string;
 	};
 	"appwrite-wrong-answer-sync": {
 		userId?: string;

@@ -14,11 +14,11 @@ describe("LumniOfflineDB", () => {
 		expect(offlineDB.name).toBe("lumni-offline");
 	});
 
-	test("version is 12", () => {
-		expect(offlineDB.verno).toBe(12);
+	test("version is 15", () => {
+		expect(offlineDB.verno).toBe(15);
 	});
 
-	test("has all 16 expected tables", () => {
+	test("has all 18 expected tables", () => {
 		expect(offlineDB.chatMessages).toBeDefined();
 		expect(offlineDB.questions).toBeDefined();
 		expect(offlineDB.progress).toBeDefined();
@@ -35,6 +35,8 @@ describe("LumniOfflineDB", () => {
 		expect(offlineDB.examSessions).toBeDefined();
 		expect(offlineDB.cachedPdfs).toBeDefined();
 		expect(offlineDB.examDates).toBeDefined();
+		expect(offlineDB.reviewHistory).toBeDefined();
+		expect(offlineDB.extractionCache).toBeDefined();
 	});
 
 	test("table names match expected values", () => {
@@ -55,7 +57,9 @@ describe("LumniOfflineDB", () => {
 		expect(tables).toContain("examSessions");
 		expect(tables).toContain("cachedPdfs");
 		expect(tables).toContain("examDates");
-		expect(tables).toHaveLength(16);
+		expect(tables).toContain("reviewHistory");
+		expect(tables).toContain("extractionCache");
+		expect(tables).toHaveLength(18);
 	});
 
 	test("flashcards table has string primary key", () => {
@@ -68,7 +72,7 @@ describe("LumniOfflineDB", () => {
 
 	test("new instance has same version", () => {
 		const db = new LumniOfflineDB();
-		expect(db.verno).toBe(12);
+		expect(db.verno).toBe(15);
 		db.close();
 	});
 });

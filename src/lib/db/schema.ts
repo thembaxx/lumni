@@ -246,6 +246,28 @@ export class LumniOfflineDB extends Dexie {
 			cachedPdfs: "++id, &paperId, cachedAt",
 			examDates: "++id, &cacheKey, session, year, updatedAt",
 		});
+
+		this.version(15).stores({
+			flashcards:
+				"&id, subject, topic, nextReview, easeFactor, interval, repetitions, status, learningStep, leeched, updatedAt",
+			reviewHistory: "++id, cardId, reviewedAt",
+			extractionCache: "++id, &imageHash, createdAt",
+			chatMessages: "++id, role, timestamp",
+			questions: "++id, &subject, topic, cachedAt",
+			progress: "++id, &odSubjectId, userId, updatedAt",
+			quizAttempts: "++id, &odSubject, userId, completedAt",
+			subjects: "++id, &code, cachedAt",
+			quizSessions: "++id, &sessionId, subject, startedAt, lastSavedAt",
+			conflicts: "++id, resolvedAt",
+			jobs: "++id, type, status, priority, scheduledAt, createdAt",
+			competencies: "++id, subjectId, topicId, bloomLevel, level, lastAssessed",
+			visuals: "++id, &cacheKey, subject, createdAt",
+			wrongAnswers: "++id, subject, topic, reviewed, createdAt",
+			questionRatings: "++id, questionId, subject, topic, rating, createdAt",
+			examSessions: "++id, &paperId, startedAt, lastSavedAt, completed",
+			cachedPdfs: "++id, &paperId, cachedAt",
+			examDates: "++id, &cacheKey, session, year, updatedAt",
+		});
 	}
 }
 

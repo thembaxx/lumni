@@ -4,6 +4,7 @@ import { Share08Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/toast";
 import type { ShareCardParams } from "@/lib/share/card-generator";
 import { generateShareCard } from "@/lib/share/card-generator";
 
@@ -40,21 +41,30 @@ export function ShareResultButton({
 
 			if (navigator.share) {
 				await navigator.share(shareData);
+				toast({ type: "success", message: "Shared successfully!" });
 			} else {
 				await navigator.clipboard.writeText(text);
-				const link = document.createElement("a");
-				link.download = `result-${cardParams.type}-${Date.now()}.png`;
+				toast({ type: "success", message: "Copied to clipboard" });
 				if (blob) {
+					const link = document.createElement("a");
+					link.download = `result-${cardParams.type}-${Date.now()}.png`;
 					link.href = URL.createObjectURL(blob);
 					link.click();
 					URL.revokeObjectURL(link.href);
+					toast({ type: "success", message: "Image downloaded", description: "Result card saved as PNG" });
 				}
 			}
 
 			onShare?.();
-		} catch {
-			if (navigator.clipboard) {
+		} catch (err) {
+			if (err instanceof DOMException && err.name === "AbortError") {
+				return;
+			}
+			try {
 				await navigator.clipboard.writeText(text);
+				toast({ type: "success", message: "Copied to clipboard" });
+			} catch {
+				toast({ type: "error", message: "Sharing failed", description: "Could not share or copy to clipboard" });
 			}
 		} finally {
 			setLoading(false);

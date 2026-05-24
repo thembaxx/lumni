@@ -110,11 +110,11 @@ function createDexieTable(tableName: string) {
 	return {
 		where: (field: string) => {
 			whereField = field;
-			whereOp = null;
+			_whereOp = null;
 			whereValue = null;
 			return {
 				equals: (val: string) => {
-					whereOp = "equals";
+					_whereOp = "equals";
 					whereValue = val;
 					return {
 						first: async () => {

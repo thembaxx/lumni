@@ -2,6 +2,7 @@ import { Query } from "appwrite";
 import {
 	COLLECTIONS,
 	createDocument,
+	deleteDocument,
 	listDocuments,
 	updateDocument,
 } from "@/lib/db/client";
@@ -95,22 +96,112 @@ export const appwriteCompetencySync: JobHandler = async (payload) => {
 
 export const appwriteFlashcardSync: JobHandler = async (payload) => {
 	const data = payload as JobPayloadByType["appwrite-flashcard-sync"];
-	await createDocument(COLLECTIONS.FLASHCARDS, {
-		userId: data.userId,
-		flashcardId: data.id,
-		front: data.front,
-		back: data.back,
-		subject: data.subject,
-		topic: data.topic || "",
-		easeFactor: data.easeFactor,
-		interval: data.interval,
-		repetitions: data.repetitions,
-		nextReview: new Date(data.nextReview).toISOString(),
-		lastReview: data.lastReview
-			? new Date(data.lastReview).toISOString()
-			: null,
-		createdAt: new Date(data.createdAt).toISOString(),
-	});
+	await upsertDocument(
+		COLLECTIONS.FLASHCARDS,
+		[Query.equal("flashcardId", data.id)],
+		{
+			userId: data.userId,
+			flashcardId: data.id,
+			front: data.front,
+			back: data.back,
+			subject: data.subject,
+			topic: data.topic || "",
+			easeFactor: data.easeFactor,
+			interval: data.interval,
+			repetitions: data.repetitions,
+			nextReview: new Date(data.nextReview).toISOString(),
+			lastReview: data.lastReview
+				? new Date(data.lastReview).toISOString()
+				: null,
+			createdAt: new Date(data.createdAt).toISOString(),
+			updatedAt: new Date(data.updatedAt).toISOString(),
+		},
+	);
+};
+
+export const appwriteFlashcardPull: JobHandler = async (payload) => {
+	const _data = payload as JobPayloadByType["appwrite-flashcard-pull"];
+	try {
+		const lastSyncStr = typeof window !== "undefined"
+			? localStorage.getItem("lumni_flashcard_last_sync") ?? "0"
+			: "0";
+		const lastSync = Number.parseInt(lastSyncStr, 10) || 0;
+
+		const remoteCards = await listDocuments<Record<string, unknown>>(
+			COLLECTIONS.FLASHCARDS,
+			lastSync > 0
+				? [Query.greaterThan("updatedAt", new Date(lastSync).toISOString())]
+				: [],
+		);
+
+		const { offlineDB: db } = await import("@/lib/db/schema");
+
+		for (const remote of remoteCards) {
+			const remoteUpdatedAt = new Date(
+				(remote.updatedAt as string) || 0,
+			).getTime();
+			const localCard = await db.flashcards.get(
+				remote.flashcardId as string,
+			);
+
+			if (
+				localCard &&
+				localCard.updatedAt &&
+				localCard.updatedAt > remoteUpdatedAt
+			) {
+				continue;
+			}
+
+			await db.flashcards.put({
+				id: remote.flashcardId as string,
+				front: (remote.front as string) || "",
+				back: (remote.back as string) || "",
+				subject: (remote.subject as string) || "",
+				topic: (remote.topic as string) || undefined,
+				easeFactor: (remote.easeFactor as number) || 2.5,
+				interval: (remote.interval as number) || 0,
+				repetitions: (remote.repetitions as number) || 0,
+				nextReview: new Date(
+					(remote.nextReview as string) || Date.now(),
+				).getTime(),
+				lastReview: remote.lastReview
+					? new Date(remote.lastReview as string).getTime()
+					: null,
+				createdAt: new Date(
+					(remote.createdAt as string) || Date.now(),
+				).getTime(),
+				updatedAt: remoteUpdatedAt || Date.now(),
+				algorithm: (remote.algorithm as "sm2" | "fsrs") || "fsrs",
+				stability: (remote.stability as number) || 0,
+				difficulty: (remote.difficulty as number) || 5,
+				status: (remote.status as "active" | "buried" | "suspended") || "active",
+				lapses: (remote.lapses as number) || 0,
+				learningStep: (remote.learningStep as number) || -1,
+				leeched: (remote.leeched as boolean) || false,
+			});
+		}
+
+		if (typeof window !== "undefined") {
+			localStorage.setItem("lumni_flashcard_last_sync", String(Date.now()));
+		}
+	} catch (e) {
+		console.warn("[FlashcardPull] sync failed:", e);
+	}
+};
+
+export const appwriteFlashcardDelete: JobHandler = async (payload) => {
+	const data = payload as JobPayloadByType["appwrite-flashcard-delete"];
+	try {
+		const existing = await listDocuments<Record<string, unknown>>(
+			COLLECTIONS.FLASHCARDS,
+			[Query.equal("flashcardId", data.id)],
+		);
+		for (const doc of existing) {
+			await deleteDocument(COLLECTIONS.FLASHCARDS, doc.$id as string);
+		}
+	} catch (e) {
+		console.warn("[FlashcardDelete] failed:", e);
+	}
 };
 
 export const appwriteWrongAnswerSync: JobHandler = async (payload) => {
@@ -216,6 +307,8 @@ export const appwriteHandlers: Partial<Record<string, JobHandler>> = {
 	"appwrite-attempt-sync": appwriteAttemptSync,
 	"appwrite-competency-sync": appwriteCompetencySync,
 	"appwrite-flashcard-sync": appwriteFlashcardSync,
+	"appwrite-flashcard-pull": appwriteFlashcardPull,
+	"appwrite-flashcard-delete": appwriteFlashcardDelete,
 	"appwrite-wrong-answer-sync": appwriteWrongAnswerSync,
 	"appwrite-chat-sync": appwriteChatSync,
 	"appwrite-rating-sync": appwriteRatingSync,

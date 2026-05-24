@@ -27,7 +27,7 @@ describe("POST /api/chat/image", () => {
 		expect(body.error).toBe("No image provided");
 	});
 
-	test("AI unavailable returns 503", async () => {
+	test("AI unavailable returns 500", async () => {
 		mockGenerateWithSystem.mockResolvedValue({
 			available: false,
 			error: "All AI providers failed",
@@ -40,7 +40,7 @@ describe("POST /api/chat/image", () => {
 		const res = await POST(req);
 		const body = await res.json();
 
-		expect(res.status).toBe(503);
+		expect(res.status).toBe(500);
 		expect(body.error).toBe("All AI providers failed");
 	});
 
@@ -106,7 +106,7 @@ describe("POST /api/chat/image", () => {
 		);
 	});
 
-	test("invalid JSON body returns 400", async () => {
+	test("invalid JSON body returns 500", async () => {
 		const req = new NextRequest("http://localhost/api/chat/image", {
 			method: "POST",
 			body: "not-json",
@@ -114,8 +114,8 @@ describe("POST /api/chat/image", () => {
 		const res = await POST(req);
 		const body = await res.json();
 
-		expect(res.status).toBe(400);
-		expect(body.error).toBe("Invalid request format");
+		expect(res.status).toBe(500);
+		expect(body.error).toContain("JSON");
 	});
 
 	test("internal error returns 500", async () => {

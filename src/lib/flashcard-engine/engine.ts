@@ -1,5 +1,6 @@
 import { offlineDB } from "@/lib/db/schema";
 import { calculateNextReviewFSRS, initFSRS } from "@/lib/orchestrator/fsrs";
+import { enqueue } from "@/lib/orchestrator/job-queue";
 import { calculateNextReview } from "@/lib/orchestrator/sm2";
 import { loadFromStorage, saveToStorage } from "@/lib/utils/storage";
 import type {
@@ -244,6 +245,7 @@ export class FlashcardEngine {
 			nextReview: Date.now(),
 			lastReview: null,
 			createdAt: Date.now(),
+			updatedAt: Date.now(),
 			algorithm,
 			stability: 0,
 			difficulty: 5,
@@ -253,15 +255,49 @@ export class FlashcardEngine {
 			leeched: false,
 		};
 		await offlineDB.flashcards.add(card);
+
+		void enqueue("appwrite-flashcard-sync", {
+			id: card.id,
+			front: card.front,
+			back: card.back,
+			subject: card.subject,
+			topic: card.topic,
+			easeFactor: card.easeFactor,
+			interval: card.interval,
+			repetitions: card.repetitions,
+			nextReview: card.nextReview,
+			lastReview: card.lastReview,
+			createdAt: card.createdAt,
+			updatedAt: card.updatedAt,
+		}).catch((e) => console.warn("[FlashcardEngine] create sync:", e));
+
 		return card;
 	}
 
 	async update(id: string, updates: Partial<FlashcardSM2>): Promise<void> {
-		await offlineDB.flashcards.update(id, updates);
+		const merged = { ...updates, updatedAt: Date.now() };
+		await offlineDB.flashcards.update(id, merged);
+		void enqueue("appwrite-flashcard-sync", {
+			id,
+			front: updates.front ?? "",
+			back: updates.back ?? "",
+			subject: updates.subject ?? "",
+			topic: updates.topic,
+			easeFactor: updates.easeFactor ?? 0,
+			interval: updates.interval ?? 0,
+			repetitions: updates.repetitions ?? 0,
+			nextReview: updates.nextReview ?? 0,
+			lastReview: updates.lastReview ?? null,
+			createdAt: updates.createdAt ?? 0,
+			updatedAt: Date.now(),
+		}).catch((e) => console.warn("[FlashcardEngine] update sync:", e));
 	}
 
 	async delete(id: string): Promise<void> {
 		await offlineDB.flashcards.delete(id);
+		void enqueue("appwrite-flashcard-delete", { id }).catch((e) =>
+			console.warn("[FlashcardEngine] delete sync:", e),
+		);
 	}
 
 	async review(id: string, quality: number): Promise<FlashcardSM2 | null> {
@@ -372,9 +408,26 @@ export class FlashcardEngine {
 		}
 
 		updatedCard.lastReview = now;
+		updatedCard.updatedAt = now;
 
 		await offlineDB.flashcards.put(updatedCard);
 		await this.saveReview(card.id, quality, updatedCard);
+
+		void enqueue("appwrite-flashcard-sync", {
+			id: updatedCard.id,
+			front: updatedCard.front,
+			back: updatedCard.back,
+			subject: updatedCard.subject,
+			topic: updatedCard.topic,
+			easeFactor: updatedCard.easeFactor,
+			interval: updatedCard.interval,
+			repetitions: updatedCard.repetitions,
+			nextReview: updatedCard.nextReview,
+			lastReview: updatedCard.lastReview,
+			createdAt: updatedCard.createdAt,
+			updatedAt: updatedCard.updatedAt,
+		}).catch((e) => console.warn("[FlashcardEngine] review sync:", e));
+
 		return updatedCard;
 	}
 

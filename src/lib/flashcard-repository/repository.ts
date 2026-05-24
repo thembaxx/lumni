@@ -95,6 +95,7 @@ export class DexieFlashcardRepository implements FlashcardRepository {
 			nextReview: Date.now(),
 			lastReview: null,
 			createdAt: Date.now(),
+			updatedAt: Date.now(),
 			algorithm,
 			stability: 0,
 			difficulty: 5,

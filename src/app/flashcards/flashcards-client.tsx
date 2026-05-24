@@ -11,6 +11,7 @@ import { useGamification } from "@/hooks/use-gamification";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
 import { migrateLegacyFlashcards } from "@/lib/flashcard-repository/migrate";
+import { enqueue } from "@/lib/orchestrator/job-queue";
 import { trackQuestionResult } from "@/lib/orchestrator";
 import type { Question } from "@/lib/question-engine/types";
 import {
@@ -41,6 +42,9 @@ export function FlashcardsClient() {
 	useEffect(() => {
 		migrateLegacyFlashcards().catch((e) =>
 			console.warn("Legacy flashcard migration:", e),
+		);
+		void enqueue("appwrite-flashcard-pull", {}).catch((e) =>
+			console.warn("Flashcard pull failed:", e),
 		);
 	}, []);
 

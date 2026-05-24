@@ -60,9 +60,10 @@ describe("POST /api/curated-problems", () => {
 		expect(body.error).toBe("Subject is required");
 	});
 
-	test("AI not configured returns 503", async () => {
+	test("AI not configured returns 500", async () => {
 		mockCheckBudget.mockResolvedValue({ allowed: true, userId: "test-user" });
 		mockIsAIConfigured.mockReturnValue(false);
+		mockGenerateWithSystem.mockResolvedValue({ available: false, error: "AI not configured", provider: "test" });
 
 		const req = new NextRequest("http://localhost/api/curated-problems", {
 			method: "POST",
@@ -71,8 +72,8 @@ describe("POST /api/curated-problems", () => {
 		const res = await POST(req);
 		const body = await res.json();
 
-		expect(res.status).toBe(503);
-		expect(body.error).toBe("AI not configured");
+		expect(res.status).toBe(500);
+		expect(body.error).toBe("AI generation failed: AI not configured");
 	});
 
 	test("valid request returns problems with subject, topic, count", async () => {

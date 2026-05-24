@@ -35,6 +35,7 @@ export interface FlashcardSM2 {
 	nextReview: number;
 	lastReview: number | null;
 	createdAt: number;
+	updatedAt: number;
 	algorithm: SRSAlgorithm;
 	stability: number;
 	difficulty: number;
