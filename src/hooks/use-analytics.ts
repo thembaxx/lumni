@@ -1,21 +1,15 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import type { OverallAnalytics } from "@/lib/analytics-engine";
 import { analyticsEngine } from "@/lib/analytics-engine";
-import type {
-	OverallAnalytics,
-	AnalyticsRecommendation,
-	SubjectAnalytics,
-	TopicPerformance,
-	PerformanceHistoryItem,
-} from "@/lib/analytics-engine";
 
 export type {
-	OverallAnalytics,
 	AnalyticsRecommendation,
+	OverallAnalytics,
+	PerformanceHistoryItem,
 	SubjectAnalytics,
 	TopicPerformance,
-	PerformanceHistoryItem,
 } from "@/lib/analytics-engine";
 
 export function useAnalytics() {

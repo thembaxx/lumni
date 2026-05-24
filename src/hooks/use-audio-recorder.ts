@@ -1,8 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { audioEngine } from "@/lib/audio-engine";
 import type { AudioEngineState } from "@/lib/audio-engine";
+import { audioEngine } from "@/lib/audio-engine";
 
 export interface UseAudioRecorderReturn {
 	isRecording: boolean;

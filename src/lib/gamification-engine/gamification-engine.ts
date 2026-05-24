@@ -3,16 +3,11 @@ import {
 	calculateLevel,
 	generateDailyChallenges,
 	STREAK_MILESTONES as STREAK_MILESTONE_DEFS,
-	XP_PER_QUESTION,
 	XP_PER_CORRECT,
+	XP_PER_QUESTION,
 	XP_STREAK_BONUS,
 } from "@/types/gamification";
-import type {
-	StoredGamification,
-	StoredAchievement,
-	StreakMilestone,
-	GamificationResult,
-} from "./types";
+import type { StoredAchievement, StoredGamification } from "./types";
 
 const GAMIFICATION_KEY = "lumni_gamification";
 
@@ -21,7 +16,10 @@ const DEFAULT_GAMIFICATION: StoredGamification = {
 	totalXp: 0,
 	achievements: [],
 	dailyChallenges: generateDailyChallenges(),
-	streakMilestones: STREAK_MILESTONE_DEFS.map((s) => ({ ...s, unlocked: false })),
+	streakMilestones: STREAK_MILESTONE_DEFS.map((s) => ({
+		...s,
+		unlocked: false,
+	})),
 	lastPracticeDate: null,
 	currentStreak: 0,
 	totalQuestionsAnswered: 0,
@@ -63,7 +61,12 @@ export class GamificationEngine {
 		const today = new Date().toDateString();
 		return dailyChallenges.map((challenge) => {
 			if (challenge.expiresAt !== today) {
-				return { ...challenge, progress: 0, completed: false, expiresAt: today };
+				return {
+					...challenge,
+					progress: 0,
+					completed: false,
+					expiresAt: today,
+				};
 			}
 			return challenge;
 		});
@@ -91,8 +94,7 @@ export class GamificationEngine {
 
 		const oldLevel = calculateLevel(data.totalXp).level;
 		const newLevelInfo = calculateLevel(newTotalXp);
-		const leveledUp =
-			newLevelInfo.level > oldLevel ? newLevelInfo.level : null;
+		const leveledUp = newLevelInfo.level > oldLevel ? newLevelInfo.level : null;
 
 		const updatedChallenges = data.dailyChallenges.map((challenge) => {
 			if (challenge.completed) return challenge;
@@ -100,10 +102,7 @@ export class GamificationEngine {
 				case "questions":
 					return {
 						...challenge,
-						progress: Math.min(
-							challenge.progress + amount,
-							challenge.target,
-						),
+						progress: Math.min(challenge.progress + amount, challenge.target),
 						completed: challenge.progress + amount >= challenge.target,
 					};
 				case "accuracy":
@@ -192,13 +191,25 @@ export class GamificationEngine {
 		const earned = data.achievements.map((a) => a.id);
 
 		const checks: [string, boolean][] = [
-			["first_question", questionsAnswered >= 1 && !earned.includes("first_question")],
+			[
+				"first_question",
+				questionsAnswered >= 1 && !earned.includes("first_question"),
+			],
 			["streak_3", streak >= 3 && !earned.includes("streak_3")],
 			["streak_7", streak >= 7 && !earned.includes("streak_7")],
 			["streak_30", streak >= 30 && !earned.includes("streak_30")],
-			["questions_50", questionsAnswered >= 50 && !earned.includes("questions_50")],
-			["questions_100", questionsAnswered >= 100 && !earned.includes("questions_100")],
-			["questions_500", questionsAnswered >= 500 && !earned.includes("questions_500")],
+			[
+				"questions_50",
+				questionsAnswered >= 50 && !earned.includes("questions_50"),
+			],
+			[
+				"questions_100",
+				questionsAnswered >= 100 && !earned.includes("questions_100"),
+			],
+			[
+				"questions_500",
+				questionsAnswered >= 500 && !earned.includes("questions_500"),
+			],
 			["accuracy_80", accuracy >= 80 && !earned.includes("accuracy_80")],
 			["accuracy_90", accuracy >= 90 && !earned.includes("accuracy_90")],
 			["perfect_quiz", perfectQuiz && !earned.includes("perfect_quiz")],
@@ -213,9 +224,10 @@ export class GamificationEngine {
 		return newAchievements;
 	}
 
-	updateStreak(
-		data: StoredGamification,
-	): { data: StoredGamification; milestoneXpGained: number } {
+	updateStreak(data: StoredGamification): {
+		data: StoredGamification;
+		milestoneXpGained: number;
+	} {
 		const today = new Date().toDateString();
 		const yesterday = new Date();
 		yesterday.setDate(yesterday.getDate() - 1);
@@ -261,9 +273,7 @@ export class GamificationEngine {
 		}
 
 		const updatedChallenges = data.dailyChallenges.map((c) =>
-			c.id === challengeId
-				? { ...c, completed: true, progress: c.target }
-				: c,
+			c.id === challengeId ? { ...c, completed: true, progress: c.target } : c,
 		);
 
 		return {
@@ -279,13 +289,20 @@ export class GamificationEngine {
 
 	getStreakXpReward(streak: number): number {
 		switch (streak) {
-			case 3: return 50;
-			case 7: return 100;
-			case 14: return 150;
-			case 30: return 200;
-			case 60: return 300;
-			case 100: return 500;
-			default: return 0;
+			case 3:
+				return 50;
+			case 7:
+				return 100;
+			case 14:
+				return 150;
+			case 30:
+				return 200;
+			case 60:
+				return 300;
+			case 100:
+				return 500;
+			default:
+				return 0;
 		}
 	}
 }

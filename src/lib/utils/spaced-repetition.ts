@@ -5,13 +5,12 @@ import type {
 } from "@/lib/flashcard-repository/types";
 import { SM2_QUALITIES } from "@/lib/flashcard-repository/types";
 
-export type { FlashcardSM2, SM2Quality };
-export { SM2_QUALITIES };
-
 export {
 	calculateNextReview,
 	computeNextReviewDate,
 } from "@/lib/orchestrator/sm2";
+export type { FlashcardSM2, SM2Quality };
+export { SM2_QUALITIES };
 
 export async function createFlashcard(
 	front: string,

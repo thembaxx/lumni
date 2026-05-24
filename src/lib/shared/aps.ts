@@ -17,14 +17,3 @@ export function getGrade(percentage: number): string {
 	if (percentage >= 30) return "F - Elementary";
 	return "G - Not Achieved";
 }
-
-export function calculateAPS(
-	scores: { percentage: number; isLO?: boolean }[],
-): number {
-	const scored = scores
-		.filter((s) => !s.isLO)
-		.map((s) => getAPSForSubject(s.percentage))
-		.sort((a, b) => b - a)
-		.slice(0, 6);
-	return scored.reduce((sum, s) => sum + s, 0);
-}

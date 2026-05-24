@@ -1,7 +1,7 @@
+import { curriculumRegistry } from "@/curriculum";
 import { generateWithSystem, initAI, isAIConfigured } from "@/lib/ai";
 import { cleanResponse } from "@/lib/ai/parse-response";
 import type { AIResponse } from "@/lib/ai/types";
-import { curriculumRegistry } from "@/curriculum";
 
 interface CuratedProblem {
 	id: string;

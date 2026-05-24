@@ -30,7 +30,14 @@ interface SolveBody {
 
 export const aiSolver = {
 	async execute(body: SolveBody) {
-		const { question, imageUrl, mode = "solve", subject, context, followUp } = body;
+		const {
+			question,
+			imageUrl,
+			mode = "solve",
+			subject,
+			context,
+			followUp,
+		} = body;
 
 		if (!isAIConfigured()) {
 			initAI({

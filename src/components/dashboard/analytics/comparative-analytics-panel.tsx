@@ -1,5 +1,7 @@
 "use client";
 
+import { CrownIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useMemo, useState } from "react";
@@ -9,6 +11,7 @@ import { LineChart } from "@/components/ui/charts/line-chart";
 import { RadarChart } from "@/components/ui/charts/radar-chart";
 import { useAnalytics } from "@/hooks/use-analytics";
 import { useAuth } from "@/lib/auth/auth-context";
+import { usePremium } from "@/lib/premium/premium-context";
 import { analyticsService } from "@/lib/services/analytics-service";
 
 interface SubjectTrendData {
@@ -18,6 +21,7 @@ interface SubjectTrendData {
 }
 
 export function ComparativeAnalyticsPanel() {
+	const { hasFeature } = usePremium();
 	const { analytics, isLoading } = useAnalytics();
 	const { user } = useAuth();
 	const [showSubjectDetail, setShowSubjectDetail] = useState(false);
@@ -59,6 +63,27 @@ export function ComparativeAnalyticsPanel() {
 	});
 
 	const subjectTrends = trendsQuery.data ?? {};
+
+	if (!hasFeature("advanced-analytics")) {
+		return (
+			<Card className="flex flex-col items-center gap-4 p-8 text-center">
+				<HugeiconsIcon icon={CrownIcon} className="size-10 text-amber-400" />
+				<div>
+					<p className="font-semibold text-lg">Premium Feature</p>
+					<p className="mt-1 text-muted-foreground text-sm">
+						Comparative analytics and peer performance insights are available on
+						Premium.
+					</p>
+				</div>
+				<Button asChild>
+					<Link href="/premium">
+						<HugeiconsIcon icon={CrownIcon} data-icon="inline-start" />
+						Upgrade Now
+					</Link>
+				</Button>
+			</Card>
+		);
+	}
 
 	if (isLoading || !analytics) {
 		return (

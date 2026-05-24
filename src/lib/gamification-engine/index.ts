@@ -1,8 +1,8 @@
 export { GamificationEngine, gamificationEngine } from "./gamification-engine";
 export type {
-	StoredGamification,
-	StoredAchievement,
-	StreakMilestone,
-	GamificationResult,
 	AchievementCheckResult,
+	GamificationResult,
+	StoredAchievement,
+	StoredGamification,
+	StreakMilestone,
 } from "./types";

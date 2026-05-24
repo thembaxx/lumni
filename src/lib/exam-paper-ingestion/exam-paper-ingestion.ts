@@ -1,4 +1,4 @@
-import { UTApi, UTFile } from "uploadthing/server";
+import { UTApi } from "uploadthing/server";
 import { databases } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 import { parseMarkdown } from "@/lib/exam-parser";
@@ -6,11 +6,18 @@ import {
 	convertPdfWithMarker,
 	uploadImagesAndRewriteMarkdown,
 } from "@/lib/exams/marker-client";
-import type { IngestionSource, IngestionResult, IngestionMetadata } from "./types";
+import type {
+	IngestionMetadata,
+	IngestionResult,
+	IngestionSource,
+} from "./types";
 
 const utapi = new UTApi();
 
-async function convertViaMarker(pdfBuffer: Buffer, filename: string): Promise<string> {
+async function convertViaMarker(
+	pdfBuffer: Buffer,
+	filename: string,
+): Promise<string> {
 	const markerResult = await convertPdfWithMarker(pdfBuffer, filename);
 	const processed = await uploadImagesAndRewriteMarkdown(
 		markerResult.markdown,
@@ -37,7 +44,8 @@ async function convertViaMarkdownNew(pdfUrl: string): Promise<string> {
 
 async function downloadPdf(url: string): Promise<Buffer> {
 	const response = await fetch(url, { cache: "no-store" });
-	if (!response.ok) throw new Error(`Failed to download PDF: ${response.status}`);
+	if (!response.ok)
+		throw new Error(`Failed to download PDF: ${response.status}`);
 	return Buffer.from(await response.arrayBuffer());
 }
 
@@ -130,8 +138,7 @@ export class ExamPaperIngestion {
 		);
 		const appwriteId = doc.$id;
 
-		const sourceFileKey =
-			source.type === "upload-thing" ? source.fileKey : "";
+		const sourceFileKey = source.type === "upload-thing" ? source.fileKey : "";
 		const fileKeys = JSON.stringify({
 			pdf: sourceFileKey,
 			markdown: mdUpload.data?.key || "",

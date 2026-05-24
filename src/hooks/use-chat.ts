@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { CHAT_SYSTEM_PROMPT, generateWithSystem } from "@/lib/ai/client";
+import { offlineDB } from "@/lib/db/schema";
 import { loadFromStorage, saveToStorage } from "@/lib/utils/storage";
 
 export interface ChatMessage {
@@ -70,6 +71,17 @@ export function useChat() {
 	useEffect(() => {
 		const serialized = serializeMessages(messages);
 		saveToStorage(CHAT_STORAGE_KEY, serialized);
+		offlineDB.chatMessages
+			.bulkPut(
+				messages.map((m) => ({
+					messageId: m.id,
+					role: m.role,
+					content: m.content,
+					type: m.type || "text",
+					timestamp: m.timestamp.getTime(),
+				})),
+			)
+			.catch(() => {});
 	}, [messages]);
 
 	const sendMessage = useCallback(async (content: string) => {
