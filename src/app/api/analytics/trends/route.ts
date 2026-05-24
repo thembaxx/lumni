@@ -1,40 +1,36 @@
 import { Query } from "appwrite";
-import { type NextRequest, NextResponse } from "next/server";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import type { StudySession } from "@/lib/db/client";
 import { COLLECTIONS, listDocuments } from "@/lib/db/client";
-import { getAuthenticatedUserId } from "@/lib/server/auth";
 
 export const dynamic = "force-dynamic";
 
-export async function GET(req: NextRequest) {
-	try {
-		const authenticatedUserId = await getAuthenticatedUserId();
-		if (!authenticatedUserId) {
-			return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
-		}
-
+export const GET = createRouteHandler({
+	auth: "required",
+	errorLabel: "Analytics Trends",
+	execute: async ({ userId, req }) => {
 		const { searchParams } = new URL(req.url);
-		const userId = searchParams.get("userId");
+		const requestedUserId = searchParams.get("userId");
 		const subject = searchParams.get("subject");
 
-		if (!userId || !subject) {
-			return NextResponse.json(
-				{ error: "userId and subject are required" },
-				{ status: 400 },
-			);
+		if (!requestedUserId || !subject) {
+			throw new HttpError(400, "userId and subject are required");
 		}
 
-		if (userId !== authenticatedUserId) {
-			return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+		if (requestedUserId !== userId) {
+			throw new HttpError(403, "Unauthorized");
 		}
 
 		const sessions = await listDocuments<StudySession>(
 			COLLECTIONS.STUDY_SESSIONS,
-			[Query.equal("userId", userId), Query.equal("subjectId", subject)],
+			[
+				Query.equal("userId", requestedUserId),
+				Query.equal("subjectId", subject),
+			],
 		);
 
 		if (sessions.length === 0) {
-			return NextResponse.json({ dates: [], accuracies: [], trend: "stable" });
+			return { dates: [], accuracies: [], trend: "stable" };
 		}
 
 		const monthlyGroups: Record<string, { answered: number; correct: number }> =
@@ -77,12 +73,6 @@ export async function GET(req: NextRequest) {
 			else if (secondAvg < firstAvg - 5) trend = "declining";
 		}
 
-		return NextResponse.json({ dates, accuracies, trend });
-	} catch (error) {
-		console.error("[/api/analytics/trends] Error:", error);
-		return NextResponse.json(
-			{ error: "Failed to get analytics trends" },
-			{ status: 500 },
-		);
-	}
-}
+		return { dates, accuracies, trend };
+	},
+});

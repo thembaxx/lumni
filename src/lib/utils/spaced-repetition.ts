@@ -1,20 +1,16 @@
-import { flashcardRepository } from "@/lib/flashcard-repository";
+import { flashcardEngine } from "@/lib/flashcard-engine";
 import type {
 	CardStatus,
 	FlashcardReview,
 	FlashcardSM2,
 	SM2Quality,
 	SRSAlgorithm,
-} from "@/lib/flashcard-repository/types";
-import { SM2_QUALITIES } from "@/lib/flashcard-repository/types";
-import type { SRSettings } from "@/lib/spaced-repetition";
+} from "@/lib/flashcard-engine";
+import { SM2_QUALITIES } from "@/lib/flashcard-engine";
+import type { SRSettings } from "@/lib/flashcard-engine";
 import {
 	DEFAULT_SR_SETTINGS,
-	loadSRSettings,
-	resetDailyBudget,
-	resetSRSettings,
-	saveSRSettings,
-} from "@/lib/spaced-repetition";
+} from "@/lib/flashcard-engine";
 
 export {
 	calculateNextReviewFSRS,
@@ -35,105 +31,57 @@ export type {
 };
 export {
 	DEFAULT_SR_SETTINGS,
-	loadSRSettings,
-	resetDailyBudget,
-	resetSRSettings,
 	SM2_QUALITIES,
-	saveSRSettings,
 };
 
-export async function createFlashcard(
-	front: string,
-	back: string,
-	subject: string,
-	topic?: string,
-): Promise<FlashcardSM2> {
-	return flashcardRepository.create(front, back, subject, topic);
-}
+export {
+	flashcardEngine,
+	flashcardEngine as flashcardRepository,
+} from "@/lib/flashcard-engine";
 
-export async function deleteFlashcard(id: string): Promise<void> {
-	return flashcardRepository.delete(id);
-}
+// Backward-compat wrappers
+export const loadSRSettings = () => flashcardEngine.loadSettings();
+export const saveSRSettings = (settings: SRSettings) => flashcardEngine.saveSettings(settings);
+export const resetSRSettings = () => flashcardEngine.resetSettings();
+export const resetDailyBudget = () => flashcardEngine.resetDailyBudget();
 
-export async function updateFlashcard(
-	id: string,
-	updates: Partial<FlashcardSM2>,
-): Promise<void> {
-	return flashcardRepository.update(id, updates);
-}
+export const createFlashcard = (front: string, back: string, subject: string, topic?: string) =>
+	flashcardEngine.create(front, back, subject, topic);
 
-export async function reviewFlashcard(
-	id: string,
-	quality: number,
-): Promise<FlashcardSM2 | null> {
-	return flashcardRepository.review(id, quality);
-}
+export const deleteFlashcard = (id: string) => flashcardEngine.delete(id);
 
-export async function getDueCards(subject?: string): Promise<FlashcardSM2[]> {
-	return flashcardRepository.getDueCards(subject);
-}
+export const updateFlashcard = (id: string, updates: Partial<FlashcardSM2>) =>
+	flashcardEngine.update(id, updates);
 
-export async function getNewCards(
-	subject?: string,
-	limit: number = 20,
-): Promise<FlashcardSM2[]> {
-	return flashcardRepository.getNewCards(subject, limit);
-}
+export const reviewFlashcard = (id: string, quality: number) =>
+	flashcardEngine.review(id, quality);
 
-export async function getAllCardsGrouped(): Promise<
-	Record<string, FlashcardSM2[]>
-> {
-	return flashcardRepository.getGrouped();
-}
+export const getDueCards = (subject?: string) =>
+	flashcardEngine.getDueCards(subject);
 
-export async function getCardStats(): Promise<{
-	total: number;
-	due: number;
-	learning: number;
-	mature: number;
-	new: number;
-	avgEaseFactor: number;
-}> {
-	return flashcardRepository.getStats();
-}
+export const getNewCards = (subject?: string, limit?: number) =>
+	flashcardEngine.getNewCards(subject, limit);
 
-export function getMasteryLevel(
-	interval: number,
-): "new" | "learning" | "reviewing" | "mastered" {
-	if (interval === 0) return "new";
-	if (interval < 7) return "learning";
-	if (interval < 21) return "reviewing";
-	return "mastered";
-}
+export const getAllCardsGrouped = () =>
+	flashcardEngine.getGrouped();
 
-export function getIntervalLabel(interval: number): string {
-	if (interval === 0) return "New";
-	if (interval === 1) return "1 day";
-	if (interval < 7) return `${interval} days`;
-	if (interval < 30) return `${Math.round(interval / 7)} weeks`;
-	if (interval < 365) return `${Math.round(interval / 30)} months`;
-	return `${Math.round(interval / 365)} years`;
-}
+export const getCardStats = () =>
+	flashcardEngine.getStats();
 
-export async function buryFlashcard(id: string): Promise<void> {
-	return flashcardRepository.bury(id);
-}
+export const getMasteryLevel = (interval: number) =>
+	flashcardEngine.getMasteryLevel(interval);
 
-export async function suspendFlashcard(id: string): Promise<void> {
-	return flashcardRepository.suspend(id);
-}
+export const getIntervalLabel = (interval: number) =>
+	flashcardEngine.getIntervalLabel(interval);
 
-export async function activateFlashcard(id: string): Promise<void> {
-	return flashcardRepository.activate(id);
-}
+export const buryFlashcard = (id: string) => flashcardEngine.bury(id);
+export const suspendFlashcard = (id: string) => flashcardEngine.suspend(id);
+export const activateFlashcard = (id: string) => flashcardEngine.activate(id);
 
-export async function getReviewHistory(
-	cardId: string,
-): Promise<FlashcardReview[]> {
-	return flashcardRepository.getReviewHistory(cardId);
-}
+export const getReviewHistory = (cardId: string) =>
+	flashcardEngine.getReviewHistory(cardId);
 
-export async function convertQuizToFlashcards(
+export const convertQuizToFlashcards = (
 	questions: Array<{
 		id: string;
 		questionText: string;
@@ -141,21 +89,4 @@ export async function convertQuizToFlashcards(
 		explanation: string;
 	}>,
 	subject: string,
-): Promise<FlashcardSM2[]> {
-	const newCards = await Promise.all(
-		questions.flatMap((q) => {
-			const correctOption = q.options.find((o) => o.isCorrect);
-			if (!correctOption) return [];
-			return [
-				flashcardRepository.create(
-					q.questionText,
-					correctOption.text,
-					subject,
-					q.id,
-				),
-			];
-		}),
-	);
-
-	return newCards;
-}
+) => flashcardEngine.convertQuizToFlashcards(questions, subject);

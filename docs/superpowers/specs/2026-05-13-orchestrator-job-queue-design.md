@@ -139,10 +139,12 @@ Two contexts:
 - Call `orchestrator.gradeAndTrack(question, answer)`
 - Return `{ ...gradingResult, jobIds }`
 
-**`src/app/api/jobs/process/route.ts`** (new):
+**`src/app/api/jobs/process/route.ts`** (new, uses `createRouteHandler`):
 - Accepts optional `{ limit?: number }`
 - Calls `JobProcessor.processBatch(limit)`
 - Returns `{ processed, succeeded, failed }`
+
+> **Note (May 24):** Several routes including `jobs/process`, `analytics/comparative`, `analytics/trends`, `admin/exams`, and `exam-sessions` have been migrated to the generic `createRouteHandler` factory (`src/lib/api/create-route-handler.ts`), which eliminates ~49 copies of auth guard + body parse + try-catch boilerplate.
 
 ## Data Flow
 

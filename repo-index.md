@@ -1,7 +1,7 @@
 # Repo Index — Lumni
 
-**Generated:** 2026-05-22  
-**Last synced with:** HEAD~0 (bf36441)
+**Generated:** 2026-05-24  
+**Last synced with:** HEAD~0 (session-8)
 
 ---
 
@@ -33,7 +33,7 @@ lumni/
 │   │   ├── admin/                   # Admin panels (users, analytics, content, notifications, etc.)
 │   │   ├── auth/                    # Sign-in, sign-up forms
 │   │   ├── settings/tabs/           # Profile, preferences, data settings
-│   │   ├── tools/                   # Flashcards, notes, study-sets, exam tools
+│   │   ├── tools/                   # core/, communication/, math/, science/, scheduling/
 │   │   ├── study-planner/           # Study plan generation + overview
 │   │   ├── visual/                  # VisualContent, DiagramRenderer
 │   │   ├── onboarding/              # 5-step wizard (Welcome/Subjects/Goals/Schedule/Notifications)
@@ -57,14 +57,18 @@ lumni/
 │   │   ├── auth/                    # Auth utilities, session management
 │   │   ├── sync/                    # Offline sync (flushOfflineData, conflict resolution)
 │   │   ├── server/                  # Server actions (exam-paper-actions, quiz-actions)
-│   │   ├── services/                # Business services (analytics, notifications, etc.)
+│   │   ├── services/                # Business services barrel (all 10 services + ServiceResult<T>)
 │   │   ├── study-planner/           # StudyPlannerService (algorithmic scheduling)
 │   │   ├── rate-limiter/            # Token budget, rate limiting
 │   │   ├── quiz-session/            # Quiz session state machine
 │   │   ├── premium/                 # Premium gating logic
 │   │   ├── referral/                # Referral program
 │   │   ├── shared/                  # Shared utilities (backoff, etc.)
-│   │   └── utils/                   # General utilities (spaced-repetition, flashcard-import-export, colors)
+│   │   ├── flashcard-engine/        # Unified SR: FlashcardEngine, types, barrel
+│   │   ├── api/                     # createRouteHandler generic factory (HttpError, AuthMode)
+│   │   ├── spaced-repetition/       # Legacy re-export barrel (delegates to flashcard-engine)
+│   │   ├── flashcard-repository/    # Legacy re-export barrel (delegates to flashcard-engine)
+│   │   └── utils/                   # General utilities (flashcard-import-export, colors, etc.)
 │   ├── hooks/                       # React hooks (use-question-engine, use-visual-engine, use-premium, etc.)
 │   ├── store/                       # Zustand stores (quiz, exam, sync, search, etc.)
 │   ├── types/                       # TypeScript types
@@ -177,7 +181,7 @@ lumni/
 
 ---
 
-## Recent Changes (May 20-22, 2026)
+## Recent Changes (May 20-24, 2026)
 
 | Commit | When | What |
 |--------|------|------|
@@ -195,7 +199,11 @@ lumni/
 | `b9efab4` | May 20 23:27 | Sync for flashcards, wrong answers, chat messages |
 | `8a53881` | May 20 23:20 | Sentry config + GamificationCelebration + ExamsBrowse |
 
-**23 files changed**, 417 insertions, 309 deletions in last 5 commits.
+### Session 8 — Architecture consolidation (May 24, 2026)
+- **Flashcard engine**: Created `src/lib/flashcard-engine/` — unified `FlashcardEngine` class wrapping DexieRepository + SM-2/FSRS + daily limits + learning steps + ease-hell + leech + settings. Old barrels re-export for backward compat.
+- **Route handler factory**: `src/lib/api/create-route-handler.ts` — generic `createRouteHandler()` with `AuthMode`, `HttpError`, auto auth guard, body parsing, Zod validation, error wrapping. 5 routes migrated: analytics/comparative, analytics/trends, admin/exams, exam-sessions, jobs/process.
+- **Services barrel**: `src/lib/services/index.ts` now exports all 10 services + `ServiceResult<T>` + `success()`/`failure()` helpers.
+- **Tools reorganization**: `src/components/tools/` split into `core/`, `communication/`, `math/`, `science/`, `scheduling/` — 11 components moved, all import chains updated.
 
 ---
 

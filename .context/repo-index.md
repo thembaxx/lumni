@@ -36,8 +36,8 @@
 
 ## Module/Component Map
 - `src/app`: Contains the application's pages (e.g., dashboard, quiz, exam) and API route handlers.
-- `src/components`: UI components organized by domain: `ui` (primitives), `quiz` (question cards, diagrams), `dashboard`, `admin`, etc.
-- `src/lib`: Core logic: `question-engine` (gen/grade), `visual-engine` (diagrams), `orchestrator` (jobs), `db` (repositories), `ai` (clients).
+- `src/components`: UI components organized by domain: `ui` (primitives), `quiz` (question cards, diagrams), `dashboard`, `admin`, `tools` (reorganized into `core/`, `communication/`, `math/`, `science/`, `scheduling/`).
+- `src/lib`: Core logic: `flashcard-engine` (unified SR), `question-engine` (gen/grade), `visual-engine` (diagrams), `api` (create-route-handler factory), `orchestrator` (jobs), `services` (barrel of all 10 services), `db` (repositories), `ai` (clients).
 - `src/hooks`: Domain-specific hooks like `useQuestionEngine`, `useVisualEngine`, `useAuth`, and `useQuizSession`.
 - `src/store`: Zustand stores for global state: `main`, `flashcards`, `exam-session`, `bookmarks`, etc.
 

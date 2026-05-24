@@ -1,14 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import type { SRSettings } from "@/lib/spaced-repetition";
-import {
-	DEFAULT_SR_SETTINGS,
-	loadSRSettings,
-	resetDailyBudget,
-	resetSRSettings,
-	saveSRSettings,
-} from "@/lib/spaced-repetition";
+import { flashcardEngine } from "@/lib/flashcard-engine";
+import type { SRSettings } from "@/lib/flashcard-engine";
+import { DEFAULT_SR_SETTINGS } from "@/lib/flashcard-engine";
 
 export interface UseSRSettingsReturn {
 	settings: SRSettings;
@@ -21,26 +16,30 @@ export function useSRSettings(): UseSRSettingsReturn {
 	const [settings, setSettings] = useState<SRSettings>(DEFAULT_SR_SETTINGS);
 
 	useEffect(() => {
-		setSettings(loadSRSettings());
+		setSettings(flashcardEngine.loadSettings());
 	}, []);
 
 	const updateSettings = useCallback((updates: Partial<SRSettings>) => {
 		setSettings((prev) => {
 			const next = { ...prev, ...updates };
-			saveSRSettings(next);
+			flashcardEngine.saveSettings(next);
 			return next;
 		});
 	}, []);
 
 	const resetSettings = useCallback(() => {
-		const defaults = resetSRSettings();
+		const defaults = flashcardEngine.resetSettings();
 		setSettings(defaults);
+	}, []);
+
+	const handleResetDailyBudget = useCallback(() => {
+		flashcardEngine.resetDailyBudget();
 	}, []);
 
 	return {
 		settings,
 		updateSettings,
 		resetSettings,
-		resetDailyBudget,
+		resetDailyBudget: handleResetDailyBudget,
 	};
 }

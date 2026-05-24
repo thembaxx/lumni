@@ -10,48 +10,48 @@ import { useToolsStore } from "@/store/tools";
 
 const ScientificCalculator = dynamic(
 	() =>
-		import("./scientific-calculator").then((mod) => mod.ScientificCalculator),
+		import("../math/scientific-calculator").then((mod) => mod.ScientificCalculator),
 	{ ssr: false },
 );
 const PeriodicTable = dynamic(
-	() => import("./periodic-table").then((mod) => mod.PeriodicTable),
+	() => import("../science/periodic-table").then((mod) => mod.PeriodicTable),
 	{ ssr: false },
 );
 const APSCalculator = dynamic(
-	() => import("./aps-calculator").then((mod) => mod.APSCalculator),
+	() => import("../math/aps-calculator").then((mod) => mod.APSCalculator),
 	{ ssr: false },
 );
 const AiSolver = dynamic(
-	() => import("./ai-solver").then((mod) => mod.AiSolver),
+	() => import("../communication/ai-solver").then((mod) => mod.AiSolver),
 	{ ssr: false },
 );
 const NationalExamCalendar = dynamic(
 	() =>
-		import("./national-exam-calendar").then((mod) => mod.NationalExamCalendar),
+		import("../scheduling/national-exam-calendar").then((mod) => mod.NationalExamCalendar),
 	{ ssr: false },
 );
 const ResultsSearch = dynamic(
-	() => import("./results-search").then((mod) => mod.ResultsSearch),
+	() => import("../communication/results-search").then((mod) => mod.ResultsSearch),
 	{ ssr: false },
 );
 const SmartScheduler = dynamic(
-	() => import("./smart-scheduler").then((mod) => mod.SmartScheduler),
+	() => import("../scheduling/smart-scheduler").then((mod) => mod.SmartScheduler),
 	{ ssr: false },
 );
 const FlashcardCreator = dynamic(
 	() =>
-		import("./flashcards/flashcard-creator").then(
+		import("../flashcards/flashcard-creator").then(
 			(mod) => mod.FlashcardCreator,
 		),
 	{ ssr: false },
 );
 const NoteCreator = dynamic(
-	() => import("./notes/note-creator").then((mod) => mod.NoteCreator),
+	() => import("../notes/note-creator").then((mod) => mod.NoteCreator),
 	{ ssr: false },
 );
 const StudySetCreator = dynamic(
 	() =>
-		import("./study-sets/study-set-creator").then((mod) => mod.StudySetCreator),
+		import("../study-sets/study-set-creator").then((mod) => mod.StudySetCreator),
 	{ ssr: false },
 );
 

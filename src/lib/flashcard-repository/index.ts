@@ -1,4 +1,4 @@
-export { DexieFlashcardRepository, flashcardRepository } from "./repository";
+export { flashcardEngine as flashcardRepository } from "@/lib/flashcard-engine";
 export type {
 	CardStatus,
 	FlashcardRepository,
@@ -7,5 +7,5 @@ export type {
 	FlashcardStats,
 	SM2Quality,
 	SRSAlgorithm,
-} from "./types";
-export { SM2_QUALITIES } from "./types";
+} from "@/lib/flashcard-engine";
+export { SM2_QUALITIES } from "@/lib/flashcard-engine";

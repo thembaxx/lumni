@@ -2,7 +2,7 @@
 
 import { PageContainer } from "@/components/layout/page-container";
 import { Anim } from "@/components/shared/anim";
-import { AiSolver } from "@/components/tools/ai-solver";
+import { AiSolver } from "@/components/tools/communication/ai-solver";
 
 export default function SolvePage() {
 	return (

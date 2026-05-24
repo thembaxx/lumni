@@ -1,22 +1,26 @@
 import { Query } from "appwrite";
-import { NextResponse } from "next/server";
+import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { databases } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
-import { getAuthenticatedUserId } from "@/lib/server/auth";
 
 export const runtime = "nodejs";
 
-export async function GET() {
-	try {
-		const userId = await getAuthenticatedUserId();
-		if (!userId) {
-			return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
-		}
+interface CreateSessionBody {
+	paperId: string;
+	answers?: Record<string, unknown>;
+	flags?: string[];
+	timeRemaining?: number;
+	startedAt?: string;
+}
 
+export const GET = createRouteHandler({
+	auth: "required",
+	errorLabel: "List Sessions",
+	execute: async ({ userId }) => {
 		const response = await databases.listDocuments(
 			APPWRITE_DATABASE_ID,
 			COLLECTIONS.EXAM_SESSIONS,
-			[Query.equal("userId", userId)],
+			[Query.equal("userId", userId as string)],
 		);
 
 		const sessions = response.documents.map((doc) => ({
@@ -30,54 +34,38 @@ export async function GET() {
 			lastSavedAt: doc.lastSavedAt,
 		}));
 
-		return NextResponse.json({ sessions });
-	} catch (error) {
-		console.error("Failed to list sessions:", error);
-		return NextResponse.json(
-			{
-				error:
-					error instanceof Error ? error.message : "Failed to list sessions",
-			},
-			{ status: 500 },
-		);
-	}
-}
+		return { sessions };
+	},
+});
 
-export async function POST(request: Request) {
-	try {
-		const userId = await getAuthenticatedUserId();
-		if (!userId) {
-			return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
-		}
-
-		const body = await request.json();
-		const { paperId, answers, flags, timeRemaining, startedAt } = body;
-
+export const POST = createRouteHandler<CreateSessionBody>({
+	auth: "required",
+	errorLabel: "Save Session",
+	parseBody: async (req) => {
+		const body = await req.json();
+		return body as CreateSessionBody;
+	},
+	validate: (body) => {
+		if (!body.paperId) return "paperId is required";
+		return null;
+	},
+	execute: async ({ body, userId }) => {
 		await databases.createDocument(
 			APPWRITE_DATABASE_ID,
 			COLLECTIONS.EXAM_SESSIONS,
 			"unique()",
 			{
 				userId,
-				examPaperId: paperId,
-				answers: JSON.stringify(answers || {}),
-				flags: JSON.stringify(flags || []),
-				timeRemaining: timeRemaining || 0,
-				completed: timeRemaining <= 0,
-				startedAt: startedAt || new Date().toISOString(),
+				examPaperId: body.paperId,
+				answers: JSON.stringify(body.answers || {}),
+				flags: JSON.stringify(body.flags || []),
+				timeRemaining: body.timeRemaining || 0,
+				completed: (body.timeRemaining ?? 0) <= 0,
+				startedAt: body.startedAt || new Date().toISOString(),
 				lastSavedAt: new Date().toISOString(),
 			},
 		);
 
-		return NextResponse.json({ success: true });
-	} catch (error) {
-		console.error("Failed to save session:", error);
-		return NextResponse.json(
-			{
-				error:
-					error instanceof Error ? error.message : "Failed to save session",
-			},
-			{ status: 500 },
-		);
-	}
-}
+		return { success: true };
+	},
+});

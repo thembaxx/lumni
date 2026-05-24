@@ -34,12 +34,12 @@ const BottomNav = dynamic(() =>
 	})),
 );
 const FloatingToolsButton = dynamic(() =>
-	import("@/components/tools/floating-tools-button").then((m) => ({
+	import("@/components/tools/core/floating-tools-button").then((m) => ({
 		default: m.FloatingToolsButton,
 	})),
 );
 const SnapFab = dynamic(() =>
-	import("@/components/tools/snap-fab").then((m) => ({
+	import("@/components/tools/core/snap-fab").then((m) => ({
 		default: m.SnapFab,
 	})),
 );

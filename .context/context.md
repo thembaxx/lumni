@@ -5,7 +5,7 @@
 Lumni is a mobile-first South African Matric prep platform. It features offline-first architecture, AI-powered educational engines, and "The Emerald Study Room" design system.
 
 ## CURRENT_FOCUS
-Production hardening, design system enforcement across the component library, and stabilization of the competency-driven study planner.
+Architecture consolidation: flashcard engine unified into `flashcard-engine/`, generic route handler factory (`create-route-handler.ts`), services barrel exporting all 10 services, tools directory reorganized into domain subdirs.
 
 ## KEY_CONSTRAINTS
 - **AI Budget**: 2000 global calls/day; per-user caps (20 gen, 100 grade).
@@ -33,10 +33,18 @@ Production hardening, design system enforcement across the component library, an
 - [D012] No `\(...\)` delimiters — only dollar signs for KaTeX.
 - [D013] 30-day question cache TTL in Appwrite.
 - [D016] Competency uses `score` field (not `proficiency`).
+- [D017] Flashcard engine consolidated into `src/lib/flashcard-engine/` wrapping repo + algorithms + settings.
+- [D018] Route handler factory `createRouteHandler()` replaces 49 copies of auth/try-catch boilerplate.
+- [D019] Services barrel `src/lib/services/index.ts` exports all 10 services with `ServiceResult<T>`.
+- [D020] Tools directory split into domain subdirs: core, communication, math, science, scheduling.
 
 ## KNOWLEDGE_GRAPH
 User -> [Zustand Store] -> [QuestionEngine] -> [AI Providers]
 User -> [Dexie SyncQueue] -> [Appwrite] -> [Analytics/Progress]
+RouteHandler -> [createRouteHandler] -> [Auth Guard + Validation + Exec]
+FlashcardEngine -> [DexieRepository + SM-2/FSRS + DailyLimits + LearningSteps + EaseHell + Leech]
+Services -> [ServiceResult<T>] -> [Analytics, Competency, Progress, Flashcard, Notification, ...]
+Tools -> [core/ | communication/ | math/ | science/ | scheduling/]
 
 ## AVOID_LIST
 - ❌ No arbitrary pixel values (e.g., `w-[250px]`). Use design tokens.

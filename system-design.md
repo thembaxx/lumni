@@ -1,7 +1,7 @@
 # System Design — Lumni
 
-**Generated:** 2026-05-22  
-**Last synced:** HEAD~0 (bf36441)
+**Generated:** 2026-05-24  
+**Last synced:** HEAD~0 (session-8)
 
 ---
 
@@ -176,7 +176,7 @@ erDiagram
 | **Dashboard** | Landing page: stats, study plan, quick actions, search, analytics | React, recharts | `src/components/dashboard/` |
 | **Quiz** | Question display, answer capture, timer, feedback, diagrams | React, Konva, Framer Motion | `src/components/quiz/` |
 | **Exam** | Past paper viewer, session management, results & review | React, sql.js, react-pdf | `src/components/exam/` |
-| **Flashcards** | SM-2 spaced repetition, browse, auto-generation | React, Dexie | `src/components/tools/flashcards/` |
+| **Flashcards** | SM-2 spaced repetition, browse, auto-generation | React, Dexie | `src/components/tools/core/` via flashcard-engine |
 | **Study Planner** | Algorithmic scheduling, weekly overview | React, localStorage | `src/components/study-planner/` |
 | **Onboarding** | 5-step wizard with Three.js particles | React, Three.js, Framer Motion | `src/components/onboarding/` |
 | **Auth** | Sign-in/sign-up, magic link, anonymous upgrade | React, Appwrite SDK | `src/components/auth/` |
@@ -195,7 +195,8 @@ erDiagram
 
 | Module | Responsibility | Tech | Location |
 |--------|---------------|------|----------|
-| **API Route Handlers** | ~30 route groups: engine, auth, exams, admin, sync | Next.js App Router | `src/app/api/` |
+| **API Route Handlers** | ~35 route groups: engine, auth, exams, admin, sync | Next.js App Router + createRouteHandler | `src/app/api/` |
+| **createRouteHandler** | Generic factory: auto auth guard, body parse, Zod validation, error wrap | TypeScript | `src/lib/api/create-route-handler.ts` |
 | **Server Actions** | Exam paper actions, quiz actions | Next.js Server Actions | `src/lib/server/` |
 | **RateLimiter** | Auth rate limits (3 sign-in/5min, 1 magic link/5min) | In-memory Map | `src/lib/rate-limiter/` |
 | **TokenTracker** | AI budget: per-user + global caps | In-memory counter | `src/lib/ai/token-tracker.ts` |
@@ -208,8 +209,10 @@ erDiagram
 |--------|---------------|------|----------|
 | **QuestionEngine** | AI question generation, grading, hinting, validation | 11-type processor pipeline | `src/lib/question-engine/` |
 | **VisualEngine** | AI diagram generation (Konva) + Wikimedia search | STEM vs non-STEM routing | `src/lib/visual-engine/` |
+| **FlashcardEngine** | Unified SR: SM-2/FSRS + daily limits + learning steps + ease-hell + leech + settings | Dexie-backed | `src/lib/flashcard-engine/` |
 | **CompetencyEngine** | Bloom's taxonomy scoring, PathEngine routing | Score→Level mapping | `src/lib/competency-engine/` |
 | **LearningOrchestrator** | Orchestrates generate+grade+queue side effects | Composes QuestionEngine | `src/lib/orchestrator/` |
+| **Services Barrel** | All 10 services (analytics, competency, progress, flashcard, notification, etc.) | ServiceResult<T> | `src/lib/services/` |
 | **StudyPlannerService** | Inverse-competency-weighted scheduling | Round-robin algorithm | `src/lib/study-planner/` |
 | **SyncService** | Offline-to-online data reconciliation | Dexie→Appwrite flush | `src/lib/sync/` |
 | **AuthService** | Anonymous→authenticated upgrade, magic link | Appwrite SDK | `src/lib/auth/` |
@@ -232,24 +235,28 @@ erDiagram
 
 ### Public API Routes
 
-| Route | Method | Purpose |
-|-------|--------|---------|
-| `/api/engine/generate` | POST | Generate questions (subject, topic, count, type, difficulty) |
-| `/api/engine/grade` | POST | Grade a question answer |
-| `/api/engine/hint` | POST | Get a hint for a question |
-| `/api/engine/visual` | POST | Generate diagram/visual for a question |
-| `/api/engine/test` | GET | Health check |
-| `/api/engine/budget` | GET | Get current token budget status |
-| `/api/engine/next-topics` | POST | Get next recommended topics based on competency |
-| `/api/engine/study-plan` | POST | Generate study plan |
-| `/api/auth/verify` | POST | Verify sign-in session |
-| `/api/auth/rate-limit` | GET | Check auth rate limit status |
-| `/api/exam-sessions` | GET/POST | List / create exam sessions |
-| `/api/exam-sessions/[id]` | GET/PUT | Get / update exam session |
-| `/api/sync` | POST | Flush offline mutation queue |
-| `/api/premium/checkout` | POST | Create premium checkout session |
-| `/api/leaderboard` | GET | Get social leaderboard |
-| `/api/push/subscribe` | POST | Subscribe to push notifications |
+| Route | Method | Purpose | Handler Style |
+|-------|--------|---------|---------------|
+| `/api/engine/generate` | POST | Generate questions (subject, topic, count, type, difficulty) | Engine handler |
+| `/api/engine/grade` | POST | Grade a question answer | Engine handler |
+| `/api/engine/hint` | POST | Get a hint for a question | Engine handler |
+| `/api/engine/visual` | POST | Generate diagram/visual for a question | Engine handler |
+| `/api/engine/test` | GET | Health check | Engine handler |
+| `/api/engine/budget` | GET | Get current token budget status | Engine handler |
+| `/api/engine/next-topics` | POST | Get next recommended topics based on competency | Engine handler |
+| `/api/engine/study-plan` | POST | Generate study plan | Engine handler |
+| `/api/auth/verify` | POST | Verify sign-in session | Engine handler |
+| `/api/auth/rate-limit` | GET | Check auth rate limit status | Engine handler |
+| `/api/exam-sessions` | GET/POST | List / create exam sessions | `createRouteHandler` |
+| `/api/exam-sessions/[id]` | GET/PUT | Get / update exam session | Traditional |
+| `/api/analytics/comparative` | GET | Cross-user comparative analytics | `createRouteHandler` |
+| `/api/analytics/trends` | GET | User analytics trends | `createRouteHandler` |
+| `/api/admin/exams` | GET | Admin exam list | `createRouteHandler` |
+| `/api/jobs/process` | POST | Process background job batch | `createRouteHandler` |
+| `/api/sync` | POST | Flush offline mutation queue | Traditional |
+| `/api/premium/checkout` | POST | Create premium checkout session | Traditional |
+| `/api/leaderboard` | GET | Get social leaderboard | Traditional |
+| `/api/push/subscribe` | POST | Subscribe to push notifications | Traditional |
 
 ### Key Event Flows
 
@@ -288,7 +295,7 @@ Client -> POST /api/engine/grade
 | `exam_sessions` | In-progress + completed exam sessions | Per-user |
 | `exam_papers` | Uploaded past exam PDFs | ~500 |
 
-### Database Tables (Dexie / IndexedDB) — v12 Schema
+### Database Tables (Dexie / IndexedDB) — v14 Schema
 
 | Table | Purpose | Expiry |
 |-------|---------|--------|
@@ -297,7 +304,8 @@ Client -> POST /api/engine/grade
 | `examDates` | Exam timetable slots | 7d |
 | `questionRatings` | User star ratings on questions | Permanent |
 | `wrongAnswers` | Wrong answer journal | Permanent |
-| `flashcards` | SM-2 spaced repetition state | Permanent |
+| `flashcards` | SM-2 spaced repetition state (includes learningStep, leeched fields) | Permanent |
+| `srsettings` | SR settings persisted via flashcard-engine | Permanent |
 
 ---
 

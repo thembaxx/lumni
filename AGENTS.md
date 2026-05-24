@@ -246,6 +246,13 @@ Established 2026-05-23 after a codebase-wide audit. All decisions below are non-
 - **Z-index**: Replaced magic numbers with `--z-content` → `--z-skip-link` semantic scale
 - **Dark mode (Critical + High tiers)**: Added `dark:` variants to `dashboard-client`, `exam-session-client`, `study-planner`, `settings-client`, fixed `bg-[#1e1e1e]` in markdown-renderer, `bg-black/10` in today-focus-card, inline hex styles in onboarding-wizard, and HTML export template in progress-export
 
+### Session 8 — Architecture consolidation batch (May 2026)
+
+- **Flashcard engine consolidation**: Created `src/lib/flashcard-engine/` — unified `FlashcardEngine` class wrapping `DexieFlashcardRepository` + SM-2/FSRS algorithms + daily limits + learning steps + ease-hell recovery + leech detection + settings. Old barrels (`spaced-repetition/index.ts`, `flashcard-repository/index.ts`, `utils/spaced-repetition.ts`) re-export from new engine for backward compatibility.
+- **Generic route handler factory**: Created `src/lib/api/create-route-handler.ts` — `createRouteHandler()` factory with `AuthMode`, `HttpError` class, automatic auth guard, body parsing, Zod validation, error wrapping, optional rate limiting. Migrated 5 routes (`analytics/comparative`, `analytics/trends`, `admin/exams`, `exam-sessions`, `jobs/process`) — each route now ~10-20 lines of declarative config.
+- **Services barrel unification**: `src/lib/services/index.ts` now exports all 10 services plus `ServiceResult<T>` success/failure helpers for consistent error handling across business logic.
+- **Tools directory reorganization**: `src/components/tools/` split into domain subdirs (`core/`, `communication/`, `math/`, `science/`, `scheduling/`) — 11 components moved, all import chains updated with backward-compat barrels.
+
 ### Known limitations (won't fix)
 
 - `analytics-service.ts` comparative analytics depends on other users' data in Appwrite; falls back to estimates

@@ -45,6 +45,9 @@ graph TD
 ## Key Abstractions
 - **QuestionEngine**: Single source of truth for all question lifecycle operations.
 - **VisualEngine**: Manages generation and retrieval of educational visuals.
+- **FlashcardEngine**: Unified class in `flashcard-engine/` wrapping DexieRepository + SM-2/FSRS algorithms + daily limits + learning steps + ease-hell recovery + leech detection + settings.
+- **createRouteHandler**: Generic factory in `api/create-route-handler.ts` for API routes — auto auth guard, body parsing, Zod validation, error wrapping. Migrated 5 routes to declarative ~15-line config.
+- **Services barrel**: `services/index.ts` exports all 10 services plus `ServiceResult<T>` success/failure helpers.
 - **LearningOrchestrator**: Coordinates engines and manages background job side effects.
 - **SyncQueue**: Dexie-backed queue ensuring offline mutations are eventually synced.
 - **CompetencyEngine**: Tracks student proficiency using Bloom's Taxonomy.

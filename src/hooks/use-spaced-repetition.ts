@@ -1,15 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { flashcardRepository } from "@/lib/flashcard-repository";
-import type {
-	FlashcardReview,
-	FlashcardSM2,
-} from "@/lib/flashcard-repository/types";
-import {
-	convertQuizToFlashcards,
-	getReviewHistory,
-} from "@/lib/utils/spaced-repetition";
+import { flashcardEngine } from "@/lib/flashcard-engine";
+import type { FlashcardSM2 } from "@/lib/flashcard-engine";
 
 export interface UseSpacedRepetitionReturn {
 	cards: FlashcardSM2[];
@@ -45,7 +38,7 @@ export interface UseSpacedRepetitionReturn {
 	bury: (id: string) => Promise<void>;
 	suspend: (id: string) => Promise<void>;
 	activate: (id: string) => Promise<void>;
-	getReviewHistory: (cardId: string) => Promise<FlashcardReview[]>;
+	getReviewHistory: (cardId: string) => Promise<import("@/lib/flashcard-engine").FlashcardReview[]>;
 	refresh: () => Promise<void>;
 }
 
@@ -66,11 +59,11 @@ export function useSpacedRepetition(): UseSpacedRepetitionReturn {
 	>({});
 
 	const refresh = useCallback(async () => {
-		setCards(await flashcardRepository.getAll());
-		setDueCards(await flashcardRepository.getDueCards());
-		setNewCards(await flashcardRepository.getNewCards());
-		setStats(await flashcardRepository.getStats());
-		setGroupedCards(await flashcardRepository.getGrouped());
+		setCards(await flashcardEngine.getAll());
+		setDueCards(await flashcardEngine.getDueCards());
+		setNewCards(await flashcardEngine.getNewCards());
+		setStats(await flashcardEngine.getStats());
+		setGroupedCards(await flashcardEngine.getGrouped());
 	}, []);
 
 	useEffect(() => {
@@ -79,7 +72,7 @@ export function useSpacedRepetition(): UseSpacedRepetitionReturn {
 
 	const addCard = useCallback(
 		async (front: string, back: string, subject: string, topic?: string) => {
-			await flashcardRepository.create(front, back, subject, topic);
+			await flashcardEngine.create(front, back, subject, topic);
 			await refresh();
 		},
 		[refresh],
@@ -87,7 +80,7 @@ export function useSpacedRepetition(): UseSpacedRepetitionReturn {
 
 	const removeCard = useCallback(
 		async (id: string) => {
-			await flashcardRepository.delete(id);
+			await flashcardEngine.delete(id);
 			await refresh();
 		},
 		[refresh],
@@ -95,7 +88,7 @@ export function useSpacedRepetition(): UseSpacedRepetitionReturn {
 
 	const editCard = useCallback(
 		async (id: string, updates: Partial<FlashcardSM2>) => {
-			await flashcardRepository.update(id, updates);
+			await flashcardEngine.update(id, updates);
 			await refresh();
 		},
 		[refresh],
@@ -103,7 +96,7 @@ export function useSpacedRepetition(): UseSpacedRepetitionReturn {
 
 	const review = useCallback(
 		async (id: string, quality: number) => {
-			await flashcardRepository.review(id, quality);
+			await flashcardEngine.review(id, quality);
 			await refresh();
 		},
 		[refresh],
@@ -111,7 +104,7 @@ export function useSpacedRepetition(): UseSpacedRepetitionReturn {
 
 	const bury = useCallback(
 		async (id: string) => {
-			await flashcardRepository.bury(id);
+			await flashcardEngine.bury(id);
 			await refresh();
 		},
 		[refresh],
@@ -119,7 +112,7 @@ export function useSpacedRepetition(): UseSpacedRepetitionReturn {
 
 	const suspend = useCallback(
 		async (id: string) => {
-			await flashcardRepository.suspend(id);
+			await flashcardEngine.suspend(id);
 			await refresh();
 		},
 		[refresh],
@@ -127,14 +120,14 @@ export function useSpacedRepetition(): UseSpacedRepetitionReturn {
 
 	const activate = useCallback(
 		async (id: string) => {
-			await flashcardRepository.activate(id);
+			await flashcardEngine.activate(id);
 			await refresh();
 		},
 		[refresh],
 	);
 
 	const getReviewHistory_ = useCallback(async (cardId: string) => {
-		return getReviewHistory(cardId);
+		return flashcardEngine.getReviewHistory(cardId);
 	}, []);
 
 	const importFromQuiz = useCallback(
@@ -147,7 +140,7 @@ export function useSpacedRepetition(): UseSpacedRepetitionReturn {
 			}>,
 			subject: string,
 		) => {
-			await convertQuizToFlashcards(questions, subject);
+			await flashcardEngine.convertQuizToFlashcards(questions, subject);
 			await refresh();
 		},
 		[refresh],

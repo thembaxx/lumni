@@ -1,4 +1,4 @@
-# Context Manifest — 2026-05-22
+# Context Manifest — 2026-05-24
 
 ## Identity
 
@@ -6,7 +6,7 @@ Lumni is an offline-capable, mobile-first SA Matric exam prep platform using Nex
 
 ## Current Mission
 
-Polish and production-hardening: error handling standardization, anonymous user gating, Sentry integration, exam session resume/auto-save, sync queue consolidation, and Bloom's Taxonomy widget on dashboard. Next push: test coverage (unit + E2E) and exam_dates Appwrite write path.
+Architecture consolidation: flashcard engine unified into `src/lib/flashcard-engine/`, generic route handler factory in `src/lib/api/create-route-handler.ts` replacing 49 copies of auth/try-catch boilerplate, services barrel exporting all 10 services, tools directory reorganized into domain subdirs. Next push: test coverage (unit + E2E) and exam_dates Appwrite write path.
 
 ## System at a Glance
 
@@ -16,12 +16,13 @@ Browser (React 19 + Next.js 16)
   ├── Zustand stores     ← client state (quiz, exam, sync, search)
   └── React Query        ← server state cache
         │
-Next.js API Routes (30+ groups)
+Next.js API Routes (~35 groups, most via createRouteHandler factory)
   ├── QuestionEngine     → Gemini → Nvidia NIM → Groq (AI chain)
   ├── VisualEngine       → Konva (STEM) or Wikimedia (non-STEM)
   ├── LearningOrchestrator → composes Engine + queued side effects
   ├── QueueCore          → Dexie-backed job queue (retry + backoff)
-  └── RateLimiter+TokenTracker → auth limits + AI budget caps
+  ├── RateLimiter+TokenTracker → auth limits + AI budget caps
+  └── createRouteHandler → generic factory (auth guard + body parse + validation + error wrap)
         │
 Appwrite Cloud
   ├── Auth (anonymous → email/password)
@@ -41,27 +42,27 @@ Appwrite Cloud
 
 | File/Dir | What I'm touching |
 |----------|-------------------|
-| `src/app/globals.css` | Design token enforcement: z-index scale, shadow/radius utilities, spacing mapping |
-| `src/components/layout/page-container.tsx` | New unified page layout component |
-| `src/app/error.tsx`, `src/app/global-error.tsx` | Error boundary standardization |
-| `src/components/navigation/bottom-nav.tsx` | Fixed transparent bg + border |
-| `src/components/quiz/parts/` | QuestionCardControls, QuestionCardFeedback |
-| `src/lib/server/exam-paper-actions.ts` | Exam paper server actions |
-| `src/lib/server/quiz-actions.ts` | Quiz server actions |
-| `src/lib/utils/flashcard-import-export.ts` | Flashcard bulk import/export |
-| `src/lib/utils/spaced-repetition.ts` | SM-2 algorithm tweaks |
-| `src/lib/queue/core.ts` | QueueCore job processing |
-| `src/lib/competency-engine/path-engine.ts` | PathEngine competency calculations |
-| `src/lib/appwrite.ts` | Appwrite client config |
-| `src/hooks/use-wrong-answer-journal.ts` | Wrong answer journal hook |
-| `src/curriculum/index.ts` | Curriculum definitions |
-| `src/components/tools/exam-detail-dialog.tsx` | Exam detail dialog |
-| `src/components/settings/tabs/profile-tab.tsx` | Profile settings for anonymous |
-| `src/components/home/home-content.tsx` | Home page content |
+| `src/lib/flashcard-engine/` | Unified FlashcardEngine: types, engine singleton, barrel |
+| `src/lib/api/create-route-handler.ts` | Generic route handler factory (auth guard + HttpError + validation) |
+| `src/lib/services/index.ts` | Services barrel: all 10 services + ServiceResult<T> |
+| `src/components/tools/core/` | Timer, pomodoro, voice recorder tools |
+| `src/components/tools/math/` | Scientific calculator, unit converter |
+| `src/components/tools/science/` | Periodic table, physics tools |
+| `src/components/tools/scheduling/` | National exam calendar, study schedule |
+| `src/components/tools/communication/` | Exam detail dialog |
+| `src/app/api/analytics/comparative/route.ts` | Migrated to createRouteHandler |
+| `src/app/api/analytics/trends/route.ts` | Migrated to createRouteHandler |
+| `src/app/api/admin/exams/route.ts` | Migrated to createRouteHandler |
+| `src/app/api/exam-sessions/route.ts` | Migrated to createRouteHandler |
+| `src/app/api/jobs/process/route.ts` | Migrated to createRouteHandler |
+| `src/hooks/use-spaced-repetition.ts` | Uses flashcardEngine singleton |
+| `src/hooks/use-sr-settings.ts` | Uses flashcardEngine singleton |
 
 ## Background Knowledge
 
 - **Question types (11)**: multiple-choice, matching, short-answer, long-answer, essay, calculation, diagram, programming, source-based, data-response, mixed. Local grade for 4 types (MC, matching, calculation, short-answer with exact-match fallback), AI grade for 7 types.
+- **Flashcard engine**: `src/lib/flashcard-engine/` — single `FlashcardEngine` class wrapping DexieRepository + SM-2/FSRS + daily limits + learning steps + ease-hell + leech + settings. Used via `flashcardEngine` singleton.
+- **Route handler factory**: `src/lib/api/create-route-handler.ts` — `createRouteHandler()` with `AuthMode`, `HttpError`, auto auth guard, body parsing, validation, error wrapping, optional rate limiting. Reduces ~49 boilerplate copies to declarative config.
 - **AI provider chain**: Gemini 2.0 Flash Lite (primary) → Nvidia NIM meta/llama-3.3-70b-instruct → Groq llama-3.3-70b-versatile. Defined in `src/lib/ai/client.ts`. DeepSeek was removed.
 - **Competency levels**: novice→Easy/remember, developing→Medium/understand/apply, proficient→Medium/apply/analyze/evaluate, mastered→Hard/evaluate/create. Mapped in `src/lib/question-engine/competency-mapper.ts`.
 - **Caching tiers**: Dexie L1 (fastest, per-device) → Appwrite L2 (cross-session) → AI/Wikimedia L3 (on-demand fallback). Visual pre-caching fires on question generation automatically.
@@ -91,7 +92,7 @@ Appwrite Cloud
 | `prompt-catalog.md` | Catalog of all discoverable prompt contexts (agents, specs, plans) | Reference |
 | `memory.md` | All decisions (ADR-lite), patterns, failures, open questions, resources | High |
 | `system-design.md` | Mermaid architecture diagram, data model ERD, component dictionary, API list, NFRs, roadmap | High |
-| `AGENTS.md` | Engine architecture, math conventions, session 1-6 history, AI provider chain | High |
-| `CONTEXT.md` | Domain glossary (163 lines) — prepend to any agent prompt | High |
+| `AGENTS.md` | Engine architecture, math conventions, session 1-8 history, AI provider chain | High |
+| `CONTEXT.md` | Domain glossary — prepend to any agent prompt | High |
 | `DESIGN.md` | "The Emerald Study Room" design system (300 lines) | Medium |
 | `TODO.md` | Outstanding tasks: custom domain, test coverage, exam dates items | Medium |

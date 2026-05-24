@@ -1,8 +1,7 @@
 import { Query } from "appwrite";
-import { type NextRequest, NextResponse } from "next/server";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import type { StudySession } from "@/lib/db/client";
 import { COLLECTIONS, listDocuments } from "@/lib/db/client";
-import { getAuthenticatedUserId } from "@/lib/server/auth";
 
 export const dynamic = "force-dynamic";
 
@@ -26,25 +25,19 @@ async function fetchAllSessions(): Promise<StudySession[]> {
 	return allSessions;
 }
 
-export async function GET(req: NextRequest) {
-	try {
-		const authenticatedUserId = await getAuthenticatedUserId();
-		if (!authenticatedUserId) {
-			return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
-		}
-
+export const GET = createRouteHandler({
+	auth: "required",
+	errorLabel: "Comparative Analytics",
+	execute: async ({ userId, req }) => {
 		const { searchParams } = new URL(req.url);
-		const userId = searchParams.get("userId");
+		const requestedUserId = searchParams.get("userId");
 
-		if (!userId) {
-			return NextResponse.json(
-				{ error: "userId is required" },
-				{ status: 400 },
-			);
+		if (!requestedUserId) {
+			throw new HttpError(400, "userId is required");
 		}
 
-		if (userId !== authenticatedUserId) {
-			return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+		if (requestedUserId !== userId) {
+			throw new HttpError(403, "Unauthorized");
 		}
 
 		const allSessions = await fetchAllSessions();
@@ -69,7 +62,10 @@ export async function GET(req: NextRequest) {
 				? Math.round((globalTotalCorrect / globalTotalAnswered) * 100)
 				: 65;
 
-		const userTotal = userTotals[userId] || { answered: 0, correct: 0 };
+		const userTotal = userTotals[requestedUserId] || {
+			answered: 0,
+			correct: 0,
+		};
 		const userAverage =
 			userTotal.answered > 0
 				? (userTotal.correct / userTotal.answered) * 100
@@ -78,7 +74,7 @@ export async function GET(req: NextRequest) {
 		const userAccuracy =
 			userTotal.answered > 0 ? userTotal.correct / userTotal.answered : 0;
 		const otherUsers = Object.entries(userTotals).filter(
-			([id]) => id !== userId,
+			([id]) => id !== requestedUserId,
 		);
 		const usersBeaten = otherUsers.filter(
 			([, data]) =>
@@ -89,7 +85,9 @@ export async function GET(req: NextRequest) {
 				? Math.round((usersBeaten / otherUsers.length) * 100)
 				: 50;
 
-		const userSessions = allSessions.filter((s) => s.userId === userId);
+		const userSessions = allSessions.filter(
+			(s) => s.userId === requestedUserId,
+		);
 		const subjectStats: Record<string, { answered: number; correct: number }> =
 			{};
 		for (const session of userSessions) {
@@ -108,17 +106,11 @@ export async function GET(req: NextRequest) {
 					: 0;
 		}
 
-		return NextResponse.json({
+		return {
 			userPercentile,
 			subjectRankings,
 			globalAverage,
 			userAverage: Math.round(userAverage * 10) / 10,
-		});
-	} catch (error) {
-		console.error("[/api/analytics/comparative] Error:", error);
-		return NextResponse.json(
-			{ error: "Failed to get comparative analytics" },
-			{ status: 500 },
-		);
-	}
-}
+		};
+	},
+});

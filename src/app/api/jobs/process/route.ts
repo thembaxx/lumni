@@ -1,32 +1,23 @@
-import { type NextRequest, NextResponse } from "next/server";
-import { AppError } from "@/lib/errors";
+import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { jobProcessor } from "@/lib/orchestrator/job-processor";
 
 export const dynamic = "force-dynamic";
 
-export async function POST(req: NextRequest) {
-	try {
-		const raw = await req.json().catch(() => null);
-		if (!raw || typeof raw !== "object") {
-			throw AppError.badRequest("Invalid request body");
-		}
-		const body = raw as Record<string, unknown>;
+export const POST = createRouteHandler({
+	auth: "none",
+	errorLabel: "Jobs Process",
+	validate: (body: Record<string, unknown>) => {
+		if (!body || typeof body !== "object") return "Invalid request body";
+		return null;
+	},
+	execute: async ({ body }) => {
+		const raw = body as Record<string, unknown>;
 		const limit =
-			typeof body.limit === "number" && body.limit > 0
-				? Math.min(body.limit, 50)
+			typeof raw.limit === "number" && raw.limit > 0
+				? Math.min(raw.limit, 50)
 				: 5;
 
 		const result = await jobProcessor.processBatch(limit);
-
-		return NextResponse.json(result);
-	} catch (error) {
-		console.error("[Jobs Process] Error:", error);
-		return NextResponse.json(
-			{
-				error:
-					error instanceof Error ? error.message : "Failed to process jobs",
-			},
-			{ status: 500 },
-		);
-	}
-}
+		return result;
+	},
+});

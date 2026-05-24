@@ -1,14 +1,13 @@
-import { NextResponse } from "next/server";
+import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { databases } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
-import { requireAdmin } from "@/lib/server/auth";
 
 export const runtime = "nodejs";
 
-export async function GET() {
-	try {
-		await requireAdmin();
-
+export const GET = createRouteHandler({
+	auth: "admin",
+	errorLabel: "List Exams",
+	execute: async () => {
 		const response = await databases.listDocuments(
 			APPWRITE_DATABASE_ID,
 			COLLECTIONS.EXAM_PAPERS,
@@ -28,14 +27,6 @@ export async function GET() {
 			uploadedAt: doc.uploadedAt,
 		}));
 
-		return NextResponse.json({ exams, total: exams.length });
-	} catch (error) {
-		console.error("Failed to list exams:", error);
-		return NextResponse.json(
-			{
-				error: error instanceof Error ? error.message : "Failed to list exams",
-			},
-			{ status: 500 },
-		);
-	}
-}
+		return { exams, total: exams.length };
+	},
+});
