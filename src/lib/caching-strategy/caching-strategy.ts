@@ -23,8 +23,10 @@ export class CachingStrategy<T, P> {
 	) {}
 
 	async resolve(params: P): Promise<T | null> {
-		for (const tier of this.tiers) {
-			const cached = await tier.read(params);
+		const cachedItems = await Promise.all(
+			this.tiers.map((tier) => tier.read(params)),
+		);
+		for (const cached of cachedItems) {
 			if (cached !== null && cached !== undefined) return cached;
 		}
 

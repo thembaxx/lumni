@@ -82,6 +82,7 @@ export function DiagramInput({ value, onChange, disabled }: DiagramInputProps) {
 				onChange={handleFile}
 				className="hidden"
 				disabled={disabled}
+				aria-label="Upload diagram image"
 			/>
 		</div>
 	);

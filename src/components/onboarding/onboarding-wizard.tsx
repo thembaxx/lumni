@@ -192,13 +192,14 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 										{step === 1 && (
 											<>
 												<div className="mb-4">
-													<input
-														type="text"
-														value={searchTerm}
-														onChange={(e) => setSearchTerm(e.target.value)}
-														placeholder="Search subjects…"
-														className="w-full rounded-lg border border-bg-muted/50 bg-card/50 px-3 py-2 text-base focus:border-[--system-accent]/50 focus:outline-none"
-													/>
+												<input
+													type="text"
+													value={searchTerm}
+													onChange={(e) => setSearchTerm(e.target.value)}
+													placeholder="Search subjects…"
+													className="w-full rounded-lg border border-bg-muted/50 bg-card/50 px-3 py-2 text-base focus:border-[--system-accent]/50 focus:outline-none"
+													aria-label="Search subjects"
+												/>
 												</div>
 
 												{filteredSubjects.length === 0 && searchTerm !== "" ? (

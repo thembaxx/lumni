@@ -9,15 +9,18 @@ async function refreshHandler(): Promise<NextResponse> {
 			{ session: "oct-nov", year: 2026 },
 		];
 
-		const results: { session: string; year: number; count: number }[] = [];
-
-		for (const { session, year } of sessions) {
-			const slots = getSeedData(session, year);
-			if (slots.length > 0) {
-				await syncExamDatesToAppwrite(session, year, slots);
-				results.push({ session, year, count: slots.length });
-			}
-		}
+		const results = (
+			await Promise.all(
+				sessions.map(async ({ session, year }) => {
+					const slots = getSeedData(session, year);
+					if (slots.length > 0) {
+						await syncExamDatesToAppwrite(session, year, slots);
+						return { session, year, count: slots.length };
+					}
+					return null;
+				}),
+			)
+		).filter((r): r is { session: string; year: number; count: number } => r !== null);
 
 		return NextResponse.json({
 			success: true,

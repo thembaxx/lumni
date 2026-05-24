@@ -354,6 +354,7 @@ export function ProfileTab() {
 						accept="image/*"
 						className="hidden"
 						onChange={handleAvatarUpload}
+						aria-label="Upload avatar image"
 					/>
 				</div>
 				<div className="flex flex-col gap-1 text-center">

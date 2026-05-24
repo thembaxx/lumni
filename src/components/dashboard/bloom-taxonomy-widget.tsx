@@ -172,7 +172,7 @@ export function BloomTaxonomyWidget() {
 								<span className="font-medium text-foreground">
 									{LEVEL_RECOMMENDATIONS[topic.overall].format}
 								</span>{" "}
-								— {LEVEL_RECOMMENDATIONS[topic.overall].description}
+								- {LEVEL_RECOMMENDATIONS[topic.overall].description}
 							</p>
 						)}
 					</div>

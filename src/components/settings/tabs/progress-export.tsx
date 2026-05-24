@@ -11,13 +11,14 @@ async function buildReport(
 	levelInfo: ReturnType<typeof useGamification>["levelInfo"],
 	gamification: ReturnType<typeof useGamification>["gamification"],
 ) {
-	const quizAttempts = await offlineDB.quizAttempts
-		.orderBy("completedAt")
-		.reverse()
-		.limit(100)
-		.toArray();
-
-	const competencies = await offlineDB.competencies.toArray();
+	const [quizAttempts, competencies] = await Promise.all([
+		offlineDB.quizAttempts
+			.orderBy("completedAt")
+			.reverse()
+			.limit(100)
+			.toArray(),
+		offlineDB.competencies.toArray(),
+	]);
 
 	return {
 		exportedAt: new Date().toISOString(),

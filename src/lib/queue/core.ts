@@ -101,28 +101,40 @@ export class QueueCore<T extends QueueItemBase> {
 		const processed: number[] = [];
 
 		try {
-			// Sequential: each item depends on previous queue state (next() consumes from queue)
+			const items: T[] = [];
 			for (let i = 0; i < limit; i++) {
 				const item = await this.next();
 				if (!item?.id) break;
+				items.push(item);
+			}
 
-				processed.push(item.id);
-				await this.markProcessing(item.id);
+			const outcomes = await Promise.all(
+				items.map(async (item) => {
+					const id = item.id!;
+					processed.push(id);
+					await this.markProcessing(id);
 
-				try {
-					await handler(item);
-					await this.markCompleted(item.id);
-					succeeded++;
-				} catch (error) {
-					const message =
-						error instanceof Error ? error.message : "Unknown error";
-					if (item.attempts + 1 >= item.maxRetries) {
-						await this.markFailed(item.id, message);
-						failed++;
-					} else {
-						await this.markForRetry(item.id, message);
+					try {
+						await handler(item);
+						await this.markCompleted(id);
+						return "succeeded" as const;
+					} catch (error) {
+						const message =
+							error instanceof Error ? error.message : "Unknown error";
+						if (item.attempts + 1 >= item.maxRetries) {
+							await this.markFailed(id, message);
+							return "failed" as const;
+						} else {
+							await this.markForRetry(id, message);
+							return "retried" as const;
+						}
 					}
-				}
+				}),
+			);
+
+			for (const outcome of outcomes) {
+				if (outcome === "succeeded") succeeded++;
+				else if (outcome === "failed") failed++;
 			}
 		} finally {
 			concurrencyGuard.isProcessing = false;

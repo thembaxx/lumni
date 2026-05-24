@@ -47,7 +47,7 @@ export function ClassShell({
 							size={28}
 							className="text-primary"
 						/>
-						<h1 className="font-bold font-heading text-2xl tracking-tight">
+						<h1 className="font-semibold font-heading text-2xl tracking-tight">
 							{role === "admin" ? "School Analytics" : "Teacher Dashboard"}
 						</h1>
 					</div>

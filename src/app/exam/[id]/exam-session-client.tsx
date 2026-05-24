@@ -153,6 +153,7 @@ function PartAnswerInput({
 				disabled={disabled}
 				className="w-full rounded-xl border-2 border-border bg-background p-3 outline-none focus:border-[--system-accent]"
 				placeholder="Type your answer..."
+				aria-label="Short answer input"
 			/>
 		);
 	}
@@ -166,6 +167,7 @@ function PartAnswerInput({
 				rows={6}
 				className="w-full resize-y rounded-xl border-2 border-border bg-background p-3 outline-none focus:border-[--system-accent]"
 				placeholder="Write your answer..."
+				aria-label="Long answer input"
 			/>
 		);
 	}
@@ -180,6 +182,7 @@ function PartAnswerInput({
 				disabled={disabled}
 				className="w-full rounded-xl border-2 border-border bg-background p-3 font-mono outline-none focus:border-[--system-accent]"
 				placeholder="Enter your answer..."
+				aria-label="Calculation answer input"
 			/>
 		);
 	}
@@ -193,6 +196,7 @@ function PartAnswerInput({
 				disabled={disabled}
 				className="w-full rounded-xl border-2 border-border bg-background p-3 outline-none focus:border-[--system-accent]"
 				placeholder="Enter matching pairs (e.g. A-1, B-2)..."
+				aria-label="Matching pairs input"
 			/>
 		);
 	}
@@ -211,6 +215,7 @@ function PartAnswerInput({
 					rows={4}
 					className="w-full resize-y rounded-xl border-2 border-border bg-background p-3 outline-none focus:border-[--system-accent]"
 					placeholder="Type your answer..."
+					aria-label="Diagram answer input"
 				/>
 			</div>
 		);
@@ -225,6 +230,7 @@ function PartAnswerInput({
 				rows={8}
 				className="w-full resize-y rounded-xl border-2 border-border bg-background p-3 font-mono text-sm outline-none focus:border-[--system-accent]"
 				placeholder="Write your code here..."
+				aria-label="Programming answer input"
 			/>
 		);
 	}
@@ -242,6 +248,7 @@ function PartAnswerInput({
 				rows={4}
 				className="w-full resize-y rounded-xl border-2 border-border bg-background p-3 outline-none focus:border-[--system-accent]"
 				placeholder="Type your answer..."
+				aria-label="Response input"
 			/>
 		);
 	}
@@ -259,6 +266,7 @@ function PartAnswerInput({
 				rows={4}
 				className="w-full resize-y rounded-xl border-2 border-border bg-background p-3 outline-none focus:border-[--system-accent]"
 				placeholder="Type your answer..."
+				aria-label="Freeform answer input"
 			/>
 		</div>
 	);

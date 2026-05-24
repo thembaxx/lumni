@@ -354,17 +354,19 @@ describe("Integration: Orchestrator → VisualEngine → Dexie caching", () => {
 	test("5. Job processor processes batch of queued jobs", async () => {
 		const processor = new JobProcessor();
 
-		const _syncId = await enqueue("appwrite-sync", {
-			questions: [cannedQuestion],
-			subject: "mathematics",
-			topic: "algebra",
-		});
-		const _visId = await enqueue("visual-generation", {
-			questionId: cannedQuestion.id,
-			questionText: cannedQuestion.questionText,
-			subject: "mathematics",
-			topic: "algebra",
-		});
+		const [_syncId, _visId] = await Promise.all([
+			enqueue("appwrite-sync", {
+				questions: [cannedQuestion],
+				subject: "mathematics",
+				topic: "algebra",
+			}),
+			enqueue("visual-generation", {
+				questionId: cannedQuestion.id,
+				questionText: cannedQuestion.questionText,
+				subject: "mathematics",
+				topic: "algebra",
+			}),
+		]);
 
 		const result = await processor.processBatch(5);
 

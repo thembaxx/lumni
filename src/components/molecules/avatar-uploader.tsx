@@ -63,6 +63,7 @@ export function AvatarUploader({
 					accept="image/*"
 					className="sr-only"
 					onChange={handleFileChange}
+					aria-label="Upload avatar photo"
 				/>
 			</div>
 		</div>

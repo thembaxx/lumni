@@ -51,8 +51,8 @@ export function SourceBasedInput({
 								setPartAnswers((prev) => ({
 									...prev,
 									[sqId]: e.target.value,
-								}))
-							}
+								}))}
+							aria-label={`Answer for question ${i + 1}`}
 						/>
 					</div>
 				);

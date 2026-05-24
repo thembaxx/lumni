@@ -4,7 +4,7 @@ import { RadialIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { useEffect, useEffectEvent, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { useAuth } from "@/lib/auth/auth-context";
@@ -31,17 +31,16 @@ export function LoadingScreen({
 		undefined,
 	);
 
-	const redirect = useEffectEvent(() => {
+	const redirect = useCallback(() => {
 		if (redirectedRef.current) return;
 		redirectedRef.current = true;
 		setIsVisible(false);
 		timeoutRef.current = setTimeout(() => replace(redirectTo), 400);
-	});
+	}, [replace, redirectTo]);
 
 	const handleManualEnter = () => {
 		setProgress(100);
-		if (redirectedRef.current) return;
-		timeoutRef.current = setTimeout(redirect, 300);
+		redirect();
 	};
 
 	useEffect(() => {
@@ -83,7 +82,7 @@ export function LoadingScreen({
 			cancelAnimationFrame(frameId);
 			if (timeoutRef.current) clearTimeout(timeoutRef.current);
 		};
-	}, [duration, authReady]);
+	}, [duration, authReady, redirect]);
 
 	useEffect(() => {
 		const timer = setTimeout(() => {

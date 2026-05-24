@@ -1,10 +1,6 @@
 "use client";
 
-import {
-	CloudUploadIcon,
-	Download01Icon,
-	RadialIcon,
-} from "@hugeicons/core-free-icons";
+import { RadialIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { cn } from "@/lib/shared";
@@ -53,48 +49,4 @@ export function AdminActionButton({
 	);
 }
 
-interface DownloadButtonProps {
-	onClick: () => void;
-	loading: boolean;
-	disabled: boolean;
-	selectedCount: number;
-	examTypesCount: number;
-}
 
-export function DownloadButton({
-	onClick,
-	loading,
-	disabled,
-	selectedCount,
-	examTypesCount,
-}: DownloadButtonProps) {
-	return (
-		<AdminActionButton
-			onClick={onClick}
-			loading={loading}
-			disabled={disabled}
-			icon={<HugeiconsIcon icon={Download01Icon} className="size-4" />}
-		>
-			Download {selectedCount} subject
-			{selectedCount !== 1 ? "s" : ""} ({examTypesCount} exam
-			{examTypesCount !== 1 ? "s" : ""})
-		</AdminActionButton>
-	);
-}
-
-interface UploadButtonProps {
-	onClick: () => void;
-	loading: boolean;
-}
-
-export function UploadButton({ onClick, loading }: UploadButtonProps) {
-	return (
-		<AdminActionButton
-			onClick={onClick}
-			loading={loading}
-			icon={<HugeiconsIcon icon={CloudUploadIcon} className="size-4" />}
-		>
-			Upload Local Exam Papers
-		</AdminActionButton>
-	);
-}

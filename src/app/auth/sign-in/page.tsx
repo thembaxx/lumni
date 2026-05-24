@@ -26,8 +26,8 @@ function safeRedirect(url: string | null): string {
 
 function SignInForm() {
 	const { push, refresh } = useRouter();
-	const searchParams = useSearchParams();
-	const redirect = safeRedirect(searchParams.get("redirect"));
+	const { get } = useSearchParams();
+	const redirect = safeRedirect(get("redirect"));
 	const { signIn, signInWithMagicLink, error } = useAuth();
 
 	const [email, setEmail] = useState("");

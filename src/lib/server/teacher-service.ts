@@ -72,16 +72,18 @@ export async function getTeacherStudents(
 	const usersApi = new Users(serverClient);
 	const userMap = new Map<string, { name: string; grade: string }>();
 	try {
-		for (const sid of studentIds) {
-			try {
-				const u = await usersApi.get(sid);
-				userMap.set(sid, {
-					name: u.name || "Unknown",
-					grade: (u.prefs?.grade as string) || "Matric",
-				});
-			} catch {
-				userMap.set(sid, { name: "Unknown", grade: "Matric" });
-			}
+		const userEntries = await Promise.all(
+			studentIds.map(async (sid) => {
+				try {
+					const u = await usersApi.get(sid);
+					return [sid, { name: u.name || "Unknown", grade: (u.prefs?.grade as string) || "Matric" }] as const;
+				} catch {
+					return [sid, { name: "Unknown", grade: "Matric" }] as const;
+				}
+			}),
+		);
+		for (const [sid, entry] of userEntries) {
+			userMap.set(sid, entry);
 		}
 	} catch {
 		// fallback

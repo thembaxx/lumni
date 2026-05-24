@@ -24,6 +24,7 @@ export function QuestionCardSkeleton() {
 						<button
 							type="button"
 							className="flex h-8 w-20 items-center justify-center rounded bg-muted/50"
+							aria-label="Loading media"
 						>
 							<div className="size-4 rounded bg-muted/300"></div>
 						</button>

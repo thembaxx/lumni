@@ -158,6 +158,7 @@ export default function FlashcardBrowsePage() {
 					accept=".csv"
 					onChange={handleImport}
 					className="hidden"
+					aria-label="Import CSV file"
 				/>
 			</div>
 

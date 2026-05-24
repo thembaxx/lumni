@@ -71,25 +71,26 @@ export async function getParentStudents(
 	);
 
 	const usersApi = new Users(serverClient);
-	const students: ParentStudent[] = [];
-	for (const sid of studentIds) {
-		try {
-			const u = await usersApi.get(sid);
-			students.push({
-				id: sid,
-				name: u.name || "Unknown",
-				initials: getInitials(u.name || "U"),
-				grade: (u.prefs?.grade as string) || "Matric",
-			});
-		} catch {
-			students.push({
-				id: sid,
-				name: "Unknown",
-				initials: "U",
-				grade: "Matric",
-			});
-		}
-	}
+	const students = await Promise.all(
+		studentIds.map(async (sid) => {
+			try {
+				const u = await usersApi.get(sid);
+				return {
+					id: sid,
+					name: u.name || "Unknown",
+					initials: getInitials(u.name || "U"),
+					grade: (u.prefs?.grade as string) || "Matric",
+				};
+			} catch {
+				return {
+					id: sid,
+					name: "Unknown",
+					initials: "U",
+					grade: "Matric",
+				};
+			}
+		}),
+	);
 	return students;
 }
 
@@ -100,33 +101,32 @@ export async function getChildSubjectProgress(
 ): Promise<ChildSubjectProgress[]> {
 	if (!canViewProgress) return [];
 
-	const competencies = await listDocuments(COLLECTIONS.COMPETENCIES, [
-		Query.equal("userId", studentId),
-	]);
-
-	const subjects = await listDocuments(COLLECTIONS.SUBJECTS);
+	const [competencies, subjects, topics, sessions, _progressDocs] =
+		await Promise.all([
+			listDocuments(COLLECTIONS.COMPETENCIES, [
+				Query.equal("userId", studentId),
+			]),
+			listDocuments(COLLECTIONS.SUBJECTS),
+			listDocuments(COLLECTIONS.TOPICS),
+			listDocuments(COLLECTIONS.STUDY_SESSIONS, [
+				Query.equal("userId", studentId),
+			]),
+			listDocuments(COLLECTIONS.USER_PROGRESS, [
+				Query.equal("userId", studentId),
+			]),
+		]);
 	const subjectNames = new Map(
 		subjects.map((s) => [
 			(s as Record<string, unknown>).$id as string,
 			(s as Record<string, unknown>).name as string,
 		]),
 	);
-
-	const topics = await listDocuments(COLLECTIONS.TOPICS);
 	const topicCountBySubject = new Map<string, number>();
 	for (const t of topics) {
 		const doc = t as Record<string, unknown>;
 		const sid = doc.subjectId as string;
 		topicCountBySubject.set(sid, (topicCountBySubject.get(sid) || 0) + 1);
 	}
-
-	const sessions = await listDocuments(COLLECTIONS.STUDY_SESSIONS, [
-		Query.equal("userId", studentId),
-	]);
-
-	const _progressDocs = await listDocuments(COLLECTIONS.USER_PROGRESS, [
-		Query.equal("userId", studentId),
-	]);
 
 	const sessionsBySubject = new Map<
 		string,

@@ -128,6 +128,7 @@ export function ChatInput({
 					className="hidden"
 					onChange={handleFileSelect("camera")}
 					disabled={isLoading}
+					aria-label="Take a photo"
 				/>
 				<input
 					ref={uploadInputRef}
@@ -136,6 +137,7 @@ export function ChatInput({
 					className="hidden"
 					onChange={handleFileSelect("upload")}
 					disabled={isLoading}
+					aria-label="Upload an image"
 				/>
 
 				<div className="flex items-center justify-between">

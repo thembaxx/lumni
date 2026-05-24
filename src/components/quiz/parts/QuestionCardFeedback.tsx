@@ -259,6 +259,7 @@ export function QuestionCardFeedback({
 										handleFollowUp();
 									}
 								}}
+								aria-label="Follow-up question input"
 								placeholder="Ask a follow-up question..."
 								className="h-9 flex-1 rounded-lg border border-border bg-card px-3 text-base outline-none focus:border-[--system-accent]/40"
 							/>

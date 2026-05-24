@@ -240,26 +240,24 @@ export class QuestionEngine {
 				needed = Math.min(needed, count - results.length);
 				if (needed <= 0) continue;
 
-				// Sequential: tries types in order until one succeeds
-				let generated = false;
-				for (let j = 0; j < available.length && !generated; j++) {
+				const candidates = await Promise.allSettled(
+				available.map((_, j) => {
 					const tryType = available[(i + j) % available.length];
-					try {
-						const processor = this.registry.getProcessor(tryType);
-						const questions = await processor.generate({
-							...params,
-							count: needed,
-							questionType: tryType,
-						});
-						results.push(...questions);
-						generated = true;
-					} catch (error) {
-						console.error(
-							`[QuestionEngine] Generation failed for ${tryType}:`,
-							error,
-						);
-					}
+					const processor = this.registry.getProcessor(tryType);
+					return processor.generate({
+						...params,
+						count: needed,
+						questionType: tryType,
+					});
+				}),
+			);
+			for (const result of candidates) {
+				if (result.status === "fulfilled") {
+					results.push(...result.value);
+					break;
 				}
+				console.error(`[QuestionEngine] Generation failed:`, result.reason);
+			}
 			}
 		}
 

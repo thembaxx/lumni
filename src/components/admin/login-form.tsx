@@ -86,6 +86,7 @@ export function LoginForm({ onSuccess }: { onSuccess: () => void }) {
 												type="email"
 												className="h-11 w-full rounded-lg border border-border/80 bg-background px-4 text-foreground text-sm transition-[border-color,box-shadow] focus:outline-none focus:ring-2 focus:ring-[--system-accent] focus:ring-offset-2"
 												placeholder="admin@lumni.co.za"
+												aria-label="Admin email"
 											/>
 										</div>
 										<div className="flex flex-col gap-1.5">
@@ -100,6 +101,7 @@ export function LoginForm({ onSuccess }: { onSuccess: () => void }) {
 												type="password"
 												className="h-11 w-full rounded-lg border border-border/80 bg-background px-4 text-foreground text-sm transition-[border-color,box-shadow] focus:outline-none focus:ring-2 focus:ring-[--system-accent] focus:ring-offset-2"
 												placeholder="••••••••"
+												aria-label="Admin password"
 											/>
 										</div>
 										<Button

@@ -55,15 +55,15 @@ function LazySyntaxHighlighter({
 		);
 	}
 
-	const { SyntaxHighlighter: SH, style } = ref.current;
+	const { SyntaxHighlighter, style } = ref.current;
 	return (
-		<SH
+		<SyntaxHighlighter
 			language={language}
 			style={style}
 			customStyle={{ margin: 0, fontSize: "0.8rem", maxHeight: 200 }}
 		>
 			{children}
-		</SH>
+		</SyntaxHighlighter>
 	);
 }
 

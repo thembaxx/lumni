@@ -34,8 +34,8 @@ export function MixedPartsInput({ parts, onGrade }: MixedPartsInputProps) {
 								setPartAnswers((prev) => ({
 									...prev,
 									[pId]: e.target.value,
-								}))
-							}
+								}))}
+							aria-label={`Answer for question ${i + 1}`}
 						/>
 					</div>
 				);

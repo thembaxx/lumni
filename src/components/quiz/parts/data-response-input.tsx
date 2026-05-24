@@ -36,8 +36,8 @@ export function DataResponseInput({ body, onGrade }: DataResponseInputProps) {
 								setPartAnswers((prev) => ({
 									...prev,
 									[qId]: e.target.value,
-								}))
-							}
+								}))}
+							aria-label={`Answer for question ${i + 1}`}
 						/>
 					</div>
 				);

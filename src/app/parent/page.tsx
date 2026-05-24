@@ -116,7 +116,7 @@ export default function ParentDashboardPage() {
 		<ParentShell hasConsent={children.length > 0}>
 			<PageContainer className="flex flex-col gap-6">
 				<div className="flex items-center justify-between">
-					<h1 className="font-bold font-heading text-2xl tracking-tight">
+					<h1 className="font-semibold font-heading text-2xl tracking-tight">
 						Parent Dashboard
 					</h1>
 					{selectedId && (

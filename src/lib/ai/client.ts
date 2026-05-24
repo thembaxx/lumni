@@ -49,18 +49,18 @@ export class AIClient {
 
 		let lastError = "";
 
-		// Sequential fallback: try each provider in priority order until one succeeds
-		for (const provider of this.providers) {
-			try {
-				const response = await provider.generate(request);
-				return {
-					...response,
-					provider: provider.name,
-				};
-			} catch (error) {
-				lastError = error instanceof Error ? error.message : String(error);
-				console.error(`[AI] ${provider.name} failed:`, lastError);
+		const results = await Promise.allSettled(
+			this.providers.map((provider) =>
+				provider.generate(request).then((response) => ({ ...response, provider: provider.name })),
+			),
+		);
+		for (const result of results) {
+			if (result.status === "fulfilled") {
+				return result.value;
 			}
+			const error = result.reason;
+			lastError = error instanceof Error ? error.message : String(error);
+			console.error(`[AI] Provider failed:`, lastError);
 		}
 
 		return {

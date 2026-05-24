@@ -21,9 +21,9 @@ export async function flushOfflineData(userId: string): Promise<void> {
 	]);
 
 	await Promise.all([
-		...allProgress.map(async (p) => {
+		...allProgress.map((p) => {
 			if (p.odSubjectId && (p.questionsAttempted > 0 || p.correctCount > 0)) {
-				await enqueue("appwrite-progress-sync", {
+				return enqueue("appwrite-progress-sync", {
 					userId,
 					odSubjectId: p.odSubjectId,
 					questionsAttempted: p.questionsAttempted,
@@ -46,8 +46,8 @@ export async function flushOfflineData(userId: string): Promise<void> {
 				await offlineDB.quizAttempts.update(a.id ?? 0, { userId });
 			}
 		}),
-		...allCompetencies.map(async (c) => {
-			await enqueue("appwrite-competency-sync", {
+		...allCompetencies.map((c) =>
+			enqueue("appwrite-competency-sync", {
 				userId,
 				subjectId: c.subjectId,
 				topicId: c.topicId,
@@ -56,10 +56,10 @@ export async function flushOfflineData(userId: string): Promise<void> {
 				attempts: c.attempts,
 				level: c.level,
 				lastAssessed: c.lastAssessed,
-			});
-		}),
-		...allFlashcards.map(async (f) => {
-			await enqueue("appwrite-flashcard-sync", {
+			}),
+		),
+		...allFlashcards.map((f) =>
+			enqueue("appwrite-flashcard-sync", {
 				userId,
 				id: f.id,
 				front: f.front,
@@ -72,11 +72,11 @@ export async function flushOfflineData(userId: string): Promise<void> {
 				nextReview: f.nextReview,
 				lastReview: f.lastReview,
 				createdAt: f.createdAt,
-			updatedAt: f.updatedAt,
-			});
-		}),
-		...allWrongAnswers.map(async (w) => {
-			await enqueue("appwrite-wrong-answer-sync", {
+				updatedAt: f.updatedAt,
+			}),
+		),
+		...allWrongAnswers.map((w) =>
+			enqueue("appwrite-wrong-answer-sync", {
 				userId,
 				questionId: w.questionId,
 				questionText: w.questionText,
@@ -88,26 +88,26 @@ export async function flushOfflineData(userId: string): Promise<void> {
 				createdAt: w.createdAt,
 				reviewed: w.reviewed,
 				errorType: w.errorType,
-			});
-		}),
-		...allChatMessages.map(async (m) => {
-			await enqueue("appwrite-chat-sync", {
+			}),
+		),
+		...allChatMessages.map((m) =>
+			enqueue("appwrite-chat-sync", {
 				userId,
 				messageId: m.messageId,
 				role: m.role,
 				content: m.content,
 				type: m.type,
 				timestamp: m.timestamp,
-			});
-		}),
-		...allRatings.map(async (r) => {
-			await enqueue("appwrite-rating-sync", {
+			}),
+		),
+		...allRatings.map((r) =>
+			enqueue("appwrite-rating-sync", {
 				questionId: r.questionId,
 				subject: r.subject,
 				rating: r.rating,
 				feedback: r.feedback,
 				createdAt: r.createdAt,
-			});
-		}),
+			}),
+		),
 	]);
 }
