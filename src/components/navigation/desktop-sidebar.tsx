@@ -10,7 +10,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
-import { usePathname } from "next/navigation";
+import { usePathname } from "@/i18n/navigation";
 import { useCallback, useMemo, useState } from "react";
 import { ChatDialog } from "@/components/dashboard/chat/chat-dialog";
 import { Button } from "@/components/ui/button";

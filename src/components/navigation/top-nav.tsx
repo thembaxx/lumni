@@ -9,7 +9,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
-import { usePathname } from "next/navigation";
+import { usePathname } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo } from "react";
 import { LocaleSwitcher } from "@/components/i18n/locale-switcher";

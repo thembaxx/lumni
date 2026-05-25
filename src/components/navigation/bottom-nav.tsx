@@ -10,7 +10,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
-import { usePathname } from "next/navigation";
+import { usePathname } from "@/i18n/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";

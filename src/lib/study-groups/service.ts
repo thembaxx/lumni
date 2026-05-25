@@ -11,9 +11,11 @@ import { failure, success } from "@/lib/services";
 import type {
 	CreateGroupInput,
 	CreatePostInput,
+	GroupComment,
 	GroupInvite,
 	GroupMember,
 	GroupPost,
+	GroupReaction,
 	GroupRole,
 	StudyGroup,
 } from "./types";
@@ -242,6 +244,171 @@ export async function deletePost(
 	} catch (err) {
 		return failure(
 			err instanceof Error ? err.message : "Failed to delete post",
+		);
+	}
+}
+
+export async function getPostComments(
+	postId: string,
+): Promise<ServiceResult<GroupComment[]>> {
+	try {
+		const comments = await listDocuments<GroupComment>(
+			COLLECTIONS.GROUP_COMMENTS,
+			[`postId=${postId}`, `orderAsc=createdAt`],
+		);
+		return success(comments);
+	} catch (err) {
+		return failure(
+			err instanceof Error ? err.message : "Failed to load comments",
+		);
+	}
+}
+
+export async function createComment(
+	userId: string,
+	userName: string | undefined,
+	postId: string,
+	content: string,
+	parentId?: string,
+): Promise<ServiceResult<GroupComment>> {
+	try {
+		const now = new Date().toISOString();
+		const commentId = await createDocument(COLLECTIONS.GROUP_COMMENTS, {
+			postId,
+			userId,
+			userName: userName ?? "",
+			content,
+			parentId: parentId ?? "",
+			createdAt: now,
+			updatedAt: now,
+		});
+		const comment = await getDocument<GroupComment>(
+			COLLECTIONS.GROUP_COMMENTS,
+			commentId,
+		);
+		if (!comment) return failure("Failed to create comment");
+		return success(comment);
+	} catch (err) {
+		return failure(
+			err instanceof Error ? err.message : "Failed to create comment",
+		);
+	}
+}
+
+export async function deleteComment(
+	userId: string,
+	commentId: string,
+): Promise<ServiceResult<void>> {
+	try {
+		const comment = await getDocument<GroupComment>(
+			COLLECTIONS.GROUP_COMMENTS,
+			commentId,
+		);
+		if (!comment) return failure("Comment not found");
+		if (comment.userId !== userId) return failure("Not authorized");
+		await deleteDocument(COLLECTIONS.GROUP_COMMENTS, commentId);
+		return success(undefined);
+	} catch (err) {
+		return failure(
+			err instanceof Error ? err.message : "Failed to delete comment",
+		);
+	}
+}
+
+export async function getPostReactions(
+	postId: string,
+): Promise<ServiceResult<GroupReaction[]>> {
+	try {
+		const reactions = await listDocuments<GroupReaction>(
+			COLLECTIONS.GROUP_REACTIONS,
+			[`postId=${postId}`],
+		);
+		return success(reactions);
+	} catch (err) {
+		return failure(
+			err instanceof Error ? err.message : "Failed to load reactions",
+		);
+	}
+}
+
+export async function getCommentReactions(
+	commentId: string,
+): Promise<ServiceResult<GroupReaction[]>> {
+	try {
+		const reactions = await listDocuments<GroupReaction>(
+			COLLECTIONS.GROUP_REACTIONS,
+			[`commentId=${commentId}`],
+		);
+		return success(reactions);
+	} catch (err) {
+		return failure(
+			err instanceof Error ? err.message : "Failed to load reactions",
+		);
+	}
+}
+
+export async function togglePostReaction(
+	userId: string,
+	postId: string,
+	emoji: string,
+): Promise<ServiceResult<GroupReaction | null>> {
+	try {
+		const existing = await listDocuments<GroupReaction>(
+			COLLECTIONS.GROUP_REACTIONS,
+			[`postId=${postId}`, `userId=${userId}`, `emoji=${emoji}`],
+		);
+		if (existing.length > 0) {
+			await deleteDocument(COLLECTIONS.GROUP_REACTIONS, existing[0].$id);
+			return success(null);
+		}
+		const now = new Date().toISOString();
+		const reactionId = await createDocument(COLLECTIONS.GROUP_REACTIONS, {
+			postId,
+			userId,
+			emoji,
+			createdAt: now,
+		});
+		const reaction = await getDocument<GroupReaction>(
+			COLLECTIONS.GROUP_REACTIONS,
+			reactionId,
+		);
+		return success(reaction ?? null);
+	} catch (err) {
+		return failure(
+			err instanceof Error ? err.message : "Failed to toggle reaction",
+		);
+	}
+}
+
+export async function toggleCommentReaction(
+	userId: string,
+	commentId: string,
+	emoji: string,
+): Promise<ServiceResult<GroupReaction | null>> {
+	try {
+		const existing = await listDocuments<GroupReaction>(
+			COLLECTIONS.GROUP_REACTIONS,
+			[`commentId=${commentId}`, `userId=${userId}`, `emoji=${emoji}`],
+		);
+		if (existing.length > 0) {
+			await deleteDocument(COLLECTIONS.GROUP_REACTIONS, existing[0].$id);
+			return success(null);
+		}
+		const now = new Date().toISOString();
+		const reactionId = await createDocument(COLLECTIONS.GROUP_REACTIONS, {
+			commentId,
+			userId,
+			emoji,
+			createdAt: now,
+		});
+		const reaction = await getDocument<GroupReaction>(
+			COLLECTIONS.GROUP_REACTIONS,
+			reactionId,
+		);
+		return success(reaction ?? null);
+	} catch (err) {
+		return failure(
+			err instanceof Error ? err.message : "Failed to toggle reaction",
 		);
 	}
 }

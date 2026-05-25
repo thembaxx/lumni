@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
-import { getSeedData, syncExamDatesToAppwrite } from "@/lib/exam-dates/service";
+import {
+	getSeedData,
+	syncExamDatesDirect,
+} from "@/lib/exam-dates/service";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 async function refreshHandler(): Promise<NextResponse> {
@@ -14,7 +17,7 @@ async function refreshHandler(): Promise<NextResponse> {
 				sessions.map(async ({ session, year }) => {
 					const slots = getSeedData(session, year);
 					if (slots.length > 0) {
-						await syncExamDatesToAppwrite(session, year, slots);
+						await syncExamDatesDirect(session, year, slots);
 						return { session, year, count: slots.length };
 					}
 					return null;

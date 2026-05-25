@@ -58,7 +58,6 @@
     "chat": "Klets",
     "tools": "Gereedskap",
     "leaderboard": "Puntelys",
-    "settings": "Instellings",
     "profile": "Profiel",
     "logout": "Teken uit",
     "login": "Teken in",
@@ -67,7 +66,9 @@
     "progress": "Vordering",
     "achievements": "Prestasies",
     "searchPlaceholder": "Soek enigiets...",
-    "skipToContent": "Spring na inhoud"
+    "skipToContent": "Spring na inhoud",
+    "selectAll": "Selecteer alles",
+    "deselectAll": "Deselekteer alles"
   },
   "home": {
     "brand": "lumni",
@@ -218,7 +219,8 @@
     "verificationFailed": "Verifikasie het misluk",
     "emailVerified": "E-pos geverifieer",
     "emailVerifiedDesc": "Jou e-pos is suksesvol geverifieer.",
-    "goToDashboard": "Gaan na Paneelbord"
+    "goToDashboard": "Gaan na Paneelbord",
+    "resetSent": "Password reset link sent to your email"
   },
   "quiz": {
     "title": "Quiz",
@@ -485,7 +487,13 @@
     "accuracy": "Akkuraatheid",
     "yourAnswer": "Jou antwoord",
     "correctAnswer": "Korrekte antwoord",
-    "notAvailable": "(nie beskikbaar nie)"
+    "notAvailable": "(nie beskikbaar nie)",
+    "readInstructions": "Please read the following instructions carefully before starting.",
+    "passMark": "Pass mark",
+    "sectionScore": "{section} score",
+    "downloadResults": "Download results",
+    "examDates": "Exam Dates",
+    "calendarExport": "Export calendar"
   },
   "studyPlanner": {
     "title": "Studiebeplanner",
@@ -539,7 +547,10 @@
     "addExamModalTitle": "Voeg Eksamen Datum By",
     "examSubject": "Vak",
     "examPaper": "Vraestel",
-    "examDate": "Datum"
+    "examDate": "Datum",
+    "semester": "Semester",
+    "subjects": "Subjects",
+    "smartScheduler": "Smart scheduler"
   },
   "gamification": {
     "xp": "XP",
@@ -594,7 +605,8 @@
     "achievement_level_5": "Geleerde",
     "achievement_level_5_desc": "Bereik vlak 5",
     "achievement_level_10": "Legende",
-    "achievement_level_10_desc": "Bereik vlak 10"
+    "achievement_level_10_desc": "Bereik vlak 10",
+    "xpToNextLevel": "{xp} XP tot volgende vlak"
   },
   "studyGroups": {
     "title": "Studiegroepe",
@@ -632,7 +644,14 @@
     "bestValue": "Beste waarde",
     "subscribe": "Teken in",
     "alreadyPremium": "Jy is 'n Premium-lid!",
-    "expiresOn": "Verval op {date}"
+    "expiresOn": "Verval op {date}",
+    "unlockAll": "Unlock all features",
+    "perMonth": "/month",
+    "perYear": "/year",
+    "manageSubscription": "Manage subscription",
+    "cancelSubscription": "Cancel subscription",
+    "cancelConfirm": "Are you sure you want to cancel?",
+    "reactivate": "Reactivate"
   },
   "settings": {
     "title": "Instellings",
@@ -654,7 +673,10 @@
     "about": "Oor",
     "version": "Weergawe",
     "privacyPolicy": "Privaatheidsbeleid",
-    "termsOfService": "Diensbepalings"
+    "termsOfService": "Diensbepalings",
+    "emailNotifications": "Email notifications",
+    "soundEffects": "Sound effects",
+    "deleteConfirm": "Are you sure? This cannot be undone."
   },
   "subjects": {
     "mathematics": "Wiskunde",
@@ -677,7 +699,12 @@
     "design": "Ontwerp",
     "tourism": "Toerisme",
     "allSubjects": "Alle vakke",
-    "selectSubject": "Kies 'n vak"
+    "selectSubject": "Kies 'n vak",
+    "dramaticArts": "Dramatic Arts",
+    "music": "Music",
+    "visualArts": "Visual Arts",
+    "consumerStudies": "Consumer Studies",
+    "religionStudies": "Religion Studies"
   },
   "dashboard": {
     "title": "Jou Leerpaneelbord",
@@ -698,6 +725,18 @@
     "timeout": "Versoek het uitgetel. Probeer asseblief weer.",
     "rateLimited": "Te veel versoeke. Wag asseblief 'n oomblik.",
     "emptyState": "Nog niks hier nie",
-    "emptyFlashcards": "Nog geen flitskaarte nie. Skep of importeer sommige om te begin."
+    "emptyFlashcards": "Nog geen flitskaarte nie. Skep of importeer sommige om te begin.",
+    "emptyQuiz": "No quiz data available. Take a quiz to see results here."
+  },
+  "tools": {
+    "title": "Gereedskap",
+    "aiSolver": "KI-oplosser",
+    "solverDescription": "Los wiskunde-probleme op deur tipering of 'n foto te neem",
+    "calculator": "Rekenaar",
+    "periodicTable": "Periodieke Tabel",
+    "unitConverter": "Eenheidomskakelaar",
+    "notes": "Notas",
+    "noteCreator": "Nota-skepper",
+    "emptyState": "Geen gereedskap beskikbaar vir hierdie onderwerp"
   }
 }

@@ -10,6 +10,7 @@ export {
 	getSessionLabel,
 	refreshExamDatesFromAppwrite,
 	syncExamDatesToAppwrite,
+	syncExamDatesDirect,
 } from "./service";
 export { getSubjectAbbr, getSubjectColor } from "./subject-maps";
 export type { ExamDateCollection, ExamSlot } from "./types";

@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { locales } from "@/i18n/locales";
 import { appConfig } from "../../app.config";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -21,23 +22,39 @@ export default function sitemap(): MetadataRoute.Sitemap {
 		"/problems",
 		"/flashcards/browse",
 		"/tools/flashcards/new",
-		"/auth/sign-in",
-		"/auth/sign-up",
-		"/auth/forgot-password",
-		"/auth/verify-email",
-		"/admin/quality",
-		"/admin",
 	];
 
-	return routes.map((route) => ({
-		url: `${baseUrl}${route}`,
-		lastModified: new Date(),
-		changeFrequency: route === "" ? "weekly" : "monthly",
-		priority:
-			route === ""
-				? 1
-				: route.startsWith("/auth") || route.startsWith("/admin")
-					? 0.3
-					: 0.8,
-	}));
+	const authRoutes = ["/auth/sign-in", "/auth/sign-up", "/auth/forgot-password", "/auth/verify-email"];
+	const adminRoutes = ["/admin/quality", "/admin"];
+
+	const entries: MetadataRoute.Sitemap = [];
+
+	for (const locale of locales) {
+		for (const route of routes) {
+			entries.push({
+				url: `${baseUrl}/${locale}${route}`,
+				lastModified: new Date(),
+				changeFrequency: route === "" ? "weekly" : "monthly",
+				priority: route === "" ? 1 : 0.8,
+			});
+		}
+		for (const route of authRoutes) {
+			entries.push({
+				url: `${baseUrl}/${locale}${route}`,
+				lastModified: new Date(),
+				changeFrequency: "monthly",
+				priority: 0.3,
+			});
+		}
+		for (const route of adminRoutes) {
+			entries.push({
+				url: `${baseUrl}/${locale}${route}`,
+				lastModified: new Date(),
+				changeFrequency: "monthly",
+				priority: 0.3,
+			});
+		}
+	}
+
+	return entries;
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { useCallback, useRef } from "react";
 
 type TransitionDirection = "forward" | "back";

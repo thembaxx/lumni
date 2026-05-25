@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, m } from "framer-motion";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { useMemo, useState } from "react";
 import { ListenToLesson } from "@/components/listen-to-lesson";
 import { Anim } from "@/components/shared/anim";

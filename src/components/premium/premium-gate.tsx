@@ -2,7 +2,7 @@
 
 import { CrownIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import type { PremiumFeature } from "@/lib/premium/premium-context";

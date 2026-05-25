@@ -3,7 +3,7 @@
 import { DiceIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { ListenToLesson } from "@/components/listen-to-lesson";
 import { MarkdownRenderer } from "@/components/markdown-renderer";

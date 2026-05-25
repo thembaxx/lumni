@@ -6,7 +6,12 @@ import type {
 	FlashcardSM2,
 } from "@/lib/flashcard-engine/types";
 import type { JobRecord } from "@/lib/orchestrator/types";
-import type { GroupPost } from "@/lib/study-groups/types";
+import type {
+	GroupComment,
+	GroupPost,
+	GroupReaction,
+} from "@/lib/study-groups/types";
+import type { QuizPack, QuizPackQuestion } from "@/lib/quiz-packs/types";
 
 export interface CachedQuestion {
 	id?: number;
@@ -135,6 +140,25 @@ export interface CachedExamDates {
 	updatedAt: number;
 }
 
+export interface DexieGroupComment {
+	id?: number;
+	postId: string;
+	userId: string;
+	userName?: string;
+	content: string;
+	parentId?: string;
+	createdAt: string;
+}
+
+export interface DexieGroupReaction {
+	id?: number;
+	postId?: string;
+	commentId?: string;
+	userId: string;
+	emoji: string;
+	createdAt: string;
+}
+
 export interface ExtractionCache {
 	id?: number;
 	imageHash: string;
@@ -184,6 +208,10 @@ export class LumniOfflineDB extends Dexie {
 	bookmarks!: Table<BookmarkRecord, number>;
 	notes!: Table<NoteRecord, number>;
 	groupPosts!: Table<GroupPost, number>;
+	groupComments!: Table<DexieGroupComment, number>;
+	groupReactions!: Table<DexieGroupReaction, number>;
+	quizPacks!: Table<QuizPack, string>;
+	packQuestions!: Table<QuizPackQuestion, number>;
 
 	constructor() {
 		super("lumni-offline");
@@ -339,6 +367,62 @@ export class LumniOfflineDB extends Dexie {
 			bookmarks: "++id, &questionId, subject, topic, savedAt",
 			notes: "++id, subject, topic, updatedAt",
 			groupPosts: "++id, groupId, userId, createdAt",
+		});
+
+		this.version(18).stores({
+			flashcards:
+				"&id, subject, topic, nextReview, easeFactor, interval, repetitions, status, learningStep, leeched, updatedAt",
+			reviewHistory: "++id, cardId, reviewedAt",
+			extractionCache: "++id, &imageHash, createdAt",
+			chatMessages: "++id, role, timestamp",
+			questions: "++id, &subject, topic, cachedAt",
+			progress: "++id, &odSubjectId, userId, updatedAt",
+			quizAttempts: "++id, &odSubject, userId, completedAt",
+			subjects: "++id, &code, cachedAt",
+			quizSessions: "++id, &sessionId, subject, startedAt, lastSavedAt",
+			conflicts: "++id, resolvedAt",
+			jobs: "++id, type, status, priority, scheduledAt, createdAt",
+			competencies: "++id, subjectId, topicId, bloomLevel, level, lastAssessed",
+			visuals: "++id, &cacheKey, subject, createdAt",
+			wrongAnswers: "++id, userId, subject, topic, reviewed, createdAt",
+			questionRatings: "++id, questionId, subject, topic, rating, createdAt",
+			examSessions: "++id, &paperId, startedAt, lastSavedAt, completed",
+			cachedPdfs: "++id, &paperId, cachedAt",
+			examDates: "++id, &cacheKey, session, year, updatedAt",
+			bookmarks: "++id, &questionId, subject, topic, savedAt",
+			notes: "++id, subject, topic, updatedAt",
+			groupPosts: "++id, groupId, userId, createdAt",
+			quizPacks: "&id, subject, topic, status, createdAt, expiresAt",
+			packQuestions: "++id, &[packId+questionIndex], packId",
+		});
+
+		this.version(19).stores({
+			flashcards:
+				"&id, subject, topic, nextReview, easeFactor, interval, repetitions, status, learningStep, leeched, updatedAt",
+			reviewHistory: "++id, cardId, reviewedAt",
+			extractionCache: "++id, &imageHash, createdAt",
+			chatMessages: "++id, role, timestamp",
+			questions: "++id, &subject, topic, cachedAt",
+			progress: "++id, &odSubjectId, userId, updatedAt",
+			quizAttempts: "++id, &odSubject, userId, completedAt",
+			subjects: "++id, &code, cachedAt",
+			quizSessions: "++id, &sessionId, subject, startedAt, lastSavedAt",
+			conflicts: "++id, resolvedAt",
+			jobs: "++id, type, status, priority, scheduledAt, createdAt",
+			competencies: "++id, subjectId, topicId, bloomLevel, level, lastAssessed",
+			visuals: "++id, &cacheKey, subject, createdAt",
+			wrongAnswers: "++id, userId, subject, topic, reviewed, createdAt",
+			questionRatings: "++id, questionId, subject, topic, rating, createdAt",
+			examSessions: "++id, &paperId, startedAt, lastSavedAt, completed",
+			cachedPdfs: "++id, &paperId, cachedAt",
+			examDates: "++id, &cacheKey, session, year, updatedAt",
+			bookmarks: "++id, &questionId, subject, topic, savedAt",
+			notes: "++id, subject, topic, updatedAt",
+			groupPosts: "++id, groupId, userId, createdAt",
+			groupComments: "++id, postId, parentId, userId, createdAt",
+			groupReactions: "++id, postId, commentId, userId, emoji, createdAt",
+			quizPacks: "&id, subject, topic, status, createdAt, expiresAt",
+			packQuestions: "++id, &[packId+questionIndex], packId",
 		});
 	}
 }

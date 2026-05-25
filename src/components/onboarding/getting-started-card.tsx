@@ -9,7 +9,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m, useReducedMotion } from "framer-motion";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { FIRST_VISITS_KEY } from "@/components/onboarding/onboarding-provider";
 import { Button } from "@/components/ui/button";

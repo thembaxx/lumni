@@ -7,20 +7,57 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { format } from "date-fns";
+import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { useDeletePost } from "@/hooks/use-study-groups";
+import {
+	useDeletePost,
+} from "@/hooks/use-study-groups";
 import { useAuth } from "@/lib/auth/auth-context";
-import type { GroupPost } from "@/lib/study-groups/types";
+import type { GroupComment, GroupPost, GroupReaction } from "@/lib/study-groups/types";
+import { cn } from "@/lib/shared";
+import { CommentForm } from "./comment-form";
+import { CommentThread } from "./comment-thread";
+import { ReactionBar } from "./reaction-bar";
 
 interface Props {
 	post: GroupPost;
+	groupId: string;
+	comments?: GroupComment[];
+	reactions?: GroupReaction[];
+	onToggleReaction?: (postId: string, emoji: string) => void;
+	onCreateComment?: (postId: string, content: string, parentId?: string) => void;
+	onDeleteComment?: (commentId: string) => void;
 }
 
-export function PostCard({ post }: Props) {
+export function PostCard({
+	post,
+	groupId,
+	comments,
+	reactions,
+	onToggleReaction,
+	onCreateComment,
+	onDeleteComment,
+}: Props) {
 	const { user } = useAuth();
 	const { mutate: deletePost } = useDeletePost();
 	const isOwner = user?.$id === post.userId;
+	const [showComments, setShowComments] = useState(false);
+
+	const postReactions = (reactions ?? []).filter((r) => r.postId === post.$id);
+	const aggregatedReactions = postReactions.reduce<
+		{ emoji: string; userId: string; count: number }[]
+	>((acc, r) => {
+		const existing = acc.find((a) => a.emoji === r.emoji);
+		if (existing) {
+			existing.count++;
+		} else {
+			acc.push({ emoji: r.emoji, userId: r.userId, count: 1 });
+		}
+		return acc;
+	}, []);
+
+	const commentCount = (comments ?? []).length;
 
 	return (
 		<div className="flex flex-col gap-2 rounded-lg border border-border/50 bg-card p-4">
@@ -63,6 +100,55 @@ export function PostCard({ post }: Props) {
 						<Badge variant="outline" className="text-xs">
 							{post.topic}
 						</Badge>
+					)}
+				</div>
+			)}
+
+			<div className="flex items-center gap-2 border-t border-border/50 pt-2">
+				<ReactionBar
+					reactions={aggregatedReactions}
+					currentUserId={user?.$id}
+					onToggle={(emoji) => onToggleReaction?.(post.$id, emoji)}
+				/>
+				<button
+					type="button"
+					onClick={() => setShowComments(!showComments)}
+					className={cn(
+						"flex items-center gap-1 rounded-full px-2 py-0.5 text-xs transition-colors",
+						showComments
+							? "bg-[--system-accent]/10 text-[--system-accent]"
+							: "text-[--system-text-secondary] hover:bg-[--system-surface-hover]",
+					)}
+				>
+					<HugeiconsIcon icon={Message01Icon} className="size-3" />
+					{commentCount > 0 && <span>{commentCount}</span>}
+				</button>
+			</div>
+
+			{showComments && (
+				<div className="border-t border-border/50 pt-3">
+					<CommentForm
+						postId={post.$id}
+						onSubmit={(content, parentId) =>
+							onCreateComment?.(post.$id, content, parentId)
+						}
+					/>
+					{comments && comments.length > 0 && (
+						<div className="mt-3">
+							<CommentThread
+								comments={comments as any}
+								reactions={reactions ?? []}
+								currentUserId={user?.$id ?? ""}
+								postId={post.$id}
+								onDelete={(id) => onDeleteComment?.(id)}
+								onReply={(content, parentId) =>
+									onCreateComment?.(post.$id, content, parentId)
+								}
+								onToggleReaction={(commentId, emoji) =>
+									onToggleReaction?.(commentId, emoji)
+								}
+							/>
+						</div>
 					)}
 				</div>
 			)}

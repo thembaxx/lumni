@@ -4,7 +4,7 @@ import { Message02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useTranslations } from "next-intl";
 import { useGroupPosts } from "@/hooks/use-study-groups";
-import { PostCard } from "./post-card";
+import { PostCardWithComments } from "./post-card-with-comments";
 
 interface Props {
 	groupId: string;
@@ -42,7 +42,7 @@ export function DiscussionFeed({ groupId }: Props) {
 	return (
 		<div className="flex flex-col gap-3">
 			{posts.map((post) => (
-				<PostCard key={post.$id} post={post} />
+				<PostCardWithComments key={post.$id} post={post} groupId={groupId} />
 			))}
 		</div>
 	);

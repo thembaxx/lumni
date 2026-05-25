@@ -59,7 +59,15 @@ const CompetencyOverview = dynamic(
 		import("@/components/dashboard/competency-overview").then(
 			(m) => m.CompetencyOverview,
 		),
-	{ ssr: false, loading: () => <Skeleton className="h-32 rounded-3xl" /> },
+	{ ssr: false },
+);
+
+const OfflinePackManager = dynamic(
+	() =>
+		import("@/components/dashboard/offline-packs").then(
+			(m) => m.OfflinePackManager,
+		),
+	{ ssr: false },
 );
 
 const BloomTaxonomyWidget = dynamic(
@@ -319,6 +327,11 @@ function DashboardContent({
 				{showPractice && !isAnonymous && (
 					<SectionReveal delay={0.13}>
 						<BloomTaxonomyWidget />
+					</SectionReveal>
+				)}
+				{showPractice && (
+					<SectionReveal delay={0.135}>
+						<OfflinePackManager />
 					</SectionReveal>
 				)}
 				{showPractice && !isAnonymous && (

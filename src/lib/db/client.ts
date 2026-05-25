@@ -39,6 +39,8 @@ export const COLLECTIONS = {
 	BOOKMARKS: "bookmarks",
 	NOTES: "notes",
 	GROUP_POSTS: "group_posts",
+	GROUP_COMMENTS: "group_comments",
+	GROUP_REACTIONS: "group_reactions",
 } as const;
 
 export type Subject = {

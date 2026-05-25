@@ -64,3 +64,23 @@ export interface CreatePostInput {
 	subject?: string;
 	topic?: string;
 }
+
+export interface GroupComment {
+	$id: string;
+	postId: string;
+	userId: string;
+	userName?: string;
+	content: string;
+	parentId?: string;
+	createdAt: string;
+	updatedAt?: string;
+}
+
+export interface GroupReaction {
+	$id: string;
+	postId?: string;
+	commentId?: string;
+	userId: string;
+	emoji: string;
+	createdAt: string;
+}

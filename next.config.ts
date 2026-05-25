@@ -1,5 +1,8 @@
 import { withSentryConfig } from "@sentry/nextjs";
+import createNextIntlPlugin from "next-intl/plugin";
 import type { NextConfig } from "next";
+
+const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
 	experimental: {
@@ -90,7 +93,7 @@ const config =
 			})
 		: nextConfig;
 
-export default withSentryConfig(config, {
+export default withNextIntl(withSentryConfig(config, {
 	// For all available options, see:
 	// https://www.npmjs.com/package/@sentry/webpack-plugin#options
 
@@ -126,4 +129,4 @@ export default withSentryConfig(config, {
 			removeDebugLogging: true,
 		},
 	},
-});
+}));

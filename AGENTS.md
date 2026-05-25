@@ -253,6 +253,15 @@ Established 2026-05-23 after a codebase-wide audit. All decisions below are non-
 - **Services barrel unification**: `src/lib/services/index.ts` now exports all 10 services plus `ServiceResult<T>` success/failure helpers for consistent error handling across business logic.
 - **Tools directory reorganization**: `src/components/tools/` split into domain subdirs (`core/`, `communication/`, `math/`, `science/`, `scheduling/`) — 11 components moved, all import chains updated with backward-compat barrels.
 
+### Session 10 — P1 Implementation Sweep (May 2026)
+
+- **Exam_dates Appwrite write path**: Added `"appwrite-exam-dates-sync"` job type with `upsertDocument` handler; `syncExamDatesToAppwrite()` now enqueues background job; `syncExamDatesDirect()` for server-side immediate writes
+- **E2E tests**: Playwright installed (`@playwright/test@1.60.0`), configured (`playwright.config.ts`), smoke tests for homepage, quiz, exam-dates pages
+- **Offline AI Quiz Packs**: `src/lib/quiz-packs/` — types, `QuizPackService`, Dexie v18 migration (quizPacks + packQuestions tables), `POST /api/quiz-packs/generate` (rate-limited, uses `QuestionEngine`), `useQuizPacks()` hook, `<OfflinePackManager>` dashboard component with storage progress, subject selector, pack list with status badges
+- **Storybook**: `storybook@10.4.1` + `@storybook/nextjs`, config (`main.ts` + `preview.ts`), stories (ShareButton, Badge), build completes successfully
+- **Fixed tests**: Updated `schema.test.ts` for Dexie v18 (version 15→18, table count 18→23)
+- **Audited P1 items**: Share/Export, SR v2 upgrades, Flashcard pull sync — all already implemented prior to this session
+
 ### Known limitations (won't fix)
 
 - `analytics-service.ts` comparative analytics depends on other users' data in Appwrite; falls back to estimates

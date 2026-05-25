@@ -2,7 +2,7 @@
 
 import { GridIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { usePathname } from "next/navigation";
+import { usePathname } from "@/i18n/navigation";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useOnboarding } from "@/hooks/use-onboarding";

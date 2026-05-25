@@ -20,7 +20,8 @@ export type JobType =
 	| "appwrite-rating-sync"
 	| "appwrite-study-plan-sync"
 	| "appwrite-question-flag"
-	| "question-regen";
+	| "question-regen"
+	| "appwrite-exam-dates-sync";
 
 export type JobPayloadByType = {
 	"appwrite-sync": { questions: Question[]; subject: string; topic?: string };
@@ -139,6 +140,13 @@ export type JobPayloadByType = {
 		createdAt: number;
 	};
 	"question-regen": { questionId: string; subject: string };
+	"appwrite-exam-dates-sync": {
+		cacheKey: string;
+		session: string;
+		year: number;
+		slots: string;
+		source: string;
+	};
 };
 
 export type JobStatus =

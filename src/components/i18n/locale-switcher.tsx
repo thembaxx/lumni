@@ -1,20 +1,23 @@
 "use client";
 
+import { useLocale } from "next-intl";
 import { useCallback, useState } from "react";
 import type { Locale } from "@/i18n/locales";
 import { localeLabels, locales } from "@/i18n/locales";
-import { useI18nContext } from "./i18n-provider";
+import { usePathname, useRouter } from "@/i18n/navigation";
 
 export function LocaleSwitcher() {
-	const { locale, setLocale } = useI18nContext();
+	const locale = useLocale() as Locale;
+	const pathname = usePathname();
+	const router = useRouter();
 	const [open, setOpen] = useState(false);
 
 	const handleSelect = useCallback(
 		(next: Locale) => {
-			setLocale(next);
+			router.replace(pathname, { locale: next });
 			setOpen(false);
 		},
-		[setLocale],
+		[pathname, router],
 	);
 
 	return (
@@ -24,7 +27,7 @@ export function LocaleSwitcher() {
 				onClick={() => setOpen(!open)}
 				className="flex items-center gap-2 rounded-lg px-3 py-2 font-medium text-[--system-text-secondary] text-sm transition-colors hover:bg-[--system-surface-hover] hover:text-[--system-text-primary]"
 			>
-				<span className="text-base">{locale === "af" ? "🇿🇦" : "🇬🇧"}</span>
+				<span className="text-base">🌐</span>
 				<span>{localeLabels[locale]}</span>
 			</button>
 			{open && (
@@ -35,7 +38,7 @@ export function LocaleSwitcher() {
 						onClick={() => setOpen(false)}
 						aria-label="Close"
 					/>
-					<div className="absolute top-full right-0 z-20 mt-1 w-40 overflow-hidden rounded-xl border border-[--system-border] bg-[--system-surface-elevated] shadow-level-2">
+					<div className="absolute top-full right-0 z-20 mt-1 max-h-80 w-48 overflow-y-auto rounded-xl border border-[--system-border] bg-[--system-surface-elevated] shadow-level-2">
 						{locales.map((l) => (
 							<button
 								key={l}
@@ -47,7 +50,6 @@ export function LocaleSwitcher() {
 										: "text-[--system-text-primary]"
 								}`}
 							>
-								<span>{l === "af" ? "🇿🇦" : "🇬🇧"}</span>
 								<span>{localeLabels[l]}</span>
 								{l === locale && <span className="ml-auto">✓</span>}
 							</button>

@@ -33,11 +33,49 @@ All 21 items across P2 and P3 are implemented. Total changes:
 - [x] **Snap FAB** — Camera button on math question cards (`QuestionCardHeader.tsx`)
 - [x] **Home page decomposition** — 6 section files (hero, features, how-it-works, testimonials, pricing, footer); rewritten `home-content.tsx` as thin orchestrator
 
+## ✅ Session 10 — P1 Implementation Sweep (May 2026)
+
+### P1 — Exam_dates Appwrite write path upgraded
+- [x] **Job queue pattern**: Added `"appwrite-exam-dates-sync"` job type to orchestrator with `upsertDocument` handler in `sync-handlers.ts`
+- [x] **Sync upgrade**: `syncExamDatesToAppwrite()` now enqueues a background job instead of raw `createDocument`; `syncExamDatesDirect()` added for server-side immediate writes
+- [x] **Refresh route updated**: `POST /api/exam-dates/refresh` uses `syncExamDatesDirect()` for immediate Appwrite sync
+- [x] **Config**: `maxRetries=3`, `priority=60` in job queue config; payload type + handler registered
+
+### P1 — E2E Tests (Playwright)
+- [x] **Playwright installed**: `@playwright/test@1.60.0` with chromium browser
+- [x] **`playwright.config.ts`**: Desktop Chrome, port 3000, `webServer` pointing to `npm run dev`
+- [x] **Smoke tests**: `e2e/home.spec.ts` (homepage loads, nav visible), `e2e/quiz.spec.ts` (quiz page, exam-dates page)
+- [x] **NPM scripts**: `test:e2e` and `test:e2e:ui`
+
+### P1 — Offline AI Quiz Packs
+- [x] **Types**: `src/lib/quiz-packs/types.ts` — `QuizPack`, `QuizPackQuestion`, `PackStatus`, `PackGenerationRequest`
+- [x] **Service**: `src/lib/quiz-packs/service.ts` — `QuizPackService` class with `generatePack`, `storeQuestions`, `getPacks`, `deletePack`, `getStorageUsage`, `cleanupExpired`
+- [x] **Dexie v18**: `quizPacks` (`&id, subject, topic, status, createdAt, expiresAt`) and `packQuestions` (`++id, &[packId+questionIndex], packId`) tables
+- [x] **API route**: `POST /api/quiz-packs/generate` — rate-limited (10/min), calls `QuestionEngine.initialize()` to generate, stores results
+- [x] **React hook**: `useQuizPacks()` — live query, generate/download, delete, storage tracking
+- [x] **UI component**: `<OfflinePackManager>` in `src/components/dashboard/offline-packs.tsx` — subject selector, question count, pack list with status badges, storage progress bar, delete action
+- [x] **Dashboard integration**: Added to `dashboard-client.tsx` via dynamic import in the `showPractice` section
+
+### P1 — SR v2 / Share-Export / Flashcard Sync
+- [x] **Already implemented** prior to this session (discovered during audit): 6-quality grading, learning steps, ease-hell, leech detection, daily limits in flashcard engine; `ShareResultButton` in all result pages; `appwriteFlashcardPull` handler for cloud sync
+
+### P1+P0 — Externally Blocked
+- **Stripe/Payfast checkout**: Requires Stripe account + webhook setup
+- **AI × Past Papers Adaptive Pool**: Requires exam parser + vector search infrastructure
+- **WhatsApp Business API Nudges**: Requires Meta Business verification (2-4 week external process)
+
+### Storybook (medium)
+- [x] **Dependencies**: `storybook@10.4.1`, `@storybook/nextjs`, `@storybook/react`, `@storybook/test`
+- [x] **Config**: `.storybook/main.ts` (Next.js framework, stories glob), `.storybook/preview.ts`
+- [x] **Stories**: `ShareButton.stories.ts` (3 variants), `Badge.stories.ts` (4 variants)
+- [x] **Build**: `npx storybook build` completes successfully; `npm run storybook` starts dev server
+- [x] **Scripts**: `storybook` and `build-storybook` in package.json
+
 ## Next Up
 
 ### P2 — Upcoming Features <!-- linear-priority: 2 -->
 
-Remaining brainstorm items (i18n, gamification expansion, share/export, spaced repetition v2, study groups, photo math implementation, etc.) — not yet scheduled.
+Remaining brainstorm items (i18n, gamification expansion, study groups, photo math implementation, etc.) — not yet scheduled.
 
 ### P3 — Bug Fixes <!-- linear-priority: 3 -->
 

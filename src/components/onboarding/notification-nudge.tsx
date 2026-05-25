@@ -3,7 +3,7 @@
 import { BellElectricIcon, Cancel01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useOnboarding } from "@/hooks/use-onboarding";

@@ -11,7 +11,7 @@ import type { JobPayloadByType } from "@/lib/orchestrator/types";
 import { syncQuestionsToAppwrite } from "@/lib/question-engine/persistence";
 import type { JobHandler } from "./index";
 
-async function upsertDocument(
+export async function upsertDocument(
 	collection: string,
 	findQuery: string[],
 	data: Record<string, unknown>,
@@ -325,6 +325,21 @@ export const appwriteBookmarkSync: JobHandler = async (payload) => {
 	}
 };
 
+export const appwriteExamDatesSync: JobHandler = async (payload) => {
+	const data = payload as JobPayloadByType["appwrite-exam-dates-sync"];
+	await upsertDocument(
+		COLLECTIONS.EXAM_DATES,
+		[Query.equal("cacheKey", data.cacheKey)],
+		{
+			cacheKey: data.cacheKey,
+			session: data.session,
+			year: data.year,
+			slots: data.slots,
+			source: data.source,
+		},
+	);
+};
+
 export const appwriteBookmarkDelete: JobHandler = async (payload) => {
 	const data = payload as JobPayloadByType["appwrite-bookmark-delete"];
 	const existing = await listDocuments<Record<string, unknown>>(
@@ -337,6 +352,7 @@ export const appwriteBookmarkDelete: JobHandler = async (payload) => {
 };
 
 export const appwriteHandlers: Partial<Record<string, JobHandler>> = {
+	"appwrite-exam-dates-sync": appwriteExamDatesSync,
 	"appwrite-sync": appwriteSync,
 	"appwrite-progress-sync": appwriteProgressSync,
 	"appwrite-attempt-sync": appwriteAttemptSync,

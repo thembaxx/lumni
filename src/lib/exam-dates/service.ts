@@ -122,17 +122,39 @@ export async function syncExamDatesToAppwrite(
 	slots: ExamSlot[],
 ): Promise<void> {
 	try {
-		const { createDocument } = await import("@/lib/db/client");
+		const { enqueue } = await import("@/lib/orchestrator/job-queue");
 		const key = `${session}_${year}`;
-		await createDocument("exam_dates", {
+		await enqueue("appwrite-exam-dates-sync", {
 			cacheKey: key,
 			session,
 			year,
 			slots: JSON.stringify(slots),
-			updatedAt: new Date().toISOString(),
 			source: "seed",
 		});
 	} catch (err) {
-		console.warn("[exam-dates] Failed to sync to Appwrite:", err);
+		console.warn("[exam-dates] Failed to enqueue sync:", err);
+	}
+}
+
+export async function syncExamDatesDirect(
+	session: string,
+	year: number,
+	slots: ExamSlot[],
+): Promise<void> {
+	try {
+		const { upsertDocument } = await import(
+			"@/lib/orchestrator/handlers/sync-handlers"
+		);
+		const key = `${session}_${year}`;
+		const { Query } = await import("appwrite");
+		await upsertDocument("exam_dates", [Query.equal("cacheKey", key)], {
+			cacheKey: key,
+			session,
+			year,
+			slots: JSON.stringify(slots),
+			source: "seed",
+		});
+	} catch (err) {
+		console.warn("[exam-dates] Direct sync failed:", err);
 	}
 }

@@ -2,7 +2,7 @@
 
 import { CloudDownloadIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { useState } from "react";
 import { FadeIn } from "@/components/shared/fade-in";
 import { Badge } from "@/components/ui/badge";

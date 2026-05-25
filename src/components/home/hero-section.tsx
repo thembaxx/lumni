@@ -9,7 +9,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m, useScroll, useTransform } from "framer-motion";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 import { iOSEase } from "@/lib/utils/animation";

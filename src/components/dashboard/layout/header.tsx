@@ -2,7 +2,7 @@
 
 import { Settings01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { PageHeader } from "@/components/ui/headers/page-header";
 import { TabNav } from "../navigation/tab-nav";
