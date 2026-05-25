@@ -105,22 +105,6 @@ export interface FlashcardStats {
 	avgEaseFactor: number;
 }
 
-export interface EaseHellConfig {
-	consecutivePasses: number;
-	boost: number;
-}
-
-export interface LeechConfig {
-	threshold: number;
-	action: "suspend" | "bury" | "tag-only";
-}
-
-export interface LeechResult {
-	isLeech: boolean;
-	newStatus: CardStatus | null;
-	actionTaken: "suspend" | "bury" | "tag-only" | null;
-}
-
 export interface FlashcardRepository {
 	getDueCards(subject?: string): Promise<FlashcardSM2[]>;
 	getNewCards(subject?: string, limit?: number): Promise<FlashcardSM2[]>;

@@ -8,7 +8,25 @@ import {
 	computeWeightedScore,
 } from "./types";
 
+export interface CompetencyDeps {
+	db: typeof offlineDB;
+	enqueue: (type: string, payload: Record<string, unknown>) => Promise<unknown>;
+}
+
+const DEFAULT_DEPS: CompetencyDeps = {
+	db: offlineDB,
+	enqueue: enqueue as unknown as CompetencyDeps["enqueue"],
+};
+
 export class CompetencyService {
+	private db: CompetencyDeps["db"];
+	private enqueueFn: CompetencyDeps["enqueue"];
+
+	constructor(deps?: Partial<CompetencyDeps>) {
+		this.db = deps?.db ?? DEFAULT_DEPS.db;
+		this.enqueueFn = deps?.enqueue ?? DEFAULT_DEPS.enqueue;
+	}
+
 	async update(
 		subjectId: string,
 		topicId: string,
@@ -16,7 +34,7 @@ export class CompetencyService {
 		questionScore: number,
 		weight: number,
 	): Promise<void> {
-		const existing = await offlineDB.competencies
+		const existing = await this.db.competencies
 			.where({ subjectId, topicId, bloomLevel })
 			.first();
 
@@ -34,14 +52,14 @@ export class CompetencyService {
 		const now = Date.now();
 
 		if (existing?.id) {
-			await offlineDB.competencies.update(existing.id, {
+			await this.db.competencies.update(existing.id, {
 				score: newScore,
 				attempts: newAttempts,
 				lastAssessed: now,
 				level,
 			});
 		} else {
-			await offlineDB.competencies.add({
+			await this.db.competencies.add({
 				subjectId,
 				topicId,
 				bloomLevel,
@@ -52,7 +70,7 @@ export class CompetencyService {
 			});
 		}
 
-		await enqueue("appwrite-competency-sync", {
+		await this.enqueueFn("appwrite-competency-sync", {
 			subjectId,
 			topicId,
 			bloomLevel,
@@ -65,7 +83,7 @@ export class CompetencyService {
 
 	async getCompetencies(subjectId: string): Promise<CompetencyRecord[]> {
 		try {
-			return offlineDB.competencies
+			return this.db.competencies
 				.where("subjectId")
 				.equals(subjectId)
 				.toArray();
@@ -81,7 +99,7 @@ export class CompetencyService {
 	): Promise<CompetencyRecord | null> {
 		try {
 			return (
-				(await offlineDB.competencies
+				(await this.db.competencies
 					.where({ subjectId, topicId, bloomLevel })
 					.first()) ?? null
 			);

@@ -10,6 +10,8 @@ export function failure<T = never>(error: string): ServiceResult<T> {
 	return { success: false, error };
 }
 
+export type { GradeEvent, GradeEventSubscriber } from "@/lib/grade-event-bus";
+export { GradeEventBus, gradeEventBus } from "@/lib/grade-event-bus";
 export { aiSolver } from "./ai-solver";
 export { AnalyticsService, analyticsService } from "./analytics-service";
 export { chatImageService } from "./chat-image";

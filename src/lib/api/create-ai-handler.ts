@@ -1,8 +1,9 @@
-import { type NextRequest, NextResponse } from "next/server";
-import { v4 as uuidv4 } from "uuid";
+import type { NextRequest } from "next/server";
 import type { AICallType } from "@/lib/ai/daily-call-tracker";
-import { checkBudget, trackUsage } from "@/lib/ai/with-budget";
-import { withRateLimit } from "@/lib/shared/with-rate-limit";
+import {
+	createRouteHandler,
+	type RouteHandlerConfig,
+} from "./create-route-handler";
 
 interface AIHandlerConfig<T> {
 	budgetType: AICallType;
@@ -28,48 +29,20 @@ export function createAIHandler<T>(config: AIHandlerConfig<T>) {
 		useRateLimit = true,
 	} = config;
 
-	const handler = async (req: NextRequest) => {
-		const requestId = uuidv4();
-
-		try {
-			const budget = await checkBudget(req, budgetType);
-			if (!budget.allowed) {
-				return (
-					budget.response ??
-					NextResponse.json({ error: "Budget exceeded" }, { status: 429 })
-				);
-			}
-
-			const body = await parseBody(req);
-
-			if (validate) {
-				const validationError = validate(body);
-				if (validationError) {
-					return NextResponse.json({ error: validationError }, { status: 400 });
-				}
-			}
-
-			const result = await service.execute(body, {
-				userId: budget.userId,
-				requestId,
-			});
-
-			await trackUsage(budgetType, budget.userId);
-
-			return NextResponse.json(result);
-		} catch (error) {
-			console.error(`[AI ${errorLabel}] Error:`, error);
-			return NextResponse.json(
-				{
-					error:
-						error instanceof Error
-							? error.message
-							: `Failed to ${errorLabel.toLowerCase()}`,
-				},
-				{ status: 500 },
-			);
-		}
+	const routeConfig: RouteHandlerConfig<T> = {
+		auth: "none",
+		budget: budgetType,
+		useRateLimit,
+		errorLabel,
+		generateRequestId: true,
+		parseBody,
+		validate,
+		execute: (params) =>
+			service.execute(params.body, {
+				userId: params.userId ?? "",
+				requestId: params.requestId ?? "",
+			}),
 	};
 
-	return useRateLimit ? withRateLimit(handler) : handler;
+	return createRouteHandler(routeConfig);
 }

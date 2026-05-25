@@ -106,8 +106,8 @@ export function ProfileTabRefactored() {
 						format: "json",
 						onExport: async () => {
 							try {
-								const { flashcardRepository } = await import(
-									"@/lib/flashcard-repository"
+								const { flashcardEngine: flashcardRepository } = await import(
+									"@/lib/flashcard-engine"
 								);
 								const cards = await flashcardRepository.getAll();
 								const blob = new Blob([JSON.stringify(cards, null, 2)], {

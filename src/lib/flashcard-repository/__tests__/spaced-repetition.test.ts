@@ -1,9 +1,11 @@
 import { describe, expect, test } from "bun:test";
+import { flashcardEngine } from "@/lib/flashcard-engine";
 import { calculateNextReview } from "@/lib/orchestrator/sm2";
-import {
-	getIntervalLabel,
-	getMasteryLevel,
-} from "@/lib/utils/spaced-repetition";
+
+const getMasteryLevel = (interval: number) =>
+	flashcardEngine.getMasteryLevel(interval);
+const getIntervalLabel = (interval: number) =>
+	flashcardEngine.getIntervalLabel(interval);
 
 describe("calculateNextReview (SM-2)", () => {
 	test("quality < 3 resets repetitions to 0 and interval to 1", () => {

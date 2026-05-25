@@ -1,7 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
 	Confetti,
 	GamificationCelebration,
@@ -11,16 +11,11 @@ import { LocalDataNotice } from "@/components/shared/local-data-notice";
 import { useGamification } from "@/hooks/use-gamification";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
+import { flashcardEngine } from "@/lib/flashcard-engine";
 import { migrateLegacyFlashcards } from "@/lib/flashcard-repository/migrate";
-import { enqueue } from "@/lib/orchestrator/job-queue";
 import { trackQuestionResult } from "@/lib/orchestrator";
+import { enqueue } from "@/lib/orchestrator/job-queue";
 import type { Question } from "@/lib/question-engine/types";
-import {
-	createFlashcard,
-	getDueCards,
-	getNewCards,
-	reviewFlashcard,
-} from "@/lib/utils/spaced-repetition";
 import { FlashcardsActive } from "./flashcards-active";
 import { FlashcardsEmpty } from "./flashcards-empty";
 import { FlashcardsIdle } from "./flashcards-idle";
@@ -105,7 +100,7 @@ export function FlashcardsClient() {
 				const cardTopic = card.rawQuestion.topic;
 
 				if (isSm2Session) {
-					cardPromises.push(reviewFlashcard(card.id, quality));
+					cardPromises.push(flashcardEngine.review(card.id, quality));
 				} else {
 					trackQuestionResult({
 						subjectId: subject,
@@ -128,7 +123,7 @@ export function FlashcardsClient() {
 					});
 					if (!isSm2Session) {
 						cardPromises.push(
-							createFlashcard(card.front, card.back, subject, cardTopic),
+							flashcardEngine.create(card.front, card.back, subject, cardTopic),
 						);
 					}
 				}
@@ -219,8 +214,11 @@ export function FlashcardsClient() {
 					})),
 				);
 			} else {
-				const sm2Due = await getDueCards(subject.toLowerCase());
-				const sm2New = await getNewCards(subject.toLowerCase(), 10);
+				const sm2Due = await flashcardEngine.getDueCards(subject.toLowerCase());
+				const sm2New = await flashcardEngine.getNewCards(
+					subject.toLowerCase(),
+					10,
+				);
 				const allSm2 = [...sm2Due, ...sm2New];
 				hasSm2Ref.current = allSm2.length > 0;
 				if (allSm2.length > 0) {

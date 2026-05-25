@@ -1,8 +1,9 @@
-import { type NextRequest, NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 import type { AICallType } from "@/lib/ai/daily-call-tracker";
-import { checkBudget, trackUsage } from "@/lib/ai/with-budget";
-import type { RouteHandler } from "@/lib/shared/with-rate-limit";
-import { withRateLimit } from "@/lib/shared/with-rate-limit";
+import {
+	createRouteHandler,
+	type RouteHandlerConfig,
+} from "./create-route-handler";
 
 interface EngineRouteConfig<T> {
 	budgetType: AICallType;
@@ -18,7 +19,7 @@ interface EngineRouteConfig<T> {
 
 export function createEngineHandler<T = Record<string, unknown>>(
 	config: EngineRouteConfig<T>,
-): RouteHandler {
+) {
 	const {
 		budgetType,
 		useRateLimit = true,
@@ -28,40 +29,15 @@ export function createEngineHandler<T = Record<string, unknown>>(
 		execute,
 	} = config;
 
-	const handler: RouteHandler = async (req: NextRequest) => {
-		try {
-			const budget = await checkBudget(req, budgetType);
-			if (!budget.allowed)
-				return (
-					budget.response ??
-					NextResponse.json({ error: "Budget exceeded" }, { status: 429 })
-				);
-
-			const body = await parseBody(req);
-
-			const validationError = validate(body);
-			if (validationError) {
-				return NextResponse.json({ error: validationError }, { status: 400 });
-			}
-
-			const result = await execute(body, { userId: budget.userId });
-
-			await trackUsage(budgetType, budget.userId);
-
-			return NextResponse.json(result);
-		} catch (error) {
-			console.error(`[Engine ${errorLabel}] Error:`, error);
-			return NextResponse.json(
-				{
-					error:
-						error instanceof Error
-							? error.message
-							: `Failed to ${errorLabel.toLowerCase()}`,
-				},
-				{ status: 500 },
-			);
-		}
+	const routeConfig: RouteHandlerConfig<T> = {
+		auth: "none",
+		budget: budgetType,
+		useRateLimit,
+		errorLabel,
+		parseBody,
+		validate,
+		execute: (params) => execute(params.body, { userId: params.userId ?? "" }),
 	};
 
-	return useRateLimit ? withRateLimit(handler) : handler;
+	return createRouteHandler(routeConfig);
 }

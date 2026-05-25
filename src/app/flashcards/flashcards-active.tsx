@@ -1,17 +1,17 @@
 "use client";
 
-import { useTranslations } from "next-intl";
 import { ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { useCallback } from "react";
 import { Anim } from "@/components/shared/anim";
 import { TTSButton } from "@/components/shared/tts-button";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { SM2_QUALITIES } from "@/lib/flashcard-engine";
 import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";
-import { SM2_QUALITIES } from "@/lib/utils/spaced-repetition";
 
 interface FlashcardItem {
 	id: string;
@@ -124,7 +124,9 @@ export function FlashcardsActive({
 									</p>
 								</div>
 								<div className="mt-4 text-center">
-									<p className="text-muted-foreground text-xs">{t("flashcards.tapToFlip")}</p>
+									<p className="text-muted-foreground text-xs">
+										{t("flashcards.tapToFlip")}
+									</p>
 								</div>
 							</div>
 

@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useSpacedRepetition } from "@/hooks/use-spaced-repetition";
-import { SM2_QUALITIES } from "@/lib/utils/spaced-repetition";
+import { SM2_QUALITIES } from "@/lib/flashcard-engine";
 
 export function SM2StudySession({ subject: _subject }: { subject?: string }) {
 	const { dueCards, newCards, review, stats } = useSpacedRepetition();

@@ -35,12 +35,12 @@ import {
 } from "@/hooks/use-exam-session-persistence";
 import { useGamification } from "@/hooks/use-gamification";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
+import { flashcardEngine } from "@/lib/flashcard-engine";
 import { trackQuestionResult } from "@/lib/orchestrator";
 import { cn } from "@/lib/shared";
 import { getAPSForSubject, getGrade } from "@/lib/shared/aps";
 import { formatTime } from "@/lib/shared/time";
 import { iOSEase } from "@/lib/utils/animation";
-import { createFlashcard } from "@/lib/utils/spaced-repetition";
 import { addStudySession } from "@/lib/utils/study-planner";
 import { useExamSessionStore } from "@/store/exam-session";
 import type { QuestionPart } from "@/types/exam-paper";
@@ -384,19 +384,25 @@ function ExamResults({
 							<p className="font-extrabold text-2xl text-success tabular-nums">
 								{correctCount}
 							</p>
-							<p className="text-muted-foreground text-xs">{t("exam.correct")}</p>
+							<p className="text-muted-foreground text-xs">
+								{t("exam.correct")}
+							</p>
 						</div>
 						<div className="rounded-lg bg-muted p-3 text-center">
 							<p className="font-extrabold text-2xl text-destructive tabular-nums">
 								{failedCount}
 							</p>
-							<p className="text-muted-foreground text-xs">{t("exam.incorrect")}</p>
+							<p className="text-muted-foreground text-xs">
+								{t("exam.incorrect")}
+							</p>
 						</div>
 						<div className="rounded-lg bg-muted p-3 text-center">
 							<p className="font-extrabold text-2xl tabular-nums">
 								{accuracy}%
 							</p>
-							<p className="text-muted-foreground text-xs">{t("exam.accuracy")}</p>
+							<p className="text-muted-foreground text-xs">
+								{t("exam.accuracy")}
+							</p>
 						</div>
 						{(() => {
 							const aps = getAPSForSubject(accuracy);
@@ -484,14 +490,18 @@ function ExamResults({
 													{t("exam.correctAnswer")}
 												</p>
 												<p className="rounded-lg bg-success/10 p-2 font-mono text-success text-xs">
-													{getCorrectAnswerText(item.part) || t("exam.notAvailable")}
+													{getCorrectAnswerText(item.part) ||
+														t("exam.notAvailable")}
 												</p>
 											</div>
 										)}
 									</div>
 									{item.part.marks && (
 										<p className="text-muted-foreground text-xs">
-											{t("exam.marks", { score: result.score, marks: item.part.marks })}
+											{t("exam.marks", {
+												score: result.score,
+												marks: item.part.marks,
+											})}
 										</p>
 									)}
 								</div>
@@ -517,7 +527,10 @@ function ExamResults({
 						subtitle: `${getAPSForSubject(accuracy)}/7 APS · ${getGrade(accuracy)}`,
 						type: "exam",
 					}}
-					text={t("exam.shareText", { percentage: accuracy, subject: _metadata.subject })}
+					text={t("exam.shareText", {
+						percentage: accuracy,
+						subject: _metadata.subject,
+					})}
 				/>
 				<Button onClick={onDashboard}>
 					<HugeiconsIcon icon={Home01Icon} data-icon="inline-start" />
@@ -586,7 +599,9 @@ export function ExamSessionWithResume({ id, mode }: ExamSessionClientProps) {
 						<div className="flex flex-col gap-3 pt-2">
 							<div className="rounded-lg bg-muted p-3 text-sm">
 								{resumeData.answers
-									? t("exam.questionsAnswered", { count: Object.keys(JSON.parse(resumeData.answers)).length })
+									? t("exam.questionsAnswered", {
+											count: Object.keys(JSON.parse(resumeData.answers)).length,
+										})
 									: t("exam.noAnswersRecorded")}
 							</div>
 							<div className="flex flex-col gap-2">
@@ -776,7 +791,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 					explanation: "",
 				});
 				flashcardPromises.push(
-					createFlashcard(
+					flashcardEngine.create(
 						partText,
 						getCorrectAnswerText(item.part) || "Review this topic",
 						subject,
@@ -833,9 +848,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 			<div className="flex min-h-screen items-center justify-center bg-background p-4">
 				<Card>
 					<CardContent className="p-8 text-center">
-						<p className="font-medium text-destructive">
-							{t("exam.notFound")}
-						</p>
+						<p className="font-medium text-destructive">{t("exam.notFound")}</p>
 						<Button className="mt-4" onClick={handleDashboard}>
 							{t("exam.goBack")}
 						</Button>
@@ -855,10 +868,18 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 				<Card className="w-full max-w-md">
 					<CardHeader>
 						<CardTitle className="font-extrabold text-xl tracking-tight">
-							{t("exam.paperInfo", { subject: paperData?.exam.metadata.subject ?? "", paperCode: paperData?.exam.metadata.paperCode ?? "" })}
+							{t("exam.paperInfo", {
+								subject: paperData?.exam.metadata.subject ?? "",
+								paperCode: paperData?.exam.metadata.paperCode ?? "",
+							})}
 						</CardTitle>
 						<p className="text-muted-foreground text-sm">
-							{t("exam.paperMeta", { year: paperData?.exam.metadata.year ?? "", period: paperData?.exam.metadata.examPeriod ?? "", marks: paperData?.exam.metadata.totalMarks ?? 0, duration: paperData?.exam.metadata.duration ?? "" })}
+							{t("exam.paperMeta", {
+								year: paperData?.exam.metadata.year ?? "",
+								period: paperData?.exam.metadata.examPeriod ?? "",
+								marks: paperData?.exam.metadata.totalMarks ?? 0,
+								duration: paperData?.exam.metadata.duration ?? "",
+							})}
 						</p>
 					</CardHeader>
 					<CardContent className="flex flex-col gap-3">
@@ -936,8 +957,8 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 								{paperData?.exam.metadata.paperCode}
 							</p>
 							<p className="text-muted-foreground text-xs">
-								{sessionMode === "timed" ? t("exam.timed") : t("exam.practice")} ·{" "}
-								{answeredCount}/{totalPartsCount}
+								{sessionMode === "timed" ? t("exam.timed") : t("exam.practice")}{" "}
+								· {answeredCount}/{totalPartsCount}
 							</p>
 						</div>
 					</div>
@@ -1031,7 +1052,9 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 									<div className="flex items-center gap-2">
 										{currentPart.part.marks && (
 											<Badge variant="outline" className="text-xs">
-												{t("exam.marksBadge", { marks: currentPart.part.marks })}
+												{t("exam.marksBadge", {
+													marks: currentPart.part.marks,
+												})}
 											</Badge>
 										)}
 									</div>
@@ -1089,7 +1112,10 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 									</Button>
 
 									<span className="text-muted-foreground text-xs">
-										{t("exam.indexOfTotal", { index: currentPartIndex + 1, total: totalPartsCount })}
+										{t("exam.indexOfTotal", {
+											index: currentPartIndex + 1,
+											total: totalPartsCount,
+										})}
 									</span>
 
 									{currentPartIndex < totalPartsCount - 1 ? (
@@ -1101,7 +1127,9 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 											/>
 										</Button>
 									) : (
-										<Button onClick={handleSubmit}>{t("exam.finishSubmit")}</Button>
+										<Button onClick={handleSubmit}>
+											{t("exam.finishSubmit")}
+										</Button>
 									)}
 								</div>
 							</m.div>

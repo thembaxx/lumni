@@ -1,4 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
+import { v4 as uuidv4 } from "uuid";
+import type { AICallType } from "@/lib/ai/daily-call-tracker";
+import { checkBudget, trackUsage } from "@/lib/ai/with-budget";
 import { getAuthenticatedUserId, requireAdmin } from "@/lib/server/auth";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
@@ -6,14 +9,17 @@ export type AuthMode = "none" | "optional" | "required" | "admin";
 
 export interface RouteHandlerConfig<TBody, TResult = Record<string, unknown>> {
 	auth: AuthMode;
+	budget?: AICallType;
 	parseBody?: (req: NextRequest) => Promise<TBody>;
 	validate?: (body: TBody) => string | null;
 	execute: (params: {
 		body: TBody;
 		userId: string | null;
 		req: NextRequest;
+		requestId?: string;
 	}) => Promise<TResult> | TResult;
 	useRateLimit?: boolean;
+	generateRequestId?: boolean;
 	errorLabel?: string;
 }
 
@@ -40,18 +46,33 @@ export function createRouteHandler<
 >(config: RouteHandlerConfig<TBody, TResult>) {
 	const {
 		auth,
+		budget,
 		parseBody,
 		validate,
 		execute,
 		useRateLimit = false,
+		generateRequestId = false,
 		errorLabel = "Handler",
 	} = config;
 
 	const handler = async (req: NextRequest) => {
+		const requestId = generateRequestId ? uuidv4() : undefined;
+
 		try {
 			let userId: string | null = null;
 
-			if (auth !== "none") {
+			if (budget) {
+				const budgetResult = await checkBudget(req, budget);
+				if (!budgetResult.allowed) {
+					return (
+						budgetResult.response ??
+						NextResponse.json({ error: "Budget exceeded" }, { status: 429 })
+					);
+				}
+				userId = budgetResult.userId;
+			}
+
+			if (auth !== "none" && !budget) {
 				if (auth === "admin") {
 					await requireAdmin();
 				} else {
@@ -81,8 +102,14 @@ export function createRouteHandler<
 				}
 			}
 
-			const result = await execute({ body, userId, req });
-			return NextResponse.json(serializeResponse(result));
+			const result = await execute({ body, userId, req, requestId });
+			const response = NextResponse.json(serializeResponse(result));
+
+			if (budget) {
+				await trackUsage(budget, userId ?? "anonymous");
+			}
+
+			return response;
 		} catch (error) {
 			if (error instanceof HttpError) {
 				return NextResponse.json(

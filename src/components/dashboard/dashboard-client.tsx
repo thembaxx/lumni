@@ -36,11 +36,11 @@ import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 import { useViewTransition } from "@/hooks/use-view-transition";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
 import { useAuth } from "@/lib/auth/auth-context";
+import { flashcardEngine } from "@/lib/flashcard-engine";
 import { trackQuestionResult } from "@/lib/orchestrator";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import { iOSEase } from "@/lib/utils/animation";
 import { useOptimizedAnimation } from "@/lib/utils/animation-optimization";
-import { createFlashcard } from "@/lib/utils/spaced-repetition";
 
 const QuizView = dynamic(
 	() => import("@/components/quiz/quiz-view").then((m) => m.QuizView),
@@ -423,7 +423,7 @@ export function DashboardClient({
 					explanation: question.explanation,
 				});
 				flashcardPromises.push(
-					createFlashcard(
+					flashcardEngine.create(
 						question.questionText,
 						question.explanation,
 						question.subject,
