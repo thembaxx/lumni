@@ -1,4 +1,4 @@
-<!-- LAST_SYNC: 2026-05-24 -->
+<!-- LAST_SYNC: 2026-05-25 -->
 # System Design — Lumni
 
 ## Overview & Goals
@@ -33,27 +33,32 @@ graph TD
 4. **Generation**: If not in L2, `QuestionEngine` triggers AI generation.
 5. **Enrichment**: `VisualEngine` generates diagrams (STEM) or searches images (non-STEM) in the background.
 6. **Processing**: User answers questions; `LearningOrchestrator` handles grading and enriches user competency data.
-7. **Sync**: Results are saved to Dexie and queued for background sync to Appwrite.
+7. **Sync**: Results are saved to Dexie and queued for background sync to Appwrite via `QueueCore`.
 
 ## Tech Stack
-- **Frontend**: Next.js 16, React 19, Tailwind CSS 4, Framer Motion, Zustand.
+- **Frontend**: Next.js 16.2.6, React 19.2.6, Tailwind CSS 4, Framer Motion, Zustand.
 - **Persistence**: Dexie.js (IndexedDB), Appwrite Database, sql.js (SQLite).
-- **AI/ML**: Gemini 2.0 Flash Lite, Nvidia NIM (Llama 3.3), Groq (Llama 3.3).
+- **AI/ML**: Gemini 2.0 Flash Lite (Primary), Nvidia NIM (Fallback), Groq (Fallback).
 - **Visualization**: Konva (Canvas diagrams), Mermaid.js, Recharts.
 - **Monitoring**: Sentry (Client/Server/Edge).
 
 ## Key Abstractions
-- **QuestionEngine**: Single source of truth for all question lifecycle operations.
+- **QuestionEngine**: Single source of truth for generation, grading, and validation across 11 question types.
 - **VisualEngine**: Manages generation and retrieval of educational visuals.
-- **FlashcardEngine**: Unified class in `flashcard-engine/` wrapping DexieRepository + SM-2/FSRS algorithms + daily limits + learning steps + ease-hell recovery + leech detection + settings.
-- **createRouteHandler**: Generic factory in `api/create-route-handler.ts` for API routes — auto auth guard, body parsing, Zod validation, error wrapping. Migrated 5 routes to declarative ~15-line config.
-- **Services barrel**: `services/index.ts` exports all 10 services plus `ServiceResult<T>` success/failure helpers.
+- **FlashcardEngine**: Unified engine wrapping repository + SM-2/FSRS + daily limits.
 - **LearningOrchestrator**: Coordinates engines and manages background job side effects.
-- **SyncQueue**: Dexie-backed queue ensuring offline mutations are eventually synced.
-- **CompetencyEngine**: Tracks student proficiency using Bloom's Taxonomy.
+- **createRouteHandler**: Generic factory for declarative API route handlers with auth and Zod validation.
+- **Services Barrel**: Unified access to all 10 domain services with `ServiceResult<T>` handling.
+- **QueueCore**: Persistent job queue ensuring offline mutations and orchestration tasks are eventually executed.
+
+## External Integrations
+- **Appwrite**: Auth, Database, Storage.
+- **AI Providers**: Google Gemini, Nvidia NIM, Groq Cloud.
+- **UploadThing**: File uploads for avatars and documents.
+- **Wikimedia**: Image search for non-STEM visuals.
 
 ## Current Limitations & TODOs
 - **OCR**: National exam schedule extraction currently manual; needs OCR/AI vision for image-based PDFs.
 - **Tests**: High priority for E2E (Playwright) and component test coverage.
 - **Analytics**: Comparative analytics currently use estimates due to Appwrite data privacy constraints.
-- **Domain**: Transitioning from development URL to production domain.
+- **Exam Dates**: Need server-side sync path for exam date data.

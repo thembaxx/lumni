@@ -1,4 +1,4 @@
-<!-- LAST_SYNC: 2026-05-24 -->
+<!-- LAST_SYNC: 2026-05-25 -->
 # Memory Index — Lumni
 
 ## Facts
@@ -8,23 +8,32 @@
 - **Math**: Renders math using KaTeX with dollar-sign delimiters (`$...$` for inline, `$$...$$` for display).
 - **Question Types**: Supports 11 types including MCQ, calculation, diagram, and programming.
 - **Design**: Follows the "Emerald Study Room" aesthetic with Study Green accent and Apple-inspired glass effects.
+- **Competency**: Mapped to Bloom's Taxonomy (Novice→Remember, Developing→Understand/Apply, Proficient→Apply/Analyze, Mastered→Evaluate/Create).
 
 ## Decisions
 - **Orchestration**: `LearningOrchestrator` composes `QuestionEngine` to handle side effects like sync and progress tracking (2026-05-15).
 - **Caching**: 3-tier strategy: Dexie L1 -> Appwrite L2 -> AI/Wikimedia L3 (2026-05-11).
-- **Grading**: Local grading for selected-response types; AI grading for constructed-response types (2026-05-11).
+- **Grading**: Local grading for 4 types (MCQ, matching, calculation, short-answer fallback); AI grading for 7 types (2026-05-11).
 - **User Identity**: Anonymous users auto-upgraded to authenticated via `updateEmail` (2026-05-22).
-- **AI Models**: Switched from DeepSeek to Gemini/Nvidia/Groq due to credit costs (2026-05-13).
+- **Flashcard Engine**: Unified into `src/lib/flashcard-engine/` wrapping repositories, SM-2/FSRS algorithms, and daily limits (2026-05-24).
+- **Route Handlers**: Use `createRouteHandler` factory for declarative auth, validation, and error handling (2026-05-24).
+- **Services**: Consolidated into `src/lib/services/index.ts` with `ServiceResult<T>` wrapper (2026-05-24).
 
 ## Patterns
 - **Repository Pattern**: All database access is abstracted through typed repositories in `src/lib/db/repositories/`.
-- **Zod Validation**: All API route bodies are validated using Zod schemas.
-- **QueueCore**: Generic persistent job queue with exponential backoff for all background tasks.
-- **Bloom's Taxonomy**: Questions and competencies are mapped to Bloom's levels (Remember, Understand, Apply, etc.).
+- **Zod Validation**: All API route bodies are validated using Zod schemas via `createRouteHandler`.
+- **QueueCore**: Generic persistent job queue with exponential backoff for all background tasks (sync, jobs).
 - **Visual Pre-caching**: Diagrams are generated in the background during question generation to ensure they are ready for display.
+- **Design Tokens**: Strict enforcement of OKLCH colors, semantic z-indices, and `gap-*` for spacing.
+
+## Failures & Lessons
+- **PDF Extraction**: Official DBE PDFs are image-based; standard extraction fails. Requires manual entry or future AI vision OCR.
+- **AI Provider Costs**: DeepSeek removed due to credit exhaustion; Gemini 2.0 Flash Lite is the new primary.
+- **Sync Logic**: Consolidation of multiple sync hooks into a single `QueueCore` processor resolved duplication bugs.
+- **Competency Fields**: Fixed mismatch between `proficiency` and `score` fields in sync/API paths.
 
 ## Contacts / Resources
 - **Domain Glossary**: `CONTEXT.md` (shared vocabulary).
 - **Design System**: `DESIGN.md` (colors, typography, components).
 - **Exam Dates Tracker**: `SPEC.md` (national exam schedule integration).
-- **Issue Tracker**: Tracked via GitHub issues and managed via `gh` CLI.
+- **Issue Tracker**: Managed via GitHub issues and `gh` CLI.
