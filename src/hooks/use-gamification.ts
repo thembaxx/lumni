@@ -4,6 +4,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "@/components/ui/toast";
 import type { StoredGamification } from "@/lib/gamification-engine";
 import { gamificationEngine } from "@/lib/gamification-engine";
+import { offlineDB } from "@/lib/db/schema";
+import { apiFetch } from "@/lib/shared/api-fetch";
 import type { Achievement, LevelInfo } from "@/types/gamification";
 import {
 	ACHIEVEMENTS,
@@ -19,6 +21,7 @@ export function useGamification() {
 	const [leveledUp, setLeveledUp] = useState<LevelInfo | null>(null);
 	const [pendingAchievement, setPendingAchievement] =
 		useState<Achievement | null>(null);
+	const syncTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
 	useEffect(() => {
 		const stored = gamificationEngine.load();
@@ -28,6 +31,24 @@ export function useGamification() {
 		}
 		setData(merged);
 		prevLevelRef.current = calculateLevel(merged.totalXp).level;
+
+		// Try to load from server on mount
+		syncFromServer().then((serverData) => {
+			if (serverData) {
+				const mergedServer = gamificationEngine.mergeWithDefaults({
+					...merged,
+					totalXp: Math.max(merged.totalXp, serverData.totalXp),
+					achievements: mergeAchievements(merged.achievements, serverData.achievements),
+					currentStreak: Math.max(merged.currentStreak, serverData.currentStreak),
+					totalQuestionsAnswered: Math.max(
+						merged.totalQuestionsAnswered,
+						serverData.totalQuestionsAnswered,
+					),
+				});
+				gamificationEngine.save(mergedServer);
+				setData(mergedServer);
+			}
+		});
 	}, []);
 
 	const levelInfo = calculateLevel(data.totalXp);
@@ -53,48 +74,54 @@ export function useGamification() {
 		lastPracticeDate: data.lastPracticeDate,
 	};
 
+	const scheduleSync = useCallback((newData: StoredGamification) => {
+		if (syncTimerRef.current) clearTimeout(syncTimerRef.current);
+		syncTimerRef.current = setTimeout(() => {
+			syncToServer(newData);
+			offlineDB.gamification.put({ ...newData, id: 1 } as any).catch(() => {});
+		}, 2000);
+	}, []);
+
 	const addXp = useCallback(
 		(amount: number, accuracy: number, streak: number, subject?: string) => {
 			setData((prev) => {
-				const { data: newData, leveledUp: newLevel } = gamificationEngine.addXp(
-					prev,
-					amount,
-					accuracy,
-					streak,
-					subject,
-				);
+				const { data: newData, leveledUp: newLevel } =
+					gamificationEngine.addXp(prev, amount, accuracy, streak, subject);
 				if (newLevel !== null) {
 					setLeveledUp(calculateLevel(newData.totalXp));
 					prevLevelRef.current = newLevel;
 				}
 				gamificationEngine.save(newData);
+				scheduleSync(newData);
 				return newData;
 			});
 		},
-		[],
+		[scheduleSync],
 	);
 
-	const addAchievement = useCallback((achievementId: string) => {
-		setData((prev) => {
-			const { data: newData, achievement } = gamificationEngine.addAchievement(
-				prev,
-				achievementId,
-			);
-			if (achievement) {
-				setPendingAchievement(achievement);
-				setTimeout(() => {
-					toast({
-						type: "success",
-						message: `${achievement.icon} New Achievement: ${achievement.name}`,
-						description: achievement.description,
-						duration: 5000,
-					});
-				}, 0);
-			}
-			gamificationEngine.save(newData);
-			return newData;
-		});
-	}, []);
+	const addAchievement = useCallback(
+		(achievementId: string) => {
+			setData((prev) => {
+				const { data: newData, achievement } =
+					gamificationEngine.addAchievement(prev, achievementId);
+				if (achievement) {
+					setPendingAchievement(achievement);
+					setTimeout(() => {
+						toast({
+							type: "success",
+							message: `${achievement.icon} New Achievement: ${achievement.name}`,
+							description: achievement.description,
+							duration: 5000,
+						});
+					}, 0);
+				}
+				gamificationEngine.save(newData);
+				scheduleSync(newData);
+				return newData;
+			});
+		},
+		[scheduleSync],
+	);
 
 	const checkAndUnlockAchievements = useCallback(
 		(
@@ -117,29 +144,27 @@ export function useGamification() {
 		[data, addAchievement],
 	);
 
-	const _streakXpReward = useCallback(
-		(streak: number): number => gamificationEngine.getStreakXpReward(streak),
-		[],
-	);
-
 	const updateStreak = useCallback(() => {
 		setData((prev) => {
 			const { data: newData } = gamificationEngine.updateStreak(prev);
 			gamificationEngine.save(newData);
+			scheduleSync(newData);
 			return newData;
 		});
-	}, []);
+	}, [scheduleSync]);
 
-	const completeDailyChallenge = useCallback((challengeId: string) => {
-		setData((prev) => {
-			const { data: newData } = gamificationEngine.completeDailyChallenge(
-				prev,
-				challengeId,
-			);
-			gamificationEngine.save(newData);
-			return newData;
-		});
-	}, []);
+	const completeDailyChallenge = useCallback(
+		(challengeId: string) => {
+			setData((prev) => {
+				const { data: newData } =
+					gamificationEngine.completeDailyChallenge(prev, challengeId);
+				gamificationEngine.save(newData);
+				scheduleSync(newData);
+				return newData;
+			});
+		},
+		[scheduleSync],
+	);
 
 	return {
 		gamification,
@@ -157,4 +182,41 @@ export function useGamification() {
 		clearLevelUp,
 		clearAchievement,
 	};
+}
+
+async function syncToServer(data: StoredGamification) {
+	try {
+		await apiFetch("/api/gamification", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(data),
+		});
+	} catch {
+		// Silently fail — will retry on next mutation
+	}
+}
+
+async function syncFromServer(): Promise<StoredGamification | null> {
+	try {
+		const res = await apiFetch<{ gamification: StoredGamification | null }>(
+			"/api/gamification",
+			{},
+		);
+		return res.gamification;
+	} catch {
+		return null;
+	}
+}
+
+function mergeAchievements(
+	local: { id: string; earnedAt: string }[],
+	remote: { id: string; earnedAt: string }[],
+): { id: string; earnedAt: string }[] {
+	const map = new Map<string, string>();
+	for (const a of [...local, ...remote]) {
+		if (!map.has(a.id) || a.earnedAt < map.get(a.id)!) {
+			map.set(a.id, a.earnedAt);
+		}
+	}
+	return Array.from(map.entries()).map(([id, earnedAt]) => ({ id, earnedAt }));
 }

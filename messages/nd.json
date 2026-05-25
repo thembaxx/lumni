@@ -679,15 +679,15 @@
     "termsOfService": "Terms of service"
   },
   "tools": {
-    "title": "Izixhobo",
+    "title": "Izifuni",
     "aiSolver": "AI Solver",
-    "solverDescription": "Sola amathemathika ngokubhala noma ngokushela picha",
+    "solverDescription": "Sola izifundo zomathemathics ngokubhala noma ngokufoto",
     "calculator": "Khalula",
-    "periodicTable": "Tafu yePeriodic",
+    "periodicTable": "Tafeli yePeriodic",
     "unitConverter": "Unit Converter",
     "notes": "Inothi",
-    "noteCreator": "Mfunzi wenothi",
-    "emptyState": "Azikho izixhobo zinikezwe kule mfuno"
+    "noteCreator": "Note Creator",
+    "emptyState": "Azikho izifuni eziphumelelayo kule mfuno"
   },
   "subjects": {
     "mathematics": "Mathematics",
