@@ -3,8 +3,8 @@
 import { Camera01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
-import { useCallback, useRef, useState } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
@@ -20,6 +20,13 @@ interface ExtractionResult {
 
 type SnapPhase = "idle" | "capturing" | "extracting" | "confirm" | "error";
 
+const MATH_SUBJECTS = new Set([
+	"mathematics",
+	"mathematical-literacy",
+	"technical-mathematics",
+	"physical-sciences",
+]);
+
 export function SnapFab() {
 	const [phase, setPhase] = useState<SnapPhase>("idle");
 	const [extractedText, setExtractedText] = useState("");
@@ -28,9 +35,20 @@ export function SnapFab() {
 	const [showDialog, setShowDialog] = useState(false);
 	const cameraRef = useRef<HTMLInputElement>(null);
 	const pathname = usePathname();
+	const searchParams = useSearchParams();
 	const { isOnboarding } = useOnboarding();
 
-	const isHomePage = pathname === "/";
+	const isOnQuizOrFlashcards =
+		pathname.startsWith("/quiz") || pathname.startsWith("/flashcards");
+	const isOnExam = pathname.startsWith("/exam/");
+	const subjectParam = searchParams.get("subject");
+	const isMathSubject = useMemo(
+		() => !subjectParam || MATH_SUBJECTS.has(subjectParam),
+		[subjectParam],
+	);
+
+	const shouldShow =
+		!isOnboarding && (isOnExam || (isOnQuizOrFlashcards && isMathSubject));
 
 	const handleSnap = useCallback(async () => {
 		if (!cameraRef.current) return;
@@ -117,7 +135,7 @@ export function SnapFab() {
 		setImagePreview(null);
 	}, []);
 
-	if (isHomePage || isOnboarding) return null;
+	if (!shouldShow) return null;
 
 	return (
 		<>

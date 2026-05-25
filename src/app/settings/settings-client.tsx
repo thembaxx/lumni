@@ -14,6 +14,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import {
@@ -43,24 +44,28 @@ import {
 	saveToStorage,
 } from "@/lib/utils/storage";
 
-const tabs = [
-	{ value: "profile", label: "Profile", icon: UserIcon },
-	{ value: "appearance", label: "UI", icon: PaintBrushIcon },
-	{ value: "study", label: "Study", icon: BookOpen01Icon },
-	{ value: "notifications", label: "Alerts", icon: Bell },
-	{ value: "referrals", label: "Referrals", icon: Share07Icon },
-	{ value: "data", label: "Data", icon: DatabaseIcon },
-	{ value: "beta", label: "Beta", icon: Chat01Icon },
+const tabDefs = [
+	{ value: "profile", key: "settings.account", icon: UserIcon },
+	{ value: "appearance", key: "settings.appearance", icon: PaintBrushIcon },
+	{ value: "study", key: "nav.studyPlanner", icon: BookOpen01Icon },
+	{ value: "notifications", key: "settings.notifications", icon: Bell },
+	{ value: "referrals", key: "settings.referral", icon: Share07Icon },
+	{ value: "data", key: "settings.data", icon: DatabaseIcon },
+	{ value: "beta", key: "settings.beta", icon: Chat01Icon },
 ];
 
 function SettingsContent() {
+	const t = useTranslations();
 	const { isAnonymous } = useAuth();
 	const [activeTab, setActiveTab] = useState("profile");
 	const [isSaving, setIsSaving] = useState(false);
 
 	const visibleTabs = useMemo(
-		() => tabs.filter((t) => !(isAnonymous && t.value === "referrals")),
-		[isAnonymous],
+		() =>
+			tabDefs
+				.filter((td) => !(isAnonymous && td.value === "referrals"))
+				.map((td) => ({ ...td, label: t(td.key) })),
+		[isAnonymous, t],
 	);
 	const [saved, setSaved] = useState(false);
 
@@ -197,7 +202,7 @@ function SettingsContent() {
 								<HugeiconsIcon icon={ArrowLeftIcon} className="size-5" />
 							</Link>
 							<h1 className="ios-title-3 font-semibold text-foreground tracking-tight">
-								Settings
+								{t("settings.title")}
 							</h1>
 						</div>
 
@@ -207,7 +212,11 @@ function SettingsContent() {
 							disabled={isSaving}
 							className="h-10 rounded-full bg-system-accent px-6 font-extrabold text-system-background-elevated shadow-level-2 transition-[transform,opacity] hover:bg-system-accent/90 active:scale-[0.96]"
 						>
-							{saved ? "✓ Saved" : isSaving ? "Saving…" : "Save"}
+							{saved
+								? `✓ ${t("common.success")}`
+								: isSaving
+									? t("common.saving")
+									: t("common.save")}
 						</Button>
 					</div>
 				</header>
@@ -305,24 +314,27 @@ function SettingsContent() {
 	);
 }
 
+function SettingsLoading() {
+	const t = useTranslations();
+	return (
+		<div className="flex min-h-[100dvh] items-center justify-center bg-system-grouped">
+			<div className="flex flex-col items-center gap-4">
+				<HugeiconsIcon
+					icon={RadialIcon}
+					className="size-8 animate-spin text-muted-foreground"
+				/>
+				<p className="ios-body text-[--system-text-secondary]">
+					{t("common.loading")}
+				</p>
+			</div>
+		</div>
+	);
+}
+
 export function SettingsClient() {
 	return (
 		<AppErrorBoundary>
-			<Suspense
-				fallback={
-					<div className="flex min-h-[100dvh] items-center justify-center bg-system-grouped">
-						<div className="flex flex-col items-center gap-4">
-							<HugeiconsIcon
-								icon={RadialIcon}
-								className="size-8 animate-spin text-muted-foreground"
-							/>
-							<p className="ios-body text-[--system-text-secondary]">
-								Loading settings…
-							</p>
-						</div>
-					</div>
-				}
-			>
+			<Suspense fallback={<SettingsLoading />}>
 				<SettingsContent />
 			</Suspense>
 		</AppErrorBoundary>

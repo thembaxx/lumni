@@ -3,6 +3,7 @@
 import { Login01Icon } from "@hugeicons/core-free-icons";
 import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 import dynamic from "next/dynamic";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { GamificationCelebration } from "@/components/celebration";
 import { AchievementShowcase } from "@/components/dashboard/achievement-showcase";
@@ -138,6 +139,7 @@ function SectionReveal({
 }
 
 function HeroBanner() {
+	const t = useTranslations();
 	const shouldReduceMotion = useReducedMotion();
 	const { shouldReduceMotion: shouldReduceMotionOpt } = useOptimizedAnimation();
 	const finalShouldReduceMotion = shouldReduceMotion || shouldReduceMotionOpt;
@@ -169,7 +171,7 @@ function HeroBanner() {
 					animate={{ opacity: 1, x: 0 }}
 					transition={{ duration: 0.5, delay: 0.1, ease: iOSEase }}
 				>
-					Your Learning Dashboard
+					{t("dashboard.title")}
 				</m.h1>
 				<m.p
 					className="mt-2 max-w-md text-muted-foreground text-sm"
@@ -177,8 +179,7 @@ function HeroBanner() {
 					animate={{ opacity: 1, x: 0 }}
 					transition={{ duration: 0.5, delay: 0.2, ease: iOSEase }}
 				>
-					Continue where you left off. Track progress, practice, and master your
-					subjects.
+					{t("dashboard.subtitle")}
 				</m.p>
 			</div>
 		</m.div>
@@ -209,20 +210,21 @@ function BentoStatRow({
 }
 
 function AnonymousUpsell() {
+	const t = useTranslations();
 	return (
 		<div className="rounded-[2rem] border border-dashed bg-system-surface p-8 shadow-level-1">
 			<EmptyStateWithIllustration
 				icon={Login01Icon}
-				title="Sign in to track your progress"
-				description="Create an account or sign in to save your study history, track your XP and streaks, unlock achievements, and compare your performance across subjects."
+				title={t("dashboard.signInTitle")}
+				description={t("dashboard.signInDescription")}
 				action={{
-					label: "Sign In",
+					label: t("dashboard.signInAction"),
 					onClick: () => {
 						window.location.href = "/auth/sign-in?redirect=/dashboard";
 					},
 				}}
 				secondaryAction={{
-					label: "Create Account",
+					label: t("dashboard.createAccount"),
 					onClick: () => {
 						window.location.href = "/auth/sign-up?redirect=/dashboard";
 					},
@@ -239,6 +241,7 @@ function DashboardContent({
 	onStartQuiz: (subject: string) => void;
 	activeTab: TabValue;
 }) {
+	const t = useTranslations();
 	const { isAnonymous } = useAuth();
 	const { gamification } = useGamification();
 
@@ -261,7 +264,7 @@ function DashboardContent({
 				{isAnonymous && (
 					<LocalDataNotice
 						page="dashboard"
-						description="Your progress, XP, and streaks are stored on this device. Sign in to keep them across all your devices."
+						description={t("dashboard.localDataDescription")}
 					/>
 				)}
 				{activeTab === "today" && !isAnonymous && <CountdownHeader />}

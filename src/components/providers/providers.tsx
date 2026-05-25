@@ -3,6 +3,7 @@
 import { QueryClientProvider } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { JoyProvider } from "@/components/celebration";
+import { I18nProvider } from "@/components/i18n/i18n-provider";
 import { OnboardingProvider } from "@/components/onboarding/onboarding-provider";
 import {
 	PWAInstallPrompt,
@@ -45,7 +46,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
 					<JoyProvider>
 						<ToastProvider>
 							<PremiumProvider>
-								<OnboardingProvider>{children}</OnboardingProvider>
+								<I18nProvider>
+									<OnboardingProvider>{children}</OnboardingProvider>
+								</I18nProvider>
 							</PremiumProvider>
 							<OnlineStatusIndicator />
 							<JobProcessorWrapper />

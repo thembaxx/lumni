@@ -10,7 +10,9 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useCallback, useMemo } from "react";
+import { LocaleSwitcher } from "@/components/i18n/locale-switcher";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -31,16 +33,17 @@ interface TopNavProps {
 	className?: string;
 }
 
-const routeTitles: Record<string, string> = {
-	"/dashboard": "Home",
-	"/quiz": "Syllabus",
-	"/flashcards": "Flashcards",
-	"/settings": "Settings",
-	"/upload": "Upload",
+const routeTitleKeys: Record<string, string> = {
+	"/dashboard": "nav.dashboard",
+	"/quiz": "nav.quiz",
+	"/flashcards": "nav.flashcards",
+	"/settings": "nav.settings",
+	"/upload": "common.upload",
 };
 
 export function TopNav({ title, className }: TopNavProps) {
 	const pathname = usePathname();
+	const t = useTranslations();
 	const { user, status, isAnonymous, signOut } = useAuth();
 	const { levelInfo } = useGamification();
 	const { isOnline, pendingCount } = useSyncStatus();
@@ -54,15 +57,15 @@ export function TopNav({ title, className }: TopNavProps) {
 	const pageTitle = useMemo(() => {
 		if (title) return title;
 
-		const matched = Object.entries(routeTitles).find(([route]) =>
+		const matched = Object.entries(routeTitleKeys).find(([route]) =>
 			pathname.startsWith(route),
 		);
-		if (matched) return matched[1];
+		if (matched) return t(matched[1]);
 
 		const slug = pathname.split("/").filter(Boolean)[0];
 		if (slug) return slug.charAt(0).toUpperCase() + slug.slice(1);
 		return "Lumni";
-	}, [pathname, title]);
+	}, [pathname, title, t]);
 
 	const isAuthPage = pathname.startsWith("/auth");
 	const isLanding = pathname === "/";
@@ -122,6 +125,7 @@ export function TopNav({ title, className }: TopNavProps) {
 				)}
 
 				<div className="flex items-center gap-2">
+					<LocaleSwitcher />
 					{!isOnline && (
 						<div className="flex items-center gap-1 rounded-full bg-warning/10 px-2 py-0.5 text-warning">
 							<div className="size-1.5 animate-pulse rounded-full bg-warning" />
