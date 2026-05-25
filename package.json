@@ -53,6 +53,7 @@
 		"date-fns": "^4.2.1",
 		"dexie": "^4.4.2",
 		"dexie-react-hooks": "^4.4.0",
+		"exa-js": "^2.13.0",
 		"framer-motion": "^12.39.0",
 		"input-otp": "^1.4.2",
 		"katex": "^0.16.47",

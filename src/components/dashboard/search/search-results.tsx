@@ -5,13 +5,14 @@ import {
 	BookOpen01Icon,
 	File01Icon,
 	NoteIcon,
+	World,
 	StarSquareIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useEffect, useReducer, useRef } from "react";
 import { Badge } from "@/components/ui/badge";
 import type { SearchResultItem } from "@/lib/services/search-service";
-import { searchAll } from "@/lib/services/search-service";
+import { searchAll, searchWeb } from "@/lib/services/search-service";
 import { cn } from "@/lib/shared";
 
 const typeConfig: Record<
@@ -36,6 +37,7 @@ const typeConfig: Record<
 		color: "text-purple-500",
 	},
 	exam: { label: "Exam", icon: BookOpen01Icon, color: "text-orange-500" },
+	web: { label: "Web", icon: World, color: "text-sky-500" },
 };
 
 interface SearchResultsProps {
@@ -106,8 +108,12 @@ export function SearchResults({
 
 		dispatch({ type: "START_LOADING" });
 		const timer = setTimeout(async () => {
-			const items = await searchAll(query);
-			dispatch({ type: "LOAD_RESULTS", items });
+			const [local, web] = await Promise.all([
+				searchAll(query),
+				searchWeb(query),
+			]);
+			const merged = [...local, ...web];
+			dispatch({ type: "LOAD_RESULTS", items: merged });
 		}, 200);
 
 		return () => clearTimeout(timer);

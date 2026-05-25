@@ -10,7 +10,8 @@ export interface SearchResultItem {
 		| "wrong-answer"
 		| "note"
 		| "study-set"
-		| "exam";
+		| "exam"
+		| "web";
 	title: string;
 	snippet: string;
 	subject: string;
@@ -147,6 +148,23 @@ export async function searchAll(query: string): Promise<SearchResultItem[]> {
 	]);
 
 	return results.flat().slice(0, 25);
+}
+
+export async function searchWeb(
+	query: string,
+): Promise<SearchResultItem[]> {
+	try {
+		const res = await fetch("/api/search/web", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ query, numResults: 6 }),
+		});
+		if (!res.ok) return [];
+		const data = (await res.json()) as { results: SearchResultItem[] };
+		return data.results ?? [];
+	} catch {
+		return [];
+	}
 }
 
 export async function searchByType(
