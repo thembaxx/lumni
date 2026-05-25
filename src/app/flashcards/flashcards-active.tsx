@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
@@ -46,6 +47,7 @@ export function FlashcardsActive({
 	onNext,
 	onQuit,
 }: FlashcardsActiveProps) {
+	const t = useTranslations();
 	const currentCard = cards[currentIndex];
 	const totalCards = cards.length;
 
@@ -64,7 +66,7 @@ export function FlashcardsActive({
 			<div className="col-span-12 col-start-1 flex flex-col md:col-span-7">
 				<div className="mb-6 flex items-center justify-between p-4">
 					<Button variant="ghost" size="sm" onClick={onQuit}>
-						Quit
+						{t("flashcards.quit")}
 					</Button>
 					<div className="flex items-center gap-2">
 						<Badge variant="outline">
@@ -74,13 +76,13 @@ export function FlashcardsActive({
 							variant="secondary"
 							className="text-success dark:text-success-foreground"
 						>
-							{knownCount} known
+							{t("flashcards.knownCount", { count: knownCount })}
 						</Badge>
 						<Badge
 							variant="secondary"
 							className="text-warning dark:text-warning-foreground"
 						>
-							{reviewCount} review
+							{t("flashcards.reviewCount", { count: reviewCount })}
 						</Badge>
 					</div>
 				</div>
@@ -93,7 +95,7 @@ export function FlashcardsActive({
 							onKeyDown={handleKeyDown}
 							role="button"
 							tabIndex={0}
-							aria-label="Flip flashcard"
+							aria-label={t("flashcards.flipAriaLabel")}
 							initial={{ rotateY: 0 }}
 							animate={{ rotateY: isFlipped ? 180 : 0 }}
 							transition={{ duration: 0.5, ease: iOSEase }}
@@ -122,7 +124,7 @@ export function FlashcardsActive({
 									</p>
 								</div>
 								<div className="mt-4 text-center">
-									<p className="text-muted-foreground text-xs">Tap to flip</p>
+									<p className="text-muted-foreground text-xs">{t("flashcards.tapToFlip")}</p>
 								</div>
 							</div>
 
@@ -141,7 +143,7 @@ export function FlashcardsActive({
 								{currentCard.hint && (
 									<div className="mt-4 rounded-lg bg-warning/10 p-3 dark:bg-warning/20">
 										<p className="text-amber-700 text-xs dark:text-amber-300">
-											Hint: {currentCard.hint}
+											{t("flashcards.hintLabel", { hint: currentCard.hint })}
 										</p>
 									</div>
 								)}
@@ -153,7 +155,7 @@ export function FlashcardsActive({
 				{isFlipped && (
 					<div className="mt-4 flex flex-col gap-2 px-4 pb-4">
 						<p className="text-center text-muted-foreground text-xs">
-							How well did you know this?
+							{t("flashcards.howWell")}
 						</p>
 						<div className="grid grid-cols-3 gap-2">
 							{SM2_QUALITIES.slice(0, 3).map((q) => (
@@ -191,14 +193,14 @@ export function FlashcardsActive({
 						disabled={currentIndex === 0}
 					>
 						<HugeiconsIcon icon={ArrowLeft01Icon} className="mr-2 size-4" />
-						Previous
+						{t("flashcards.previous")}
 					</Button>
 					<Button
 						variant="ghost"
 						onClick={onNext}
 						disabled={currentIndex === totalCards - 1}
 					>
-						Next
+						{t("flashcards.next")}
 						<HugeiconsIcon icon={ArrowRight01Icon} className="ml-2 size-4" />
 					</Button>
 				</div>

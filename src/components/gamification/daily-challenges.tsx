@@ -3,6 +3,7 @@
 import { CheckmarkCircle01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { AnimatedProgressBar } from "@/components/shared/animated-progress-bar";
 import { FadeIn } from "@/components/shared/fade-in";
 import type { DailyChallenge } from "@/types/gamification";
@@ -12,6 +13,7 @@ interface DailyChallengesProps {
 }
 
 export function DailyChallenges({ challenges }: DailyChallengesProps) {
+	const t = useTranslations();
 	const completedCount = challenges.filter((c) => c.completed).length;
 	const allCompleted = completedCount === challenges.length;
 
@@ -20,7 +22,7 @@ export function DailyChallenges({ challenges }: DailyChallengesProps) {
 			<div className="flex items-center justify-between">
 				<div className="flex items-center gap-2">
 					<span className="font-semibold text-foreground text-sm">
-						Daily Challenges
+						{t("gamification.dailyChallenges")}
 					</span>
 					{allCompleted && (
 						<m.span
@@ -28,12 +30,12 @@ export function DailyChallenges({ challenges }: DailyChallengesProps) {
 							animate={{ scale: 1, opacity: 1 }}
 							className="rounded-full bg-success/20 px-2 py-0.5 text-success-foreground text-xs"
 						>
-							Complete!
+							{t("gamification.complete")}
 						</m.span>
 					)}
 				</div>
 				<span className="text-muted-foreground text-xs">
-					{completedCount} / {challenges.length}
+					{t("gamification.completedOfTotal", { completed: completedCount, total: challenges.length })}
 				</span>
 			</div>
 
@@ -71,7 +73,7 @@ export function DailyChallenges({ challenges }: DailyChallengesProps) {
 										{challenge.title}
 									</span>
 									<span className="text-muted-foreground text-xs">
-										+{challenge.xpReward} XP
+										{t("gamification.xpReward", { xpReward: challenge.xpReward })}
 									</span>
 								</div>
 
@@ -96,7 +98,7 @@ export function DailyChallenges({ challenges }: DailyChallengesProps) {
 										className="flex items-center gap-1 text-success-foreground text-xs"
 									>
 										<HugeiconsIcon icon={CheckmarkCircle01Icon} size={12} />
-										Completed
+										{t("gamification.completed")}
 									</m.div>
 								)}
 							</div>

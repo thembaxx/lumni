@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Add01Icon, MinusSignIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Button } from "@/components/ui/button";
@@ -22,6 +23,7 @@ export function QuestionCardMedia({
 	onToggleDiagram,
 	hasDiagram,
 }: QuestionCardMediaProps) {
+	const t = useTranslations();
 	// If we are loading the visual, show a skeleton
 	if (isLoading) {
 		return (
@@ -38,23 +40,23 @@ export function QuestionCardMedia({
 	return (
 		<div className="mt-2">
 			<div className="flex items-center justify-between">
-				<p className="font-medium text-muted-foreground text-xs">Diagram</p>
+				<p className="font-medium text-muted-foreground text-xs">{t("quiz.diagram")}</p>
 				<Button
 					variant="ghost"
 					size="sm"
 					onClick={onToggleDiagram}
 					className="h-8 gap-1 px-2"
-					aria-label={showDiagram ? "Hide diagram" : "Show diagram"}
+					aria-label={showDiagram ? t("quiz.hideDiagram") : t("quiz.showDiagram")}
 				>
 					{showDiagram ? (
 						<>
 							<HugeiconsIcon icon={MinusSignIcon} data-icon="inline-start" />
-							<span className="text-xs">Hide</span>
+							<span className="text-xs">{t("quiz.hide")}</span>
 						</>
 					) : (
 						<>
 							<HugeiconsIcon icon={Add01Icon} data-icon="inline-start" />
-							<span className="text-xs">Show</span>
+							<span className="text-xs">{t("quiz.show")}</span>
 						</>
 					)}
 				</Button>

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { RadialIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
@@ -7,6 +8,7 @@ import { LoadingShell } from "@/components/loading/loading-shell";
 import { iOSEase } from "@/lib/utils/animation";
 
 export function FlashcardsLoading() {
+	const t = useTranslations();
 	return (
 		<LoadingShell>
 			<div className="flex flex-col items-center gap-[--space-6]">
@@ -41,7 +43,7 @@ export function FlashcardsLoading() {
 					transition={{ duration: 0.4, ease: iOSEase, delay: 0.08 }}
 					className="ios-title-2 text-center text-[--system-text-primary]"
 				>
-					Flashcards
+					{t("flashcards.title")}
 				</m.h2>
 
 				<m.p
@@ -50,7 +52,7 @@ export function FlashcardsLoading() {
 					transition={{ duration: 0.35, ease: iOSEase, delay: 0.12 }}
 					className="ios-footnote text-center text-[--system-text-secondary]"
 				>
-					Loading your cards…
+					{t("flashcards.loading")}
 				</m.p>
 			</div>
 		</LoadingShell>

@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Camera01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
@@ -30,6 +31,7 @@ export function QuestionCardHeader({
 	isMathSubject,
 	onToolClick,
 }: QuestionCardHeaderProps) {
+	const t = useTranslations();
 	return (
 		<div className="gap-4">
 			<div className="flex items-center justify-between">
@@ -58,7 +60,7 @@ export function QuestionCardHeader({
 							type="button"
 							onClick={onToolClick}
 							className="flex size-8 items-center justify-center rounded-full transition-colors hover:bg-muted"
-							aria-label="Snap photo to solve"
+							aria-label={t("quiz.snapPhoto")}
 						>
 							<HugeiconsIcon
 								icon={Camera01Icon}
@@ -70,7 +72,7 @@ export function QuestionCardHeader({
 						type="button"
 						onClick={onBookmarkToggle}
 						className="flex size-8 items-center justify-center rounded-full transition-colors hover:bg-muted"
-						aria-label={bookmarked ? "Remove bookmark" : "Bookmark question"}
+						aria-label={bookmarked ? t("quiz.removeBookmark") : t("quiz.bookmarkQuestion")}
 					>
 						<svg
 							width="16"
@@ -81,13 +83,13 @@ export function QuestionCardHeader({
 							strokeWidth="2"
 							className={bookmarked ? "text-warning" : "text-muted-foreground"}
 						>
-							<title>Bookmark</title>
+							<title>{t("quiz.bookmark")}</title>
 							<path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
 						</svg>
 					</button>
 					<TTSButton text={question.questionText} />
 					<Badge variant="secondary" className="text-xs">
-						{question.points} pts
+						{t("quiz.pointsCount", { points: question.points })}
 					</Badge>
 				</div>
 			</div>

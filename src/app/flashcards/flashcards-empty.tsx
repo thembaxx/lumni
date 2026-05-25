@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Search01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
@@ -25,16 +26,17 @@ export function FlashcardsEmpty({
 	onGoBack,
 	mode,
 }: FlashcardsEmptyProps) {
+	const t = useTranslations();
 	const message =
 		mode === "mistakes"
-			? `No past mistakes found for ${subject}. Complete some quizzes first!`
-			: `Upload some ${subject} questions to start studying and ace that exam!`;
+			? t("flashcards.noMistakes", { subject })
+			: t("flashcards.uploadPrompt", { subject });
 
 	return (
 		<div className="flex min-h-screen items-center justify-center bg-background p-4">
 			<Card className="w-full max-w-md">
 				<CardHeader className="text-center">
-					<CardTitle>Deck is Empty</CardTitle>
+					<CardTitle>{t("flashcards.deckEmpty")}</CardTitle>
 				</CardHeader>
 				<CardContent className="flex flex-col gap-4">
 					<Empty>
@@ -50,12 +52,12 @@ export function FlashcardsEmpty({
 									/>
 								</m.div>
 							</EmptyMedia>
-							<EmptyTitle>No flashcards found</EmptyTitle>
+							<EmptyTitle>{t("flashcards.noFlashcards")}</EmptyTitle>
 							<EmptyDescription>{message}</EmptyDescription>
 						</EmptyHeader>
 						<EmptyContent>
 							<Button variant="outline" className="w-full" onClick={onGoBack}>
-								Go Back
+								{t("flashcards.goBack")}
 							</Button>
 						</EmptyContent>
 					</Empty>

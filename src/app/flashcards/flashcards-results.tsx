@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Home01Icon, Target01Icon, UndoIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Confetti } from "@/components/celebration";
@@ -23,6 +24,7 @@ export function FlashcardsResults({
 	onGoHouse,
 	onRestart,
 }: FlashcardsResultsProps) {
+	const t = useTranslations();
 	const accuracy =
 		totalCards > 0 ? Math.round((knownCount / totalCards) * 100) : 0;
 	const didWell = accuracy >= 70;
@@ -37,23 +39,23 @@ export function FlashcardsResults({
 							<header className="text-left">
 								<h2 className="font-semibold text-xl tracking-tight">
 									{accuracy === 100
-										? "Perfect! You&apos;re a pro."
+										? t("flashcards.perfectResult")
 										: didWell
-											? "Awesome! Session Complete."
-											: "Good start! Keep going."}
+											? t("flashcards.greatResult")
+											: t("flashcards.goodResult")}
 								</h2>
 							</header>
 							<div className="grid grid-cols-12 gap-3">
 								<div className="col-span-8 rounded-lg bg-muted p-4 sm:col-span-8">
 									<p className="font-extrabold text-2xl">{totalCards}</p>
-									<p className="text-muted-foreground text-xs">Cards Studied</p>
+									<p className="text-muted-foreground text-xs">{t("flashcards.cardsStudied")}</p>
 								</div>
 								<div className="col-span-4 rounded-lg bg-success/10 p-4 sm:col-span-4 dark:bg-success/20">
 									<p className="font-extrabold text-success text-xl dark:text-success-foreground">
 										{knownCount}
 									</p>
 									<p className="text-success text-xs dark:text-success-foreground">
-										Nailed it
+										{t("flashcards.nailedIt")}
 									</p>
 								</div>
 								<div className="col-span-12 rounded-lg bg-warning/10 p-4 sm:col-span-4 dark:bg-warning/20">
@@ -61,7 +63,7 @@ export function FlashcardsResults({
 										{reviewCount}
 									</p>
 									<p className="text-warning text-xs dark:text-warning-foreground">
-										Still learning
+										{t("flashcards.stillLearning")}
 									</p>
 								</div>
 								<div className="col-span-12 flex items-center gap-2">
@@ -70,7 +72,7 @@ export function FlashcardsResults({
 										className="size-4 text-success dark:text-success-foreground"
 									/>
 									<span className="font-medium text-sm text-success dark:text-success-foreground">
-										{accuracy}% Mastery
+										{t("flashcards.mastery", { accuracy })}
 									</span>
 								</div>
 								<div className="col-span-12 flex gap-2">
@@ -80,11 +82,11 @@ export function FlashcardsResults({
 										onClick={onGoHouse}
 									>
 										<HugeiconsIcon icon={Home01Icon} className="mr-2 size-4" />
-										Dashboard
+										{t("flashcards.dashboard")}
 									</Button>
 									<Button className="flex-1" onClick={onRestart}>
 										<HugeiconsIcon icon={UndoIcon} className="mr-2 size-4" />
-										Try Again
+										{t("flashcards.tryAgain")}
 									</Button>
 								</div>
 								<div className="col-span-12">
@@ -93,11 +95,11 @@ export function FlashcardsResults({
 											score: knownCount,
 											total: totalCards,
 											percentage: accuracy,
-											title: `${subject} Flashcards`,
-											subtitle: `${knownCount} / ${totalCards} Mastered`,
+											title: t("flashcards.resultHeading", { subject }),
+											subtitle: t("flashcards.masteredCount", { knownCount, totalCards }),
 											type: "flashcard",
 										}}
-										text={`I mastered ${accuracy}% of my ${subject} flashcards on Lumni!`}
+										text={t("flashcards.shareText", { accuracy, subject })}
 									/>
 								</div>
 							</div>

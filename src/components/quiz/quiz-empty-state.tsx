@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { RadialIcon, Target01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
@@ -32,6 +33,7 @@ interface QuizEmptyStateNoQuestionsProps {
 }
 
 function QuizEmptyStateNotStarted({ onStart }: QuizEmptyStateNotStartedProps) {
+	const t = useTranslations();
 	return (
 		<Empty className="mt-2 border border-dashed">
 			<div className="grid grid-cols-12 items-center gap-4">
@@ -48,15 +50,14 @@ function QuizEmptyStateNotStarted({ onStart }: QuizEmptyStateNotStartedProps) {
 								/>
 							</m.div>
 						</EmptyMedia>
-						<EmptyTitle>Quiz not started</EmptyTitle>
+						<EmptyTitle>{t("quiz.notStarted")}</EmptyTitle>
 						<EmptyDescription>
-							Practice quizzes you start will be saved here for easy access
-							later. You can also view and manage your past quiz attempts here.
+							{t("quiz.notStartedDesc")}
 						</EmptyDescription>
 					</EmptyHeader>
 					<EmptyContent>
 						<Button variant="outline" size="sm" onClick={onStart}>
-							Start quiz
+							{t("quiz.startQuiz")}
 						</Button>
 					</EmptyContent>
 				</div>
@@ -72,6 +73,7 @@ function QuizEmptyStateNoQuestions({
 	subject,
 	onBack,
 }: QuizEmptyStateNoQuestionsProps) {
+	const t = useTranslations();
 	return (
 		<Empty>
 			<div className="grid grid-cols-12 items-center gap-4">
@@ -88,14 +90,14 @@ function QuizEmptyStateNoQuestions({
 								/>
 							</m.div>
 						</EmptyMedia>
-						<EmptyTitle>No questions found</EmptyTitle>
+						<EmptyTitle>{t("quiz.noQuestionsFound")}</EmptyTitle>
 						<EmptyDescription>
-							Upload questions for {subject} to start practicing
+							{t("quiz.uploadQuestions", { subject: subject ?? "" })}
 						</EmptyDescription>
 					</EmptyHeader>
 					<EmptyContent>
 						<Button variant="outline" onClick={onBack}>
-							Go Back
+							{t("common.back")}
 						</Button>
 					</EmptyContent>
 				</div>
@@ -112,16 +114,17 @@ interface QuizStartStateProps {
 }
 
 export function QuizStartState({ onSelect }: QuizStartStateProps) {
+	const t = useTranslations();
 	return (
 		<div className="mt-24 flex flex-col gap-4">
 			<div className="grid grid-cols-12 items-center gap-4">
 				<div className="col-span-12 md:col-span-6">
 					<div className="flex flex-col gap-4 text-center md:text-left">
 						<p className="font-medium text-muted-foreground text-sm">
-							Select a subject to begin
+							{t("quiz.selectSubjectBegin")}
 						</p>
 						<p className="text-muted-foreground/60 text-xs">
-							Choose a subject above to start your quiz
+							{t("quiz.chooseSubjectToStart")}
 						</p>
 					</div>
 				</div>
@@ -148,7 +151,7 @@ export function QuizStartState({ onSelect }: QuizStartStateProps) {
 					onClick={onSelect}
 					className="rounded-lg bg-system-accent px-4 py-2 font-medium text-sm text-white hover:bg-system-accent/90"
 				>
-					Select Subject
+					{t("quiz.selectSubject")}
 				</button>
 			</div>
 		</div>
@@ -164,18 +167,19 @@ export function QuizSubjectPrompt({
 	onSelect,
 	hasSubject,
 }: QuizSubjectPromptProps) {
+	const t = useTranslations();
 	return (
 		<div className="mt-24 flex flex-col gap-4">
 			<div className="grid grid-cols-12 items-center gap-4">
 				<div className="col-span-12 md:col-span-6">
 					<div className="flex flex-col gap-4 text-center md:text-left">
 						<p className="font-medium text-muted-foreground text-sm">
-							{hasSubject ? "Ready to begin" : "Select a subject to begin"}
+							{hasSubject ? t("quiz.readyToBegin") : t("quiz.selectSubjectBegin")}
 						</p>
 						<p className="text-muted-foreground/60 text-xs">
 							{hasSubject
-								? "Press play to start your quiz"
-								: "Choose a subject above to start your quiz"}
+								? t("quiz.pressPlayToStart")
+								: t("quiz.chooseSubjectToStart")}
 						</p>
 					</div>
 				</div>
@@ -202,7 +206,7 @@ export function QuizSubjectPrompt({
 					onClick={onSelect}
 					className="rounded-lg bg-system-accent px-4 py-2 font-medium text-sm text-white hover:bg-system-accent/90"
 				>
-					{hasSubject ? "Start Quiz" : "Select Subject"}
+					{hasSubject ? t("quiz.startQuiz") : t("quiz.selectSubject")}
 				</button>
 			</div>
 		</div>
@@ -216,15 +220,16 @@ export function QuizSelectSubject({
 	onSelect: (subject: string) => void;
 	buttonLabel?: string;
 }) {
+	const t = useTranslations();
 	return (
 		<Empty className="p-0">
 			<EmptyHeader>
 				<EmptyMedia variant="icon">
 					<HugeiconsIcon icon={Target01Icon} className="size-8" />
 				</EmptyMedia>
-				<EmptyTitle>Start a Quiz</EmptyTitle>
+				<EmptyTitle>{t("quiz.startQuiz")}</EmptyTitle>
 				<EmptyDescription>
-					Select a subject to begin practicing
+					{t("quiz.selectSubjectToBegin")}
 				</EmptyDescription>
 			</EmptyHeader>
 			<EmptyContent className="px-0">

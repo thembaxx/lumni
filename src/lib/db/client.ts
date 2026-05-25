@@ -33,6 +33,9 @@ export const COLLECTIONS = {
 	TEACHER_STUDENTS: "teacher_students",
 	PARENT_STUDENTS: "parent_students",
 	FLASHCARD_REVIEWS: "flashcard_reviews",
+	STUDY_GROUPS: "study_groups",
+	GROUP_MEMBERS: "group_members",
+	GROUP_INVITES: "group_invites",
 } as const;
 
 export type Subject = {

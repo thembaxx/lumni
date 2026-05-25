@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { BulbIcon, RefreshIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
@@ -22,13 +23,14 @@ export function FlashcardsIdle({
 	onSelect,
 	onReviewMistakes,
 }: FlashcardsIdleProps) {
+	const t = useTranslations();
 	return (
 		<div className="grid min-h-[100dvh] grid-cols-12 gap-0 bg-background">
 			<div className="col-span-12 col-start-1 flex items-center justify-center p-4 pb-20 md:col-span-7">
 				<div className="card-elevated mx-auto w-full max-w-md overflow-hidden rounded-card-lg border border-border/80 bg-card p-6 shadow-level-2">
 					<header className="pb-4 text-left">
 						<h2 className="font-semibold text-2xl tracking-tight">
-							Flashcards
+							{t("flashcards.title")}
 						</h2>
 					</header>
 					<div className="flex flex-col gap-4">
@@ -37,22 +39,22 @@ export function FlashcardsIdle({
 								<EmptyMedia variant="icon">
 									<HugeiconsIcon icon={BulbIcon} className="size-8" />
 								</EmptyMedia>
-								<EmptyTitle>Ready to start studying?</EmptyTitle>
+								<EmptyTitle>{t("flashcards.readyToStart")}</EmptyTitle>
 								<EmptyDescription>
-									Generate new flashcards or review your past mistakes.
+									{t("flashcards.generateOrReview")}
 								</EmptyDescription>
 							</EmptyHeader>
 							<EmptyContent>
 								<div className="flex flex-col gap-3">
 									<SubjectsDrawer onSelect={onSelect}>
 										<Button>
-											Generate AI Flashcards
+											{t("flashcards.generateAiFlashcards")}
 											<HugeiconsIcon icon={BulbIcon} className="ml-1 size-4" />
 										</Button>
 									</SubjectsDrawer>
 									<SubjectsDrawer onSelect={onReviewMistakes}>
 										<Button variant="outline">
-											Review Mistakes
+											{t("flashcards.reviewMistakes")}
 											<HugeiconsIcon
 												icon={RefreshIcon}
 												className="ml-1 size-4"

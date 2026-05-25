@@ -1,10 +1,12 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { appConfig } from "../../../app.config";
 
 export function SiteFooter() {
+	const t = useTranslations();
 	const [mounted, setMounted] = useState(false);
 	useEffect(() => {
 		setMounted(true);
@@ -19,73 +21,73 @@ export function SiteFooter() {
 							href="/"
 							className="py-1.5 font-extrabold text-lg tracking-tight"
 						>
-							lumni
+							{t("home.footerBrand")}
 						</Link>
 						<p className="mt-2 max-w-xs text-muted-foreground text-sm">
-							AI-powered Matric exam preparation for South African students.
+							{t("home.footerDesc")}
 						</p>
 					</div>
 					<div>
-						<h4 className="mb-3 font-semibold text-sm">Product</h4>
+						<h4 className="mb-3 font-semibold text-sm">{t("home.footerProduct")}</h4>
 						<div className="flex flex-col text-muted-foreground text-sm">
 							<Link
 								href="/quiz"
 								className="py-1.5 transition-colors hover:text-foreground"
 							>
-								Practice Quizzes
+								{t("home.footerQuiz")}
 							</Link>
 							<Link
 								href="/past-papers"
 								className="py-1.5 transition-colors hover:text-foreground"
 							>
-								Past Papers
+								{t("home.footerPapers")}
 							</Link>
 							<Link
 								href="/flashcards"
 								className="py-1.5 transition-colors hover:text-foreground"
 							>
-								Flashcards
+								{t("home.footerFlashcards")}
 							</Link>
 							<Link
 								href="/study-plan"
 								className="py-1.5 transition-colors hover:text-foreground"
 							>
-								Study Plan
+								{t("home.footerPlan")}
 							</Link>
 							<Link
 								href="/solve"
 								className="py-1.5 transition-colors hover:text-foreground"
 							>
-								Homework Help
+								{t("home.footerHomework")}
 							</Link>
 						</div>
 					</div>
 					<div>
-						<h4 className="mb-3 font-semibold text-sm">Support</h4>
+						<h4 className="mb-3 font-semibold text-sm">{t("home.footerSupport")}</h4>
 						<div className="flex flex-col text-muted-foreground text-sm">
 							<a
 								href={appConfig.links.support}
 								className="py-1.5 transition-colors hover:text-foreground"
 							>
-								Help Center
+								{t("home.footerHelp")}
 							</a>
 							<a
 								href={`mailto:${appConfig.contact.supportEmail}`}
 								className="py-1.5 transition-colors hover:text-foreground"
 							>
-								Email Us
+								{t("home.footerEmail")}
 							</a>
 							<Link
 								href={appConfig.links.privacy}
 								className="py-1.5 transition-colors hover:text-foreground"
 							>
-								Privacy Policy
+								{t("home.footerPrivacy")}
 							</Link>
 							<Link
 								href={appConfig.links.terms}
 								className="py-1.5 transition-colors hover:text-foreground"
 							>
-								Terms of Service
+								{t("home.footerTerms")}
 							</Link>
 						</div>
 					</div>
@@ -100,7 +102,7 @@ export function SiteFooter() {
 							href={`mailto:${appConfig.contact.email}`}
 							className="py-1.5 text-muted-foreground transition-colors hover:text-foreground"
 						>
-							<span className="text-xs">Contact</span>
+							<span className="text-xs">{t("home.footerContact")}</span>
 						</a>
 					</div>
 				</div>

@@ -5,11 +5,13 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { iOSEase } from "@/lib/utils/animation";
 
 export default function ForgotPasswordPage() {
+	const t = useTranslations();
 	const [email, setEmail] = useState("");
 	const [sent, setSent] = useState(false);
 
@@ -42,17 +44,19 @@ export default function ForgotPasswordPage() {
 					/>
 				</div>
 				<div className="flex flex-col gap-2">
-					<h1 className="font-semibold text-xl">Check your email</h1>
+					<h1 className="font-semibold text-xl">{t("auth.checkEmail")}</h1>
 					<p className="text-muted-foreground text-sm">
-						If an account exists for <strong>{email}</strong>, we sent password
-						reset instructions.
+						{t.rich("auth.resetEmailSent", {
+							email,
+							strong: (chunks) => <strong>{chunks}</strong>,
+						})}
 					</p>
 				</div>
 				<Link
 					href="/auth/sign-in"
 					className="font-semibold text-sm text-system-accent hover:underline"
 				>
-					Back to sign in
+					{t("auth.backToSignIn")}
 				</Link>
 			</m.div>
 		);
@@ -67,15 +71,15 @@ export default function ForgotPasswordPage() {
 			className="flex flex-col gap-8"
 		>
 			<div className="flex flex-col gap-2">
-				<h1 className="font-semibold text-xl">Reset password</h1>
+				<h1 className="font-semibold text-xl">{t("auth.resetPassword")}</h1>
 				<p className="text-muted-foreground text-sm">
-					Enter your email and we&apos;ll send you a reset link.
+					{t("auth.resetPasswordSubtitle")}
 				</p>
 			</div>
 
 			<div className="flex flex-col gap-1.5">
 				<label htmlFor="email" className="font-semibold text-sm">
-					Email
+					{t("auth.emailLabel")}
 				</label>
 				<div className="relative">
 					<HugeiconsIcon
@@ -85,7 +89,7 @@ export default function ForgotPasswordPage() {
 					<Input
 						id="email"
 						type="email"
-						placeholder="you@school.edu"
+						placeholder={t("auth.emailPlaceholder")}
 						value={email}
 						onChange={(e) => setEmail(e.target.value)}
 						required
@@ -99,16 +103,16 @@ export default function ForgotPasswordPage() {
 				disabled={!email}
 				className="h-11 w-full rounded-xl"
 			>
-				Send reset link
+				{t("auth.sendResetLink")}
 			</Button>
 
 			<p className="text-center text-muted-foreground text-sm">
-				Remember your password?{" "}
+				{t("auth.rememberPassword")}{" "}
 				<Link
 					href="/auth/sign-in"
 					className="font-semibold text-system-accent hover:underline"
 				>
-					Sign in
+					{t("auth.signIn")}
 				</Link>
 			</p>
 		</m.form>

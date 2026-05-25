@@ -350,4 +350,46 @@ export const schemaConfig: Record<string, CollectionSchema> = {
 			},
 		],
 	},
+	study_groups: {
+		attributes: {
+			name: { type: "string", size: 255, required: true },
+			description: { type: "string", size: 2000 },
+			subjectId: { type: "string", size: 100 },
+			inviteCode: { type: "string", size: 20, required: true },
+			createdBy: { type: "string", size: 100, required: true },
+			memberCount: { type: "integer" },
+			createdAt: { type: "datetime" },
+		},
+		indexes: [
+			{ key: "idx_groups_inviteCode", type: "unique", attributes: ["inviteCode"] },
+			{ key: "idx_groups_createdBy", type: "key", attributes: ["createdBy"] },
+		],
+	},
+	group_members: {
+		attributes: {
+			groupId: { type: "string", size: 100, required: true },
+			userId: { type: "string", size: 100, required: true },
+			role: { type: "string", size: 20, required: true },
+			joinedAt: { type: "datetime" },
+		},
+		indexes: [
+			{ key: "idx_members_groupId", type: "key", attributes: ["groupId"] },
+			{ key: "idx_members_userId", type: "key", attributes: ["userId"] },
+			{ key: "idx_members_pair", type: "unique", attributes: ["groupId", "userId"] },
+		],
+	},
+	group_invites: {
+		attributes: {
+			groupId: { type: "string", size: 100, required: true },
+			code: { type: "string", size: 20, required: true },
+			createdBy: { type: "string", size: 100, required: true },
+			status: { type: "string", size: 20, required: true },
+			expiresAt: { type: "datetime" },
+			createdAt: { type: "datetime" },
+		},
+		indexes: [
+			{ key: "idx_invites_groupId", type: "key", attributes: ["groupId"] },
+			{ key: "idx_invites_code", type: "key", attributes: ["code"] },
+		],
+	},
 };

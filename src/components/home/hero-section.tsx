@@ -11,6 +11,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { m, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 import { iOSEase } from "@/lib/utils/animation";
 
 interface HeroSectionProps {
@@ -18,6 +19,7 @@ interface HeroSectionProps {
 }
 
 export function HeroSection({ isAuthenticated }: HeroSectionProps) {
+	const t = useTranslations();
 	const { scrollYProgress } = useScroll();
 	const heroOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
 	const heroScale = useTransform(scrollYProgress, [0, 0.15], [1, 0.98]);
@@ -39,16 +41,13 @@ export function HeroSection({ isAuthenticated }: HeroSectionProps) {
 						>
 							<div className="mb-4 inline-flex items-center gap-2 rounded-full bg-(--system-accent-alpha-10) px-3 py-1 font-medium text-primary text-xs">
 								<HugeiconsIcon icon={SparklesIcon} className="size-3" />
-								Your Matric advantage
+								{t("home.heroTagline")}
 							</div>
 							<h1 className="ios-large-title leading-[1.1] sm:text-5xl lg:text-6xl">
-								Pass your Matric{" "}
-								<span className="text-primary">with confidence</span>
+								{t("home.heroTitle")}<span className="text-primary">{t("home.heroTitleHighlight")}</span>
 							</h1>
 							<p className="mt-4 max-w-lg text-lg text-muted-foreground leading-relaxed">
-								AI-powered quizzes, past exam papers, smart flashcards, and a
-								personalized study planner. Everything a Matric student needs to
-								prepare, all in one place.
+								{t("home.heroDesc")}
 							</p>
 						</m.div>
 
@@ -61,13 +60,13 @@ export function HeroSection({ isAuthenticated }: HeroSectionProps) {
 							{isAuthenticated ? (
 								<Link href="/dashboard">
 									<Button size="lg" className="w-full sm:w-auto">
-										Go to Dashboard
+										{t("home.heroDashboard")}
 									</Button>
 								</Link>
 							) : (
 								<Link href="/auth/sign-up">
 									<Button size="lg" className="w-full sm:w-auto">
-										Start Learning Free
+										{t("home.heroStartFree")}
 									</Button>
 								</Link>
 							)}
@@ -81,11 +80,11 @@ export function HeroSection({ isAuthenticated }: HeroSectionProps) {
 						>
 							<div className="flex items-center gap-2">
 								<HugeiconsIcon icon={Mortarboard01Icon} className="size-4" />
-								<span>CAPS aligned</span>
+								<span>{t("home.heroBadgeCaps")}</span>
 							</div>
 							<div className="flex items-center gap-2">
 								<HugeiconsIcon icon={Timer01Icon} className="size-4" />
-								<span>Past papers 2021-2025</span>
+								<span>{t("home.heroBadgePapers")}</span>
 							</div>
 							<div className="flex items-center gap-2">
 								<HugeiconsIcon icon={ChartUpIcon} className="size-4" />
@@ -111,9 +110,9 @@ export function HeroSection({ isAuthenticated }: HeroSectionProps) {
 										/>
 									</div>
 									<div>
-										<p className="font-semibold text-sm">AI Quiz</p>
+										<p className="font-semibold text-sm">{t("home.demoQuiz")}</p>
 										<p className="text-[10px] text-muted-foreground">
-											Mathematics
+											{t("home.demoSubject")}
 										</p>
 									</div>
 								</div>
@@ -133,11 +132,11 @@ export function HeroSection({ isAuthenticated }: HeroSectionProps) {
 											<div className="size-2 rounded-full bg-success" />
 										</div>
 										<span className="font-medium text-success text-xs">
-											85%
+											{t("home.demoScore")}
 										</span>
 									</div>
 									<span className="text-[10px] text-muted-foreground">
-										Question 4 of 10
+										{t("home.demoProgress", { current: 4, total: 10 })}
 									</span>
 								</div>
 							</div>

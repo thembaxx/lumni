@@ -1,6 +1,7 @@
 "use client";
 
 import { m } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { AnimatedProgressBar } from "@/components/shared/animated-progress-bar";
 import { FadeIn } from "@/components/shared/fade-in";
 import { getStreakMessage } from "@/lib/utils/gamification";
@@ -37,6 +38,7 @@ export function StreakCelebration({
 	currentStreak,
 	milestones,
 }: StreakCelebrationProps) {
+	const t = useTranslations();
 	const nextMilestone = milestones.find((m) => !m.unlocked);
 	const progress = nextMilestone
 		? (currentStreak / nextMilestone.streak) * 100
@@ -85,7 +87,7 @@ export function StreakCelebration({
 				<div className="flex-1">
 					<div className="mb-1 flex items-center justify-between">
 						<span className="font-extrabold text-foreground text-lg">
-							{currentStreak} day{currentStreak !== 1 ? "s" : ""}
+							{t("gamification.streakCount", { count: currentStreak })}
 						</span>
 						<span
 							className={`font-medium text-xs ${
@@ -105,8 +107,10 @@ export function StreakCelebration({
 								trackClassName="bg-secondary"
 							/>
 							<p className="mt-1 text-muted-foreground text-xs">
-								{nextMilestone.streak - currentStreak} days to unlock:{" "}
-								{nextMilestone.reward}
+								{t("gamification.daysToUnlock", {
+									delta: nextMilestone.streak - currentStreak,
+									reward: nextMilestone.reward,
+								})}
 							</p>
 						</>
 					)}
@@ -117,7 +121,7 @@ export function StreakCelebration({
 							animate={{ opacity: 1, y: 0 }}
 							className="mt-1 text-success-foreground text-xs"
 						>
-							Milestone reached!
+							{t("gamification.milestoneReached")}
 						</m.p>
 					)}
 				</div>

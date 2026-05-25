@@ -1,6 +1,7 @@
 "use client";
 
 import { m } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { FadeIn } from "@/components/shared/fade-in";
 import type { StreakMilestone } from "@/types/gamification";
 
@@ -13,10 +14,11 @@ export function ProgressMilestones({
 	currentStreak,
 	milestones,
 }: ProgressMilestonesProps) {
+	const t = useTranslations();
 	return (
 		<div className="flex flex-col gap-3">
 			<h3 className="font-semibold text-foreground text-sm">
-				Streak Milestones
+				{t("gamification.streakMilestones")}
 			</h3>
 
 			<div className="relative">
@@ -70,7 +72,7 @@ export function ProgressMilestones({
 												: "text-muted-foreground"
 										}`}
 									>
-										{milestone.streak} days
+										{t("gamification.milestoneStreakDays", { streak: milestone.streak })}
 									</p>
 									<p className="max-w-[60px] text-[10px] text-muted-foreground leading-tight">
 										{milestone.reward.split(" ")[0]}

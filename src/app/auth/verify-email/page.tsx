@@ -7,6 +7,7 @@ import { m } from "framer-motion";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { FormSkeleton } from "@/components/ui/skeletons";
 import { iOSEase } from "@/lib/utils/animation";
@@ -18,6 +19,7 @@ function VerifyEmailContent() {
 	const secret = get("secret");
 	const [error, setError] = useState("");
 	const calledRef = useRef(false);
+	const t = useTranslations();
 
 	const queryClient = useQueryClient();
 	const { mutate } = useMutation({
@@ -44,13 +46,13 @@ function VerifyEmailContent() {
 	if (error) {
 		return (
 			<div className="flex flex-col items-center gap-4 text-center">
-				<h1 className="font-semibold text-xl">Verification failed</h1>
+				<h1 className="font-semibold text-xl">{t("auth.verificationFailed")}</h1>
 				<p className="text-muted-foreground text-sm">{error}</p>
 				<Link
 					href="/auth/sign-in"
 					className="font-semibold text-sm text-system-accent hover:underline"
 				>
-					Back to sign in
+					{t("auth.backToSignIn")}
 				</Link>
 			</div>
 		);
@@ -67,13 +69,13 @@ function VerifyEmailContent() {
 				<HugeiconsIcon icon={SparklesIcon} className="size-8 text-green-500" />
 			</div>
 			<div className="flex flex-col gap-2">
-				<h1 className="font-semibold text-xl">Email verified</h1>
+				<h1 className="font-semibold text-xl">{t("auth.emailVerified")}</h1>
 				<p className="text-muted-foreground text-sm">
-					Your email has been verified successfully.
+					{t("auth.emailVerifiedDesc")}
 				</p>
 			</div>
 			<Button onClick={() => push("/dashboard")} className="rounded-xl">
-				Go to Dashboard
+				{t("auth.goToDashboard")}
 			</Button>
 		</m.div>
 	);

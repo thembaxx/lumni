@@ -11,6 +11,7 @@ import { m } from "framer-motion";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useCallback, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FormSkeleton } from "@/components/ui/skeletons";
@@ -36,6 +37,7 @@ function SignInForm() {
 	const [isMagicLink, setIsMagicLink] = useState(false);
 	const [magicLinkSent, setMagicLinkSent] = useState(false);
 	const [loading, setLoading] = useState(false);
+	const t = useTranslations();
 
 	const handleSignIn = useCallback(
 		async (e: React.FormEvent) => {
@@ -83,12 +85,13 @@ function SignInForm() {
 				</div>
 				<div className="flex flex-col gap-2">
 					<h1 className="ios-title-2 font-semibold text-foreground">
-						Check your email
+						{t("auth.checkEmail")}
 					</h1>
 					<p className="ios-subhead text-muted-foreground leading-relaxed">
-						We sent a magic link to{" "}
-						<strong className="text-foreground">{email}</strong>. Click the link
-						to sign in.
+						{t.rich("auth.magicLinkSent", {
+							email,
+							strong: (chunks) => <strong className="text-foreground">{chunks}</strong>,
+						})}
 					</p>
 				</div>
 				<button
@@ -96,7 +99,7 @@ function SignInForm() {
 					onClick={() => setMagicLinkSent(false)}
 					className="font-semibold text-sm text-system-accent hover:underline"
 				>
-					Use a different email
+					{t("auth.useDifferentEmail")}
 				</button>
 			</m.div>
 		);
@@ -111,9 +114,9 @@ function SignInForm() {
 			className="flex flex-col gap-8"
 		>
 			<div className="flex flex-col gap-2">
-				<h1 className="ios-title-2 font-semibold text-foreground">Sign In</h1>
+				<h1 className="ios-title-2 font-semibold text-foreground">{t("auth.signInTitle")}</h1>
 				<p className="ios-subhead text-muted-foreground">
-					Welcome back to Lumni
+					{t("auth.welcomeBack")}
 				</p>
 			</div>
 
@@ -123,7 +126,7 @@ function SignInForm() {
 						htmlFor="email"
 						className="ios-footnote font-semibold text-foreground"
 					>
-						Email
+						{t("auth.emailLabel")}
 					</label>
 					<div className="relative">
 						<HugeiconsIcon
@@ -133,7 +136,7 @@ function SignInForm() {
 						<Input
 							id="email"
 							type="email"
-							placeholder="you@school.edu"
+							placeholder={t("auth.emailPlaceholder")}
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
 							required
@@ -148,13 +151,13 @@ function SignInForm() {
 							htmlFor="password"
 							className="ios-footnote font-semibold text-foreground"
 						>
-							Password
+							{t("auth.passwordLabel")}
 						</label>
 						<div className="relative">
 							<Input
 								id="password"
 								type={showPassword ? "text" : "password"}
-								placeholder="Enter your password"
+								placeholder={t("auth.passwordPlaceholder")}
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}
 								required
@@ -162,7 +165,7 @@ function SignInForm() {
 							/>
 							<button
 								type="button"
-								aria-label={showPassword ? "Hide password" : "Show password"}
+								aria-label={showPassword ? t("auth.hidePassword") : t("auth.showPassword")}
 								onClick={() => setShowPassword(!showPassword)}
 								className="absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground hover:text-foreground"
 							>
@@ -186,10 +189,10 @@ function SignInForm() {
 					className="h-11 w-full rounded-xl bg-system-accent font-semibold text-sm text-white transition-[background-color,transform] hover:bg-system-accent/90 active:scale-[0.96]"
 				>
 					{loading
-						? "Signing in..."
+						? t("auth.signingIn")
 						: isMagicLink
-							? "Send Magic Link"
-							: "Sign In"}
+							? t("auth.sendMagicLink")
+							: t("auth.signIn")}
 				</Button>
 
 				<button
@@ -201,18 +204,18 @@ function SignInForm() {
 					className="text-center font-medium text-sm text-system-accent hover:underline"
 				>
 					{isMagicLink
-						? "Sign in with password instead"
-						: "Send me a magic link by email"}
+						? t("auth.signInWithPassword")
+						: t("auth.sendMagicLinkLabel")}
 				</button>
 			</div>
 
 			<p className="text-center text-muted-foreground text-sm">
-				Don&apos;t have an account?{" "}
+				{t("auth.noAccount")}{" "}
 				<Link
 					href={`/auth/sign-up?redirect=${encodeURIComponent(redirect)}`}
 					className="font-semibold text-system-accent hover:underline"
 				>
-					Sign up
+					{t("auth.signUp")}
 				</Link>
 			</p>
 		</m.form>

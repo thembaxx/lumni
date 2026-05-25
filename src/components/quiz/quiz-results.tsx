@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import {
 	Award01Icon,
 	DashboardSquare01Icon,
@@ -37,6 +38,7 @@ export function QuizResultsCard({
 	onDashboard,
 	className,
 }: QuizResultsCardProps) {
+	const t = useTranslations();
 	const accuracy = calculateAccuracy(correctAnswers, totalQuestions);
 	const isGreatScore = accuracy >= 80;
 	const isPerfect = accuracy === 100;
@@ -83,7 +85,7 @@ export function QuizResultsCard({
 						className="flex items-center gap-2 px-4 py-2 shadow-lg"
 					>
 						<HugeiconsIcon icon={Award01Icon} className="size-5" />
-						<span className="font-extrabold">Perfect Score!</span>
+						<span className="font-extrabold">{t("quiz.perfectScore")}</span>
 					</Badge>
 				</m.div>
 			)}
@@ -106,14 +108,14 @@ export function QuizResultsCard({
 					>
 						<CardTitle className="font-extrabold text-xl tracking-tight">
 							{isPerfect
-								? "Flawless!"
+								? t("quiz.flawless")
 								: isGreatScore
-									? "Great Job!"
-									: "Quiz Complete!"}
+									? t("quiz.greatJob")
+									: t("quiz.quizComplete")}
 						</CardTitle>
 					</m.div>
 					<p className="text-muted-foreground text-sm">
-						Here are your results:
+						{t("quiz.hereAreResults")}
 					</p>
 				</CardHeader>
 
@@ -143,7 +145,7 @@ export function QuizResultsCard({
 									>
 										{totalQuestions}
 									</m.p>
-									<p className="text-muted-foreground text-xs">Questions</p>
+									<p className="text-muted-foreground text-xs">{t("quiz.questions")}</p>
 								</m.div>
 								<m.div
 									className="col-span-2 rounded-lg bg-muted p-4"
@@ -159,7 +161,7 @@ export function QuizResultsCard({
 									>
 										{correctAnswers}
 									</p>
-									<p className="text-muted-foreground text-xs">Correct</p>
+									<p className="text-muted-foreground text-xs">{t("quiz.correct")}</p>
 								</m.div>
 								<m.div
 									className="col-span-3 rounded-lg bg-muted p-4"
@@ -175,7 +177,7 @@ export function QuizResultsCard({
 									>
 										{accuracy}%
 									</p>
-									<p className="text-muted-foreground text-xs">Accuracy</p>
+									<p className="text-muted-foreground text-xs">{t("quiz.accuracy")}</p>
 								</m.div>
 								{(() => {
 									const aps = getAPSForSubject(accuracy);
@@ -217,7 +219,7 @@ export function QuizResultsCard({
 									<p className="font-extrabold text-2xl tabular-nums">
 										{formatTime(elapsedTime)}
 									</p>
-									<p className="text-muted-foreground text-xs">Time</p>
+									<p className="text-muted-foreground text-xs">{t("quiz.time")}</p>
 								</m.div>
 							</m.div>
 						</section>
@@ -232,7 +234,7 @@ export function QuizResultsCard({
 											className="flex-1 gap-2"
 										>
 											<HugeiconsIcon icon={Refresh01Icon} className="size-4" />
-											Try Again
+											{t("common.retry")}
 										</Button>
 									)}
 									{onDashboard && (
@@ -245,7 +247,7 @@ export function QuizResultsCard({
 												icon={DashboardSquare01Icon}
 												className="size-4"
 											/>
-											Dashboard
+											{t("quiz.dashboard")}
 										</Button>
 									)}
 								</div>
@@ -258,7 +260,7 @@ export function QuizResultsCard({
 										subtitle: `${getAPSForSubject(accuracy)}/7 APS · ${getGrade(accuracy)}`,
 										type: "quiz",
 									}}
-									text={`I scored ${accuracy}% on my ${subject} quiz on Lumni!`}
+									text={t("quiz.shareText", { accuracy, subject })}
 								/>
 							</m.div>
 						)}

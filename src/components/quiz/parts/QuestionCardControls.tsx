@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { ArrowRight01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Button } from "@/components/ui/button";
@@ -35,6 +36,7 @@ export function QuestionCardControls({
 	questionNumber,
 	totalQuestions,
 }: QuestionCardControlsProps) {
+	const t = useTranslations();
 	return (
 		<div
 			className={cn(
@@ -48,8 +50,8 @@ export function QuestionCardControls({
 					{questionNumber != null &&
 					totalQuestions != null &&
 					questionNumber < totalQuestions
-						? "Next"
-						: "Finish"}
+						? t("common.next")
+						: t("common.finish")}
 					<HugeiconsIcon icon={ArrowRight01Icon} data-icon />
 				</Button>
 			)}

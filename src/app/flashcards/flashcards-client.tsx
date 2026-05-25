@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import {
 	Confetti,
 	GamificationCelebration,
@@ -39,6 +40,7 @@ interface FlashcardItem {
 type FlashcardSource = "ai" | "mistakes";
 
 export function FlashcardsClient() {
+	const t = useTranslations();
 	useEffect(() => {
 		migrateLegacyFlashcards().catch((e) =>
 			console.warn("Legacy flashcard migration:", e),
@@ -325,7 +327,7 @@ export function FlashcardsClient() {
 			<div className="flex flex-col gap-4">
 				<LocalDataNotice
 					page="flashcards"
-					description="Your flashcards are saved on this device. Sign in to sync them across devices."
+					description={t("flashcards.localDataNotice")}
 				/>
 				<FlashcardsIdle
 					onSelect={(subject) => startSession(subject, "ai")}

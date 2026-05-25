@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import type { UserAnswer } from "@/lib/question-engine/types";
@@ -10,6 +11,7 @@ interface DataResponseInputProps {
 }
 
 export function DataResponseInput({ body, onGrade }: DataResponseInputProps) {
+	const t = useTranslations();
 	const questions = body.questions as Record<string, unknown>[] | undefined;
 	const [partAnswers, setPartAnswers] = useState<Record<string, string>>({});
 
@@ -30,7 +32,7 @@ export function DataResponseInput({ body, onGrade }: DataResponseInputProps) {
 						<input
 							type="text"
 							className="w-full rounded-md border bg-transparent px-3 py-1.5 text-sm outline-none focus:ring-2 focus:ring-[--system-accent]"
-							placeholder="Your answer..."
+							placeholder={t("quiz.answerPlaceholder")}
 							value={partAnswers[qId] ?? ""}
 							onChange={(e) =>
 								setPartAnswers((prev) => ({
@@ -62,7 +64,7 @@ export function DataResponseInput({ body, onGrade }: DataResponseInputProps) {
 					Object.values(partAnswers).every((v) => !v.trim())
 				}
 			>
-				Submit Answer
+				{t("quiz.submitAnswer")}
 			</Button>
 		</div>
 	);

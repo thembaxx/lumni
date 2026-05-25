@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Button } from "@/components/ui/button";
@@ -16,6 +17,7 @@ export function SourceBasedInput({
 	effectiveSubject,
 	onGrade,
 }: SourceBasedInputProps) {
+	const t = useTranslations();
 	const source = body.source as Record<string, unknown> | undefined;
 	const subQuestions = body.subQuestions as
 		| Record<string, unknown>[]
@@ -31,7 +33,7 @@ export function SourceBasedInput({
 				/>
 				{!!source?.attribution && (
 					<p className="mt-2 text-muted-foreground text-xs">
-						: {String(source.attribution)}
+						{t("quiz.sourceAttribution", { attribution: String(source.attribution) })}
 					</p>
 				)}
 			</div>
@@ -45,7 +47,7 @@ export function SourceBasedInput({
 						<input
 							type="text"
 							className="w-full rounded-md border bg-transparent px-3 py-1.5 text-sm outline-none focus:ring-2 focus:ring-[--system-accent]"
-							placeholder="Your answer..."
+							placeholder={t("quiz.answerPlaceholder")}
 							value={partAnswers[sqId] ?? ""}
 							onChange={(e) =>
 								setPartAnswers((prev) => ({
@@ -80,7 +82,7 @@ export function SourceBasedInput({
 					Object.values(partAnswers).every((v) => !v.trim())
 				}
 			>
-				Submit Answer
+				{t("quiz.submitAnswer")}
 			</Button>
 		</div>
 	);

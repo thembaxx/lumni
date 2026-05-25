@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { RadialIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
@@ -48,6 +49,7 @@ export function QuizView({
 	onFinish,
 	className: _className,
 }: QuizViewProps) {
+	const t = useTranslations();
 	const {
 		selectedSubject,
 		sessionActive,
@@ -84,20 +86,20 @@ export function QuizView({
 					<Card size="sm" className="w-full max-w-md">
 						<CardContent className="flex flex-col gap-4">
 							<CardTitle className="font-extrabold text-xl tracking-tight">
-								Unable to Load
+								{t("common.error")}
 							</CardTitle>
 							<EmptyStateWithIllustration
 								animation="error"
-								title="Unable to Load Questions"
+								title={t("quiz.loadError")}
 								description={loadError}
 								action={{
-									label: "Try Again",
+									label: t("common.retry"),
 									onClick: () => {
 										setLoadError(null);
 										window.location.reload();
 									},
 								}}
-								secondaryAction={{ label: "Go Back", onClick: handleStop }}
+								secondaryAction={{ label: t("common.back"), onClick: handleStop }}
 							/>
 						</CardContent>
 					</Card>
@@ -127,7 +129,7 @@ export function QuizView({
 					<Card size="sm" className="w-full max-w-md">
 						<CardContent className="flex flex-col gap-4">
 							<CardTitle className="ios-title-2 font-extrabold tracking-tight">
-								Quiz Practice
+								{t("quiz.title")}
 							</CardTitle>
 							<QuizSelectSubject onSelect={(s) => handleStartWithSubject(s)} />
 						</CardContent>
@@ -159,22 +161,16 @@ export function QuizView({
 									className="size-12 text-muted-foreground"
 								/>
 							</m.div>
-							<p className="text-muted-foreground">Preparing your questions…</p>
+							<p className="text-muted-foreground">{t("quiz.preparingQuestions")}</p>
 							{resolvedTopic && competencyData.topicCompetencyLevel && (
 								<div className="flex flex-col items-center gap-1">
 									<p className="text-muted-foreground text-xs">
-										Focusing on{" "}
-										<span className="font-semibold text-foreground">
-											{resolvedTopic}
-										</span>
+										{t("quiz.focusingOn", { topic: resolvedTopic })}
 									</p>
 									<p className="text-muted-foreground text-xs">
-										Level:{" "}
-										<span className="font-semibold text-foreground capitalize">
-											{competencyData.topicCompetencyLevel}
-										</span>
+										{t("quiz.level", { level: competencyData.topicCompetencyLevel })}
 										{competencyData.topicCompetencyScore !== undefined && (
-											<> · Score: {competencyData.topicCompetencyScore}%</>
+											<>{t("quiz.scorePercent", { score: competencyData.topicCompetencyScore })}</>
 										)}
 									</p>
 								</div>
@@ -199,7 +195,7 @@ export function QuizView({
 					<Card size="sm" className="w-full max-w-md">
 						<CardContent>
 							<CardTitle className="text-center font-extrabold text-xl tracking-tight">
-								Unable to Load Questions
+								{t("quiz.loadError")}
 							</CardTitle>
 							<QuizEmptyState
 								variant="no-questions"
@@ -226,7 +222,7 @@ export function QuizView({
 					<Card size="sm" className="w-full max-w-md">
 						<CardContent>
 							<CardTitle className="font-extrabold text-xl tracking-tight">
-								No Questions
+								{t("quiz.noQuestions")}
 							</CardTitle>
 							<QuizEmptyState
 								variant="no-questions"

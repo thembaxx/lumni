@@ -2,6 +2,7 @@
 
 import { Activity02Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/auth/auth-context";
@@ -13,6 +14,7 @@ import { SiteFooter } from "./site-footer";
 import { TestimonialsSection } from "./testimonials-section";
 
 export function HomeContent() {
+	const t = useTranslations();
 	const { user, status, authReady } = useAuth();
 	const isAuthenticated =
 		authReady &&
@@ -27,26 +29,26 @@ export function HomeContent() {
 						href="/"
 						className="py-2 font-extrabold text-lg tracking-tight transition-colors hover:text-primary"
 					>
-						lumni
+						{t("home.brand")}
 					</Link>
 					<div className="flex items-center gap-2">
 						{isAuthenticated ? (
 							<Link href="/dashboard">
 								<Button size="sm" className="flex items-center">
 									<HugeiconsIcon icon={Activity02Icon} className="size-5" />
-									Dashboard
+									{t("home.navDashboard")}
 								</Button>
 							</Link>
 						) : (
 							<>
 								<Link href="/auth/sign-in">
 									<Button variant="ghost" size="sm">
-										Sign In
+										{t("home.navSignIn")}
 									</Button>
 								</Link>
 								<Link href="/auth/sign-up">
 									<Button size="sm">
-										Get Started
+										{t("home.navGetStarted")}
 										<HugeiconsIcon
 											icon={ArrowRight01Icon}
 											data-icon="inline-end"

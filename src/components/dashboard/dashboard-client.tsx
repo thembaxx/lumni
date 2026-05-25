@@ -48,7 +48,7 @@ const QuizView = dynamic(
 		ssr: false,
 		loading: () => (
 			<div className="flex min-h-[60dvh] items-center justify-center">
-				<Skeleton className="size-full max-w-3xl rounded-[2rem]" />
+				<Skeleton className="size-full max-w-3xl rounded-3xl" />
 			</div>
 		),
 	},
@@ -59,7 +59,7 @@ const CompetencyOverview = dynamic(
 		import("@/components/dashboard/competency-overview").then(
 			(m) => m.CompetencyOverview,
 		),
-	{ ssr: false, loading: () => <Skeleton className="h-32 rounded-[2rem]" /> },
+	{ ssr: false, loading: () => <Skeleton className="h-32 rounded-3xl" /> },
 );
 
 const BloomTaxonomyWidget = dynamic(
@@ -69,7 +69,7 @@ const BloomTaxonomyWidget = dynamic(
 		),
 	{
 		ssr: false,
-		loading: () => <Skeleton className="h-48 rounded-[2rem]" />,
+		loading: () => <Skeleton className="h-48 rounded-3xl" />,
 	},
 );
 
@@ -80,7 +80,7 @@ const DailyProgressRing = dynamic(
 		),
 	{
 		ssr: false,
-		loading: () => <Skeleton className="size-full rounded-[2rem]" />,
+		loading: () => <Skeleton className="size-full rounded-3xl" />,
 	},
 );
 
@@ -89,7 +89,7 @@ const FocusTimerCard = dynamic(
 		import("@/components/dashboard/focus-timer-card").then(
 			(m) => m.FocusTimerCard,
 		),
-	{ ssr: false, loading: () => <Skeleton className="h-20 rounded-[2rem]" /> },
+	{ ssr: false, loading: () => <Skeleton className="h-20 rounded-3xl" /> },
 );
 
 const ComparativeAnalyticsPanel = dynamic(
@@ -100,8 +100,8 @@ const ComparativeAnalyticsPanel = dynamic(
 	{
 		ssr: false,
 		loading: () => (
-			<div className="flex h-64 items-center justify-center rounded-[2rem] border border-dashed bg-system-surface">
-				<Skeleton className="h-full w-full rounded-[2rem]" />
+			<div className="flex h-64 items-center justify-center rounded-3xl border border-dashed bg-system-surface">
+				<Skeleton className="h-full w-full rounded-3xl" />
 			</div>
 		),
 	},
@@ -200,7 +200,7 @@ function BentoStatRow({
 			</div>
 			<div className="col-span-12 sm:col-span-4">
 				<SectionReveal delay={0.12}>
-					<Card className="flex h-full items-center justify-center rounded-[2rem] p-4 shadow-level-1">
+					<Card className="flex h-full items-center justify-center rounded-3xl p-4 shadow-level-1">
 						<DailyProgressRing />
 					</Card>
 				</SectionReveal>
@@ -212,7 +212,7 @@ function BentoStatRow({
 function AnonymousUpsell() {
 	const t = useTranslations();
 	return (
-		<div className="rounded-[2rem] border border-dashed bg-system-surface p-8 shadow-level-1">
+		<div className="rounded-3xl border border-dashed bg-system-surface p-8 shadow-level-1">
 			<EmptyStateWithIllustration
 				icon={Login01Icon}
 				title={t("dashboard.signInTitle")}
@@ -484,13 +484,13 @@ export function DashboardClient({
 						className="flex min-h-dvh items-center justify-center px-4"
 					>
 						<div className="flex w-full max-w-md flex-col gap-3">
-							<Skeleton className="h-24 rounded-[2rem]" />
+							<Skeleton className="h-24 rounded-3xl" />
 							<div className="grid grid-cols-12 gap-3">
-								<Skeleton className="col-span-8 h-24 rounded-[2rem]" />
-								<Skeleton className="col-span-4 h-24 rounded-[2rem]" />
+								<Skeleton className="col-span-8 h-24 rounded-3xl" />
+								<Skeleton className="col-span-4 h-24 rounded-3xl" />
 							</div>
-							<Skeleton className="h-32 rounded-[2rem]" />
-							<Skeleton className="h-20 rounded-[2rem]" />
+							<Skeleton className="h-32 rounded-3xl" />
+							<Skeleton className="h-20 rounded-3xl" />
 						</div>
 					</m.div>
 				) : (

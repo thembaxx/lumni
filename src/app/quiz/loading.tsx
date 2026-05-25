@@ -1,14 +1,16 @@
+import { useTranslations } from "next-intl";
 import { RadialIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
 export default function QuizLoading() {
+	const t = useTranslations();
 	return (
 		<div className="flex min-h-[60vh] flex-col items-center justify-center gap-4">
 			<HugeiconsIcon
 				icon={RadialIcon}
 				className="size-10 animate-spin text-system-accent"
 			/>
-			<p className="text-muted-foreground text-sm">Preparing your quiz…</p>
+			<p className="text-muted-foreground text-sm">{t("quiz.preparing")}</p>
 		</div>
 	);
 }

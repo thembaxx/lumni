@@ -39,6 +39,7 @@ const routeTitleKeys: Record<string, string> = {
 	"/flashcards": "nav.flashcards",
 	"/settings": "nav.settings",
 	"/upload": "common.upload",
+	"/study-groups": "nav.studyGroups",
 };
 
 export function TopNav({ title, className }: TopNavProps) {

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -24,42 +25,43 @@ export function ExamSubmitDialog({
 	answeredCount,
 	totalParts,
 }: ExamSubmitDialogProps) {
+	const t = useTranslations();
 	const unanswered = totalParts - answeredCount;
 
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange}>
 			<DialogContent>
 				<DialogHeader>
-					<DialogTitle>Ready to hand in?</DialogTitle>
+					<DialogTitle>{t("exam.readyToHandIn")}</DialogTitle>
 					<DialogDescription>
 						{unanswered > 0
-							? `You still have ${unanswered} unanswered questions. Are you sure you want to finish now?`
-							: "You&apos;ve answered all questions. Ready to see how you did?"}
+							? t("exam.unansweredWarning", { unanswered })
+							: t("exam.allAnswered")}
 					</DialogDescription>
 				</DialogHeader>
 				<div className="flex flex-col gap-3 py-2">
 					<div className="flex justify-between text-sm">
-						<span className="text-muted-foreground">Answered</span>
+						<span className="text-muted-foreground">{t("exam.answered")}</span>
 						<span className="font-medium">
 							{answeredCount}/{totalParts}
 						</span>
 					</div>
 					{unanswered > 0 && (
 						<div className="flex justify-between text-sm">
-							<span className="font-semibold text-destructive">Unanswered</span>
+							<span className="font-semibold text-destructive">{t("exam.unanswered")}</span>
 							<span className="font-bold text-destructive">{unanswered}</span>
 						</div>
 					)}
 				</div>
 				<div className="flex justify-end gap-3">
 					<Button variant="outline" onClick={() => onOpenChange(false)}>
-						Continue Writing
+						{t("exam.continueWriting")}
 					</Button>
 					<Button
 						variant={unanswered > 0 ? "destructive" : "default"}
 						onClick={onConfirm}
 					>
-						Finish & Submit
+						{t("exam.finishSubmit")}
 					</Button>
 				</div>
 			</DialogContent>

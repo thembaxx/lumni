@@ -112,7 +112,7 @@ export function BloomTaxonomyWidget() {
 	if (topicData.length === 0) return null;
 
 	return (
-		<Card className="rounded-[2rem] shadow-level-1">
+		<Card className="rounded-3xl shadow-level-1">
 			<CardHeader>
 				<CardTitle className="font-semibold text-base">
 					Bloom's Taxonomy Progress

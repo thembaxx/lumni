@@ -6,6 +6,7 @@ import {
 	Home01Icon,
 	Quiz01Icon,
 	Settings01Icon,
+	UserGroupIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
@@ -48,6 +49,12 @@ const navItems: NavItem[] = [
 		label: "Problems",
 		icon: BookOpen01Icon,
 		href: "/problems",
+	},
+	{
+		id: "groups",
+		label: "Groups",
+		icon: UserGroupIcon,
+		href: "/study-groups",
 	},
 	{
 		id: "settings",

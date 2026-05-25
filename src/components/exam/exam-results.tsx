@@ -8,6 +8,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { PageContainer } from "@/components/layout/page-container";
 import { Button } from "@/components/ui/button";
@@ -36,6 +37,7 @@ export function ExamResults({
 	flags,
 	timeTaken,
 }: ExamResultsProps) {
+	const t = useTranslations();
 	const { push } = useRouter();
 
 	const totalParts = paper.sections.reduce(
@@ -62,10 +64,10 @@ export function ExamResults({
 						</m.div>
 						<div>
 							<h1 className="ios-title-1 text-[--system-text-primary]">
-								Exam Submitted
+								{t("exam.examSubmitted")}
 							</h1>
 							<p className="ios-footnote text-[--system-text-secondary]">
-								{paper.metadata.subject} {paper.metadata.paperCode}
+								{t("exam.engineTitle", { subject: paper.metadata.subject, paperCode: paper.metadata.paperCode })}
 							</p>
 						</div>
 					</div>
@@ -75,7 +77,7 @@ export function ExamResults({
 						onClick={() => push("/dashboard/practice")}
 					>
 						<HugeiconsIcon icon={ArrowLeft01Icon} data-icon />
-						Back to Exams
+						{t("exam.backToExams")}
 					</Button>
 				</div>
 
@@ -83,7 +85,7 @@ export function ExamResults({
 					<Card>
 						<CardHeader>
 							<CardTitle className="ios-caption-1 font-semibold text-[--system-text-secondary]">
-								Answered
+								{t("exam.answered")}
 							</CardTitle>
 						</CardHeader>
 						<CardContent>
@@ -98,7 +100,7 @@ export function ExamResults({
 					<Card>
 						<CardHeader>
 							<CardTitle className="ios-caption-1 font-semibold text-[--system-text-secondary]">
-								Unanswered
+								{t("exam.unanswered")}
 							</CardTitle>
 						</CardHeader>
 						<CardContent>
@@ -110,7 +112,7 @@ export function ExamResults({
 					<Card>
 						<CardHeader>
 							<CardTitle className="ios-caption-1 font-semibold text-[--system-text-secondary]">
-								Flagged
+								{t("exam.flagged")}
 							</CardTitle>
 						</CardHeader>
 						<CardContent>
@@ -122,7 +124,7 @@ export function ExamResults({
 					<Card>
 						<CardHeader>
 							<CardTitle className="ios-caption-1 font-semibold text-[--system-text-secondary]">
-								Time Taken
+								{t("exam.timeTaken")}
 							</CardTitle>
 						</CardHeader>
 						<CardContent>
@@ -135,7 +137,7 @@ export function ExamResults({
 
 				<Card>
 					<CardHeader>
-						<CardTitle className="ios-headline">Score Breakdown</CardTitle>
+						<CardTitle className="ios-headline">{t("exam.scoreBreakdown")}</CardTitle>
 					</CardHeader>
 					<CardContent>
 						<ScrollArea className="max-h-[400px]">
@@ -143,7 +145,7 @@ export function ExamResults({
 								{paper.sections.map((section) => (
 									<div key={section.id}>
 										<h3 className="ios-subhead font-semibold text-[--system-text-secondary] uppercase">
-											Section {section.id}
+											{t("exam.sectionLabel", { id: section.id })}
 										</h3>
 										{section.questions.map((question) => (
 											<div key={question.id} className="mb-3 ml-2">
@@ -205,7 +207,7 @@ export function ExamResults({
 									icon={Flag01Icon}
 									className="size-4 text-warning"
 								/>
-								Flagged for Review
+								{t("exam.flaggedForReview")}
 							</CardTitle>
 						</CardHeader>
 						<CardContent>
@@ -224,7 +226,7 @@ export function ExamResults({
 																icon={Flag01Icon}
 																className="size-3 text-warning-foreground"
 															/>
-															{`Section ${section.id}, Q${question.id}.${part.id}`}
+															{t("exam.flaggedItem", { section: section.id, question: question.id, part: part.id })}
 														</li>,
 													]
 												: [];

@@ -1,6 +1,7 @@
 "use client";
 
 import { m } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { AnimatedProgressBar } from "@/components/shared/animated-progress-bar";
 import { FadeIn } from "@/components/shared/fade-in";
 import type { LevelInfo } from "@/types/gamification";
@@ -11,6 +12,7 @@ interface XpLevelCardProps {
 }
 
 export function XpLevelCard({ levelInfo, totalXp }: XpLevelCardProps) {
+	const t = useTranslations();
 	return (
 		<FadeIn
 			distance={10}
@@ -34,7 +36,7 @@ export function XpLevelCard({ levelInfo, totalXp }: XpLevelCardProps) {
 							{levelInfo.title}
 						</span>
 						<span className="font-medium text-muted-foreground text-xs">
-							{totalXp.toLocaleString("en-ZA")} XP
+							{t("gamification.xpLabel", { xp: totalXp.toLocaleString("en-ZA") })}
 						</span>
 					</div>
 
@@ -45,8 +47,11 @@ export function XpLevelCard({ levelInfo, totalXp }: XpLevelCardProps) {
 					/>
 
 					<p className="mt-1 font-medium text-muted-foreground text-xs">
-						{levelInfo.currentXp} / {levelInfo.xpToNextLevel} XP to Level{" "}
-						{levelInfo.level + 1}
+						{t("gamification.xpProgress", {
+							currentXp: levelInfo.currentXp,
+							xpToNextLevel: levelInfo.xpToNextLevel,
+							level: levelInfo.level + 1,
+						})}
 					</p>
 				</div>
 			</div>

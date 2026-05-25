@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import {
 	ArrowLeft01Icon,
 	ArrowRight01Icon,
@@ -20,6 +21,7 @@ import type { FlashcardSM2 } from "@/lib/flashcard-repository/types";
 import { downloadCSV, parseCSV } from "@/lib/utils/flashcard-import-export";
 
 export default function FlashcardBrowsePage() {
+	const t = useTranslations();
 	const [cards, setCards] = useState<FlashcardSM2[]>([]);
 	const [search, setSearch] = useState("");
 	const [subjectFilter, setSubjectFilter] = useState<string>("all");
@@ -97,7 +99,7 @@ export default function FlashcardBrowsePage() {
 
 	return (
 		<PageContainer className="py-8">
-			<h1 className="mb-6 font-semibold text-2xl">Browse Flashcards</h1>
+			<h1 className="mb-6 font-semibold text-2xl">{t("flashcards.browseTitle")}</h1>
 
 			<div className="mb-6 flex flex-wrap gap-3">
 				<div className="relative min-w-[200px] flex-1">
@@ -106,7 +108,7 @@ export default function FlashcardBrowsePage() {
 						className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
 					/>
 					<Input
-						placeholder="Search cards..."
+						placeholder={t("flashcards.searchPlaceholder")}
 						value={search}
 						onChange={(e) => {
 							setSearch(e.target.value);
@@ -123,7 +125,7 @@ export default function FlashcardBrowsePage() {
 					}}
 					className="rounded-lg border border-input bg-background px-3 py-2 text-sm"
 				>
-					<option value="all">All subjects</option>
+					<option value="all">{t("flashcards.allSubjects")}</option>
 					{subjects.map((s) => (
 						<option key={s} value={s}>
 							{s}
@@ -132,7 +134,7 @@ export default function FlashcardBrowsePage() {
 				</select>
 				<Button variant="outline" size="sm" onClick={loadCards}>
 					<HugeiconsIcon icon={FilterIcon} className="mr-1 size-4" />
-					Refresh
+					{t("flashcards.refresh")}
 				</Button>
 				<Button
 					variant="outline"
@@ -141,7 +143,7 @@ export default function FlashcardBrowsePage() {
 					disabled={cards.length === 0}
 				>
 					<HugeiconsIcon icon={Download03Icon} className="mr-1 size-4" />
-					Export CSV
+					{t("flashcards.exportCsv")}
 				</Button>
 				<Button
 					variant="outline"
@@ -150,7 +152,7 @@ export default function FlashcardBrowsePage() {
 					disabled={importing}
 				>
 					<HugeiconsIcon icon={Upload04Icon} className="mr-1 size-4" />
-					{importing ? "Importing..." : "Import CSV"}
+					{importing ? t("flashcards.importing") : t("flashcards.importCsv")}
 				</Button>
 				<input
 					ref={fileInputRef}
@@ -158,7 +160,7 @@ export default function FlashcardBrowsePage() {
 					accept=".csv"
 					onChange={handleImport}
 					className="hidden"
-					aria-label="Import CSV file"
+					aria-label={t("flashcards.importCsvAria")}
 				/>
 			</div>
 
@@ -175,13 +177,13 @@ export default function FlashcardBrowsePage() {
 			) : paginated.length === 0 ? (
 				<div className="py-12 text-center text-muted-foreground">
 					{search || subjectFilter !== "all"
-						? "No cards match your filters."
-						: "No flashcards yet. Create some from the study page!"}
+						? t("flashcards.noMatchFilters")
+						: t("flashcards.browseEmpty")}
 				</div>
 			) : (
 				<>
 					<p className="mb-4 text-muted-foreground text-sm">
-						{cards.length} card{cards.length !== 1 ? "s" : ""}
+						{t("flashcards.cardCount", { count: cards.length })}
 					</p>
 					<div className="flex flex-col gap-3">
 						{paginated.map((card) => (
@@ -205,20 +207,20 @@ export default function FlashcardBrowsePage() {
 													</span>
 												)}
 												<span className="rounded bg-muted/30 px-1.5 py-0.5 text-[10px] text-muted-foreground">
-													Ease: {card.easeFactor.toFixed(1)}
+													{t("flashcards.ease")}: {card.easeFactor.toFixed(1)}
 												</span>
 												<span className="rounded bg-muted/30 px-1.5 py-0.5 text-[10px] text-muted-foreground">
-													Interval: {card.interval}d
+													{t("flashcards.interval")}: {card.interval}d
 												</span>
 												{mounted ? (
 													card.nextReview > Date.now() ? (
 														<span className="rounded bg-green-500/10 px-1.5 py-0.5 text-[10px] text-green-600">
-															Due{" "}
+															{t("flashcards.dueLabel")}{" "}
 															{new Date(card.nextReview).toLocaleDateString()}
 														</span>
 													) : (
 														<span className="rounded bg-amber-500/10 px-1.5 py-0.5 text-[10px] text-amber-600">
-															Overdue
+															{t("flashcards.overdue")}
 														</span>
 													)
 												) : null}
@@ -228,7 +230,7 @@ export default function FlashcardBrowsePage() {
 											variant="ghost"
 											size="sm"
 											onClick={() => handleDelete(card.id)}
-											aria-label="Delete card"
+											aria-label={t("flashcards.deleteCard")}
 										>
 											<HugeiconsIcon
 												icon={Delete02Icon}
@@ -250,10 +252,10 @@ export default function FlashcardBrowsePage() {
 								onClick={() => setPage((p) => p - 1)}
 							>
 								<HugeiconsIcon icon={ArrowLeft01Icon} className="mr-1 size-4" />{" "}
-								Previous
+								{t("flashcards.previous")}
 							</Button>
 							<span className="text-muted-foreground text-sm">
-								Page {page + 1} of {totalPages}
+								{t("flashcards.pageInfo", { page: page + 1, totalPages })}
 							</span>
 							<Button
 								variant="outline"
@@ -261,7 +263,7 @@ export default function FlashcardBrowsePage() {
 								disabled={page >= totalPages - 1}
 								onClick={() => setPage((p) => p + 1)}
 							>
-								Next{" "}
+								{t("flashcards.next")}{" "}
 								<HugeiconsIcon
 									icon={ArrowRight01Icon}
 									className="ml-1 size-4"

@@ -2,6 +2,7 @@
 
 import { Flag01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/shared";
@@ -24,6 +25,7 @@ export function ExamSidebar({
 	onNavigate,
 	onClose: _onClose,
 }: ExamSidebarProps) {
+	const t = useTranslations();
 	const getStatus = (
 		sectionId: string,
 		questionId: string,
@@ -38,21 +40,21 @@ export function ExamSidebar({
 	return (
 		<div className="flex h-full flex-col">
 			<div className="border-b p-3">
-				<h3 className="font-semibold text-sm">Question Navigator</h3>
+				<h3 className="font-semibold text-sm">{t("exam.questionNavigator")}</h3>
 				<div className="mt-2 flex gap-2 text-muted-foreground text-xs">
 					<span className="flex items-center gap-1">
-						<span className="size-2 rounded-full bg-success" /> Answered
+						<span className="size-2 rounded-full bg-success" /> {t("exam.answered")}
 					</span>
 					<span className="flex items-center gap-1">
 						<HugeiconsIcon
 							icon={Flag01Icon}
 							className="size-2.5 text-warning"
 						/>{" "}
-						Flagged
+						{t("exam.flagged")}
 					</span>
 					<span className="flex items-center gap-1">
 						<span className="size-2 rounded-full bg-muted-foreground/30" />{" "}
-						Unanswered
+						{t("exam.unanswered")}
 					</span>
 				</div>
 			</div>
@@ -62,12 +64,12 @@ export function ExamSidebar({
 					{paper.sections.map((section) => (
 						<div key={section.id}>
 							<h4 className="px-2 py-1 font-semibold text-muted-foreground text-xs uppercase tracking-wider">
-								Section {section.id}
+								{t("exam.sectionLabel", { id: section.id })}
 							</h4>
 							{section.questions.map((question) => (
 								<div key={question.id} className="ml-1">
 									<p className="px-2 py-1 font-medium text-muted-foreground text-xs">
-										Q{question.id}
+										{t("exam.questionLabelShort", { id: question.id })}
 									</p>
 									<div className="flex flex-wrap gap-1 px-2 pb-2">
 										{question.parts.map((part) => {

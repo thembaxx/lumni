@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import {
 	ArrowLeft01Icon,
 	ArrowRight01Icon,
@@ -30,6 +31,7 @@ export function QuizControls({
 	onSkip,
 	showSkip = false,
 }: QuizControlsProps) {
+	const t = useTranslations();
 	const isFirst = currentQuestionIndex === 0;
 	const isLast = currentQuestionIndex === totalQuestions - 1;
 	const nextButtonRef = useRef<HTMLButtonElement>(null);
@@ -43,7 +45,7 @@ export function QuizControls({
 		return (
 			<div className="flex flex-col gap-2">
 				<Button ref={nextButtonRef} className="w-full" onClick={onNext}>
-					{isLast ? "See Results" : "Next Question"}
+					{isLast ? t("quiz.seeResults") : t("quiz.nextQuestion")}
 					{!isLast && (
 						<HugeiconsIcon icon={ArrowRight01Icon} data-icon="inline-end" />
 					)}
@@ -61,11 +63,11 @@ export function QuizControls({
 				className="flex-1"
 			>
 				<HugeiconsIcon icon={ArrowLeft01Icon} data-icon="inline-start" />
-				Previous
+				{t("quiz.previous")}
 			</Button>
 			{showSkip && onSkip && (
 				<Button variant="outline" onClick={onSkip} className="flex-1">
-					Skip
+					{t("common.skip")}
 					<HugeiconsIcon icon={Forward01Icon} data-icon="inline-end" />
 				</Button>
 			)}

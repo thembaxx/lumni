@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import {
 	Cancel01Icon,
 	CheckmarkCircle01Icon,
@@ -79,6 +80,7 @@ export function QuestionCardFeedback({
 	followUpInput,
 	setFollowUpInput,
 }: QuestionCardFeedbackProps) {
+	const t = useTranslations();
 	if (!state.showExplanation) {
 		return null;
 	}
@@ -114,14 +116,14 @@ export function QuestionCardFeedback({
 					)}
 				</m.div>
 				<p className="font-medium">
-					{isCorrectAnswer ? "Correct!" : "Incorrect"}
+					{isCorrectAnswer ? t("quiz.correctLabel") : t("quiz.incorrectLabel")}
 				</p>
 			</div>
 			{feedback && (
 				<div className="flex flex-col gap-1">
 					<div className="flex items-center gap-2">
 						<span className="font-medium text-sm">
-							Score: {feedback.score}/{question.points}
+							{t("quiz.scoreFraction", { score: feedback.score, points: question.points })}
 						</span>
 					</div>
 					<div className="text-sm opacity-90">
@@ -154,12 +156,12 @@ export function QuestionCardFeedback({
 								icon={RadialIcon}
 								className="size-5 animate-spin"
 							/>
-							<span className="text-sm">Solving…</span>
+							<span className="text-sm">{t("quiz.solving")}</span>
 						</div>
 					) : solver.data?.steps?.length ? (
 						<div className="flex flex-col gap-2">
 							<p className="font-bold text-foreground/60 text-xs uppercase tracking-wider">
-								Step-by-step solution
+								{t("quiz.stepByStepSolution")}
 							</p>
 							<StepByStep
 								steps={solver.data.steps}
@@ -174,7 +176,7 @@ export function QuestionCardFeedback({
 					) : solver.isError ? (
 						<div className="flex items-center gap-2 py-2">
 							<span className="text-sm opacity-80">
-								Couldn't generate steps.
+								{t("quiz.couldNotGenerateSteps")}
 							</span>
 							<Button
 								variant="ghost"
@@ -187,7 +189,7 @@ export function QuestionCardFeedback({
 								}
 								className="h-8 text-xs"
 							>
-								Try again
+								{t("common.retry")}
 							</Button>
 						</div>
 					) : (
@@ -203,7 +205,7 @@ export function QuestionCardFeedback({
 							className="h-9 gap-2 self-start text-sm"
 						>
 							<HugeiconsIcon icon={SparklesIcon} data-icon="inline-start" />
-							Show me the steps
+							{t("quiz.showSteps")}
 						</Button>
 					)}
 				</div>
@@ -229,13 +231,13 @@ export function QuestionCardFeedback({
 								icon={RadialIcon}
 								className="size-4 animate-spin"
 							/>
-							Thinking…
+							{t("quiz.thinking")}
 						</div>
 					)}
 					{solver.followUpError && (
 						<div className="flex items-center gap-2 py-2">
 							<span className="text-sm opacity-80">
-								Couldn't get an answer.
+								{t("quiz.couldNotGetAnswer")}
 							</span>
 							<Button
 								variant="ghost"
@@ -243,7 +245,7 @@ export function QuestionCardFeedback({
 								onClick={handleFollowUp}
 								className="h-8 text-xs"
 							>
-								Try again
+								{t("common.retry")}
 							</Button>
 						</div>
 					)}
@@ -260,7 +262,7 @@ export function QuestionCardFeedback({
 									}
 								}}
 								aria-label="Follow-up question input"
-								placeholder="Ask a follow-up question..."
+								placeholder={t("quiz.followUpPlaceholder")}
 								className="h-9 flex-1 rounded-lg border border-border bg-card px-3 text-base outline-none focus:border-[--system-accent]/40"
 							/>
 							<Button

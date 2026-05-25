@@ -73,7 +73,7 @@ function ListGroup({ children, className }: ListGroupProps) {
 	return (
 		<div
 			className={cn(
-				"overflow-hidden rounded-[24px] bg-[--system-surface]",
+				"overflow-hidden rounded-xl bg-[--system-surface]",
 				"border border-border/60 shadow-level-1",
 				className,
 			)}

@@ -6,6 +6,7 @@ import { m } from "framer-motion";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FormSkeleton } from "@/components/ui/skeletons";
@@ -23,17 +24,18 @@ function ResetPasswordForm() {
 	const [error, setError] = useState("");
 	const [loading, setLoading] = useState(false);
 	const [success, setSuccess] = useState(false);
+	const t = useTranslations();
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		setError("");
 
 		if (password !== confirmPassword) {
-			setError("Passwords do not match");
+			setError(t("auth.passwordsDoNotMatch"));
 			return;
 		}
 		if (password.length < 8) {
-			setError("Password must be at least 8 characters");
+			setError(t("auth.weakPassword"));
 			return;
 		}
 
@@ -46,13 +48,13 @@ function ResetPasswordForm() {
 			});
 			const data = await res.json();
 			if (!res.ok) {
-				setError(data.error || "Failed to reset password");
+				setError(data.error || t("auth.resetFailed"));
 				return;
 			}
 			setSuccess(true);
 			setTimeout(() => push("/auth/sign-in"), 2000);
 		} catch {
-			setError("Network error. Please try again.");
+			setError(t("auth.networkError"));
 		} finally {
 			setLoading(false);
 		}
@@ -61,15 +63,15 @@ function ResetPasswordForm() {
 	if (!userId || !secret) {
 		return (
 			<div className="flex flex-col items-center gap-4 text-center">
-				<h1 className="font-semibold text-xl">Invalid reset link</h1>
+				<h1 className="font-semibold text-xl">{t("auth.invalidResetLink")}</h1>
 				<p className="text-muted-foreground text-sm">
-					This password reset link is invalid or has expired.
+					{t("auth.invalidResetLinkDesc")}
 				</p>
 				<Link
 					href="/auth/forgot-password"
 					className="font-semibold text-sm text-system-accent hover:underline"
 				>
-					Request a new reset link
+					{t("auth.requestNewResetLink")}
 				</Link>
 			</div>
 		);
@@ -84,18 +86,18 @@ function ResetPasswordForm() {
 			className="flex flex-col gap-8"
 		>
 			<div className="flex flex-col gap-2">
-				<h1 className="font-semibold text-xl">Set new password</h1>
+				<h1 className="font-semibold text-xl">{t("auth.setNewPassword")}</h1>
 				<p className="text-muted-foreground text-sm">
 					{success
-						? "Password reset successful! Redirecting..."
-						: "Must be at least 8 characters."}
+						? t("auth.resetSuccess")
+						: t("auth.passwordHint")}
 				</p>
 			</div>
 
 			<div className="flex flex-col gap-4">
 				<div className="flex flex-col gap-1.5">
 					<label htmlFor="password" className="font-semibold text-sm">
-						New password
+						{t("auth.newPasswordLabel")}
 					</label>
 					<div className="relative">
 						<Input
@@ -110,7 +112,7 @@ function ResetPasswordForm() {
 						/>
 						<button
 							type="button"
-							aria-label={showPassword ? "Hide password" : "Show password"}
+							aria-label={showPassword ? t("auth.hidePassword") : t("auth.showPassword")}
 							onClick={() => setShowPassword(!showPassword)}
 							className="absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground"
 						>
@@ -124,7 +126,7 @@ function ResetPasswordForm() {
 
 				<div className="flex flex-col gap-1.5">
 					<label htmlFor="confirm" className="font-semibold text-sm">
-						Confirm password
+						{t("auth.confirmPassword")}
 					</label>
 					<Input
 						id="confirm"
@@ -148,7 +150,7 @@ function ResetPasswordForm() {
 				disabled={!password || !confirmPassword || loading || success}
 				className="h-11 w-full rounded-xl"
 			>
-				{loading ? "Resetting..." : success ? "Done!" : "Reset password"}
+				{loading ? t("auth.resetting") : success ? t("auth.done") : t("auth.resetPassword")}
 			</Button>
 		</m.form>
 	);

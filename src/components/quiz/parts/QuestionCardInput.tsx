@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { m } from "framer-motion";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { DataResponseInput } from "@/components/quiz/parts/data-response-input";
@@ -64,6 +65,7 @@ export function QuestionCardInput({
 	handleMCQSubmit,
 	handleGrade,
 }: QuestionCardInputProps) {
+	const t = useTranslations();
 	if (state.isSubmitted) {
 		return null;
 	}
@@ -130,7 +132,7 @@ export function QuestionCardInput({
 						disabled={!state.selectedOption}
 						className="col-span-full mt-2"
 					>
-						Check Answer
+						{t("quiz.checkAnswer")}
 					</Button>
 				</div>
 			);
@@ -146,7 +148,7 @@ export function QuestionCardInput({
 					p.right as string,
 				]) ?? [];
 			const table = {
-				headers: ["Items", "Match"],
+				headers: [t("quiz.items"), t("quiz.match")],
 				rows: pairs,
 			};
 			return (
@@ -223,7 +225,7 @@ export function QuestionCardInput({
 						onClick={() => handleGrade({ type: "numeric", value: calcValue })}
 						disabled={!calcValue.trim()}
 					>
-						Submit Answer
+						{t("quiz.submitAnswer")}
 					</Button>
 				</div>
 			);
@@ -235,7 +237,7 @@ export function QuestionCardInput({
 			return (
 				<div className="py-4 text-center text-muted-foreground text-sm">
 					{(qBody.instructions as string | undefined) ||
-						"Interact with the diagram above and submit your answer."}
+						t("quiz.diagramPrompt")}
 				</div>
 			);
 		}
@@ -256,7 +258,7 @@ export function QuestionCardInput({
 						onClick={() => handleGrade({ type: "code", value: code })}
 						disabled={!code.trim()}
 					>
-						Submit Answer
+						{t("quiz.submitAnswer")}
 					</Button>
 				</div>
 			);
@@ -290,7 +292,7 @@ export function QuestionCardInput({
 		default:
 			return (
 				<p className="text-muted-foreground text-sm">
-					Question type not supported yet.
+					{t("quiz.unsupportedType")}
 				</p>
 			);
 	}

@@ -22,7 +22,7 @@ export function StreakCard() {
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
 		>
-			<Card className="overflow-hidden rounded-[2rem] shadow-level-1">
+			<Card className="overflow-hidden rounded-3xl shadow-level-1">
 				<CardContent className="p-5">
 					<div className="flex items-center gap-4">
 						<div

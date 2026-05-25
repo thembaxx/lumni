@@ -6,6 +6,7 @@ import {
 	Home01Icon,
 	Notebook,
 	Settings01Icon,
+	UserGroupIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
@@ -47,6 +48,12 @@ const sidebarItems: SidebarItem[] = [
 		label: "Problems",
 		icon: BookOpen01Icon,
 		href: "/problems",
+	},
+	{
+		id: "groups",
+		label: "Study Groups",
+		icon: UserGroupIcon,
+		href: "/study-groups",
 	},
 ];
 

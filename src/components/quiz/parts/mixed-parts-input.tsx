@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import type { UserAnswer } from "@/lib/question-engine/types";
@@ -10,6 +11,7 @@ interface MixedPartsInputProps {
 }
 
 export function MixedPartsInput({ parts, onGrade }: MixedPartsInputProps) {
+	const t = useTranslations();
 	const [partAnswers, setPartAnswers] = useState<Record<string, string>>({});
 
 	return (
@@ -22,13 +24,13 @@ export function MixedPartsInput({ parts, onGrade }: MixedPartsInputProps) {
 						<p className="mb-1 font-medium text-sm">
 							{i + 1}. {String(p.questionText ?? "")}{" "}
 							<span className="text-muted-foreground text-xs">
-								({String(p.points ?? "")} pts)
+								{t("quiz.pointsParenthetical", { points: String(p.points ?? "") })}
 							</span>
 						</p>
 						<input
 							type="text"
 							className="w-full rounded-md border bg-transparent px-3 py-1.5 text-sm outline-none focus:ring-2 focus:ring-[--system-accent]"
-							placeholder="Your answer..."
+							placeholder={t("quiz.answerPlaceholder")}
 							value={partAnswers[pId] ?? ""}
 							onChange={(e) =>
 								setPartAnswers((prev) => ({
@@ -62,7 +64,7 @@ export function MixedPartsInput({ parts, onGrade }: MixedPartsInputProps) {
 				}
 				className="w-full"
 			>
-				Submit All Parts
+				{t("quiz.submitAllParts")}
 			</Button>
 		</div>
 	);

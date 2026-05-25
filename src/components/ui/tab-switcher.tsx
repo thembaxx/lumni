@@ -80,7 +80,7 @@ export function TabSwitcher({
 					className={cn(
 						variant === "tabs"
 							? "relative inline-flex gap-1 rounded-lg bg-muted p-1"
-							: "relative inline-flex items-center rounded-[10px] bg-[--system-surface-secondary] p-[3px]",
+							: "relative inline-flex items-center rounded-md bg-[--system-surface-secondary] p-[3px]",
 						listClassName,
 					)}
 				>
@@ -97,7 +97,7 @@ export function TabSwitcher({
 								"relative z-elevated inline-flex items-center justify-center gap-1.5 whitespace-nowrap transition-colors duration-150",
 								variant === "tabs"
 									? "rounded-md px-4 py-2 font-medium text-sm"
-									: "flex-1 rounded-[7px] px-4 py-2 font-medium text-sm",
+									: "flex-1 rounded-sm px-4 py-2 font-medium text-sm",
 								variant === "tabs"
 									? value === tab.value
 										? "text-background"
@@ -115,7 +115,7 @@ export function TabSwitcher({
 						className={
 							variant === "tabs"
 								? "absolute inset-y-1 z-0 rounded-md bg-[--system-accent]"
-								: "absolute inset-y-[3px] z-0 rounded-[7px] bg-[--system-surface] shadow-[--shadow-level-1]"
+								: "absolute inset-y-[3px] z-0 rounded-sm bg-[--system-surface] shadow-[--shadow-level-1]"
 						}
 						initial={false}
 						animate={{

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import {
 	Alert01Icon,
 	Home01Icon,
@@ -17,6 +18,7 @@ export default function FlashcardsBrowseError({
 	error: Error & { digest?: string };
 	reset: () => void;
 }) {
+	const t = useTranslations();
 	useEffect(() => {
 		Sentry.captureException(error);
 	}, [error]);
@@ -32,10 +34,10 @@ export default function FlashcardsBrowseError({
 				</div>
 				<div>
 					<h2 className="ios-title-2 text-foreground">
-						Couldn&apos;t load flashcards
+						{t("flashcards.browseError")}
 					</h2>
 					<p className="ios-callout mt-1 text-muted-foreground">
-						Something went wrong. Please try again.
+						{t("flashcards.browseErrorDesc")}
 					</p>
 				</div>
 				<div className="flex gap-3">
@@ -45,7 +47,7 @@ export default function FlashcardsBrowseError({
 							className="size-4"
 							data-icon="inline-start"
 						/>
-						Try again
+						{t("common.retry")}
 					</Button>
 					<Button
 						variant="outline"
@@ -56,7 +58,7 @@ export default function FlashcardsBrowseError({
 							className="size-4"
 							data-icon="inline-start"
 						/>
-						Go Home
+						{t("flashcards.goHome")}
 					</Button>
 				</div>
 			</div>

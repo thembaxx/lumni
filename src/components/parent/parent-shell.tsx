@@ -25,8 +25,8 @@ export function ParentShell({
 				className={cn("flex min-h-screen flex-col gap-6 p-4 md:p-8", className)}
 			>
 				<Skeleton className="h-12 w-3/4 rounded-xl" />
-				<Skeleton className="h-64 rounded-[2rem]" />
-				<Skeleton className="h-96 rounded-[2rem]" />
+				<Skeleton className="h-64 rounded-3xl" />
+				<Skeleton className="h-96 rounded-3xl" />
 			</div>
 		);
 	}

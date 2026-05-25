@@ -11,6 +11,7 @@ import { m } from "framer-motion";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useCallback, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FormSkeleton } from "@/components/ui/skeletons";
@@ -35,6 +36,7 @@ function SignUpForm() {
 	const [password, setPassword] = useState("");
 	const [showPassword, setShowPassword] = useState(false);
 	const [loading, setLoading] = useState(false);
+	const t = useTranslations();
 
 	const referralCode = get("ref");
 
@@ -71,10 +73,10 @@ function SignUpForm() {
 		>
 			<div className="flex flex-col gap-2">
 				<h1 className="ios-title-2 font-semibold text-foreground">
-					Create Account
+					{t("auth.createAccount")}
 				</h1>
 				<p className="ios-subhead text-muted-foreground">
-					Sign up to save your progress
+					{t("auth.signUpSubtitle")}
 				</p>
 			</div>
 
@@ -84,7 +86,7 @@ function SignUpForm() {
 						htmlFor="name"
 						className="ios-footnote font-semibold text-foreground"
 					>
-						Display Name
+						{t("auth.displayNameLabel")}
 					</label>
 					<div className="relative">
 						<HugeiconsIcon
@@ -94,7 +96,7 @@ function SignUpForm() {
 						<Input
 							id="name"
 							type="text"
-							placeholder="Your name"
+							placeholder={t("auth.displayNamePlaceholder")}
 							value={name}
 							onChange={(e) => setName(e.target.value)}
 							required
@@ -108,7 +110,7 @@ function SignUpForm() {
 						htmlFor="email"
 						className="ios-footnote font-semibold text-foreground"
 					>
-						Email
+						{t("auth.emailLabel")}
 					</label>
 					<div className="relative">
 						<HugeiconsIcon
@@ -118,7 +120,7 @@ function SignUpForm() {
 						<Input
 							id="email"
 							type="email"
-							placeholder="you@school.edu"
+							placeholder={t("auth.emailPlaceholder")}
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
 							required
@@ -132,13 +134,13 @@ function SignUpForm() {
 						htmlFor="password"
 						className="ios-footnote font-semibold text-foreground"
 					>
-						Password
+						{t("auth.passwordLabel")}
 					</label>
 					<div className="relative">
 						<Input
 							id="password"
 							type={showPassword ? "text" : "password"}
-							placeholder="Create a password"
+							placeholder={t("auth.createPassword")}
 							value={password}
 							onChange={(e) => setPassword(e.target.value)}
 							required
@@ -148,6 +150,7 @@ function SignUpForm() {
 						<button
 							type="button"
 							onClick={() => setShowPassword(!showPassword)}
+							aria-label={showPassword ? t("auth.hidePassword") : t("auth.showPassword")}
 							className="absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground hover:text-foreground"
 						>
 							{showPassword ? (
@@ -158,7 +161,7 @@ function SignUpForm() {
 						</button>
 					</div>
 					<p className="ios-caption-1 mt-1 text-muted-foreground">
-						At least 8 characters
+						{t("auth.passwordHint")}
 					</p>
 				</div>
 
@@ -173,17 +176,17 @@ function SignUpForm() {
 					}
 					className="h-11 w-full rounded-xl bg-system-accent font-semibold text-sm text-white transition-[background-color,transform] hover:bg-system-accent/90 active:scale-[0.96]"
 				>
-					{loading ? "Creating account..." : "Create Account"}
+					{loading ? t("auth.creatingAccount") : t("auth.createAccount")}
 				</Button>
 			</div>
 
 			<p className="text-center text-muted-foreground text-sm">
-				Already have an account?{" "}
+				{t("auth.hasAccount")}{" "}
 				<Link
 					href={`/auth/sign-in?redirect=${encodeURIComponent(redirect)}`}
 					className="font-semibold text-system-accent hover:underline"
 				>
-					Sign in
+					{t("auth.signIn")}
 				</Link>
 			</p>
 		</m.form>

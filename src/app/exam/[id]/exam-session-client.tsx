@@ -12,6 +12,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Confetti, GamificationCelebration } from "@/components/celebration";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
@@ -99,6 +100,7 @@ function PartAnswerInput({
 	onChange: (value: string | string[]) => void;
 	disabled: boolean;
 }) {
+	const t = useTranslations();
 	if (part.type === "multiple-choice" && part.options) {
 		const selected = Array.isArray(value) ? value[0] : value;
 		return (
@@ -152,7 +154,7 @@ function PartAnswerInput({
 				onChange={(e) => onChange(e.target.value)}
 				disabled={disabled}
 				className="w-full rounded-xl border-2 border-border bg-background p-3 outline-none focus:border-[--system-accent]"
-				placeholder="Type your answer..."
+				placeholder={t("exam.placeholderShortAnswer")}
 				aria-label="Short answer input"
 			/>
 		);
@@ -166,7 +168,7 @@ function PartAnswerInput({
 				disabled={disabled}
 				rows={6}
 				className="w-full resize-y rounded-xl border-2 border-border bg-background p-3 outline-none focus:border-[--system-accent]"
-				placeholder="Write your answer..."
+				placeholder={t("exam.placeholderLongAnswer")}
 				aria-label="Long answer input"
 			/>
 		);
@@ -181,7 +183,7 @@ function PartAnswerInput({
 				onChange={(e) => onChange(e.target.value)}
 				disabled={disabled}
 				className="w-full rounded-xl border-2 border-border bg-background p-3 font-mono outline-none focus:border-[--system-accent]"
-				placeholder="Enter your answer..."
+				placeholder={t("exam.placeholderCalculation")}
 				aria-label="Calculation answer input"
 			/>
 		);
@@ -195,7 +197,7 @@ function PartAnswerInput({
 				onChange={(e) => onChange(e.target.value)}
 				disabled={disabled}
 				className="w-full rounded-xl border-2 border-border bg-background p-3 outline-none focus:border-[--system-accent]"
-				placeholder="Enter matching pairs (e.g. A-1, B-2)..."
+				placeholder={t("exam.placeholderMatching")}
 				aria-label="Matching pairs input"
 			/>
 		);
@@ -204,7 +206,7 @@ function PartAnswerInput({
 	if (part.type === "diagram") {
 		const instructions =
 			((part as unknown as Record<string, unknown>).instructions as string) ??
-			"Refer to the diagram and type your answer below.";
+			t("exam.placeholderDiagram");
 		return (
 			<div className="flex flex-col gap-2">
 				<p className="text-muted-foreground text-sm">{instructions}</p>
@@ -214,7 +216,7 @@ function PartAnswerInput({
 					disabled={disabled}
 					rows={4}
 					className="w-full resize-y rounded-xl border-2 border-border bg-background p-3 outline-none focus:border-[--system-accent]"
-					placeholder="Type your answer..."
+					placeholder={t("exam.placeholderShortAnswer")}
 					aria-label="Diagram answer input"
 				/>
 			</div>
@@ -229,7 +231,7 @@ function PartAnswerInput({
 				disabled={disabled}
 				rows={8}
 				className="w-full resize-y rounded-xl border-2 border-border bg-background p-3 font-mono text-sm outline-none focus:border-[--system-accent]"
-				placeholder="Write your code here..."
+				placeholder={t("exam.placeholderCode")}
 				aria-label="Programming answer input"
 			/>
 		);
@@ -247,7 +249,7 @@ function PartAnswerInput({
 				disabled={disabled}
 				rows={4}
 				className="w-full resize-y rounded-xl border-2 border-border bg-background p-3 outline-none focus:border-[--system-accent]"
-				placeholder="Type your answer..."
+				placeholder={t("exam.placeholderShortAnswer")}
 				aria-label="Response input"
 			/>
 		);
@@ -256,8 +258,7 @@ function PartAnswerInput({
 	return (
 		<div className="flex flex-col gap-2">
 			<p className="text-muted-foreground text-sm">
-				This question type ({part.type}) is not fully supported yet. You can
-				type a freeform answer below.
+				{t("exam.unsupportedType", { type: part.type })}
 			</p>
 			<textarea
 				value={(Array.isArray(value) ? value[0] : value) ?? ""}
@@ -265,7 +266,7 @@ function PartAnswerInput({
 				disabled={disabled}
 				rows={4}
 				className="w-full resize-y rounded-xl border-2 border-border bg-background p-3 outline-none focus:border-[--system-accent]"
-				placeholder="Type your answer..."
+				placeholder={t("exam.placeholderShortAnswer")}
 				aria-label="Freeform answer input"
 			/>
 		</div>
@@ -346,6 +347,7 @@ function ExamResults({
 	onDashboard: () => void;
 	onReview?: () => void;
 }) {
+	const t = useTranslations();
 	const [expandedId, setExpandedId] = useState<string | null>(null);
 	const correctCount = results.partResults.filter((r) => r.correct).length;
 	const totalCount = results.partResults.length;
@@ -370,10 +372,10 @@ function ExamResults({
 				<CardHeader>
 					<CardTitle className="font-extrabold text-xl">
 						{accuracy >= 80
-							? "Great job!"
+							? t("exam.greatJob")
 							: accuracy >= 50
-								? "Good effort!"
-								: "Keep practicing!"}
+								? t("exam.goodEffort")
+								: t("exam.keepPracticing")}
 					</CardTitle>
 				</CardHeader>
 				<CardContent className="flex flex-col gap-4">
@@ -382,19 +384,19 @@ function ExamResults({
 							<p className="font-extrabold text-2xl text-success tabular-nums">
 								{correctCount}
 							</p>
-							<p className="text-muted-foreground text-xs">Correct</p>
+							<p className="text-muted-foreground text-xs">{t("exam.correct")}</p>
 						</div>
 						<div className="rounded-lg bg-muted p-3 text-center">
 							<p className="font-extrabold text-2xl text-destructive tabular-nums">
 								{failedCount}
 							</p>
-							<p className="text-muted-foreground text-xs">Incorrect</p>
+							<p className="text-muted-foreground text-xs">{t("exam.incorrect")}</p>
 						</div>
 						<div className="rounded-lg bg-muted p-3 text-center">
 							<p className="font-extrabold text-2xl tabular-nums">
 								{accuracy}%
 							</p>
-							<p className="text-muted-foreground text-xs">Accuracy</p>
+							<p className="text-muted-foreground text-xs">{t("exam.accuracy")}</p>
 						</div>
 						{(() => {
 							const aps = getAPSForSubject(accuracy);
@@ -454,7 +456,7 @@ function ExamResults({
 											{item.questionId}.{item.part.id.split("-").pop()}
 										</p>
 										<p className="line-clamp-1 text-muted-foreground text-xs">
-											{item.part.text ?? "Question"}
+											{item.part.text ?? t("exam.questionText")}
 										</p>
 									</div>
 								</div>
@@ -469,27 +471,27 @@ function ExamResults({
 									<div className="grid grid-cols-2 gap-3 text-sm">
 										<div>
 											<p className="mb-1 text-muted-foreground text-xs">
-												Your answer
+												{t("exam.yourAnswer")}
 											</p>
 											<p className="rounded-lg bg-muted p-2 font-mono text-xs">
 												{getAnswerText(item.part, answers[item.part.id]) ||
-													"(no answer)"}
+													t("exam.noAnswer")}
 											</p>
 										</div>
 										{!result.correct && (
 											<div>
 												<p className="mb-1 text-muted-foreground text-xs">
-													Correct answer
+													{t("exam.correctAnswer")}
 												</p>
 												<p className="rounded-lg bg-success/10 p-2 font-mono text-success text-xs">
-													{getCorrectAnswerText(item.part) || "(not available)"}
+													{getCorrectAnswerText(item.part) || t("exam.notAvailable")}
 												</p>
 											</div>
 										)}
 									</div>
 									{item.part.marks && (
 										<p className="text-muted-foreground text-xs">
-											Marks: {result.score}/{item.part.marks}
+											{t("exam.marks", { score: result.score, marks: item.part.marks })}
 										</p>
 									)}
 								</div>
@@ -503,7 +505,7 @@ function ExamResults({
 				{failedCount > 0 && onReview && (
 					<Button variant="secondary" onClick={onReview}>
 						<HugeiconsIcon icon={RefreshIcon} data-icon="inline-start" />
-						Review Mistakes
+						{t("exam.reviewMistakes")}
 					</Button>
 				)}
 				<ShareResultButton
@@ -511,15 +513,15 @@ function ExamResults({
 						score: correctCount,
 						total: totalCount,
 						percentage: accuracy,
-						title: `${_metadata.subject} Exam`,
+						title: t("exam.examHeading", { subject: _metadata.subject }),
 						subtitle: `${getAPSForSubject(accuracy)}/7 APS · ${getGrade(accuracy)}`,
 						type: "exam",
 					}}
-					text={`I scored ${accuracy}% on my ${_metadata.subject} exam on Lumni!`}
+					text={t("exam.shareText", { percentage: accuracy, subject: _metadata.subject })}
 				/>
 				<Button onClick={onDashboard}>
 					<HugeiconsIcon icon={Home01Icon} data-icon="inline-start" />
-					Dashboard
+					{t("exam.dashboard")}
 				</Button>
 			</div>
 		</m.div>
@@ -527,6 +529,7 @@ function ExamResults({
 }
 
 export function ExamSessionWithResume({ id, mode }: ExamSessionClientProps) {
+	const t = useTranslations();
 	const [resumeData, setResumeData] =
 		useState<Awaited<ReturnType<typeof hasSavedSession>>>(null);
 	const [resumeChecked, setResumeChecked] = useState(false);
@@ -563,7 +566,7 @@ export function ExamSessionWithResume({ id, mode }: ExamSessionClientProps) {
 		return (
 			<div className="flex min-h-screen items-center justify-center bg-background">
 				<p className="animate-pulse text-muted-foreground">
-					Checking for saved session…
+					{t("exam.checkingSavedSession")}
 				</p>
 			</div>
 		);
@@ -575,24 +578,23 @@ export function ExamSessionWithResume({ id, mode }: ExamSessionClientProps) {
 				<Dialog open modal>
 					<DialogContent className="sm:max-w-md">
 						<DialogHeader>
-							<DialogTitle>Resume Exam?</DialogTitle>
+							<DialogTitle>{t("exam.resumeTitle")}</DialogTitle>
 							<DialogDescription>
-								You have an unfinished exam session. Pick up where you left off,
-								or start a new attempt.
+								{t("exam.resumeDescription")}
 							</DialogDescription>
 						</DialogHeader>
 						<div className="flex flex-col gap-3 pt-2">
 							<div className="rounded-lg bg-muted p-3 text-sm">
 								{resumeData.answers
-									? `${Object.keys(JSON.parse(resumeData.answers)).length} questions answered`
-									: "No answers recorded yet"}
+									? t("exam.questionsAnswered", { count: Object.keys(JSON.parse(resumeData.answers)).length })
+									: t("exam.noAnswersRecorded")}
 							</div>
 							<div className="flex flex-col gap-2">
 								<Button size="lg" onClick={handleResume}>
-									Resume Session
+									{t("exam.resumeSession")}
 								</Button>
 								<Button variant="outline" size="lg" onClick={handleStartNew}>
-									Start New
+									{t("exam.startNew")}
 								</Button>
 							</div>
 						</div>
@@ -606,6 +608,7 @@ export function ExamSessionWithResume({ id, mode }: ExamSessionClientProps) {
 }
 
 export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
+	const t = useTranslations();
 	const { data: paperData, isLoading: paperLoading } = useExamPaper(id);
 	const [phase, setPhase] = useState<SessionPhase>("loading");
 	const [sessionModeOverride, setSessionModeOverride] = useState<
@@ -819,7 +822,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 		return (
 			<div className="flex min-h-screen items-center justify-center bg-background">
 				<p className="animate-pulse text-muted-foreground">
-					Loading exam paper…
+					{t("exam.loadingExam")}
 				</p>
 			</div>
 		);
@@ -831,10 +834,10 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 				<Card>
 					<CardContent className="p-8 text-center">
 						<p className="font-medium text-destructive">
-							Exam paper not found.
+							{t("exam.notFound")}
 						</p>
 						<Button className="mt-4" onClick={handleDashboard}>
-							Go Back
+							{t("exam.goBack")}
 						</Button>
 					</CardContent>
 				</Card>
@@ -852,20 +855,16 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 				<Card className="w-full max-w-md">
 					<CardHeader>
 						<CardTitle className="font-extrabold text-xl tracking-tight">
-							{paperData?.exam.metadata.subject} -{" "}
-							{paperData?.exam.metadata.paperCode}
+							{t("exam.paperInfo", { subject: paperData?.exam.metadata.subject ?? "", paperCode: paperData?.exam.metadata.paperCode ?? "" })}
 						</CardTitle>
 						<p className="text-muted-foreground text-sm">
-							{paperData?.exam.metadata.year}{" "}
-							{paperData?.exam.metadata.examPeriod} |{" "}
-							{paperData?.exam.metadata.totalMarks} marks |{" "}
-							{paperData?.exam.metadata.duration}
+							{t("exam.paperMeta", { year: paperData?.exam.metadata.year ?? "", period: paperData?.exam.metadata.examPeriod ?? "", marks: paperData?.exam.metadata.totalMarks ?? 0, duration: paperData?.exam.metadata.duration ?? "" })}
 						</p>
 					</CardHeader>
 					<CardContent className="flex flex-col gap-3">
 						<Button size="lg" onClick={startSession}>
 							<HugeiconsIcon icon={PlayFreeIcons} data-icon="inline-start" />
-							Start Practice Mode
+							{t("exam.startPractice")}
 						</Button>
 						<Button
 							variant="outline"
@@ -876,7 +875,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 							}}
 						>
 							<HugeiconsIcon icon={Clock01Icon} data-icon="inline-start" />
-							Start Timed Exam
+							{t("exam.startTimed")}
 						</Button>
 					</CardContent>
 				</Card>
@@ -937,7 +936,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 								{paperData?.exam.metadata.paperCode}
 							</p>
 							<p className="text-muted-foreground text-xs">
-								{sessionMode === "timed" ? "Timed" : "Practice"} ·{" "}
+								{sessionMode === "timed" ? t("exam.timed") : t("exam.practice")} ·{" "}
 								{answeredCount}/{totalPartsCount}
 							</p>
 						</div>
@@ -983,7 +982,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 						</button>
 
 						<Button size="sm" onClick={handleSubmit}>
-							Submit Exam
+							{t("exam.submitExam")}
 						</Button>
 					</div>
 				</div>
@@ -1000,7 +999,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 						>
 							<div className="w-[260px] p-4">
 								<p className="mb-3 font-semibold text-muted-foreground text-xs">
-									Question Navigator
+									{t("exam.questionNavigator")}
 								</p>
 								<QuestionNavigator
 									totalParts={flatParts}
@@ -1032,7 +1031,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 									<div className="flex items-center gap-2">
 										{currentPart.part.marks && (
 											<Badge variant="outline" className="text-xs">
-												{currentPart.part.marks} marks
+												{t("exam.marksBadge", { marks: currentPart.part.marks })}
 											</Badge>
 										)}
 									</div>
@@ -1086,23 +1085,23 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 											icon={ArrowLeft01Icon}
 											data-icon="inline-start"
 										/>
-										Previous
+										{t("exam.previous")}
 									</Button>
 
 									<span className="text-muted-foreground text-xs">
-										{currentPartIndex + 1} of {totalPartsCount}
+										{t("exam.indexOfTotal", { index: currentPartIndex + 1, total: totalPartsCount })}
 									</span>
 
 									{currentPartIndex < totalPartsCount - 1 ? (
 										<Button onClick={goToNext}>
-											Next
+											{t("exam.next")}
 											<HugeiconsIcon
 												icon={ArrowRight01Icon}
 												data-icon="inline-end"
 											/>
 										</Button>
 									) : (
-										<Button onClick={handleSubmit}>Finish & Submit</Button>
+										<Button onClick={handleSubmit}>{t("exam.finishSubmit")}</Button>
 									)}
 								</div>
 							</m.div>

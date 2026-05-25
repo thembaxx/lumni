@@ -6,6 +6,7 @@ import {
 	RadialIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -32,6 +33,7 @@ export function ExamEngine({
 	paperId,
 	durationMinutes,
 }: ExamEngineProps) {
+	const t = useTranslations();
 	const { hasFeature } = usePremium();
 	const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -136,16 +138,15 @@ export function ExamEngine({
 			<Card className="flex flex-col items-center gap-4 p-8 text-center">
 				<HugeiconsIcon icon={CrownIcon} className="size-10 text-amber-400" />
 				<div>
-					<p className="font-semibold text-lg">Premium Feature</p>
+					<p className="font-semibold text-lg">{t("exam.premiumFeature")}</p>
 					<p className="mt-1 text-muted-foreground text-sm">
-						Full exam simulations with timers and marking guides are available
-						on Premium.
+						{t("exam.premiumDesc")}
 					</p>
 				</div>
 				<Button asChild>
 					<Link href="/premium">
 						<HugeiconsIcon icon={CrownIcon} data-icon="inline-start" />
-						Upgrade Now
+						{t("exam.upgradeNow")}
 					</Link>
 				</Button>
 			</Card>
@@ -174,10 +175,10 @@ export function ExamEngine({
 					className="mt-0.5 shrink-0 lg:hidden"
 				>
 					<HugeiconsIcon icon={ListViewIcon} data-icon />
-					<span className="sr-only">Toggle question list</span>
+					<span className="sr-only">{t("exam.toggleQuestionList")}</span>
 				</Button>
 				<AssessmentHeader
-					title={`${paper.metadata.subject} ${paper.metadata.paperCode}`}
+					title={t("exam.engineTitle", { subject: paper.metadata.subject, paperCode: paper.metadata.paperCode })}
 					elapsedTime={startedAt ? Math.floor((now - startedAt) / 1000) : 0}
 					currentQuestionIndex={answeredCount}
 					totalQuestions={totalParts}
@@ -215,14 +216,13 @@ export function ExamEngine({
 						{paper.sections.map((section) => (
 							<div key={section.id}>
 								<h2 className="mb-4 font-semibold text-xl">
-									SECTION {section.id}
-									{section.title ? `: ${section.title}` : ""}
+									{t("exam.sectionTitle", { id: section.id })}{section.title ? `: ${section.title}` : ""}
 								</h2>
 
 								{section.instructions && section.instructions.length > 0 && (
 									<div className="mb-4 rounded-lg bg-muted/50 p-3">
 										<p className="mb-1 font-semibold text-muted-foreground text-xs uppercase">
-											Instructions
+											{t("exam.instructions")}
 										</p>
 										<ul className="flex flex-col gap-1">
 											{section.instructions.map((inst) => (
@@ -266,10 +266,10 @@ export function ExamEngine({
 											data-icon
 											className="mr-2 animate-spin"
 										/>
-										Submitting…
+										{t("exam.submitting")}
 									</>
 								) : (
-									"Submit Exam"
+									t("exam.submitExam")
 								)}
 							</Button>
 						</div>
