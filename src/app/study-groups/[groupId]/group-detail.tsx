@@ -11,6 +11,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { DiscussionFeed } from "@/components/study-groups/discussion-feed";
 import { PageContainer } from "@/components/layout/page-container";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -153,6 +154,11 @@ export function GroupDetail() {
 							</p>
 						)}
 					</Card>
+				</div>
+
+				<div className="flex flex-col gap-4">
+					<h2 className="font-semibold text-lg">Discussions</h2>
+					<DiscussionFeed groupId={groupId} />
 				</div>
 			</div>
 		</PageContainer>

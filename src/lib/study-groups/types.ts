@@ -44,3 +44,23 @@ export interface CreateGroupInput {
 export interface JoinGroupInput {
 	inviteCode: string;
 }
+
+export interface GroupPost {
+	$id: string;
+	groupId: string;
+	userId: string;
+	userName?: string;
+	content: string;
+	questionText?: string;
+	subject?: string;
+	topic?: string;
+	createdAt: string;
+}
+
+export interface CreatePostInput {
+	groupId: string;
+	content: string;
+	questionText?: string;
+	subject?: string;
+	topic?: string;
+}

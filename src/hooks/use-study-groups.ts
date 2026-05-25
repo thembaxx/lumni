@@ -2,7 +2,7 @@
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiFetch } from "@/lib/shared/api-fetch";
-import type { GroupMember, StudyGroup } from "@/lib/study-groups/types";
+import type { GroupMember, GroupPost, StudyGroup } from "@/lib/study-groups/types";
 
 interface GroupsResponse {
 	groups: StudyGroup[];
@@ -89,6 +89,65 @@ export function useLeaveGroup() {
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["study-groups"] });
+		},
+	});
+}
+
+export function useGroupPosts(groupId: string | undefined) {
+	return useQuery<GroupPost[]>({
+		queryKey: ["group-posts", groupId],
+		queryFn: async () => {
+			if (!groupId) return [];
+			const res = await apiFetch<{ posts: GroupPost[] }>(
+				`/api/study-groups/${groupId}/posts`,
+				{},
+			);
+			return res.posts;
+		},
+		enabled: !!groupId,
+	});
+}
+
+export function useCreatePost() {
+	const queryClient = useQueryClient();
+
+	return useMutation({
+		mutationFn: async (input: {
+			groupId: string;
+			content: string;
+			questionText?: string;
+			subject?: string;
+			topic?: string;
+		}) => {
+			const res = await apiFetch<{ post: GroupPost }>(
+				`/api/study-groups/${input.groupId}/posts`,
+				{
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify(input),
+				},
+			);
+			return res.post;
+		},
+		onSuccess: (_data, variables) => {
+			queryClient.invalidateQueries({
+				queryKey: ["group-posts", variables.groupId],
+			});
+		},
+	});
+}
+
+export function useDeletePost() {
+	const queryClient = useQueryClient();
+
+	return useMutation({
+		mutationFn: async (postId: string) => {
+			await apiFetch<{ success: boolean }>(`/api/study-groups/posts/${postId}`, {
+				method: "DELETE",
+			});
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["group-posts"] });
 		},
 	});
 }

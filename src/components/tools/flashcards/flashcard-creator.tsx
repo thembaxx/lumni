@@ -23,88 +23,54 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { useSpacedRepetition } from "@/hooks/use-spaced-repetition";
+import { flashcardEngine } from "@/lib/flashcard-engine";
 import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";
 
-interface Flashcard {
-	id: string;
+interface FormFields {
 	front: string;
 	back: string;
-	hint?: string;
-	tags?: string[];
-	subject?: string;
-	topic?: string;
-	createdAt: string;
+	hint: string;
+	subject: string;
+	topic: string;
 }
 
 interface FlashcardCreatorProps {
 	className?: string;
 }
 
-export function useFlashcardStorage() {
-	const [flashcards, setFlashcards] = useState<Flashcard[]>(() => {
-		if (typeof window !== "undefined") {
-			const saved = localStorage.getItem("lumni-flashcards:v1");
-			return saved ? JSON.parse(saved) : [];
+let migrated = false;
+
+async function migrateLegacyFlashcards(
+	addCard: (front: string, back: string, subject: string, topic?: string) => Promise<void>,
+) {
+	if (migrated) return;
+	migrated = true;
+	try {
+		const raw = localStorage.getItem("lumni-flashcards:v1");
+		if (!raw) return;
+		const legacy = JSON.parse(raw) as Array<{
+			id: string;
+			front: string;
+			back: string;
+			hint?: string;
+			subject?: string;
+			topic?: string;
+		}>;
+		if (legacy.length === 0) return;
+
+		const existing = await flashcardEngine.getAll();
+		if (existing.length > 0) return;
+
+		for (const card of legacy) {
+			const backText = card.hint
+				? `${card.back}\n\n**Hint:** ${card.hint}`
+				: card.back;
+			await addCard(card.front, backText, card.subject || "", card.topic || "");
 		}
-		return [];
-	});
-
-	const saveFlashcards = useCallback((cards: Flashcard[]) => {
-		setFlashcards(cards);
-		if (typeof window !== "undefined") {
-			localStorage.setItem("lumni-flashcards:v1", JSON.stringify(cards));
-		}
-	}, []);
-
-	const writeLocalStorage = useCallback((cards: Flashcard[]) => {
-		if (typeof window !== "undefined") {
-			localStorage.setItem("lumni-flashcards:v1", JSON.stringify(cards));
-		}
-	}, []);
-
-	const addFlashcard = useCallback(
-		(card: Flashcard) => {
-			setFlashcards((prev) => {
-				const next = [...prev, card];
-				writeLocalStorage(next);
-				return next;
-			});
-		},
-		[writeLocalStorage],
-	);
-
-	const removeFlashcard = useCallback(
-		(id: string) => {
-			setFlashcards((prev) => {
-				const next = prev.filter((card) => card.id !== id);
-				writeLocalStorage(next);
-				return next;
-			});
-		},
-		[writeLocalStorage],
-	);
-
-	const updateFlashcard = useCallback(
-		(id: string, updates: Partial<Flashcard>) => {
-			setFlashcards((prev) => {
-				const next = prev.map((card) =>
-					card.id === id ? { ...card, ...updates } : card,
-				);
-				writeLocalStorage(next);
-				return next;
-			});
-		},
-		[writeLocalStorage],
-	);
-
-	return {
-		flashcards,
-		addFlashcard,
-		removeFlashcard,
-		updateFlashcard,
-		saveFlashcards,
-	};
+		localStorage.removeItem("lumni-flashcards:v1");
+	} catch {}
 }
 
 function FlashcardForm({
@@ -112,48 +78,29 @@ function FlashcardForm({
 	onCancel,
 	initialValues,
 }: {
-	onSubmit: (data: Flashcard) => void;
+	onSubmit: (data: FormFields) => void;
 	onCancel: () => void;
-	initialValues?: Partial<Flashcard>;
+	initialValues?: FormFields;
 }) {
-	const [formData, setFormData] = useState<Flashcard>({
-		id: "",
+	const [formData, setFormData] = useState<FormFields>({
 		front: "",
 		back: "",
-		hint: undefined,
-		tags: [],
+		hint: "",
 		subject: "",
 		topic: "",
-		createdAt: "",
 		...initialValues,
 	});
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
-		const flashcard: Flashcard = {
-			...formData,
-			id: formData.id || Math.random().toString(36).substr(2, 9),
-			createdAt: formData.createdAt || new Date().toISOString(),
-		};
-		onSubmit(flashcard);
+		onSubmit(formData);
 	};
 
 	const handleInputChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
 	) => {
 		const { name, value } = e.target;
-		if (name === "tags") {
-			setFormData((prev) => ({
-				...prev,
-				[name]: value.split(",").reduce((acc, tag) => {
-					const trimmed = tag.trim();
-					if (trimmed.length > 0) acc.push(trimmed);
-					return acc;
-				}, [] as string[]),
-			}));
-		} else {
-			setFormData((prev) => ({ ...prev, [name]: value }));
-		}
+		setFormData((prev) => ({ ...prev, [name]: value }));
 	};
 
 	return (
@@ -163,11 +110,10 @@ function FlashcardForm({
 				<Textarea
 					id="front"
 					name="front"
-					value={formData.front || ""}
+					value={formData.front}
 					onChange={handleInputChange}
 					placeholder="What is the question or prompt?"
 					className="min-h-20"
-					disabled={false}
 				/>
 			</div>
 
@@ -176,11 +122,10 @@ function FlashcardForm({
 				<Textarea
 					id="back"
 					name="back"
-					value={formData.back || ""}
+					value={formData.back}
 					onChange={handleInputChange}
 					placeholder="What is the answer or explanation?"
 					className="min-h-20"
-					disabled={false}
 				/>
 			</div>
 
@@ -189,36 +134,21 @@ function FlashcardForm({
 				<Input
 					id="hint"
 					name="hint"
-					value={formData.hint || ""}
+					value={formData.hint}
 					onChange={handleInputChange}
 					placeholder="Enter a hint to help recall the answer"
-					disabled={false}
 				/>
-			</div>
-
-			<div className="flex flex-col gap-2">
-				<Label htmlFor="tags">Tags (Optional)</Label>
-				<Input
-					id="tags"
-					name="tags"
-					value={Array.isArray(formData.tags) ? formData.tags.join(", ") : ""}
-					onChange={handleInputChange}
-					placeholder="e.g., biology, mitosis, cell-division"
-					disabled={false}
-				/>
-				<p className="mt-1 text-muted-foreground text-xs">
-					Separate tags with commas
-				</p>
 			</div>
 
 			<div className="flex flex-col gap-2">
 				<Label htmlFor="subject">Subject (Optional)</Label>
 				<Select
-					id="subject"
-					name="subject"
-					value={formData.subject || ""}
+					value={formData.subject}
 					onValueChange={(value) =>
-						setFormData((prev) => ({ ...prev, subject: value || "" }))
+						setFormData((prev) => ({
+							...prev,
+							subject: value ?? "",
+						}))
 					}
 				>
 					<SelectTrigger>
@@ -239,10 +169,9 @@ function FlashcardForm({
 				<Input
 					id="topic"
 					name="topic"
-					value={formData.topic || ""}
+					value={formData.topic}
 					onChange={handleInputChange}
 					placeholder="e.g., algebra, photosynthesis, world war II"
-					disabled={false}
 				/>
 			</div>
 
@@ -297,28 +226,36 @@ function FlashcardCreatorInner({ className }: FlashcardCreatorProps) {
 	useEffect(() => {
 		setMounted(true);
 	}, []);
-	const { flashcards, addFlashcard, removeFlashcard, updateFlashcard } =
-		useFlashcardStorage();
+
+	const { cards, addCard, editCard, removeCard, refresh } =
+		useSpacedRepetition();
+
+	const migrateAndRefresh = useCallback(async () => {
+		await migrateLegacyFlashcards(addCard);
+		await refresh();
+	}, [addCard, refresh]);
+
+	useEffect(() => {
+		migrateAndRefresh();
+	}, [migrateAndRefresh]);
+
 	const [isCreating, setIsCreating] = useState(false);
 	const [editingCardId, setEditingCardId] = useState<string | null>(null);
 	const [searchQuery, setSearchQuery] = useState("");
 
-	const handleEditFlashcard = (card: Flashcard) => {
+	const handleEditFlashcard = (card: (typeof cards)[number]) => {
 		setEditingCardId(card.id);
 		setIsCreating(true);
 	};
 
-	const handleDeleteFlashcard = (id: string) => {
-		removeFlashcard(id);
+	const handleDeleteFlashcard = async (id: string) => {
+		await removeCard(id);
 	};
 
-	const filteredFlashcards = flashcards.filter(
+	const filteredCards = cards.filter(
 		(card) =>
 			card.front.toLowerCase().includes(searchQuery.toLowerCase()) ||
-			card.back.toLowerCase().includes(searchQuery.toLowerCase()) ||
-			(card.tags || []).some((tag) =>
-				tag.toLowerCase().includes(searchQuery.toLowerCase()),
-			),
+			card.back.toLowerCase().includes(searchQuery.toLowerCase()),
 	);
 
 	return (
@@ -347,9 +284,9 @@ function FlashcardCreatorInner({ className }: FlashcardCreatorProps) {
 								onChange={(e) => setSearchQuery(e.target.value)}
 								className="mb-2"
 							/>
-							{flashcards.length > 0 && (
+							{cards.length > 0 && (
 								<p className="text-muted-foreground text-xs">
-									{flashcards.length} flashcards total
+									{cards.length} flashcards total
 								</p>
 							)}
 						</div>
@@ -364,8 +301,7 @@ function FlashcardCreatorInner({ className }: FlashcardCreatorProps) {
 				</CardContent>
 			</Card>
 
-			{/* Flashcard List */}
-			{filteredFlashcards.length > 0 && (
+			{filteredCards.length > 0 && (
 				<Card>
 					<CardHeader className="pb-4">
 						<CardTitle className="font-medium text-lg">
@@ -373,7 +309,7 @@ function FlashcardCreatorInner({ className }: FlashcardCreatorProps) {
 						</CardTitle>
 					</CardHeader>
 					<CardContent className="flex flex-col gap-3">
-						{filteredFlashcards.map((card) => (
+						{filteredCards.map((card) => (
 							<m.div
 								key={card.id}
 								initial={{ opacity: 0, x: -10 }}
@@ -381,9 +317,6 @@ function FlashcardCreatorInner({ className }: FlashcardCreatorProps) {
 								exit={{ opacity: 0, x: -10 }}
 								transition={{ duration: 0.2, ease: iOSEase }}
 								className="cursor-pointer rounded-3xl border p-4 transition-colors hover:bg-accent/5"
-								tabIndex={0}
-								role="button"
-								aria-label={`Flashcard: ${card.front.substring(0, 50)}...`}
 							>
 								<div className="flex items-start justify-between">
 									<div className="flex-1">
@@ -392,15 +325,6 @@ function FlashcardCreatorInner({ className }: FlashcardCreatorProps) {
 											subject={card.subject}
 											className="mb-2 font-medium"
 										/>
-										{card.hint && (
-											<div className="text-muted-foreground text-xs">
-												Hint:{" "}
-												<MarkdownRenderer
-													content={card.hint}
-													subject={card.subject}
-												/>
-											</div>
-										)}
 									</div>
 									<div className="flex items-center gap-2 text-xs">
 										{card.subject && (
@@ -413,20 +337,7 @@ function FlashcardCreatorInner({ className }: FlashcardCreatorProps) {
 												{card.topic}
 											</span>
 										)}
-										{Array.isArray(card.tags) &&
-											card.tags.length > 0 &&
-											card.tags.map((tag) => (
-												<span
-													key={tag}
-													className="rounded bg-secondary/50 px-2 py-0.5 text-xs"
-												>
-													{tag}
-												</span>
-											))}
 									</div>
-								</div>
-								<div className="mt-2 text-right text-muted-foreground text-xs">
-									{mounted ? new Date(card.createdAt).toLocaleDateString() : ""}
 								</div>
 								<div className="mt-3 flex justify-end gap-x-2">
 									<Button
@@ -492,8 +403,7 @@ function FlashcardCreatorInner({ className }: FlashcardCreatorProps) {
 				</Card>
 			)}
 
-			{/* Empty State */}
-			{filteredFlashcards.length === 0 && flashcards.length > 0 && (
+			{filteredCards.length === 0 && cards.length > 0 && (
 				<Card className="py-8 text-center">
 					<p className="text-muted-foreground">
 						No flashcards match your search
@@ -501,7 +411,7 @@ function FlashcardCreatorInner({ className }: FlashcardCreatorProps) {
 				</Card>
 			)}
 
-			{filteredFlashcards.length === 0 && flashcards.length === 0 && (
+			{filteredCards.length === 0 && cards.length === 0 && (
 				<Card className="py-8 text-center">
 					<p className="text-muted-foreground">
 						You haven't created any flashcards yet. Click "New Flashcard" to get
@@ -510,7 +420,6 @@ function FlashcardCreatorInner({ className }: FlashcardCreatorProps) {
 				</Card>
 			)}
 
-			{/* Create/Edit Flashcard Modal */}
 			<Dialog open={isCreating} onOpenChange={setIsCreating}>
 				<DialogContent className="w-full max-w-md sm:max-w-lg">
 					<DialogHeader>
@@ -524,14 +433,32 @@ function FlashcardCreatorInner({ className }: FlashcardCreatorProps) {
 					<FlashcardForm
 						initialValues={
 							editingCardId
-								? flashcards.find((c) => c.id === editingCardId) || undefined
+								? (() => {
+										const c = cards.find((c) => c.id === editingCardId);
+										if (!c) return undefined;
+										return {
+											front: c.front,
+											back: c.back,
+											hint: "",
+											subject: c.subject,
+											topic: c.topic || "",
+										};
+									})()
 								: undefined
 						}
-						onSubmit={(flashcard) => {
+						onSubmit={async (data) => {
 							if (editingCardId) {
-								updateFlashcard(editingCardId, flashcard);
+								await editCard(editingCardId, {
+									front: data.front,
+									back: data.back,
+									subject: data.subject,
+									topic: data.topic,
+								});
 							} else {
-								addFlashcard(flashcard);
+								const backText = data.hint
+									? `${data.back}\n\n**Hint:** ${data.hint}`
+									: data.back;
+								await addCard(data.front, backText, data.subject, data.topic);
 							}
 							setIsCreating(false);
 							setEditingCardId(null);

@@ -36,6 +36,9 @@ export const COLLECTIONS = {
 	STUDY_GROUPS: "study_groups",
 	GROUP_MEMBERS: "group_members",
 	GROUP_INVITES: "group_invites",
+	BOOKMARKS: "bookmarks",
+	NOTES: "notes",
+	GROUP_POSTS: "group_posts",
 } as const;
 
 export type Subject = {

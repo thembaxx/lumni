@@ -1,4 +1,4 @@
-import { flashcardRepository } from "./repository";
+import { flashcardEngine } from "@/lib/flashcard-engine";
 
 interface LegacyFlashcard {
 	id: string;
@@ -22,9 +22,9 @@ export async function migrateLegacyFlashcards(): Promise<number> {
 
 	const results = await Promise.all(
 		legacy.map(async (card) => {
-			const existing = await flashcardRepository.getById(card.id);
+			const existing = await flashcardEngine.getById(card.id);
 			if (!existing) {
-				await flashcardRepository.create(
+				await flashcardEngine.create(
 					card.front,
 					card.back,
 					card.subject || "General",

@@ -4,8 +4,9 @@ import type { CompetencyRecord } from "@/lib/competency-engine/types";
 import type {
 	FlashcardReview,
 	FlashcardSM2,
-} from "@/lib/flashcard-repository/types";
+} from "@/lib/flashcard-engine/types";
 import type { JobRecord } from "@/lib/orchestrator/types";
+import type { GroupPost } from "@/lib/study-groups/types";
 
 export interface CachedQuestion {
 	id?: number;
@@ -142,6 +143,25 @@ export interface ExtractionCache {
 	createdAt: number;
 }
 
+export interface BookmarkRecord {
+	id?: number;
+	questionId: string;
+	questionText: string;
+	subject: string;
+	topic: string;
+	note?: string;
+	savedAt: number;
+}
+
+export interface NoteRecord {
+	id?: number;
+	content: string;
+	subject?: string;
+	topic?: string;
+	createdAt: number;
+	updatedAt: number;
+}
+
 export class LumniOfflineDB extends Dexie {
 	chatMessages!: Table<ChatMessageRecord, number>;
 	questions!: Table<CachedQuestion, number>;
@@ -161,6 +181,9 @@ export class LumniOfflineDB extends Dexie {
 	examDates!: Table<CachedExamDates, number>;
 	reviewHistory!: Table<FlashcardReview, number>;
 	extractionCache!: Table<ExtractionCache, number>;
+	bookmarks!: Table<BookmarkRecord, number>;
+	notes!: Table<NoteRecord, number>;
+	groupPosts!: Table<GroupPost, number>;
 
 	constructor() {
 		super("lumni-offline");
@@ -267,6 +290,55 @@ export class LumniOfflineDB extends Dexie {
 			examSessions: "++id, &paperId, startedAt, lastSavedAt, completed",
 			cachedPdfs: "++id, &paperId, cachedAt",
 			examDates: "++id, &cacheKey, session, year, updatedAt",
+		});
+
+		this.version(16).stores({
+			flashcards:
+				"&id, subject, topic, nextReview, easeFactor, interval, repetitions, status, learningStep, leeched, updatedAt",
+			reviewHistory: "++id, cardId, reviewedAt",
+			extractionCache: "++id, &imageHash, createdAt",
+			chatMessages: "++id, role, timestamp",
+			questions: "++id, &subject, topic, cachedAt",
+			progress: "++id, &odSubjectId, userId, updatedAt",
+			quizAttempts: "++id, &odSubject, userId, completedAt",
+			subjects: "++id, &code, cachedAt",
+			quizSessions: "++id, &sessionId, subject, startedAt, lastSavedAt",
+			conflicts: "++id, resolvedAt",
+			jobs: "++id, type, status, priority, scheduledAt, createdAt",
+			competencies: "++id, subjectId, topicId, bloomLevel, level, lastAssessed",
+			visuals: "++id, &cacheKey, subject, createdAt",
+			wrongAnswers: "++id, userId, subject, topic, reviewed, createdAt",
+			questionRatings: "++id, questionId, subject, topic, rating, createdAt",
+			examSessions: "++id, &paperId, startedAt, lastSavedAt, completed",
+			cachedPdfs: "++id, &paperId, cachedAt",
+			examDates: "++id, &cacheKey, session, year, updatedAt",
+			bookmarks: "++id, &questionId, subject, topic, savedAt",
+			notes: "++id, subject, topic, updatedAt",
+		});
+
+		this.version(17).stores({
+			flashcards:
+				"&id, subject, topic, nextReview, easeFactor, interval, repetitions, status, learningStep, leeched, updatedAt",
+			reviewHistory: "++id, cardId, reviewedAt",
+			extractionCache: "++id, &imageHash, createdAt",
+			chatMessages: "++id, role, timestamp",
+			questions: "++id, &subject, topic, cachedAt",
+			progress: "++id, &odSubjectId, userId, updatedAt",
+			quizAttempts: "++id, &odSubject, userId, completedAt",
+			subjects: "++id, &code, cachedAt",
+			quizSessions: "++id, &sessionId, subject, startedAt, lastSavedAt",
+			conflicts: "++id, resolvedAt",
+			jobs: "++id, type, status, priority, scheduledAt, createdAt",
+			competencies: "++id, subjectId, topicId, bloomLevel, level, lastAssessed",
+			visuals: "++id, &cacheKey, subject, createdAt",
+			wrongAnswers: "++id, userId, subject, topic, reviewed, createdAt",
+			questionRatings: "++id, questionId, subject, topic, rating, createdAt",
+			examSessions: "++id, &paperId, startedAt, lastSavedAt, completed",
+			cachedPdfs: "++id, &paperId, cachedAt",
+			examDates: "++id, &cacheKey, session, year, updatedAt",
+			bookmarks: "++id, &questionId, subject, topic, savedAt",
+			notes: "++id, subject, topic, updatedAt",
+			groupPosts: "++id, groupId, userId, createdAt",
 		});
 	}
 }

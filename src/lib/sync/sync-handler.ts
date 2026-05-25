@@ -10,6 +10,7 @@ export async function flushOfflineData(userId: string): Promise<void> {
 		allWrongAnswers,
 		allChatMessages,
 		allRatings,
+		allBookmarks,
 	] = await Promise.all([
 		offlineDB.progress.toArray(),
 		offlineDB.quizAttempts.toArray(),
@@ -18,6 +19,7 @@ export async function flushOfflineData(userId: string): Promise<void> {
 		offlineDB.wrongAnswers.toArray(),
 		offlineDB.chatMessages.toArray(),
 		offlineDB.questionRatings.toArray(),
+		offlineDB.bookmarks.toArray(),
 	]);
 
 	await Promise.all([
@@ -107,6 +109,17 @@ export async function flushOfflineData(userId: string): Promise<void> {
 				rating: r.rating,
 				feedback: r.feedback,
 				createdAt: r.createdAt,
+			}),
+		),
+		...allBookmarks.map((b) =>
+			enqueue("appwrite-bookmark-sync", {
+				userId,
+				questionId: b.questionId,
+				questionText: b.questionText,
+				subject: b.subject,
+				topic: b.topic,
+				note: b.note,
+				savedAt: b.savedAt,
 			}),
 		),
 	]);

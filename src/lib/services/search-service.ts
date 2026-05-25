@@ -1,5 +1,5 @@
 import { offlineDB } from "@/lib/db/schema";
-import { flashcardRepository } from "@/lib/flashcard-repository";
+import { flashcardEngine } from "@/lib/flashcard-engine";
 import { loadFromStorage } from "@/lib/utils/storage";
 
 export interface SearchResultItem {
@@ -79,7 +79,7 @@ function searchDexieWrongAnswers(query: string): Promise<SearchResultItem[]> {
 async function searchDexieFlashcards(
 	query: string,
 ): Promise<SearchResultItem[]> {
-	const flashcards = await flashcardRepository.getAll();
+	const flashcards = await flashcardEngine.getAll();
 	const results: SearchResultItem[] = [];
 	for (const c of flashcards) {
 		if (

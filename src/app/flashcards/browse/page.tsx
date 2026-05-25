@@ -16,8 +16,8 @@ import { PageContainer } from "@/components/layout/page-container";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { flashcardRepository } from "@/lib/flashcard-repository";
-import type { FlashcardSM2 } from "@/lib/flashcard-repository/types";
+import { flashcardEngine } from "@/lib/flashcard-engine";
+import type { FlashcardSM2 } from "@/lib/flashcard-engine/types";
 import { downloadCSV, parseCSV } from "@/lib/utils/flashcard-import-export";
 
 export default function FlashcardBrowsePage() {
@@ -39,7 +39,7 @@ export default function FlashcardBrowsePage() {
 	const loadCards = useCallback(async () => {
 		setLoading(true);
 		try {
-			const all = await flashcardRepository.getAll(
+			const all = await flashcardEngine.getAll(
 				subjectFilter !== "all" ? subjectFilter : undefined,
 			);
 			const filtered = search
@@ -62,7 +62,7 @@ export default function FlashcardBrowsePage() {
 	}, [loadCards]);
 
 	const handleDelete = async (id: string) => {
-		await flashcardRepository.delete(id);
+		await flashcardEngine.delete(id);
 		loadCards();
 	};
 
@@ -79,7 +79,7 @@ export default function FlashcardBrowsePage() {
 			const imported = parseCSV(text);
 			await Promise.all(
 				imported.map((card) =>
-					flashcardRepository.create(
+					flashcardEngine.create(
 						card.front,
 						card.back,
 						card.subject,

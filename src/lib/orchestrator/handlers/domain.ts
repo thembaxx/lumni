@@ -8,7 +8,7 @@ import {
 } from "@/lib/db/client";
 import { safePersist } from "@/lib/db/persist";
 import { getProgress, saveProgress } from "@/lib/db/repositories/progress";
-import { flashcardRepository } from "@/lib/flashcard-repository";
+import { flashcardEngine } from "@/lib/flashcard-engine";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import type { JobPayloadByType } from "@/lib/orchestrator/types";
 import { extractCorrectAnswer } from "@/lib/shared/question-utils";
@@ -54,16 +54,16 @@ export const spacedRepUpdate: JobHandler = async (payload) => {
 				? 1
 				: 0;
 
-	const allCards = await flashcardRepository.getAll(question.subject);
+	const allCards = await flashcardEngine.getAll(question.subject);
 	const existingCards = allCards.filter(
 		(c) => c.front === question.questionText,
 	);
 
 	if (existingCards.length > 0) {
-		await flashcardRepository.review(existingCards[0].id, quality);
+		await flashcardEngine.review(existingCards[0].id, quality);
 	} else {
 		const correctOptionText = extractCorrectAnswer(question);
-		await flashcardRepository.create(
+		await flashcardEngine.create(
 			question.questionText,
 			correctOptionText || question.explanation,
 			question.subject,

@@ -14,6 +14,8 @@ export type JobType =
 	| "appwrite-flashcard-pull"
 	| "appwrite-flashcard-delete"
 	| "appwrite-wrong-answer-sync"
+	| "appwrite-bookmark-sync"
+	| "appwrite-bookmark-delete"
 	| "appwrite-chat-sync"
 	| "appwrite-rating-sync"
 	| "appwrite-study-plan-sync"
@@ -94,6 +96,19 @@ export type JobPayloadByType = {
 		createdAt: number;
 		reviewed: boolean;
 		errorType?: string;
+	};
+	"appwrite-bookmark-sync": {
+		userId?: string;
+		questionId: string;
+		questionText: string;
+		subject: string;
+		topic: string;
+		note?: string;
+		savedAt: number;
+	};
+	"appwrite-bookmark-delete": {
+		userId?: string;
+		questionId: string;
 	};
 	"appwrite-chat-sync": {
 		userId?: string;

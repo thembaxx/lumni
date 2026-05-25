@@ -1,4 +1,4 @@
-import type { FlashcardSM2 } from "@/lib/flashcard-repository/types";
+import type { FlashcardSM2 } from "@/lib/flashcard-engine/types";
 
 export function exportToCSV(cards: FlashcardSM2[]): string {
 	const header = "front,back,subject,topic";

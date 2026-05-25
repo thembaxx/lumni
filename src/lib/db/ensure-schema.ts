@@ -392,4 +392,69 @@ export const schemaConfig: Record<string, CollectionSchema> = {
 			{ key: "idx_invites_code", type: "key", attributes: ["code"] },
 		],
 	},
+	wrong_answers: {
+		attributes: {
+			userId: { type: "string", size: 100, required: true },
+			questionId: { type: "string", size: 255, required: true },
+			questionText: { type: "string", size: 65535, required: true },
+			subject: { type: "string", size: 128, required: true },
+			topic: { type: "string", size: 128 },
+			correctAnswer: { type: "string", size: 65535, required: true },
+			userAnswer: { type: "string", size: 65535, required: true },
+			explanation: { type: "string", size: 65535 },
+			errorType: { type: "string", size: 64 },
+			reviewed: { type: "boolean", required: true },
+			createdAt: { type: "datetime", required: true },
+		},
+		indexes: [
+			{ key: "idx_wrong_answers_userId", type: "key", attributes: ["userId"] },
+			{ key: "idx_wrong_answers_subject", type: "key", attributes: ["subject"] },
+		],
+	},
+	bookmarks: {
+		attributes: {
+			userId: { type: "string", size: 100, required: true },
+			questionId: { type: "string", size: 255, required: true },
+			questionText: { type: "string", size: 65535, required: true },
+			subject: { type: "string", size: 128, required: true },
+			topic: { type: "string", size: 128 },
+			note: { type: "string", size: 65535 },
+			savedAt: { type: "datetime", required: true },
+		},
+		indexes: [
+			{ key: "idx_bookmarks_userId", type: "key", attributes: ["userId"] },
+			{ key: "idx_bookmarks_questionId", type: "key", attributes: ["questionId"] },
+		],
+	},
+	notes: {
+		attributes: {
+			userId: { type: "string", size: 100 },
+			content: { type: "string", size: 65535, required: true },
+			subject: { type: "string", size: 128 },
+			topic: { type: "string", size: 128 },
+			createdAt: { type: "datetime", required: true },
+			updatedAt: { type: "datetime", required: true },
+		},
+		indexes: [
+			{ key: "idx_notes_userId", type: "key", attributes: ["userId"] },
+			{ key: "idx_notes_subject", type: "key", attributes: ["subject"] },
+		],
+	},
+	group_posts: {
+		attributes: {
+			groupId: { type: "string", size: 100, required: true },
+			userId: { type: "string", size: 100, required: true },
+			userName: { type: "string", size: 255 },
+			content: { type: "string", size: 65535, required: true },
+			questionText: { type: "string", size: 65535 },
+			subject: { type: "string", size: 128 },
+			topic: { type: "string", size: 128 },
+			createdAt: { type: "datetime", required: true },
+		},
+		indexes: [
+			{ key: "idx_posts_groupId", type: "key", attributes: ["groupId"] },
+			{ key: "idx_posts_userId", type: "key", attributes: ["userId"] },
+			{ key: "idx_posts_createdAt", type: "key", attributes: ["createdAt"] },
+		],
+	},
 };

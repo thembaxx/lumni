@@ -301,6 +301,41 @@ export const appwriteQuestionFlag: JobHandler = async (payload) => {
 	});
 };
 
+export const appwriteBookmarkSync: JobHandler = async (payload) => {
+	const data = payload as JobPayloadByType["appwrite-bookmark-sync"];
+	const existing = await listDocuments<Record<string, unknown>>(
+		COLLECTIONS.BOOKMARKS,
+		[Query.equal("questionId", data.questionId)],
+	);
+	if (existing.length > 0) {
+		await updateDocument(COLLECTIONS.BOOKMARKS, existing[0].$id as string, {
+			note: data.note || "",
+			savedAt: new Date(data.savedAt).toISOString(),
+		});
+	} else {
+		await createDocument(COLLECTIONS.BOOKMARKS, {
+			userId: data.userId || "",
+			questionId: data.questionId,
+			questionText: data.questionText,
+			subject: data.subject,
+			topic: data.topic || "",
+			note: data.note || "",
+			savedAt: new Date(data.savedAt).toISOString(),
+		});
+	}
+};
+
+export const appwriteBookmarkDelete: JobHandler = async (payload) => {
+	const data = payload as JobPayloadByType["appwrite-bookmark-delete"];
+	const existing = await listDocuments<Record<string, unknown>>(
+		COLLECTIONS.BOOKMARKS,
+		[Query.equal("questionId", data.questionId)],
+	);
+	for (const doc of existing) {
+		await deleteDocument(COLLECTIONS.BOOKMARKS, doc.$id as string);
+	}
+};
+
 export const appwriteHandlers: Partial<Record<string, JobHandler>> = {
 	"appwrite-sync": appwriteSync,
 	"appwrite-progress-sync": appwriteProgressSync,
@@ -310,6 +345,8 @@ export const appwriteHandlers: Partial<Record<string, JobHandler>> = {
 	"appwrite-flashcard-pull": appwriteFlashcardPull,
 	"appwrite-flashcard-delete": appwriteFlashcardDelete,
 	"appwrite-wrong-answer-sync": appwriteWrongAnswerSync,
+	"appwrite-bookmark-sync": appwriteBookmarkSync,
+	"appwrite-bookmark-delete": appwriteBookmarkDelete,
 	"appwrite-chat-sync": appwriteChatSync,
 	"appwrite-rating-sync": appwriteRatingSync,
 	"appwrite-study-plan-sync": appwriteStudyPlanSync,

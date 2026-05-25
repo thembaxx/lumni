@@ -1,4 +1,4 @@
-import { flashcardRepository } from "@/lib/flashcard-repository";
+import { flashcardEngine } from "@/lib/flashcard-engine";
 import { loadFromStorage, saveToStorage } from "@/lib/utils/storage";
 
 const NOTIF_KEY = "lumni_notification_subscription";
@@ -200,7 +200,7 @@ function getTodayPlanSessions(): { subject: string; topic?: string }[] {
 
 async function getDueCardCount(): Promise<number> {
 	try {
-		const cards = await flashcardRepository.getDueCards();
+		const cards = await flashcardEngine.getDueCards();
 		return cards.length;
 	} catch {
 		return 0;

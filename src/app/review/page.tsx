@@ -9,6 +9,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { DiscussWrongAnswer } from "@/components/study-groups/discuss-wrong-answer";
 import { PageContainer } from "@/components/layout/page-container";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { LocalDataNotice } from "@/components/shared/local-data-notice";
@@ -247,6 +248,11 @@ export default function ReviewPage() {
 										</div>
 									)}
 									<div className="flex items-center justify-end gap-2">
+										<DiscussWrongAnswer
+											questionText={entry.questionText}
+											subject={entry.subject}
+											topic={entry.topic}
+										/>
 										{entry.id && (
 											<Button
 												variant="outline"
