@@ -19,7 +19,7 @@ interface AppwriteExam {
 }
 
 async function fetchExams(): Promise<PaperListing[]> {
-	const res = await fetch("/api/admin/exams");
+	const res = await fetch("/api/exams");
 	if (!res.ok) return [];
 	const data = await res.json();
 	const appwriteExams = (data.exams || []) as AppwriteExam[];

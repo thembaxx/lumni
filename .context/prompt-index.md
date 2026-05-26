@@ -1,4 +1,4 @@
-<!-- LAST_SYNC: 2026-05-24 -->
+<!-- LAST_SYNC: 2026-05-25 -->
 # Prompt Index — Lumni
 
 | ID | Category | Prompt Name | File Path | Purpose | Key Variables | When to Use | Status |

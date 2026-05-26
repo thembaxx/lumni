@@ -1,55 +1,52 @@
-<!-- LAST_SYNC: 2026-05-24 -->
+<!-- LAST_SYNC: 2026-05-25 -->
 # Master Context — Lumni
 
 ## PROJECT_IDENTITY
-Lumni is a mobile-first South African Matric prep platform. It features offline-first architecture, AI-powered educational engines, and "The Emerald Study Room" design system.
+Lumni is a mobile-first South African Matric prep platform featuring offline-first architecture, AI-powered educational engines, and "The Emerald Study Room" design system.
 
 ## CURRENT_FOCUS
-Architecture consolidation: flashcard engine unified into `flashcard-engine/`, generic route handler factory (`create-route-handler.ts`), services barrel exporting all 10 services, tools directory reorganized into domain subdirs.
+Testing and verification: prioritizing E2E (Playwright) and component test coverage. Stabilizing the `flashcard-engine` unification and ensuring the Appwrite write path for `exam_dates` is implemented.
 
 ## KEY_CONSTRAINTS
-- **AI Budget**: 2000 global calls/day; per-user caps (20 gen, 100 grade).
-- **Offline-First**: All reads must prioritize Dexie; all writes must be sync-queued.
+- **AI Budget**: 2000 global calls/day; per-user caps (20 gen, 100 grade, 20 hint, 50 visual).
+- **Offline-First**: All reads must prioritize Dexie; all writes must be sync-queued via `QueueCore`.
 - **Math Delimiters**: Strictly use `$...$` (inline) and `$$...$$` (display).
 - **Appwrite Limits**: 50k document cap requires periodic cleanup of cached questions.
+- **Design Tokens**: No hardcoded values; use OKLCH colors and semantic shadows/spacing.
 
 ## DEFINITIONS
-- **QuestionEngine**: Core module at `src/lib/question-engine/`.
+- **QuestionEngine**: Core module for question lifecycle (gen/grade/validate) at `src/lib/question-engine/`.
 - **Emerald Design**: Aesthetic defined in `DESIGN.md` using `oklch` colors and Tailwind v4.
-- **Competency Level**: Scale (Novice, Developing, Proficient, Mastered) mapping to difficulty and Bloom's Taxonomy.
-- **QueueCore**: Persistent job queue processor in `src/lib/queue/core.ts`.
+- **Competency Level**: Scale (Novice, Developing, Proficient, Mastered) mapping to Bloom's Taxonomy.
+- **QueueCore**: Persistent job queue processor for sync and background tasks.
 
 ## DECISION_LOG
 - [D001] `LearningOrchestrator` composes `QuestionEngine` for clean separation.
 - [D002] 3-tier caching: Dexie L1 -> Appwrite L2 -> AI/Wikimedia L3.
 - [D003] AI chain: Gemini 2.0 Flash Lite -> Nvidia NIM -> Groq fallback.
 - [D004] Local grading for 4 types, AI for 7.
-- [D005] Same `userId` preserved during anonymous-to-authenticated upgrade.
-- [D006] Repository pattern for all DB access.
-- [D007] Single `QueueCore` for sync and jobs.
-- [D008] Unified `trackQuestionResult()` for competency.
-- [D009] AI token budgets per user/day.
 - [D011] Inverse-competency round-robin study scheduling.
-- [D012] No `\(...\)` delimiters — only dollar signs for KaTeX.
-- [D013] 30-day question cache TTL in Appwrite.
-- [D016] Competency uses `score` field (not `proficiency`).
-- [D017] Flashcard engine consolidated into `src/lib/flashcard-engine/` wrapping repo + algorithms + settings.
-- [D018] Route handler factory `createRouteHandler()` replaces 49 copies of auth/try-catch boilerplate.
-- [D019] Services barrel `src/lib/services/index.ts` exports all 10 services with `ServiceResult<T>`.
+- [D017] Flashcard engine consolidated into `src/lib/flashcard-engine/`.
+- [D018] Route handler factory `createRouteHandler()` for declarative API logic.
+- [D019] Services barrel `src/lib/services/index.ts` exports all 10 services.
 - [D020] Tools directory split into domain subdirs: core, communication, math, science, scheduling.
 
 ## KNOWLEDGE_GRAPH
-User -> [Zustand Store] -> [QuestionEngine] -> [AI Providers]
-User -> [Dexie SyncQueue] -> [Appwrite] -> [Analytics/Progress]
+User -> [Zustand Store] -> [LearningOrchestrator] -> [QuestionEngine] -> [AI Providers]
+User -> [QueueCore] -> [Appwrite] -> [Analytics/Progress]
 RouteHandler -> [createRouteHandler] -> [Auth Guard + Validation + Exec]
-FlashcardEngine -> [DexieRepository + SM-2/FSRS + DailyLimits + LearningSteps + EaseHell + Leech]
-Services -> [ServiceResult<T>] -> [Analytics, Competency, Progress, Flashcard, Notification, ...]
-Tools -> [core/ | communication/ | math/ | science/ | scheduling/]
+FlashcardEngine -> [DexieRepository + SM-2/FSRS + DailyLimits]
+Services -> [ServiceResult<T>] -> [Analytics, Competency, Progress, Notification, ...]
+
+## REUSABLE_SNIPPETS
+- **Route Handler**: `export const POST = createRouteHandler({ auth: "required", schema: z.object({...}), async exec({ body, user }) {...} });`
+- **Math**: `$E = mc^2$` for inline, `$$\sum_{i=1}^n i = \frac{n(n+1)}{2}$$` for display.
+- **Service Result**: `if (!result.success) return failure(result.error); return success(result.data);`
 
 ## AVOID_LIST
-- ❌ No arbitrary pixel values (e.g., `w-[250px]`). Use design tokens.
-- ❌ No hardcoded shadows. Use `shadow-level-1/2/3`.
+- ❌ No arbitrary pixel values. Use design tokens.
 - ❌ No `space-y-*` for layout. Use `flex flex-col` + `gap-*`.
+- ❌ No `\(...\)` delimiters — only dollar signs for KaTeX.
 - ❌ No magic z-index numbers. Use semantic `--z-*` scale.
 - ❌ No `lottie-react`. Use `@lottiefiles/dotlottie-react`.
 

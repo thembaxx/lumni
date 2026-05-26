@@ -1,4 +1,4 @@
-<!-- LAST_SYNC: 2026-05-24 -->
+<!-- LAST_SYNC: 2026-05-25 -->
 # Repository Index — Lumni
 
 ## Directory Tree (Depth 3)
@@ -57,8 +57,9 @@
 - `src/instrumentation.ts`: Sentry and monitoring initialization.
 
 ## Recent Changes (Last 7 Days)
-- Enforcement of design system tokens (shadows, radii, spacing).
-- Standardization of page layouts with `<PageContainer>`.
-- Dark mode improvements across core pages.
-- Migration to Hugeicons and Biome updates.
+- Architecture consolidation: flashcard engine unified into `src/lib/flashcard-engine/`.
+- Implementation of generic route handler factory (`create-route-handler.ts`).
+- Services barrel reorganization (`src/lib/services/index.ts`).
+- Tools directory split into domain subdirs (core, math, science, etc.).
 - Refinement of competency tracking and study planner algorithms.
+- Migration to Hugeicons and Biome updates.
