@@ -3,6 +3,7 @@ import { describe, expect, mock, test } from "bun:test";
 const mockCreateDocument = mock(() => "doc-id");
 const mockListDocuments = mock(() => []);
 const mockUpdateDocument = mock(() => {});
+const mockDeleteDocument = mock(() => {});
 
 mock.module("@/lib/appwrite", () => ({
 	databases: {
@@ -26,6 +27,7 @@ mock.module("@/lib/db/client", () => ({
 	createDocument: mockCreateDocument,
 	listDocuments: mockListDocuments,
 	updateDocument: mockUpdateDocument,
+	deleteDocument: mockDeleteDocument,
 }));
 
 mock.module("@/lib/db/persist", () => ({
