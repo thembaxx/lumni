@@ -1,43 +1,58 @@
 import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
+import createMiddleware from "next-intl/middleware";
+import { defaultLocale, locales } from "./src/i18n/locales";
 
-const PUBLIC_ROUTES = [
-	"/",
-	"/auth/sign-in",
-	"/auth/sign-up",
-	"/auth/forgot-password",
-	"/auth/reset-password",
-	"/auth/verify-email",
-	"/api/auth",
-	"/api/session",
-	"/api/seed",
-	"/api/cron",
-	"/api/csp-violation",
-	"/api/uploadthing",
-	"/_next",
-	"/favicon.ico",
-	"/robots.txt",
-	"/sitemap.xml",
-	"/fonts",
-];
+const intlMiddleware = createMiddleware({
+	locales,
+	defaultLocale,
+	localeDetection: true,
+	localePrefix: "as-needed",
+});
+
+const PROTECTED_PAGES = ["/admin", "/teacher", "/parent"];
+
+function getProjectCookieName(): string {
+	const projectId = process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID;
+	return `a_session_${projectId}`;
+}
+
+function isAuthenticated(request: NextRequest): boolean {
+	const cookieName = getProjectCookieName();
+	return (
+		request.cookies.has(cookieName) ||
+		request.cookies.has(`${cookieName}_legacy`)
+	);
+}
+
+function stripLocale(pathname: string): string {
+	for (const locale of locales) {
+		if (pathname === `/${locale}` || pathname.startsWith(`/${locale}/`)) {
+			return pathname.slice(locale.length + 1) || "/";
+		}
+	}
+	return pathname;
+}
 
 export function proxy(request: NextRequest) {
 	const { pathname } = request.nextUrl;
 
-	if (PUBLIC_ROUTES.some((route) => pathname.startsWith(route))) {
+	const isApiRoute =
+		pathname.startsWith("/api/") || pathname.startsWith("/monitoring");
+	if (isApiRoute) {
 		return;
 	}
 
-	const hasSessionCookie = request.cookies
-		.getAll()
-		.some((c) => c.name.startsWith("a_session_"));
+	const strippedPath = stripLocale(pathname);
+	const isProtectedPage = PROTECTED_PAGES.some((prefix) =>
+		strippedPath.startsWith(prefix),
+	);
 
-	if (!hasSessionCookie) {
-		if (pathname.startsWith("/api/")) {
-			return Response.json({ error: "Not authenticated" }, { status: 401 });
-		}
-		const url = request.nextUrl.clone();
-		url.pathname = "/auth/sign-in";
-		url.searchParams.set("redirect", pathname);
-		return Response.redirect(url);
+	if (isProtectedPage && !isAuthenticated(request)) {
+		const signInUrl = new URL("/auth/sign-in", request.url);
+		signInUrl.searchParams.set("redirect", pathname);
+		return NextResponse.redirect(signInUrl);
 	}
+
+	return intlMiddleware(request);
 }
