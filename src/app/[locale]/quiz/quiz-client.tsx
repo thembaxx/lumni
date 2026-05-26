@@ -12,6 +12,7 @@ function QuizClientContent() {
 	const questionCount = countParam ? parseInt(countParam, 10) : 20;
 	const timeParam = get("time");
 	const maxTime = timeParam ? parseInt(timeParam, 10) : undefined;
+	const pastPaperMode = get("pastPaperMode") === "true";
 
 	const handleQuit = () => {
 		window.history.back();
@@ -23,6 +24,7 @@ function QuizClientContent() {
 			topic={topic}
 			questionCount={questionCount}
 			maxTime={maxTime}
+			pastPaperMode={pastPaperMode}
 			onQuit={handleQuit}
 		/>
 	);

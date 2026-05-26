@@ -5,6 +5,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useMemo, useRef, useState } from "react";
+import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
@@ -21,7 +22,20 @@ interface ExtractionResult {
 	provider: string;
 }
 
-type SnapPhase = "idle" | "capturing" | "extracting" | "confirm" | "error";
+interface SolveResult {
+	solution: string;
+	steps: string[];
+	provider: string;
+}
+
+type SnapPhase =
+	| "idle"
+	| "capturing"
+	| "extracting"
+	| "confirm"
+	| "solving"
+	| "solved"
+	| "error";
 
 const MATH_SUBJECTS = new Set([
 	"mathematics",
@@ -35,6 +49,7 @@ export function SnapFab() {
 	const [extractedText, setExtractedText] = useState("");
 	const [error, setError] = useState<string | null>(null);
 	const [imagePreview, setImagePreview] = useState<string | null>(null);
+	const [solveResult, setSolveResult] = useState<SolveResult | null>(null);
 	const [showDialog, setShowDialog] = useState(false);
 	const [showCamera, setShowCamera] = useState(false);
 	const hiddenFileRef = useRef<HTMLInputElement>(null);
@@ -197,7 +212,27 @@ export function SnapFab() {
 		[],
 	);
 
-	const handleSolve = useCallback(() => {
+	const handleSolveInline = useCallback(async () => {
+		if (!extractedText) return;
+		setPhase("solving");
+		setError(null);
+		try {
+			const response = await fetch("/api/solve", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ question: extractedText, mode: "solve" }),
+			});
+			if (!response.ok) throw new Error("Failed to solve");
+			const data: SolveResult = await response.json();
+			setSolveResult(data);
+			setPhase("solved");
+		} catch {
+			setError("Failed to solve. Try the full solver instead.");
+			setPhase("error");
+		}
+	}, [extractedText]);
+
+	const handleOpenSolver = useCallback(() => {
 		if (!extractedText) return;
 		setShowDialog(false);
 		const params = new URLSearchParams({
@@ -212,6 +247,7 @@ export function SnapFab() {
 		setExtractedText("");
 		setError(null);
 		setImagePreview(null);
+		setSolveResult(null);
 		setShowCamera(false);
 	}, []);
 
@@ -254,16 +290,18 @@ export function SnapFab() {
 			</button>
 
 			<Dialog open={showDialog} onOpenChange={(o) => !o && handleDismiss()}>
-				<DialogContent className="sm:max-w-lg">
+				<DialogContent className="max-h-[80vh] overflow-y-auto sm:max-w-lg">
 					<DialogTitle className="ios-title-3 text-[--system-text-primary]">
 						{phase === "extracting" && "Reading problem…"}
 						{phase === "confirm" && "Verify extracted problem"}
+						{phase === "solving" && "Solving…"}
+						{phase === "solved" && "Solution"}
 						{phase === "error" && "Something went wrong"}
 						{phase === "capturing" && "Processing image…"}
 					</DialogTitle>
 
 					<div className="flex flex-col gap-4 py-2">
-						{imagePreview && phase !== "capturing" && (
+						{imagePreview && phase !== "capturing" && phase !== "solving" && (
 							<div className="overflow-hidden rounded-xl border border-border">
 								<Image
 									src={imagePreview}
@@ -294,6 +332,15 @@ export function SnapFab() {
 							</div>
 						)}
 
+						{phase === "solving" && (
+							<div className="flex items-center justify-center gap-3 py-8">
+								<div className="size-6 animate-spin rounded-full border-2 border-[--system-accent] border-t-transparent" />
+								<span className="text-[--system-text-secondary] text-sm">
+									Solving…
+								</span>
+							</div>
+						)}
+
 						{phase === "confirm" && (
 							<Textarea
 								value={extractedText}
@@ -301,6 +348,39 @@ export function SnapFab() {
 								className="min-h-[120px] rounded-xl bg-system-surface px-4 py-3"
 								placeholder="Edit the extracted problem if needed…"
 							/>
+						)}
+
+						{phase === "solved" && solveResult && (
+							<div className="flex flex-col gap-4">
+								<div className="rounded-xl border border-border bg-card p-4">
+									<MarkdownRenderer
+										content={solveResult.solution}
+										subject="mathematics"
+									/>
+								</div>
+								{solveResult.steps.length > 0 && (
+									<div className="flex flex-col gap-2">
+										<h4 className="font-medium text-muted-foreground text-sm">
+											Steps
+										</h4>
+										{solveResult.steps.map((step, i) => (
+											<div
+												// biome-ignore lint/suspicious/noArrayIndexKey: steps are static ordered list
+												key={i}
+												className="rounded-lg border border-border/60 bg-muted/30 p-3"
+											>
+												<span className="mr-2 font-mono text-muted-foreground text-xs">
+													{i + 1}.
+												</span>
+												<MarkdownRenderer
+													content={step}
+													subject="mathematics"
+												/>
+											</div>
+										))}
+									</div>
+								)}
+							</div>
 						)}
 
 						{phase === "error" && (
@@ -315,12 +395,25 @@ export function SnapFab() {
 								onClick={handleDismiss}
 								className="flex-1"
 							>
-								Cancel
+								{phase === "solved" ? "Close" : "Cancel"}
 							</Button>
 							{phase === "confirm" && (
-								<Button onClick={handleSolve} className="flex-1">
-									Solve Problem
-								</Button>
+								<>
+									<Button
+										onClick={handleSolveInline}
+										variant="default"
+										className="flex-1"
+									>
+										Solve Here
+									</Button>
+									<Button
+										onClick={handleOpenSolver}
+										variant="outline"
+										className="flex-1"
+									>
+										Open Solver
+									</Button>
+								</>
 							)}
 							{phase === "error" && (
 								<Button

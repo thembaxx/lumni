@@ -1,9 +1,15 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-
-import { locales } from "./i18n/locales";
+import createMiddleware from "next-intl/middleware";
+import { defaultLocale, locales } from "./i18n/locales";
 
 const PROTECTED_PAGES = ["/admin", "/teacher", "/parent"];
+
+const intlMiddleware = createMiddleware({
+	locales,
+	defaultLocale,
+	localePrefix: "as-needed",
+});
 
 function getProjectCookieName(): string {
 	const projectId = process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID;
@@ -28,6 +34,12 @@ function stripLocale(pathname: string): string {
 }
 
 export function proxy(request: NextRequest) {
+	const intlResponse = intlMiddleware(request);
+
+	if (intlResponse.status === 307 || intlResponse.status === 308) {
+		return intlResponse;
+	}
+
 	const pathname = stripLocale(request.nextUrl.pathname);
 
 	const isProtectedPage = PROTECTED_PAGES.some((prefix) =>
@@ -40,5 +52,5 @@ export function proxy(request: NextRequest) {
 		return NextResponse.redirect(signInUrl);
 	}
 
-	return NextResponse.next();
+	return intlResponse;
 }

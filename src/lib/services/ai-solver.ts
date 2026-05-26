@@ -50,7 +50,7 @@ export const aiSolver = {
 		const subjectKey = subject && SUBJECT_PROMPTS[subject] ? subject : null;
 		const systemPrompt =
 			mode === "extract"
-				? "You are an expert at reading math problems from images. Extract the exact math problem shown in the image. Return the problem text as-is \u2014 do not solve it. Format your response as a JSON object with 'solution' (the extracted problem text) and 'steps' (an empty array)."
+				? "You are an expert at reading math problems from images. Extract the exact math problem shown in the image. Return the problem text using LaTeX notation for all mathematical expressions (e.g., $x^2 + 2x + 1 = 0$, $\\int_0^1 x^2 \\, dx$, $\\frac{a}{b}$). Do NOT solve the problem. Format your response as a JSON object with 'solution' (the extracted problem text in LaTeX) and 'steps' (an empty array)."
 				: followUp
 					? "You are a helpful tutor. The student is asking a follow-up question about a problem you previously helped them with. Answer their follow-up conversationally and concisely. No JSON \u2014 just plain text."
 					: subjectKey

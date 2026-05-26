@@ -65,3 +65,7 @@ storybook-static/
 
 # translation generation log
 messages/translations.log
+
+# test artifacts
+test-results/
+playwright-report/

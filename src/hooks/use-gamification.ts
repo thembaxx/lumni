@@ -98,8 +98,11 @@ export function useGamification() {
 	const addXp = useCallback(
 		(amount: number, accuracy: number, streak: number, subject?: string) => {
 			setData((prev) => {
+				const working = subject
+					? gamificationEngine.trackSubjectQuestion(prev, subject, amount)
+					: prev;
 				const { data: newData, leveledUp: newLevel } = gamificationEngine.addXp(
-					prev,
+					working,
 					amount,
 					accuracy,
 					streak,
@@ -164,12 +167,48 @@ export function useGamification() {
 
 	const updateStreak = useCallback(() => {
 		setData((prev) => {
-			const { data: newData } = gamificationEngine.updateStreak(prev);
+			const { data: newData, freezeConsumed } =
+				gamificationEngine.updateStreak(prev);
+			if (freezeConsumed) {
+				setTimeout(() => {
+					toast({
+						type: "info",
+						message: "🧊 Streak Freeze Used",
+						description:
+							"Your streak was protected! Earn more freezes by reaching streak milestones.",
+						duration: 4000,
+					});
+				}, 0);
+			}
 			gamificationEngine.save(newData);
 			scheduleSync(newData);
 			return newData;
 		});
 	}, [scheduleSync]);
+
+	const useStreakFreeze = useCallback(() => {
+		setData((prev) => {
+			const { data: newData, success } =
+				gamificationEngine.consumeStreakFreeze(prev);
+			if (success) {
+				gamificationEngine.save(newData);
+				scheduleSync(newData);
+			}
+			return newData;
+		});
+	}, [scheduleSync]);
+
+	const addStreakFreeze = useCallback(
+		(count?: number) => {
+			setData((prev) => {
+				const newData = gamificationEngine.addStreakFreeze(prev, count);
+				gamificationEngine.save(newData);
+				scheduleSync(newData);
+				return newData;
+			});
+		},
+		[scheduleSync],
+	);
 
 	const completeDailyChallenge = useCallback(
 		(challengeId: string) => {
@@ -219,9 +258,13 @@ export function useGamification() {
 		addAchievement,
 		checkAndUnlockAchievements,
 		updateStreak,
+		useStreakFreeze,
+		addStreakFreeze,
 		completeDailyChallenge,
 		checkForRewardChests,
 		currentStreak: data.currentStreak,
+		streakFreezes: data.streakFreezes,
+		subjectQuestionCounts: data.subjectQuestionCounts,
 		totalQuestionsAnswered: data.totalQuestionsAnswered,
 		claimedChests: data.claimedChests,
 		rewardChests: REWARD_CHESTS,
@@ -236,10 +279,14 @@ export function useGamification() {
 
 async function syncToServer(data: StoredGamification) {
 	try {
+		const label =
+			(typeof window !== "undefined"
+				? window.localStorage.getItem("lumni_display_name")
+				: null) || undefined;
 		await apiFetch("/api/gamification", {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify(data),
+			body: JSON.stringify({ ...data, label }),
 		});
 	} catch {
 		// Silently fail — will retry on next mutation

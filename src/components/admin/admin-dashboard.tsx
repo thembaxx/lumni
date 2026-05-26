@@ -208,6 +208,13 @@ export function AdminDashboard() {
 						<Button
 							variant="ghost"
 							size="sm"
+							onClick={() => push("/admin/gamification")}
+						>
+							Gamification
+						</Button>
+						<Button
+							variant="ghost"
+							size="sm"
 							onClick={() => push("/admin/questions")}
 						>
 							Questions

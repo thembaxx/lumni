@@ -228,6 +228,13 @@ export interface GenerationParams {
 	questionType?: QuestionType | QuestionType[] | "any";
 	count: number;
 	sourceExamPaper?: string;
+	pastPaperMode?: boolean;
+	pastPaperExamples?: Array<{
+		questionText: string;
+		answerText: string;
+		marks: number;
+		year: number;
+	}>;
 }
 
 export interface HintParams {

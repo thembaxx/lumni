@@ -159,6 +159,30 @@ export function useDeletePost() {
 	});
 }
 
+export function useRemoveMember() {
+	const queryClient = useQueryClient();
+
+	return useMutation({
+		mutationFn: async ({
+			groupId,
+			memberId,
+		}: {
+			groupId: string;
+			memberId: string;
+		}) => {
+			await apiFetch<{ success: boolean }>(
+				`/api/study-groups/${groupId}/members/${memberId}`,
+				{ method: "DELETE" },
+			);
+		},
+		onSuccess: (_data, variables) => {
+			queryClient.invalidateQueries({
+				queryKey: ["study-group", variables.groupId],
+			});
+		},
+	});
+}
+
 export function useDeleteGroup() {
 	const queryClient = useQueryClient();
 

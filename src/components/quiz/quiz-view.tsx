@@ -34,6 +34,7 @@ export interface QuizViewProps {
 	topic?: string;
 	questionCount?: number;
 	maxTime?: number;
+	pastPaperMode?: boolean;
 	onQuit?: () => void;
 	onFinish?: (results: QuizResults) => void;
 	className?: string;
@@ -45,6 +46,7 @@ export function QuizView({
 	topic,
 	questionCount = 10,
 	maxTime = 90 * 60,
+	pastPaperMode,
 	onQuit,
 	onFinish,
 	className: _className,
@@ -75,6 +77,7 @@ export function QuizView({
 		topic,
 		questionCount,
 		maxTime,
+		pastPaperMode,
 		onQuit,
 		onFinish,
 	});
@@ -282,6 +285,15 @@ export function QuizView({
 				className="col-span-12 col-start-1 flex flex-col gap-6 p-4 pb-20 md:col-span-7 md:p-6"
 				tabIndex={-1}
 			>
+				{pastPaperMode && (
+					<div className="flex items-center gap-2 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-amber-600 text-xs dark:text-amber-400">
+						<span>📝</span>
+						<span>
+							Past Paper Mode — questions styled after NSC exam papers
+						</span>
+					</div>
+				)}
+
 				<QuizHeader
 					elapsedTime={state.elapsedTime}
 					currentIndex={currentIndex}

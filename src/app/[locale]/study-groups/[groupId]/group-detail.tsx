@@ -4,6 +4,7 @@ import {
 	ArrowLeft01Icon,
 	CheckmarkCircle01Icon,
 	Copy02Icon,
+	Minimize01Icon,
 	UserGroupIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -15,14 +16,17 @@ import { DiscussionFeed } from "@/components/study-groups/discussion-feed";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { useGroupDetail } from "@/hooks/use-study-groups";
+import { useGroupDetail, useRemoveMember } from "@/hooks/use-study-groups";
 import { Link } from "@/i18n/navigation";
+import { useAuth } from "@/lib/auth/auth-context";
 
 export function GroupDetail() {
 	const t = useTranslations();
 	const params = useParams<{ groupId: string }>();
 	const groupId = params.groupId;
 	const { data, isLoading, error } = useGroupDetail(groupId);
+	const { user } = useAuth();
+	const { mutate: removeMemberAction } = useRemoveMember();
 	const [copied, setCopied] = useState(false);
 
 	const copyInviteCode = () => {
@@ -132,19 +136,52 @@ export function GroupDetail() {
 											<span className="font-medium text-sm">
 												{member.userName || member.userEmail || member.userId}
 											</span>
-											{member.userEmail && member.userName && (
-												<span className="text-muted-foreground text-xs">
-													{member.userEmail}
-												</span>
-											)}
+											<div className="flex items-center gap-2">
+												{member.userEmail && member.userName && (
+													<span className="text-muted-foreground text-xs">
+														{member.userEmail}
+													</span>
+												)}
+												{member.questionsAnswered !== undefined && (
+													<span className="text-muted-foreground text-xs">
+														{member.questionsAnswered} Q
+													</span>
+												)}
+												{member.currentStreak !== undefined && (
+													<span className="text-muted-foreground text-xs">
+														🔥 {member.currentStreak}
+													</span>
+												)}
+											</div>
 										</div>
-										<Badge
-											variant={
-												member.role === "admin" ? "default" : "secondary"
-											}
-										>
-											{member.role}
-										</Badge>
+										<div className="flex items-center gap-2">
+											<Badge
+												variant={
+													member.role === "admin" ? "default" : "secondary"
+												}
+											>
+												{member.role}
+											</Badge>
+											{user?.$id === group.createdBy &&
+												member.role !== "admin" && (
+													<button
+														type="button"
+														onClick={() =>
+															removeMemberAction({
+																groupId: group.$id,
+																memberId: member.$id,
+															})
+														}
+														className="text-destructive hover:text-destructive/80"
+														title={t("common.remove") || "Remove"}
+													>
+														<HugeiconsIcon
+															icon={Minimize01Icon}
+															className="size-3.5"
+														/>
+													</button>
+												)}
+										</div>
 									</div>
 								))}
 							</div>

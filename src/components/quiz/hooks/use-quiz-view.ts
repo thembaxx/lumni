@@ -11,6 +11,7 @@ export function useQuizView({
 	topic,
 	questionCount = 10,
 	maxTime = 90 * 60,
+	pastPaperMode,
 	onQuit,
 	onFinish,
 }: QuizViewProps) {
@@ -40,9 +41,16 @@ export function useQuizView({
 			topic: resolvedTopic,
 			count: questionCount,
 			questionType: "any" as const,
+			...(pastPaperMode ? { pastPaperMode: true } : {}),
 			...competencyData,
 		}),
-		[selectedSubject, resolvedTopic, questionCount, competencyData],
+		[
+			selectedSubject,
+			resolvedTopic,
+			questionCount,
+			pastPaperMode,
+			competencyData,
+		],
 	);
 
 	const { questions, isLoading, isError } = useQuestionEngine(engineParams, {

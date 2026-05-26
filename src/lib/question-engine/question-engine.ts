@@ -1,5 +1,6 @@
 import { initAI, isAIConfigured } from "@/lib/ai";
 import { createCachingStrategy } from "@/lib/caching-strategy";
+import type { PastPaperQuestion } from "@/lib/exam-paper-ingestion/past-paper-question-types";
 import { ProcessorRegistry } from "./processor-registry";
 import { PromptManager } from "./prompt-manager";
 import type {
@@ -181,8 +182,49 @@ export class QuestionEngine {
 			params.subject,
 			params.topic,
 		);
-		if (!curriculumContext) return params;
-		return { ...params, curriculumContext };
+		const exampleCount = params.pastPaperMode ? 5 : 3;
+		const pastPaperExamples = await this.retrievePastPaperExamples(
+			params.subject,
+			params.topic,
+			exampleCount,
+		);
+		return {
+			...params,
+			...(curriculumContext ? { curriculumContext } : {}),
+			...(pastPaperExamples.length > 0 ? { pastPaperExamples } : {}),
+		};
+	}
+
+	private async retrievePastPaperExamples(
+		subject: string,
+		topic?: string,
+		limit: number = 3,
+	): Promise<
+		{ questionText: string; answerText: string; marks: number; year: number }[]
+	> {
+		if (!subject) return [];
+		try {
+			const url = new URL(
+				`${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/api/exam-papers/questions`,
+			);
+			url.searchParams.set("subject", subject);
+			if (topic) url.searchParams.set("topic", topic);
+			url.searchParams.set("limit", String(limit));
+
+			const res = await fetch(url.toString(), { cache: "no-store" });
+			if (!res.ok) return [];
+			const data = await res.json();
+			return (data.questions as PastPaperQuestion[])
+				.slice(0, limit)
+				.map((q) => ({
+					questionText: q.questionText,
+					answerText: q.answerText,
+					marks: q.marks,
+					year: q.year,
+				}));
+		} catch {
+			return [];
+		}
 	}
 
 	private async retrieveCurriculumContext(

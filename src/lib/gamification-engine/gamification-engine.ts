@@ -26,6 +26,8 @@ const DEFAULT_GAMIFICATION: StoredGamification = {
 	currentStreak: 0,
 	totalQuestionsAnswered: 0,
 	claimedChests: [],
+	streakFreezes: 3,
+	subjectQuestionCounts: {},
 };
 
 export class GamificationEngine {
@@ -220,7 +222,59 @@ export class GamificationEngine {
 			["level_10", currentLevel >= 10 && !earned.includes("level_10")],
 		];
 
-		for (const [id, shouldUnlock] of checks) {
+		const subjectCounts = data.subjectQuestionCounts;
+		const subjectsWithActivity = Object.keys(subjectCounts).filter(
+			(s) => subjectCounts[s] > 0,
+		).length;
+
+		const subjectChecks: [string, boolean][] = [
+			[
+				"subject_math_50",
+				(subjectCounts.mathematics ?? 0) >= 50 &&
+					!earned.includes("subject_math_50"),
+			],
+			[
+				"subject_math_200",
+				(subjectCounts.mathematics ?? 0) >= 200 &&
+					!earned.includes("subject_math_200"),
+			],
+			[
+				"subject_science_50",
+				(subjectCounts.physical_sciences ?? 0) >= 50 &&
+					!earned.includes("subject_science_50"),
+			],
+			[
+				"subject_science_200",
+				(subjectCounts.physical_sciences ?? 0) >= 200 &&
+					!earned.includes("subject_science_200"),
+			],
+			[
+				"subject_language_50",
+				(subjectCounts.english ?? 0) >= 50 &&
+					!earned.includes("subject_language_50"),
+			],
+			[
+				"subject_language_200",
+				(subjectCounts.english ?? 0) >= 200 &&
+					!earned.includes("subject_language_200"),
+			],
+			[
+				"subject_commerce_50",
+				(subjectCounts.accounting ?? 0) >= 50 &&
+					!earned.includes("subject_commerce_50"),
+			],
+			[
+				"subject_commerce_200",
+				(subjectCounts.accounting ?? 0) >= 200 &&
+					!earned.includes("subject_commerce_200"),
+			],
+			[
+				"subjects_all_5",
+				subjectsWithActivity >= 5 && !earned.includes("subjects_all_5"),
+			],
+		];
+
+		for (const [id, shouldUnlock] of [...checks, ...subjectChecks]) {
 			if (shouldUnlock) newAchievements.push(id);
 		}
 
@@ -230,24 +284,35 @@ export class GamificationEngine {
 	updateStreak(data: StoredGamification): {
 		data: StoredGamification;
 		milestoneXpGained: number;
+		freezeConsumed: boolean;
 	} {
 		const today = new Date().toDateString();
 		const yesterday = new Date();
 		yesterday.setDate(yesterday.getDate() - 1);
 		const yesterdayStr = yesterday.toDateString();
 
+		let freezeConsumed = false;
 		let newStreak = data.currentStreak;
+		let newStreakFreezes = data.streakFreezes;
+
 		if (data.lastPracticeDate === yesterdayStr) {
 			newStreak = data.currentStreak + 1;
 		} else if (data.lastPracticeDate !== today) {
-			newStreak = 1;
+			if (data.currentStreak > 1 && data.streakFreezes > 0) {
+				newStreakFreezes -= 1;
+				freezeConsumed = true;
+			} else {
+				newStreak = 1;
+			}
 		}
 
 		let milestoneXpGain = 0;
+		let milestoneFreezeGain = 0;
 		const updatedMilestones = data.streakMilestones.map((ms) => {
 			if (!ms.unlocked && newStreak >= ms.streak) {
 				const reward = this.getStreakXpReward(ms.streak);
 				milestoneXpGain += reward;
+				milestoneFreezeGain += 1;
 				return { ...ms, unlocked: true };
 			}
 			return ms;
@@ -258,11 +323,47 @@ export class GamificationEngine {
 				...data,
 				currentStreak: newStreak,
 				lastPracticeDate: today,
+				streakFreezes: newStreakFreezes + milestoneFreezeGain,
 				xp: data.xp + milestoneXpGain,
 				totalXp: data.totalXp + milestoneXpGain,
 				streakMilestones: updatedMilestones,
 			},
 			milestoneXpGained: milestoneXpGain,
+			freezeConsumed,
+		};
+	}
+
+	consumeStreakFreeze(data: StoredGamification): {
+		data: StoredGamification;
+		success: boolean;
+	} {
+		if (data.streakFreezes <= 0) return { data, success: false };
+		return {
+			data: { ...data, streakFreezes: data.streakFreezes - 1 },
+			success: true,
+		};
+	}
+
+	addStreakFreeze(
+		data: StoredGamification,
+		count: number = 1,
+	): StoredGamification {
+		return { ...data, streakFreezes: data.streakFreezes + count };
+	}
+
+	trackSubjectQuestion(
+		data: StoredGamification,
+		subject: string,
+		count: number = 1,
+	): StoredGamification {
+		const normalized = subject.toLowerCase().replace(/[^a-z]/g, "_");
+		const current = data.subjectQuestionCounts[normalized] ?? 0;
+		return {
+			...data,
+			subjectQuestionCounts: {
+				...data.subjectQuestionCounts,
+				[normalized]: current + count,
+			},
 		};
 	}
 

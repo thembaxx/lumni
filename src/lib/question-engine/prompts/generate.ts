@@ -8,10 +8,11 @@ function buildBaseUser(
 	bloomStr: string,
 	unit: string,
 	studentCtx: string,
+	examExamples: string,
 ): string {
 	const subject = params.subject;
 	const topic = params.topic ? ` on the topic: ${params.topic}` : "";
-	return `Generate ${params.count} ${type} questions for ${subject}${topic}. Difficulty: ${difficulty}${bloomStr}${unit}${studentCtx}`;
+	return `Generate ${params.count} ${type} questions for ${subject}${topic}. Difficulty: ${difficulty}${bloomStr}${unit}${studentCtx}${examExamples}`;
 }
 
 export function buildGeneratePrompt(
@@ -30,10 +31,15 @@ export function buildGeneratePrompt(
 		: "";
 	const count = params.count;
 
+	const examExamples =
+		params.pastPaperExamples && params.pastPaperExamples.length > 0
+			? `\n\nHere are real past exam questions on this topic. Use them as style and difficulty references — generate NEW questions at a similar level, NOT duplicates:\n${params.pastPaperExamples.map((ex, i) => `--- Past Paper Example ${i + 1} (${ex.year}, ${ex.marks} marks) ---\nQ: ${ex.questionText}\nA: ${ex.answerText}`).join("\n\n")}${params.pastPaperMode ? "\nIMPORTANT: Match the style, tone, and format of NSC exam papers closely. Use exam-appropriate phrasing and mark allocation." : ""}`
+			: "";
+
 	if (type === "any") {
 		return {
 			system: `You are an expert educational question generator for ${subject}. Generate a diverse mix of question types appropriate for the subject. Choose the most suitable type for each question based on what is being tested.`,
-			user: `Generate ${count} questions for ${subject}${topic}. Difficulty: ${difficulty}${bloomStr}${unit}${studentCtx}
+			user: `Generate ${count} questions for ${subject}${topic}. Difficulty: ${difficulty}${bloomStr}${unit}${studentCtx}${examExamples}
 
 Return a JSON array. Each question must have: id (unique string like "q1"), type (the question type), subject, topic, difficulty, bloomTaxonomy, points, questionText, hint, explanation, body (type-specific data).
 
@@ -49,7 +55,7 @@ Return ONLY valid JSON array, no markdown.`,
 	const prompts: Record<string, PromptTemplate> = {
 		"multiple-choice": {
 			system: `You are an expert MCQ generator for ${subject}. Create clear, unambiguous multiple-choice questions with plausible distractors.`,
-			user: `${buildBaseUser("multiple-choice", params, difficulty, bloomStr, unit, studentCtx)}
+			user: `${buildBaseUser("multiple-choice", params, difficulty, bloomStr, unit, studentCtx, examExamples)}
 
 Each question must have:
 - id: string (unique like "q1")
@@ -76,7 +82,7 @@ Return ONLY valid JSON array.`,
 
 		matching: {
 			system: `You are an expert at creating matching questions for ${subject}. Create clear matching exercises where students connect related items.`,
-			user: `${buildBaseUser("matching", params, difficulty, bloomStr, unit, studentCtx)}
+			user: `${buildBaseUser("matching", params, difficulty, bloomStr, unit, studentCtx, examExamples)}
 
 Each question must have:
 - id, type: "matching", subject, topic, difficulty, bloomTaxonomy, points
@@ -91,7 +97,7 @@ Return ONLY valid JSON array.`,
 
 		"short-answer": {
 			system: `You are an expert at creating short-answer questions for ${subject}. Create questions that have a concise, specific correct answer.`,
-			user: `${buildBaseUser("short-answer", params, difficulty, bloomStr, unit, studentCtx)}
+			user: `${buildBaseUser("short-answer", params, difficulty, bloomStr, unit, studentCtx, examExamples)}
 
 Each question must have:
 - id, type: "short-answer", subject, topic, difficulty, bloomTaxonomy, points
@@ -107,7 +113,7 @@ Return ONLY valid JSON array.`,
 
 		"long-answer": {
 			system: `You are an expert at creating long-answer questions for ${subject}. Create questions requiring detailed paragraph responses.`,
-			user: `${buildBaseUser("long-answer", params, difficulty, bloomStr, unit, studentCtx)}
+			user: `${buildBaseUser("long-answer", params, difficulty, bloomStr, unit, studentCtx, examExamples)}
 
 Each question must have:
 - id, type: "long-answer", subject, topic, difficulty, bloomTaxonomy, points
@@ -123,7 +129,7 @@ Return ONLY valid JSON array.`,
 
 		essay: {
 			system: `You are an expert at creating essay questions for ${subject}. Create thought-provoking essay prompts with clear rubrics.`,
-			user: `${buildBaseUser("essay", params, difficulty, bloomStr, unit, studentCtx)}
+			user: `${buildBaseUser("essay", params, difficulty, bloomStr, unit, studentCtx, examExamples)}
 
 Each question must have:
 - id, type: "essay", subject, topic, difficulty, bloomTaxonomy, points
@@ -139,7 +145,7 @@ Return ONLY valid JSON array.`,
 
 		calculation: {
 			system: `You are an expert at creating calculation questions for ${subject}. Create numerical problems with clear formulas and units. Use $...$ for LaTeX math notation.`,
-			user: `${buildBaseUser("calculation", params, difficulty, bloomStr, unit, studentCtx)}
+			user: `${buildBaseUser("calculation", params, difficulty, bloomStr, unit, studentCtx, examExamples)}
 
 Each question must have:
 - id, type: "calculation", subject, topic, difficulty, bloomTaxonomy, points
@@ -156,7 +162,7 @@ Return ONLY valid JSON array.`,
 
 		diagram: {
 			system: `You are an expert at creating diagram-based questions for ${subject}. Create questions that involve labeling, completing, or interpreting diagrams.`,
-			user: `${buildBaseUser("diagram", params, difficulty, bloomStr, unit, studentCtx)}
+			user: `${buildBaseUser("diagram", params, difficulty, bloomStr, unit, studentCtx, examExamples)}
 
 Each question must have:
 - id, type: "diagram", subject, topic, difficulty, bloomTaxonomy, points
@@ -171,7 +177,7 @@ Return ONLY valid JSON array.`,
 
 		"source-based": {
 			system: `You are an expert at creating source-based questions for ${subject}. Create multi-part questions based on provided sources (text, images, data).`,
-			user: `${buildBaseUser("source-based", params, difficulty, bloomStr, unit, studentCtx)}
+			user: `${buildBaseUser("source-based", params, difficulty, bloomStr, unit, studentCtx, examExamples)}
 
 Each question must have:
 - id, type: "source-based", subject, topic, difficulty, bloomTaxonomy, points
@@ -185,7 +191,7 @@ Return ONLY valid JSON array.`,
 
 		programming: {
 			system: `You are an expert at creating programming questions. Create coding problems with clear specifications and test cases.`,
-			user: `${buildBaseUser("programming", params, difficulty, bloomStr, unit, studentCtx)}
+			user: `${buildBaseUser("programming", params, difficulty, bloomStr, unit, studentCtx, examExamples)}
 
 Each question must have:
 - id, type: "programming", subject, topic, difficulty, bloomTaxonomy, points
@@ -202,7 +208,7 @@ Return ONLY valid JSON array.`,
 
 		"data-response": {
 			system: `You are an expert at creating data response questions for ${subject}. Create questions that require interpreting tables, charts, and graphs.`,
-			user: `${buildBaseUser("data-response", params, difficulty, bloomStr, unit, studentCtx)}
+			user: `${buildBaseUser("data-response", params, difficulty, bloomStr, unit, studentCtx, examExamples)}
 
 Each question must have:
 - id, type: "data-response", subject, topic, difficulty, bloomTaxonomy, points
@@ -216,7 +222,7 @@ Return ONLY valid JSON array.`,
 
 		mixed: {
 			system: `You are an expert at creating mixed-type questions for ${subject}. Create compound questions that combine multiple question types (e.g., a source with MCQs and a short answer).`,
-			user: `${buildBaseUser("mixed", params, difficulty, bloomStr, unit, studentCtx)}
+			user: `${buildBaseUser("mixed", params, difficulty, bloomStr, unit, studentCtx, examExamples)}
 
 Each question must have:
 - id, type: "mixed", subject, topic, difficulty, bloomTaxonomy, points

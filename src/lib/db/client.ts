@@ -42,6 +42,7 @@ export const COLLECTIONS = {
 	USER_GAMIFICATION: "user_gamification",
 	GROUP_COMMENTS: "group_comments",
 	GROUP_REACTIONS: "group_reactions",
+	PAST_PAPER_QUESTIONS: "past_paper_questions",
 } as const;
 
 export type Subject = {

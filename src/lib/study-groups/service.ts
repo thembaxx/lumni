@@ -412,6 +412,43 @@ export async function toggleCommentReaction(
 	}
 }
 
+export async function removeMember(
+	adminUserId: string,
+	groupId: string,
+	memberId: string,
+): Promise<ServiceResult<void>> {
+	try {
+		const group = await getDocument<StudyGroup>(
+			COLLECTIONS.STUDY_GROUPS,
+			groupId,
+		);
+		if (!group) return failure("Group not found");
+		if (group.createdBy !== adminUserId)
+			return failure("Only the group creator can remove members");
+
+		const member = await getDocument<GroupMember>(
+			COLLECTIONS.GROUP_MEMBERS,
+			memberId,
+		);
+		if (!member) return failure("Member not found");
+		if (member.role === "admin")
+			return failure("Cannot remove the group creator");
+
+		await deleteDocument(COLLECTIONS.GROUP_MEMBERS, memberId);
+
+		const newCount = Math.max(0, (group.memberCount ?? 1) - 1);
+		await updateDocument(COLLECTIONS.STUDY_GROUPS, groupId, {
+			memberCount: newCount,
+		});
+
+		return success(undefined);
+	} catch (err) {
+		return failure(
+			err instanceof Error ? err.message : "Failed to remove member",
+		);
+	}
+}
+
 export async function deleteGroup(
 	userId: string,
 	groupId: string,

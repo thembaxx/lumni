@@ -2,7 +2,10 @@ import { Client, Databases, ID, Query } from "appwrite";
 import { type NextRequest, NextResponse } from "next/server";
 import { APPWRITE_ENDPOINT, APPWRITE_PROJECT } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
-import { getAuthenticatedUserId } from "@/lib/server/auth";
+import {
+	getAuthenticatedUserId,
+	getAuthenticatedUserName,
+} from "@/lib/server/auth";
 
 export async function GET() {
 	try {
@@ -53,11 +56,18 @@ export async function POST(req: NextRequest) {
 			return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
 		}
 
+		const userName = await getAuthenticatedUserName();
 		const body = await req.json();
 		const client = new Client()
 			.setEndpoint(APPWRITE_ENDPOINT)
 			.setProject(APPWRITE_PROJECT);
 		const db = new Databases(client);
+
+		const payload = {
+			...body,
+			userId,
+			label: userName || body.label || undefined,
+		};
 
 		try {
 			const docs = await db.listDocuments(
@@ -71,14 +81,14 @@ export async function POST(req: NextRequest) {
 					APPWRITE_DATABASE_ID,
 					COLLECTIONS.USER_GAMIFICATION,
 					docs.documents[0].$id,
-					{ ...body, userId },
+					payload,
 				);
 			} else {
 				await db.createDocument(
 					APPWRITE_DATABASE_ID,
 					COLLECTIONS.USER_GAMIFICATION,
 					ID.unique(),
-					{ ...body, userId },
+					payload,
 				);
 			}
 			return NextResponse.json({ success: true });

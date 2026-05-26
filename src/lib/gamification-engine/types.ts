@@ -21,6 +21,8 @@ export interface StoredGamification {
 	currentStreak: number;
 	totalQuestionsAnswered: number;
 	claimedChests: StoredRewardChest[];
+	streakFreezes: number;
+	subjectQuestionCounts: Record<string, number>;
 }
 
 export interface GamificationResult {
