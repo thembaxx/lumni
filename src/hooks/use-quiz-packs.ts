@@ -1,6 +1,5 @@
 import { useLiveQuery } from "dexie-react-hooks";
 import { useCallback, useEffect, useState } from "react";
-import { offlineDB } from "@/lib/db/schema";
 import type { QuizPack } from "@/lib/quiz-packs";
 import { MAX_PACK_STORAGE_BYTES, quizPackService } from "@/lib/quiz-packs";
 
@@ -13,7 +12,7 @@ export function useQuizPacks() {
 		quizPackService
 			.getStorageUsage()
 			.then((usage) => setStorageBytes(usage.usedBytes));
-	}, [packs]);
+	}, []);
 
 	const generate = useCallback(
 		async (subject: string, topic: string | null, count: number) => {

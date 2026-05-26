@@ -51,16 +51,16 @@ const storedCards = [...mockCards];
 
 const mockReviewStore: Record<string, unknown>[] = [];
 
-function whereOnTable(tableName: string, store: Record<string, unknown>[]) {
+function whereOnTable(_tableName: string, store: Record<string, unknown>[]) {
 	let whereField: string | null = null;
-	let whereValue: unknown = null;
+	let _whereValue: unknown = null;
 	return {
 		where: (field: string) => {
 			whereField = field;
-			whereValue = null;
+			_whereValue = null;
 			return {
 				equals: (val: unknown) => {
-					whereValue = val;
+					_whereValue = val;
 					return {
 						toArray: async () =>
 							store.filter(
@@ -237,7 +237,7 @@ describe("DexieFlashcardRepository", () => {
 		expect(card).not.toBeNull();
 		expect(card?.repetitions).toBe(1);
 		expect(typeof card?.interval).toBe("number");
-		expect(card!.interval).toBeGreaterThan(0);
+		expect(card?.interval).toBeGreaterThan(0);
 		expect(card?.lastReview).not.toBeNull();
 	});
 

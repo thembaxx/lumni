@@ -633,7 +633,7 @@ function SubjectCard({
 		>
 			<CardContent className="flex items-center gap-3 py-3">
 				<div
-					className="flex size-9 shrink-0 items-center justify-center rounded-full font-extrabold text-xs text-white"
+					className="flex size-9 shrink-0 items-center justify-center rounded-full font-extrabold text-white text-xs"
 					style={
 						{
 							"--subject-color": subject.color,

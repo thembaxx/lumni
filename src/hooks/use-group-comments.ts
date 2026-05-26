@@ -8,10 +8,6 @@ interface CommentsResponse {
 	comments: GroupComment[];
 }
 
-interface PostReactionsResponse {
-	reactions: GroupComment[];
-}
-
 export function useGroupComments(groupId: string, postId: string) {
 	return useQuery<GroupComment[]>({
 		queryKey: ["group-comments", postId],

@@ -227,7 +227,7 @@ export function FlashcardCreator({ className }: FlashcardCreatorProps) {
 }
 
 function FlashcardCreatorInner({ className }: FlashcardCreatorProps) {
-	const [mounted, setMounted] = useState(false);
+	const [_mounted, setMounted] = useState(false);
 	useEffect(() => {
 		setMounted(true);
 	}, []);

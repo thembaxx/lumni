@@ -29,7 +29,7 @@ interface Props {
 }
 
 export function DiscussWrongAnswer({ questionText, subject, topic }: Props) {
-	const t = useTranslations();
+	const _t = useTranslations();
 	const { data: groups } = useStudyGroups();
 	const { mutate: createPost, isPending } = useCreatePost();
 	const [open, setOpen] = useState(false);
@@ -69,7 +69,7 @@ export function DiscussWrongAnswer({ questionText, subject, topic }: Props) {
 					<DialogTitle>Ask your study group</DialogTitle>
 				</DialogHeader>
 				<div className="flex flex-col gap-4">
-					<div className="rounded-md bg-muted/50 px-3 py-2 text-sm italic text-muted-foreground">
+					<div className="rounded-md bg-muted/50 px-3 py-2 text-muted-foreground text-sm italic">
 						{questionText}
 					</div>
 

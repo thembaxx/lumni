@@ -11,7 +11,7 @@ interface Props {
 }
 
 export function DiscussionFeed({ groupId }: Props) {
-	const t = useTranslations();
+	const _t = useTranslations();
 	const { data: posts, isLoading } = useGroupPosts(groupId);
 
 	if (isLoading) {

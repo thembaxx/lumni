@@ -10,7 +10,7 @@ interface CommentFormProps {
 }
 
 export function CommentForm({
-	postId,
+	postId: _postId,
 	parentId,
 	placeholder = "Write a comment...",
 	onSubmit,
@@ -44,13 +44,13 @@ export function CommentForm({
 				onKeyDown={handleKeyDown}
 				placeholder={placeholder}
 				rows={2}
-				className="min-h-[40px] flex-1 resize-none rounded-lg border border-[--system-border] bg-[--system-surface] px-3 py-2 text-sm text-[--system-text-primary] placeholder:text-[--system-text-tertiary] focus:border-[--system-accent] focus:outline-none"
+				className="min-h-[40px] flex-1 resize-none rounded-lg border border-[--system-border] bg-[--system-surface] px-3 py-2 text-[--system-text-primary] text-sm placeholder:text-[--system-text-tertiary] focus:border-[--system-accent] focus:outline-none"
 			/>
 			<button
 				type="button"
 				onClick={handleSubmit}
 				disabled={!content.trim()}
-				className="shrink-0 rounded-lg bg-[--system-accent] px-3 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-40"
+				className="shrink-0 rounded-lg bg-[--system-accent] px-3 py-2 font-medium text-sm text-white transition-opacity hover:opacity-90 disabled:opacity-40"
 			>
 				Post
 			</button>

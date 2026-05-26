@@ -28,7 +28,7 @@ export function CreatePostDialog({
 	subject,
 	topic,
 }: Props) {
-	const t = useTranslations();
+	const _t = useTranslations();
 	const [open, setOpen] = useState(false);
 	const [content, setContent] = useState("");
 	const { mutate: createPost, isPending } = useCreatePost();
@@ -66,7 +66,7 @@ export function CreatePostDialog({
 				</DialogHeader>
 				<div className="flex flex-col gap-4">
 					{questionText && (
-						<div className="rounded-md bg-muted/50 px-3 py-2 text-sm italic text-muted-foreground">
+						<div className="rounded-md bg-muted/50 px-3 py-2 text-muted-foreground text-sm italic">
 							{questionText}
 						</div>
 					)}

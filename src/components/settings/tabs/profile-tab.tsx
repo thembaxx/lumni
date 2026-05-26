@@ -240,7 +240,6 @@ export function ProfileTab() {
 
 	const {
 		enrolledSubjects,
-		selectedSubjectIds,
 		subjects: allSubjects,
 		isEnrolled,
 	} = useEnrolledSubjects();
@@ -540,7 +539,7 @@ export function ProfileTab() {
 									className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm hover:bg-accent"
 								>
 									<div
-										className="flex size-7 shrink-0 items-center justify-center rounded-lg font-extrabold text-xs text-white"
+										className="flex size-7 shrink-0 items-center justify-center rounded-lg font-extrabold text-white text-xs"
 										style={{ backgroundColor: subject.color }}
 									>
 										{subject.name[0]}

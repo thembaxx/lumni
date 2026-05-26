@@ -58,24 +58,24 @@ export function CommentCard({
 	return (
 		<div
 			className={cn(
-				"group border-l-2 border-[--system-border] pl-3",
+				"group border-[--system-border] border-l-2 pl-3",
 				depth === 0 && "border-transparent pl-0",
 			)}
 		>
 			<div className="flex items-start gap-2 py-2">
-				<div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[--system-accent]/10 text-xs font-semibold text-[--system-accent]">
+				<div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[--system-accent]/10 font-semibold text-[--system-accent] text-xs">
 					{(comment.userName || "?")[0].toUpperCase()}
 				</div>
 				<div className="min-w-0 flex-1">
 					<div className="flex items-center gap-2">
-						<span className="text-xs font-medium text-[--system-text-primary]">
+						<span className="font-medium text-[--system-text-primary] text-xs">
 							{comment.userName || "Anonymous"}
 						</span>
-						<span className="text-xs text-[--system-text-tertiary]">
+						<span className="text-[--system-text-tertiary] text-xs">
 							{timeAgo(comment.createdAt)}
 						</span>
 					</div>
-					<p className="mt-0.5 text-sm text-[--system-text-secondary]">
+					<p className="mt-0.5 text-[--system-text-secondary] text-sm">
 						{comment.content}
 					</p>
 					<div className="mt-1 flex items-center gap-3">
@@ -87,7 +87,7 @@ export function CommentCard({
 						<button
 							type="button"
 							onClick={() => setShowReply(!showReply)}
-							className="text-xs text-[--system-text-tertiary] transition-colors hover:text-[--system-accent]"
+							className="text-[--system-text-tertiary] text-xs transition-colors hover:text-[--system-accent]"
 						>
 							Reply
 						</button>
@@ -95,7 +95,7 @@ export function CommentCard({
 							<button
 								type="button"
 								onClick={() => onDelete(comment.$id)}
-								className="text-xs text-[--system-text-tertiary] opacity-0 transition-all hover:text-red-500 group-hover:opacity-100"
+								className="text-[--system-text-tertiary] text-xs opacity-0 transition-all hover:text-red-500 group-hover:opacity-100"
 							>
 								Delete
 							</button>

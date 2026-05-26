@@ -176,13 +176,10 @@ export function QuizView({
 										{t("quiz.level", {
 											level: competencyData.topicCompetencyLevel,
 										})}
-										{competencyData.topicCompetencyScore !== undefined && (
-											<>
-												{t("quiz.scorePercent", {
-													score: competencyData.topicCompetencyScore,
-												})}
-											</>
-										)}
+										{competencyData.topicCompetencyScore !== undefined &&
+											t("quiz.scorePercent", {
+												score: competencyData.topicCompetencyScore,
+											})}
 									</p>
 								</div>
 							)}

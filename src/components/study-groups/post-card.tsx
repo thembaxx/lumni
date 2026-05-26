@@ -38,7 +38,7 @@ interface Props {
 
 export function PostCard({
 	post,
-	groupId,
+	groupId: _groupId,
 	comments,
 	reactions,
 	onToggleReaction,
@@ -92,12 +92,12 @@ export function PostCard({
 			</div>
 
 			{post.questionText && (
-				<div className="rounded-md bg-muted/50 px-3 py-2 text-sm italic text-muted-foreground">
+				<div className="rounded-md bg-muted/50 px-3 py-2 text-muted-foreground text-sm italic">
 					{post.questionText}
 				</div>
 			)}
 
-			<p className="text-sm whitespace-pre-wrap">{post.content}</p>
+			<p className="whitespace-pre-wrap text-sm">{post.content}</p>
 
 			{post.subject && (
 				<div className="flex gap-2">
@@ -112,7 +112,7 @@ export function PostCard({
 				</div>
 			)}
 
-			<div className="flex items-center gap-2 border-t border-border/50 pt-2">
+			<div className="flex items-center gap-2 border-border/50 border-t pt-2">
 				<ReactionBar
 					reactions={aggregatedReactions}
 					currentUserId={user?.$id}
@@ -134,7 +134,7 @@ export function PostCard({
 			</div>
 
 			{showComments && (
-				<div className="border-t border-border/50 pt-3">
+				<div className="border-border/50 border-t pt-3">
 					<CommentForm
 						postId={post.$id}
 						onSubmit={(content, parentId) =>
@@ -144,7 +144,7 @@ export function PostCard({
 					{comments && comments.length > 0 && (
 						<div className="mt-3">
 							<CommentThread
-								comments={comments as any}
+								comments={comments}
 								reactions={reactions ?? []}
 								currentUserId={user?.$id ?? ""}
 								postId={post.$id}

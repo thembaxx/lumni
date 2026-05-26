@@ -23,18 +23,21 @@ export async function flushOfflineData(userId: string): Promise<void> {
 	]);
 
 	await Promise.all([
-		...allProgress.map((p) => {
-			if (p.odSubjectId && (p.questionsAttempted > 0 || p.correctCount > 0)) {
-				return enqueue("appwrite-progress-sync", {
+		...allProgress
+			.filter(
+				(p) =>
+					p.odSubjectId && (p.questionsAttempted > 0 || p.correctCount > 0),
+			)
+			.map((p) =>
+				enqueue("appwrite-progress-sync", {
 					userId,
 					odSubjectId: p.odSubjectId,
 					questionsAttempted: p.questionsAttempted,
 					correctCount: p.correctCount,
 					currentStreak: p.currentStreak,
 					longestStreak: p.longestStreak,
-				});
-			}
-		}),
+				}),
+			),
 		...allAttempts.map(async (a) => {
 			if (!a.userId) {
 				await enqueue("appwrite-attempt-sync", {

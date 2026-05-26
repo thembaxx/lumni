@@ -110,7 +110,7 @@ export class QueueCore<T extends QueueItemBase> {
 
 			const outcomes = await Promise.all(
 				items.map(async (item) => {
-					const id = item.id!;
+					const id = item.id as number;
 					processed.push(id);
 					await this.markProcessing(id);
 

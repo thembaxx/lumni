@@ -143,11 +143,7 @@ export const appwriteFlashcardPull: JobHandler = async (payload) => {
 			).getTime();
 			const localCard = await db.flashcards.get(remote.flashcardId as string);
 
-			if (
-				localCard &&
-				localCard.updatedAt &&
-				localCard.updatedAt > remoteUpdatedAt
-			) {
+			if (localCard?.updatedAt && localCard.updatedAt > remoteUpdatedAt) {
 				continue;
 			}
 

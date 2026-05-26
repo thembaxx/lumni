@@ -54,7 +54,7 @@ export function ReactionBar({
 			<button
 				type="button"
 				onClick={() => onToggle("+")}
-				className="flex items-center rounded-full px-2 py-0.5 text-xs text-[--system-text-tertiary] transition-colors hover:bg-[--system-surface-hover]"
+				className="flex items-center rounded-full px-2 py-0.5 text-[--system-text-tertiary] text-xs transition-colors hover:bg-[--system-surface-hover]"
 				title="Add reaction"
 			>
 				➕
