@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
+import { Query } from "node-appwrite";
 import { apiError } from "@/lib/api-error";
 import { databases } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
@@ -45,10 +46,10 @@ async function examsHandler(request: NextRequest) {
 
 		const queries: string[] = [];
 		if (subjectCode) {
-			queries.push(`subject=${subjectCode}`);
+			queries.push(Query.equal("subject", subjectCode));
 		}
 		if (year) {
-			queries.push(`year=${year}`);
+			queries.push(Query.equal("year", Number.parseInt(year, 10)));
 		}
 
 		const response = await databases.listDocuments(
@@ -67,11 +68,13 @@ async function examsHandler(request: NextRequest) {
 			language: doc.language,
 			totalMarks: doc.totalMarks,
 			duration: doc.duration,
+			fileKeys: doc.fileKeys ? JSON.parse(doc.fileKeys as string) : null,
 			uploadedAt: doc.uploadedAt,
 		}));
 
-		return NextResponse.json({ papers: exams, count: exams.length });
-	} catch {
+		return NextResponse.json({ exams, total: exams.length });
+	} catch (error) {
+		console.error("Failed to fetch exams:", error);
 		return apiError("Failed to fetch exams", 500);
 	}
 }
