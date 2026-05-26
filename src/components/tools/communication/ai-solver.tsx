@@ -14,6 +14,7 @@ import { StepByStep } from "@/components/quiz/step-by-step";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { tryLocalOcr } from "@/lib/ocr/local-ocr";
 import { cn } from "@/lib/shared";
 import { UploadButton } from "@/lib/uploadthing";
 import { CameraPreview } from "./camera-preview";
@@ -433,17 +434,4 @@ function AiSolverInner({ cameraFocus, initialQuestion }: AiSolverProps) {
 			)}
 		</div>
 	);
-}
-
-async function tryLocalOcr(imageData: string): Promise<string | null> {
-	try {
-		const { recognizeImage } = await import("@/lib/ocr");
-		const result = await recognizeImage(imageData, "printed");
-		if (result.confidence > 60 && result.text.length > 3) {
-			return result.text;
-		}
-		return null;
-	} catch {
-		return null;
-	}
 }

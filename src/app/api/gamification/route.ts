@@ -1,7 +1,13 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { getAuthenticatedUserId } from "@/lib/server/auth";
-import { COLLECTIONS, createDocument, getDocument, listDocuments, updateDocument } from "@/lib/db/client";
+import {
+	COLLECTIONS,
+	createDocument,
+	getDocument,
+	listDocuments,
+	updateDocument,
+} from "@/lib/db/client";
 import type { StoredGamification } from "@/lib/gamification-engine/types";
+import { getAuthenticatedUserId } from "@/lib/server/auth";
 
 export async function GET(_request: NextRequest) {
 	const userId = await getAuthenticatedUserId();
@@ -38,35 +44,37 @@ export async function POST(request: NextRequest) {
 		const now = new Date().toISOString();
 
 		if (existing.length > 0) {
-			const doc = existing[0];
+			const remote = docToGamification(
+				existing[0] as unknown as Record<string, unknown>,
+			);
 			const merged: StoredGamification = {
-				xp: Math.max(body.xp, (doc as any).xp ?? 0),
-				totalXp: Math.max(body.totalXp, (doc as any).totalXp ?? 0),
+				xp: Math.max(body.xp, remote.xp),
+				totalXp: Math.max(body.totalXp, remote.totalXp),
 				achievements: mergeAchievements(
-					(body as any).achievements ?? [],
-					(doc as any).achievements ?? [],
+					body.achievements ?? [],
+					remote.achievements ?? [],
 				),
-				dailyChallenges: body.dailyChallenges ?? (doc as any).dailyChallenges ?? [],
+				dailyChallenges: body.dailyChallenges ?? remote.dailyChallenges ?? [],
 				streakMilestones: mergeMilestones(
-					(body as any).streakMilestones ?? [],
-					(doc as any).streakMilestones ?? [],
+					body.streakMilestones ?? [],
+					remote.streakMilestones ?? [],
 				),
 				lastPracticeDate:
-					(body as any).lastPracticeDate ?? (doc as any).lastPracticeDate ?? null,
+					body.lastPracticeDate ?? remote.lastPracticeDate ?? null,
 				currentStreak: Math.max(
-					(body as any).currentStreak ?? 0,
-					(doc as any).currentStreak ?? 0,
+					body.currentStreak ?? 0,
+					remote.currentStreak ?? 0,
 				),
 				totalQuestionsAnswered: Math.max(
-					(body as any).totalQuestionsAnswered ?? 0,
-					(doc as any).totalQuestionsAnswered ?? 0,
+					body.totalQuestionsAnswered ?? 0,
+					remote.totalQuestionsAnswered ?? 0,
 				),
 			};
-			await updateDocument(COLLECTIONS.USER_GAMIFICATION, doc.$id, {
+			await updateDocument(COLLECTIONS.USER_GAMIFICATION, remote.$id, {
 				...merged,
 				userId,
 				updatedAt: now,
-			});
+			} as unknown as Record<string, unknown>);
 			return NextResponse.json({ gamification: merged });
 		}
 
@@ -79,21 +87,48 @@ export async function POST(request: NextRequest) {
 		const created = await getDocument(COLLECTIONS.USER_GAMIFICATION, id);
 		return NextResponse.json({ gamification: created }, { status: 201 });
 	} catch {
-		return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+		return NextResponse.json(
+			{ error: "Invalid request body" },
+			{ status: 400 },
+		);
 	}
+}
+
+function docToGamification(doc: Record<string, unknown>) {
+	return {
+		$id: doc.$id as string,
+		xp: (doc.xp as number) ?? 0,
+		totalXp: (doc.totalXp as number) ?? 0,
+		achievements:
+			(doc.achievements as { id: string; earnedAt: string }[]) ?? [],
+		dailyChallenges: (doc.dailyChallenges as string[]) ?? [],
+		streakMilestones:
+			(doc.streakMilestones as {
+				streak: number;
+				reward: string;
+				unlocked: boolean;
+			}[]) ?? [],
+		lastPracticeDate: (doc.lastPracticeDate as string | null) ?? null,
+		currentStreak: (doc.currentStreak as number) ?? 0,
+		totalQuestionsAnswered: (doc.totalQuestionsAnswered as number) ?? 0,
+	};
 }
 
 function mergeAchievements(
 	local: { id: string; earnedAt: string }[],
 	remote: { id: string; earnedAt: string }[],
 ): { id: string; earnedAt: string }[] {
-	const map = new Map<string, string>();
+	const entries = new Map<string, string>();
 	for (const a of [...local, ...remote]) {
-		if (!map.has(a.id) || a.earnedAt < map.get(a.id)!) {
-			map.set(a.id, a.earnedAt);
+		const existing = entries.get(a.id);
+		if (!existing || a.earnedAt < existing) {
+			entries.set(a.id, a.earnedAt);
 		}
 	}
-	return Array.from(map.entries()).map(([id, earnedAt]) => ({ id, earnedAt }));
+	return Array.from(entries.entries()).map(([id, earnedAt]) => ({
+		id,
+		earnedAt,
+	}));
 }
 
 function mergeMilestones(

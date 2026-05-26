@@ -679,15 +679,15 @@
     "termsOfService": "Terms of service"
   },
   "tools": {
-    "title": "Izifuni",
+    "title": "Tools",
     "aiSolver": "AI Solver",
-    "solverDescription": "Sola izifundo zomathemathics ngokubhala noma ngokufoto",
-    "calculator": "Khalula",
-    "periodicTable": "Tafeli yePeriodic",
+    "solverDescription": "Solve math problems by typing or taking a photo",
+    "calculator": "Calculator",
+    "periodicTable": "Periodic Table",
     "unitConverter": "Unit Converter",
-    "notes": "Inothi",
+    "notes": "Notes",
     "noteCreator": "Note Creator",
-    "emptyState": "Azikho izifuni eziphumelelayo kule mfuno"
+    "emptyState": "No tools available for this subject"
   },
   "subjects": {
     "mathematics": "Mathematics",

@@ -1,16 +1,21 @@
 import { readFileSync, writeFileSync } from "fs";
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
+import dotenv from "dotenv";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "..");
 
+dotenv.config({ path: resolve(__dirname, "..", ".env.local") });
+
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const GROQ_API_KEY = process.env.GROQ_API_KEY;
+const NVIDIA_API_KEY = process.env.NVIDIA_API_KEY;
 
 const GEMINI_URL =
   "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite-001:generateContent";
 const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
+const NVIDIA_URL = "https://integrate.api.nvidia.com/v1/chat/completions";
 
 const LOCALES = {
   zu: "isiZulu",
@@ -68,10 +73,34 @@ async function callGroq(prompt) {
   return data.choices?.[0]?.message?.content ?? "";
 }
 
+async function callNvidia(prompt) {
+  const messages = [
+    { role: "system", content: "You are a professional translator. Return ONLY valid JSON — no explanation, no markdown, no code fences." },
+    { role: "user", content: prompt },
+  ];
+  const response = await fetch(NVIDIA_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${NVIDIA_API_KEY}` },
+    body: JSON.stringify({
+      model: "meta/llama-3.3-70b-instruct",
+      messages,
+      temperature: 0.3,
+      max_tokens: 8192,
+    }),
+  });
+  if (!response.ok) {
+    const error = await response.text();
+    throw { status: response.status, body: error };
+  }
+  const data = await response.json();
+  return data.choices?.[0]?.message?.content ?? "";
+}
+
 async function callAI(prompt, label) {
   const providers = [];
   if (GEMINI_API_KEY) providers.push({ name: "Gemini", fn: () => callGemini(prompt) });
   if (GROQ_API_KEY) providers.push({ name: "Groq", fn: () => callGroq(prompt) });
+  if (NVIDIA_API_KEY) providers.push({ name: "Nvidia", fn: () => callNvidia(prompt) });
 
   for (const provider of providers) {
     try {
@@ -206,6 +235,7 @@ async function main() {
   console.log(`Source: ${Object.keys(enSource).length} sections`);
   if (!GEMINI_API_KEY) console.log("Gemini: not configured");
   if (!GROQ_API_KEY) console.log("Groq: not configured");
+  if (!NVIDIA_API_KEY) console.log("Nvidia: not configured");
 
   // Step 1: Fill Afrikaans gaps
   await fillAfrikaansGaps(enSource, afPath);

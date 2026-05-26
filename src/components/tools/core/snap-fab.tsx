@@ -11,6 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useOnboarding } from "@/hooks/use-onboarding";
 import { usePathname } from "@/i18n/navigation";
 import { offlineDB } from "@/lib/db/schema";
+import { tryLocalOcr } from "@/lib/ocr/local-ocr";
 import { cn } from "@/lib/shared";
 import { getImageHash, preprocessImage } from "@/lib/utils/image-preprocess";
 import { CameraPreview } from "../communication/camera-preview";
@@ -339,17 +340,4 @@ export function SnapFab() {
 			</Dialog>
 		</>
 	);
-}
-
-async function tryLocalOcr(imageData: string): Promise<string | null> {
-	try {
-		const { recognizeImage } = await import("@/lib/ocr");
-		const result = await recognizeImage(imageData, "printed");
-		if (result.confidence > 60 && result.text.length > 3) {
-			return result.text;
-		}
-		return null;
-	} catch {
-		return null;
-	}
 }

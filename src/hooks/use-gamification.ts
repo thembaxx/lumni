@@ -2,9 +2,9 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "@/components/ui/toast";
+import { offlineDB } from "@/lib/db/schema";
 import type { StoredGamification } from "@/lib/gamification-engine";
 import { gamificationEngine } from "@/lib/gamification-engine";
-import { offlineDB } from "@/lib/db/schema";
 import { apiFetch } from "@/lib/shared/api-fetch";
 import type { Achievement, LevelInfo } from "@/types/gamification";
 import {
@@ -38,8 +38,14 @@ export function useGamification() {
 				const mergedServer = gamificationEngine.mergeWithDefaults({
 					...merged,
 					totalXp: Math.max(merged.totalXp, serverData.totalXp),
-					achievements: mergeAchievements(merged.achievements, serverData.achievements),
-					currentStreak: Math.max(merged.currentStreak, serverData.currentStreak),
+					achievements: mergeAchievements(
+						merged.achievements,
+						serverData.achievements,
+					),
+					currentStreak: Math.max(
+						merged.currentStreak,
+						serverData.currentStreak,
+					),
 					totalQuestionsAnswered: Math.max(
 						merged.totalQuestionsAnswered,
 						serverData.totalQuestionsAnswered,
@@ -78,6 +84,7 @@ export function useGamification() {
 		if (syncTimerRef.current) clearTimeout(syncTimerRef.current);
 		syncTimerRef.current = setTimeout(() => {
 			syncToServer(newData);
+			// biome-ignore lint/suspicious/noExplicitAny: Dexie table type mismatch
 			offlineDB.gamification.put({ ...newData, id: 1 } as any).catch(() => {});
 		}, 2000);
 	}, []);
@@ -85,8 +92,13 @@ export function useGamification() {
 	const addXp = useCallback(
 		(amount: number, accuracy: number, streak: number, subject?: string) => {
 			setData((prev) => {
-				const { data: newData, leveledUp: newLevel } =
-					gamificationEngine.addXp(prev, amount, accuracy, streak, subject);
+				const { data: newData, leveledUp: newLevel } = gamificationEngine.addXp(
+					prev,
+					amount,
+					accuracy,
+					streak,
+					subject,
+				);
 				if (newLevel !== null) {
 					setLeveledUp(calculateLevel(newData.totalXp));
 					prevLevelRef.current = newLevel;
@@ -156,8 +168,10 @@ export function useGamification() {
 	const completeDailyChallenge = useCallback(
 		(challengeId: string) => {
 			setData((prev) => {
-				const { data: newData } =
-					gamificationEngine.completeDailyChallenge(prev, challengeId);
+				const { data: newData } = gamificationEngine.completeDailyChallenge(
+					prev,
+					challengeId,
+				);
 				gamificationEngine.save(newData);
 				scheduleSync(newData);
 				return newData;
@@ -212,11 +226,15 @@ function mergeAchievements(
 	local: { id: string; earnedAt: string }[],
 	remote: { id: string; earnedAt: string }[],
 ): { id: string; earnedAt: string }[] {
-	const map = new Map<string, string>();
+	const entries = new Map<string, string>();
 	for (const a of [...local, ...remote]) {
-		if (!map.has(a.id) || a.earnedAt < map.get(a.id)!) {
-			map.set(a.id, a.earnedAt);
+		const existing = entries.get(a.id);
+		if (!existing || a.earnedAt < existing) {
+			entries.set(a.id, a.earnedAt);
 		}
 	}
-	return Array.from(map.entries()).map(([id, earnedAt]) => ({ id, earnedAt }));
+	return Array.from(entries.entries()).map(([id, earnedAt]) => ({
+		id,
+		earnedAt,
+	}));
 }

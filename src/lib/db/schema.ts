@@ -5,14 +5,10 @@ import type {
 	FlashcardReview,
 	FlashcardSM2,
 } from "@/lib/flashcard-engine/types";
-import type { JobRecord } from "@/lib/orchestrator/types";
 import type { StoredGamification } from "@/lib/gamification-engine/types";
-import type {
-	GroupComment,
-	GroupPost,
-	GroupReaction,
-} from "@/lib/study-groups/types";
+import type { JobRecord } from "@/lib/orchestrator/types";
 import type { QuizPack, QuizPackQuestion } from "@/lib/quiz-packs/types";
+import type { GroupPost } from "@/lib/study-groups/types";
 
 export interface CachedQuestion {
 	id?: number;
