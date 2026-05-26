@@ -1,7 +1,7 @@
 "use client";
 
-import { useTranslations } from "next-intl";
 import { m } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { DataResponseInput } from "@/components/quiz/parts/data-response-input";
 import { MixedPartsInput } from "@/components/quiz/parts/mixed-parts-input";

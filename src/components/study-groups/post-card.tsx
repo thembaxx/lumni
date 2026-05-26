@@ -10,12 +10,14 @@ import { format } from "date-fns";
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-	useDeletePost,
-} from "@/hooks/use-study-groups";
+import { useDeletePost } from "@/hooks/use-study-groups";
 import { useAuth } from "@/lib/auth/auth-context";
-import type { GroupComment, GroupPost, GroupReaction } from "@/lib/study-groups/types";
 import { cn } from "@/lib/shared";
+import type {
+	GroupComment,
+	GroupPost,
+	GroupReaction,
+} from "@/lib/study-groups/types";
 import { CommentForm } from "./comment-form";
 import { CommentThread } from "./comment-thread";
 import { ReactionBar } from "./reaction-bar";
@@ -26,7 +28,11 @@ interface Props {
 	comments?: GroupComment[];
 	reactions?: GroupReaction[];
 	onToggleReaction?: (postId: string, emoji: string) => void;
-	onCreateComment?: (postId: string, content: string, parentId?: string) => void;
+	onCreateComment?: (
+		postId: string,
+		content: string,
+		parentId?: string,
+	) => void;
 	onDeleteComment?: (commentId: string) => void;
 }
 
@@ -66,7 +72,9 @@ export function PostCard({
 					<div className="flex size-7 items-center justify-center rounded-full bg-muted">
 						<HugeiconsIcon icon={UserIcon} className="size-3.5" />
 					</div>
-					<span className="font-medium text-sm">{post.userName || post.userId}</span>
+					<span className="font-medium text-sm">
+						{post.userName || post.userId}
+					</span>
 					<span className="text-muted-foreground text-xs">
 						{format(new Date(post.createdAt), "MMM d, HH:mm")}
 					</span>

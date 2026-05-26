@@ -3,14 +3,13 @@
 import { ViewIcon, ViewOffIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
-import { Link } from "@/i18n/navigation";
-import { useRouter } from "@/i18n/navigation";
 import { useSearchParams } from "next/navigation";
-import { Suspense, useState } from "react";
 import { useTranslations } from "next-intl";
+import { Suspense, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FormSkeleton } from "@/components/ui/skeletons";
+import { Link, useRouter } from "@/i18n/navigation";
 import { iOSEase } from "@/lib/utils/animation";
 
 function ResetPasswordForm() {
@@ -89,9 +88,7 @@ function ResetPasswordForm() {
 			<div className="flex flex-col gap-2">
 				<h1 className="font-semibold text-xl">{t("auth.setNewPassword")}</h1>
 				<p className="text-muted-foreground text-sm">
-					{success
-						? t("auth.resetSuccess")
-						: t("auth.passwordHint")}
+					{success ? t("auth.resetSuccess") : t("auth.passwordHint")}
 				</p>
 			</div>
 
@@ -113,7 +110,9 @@ function ResetPasswordForm() {
 						/>
 						<button
 							type="button"
-							aria-label={showPassword ? t("auth.hidePassword") : t("auth.showPassword")}
+							aria-label={
+								showPassword ? t("auth.hidePassword") : t("auth.showPassword")
+							}
 							onClick={() => setShowPassword(!showPassword)}
 							className="absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground"
 						>
@@ -151,7 +150,11 @@ function ResetPasswordForm() {
 				disabled={!password || !confirmPassword || loading || success}
 				className="h-11 w-full rounded-xl"
 			>
-				{loading ? t("auth.resetting") : success ? t("auth.done") : t("auth.resetPassword")}
+				{loading
+					? t("auth.resetting")
+					: success
+						? t("auth.done")
+						: t("auth.resetPassword")}
 			</Button>
 		</m.form>
 	);

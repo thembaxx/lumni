@@ -10,7 +10,6 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
-import { useRouter } from "@/i18n/navigation";
 import { useCallback, useEffect, useState } from "react";
 import {
 	Dialog,
@@ -19,6 +18,7 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
+import { useRouter } from "@/i18n/navigation";
 import {
 	formatDuration,
 	formatFriendlyDate,

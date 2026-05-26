@@ -10,8 +10,8 @@ import {
 	Download03Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useRef, useState } from "react";
 import { useTranslations } from "next-intl";
+import { useRef, useState } from "react";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { LocalDataNotice } from "@/components/shared/local-data-notice";
 import { Button } from "@/components/ui/button";
@@ -162,7 +162,9 @@ function StatsRow({
 					<div className="font-extrabold text-2xl">
 						{stats.completedSessions}
 					</div>
-					<div className="text-muted-foreground text-xs">{t("studyPlanner.completed")}</div>
+					<div className="text-muted-foreground text-xs">
+						{t("studyPlanner.completed")}
+					</div>
 				</div>
 			</div>
 			<div className="overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors">
@@ -170,7 +172,9 @@ function StatsRow({
 					<div className="font-extrabold text-2xl">
 						{stats.upcomingSessions}
 					</div>
-					<div className="text-muted-foreground text-xs">{t("studyPlanner.upcoming")}</div>
+					<div className="text-muted-foreground text-xs">
+						{t("studyPlanner.upcoming")}
+					</div>
 				</div>
 			</div>
 			<div className="overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors">
@@ -178,7 +182,9 @@ function StatsRow({
 					<div className="font-extrabold text-2xl">
 						{Math.round(stats.studyTimeMinutes / 60)}h
 					</div>
-					<div className="text-muted-foreground text-xs">{t("studyPlanner.studyTime")}</div>
+					<div className="text-muted-foreground text-xs">
+						{t("studyPlanner.studyTime")}
+					</div>
 				</div>
 			</div>
 			<div className="overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors">
@@ -186,7 +192,9 @@ function StatsRow({
 					<div className="font-extrabold text-2xl">
 						{stats.daysUntilNextExam !== null ? stats.daysUntilNextExam : "-"}
 					</div>
-					<div className="text-muted-foreground text-xs">{t("studyPlanner.daysToExam")}</div>
+					<div className="text-muted-foreground text-xs">
+						{t("studyPlanner.daysToExam")}
+					</div>
 				</div>
 			</div>
 		</div>
@@ -401,7 +409,10 @@ function UpcomingExamsCard({
 								<div>
 									<p className="font-medium text-sm">{exam.subject}</p>
 									<p className="text-muted-foreground text-xs">
-										{t("studyPlanner.daysLeft", { paper: exam.paper, days: exam.daysUntil })}
+										{t("studyPlanner.daysLeft", {
+											paper: exam.paper,
+											days: exam.daysUntil,
+										})}
 									</p>
 								</div>
 								<Button
@@ -474,10 +485,18 @@ function AddSessionModal({
 								<SelectValue />
 							</SelectTrigger>
 							<SelectContent>
-								<SelectItem value="quiz">{t("studyPlanner.typeQuiz")}</SelectItem>
-								<SelectItem value="flashcard">{t("studyPlanner.typeFlashcard")}</SelectItem>
-								<SelectItem value="exam">{t("studyPlanner.typeExamPaper")}</SelectItem>
-								<SelectItem value="review">{t("studyPlanner.typeReview")}</SelectItem>
+								<SelectItem value="quiz">
+									{t("studyPlanner.typeQuiz")}
+								</SelectItem>
+								<SelectItem value="flashcard">
+									{t("studyPlanner.typeFlashcard")}
+								</SelectItem>
+								<SelectItem value="exam">
+									{t("studyPlanner.typeExamPaper")}
+								</SelectItem>
+								<SelectItem value="review">
+									{t("studyPlanner.typeReview")}
+								</SelectItem>
 							</SelectContent>
 						</Select>
 					</div>
@@ -501,9 +520,15 @@ function AddSessionModal({
 								<SelectValue />
 							</SelectTrigger>
 							<SelectContent>
-								<SelectItem value="none">{t("studyPlanner.repeatNone")}</SelectItem>
-								<SelectItem value="daily">{t("studyPlanner.repeatDaily")}</SelectItem>
-								<SelectItem value="weekly">{t("studyPlanner.repeatWeekly")}</SelectItem>
+								<SelectItem value="none">
+									{t("studyPlanner.repeatNone")}
+								</SelectItem>
+								<SelectItem value="daily">
+									{t("studyPlanner.repeatDaily")}
+								</SelectItem>
+								<SelectItem value="weekly">
+									{t("studyPlanner.repeatWeekly")}
+								</SelectItem>
 							</SelectContent>
 						</Select>
 					</div>

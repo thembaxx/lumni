@@ -43,7 +43,8 @@ export function ExamSidebar({
 				<h3 className="font-semibold text-sm">{t("exam.questionNavigator")}</h3>
 				<div className="mt-2 flex gap-2 text-muted-foreground text-xs">
 					<span className="flex items-center gap-1">
-						<span className="size-2 rounded-full bg-success" /> {t("exam.answered")}
+						<span className="size-2 rounded-full bg-success" />{" "}
+						{t("exam.answered")}
 					</span>
 					<span className="flex items-center gap-1">
 						<HugeiconsIcon

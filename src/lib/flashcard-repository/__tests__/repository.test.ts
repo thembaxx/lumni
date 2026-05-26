@@ -47,14 +47,11 @@ const mockCards: FlashcardSM2[] = [
 	}),
 ];
 
-let storedCards = [...mockCards];
+const storedCards = [...mockCards];
 
 const mockReviewStore: Record<string, unknown>[] = [];
 
-function whereOnTable(
-	tableName: string,
-	store: Record<string, unknown>[],
-) {
+function whereOnTable(tableName: string, store: Record<string, unknown>[]) {
 	let whereField: string | null = null;
 	let whereValue: unknown = null;
 	return {

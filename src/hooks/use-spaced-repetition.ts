@@ -1,8 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { flashcardEngine } from "@/lib/flashcard-engine";
 import type { FlashcardSM2 } from "@/lib/flashcard-engine";
+import { flashcardEngine } from "@/lib/flashcard-engine";
 
 export interface UseSpacedRepetitionReturn {
 	cards: FlashcardSM2[];
@@ -38,7 +38,9 @@ export interface UseSpacedRepetitionReturn {
 	bury: (id: string) => Promise<void>;
 	suspend: (id: string) => Promise<void>;
 	activate: (id: string) => Promise<void>;
-	getReviewHistory: (cardId: string) => Promise<import("@/lib/flashcard-engine").FlashcardReview[]>;
+	getReviewHistory: (
+		cardId: string,
+	) => Promise<import("@/lib/flashcard-engine").FlashcardReview[]>;
 	refresh: () => Promise<void>;
 }
 

@@ -29,7 +29,17 @@ async function generateHandler(req: Request): Promise<NextResponse> {
 		});
 
 		const questionData = questions.map(
-			(q: { questionText: string; options?: unknown[]; correctAnswer?: string; explanation?: string; difficulty?: string; type: string }, i: number) => ({
+			(
+				q: {
+					questionText: string;
+					options?: unknown[];
+					correctAnswer?: string;
+					explanation?: string;
+					difficulty?: string;
+					type: string;
+				},
+				i: number,
+			) => ({
 				questionIndex: i,
 				questionText: q.questionText,
 				options: q.options ? JSON.stringify(q.options) : null,
@@ -42,8 +52,9 @@ async function generateHandler(req: Request): Promise<NextResponse> {
 
 		await quizPackService.storeQuestions(packId, questionData);
 
-		const storageBytes = new TextEncoder().encode(JSON.stringify(questionData))
-			.length;
+		const storageBytes = new TextEncoder().encode(
+			JSON.stringify(questionData),
+		).length;
 
 		return NextResponse.json({ success: true, storageBytes });
 	} catch (error) {

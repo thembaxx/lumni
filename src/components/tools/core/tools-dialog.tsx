@@ -10,7 +10,9 @@ import { useToolsStore } from "@/store/tools";
 
 const ScientificCalculator = dynamic(
 	() =>
-		import("../math/scientific-calculator").then((mod) => mod.ScientificCalculator),
+		import("../math/scientific-calculator").then(
+			(mod) => mod.ScientificCalculator,
+		),
 	{ ssr: false },
 );
 const PeriodicTable = dynamic(
@@ -27,15 +29,19 @@ const AiSolver = dynamic(
 );
 const NationalExamCalendar = dynamic(
 	() =>
-		import("../scheduling/national-exam-calendar").then((mod) => mod.NationalExamCalendar),
+		import("../scheduling/national-exam-calendar").then(
+			(mod) => mod.NationalExamCalendar,
+		),
 	{ ssr: false },
 );
 const ResultsSearch = dynamic(
-	() => import("../communication/results-search").then((mod) => mod.ResultsSearch),
+	() =>
+		import("../communication/results-search").then((mod) => mod.ResultsSearch),
 	{ ssr: false },
 );
 const SmartScheduler = dynamic(
-	() => import("../scheduling/smart-scheduler").then((mod) => mod.SmartScheduler),
+	() =>
+		import("../scheduling/smart-scheduler").then((mod) => mod.SmartScheduler),
 	{ ssr: false },
 );
 const FlashcardCreator = dynamic(
@@ -51,7 +57,9 @@ const NoteCreator = dynamic(
 );
 const StudySetCreator = dynamic(
 	() =>
-		import("../study-sets/study-set-creator").then((mod) => mod.StudySetCreator),
+		import("../study-sets/study-set-creator").then(
+			(mod) => mod.StudySetCreator,
+		),
 	{ ssr: false },
 );
 

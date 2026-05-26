@@ -9,12 +9,11 @@ import {
 	UserGroupIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-
-import { usePathname } from "@/i18n/navigation";
 import { useCallback, useMemo, useState } from "react";
 import { ChatDialog } from "@/components/dashboard/chat/chat-dialog";
 import { Button } from "@/components/ui/button";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
+import { usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/shared";
 
 interface SidebarItem {

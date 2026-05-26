@@ -2,9 +2,9 @@
 
 import { CrownIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Link } from "@/i18n/navigation";
 import type { PremiumFeature } from "@/lib/premium/premium-context";
 import { usePremium } from "@/lib/premium/premium-context";
 

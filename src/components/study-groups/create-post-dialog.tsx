@@ -22,7 +22,12 @@ interface Props {
 	topic?: string;
 }
 
-export function CreatePostDialog({ groupId, questionText, subject, topic }: Props) {
+export function CreatePostDialog({
+	groupId,
+	questionText,
+	subject,
+	topic,
+}: Props) {
 	const t = useTranslations();
 	const [open, setOpen] = useState(false);
 	const [content, setContent] = useState("");
@@ -79,7 +84,10 @@ export function CreatePostDialog({ groupId, questionText, subject, topic }: Prop
 						>
 							Cancel
 						</Button>
-						<Button onClick={handleSubmit} disabled={!content.trim() || isPending}>
+						<Button
+							onClick={handleSubmit}
+							disabled={!content.trim() || isPending}
+						>
 							{isPending ? "Posting..." : "Post to group"}
 						</Button>
 					</div>

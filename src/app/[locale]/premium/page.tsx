@@ -9,12 +9,11 @@ import {
 	StarsIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Link } from "@/i18n/navigation";
-import { useRouter } from "@/i18n/navigation";
 import { useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Link, useRouter } from "@/i18n/navigation";
 import { usePremium } from "@/lib/premium/premium-context";
 
 const FEATURES = [

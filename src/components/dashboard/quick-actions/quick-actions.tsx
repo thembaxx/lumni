@@ -11,12 +11,12 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m, useReducedMotion } from "framer-motion";
-import { useRouter } from "@/i18n/navigation";
 import { StudyPlanSheet } from "@/components/dashboard/study-plan-sheet";
 import { LessonsButton } from "@/components/lesson";
 import { ReferralSheet } from "@/components/referral/referral-sheet";
 import { PerpetualFloat } from "@/components/shared/perpetual-float";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "@/i18n/navigation";
 import { iOSEase } from "@/lib/utils/animation";
 import { useOptimizedAnimation } from "@/lib/utils/animation-optimization";
 

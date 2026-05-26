@@ -1,9 +1,9 @@
 "use client";
 
-import { useTranslations } from "next-intl";
 import { RadialIcon, Target01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
+import { useTranslations } from "next-intl";
 import {
 	Empty,
 	EmptyContent,
@@ -51,9 +51,7 @@ function QuizEmptyStateNotStarted({ onStart }: QuizEmptyStateNotStartedProps) {
 							</m.div>
 						</EmptyMedia>
 						<EmptyTitle>{t("quiz.notStarted")}</EmptyTitle>
-						<EmptyDescription>
-							{t("quiz.notStartedDesc")}
-						</EmptyDescription>
+						<EmptyDescription>{t("quiz.notStartedDesc")}</EmptyDescription>
 					</EmptyHeader>
 					<EmptyContent>
 						<Button variant="outline" size="sm" onClick={onStart}>
@@ -174,7 +172,9 @@ export function QuizSubjectPrompt({
 				<div className="col-span-12 md:col-span-6">
 					<div className="flex flex-col gap-4 text-center md:text-left">
 						<p className="font-medium text-muted-foreground text-sm">
-							{hasSubject ? t("quiz.readyToBegin") : t("quiz.selectSubjectBegin")}
+							{hasSubject
+								? t("quiz.readyToBegin")
+								: t("quiz.selectSubjectBegin")}
 						</p>
 						<p className="text-muted-foreground/60 text-xs">
 							{hasSubject
@@ -228,9 +228,7 @@ export function QuizSelectSubject({
 					<HugeiconsIcon icon={Target01Icon} className="size-8" />
 				</EmptyMedia>
 				<EmptyTitle>{t("quiz.startQuiz")}</EmptyTitle>
-				<EmptyDescription>
-					{t("quiz.selectSubjectToBegin")}
-				</EmptyDescription>
+				<EmptyDescription>{t("quiz.selectSubjectToBegin")}</EmptyDescription>
 			</EmptyHeader>
 			<EmptyContent className="px-0">
 				<SubjectSelector onSelect={onSelect} />

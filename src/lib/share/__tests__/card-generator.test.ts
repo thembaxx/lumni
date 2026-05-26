@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, test, mock } from "bun:test";
+import { afterEach, beforeEach, describe, expect, mock, test } from "bun:test";
 import type { ShareCardParams } from "@/lib/share/card-generator";
 import { generateShareCard } from "@/lib/share/card-generator";
 
@@ -53,11 +53,11 @@ afterEach(() => {
 describe("generateShareCard", () => {
 	test("returns a Blob on successful canvas render", async () => {
 		const mockBlob = new Blob(["fake-png"], { type: "image/png" });
-		HTMLCanvasElement.prototype.getContext = mock(
-			() => createMockCtx(),
+		HTMLCanvasElement.prototype.getContext = mock(() =>
+			createMockCtx(),
 		) as unknown as typeof HTMLCanvasElement.prototype.getContext;
-		HTMLCanvasElement.prototype.toBlob = mock(
-			(cb: (b: Blob | null) => void) => cb(mockBlob),
+		HTMLCanvasElement.prototype.toBlob = mock((cb: (b: Blob | null) => void) =>
+			cb(mockBlob),
 		) as unknown as typeof HTMLCanvasElement.prototype.toBlob;
 
 		const result = await generateShareCard(baseParams);
@@ -66,11 +66,11 @@ describe("generateShareCard", () => {
 	});
 
 	test("throws when toBlob returns null", async () => {
-		HTMLCanvasElement.prototype.getContext = mock(
-			() => createMockCtx(),
+		HTMLCanvasElement.prototype.getContext = mock(() =>
+			createMockCtx(),
 		) as unknown as typeof HTMLCanvasElement.prototype.getContext;
-		HTMLCanvasElement.prototype.toBlob = mock(
-			(cb: (b: Blob | null) => void) => cb(null),
+		HTMLCanvasElement.prototype.toBlob = mock((cb: (b: Blob | null) => void) =>
+			cb(null),
 		) as unknown as typeof HTMLCanvasElement.prototype.toBlob;
 
 		await expect(generateShareCard(baseParams)).rejects.toThrow(
@@ -85,8 +85,8 @@ describe("generateShareCard", () => {
 		HTMLCanvasElement.prototype.getContext = mock(
 			() => ctx,
 		) as unknown as typeof HTMLCanvasElement.prototype.getContext;
-		HTMLCanvasElement.prototype.toBlob = mock(
-			(cb: (b: Blob | null) => void) => cb(new Blob()),
+		HTMLCanvasElement.prototype.toBlob = mock((cb: (b: Blob | null) => void) =>
+			cb(new Blob()),
 		) as unknown as typeof HTMLCanvasElement.prototype.toBlob;
 
 		const types: ShareCardParams["type"][] = ["quiz", "exam", "flashcard"];

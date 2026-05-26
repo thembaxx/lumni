@@ -13,7 +13,6 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
-import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
@@ -28,6 +27,7 @@ import {
 } from "@/components/settings/tabs";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Button } from "@/components/ui/button";
+import { Link } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
 import { iOSEase } from "@/lib/utils/animation";
 import {

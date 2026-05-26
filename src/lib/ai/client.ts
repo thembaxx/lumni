@@ -51,7 +51,9 @@ export class AIClient {
 
 		const results = await Promise.allSettled(
 			this.providers.map((provider) =>
-				provider.generate(request).then((response) => ({ ...response, provider: provider.name })),
+				provider
+					.generate(request)
+					.then((response) => ({ ...response, provider: provider.name })),
 			),
 		);
 		for (const result of results) {

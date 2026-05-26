@@ -35,7 +35,10 @@ export function DailyChallenges({ challenges }: DailyChallengesProps) {
 					)}
 				</div>
 				<span className="text-muted-foreground text-xs">
-					{t("gamification.completedOfTotal", { completed: completedCount, total: challenges.length })}
+					{t("gamification.completedOfTotal", {
+						completed: completedCount,
+						total: challenges.length,
+					})}
 				</span>
 			</div>
 
@@ -73,7 +76,9 @@ export function DailyChallenges({ challenges }: DailyChallengesProps) {
 										{challenge.title}
 									</span>
 									<span className="text-muted-foreground text-xs">
-										{t("gamification.xpReward", { xpReward: challenge.xpReward })}
+										{t("gamification.xpReward", {
+											xpReward: challenge.xpReward,
+										})}
 									</span>
 								</div>
 

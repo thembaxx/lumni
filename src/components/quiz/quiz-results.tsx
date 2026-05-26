@@ -1,6 +1,5 @@
 "use client";
 
-import { useTranslations } from "next-intl";
 import {
 	Award01Icon,
 	DashboardSquare01Icon,
@@ -8,6 +7,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { Confetti } from "@/components/celebration";
 import { ProgressDots } from "@/components/shared/progress-dots";
 import { ShareResultButton } from "@/components/shared/share-button";
@@ -145,7 +145,9 @@ export function QuizResultsCard({
 									>
 										{totalQuestions}
 									</m.p>
-									<p className="text-muted-foreground text-xs">{t("quiz.questions")}</p>
+									<p className="text-muted-foreground text-xs">
+										{t("quiz.questions")}
+									</p>
 								</m.div>
 								<m.div
 									className="col-span-2 rounded-lg bg-muted p-4"
@@ -161,7 +163,9 @@ export function QuizResultsCard({
 									>
 										{correctAnswers}
 									</p>
-									<p className="text-muted-foreground text-xs">{t("quiz.correct")}</p>
+									<p className="text-muted-foreground text-xs">
+										{t("quiz.correct")}
+									</p>
 								</m.div>
 								<m.div
 									className="col-span-3 rounded-lg bg-muted p-4"
@@ -177,7 +181,9 @@ export function QuizResultsCard({
 									>
 										{accuracy}%
 									</p>
-									<p className="text-muted-foreground text-xs">{t("quiz.accuracy")}</p>
+									<p className="text-muted-foreground text-xs">
+										{t("quiz.accuracy")}
+									</p>
 								</m.div>
 								{(() => {
 									const aps = getAPSForSubject(accuracy);
@@ -219,13 +225,18 @@ export function QuizResultsCard({
 									<p className="font-extrabold text-2xl tabular-nums">
 										{formatTime(elapsedTime)}
 									</p>
-									<p className="text-muted-foreground text-xs">{t("quiz.time")}</p>
+									<p className="text-muted-foreground text-xs">
+										{t("quiz.time")}
+									</p>
 								</m.div>
 							</m.div>
 						</section>
 
 						{(onRestart || onDashboard) && (
-							<m.div className="flex flex-col gap-3 pt-2" variants={itemVariants}>
+							<m.div
+								className="flex flex-col gap-3 pt-2"
+								variants={itemVariants}
+							>
 								<div className="flex gap-3">
 									{onRestart && (
 										<Button

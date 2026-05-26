@@ -7,12 +7,11 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Link } from "@/i18n/navigation";
 import { useMemo, useState } from "react";
-import { DiscussWrongAnswer } from "@/components/study-groups/discuss-wrong-answer";
 import { PageContainer } from "@/components/layout/page-container";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { LocalDataNotice } from "@/components/shared/local-data-notice";
+import { DiscussWrongAnswer } from "@/components/study-groups/discuss-wrong-answer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -29,6 +28,7 @@ import {
 	type ErrorType,
 	useWrongAnswerJournal,
 } from "@/hooks/use-wrong-answer-journal";
+import { Link } from "@/i18n/navigation";
 
 function ErrorTypeSelect({
 	value,
@@ -56,7 +56,8 @@ function ErrorTypeSelect({
 export default function ReviewPage() {
 	const { getWrongAnswers, markReviewed, clearReviewed, updateErrorType } =
 		useWrongAnswerJournal();
-	const { data: subjects } = useSubjects();
+	const { data: subjectsData } = useSubjects();
+	const subjects = subjectsData?.subjects ?? [];
 	const [filterSubject, setFilterSubject] = useState<string>("");
 	const [filterTopic, setFilterTopic] = useState<string>("");
 	const [errorTypes, setErrorTypes] = useState<Record<number, ErrorType>>({});

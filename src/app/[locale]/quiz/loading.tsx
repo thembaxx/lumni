@@ -1,6 +1,6 @@
-import { useTranslations } from "next-intl";
 import { RadialIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { useTranslations } from "next-intl";
 
 export default function QuizLoading() {
 	const t = useTranslations();

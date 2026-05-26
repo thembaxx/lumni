@@ -1,8 +1,5 @@
 import { NextResponse } from "next/server";
-import {
-	getSeedData,
-	syncExamDatesDirect,
-} from "@/lib/exam-dates/service";
+import { getSeedData, syncExamDatesDirect } from "@/lib/exam-dates/service";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 async function refreshHandler(): Promise<NextResponse> {
@@ -23,7 +20,9 @@ async function refreshHandler(): Promise<NextResponse> {
 					return null;
 				}),
 			)
-		).filter((r): r is { session: string; year: number; count: number } => r !== null);
+		).filter(
+			(r): r is { session: string; year: number; count: number } => r !== null,
+		);
 
 		return NextResponse.json({
 			success: true,

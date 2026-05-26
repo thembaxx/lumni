@@ -69,7 +69,8 @@ export function QuestionRenderer({
 		<div className="flex flex-col gap-6">
 			<div className="flex items-center gap-2">
 				<h3 className="font-semibold text-lg">
-					{t("exam.questionLabel", { id: question.id })}{question.title ? `: ${question.title}` : ""}
+					{t("exam.questionLabel", { id: question.id })}
+					{question.title ? `: ${question.title}` : ""}
 				</h3>
 				{question.totalMarks && (
 					<MarksDisplay marks={question.totalMarks} className="text-base" />
@@ -88,7 +89,9 @@ export function QuestionRenderer({
 			))}
 
 			{question.parts.length === 0 && (
-				<p className="text-muted-foreground text-sm italic">{t("exam.noSubQuestions")}</p>
+				<p className="text-muted-foreground text-sm italic">
+					{t("exam.noSubQuestions")}
+				</p>
 			)}
 
 			{question.parts.map((part) => {

@@ -1,7 +1,6 @@
 "use client";
 
 import { AnimatePresence, m } from "framer-motion";
-import { useRouter } from "@/i18n/navigation";
 import { useMemo, useState } from "react";
 import { ListenToLesson } from "@/components/listen-to-lesson";
 import { Anim } from "@/components/shared/anim";
@@ -10,6 +9,7 @@ import { PracticeButton } from "@/components/study/practice-button";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useRouter } from "@/i18n/navigation";
 import { cn } from "@/lib/shared";
 import type { Difficulty } from "@/lib/utils/colors";
 

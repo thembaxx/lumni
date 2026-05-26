@@ -1,6 +1,6 @@
-import { useTranslations } from "next-intl";
 import { Camera01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { useTranslations } from "next-intl";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { DifficultyBadge } from "@/components/shared/difficulty-badge";
 import { TTSButton } from "@/components/shared/tts-button";
@@ -72,7 +72,9 @@ export function QuestionCardHeader({
 						type="button"
 						onClick={onBookmarkToggle}
 						className="flex size-8 items-center justify-center rounded-full transition-colors hover:bg-muted"
-						aria-label={bookmarked ? t("quiz.removeBookmark") : t("quiz.bookmarkQuestion")}
+						aria-label={
+							bookmarked ? t("quiz.removeBookmark") : t("quiz.bookmarkQuestion")
+						}
 					>
 						<svg
 							width="16"

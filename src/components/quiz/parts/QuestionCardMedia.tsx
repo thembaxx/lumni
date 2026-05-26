@@ -1,6 +1,6 @@
-import { useTranslations } from "next-intl";
 import { Add01Icon, MinusSignIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import type { MediaContent } from "@/lib/question-engine/types";
 import type { VisualContent as VisualContentType } from "@/lib/visual-engine/types";
@@ -40,13 +40,17 @@ export function QuestionCardMedia({
 	return (
 		<div className="mt-2">
 			<div className="flex items-center justify-between">
-				<p className="font-medium text-muted-foreground text-xs">{t("quiz.diagram")}</p>
+				<p className="font-medium text-muted-foreground text-xs">
+					{t("quiz.diagram")}
+				</p>
 				<Button
 					variant="ghost"
 					size="sm"
 					onClick={onToggleDiagram}
 					className="h-8 gap-1 px-2"
-					aria-label={showDiagram ? t("quiz.hideDiagram") : t("quiz.showDiagram")}
+					aria-label={
+						showDiagram ? t("quiz.hideDiagram") : t("quiz.showDiagram")
+					}
 				>
 					{showDiagram ? (
 						<>

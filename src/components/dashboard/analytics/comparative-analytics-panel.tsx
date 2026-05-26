@@ -3,13 +3,13 @@
 import { CrownIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
-import { Link } from "@/i18n/navigation";
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { LineChart } from "@/components/ui/charts/line-chart";
 import { RadarChart } from "@/components/ui/charts/radar-chart";
 import { useAnalytics } from "@/hooks/use-analytics";
+import { Link } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
 import { usePremium } from "@/lib/premium/premium-context";
 import { analyticsService } from "@/lib/services/analytics-service";

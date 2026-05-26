@@ -1,9 +1,9 @@
 "use client";
 
-import { useTranslations } from "next-intl";
 import { RadialIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { LoadingShell } from "@/components/loading/loading-shell";
 import { iOSEase } from "@/lib/utils/animation";
 

@@ -1,6 +1,5 @@
 "use client";
 
-import { useTranslations } from "next-intl";
 import {
 	ArrowLeft01Icon,
 	ArrowRight01Icon,
@@ -11,6 +10,7 @@ import {
 	Upload04Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import { Button } from "@/components/ui/button";
@@ -99,7 +99,9 @@ export default function FlashcardBrowsePage() {
 
 	return (
 		<PageContainer className="py-8">
-			<h1 className="mb-6 font-semibold text-2xl">{t("flashcards.browseTitle")}</h1>
+			<h1 className="mb-6 font-semibold text-2xl">
+				{t("flashcards.browseTitle")}
+			</h1>
 
 			<div className="mb-6 flex flex-wrap gap-3">
 				<div className="relative min-w-[200px] flex-1">

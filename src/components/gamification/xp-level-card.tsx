@@ -36,7 +36,9 @@ export function XpLevelCard({ levelInfo, totalXp }: XpLevelCardProps) {
 							{levelInfo.title}
 						</span>
 						<span className="font-medium text-muted-foreground text-xs">
-							{t("gamification.xpLabel", { xp: totalXp.toLocaleString("en-ZA") })}
+							{t("gamification.xpLabel", {
+								xp: totalXp.toLocaleString("en-ZA"),
+							})}
 						</span>
 					</div>
 

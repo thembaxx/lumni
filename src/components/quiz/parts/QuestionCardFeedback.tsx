@@ -1,6 +1,5 @@
 "use client";
 
-import { useTranslations } from "next-intl";
 import {
 	Cancel01Icon,
 	CheckmarkCircle01Icon,
@@ -10,6 +9,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { TTSButton } from "@/components/shared/tts-button";
 import { Button } from "@/components/ui/button";
@@ -123,7 +123,10 @@ export function QuestionCardFeedback({
 				<div className="flex flex-col gap-1">
 					<div className="flex items-center gap-2">
 						<span className="font-medium text-sm">
-							{t("quiz.scoreFraction", { score: feedback.score, points: question.points })}
+							{t("quiz.scoreFraction", {
+								score: feedback.score,
+								points: question.points,
+							})}
 						</span>
 					</div>
 					<div className="text-sm opacity-90">

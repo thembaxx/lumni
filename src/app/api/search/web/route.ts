@@ -24,8 +24,7 @@ export async function POST(request: Request) {
 		console.error("[Web Search API]", error);
 		return NextResponse.json(
 			{
-				error:
-					error instanceof Error ? error.message : "Web search failed",
+				error: error instanceof Error ? error.message : "Web search failed",
 				results: [],
 			},
 			{ status: 500 },

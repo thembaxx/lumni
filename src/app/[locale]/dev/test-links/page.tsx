@@ -1,6 +1,5 @@
 "use client";
 
-import { Link } from "@/i18n/navigation";
 import { PageShell } from "@/components/layout/page-shell";
 import {
 	Card,
@@ -8,6 +7,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
+import { Link } from "@/i18n/navigation";
 
 const PAGES = [
 	{ name: "Home", path: "/" },

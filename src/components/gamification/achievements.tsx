@@ -18,9 +18,14 @@ export function Achievements({ achievements }: AchievementsProps) {
 	return (
 		<div className="flex flex-col gap-3">
 			<div className="flex items-center justify-between">
-				<h3 className="font-semibold text-foreground text-sm">{t("gamification.achievements")}</h3>
+				<h3 className="font-semibold text-foreground text-sm">
+					{t("gamification.achievements")}
+				</h3>
 				<span className="text-muted-foreground text-xs">
-					{t("gamification.earnedOfTotal", { earned: earnedCount, total: achievements.length })}
+					{t("gamification.earnedOfTotal", {
+						earned: earnedCount,
+						total: achievements.length,
+					})}
 				</span>
 			</div>
 
@@ -34,7 +39,10 @@ export function Achievements({ achievements }: AchievementsProps) {
 						whileHover={{ scale: 1.08 }}
 						whileTap={{ scale: 0.95 }}
 						className={`relative size-14 shrink-0 rounded-xl border-2 ${rarityColors[achievement.rarity]} ${rarityGlow[achievement.rarity]} flex items-center justify-center shadow-lg transition-transform`}
-						title={t("gamification.achievementUnlocked", { name: achievement.name, description: achievement.description })}
+						title={t("gamification.achievementUnlocked", {
+							name: achievement.name,
+							description: achievement.description,
+						})}
 					>
 						<span className="text-2xl">{achievement.icon}</span>
 						{achievement.rarity === "legendary" && (
@@ -57,7 +65,9 @@ export function Achievements({ achievements }: AchievementsProps) {
 						animate={{ opacity: 0.5 }}
 						transition={{ delay: (earnedAchievements.length + index) * 0.05 }}
 						className="relative flex size-14 shrink-0 items-center justify-center rounded-xl border-2 border-border border-dashed bg-muted/30"
-						title={t("gamification.achievementLocked", { name: achievement.name })}
+						title={t("gamification.achievementLocked", {
+							name: achievement.name,
+						})}
 					>
 						<span className="text-xl grayscale">🔒</span>
 					</m.div>

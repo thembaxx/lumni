@@ -9,11 +9,11 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m, useReducedMotion } from "framer-motion";
-import { useRouter } from "@/i18n/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { FIRST_VISITS_KEY } from "@/components/onboarding/onboarding-provider";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { useRouter } from "@/i18n/navigation";
 import { iOSEase } from "@/lib/utils/animation";
 
 const STEPS_KEY = "lumni_getting_started_steps";

@@ -82,10 +82,7 @@ export const useBookmarksStore = create<BookmarksState>()(
 
 			removeBookmark: (id) => {
 				set({ bookmarks: get().bookmarks.filter((b) => b.id !== id) });
-				offlineDB.bookmarks
-					.where("questionId")
-					.equals(id)
-					.delete();
+				offlineDB.bookmarks.where("questionId").equals(id).delete();
 				enqueue("appwrite-bookmark-delete", { questionId: id });
 			},
 
@@ -95,10 +92,7 @@ export const useBookmarksStore = create<BookmarksState>()(
 						b.id === id ? { ...b, note } : b,
 					),
 				});
-				offlineDB.bookmarks
-					.where("questionId")
-					.equals(id)
-					.modify({ note });
+				offlineDB.bookmarks.where("questionId").equals(id).modify({ note });
 			},
 
 			isBookmarked: (id) => {

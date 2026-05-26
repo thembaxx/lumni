@@ -8,14 +8,13 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
-import { Link } from "@/i18n/navigation";
-import { useRouter } from "@/i18n/navigation";
 import { useSearchParams } from "next/navigation";
-import { Suspense, useCallback, useState } from "react";
 import { useTranslations } from "next-intl";
+import { Suspense, useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FormSkeleton } from "@/components/ui/skeletons";
+import { Link, useRouter } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
 import { iOSEase } from "@/lib/utils/animation";
 
@@ -151,7 +150,9 @@ function SignUpForm() {
 						<button
 							type="button"
 							onClick={() => setShowPassword(!showPassword)}
-							aria-label={showPassword ? t("auth.hidePassword") : t("auth.showPassword")}
+							aria-label={
+								showPassword ? t("auth.hidePassword") : t("auth.showPassword")
+							}
 							className="absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground hover:text-foreground"
 						>
 							{showPassword ? (

@@ -43,7 +43,12 @@ interface FlashcardCreatorProps {
 let migrated = false;
 
 async function migrateLegacyFlashcards(
-	addCard: (front: string, back: string, subject: string, topic?: string) => Promise<void>,
+	addCard: (
+		front: string,
+		back: string,
+		subject: string,
+		topic?: string,
+	) => Promise<void>,
 ) {
 	if (migrated) return;
 	migrated = true;

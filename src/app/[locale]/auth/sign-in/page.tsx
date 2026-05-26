@@ -8,14 +8,13 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
-import { Link } from "@/i18n/navigation";
-import { useRouter } from "@/i18n/navigation";
 import { useSearchParams } from "next/navigation";
-import { Suspense, useCallback, useState } from "react";
 import { useTranslations } from "next-intl";
+import { Suspense, useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FormSkeleton } from "@/components/ui/skeletons";
+import { Link, useRouter } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
 import { iOSEase } from "@/lib/utils/animation";
 
@@ -91,7 +90,9 @@ function SignInForm() {
 					<p className="ios-subhead text-muted-foreground leading-relaxed">
 						{t.rich("auth.magicLinkSent", {
 							email,
-							strong: (chunks) => <strong className="text-foreground">{chunks}</strong>,
+							strong: (chunks) => (
+								<strong className="text-foreground">{chunks}</strong>
+							),
 						})}
 					</p>
 				</div>
@@ -115,7 +116,9 @@ function SignInForm() {
 			className="flex flex-col gap-8"
 		>
 			<div className="flex flex-col gap-2">
-				<h1 className="ios-title-2 font-semibold text-foreground">{t("auth.signInTitle")}</h1>
+				<h1 className="ios-title-2 font-semibold text-foreground">
+					{t("auth.signInTitle")}
+				</h1>
 				<p className="ios-subhead text-muted-foreground">
 					{t("auth.welcomeBack")}
 				</p>
@@ -166,7 +169,9 @@ function SignInForm() {
 							/>
 							<button
 								type="button"
-								aria-label={showPassword ? t("auth.hidePassword") : t("auth.showPassword")}
+								aria-label={
+									showPassword ? t("auth.hidePassword") : t("auth.showPassword")
+								}
 								onClick={() => setShowPassword(!showPassword)}
 								className="absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground hover:text-foreground"
 							>

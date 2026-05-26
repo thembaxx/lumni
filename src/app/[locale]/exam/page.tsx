@@ -1,5 +1,5 @@
-import { getLocale } from "next-intl/server";
 import type { Metadata } from "next";
+import { getLocale } from "next-intl/server";
 import { redirect } from "@/i18n/navigation";
 
 export const metadata: Metadata = {

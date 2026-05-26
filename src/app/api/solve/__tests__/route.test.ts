@@ -51,7 +51,11 @@ describe("POST /api/solve", () => {
 	test("AI not configured returns 500", async () => {
 		mockCheckBudget.mockResolvedValue({ allowed: true, userId: "test-user" });
 		mockIsAIConfigured.mockReturnValue(false);
-		mockGenerateWithSystem.mockResolvedValue({ available: false, error: "AI not configured", provider: "test" });
+		mockGenerateWithSystem.mockResolvedValue({
+			available: false,
+			error: "AI not configured",
+			provider: "test",
+		});
 
 		const req = new NextRequest("http://localhost/api/solve", {
 			method: "POST",

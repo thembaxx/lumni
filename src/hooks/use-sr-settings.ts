@@ -1,9 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { flashcardEngine } from "@/lib/flashcard-engine";
 import type { SRSettings } from "@/lib/flashcard-engine";
-import { DEFAULT_SR_SETTINGS } from "@/lib/flashcard-engine";
+import { DEFAULT_SR_SETTINGS, flashcardEngine } from "@/lib/flashcard-engine";
 
 export interface UseSRSettingsReturn {
 	settings: SRSettings;

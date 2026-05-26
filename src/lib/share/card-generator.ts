@@ -46,10 +46,7 @@ function drawRoundedRect(
 	ctx.closePath();
 }
 
-function drawGradientBackground(
-	ctx: CanvasRenderingContext2D,
-	type: CardType,
-) {
+function drawGradientBackground(ctx: CanvasRenderingContext2D, type: CardType) {
 	const [c1, c2] = GRADIENTS[type];
 	const gradient = ctx.createLinearGradient(0, 0, WIDTH, HEIGHT);
 	gradient.addColorStop(0, c1);
@@ -59,13 +56,17 @@ function drawGradientBackground(
 	ctx.fill();
 }
 
-function drawGlow(
-	ctx: CanvasRenderingContext2D,
-	type: CardType,
-) {
+function drawGlow(ctx: CanvasRenderingContext2D, type: CardType) {
 	const [, c2] = GRADIENTS[type];
 	const [r, g, b] = hexToRgb(c2);
-	const glow = ctx.createRadialGradient(WIDTH / 2, HEIGHT / 2, 10, WIDTH / 2, HEIGHT / 2, 200);
+	const glow = ctx.createRadialGradient(
+		WIDTH / 2,
+		HEIGHT / 2,
+		10,
+		WIDTH / 2,
+		HEIGHT / 2,
+		200,
+	);
 	glow.addColorStop(0, `rgba(${r},${g},${b},0.15)`);
 	glow.addColorStop(1, `rgba(${r},${g},${b},0)`);
 	ctx.fillStyle = glow;

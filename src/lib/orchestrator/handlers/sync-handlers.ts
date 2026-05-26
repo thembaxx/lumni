@@ -122,9 +122,10 @@ export const appwriteFlashcardSync: JobHandler = async (payload) => {
 export const appwriteFlashcardPull: JobHandler = async (payload) => {
 	const _data = payload as JobPayloadByType["appwrite-flashcard-pull"];
 	try {
-		const lastSyncStr = typeof window !== "undefined"
-			? localStorage.getItem("lumni_flashcard_last_sync") ?? "0"
-			: "0";
+		const lastSyncStr =
+			typeof window !== "undefined"
+				? (localStorage.getItem("lumni_flashcard_last_sync") ?? "0")
+				: "0";
 		const lastSync = Number.parseInt(lastSyncStr, 10) || 0;
 
 		const remoteCards = await listDocuments<Record<string, unknown>>(
@@ -140,9 +141,7 @@ export const appwriteFlashcardPull: JobHandler = async (payload) => {
 			const remoteUpdatedAt = new Date(
 				(remote.updatedAt as string) || 0,
 			).getTime();
-			const localCard = await db.flashcards.get(
-				remote.flashcardId as string,
-			);
+			const localCard = await db.flashcards.get(remote.flashcardId as string);
 
 			if (
 				localCard &&
@@ -174,7 +173,8 @@ export const appwriteFlashcardPull: JobHandler = async (payload) => {
 				algorithm: (remote.algorithm as "sm2" | "fsrs") || "fsrs",
 				stability: (remote.stability as number) || 0,
 				difficulty: (remote.difficulty as number) || 5,
-				status: (remote.status as "active" | "buried" | "suspended") || "active",
+				status:
+					(remote.status as "active" | "buried" | "suspended") || "active",
 				lapses: (remote.lapses as number) || 0,
 				learningStep: (remote.learningStep as number) || -1,
 				leeched: (remote.leeched as boolean) || false,

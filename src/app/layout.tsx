@@ -1,6 +1,6 @@
-import { getLocale } from "next-intl/server";
 import type { Viewport } from "next";
 import Script from "next/script";
+import { getLocale } from "next-intl/server";
 import { cn } from "@/lib/shared";
 import "./globals.css";
 import { fontHeading, fontMono, fontSans } from "./fonts";

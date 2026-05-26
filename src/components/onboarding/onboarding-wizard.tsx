@@ -1,21 +1,29 @@
 "use client";
 
-import { ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
+import {
+	ArrowDownIcon,
+	ArrowLeft01Icon,
+	ArrowRight01Icon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 import dynamic from "next/dynamic";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Confetti } from "@/components/celebration/confetti";
 import { PageContainer } from "@/components/layout/page-container";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
-import { nscSubjects } from "@/data/nsc-subjects";
+import subjectsData from "@/data/subjects.json";
 import { useOnboarding } from "@/hooks/use-onboarding";
+import { saveLocalEnrolledSubjects } from "@/hooks/use-subjects";
+import { useAuth } from "@/lib/auth/auth-context";
 import { iOSEase } from "@/lib/utils/animation";
 import { GoalsSVG } from "./svgs/goals-svg";
 import { SubjectsSVG } from "./svgs/subjects-svg";
 import { WelcomeSVG } from "./svgs/welcome-svg";
+
+type Subject = (typeof subjectsData)[number];
 
 const ParticleField = dynamic(
 	() => import("./particle-field").then((m) => ({ default: m.ParticleField })),
@@ -82,10 +90,61 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 	}, [step, selectedSubjects, targetAps, dailyMinutes, updateProgress]);
 
 	const current = STEPS_COPY[step];
+	const { user } = useAuth();
 
-	const filteredSubjects = nscSubjects.filter((subject) =>
-		subject.name.toLowerCase().includes(searchTerm.toLowerCase()),
-	);
+	const categoryLabels: Record<string, string> = {
+		sciences: "Sciences",
+		languages: "Languages",
+		business: "Business",
+		humanities: "Humanities",
+		technology: "Technology",
+		agriculture: "Agriculture",
+		arts: "Arts",
+		services: "Services",
+		compulsory: "Compulsory",
+	};
+
+	const subjectsByCategory = useMemo(() => {
+		const groups: Record<string, Subject[]> = {};
+		for (const subject of subjectsData) {
+			const cat = subject.category || "other";
+			if (!groups[cat]) groups[cat] = [];
+			groups[cat].push(subject);
+		}
+		for (const cat of Object.keys(groups)) {
+			groups[cat].sort((a, b) => a.name.localeCompare(b.name));
+		}
+		return groups;
+	}, []);
+
+	const categoryOrder = [
+		"sciences",
+		"languages",
+		"business",
+		"humanities",
+		"technology",
+		"agriculture",
+		"arts",
+		"services",
+		"compulsory",
+	];
+
+	const [expandedCategories, setExpandedCategories] = useState<
+		Record<string, boolean>
+	>(() => {
+		const initial: Record<string, boolean> = {};
+		for (const cat of categoryOrder) {
+			initial[cat] = false;
+		}
+		initial.sciences = true;
+		return initial;
+	});
+
+	const filteredSubjects = searchTerm
+		? subjectsData.filter((subject) =>
+				subject.name.toLowerCase().includes(searchTerm.toLowerCase()),
+			)
+		: null;
 
 	const canProceed = () => {
 		switch (step) {
@@ -102,15 +161,29 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 		}
 	};
 
-	const complete = useCallback(() => {
+	const complete = useCallback(async () => {
 		if (isCompleting) return;
 		setIsCompleting(true);
-		setShowConfetti(true);
+
 		completeOnboarding({
 			selectedSubjects,
 			targetAps,
 			dailyStudyMinutes: dailyMinutes,
 		});
+
+		if (user) {
+			try {
+				await fetch("/api/subjects/enroll", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({ subjectIds: selectedSubjects }),
+				});
+			} catch {}
+		} else {
+			saveLocalEnrolledSubjects(selectedSubjects);
+		}
+
+		setShowConfetti(true);
 		setTimeout(() => {
 			onComplete?.();
 		}, 800);
@@ -121,6 +194,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 		targetAps,
 		dailyMinutes,
 		onComplete,
+		user,
 	]);
 
 	const handleNext = () => {
@@ -192,22 +266,26 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 										{step === 1 && (
 											<>
 												<div className="mb-4">
-												<input
-													type="text"
-													value={searchTerm}
-													onChange={(e) => setSearchTerm(e.target.value)}
-													placeholder="Search subjects…"
-													className="w-full rounded-lg border border-bg-muted/50 bg-card/50 px-3 py-2 text-base focus:border-[--system-accent]/50 focus:outline-none"
-													aria-label="Search subjects"
-												/>
+													<input
+														type="text"
+														value={searchTerm}
+														onChange={(e) => {
+															setSearchTerm(e.target.value);
+															if (e.target.value) {
+																setExpandedCategories(() => {
+																	const all: Record<string, boolean> = {};
+																	for (const cat of categoryOrder) {
+																		all[cat] = true;
+																	}
+																	return all;
+																});
+															}
+														}}
+														placeholder="Search subjects…"
+														className="w-full rounded-lg border border-bg-muted/50 bg-card/50 px-3 py-2 text-base focus:border-[--system-accent]/50 focus:outline-none"
+														aria-label="Search subjects"
+													/>
 												</div>
-
-												{filteredSubjects.length === 0 && searchTerm !== "" ? (
-													<p className="mb-4 text-muted-foreground text-xs italic">
-														No subjects match &quot;{searchTerm}&quot;. Try a
-														different search.
-													</p>
-												) : null}
 
 												<m.div
 													initial={
@@ -219,47 +297,126 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 														delay: 0.15,
 														ease: iOSEase,
 													}}
-													className="grid max-h-80 grid-cols-1 gap-3 overflow-y-auto pr-1 sm:grid-cols-2"
+													className="max-h-80 space-y-2 overflow-y-auto pr-1"
 												>
-													{filteredSubjects.map((subject) => (
-														<Card
-															key={subject.id}
-															className={`cursor-pointer transition-colors duration-150 hover:ring-2 hover:ring-[--system-accent] active:scale-[0.97] ${
-																selectedSubjects.includes(subject.id)
-																	? "bg-[--system-accent]/5 ring-2 ring-[--system-accent]"
-																	: ""
-															}`}
-															onClick={() =>
-																setSelectedSubjects((prev) =>
-																	prev.includes(subject.id)
-																		? prev.filter((s) => s !== subject.id)
-																		: [...prev, subject.id],
-																)
-															}
-														>
-															<CardContent className="flex items-center gap-3 py-4">
-																<div
-																	className="flex size-10 items-center justify-center rounded-full font-extrabold text-sm text-white"
-																	style={
-																		{
-																			"--subject-color": subject.color,
-																			backgroundColor: "var(--subject-color)",
-																		} as React.CSSProperties
-																	}
-																>
-																	{subject.id.slice(0, 2)}
-																</div>
-																<div className="min-w-0 flex-1">
-																	<p className="truncate font-medium text-sm">
-																		{subject.name}
-																	</p>
-																	<p className="text-muted-foreground text-xs">
-																		Grade 12
-																	</p>
-																</div>
-															</CardContent>
-														</Card>
-													))}
+													{searchTerm ? (
+														filteredSubjects &&
+														filteredSubjects.length === 0 ? (
+															<p className="py-4 text-center text-muted-foreground text-xs italic">
+																No subjects match &quot;{searchTerm}&quot;. Try
+																a different search.
+															</p>
+														) : (
+															<div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+																{filteredSubjects?.map((subject) => (
+																	<SubjectCard
+																		key={subject.id}
+																		subject={subject}
+																		selected={selectedSubjects.includes(
+																			subject.id,
+																		)}
+																		onToggle={() =>
+																			setSelectedSubjects((prev) =>
+																				prev.includes(subject.id)
+																					? prev.filter((s) => s !== subject.id)
+																					: [...prev, subject.id],
+																			)
+																		}
+																	/>
+																))}
+															</div>
+														)
+													) : (
+														categoryOrder
+															.filter((cat) => subjectsByCategory[cat])
+															.map((cat) => {
+																const subjects = subjectsByCategory[cat];
+																const selectedCount = subjects.filter((s) =>
+																	selectedSubjects.includes(s.id),
+																).length;
+																const isExpanded = expandedCategories[cat];
+
+																return (
+																	<div
+																		key={cat}
+																		className="rounded-xl border border-border/40 bg-card/30"
+																	>
+																		<button
+																			type="button"
+																			onClick={() =>
+																				setExpandedCategories((prev) => ({
+																					...prev,
+																					[cat]: !prev[cat],
+																				}))
+																			}
+																			className="flex w-full items-center gap-2 px-4 py-3 text-left"
+																		>
+																			<HugeiconsIcon
+																				icon={ArrowDownIcon}
+																				className={`size-4 text-muted-foreground transition-transform duration-200 ${
+																					isExpanded ? "rotate-0" : "-rotate-90"
+																				}`}
+																			/>
+																			<span className="flex-1 font-semibold text-sm capitalize">
+																				{categoryLabels[cat] || cat}
+																			</span>
+																			<span className="text-muted-foreground text-xs">
+																				{selectedCount > 0
+																					? `${selectedCount} selected`
+																					: `${subjects.length} subjects`}
+																			</span>
+																		</button>
+																		<AnimatePresence initial={false}>
+																			{isExpanded && (
+																				<m.div
+																					initial={
+																						shouldReduceMotion
+																							? {}
+																							: { height: 0, opacity: 0 }
+																					}
+																					animate={{
+																						height: "auto",
+																						opacity: 1,
+																					}}
+																					exit={
+																						shouldReduceMotion
+																							? {}
+																							: { height: 0, opacity: 0 }
+																					}
+																					transition={{
+																						duration: 0.2,
+																						ease: iOSEase,
+																					}}
+																					className="overflow-hidden"
+																				>
+																					<div className="grid grid-cols-1 gap-2 px-4 pb-3 sm:grid-cols-2">
+																						{subjects.map((subject) => (
+																							<SubjectCard
+																								key={subject.id}
+																								subject={subject}
+																								selected={selectedSubjects.includes(
+																									subject.id,
+																								)}
+																								onToggle={() =>
+																									setSelectedSubjects((prev) =>
+																										prev.includes(subject.id)
+																											? prev.filter(
+																													(s) =>
+																														s !== subject.id,
+																												)
+																											: [...prev, subject.id],
+																									)
+																								}
+																							/>
+																						))}
+																					</div>
+																				</m.div>
+																			)}
+																		</AnimatePresence>
+																	</div>
+																);
+															})
+													)}
 												</m.div>
 											</>
 										)}
@@ -396,7 +553,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 											className="mb-8 flex flex-wrap justify-center gap-2"
 										>
 											{selectedSubjects.map((id) => {
-												const sub = nscSubjects.find((s) => s.id === id);
+												const sub = subjectsData.find((s) => s.id === id);
 												return sub ? (
 													<m.span
 														key={id}
@@ -455,5 +612,42 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 				</div>
 			</PageContainer>
 		</div>
+	);
+}
+
+function SubjectCard({
+	subject,
+	selected,
+	onToggle,
+}: {
+	subject: Subject;
+	selected: boolean;
+	onToggle: () => void;
+}) {
+	return (
+		<Card
+			className={`cursor-pointer transition-colors duration-150 hover:ring-2 hover:ring-[--system-accent] active:scale-[0.97] ${
+				selected ? "bg-[--system-accent]/5 ring-2 ring-[--system-accent]" : ""
+			}`}
+			onClick={onToggle}
+		>
+			<CardContent className="flex items-center gap-3 py-3">
+				<div
+					className="flex size-9 shrink-0 items-center justify-center rounded-full font-extrabold text-xs text-white"
+					style={
+						{
+							"--subject-color": subject.color,
+							backgroundColor: "var(--subject-color)",
+						} as React.CSSProperties
+					}
+				>
+					{subject.id.slice(0, 2)}
+				</div>
+				<div className="min-w-0 flex-1">
+					<p className="truncate font-medium text-sm">{subject.name}</p>
+					<p className="text-muted-foreground text-xs">Grade 12</p>
+				</div>
+			</CardContent>
+		</Card>
 	);
 }

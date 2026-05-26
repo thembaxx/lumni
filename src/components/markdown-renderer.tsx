@@ -144,12 +144,18 @@ function Paragraph({ children }: { children?: React.ReactNode }) {
 }
 
 function UnorderedList({ children }: { children?: React.ReactNode }) {
-	return <ul className="mb-3 flex flex-col gap-1 list-inside list-disc">{children}</ul>;
+	return (
+		<ul className="mb-3 flex flex-col gap-1 list-inside list-disc">
+			{children}
+		</ul>
+	);
 }
 
 function OrderedList({ children }: { children?: React.ReactNode }) {
 	return (
-		<ol className="mb-3 flex flex-col gap-1 list-inside list-decimal">{children}</ol>
+		<ol className="mb-3 flex flex-col gap-1 list-inside list-decimal">
+			{children}
+		</ol>
 	);
 }
 

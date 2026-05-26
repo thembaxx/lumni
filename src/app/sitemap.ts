@@ -24,7 +24,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
 		"/tools/flashcards/new",
 	];
 
-	const authRoutes = ["/auth/sign-in", "/auth/sign-up", "/auth/forgot-password", "/auth/verify-email"];
+	const authRoutes = [
+		"/auth/sign-in",
+		"/auth/sign-up",
+		"/auth/forgot-password",
+		"/auth/verify-email",
+	];
 	const adminRoutes = ["/admin/quality", "/admin"];
 
 	const entries: MetadataRoute.Sitemap = [];

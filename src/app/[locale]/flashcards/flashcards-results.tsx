@@ -1,8 +1,8 @@
 "use client";
 
-import { useTranslations } from "next-intl";
 import { Home01Icon, Target01Icon, UndoIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { useTranslations } from "next-intl";
 import { Confetti } from "@/components/celebration";
 import { ShareResultButton } from "@/components/shared/share-button";
 import { Button } from "@/components/ui/button";
@@ -48,7 +48,9 @@ export function FlashcardsResults({
 							<div className="grid grid-cols-12 gap-3">
 								<div className="col-span-8 rounded-lg bg-muted p-4 sm:col-span-8">
 									<p className="font-extrabold text-2xl">{totalCards}</p>
-									<p className="text-muted-foreground text-xs">{t("flashcards.cardsStudied")}</p>
+									<p className="text-muted-foreground text-xs">
+										{t("flashcards.cardsStudied")}
+									</p>
 								</div>
 								<div className="col-span-4 rounded-lg bg-success/10 p-4 sm:col-span-4 dark:bg-success/20">
 									<p className="font-extrabold text-success text-xl dark:text-success-foreground">
@@ -96,7 +98,10 @@ export function FlashcardsResults({
 											total: totalCards,
 											percentage: accuracy,
 											title: t("flashcards.resultHeading", { subject }),
-											subtitle: t("flashcards.masteredCount", { knownCount, totalCards }),
+											subtitle: t("flashcards.masteredCount", {
+												knownCount,
+												totalCards,
+											}),
 											type: "flashcard",
 										}}
 										text={t("flashcards.shareText", { accuracy, subject })}

@@ -2,10 +2,10 @@
 
 import { GridIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { usePathname } from "@/i18n/navigation";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useOnboarding } from "@/hooks/use-onboarding";
+import { usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/shared";
 import { useToolsStore } from "@/store/tools";
 import { ToolsDialog } from "./tools-dialog";

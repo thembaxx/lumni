@@ -35,8 +35,15 @@ export function ShareResultButton({
 
 			const shareData: ShareData = { text };
 
-			if (blob && navigator.canShare?.({ files: [new File([blob], "result.png", { type: "image/png" })] })) {
-				shareData.files = [new File([blob], "result.png", { type: "image/png" })];
+			if (
+				blob &&
+				navigator.canShare?.({
+					files: [new File([blob], "result.png", { type: "image/png" })],
+				})
+			) {
+				shareData.files = [
+					new File([blob], "result.png", { type: "image/png" }),
+				];
 			}
 
 			if (navigator.share) {
@@ -51,7 +58,11 @@ export function ShareResultButton({
 					link.href = URL.createObjectURL(blob);
 					link.click();
 					URL.revokeObjectURL(link.href);
-					toast({ type: "success", message: "Image downloaded", description: "Result card saved as PNG" });
+					toast({
+						type: "success",
+						message: "Image downloaded",
+						description: "Result card saved as PNG",
+					});
 				}
 			}
 
@@ -64,7 +75,11 @@ export function ShareResultButton({
 				await navigator.clipboard.writeText(text);
 				toast({ type: "success", message: "Copied to clipboard" });
 			} catch {
-				toast({ type: "error", message: "Sharing failed", description: "Could not share or copy to clipboard" });
+				toast({
+					type: "error",
+					message: "Sharing failed",
+					description: "Could not share or copy to clipboard",
+				});
 			}
 		} finally {
 			setLoading(false);

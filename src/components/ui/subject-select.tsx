@@ -23,7 +23,7 @@ export function SubjectSelect({
 }: SubjectSelectProps) {
 	const [open, setOpen] = useState(false);
 	const [searchQuery, setSearchQuery] = useState("");
-	const { data: subjects } = useFilteredSubjects(searchQuery);
+	const { data: subjects } = useFilteredSubjects(searchQuery, true);
 	const ref = useRef<HTMLDivElement>(null);
 	const inputRef = useRef<HTMLInputElement>(null);
 

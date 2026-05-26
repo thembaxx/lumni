@@ -34,7 +34,11 @@ export function SubjectsDrawer({
 	onSelectionChange: _onSelectionChange,
 }: SubjectsDrawerProps) {
 	const [searchQuery, setSearchQuery] = useState("");
-	const { data: subjects, isLoading, error } = useFilteredSubjects(searchQuery);
+	const {
+		data: subjects,
+		isLoading,
+		error,
+	} = useFilteredSubjects(searchQuery, true);
 	const drawerCloseRef = useRef<HTMLButtonElement>(null);
 
 	const handleSelect = (subjectName: string) => {

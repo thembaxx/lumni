@@ -3,7 +3,6 @@
 import { DiceIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
-import { useRouter } from "@/i18n/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { ListenToLesson } from "@/components/listen-to-lesson";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
@@ -11,6 +10,7 @@ import { Anim } from "@/components/shared/anim";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useRouter } from "@/i18n/navigation";
 import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";
 import { getDifficultyColor } from "@/lib/utils/colors";

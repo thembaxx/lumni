@@ -6,15 +6,13 @@ import Script from "next/script";
 import { connection } from "next/server";
 import { Suspense } from "react";
 import { extractRouterConfig } from "uploadthing/server";
-
-import { locales } from "@/i18n/locales";
-
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { PageTransition } from "@/components/layout/page-transition";
 import { Providers } from "@/components/providers";
 import { CardSkeleton } from "@/components/ui/skeletons";
 import { Toaster } from "@/components/ui/toast";
 import { UploadDialogRenderer } from "@/components/upload/upload-dialog-renderer";
+import { locales } from "@/i18n/locales";
 import { ourFileRouter } from "../api/uploadthing/core";
 
 const DesktopSidebar = dynamic(() =>

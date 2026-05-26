@@ -8,13 +8,13 @@ import {
 	MagicWand01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Link } from "@/i18n/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useStudyPlanner } from "@/hooks/use-study-planner";
+import { Link } from "@/i18n/navigation";
 import { usePremium } from "@/lib/premium/premium-context";
 
 export function StudyPlanOverview() {

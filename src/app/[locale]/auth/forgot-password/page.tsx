@@ -3,11 +3,11 @@
 import { Mail01Icon, SparklesIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
-import { Link } from "@/i18n/navigation";
-import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Link } from "@/i18n/navigation";
 import { iOSEase } from "@/lib/utils/animation";
 
 export default function ForgotPasswordPage() {

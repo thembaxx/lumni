@@ -7,12 +7,12 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { AssessmentHeader } from "@/components/ui/headers/assessment-header";
 import { useExamSessionAutoSave } from "@/hooks/use-exam-session-persistence";
+import { Link } from "@/i18n/navigation";
 import { usePremium } from "@/lib/premium/premium-context";
 import { useExamSessionStore } from "@/store/exam-session";
 import type { ExamPaper } from "@/types/exam-paper";
@@ -178,7 +178,10 @@ export function ExamEngine({
 					<span className="sr-only">{t("exam.toggleQuestionList")}</span>
 				</Button>
 				<AssessmentHeader
-					title={t("exam.engineTitle", { subject: paper.metadata.subject, paperCode: paper.metadata.paperCode })}
+					title={t("exam.engineTitle", {
+						subject: paper.metadata.subject,
+						paperCode: paper.metadata.paperCode,
+					})}
 					elapsedTime={startedAt ? Math.floor((now - startedAt) / 1000) : 0}
 					currentQuestionIndex={answeredCount}
 					totalQuestions={totalParts}
@@ -216,7 +219,8 @@ export function ExamEngine({
 						{paper.sections.map((section) => (
 							<div key={section.id}>
 								<h2 className="mb-4 font-semibold text-xl">
-									{t("exam.sectionTitle", { id: section.id })}{section.title ? `: ${section.title}` : ""}
+									{t("exam.sectionTitle", { id: section.id })}
+									{section.title ? `: ${section.title}` : ""}
 								</h2>
 
 								{section.instructions && section.instructions.length > 0 && (

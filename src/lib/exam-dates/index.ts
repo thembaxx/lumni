@@ -9,8 +9,8 @@ export {
 	getNextExams,
 	getSessionLabel,
 	refreshExamDatesFromAppwrite,
-	syncExamDatesToAppwrite,
 	syncExamDatesDirect,
+	syncExamDatesToAppwrite,
 } from "./service";
 export { getSubjectAbbr, getSubjectColor } from "./subject-maps";
 export type { ExamDateCollection, ExamSlot } from "./types";

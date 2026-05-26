@@ -71,7 +71,9 @@ export function useToggleCommentReaction(commentId: string) {
 			return res.reaction;
 		},
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["comment-reactions", commentId] });
+			queryClient.invalidateQueries({
+				queryKey: ["comment-reactions", commentId],
+			});
 		},
 	});
 }

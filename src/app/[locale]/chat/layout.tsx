@@ -7,6 +7,8 @@ export const metadata: Metadata = {
 
 export default function ChatLayout({
 	children,
-}: { children: React.ReactNode }) {
+}: {
+	children: React.ReactNode;
+}) {
 	return children;
 }

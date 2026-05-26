@@ -7,6 +7,8 @@ export const metadata: Metadata = {
 
 export default function TestLinksLayout({
 	children,
-}: { children: React.ReactNode }) {
+}: {
+	children: React.ReactNode;
+}) {
 	return children;
 }

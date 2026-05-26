@@ -1,8 +1,8 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
 import { useEffect, useState } from "react";
+import { Link } from "@/i18n/navigation";
 import { appConfig } from "../../../app.config";
 
 export function SiteFooter() {
@@ -28,7 +28,9 @@ export function SiteFooter() {
 						</p>
 					</div>
 					<div>
-						<h4 className="mb-3 font-semibold text-sm">{t("home.footerProduct")}</h4>
+						<h4 className="mb-3 font-semibold text-sm">
+							{t("home.footerProduct")}
+						</h4>
 						<div className="flex flex-col text-muted-foreground text-sm">
 							<Link
 								href="/quiz"
@@ -63,7 +65,9 @@ export function SiteFooter() {
 						</div>
 					</div>
 					<div>
-						<h4 className="mb-3 font-semibold text-sm">{t("home.footerSupport")}</h4>
+						<h4 className="mb-3 font-semibold text-sm">
+							{t("home.footerSupport")}
+						</h4>
 						<div className="flex flex-col text-muted-foreground text-sm">
 							<a
 								href={appConfig.links.support}

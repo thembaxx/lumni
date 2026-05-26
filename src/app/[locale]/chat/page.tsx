@@ -3,7 +3,6 @@
 import { Cancel01Icon, Chat01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence } from "framer-motion";
-import { Link } from "@/i18n/navigation";
 import { useEffect, useRef } from "react";
 import { ChatInput } from "@/components/chat/ChatInput";
 import { LoadingIndicator } from "@/components/chat/LoadingIndicator";
@@ -12,6 +11,7 @@ import { WelcomeState } from "@/components/chat/WelcomeState";
 import { Button } from "@/components/ui/button";
 import { useChat } from "@/hooks/use-chat";
 import { useImageChatWithSend } from "@/hooks/use-image-chat";
+import { Link } from "@/i18n/navigation";
 
 export default function ChatPage() {
 	const chat = useChat();

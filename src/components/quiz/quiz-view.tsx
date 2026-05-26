@@ -1,9 +1,9 @@
 "use client";
 
-import { useTranslations } from "next-intl";
 import { RadialIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
+import { useTranslations } from "next-intl";
 import {
 	EmptyStateWithIllustration,
 	QuestionCard,
@@ -99,7 +99,10 @@ export function QuizView({
 										window.location.reload();
 									},
 								}}
-								secondaryAction={{ label: t("common.back"), onClick: handleStop }}
+								secondaryAction={{
+									label: t("common.back"),
+									onClick: handleStop,
+								}}
 							/>
 						</CardContent>
 					</Card>
@@ -161,16 +164,24 @@ export function QuizView({
 									className="size-12 text-muted-foreground"
 								/>
 							</m.div>
-							<p className="text-muted-foreground">{t("quiz.preparingQuestions")}</p>
+							<p className="text-muted-foreground">
+								{t("quiz.preparingQuestions")}
+							</p>
 							{resolvedTopic && competencyData.topicCompetencyLevel && (
 								<div className="flex flex-col items-center gap-1">
 									<p className="text-muted-foreground text-xs">
 										{t("quiz.focusingOn", { topic: resolvedTopic })}
 									</p>
 									<p className="text-muted-foreground text-xs">
-										{t("quiz.level", { level: competencyData.topicCompetencyLevel })}
+										{t("quiz.level", {
+											level: competencyData.topicCompetencyLevel,
+										})}
 										{competencyData.topicCompetencyScore !== undefined && (
-											<>{t("quiz.scorePercent", { score: competencyData.topicCompetencyScore })}</>
+											<>
+												{t("quiz.scorePercent", {
+													score: competencyData.topicCompetencyScore,
+												})}
+											</>
 										)}
 									</p>
 								</div>

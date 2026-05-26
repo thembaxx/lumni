@@ -41,9 +41,7 @@ export function CommentCard({
 }: CommentCardProps) {
 	const [showReply, setShowReply] = useState(false);
 
-	const commentReactions = reactions.filter(
-		(r) => r.commentId === comment.$id,
-	);
+	const commentReactions = reactions.filter((r) => r.commentId === comment.$id);
 
 	const aggregatedReactions = commentReactions.reduce<
 		{ emoji: string; userId: string; count: number }[]

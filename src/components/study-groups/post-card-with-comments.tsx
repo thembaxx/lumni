@@ -1,8 +1,15 @@
 "use client";
 
 import { useCallback } from "react";
-import { useGroupComments, useCreateComment, useDeleteComment } from "@/hooks/use-group-comments";
-import { usePostReactions, useTogglePostReaction } from "@/hooks/use-group-reactions";
+import {
+	useCreateComment,
+	useDeleteComment,
+	useGroupComments,
+} from "@/hooks/use-group-comments";
+import {
+	usePostReactions,
+	useTogglePostReaction,
+} from "@/hooks/use-group-reactions";
 import type { GroupPost } from "@/lib/study-groups/types";
 import { PostCard } from "./post-card";
 

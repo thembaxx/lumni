@@ -74,7 +74,10 @@ export function DiscussWrongAnswer({ questionText, subject, topic }: Props) {
 					</div>
 
 					{groups && groups.length > 0 ? (
-						<Select value={selectedGroup} onValueChange={(value) => setSelectedGroup(value ?? "")}>
+						<Select
+							value={selectedGroup}
+							onValueChange={(value) => setSelectedGroup(value ?? "")}
+						>
 							<SelectTrigger>
 								<SelectValue placeholder="Select a group" />
 							</SelectTrigger>
@@ -88,7 +91,7 @@ export function DiscussWrongAnswer({ questionText, subject, topic }: Props) {
 						</Select>
 					) : (
 						<p className="text-muted-foreground text-sm">
-							You are not in any study groups.{' '}
+							You are not in any study groups.{" "}
 							<a href="/study-groups" className="underline">
 								Create or join one
 							</a>
@@ -103,7 +106,11 @@ export function DiscussWrongAnswer({ questionText, subject, topic }: Props) {
 					/>
 
 					<div className="flex justify-end gap-2">
-						<Button variant="ghost" onClick={() => setOpen(false)} disabled={isPending}>
+						<Button
+							variant="ghost"
+							onClick={() => setOpen(false)}
+							disabled={isPending}
+						>
 							Cancel
 						</Button>
 						<Button

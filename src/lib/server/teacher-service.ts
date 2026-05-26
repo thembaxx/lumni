@@ -76,7 +76,13 @@ export async function getTeacherStudents(
 			studentIds.map(async (sid) => {
 				try {
 					const u = await usersApi.get(sid);
-					return [sid, { name: u.name || "Unknown", grade: (u.prefs?.grade as string) || "Matric" }] as const;
+					return [
+						sid,
+						{
+							name: u.name || "Unknown",
+							grade: (u.prefs?.grade as string) || "Matric",
+						},
+					] as const;
 				} catch {
 					return [sid, { name: "Unknown", grade: "Matric" }] as const;
 				}

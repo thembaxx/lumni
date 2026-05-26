@@ -47,4 +47,7 @@ export {
 } from "./question-rating-service";
 export type { SearchResultItem } from "./search-service";
 export { searchAll, searchByType, searchWeb } from "./search-service";
-export { searchWeb as searchWebServer, getWebContents } from "./web-search-service";
+export {
+	getWebContents,
+	searchWeb as searchWebServer,
+} from "./web-search-service";

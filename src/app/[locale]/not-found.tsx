@@ -1,8 +1,8 @@
 "use client";
 
 import { m } from "framer-motion";
-import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
+import { Link } from "@/i18n/navigation";
 import { iOSEase } from "@/lib/utils/animation";
 import { AnimatedIcon } from "@/lib/utils/icon-mapping";
 import { appConfig } from "../../../app.config";

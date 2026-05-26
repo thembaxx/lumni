@@ -36,7 +36,9 @@ export class AnalyticsService {
 			}),
 		);
 		const fulfilled = attempts.find(
-			(r): r is PromiseFulfilledResult<{
+			(
+				r,
+			): r is PromiseFulfilledResult<{
 				userPercentile: number;
 				subjectRankings: Record<string, number>;
 				globalAverage: number;
@@ -46,8 +48,8 @@ export class AnalyticsService {
 		if (fulfilled) return fulfilled.value;
 
 		const lastError =
-			(attempts.find((r): r is PromiseRejectedResult => r.status === "rejected")?.reason as Error | undefined) ??
-			null;
+			(attempts.find((r): r is PromiseRejectedResult => r.status === "rejected")
+				?.reason as Error | undefined) ?? null;
 		console.error(
 			"Failed to get comparative analytics after retries:",
 			lastError,

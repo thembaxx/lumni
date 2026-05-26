@@ -31,7 +31,8 @@ export function CreateGroupDialog() {
 	const [name, setName] = useState("");
 	const [description, setDescription] = useState("");
 	const [subjectId, setSubjectId] = useState("");
-	const { data: subjects } = useSubjects();
+	const { data: subjectsData } = useSubjects();
+	const subjects = subjectsData?.subjects ?? [];
 	const { mutate: createGroup, isPending } = useCreateGroup();
 
 	const handleSubmit = (e: React.FormEvent) => {

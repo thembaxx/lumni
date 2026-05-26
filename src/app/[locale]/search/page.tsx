@@ -2,11 +2,11 @@
 
 import { Book01Icon, Search01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useRouter } from "@/i18n/navigation";
 import { useEffect, useRef, useState } from "react";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
 import { SearchResults } from "@/components/dashboard/search/search-results";
 import { Input } from "@/components/ui/input";
+import { useRouter } from "@/i18n/navigation";
 
 export default function SearchPage() {
 	const [query, setQuery] = useState("");

@@ -361,7 +361,11 @@ export const schemaConfig: Record<string, CollectionSchema> = {
 			createdAt: { type: "datetime" },
 		},
 		indexes: [
-			{ key: "idx_groups_inviteCode", type: "unique", attributes: ["inviteCode"] },
+			{
+				key: "idx_groups_inviteCode",
+				type: "unique",
+				attributes: ["inviteCode"],
+			},
 			{ key: "idx_groups_createdBy", type: "key", attributes: ["createdBy"] },
 		],
 	},
@@ -375,7 +379,11 @@ export const schemaConfig: Record<string, CollectionSchema> = {
 		indexes: [
 			{ key: "idx_members_groupId", type: "key", attributes: ["groupId"] },
 			{ key: "idx_members_userId", type: "key", attributes: ["userId"] },
-			{ key: "idx_members_pair", type: "unique", attributes: ["groupId", "userId"] },
+			{
+				key: "idx_members_pair",
+				type: "unique",
+				attributes: ["groupId", "userId"],
+			},
 		],
 	},
 	group_invites: {
@@ -408,7 +416,11 @@ export const schemaConfig: Record<string, CollectionSchema> = {
 		},
 		indexes: [
 			{ key: "idx_wrong_answers_userId", type: "key", attributes: ["userId"] },
-			{ key: "idx_wrong_answers_subject", type: "key", attributes: ["subject"] },
+			{
+				key: "idx_wrong_answers_subject",
+				type: "key",
+				attributes: ["subject"],
+			},
 		],
 	},
 	bookmarks: {
@@ -423,7 +435,11 @@ export const schemaConfig: Record<string, CollectionSchema> = {
 		},
 		indexes: [
 			{ key: "idx_bookmarks_userId", type: "key", attributes: ["userId"] },
-			{ key: "idx_bookmarks_questionId", type: "key", attributes: ["questionId"] },
+			{
+				key: "idx_bookmarks_questionId",
+				type: "key",
+				attributes: ["questionId"],
+			},
 		],
 	},
 	notes: {

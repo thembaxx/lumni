@@ -150,9 +150,7 @@ export async function searchAll(query: string): Promise<SearchResultItem[]> {
 	return results.flat().slice(0, 25);
 }
 
-export async function searchWeb(
-	query: string,
-): Promise<SearchResultItem[]> {
+export async function searchWeb(query: string): Promise<SearchResultItem[]> {
 	try {
 		const res = await fetch("/api/search/web", {
 			method: "POST",

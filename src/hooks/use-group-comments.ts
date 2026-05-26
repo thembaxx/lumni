@@ -29,10 +29,7 @@ export function useCreateComment(groupId: string, postId: string) {
 	const queryClient = useQueryClient();
 
 	return useMutation({
-		mutationFn: async (input: {
-			content: string;
-			parentId?: string;
-		}) => {
+		mutationFn: async (input: { content: string; parentId?: string }) => {
 			const res = await apiFetch<{ comment: GroupComment }>(
 				`/api/study-groups/${groupId}/posts/${postId}/comments`,
 				{

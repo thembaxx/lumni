@@ -2,7 +2,11 @@
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiFetch } from "@/lib/shared/api-fetch";
-import type { GroupMember, GroupPost, StudyGroup } from "@/lib/study-groups/types";
+import type {
+	GroupMember,
+	GroupPost,
+	StudyGroup,
+} from "@/lib/study-groups/types";
 
 interface GroupsResponse {
 	groups: StudyGroup[];
@@ -142,9 +146,12 @@ export function useDeletePost() {
 
 	return useMutation({
 		mutationFn: async (postId: string) => {
-			await apiFetch<{ success: boolean }>(`/api/study-groups/posts/${postId}`, {
-				method: "DELETE",
-			});
+			await apiFetch<{ success: boolean }>(
+				`/api/study-groups/posts/${postId}`,
+				{
+					method: "DELETE",
+				},
+			);
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["group-posts"] });

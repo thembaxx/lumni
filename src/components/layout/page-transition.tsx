@@ -1,10 +1,10 @@
 "use client";
 
 import { AnimatePresence, m, useReducedMotion } from "framer-motion";
-import { usePathname } from "@/i18n/navigation";
 import { useEffect, useReducer, useRef, useState } from "react";
 import { Anim } from "@/components/shared/anim";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
+import { usePathname } from "@/i18n/navigation";
 import { iOSAccelerate, iOSDecelerate } from "@/lib/utils/animation";
 
 type NavState = {

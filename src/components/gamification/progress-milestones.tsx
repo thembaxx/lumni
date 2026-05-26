@@ -72,7 +72,9 @@ export function ProgressMilestones({
 												: "text-muted-foreground"
 										}`}
 									>
-										{t("gamification.milestoneStreakDays", { streak: milestone.streak })}
+										{t("gamification.milestoneStreakDays", {
+											streak: milestone.streak,
+										})}
 									</p>
 									<p className="max-w-[60px] text-[10px] text-muted-foreground leading-tight">
 										{milestone.reward.split(" ")[0]}

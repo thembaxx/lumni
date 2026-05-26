@@ -24,9 +24,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ListCell, ListSection } from "@/components/ui/list-cell";
+import { useEnrolledSubjects } from "@/hooks/use-subjects";
 import { toast } from "@/hooks/use-toast";
 import { account } from "@/lib/appwrite";
 import { useAuth } from "@/lib/auth/auth-context";
+import { toggleUserSubject } from "@/lib/server";
 import { useUploadThing } from "@/lib/uploadthing";
 import { getRandomName } from "@/lib/utils/random-name";
 
@@ -157,33 +159,6 @@ const SOUTH_AFRICAN_PROVINCES = [
 	"Western Cape",
 ];
 
-const COMMON_SUBJECTS = [
-	"Mathematics",
-	"Physical Sciences",
-	"English Home Language",
-	"English First Additional Language",
-	"Afrikaans Home Language",
-	"Afrikaans First Additional Language",
-	"Life Sciences",
-	"Geography",
-	"History",
-	"Accounting",
-	"Business Studies",
-	"Economics",
-	"Life Orientation",
-	"Information Technology",
-	"Computer Applications Technology",
-	"Agricultural Sciences",
-	"Visual Arts",
-	"Dramatic Arts",
-	"Music",
-	"Design",
-	"Religious Studies",
-	"Tourism",
-	"Consumer Studies",
-	"Hospitality Studies",
-];
-
 export function ProfileTab() {
 	const { user, isAnonymous, updateProfile, verifyEmail, signOut, error } =
 		useAuth();
@@ -195,14 +170,12 @@ export function ProfileTab() {
 		schoolDraft: string;
 		gradeDraft: string;
 		provinceDraft: string;
-		subjects: string[];
 	};
 
 	const initialDrafts: ProfileDraftState = {
 		schoolDraft: "",
 		gradeDraft: "",
 		provinceDraft: "",
-		subjects: [],
 	};
 
 	function draftReducer(
@@ -220,10 +193,8 @@ export function ProfileTab() {
 	}
 
 	const [drafts, dispatchDrafts] = useReducer(draftReducer, initialDrafts);
-	const { schoolDraft, gradeDraft, provinceDraft, subjects } = drafts;
-	const [subjectInput, setSubjectInput] = useState("");
+	const { schoolDraft, gradeDraft, provinceDraft } = drafts;
 	const [showProvincePicker, setShowProvincePicker] = useState(false);
-	const [showSubjectPicker, setShowSubjectPicker] = useState(false);
 	const [uploading, setUploading] = useState(false);
 
 	const prefs = (user?.prefs as Record<string, unknown>) || {};
@@ -235,10 +206,9 @@ export function ProfileTab() {
 				schoolDraft: (prefs.school as string) || "",
 				gradeDraft: (prefs.grade as string) || "",
 				provinceDraft: (prefs.province as string) || "",
-				subjects: (prefs.subjects as string[]) || [],
 			},
 		});
-	}, [prefs.school, prefs.grade, prefs.province, prefs.subjects]);
+	}, [prefs.school, prefs.grade, prefs.province]);
 
 	const handleAvatarUpload = useCallback(
 		async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -268,26 +238,29 @@ export function ProfileTab() {
 		[updateProfile, prefs],
 	);
 
-	const handleAddSubject = useCallback(
-		async (subject: string) => {
-			if (subjects.includes(subject)) return;
-			const updated = [...subjects, subject];
-			dispatchDrafts({ type: "SET_FIELD", field: "subjects", value: updated });
-			await handleSaveField("subjects", updated);
-			setShowSubjectPicker(false);
-			setSubjectInput("");
+	const {
+		enrolledSubjects,
+		selectedSubjectIds,
+		subjects: allSubjects,
+		isEnrolled,
+	} = useEnrolledSubjects();
+	const queryClient = useQueryClient();
+
+	const handleToggleSubject = useCallback(
+		async (subjectId: string) => {
+			if (!user) return;
+			try {
+				await toggleUserSubject(user.$id, subjectId);
+				queryClient.invalidateQueries({ queryKey: ["subjects"] });
+				queryClient.invalidateQueries({
+					queryKey: ["user-subjects", user.$id],
+				});
+			} catch {}
 		},
-		[subjects, handleSaveField],
+		[user, queryClient],
 	);
 
-	const handleRemoveSubject = useCallback(
-		async (subject: string) => {
-			const updated = subjects.filter((s) => s !== subject);
-			dispatchDrafts({ type: "SET_FIELD", field: "subjects", value: updated });
-			await handleSaveField("subjects", updated);
-		},
-		[subjects, handleSaveField],
-	);
+	const [showSubjectPicker, setShowSubjectPicker] = useState(false);
 
 	if (isAnonymous) {
 		return (
@@ -528,16 +501,16 @@ export function ProfileTab() {
 
 			<ListSection header="Subjects (Optional)">
 				<div className="flex flex-wrap gap-2 px-1">
-					{subjects.map((subject) => (
+					{enrolledSubjects.map((subject) => (
 						<span
-							key={subject}
+							key={subject.id}
 							className="inline-flex items-center gap-1 rounded-full bg-system-accent/10 px-3 py-1.5 font-semibold text-system-accent text-xs"
 						>
-							{subject}
+							{subject.name}
 							<button
 								type="button"
-								onClick={() => handleRemoveSubject(subject)}
-								aria-label={`Remove ${subject}`}
+								onClick={() => handleToggleSubject(subject.id)}
+								aria-label={`Remove ${subject.name}`}
 								className="ml-0.5 hover:text-destructive"
 							>
 								<HugeiconsIcon icon={Cancel01Icon} className="size-3" />
@@ -553,30 +526,33 @@ export function ProfileTab() {
 					</button>
 				</div>
 				{showSubjectPicker && (
-					<div className="mt-2 rounded-xl bg-popover p-2 shadow-level-2 ring-1 ring-foreground/10">
-						<Input
-							value={subjectInput}
-							onChange={(e) => setSubjectInput(e.target.value)}
-							placeholder="Search subjects..."
-							className="mb-2 h-9 rounded-lg text-sm"
-						/>
-						<div className="flex max-h-40 flex-col gap-0.5 overflow-y-auto">
-							{COMMON_SUBJECTS.flatMap((s) =>
-								!subjects.includes(s) &&
-								s.toLowerCase().includes(subjectInput.toLowerCase())
-									? [
-											<button
-												key={s}
-												type="button"
-												onClick={() => handleAddSubject(s)}
-												className="w-full rounded-lg px-3 py-2 text-left text-sm hover:bg-accent"
-											>
-												{s}
-											</button>,
-										]
-									: [],
-							)}
-						</div>
+					<div className="mt-2 max-h-60 overflow-y-auto rounded-xl bg-popover p-2 shadow-level-2 ring-1 ring-foreground/10">
+						{allSubjects
+							.filter((s) => !isEnrolled(s.id))
+							.map((subject) => (
+								<button
+									key={subject.id}
+									type="button"
+									onClick={() => {
+										handleToggleSubject(subject.id);
+										setShowSubjectPicker(false);
+									}}
+									className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm hover:bg-accent"
+								>
+									<div
+										className="flex size-7 shrink-0 items-center justify-center rounded-lg font-extrabold text-xs text-white"
+										style={{ backgroundColor: subject.color }}
+									>
+										{subject.name[0]}
+									</div>
+									<div className="min-w-0 flex-1">
+										<p className="truncate font-medium">{subject.name}</p>
+										<p className="truncate text-muted-foreground text-xs">
+											{subject.category}
+										</p>
+									</div>
+								</button>
+							))}
 					</div>
 				)}
 			</ListSection>

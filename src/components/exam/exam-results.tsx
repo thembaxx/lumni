@@ -9,11 +9,11 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { useRouter } from "@/i18n/navigation";
 import { PageContainer } from "@/components/layout/page-container";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useRouter } from "@/i18n/navigation";
 import type { ExamPaper } from "@/types/exam-paper";
 import type { ExamAnswer } from "@/types/exam-session";
 
@@ -67,7 +67,10 @@ export function ExamResults({
 								{t("exam.examSubmitted")}
 							</h1>
 							<p className="ios-footnote text-[--system-text-secondary]">
-								{t("exam.engineTitle", { subject: paper.metadata.subject, paperCode: paper.metadata.paperCode })}
+								{t("exam.engineTitle", {
+									subject: paper.metadata.subject,
+									paperCode: paper.metadata.paperCode,
+								})}
 							</p>
 						</div>
 					</div>
@@ -137,7 +140,9 @@ export function ExamResults({
 
 				<Card>
 					<CardHeader>
-						<CardTitle className="ios-headline">{t("exam.scoreBreakdown")}</CardTitle>
+						<CardTitle className="ios-headline">
+							{t("exam.scoreBreakdown")}
+						</CardTitle>
 					</CardHeader>
 					<CardContent>
 						<ScrollArea className="max-h-[400px]">
@@ -226,7 +231,11 @@ export function ExamResults({
 																icon={Flag01Icon}
 																className="size-3 text-warning-foreground"
 															/>
-															{t("exam.flaggedItem", { section: section.id, question: question.id, part: part.id })}
+															{t("exam.flaggedItem", {
+																section: section.id,
+																question: question.id,
+																part: part.id,
+															})}
 														</li>,
 													]
 												: [];

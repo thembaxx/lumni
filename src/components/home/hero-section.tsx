@@ -9,9 +9,9 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m, useScroll, useTransform } from "framer-motion";
-import { Link } from "@/i18n/navigation";
-import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
+import { Button } from "@/components/ui/button";
+import { Link } from "@/i18n/navigation";
 import { iOSEase } from "@/lib/utils/animation";
 
 interface HeroSectionProps {
@@ -44,7 +44,10 @@ export function HeroSection({ isAuthenticated }: HeroSectionProps) {
 								{t("home.heroTagline")}
 							</div>
 							<h1 className="ios-large-title leading-[1.1] sm:text-5xl lg:text-6xl">
-								{t("home.heroTitle")}<span className="text-primary">{t("home.heroTitleHighlight")}</span>
+								{t("home.heroTitle")}
+								<span className="text-primary">
+									{t("home.heroTitleHighlight")}
+								</span>
 							</h1>
 							<p className="mt-4 max-w-lg text-lg text-muted-foreground leading-relaxed">
 								{t("home.heroDesc")}
@@ -110,7 +113,9 @@ export function HeroSection({ isAuthenticated }: HeroSectionProps) {
 										/>
 									</div>
 									<div>
-										<p className="font-semibold text-sm">{t("home.demoQuiz")}</p>
+										<p className="font-semibold text-sm">
+											{t("home.demoQuiz")}
+										</p>
 										<p className="text-[10px] text-muted-foreground">
 											{t("home.demoSubject")}
 										</p>

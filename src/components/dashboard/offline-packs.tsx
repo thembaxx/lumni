@@ -10,17 +10,11 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import {
-	Card,
-	CardContent,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { useQuizPacks } from "@/hooks/use-quiz-packs";
-import { useSubjects } from "@/hooks/use-subjects";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Progress } from "@/components/ui/progress";
 import {
 	Select,
 	SelectContent,
@@ -28,19 +22,32 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
+import { useQuizPacks } from "@/hooks/use-quiz-packs";
+import { useSubjects } from "@/hooks/use-subjects";
 
 export function OfflinePackManager() {
-	const { packs, generating, storageBytes, storagePercentage, storageLimit, generate, remove } =
-		useQuizPacks();
-	const { data: subjects } = useSubjects();
+	const {
+		packs,
+		generating,
+		storageBytes,
+		storagePercentage,
+		storageLimit,
+		generate,
+		remove,
+	} = useQuizPacks();
+	const { data: subjectsData } = useSubjects();
+	const subjects = subjectsData?.subjects ?? [];
 
 	const [selectedSubject, setSelectedSubject] = useState("");
 	const [questionCount, setQuestionCount] = useState("10");
 
 	const handleGenerate = async () => {
 		if (!selectedSubject) return;
-		await generate(selectedSubject, null, Number.parseInt(questionCount, 10) || 10);
+		await generate(
+			selectedSubject,
+			null,
+			Number.parseInt(questionCount, 10) || 10,
+		);
 	};
 
 	const formatBytes = (bytes: number) => {
@@ -72,7 +79,12 @@ export function OfflinePackManager() {
 					Offline Quiz Packs
 				</CardTitle>
 				<div className="flex items-center gap-2">
-					<Select value={selectedSubject} onValueChange={(value: string | null) => setSelectedSubject(value ?? "")}>
+					<Select
+						value={selectedSubject}
+						onValueChange={(value: string | null) =>
+							setSelectedSubject(value ?? "")
+						}
+					>
 						<SelectTrigger className="w-36">
 							<SelectValue placeholder="Subject" />
 						</SelectTrigger>
@@ -98,17 +110,17 @@ export function OfflinePackManager() {
 						onClick={handleGenerate}
 						disabled={generating || !selectedSubject}
 					>
-						<HugeiconsIcon
-							icon={CloudDownloadIcon}
-							data-icon="inline-start"
-						/>
+						<HugeiconsIcon icon={CloudDownloadIcon} data-icon="inline-start" />
 						{generating ? "Generating…" : "Download"}
 					</Button>
 				</div>
 			</CardHeader>
 			<CardContent className="flex flex-col gap-3">
 				<div className="flex items-center gap-2">
-					<HugeiconsIcon icon={StoreIcon} className="size-4 text-muted-foreground" />
+					<HugeiconsIcon
+						icon={StoreIcon}
+						className="size-4 text-muted-foreground"
+					/>
 					<Progress value={storagePercentage} className="h-1.5 flex-1" />
 					<span className="shrink-0 text-muted-foreground text-xs">
 						{formatBytes(storageBytes)} / {formatBytes(storageLimit)}
@@ -122,8 +134,8 @@ export function OfflinePackManager() {
 							className="size-4 text-muted-foreground"
 						/>
 						<p className="text-muted-foreground text-sm">
-							No offline packs yet. Select a subject and download questions
-							for offline study.
+							No offline packs yet. Select a subject and download questions for
+							offline study.
 						</p>
 					</div>
 				) : (
@@ -155,10 +167,8 @@ export function OfflinePackManager() {
 												<HugeiconsIcon
 													icon={Time03Icon}
 													className="inline size-3 align-middle"
-												/>
-												{" "}
-												Expires{" "}
-												{new Date(pack.expiresAt).toLocaleDateString()}
+												/>{" "}
+												Expires {new Date(pack.expiresAt).toLocaleDateString()}
 											</>
 										)}
 									</p>

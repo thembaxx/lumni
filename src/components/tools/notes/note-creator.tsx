@@ -5,7 +5,6 @@ import { useCallback, useEffect, useState } from "react";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { exportNoteAsMarkdown } from "@/lib/utils/note-export";
 import {
 	Dialog,
 	DialogContent,
@@ -25,6 +24,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";
+import { exportNoteAsMarkdown } from "@/lib/utils/note-export";
 
 interface Note {
 	id: string;
@@ -572,7 +572,9 @@ function NoteCreatorInner({ className }: NoteCreatorProps) {
 									<Button
 										variant="ghost"
 										size="icon"
-										onClick={() => exportNoteAsMarkdown(note.title, note.content)}
+										onClick={() =>
+											exportNoteAsMarkdown(note.title, note.content)
+										}
 										aria-label="Export note"
 									>
 										<m.div

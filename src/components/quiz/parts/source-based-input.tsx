@@ -33,7 +33,9 @@ export function SourceBasedInput({
 				/>
 				{!!source?.attribution && (
 					<p className="mt-2 text-muted-foreground text-xs">
-						{t("quiz.sourceAttribution", { attribution: String(source.attribution) })}
+						{t("quiz.sourceAttribution", {
+							attribution: String(source.attribution),
+						})}
 					</p>
 				)}
 			</div>
@@ -53,7 +55,8 @@ export function SourceBasedInput({
 								setPartAnswers((prev) => ({
 									...prev,
 									[sqId]: e.target.value,
-								}))}
+								}))
+							}
 							aria-label={`Answer for question ${i + 1}`}
 						/>
 					</div>

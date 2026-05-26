@@ -24,7 +24,9 @@ export function MixedPartsInput({ parts, onGrade }: MixedPartsInputProps) {
 						<p className="mb-1 font-medium text-sm">
 							{i + 1}. {String(p.questionText ?? "")}{" "}
 							<span className="text-muted-foreground text-xs">
-								{t("quiz.pointsParenthetical", { points: String(p.points ?? "") })}
+								{t("quiz.pointsParenthetical", {
+									points: String(p.points ?? ""),
+								})}
 							</span>
 						</p>
 						<input
@@ -36,7 +38,8 @@ export function MixedPartsInput({ parts, onGrade }: MixedPartsInputProps) {
 								setPartAnswers((prev) => ({
 									...prev,
 									[pId]: e.target.value,
-								}))}
+								}))
+							}
 							aria-label={`Answer for question ${i + 1}`}
 						/>
 					</div>

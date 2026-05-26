@@ -225,9 +225,7 @@ export async function getGroupPosts(
 		]);
 		return success(posts);
 	} catch (err) {
-		return failure(
-			err instanceof Error ? err.message : "Failed to load posts",
-		);
+		return failure(err instanceof Error ? err.message : "Failed to load posts");
 	}
 }
 
@@ -238,7 +236,8 @@ export async function deletePost(
 	try {
 		const post = await getDocument<GroupPost>(COLLECTIONS.GROUP_POSTS, postId);
 		if (!post) return failure("Post not found");
-		if (post.userId !== userId) return failure("Not authorized to delete this post");
+		if (post.userId !== userId)
+			return failure("Not authorized to delete this post");
 		await deleteDocument(COLLECTIONS.GROUP_POSTS, postId);
 		return success(undefined);
 	} catch (err) {

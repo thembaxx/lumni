@@ -12,7 +12,6 @@ import {
 	Target01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Link } from "@/i18n/navigation";
 import { AccuracyBar } from "@/components/shared/accuracy-bar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -22,6 +21,7 @@ import {
 	type SubjectAnalytics,
 	useAnalytics,
 } from "@/hooks/use-analytics";
+import { Link } from "@/i18n/navigation";
 import { usePremium } from "@/lib/premium/premium-context";
 
 export function AnalyticsPanel() {

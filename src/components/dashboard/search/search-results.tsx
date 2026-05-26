@@ -5,8 +5,8 @@ import {
 	BookOpen01Icon,
 	File01Icon,
 	NoteIcon,
-	World,
 	StarSquareIcon,
+	World,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useEffect, useReducer, useRef } from "react";

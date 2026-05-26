@@ -4,13 +4,12 @@ import { SparklesIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { m } from "framer-motion";
-import { Link } from "@/i18n/navigation";
-import { useRouter } from "@/i18n/navigation";
 import { useSearchParams } from "next/navigation";
-import { Suspense, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
+import { Suspense, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { FormSkeleton } from "@/components/ui/skeletons";
+import { Link, useRouter } from "@/i18n/navigation";
 import { iOSEase } from "@/lib/utils/animation";
 
 function VerifyEmailContent() {
@@ -47,7 +46,9 @@ function VerifyEmailContent() {
 	if (error) {
 		return (
 			<div className="flex flex-col items-center gap-4 text-center">
-				<h1 className="font-semibold text-xl">{t("auth.verificationFailed")}</h1>
+				<h1 className="font-semibold text-xl">
+					{t("auth.verificationFailed")}
+				</h1>
 				<p className="text-muted-foreground text-sm">{error}</p>
 				<Link
 					href="/auth/sign-in"

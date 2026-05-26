@@ -7,6 +7,8 @@ export const metadata: Metadata = {
 
 export default function ReviewLayout({
 	children,
-}: { children: React.ReactNode }) {
+}: {
+	children: React.ReactNode;
+}) {
 	return children;
 }

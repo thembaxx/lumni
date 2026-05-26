@@ -7,16 +7,16 @@ import {
 	UserGroupIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Link } from "@/i18n/navigation";
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import { DiscussionFeed } from "@/components/study-groups/discussion-feed";
 import { PageContainer } from "@/components/layout/page-container";
+import { DiscussionFeed } from "@/components/study-groups/discussion-feed";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useGroupDetail } from "@/hooks/use-study-groups";
+import { Link } from "@/i18n/navigation";
 
 export function GroupDetail() {
 	const t = useTranslations();

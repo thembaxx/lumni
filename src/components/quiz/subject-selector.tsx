@@ -72,7 +72,7 @@ function getSubjectIcon(iconName: string) {
 
 export function SubjectSelector({ onSelect, className }: SubjectSelectorProps) {
 	const [searchQuery, setSearchQuery] = useState("");
-	const { data: subjects } = useFilteredSubjects(searchQuery);
+	const { data: subjects } = useFilteredSubjects(searchQuery, true);
 	const [selected, setSelected] = useState<string | null>(null);
 	const [isGenerating, setIsGenerating] = useState(false);
 

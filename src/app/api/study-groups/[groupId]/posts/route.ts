@@ -1,9 +1,9 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { getAuthenticatedUserId, getAuthenticatedUserName } from "@/lib/server/auth";
 import {
-	createPost,
-	getGroupPosts,
-} from "@/lib/study-groups/service";
+	getAuthenticatedUserId,
+	getAuthenticatedUserName,
+} from "@/lib/server/auth";
+import { createPost, getGroupPosts } from "@/lib/study-groups/service";
 
 export async function GET(
 	_request: NextRequest,

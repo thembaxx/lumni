@@ -65,9 +65,7 @@ describe("POST /api/generate-element-fact", () => {
 
 	test("AI not configured returns static [FIXED] fact", async () => {
 		mockCheckBudget.mockResolvedValue({ allowed: true, userId: "test-user" });
-		mockIsAIConfigured
-			.mockReturnValueOnce(true)
-			.mockReturnValueOnce(false);
+		mockIsAIConfigured.mockReturnValueOnce(true).mockReturnValueOnce(false);
 
 		const req = new NextRequest("http://localhost/api/generate-element-fact", {
 			method: "POST",

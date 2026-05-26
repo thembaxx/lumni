@@ -10,11 +10,11 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
-import { usePathname } from "@/i18n/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { useOnboarding } from "@/hooks/use-onboarding";
+import { usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/shared";
 
 interface NavItem {

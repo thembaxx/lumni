@@ -9,7 +9,6 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
-import { usePathname } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo } from "react";
 import { LocaleSwitcher } from "@/components/i18n/locale-switcher";
@@ -24,6 +23,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useGamification } from "@/hooks/use-gamification";
 import { useSyncStatus } from "@/hooks/use-sync-status";
+import { usePathname } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
 import { cn } from "@/lib/shared";
 import { getRandomName } from "@/lib/utils/random-name";

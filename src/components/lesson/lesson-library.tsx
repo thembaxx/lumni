@@ -10,7 +10,6 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
-import { useRouter } from "@/i18n/navigation";
 import { useState } from "react";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
 import { Badge } from "@/components/ui/badge";
@@ -18,6 +17,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useFilteredSubjects } from "@/hooks/use-subjects";
+import { useRouter } from "@/i18n/navigation";
 import type { TopicRecommendation } from "@/lib/competency-engine/path-engine";
 
 const levelColors: Record<string, string> = {

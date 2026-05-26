@@ -3,10 +3,7 @@ import {
 	getAuthenticatedUserId,
 	getAuthenticatedUserName,
 } from "@/lib/server/auth";
-import {
-	getPostComments,
-	createComment,
-} from "@/lib/study-groups/service";
+import { createComment, getPostComments } from "@/lib/study-groups/service";
 
 export async function GET(
 	_request: NextRequest,
@@ -40,7 +37,10 @@ export async function POST(
 	try {
 		const body = await request.json();
 		if (!body.content || typeof body.content !== "string") {
-			return NextResponse.json({ error: "Content is required" }, { status: 400 });
+			return NextResponse.json(
+				{ error: "Content is required" },
+				{ status: 400 },
+			);
 		}
 
 		const userName = await getAuthenticatedUserName();
@@ -57,6 +57,9 @@ export async function POST(
 		}
 		return NextResponse.json({ comment: result.data }, { status: 201 });
 	} catch {
-		return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+		return NextResponse.json(
+			{ error: "Invalid request body" },
+			{ status: 400 },
+		);
 	}
 }

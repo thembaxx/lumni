@@ -7,6 +7,8 @@ export const metadata: Metadata = {
 
 export default function EngineDevLayout({
 	children,
-}: { children: React.ReactNode }) {
+}: {
+	children: React.ReactNode;
+}) {
 	return children;
 }

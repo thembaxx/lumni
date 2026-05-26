@@ -1,9 +1,8 @@
-import { useCallback, useEffect, useState } from "react";
 import { useLiveQuery } from "dexie-react-hooks";
+import { useCallback, useEffect, useState } from "react";
 import { offlineDB } from "@/lib/db/schema";
-import { quizPackService } from "@/lib/quiz-packs";
 import type { QuizPack } from "@/lib/quiz-packs";
-import { MAX_PACK_STORAGE_BYTES } from "@/lib/quiz-packs";
+import { MAX_PACK_STORAGE_BYTES, quizPackService } from "@/lib/quiz-packs";
 
 export function useQuizPacks() {
 	const packs = useLiveQuery(() => quizPackService.getPacks());
@@ -25,11 +24,7 @@ export function useQuizPacks() {
 					throw new Error("Storage full. Delete old packs first.");
 				}
 
-				const pack = await quizPackService.generatePack(
-					subject,
-					topic,
-					count,
-				);
+				const pack = await quizPackService.generatePack(subject, topic, count);
 
 				const res = await fetch("/api/quiz-packs/generate", {
 					method: "POST",

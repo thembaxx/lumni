@@ -1,13 +1,13 @@
 "use client";
 
 import { AnimatePresence, m } from "framer-motion";
-import { useRouter } from "@/i18n/navigation";
 import { useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Anim } from "@/components/shared/anim";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { useRouter } from "@/i18n/navigation";
 import { cn } from "@/lib/shared";
 import { getDifficultyColor } from "@/lib/utils/colors";
 import { ListenToLesson } from "../listen-to-lesson";
