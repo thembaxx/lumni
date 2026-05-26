@@ -47,6 +47,7 @@ mock.module("@/lib/db/schema", () => ({
 		wrongAnswers: { toArray: async () => [] },
 		chatMessages: { toArray: async () => [] },
 		questionRatings: { toArray: async () => [] },
+		bookmarks: { toArray: async () => [] },
 	},
 }));
 

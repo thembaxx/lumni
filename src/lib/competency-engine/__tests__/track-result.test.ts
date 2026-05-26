@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { isPassingScore } from "../track-result";
+import { isPassingScore } from "@/lib/orchestrator/track-result";
 
 describe("isPassingScore", () => {
 	test("returns true when score/maxScore >= default threshold (0.5)", () => {

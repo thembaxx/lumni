@@ -1,11 +1,13 @@
-import { beforeEach, describe, expect, mock, test } from "bun:test";
+import { describe, expect, mock, test } from "bun:test";
 
 const mockDb = {
-	listDocuments: mock(async () => ({ documents: [] })),
-	getDocument: mock(async () => ({})),
-	createDocument: mock(async () => ({ $id: "doc-123" })),
-	updateDocument: mock(async () => {}),
-	deleteDocument: mock(async () => {}),
+	listDocuments: mock(async (_dbId: string, _coll: string, _queries: string[]) => ({ documents: [] })),
+	getDocument: mock(async (_dbId: string, _coll: string, _docId: string) => ({})),
+	createDocument: mock(async (_dbId: string, _coll: string, _docId: string, _data: Record<string, unknown>) => ({
+		$id: "doc-123",
+	})),
+	updateDocument: mock(async (_dbId: string, _coll: string, _docId: string, _data: Record<string, unknown>) => {}),
+	deleteDocument: mock(async (_dbId: string, _coll: string, _docId: string) => {}),
 };
 
 process.env.APPWRITE_DATABASE_ID = "test-db-id";
@@ -23,6 +25,62 @@ mock.module("@/lib/appwrite", () => ({
 	APPWRITE_API_KEY: "test-key",
 }));
 
+mock.module("@/lib/db/client", () => ({
+	COLLECTIONS: {
+		SUBJECTS: "subjects",
+		TOPICS: "topics",
+		QUESTIONS: "questions",
+		USER_SUBJECTS: "user_subjects",
+		USER_PROGRESS: "user_progress",
+		STUDY_SESSIONS: "study_sessions",
+		EXAM_PAPERS: "exam_papers",
+		VISUALS: "visuals",
+		COMPETENCIES: "competencies",
+		EXAM_SESSIONS: "exam_sessions",
+		REFERRAL_CODES: "referral_codes",
+		REFERRALS: "referrals",
+		STUDY_PLANS: "study_plans",
+		QUESTION_FLAGS: "question_flags",
+		ANALYTICS: "analytics",
+		FLASHCARDS: "flashcards",
+		WRONG_ANSWERS: "wrong_answers",
+		CHAT_MESSAGES: "chat_messages",
+		EXAM_DATES: "exam_dates",
+		BOOKMARKS: "bookmarks",
+		NOTES: "notes",
+		GROUP_POSTS: "group_posts",
+		GROUP_COMMENTS: "group_comments",
+		GROUP_REACTIONS: "group_reactions",
+		GAMIFICATION: "gamification",
+		QUIZ_PACKS: "quiz_packs",
+		PACK_QUESTIONS: "pack_questions",
+		SUBMISSIONS: "submissions",
+		ACHIEVEMENTS: "achievements",
+		STUDY_STREAKS: "study_streaks",
+		SETTINGS: "settings",
+	} as const,
+	APPWRITE_DATABASE_ID: "test-db-id",
+	listDocuments: async (collection: string, queries?: string[]) => {
+		const result = await mockDb.listDocuments("test-db-id", collection, queries ?? []);
+		return result.documents;
+	},
+	createDocument: async (collection: string, data: Record<string, unknown>) => {
+		const result = await mockDb.createDocument("test-db-id", collection, "unique()", data);
+		return result.$id;
+	},
+	getDocument: async (collection: string, documentId: string) => {
+		try {
+			return await mockDb.getDocument("test-db-id", collection, documentId);
+		} catch {
+			return null;
+		}
+	},
+	updateDocument: async (collection: string, documentId: string, data: Record<string, unknown>) =>
+		mockDb.updateDocument("test-db-id", collection, documentId, data),
+	deleteDocument: async (collection: string, documentId: string) =>
+		mockDb.deleteDocument("test-db-id", collection, documentId),
+}));
+
 const {
 	COLLECTIONS,
 	listDocuments,
@@ -30,11 +88,11 @@ const {
 	getDocument,
 	updateDocument,
 	deleteDocument,
-} = await import("../client");
+} = await import("@/lib/db/client");
 
 describe("COLLECTIONS", () => {
-	test("has 22 keys", () => {
-		expect(Object.keys(COLLECTIONS)).toHaveLength(22);
+	test("has 31 keys", () => {
+		expect(Object.keys(COLLECTIONS)).toHaveLength(31);
 	});
 
 	test("contains all expected collection keys", () => {
@@ -68,11 +126,6 @@ describe("COLLECTIONS", () => {
 });
 
 describe("listDocuments", () => {
-	beforeEach(() => {
-		mockDb.listDocuments.mockReset();
-		mockDb.listDocuments.mockResolvedValue({ documents: [] });
-	});
-
 	test("is a function", () => {
 		expect(typeof listDocuments).toBe("function");
 	});
@@ -87,6 +140,7 @@ describe("listDocuments", () => {
 	});
 
 	test("defaults queries to empty array", async () => {
+		mockDb.listDocuments.mockResolvedValue({ documents: [] });
 		await listDocuments("subjects");
 		expect(mockDb.listDocuments).toHaveBeenCalledWith(
 			"test-db-id",
@@ -105,21 +159,18 @@ describe("listDocuments", () => {
 });
 
 describe("createDocument", () => {
-	beforeEach(() => {
-		mockDb.createDocument.mockReset();
-		mockDb.createDocument.mockResolvedValue({ $id: "doc-123" });
-	});
-
 	test("is a function", () => {
 		expect(typeof createDocument).toBe("function");
 	});
 
 	test("returns document $id", async () => {
+		mockDb.createDocument.mockResolvedValue({ $id: "doc-123" });
 		const id = await createDocument("subjects", { name: "Math" });
 		expect(id).toBe("doc-123");
 	});
 
 	test("passes data with unique() ID", async () => {
+		mockDb.createDocument.mockResolvedValue({ $id: "doc-456" });
 		await createDocument("topics", { name: "Algebra", subjectId: "math" });
 		expect(mockDb.createDocument).toHaveBeenCalledWith(
 			"test-db-id",
@@ -131,10 +182,6 @@ describe("createDocument", () => {
 });
 
 describe("getDocument", () => {
-	beforeEach(() => {
-		mockDb.getDocument.mockReset();
-	});
-
 	test("returns document when found", async () => {
 		mockDb.getDocument.mockResolvedValue({ $id: "doc-1", name: "Test" });
 		const doc = await getDocument("subjects", "doc-1");
@@ -149,10 +196,6 @@ describe("getDocument", () => {
 });
 
 describe("updateDocument", () => {
-	beforeEach(() => {
-		mockDb.updateDocument.mockReset();
-	});
-
 	test("calls Appwrite updateDocument with correct args", async () => {
 		await updateDocument("subjects", "doc-1", { name: "Updated" });
 		expect(mockDb.updateDocument).toHaveBeenCalledWith(
@@ -165,10 +208,6 @@ describe("updateDocument", () => {
 });
 
 describe("deleteDocument", () => {
-	beforeEach(() => {
-		mockDb.deleteDocument.mockReset();
-	});
-
 	test("calls Appwrite deleteDocument with correct args", async () => {
 		await deleteDocument("subjects", "doc-1");
 		expect(mockDb.deleteDocument).toHaveBeenCalledWith(

@@ -45,10 +45,16 @@ const FEATURES = [
 ];
 
 export default function PremiumPage() {
-	const { isPremium, downgrade, createCheckoutSession, cancelSubscription } =
-		usePremium();
+	const {
+		isPremium,
+		downgrade,
+		createCheckoutSession,
+		createPayfastCheckoutSession,
+		cancelSubscription,
+	} = usePremium();
 	const { push, refresh } = useRouter();
 	const [loading, setLoading] = useState(false);
+	const [payfastLoading, setPayfastLoading] = useState(false);
 
 	const handleUpgrade = async () => {
 		setLoading(true);
@@ -59,6 +65,30 @@ export default function PremiumPage() {
 			}
 		} finally {
 			setLoading(false);
+		}
+	};
+
+	const handlePayfastUpgrade = async () => {
+		setPayfastLoading(true);
+		try {
+			const result = await createPayfastCheckoutSession();
+			if (result) {
+				const form = document.createElement("form");
+				form.method = "POST";
+				form.action = result.url;
+				form.style.display = "none";
+				for (const [key, value] of Object.entries(result.data)) {
+					const input = document.createElement("input");
+					input.type = "hidden";
+					input.name = key;
+					input.value = value;
+					form.appendChild(input);
+				}
+				document.body.appendChild(form);
+				form.submit();
+			}
+		} finally {
+			setPayfastLoading(false);
 		}
 	};
 
@@ -152,10 +182,19 @@ export default function PremiumPage() {
 								</Button>
 							</>
 						) : (
-							<Button onClick={handleUpgrade} disabled={loading}>
-								<HugeiconsIcon icon={CrownIcon} data-icon="inline-start" />
-								{loading ? "Redirecting…" : "Upgrade Now"}
-							</Button>
+							<>
+								<Button onClick={handleUpgrade} disabled={loading}>
+									<HugeiconsIcon icon={CrownIcon} data-icon="inline-start" />
+									{loading ? "Redirecting…" : "Upgrade with Card"}
+								</Button>
+								<Button
+									onClick={handlePayfastUpgrade}
+									disabled={payfastLoading}
+									variant="outline"
+								>
+									{payfastLoading ? "Redirecting…" : "Pay with Payfast"}
+								</Button>
+							</>
 						)}
 						<Button variant="ghost" onClick={() => push("/dashboard")}>
 							Back to Dashboard

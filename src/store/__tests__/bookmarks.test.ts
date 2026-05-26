@@ -1,4 +1,24 @@
-import { beforeEach, describe, expect, test } from "bun:test";
+import { beforeEach, describe, expect, mock, test } from "bun:test";
+
+mock.module("@/lib/db/schema", () => ({
+	offlineDB: {
+		bookmarks: {
+			add: async () => 1,
+			toArray: async () => [],
+			where: () => ({
+				equals: () => ({
+					delete: async () => {},
+					modify: async () => {},
+				}),
+			}),
+		},
+	},
+}));
+
+mock.module("@/lib/orchestrator/job-queue", () => ({
+	enqueue: mock(async () => 1),
+}));
+
 import { useBookmarksStore } from "../bookmarks";
 
 beforeEach(() => {

@@ -26,7 +26,7 @@ mock.module("@/lib/db/schema", () => ({
 	},
 }));
 
-mock.module("@/lib/flashcard-repository", () => ({
+mock.module("@/lib/flashcard-engine", () => ({
 	flashcardEngine: {
 		getAll: () => Promise.resolve(mockFlashcards),
 	},

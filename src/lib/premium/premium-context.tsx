@@ -40,6 +40,10 @@ interface PremiumContextValue {
 	upgrade: () => Promise<void>;
 	downgrade: () => Promise<void>;
 	createCheckoutSession: () => Promise<string | null>;
+	createPayfastCheckoutSession: () => Promise<{
+		url: string;
+		data: Record<string, string>;
+	} | null>;
 	cancelSubscription: () => Promise<boolean>;
 }
 
@@ -50,12 +54,14 @@ const PremiumContext = createContext<PremiumContextValue>({
 	upgrade: async () => {},
 	downgrade: async () => {},
 	createCheckoutSession: async () => null,
+	createPayfastCheckoutSession: async () => null,
 	cancelSubscription: async () => false,
 });
 
 const CHECKOUT_API = "/api/premium/checkout";
 const CANCEL_API = "/api/premium/cancel";
 const VERIFY_API = "/api/premium/verify";
+const PAYFAST_CHECKOUT_API = "/api/payfast/checkout";
 
 export function PremiumProvider({ children }: { children: React.ReactNode }) {
 	const [state, setState] = useState<PremiumState>(() => {
@@ -119,6 +125,26 @@ export function PremiumProvider({ children }: { children: React.ReactNode }) {
 		}
 	}, []);
 
+	const createPayfastCheckoutSession = useCallback(async (): Promise<{
+		url: string;
+		data: Record<string, string>;
+	} | null> => {
+		try {
+			const res = await fetch(PAYFAST_CHECKOUT_API, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					amount: "99.00",
+					item_name: "Lumni Premium Yearly",
+				}),
+			});
+			if (!res.ok) return null;
+			return await res.json();
+		} catch {
+			return null;
+		}
+	}, []);
+
 	const upgrade = useCallback(async () => {
 		const expiresAt = Date.now() + 365 * 24 * 60 * 60 * 1000;
 		setState({
@@ -154,6 +180,7 @@ export function PremiumProvider({ children }: { children: React.ReactNode }) {
 				upgrade,
 				downgrade,
 				createCheckoutSession,
+				createPayfastCheckoutSession,
 				cancelSubscription,
 			}}
 		>

@@ -20,6 +20,7 @@ export interface StoredGamification {
 	lastPracticeDate: string | null;
 	currentStreak: number;
 	totalQuestionsAnswered: number;
+	claimedChests: StoredRewardChest[];
 }
 
 export interface GamificationResult {
@@ -32,4 +33,19 @@ export interface GamificationResult {
 export interface AchievementCheckResult {
 	unlocked: string[];
 	pending: string[];
+}
+
+export interface RewardChest {
+	id: string;
+	name: string;
+	description: string;
+	xpRequired: number;
+	xpReward: number;
+	icon: string;
+	rarity: "common" | "rare" | "epic" | "legendary";
+}
+
+export interface StoredRewardChest {
+	id: string;
+	claimedAt: string | null;
 }

@@ -6,10 +6,15 @@ import { offlineDB } from "@/lib/db/schema";
 import type { StoredGamification } from "@/lib/gamification-engine";
 import { gamificationEngine } from "@/lib/gamification-engine";
 import { apiFetch } from "@/lib/shared/api-fetch";
-import type { Achievement, LevelInfo } from "@/types/gamification";
+import type {
+	Achievement,
+	LevelInfo,
+	RewardChestDef,
+} from "@/types/gamification";
 import {
 	ACHIEVEMENTS,
 	calculateLevel,
+	REWARD_CHESTS,
 	type UserGamification,
 } from "@/types/gamification";
 
@@ -21,6 +26,7 @@ export function useGamification() {
 	const [leveledUp, setLeveledUp] = useState<LevelInfo | null>(null);
 	const [pendingAchievement, setPendingAchievement] =
 		useState<Achievement | null>(null);
+	const [pendingChest, setPendingChest] = useState<RewardChestDef | null>(null);
 	const syncTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
 	useEffect(() => {
@@ -180,6 +186,31 @@ export function useGamification() {
 		[scheduleSync],
 	);
 
+	const checkForRewardChests = useCallback(() => {
+		setData((prev) => {
+			const { data: newData, chest } =
+				gamificationEngine.checkAndClaimRewardChest(prev);
+			if (chest) {
+				setPendingChest(chest);
+				setTimeout(() => {
+					toast({
+						type: "success",
+						message: `${chest.icon} Reward Chest: ${chest.name}`,
+						description: `You earned ${chest.xpReward} bonus XP!`,
+						duration: 5000,
+					});
+				}, 0);
+			}
+			if (newData !== prev) {
+				gamificationEngine.save(newData);
+				scheduleSync(newData);
+			}
+			return newData;
+		});
+	}, [scheduleSync]);
+
+	const clearChest = useCallback(() => setPendingChest(null), []);
+
 	return {
 		gamification,
 		levelInfo,
@@ -189,12 +220,17 @@ export function useGamification() {
 		checkAndUnlockAchievements,
 		updateStreak,
 		completeDailyChallenge,
+		checkForRewardChests,
 		currentStreak: data.currentStreak,
 		totalQuestionsAnswered: data.totalQuestionsAnswered,
+		claimedChests: data.claimedChests,
+		rewardChests: REWARD_CHESTS,
 		leveledUp,
 		pendingAchievement,
+		pendingChest,
 		clearLevelUp,
 		clearAchievement,
+		clearChest,
 	};
 }
 

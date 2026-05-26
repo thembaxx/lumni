@@ -10,6 +10,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { StepByStep } from "@/components/quiz/step-by-step";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Button } from "@/components/ui/button";
@@ -407,8 +408,11 @@ function AiSolverInner({ cameraFocus, initialQuestion }: AiSolverProps) {
 								</div>
 							)}
 							<div className="rounded-xl border border-border/50 bg-system-background p-5">
-								<div className="whitespace-pre-wrap font-medium text-foreground text-sm leading-relaxed">
-									{result.solution}
+								<div className="prose prose-sm max-w-none text-foreground">
+									<MarkdownRenderer
+										content={result.solution}
+										subject="mathematics"
+									/>
 								</div>
 							</div>
 

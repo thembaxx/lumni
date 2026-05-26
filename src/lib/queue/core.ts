@@ -105,6 +105,7 @@ export class QueueCore<T extends QueueItemBase> {
 			for (let i = 0; i < limit; i++) {
 				const item = await this.next();
 				if (!item?.id) break;
+				await this.markProcessing(item.id as number);
 				items.push(item);
 			}
 
@@ -112,7 +113,6 @@ export class QueueCore<T extends QueueItemBase> {
 				items.map(async (item) => {
 					const id = item.id as number;
 					processed.push(id);
-					await this.markProcessing(id);
 
 					try {
 						await handler(item);

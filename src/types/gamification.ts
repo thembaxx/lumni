@@ -243,6 +243,73 @@ export function calculateLevel(totalXp: number): LevelInfo {
 	};
 }
 
+export interface RewardChestDef {
+	id: string;
+	name: string;
+	description: string;
+	xpRequired: number;
+	xpReward: number;
+	icon: string;
+	rarity: "common" | "rare" | "epic" | "legendary";
+}
+
+export const REWARD_CHESTS: RewardChestDef[] = [
+	{
+		id: "chest_500",
+		name: "Wooden Chest",
+		description: "Reach 500 total XP",
+		xpRequired: 500,
+		xpReward: 50,
+		icon: "🪵",
+		rarity: "common",
+	},
+	{
+		id: "chest_1000",
+		name: "Bronze Chest",
+		description: "Reach 1,000 total XP",
+		xpRequired: 1000,
+		xpReward: 100,
+		icon: "🥉",
+		rarity: "common",
+	},
+	{
+		id: "chest_2500",
+		name: "Silver Chest",
+		description: "Reach 2,500 total XP",
+		xpRequired: 2500,
+		xpReward: 200,
+		icon: "🥈",
+		rarity: "rare",
+	},
+	{
+		id: "chest_5000",
+		name: "Golden Chest",
+		description: "Reach 5,000 total XP",
+		xpRequired: 5000,
+		xpReward: 400,
+		icon: "🥇",
+		rarity: "rare",
+	},
+	{
+		id: "chest_10000",
+		name: "Crystal Chest",
+		description: "Reach 10,000 total XP",
+		xpRequired: 10000,
+		xpReward: 800,
+		icon: "💎",
+		rarity: "epic",
+	},
+	{
+		id: "chest_25000",
+		name: "Obsidian Chest",
+		description: "Reach 25,000 total XP",
+		xpRequired: 25000,
+		xpReward: 1500,
+		icon: "🪨",
+		rarity: "legendary",
+	},
+];
+
 export function generateDailyChallenges(): DailyChallenge[] {
 	const today = new Date().toDateString();
 	const challenges: DailyChallenge[] = [

@@ -16,16 +16,29 @@ mock.module("@/lib/shared/json", () => ({
 	safeJsonStringify: (value: unknown) => JSON.stringify(value),
 }));
 
-const appwrite = await import("@/lib/appwrite");
-const dbClient = await import("@/lib/db/client");
-
 const mockCreateDocument = mock(() => Promise.resolve());
 const mockGetDocument = mock(() => Promise.resolve(null));
 
-appwrite.databases.createDocument = mockCreateDocument;
-appwrite.databases.getDocument = mockGetDocument;
-(dbClient as Record<string, unknown>).APPWRITE_DATABASE_ID = "test-db-id";
-(dbClient as Record<string, unknown>).COLLECTIONS = { VISUALS: "visuals" };
+mock.module("@/lib/appwrite", () => ({
+	APPWRITE_ENDPOINT: "https://cloud.appwrite.io/v1",
+	APPWRITE_PROJECT: "test-project",
+	APPWRITE_API_KEY: "test-key",
+	databases: {
+		createDocument: mockCreateDocument,
+		getDocument: mockGetDocument,
+	},
+	browserDatabases: {},
+	storage: {},
+	functions: {},
+	account: {},
+	serverAccount: {},
+	serverClient: {},
+}));
+
+mock.module("@/lib/db/client", () => ({
+	APPWRITE_DATABASE_ID: "test-db-id",
+	COLLECTIONS: { VISUALS: "visuals" },
+}));
 
 import {
 	loadVisualFromAppwrite,

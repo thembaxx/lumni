@@ -2,12 +2,19 @@
 
 import { useGamification } from "@/hooks/use-gamification";
 import { AchievementUnlock } from "./achievement-unlock";
+import { ChestUnlock } from "./chest-unlock";
 import { Confetti } from "./confetti";
 import { LevelUp } from "./level-up";
 
 export function GamificationCelebration() {
-	const { leveledUp, pendingAchievement, clearLevelUp, clearAchievement } =
-		useGamification();
+	const {
+		leveledUp,
+		pendingAchievement,
+		pendingChest,
+		clearLevelUp,
+		clearAchievement,
+		clearChest,
+	} = useGamification();
 
 	return (
 		<>
@@ -28,6 +35,17 @@ export function GamificationCelebration() {
 					xpReward={pendingAchievement.xpReward}
 					rarity={pendingAchievement.rarity}
 					onClose={clearAchievement}
+				/>
+			)}
+			{pendingChest && (
+				<ChestUnlock
+					visible
+					icon={pendingChest.icon}
+					name={pendingChest.name}
+					description={pendingChest.description}
+					xpReward={pendingChest.xpReward}
+					rarity={pendingChest.rarity}
+					onClose={clearChest}
 				/>
 			)}
 		</>

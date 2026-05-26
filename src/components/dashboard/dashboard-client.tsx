@@ -9,6 +9,7 @@ import { GamificationCelebration } from "@/components/celebration";
 import { AchievementShowcase } from "@/components/dashboard/achievement-showcase";
 import { CountdownHeader } from "@/components/dashboard/countdown-header";
 import { DailyChallenges } from "@/components/dashboard/daily-challenges";
+import { RewardChestPanel } from "@/components/gamification/reward-chest/reward-chest-panel";
 import { TabNav } from "@/components/dashboard/navigation/tab-nav";
 import { QuickActions } from "@/components/dashboard/quick-actions/quick-actions";
 import { QuizStartCard } from "@/components/dashboard/quiz-start-card";
@@ -359,6 +360,11 @@ function DashboardContent({
 						<AchievementShowcase />
 					</SectionReveal>
 				)}
+				{showAnalytics && !isAnonymous && (
+					<SectionReveal delay={0.185}>
+						<RewardChestPanel />
+					</SectionReveal>
+				)}
 				{showPractice && (
 					<SectionReveal delay={0.19}>
 						<StaggerList>
@@ -384,6 +390,7 @@ export function DashboardClient({
 		addXp,
 		updateStreak,
 		checkAndUnlockAchievements,
+		checkForRewardChests,
 		currentStreak,
 		levelInfo,
 		totalQuestionsAnswered,
@@ -412,6 +419,7 @@ export function DashboardClient({
 			levelInfo.level,
 			accuracy === 100,
 		);
+		checkForRewardChests();
 
 		const flashcardPromises: Promise<unknown>[] = [];
 

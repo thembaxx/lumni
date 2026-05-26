@@ -1,7 +1,9 @@
+import type { RewardChestDef } from "@/types/gamification";
 import {
 	ACHIEVEMENTS,
 	calculateLevel,
 	generateDailyChallenges,
+	REWARD_CHESTS,
 	STREAK_MILESTONES as STREAK_MILESTONE_DEFS,
 	XP_PER_CORRECT,
 	XP_PER_QUESTION,
@@ -23,6 +25,7 @@ const DEFAULT_GAMIFICATION: StoredGamification = {
 	lastPracticeDate: null,
 	currentStreak: 0,
 	totalQuestionsAnswered: 0,
+	claimedChests: [],
 };
 
 export class GamificationEngine {
@@ -304,6 +307,30 @@ export class GamificationEngine {
 			default:
 				return 0;
 		}
+	}
+
+	checkAndClaimRewardChest(data: StoredGamification): {
+		data: StoredGamification;
+		chest: RewardChestDef | null;
+	} {
+		const claimedIds = new Set(data.claimedChests.map((c) => c.id));
+		for (const chest of REWARD_CHESTS) {
+			if (!claimedIds.has(chest.id) && data.totalXp >= chest.xpRequired) {
+				return {
+					data: {
+						...data,
+						xp: data.xp + chest.xpReward,
+						totalXp: data.totalXp + chest.xpReward,
+						claimedChests: [
+							...data.claimedChests,
+							{ id: chest.id, claimedAt: new Date().toISOString() },
+						],
+					},
+					chest,
+				};
+			}
+		}
+		return { data, chest: null };
 	}
 }
 
