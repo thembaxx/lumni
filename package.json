@@ -129,5 +129,10 @@
 		"msw",
 		"sharp",
 		"unrs-resolver"
-	]
+	],
+	"overrides": {
+		"effect": "3.21.0",
+		"postcss": "8.5.15",
+		"elliptic": "6.6.1"
+	}
 }
