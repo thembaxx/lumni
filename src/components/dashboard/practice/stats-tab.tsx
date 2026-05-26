@@ -86,7 +86,12 @@ export default function StatsTab() {
 		{ date: "Sun", accuracy: progress.accuracy || 0 },
 	];
 
-	if (!authReady || isProgressLoading || isSubjectsLoading || !isGamificationLoaded) {
+	if (
+		!authReady ||
+		isProgressLoading ||
+		isSubjectsLoading ||
+		!isGamificationLoaded
+	) {
 		return (
 			<div className="flex flex-col gap-3 px-4 pb-6">
 				<Skeleton className="h-24 rounded-lg" />
