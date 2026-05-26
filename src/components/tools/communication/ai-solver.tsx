@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/shared";
 import { UploadButton } from "@/lib/uploadthing";
+import { CameraPreview } from "./camera-preview";
 
 const SUBJECTS = [
 	{ id: "general", label: "General" },
@@ -41,8 +42,8 @@ type SolverPhase = "input" | "extracting" | "confirm" | "solving" | "result";
 const MATH_SYMBOLS = [
 	{ label: "√", value: "√" },
 	{ label: "π", value: "π" },
-	{ label: "x²", value: "²" },
-	{ label: "x³", value: "³" },
+	{ label: "²", value: "²" },
+	{ label: "³", value: "³" },
 	{ label: "±", value: "±" },
 	{ label: "÷", value: "÷" },
 	{ label: "×", value: "×" },
@@ -53,42 +54,39 @@ const MATH_SYMBOLS = [
 	{ label: "∞", value: "∞" },
 ];
 
-function readFileAsDataURL(file: File): Promise<string> {
-	return new Promise((resolve, reject) => {
-		const reader = new FileReader();
-		reader.onload = () => resolve(reader.result as string);
-		reader.onerror = reject;
-		reader.readAsDataURL(file);
-	});
-}
-
 interface AiSolverProps {
 	cameraFocus?: boolean;
+	initialQuestion?: string;
 }
 
-export function AiSolver({ cameraFocus }: AiSolverProps) {
+export function AiSolver({ cameraFocus, initialQuestion }: AiSolverProps) {
 	return (
 		<AppErrorBoundary>
-			<AiSolverInner cameraFocus={cameraFocus} />
+			<AiSolverInner
+				cameraFocus={cameraFocus}
+				initialQuestion={initialQuestion}
+			/>
 		</AppErrorBoundary>
 	);
 }
 
-function AiSolverInner({ cameraFocus }: AiSolverProps) {
+function AiSolverInner({ cameraFocus, initialQuestion }: AiSolverProps) {
 	const [subject, setSubject] = useState<Subject>("general");
-	const [question, setQuestion] = useState("");
+	const [question, setQuestion] = useState(initialQuestion ?? "");
 	const [imageUrl, setImageUrl] = useState<string | null>(null);
 	const [result, setResult] = useState<SolverResponse | null>(null);
 	const [error, setError] = useState<string | null>(null);
-	const [phase, setPhase] = useState<SolverPhase>("input");
+	const [phase, setPhase] = useState<SolverPhase>(
+		initialQuestion ? "confirm" : "input",
+	);
+	const [showCamera, setShowCamera] = useState(false);
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
-	const cameraInputRef = useRef<HTMLInputElement>(null);
 	const didAutoFocus = useRef(false);
 
 	useEffect(() => {
 		if (cameraFocus && !didAutoFocus.current) {
 			didAutoFocus.current = true;
-			cameraInputRef.current?.click();
+			setShowCamera(true);
 		}
 	}, [cameraFocus]);
 
@@ -109,12 +107,8 @@ function AiSolverInner({ cameraFocus }: AiSolverProps) {
 		});
 	};
 
-	const handleCameraCapture = async (
-		e: React.ChangeEvent<HTMLInputElement>,
-	) => {
-		const file = e.target.files?.[0];
-		if (!file) return;
-		const dataUrl = await readFileAsDataURL(file);
+	const handleCameraCapture = async (dataUrl: string) => {
+		setShowCamera(false);
 		startExtract(dataUrl);
 	};
 
@@ -123,6 +117,13 @@ function AiSolverInner({ cameraFocus }: AiSolverProps) {
 		setPhase("extracting");
 		setError(null);
 		setResult(null);
+
+		const extracted = await tryLocalOcr(imgUrl);
+		if (extracted) {
+			setQuestion(extracted);
+			setPhase("confirm");
+			return;
+		}
 
 		try {
 			const response = await fetch("/api/solve", {
@@ -226,6 +227,15 @@ function AiSolverInner({ cameraFocus }: AiSolverProps) {
 				</p>
 			</div>
 
+			{showCamera && (
+				<div className="px-5 pb-5">
+					<CameraPreview
+						onCapture={handleCameraCapture}
+						onClose={() => setShowCamera(false)}
+					/>
+				</div>
+			)}
+
 			<div className="px-5 pb-5">
 				<div className="flex flex-col gap-4 rounded-xl bg-system-background-secondary p-5">
 					{showSymbols && (
@@ -297,18 +307,10 @@ function AiSolverInner({ cameraFocus }: AiSolverProps) {
 							<div className="flex flex-1 gap-2">
 								{phase === "input" && (
 									<>
-										<input
-											ref={cameraInputRef}
-											type="file"
-											accept="image/*"
-											capture="environment"
-											onChange={handleCameraCapture}
-											className="hidden"
-										/>
 										<Button
 											variant="outline"
 											size="sm"
-											onClick={() => cameraInputRef.current?.click()}
+											onClick={() => setShowCamera(true)}
 											className="h-10 gap-2 rounded-xl px-4"
 										>
 											<HugeiconsIcon icon={Camera01Icon} data-icon />
@@ -431,4 +433,17 @@ function AiSolverInner({ cameraFocus }: AiSolverProps) {
 			)}
 		</div>
 	);
+}
+
+async function tryLocalOcr(imageData: string): Promise<string | null> {
+	try {
+		const { recognizeImage } = await import("@/lib/ocr");
+		const result = await recognizeImage(imageData, "printed");
+		if (result.confidence > 60 && result.text.length > 3) {
+			return result.text;
+		}
+		return null;
+	} catch {
+		return null;
+	}
 }

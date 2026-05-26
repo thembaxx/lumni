@@ -3,16 +3,17 @@
 import { Camera01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Image from "next/image";
-import { usePathname } from "@/i18n/navigation";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { useOnboarding } from "@/hooks/use-onboarding";
+import { usePathname } from "@/i18n/navigation";
 import { offlineDB } from "@/lib/db/schema";
 import { cn } from "@/lib/shared";
 import { getImageHash, preprocessImage } from "@/lib/utils/image-preprocess";
+import { CameraPreview } from "../communication/camera-preview";
 
 interface ExtractionResult {
 	solution: string;
@@ -34,7 +35,8 @@ export function SnapFab() {
 	const [error, setError] = useState<string | null>(null);
 	const [imagePreview, setImagePreview] = useState<string | null>(null);
 	const [showDialog, setShowDialog] = useState(false);
-	const cameraRef = useRef<HTMLInputElement>(null);
+	const [showCamera, setShowCamera] = useState(false);
+	const hiddenFileRef = useRef<HTMLInputElement>(null);
 	const pathname = usePathname();
 	const searchParams = useSearchParams();
 	const { isOnboarding } = useOnboarding();
@@ -51,9 +53,73 @@ export function SnapFab() {
 	const shouldShow =
 		!isOnboarding && (isOnExam || (isOnQuizOrFlashcards && isMathSubject));
 
-	const handleSnap = useCallback(async () => {
-		if (!cameraRef.current) return;
-		cameraRef.current.click();
+	const handleSnap = useCallback(() => {
+		setShowCamera(true);
+	}, []);
+
+	const handleCameraCapture = useCallback(async (dataUrl: string) => {
+		setShowCamera(false);
+		setPhase("capturing");
+		setError(null);
+		setShowDialog(true);
+
+		try {
+			const hash = getImageHash(dataUrl);
+			const cached = await offlineDB.extractionCache
+				.where("imageHash")
+				.equals(hash)
+				.first();
+
+			if (cached) {
+				setExtractedText(cached.extractedText);
+				setImagePreview(dataUrl);
+				setPhase("confirm");
+				return;
+			}
+
+			setImagePreview(dataUrl);
+			setPhase("extracting");
+
+			const localText = await tryLocalOcr(dataUrl);
+			if (localText) {
+				await offlineDB.extractionCache.add({
+					imageHash: hash,
+					extractedText: localText,
+					createdAt: Date.now(),
+				});
+				setExtractedText(localText);
+				setPhase("confirm");
+				return;
+			}
+
+			const response = await fetch("/api/solve", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ imageUrl: dataUrl, mode: "extract" }),
+			});
+
+			if (!response.ok) {
+				throw new Error("Failed to read the problem from the image");
+			}
+
+			const data: ExtractionResult = await response.json();
+			const text = data.solution || "";
+
+			await offlineDB.extractionCache.add({
+				imageHash: hash,
+				extractedText: text,
+				createdAt: Date.now(),
+			});
+
+			setExtractedText(text);
+			setPhase("confirm");
+		} catch (err) {
+			console.error("Snap error:", err);
+			setError(
+				"Couldn't read the problem from the image. Try typing it instead.",
+			);
+			setPhase("error");
+		}
 	}, []);
 
 	const handleFileCapture = useCallback(
@@ -82,6 +148,18 @@ export function SnapFab() {
 				}
 
 				setPhase("extracting");
+
+				const localText = await tryLocalOcr(processed.dataUrl);
+				if (localText) {
+					await offlineDB.extractionCache.add({
+						imageHash: hash,
+						extractedText: localText,
+						createdAt: Date.now(),
+					});
+					setExtractedText(localText);
+					setPhase("confirm");
+					return;
+				}
 
 				const response = await fetch("/api/solve", {
 					method: "POST",
@@ -123,7 +201,6 @@ export function SnapFab() {
 		setShowDialog(false);
 		const params = new URLSearchParams({
 			question: extractedText,
-			openSolver: "true",
 		});
 		window.location.href = `/solve?${params.toString()}`;
 	}, [extractedText]);
@@ -134,6 +211,7 @@ export function SnapFab() {
 		setExtractedText("");
 		setError(null);
 		setImagePreview(null);
+		setShowCamera(false);
 	}, []);
 
 	if (!shouldShow) return null;
@@ -141,13 +219,23 @@ export function SnapFab() {
 	return (
 		<>
 			<input
-				ref={cameraRef}
+				ref={hiddenFileRef}
 				type="file"
 				accept="image/*"
-				capture="environment"
 				onChange={handleFileCapture}
 				className="hidden"
 			/>
+
+			{showCamera && (
+				<div className="fixed inset-0 z-modal flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
+					<div className="w-full max-w-md overflow-hidden rounded-2xl bg-system-background shadow-level-3">
+						<CameraPreview
+							onCapture={handleCameraCapture}
+							onClose={() => setShowCamera(false)}
+						/>
+					</div>
+				</div>
+			)}
 
 			<button
 				type="button"
@@ -251,4 +339,17 @@ export function SnapFab() {
 			</Dialog>
 		</>
 	);
+}
+
+async function tryLocalOcr(imageData: string): Promise<string | null> {
+	try {
+		const { recognizeImage } = await import("@/lib/ocr");
+		const result = await recognizeImage(imageData, "printed");
+		if (result.confidence > 60 && result.text.length > 3) {
+			return result.text;
+		}
+		return null;
+	} catch {
+		return null;
+	}
 }

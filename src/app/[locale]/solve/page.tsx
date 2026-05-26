@@ -1,10 +1,14 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { PageContainer } from "@/components/layout/page-container";
 import { Anim } from "@/components/shared/anim";
 import { AiSolver } from "@/components/tools/communication/ai-solver";
 
 export default function SolvePage() {
+	const searchParams = useSearchParams();
+	const initialQuestion = searchParams.get("question") ?? undefined;
+
 	return (
 		<div className="min-h-[100dvh] bg-system-grouped pt-4 pb-24">
 			<PageContainer>
@@ -20,7 +24,7 @@ export default function SolvePage() {
 							</p>
 						</div>
 						<div className="overflow-hidden rounded-2xl border border-border bg-card shadow-level-2">
-							<AiSolver />
+							<AiSolver initialQuestion={initialQuestion} />
 						</div>
 					</div>
 				</Anim>
