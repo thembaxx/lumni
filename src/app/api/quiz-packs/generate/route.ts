@@ -1,8 +1,16 @@
 import { NextResponse } from "next/server";
+import { getAuthenticatedUserId } from "@/lib/server/auth";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 async function generateHandler(req: Request): Promise<NextResponse> {
 	try {
+		const userId = await getAuthenticatedUserId();
+		if (!userId) {
+			return NextResponse.json(
+				{ error: "Authentication required" },
+				{ status: 401 },
+			);
+		}
 		const body = await req.json();
 		const { packId, subject, topic, count } = body;
 

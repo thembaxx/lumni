@@ -1,9 +1,8 @@
 import { Client, Databases, ID, Query } from "appwrite";
 import { type NextRequest, NextResponse } from "next/server";
 import { APPWRITE_ENDPOINT, APPWRITE_PROJECT } from "@/lib/appwrite";
+import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 import { getAuthenticatedUserId } from "@/lib/server/auth";
-
-const COLLECTION = "user_gamification";
 
 export async function GET() {
 	try {
@@ -19,8 +18,8 @@ export async function GET() {
 
 		try {
 			const docs = await db.listDocuments(
-				process.env.APPWRITE_DATABASE_ID!,
-				COLLECTION,
+				APPWRITE_DATABASE_ID,
+				COLLECTIONS.USER_GAMIFICATION,
 				[Query.equal("userId", userId), Query.limit(1)],
 			);
 			const record = docs.documents[0] ?? null;
@@ -62,22 +61,22 @@ export async function POST(req: NextRequest) {
 
 		try {
 			const docs = await db.listDocuments(
-				process.env.APPWRITE_DATABASE_ID!,
-				COLLECTION,
+				APPWRITE_DATABASE_ID,
+				COLLECTIONS.USER_GAMIFICATION,
 				[Query.equal("userId", userId), Query.limit(1)],
 			);
 
 			if (docs.documents.length > 0) {
 				await db.updateDocument(
-					process.env.APPWRITE_DATABASE_ID!,
-					COLLECTION,
+					APPWRITE_DATABASE_ID,
+					COLLECTIONS.USER_GAMIFICATION,
 					docs.documents[0].$id,
 					{ ...body, userId },
 				);
 			} else {
 				await db.createDocument(
-					process.env.APPWRITE_DATABASE_ID!,
-					COLLECTION,
+					APPWRITE_DATABASE_ID,
+					COLLECTIONS.USER_GAMIFICATION,
 					ID.unique(),
 					{ ...body, userId },
 				);

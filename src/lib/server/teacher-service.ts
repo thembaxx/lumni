@@ -7,6 +7,7 @@ import {
 	deleteDocument,
 	listDocuments,
 } from "@/lib/db/client";
+import { auth } from "@/lib/server/auth";
 
 export interface TeacherStudent {
 	id: string;
@@ -60,6 +61,7 @@ function relativeTime(dateStr: string | undefined): string {
 export async function getTeacherStudents(
 	teacherId: string,
 ): Promise<TeacherStudent[]> {
+	await auth();
 	const relationships = await listDocuments(COLLECTIONS.TEACHER_STUDENTS, [
 		Query.equal("teacherId", teacherId),
 	]);
@@ -180,6 +182,7 @@ export async function getTeacherStudents(
 export async function getTeacherTopicMastery(
 	teacherId: string,
 ): Promise<TopicMasteryData[]> {
+	await auth();
 	const relationships = await listDocuments(COLLECTIONS.TEACHER_STUDENTS, [
 		Query.equal("teacherId", teacherId),
 	]);
@@ -227,6 +230,7 @@ export async function linkStudentToTeacher(
 	studentId: string,
 	subjectId?: string,
 ): Promise<void> {
+	await auth();
 	await createDocument(COLLECTIONS.TEACHER_STUDENTS, {
 		teacherId,
 		studentId,
@@ -238,6 +242,7 @@ export async function unlinkStudentFromTeacher(
 	teacherId: string,
 	studentId: string,
 ): Promise<void> {
+	await auth();
 	const existing = await listDocuments(COLLECTIONS.TEACHER_STUDENTS, [
 		Query.equal("teacherId", teacherId),
 		Query.equal("studentId", studentId),

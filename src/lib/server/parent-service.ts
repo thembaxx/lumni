@@ -7,6 +7,7 @@ import {
 	listDocuments,
 	updateDocument,
 } from "@/lib/db/client";
+import { auth } from "@/lib/server/auth";
 
 export interface ParentStudent {
 	id: string;
@@ -60,6 +61,7 @@ function relativeTime(dateStr: string | undefined): string {
 export async function getParentStudents(
 	parentId: string,
 ): Promise<ParentStudent[]> {
+	await auth();
 	const relationships = await listDocuments(COLLECTIONS.PARENT_STUDENTS, [
 		Query.equal("parentId", parentId),
 		Query.equal("consentStatus", "granted"),
@@ -99,6 +101,7 @@ export async function getChildSubjectProgress(
 	canViewProgress: boolean,
 	canViewScores: boolean,
 ): Promise<ChildSubjectProgress[]> {
+	await auth();
 	if (!canViewProgress) return [];
 
 	const [competencies, subjects, topics, sessions, _progressDocs] =
@@ -174,6 +177,7 @@ export async function getChildActivityTimeline(
 	studentId: string,
 	limit = 20,
 ): Promise<ActivityItem[]> {
+	await auth();
 	const sessions = await listDocuments(COLLECTIONS.STUDY_SESSIONS, [
 		Query.equal("userId", studentId),
 		Query.orderDesc("endedAt"),
@@ -206,6 +210,7 @@ export async function grantParentConsent(
 	canViewProgress = true,
 	canViewScores = true,
 ): Promise<void> {
+	await auth();
 	const existing = await listDocuments(COLLECTIONS.PARENT_STUDENTS, [
 		Query.equal("parentId", parentId),
 		Query.equal("studentId", studentId),
@@ -237,6 +242,7 @@ export async function revokeParentConsent(
 	parentId: string,
 	studentId: string,
 ): Promise<void> {
+	await auth();
 	const existing = await listDocuments(COLLECTIONS.PARENT_STUDENTS, [
 		Query.equal("parentId", parentId),
 		Query.equal("studentId", studentId),
@@ -255,6 +261,7 @@ export async function getParentConsentStatus(
 	parentId: string,
 	studentId: string,
 ): Promise<"pending" | "granted" | "revoked"> {
+	await auth();
 	const existing = await listDocuments(COLLECTIONS.PARENT_STUDENTS, [
 		Query.equal("parentId", parentId),
 		Query.equal("studentId", studentId),

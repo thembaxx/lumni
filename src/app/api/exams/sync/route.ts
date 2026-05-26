@@ -4,11 +4,19 @@ import {
 	ensureExamPapersSynced,
 	isSyncCompleted,
 } from "@/lib/exams/sync-exam-papers";
+import { getAuthenticatedUserId } from "@/lib/server/auth";
 
 export const runtime = "nodejs";
 
 export async function POST() {
 	try {
+		const userId = await getAuthenticatedUserId();
+		if (!userId) {
+			return NextResponse.json(
+				{ error: "Authentication required" },
+				{ status: 401 },
+			);
+		}
 		const count = getExamPaperCount();
 		if (count === 0) {
 			await ensureExamPapersSynced();
@@ -29,6 +37,13 @@ export async function POST() {
 
 export async function GET() {
 	try {
+		const userId = await getAuthenticatedUserId();
+		if (!userId) {
+			return NextResponse.json(
+				{ error: "Authentication required" },
+				{ status: 401 },
+			);
+		}
 		await ensureExamPapersSynced();
 		const count = getExamPaperCount();
 		const completed = isSyncCompleted();

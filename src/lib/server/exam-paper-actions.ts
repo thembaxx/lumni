@@ -33,7 +33,7 @@ export interface ExamPaperRecord {
 	type: "paper" | "memo";
 	memoId: string | null;
 	fileUrl: string;
-	fileKey: string;
+	fileKey: null;
 	originalFileName: string;
 	uploadedAt: string;
 }
@@ -199,7 +199,7 @@ export async function uploadExamPaper(
 		type: record.type as "paper" | "memo",
 		memoId: record.memo_id as string | null,
 		fileUrl: record.file_url as string,
-		fileKey: record.file_key as string,
+		fileKey: null,
 		originalFileName: record.original_file_name as string,
 		uploadedAt: record.uploaded_at as string,
 	};
@@ -224,7 +224,7 @@ export async function getExamPapers(
 		type: r.type as "paper" | "memo",
 		memoId: r.memo_id as string | null,
 		fileUrl: r.file_url as string,
-		fileKey: r.file_key as string,
+		fileKey: null,
 		originalFileName: r.original_file_name as string,
 		uploadedAt: r.uploaded_at as string,
 	}));
@@ -303,7 +303,7 @@ export async function getExamPapersWithFallback() {
 					downloadedAt: record.uploaded_at,
 					src: undefined,
 					fileUrl: record.file_url,
-					fileKey: record.file_key,
+					fileKey: null,
 				};
 			});
 		}

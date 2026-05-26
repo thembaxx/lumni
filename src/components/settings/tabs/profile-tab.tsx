@@ -3,7 +3,6 @@
 import {
 	Camera01Icon,
 	Cancel01Icon,
-	CheckmarkCircle01Icon,
 	CompassIcon,
 	Copy01Icon,
 	LinkSquare01Icon,
@@ -12,17 +11,18 @@ import {
 	Mail01Icon,
 	MapPinIcon,
 	Mortarboard01Icon,
-	PencilIcon,
 	UserIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useCallback, useEffect, useReducer, useRef, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { useCallback, useEffect, useReducer, useState } from "react";
 import { OnboardingWizard } from "@/components/onboarding/onboarding-wizard";
+import { EditableField } from "@/components/settings/tabs/editable-field";
+import { ParentConsentSection } from "@/components/settings/tabs/parent-consent-section";
+import { RoleSelector } from "@/components/settings/tabs/role-selector";
 import { EmptyStateWithIllustration } from "@/components/shared/empty-state";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { ListCell, ListSection } from "@/components/ui/list-cell";
 import { useEnrolledSubjects } from "@/hooks/use-subjects";
 import { toast } from "@/hooks/use-toast";
@@ -31,121 +31,6 @@ import { useAuth } from "@/lib/auth/auth-context";
 import { toggleUserSubject } from "@/lib/server";
 import { useUploadThing } from "@/lib/uploadthing";
 import { getRandomName } from "@/lib/utils/random-name";
-
-interface EditableFieldProps {
-	value: string;
-	onSave: (value: string) => Promise<void>;
-	placeholder?: string;
-	icon?: React.ReactNode;
-}
-
-function EditableField({
-	value,
-	onSave,
-	placeholder,
-	icon,
-}: EditableFieldProps) {
-	const [editing, setEditing] = useState(false);
-	const [draft, setDraft] = useState(value);
-	const [saving, setSaving] = useState(false);
-	const inputRef = useRef<HTMLInputElement>(null);
-	const previousValue = useRef(value);
-
-	useEffect(() => {
-		setDraft(value);
-	}, [value]);
-
-	useEffect(() => {
-		if (editing && inputRef.current) {
-			inputRef.current.focus();
-			inputRef.current.select();
-		}
-	}, [editing]);
-
-	const handleSave = useCallback(async () => {
-		if (draft === value) {
-			setEditing(false);
-			return;
-		}
-		setSaving(true);
-		try {
-			await onSave(draft);
-			setEditing(false);
-			previousValue.current = draft;
-		} catch {
-			setDraft(previousValue.current);
-		} finally {
-			setSaving(false);
-		}
-	}, [draft, value, onSave]);
-
-	const handleCancel = useCallback(() => {
-		setDraft(previousValue.current);
-		setEditing(false);
-	}, []);
-
-	if (editing) {
-		// Only use draft during editing; value is the source of truth when not editing
-		return (
-			<div className="flex items-center gap-2">
-				<div className="relative flex-1">
-					{icon && (
-						<div className="absolute top-1/2 left-3 -translate-y-1/2 text-muted-foreground">
-							{icon}
-						</div>
-					)}
-					<Input
-						ref={inputRef}
-						value={draft}
-						onChange={(e) => setDraft(e.target.value)}
-						onKeyDown={(e) => {
-							if (e.key === "Enter") handleSave();
-							if (e.key === "Escape") handleCancel();
-						}}
-						placeholder={placeholder}
-						className={`h-9 rounded-lg border-border/40 bg-system-surface text-sm ${icon ? "pl-9" : ""}`}
-					/>
-				</div>
-				<button
-					type="button"
-					onClick={handleSave}
-					disabled={saving || !draft.trim()}
-					aria-label="Save profile changes"
-					className="flex size-8 shrink-0 items-center justify-center rounded-full bg-system-accent text-white hover:bg-system-accent/90 disabled:opacity-50"
-				>
-					<HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-4" />
-				</button>
-				<button
-					type="button"
-					onClick={handleCancel}
-					aria-label="Cancel editing"
-					className="flex size-8 shrink-0 items-center justify-center rounded-full bg-system-fill text-muted-foreground hover:bg-system-fill/80"
-				>
-					<HugeiconsIcon icon={Cancel01Icon} className="size-4" />
-				</button>
-			</div>
-		);
-	}
-
-	return (
-		<button
-			type="button"
-			onClick={() => {
-				setDraft(value);
-				setEditing(true);
-			}}
-			className="group flex w-full items-center gap-2 text-left"
-		>
-			<span className="flex-1 truncate font-medium text-foreground text-sm">
-				{value || placeholder || "Not set"}
-			</span>
-			<HugeiconsIcon
-				icon={PencilIcon}
-				className="size-3.5 shrink-0 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100"
-			/>
-		</button>
-	);
-}
 
 const SOUTH_AFRICAN_PROVINCES = [
 	"Eastern Cape",
@@ -686,94 +571,5 @@ export function ProfileTab() {
 				</div>
 			</div>
 		</div>
-	);
-}
-
-const VALID_ROLES = ["teacher", "parent", "student"] as const;
-
-function RoleSelector({ currentLabels }: { currentLabels: string[] }) {
-	const queryClient = useQueryClient();
-	const currentRole =
-		VALID_ROLES.find((r) => currentLabels.includes(r)) ?? "student";
-
-	const setRole = useMutation({
-		mutationFn: async (role: string) => {
-			const res = await fetch("/api/user/role", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ role }),
-			});
-			if (!res.ok) throw new Error("Failed to set role");
-			return res.json();
-		},
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["session"] });
-			toast({ type: "success", message: "Role updated" });
-		},
-		onError: () => toast({ type: "error", message: "Failed to update role" }),
-	});
-
-	return (
-		<div className="flex gap-1">
-			{VALID_ROLES.map((role) => (
-				<button
-					key={role}
-					type="button"
-					onClick={() => setRole.mutate(role)}
-					disabled={setRole.isPending}
-					className={`rounded-lg px-2.5 py-1 font-semibold text-xs capitalize transition-colors ${
-						currentRole === role
-							? "bg-system-accent text-white"
-							: "bg-system-fill text-muted-foreground hover:bg-system-fill/80"
-					}`}
-				>
-					{role}
-				</button>
-			))}
-		</div>
-	);
-}
-
-function ParentConsentSection({ userId }: { userId: string }) {
-	const { data: requests } = useQuery({
-		queryKey: ["parent-consent-requests", userId],
-		queryFn: async () => {
-			const res = await fetch(
-				`/api/parent/consent?studentId=${encodeURIComponent(userId)}`,
-			);
-			if (!res.ok) return null;
-			const data = (await res.json()) as { status: string };
-			return data;
-		},
-	});
-
-	if (!requests) return null;
-
-	return (
-		<ListSection header="Parental Consent">
-			<ListCell
-				leading={<HugeiconsIcon icon={LinkSquare01Icon} className="size-5" />}
-				title="Consent Status"
-				subtitle={
-					requests.status === "granted"
-						? "A parent can view your progress"
-						: requests.status === "revoked"
-							? "Parent access has been revoked"
-							: "No parent link active"
-				}
-				showSeparator={false}
-				trailing={
-					<span
-						className={`rounded-full px-2.5 py-0.5 font-semibold text-xs ${
-							requests.status === "granted"
-								? "bg-emerald-500/10 text-emerald-600"
-								: "bg-muted text-muted-foreground"
-						}`}
-					>
-						{requests.status}
-					</span>
-				}
-			/>
-		</ListSection>
 	);
 }

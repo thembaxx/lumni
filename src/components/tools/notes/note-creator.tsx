@@ -1,7 +1,7 @@
 "use client";
 
 import { m } from "framer-motion";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -13,433 +13,15 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
+import { useNoteStorage } from "@/hooks/use-note-storage";
 import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";
 import { exportNoteAsMarkdown } from "@/lib/utils/note-export";
-
-interface Note {
-	id: string;
-	title: string;
-	content: string;
-	tags?: string[];
-	subject?: string;
-	topic?: string;
-	createdAt: string;
-	updatedAt: string;
-	isFavorite?: boolean;
-}
+import { NoteForm } from "./note-form";
+import type { Note } from "./types";
 
 interface NoteCreatorProps {
 	className?: string;
-}
-
-export function useNoteStorage() {
-	const [notes, setNotes] = useState<Note[]>(() => {
-		if (typeof window !== "undefined") {
-			const saved = localStorage.getItem("lumni-notes:v1");
-			return saved ? JSON.parse(saved) : [];
-		}
-		return [];
-	});
-	const [loaded, setLoaded] = useState(false);
-
-	useEffect(() => {
-		async function load() {
-			const migrated = localStorage.getItem("lumni-notes:migrated");
-			if (!migrated) {
-				const saved = localStorage.getItem("lumni-notes:v1");
-				if (saved) {
-					const localNotes: Note[] = JSON.parse(saved);
-					const db = (await import("@/lib/db/schema")).offlineDB;
-					for (const n of localNotes) {
-						const existing = await db.notes.where("uuid").equals(n.id).first();
-						if (!existing) {
-							await db.notes.add({
-								uuid: n.id,
-								title: n.title,
-								content: n.content,
-								tags: n.tags,
-								subject: n.subject,
-								topic: n.topic,
-								isFavorite: n.isFavorite,
-								createdAt: new Date(n.createdAt).getTime(),
-								updatedAt: new Date(n.updatedAt).getTime(),
-							});
-						}
-					}
-					localStorage.setItem("lumni-notes:migrated", "true");
-					localStorage.removeItem("lumni-notes:v1");
-				} else {
-					localStorage.setItem("lumni-notes:migrated", "true");
-				}
-			}
-
-			const db = (await import("@/lib/db/schema")).offlineDB;
-			const records = await db.notes.toArray();
-			records.sort((a, b) => b.updatedAt - a.updatedAt);
-			setNotes(
-				records.map((r) => ({
-					id: r.uuid,
-					title: r.title,
-					content: r.content,
-					tags: r.tags,
-					subject: r.subject,
-					topic: r.topic,
-					isFavorite: r.isFavorite,
-					createdAt: new Date(r.createdAt).toISOString(),
-					updatedAt: new Date(r.updatedAt).toISOString(),
-				})),
-			);
-			setLoaded(true);
-		}
-		load();
-	}, []);
-
-	const saveNotes = useCallback(async (notes: Note[]) => {
-		const db = (await import("@/lib/db/schema")).offlineDB;
-		await db.notes.clear();
-		for (const n of notes) {
-			await db.notes.add({
-				uuid: n.id,
-				title: n.title,
-				content: n.content,
-				tags: n.tags,
-				subject: n.subject,
-				topic: n.topic,
-				isFavorite: n.isFavorite,
-				createdAt: new Date(n.createdAt).getTime(),
-				updatedAt: new Date(n.updatedAt).getTime(),
-			});
-		}
-		setNotes(notes);
-	}, []);
-
-	const persistNote = useCallback(async (note: Note) => {
-		const db = (await import("@/lib/db/schema")).offlineDB;
-		const existing = await db.notes.where("uuid").equals(note.id).first();
-		const record = {
-			uuid: note.id,
-			title: note.title,
-			content: note.content,
-			tags: note.tags,
-			subject: note.subject,
-			topic: note.topic,
-			isFavorite: note.isFavorite,
-			createdAt: new Date(note.createdAt).getTime(),
-			updatedAt: new Date(note.updatedAt).getTime(),
-		};
-		if (existing && existing.id !== undefined) {
-			await db.notes.update(existing.id, record);
-		} else {
-			await db.notes.add(record);
-		}
-	}, []);
-
-	const addNote = useCallback(
-		(note: Note) => {
-			setNotes((prev) => [...prev, note]);
-			persistNote(note);
-		},
-		[persistNote],
-	);
-
-	const removeNote = useCallback((id: string) => {
-		setNotes((prev) => prev.filter((note) => note.id !== id));
-		(async () => {
-			const db = (await import("@/lib/db/schema")).offlineDB;
-			await db.notes.where("uuid").equals(id).delete();
-		})();
-	}, []);
-
-	const updateNote = useCallback(
-		(id: string, updates: Partial<Note>) => {
-			setNotes((prev) => {
-				const next = prev.map((note) =>
-					note.id === id
-						? { ...note, ...updates, updatedAt: new Date().toISOString() }
-						: note,
-				);
-				const updated = next.find((n) => n.id === id);
-				if (updated) persistNote(updated);
-				return next;
-			});
-		},
-		[persistNote],
-	);
-
-	const toggleFavorite = useCallback(
-		(id: string) => {
-			setNotes((prev) => {
-				const next = prev.map((note) =>
-					note.id === id ? { ...note, isFavorite: !note.isFavorite } : note,
-				);
-				const updated = next.find((n) => n.id === id);
-				if (updated) persistNote(updated);
-				return next;
-			});
-		},
-		[persistNote],
-	);
-
-	return {
-		notes,
-		loaded,
-		addNote,
-		removeNote,
-		updateNote,
-		toggleFavorite,
-		saveNotes,
-	};
-}
-
-function NoteForm({
-	onSubmit,
-	onCancel,
-	initialValues,
-}: {
-	onSubmit: (data: Note) => void;
-	onCancel: () => void;
-	initialValues?: Partial<Note>;
-}) {
-	const [formData, setFormData] = useState<Note>({
-		id: "",
-		title: "",
-		content: "",
-		tags: [],
-		subject: "",
-		topic: "",
-		createdAt: "",
-		updatedAt: "",
-		isFavorite: false,
-		...initialValues,
-	});
-
-	const handleSubmit = (e: React.FormEvent) => {
-		e.preventDefault();
-		const note: Note = {
-			...formData,
-			id: formData.id || Math.random().toString(36).substr(2, 9),
-			createdAt: formData.createdAt || new Date().toISOString(),
-			updatedAt: formData.updatedAt || new Date().toISOString(),
-		};
-		onSubmit(note);
-	};
-
-	const handleInputChange = (
-		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-	) => {
-		const { name, value } = e.target;
-		if (name === "tags") {
-			setFormData((prev) => ({
-				...prev,
-				[name]: value.split(",").reduce((acc, tag) => {
-					const trimmed = tag.trim();
-					if (trimmed.length > 0) acc.push(trimmed);
-					return acc;
-				}, [] as string[]),
-			}));
-		} else {
-			setFormData((prev) => ({ ...prev, [name]: value }));
-		}
-	};
-
-	return (
-		<form onSubmit={handleSubmit} className="flex flex-col gap-4">
-			<div className="flex flex-col gap-2">
-				<Label htmlFor="title">Title</Label>
-				<Input
-					id="title"
-					name="title"
-					value={formData.title || ""}
-					onChange={handleInputChange}
-					placeholder="Enter note title"
-					disabled={false}
-				/>
-			</div>
-
-			<div className="flex flex-col gap-2">
-				<Label htmlFor="content">Content</Label>
-				<Textarea
-					id="content"
-					name="content"
-					value={formData.content || ""}
-					onChange={handleInputChange}
-					placeholder="Write your note content here..."
-					className="min-h-50"
-					disabled={false}
-				/>
-			</div>
-
-			<div className="flex flex-col gap-2">
-				<Label htmlFor="hint">Tags (Optional)</Label>
-				<Input
-					id="tags"
-					name="tags"
-					value={Array.isArray(formData.tags) ? formData.tags.join(", ") : ""}
-					onChange={handleInputChange}
-					placeholder="e.g., biology, mitosis, cell-division"
-					disabled={false}
-				/>
-				<p className="mt-1 text-muted-foreground text-xs">
-					Separate tags with commas
-				</p>
-			</div>
-
-			<div className="flex flex-col gap-2">
-				<Label htmlFor="subject">Subject (Optional)</Label>
-				<Select
-					id="subject"
-					name="subject"
-					value={formData.subject || ""}
-					onValueChange={(value) =>
-						setFormData((prev) => ({ ...prev, subject: value || "" }))
-					}
-				>
-					<SelectTrigger>
-						<SelectValue placeholder="Select a subject" />
-					</SelectTrigger>
-					<SelectContent>
-						<SelectItem value="mathematics">Mathematics</SelectItem>
-						<SelectItem value="physical-sciences">Physical Sciences</SelectItem>
-						<SelectItem value="life-sciences">Life Sciences</SelectItem>
-						<SelectItem value="humanities">Humanities</SelectItem>
-						<SelectItem value="languages">Languages</SelectItem>
-					</SelectContent>
-				</Select>
-			</div>
-
-			<div className="flex flex-col gap-2">
-				<Label htmlFor="topic">Topic (Optional)</Label>
-				<Input
-					id="topic"
-					name="topic"
-					value={formData.topic || ""}
-					onChange={handleInputChange}
-					placeholder="e.g., algebra, photosynthesis, world war II"
-					disabled={false}
-				/>
-			</div>
-
-			<div className="flex items-center gap-x-3">
-				<Label
-					htmlFor="favorite"
-					className="flex items-center font-medium text-sm"
-				>
-					<input
-						type="checkbox"
-						id="favorite"
-						checked={formData.isFavorite ?? false}
-						onChange={(e) =>
-							setFormData((prev) => ({ ...prev, isFavorite: e.target.checked }))
-						}
-						className="size-4 rounded border-zinc-300 text-primary"
-					/>
-					Mark as favorite
-				</Label>
-			</div>
-
-			<div className="mt-4 flex justify-end gap-x-3">
-				<Button
-					variant="outline"
-					size="icon"
-					asChild
-					onClick={onCancel}
-					aria-label="Cancel"
-				>
-					<m.div
-						whileTap={{ scale: 0.95 }}
-						transition={{ duration: 0.2, ease: iOSEase }}
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="20"
-							height="20"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							strokeWidth={2}
-							strokeLinecap="round"
-							strokeLinejoin="round"
-						>
-							<title>Cancel</title>
-							<path d="M18 6L6 18" />
-							<path d="M6 6l12 12" />
-						</svg>
-					</m.div>
-				</Button>
-
-				<Button type="submit" className="btn-primary">
-					{initialValues ? "Update Note" : "Create Note"}
-				</Button>
-			</div>
-		</form>
-	);
-}
-
-function _NoteItem({
-	note,
-	_onEdit,
-	_onDelete,
-	onToggleFavorite,
-	mounted,
-}: {
-	note: Note;
-	_onEdit: (id: string) => void;
-	_onDelete: (id: string) => void;
-	onToggleFavorite: (id: string) => void;
-	mounted: boolean;
-}) {
-	return (
-		<Card key={note.id}>
-			<CardHeader>
-				<div className="flex items-center justify-between">
-					<CardTitle className="text-sm">{note.title}</CardTitle>
-					<div className="flex items-center gap-2">
-						{note.isFavorite && (
-							<Button
-								variant="ghost"
-								size="icon"
-								onClick={() => onToggleFavorite(note.id)}
-								aria-label="Remove from favorites"
-							>
-								<m.div
-									whileTap={{ scale: 0.95 }}
-									transition={{ duration: 0.15, ease: iOSEase }}
-								>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										width="16"
-										height="16"
-										viewBox="0 0 24 24"
-										fill="currentColor"
-										stroke="currentColor"
-										strokeWidth="2"
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										aria-label="Favorite"
-									>
-										<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-									</svg>
-								</m.div>
-							</Button>
-						)}
-						<span className="ml-2">
-							{mounted ? new Date(note.createdAt).toLocaleDateString() : ""}
-						</span>
-					</div>
-				</div>
-			</CardHeader>
-		</Card>
-	);
 }
 
 export function NoteCreator({ className }: NoteCreatorProps) {
@@ -564,7 +146,6 @@ function NoteCreatorInner({ className }: NoteCreatorProps) {
 				</CardContent>
 			</Card>
 
-			{/* Note List */}
 			{filteredNotes.length > 0 && (
 				<Card>
 					<CardHeader className="pb-4">
@@ -622,7 +203,6 @@ function NoteCreatorInner({ className }: NoteCreatorProps) {
 													transition={{ duration: 0.2, ease: iOSEase }}
 												>
 													<svg
-														xmlns="http://www.w3.org/2000/svg"
 														width="16"
 														height="16"
 														viewBox="0 0 24 24"
@@ -659,7 +239,6 @@ function NoteCreatorInner({ className }: NoteCreatorProps) {
 											transition={{ duration: 0.2, ease: iOSEase }}
 										>
 											<svg
-												xmlns="http://www.w3.org/2000/svg"
 												width="18"
 												height="18"
 												viewBox="0 0 24 24"
@@ -690,7 +269,6 @@ function NoteCreatorInner({ className }: NoteCreatorProps) {
 											transition={{ duration: 0.2, ease: iOSEase }}
 										>
 											<svg
-												xmlns="http://www.w3.org/2000/svg"
 												width="18"
 												height="18"
 												viewBox="0 0 24 24"
@@ -717,7 +295,6 @@ function NoteCreatorInner({ className }: NoteCreatorProps) {
 											transition={{ duration: 0.2, ease: iOSEase }}
 										>
 											<svg
-												xmlns="http://www.w3.org/2000/svg"
 												width="18"
 												height="18"
 												viewBox="0 0 24 24"
@@ -742,7 +319,6 @@ function NoteCreatorInner({ className }: NoteCreatorProps) {
 				</Card>
 			)}
 
-			{/* Empty State */}
 			{filteredNotes.length === 0 && notes.length > 0 && (
 				<Card className="py-8 text-center">
 					<p className="text-muted-foreground">No notes match your search</p>
@@ -757,7 +333,6 @@ function NoteCreatorInner({ className }: NoteCreatorProps) {
 				</Card>
 			)}
 
-			{/* Create/Edit Note Modal */}
 			<Dialog open={isCreating} onOpenChange={setIsCreating}>
 				<DialogContent className="w-full max-w-md sm:max-w-lg">
 					<DialogHeader>

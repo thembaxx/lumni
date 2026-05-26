@@ -473,4 +473,37 @@ export const schemaConfig: Record<string, CollectionSchema> = {
 			{ key: "idx_posts_createdAt", type: "key", attributes: ["createdAt"] },
 		],
 	},
+	group_comments: {
+		attributes: {
+			postId: { type: "string", size: 100, required: true },
+			userId: { type: "string", size: 100, required: true },
+			userName: { type: "string", size: 255 },
+			content: { type: "string", size: 65535, required: true },
+			parentId: { type: "string", size: 100 },
+			createdAt: { type: "datetime", required: true },
+			updatedAt: { type: "datetime" },
+		},
+		indexes: [
+			{ key: "idx_comments_postId", type: "key", attributes: ["postId"] },
+			{ key: "idx_comments_userId", type: "key", attributes: ["userId"] },
+		],
+	},
+	group_reactions: {
+		attributes: {
+			postId: { type: "string", size: 100 },
+			commentId: { type: "string", size: 100 },
+			userId: { type: "string", size: 100, required: true },
+			emoji: { type: "string", size: 50, required: true },
+			createdAt: { type: "datetime", required: true },
+		},
+		indexes: [
+			{ key: "idx_reactions_postId", type: "key", attributes: ["postId"] },
+			{
+				key: "idx_reactions_commentId",
+				type: "key",
+				attributes: ["commentId"],
+			},
+			{ key: "idx_reactions_userId", type: "key", attributes: ["userId"] },
+		],
+	},
 };

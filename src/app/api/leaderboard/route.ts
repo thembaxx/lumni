@@ -1,8 +1,7 @@
 import { Client, Databases, Query } from "appwrite";
 import { NextResponse } from "next/server";
 import { APPWRITE_ENDPOINT, APPWRITE_PROJECT } from "@/lib/appwrite";
-
-const COLLECTION = "user_gamification";
+import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 
 export async function GET() {
 	try {
@@ -13,8 +12,8 @@ export async function GET() {
 
 		try {
 			const docs = await db.listDocuments(
-				process.env.APPWRITE_DATABASE_ID!,
-				COLLECTION,
+				APPWRITE_DATABASE_ID,
+				COLLECTIONS.USER_GAMIFICATION,
 				[Query.orderDesc("totalXp"), Query.limit(100)],
 			);
 

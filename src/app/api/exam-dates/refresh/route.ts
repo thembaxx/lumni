@@ -1,9 +1,18 @@
 import { NextResponse } from "next/server";
 import { getSeedData, syncExamDatesDirect } from "@/lib/exam-dates/service";
+import { getAuthenticatedUserId } from "@/lib/server/auth";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 async function refreshHandler(): Promise<NextResponse> {
 	try {
+		const userId = await getAuthenticatedUserId();
+		if (!userId) {
+			return NextResponse.json(
+				{ error: "Authentication required" },
+				{ status: 401 },
+			);
+		}
+
 		const sessions = [
 			{ session: "may-june", year: 2026 },
 			{ session: "oct-nov", year: 2026 },

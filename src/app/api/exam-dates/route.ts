@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getSeedData, syncExamDatesToAppwrite } from "@/lib/exam-dates/service";
 import type { ExamSlot } from "@/lib/exam-dates/types";
+import { getAuthenticatedUserId } from "@/lib/server/auth";
 
 export async function GET(request: Request): Promise<NextResponse> {
 	const url = new URL(request.url);
@@ -22,6 +23,14 @@ export async function GET(request: Request): Promise<NextResponse> {
 
 export async function POST(request: Request): Promise<NextResponse> {
 	try {
+		const userId = await getAuthenticatedUserId();
+		if (!userId) {
+			return NextResponse.json(
+				{ error: "Authentication required" },
+				{ status: 401 },
+			);
+		}
+
 		const url = new URL(request.url);
 		const session = url.searchParams.get("session") || "may-june";
 		const yearStr = url.searchParams.get("year") || "2026";

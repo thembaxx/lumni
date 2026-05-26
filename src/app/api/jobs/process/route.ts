@@ -4,7 +4,7 @@ import { jobProcessor } from "@/lib/orchestrator/job-processor";
 export const dynamic = "force-dynamic";
 
 export const POST = createRouteHandler({
-	auth: "none",
+	auth: "admin",
 	errorLabel: "Jobs Process",
 	validate: (body: Record<string, unknown>) => {
 		if (!body || typeof body !== "object") return "Invalid request body";

@@ -30,18 +30,19 @@ import { QuizEngine, type QuizResults } from "@/components/quiz/quiz-engine";
 import { useGamification } from "@/hooks/use-gamification";
 import { useUserProgress } from "@/hooks/use-user-progress";
 import { useUserSubjects } from "@/hooks/use-user-subjects";
+import { useAuth } from "@/lib/auth";
 import { toggleUserSubject } from "@/lib/server";
 
-const DEFAULT_USER_ID = "demo-user";
-
 export default function StatsTab() {
-	const [userId] = useState(DEFAULT_USER_ID);
+	const { user, authReady } = useAuth();
+	const userId = user?.$id ?? null;
 	const [quizResults, setQuizResults] = useState<QuizResults | null>(null);
 
-	const { data: progressData, isLoading: isProgressLoading } =
-		useUserProgress(userId);
+	const { data: progressData, isLoading: isProgressLoading } = useUserProgress(
+		userId ?? "",
+	);
 	const { data: subjectsResult, isLoading: isSubjectsLoading } =
-		useUserSubjects(userId);
+		useUserSubjects(userId ?? "");
 	const {
 		gamification,
 		currentStreak,
@@ -56,13 +57,14 @@ export default function StatsTab() {
 	};
 
 	async function handleSubjectToggle(newSelection: string[]) {
+		if (!userId) return;
 		const added = newSelection.find((id) => !selectedSubjects.includes(id));
 		const removed = selectedSubjects.find((id) => !newSelection.includes(id));
 
 		if (added) {
-			await toggleUserSubject(DEFAULT_USER_ID, added);
+			await toggleUserSubject(userId, added);
 		} else if (removed) {
-			await toggleUserSubject(DEFAULT_USER_ID, removed);
+			await toggleUserSubject(userId, removed);
 		}
 	}
 
@@ -84,12 +86,24 @@ export default function StatsTab() {
 		{ date: "Sun", accuracy: progress.accuracy || 0 },
 	];
 
-	if (isProgressLoading || isSubjectsLoading || !isGamificationLoaded) {
+	if (!authReady || isProgressLoading || isSubjectsLoading || !isGamificationLoaded) {
 		return (
 			<div className="flex flex-col gap-3 px-4 pb-6">
 				<Skeleton className="h-24 rounded-lg" />
 				<Skeleton className="h-24 rounded-lg" />
 				<Skeleton className="h-48 rounded-lg" />
+			</div>
+		);
+	}
+
+	if (!userId) {
+		return (
+			<div className="flex flex-col gap-3 px-4 pb-6">
+				<Card className="border-0 p-6">
+					<p className="text-muted-foreground">
+						Sign in to track your practice progress and streaks.
+					</p>
+				</Card>
 			</div>
 		);
 	}
