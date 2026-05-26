@@ -1,13 +1,35 @@
 import { describe, expect, mock, test } from "bun:test";
 
 const mockDb = {
-	listDocuments: mock(async (_dbId: string, _coll: string, _queries: string[]) => ({ documents: [] })),
-	getDocument: mock(async (_dbId: string, _coll: string, _docId: string) => ({})),
-	createDocument: mock(async (_dbId: string, _coll: string, _docId: string, _data: Record<string, unknown>) => ({
-		$id: "doc-123",
-	})),
-	updateDocument: mock(async (_dbId: string, _coll: string, _docId: string, _data: Record<string, unknown>) => {}),
-	deleteDocument: mock(async (_dbId: string, _coll: string, _docId: string) => {}),
+	listDocuments: mock(
+		async (_dbId: string, _coll: string, _queries: string[]) => ({
+			documents: [],
+		}),
+	),
+	getDocument: mock(
+		async (_dbId: string, _coll: string, _docId: string) => ({}),
+	),
+	createDocument: mock(
+		async (
+			_dbId: string,
+			_coll: string,
+			_docId: string,
+			_data: Record<string, unknown>,
+		) => ({
+			$id: "doc-123",
+		}),
+	),
+	updateDocument: mock(
+		async (
+			_dbId: string,
+			_coll: string,
+			_docId: string,
+			_data: Record<string, unknown>,
+		) => {},
+	),
+	deleteDocument: mock(
+		async (_dbId: string, _coll: string, _docId: string) => {},
+	),
 };
 
 process.env.APPWRITE_DATABASE_ID = "test-db-id";
@@ -61,11 +83,20 @@ mock.module("@/lib/db/client", () => ({
 	} as const,
 	APPWRITE_DATABASE_ID: "test-db-id",
 	listDocuments: async (collection: string, queries?: string[]) => {
-		const result = await mockDb.listDocuments("test-db-id", collection, queries ?? []);
+		const result = await mockDb.listDocuments(
+			"test-db-id",
+			collection,
+			queries ?? [],
+		);
 		return result.documents;
 	},
 	createDocument: async (collection: string, data: Record<string, unknown>) => {
-		const result = await mockDb.createDocument("test-db-id", collection, "unique()", data);
+		const result = await mockDb.createDocument(
+			"test-db-id",
+			collection,
+			"unique()",
+			data,
+		);
 		return result.$id;
 	},
 	getDocument: async (collection: string, documentId: string) => {
@@ -75,8 +106,11 @@ mock.module("@/lib/db/client", () => ({
 			return null;
 		}
 	},
-	updateDocument: async (collection: string, documentId: string, data: Record<string, unknown>) =>
-		mockDb.updateDocument("test-db-id", collection, documentId, data),
+	updateDocument: async (
+		collection: string,
+		documentId: string,
+		data: Record<string, unknown>,
+	) => mockDb.updateDocument("test-db-id", collection, documentId, data),
 	deleteDocument: async (collection: string, documentId: string) =>
 		mockDb.deleteDocument("test-db-id", collection, documentId),
 }));

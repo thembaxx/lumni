@@ -1,12 +1,32 @@
 import { describe, expect, mock, test } from "bun:test";
 
 const tableNames = [
-	"chatMessages", "flashcards", "competencies", "questions", "progress",
-	"quizAttempts", "subjects", "quizSessions", "conflicts", "jobs",
-	"visuals", "wrongAnswers", "questionRatings", "examSessions", "cachedPdfs",
-	"examDates", "reviewHistory", "extractionCache", "bookmarks", "notes",
-	"groupPosts", "groupComments", "groupReactions", "gamification",
-	"quizPacks", "packQuestions",
+	"chatMessages",
+	"flashcards",
+	"competencies",
+	"questions",
+	"progress",
+	"quizAttempts",
+	"subjects",
+	"quizSessions",
+	"conflicts",
+	"jobs",
+	"visuals",
+	"wrongAnswers",
+	"questionRatings",
+	"examSessions",
+	"cachedPdfs",
+	"examDates",
+	"reviewHistory",
+	"extractionCache",
+	"bookmarks",
+	"notes",
+	"groupPosts",
+	"groupComments",
+	"groupReactions",
+	"gamification",
+	"quizPacks",
+	"packQuestions",
 ];
 
 const mockTables = tableNames.map((name) => ({
@@ -22,10 +42,18 @@ class MockOfflineDB {
 	table(name: string) {
 		return mockTables.find((t) => t.name === name);
 	}
-	version(_v: number) { return this; }
-	stores(_schema: Record<string, string>) { return this; }
-	upgrade(_fn: (trans: unknown) => void) { return this; }
-	open() { return Promise.resolve(this); }
+	version(_v: number) {
+		return this;
+	}
+	stores(_schema: Record<string, string>) {
+		return this;
+	}
+	upgrade(_fn: (trans: unknown) => void) {
+		return this;
+	}
+	open() {
+		return Promise.resolve(this);
+	}
 	close() {}
 }
 
@@ -52,7 +80,9 @@ describe("LumniOfflineDB", () => {
 	test("has all expected tables", () => {
 		expect(offlineDB.tables.length).toBe(26);
 		for (const name of tableNames) {
-			const table = offlineDB.tables.find((t: { name: string }) => t.name === name);
+			const table = offlineDB.tables.find(
+				(t: { name: string }) => t.name === name,
+			);
 			expect(table).toBeDefined();
 		}
 	});

@@ -29,7 +29,12 @@ mock.module("next/headers", () => ({
 		},
 		getAll: () =>
 			authState.sessionCookieValue != null
-				? [{ name: `a_session_test-project`, value: authState.sessionCookieValue }]
+				? [
+						{
+							name: `a_session_test-project`,
+							value: authState.sessionCookieValue,
+						},
+					]
 				: [],
 	}),
 }));

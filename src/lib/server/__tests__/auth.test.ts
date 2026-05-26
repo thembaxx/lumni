@@ -37,23 +37,40 @@ mock.module("next/headers", () => ({
 		},
 		getAll: () =>
 			authState.sessionCookieValue != null
-				? [{ name: `a_session_test-project`, value: authState.sessionCookieValue }]
+				? [
+						{
+							name: `a_session_test-project`,
+							value: authState.sessionCookieValue,
+						},
+					]
 				: [],
 	}),
 }));
 
 mock.module("node-appwrite", () => {
 	class MockClient {
-		setEndpoint() { return this; }
-		setProject() { return this; }
-		setSession() { return this; }
-		setKey() { return this; }
+		setEndpoint() {
+			return this;
+		}
+		setProject() {
+			return this;
+		}
+		setSession() {
+			return this;
+		}
+		setKey() {
+			return this;
+		}
 	}
 	class MockAccount {
 		async get() {
 			if (authState.getRejects) throw new Error("Account get rejected");
 			if (!authState.userId) throw new Error("No user");
-			return { $id: authState.userId, name: authState.userName, email: `${authState.userId}@test.com` };
+			return {
+				$id: authState.userId,
+				name: authState.userName,
+				email: `${authState.userId}@test.com`,
+			};
 		}
 	}
 	class MockAppwriteException extends Error {
