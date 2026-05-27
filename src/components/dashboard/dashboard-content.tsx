@@ -7,6 +7,7 @@ import { AchievementShowcase } from "@/components/dashboard/achievement-showcase
 import { CountdownHeader } from "@/components/dashboard/countdown-header";
 import { DailyChallenges } from "@/components/dashboard/daily-challenges";
 import { HeroBanner } from "@/components/dashboard/dashboard-hero";
+import { MasteryHeatmap } from "@/components/dashboard/mastery-heatmap";
 import { QuickActions } from "@/components/dashboard/quick-actions/quick-actions";
 import { QuizStartCard } from "@/components/dashboard/quiz-start-card";
 import { SectionReveal } from "@/components/dashboard/section-reveal";
@@ -257,6 +258,14 @@ export function DashboardContent({
 				{showAnalytics && !isAnonymous && (
 					<SectionReveal delay={0.185}>
 						<RewardChestPanel />
+					</SectionReveal>
+				)}
+				{showAnalytics && !isAnonymous && (
+					<SectionReveal delay={0.19}>
+						<Card className="flex flex-col gap-4 p-4">
+							<h2 className="font-semibold text-sm">Mastery Heatmap</h2>
+							<MasteryHeatmap />
+						</Card>
 					</SectionReveal>
 				)}
 				{showPractice && (
