@@ -9,6 +9,11 @@ import type {
 import type { StoredGamification } from "@/lib/gamification-engine/types";
 import type { JobRecord } from "@/lib/orchestrator/types";
 import type { QuizPack, QuizPackQuestion } from "@/lib/quiz-packs/types";
+import type {
+	GroupBadge,
+	GroupChallenge,
+	GroupChallengeEntry,
+} from "@/lib/study-groups/challenge-types";
 import type { GroupPost } from "@/lib/study-groups/types";
 
 export interface CachedQuestion {
@@ -216,6 +221,9 @@ export class LumniOfflineDB extends Dexie {
 	quizPacks!: Table<QuizPack, string>;
 	packQuestions!: Table<QuizPackQuestion, number>;
 	pastPaperQuestions!: Table<PastPaperQuestion, string>;
+	groupChallenges!: Table<GroupChallenge, string>;
+	groupChallengeEntries!: Table<GroupChallengeEntry, string>;
+	groupBadges!: Table<GroupBadge, string>;
 
 	constructor() {
 		super("lumni-offline");
@@ -519,6 +527,41 @@ export class LumniOfflineDB extends Dexie {
 			packQuestions: "++id, &[packId+questionIndex], packId",
 			pastPaperQuestions:
 				"&id, subject, year, paperNumber, questionType, createdAt",
+		});
+
+		this.version(23).stores({
+			flashcards:
+				"&id, subject, topic, nextReview, easeFactor, interval, repetitions, status, learningStep, leeched, updatedAt",
+			reviewHistory: "++id, cardId, reviewedAt",
+			extractionCache: "++id, &imageHash, createdAt",
+			chatMessages: "++id, role, timestamp",
+			questions: "++id, &subject, topic, cachedAt",
+			progress: "++id, &odSubjectId, userId, updatedAt",
+			quizAttempts: "++id, &odSubject, userId, completedAt",
+			subjects: "++id, &code, cachedAt",
+			quizSessions: "++id, &sessionId, subject, startedAt, lastSavedAt",
+			conflicts: "++id, resolvedAt",
+			jobs: "++id, type, status, priority, scheduledAt, createdAt",
+			competencies: "++id, subjectId, topicId, bloomLevel, level, lastAssessed",
+			visuals: "++id, &cacheKey, subject, createdAt",
+			wrongAnswers: "++id, userId, subject, topic, reviewed, createdAt",
+			questionRatings: "++id, questionId, subject, topic, rating, createdAt",
+			examSessions: "++id, &paperId, startedAt, lastSavedAt, completed",
+			cachedPdfs: "++id, &paperId, cachedAt",
+			examDates: "++id, &cacheKey, session, year, updatedAt",
+			bookmarks: "++id, &questionId, subject, topic, savedAt",
+			notes: "++id, title, subject, topic, isFavorite, updatedAt",
+			groupPosts: "++id, groupId, userId, createdAt",
+			groupComments: "++id, postId, parentId, userId, createdAt",
+			groupReactions: "++id, postId, commentId, userId, emoji, createdAt",
+			gamification: "++id, totalXp, currentStreak, lastPracticeDate",
+			quizPacks: "&id, subject, topic, status, createdAt, expiresAt",
+			packQuestions: "++id, &[packId+questionIndex], packId",
+			pastPaperQuestions:
+				"&id, subject, year, paperNumber, questionType, createdAt",
+			groupChallenges: "&id, groupId, weekStart, status",
+			groupChallengeEntries: "&id, challengeId, groupId, userId",
+			groupBadges: "&id, groupId, userId, tier",
 		});
 	}
 }

@@ -74,15 +74,31 @@ export function ExamsBrowse() {
 							<h1 className="ios-title-1 font-semibold text-foreground tracking-tight">
 								Past Exam Papers
 							</h1>
-							<Button
-								size="sm"
-								variant="outline"
-								onClick={() => openTools("calendar")}
-								className="gap-1.5 rounded-full border-border/60 text-xs"
-							>
-								<HugeiconsIcon icon={Calendar01Icon} className="size-3.5" />
-								Exam Dates
-							</Button>
+							<div className="flex items-center gap-2">
+								<Button
+									size="sm"
+									variant="default"
+									onClick={() => {
+										const params = new URLSearchParams({
+											pastPaperMode: "true",
+										});
+										window.location.href = `/quiz?${params.toString()}`;
+									}}
+									className="gap-1.5 rounded-full text-xs"
+								>
+									<HugeiconsIcon icon={BookOpen01Icon} className="size-3.5" />
+									Practice
+								</Button>
+								<Button
+									size="sm"
+									variant="outline"
+									onClick={() => openTools("calendar")}
+									className="gap-1.5 rounded-full border-border/60 text-xs"
+								>
+									<HugeiconsIcon icon={Calendar01Icon} className="size-3.5" />
+									Exam Dates
+								</Button>
+							</div>
 						</div>
 
 						<div className="relative flex flex-col gap-4">

@@ -8,7 +8,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import {
 	Empty,
 	EmptyContent,
@@ -39,6 +39,7 @@ export function AdminExamList() {
 	const { push } = useRouter();
 	const queryClient = useQueryClient();
 	const [deleting, setDeleting] = useState<string | null>(null);
+	const [extracting, setExtracting] = useState<string | null>(null);
 
 	const { data, isLoading, error } = useQuery({
 		queryKey: ["admin-exams"],
@@ -51,6 +52,8 @@ export function AdminExamList() {
 			}>;
 		},
 	});
+
+	const exams = data?.exams || [];
 
 	const deleteMutation = useMutation({
 		mutationFn: async (id: string) => {
@@ -74,12 +77,80 @@ export function AdminExamList() {
 		}
 	};
 
-	const exams = data?.exams || [];
+	const handleExtract = useCallback(
+		async (paperId: string) => {
+			setExtracting(paperId);
+			try {
+				const res = await fetch("/api/admin/exams/batch-extract", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({ paperIds: [paperId] }),
+				});
+				if (!res.ok) throw new Error("Extract failed");
+				queryClient.invalidateQueries({ queryKey: ["admin-exams"] });
+			} catch {
+				alert("Extraction failed. Check console for details.");
+			} finally {
+				setExtracting(null);
+			}
+		},
+		[queryClient],
+	);
+
+	const handleBatchExtractAll = useCallback(async () => {
+		if (
+			!confirm(
+				`Extract questions from all ${exams.length} papers? This may take a while.`,
+			)
+		)
+			return;
+		setExtracting("batch");
+		try {
+			const res = await fetch("/api/admin/exams/batch-extract", {
+				method: "POST",
+			});
+			if (!res.ok) throw new Error("Batch extract failed");
+			const result = await res.json();
+			const successCount = result.results.filter(
+				(r: { status: string }) => r.status === "success",
+			).length;
+			alert(
+				`Extraction complete: ${successCount}/${result.total} papers extracted.`,
+			);
+			queryClient.invalidateQueries({ queryKey: ["admin-exams"] });
+		} catch {
+			alert("Batch extraction failed.");
+		} finally {
+			setExtracting(null);
+		}
+	}, [exams.length, queryClient]);
 
 	return (
 		<Card>
 			<CardHeader>
-				<CardTitle>Exam Papers ({data?.total || 0})</CardTitle>
+				<div className="flex items-center justify-between">
+					<CardTitle>Exam Papers ({data?.total || 0})</CardTitle>
+					{exams.length > 0 && (
+						<Button
+							variant="outline"
+							size="sm"
+							onClick={handleBatchExtractAll}
+							disabled={extracting === "batch"}
+						>
+							{extracting === "batch" ? (
+								<>
+									<HugeiconsIcon
+										icon={RadialIcon}
+										className="size-3.5 animate-spin"
+									/>
+									Extracting…
+								</>
+							) : (
+								"Extract All Questions"
+							)}
+						</Button>
+					)}
+				</div>
 			</CardHeader>
 			<CardContent className="p-0">
 				{isLoading ? (
@@ -127,6 +198,22 @@ export function AdminExamList() {
 										</p>
 									</div>
 									<div className="flex shrink-0 items-center gap-1">
+										<Button
+											variant="ghost"
+											size="icon"
+											onClick={() => handleExtract(exam.id)}
+											disabled={extracting === exam.id}
+											title="Extract questions"
+										>
+											{extracting === exam.id ? (
+												<HugeiconsIcon
+													icon={RadialIcon}
+													className="size-4 animate-spin"
+												/>
+											) : (
+												<HugeiconsIcon icon={File02Icon} className="size-4" />
+											)}
+										</Button>
 										<Button
 											variant="ghost"
 											size="icon"

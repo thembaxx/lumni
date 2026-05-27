@@ -215,6 +215,13 @@ export function AdminDashboard() {
 						<Button
 							variant="ghost"
 							size="sm"
+							onClick={() => push("/admin/past-papers")}
+						>
+							Past Qs
+						</Button>
+						<Button
+							variant="ghost"
+							size="sm"
 							onClick={() => push("/admin/questions")}
 						>
 							Questions

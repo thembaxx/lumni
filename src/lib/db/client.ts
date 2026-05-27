@@ -43,6 +43,9 @@ export const COLLECTIONS = {
 	GROUP_COMMENTS: "group_comments",
 	GROUP_REACTIONS: "group_reactions",
 	PAST_PAPER_QUESTIONS: "past_paper_questions",
+	GROUP_CHALLENGES: "group_challenges",
+	GROUP_CHALLENGE_ENTRIES: "group_challenge_entries",
+	GROUP_BADGES: "group_badges",
 } as const;
 
 export type Subject = {

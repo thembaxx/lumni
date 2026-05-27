@@ -2,16 +2,20 @@
 
 import {
 	ArrowLeft01Icon,
+	Award01Icon,
 	CheckmarkCircle01Icon,
 	Copy02Icon,
 	Minimize01Icon,
 	UserGroupIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
+import { ChallengeBanner } from "@/components/study-groups/challenge/challenge-banner";
+import { ChallengeLeaderboard } from "@/components/study-groups/challenge/challenge-leaderboard";
 import { DiscussionFeed } from "@/components/study-groups/discussion-feed";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -19,6 +23,11 @@ import { Card } from "@/components/ui/card";
 import { useGroupDetail, useRemoveMember } from "@/hooks/use-study-groups";
 import { Link } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
+import { apiFetch } from "@/lib/shared/api-fetch";
+import type {
+	GroupChallenge,
+	GroupChallengeEntry,
+} from "@/lib/study-groups/challenge-types";
 
 export function GroupDetail() {
 	const t = useTranslations();
@@ -28,6 +37,19 @@ export function GroupDetail() {
 	const { user } = useAuth();
 	const { mutate: removeMemberAction } = useRemoveMember();
 	const [copied, setCopied] = useState(false);
+
+	const { data: challengeData } = useQuery<{
+		challenge: GroupChallenge;
+		entries: GroupChallengeEntry[];
+	}>({
+		queryKey: ["group-challenge", groupId],
+		queryFn: async () =>
+			apiFetch<{ challenge: GroupChallenge; entries: GroupChallengeEntry[] }>(
+				`/api/study-groups/${groupId}/challenge`,
+				{},
+			),
+		refetchInterval: 30000,
+	});
 
 	const copyInviteCode = () => {
 		if (data?.group?.inviteCode) {
@@ -72,6 +94,11 @@ export function GroupDetail() {
 
 	const { group, members } = data;
 
+	const userNames: Record<string, string> = {};
+	for (const m of members || []) {
+		userNames[m.userId] = m.userName || m.userEmail || m.userId;
+	}
+
 	return (
 		<PageContainer>
 			<div className="flex flex-col gap-6 py-6">
@@ -91,6 +118,25 @@ export function GroupDetail() {
 						)}
 					</div>
 				</div>
+
+				{challengeData && (
+					<>
+						<ChallengeBanner
+							challenge={challengeData.challenge}
+							entries={challengeData.entries}
+						/>
+						<Card className="flex flex-col gap-3 p-4">
+							<div className="flex items-center gap-2">
+								<HugeiconsIcon icon={Award01Icon} className="size-5" />
+								<h2 className="font-semibold">This Week&apos;s Leaderboard</h2>
+							</div>
+							<ChallengeLeaderboard
+								entries={challengeData.entries}
+								userNames={userNames}
+							/>
+						</Card>
+					</>
+				)}
 
 				<div className="grid grid-cols-1 gap-6 md:grid-cols-2">
 					<Card className="flex flex-col gap-4 p-4">

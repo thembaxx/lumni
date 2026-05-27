@@ -45,9 +45,9 @@ export async function GET(request: NextRequest) {
 		if (topic) {
 			const topicLower = topic.toLowerCase();
 			questions = questions.filter(
-			(q) =>
-				q.questionText.toLowerCase().includes(topicLower) ||
-				q.topic?.toLowerCase().includes(topicLower),
+				(q) =>
+					q.questionText.toLowerCase().includes(topicLower) ||
+					q.topic?.toLowerCase().includes(topicLower),
 			);
 		}
 

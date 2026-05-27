@@ -1,4 +1,6 @@
 import type { BloomLevel, QuestionType } from "@/lib/question-engine/types";
+import { updateChallengeEntry } from "@/lib/study-groups/challenge-service";
+import { XP_PER_CORRECT, XP_PER_QUESTION } from "@/types/gamification";
 import { enqueueGradeSideEffects } from "./grading";
 
 export interface TrackResultParams {
@@ -10,6 +12,7 @@ export interface TrackResultParams {
 	questionType?: QuestionType;
 	correct?: boolean;
 	questionText?: string;
+	userId?: string;
 }
 
 export async function trackQuestionResult(
@@ -28,15 +31,28 @@ export async function trackQuestionResult(
 	const isCorrect =
 		correct ?? (maxScore > 0 ? score / maxScore >= 0.5 : score >= 0.5);
 
-	await enqueueGradeSideEffects({
-		subject: subjectId,
-		topic: topicId,
-		bloomLevel,
-		questionType: questionType ?? "short-answer",
-		score,
-		maxScore,
-		correct: isCorrect,
-	});
+	const accuracy =
+		maxScore > 0
+			? Math.round((score / maxScore) * 100)
+			: score >= 0.5
+				? 100
+				: 0;
+	const xpGained = XP_PER_QUESTION + (isCorrect ? XP_PER_CORRECT : 0);
+
+	await Promise.allSettled([
+		enqueueGradeSideEffects({
+			subject: subjectId,
+			topic: topicId,
+			bloomLevel,
+			questionType: questionType ?? "short-answer",
+			score,
+			maxScore,
+			correct: isCorrect,
+		}),
+		params.userId
+			? updateChallengeEntry(params.userId, xpGained, 1, accuracy)
+			: Promise.resolve(),
+	]);
 }
 
 export function isPassingScore(

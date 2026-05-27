@@ -1,0 +1,62 @@
+"use client";
+
+import type { GroupChallengeEntry } from "@/lib/study-groups/challenge-types";
+
+interface Props {
+	entries: GroupChallengeEntry[];
+	userNames?: Record<string, string>;
+}
+
+const MEDAL_ICONS = ["🥇", "🥈", "🥉"];
+
+export function ChallengeLeaderboard({ entries, userNames = {} }: Props) {
+	const sorted = [...entries].sort((a, b) => b.combinedScore - a.combinedScore);
+
+	if (sorted.length === 0) {
+		return (
+			<div className="flex flex-col items-center gap-2 py-8 text-muted-foreground">
+				<span className="text-2xl">📊</span>
+				<p className="text-sm">No activity yet this week</p>
+				<p className="text-xs">Complete quizzes to earn challenge points!</p>
+			</div>
+		);
+	}
+
+	return (
+		<div className="flex flex-col gap-2">
+			{sorted.map((entry, i) => (
+				<div
+					key={entry.userId}
+					className="flex items-center gap-3 rounded-lg bg-muted/30 px-3 py-2.5"
+				>
+					<div className="flex w-8 items-center justify-center">
+						{i < 3 ? (
+							<span className="text-lg">{MEDAL_ICONS[i]}</span>
+						) : (
+							<span className="font-mono text-muted-foreground text-xs">
+								#{i + 1}
+							</span>
+						)}
+					</div>
+
+					<div className="min-w-0 flex-1">
+						<p className="truncate font-medium text-sm">
+							{userNames[entry.userId] || "Student"}
+						</p>
+						<div className="flex items-center gap-2 text-muted-foreground text-xs">
+							<span>{entry.questionsAnswered} Q</span>
+							<span>{(entry.accuracy || 0).toFixed(0)}%</span>
+						</div>
+					</div>
+
+					<div className="text-right">
+						<p className="font-bold text-sm">
+							{Math.round(entry.combinedScore)}
+						</p>
+						<p className="text-[10px] text-muted-foreground">pts</p>
+					</div>
+				</div>
+			))}
+		</div>
+	);
+}
