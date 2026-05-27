@@ -3,13 +3,14 @@ import { NextResponse } from "next/server";
 import createMiddleware from "next-intl/middleware";
 import { defaultLocale, locales } from "./i18n/locales";
 
-const PROTECTED_PAGES = ["/admin", "/teacher", "/parent"];
-
 const intlMiddleware = createMiddleware({
 	locales,
 	defaultLocale,
+	localeDetection: true,
 	localePrefix: "as-needed",
 });
+
+const PROTECTED_PAGES = ["/admin", "/teacher", "/parent"];
 
 function getProjectCookieName(): string {
 	const projectId = process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID;
@@ -33,24 +34,31 @@ function stripLocale(pathname: string): string {
 	return pathname;
 }
 
-export function proxy(request: NextRequest) {
-	const intlResponse = intlMiddleware(request);
+export function middleware(request: NextRequest) {
+	const { pathname } = request.nextUrl;
 
-	if (intlResponse.status === 307 || intlResponse.status === 308) {
-		return intlResponse;
+	const isApiRoute =
+		pathname.startsWith("/api/") || pathname.startsWith("/monitoring");
+	if (isApiRoute) {
+		return;
 	}
 
-	const pathname = stripLocale(request.nextUrl.pathname);
-
+	const strippedPath = stripLocale(pathname);
 	const isProtectedPage = PROTECTED_PAGES.some((prefix) =>
-		pathname.startsWith(prefix),
+		strippedPath.startsWith(prefix),
 	);
 
 	if (isProtectedPage && !isAuthenticated(request)) {
 		const signInUrl = new URL("/auth/sign-in", request.url);
-		signInUrl.searchParams.set("redirect", request.nextUrl.pathname);
+		signInUrl.searchParams.set("redirect", pathname);
 		return NextResponse.redirect(signInUrl);
 	}
 
-	return intlResponse;
+	return intlMiddleware(request);
 }
+
+export const config = {
+	matcher: [
+		"/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
+	],
+};
