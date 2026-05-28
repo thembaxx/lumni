@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/select";
 import { useQuizPacks } from "@/hooks/use-quiz-packs";
 import { useSubjects } from "@/hooks/use-subjects";
+import { usePremium } from "@/lib/premium/premium-context";
 
 export function OfflinePackManager() {
 	const {
@@ -37,9 +38,37 @@ export function OfflinePackManager() {
 	} = useQuizPacks();
 	const { data: subjectsData } = useSubjects();
 	const subjects = subjectsData?.subjects ?? [];
-
+	const { hasFeature } = usePremium();
+	const isPremium = hasFeature("offline-quiz-packs");
 	const [selectedSubject, setSelectedSubject] = useState("");
 	const [questionCount, setQuestionCount] = useState("10");
+
+	if (!isPremium) {
+		return (
+			<Card>
+				<CardHeader className="flex flex-row items-center justify-between">
+					<CardTitle className="flex items-center gap-2 font-extrabold text-base tracking-tight">
+						<HugeiconsIcon icon={CloudOffIcon} className="size-5" />
+						Offline Quiz Packs
+					</CardTitle>
+				</CardHeader>
+				<CardContent>
+					<div className="flex flex-col items-center gap-3 rounded-xl bg-muted/30 p-6 text-center">
+						<HugeiconsIcon
+							icon={StoreIcon}
+							className="size-8 text-muted-foreground/40"
+						/>
+						<div>
+							<p className="font-medium text-sm">Premium Feature</p>
+							<p className="mt-1 text-muted-foreground text-xs">
+								Upgrade to Premium to download quiz packs for offline study.
+							</p>
+						</div>
+					</div>
+				</CardContent>
+			</Card>
+		);
+	}
 
 	const handleGenerate = async () => {
 		if (!selectedSubject) return;

@@ -49,14 +49,16 @@ export function DangerZone({
 			</CardHeader>
 			<CardContent className="flex flex-col gap-3">
 				<Dialog>
-					<DialogTrigger>
-						<Button
-							variant="outline"
-							size="sm"
-							className="w-fit border-destructive/50 text-destructive hover:bg-destructive/10"
-						>
-							Clear All Local Data
-						</Button>
+					<DialogTrigger
+						render={
+							<Button
+								variant="outline"
+								size="sm"
+								className="w-fit border-destructive/50 text-destructive hover:bg-destructive/10"
+							/>
+						}
+					>
+						Clear All Local Data
 					</DialogTrigger>
 					<DialogContent>
 						<DialogHeader>
@@ -83,11 +85,13 @@ export function DangerZone({
 				</Dialog>
 
 				<Dialog>
-					<DialogTrigger>
-						<Button variant="destructive" size="sm" className="w-fit">
-							<HugeiconsIcon icon={Delete02Icon} size={16} />
-							Delete Account
-						</Button>
+					<DialogTrigger
+						render={
+							<Button variant="destructive" size="sm" className="w-fit" />
+						}
+					>
+						<HugeiconsIcon icon={Delete02Icon} size={16} />
+						Delete Account
 					</DialogTrigger>
 					<DialogContent>
 						<DialogHeader>

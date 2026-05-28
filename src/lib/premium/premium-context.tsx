@@ -19,7 +19,10 @@ export type PremiumFeature =
 	| "unlimited-flashcards"
 	| "custom-study-plans"
 	| "exam-simulator"
-	| "priority-support";
+	| "priority-support"
+	| "offline-quiz-packs"
+	| "problem-library"
+	| "visual-engine";
 
 const FREE_FEATURES: PremiumFeature[] = ["ai-tutor", "unlimited-flashcards"];
 
@@ -30,6 +33,9 @@ const PREMIUM_FEATURES: PremiumFeature[] = [
 	"custom-study-plans",
 	"exam-simulator",
 	"priority-support",
+	"offline-quiz-packs",
+	"problem-library",
+	"visual-engine",
 ];
 
 const YEARLY_PRICE_ID = "price_premium_yearly";

@@ -112,11 +112,13 @@ export function AssignmentBuilder({
 				)}
 
 				<Dialog open={open} onOpenChange={setOpen}>
-					<DialogTrigger>
-						<Button disabled={selected.length === 0} className="w-full">
-							<HugeiconsIcon icon={SentIcon} size={16} />
-							Assign to Class ({selected.length})
-						</Button>
+					<DialogTrigger
+						render={
+							<Button disabled={selected.length === 0} className="w-full" />
+						}
+					>
+						<HugeiconsIcon icon={SentIcon} size={16} />
+						Assign to Class ({selected.length})
 					</DialogTrigger>
 					<DialogContent>
 						<DialogHeader>

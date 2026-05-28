@@ -46,6 +46,17 @@ const OfflinePackManager = dynamic(
 	{ ssr: false },
 );
 
+const MyAssignments = dynamic(
+	() =>
+		import("@/components/dashboard/my-assignments").then(
+			(m) => m.MyAssignments,
+		),
+	{
+		ssr: false,
+		loading: () => <Skeleton className="h-32 rounded-3xl" />,
+	},
+);
+
 const BloomTaxonomyWidget = dynamic(
 	() =>
 		import("@/components/dashboard/bloom-taxonomy-widget").then(
@@ -209,6 +220,11 @@ export function DashboardContent({
 				{showPractice && !isAnonymous && (
 					<SectionReveal delay={0.1}>
 						<TodayFocusCard />
+					</SectionReveal>
+				)}
+				{showPractice && !isAnonymous && (
+					<SectionReveal delay={0.105}>
+						<MyAssignments />
 					</SectionReveal>
 				)}
 				{showPractice && !isAnonymous && (

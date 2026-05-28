@@ -232,6 +232,29 @@ All 21 items across P2 and P3 are implemented. Total changes:
 - **Appwrite SA Region**: Console-side verification (non-code)
 - **New features / bug fixes**: Open for prioritization
 
+## ✅ Session 17 — Premium Gating + Student Assignments (May 2026)
+
+### Premium gating
+- [x] **Offline Quiz Packs**: Gated `OfflinePackManager` with `hasFeature("offline-quiz-packs")` — shows premium upgrade card for free users
+- [x] **Problem Library**: Gated `ProblemsClient` with `hasFeature("problem-library")` — early return with premium prompt
+- [x] **Visual Engine**: Added `isPremium` guard to `useVisualEngine` hook — query disabled for free users (no wasted AI calls)
+
+### Dead code cleanup
+- [x] **Deleted `PremiumGate` component**: Zero consumers (all checks use `hasFeature()` inline)
+- [x] **Deleted 3 unused API routes**:
+  - `POST /api/exams/sync`
+  - `GET /api/exam-dates/refresh`
+  - `GET /api/cron/cleanup`
+
+### Teacher assignments — student view
+- [x] **`GET /api/student/assignments`**: New route — finds linked teachers via `teacher_students`, fetches their `teacher_assignments`, resolves topic IDs to names
+- [x] **`MyAssignments` component**: Dashboard card showing pending assignments (topic names + assignment date)
+- [x] **`DashboardContent` integration**: `MyAssignments` inserted after `TodayFocusCard` on today tab
+
+### Verification
+- [x] **TypeScript**: `npx tsc --noEmit` passes with zero errors
+- [x] **Biome**: `npx biome check` passes on all 6 changed files
+
 ## ✅ Session 8 — Unimplemented Fixes (May 2026)
 
 Automated scan of `src/` across 7 phases. All P0-P3 items from scan have been fixed. Details below.

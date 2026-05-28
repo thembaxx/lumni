@@ -20,6 +20,7 @@ import {
 	type CuratedProblem,
 	useCuratedProblems,
 } from "@/hooks/use-curated-problems";
+import { usePremium } from "@/lib/premium/premium-context";
 import { cn } from "@/lib/shared";
 
 const DIFFICULTIES = ["all", "Easy", "Medium", "Hard"] as const;
@@ -116,6 +117,8 @@ function ProblemCard({
 }
 
 function ProblemsClient() {
+	const { hasFeature } = usePremium();
+	const isPremium = hasFeature("problem-library");
 	const [selectedSubject, setSelectedSubject] = useState("");
 	const [selectedDifficulty, setSelectedDifficulty] = useState<string>("all");
 	const [problemCount, setProblemCount] = useState(5);
@@ -124,12 +127,6 @@ function ProblemsClient() {
 
 	const [fetched, setFetched] = useState(false);
 
-	const handleGenerate = async () => {
-		if (!selectedSubject) return;
-		setFetched(true);
-		mutate({ subject: selectedSubject, count: problemCount });
-	};
-
 	const filteredProblems = useMemo(() => {
 		if (!data?.problems) return [];
 		if (selectedDifficulty === "all") return data.problems;
@@ -137,6 +134,30 @@ function ProblemsClient() {
 			(p) => p.difficulty.toLowerCase() === selectedDifficulty.toLowerCase(),
 		);
 	}, [data, selectedDifficulty]);
+
+	if (!isPremium) {
+		return (
+			<PageContainer className="flex flex-col items-center justify-center gap-4 py-24 text-center">
+				<HugeiconsIcon
+					icon={SparklesIcon}
+					className="size-12 text-muted-foreground/30"
+				/>
+				<div>
+					<p className="font-heading font-semibold text-lg">Premium Feature</p>
+					<p className="mt-1 text-muted-foreground text-sm">
+						Upgrade to Premium to access the Problem Library with AI-curated
+						practice problems.
+					</p>
+				</div>
+			</PageContainer>
+		);
+	}
+
+	const handleGenerate = async () => {
+		if (!selectedSubject) return;
+		setFetched(true);
+		mutate({ subject: selectedSubject, count: problemCount });
+	};
 
 	return (
 		<div className="min-h-[100dvh] bg-system-grouped pt-4 pb-24">
