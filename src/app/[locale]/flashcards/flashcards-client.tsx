@@ -140,10 +140,7 @@ export function FlashcardsClient() {
 		[selectedSubject],
 	);
 
-	const {
-		questions,
-		isLoading,
-	} = useQuestionEngine(engineParams, {
+	const { questions, isLoading } = useQuestionEngine(engineParams, {
 		enabled:
 			isActive && !!selectedSubject && source === "ai" && !hasSm2Ref.current,
 	});
@@ -248,18 +245,15 @@ export function FlashcardsClient() {
 		setSelectedSubject("");
 	}, []);
 
-	const handleReview = useCallback(
-		(cardId: string, quality: number) => {
-			setQualityMap((prev) => new Map(prev).set(cardId, quality));
-			if (quality >= 3) {
-				setShowConfetti(true);
-				setShowXPGain(true);
-				setTimeout(() => setShowConfetti(false), 1500);
-				setTimeout(() => setShowXPGain(false), 1000);
-			}
-		},
-		[],
-	);
+	const handleReview = useCallback((cardId: string, quality: number) => {
+		setQualityMap((prev) => new Map(prev).set(cardId, quality));
+		if (quality >= 3) {
+			setShowConfetti(true);
+			setShowXPGain(true);
+			setTimeout(() => setShowConfetti(false), 1500);
+			setTimeout(() => setShowXPGain(false), 1000);
+		}
+	}, []);
 
 	const handleSessionComplete = useCallback(() => {
 		setSessionComplete(true);
