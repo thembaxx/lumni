@@ -12,13 +12,13 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { Confetti } from "@/components/celebration/confetti";
 import { PageContainer } from "@/components/layout/page-container";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
 import subjectsData from "@/data/subjects.json";
 import { useOnboarding } from "@/hooks/use-onboarding";
 import { saveLocalEnrolledSubjects } from "@/hooks/use-subjects";
 import { useAuth } from "@/lib/auth/auth-context";
 import { iOSEase } from "@/lib/utils/animation";
+import { SubjectCard } from "./subject-card";
 import { GoalsSVG } from "./svgs/goals-svg";
 import { SubjectsSVG } from "./svgs/subjects-svg";
 import { WelcomeSVG } from "./svgs/welcome-svg";
@@ -612,42 +612,5 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 				</div>
 			</PageContainer>
 		</div>
-	);
-}
-
-function SubjectCard({
-	subject,
-	selected,
-	onToggle,
-}: {
-	subject: Subject;
-	selected: boolean;
-	onToggle: () => void;
-}) {
-	return (
-		<Card
-			className={`cursor-pointer transition-colors duration-150 hover:ring-2 hover:ring-[--system-accent] active:scale-[0.97] ${
-				selected ? "bg-[--system-accent]/5 ring-2 ring-[--system-accent]" : ""
-			}`}
-			onClick={onToggle}
-		>
-			<CardContent className="flex items-center gap-3 py-3">
-				<div
-					className="flex size-9 shrink-0 items-center justify-center rounded-full font-extrabold text-white text-xs"
-					style={
-						{
-							"--subject-color": subject.color,
-							backgroundColor: "var(--subject-color)",
-						} as React.CSSProperties
-					}
-				>
-					{subject.id.slice(0, 2)}
-				</div>
-				<div className="min-w-0 flex-1">
-					<p className="truncate font-medium text-sm">{subject.name}</p>
-					<p className="text-muted-foreground text-xs">Grade 12</p>
-				</div>
-			</CardContent>
-		</Card>
 	);
 }

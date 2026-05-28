@@ -262,6 +262,15 @@ Established 2026-05-23 after a codebase-wide audit. All decisions below are non-
 - **Fixed tests**: Updated `schema.test.ts` for Dexie v18 (version 15→18, table count 18→23)
 - **Audited P1 items**: Share/Export, SR v2 upgrades, Flashcard pull sync — all already implemented prior to this session
 
+### Session 13 — Swipeable flashcard deck (May 2026)
+
+- **`SwipeableCardDeck`**: `src/components/flashcard/swipeable-card-deck.tsx` — Tinder-style 3-card cascade with drag-to-swipe interaction. Tap to flip, drag with colored overlay feedback, exit animation on swipe. `mode="simple"` (binary) and `mode="sm2"` (full 6-quality SM-2) modes.
+- **`SwipeableCard`**: `src/components/flashcard/swipeable-card.tsx` — single card with framer-motion `drag="x"`, reactive gradient overlays via `useTransform`, spring-back below threshold.
+- **`QualityPicker`**: `src/components/flashcard/quality-picker.tsx` — post-swipe overlay for SM-2 quality fine-tuning (3 correct/3 incorrect levels), auto-advances after 1.5s timeout, undo support.
+- **`useSwipeDeck`**: `src/hooks/use-swipe-deck.ts` — drag state machine (idle→dragging→swiped→quality-pick→advancing), undo stack, pending guard for rapid swipes.
+- **Migration**: `flashcards-active.tsx` and `sm2-study-session.tsx` replaced with deck. `flashcards-client.tsx` simplified (removed `currentIndex`, `isFlipped`, `previousCard`, `nextCard` state).
+- **TypeScript + Biome**: zero errors.
+
 ### Known limitations (won't fix)
 
 - `analytics-service.ts` comparative analytics depends on other users' data in Appwrite; falls back to estimates

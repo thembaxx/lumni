@@ -233,6 +233,13 @@ export function AdminDashboard() {
 						>
 							Budget
 						</Button>
+						<Button
+							variant="ghost"
+							size="sm"
+							onClick={() => push("/admin/observability")}
+						>
+							Observability
+						</Button>
 						<Button variant="ghost" size="icon-sm" onClick={handleSignOut}>
 							<HugeiconsIcon icon={Logout01Icon} className="size-4" />
 						</Button>

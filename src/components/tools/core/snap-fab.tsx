@@ -14,6 +14,7 @@ import { usePathname } from "@/i18n/navigation";
 import { offlineDB } from "@/lib/db/schema";
 import { tryLocalOcr } from "@/lib/ocr/local-ocr";
 import { cn } from "@/lib/shared";
+import { dispatchSnapAnswer } from "@/lib/shared/snap-answer";
 import { getImageHash, preprocessImage } from "@/lib/utils/image-preprocess";
 import { CameraPreview } from "../communication/camera-preview";
 
@@ -232,6 +233,15 @@ export function SnapFab() {
 		}
 	}, [extractedText]);
 
+	const handleFillAnswer = useCallback(() => {
+		if (!extractedText) return;
+		dispatchSnapAnswer(extractedText);
+		setShowDialog(false);
+		setPhase("idle");
+		setExtractedText("");
+		setImagePreview(null);
+	}, [extractedText]);
+
 	const handleOpenSolver = useCallback(() => {
 		if (!extractedText) return;
 		setShowDialog(false);
@@ -399,9 +409,18 @@ export function SnapFab() {
 							</Button>
 							{phase === "confirm" && (
 								<>
+									{isOnQuizOrFlashcards && (
+										<Button
+											onClick={handleFillAnswer}
+											variant="default"
+											className="flex-1"
+										>
+											Use as Answer
+										</Button>
+									)}
 									<Button
 										onClick={handleSolveInline}
-										variant="default"
+										variant={isOnQuizOrFlashcards ? "outline" : "default"}
 										className="flex-1"
 									>
 										Solve Here

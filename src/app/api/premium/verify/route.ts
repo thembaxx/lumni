@@ -1,10 +1,11 @@
 import { Client, Databases, Query } from "appwrite";
-import { NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { APPWRITE_ENDPOINT, APPWRITE_PROJECT } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID } from "@/lib/db/client";
 import { getAuthenticatedUserId } from "@/lib/server/auth";
+import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
-export async function POST(_req: Request) {
+async function verifyHandler(_req: NextRequest) {
 	try {
 		const userId = await getAuthenticatedUserId();
 		if (!userId) {
@@ -34,6 +35,13 @@ export async function POST(_req: Request) {
 					return NextResponse.json({
 						verified: true,
 						isPremium: !!activeSub,
+						subscriptionId: activeSub?.id as string | undefined,
+						expiresAt:
+							(activeSub?.current_period_end as number | undefined) != null
+								? new Date(
+										(activeSub.current_period_end as number) * 1000,
+									).toISOString()
+								: undefined,
 					});
 				}
 			} catch (stripeErr) {
@@ -52,9 +60,14 @@ export async function POST(_req: Request) {
 				"premium_subscriptions",
 				[Query.equal("userId", userId), Query.equal("status", "active")],
 			);
+			const doc = premiumDocs.documents[0] as
+				| { subscriptionId?: string; expiresAt?: string }
+				| undefined;
 			return NextResponse.json({
 				verified: true,
 				isPremium: premiumDocs.total > 0,
+				subscriptionId: doc?.subscriptionId,
+				expiresAt: doc?.expiresAt,
 			});
 		} catch (dbErr) {
 			console.error("Premium DB query error:", dbErr);
@@ -68,3 +81,8 @@ export async function POST(_req: Request) {
 		return NextResponse.json({ error: "Verification failed" }, { status: 500 });
 	}
 }
+
+export const POST = withRateLimit(verifyHandler, {
+	max: 10,
+	windowMs: 60000,
+});

@@ -10,6 +10,7 @@ export interface PremiumState {
 	isPremium: boolean;
 	expiresAt: number | null;
 	features: PremiumFeature[];
+	subscriptionId?: string;
 }
 
 export type PremiumFeature =
@@ -31,20 +32,25 @@ const PREMIUM_FEATURES: PremiumFeature[] = [
 	"priority-support",
 ];
 
-const STRIPE_PRICE_ID = "price_premium_yearly";
+const YEARLY_PRICE_ID = "price_premium_yearly";
+const MONTHLY_PRICE_ID = "price_premium_monthly";
 
 interface PremiumContextValue {
 	isPremium: boolean;
 	features: PremiumFeature[];
+	subscriptionId?: string;
 	hasFeature: (feature: PremiumFeature) => boolean;
 	upgrade: () => Promise<void>;
 	downgrade: () => Promise<void>;
-	createCheckoutSession: () => Promise<string | null>;
-	createPayfastCheckoutSession: () => Promise<{
+	createCheckoutSession: (
+		billing?: "monthly" | "yearly",
+	) => Promise<string | null>;
+	createPayfastCheckoutSession: (billing?: "monthly" | "yearly") => Promise<{
 		url: string;
 		data: Record<string, string>;
 	} | null>;
 	cancelSubscription: () => Promise<boolean>;
+	syncPremium: () => Promise<void>;
 }
 
 const PremiumContext = createContext<PremiumContextValue>({
@@ -56,6 +62,7 @@ const PremiumContext = createContext<PremiumContextValue>({
 	createCheckoutSession: async () => null,
 	createPayfastCheckoutSession: async () => null,
 	cancelSubscription: async () => false,
+	syncPremium: async () => {},
 });
 
 const CHECKOUT_API = "/api/premium/checkout";
@@ -84,66 +91,101 @@ export function PremiumProvider({ children }: { children: React.ReactNode }) {
 
 	const { mutate: verifyPremium } = useMutation({
 		mutationFn: async () => {
-			await fetch(VERIFY_API, {
+			const res = await fetch(VERIFY_API, {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ isPremium: state.isPremium }),
 			});
+			if (!res.ok) return null;
+			return res.json() as Promise<{
+				verified: boolean;
+				isPremium: boolean;
+				subscriptionId?: string;
+				expiresAt?: string;
+			}>;
 		},
-		onSuccess: () => {
+		onSuccess: (data) => {
+			if (!data) return;
+			if (data.isPremium) {
+				setState((prev) => ({
+					...prev,
+					isPremium: true,
+					features: PREMIUM_FEATURES,
+					subscriptionId: data.subscriptionId || prev.subscriptionId,
+					expiresAt: data.expiresAt
+						? new Date(data.expiresAt).getTime()
+						: prev.expiresAt,
+				}));
+			} else if (state.isPremium) {
+				setState({
+					isPremium: false,
+					expiresAt: null,
+					features: FREE_FEATURES,
+				});
+			}
 			queryClient.invalidateQueries({ queryKey: ["premium"] });
 		},
 	});
 
 	useEffect(() => {
-		if (state.isPremium && state.expiresAt) {
-			verifyPremium();
-		}
-	}, [state.isPremium, state.expiresAt, verifyPremium]);
+		verifyPremium();
+	}, [verifyPremium]);
+
+	const syncPremium = useCallback(async () => {
+		verifyPremium();
+	}, [verifyPremium]);
 
 	const hasFeature = (feature: PremiumFeature): boolean => {
 		return state.features.includes(feature);
 	};
 
-	const createCheckoutSession = useCallback(async (): Promise<
-		string | null
-	> => {
-		try {
-			const res = await fetch(CHECKOUT_API, {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ priceId: STRIPE_PRICE_ID }),
-			});
-			if (!res.ok) return null;
-			const data = await res.json();
-			if (data.url) {
-				return data.url;
+	const createCheckoutSession = useCallback(
+		async (
+			billing: "monthly" | "yearly" = "yearly",
+		): Promise<string | null> => {
+			try {
+				const priceId =
+					billing === "monthly" ? MONTHLY_PRICE_ID : YEARLY_PRICE_ID;
+				const res = await fetch(CHECKOUT_API, {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({ priceId, billing }),
+				});
+				if (!res.ok) return null;
+				const data = await res.json();
+				return data.url ?? null;
+			} catch {
+				return null;
 			}
-			return null;
-		} catch {
-			return null;
-		}
-	}, []);
+		},
+		[],
+	);
 
-	const createPayfastCheckoutSession = useCallback(async (): Promise<{
-		url: string;
-		data: Record<string, string>;
-	} | null> => {
-		try {
-			const res = await fetch(PAYFAST_CHECKOUT_API, {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
-					amount: "99.00",
-					item_name: "Lumni Premium Yearly",
-				}),
-			});
-			if (!res.ok) return null;
-			return await res.json();
-		} catch {
-			return null;
-		}
-	}, []);
+	const createPayfastCheckoutSession = useCallback(
+		async (
+			billing: "monthly" | "yearly" = "yearly",
+		): Promise<{
+			url: string;
+			data: Record<string, string>;
+		} | null> => {
+			try {
+				const amount = billing === "monthly" ? "99.00" : "999.00";
+				const itemName =
+					billing === "monthly"
+						? "Lumni Premium Monthly"
+						: "Lumni Premium Yearly";
+				const res = await fetch(PAYFAST_CHECKOUT_API, {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({ amount, item_name: itemName, billing }),
+				});
+				if (!res.ok) return null;
+				return await res.json();
+			} catch {
+				return null;
+			}
+		},
+		[],
+	);
 
 	const upgrade = useCallback(async () => {
 		const expiresAt = Date.now() + 365 * 24 * 60 * 60 * 1000;
@@ -155,13 +197,18 @@ export function PremiumProvider({ children }: { children: React.ReactNode }) {
 	}, []);
 
 	const cancelSubscription = useCallback(async (): Promise<boolean> => {
+		if (!state.subscriptionId) return false;
 		try {
-			const res = await fetch(CANCEL_API, { method: "POST" });
+			const res = await fetch(CANCEL_API, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ subscriptionId: state.subscriptionId }),
+			});
 			return res.ok;
 		} catch {
 			return false;
 		}
-	}, []);
+	}, [state.subscriptionId]);
 
 	const downgrade = useCallback(async () => {
 		setState({
@@ -176,12 +223,14 @@ export function PremiumProvider({ children }: { children: React.ReactNode }) {
 			value={{
 				isPremium: state.isPremium,
 				features: state.features,
+				subscriptionId: state.subscriptionId,
 				hasFeature,
 				upgrade,
 				downgrade,
 				createCheckoutSession,
 				createPayfastCheckoutSession,
 				cancelSubscription,
+				syncPremium,
 			}}
 		>
 			{children}

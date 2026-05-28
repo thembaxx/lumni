@@ -1,3 +1,4 @@
+import { trackAILatency } from "./latency-tracker";
 import { createGeminiProvider } from "./providers/gemini";
 import { createGroqProvider } from "./providers/groq";
 import { createNvidiaProvider } from "./providers/nvidia";
@@ -42,7 +43,10 @@ export class AIClient {
 		this.providers = createProviderChain(config);
 	}
 
-	private async _callProviders(request: AIRequest): Promise<AIResult> {
+	private async _callProviders(
+		request: AIRequest,
+		callType: "generate" | "grade" | "hint" | "visual" | "embed" = "generate",
+	): Promise<AIResult> {
 		if (this.providers.length === 0) {
 			return { ...FAILURE_RESPONSE, error: "No AI providers configured" };
 		}
@@ -50,11 +54,31 @@ export class AIClient {
 		let lastError = "";
 
 		const results = await Promise.allSettled(
-			this.providers.map((provider) =>
-				provider
-					.generate(request)
-					.then((response) => ({ ...response, provider: provider.name })),
-			),
+			this.providers.map(async (provider) => {
+				const start = performance.now();
+				try {
+					const response = await provider.generate(request);
+					const durationMs = Math.round(performance.now() - start);
+					trackAILatency({
+						provider: provider.name,
+						durationMs,
+						success: true,
+						callType,
+						timestamp: new Date().toISOString(),
+					});
+					return { ...response, provider: provider.name };
+				} catch (err) {
+					const durationMs = Math.round(performance.now() - start);
+					trackAILatency({
+						provider: provider.name,
+						durationMs,
+						success: false,
+						callType,
+						timestamp: new Date().toISOString(),
+					});
+					throw err;
+				}
+			}),
 		);
 		for (const result of results) {
 			if (result.status === "fulfilled") {
@@ -72,11 +96,14 @@ export class AIClient {
 	}
 
 	async generate(prompt: string, options?: GenerateOptions): Promise<AIResult> {
-		return this._callProviders({
-			messages: [{ role: "user", content: prompt }],
-			temperature: options?.temperature ?? 0.7,
-			maxTokens: options?.maxTokens ?? 2048,
-		});
+		return this._callProviders(
+			{
+				messages: [{ role: "user", content: prompt }],
+				temperature: options?.temperature ?? 0.7,
+				maxTokens: options?.maxTokens ?? 2048,
+			},
+			"generate",
+		);
 	}
 
 	async generateWithSystem(
@@ -84,14 +111,17 @@ export class AIClient {
 		userPrompt: string,
 		options?: GenerateOptions & { imageUrl?: string },
 	): Promise<AIResult> {
-		return this._callProviders({
-			messages: [
-				{ role: "user", content: userPrompt, imageUrl: options?.imageUrl },
-			],
-			systemPrompt,
-			temperature: options?.temperature ?? 0.7,
-			maxTokens: options?.maxTokens ?? 2048,
-		});
+		return this._callProviders(
+			{
+				messages: [
+					{ role: "user", content: userPrompt, imageUrl: options?.imageUrl },
+				],
+				systemPrompt,
+				temperature: options?.temperature ?? 0.7,
+				maxTokens: options?.maxTokens ?? 2048,
+			},
+			"generate",
+		);
 	}
 
 	async generateBatch(

@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link, useRouter } from "@/i18n/navigation";
 import { usePremium } from "@/lib/premium/premium-context";
+import { cn } from "@/lib/shared";
 
 const FEATURES = [
 	{
@@ -44,6 +45,8 @@ const FEATURES = [
 	},
 ];
 
+type BillingPeriod = "monthly" | "yearly";
+
 export default function PremiumPage() {
 	const {
 		isPremium,
@@ -55,11 +58,12 @@ export default function PremiumPage() {
 	const { push, refresh } = useRouter();
 	const [loading, setLoading] = useState(false);
 	const [payfastLoading, setPayfastLoading] = useState(false);
+	const [billing, setBilling] = useState<BillingPeriod>("monthly");
 
 	const handleUpgrade = async () => {
 		setLoading(true);
 		try {
-			const url = await createCheckoutSession();
+			const url = await createCheckoutSession(billing);
 			if (url) {
 				window.location.href = url;
 			}
@@ -71,7 +75,7 @@ export default function PremiumPage() {
 	const handlePayfastUpgrade = async () => {
 		setPayfastLoading(true);
 		try {
-			const result = await createPayfastCheckoutSession();
+			const result = await createPayfastCheckoutSession(billing);
 			if (result) {
 				const form = document.createElement("form");
 				form.method = "POST";
@@ -95,9 +99,11 @@ export default function PremiumPage() {
 	const handleCancel = async () => {
 		setLoading(true);
 		try {
-			await cancelSubscription();
-			await downgrade();
-			refresh();
+			const ok = await cancelSubscription();
+			if (ok) {
+				await downgrade();
+				refresh();
+			}
 		} finally {
 			setLoading(false);
 		}
@@ -137,6 +143,36 @@ export default function PremiumPage() {
 							</div>
 						</div>
 					))}
+
+					{!isPremium && (
+						<div className="flex rounded-xl border border-border p-1">
+							<button
+								type="button"
+								onClick={() => setBilling("monthly")}
+								className={cn(
+									"flex-1 rounded-lg py-2 text-center font-medium text-sm transition-colors",
+									billing === "monthly"
+										? "bg-[--system-accent] text-white"
+										: "text-muted-foreground hover:text-foreground",
+								)}
+							>
+								R99 / mo
+							</button>
+							<button
+								type="button"
+								onClick={() => setBilling("yearly")}
+								className={cn(
+									"flex-1 rounded-lg py-2 text-center font-medium text-sm transition-colors",
+									billing === "yearly"
+										? "bg-[--system-accent] text-white"
+										: "text-muted-foreground hover:text-foreground",
+								)}
+							>
+								R999 / yr
+								<span className="ml-1 text-[10px] opacity-80">(save 16%)</span>
+							</button>
+						</div>
+					)}
 
 					<div className="border-border/30 border-t pt-4">
 						<button
@@ -185,14 +221,18 @@ export default function PremiumPage() {
 							<>
 								<Button onClick={handleUpgrade} disabled={loading}>
 									<HugeiconsIcon icon={CrownIcon} data-icon="inline-start" />
-									{loading ? "Redirecting…" : "Upgrade with Card"}
+									{loading
+										? "Redirecting…"
+										: `Upgrade with Card (${billing === "monthly" ? "R99/mo" : "R999/yr"})`}
 								</Button>
 								<Button
 									onClick={handlePayfastUpgrade}
 									disabled={payfastLoading}
 									variant="outline"
 								>
-									{payfastLoading ? "Redirecting…" : "Pay with Payfast"}
+									{payfastLoading
+										? "Redirecting…"
+										: `Pay with Payfast (${billing === "monthly" ? "R99/mo" : "R999/yr"})`}
 								</Button>
 							</>
 						)}

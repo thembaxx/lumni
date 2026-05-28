@@ -2,6 +2,11 @@ import { type NextRequest, NextResponse } from "next/server";
 import { getAuthenticatedUserId } from "@/lib/server/auth";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
+const PRICE_IDS: Record<string, string> = {
+	monthly: "price_premium_monthly",
+	yearly: "price_premium_yearly",
+};
+
 async function checkoutHandler(req: NextRequest) {
 	const userId = await getAuthenticatedUserId();
 	if (!userId) {
@@ -12,7 +17,9 @@ async function checkoutHandler(req: NextRequest) {
 		const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
 
 		if (STRIPE_SECRET_KEY) {
-			const { priceId } = await req.json();
+			const { priceId, billing } = await req.json();
+			const resolvedPriceId =
+				priceId || PRICE_IDS[billing as string] || "price_premium_yearly";
 			const stripeRes = await fetch(
 				"https://api.stripe.com/v1/checkout/sessions",
 				{
@@ -24,9 +31,10 @@ async function checkoutHandler(req: NextRequest) {
 					},
 					body: new URLSearchParams({
 						mode: "subscription",
-						"line_items[0][price]": priceId || "price_premium_yearly",
+						"line_items[0][price]": resolvedPriceId,
 						"line_items[0][quantity]": "1",
 						client_reference_id: userId,
+						"subscription_data[metadata][client_reference_id]": userId,
 						success_url: `${new URL(req.url).origin}/premium?success=true`,
 						cancel_url: `${new URL(req.url).origin}/premium?canceled=true`,
 					}),

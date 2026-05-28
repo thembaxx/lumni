@@ -48,13 +48,10 @@ export function FlashcardsClient() {
 	const [selectedSubject, setSelectedSubject] = useState<string>("");
 	const [source, setSource] = useState<FlashcardSource>("ai");
 	const [isActive, setIsActive] = useState(false);
-	const [currentIndex, setCurrentIndex] = useState(0);
-	const [isFlipped, setIsFlipped] = useState(false);
 	const [qualityMap, setQualityMap] = useState<Map<string, number>>(new Map());
 	const [mistakeCards, setMistakeCards] = useState<FlashcardItem[]>([]);
 	const [sm2Cards, setSm2Cards] = useState<FlashcardItem[]>([]);
 	const hasSm2Ref = useRef(false);
-	const hintsRef = useRef<Map<string, string>>(new Map());
 	const [sessionComplete, setSessionComplete] = useState(false);
 	const [showConfetti, setShowConfetti] = useState(false);
 	const [showXPGain, setShowXPGain] = useState(false);
@@ -146,7 +143,6 @@ export function FlashcardsClient() {
 	const {
 		questions,
 		isLoading,
-		hint: generateHint,
 	} = useQuestionEngine(engineParams, {
 		enabled:
 			isActive && !!selectedSubject && source === "ai" && !hasSm2Ref.current,
@@ -162,7 +158,7 @@ export function FlashcardsClient() {
 						back: q.explanation,
 						topic: q.topic,
 						difficulty: q.difficulty,
-						hint: hintsRef.current.get(q.id) || q.hint,
+						hint: q.hint,
 						rawQuestion: q,
 					});
 					return acc;
@@ -182,8 +178,6 @@ export function FlashcardsClient() {
 			setSelectedSubject(subject);
 			setSource(src);
 			setIsActive(true);
-			setCurrentIndex(0);
-			setIsFlipped(false);
 			setQualityMap(new Map());
 			setMistakeCards([]);
 			setSm2Cards([]);
@@ -254,68 +248,29 @@ export function FlashcardsClient() {
 		setSelectedSubject("");
 	}, []);
 
-	const handleFlip = useCallback(() => {
-		setIsFlipped((prev) => {
-			if (!prev) {
-				const card = displayCards[currentIndex];
-				if (card && !hintsRef.current.has(card.id) && card.rawQuestion) {
-					generateHint(card.rawQuestion)
-						.then((hint) => {
-							hintsRef.current.set(card.id, hint);
-						})
-						.catch((e) => console.warn("Hint generation:", e));
-				}
-			}
-			return !prev;
-		});
-	}, [currentIndex, displayCards, generateHint]);
-
-	const nextCard = useCallback(() => {
-		if (currentIndex < displayCards.length - 1) {
-			setCurrentIndex((prev) => prev + 1);
-		} else {
-			setSessionComplete(true);
-			processSessionResults(
-				displayCards,
-				qualityMap,
-				selectedSubject.toLowerCase(),
-			).catch((e) => console.warn("Session processing:", e));
-		}
-		setIsFlipped(false);
-	}, [
-		currentIndex,
-		displayCards,
-		qualityMap,
-		selectedSubject,
-		processSessionResults,
-	]);
-
 	const handleReview = useCallback(
-		(quality: number) => {
-			const currentCard = displayCards[currentIndex];
-			if (!currentCard) return;
-			setQualityMap((prev) => new Map(prev).set(currentCard.id, quality));
+		(cardId: string, quality: number) => {
+			setQualityMap((prev) => new Map(prev).set(cardId, quality));
 			if (quality >= 3) {
 				setShowConfetti(true);
 				setShowXPGain(true);
 				setTimeout(() => setShowConfetti(false), 1500);
 				setTimeout(() => setShowXPGain(false), 1000);
 			}
-			nextCard();
 		},
-		[displayCards, currentIndex, nextCard],
+		[],
 	);
 
-	const previousCard = useCallback(() => {
-		if (currentIndex > 0) {
-			setCurrentIndex((prev) => prev - 1);
-			setIsFlipped(false);
-		}
-	}, [currentIndex]);
+	const handleSessionComplete = useCallback(() => {
+		setSessionComplete(true);
+		processSessionResults(
+			displayCards,
+			qualityMap,
+			selectedSubject.toLowerCase(),
+		).catch((e) => console.warn("Session processing:", e));
+	}, [displayCards, qualityMap, selectedSubject, processSessionResults]);
 
 	const handleRestart = useCallback(() => {
-		setCurrentIndex(0);
-		setIsFlipped(false);
 		setQualityMap(new Map());
 		setSessionComplete(false);
 	}, []);
@@ -369,14 +324,10 @@ export function FlashcardsClient() {
 			<XPGainPopup amount={10} visible={showXPGain} />
 			<FlashcardsActive
 				cards={displayCards}
-				currentIndex={currentIndex}
-				isFlipped={isFlipped}
 				knownCount={knownCount}
 				reviewCount={reviewCount}
-				onFlip={handleFlip}
 				onReview={handleReview}
-				onPrevious={previousCard}
-				onNext={nextCard}
+				onComplete={handleSessionComplete}
 				onQuit={stopSession}
 			/>
 		</>

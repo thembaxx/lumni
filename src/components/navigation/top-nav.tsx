@@ -5,6 +5,7 @@ import {
 	Login01Icon,
 	Logout01Icon,
 	Settings01Icon,
+	UserGroupIcon,
 	UserIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -48,6 +49,10 @@ export function TopNav({ title, className }: TopNavProps) {
 	const { user, status, isAnonymous, signOut } = useAuth();
 	const { levelInfo } = useGamification();
 	const { isOnline, pendingCount } = useSyncStatus();
+
+	const userLabels = user?.labels ?? [];
+	const isTeacher = userLabels.includes("teacher");
+	const isParent = userLabels.includes("parent");
 
 	const handleSignOut = useCallback(async () => {
 		await signOut();
@@ -183,6 +188,28 @@ export function TopNav({ title, className }: TopNavProps) {
 										<HugeiconsIcon icon={UserIcon} className="size-4" />
 										View Profile
 									</DropdownListItem>
+									{isTeacher && (
+										<DropdownListItem
+											className="rounded-md"
+											onClick={() => {
+												window.location.href = "/teacher";
+											}}
+										>
+											<HugeiconsIcon icon={UserGroupIcon} className="size-4" />
+											Teacher Dashboard
+										</DropdownListItem>
+									)}
+									{isParent && (
+										<DropdownListItem
+											className="rounded-md"
+											onClick={() => {
+												window.location.href = "/parent";
+											}}
+										>
+											<HugeiconsIcon icon={UserIcon} className="size-4" />
+											Parent Dashboard
+										</DropdownListItem>
+									)}
 									<DropdownListItem
 										className="rounded-md"
 										onClick={() => {

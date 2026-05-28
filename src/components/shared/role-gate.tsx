@@ -5,21 +5,21 @@ import type { ReactNode } from "react";
 import { useAuth } from "@/lib/auth/auth-context";
 
 interface RoleGateProps {
-	role: "teacher" | "parent" | "student";
+	requiredRole: "teacher" | "parent" | "student";
 	fallback?: ReactNode;
 	children: ReactNode;
 }
 
-export function RoleGate({ role, fallback, children }: RoleGateProps) {
+export function RoleGate({ requiredRole, fallback, children }: RoleGateProps) {
 	const { user } = useAuth();
-	const hasRole = user?.labels?.includes(role);
+	const hasRole = user?.labels?.includes(requiredRole);
 
 	const { data: sessionRole } = useQuery({
 		queryKey: ["session"],
 		queryFn: async () => {
 			const res = await fetch("/api/session");
 			const data = (await res.json()) as { labels?: string[] };
-			return data.labels?.includes(role) ?? false;
+			return data.labels?.includes(requiredRole) ?? false;
 		},
 		enabled: !hasRole && !!user,
 	});
