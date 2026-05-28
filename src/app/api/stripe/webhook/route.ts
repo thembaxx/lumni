@@ -4,16 +4,21 @@ import Stripe from "stripe";
 import { APPWRITE_ENDPOINT, APPWRITE_PROJECT } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID } from "@/lib/db/client";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? "", {
-	apiVersion: "2026-05-27.dahlia" as const,
-});
+function getStripe(): Stripe {
+	const key = process.env.STRIPE_SECRET_KEY;
+	if (!key) throw new Error("STRIPE_SECRET_KEY not configured");
+	return new Stripe(key, {
+		apiVersion: "2026-05-27.dahlia" as const,
+	});
+}
 
 export async function POST(req: Request) {
 	const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+	const stripeKey = process.env.STRIPE_SECRET_KEY;
 
-	if (!webhookSecret) {
+	if (!webhookSecret || !stripeKey) {
 		return NextResponse.json(
-			{ error: "Webhook not configured" },
+			{ error: "Stripe not configured" },
 			{ status: 503 },
 		);
 	}
@@ -26,6 +31,7 @@ export async function POST(req: Request) {
 			return NextResponse.json({ error: "Missing signature" }, { status: 400 });
 		}
 
+		const stripe = getStripe();
 		const event = stripe.webhooks.constructEvent(body, sig, webhookSecret);
 
 		const client = new Client()
