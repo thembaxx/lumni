@@ -19,6 +19,7 @@ import {
 	SessionResultsView,
 } from "@/components/exam";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { useImmersiveMode } from "@/components/shared/immersive-mode";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -36,7 +37,6 @@ import {
 	useExamSessionAutoSave,
 } from "@/hooks/use-exam-session-persistence";
 import { useGamification } from "@/hooks/use-gamification";
-import { useImmersiveMode } from "@/components/shared/immersive-mode";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
 import {
 	getAnswerText,
