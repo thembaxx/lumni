@@ -218,7 +218,7 @@ All 21 items across P2 and P3 are implemented. Total changes:
 
 ### P2 — Localization (AF, ZU)
 - [x] **Afrikaans**: 58 remaining keys translated via Groq → 100% complete (24 proper nouns/numbers/templates left as-is)
-- [x] **isiZulu**: 464→30 keys remaining (~96% done). AI quota exhausted mid-run (Gemini/Groq rate limits). Remaining keys need another script run when quota resets.
+- [x] **isiZulu**: 464→25 keys remaining (~97% done). Remaining 25 are brand names, numbers, templates, abbreviations, and proper nouns — acceptable as-is.
 
 ### Externally Blocked
 - **WhatsApp Business API Nudges**: Requires Meta Business verification (2-4 week external process)
@@ -229,11 +229,8 @@ All 21 items across P2 and P3 are implemented. Total changes:
 
 ## Next Up
 
-- **ZU translations**: Retry remaining 30 keys when AI API quota resets
 - **Appwrite SA Region**: Console-side verification (non-code)
-
-### New work / Open
-- (User to define next priorities)
+- **New features / bug fixes**: Open for prioritization
 
 ## ✅ Session 8 — Unimplemented Fixes (May 2026)
 
