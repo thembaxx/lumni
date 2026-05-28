@@ -9,6 +9,7 @@ import {
 	PWAInstallPrompt,
 	PWAUpdateToast,
 } from "@/components/pwa/pwa-update-toast";
+import { ImmersiveModeProvider } from "@/components/shared/immersive-mode";
 import { ThemeProvider } from "@/components/theme";
 import { ToastProvider } from "@/components/ui/toast";
 import { useJobProcessor } from "@/hooks/use-job-processor";
@@ -47,7 +48,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
 						<ToastProvider>
 							<PremiumProvider>
 								<I18nProvider>
-									<OnboardingProvider>{children}</OnboardingProvider>
+									<OnboardingProvider>
+										<ImmersiveModeProvider>{children}</ImmersiveModeProvider>
+									</OnboardingProvider>
 								</I18nProvider>
 							</PremiumProvider>
 							<OnlineStatusIndicator />

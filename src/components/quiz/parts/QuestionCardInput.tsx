@@ -118,7 +118,7 @@ export function QuestionCardInput({
 									type="button"
 									onClick={() => handleMCQSelect(option.id)}
 									className={cn(
-										"quiz-option-btn flex h-auto w-full items-center gap-3 rounded-lg border border-border bg-card p-4 text-left",
+										"quiz-option-btn flex min-h-[48px] w-full items-center gap-3 rounded-lg border border-border bg-card p-4 text-left",
 										isSelected &&
 											"border-[--system-accent] bg-[--system-accent]/10",
 									)}

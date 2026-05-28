@@ -11,6 +11,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useMemo, useState } from "react";
 import { ChatDialog } from "@/components/dashboard/chat/chat-dialog";
+import { useImmersiveMode } from "@/components/shared/immersive-mode";
 import { Button } from "@/components/ui/button";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { usePathname } from "@/i18n/navigation";
@@ -66,6 +67,7 @@ const bottomItems: SidebarItem[] = [
 ];
 
 export function DesktopSidebar() {
+	const { isImmersive } = useImmersiveMode();
 	const pathname = usePathname();
 	const { push } = useNavigationDirection();
 	const [chatOpen, setChatOpen] = useState(false);
@@ -90,6 +92,8 @@ export function DesktopSidebar() {
 		},
 		[push],
 	);
+
+	if (isImmersive) return null;
 
 	return (
 		<>

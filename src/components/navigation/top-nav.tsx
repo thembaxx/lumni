@@ -13,6 +13,7 @@ import { m } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo } from "react";
 import { LocaleSwitcher } from "@/components/i18n/locale-switcher";
+import { useImmersiveMode } from "@/components/shared/immersive-mode";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -73,6 +74,7 @@ export function TopNav({ title, className }: TopNavProps) {
 		return "Lumni";
 	}, [pathname, title, t]);
 
+	const { isImmersive } = useImmersiveMode();
 	const isAuthPage = pathname.startsWith("/auth");
 	const isLanding = pathname === "/";
 	const hasOwnHeader =
@@ -80,7 +82,7 @@ export function TopNav({ title, className }: TopNavProps) {
 		pathname.startsWith("/admin") ||
 		pathname.startsWith("/dev");
 
-	if (isAuthPage || isLanding || hasOwnHeader) return null;
+	if (isAuthPage || isLanding || hasOwnHeader || isImmersive) return null;
 
 	let imgSrc = null;
 	if (

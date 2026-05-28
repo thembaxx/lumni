@@ -23,6 +23,7 @@ import { GettingStartedCard } from "@/components/onboarding/getting-started-card
 import { NotificationNudge } from "@/components/onboarding/notification-nudge";
 import { EmptyStateWithIllustration } from "@/components/shared/empty-state";
 import { LocalDataNotice } from "@/components/shared/local-data-notice";
+import { PullToRefresh } from "@/components/shared/pull-to-refresh";
 import { StaggerList } from "@/components/shared/stagger-list";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -158,9 +159,14 @@ export function DashboardContent({
 	const showPractice = activeTab === "today" || activeTab === "spaces";
 	const showAnalytics = activeTab === "today" || activeTab === "analytics";
 
+	const handleRefresh = async () => {
+		window.location.reload();
+	};
+
 	return (
-		<div
+		<PullToRefresh
 			data-scroll-container
+			onRefresh={handleRefresh}
 			className="flex min-h-dvh w-full flex-col overflow-y-auto overflow-x-hidden bg-system-grouped pt-8 pb-[calc(var(--spacing-safe-pb)+var(--space-16)+var(--space-5))]"
 		>
 			<PageContainer className="gap-8 pb-16">
@@ -276,6 +282,6 @@ export function DashboardContent({
 					</SectionReveal>
 				)}
 			</PageContainer>
-		</div>
+		</PullToRefresh>
 	);
 }

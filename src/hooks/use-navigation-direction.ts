@@ -2,6 +2,7 @@
 
 import { useCallback, useRef } from "react";
 import { useRouter } from "@/i18n/navigation";
+import { startViewTransition as svt } from "@/lib/utils/view-transition";
 
 type TransitionDirection = "forward" | "back";
 
@@ -30,7 +31,11 @@ export function useNavigationDirection() {
 				targetDepth >= currentDepth ? "forward" : "back";
 			directionRef.current = direction;
 
-			router.push(href);
+			document.documentElement.dataset.vtDirection = direction;
+
+			svt(() => {
+				router.push(href);
+			});
 		},
 		[router],
 	);
@@ -44,7 +49,11 @@ export function useNavigationDirection() {
 				targetDepth >= currentDepth ? "forward" : "back";
 			directionRef.current = direction;
 
-			router.replace(href);
+			document.documentElement.dataset.vtDirection = direction;
+
+			svt(() => {
+				router.replace(href);
+			});
 		},
 		[router],
 	);

@@ -262,6 +262,17 @@ Established 2026-05-23 after a codebase-wide audit. All decisions below are non-
 - **Fixed tests**: Updated `schema.test.ts` for Dexie v18 (version 15→18, table count 18→23)
 - **Audited P1 items**: Share/Export, SR v2 upgrades, Flashcard pull sync — all already implemented prior to this session
 
+### Session 14 — Full-screen quiz mode (May 2026)
+
+- **ImmersiveModeProvider**: `src/components/shared/immersive-mode.tsx` — React context for immersive/full-screen mode. `ImmersiveModeProvider` wraps the app tree; `useImmersiveMode()` hook for consuming components.
+- **Nav hiding**: `TopNav`, `BottomNav`, `DesktopSidebar` all check `isImmersive` and return `null` when true (following existing self-hide pattern).
+- **Exit button**: Floating pill button (top-right) appears only in immersive mode. Clicking restores nav bars.
+- **Quiz**: `quiz-view.tsx` sets immersive when session is active with questions. Layout simplified to full-width (`max-w-2xl` centered), decorative right panel removed, `pb-20` removed.
+- **Exam**: `exam-session-client.tsx` sets immersive when phase is `"active"`.
+- **Touch targets**: MCQ option buttons now have `min-h-[48px]` (up from `h-auto`).
+- **Trigger**: Auto on quiz/exam start, manual toggle via exit button.
+- **TypeScript + Biome**: zero errors.
+
 ### Session 13 — Swipeable flashcard deck (May 2026)
 
 - **`SwipeableCardDeck`**: `src/components/flashcard/swipeable-card-deck.tsx` — Tinder-style 3-card cascade with drag-to-swipe interaction. Tap to flip, drag with colored overlay feedback, exit animation on swipe. `mode="simple"` (binary) and `mode="sm2"` (full 6-quality SM-2) modes.

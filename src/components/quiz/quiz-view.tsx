@@ -2,8 +2,9 @@
 
 import { RadialIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m } from "framer-motion";
+import { animate, m, useMotionValue } from "framer-motion";
 import { useTranslations } from "next-intl";
+import { useCallback, useEffect } from "react";
 import {
 	EmptyStateWithIllustration,
 	QuestionCard,
@@ -12,6 +13,7 @@ import {
 	QuizSelectSubject,
 	QuizSubjectPrompt,
 } from "@/components/quiz";
+import { useImmersiveMode } from "@/components/shared/immersive-mode";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import type { Question } from "@/lib/question-engine/types";
 import { useQuizView } from "./hooks/use-quiz-view";
@@ -52,6 +54,7 @@ export function QuizView({
 	className: _className,
 }: QuizViewProps) {
 	const t = useTranslations();
+	const { setImmersive } = useImmersiveMode();
 	const {
 		selectedSubject,
 		sessionActive,
@@ -81,6 +84,26 @@ export function QuizView({
 		onQuit,
 		onFinish,
 	});
+
+	const isQuizActive =
+		sessionActive && questions.length > 0 && !state.isComplete;
+
+	useEffect(() => {
+		setImmersive(isQuizActive);
+		return () => setImmersive(false);
+	}, [isQuizActive, setImmersive]);
+
+	const dragX = useMotionValue(0);
+
+	const handleDragEnd = useCallback(
+		(_: unknown, info: { offset: { x: number } }) => {
+			const threshold = 80;
+			if (info.offset.x > threshold) handlePrevious();
+			else if (info.offset.x < -threshold) handleNext();
+			animate(dragX, 0, { type: "spring", stiffness: 300, damping: 30 });
+		},
+		[handleNext, handlePrevious, dragX],
+	);
 
 	if (loadError) {
 		return (
@@ -277,13 +300,15 @@ export function QuizView({
 	}
 
 	return (
-		<section
-			className="grid min-h-dvh grid-cols-12 gap-0 bg-background"
-			aria-labelledby="quiz-title"
-		>
-			<main
-				className="col-span-12 col-start-1 flex flex-col gap-6 p-4 pb-20 md:col-span-7 md:p-6"
+		<section className="min-h-dvh bg-background" aria-labelledby="quiz-title">
+			<m.main
+				className="mx-auto flex w-full max-w-2xl flex-col gap-6 p-4 md:p-6"
 				tabIndex={-1}
+				drag={isQuizActive ? "x" : false}
+				dragElastic={0.3}
+				whileDrag={{ scale: 0.97, transition: { duration: 0.1 } }}
+				style={{ x: dragX }}
+				onDragEnd={handleDragEnd}
 			>
 				{pastPaperMode && (
 					<div className="flex items-center gap-2 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-amber-600 text-xs dark:text-amber-400">
@@ -323,17 +348,7 @@ export function QuizView({
 					onNext={handleNext}
 					onSkip={handleSkip}
 				/>
-			</main>
-
-			<div
-				className="relative col-span-12 col-start-1 overflow-hidden bg-system-surface/30 md:col-span-5 md:col-start-8"
-				aria-hidden="true"
-			>
-				<div className="absolute inset-0 bg-linear-to-br from-[--system-accent]/10 via-transparent to-transparent" />
-				<div className="absolute inset-0 flex items-center justify-center p-8">
-					<div className="aspect-square h-full w-full max-w-xs animate-float-slow rounded-3xl bg-system-accent/10 blur-2xl" />
-				</div>
-			</div>
+			</m.main>
 		</section>
 	);
 }

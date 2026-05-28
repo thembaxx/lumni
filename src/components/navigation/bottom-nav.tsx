@@ -10,7 +10,8 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo } from "react";
+import { useImmersiveMode } from "@/components/shared/immersive-mode";
 import { Badge } from "@/components/ui/badge";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { useOnboarding } from "@/hooks/use-onboarding";
@@ -128,48 +129,8 @@ function NavItemComponent({
 export function BottomNav() {
 	const pathname = usePathname();
 	const { push } = useNavigationDirection();
+	const { isImmersive } = useImmersiveMode();
 	const { isOnboarding } = useOnboarding();
-	const [hidden, setHidden] = useState(false);
-	const [reducedMotion, setReducedMotion] = useState(false);
-
-	useEffect(() => {
-		const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-		setReducedMotion(mq.matches);
-		const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
-		mq.addEventListener("change", handler);
-		return () => mq.removeEventListener("change", handler);
-	}, []);
-
-	// biome-ignore lint/correctness/useExhaustiveDependencies: re-run on route change to reset scroll/hidden state
-	useEffect(() => {
-		let lastY = window.scrollY;
-		let ticking = false;
-
-		const updateScroll = () => {
-			const currentY = window.scrollY;
-			const delta = lastY - currentY;
-
-			setHidden((prev) => {
-				if (currentY <= 0) return false;
-				if (delta < -8) return true;
-				if (delta > 0) return false;
-				return prev;
-			});
-
-			lastY = currentY;
-			ticking = false;
-		};
-
-		const handleScroll = () => {
-			if (!ticking) {
-				window.requestAnimationFrame(updateScroll);
-				ticking = true;
-			}
-		};
-
-		window.addEventListener("scroll", handleScroll, { passive: true });
-		return () => window.removeEventListener("scroll", handleScroll);
-	}, [pathname]);
 
 	const activeIndex = useMemo(() => {
 		const index = navItems.findIndex((item) => {
@@ -188,7 +149,7 @@ export function BottomNav() {
 		[push],
 	);
 
-	if (pathname === "/" || isOnboarding) return null;
+	if (pathname === "/" || isOnboarding || isImmersive) return null;
 
 	return (
 		<nav
@@ -196,12 +157,6 @@ export function BottomNav() {
 			className="fixed right-0 bottom-0 left-0 z-header flex w-full md:hidden"
 			style={{
 				height: "calc(49px + env(safe-area-inset-bottom, 0px))",
-				transform: hidden ? "translateY(100%)" : "translateY(0)",
-				transition: reducedMotion
-					? "none"
-					: hidden
-						? "transform 0.225s cubic-bezier(0.22, 1, 0.36, 1)"
-						: "transform 0.3s cubic-bezier(0.22, 1, 0.36, 1)",
 			}}
 		>
 			<div className="grid h-12.25 w-full grow grid-cols-5 items-stretch border-system-separator/30 border-t bg-system-background/80 backdrop-blur-xl">

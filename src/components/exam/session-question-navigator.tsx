@@ -31,16 +31,17 @@ export function SessionQuestionNavigator({
 				return (
 					<div key={key} className="flex flex-wrap gap-1.5">
 						{items.map((item) => {
-							const isCurrent = item.part.id === currentPartId;
-							const isAnswered = !!answers[item.part.id];
-							const isFlagged = flags.includes(item.part.id);
+							const fullId = `${item.sectionId}-${item.questionId}-${item.part.id}`;
+							const isCurrent = fullId === currentPartId;
+							const isAnswered = !!answers[fullId];
+							const isFlagged = flags.includes(fullId);
 							const partSuffix = item.part.id.split("-").pop() ?? "";
 							const label = `${item.questionId}.${partSuffix}`;
 							return (
 								<button
-									key={item.part.id}
+									key={fullId}
 									type="button"
-									onClick={() => onNavigate(item.part.id)}
+									onClick={() => onNavigate(fullId)}
 									className={cn(
 										"size-8 rounded-lg font-medium text-xs transition-colors",
 										isCurrent && "ring-2 ring-[--system-accent]",

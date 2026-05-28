@@ -118,12 +118,13 @@ export function SessionResultsView({
 
 			<div className="flex flex-col gap-2">
 				{flatParts.map((item) => {
-					const result = resultMap.get(item.part.id);
+					const fullId = `${item.sectionId}-${item.questionId}-${item.part.id}`;
+					const result = resultMap.get(fullId);
 					if (!result) return null;
-					const isExpanded = expandedId === item.part.id;
+					const isExpanded = expandedId === fullId;
 					return (
 						<Card
-							key={item.part.id}
+							key={fullId}
 							className={cn(
 								"overflow-hidden transition-shadow",
 								result.correct ? "border-success/20" : "border-destructive/20",
@@ -131,7 +132,7 @@ export function SessionResultsView({
 						>
 							<button
 								type="button"
-								onClick={() => setExpandedId(isExpanded ? null : item.part.id)}
+								onClick={() => setExpandedId(isExpanded ? null : fullId)}
 								className="flex w-full items-center justify-between p-4 text-left"
 							>
 								<div className="flex items-center gap-3">
@@ -168,7 +169,7 @@ export function SessionResultsView({
 												{t("exam.yourAnswer")}
 											</p>
 											<p className="rounded-lg bg-muted p-2 font-mono text-xs">
-												{getAnswerText(item.part, answers[item.part.id]) ||
+												{getAnswerText(item.part, answers[fullId]) ||
 													t("exam.noAnswer")}
 											</p>
 										</div>

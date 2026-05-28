@@ -36,6 +36,7 @@ import {
 	useExamSessionAutoSave,
 } from "@/hooks/use-exam-session-persistence";
 import { useGamification } from "@/hooks/use-gamification";
+import { useImmersiveMode } from "@/components/shared/immersive-mode";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
 import {
 	getAnswerText,
@@ -183,6 +184,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 	} = useGamification();
 
 	const { addWrongAnswer } = useWrongAnswerJournal();
+	const { setImmersive } = useImmersiveMode();
 
 	useExamSessionAutoSave(id);
 
@@ -214,14 +216,23 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 		};
 	}, [phase, sessionMode, paused, tick, timeRemaining, completeSession]);
 
+	useEffect(() => {
+		setImmersive(phase === "active");
+		return () => setImmersive(false);
+	}, [phase, setImmersive]);
+
 	const startSession = useCallback(() => {
 		const first = flatParts[0];
-		if (first) setCurrentPart(first.part.id);
+		if (first)
+			setCurrentPart(`${first.sectionId}-${first.questionId}-${first.part.id}`);
 		setPhase("active");
 	}, [flatParts, setCurrentPart]);
 
 	const currentPartIndex = useMemo(
-		() => flatParts.findIndex((p) => p.part.id === currentPartId),
+		() =>
+			flatParts.findIndex(
+				(p) => `${p.sectionId}-${p.questionId}-${p.part.id}` === currentPartId,
+			),
 		[flatParts, currentPartId],
 	);
 
@@ -232,13 +243,19 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 
 	const goToNext = useCallback(() => {
 		if (currentPartIndex < flatParts.length - 1) {
-			setCurrentPart(flatParts[currentPartIndex + 1].part.id);
+			const nextPart = flatParts[currentPartIndex + 1];
+			setCurrentPart(
+				`${nextPart.sectionId}-${nextPart.questionId}-${nextPart.part.id}`,
+			);
 		}
 	}, [currentPartIndex, flatParts, setCurrentPart]);
 
 	const goToPrevious = useCallback(() => {
 		if (currentPartIndex > 0) {
-			setCurrentPart(flatParts[currentPartIndex - 1].part.id);
+			const prevPart = flatParts[currentPartIndex - 1];
+			setCurrentPart(
+				`${prevPart.sectionId}-${prevPart.questionId}-${prevPart.part.id}`,
+			);
 		}
 	}, [currentPartIndex, flatParts, setCurrentPart]);
 
@@ -255,7 +272,8 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 		if (timerRef.current) clearInterval(timerRef.current);
 
 		const partResults = flatParts.map((item) => {
-			const answer = answers[item.part.id];
+			const fullId = `${item.sectionId}-${item.questionId}-${item.part.id}`;
+			const answer = answers[fullId];
 			let correct = false;
 			if (item.part.type === "multiple-choice" && item.part.options) {
 				const selected = Array.isArray(answer?.value)
@@ -265,7 +283,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 					(o) => o.id === selected && o.isCorrect,
 				);
 			}
-			return { partId: item.part.id, correct, score: correct ? 1 : 0 };
+			return { partId: fullId, correct, score: correct ? 1 : 0 };
 		});
 
 		const correctCount = partResults.filter((r) => r.correct).length;
@@ -303,12 +321,12 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 			if (!result.correct) {
 				const partText = item.part.text ?? `Question ${item.questionId}`;
 				addWrongAnswer({
-					questionId: item.part.id,
+					questionId: result.partId,
 					questionText: partText,
 					subject,
 					topic,
 					correctAnswer: getCorrectAnswerText(item.part),
-					userAnswer: getAnswerText(item.part, answers[item.part.id]),
+					userAnswer: getAnswerText(item.part, answers[result.partId]),
 					explanation: "",
 				});
 				flashcardPromises.push(
@@ -427,7 +445,8 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 
 	if (phase === "results") {
 		const partResults = flatParts.map((item) => {
-			const answer = answers[item.part.id];
+			const fullId = `${item.sectionId}-${item.questionId}-${item.part.id}`;
+			const answer = answers[fullId];
 			let correct = false;
 			if (item.part.type === "multiple-choice" && item.part.options) {
 				const selected = Array.isArray(answer?.value)
@@ -437,7 +456,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 					(o) => o.id === selected && o.isCorrect,
 				);
 			}
-			return { partId: item.part.id, correct, score: correct ? 1 : 0 };
+			return { partId: fullId, correct, score: correct ? 1 : 0 };
 		});
 		return (
 			<SessionResultsView
