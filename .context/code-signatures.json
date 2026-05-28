@@ -1,5 +1,5 @@
 {
-  "LAST_SYNC": "2026-05-25",
+  "LAST_SYNC": "2026-05-28",
   "modules": [
     {
       "path": "src/lib/flashcard-engine/engine.ts",
@@ -80,12 +80,75 @@
       "internalDependencies": ["@/lib/question-engine/question-engine", "./grading", "./job-queue", "@/lib/utils/engine-analytics"]
     },
     {
+      "path": "src/lib/quiz-packs/service.ts",
+      "exports": [
+        {
+          "name": "QuizPackService",
+          "type": "class",
+          "description": "Service for managing offline AI quiz packs, their lifecycle, and storage.",
+          "methods": [
+            "generatePack(subject: string, topic: string | null, count: number): Promise<QuizPack>",
+            "markReady(id: string, storageBytes: number): Promise<void>",
+            "getPacks(): Promise<QuizPack[]>",
+            "deletePack(id: string): Promise<void>",
+            "getQuestions(packId: string): Promise<QuizPackQuestion[]>",
+            "storeQuestions(packId: string, questions: Omit<QuizPackQuestion, 'packId'>[]): Promise<void>",
+            "cleanupExpired(): Promise<number>"
+          ]
+        },
+        {
+          "name": "quizPackService",
+          "type": "singleton",
+          "description": "Exported singleton instance of QuizPackService."
+        }
+      ],
+      "internalDependencies": ["@/lib/db/schema", "nanoid"]
+    },
+    {
+      "path": "src/lib/exam-dates/service.ts",
+      "exports": [
+        {
+          "name": "getExamDates",
+          "description": "Fetches exam slots for a session/year from Dexie or Seed data."
+        },
+        {
+          "name": "getNextExams",
+          "description": "Gets upcoming exams (default 2) from current date."
+        },
+        {
+          "name": "syncExamDatesToAppwrite",
+          "description": "Enqueues background job to sync exam dates to Appwrite."
+        },
+        {
+          "name": "syncExamDatesDirect",
+          "description": "Direct server-side sync of exam dates to Appwrite."
+        }
+      ],
+      "internalDependencies": ["@/lib/db/schema", "@/lib/orchestrator/job-queue", "appwrite"]
+    },
+    {
       "path": "src/lib/services/index.ts",
       "exports": [
         { "name": "aiSolver", "description": "Service for AI-powered problem solving." },
         { "name": "analyticsService", "description": "Unified analytics for user progress and engagement." },
         { "name": "notificationService", "description": "Handles push notifications and study reminders." },
-        { "name": "searchAll", "description": "Global search service across subjects, topics, and questions." }
+        { "name": "searchAll", "description": "Global search service across subjects, topics, and questions." },
+        { "name": "questionRatingService", "description": "Manages user ratings and quality feedback for questions." }
+      ]
+    },
+    {
+      "path": "src/lib/api/create-route-handler.ts",
+      "exports": [
+        {
+          "name": "createRouteHandler",
+          "type": "function",
+          "description": "Generic factory for Next.js API route handlers with integrated auth, validation, and budget tracking."
+        },
+        {
+          "name": "HttpError",
+          "type": "class",
+          "description": "Standardized HTTP error for use within createRouteHandler."
+        }
       ]
     }
   ]
