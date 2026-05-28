@@ -49,7 +49,7 @@
     "preview": "Voorskou",
     "fullscreen": "Volskerm",
     "settings": "Instellings",
-    "quiz": "Quiz",
+    "quiz": "Kwiz",
     "flashcards": "Flitskaarte",
     "studyGroups": "Studiegroepe",
     "exam": "Eksamen",
@@ -220,10 +220,10 @@
     "emailVerified": "E-pos geverifieer",
     "emailVerifiedDesc": "Jou e-pos is suksesvol geverifieer.",
     "goToDashboard": "Gaan na Paneelbord",
-    "resetSent": "Password reset link sent to your email"
+    "resetSent": "Wagwoordherstelkoppeling gestuur na jou e-pos"
   },
   "quiz": {
-    "title": "Quiz",
+    "title": "Toets",
     "startQuiz": "Begin Quiz",
     "newQuiz": "Nuwe Quiz",
     "continueQuiz": "Gaan voort",
@@ -387,7 +387,7 @@
     "dueLabel": "Verskuldig",
     "overdue": "Agterstallig",
     "ease": "Gemak",
-    "interval": "Interval",
+    "interval": "Tydsinterval",
     "noMatchFilters": "Geen kaarte pas by jou filters nie.",
     "browseEmpty": "Nog geen flitskaarte nie. Skep sommige van die studiebladsy af!",
     "cardCount": "{count} kaart",
@@ -488,12 +488,12 @@
     "yourAnswer": "Jou antwoord",
     "correctAnswer": "Korrekte antwoord",
     "notAvailable": "(nie beskikbaar nie)",
-    "readInstructions": "Please read the following instructions carefully before starting.",
-    "passMark": "Pass mark",
-    "sectionScore": "{section} score",
-    "downloadResults": "Download results",
-    "examDates": "Exam Dates",
-    "calendarExport": "Export calendar"
+    "readInstructions": "Lees asseblief die volgende instruksies sorgvuldig voor jy begin.",
+    "passMark": "Slaagsyfer",
+    "sectionScore": "{section} telling",
+    "downloadResults": "Laai resultate af",
+    "examDates": "Eksamen-datums",
+    "calendarExport": "Kalender-uitvoer"
   },
   "studyPlanner": {
     "title": "Studiebeplanner",
@@ -535,7 +535,7 @@
     "subjectPlaceholder": "bv. Wiskunde",
     "topicPlaceholder": "bv. Algebra",
     "paperPlaceholder": "bv. Vraestel 1",
-    "typeQuiz": "Quiz",
+    "typeQuiz": "Toets",
     "typeFlashcard": "Flitskaart",
     "typeExamPaper": "Eksamen Vraestel",
     "typeReview": "Hersiening",
@@ -548,12 +548,12 @@
     "examSubject": "Vak",
     "examPaper": "Vraestel",
     "examDate": "Datum",
-    "semester": "Semester",
-    "subjects": "Subjects",
-    "smartScheduler": "Smart scheduler"
+    "semester": "Semeseter",
+    "subjects": "Vakke",
+    "smartScheduler": "Slim skeduleerder"
   },
   "gamification": {
-    "xp": "XP",
+    "xp": "ER",
     "level": "Vlak {level}",
     "streak": "Reeks",
     "streakDays": "{count} dag reeks",
@@ -569,12 +569,12 @@
     "noAchievements": "Nog geen prestasies nie. Begin studeer om jou eerste te verdien!",
     "earnedOfTotal": "{earned} / {total}",
     "achievementLocked": "Gesluit: {name}",
-    "xpLabel": "{xp} XP",
+    "xpLabel": "{xp} ER",
     "xpProgress": "{currentXp} / {xpToNextLevel} XP na Vlak {level}",
     "dailyChallenges": "Daaglikse Uitdagings",
     "complete": "Voltooi!",
     "completedOfTotal": "{completed} / {total}",
-    "xpReward": "+{xpReward} XP",
+    "xpReward": "+{xpReward} ER",
     "completed": "Voltooi",
     "streakMilestones": "Reeks Mylpale",
     "milestoneStreakDays": "{streak} dae",
@@ -645,13 +645,13 @@
     "subscribe": "Teken in",
     "alreadyPremium": "Jy is 'n Premium-lid!",
     "expiresOn": "Verval op {date}",
-    "unlockAll": "Unlock all features",
-    "perMonth": "/month",
-    "perYear": "/year",
-    "manageSubscription": "Manage subscription",
-    "cancelSubscription": "Cancel subscription",
-    "cancelConfirm": "Are you sure you want to cancel?",
-    "reactivate": "Reactivate"
+    "unlockAll": "Ontsper alle funksies",
+    "perMonth": "/maand",
+    "perYear": "/jaar",
+    "manageSubscription": "Bestuur intekening",
+    "cancelSubscription": "Kanselleer intekening",
+    "cancelConfirm": "Is jy seker jy wil kanselleer?",
+    "reactivate": "Heraktiveer"
   },
   "settings": {
     "title": "Instellings",
@@ -662,7 +662,7 @@
     "data": "Data",
     "account": "Rekening",
     "referral": "Verwys 'n vriend",
-    "beta": "Beta",
+    "beta": "Bèta",
     "languageDescription": "Kies jou voorkeurtaal",
     "theme": "Tema",
     "pushNotifications": "Stootkennisgewings",
@@ -674,9 +674,9 @@
     "version": "Weergawe",
     "privacyPolicy": "Privaatheidsbeleid",
     "termsOfService": "Diensbepalings",
-    "emailNotifications": "Email notifications",
-    "soundEffects": "Sound effects",
-    "deleteConfirm": "Are you sure? This cannot be undone."
+    "emailNotifications": "E-poskennisgewings",
+    "soundEffects": "Klank-effekte",
+    "deleteConfirm": "Is jy seker? Dit kan nie ongedaan gemaak word nie."
   },
   "subjects": {
     "mathematics": "Wiskunde",
@@ -700,11 +700,11 @@
     "tourism": "Toerisme",
     "allSubjects": "Alle vakke",
     "selectSubject": "Kies 'n vak",
-    "dramaticArts": "Dramatic Arts",
-    "music": "Music",
-    "visualArts": "Visual Arts",
-    "consumerStudies": "Consumer Studies",
-    "religionStudies": "Religion Studies"
+    "dramaticArts": "Dramatiese Kuns",
+    "music": "Musiek",
+    "visualArts": "Visuele Kuns",
+    "consumerStudies": "Verbruikerstudie",
+    "religionStudies": "Geloofstudie"
   },
   "dashboard": {
     "title": "Jou Leerpaneelbord",
@@ -726,7 +726,7 @@
     "rateLimited": "Te veel versoeke. Wag asseblief 'n oomblik.",
     "emptyState": "Nog niks hier nie",
     "emptyFlashcards": "Nog geen flitskaarte nie. Skep of importeer sommige om te begin.",
-    "emptyQuiz": "No quiz data available. Take a quiz to see results here."
+    "emptyQuiz": "Geen kwisdata beskikbaar nie. Neem 'n kwis om resultate hier te sien."
   },
   "tools": {
     "title": "Gereedskap",

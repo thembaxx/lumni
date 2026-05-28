@@ -319,6 +319,21 @@ export const schemaConfig: Record<string, CollectionSchema> = {
 			},
 		],
 	},
+	teacher_assignments: {
+		attributes: {
+			teacherId: { type: "string", size: 100, required: true },
+			topicIds: { type: "string", size: 2000, required: true },
+			status: { type: "string", size: 20, required: true },
+			createdAt: { type: "datetime" },
+		},
+		indexes: [
+			{
+				key: "idx_teacher_assignments_teacherId",
+				type: "key",
+				attributes: ["teacherId"],
+			},
+		],
+	},
 	parent_students: {
 		attributes: {
 			parentId: { type: "string", size: 100, required: true },

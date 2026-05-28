@@ -166,7 +166,7 @@ mock.module("@/lib/appwrite", () => ({
 	account: {},
 	serverAccount: {},
 	serverClient: {},
-	APPWRITE_ENDPOINT: "https://cloud.appwrite.io/v1",
+	APPWRITE_ENDPOINT: "https://jnb.cloud.appwrite.io/v1",
 	APPWRITE_PROJECT: "test-project",
 	APPWRITE_API_KEY: "test-key",
 }));

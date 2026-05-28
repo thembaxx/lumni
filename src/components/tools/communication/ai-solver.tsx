@@ -1,37 +1,17 @@
 "use client";
 
-import {
-	Camera01Icon,
-	Cancel01Icon,
-	Image03FreeIcons,
-	RadialIcon,
-	SparklesIcon,
-} from "@hugeicons/core-free-icons";
+import { RadialIcon, SparklesIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { MarkdownRenderer } from "@/components/markdown-renderer";
-import { StepByStep } from "@/components/quiz/step-by-step";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { tryLocalOcr } from "@/lib/ocr/local-ocr";
-import { cn } from "@/lib/shared";
-import { UploadButton } from "@/lib/uploadthing";
 import { CameraPreview } from "./camera-preview";
-
-const SUBJECTS = [
-	{ id: "general", label: "General" },
-	{ id: "pre-algebra", label: "Pre-Algebra" },
-	{ id: "algebra", label: "Algebra" },
-	{ id: "trigonometry", label: "Trigonometry" },
-	{ id: "calculus", label: "Calculus" },
-	{ id: "geometry", label: "Geometry" },
-	{ id: "statistics", label: "Statistics" },
-	{ id: "matrix", label: "Matrix" },
-] as const;
-
-type Subject = (typeof SUBJECTS)[number]["id"];
+import { SolverInputTools } from "./solver-input-tools";
+import { SolverResultView } from "./solver-result-view";
+import { SolverSubjectSelector, type Subject } from "./solver-subject-selector";
+import { SymbolPalette } from "./symbol-palette";
 
 interface SolverResponse {
 	solution: string;
@@ -40,21 +20,6 @@ interface SolverResponse {
 }
 
 type SolverPhase = "input" | "extracting" | "confirm" | "solving" | "result";
-
-const MATH_SYMBOLS = [
-	{ label: "√", value: "√" },
-	{ label: "π", value: "π" },
-	{ label: "²", value: "²" },
-	{ label: "³", value: "³" },
-	{ label: "±", value: "±" },
-	{ label: "÷", value: "÷" },
-	{ label: "×", value: "×" },
-	{ label: "∑", value: "∑" },
-	{ label: "∫", value: "∫" },
-	{ label: "≠", value: "≠" },
-	{ label: "≈", value: "≈" },
-	{ label: "∞", value: "∞" },
-];
 
 interface AiSolverProps {
 	cameraFocus?: boolean;
@@ -241,39 +206,9 @@ function AiSolverInner({ cameraFocus, initialQuestion }: AiSolverProps) {
 			<div className="px-5 pb-5">
 				<div className="flex flex-col gap-4 rounded-xl bg-system-background-secondary p-5">
 					{showSymbols && (
-						<div className="flex flex-wrap gap-1.5">
-							{SUBJECTS.map((s) => (
-								<button
-									key={s.id}
-									type="button"
-									onClick={() => setSubject(s.id)}
-									className={cn(
-										"h-7 rounded-lg border px-2.5 font-medium text-xs transition-colors",
-										subject === s.id
-											? "border-[--system-accent] bg-[--system-accent] text-white"
-											: "border-border bg-system-fill text-[--system-text-secondary] hover:border-[--system-accent]/40",
-									)}
-								>
-									{s.label}
-								</button>
-							))}
-						</div>
+						<SolverSubjectSelector subject={subject} onChange={setSubject} />
 					)}
-					{showSymbols && (
-						<div className="flex flex-wrap gap-1">
-							{MATH_SYMBOLS.map((s) => (
-								<Button
-									key={s.label}
-									variant="ghost"
-									size="sm"
-									onClick={() => insertSymbol(s.value)}
-									className="ios-footnote h-6 w-7 p-0 text-[--system-text-secondary] hover:text-[--system-accent]"
-								>
-									{s.label}
-								</Button>
-							))}
-						</div>
-					)}
+					{showSymbols && <SymbolPalette onInsert={insertSymbol} />}
 
 					{showTextarea && (
 						<Textarea
@@ -304,83 +239,16 @@ function AiSolverInner({ cameraFocus, initialQuestion }: AiSolverProps) {
 						</div>
 					)}
 
-					{(phase === "input" || phase === "confirm") && (
-						<div className="flex items-center gap-4">
-							<div className="flex flex-1 gap-2">
-								{phase === "input" && (
-									<>
-										<Button
-											variant="outline"
-											size="sm"
-											onClick={() => setShowCamera(true)}
-											className="h-10 gap-2 rounded-xl px-4"
-										>
-											<HugeiconsIcon icon={Camera01Icon} data-icon />
-											<span className="text-sm">Take Photo</span>
-										</Button>
-										<UploadButton
-											endpoint="imageUploader"
-											onClientUploadComplete={handleUploadComplete}
-											onUploadError={(error: Error) => {
-												setError(`Upload failed: ${error.message}`);
-											}}
-											appearance={{
-												button:
-													"bg-system-fill hover:bg-system-fill-secondary text-foreground h-10 px-4 py-2 text-sm border border-border w-full transition-colors rounded-xl",
-												allowedContent: "hidden",
-											}}
-											content={{
-												button({ ready }) {
-													if (ready)
-														return (
-															<div className="flex items-center gap-2 text-foreground text-sm">
-																<HugeiconsIcon
-																	icon={Image03FreeIcons}
-																	className="size-4"
-																	data-icon
-																/>
-																<span>Upload</span>
-															</div>
-														);
-													return "Working on it…";
-												},
-											}}
-										/>
-									</>
-								)}
-								{phase === "confirm" && imageUrl && (
-									<Button
-										variant="outline"
-										size="sm"
-										onClick={handleRetake}
-										className="h-10 gap-2 rounded-xl px-4"
-									>
-										<HugeiconsIcon icon={Camera01Icon} data-icon />
-										<span className="text-sm">Retake</span>
-									</Button>
-								)}
-							</div>
-							{imageUrl && (
-								<div className="group relative size-20 shrink-0 overflow-hidden rounded-xl border-2 border-[--system-accent]/20 shadow-level-2">
-									<Image
-										src={imageUrl}
-										alt="Uploaded problem"
-										fill
-										sizes="80px"
-										className="object-cover outline outline-black/10 -outline-offset-1 transition-transform group-hover:scale-110 dark:outline-white/10"
-									/>
-									<Button
-										variant="destructive"
-										size="icon-xs"
-										onClick={handleRetake}
-										className="absolute top-1 right-1 size-5"
-									>
-										<HugeiconsIcon icon={Cancel01Icon} data-icon />
-									</Button>
-								</div>
-							)}
-						</div>
-					)}
+					<SolverInputTools
+						phase={phase}
+						imageUrl={imageUrl}
+						onCameraClick={() => setShowCamera(true)}
+						onRetake={handleRetake}
+						onUploadComplete={handleUploadComplete}
+						onUploadError={(error: Error) => {
+							setError(`Upload failed: ${error.message}`);
+						}}
+					/>
 				</div>
 			</div>
 
@@ -397,44 +265,11 @@ function AiSolverInner({ cameraFocus, initialQuestion }: AiSolverProps) {
 			)}
 
 			{phase === "result" && result && (
-				<div className="animate-fade-in-up px-5 pb-10">
-					<div className="overflow-hidden rounded-2xl border border-border bg-card shadow-level-2">
-						<div className="p-6">
-							{subject !== "general" && (
-								<div className="mb-4">
-									<span className="rounded-full bg-[--system-accent]/10 px-2.5 py-1 font-medium text-[--system-accent] text-xs">
-										{SUBJECTS.find((s) => s.id === subject)?.label}
-									</span>
-								</div>
-							)}
-							<div className="rounded-xl border border-border/50 bg-system-background p-5">
-								<div className="prose prose-sm max-w-none text-foreground">
-									<MarkdownRenderer
-										content={result.solution}
-										subject="mathematics"
-									/>
-								</div>
-							</div>
-
-							{result.steps && result.steps.length > 0 && (
-								<div className="mt-6">
-									<p className="mb-4 font-bold text-muted-foreground text-xs uppercase tracking-wider">
-										Steps
-									</p>
-									<StepByStep steps={result.steps} />
-								</div>
-							)}
-						</div>
-					</div>
-
-					<Button
-						variant="outline"
-						onClick={handleReset}
-						className="mt-4 h-10 w-full gap-2 rounded-xl"
-					>
-						Solve Another Problem
-					</Button>
-				</div>
+				<SolverResultView
+					subject={subject}
+					result={result}
+					onReset={handleReset}
+				/>
 			)}
 		</div>
 	);

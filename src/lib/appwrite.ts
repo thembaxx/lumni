@@ -14,7 +14,8 @@ import {
 const isBrowser = typeof window !== "undefined";
 
 const API_ENDPOINT =
-	process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT || "https://cloud.appwrite.io/v1";
+	process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT ||
+	"https://jnb.cloud.appwrite.io/v1";
 
 export const APPWRITE_ENDPOINT = API_ENDPOINT;
 

@@ -6,11 +6,36 @@ import { RoleGate } from "@/components/shared/role-gate";
 import { AssignmentBuilder } from "@/components/teacher/assignment-builder";
 import { ClassRosterTable } from "@/components/teacher/class-roster-table";
 import { ClassShell } from "@/components/teacher/class-shell";
+import { StudentDetailDialog } from "@/components/teacher/student-detail-dialog";
 import { TopicMasteryHeatmap } from "@/components/teacher/topic-mastery-heatmap";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "@/hooks/use-toast";
+
+interface StudentData {
+	id: string;
+	name: string;
+	initials: string;
+	grade: string;
+	overallScore: number;
+	weakTopics: string[];
+	lastActive: string;
+}
+
+interface TopicMasteryData {
+	topic: string;
+	mastery: "mastered" | "proficient" | "developing" | "novice";
+	studentCount: number;
+	avgScore: number;
+}
+
+interface EngagementData {
+	totalSessions: number;
+	totalQuestionsAnswered: number;
+	activeStudents: number;
+}
 
 export default function TeacherDashboardPage() {
 	return (
@@ -23,6 +48,9 @@ export default function TeacherDashboardPage() {
 function TeacherDashboardPageInner() {
 	const queryClient = useQueryClient();
 	const [linkId, setLinkId] = useState("");
+	const [selectedStudent, setSelectedStudent] = useState<StudentData | null>(
+		null,
+	);
 
 	const { data, isLoading } = useQuery({
 		queryKey: ["teacher-students"],
@@ -30,21 +58,9 @@ function TeacherDashboardPageInner() {
 			const res = await fetch("/api/teacher/students");
 			if (!res.ok) throw new Error("Failed to fetch");
 			return res.json() as Promise<{
-				students: {
-					id: string;
-					name: string;
-					initials: string;
-					grade: string;
-					overallScore: number;
-					weakTopics: string[];
-					lastActive: string;
-				}[];
-				topicMastery: {
-					topic: string;
-					mastery: "mastered" | "proficient" | "developing" | "novice";
-					studentCount: number;
-					avgScore: number;
-				}[];
+				students: StudentData[];
+				topicMastery: TopicMasteryData[];
+				engagement: EngagementData;
 			}>;
 		},
 	});
@@ -70,11 +86,41 @@ function TeacherDashboardPageInner() {
 			}),
 	});
 
-	const handleAssign = (topics: string[]) => {
-		toast({
-			type: "success",
-			message: `Assigned: ${topics.join(", ")}`,
-		});
+	const unlinkStudent = useMutation({
+		mutationFn: async (studentId: string) => {
+			const res = await fetch("/api/teacher/link", {
+				method: "DELETE",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ studentId }),
+			});
+			if (!res.ok) throw new Error("Failed to unlink");
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["teacher-students"] });
+			toast({ type: "success", message: "Student unlinked" });
+		},
+		onError: () =>
+			toast({ type: "error", message: "Failed to unlink student" }),
+	});
+
+	const handleAssign = async (topics: string[]) => {
+		try {
+			const res = await fetch("/api/teacher/assign", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ topics }),
+			});
+			if (!res.ok) throw new Error("Assignment failed");
+			toast({
+				type: "success",
+				message: `Assigned: ${topics.join(", ")}`,
+			});
+		} catch {
+			toast({
+				type: "error",
+				message: "Failed to create assignment",
+			});
+		}
 	};
 
 	if (isLoading) {
@@ -90,6 +136,7 @@ function TeacherDashboardPageInner() {
 
 	const students = data?.students ?? [];
 	const topicMastery = data?.topicMastery ?? [];
+	const engagement = data?.engagement;
 	const allTopics = topicMastery.map((t) => t.topic);
 
 	return (
@@ -129,16 +176,62 @@ function TeacherDashboardPageInner() {
 					</p>
 				</div>
 			) : (
-				<div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-					<div className="flex flex-col gap-6 lg:col-span-2">
-						<TopicMasteryHeatmap topics={topicMastery} />
-						<ClassRosterTable students={students} />
+				<>
+					{engagement && (
+						<div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+							<EngagementCard
+								label="Study Sessions"
+								value={String(engagement.totalSessions)}
+							/>
+							<EngagementCard
+								label="Questions Answered"
+								value={String(engagement.totalQuestionsAnswered)}
+							/>
+							<EngagementCard
+								label="Active Students"
+								value={`${engagement.activeStudents} / ${students.length}`}
+							/>
+						</div>
+					)}
+					<div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+						<div className="flex flex-col gap-6 lg:col-span-2">
+							<TopicMasteryHeatmap topics={topicMastery} />
+							<ClassRosterTable
+								students={students}
+								onStudentSelect={setSelectedStudent}
+								onUnlink={(id) => unlinkStudent.mutate(id)}
+								unlinkingId={
+									unlinkStudent.isPending ? unlinkStudent.variables : undefined
+								}
+							/>
+						</div>
+						<div>
+							<AssignmentBuilder topics={allTopics} onAssign={handleAssign} />
+						</div>
 					</div>
-					<div>
-						<AssignmentBuilder topics={allTopics} onAssign={handleAssign} />
-					</div>
-				</div>
+				</>
 			)}
+
+			<StudentDetailDialog
+				student={selectedStudent}
+				open={selectedStudent !== null}
+				onOpenChange={(open) => {
+					if (!open) setSelectedStudent(null);
+				}}
+			/>
 		</ClassShell>
+	);
+}
+
+function EngagementCard({ label, value }: { label: string; value: string }) {
+	return (
+		<Card>
+			<CardContent className="flex flex-col gap-1 p-4">
+				<p className="text-muted-foreground text-xs uppercase tracking-wide">
+					{label}
+				</p>
+				<p className="font-semibold text-xl">{value}</p>
+			</CardContent>
+		</Card>
 	);
 }

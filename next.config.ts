@@ -14,11 +14,7 @@ const nextConfig: NextConfig = {
 		remotePatterns: [
 			{
 				protocol: "https",
-				hostname: "cloud.appwrite.io",
-			},
-			{
-				protocol: "https",
-				hostname: "fra.cloud.appwrite.io",
+				hostname: "jnb.cloud.appwrite.io",
 			},
 			{
 				protocol: "https",
@@ -30,7 +26,7 @@ const nextConfig: NextConfig = {
 		return [
 			{
 				source: "/api/appwrite/:path*",
-				destination: `${process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT || "https://cloud.appwrite.io/v1"}/:path*`,
+				destination: `${process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT || "https://jnb.cloud.appwrite.io/v1"}/:path*`,
 			},
 		];
 	},

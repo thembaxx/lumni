@@ -1,8 +1,6 @@
 "use client";
 
 import {
-	Camera01Icon,
-	Cancel01Icon,
 	CompassIcon,
 	Copy01Icon,
 	LinkSquare01Icon,
@@ -20,8 +18,11 @@ import { OnboardingWizard } from "@/components/onboarding/onboarding-wizard";
 import { EditableField } from "@/components/settings/tabs/editable-field";
 import { ParentConsentSection } from "@/components/settings/tabs/parent-consent-section";
 import { RoleSelector } from "@/components/settings/tabs/role-selector";
+import { ConfirmDialog } from "@/components/settings/tabs/sections/confirm-dialog";
+import { ProfileAvatarSection } from "@/components/settings/tabs/sections/profile-avatar-section";
+import { ProvincePicker } from "@/components/settings/tabs/sections/province-picker";
+import { SubjectPicker } from "@/components/settings/tabs/sections/subject-picker";
 import { EmptyStateWithIllustration } from "@/components/shared/empty-state";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { ListCell, ListSection } from "@/components/ui/list-cell";
 import { useEnrolledSubjects } from "@/hooks/use-subjects";
@@ -30,19 +31,6 @@ import { account } from "@/lib/appwrite";
 import { useAuth } from "@/lib/auth/auth-context";
 import { toggleUserSubject } from "@/lib/server";
 import { useUploadThing } from "@/lib/uploadthing";
-import { getRandomName } from "@/lib/utils/random-name";
-
-const SOUTH_AFRICAN_PROVINCES = [
-	"Eastern Cape",
-	"Free State",
-	"Gauteng",
-	"KwaZulu-Natal",
-	"Limpopo",
-	"Mpumalanga",
-	"Northern Cape",
-	"North West",
-	"Western Cape",
-];
 
 export function ProfileTab() {
 	const { user, isAnonymous, updateProfile, verifyEmail, signOut, error } =
@@ -79,7 +67,6 @@ export function ProfileTab() {
 
 	const [drafts, dispatchDrafts] = useReducer(draftReducer, initialDrafts);
 	const { schoolDraft, gradeDraft, provinceDraft } = drafts;
-	const [showProvincePicker, setShowProvincePicker] = useState(false);
 	const [uploading, setUploading] = useState(false);
 
 	const prefs = (user?.prefs as Record<string, unknown>) || {};
@@ -144,8 +131,6 @@ export function ProfileTab() {
 		[user, queryClient],
 	);
 
-	const [showSubjectPicker, setShowSubjectPicker] = useState(false);
-
 	if (isAnonymous) {
 		return (
 			<div className="flex flex-col gap-10 pt-8">
@@ -180,65 +165,15 @@ export function ProfileTab() {
 
 	return (
 		<div className="flex flex-col gap-10">
-			<div className="flex flex-col items-center justify-center gap-4 py-8">
-				<div className="group relative">
-					<label htmlFor="avatar-upload" className="block cursor-pointer">
-						<Avatar className="size-24 border-[6px] border-system-surface shadow-level-3 transition-transform duration-500 group-hover:scale-105">
-							<AvatarImage
-								src={
-									(prefs?.avatarUrl as string) ??
-									`https://api.dicebear.com/9.x/fun-emoji/svg?backgroundColor=ecad80,d1d4f9,b6e3f4,c0aede,ffdfbf&seed=${getRandomName()}`
-								}
-								alt={user?.name || "User"}
-							/>
-
-							<AvatarFallback className="bg-system-accent font-extrabold text-3xl text-white">
-								{user?.name?.charAt(0)?.toUpperCase() || "U"}
-							</AvatarFallback>
-						</Avatar>
-						<div className="pointer-events-none absolute inset-0 rounded-full ring-1 ring-black/10" />
-						<div className="absolute -right-1 -bottom-1 flex size-9 items-center justify-center rounded-full border-[3px] border-system-surface bg-system-accent text-white shadow-level-2 transition-transform group-hover:scale-110">
-							{uploading ? (
-								<div className="size-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-							) : (
-								<HugeiconsIcon icon={Camera01Icon} className="size-4" />
-							)}
-						</div>
-					</label>
-					<input
-						id="avatar-upload"
-						type="file"
-						accept="image/*"
-						className="hidden"
-						onChange={handleAvatarUpload}
-						aria-label="Upload avatar image"
-					/>
-				</div>
-				<div className="flex flex-col gap-1 text-center">
-					<h2 className="text-(length:--fs-title-2) font-semibold text-foreground">
-						{user?.name || "User"}
-					</h2>
-					{user?.email && (
-						<p className="text-(length:--fs-subhead) font-medium text-muted-foreground">
-							{user.email}
-							{!user.emailVerification && (
-								<button
-									type="button"
-									onClick={verifyEmail}
-									className="ml-2 font-semibold text-system-accent text-xs hover:underline"
-								>
-									Verify
-								</button>
-							)}
-							{user.emailVerification && (
-								<span className="ml-2 font-semibold text-emerald-500 text-xs">
-									Verified
-								</span>
-							)}
-						</p>
-					)}
-				</div>
-			</div>
+			<ProfileAvatarSection
+				avatarUrl={prefs?.avatarUrl as string}
+				name={user?.name || ""}
+				email={user?.email}
+				emailVerified={user?.emailVerification}
+				uploading={uploading}
+				onVerifyEmail={verifyEmail}
+				onAvatarUpload={handleAvatarUpload}
+			/>
 
 			{error && (
 				<p className="ios-footnote -mt-6 text-center font-medium text-destructive">
@@ -346,99 +281,28 @@ export function ProfileTab() {
 					title="Province"
 					showSeparator={false}
 					trailing={
-						<div className="relative">
-							<button
-								type="button"
-								onClick={() => setShowProvincePicker(!showProvincePicker)}
-								className="font-medium text-sm text-system-accent hover:underline"
-							>
-								{provinceDraft || "Select"}
-							</button>
-							{showProvincePicker && (
-								<div className="absolute top-8 right-0 z-drawer max-h-48 w-48 overflow-y-auto rounded-xl bg-popover p-1 shadow-level-3 ring-1 ring-foreground/10">
-									{SOUTH_AFRICAN_PROVINCES.map((p) => (
-										<button
-											key={p}
-											type="button"
-											onClick={async () => {
-												dispatchDrafts({
-													type: "SET_FIELD",
-													field: "provinceDraft",
-													value: p,
-												});
-												await handleSaveField("province", p);
-												setShowProvincePicker(false);
-											}}
-											className={`w-full rounded-lg px-3 py-2 text-left text-sm hover:bg-accent ${
-												provinceDraft === p ? "bg-accent font-semibold" : ""
-											}`}
-										>
-											{p}
-										</button>
-									))}
-								</div>
-							)}
-						</div>
+						<ProvincePicker
+							value={provinceDraft}
+							onSelect={async (p) => {
+								dispatchDrafts({
+									type: "SET_FIELD",
+									field: "provinceDraft",
+									value: p,
+								});
+								await handleSaveField("province", p);
+							}}
+						/>
 					}
 				/>
 			</ListSection>
 
 			<ListSection header="Subjects (Optional)">
-				<div className="flex flex-wrap gap-2 px-1">
-					{enrolledSubjects.map((subject) => (
-						<span
-							key={subject.id}
-							className="inline-flex items-center gap-1 rounded-full bg-system-accent/10 px-3 py-1.5 font-semibold text-system-accent text-xs"
-						>
-							{subject.name}
-							<button
-								type="button"
-								onClick={() => handleToggleSubject(subject.id)}
-								aria-label={`Remove ${subject.name}`}
-								className="ml-0.5 hover:text-destructive"
-							>
-								<HugeiconsIcon icon={Cancel01Icon} className="size-3" />
-							</button>
-						</span>
-					))}
-					<button
-						type="button"
-						onClick={() => setShowSubjectPicker(!showSubjectPicker)}
-						className="inline-flex items-center gap-1 rounded-full bg-system-fill px-3 py-1.5 font-semibold text-muted-foreground text-xs hover:bg-system-fill/80"
-					>
-						+ Add subject
-					</button>
-				</div>
-				{showSubjectPicker && (
-					<div className="mt-2 max-h-60 overflow-y-auto rounded-xl bg-popover p-2 shadow-level-2 ring-1 ring-foreground/10">
-						{allSubjects
-							.filter((s) => !isEnrolled(s.id))
-							.map((subject) => (
-								<button
-									key={subject.id}
-									type="button"
-									onClick={() => {
-										handleToggleSubject(subject.id);
-										setShowSubjectPicker(false);
-									}}
-									className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm hover:bg-accent"
-								>
-									<div
-										className="flex size-7 shrink-0 items-center justify-center rounded-lg font-extrabold text-white text-xs"
-										style={{ backgroundColor: subject.color }}
-									>
-										{subject.name[0]}
-									</div>
-									<div className="min-w-0 flex-1">
-										<p className="truncate font-medium">{subject.name}</p>
-										<p className="truncate text-muted-foreground text-xs">
-											{subject.category}
-										</p>
-									</div>
-								</button>
-							))}
-					</div>
-				)}
+				<SubjectPicker
+					enrolled={enrolledSubjects}
+					available={allSubjects}
+					isEnrolled={isEnrolled}
+					onToggle={handleToggleSubject}
+				/>
 			</ListSection>
 
 			<ListSection header="Account Role">
@@ -497,35 +361,17 @@ export function ProfileTab() {
 				/>
 			</ListSection>
 
-			{showConfirmDialog && (
-				<div className="fixed inset-0 z-modal flex items-center justify-center bg-black/40">
-					<div className="mx-4 w-full max-w-sm rounded-2xl bg-card p-6 shadow-level-3">
-						<h3 className="ios-title-3 mb-2 font-semibold">
-							Redo Guided Setup?
-						</h3>
-						<p className="ios-subhead mb-6 text-muted-foreground">
-							This will update your subjects, study goals, and preferences.
-							Ready to set them up again?
-						</p>
-						<div className="flex justify-end gap-3">
-							<Button
-								variant="outline"
-								onClick={() => setShowConfirmDialog(false)}
-							>
-								Cancel
-							</Button>
-							<Button
-								onClick={() => {
-									setShowConfirmDialog(false);
-									setShowGuidedSetup(true);
-								}}
-							>
-								Let's do it
-							</Button>
-						</div>
-					</div>
-				</div>
-			)}
+			<ConfirmDialog
+				open={showConfirmDialog}
+				title="Redo Guided Setup?"
+				description="This will update your subjects, study goals, and preferences. Ready to set them up again?"
+				confirmLabel="Let's do it"
+				onConfirm={() => {
+					setShowConfirmDialog(false);
+					setShowGuidedSetup(true);
+				}}
+				onCancel={() => setShowConfirmDialog(false)}
+			/>
 
 			{showGuidedSetup && (
 				<OnboardingWizard onComplete={() => setShowGuidedSetup(false)} />

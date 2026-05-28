@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 env:
-  NEXT_PUBLIC_APPWRITE_ENDPOINT: ${{ vars.APPWRITE_ENDPOINT || 'https://cloud.appwrite.io/v1' }}
+  NEXT_PUBLIC_APPWRITE_ENDPOINT: ${{ vars.APPWRITE_ENDPOINT || 'https://jnb.cloud.appwrite.io/v1' }}
   NEXT_PUBLIC_APPWRITE_PROJECT_ID: ${{ vars.APPWRITE_PROJECT_ID || '' }}
 
 jobs:

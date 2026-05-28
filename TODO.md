@@ -151,10 +151,89 @@ All 21 items across P2 and P3 are implemented. Total changes:
 - [x] `tsc --noEmit` — zero errors
 - [x] `biome check` — passes on all changed files
 
-## Next Up
+## ✅ Session 13 — Swipeable Flashcard Deck (May 2026)
+
+- [x] **SwipeableCardDeck** — Tinder-style 3-card cascade with drag-to-swipe, tap-to-flip, colored overlay feedback, exit animation
+- [x] **SwipeableCard** — Single card with framer-motion `drag="x"`, reactive gradients, spring-back below threshold
+- [x] **QualityPicker** — Post-swipe overlay for SM-2 quality (6 levels), auto-advance 1.5s, undo support
+- [x] **useSwipeDeck** — Drag state machine (idle→dragging→swiped→quality-pick→advancing), undo stack
+- [x] **Migration**: Replaced `flashcards-active.tsx` and `sm2-study-session.tsx` with deck
+- [x] **TypeScript + Biome**: zero errors
+
+## ✅ Session 14 — Full-Screen Quiz Mode (May 2026)
+
+- [x] **ImmersiveModeProvider** — React context for immersive/full-screen mode
+- [x] **Nav hiding** — `TopNav`, `BottomNav`, `DesktopSidebar` check `isImmersive` and hide
+- [x] **Exit button** — Floating pill button (top-right), restores nav on click
+- [x] **Quiz** — `quiz-view.tsx` sets immersive when session active with questions
+- [x] **Exam** — `exam-session-client.tsx` sets immersive when phase is `"active"`
+- [x] **Touch targets** — MCQ option buttons `min-h-[48px]`
+- [x] **TypeScript + Biome**: zero errors
+
+## ✅ Session 15 — Mega-Component Breakdown Sprint (May 2026)
+
+### profile-tab.tsx (544→393 lines)
+- [x] Extracted `ProfileAvatarSection` — avatar upload + name/email/verify display
+- [x] Extracted `ProvincePicker` — inline province dropdown selector
+- [x] Extracted `SubjectPicker` — subject enrollment with add/remove
+- [x] Extracted `ConfirmDialog` — reusable confirmation modal
+
+### otp-dialog.tsx (593→256 lines)
+- [x] Extracted `otp-reducer.ts` — reducer + types + initial state
+- [x] Extracted `OtpEmailForm` — email input + send button
+- [x] Extracted `OtpVerificationForm` — OTP input, verify, countdown, resend
+- [x] Extracted `OtpVerifiedView` — success checkmark + redirect animation
+
+### periodic-table.tsx (476→235 lines)
+- [x] Extracted `ElementCard` — memo'd element card with glow/hover effects
+- [x] Extracted `ElementDetailModal` — full element detail view with facts
+
+### ai-solver.tsx (404→252 lines)
+- [x] Extracted `SolverSubjectSelector` — subject filter buttons
+- [x] Extracted `SymbolPalette` — math symbol toolbar
+- [x] Extracted `SolverInputTools` — camera/upload/image preview area
+- [x] Extracted `SolverResultView` — solution + steps display
+
+### Verification
+- [x] `tsc --noEmit` — zero errors
+- [x] `biome check` — passes on all 18 changed files
+- [x] **Total**: 2016→1136 lines across 4 mega-components (44% reduction)
+- [x] **12 new component files** created in co-located directories
+
+## ✅ Session 16 — Next Up Items (May 2026)
+
+### P0 — Appwrite SA Region Migration
+- [x] **Code already configured**: Endpoint set to `jnb.cloud.appwrite.io` in `src/lib/appwrite.ts`, `.env.local`, `.env.example`, CI, scripts, and tests (~21 files). Only remaining step is console-side verification.
+
+### P0 — Parental Dashboard (FEAT-01)
+- [x] **Already built**: Full `/parent` route, `ParentShell`, `WeeklyReportPanel`, `ActivityTimeline`, `ChildSelector`, API routes, server service, consent infrastructure
+- [x] **ChildProgressGrid**: Created `src/components/parent/child-progress-grid.tsx` — overview card grid showing all children's subject progress. Wired into parent page.
+
+### P0 — Teacher Analytics (FEAT-02)
+- [x] **Already built**: Full `/teacher` route, `ClassShell`, `TopicMasteryHeatmap`, `ClassRosterTable`, `AssignmentBuilder`, API routes, server service
+- [x] **Assignment persistence**: Created `teacher_assignments` Appwrite collection + schema + `POST /api/teacher/assign` route. `AssignmentBuilder` now calls real API instead of toast.
+- [x] **Unlink button**: Added to `ClassRosterTable` with `DELETE /api/teacher/link`
+- [x] **Per-student drill-down**: Created `StudentDetailDialog` with overall score, progress bar, weak topics. Rows clickable.
+- [x] **Engagement stats**: Added `getTeacherEngagementStats()` to service, exposed via API, 3 stat cards rendered on dashboard.
+
+### P2 — Localization (AF, ZU)
+- [x] **Afrikaans**: 58 remaining keys translated via Groq → 100% complete (24 proper nouns/numbers/templates left as-is)
+- [x] **isiZulu**: 464→30 keys remaining (~96% done). AI quota exhausted mid-run (Gemini/Groq rate limits). Remaining keys need another script run when quota resets.
 
 ### Externally Blocked
 - **WhatsApp Business API Nudges**: Requires Meta Business verification (2-4 week external process)
+
+### Verification
+- [x] `tsc --noEmit` — zero errors
+- [x] `biome check` — passes on all changed files
+
+## Next Up
+
+- **ZU translations**: Retry remaining 30 keys when AI API quota resets
+- **Appwrite SA Region**: Console-side verification (non-code)
+
+### New work / Open
+- (User to define next priorities)
 
 ## ✅ Session 8 — Unimplemented Fixes (May 2026)
 

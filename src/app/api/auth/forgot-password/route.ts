@@ -2,7 +2,8 @@ import { type NextRequest, NextResponse } from "next/server";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 const APPWRITE_ENDPOINT =
-	process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT || "https://cloud.appwrite.io/v1";
+	process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT ||
+	"https://jnb.cloud.appwrite.io/v1";
 const APPWRITE_PROJECT = process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID || "";
 
 async function forgotPasswordHandler(request: NextRequest) {

@@ -16,7 +16,7 @@ const authState: {
 };
 
 mock.module("@/lib/appwrite", () => ({
-	APPWRITE_ENDPOINT: "https://cloud.appwrite.io/v1",
+	APPWRITE_ENDPOINT: "https://jnb.cloud.appwrite.io/v1",
 	APPWRITE_PROJECT: "test-project",
 	APPWRITE_API_KEY: "test-key",
 	databases: {},

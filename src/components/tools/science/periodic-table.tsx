@@ -3,97 +3,17 @@
 import { Cancel01Icon, Search01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { AnimatePresence, m, useSpring, useTransform } from "framer-motion";
-import { memo, useCallback, useEffect, useMemo, useState } from "react";
+import { m } from "framer-motion";
+import { useCallback, useMemo, useState } from "react";
 import { Input } from "@/components/ui/input";
 import {
 	elementCategoryConfig,
-	elementEaseOutBack,
-	elementEaseOutExpo,
 	elementEaseOutQuart,
 	elementEaseOutQuint,
 } from "@/lib/data/element-categories";
 import { type Element, elements } from "@/lib/data/elements";
-
-const getBg = (category: string) =>
-	elementCategoryConfig[category]?.bg || "bg-gray-500/90";
-
-const ElementCard = memo(
-	({
-		el,
-		isActive,
-		onClick,
-	}: {
-		el: Element;
-		isActive: boolean;
-		onClick: (atomicNumber: number) => void;
-	}) => {
-		const [isHovered, setIsHovered] = useState(false);
-		const scale = useSpring(1, { stiffness: 400, damping: 30 });
-		const glowIntensity = useSpring(0, { stiffness: 300, damping: 25 });
-
-		useEffect(() => {
-			if (isHovered && isActive) {
-				glowIntensity.set(1);
-			} else {
-				glowIntensity.set(0);
-			}
-		}, [isHovered, isActive, glowIntensity]);
-
-		const boxShadow = useTransform(
-			glowIntensity,
-			[0, 1],
-			[
-				`0 0 12px oklch(${elementCategoryConfig[el.category]?.rgb} / 0.4)`,
-				`0 0 24px oklch(${elementCategoryConfig[el.category]?.rgb} / 0.8), 0 0 48px oklch(${elementCategoryConfig[el.category]?.rgb} / 0.4)`,
-			],
-		);
-
-		const symbolScale = useTransform(glowIntensity, [0, 1], [1, 1.05]);
-
-		return (
-			<m.button
-				onClick={() => onClick(el.atomicNumber)}
-				onHoverStart={() => setIsHovered(true)}
-				onHoverEnd={() => setIsHovered(false)}
-				style={{ scale, boxShadow }}
-				initial={{ opacity: 0, scale: 0.8, y: 10 }}
-				animate={{
-					opacity: isActive ? 1 : 0.15,
-					scale: 1,
-					y: 0,
-				}}
-				transition={{
-					duration: 0.35,
-					delay: (el.atomicNumber % 20) * 0.015,
-					ease: elementEaseOutQuint,
-				}}
-				whileTap={isActive ? { scale: 0.95 } : {}}
-				className={`relative flex flex-col items-center justify-center ${getBg(el.category)}rounded-2xl aspect-square cursor-pointer border border-white/10 p-2 dark:border-white/20`}
-			>
-				<span className="absolute top-1.5 left-2 font-extrabold text-[10px] tabular-nums opacity-50">
-					{el.atomicNumber}
-				</span>
-				<m.span
-					style={{ scale: symbolScale }}
-					className="font-extrabold text-white text-xl drop-shadow-lg"
-				>
-					{el.symbol}
-				</m.span>
-				<span className="mt-0.5 text-center text-[9px] leading-tight opacity-60">
-					{el.name}
-				</span>
-				<div
-					className="pointer-events-none absolute inset-0 rounded-2xl"
-					style={{
-						background:
-							"radial-gradient(circle at 50% 0%, oklch(100% 0 0 / 0.12) 0%, transparent 50%)",
-					}}
-				/>
-			</m.button>
-		);
-	},
-);
+import { ElementCard } from "./element-card";
+import { ElementDetailModal } from "./element-detail-modal";
 
 export function PeriodicTable() {
 	const [selectedElement, setSelectedElement] = useState<Element | null>(null);
@@ -119,7 +39,6 @@ export function PeriodicTable() {
 	const _displayedElements = isFiltered ? filteredElements : elements;
 	const queryClient = useQueryClient();
 
-	// Generate interesting fact when element is selected
 	const { mutate: generateFact } = useMutation({
 		mutationFn: async (el: Element) => {
 			const response = await fetch(`/api/generate-element-fact`, {
@@ -153,7 +72,6 @@ export function PeriodicTable() {
 		},
 	});
 
-	// Reset fact when new element selected and trigger generation
 	const handleElementSelect = useCallback(
 		(el: Element) => {
 			setSelectedElement(el);
@@ -259,8 +177,7 @@ export function PeriodicTable() {
 							activeCategory === null
 								? "border-[--system-separator] bg-[--system-fill] text-foreground"
 								: "border-[--system-separator] bg-[--system-fill-secondary] text-muted-foreground hover:bg-[--system-fill]"
-						}
-            `}
+						}`}
 						whileTap={{ scale: 0.95 }}
 					>
 						All
@@ -282,8 +199,7 @@ export function PeriodicTable() {
 								activeCategory === key
 									? "border-[--system-separator] bg-[--system-fill] text-foreground"
 									: "border-[--system-separator] bg-[--system-fill-secondary] text-muted-foreground hover:bg-[--system-fill]"
-							}
-            `}
+							}`}
 							whileTap={{ scale: 0.95 }}
 						>
 							<m.span
@@ -324,179 +240,11 @@ export function PeriodicTable() {
 				</m.div>
 			</div>
 
-			<AnimatePresence initial={false}>
-				{selectedElement && (
-					<m.div
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
-						exit={{ opacity: 0 }}
-						transition={{ duration: 0.25, ease: elementEaseOutQuart }}
-						className="fixed inset-0 z-modal flex items-center justify-center bg-black/80 p-4"
-						style={{
-							backdropFilter: "blur(8px)",
-						}}
-						onClick={() => setSelectedElement(null)}
-					>
-						<m.div
-							initial={{ opacity: 0, scale: 0.85, y: 30 }}
-							animate={{ opacity: 1, scale: 1, y: 0 }}
-							exit={{ opacity: 0, scale: 0.92, y: 15 }}
-							transition={{
-								duration: 0.4,
-								ease: elementEaseOutExpo,
-							}}
-							onClick={(e) => e.stopPropagation()}
-							className={`relative w-full max-w-md overflow-hidden rounded-3xl border bg-[--system-background-secondary]`}
-							style={{
-								borderColor: `oklch(${elementCategoryConfig[selectedElement.category]?.rgb} / 0.25)`,
-								boxShadow: `0 0 80px oklch(${elementCategoryConfig[selectedElement.category]?.rgb} / 0.2), 0 0 160px oklch(${elementCategoryConfig[selectedElement.category]?.rgb} / 0.08)`,
-							}}
-						>
-							<div
-								className={`absolute top-0 right-0 left-0 h-1`}
-								style={{
-									background: `linear-gradient(90deg, oklch(${elementCategoryConfig[selectedElement.category]?.rgb} / 0.6), oklch(${elementCategoryConfig[selectedElement.category]?.rgb} / 1))`,
-								}}
-							/>
-
-							<m.button
-								onClick={() => setSelectedElement(null)}
-								className="absolute top-4 right-4 z-elevated rounded-xl bg-white/5 p-2 hover:bg-white/10 dark:bg-white/10 dark:hover:bg-white/15"
-								whileHover={{
-									scale: 1.1,
-									backgroundColor: "oklch(100% 0 0 / 0.15)",
-								}}
-								whileTap={{ scale: 0.95 }}
-								transition={{ duration: 0.15 }}
-							>
-								<HugeiconsIcon icon={Cancel01Icon} data-icon />
-							</m.button>
-
-							<div className="p-6 pt-8">
-								<m.div
-									initial={{ opacity: 0, x: -20 }}
-									animate={{ opacity: 1, x: 0 }}
-									transition={{
-										delay: 0.1,
-										duration: 0.35,
-										ease: elementEaseOutQuint,
-									}}
-									className="mb-6 flex items-start gap-5"
-								>
-									<m.div
-										initial={{ scale: 0.8, rotate: -10 }}
-										animate={{ scale: 1, rotate: 0 }}
-										transition={{
-											delay: 0.05,
-											duration: 0.4,
-											ease: elementEaseOutBack,
-										}}
-										className={`flex size-20 items-center justify-center rounded-2xl ${getBg(selectedElement.category)}
-                  `}
-										style={{
-											boxShadow: `0 0 30px oklch(${elementCategoryConfig[selectedElement.category]?.rgb} / 0.5), 0 0 60px oklch(${elementCategoryConfig[selectedElement.category]?.rgb} / 0.25)`,
-										}}
-									>
-										<span className="font-extrabold text-3xl text-white">
-											{selectedElement.symbol}
-										</span>
-									</m.div>
-									<div className="flex-1 pt-1">
-										<h2 className="mb-1 font-semibold text-2xl">
-											{selectedElement.name}
-										</h2>
-										<p className="text-muted-foreground/70 text-sm">
-											Atomic Number {selectedElement.atomicNumber}
-										</p>
-										<p className="text-muted-foreground/70 text-sm tabular-nums">
-											{selectedElement.atomicMass} u
-										</p>
-									</div>
-								</m.div>
-
-								<div className="mb-4 grid grid-cols-2 gap-3">
-									<m.div
-										initial={{ opacity: 0, y: 15 }}
-										animate={{ opacity: 1, y: 0 }}
-										transition={{
-											delay: 0.15,
-											duration: 0.3,
-											ease: elementEaseOutQuart,
-										}}
-										className="rounded-xl border border-white/5 bg-white/5 p-4 dark:border-white/10 dark:bg-white/10"
-									>
-										<p className="mb-1.5 text-muted-foreground text-xs">
-											Category
-										</p>
-										<p className="font-semibold text-sm">
-											{elementCategoryConfig[selectedElement.category]?.label ||
-												selectedElement.category}
-										</p>
-									</m.div>
-									<m.div
-										initial={{ opacity: 0, y: 15 }}
-										animate={{ opacity: 1, y: 0 }}
-										transition={{
-											delay: 0.18,
-											duration: 0.3,
-											ease: elementEaseOutQuart,
-										}}
-										className="rounded-xl border border-white/5 bg-white/5 p-4 dark:border-white/10 dark:bg-white/10"
-									>
-										<p className="mb-1.5 text-muted-foreground text-xs">
-											Electron Config
-										</p>
-										<p className="font-semibold text-sm">
-											{selectedElement.electronConfig}
-										</p>
-									</m.div>
-								</div>
-
-								<m.div
-									initial={{ opacity: 0, y: 15 }}
-									animate={{ opacity: 1, y: 0 }}
-									transition={{
-										delay: 0.22,
-										duration: 0.3,
-										ease: elementEaseOutQuart,
-									}}
-									className="rounded-xl border border-white/5 bg-white/5 p-4 dark:border-white/10 dark:bg-white/10"
-								>
-									<p className="mb-1.5 text-muted-foreground text-xs">
-										Discovery
-									</p>
-									<p className="mb-1 font-semibold text-sm">
-										{selectedElement.discoveryYear}
-									</p>
-									<p className="text-muted-foreground/70 text-xs leading-relaxed">
-										{selectedElement.namedAfter}
-									</p>
-								</m.div>
-
-								{interestingFact && (
-									<m.div
-										initial={{ opacity: 0, y: 15 }}
-										animate={{ opacity: 1, y: 0 }}
-										transition={{
-											delay: 0.26,
-											duration: 0.3,
-											ease: elementEaseOutQuart,
-										}}
-										className="rounded-xl border border-white/5 bg-white/5 p-4 dark:border-white/10 dark:bg-white/10"
-									>
-										<p className="mb-1.5 text-muted-foreground text-xs">
-											Did You Know?
-										</p>
-										<p className="text-muted-foreground/80 text-sm leading-relaxed">
-											{interestingFact}
-										</p>
-									</m.div>
-								)}
-							</div>
-						</m.div>
-					</m.div>
-				)}
-			</AnimatePresence>
+			<ElementDetailModal
+				element={selectedElement}
+				interestingFact={interestingFact}
+				onClose={() => setSelectedElement(null)}
+			/>
 		</div>
 	);
 }

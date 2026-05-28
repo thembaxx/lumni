@@ -31,6 +31,7 @@ export const COLLECTIONS = {
 	CHAT_MESSAGES: "chat_messages",
 	EXAM_DATES: "exam_dates",
 	TEACHER_STUDENTS: "teacher_students",
+	TEACHER_ASSIGNMENTS: "teacher_assignments",
 	PARENT_STUDENTS: "parent_students",
 	FLASHCARD_REVIEWS: "flashcard_reviews",
 	STUDY_GROUPS: "study_groups",

@@ -2,6 +2,7 @@
 
 import { MasteryBadge } from "@/components/atoms/mastery-badge";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
 	Table,
 	TableBody,
@@ -25,11 +26,17 @@ interface StudentRow {
 interface ClassRosterTableProps extends React.ComponentProps<typeof Table> {
 	students: StudentRow[];
 	showScores?: boolean;
+	onUnlink?: (studentId: string) => void;
+	onStudentSelect?: (student: StudentRow) => void;
+	unlinkingId?: string;
 }
 
 export function ClassRosterTable({
 	students,
 	showScores = true,
+	onUnlink,
+	onStudentSelect,
+	unlinkingId,
 	className,
 	...props
 }: ClassRosterTableProps) {
@@ -43,13 +50,14 @@ export function ClassRosterTable({
 						{showScores && <TableHead>Overall</TableHead>}
 						<TableHead>Weak Areas</TableHead>
 						<TableHead>Last Active</TableHead>
+						{onUnlink && <TableHead />}
 					</TableRow>
 				</TableHeader>
 				<TableBody>
 					{students.length === 0 && (
 						<TableRow>
 							<TableCell
-								colSpan={showScores ? 5 : 4}
+								colSpan={showScores ? (onUnlink ? 6 : 5) : onUnlink ? 5 : 4}
 								className="py-8 text-center text-muted-foreground text-sm"
 							>
 								No students in this class yet.
@@ -57,7 +65,13 @@ export function ClassRosterTable({
 						</TableRow>
 					)}
 					{students.map((student) => (
-						<TableRow key={student.id}>
+						<TableRow
+							key={student.id}
+							className={cn(
+								onStudentSelect && "cursor-pointer hover:bg-muted/50",
+							)}
+							onClick={() => onStudentSelect?.(student)}
+						>
 							<TableCell className="font-medium">{student.name}</TableCell>
 							<TableCell>{student.grade}</TableCell>
 							{showScores && (
@@ -92,6 +106,22 @@ export function ClassRosterTable({
 							<TableCell className="text-muted-foreground text-sm">
 								{student.lastActive}
 							</TableCell>
+							{onUnlink && (
+								<TableCell>
+									<Button
+										variant="ghost"
+										size="sm"
+										className="text-destructive hover:text-destructive"
+										disabled={unlinkingId === student.id}
+										onClick={(e) => {
+											e.stopPropagation();
+											onUnlink(student.id);
+										}}
+									>
+										{unlinkingId === student.id ? "..." : "Unlink"}
+									</Button>
+								</TableCell>
+							)}
 						</TableRow>
 					))}
 				</TableBody>

@@ -26,6 +26,12 @@ export interface TopicMasteryData {
 	avgScore: number;
 }
 
+export interface EngagementStats {
+	totalSessions: number;
+	totalQuestionsAnswered: number;
+	activeStudents: number;
+}
+
 function getInitials(name: string): string {
 	return name
 		.split(" ")
@@ -223,6 +229,44 @@ export async function getTeacherTopicMastery(
 	}
 
 	return results.sort((a, b) => b.avgScore - a.avgScore);
+}
+
+export async function getTeacherEngagementStats(
+	teacherId: string,
+): Promise<EngagementStats> {
+	await auth();
+	const relationships = await listDocuments(COLLECTIONS.TEACHER_STUDENTS, [
+		Query.equal("teacherId", teacherId),
+	]);
+	if (relationships.length === 0) {
+		return { totalSessions: 0, totalQuestionsAnswered: 0, activeStudents: 0 };
+	}
+
+	const studentIds = relationships.map(
+		(r) => (r as Record<string, unknown>).studentId as string,
+	);
+
+	const allSessions = await Promise.all(
+		studentIds.map((sid) =>
+			listDocuments(COLLECTIONS.STUDY_SESSIONS, [Query.equal("userId", sid)]),
+		),
+	);
+
+	let totalSessions = 0;
+	let totalQuestionsAnswered = 0;
+	let activeStudents = 0;
+
+	for (let i = 0; i < allSessions.length; i++) {
+		const sessions = allSessions[i];
+		totalSessions += sessions.length;
+		if (sessions.length > 0) activeStudents++;
+		for (const s of sessions) {
+			const doc = s as Record<string, unknown>;
+			totalQuestionsAnswered += (doc.questionsAnswered as number) || 0;
+		}
+	}
+
+	return { totalSessions, totalQuestionsAnswered, activeStudents };
 }
 
 export async function linkStudentToTeacher(

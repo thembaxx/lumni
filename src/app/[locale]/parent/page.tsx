@@ -6,6 +6,7 @@ import { ConsentGate } from "@/components/consent/consent-gate";
 import { ParentInvitationDialog } from "@/components/consent/parent-invitation-dialog";
 import { PageContainer } from "@/components/layout/page-container";
 import { ActivityTimeline } from "@/components/parent/activity-timeline";
+import { ChildProgressGrid } from "@/components/parent/child-progress-grid";
 import { ChildSelector } from "@/components/parent/child-selector";
 import { ParentShell } from "@/components/parent/parent-shell";
 import { WeeklyReportPanel } from "@/components/parent/weekly-report-panel";
@@ -177,6 +178,22 @@ function ParentDashboardPageInner() {
 							}))}
 							selectedId={selectedId}
 							onValueChange={setSelectedChildId}
+						/>
+						<ChildProgressGrid
+							childData={children.map((c) => ({
+								id: c.student.id,
+								name: c.student.name,
+								initials: c.student.initials,
+								grade: c.student.grade,
+								subjects: c.subjects,
+								overallScore:
+									c.subjects.length > 0
+										? Math.round(
+												c.subjects.reduce((a, s) => a + s.score, 0) /
+													c.subjects.length,
+											)
+										: 0,
+							}))}
 						/>
 						<div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
 							<div className="lg:col-span-2">
