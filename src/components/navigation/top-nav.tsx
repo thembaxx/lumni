@@ -5,6 +5,7 @@ import {
 	Login01Icon,
 	Logout01Icon,
 	Settings01Icon,
+	UserGroupIcon,
 	UserIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -12,6 +13,7 @@ import { m } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo } from "react";
 import { LocaleSwitcher } from "@/components/i18n/locale-switcher";
+import { useImmersiveMode } from "@/components/shared/immersive-mode";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -49,6 +51,10 @@ export function TopNav({ title, className }: TopNavProps) {
 	const { levelInfo } = useGamification();
 	const { isOnline, pendingCount } = useSyncStatus();
 
+	const userLabels = user?.labels ?? [];
+	const isTeacher = userLabels.includes("teacher");
+	const isParent = userLabels.includes("parent");
+
 	const handleSignOut = useCallback(async () => {
 		await signOut();
 	}, [signOut]);
@@ -68,6 +74,7 @@ export function TopNav({ title, className }: TopNavProps) {
 		return "Lumni";
 	}, [pathname, title, t]);
 
+	const { isImmersive } = useImmersiveMode();
 	const isAuthPage = pathname.startsWith("/auth");
 	const isLanding = pathname === "/";
 	const hasOwnHeader =
@@ -75,7 +82,7 @@ export function TopNav({ title, className }: TopNavProps) {
 		pathname.startsWith("/admin") ||
 		pathname.startsWith("/dev");
 
-	if (isAuthPage || isLanding || hasOwnHeader) return null;
+	if (isAuthPage || isLanding || hasOwnHeader || isImmersive) return null;
 
 	let imgSrc = null;
 	if (
@@ -183,6 +190,28 @@ export function TopNav({ title, className }: TopNavProps) {
 										<HugeiconsIcon icon={UserIcon} className="size-4" />
 										View Profile
 									</DropdownListItem>
+									{isTeacher && (
+										<DropdownListItem
+											className="rounded-md"
+											onClick={() => {
+												window.location.href = "/teacher";
+											}}
+										>
+											<HugeiconsIcon icon={UserGroupIcon} className="size-4" />
+											Teacher Dashboard
+										</DropdownListItem>
+									)}
+									{isParent && (
+										<DropdownListItem
+											className="rounded-md"
+											onClick={() => {
+												window.location.href = "/parent";
+											}}
+										>
+											<HugeiconsIcon icon={UserIcon} className="size-4" />
+											Parent Dashboard
+										</DropdownListItem>
+									)}
 									<DropdownListItem
 										className="rounded-md"
 										onClick={() => {

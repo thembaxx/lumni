@@ -71,13 +71,90 @@ All 21 items across P2 and P3 are implemented. Total changes:
 - [x] **Build**: `npx storybook build` completes successfully; `npm run storybook` starts dev server
 - [x] **Scripts**: `storybook` and `build-storybook` in package.json
 
+## ✅ Session 11 — P2 Brainstorm Features (May 2026)
+
+### P2 — All 5 brainstorm items implemented
+
+- [x] **i18n middleware**: Locale-based routing (`[locale]` prefix), `i18n-provider.tsx` for client-side, `navigation.ts` helpers
+- [x] **Gamification expansion**: Admin gamification dashboard at `/admin/gamification`, `gamification-engine.ts` extended with achievement tiers + 50+ new achievement types, `use-gamification.ts` hook with real-time progression
+- [x] **Study groups v3**: `sync-stats` background sync route, member management API (`members/[memberId]`), enhanced `group-detail.tsx` with stats/activity feed, `use-study-groups.ts` hook updates
+- [x] **Photo math polish**: `snap-fab.tsx` enhanced with camera roll support, crop UI, multi-shot flow; `ai-solver.ts` wired for image-based extraction
+- [x] **AI × past papers adaptive pool**: `question-extractor.ts` parses past paper PDFs into structured `PastPaperQuestion[]`, `POST /api/exam-papers/extract` and `questions` ingestion routes, `question-engine.ts` uses pool to seed AI generation with real exam context
+
+### TypeScript & Lint
+- [x] `tsc --noEmit` passes with zero errors
+- [x] `npx biome check` passes on all changed files
+
+## ✅ Session 12 — Infrastructure + Feature Sweep (May 2026)
+
+### Bun Migration
+- [x] **Lockfile**: Deleted `package-lock.json`, regenerated with `bun install` → `bun.lock`
+- [x] **Scripts**: Changed `npx` → `bunx` in `test:e2e` and `test:e2e:ui` scripts
+- [x] **Husky**: Changed `.husky/pre-commit` from `npx biome` to `bunx biome`
+- [x] **Playwright**: Changed `playwright.config.ts` from `npm run dev` to `bun run dev`
+- [x] **CI**: Migrated `sentry-release` job from `actions/setup-node@v4` to `oven-sh/setup-bun@v2`
+
+### Mega-component Decomposition
+- [x] **exam-session-client.tsx** (1143→660 lines): Extracted `SessionPartAnswerInput`, `SessionQuestionNavigator`, `SessionResultsView` to `src/components/exam/`; extracted `parseDuration`, `getCorrectAnswerText`, `getAnswerText` to `src/lib/exam/helpers.ts`
+- [x] **onboarding-wizard.tsx** (653→595 lines): Extracted `SubjectCard` to its own file; removed `Card`/`CardContent` imports
+- [x] **Barrel export**: Updated `src/components/exam/index.ts` with new component exports
+
+### Group Challenges (v2)
+- [x] **BadgeDisplay**: Created `src/components/study-groups/challenge/badge-display.tsx` — tier-colored badge icons with hover descriptions
+- [x] **Group card progress**: Added weekly challenge progress bar + score to `StudyGroupCard` via inline `useQuery`
+- [x] **Leaderboard page**: Created `/study-groups/leaderboard` route with ranked group list, medal icons, auto-refresh
+
+### Competency Dashboard
+- [x] **Already covered**: `TodayFocusCard` already surfaces weakest topic with practice CTA
+
+### TypeScript & Biome
+- [x] `tsc --noEmit` — zero errors
+- [x] `biome check` — passes on all changed files
+- [x] Tests — 966 pass, 15 pre-existing failures (unchanged)
+
+### Observability
+- [x] **AI latency monitoring**: Created `src/lib/ai/latency-tracker.ts` — wraps all AI provider calls with `performance.now()` timing, tracks success/failure per provider, persisted to localStorage (1000 records)
+- [x] **Usage event tracking**: Created `src/lib/observability/events.ts` — `trackEvent()` for page views, feature use, quiz/flashcard/exam events, stored in localStorage (2000 events)
+- [x] **Admin observability dashboard**: Created `/admin/observability` page showing AI latency stats, provider breakdown, usage event summary, recent calls with auto-refresh
+- [x] **Admin nav**: Added Observability link to admin dashboard header
+- [x] **AIClient integration**: Wired `_callProviders()` to track timing and success/failure before returning results
+
+### TypeScript & Biome
+- [x] `tsc --noEmit` — zero errors
+- [x] `biome check` — passes on all changed files
+
+### B2B2C Dashboard
+- [x] **RoleGate protection**: Wrapped `/parent` and `/teacher` pages with `RoleGate` component (renamed prop `role` → `requiredRole` to avoid a11y collision)
+- [x] **Nav links**: Added Teacher Dashboard / Parent Dashboard links in top-nav user dropdown when user has corresponding role label
+- [x] **Infrastructure already existed**: Full parent/teacher dashboards with services, API routes, and UI components were already built — only wiring and gating were missing
+
+### Photo Math Deep Integration
+- [x] **Snap → answer event bus**: Created `src/lib/shared/snap-answer.ts` — `dispatchSnapAnswer()` fires a custom event, `onSnapAnswer()` listens
+- [x] **"Use as Answer" button**: Added to SnapFab confirm dialog when on `/quiz` or `/flashcards` pages; dispatches extracted text on click
+- [x] **`useSnapAnswer()` hook**: Created `src/hooks/use-snap-answer.ts` — auto-clears after 2s, ready for any component to consume
+- [x] **Quiz wiring**: `QuestionCardInput.tsx` now listens for snap answers and auto-fills text-based questions (`short-answer`, `long-answer`, `essay`, `calculation`)
+
+### TypeScript & Biome
+- [x] `tsc --noEmit` — zero errors
+- [x] `biome check` — passes on all changed files
+
+### Full End-to-End Monetization (spec: `docs/superpowers/specs/2026-05-27-monetization-end-to-end.md`)
+- [x] **Stripe SDK**: Installed `stripe@22.2.0` for proper webhook signature verification
+- [x] **Stripe webhook**: Created `POST /api/stripe/webhook` — verifies `stripe-signature`, handles `checkout.session.completed` (writes Appwrite `premium_subscriptions` doc) and `customer.subscription.deleted` (updates status to cancelled)
+- [x] **Premium sync on mount**: `PremiumProvider` now calls `POST /api/premium/verify` on mount — premium persists across devices and survives localStorage clears
+- [x] **Cancel subscription fix**: `subscriptionId` stored in `PremiumState`, passed to cancel endpoint (was previously broken — sent empty body)
+- [x] **Billing toggle**: Monthly (R99) / Yearly (R999) toggle on premium page with segmented control; price propagated to both Stripe and Payfast checkout routes
+- [x] **Rate limiting**: Added `withRateLimit` (10/min) to verify endpoint
+- [x] **Env config**: Added Payfast vars + Stripe price ID vars to `.env.example`
+
+### TypeScript & Biome
+- [x] `tsc --noEmit` — zero errors
+- [x] `biome check` — passes on all changed files
+
 ## Next Up
 
-### P2 — Upcoming Features <!-- linear-priority: 2 -->
-
-Remaining brainstorm items (i18n, gamification expansion, study groups, photo math implementation, etc.) — not yet scheduled.
-
-### P3 — Bug Fixes <!-- linear-priority: 3 -->
+### Externally Blocked
+- **WhatsApp Business API Nudges**: Requires Meta Business verification (2-4 week external process)
 
 ## ✅ Session 8 — Unimplemented Fixes (May 2026)
 

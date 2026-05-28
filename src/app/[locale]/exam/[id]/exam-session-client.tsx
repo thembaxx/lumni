@@ -5,18 +5,21 @@ import {
 	ArrowRight01Icon,
 	Clock01Icon,
 	Flag01Icon,
-	Home01Icon,
 	Pause,
 	PlayFreeIcons,
-	RefreshIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Confetti, GamificationCelebration } from "@/components/celebration";
+import { GamificationCelebration } from "@/components/celebration";
+import {
+	SessionPartAnswerInput,
+	SessionQuestionNavigator,
+	SessionResultsView,
+} from "@/components/exam";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
-import { ShareResultButton } from "@/components/shared/share-button";
+import { useImmersiveMode } from "@/components/shared/immersive-mode";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -35,51 +38,22 @@ import {
 } from "@/hooks/use-exam-session-persistence";
 import { useGamification } from "@/hooks/use-gamification";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
+import {
+	getAnswerText,
+	getCorrectAnswerText,
+	parseDuration,
+} from "@/lib/exam/helpers";
 import { flashcardEngine } from "@/lib/flashcard-engine";
 import { trackQuestionResult } from "@/lib/orchestrator";
 import { cn } from "@/lib/shared";
-import { getAPSForSubject, getGrade } from "@/lib/shared/aps";
 import { formatTime } from "@/lib/shared/time";
 import { iOSEase } from "@/lib/utils/animation";
 import { addStudySession } from "@/lib/utils/study-planner";
 import { useExamSessionStore } from "@/store/exam-session";
-import type { QuestionPart } from "@/types/exam-paper";
 
 interface ExamSessionClientProps {
 	id: string;
 	mode: "timed" | "practice";
-}
-
-function parseDuration(duration: string): number {
-	const lower = duration.toLowerCase();
-	const hourMatch = lower.match(/(\d+)\s*hour/);
-	const minMatch = lower.match(/(\d+)\s*min/);
-	let total = 0;
-	if (hourMatch) total += parseInt(hourMatch[1], 10) * 60;
-	if (minMatch) total += parseInt(minMatch[1], 10);
-	return total || 180;
-}
-
-function getCorrectAnswerText(part: QuestionPart): string {
-	if (part.options) {
-		const correct = part.options.find((o) => o.isCorrect);
-		return correct ? `${correct.id}. ${correct.text}` : "";
-	}
-	return "";
-}
-
-function getAnswerText(
-	part: QuestionPart,
-	answer: { value: string | string[] } | undefined,
-): string {
-	if (!answer) return "";
-	const value = answer.value;
-	if (Array.isArray(value)) return value.join(", ");
-	if (part.options) {
-		const opt = part.options.find((o) => o.id === value);
-		return opt ? `${opt.id}. ${opt.text}` : value;
-	}
-	return value;
 }
 
 type SessionPhase =
@@ -88,458 +62,6 @@ type SessionPhase =
 	| "active"
 	| "submitting"
 	| "results";
-
-function PartAnswerInput({
-	part,
-	value,
-	onChange,
-	disabled,
-}: {
-	part: QuestionPart;
-	value: string | string[];
-	onChange: (value: string | string[]) => void;
-	disabled: boolean;
-}) {
-	const t = useTranslations();
-	if (part.type === "multiple-choice" && part.options) {
-		const selected = Array.isArray(value) ? value[0] : value;
-		return (
-			<div className="flex flex-col gap-2">
-				{part.options.map((opt) => (
-					<button
-						key={opt.id}
-						type="button"
-						disabled={disabled}
-						onClick={() => onChange(opt.id)}
-						className={cn(
-							"w-full rounded-xl border-2 p-3 text-left transition-[border-color,background-color]",
-							selected === opt.id
-								? "border-[--system-accent] bg-[--system-accent]/5"
-								: "border-border hover:border-[--system-accent]/30",
-						)}
-					>
-						<span className="font-medium">{opt.id}.</span>{" "}
-						<MarkdownRenderer content={opt.text} />
-					</button>
-				))}
-			</div>
-		);
-	}
-
-	if (part.subParts) {
-		return (
-			<div className="flex flex-col gap-4">
-				{part.subParts.map((subPart) => (
-					<div key={subPart.id}>
-						<MarkdownRenderer content={subPart.text ?? ""} />
-						<div className="mt-2">
-							<PartAnswerInput
-								part={subPart}
-								value={value}
-								onChange={onChange}
-								disabled={disabled}
-							/>
-						</div>
-					</div>
-				))}
-			</div>
-		);
-	}
-
-	if (part.type === "short-answer") {
-		return (
-			<input
-				type="text"
-				value={(Array.isArray(value) ? value[0] : value) ?? ""}
-				onChange={(e) => onChange(e.target.value)}
-				disabled={disabled}
-				className="w-full rounded-xl border-2 border-border bg-background p-3 outline-none focus:border-[--system-accent]"
-				placeholder={t("exam.placeholderShortAnswer")}
-				aria-label="Short answer input"
-			/>
-		);
-	}
-
-	if (part.type === "long-answer" || part.type === "essay") {
-		return (
-			<textarea
-				value={(Array.isArray(value) ? value[0] : value) ?? ""}
-				onChange={(e) => onChange(e.target.value)}
-				disabled={disabled}
-				rows={6}
-				className="w-full resize-y rounded-xl border-2 border-border bg-background p-3 outline-none focus:border-[--system-accent]"
-				placeholder={t("exam.placeholderLongAnswer")}
-				aria-label="Long answer input"
-			/>
-		);
-	}
-
-	if (part.type === "calculation") {
-		return (
-			<input
-				type="text"
-				inputMode="decimal"
-				value={(Array.isArray(value) ? value[0] : value) ?? ""}
-				onChange={(e) => onChange(e.target.value)}
-				disabled={disabled}
-				className="w-full rounded-xl border-2 border-border bg-background p-3 font-mono outline-none focus:border-[--system-accent]"
-				placeholder={t("exam.placeholderCalculation")}
-				aria-label="Calculation answer input"
-			/>
-		);
-	}
-
-	if (part.type === "matching") {
-		return (
-			<input
-				type="text"
-				value={(Array.isArray(value) ? value[0] : value) ?? ""}
-				onChange={(e) => onChange(e.target.value)}
-				disabled={disabled}
-				className="w-full rounded-xl border-2 border-border bg-background p-3 outline-none focus:border-[--system-accent]"
-				placeholder={t("exam.placeholderMatching")}
-				aria-label="Matching pairs input"
-			/>
-		);
-	}
-
-	if (part.type === "diagram") {
-		const instructions =
-			((part as unknown as Record<string, unknown>).instructions as string) ??
-			t("exam.placeholderDiagram");
-		return (
-			<div className="flex flex-col gap-2">
-				<p className="text-muted-foreground text-sm">{instructions}</p>
-				<textarea
-					value={(Array.isArray(value) ? value[0] : value) ?? ""}
-					onChange={(e) => onChange(e.target.value)}
-					disabled={disabled}
-					rows={4}
-					className="w-full resize-y rounded-xl border-2 border-border bg-background p-3 outline-none focus:border-[--system-accent]"
-					placeholder={t("exam.placeholderShortAnswer")}
-					aria-label="Diagram answer input"
-				/>
-			</div>
-		);
-	}
-
-	if (part.type === "programming") {
-		return (
-			<textarea
-				value={(Array.isArray(value) ? value[0] : value) ?? ""}
-				onChange={(e) => onChange(e.target.value)}
-				disabled={disabled}
-				rows={8}
-				className="w-full resize-y rounded-xl border-2 border-border bg-background p-3 font-mono text-sm outline-none focus:border-[--system-accent]"
-				placeholder={t("exam.placeholderCode")}
-				aria-label="Programming answer input"
-			/>
-		);
-	}
-
-	if (
-		part.type === "source-based" ||
-		part.type === "data-response" ||
-		part.type === "mixed"
-	) {
-		return (
-			<textarea
-				value={(Array.isArray(value) ? value[0] : value) ?? ""}
-				onChange={(e) => onChange(e.target.value)}
-				disabled={disabled}
-				rows={4}
-				className="w-full resize-y rounded-xl border-2 border-border bg-background p-3 outline-none focus:border-[--system-accent]"
-				placeholder={t("exam.placeholderShortAnswer")}
-				aria-label="Response input"
-			/>
-		);
-	}
-
-	return (
-		<div className="flex flex-col gap-2">
-			<p className="text-muted-foreground text-sm">
-				{t("exam.unsupportedType", { type: part.type })}
-			</p>
-			<textarea
-				value={(Array.isArray(value) ? value[0] : value) ?? ""}
-				onChange={(e) => onChange(e.target.value)}
-				disabled={disabled}
-				rows={4}
-				className="w-full resize-y rounded-xl border-2 border-border bg-background p-3 outline-none focus:border-[--system-accent]"
-				placeholder={t("exam.placeholderShortAnswer")}
-				aria-label="Freeform answer input"
-			/>
-		</div>
-	);
-}
-
-function QuestionNavigator({
-	totalParts,
-	currentPartId,
-	answers,
-	flags,
-	onNavigate,
-}: {
-	totalParts: { sectionId: string; questionId: string; part: QuestionPart }[];
-	currentPartId: string | null;
-	answers: Record<string, { value: string | string[] }>;
-	flags: string[];
-	onNavigate: (partId: string) => void;
-}) {
-	const groups: Record<string, typeof totalParts> = {};
-	for (const item of totalParts) {
-		const key = `${item.sectionId}-${item.questionId}`;
-		if (!groups[key]) groups[key] = [];
-		groups[key].push(item);
-	}
-
-	return (
-		<div className="flex max-h-80 flex-col gap-2 overflow-y-auto">
-			{Object.entries(groups).map(([key, items]) => {
-				return (
-					<div key={key} className="flex flex-wrap gap-1.5">
-						{items.map((item) => {
-							const isCurrent = item.part.id === currentPartId;
-							const isAnswered = !!answers[item.part.id];
-							const isFlagged = flags.includes(item.part.id);
-							const partSuffix = item.part.id.split("-").pop() ?? "";
-							const label = `${item.questionId}.${partSuffix}`;
-							return (
-								<button
-									key={item.part.id}
-									type="button"
-									onClick={() => onNavigate(item.part.id)}
-									className={cn(
-										"size-8 rounded-lg font-medium text-xs transition-colors",
-										isCurrent && "ring-2 ring-[--system-accent]",
-										isAnswered && !isCurrent && "bg-success/20 text-success",
-										!isAnswered &&
-											!isCurrent &&
-											"bg-muted text-muted-foreground",
-										isFlagged && "ring-1 ring-warning",
-									)}
-								>
-									{label}
-								</button>
-							);
-						})}
-					</div>
-				);
-			})}
-		</div>
-	);
-}
-
-function ExamResults({
-	results,
-	flatParts,
-	answers,
-	metadata: _metadata,
-	onDashboard,
-	onReview,
-}: {
-	results: {
-		partResults: { partId: string; correct: boolean; score: number }[];
-	};
-	flatParts: { sectionId: string; questionId: string; part: QuestionPart }[];
-	answers: Record<string, { value: string | string[] }>;
-	metadata: { subject: string; totalMarks: number; duration: string };
-	onDashboard: () => void;
-	onReview?: () => void;
-}) {
-	const t = useTranslations();
-	const [expandedId, setExpandedId] = useState<string | null>(null);
-	const correctCount = results.partResults.filter((r) => r.correct).length;
-	const totalCount = results.partResults.length;
-	const accuracy =
-		totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0;
-
-	const resultMap = useMemo(
-		() => new Map(results.partResults.map((r) => [r.partId, r])),
-		[results.partResults],
-	);
-
-	const failedCount = totalCount - correctCount;
-
-	return (
-		<m.div
-			initial={{ opacity: 0, y: 20 }}
-			animate={{ opacity: 1, y: 0 }}
-			className="flex min-h-screen flex-col gap-6 bg-background p-4 pb-24"
-		>
-			<Confetti trigger={accuracy >= 70} count={60} duration={2500} />
-			<Card>
-				<CardHeader>
-					<CardTitle className="font-extrabold text-xl">
-						{accuracy >= 80
-							? t("exam.greatJob")
-							: accuracy >= 50
-								? t("exam.goodEffort")
-								: t("exam.keepPracticing")}
-					</CardTitle>
-				</CardHeader>
-				<CardContent className="flex flex-col gap-4">
-					<div className="grid grid-cols-4 gap-3">
-						<div className="rounded-lg bg-muted p-3 text-center">
-							<p className="font-extrabold text-2xl text-success tabular-nums">
-								{correctCount}
-							</p>
-							<p className="text-muted-foreground text-xs">
-								{t("exam.correct")}
-							</p>
-						</div>
-						<div className="rounded-lg bg-muted p-3 text-center">
-							<p className="font-extrabold text-2xl text-destructive tabular-nums">
-								{failedCount}
-							</p>
-							<p className="text-muted-foreground text-xs">
-								{t("exam.incorrect")}
-							</p>
-						</div>
-						<div className="rounded-lg bg-muted p-3 text-center">
-							<p className="font-extrabold text-2xl tabular-nums">
-								{accuracy}%
-							</p>
-							<p className="text-muted-foreground text-xs">
-								{t("exam.accuracy")}
-							</p>
-						</div>
-						{(() => {
-							const aps = getAPSForSubject(accuracy);
-							return (
-								<div className="rounded-lg bg-muted p-3 text-center">
-									<p
-										className={cn(
-											"font-extrabold text-2xl tabular-nums",
-											aps >= 6 && "text-success",
-											aps >= 4 && aps < 6 && "text-warning",
-											aps < 4 && "text-destructive",
-										)}
-									>
-										{aps}/7
-									</p>
-									<p className="text-muted-foreground text-xs">
-										{getGrade(accuracy)}
-									</p>
-								</div>
-							);
-						})()}
-					</div>
-				</CardContent>
-			</Card>
-
-			<div className="flex flex-col gap-2">
-				{flatParts.map((item) => {
-					const result = resultMap.get(item.part.id);
-					if (!result) return null;
-					const isExpanded = expandedId === item.part.id;
-					return (
-						<Card
-							key={item.part.id}
-							className={cn(
-								"overflow-hidden transition-shadow",
-								result.correct ? "border-success/20" : "border-destructive/20",
-							)}
-						>
-							<button
-								type="button"
-								onClick={() => setExpandedId(isExpanded ? null : item.part.id)}
-								className="flex w-full items-center justify-between p-4 text-left"
-							>
-								<div className="flex items-center gap-3">
-									<span
-										className={cn(
-											"flex size-7 items-center justify-center rounded-full font-bold text-xs",
-											result.correct
-												? "bg-success/20 text-success"
-												: "bg-destructive/20 text-destructive",
-										)}
-									>
-										{result.correct ? "✓" : "✗"}
-									</span>
-									<div>
-										<p className="font-medium text-sm">
-											{item.questionId}.{item.part.id.split("-").pop()}
-										</p>
-										<p className="line-clamp-1 text-muted-foreground text-xs">
-											{item.part.text ?? t("exam.questionText")}
-										</p>
-									</div>
-								</div>
-							</button>
-							{isExpanded && (
-								<div className="flex flex-col gap-3 border-border border-t px-4 pt-3 pb-4">
-									{item.part.text && (
-										<div className="text-sm">
-											<MarkdownRenderer content={item.part.text} />
-										</div>
-									)}
-									<div className="grid grid-cols-2 gap-3 text-sm">
-										<div>
-											<p className="mb-1 text-muted-foreground text-xs">
-												{t("exam.yourAnswer")}
-											</p>
-											<p className="rounded-lg bg-muted p-2 font-mono text-xs">
-												{getAnswerText(item.part, answers[item.part.id]) ||
-													t("exam.noAnswer")}
-											</p>
-										</div>
-										{!result.correct && (
-											<div>
-												<p className="mb-1 text-muted-foreground text-xs">
-													{t("exam.correctAnswer")}
-												</p>
-												<p className="rounded-lg bg-success/10 p-2 font-mono text-success text-xs">
-													{getCorrectAnswerText(item.part) ||
-														t("exam.notAvailable")}
-												</p>
-											</div>
-										)}
-									</div>
-									{item.part.marks && (
-										<p className="text-muted-foreground text-xs">
-											{t("exam.marks", {
-												score: result.score,
-												marks: item.part.marks,
-											})}
-										</p>
-									)}
-								</div>
-							)}
-						</Card>
-					);
-				})}
-			</div>
-
-			<div className="flex flex-col gap-3">
-				{failedCount > 0 && onReview && (
-					<Button variant="secondary" onClick={onReview}>
-						<HugeiconsIcon icon={RefreshIcon} data-icon="inline-start" />
-						{t("exam.reviewMistakes")}
-					</Button>
-				)}
-				<ShareResultButton
-					cardParams={{
-						score: correctCount,
-						total: totalCount,
-						percentage: accuracy,
-						title: t("exam.examHeading", { subject: _metadata.subject }),
-						subtitle: `${getAPSForSubject(accuracy)}/7 APS · ${getGrade(accuracy)}`,
-						type: "exam",
-					}}
-					text={t("exam.shareText", {
-						percentage: accuracy,
-						subject: _metadata.subject,
-					})}
-				/>
-				<Button onClick={onDashboard}>
-					<HugeiconsIcon icon={Home01Icon} data-icon="inline-start" />
-					{t("exam.dashboard")}
-				</Button>
-			</div>
-		</m.div>
-	);
-}
 
 export function ExamSessionWithResume({ id, mode }: ExamSessionClientProps) {
 	const t = useTranslations();
@@ -662,6 +184,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 	} = useGamification();
 
 	const { addWrongAnswer } = useWrongAnswerJournal();
+	const { setImmersive } = useImmersiveMode();
 
 	useExamSessionAutoSave(id);
 
@@ -693,14 +216,23 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 		};
 	}, [phase, sessionMode, paused, tick, timeRemaining, completeSession]);
 
+	useEffect(() => {
+		setImmersive(phase === "active");
+		return () => setImmersive(false);
+	}, [phase, setImmersive]);
+
 	const startSession = useCallback(() => {
 		const first = flatParts[0];
-		if (first) setCurrentPart(first.part.id);
+		if (first)
+			setCurrentPart(`${first.sectionId}-${first.questionId}-${first.part.id}`);
 		setPhase("active");
 	}, [flatParts, setCurrentPart]);
 
 	const currentPartIndex = useMemo(
-		() => flatParts.findIndex((p) => p.part.id === currentPartId),
+		() =>
+			flatParts.findIndex(
+				(p) => `${p.sectionId}-${p.questionId}-${p.part.id}` === currentPartId,
+			),
 		[flatParts, currentPartId],
 	);
 
@@ -711,13 +243,19 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 
 	const goToNext = useCallback(() => {
 		if (currentPartIndex < flatParts.length - 1) {
-			setCurrentPart(flatParts[currentPartIndex + 1].part.id);
+			const nextPart = flatParts[currentPartIndex + 1];
+			setCurrentPart(
+				`${nextPart.sectionId}-${nextPart.questionId}-${nextPart.part.id}`,
+			);
 		}
 	}, [currentPartIndex, flatParts, setCurrentPart]);
 
 	const goToPrevious = useCallback(() => {
 		if (currentPartIndex > 0) {
-			setCurrentPart(flatParts[currentPartIndex - 1].part.id);
+			const prevPart = flatParts[currentPartIndex - 1];
+			setCurrentPart(
+				`${prevPart.sectionId}-${prevPart.questionId}-${prevPart.part.id}`,
+			);
 		}
 	}, [currentPartIndex, flatParts, setCurrentPart]);
 
@@ -734,7 +272,8 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 		if (timerRef.current) clearInterval(timerRef.current);
 
 		const partResults = flatParts.map((item) => {
-			const answer = answers[item.part.id];
+			const fullId = `${item.sectionId}-${item.questionId}-${item.part.id}`;
+			const answer = answers[fullId];
 			let correct = false;
 			if (item.part.type === "multiple-choice" && item.part.options) {
 				const selected = Array.isArray(answer?.value)
@@ -744,7 +283,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 					(o) => o.id === selected && o.isCorrect,
 				);
 			}
-			return { partId: item.part.id, correct, score: correct ? 1 : 0 };
+			return { partId: fullId, correct, score: correct ? 1 : 0 };
 		});
 
 		const correctCount = partResults.filter((r) => r.correct).length;
@@ -782,12 +321,12 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 			if (!result.correct) {
 				const partText = item.part.text ?? `Question ${item.questionId}`;
 				addWrongAnswer({
-					questionId: item.part.id,
+					questionId: result.partId,
 					questionText: partText,
 					subject,
 					topic,
 					correctAnswer: getCorrectAnswerText(item.part),
-					userAnswer: getAnswerText(item.part, answers[item.part.id]),
+					userAnswer: getAnswerText(item.part, answers[result.partId]),
 					explanation: "",
 				});
 				flashcardPromises.push(
@@ -906,7 +445,8 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 
 	if (phase === "results") {
 		const partResults = flatParts.map((item) => {
-			const answer = answers[item.part.id];
+			const fullId = `${item.sectionId}-${item.questionId}-${item.part.id}`;
+			const answer = answers[fullId];
 			let correct = false;
 			if (item.part.type === "multiple-choice" && item.part.options) {
 				const selected = Array.isArray(answer?.value)
@@ -916,10 +456,10 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 					(o) => o.id === selected && o.isCorrect,
 				);
 			}
-			return { partId: item.part.id, correct, score: correct ? 1 : 0 };
+			return { partId: fullId, correct, score: correct ? 1 : 0 };
 		});
 		return (
-			<ExamResults
+			<SessionResultsView
 				results={{ partResults }}
 				flatParts={flatParts}
 				answers={answers}
@@ -1022,7 +562,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 								<p className="mb-3 font-semibold text-muted-foreground text-xs">
 									{t("exam.questionNavigator")}
 								</p>
-								<QuestionNavigator
+								<SessionQuestionNavigator
 									totalParts={flatParts}
 									currentPartId={currentPartId}
 									answers={answers}
@@ -1088,7 +628,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 								</div>
 
 								<div className="pt-2">
-									<PartAnswerInput
+									<SessionPartAnswerInput
 										part={currentPart.part}
 										value={
 											currentPartId ? (answers[currentPartId]?.value ?? "") : ""

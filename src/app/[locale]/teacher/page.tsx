@@ -2,6 +2,7 @@
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import { RoleGate } from "@/components/shared/role-gate";
 import { AssignmentBuilder } from "@/components/teacher/assignment-builder";
 import { ClassRosterTable } from "@/components/teacher/class-roster-table";
 import { ClassShell } from "@/components/teacher/class-shell";
@@ -12,6 +13,14 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "@/hooks/use-toast";
 
 export default function TeacherDashboardPage() {
+	return (
+		<RoleGate requiredRole="teacher" fallback={<TeacherDashboardPageInner />}>
+			<TeacherDashboardPageInner />
+		</RoleGate>
+	);
+}
+
+function TeacherDashboardPageInner() {
 	const queryClient = useQueryClient();
 	const [linkId, setLinkId] = useState("");
 

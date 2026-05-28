@@ -2,22 +2,49 @@
 
 import { BrainIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useState } from "react";
+import { useCallback, useRef, useState } from "react";
+import { SwipeableCardDeck } from "@/components/flashcard/swipeable-card-deck";
+import type { FlashcardCardData } from "@/components/flashcard/types";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { useSpacedRepetition } from "@/hooks/use-spaced-repetition";
-import { SM2_QUALITIES } from "@/lib/flashcard-engine";
 
 export function SM2StudySession({ subject: _subject }: { subject?: string }) {
 	const { dueCards, newCards, review, stats } = useSpacedRepetition();
-	const [currentIndex, setCurrentIndex] = useState(0);
-	const [showAnswer, setShowAnswer] = useState(false);
 	const [sessionComplete, setSessionComplete] = useState(false);
 	const [reviewed, setReviewed] = useState(0);
+	const reviewedRef = useRef(0);
 
-	const allCards = [...dueCards, ...newCards.slice(0, 10)];
-	const currentCard = allCards[currentIndex];
+	const allCards: FlashcardCardData[] = [
+		...dueCards.map((c) => ({
+			id: c.id,
+			front: c.front,
+			back: c.back,
+			topic: c.topic,
+			difficulty: String(c.difficulty),
+			hint: undefined,
+		})),
+		...newCards.slice(0, 10).map((c) => ({
+			id: c.id,
+			front: c.front,
+			back: c.back,
+			topic: c.topic,
+			difficulty: String(c.difficulty),
+			hint: undefined,
+		})),
+	];
+
+	const handleReview = useCallback(
+		(cardId: string, quality: number) => {
+			review(cardId, quality);
+			reviewedRef.current += 1;
+			setReviewed(reviewedRef.current);
+		},
+		[review],
+	);
+
+	const handleComplete = useCallback(() => {
+		setSessionComplete(true);
+	}, []);
 
 	if (allCards.length === 0) {
 		return (
@@ -26,7 +53,7 @@ export function SM2StudySession({ subject: _subject }: { subject?: string }) {
 					icon={BrainIcon}
 					className="mx-auto mb-4 size-12 text-muted-foreground"
 				/>
-				<h3 className="mb-2 font-semibold text-xl">All Caught Up! 🎉</h3>
+				<h3 className="mb-2 font-semibold text-xl">All Caught Up!</h3>
 				<p className="text-muted-foreground">
 					No cards due for review. Add more flashcards or come back later.
 				</p>
@@ -49,23 +76,11 @@ export function SM2StudySession({ subject: _subject }: { subject?: string }) {
 		);
 	}
 
-	const handleReview = (quality: number) => {
-		review(currentCard.id, quality);
-		setReviewed((r) => r + 1);
-		setShowAnswer(false);
-
-		if (currentIndex >= allCards.length - 1) {
-			setSessionComplete(true);
-		} else {
-			setCurrentIndex((i) => i + 1);
-		}
-	};
-
 	return (
 		<div className="mx-auto max-w-xl">
 			<div className="mb-4 flex items-center justify-between">
 				<span className="text-muted-foreground text-sm">
-					Card {currentIndex + 1} of {allCards.length}
+					SM-2 Study Session
 				</span>
 				<div className="flex gap-2">
 					<Badge className="bg-muted text-foreground">
@@ -77,78 +92,12 @@ export function SM2StudySession({ subject: _subject }: { subject?: string }) {
 				</div>
 			</div>
 
-			<Card className="min-h-[300px] p-0">
-				<CardContent className="flex min-h-[300px] flex-col items-center justify-center p-6">
-					<p className="mb-8 text-center font-medium text-lg">
-						{currentCard?.front}
-					</p>
-
-					{showAnswer ? (
-						<div className="w-full">
-							<div className="mb-6 rounded-lg bg-muted p-4 text-center">
-								<p className="text-lg">{currentCard?.back}</p>
-							</div>
-
-							<p className="mb-4 text-center text-muted-foreground text-sm">
-								How well did you know this?
-							</p>
-
-							<div className="grid grid-cols-3 gap-2">
-								{SM2_QUALITIES.slice(0, 3).map((q) => (
-									<Button
-										key={q.quality}
-										variant="outline"
-										onClick={() => handleReview(q.quality)}
-										className="text-xs"
-									>
-										{q.label}
-									</Button>
-								))}
-							</div>
-							<div className="mt-2 grid grid-cols-3 gap-2">
-								{SM2_QUALITIES.slice(3).map((q) => (
-									<Button
-										key={q.quality}
-										onClick={() => handleReview(q.quality)}
-										className="text-xs"
-									>
-										{q.label}
-									</Button>
-								))}
-							</div>
-						</div>
-					) : (
-						<Button onClick={() => setShowAnswer(true)} size="lg">
-							Show Answer
-						</Button>
-					)}
-				</CardContent>
-			</Card>
-
-			<div className="mt-4 flex justify-center gap-2">
-				<Button
-					variant="ghost"
-					size="sm"
-					onClick={() => setCurrentIndex((i) => Math.max(0, i - 1))}
-					disabled={currentIndex === 0}
-				>
-					Previous
-				</Button>
-				<Button
-					variant="ghost"
-					size="sm"
-					onClick={() => {
-						setShowAnswer(false);
-						if (currentIndex >= allCards.length - 1) {
-							setSessionComplete(true);
-						} else {
-							setCurrentIndex((i) => i + 1);
-						}
-					}}
-				>
-					Skip
-				</Button>
-			</div>
+			<SwipeableCardDeck
+				cards={allCards}
+				mode="sm2"
+				onReview={handleReview}
+				onComplete={handleComplete}
+			/>
 		</div>
 	);
 }

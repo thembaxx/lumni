@@ -9,6 +9,7 @@ import {
 	UserGroupIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
@@ -16,6 +17,11 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useDeleteGroup, useLeaveGroup } from "@/hooks/use-study-groups";
 import { useAuth } from "@/lib/auth/auth-context";
+import { cn } from "@/lib/shared";
+import type {
+	GroupChallenge,
+	GroupChallengeEntry,
+} from "@/lib/study-groups/challenge-types";
 import type { StudyGroup } from "@/lib/study-groups/types";
 
 interface Props {
@@ -29,6 +35,24 @@ export function StudyGroupCard({ group }: Props) {
 	const { mutate: deleteGroup } = useDeleteGroup();
 	const [copied, setCopied] = useState(false);
 	const isOwner = user?.$id === group.createdBy;
+
+	const { data: challengeData } = useQuery({
+		queryKey: ["group-challenge", group.$id],
+		queryFn: async () => {
+			const res = await fetch(`/api/study-groups/${group.$id}/challenge`);
+			if (!res.ok) return null;
+			return res.json() as Promise<{
+				challenge: GroupChallenge;
+				entries: GroupChallengeEntry[];
+			}>;
+		},
+		staleTime: 60_000,
+		retry: false,
+	});
+
+	const totalScore = challengeData
+		? challengeData.entries.reduce((s, e) => s + e.combinedScore, 0)
+		: 0;
 
 	const copyInviteCode = () => {
 		navigator.clipboard.writeText(group.inviteCode);
@@ -62,6 +86,29 @@ export function StudyGroupCard({ group }: Props) {
 					</Badge>
 				)}
 			</div>
+
+			{challengeData && (
+				<div className="flex items-center gap-2">
+					<div className="flex h-1.5 flex-1 overflow-hidden rounded-full bg-muted">
+						<div
+							className="rounded-full bg-[--system-accent] transition-all"
+							style={{ width: `${Math.min(totalScore, 100)}%` }}
+						/>
+					</div>
+					<span
+						className={cn(
+							"font-mono text-xs tabular-nums",
+							totalScore >= 80
+								? "text-success"
+								: totalScore >= 40
+									? "text-warning"
+									: "text-muted-foreground",
+						)}
+					>
+						{Math.round(totalScore)} pts
+					</span>
+				</div>
+			)}
 
 			<div className="flex items-center gap-2 pt-1">
 				<Button variant="outline" size="sm" onClick={copyInviteCode}>

@@ -1,2 +1,2 @@
-npx biome check --write src/
+bunx biome check --write src/
 bun run typecheck

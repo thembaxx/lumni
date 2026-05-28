@@ -9,12 +9,21 @@ import { ActivityTimeline } from "@/components/parent/activity-timeline";
 import { ChildSelector } from "@/components/parent/child-selector";
 import { ParentShell } from "@/components/parent/parent-shell";
 import { WeeklyReportPanel } from "@/components/parent/weekly-report-panel";
+import { RoleGate } from "@/components/shared/role-gate";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "@/hooks/use-toast";
 import { useAuth } from "@/lib/auth/auth-context";
 
 export default function ParentDashboardPage() {
+	return (
+		<RoleGate requiredRole="parent" fallback={<ParentDashboardPageInner />}>
+			<ParentDashboardPageInner />
+		</RoleGate>
+	);
+}
+
+function ParentDashboardPageInner() {
 	const { user } = useAuth();
 	const queryClient = useQueryClient();
 	const [selectedChildId, setSelectedChildId] = useState<string | null>(null);

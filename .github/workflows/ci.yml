@@ -66,10 +66,10 @@ jobs:
     needs: [quality, bundle-size]
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: oven-sh/setup-bun@v2
         with:
-          node-version: 22
-          cache: npm
+          bun-version: latest
+      - run: bun install --frozen-lockfile
       - name: Create Sentry release
         uses: getsentry/action-release@v3
         env:

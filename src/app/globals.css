@@ -531,6 +531,24 @@
 	animation-delay: 50ms;
 }
 
+[data-vt-direction="forward"]::view-transition-old(root) {
+	animation: 200ms var(--ease-ios) both vt-slide-to-left;
+}
+
+[data-vt-direction="forward"]::view-transition-new(root) {
+	animation: 300ms var(--ease-ios) both vt-slide-from-right;
+	animation-delay: 50ms;
+}
+
+[data-vt-direction="back"]::view-transition-old(root) {
+	animation: 200ms var(--ease-ios) both vt-slide-to-right;
+}
+
+[data-vt-direction="back"]::view-transition-new(root) {
+	animation: 300ms var(--ease-ios) both vt-slide-from-left;
+	animation-delay: 50ms;
+}
+
 @keyframes fadeOut { to { opacity: 0; } }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes floatSlow { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
