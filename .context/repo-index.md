@@ -1,4 +1,4 @@
-<!-- LAST_SYNC: 2026-05-25 -->
+<!-- LAST_SYNC: 2026-05-28 -->
 # Repository Index — Lumni
 
 ## Directory Tree (Depth 3)
@@ -33,13 +33,14 @@
 - `docker-compose.yml`: Docker services for development (including marker-api).
 - `components.json`: Shadcn UI component configuration.
 - `postcss.config.mjs`: PostCSS configuration for Tailwind CSS.
+- `playwright.config.ts`: E2E testing configuration for Playwright.
 
 ## Module/Component Map
 - `src/app`: Contains the application's pages (e.g., dashboard, quiz, exam) and API route handlers.
 - `src/components`: UI components organized by domain: `ui` (primitives), `quiz` (question cards, diagrams), `dashboard`, `admin`, `tools` (reorganized into `core/`, `communication/`, `math/`, `science/`, `scheduling/`).
-- `src/lib`: Core logic: `flashcard-engine` (unified SR), `question-engine` (gen/grade), `visual-engine` (diagrams), `api` (create-route-handler factory), `orchestrator` (jobs), `services` (barrel of all 10 services), `db` (repositories), `ai` (clients).
-- `src/hooks`: Domain-specific hooks like `useQuestionEngine`, `useVisualEngine`, `useAuth`, and `useQuizSession`.
-- `src/store`: Zustand stores for global state: `main`, `flashcards`, `exam-session`, `bookmarks`, etc.
+- `src/lib`: Core logic: `flashcard-engine` (unified SR), `question-engine` (gen/grade), `visual-engine` (diagrams), `api` (create-route-handler factory), `orchestrator` (jobs), `services` (barrel of all 10 services), `db` (repositories), `ai` (clients), `quiz-packs` (offline packs), `exam-dates` (tracker).
+- `src/hooks`: Domain-specific hooks like `useQuestionEngine`, `useVisualEngine`, `useAuth`, `useQuizSession`, `useQuizPacks`.
+- `src/store`: Zustand stores for global state: `main`, `flashcards`, `exam-session`, `bookmarks`, `tools`, `voice-recorder`.
 
 ## Dependency Graph (Core)
 - **Framework**: Next.js 16.2.6, React 19.2.6
@@ -48,7 +49,7 @@
 - **State Management**: Zustand, TanStack React Query
 - **Styling**: Tailwind CSS 4, Framer Motion
 - **Rendering**: KaTeX (math), Konva (diagrams), Three.js (onboarding)
-- **Tooling**: Biome, Bun, Sentry, UploadThing
+- **Tooling**: Biome, Bun, Sentry, UploadThing, Playwright, Storybook
 
 ## Entry Points
 - `src/app/page.tsx`: Application dashboard / home feed.
@@ -57,9 +58,9 @@
 - `src/instrumentation.ts`: Sentry and monitoring initialization.
 
 ## Recent Changes (Last 7 Days)
-- Architecture consolidation: flashcard engine unified into `src/lib/flashcard-engine/`.
-- Implementation of generic route handler factory (`create-route-handler.ts`).
-- Services barrel reorganization (`src/lib/services/index.ts`).
-- Tools directory split into domain subdirs (core, math, science, etc.).
-- Refinement of competency tracking and study planner algorithms.
-- Migration to Hugeicons and Biome updates.
+- Implementation of Offline AI Quiz Packs (`src/lib/quiz-packs/`).
+- Playwright E2E testing setup and smoke tests (`playwright.config.ts`, `e2e/`).
+- Appwrite sync path for `exam_dates` implemented.
+- Storybook integration and initial stories (`src/stories/`).
+- Dexie v18 migration for Quiz Packs support (table count 18→23).
+- Services barrel reorganization and generic route handler factory refinement.
