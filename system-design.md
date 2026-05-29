@@ -1,7 +1,7 @@
 # System Design — Lumni
 
-**Generated:** 2026-05-24  
-**Last synced:** HEAD~0 (session-8)
+**Generated:** 2026-05-29  
+**Last synced:** HEAD~0 (sessions 10-14)
 
 ---
 
@@ -18,7 +18,7 @@ graph TB
     subgraph Client [Browser / PWA]
         A[React 19 + Next.js 16]
         B[Zustand Stores]
-        C[Dexie IndexedDB]
+        C[Dexie IndexedDB<br/>23 tables, v18 schema]
         D[Zustand Persist<br/>localStorage]
     end
 
@@ -37,7 +37,7 @@ graph TB
 
     subgraph Backend [Appwrite BaaS]
         L[Auth<br/>anonymous → email/password]
-        M[Database<br/>questions, exams, users]
+        M[Database<br/>questions, exams, users, exam_dates]
         N[Storage<br/>exam papers, avatars]
     end
 
@@ -86,9 +86,11 @@ erDiagram
     USER ||--o{ FLASHCARD : reviews
     USER ||--o{ WRONG_ANSWER : records
     USER ||--o{ COMPETENCY : tracks
+    USER ||--o{ QUIZ_PACK : downloads
     EXAM_PAPER ||--o{ EXAM_SESSION : generates
     QUESTION ||--o{ VISUAL : has
     QUESTION ||--o{ RATING : receives
+    QUIZ_PACK ||--o{ PACK_QUESTION : contains
     
     USER {
         string id PK
@@ -141,6 +143,8 @@ erDiagram
         number interval "SM-2 parameter"
         number repetitions "SM-2 parameter"
         datetime nextReview
+        string learningStep
+        boolean leeched
     }
     
     WRONG_ANSWER {
@@ -163,6 +167,16 @@ erDiagram
         number score "0-100"
         string level "novice|developing|proficient|mastered"
     }
+    
+    QUIZ_PACK {
+        string id PK
+        string subject
+        string topic
+        string status "generating|ready|expired|failed"
+        number questionCount
+        datetime createdAt
+        datetime expiresAt
+    }
 ```
 
 ---
@@ -173,29 +187,30 @@ erDiagram
 
 | Module | Responsibility | Tech | Key File(s) |
 |--------|---------------|------|-------------|
-| **Dashboard** | Landing page: stats, study plan, quick actions, search, analytics | React, recharts | `src/components/dashboard/` |
-| **Quiz** | Question display, answer capture, timer, feedback, diagrams | React, Konva, Framer Motion | `src/components/quiz/` |
-| **Exam** | Past paper viewer, session management, results & review | React, sql.js, react-pdf | `src/components/exam/` |
-| **Flashcards** | SM-2 spaced repetition, browse, auto-generation | React, Dexie | `src/components/tools/core/` via flashcard-engine |
+| **Dashboard** | Landing page: stats, study plan, quick actions, search, analytics, offline packs | React, recharts | `src/components/dashboard/` |
+| **Quiz** | Question display, answer capture, timer, feedback, diagrams, immersive mode | React, Konva, Framer Motion | `src/components/quiz/` |
+| **Exam** | Past paper viewer, session management, results & review, immersive mode | React, sql.js, react-pdf | `src/components/exam/` |
+| **Flashcards** | SM-2 spaced repetition, swipeable Tinder deck, auto-generation | React, Dexie, Framer Motion | `src/components/flashcard/` |
 | **Study Planner** | Algorithmic scheduling, weekly overview | React, localStorage | `src/components/study-planner/` |
 | **Onboarding** | 5-step wizard with Three.js particles | React, Three.js, Framer Motion | `src/components/onboarding/` |
 | **Auth** | Sign-in/sign-up, magic link, anonymous upgrade | React, Appwrite SDK | `src/components/auth/` |
 | **Settings** | Profile, preferences, data management, theme | React | `src/components/settings/` |
 | **Visual** | Diagram/image rendering for questions | Konva, Mermaid, Wikimedia | `src/components/visual/` |
+| **Tools** | Calculator, periodic table, exam calendar, flashcards | React | `src/components/tools/` |
 
 ### State Layer
 
 | Store | Responsibility | Tech | Location |
 |-------|---------------|------|----------|
-| Zustand (multiple) | Quiz session, exam session, sync queue, search, notifications | Zustand | `src/store/` |
-| Dexie | Offline cache: questions, visuals, exam dates, ratings, flashcard SM-2 state | Dexie + dexie-react-hooks | `src/lib/db/` |
+| Zustand (multiple) | Quiz session, exam session, sync queue, search, notifications, bookmarks, voice recorder | Zustand | `src/store/` |
+| Dexie | Offline cache: questions, visuals, exam dates, ratings, flashcard SM-2, quiz packs, jobs, sync queue, competencies, wrong answers, chat | Dexie + dexie-react-hooks | `src/lib/db/` |
 | React Query | Server state: API data caching, background refetch | TanStack React Query | `src/lib/query-client.ts` |
 
 ### Server / API Layer
 
 | Module | Responsibility | Tech | Location |
 |--------|---------------|------|----------|
-| **API Route Handlers** | ~35 route groups: engine, auth, exams, admin, sync | Next.js App Router + createRouteHandler | `src/app/api/` |
+| **API Route Handlers** | ~41 route groups: engine, auth, exams, admin, sync, quiz-packs | Next.js App Router + createRouteHandler | `src/app/api/` |
 | **createRouteHandler** | Generic factory: auto auth guard, body parse, Zod validation, error wrap | TypeScript | `src/lib/api/create-route-handler.ts` |
 | **Server Actions** | Exam paper actions, quiz actions | Next.js Server Actions | `src/lib/server/` |
 | **RateLimiter** | Auth rate limits (3 sign-in/5min, 1 magic link/5min) | In-memory Map | `src/lib/rate-limiter/` |
@@ -212,6 +227,7 @@ erDiagram
 | **FlashcardEngine** | Unified SR: SM-2/FSRS + daily limits + learning steps + ease-hell + leech + settings | Dexie-backed | `src/lib/flashcard-engine/` |
 | **CompetencyEngine** | Bloom's taxonomy scoring, PathEngine routing | Score→Level mapping | `src/lib/competency-engine/` |
 | **LearningOrchestrator** | Orchestrates generate+grade+queue side effects | Composes QuestionEngine | `src/lib/orchestrator/` |
+| **QuizPackService** | Offline AI quiz pack lifecycle (generate, persist, expire) | Dexie + QuestionEngine | `src/lib/quiz-packs/` |
 | **Services Barrel** | All 10 services (analytics, competency, progress, flashcard, notification, etc.) | ServiceResult<T> | `src/lib/services/` |
 | **StudyPlannerService** | Inverse-competency-weighted scheduling | Round-robin algorithm | `src/lib/study-planner/` |
 | **SyncService** | Offline-to-online data reconciliation | Dexie→Appwrite flush | `src/lib/sync/` |
@@ -222,7 +238,7 @@ erDiagram
 
 | Service | Responsibility | Free Tier Limit |
 |---------|---------------|-----------------|
-| **Appwrite** | Auth, DB (questions, users, sessions), storage (exam PDFs, avatars) | 50k docs, 10GB storage |
+| **Appwrite** | Auth, DB (questions, users, sessions, exam_dates), storage (exam PDFs, avatars) | 50k docs, 10GB storage |
 | **Gemini 2.0 Flash Lite** | Primary AI: question gen, grading, visuals | 60 req/min |
 | **Nvidia NIM** | Fallback AI: Llama 3.3 70B | Pay-as-you-go |
 | **Groq** | Last-resort AI: Llama 3.3 70B | 30 req/min |
@@ -245,6 +261,7 @@ erDiagram
 | `/api/engine/budget` | GET | Get current token budget status | Engine handler |
 | `/api/engine/next-topics` | POST | Get next recommended topics based on competency | Engine handler |
 | `/api/engine/study-plan` | POST | Generate study plan | Engine handler |
+| `/api/quiz-packs/generate` | POST | Generate offline AI quiz pack | Rate-limited |
 | `/api/auth/verify` | POST | Verify sign-in session | Engine handler |
 | `/api/auth/rate-limit` | GET | Check auth rate limit status | Engine handler |
 | `/api/exam-sessions` | GET/POST | List / create exam sessions | `createRouteHandler` |
@@ -285,6 +302,17 @@ Client -> POST /api/engine/grade
     -> Response: GradingResult
 ```
 
+**Offline Quiz Pack Generation:**
+```
+Client -> POST /api/quiz-packs/generate
+  -> QuizPackService.generate()
+    -> Rate limiter check
+    -> QuestionEngine.generate() × count
+    -> Dexie: quizPacks + packQuestions tables
+    -> Response: QuizPack { id, subject, status: "generating" }
+  -> Background: QuestionEngine finishes -> status: "ready"
+```
+
 ### Database Collections (Appwrite)
 
 | Collection | Purpose | Documents |
@@ -294,8 +322,9 @@ Client -> POST /api/engine/grade
 | `visuals` | Cached AI-generated diagrams | ~5k (cleaned >30d) |
 | `exam_sessions` | In-progress + completed exam sessions | Per-user |
 | `exam_papers` | Uploaded past exam PDFs | ~500 |
+| `exam_dates` | National exam timetable (synced server-side) | ~200 |
 
-### Database Tables (Dexie / IndexedDB) — v14 Schema
+### Database Tables (Dexie / IndexedDB) — v18 Schema
 
 | Table | Purpose | Expiry |
 |-------|---------|--------|
@@ -306,6 +335,15 @@ Client -> POST /api/engine/grade
 | `wrongAnswers` | Wrong answer journal | Permanent |
 | `flashcards` | SM-2 spaced repetition state (includes learningStep, leeched fields) | Permanent |
 | `srsettings` | SR settings persisted via flashcard-engine | Permanent |
+| `quizPacks` | Offline AI quiz pack manifests | 30d |
+| `packQuestions` | Questions within offline packs | 30d |
+| `jobs` | Background job queue (QueueCore) | Processed → deleted |
+| `syncQueue` | Offline mutation queue | Flushed → deleted |
+| `competencies` | Per-topic competency scores | Permanent |
+| `chatMessages` | AI chat history | Permanent |
+| `notes` | User notes | Permanent |
+| `studySessions` | Study planner sessions | Permanent |
+| +8 others | Exam sessions, progress, conflicts, subjects, etc. | Varies |
 
 ---
 
@@ -313,14 +351,16 @@ Client -> POST /api/engine/grade
 
 | Area | Target | Implementation |
 |------|--------|----------------|
-| **Offline support** | Full read access, queued writes | Dexie + SyncQueue |
+| **Offline support** | Full read access, queued writes | Dexie + SyncQueue + offline quiz packs |
 | **AI budget** | 2000 calls/day global, per-user caps | TokenTracker + 429 responses |
 | **Auth security** | 3 attempts/5min sign-in, 1/5min magic link | In-memory rate limiter |
-| **Cache freshness** | Questions: 24h, Visuals: 7d, ExamDates: 7d | Dexie TTL + Appwrite cleanup cron |
+| **Cache freshness** | Questions: 24h, Visuals: 7d, QuizPacks: 30d | Dexie TTL + Appwrite cleanup cron |
 | **Appwrite limits** | <50k documents | Cleanup cron deletes >30d |
 | **Page load** | Mobile-first, Core Web Vitals tracked | Sentry + web-vitals |
 | **Error monitoring** | Client + server + edge | Sentry DSN configured |
 | **Build quality** | Zero tsc errors, zero Biome errors | Pre-commit hook (Bun) |
+| **E2E coverage** | Smoke tests for core flows | Playwright 1.60.0 |
+| **UI documentation** | Storybook for component library | Storybook 10.4.1 |
 
 ### Scalability Bottlenecks
 
@@ -344,14 +384,19 @@ Client -> POST /api/engine/grade
 
 ## Evolution Roadmap
 
-| Priority | Change | Rationale | Target |
+| Priority | Change | Rationale | Status |
 |----------|--------|-----------|--------|
-| P1 | Appwrite write path for exam_dates + server-side cron scraping | Productionize exam dates (currently seed-only + Dexie) | Phase 3 |
-| P2 | Redis-backed RateLimiter + TokenTracker | Survives server restarts, shared across instances | Phase 4 |
-| P3 | E2E tests (Playwright) + component tests | Coverage gap: only unit tests exist | Phase 4 |
-| P4 | Custom domain + production deployment | Current: Vercel preview; needs custom domain | Phase 4 |
-| P5 | OCR-based PDF scraping for DBE timetables | Automated exam date extraction without manual data entry | Phase 3 |
-| P6 | Shared subject color/abbreviation maps | Remove duplication between old `exam-calendar.tsx` and `exam-dates/service.ts` | Tech debt |
+| P1 | Appwrite write path for exam_dates + server-side cron scraping | Productionize exam dates (was seed-only + Dexie) | ✅ Done |
+| P1 | E2E tests (Playwright) + component tests | Coverage gap: only unit tests existed | ✅ Done |
+| P1 | Offline AI Quiz Packs | Downloadable packs for load-shedding resilience | ✅ Done |
+| P1 | Storybook setup | UI component documentation | ✅ Done |
+| P1 | Swipeable flashcard deck | Tinder-style drag-to-swipe interaction | ✅ Done |
+| P1 | Full-screen immersive mode | Distraction-free quiz/exam experience | ✅ Done |
+| P2 | Redis-backed RateLimiter + TokenTracker | Survives server restarts, shared across instances | Planned |
+| P2 | Mock exam mode | Timed past-paper simulation | Planned |
+| P2 | Shared subject color/abbreviation maps | Remove duplication between exam-calendar and exam-dates service | Tech debt |
+| P3 | Custom domain + production deployment | Current: Vercel preview; needs custom domain | Planned |
+| P3 | OCR-based PDF scraping for DBE timetables | Automated exam date extraction without manual data entry | Planned |
 
 ---
 
@@ -375,6 +420,7 @@ graph LR
     
     M[GitHub] --> N[Vercel Git Deploy]
     M --> O[GitHub Actions<br/>(Biome + tsc)]
+    M --> P[Playwright E2E]
     
     style A fill:#e1f5fe
     style F fill:#e8f5e9

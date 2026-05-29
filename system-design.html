@@ -177,6 +177,9 @@
     <span class="tag">shadcn/ui</span>
     <span class="tag">Konva + Mermaid</span>
     <span class="tag">PWA</span>
+    <span class="tag">Playwright</span>
+    <span class="tag">Storybook</span>
+    <span class="tag">Immersive Mode</span>
   </div>
   <div class="subtitle">Generated from codebase — May 2026</div>
 </div>
@@ -215,12 +218,14 @@
           QE["QuestionEngine<br/>Generation · Grading · Validation"]
           VE["VisualEngine<br/>Konva · Wikimedia · Mermaid"]
           CE["CompetencyEngine<br/>Bloom's Taxonomy · 4 Levels · Paths"]
+          FE["FlashcardEngine<br/>SM-2 · FSRS · Leech Detection"]
+          QPS["QuizPackService<br/>Offline Pack Lifecycle"]
           QS["QuizSession<br/>State Machine · Timer"]
           LO["LearningOrchestrator<br/>Composition Root · Job Queue"]
         end
 
         subgraph Cache["Caching Layer"]
-          D["Dexie (IndexedDB)<br/>13 tables · 24h-7d expiry"]
+          D["Dexie (IndexedDB)<br/>23 tables · v18 schema · 24h-30d expiry"]
           AW["Appwrite Cloud<br/>10+ collections"]
           AI["AI Generation<br/>On-demand fallback"]
         end
@@ -228,12 +233,13 @@
         subgraph Services["Service Layer"]
           AS["AnalyticsService"]
           PS["ProgressService"]
-          SRS["SpacedRepService (SM-2)"]
+          FS["FlashcardService (SM-2/FSRS)"]
           SS["SearchService"]
           LS["LeaderboardService"]
           NS["NotificationService"]
           QRS["QuestionRatingService"]
           CS["ChatService"]
+          EDS["ExamDatesService"]
         end
 
         subgraph Infra["Infrastructure"]
@@ -256,6 +262,8 @@
         Jobs --> Services
         Auth --> AW
         Budget --> API
+        FE -.-> Cache
+        QPS -.-> Engine
     </pre>
   </div>
   <div class="legend">
@@ -285,6 +293,7 @@
           V["Visuals: 7d"]
           S["Subjects: 7d"]
           P["Progress: immediate"]
+          QP["QuizPacks: 30d"]
         end
     </pre>
   </div>
@@ -400,10 +409,11 @@
         subgraph Routes["Budget-Checked Routes"]
           R1["POST /api/engine/*"]
           R2["POST /api/solve"]
-          R3["POST /api/chat"]
-          R4["POST /api/chat/image"]
-          R5["POST /api/curated-problems"]
-          R6["POST /api/generate-element-fact"]
+            R3["POST /api/chat"]
+            R4["POST /api/chat/image"]
+            R5["POST /api/curated-problems"]
+            R6["POST /api/generate-element-fact"]
+            R7["POST /api/quiz-packs/generate"]
         end
     </pre>
   </div>
@@ -447,7 +457,7 @@
   <div class="diagram-wrap">
     <pre class="mermaid">
       graph TB
-        subgraph Tier1["Tier 1: Dexie (IndexedDB, v9) — Offline-First"]
+        subgraph Tier1["Tier 1: Dexie (IndexedDB, v18) — Offline-First"]
           T1_Q["questions<br/>subject, topic, cachedAt"]
           T1_P["progress<br/>odSubjectId, userId"]
           T1_QA["quizAttempts<br/>odSubject, userId"]
@@ -461,6 +471,15 @@
           T1_SYNC["syncQueue<br/>status, priority"]
           T1_CONF["conflicts<br/>resolvedAt"]
           T1_CM["chatMessages<br/>role, timestamp"]
+          T1_FC["flashcards<br/>SM-2 state, learningStep, leeched"]
+          T1_SR["srsettings<br/>SR settings"]
+          T1_QP["quizPacks<br/>subject, status, expiry"]
+          T1_PQ["packQuestions<br/>packId, questionId"]
+          T1_ED["examDates<br/>session, year"]
+          T1_ES["examSessions<br/>auto-save 30s, 4hr stale"]
+          T1_NO["notes<br/>subject, tags"]
+          T1_ST["studySessions<br/>planner sessions"]
+          T1_CT["conflicts<br/>resolvedAt"]
         end
 
         subgraph Tier2["Tier 2: Appwrite Cloud"]
@@ -489,7 +508,7 @@
 <!-- ===== 8. QUIZ/EXAM ===== -->
 <div class="section" id="quiz">
   <h2>8. Quiz & Exam Session Flow</h2>
-  <p class="desc">Three entry points share the same core engine: quiz mode, exam mode, and flashcard review.</p>
+  <p class="desc">Three entry points share the same core engine: quiz mode, exam mode, and flashcard review. Quiz and exam auto-activate immersive mode (nav hiding, full-width layout).</p>
   <div class="diagram-wrap">
     <pre class="mermaid">
       stateDiagram-v2
@@ -506,6 +525,14 @@
           Quiz: "/quiz<br/>Subject/Topic → AI Questions"
           Exam: "/exam/[id]<br/>Past Paper → Timed"
           Flash: "/flashcards<br/>SM-2 Due Cards"
+          Swipe: "/flashcards<br/>Swipeable Deck"
+        }
+
+        state "Immersive Mode" as IM {
+          Auto: "Auto on quiz/exam start"
+          Hide: "Hides TopNav, BottomNav, DesktopSidebar"
+          Exit: "Floating pill exit button"
+          Layout: "max-w-2xl centered, no decorative panel"
         }
 
         state "Side Effects" as SE {
@@ -518,8 +545,11 @@
 
         EP --> QS
         QS --> SE
+        QS --> IM
         Exam --> ExamTimer : "Timer<br/>Auto-submit at 0"
         ExamTimer --> QS
+        Swipe --> QualityPicker : "SM-2 6-level quality"
+        QualityPicker --> QS
     </pre>
   </div>
 </div>
@@ -538,28 +568,29 @@
         Root --> Toast["ToastProvider"]
         Root --> Onboard["OnboardingProvider"]
         Root --> Premium["PremiumProvider"]
+        Root --> Immersive["ImmersiveModeProvider<br/>(full-screen toggle)"]
         Root --> WV["WebVitalsLogger"]
         Root --> Online["OnlineStatusIndicator"]
         Root --> Auto["AutoSyncWrapper"]
         Root --> JobP["JobProcessorWrapper"]
         Root --> Query["QueryProvider"]
 
-        Root --> Side["DesktopSidebar<br/>(hidden mobile)"]
+        Root --> Side["DesktopSidebar<br/>(hidden immersive)"]
         Root --> Main["Main Content Area"]
-        Main --> Nav["TopNav<br/>(iOS-style)"]
+        Main --> Nav["TopNav<br/>(iOS-style, hidden immersive)"]
         Main --> Err["ErrorBoundary"]
         Err --> PT["PageTransition<br/>(framer-motion)"]
         PT --> Children["{children}"]
-        Root --> BNav["BottomNav<br/>(mobile)"]
+        Root --> BNav["BottomNav<br/>(mobile, hidden immersive)"]
         Root --> UD["UploadDialogRenderer"]
         Root --> Toaster
         Root --> FTB["FloatingToolsButton"]
 
         Children --> HP["/ — Home / Landing"]
-        Children --> DP["/dashboard — Dashboard<br/>stats · streaks · challenges<br/>focus · search · analytics"]
-        Children --> QP["/quiz — Quiz"]
-        Children --> FP["/flashcards — SM-2 Review"]
-        Children --> EP["/exam/[id] — Exam Session"]
+        Children --> DP["/dashboard — Dashboard<br/>stats · streaks · challenges<br/>focus · search · offline packs"]
+        Children --> QP["/quiz — Quiz (immersive)"]
+        Children --> FP["/flashcards — Swipeable Deck"]
+        Children --> EP["/exam/[id] — Exam Session (immersive)"]
         Children --> PP["/past-papers — Paper Browser"]
         Children --> SP["/study-plan — Planner"]
         Children --> ST["/settings — Settings"]
@@ -574,6 +605,7 @@
         Children --> TP["/tools — APS Calc, Periodic Table, ..."]
         Children --> DVP["/dev — Dev / Testing"]
         Children --> PMP["/premium — Premium Upgrade"]
+        Children --> OLP["OfflinePackManager<br/>(dashboard widget)"]
     </pre>
   </div>
 </div>
@@ -721,6 +753,8 @@
             Chat(("/api/chat"))
             ChatImage(("/api/chat/image"))
             Analytics(("/api/analytics/*"))
+            QuizPacks(("POST /api/quiz-packs/generate"))
+            ExamDates(("/api/exam-dates"))
             Cron(("/api/cron/cleanup"))
             Lessons(("/api/lessons/*"))
             Subjects(("/api/subjects/*"))

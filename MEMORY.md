@@ -1,7 +1,7 @@
 # Memory Consolidation — Lumni
 
-**Generated:** 2026-05-22  
-**Sources:** MEMORY.md, AGENTS.md (Session 1-6), implementation-notes.md, CONTEXT.md, docs/adr/0001
+**Generated:** 2026-05-29  
+**Sources:** MEMORY.md, AGENTS.md (Session 1-14), implementation-notes.md, CONTEXT.md, docs/adr/
 
 ---
 
@@ -16,7 +16,7 @@
 | D005 | Anonymous → Authenticated via `updateEmail` + `updatePassword` (same userId) | Preserves anonymous user ID; avoids data loss on sign-up | 2026-05-22 |
 | D005a | Anonymous users get soft gating (component-level), not route-level guards | App auto-creates anonymous sessions — no "not signed in" state at route level | 2026-05-22 |
 | D006 | All DB access through Repository layer (`src/lib/db/repositories/`) | Consistent typed DB access; isolation from Appwrite SDK changes | 2026-05-15 |
-| D007 | Sync queue uses Dexie-backed QueueCore with single processor | Duplicate sync hooks (`useAutoSync`, `useEnhancedSync`, `useSyncAll`, `useSyncSingleSubject`) removed | 2026-05-20 |
+| D007 | Sync queue uses Dexie-backed QueueCore with single processor | Duplicate sync hooks removed | 2026-05-20 |
 | D008 | TrackQuestionResult() used across exam/flashcards/dashboard for unified competency | Single source of truth for competency data | 2026-05-20 |
 | D009 | Token budgets: 20 gen/day, 100 grade/day, 20 hint/day, 50 visual/day per user; 2000 global | Prevents exhausting free-tier AI API limits | 2026-05-13 |
 | D010 | Stores in `src/store/` not `src/lib/store.ts` or `src/lib/stores/` | Cleaner separation; deprecated lib stores not to be used | 2026-05-15 |
@@ -27,6 +27,12 @@
 | D015 | Onboarding fires once on first visit regardless of auth status; never re-triggers | Partial data saved with defaults; wizard is 5 steps | 2026-05-15 |
 | D016 | Competency sync field: use `score` (not `proficiency`) | Historical bug — job-processor wrote `proficiency` but API routes read `score`; fixed both write paths + backward-compat fallback | 2026-05-20 |
 | D017 | Exam sessions stored in `exam_sessions` Appwrite collection (not `exam_papers`) | Wrong collection was used historically; fixed in Session 1 | 2026-05-15 |
+| D018 | Flashcard engine consolidated into `src/lib/flashcard-engine/` | Unified FlashcardEngine class wrapping DexieRepository + SM-2/FSRS | 2026-05-24 |
+| D019 | Generic route handler factory `createRouteHandler()` | Replaces 49 copies of auth/try-catch boilerplate | 2026-05-24 |
+| D020 | QuizPackService for offline AI quiz packs | Bulk generation + Dexie v18 persistence + rate limiting | 2026-05-26 |
+| D021 | Playwright for E2E testing; Storybook for UI documentation | Coverage gap: only unit tests existed; Storybook for component doc | 2026-05-26 |
+| D022 | ImmersiveModeProvider for full-screen quiz/exam | Auto-hides nav bars; improves focus during sessions | 2026-05-28 |
+| D023 | SwipeableCardDeck replaces old flashcard list | Tinder-style interaction; SM-2 quality picker; 3-card cascade | 2026-05-28 |
 
 ### Reversals
 
@@ -44,10 +50,13 @@
 - **Repository pattern for DB access**: All `src/lib/db/repositories/` provide typed CRUD, tests use mock repos
 - **QueueCore generic queue**: Single `QueueCore` class in `src/lib/queue/core.ts` powers both SyncQueue (offline mutations) and JobQueue (orchestration side effects). Exponential backoff + concurrency guard built in.
 - **RateLimiter single class, domain-specific configs**: In-memory rate limiter with configs for auth, API routes, and AI token budgets
-- **Dexie schema versioning**: Schema versions (currently v12) managed in `src/lib/db/schema.ts` with upgrade handlers
+- **Dexie schema versioning**: Schema versions (currently v18) managed in `src/lib/db/schema.ts` with upgrade handlers (v15→v18 includes quizPacks + packQuestions)
 - **Competency mapper**: Novice→Easy, Developing→Medium, Proficient→Medium, Mastered→Hard (in `src/lib/question-engine/competency-mapper.ts`)
 - **Background visual pre-caching**: When questions are generated, visual generation fires in background so visuals are cached before the question card renders
 - **SM-2 spaced repetition**: Flashcard review uses SM-2 algorithm; existing cards use `reviewFlashcard()`, AI fallback for new content
+- **Immersive mode pattern**: React context + `useImmersiveMode()` hook; nav components self-hide; quiz/exam auto-enable; floating exit pill
+- **Swipeable deck pattern**: `useSwipeDeck` state machine (idle→dragging→swiped→quality-pick→advancing); undo stack; framer-motion drag + spring-back
+- **Offline pack pattern**: `QuizPackService` + Dexie `quizPacks`/`packQuestions` tables; rate-limited generation; expiry-based eviction
 
 ---
 
@@ -65,12 +74,19 @@
 
 ## Open Questions
 
-1. **Appwrite write path for exam_dates**: No server-side cron or Appwrite collection exists yet for exam date data. Current implementation is Dexie L1 + seed data L2 only. When to build?
-2. **Component test strategy**: TODO.md lists E2E and component tests as outstanding. Current tests are unit-only. What framework? Playwright for E2E?
-3. **PDF scraping for exam dates**: Official DBE PDF is image-based. OCR (Tesseract?) or manual data entry each session?
-4. **Shared subject color/abbreviation maps**: Duplicated between old `exam-calendar.tsx` and new `exam-dates/service.ts`. Extract to shared location?
-5. **Old `ExamCalendar` component**: Preserved but unused. When to delete?
-6. **Comparative analytics**: Depends on other users' data in Appwrite; currently falls back to estimates. Production-ready path unclear.
+1. **Mock exam mode**: Timed past-paper simulation with exam hall conditions. Planned for next development cycle.
+2. **Shared subject color/abbreviation maps**: Duplicated between old `exam-calendar.tsx` and `exam-dates/service.ts`. Extract to shared location?
+3. **Old `ExamCalendar` component**: Preserved but unused. When to delete?
+4. **Comparative analytics**: Depends on other users' data in Appwrite; currently falls back to estimates. Production-ready path unclear.
+5. **Redis-backed rate limiting**: In-memory RateLimiter does not survive server restarts. Needed for multi-instance deployment.
+
+### Resolved
+
+| Question | Resolution | Date |
+|----------|-----------|------|
+| Appwrite write path for exam_dates? No server-side cron exists. | ✅ Done — Session 10: background job `"appwrite-exam-dates-sync"` + `syncExamDatesToAppwrite()` | 2026-05-26 |
+| Component test strategy? What framework? | ✅ Playwright for E2E + Storybook for UI docs — Session 10 | 2026-05-26 |
+| PDF scraping for exam dates? OCR or manual? | ✅ Manual extraction from web sources for now; OCR remains future work | 2026-05-26 |
 
 ---
 
@@ -79,11 +95,11 @@
 | Resource | Location | Purpose |
 |----------|----------|---------|
 | Domain glossary | `CONTEXT.md` | Shared vocabulary for all agents |
-| Agent instructions | `AGENTS.md` | Engine arch, math conventions, session history |
+| Agent instructions | `AGENTS.md` | Engine arch, math conventions, session 1-14 history |
 | Design system | `DESIGN.md` | "The Emerald Study Room" — colors, typography, components |
 | Product context | `PRODUCT.md` | Target users, brand principles |
 | Spec: Exam Dates | `SPEC.md` | National Exam Dates Tracker spec |
-| Roadmap | `docs/roadmap.md` | 4-phase product roadmap |
+| Roadmap | `docs/roadmap.md` | Phase-based product roadmap |
 | ADR-0001 | `docs/adr/0001-question-engine-composition.md` | QuestionEngine composition decision |
 | Lottie migration | `docs/issues/lottie-web-unpin.md` | Resolved: migrated from lottie-react to @lottiefiles/dotlottie-react |
 | Impeccable skill | `.agents/skills/impeccable/` | UI/UX design audit workflow (34 reference files) |

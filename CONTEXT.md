@@ -1,4 +1,4 @@
-# Context Manifest — 2026-05-24
+# Context Manifest — 2026-05-29
 
 ## Identity
 
@@ -6,19 +6,25 @@ Lumni is an offline-capable, mobile-first SA Matric exam prep platform using Nex
 
 ## Current Mission
 
-Architecture consolidation: flashcard engine unified into `src/lib/flashcard-engine/`, generic route handler factory in `src/lib/api/create-route-handler.ts` replacing 49 copies of auth/try-catch boilerplate, services barrel exporting all 10 services, tools directory reorganized into domain subdirs. Next push: test coverage (unit + E2E) and exam_dates Appwrite write path.
+Feature completion and hardening: immersive quiz/exam mode shipped, swipeable Tinder-style flashcard deck shipped, full-screen mode with auto-nav-hiding shipped. Next push: mock exam mode, shared subject color/abbreviation extraction, and Redis-backed rate limiting.
 
 ## System at a Glance
 
 ```
 Browser (React 19 + Next.js 16)
-  ├── Dexie IndexedDB   ← L1 cache (questions 24h, visuals 7d)
-  ├── Zustand stores     ← client state (quiz, exam, sync, search)
-  └── React Query        ← server state cache
+  ├── Dexie IndexedDB   ← L1 cache (questions 24h, visuals 7d, quizPacks 30d)
+  │     ├── 23 tables (v18 schema)
+  │     ├── QuizPacks + packQuestions (offline packs)
+  │     ├── Flashcard SM-2 state + SR settings
+  │     ├── Exam sessions (auto-save 30s intervals, 4hr stale expiry)
+  │     └── Sync queue + job queue (QueueCore)
+  ├── Zustand stores     ← client state (quiz, exam, sync, search, bookmarks, voice)
+  └── React Query        ← server state cache (retry 3, offlineFirst)
         │
-Next.js API Routes (~35 groups, most via createRouteHandler factory)
+Next.js API Routes (~41 groups, most via createRouteHandler factory)
   ├── QuestionEngine     → Gemini → Nvidia NIM → Groq (AI chain)
   ├── VisualEngine       → Konva (STEM) or Wikimedia (non-STEM)
+  ├── QuizPackService    → bulk generate → Dexie storage
   ├── LearningOrchestrator → composes Engine + queued side effects
   ├── QueueCore          → Dexie-backed job queue (retry + backoff)
   ├── RateLimiter+TokenTracker → auth limits + AI budget caps
@@ -26,7 +32,7 @@ Next.js API Routes (~35 groups, most via createRouteHandler factory)
         │
 Appwrite Cloud
   ├── Auth (anonymous → email/password)
-  ├── DB (questions, visuals, exam_sessions, exam_papers)
+  ├── DB (questions, visuals, exam_sessions, exam_papers, exam_dates)
   └── Storage (exam PDFs, avatars)
 ```
 
@@ -34,7 +40,7 @@ Appwrite Cloud
 
 1. **Free-tier budgets**: 2000 AI calls/day global; per-user: 20 gen, 100 grade, 20 hint, 50 visual. Soft block (429 with headers), resets midnight.
 2. **50k Appwrite doc limit**: Cleanup cron deletes cached questions >30 days (batches of 100).
-3. **Offline-first**: All reads hit Dexie first. Write queue flushes via `sync-queue.ts` on reconnect.
+3. **Offline-first**: All reads hit Dexie first. Write queue flushes via sync-queue.ts on reconnect.
 4. **Math delimiters**: `$...$` / `$$...$$` only (no `\(...\)`). KaTeX via `remark-math` + `rehype-katex`.
 5. **Anonymous→authenticated**: Same userId preserved via `updateEmail()` + `updatePassword()`. Soft gating at component level, not route level.
 
@@ -42,31 +48,33 @@ Appwrite Cloud
 
 | File/Dir | What I'm touching |
 |----------|-------------------|
-| `src/lib/flashcard-engine/` | Unified FlashcardEngine: types, engine singleton, barrel |
-| `src/lib/api/create-route-handler.ts` | Generic route handler factory (auth guard + HttpError + validation) |
-| `src/lib/services/index.ts` | Services barrel: all 10 services + ServiceResult<T> |
-| `src/components/tools/core/` | Timer, pomodoro, voice recorder tools |
-| `src/components/tools/math/` | Scientific calculator, unit converter |
-| `src/components/tools/science/` | Periodic table, physics tools |
-| `src/components/tools/scheduling/` | National exam calendar, study schedule |
-| `src/components/tools/communication/` | Exam detail dialog |
-| `src/app/api/analytics/comparative/route.ts` | Migrated to createRouteHandler |
-| `src/app/api/analytics/trends/route.ts` | Migrated to createRouteHandler |
-| `src/app/api/admin/exams/route.ts` | Migrated to createRouteHandler |
-| `src/app/api/exam-sessions/route.ts` | Migrated to createRouteHandler |
-| `src/app/api/jobs/process/route.ts` | Migrated to createRouteHandler |
-| `src/hooks/use-spaced-repetition.ts` | Uses flashcardEngine singleton |
-| `src/hooks/use-sr-settings.ts` | Uses flashcardEngine singleton |
+| `src/components/shared/immersive-mode.tsx` | ImmersiveModeProvider + useImmersiveMode + ExitButton |
+| `src/components/flashcard/swipeable-card-deck.tsx` | Tinder-style deck (simple + SM-2 modes) |
+| `src/components/flashcard/swipeable-card.tsx` | Drag-to-swipe card with framer-motion |
+| `src/components/flashcard/quality-picker.tsx` | Post-swipe SM-2 quality overlay |
+| `src/hooks/use-swipe-deck.ts` | Drag state machine (idle→dragging→swiped→quality-pick→advancing) |
+| `src/lib/quiz-packs/` | Offline AI Quiz Pack types, service, Dexie v18 migration |
+| `src/components/dashboard/offline-packs.tsx` | OfflinePackManager UI with storage progress |
+| `src/hooks/use-quiz-packs.ts` | TanStack Query hook for packs |
+| `playwright.config.ts` | E2E smoke tests (homepage, quiz, exam-dates) |
+| `.storybook/` | Storybook config + stories (ShareButton, Badge) |
 
 ## Background Knowledge
 
 - **Question types (11)**: multiple-choice, matching, short-answer, long-answer, essay, calculation, diagram, programming, source-based, data-response, mixed. Local grade for 4 types (MC, matching, calculation, short-answer with exact-match fallback), AI grade for 7 types.
 - **Flashcard engine**: `src/lib/flashcard-engine/` — single `FlashcardEngine` class wrapping DexieRepository + SM-2/FSRS + daily limits + learning steps + ease-hell + leech + settings. Used via `flashcardEngine` singleton.
-- **Route handler factory**: `src/lib/api/create-route-handler.ts` — `createRouteHandler()` with `AuthMode`, `HttpError`, auto auth guard, body parsing, validation, error wrapping, optional rate limiting. Reduces ~49 boilerplate copies to declarative config.
+- **Swipeable flashcard deck**: `SwipeableCardDeck` (3-card cascade, drag-to-swipe, tap-to-flip), `QualityPicker` (6-level SM-2), `useSwipeDeck` (state machine with undo stack). Replaces old `flashcards-active.tsx` and `sm2-study-session.tsx`.
+- **Immersive mode**: `ImmersiveModeProvider` context — auto-hides `TopNav`/`BottomNav`/`DesktopSidebar` when quiz `phase="active"` or exam `phase="active"`. Floating exit pill button. Full-width layout via `max-w-2xl` centered.
+- **Route handler factory**: `src/lib/api/create-route-handler.ts` — `createRouteHandler()` with `AuthMode`, `HttpError`, auto auth guard, body parsing, validation, error wrapping, optional rate limiting. 5 routes migrated.
 - **AI provider chain**: Gemini 2.0 Flash Lite (primary) → Nvidia NIM meta/llama-3.3-70b-instruct → Groq llama-3.3-70b-versatile. Defined in `src/lib/ai/client.ts`. DeepSeek was removed.
 - **Competency levels**: novice→Easy/remember, developing→Medium/understand/apply, proficient→Medium/apply/analyze/evaluate, mastered→Hard/evaluate/create. Mapped in `src/lib/question-engine/competency-mapper.ts`.
 - **Caching tiers**: Dexie L1 (fastest, per-device) → Appwrite L2 (cross-session) → AI/Wikimedia L3 (on-demand fallback). Visual pre-caching fires on question generation automatically.
 - **Diagrams**: STEM subjects (30) → Konva renderers (geometry, chart, chemistry, graph, force-vector, circuit, wave, motion, node-flow, custom-svg). Non-STEM → Wikimedia Commons images. Fallback: Mermaid.js.
+- **Quiz packs**: `src/lib/quiz-packs/` — `QuizPackService`, Dexie v18 (`quizPacks` + `packQuestions` tables), `POST /api/quiz-packs/generate` (rate-limited), `useQuizPacks()` hook, `<OfflinePackManager>` with status badges (generating/ready/expired/failed).
+- **Dexie schema**: v18 — 23 tables including `questions`, `visuals`, `examDates`, `questionRatings`, `wrongAnswers`, `flashcards`, `srsettings`, `quizPacks`, `packQuestions`, `jobs`, `syncQueue`, `competencies`, etc.
+- **E2E testing**: Playwright 1.60.0 configured with smoke tests for homepage, quiz, and exam-dates pages.
+- **Storybook**: 10.4.1 with `@storybook/nextjs`, config in `main.ts` + `preview.ts`, initial stories for ShareButton and Badge.
+- **Exam_dates sync**: Background job type `"appwrite-exam-dates-sync"` with `upsertDocument` handler; `syncExamDatesToAppwrite()` enqueues job; `syncExamDatesDirect()` for immediate writes.
 - **Design**: "The Emerald Study Room" — Study Green accent (`oklch(52% 0.18 146)`), Warm Paper neutrals, Outfit 800 / Geist 400 fonts, 20px card radius, 44px touch targets, stacked lightness over shadows.
 - **Auth**: Anonymous users auto-created; sign-up upgrades anonymous session. Admin uses separate magic-link + OTP. Rate limits: 3 sign-in/5min, 1 magic link/5min.
 - **Onboarding**: 5-step wizard (Welcome→Subjects→Goals→Schedule→Notifications) with Three.js particle background + inline SVG illustrations. Fires once only. Re-enter via Settings > Data tab.
@@ -92,7 +100,7 @@ Appwrite Cloud
 | `prompt-catalog.md` | Catalog of all discoverable prompt contexts (agents, specs, plans) | Reference |
 | `memory.md` | All decisions (ADR-lite), patterns, failures, open questions, resources | High |
 | `system-design.md` | Mermaid architecture diagram, data model ERD, component dictionary, API list, NFRs, roadmap | High |
-| `AGENTS.md` | Engine architecture, math conventions, session 1-8 history, AI provider chain | High |
+| `AGENTS.md` | Engine architecture, math conventions, session 1-14 history, AI provider chain | High |
 | `CONTEXT.md` | Domain glossary — prepend to any agent prompt | High |
-| `DESIGN.md` | "The Emerald Study Room" design system (300 lines) | Medium |
+| `DESIGN.md` | "The Emerald Study Room" design system (342 lines) | Medium |
 | `TODO.md` | Outstanding tasks: custom domain, test coverage, exam dates items | Medium |
