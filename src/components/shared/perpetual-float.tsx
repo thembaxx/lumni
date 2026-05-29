@@ -1,13 +1,12 @@
 "use client";
 
 import { animate, m, useMotionValue, useTransform } from "framer-motion";
-import * as React from "react";
-import { useEffect } from "react";
+import { memo, type ReactNode, useEffect } from "react";
 import { cn } from "@/lib/shared";
 import { useOptimizedAnimation } from "@/lib/utils/animation-optimization";
 
 interface PerpetualFloatProps {
-	children: React.ReactNode;
+	children: ReactNode;
 	className?: string;
 	floatRange?: number;
 	speed?: number;
@@ -15,7 +14,7 @@ interface PerpetualFloatProps {
 	offsetY?: number;
 }
 
-export const PerpetualFloat = React.memo(function PerpetualFloat({
+export const PerpetualFloat = memo(function PerpetualFloat({
 	children,
 	className,
 	floatRange = 6,

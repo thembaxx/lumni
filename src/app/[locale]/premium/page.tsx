@@ -117,7 +117,7 @@ export default function PremiumPage() {
 						<HugeiconsIcon
 							icon={CrownIcon}
 							size={40}
-							className="text-amber-400"
+							className="text-amber-400 dark:text-amber-300"
 						/>
 					</div>
 					<CardTitle className="text-2xl">
@@ -135,7 +135,7 @@ export default function PremiumPage() {
 							<HugeiconsIcon
 								icon={f.icon}
 								size={18}
-								className="mt-0.5 text-amber-400"
+								className="mt-0.5 text-amber-400 dark:text-amber-300"
 							/>
 							<div>
 								<p className="font-medium text-sm">{f.label}</p>

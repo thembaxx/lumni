@@ -263,7 +263,10 @@ export function SmartScheduler() {
 		return (
 			<div className="flex h-full flex-col items-center justify-center gap-4 p-8">
 				<Card className="flex max-w-md flex-col items-center gap-4 p-8 text-center">
-					<HugeiconsIcon icon={CrownIcon} className="size-10 text-amber-400" />
+					<HugeiconsIcon
+						icon={CrownIcon}
+						className="size-10 text-amber-400 dark:text-amber-300"
+					/>
 					<div>
 						<p className="font-semibold text-lg">Premium Feature</p>
 						<p className="mt-1 text-muted-foreground text-sm">

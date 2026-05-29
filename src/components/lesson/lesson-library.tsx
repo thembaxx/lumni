@@ -21,10 +21,14 @@ import { useRouter } from "@/i18n/navigation";
 import type { TopicRecommendation } from "@/lib/competency-engine/path-engine";
 
 const levelColors: Record<string, string> = {
-	novice: "bg-red-500/10 text-red-500 border-red-500/20",
-	developing: "bg-amber-500/10 text-amber-500 border-amber-500/20",
-	proficient: "bg-blue-500/10 text-blue-500 border-blue-500/20",
-	mastered: "bg-emerald-500/10 text-emerald-500 border-emerald-500/20",
+	novice:
+		"bg-red-500/10 text-red-500 border-red-500/20 dark:bg-red-400/10 dark:text-red-300 dark:border-red-400/20",
+	developing:
+		"bg-amber-500/10 text-amber-500 border-amber-500/20 dark:bg-amber-400/10 dark:text-amber-300 dark:border-amber-400/20",
+	proficient:
+		"bg-blue-500/10 text-blue-500 border-blue-500/20 dark:bg-blue-400/10 dark:text-blue-300 dark:border-blue-400/20",
+	mastered:
+		"bg-emerald-500/10 text-emerald-500 border-emerald-500/20 dark:bg-emerald-400/10 dark:text-emerald-300 dark:border-emerald-400/20",
 	unknown: "bg-muted text-muted-foreground border-border",
 };
 

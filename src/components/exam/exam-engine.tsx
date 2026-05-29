@@ -133,7 +133,10 @@ export function ExamEngine({
 	if (!hasFeature("exam-simulator")) {
 		return (
 			<Card className="flex flex-col items-center gap-4 p-8 text-center">
-				<HugeiconsIcon icon={CrownIcon} className="size-10 text-amber-400" />
+				<HugeiconsIcon
+					icon={CrownIcon}
+					className="size-10 text-amber-400 dark:text-amber-300"
+				/>
 				<div>
 					<p className="font-semibold text-lg">{t("exam.premiumFeature")}</p>
 					<p className="mt-1 text-muted-foreground text-sm">

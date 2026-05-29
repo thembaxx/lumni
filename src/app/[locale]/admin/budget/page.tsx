@@ -118,7 +118,7 @@ export default function AdminBudgetPage() {
 													exhausted
 														? "bg-destructive"
 														: warning
-															? "bg-amber-500"
+															? "bg-amber-500 dark:bg-amber-600"
 															: "bg-foreground"
 												}`}
 												style={{ width: `${Math.min(100, pct)}%` }}

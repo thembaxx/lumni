@@ -22,11 +22,11 @@ export function GamificationStrip({
 		<Card className={cn("overflow-hidden", className)} {...props}>
 			<CardContent className="flex items-center justify-between gap-4 p-4">
 				<div className="flex items-center gap-3">
-					<div className="flex size-10 items-center justify-center rounded-full bg-orange-500/10">
+					<div className="flex size-10 items-center justify-center rounded-full bg-orange-500/10 dark:bg-orange-400/10">
 						<HugeiconsIcon
 							icon={FireIcon}
 							size={20}
-							className="text-orange-500"
+							className="text-orange-500 dark:text-orange-300"
 						/>
 					</div>
 					<div>

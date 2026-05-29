@@ -67,8 +67,11 @@ function VerifyEmailContent() {
 			transition={{ duration: 0.35, ease: iOSEase }}
 			className="flex flex-col items-center gap-6 text-center"
 		>
-			<div className="flex size-16 items-center justify-center rounded-full bg-green-500/10">
-				<HugeiconsIcon icon={SparklesIcon} className="size-8 text-green-500" />
+			<div className="flex size-16 items-center justify-center rounded-full bg-green-500/10 dark:bg-green-400/10">
+				<HugeiconsIcon
+					icon={SparklesIcon}
+					className="size-8 text-green-500 dark:text-green-300"
+				/>
 			</div>
 			<div className="flex flex-col gap-2">
 				<h1 className="font-semibold text-xl">{t("auth.emailVerified")}</h1>

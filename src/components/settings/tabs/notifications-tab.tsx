@@ -8,14 +8,37 @@ interface NotificationsTabProps {
 	onNotificationsChange: (settings: NotificationSettings) => void;
 }
 
+const HOURS = Array.from({ length: 24 }, (_, i) => i);
+
+function formatHour(hour: number): string {
+	const d = new Date();
+	d.setHours(hour, 0, 0, 0);
+	return d.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+}
+
 export function NotificationsTab({
 	notifications,
 	onNotificationsChange,
 }: NotificationsTabProps) {
+	const enabledTrailing = useMemo(
+		() => (
+			<Switch
+				checked={notifications.enabled}
+				onCheckedChange={(checked) =>
+					onNotificationsChange({
+						...notifications,
+						enabled: checked,
+					})
+				}
+			/>
+		),
+		[notifications, onNotificationsChange],
+	);
 	const studyRemindersTrailing = useMemo(
 		() => (
 			<Switch
 				checked={notifications.studyReminders}
+				disabled={!notifications.enabled}
 				onCheckedChange={(checked) =>
 					onNotificationsChange({
 						...notifications,
@@ -30,6 +53,7 @@ export function NotificationsTab({
 		() => (
 			<Switch
 				checked={notifications.streakAlerts}
+				disabled={!notifications.enabled}
 				onCheckedChange={(checked) =>
 					onNotificationsChange({
 						...notifications,
@@ -40,10 +64,26 @@ export function NotificationsTab({
 		),
 		[notifications, onNotificationsChange],
 	);
+	const quizRemindersTrailing = useMemo(
+		() => (
+			<Switch
+				checked={notifications.quizReminders}
+				disabled={!notifications.enabled}
+				onCheckedChange={(checked) =>
+					onNotificationsChange({
+						...notifications,
+						quizReminders: checked,
+					})
+				}
+			/>
+		),
+		[notifications, onNotificationsChange],
+	);
 	const achievementNotificationsTrailing = useMemo(
 		() => (
 			<Switch
 				checked={notifications.achievementNotifications}
+				disabled={!notifications.enabled}
 				onCheckedChange={(checked) =>
 					onNotificationsChange({
 						...notifications,
@@ -58,6 +98,7 @@ export function NotificationsTab({
 		() => (
 			<Switch
 				checked={notifications.weeklyProgress}
+				disabled={!notifications.enabled}
 				onCheckedChange={(checked) =>
 					onNotificationsChange({
 						...notifications,
@@ -69,20 +110,58 @@ export function NotificationsTab({
 		[notifications, onNotificationsChange],
 	);
 
+	const reminderHourTrailing = useMemo(
+		() => (
+			<select
+				value={notifications.reminderHour}
+				disabled={!notifications.enabled}
+				onChange={(e) =>
+					onNotificationsChange({
+						...notifications,
+						reminderHour: Number(e.target.value),
+					})
+				}
+				className="h-8 rounded-lg border border-border/60 bg-system-surface px-2 font-medium text-foreground text-sm"
+			>
+				{HOURS.map((h) => (
+					<option key={h} value={h}>
+						{formatHour(h)}
+					</option>
+				))}
+			</select>
+		),
+		[notifications, onNotificationsChange],
+	);
+
 	return (
 		<ListSection
 			header="Notifications"
 			footer="Manage your notification preferences"
 		>
 			<ListCell
+				title="Enable Notifications"
+				subtitle="Master toggle for all notifications"
+				trailing={enabledTrailing}
+			/>
+			<ListCell
 				title="Study Reminders"
 				subtitle="Get reminded to study daily"
 				trailing={studyRemindersTrailing}
 			/>
 			<ListCell
+				title="Reminder Time"
+				subtitle="Time of day for study reminders"
+				trailing={reminderHourTrailing}
+			/>
+			<ListCell
 				title="Streak Alerts"
 				subtitle="Notify when streak is at risk"
 				trailing={streakAlertsTrailing}
+			/>
+			<ListCell
+				title="Quiz Reminders"
+				subtitle="Get reminded about pending quizzes"
+				trailing={quizRemindersTrailing}
 			/>
 			<ListCell
 				title="Achievement Notifications"

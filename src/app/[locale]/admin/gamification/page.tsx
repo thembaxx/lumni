@@ -252,11 +252,11 @@ export default function AdminGamificationPage() {
 									className={cn(
 										"font-mono text-[10px]",
 										a.rarity === "legendary"
-											? "border-yellow-500 text-yellow-500"
+											? "border-yellow-500 text-yellow-500 dark:border-yellow-400 dark:text-yellow-400"
 											: a.rarity === "epic"
-												? "border-purple-500 text-purple-500"
+												? "border-purple-500 text-purple-500 dark:border-purple-400 dark:text-purple-400"
 												: a.rarity === "rare"
-													? "border-blue-500 text-blue-500"
+													? "border-blue-500 text-blue-500 dark:border-blue-400 dark:text-blue-400"
 													: "",
 									)}
 								>

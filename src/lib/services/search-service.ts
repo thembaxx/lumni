@@ -11,7 +11,10 @@ export interface SearchResultItem {
 		| "note"
 		| "study-set"
 		| "exam"
-		| "web";
+		| "web"
+		| "quiz-attempt"
+		| "exam-session"
+		| "progress";
 	title: string;
 	snippet: string;
 	subject: string;
@@ -137,17 +140,98 @@ function searchLocalStorageNotes(query: string): SearchResultItem[] {
 	return results;
 }
 
+function searchDexieQuizAttempts(query: string): Promise<SearchResultItem[]> {
+	return offlineDB.quizAttempts.toArray().then((rows) => {
+		const results: SearchResultItem[] = [];
+		for (const r of rows) {
+			if (textRelevant(r.odSubject, query)) {
+				results.push({
+					id: `qa-${r.id}`,
+					type: "quiz-attempt",
+					title: `${r.odSubject} — ${r.score}/${r.totalQuestions}`,
+					snippet: `Score: ${r.score}/${r.totalQuestions} (${Math.round((r.score / r.totalQuestions) * 100)}%)`,
+					subject: r.odSubject,
+					createdAt: r.completedAt,
+				});
+				if (results.length >= 10) break;
+			}
+		}
+		return results;
+	});
+}
+
+function searchDexieExamSessions(query: string): Promise<SearchResultItem[]> {
+	return offlineDB.examSessions.toArray().then((rows) => {
+		const results: SearchResultItem[] = [];
+		for (const r of rows) {
+			if (textRelevant(r.paperId, query)) {
+				results.push({
+					id: `es-${r.id}`,
+					type: "exam-session",
+					title: r.paperId,
+					snippet: r.completed ? "Completed" : "In progress",
+					subject: "",
+					createdAt: r.startedAt,
+				});
+				if (results.length >= 10) break;
+			}
+		}
+		return results;
+	});
+}
+
+function searchDexieProgress(query: string): Promise<SearchResultItem[]> {
+	return offlineDB.progress.toArray().then((rows) => {
+		const results: SearchResultItem[] = [];
+		for (const r of rows) {
+			if (textRelevant(r.odSubjectId, query)) {
+				results.push({
+					id: `pr-${r.id}`,
+					type: "progress",
+					title: r.odSubjectId,
+					snippet: `${r.questionsAttempted} questions, ${Math.round((r.correctCount / Math.max(r.questionsAttempted, 1)) * 100)}% correct`,
+					subject: r.odSubjectId,
+					createdAt: r.updatedAt,
+				});
+				if (results.length >= 10) break;
+			}
+		}
+		return results;
+	});
+}
+
+async function searchAppwrite(query: string): Promise<SearchResultItem[]> {
+	try {
+		const res = await fetch(
+			`/api/search/appwrite?query=${encodeURIComponent(query)}`,
+			{ method: "GET" },
+		);
+		if (!res.ok) return [];
+		const data = (await res.json()) as { results: SearchResultItem[] };
+		return data.results ?? [];
+	} catch {
+		return [];
+	}
+}
+
 export async function searchAll(query: string): Promise<SearchResultItem[]> {
 	if (!query.trim() || query.length < 2) return [];
 
-	const results = await Promise.all([
+	const local = await Promise.all([
 		searchDexieQuestions(query),
 		searchDexieWrongAnswers(query),
 		searchDexieFlashcards(query),
 		Promise.resolve(searchLocalStorageNotes(query)),
+		searchDexieQuizAttempts(query),
+		searchDexieExamSessions(query),
+		searchDexieProgress(query),
 	]);
 
-	return results.flat().slice(0, 25);
+	const localResults = local.flat();
+	if (localResults.length >= 25) return localResults.slice(0, 25);
+
+	const appwriteResults = await searchAppwrite(query);
+	return [...localResults, ...appwriteResults].slice(0, 25);
 }
 
 export async function searchWeb(query: string): Promise<SearchResultItem[]> {
@@ -180,6 +264,12 @@ export async function searchByType(
 			return searchDexieFlashcards(query);
 		case "note":
 			return Promise.resolve(searchLocalStorageNotes(query));
+		case "quiz-attempt":
+			return searchDexieQuizAttempts(query);
+		case "exam-session":
+			return searchDexieExamSessions(query);
+		case "progress":
+			return searchDexieProgress(query);
 		default:
 			return [];
 	}

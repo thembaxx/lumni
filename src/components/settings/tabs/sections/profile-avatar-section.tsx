@@ -75,7 +75,7 @@ export function ProfileAvatarSection({
 							</button>
 						)}
 						{emailVerified && (
-							<span className="ml-2 font-semibold text-emerald-500 text-xs">
+							<span className="ml-2 font-semibold text-emerald-500 text-xs dark:text-emerald-400">
 								Verified
 							</span>
 						)}

@@ -12,9 +12,18 @@ interface BadgeDisplayProps {
 }
 
 const tierConfig = {
-	bronze: { bg: "bg-amber-100 text-amber-800", ring: "ring-amber-400" },
-	silver: { bg: "bg-slate-100 text-slate-700", ring: "ring-slate-400" },
-	gold: { bg: "bg-yellow-100 text-yellow-800", ring: "ring-yellow-400" },
+	bronze: {
+		bg: "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-200",
+		ring: "ring-amber-400",
+	},
+	silver: {
+		bg: "bg-slate-100 text-slate-700 dark:bg-slate-900/30 dark:text-slate-200",
+		ring: "ring-slate-400",
+	},
+	gold: {
+		bg: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-200",
+		ring: "ring-yellow-400",
+	},
 } as const;
 
 export function BadgeDisplay({

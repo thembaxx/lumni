@@ -1,3 +1,7 @@
+import type { NotificationSettings } from "@/lib/services/notification-service";
+
+export type { NotificationSettings };
+
 export function loadFromStorage<T>(key: string, defaultValue: T): T {
 	if (typeof window === "undefined") return defaultValue;
 	try {
@@ -26,13 +30,6 @@ export type StudyPreferences = {
 	showExplanations: boolean;
 };
 
-export type NotificationSettings = {
-	studyReminders: boolean;
-	streakAlerts: boolean;
-	achievementNotifications: boolean;
-	weeklyProgress: boolean;
-};
-
 export type BetaFeatures = {
 	aiTutor: boolean;
 	voicePractice: boolean;
@@ -47,13 +44,6 @@ export const DEFAULT_PREFERENCES: StudyPreferences = {
 	showExplanations: true,
 };
 
-export const DEFAULT_NOTIFICATIONS: NotificationSettings = {
-	studyReminders: true,
-	streakAlerts: true,
-	achievementNotifications: true,
-	weeklyProgress: false,
-};
-
 export const DEFAULT_BETA: BetaFeatures = {
 	aiTutor: false,
 	voicePractice: false,
@@ -61,5 +51,15 @@ export const DEFAULT_BETA: BetaFeatures = {
 };
 
 export const STUDY_PREFS_KEY = "study-preferences";
-export const NOTIFICATION_SETTINGS_KEY = "notification-settings";
+export const NOTIFICATION_SETTINGS_KEY = "lumni_notification_settings";
 export const BETA_FEATURES_KEY = "beta-features";
+
+export const DEFAULT_NOTIFICATIONS: NotificationSettings = {
+	enabled: false,
+	studyReminders: true,
+	streakAlerts: true,
+	quizReminders: false,
+	achievementNotifications: true,
+	weeklyProgress: false,
+	reminderHour: 18,
+};

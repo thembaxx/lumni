@@ -1,0 +1,19 @@
+"use client";
+
+import { m } from "framer-motion";
+import { GroupSkeleton } from "@/components/dashboard/practice/exam-card-skeleton";
+
+export function ExamLoadingState() {
+	return (
+		<m.div
+			initial={{ opacity: 0 }}
+			animate={{ opacity: 1 }}
+			exit={{ opacity: 0 }}
+			className="flex grow flex-col gap-5"
+		>
+			<GroupSkeleton />
+			<GroupSkeleton />
+			<GroupSkeleton />
+		</m.div>
+	);
+}

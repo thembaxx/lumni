@@ -8,9 +8,9 @@ import { getWeeklyLeaderboard } from "@/lib/services/leaderboard-service";
 import { cn } from "@/lib/shared";
 
 const rankColors = [
-	"text-amber-400",
-	"text-zinc-400",
-	"text-orange-700",
+	"text-amber-400 dark:text-amber-300",
+	"text-zinc-400 dark:text-zinc-300",
+	"text-orange-700 dark:text-orange-400",
 	"text-muted-foreground",
 ];
 
@@ -27,7 +27,7 @@ export function LeaderboardCard() {
 					<HugeiconsIcon
 						icon={CrownIcon}
 						size={20}
-						className="text-amber-400"
+						className="text-amber-400 dark:text-amber-300"
 					/>
 					Weekly Leaderboard
 				</CardTitle>

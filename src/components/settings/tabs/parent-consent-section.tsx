@@ -28,7 +28,7 @@ export function ParentConsentSection({ userId }: { userId: string }) {
 			<span
 				className={`rounded-full px-2.5 py-0.5 font-semibold text-xs ${
 					requests?.status === "granted"
-						? "bg-emerald-500/10 text-emerald-600"
+						? "bg-emerald-500/10 text-emerald-600 dark:bg-emerald-400/10 dark:text-emerald-300"
 						: "bg-muted text-muted-foreground"
 				}`}
 			>

@@ -1,31 +1,18 @@
 "use client";
 
-import {
-	CheckmarkCircle01Icon,
-	MailSend01Icon,
-	Mic01Icon,
-	MicOff01Icon,
-	PauseFreeIcons,
-	PlayFreeIcons,
-	UndoIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, m } from "framer-motion";
 import { useCallback, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { LiveWaveform } from "@/components/ui/live-waveform";
 import { useAudioRecorder } from "@/hooks/use-audio-recorder";
 import { cn } from "@/lib/shared";
+import { ControlButtons } from "./voice-recorder/control-buttons";
+import { SendButton } from "./voice-recorder/send-button";
+import { StatusDisplay } from "./voice-recorder/status-display";
+import { WaveformDisplay } from "./voice-recorder/waveform-display";
 
 interface VoiceRecorderProps {
 	onRecordingComplete?: (audioBlob: Blob | null) => void;
 	className?: string;
 }
 
-// TODO(react-doctor): Extract WaveformDisplay into separate component (~25 lines)
-// TODO(react-doctor): Extract StatusDisplay into separate component (~30 lines)
-// TODO(react-doctor): Extract ControlButtons into separate component (~100 lines)
-// TODO(react-doctor): Extract SendButton into separate component (~65 lines)
 export function VoiceRecorder({
 	onRecordingComplete,
 	className,
@@ -52,8 +39,11 @@ export function VoiceRecorder({
 
 	const showPermissionError =
 		permissionStatus === "denied" || permissionStatus === "unsupported";
-	const showValidationError =
-		isTooShort || isTooLong || (recordingError && !isRecording);
+	const showValidationError = !!(
+		isTooShort ||
+		isTooLong ||
+		(recordingError && !isRecording)
+	);
 
 	const handleRecordClick = async () => {
 		if (permissionStatus === "prompt") {
@@ -112,221 +102,42 @@ export function VoiceRecorder({
 		<div
 			className={cn("mt-4 flex w-full flex-col items-center gap-6", className)}
 		>
-			<div className="relative w-full overflow-hidden rounded-lg bg-muted/20 p-2">
-				<LiveWaveform
-					active={isRecording}
-					processing={!isRecording && !audioBlob}
-					mode="static"
-					barColor="oklch(76.7% 0.179 65°)"
-					height={64}
-					barWidth={3}
-					barGap={2}
-					fadeEdges
-					className={cn(
-						"w-full transition-transform duration-300",
-						isRecording && "scale-y-110",
-					)}
-				/>
-			</div>
+			<WaveformDisplay isRecording={isRecording} audioBlob={audioBlob} />
 
-			<div className="flex min-h-14 flex-col items-center gap-1">
-				{showValidationError && (
-					<span className="animate-fade-in-up text-destructive text-xs">
-						{isTooShort && `Recording too short (min 1s)`}
-						{isTooLong && "Maximum duration reached"}
-						{recordingError && !isTooShort && !isTooLong && recordingError}
-					</span>
-				)}
-				<span
-					className={cn(
-						"font-medium text-xs uppercase tracking-widest transition-colors duration-200",
-						sendSuccess
-							? "text-success dark:text-success-foreground"
-							: isRecording
-								? "animate-pulse text-destructive"
-								: isPlaying
-									? "animate-pulse text-[--system-accent]"
-									: showPermissionError
-										? "text-destructive"
-										: "text-muted-foreground",
-					)}
-				>
-					{showPermissionError ? "Permission Required" : getStatusText()}
-				</span>
-				{(isRecording || isPlaying || (audioBlob && totalDuration > 0)) && (
-					<span className="animate-fade-in-up font-extrabold font-mono text-2xl text-foreground tabular-nums">
-						{getTimerDisplay()}
-					</span>
-				)}
-			</div>
+			<StatusDisplay
+				sendSuccess={sendSuccess}
+				isRecording={isRecording}
+				isPlaying={isPlaying}
+				showPermissionError={showPermissionError}
+				showValidationError={showValidationError}
+				isTooShort={isTooShort}
+				isTooLong={isTooLong}
+				recordingError={recordingError}
+				statusText={getStatusText()}
+				timerDisplay={getTimerDisplay()}
+			/>
 
-			<div className="flex items-center gap-4">
-				<Button
-					variant="ghost"
-					size="icon"
-					onClick={resetRecording}
-					disabled={(!audioBlob && !isRecording) || isPaperPlaneing}
-					className={cn(
-						"rounded-lg",
-						audioBlob || isRecording
-							? "bg-muted/80 text-muted-foreground hover:scale-105 hover:bg-muted hover:text-foreground"
-							: "bg-muted/30 text-muted-foreground/30",
-						isPaperPlaneing && "pointer-events-none opacity-50",
-					)}
-					aria-label="Reset recording"
-				>
-					<span className="transition-transform duration-200 active:rotate-180">
-						<HugeiconsIcon icon={UndoIcon} className="size-4" />
-					</span>
-				</Button>
+			<ControlButtons
+				isRecording={isRecording}
+				isPlaying={isPlaying}
+				audioBlob={audioBlob}
+				isPaperPlaneing={isPaperPlaneing}
+				showPermissionError={showPermissionError}
+				disabled={isPaperPlaneing || showPermissionError}
+				onReset={resetRecording}
+				onRecordClick={handleRecordClick}
+				onTogglePlayback={togglePlayback}
+			/>
 
-				<Button
-					variant="ghost"
-					onClick={handleRecordClick}
-					disabled={isPaperPlaneing || showPermissionError}
-					className={cn(
-						"relative h-16 w-16 rounded-full",
-						isRecording
-							? "bg-destructive text-destructive-foreground shadow-[0_0_30px_oklch(59.3%_0.194_28°_/_0.6)]"
-							: showPermissionError
-								? "cursor-not-allowed bg-muted text-muted-foreground"
-								: "bg-foreground text-background hover:scale-105 hover:shadow-foreground/20 hover:shadow-xl",
-						isPaperPlaneing && "pointer-events-none opacity-50",
-					)}
-					aria-label={isRecording ? "Stop recording" : "Start recording"}
-				>
-					<span
-						className={cn(
-							"absolute inset-0 rounded-full transition-opacity duration-300",
-							isRecording
-								? "animate-ping bg-destructive/40"
-								: "ring-2 ring-transparent",
-						)}
-					/>
-					<span className="relative flex items-center justify-center">
-						<HugeiconsIcon
-							icon={MicOff01Icon}
-							className="absolute size-6 transition-[opacity,transform] duration-200"
-							style={{
-								opacity: isRecording ? 1 : 0,
-								transform: `scale(${isRecording ? 1 : 0.25})`,
-								transitionTimingFunction: "cubic-bezier(0.2, 0, 0, 1)",
-							}}
-						/>
-						<HugeiconsIcon
-							icon={Mic01Icon}
-							className="size-6 transition-[opacity,transform] duration-200"
-							style={{
-								opacity: isRecording ? 0 : 1,
-								transform: `scale(${isRecording ? 0.25 : 1})`,
-								transitionTimingFunction: "cubic-bezier(0.2, 0, 0, 1)",
-							}}
-						/>
-					</span>
-				</Button>
-
-				<Button
-					variant="ghost"
-					size="icon"
-					onClick={togglePlayback}
-					disabled={!audioBlob || isRecording || isPaperPlaneing}
-					className={cn(
-						"rounded-lg",
-						audioBlob && !isRecording
-							? "bg-[--system-accent] text-background hover:scale-105 hover:shadow-[--system-accent]/20 hover:shadow-xl"
-							: "bg-muted/30 text-muted-foreground/30",
-						isPaperPlaneing && "pointer-events-none opacity-50",
-					)}
-					aria-label={isPlaying ? "Pause playback" : "Play recording"}
-				>
-					<span className="relative flex items-center justify-center">
-						<HugeiconsIcon
-							icon={PauseFreeIcons}
-							className="absolute size-4 transition-[opacity,transform] duration-200"
-							style={{
-								opacity: isPlaying ? 1 : 0,
-								transform: `scale(${isPlaying ? 1 : 0.25})`,
-								transitionTimingFunction: "cubic-bezier(0.2, 0, 0, 1)",
-							}}
-						/>
-						<HugeiconsIcon
-							icon={PlayFreeIcons}
-							className="ml-0.5 size-4 transition-[opacity,transform] duration-200"
-							style={{
-								opacity: isPlaying ? 0 : 1,
-								transform: `scale(${isPlaying ? 0.25 : 1})`,
-								transitionTimingFunction: "cubic-bezier(0.2, 0, 0, 1)",
-							}}
-						/>
-					</span>
-				</Button>
-			</div>
-
-			<Button
-				onClick={handleSend}
-				disabled={
-					isRecording ||
-					!audioBlob ||
-					isPaperPlaneing ||
-					sendSuccess ||
-					isTooShort ||
-					isTooLong
-				}
-				className={cn(
-					"mt-2 w-full rounded-lg",
-					sendSuccess
-						? "bg-success text-primary-foreground hover:bg-success/90"
-						: !isRecording && audioBlob && !isTooShort && !isTooLong
-							? "bg-[--system-accent] text-background hover:opacity-90"
-							: "bg-muted/50 text-muted-foreground/50",
-				)}
-				aria-label="Send voice message"
-			>
-				<span className="flex items-center gap-2">
-					<AnimatePresence mode="wait" initial={false}>
-						{sendSuccess ? (
-							<m.span
-								key="success"
-								className="flex items-center gap-2"
-								initial={{ opacity: 0, scale: 0.25, filter: "blur(4px)" }}
-								animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-								exit={{ opacity: 0, scale: 0.25, filter: "blur(4px)" }}
-								transition={{ type: "spring", duration: 0.3, bounce: 0 }}
-							>
-								<HugeiconsIcon
-									icon={CheckmarkCircle01Icon}
-									className="size-4"
-								/>
-								<span>Sent!</span>
-							</m.span>
-						) : isPaperPlaneing ? (
-							<m.span
-								key="sending"
-								className="flex items-center gap-2"
-								initial={{ opacity: 0, scale: 0.25, filter: "blur(4px)" }}
-								animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-								exit={{ opacity: 0, scale: 0.25, filter: "blur(4px)" }}
-								transition={{ type: "spring", duration: 0.3, bounce: 0 }}
-							>
-								<span className="size-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-								<span>Sending…</span>
-							</m.span>
-						) : (
-							<m.span
-								key="idle"
-								className="flex items-center gap-2"
-								initial={{ opacity: 0, scale: 0.25, filter: "blur(4px)" }}
-								animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-								exit={{ opacity: 0, scale: 0.25, filter: "blur(4px)" }}
-								transition={{ type: "spring", duration: 0.3, bounce: 0 }}
-							>
-								<HugeiconsIcon icon={MailSend01Icon} className="size-4" />
-								<span>Send Voice Message</span>
-							</m.span>
-						)}
-					</AnimatePresence>
-				</span>
-			</Button>
+			<SendButton
+				isRecording={isRecording}
+				audioBlob={audioBlob}
+				isPaperPlaneing={isPaperPlaneing}
+				sendSuccess={sendSuccess}
+				isTooShort={isTooShort}
+				isTooLong={isTooLong}
+				onSend={handleSend}
+			/>
 		</div>
 	);
 }

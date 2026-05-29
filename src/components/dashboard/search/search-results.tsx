@@ -3,7 +3,10 @@
 import {
 	AlertCircleIcon,
 	BookOpen01Icon,
+	ChartBarIncreasingIcon,
+	Clock01Icon,
 	File01Icon,
+	File02Icon,
 	NoteIcon,
 	StarSquareIcon,
 	World,
@@ -19,25 +22,52 @@ const typeConfig: Record<
 	SearchResultItem["type"],
 	{ label: string; icon: typeof File01Icon; color: string }
 > = {
-	question: { label: "Question", icon: File01Icon, color: "text-blue-500" },
+	question: {
+		label: "Question",
+		icon: File01Icon,
+		color: "text-blue-500 dark:text-blue-400",
+	},
 	flashcard: {
 		label: "Flashcard",
 		icon: StarSquareIcon,
-		color: "text-amber-500",
+		color: "text-amber-500 dark:text-amber-400",
 	},
 	"wrong-answer": {
 		label: "Mistake",
 		icon: AlertCircleIcon,
 		color: "text-destructive",
 	},
-	note: { label: "Note", icon: NoteIcon, color: "text-green-500" },
+	note: {
+		label: "Note",
+		icon: NoteIcon,
+		color: "text-green-500 dark:text-green-400",
+	},
 	"study-set": {
 		label: "Study Set",
 		icon: BookOpen01Icon,
-		color: "text-purple-500",
+		color: "text-purple-500 dark:text-purple-400",
 	},
-	exam: { label: "Exam", icon: BookOpen01Icon, color: "text-orange-500" },
-	web: { label: "Web", icon: World, color: "text-sky-500" },
+	exam: {
+		label: "Exam",
+		icon: BookOpen01Icon,
+		color: "text-orange-500 dark:text-orange-400",
+	},
+	"quiz-attempt": {
+		label: "Quiz Attempt",
+		icon: Clock01Icon,
+		color: "text-sky-500 dark:text-sky-400",
+	},
+	"exam-session": {
+		label: "Exam Session",
+		icon: File02Icon,
+		color: "text-red-500 dark:text-red-400",
+	},
+	progress: {
+		label: "Progress",
+		icon: ChartBarIncreasingIcon,
+		color: "text-teal-500 dark:text-teal-400",
+	},
+	web: { label: "Web", icon: World, color: "text-sky-500 dark:text-sky-400" },
 };
 
 interface SearchResultsProps {

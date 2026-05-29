@@ -1,7 +1,9 @@
+import { offlineDB } from "@/lib/db/schema";
 import { flashcardEngine } from "@/lib/flashcard-engine";
 import { loadFromStorage, saveToStorage } from "@/lib/utils/storage";
 
 const NOTIF_KEY = "lumni_notification_subscription";
+export const NOTIF_SETTINGS_KEY = "lumni_notification_settings";
 const VAPID_PUBLIC_KEY =
 	"BAbQ_jX8FJMzVHJyGq4MmQGfARgTABtHF_sbqUCpDZKmL2qOqD6Aq3XK9lVfASVEJNSUQUK_j18vBEx6mJiA46o";
 
@@ -10,6 +12,8 @@ export interface NotificationSettings {
 	studyReminders: boolean;
 	streakAlerts: boolean;
 	quizReminders: boolean;
+	achievementNotifications: boolean;
+	weeklyProgress: boolean;
 	reminderHour: number;
 }
 
@@ -18,21 +22,20 @@ const DEFAULT_SETTINGS: NotificationSettings = {
 	studyReminders: true,
 	streakAlerts: true,
 	quizReminders: false,
+	achievementNotifications: true,
+	weeklyProgress: false,
 	reminderHour: 18,
 };
 
 export function getSettings(): NotificationSettings {
 	return {
 		...DEFAULT_SETTINGS,
-		...loadFromStorage<Partial<NotificationSettings>>(
-			"lumni_notification_settings",
-			{},
-		),
+		...loadFromStorage<Partial<NotificationSettings>>(NOTIF_SETTINGS_KEY, {}),
 	};
 }
 
 export function saveSettings(settings: NotificationSettings): void {
-	saveToStorage("lumni_notification_settings", settings);
+	saveToStorage(NOTIF_SETTINGS_KEY, settings);
 }
 
 function urlBase64ToUint8Array(base64String: string): Uint8Array {
@@ -276,6 +279,120 @@ export function getNextReminder(): StudyReminder | null {
 
 export function cancelScheduledReminder(): void {
 	localStorage.removeItem("lumni_next_reminder");
+}
+
+function getGamificationData(): {
+	currentStreak: number;
+	lastPracticeDate: string | null;
+	achievements: { id: string; earnedAt: string }[];
+} | null {
+	try {
+		const raw = localStorage.getItem("lumni_gamification");
+		if (!raw) return null;
+		return JSON.parse(raw);
+	} catch {
+		return null;
+	}
+}
+
+const STREAK_ALERT_KEY = "lumni_last_streak_alert_notification";
+
+export function scheduleStreakAlert(settings = getSettings()): void {
+	if (!settings.enabled || !settings.streakAlerts) return;
+
+	const lastAlertDay = loadFromStorage<string>(STREAK_ALERT_KEY, "");
+	const today = new Date().toDateString();
+	if (lastAlertDay === today) return;
+
+	const gamification = getGamificationData();
+	if (!gamification) return;
+
+	if (gamification.lastPracticeDate === today) return;
+
+	if (gamification.currentStreak > 0) {
+		sendLocalNotification(
+			"Streak at Risk!",
+			"Your streak is at risk! Practice now to keep it alive.",
+		);
+		saveToStorage(STREAK_ALERT_KEY, today);
+	}
+}
+
+const ACHIEVEMENT_CHECK_KEY = "lumni_last_checked_achievement_count";
+
+export function checkForNewAchievements(): void {
+	const settings = getSettings();
+	if (!settings.enabled || !settings.achievementNotifications) return;
+
+	const gamification = getGamificationData();
+	if (!gamification) return;
+
+	const currentCount = gamification.achievements.length;
+	const lastCount = loadFromStorage<number>(ACHIEVEMENT_CHECK_KEY, 0);
+
+	if (currentCount > lastCount && lastCount > 0) {
+		const newlyEarned = gamification.achievements.slice(lastCount);
+		for (const _achievement of newlyEarned) {
+			sendLocalNotification(
+				"Achievement Unlocked!",
+				`You unlocked an achievement!`,
+			);
+		}
+	}
+
+	saveToStorage(ACHIEVEMENT_CHECK_KEY, currentCount);
+}
+
+const WEEKLY_NOTIF_KEY = "lumni_last_weekly_notification";
+
+export async function scheduleWeeklyProgress(
+	settings = getSettings(),
+): Promise<void> {
+	if (!settings.enabled || !settings.weeklyProgress) return;
+
+	const lastNotif = loadFromStorage<number>(WEEKLY_NOTIF_KEY, 0);
+	const now = Date.now();
+	if (now - lastNotif < 7 * 24 * 60 * 60 * 1000) return;
+
+	try {
+		const sevenDaysAgo = now - 7 * 24 * 60 * 60 * 1000;
+		const attempts = await offlineDB.quizAttempts
+			.filter((a) => a.completedAt >= sevenDaysAgo)
+			.toArray();
+
+		const totalAttempts = attempts.length;
+		let totalScore = 0;
+		for (const a of attempts) {
+			totalScore += a.score;
+		}
+		const avgScore =
+			totalAttempts > 0 ? Math.round(totalScore / totalAttempts) : 0;
+
+		const gamification = getGamificationData();
+		const streak = gamification?.currentStreak ?? 0;
+
+		sendLocalNotification(
+			"Weekly Progress",
+			`${totalAttempts} quiz attempts this week, ${avgScore}% avg accuracy. Streak: ${streak} days`,
+		);
+
+		saveToStorage(WEEKLY_NOTIF_KEY, now);
+	} catch {
+		// Silently fail — Dexie may not be ready
+	}
+}
+
+export function initializeNotificationSchedulers(): void {
+	const settings = getSettings();
+	if (!settings.enabled) return;
+
+	scheduleStudyReminder(settings);
+	scheduleStreakAlert(settings);
+	checkForNewAchievements();
+
+	if (typeof window !== "undefined" && "indexedDB" in window) {
+		scheduleWeeklyProgress(settings);
+	}
 }
 
 export async function scheduleExamAlerts(

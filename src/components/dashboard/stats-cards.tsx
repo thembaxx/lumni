@@ -113,7 +113,7 @@ export function StatsCards({ questionsAnswered, accuracy }: StatsCardsProps) {
 					label: "Questions",
 					value: questionsAnswered,
 					icon: Target01Icon,
-					colorClass: "text-purple-600",
+					colorClass: "text-purple-600 dark:text-purple-400",
 					accentClass: "hover:text-purple-400/80",
 					index: 0,
 				},

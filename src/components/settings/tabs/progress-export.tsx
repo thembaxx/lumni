@@ -5,77 +5,19 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useGamification } from "@/hooks/use-gamification";
-import { offlineDB } from "@/lib/db/schema";
-
-async function buildReport(
-	levelInfo: ReturnType<typeof useGamification>["levelInfo"],
-	gamification: ReturnType<typeof useGamification>["gamification"],
-) {
-	const [quizAttempts, competencies] = await Promise.all([
-		offlineDB.quizAttempts
-			.orderBy("completedAt")
-			.reverse()
-			.limit(100)
-			.toArray(),
-		offlineDB.competencies.toArray(),
-	]);
-
-	return {
-		exportedAt: new Date().toISOString(),
-		user: {
-			level: levelInfo.level,
-			title: levelInfo.title,
-			totalXp: gamification.totalXp,
-		},
-		achievements: gamification.achievements.reduce(
-			(acc, a) => {
-				if (a.earnedAt)
-					acc.push({
-						name: a.name,
-						rarity: a.rarity,
-						earnedAt: a.earnedAt,
-					});
-				return acc;
-			},
-			[] as { name: string; rarity: string; earnedAt: string }[],
-		),
-		quizHistory: quizAttempts.map((a) => ({
-			subject: a.odSubject,
-			score: a.score,
-			totalQuestions: a.totalQuestions,
-			accuracy:
-				a.totalQuestions > 0
-					? Math.round((a.score / a.totalQuestions) * 100)
-					: 0,
-			duration: a.duration,
-			completedAt: new Date(a.completedAt).toISOString(),
-		})),
-		competency: competencies.reduce<
-			Record<string, { topics: number; averageScore: number }>
-		>((acc, c) => {
-			if (!acc[c.subjectId]) {
-				acc[c.subjectId] = { topics: 0, averageScore: 0 };
-			}
-			acc[c.subjectId].topics++;
-			acc[c.subjectId].averageScore =
-				(acc[c.subjectId].averageScore * (acc[c.subjectId].topics - 1) +
-					c.score) /
-				acc[c.subjectId].topics;
-			return acc;
-		}, {}),
-	};
-}
+import { exportService } from "@/lib/export";
 
 export function ProgressExport() {
-	const { gamification, levelInfo } = useGamification();
+	const { levelInfo } = useGamification();
 	const [isExporting, setIsExporting] = useState(false);
 	const [isPrinting, setIsPrinting] = useState(false);
+	const [isCsvExporting, setIsCsvExporting] = useState(false);
 
-	const handleExport = async () => {
+	const handleExportJson = async () => {
 		setIsExporting(true);
 		try {
-			const report = await buildReport(levelInfo, gamification);
-			const blob = new Blob([JSON.stringify(report, null, 2)], {
+			const report = await exportService.buildFullReport();
+			const blob = new Blob([exportService.toJSON(report)], {
 				type: "application/json",
 			});
 			const url = URL.createObjectURL(blob);
@@ -89,10 +31,35 @@ export function ProgressExport() {
 		}
 	};
 
+	const handleExportCsv = async () => {
+		setIsCsvExporting(true);
+		try {
+			const { offlineDB } = await import("@/lib/db/schema");
+			const [quizAttempts, examSessions] = await Promise.all([
+				offlineDB.quizAttempts
+					.orderBy("completedAt")
+					.reverse()
+					.limit(100)
+					.toArray(),
+				offlineDB.examSessions.toArray(),
+			]);
+			const csv = exportService.toCSV(quizAttempts, examSessions);
+			const blob = new Blob([csv], { type: "text/csv" });
+			const url = URL.createObjectURL(blob);
+			const a = document.createElement("a");
+			a.href = url;
+			a.download = `lumni-progress-${new Date().toISOString().split("T")[0]}.csv`;
+			a.click();
+			URL.revokeObjectURL(url);
+		} finally {
+			setIsCsvExporting(false);
+		}
+	};
+
 	const handlePrint = async () => {
 		setIsPrinting(true);
 		try {
-			const report = await buildReport(levelInfo, gamification);
+			const report = await exportService.buildFullReport();
 			const printWindow = window.open("", "_blank");
 			if (!printWindow) return;
 			printWindow.document.write(`
@@ -137,16 +104,31 @@ export function ProgressExport() {
 
 					<div class="stats">
 						<div class="stat-card">
-							<div class="stat-value">${report.user.level}</div>
-							<div class="stat-label">Level (${report.user.title})</div>
+							<div class="stat-value">${(report.gamification?.totalXp ?? 0) > 0 ? levelInfo.level : "—"}</div>
+							<div class="stat-label">Level (${levelInfo.title})</div>
 						</div>
 						<div class="stat-card">
-							<div class="stat-value">${report.user.totalXp.toLocaleString()}</div>
+							<div class="stat-value">${(report.gamification?.totalXp ?? 0).toLocaleString()}</div>
 							<div class="stat-label">Total XP</div>
 						</div>
 						<div class="stat-card">
 							<div class="stat-value">${report.achievements.length}</div>
 							<div class="stat-label">Achievements</div>
+						</div>
+					</div>
+
+					<div class="stats">
+						<div class="stat-card">
+							<div class="stat-value">${report.quizHistory.length}</div>
+							<div class="stat-label">Quiz Attempts</div>
+						</div>
+						<div class="stat-card">
+							<div class="stat-value">${report.examSessions.length}</div>
+							<div class="stat-label">Exam Sessions</div>
+						</div>
+						<div class="stat-card">
+							<div class="stat-value">${report.wrongAnswers.length}</div>
+							<div class="stat-label">Wrong Answers</div>
 						</div>
 					</div>
 
@@ -174,7 +156,7 @@ export function ProgressExport() {
 							${report.achievements
 								.map(
 									(a) =>
-										`<tr><td>${a.name}</td><td>${a.rarity}</td><td>${new Date(a.earnedAt).toLocaleDateString()}</td></tr>`,
+										`<tr><td>${a.name ?? a.id}</td><td>${a.rarity ?? "—"}</td><td>${new Date(a.earnedAt).toLocaleDateString()}</td></tr>`,
 								)
 								.join("")}
 						</tbody>
@@ -195,6 +177,38 @@ export function ProgressExport() {
 								.join("")}
 						</tbody>
 					</table>
+
+					<h2 class="section-title">Exam Sessions (${report.examSessions.length})</h2>
+					<table>
+						<thead>
+							<tr><th>Paper</th><th>Started</th><th>Completed</th></tr>
+						</thead>
+						<tbody>
+							${report.examSessions
+								.slice(0, 20)
+								.map(
+									(e) =>
+										`<tr><td>${e.paperId}</td><td>${new Date(e.startedAt).toLocaleDateString()}</td><td>${e.completed ? "Yes" : "No"}</td></tr>`,
+								)
+								.join("")}
+						</tbody>
+					</table>
+
+					<h2 class="section-title">Wrong Answers (${report.wrongAnswers.length})</h2>
+					<table>
+						<thead>
+							<tr><th>Subject</th><th>Topic</th><th>Reviewed</th></tr>
+						</thead>
+						<tbody>
+							${report.wrongAnswers
+								.slice(0, 20)
+								.map(
+									(w) =>
+										`<tr><td>${w.subject}</td><td>${w.topic}</td><td>${w.reviewed ? "Yes" : "No"}</td></tr>`,
+								)
+								.join("")}
+						</tbody>
+					</table>
 				</body>
 				</html>
 			`);
@@ -210,12 +224,21 @@ export function ProgressExport() {
 		<div className="flex flex-col gap-3">
 			<Button
 				variant="outline"
-				onClick={handleExport}
+				onClick={handleExportJson}
 				disabled={isExporting}
 				className="w-full"
 			>
 				<HugeiconsIcon icon={Download01Icon} data-icon="inline-start" />
 				{isExporting ? "Generating..." : "Download JSON Report"}
+			</Button>
+			<Button
+				variant="outline"
+				onClick={handleExportCsv}
+				disabled={isCsvExporting}
+				className="w-full"
+			>
+				<HugeiconsIcon icon={Download01Icon} data-icon="inline-start" />
+				{isCsvExporting ? "Generating..." : "Download CSV Report"}
 			</Button>
 			<Button
 				variant="outline"

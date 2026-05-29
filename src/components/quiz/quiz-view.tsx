@@ -1,24 +1,19 @@
 "use client";
 
-import { RadialIcon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { animate, m, useMotionValue } from "framer-motion";
-import { useTranslations } from "next-intl";
 import { useCallback, useEffect } from "react";
-import {
-	EmptyStateWithIllustration,
-	QuestionCard,
-	QuizEmptyState,
-	QuizResultsCard,
-	QuizSelectSubject,
-	QuizSubjectPrompt,
-} from "@/components/quiz";
+import { QuestionCard, QuizSubjectPrompt } from "@/components/quiz";
 import { useImmersiveMode } from "@/components/shared/immersive-mode";
-import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import type { Question } from "@/lib/question-engine/types";
 import { useQuizView } from "./hooks/use-quiz-view";
 import { QuizFooter } from "./quiz-footer";
 import { QuizHeader } from "./quiz-header";
+import { DecorativeRightPanel } from "./quiz-view/decorative-right-panel";
+import { QuizErrorState } from "./quiz-view/quiz-error-state";
+import { QuizLoadingState } from "./quiz-view/quiz-loading-state";
+import { QuizNoQuestionsState } from "./quiz-view/quiz-no-questions-state";
+import { QuizResultsState } from "./quiz-view/quiz-results-state";
+import { QuizSubjectSelection } from "./quiz-view/quiz-subject-selection";
 
 export interface QuizResults {
 	questions: Question[];
@@ -42,12 +37,6 @@ export interface QuizViewProps {
 	className?: string;
 }
 
-// TODO(react-doctor): Extract QuizErrorState into separate component (~40 lines)
-// TODO(react-doctor): Extract QuizSubjectSelection into separate component (~30 lines)
-// TODO(react-doctor): Extract QuizLoadingState into separate component (~45 lines)
-// TODO(react-doctor): Extract QuizResultsState into separate component (~25 lines)
-// TODO(react-doctor): Extract QuizNoQuestionsState into separate component (~25 lines)
-// TODO(react-doctor): Extract DecorativeRightPanel into separate component (repeated ~50 lines)
 export function QuizView({
 	variant = "full",
 	initialSubject,
@@ -59,7 +48,6 @@ export function QuizView({
 	onFinish,
 	className: _className,
 }: QuizViewProps) {
-	const t = useTranslations();
 	const { setImmersive } = useImmersiveMode();
 	const {
 		selectedSubject,
@@ -113,39 +101,14 @@ export function QuizView({
 
 	if (loadError) {
 		return (
-			<div className="grid min-h-dvh grid-cols-12 gap-0 bg-background">
-				<div className="col-span-12 col-start-1 flex items-center justify-center p-4 pb-20 md:col-span-7">
-					<Card size="sm" className="w-full max-w-md">
-						<CardContent className="flex flex-col gap-4">
-							<CardTitle className="font-extrabold text-xl tracking-tight">
-								{t("common.error")}
-							</CardTitle>
-							<EmptyStateWithIllustration
-								animation="error"
-								title={t("quiz.loadError")}
-								description={loadError}
-								action={{
-									label: t("common.retry"),
-									onClick: () => {
-										setLoadError(null);
-										window.location.reload();
-									},
-								}}
-								secondaryAction={{
-									label: t("common.back"),
-									onClick: handleStop,
-								}}
-							/>
-						</CardContent>
-					</Card>
-				</div>
-				<div className="relative col-span-12 col-start-1 overflow-hidden bg-system-surface/30 md:col-span-5 md:col-start-8">
-					<div className="absolute inset-0 bg-linear-to-br from-destructive/5 via-transparent to-transparent" />
-					<div className="absolute inset-0 flex items-center justify-center p-8">
-						<div className="aspect-square h-full w-full max-w-xs animate-float-slow rounded-3xl bg-destructive/10 blur-2xl" />
-					</div>
-				</div>
-			</div>
+			<QuizErrorState
+				loadError={loadError}
+				onRetry={() => {
+					setLoadError(null);
+					window.location.reload();
+				}}
+				onBack={handleStop}
+			/>
 		);
 	}
 
@@ -158,73 +121,16 @@ export function QuizView({
 				/>
 			);
 		}
-		return (
-			<div className="grid min-h-dvh grid-cols-12 gap-0 bg-background">
-				<div className="col-span-12 col-start-1 flex items-center justify-center p-4 pb-20 md:col-span-7">
-					<Card size="sm" className="w-full max-w-md">
-						<CardContent className="flex flex-col gap-4">
-							<CardTitle className="ios-title-2 font-extrabold tracking-tight">
-								{t("quiz.title")}
-							</CardTitle>
-							<QuizSelectSubject onSelect={(s) => handleStartWithSubject(s)} />
-						</CardContent>
-					</Card>
-				</div>
-				<div className="relative col-span-12 col-start-1 overflow-hidden bg-system-surface/30 md:col-span-5 md:col-start-8">
-					<div className="absolute inset-0 bg-linear-to-br from-[--system-accent]/10 via-transparent to-transparent" />
-					<div className="absolute inset-0 flex items-center justify-center p-8">
-						<div className="aspect-square h-full w-full max-w-xs animate-float-slow rounded-3xl bg-system-accent/10 blur-2xl" />
-					</div>
-				</div>
-			</div>
-		);
+		return <QuizSubjectSelection onSelect={(s) => handleStartWithSubject(s)} />;
 	}
 
 	if (isLoading) {
 		return (
-			<div className="grid min-h-dvh grid-cols-12 gap-0 bg-background">
-				<div className="col-span-12 col-start-1 flex items-center justify-center p-4 pb-20 md:col-span-7">
-					<Card size="sm" className="w-full max-w-md">
-						<CardContent className="flex flex-col items-center gap-4 p-8 text-left">
-							<m.div
-								animate={{ rotate: 360 }}
-								transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
-								className="mx-auto h-3 w-12"
-							>
-								<HugeiconsIcon
-									icon={RadialIcon}
-									className="size-12 text-muted-foreground"
-								/>
-							</m.div>
-							<p className="text-muted-foreground">
-								{t("quiz.preparingQuestions")}
-							</p>
-							{resolvedTopic && competencyData.topicCompetencyLevel && (
-								<div className="flex flex-col items-center gap-1">
-									<p className="text-muted-foreground text-xs">
-										{t("quiz.focusingOn", { topic: resolvedTopic })}
-									</p>
-									<p className="text-muted-foreground text-xs">
-										{t("quiz.level", {
-											level: competencyData.topicCompetencyLevel,
-										})}
-										{competencyData.topicCompetencyScore !== undefined &&
-											t("quiz.scorePercent", {
-												score: competencyData.topicCompetencyScore,
-											})}
-									</p>
-								</div>
-							)}
-						</CardContent>
-					</Card>
-				</div>
-				<div className="relative col-span-12 col-start-1 overflow-hidden bg-system-surface/30 md:col-span-5 md:col-start-8">
-					<div className="absolute inset-0 bg-linear-to-br from-[--system-accent]/10 via-transparent to-transparent" />
-					<div className="absolute inset-0 flex items-center justify-center p-8">
-						<div className="aspect-square h-full w-full max-w-xs animate-float-slow rounded-3xl bg-system-accent/10 blur-2xl" />
-					</div>
-				</div>
-			</div>
+			<QuizLoadingState
+				resolvedTopic={resolvedTopic}
+				topicCompetencyLevel={competencyData.topicCompetencyLevel}
+				topicCompetencyScore={competencyData.topicCompetencyScore}
+			/>
 		);
 	}
 
@@ -232,76 +138,35 @@ export function QuizView({
 		return (
 			<div className="grid min-h-dvh grid-cols-12 gap-0 bg-background">
 				<div className="col-span-12 col-start-1 flex items-center justify-center p-4 pb-20 md:col-span-7">
-					<Card size="sm" className="w-full max-w-md">
-						<CardContent>
-							<CardTitle className="text-center font-extrabold text-xl tracking-tight">
-								{t("quiz.loadError")}
-							</CardTitle>
-							<QuizEmptyState
-								variant="no-questions"
-								subject={selectedSubject}
-								onBack={handleStop}
-							/>
-						</CardContent>
-					</Card>
+					<QuizNoQuestionsState
+						selectedSubject={selectedSubject}
+						onBack={handleStop}
+					/>
 				</div>
-				<div className="relative col-span-12 col-start-1 overflow-hidden bg-system-surface/30 md:col-span-5 md:col-start-8">
-					<div className="absolute inset-0 bg-linear-to-br from-destructive/5 via-transparent to-transparent" />
-					<div className="absolute inset-0 flex items-center justify-center p-8">
-						<div className="aspect-square h-full w-full max-w-xs animate-float-slow rounded-3xl bg-destructive/10 blur-2xl" />
-					</div>
-				</div>
+				<DecorativeRightPanel variant="destructive" />
 			</div>
 		);
 	}
 
 	if (questions.length === 0) {
 		return (
-			<div className="grid min-h-dvh grid-cols-12 gap-0 bg-background">
-				<div className="col-span-12 col-start-1 flex items-center justify-center p-4 pb-20 md:col-span-7">
-					<Card size="sm" className="w-full max-w-md">
-						<CardContent>
-							<CardTitle className="font-extrabold text-xl tracking-tight">
-								{t("quiz.noQuestions")}
-							</CardTitle>
-							<QuizEmptyState
-								variant="no-questions"
-								subject={selectedSubject}
-								onBack={handleStop}
-							/>
-						</CardContent>
-					</Card>
-				</div>
-				<div className="relative col-span-12 col-start-1 overflow-hidden bg-system-surface/30 md:col-span-5 md:col-start-8">
-					<div className="absolute inset-0 bg-linear-to-br from-[--system-accent]/10 via-transparent to-transparent" />
-					<div className="absolute inset-0 flex items-center justify-center p-8">
-						<div className="aspect-square h-full w-full max-w-xs animate-float-slow rounded-3xl bg-system-accent/10 blur-2xl" />
-					</div>
-				</div>
-			</div>
+			<QuizNoQuestionsState
+				selectedSubject={selectedSubject}
+				onBack={handleStop}
+			/>
 		);
 	}
 
 	if (state.isComplete) {
 		return (
-			<div className="grid min-h-dvh grid-cols-12 gap-0 bg-background">
-				<div className="col-span-12 col-start-1 flex items-center justify-center p-4 pb-20 md:col-span-7">
-					<QuizResultsCard
-						totalQuestions={state.totalQuestions}
-						correctAnswers={state.correctAnswers}
-						elapsedTime={state.elapsedTime}
-						subject={selectedSubject ?? "Quiz"}
-						onRestart={handleRestart}
-						onDashboard={handleStop}
-					/>
-				</div>
-				<div className="relative col-span-12 col-start-1 overflow-hidden bg-system-surface/30 md:col-span-5 md:col-start-8">
-					<div className="absolute inset-0 bg-linear-to-br from-[--system-accent]/10 via-transparent to-transparent" />
-					<div className="absolute inset-0 flex items-center justify-center p-8">
-						<div className="aspect-square h-full w-full max-w-xs animate-float-slow rounded-3xl bg-system-accent/10 blur-2xl" />
-					</div>
-				</div>
-			</div>
+			<QuizResultsState
+				totalQuestions={state.totalQuestions}
+				correctAnswers={state.correctAnswers}
+				elapsedTime={state.elapsedTime}
+				subject={selectedSubject ?? "Quiz"}
+				onRestart={handleRestart}
+				onDashboard={handleStop}
+			/>
 		);
 	}
 
@@ -317,7 +182,7 @@ export function QuizView({
 				onDragEnd={handleDragEnd}
 			>
 				{pastPaperMode && (
-					<div className="flex items-center gap-2 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-amber-600 text-xs dark:text-amber-400">
+					<div className="flex items-center gap-2 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-amber-600 text-xs dark:border-amber-400/30 dark:bg-amber-400/10 dark:text-amber-400">
 						<span>📝</span>
 						<span>Past Paper Mode: questions styled after NSC exam papers</span>
 					</div>

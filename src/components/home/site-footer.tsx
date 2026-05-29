@@ -1,16 +1,11 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
 import { Link } from "@/i18n/navigation";
 import { appConfig } from "../../../app.config";
 
 export function SiteFooter() {
 	const t = useTranslations();
-	const [mounted, setMounted] = useState(false);
-	useEffect(() => {
-		setMounted(true);
-	}, []);
 
 	return (
 		<footer className="border-border/50 border-t py-12">
@@ -98,8 +93,7 @@ export function SiteFooter() {
 				</div>
 				<div className="mt-8 flex flex-col items-center justify-between gap-4 border-border/50 border-t pt-8 sm:flex-row">
 					<p className="text-muted-foreground text-xs">
-						&copy; {mounted ? new Date().getFullYear() : ""} Lumni. All rights
-						reserved.
+						&copy; {new Date().getFullYear()} Lumni. All rights reserved.
 					</p>
 					<div className="flex items-center gap-4">
 						<a

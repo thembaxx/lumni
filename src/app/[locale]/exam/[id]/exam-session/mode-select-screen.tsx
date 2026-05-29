@@ -1,0 +1,69 @@
+"use client";
+
+import { Clock01Icon, PlayFreeIcons } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { m } from "framer-motion";
+import { useTranslations } from "next-intl";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
+interface ModeSelectScreenProps {
+	subject: string;
+	paperCode: string;
+	year: string | number;
+	examPeriod: string;
+	totalMarks: number;
+	duration: string;
+	onStartPractice: () => void;
+	onStartTimed: () => void;
+}
+
+export function ModeSelectScreen({
+	subject,
+	paperCode,
+	year,
+	examPeriod,
+	totalMarks,
+	duration,
+	onStartPractice,
+	onStartTimed,
+}: ModeSelectScreenProps) {
+	const t = useTranslations();
+
+	return (
+		<m.div
+			initial={{ opacity: 0 }}
+			animate={{ opacity: 1 }}
+			className="flex min-h-screen items-center justify-center bg-background p-4"
+		>
+			<Card className="w-full max-w-md">
+				<CardHeader>
+					<CardTitle className="font-extrabold text-xl tracking-tight">
+						{t("exam.paperInfo", {
+							subject,
+							paperCode,
+						})}
+					</CardTitle>
+					<p className="text-muted-foreground text-sm">
+						{t("exam.paperMeta", {
+							year,
+							period: examPeriod,
+							marks: totalMarks,
+							duration,
+						})}
+					</p>
+				</CardHeader>
+				<CardContent className="flex flex-col gap-3">
+					<Button size="lg" onClick={onStartPractice}>
+						<HugeiconsIcon icon={PlayFreeIcons} data-icon="inline-start" />
+						{t("exam.startPractice")}
+					</Button>
+					<Button variant="outline" size="lg" onClick={onStartTimed}>
+						<HugeiconsIcon icon={Clock01Icon} data-icon="inline-start" />
+						{t("exam.startTimed")}
+					</Button>
+				</CardContent>
+			</Card>
+		</m.div>
+	);
+}

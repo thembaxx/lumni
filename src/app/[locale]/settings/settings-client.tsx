@@ -14,7 +14,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { Suspense, useCallback, useMemo, useState } from "react";
+import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import {
 	AppearanceTab,
@@ -29,6 +29,7 @@ import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
+import { initializeNotificationSchedulers } from "@/lib/services/notification-service";
 import { iOSEase } from "@/lib/utils/animation";
 import {
 	BETA_FEATURES_KEY,
@@ -58,6 +59,10 @@ function SettingsContent() {
 	const t = useTranslations();
 	const { isAnonymous } = useAuth();
 	const [activeTab, setActiveTab] = useState("profile");
+
+	useEffect(() => {
+		initializeNotificationSchedulers();
+	}, []);
 	const [isSaving, setIsSaving] = useState(false);
 
 	const visibleTabs = useMemo(

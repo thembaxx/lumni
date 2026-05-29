@@ -11,6 +11,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useStudyPlanner } from "@/hooks/use-study-planner";
@@ -23,6 +24,9 @@ export function StudyPlanOverview() {
 		useStudyPlanner();
 	const [targetAps, setTargetAps] = useState("25");
 	const [dailyMinutes, setDailyMinutes] = useState("30");
+	const [includeWeekends, setIncludeWeekends] = useState(false);
+	const [horizonDays, setHorizonDays] = useState("30");
+	const [horizonCustom, setHorizonCustom] = useState("");
 	const [showForm, setShowForm] = useState(false);
 
 	if (todaySessions.length === 0 && upcomingExams.length === 0 && !showForm) {
@@ -67,7 +71,7 @@ export function StudyPlanOverview() {
 					<CardContent className="flex flex-col items-center gap-4 py-8 text-center">
 						<HugeiconsIcon
 							icon={CrownIcon}
-							className="size-10 text-amber-400"
+							className="size-10 text-amber-400 dark:text-amber-300"
 						/>
 						<div>
 							<p className="font-semibold text-lg">Premium Feature</p>
@@ -97,7 +101,12 @@ export function StudyPlanOverview() {
 				<CardContent className="flex flex-col gap-4">
 					<p className="text-muted-foreground text-sm">
 						Your plan will focus on your weakest topics based on quiz
-						performance, scheduled across weekdays for the next 30 days.
+						performance, scheduled
+						{includeWeekends ? " across all days" : " across weekdays"}
+						{horizonDays === "custom"
+							? ` for ${horizonCustom || "…"} days`
+							: ` for ${horizonDays} days`}
+						.
 					</p>
 					<div className="grid grid-cols-2 gap-4">
 						<div className="flex flex-col gap-1.5">
@@ -127,6 +136,55 @@ export function StudyPlanOverview() {
 							/>
 						</div>
 					</div>
+					<Label
+						htmlFor="include-weekends"
+						className="flex cursor-pointer items-center gap-2 text-xs"
+					>
+						<Checkbox
+							id="include-weekends"
+							checked={includeWeekends}
+							onCheckedChange={(checked) =>
+								setIncludeWeekends(checked === true)
+							}
+						/>
+						Include weekends
+					</Label>
+					<div className="flex flex-col gap-1.5">
+						<span className="text-muted-foreground text-xs">Plan horizon</span>
+						<div className="flex flex-wrap gap-1.5">
+							{["7", "14", "30"].map((days) => (
+								<Button
+									key={days}
+									size="sm"
+									variant={horizonDays === days ? "default" : "outline"}
+									onClick={() => {
+										setHorizonDays(days);
+										setHorizonCustom("");
+									}}
+								>
+									{days} days
+								</Button>
+							))}
+							<Button
+								size="sm"
+								variant={horizonDays === "custom" ? "default" : "outline"}
+								onClick={() => setHorizonDays("custom")}
+							>
+								Custom
+							</Button>
+						</div>
+						{horizonDays === "custom" && (
+							<Input
+								type="number"
+								min="7"
+								max="90"
+								placeholder="Days"
+								value={horizonCustom}
+								className="mt-1 h-8 w-24"
+								onChange={(e) => setHorizonCustom(e.target.value)}
+							/>
+						)}
+					</div>
 					<div className="flex items-center justify-end gap-2">
 						<Button
 							variant="ghost"
@@ -140,9 +198,15 @@ export function StudyPlanOverview() {
 							size="sm"
 							disabled={isGenerating}
 							onClick={async () => {
+								const resolvedHorizon =
+									horizonDays === "custom"
+										? Number.parseInt(horizonCustom, 10) || 30
+										: Number.parseInt(horizonDays, 10);
 								await generatePlan({
 									targetAps: Number.parseInt(targetAps, 10) || 25,
 									dailyStudyMinutes: Number.parseInt(dailyMinutes, 10) || 30,
+									includeWeekends,
+									horizonDays: resolvedHorizon,
 								});
 								setShowForm(false);
 							}}

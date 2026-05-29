@@ -48,7 +48,7 @@ export function StarRating({
 							className={cn(
 								"transition-colors",
 								active
-									? "fill-amber-400 text-amber-400"
+									? "fill-amber-400 text-amber-400 dark:fill-amber-300 dark:text-amber-300"
 									: "text-muted-foreground/30",
 							)}
 						/>

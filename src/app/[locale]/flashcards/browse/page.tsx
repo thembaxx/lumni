@@ -216,12 +216,12 @@ export default function FlashcardBrowsePage() {
 													{t("flashcards.interval")}: {card.interval}d
 												</span>
 												{card.nextReview > now ? (
-													<span className="rounded bg-green-500/10 px-1.5 py-0.5 text-[10px] text-green-600">
+													<span className="rounded bg-green-500/10 px-1.5 py-0.5 text-[10px] text-green-600 dark:bg-green-400/10 dark:text-green-300">
 														{t("flashcards.dueLabel")}{" "}
 														{new Date(card.nextReview).toLocaleDateString()}
 													</span>
 												) : (
-													<span className="rounded bg-amber-500/10 px-1.5 py-0.5 text-[10px] text-amber-600">
+													<span className="rounded bg-amber-500/10 px-1.5 py-0.5 text-[10px] text-amber-600 dark:bg-amber-400/10 dark:text-amber-300">
 														{t("flashcards.overdue")}
 													</span>
 												)}

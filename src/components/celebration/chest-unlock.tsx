@@ -62,7 +62,7 @@ export function ChestUnlock({
 									{description}
 								</p>
 							</div>
-							<div className="flex items-center gap-2 text-amber-400">
+							<div className="flex items-center gap-2 text-amber-400 dark:text-amber-300">
 								<span className="font-bold text-2xl">+{xpReward}</span>
 								<span className="text-sm">XP</span>
 							</div>

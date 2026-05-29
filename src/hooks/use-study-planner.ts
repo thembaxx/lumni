@@ -25,6 +25,8 @@ import {
 export interface GeneratePlanSettings {
 	targetAps?: number;
 	dailyStudyMinutes?: number;
+	includeWeekends?: boolean;
+	horizonDays?: number;
 }
 
 export interface UseStudyPlannerReturn {
@@ -161,14 +163,18 @@ export function useStudyPlanner(): UseStudyPlannerReturn {
 				);
 
 				const today = new Date();
+				const horizonDays = settings?.horizonDays ?? 30;
 				const endDate = new Date(today);
-				endDate.setDate(endDate.getDate() + 30);
+				endDate.setDate(endDate.getDate() + horizonDays);
+				const studyDays = settings?.includeWeekends
+					? [0, 1, 2, 3, 4, 5, 6]
+					: [1, 2, 3, 4, 5];
 
 				const planSettings = {
 					targetAps: settings?.targetAps ?? 25,
 					dailyStudyMinutes: settings?.dailyStudyMinutes ?? 30,
 					preferredStudyTime: "morning" as const,
-					studyDays: [1, 2, 3, 4, 5],
+					studyDays,
 					startDate: today.toISOString().split("T")[0],
 					endDate: endDate.toISOString().split("T")[0],
 				};

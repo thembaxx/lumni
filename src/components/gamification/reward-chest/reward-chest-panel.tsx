@@ -8,10 +8,10 @@ import { cn } from "@/lib/shared";
 import { rarityBorder } from "@/lib/utils/gamification";
 
 const rarityColors: Record<string, string> = {
-	common: "text-zinc-400",
-	rare: "text-blue-400",
-	epic: "text-purple-400",
-	legendary: "text-amber-400",
+	common: "text-zinc-400 dark:text-zinc-300",
+	rare: "text-blue-400 dark:text-blue-300",
+	epic: "text-purple-400 dark:text-purple-300",
+	legendary: "text-amber-400 dark:text-amber-300",
 };
 
 export function RewardChestPanel() {

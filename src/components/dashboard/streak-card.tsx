@@ -29,7 +29,7 @@ export function StreakCard() {
 							className={cn(
 								"flex size-12 items-center justify-center rounded-2xl transition-colors",
 								currentStreak > 0
-									? "bg-orange-500/15 text-orange-500"
+									? "bg-orange-500/15 text-orange-500 dark:bg-orange-400/15 dark:text-orange-300"
 									: "bg-muted text-muted-foreground",
 							)}
 						>

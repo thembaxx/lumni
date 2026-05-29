@@ -90,15 +90,29 @@ export function ProfileTabRefactored() {
 						id: "progress",
 						label: "Export Progress (CSV)",
 						format: "csv",
-						onExport: () => {
-							const csv = "Subject,Score,Date\nMathematics,85,2026-05-23\n";
-							const blob = new Blob([csv], { type: "text/csv" });
-							const url = URL.createObjectURL(blob);
-							const a = document.createElement("a");
-							a.href = url;
-							a.download = `lumni-progress-${exportDate}.csv`;
-							a.click();
-							URL.revokeObjectURL(url);
+						onExport: async () => {
+							try {
+								const { exportService } = await import("@/lib/export");
+								const { offlineDB } = await import("@/lib/db/schema");
+								const [quizAttempts, examSessions] = await Promise.all([
+									offlineDB.quizAttempts
+										.orderBy("completedAt")
+										.reverse()
+										.limit(100)
+										.toArray(),
+									offlineDB.examSessions.toArray(),
+								]);
+								const csv = exportService.toCSV(quizAttempts, examSessions);
+								const blob = new Blob([csv], { type: "text/csv" });
+								const url = URL.createObjectURL(blob);
+								const a = document.createElement("a");
+								a.href = url;
+								a.download = `lumni-progress-${exportDate}.csv`;
+								a.click();
+								URL.revokeObjectURL(url);
+							} catch (e) {
+								console.error("Export failed:", e);
+							}
 						},
 					},
 					{

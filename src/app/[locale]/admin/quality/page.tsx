@@ -3,7 +3,6 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback } from "react";
 import { QuestionRatingsDashboard } from "@/components/admin/question-ratings-dashboard";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/shared";
 import {
@@ -16,20 +15,12 @@ import {
 	getQualityStats,
 	loadQualityRecords,
 } from "@/lib/utils/engine-quality";
+import { QualityByTypeCard } from "./quality-sections/quality-by-type-card";
+import { RecentEventsCard } from "./quality-sections/recent-events-card";
+import { RecentQualityRecordsCard } from "./quality-sections/recent-quality-records-card";
+import { RequestsBreakdownCard } from "./quality-sections/requests-breakdown-card";
+import { StatsCardsGrid } from "./quality-sections/stats-cards-grid";
 
-function Timestamp({ time }: { time: string | number }) {
-	return (
-		<span className={cn("text-muted-foreground")}>
-			{new Date(time).toLocaleTimeString()}
-		</span>
-	);
-}
-
-// TODO(react-doctor): Extract StatsCardsGrid into separate component (~180 lines)
-// TODO(react-doctor): Extract RequestsBreakdownCard into separate component (~40 lines)
-// TODO(react-doctor): Extract QualityByTypeCard into separate component (~60 lines)
-// TODO(react-doctor): Extract RecentEventsCard into separate component (~65 lines)
-// TODO(react-doctor): Extract RecentQualityRecordsCard into separate component (~65 lines)
 export default function AdminQualityPage() {
 	const { data: quality = getQualityStats() } = useQuery({
 		queryKey: ["engine-quality", "stats"],
@@ -86,419 +77,26 @@ export default function AdminQualityPage() {
 				</Button>
 			</div>
 
-			<div className={cn("grid", "grid-cols-2", "gap-4", "lg:grid-cols-4")}>
-				<div
-					className={cn(
-						"overflow-hidden",
-						"rounded-card-lg",
-						"border",
-						"border-border/80",
-						"bg-card",
-						"shadow-level-2",
-						"transition-colors",
-					)}
-				>
-					<header
-						className={cn(
-							"rounded-t-card-lg",
-							"border-t",
-							"border-border/80",
-							"p-4",
-							"pb-2",
-						)}
-					>
-						<h2
-							className={cn(
-								"font-heading",
-								"font-medium",
-								"text-sm",
-								"text-muted-foreground",
-							)}
-						>
-							Total Requests
-						</h2>
-					</header>
-					<div className={cn("group-data-[size=sm]/card:px-3", "p-4", "pt-0")}>
-						<p className={cn("font-extrabold", "text-3xl")}>
-							{analytics.totalRequests}
-						</p>
-					</div>
-				</div>
-				<div
-					className={cn(
-						"overflow-hidden",
-						"rounded-card-lg",
-						"border",
-						"border-border/80",
-						"bg-card",
-						"shadow-level-2",
-						"transition-colors",
-					)}
-				>
-					<header
-						className={cn(
-							"rounded-t-card-lg",
-							"border-t",
-							"border-border/80",
-							"p-4",
-							"pb-2",
-						)}
-					>
-						<h2
-							className={cn(
-								"font-heading",
-								"font-medium",
-								"text-sm",
-								"text-muted-foreground",
-							)}
-						>
-							Success Rate
-						</h2>
-					</header>
-					<div className={cn("group-data-[size=sm]/card:px-3", "p-4", "pt-0")}>
-						<p
-							className={cn(
-								"text-3xl",
-								"font-extrabold",
-								analytics.successRate >= 80
-									? "text-success"
-									: analytics.successRate >= 50
-										? "text-warning"
-										: "text-destructive",
-							)}
-						>
-							{analytics.successRate}%
-						</p>
-					</div>
-				</div>
-				<div
-					className={cn(
-						"overflow-hidden",
-						"rounded-card-lg",
-						"border",
-						"border-border/80",
-						"bg-card",
-						"shadow-level-2",
-						"transition-colors",
-					)}
-				>
-					<header
-						className={cn(
-							"rounded-t-card-lg",
-							"border-t",
-							"border-border/80",
-							"p-4",
-							"pb-2",
-						)}
-					>
-						<h2
-							className={cn(
-								"font-heading",
-								"font-medium",
-								"text-sm",
-								"text-muted-foreground",
-							)}
-						>
-							Avg Validation Score
-						</h2>
-					</header>
-					<div className={cn("group-data-[size=sm]/card:px-3", "p-4", "pt-0")}>
-						<p
-							className={cn(
-								"text-3xl",
-								"font-extrabold",
-								quality.avgScore >= 80
-									? "text-success"
-									: quality.avgScore >= 50
-										? "text-warning"
-										: "text-destructive",
-							)}
-						>
-							{quality.avgScore}
-						</p>
-					</div>
-				</div>
-				<div
-					className={cn(
-						"overflow-hidden",
-						"rounded-card-lg",
-						"border",
-						"border-border/80",
-						"bg-card",
-						"shadow-level-2",
-						"transition-colors",
-					)}
-				>
-					<header
-						className={cn(
-							"rounded-t-card-lg",
-							"border-t",
-							"border-border/80",
-							"p-4",
-							"pb-2",
-						)}
-					>
-						<h2
-							className={cn(
-								"font-heading",
-								"font-medium",
-								"text-sm",
-								"text-muted-foreground",
-							)}
-						>
-							Question Pass Rate
-						</h2>
-					</header>
-					<div className={cn("group-data-[size=sm]/card:px-3", "p-4", "pt-0")}>
-						<p
-							className={cn(
-								"text-3xl",
-								"font-extrabold",
-								quality.passRate >= 80
-									? "text-success"
-									: quality.passRate >= 50
-										? "text-warning"
-										: "text-destructive",
-							)}
-						>
-							{quality.passRate}%
-						</p>
-					</div>
-				</div>
-			</div>
+			<StatsCardsGrid
+				totalRequests={analytics.totalRequests}
+				successRate={analytics.successRate}
+				avgScore={quality.avgScore}
+				passRate={quality.passRate}
+			/>
 
 			<div className={cn("grid", "grid-cols-2", "gap-6")}>
-				<div
-					className={cn(
-						"overflow-hidden",
-						"rounded-card-lg",
-						"border",
-						"border-border/80",
-						"bg-card",
-						"shadow-level-2",
-						"transition-colors",
-					)}
-				>
-					<header>
-						<h2 className={cn("font-heading", "text-lg", "font-medium")}>
-							Requests Breakdown
-						</h2>
-					</header>
-					<div
-						className={cn(
-							"flex",
-							"flex-col",
-							"group-data-[size=sm]/card:px-3",
-							"px-4",
-							"gap-3",
-						)}
-					>
-						<div className={cn("flex", "justify-between", "text-sm")}>
-							<span>Generate</span>
-							<span className={cn("font-mono")}>{analytics.generateCount}</span>
-						</div>
-						<div className={cn("flex", "justify-between", "text-sm")}>
-							<span>Grade</span>
-							<span className={cn("font-mono")}>{analytics.gradeCount}</span>
-						</div>
-						<div className={cn("flex", "justify-between", "text-sm")}>
-							<span>Hint</span>
-							<span className={cn("font-mono")}>{analytics.hintCount}</span>
-						</div>
-					</div>
-				</div>
+				<RequestsBreakdownCard
+					generateCount={analytics.generateCount}
+					gradeCount={analytics.gradeCount}
+					hintCount={analytics.hintCount}
+				/>
 
-				<div
-					className={cn(
-						"overflow-hidden",
-						"rounded-card-lg",
-						"border",
-						"border-border/80",
-						"bg-card",
-						"shadow-level-2",
-						"transition-colors",
-					)}
-				>
-					<header>
-						<h2 className={cn("font-heading", "text-lg", "font-medium")}>
-							Quality by Type
-						</h2>
-					</header>
-					<div
-						className={cn(
-							"flex",
-							"flex-col",
-							"group-data-[size=sm]/card:px-3",
-							"px-4",
-							"gap-2",
-						)}
-					>
-						{Object.entries(quality.byType).length === 0 && (
-							<p className={cn("text-sm", "text-muted-foreground")}>
-								No quality data yet
-							</p>
-						)}
-						{(
-							Object.entries(quality.byType) as [
-								string,
-								{ count: number; avgScore: number },
-							][]
-						).map(([type, stats]) => (
-							<div
-								key={type}
-								className={cn(
-									"flex",
-									"items-center",
-									"justify-between",
-									"text-sm",
-								)}
-							>
-								<Badge variant="outline" className={cn("font-mono", "text-xs")}>
-									{type}
-								</Badge>
-								<div className={cn("flex", "gap-3")}>
-									<span className={cn("text-muted-foreground")}>
-										{stats.count}x
-									</span>
-									<span
-										className={`font-mono ${stats.avgScore >= 80 ? "text-success" : "text-warning"}`}
-									>
-										{stats.avgScore}
-									</span>
-								</div>
-							</div>
-						))}
-					</div>
-				</div>
+				<QualityByTypeCard byType={quality.byType} />
 			</div>
 
-			<div
-				className={cn(
-					"overflow-hidden",
-					"rounded-card-lg",
-					"border",
-					"border-border/80",
-					"bg-card",
-					"shadow-level-2",
-					"transition-colors",
-				)}
-			>
-				<header>
-					<h2 className={cn("font-heading", "text-lg", "font-medium")}>
-						Recent Events
-					</h2>
-				</header>
-				<div className={cn("px-4", "group-data-[size=sm]/card:px-3")}>
-					{events.length === 0 ? (
-						<p className={cn("text-sm", "text-muted-foreground")}>
-							No events recorded yet
-						</p>
-					) : (
-						<div
-							className={cn(
-								"flex",
-								"flex-col",
-								"max-h-60",
-								"overflow-y-auto",
-								"gap-1",
-							)}
-						>
-							{events.map((e) => (
-								<div
-									key={`${e.event}-${e.timestamp}`}
-									className={cn(
-										"flex",
-										"items-center",
-										"gap-2",
-										"text-xs",
-										"font-mono",
-									)}
-								>
-									<Badge
-										variant={e.success ? "secondary" : "destructive"}
-										className={cn("px-1", "py-0", "text-[10px]")}
-									>
-										{e.event}
-									</Badge>
-									<span className={cn("text-muted-foreground")}>
-										{e.subject || "-"}
-									</span>
-									<span className={cn("text-muted-foreground")}>
-										{e.questionType || "-"}
-									</span>
-									<span className={cn("ml-auto", "text-muted-foreground")}>
-										<Timestamp time={e.timestamp} />
-									</span>
-								</div>
-							))}
-						</div>
-					)}
-				</div>
-			</div>
+			<RecentEventsCard events={events} />
 
-			<div
-				className={cn(
-					"overflow-hidden",
-					"rounded-card-lg",
-					"border",
-					"border-border/80",
-					"bg-card",
-					"shadow-level-2",
-					"transition-colors",
-				)}
-			>
-				<header>
-					<h2 className={cn("font-heading", "text-lg", "font-medium")}>
-						Recent Quality Records
-					</h2>
-				</header>
-				<div className={cn("px-4", "group-data-[size=sm]/card:px-3")}>
-					{recentQuality.length === 0 ? (
-						<p className={cn("text-sm", "text-muted-foreground")}>
-							No quality data yet
-						</p>
-					) : (
-						<div
-							className={cn(
-								"flex",
-								"flex-col",
-								"max-h-60",
-								"overflow-y-auto",
-								"gap-1",
-							)}
-						>
-							{recentQuality.map((r) => (
-								<div
-									key={`${r.questionType}-${r.timestamp}`}
-									className={cn(
-										"flex",
-										"items-center",
-										"gap-2",
-										"text-xs",
-										"font-mono",
-									)}
-								>
-									<Badge
-										variant={r.isValid ? "secondary" : "destructive"}
-										className={cn("px-1", "py-0", "text-[10px]")}
-									>
-										{r.validationScore}
-									</Badge>
-									<span className={cn("text-muted-foreground")}>
-										{r.questionType}
-									</span>
-									<span className={cn("text-muted-foreground")}>
-										{r.subject}
-									</span>
-									<span className={cn("ml-auto", "text-muted-foreground")}>
-										<Timestamp time={r.timestamp} />
-									</span>
-								</div>
-							))}
-						</div>
-					)}
-				</div>
-			</div>
+			<RecentQualityRecordsCard records={recentQuality} />
 
 			<div
 				className={cn(
