@@ -1,4 +1,4 @@
-import { createAIHandler } from "@/lib/api/create-ai-handler";
+import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { chatImageService } from "@/lib/services/chat-image";
 
 interface ChatImageBody {
@@ -6,9 +6,11 @@ interface ChatImageBody {
 	imageName?: string;
 }
 
-export const POST = createAIHandler<ChatImageBody>({
-	budgetType: "generate",
+export const POST = createRouteHandler<ChatImageBody>({
+	auth: "none",
+	budget: "generate",
 	errorLabel: "ChatImage",
+	useRateLimit: true,
 	parseBody: async (req) => {
 		const body: ChatImageBody = await req.json();
 		return body;
@@ -17,5 +19,5 @@ export const POST = createAIHandler<ChatImageBody>({
 		if (!body.imageUrl) return "No image provided";
 		return null;
 	},
-	service: chatImageService,
+	execute: async ({ body }) => chatImageService.execute(body),
 });

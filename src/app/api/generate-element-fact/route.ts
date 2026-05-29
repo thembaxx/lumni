@@ -1,4 +1,4 @@
-import { createAIHandler } from "@/lib/api/create-ai-handler";
+import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { elementFactService } from "@/lib/services/element-fact";
 
 export const dynamic = "force-dynamic";
@@ -11,9 +11,11 @@ interface GenerateFactBody {
 	};
 }
 
-export const POST = createAIHandler<GenerateFactBody>({
-	budgetType: "generate",
+export const POST = createRouteHandler<GenerateFactBody>({
+	auth: "none",
+	budget: "generate",
 	errorLabel: "ElementFact",
+	useRateLimit: true,
 	parseBody: async (req) => {
 		const body: GenerateFactBody = await req.json();
 		return body;
@@ -24,5 +26,5 @@ export const POST = createAIHandler<GenerateFactBody>({
 		}
 		return null;
 	},
-	service: elementFactService,
+	execute: async ({ body }) => elementFactService.execute(body),
 });

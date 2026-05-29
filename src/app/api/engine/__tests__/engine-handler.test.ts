@@ -14,9 +14,19 @@ mock.module("@/lib/shared/with-rate-limit", () => ({
 }));
 
 const { NextRequest, NextResponse } = await import("next/server");
-const { createEngineHandler } = await import("@/lib/api/engine-handler");
+const { createRouteHandler } = await import("@/lib/api/create-route-handler");
 
-describe("createEngineHandler", () => {
+function createHandler(config: Record<string, unknown>) {
+	return createRouteHandler({
+		auth: "none",
+		errorLabel: "Test",
+		parseBody: async () => ({}),
+		validate: () => null,
+		...config,
+	});
+}
+
+describe("createRouteHandler with budget config", () => {
 	beforeEach(() => {
 		mockCheckBudget.mockReset();
 		mockTrackUsage.mockReset();
@@ -31,9 +41,8 @@ describe("createEngineHandler", () => {
 		const validate = mock(() => null);
 		const execute = mock(async () => ({ questions: [], count: 2 }));
 
-		const handler = createEngineHandler({
-			budgetType: "generate",
-			errorLabel: "Test",
+		const handler = createHandler({
+			budget: "generate",
 			parseBody,
 			validate,
 			execute,
@@ -51,8 +60,10 @@ describe("createEngineHandler", () => {
 		expect(validate).toHaveBeenCalledTimes(1);
 		expect(execute).toHaveBeenCalledTimes(1);
 		expect(execute).toHaveBeenCalledWith(
-			{ subject: "math", count: 2 },
-			{ userId: "test-user" },
+			expect.objectContaining({
+				body: { subject: "math", count: 2 },
+				userId: "test-user",
+			}),
 		);
 		expect(body).toEqual({ questions: [], count: 2 });
 		expect(mockTrackUsage).toHaveBeenCalledWith("generate", "test-user");
@@ -69,11 +80,8 @@ describe("createEngineHandler", () => {
 		});
 
 		const execute = mock(async () => ({ ok: true }));
-		const handler = createEngineHandler({
-			budgetType: "generate",
-			errorLabel: "Test",
-			parseBody: async () => ({}),
-			validate: () => null,
+		const handler = createHandler({
+			budget: "generate",
 			execute,
 		});
 
@@ -94,11 +102,11 @@ describe("createEngineHandler", () => {
 		mockCheckBudget.mockResolvedValue({ allowed: true, userId: "test-user" });
 
 		const execute = mock(async () => ({ ok: true }));
-		const handler = createEngineHandler({
-			budgetType: "generate",
-			errorLabel: "Test",
+		const handler = createHandler({
+			budget: "generate",
 			parseBody: async () => ({ subject: "" }),
-			validate: (body) => (!body.subject ? "Subject is required" : null),
+			validate: (body: { subject?: string }) =>
+				!body.subject ? "Subject is required" : null,
 			execute,
 		});
 
@@ -120,11 +128,8 @@ describe("createEngineHandler", () => {
 		const execute = mock(async () => {
 			throw new Error("Something went wrong");
 		});
-		const handler = createEngineHandler({
-			budgetType: "generate",
-			errorLabel: "Test",
-			parseBody: async () => ({}),
-			validate: () => null,
+		const handler = createHandler({
+			budget: "generate",
 			execute,
 		});
 
@@ -145,11 +150,9 @@ describe("createEngineHandler", () => {
 		const execute = mock(async () => {
 			throw "string error";
 		});
-		const handler = createEngineHandler({
-			budgetType: "generate",
+		const handler = createHandler({
+			budget: "generate",
 			errorLabel: "Generate",
-			parseBody: async () => ({}),
-			validate: () => null,
 			execute,
 		});
 
@@ -165,12 +168,9 @@ describe("createEngineHandler", () => {
 	});
 
 	test("useRateLimit false skips rate limit wrapping", async () => {
-		const _handler = createEngineHandler({
-			budgetType: "generate",
+		const _handler = createHandler({
+			budget: "generate",
 			useRateLimit: false,
-			errorLabel: "Test",
-			parseBody: async () => ({}),
-			validate: () => null,
 			execute: async () => ({ ok: true }),
 		});
 
@@ -180,11 +180,9 @@ describe("createEngineHandler", () => {
 	test("trackUsage called after successful execution", async () => {
 		mockCheckBudget.mockResolvedValue({ allowed: true, userId: "test-user" });
 
-		const handler = createEngineHandler({
-			budgetType: "hint",
-			errorLabel: "Test",
+		const handler = createHandler({
+			budget: "hint",
 			parseBody: async () => ({ question: { id: "q1" } }),
-			validate: () => null,
 			execute: async () => ({ hint: "Think harder" }),
 		});
 

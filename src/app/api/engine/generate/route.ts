@@ -1,12 +1,14 @@
-import { createEngineHandler } from "@/lib/api/engine-handler";
+import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { LearningOrchestrator } from "@/lib/orchestrator";
 import type { GenerationParams } from "@/lib/question-engine/types";
 
 export const dynamic = "force-dynamic";
 
-export const POST = createEngineHandler({
-	budgetType: "generate",
+export const POST = createRouteHandler({
+	auth: "none",
+	budget: "generate",
 	errorLabel: "Generate",
+	useRateLimit: true,
 	parseBody: async (req) => {
 		const body: GenerationParams = await req.json();
 		return body;
@@ -16,7 +18,7 @@ export const POST = createEngineHandler({
 		if (!body.count || body.count < 1) return "Count must be at least 1";
 		return null;
 	},
-	execute: async (body) => {
+	execute: async ({ body }) => {
 		const orchestrator = await LearningOrchestrator.initialize();
 		const result = await orchestrator.generateQuestionSet(body);
 		const requested = body.count;

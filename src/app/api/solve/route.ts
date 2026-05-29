@@ -1,4 +1,4 @@
-import { createAIHandler } from "@/lib/api/create-ai-handler";
+import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { aiSolver } from "@/lib/services/ai-solver";
 
 export const dynamic = "force-dynamic";
@@ -12,9 +12,11 @@ interface SolveBody {
 	followUp?: boolean;
 }
 
-export const POST = createAIHandler<SolveBody>({
-	budgetType: "generate",
+export const POST = createRouteHandler<SolveBody>({
+	auth: "none",
+	budget: "generate",
 	errorLabel: "Solve",
+	useRateLimit: true,
 	parseBody: async (req) => {
 		const body: SolveBody = await req.json();
 		return body;
@@ -25,5 +27,5 @@ export const POST = createAIHandler<SolveBody>({
 		}
 		return null;
 	},
-	service: aiSolver,
+	execute: async ({ body }) => aiSolver.execute(body),
 });

@@ -1,4 +1,4 @@
-import { createAIHandler } from "@/lib/api/create-ai-handler";
+import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { curatedProblemsService } from "@/lib/services/curated-problems";
 
 export const dynamic = "force-dynamic";
@@ -9,9 +9,11 @@ interface CuratedBody {
 	count?: number;
 }
 
-export const POST = createAIHandler<CuratedBody>({
-	budgetType: "generate",
+export const POST = createRouteHandler<CuratedBody>({
+	auth: "none",
+	budget: "generate",
 	errorLabel: "CuratedProblems",
+	useRateLimit: true,
 	parseBody: async (req) => {
 		const body: CuratedBody = await req.json();
 		return body;
@@ -20,5 +22,5 @@ export const POST = createAIHandler<CuratedBody>({
 		if (!body.subject) return "Subject is required";
 		return null;
 	},
-	service: curatedProblemsService,
+	execute: async ({ body }) => curatedProblemsService.execute(body),
 });

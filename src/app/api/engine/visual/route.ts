@@ -1,11 +1,13 @@
-import { createEngineHandler } from "@/lib/api/engine-handler";
+import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { VisualEngine, visualEngine } from "@/lib/visual-engine";
 
 export const dynamic = "force-dynamic";
 
-export const POST = createEngineHandler({
-	budgetType: "visual",
+export const POST = createRouteHandler({
+	auth: "none",
+	budget: "visual",
 	errorLabel: "Visual",
+	useRateLimit: true,
 	parseBody: async (req) => {
 		const body: {
 			questionId: string;
@@ -20,7 +22,7 @@ export const POST = createEngineHandler({
 			return "questionId, questionText, and subject are required";
 		return null;
 	},
-	execute: async (body) => {
+	execute: async ({ body }) => {
 		VisualEngine.initialize();
 		const visual = await visualEngine.resolve({
 			questionId: body.questionId,

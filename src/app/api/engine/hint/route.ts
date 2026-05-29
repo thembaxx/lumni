@@ -1,12 +1,14 @@
-import { createEngineHandler } from "@/lib/api/engine-handler";
+import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { QuestionEngine } from "@/lib/question-engine/question-engine";
 import type { Question } from "@/lib/question-engine/types";
 
 export const dynamic = "force-dynamic";
 
-export const POST = createEngineHandler({
-	budgetType: "hint",
+export const POST = createRouteHandler({
+	auth: "none",
+	budget: "hint",
 	errorLabel: "Hint",
+	useRateLimit: true,
 	parseBody: async (req) => {
 		const body: { question: Question } = await req.json();
 		return body;
@@ -15,7 +17,7 @@ export const POST = createEngineHandler({
 		if (!body.question?.id) return "Question is required";
 		return null;
 	},
-	execute: async (body) => {
+	execute: async ({ body }) => {
 		const engine = await QuestionEngine.initialize();
 		const hint = await engine.generateHint({
 			questionId: body.question.id,
