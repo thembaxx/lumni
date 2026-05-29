@@ -23,9 +23,8 @@ export function MixedInput({
 }: MixedInputProps) {
 	return (
 		<div className="flex flex-col gap-4">
-			{content?.map((block, idx) => (
-				// biome-ignore lint/suspicious/noArrayIndexKey: ContentBlock has no stable id
-				<ContentBlockRenderer key={idx} block={block} />
+			{content?.map((block) => (
+				<ContentBlockRenderer key={crypto.randomUUID()} block={block} />
 			))}
 			{subParts?.map((part) => (
 				<div key={part.id} className="border-muted border-l-2 pl-4">

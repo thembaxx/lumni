@@ -63,7 +63,7 @@ export function CommentCard({
 			)}
 		>
 			<div className="flex items-start gap-2 py-2">
-				<div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[--system-accent]/10 font-semibold text-[--system-accent] text-xs">
+				<div className="flex size-7 shrink-0 items-center justify-center rounded-full bg-[--system-accent]/10 font-semibold text-[--system-accent] text-xs">
 					{(comment.userName || "?")[0].toUpperCase()}
 				</div>
 				<div className="min-w-0 flex-1">

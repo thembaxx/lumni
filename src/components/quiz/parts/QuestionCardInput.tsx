@@ -2,7 +2,6 @@
 
 import { m } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { useEffect } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { DataResponseInput } from "@/components/quiz/parts/data-response-input";
 import { MixedPartsInput } from "@/components/quiz/parts/mixed-parts-input";
@@ -17,7 +16,6 @@ import {
 	ProgrammingInput,
 	ShortAnswerInput,
 } from "@/components/ui/inputs";
-import { useSnapAnswer } from "@/hooks/use-snap-answer";
 import type {
 	MediaContent,
 	Option,
@@ -68,20 +66,6 @@ export function QuestionCardInput({
 	handleGrade,
 }: QuestionCardInputProps) {
 	const t = useTranslations();
-	const snapAnswer = useSnapAnswer();
-
-	useEffect(() => {
-		if (!snapAnswer || state.isSubmitted) return;
-		const textTypes = new Set([
-			"short-answer",
-			"long-answer",
-			"essay",
-			"calculation",
-		]);
-		if (textTypes.has(question.type)) {
-			handleGrade({ type: "text", value: snapAnswer });
-		}
-	}, [snapAnswer, question.type, handleGrade, state.isSubmitted]);
 
 	if (state.isSubmitted) {
 		return null;

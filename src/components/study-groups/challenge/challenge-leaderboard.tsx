@@ -8,9 +8,13 @@ interface Props {
 }
 
 const MEDAL_ICONS = ["🥇", "🥈", "🥉"];
+const DEFAULT_USER_NAMES = {};
 
-export function ChallengeLeaderboard({ entries, userNames = {} }: Props) {
-	const sorted = [...entries].sort((a, b) => b.combinedScore - a.combinedScore);
+export function ChallengeLeaderboard({
+	entries,
+	userNames = DEFAULT_USER_NAMES,
+}: Props) {
+	const sorted = entries.toSorted((a, b) => b.combinedScore - a.combinedScore);
 
 	if (sorted.length === 0) {
 		return (

@@ -6,6 +6,7 @@ import {
 	Tick01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import Image from "next/image";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -96,10 +97,12 @@ export function ReferralSheet() {
 
 							{/* QR Code */}
 							<div className="flex justify-center">
-								{/* biome-ignore lint/performance/noImgElement: external QR code API */}
-								<img
+								<Image
 									src={generateQRDataUrl(info.link)}
 									alt="QR Code"
+									width={128}
+									height={128}
+									unoptimized
 									className="size-32 rounded-lg border border-border/30 outline outline-black/10 -outline-offset-1 dark:outline-white/10"
 								/>
 							</div>

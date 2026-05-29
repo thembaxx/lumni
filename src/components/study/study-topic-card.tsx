@@ -3,7 +3,7 @@
 import { DiceIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
-import { useCallback, useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import { ListenToLesson } from "@/components/listen-to-lesson";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Anim } from "@/components/shared/anim";
@@ -34,28 +34,21 @@ export function StudyTopicCard({
 	initialTopic,
 }: StudyTopicCardProps) {
 	const { push } = useRouter();
-	const [topic, setTopic] = useState<TopicData | null>(null);
 	const [isPlaying, setIsPlaying] = useState(false);
-	const [isLoading, setIsLoading] = useState(true);
 	const [, setWordIndex] = useState(0);
+	const [triggerIndex, setTriggerIndex] = useState(0);
 
-	const initializeTopic = useCallback(() => {
-		const randomTopic = initialTopic || getRandomTopic();
-		setTopic(randomTopic);
-		setIsLoading(false);
-	}, [initialTopic]);
-
-	useEffect(() => {
-		initializeTopic();
-	}, [initializeTopic]);
+	const topic = useMemo(
+		() => initialTopic ?? getRandomTopic(),
+		[initialTopic, triggerIndex],
+	);
 
 	const handleRefresh = () => {
 		setIsPlaying(false);
-		setIsLoading(true);
-		initializeTopic();
+		setTriggerIndex((i) => i + 1);
 	};
 
-	if (isLoading || !topic) {
+	if (!topic) {
 		return (
 			<Card className={cn(className)}>
 				<CardContent className="flex flex-col gap-4">

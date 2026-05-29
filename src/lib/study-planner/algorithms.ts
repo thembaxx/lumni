@@ -59,6 +59,7 @@ export function generateStudyPlan(
 	const startDate = new Date(settings.startDate);
 	const endDate = new Date(settings.endDate);
 	const studyDays = settings.studyDays;
+	const studyDaySet = new Set(studyDays);
 	const dailyMinutes = settings.dailyStudyMinutes;
 
 	// Calculate days until end (exam proximity)
@@ -116,7 +117,7 @@ export function generateStudyPlan(
 	let daysSinceRest = 0;
 
 	while (cursor <= endDate) {
-		if (studyDays.includes(cursor.getDay())) {
+		if (studyDaySet.has(cursor.getDay())) {
 			if (daysSinceRest >= 6) {
 				daysSinceRest = 0;
 				cursor.setDate(cursor.getDate() + 1);

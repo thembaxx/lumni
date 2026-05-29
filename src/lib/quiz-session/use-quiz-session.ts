@@ -92,11 +92,11 @@ export function useQuizSession(
 		isActive,
 	} = quizState;
 
-	useEffect(() => {
-		if (questions.length === 0) {
-			dispatch({ type: "RESET" });
-		}
-	}, [questions]);
+	const prevQuestionsLength = useRef(questions.length);
+	if (questions.length === 0 && prevQuestionsLength.current > 0) {
+		dispatch({ type: "RESET" });
+	}
+	prevQuestionsLength.current = questions.length;
 
 	const saveRef = useRef({ ...quizState, questions });
 	useEffect(() => {

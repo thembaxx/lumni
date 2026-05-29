@@ -86,6 +86,9 @@ const initialState: MagicLinkForm = {
 	countdown: 0,
 };
 
+// TODO(react-doctor): Extract EmailInputForm into separate component (~170 lines)
+// TODO(react-doctor): Extract SuccessState into separate component (~80 lines)
+// TODO(react-doctor): Extract ResendSection into separate component (~60 lines)
 export function MagicLinkDialog({
 	open,
 	onOpenChange,
@@ -200,14 +203,18 @@ export function MagicLinkDialog({
 		return () => clearInterval(interval);
 	}, [sent, countdown]);
 
-	useEffect(() => {
-		if (!open) {
-			dispatch({ type: "RESET" });
-		}
-	}, [open]);
+	const handleOpenChange = useCallback(
+		(next: boolean) => {
+			if (!next) {
+				dispatch({ type: "RESET" });
+			}
+			onOpenChange(next);
+		},
+		[onOpenChange],
+	);
 
 	return (
-		<Dialog open={open} onOpenChange={onOpenChange}>
+		<Dialog open={open} onOpenChange={handleOpenChange}>
 			<DialogContent className="shadow-lg sm:max-w-md">
 				<DialogHeader>
 					<DialogTitle className="flex items-center gap-2">

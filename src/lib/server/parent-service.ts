@@ -36,8 +36,7 @@ export interface ActivityItem {
 function getInitials(name: string): string {
 	return name
 		.split(" ")
-		.map((n) => n[0])
-		.filter(Boolean)
+		.flatMap((n) => (n ? [n[0]] : []))
 		.slice(0, 2)
 		.join("")
 		.toUpperCase();
@@ -101,8 +100,8 @@ export async function getChildSubjectProgress(
 	canViewProgress: boolean,
 	canViewScores: boolean,
 ): Promise<ChildSubjectProgress[]> {
-	await auth();
 	if (!canViewProgress) return [];
+	await auth();
 
 	const [competencies, subjects, topics, sessions, _progressDocs] =
 		await Promise.all([

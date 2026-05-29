@@ -22,6 +22,10 @@ interface VoiceRecorderProps {
 	className?: string;
 }
 
+// TODO(react-doctor): Extract WaveformDisplay into separate component (~25 lines)
+// TODO(react-doctor): Extract StatusDisplay into separate component (~30 lines)
+// TODO(react-doctor): Extract ControlButtons into separate component (~100 lines)
+// TODO(react-doctor): Extract SendButton into separate component (~65 lines)
 export function VoiceRecorder({
 	onRecordingComplete,
 	className,

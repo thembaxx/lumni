@@ -1,6 +1,12 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+	useCallback,
+	useEffect,
+	useEffectEvent,
+	useRef,
+	useState,
+} from "react";
 
 interface PullToRefreshProps {
 	children: React.ReactNode;
@@ -30,6 +36,9 @@ export function PullToRefresh({
 		el.style.transform = y > 0 ? `translateY(${y}px)` : "";
 	}, []);
 
+	const onRefreshEvent = useEffectEvent(onRefresh);
+	const animateYEvent = useEffectEvent(animateY);
+
 	useEffect(() => {
 		if (disabled) return;
 		const el = ref.current;
@@ -52,7 +61,7 @@ export function PullToRefresh({
 				el.style.transform = `translateY(${damped}px)`;
 			} else if (g.pulling && diff <= 4) {
 				g.pulling = false;
-				animateY(0);
+				animateYEvent(0);
 			}
 		};
 
@@ -69,13 +78,13 @@ export function PullToRefresh({
 				el.style.transition = "transform 0.3s cubic-bezier(0.32, 0.72, 0, 1)";
 				el.style.transform = "translateY(56px)";
 				try {
-					await onRefresh();
+					await onRefreshEvent();
 				} finally {
-					animateY(0, true);
+					animateYEvent(0, true);
 					setRefreshing(false);
 				}
 			} else {
-				animateY(0);
+				animateYEvent(0);
 			}
 		};
 
@@ -87,7 +96,7 @@ export function PullToRefresh({
 			el.removeEventListener("touchmove", onTouchMove);
 			el.removeEventListener("touchend", onTouchEnd);
 		};
-	}, [disabled, refreshing, onRefresh, animateY]);
+	}, [disabled, refreshing]);
 
 	return (
 		<div

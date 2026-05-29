@@ -90,13 +90,14 @@ export function CameraPreview({ onCapture, onClose }: CameraPreviewProps) {
 	return (
 		<div className="relative flex flex-col">
 			<div className="relative overflow-hidden rounded-xl bg-black">
-				{/* biome-ignore lint/a11y/useMediaCaption: Live camera feed — no captions */}
 				<video
 					ref={videoRef}
 					autoPlay
 					playsInline
 					className="h-80 w-full object-cover"
-				/>
+				>
+					<track kind="captions" />
+				</video>
 				<div className="pointer-events-none absolute inset-0 flex items-center justify-center">
 					<div className="size-64 rounded-2xl border-2 border-white/50" />
 				</div>

@@ -7,6 +7,7 @@ import { PageContainer } from "@/components/layout/page-container";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/shared";
 
 interface LeaderboardEntry {
@@ -35,9 +36,9 @@ export default function LeaderboardPage() {
 			<div className="flex flex-col gap-6 py-6">
 				<div className="flex items-center gap-3">
 					<Button variant="ghost" size="icon" asChild>
-						<a href="/study-groups">
+						<Link href="/study-groups">
 							<HugeiconsIcon icon={ArrowLeft01Icon} className="size-5" />
-						</a>
+						</Link>
 					</Button>
 					<div>
 						<h1 className="font-bold text-2xl">Group Leaderboard</h1>
@@ -71,7 +72,7 @@ export default function LeaderboardPage() {
 						) : (
 							<div className="flex flex-col gap-2">
 								{data.map((entry, i) => (
-									<a
+									<Link
 										key={entry.groupId}
 										href={`/study-groups/${entry.groupId}`}
 										className={cn(
@@ -96,7 +97,7 @@ export default function LeaderboardPage() {
 											</p>
 											<p className="text-muted-foreground text-xs">pts</p>
 										</div>
-									</a>
+									</Link>
 								))}
 							</div>
 						)}

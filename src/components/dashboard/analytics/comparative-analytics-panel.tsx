@@ -20,6 +20,10 @@ interface SubjectTrendData {
 	trend: "improving" | "declining" | "stable";
 }
 
+// TODO(react-doctor): Extract UserPercentileCard into separate component (~60 lines)
+// TODO(react-doctor): Extract SubjectRankingsChart into separate component (~105 lines)
+// TODO(react-doctor): Extract PerformanceTrendsSection into separate component (~65 lines)
+// TODO(react-doctor): Extract PremiumGate into separate component (~20 lines)
 export function ComparativeAnalyticsPanel() {
 	const { hasFeature } = usePremium();
 	const { analytics, isLoading } = useAnalytics();

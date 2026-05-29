@@ -31,7 +31,9 @@ export function useAudioRecorder(
 	options: UseAudioRecorderOptions = {},
 ): UseAudioRecorderReturn {
 	const { onRecordingComplete, minDuration = 1, maxDuration = 300 } = options;
-	const [state, setState] = useState<AudioEngineState>(audioEngine.getState());
+	const [state, setState] = useState<AudioEngineState>(() =>
+		audioEngine.getState(),
+	);
 	const onCompleteRef = useRef(onRecordingComplete);
 	onCompleteRef.current = onRecordingComplete;
 

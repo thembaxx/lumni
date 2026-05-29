@@ -1,8 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import type { SRSettings } from "@/lib/flashcard-engine";
-import { DEFAULT_SR_SETTINGS, flashcardEngine } from "@/lib/flashcard-engine";
+import { flashcardEngine } from "@/lib/flashcard-engine";
 
 export interface UseSRSettingsReturn {
 	settings: SRSettings;
@@ -12,11 +12,9 @@ export interface UseSRSettingsReturn {
 }
 
 export function useSRSettings(): UseSRSettingsReturn {
-	const [settings, setSettings] = useState<SRSettings>(DEFAULT_SR_SETTINGS);
-
-	useEffect(() => {
-		setSettings(flashcardEngine.loadSettings());
-	}, []);
+	const [settings, setSettings] = useState<SRSettings>(() =>
+		flashcardEngine.loadSettings(),
+	);
 
 	const updateSettings = useCallback((updates: Partial<SRSettings>) => {
 		setSettings((prev) => {

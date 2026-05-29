@@ -24,6 +24,11 @@ export function AvatarUploader({
 }: AvatarUploaderProps) {
 	const inputRef = useRef<HTMLInputElement>(null);
 	const [preview, setPreview] = useState<string | undefined>(url);
+	const prevUrl = useRef(url);
+	if (url !== prevUrl.current) {
+		prevUrl.current = url;
+		setPreview(url);
+	}
 
 	const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files?.[0];

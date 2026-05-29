@@ -175,53 +175,54 @@ export class PathEngine {
 		days = 7,
 		dailyGoalMinutes = 30,
 	): Promise<StudyPlanDay[]> {
-		const plan: StudyPlanDay[] = [];
 		const today = new Date();
 
-		for (let d = 0; d < days; d++) {
-			const date = new Date(today);
-			date.setDate(date.getDate() + d);
+		const dayResults = await Promise.all(
+			Array.from({ length: days }, async (_, d) => {
+				const date = new Date(today);
+				date.setDate(date.getDate() + d);
 
-			const sessions: StudyPlanDay["sessions"] = [];
-			let minutesUsed = 0;
+				const sessions: StudyPlanDay["sessions"] = [];
+				let minutesUsed = 0;
 
-			const subjectRecs = await Promise.all(
-				subjects.map((subjectId) =>
-					this.getNextTopics(subjectId, competencyMap).then((recs) => ({
-						subjectId,
-						recs,
-					})),
-				),
-			);
-			for (const { subjectId, recs } of subjectRecs) {
-				if (minutesUsed >= dailyGoalMinutes) break;
-				for (const rec of recs) {
+				const subjectRecs = await Promise.all(
+					subjects.map((subjectId) =>
+						this.getNextTopics(subjectId, competencyMap).then((recs) => ({
+							subjectId,
+							recs,
+						})),
+					),
+				);
+				for (const { subjectId, recs } of subjectRecs) {
 					if (minutesUsed >= dailyGoalMinutes) break;
-					if (rec.action === "skip") continue;
+					for (const rec of recs) {
+						if (minutesUsed >= dailyGoalMinutes) break;
+						if (rec.action === "skip") continue;
 
-					const minutes = Math.min(
-						rec.estimatedMinutes,
-						dailyGoalMinutes - minutesUsed,
-					);
-					sessions.push({
-						subjectId,
-						topicId: rec.topicId,
-						name: rec.name,
-						action: rec.action as "study" | "practice" | "review",
-						minutes,
-					});
-					minutesUsed += minutes;
+						const minutes = Math.min(
+							rec.estimatedMinutes,
+							dailyGoalMinutes - minutesUsed,
+						);
+						sessions.push({
+							subjectId,
+							topicId: rec.topicId,
+							name: rec.name,
+							action: rec.action as "study" | "practice" | "review",
+							minutes,
+						});
+						minutesUsed += minutes;
+					}
 				}
-			}
 
-			plan.push({
-				day: d + 1,
-				date: date.toISOString().split("T")[0],
-				sessions,
-			});
-		}
+				return {
+					day: d + 1,
+					date: date.toISOString().split("T")[0],
+					sessions,
+				};
+			}),
+		);
 
-		return plan;
+		return dayResults.sort((a, b) => a.day - b.day);
 	}
 
 	private async getTopicLevel(

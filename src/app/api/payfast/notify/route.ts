@@ -59,6 +59,7 @@ export async function POST(req: Request) {
 				method: "POST",
 				headers: { "Content-Type": "application/x-www-form-urlencoded" },
 				body: body.toString(),
+				cache: "no-store",
 			});
 			const text = await validateRes.text();
 			pfValid = text === "VALID";

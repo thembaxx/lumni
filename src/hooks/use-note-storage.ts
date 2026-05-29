@@ -4,39 +4,49 @@ import { useCallback, useEffect, useState } from "react";
 import type { Note } from "@/components/tools/notes/types";
 
 export function useNoteStorage() {
+	const v1Item =
+		typeof window !== "undefined"
+			? localStorage.getItem("lumni-notes:v1")
+			: null;
+	const migratedItem =
+		typeof window !== "undefined"
+			? localStorage.getItem("lumni-notes:migrated")
+			: null;
+
 	const [notes, setNotes] = useState<Note[]>(() => {
-		if (typeof window !== "undefined") {
-			const saved = localStorage.getItem("lumni-notes:v1");
-			return saved ? JSON.parse(saved) : [];
-		}
+		if (v1Item) return JSON.parse(v1Item);
 		return [];
 	});
-	const [loaded, setLoaded] = useState(false);
+	const [loaded, setLoaded] = useState(!!migratedItem);
 
 	useEffect(() => {
+		if (loaded) return;
 		async function load() {
-			const migrated = localStorage.getItem("lumni-notes:migrated");
-			if (!migrated) {
-				const saved = localStorage.getItem("lumni-notes:v1");
-				if (saved) {
-					const localNotes: Note[] = JSON.parse(saved);
+			if (!migratedItem) {
+				if (v1Item) {
+					const localNotes: Note[] = JSON.parse(v1Item);
 					const db = (await import("@/lib/db/schema")).offlineDB;
-					for (const n of localNotes) {
-						const existing = await db.notes.where("uuid").equals(n.id).first();
-						if (!existing) {
-							await db.notes.add({
-								uuid: n.id,
-								title: n.title,
-								content: n.content,
-								tags: n.tags,
-								subject: n.subject,
-								topic: n.topic,
-								isFavorite: n.isFavorite,
-								createdAt: new Date(n.createdAt).getTime(),
-								updatedAt: new Date(n.updatedAt).getTime(),
-							});
-						}
-					}
+					await Promise.all(
+						localNotes.map(async (n) => {
+							const existing = await db.notes
+								.where("uuid")
+								.equals(n.id)
+								.first();
+							if (!existing) {
+								await db.notes.add({
+									uuid: n.id,
+									title: n.title,
+									content: n.content,
+									tags: n.tags,
+									subject: n.subject,
+									topic: n.topic,
+									isFavorite: n.isFavorite,
+									createdAt: new Date(n.createdAt).getTime(),
+									updatedAt: new Date(n.updatedAt).getTime(),
+								});
+							}
+						}),
+					);
 					localStorage.setItem("lumni-notes:migrated", "true");
 					localStorage.removeItem("lumni-notes:v1");
 				} else {
@@ -63,24 +73,26 @@ export function useNoteStorage() {
 			setLoaded(true);
 		}
 		load();
-	}, []);
+	}, [loaded, migratedItem, v1Item]);
 
 	const saveNotes = useCallback(async (notes: Note[]) => {
 		const db = (await import("@/lib/db/schema")).offlineDB;
 		await db.notes.clear();
-		for (const n of notes) {
-			await db.notes.add({
-				uuid: n.id,
-				title: n.title,
-				content: n.content,
-				tags: n.tags,
-				subject: n.subject,
-				topic: n.topic,
-				isFavorite: n.isFavorite,
-				createdAt: new Date(n.createdAt).getTime(),
-				updatedAt: new Date(n.updatedAt).getTime(),
-			});
-		}
+		await Promise.all(
+			notes.map((n) =>
+				db.notes.add({
+					uuid: n.id,
+					title: n.title,
+					content: n.content,
+					tags: n.tags,
+					subject: n.subject,
+					topic: n.topic,
+					isFavorite: n.isFavorite,
+					createdAt: new Date(n.createdAt).getTime(),
+					updatedAt: new Date(n.updatedAt).getTime(),
+				}),
+			),
+		);
 		setNotes(notes);
 	}, []);
 

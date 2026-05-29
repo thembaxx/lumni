@@ -12,6 +12,7 @@ import { FormSkeleton } from "@/components/ui/skeletons";
 import { Link, useRouter } from "@/i18n/navigation";
 import { iOSEase } from "@/lib/utils/animation";
 
+// TODO(react-doctor): Refactor multiple useState calls into useReducer
 function ResetPasswordForm() {
 	const { push } = useRouter();
 	const { get } = useSearchParams();

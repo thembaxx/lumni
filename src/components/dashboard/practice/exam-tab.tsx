@@ -34,6 +34,7 @@ interface ExamTabProps {
 	className?: string;
 }
 
+// TODO(react-doctor): Refactor multiple useState calls into useReducer
 export function ExamTab({ className }: ExamTabProps) {
 	const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
 	const [selectedYear, setSelectedYear] = useState<number | null>(null);

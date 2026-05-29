@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useCreatePost, useStudyGroups } from "@/hooks/use-study-groups";
+import { Link } from "@/i18n/navigation";
 
 interface Props {
 	questionText: string;
@@ -92,9 +93,9 @@ export function DiscussWrongAnswer({ questionText, subject, topic }: Props) {
 					) : (
 						<p className="text-muted-foreground text-sm">
 							You are not in any study groups.{" "}
-							<a href="/study-groups" className="underline">
+							<Link href="/study-groups" className="underline">
 								Create or join one
-							</a>
+							</Link>
 						</p>
 					)}
 

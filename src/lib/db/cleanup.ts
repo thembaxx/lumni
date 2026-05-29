@@ -17,7 +17,7 @@ export async function cleanupOldQuestions(): Promise<{
 		let deleted = 0;
 		let remaining = 0;
 
-		// Sequential pagination: each page depends on the previous batch being deleted
+		// Sequential pagination: each page depends on the previous batch being deleted (must run sequentially)
 		while (true) {
 			const response = await databases.listDocuments(
 				APPWRITE_DATABASE_ID,

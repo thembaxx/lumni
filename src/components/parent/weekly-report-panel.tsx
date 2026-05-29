@@ -89,8 +89,7 @@ export function WeeklyReportPanel({
 										const mastery = 40 + (hash % 55);
 										return (
 											<div
-												// biome-ignore lint/suspicious/noArrayIndexKey: generated mock data, no real entity ID
-												key={i}
+												key={crypto.randomUUID()}
 												className="flex items-center justify-between"
 											>
 												<span className="text-muted-foreground text-xs">

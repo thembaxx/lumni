@@ -222,14 +222,18 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 		return () => clearInterval(interval);
 	}, [sent, countdown]);
 
-	useEffect(() => {
-		if (!open) {
-			dispatch({ type: "RESET" });
-		}
-	}, [open]);
+	const handleOpenChange = useCallback(
+		(next: boolean) => {
+			if (!next) {
+				dispatch({ type: "RESET" });
+			}
+			onOpenChange(next);
+		},
+		[onOpenChange],
+	);
 
 	return (
-		<Dialog open={open} onOpenChange={onOpenChange}>
+		<Dialog open={open} onOpenChange={handleOpenChange}>
 			<DialogContent className="shadow-lg sm:max-w-md">
 				<DialogHeader>
 					<DialogTitle className="flex items-center gap-2">

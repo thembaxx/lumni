@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -57,7 +57,7 @@ export function UsersClient() {
 		},
 	});
 
-	const users = data?.users || [];
+	const users = useMemo(() => data?.users ?? [], [data?.users]);
 	const [formattedDates, setFormattedDates] = useState<
 		Record<string, { registered: string; accessed: string }>
 	>({});

@@ -61,6 +61,13 @@ const STEPS_COPY = [
 	},
 ];
 
+// TODO(react-doctor): Extract StepIndicator into separate component (~20 lines)
+// TODO(react-doctor): Extract WelcomeStep into separate component (~20 lines)
+// TODO(react-doctor): Extract SubjectSelectionStep into separate component (~170 lines)
+// TODO(react-doctor): Extract GoalsStep into separate component (~80 lines)
+// TODO(react-doctor): Extract CompleteStep into separate component (~60 lines)
+// TODO(react-doctor): Extract WizardFooter into separate component (~30 lines)
+// TODO(react-doctor): Refactor multiple useState calls into useReducer
 export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 	const { data, completeOnboarding, updateProgress } = useOnboarding();
 	const [step, setStep] = useState(data.currentStep);
@@ -73,12 +80,6 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 	const [showConfetti, setShowConfetti] = useState(false);
 	const [isCompleting, setIsCompleting] = useState(false);
 	const shouldReduceMotion = useReducedMotion();
-
-	useEffect(() => {
-		if (step !== 1) {
-			setSearchTerm("");
-		}
-	}, [step]);
 
 	useEffect(() => {
 		updateProgress({
@@ -202,6 +203,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 			complete();
 			return;
 		}
+		if (step === 1) setSearchTerm("");
 		setStep((s) => s + 1);
 	};
 
@@ -327,95 +329,108 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 															</div>
 														)
 													) : (
-														categoryOrder
-															.filter((cat) => subjectsByCategory[cat])
-															.map((cat) => {
-																const subjects = subjectsByCategory[cat];
-																const selectedCount = subjects.filter((s) =>
-																	selectedSubjects.includes(s.id),
-																).length;
-																const isExpanded = expandedCategories[cat];
-
-																return (
-																	<div
-																		key={cat}
-																		className="rounded-xl border border-border/40 bg-card/30"
-																	>
-																		<button
-																			type="button"
-																			onClick={() =>
-																				setExpandedCategories((prev) => ({
-																					...prev,
-																					[cat]: !prev[cat],
-																				}))
-																			}
-																			className="flex w-full items-center gap-2 px-4 py-3 text-left"
-																		>
-																			<HugeiconsIcon
-																				icon={ArrowDownIcon}
-																				className={`size-4 text-muted-foreground transition-transform duration-200 ${
-																					isExpanded ? "rotate-0" : "-rotate-90"
-																				}`}
-																			/>
-																			<span className="flex-1 font-semibold text-sm capitalize">
-																				{categoryLabels[cat] || cat}
-																			</span>
-																			<span className="text-muted-foreground text-xs">
-																				{selectedCount > 0
-																					? `${selectedCount} selected`
-																					: `${subjects.length} subjects`}
-																			</span>
-																		</button>
-																		<AnimatePresence initial={false}>
-																			{isExpanded && (
-																				<m.div
-																					initial={
-																						shouldReduceMotion
-																							? {}
-																							: { height: 0, opacity: 0 }
-																					}
-																					animate={{
-																						height: "auto",
-																						opacity: 1,
-																					}}
-																					exit={
-																						shouldReduceMotion
-																							? {}
-																							: { height: 0, opacity: 0 }
-																					}
-																					transition={{
-																						duration: 0.2,
-																						ease: iOSEase,
-																					}}
-																					className="overflow-hidden"
+														categoryOrder.flatMap((cat) =>
+															subjectsByCategory[cat]
+																? [
+																		(() => {
+																			const subjects = subjectsByCategory[cat];
+																			const selectedCount = subjects.filter(
+																				(s) => selectedSubjects.includes(s.id),
+																			).length;
+																			const isExpanded =
+																				expandedCategories[cat];
+																			return (
+																				<div
+																					key={cat}
+																					className="rounded-xl border border-border/40 bg-card/30"
 																				>
-																					<div className="grid grid-cols-1 gap-2 px-4 pb-3 sm:grid-cols-2">
-																						{subjects.map((subject) => (
-																							<SubjectCard
-																								key={subject.id}
-																								subject={subject}
-																								selected={selectedSubjects.includes(
-																									subject.id,
-																								)}
-																								onToggle={() =>
-																									setSelectedSubjects((prev) =>
-																										prev.includes(subject.id)
-																											? prev.filter(
-																													(s) =>
-																														s !== subject.id,
-																												)
-																											: [...prev, subject.id],
-																									)
+																					<button
+																						type="button"
+																						onClick={() =>
+																							setExpandedCategories((prev) => ({
+																								...prev,
+																								[cat]: !prev[cat],
+																							}))
+																						}
+																						className="flex w-full items-center gap-2 px-4 py-3 text-left"
+																					>
+																						<HugeiconsIcon
+																							icon={ArrowDownIcon}
+																							className={`size-4 text-muted-foreground transition-transform duration-200 ${
+																								isExpanded
+																									? "rotate-0"
+																									: "-rotate-90"
+																							}`}
+																						/>
+																						<span className="flex-1 font-semibold text-sm capitalize">
+																							{categoryLabels[cat] || cat}
+																						</span>
+																						<span className="text-muted-foreground text-xs">
+																							{selectedCount > 0
+																								? `${selectedCount} selected`
+																								: `${subjects.length} subjects`}
+																						</span>
+																					</button>
+																					<AnimatePresence initial={false}>
+																						{isExpanded && (
+																							<m.div
+																								initial={
+																									shouldReduceMotion
+																										? {}
+																										: { height: 0, opacity: 0 }
 																								}
-																							/>
-																						))}
-																					</div>
-																				</m.div>
-																			)}
-																		</AnimatePresence>
-																	</div>
-																);
-															})
+																								animate={{
+																									height: "auto",
+																									opacity: 1,
+																								}}
+																								exit={
+																									shouldReduceMotion
+																										? {}
+																										: { height: 0, opacity: 0 }
+																								}
+																								transition={{
+																									duration: 0.2,
+																									ease: iOSEase,
+																								}}
+																								className="overflow-hidden"
+																							>
+																								<div className="grid grid-cols-1 gap-2 px-4 pb-3 sm:grid-cols-2">
+																									{subjects.map((subject) => (
+																										<SubjectCard
+																											key={subject.id}
+																											subject={subject}
+																											selected={selectedSubjects.includes(
+																												subject.id,
+																											)}
+																											onToggle={() =>
+																												setSelectedSubjects(
+																													(prev) =>
+																														prev.includes(
+																															subject.id,
+																														)
+																															? prev.filter(
+																																	(s) =>
+																																		s !==
+																																		subject.id,
+																																)
+																															: [
+																																	...prev,
+																																	subject.id,
+																																],
+																												)
+																											}
+																										/>
+																									))}
+																								</div>
+																							</m.div>
+																						)}
+																					</AnimatePresence>
+																				</div>
+																			);
+																		})(),
+																	]
+																: [],
+														)
 													)}
 												</m.div>
 											</>

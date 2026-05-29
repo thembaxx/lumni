@@ -51,6 +51,7 @@ export async function verifyAuth(userId: string): Promise<void> {
 		const account = new Account(client);
 		let user: Models.User<Models.Preferences>;
 		let retries = 0;
+		// Retry loop: each attempt depends on the previous one failing (must run sequentially)
 		while (true) {
 			try {
 				user = await account.get();
@@ -115,6 +116,7 @@ export async function getAuthenticatedUserId(): Promise<string | null> {
 		const account = new Account(client);
 		let user: Models.User<Models.Preferences>;
 		let retries = 0;
+		// Retry loop: each attempt depends on the previous one failing (must run sequentially)
 		while (true) {
 			try {
 				user = await account.get();

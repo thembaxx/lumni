@@ -14,6 +14,8 @@ interface WikimediaImage {
 const WIKIMEDIA_API =
 	"https://commons.wikimedia.org/w/api.php?action=query&generator=search&format=json&origin=*&prop=imageinfo&gsrlimit=5&iiprop=url|extmetadata&gsrsearch=";
 
+const VALID_IMAGE_EXTENSIONS = new Set(["svg", "png", "jpg", "jpeg", "gif"]);
+
 function buildSearchUrl(query: string): string {
 	return `${WIKIMEDIA_API}${encodeURIComponent(query)}`;
 }
@@ -81,7 +83,7 @@ export async function searchImage(
 			const url = info.url;
 			const ext = url.split(".").pop()?.toLowerCase() || "";
 
-			if (["svg", "png", "jpg", "jpeg", "gif"].includes(ext)) {
+			if (VALID_IMAGE_EXTENSIONS.has(ext)) {
 				const meta = info.extmetadata as Record<string, unknown> | undefined;
 				return {
 					url,

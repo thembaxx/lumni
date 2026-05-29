@@ -19,41 +19,35 @@ import {
 } from "@/types/gamification";
 
 export function useGamification() {
-	const [data, setData] = useState<StoredGamification>(
-		gamificationEngine.load(),
-	);
-	const prevLevelRef = useRef<number>(0);
+	const [data, setData] = useState<StoredGamification>(() => {
+		const stored = gamificationEngine.load();
+		const merged = gamificationEngine.mergeWithDefaults(stored);
+		if (merged !== stored) {
+			gamificationEngine.save(merged);
+		}
+		return merged;
+	});
+	const prevLevelRef = useRef<number>(calculateLevel(data.totalXp).level);
 	const [leveledUp, setLeveledUp] = useState<LevelInfo | null>(null);
 	const [pendingAchievement, setPendingAchievement] =
 		useState<Achievement | null>(null);
 	const [pendingChest, setPendingChest] = useState<RewardChestDef | null>(null);
 	const syncTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+	// Try to load from server on mount
 	useEffect(() => {
-		const stored = gamificationEngine.load();
-		const merged = gamificationEngine.mergeWithDefaults(stored);
-		if (merged !== stored) {
-			gamificationEngine.save(merged);
-		}
-		setData(merged);
-		prevLevelRef.current = calculateLevel(merged.totalXp).level;
-
-		// Try to load from server on mount
 		syncFromServer().then((serverData) => {
 			if (serverData) {
 				const mergedServer = gamificationEngine.mergeWithDefaults({
-					...merged,
-					totalXp: Math.max(merged.totalXp, serverData.totalXp),
+					...data,
+					totalXp: Math.max(data.totalXp, serverData.totalXp),
 					achievements: mergeAchievements(
-						merged.achievements,
+						data.achievements,
 						serverData.achievements,
 					),
-					currentStreak: Math.max(
-						merged.currentStreak,
-						serverData.currentStreak,
-					),
+					currentStreak: Math.max(data.currentStreak, serverData.currentStreak),
 					totalQuestionsAnswered: Math.max(
-						merged.totalQuestionsAnswered,
+						data.totalQuestionsAnswered,
 						serverData.totalQuestionsAnswered,
 					),
 				});
@@ -61,7 +55,7 @@ export function useGamification() {
 				setData(mergedServer);
 			}
 		});
-	}, []);
+	}, [data]);
 
 	const levelInfo = calculateLevel(data.totalXp);
 

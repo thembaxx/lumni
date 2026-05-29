@@ -77,11 +77,13 @@ export async function POST(req: Request) {
 						`subscriptionId=${sub.id}`,
 						`status=active`,
 					] as unknown as string[]);
-					for (const doc of docs.documents) {
-						await db.updateDocument(dbId, "premium_subscriptions", doc.$id, {
-							status: "cancelled",
-						});
-					}
+					await Promise.all(
+						docs.documents.map((doc) =>
+							db.updateDocument(dbId, "premium_subscriptions", doc.$id, {
+								status: "cancelled",
+							}),
+						),
+					);
 				} catch (err) {
 					console.error("Subscription delete handler error:", err);
 				}

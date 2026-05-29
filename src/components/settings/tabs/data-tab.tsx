@@ -10,6 +10,12 @@ interface DataTabProps {
 	onClear: () => void;
 }
 
+const restartTrailing = (
+	<span className="ios-footnote font-semibold text-[--system-destructive]">
+		Restart
+	</span>
+);
+
 function RestartOnboarding() {
 	const { push } = useRouter();
 	return (
@@ -29,14 +35,22 @@ function RestartOnboarding() {
 				}
 			}}
 			showSeparator={false}
-			trailing={
-				<span className="ios-footnote font-semibold text-[--system-destructive]">
-					Restart
-				</span>
-			}
+			trailing={restartTrailing}
 		/>
 	);
 }
+
+const exportTrailing = (
+	<span className="ios-footnote font-semibold text-[--system-accent]">
+		Export
+	</span>
+);
+
+const clearTrailing = (
+	<span className="ios-footnote font-semibold text-[--system-destructive]">
+		Clear
+	</span>
+);
 
 export function DataTab({ onExport, onClear }: DataTabProps) {
 	return (
@@ -51,11 +65,7 @@ export function DataTab({ onExport, onClear }: DataTabProps) {
 					title="Export Settings"
 					subtitle="Download your preferences as JSON"
 					onClick={onExport}
-					trailing={
-						<span className="ios-footnote font-semibold text-[--system-accent]">
-							Export
-						</span>
-					}
+					trailing={exportTrailing}
 				/>
 				<ListCell
 					title="Clear Local Data"
@@ -63,11 +73,7 @@ export function DataTab({ onExport, onClear }: DataTabProps) {
 					destructive
 					onClick={onClear}
 					showSeparator={false}
-					trailing={
-						<span className="ios-footnote font-semibold text-[--system-destructive]">
-							Clear
-						</span>
-					}
+					trailing={clearTrailing}
 				/>
 				<RestartOnboarding />
 			</ListSection>

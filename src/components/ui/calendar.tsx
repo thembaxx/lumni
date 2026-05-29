@@ -7,14 +7,15 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
-import * as React from "react";
+import type * as React from "react";
 import {
 	type DayButton,
 	DayPicker,
 	getDefaultClassNames,
 	type Locale,
 } from "react-day-picker";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button-variants";
 import { cn } from "@/lib/shared";
 
 function Calendar01Icon({
@@ -208,16 +209,12 @@ function CalendarDayButton({
 }: React.ComponentProps<typeof DayButton> & { locale?: Partial<Locale> }) {
 	const defaultClassNames = getDefaultClassNames();
 
-	const ref = React.useRef<HTMLButtonElement>(null);
-	React.useEffect(() => {
-		if (modifiers.focused) ref.current?.focus();
-	}, [modifiers.focused]);
-
 	return (
 		<Button
 			variant="ghost"
 			size="icon"
 			data-day={day.date.toLocaleDateString(locale?.code)}
+			tabIndex={modifiers.focused ? 0 : -1}
 			data-selected-single={
 				modifiers.selected &&
 				!modifiers.range_start &&

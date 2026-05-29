@@ -13,7 +13,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQueryClient } from "@tanstack/react-query";
-import { useCallback, useEffect, useReducer, useState } from "react";
+import { useCallback, useEffect, useMemo, useReducer, useState } from "react";
 import { OnboardingWizard } from "@/components/onboarding/onboarding-wizard";
 import { EditableField } from "@/components/settings/tabs/editable-field";
 import { ParentConsentSection } from "@/components/settings/tabs/parent-consent-section";
@@ -32,6 +32,20 @@ import { useAuth } from "@/lib/auth/auth-context";
 import { toggleUserSubject } from "@/lib/server";
 import { useUploadThing } from "@/lib/uploadthing";
 
+const passwordLeading = <HugeiconsIcon icon={Mail01Icon} className="size-5" />;
+
+const guidedSetupLeading = (
+	<HugeiconsIcon icon={CompassIcon} className="size-5" />
+);
+
+// TODO(react-doctor): Extract PersonalInfoSection into separate component (~30 lines)
+// TODO(react-doctor): Extract PasswordSection into separate component (~20 lines)
+// TODO(react-doctor): Extract SchoolDetailsSection into separate component (~35 lines)
+// TODO(react-doctor): Extract SubjectsSection into separate component (~8 lines)
+// TODO(react-doctor): Extract AccountRoleSection into separate component (~10 lines)
+// TODO(react-doctor): Extract ShareProfileSection into separate component (~15 lines)
+// TODO(react-doctor): Extract StudyGoalsSection into separate component (~20 lines)
+// TODO(react-doctor): Extract SignOutSection into separate component (~20 lines)
 export function ProfileTab() {
 	const { user, isAnonymous, updateProfile, verifyEmail, signOut, error } =
 		useAuth();
@@ -91,8 +105,9 @@ export function ProfileTab() {
 			try {
 				const result = await startUpload([file]);
 				if (result?.[0]?.ufsUrl) {
+					const p = (user?.prefs as Record<string, unknown>) || {};
 					await updateProfile({
-						prefs: { ...prefs, avatarUrl: result[0].ufsUrl },
+						prefs: { ...p, avatarUrl: result[0].ufsUrl },
 					});
 				}
 			} catch {
@@ -100,14 +115,15 @@ export function ProfileTab() {
 				setUploading(false);
 			}
 		},
-		[startUpload, updateProfile, prefs],
+		[startUpload, updateProfile, user],
 	);
 
 	const handleSaveField = useCallback(
 		async (key: string, value: unknown) => {
-			await updateProfile({ prefs: { ...prefs, [key]: value } });
+			const p = (user?.prefs as Record<string, unknown>) || {};
+			await updateProfile({ prefs: { ...p, [key]: value } });
 		},
-		[updateProfile, prefs],
+		[updateProfile, user],
 	);
 
 	const {
@@ -129,6 +145,144 @@ export function ProfileTab() {
 			} catch {}
 		},
 		[user, queryClient],
+	);
+
+	const displayNameLeading = useMemo(
+		() => <HugeiconsIcon icon={UserIcon} className="size-5" />,
+		[],
+	);
+	const displayNameTrailing = useMemo(
+		() => (
+			<EditableField
+				value={user?.name || ""}
+				onSave={async (v) => updateProfile({ name: v })}
+				placeholder="Your name"
+			/>
+		),
+		[user, updateProfile],
+	);
+	const emailLeading = useMemo(
+		() => <HugeiconsIcon icon={Mail01Icon} className="size-5" />,
+		[],
+	);
+	const emailTrailing = useMemo(
+		() => (
+			<span className="max-w-40 truncate text-muted-foreground text-sm">
+				{user?.email}
+			</span>
+		),
+		[user],
+	);
+	const passwordTrailing = useMemo(
+		() => (
+			<span className="text-(length:--fs-footnote) font-semibold text-system-accent">
+				Update
+			</span>
+		),
+		[],
+	);
+	const schoolLeading = useMemo(
+		() => <HugeiconsIcon icon={Mortarboard01Icon} className="size-5" />,
+		[],
+	);
+	const schoolTrailing = useMemo(
+		() => (
+			<EditableField
+				value={schoolDraft}
+				onSave={async (v) => {
+					dispatchDrafts({
+						type: "SET_FIELD",
+						field: "schoolDraft",
+						value: v,
+					});
+					await handleSaveField("school", v);
+				}}
+				placeholder="Your school name"
+			/>
+		),
+		[schoolDraft, handleSaveField],
+	);
+	const gradeLeading = useMemo(
+		() => <HugeiconsIcon icon={Mortarboard01Icon} className="size-5" />,
+		[],
+	);
+	const gradeTrailing = useMemo(
+		() => (
+			<EditableField
+				value={gradeDraft}
+				onSave={async (v) => {
+					dispatchDrafts({
+						type: "SET_FIELD",
+						field: "gradeDraft",
+						value: v,
+					});
+					await handleSaveField("grade", v);
+				}}
+				placeholder="e.g. Grade 12"
+			/>
+		),
+		[gradeDraft, handleSaveField],
+	);
+	const provinceLeading = useMemo(
+		() => <HugeiconsIcon icon={MapPinIcon} className="size-5" />,
+		[],
+	);
+	const provinceTrailing = useMemo(
+		() => (
+			<ProvincePicker
+				value={provinceDraft}
+				onSelect={async (p) => {
+					dispatchDrafts({
+						type: "SET_FIELD",
+						field: "provinceDraft",
+						value: p,
+					});
+					await handleSaveField("province", p);
+				}}
+			/>
+		),
+		[provinceDraft, handleSaveField],
+	);
+	const roleLeading = useMemo(
+		() => <HugeiconsIcon icon={UserIcon} className="size-5" />,
+		[],
+	);
+	const roleTrailing = useMemo(
+		() => <RoleSelector currentLabels={user?.labels ?? []} />,
+		[user],
+	);
+	const shareLeading = useMemo(
+		() => <HugeiconsIcon icon={LinkSquare01Icon} className="size-5" />,
+		[],
+	);
+	const shareTrailing = useMemo(
+		() => (
+			<button
+				type="button"
+				onClick={async () => {
+					if (user?.$id) {
+						await navigator.clipboard.writeText(user.$id);
+						toast({
+							type: "success",
+							message: "User ID copied to clipboard",
+						});
+					}
+				}}
+				className="flex size-8 shrink-0 items-center justify-center rounded-full bg-system-accent text-white hover:bg-system-accent/90"
+				aria-label="Copy user ID"
+			>
+				<HugeiconsIcon icon={Copy01Icon} className="size-4" />
+			</button>
+		),
+		[user],
+	);
+	const guidedSetupTrailing = useMemo(
+		() => (
+			<span className="text-(length:--fs-footnote) font-semibold text-system-accent">
+				Redo
+			</span>
+		),
+		[],
 	);
 
 	if (isAnonymous) {
@@ -183,27 +337,17 @@ export function ProfileTab() {
 
 			<ListSection header="Personal Information">
 				<ListCell
-					leading={<HugeiconsIcon icon={UserIcon} className="size-5" />}
+					leading={displayNameLeading}
 					title="Display Name"
 					showSeparator
-					trailing={
-						<EditableField
-							value={user?.name || ""}
-							onSave={async (v) => updateProfile({ name: v })}
-							placeholder="Your name"
-						/>
-					}
+					trailing={displayNameTrailing}
 				/>
 				{!isAnonymous && (
 					<ListCell
-						leading={<HugeiconsIcon icon={Mail01Icon} className="size-5" />}
+						leading={emailLeading}
 						title="Email Address"
 						subtitle={user?.emailVerification ? "Verified" : "Not verified"}
-						trailing={
-							<span className="max-w-40 truncate text-muted-foreground text-sm">
-								{user?.email}
-							</span>
-						}
+						trailing={emailTrailing}
 					/>
 				)}
 			</ListSection>
@@ -211,14 +355,10 @@ export function ProfileTab() {
 			{!isAnonymous && (
 				<ListSection header="Password">
 					<ListCell
-						leading={<HugeiconsIcon icon={Mail01Icon} className="size-5" />}
+						leading={passwordLeading}
 						title="Change Password"
 						showSeparator={false}
-						trailing={
-							<span className="text-(length:--fs-footnote) font-semibold text-system-accent">
-								Update
-							</span>
-						}
+						trailing={passwordTrailing}
 						onClick={() => {
 							const current = prompt("Current password");
 							if (!current) return;
@@ -235,64 +375,22 @@ export function ProfileTab() {
 
 			<ListSection header="School Details (Optional)">
 				<ListCell
-					leading={
-						<HugeiconsIcon icon={Mortarboard01Icon} className="size-5" />
-					}
+					leading={schoolLeading}
 					title="School"
 					showSeparator
-					trailing={
-						<EditableField
-							value={schoolDraft}
-							onSave={async (v) => {
-								dispatchDrafts({
-									type: "SET_FIELD",
-									field: "schoolDraft",
-									value: v,
-								});
-								await handleSaveField("school", v);
-							}}
-							placeholder="Your school name"
-						/>
-					}
+					trailing={schoolTrailing}
 				/>
 				<ListCell
-					leading={
-						<HugeiconsIcon icon={Mortarboard01Icon} className="size-5" />
-					}
+					leading={gradeLeading}
 					title="Grade"
 					showSeparator
-					trailing={
-						<EditableField
-							value={gradeDraft}
-							onSave={async (v) => {
-								dispatchDrafts({
-									type: "SET_FIELD",
-									field: "gradeDraft",
-									value: v,
-								});
-								await handleSaveField("grade", v);
-							}}
-							placeholder="e.g. Grade 12"
-						/>
-					}
+					trailing={gradeTrailing}
 				/>
 				<ListCell
-					leading={<HugeiconsIcon icon={MapPinIcon} className="size-5" />}
+					leading={provinceLeading}
 					title="Province"
 					showSeparator={false}
-					trailing={
-						<ProvincePicker
-							value={provinceDraft}
-							onSelect={async (p) => {
-								dispatchDrafts({
-									type: "SET_FIELD",
-									field: "provinceDraft",
-									value: p,
-								});
-								await handleSaveField("province", p);
-							}}
-						/>
-					}
+					trailing={provinceTrailing}
 				/>
 			</ListSection>
 
@@ -307,38 +405,21 @@ export function ProfileTab() {
 
 			<ListSection header="Account Role">
 				<ListCell
-					leading={<HugeiconsIcon icon={UserIcon} className="size-5" />}
+					leading={roleLeading}
 					title="Role"
 					subtitle="Controls which dashboard you see"
 					showSeparator={false}
-					trailing={<RoleSelector currentLabels={user?.labels ?? []} />}
+					trailing={roleTrailing}
 				/>
 			</ListSection>
 
 			<ListSection header="Share Profile">
 				<ListCell
-					leading={<HugeiconsIcon icon={LinkSquare01Icon} className="size-5" />}
+					leading={shareLeading}
 					title="Your User ID"
 					subtitle="Share this with your teacher or parent to link accounts"
 					showSeparator={false}
-					trailing={
-						<button
-							type="button"
-							onClick={async () => {
-								if (user?.$id) {
-									await navigator.clipboard.writeText(user.$id);
-									toast({
-										type: "success",
-										message: "User ID copied to clipboard",
-									});
-								}
-							}}
-							className="flex size-8 shrink-0 items-center justify-center rounded-full bg-system-accent text-white hover:bg-system-accent/90"
-							aria-label="Copy user ID"
-						>
-							<HugeiconsIcon icon={Copy01Icon} className="size-4" />
-						</button>
-					}
+					trailing={shareTrailing}
 				/>
 			</ListSection>
 
@@ -348,15 +429,11 @@ export function ProfileTab() {
 
 			<ListSection header="Study Goals">
 				<ListCell
-					leading={<HugeiconsIcon icon={CompassIcon} className="size-5" />}
+					leading={guidedSetupLeading}
 					title="Guided Setup"
 					subtitle="Set your subjects, targets, and study schedule"
 					showSeparator={false}
-					trailing={
-						<span className="text-(length:--fs-footnote) font-semibold text-system-accent">
-							Redo
-						</span>
-					}
+					trailing={guidedSetupTrailing}
 					onClick={() => setShowConfirmDialog(true)}
 				/>
 			</ListSection>

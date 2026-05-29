@@ -9,15 +9,15 @@ import { usePathname, useRouter } from "@/i18n/navigation";
 export function LocaleSwitcher() {
 	const locale = useLocale() as Locale;
 	const pathname = usePathname();
-	const router = useRouter();
+	const { replace } = useRouter();
 	const [open, setOpen] = useState(false);
 
 	const handleSelect = useCallback(
 		(next: Locale) => {
-			router.replace(pathname, { locale: next });
+			replace(pathname, { locale: next });
 			setOpen(false);
 		},
-		[pathname, router],
+		[pathname, replace],
 	);
 
 	return (

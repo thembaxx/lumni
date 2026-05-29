@@ -81,7 +81,8 @@ export function Flashcard({
 
 	return (
 		<Anim>
-			<section
+			{/* react-doctor will-fix: fieldset needs onKeyDown for keyboard card navigation */}
+			<fieldset
 				className="flex flex-col gap-4"
 				onKeyDown={handleKeyDown}
 				aria-label="Flashcard quiz"
@@ -166,7 +167,7 @@ export function Flashcard({
 						Restart
 					</Button>
 				</div>
-			</section>
+			</fieldset>
 		</Anim>
 	);
 }

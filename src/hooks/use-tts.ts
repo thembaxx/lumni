@@ -28,21 +28,19 @@ export interface UseTTSReturn {
 type TTSStatus = "idle" | "speaking" | "paused";
 
 export function useTTS(): UseTTSReturn {
-	const [isSupported, setIsSupported] = useState(false);
+	const [isSupported] = useState(() => ttsService.isSupported());
 	const [ttsStatus, setTtsStatus] = useState<TTSStatus>("idle");
-	const [voices, setVoices] = useState<TTSVoice[]>([]);
+	const [voices, setVoices] = useState<TTSVoice[]>(() =>
+		ttsService.getVoices(),
+	);
 
 	const isSpeaking = ttsStatus === "speaking";
 	const isPaused = ttsStatus === "paused";
 
 	useEffect(() => {
-		setIsSupported(ttsService.isSupported());
-
 		const loadVoices = () => {
 			setVoices(ttsService.getVoices());
 		};
-
-		loadVoices();
 
 		if ("speechSynthesis" in window) {
 			window.speechSynthesis.addEventListener("voiceschanged", loadVoices);

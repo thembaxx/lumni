@@ -55,32 +55,34 @@ export function SubjectPicker({
 			</div>
 			{showPicker && (
 				<div className="mt-2 max-h-60 overflow-y-auto rounded-xl bg-popover p-2 shadow-level-2 ring-1 ring-foreground/10">
-					{available
-						.filter((s) => !isEnrolled(s.id))
-						.map((subject) => (
-							<button
-								key={subject.id}
-								type="button"
-								onClick={() => {
-									onToggle(subject.id);
-									setShowPicker(false);
-								}}
-								className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm hover:bg-accent"
-							>
-								<div
-									className="flex size-7 shrink-0 items-center justify-center rounded-lg font-extrabold text-white text-xs"
-									style={{ backgroundColor: subject.color }}
-								>
-									{subject.name[0]}
-								</div>
-								<div className="min-w-0 flex-1">
-									<p className="truncate font-medium">{subject.name}</p>
-									<p className="truncate text-muted-foreground text-xs">
-										{subject.category}
-									</p>
-								</div>
-							</button>
-						))}
+					{available.flatMap((s) =>
+						!isEnrolled(s.id)
+							? [
+									<button
+										key={s.id}
+										type="button"
+										onClick={() => {
+											onToggle(s.id);
+											setShowPicker(false);
+										}}
+										className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm hover:bg-accent"
+									>
+										<div
+											className="flex size-7 shrink-0 items-center justify-center rounded-lg font-extrabold text-white text-xs"
+											style={{ backgroundColor: s.color }}
+										>
+											{s.name[0]}
+										</div>
+										<div className="min-w-0 flex-1">
+											<p className="truncate font-medium">{s.name}</p>
+											<p className="truncate text-muted-foreground text-xs">
+												{s.category}
+											</p>
+										</div>
+									</button>,
+								]
+							: [],
+					)}
 				</div>
 			)}
 		</>

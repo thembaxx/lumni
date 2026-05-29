@@ -33,6 +33,13 @@ import { useToolsStore } from "@/store/tools";
 const YEARS = [2025, 2024, 2023, 2022, 2021] as const;
 const LANGUAGES = ["all", "english", "afrikaans"] as const;
 
+// TODO(react-doctor): Extract ExamSearchBar into separate component (~30 lines)
+// TODO(react-doctor): Extract ExamFilters into separate component (~110 lines)
+// TODO(react-doctor): Extract ExamGroupList into separate component (~70 lines)
+// TODO(react-doctor): Extract ExamLoadingState into separate component (~15 lines)
+// TODO(react-doctor): Extract ExamErrorState into separate component (~20 lines)
+// TODO(react-doctor): Extract ExamEmptyState into separate component (~30 lines)
+// TODO(react-doctor): Refactor multiple useState calls into useReducer
 export function ExamsBrowse() {
 	const [selectedSubject, setSelectedSubject] = useState<string>("");
 	const [selectedYear, setSelectedYear] = useState<number | null>(null);

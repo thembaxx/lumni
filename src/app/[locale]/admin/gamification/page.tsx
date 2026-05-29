@@ -173,7 +173,7 @@ export default function AdminGamificationPage() {
 									className={cn("flex items-center justify-between text-sm")}
 								>
 									<span className={cn("font-medium")}>
-										Lvl {level} — {levelDef?.title || ""}
+										Lvl {level}: {levelDef?.title || ""}
 									</span>
 									<span className={cn("font-mono")}>
 										{count} user{count !== 1 ? "s" : ""}
@@ -264,7 +264,7 @@ export default function AdminGamificationPage() {
 								</Badge>
 							</div>
 							<span className={cn("text-muted-foreground text-xs")}>
-								{a.xpReward} XP — {a.category}
+								{a.xpReward} XP ({a.category})
 							</span>
 						</div>
 					))}

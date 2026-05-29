@@ -44,11 +44,13 @@ export async function getOrCreateChallenge(
 		);
 		if (activeChallenge) return success(activeChallenge);
 
-		for (const past of existing) {
-			if (past.weekEnd < new Date().toISOString() && past.status === "active") {
-				await closeChallenge(past.$id);
-			}
-		}
+		await Promise.all(
+			existing.flatMap((past) =>
+				past.weekEnd < new Date().toISOString() && past.status === "active"
+					? [closeChallenge(past.$id)]
+					: [],
+			),
+		);
 
 		const now = new Date().toISOString();
 		const challengeId = await createDocument(COLLECTIONS.GROUP_CHALLENGES, {
@@ -100,66 +102,68 @@ export async function updateChallengeEntry(
 			[`userId=${userId}`],
 		);
 
-		for (const membership of memberships) {
-			const groupId = membership.groupId as string;
-			const challengeResult = await getOrCreateChallenge(groupId);
-			if (!challengeResult.success) continue;
-			const challenge = challengeResult.data;
-			if (challenge.status !== "active") continue;
+		await Promise.all(
+			memberships.map(async (membership) => {
+				const groupId = membership.groupId as string;
+				const challengeResult = await getOrCreateChallenge(groupId);
+				if (!challengeResult.success) return;
+				const challenge = challengeResult.data;
+				if (challenge.status !== "active") return;
 
-			const existing = await listDocuments<GroupChallengeEntry>(
-				COLLECTIONS.GROUP_CHALLENGE_ENTRIES,
-				[`challengeId=${challenge.$id}`, `userId=${userId}`],
-			);
-
-			const allEntries = await listDocuments<GroupChallengeEntry>(
-				COLLECTIONS.GROUP_CHALLENGE_ENTRIES,
-				[`challengeId=${challenge.$id}`],
-			);
-			const groupTotalXp =
-				allEntries.reduce((s, e) => s + e.xpEarned, 0) + xpGained;
-			const groupTotalQ =
-				allEntries.reduce((s, e) => s + e.questionsAnswered, 0) +
-				questionsCount;
-
-			if (existing.length > 0) {
-				const entry = existing[0];
-				const newXp = entry.xpEarned + xpGained;
-				const newQ = entry.questionsAnswered + questionsCount;
-				const combined = computeCombinedScore(
-					newXp,
-					newQ,
-					accuracy,
-					groupTotalXp,
-					groupTotalQ,
+				const existing = await listDocuments<GroupChallengeEntry>(
+					COLLECTIONS.GROUP_CHALLENGE_ENTRIES,
+					[`challengeId=${challenge.$id}`, `userId=${userId}`],
 				);
-				await updateDocument(COLLECTIONS.GROUP_CHALLENGE_ENTRIES, entry.$id, {
-					xpEarned: newXp,
-					questionsAnswered: newQ,
-					accuracy,
-					combinedScore: combined,
-					updatedAt: new Date().toISOString(),
-				});
-			} else {
-				const combined = computeCombinedScore(
-					xpGained,
-					questionsCount,
-					accuracy,
-					groupTotalXp,
-					groupTotalQ,
+
+				const allEntries = await listDocuments<GroupChallengeEntry>(
+					COLLECTIONS.GROUP_CHALLENGE_ENTRIES,
+					[`challengeId=${challenge.$id}`],
 				);
-				await createDocument(COLLECTIONS.GROUP_CHALLENGE_ENTRIES, {
-					challengeId: challenge.$id,
-					groupId,
-					userId,
-					xpEarned: xpGained,
-					questionsAnswered: questionsCount,
-					accuracy,
-					combinedScore: combined,
-					updatedAt: new Date().toISOString(),
-				});
-			}
-		}
+				const groupTotalXp =
+					allEntries.reduce((s, e) => s + e.xpEarned, 0) + xpGained;
+				const groupTotalQ =
+					allEntries.reduce((s, e) => s + e.questionsAnswered, 0) +
+					questionsCount;
+
+				if (existing.length > 0) {
+					const entry = existing[0];
+					const newXp = entry.xpEarned + xpGained;
+					const newQ = entry.questionsAnswered + questionsCount;
+					const combined = computeCombinedScore(
+						newXp,
+						newQ,
+						accuracy,
+						groupTotalXp,
+						groupTotalQ,
+					);
+					await updateDocument(COLLECTIONS.GROUP_CHALLENGE_ENTRIES, entry.$id, {
+						xpEarned: newXp,
+						questionsAnswered: newQ,
+						accuracy,
+						combinedScore: combined,
+						updatedAt: new Date().toISOString(),
+					});
+				} else {
+					const combined = computeCombinedScore(
+						xpGained,
+						questionsCount,
+						accuracy,
+						groupTotalXp,
+						groupTotalQ,
+					);
+					await createDocument(COLLECTIONS.GROUP_CHALLENGE_ENTRIES, {
+						challengeId: challenge.$id,
+						groupId,
+						userId,
+						xpEarned: xpGained,
+						questionsAnswered: questionsCount,
+						accuracy,
+						combinedScore: combined,
+						updatedAt: new Date().toISOString(),
+					});
+				}
+			}),
+		);
 	} catch {
 		// Silently fail - challenge tracking is non-critical
 	}
@@ -172,22 +176,24 @@ async function closeChallenge(challengeId: string): Promise<void> {
 			[`challengeId=${challengeId}`],
 		);
 
-		const ranked = [...entries].sort(
+		const ranked = entries.toSorted(
 			(a, b) => b.combinedScore - a.combinedScore,
 		);
 
-		for (let i = 0; i < Math.min(3, ranked.length); i++) {
-			const badge = BADGE_DEFS[i];
-			await createDocument(COLLECTIONS.GROUP_BADGES, {
-				groupId: ranked[i].groupId,
-				userId: ranked[i].userId,
-				name: badge.name,
-				description: badge.description,
-				icon: badge.icon,
-				tier: badge.tier,
-				earnedAt: new Date().toISOString(),
-			});
-		}
+		await Promise.all(
+			ranked.slice(0, 3).map((entry, i) => {
+				const badge = BADGE_DEFS[i];
+				return createDocument(COLLECTIONS.GROUP_BADGES, {
+					groupId: entry.groupId,
+					userId: entry.userId,
+					name: badge.name,
+					description: badge.description,
+					icon: badge.icon,
+					tier: badge.tier,
+					earnedAt: new Date().toISOString(),
+				});
+			}),
+		);
 
 		await updateDocument(COLLECTIONS.GROUP_CHALLENGES, challengeId, {
 			status: "completed",
@@ -234,26 +240,29 @@ export async function getInterGroupLeaderboard(): Promise<
 			memberCount: number;
 		}[] = [];
 
-		for (const challenge of challenges) {
-			const entries = await listDocuments<GroupChallengeEntry>(
-				COLLECTIONS.GROUP_CHALLENGE_ENTRIES,
-				[`challengeId=${challenge.$id}`],
-			);
+		const leaderboardEntries = await Promise.all(
+			challenges.map(async (challenge) => {
+				const entries = await listDocuments<GroupChallengeEntry>(
+					COLLECTIONS.GROUP_CHALLENGE_ENTRIES,
+					[`challengeId=${challenge.$id}`],
+				);
 
-			const group = await getDocument<{ name: string; memberCount: number }>(
-				COLLECTIONS.STUDY_GROUPS,
-				challenge.groupId,
-			);
+				const group = await getDocument<{ name: string; memberCount: number }>(
+					COLLECTIONS.STUDY_GROUPS,
+					challenge.groupId,
+				);
 
-			const totalScore = entries.reduce((s, e) => s + e.combinedScore, 0);
+				const totalScore = entries.reduce((s, e) => s + e.combinedScore, 0);
 
-			leaderboard.push({
-				groupId: challenge.groupId,
-				groupName: group?.name || "Unknown Group",
-				totalScore: Math.round(totalScore * 100) / 100,
-				memberCount: group?.memberCount || entries.length,
-			});
-		}
+				return {
+					groupId: challenge.groupId,
+					groupName: group?.name || "Unknown Group",
+					totalScore: Math.round(totalScore * 100) / 100,
+					memberCount: group?.memberCount || entries.length,
+				};
+			}),
+		);
+		leaderboard.push(...leaderboardEntries);
 
 		leaderboard.sort((a, b) => b.totalScore - a.totalScore);
 		return success(leaderboard);

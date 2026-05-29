@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, m } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { QualityPicker } from "@/components/flashcard/quality-picker";
 import { SwipeableCard } from "@/components/flashcard/swipeable-card";
 import type { FlashcardCardData } from "@/components/flashcard/types";
@@ -56,12 +56,6 @@ export function SwipeableCardDeck({
 	const lastCardRef = useRef<FlashcardCardData | null>(null);
 	const lastDirectionRef = useRef<"left" | "right" | null>(null);
 
-	useEffect(() => {
-		if (isComplete) {
-			onComplete?.();
-		}
-	}, [isComplete, onComplete]);
-
 	function handleSwipe(direction: "left" | "right") {
 		const card = cards[currentIndex];
 		if (!card) return;
@@ -75,6 +69,7 @@ export function SwipeableCardDeck({
 		} else {
 			onSwipeEnd(card.id, direction);
 			resetPending();
+			if (currentIndex + 1 >= cards.length) onComplete?.();
 		}
 	}
 
@@ -86,6 +81,7 @@ export function SwipeableCardDeck({
 		setShowPicker(false);
 		onQualitySelect(card.id, direction, quality);
 		resetPending();
+		if (currentIndex + 1 >= cards.length) onComplete?.();
 	}
 
 	function handleQualityTimeout() {
@@ -96,6 +92,7 @@ export function SwipeableCardDeck({
 		setShowPicker(false);
 		onSwipeEnd(card.id, direction);
 		resetPending();
+		if (currentIndex + 1 >= cards.length) onComplete?.();
 	}
 
 	function handleUndo() {

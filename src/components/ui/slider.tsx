@@ -37,11 +37,10 @@ function Slider({
 						className="select-none bg-primary data-horizontal:h-full data-vertical:w-full"
 					/>
 				</SliderPrimitive.Track>
-				{Array.from({ length: _values.length }, (_, index) => (
+				{Array.from({ length: _values.length }, () => (
 					<SliderPrimitive.Thumb
 						data-slot="slider-thumb"
-						// biome-ignore lint/suspicious/noArrayIndexKey: slider thumbs, index is stable
-						key={index}
+						key={crypto.randomUUID()}
 						className="relative block size-3 shrink-0 select-none rounded-md border border-ring bg-background ring-ring/30 transition-[color,box-shadow] after:absolute after:-inset-2 hover:ring-2 focus-visible:outline-hidden focus-visible:ring-2 active:ring-2 disabled:pointer-events-none disabled:opacity-50"
 					/>
 				))}

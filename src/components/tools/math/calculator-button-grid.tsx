@@ -11,12 +11,8 @@ interface ButtonGridProps {
 export function ButtonGrid({ onButtonClick }: ButtonGridProps) {
 	return (
 		<div className="flex flex-1 flex-col gap-1.5">
-			{ROWS.map((row, rowIndex) => (
-				<div
-					// biome-ignore lint/suspicious/noArrayIndexKey: static keyboard rows
-					key={rowIndex}
-					className="grid flex-none grid-cols-5 gap-1.5"
-				>
+			{ROWS.map((row) => (
+				<div key={row[0].id} className="grid flex-none grid-cols-5 gap-1.5">
 					{row.map((btn) => (
 						<Button
 							key={btn.id}

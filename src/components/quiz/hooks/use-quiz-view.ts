@@ -26,14 +26,6 @@ export function useQuizView({
 		suggestedDifficulty?: Difficulty;
 	}>({});
 	const [resolvedTopic, setResolvedTopic] = useState<string | undefined>(topic);
-	const prevTopicRef = useRef(topic);
-
-	if (topic !== prevTopicRef.current) {
-		prevTopicRef.current = topic;
-		setResolvedTopic(topic);
-	}
-
-	const hasAutoStarted = useRef(false);
 
 	const engineParams = useMemo(
 		() => ({
@@ -136,40 +128,22 @@ export function useQuizView({
 	);
 
 	// Auto-start when a subject is provided via URL params
+	const handleStartRef = useRef(handleStartWithSubject);
+	handleStartRef.current = handleStartWithSubject;
+	const hasAutoStarted = useRef(false);
 	useEffect(() => {
 		if (initialSubject && !hasAutoStarted.current) {
 			hasAutoStarted.current = true;
-			handleStartWithSubject(initialSubject);
+			handleStartRef.current(initialSubject);
 		}
-	}, [initialSubject, handleStartWithSubject]);
+	}, [initialSubject]);
 
+	// Start the quiz session when questions are loaded
 	useEffect(() => {
 		if (sessionActive && questions.length > 0 && !state.isComplete) {
 			actions.start();
 		}
-	}, [sessionActive, questions.length, state.isComplete, actions]);
-
-	const prevComplete = useRef(state.isComplete);
-	useEffect(() => {
-		if (state.isComplete && !prevComplete.current) {
-			onFinish?.({
-				questions: state.questions,
-				correctness: state.correctness,
-				correctAnswers: state.correctAnswers,
-				totalQuestions: state.totalQuestions,
-				elapsedTime: state.elapsedTime,
-			});
-		}
-		prevComplete.current = state.isComplete;
-	}, [
-		state.isComplete,
-		state.questions,
-		state.correctness,
-		state.correctAnswers,
-		state.totalQuestions,
-		state.elapsedTime,
-		onFinish,
-	]);
+	}, [sessionActive, questions, state.isComplete, actions]);
 
 	const handleStop = useCallback(() => {
 		setSessionActive(false);
@@ -182,10 +156,23 @@ export function useQuizView({
 		setCurrentAnswered(false);
 	}, [actions]);
 
+	const stateRef = useRef(state);
+	stateRef.current = state;
+
 	const handleNext = useCallback(() => {
+		const wasLastQuestion = currentIndex >= stateRef.current.totalQuestions - 1;
 		actions.next();
 		setCurrentAnswered(false);
-	}, [actions]);
+		if (wasLastQuestion) {
+			onFinish?.({
+				questions: stateRef.current.questions,
+				correctness: stateRef.current.correctness,
+				correctAnswers: stateRef.current.correctAnswers,
+				totalQuestions: stateRef.current.totalQuestions,
+				elapsedTime: stateRef.current.elapsedTime,
+			});
+		}
+	}, [actions, currentIndex, onFinish]);
 
 	const handlePrevious = useCallback(() => {
 		actions.previous();

@@ -6,6 +6,8 @@ import {
 	type ReactNode,
 	type SetStateAction,
 	use,
+	useCallback,
+	useMemo,
 	useState,
 } from "react";
 
@@ -20,10 +22,12 @@ const LessonCardContext = createContext<LessonCardContextValue | null>(null);
 export function LessonCardProvider({ children }: { children: ReactNode }) {
 	const [openId, setOpenId] = useState<string | null>(null);
 
-	const isOpen = (id: string) => openId === id;
+	const isOpen = useCallback((id: string) => openId === id, [openId]);
 
 	return (
-		<LessonCardContext.Provider value={{ openId, setOpenId, isOpen }}>
+		<LessonCardContext.Provider
+			value={useMemo(() => ({ openId, setOpenId, isOpen }), [openId, isOpen])}
+		>
 			{children}
 		</LessonCardContext.Provider>
 	);

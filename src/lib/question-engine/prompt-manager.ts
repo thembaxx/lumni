@@ -2,11 +2,9 @@ import {
 	getCompetencyDescription,
 	mapCompetencyToBloomList,
 } from "./competency-mapper";
-import {
-	buildGeneratePrompt,
-	buildGradePrompt,
-	buildHintPrompt,
-} from "./prompts";
+import { buildGeneratePrompt } from "./prompts/generate";
+import { buildGradePrompt } from "./prompts/grade";
+import { buildHintPrompt } from "./prompts/hint";
 import type { GenerationParams, QuestionType } from "./types";
 
 export interface PromptTemplate {

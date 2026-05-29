@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback } from "react";
 import { QuestionRatingsDashboard } from "@/components/admin/question-ratings-dashboard";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -18,17 +18,18 @@ import {
 } from "@/lib/utils/engine-quality";
 
 function Timestamp({ time }: { time: string | number }) {
-	const [label, setLabel] = useState("");
-
-	useEffect(() => {
-		setLabel(new Date(time).toLocaleTimeString());
-	}, [time]);
-
 	return (
-		<span className={cn("text-muted-foreground")}>{label || "Loading..."}</span>
+		<span className={cn("text-muted-foreground")}>
+			{new Date(time).toLocaleTimeString()}
+		</span>
 	);
 }
 
+// TODO(react-doctor): Extract StatsCardsGrid into separate component (~180 lines)
+// TODO(react-doctor): Extract RequestsBreakdownCard into separate component (~40 lines)
+// TODO(react-doctor): Extract QualityByTypeCard into separate component (~60 lines)
+// TODO(react-doctor): Extract RecentEventsCard into separate component (~65 lines)
+// TODO(react-doctor): Extract RecentQualityRecordsCard into separate component (~65 lines)
 export default function AdminQualityPage() {
 	const { data: quality = getQualityStats() } = useQuery({
 		queryKey: ["engine-quality", "stats"],

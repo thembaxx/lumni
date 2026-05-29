@@ -3,7 +3,13 @@
 import { RadialIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+	useCallback,
+	useEffect,
+	useEffectEvent,
+	useRef,
+	useState,
+} from "react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { useRouter } from "@/i18n/navigation";
@@ -38,14 +44,17 @@ export function LoadingScreen({
 		timeoutRef.current = setTimeout(() => replace(redirectTo), 400);
 	}, [replace, redirectTo]);
 
+	const redirectEvent = useEffectEvent(redirect);
+
 	const handleManualEnter = () => {
 		setProgress(100);
 		redirect();
 	};
 
 	useEffect(() => {
+		const ref = timeoutRef;
 		return () => {
-			if (timeoutRef.current) clearTimeout(timeoutRef.current);
+			if (ref.current) clearTimeout(ref.current);
 		};
 	}, []);
 
@@ -72,17 +81,18 @@ export function LoadingScreen({
 			if (targetProgress < 100) {
 				frameId = requestAnimationFrame(animate);
 			} else {
-				setTimeout(redirect, 300);
+				setTimeout(redirectEvent, 300);
 			}
 		};
 
 		frameId = requestAnimationFrame(animate);
 
+		const ref = timeoutRef;
 		return () => {
 			cancelAnimationFrame(frameId);
-			if (timeoutRef.current) clearTimeout(timeoutRef.current);
+			if (ref.current) clearTimeout(ref.current);
 		};
-	}, [duration, authReady, redirect]);
+	}, [duration, authReady]);
 
 	useEffect(() => {
 		const timer = setTimeout(() => {

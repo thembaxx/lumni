@@ -27,7 +27,7 @@ export type AnimationPreset =
 	| "rotate"
 	| "sway";
 
-export const iconAnimations = {
+const iconAnimations = {
 	spin: {
 		rotate: 360,
 		transition: { duration: 1, repeat: Infinity, ease: "linear" },
@@ -97,7 +97,7 @@ const animationMapping: Record<string, IconMappingEntry> = {
 
 export type LottieAnimationName = keyof typeof animationMapping;
 
-export function getIconMapping(name: string): IconMappingEntry | undefined {
+function getIconMapping(name: string): IconMappingEntry | undefined {
 	return animationMapping[name];
 }
 

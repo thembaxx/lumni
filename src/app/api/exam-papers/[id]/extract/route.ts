@@ -84,16 +84,18 @@ export async function POST(
 		const dbLib = await import("@/lib/db/client");
 
 		const stored: string[] = [];
-		for (const q of questions) {
-			try {
-				await dbLib.createDocument(dbLib.COLLECTIONS.PAST_PAPER_QUESTIONS, {
-					...q,
-					userId,
-				});
-				stored.push(q.id);
-			} catch {
-				// Skip duplicates silently
-			}
+		const results = await Promise.allSettled(
+			questions.map((q) =>
+				dbLib
+					.createDocument(dbLib.COLLECTIONS.PAST_PAPER_QUESTIONS, {
+						...q,
+						userId,
+					})
+					.then(() => q.id),
+			),
+		);
+		for (const r of results) {
+			if (r.status === "fulfilled") stored.push(r.value);
 		}
 
 		try {

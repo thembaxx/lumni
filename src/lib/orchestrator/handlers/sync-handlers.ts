@@ -128,54 +128,57 @@ export const appwriteFlashcardPull: JobHandler = async (payload) => {
 				: "0";
 		const lastSync = Number.parseInt(lastSyncStr, 10) || 0;
 
-		const remoteCards = await listDocuments<Record<string, unknown>>(
-			COLLECTIONS.FLASHCARDS,
-			lastSync > 0
-				? [Query.greaterThan("updatedAt", new Date(lastSync).toISOString())]
-				: [],
+		const [remoteCards, { offlineDB: db }] = await Promise.all([
+			listDocuments<Record<string, unknown>>(
+				COLLECTIONS.FLASHCARDS,
+				lastSync > 0
+					? [Query.greaterThan("updatedAt", new Date(lastSync).toISOString())]
+					: [],
+			),
+			import("@/lib/db/schema").then((m) => ({ offlineDB: m.offlineDB })),
+		]);
+
+		await Promise.all(
+			remoteCards.map(async (remote) => {
+				const remoteUpdatedAt = new Date(
+					(remote.updatedAt as string) || 0,
+				).getTime();
+				const localCard = await db.flashcards.get(remote.flashcardId as string);
+
+				if (localCard?.updatedAt && localCard.updatedAt > remoteUpdatedAt) {
+					return;
+				}
+
+				await db.flashcards.put({
+					id: remote.flashcardId as string,
+					front: (remote.front as string) || "",
+					back: (remote.back as string) || "",
+					subject: (remote.subject as string) || "",
+					topic: (remote.topic as string) || undefined,
+					easeFactor: (remote.easeFactor as number) || 2.5,
+					interval: (remote.interval as number) || 0,
+					repetitions: (remote.repetitions as number) || 0,
+					nextReview: new Date(
+						(remote.nextReview as string) || Date.now(),
+					).getTime(),
+					lastReview: remote.lastReview
+						? new Date(remote.lastReview as string).getTime()
+						: null,
+					createdAt: new Date(
+						(remote.createdAt as string) || Date.now(),
+					).getTime(),
+					updatedAt: remoteUpdatedAt || Date.now(),
+					algorithm: (remote.algorithm as "sm2" | "fsrs") || "fsrs",
+					stability: (remote.stability as number) || 0,
+					difficulty: (remote.difficulty as number) || 5,
+					status:
+						(remote.status as "active" | "buried" | "suspended") || "active",
+					lapses: (remote.lapses as number) || 0,
+					learningStep: (remote.learningStep as number) || -1,
+					leeched: (remote.leeched as boolean) || false,
+				});
+			}),
 		);
-
-		const { offlineDB: db } = await import("@/lib/db/schema");
-
-		for (const remote of remoteCards) {
-			const remoteUpdatedAt = new Date(
-				(remote.updatedAt as string) || 0,
-			).getTime();
-			const localCard = await db.flashcards.get(remote.flashcardId as string);
-
-			if (localCard?.updatedAt && localCard.updatedAt > remoteUpdatedAt) {
-				continue;
-			}
-
-			await db.flashcards.put({
-				id: remote.flashcardId as string,
-				front: (remote.front as string) || "",
-				back: (remote.back as string) || "",
-				subject: (remote.subject as string) || "",
-				topic: (remote.topic as string) || undefined,
-				easeFactor: (remote.easeFactor as number) || 2.5,
-				interval: (remote.interval as number) || 0,
-				repetitions: (remote.repetitions as number) || 0,
-				nextReview: new Date(
-					(remote.nextReview as string) || Date.now(),
-				).getTime(),
-				lastReview: remote.lastReview
-					? new Date(remote.lastReview as string).getTime()
-					: null,
-				createdAt: new Date(
-					(remote.createdAt as string) || Date.now(),
-				).getTime(),
-				updatedAt: remoteUpdatedAt || Date.now(),
-				algorithm: (remote.algorithm as "sm2" | "fsrs") || "fsrs",
-				stability: (remote.stability as number) || 0,
-				difficulty: (remote.difficulty as number) || 5,
-				status:
-					(remote.status as "active" | "buried" | "suspended") || "active",
-				lapses: (remote.lapses as number) || 0,
-				learningStep: (remote.learningStep as number) || -1,
-				leeched: (remote.leeched as boolean) || false,
-			});
-		}
 
 		if (typeof window !== "undefined") {
 			localStorage.setItem("lumni_flashcard_last_sync", String(Date.now()));
@@ -192,9 +195,11 @@ export const appwriteFlashcardDelete: JobHandler = async (payload) => {
 			COLLECTIONS.FLASHCARDS,
 			[Query.equal("flashcardId", data.id)],
 		);
-		for (const doc of existing) {
-			await deleteDocument(COLLECTIONS.FLASHCARDS, doc.$id as string);
-		}
+		await Promise.all(
+			existing.map((doc) =>
+				deleteDocument(COLLECTIONS.FLASHCARDS, doc.$id as string),
+			),
+		);
 	} catch (e) {
 		console.warn("[FlashcardDelete] failed:", e);
 	}
@@ -342,9 +347,11 @@ export const appwriteBookmarkDelete: JobHandler = async (payload) => {
 		COLLECTIONS.BOOKMARKS,
 		[Query.equal("questionId", data.questionId)],
 	);
-	for (const doc of existing) {
-		await deleteDocument(COLLECTIONS.BOOKMARKS, doc.$id as string);
-	}
+	await Promise.all(
+		existing.map((doc) =>
+			deleteDocument(COLLECTIONS.BOOKMARKS, doc.$id as string),
+		),
+	);
 };
 
 export const appwriteHandlers: Partial<Record<string, JobHandler>> = {

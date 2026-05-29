@@ -20,6 +20,7 @@ import { flashcardEngine } from "@/lib/flashcard-engine";
 import type { FlashcardSM2 } from "@/lib/flashcard-engine/types";
 import { downloadCSV, parseCSV } from "@/lib/utils/flashcard-import-export";
 
+// TODO(react-doctor): Refactor multiple useState calls into useReducer
 export default function FlashcardBrowsePage() {
 	const t = useTranslations();
 	const [cards, setCards] = useState<FlashcardSM2[]>([]);
@@ -29,9 +30,9 @@ export default function FlashcardBrowsePage() {
 	const [loading, setLoading] = useState(true);
 	const [importing, setImporting] = useState(false);
 	const [page, setPage] = useState(0);
-	const [mounted, setMounted] = useState(false);
+	const [now, setNow] = useState(0);
 	useEffect(() => {
-		setMounted(true);
+		setNow(Date.now());
 	}, []);
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const PAGE_SIZE = 20;
@@ -214,18 +215,16 @@ export default function FlashcardBrowsePage() {
 												<span className="rounded bg-muted/30 px-1.5 py-0.5 text-[10px] text-muted-foreground">
 													{t("flashcards.interval")}: {card.interval}d
 												</span>
-												{mounted ? (
-													card.nextReview > Date.now() ? (
-														<span className="rounded bg-green-500/10 px-1.5 py-0.5 text-[10px] text-green-600">
-															{t("flashcards.dueLabel")}{" "}
-															{new Date(card.nextReview).toLocaleDateString()}
-														</span>
-													) : (
-														<span className="rounded bg-amber-500/10 px-1.5 py-0.5 text-[10px] text-amber-600">
-															{t("flashcards.overdue")}
-														</span>
-													)
-												) : null}
+												{card.nextReview > now ? (
+													<span className="rounded bg-green-500/10 px-1.5 py-0.5 text-[10px] text-green-600">
+														{t("flashcards.dueLabel")}{" "}
+														{new Date(card.nextReview).toLocaleDateString()}
+													</span>
+												) : (
+													<span className="rounded bg-amber-500/10 px-1.5 py-0.5 text-[10px] text-amber-600">
+														{t("flashcards.overdue")}
+													</span>
+												)}
 											</div>
 										</div>
 										<Button

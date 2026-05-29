@@ -101,27 +101,26 @@ const iconTransition =
 export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 	const [pdfState, dispatchPdf] = useReducer(pdfReducer, initialPdfState);
 	const { pdfPage, totalPages, isLoading, error, scale } = pdfState;
-	const [workerReady, setWorkerReady] = useState(false);
+	const [workerReady] = useState(() => {
+		pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
+		return true;
+	});
 	const [isFullscreen, setIsFullscreen] = useState(false);
 	const containerRef = useRef<HTMLDivElement>(null);
-	const initRef = useRef(false);
 
 	const cachedUrl = useCachedPdfUrl(exam.id);
 	const pdfUrl =
 		cachedUrl || exam.fileUrl || exam.src || exam.localPath || exam.url;
 
-	useEffect(() => {
-		if (initRef.current) return;
-		initRef.current = true;
-		pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
-		setWorkerReady(true);
-	}, []);
-
-	useEffect(() => {
-		if (!open) {
-			dispatchPdf({ type: "RESET" });
-		}
-	}, [open]);
+	const handleOpenChange = useCallback(
+		(next: boolean) => {
+			if (!next) {
+				dispatchPdf({ type: "RESET" });
+			}
+			onOpenChange(next);
+		},
+		[onOpenChange],
+	);
 
 	useEffect(() => {
 		const handleFullscreenChange = () => {
@@ -179,7 +178,7 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 	const zoomPercent = Math.round(scale * 100);
 
 	return (
-		<Dialog open={open} onOpenChange={onOpenChange}>
+		<Dialog open={open} onOpenChange={handleOpenChange}>
 			<DialogContent
 				ref={containerRef}
 				showCloseButton={false}

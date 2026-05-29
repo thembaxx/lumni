@@ -462,23 +462,20 @@ export async function deleteGroup(
 		if (group.createdBy !== userId)
 			return failure("Only the creator can delete the group");
 
-		const members = await listDocuments<GroupMember>(
-			COLLECTIONS.GROUP_MEMBERS,
-			[`groupId=${groupId}`],
-		);
-		await Promise.all(
-			members.map((m) => deleteDocument(COLLECTIONS.GROUP_MEMBERS, m.$id)),
-		);
+		const [members, invites] = await Promise.all([
+			listDocuments<GroupMember>(COLLECTIONS.GROUP_MEMBERS, [
+				`groupId=${groupId}`,
+			]),
+			listDocuments<GroupInvite>(COLLECTIONS.GROUP_INVITES, [
+				`groupId=${groupId}`,
+			]),
+		]);
 
-		const invites = await listDocuments<GroupInvite>(
-			COLLECTIONS.GROUP_INVITES,
-			[`groupId=${groupId}`],
-		);
-		await Promise.all(
-			invites.map((i) => deleteDocument(COLLECTIONS.GROUP_INVITES, i.$id)),
-		);
-
-		await deleteDocument(COLLECTIONS.STUDY_GROUPS, groupId);
+		await Promise.all([
+			...members.map((m) => deleteDocument(COLLECTIONS.GROUP_MEMBERS, m.$id)),
+			...invites.map((i) => deleteDocument(COLLECTIONS.GROUP_INVITES, i.$id)),
+			deleteDocument(COLLECTIONS.STUDY_GROUPS, groupId),
+		]);
 		return success(undefined);
 	} catch (err) {
 		return failure(

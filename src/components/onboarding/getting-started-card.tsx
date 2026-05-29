@@ -9,7 +9,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m, useReducedMotion } from "framer-motion";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { FIRST_VISITS_KEY } from "@/components/onboarding/onboarding-provider";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -48,18 +48,16 @@ export function GettingStartedCard() {
 	const { push } = useRouter();
 	const [dismissed, setDismissed] = useState(false);
 	const [collapsing, setCollapsing] = useState(false);
-	const [steps, setSteps] = useState<StepState>(defaultSteps);
-	const [visitsLeft, setVisitsLeft] = useState(3);
-	const shouldReduceMotion = useReducedMotion();
-
-	useEffect(() => {
-		setSteps(loadSteps());
+	const [steps, setSteps] = useState<StepState>(() => loadSteps());
+	const [visitsLeft] = useState(() => {
 		const raw = localStorage.getItem(FIRST_VISITS_KEY);
 		if (raw) {
 			const n = Number.parseInt(raw, 10);
-			setVisitsLeft(Number.isNaN(n) ? 0 : n);
+			return Number.isNaN(n) ? 0 : n;
 		}
-	}, []);
+		return 3;
+	});
+	const shouldReduceMotion = useReducedMotion();
 
 	const allDone = steps.quiz && steps.settings && steps.explore;
 

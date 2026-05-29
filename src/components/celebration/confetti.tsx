@@ -1,7 +1,7 @@
 "use client";
 
 import { m } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 interface ConfettiPiece {
 	id: number;
@@ -34,11 +34,11 @@ export function Confetti({
 	count?: number;
 	duration?: number;
 }) {
-	const [pieces, setPieces] = useState<ConfettiPiece[]>([]);
+	const [showConfetti, setShowConfetti] = useState(false);
 
-	useEffect(() => {
-		if (!trigger) return;
-		const newPieces = Array.from({ length: count }, (_, i) => ({
+	const pieces = useMemo<ConfettiPiece[]>(() => {
+		if (!trigger) return [];
+		return Array.from({ length: count }, (_, i) => ({
 			id: i,
 			x: Math.random() * 100,
 			color:
@@ -51,16 +51,19 @@ export function Confetti({
 				| "square",
 			xOffset: (Math.random() - 0.5) * 30,
 		}));
-		setPieces(newPieces);
 	}, [trigger, count]);
 
 	useEffect(() => {
-		if (pieces.length === 0) return;
-		const timeoutId = setTimeout(() => setPieces([]), duration);
+		if (!trigger) {
+			setShowConfetti(false);
+			return;
+		}
+		setShowConfetti(true);
+		const timeoutId = setTimeout(() => setShowConfetti(false), duration);
 		return () => clearTimeout(timeoutId);
-	}, [pieces, duration]);
+	}, [trigger, duration]);
 
-	if (pieces.length === 0) return null;
+	if (!showConfetti) return null;
 
 	return (
 		<div className="pointer-events-none fixed inset-0 z-modal overflow-hidden">

@@ -64,7 +64,7 @@ function ChartContainer({
 	const chartId = `chart-${id ?? uniqueId.replace(/:/g, "")}`;
 
 	return (
-		<ChartContext.Provider value={{ config }}>
+		<ChartContext.Provider value={React.useMemo(() => ({ config }), [config])}>
 			<div
 				data-slot="chart"
 				data-chart={chartId}
@@ -94,6 +94,7 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
 
 	return (
 		<style
+			// react-doctor will-fix: safe — chart CSS uses internal IDs (useId) and developer-defined config colors only
 			// biome-ignore lint/security/noDangerouslySetInnerHtml: chart CSS injection
 			dangerouslySetInnerHTML={{
 				__html: Object.entries(THEMES)

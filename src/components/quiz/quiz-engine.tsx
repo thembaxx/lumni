@@ -3,7 +3,7 @@
 import { RadialIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { Anim } from "@/components/shared/anim";
 import { ProgressDots } from "@/components/shared/progress-dots";
 import { Card } from "@/components/ui/card";
@@ -67,14 +67,12 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 	});
 
 	const { state, actions } = useQuizSession(questions ?? []);
+	const sessionStarted = useRef(false);
 
-	const prevStarted = useRef(false);
-	useEffect(() => {
-		if (questions.length > 0 && !prevStarted.current) {
-			actions.start();
-			prevStarted.current = true;
-		}
-	}, [questions.length, actions]);
+	if (questions.length > 0 && !sessionStarted.current && !state.isComplete) {
+		sessionStarted.current = true;
+		actions.start();
+	}
 
 	const handleNext = useCallback(() => {
 		actions.next();
@@ -198,7 +196,7 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 							)}
 							onRestart={() => {
 								setIncorrectAnswers([]);
-								prevStarted.current = false;
+								sessionStarted.current = false;
 								actions.restart();
 							}}
 							onClose={handleQuit}

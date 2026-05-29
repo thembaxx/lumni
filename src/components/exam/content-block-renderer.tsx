@@ -114,12 +114,10 @@ export function ContentBlockRenderer({ block }: ContentBlockRendererProps) {
 							</TableRow>
 						</TableHeader>
 						<TableBody>
-							{rows.map((row, ri) => (
-								// biome-ignore lint/suspicious/noArrayIndexKey: table rows are positional
-								<TableRow key={ri}>
-									{row.map((cell, ci) => (
-										// biome-ignore lint/suspicious/noArrayIndexKey: table cells are positional
-										<TableCell key={ci}>
+							{rows.map((row) => (
+								<TableRow key={crypto.randomUUID()}>
+									{row.map((cell) => (
+										<TableCell key={crypto.randomUUID()}>
 											{cell !== null && cell !== undefined ? String(cell) : ""}
 										</TableCell>
 									))}

@@ -41,7 +41,7 @@ const SnapFab = dynamic(() =>
 	})),
 );
 
-async function UTSSR() {
+async function Utssr() {
 	await connection();
 	return <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />;
 }
@@ -161,12 +161,13 @@ export default function LocaleLayout({
 				Skip to content
 			</a>
 			<Suspense fallback={<CardSkeleton />}>
-				<UTSSR />
+				<Utssr />
 			</Suspense>
 			<Script
 				id="json-ld"
 				type="application/ld+json"
 				strategy="afterInteractive"
+				// react-doctor will-fix: JSON-LD structured data is static, no user input
 				// biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD structured data (static, no user input)
 				dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
 			/>

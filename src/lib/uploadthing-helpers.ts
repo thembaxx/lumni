@@ -1,3 +1,3 @@
-import { openUploadDialog } from "@/components/upload/upload-dialog-renderer";
+import { openUploadDialog } from "@/lib/upload-dialog";
 
 export { openUploadDialog };

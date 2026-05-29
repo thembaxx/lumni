@@ -76,6 +76,7 @@ export function TabSwitcher({
 				<div
 					ref={listRef}
 					role="tablist"
+					tabIndex={0}
 					onKeyDown={handleKeyDown}
 					className={cn(
 						variant === "tabs"

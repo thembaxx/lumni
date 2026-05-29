@@ -27,6 +27,7 @@ const ALL_SUBJECTS = [
 	"MusicNote",
 ].toSorted();
 
+// TODO(react-doctor): Refactor multiple useState calls into useReducer
 export default function DevVisualPage() {
 	const [subject, setSubject] = useState("mathematics");
 	const [topic, setTopic] = useState("algebra");

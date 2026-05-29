@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { loadFromStorage, saveToStorage } from "@/lib/utils/storage";
 
 export interface OnboardingData {
@@ -59,14 +59,8 @@ export function resetOnboardingData(): void {
 }
 
 export function useOnboarding(): UseOnboardingReturn {
-	const [data, setData] = useState<OnboardingData>(DEFAULT_ONBOARDING);
-	const [isLoaded, setIsLoaded] = useState(false);
-
-	useEffect(() => {
-		const stored = loadOnboardingData();
-		setData(stored);
-		setIsLoaded(true);
-	}, []);
+	const [data, setData] = useState<OnboardingData>(() => loadOnboardingData());
+	const [isLoaded] = useState(true);
 
 	const isOnboarding = isLoaded && !data.isComplete;
 
@@ -132,26 +126,24 @@ export function useOnboarding(): UseOnboardingReturn {
 }
 
 export function useOnboardingCheck(): { shouldShow: boolean; reason?: string } {
-	const [result, setResult] = useState<{
+	const [result] = useState<{
 		shouldShow: boolean;
 		reason?: string;
-	}>({ shouldShow: false });
-
-	useEffect(() => {
-		if (typeof window === "undefined") return;
+	}>(() => {
+		if (typeof window === "undefined") return { shouldShow: false };
 
 		const data = loadOnboardingData();
 		if (!data.isComplete) {
-			setResult({ shouldShow: true });
-			return;
+			return { shouldShow: true };
 		}
 
 		const hasProgress = localStorage.getItem("lumni_user_progress");
 		if (!hasProgress) {
-			setResult({ shouldShow: true, reason: "No progress yet" });
-			return;
+			return { shouldShow: true, reason: "No progress yet" };
 		}
-	}, []);
+
+		return { shouldShow: false };
+	});
 
 	return result;
 }

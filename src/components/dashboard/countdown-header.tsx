@@ -1,7 +1,7 @@
 "use client";
 
 import { m, useReducedMotion } from "framer-motion";
-import { useEffect, useReducer, useRef, useState } from "react";
+import { useEffect, useReducer, useRef, useSyncExternalStore } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAppwriteSession } from "@/hooks/use-appwrite-session";
 import { cn } from "@/lib/shared";
@@ -195,8 +195,8 @@ export function CountdownHeader() {
 		yearProgress: 0,
 	});
 	const { mounted, daysLeft, yearProgress } = cdState;
-	const [isCompact, setIsCompact] = useState(false);
 	const sentinelRef = useRef<HTMLDivElement>(null);
+	const isCompactRef = useRef(false);
 	const shouldReduceMotion = useReducedMotion();
 
 	const greeting = mounted ? greetingMap[getTimeOfDay()] : "Good";
@@ -207,6 +207,29 @@ export function CountdownHeader() {
 		: { primary: "", subtitle: "" };
 	const cfg = phaseConfigs[phase];
 	const milestone = mounted ? getMilestone(daysLeft) : null;
+
+	const isCompact = useSyncExternalStore(
+		(onStoreChange) => {
+			const el = sentinelRef.current;
+			if (!el) return () => {};
+			const container = el.closest("[data-scroll-container]") ?? null;
+			const observer = new IntersectionObserver(
+				([entry]) => {
+					isCompactRef.current = entry.boundingClientRect.top < 0;
+					onStoreChange();
+				},
+				{
+					root: container,
+					rootMargin: "-1px 0px 0px 0px",
+					threshold: 0,
+				},
+			);
+			observer.observe(el);
+			return () => observer.disconnect();
+		},
+		() => isCompactRef.current,
+		() => false,
+	);
 
 	useEffect(() => {
 		dispatchCd({ type: "MOUNT" });
@@ -224,25 +247,6 @@ export function CountdownHeader() {
 			return () => clearInterval(interval);
 		}, msUntilMidnight);
 		return () => clearTimeout(timeout);
-	}, []);
-
-	useEffect(() => {
-		const el = sentinelRef.current;
-		if (!el) return;
-
-		const container = el.closest("[data-scroll-container]") ?? null;
-		const observer = new IntersectionObserver(
-			([entry]) => {
-				setIsCompact(entry.boundingClientRect.top < 0);
-			},
-			{
-				root: container,
-				rootMargin: "-1px 0px 0px 0px",
-				threshold: 0,
-			},
-		);
-		observer.observe(el);
-		return () => observer.disconnect();
 	}, []);
 
 	const headerVariants = {

@@ -35,8 +35,8 @@ export default function AdminPastPapersPage() {
 		refetchInterval: 15000,
 	});
 
-	const subjects = [...new Set(questions.map((q) => q.subject))].sort();
-	const types = [...new Set(questions.map((q) => q.questionType))].sort();
+	const subjects = [...new Set(questions.map((q) => q.subject))].toSorted();
+	const types = [...new Set(questions.map((q) => q.questionType))].toSorted();
 
 	return (
 		<div

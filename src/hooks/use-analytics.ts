@@ -14,19 +14,21 @@ export type {
 
 export function useAnalytics() {
 	const [analytics, setAnalytics] = useState<OverallAnalytics | null>(null);
-	const [isLoading, setIsLoading] = useState(true);
+	const [hasLoaded, setHasLoaded] = useState(false);
 
 	const refresh = useCallback(() => {
-		setIsLoading(true);
+		setHasLoaded(false);
 		analyticsEngine
 			.compute()
 			.then(setAnalytics)
-			.finally(() => setIsLoading(false));
+			.finally(() => setHasLoaded(true));
 	}, []);
 
 	useEffect(() => {
 		refresh();
 	}, [refresh]);
+
+	const isLoading = !hasLoaded;
 
 	return {
 		analytics,

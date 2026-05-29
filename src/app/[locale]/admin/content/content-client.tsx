@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -65,16 +65,12 @@ export function ContentClient() {
 		(f) => statusFilter === "all" || f.status === statusFilter,
 	);
 
-	const [formattedDates, setFormattedDates] = useState<Record<string, string>>(
-		{},
-	);
-
-	useEffect(() => {
+	const formattedDates = useMemo(() => {
 		const nextDates: Record<string, string> = {};
 		flags.forEach((flag) => {
 			nextDates[flag.$id] = new Date(flag.createdAt).toLocaleDateString();
 		});
-		setFormattedDates(nextDates);
+		return nextDates;
 	}, [flags]);
 
 	const reasonColors: Record<string, string> = {

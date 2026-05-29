@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useEffectEvent, useRef, useState } from "react";
 import { SM2_QUALITIES } from "@/lib/flashcard-engine";
 import { cn } from "@/lib/shared";
 
@@ -17,6 +17,7 @@ export function QualityPicker({
 }: QualityPickerProps) {
 	const [selected, setSelected] = useState<number | null>(null);
 	const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+	const onTimeoutEvent = useEffectEvent(onTimeout);
 
 	const qualities =
 		polarity === "correct"
@@ -26,13 +27,13 @@ export function QualityPicker({
 	useEffect(() => {
 		const id = setTimeout(() => {
 			if (selected === null) {
-				onTimeout();
+				onTimeoutEvent();
 			}
 		}, 1500);
 		timerRef.current = id;
 
 		return () => clearTimeout(id);
-	}, [onTimeout, selected]);
+	}, [selected]);
 
 	function handleSelect(quality: number) {
 		if (selected !== null) return;

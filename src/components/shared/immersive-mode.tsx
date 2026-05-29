@@ -1,13 +1,7 @@
 "use client";
 
 import { m } from "framer-motion";
-import {
-	createContext,
-	useCallback,
-	useContext,
-	useMemo,
-	useState,
-} from "react";
+import { createContext, use, useCallback, useMemo, useState } from "react";
 import { iOSDecelerate } from "@/lib/utils/animation";
 
 interface ImmersiveModeContextValue {
@@ -51,7 +45,7 @@ export function ImmersiveModeProvider({
 }
 
 export function useImmersiveMode() {
-	return useContext(ImmersiveModeContext);
+	return use(ImmersiveModeContext);
 }
 
 function ExitFullscreenButton({ onClick }: { onClick: () => void }) {

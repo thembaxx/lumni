@@ -21,10 +21,10 @@ async function generateHandler(req: Request): Promise<NextResponse> {
 			);
 		}
 
-		const { QuestionEngine } = await import(
-			"@/lib/question-engine/question-engine"
-		);
-		const { quizPackService } = await import("@/lib/quiz-packs");
+		const [{ QuestionEngine }, { quizPackService }] = await Promise.all([
+			import("@/lib/question-engine/question-engine"),
+			import("@/lib/quiz-packs"),
+		]);
 
 		const engine = await QuestionEngine.initialize();
 		const topicParam = topic && typeof topic === "string" ? topic : undefined;

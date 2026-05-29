@@ -23,13 +23,16 @@ export function EditableField({
 	icon,
 }: EditableFieldProps) {
 	const [editing, setEditing] = useState(false);
-	const [draft, setDraft] = useState(value);
+	const [draft, setDraft] = useState("");
 	const [saving, setSaving] = useState(false);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const previousValue = useRef(value);
 
 	useEffect(() => {
-		setDraft(value);
+		if (value !== previousValue.current) {
+			previousValue.current = value;
+			setDraft(value);
+		}
 	}, [value]);
 
 	useEffect(() => {

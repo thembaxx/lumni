@@ -22,6 +22,7 @@ export function ProfileTabRefactored() {
 	const { user, updateProfile, signOut } = useAuth();
 	const [name, setName] = useState(user?.name || "");
 	const [isUploading, setIsUploading] = useState(false);
+	const [exportDate] = useState(() => new Date().toISOString().split("T")[0]);
 
 	const initials =
 		name
@@ -95,7 +96,7 @@ export function ProfileTabRefactored() {
 							const url = URL.createObjectURL(blob);
 							const a = document.createElement("a");
 							a.href = url;
-							a.download = `lumni-progress-${new Date().toISOString().split("T")[0]}.csv`;
+							a.download = `lumni-progress-${exportDate}.csv`;
 							a.click();
 							URL.revokeObjectURL(url);
 						},
@@ -116,7 +117,7 @@ export function ProfileTabRefactored() {
 								const url = URL.createObjectURL(blob);
 								const a = document.createElement("a");
 								a.href = url;
-								a.download = `lumni-flashcards-${new Date().toISOString().split("T")[0]}.json`;
+								a.download = `lumni-flashcards-${exportDate}.json`;
 								a.click();
 								URL.revokeObjectURL(url);
 							} catch (e) {

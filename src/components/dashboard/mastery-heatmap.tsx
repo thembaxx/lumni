@@ -74,7 +74,7 @@ export function MasteryHeatmap() {
 		enabled: !!selectedSubject,
 	});
 
-	const topics = [...new Set(competencies.map((c) => c.topicId))].sort();
+	const topics = [...new Set(competencies.map((c) => c.topicId))].toSorted();
 	const overallByTopic = topics.map((topic) => {
 		const topicComps = competencies.filter((c) => c.topicId === topic);
 		const avgScore =
@@ -180,7 +180,7 @@ export function MasteryHeatmap() {
 															</div>
 														) : (
 															<div className="rounded px-2 py-1.5 text-center text-muted-foreground/30">
-																—
+																-
 															</div>
 														)}
 													</td>

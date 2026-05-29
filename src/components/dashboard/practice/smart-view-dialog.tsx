@@ -2,6 +2,7 @@
 
 import { File02Icon } from "@hugeicons/core-free-icons";
 import { useQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeKatex from "rehype-katex";
 import remarkGfm from "remark-gfm";
@@ -44,22 +45,26 @@ export function SmartViewDialog({
 		onViewPdf?.();
 	};
 
+	const headerChildren = useMemo(
+		() =>
+			result && result.source !== "error" ? (
+				<Badge
+					variant="outline"
+					className="shrink-0 px-1.5 text-[9px] capitalize"
+				>
+					{result.source}
+				</Badge>
+			) : undefined,
+		[result],
+	);
+
 	return (
 		<FullscreenDialog
 			open={open}
 			onOpenChange={onOpenChange}
 			title={exam.title}
 			badge={exam.year}
-			headerChildren={
-				result && result.source !== "error" ? (
-					<Badge
-						variant="outline"
-						className="shrink-0 px-1.5 text-[9px] capitalize"
-					>
-						{result.source}
-					</Badge>
-				) : undefined
-			}
+			headerChildren={headerChildren}
 		>
 			<div className="min-h-0 flex-1 overflow-auto">
 				{loading ? (

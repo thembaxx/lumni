@@ -42,6 +42,12 @@ export interface QuizViewProps {
 	className?: string;
 }
 
+// TODO(react-doctor): Extract QuizErrorState into separate component (~40 lines)
+// TODO(react-doctor): Extract QuizSubjectSelection into separate component (~30 lines)
+// TODO(react-doctor): Extract QuizLoadingState into separate component (~45 lines)
+// TODO(react-doctor): Extract QuizResultsState into separate component (~25 lines)
+// TODO(react-doctor): Extract QuizNoQuestionsState into separate component (~25 lines)
+// TODO(react-doctor): Extract DecorativeRightPanel into separate component (repeated ~50 lines)
 export function QuizView({
 	variant = "full",
 	initialSubject,
@@ -313,9 +319,7 @@ export function QuizView({
 				{pastPaperMode && (
 					<div className="flex items-center gap-2 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-amber-600 text-xs dark:text-amber-400">
 						<span>📝</span>
-						<span>
-							Past Paper Mode — questions styled after NSC exam papers
-						</span>
+						<span>Past Paper Mode: questions styled after NSC exam papers</span>
 					</div>
 				)}
 

@@ -23,34 +23,34 @@ export async function flushOfflineData(userId: string): Promise<void> {
 	]);
 
 	await Promise.all([
-		...allProgress
-			.filter(
-				(p) =>
-					p.odSubjectId && (p.questionsAttempted > 0 || p.correctCount > 0),
-			)
-			.map((p) =>
-				enqueue("appwrite-progress-sync", {
-					userId,
-					odSubjectId: p.odSubjectId,
-					questionsAttempted: p.questionsAttempted,
-					correctCount: p.correctCount,
-					currentStreak: p.currentStreak,
-					longestStreak: p.longestStreak,
-				}),
-			),
-		...allAttempts.map(async (a) => {
-			if (!a.userId) {
-				await enqueue("appwrite-attempt-sync", {
-					userId,
-					subjectId: a.odSubject,
-					score: a.score,
-					totalQuestions: a.totalQuestions,
-					duration: a.duration,
-					completedAt: a.completedAt,
-				});
-				await offlineDB.quizAttempts.update(a.id ?? 0, { userId });
-			}
-		}),
+		...allProgress.flatMap((p) =>
+			p.odSubjectId && (p.questionsAttempted > 0 || p.correctCount > 0)
+				? [
+						enqueue("appwrite-progress-sync", {
+							userId,
+							odSubjectId: p.odSubjectId,
+							questionsAttempted: p.questionsAttempted,
+							correctCount: p.correctCount,
+							currentStreak: p.currentStreak,
+							longestStreak: p.longestStreak,
+						}),
+					]
+				: [],
+		),
+		...allAttempts.flatMap((a) =>
+			!a.userId
+				? [
+						enqueue("appwrite-attempt-sync", {
+							userId,
+							subjectId: a.odSubject,
+							score: a.score,
+							totalQuestions: a.totalQuestions,
+							duration: a.duration,
+							completedAt: a.completedAt,
+						}).then(() => offlineDB.quizAttempts.update(a.id ?? 0, { userId })),
+					]
+				: [],
+		),
 		...allCompetencies.map((c) =>
 			enqueue("appwrite-competency-sync", {
 				userId,

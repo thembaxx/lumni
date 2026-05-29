@@ -65,75 +65,74 @@ export async function POST(request: NextRequest) {
 			error?: string;
 		}[] = [];
 
-		for (const doc of papersToExtract) {
-			const docId = doc.$id as string;
-			const fileKeysRaw = doc.fileKeys as string;
-			const fileKeys: Record<string, string> = fileKeysRaw
-				? JSON.parse(fileKeysRaw)
-				: {};
+		const docResults = await Promise.all(
+			papersToExtract.map(async (doc) => {
+				const docId = doc.$id as string;
+				const fileKeysRaw = doc.fileKeys as string;
+				const fileKeys: Record<string, string> = fileKeysRaw
+					? JSON.parse(fileKeysRaw)
+					: {};
 
-			if (!fileKeys.json) {
-				results.push({
-					paperId: docId,
-					subject: (doc.subject as string) || "",
-					status: "skipped",
-					error: "No JSON file available",
-				});
-				continue;
-			}
+				if (!fileKeys.json) {
+					return {
+						paperId: docId,
+						subject: (doc.subject as string) || "",
+						status: "skipped" as const,
+						error: "No JSON file available",
+					};
+				}
 
-			try {
-				const subject = (doc.subject as string) || "";
-				const year = (doc.year as number) || 0;
-				const paperNumberStr = (doc.paperCode as string) || "1";
-				const paperNumber =
-					parseInt(paperNumberStr.replace(/\D/g, ""), 10) || 1;
+				try {
+					const subject = (doc.subject as string) || "";
+					const year = (doc.year as number) || 0;
+					const paperNumberStr = (doc.paperCode as string) || "1";
+					const paperNumber =
+						parseInt(paperNumberStr.replace(/\D/g, ""), 10) || 1;
 
-				const paper = await fetchParsedPaper(docId);
-				if (!paper) {
-					results.push({
+					const paper = await fetchParsedPaper(docId);
+					if (!paper) {
+						return {
+							paperId: docId,
+							subject,
+							status: "error" as const,
+							error: "Failed to fetch parsed JSON",
+						};
+					}
+
+					const questions = extractQuestionsFromPaper(
+						paper,
+						null,
+						subject,
+						year,
+						paperNumber,
+					);
+
+					await Promise.allSettled(
+						questions.map((q) =>
+							createDocument(
+								COLLECTIONS.PAST_PAPER_QUESTIONS,
+								q as unknown as Record<string, unknown>,
+							).catch(() => {}),
+						),
+					);
+
+					return {
 						paperId: docId,
 						subject,
+						status: "success" as const,
+						extracted: questions.length,
+					};
+				} catch (err) {
+					return {
+						paperId: docId,
+						subject: (doc.subject as string) || "",
 						status: "error",
-						error: "Failed to fetch parsed JSON",
-					});
-					continue;
+						error: err instanceof Error ? err.message : "Unknown error",
+					};
 				}
-
-				const questions = extractQuestionsFromPaper(
-					paper,
-					null,
-					subject,
-					year,
-					paperNumber,
-				);
-
-				for (const q of questions) {
-					try {
-						await createDocument(
-							COLLECTIONS.PAST_PAPER_QUESTIONS,
-							q as unknown as Record<string, unknown>,
-						);
-					} catch {
-						// Skip duplicates
-					}
-				}
-
-				results.push({
-					paperId: docId,
-					subject,
-					status: "success",
-					extracted: questions.length,
-				});
-			} catch (err) {
-				results.push({
-					paperId: docId,
-					subject: (doc.subject as string) || "",
-					status: "error",
-					error: err instanceof Error ? err.message : "Unknown error",
-				});
-			}
-		}
+			}),
+		);
+		results.push(...docResults);
 
 		return NextResponse.json({
 			success: true,

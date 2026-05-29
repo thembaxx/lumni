@@ -24,21 +24,23 @@ export function LocalDataNotice({
 	description,
 }: LocalDataNoticeProps) {
 	const { isAnonymous } = useAuth();
-	const [dismissed, setDismissed] = useState(true);
+	const [localDismissed, setLocalDismissed] = useState(true);
 
 	const storageKey = `${DISMISS_PREFIX}_${page}`;
 
 	useEffect(() => {
 		const raw = localStorage.getItem(storageKey);
-		setDismissed(raw === "true" || !isAnonymous);
-	}, [isAnonymous, storageKey]);
+		setLocalDismissed(raw === "true");
+	}, [storageKey]);
+
+	const dismissed = localDismissed || !isAnonymous;
 
 	const handleDismiss = useCallback(() => {
 		localStorage.setItem(storageKey, "true");
-		setDismissed(true);
+		setLocalDismissed(true);
 	}, [storageKey]);
 
-	if (dismissed || !isAnonymous) return null;
+	if (dismissed) return null;
 
 	return (
 		<m.div

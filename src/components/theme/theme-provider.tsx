@@ -4,7 +4,9 @@ import {
 	createContext,
 	type ReactNode,
 	use,
+	useCallback,
 	useEffect,
+	useMemo,
 	useRef,
 	useState,
 } from "react";
@@ -26,14 +28,13 @@ function getSystemTheme(): Theme {
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-	const [theme, setThemeState] = useState<Theme>("system");
+	const [theme, setThemeState] = useState<Theme>(() => {
+		if (typeof window !== "undefined") {
+			return (localStorage.getItem("theme") as Theme) || "system";
+		}
+		return "system";
+	});
 	const mounted = useRef(false);
-
-	useEffect(() => {
-		const stored = localStorage.getItem("theme") as Theme | null;
-		setThemeState(stored || "system");
-		mounted.current = true;
-	}, []);
 
 	useEffect(() => {
 		if (!mounted.current) return;
@@ -59,10 +60,15 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 		return () => mediaQuery.removeEventListener("change", handler);
 	}, [theme]);
 
-	const setTheme = (newTheme: Theme) => setThemeState(newTheme);
+	const setTheme = useCallback(
+		(newTheme: Theme) => setThemeState(newTheme),
+		[],
+	);
 
 	return (
-		<ThemeContext.Provider value={{ theme, setTheme }}>
+		<ThemeContext.Provider
+			value={useMemo(() => ({ theme, setTheme }), [theme, setTheme])}
+		>
 			{children}
 		</ThemeContext.Provider>
 	);

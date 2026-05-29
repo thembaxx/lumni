@@ -1,7 +1,7 @@
 "use client";
 
 import { m } from "framer-motion";
-import { createContext, use, useState } from "react";
+import { createContext, use, useMemo, useState } from "react";
 import { Anim } from "@/components/shared/anim";
 import { iOSEase } from "@/lib/utils/animation";
 
@@ -29,7 +29,9 @@ export function DirectionalTransitionProvider({
 }: DirectionalTransitionProviderProps) {
 	const [direction, setDirection] = useState<"forward" | "back">("forward");
 	return (
-		<DirectionalTransitionContext.Provider value={{ direction, setDirection }}>
+		<DirectionalTransitionContext.Provider
+			value={useMemo(() => ({ direction, setDirection }), [direction])}
+		>
 			{children}
 		</DirectionalTransitionContext.Provider>
 	);

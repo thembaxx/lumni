@@ -27,6 +27,10 @@ export function NationalExamCalendar() {
 	const [allSlots, setAllSlots] = useState<ExamSlot[]>([]);
 	const [selectedExam, setSelectedExam] = useState<ExamSlot | null>(null);
 	const [dialogOpen, setDialogOpen] = useState(false);
+	const [todayStr, setTodayStr] = useState("");
+	useEffect(() => {
+		setTodayStr(new Date().toDateString());
+	}, []);
 
 	const session = useMemo(() => getCurrentSession(), []);
 	const sessionLabel = getSessionLabel(session.session, session.year);
@@ -233,8 +237,7 @@ export function NationalExamCalendar() {
 							</h3>
 							{grouped.map((group, gi) => {
 								const dateObj = new Date(`${group.date}T00:00:00`);
-								const isToday =
-									dateObj.toDateString() === new Date().toDateString();
+								const isToday = dateObj.toDateString() === todayStr;
 								const dayName = dateObj.toLocaleDateString("en-ZA", {
 									weekday: "short",
 								});

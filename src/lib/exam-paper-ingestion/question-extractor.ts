@@ -10,23 +10,25 @@ function extractAnswerText(
 ): string {
 	const parts = memoQuestion.parts || [];
 	return parts
-		.map((p) => {
-			const contentText = p.content
-				?.map((c) => {
-					if (c.type === "text") return c.value || "";
-					if (c.type === "formula") return c.value || "";
-					if (c.type === "table") {
-						return p.table
-							? `${p.table.headers.join(" | ")}\n${p.table.rows.map((r) => r.join(" | ")).join("\n")}`
-							: "";
-					}
-					return "";
-				})
-				.filter(Boolean)
-				.join("\n");
-			return [p.text, contentText].filter(Boolean).join("\n");
+		.flatMap((p) => {
+			const contentText =
+				p.content
+					?.flatMap((c) => {
+						if (c.type === "text") return c.value ? [c.value] : [];
+						if (c.type === "formula") return c.value ? [c.value] : [];
+						if (c.type === "table") {
+							return p.table
+								? [
+										`${p.table.headers.join(" | ")}\n${p.table.rows.map((r) => r.join(" | ")).join("\n")}`,
+									]
+								: [];
+						}
+						return [];
+					})
+					.join("\n") ?? "";
+			const result = [p.text, contentText].filter(Boolean).join("\n");
+			return result ? [result] : [];
 		})
-		.filter(Boolean)
 		.join("\n\n");
 }
 
@@ -38,22 +40,24 @@ function extractQuestionText(
 ): string {
 	const parts = paperQuestion.parts || [];
 	return parts
-		.map((p) => {
-			const contentText = p.content
-				?.map((c) => {
-					if (c.type === "text") return c.value || "";
-					if (c.type === "formula") return c.value || "";
-					if (c.type === "image") return `[Image: ${c.altText || ""}]`;
-					return "";
-				})
-				.filter(Boolean)
-				.join("\n");
+		.flatMap((p) => {
+			const contentText =
+				p.content
+					?.flatMap((c) => {
+						if (c.type === "text") return c.value ? [c.value] : [];
+						if (c.type === "formula") return c.value ? [c.value] : [];
+						if (c.type === "image") return [`[Image: ${c.altText || ""}]`];
+						return [];
+					})
+					.join("\n") ?? "";
 			const optionsText = p.options
 				?.map((o) => `${o.id}: ${o.text}`)
 				.join("\n");
-			return [p.text, contentText, optionsText].filter(Boolean).join("\n");
+			const result = [p.text, contentText, optionsText]
+				.filter(Boolean)
+				.join("\n");
+			return result ? [result] : [];
 		})
-		.filter(Boolean)
 		.join("\n\n");
 }
 

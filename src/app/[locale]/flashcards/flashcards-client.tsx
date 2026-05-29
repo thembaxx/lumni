@@ -34,6 +34,7 @@ interface FlashcardItem {
 
 type FlashcardSource = "ai" | "mistakes";
 
+// TODO(react-doctor): Refactor multiple useState calls into useReducer
 export function FlashcardsClient() {
 	const t = useTranslations();
 	useEffect(() => {

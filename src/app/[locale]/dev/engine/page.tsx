@@ -17,6 +17,7 @@ import { Textarea } from "@/components/ui/textarea";
 import type { GradingResult, Question } from "@/lib/question-engine/types";
 import { apiFetch, showBudgetToast } from "@/lib/shared/api-fetch";
 
+// TODO(react-doctor): Refactor multiple useState calls into useReducer
 export default function DevEnginePage() {
 	const [subject, setSubject] = useState("mathematics");
 	const [topic, setTopic] = useState("algebra");

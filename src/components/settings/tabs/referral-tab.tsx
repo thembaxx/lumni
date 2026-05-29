@@ -6,7 +6,8 @@ import {
 	Tick01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useState } from "react";
+import Image from "next/image";
+import { useMemo, useState } from "react";
 import { ListCell, ListSection } from "@/components/ui/list-cell";
 import { useReferral } from "@/hooks/use-referral";
 import {
@@ -18,6 +19,20 @@ import {
 export function ReferralTab() {
 	const { info, isLoading } = useReferral();
 	const [copied, setCopied] = useState(false);
+
+	const copyLeading = useMemo(
+		() =>
+			copied ? (
+				<HugeiconsIcon icon={Tick01Icon} className="size-4" />
+			) : (
+				<HugeiconsIcon icon={Copy01Icon} className="size-4" />
+			),
+		[copied],
+	);
+	const shareLeading = useMemo(
+		() => <HugeiconsIcon icon={Share07Icon} className="size-4" />,
+		[],
+	);
 
 	if (isLoading) {
 		return (
@@ -77,20 +92,14 @@ export function ReferralTab() {
 
 				<ListCell
 					title={copied ? "Copied!" : "Copy Code"}
-					leading={
-						copied ? (
-							<HugeiconsIcon icon={Tick01Icon} className="size-4" />
-						) : (
-							<HugeiconsIcon icon={Copy01Icon} className="size-4" />
-						)
-					}
+					leading={copyLeading}
 					onClick={handleCopy}
 					showSeparator
 				/>
 
 				<ListCell
 					title="Share Invite Link"
-					leading={<HugeiconsIcon icon={Share07Icon} className="size-4" />}
+					leading={shareLeading}
 					onClick={handleShare}
 					showSeparator={false}
 				/>
@@ -99,10 +108,12 @@ export function ReferralTab() {
 			{/* QR Code Section */}
 			<ListSection header="Share via QR Code">
 				<div className="flex justify-center py-6">
-					{/* biome-ignore lint/performance/noImgElement: external QR code API */}
-					<img
+					<Image
 						src={generateQRDataUrl(info.link)}
 						alt="Referral QR Code"
+						width={160}
+						height={160}
+						unoptimized
 						className="size-40 rounded-xl border border-border/40 outline outline-black/10 -outline-offset-1 dark:outline-white/10"
 					/>
 				</div>

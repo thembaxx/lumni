@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import subjectsData from "@/data/subjects.json";
 import { useAuth } from "@/lib/auth/auth-context";
 import { offlineDB } from "@/lib/db/schema";
@@ -80,55 +80,62 @@ export function useEnrolledSubjects() {
 	const prefs = user?.prefs as Record<string, unknown> | undefined;
 	const prefsSubjects = (prefs?.subjects as string[]) ?? [];
 
-	useEffect(() => {
-		if (
-			!migrated.current &&
-			user &&
-			data &&
-			data.selectedSubjectIds.length === 0 &&
-			prefsSubjects.length > 0
-		) {
-			migrated.current = true;
-			const subjectIds = prefsSubjects
-				.map((name) => {
-					const sub = subjectsData.find(
-						(s) => s.name.toLowerCase() === name.toLowerCase(),
-					);
-					return sub?.id;
-				})
-				.filter(Boolean) as string[];
+	const migratePrefsSubjects = useCallback(async () => {
+		if (!user || !data || data.selectedSubjectIds.length > 0) return;
+		const subjectIds = prefsSubjects.flatMap((name) => {
+			const sub = subjectsData.find(
+				(s) => s.name.toLowerCase() === name.toLowerCase(),
+			);
+			return sub?.id ? [sub.id] : [];
+		}) as string[];
 
-			if (subjectIds.length > 0) {
-				fetch("/api/subjects/enroll", {
+		if (subjectIds.length > 0) {
+			try {
+				await fetch("/api/subjects/enroll", {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({ subjectIds }),
-				})
-					.then(() => {
-						queryClient.invalidateQueries({ queryKey: ["subjects"] });
-					})
-					.catch(() => {});
-			}
+				});
+				queryClient.invalidateQueries({ queryKey: ["subjects"] });
+			} catch {}
 		}
 	}, [user, data, prefsSubjects, queryClient]);
 
-	const subjects = data?.subjects ?? (subjectsData as Subject[]);
-	let selectedIds = data?.selectedSubjectIds ?? [];
-
-	if (!user && selectedIds.length === 0) {
-		const stored = getLocalEnrolledSubjects();
-		if (stored.length > 0) {
-			selectedIds = stored;
+	useEffect(() => {
+		if (!migrated.current && prefsSubjects.length > 0) {
+			migrated.current = true;
+			migratePrefsSubjects();
 		}
-	}
+	}, [migratePrefsSubjects, prefsSubjects]);
 
-	const enrolled = subjects.filter((s) => selectedIds.includes(s.id));
+	const subjects = useMemo(
+		() => data?.subjects ?? (subjectsData as Subject[]),
+		[data?.subjects],
+	);
+	const selectedIds = useMemo(() => {
+		let ids = data?.selectedSubjectIds ?? [];
+		if (!user && ids.length === 0) {
+			const stored = getLocalEnrolledSubjects();
+			if (stored.length > 0) {
+				ids = stored;
+			}
+		}
+		return ids;
+	}, [data?.selectedSubjectIds, user]);
+
+	const enrolled = useMemo(
+		() => subjects.filter((s) => selectedIds.includes(s.id)),
+		[subjects, selectedIds],
+	);
 
 	return {
 		subjects,
 		enrolledSubjects: enrolled,
 		selectedSubjectIds: selectedIds,
-		isEnrolled: (subjectId: string) => selectedIds.includes(subjectId),
+		isEnrolled: useCallback(
+			(subjectId: string) => selectedIds.includes(subjectId),
+			[selectedIds],
+		),
 	};
 }
 
@@ -147,10 +154,10 @@ export function getLocalEnrolledSubjects(): string[] {
 export function saveLocalEnrolledSubjects(subjectIds: string[]): void {
 	if (typeof window === "undefined") return;
 	try {
-		const raw = localStorage.getItem("lumni_onboarding");
+		const raw = localStorage.getItem("lumni_onboarding:v1");
 		const data = raw ? JSON.parse(raw) : {};
 		data.selectedSubjects = subjectIds;
-		localStorage.setItem("lumni_onboarding", JSON.stringify(data));
+		localStorage.setItem("lumni_onboarding:v1", JSON.stringify(data));
 	} catch {}
 }
 

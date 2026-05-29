@@ -25,6 +25,7 @@ function safeRedirect(url: string | null): string {
 	return url;
 }
 
+// TODO(react-doctor): Refactor multiple useState calls into useReducer
 function SignUpForm() {
 	const { push, refresh } = useRouter();
 	const { get } = useSearchParams();

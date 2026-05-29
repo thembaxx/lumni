@@ -12,6 +12,7 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
+import { setOpenUploadHandler } from "@/lib/upload-dialog";
 import type { UploadedFile } from "@/lib/uploadthing";
 import { useUploadThing } from "@/lib/uploadthing";
 import {
@@ -19,17 +20,6 @@ import {
 	UploadFileItem,
 	UploadHeader,
 } from "./upload-file-item";
-
-let openUploadRef:
-	| ((files: File[], endpoint?: "generalUploader") => void)
-	| null = null;
-
-export function openUploadDialog(
-	files: File[],
-	endpoint: "generalUploader" = "generalUploader",
-) {
-	openUploadRef?.(files, endpoint);
-}
 
 export function UploadDialogRenderer({
 	children,
@@ -104,9 +94,7 @@ export function UploadDialogRenderer({
 		}, 50);
 	}, []);
 
-	useEffect(() => {
-		openUploadRef = open;
-	}, [open]);
+	setOpenUploadHandler(open);
 
 	useEffect(() => {
 		if (items.length === 0 || isUploading) return;

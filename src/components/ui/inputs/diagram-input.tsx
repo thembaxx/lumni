@@ -2,6 +2,7 @@
 
 import { CloudUploadIcon, Delete02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import Image from "next/image";
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 
@@ -37,11 +38,13 @@ export function DiagramInput({ value, onChange, disabled }: DiagramInputProps) {
 		<div className="flex flex-col gap-3">
 			{preview ? (
 				<div className="relative inline-block">
-					<img
-						src={preview}
+					<Image
+						src={preview ?? ""}
 						alt="Uploaded diagram"
-						loading="lazy"
-						className="max-h-48 max-w-sm rounded border outline outline-black/10 -outline-offset-1 dark:outline-white/10"
+						width={500}
+						height={192}
+						unoptimized
+						className="max-h-48 max-w-sm rounded border object-contain outline outline-black/10 -outline-offset-1 dark:outline-white/10"
 					/>
 					{!disabled && (
 						<Button

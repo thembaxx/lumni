@@ -2,7 +2,7 @@
 
 import { useParams } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
-import { createContext, useContext } from "react";
+import { createContext, use, useMemo } from "react";
 import type { Locale } from "@/i18n/locales";
 import { isValidLocale } from "@/i18n/locales";
 
@@ -19,7 +19,9 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
 
 	return (
 		<NextIntlClientProvider locale={localeFromPath}>
-			<I18nContext.Provider value={{ setLocale: () => {} }}>
+			<I18nContext.Provider
+				value={useMemo(() => ({ setLocale: () => {} }), [])}
+			>
 				{children}
 			</I18nContext.Provider>
 		</NextIntlClientProvider>
@@ -27,7 +29,7 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
 }
 
 export function useI18nContext() {
-	const ctx = useContext(I18nContext);
+	const ctx = use(I18nContext);
 	if (!ctx) throw new Error("useI18nContext must be used within I18nProvider");
 	return ctx;
 }

@@ -1,7 +1,14 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createContext, use, useCallback, useEffect, useState } from "react";
+import {
+	createContext,
+	use,
+	useCallback,
+	useEffect,
+	useMemo,
+	useState,
+} from "react";
 import { loadFromStorage, saveToStorage } from "@/lib/utils/storage";
 
 const PREMIUM_KEY = "lumni_premium_status";
@@ -136,13 +143,16 @@ export function PremiumProvider({ children }: { children: React.ReactNode }) {
 		verifyPremium();
 	}, [verifyPremium]);
 
+	const features = state.isPremium ? PREMIUM_FEATURES : FREE_FEATURES;
+
 	const syncPremium = useCallback(async () => {
 		verifyPremium();
 	}, [verifyPremium]);
 
-	const hasFeature = (feature: PremiumFeature): boolean => {
-		return state.features.includes(feature);
-	};
+	const hasFeature = useCallback(
+		(feature: PremiumFeature): boolean => features.includes(feature),
+		[features],
+	);
 
 	const createCheckoutSession = useCallback(
 		async (
@@ -224,21 +234,35 @@ export function PremiumProvider({ children }: { children: React.ReactNode }) {
 		});
 	}, []);
 
+	const contextValue = useMemo(
+		() => ({
+			isPremium: state.isPremium,
+			features,
+			subscriptionId: state.subscriptionId,
+			hasFeature,
+			upgrade,
+			downgrade,
+			createCheckoutSession,
+			createPayfastCheckoutSession,
+			cancelSubscription,
+			syncPremium,
+		}),
+		[
+			state.isPremium,
+			features,
+			state.subscriptionId,
+			hasFeature,
+			upgrade,
+			downgrade,
+			createCheckoutSession,
+			createPayfastCheckoutSession,
+			cancelSubscription,
+			syncPremium,
+		],
+	);
+
 	return (
-		<PremiumContext.Provider
-			value={{
-				isPremium: state.isPremium,
-				features: state.features,
-				subscriptionId: state.subscriptionId,
-				hasFeature,
-				upgrade,
-				downgrade,
-				createCheckoutSession,
-				createPayfastCheckoutSession,
-				cancelSubscription,
-				syncPremium,
-			}}
-		>
+		<PremiumContext.Provider value={contextValue}>
 			{children}
 		</PremiumContext.Provider>
 	);

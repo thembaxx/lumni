@@ -26,12 +26,12 @@ interface UseReferralReturn {
 
 export function useReferral(): UseReferralReturn {
 	const [info, setInfo] = useState<ReferralInfo | null>(null);
-	const [isLoading, setIsLoading] = useState(true);
+	const [hasLoaded, setHasLoaded] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 
 	const fetchInfo = useCallback(async () => {
 		try {
-			setIsLoading(true);
+			setHasLoaded(false);
 			setError(null);
 			const res = await fetch("/api/referral/info");
 			if (!res.ok) {
@@ -43,13 +43,15 @@ export function useReferral(): UseReferralReturn {
 		} catch (err) {
 			setError(err instanceof Error ? err.message : "Something went wrong");
 		} finally {
-			setIsLoading(false);
+			setHasLoaded(true);
 		}
 	}, []);
 
 	useEffect(() => {
 		fetchInfo();
 	}, [fetchInfo]);
+
+	const isLoading = !hasLoaded;
 
 	const share = useCallback(async () => {
 		if (!info) return;

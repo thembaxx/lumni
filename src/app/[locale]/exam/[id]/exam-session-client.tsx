@@ -144,6 +144,12 @@ export function ExamSessionWithResume({ id, mode }: ExamSessionClientProps) {
 	return <ExamSessionClient id={id} mode={mode} />;
 }
 
+// TODO(react-doctor): Extract ExamHeader into separate component (~60 lines)
+// TODO(react-doctor): Extract QuestionNavigatorSidebar into separate component (~25 lines)
+// TODO(react-doctor): Extract QuestionDisplay into separate component (~95 lines)
+// TODO(react-doctor): Extract ModeSelectScreen into separate component (~45 lines)
+// TODO(react-doctor): Extract ResultsScreen into separate component (~35 lines)
+// TODO(react-doctor): Extract SubmitHandler logic into separate hook (~90 lines)
 export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 	const t = useTranslations();
 	const { data: paperData, isLoading: paperLoading } = useExamPaper(id);
@@ -193,13 +199,15 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 		return getFlatParts();
 	}, [paper, getFlatParts]);
 
-	useEffect(() => {
-		if (!paperLoading && paperData) {
+	const sessionInitRef = useRef(false);
+	if (!paperLoading && paperData && !sessionInitRef.current) {
+		sessionInitRef.current = true;
+		setTimeout(() => {
 			const durationMinutes = parseDuration(paperData.exam.metadata.duration);
 			initSession(paperData.exam, paperData.metadata.id, durationMinutes);
 			setPhase("mode-select");
-		}
-	}, [paperLoading, paperData, initSession]);
+		}, 0);
+	}
 
 	useEffect(() => {
 		if (timeRemaining <= 0 && phase === "active" && sessionMode === "timed") {

@@ -44,6 +44,7 @@ const MATH_SUBJECTS = [
 	"mathematical-literacy",
 ];
 
+// TODO(react-doctor): Refactor multiple useState calls into useReducer
 export function QuestionCard({
 	question,
 	subject: subjectProp,
@@ -183,11 +184,13 @@ export function QuestionCard({
 	);
 
 	const handleMCQSubmit = useCallback(() => {
-		if (!state.selectedOption || !isMCQ) return;
-		const selectedOpt = options.find((opt) => opt.id === state.selectedOption);
+		if (!state.selectedOption || question.type !== "multiple-choice") return;
+		const body = question.body as Question<"multiple-choice">["body"];
+		const opts = body?.options ?? [];
+		const selectedOpt = opts.find((opt) => opt.id === state.selectedOption);
 		if (!selectedOpt) return;
 		handleGrade({ type: "option-ids", value: [selectedOpt.id] });
-	}, [state.selectedOption, isMCQ, options, handleGrade]);
+	}, [state.selectedOption, question, handleGrade]);
 
 	const handleToggleDiagram = () => {
 		setState((prev) => ({ ...prev, showDiagram: !prev.showDiagram }));

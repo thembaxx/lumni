@@ -26,6 +26,11 @@ export type LiveWaveformProps = HTMLAttributes<HTMLDivElement> & {
 	onStreamEnd?: () => void;
 };
 
+// TODO(react-doctor): Extract useCanvasResize into separate hook (~30 lines)
+// TODO(react-doctor): Extract useProcessingAnimation into separate hook (~130 lines)
+// TODO(react-doctor): Extract useMicrophone into separate hook (~90 lines)
+// TODO(react-doctor): Extract useAnimationLoop into separate hook (~190 lines)
+// TODO(react-doctor): Extract CanvasComponent into separate component (~25 lines)
 export const LiveWaveform = ({
 	active = false,
 	processing = false,
@@ -99,6 +104,8 @@ export const LiveWaveform = ({
 
 	// Processing animation
 	useEffect(() => {
+		const animRef = processingAnimationRef;
+
 		if (processing && !active) {
 			let time = 0;
 			transitionProgressRef.current = 0;
@@ -182,15 +189,14 @@ export const LiveWaveform = ({
 				}
 
 				needsRedrawRef.current = true;
-				processingAnimationRef.current =
-					requestAnimationFrame(animateProcessing);
+				animRef.current = requestAnimationFrame(animateProcessing);
 			};
 
 			animateProcessing();
 
 			return () => {
-				if (processingAnimationRef.current) {
-					cancelAnimationFrame(processingAnimationRef.current);
+				if (animRef.current) {
+					cancelAnimationFrame(animRef.current);
 				}
 			};
 		} else if (!active && !processing) {

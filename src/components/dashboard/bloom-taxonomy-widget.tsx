@@ -59,7 +59,6 @@ export function BloomTaxonomyWidget() {
 		{
 			topicId: string;
 			levels: Record<BloomLevel, number>;
-			overall: CompetencyLevel | null;
 		}[]
 	>([]);
 
@@ -79,26 +78,12 @@ export function BloomTaxonomyWidget() {
 
 		const result = Object.entries(grouped).map(([key, _levels]) => {
 			const [, topicId] = key.split("::");
-			const totalScores = Object.values(scores[key] ?? {});
-			const avgScore =
-				totalScores.length > 0
-					? totalScores.reduce((a, b) => a + b, 0) / totalScores.length
-					: 0;
-			const overall: CompetencyLevel =
-				avgScore >= 80
-					? "mastered"
-					: avgScore >= 60
-						? "proficient"
-						: avgScore >= 40
-							? "developing"
-							: "novice";
 			const levelScores = scores[key] ?? {};
 			return {
 				topicId,
 				levels: Object.fromEntries(
 					BLOOM_ORDER.map((bl) => [bl, levelScores[bl] ?? 0]),
 				) as Record<BloomLevel, number>,
-				overall,
 			};
 		});
 
@@ -119,64 +104,75 @@ export function BloomTaxonomyWidget() {
 				</CardTitle>
 			</CardHeader>
 			<CardContent className="flex flex-col gap-4">
-				{topicData.slice(0, 4).map((topic) => (
-					<div key={topic.topicId} className="rounded-[1rem] bg-muted/40 p-3">
-						<div className="mb-2 flex items-center justify-between">
-							<p className="font-medium text-sm capitalize">
-								{topic.topicId.replace(/-/g, " ")}
-							</p>
-							{topic.overall && (
+				{topicData.slice(0, 4).map((topic) => {
+					const totalScores = Object.values(topic.levels);
+					const avgScore =
+						totalScores.length > 0
+							? totalScores.reduce((a, b) => a + b, 0) / totalScores.length
+							: 0;
+					const overall: CompetencyLevel =
+						avgScore >= 80
+							? "mastered"
+							: avgScore >= 60
+								? "proficient"
+								: avgScore >= 40
+									? "developing"
+									: "novice";
+					return (
+						<div key={topic.topicId} className="rounded-[1rem] bg-muted/40 p-3">
+							<div className="mb-2 flex items-center justify-between">
+								<p className="font-medium text-sm capitalize">
+									{topic.topicId.replace(/-/g, " ")}
+								</p>
 								<span
 									className={cn(
 										"rounded-full px-2 py-0.5 font-medium text-[10px]",
-										COMPETENCY_COLORS[topic.overall],
+										COMPETENCY_COLORS[overall],
 									)}
 								>
-									{topic.overall}
+									{overall}
 								</span>
-							)}
-						</div>
-						<div className="mb-2 flex gap-1">
-							{BLOOM_ORDER.map((bl) => {
-								const score = topic.levels[bl];
-								const fill =
-									score >= 80
-										? "bg-[--system-accent]"
-										: score >= 50
-											? "bg-[--system-accent]/50"
-											: "bg-muted-foreground/20";
-								return (
-									<div
-										key={bl}
-										className="flex flex-1 flex-col items-center gap-1"
-									>
-										<div className="h-12 w-full overflow-hidden rounded-md bg-muted">
-											<div
-												className={cn(
-													"h-full w-full rounded-md transition-[height]",
-													fill,
-												)}
-												style={{ height: `${Math.max(8, score)}%` }}
-											/>
+							</div>
+							<div className="mb-2 flex gap-1">
+								{BLOOM_ORDER.map((bl) => {
+									const score = topic.levels[bl];
+									const fill =
+										score >= 80
+											? "bg-[--system-accent]"
+											: score >= 50
+												? "bg-[--system-accent]/50"
+												: "bg-muted-foreground/20";
+									return (
+										<div
+											key={bl}
+											className="flex flex-1 flex-col items-center gap-1"
+										>
+											<div className="h-12 w-full overflow-hidden rounded-md bg-muted">
+												<div
+													className={cn(
+														"h-full w-full rounded-md transition-[height]",
+														fill,
+													)}
+													style={{ height: `${Math.max(8, score)}%` }}
+												/>
+											</div>
+											<span className="text-[9px] text-muted-foreground uppercase">
+												{BLOOM_LABELS[bl].slice(0, 3)}
+											</span>
 										</div>
-										<span className="text-[9px] text-muted-foreground uppercase">
-											{BLOOM_LABELS[bl].slice(0, 3)}
-										</span>
-									</div>
-								);
-							})}
-						</div>
-						{topic.overall && (
+									);
+								})}
+							</div>
 							<p className="text-[10px] text-muted-foreground">
 								Recommended:{" "}
 								<span className="font-medium text-foreground">
-									{LEVEL_RECOMMENDATIONS[topic.overall].format}
+									{LEVEL_RECOMMENDATIONS[overall].format}
 								</span>{" "}
-								- {LEVEL_RECOMMENDATIONS[topic.overall].description}
+								- {LEVEL_RECOMMENDATIONS[overall].description}
 							</p>
-						)}
-					</div>
-				))}
+						</div>
+					);
+				})}
 			</CardContent>
 		</Card>
 	);

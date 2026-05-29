@@ -222,7 +222,7 @@ export function GraphDiagram({ data }: { data: GraphData }) {
 		}
 
 		return elements;
-	}, [axes, data.xLabel, data.yLabel]);
+	}, [data, axes]);
 
 	const functionLines = useMemo(() => {
 		return (data.functions || []).map((fn, i) => {
@@ -243,7 +243,7 @@ export function GraphDiagram({ data }: { data: GraphData }) {
 				/>
 			);
 		});
-	}, [data.functions, axes]);
+	}, [data, axes]);
 
 	const asymptoteLines = useMemo(() => {
 		return (data.asymptotes || []).map((a) => {
@@ -270,7 +270,7 @@ export function GraphDiagram({ data }: { data: GraphData }) {
 				/>
 			);
 		});
-	}, [data.asymptotes, axes]);
+	}, [data, axes]);
 
 	const markedPoints = useMemo(() => {
 		return (data.points || []).map((p) => {
@@ -299,7 +299,7 @@ export function GraphDiagram({ data }: { data: GraphData }) {
 				</Group>
 			);
 		});
-	}, [data.points, axes]);
+	}, [data, axes]);
 
 	return (
 		<Stage

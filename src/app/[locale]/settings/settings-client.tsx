@@ -14,7 +14,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
+import { Suspense, useCallback, useMemo, useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import {
 	AppearanceTab,
@@ -62,9 +62,11 @@ function SettingsContent() {
 
 	const visibleTabs = useMemo(
 		() =>
-			tabDefs
-				.filter((td) => !(isAnonymous && td.value === "referrals"))
-				.map((td) => ({ ...td, label: t(td.key) })),
+			tabDefs.flatMap((td) =>
+				!(isAnonymous && td.value === "referrals")
+					? [{ ...td, label: t(td.key) }]
+					: [],
+			),
 		[isAnonymous, t],
 	);
 	const [saved, setSaved] = useState(false);
@@ -75,39 +77,7 @@ function SettingsContent() {
 		betaFeatures: BetaFeatures;
 	};
 
-	const [appSettings, setAppSettings] = useState<AppSettings>({
-		studyPrefs: DEFAULT_PREFERENCES,
-		notifications: DEFAULT_NOTIFICATIONS,
-		betaFeatures: DEFAULT_BETA,
-	});
-
-	const { studyPrefs, notifications, betaFeatures } = appSettings;
-
-	const setStudyPrefs = useCallback(
-		(prefs: StudyPreferences) =>
-			setAppSettings((prev) => ({ ...prev, studyPrefs: prefs })),
-		[],
-	);
-
-	const setNotifications = useCallback(
-		(notif: NotificationSettings) =>
-			setAppSettings((prev) => ({ ...prev, notifications: notif })),
-		[],
-	);
-
-	const setBetaFeatures = useCallback(
-		(beta: BetaFeatures) =>
-			setAppSettings((prev) => ({ ...prev, betaFeatures: beta })),
-		[],
-	);
-
-	useEffect(() => {
-		if (isAnonymous && activeTab === "referrals") {
-			setActiveTab("profile");
-		}
-	}, [isAnonymous, activeTab]);
-
-	useEffect(() => {
+	const [appSettings, setAppSettings] = useState<AppSettings>(() => {
 		const onboarding = loadFromStorage<{
 			selectedSubjects?: string[];
 			targetAps?: number;
@@ -137,12 +107,43 @@ function SettingsContent() {
 
 		const betaPrefs = loadFromStorage(BETA_FEATURES_KEY, DEFAULT_BETA);
 
-		setAppSettings({
+		return {
 			studyPrefs: stored,
 			notifications: notifPrefs,
 			betaFeatures: betaPrefs,
-		});
-	}, []);
+		};
+	});
+
+	const { studyPrefs, notifications, betaFeatures } = appSettings;
+
+	const setStudyPrefs = useCallback(
+		(prefs: StudyPreferences) =>
+			setAppSettings((prev) => ({ ...prev, studyPrefs: prefs })),
+		[],
+	);
+
+	const setNotifications = useCallback(
+		(notif: NotificationSettings) =>
+			setAppSettings((prev) => ({ ...prev, notifications: notif })),
+		[],
+	);
+
+	const handleSetActiveTab = useCallback(
+		(tab: string) => {
+			if (isAnonymous && tab === "referrals") {
+				setActiveTab("profile");
+			} else {
+				setActiveTab(tab);
+			}
+		},
+		[isAnonymous],
+	);
+
+	const setBetaFeatures = useCallback(
+		(beta: BetaFeatures) =>
+			setAppSettings((prev) => ({ ...prev, betaFeatures: beta })),
+		[],
+	);
 
 	const handleSave = async () => {
 		setIsSaving(true);
@@ -235,7 +236,7 @@ function SettingsContent() {
 									type="button"
 									role="tab"
 									aria-selected={isActive}
-									onClick={() => setActiveTab(tab.value)}
+									onClick={() => handleSetActiveTab(tab.value)}
 									className={`relative flex items-center gap-2 whitespace-nowrap rounded-full px-4 py-2.5 transition-colors duration-300 active:scale-[0.96]${
 										isActive
 											? "border border-border/30 bg-system-surface text-system-accent shadow-level-1"

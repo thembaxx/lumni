@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/select";
 import type { StudySession as StudySessionType } from "@/lib/utils/study-planner";
 
+// TODO(react-doctor): Refactor multiple useState calls into useReducer
 export function AddSessionModal({
 	onClose,
 	onAdd,
@@ -28,7 +29,7 @@ export function AddSessionModal({
 		"quiz",
 	);
 	const [duration, setDuration] = useState(30);
-	const [repeat, setRepeat] = useState<"none" | "daily" | "weekly">("none");
+	const [defaultTime] = useState(() => Date.now() + 60 * 60 * 1000);
 
 	return (
 		<div className="fixed inset-0 z-modal flex items-center justify-center bg-black/50">
@@ -124,7 +125,7 @@ export function AddSessionModal({
 									subject,
 									topic: topic || undefined,
 									type,
-									scheduledAt: Date.now() + 60 * 60 * 1000,
+									scheduledAt: defaultTime,
 									duration,
 									completed: false,
 									repeat,

@@ -102,12 +102,15 @@ export class QueueCore<T extends QueueItemBase> {
 
 		try {
 			const items: T[] = [];
+			// Sequential dequeue: each next() call depends on previous items being dequeued for correct ordering (must run sequentially)
 			for (let i = 0; i < limit; i++) {
 				const item = await this.next();
 				if (!item?.id) break;
-				await this.markProcessing(item.id as number);
 				items.push(item);
 			}
+			await Promise.all(
+				items.map((item) => this.markProcessing(item.id as number)),
+			);
 
 			const outcomes = await Promise.all(
 				items.map(async (item) => {

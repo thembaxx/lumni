@@ -26,9 +26,9 @@ self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
-        cacheNames
-          .filter((name) => name !== CACHE_NAME && name !== RUNTIME_CACHE)
-          .map((name) => caches.delete(name))
+        cacheNames.flatMap((name) =>
+          name !== CACHE_NAME && name !== RUNTIME_CACHE ? [caches.delete(name)] : [],
+        )
       );
     })
   );

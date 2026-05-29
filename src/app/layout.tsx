@@ -39,6 +39,7 @@ export default async function RootLayout({
 				<Script
 					id="theme-init"
 					strategy="beforeInteractive"
+					// react-doctor will-fix: theme FOUC prevention — no user input, hardcoded inline script
 					// biome-ignore lint/security/noDangerouslySetInnerHtml: theme FOUC prevention
 					dangerouslySetInnerHTML={{
 						__html: `(function(){try{var t=localStorage.getItem("theme");if(t==="dark"){document.documentElement.classList.add("dark");document.documentElement.style.colorScheme="dark"}else if(t==="light"){document.documentElement.classList.remove("dark");document.documentElement.style.colorScheme="light"}else{if(window.matchMedia("(prefers-color-scheme:dark)").matches){document.documentElement.classList.add("dark");document.documentElement.style.colorScheme="dark"}else{document.documentElement.classList.remove("dark");document.documentElement.style.colorScheme="light"}}}catch(e){}})()`,

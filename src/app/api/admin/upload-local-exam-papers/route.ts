@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import fs from "node:fs";
+import { access, readdir } from "node:fs/promises";
 import path from "node:path";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
@@ -121,16 +121,17 @@ export async function POST(request: NextRequest) {
 
 		const targetFolder = folderPath || DEFAULT_FOLDER_PATH;
 
-		if (!fs.existsSync(/* turbopackIgnore: true */ targetFolder)) {
+		try {
+			await access(targetFolder);
+		} catch {
 			return NextResponse.json(
 				{ error: `Folder not found: ${targetFolder}` },
 				{ status: 400 },
 			);
 		}
 
-		const files = fs
-			.readdirSync(/* turbopackIgnore: true */ targetFolder)
-			.filter((f) => f.endsWith(".pdf"));
+		const dirEntries = await readdir(targetFolder);
+		const files = dirEntries.filter((f) => f.endsWith(".pdf"));
 
 		if (files.length === 0) {
 			return NextResponse.json(
@@ -144,22 +145,21 @@ export async function POST(request: NextRequest) {
 		let updated = 0;
 		const errors: string[] = [];
 
-		const parsedFiles = files
-			.map((fileName) => {
-				const parsed = parseFilename(fileName);
-				if (!parsed) {
-					errors.push(`Could not parse filename: ${fileName}`);
-					return null;
-				}
-				const { year, subjectCode, paperNumber, type, originalFileName } =
-					parsed;
-				const normalizedCode = normalizeSubjectCode(subjectCode);
-				const subjectName = toTitleCase(normalizedCode);
-				const filePath = path.join(
-					/* turbopackIgnore: true */ targetFolder,
-					fileName,
-				);
-				return {
+		const parsedFiles = files.flatMap((fileName) => {
+			const parsed = parseFilename(fileName);
+			if (!parsed) {
+				errors.push(`Could not parse filename: ${fileName}`);
+				return [];
+			}
+			const { year, subjectCode, paperNumber, type, originalFileName } = parsed;
+			const normalizedCode = normalizeSubjectCode(subjectCode);
+			const subjectName = toTitleCase(normalizedCode);
+			const filePath = path.join(
+				/* turbopackIgnore: true */ targetFolder,
+				fileName,
+			);
+			return [
+				{
 					fileName,
 					year,
 					normalizedCode,
@@ -168,9 +168,9 @@ export async function POST(request: NextRequest) {
 					type,
 					originalFileName,
 					filePath,
-				};
-			})
-			.filter(Boolean) as {
+				},
+			];
+		}) as {
 			fileName: string;
 			year: number;
 			normalizedCode: string;

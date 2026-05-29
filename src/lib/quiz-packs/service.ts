@@ -52,16 +52,16 @@ export class QuizPackService {
 			.toArray();
 		const now = Date.now();
 		const updated: QuizPack[] = [];
-		for (const pack of packs) {
+		const updates = packs.map(async (pack) => {
 			if (pack.status === "ready" && pack.expiresAt < now) {
 				await offlineDB.quizPacks.update(pack.id, {
 					status: "expired",
 				});
-				updated.push({ ...pack, status: "expired" });
-			} else {
-				updated.push(pack);
+				return { ...pack, status: "expired" as const };
 			}
-		}
+			return pack;
+		});
+		updated.push(...(await Promise.all(updates)));
 		return updated;
 	}
 
@@ -106,9 +106,7 @@ export class QuizPackService {
 			.where("expiresAt")
 			.below(now)
 			.toArray();
-		for (const pack of expired) {
-			await this.deletePack(pack.id);
-		}
+		await Promise.all(expired.map((pack) => this.deletePack(pack.id)));
 		return expired.length;
 	}
 }

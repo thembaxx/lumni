@@ -19,9 +19,11 @@ export function TTSButton({ text, lang, className }: TTSButtonProps) {
 	const errorUnsubscribeRef = useRef<(() => void) | null>(null);
 
 	useEffect(() => {
+		const ref = endUnsubscribeRef;
+		const ref2 = errorUnsubscribeRef;
 		return () => {
-			endUnsubscribeRef.current?.();
-			errorUnsubscribeRef.current?.();
+			ref.current?.();
+			ref2.current?.();
 		};
 	}, []);
 

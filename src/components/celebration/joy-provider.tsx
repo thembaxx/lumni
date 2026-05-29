@@ -5,6 +5,7 @@ import {
 	type ReactNode,
 	use,
 	useCallback,
+	useMemo,
 	useState,
 } from "react";
 
@@ -50,7 +51,10 @@ export function JoyProvider({ children }: { children: ReactNode }) {
 
 	return (
 		<JoyContext.Provider
-			value={{ triggerCelebration, currentCelebration, clearCelebration }}
+			value={useMemo(
+				() => ({ triggerCelebration, currentCelebration, clearCelebration }),
+				[triggerCelebration, currentCelebration, clearCelebration],
+			)}
 		>
 			{children}
 		</JoyContext.Provider>

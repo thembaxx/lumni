@@ -58,6 +58,7 @@ function AnimatedCard({
 	);
 }
 
+// TODO(react-doctor): Refactor multiple useState calls into useReducer
 export function AdminDashboard() {
 	const { push } = useRouter();
 	const queryClient = useQueryClient();

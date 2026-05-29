@@ -39,10 +39,7 @@ export function ExamEngine({
 
 	useExamSessionAutoSave(paperId);
 	const [showSubmit, setShowSubmit] = useState(false);
-	const [now, setNow] = useState(0);
-	useEffect(() => {
-		setNow(Date.now());
-	}, []);
+	const [now] = useState(() => Date.now());
 	const initialized = useRef(false);
 
 	const currentPartId = useExamSessionStore((s) => s.currentPartId);

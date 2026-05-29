@@ -1,6 +1,6 @@
 "use client";
 
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export interface CuratedProblem {
 	id: string;
@@ -25,6 +25,8 @@ interface UseCuratedProblemsParams {
 }
 
 export function useCuratedProblems() {
+	const queryClient = useQueryClient();
+
 	return useMutation<CuratedProblemsResponse, Error, UseCuratedProblemsParams>({
 		mutationFn: async ({ subject, topic, count = 5 }) => {
 			const res = await fetch("/api/curated-problems", {
@@ -37,6 +39,9 @@ export function useCuratedProblems() {
 				throw new Error(err.error || "Failed to generate problems");
 			}
 			return res.json();
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["curated-problems"] });
 		},
 	});
 }

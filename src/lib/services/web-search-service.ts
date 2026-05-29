@@ -48,19 +48,23 @@ export async function searchWeb(
 		},
 	});
 
-	return result.results
-		.filter((r) => r.title && r.url)
-		.map((r, i) => ({
-			id: `web-${i}`,
-			type: "web" as const,
-			title: r.title ?? r.url,
-			snippet: (r as { text?: string }).text?.slice(0, 200) ?? "",
-			subject: "",
-			url: r.url,
-			createdAt: r.publishedDate
-				? new Date(r.publishedDate).getTime()
-				: Date.now(),
-		}));
+	return result.results.flatMap((r, i) =>
+		r.title && r.url
+			? [
+					{
+						id: `web-${i}`,
+						type: "web" as const,
+						title: r.title ?? r.url,
+						snippet: (r as { text?: string }).text?.slice(0, 200) ?? "",
+						subject: "",
+						url: r.url,
+						createdAt: r.publishedDate
+							? new Date(r.publishedDate).getTime()
+							: Date.now(),
+					},
+				]
+			: [],
+	);
 }
 
 export async function getWebContents(
