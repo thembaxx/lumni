@@ -14,9 +14,9 @@ import { ProfileAvatarSection } from "@/components/settings/tabs/sections/profil
 import { SchoolDetailsSection } from "@/components/settings/tabs/sections/school-details-section";
 import { ShareProfileSection } from "@/components/settings/tabs/sections/share-profile-section";
 import { SignOutSection } from "@/components/settings/tabs/sections/sign-out-section";
-import { ListCell, ListSection } from "@/components/ui/list-cell";
 import { SubjectPicker } from "@/components/settings/tabs/sections/subject-picker";
 import { EmptyStateWithIllustration } from "@/components/shared/empty-state";
+import { ListCell, ListSection } from "@/components/ui/list-cell";
 import { useEnrolledSubjects } from "@/hooks/use-subjects";
 import { useAuth } from "@/lib/auth/auth-context";
 import { toggleUserSubject } from "@/lib/server";
