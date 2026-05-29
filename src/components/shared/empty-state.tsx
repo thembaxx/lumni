@@ -225,7 +225,7 @@ export function EmptyStateWithIllustration({
 
 /* ─── EmptyStates presets ─── */
 
-const EmptyStates = {
+const _EmptyStates = {
 	noQuestions: (onAction?: () => void) => (
 		<EmptyStateWithIllustration
 			animation="search"

@@ -30,6 +30,7 @@ export function AddSessionModal({
 	);
 	const [duration, setDuration] = useState(30);
 	const [defaultTime] = useState(() => Date.now() + 60 * 60 * 1000);
+	const [repeat, setRepeat] = useState<"none" | "daily" | "weekly">("none");
 
 	return (
 		<div className="fixed inset-0 z-modal flex items-center justify-center bg-black/50">

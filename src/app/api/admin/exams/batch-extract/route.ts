@@ -126,7 +126,7 @@ export async function POST(request: NextRequest) {
 					return {
 						paperId: docId,
 						subject: (doc.subject as string) || "",
-						status: "error",
+						status: "error" as const,
 						error: err instanceof Error ? err.message : "Unknown error",
 					};
 				}

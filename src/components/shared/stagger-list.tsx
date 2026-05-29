@@ -39,7 +39,7 @@ export function StaggerList({
 	);
 }
 
-const defaultItemVariants: Variants = {
+const _defaultItemVariants: Variants = {
 	hidden: { opacity: 0, y: 12 },
 	visible: {
 		opacity: 1,

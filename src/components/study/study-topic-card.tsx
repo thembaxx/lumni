@@ -3,7 +3,7 @@
 import { DiceIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { ListenToLesson } from "@/components/listen-to-lesson";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Anim } from "@/components/shared/anim";
@@ -36,16 +36,11 @@ export function StudyTopicCard({
 	const { push } = useRouter();
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [, setWordIndex] = useState(0);
-	const [triggerIndex, setTriggerIndex] = useState(0);
-
-	const topic = useMemo(
-		() => initialTopic ?? getRandomTopic(),
-		[initialTopic, triggerIndex],
-	);
+	const [topic, setTopic] = useState(() => initialTopic ?? getRandomTopic());
 
 	const handleRefresh = () => {
 		setIsPlaying(false);
-		setTriggerIndex((i) => i + 1);
+		setTopic(initialTopic ?? getRandomTopic());
 	};
 
 	if (!topic) {
