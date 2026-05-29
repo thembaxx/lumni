@@ -11,7 +11,6 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 import { useCallback, useMemo } from "react";
-import { useImmersiveMode } from "@/components/shared/immersive-mode";
 import { Badge } from "@/components/ui/badge";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { useOnboarding } from "@/hooks/use-onboarding";
@@ -129,7 +128,6 @@ function NavItemComponent({
 export function BottomNav() {
 	const pathname = usePathname();
 	const { push } = useNavigationDirection();
-	const { isImmersive } = useImmersiveMode();
 	const { isOnboarding } = useOnboarding();
 
 	const activeIndex = useMemo(() => {
@@ -149,7 +147,7 @@ export function BottomNav() {
 		[push],
 	);
 
-	if (pathname === "/" || isOnboarding || isImmersive) return null;
+	if (pathname === "/" || isOnboarding) return null;
 
 	return (
 		<nav
