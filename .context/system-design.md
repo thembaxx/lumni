@@ -1,8 +1,8 @@
-<!-- LAST_SYNC: 2026-05-28 -->
+<!-- LAST_SYNC: 2026-05-29 -->
 # System Design — Lumni
 
 ## Overview & Goals
-Lumni is a mobile-first South African Matric exam prep platform. It provides offline-capable practice, AI-powered grading, and algorithmic study planning to help students improve their results. The platform prioritizes offline availability through local AI generation and on-device caching.
+Lumni is a mobile-first South African Matric exam prep platform. It provides offline-capable practice, AI-powered grading, and algorithmic study planning. The platform prioritizes offline availability through local AI generation (Quiz Packs), on-device caching (Dexie), and immersive focus modes.
 
 ## Architecture Diagram
 ```mermaid
@@ -16,8 +16,11 @@ graph TD
     Pack[Quiz Pack Service]
     AI[AI: Gemini/Nvidia/Groq]
     Wiki[Wikimedia Commons]
+    Queue[QueueCore Job Queue]
+    Auth[Appwrite Auth / Anon Gating]
 
     Client <--> Dexie
+    Client <--> Auth
     Client <--> API
     API <--> Appwrite
     API <--> Engine
@@ -27,40 +30,41 @@ graph TD
     Visual <--> AI
     Visual <--> Wiki
     Pack <--> Engine
+    Queue <--> Dexie
+    Queue <--> Appwrite
 ```
 
 ## Data Flow
-1. **Practice Request**: User requests questions for a subject. L1 (Dexie) is checked first, then L2 (Appwrite), then L3 (AI Generation).
-2. **Offline Download**: User selects "Download for Offline" for a topic. `QuizPackService` enqueues a bulk generation job. Questions and visuals are stored in Dexie `packQuestions` table.
-3. **Question Processing**: User answers are graded locally (for 4 types) or via AI (7 types). `LearningOrchestrator` handles side effects.
-4. **Competency Tracking**: Results update the local `competency` table and are queued for Appwrite sync via `QueueCore`.
-5. **Exam Tracking**: `ExamDatesService` provides national exam schedules, pulling from Dexie or Seed data, with background sync to Appwrite to maintain global availability.
+1. **Request Lifecycle**: User requests content. L1 (Dexie) is primary; L2 (Appwrite) is secondary; L3 (AI/Wiki) is fallback.
+2. **Offline Practice**: `QuizPackService` handles bulk generation and storage in `quizPacks`/`packQuestions` Dexie tables for offline-first access.
+3. **Question Processing**: Answer grading (local/AI) is orchestrated by `LearningOrchestrator`, which enqueues sync and progress jobs via `QueueCore`.
+4. **Competency tracking**: Progress is assessed via `trackQuestionResult()`, updating the local `competency` table and syncing to Appwrite `competencies` collection.
+5. **Exam Lifecycle**: `ExamDatesService` provides schedules from seed data/Dexie, with background sync to Appwrite for cross-device consistency.
+6. **Immersive Focus**: `ImmersiveModeProvider` hides navigation elements during active quiz/exam sessions to maximize screen real estate and focus.
 
 ## Tech Stack
-- **Frontend**: Next.js 16.2.6, React 19.2.6, Tailwind CSS 4, Framer Motion, Zustand.
-- **Persistence**: Dexie.js (IndexedDB), Appwrite Database, sql.js (SQLite).
-- **AI/ML**: Gemini 2.0 Flash Lite (Primary), Nvidia NIM (Fallback), Groq (Fallback).
-- **Visualization**: Konva (Canvas diagrams), Mermaid.js, Recharts.
-- **Verification**: Playwright (E2E), Storybook (UI Documentation), Bun (Tests).
-- **Monitoring**: Sentry (Client/Server/Edge).
+- **Frontend**: Next.js 16.2.6 (App Router), React 19.2.6, Tailwind CSS 4, Framer Motion 12.
+- **Persistence**: Dexie 4 (IndexedDB, v23 schema), Appwrite Cloud, sql.js (SQLite).
+- **AI/ML**: Gemini 2.0 Flash Lite (Primary), Nvidia NIM (Fallback), Groq Cloud (Last resort).
+- **Visualization**: Konva (STEM diagrams), Mermaid.js, Recharts 3.
+- **Verification**: Playwright (E2E), Storybook (UI), Bun (Tests).
 
 ## Key Abstractions
-- **QuestionEngine**: Single source of truth for generation, grading, and validation across 11 question types.
-- **VisualEngine**: Manages generation and retrieval of educational visuals (STEM diagrams vs. Wikimedia images).
-- **FlashcardEngine**: Unified engine wrapping repository + SM-2/FSRS + daily limits.
-- **LearningOrchestrator**: Coordinates engines and manages background job side effects (sync, analytics).
-- **QuizPackService**: Manages the lifecycle of AI-generated offline question sets.
-- **createRouteHandler**: Generic factory for declarative API route handlers with auth, validation, and budget tracking.
-- **QueueCore**: Persistent job queue ensuring offline mutations and orchestration tasks are eventually executed.
+- **QuestionEngine**: Single source of truth for generation/grading/validation of 11 question types.
+- **FlashcardEngine**: Unified SM-2/FSRS engine wrapping repository, limits, and recovery logic.
+- **LearningOrchestrator**: Orchestrates engines and manages side effects (sync, analytics, jobs).
+- **createRouteHandler**: Declarative factory for API routes with auth, Zod validation, and AI budgeting.
+- **QueueCore**: Persistent Dexie-backed job queue for background tasks and offline mutation sync.
+- **ImmersiveMode**: Context-driven UI state for hiding/showing core navigation components.
 
 ## External Integrations
-- **Appwrite**: Auth, Database (exam_sessions, questions, visuals, exam_dates), Storage.
+- **Appwrite**: Authentication (Anonymous auto-upgrade), Database (10+ collections), Storage.
 - **AI Providers**: Google Gemini, Nvidia NIM, Groq Cloud.
-- **UploadThing**: File uploads for avatars and documents.
-- **Wikimedia**: Image search for non-STEM visuals.
+- **UploadThing**: Document and avatar storage.
+- **Wikimedia**: Image search fallback for non-STEM visuals.
 
 ## Current Limitations & TODOs
-- **OCR**: National exam schedule extraction currently manual; needs OCR/AI vision for image-based PDFs.
-- **Comparative Analytics**: Currently uses estimates due to Appwrite data privacy constraints.
-- **Mock Exam Mode**: Planned feature for timed past-paper simulations.
-- **Component Coverage**: Ongoing expansion of Storybook and Playwright test suites.
+- **OCR/Vision**: Future integration for national exam schedule extraction from image-based PDFs.
+- **Comparative Stats**: Production path for multi-user data analysis still relies on estimates.
+- **Mock Exam Mode**: Timed past-paper simulation feature currently in roadmap/development.
+- **Component Coverage**: Expansion of Storybook stories and Playwright E2E coverage ongoing.
