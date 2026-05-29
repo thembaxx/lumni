@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { Note } from "@/components/tools/notes/types";
 
 export function useNoteStorage() {
@@ -17,10 +17,10 @@ export function useNoteStorage() {
 		if (v1Item) return JSON.parse(v1Item);
 		return [];
 	});
-	const [loaded, setLoaded] = useState(!!migratedItem);
+	const migratedRef = useRef(!!migratedItem);
 
 	useEffect(() => {
-		if (loaded) return;
+		if (migratedRef.current) return;
 		async function load() {
 			if (!migratedItem) {
 				if (v1Item) {
@@ -53,6 +53,7 @@ export function useNoteStorage() {
 					localStorage.setItem("lumni-notes:migrated", "true");
 				}
 			}
+			migratedRef.current = true;
 
 			const db = (await import("@/lib/db/schema")).offlineDB;
 			const records = await db.notes.toArray();
@@ -70,10 +71,9 @@ export function useNoteStorage() {
 					updatedAt: new Date(r.updatedAt).toISOString(),
 				})),
 			);
-			setLoaded(true);
 		}
 		load();
-	}, [loaded, migratedItem, v1Item]);
+	}, [migratedItem, v1Item]);
 
 	const saveNotes = useCallback(async (notes: Note[]) => {
 		const db = (await import("@/lib/db/schema")).offlineDB;
@@ -165,7 +165,7 @@ export function useNoteStorage() {
 
 	return {
 		notes,
-		loaded,
+		loaded: true,
 		addNote,
 		removeNote,
 		updateNote,

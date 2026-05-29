@@ -85,12 +85,17 @@ export function useExamSubmit(deps: SubmitDeps) {
 			accuracy === 100,
 		);
 
-		const { trackQuestionResult } = await import("@/lib/orchestrator");
-		const { flashcardEngine } = await import("@/lib/flashcard-engine");
-		const { getCorrectAnswerText, getAnswerText } = await import(
-			"@/lib/exam/helpers"
-		);
-		const { addStudySession } = await import("@/lib/utils/study-planner");
+		const [
+			{ trackQuestionResult },
+			{ flashcardEngine },
+			{ getCorrectAnswerText, getAnswerText },
+			{ addStudySession },
+		] = await Promise.all([
+			import("@/lib/orchestrator"),
+			import("@/lib/flashcard-engine"),
+			import("@/lib/exam/helpers"),
+			import("@/lib/utils/study-planner"),
+		]);
 
 		const flashcardPromises: Promise<unknown>[] = [];
 		const trackPromises: Promise<unknown>[] = [];

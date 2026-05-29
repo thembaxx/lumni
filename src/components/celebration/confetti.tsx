@@ -1,7 +1,7 @@
 "use client";
 
 import { m } from "framer-motion";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 interface ConfettiPiece {
 	id: number;
@@ -34,7 +34,19 @@ export function Confetti({
 	count?: number;
 	duration?: number;
 }) {
-	const [showConfetti, setShowConfetti] = useState(false);
+	const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+	const [visible, setVisible] = useState(false);
+
+	if (trigger && !visible) {
+		setVisible(true);
+	}
+
+	useEffect(() => {
+		if (!trigger) return;
+		clearTimeout(timerRef.current);
+		timerRef.current = setTimeout(() => setVisible(false), duration);
+		return () => clearTimeout(timerRef.current);
+	}, [trigger, duration]);
 
 	const pieces = useMemo<ConfettiPiece[]>(() => {
 		if (!trigger) return [];
@@ -53,17 +65,7 @@ export function Confetti({
 		}));
 	}, [trigger, count]);
 
-	useEffect(() => {
-		if (!trigger) {
-			setShowConfetti(false);
-			return;
-		}
-		setShowConfetti(true);
-		const timeoutId = setTimeout(() => setShowConfetti(false), duration);
-		return () => clearTimeout(timeoutId);
-	}, [trigger, duration]);
-
-	if (!showConfetti) return null;
+	if (!visible) return null;
 
 	return (
 		<div className="pointer-events-none fixed inset-0 z-modal overflow-hidden">

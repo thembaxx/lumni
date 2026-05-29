@@ -110,15 +110,16 @@ export async function updateChallengeEntry(
 				const challenge = challengeResult.data;
 				if (challenge.status !== "active") return;
 
-				const existing = await listDocuments<GroupChallengeEntry>(
-					COLLECTIONS.GROUP_CHALLENGE_ENTRIES,
-					[`challengeId=${challenge.$id}`, `userId=${userId}`],
-				);
-
-				const allEntries = await listDocuments<GroupChallengeEntry>(
-					COLLECTIONS.GROUP_CHALLENGE_ENTRIES,
-					[`challengeId=${challenge.$id}`],
-				);
+				const [existing, allEntries] = await Promise.all([
+					listDocuments<GroupChallengeEntry>(
+						COLLECTIONS.GROUP_CHALLENGE_ENTRIES,
+						[`challengeId=${challenge.$id}`, `userId=${userId}`],
+					),
+					listDocuments<GroupChallengeEntry>(
+						COLLECTIONS.GROUP_CHALLENGE_ENTRIES,
+						[`challengeId=${challenge.$id}`],
+					),
+				]);
 				const groupTotalXp =
 					allEntries.reduce((s, e) => s + e.xpEarned, 0) + xpGained;
 				const groupTotalQ =
@@ -242,15 +243,16 @@ export async function getInterGroupLeaderboard(): Promise<
 
 		const leaderboardEntries = await Promise.all(
 			challenges.map(async (challenge) => {
-				const entries = await listDocuments<GroupChallengeEntry>(
-					COLLECTIONS.GROUP_CHALLENGE_ENTRIES,
-					[`challengeId=${challenge.$id}`],
-				);
-
-				const group = await getDocument<{ name: string; memberCount: number }>(
-					COLLECTIONS.STUDY_GROUPS,
-					challenge.groupId,
-				);
+				const [entries, group] = await Promise.all([
+					listDocuments<GroupChallengeEntry>(
+						COLLECTIONS.GROUP_CHALLENGE_ENTRIES,
+						[`challengeId=${challenge.$id}`],
+					),
+					getDocument<{ name: string; memberCount: number }>(
+						COLLECTIONS.STUDY_GROUPS,
+						challenge.groupId,
+					),
+				]);
 
 				const totalScore = entries.reduce((s, e) => s + e.combinedScore, 0);
 

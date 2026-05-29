@@ -19,9 +19,11 @@ export function DataResponseInput({
 }: DataResponseInputProps) {
 	return (
 		<div className="flex flex-col gap-4">
-			{content?.map((block, idx) => (
-				// biome-ignore lint/suspicious/noArrayIndexKey: ContentBlock has no stable id
-				<ContentBlockRenderer key={idx} block={block} />
+			{content?.map((block) => (
+				<ContentBlockRenderer
+					key={`cb-${block.type}-${block.value ?? block.imagePath ?? ""}`}
+					block={block}
+				/>
 			))}
 			<Textarea
 				value={value}

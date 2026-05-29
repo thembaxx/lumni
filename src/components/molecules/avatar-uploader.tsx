@@ -23,7 +23,7 @@ export function AvatarUploader({
 	...props
 }: AvatarUploaderProps) {
 	const inputRef = useRef<HTMLInputElement>(null);
-	const [preview, setPreview] = useState<string | undefined>(url);
+	const [preview, setPreview] = useState<string | undefined>(undefined);
 	const prevUrl = useRef(url);
 	if (url !== prevUrl.current) {
 		prevUrl.current = url;

@@ -26,14 +26,6 @@ export function EditableField({
 	const [draft, setDraft] = useState("");
 	const [saving, setSaving] = useState(false);
 	const inputRef = useRef<HTMLInputElement>(null);
-	const previousValue = useRef(value);
-
-	useEffect(() => {
-		if (value !== previousValue.current) {
-			previousValue.current = value;
-			setDraft(value);
-		}
-	}, [value]);
 
 	useEffect(() => {
 		if (editing && inputRef.current) {
@@ -51,18 +43,17 @@ export function EditableField({
 		try {
 			await onSave(draft);
 			setEditing(false);
-			previousValue.current = draft;
 		} catch {
-			setDraft(previousValue.current);
+			setDraft(value);
 		} finally {
 			setSaving(false);
 		}
 	}, [draft, value, onSave]);
 
 	const handleCancel = useCallback(() => {
-		setDraft(previousValue.current);
+		setDraft(value);
 		setEditing(false);
-	}, []);
+	}, [value]);
 
 	if (editing) {
 		return (

@@ -67,7 +67,10 @@ function mapY(y: number, axes: GraphAxes): number {
 }
 
 export function GraphDiagram({ data }: { data: GraphData }) {
-	const axes = data.axes || { xMin: -10, xMax: 10, yMin: -10, yMax: 10 };
+	const axes = useMemo(
+		() => data.axes || { xMin: -10, xMax: 10, yMin: -10, yMax: 10 },
+		[data.axes],
+	);
 	const showGrid = data.showGrid ?? true;
 
 	const gridLines = useMemo(() => {
@@ -222,7 +225,7 @@ export function GraphDiagram({ data }: { data: GraphData }) {
 		}
 
 		return elements;
-	}, [data, axes]);
+	}, [axes, data.xLabel, data.yLabel]);
 
 	const functionLines = useMemo(() => {
 		return (data.functions || []).map((fn, i) => {
@@ -243,7 +246,7 @@ export function GraphDiagram({ data }: { data: GraphData }) {
 				/>
 			);
 		});
-	}, [data, axes]);
+	}, [axes, data.functions]);
 
 	const asymptoteLines = useMemo(() => {
 		return (data.asymptotes || []).map((a) => {
@@ -270,7 +273,7 @@ export function GraphDiagram({ data }: { data: GraphData }) {
 				/>
 			);
 		});
-	}, [data, axes]);
+	}, [axes, data.asymptotes]);
 
 	const markedPoints = useMemo(() => {
 		return (data.points || []).map((p) => {
@@ -299,7 +302,7 @@ export function GraphDiagram({ data }: { data: GraphData }) {
 				</Group>
 			);
 		});
-	}, [data, axes]);
+	}, [axes, data.points]);
 
 	return (
 		<Stage

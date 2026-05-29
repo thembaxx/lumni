@@ -115,15 +115,22 @@ export function ContentBlockRenderer({ block }: ContentBlockRendererProps) {
 							</TableRow>
 						</TableHeader>
 						<TableBody>
-							{rows.map((row) => (
-								<TableRow key={crypto.randomUUID()}>
-									{row.map((cell) => (
-										<TableCell key={crypto.randomUUID()}>
-											{cell !== null && cell !== undefined ? String(cell) : ""}
-										</TableCell>
-									))}
-								</TableRow>
-							))}
+							{rows.map((row) => {
+								const rowKey = row.join("|");
+								return (
+									<TableRow key={`trow-${rowKey}`}>
+										{row.map((cell) => {
+											const cellText =
+												cell !== null && cell !== undefined ? String(cell) : "";
+											return (
+												<TableCell key={`tcell-${rowKey}-${cellText}`}>
+													{cellText}
+												</TableCell>
+											);
+										})}
+									</TableRow>
+								);
+							})}
 						</TableBody>
 					</Table>
 				</div>

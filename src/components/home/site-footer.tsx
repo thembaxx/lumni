@@ -4,6 +4,8 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { appConfig } from "../../../app.config";
 
+const CURRENT_YEAR = new Date().getFullYear();
+
 export function SiteFooter() {
 	const t = useTranslations();
 
@@ -93,7 +95,7 @@ export function SiteFooter() {
 				</div>
 				<div className="mt-8 flex flex-col items-center justify-between gap-4 border-border/50 border-t pt-8 sm:flex-row">
 					<p className="text-muted-foreground text-xs">
-						&copy; {new Date().getFullYear()} Lumni. All rights reserved.
+						&copy; {CURRENT_YEAR} Lumni. All rights reserved.
 					</p>
 					<div className="flex items-center gap-4">
 						<a

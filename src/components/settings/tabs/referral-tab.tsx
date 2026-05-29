@@ -7,7 +7,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { ListCell, ListSection } from "@/components/ui/list-cell";
 import { useReferral } from "@/hooks/use-referral";
 import {
@@ -19,20 +19,6 @@ import {
 export function ReferralTab() {
 	const { info, isLoading } = useReferral();
 	const [copied, setCopied] = useState(false);
-
-	const copyLeading = useMemo(
-		() =>
-			copied ? (
-				<HugeiconsIcon icon={Tick01Icon} className="size-4" />
-			) : (
-				<HugeiconsIcon icon={Copy01Icon} className="size-4" />
-			),
-		[copied],
-	);
-	const shareLeading = useMemo(
-		() => <HugeiconsIcon icon={Share07Icon} className="size-4" />,
-		[],
-	);
 
 	if (isLoading) {
 		return (
@@ -92,14 +78,20 @@ export function ReferralTab() {
 
 				<ListCell
 					title={copied ? "Copied!" : "Copy Code"}
-					leading={copyLeading}
+					leading={
+						copied ? (
+							<HugeiconsIcon icon={Tick01Icon} className="size-4" />
+						) : (
+							<HugeiconsIcon icon={Copy01Icon} className="size-4" />
+						)
+					}
 					onClick={handleCopy}
 					showSeparator
 				/>
 
 				<ListCell
 					title="Share Invite Link"
-					leading={shareLeading}
+					leading={<HugeiconsIcon icon={Share07Icon} className="size-4" />}
 					onClick={handleShare}
 					showSeparator={false}
 				/>

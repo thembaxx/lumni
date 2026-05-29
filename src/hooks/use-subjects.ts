@@ -80,9 +80,13 @@ export function useEnrolledSubjects() {
 	const prefs = user?.prefs as Record<string, unknown> | undefined;
 	const prefsSubjects = (prefs?.subjects as string[]) ?? [];
 
+	const subjectIdsRef = useRef(prefsSubjects);
+	subjectIdsRef.current = prefsSubjects;
+
 	const migratePrefsSubjects = useCallback(async () => {
 		if (!user || !data || data.selectedSubjectIds.length > 0) return;
-		const subjectIds = prefsSubjects.flatMap((name) => {
+		const currentPrefs = subjectIdsRef.current;
+		const subjectIds = currentPrefs.flatMap((name) => {
 			const sub = subjectsData.find(
 				(s) => s.name.toLowerCase() === name.toLowerCase(),
 			);
@@ -99,14 +103,14 @@ export function useEnrolledSubjects() {
 				queryClient.invalidateQueries({ queryKey: ["subjects"] });
 			} catch {}
 		}
-	}, [user, data, prefsSubjects, queryClient]);
+	}, [user, data, queryClient]);
 
 	useEffect(() => {
 		if (!migrated.current && prefsSubjects.length > 0) {
 			migrated.current = true;
 			migratePrefsSubjects();
 		}
-	}, [migratePrefsSubjects, prefsSubjects]);
+	}, [migratePrefsSubjects, prefsSubjects.length]);
 
 	const subjects = useMemo(
 		() => data?.subjects ?? (subjectsData as Subject[]),

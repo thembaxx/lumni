@@ -1,30 +1,11 @@
 "use client";
 
 import { Popover as PopoverPrimitive } from "@base-ui/react/popover";
-import { cn } from "@/lib/shared";
+import type { PopoverContent } from "./popover-content";
+import type { PopoverTrigger } from "./popover-trigger";
 
 function Popover({ ...props }: PopoverPrimitive.Root.Props) {
 	return <PopoverPrimitive.Root data-slot="popover" {...props} />;
 }
 
-function PopoverTrigger({ ...props }: PopoverPrimitive.Trigger.Props) {
-	return <PopoverPrimitive.Trigger data-slot="popover-trigger" {...props} />;
-}
-
-function PopoverContent({ className, ...props }: PopoverPrimitive.Popup.Props) {
-	return (
-		<PopoverPrimitive.Portal>
-			<PopoverPrimitive.Positioner>
-				<PopoverPrimitive.Popup
-					className={cn(
-						"z-drawer w-72 rounded-xl border bg-popover p-4 text-popover-foreground shadow-md outline-none",
-						className,
-					)}
-					{...props}
-				/>
-			</PopoverPrimitive.Positioner>
-		</PopoverPrimitive.Portal>
-	);
-}
-
-export { Popover, PopoverContent, PopoverTrigger };
+export { Popover, type PopoverContent, type PopoverTrigger };

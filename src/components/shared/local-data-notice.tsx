@@ -3,7 +3,7 @@
 import { Cancel01Icon, DatabaseIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/auth/auth-context";
 import { iOSEase } from "@/lib/utils/animation";
@@ -24,14 +24,11 @@ export function LocalDataNotice({
 	description,
 }: LocalDataNoticeProps) {
 	const { isAnonymous } = useAuth();
-	const [localDismissed, setLocalDismissed] = useState(true);
-
 	const storageKey = `${DISMISS_PREFIX}_${page}`;
-
-	useEffect(() => {
-		const raw = localStorage.getItem(storageKey);
-		setLocalDismissed(raw === "true");
-	}, [storageKey]);
+	const [localDismissed, setLocalDismissed] = useState(() => {
+		if (typeof window === "undefined") return true;
+		return localStorage.getItem(storageKey) === "true";
+	});
 
 	const dismissed = localDismissed || !isAnonymous;
 

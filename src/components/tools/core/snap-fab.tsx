@@ -375,8 +375,8 @@ export function SnapFab() {
 										</h4>
 										{solveResult.steps.map((step, i) => (
 											<div
-												// biome-ignore lint/suspicious/noArrayIndexKey: steps are static ordered list
-												key={i}
+												key={`st-${step.slice(0, 40).replace(/\s+/g, "-")}`}
+												data-index={i}
 												className="rounded-lg border border-border/60 bg-muted/30 p-3"
 											>
 												<span className="mr-2 font-mono text-muted-foreground text-xs">

@@ -81,7 +81,6 @@ export function Flashcard({
 
 	return (
 		<Anim>
-			{/* react-doctor will-fix: fieldset needs onKeyDown for keyboard card navigation */}
 			<fieldset
 				className="flex flex-col gap-4"
 				onKeyDown={handleKeyDown}

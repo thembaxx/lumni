@@ -89,7 +89,7 @@ export function WeeklyReportPanel({
 										const mastery = 40 + (hash % 55);
 										return (
 											<div
-												key={crypto.randomUUID()}
+												key={`tp-${subject.subject}-${hash}`}
 												className="flex items-center justify-between"
 											>
 												<span className="text-muted-foreground text-xs">

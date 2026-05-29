@@ -30,10 +30,7 @@ export default function FlashcardBrowsePage() {
 	const [loading, setLoading] = useState(true);
 	const [importing, setImporting] = useState(false);
 	const [page, setPage] = useState(0);
-	const [now, setNow] = useState(0);
-	useEffect(() => {
-		setNow(Date.now());
-	}, []);
+	const [now] = useState(() => Date.now());
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const PAGE_SIZE = 20;
 

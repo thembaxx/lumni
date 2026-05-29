@@ -24,7 +24,10 @@ export function MixedInput({
 	return (
 		<div className="flex flex-col gap-4">
 			{content?.map((block) => (
-				<ContentBlockRenderer key={crypto.randomUUID()} block={block} />
+				<ContentBlockRenderer
+					key={`cb-${block.type}-${block.value ?? block.imagePath ?? ""}`}
+					block={block}
+				/>
 			))}
 			{subParts?.map((part) => (
 				<div key={part.id} className="border-muted border-l-2 pl-4">

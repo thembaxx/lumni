@@ -33,7 +33,10 @@ export function SourceBasedInput({
 				</div>
 			)}
 			{content?.map((block) => (
-				<ContentBlockRenderer key={crypto.randomUUID()} block={block} />
+				<ContentBlockRenderer
+					key={`cb-${block.type}-${block.value ?? block.imagePath ?? ""}`}
+					block={block}
+				/>
 			))}
 			<Textarea
 				value={value}

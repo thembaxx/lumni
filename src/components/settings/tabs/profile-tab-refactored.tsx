@@ -92,8 +92,10 @@ export function ProfileTabRefactored() {
 						format: "csv",
 						onExport: async () => {
 							try {
-								const { exportService } = await import("@/lib/export");
-								const { offlineDB } = await import("@/lib/db/schema");
+								const [{ exportService }, { offlineDB }] = await Promise.all([
+									import("@/lib/export"),
+									import("@/lib/db/schema"),
+								]);
 								const [quizAttempts, examSessions] = await Promise.all([
 									offlineDB.quizAttempts
 										.orderBy("completedAt")
