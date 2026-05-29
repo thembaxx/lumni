@@ -1,51 +1,30 @@
 "use client";
 
-import {
-	CompassIcon,
-	Copy01Icon,
-	LinkSquare01Icon,
-	Login01Icon,
-	Logout01Icon,
-	Mail01Icon,
-	MapPinIcon,
-	Mortarboard01Icon,
-	UserIcon,
-} from "@hugeicons/core-free-icons";
+import { CompassIcon, Login01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQueryClient } from "@tanstack/react-query";
-import { useCallback, useEffect, useMemo, useReducer, useState } from "react";
+import { useCallback, useEffect, useReducer, useState } from "react";
 import { OnboardingWizard } from "@/components/onboarding/onboarding-wizard";
-import { EditableField } from "@/components/settings/tabs/editable-field";
 import { ParentConsentSection } from "@/components/settings/tabs/parent-consent-section";
-import { RoleSelector } from "@/components/settings/tabs/role-selector";
+import { AccountRoleSection } from "@/components/settings/tabs/sections/account-role-section";
 import { ConfirmDialog } from "@/components/settings/tabs/sections/confirm-dialog";
+import { PasswordSection } from "@/components/settings/tabs/sections/password-section";
+import { PersonalInfoSection } from "@/components/settings/tabs/sections/personal-info-section";
 import { ProfileAvatarSection } from "@/components/settings/tabs/sections/profile-avatar-section";
-import { ProvincePicker } from "@/components/settings/tabs/sections/province-picker";
+import { SchoolDetailsSection } from "@/components/settings/tabs/sections/school-details-section";
+import { ShareProfileSection } from "@/components/settings/tabs/sections/share-profile-section";
+import { SignOutSection } from "@/components/settings/tabs/sections/sign-out-section";
+import { ListCell, ListSection } from "@/components/ui/list-cell";
 import { SubjectPicker } from "@/components/settings/tabs/sections/subject-picker";
 import { EmptyStateWithIllustration } from "@/components/shared/empty-state";
-import { Button } from "@/components/ui/button";
-import { ListCell, ListSection } from "@/components/ui/list-cell";
 import { useEnrolledSubjects } from "@/hooks/use-subjects";
-import { toast } from "@/hooks/use-toast";
-import { account } from "@/lib/appwrite";
 import { useAuth } from "@/lib/auth/auth-context";
 import { toggleUserSubject } from "@/lib/server";
 import { useUploadThing } from "@/lib/uploadthing";
 
-const passwordLeading = <HugeiconsIcon icon={Mail01Icon} className="size-5" />;
-
 const guidedSetupLeading = (
 	<HugeiconsIcon icon={CompassIcon} className="size-5" />
 );
-
-// TODO(react-doctor): Extract PersonalInfoSection into separate component (~30 lines)
-// TODO(react-doctor): Extract PasswordSection into separate component (~20 lines)
-// TODO(react-doctor): Extract SchoolDetailsSection into separate component (~35 lines)
-// TODO(react-doctor): Extract SubjectsSection into separate component (~8 lines)
-// TODO(react-doctor): Extract AccountRoleSection into separate component (~10 lines)
-// TODO(react-doctor): Extract ShareProfileSection into separate component (~15 lines)
-// TODO(react-doctor): Extract StudyGoalsSection into separate component (~20 lines)
-// TODO(react-doctor): Extract SignOutSection into separate component (~20 lines)
 export function ProfileTab() {
 	const { user, isAnonymous, updateProfile, verifyEmail, signOut, error } =
 		useAuth();
@@ -147,144 +126,6 @@ export function ProfileTab() {
 		[user, queryClient],
 	);
 
-	const displayNameLeading = useMemo(
-		() => <HugeiconsIcon icon={UserIcon} className="size-5" />,
-		[],
-	);
-	const displayNameTrailing = useMemo(
-		() => (
-			<EditableField
-				value={user?.name || ""}
-				onSave={async (v) => updateProfile({ name: v })}
-				placeholder="Your name"
-			/>
-		),
-		[user, updateProfile],
-	);
-	const emailLeading = useMemo(
-		() => <HugeiconsIcon icon={Mail01Icon} className="size-5" />,
-		[],
-	);
-	const emailTrailing = useMemo(
-		() => (
-			<span className="max-w-40 truncate text-muted-foreground text-sm">
-				{user?.email}
-			</span>
-		),
-		[user],
-	);
-	const passwordTrailing = useMemo(
-		() => (
-			<span className="text-(length:--fs-footnote) font-semibold text-system-accent">
-				Update
-			</span>
-		),
-		[],
-	);
-	const schoolLeading = useMemo(
-		() => <HugeiconsIcon icon={Mortarboard01Icon} className="size-5" />,
-		[],
-	);
-	const schoolTrailing = useMemo(
-		() => (
-			<EditableField
-				value={schoolDraft}
-				onSave={async (v) => {
-					dispatchDrafts({
-						type: "SET_FIELD",
-						field: "schoolDraft",
-						value: v,
-					});
-					await handleSaveField("school", v);
-				}}
-				placeholder="Your school name"
-			/>
-		),
-		[schoolDraft, handleSaveField],
-	);
-	const gradeLeading = useMemo(
-		() => <HugeiconsIcon icon={Mortarboard01Icon} className="size-5" />,
-		[],
-	);
-	const gradeTrailing = useMemo(
-		() => (
-			<EditableField
-				value={gradeDraft}
-				onSave={async (v) => {
-					dispatchDrafts({
-						type: "SET_FIELD",
-						field: "gradeDraft",
-						value: v,
-					});
-					await handleSaveField("grade", v);
-				}}
-				placeholder="e.g. Grade 12"
-			/>
-		),
-		[gradeDraft, handleSaveField],
-	);
-	const provinceLeading = useMemo(
-		() => <HugeiconsIcon icon={MapPinIcon} className="size-5" />,
-		[],
-	);
-	const provinceTrailing = useMemo(
-		() => (
-			<ProvincePicker
-				value={provinceDraft}
-				onSelect={async (p) => {
-					dispatchDrafts({
-						type: "SET_FIELD",
-						field: "provinceDraft",
-						value: p,
-					});
-					await handleSaveField("province", p);
-				}}
-			/>
-		),
-		[provinceDraft, handleSaveField],
-	);
-	const roleLeading = useMemo(
-		() => <HugeiconsIcon icon={UserIcon} className="size-5" />,
-		[],
-	);
-	const roleTrailing = useMemo(
-		() => <RoleSelector currentLabels={user?.labels ?? []} />,
-		[user],
-	);
-	const shareLeading = useMemo(
-		() => <HugeiconsIcon icon={LinkSquare01Icon} className="size-5" />,
-		[],
-	);
-	const shareTrailing = useMemo(
-		() => (
-			<button
-				type="button"
-				onClick={async () => {
-					if (user?.$id) {
-						await navigator.clipboard.writeText(user.$id);
-						toast({
-							type: "success",
-							message: "User ID copied to clipboard",
-						});
-					}
-				}}
-				className="flex size-8 shrink-0 items-center justify-center rounded-full bg-system-accent text-white hover:bg-system-accent/90"
-				aria-label="Copy user ID"
-			>
-				<HugeiconsIcon icon={Copy01Icon} className="size-4" />
-			</button>
-		),
-		[user],
-	);
-	const guidedSetupTrailing = useMemo(
-		() => (
-			<span className="text-(length:--fs-footnote) font-semibold text-system-accent">
-				Redo
-			</span>
-		),
-		[],
-	);
-
 	if (isAnonymous) {
 		return (
 			<div className="flex flex-col gap-10 pt-8">
@@ -335,64 +176,35 @@ export function ProfileTab() {
 				</p>
 			)}
 
-			<ListSection header="Personal Information">
-				<ListCell
-					leading={displayNameLeading}
-					title="Display Name"
-					showSeparator
-					trailing={displayNameTrailing}
-				/>
-				{!isAnonymous && (
-					<ListCell
-						leading={emailLeading}
-						title="Email Address"
-						subtitle={user?.emailVerification ? "Verified" : "Not verified"}
-						trailing={emailTrailing}
-					/>
-				)}
-			</ListSection>
+			<PersonalInfoSection
+				user={user}
+				isAnonymous={isAnonymous}
+				onUpdateName={async (v) => updateProfile({ name: v })}
+			/>
 
-			{!isAnonymous && (
-				<ListSection header="Password">
-					<ListCell
-						leading={passwordLeading}
-						title="Change Password"
-						showSeparator={false}
-						trailing={passwordTrailing}
-						onClick={() => {
-							const current = prompt("Current password");
-							if (!current) return;
-							const newPwd = prompt("New password (min 8 chars)");
-							if (!newPwd || newPwd.length < 8) return;
-							account
-								.updatePassword(newPwd, current)
-								.then(() => alert("Password updated"))
-								.catch((err) => alert(err.message));
-						}}
-					/>
-				</ListSection>
-			)}
+			{!isAnonymous && <PasswordSection />}
 
-			<ListSection header="School Details (Optional)">
-				<ListCell
-					leading={schoolLeading}
-					title="School"
-					showSeparator
-					trailing={schoolTrailing}
-				/>
-				<ListCell
-					leading={gradeLeading}
-					title="Grade"
-					showSeparator
-					trailing={gradeTrailing}
-				/>
-				<ListCell
-					leading={provinceLeading}
-					title="Province"
-					showSeparator={false}
-					trailing={provinceTrailing}
-				/>
-			</ListSection>
+			<SchoolDetailsSection
+				schoolDraft={schoolDraft}
+				gradeDraft={gradeDraft}
+				provinceDraft={provinceDraft}
+				onSaveSchool={async (v) => {
+					dispatchDrafts({ type: "SET_FIELD", field: "schoolDraft", value: v });
+					await handleSaveField("school", v);
+				}}
+				onSaveGrade={async (v) => {
+					dispatchDrafts({ type: "SET_FIELD", field: "gradeDraft", value: v });
+					await handleSaveField("grade", v);
+				}}
+				onSaveProvince={async (v) => {
+					dispatchDrafts({
+						type: "SET_FIELD",
+						field: "provinceDraft",
+						value: v,
+					});
+					await handleSaveField("province", v);
+				}}
+			/>
 
 			<ListSection header="Subjects (Optional)">
 				<SubjectPicker
@@ -403,25 +215,9 @@ export function ProfileTab() {
 				/>
 			</ListSection>
 
-			<ListSection header="Account Role">
-				<ListCell
-					leading={roleLeading}
-					title="Role"
-					subtitle="Controls which dashboard you see"
-					showSeparator={false}
-					trailing={roleTrailing}
-				/>
-			</ListSection>
+			<AccountRoleSection labels={user?.labels} />
 
-			<ListSection header="Share Profile">
-				<ListCell
-					leading={shareLeading}
-					title="Your User ID"
-					subtitle="Share this with your teacher or parent to link accounts"
-					showSeparator={false}
-					trailing={shareTrailing}
-				/>
-			</ListSection>
+			<ShareProfileSection userId={user?.$id} />
 
 			{user?.labels?.includes("student") && (
 				<ParentConsentSection userId={user.$id} />
@@ -433,7 +229,11 @@ export function ProfileTab() {
 					title="Guided Setup"
 					subtitle="Set your subjects, targets, and study schedule"
 					showSeparator={false}
-					trailing={guidedSetupTrailing}
+					trailing={
+						<span className="text-(length:--fs-footnote) font-semibold text-system-accent">
+							Redo
+						</span>
+					}
 					onClick={() => setShowConfirmDialog(true)}
 				/>
 			</ListSection>
@@ -472,27 +272,7 @@ export function ProfileTab() {
 				</div>
 			)}
 
-			<div className="px-2 pt-4">
-				{!isAnonymous && (
-					<Button
-						size="default"
-						variant="destructive"
-						onClick={signOut}
-						className="w-full rounded-lg font-medium text-sm shadow-level-2 transition-[transform,opacity] active:scale-[0.96]"
-					>
-						<HugeiconsIcon icon={Logout01Icon} data-icon />
-						Sign Out
-					</Button>
-				)}
-				<div className="mt-8 flex flex-col items-center gap-1">
-					<p className="text-(length:--fs-footnote) font-extrabold text-[--system-text-tertiary] uppercase tracking-widest">
-						Lumni Mobile
-					</p>
-					<p className="text-(length:--fs-caption-2) font-medium text-[--system-text-tertiary] tabular-nums">
-						Version 1.0.4 (Stable-RC)
-					</p>
-				</div>
-			</div>
+			<SignOutSection isAnonymous={isAnonymous} onSignOut={signOut} />
 		</div>
 	);
 }
