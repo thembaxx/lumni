@@ -1,4 +1,4 @@
-<!-- LAST_SYNC: 2026-05-28 -->
+<!-- LAST_SYNC: 2026-05-30 -->
 # System Design — Lumni
 
 ## Overview & Goals
@@ -35,6 +35,7 @@ graph TD
 3. **Question Processing**: User answers are graded locally (for 4 types) or via AI (7 types). `LearningOrchestrator` handles side effects.
 4. **Competency Tracking**: Results update the local `competency` table and are queued for Appwrite sync via `QueueCore`.
 5. **Exam Tracking**: `ExamDatesService` provides national exam schedules, pulling from Dexie or Seed data, with background sync to Appwrite to maintain global availability.
+6. **Assignments**: Teachers create assignments via `POST /api/teacher/assign`; students fetch via `GET /api/student/assignments`.
 
 ## Tech Stack
 - **Frontend**: Next.js 16.2.6, React 19.2.6, Tailwind CSS 4, Framer Motion, Zustand.
@@ -52,9 +53,10 @@ graph TD
 - **QuizPackService**: Manages the lifecycle of AI-generated offline question sets.
 - **createRouteHandler**: Generic factory for declarative API route handlers with auth, validation, and budget tracking.
 - **QueueCore**: Persistent job queue ensuring offline mutations and orchestration tasks are eventually executed.
+- **Snap-Answer Bus**: Event-based bridge between OCR solver and question input fields.
 
 ## External Integrations
-- **Appwrite**: Auth, Database (exam_sessions, questions, visuals, exam_dates), Storage.
+- **Appwrite**: Auth, Database (exam_sessions, questions, visuals, exam_dates, teacher_assignments), Storage.
 - **AI Providers**: Google Gemini, Nvidia NIM, Groq Cloud.
 - **UploadThing**: File uploads for avatars and documents.
 - **Wikimedia**: Image search for non-STEM visuals.
@@ -62,5 +64,5 @@ graph TD
 ## Current Limitations & TODOs
 - **OCR**: National exam schedule extraction currently manual; needs OCR/AI vision for image-based PDFs.
 - **Comparative Analytics**: Currently uses estimates due to Appwrite data privacy constraints.
-- **Mock Exam Mode**: Planned feature for timed past-paper simulations.
+- **Mock Exam Mode**: Timed past-paper simulations (Wired to quiz route).
 - **Component Coverage**: Ongoing expansion of Storybook and Playwright test suites.

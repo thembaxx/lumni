@@ -1,4 +1,4 @@
-<!-- LAST_SYNC: 2026-05-28 -->
+<!-- LAST_SYNC: 2026-05-30 -->
 # Memory Index — Lumni
 
 ## Facts
@@ -11,6 +11,7 @@
 - **Competency**: Mapped to Bloom's Taxonomy (Novice→Remember, Developing→Understand/Apply, Proficient→Apply/Analyze, Mastered→Evaluate/Create).
 - **E2E Testing**: Uses Playwright for end-to-end verification.
 - **UI Documentation**: Uses Storybook for component isolation and documentation.
+- **SA Region**: Appwrite endpoint set to `jnb.cloud.appwrite.io`.
 
 ## Decisions
 - **Orchestration**: `LearningOrchestrator` composes `QuestionEngine` to handle side effects like sync and progress tracking (2026-05-15).
@@ -22,6 +23,9 @@
 - **Services**: Consolidated into `src/lib/services/index.ts` with `ServiceResult<T>` wrapper (2026-05-24).
 - **Offline Packs**: Implemented `QuizPackService` to allow users to download AI-generated question sets for offline use (2026-05-28).
 - **Exam Dates Sync**: Added server-side write path to Appwrite for national exam dates to ensure L2 cache availability (2026-05-28).
+- **Immersive Mode**: Added `ImmersiveModeProvider` to auto-hide nav bars during quiz/exam sessions (2026-05-28).
+- **Swipeable Deck**: Replaced flashcard list with Tinder-style swipeable deck and SM-2 quality picker (2026-05-28).
+- **Mega-Component Breakdown**: Decomposed Profile, OTP, Periodic Table, and AI Solver into sub-components for maintainability (2026-05-30).
 
 ## Patterns
 - **Repository Pattern**: All database access is abstracted through typed repositories in `src/lib/db/repositories/`.
@@ -30,6 +34,7 @@
 - **Visual Pre-caching**: Diagrams are generated in the background during question generation to ensure they are ready for display.
 - **Design Tokens**: Strict enforcement of OKLCH colors, semantic z-indices, and `gap-*` for spacing.
 - **ServiceResult**: All business logic services return a unified `ServiceResult<T>` to simplify error handling in the UI and API.
+- **Snap-Answer Event Bus**: `dispatchSnapAnswer` and `useSnapAnswer` for passing OCR results to input fields.
 
 ## Failures & Lessons
 - **PDF Extraction**: Official DBE PDFs are image-based; standard extraction fails. Requires manual entry or future AI vision OCR.
@@ -37,6 +42,7 @@
 - **Sync Logic**: Consolidation of multiple sync hooks into a single `QueueCore` processor resolved duplication bugs.
 - **Competency Fields**: Fixed mismatch between `proficiency` and `score` fields in sync/API paths.
 - **Next.js Worker Clone**: `bunx --bun next build` fails in some environments due to git-clone worker issues; use `npx next build` for stability.
+- **Middleware/Proxy Conflict**: `middleware.ts` and `proxy.ts` conflicted; merged into `proxy.ts` for Next.js 16 compatibility.
 
 ## Contacts / Resources
 - **Domain Glossary**: `CONTEXT.md` (shared vocabulary).

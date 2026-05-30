@@ -1,4 +1,4 @@
-<!-- LAST_SYNC: 2026-05-28 -->
+<!-- LAST_SYNC: 2026-05-30 -->
 # Repository Index — Lumni
 
 ## Directory Tree (Depth 3)
@@ -37,9 +37,9 @@
 
 ## Module/Component Map
 - `src/app`: Contains the application's pages (e.g., dashboard, quiz, exam) and API route handlers.
-- `src/components`: UI components organized by domain: `ui` (primitives), `quiz` (question cards, diagrams), `dashboard`, `admin`, `tools` (reorganized into `core/`, `communication/`, `math/`, `science/`, `scheduling/`).
-- `src/lib`: Core logic: `flashcard-engine` (unified SR), `question-engine` (gen/grade), `visual-engine` (diagrams), `api` (create-route-handler factory), `orchestrator` (jobs), `services` (barrel of all 10 services), `db` (repositories), `ai` (clients), `quiz-packs` (offline packs), `exam-dates` (tracker).
-- `src/hooks`: Domain-specific hooks like `useQuestionEngine`, `useVisualEngine`, `useAuth`, `useQuizSession`, `useQuizPacks`.
+- `src/components`: UI components organized by domain. Recently decomposed mega-components into subdirectories: `auth/`, `profile/`, `periodic-table/`, `tools/`.
+- `src/lib`: Core logic: `flashcard-engine` (unified SR), `question-engine` (gen/grade), `visual-engine` (diagrams), `api` (create-route-handler factory), `orchestrator` (jobs), `services` (barrel), `db` (repositories), `ai` (clients), `quiz-packs` (offline packs), `exam-dates` (tracker).
+- `src/hooks`: Domain-specific hooks like `useQuestionEngine`, `useVisualEngine`, `useAuth`, `useQuizSession`, `useQuizPacks`, `useSwipeDeck`.
 - `src/store`: Zustand stores for global state: `main`, `flashcards`, `exam-session`, `bookmarks`, `tools`, `voice-recorder`.
 
 ## Dependency Graph (Core)
@@ -52,15 +52,16 @@
 - **Tooling**: Biome, Bun, Sentry, UploadThing, Playwright, Storybook
 
 ## Entry Points
-- `src/app/page.tsx`: Application dashboard / home feed.
-- `src/app/layout.tsx`: Root layout with providers and global styles.
-- `src/app/api/engine/generate/route.ts`: Question generation entry point.
+- `src/app/[locale]/page.tsx`: Application dashboard / home feed.
+- `src/app/[locale]/layout.tsx`: Root layout with providers and global styles.
 - `src/instrumentation.ts`: Sentry and monitoring initialization.
+- `src/proxy.ts`: Auth and middleware proxy logic.
 
 ## Recent Changes (Last 7 Days)
-- Implementation of Offline AI Quiz Packs (`src/lib/quiz-packs/`).
-- Playwright E2E testing setup and smoke tests (`playwright.config.ts`, `e2e/`).
-- Appwrite sync path for `exam_dates` implemented.
-- Storybook integration and initial stories (`src/stories/`).
-- Dexie v18 migration for Quiz Packs support (table count 18→23).
-- Services barrel reorganization and generic route handler factory refinement.
+- Mega-component breakdown sprint (Profile, OTP, Periodic Table, AI Solver).
+- Parental Dashboard (ChildProgressGrid) and Teacher Analytics (Assignment persistence, drill-down) implemented.
+- Premium gating for Offline Packs, Problem Library, and Visual Engine.
+- Student view for teacher assignments added to dashboard.
+- Extensive code cleanup: removed dead buttons, stubs, and 17 unused animations.
+- Dexie persistence for subjects and chat messages added.
+- Playwright E2E testing and Storybook integration.

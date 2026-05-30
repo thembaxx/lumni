@@ -1,5 +1,5 @@
 {
-  "LAST_SYNC": "2026-05-28",
+  "LAST_SYNC": "2026-05-30",
   "modules": [
     {
       "path": "src/lib/flashcard-engine/engine.ts",
@@ -125,6 +125,19 @@
         }
       ],
       "internalDependencies": ["@/lib/db/schema", "@/lib/orchestrator/job-queue", "appwrite"]
+    },
+    {
+      "path": "src/lib/auth/auth-context.tsx",
+      "exports": [
+        {
+          "name": "AuthProvider",
+          "description": "React provider for Appwrite-based authentication with anonymous session support."
+        },
+        {
+          "name": "useAuth",
+          "description": "Hook to access auth state (user, status, isAnonymous) and actions (signIn, signUp, signOut, etc.)."
+        }
+      ]
     },
     {
       "path": "src/lib/services/index.ts",
