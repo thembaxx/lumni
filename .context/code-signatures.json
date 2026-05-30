@@ -1,5 +1,6 @@
+<!-- LAST_SYNC: 2026-05-29 -->
 {
-  "LAST_SYNC": "2026-05-28",
+  "LAST_SYNC": "2026-05-29",
   "modules": [
     {
       "path": "src/lib/flashcard-engine/engine.ts",
@@ -148,6 +149,16 @@
           "name": "HttpError",
           "type": "class",
           "description": "Standardized HTTP error for use within createRouteHandler."
+        }
+      ]
+    },
+    {
+      "path": "src/lib/db/schema.ts",
+      "exports": [
+        {
+          "name": "offlineDB",
+          "type": "instance",
+          "description": "Dexie database instance with 30+ tables for offline-first persistence."
         }
       ]
     }
