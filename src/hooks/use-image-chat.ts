@@ -338,7 +338,7 @@ export function useImageChatWithSend(
 		async (messageId: string) => {
 			chat.setMessages((prev) => {
 				const msg = prev.find((m) => m.id === messageId);
-				if (!msg || msg.type !== "image" || !msg.imageUrl) return prev;
+				if (msg?.type !== "image" || !msg.imageUrl) return prev;
 
 				const currentMsg = msg as RetryableMessage;
 				if (currentMsg.processingStatus === "sending") return prev;

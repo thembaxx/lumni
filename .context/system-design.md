@@ -1,4 +1,4 @@
-<!-- LAST_SYNC: 2026-05-29 -->
+<!-- LAST_SYNC: 2026-05-31 -->
 # System Design — Lumni
 
 ## Overview & Goals
@@ -18,6 +18,7 @@ graph TD
     Wiki[Wikimedia Commons]
     Queue[QueueCore Job Queue]
     Auth[Appwrite Auth / Anon Gating]
+    Stripe[Stripe/Payfast Payments]
 
     Client <--> Dexie
     Client <--> Auth
@@ -26,6 +27,7 @@ graph TD
     API <--> Engine
     API <--> Visual
     API <--> Pack
+    API <--> Stripe
     Engine <--> AI
     Visual <--> AI
     Visual <--> Wiki
@@ -35,12 +37,13 @@ graph TD
 ```
 
 ## Data Flow
-1. **Request Lifecycle**: User requests content. L1 (Dexie) is primary; L2 (Appwrite) is secondary; L3 (AI/Wiki) is fallback.
-2. **Offline Practice**: `QuizPackService` handles bulk generation and storage in `quizPacks`/`packQuestions` Dexie tables for offline-first access.
-3. **Question Processing**: Answer grading (local/AI) is orchestrated by `LearningOrchestrator`, which enqueues sync and progress jobs via `QueueCore`.
+1. **Multi-Tier Caching**: User requests content. L1 (Dexie) is primary; L2 (Appwrite) is secondary; L3 (AI/Wiki) is fallback.
+2. **Offline Practice**: `QuizPackService` enables bulk generation and storage in `quizPacks`/`packQuestions` Dexie tables for offline-first access.
+3. **Question Processing**: Grading (local/AI) is orchestrated by `LearningOrchestrator`, which enqueues sync and progress jobs via `QueueCore`.
 4. **Competency tracking**: Progress is assessed via `trackQuestionResult()`, updating the local `competency` table and syncing to Appwrite `competencies` collection.
-5. **Exam Lifecycle**: `ExamDatesService` provides schedules from seed data/Dexie, with background sync to Appwrite for cross-device consistency.
-6. **Immersive Focus**: `ImmersiveModeProvider` hides navigation elements during active quiz/exam sessions to maximize screen real estate and focus.
+5. **Monetization**: `PremiumProvider` gates features (offline packs, advanced analytics) based on Appwrite `premium_subscriptions`. Stripe/Payfast webhooks handle status updates.
+6. **B2B2C Flows**: Teachers create assignments via `teacher_assignments` collection; students view them via `student/assignments` route. Parents monitor progress via `ParentShell` using linked `teacher_students` relationships.
+7. **Observability**: `latency-tracker` monitors AI provider performance; `events.ts` tracks usage events to localStorage/Appwrite.
 
 ## Tech Stack
 - **Frontend**: Next.js 16.2.6 (App Router), React 19.2.6, Tailwind CSS 4, Framer Motion 12.
@@ -54,17 +57,12 @@ graph TD
 - **FlashcardEngine**: Unified SM-2/FSRS engine wrapping repository, limits, and recovery logic.
 - **LearningOrchestrator**: Orchestrates engines and manages side effects (sync, analytics, jobs).
 - **createRouteHandler**: Declarative factory for API routes with auth, Zod validation, and AI budgeting.
-- **QueueCore**: Persistent Dexie-backed job queue for background tasks and offline mutation sync.
-- **ImmersiveMode**: Context-driven UI state for hiding/showing core navigation components.
+- **ImmersiveMode**: Context-driven UI state for hiding core navigation components.
+- **SnapAnswer**: Event-bus for injecting OCR results from photo-math scanner into quiz/flashcard inputs.
 
 ## External Integrations
-- **Appwrite**: Authentication (Anonymous auto-upgrade), Database (10+ collections), Storage.
+- **Appwrite**: Authentication, Database (10+ collections), Storage.
 - **AI Providers**: Google Gemini, Nvidia NIM, Groq Cloud.
+- **Payments**: Stripe, Payfast.
 - **UploadThing**: Document and avatar storage.
 - **Wikimedia**: Image search fallback for non-STEM visuals.
-
-## Current Limitations & TODOs
-- **OCR/Vision**: Future integration for national exam schedule extraction from image-based PDFs.
-- **Comparative Stats**: Production path for multi-user data analysis still relies on estimates.
-- **Mock Exam Mode**: Timed past-paper simulation feature currently in roadmap/development.
-- **Component Coverage**: Expansion of Storybook stories and Playwright E2E coverage ongoing.
