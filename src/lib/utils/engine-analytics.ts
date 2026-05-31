@@ -15,6 +15,7 @@ const ANALYTICS_KEY = "lumni_engine_analytics";
 export function trackEngineEvent(
 	data: Omit<AnalyticsEvent, "timestamp">,
 ): void {
+	if (typeof window === "undefined") return;
 	try {
 		const events = loadEvents();
 		events.push({ ...data, timestamp: Date.now() });

@@ -32,6 +32,7 @@ const DEFAULT_GAMIFICATION: StoredGamification = {
 
 export class GamificationEngine {
 	load(): StoredGamification {
+		if (typeof window === "undefined") return DEFAULT_GAMIFICATION;
 		try {
 			const stored = localStorage.getItem(GAMIFICATION_KEY);
 			if (stored) {
@@ -57,7 +58,12 @@ export class GamificationEngine {
 	}
 
 	save(data: StoredGamification): void {
-		localStorage.setItem(GAMIFICATION_KEY, JSON.stringify(data));
+		if (typeof window === "undefined") return;
+		try {
+			localStorage.setItem(GAMIFICATION_KEY, JSON.stringify(data));
+		} catch {
+			// ignore
+		}
 	}
 
 	resetExpiredChallenges(

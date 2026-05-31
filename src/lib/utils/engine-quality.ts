@@ -15,14 +15,18 @@ export interface QualityRecord {
 const QUALITY_KEY = "lumni_engine_quality";
 
 export function recordQuality(data: Omit<QualityRecord, "timestamp">): void {
+	if (typeof window === "undefined") return;
 	const records = loadQualityRecords();
 	records.push({ ...data, timestamp: Date.now() });
 	const recent = records.slice(-200);
 	try {
 		localStorage.setItem(QUALITY_KEY, safeJsonStringify(recent));
 	} catch {
-		// Storage full, clear and retry
-		localStorage.setItem(QUALITY_KEY, safeJsonStringify(recent.slice(-50)));
+		try {
+			localStorage.setItem(QUALITY_KEY, safeJsonStringify(recent.slice(-50)));
+		} catch {
+			// ignore
+		}
 	}
 }
 
