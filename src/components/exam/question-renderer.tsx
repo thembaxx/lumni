@@ -1,12 +1,21 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";
-import { VisualContent } from "@/components/visual/visual-content";
+import { CardSkeleton } from "@/components/ui/skeletons";
 import { useVisualEngine } from "@/hooks/use-visual-engine";
 import type { Question as ExamQuestion } from "@/types/exam-paper";
 import { ContentBlockRenderer } from "./content-block-renderer";
 import { MarksDisplay } from "./marks-display";
 import { PartRenderer } from "./part-renderer";
+
+const VisualContent = dynamic(
+	() =>
+		import("@/components/visual/visual-content").then((m) => ({
+			default: m.VisualContent,
+		})),
+	{ ssr: false, loading: () => <CardSkeleton /> },
+);
 
 interface QuestionRendererProps {
 	question: ExamQuestion;

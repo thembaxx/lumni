@@ -10,7 +10,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
-import { useCallback, useMemo } from "react";
+import { memo, useCallback, useMemo } from "react";
 import { Badge } from "@/components/ui/badge";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { usePathname } from "@/i18n/navigation";
@@ -63,7 +63,7 @@ const navItems: NavItem[] = [
 	},
 ];
 
-function NavItemComponent({
+const NavItemComponent = memo(function NavItemComponent({
 	item,
 	isActive,
 	onClick,
@@ -122,7 +122,7 @@ function NavItemComponent({
 			</span>
 		</m.button>
 	);
-}
+});
 
 export function BottomNav() {
 	const pathname = usePathname();

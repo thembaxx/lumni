@@ -1,7 +1,16 @@
 "use client";
 
-import { DiagramRenderer } from "@/components/visual/diagram-renderer";
+import dynamic from "next/dynamic";
+import { CardSkeleton } from "@/components/ui/skeletons";
 import type { DiagramSpec } from "@/lib/question-engine/types";
+
+const DiagramRenderer = dynamic(
+	() =>
+		import("@/components/visual/diagram-renderer").then((m) => ({
+			default: m.DiagramRenderer,
+		})),
+	{ ssr: false, loading: () => <CardSkeleton /> },
+);
 
 export function QuestionDiagram({ diagram }: { diagram: DiagramSpec }) {
 	return (

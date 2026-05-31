@@ -1,8 +1,32 @@
 "use client";
 
-import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis } from "recharts";
+import dynamic from "next/dynamic";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/shared";
+
+const BarChart = dynamic(
+	() => import("recharts").then((m) => ({ default: m.BarChart })),
+	{ ssr: false },
+);
+const Bar = dynamic(
+	() => import("recharts").then((m) => ({ default: m.Bar })),
+	{ ssr: false },
+);
+const XAxis = dynamic(
+	() => import("recharts").then((m) => ({ default: m.XAxis })),
+	{ ssr: false },
+);
+const ResponsiveContainer = dynamic(
+	() => import("recharts").then((m) => ({ default: m.ResponsiveContainer })),
+	{
+		ssr: false,
+		loading: () => <div className="h-32 animate-pulse rounded-lg bg-muted" />,
+	},
+);
+const Tooltip = dynamic(
+	() => import("recharts").then((m) => ({ default: m.Tooltip })),
+	{ ssr: false },
+);
 
 interface StatItem {
 	label: string;
