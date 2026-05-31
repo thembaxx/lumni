@@ -119,7 +119,7 @@ export function BloomTaxonomyWidget() {
 									? "developing"
 									: "novice";
 					return (
-						<div key={topic.topicId} className="rounded-[1rem] bg-muted/40 p-3">
+						<div key={topic.topicId} className="rounded-xl bg-muted/40 p-3">
 							<div className="mb-2 flex items-center justify-between">
 								<p className="font-medium text-sm capitalize">
 									{topic.topicId.replace(/-/g, " ")}

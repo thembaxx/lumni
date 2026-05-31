@@ -4,6 +4,7 @@ import { Mail01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useMemo } from "react";
 import { ListCell, ListSection } from "@/components/ui/list-cell";
+import { toast } from "@/hooks/use-toast";
 import { account } from "@/lib/appwrite";
 
 const passwordLeading = <HugeiconsIcon icon={Mail01Icon} className="size-5" />;
@@ -32,8 +33,8 @@ export function PasswordSection() {
 					if (!newPwd || newPwd.length < 8) return;
 					account
 						.updatePassword(newPwd, current)
-						.then(() => alert("Password updated"))
-						.catch((err) => alert(err.message));
+						.then(() => toast({ type: "success", message: "Password updated" }))
+						.catch((err) => toast({ type: "error", message: err.message }));
 				}}
 			/>
 		</ListSection>

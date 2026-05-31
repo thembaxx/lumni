@@ -1,7 +1,14 @@
 "use client";
+import {
+	BookOpen02Icon,
+	CheckmarkCircle01Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { StepByStep } from "@/components/quiz/step-by-step";
 import { Button } from "@/components/ui/button";
+import { flashcardEngine } from "@/lib/flashcard-engine";
 
 interface SolverResultViewProps {
 	subject: string;
@@ -28,6 +35,23 @@ export function SolverResultView({
 	result,
 	onReset,
 }: SolverResultViewProps) {
+	const [flashcardCreated, setFlashcardCreated] = useState(false);
+	const [creatingFlashcard, setCreatingFlashcard] = useState(false);
+
+	const handleCreateFlashcard = async () => {
+		setCreatingFlashcard(true);
+		try {
+			await flashcardEngine.create(
+				`${SUBJECT_LABELS[subject] || subject} problem`,
+				result.solution,
+				"mathematics",
+			);
+			setFlashcardCreated(true);
+		} finally {
+			setCreatingFlashcard(false);
+		}
+	};
+
 	return (
 		<div className="animate-fade-in-up px-5 pb-10">
 			<div className="overflow-hidden rounded-2xl border border-border bg-card shadow-level-2">
@@ -59,10 +83,29 @@ export function SolverResultView({
 				</div>
 			</div>
 
+			<div className="mt-4 flex gap-3">
+				<Button
+					variant="secondary"
+					onClick={handleCreateFlashcard}
+					disabled={creatingFlashcard || flashcardCreated}
+					className="min-h-12 flex-1 gap-2 rounded-xl"
+				>
+					<HugeiconsIcon
+						icon={flashcardCreated ? CheckmarkCircle01Icon : BookOpen02Icon}
+						className="size-4"
+					/>
+					{creatingFlashcard
+						? "Creating…"
+						: flashcardCreated
+							? "Flashcard Created"
+							: "Create Flashcard"}
+				</Button>
+			</div>
+
 			<Button
 				variant="outline"
 				onClick={onReset}
-				className="mt-4 h-10 w-full gap-2 rounded-xl"
+				className="mt-2 h-10 w-full gap-2 rounded-xl"
 			>
 				Solve Another Problem
 			</Button>

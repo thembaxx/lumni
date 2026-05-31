@@ -8,7 +8,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
-import { useState } from "react";
+import { useReducer } from "react";
 import { SubjectsDrawer } from "@/components/dashboard/drawers/subjects-drawer";
 import { Anim } from "@/components/shared/anim";
 import {
@@ -34,13 +34,68 @@ interface ExamTabProps {
 	className?: string;
 }
 
-// TODO(react-doctor): Refactor multiple useState calls into useReducer
+type ExamFiltersState = {
+	selectedSubject: string | null;
+	selectedYear: number | null;
+	selectedSession: string;
+	searchQuery: string;
+	expandedGroups: Set<string>;
+};
+
+type ExamFiltersAction =
+	| { type: "SET_SUBJECT"; payload: string | null }
+	| { type: "SET_YEAR"; payload: number | null }
+	| { type: "SET_SESSION"; payload: string }
+	| { type: "SET_SEARCH"; payload: string }
+	| { type: "TOGGLE_GROUP"; payload: string }
+	| { type: "CLEAR_ALL" };
+
+const initialFiltersState: ExamFiltersState = {
+	selectedSubject: null,
+	selectedYear: null,
+	selectedSession: "all",
+	searchQuery: "",
+	expandedGroups: new Set(),
+};
+
+function filtersReducer(
+	state: ExamFiltersState,
+	action: ExamFiltersAction,
+): ExamFiltersState {
+	switch (action.type) {
+		case "SET_SUBJECT":
+			return { ...state, selectedSubject: action.payload };
+		case "SET_YEAR":
+			return { ...state, selectedYear: action.payload };
+		case "SET_SESSION":
+			return { ...state, selectedSession: action.payload };
+		case "SET_SEARCH":
+			return { ...state, searchQuery: action.payload };
+		case "TOGGLE_GROUP": {
+			const next = new Set(state.expandedGroups);
+			if (next.has(action.payload)) {
+				next.delete(action.payload);
+			} else {
+				next.add(action.payload);
+			}
+			return { ...state, expandedGroups: next };
+		}
+		case "CLEAR_ALL":
+			return { ...initialFiltersState, expandedGroups: new Set() };
+		default:
+			return state;
+	}
+}
+
 export function ExamTab({ className }: ExamTabProps) {
-	const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
-	const [selectedYear, setSelectedYear] = useState<number | null>(null);
-	const [selectedSession, setSelectedSession] = useState<string>("all");
-	const [searchQuery, setSearchQuery] = useState("");
-	const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
+	const [filters, dispatch] = useReducer(filtersReducer, initialFiltersState);
+	const {
+		selectedSubject,
+		selectedYear,
+		selectedSession,
+		searchQuery,
+		expandedGroups,
+	} = filters;
 
 	const { exams, groupedExams, isLoading, error } = useExams({
 		search: searchQuery,
@@ -50,18 +105,15 @@ export function ExamTab({ className }: ExamTabProps) {
 	});
 
 	const handleSubjectSelect = (subject: string) => {
-		setSelectedSubject(subject);
+		dispatch({ type: "SET_SUBJECT", payload: subject });
 	};
 
 	const handleYearSelect = (year: number | null) => {
-		setSelectedYear(year);
+		dispatch({ type: "SET_YEAR", payload: year });
 	};
 
 	const clearFilters = () => {
-		setSelectedSubject(null);
-		setSelectedYear(null);
-		setSelectedSession("all");
-		setSearchQuery("");
+		dispatch({ type: "CLEAR_ALL" });
 	};
 
 	const hasActiveFilters =
@@ -87,7 +139,9 @@ export function ExamTab({ className }: ExamTabProps) {
 							type="text"
 							placeholder="Search exams..."
 							value={searchQuery}
-							onChange={(e) => setSearchQuery(e.target.value)}
+							onChange={(e) =>
+								dispatch({ type: "SET_SEARCH", payload: e.target.value })
+							}
 							className="h-10 rounded-full border-0 bg-secondary/50 pr-10 pl-10 placeholder:text-muted-foreground/60 focus-visible:ring-1 focus-visible:ring-[--system-accent]/30"
 						/>
 						<AnimatePresence initial={false}>
@@ -99,7 +153,9 @@ export function ExamTab({ className }: ExamTabProps) {
 									className="absolute top-1/2 right-3 -translate-y-1/2"
 								>
 									<Button
-										onClick={() => setSearchQuery("")}
+										onClick={() =>
+											dispatch({ type: "SET_SEARCH", payload: "" })
+										}
 										variant="ghost"
 										size="icon"
 										className="rounded-full bg-muted/60 text-muted-foreground transition-[scale] hover:bg-muted hover:text-foreground active:scale-[0.96]"
@@ -131,21 +187,27 @@ export function ExamTab({ className }: ExamTabProps) {
 							<Button
 								variant={selectedSession === "all" ? "default" : "secondary"}
 								size="sm"
-								onClick={() => setSelectedSession("all")}
+								onClick={() =>
+									dispatch({ type: "SET_SESSION", payload: "all" })
+								}
 							>
 								All
 							</Button>
 							<Button
 								variant={selectedSession === "may" ? "default" : "secondary"}
 								size="sm"
-								onClick={() => setSelectedSession("may")}
+								onClick={() =>
+									dispatch({ type: "SET_SESSION", payload: "may" })
+								}
 							>
 								Jun
 							</Button>
 							<Button
 								variant={selectedSession === "nov" ? "default" : "secondary"}
 								size="sm"
-								onClick={() => setSelectedSession("nov")}
+								onClick={() =>
+									dispatch({ type: "SET_SESSION", payload: "nov" })
+								}
 							>
 								Nov
 							</Button>
@@ -297,14 +359,9 @@ export function ExamTab({ className }: ExamTabProps) {
 													variant="secondary"
 													size="sm"
 													onClick={() =>
-														setExpandedGroups((prev) => {
-															const next = new Set(prev);
-															if (next.has(group.subject)) {
-																next.delete(group.subject);
-															} else {
-																next.add(group.subject);
-															}
-															return next;
+														dispatch({
+															type: "TOGGLE_GROUP",
+															payload: group.subject,
 														})
 													}
 												>

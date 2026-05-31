@@ -341,6 +341,26 @@ export const appwriteExamDatesSync: JobHandler = async (payload) => {
 	);
 };
 
+export const appwriteConsentSync: JobHandler = async (payload) => {
+	const data = payload as JobPayloadByType["appwrite-consent-sync"];
+	await upsertDocument(
+		COLLECTIONS.USER_CONSENTS,
+		[Query.equal("userId", data.userId)],
+		{
+			userId: data.userId,
+			analytics: data.record.analytics,
+			marketing: data.record.marketing,
+			dataSharing: data.record.dataSharing,
+			tosVersion: data.record.tosVersion || "",
+			tosAcceptedAt: data.record.tosAcceptedAt || "",
+			privacyVersion: data.record.privacyVersion || "",
+			privacyAcknowledgedAt: data.record.privacyAcknowledgedAt || "",
+			updatedAt: data.record.updatedAt,
+			createdAt: data.record.createdAt,
+		},
+	);
+};
+
 export const appwriteBookmarkDelete: JobHandler = async (payload) => {
 	const data = payload as JobPayloadByType["appwrite-bookmark-delete"];
 	const existing = await listDocuments<Record<string, unknown>>(
@@ -370,4 +390,5 @@ export const appwriteHandlers: Partial<Record<string, JobHandler>> = {
 	"appwrite-rating-sync": appwriteRatingSync,
 	"appwrite-study-plan-sync": appwriteStudyPlanSync,
 	"appwrite-question-flag": appwriteQuestionFlag,
+	"appwrite-consent-sync": appwriteConsentSync,
 };

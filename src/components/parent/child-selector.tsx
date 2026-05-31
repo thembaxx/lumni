@@ -65,7 +65,7 @@ export function ChildSelector({
 					if (value) onValueChange(value);
 				}}
 			>
-				<SelectTrigger className="w-[200px] border-0 bg-transparent shadow-none focus:ring-0">
+				<SelectTrigger className="w-48 border-0 bg-transparent shadow-none focus:ring-0">
 					<SelectValue placeholder="Select a student" />
 				</SelectTrigger>
 				<SelectContent>

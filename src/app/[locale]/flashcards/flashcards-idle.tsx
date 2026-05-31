@@ -25,7 +25,7 @@ export function FlashcardsIdle({
 }: FlashcardsIdleProps) {
 	const t = useTranslations();
 	return (
-		<div className="grid min-h-[100dvh] grid-cols-12 gap-0 bg-background">
+		<div className="grid min-h-dvh grid-cols-12 gap-0 bg-background">
 			<div className="col-span-12 col-start-1 flex items-center justify-center p-4 pb-20 md:col-span-7">
 				<div className="card-elevated mx-auto w-full max-w-md overflow-hidden rounded-card-lg border border-border/80 bg-card p-6 shadow-level-2">
 					<header className="pb-4 text-left">

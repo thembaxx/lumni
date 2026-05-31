@@ -11,7 +11,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -20,22 +20,52 @@ import { flashcardEngine } from "@/lib/flashcard-engine";
 import type { FlashcardSM2 } from "@/lib/flashcard-engine/types";
 import { downloadCSV, parseCSV } from "@/lib/utils/flashcard-import-export";
 
-// TODO(react-doctor): Refactor multiple useState calls into useReducer
+type BrowseFiltersState = {
+	search: string;
+	subjectFilter: string;
+	page: number;
+};
+
+type BrowseFiltersAction =
+	| { type: "SET_SEARCH"; payload: string }
+	| { type: "SET_SUBJECT_FILTER"; payload: string }
+	| { type: "SET_PAGE"; payload: number };
+
+function filtersReducer(
+	state: BrowseFiltersState,
+	action: BrowseFiltersAction,
+): BrowseFiltersState {
+	switch (action.type) {
+		case "SET_SEARCH":
+			return { ...state, search: action.payload, page: 0 };
+		case "SET_SUBJECT_FILTER":
+			return { ...state, subjectFilter: action.payload, page: 0 };
+		case "SET_PAGE":
+			return { ...state, page: action.payload };
+		default:
+			return state;
+	}
+}
+
+type LoadingStatus = "idle" | "loading" | "importing";
+
 export default function FlashcardBrowsePage() {
 	const t = useTranslations();
+	const [filters, dispatch] = useReducer(filtersReducer, {
+		search: "",
+		subjectFilter: "all",
+		page: 0,
+	});
+	const { search, subjectFilter, page } = filters;
+	const [status, setStatus] = useState<LoadingStatus>("loading");
 	const [cards, setCards] = useState<FlashcardSM2[]>([]);
-	const [search, setSearch] = useState("");
-	const [subjectFilter, setSubjectFilter] = useState<string>("all");
 	const [subjects, setSubjects] = useState<string[]>([]);
-	const [loading, setLoading] = useState(true);
-	const [importing, setImporting] = useState(false);
-	const [page, setPage] = useState(0);
-	const [now] = useState(() => Date.now());
+	const now = useRef(Date.now()).current;
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const PAGE_SIZE = 20;
 
 	const loadCards = useCallback(async () => {
-		setLoading(true);
+		setStatus("loading");
 		try {
 			const all = await flashcardEngine.getAll(
 				subjectFilter !== "all" ? subjectFilter : undefined,
@@ -51,7 +81,7 @@ export default function FlashcardBrowsePage() {
 			const uniqueSubjects = [...new Set(all.map((c) => c.subject))].toSorted();
 			setSubjects(uniqueSubjects);
 		} finally {
-			setLoading(false);
+			setStatus("idle");
 		}
 	}, [search, subjectFilter]);
 
@@ -71,7 +101,7 @@ export default function FlashcardBrowsePage() {
 	const handleImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files?.[0];
 		if (!file) return;
-		setImporting(true);
+		setStatus("importing");
 		try {
 			const text = await file.text();
 			const imported = parseCSV(text);
@@ -87,7 +117,7 @@ export default function FlashcardBrowsePage() {
 			);
 			loadCards();
 		} finally {
-			setImporting(false);
+			setStatus("idle");
 			if (fileInputRef.current) fileInputRef.current.value = "";
 		}
 	};
@@ -102,7 +132,7 @@ export default function FlashcardBrowsePage() {
 			</h1>
 
 			<div className="mb-6 flex flex-wrap gap-3">
-				<div className="relative min-w-[200px] flex-1">
+				<div className="relative min-w-48 flex-1">
 					<HugeiconsIcon
 						icon={Search01Icon}
 						className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
@@ -111,8 +141,7 @@ export default function FlashcardBrowsePage() {
 						placeholder={t("flashcards.searchPlaceholder")}
 						value={search}
 						onChange={(e) => {
-							setSearch(e.target.value);
-							setPage(0);
+							dispatch({ type: "SET_SEARCH", payload: e.target.value });
 						}}
 						className="pl-9"
 					/>
@@ -120,8 +149,7 @@ export default function FlashcardBrowsePage() {
 				<select
 					value={subjectFilter}
 					onChange={(e) => {
-						setSubjectFilter(e.target.value);
-						setPage(0);
+						dispatch({ type: "SET_SUBJECT_FILTER", payload: e.target.value });
 					}}
 					className="rounded-lg border border-input bg-background px-3 py-2 text-sm"
 				>
@@ -149,10 +177,12 @@ export default function FlashcardBrowsePage() {
 					variant="outline"
 					size="sm"
 					onClick={() => fileInputRef.current?.click()}
-					disabled={importing}
+					disabled={status === "importing"}
 				>
 					<HugeiconsIcon icon={Upload04Icon} className="mr-1 size-4" />
-					{importing ? t("flashcards.importing") : t("flashcards.importCsv")}
+					{status === "importing"
+						? t("flashcards.importing")
+						: t("flashcards.importCsv")}
 				</Button>
 				<input
 					ref={fileInputRef}
@@ -164,7 +194,7 @@ export default function FlashcardBrowsePage() {
 				/>
 			</div>
 
-			{loading ? (
+			{status === "loading" ? (
 				<div className="flex flex-col gap-3">
 					{Array.from({ length: 5 }).map((_, i) => (
 						<div
@@ -247,7 +277,9 @@ export default function FlashcardBrowsePage() {
 								variant="outline"
 								size="sm"
 								disabled={page === 0}
-								onClick={() => setPage((p) => p - 1)}
+								onClick={() =>
+									dispatch({ type: "SET_PAGE", payload: page - 1 })
+								}
 							>
 								<HugeiconsIcon icon={ArrowLeft01Icon} className="mr-1 size-4" />{" "}
 								{t("flashcards.previous")}
@@ -259,7 +291,9 @@ export default function FlashcardBrowsePage() {
 								variant="outline"
 								size="sm"
 								disabled={page >= totalPages - 1}
-								onClick={() => setPage((p) => p + 1)}
+								onClick={() =>
+									dispatch({ type: "SET_PAGE", payload: page + 1 })
+								}
 							>
 								{t("flashcards.next")}{" "}
 								<HugeiconsIcon

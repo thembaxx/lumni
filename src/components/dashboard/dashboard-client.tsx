@@ -13,6 +13,7 @@ import type { QuizResults } from "@/components/quiz/quiz-view";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGamification } from "@/hooks/use-gamification";
+import { toast } from "@/hooks/use-toast";
 import { useViewTransition } from "@/hooks/use-view-transition";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
 import { flashcardEngine } from "@/lib/flashcard-engine";
@@ -134,7 +135,10 @@ export function DashboardClient({
 				correctCount: results.correctAnswers,
 				duration: results.elapsedTime,
 			}),
-		}).catch((e) => console.warn("Analytics event failed:", e));
+		}).catch((e) => {
+			console.warn("Analytics event failed:", e);
+			toast({ type: "error", message: "Failed to save session data" });
+		});
 
 		setQuizActive(false);
 		setQuizSubject("");

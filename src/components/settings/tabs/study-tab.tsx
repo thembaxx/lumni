@@ -54,7 +54,7 @@ export function StudyTab({ studyPrefs, onStudyPrefsChange }: StudyTabProps) {
 					})
 				}
 			>
-				<SelectTrigger className="h-9 w-[120px] border-none bg-secondary/50 focus:ring-0">
+				<SelectTrigger className="h-9 w-32 border-none bg-secondary/50 focus:ring-0">
 					<SelectValue />
 				</SelectTrigger>
 				<SelectContent>
@@ -107,7 +107,7 @@ export function StudyTab({ studyPrefs, onStudyPrefsChange }: StudyTabProps) {
 					})
 				}
 			>
-				<SelectTrigger className="h-9 w-[120px] border-none bg-secondary/50 focus:ring-0">
+				<SelectTrigger className="h-9 w-32 border-none bg-secondary/50 focus:ring-0">
 					<SelectValue />
 				</SelectTrigger>
 				<SelectContent>
@@ -133,7 +133,7 @@ export function StudyTab({ studyPrefs, onStudyPrefsChange }: StudyTabProps) {
 						.filter((n) => !Number.isNaN(n) && n > 0);
 					if (steps.length > 0) updateSr({ learningSteps: steps });
 				}}
-				className="h-9 w-[140px] border-none bg-secondary/50 text-right text-xs focus:ring-0"
+				className="h-9 w-36 border-none bg-secondary/50 text-right text-xs focus:ring-0"
 			/>
 		),
 		[sr.learningSteps, updateSr],
@@ -146,7 +146,7 @@ export function StudyTab({ studyPrefs, onStudyPrefsChange }: StudyTabProps) {
 					updateSr({ dailyNewLimit: parseInt(v ?? "20", 10) })
 				}
 			>
-				<SelectTrigger className="h-9 w-[120px] border-none bg-secondary/50 focus:ring-0">
+				<SelectTrigger className="h-9 w-32 border-none bg-secondary/50 focus:ring-0">
 					<SelectValue />
 				</SelectTrigger>
 				<SelectContent>
@@ -168,7 +168,7 @@ export function StudyTab({ studyPrefs, onStudyPrefsChange }: StudyTabProps) {
 					updateSr({ dailyReviewLimit: parseInt(v ?? "200", 10) })
 				}
 			>
-				<SelectTrigger className="h-9 w-[120px] border-none bg-secondary/50 focus:ring-0">
+				<SelectTrigger className="h-9 w-32 border-none bg-secondary/50 focus:ring-0">
 					<SelectValue />
 				</SelectTrigger>
 				<SelectContent>
@@ -190,7 +190,7 @@ export function StudyTab({ studyPrefs, onStudyPrefsChange }: StudyTabProps) {
 					updateSr({ leechThreshold: parseInt(v ?? "8", 10) })
 				}
 			>
-				<SelectTrigger className="h-9 w-[120px] border-none bg-secondary/50 focus:ring-0">
+				<SelectTrigger className="h-9 w-32 border-none bg-secondary/50 focus:ring-0">
 					<SelectValue />
 				</SelectTrigger>
 				<SelectContent>
@@ -214,7 +214,7 @@ export function StudyTab({ studyPrefs, onStudyPrefsChange }: StudyTabProps) {
 					})
 				}
 			>
-				<SelectTrigger className="h-9 w-[120px] border-none bg-secondary/50 focus:ring-0">
+				<SelectTrigger className="h-9 w-32 border-none bg-secondary/50 focus:ring-0">
 					<SelectValue />
 				</SelectTrigger>
 				<SelectContent>

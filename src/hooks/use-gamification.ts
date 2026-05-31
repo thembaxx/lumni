@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "@/components/ui/toast";
 import { offlineDB } from "@/lib/db/schema";
 import type { StoredGamification } from "@/lib/gamification-engine";
@@ -34,42 +34,52 @@ export function useGamification() {
 		useState<Achievement | null>(null);
 	const [pendingChest, setPendingChest] = useState<RewardChestDef | null>(null);
 	const syncTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+	const syncedRef = useRef(false);
+	const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
 
-	// Try to load from server on mount
+	// Try to load from server on mount (once)
 	useEffect(() => {
+		if (syncedRef.current) return;
+		syncedRef.current = true;
 		syncFromServer().then((serverData) => {
 			if (serverData) {
-				const mergedServer = gamificationEngine.mergeWithDefaults({
-					...data,
-					totalXp: Math.max(data.totalXp, serverData.totalXp),
-					achievements: mergeAchievements(
-						data.achievements,
-						serverData.achievements,
-					),
-					currentStreak: Math.max(data.currentStreak, serverData.currentStreak),
-					totalQuestionsAnswered: Math.max(
-						data.totalQuestionsAnswered,
-						serverData.totalQuestionsAnswered,
-					),
+				setData((prev) => {
+					const merged = gamificationEngine.mergeWithDefaults({
+						...prev,
+						...serverData,
+					});
+					gamificationEngine.save(merged);
+					return merged;
 				});
-				gamificationEngine.save(mergedServer);
-				setData(mergedServer);
 			}
 		});
-	}, [data]);
+	}, []);
+
+	// Cleanup all timers on unmount
+	useEffect(() => {
+		return () => {
+			if (syncTimerRef.current) clearTimeout(syncTimerRef.current);
+			for (const id of timersRef.current) clearTimeout(id);
+			timersRef.current = [];
+		};
+	}, []);
 
 	const levelInfo = calculateLevel(data.totalXp);
 
 	const clearLevelUp = useCallback(() => setLeveledUp(null), []);
 	const clearAchievement = useCallback(() => setPendingAchievement(null), []);
 
-	const earnedAchievements = ACHIEVEMENTS.map((achievement) => {
-		const stored = data.achievements.find((a) => a.id === achievement.id);
-		return {
-			...achievement,
-			earnedAt: stored?.earnedAt ?? null,
-		};
-	});
+	const earnedAchievements = useMemo(
+		() =>
+			ACHIEVEMENTS.map((achievement) => {
+				const stored = data.achievements.find((a) => a.id === achievement.id);
+				return {
+					...achievement,
+					earnedAt: stored?.earnedAt ?? null,
+				};
+			}),
+		[data.achievements],
+	);
 
 	const gamification: UserGamification = {
 		xp: data.xp,
@@ -88,6 +98,7 @@ export function useGamification() {
 			// biome-ignore lint/suspicious/noExplicitAny: Dexie table type mismatch
 			offlineDB.gamification.put({ ...newData, id: 1 } as any).catch(() => {});
 		}, 2000);
+		timersRef.current.push(syncTimerRef.current);
 	}, []);
 
 	const addXp = useCallback(
@@ -113,13 +124,14 @@ export function useGamification() {
 					typeof window !== "undefined"
 						? window.localStorage.getItem("lumni_display_name") || undefined
 						: undefined;
-				setTimeout(() => {
+				const snapTimer = setTimeout(() => {
 					saveWeeklySnapshot(
 						label || "You",
 						newData.totalXp,
 						newData.currentStreak,
 					);
 				}, 0);
+				timersRef.current.push(snapTimer);
 				return newData;
 			});
 		},
@@ -133,7 +145,7 @@ export function useGamification() {
 					gamificationEngine.addAchievement(prev, achievementId);
 				if (achievement) {
 					setPendingAchievement(achievement);
-					setTimeout(() => {
+					const achTimer = setTimeout(() => {
 						toast({
 							type: "success",
 							message: `${achievement.icon} New Achievement: ${achievement.name}`,
@@ -141,6 +153,7 @@ export function useGamification() {
 							duration: 5000,
 						});
 					}, 0);
+					timersRef.current.push(achTimer);
 				}
 				gamificationEngine.save(newData);
 				scheduleSync(newData);
@@ -176,7 +189,7 @@ export function useGamification() {
 			const { data: newData, freezeConsumed } =
 				gamificationEngine.updateStreak(prev);
 			if (freezeConsumed) {
-				setTimeout(() => {
+				const freezeTimer = setTimeout(() => {
 					toast({
 						type: "info",
 						message: "🧊 Streak Freeze Used",
@@ -185,6 +198,7 @@ export function useGamification() {
 						duration: 4000,
 					});
 				}, 0);
+				timersRef.current.push(freezeTimer);
 			}
 			gamificationEngine.save(newData);
 			scheduleSync(newData);
@@ -237,7 +251,7 @@ export function useGamification() {
 				gamificationEngine.checkAndClaimRewardChest(prev);
 			if (chest) {
 				setPendingChest(chest);
-				setTimeout(() => {
+				const chestTimer = setTimeout(() => {
 					toast({
 						type: "success",
 						message: `${chest.icon} Reward Chest: ${chest.name}`,
@@ -245,6 +259,7 @@ export function useGamification() {
 						duration: 5000,
 					});
 				}, 0);
+				timersRef.current.push(chestTimer);
 			}
 			if (newData !== prev) {
 				gamificationEngine.save(newData);
@@ -309,21 +324,4 @@ async function syncFromServer(): Promise<StoredGamification | null> {
 	} catch {
 		return null;
 	}
-}
-
-function mergeAchievements(
-	local: { id: string; earnedAt: string }[],
-	remote: { id: string; earnedAt: string }[],
-): { id: string; earnedAt: string }[] {
-	const entries = new Map<string, string>();
-	for (const a of [...local, ...remote]) {
-		const existing = entries.get(a.id);
-		if (!existing || a.earnedAt < existing) {
-			entries.set(a.id, a.earnedAt);
-		}
-	}
-	return Array.from(entries.entries()).map(([id, earnedAt]) => ({
-		id,
-		earnedAt,
-	}));
 }

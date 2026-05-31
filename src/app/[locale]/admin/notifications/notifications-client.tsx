@@ -43,7 +43,7 @@ export function NotificationsClient() {
 	});
 
 	return (
-		<div className="min-h-[100dvh] bg-background">
+		<div className="min-h-dvh bg-background">
 			<PageHeader
 				title="Broadcast Notification"
 				subtitle="Send push notifications to users"

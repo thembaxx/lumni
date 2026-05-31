@@ -28,7 +28,7 @@ function PageShell({
 		return (
 			<div
 				className={cn(
-					"min-h-[100dvh] bg-system-background pb-[calc(var(--space-16)+var(--space-5))]",
+					"min-h-dvh bg-system-background pb-[calc(var(--space-16)+var(--space-5))]",
 					className,
 				)}
 			>
@@ -40,7 +40,7 @@ function PageShell({
 	return (
 		<div
 			className={cn(
-				"min-h-[100dvh] bg-system-background pb-[calc(var(--space-16)+var(--space-5))]",
+				"min-h-dvh bg-system-background pb-[calc(var(--space-16)+var(--space-5))]",
 				className,
 			)}
 		>

@@ -45,6 +45,7 @@ export function LoadingScreen({
 	}, [replace, redirectTo]);
 
 	const redirectEvent = useEffectEvent(redirect);
+	const isProgressComplete = useEffectEvent(() => progress >= 100);
 
 	const handleManualEnter = () => {
 		setProgress(100);
@@ -81,7 +82,7 @@ export function LoadingScreen({
 			if (targetProgress < 100) {
 				frameId = requestAnimationFrame(animate);
 			} else {
-				setTimeout(redirectEvent, 300);
+				timeoutRef.current = setTimeout(redirectEvent, 300);
 			}
 		};
 
@@ -96,12 +97,12 @@ export function LoadingScreen({
 
 	useEffect(() => {
 		const timer = setTimeout(() => {
-			if (progress < 100) {
+			if (!isProgressComplete()) {
 				setShowSkipButton(true);
 			}
 		}, skipDelay);
 		return () => clearTimeout(timer);
-	}, [skipDelay, progress]);
+	}, [skipDelay]);
 
 	return (
 		<AnimatePresence initial={false}>

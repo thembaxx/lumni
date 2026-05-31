@@ -42,7 +42,7 @@ export default function AdminBudgetPage() {
 	const error = queryError instanceof Error ? queryError.message : "";
 
 	return (
-		<div className="mx-auto flex min-h-[100dvh] max-w-4xl flex-col gap-6 bg-background p-6">
+		<div className="mx-auto flex min-h-dvh max-w-4xl flex-col gap-6 bg-background p-6">
 			<div className="flex items-center justify-between">
 				<div className="min-w-0">
 					<h1 className="font-semibold text-xl tracking-tight">Token Budget</h1>

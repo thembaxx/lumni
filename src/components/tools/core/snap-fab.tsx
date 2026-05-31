@@ -1,6 +1,10 @@
 "use client";
 
-import { Camera01Icon } from "@hugeicons/core-free-icons";
+import {
+	BookOpen02Icon,
+	Camera01Icon,
+	CheckmarkCircle01Icon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
@@ -12,6 +16,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useOnboarding } from "@/hooks/use-onboarding";
 import { usePathname } from "@/i18n/navigation";
 import { offlineDB } from "@/lib/db/schema";
+import { flashcardEngine } from "@/lib/flashcard-engine";
 import { tryLocalOcr } from "@/lib/ocr/local-ocr";
 import { cn } from "@/lib/shared";
 import { dispatchSnapAnswer } from "@/lib/shared/snap-answer";
@@ -52,6 +57,8 @@ export function SnapFab() {
 	const [imagePreview, setImagePreview] = useState<string | null>(null);
 	const [solveResult, setSolveResult] = useState<SolveResult | null>(null);
 	const [showDialog, setShowDialog] = useState(false);
+	const [flashcardCreated, setFlashcardCreated] = useState(false);
+	const [creatingFlashcard, setCreatingFlashcard] = useState(false);
 	const [showCamera, setShowCamera] = useState(false);
 	const hiddenFileRef = useRef<HTMLInputElement>(null);
 	const pathname = usePathname();
@@ -233,6 +240,21 @@ export function SnapFab() {
 		}
 	}, [extractedText]);
 
+	const handleCreateFlashcard = useCallback(async () => {
+		if (!extractedText || !solveResult) return;
+		setCreatingFlashcard(true);
+		try {
+			await flashcardEngine.create(
+				extractedText.slice(0, 200),
+				solveResult.solution,
+				subjectParam ?? "mathematics",
+			);
+			setFlashcardCreated(true);
+		} finally {
+			setCreatingFlashcard(false);
+		}
+	}, [extractedText, solveResult, subjectParam]);
+
 	const handleFillAnswer = useCallback(() => {
 		if (!extractedText) return;
 		dispatchSnapAnswer(extractedText);
@@ -407,6 +429,26 @@ export function SnapFab() {
 							>
 								{phase === "solved" ? "Close" : "Cancel"}
 							</Button>
+							{phase === "solved" && (
+								<Button
+									variant="secondary"
+									onClick={handleCreateFlashcard}
+									disabled={creatingFlashcard || flashcardCreated}
+									className="flex-1 gap-1.5"
+								>
+									<HugeiconsIcon
+										icon={
+											flashcardCreated ? CheckmarkCircle01Icon : BookOpen02Icon
+										}
+										className="size-4"
+									/>
+									{creatingFlashcard
+										? "Creating…"
+										: flashcardCreated
+											? "Flashcard Created"
+											: "Create Flashcard"}
+								</Button>
+							)}
 							{phase === "confirm" && (
 								<>
 									{isOnQuizOrFlashcards && (

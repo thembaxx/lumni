@@ -37,7 +37,7 @@ export function LoginForm({ onSuccess }: { onSuccess: () => void }) {
 
 	return (
 		<>
-			<div className="-webkit-font-smoothing flex min-h-[100dvh] items-center justify-center bg-background p-4 antialiased">
+			<div className="-webkit-font-smoothing flex min-h-dvh items-center justify-center bg-background p-4 antialiased">
 				<Anim>
 					<div className="flex w-full max-w-sm flex-col gap-6">
 						<m.div

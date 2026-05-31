@@ -2,6 +2,7 @@ export { AppearanceTab } from "./appearance-tab";
 export { BetaTab } from "./beta-tab";
 export { DataTab } from "./data-tab";
 export { NotificationsTab } from "./notifications-tab";
+export { PrivacyTab } from "./privacy-tab";
 export { ProfileTab } from "./profile-tab";
 export { ReferralTab } from "./referral-tab";
 export { StudyTab } from "./study-tab";

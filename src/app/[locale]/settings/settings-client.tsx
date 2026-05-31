@@ -9,6 +9,7 @@ import {
 	PaintBrushIcon,
 	RadialIcon,
 	Share07Icon,
+	ShieldCheck,
 	UserIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -21,6 +22,7 @@ import {
 	BetaTab,
 	DataTab,
 	NotificationsTab,
+	PrivacyTab,
 	ProfileTab,
 	ReferralTab,
 	StudyTab,
@@ -50,6 +52,7 @@ const tabDefs = [
 	{ value: "appearance", key: "settings.appearance", icon: PaintBrushIcon },
 	{ value: "study", key: "nav.studyPlanner", icon: BookOpen01Icon },
 	{ value: "notifications", key: "settings.notifications", icon: Bell },
+	{ value: "privacy", key: "settings.privacy", icon: ShieldCheck },
 	{ value: "referrals", key: "settings.referral", icon: Share07Icon },
 	{ value: "data", key: "settings.data", icon: DatabaseIcon },
 	{ value: "beta", key: "settings.beta", icon: Chat01Icon },
@@ -195,7 +198,7 @@ function SettingsContent() {
 	};
 
 	return (
-		<div className="flex min-h-[100dvh] flex-col bg-system-grouped antialiased">
+		<div className="flex min-h-dvh flex-col bg-system-grouped antialiased">
 			<PageContainer className="flex-1">
 				{/* Refined Header */}
 				<header className="sticky top-0 z-header bg-system-grouped/90 px-6 pt-6 pb-4 backdrop-blur-xl">
@@ -294,6 +297,8 @@ function SettingsContent() {
 								/>
 							)}
 
+							{activeTab === "privacy" && <PrivacyTab />}
+
 							{activeTab === "data" && (
 								<DataTab
 									studyPrefs={studyPrefs}
@@ -323,7 +328,7 @@ function SettingsContent() {
 function SettingsLoading() {
 	const t = useTranslations();
 	return (
-		<div className="flex min-h-[100dvh] items-center justify-center bg-system-grouped">
+		<div className="flex min-h-dvh items-center justify-center bg-system-grouped">
 			<div className="flex flex-col items-center gap-4">
 				<HugeiconsIcon
 					icon={RadialIcon}

@@ -30,6 +30,16 @@ const BottomNav = dynamic(() =>
 		default: m.BottomNav,
 	})),
 );
+const CookieBanner = dynamic(() =>
+	import("@/components/consent/cookie-banner").then((m) => ({
+		default: m.CookieBanner,
+	})),
+);
+const TosBanner = dynamic(() =>
+	import("@/components/consent/tos-banner").then((m) => ({
+		default: m.TosBanner,
+	})),
+);
 const FloatingToolsButton = dynamic(() =>
 	import("@/components/tools/core/floating-tools-button").then((m) => ({
 		default: m.FloatingToolsButton,
@@ -177,6 +187,8 @@ export default function LocaleLayout({
 					<Toaster />
 					<FloatingToolsButton />
 					<SnapFab />
+					<CookieBanner />
+					<TosBanner />
 					<div className="flex flex-1">
 						<DesktopSidebar />
 						<main id="main-content" className="flex min-w-0 flex-1 flex-col">

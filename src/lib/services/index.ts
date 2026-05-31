@@ -48,6 +48,10 @@ export {
 export type { SearchResultItem } from "./search-service";
 export { searchAll, searchByType, searchWeb } from "./search-service";
 export {
+	UserConsentService,
+	userConsentService,
+} from "./user-consent-service";
+export {
 	getWebContents,
 	searchWeb as searchWebServer,
 } from "./web-search-service";

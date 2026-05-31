@@ -1,6 +1,7 @@
 "use client";
 
 import {
+	Bookmark02Icon,
 	Calendar01Icon,
 	CheckListIcon,
 	Clock01Icon,
@@ -9,7 +10,7 @@ import {
 	RefreshIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -18,7 +19,9 @@ import { Label } from "@/components/ui/label";
 import { useStudyPlanner } from "@/hooks/use-study-planner";
 import { Link } from "@/i18n/navigation";
 import { usePremium } from "@/lib/premium/premium-context";
+import { getSubjectAbbr } from "@/lib/subjects";
 import { getWeekOldThreshold, loadStudyPlan } from "@/lib/utils/study-planner";
+import { useBookmarksStore } from "@/store/bookmarks";
 
 export function StudyPlanOverview() {
 	const { hasFeature } = usePremium();
@@ -38,6 +41,14 @@ export function StudyPlanOverview() {
 	const [showForm, setShowForm] = useState(false);
 	const [dismissedStale, setDismissedStale] = useState(false);
 	const autoRefreshDoneRef = useRef(false);
+	const bookmarks = useBookmarksStore((s) => s.bookmarks);
+	const bookmarksBySubject = useMemo(() => {
+		const map = new Map<string, number>();
+		for (const b of bookmarks) {
+			map.set(b.subject, (map.get(b.subject) ?? 0) + 1);
+		}
+		return map;
+	}, [bookmarks]);
 
 	// Weekly auto-refresh on mount
 	useEffect(() => {
@@ -331,11 +342,47 @@ export function StudyPlanOverview() {
 					</div>
 				)}
 				{stats.completedSessions > 0 && (
-					<p className="pt-1 text-muted-foreground text-xs">
-						{stats.completedSessions} session
-						{stats.completedSessions !== 1 ? "s" : ""} completed ·{" "}
-						{stats.studyTimeMinutes} min studied
-					</p>
+					<>
+						<div className="mt-2 flex items-center gap-2">
+							<div className="h-1.5 flex-1 overflow-hidden rounded-full bg-muted">
+								<div
+									className="h-full rounded-full bg-[--system-accent] transition-all"
+									style={{ width: `${Math.min(stats.progress, 100)}%` }}
+								/>
+							</div>
+							<span className="shrink-0 font-medium text-muted-foreground text-xs tabular-nums">
+								{stats.progress}%
+							</span>
+						</div>
+						<p className="pt-1 text-muted-foreground text-xs">
+							{stats.completedSessions} session
+							{stats.completedSessions !== 1 ? "s" : ""} completed ·{" "}
+							{stats.studyTimeMinutes} min studied
+						</p>
+					</>
+				)}
+				{bookmarksBySubject.size > 0 && (
+					<div className="mt-2 flex flex-col gap-1.5">
+						<p className="flex items-center gap-1 font-medium text-muted-foreground text-xs">
+							<HugeiconsIcon icon={Bookmark02Icon} className="size-3" />
+							Bookmarked questions
+						</p>
+						<div className="flex flex-wrap gap-1.5">
+							{[...bookmarksBySubject.entries()]
+								.sort((a, b) => b[1] - a[1])
+								.slice(0, 5)
+								.map(([subj, count]) => (
+									<Link
+										key={subj}
+										href={`/quiz?subject=${subj}&count=10`}
+										className="inline-flex items-center gap-1 rounded-full bg-muted/50 px-2 py-0.5 font-medium text-muted-foreground text-xs hover:bg-muted hover:text-foreground"
+									>
+										{getSubjectAbbr(subj)}
+										<span className="tabular-nums">{count}</span>
+									</Link>
+								))}
+						</div>
+					</div>
 				)}
 			</CardContent>
 		</Card>

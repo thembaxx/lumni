@@ -221,7 +221,7 @@ export function SearchResults({
 									{config.label}
 								</Badge>
 								{item.subject && (
-									<span className="max-w-[60px] truncate font-mono text-[10px] text-muted-foreground">
+									<span className="max-w-16 truncate font-mono text-[10px] text-muted-foreground">
 										{item.subject}
 									</span>
 								)}

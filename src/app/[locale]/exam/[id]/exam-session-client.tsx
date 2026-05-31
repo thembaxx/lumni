@@ -192,14 +192,15 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 	}, [paper, getFlatParts]);
 
 	const sessionInitRef = useRef(false);
-	if (!paperLoading && paperData && !sessionInitRef.current) {
-		sessionInitRef.current = true;
-		setTimeout(() => {
+
+	useEffect(() => {
+		if (!paperLoading && paperData && !sessionInitRef.current) {
+			sessionInitRef.current = true;
 			const durationMinutes = parseDuration(paperData.exam.metadata.duration);
 			initSession(paperData.exam, paperData.metadata.id, durationMinutes);
 			setPhase("mode-select");
-		}, 0);
-	}
+		}
+	}, [paperLoading, paperData, initSession]);
 
 	useEffect(() => {
 		if (

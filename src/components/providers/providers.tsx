@@ -17,6 +17,7 @@ import { useServiceWorker } from "@/hooks/use-service-worker";
 import { prefetchUploadSubjects } from "@/hooks/use-upload-subjects";
 import { OnlineStatusIndicator } from "@/hooks/useOnlineStatus";
 import { AuthProvider } from "@/lib/auth/auth-context";
+import { ConsentProvider } from "@/lib/consent/consent-context";
 import { PremiumProvider } from "@/lib/premium/premium-context";
 import { queryClient } from "@/lib/query-client";
 import { setAppInitialized } from "@/store";
@@ -44,22 +45,24 @@ export function Providers({ children }: { children: React.ReactNode }) {
 		<QueryClientProvider client={queryClient}>
 			<ThemeProvider>
 				<AuthProvider>
-					<JoyProvider>
-						<ToastProvider>
-							<PremiumProvider>
-								<I18nProvider>
-									<OnboardingProvider>
-										<ImmersiveModeProvider>{children}</ImmersiveModeProvider>
-									</OnboardingProvider>
-								</I18nProvider>
-							</PremiumProvider>
-							<OnlineStatusIndicator />
-							<JobProcessorWrapper />
-							<ServiceWorkerWrapper />
-							<PWAUpdateToast />
-							<PWAInstallPrompt />
-						</ToastProvider>
-					</JoyProvider>
+					<ConsentProvider>
+						<JoyProvider>
+							<ToastProvider>
+								<PremiumProvider>
+									<I18nProvider>
+										<OnboardingProvider>
+											<ImmersiveModeProvider>{children}</ImmersiveModeProvider>
+										</OnboardingProvider>
+									</I18nProvider>
+								</PremiumProvider>
+								<OnlineStatusIndicator />
+								<JobProcessorWrapper />
+								<ServiceWorkerWrapper />
+								<PWAUpdateToast />
+								<PWAInstallPrompt />
+							</ToastProvider>
+						</JoyProvider>
+					</ConsentProvider>
 				</AuthProvider>
 			</ThemeProvider>
 		</QueryClientProvider>

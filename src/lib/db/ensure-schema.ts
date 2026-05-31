@@ -521,4 +521,25 @@ export const schemaConfig: Record<string, CollectionSchema> = {
 			{ key: "idx_reactions_userId", type: "key", attributes: ["userId"] },
 		],
 	},
+	user_consents: {
+		attributes: {
+			userId: { type: "string", size: 100, required: true },
+			analytics: { type: "boolean", required: true },
+			marketing: { type: "boolean", required: true },
+			dataSharing: { type: "boolean", required: true },
+			tosVersion: { type: "string", size: 20 },
+			tosAcceptedAt: { type: "datetime" },
+			privacyVersion: { type: "string", size: 20 },
+			privacyAcknowledgedAt: { type: "datetime" },
+			updatedAt: { type: "datetime", required: true },
+			createdAt: { type: "datetime", required: true },
+		},
+		indexes: [
+			{
+				key: "idx_user_consents_userId",
+				type: "unique",
+				attributes: ["userId"],
+			},
+		],
+	},
 };

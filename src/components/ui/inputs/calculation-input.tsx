@@ -40,7 +40,7 @@ export function CalculationInput({
 					onChange={(e) => onChange(e.target.value)}
 					disabled={disabled}
 					placeholder="Enter your answer..."
-					className="max-w-[200px]"
+					className="max-w-48"
 				/>
 				{unit && <span className="text-muted-foreground text-sm">{unit}</span>}
 				{onUnitChange && (

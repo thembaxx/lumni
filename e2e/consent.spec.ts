@@ -1,0 +1,71 @@
+import { test, expect } from "@playwright/test";
+
+test.describe("Cookie consent banner", () => {
+	test.beforeEach(async ({ page }) => {
+		await page.goto("/en", { waitUntil: "commit" });
+		await page.waitForLoadState("networkidle");
+	});
+
+	test("cookie banner is visible on first visit", async ({ page }) => {
+		const banner = page.getByText("We respect your privacy");
+		await expect(banner).toBeVisible({ timeout: 10000 });
+	});
+
+	test("cookie settings dialog opens from banner", async ({ page }) => {
+		await page.getByText("Cookie settings").click();
+		const dialog = page.getByText("Choose which cookies you want to allow.");
+		await expect(dialog).toBeVisible({ timeout: 5000 });
+	});
+
+	test("essential only dismisses the banner", async ({ page }) => {
+		await page.getByText("Essential only").click();
+		const banner = page.getByText("We respect your privacy");
+		await expect(banner).not.toBeVisible({ timeout: 5000 });
+	});
+
+	test("accept analytics dismisses the banner", async ({ page }) => {
+		await page.getByText("Accept analytics").click();
+		const banner = page.getByText("We respect your privacy");
+		await expect(banner).not.toBeVisible({ timeout: 5000 });
+	});
+
+	test("accept all dismisses the banner", async ({ page }) => {
+		await page.getByText("Accept all").click();
+		const banner = page.getByText("We respect your privacy");
+		await expect(banner).not.toBeVisible({ timeout: 5000 });
+	});
+});
+
+test.describe("Cookie settings dialog", () => {
+	test("shows category switches and save button", async ({ page }) => {
+		await page.goto("/en", { waitUntil: "commit" });
+		await page.waitForLoadState("networkidle");
+		await page.getByText("Cookie settings").click();
+
+		await expect(
+			page.getByRole("dialog").getByText("Essential"),
+		).toBeVisible({ timeout: 5000 });
+		await expect(
+			page.getByRole("dialog").getByText("Analytics"),
+		).toBeVisible();
+		await expect(
+			page.getByRole("dialog").getByText("Marketing"),
+		).toBeVisible();
+		await expect(
+			page.getByRole("dialog").getByText("Data Sharing"),
+		).toBeVisible();
+		await expect(
+			page.getByRole("dialog").getByText("Save preferences"),
+		).toBeVisible();
+	});
+
+	test("save preferences dismisses whole banner", async ({ page }) => {
+		await page.goto("/en", { waitUntil: "commit" });
+		await page.waitForLoadState("networkidle");
+		await page.getByText("Cookie settings").click();
+		await page.getByText("Save preferences").click();
+
+		const banner = page.getByText("We respect your privacy");
+		await expect(banner).not.toBeVisible({ timeout: 5000 });
+	});
+});

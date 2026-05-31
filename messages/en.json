@@ -736,6 +736,64 @@
     "createAccount": "Create Account",
     "localDataDescription": "Your progress, XP, and streaks are stored on this device. Sign in to keep them across all your devices."
   },
+  "consent": {
+    "cookieBanner": {
+      "title": "We respect your privacy",
+      "description": "We use essential cookies for the app to function. Analytics cookies help us improve. You can choose what to allow.",
+      "essentialOnly": "Essential only",
+      "acceptAnalytics": "Accept analytics",
+      "acceptAll": "Accept all",
+      "cookieSettings": "Cookie settings"
+    },
+    "cookieSettings": {
+      "title": "Cookie Settings",
+      "description": "Choose which cookies you want to allow.",
+      "essential": "Essential",
+      "essentialDesc": "Required for the app to function (session, locale).",
+      "analytics": "Analytics",
+      "analyticsDesc": "Help us improve with usage data (Sentry, page views).",
+      "marketing": "Marketing",
+      "marketingDesc": "Promotional communications about features and updates.",
+      "dataSharing": "Data Sharing",
+      "dataSharingDesc": "Share data with third-party AI providers for personalization.",
+      "savePreferences": "Save preferences"
+    },
+    "tosBanner": {
+      "title": "Our terms have been updated",
+      "description": "Please review and accept the updated Terms of Service to continue using Lumni.",
+      "accept": "Accept",
+      "viewChanges": "View changes"
+    },
+    "privacyTab": {
+      "noConsent": "Set your cookie preferences to manage privacy settings.",
+      "consentPreferences": "Consent Preferences",
+      "analytics": "Analytics",
+      "analyticsDesc": "Usage data and error reporting (Sentry)",
+      "marketing": "Marketing",
+      "marketingDesc": "Promotional communications",
+      "dataSharing": "Data Sharing",
+      "dataSharingDesc": "Share data with AI providers for personalization",
+      "policyVersions": "Policy Versions",
+      "termsOfService": "Terms of Service",
+      "privacyPolicy": "Privacy Policy",
+      "notAccepted": "Not accepted",
+      "notAcknowledged": "Not acknowledged",
+      "currentLabel": "Current",
+      "yourData": "Your Data",
+      "exportData": "Export my data",
+      "deleteAccount": "Delete account",
+      "deleteTitle": "Delete your account?",
+      "deleteDescription": "This will permanently delete all your data including quiz history, flashcards, study plans, and progress. This action cannot be undone.",
+      "cancel": "Cancel",
+      "deletePermanently": "Delete permanently",
+      "deleting": "Deleting..."
+    },
+    "cookiePolicy": {
+      "title": "Cookie Policy - Lumni",
+      "heading": "Cookie Policy",
+      "lastUpdated": "Last updated: May 2026"
+    }
+  },
   "errors": {
     "general": "Something went wrong",
     "notFound": "Page not found",

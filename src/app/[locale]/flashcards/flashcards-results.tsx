@@ -32,7 +32,7 @@ export function FlashcardsResults({
 	return (
 		<>
 			<Confetti trigger={didWell} count={40} duration={2000} />
-			<div className="grid min-h-[100dvh] grid-cols-12 gap-0 bg-background">
+			<div className="grid min-h-dvh grid-cols-12 gap-0 bg-background">
 				<div className="col-span-12 col-start-1 flex items-center justify-center p-4 md:col-span-7">
 					<div className="mx-auto w-full max-w-md">
 						<div className="flex flex-col gap-4">

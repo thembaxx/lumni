@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useReducer } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -17,24 +17,95 @@ import { Textarea } from "@/components/ui/textarea";
 import type { GradingResult, Question } from "@/lib/question-engine/types";
 import { apiFetch, showBudgetToast } from "@/lib/shared/api-fetch";
 
-// TODO(react-doctor): Refactor multiple useState calls into useReducer
+interface DevEngineState {
+	subject: string;
+	topic: string;
+	count: number;
+	questionType: string;
+	questions: Question[];
+	grading: Record<string, GradingResult>;
+	rawJson: string;
+	isLoading: boolean;
+	error: string;
+}
+
+const initialState: DevEngineState = {
+	subject: "mathematics",
+	topic: "algebra",
+	count: 2,
+	questionType: "any",
+	questions: [],
+	grading: {},
+	rawJson: "",
+	isLoading: false,
+	error: "",
+};
+
+type DevEngineAction =
+	| { type: "SET_SUBJECT"; payload: string }
+	| { type: "SET_TOPIC"; payload: string }
+	| { type: "SET_COUNT"; payload: number }
+	| { type: "SET_QUESTION_TYPE"; payload: string }
+	| { type: "GENERATE_START" }
+	| {
+			type: "GENERATE_SUCCESS";
+			payload: { questions: Question[]; rawJson: string };
+	  }
+	| { type: "GENERATE_ERROR"; payload: string }
+	| {
+			type: "GRADE_RESULT";
+			payload: { questionId: string; result: GradingResult };
+	  };
+
+function devEngineReducer(
+	state: DevEngineState,
+	action: DevEngineAction,
+): DevEngineState {
+	switch (action.type) {
+		case "SET_SUBJECT":
+			return { ...state, subject: action.payload };
+		case "SET_TOPIC":
+			return { ...state, topic: action.payload };
+		case "SET_COUNT":
+			return { ...state, count: action.payload };
+		case "SET_QUESTION_TYPE":
+			return { ...state, questionType: action.payload };
+		case "GENERATE_START":
+			return {
+				...state,
+				isLoading: true,
+				error: "",
+				rawJson: "",
+				questions: [],
+				grading: {},
+			};
+		case "GENERATE_SUCCESS":
+			return {
+				...state,
+				isLoading: false,
+				questions: action.payload.questions,
+				rawJson: action.payload.rawJson,
+			};
+		case "GENERATE_ERROR":
+			return { ...state, isLoading: false, error: action.payload };
+		case "GRADE_RESULT":
+			return {
+				...state,
+				grading: {
+					...state.grading,
+					[action.payload.questionId]: action.payload.result,
+				},
+			};
+		default:
+			return state;
+	}
+}
+
 export default function DevEnginePage() {
-	const [subject, setSubject] = useState("mathematics");
-	const [topic, setTopic] = useState("algebra");
-	const [count, setCount] = useState(2);
-	const [questionType, setQuestionType] = useState("any");
-	const [questions, setQuestions] = useState<Question[]>([]);
-	const [grading, setGrading] = useState<Record<string, GradingResult>>({});
-	const [rawJson, setRawJson] = useState("");
-	const [isLoading, setIsLoading] = useState(false);
-	const [error, setError] = useState("");
+	const [state, dispatch] = useReducer(devEngineReducer, initialState);
 
 	const handleGenerate = useCallback(async () => {
-		setIsLoading(true);
-		setError("");
-		setRawJson("");
-		setQuestions([]);
-		setGrading({});
+		dispatch({ type: "GENERATE_START" });
 		try {
 			const data = await apiFetch<{ questions?: Question[]; error?: string }>(
 				"/api/engine/generate",
@@ -42,23 +113,29 @@ export default function DevEnginePage() {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({
-						subject,
-						topic: topic || undefined,
-						count,
-						questionType: questionType === "any" ? "any" : questionType,
+						subject: state.subject,
+						topic: state.topic || undefined,
+						count: state.count,
+						questionType:
+							state.questionType === "any" ? "any" : state.questionType,
 					}),
 				},
 			);
-			setRawJson(JSON.stringify(data, null, 2));
-			if (data.questions) {
-				setQuestions(data.questions);
-			}
+			dispatch({
+				type: "GENERATE_SUCCESS",
+				payload: {
+					questions: data.questions ?? [],
+					rawJson: JSON.stringify(data, null, 2),
+				},
+			});
 		} catch (err) {
 			showBudgetToast(err);
-			setError(err instanceof Error ? err.message : "Network error");
+			dispatch({
+				type: "GENERATE_ERROR",
+				payload: err instanceof Error ? err.message : "Network error",
+			});
 		}
-		setIsLoading(false);
-	}, [subject, topic, count, questionType]);
+	}, [state.subject, state.topic, state.count, state.questionType]);
 
 	const handleGrade = useCallback(async (q: Question) => {
 		try {
@@ -70,7 +147,7 @@ export default function DevEnginePage() {
 					answer: { type: "text", value: "test answer" },
 				}),
 			});
-			setGrading((prev) => ({ ...prev, [q.id]: result }));
+			dispatch({ type: "GRADE_RESULT", payload: { questionId: q.id, result } });
 		} catch (err) {
 			showBudgetToast(err);
 		}
@@ -92,33 +169,41 @@ export default function DevEnginePage() {
 	];
 
 	return (
-		<div className="mx-auto flex min-h-[100dvh] max-w-4xl flex-col gap-4 bg-background p-4 pb-20">
+		<div className="mx-auto flex min-h-dvh max-w-4xl flex-col gap-4 bg-background p-4 pb-20">
 			<h1 className="font-semibold text-xl">Engine Integration Test</h1>
 
 			<div className="overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors">
 				<div className="flex flex-col gap-3 p-4 px-4 group-data-[size=sm]/card:px-3">
 					<div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
 						<Input
-							value={subject}
-							onChange={(e) => setSubject(e.target.value)}
+							value={state.subject}
+							onChange={(e) =>
+								dispatch({ type: "SET_SUBJECT", payload: e.target.value })
+							}
 							placeholder="Subject"
 						/>
 						<Input
-							value={topic}
-							onChange={(e) => setTopic(e.target.value)}
+							value={state.topic}
+							onChange={(e) =>
+								dispatch({ type: "SET_TOPIC", payload: e.target.value })
+							}
 							placeholder="Topic (optional)"
 						/>
 						<Input
 							type="number"
-							value={count}
-							onChange={(e) => setCount(Number(e.target.value))}
+							value={state.count}
+							onChange={(e) =>
+								dispatch({ type: "SET_COUNT", payload: Number(e.target.value) })
+							}
 							min={1}
 							max={20}
 							placeholder="Count"
 						/>
 						<Select
-							value={questionType}
-							onValueChange={(v) => v && setQuestionType(v)}
+							value={state.questionType}
+							onValueChange={(v) =>
+								v && dispatch({ type: "SET_QUESTION_TYPE", payload: v })
+							}
 						>
 							<SelectTrigger>
 								<SelectValue />
@@ -134,34 +219,34 @@ export default function DevEnginePage() {
 					</div>
 					<Button
 						onClick={handleGenerate}
-						disabled={isLoading}
+						disabled={state.isLoading}
 						className="w-full"
 					>
-						{isLoading ? "Generating..." : "Generate"}
+						{state.isLoading ? "Generating..." : "Generate"}
 					</Button>
 				</div>
 			</div>
 
-			{error && (
+			{state.error && (
 				<div className="overflow-hidden rounded-card-lg border border-border/80 border-destructive bg-card shadow-level-2 transition-colors">
 					<div className="p-4 px-4 text-destructive text-sm group-data-[size=sm]/card:px-3">
-						{error}
+						{state.error}
 					</div>
 				</div>
 			)}
 
-			{isLoading && <Skeleton className="h-48 w-full" />}
+			{state.isLoading && <Skeleton className="h-48 w-full" />}
 
-			{questions.length > 0 && (
+			{state.questions.length > 0 && (
 				<>
 					<div className="overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors">
 						<header className="rounded-t-[2.5rem] border-border/80 border-t p-4 pb-2">
 							<h2 className="font-heading font-medium text-sm text-sm">
-								Questions ({questions.length})
+								Questions ({state.questions.length})
 							</h2>
 						</header>
 						<div className="flex flex-col gap-3 p-4 px-4 pt-0 group-data-[size=sm]/card:px-3">
-							{questions.map((q, _i) => (
+							{state.questions.map((q, _i) => (
 								<div
 									key={q.id}
 									className="flex flex-col gap-2 p-3 px-4 group-data-[size=sm]/card:px-3"
@@ -180,7 +265,7 @@ export default function DevEnginePage() {
 									<div className="text-sm">
 										<MarkdownRenderer
 											content={q.questionText}
-											subject={subject}
+											subject={state.subject}
 										/>
 									</div>
 									<div className="line-clamp-2 text-muted-foreground text-xs">
@@ -190,10 +275,10 @@ export default function DevEnginePage() {
 												size="sm"
 												variant="outline"
 												onClick={() => handleGrade(q)}
-												disabled={!!grading[q.id]}
+												disabled={!!state.grading[q.id]}
 											>
-												{grading[q.id]
-													? `Score: ${grading[q.id].score}`
+												{state.grading[q.id]
+													? `Score: ${state.grading[q.id].score}`
 													: "Test Grade"}
 											</Button>
 											{q.steps && q.steps.length > 0 && (
@@ -216,7 +301,7 @@ export default function DevEnginePage() {
 						</header>
 						<div className="p-4 px-4 pt-0 group-data-[size=sm]/card:px-3">
 							<Textarea
-								value={rawJson}
+								value={state.rawJson}
 								readOnly
 								className="min-h-[200px] font-mono text-xs"
 							/>

@@ -27,7 +27,7 @@ export function SessionResults({
 	const accuracy = calculateAccuracy(stats.correct ?? 0, stats.total);
 
 	return (
-		<div className="grid min-h-[100dvh] grid-cols-12 gap-0 bg-background">
+		<div className="grid min-h-dvh grid-cols-12 gap-0 bg-background">
 			<div className="col-span-12 col-start-1 flex items-center justify-center p-4 md:col-span-7">
 				<div className="mx-auto flex w-full max-w-md flex-col gap-4">
 					<header className="text-left">

@@ -15,7 +15,12 @@ export const appConfig = {
 		support: "https://lumni.ai/support",
 		privacy: "/privacy",
 		terms: "/terms",
+		cookiePolicy: "/cookie-policy",
 		feedback: "https://lumni.ai/feedback",
+	},
+	legal: {
+		tosVersion: "1.0.0",
+		privacyVersion: "1.0.0",
 	},
 	contact: {
 		email: "hello@lumni.ai",

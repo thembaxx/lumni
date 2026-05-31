@@ -10,10 +10,11 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { Suspense, useCallback, useState } from "react";
+import { Suspense, useCallback, useReducer } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FormSkeleton } from "@/components/ui/skeletons";
+import { toast } from "@/hooks/use-toast";
 import { Link, useRouter } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
 import { iOSEase } from "@/lib/utils/animation";
@@ -25,18 +26,54 @@ function safeRedirect(url: string | null): string {
 	return url;
 }
 
-// TODO(react-doctor): Refactor multiple useState calls into useReducer
+type SignUpState = {
+	name: string;
+	email: string;
+	password: string;
+	showPassword: boolean;
+	loading: boolean;
+};
+
+type SignUpAction =
+	| { type: "SET_NAME"; payload: string }
+	| { type: "SET_EMAIL"; payload: string }
+	| { type: "SET_PASSWORD"; payload: string }
+	| { type: "TOGGLE_SHOW_PASSWORD" }
+	| { type: "SET_LOADING"; payload: boolean };
+
+const initialState: SignUpState = {
+	name: "",
+	email: "",
+	password: "",
+	showPassword: false,
+	loading: false,
+};
+
+function signUpReducer(state: SignUpState, action: SignUpAction): SignUpState {
+	switch (action.type) {
+		case "SET_NAME":
+			return { ...state, name: action.payload };
+		case "SET_EMAIL":
+			return { ...state, email: action.payload };
+		case "SET_PASSWORD":
+			return { ...state, password: action.payload };
+		case "TOGGLE_SHOW_PASSWORD":
+			return { ...state, showPassword: !state.showPassword };
+		case "SET_LOADING":
+			return { ...state, loading: action.payload };
+		default:
+			return state;
+	}
+}
+
 function SignUpForm() {
 	const { push, refresh } = useRouter();
 	const { get } = useSearchParams();
 	const redirect = safeRedirect(get("redirect"));
 	const { signUp, error } = useAuth();
 
-	const [name, setName] = useState("");
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-	const [showPassword, setShowPassword] = useState(false);
-	const [loading, setLoading] = useState(false);
+	const [state, dispatch] = useReducer(signUpReducer, initialState);
+	const { name, email, password, showPassword, loading } = state;
 	const t = useTranslations();
 
 	const referralCode = get("ref");
@@ -44,7 +81,7 @@ function SignUpForm() {
 	const handleSignUp = useCallback(
 		async (e: React.FormEvent) => {
 			e.preventDefault();
-			setLoading(true);
+			dispatch({ type: "SET_LOADING", payload: true });
 			try {
 				const userId = await signUp(email, password, name);
 				if (referralCode && userId) {
@@ -52,13 +89,20 @@ function SignUpForm() {
 						method: "POST",
 						headers: { "Content-Type": "application/json" },
 						body: JSON.stringify({ code: referralCode, refereeId: userId }),
-					}).catch((e) => console.warn("Referral claim:", e));
+					}).catch((e) => {
+						console.warn("Referral claim:", e);
+						toast({
+							type: "warning",
+							message:
+								"Couldn't apply referral. You can add it later in Settings.",
+						});
+					});
 				}
 				push(redirect);
 				refresh();
 			} catch {
 			} finally {
-				setLoading(false);
+				dispatch({ type: "SET_LOADING", payload: false });
 			}
 		},
 		[email, password, name, signUp, push, redirect, referralCode, refresh],
@@ -99,7 +143,9 @@ function SignUpForm() {
 							type="text"
 							placeholder={t("auth.displayNamePlaceholder")}
 							value={name}
-							onChange={(e) => setName(e.target.value)}
+							onChange={(e) =>
+								dispatch({ type: "SET_NAME", payload: e.target.value })
+							}
 							required
 							className="h-11 rounded-xl border-border/40 bg-system-surface pl-10"
 						/>
@@ -123,7 +169,9 @@ function SignUpForm() {
 							type="email"
 							placeholder={t("auth.emailPlaceholder")}
 							value={email}
-							onChange={(e) => setEmail(e.target.value)}
+							onChange={(e) =>
+								dispatch({ type: "SET_EMAIL", payload: e.target.value })
+							}
 							required
 							className="h-11 rounded-xl border-border/40 bg-system-surface pl-10"
 						/>
@@ -143,14 +191,16 @@ function SignUpForm() {
 							type={showPassword ? "text" : "password"}
 							placeholder={t("auth.createPassword")}
 							value={password}
-							onChange={(e) => setPassword(e.target.value)}
+							onChange={(e) =>
+								dispatch({ type: "SET_PASSWORD", payload: e.target.value })
+							}
 							required
 							minLength={8}
 							className="h-11 rounded-xl border-border/40 bg-system-surface pr-10"
 						/>
 						<button
 							type="button"
-							onClick={() => setShowPassword(!showPassword)}
+							onClick={() => dispatch({ type: "TOGGLE_SHOW_PASSWORD" })}
 							aria-label={
 								showPassword ? t("auth.hidePassword") : t("auth.showPassword")
 							}

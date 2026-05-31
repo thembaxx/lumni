@@ -10,7 +10,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { Suspense, useCallback, useState } from "react";
+import { Suspense, useCallback, useReducer } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FormSkeleton } from "@/components/ui/skeletons";
@@ -25,29 +25,73 @@ function safeRedirect(url: string | null): string {
 	return url;
 }
 
-// TODO(react-doctor): Refactor multiple useState calls into useReducer
+type SignInState = {
+	email: string;
+	password: string;
+	showPassword: boolean;
+	isMagicLink: boolean;
+	magicLinkSent: boolean;
+	loading: boolean;
+};
+
+type SignInAction =
+	| { type: "SET_EMAIL"; payload: string }
+	| { type: "SET_PASSWORD"; payload: string }
+	| { type: "TOGGLE_SHOW_PASSWORD" }
+	| { type: "TOGGLE_MAGIC_LINK" }
+	| { type: "MAGIC_LINK_SENT" }
+	| { type: "RESET_MAGIC_LINK" }
+	| { type: "SET_LOADING"; payload: boolean };
+
+const initialState: SignInState = {
+	email: "",
+	password: "",
+	showPassword: false,
+	isMagicLink: false,
+	magicLinkSent: false,
+	loading: false,
+};
+
+function signInReducer(state: SignInState, action: SignInAction): SignInState {
+	switch (action.type) {
+		case "SET_EMAIL":
+			return { ...state, email: action.payload };
+		case "SET_PASSWORD":
+			return { ...state, password: action.payload };
+		case "TOGGLE_SHOW_PASSWORD":
+			return { ...state, showPassword: !state.showPassword };
+		case "TOGGLE_MAGIC_LINK":
+			return { ...state, isMagicLink: !state.isMagicLink };
+		case "MAGIC_LINK_SENT":
+			return { ...state, magicLinkSent: true };
+		case "RESET_MAGIC_LINK":
+			return { ...state, magicLinkSent: false };
+		case "SET_LOADING":
+			return { ...state, loading: action.payload };
+		default:
+			return state;
+	}
+}
+
 function SignInForm() {
 	const { push, refresh } = useRouter();
 	const { get } = useSearchParams();
 	const redirect = safeRedirect(get("redirect"));
 	const { signIn, signInWithMagicLink, error } = useAuth();
 
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-	const [showPassword, setShowPassword] = useState(false);
-	const [isMagicLink, setIsMagicLink] = useState(false);
-	const [magicLinkSent, setMagicLinkSent] = useState(false);
-	const [loading, setLoading] = useState(false);
+	const [state, dispatch] = useReducer(signInReducer, initialState);
+	const { email, password, showPassword, isMagicLink, magicLinkSent, loading } =
+		state;
 	const t = useTranslations();
 
 	const handleSignIn = useCallback(
 		async (e: React.FormEvent) => {
 			e.preventDefault();
-			setLoading(true);
+			dispatch({ type: "SET_LOADING", payload: true });
 			try {
 				if (isMagicLink) {
 					await signInWithMagicLink(email);
-					setMagicLinkSent(true);
+					dispatch({ type: "MAGIC_LINK_SENT" });
 				} else {
 					await signIn(email, password);
 					push(redirect);
@@ -55,7 +99,7 @@ function SignInForm() {
 				}
 			} catch {
 			} finally {
-				setLoading(false);
+				dispatch({ type: "SET_LOADING", payload: false });
 			}
 		},
 		[
@@ -99,7 +143,7 @@ function SignInForm() {
 				</div>
 				<button
 					type="button"
-					onClick={() => setMagicLinkSent(false)}
+					onClick={() => dispatch({ type: "RESET_MAGIC_LINK" })}
 					className="font-semibold text-sm text-system-accent hover:underline"
 				>
 					{t("auth.useDifferentEmail")}
@@ -143,7 +187,9 @@ function SignInForm() {
 							type="email"
 							placeholder={t("auth.emailPlaceholder")}
 							value={email}
-							onChange={(e) => setEmail(e.target.value)}
+							onChange={(e) =>
+								dispatch({ type: "SET_EMAIL", payload: e.target.value })
+							}
 							required
 							className="h-11 rounded-xl border-border/40 bg-system-surface pl-10"
 						/>
@@ -164,7 +210,9 @@ function SignInForm() {
 								type={showPassword ? "text" : "password"}
 								placeholder={t("auth.passwordPlaceholder")}
 								value={password}
-								onChange={(e) => setPassword(e.target.value)}
+								onChange={(e) =>
+									dispatch({ type: "SET_PASSWORD", payload: e.target.value })
+								}
 								required
 								className="h-11 rounded-xl border-border/40 bg-system-surface pr-10"
 							/>
@@ -173,7 +221,7 @@ function SignInForm() {
 								aria-label={
 									showPassword ? t("auth.hidePassword") : t("auth.showPassword")
 								}
-								onClick={() => setShowPassword(!showPassword)}
+								onClick={() => dispatch({ type: "TOGGLE_SHOW_PASSWORD" })}
 								className="absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground hover:text-foreground"
 							>
 								{showPassword ? (
@@ -205,8 +253,8 @@ function SignInForm() {
 				<button
 					type="button"
 					onClick={() => {
-						setIsMagicLink(!isMagicLink);
-						setPassword("");
+						dispatch({ type: "TOGGLE_MAGIC_LINK" });
+						dispatch({ type: "SET_PASSWORD", payload: "" });
 					}}
 					className="text-center font-medium text-sm text-system-accent hover:underline"
 				>

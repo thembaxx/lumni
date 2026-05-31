@@ -125,7 +125,10 @@ export function PremiumProvider({ children }: { children: React.ReactNode }) {
 					features: PREMIUM_FEATURES,
 					subscriptionId: data.subscriptionId || prev.subscriptionId,
 					expiresAt: data.expiresAt
-						? new Date(data.expiresAt).getTime()
+						? (() => {
+								const d = new Date(data.expiresAt);
+								return Number.isNaN(d.getTime()) ? prev.expiresAt : d.getTime();
+							})()
 						: prev.expiresAt,
 				}));
 			} else if (state.isPremium) {

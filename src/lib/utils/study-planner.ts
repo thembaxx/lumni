@@ -11,6 +11,7 @@ export interface StudySession {
 	duration: number;
 	completed: boolean;
 	completedAt?: number;
+	actualDuration?: number;
 	notes?: string;
 	repeat?: "daily" | "weekly" | "none";
 }
@@ -30,6 +31,8 @@ export interface StudyPlan {
 	generatedAt: number;
 	stale: boolean;
 	lastCompetencyRefresh: number;
+	progress?: number;
+	totalActualMinutes?: number;
 }
 
 const STUDY_PLAN_KEY = "lumni_study_plan";
@@ -41,6 +44,8 @@ export function loadStudyPlan(): StudyPlan {
 		generatedAt: 0,
 		stale: false,
 		lastCompetencyRefresh: 0,
+		progress: 0,
+		totalActualMinutes: 0,
 	});
 }
 
@@ -134,6 +139,22 @@ export function addStudySession(session: Omit<StudySession, "id">): StudyPlan {
 	return plan;
 }
 
+function recalculateProgress(plan: StudyPlan): void {
+	const planned = plan.sessions.filter((s) => s.duration > 0);
+	const completed = planned.filter((s) => s.completed);
+	const totalPlanned = planned.reduce((sum, s) => sum + s.duration, 0);
+	const totalCompleted = completed.reduce(
+		(sum, s) => sum + (s.actualDuration ?? s.duration),
+		0,
+	);
+	plan.progress =
+		totalPlanned > 0 ? Math.round((totalCompleted / totalPlanned) * 100) : 0;
+	plan.totalActualMinutes = completed.reduce(
+		(sum, s) => sum + (s.actualDuration ?? s.duration),
+		0,
+	);
+}
+
 export function updateStudySession(
 	id: string,
 	updates: Partial<StudySession>,
@@ -142,6 +163,7 @@ export function updateStudySession(
 	const index = plan.sessions.findIndex((s) => s.id === id);
 	if (index >= 0) {
 		plan.sessions[index] = { ...plan.sessions[index], ...updates };
+		recalculateProgress(plan);
 		plan.generatedAt = Date.now();
 		saveStudyPlan(plan);
 	}
@@ -265,6 +287,9 @@ export function getStudyStats(): {
 	studyTimeMinutes: number;
 	examCount: number;
 	daysUntilNextExam: number | null;
+	progress: number;
+	totalActualMinutes: number;
+	totalPlannedMinutes: number;
 } {
 	const plan = loadStudyPlan();
 
@@ -277,12 +302,26 @@ export function getStudyStats(): {
 		.filter((e) => e.daysUntil > 0)
 		.sort((a, b) => a.date - b.date);
 
+	const planned = plan.sessions.filter((s) => s.duration > 0);
+	const totalPlannedMinutes = planned.reduce((sum, s) => sum + s.duration, 0);
+	const totalActualMinutes = completed.reduce(
+		(sum, s) => sum + (s.actualDuration ?? s.duration),
+		0,
+	);
+	const progress =
+		totalPlannedMinutes > 0
+			? Math.round((totalActualMinutes / totalPlannedMinutes) * 100)
+			: (plan.progress ?? 0);
+
 	return {
 		totalSessions: plan.sessions.length,
 		completedSessions: completed.length,
 		upcomingSessions: upcoming.length,
-		studyTimeMinutes: completed.reduce((sum, s) => sum + s.duration, 0),
+		studyTimeMinutes: totalActualMinutes,
 		examCount: plan.examDates.length,
 		daysUntilNextExam: upcomingExams[0]?.daysUntil || null,
+		progress,
+		totalActualMinutes,
+		totalPlannedMinutes,
 	};
 }

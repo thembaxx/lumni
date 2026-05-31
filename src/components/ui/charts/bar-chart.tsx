@@ -1,18 +1,30 @@
 "use client";
 
-import {
-	Bar,
-	CartesianGrid,
-	BarChart as RechartsBarChart,
-	XAxis,
-	YAxis,
-} from "recharts";
+import dynamic from "next/dynamic";
 import {
 	type ChartConfig,
 	ChartContainer,
 	ChartTooltip,
 	ChartTooltipContent,
 } from "@/components/ui/chart";
+
+const RechartsBarChart = dynamic(
+	() => import("recharts").then((m) => m.BarChart),
+	{ ssr: false },
+);
+const CartesianGrid = dynamic(
+	() => import("recharts").then((m) => m.CartesianGrid),
+	{ ssr: false },
+);
+const XAxis = dynamic(() => import("recharts").then((m) => m.XAxis), {
+	ssr: false,
+});
+const YAxis = dynamic(() => import("recharts").then((m) => m.YAxis), {
+	ssr: false,
+});
+const Bar = dynamic(() => import("recharts").then((m) => m.Bar), {
+	ssr: false,
+});
 
 interface BarChartProps {
 	data: Record<string, unknown>[];

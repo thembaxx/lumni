@@ -3,6 +3,7 @@ import {
 	type CachingStrategy,
 	createCachingStrategy,
 } from "@/lib/caching-strategy";
+import { dataSharingConsent } from "@/lib/consent/ai-gate";
 import {
 	cacheVisual,
 	getCachedVisual,
@@ -78,11 +79,13 @@ export class VisualEngine {
 		const isSTEM = STEM_SUBJECTS.has(params.subject);
 
 		if (isSTEM) {
-			const diagram = await generateDiagram(
-				params.questionText,
-				params.subject,
-				params.topic,
-			);
+			const diagram = dataSharingConsent
+				? await generateDiagram(
+						params.questionText,
+						params.subject,
+						params.topic,
+					)
+				: null;
 			if (diagram) return diagram;
 			const fallback = await searchImage(
 				params.questionText,
@@ -114,7 +117,9 @@ export class VisualEngine {
 			};
 		}
 
-		return generateDiagram(params.questionText, params.subject, params.topic);
+		return dataSharingConsent
+			? generateDiagram(params.questionText, params.subject, params.topic)
+			: null;
 	}
 }
 

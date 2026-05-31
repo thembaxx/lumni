@@ -9,7 +9,7 @@ import { appConfig } from "../../../app.config";
 
 export default function NotFound() {
 	return (
-		<div className="grid min-h-[100dvh] grid-cols-12 gap-0 bg-[--system-background]">
+		<div className="grid min-h-dvh grid-cols-12 gap-0 bg-[--system-background]">
 			<m.div
 				className="col-span-12 col-start-1 flex items-center justify-center p-4 pb-20 md:col-span-7"
 				initial={{ opacity: 0, y: 12 }}

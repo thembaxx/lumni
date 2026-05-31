@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useReducer, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -14,7 +14,46 @@ import {
 } from "@/components/ui/select";
 import type { StudySession as StudySessionType } from "@/lib/utils/study-planner";
 
-// TODO(react-doctor): Refactor multiple useState calls into useReducer
+type FormState = {
+	subject: string;
+	topic: string;
+	type: "flashcard" | "exam" | "quiz" | "review";
+	duration: number;
+	repeat: "none" | "daily" | "weekly";
+};
+
+type FormAction =
+	| { type: "SET_SUBJECT"; payload: string }
+	| { type: "SET_TOPIC"; payload: string }
+	| { type: "SET_TYPE"; payload: "flashcard" | "exam" | "quiz" | "review" }
+	| { type: "SET_DURATION"; payload: number }
+	| { type: "SET_REPEAT"; payload: "none" | "daily" | "weekly" };
+
+const initialState: FormState = {
+	subject: "",
+	topic: "",
+	type: "quiz",
+	duration: 30,
+	repeat: "none",
+};
+
+function reducer(state: FormState, action: FormAction): FormState {
+	switch (action.type) {
+		case "SET_SUBJECT":
+			return { ...state, subject: action.payload };
+		case "SET_TOPIC":
+			return { ...state, topic: action.payload };
+		case "SET_TYPE":
+			return { ...state, type: action.payload };
+		case "SET_DURATION":
+			return { ...state, duration: action.payload };
+		case "SET_REPEAT":
+			return { ...state, repeat: action.payload };
+		default:
+			return state;
+	}
+}
+
 export function AddSessionModal({
 	onClose,
 	onAdd,
@@ -23,14 +62,9 @@ export function AddSessionModal({
 	onAdd: (session: Omit<StudySessionType, "id">) => void;
 }) {
 	const t = useTranslations();
-	const [subject, setSubject] = useState("");
-	const [topic, setTopic] = useState("");
-	const [type, setType] = useState<"flashcard" | "exam" | "quiz" | "review">(
-		"quiz",
-	);
-	const [duration, setDuration] = useState(30);
-	const [defaultTime] = useState(() => Date.now() + 60 * 60 * 1000);
-	const [repeat, setRepeat] = useState<"none" | "daily" | "weekly">("none");
+	const defaultTime = useRef(Date.now() + 60 * 60 * 1000).current;
+	const [form, dispatch] = useReducer(reducer, initialState);
+	const { subject, topic, type, duration, repeat } = form;
 
 	return (
 		<div className="fixed inset-0 z-modal flex items-center justify-center bg-black/50">
@@ -45,7 +79,9 @@ export function AddSessionModal({
 						<Label>{t("studyPlanner.sessionSubject")}</Label>
 						<Input
 							value={subject}
-							onChange={(e) => setSubject(e.target.value)}
+							onChange={(e) =>
+								dispatch({ type: "SET_SUBJECT", payload: e.target.value })
+							}
 							placeholder={t("studyPlanner.subjectPlaceholder")}
 						/>
 					</div>
@@ -53,7 +89,9 @@ export function AddSessionModal({
 						<Label>{t("studyPlanner.sessionTopic")}</Label>
 						<Input
 							value={topic}
-							onChange={(e) => setTopic(e.target.value)}
+							onChange={(e) =>
+								dispatch({ type: "SET_TOPIC", payload: e.target.value })
+							}
 							placeholder={t("studyPlanner.topicPlaceholder")}
 						/>
 					</div>
@@ -62,7 +100,10 @@ export function AddSessionModal({
 						<Select
 							value={type}
 							onValueChange={(v) =>
-								setType(v as "flashcard" | "exam" | "quiz" | "review")
+								dispatch({
+									type: "SET_TYPE",
+									payload: v as "flashcard" | "exam" | "quiz" | "review",
+								})
 							}
 						>
 							<SelectTrigger>
@@ -89,7 +130,12 @@ export function AddSessionModal({
 						<Input
 							type="number"
 							value={duration}
-							onChange={(e) => setDuration(parseInt(e.target.value, 10) || 30)}
+							onChange={(e) =>
+								dispatch({
+									type: "SET_DURATION",
+									payload: parseInt(e.target.value, 10) || 30,
+								})
+							}
 							min={5}
 							max={120}
 						/>
@@ -98,7 +144,12 @@ export function AddSessionModal({
 						<Label>{t("studyPlanner.sessionRepeat")}</Label>
 						<Select
 							value={repeat}
-							onValueChange={(v) => setRepeat(v as "none" | "daily" | "weekly")}
+							onValueChange={(v) =>
+								dispatch({
+									type: "SET_REPEAT",
+									payload: v as "none" | "daily" | "weekly",
+								})
+							}
 						>
 							<SelectTrigger>
 								<SelectValue />

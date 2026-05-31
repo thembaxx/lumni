@@ -62,7 +62,7 @@ export function ControlButtons({
 				className={cn(
 					"relative h-16 w-16 rounded-full",
 					isRecording
-						? "bg-destructive text-destructive-foreground shadow-[0_0_30px_oklch(59.3%_0.194_28°_/_0.6)]"
+						? "bg-destructive text-destructive-foreground shadow-level-2"
 						: showPermissionError
 							? "cursor-not-allowed bg-muted text-muted-foreground"
 							: "bg-foreground text-background hover:scale-105 hover:shadow-foreground/20 hover:shadow-xl",
@@ -108,7 +108,7 @@ export function ControlButtons({
 				className={cn(
 					"rounded-lg",
 					audioBlob && !isRecording
-						? "bg-[--system-accent] text-background hover:scale-105 hover:shadow-[--system-accent]/20 hover:shadow-xl"
+						? "bg-[--system-accent] text-background hover:scale-105 hover:shadow-xl"
 						: "bg-muted/30 text-muted-foreground/30",
 					isPaperPlaneing && "pointer-events-none opacity-50",
 				)}

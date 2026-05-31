@@ -9,11 +9,12 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AnimatePresence, m } from "framer-motion";
-import { useState } from "react";
+import { useReducer } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PageHeader } from "@/components/ui/headers/page-header";
 import { TabSwitcher } from "@/components/ui/tab-switcher";
+import { toast } from "@/hooks/use-toast";
 import { useRouter } from "@/i18n/navigation";
 import { iOSEase } from "@/lib/utils/animation";
 import { AdminExamList } from "./admin-exam-list";
@@ -58,22 +59,75 @@ function AnimatedCard({
 	);
 }
 
-// TODO(react-doctor): Refactor multiple useState calls into useReducer
+type AdminState = {
+	selectedSubjects: Set<string>;
+	editSubject: Subject | null;
+	newSubject: {
+		name: string;
+		code: string;
+		description: string;
+		category: string;
+	};
+	activeTab: "exam" | "subjects";
+	showSuccess: boolean;
+};
+
+type AdminAction =
+	| { type: "TOGGLE_SUBJECT"; payload: string }
+	| { type: "SET_EDIT_SUBJECT"; payload: Subject | null }
+	| { type: "SET_FORM_DATA"; payload: AdminState["newSubject"] }
+	| { type: "RESET_FORM_DATA" }
+	| { type: "SET_TAB"; payload: "exam" | "subjects" }
+	| { type: "SHOW_SUCCESS" }
+	| { type: "HIDE_SUCCESS" };
+
+function adminReducer(state: AdminState, action: AdminAction): AdminState {
+	switch (action.type) {
+		case "TOGGLE_SUBJECT": {
+			const next = new Set(state.selectedSubjects);
+			if (next.has(action.payload)) next.delete(action.payload);
+			else next.add(action.payload);
+			return { ...state, selectedSubjects: next };
+		}
+		case "SET_EDIT_SUBJECT":
+			return { ...state, editSubject: action.payload };
+		case "SET_FORM_DATA":
+			return { ...state, newSubject: action.payload };
+		case "RESET_FORM_DATA":
+			return {
+				...state,
+				newSubject: {
+					name: "",
+					code: "",
+					description: "",
+					category: "general",
+				},
+			};
+		case "SET_TAB":
+			return { ...state, activeTab: action.payload };
+		case "SHOW_SUCCESS":
+			return { ...state, showSuccess: true };
+		case "HIDE_SUCCESS":
+			return { ...state, showSuccess: false };
+		default:
+			return state;
+	}
+}
+
+const adminInitialState: AdminState = {
+	selectedSubjects: new Set(),
+	editSubject: null,
+	newSubject: { name: "", code: "", description: "", category: "general" },
+	activeTab: "exam",
+	showSuccess: false,
+};
+
 export function AdminDashboard() {
 	const { push } = useRouter();
 	const queryClient = useQueryClient();
-	const [selectedSubjects, setSelectedSubjects] = useState<Set<string>>(
-		new Set(),
-	);
-	const [editSubject, setEditSubject] = useState<Subject | null>(null);
-	const [newSubject, setNewSubject] = useState({
-		name: "",
-		code: "",
-		description: "",
-		category: "general",
-	});
-	const [activeTab, setActiveTab] = useState<"exam" | "subjects">("exam");
-	const [showSuccess, setShowSuccess] = useState(false);
+	const [admin, dispatch] = useReducer(adminReducer, adminInitialState);
+	const { selectedSubjects, editSubject, newSubject, activeTab, showSuccess } =
+		admin;
 
 	const { data: subjectsData, isLoading } = useQuery({
 		queryKey: ["admin-subjects"],
@@ -105,15 +159,10 @@ export function AdminDashboard() {
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["admin-subjects"] });
-			setEditSubject(null);
-			setNewSubject({
-				name: "",
-				code: "",
-				description: "",
-				category: "general",
-			});
-			setShowSuccess(true);
-			setTimeout(() => setShowSuccess(false), 2000);
+			dispatch({ type: "SET_EDIT_SUBJECT", payload: null });
+			dispatch({ type: "RESET_FORM_DATA" });
+			dispatch({ type: "SHOW_SUCCESS" });
+			setTimeout(() => dispatch({ type: "HIDE_SUCCESS" }), 2000);
 		},
 	});
 
@@ -127,8 +176,8 @@ export function AdminDashboard() {
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["admin-subjects"] });
-			setShowSuccess(true);
-			setTimeout(() => setShowSuccess(false), 2000);
+			dispatch({ type: "SHOW_SUCCESS" });
+			setTimeout(() => dispatch({ type: "HIDE_SUCCESS" }), 2000);
 		},
 	});
 
@@ -142,8 +191,8 @@ export function AdminDashboard() {
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["admin-subjects"] });
-			setShowSuccess(true);
-			setTimeout(() => setShowSuccess(false), 2000);
+			dispatch({ type: "SHOW_SUCCESS" });
+			setTimeout(() => dispatch({ type: "HIDE_SUCCESS" }), 2000);
 		},
 	});
 
@@ -155,7 +204,7 @@ export function AdminDashboard() {
 
 	const handleSaveSubject = () => {
 		if (!newSubject.name || !newSubject.code) {
-			alert("Name and code are required");
+			toast({ type: "error", message: "Name and code are required" });
 			return;
 		}
 		const subject = editSubject
@@ -170,17 +219,11 @@ export function AdminDashboard() {
 	};
 
 	const toggleSubject = (subjectId: string) => {
-		const newSelected = new Set(selectedSubjects);
-		if (newSelected.has(subjectId)) {
-			newSelected.delete(subjectId);
-		} else {
-			newSelected.add(subjectId);
-		}
-		setSelectedSubjects(newSelected);
+		dispatch({ type: "TOGGLE_SUBJECT", payload: subjectId });
 	};
 
 	return (
-		<div className="min-h-[100dvh] bg-background">
+		<div className="min-h-dvh bg-background">
 			<AnimatePresence initial={false}>
 				{showSuccess && (
 					<m.div
@@ -271,7 +314,9 @@ export function AdminDashboard() {
 							},
 						]}
 						value={activeTab}
-						onValueChange={(v) => setActiveTab(v as "exam" | "subjects")}
+						onValueChange={(v) =>
+							dispatch({ type: "SET_TAB", payload: v as "exam" | "subjects" })
+						}
 						listClassName="w-full"
 					>
 						{activeTab === "exam" && (
@@ -306,9 +351,13 @@ export function AdminDashboard() {
 									<SubjectForm
 										editSubject={editSubject}
 										formData={newSubject}
-										onFormDataChange={setNewSubject}
+										onFormDataChange={(data) =>
+											dispatch({ type: "SET_FORM_DATA", payload: data })
+										}
 										onSave={handleSaveSubject}
-										onCancel={() => setEditSubject(null)}
+										onCancel={() =>
+											dispatch({ type: "SET_EDIT_SUBJECT", payload: null })
+										}
 										onPreload={() => preloadMutation.mutate()}
 										isSaving={saveMutation.isPending}
 										isPreloading={preloadMutation.isPending}
@@ -325,7 +374,12 @@ export function AdminDashboard() {
 												subjects={subjects}
 												selectedSubjects={selectedSubjects}
 												onToggleSubject={toggleSubject}
-												onEditSubject={setEditSubject}
+												onEditSubject={(subject) =>
+													dispatch({
+														type: "SET_EDIT_SUBJECT",
+														payload: subject,
+													})
+												}
 												onDeleteSubject={handleDeleteSubject}
 												isLoading={isLoading}
 												isDeleting={deleteMutation.isPending}

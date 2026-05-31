@@ -62,7 +62,7 @@ export function ExamsBrowse() {
 	};
 
 	return (
-		<div className="min-h-[100dvh] bg-system-grouped pt-4 pb-24">
+		<div className="min-h-dvh bg-system-grouped pt-4 pb-24">
 			<PageContainer className="flex flex-col gap-8">
 				<Anim>
 					<div className="flex flex-col gap-6">

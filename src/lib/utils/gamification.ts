@@ -9,7 +9,7 @@ export const rarityColors: Record<Rarity, string> = {
 
 export const rarityGlow: Record<Rarity, string> = {
 	common: "",
-	rare: "shadow-[--system-accent]/20",
+	rare: "shadow-level-1",
 	epic: "shadow-accent/20",
 	legendary: "shadow-warning/30",
 };
@@ -30,7 +30,7 @@ export const rarityBorder: Record<Rarity, string> = {
 
 export const rarityGlowStrong: Record<Rarity, string> = {
 	common: "shadow-gray-500/50 dark:shadow-gray-700/50",
-	rare: "shadow-[--system-accent]/50",
+	rare: "shadow-level-2",
 	epic: "shadow-accent/50 dark:shadow-accent/50",
 	legendary: "shadow-warning/70 dark:shadow-warning/70",
 };

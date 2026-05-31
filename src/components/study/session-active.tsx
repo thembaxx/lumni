@@ -36,7 +36,7 @@ export function SessionActive({
 	const progressValue = activity?.progress ?? 0;
 
 	return (
-		<div className="flex min-h-[100dvh] flex-col gap-4 bg-background p-4">
+		<div className="flex min-h-dvh flex-col gap-4 bg-background p-4">
 			<div className="flex flex-wrap items-center justify-between gap-2">
 				{onQuit && (
 					<Button variant="ghost" size="sm" onClick={onQuit}>

@@ -67,7 +67,7 @@ function AnimatedYearButton({
 				variant={selected ? "default" : "secondary"}
 				size="sm"
 				onClick={onClick}
-				className="min-w-[60px]"
+				className="min-w-16"
 			>
 				{year}
 			</Button>

@@ -37,7 +37,7 @@ export function QuestionNavigatorSidebar({
 					exit={{ width: 0, opacity: 0 }}
 					className="overflow-hidden border-border border-r bg-muted/20"
 				>
-					<div className="w-[260px] p-4">
+					<div className="w-64 p-4">
 						<p className="mb-3 font-semibold text-muted-foreground text-xs">
 							{t("exam.questionNavigator")}
 						</p>

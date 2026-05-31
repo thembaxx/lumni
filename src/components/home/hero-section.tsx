@@ -103,7 +103,7 @@ export function HeroSection({ isAuthenticated }: HeroSectionProps) {
 						className="relative hidden items-center justify-center lg:flex"
 					>
 						<div className="relative aspect-square w-full max-w-md">
-							<div className="absolute inset-0 rounded-[3rem] bg-linear-to-br from-primary/20 via-primary/5 to-transparent blur-3xl" />
+							<div className="absolute inset-0 rounded-card-lg bg-linear-to-br from-primary/20 via-primary/5 to-transparent blur-3xl" />
 							<div className="relative flex h-full w-full flex-col gap-4 rounded-lg border border-border/50 bg-linear-to-br from-primary/10 to-background p-8 shadow-level-2">
 								<div className="flex items-center gap-3">
 									<div className="flex size-10 items-center justify-center rounded-md bg-(--system-accent-alpha-10)">

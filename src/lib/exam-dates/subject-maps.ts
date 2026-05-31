@@ -1,3 +1,18 @@
+import {
+	getSubjectHexColor,
+	getSubjectName,
+	getSubjectOklchColor,
+	getSubjectTailwindColor,
+	getSubjectAbbr as getUnifiedAbbr,
+} from "@/lib/subjects";
+
+export {
+	getSubjectHexColor,
+	getSubjectName,
+	getSubjectOklchColor,
+	getSubjectTailwindColor,
+};
+
 export const subjectColors: Record<string, string> = {
 	mathematics: "bg-[--system-accent]",
 	"physical-sciences": "bg-success",
@@ -14,28 +29,12 @@ export const subjectColors: Record<string, string> = {
 	"information-technology": "bg-[--chart-5]",
 };
 
-export const subjectAbbrs: Record<string, string> = {
-	mathematics: "Math",
-	"physical-sciences": "PhySci",
-	"life-sciences": "LifeSci",
-	"english-home-language": "EngHL",
-	"english-first-additional-language": "EngFAL",
-	"afrikaans-home-language": "AfrHL",
-	"afrikaans-first-additional-language": "AfrFAL",
-	geography: "Geo",
-	history: "Hist",
-	accounting: "Acc",
-	"business-studies": "Bus",
-	economics: "Econ",
-	"mathematical-literacy": "MathLit",
-	"computer-applications-technology": "CAT",
-	"information-technology": "IT",
-};
+export const subjectAbbrs: Record<string, string> = {};
 
 export function getSubjectColor(subjectId: string): string {
 	return subjectColors[subjectId] || "bg-muted";
 }
 
 export function getSubjectAbbr(subjectId: string): string {
-	return subjectAbbrs[subjectId] || subjectId.slice(0, 4).toUpperCase();
+	return getUnifiedAbbr(subjectId);
 }

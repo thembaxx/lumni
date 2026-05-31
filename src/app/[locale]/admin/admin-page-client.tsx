@@ -102,7 +102,7 @@ export function AdminPageClient() {
 						animate={{ opacity: 1 }}
 						transition={{ duration: 0.3 }}
 						initial={false}
-						className="relative min-h-[100dvh]"
+						className="relative min-h-dvh"
 					>
 						<m.div
 							whileHover={{ scale: 1.05 }}

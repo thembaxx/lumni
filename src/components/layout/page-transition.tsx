@@ -66,7 +66,7 @@ export function PageTransition({ children }: PageTransitionProps) {
 				<m.div
 					ref={constraintsRef}
 					key={navState.displayPathname}
-					className="min-h-[100dvh] overflow-x-hidden"
+					className="min-h-dvh overflow-x-hidden"
 					custom={navState.direction}
 					initial={{
 						opacity: 0,

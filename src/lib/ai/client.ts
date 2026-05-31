@@ -2,6 +2,7 @@ import { trackAILatency } from "./latency-tracker";
 import { createGeminiProvider } from "./providers/gemini";
 import { createGroqProvider } from "./providers/groq";
 import { createNvidiaProvider } from "./providers/nvidia";
+import { dataSharingConsent } from "@/lib/consent/ai-gate";
 import type { AIFailure, AIProvider, AIRequest, AIResult } from "./types";
 
 export interface AIConfig {
@@ -47,6 +48,12 @@ export class AIClient {
 		request: AIRequest,
 		callType: "generate" | "grade" | "hint" | "visual" | "embed" = "generate",
 	): Promise<AIResult> {
+		if (!dataSharingConsent) {
+			return {
+				...FAILURE_RESPONSE,
+				error: "Data sharing consent not granted",
+			};
+		}
 		if (this.providers.length === 0) {
 			return { ...FAILURE_RESPONSE, error: "No AI providers configured" };
 		}

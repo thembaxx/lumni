@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/table";
 import { normalizeMathDelimiters } from "@/lib/katex-utils";
 import { cn } from "@/lib/shared";
+import { getSubjectOklchColor } from "@/lib/subjects";
 
 function LazyCodeBlock({
 	language,
@@ -93,10 +94,13 @@ const TABULAR_SUBJECTS = ["physical-sciences", "mathematical-literacy"];
 const MATH_DETECT_RE = /\$\$[\s\S]*?\$\$|\$[a-zA-Z\\{].*?\$|\\\(|\\\[/;
 
 const SUBJECT_COLORS: Record<string, string> = {
-	mathematics: "oklch(70.6% 0.132 264°)",
-	"technical-mathematics": "oklch(71.8% 0.143 286°)",
-	"physical-sciences": "oklch(73.6% 0.145 155°)",
-	"mathematical-literacy": "oklch(76.2% 0.155 49°)",
+	mathematics: getSubjectOklchColor("mathematics") ?? "oklch(70.6% 0.132 264°)",
+	"technical-mathematics":
+		getSubjectOklchColor("technical-mathematics") ?? "oklch(71.8% 0.143 286°)",
+	"physical-sciences":
+		getSubjectOklchColor("physical-sciences") ?? "oklch(73.6% 0.145 155°)",
+	"mathematical-literacy":
+		getSubjectOklchColor("mathematical-literacy") ?? "oklch(76.2% 0.155 49°)",
 };
 
 interface MarkdownRendererProps {

@@ -39,7 +39,7 @@ export function AnalyticsClient() {
 	];
 
 	return (
-		<div className="min-h-[100dvh] bg-background">
+		<div className="min-h-dvh bg-background">
 			<PageHeader title="Analytics" subtitle="Platform usage statistics" />
 			<div className="flex flex-col gap-4 p-4">
 				<div className="grid grid-cols-2 gap-3 md:grid-cols-3">

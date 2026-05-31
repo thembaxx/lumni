@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useReducer, useState } from "react";
 import { Confetti, XPGainPopup } from "@/components/celebration";
 import { Anim } from "@/components/shared/anim";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
@@ -44,7 +44,78 @@ const MATH_SUBJECTS = [
 	"mathematical-literacy",
 ];
 
-// TODO(react-doctor): Refactor multiple useState calls into useReducer
+type GradeResult = { correct: boolean; score: number; feedback: string } | null;
+
+type GradingState = {
+	gradeResult: GradeResult;
+	isGrading: boolean;
+};
+
+type GradingAction =
+	| { type: "START_GRADING" }
+	| { type: "FINISH_GRADING"; payload: { result: GradeResult } }
+	| { type: "GRADE_FAILED" };
+
+function gradingReducer(
+	state: GradingState,
+	action: GradingAction,
+): GradingState {
+	switch (action.type) {
+		case "START_GRADING":
+			return { ...state, isGrading: true };
+		case "FINISH_GRADING":
+			return { isGrading: false, gradeResult: action.payload.result };
+		case "GRADE_FAILED":
+			return {
+				isGrading: false,
+				gradeResult: {
+					correct: false,
+					score: 0,
+					feedback: "Grading failed. Please try again.",
+				},
+			};
+		default:
+			return state;
+	}
+}
+
+type FollowUpState = {
+	messages: { role: "user" | "assistant"; content: string }[];
+	input: string;
+};
+
+type FollowUpAction =
+	| { type: "ADD_ASSISTANT"; payload: string }
+	| { type: "SEND_MESSAGE"; payload: string }
+	| { type: "SET_INPUT"; payload: string };
+
+function followUpReducer(
+	state: FollowUpState,
+	action: FollowUpAction,
+): FollowUpState {
+	switch (action.type) {
+		case "ADD_ASSISTANT":
+			return {
+				...state,
+				messages: [
+					...state.messages,
+					{ role: "assistant", content: action.payload },
+				],
+			};
+		case "SEND_MESSAGE":
+			return {
+				messages: [
+					...state.messages,
+					{ role: "user", content: action.payload },
+				],
+				input: "",
+			};
+		case "SET_INPUT":
+			return { ...state, input: action.payload };
+		default:
+			return state;
+	}
+}
 export function QuestionCard({
 	question,
 	subject: subjectProp,
@@ -71,44 +142,37 @@ export function QuestionCard({
 	const [showXPGain, setShowXPGain] = useState(false);
 	const { addBookmark, removeBookmark, isBookmarked } = useBookmarksStore();
 	const bookmarked = isBookmarked(question.id);
-	const [gradeResult, setGradeResult] = useState<{
-		correct: boolean;
-		score: number;
-		feedback: string;
-	} | null>(null);
-	const [isGrading, setIsGrading] = useState(false);
-	const [calcValue, setCalcValue] = useState("");
+	const [{ gradeResult, isGrading }, dispatchGrading] = useReducer(
+		gradingReducer,
+		{ gradeResult: null, isGrading: false },
+	);
 	const effectiveSubjectLower = effectiveSubject.toLowerCase();
 	const isMathSubject = MATH_SUBJECTS.some((s) =>
 		effectiveSubjectLower.includes(s),
 	);
 	const openTools = useToolsStore((s) => s.openTools);
-	const [code, setCode] = useState("");
 
 	const { grade } = useQuestionEngine();
 
 	const { data: visual, isLoading: visualLoading } = useVisualEngine(question);
 
 	const solver = useSolver();
-	const [followUpMsgs, setFollowUpMsgs] = useState<
-		{ role: "user" | "assistant"; content: string }[]
-	>([]);
-	const [followUpInput, setFollowUpInput] = useState("");
+	const [{ messages: followUpMsgs, input: followUpInput }, dispatchFollowUp] =
+		useReducer(followUpReducer, { messages: [], input: "" });
 
 	useEffect(() => {
 		if (solver.followUpData?.answer) {
-			setFollowUpMsgs((prev) => [
-				...prev,
-				{ role: "assistant", content: solver.followUpData?.answer ?? "" },
-			]);
+			dispatchFollowUp({
+				type: "ADD_ASSISTANT",
+				payload: solver.followUpData?.answer ?? "",
+			});
 		}
 	}, [solver.followUpData]);
 
 	const handleFollowUp = useCallback(() => {
 		const text = followUpInput.trim();
 		if (!text || !solver.data) return;
-		setFollowUpMsgs((prev) => [...prev, { role: "user", content: text }]);
-		setFollowUpInput("");
+		dispatchFollowUp({ type: "SEND_MESSAGE", payload: text });
 		solver.followUp({
 			question: text,
 			context: [
@@ -141,10 +205,10 @@ export function QuestionCard({
 
 	const handleGrade = useCallback(
 		async (answer: UserAnswer) => {
-			setIsGrading(true);
+			dispatchGrading({ type: "START_GRADING" });
 			try {
 				const result = await grade(question, answer);
-				setGradeResult(result);
+				dispatchGrading({ type: "FINISH_GRADING", payload: { result } });
 				setState((prev) => ({
 					...prev,
 					isSubmitted: true,
@@ -159,18 +223,13 @@ export function QuestionCard({
 				}
 				onAnswered?.(result.correct, result.score);
 			} catch {
-				setGradeResult({
-					correct: false,
-					score: 0,
-					feedback: "Grading failed. Please try again.",
-				});
+				dispatchGrading({ type: "GRADE_FAILED" });
 				setState((prev) => ({
 					...prev,
 					isSubmitted: true,
 					showExplanation: true,
 				}));
 			}
-			setIsGrading(false);
 		},
 		[grade, question, onAnswered],
 	);
@@ -230,10 +289,20 @@ export function QuestionCard({
 				effectiveSubject={effectiveSubject}
 				state={state}
 				options={options}
-				calcValue={calcValue}
-				setCalcValue={setCalcValue}
-				code={code}
-				setCode={setCode}
+				calcValue={state.calcValue}
+				setCalcValue={(next) => {
+					setState((prev) => ({
+						...prev,
+						calcValue: typeof next === "function" ? next(prev.calcValue) : next,
+					}));
+				}}
+				code={state.code}
+				setCode={(next) => {
+					setState((prev) => ({
+						...prev,
+						code: typeof next === "function" ? next(prev.code) : next,
+					}));
+				}}
 				handleMCQSelect={handleMCQSelect}
 				handleMCQSubmit={handleMCQSubmit}
 				handleGrade={handleGrade}
@@ -253,7 +322,12 @@ export function QuestionCard({
 				followUpMsgs={followUpMsgs}
 				handleFollowUp={handleFollowUp}
 				followUpInput={followUpInput}
-				setFollowUpInput={setFollowUpInput}
+				setFollowUpInput={(next) =>
+					dispatchFollowUp({
+						type: "SET_INPUT",
+						payload: typeof next === "function" ? next(followUpInput) : next,
+					})
+				}
 			/>
 			<QuestionCardControls
 				options={{

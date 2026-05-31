@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function StudyPlanPage() {
 	return (
-		<div className="min-h-[100dvh] bg-system-grouped pt-4 pb-24">
+		<div className="min-h-dvh bg-system-grouped pt-4 pb-24">
 			<PageContainer>
 				<StudyPlanner />
 			</PageContainer>

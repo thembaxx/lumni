@@ -29,7 +29,7 @@ export function SessionIdle({
 	onSelect,
 }: SessionIdleProps) {
 	return (
-		<div className="grid min-h-[100dvh] grid-cols-12 gap-0 bg-background">
+		<div className="grid min-h-dvh grid-cols-12 gap-0 bg-background">
 			<div className="col-span-12 col-start-1 flex items-center justify-center p-4 pb-20 md:col-span-7">
 				<Card className="mx-auto w-full max-w-md p-6">
 					<CardHeader className="px-0 pt-0 pb-4">

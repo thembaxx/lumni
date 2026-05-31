@@ -197,6 +197,8 @@ export function CountdownHeader() {
 	const { mounted, daysLeft, yearProgress } = cdState;
 	const sentinelRef = useRef<HTMLDivElement>(null);
 	const isCompactRef = useRef(false);
+	const timeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+	const intervalRef = useRef<ReturnType<typeof setInterval>>(undefined);
 	const shouldReduceMotion = useReducedMotion();
 
 	const greeting = mounted ? greetingMap[getTimeOfDay()] : "Good";
@@ -238,15 +240,17 @@ export function CountdownHeader() {
 		midnight.setDate(midnight.getDate() + 1);
 		midnight.setHours(0, 0, 0, 0);
 		const msUntilMidnight = midnight.getTime() - Date.now();
-		const timeout = setTimeout(() => {
+		timeoutRef.current = setTimeout(() => {
 			dispatchCd({ type: "TICK" });
-			const interval = setInterval(
+			intervalRef.current = setInterval(
 				() => dispatchCd({ type: "TICK" }),
 				1000 * 60 * 60 * 24,
 			);
-			return () => clearInterval(interval);
 		}, msUntilMidnight);
-		return () => clearTimeout(timeout);
+		return () => {
+			clearTimeout(timeoutRef.current);
+			clearInterval(intervalRef.current);
+		};
 	}, []);
 
 	const headerVariants = {

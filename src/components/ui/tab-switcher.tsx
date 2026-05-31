@@ -116,7 +116,7 @@ export function TabSwitcher({
 						className={
 							variant === "tabs"
 								? "absolute inset-y-1 z-0 rounded-md bg-[--system-accent]"
-								: "absolute inset-y-[3px] z-0 rounded-sm bg-[--system-surface] shadow-[--shadow-level-1]"
+								: "absolute inset-y-[3px] z-0 rounded-sm bg-[--system-surface] shadow-level-1"
 						}
 						initial={false}
 						animate={{

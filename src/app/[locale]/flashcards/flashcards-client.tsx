@@ -1,7 +1,14 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+	useCallback,
+	useEffect,
+	useMemo,
+	useReducer,
+	useRef,
+	useState,
+} from "react";
 import {
 	Confetti,
 	GamificationCelebration,
@@ -10,6 +17,7 @@ import {
 import { LocalDataNotice } from "@/components/shared/local-data-notice";
 import { useGamification } from "@/hooks/use-gamification";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
+import { toast } from "@/hooks/use-toast";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
 import { competencyService } from "@/lib/competency-engine/competency-service";
 import { flashcardEngine } from "@/lib/flashcard-engine";
@@ -35,36 +43,132 @@ interface FlashcardItem {
 
 type FlashcardSource = "ai" | "mistakes";
 
-// TODO(react-doctor): Refactor multiple useState calls into useReducer
+interface SessionState {
+	selectedSubject: string;
+	source: FlashcardSource;
+	isActive: boolean;
+	sessionComplete: boolean;
+}
+
+const initialSessionState: SessionState = {
+	selectedSubject: "",
+	source: "ai",
+	isActive: false,
+	sessionComplete: false,
+};
+
+type SessionAction =
+	| {
+			type: "START_SESSION";
+			payload: { subject: string; source: FlashcardSource };
+	  }
+	| { type: "STOP_SESSION" }
+	| { type: "COMPLETE_SESSION" }
+	| { type: "RESTART" };
+
+function sessionReducer(
+	state: SessionState,
+	action: SessionAction,
+): SessionState {
+	switch (action.type) {
+		case "START_SESSION":
+			return {
+				...state,
+				selectedSubject: action.payload.subject,
+				source: action.payload.source,
+				isActive: true,
+				sessionComplete: false,
+			};
+		case "STOP_SESSION":
+			return { ...state, isActive: false, selectedSubject: "" };
+		case "COMPLETE_SESSION":
+			return { ...state, sessionComplete: true };
+		case "RESTART":
+			return { ...state, sessionComplete: false };
+		default:
+			return state;
+	}
+}
+
+interface CardsState {
+	mistakeCards: FlashcardItem[];
+	sm2Cards: FlashcardItem[];
+	qualityMap: Map<string, number>;
+}
+
+const initialCardsState: CardsState = {
+	mistakeCards: [],
+	sm2Cards: [],
+	qualityMap: new Map(),
+};
+
+type CardsAction =
+	| { type: "SET_MISTAKE_CARDS"; payload: FlashcardItem[] }
+	| { type: "SET_SM2_CARDS"; payload: FlashcardItem[] }
+	| { type: "RESET" }
+	| { type: "SET_QUALITY"; payload: { cardId: string; quality: number } };
+
+function cardsReducer(state: CardsState, action: CardsAction): CardsState {
+	switch (action.type) {
+		case "SET_MISTAKE_CARDS":
+			return { ...state, mistakeCards: action.payload };
+		case "SET_SM2_CARDS":
+			return { ...state, sm2Cards: action.payload };
+		case "RESET":
+			return {
+				...state,
+				mistakeCards: [],
+				sm2Cards: [],
+				qualityMap: new Map(),
+			};
+		case "SET_QUALITY":
+			return {
+				...state,
+				qualityMap: new Map(state.qualityMap).set(
+					action.payload.cardId,
+					action.payload.quality,
+				),
+			};
+		default:
+			return state;
+	}
+}
+
 export function FlashcardsClient() {
 	const t = useTranslations();
 	useEffect(() => {
-		migrateLegacyFlashcards().catch((e) =>
-			console.warn("Legacy flashcard migration:", e),
-		);
-		void enqueue("appwrite-flashcard-pull", {}).catch((e) =>
-			console.warn("Flashcard pull failed:", e),
-		);
+		migrateLegacyFlashcards().catch((e) => {
+			console.warn("Legacy flashcard migration:", e);
+			toast({
+				type: "warning",
+				message: "Could not migrate legacy flashcards",
+			});
+		});
+		void enqueue("appwrite-flashcard-pull", {}).catch((e) => {
+			console.warn("Flashcard pull failed:", e);
+			toast({
+				type: "warning",
+				message: "Could not sync flashcards from cloud",
+			});
+		});
 	}, []);
 
-	const [selectedSubject, setSelectedSubject] = useState<string>("");
-	const [source, setSource] = useState<FlashcardSource>("ai");
-	const [isActive, setIsActive] = useState(false);
-	const [qualityMap, setQualityMap] = useState<Map<string, number>>(new Map());
-	const [mistakeCards, setMistakeCards] = useState<FlashcardItem[]>([]);
-	const [sm2Cards, setSm2Cards] = useState<FlashcardItem[]>([]);
+	const [session, dispatchSession] = useReducer(
+		sessionReducer,
+		initialSessionState,
+	);
+	const [cards, dispatchCards] = useReducer(cardsReducer, initialCardsState);
 	const hasSm2Ref = useRef(false);
-	const [sessionComplete, setSessionComplete] = useState(false);
 	const [showConfetti, setShowConfetti] = useState(false);
 	const [showXPGain, setShowXPGain] = useState(false);
 
 	const gamification = useGamification();
 	const { addWrongAnswer, getWrongAnswers } = useWrongAnswerJournal();
 
-	const knownCount = Array.from(qualityMap.values()).filter(
+	const knownCount = Array.from(cards.qualityMap.values()).filter(
 		(q) => q >= 3,
 	).length;
-	const reviewCount = qualityMap.size - knownCount;
+	const reviewCount = cards.qualityMap.size - knownCount;
 
 	const processSessionResults = useCallback(
 		async (
@@ -135,19 +239,22 @@ export function FlashcardsClient() {
 
 	const engineParams = useMemo(
 		() => ({
-			subject: selectedSubject.toLowerCase(),
+			subject: session.selectedSubject.toLowerCase(),
 			count: 20,
 			questionType: "multiple-choice" as const,
 		}),
-		[selectedSubject],
+		[session.selectedSubject],
 	);
 
 	const { questions, isLoading } = useQuestionEngine(engineParams, {
 		enabled:
-			isActive && !!selectedSubject && source === "ai" && !hasSm2Ref.current,
+			session.isActive &&
+			!!session.selectedSubject &&
+			session.source === "ai" &&
+			!hasSm2Ref.current,
 	});
 
-	const cards: FlashcardItem[] =
+	const generatedCards: FlashcardItem[] =
 		isLoading === false && questions?.length
 			? questions.reduce<FlashcardItem[]>((acc, q) => {
 					if (!q?.id) return acc;
@@ -164,28 +271,27 @@ export function FlashcardsClient() {
 				}, [])
 			: [];
 
-	const sm2Available = source === "ai" && sm2Cards.length > 0;
+	const sm2Available = session.source === "ai" && cards.sm2Cards.length > 0;
 	const displayCards = sm2Available
-		? sm2Cards
-		: source === "mistakes"
-			? mistakeCards
-			: cards;
+		? cards.sm2Cards
+		: session.source === "mistakes"
+			? cards.mistakeCards
+			: generatedCards;
 	const totalCards = displayCards.length;
 
 	const startSession = useCallback(
 		async (subject: string, src: FlashcardSource = "ai") => {
-			setSelectedSubject(subject);
-			setSource(src);
-			setIsActive(true);
-			setQualityMap(new Map());
-			setMistakeCards([]);
-			setSm2Cards([]);
-			setSessionComplete(false);
+			dispatchSession({
+				type: "START_SESSION",
+				payload: { subject, source: src },
+			});
+			dispatchCards({ type: "RESET" });
 
 			if (src === "mistakes") {
 				const wrongAnswers = await getWrongAnswers(subject.toLowerCase());
-				setMistakeCards(
-					wrongAnswers.map((wa) => ({
+				dispatchCards({
+					type: "SET_MISTAKE_CARDS",
+					payload: wrongAnswers.map((wa) => ({
 						id: wa.questionId,
 						front: wa.questionText,
 						back: wa.correctAnswer || wa.explanation,
@@ -205,7 +311,7 @@ export function FlashcardsClient() {
 							body: { modelAnswer: wa.correctAnswer || wa.explanation },
 						} as Question,
 					})),
-				);
+				});
 			} else {
 				const sm2Due = await flashcardEngine.getDueCards(subject.toLowerCase());
 				const sm2New = await flashcardEngine.getNewCards(
@@ -215,7 +321,6 @@ export function FlashcardsClient() {
 				const allSm2 = [...sm2Due, ...sm2New];
 				hasSm2Ref.current = allSm2.length > 0;
 				if (allSm2.length > 0) {
-					// Sort by topic weakness (weakest topics first)
 					try {
 						const competencies = await competencyService.getCompetencies(
 							subject.toLowerCase(),
@@ -225,7 +330,6 @@ export function FlashcardsClient() {
 							const cur = topicScores.get(c.topicId) ?? 0;
 							topicScores.set(c.topicId, cur + c.score);
 						}
-						// Average score per topic, lower = weaker
 						for (const [topicId, total] of topicScores) {
 							const count = competencies.filter(
 								(c) => c.topicId === topicId,
@@ -235,15 +339,15 @@ export function FlashcardsClient() {
 						allSm2.sort((a, b) => {
 							const aScore = topicScores.get(a.topic ?? "") ?? 100;
 							const bScore = topicScores.get(b.topic ?? "") ?? 100;
-							// Lower score first (weakest), fall back to due-date order
 							if (aScore !== bScore) return aScore - bScore;
 							return (a.nextReview ?? 0) - (b.nextReview ?? 0);
 						});
 					} catch {
 						// Fall back to default ordering
 					}
-					setSm2Cards(
-						allSm2.map((c) => ({
+					dispatchCards({
+						type: "SET_SM2_CARDS",
+						payload: allSm2.map((c) => ({
 							id: c.id,
 							front: c.front,
 							back: c.back,
@@ -262,7 +366,7 @@ export function FlashcardsClient() {
 								body: { modelAnswer: c.back },
 							} as Question,
 						})),
-					);
+					});
 				}
 			}
 		},
@@ -270,12 +374,11 @@ export function FlashcardsClient() {
 	);
 
 	const stopSession = useCallback(() => {
-		setIsActive(false);
-		setSelectedSubject("");
+		dispatchSession({ type: "STOP_SESSION" });
 	}, []);
 
 	const handleReview = useCallback((cardId: string, quality: number) => {
-		setQualityMap((prev) => new Map(prev).set(cardId, quality));
+		dispatchCards({ type: "SET_QUALITY", payload: { cardId, quality } });
 		if (quality >= 3) {
 			setShowConfetti(true);
 			setShowXPGain(true);
@@ -285,20 +388,31 @@ export function FlashcardsClient() {
 	}, []);
 
 	const handleSessionComplete = useCallback(() => {
-		setSessionComplete(true);
+		dispatchSession({ type: "COMPLETE_SESSION" });
 		processSessionResults(
 			displayCards,
-			qualityMap,
-			selectedSubject.toLowerCase(),
-		).catch((e) => console.warn("Session processing:", e));
-	}, [displayCards, qualityMap, selectedSubject, processSessionResults]);
+			cards.qualityMap,
+			session.selectedSubject.toLowerCase(),
+		).catch((e) => {
+			console.warn("Session processing:", e);
+			toast({
+				type: "error",
+				message: "Session results may not be fully saved.",
+			});
+		});
+	}, [
+		displayCards,
+		cards.qualityMap,
+		session.selectedSubject,
+		processSessionResults,
+	]);
 
 	const handleRestart = useCallback(() => {
-		setQualityMap(new Map());
-		setSessionComplete(false);
+		dispatchCards({ type: "RESET" });
+		dispatchSession({ type: "RESTART" });
 	}, []);
 
-	if (!isActive) {
+	if (!session.isActive) {
 		return (
 			<div className="flex flex-col gap-4">
 				<LocalDataNotice
@@ -313,27 +427,27 @@ export function FlashcardsClient() {
 		);
 	}
 
-	if (isLoading && source === "ai") {
+	if (isLoading && session.source === "ai") {
 		return <FlashcardsLoading />;
 	}
 
 	if (displayCards.length === 0) {
 		return (
 			<FlashcardsEmpty
-				subject={selectedSubject}
+				subject={session.selectedSubject}
 				onGoBack={stopSession}
-				mode={source}
+				mode={session.source}
 			/>
 		);
 	}
 
-	if (sessionComplete) {
+	if (session.sessionComplete) {
 		return (
 			<FlashcardsResults
 				totalCards={totalCards}
 				knownCount={knownCount}
 				reviewCount={reviewCount}
-				subject={selectedSubject || "Flashcards"}
+				subject={session.selectedSubject || "Flashcards"}
 				onGoHouse={stopSession}
 				onRestart={handleRestart}
 			/>

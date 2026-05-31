@@ -1,14 +1,34 @@
+"use client";
+
+import dynamic from "next/dynamic";
 import { useMemo } from "react";
-import {
-	Legend,
-	PolarAngleAxis,
-	PolarGrid,
-	PolarRadiusAxis,
-	Radar,
-	RadarChart as RechartsRadarChart,
-	ResponsiveContainer,
-} from "recharts";
 import { cn } from "@/lib/shared";
+
+const RechartsRadarChart = dynamic(
+	() => import("recharts").then((m) => m.RadarChart),
+	{ ssr: false },
+);
+const PolarGrid = dynamic(() => import("recharts").then((m) => m.PolarGrid), {
+	ssr: false,
+});
+const PolarAngleAxis = dynamic(
+	() => import("recharts").then((m) => m.PolarAngleAxis),
+	{ ssr: false },
+);
+const PolarRadiusAxis = dynamic(
+	() => import("recharts").then((m) => m.PolarRadiusAxis),
+	{ ssr: false },
+);
+const Radar = dynamic(() => import("recharts").then((m) => m.Radar), {
+	ssr: false,
+});
+const Legend = dynamic(() => import("recharts").then((m) => m.Legend), {
+	ssr: false,
+});
+const ResponsiveContainer = dynamic(
+	() => import("recharts").then((m) => m.ResponsiveContainer),
+	{ ssr: false },
+);
 
 interface RadarChartProps {
 	data: {

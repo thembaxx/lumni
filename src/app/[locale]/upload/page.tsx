@@ -64,7 +64,7 @@ export default function UploadPage() {
 	};
 
 	return (
-		<div className="min-h-[100dvh] bg-[--system-grouped-background]">
+		<div className="min-h-dvh bg-[--system-grouped-background]">
 			<PageContainer>
 				<div className="pt-safe pb-[--space-2]">
 					<h1 className="ios-large-title text-[--system-text-primary]">

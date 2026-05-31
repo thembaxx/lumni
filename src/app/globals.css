@@ -137,6 +137,7 @@
 	--z-sticky: 20;
 	--z-header: 30;
 	--z-drawer: 40;
+	--z-cookie-banner: 45;
 	--z-modal: 50;
 	--z-toast: 60;
 	--z-skip-link: 100;
@@ -259,6 +260,7 @@
 	--z-sticky: var(--z-sticky);
 	--z-header: var(--z-header);
 	--z-drawer: var(--z-drawer);
+	--z-cookie-banner: var(--z-cookie-banner);
 	--z-modal: var(--z-modal);
 	--z-toast: var(--z-toast);
 	--z-skip-link: var(--z-skip-link);
@@ -628,6 +630,7 @@
 .z-sticky { z-index: var(--z-sticky); }
 .z-header { z-index: var(--z-header); }
 .z-drawer { z-index: var(--z-drawer); }
+.z-cookie-banner { z-index: var(--z-cookie-banner); }
 .z-modal { z-index: var(--z-modal); }
 .z-toast { z-index: var(--z-toast); }
 .z-skip-link { z-index: var(--z-skip-link); }

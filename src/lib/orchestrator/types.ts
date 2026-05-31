@@ -21,7 +21,8 @@ export type JobType =
 	| "appwrite-study-plan-sync"
 	| "appwrite-question-flag"
 	| "question-regen"
-	| "appwrite-exam-dates-sync";
+	| "appwrite-exam-dates-sync"
+	| "appwrite-consent-sync";
 
 export type JobPayloadByType = {
 	"appwrite-sync": { questions: Question[]; subject: string; topic?: string };
@@ -146,6 +147,20 @@ export type JobPayloadByType = {
 		year: number;
 		slots: string;
 		source: string;
+	};
+	"appwrite-consent-sync": {
+		userId: string;
+		record: {
+			analytics: boolean;
+			marketing: boolean;
+			dataSharing: boolean;
+			tosVersion: string | null;
+			tosAcceptedAt: string | null;
+			privacyVersion: string | null;
+			privacyAcknowledgedAt: string | null;
+			updatedAt: string;
+			createdAt: string;
+		};
 	};
 };
 

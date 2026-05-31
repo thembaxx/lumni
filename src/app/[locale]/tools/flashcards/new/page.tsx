@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function NewFlashcardPage() {
 	return (
-		<PageContainer className="flex min-h-[100dvh] items-center justify-center py-8">
+		<PageContainer className="flex min-h-dvh items-center justify-center py-8">
 			<FlashcardCreator />
 		</PageContainer>
 	);

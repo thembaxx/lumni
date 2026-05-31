@@ -19,6 +19,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { toast } from "@/hooks/use-toast";
 import { useRouter } from "@/i18n/navigation";
 
 interface ExamListItem {
@@ -89,7 +90,10 @@ export function AdminExamList() {
 				if (!res.ok) throw new Error("Extract failed");
 				queryClient.invalidateQueries({ queryKey: ["admin-exams"] });
 			} catch {
-				alert("Extraction failed. Check console for details.");
+				toast({
+					type: "error",
+					message: "Extraction failed. Check console for details.",
+				});
 			} finally {
 				setExtracting(null);
 			}
@@ -114,12 +118,13 @@ export function AdminExamList() {
 			const successCount = result.results.filter(
 				(r: { status: string }) => r.status === "success",
 			).length;
-			alert(
-				`Extraction complete: ${successCount}/${result.total} papers extracted.`,
-			);
+			toast({
+				type: "success",
+				message: `Extraction complete: ${successCount}/${result.total} papers extracted.`,
+			});
 			queryClient.invalidateQueries({ queryKey: ["admin-exams"] });
 		} catch {
-			alert("Batch extraction failed.");
+			toast({ type: "error", message: "Batch extraction failed." });
 		} finally {
 			setExtracting(null);
 		}

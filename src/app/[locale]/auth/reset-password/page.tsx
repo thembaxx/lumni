@@ -5,42 +5,89 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { Suspense, useState } from "react";
+import { Suspense, useReducer } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FormSkeleton } from "@/components/ui/skeletons";
 import { Link, useRouter } from "@/i18n/navigation";
 import { iOSEase } from "@/lib/utils/animation";
 
-// TODO(react-doctor): Refactor multiple useState calls into useReducer
+type ResetPasswordState = {
+	password: string;
+	confirmPassword: string;
+	showPassword: boolean;
+	error: string;
+	loading: boolean;
+	success: boolean;
+};
+
+type ResetPasswordAction =
+	| { type: "SET_PASSWORD"; payload: string }
+	| { type: "SET_CONFIRM_PASSWORD"; payload: string }
+	| { type: "TOGGLE_SHOW_PASSWORD" }
+	| { type: "SET_ERROR"; payload: string }
+	| { type: "CLEAR_ERROR" }
+	| { type: "SET_LOADING"; payload: boolean }
+	| { type: "SET_SUCCESS" };
+
+const initialState: ResetPasswordState = {
+	password: "",
+	confirmPassword: "",
+	showPassword: false,
+	error: "",
+	loading: false,
+	success: false,
+};
+
+function resetPasswordReducer(
+	state: ResetPasswordState,
+	action: ResetPasswordAction,
+): ResetPasswordState {
+	switch (action.type) {
+		case "SET_PASSWORD":
+			return { ...state, password: action.payload };
+		case "SET_CONFIRM_PASSWORD":
+			return { ...state, confirmPassword: action.payload };
+		case "TOGGLE_SHOW_PASSWORD":
+			return { ...state, showPassword: !state.showPassword };
+		case "SET_ERROR":
+			return { ...state, error: action.payload };
+		case "CLEAR_ERROR":
+			return { ...state, error: "" };
+		case "SET_LOADING":
+			return { ...state, loading: action.payload };
+		case "SET_SUCCESS":
+			return { ...state, success: true, loading: false };
+		default:
+			return state;
+	}
+}
+
 function ResetPasswordForm() {
 	const { push } = useRouter();
 	const { get } = useSearchParams();
 	const userId = get("userId");
 	const secret = get("secret");
 
-	const [password, setPassword] = useState("");
-	const [confirmPassword, setConfirmPassword] = useState("");
-	const [showPassword, setShowPassword] = useState(false);
-	const [error, setError] = useState("");
-	const [loading, setLoading] = useState(false);
-	const [success, setSuccess] = useState(false);
+	const [state, dispatch] = useReducer(resetPasswordReducer, initialState);
+	const { password, confirmPassword, showPassword, error, loading, success } =
+		state;
 	const t = useTranslations();
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		setError("");
+		dispatch({ type: "CLEAR_ERROR" });
 
 		if (password !== confirmPassword) {
-			setError(t("auth.passwordsDoNotMatch"));
+			dispatch({ type: "SET_ERROR", payload: t("auth.passwordsDoNotMatch") });
 			return;
 		}
 		if (password.length < 8) {
-			setError(t("auth.weakPassword"));
+			dispatch({ type: "SET_ERROR", payload: t("auth.weakPassword") });
 			return;
 		}
 
-		setLoading(true);
+		dispatch({ type: "SET_LOADING", payload: true });
 		try {
 			const res = await fetch("/api/auth/reset-password", {
 				method: "POST",
@@ -49,15 +96,18 @@ function ResetPasswordForm() {
 			});
 			const data = await res.json();
 			if (!res.ok) {
-				setError(data.error || t("auth.resetFailed"));
+				dispatch({
+					type: "SET_ERROR",
+					payload: data.error || t("auth.resetFailed"),
+				});
 				return;
 			}
-			setSuccess(true);
+			dispatch({ type: "SET_SUCCESS" });
 			setTimeout(() => push("/auth/sign-in"), 2000);
 		} catch {
-			setError(t("auth.networkError"));
+			dispatch({ type: "SET_ERROR", payload: t("auth.networkError") });
 		} finally {
-			setLoading(false);
+			dispatch({ type: "SET_LOADING", payload: false });
 		}
 	};
 
@@ -103,7 +153,9 @@ function ResetPasswordForm() {
 							id="password"
 							type={showPassword ? "text" : "password"}
 							value={password}
-							onChange={(e) => setPassword(e.target.value)}
+							onChange={(e) =>
+								dispatch({ type: "SET_PASSWORD", payload: e.target.value })
+							}
 							required
 							minLength={8}
 							disabled={success}
@@ -114,7 +166,7 @@ function ResetPasswordForm() {
 							aria-label={
 								showPassword ? t("auth.hidePassword") : t("auth.showPassword")
 							}
-							onClick={() => setShowPassword(!showPassword)}
+							onClick={() => dispatch({ type: "TOGGLE_SHOW_PASSWORD" })}
 							className="absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground"
 						>
 							<HugeiconsIcon
@@ -133,7 +185,12 @@ function ResetPasswordForm() {
 						id="confirm"
 						type="password"
 						value={confirmPassword}
-						onChange={(e) => setConfirmPassword(e.target.value)}
+						onChange={(e) =>
+							dispatch({
+								type: "SET_CONFIRM_PASSWORD",
+								payload: e.target.value,
+							})
+						}
 						required
 						minLength={8}
 						disabled={success}
