@@ -10,7 +10,6 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
-import { usePathname as useNextPathname } from "next/navigation";
 import { useCallback } from "react";
 import { Badge } from "@/components/ui/badge";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
@@ -124,10 +123,7 @@ function NavItemComponent({
 }
 
 export function BottomNav() {
-	const nextPathname = useNextPathname();
 	const { push } = useNavigationDirection();
-
-	const isHomepage = nextPathname === "/";
 
 	const handleItemClick = useCallback(
 		(item: NavItem) => {
@@ -135,8 +131,6 @@ export function BottomNav() {
 		},
 		[push],
 	);
-
-	if (isHomepage) return null;
 
 	return (
 		<nav
