@@ -13,6 +13,7 @@ interface ResultsScreenProps {
 	subject: string;
 	totalMarks: number;
 	duration: string;
+	mode?: "timed" | "practice" | "mock";
 	onDashboard: () => void;
 	onReview: () => void;
 }
@@ -23,6 +24,7 @@ export function ResultsScreen({
 	subject,
 	totalMarks,
 	duration,
+	mode,
 	onDashboard,
 	onReview,
 }: ResultsScreenProps) {
@@ -49,6 +51,7 @@ export function ResultsScreen({
 				totalMarks,
 				duration,
 			}}
+			isMock={mode === "mock"}
 			onDashboard={onDashboard}
 			onReview={onReview}
 		/>

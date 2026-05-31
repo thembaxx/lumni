@@ -3,8 +3,16 @@
 import { Award01Icon, CrownIcon, FireIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
+import { useEffect, useRef, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getWeeklyLeaderboard } from "@/lib/services/leaderboard-service";
+import { toast } from "@/components/ui/toast";
+import { client } from "@/lib/appwrite";
+import { useAuth } from "@/lib/auth";
+import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
+import {
+	getWeeklyLeaderboard,
+	type LeaderboardEntry,
+} from "@/lib/services/leaderboard-service";
 import { cn } from "@/lib/shared";
 
 const rankColors = [
@@ -14,11 +22,73 @@ const rankColors = [
 	"text-muted-foreground",
 ];
 
+function useRealtimeIndicator() {
+	const [liveSince, setLiveSince] = useState<Date | null>(null);
+
+	useEffect(() => {
+		if (typeof window === "undefined") return;
+		let unsub: (() => void) | undefined;
+		const channel = `databases.${APPWRITE_DATABASE_ID}.collections.${COLLECTIONS.USER_GAMIFICATION}.documents`;
+
+		try {
+			unsub = client.subscribe(channel, () => {
+				setLiveSince(new Date());
+			});
+		} catch {
+			// Realtime unavailable — polling fallback
+		}
+		return () => unsub?.();
+	}, []);
+
+	return liveSince;
+}
+
 export function LeaderboardCard() {
-	const { data: entries = [] } = useQuery({
+	const { user } = useAuth();
+	const currentUserId = user?.$id;
+	const liveSince = useRealtimeIndicator();
+	const prevEntriesRef = useRef<LeaderboardEntry[]>([]);
+	const [rankChanged, setRankChanged] = useState(false);
+
+	const { data: rawEntries = [] } = useQuery({
 		queryKey: ["leaderboard"],
 		queryFn: () => getWeeklyLeaderboard(),
+		refetchInterval: 15_000,
 	});
+
+	const entries = rawEntries.map((entry) => ({
+		...entry,
+		isCurrentUser: entry.isCurrentUser || entry.userId === currentUserId,
+	}));
+
+	useEffect(() => {
+		if (rankChanged) {
+			const timer = setTimeout(() => setRankChanged(false), 3000);
+			return () => clearTimeout(timer);
+		}
+	}, [rankChanged]);
+
+	useEffect(() => {
+		const prev = prevEntriesRef.current;
+		if (prev.length > 0 && entries.length > 0) {
+			const currentUserEntry = entries.find((e) => e.isCurrentUser);
+			const prevUserEntry = prev.find((e) => e.isCurrentUser);
+			if (
+				currentUserEntry &&
+				prevUserEntry &&
+				currentUserEntry.rank < prevUserEntry.rank
+			) {
+				setRankChanged(true);
+				toast({
+					type: "success",
+					message: `Leaderboard: #${prevUserEntry.rank} → #${currentUserEntry.rank}`,
+					description: "You climbed the ranks! Keep studying!",
+					duration: 4000,
+				});
+			}
+		}
+		prevEntriesRef.current = entries;
+	}, [entries]);
 
 	return (
 		<Card className="overflow-hidden">
@@ -30,6 +100,15 @@ export function LeaderboardCard() {
 						className="text-amber-400 dark:text-amber-300"
 					/>
 					Weekly Leaderboard
+					{liveSince && (
+						<span className="ml-auto flex items-center gap-1.5 font-medium text-[10px] text-emerald-500 uppercase tracking-wider">
+							<span className="relative flex size-2">
+								<span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+								<span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
+							</span>
+							LIVE
+						</span>
+					)}
 				</CardTitle>
 			</CardHeader>
 			<CardContent>

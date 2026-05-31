@@ -1,6 +1,10 @@
 "use client";
 
-import { Clock01Icon, PlayFreeIcons } from "@hugeicons/core-free-icons";
+import {
+	Alert01Icon,
+	Clock01Icon,
+	PlayFreeIcons,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { useTranslations } from "next-intl";
@@ -16,6 +20,7 @@ interface ModeSelectScreenProps {
 	duration: string;
 	onStartPractice: () => void;
 	onStartTimed: () => void;
+	onStartMock: () => void;
 }
 
 export function ModeSelectScreen({
@@ -27,6 +32,7 @@ export function ModeSelectScreen({
 	duration,
 	onStartPractice,
 	onStartTimed,
+	onStartMock,
 }: ModeSelectScreenProps) {
 	const t = useTranslations();
 
@@ -54,13 +60,17 @@ export function ModeSelectScreen({
 					</p>
 				</CardHeader>
 				<CardContent className="flex flex-col gap-3">
-					<Button size="lg" onClick={onStartPractice}>
-						<HugeiconsIcon icon={PlayFreeIcons} data-icon="inline-start" />
-						{t("exam.startPractice")}
+					<Button size="lg" onClick={onStartMock}>
+						<HugeiconsIcon icon={Alert01Icon} data-icon="inline-start" />
+						{t("exam.startMockExam")}
 					</Button>
 					<Button variant="outline" size="lg" onClick={onStartTimed}>
 						<HugeiconsIcon icon={Clock01Icon} data-icon="inline-start" />
 						{t("exam.startTimed")}
+					</Button>
+					<Button variant="ghost" size="lg" onClick={onStartPractice}>
+						<HugeiconsIcon icon={PlayFreeIcons} data-icon="inline-start" />
+						{t("exam.startPractice")}
 					</Button>
 				</CardContent>
 			</Card>

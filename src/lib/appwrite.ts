@@ -31,6 +31,7 @@ const appwriteClient = new Client()
 	.setEndpoint(APPWRITE_ENDPOINT)
 	.setProject(APPWRITE_PROJECT);
 
+export const client = appwriteClient;
 export const storage = new Storage(appwriteClient);
 export const functions = new Functions(appwriteClient);
 export const account = new Account(appwriteClient);

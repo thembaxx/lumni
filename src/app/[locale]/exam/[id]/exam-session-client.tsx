@@ -38,7 +38,7 @@ import { ResultsScreen } from "./exam-session/results-screen";
 
 interface ExamSessionClientProps {
 	id: string;
-	mode: "timed" | "practice";
+	mode: "timed" | "practice" | "mock";
 }
 
 type SessionPhase =
@@ -46,7 +46,8 @@ type SessionPhase =
 	| "mode-select"
 	| "active"
 	| "submitting"
-	| "results";
+	| "results"
+	| "mock-confirm";
 
 export function ExamSessionWithResume({ id, mode }: ExamSessionClientProps) {
 	const t = useTranslations();
@@ -134,11 +135,13 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 	const { data: paperData, isLoading: paperLoading } = useExamPaper(id);
 	const [phase, setPhase] = useState<SessionPhase>("loading");
 	const [sessionModeOverride, setSessionModeOverride] = useState<
-		"timed" | "practice" | null
+		"timed" | "practice" | "mock" | null
 	>(null);
 	const sessionMode = sessionModeOverride ?? mode;
+	const isMock = sessionMode === "mock";
 	const [showPalette, setShowPalette] = useState(false);
 	const [paused, setPaused] = useState(false);
+	const [tabFocusWarn, setTabFocusWarn] = useState(false);
 	const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
 	const {
@@ -173,6 +176,16 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 
 	useExamSessionAutoSave(id);
 
+	useEffect(() => {
+		if (!isMock || phase !== "active") return;
+		const handleVisibility = () => {
+			if (document.hidden) setTabFocusWarn(true);
+		};
+		document.addEventListener("visibilitychange", handleVisibility);
+		return () =>
+			document.removeEventListener("visibilitychange", handleVisibility);
+	}, [isMock, phase]);
+
 	const flatParts = useMemo(() => {
 		if (!paper) return [];
 		return getFlatParts();
@@ -189,11 +202,15 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 	}
 
 	useEffect(() => {
-		if (timeRemaining <= 0 && phase === "active" && sessionMode === "timed") {
+		if (
+			timeRemaining <= 0 &&
+			phase === "active" &&
+			(sessionMode === "timed" || isMock)
+		) {
 			completeSession();
 			setPhase("submitting");
 		}
-		if (phase === "active" && sessionMode === "timed" && !paused) {
+		if (phase === "active" && (sessionMode === "timed" || isMock) && !paused) {
 			timerRef.current = setInterval(() => {
 				tick();
 			}, 1000);
@@ -201,7 +218,15 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 		return () => {
 			if (timerRef.current) clearInterval(timerRef.current);
 		};
-	}, [phase, sessionMode, paused, tick, timeRemaining, completeSession]);
+	}, [
+		phase,
+		sessionMode,
+		isMock,
+		paused,
+		tick,
+		timeRemaining,
+		completeSession,
+	]);
 
 	useEffect(() => {
 		setImmersive(phase === "active");
@@ -238,13 +263,14 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 	}, [currentPartIndex, flatParts, setCurrentPart]);
 
 	const goToPrevious = useCallback(() => {
+		if (isMock) return;
 		if (currentPartIndex > 0) {
 			const prevPart = flatParts[currentPartIndex - 1];
 			setCurrentPart(
 				`${prevPart.sectionId}-${prevPart.questionId}-${prevPart.part.id}`,
 			);
 		}
-	}, [currentPartIndex, flatParts, setCurrentPart]);
+	}, [currentPartIndex, flatParts, setCurrentPart, isMock]);
 
 	const handleAnswer = useCallback(
 		(value: string | string[]) => {
@@ -398,7 +424,58 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 					setSessionModeOverride("timed");
 					startSession();
 				}}
+				onStartMock={() => {
+					setSessionModeOverride("mock");
+					setPhase("mock-confirm");
+				}}
 			/>
+		);
+	}
+
+	if (phase === "mock-confirm") {
+		return (
+			<div className="flex min-h-screen items-center justify-center bg-background p-4">
+				<Dialog open modal>
+					<DialogContent className="sm:max-w-md">
+						<DialogHeader>
+							<DialogTitle>{t("exam.mockExamTitle")}</DialogTitle>
+							<DialogDescription>
+								{t("exam.mockExamDescription")}
+							</DialogDescription>
+						</DialogHeader>
+						<ul className="flex flex-col gap-2 text-muted-foreground text-sm">
+							<li className="flex items-start gap-2">
+								<span className="mt-0.5 text-warning">\u26A0</span>
+								<span>{t("exam.mockRuleNoPause")}</span>
+							</li>
+							<li className="flex items-start gap-2">
+								<span className="mt-0.5 text-warning">\u26A0</span>
+								<span>{t("exam.mockRuleNoBack")}</span>
+							</li>
+							<li className="flex items-start gap-2">
+								<span className="mt-0.5 text-warning">\u26A0</span>
+								<span>{t("exam.mockRuleNoHints")}</span>
+							</li>
+							<li className="flex items-start gap-2">
+								<span className="mt-0.5 text-warning">\u26A0</span>
+								<span>{t("exam.mockRuleTabFocus")}</span>
+							</li>
+						</ul>
+						<div className="flex flex-col gap-2 pt-2">
+							<Button size="lg" onClick={startSession}>
+								{t("exam.beginExam")}
+							</Button>
+							<Button
+								variant="outline"
+								size="lg"
+								onClick={() => setPhase("mode-select")}
+							>
+								{t("exam.goBack")}
+							</Button>
+						</div>
+					</DialogContent>
+				</Dialog>
+			</div>
 		);
 	}
 
@@ -410,6 +487,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 				subject={paperData?.exam.metadata.subject ?? ""}
 				totalMarks={paperData?.exam.metadata.totalMarks ?? 0}
 				duration={paperData?.exam.metadata.duration ?? ""}
+				mode={sessionMode}
 				onDashboard={handleDashboard}
 				onReview={() => {
 					resetSession();
@@ -424,6 +502,12 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 
 	return (
 		<div className="flex min-h-screen flex-col bg-background">
+			{tabFocusWarn && (
+				<div className="sticky top-0 z-modal flex items-center justify-center bg-warning p-2 text-center font-medium text-sm text-warning-foreground">
+					{t("exam.mockTabFocusWarn")}
+				</div>
+			)}
+
 			<ExamHeader
 				paperCode={paperData?.exam.metadata.paperCode}
 				sessionMode={sessionMode}
@@ -439,17 +523,19 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 			/>
 
 			<div className="flex flex-1">
-				<QuestionNavigatorSidebar
-					showPalette={showPalette}
-					flatParts={flatParts}
-					currentPartId={currentPartId}
-					answers={answers}
-					flags={flags}
-					onNavigate={(partId) => {
-						setCurrentPart(partId);
-						setShowPalette(false);
-					}}
-				/>
+				{!isMock && (
+					<QuestionNavigatorSidebar
+						showPalette={showPalette}
+						flatParts={flatParts}
+						currentPartId={currentPartId}
+						answers={answers}
+						flags={flags}
+						onNavigate={(partId) => {
+							setCurrentPart(partId);
+							setShowPalette(false);
+						}}
+					/>
+				)}
 
 				<QuestionDisplay
 					currentPart={currentPart}
@@ -459,6 +545,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 					answers={answers}
 					flags={flags}
 					paused={paused}
+					isMock={isMock}
 					onAnswer={handleAnswer}
 					onToggleFlag={toggleFlag}
 					onPrevious={goToPrevious}

@@ -14,7 +14,7 @@ import { formatTime } from "@/lib/shared/time";
 
 interface ExamHeaderProps {
 	paperCode?: string;
-	sessionMode: "timed" | "practice";
+	sessionMode: "timed" | "practice" | "mock";
 	answeredCount: number;
 	totalPartsCount: number;
 	currentPartIndex: number;
@@ -40,6 +40,7 @@ export function ExamHeader({
 	onSubmit,
 }: ExamHeaderProps) {
 	const t = useTranslations();
+	const isMock = sessionMode === "mock";
 
 	return (
 		<header className="sticky top-0 z-sticky border-border border-b bg-background/80 backdrop-blur-xl">
@@ -55,14 +56,18 @@ export function ExamHeader({
 					<div>
 						<p className="font-semibold text-sm">{paperCode}</p>
 						<p className="text-muted-foreground text-xs">
-							{sessionMode === "timed" ? t("exam.timed") : t("exam.practice")} ·{" "}
-							{answeredCount}/{totalPartsCount}
+							{isMock
+								? t("exam.mockExam")
+								: sessionMode === "timed"
+									? t("exam.timed")
+									: t("exam.practice")}{" "}
+							· {answeredCount}/{totalPartsCount}
 						</p>
 					</div>
 				</div>
 
 				<div className="flex items-center gap-3">
-					{sessionMode === "timed" && (
+					{(sessionMode === "timed" || isMock) && (
 						<div className="flex items-center gap-2">
 							<HugeiconsIcon icon={Clock01Icon} className="size-4" />
 							<span
@@ -90,15 +95,17 @@ export function ExamHeader({
 						</button>
 					)}
 
-					<button
-						type="button"
-						onClick={onTogglePalette}
-						className="relative rounded-xl p-2 transition-colors hover:bg-muted"
-					>
-						<span className="font-mono text-sm tabular-nums">
-							{currentPartIndex + 1}/{totalPartsCount}
-						</span>
-					</button>
+					{!isMock && (
+						<button
+							type="button"
+							onClick={onTogglePalette}
+							className="relative rounded-xl p-2 transition-colors hover:bg-muted"
+						>
+							<span className="font-mono text-sm tabular-nums">
+								{currentPartIndex + 1}/{totalPartsCount}
+							</span>
+						</button>
+					)}
 
 					<Button size="sm" onClick={onSubmit}>
 						{t("exam.submitExam")}

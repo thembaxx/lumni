@@ -5,6 +5,7 @@ import { toast } from "@/components/ui/toast";
 import { offlineDB } from "@/lib/db/schema";
 import type { StoredGamification } from "@/lib/gamification-engine";
 import { gamificationEngine } from "@/lib/gamification-engine";
+import { saveWeeklySnapshot } from "@/lib/services/leaderboard-service";
 import { apiFetch } from "@/lib/shared/api-fetch";
 import type {
 	Achievement,
@@ -108,6 +109,17 @@ export function useGamification() {
 				}
 				gamificationEngine.save(newData);
 				scheduleSync(newData);
+				const label =
+					typeof window !== "undefined"
+						? window.localStorage.getItem("lumni_display_name") || undefined
+						: undefined;
+				setTimeout(() => {
+					saveWeeklySnapshot(
+						label || "You",
+						newData.totalXp,
+						newData.currentStreak,
+					);
+				}, 0);
 				return newData;
 			});
 		},

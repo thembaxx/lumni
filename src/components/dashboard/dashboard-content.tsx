@@ -25,6 +25,7 @@ import { EmptyStateWithIllustration } from "@/components/shared/empty-state";
 import { LocalDataNotice } from "@/components/shared/local-data-notice";
 import { PullToRefresh } from "@/components/shared/pull-to-refresh";
 import { StaggerList } from "@/components/shared/stagger-list";
+import { LeaderboardCard } from "@/components/social/leaderboard-card";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGamification } from "@/hooks/use-gamification";
@@ -270,6 +271,11 @@ export function DashboardContent({
 				{showAnalytics && !isAnonymous && (
 					<SectionReveal delay={0.16}>
 						<StatsRow />
+					</SectionReveal>
+				)}
+				{showAnalytics && !isAnonymous && (
+					<SectionReveal delay={0.17}>
+						<LeaderboardCard />
 					</SectionReveal>
 				)}
 				{showAnalytics && !isAnonymous && (

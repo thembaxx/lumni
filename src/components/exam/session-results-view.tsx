@@ -22,6 +22,7 @@ interface SessionResultsViewProps {
 	flatParts: { sectionId: string; questionId: string; part: QuestionPart }[];
 	answers: Record<string, { value: string | string[] }>;
 	metadata: { subject: string; totalMarks: number; duration: string };
+	isMock?: boolean;
 	onDashboard: () => void;
 	onReview?: () => void;
 }
@@ -31,6 +32,7 @@ export function SessionResultsView({
 	flatParts,
 	answers,
 	metadata: _metadata,
+	isMock,
 	onDashboard,
 	onReview,
 }: SessionResultsViewProps) {
@@ -58,13 +60,20 @@ export function SessionResultsView({
 			<Confetti trigger={accuracy >= 70} count={60} duration={2500} />
 			<Card>
 				<CardHeader>
-					<CardTitle className="font-extrabold text-xl">
-						{accuracy >= 80
-							? t("exam.greatJob")
-							: accuracy >= 50
-								? t("exam.goodEffort")
-								: t("exam.keepPracticing")}
-					</CardTitle>
+					<div className="flex items-center justify-between">
+						<CardTitle className="font-extrabold text-xl">
+							{accuracy >= 80
+								? t("exam.greatJob")
+								: accuracy >= 50
+									? t("exam.goodEffort")
+									: t("exam.keepPracticing")}
+						</CardTitle>
+						{isMock && (
+							<span className="rounded-full bg-warning/15 px-3 py-1 font-semibold text-warning text-xs">
+								{t("exam.mockExam")}
+							</span>
+						)}
+					</div>
 				</CardHeader>
 				<CardContent className="flex flex-col gap-4">
 					<div className="grid grid-cols-4 gap-3">
@@ -212,7 +221,9 @@ export function SessionResultsView({
 						score: correctCount,
 						total: totalCount,
 						percentage: accuracy,
-						title: t("exam.examHeading", { subject: _metadata.subject }),
+						title: isMock
+							? `${t("exam.mockExam")} - ${t("exam.examHeading", { subject: _metadata.subject })}`
+							: t("exam.examHeading", { subject: _metadata.subject }),
 						subtitle: `${getAPSForSubject(accuracy)}/7 APS \u00B7 ${getGrade(accuracy)}`,
 						type: "exam",
 					}}

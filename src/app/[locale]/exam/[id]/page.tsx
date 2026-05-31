@@ -19,7 +19,9 @@ export default async function ExamPage({
 		<ErrorBoundary>
 			<ExamSessionWithResume
 				id={id}
-				mode={mode === "timed" ? "timed" : "practice"}
+				mode={
+					mode === "timed" ? "timed" : mode === "mock" ? "mock" : "practice"
+				}
 			/>
 		</ErrorBoundary>
 	);
