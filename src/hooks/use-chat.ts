@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { buildChatContext } from "@/lib/ai/chat-context";
 import { CHAT_SYSTEM_PROMPT, generateWithSystem } from "@/lib/ai/client";
 import { offlineDB } from "@/lib/db/schema";
 import { loadFromStorage, saveToStorage } from "@/lib/utils/storage";
@@ -65,8 +66,19 @@ export function useChat() {
 	});
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
+	const [chatContext, setChatContext] = useState<string>("");
 	const messagesRef = useRef(messages);
+	const contextRef = useRef(chatContext);
 	messagesRef.current = messages;
+	contextRef.current = chatContext;
+
+	useEffect(() => {
+		buildChatContext()
+			.then((ctx) => {
+				if (ctx) setChatContext(ctx);
+			})
+			.catch(() => {});
+	}, []);
 
 	useEffect(() => {
 		const serialized = serializeMessages(messages);
@@ -113,7 +125,11 @@ export function useChat() {
 				? `${conversationHistory}\n\nUser: ${content.trim()}\n\nAssistant:`
 				: `User: ${content.trim()}\n\nAssistant:`;
 
-			const result = await generateWithSystem(CHAT_SYSTEM_PROMPT, fullPrompt, {
+			const systemPrompt = contextRef.current
+				? `${CHAT_SYSTEM_PROMPT}\n\n---\nStudent Context:\n${contextRef.current}`
+				: CHAT_SYSTEM_PROMPT;
+
+			const result = await generateWithSystem(systemPrompt, fullPrompt, {
 				temperature: 0.7,
 				maxTokens: 1024,
 			});
@@ -161,5 +177,6 @@ export function useChat() {
 		error,
 		sendMessage,
 		clearChat,
+		hasContext: chatContext.length > 0,
 	};
 }

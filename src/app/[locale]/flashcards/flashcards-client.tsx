@@ -11,6 +11,7 @@ import { LocalDataNotice } from "@/components/shared/local-data-notice";
 import { useGamification } from "@/hooks/use-gamification";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
+import { competencyService } from "@/lib/competency-engine/competency-service";
 import { flashcardEngine } from "@/lib/flashcard-engine";
 import { migrateLegacyFlashcards } from "@/lib/flashcard-repository/migrate";
 import { trackQuestionResult } from "@/lib/orchestrator";
@@ -214,6 +215,33 @@ export function FlashcardsClient() {
 				const allSm2 = [...sm2Due, ...sm2New];
 				hasSm2Ref.current = allSm2.length > 0;
 				if (allSm2.length > 0) {
+					// Sort by topic weakness (weakest topics first)
+					try {
+						const competencies = await competencyService.getCompetencies(
+							subject.toLowerCase(),
+						);
+						const topicScores = new Map<string, number>();
+						for (const c of competencies) {
+							const cur = topicScores.get(c.topicId) ?? 0;
+							topicScores.set(c.topicId, cur + c.score);
+						}
+						// Average score per topic, lower = weaker
+						for (const [topicId, total] of topicScores) {
+							const count = competencies.filter(
+								(c) => c.topicId === topicId,
+							).length;
+							topicScores.set(topicId, total / count);
+						}
+						allSm2.sort((a, b) => {
+							const aScore = topicScores.get(a.topic ?? "") ?? 100;
+							const bScore = topicScores.get(b.topic ?? "") ?? 100;
+							// Lower score first (weakest), fall back to due-date order
+							if (aScore !== bScore) return aScore - bScore;
+							return (a.nextReview ?? 0) - (b.nextReview ?? 0);
+						});
+					} catch {
+						// Fall back to default ordering
+					}
 					setSm2Cards(
 						allSm2.map((c) => ({
 							id: c.id,

@@ -1,6 +1,10 @@
 "use client";
 
-import { Cancel01Icon, Chat01Icon } from "@hugeicons/core-free-icons";
+import {
+	Cancel01Icon,
+	Chat01Icon,
+	StarsIcon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence } from "framer-motion";
 import { useEffect, useRef } from "react";
@@ -33,9 +37,17 @@ export default function ChatPage() {
 							className="size-6 text-system-accent"
 						/>
 					</div>
-					<span className="font-extrabold text-base tracking-tight">
-						Study Assistant
-					</span>
+					<div className="flex flex-col">
+						<span className="font-extrabold text-base tracking-tight">
+							Study Assistant
+						</span>
+						{chat.messages.length === 0 && chat.hasContext && (
+							<span className="flex items-center gap-1 text-muted-foreground text-xs">
+								<HugeiconsIcon icon={StarsIcon} className="size-3" />
+								Personalised to your progress
+							</span>
+						)}
+					</div>
 				</div>
 				<Link href="/dashboard">
 					<Button variant="ghost" size="icon" className="rounded-full">
