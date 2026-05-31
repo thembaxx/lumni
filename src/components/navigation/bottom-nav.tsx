@@ -129,9 +129,7 @@ export function BottomNav() {
 	const { push } = useNavigationDirection();
 	const { isOnboarding } = useOnboarding();
 
-	const isHomepage =
-		nextPathname === "/"
-
+	const isHomepage = nextPathname === "/";
 
 	const handleItemClick = useCallback(
 		(item: NavItem) => {
@@ -151,11 +149,13 @@ export function BottomNav() {
 			}}
 		>
 			<div className="grid h-12.25 w-full grow grid-cols-5 items-stretch border-system-separator/30 border-t bg-system-background/80 backdrop-blur-xl">
-				{navItems.map((item, index) => (
+				{navItems.map((item) => (
 					<NavItemComponent
 						key={item.id}
 						item={item}
-						onClick={() => handleItemClick(item)} isActive={false}					/>
+						onClick={() => handleItemClick(item)}
+						isActive={false}
+					/>
 				))}
 			</div>
 		</nav>
