@@ -11,12 +11,10 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 import { usePathname as useNextPathname } from "next/navigation";
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import { Badge } from "@/components/ui/badge";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { useOnboarding } from "@/hooks/use-onboarding";
-import { locales } from "@/i18n/locales";
-import { usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/shared";
 
 interface NavItem {
@@ -80,8 +78,7 @@ function NavItemComponent({
 			type="button"
 			onClick={onClick}
 			aria-label={item.label}
-			aria-current={isActive ? "page" : undefined}
-			className="relative m-0 flex h-full min-w-0 flex-1 cursor-pointer flex-col items-center justify-center gap-0.5 border-none bg-transparent p-0 text-inherit outline-none"
+			className="relative m-0 flex h-full min-w-0 flex-1 cursor-pointer flex-col items-center justify-center gap-0.5 border-none p-0 text-inherit outline-none"
 			whileTap={{ scale: 0.96 }}
 			transition={{ type: "spring", duration: 0.25, bounce: 0 }}
 		>
@@ -128,24 +125,13 @@ function NavItemComponent({
 }
 
 export function BottomNav() {
-	const pathname = usePathname();
 	const nextPathname = useNextPathname();
 	const { push } = useNavigationDirection();
 	const { isOnboarding } = useOnboarding();
 
 	const isHomepage =
-		nextPathname === "/" ||
-		(locales as readonly string[]).some((l) => nextPathname === `/${l}`);
+		nextPathname === "/"
 
-	const activeIndex = useMemo(() => {
-		const index = navItems.findIndex((item) => {
-			if (item.href === "/dashboard") {
-				return pathname === "/dashboard" || pathname === "/";
-			}
-			return pathname.startsWith(item.href);
-		});
-		return index >= 0 ? index : 0;
-	}, [pathname]);
 
 	const handleItemClick = useCallback(
 		(item: NavItem) => {
@@ -169,9 +155,7 @@ export function BottomNav() {
 					<NavItemComponent
 						key={item.id}
 						item={item}
-						isActive={index === activeIndex}
-						onClick={() => handleItemClick(item)}
-					/>
+						onClick={() => handleItemClick(item)} isActive={false}					/>
 				))}
 			</div>
 		</nav>
