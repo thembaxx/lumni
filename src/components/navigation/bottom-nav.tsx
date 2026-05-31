@@ -10,9 +10,10 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { Badge } from "@/components/ui/badge";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
+import { usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/shared";
 
 interface NavItem {
@@ -76,7 +77,8 @@ function NavItemComponent({
 			type="button"
 			onClick={onClick}
 			aria-label={item.label}
-			className="relative m-0 flex h-full min-w-0 flex-1 cursor-pointer flex-col items-center justify-center gap-0.5 border-none p-0 text-inherit outline-none"
+			aria-current={isActive ? "page" : undefined}
+			className="relative m-0 flex h-full min-w-0 flex-1 cursor-pointer flex-col items-center justify-center gap-0.5 border-none bg-transparent p-0 text-inherit outline-none"
 			whileTap={{ scale: 0.96 }}
 			transition={{ type: "spring", duration: 0.25, bounce: 0 }}
 		>
@@ -123,7 +125,18 @@ function NavItemComponent({
 }
 
 export function BottomNav() {
+	const pathname = usePathname();
 	const { push } = useNavigationDirection();
+
+	const activeIndex = useMemo(() => {
+		const index = navItems.findIndex((item) => {
+			if (item.href === "/dashboard") {
+				return pathname === "/dashboard" || pathname === "/";
+			}
+			return pathname.startsWith(item.href);
+		});
+		return index >= 0 ? index : 0;
+	}, [pathname]);
 
 	const handleItemClick = useCallback(
 		(item: NavItem) => {
@@ -135,18 +148,18 @@ export function BottomNav() {
 	return (
 		<nav
 			aria-label="Main navigation"
-			className="fixed right-0 bottom-0 left-0 z-header flex w-full md:hidden"
+			className="fixed right-0 bottom-0 left-0 z-header flex w-full"
 			style={{
 				height: "calc(49px + env(safe-area-inset-bottom, 0px))",
 			}}
 		>
-			<div className="grid h-12.25 w-full grow grid-cols-5 items-stretch border-system-separator/30 border-t bg-system-background/80 backdrop-blur-xl">
-				{navItems.map((item) => (
+			<div className="grid h-12.25 w-full grow grid-cols-6 items-stretch border-system-separator/30 border-t bg-system-background/80 backdrop-blur-xl">
+				{navItems.map((item, index) => (
 					<NavItemComponent
 						key={item.id}
 						item={item}
 						onClick={() => handleItemClick(item)}
-						isActive={false}
+						isActive={index === activeIndex}
 					/>
 				))}
 			</div>
