@@ -10,10 +10,12 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
+import { usePathname as useNextPathname } from "next/navigation";
 import { useCallback, useMemo } from "react";
 import { Badge } from "@/components/ui/badge";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { useOnboarding } from "@/hooks/use-onboarding";
+import { locales } from "@/i18n/locales";
 import { usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/shared";
 
@@ -127,8 +129,13 @@ function NavItemComponent({
 
 export function BottomNav() {
 	const pathname = usePathname();
+	const nextPathname = useNextPathname();
 	const { push } = useNavigationDirection();
 	const { isOnboarding } = useOnboarding();
+
+	const isHomepage =
+		nextPathname === "/" ||
+		(locales as readonly string[]).some((l) => nextPathname === `/${l}`);
 
 	const activeIndex = useMemo(() => {
 		const index = navItems.findIndex((item) => {
@@ -147,7 +154,7 @@ export function BottomNav() {
 		[push],
 	);
 
-	if (pathname === "/" || isOnboarding) return null;
+	if (isHomepage || isOnboarding) return null;
 
 	return (
 		<nav
