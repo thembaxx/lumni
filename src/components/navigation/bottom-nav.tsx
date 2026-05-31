@@ -14,7 +14,6 @@ import { usePathname as useNextPathname } from "next/navigation";
 import { useCallback } from "react";
 import { Badge } from "@/components/ui/badge";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
-import { useOnboarding } from "@/hooks/use-onboarding";
 import { cn } from "@/lib/shared";
 
 interface NavItem {
@@ -127,7 +126,6 @@ function NavItemComponent({
 export function BottomNav() {
 	const nextPathname = useNextPathname();
 	const { push } = useNavigationDirection();
-	const { isOnboarding } = useOnboarding();
 
 	const isHomepage = nextPathname === "/";
 
@@ -138,7 +136,7 @@ export function BottomNav() {
 		[push],
 	);
 
-	if (isHomepage || isOnboarding) return null;
+	if (isHomepage) return null;
 
 	return (
 		<nav
