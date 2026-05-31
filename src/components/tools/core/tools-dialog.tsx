@@ -4,63 +4,67 @@ import { Cancel01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 import dynamic from "next/dynamic";
+import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToolsStore } from "@/store/tools";
+
+const skel = () => <Skeleton className="h-64 w-full rounded-lg" />;
 
 const ScientificCalculator = dynamic(
 	() =>
 		import("../math/scientific-calculator").then(
 			(mod) => mod.ScientificCalculator,
 		),
-	{ ssr: false },
+	{ ssr: false, loading: skel },
 );
 const PeriodicTable = dynamic(
 	() => import("../science/periodic-table").then((mod) => mod.PeriodicTable),
-	{ ssr: false },
+	{ ssr: false, loading: skel },
 );
 const APSCalculator = dynamic(
 	() => import("../math/aps-calculator").then((mod) => mod.APSCalculator),
-	{ ssr: false },
+	{ ssr: false, loading: skel },
 );
 const AiSolver = dynamic(
 	() => import("../communication/ai-solver").then((mod) => mod.AiSolver),
-	{ ssr: false },
+	{ ssr: false, loading: skel },
 );
 const NationalExamCalendar = dynamic(
 	() =>
 		import("../scheduling/national-exam-calendar").then(
 			(mod) => mod.NationalExamCalendar,
 		),
-	{ ssr: false },
+	{ ssr: false, loading: skel },
 );
 const ResultsSearch = dynamic(
 	() =>
 		import("../communication/results-search").then((mod) => mod.ResultsSearch),
-	{ ssr: false },
+	{ ssr: false, loading: skel },
 );
 const SmartScheduler = dynamic(
 	() =>
 		import("../scheduling/smart-scheduler").then((mod) => mod.SmartScheduler),
-	{ ssr: false },
+	{ ssr: false, loading: skel },
 );
 const FlashcardCreator = dynamic(
 	() =>
 		import("../flashcards/flashcard-creator").then(
 			(mod) => mod.FlashcardCreator,
 		),
-	{ ssr: false },
+	{ ssr: false, loading: skel },
 );
 const NoteCreator = dynamic(
 	() => import("../notes/note-creator").then((mod) => mod.NoteCreator),
-	{ ssr: false },
+	{ ssr: false, loading: skel },
 );
 const StudySetCreator = dynamic(
 	() =>
 		import("../study-sets/study-set-creator").then(
 			(mod) => mod.StudySetCreator,
 		),
-	{ ssr: false },
+	{ ssr: false, loading: skel },
 );
 
 interface ToolsDialogProps {
@@ -175,8 +179,10 @@ function ToolsDialogInner({ open: _open, onOpenChange }: ToolsDialogProps) {
 
 export function ToolsDialog({ open, onOpenChange }: ToolsDialogProps) {
 	return (
-		<AnimatePresence initial={false}>
-			{open && <ToolsDialogInner open={open} onOpenChange={onOpenChange} />}
-		</AnimatePresence>
+		<AppErrorBoundary>
+			<AnimatePresence initial={false}>
+				{open && <ToolsDialogInner open={open} onOpenChange={onOpenChange} />}
+			</AnimatePresence>
+		</AppErrorBoundary>
 	);
 }

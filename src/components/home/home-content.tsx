@@ -1,6 +1,10 @@
 "use client";
 
-import { Activity02Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
+import {
+	Activity02Icon,
+	ArrowRight01Icon,
+	Quiz01Icon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
@@ -20,6 +24,10 @@ export function HomeContent() {
 		authReady &&
 		status === "authenticated" &&
 		!user?.labels?.includes("anonymous");
+	const isAnonymous =
+		authReady &&
+		status === "authenticated" &&
+		user?.labels?.includes("anonymous") === true;
 
 	return (
 		<div className="min-h-screen overflow-x-hidden bg-background pb-16">
@@ -39,6 +47,26 @@ export function HomeContent() {
 									{t("home.navDashboard")}
 								</Button>
 							</Link>
+						) : isAnonymous ? (
+							<>
+								<Link href="/quiz">
+									<Button size="sm" className="flex items-center">
+										<HugeiconsIcon icon={Quiz01Icon} className="size-5" />
+										Try a Quiz
+									</Button>
+								</Link>
+								<Link href="/dashboard">
+									<Button size="sm" className="flex items-center">
+										<HugeiconsIcon icon={Activity02Icon} className="size-5" />
+										{t("home.navDashboard")}
+									</Button>
+								</Link>
+								<Link href="/auth/sign-up">
+									<Button variant="ghost" size="sm">
+										{t("home.navGetStarted")}
+									</Button>
+								</Link>
+							</>
 						) : (
 							<>
 								<Link href="/auth/sign-in">
@@ -61,7 +89,7 @@ export function HomeContent() {
 				</div>
 			</nav>
 
-			<HeroSection isAuthenticated={isAuthenticated} />
+			<HeroSection isAuthenticated={isAuthenticated || isAnonymous} />
 			<FeaturesGrid />
 			<HowItWorksSection />
 			<TestimonialsSection />

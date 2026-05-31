@@ -1,13 +1,17 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
+import { Skeleton } from "@/components/ui/skeleton";
+
+const diaLoading = () => <Skeleton className="h-48 w-full rounded-lg" />;
 
 const ForceVectorDiagram = dynamic(
 	() =>
 		import("@/components/quiz/diagrams/force-vector").then((m) => ({
 			default: m.ForceVectorDiagram,
 		})),
-	{ ssr: false },
+	{ ssr: false, loading: diaLoading },
 );
 
 const CircuitDiagram = dynamic(
@@ -15,7 +19,7 @@ const CircuitDiagram = dynamic(
 		import("@/components/quiz/diagrams/circuit").then((m) => ({
 			default: m.CircuitDiagram,
 		})),
-	{ ssr: false },
+	{ ssr: false, loading: diaLoading },
 );
 
 const WaveDiagram = dynamic(
@@ -23,7 +27,7 @@ const WaveDiagram = dynamic(
 		import("@/components/quiz/diagrams/wave").then((m) => ({
 			default: m.WaveDiagram,
 		})),
-	{ ssr: false },
+	{ ssr: false, loading: diaLoading },
 );
 
 const MotionDiagram = dynamic(
@@ -31,7 +35,7 @@ const MotionDiagram = dynamic(
 		import("@/components/quiz/diagrams/motion").then((m) => ({
 			default: m.MotionDiagram,
 		})),
-	{ ssr: false },
+	{ ssr: false, loading: diaLoading },
 );
 
 const GeometryDiagram = dynamic(
@@ -39,7 +43,7 @@ const GeometryDiagram = dynamic(
 		import("@/components/quiz/diagrams/geometry").then((m) => ({
 			default: m.GeometryDiagram,
 		})),
-	{ ssr: false },
+	{ ssr: false, loading: diaLoading },
 );
 
 const ChartDiagram = dynamic(
@@ -47,7 +51,7 @@ const ChartDiagram = dynamic(
 		import("@/components/quiz/diagrams/chart").then((m) => ({
 			default: m.ChartDiagram,
 		})),
-	{ ssr: false },
+	{ ssr: false, loading: diaLoading },
 );
 
 const ChemistryDiagram = dynamic(
@@ -55,7 +59,7 @@ const ChemistryDiagram = dynamic(
 		import("@/components/quiz/diagrams/chemistry").then((m) => ({
 			default: m.ChemistryDiagram,
 		})),
-	{ ssr: false },
+	{ ssr: false, loading: diaLoading },
 );
 
 const GraphDiagram = dynamic(
@@ -63,11 +67,12 @@ const GraphDiagram = dynamic(
 		import("@/components/quiz/diagrams/graph").then((m) => ({
 			default: m.GraphDiagram,
 		})),
-	{ ssr: false },
+	{ ssr: false, loading: diaLoading },
 );
 
 const ReactFlowDiagram = dynamic(() => import("./reactflow-diagram"), {
 	ssr: false,
+	loading: diaLoading,
 });
 
 interface DiagramRendererProps {
@@ -76,6 +81,14 @@ interface DiagramRendererProps {
 }
 
 export function DiagramRenderer({ type, data }: DiagramRendererProps) {
+	return (
+		<AppErrorBoundary>
+			<DiagramRendererInner type={type} data={data} />
+		</AppErrorBoundary>
+	);
+}
+
+function DiagramRendererInner({ type, data }: DiagramRendererProps) {
 	switch (type) {
 		case "force-vector":
 			return <ForceVectorDiagram data={data as never} />;

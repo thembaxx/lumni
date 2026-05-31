@@ -36,7 +36,7 @@ const CompetencyOverview = dynamic(
 		import("@/components/dashboard/competency-overview").then(
 			(m) => m.CompetencyOverview,
 		),
-	{ ssr: false },
+	{ ssr: false, loading: () => <Skeleton className="h-32 rounded-3xl" /> },
 );
 
 const OfflinePackManager = dynamic(
@@ -44,7 +44,7 @@ const OfflinePackManager = dynamic(
 		import("@/components/dashboard/offline-packs").then(
 			(m) => m.OfflinePackManager,
 		),
-	{ ssr: false },
+	{ ssr: false, loading: () => <Skeleton className="h-32 rounded-3xl" /> },
 );
 
 const MyAssignments = dynamic(

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { QuestionCardSkeleton } from "@/components/quiz/parts/QuestionCardSkeleton";
+import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { QuizClient } from "./quiz-client";
 
 export const metadata: Metadata = {
@@ -10,8 +11,10 @@ export const metadata: Metadata = {
 
 export default function QuizPage() {
 	return (
-		<Suspense fallback={<QuestionCardSkeleton />}>
-			<QuizClient />
-		</Suspense>
+		<AppErrorBoundary>
+			<Suspense fallback={<QuestionCardSkeleton />}>
+				<QuizClient />
+			</Suspense>
+		</AppErrorBoundary>
 	);
 }
