@@ -27,6 +27,10 @@ const tableNames = [
 	"gamification",
 	"quizPacks",
 	"packQuestions",
+	"pastPaperQuestions",
+	"groupChallenges",
+	"groupChallengeEntries",
+	"groupBadges",
 	"userConsents",
 ];
 
@@ -38,7 +42,7 @@ const mockTables = tableNames.map((name) => ({
 
 class MockOfflineDB {
 	readonly name = "lumni-offline";
-	readonly verno = 20;
+	readonly verno = 24;
 	readonly tables = mockTables;
 	table(name: string) {
 		return mockTables.find((t) => t.name === name);
@@ -79,7 +83,7 @@ describe("LumniOfflineDB", () => {
 	});
 
 	test("has all expected tables", () => {
-		expect(offlineDB.tables.length).toBe(27);
+		expect(offlineDB.tables.length).toBe(31);
 		for (const name of tableNames) {
 			const table = offlineDB.tables.find(
 				(t: { name: string }) => t.name === name,

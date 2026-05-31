@@ -29,7 +29,23 @@ export const subjectColors: Record<string, string> = {
 	"information-technology": "bg-[--chart-5]",
 };
 
-export const subjectAbbrs: Record<string, string> = {};
+export const subjectAbbrs: Record<string, string> = {
+	mathematics: "Math",
+	"physical-sciences": "PhySci",
+	"life-sciences": "LifeSci",
+	"english-home-language": "EngHL",
+	"english-first-additional-language": "EngFAL",
+	"afrikaans-home-language": "AfrHL",
+	"afrikaans-first-additional-language": "AfrFAL",
+	geography: "Geo",
+	history: "Hist",
+	accounting: "Acc",
+	"business-studies": "Bus",
+	economics: "Econ",
+	"mathematical-literacy": "MathLit",
+	"computer-applications-technology": "CAT",
+	"information-technology": "IT",
+};
 
 export function getSubjectColor(subjectId: string): string {
 	return subjectColors[subjectId] || "bg-muted";

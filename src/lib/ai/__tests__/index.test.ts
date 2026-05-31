@@ -1,12 +1,8 @@
-import { describe, expect, mock, test } from "bun:test";
+import { afterAll, beforeAll, describe, expect, mock, test } from "bun:test";
+import { setDataSharingConsent } from "@/lib/consent/ai-gate";
 
 const GEMINI_RESP = {
 	candidates: [{ content: { parts: [{ text: "gemini-answer" }] } }],
-};
-
-const _GROQ_RESP = {
-	choices: [{ message: { content: "groq-answer" } }],
-	usage: { prompt_tokens: 5, completion_tokens: 10 },
 };
 
 function mockFetch(response: object, status = 200) {
@@ -25,6 +21,26 @@ function mockFetch(response: object, status = 200) {
 function restoreFetch(original: typeof globalThis.fetch) {
 	globalThis.fetch = original;
 }
+
+const originalLocalStorage = (globalThis as Record<string, unknown>)
+	.localStorage;
+
+beforeAll(() => {
+	(globalThis as Record<string, unknown>).localStorage = {
+		getItem: () => null,
+		setItem: () => {},
+		removeItem: () => {},
+		clear: () => {},
+		key: () => null,
+		length: 0,
+	};
+	setDataSharingConsent(true);
+});
+
+afterAll(() => {
+	setDataSharingConsent(false);
+	(globalThis as Record<string, unknown>).localStorage = originalLocalStorage;
+});
 
 import {
 	CHAT_SYSTEM_PROMPT,

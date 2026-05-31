@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test";
+import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import {
 	attemptMagicLink,
 	attemptSignIn,
@@ -8,6 +8,18 @@ import {
 function uniqueEmail(): string {
 	return `test-${Date.now()}-${Math.random().toString(36).slice(2)}@example.com`;
 }
+
+const originalFetch = globalThis.fetch;
+
+beforeAll(() => {
+	globalThis.fetch = (() => {
+		throw new Error("fetch should not be called in tests");
+	}) as unknown as typeof globalThis.fetch;
+});
+
+afterAll(() => {
+	globalThis.fetch = originalFetch;
+});
 
 describe("attemptSignIn", () => {
 	test("returns allowed on first attempt", async () => {

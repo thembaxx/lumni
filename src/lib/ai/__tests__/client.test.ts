@@ -1,5 +1,28 @@
-import { describe, expect, test } from "bun:test";
+import { afterAll, beforeAll, describe, expect, mock, test } from "bun:test";
+import { setDataSharingConsent } from "@/lib/consent/ai-gate";
 import { AIClient } from "../client";
+
+const originalFetch = globalThis.fetch;
+const originalLocalStorage = (globalThis as Record<string, unknown>)
+	.localStorage;
+
+beforeAll(() => {
+	(globalThis as Record<string, unknown>).localStorage = {
+		getItem: () => null,
+		setItem: () => {},
+		removeItem: () => {},
+		clear: () => {},
+		key: () => null,
+		length: 0,
+	};
+	setDataSharingConsent(true);
+});
+
+afterAll(() => {
+	setDataSharingConsent(false);
+	globalThis.fetch = originalFetch;
+	(globalThis as Record<string, unknown>).localStorage = originalLocalStorage;
+});
 
 describe("AIClient", () => {
 	test("isConfigured returns false with no config", () => {
@@ -49,5 +72,26 @@ describe("AIClient", () => {
 			groqApiKey: "groq-key",
 		});
 		expect(client.getProviders()).toEqual(["gemini", "nvidia", "groq"]);
+	});
+
+	test("generate delegates to provider", async () => {
+		globalThis.fetch = mock(() =>
+			Promise.resolve(
+				new Response(
+					JSON.stringify({
+						choices: [{ message: { content: "Hello from provider" } }],
+						usage: { prompt_tokens: 5, completion_tokens: 3 },
+					}),
+					{ status: 200, headers: { "Content-Type": "application/json" } },
+				),
+			),
+		) as unknown as typeof globalThis.fetch;
+
+		const client = new AIClient({ nvidiaApiKey: "nv-test" });
+		const result = await client.generate("test prompt");
+
+		expect(result.error).toBeUndefined();
+		expect(result.content).toBe("Hello from provider");
+		expect(result.provider).toBe("nvidia");
 	});
 });

@@ -154,12 +154,29 @@ describe("usePremium", () => {
 	});
 
 	test("cancelSubscription calls /api/premium/cancel and returns true on success", async () => {
-		mockFetch.mockResolvedValue({
-			ok: true,
-		} as Response);
+		mockFetch.mockImplementation(async (url) => {
+			if (url === "/api/premium/verify") {
+				return {
+					ok: true,
+					json: async () => ({
+						verified: true,
+						isPremium: true,
+						subscriptionId: "sub_test",
+					}),
+				} as unknown as Response;
+			}
+			if (url === "/api/premium/cancel") {
+				return { ok: true } as unknown as Response;
+			}
+			return { ok: false } as unknown as Response;
+		});
 
 		const { result } = renderHook(() => usePremium(), {
 			wrapper: createPremiumWrapper(),
+		});
+
+		await act(async () => {
+			await new Promise((r) => setTimeout(r, 50));
 		});
 
 		const canceled = await result.current.cancelSubscription();

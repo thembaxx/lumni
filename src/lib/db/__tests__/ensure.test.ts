@@ -172,6 +172,25 @@ mock.module("@/lib/appwrite", () => ({
 }));
 
 mock.module("node-appwrite", () => ({
+	Client: class {
+		setEndpoint() {
+			return this;
+		}
+		setProject() {
+			return this;
+		}
+		setSession() {
+			return this;
+		}
+		setKey() {
+			return this;
+		}
+	},
+	Account: class {
+		async get() {
+			return { $id: "test", name: "Test", email: "test@test.com" };
+		}
+	},
 	AppwriteException: MockAppwriteException,
 }));
 const { ensureAppwrite } = await import("../ensure");

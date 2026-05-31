@@ -23,6 +23,15 @@ mock.module("@/lib/db/schema", () => ({
 		wrongAnswers: {
 			toArray: () => Promise.resolve(mockWrongAnswers),
 		},
+		quizAttempts: {
+			toArray: () => Promise.resolve([]),
+		},
+		examSessions: {
+			toArray: () => Promise.resolve([]),
+		},
+		progress: {
+			toArray: () => Promise.resolve([]),
+		},
 	},
 }));
 

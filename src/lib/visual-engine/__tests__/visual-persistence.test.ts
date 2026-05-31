@@ -40,10 +40,9 @@ mock.module("@/lib/db/client", () => ({
 	COLLECTIONS: { VISUALS: "visuals" },
 }));
 
-import {
-	loadVisualFromAppwrite,
-	saveVisualToAppwrite,
-} from "../visual-persistence";
+const { loadVisualFromAppwrite, saveVisualToAppwrite } = await import(
+	"../visual-persistence"
+);
 
 const sampleVisual = {
 	type: "konva-diagram" as const,

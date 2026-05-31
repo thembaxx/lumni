@@ -61,7 +61,7 @@ describe("flushOfflineData", () => {
 	beforeEach(() => {
 		progressStore.length = 0;
 		attemptsStore.length = 0;
-		enqueueMock.mockReset();
+		enqueueMock.mockClear();
 	});
 
 	test("completes without error when no data exists", async () => {

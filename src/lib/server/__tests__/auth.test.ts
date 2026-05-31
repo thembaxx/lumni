@@ -1,4 +1,12 @@
-import { afterAll, beforeEach, describe, expect, mock, test } from "bun:test";
+import {
+	afterAll,
+	beforeAll,
+	beforeEach,
+	describe,
+	expect,
+	mock,
+	test,
+} from "bun:test";
 
 process.env.APPWRITE_DATABASE_ID = "test-db-id";
 process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID = "test-project";
@@ -28,7 +36,7 @@ mock.module("next/headers", () => ({
 	cookies: async () => ({
 		get: (name: string) => {
 			if (
-				name === `a_session_test-project` &&
+				name === "a_session_test-project" &&
 				authState.sessionCookieValue != null
 			) {
 				return { name, value: authState.sessionCookieValue };
@@ -39,7 +47,7 @@ mock.module("next/headers", () => ({
 			authState.sessionCookieValue != null
 				? [
 						{
-							name: `a_session_test-project`,
+							name: "a_session_test-project",
 							value: authState.sessionCookieValue,
 						},
 					]
@@ -90,6 +98,21 @@ mock.module("node-appwrite", () => {
 
 const OLD_ENV = process.env;
 
+let verifyAuth: (userId: string) => Promise<void>;
+let getAuthenticatedUserId: () => Promise<string | null>;
+let requireAdmin: () => Promise<string>;
+let getAuthenticatedUserName: () => Promise<string | null>;
+
+beforeAll(async () => {
+	const mod = await import(
+		`../auth?_auth_test=${Date.now()}_${Math.random().toString(36).slice(2)}`
+	);
+	verifyAuth = mod.verifyAuth;
+	getAuthenticatedUserId = mod.getAuthenticatedUserId;
+	requireAdmin = mod.requireAdmin;
+	getAuthenticatedUserName = mod.getAuthenticatedUserName;
+});
+
 beforeEach(() => {
 	authState.sessionCookieValue = "session123";
 	authState.userId = "user_abc";
@@ -102,13 +125,6 @@ beforeEach(() => {
 afterAll(() => {
 	process.env = OLD_ENV;
 });
-
-const {
-	verifyAuth,
-	getAuthenticatedUserId,
-	requireAdmin,
-	getAuthenticatedUserName,
-} = await import("../auth");
 
 describe("verifyAuth", () => {
 	test("resolves when session is valid and userId matches", async () => {
