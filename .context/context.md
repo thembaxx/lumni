@@ -1,11 +1,11 @@
-<!-- LAST_SYNC: 2026-05-31 -->
+<!-- LAST_SYNC: 2026-06-01 -->
 # Master Context — Lumni
 
 ## PROJECT_IDENTITY
 AI-powered South African Matric (Grade 12) exam preparation platform. Offline-first architecture using Dexie (L1) and Appwrite (L2). Design system is "Emerald Study Room" (Tailwind 4).
 
 ## CURRENT_FOCUS
-Finalizing B2B2C dashboards (Teacher/Parent), polishing the swipeable flashcard deck, and ensuring full-screen immersive mode stability across devices.
+Polish & hardening phase complete: WCAG 2.2 AA audit done (19 critical/high fixes), test suite hardened (1109 pass), GDPR/POPIA consent suite fully implemented. Active: continued polish — keyboard accessibility, prefers-reduced-motion, quiz input labels.
 
 ## KEY_CONSTRAINTS
 - **AI Budget**: 2000 global calls/day. Strict per-user caps: 20 gen, 100 grade, 20 hint, 50 visual.
@@ -24,11 +24,14 @@ Finalizing B2B2C dashboards (Teacher/Parent), polishing the swipeable flashcard 
 - [D031] **Unified SR**: SM-2/FSRS logic unified into `src/lib/flashcard-engine/`.
 - [D032] **Generic API**: Migrated routes to `createRouteHandler` factory.
 - [D033] **Swipeable Deck**: Tinder-style interaction for flashcards with quality fine-tuning.
+- [D034] **GDPR Consent**: Dual-write (Dexie + Appwrite) with ai-gate/sentry-gate blocking.
+- [D035] **WCAG 2.2 AA**: 30+ components audited; 19 critical/high fixes applied (labels, focus-visible, aria-live, keyboard).
 
 ## KNOWLEDGE_GRAPH
 - `LearningOrchestrator` → `QuestionEngine` → `AI Providers` (Gemini/Nvidia/Groq)
 - `FlashcardEngine` → `Dexie` → `QueueCore` → `Appwrite`
-- `QuizPackService` → `QuestionEngine` → `Dexie` (v23)
+- `QuizPackService` → `QuestionEngine` → `Dexie` (v24)
+- `UserConsentService` → `Dexie` → `QueueCore` → `Appwrite` (dual-write)
 
 ## REUSABLE_SNIPPETS
 - **API Route**: `export const POST = createRouteHandler({ auth: 'required', schema: z.object({...}), handler: async (data, ctx) => {...} });`

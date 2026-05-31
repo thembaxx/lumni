@@ -1,6 +1,7 @@
 # Prompt Catalog — Lumni
 
 **Generated:** 2026-05-22  
+**Last updated:** June 2026 (Sessions 15-19)  
 **Note:** No dedicated `prompts/` directory exists. Prompts are embedded in agent config files, skill definitions, and spec docs. Catalog below consolidates all discoverable prompt contexts.
 
 ---

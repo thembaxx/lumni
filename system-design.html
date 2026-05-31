@@ -176,12 +176,14 @@
     <span class="tag">Gemini + Nvidia + Groq</span>
     <span class="tag">shadcn/ui</span>
     <span class="tag">Konva + Mermaid</span>
+    <span class="tag">WCAG 2.2 AA</span>
+    <span class="tag">Bun ≥1.2</span>
     <span class="tag">PWA</span>
     <span class="tag">Playwright</span>
     <span class="tag">Storybook</span>
     <span class="tag">Immersive Mode</span>
   </div>
-  <div class="subtitle">Generated from codebase — May 2026</div>
+  <div class="subtitle">Generated from codebase — June 2026</div>
 </div>
 
 <div class="nav">
@@ -194,6 +196,8 @@
   <a href="#storage">Storage</a>
   <a href="#quiz">Quiz / Exam</a>
   <a href="#components">Components</a>
+  <a href="#consent">Consent</a>
+  <a href="#a11y">A11y</a>
   <a href="#sync">Sync</a>
   <a href="#gamification">Gamification</a>
   <a href="#routes">Routes</a>
@@ -211,7 +215,7 @@
         subgraph Client["Client Layer"]
           RSC["Next.js RSC / Pages"]
           Hooks["33+ React Hooks<br/>(useQuestionEngine, useVisualEngine, etc.)"]
-          Stores["Zustand Stores<br/>(auth, flashcards, exam, app)"]
+          Stores["Zustand Stores<br/>(quiz, exam, sync, search, bookmarks, voice, premium)"]
         end
 
         subgraph Engine["Engine Layer"]
@@ -225,7 +229,7 @@
         end
 
         subgraph Cache["Caching Layer"]
-          D["Dexie (IndexedDB)<br/>23 tables · v18 schema · 24h-30d expiry"]
+           D["Dexie (IndexedDB)<br/>24 tables · v24 schema · 24h-30d expiry"]
           AW["Appwrite Cloud<br/>10+ collections"]
           AI["AI Generation<br/>On-demand fallback"]
         end
@@ -238,9 +242,10 @@
           LS["LeaderboardService"]
           NS["NotificationService"]
           QRS["QuestionRatingService"]
-          CS["ChatService"]
-          EDS["ExamDatesService"]
-        end
+           CS["ChatService"]
+           EDS["ExamDatesService"]
+           UCS["UserConsentService"]
+         end
 
         subgraph Infra["Infrastructure"]
           API["REST API Routes<br/>(/api/*)"]
@@ -264,6 +269,7 @@
         Budget --> API
         FE -.-> Cache
         QPS -.-> Engine
+        UCS -.-> Cache
     </pre>
   </div>
   <div class="legend">
@@ -642,10 +648,86 @@
   </div>
 </div>
 
-<!-- ===== 11. GAMIFICATION ===== -->
+<!-- ===== 11. CONSENT / GDPR ===== -->
+<div class="section" id="consent">
+  <h2>11. GDPR/POPIA Consent Architecture</h2>
+  <p class="desc">Dual-write consent (Dexie + Appwrite) with AI/Sentry gating. Cookie banner, TOS versioning, account deletion, and data export APIs.</p>
+  <div class="diagram-wrap">
+    <pre class="mermaid">
+      graph LR
+        subgraph Gates["Consent Gates"]
+          AG["AI Gate<br/>dataSharingConsent"]
+          SG["Sentry Gate<br/>analyticsConsent"]
+        end
+
+        subgraph UI["User Interfaces"]
+          CB["Cookie Banner<br/>3 quick-accept + settings"]
+          TB["TOS Banner<br/>version change detection"]
+          PT["Privacy Tab<br/>consent toggles + export + delete"]
+          CG["Consent Gate<br/>parental consent"]
+        end
+
+        subgraph Store["Storage"]
+          DX["Dexie<br/>userConsents table"]
+          AW_C["Appwrite<br/>user_consents collection<br/>(background job sync)"]
+        end
+
+        subgraph API["API"]
+          GET_CONSENT["GET /api/user/consent"]
+          POST_CONSENT["POST /api/user/consent"]
+          DELETE_ACCT["DELETE /api/user/account"]
+          EXPORT["GET /api/user/export"]
+        end
+
+        CB -->|Save| POST_CONSENT
+        TB -->|Accept| POST_CONSENT
+        PT -->|Toggle| POST_CONSENT
+        PT -->|Delete| DELETE_ACCT
+        PT -->|Export| EXPORT
+        POST_CONSENT --> DX
+        POST_CONSENT -->|Background job| AW_C
+        AG -.->|Blocks if false| AI_Block["AI calls blocked<br/>→ fallback to cached/local"]
+        SG -.->|Blocks if false| Sentry_Block["Sentry events blocked<br/>→ beforeSend returns null"]
+    </pre>
+  </div>
+</div>
+
+<!-- ===== 12. A11Y ===== -->
+<div class="section" id="a11y">
+  <h2>12. WCAG 2.2 AA Accessibility</h2>
+  <p class="desc">30+ components audited. 11 critical + 8 high-priority fixes applied: label associations, focus indicators, aria-live regions, keyboard support for swipeable deck.</p>
+  <div class="diagram-wrap">
+    <pre class="mermaid">
+      graph LR
+        subgraph Fixed["Critical Fixes (19)"]
+          F1["Label/Switch htmlFor-id<br/>(7 cookie + privacy pairs)"]
+          F2["Focus-visible rings<br/>(6 bottom-nav + 1 top-nav)"]
+          F3["aria-label on icon-only<br/>buttons (4 instances)"]
+          F4["Quiz input labels<br/>(6 input types)"]
+          F5["aria-live regions<br/>(timer, feedback, deck)"]
+          F6["Keyboard: swipeable deck<br/>(Space/Enter, Arrow keys)"]
+          F7["aria-hidden on<br/>decorative icons"]
+          F8["Fixed aria-labelledby<br/>in quiz-view"]
+        end
+
+        subgraph Audit["Audit Coverage"]
+          A1["Quiz flow<br/>quiz-view, inputs, feedback"]
+          A2["Exam flow<br/>session, navigator, results"]
+          A3["Flashcards<br/>deck, card, quality picker"]
+          A4["GDPR/Consent<br/>banner, tabs, gate"]
+          A5["Navigation<br/>top, bottom, sidebar"]
+          A6["Settings<br/>privacy, profile, layout"]
+        end
+
+        Audit --> Fixed
+    </pre>
+  </div>
+</div>
+
+<!-- ===== 13. GAMIFICATION ===== -->
 <div class="section" id="gamification">
-  <h2>11. Gamification System</h2>
-  <p class="desc">XP, levels, achievements, streaks, and daily challenges — all driven by quiz/exam completions.</p>
+  <h2>13. Gamification System</h2>
+  <p class="desc">XP, levels, 50+ achievements, streaks, and daily challenges — all driven by quiz/exam completions. Extended with achievement tiers (Session 11).</p>
   <div class="diagram-wrap">
     <pre class="mermaid">
       graph TD
@@ -698,9 +780,9 @@
   </div>
 </div>
 
-<!-- ===== 12. ROUTES ===== -->
+<!-- ===== 14. ROUTES ===== -->
 <div class="section" id="routes">
-  <h2>12. Full Route Map</h2>
+  <h2>14. Full Route Map</h2>
   <p class="desc">Every app page and API endpoint with their purpose.</p>
   <div class="diagram-wrap">
     <pre class="mermaid">

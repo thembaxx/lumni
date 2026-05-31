@@ -1,7 +1,7 @@
 # System Design — Lumni
 
 **Generated:** 2026-05-29  
-**Last synced:** HEAD~0 (sessions 10-14)
+**Last synced:** HEAD~0 (sessions 1-19, June 2026)
 
 ---
 
@@ -18,7 +18,7 @@ graph TB
     subgraph Client [Browser / PWA]
         A[React 19 + Next.js 16]
         B[Zustand Stores]
-        C[Dexie IndexedDB<br/>23 tables, v18 schema]
+        C[Dexie IndexedDB<br/>24 tables, v24 schema]
         D[Zustand Persist<br/>localStorage]
     end
 
@@ -190,20 +190,22 @@ erDiagram
 | **Dashboard** | Landing page: stats, study plan, quick actions, search, analytics, offline packs | React, recharts | `src/components/dashboard/` |
 | **Quiz** | Question display, answer capture, timer, feedback, diagrams, immersive mode | React, Konva, Framer Motion | `src/components/quiz/` |
 | **Exam** | Past paper viewer, session management, results & review, immersive mode | React, sql.js, react-pdf | `src/components/exam/` |
-| **Flashcards** | SM-2 spaced repetition, swipeable Tinder deck, auto-generation | React, Dexie, Framer Motion | `src/components/flashcard/` |
+| **Flashcards** | SM-2 spaced repetition, Tinder-style swipeable deck, auto-generation | React, Dexie, Framer Motion | `src/components/flashcard/` |
 | **Study Planner** | Algorithmic scheduling, weekly overview | React, localStorage | `src/components/study-planner/` |
-| **Onboarding** | 5-step wizard with Three.js particles | React, Three.js, Framer Motion | `src/components/onboarding/` |
+| **Onboarding** | 5-step wizard with Three.js particles, push notification opt-in | React, Three.js, Framer Motion | `src/components/onboarding/` |
 | **Auth** | Sign-in/sign-up, magic link, anonymous upgrade | React, Appwrite SDK | `src/components/auth/` |
-| **Settings** | Profile, preferences, data management, theme | React | `src/components/settings/` |
+| **Settings** | Profile, privacy (GDPR consent toggles), data management, theme | React | `src/components/settings/` |
+| **Consent** | Cookie banner, TOS banner, consent gate, parental consent UI | React, Dexie + Appwrite | `src/components/consent/` |
 | **Visual** | Diagram/image rendering for questions | Konva, Mermaid, Wikimedia | `src/components/visual/` |
-| **Tools** | Calculator, periodic table, exam calendar, flashcards | React | `src/components/tools/` |
+| **Immersive** | Full-screen mode provider, exit button, nav auto-hiding | React Context | `src/components/shared/immersive-mode.tsx` |
+| **Tools** | Domain-organized: core, communication, math, science, scheduling | React | `src/components/tools/` |
 
 ### State Layer
 
 | Store | Responsibility | Tech | Location |
 |-------|---------------|------|----------|
-| Zustand (multiple) | Quiz session, exam session, sync queue, search, notifications, bookmarks, voice recorder | Zustand | `src/store/` |
-| Dexie | Offline cache: questions, visuals, exam dates, ratings, flashcard SM-2, quiz packs, jobs, sync queue, competencies, wrong answers, chat | Dexie + dexie-react-hooks | `src/lib/db/` |
+| Zustand (multiple) | Quiz session, exam session, sync queue, search, notifications, bookmarks, voice recorder, premium | Zustand | `src/store/` |
+| Dexie | Offline cache: questions, visuals, exam dates, ratings, flashcard SM-2, quiz packs, jobs, sync queue, competencies, wrong answers, chat, userConsents | Dexie + dexie-react-hooks | `src/lib/db/` |
 | React Query | Server state: API data caching, background refetch | TanStack React Query | `src/lib/query-client.ts` |
 
 ### Server / API Layer
@@ -228,11 +230,13 @@ erDiagram
 | **CompetencyEngine** | Bloom's taxonomy scoring, PathEngine routing | Score→Level mapping | `src/lib/competency-engine/` |
 | **LearningOrchestrator** | Orchestrates generate+grade+queue side effects | Composes QuestionEngine | `src/lib/orchestrator/` |
 | **QuizPackService** | Offline AI quiz pack lifecycle (generate, persist, expire) | Dexie + QuestionEngine | `src/lib/quiz-packs/` |
-| **Services Barrel** | All 10 services (analytics, competency, progress, flashcard, notification, etc.) | ServiceResult<T> | `src/lib/services/` |
+| **Services Barrel** | All 12 services (analytics, competency, progress, flashcard, notification, consent, etc.) | ServiceResult<T> | `src/lib/services/` |
 | **StudyPlannerService** | Inverse-competency-weighted scheduling | Round-robin algorithm | `src/lib/study-planner/` |
 | **SyncService** | Offline-to-online data reconciliation | Dexie→Appwrite flush | `src/lib/sync/` |
 | **AuthService** | Anonymous→authenticated upgrade, magic link | Appwrite SDK | `src/lib/auth/` |
 | **PremiumService** | Premium gating, checkout, verification | localStorage + API | `src/lib/premium/` |
+| **UserConsentService** | GDPR/POPIA dual-write consent (Dexie + Appwrite) | Background job queue | `src/lib/services/user-consent-service.ts` |
+| **i18n** | Locale-based routing ([locale] prefix), en/af/zu translations | Next.js middleware | `src/i18n/` |
 
 ### Backend (External)
 
@@ -323,8 +327,13 @@ Client -> POST /api/quiz-packs/generate
 | `exam_sessions` | In-progress + completed exam sessions | Per-user |
 | `exam_papers` | Uploaded past exam PDFs | ~500 |
 | `exam_dates` | National exam timetable (synced server-side) | ~200 |
+| `user_consents` | GDPR/POPIA consent preferences (dual-write) | Per-user |
+| `teacher_assignments` | Teacher-assigned student work (FEAT-02) | Per-teacher |
+| `teacher_students` | Teacher-student linking (FEAT-01/02) | Per-teacher |
+| `premium_subscriptions` | Premium subscription records (Stripe webhook) | Per-user |
+| `study_groups` | Study group metadata + membership (v3) | Per-group |
 
-### Database Tables (Dexie / IndexedDB) — v18 Schema
+### Database Tables (Dexie / IndexedDB) — v24 Schema
 
 | Table | Purpose | Expiry |
 |-------|---------|--------|
@@ -342,8 +351,9 @@ Client -> POST /api/quiz-packs/generate
 | `competencies` | Per-topic competency scores | Permanent |
 | `chatMessages` | AI chat history | Permanent |
 | `notes` | User notes | Permanent |
+| `userConsents` | GDPR/POPIA consent preferences (dual-write to Appwrite) | Permanent |
 | `studySessions` | Study planner sessions | Permanent |
-| +8 others | Exam sessions, progress, conflicts, subjects, etc. | Varies |
+| +7 others | Exam sessions, progress, conflicts, subjects, bookmarks, chat, sync queue | Varies |
 
 ---
 
@@ -387,16 +397,21 @@ Client -> POST /api/quiz-packs/generate
 | Priority | Change | Rationale | Status |
 |----------|--------|-----------|--------|
 | P1 | Appwrite write path for exam_dates + server-side cron scraping | Productionize exam dates (was seed-only + Dexie) | ✅ Done |
-| P1 | E2E tests (Playwright) + component tests | Coverage gap: only unit tests existed | ✅ Done |
+| P1 | E2E tests (Playwright) | Coverage gap: only unit tests existed | ✅ Done |
 | P1 | Offline AI Quiz Packs | Downloadable packs for load-shedding resilience | ✅ Done |
 | P1 | Storybook setup | UI component documentation | ✅ Done |
-| P1 | Swipeable flashcard deck | Tinder-style drag-to-swipe interaction | ✅ Done |
-| P1 | Full-screen immersive mode | Distraction-free quiz/exam experience | ✅ Done |
+| P1 | Swipeable flashcard deck | Tinder-style drag-to-swipe + keyboard support | ✅ Done |
+| P1 | Full-screen immersive mode | Distraction-free quiz/exam (auto nav-hiding) | ✅ Done |
+| P1 | Mega-component decomposition | 4 components split (2016→1136 lines, −44%) | ✅ Done |
+| P1 | Bun migration | Runtime + CI + Husky migration to Bun | ✅ Done |
+| P1 | Observability dashboard | AI latency tracking + usage events + admin panel | ✅ Done |
+| P1 | Teacher + Parent dashboards | Role-gated B2B2C analytics (FEAT-01, FEAT-02) | ✅ Done |
+| P1 | Premium gating + Stripe webhook | Monetization end-to-end: checkout, verify, cancel | ✅ Done |
+| P1 | GDPR/POPIA consent suite | Cookie banner, TOS versioning, account deletion, data export | ✅ Done |
+| P1 | i18n AF + ZU | Afrikaans 100%, isiZulu ~97% complete | ✅ Done |
+| P1 | WCAG 2.2 AA a11y audit + critical fixes | 30+ components audited, 11 critical + 8 high fixes | ✅ Done |
 | P2 | Redis-backed RateLimiter + TokenTracker | Survives server restarts, shared across instances | Planned |
-| P2 | Mock exam mode | Timed past-paper simulation | Planned |
-| P2 | Shared subject color/abbreviation maps | Remove duplication between exam-calendar and exam-dates service | Tech debt |
-| P3 | Custom domain + production deployment | Current: Vercel preview; needs custom domain | Planned |
-| P3 | OCR-based PDF scraping for DBE timetables | Automated exam date extraction without manual data entry | Planned |
+| P2 | Keyboard-accessible flashcard deck | Full redesign for keyboard-only operation | Planned |
 
 ---
 

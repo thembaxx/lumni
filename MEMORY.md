@@ -1,7 +1,8 @@
 # Memory Consolidation — Lumni
 
 **Generated:** 2026-05-29  
-**Sources:** MEMORY.md, AGENTS.md (Session 1-14), implementation-notes.md, CONTEXT.md, docs/adr/
+**Last updated:** June 2026 (Sessions 15-19)
+**Sources:** MEMORY.md, AGENTS.md (Sessions 1-19), implementation-notes.md, CONTEXT.md, docs/adr/
 
 ---
 
@@ -33,6 +34,12 @@
 | D021 | Playwright for E2E testing; Storybook for UI documentation | Coverage gap: only unit tests existed; Storybook for component doc | 2026-05-26 |
 | D022 | ImmersiveModeProvider for full-screen quiz/exam | Auto-hides nav bars; improves focus during sessions | 2026-05-28 |
 | D023 | SwipeableCardDeck replaces old flashcard list | Tinder-style interaction; SM-2 quality picker; 3-card cascade | 2026-05-28 |
+| D024 | Dual-write consent strategy (Appwrite + Dexie) | GDPR/POPIA compliance; background sync job with retry | 2026-05-29 |
+| D025 | Bun runtime migration (≥1.2.0) | Faster CI, smaller install, native test runner; lockfile regenerated | 2026-05-28 |
+| D026 | i18n locale-based routing ([locale] prefix) | en/af/zu translations; middleware-based locale detection | 2026-05-28 |
+| D027 | Premium gating at component level (hasFeature) | Per-feature gates; Stripe/Payfast checkout; Appwrite subscription sync | 2026-05-29 |
+| D028 | Observability via latency-tracker + usage events | AI provider timing; feature usage; admin dashboard | 2026-05-28 |
+| D029 | WCAG 2.2 AA a11y compliance target | 30+ components audited; 19 critical/high fixes; keyboard + screen reader | 2026-06-01 |
 
 ### Reversals
 
@@ -50,13 +57,16 @@
 - **Repository pattern for DB access**: All `src/lib/db/repositories/` provide typed CRUD, tests use mock repos
 - **QueueCore generic queue**: Single `QueueCore` class in `src/lib/queue/core.ts` powers both SyncQueue (offline mutations) and JobQueue (orchestration side effects). Exponential backoff + concurrency guard built in.
 - **RateLimiter single class, domain-specific configs**: In-memory rate limiter with configs for auth, API routes, and AI token budgets
-- **Dexie schema versioning**: Schema versions (currently v18) managed in `src/lib/db/schema.ts` with upgrade handlers (v15→v18 includes quizPacks + packQuestions)
+- **Dexie schema versioning**: Schema versions (currently v24) managed in `src/lib/db/schema.ts` with upgrade handlers (v18→v24 includes userConsents, quizPacks, packQuestions, and more)
 - **Competency mapper**: Novice→Easy, Developing→Medium, Proficient→Medium, Mastered→Hard (in `src/lib/question-engine/competency-mapper.ts`)
 - **Background visual pre-caching**: When questions are generated, visual generation fires in background so visuals are cached before the question card renders
 - **SM-2 spaced repetition**: Flashcard review uses SM-2 algorithm; existing cards use `reviewFlashcard()`, AI fallback for new content
 - **Immersive mode pattern**: React context + `useImmersiveMode()` hook; nav components self-hide; quiz/exam auto-enable; floating exit pill
 - **Swipeable deck pattern**: `useSwipeDeck` state machine (idle→dragging→swiped→quality-pick→advancing); undo stack; framer-motion drag + spring-back
 - **Offline pack pattern**: `QuizPackService` + Dexie `quizPacks`/`packQuestions` tables; rate-limited generation; expiry-based eviction
+- **Consent dual-write pattern**: `UserConsentService.save()` writes to Dexie first, then enqueues `appwrite-consent-sync` background job with retry; gates (`ai-gate`, `sentry-gate`) read module-level booleans
+- **i18n pattern**: Locale-based routing via `[locale]` middleware; `i18n-provider.tsx` + `navigation.ts` helpers; translation keys in JSON under `src/i18n/`
+- **Mega-component decomposition**: Co-located sub-components; barrel exports in `index.ts` preserve import sites; target: <200 lines per component
 
 ---
 
@@ -74,11 +84,9 @@
 
 ## Open Questions
 
-1. **Mock exam mode**: Timed past-paper simulation with exam hall conditions. Planned for next development cycle.
-2. **Shared subject color/abbreviation maps**: Duplicated between old `exam-calendar.tsx` and `exam-dates/service.ts`. Extract to shared location?
-3. **Old `ExamCalendar` component**: Preserved but unused. When to delete?
-4. **Comparative analytics**: Depends on other users' data in Appwrite; currently falls back to estimates. Production-ready path unclear.
-5. **Redis-backed rate limiting**: In-memory RateLimiter does not survive server restarts. Needed for multi-instance deployment.
+1. **Redis-backed rate limiting**: In-memory RateLimiter does not survive server restarts. Needed for multi-instance deployment.
+2. **Kangaroo keyboard support**: Swipeable deck now has basic keyboard (Space/Enter flip, Arrow keys swipe) but lacks full ARIA widget semantics
+3. **QuestionEngine consent-denied UX**: Engine silently returns `[]` when data-sharing consent is denied — no user-facing explanation
 
 ### Resolved
 
@@ -87,6 +95,9 @@
 | Appwrite write path for exam_dates? No server-side cron exists. | ✅ Done — Session 10: background job `"appwrite-exam-dates-sync"` + `syncExamDatesToAppwrite()` | 2026-05-26 |
 | Component test strategy? What framework? | ✅ Playwright for E2E + Storybook for UI docs — Session 10 | 2026-05-26 |
 | PDF scraping for exam dates? OCR or manual? | ✅ Manual extraction from web sources for now; OCR remains future work | 2026-05-26 |
+| GDPR/POPIA legal compliance? | ✅ Done — consent management, cookie banner, TOS versioning, account deletion, data export (Session 17) | 2026-05-29 |
+| Accessibility standard? | ✅ WCAG 2.2 AA — 30+ components audited, 19 critical/high fixes (Session 19) | 2026-06-01 |
+| Test suite health? | ✅ 1109 pass, 5 fail (e2e only) — fixed module cache conflicts + missing mocks (Session 18) | 2026-06-01 |
 
 ---
 
@@ -95,7 +106,7 @@
 | Resource | Location | Purpose |
 |----------|----------|---------|
 | Domain glossary | `CONTEXT.md` | Shared vocabulary for all agents |
-| Agent instructions | `AGENTS.md` | Engine arch, math conventions, session 1-14 history |
+| Agent instructions | `AGENTS.md` | Engine arch, math conventions, session 1-19 history |
 | Design system | `DESIGN.md` | "The Emerald Study Room" — colors, typography, components |
 | Product context | `PRODUCT.md` | Target users, brand principles |
 | Spec: Exam Dates | `SPEC.md` | National Exam Dates Tracker spec |

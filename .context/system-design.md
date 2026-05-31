@@ -1,4 +1,4 @@
-<!-- LAST_SYNC: 2026-05-31 -->
+<!-- LAST_SYNC: 2026-06-01 -->
 # System Design — Lumni
 
 ## Overview & Goals
