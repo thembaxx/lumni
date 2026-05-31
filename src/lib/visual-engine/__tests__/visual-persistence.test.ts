@@ -1,44 +1,5 @@
-import { describe, expect, mock, test } from "bun:test";
-
-mock.module("@/lib/db/repositories/visual-cache", () => ({
-	makeCacheKey: (questionId: string, subject: string) =>
-		`${questionId}-${subject}`,
-}));
-
-mock.module("@/lib/shared/json", () => ({
-	safeJsonParse: (str: string, fallback: unknown) => {
-		try {
-			return JSON.parse(str);
-		} catch {
-			return fallback;
-		}
-	},
-	safeJsonStringify: (value: unknown) => JSON.stringify(value),
-}));
-
-const mockCreateDocument = mock(() => Promise.resolve());
-const mockGetDocument = mock(() => Promise.resolve(null));
-
-mock.module("@/lib/appwrite", () => ({
-	APPWRITE_ENDPOINT: "https://jnb.cloud.appwrite.io/v1",
-	APPWRITE_PROJECT: "test-project",
-	APPWRITE_API_KEY: "test-key",
-	databases: {
-		createDocument: mockCreateDocument,
-		getDocument: mockGetDocument,
-	},
-	browserDatabases: {},
-	storage: {},
-	functions: {},
-	account: {},
-	serverAccount: {},
-	serverClient: {},
-}));
-
-mock.module("@/lib/db/client", () => ({
-	APPWRITE_DATABASE_ID: "test-db-id",
-	COLLECTIONS: { VISUALS: "visuals" },
-}));
+import { describe, expect, test } from "bun:test";
+import { mockCreateDocument, mockGetDocument } from "./_appwrite-mocks";
 
 const { loadVisualFromAppwrite, saveVisualToAppwrite } = await import(
 	"../visual-persistence"

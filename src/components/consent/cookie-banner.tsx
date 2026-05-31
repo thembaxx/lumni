@@ -102,47 +102,59 @@ function CookieSettingsContent({
 		<div className="flex flex-col gap-4">
 			<div className="flex items-center justify-between">
 				<div>
-					<Label className="font-medium">
+					<Label htmlFor="cookie-essential" className="font-medium">
 						{t("consent.cookieSettings.essential")}
 					</Label>
 					<p className="text-muted-foreground text-sm">
 						{t("consent.cookieSettings.essentialDesc")}
 					</p>
 				</div>
-				<Switch checked disabled />
+				<Switch id="cookie-essential" checked disabled />
 			</div>
 			<div className="flex items-center justify-between">
 				<div>
-					<Label className="font-medium">
+					<Label htmlFor="cookie-analytics" className="font-medium">
 						{t("consent.cookieSettings.analytics")}
 					</Label>
 					<p className="text-muted-foreground text-sm">
 						{t("consent.cookieSettings.analyticsDesc")}
 					</p>
 				</div>
-				<Switch checked={analytics} onCheckedChange={setAnalytics} />
+				<Switch
+					id="cookie-analytics"
+					checked={analytics}
+					onCheckedChange={setAnalytics}
+				/>
 			</div>
 			<div className="flex items-center justify-between">
 				<div>
-					<Label className="font-medium">
+					<Label htmlFor="cookie-marketing" className="font-medium">
 						{t("consent.cookieSettings.marketing")}
 					</Label>
 					<p className="text-muted-foreground text-sm">
 						{t("consent.cookieSettings.marketingDesc")}
 					</p>
 				</div>
-				<Switch checked={marketing} onCheckedChange={setMarketing} />
+				<Switch
+					id="cookie-marketing"
+					checked={marketing}
+					onCheckedChange={setMarketing}
+				/>
 			</div>
 			<div className="flex items-center justify-between">
 				<div>
-					<Label className="font-medium">
+					<Label htmlFor="cookie-data-sharing" className="font-medium">
 						{t("consent.cookieSettings.dataSharing")}
 					</Label>
 					<p className="text-muted-foreground text-sm">
 						{t("consent.cookieSettings.dataSharingDesc")}
 					</p>
 				</div>
-				<Switch checked={dataSharing} onCheckedChange={setDataSharing} />
+				<Switch
+					id="cookie-data-sharing"
+					checked={dataSharing}
+					onCheckedChange={setDataSharing}
+				/>
 			</div>
 			<Button
 				onClick={() => onSave(analytics, marketing, dataSharing)}

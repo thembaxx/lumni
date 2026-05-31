@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/shared";
 
@@ -41,7 +42,9 @@ export function EssayInput({
 					</ul>
 				</div>
 			)}
+			<Label htmlFor="essay-input">Your essay</Label>
 			<Textarea
+				id="essay-input"
 				value={value}
 				onChange={(e) => onChange(e.target.value)}
 				disabled={disabled}

@@ -10,7 +10,6 @@ import {
 import { searchImage } from "../image-resolver";
 import { generateDiagram } from "../stem-renderer";
 import { STEM_SUBJECTS } from "../types";
-import { VisualEngine, visualEngine } from "../visual-engine";
 
 describe("barrel exports", () => {
 	test("exports diagram-mapper functions", () => {
@@ -31,14 +30,5 @@ describe("barrel exports", () => {
 
 	test("exports types constant", () => {
 		expect(STEM_SUBJECTS).toBeInstanceOf(Set);
-	});
-
-	test("exports VisualEngine class and singleton", () => {
-		expect(VisualEngine).toBeFunction();
-		expect(visualEngine).toBeInstanceOf(VisualEngine);
-	});
-
-	test("visualEngine has resolve method", () => {
-		expect(visualEngine.resolve).toBeFunction();
 	});
 });

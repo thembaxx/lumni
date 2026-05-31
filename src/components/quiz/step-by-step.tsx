@@ -52,18 +52,28 @@ export function StepByStep({ steps, subject, className }: StepByStepProps) {
 						size="icon-sm"
 						onClick={prevStep}
 						disabled={currentStep === 0}
+						aria-label="Previous step"
 						className="size-8 hover:bg-[--system-accent]/10"
 					>
-						<HugeiconsIcon icon={ArrowLeft01Icon} data-icon="inline-start" />
+						<HugeiconsIcon
+							icon={ArrowLeft01Icon}
+							data-icon="inline-start"
+							aria-hidden="true"
+						/>
 					</Button>
 					<Button
 						variant="ghost"
 						size="icon-sm"
 						onClick={nextStep}
 						disabled={currentStep === steps.length - 1}
+						aria-label="Next step"
 						className="size-8 bg-[--system-accent]/5 hover:bg-[--system-accent]/10"
 					>
-						<HugeiconsIcon icon={ArrowRight01Icon} data-icon="inline-start" />
+						<HugeiconsIcon
+							icon={ArrowRight01Icon}
+							data-icon="inline-start"
+							aria-hidden="true"
+						/>
 					</Button>
 				</div>
 			</div>

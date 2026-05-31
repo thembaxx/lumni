@@ -113,8 +113,13 @@ export function SwipeableCardDeck({
 
 	if (isComplete && cards.length > 0) {
 		return (
-			<div className="flex flex-col items-center justify-center gap-4 py-12">
-				<div className="text-6xl">🎉</div>
+			<div
+				role="alert"
+				className="flex flex-col items-center justify-center gap-4 py-12"
+			>
+				<div className="text-6xl" aria-hidden="true">
+					🎉
+				</div>
 				<h3 className="font-semibold text-xl">Deck Complete!</h3>
 				<p className="text-muted-foreground text-sm">
 					You reviewed all {cards.length} cards.

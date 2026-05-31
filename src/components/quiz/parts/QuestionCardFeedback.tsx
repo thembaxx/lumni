@@ -90,6 +90,7 @@ export function QuestionCardFeedback({
 
 	return (
 		<m.div
+			role="alert"
 			initial={{ opacity: 0, scale: 0.95, y: -8 }}
 			animate={{ opacity: 1, scale: 1, y: 0 }}
 			transition={{ duration: 0.3, ease: iOSEase }}
@@ -273,9 +274,14 @@ export function QuestionCardFeedback({
 								size="icon-sm"
 								onClick={handleFollowUp}
 								disabled={!followUpInput.trim()}
+								aria-label={t("quiz.sendFollowUp")}
 								className="size-9 shrink-0"
 							>
-								<HugeiconsIcon icon={MailSend01Icon} data-icon />
+								<HugeiconsIcon
+									icon={MailSend01Icon}
+									data-icon
+									aria-hidden="true"
+								/>
 							</Button>
 						</div>
 					)}

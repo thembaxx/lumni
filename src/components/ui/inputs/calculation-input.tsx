@@ -34,8 +34,9 @@ export function CalculationInput({
 	return (
 		<div className="flex flex-col gap-3">
 			<div className="flex items-center gap-3">
-				<Label>Answer:</Label>
+				<Label htmlFor="calculation-answer">Answer:</Label>
 				<Input
+					id="calculation-answer"
 					value={value}
 					onChange={(e) => onChange(e.target.value)}
 					disabled={disabled}
@@ -44,13 +45,19 @@ export function CalculationInput({
 				/>
 				{unit && <span className="text-muted-foreground text-sm">{unit}</span>}
 				{onUnitChange && (
-					<Input
-						value={unit || ""}
-						onChange={(e) => onUnitChange(e.target.value)}
-						disabled={disabled}
-						placeholder="Unit"
-						className="w-20"
-					/>
+					<>
+						<Label htmlFor="calculation-unit" className="sr-only">
+							Unit
+						</Label>
+						<Input
+							id="calculation-unit"
+							value={unit || ""}
+							onChange={(e) => onUnitChange(e.target.value)}
+							disabled={disabled}
+							placeholder="Unit"
+							className="w-20"
+						/>
+					</>
 				)}
 			</div>
 			{onWorkingChange && (

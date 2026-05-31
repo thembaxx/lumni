@@ -232,6 +232,42 @@ All 21 items across P2 and P3 are implemented. Total changes:
 - **Appwrite SA Region**: Console-side verification (non-code)
 - **New features / bug fixes**: Open for prioritization
 
+## ✅ Session 18 — Polish & Hardening (June 2026)
+
+### Test suite hardening
+- [x] **e2e exclusion**: Fixed e2e Playwright files loaded by `bun test` — added `exclude = ["**/e2e/**"]` to `bunfig.toml`
+- [x] **localStorage**: Added `globalThis.localStorage` to test `setup.ts` (happy-dom Window) — fixes `ReferenceError` in 89 source files
+- [x] **Missing mock exports**: Added `markPlanStale`, `clearPlanStale`, `syncStudyPlanToAppwrite` to `use-study-planner.test.ts` mock
+- [x] **Missing mock exports (api-fetch)**: Added `isBudgetExceeded`, `showBudgetToast` to `use-gamification.test.tsx` api-fetch mock
+- [x] **useVisualEngine premium gate**: Added `mock.module("@/lib/premium/premium-context")` — tests were silently disabled by premium gating
+- [x] **Visual-engine module cache conflicts**: Extracted shared `_appwrite-mocks.ts` for `@/lib/appwrite` + `@/lib/db/client` + `@/lib/db/repositories/visual-cache` + `@/lib/shared/json` mocks; removed `../visual-engine` import from `index.test.ts` + `visual-engine.test.ts` to avoid pre-loading real modules before mocks register
+- [x] **Result**: 1073→1109 pass, 13→5 fail (remaining 5 are e2e Playwright files, expected)
+
+### WCAG 2.2 AA Accessibility Audit
+- [x] **Quiz flow**: Audited `quiz-view.tsx`, `QuestionCardInput`, `QuestionCardFeedback`, `step-by-step.tsx`, `calculation-input.tsx`, `matching-input.tsx` — found 17 critical + 22 high + 18 medium issues
+- [x] **Flashcard + GDPR**: Audited `swipeable-card-deck`, `swipeable-card`, `quality-picker`, `cookie-banner`, `tos-banner`, `consent-gate`, `privacy-tab`, `settings-client` — found 9 critical + 12 high issues
+- [x] **Exam + Navigation**: Audited `exam-engine`, `session-question-navigator`, `session-results-view`, `session-part-answer-input`, `top-nav`, `bottom-nav`, `desktop-sidebar`, `layout.tsx`, `immersive-mode` — found 2 critical + 5 high issues
+
+### Critical a11y fixes (10 items)
+- [x] **Cookie banner**: Added `htmlFor`/`id` to 4 Label/Switch pairs
+- [x] **Privacy tab**: Added `htmlFor`/`id` to 3 Label/Switch pairs
+- [x] **Bottom nav**: Replaced `outline-none` with `focus-visible:ring-2 focus-visible:ring-inset`
+- [x] **Top nav**: Replaced `outline-none` on avatar dropdown trigger with `focus-visible:ring-2`
+- [x] **Settings back link**: Added `aria-label` to icon-only back navigation link
+- [x] **Step-by-step prev/next**: Added `aria-label` + `aria-hidden="true"` on icon-only buttons
+- [x] **QuestionCardFeedback send**: Added `aria-label` + `aria-hidden="true"` on icon-only send button
+- [x] **Quiz-view**: Fixed broken `aria-labelledby="quiz-title"` → `aria-label="Quiz Practice"`
+
+### Error state audit
+- [x] **GDPR consent failure**: No crashes — dual-write to Dexie first, Appwrite sync best-effort. QuestionEngine gracefully returns `[]` on consent denial. VisualEngine falls back to Wikimedia.
+- [x] **Swipeable deck empty**: Triple-layered guards (deck, sm2-session, flashcards-client) with `FlashcardsEmpty` component
+- [x] **Immersive exit button**: Properly positioned, z-modal, semi-transparent. Minor: lacks `safe-area-inset-top` for notched iPhones
+
+### Verification
+- [x] `tsc --noEmit` — zero errors
+- [x] `biome check` — zero errors on all 8 changed files
+- [x] `bun test` — 1109 pass, 5 fail (e2e only)
+
 ## ✅ Session 17 — Premium Gating + Student Assignments (May 2026)
 
 ### Premium gating

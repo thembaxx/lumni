@@ -38,7 +38,8 @@ export function MatchingInput({
 	const rightOptions = [...new Set(items.map((i) => i.right))];
 
 	return (
-		<div className="flex flex-col gap-3">
+		<fieldset className="flex flex-col gap-3">
+			<legend className="sr-only">{colA} — Match each item</legend>
 			<div className="mb-1 grid grid-cols-[1fr_auto_1fr] items-center gap-3 font-medium text-muted-foreground text-sm">
 				<span>{colA}</span>
 				<span />
@@ -46,13 +47,18 @@ export function MatchingInput({
 			</div>
 			{items.map((item) => {
 				const itemLeft = item.left;
+				const selectId = `match-${itemLeft.replace(/\s+/g, "-").toLowerCase()}`;
 				return (
 					<div
 						key={item.left}
 						className="grid grid-cols-[1fr_auto_1fr] items-center gap-3"
 					>
-						<span className="text-sm">{itemLeft}</span>
-						<span className="text-muted-foreground">↔</span>
+						<label htmlFor={selectId} className="text-sm">
+							{itemLeft}
+						</label>
+						<span className="text-muted-foreground" aria-hidden="true">
+							↔
+						</span>
 						<Select
 							value={value?.[itemLeft] || ""}
 							onValueChange={(v) => {
@@ -60,7 +66,7 @@ export function MatchingInput({
 							}}
 							disabled={disabled}
 						>
-							<SelectTrigger className="w-full">
+							<SelectTrigger id={selectId} className="w-full">
 								<SelectValue placeholder="Select..." />
 							</SelectTrigger>
 							<SelectContent>
@@ -74,6 +80,6 @@ export function MatchingInput({
 					</div>
 				);
 			})}
-		</div>
+		</fieldset>
 	);
 }

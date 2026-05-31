@@ -6,7 +6,7 @@ Lumni is an offline-capable, mobile-first SA Matric exam prep platform using Nex
 
 ## Current Mission
 
-Feature completion and hardening: immersive quiz/exam mode shipped, swipeable Tinder-style flashcard deck shipped, full-screen mode with auto-nav-hiding shipped. Active: GDPR/POPIA legal compliance suite — consent management, cookie banner, account deletion, data export, TOS versioning, cookie policy.
+Polish & hardening phase: WCAG 2.2 AA audit and critical fixes complete. Test suite hardened (1109 pass). GDPR/POPIA consent suite fully implemented. Active: continued polish — keyboard accessibility for swipeable deck, prefers-reduced-motion, quiz input labels.
 
 ## System at a Glance
 

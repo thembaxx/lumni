@@ -97,6 +97,8 @@ mock.module("@/lib/utils/study-planner", () => ({
 			generatedAt: mockPlan.generatedAt,
 		};
 	},
+	markPlanStale: () => {},
+	clearPlanStale: () => {},
 	syncStudyPlanToAppwrite: async () => {},
 }));
 

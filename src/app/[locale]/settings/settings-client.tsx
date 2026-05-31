@@ -206,6 +206,7 @@ function SettingsContent() {
 						<div className="flex items-center gap-4">
 							<Link
 								href="/dashboard"
+								aria-label={t("settings.backToDashboard")}
 								className="flex size-10 items-center justify-center rounded-full border border-border/40 bg-system-surface text-foreground shadow-sm transition-colors hover:bg-secondary active:scale-[0.96]"
 							>
 								<HugeiconsIcon icon={ArrowLeftIcon} className="size-5" />

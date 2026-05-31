@@ -78,7 +78,7 @@ const NavItemComponent = memo(function NavItemComponent({
 			onClick={onClick}
 			aria-label={item.label}
 			aria-current={isActive ? "page" : undefined}
-			className="relative m-0 flex h-full min-w-0 flex-1 cursor-pointer flex-col items-center justify-center gap-0.5 border-none bg-transparent p-0 text-inherit outline-none"
+			className="relative m-0 flex h-full min-w-0 flex-1 cursor-pointer flex-col items-center justify-center gap-0.5 border-none bg-transparent p-0 text-inherit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--system-accent] focus-visible:ring-inset"
 			whileTap={{ scale: 0.96 }}
 			transition={{ type: "spring", duration: 0.25, bounce: 0 }}
 		>

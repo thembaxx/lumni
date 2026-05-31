@@ -12,3 +12,4 @@ globalThis.HTMLCanvasElement =
 	window.HTMLCanvasElement as unknown as typeof HTMLCanvasElement;
 globalThis.customElements =
 	window.customElements as unknown as CustomElementRegistry;
+globalThis.localStorage = window.localStorage;

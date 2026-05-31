@@ -81,6 +81,20 @@ export function SwipeableCard({
 		}
 	}
 
+	function handleKeyDown(e: React.KeyboardEvent) {
+		if (!isTop) return;
+		if (e.key === "Enter" || e.key === " ") {
+			e.preventDefault();
+			handleTap();
+		} else if (e.key === "ArrowLeft") {
+			e.preventDefault();
+			onSwipe("left");
+		} else if (e.key === "ArrowRight") {
+			e.preventDefault();
+			onSwipe("right");
+		}
+	}
+
 	return (
 		<m.div
 			className={cn(
@@ -100,6 +114,10 @@ export function SwipeableCard({
 			}}
 			whileTap={{ cursor: "grabbing" }}
 			layout
+			tabIndex={isTop ? 0 : -1}
+			role="button"
+			aria-label={`Flashcard: ${front}`}
+			onKeyDown={isTop ? handleKeyDown : undefined}
 		>
 			<m.div
 				className="perspective-1000 relative h-full w-full"
@@ -147,7 +165,9 @@ export function SwipeableCard({
 
 						{isTop && !isFlipped && (
 							<div className="mt-4 text-center">
-								<p className="text-muted-foreground text-xs">Tap to flip</p>
+								<p className="text-muted-foreground text-xs">
+									Tap or press Space/Enter to flip
+								</p>
 							</div>
 						)}
 					</div>
@@ -181,7 +201,8 @@ export function SwipeableCard({
 						{isTop && isFlipped && (
 							<div className="mt-4 text-center">
 								<p className="text-muted-foreground text-xs">
-									Swipe right if correct, left if incorrect
+									Swipe right if correct, left if incorrect. Arrow keys or
+									Space/Enter to flip.
 								</p>
 							</div>
 						)}

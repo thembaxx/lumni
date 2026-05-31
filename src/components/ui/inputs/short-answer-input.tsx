@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/shared";
 
 interface ShortAnswerInputProps {
@@ -23,7 +24,9 @@ export function ShortAnswerInput({
 
 	return (
 		<div className="flex flex-col gap-3">
+			<Label htmlFor="short-answer-input">Your answer</Label>
 			<Input
+				id="short-answer-input"
 				value={value}
 				onChange={(e) => {
 					const next = e.target.value;

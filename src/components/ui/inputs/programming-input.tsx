@@ -68,6 +68,7 @@ function LazySyntaxHighlighter({
 }
 
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/shared";
 
@@ -100,7 +101,9 @@ export function ProgrammingInput({
 					</LazySyntaxHighlighter>
 				</div>
 			)}
+			<Label htmlFor="programming-input">Your solution ({language})</Label>
 			<Textarea
+				id="programming-input"
 				value={value}
 				onChange={(e) => {
 					onChange(e.target.value);

@@ -42,7 +42,11 @@ export function TimerDisplay({
 	const styles = variantStyles[variant];
 
 	return (
-		<div className={cn(styles.container, className)}>
+		<div
+			className={cn(styles.container, className)}
+			role="timer"
+			aria-live="polite"
+		>
 			{showIcon && (
 				<HugeiconsIcon
 					icon={Timer01Icon}

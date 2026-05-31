@@ -66,7 +66,7 @@ export function PrivacyTab() {
 				<div className="flex flex-col gap-4">
 					<div className="flex items-center justify-between">
 						<div>
-							<Label className="font-medium">
+							<Label htmlFor="privacy-analytics" className="font-medium">
 								{t("consent.privacyTab.analytics")}
 							</Label>
 							<p className="text-muted-foreground text-sm">
@@ -74,13 +74,14 @@ export function PrivacyTab() {
 							</p>
 						</div>
 						<Switch
+							id="privacy-analytics"
 							checked={consent.analytics}
 							onCheckedChange={(v) => updateConsent({ analytics: v })}
 						/>
 					</div>
 					<div className="flex items-center justify-between">
 						<div>
-							<Label className="font-medium">
+							<Label htmlFor="privacy-marketing" className="font-medium">
 								{t("consent.privacyTab.marketing")}
 							</Label>
 							<p className="text-muted-foreground text-sm">
@@ -88,13 +89,14 @@ export function PrivacyTab() {
 							</p>
 						</div>
 						<Switch
+							id="privacy-marketing"
 							checked={consent.marketing}
 							onCheckedChange={(v) => updateConsent({ marketing: v })}
 						/>
 					</div>
 					<div className="flex items-center justify-between">
 						<div>
-							<Label className="font-medium">
+							<Label htmlFor="privacy-data-sharing" className="font-medium">
 								{t("consent.privacyTab.dataSharing")}
 							</Label>
 							<p className="text-muted-foreground text-sm">
@@ -102,6 +104,7 @@ export function PrivacyTab() {
 							</p>
 						</div>
 						<Switch
+							id="privacy-data-sharing"
 							checked={consent.dataSharing}
 							onCheckedChange={(v) => updateConsent({ dataSharing: v })}
 						/>

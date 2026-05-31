@@ -163,7 +163,7 @@ export function TopNav({ title, className }: TopNavProps) {
 						</Button>
 					) : status === "authenticated" && !isAnonymous ? (
 						<DropdownList>
-							<DropdownListTrigger className="outline-none">
+							<DropdownListTrigger className="rounded-full focus-visible:ring-2 focus-visible:ring-[--system-accent] focus-visible:ring-offset-2">
 								<Avatar className="size-8 cursor-pointer ring-2 ring-transparent transition-shadow hover:ring-system-accent/30">
 									<AvatarImage src={imgSrc} alt={user?.name || "User"} />
 									<AvatarFallback className="bg-system-accent font-bold text-white text-xs">

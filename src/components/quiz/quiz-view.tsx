@@ -171,7 +171,7 @@ export function QuizView({
 	}
 
 	return (
-		<section className="min-h-dvh bg-background" aria-labelledby="quiz-title">
+		<section className="min-h-dvh bg-background" aria-label="Quiz Practice">
 			<m.main
 				className="mx-auto flex w-full max-w-2xl flex-col gap-6 p-4 md:p-6"
 				tabIndex={-1}

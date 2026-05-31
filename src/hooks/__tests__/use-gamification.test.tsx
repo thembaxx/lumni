@@ -19,6 +19,8 @@ let mockGamificationData: Record<string, unknown> = {
 
 mock.module("@/lib/shared/api-fetch", () => ({
 	apiFetch: mock(async (_url: string) => mockGamificationData),
+	isBudgetExceeded: () => false,
+	showBudgetToast: () => {},
 }));
 
 const { useGamification } = await import("@/hooks/use-gamification");
