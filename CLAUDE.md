@@ -1,0 +1,17 @@
+# Lumni Agent Guide
+
+## Context Bootstrap Preamble
+**You must load the project's context layer before performing any tasks.** This eliminates expensive repository scans and ensures alignment with the current architecture and decisions.
+
+Run the following command at the start of every session:
+```bash
+cat .context/context.md .context/system-design.md .context/memory.md .context/repo-index.md
+```
+
+## Guidelines
+- **Verify before acting**: Context files are hints. Always verify specific file paths or function names before making changes.
+- **Update memory**: If you make a significant architectural decision or solve a complex bug, record it in `.context/memory.md`.
+- **Sync status**: Ensure `.context/context.md` reflects your current progress and next steps.
+
+## Daily Maintenance
+Run the maintenance prompt (as described in the project documentation) to refresh the context layer once a day.

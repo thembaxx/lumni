@@ -1,56 +1,28 @@
-<!-- LAST_SYNC: 2026-05-29 -->
+<!-- LAST_SYNC: 2026-05-31 -->
 # Master Context — Lumni
 
-## PROJECT_IDENTITY
-Lumni is a mobile-first South African Matric prep platform featuring offline-first architecture, AI-powered educational engines, and "The Emerald Study Room" design system.
+## Project Identity
+AI-powered South African Matric (Grade 12) prep platform. Offline-first architecture, Emerald Study Room design system.
 
-## CURRENT_FOCUS
-Stabilizing offline-first sync, expanding AI Quiz Packs for fully offline practice, and implementing national exam tracking and immersive study experiences.
+## Current Sprint
+- **Focus**: Finalizing B2B2C flows (Teacher assignments, Parent reports), AI observability, and premium gating.
+- **Active Tasks**:
+  - Verifying Appwrite SA Region migration console-side.
+  - Hardening photo-math OCR event bus integration.
+  - Finalizing localization for AF and ZU.
+- **Blockers**: WhatsApp Business API verification (external).
 
-## KEY_CONSTRAINTS
-- **AI Budget**: 2000 global calls/day; strict user caps (20 gen, 100 grade, 20 hint, 50 visual).
-- **Offline-First**: All reads must prioritize Dexie; all writes must be sync-queued via `QueueCore`.
-- **Math Delimiters**: Strictly use `$...$` (inline) and `$$...$$` (display).
-- **Design Tokens**: Strict enforcement of OKLCH colors, semantic shadows (`shadow-level-1/2/3`), and radius (`rounded-card-lg`).
-- **Anonymous Gating**: Users are anonymous by default; soft gating redirects to sign-in for referrals/analytics/sync.
+## Next Actions
+1. **Maintenance**: Refresh context layer to follow the new 4-file production standard.
+2. **Cleanup**: Delete redundant `prompt-catalog.md` and `code-signatures.json`.
+3. **Verify**: Ensure `CLAUDE.md` is correctly directing agents to the context layer.
 
-## DEFINITIONS
-- **QuestionEngine**: Single source of truth for generation/grading at `src/lib/question-engine/`.
-- **FlashcardEngine**: Unified engine for SR (SM-2/FSRS) at `src/lib/flashcard-engine/`.
-- **Emerald Design**: Aesthetic defined in `DESIGN.md` using Tailwind v4 and semantic tokens.
-- **Quiz Packs**: Downloadable AI question sets for offline use, managed by `QuizPackService`.
-- **Immersive Mode**: nav-hiding UI state for focus, managed by `ImmersiveModeProvider`.
+## Key Constraints
+- **AI Budget**: 2000 global calls/day. Strict per-user caps (20 gen, 100 grade, 20 hint, 50 visual).
+- **Offline-First**: Dexie is the source of truth for all client reads.
+- **Math**: Dollar-sign delimiters only.
 
-## DECISION_LOG
-- [D024] `ImmersiveModeProvider` auto-hides navigation during active sessions.
-- [D025] Swipeable Tinder-style flashcards with quality-pick overlay.
-- [D026] Anonymous soft gating replaces profile/referrals with upsell illustrations.
-- [D027] `ExamDatesService` uses seed data for 2026 with background sync to Appwrite.
-- [D028] Playwright for E2E testing; Storybook for UI documentation.
-
-## KNOWLEDGE_GRAPH
-User -> [ImmersiveMode] -> [Quiz/Exam View] -> [QuestionEngine] -> [AI Providers]
-User -> [QuizPackService] -> [Offline Packs] -> [Dexie Storage]
-User -> [FlashcardEngine] -> [Swipeable Deck] -> [Dexie/Appwrite]
-API -> [createRouteHandler] -> [Auth + Zod + Budget] -> [Service Logic]
-
-## REUSABLE_SNIPPETS
-- **Immersive Exit**: `<ExitImmersiveButton />` (appears only in immersive mode).
-- **API Route**: `export const POST = createRouteHandler({ auth: "required", schema: z.object({...}), async exec({ body, user }) {...} });`
-- **Math**: `$E = mc^2$` for inline, `$$\sum_{i=1}^n i = \frac{n(n+1)}{2}$$` for display.
-- **Service Result**: `if (!result.success) return failure(result.error); return success(result.data);`
-
-## AVOID_LIST
-- ❌ No arbitrary pixel values or magic z-indices. Use design tokens.
-- ❌ No `space-y-*` for layout. Use `flex flex-col` + `gap-*`.
-- ❌ No `\(...\)` delimiters — only dollar signs for KaTeX.
-- ❌ No arbitrary shadows — use `shadow-level-1/2/3`.
-- ❌ No `bunx --bun next build` — use `npx next build`.
-
-## PROMPT_LOOKUP_TABLE
-- Architecture -> `system-design.md`
-- Code Signatures -> `code-signatures.json`
-- History/Decisions -> `memory-index.md`
-- Prompt Library -> `prompt-index.md`
-- File Map -> `repo-index.md`
-- Exam Dates -> `SPEC.md`
+## Decision Log
+- [D030] **Mega-component breakdown**: extracted 45+ sub-components from 10 overgrown files into co-located subdirs.
+- [D031] **Student Assignments**: Teachers can assign topics via Appwrite; students see "My Assignments" on dashboard.
+- [D032] **Snap-to-Answer**: Photo-math OCR results are injected into quiz inputs via a custom event bus.
