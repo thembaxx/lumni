@@ -1,5 +1,6 @@
 import type { CompetencyService } from "@/lib/competency-engine/competency-service";
 import { competencyService as defaultCompetencyService } from "@/lib/competency-engine/competency-service";
+import type { ExamDateInfo } from "@/lib/utils/study-planner";
 import { generateStudyPlan } from "./algorithms";
 import type { StudyPlan, StudyPlanSettings, SubjectCompetency } from "./types";
 
@@ -20,14 +21,20 @@ export class StudyPlannerService {
 		private competencyService: CompetencyService = defaultCompetencyService,
 	) {}
 
-	async generateStudyPlan(settings: StudyPlanSettings): Promise<StudyPlan> {
+	async generateStudyPlan(
+		settings: StudyPlanSettings,
+		examDates: ExamDateInfo[] = [],
+	): Promise<StudyPlan> {
 		const subjects = await this.getAllSubjectsCompetency();
-		return generateStudyPlan(settings, subjects);
+		return generateStudyPlan(settings, subjects, examDates);
 	}
 
-	async updateStudyPlan(currentPlan: StudyPlan): Promise<StudyPlan> {
+	async updateStudyPlan(
+		currentPlan: StudyPlan,
+		examDates: ExamDateInfo[] = [],
+	): Promise<StudyPlan> {
 		const updatedSubjects = await this.getAllSubjectsCompetency();
-		return generateStudyPlan(currentPlan.settings, updatedSubjects);
+		return generateStudyPlan(currentPlan.settings, updatedSubjects, examDates);
 	}
 
 	private async getAllSubjectsCompetency(): Promise<SubjectCompetency[]> {

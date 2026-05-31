@@ -1,3 +1,4 @@
+import type { ExamDateInfo } from "@/lib/utils/study-planner";
 import type {
 	StudyPlan,
 	StudyPlanSettings,
@@ -55,22 +56,60 @@ export function allocateDailyMinutes(
 export function generateStudyPlan(
 	settings: StudyPlanSettings,
 	subjects: SubjectCompetency[],
+	examDates: ExamDateInfo[] = [],
 ): StudyPlan {
 	const startDate = new Date(settings.startDate);
-	const endDate = new Date(settings.endDate);
+	let endDate = new Date(settings.endDate);
 	const studyDays = settings.studyDays;
 	const studyDaySet = new Set(studyDays);
 	const dailyMinutes = settings.dailyStudyMinutes;
-
-	// Calculate days until end (exam proximity)
 	const msPerDay = 86400000;
+
+	// Build exam date map: subjectId → Set of date strings
+	const examMap = new Map<string, Set<string>>();
+	let earliestExamDate: Date | null = null;
+	for (const ed of examDates) {
+		if (!examMap.has(ed.subjectId)) examMap.set(ed.subjectId, new Set());
+		examMap.get(ed.subjectId)?.add(ed.date);
+		const d = new Date(ed.date);
+		if (!earliestExamDate || d < earliestExamDate) earliestExamDate = d;
+	}
+
+	// Adjust endDate to day before earliest exam
+	if (earliestExamDate && earliestExamDate < endDate) {
+		const dayBefore = new Date(earliestExamDate);
+		dayBefore.setDate(dayBefore.getDate() - 1);
+		endDate = dayBefore;
+	}
+
+	// Days until end for exam-proximal weighting
 	const daysUntilEnd = Math.ceil(
 		(endDate.getTime() - startDate.getTime()) / msPerDay,
 	);
 	const isExamSoon = daysUntilEnd <= 7;
 
 	// 1. Calculate subject weights from inverse competency
-	const subjectWeights = calculateSubjectWeights(subjects, settings.targetAps);
+	let subjectWeights = calculateSubjectWeights(subjects, settings.targetAps);
+
+	// Boost weight for subjects with exams within 14 days
+	const now = new Date();
+	for (const [idx, subject] of subjects.entries()) {
+		const subjExams = examMap.get(subject.subjectId);
+		if (!subjExams) continue;
+		for (const dateStr of subjExams) {
+			const examDate = new Date(dateStr);
+			const daysUntil = Math.ceil(
+				(examDate.getTime() - now.getTime()) / msPerDay,
+			);
+			if (daysUntil >= 0 && daysUntil <= 14) {
+				subjectWeights[idx] *= 1.2;
+				break;
+			}
+		}
+	}
+	// Renormalize
+	const weightSum = subjectWeights.reduce((a, b) => a + b, 0);
+	if (weightSum > 0) subjectWeights = subjectWeights.map((w) => w / weightSum);
 
 	// 2. Build topic candidates
 	interface TopicCandidate {
@@ -140,6 +179,19 @@ export function generateStudyPlan(
 		};
 	}
 
+	// Helper: check if a subject has an exam on a given date
+	function isExamDay(subjectId: string, dateStr: string): boolean {
+		return examMap.get(subjectId)?.has(dateStr) ?? false;
+	}
+
+	// Helper: check if a subject has an exam the next day (rest day before exam)
+	function isDayBeforeExam(subjectId: string, dateObj: Date): boolean {
+		const next = new Date(dateObj);
+		next.setDate(next.getDate() + 1);
+		const nextStr = next.toISOString().split("T")[0];
+		return isExamDay(subjectId, nextStr);
+	}
+
 	// 4. Constraint-based assignment
 	const assigned: TopicPlan[] = [];
 	const unassigned = [...candidates];
@@ -164,6 +216,11 @@ export function generateStudyPlan(
 		for (let i = unassigned.length - 1; i >= 0; i--) {
 			if (remaining <= 0) break;
 			const cand = unassigned[i];
+
+			// Skip if subject has an exam today
+			if (isExamDay(cand.topic.subjectId, key)) continue;
+			// Skip day before exam (rest day for that subject)
+			if (isDayBeforeExam(cand.topic.subjectId, d)) continue;
 
 			if (cand.topic.estimatedMinutes > remaining) continue;
 			if (
@@ -190,6 +247,9 @@ export function generateStudyPlan(
 		for (let i = unassigned.length - 1; i >= 0; i--) {
 			if (remaining <= 0) break;
 			const cand = unassigned[i];
+
+			if (isExamDay(cand.topic.subjectId, key)) continue;
+			if (isDayBeforeExam(cand.topic.subjectId, d)) continue;
 			if (cand.topic.estimatedMinutes > remaining) continue;
 
 			cand.topic.scheduledDate = key;

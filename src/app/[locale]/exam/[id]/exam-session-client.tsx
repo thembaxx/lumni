@@ -28,7 +28,7 @@ import {
 } from "@/lib/exam/helpers";
 import { flashcardEngine } from "@/lib/flashcard-engine";
 import { trackQuestionResult } from "@/lib/orchestrator";
-import { addStudySession } from "@/lib/utils/study-planner";
+import { addStudySession, markPlanStale } from "@/lib/utils/study-planner";
 import { useExamSessionStore } from "@/store/exam-session";
 import { ExamHeader } from "./exam-session/exam-header";
 import { ModeSelectScreen } from "./exam-session/mode-select-screen";
@@ -352,6 +352,8 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 			}
 		}
 		await Promise.all(flashcardPromises);
+
+		markPlanStale();
 
 		const weakCount = partResults.filter((r) => !r.correct).length;
 		if (weakCount > 0) {

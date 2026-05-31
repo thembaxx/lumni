@@ -19,6 +19,7 @@ import { flashcardEngine } from "@/lib/flashcard-engine";
 import { trackQuestionResult } from "@/lib/orchestrator";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import { iOSEase } from "@/lib/utils/animation";
+import { markPlanStale } from "@/lib/utils/study-planner";
 
 const QuizView = dynamic(
 	() => import("@/components/quiz/quiz-view").then((m) => m.QuizView),
@@ -110,6 +111,8 @@ export function DashboardClient({
 		}
 
 		await Promise.all(flashcardPromises);
+
+		markPlanStale();
 
 		enqueue("analytics-sync", {
 			events: results.questions.map((q, i) => ({

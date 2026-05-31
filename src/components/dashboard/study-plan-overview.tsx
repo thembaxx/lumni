@@ -6,9 +6,10 @@ import {
 	Clock01Icon,
 	CrownIcon,
 	MagicWand01Icon,
+	RefreshIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -17,17 +18,48 @@ import { Label } from "@/components/ui/label";
 import { useStudyPlanner } from "@/hooks/use-study-planner";
 import { Link } from "@/i18n/navigation";
 import { usePremium } from "@/lib/premium/premium-context";
+import { getWeekOldThreshold, loadStudyPlan } from "@/lib/utils/study-planner";
 
 export function StudyPlanOverview() {
 	const { hasFeature } = usePremium();
-	const { todaySessions, upcomingExams, stats, generatePlan, isGenerating } =
-		useStudyPlanner();
+	const {
+		todaySessions,
+		upcomingExams,
+		stats,
+		generatePlan,
+		isGenerating,
+		stale,
+	} = useStudyPlanner();
 	const [targetAps, setTargetAps] = useState("25");
 	const [dailyMinutes, setDailyMinutes] = useState("30");
 	const [includeWeekends, setIncludeWeekends] = useState(false);
 	const [horizonDays, setHorizonDays] = useState("30");
 	const [horizonCustom, setHorizonCustom] = useState("");
 	const [showForm, setShowForm] = useState(false);
+	const [dismissedStale, setDismissedStale] = useState(false);
+	const autoRefreshDoneRef = useRef(false);
+
+	// Weekly auto-refresh on mount
+	useEffect(() => {
+		if (autoRefreshDoneRef.current) return;
+		autoRefreshDoneRef.current = true;
+		const plan = loadStudyPlan();
+		if (
+			plan.generatedAt > 0 &&
+			plan.lastCompetencyRefresh < getWeekOldThreshold()
+		) {
+			generatePlan({
+				targetAps: Number.parseInt(
+					localStorage.getItem("lumni_plan_target_aps") ?? "25",
+					10,
+				),
+				dailyStudyMinutes: Number.parseInt(
+					localStorage.getItem("lumni_plan_daily_minutes") ?? "30",
+					10,
+				),
+			}).catch(() => {});
+		}
+	}, [generatePlan]);
 
 	if (todaySessions.length === 0 && upcomingExams.length === 0 && !showForm) {
 		return (
@@ -234,6 +266,34 @@ export function StudyPlanOverview() {
 				</Link>
 			</CardHeader>
 			<CardContent className="flex flex-col gap-2">
+				{stale && !dismissedStale && !showForm && (
+					<div className="flex items-center justify-between gap-2 rounded-xl bg-amber-50 px-3 py-2 text-amber-800 dark:bg-amber-950/40 dark:text-amber-200">
+						<div className="flex items-center gap-2 text-xs">
+							<HugeiconsIcon icon={RefreshIcon} className="size-3.5 shrink-0" />
+							<span>
+								Your scores have changed — consider regenerating your plan.
+							</span>
+						</div>
+						<div className="flex shrink-0 items-center gap-1">
+							<Button
+								size="sm"
+								variant="ghost"
+								className="h-6 px-2 text-xs"
+								onClick={() => setShowForm(true)}
+							>
+								Regenerate
+							</Button>
+							<button
+								type="button"
+								className="text-amber-600 hover:text-amber-800 dark:text-amber-400 dark:hover:text-amber-200"
+								onClick={() => setDismissedStale(true)}
+								aria-label="Dismiss"
+							>
+								\u2715
+							</button>
+						</div>
+					</div>
+				)}
 				{todaySessions.length > 0 ? (
 					todaySessions.slice(0, 3).map((session) => (
 						<div

@@ -1,3 +1,4 @@
+import type { ExamSlot } from "@/lib/exam-dates/types";
 import { enqueue } from "@/lib/orchestrator/job-queue";
 import { loadFromStorage, saveToStorage } from "./storage";
 
@@ -27,6 +28,8 @@ export interface StudyPlan {
 	sessions: StudySession[];
 	examDates: ExamDate[];
 	generatedAt: number;
+	stale: boolean;
+	lastCompetencyRefresh: number;
 }
 
 const STUDY_PLAN_KEY = "lumni_study_plan";
@@ -36,11 +39,63 @@ export function loadStudyPlan(): StudyPlan {
 		sessions: [],
 		examDates: [],
 		generatedAt: 0,
+		stale: false,
+		lastCompetencyRefresh: 0,
 	});
 }
 
 export function saveStudyPlan(plan: StudyPlan): void {
 	saveToStorage(STUDY_PLAN_KEY, plan);
+}
+
+export function markPlanStale(): void {
+	const plan = loadStudyPlan();
+	if (!plan.stale) {
+		plan.stale = true;
+		saveToStorage(STUDY_PLAN_KEY, plan);
+	}
+}
+
+export function clearPlanStale(): void {
+	const plan = loadStudyPlan();
+	plan.stale = false;
+	plan.lastCompetencyRefresh = Date.now();
+	saveToStorage(STUDY_PLAN_KEY, plan);
+}
+
+export function getWeekOldThreshold(): number {
+	return Date.now() - 7 * 24 * 60 * 60 * 1000;
+}
+
+export function mergeNationalExamDates(slots: ExamSlot[]): StudyPlan {
+	const plan = loadStudyPlan();
+	for (const slot of slots) {
+		const paper = `Paper ${slot.paperNumber}`;
+		const exists = plan.examDates.some(
+			(e) => e.subject === slot.subjectId && e.paper === paper,
+		);
+		if (exists) continue;
+		plan.examDates.push({
+			id: `exam_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+			subject: slot.subjectId,
+			paper,
+			date: new Date(slot.date).getTime(),
+			daysUntil: Math.max(
+				0,
+				Math.ceil(
+					(new Date(slot.date).getTime() - Date.now()) / (1000 * 60 * 60 * 24),
+				),
+			),
+		});
+	}
+	plan.stale = true;
+	saveToStorage(STUDY_PLAN_KEY, plan);
+	return plan;
+}
+
+export interface ExamDateInfo {
+	subjectId: string;
+	date: string;
 }
 
 function generateRecurringSessions(

@@ -7,14 +7,17 @@ import {
 	addExamDate,
 	addStudySession,
 	autoScheduleSessions,
+	clearPlanStale,
 	deleteExamDate,
 	deleteStudySession,
 	type ExamDate,
+	type ExamDateInfo,
 	getStudyStats,
 	getTodaySessions,
 	getUpcomingExams,
 	getUpcomingSessions,
 	loadStudyPlan,
+	markPlanStale,
 	type StudyPlan,
 	type StudySession,
 	saveStudyPlan,
@@ -35,6 +38,7 @@ export interface UseStudyPlannerReturn {
 	upcomingSessions: StudySession[];
 	upcomingExams: ExamDate[];
 	stats: ReturnType<typeof getStudyStats>;
+	stale: boolean;
 	addSession: (session: Omit<StudySession, "id">) => void;
 	updateSession: (id: string, updates: Partial<StudySession>) => void;
 	removeSession: (id: string) => void;
@@ -60,7 +64,8 @@ export function useStudyPlanner(): UseStudyPlannerReturn {
 	const [isGenerating, setIsGenerating] = useState(false);
 
 	const refresh = useCallback(() => {
-		setPlan(loadStudyPlan());
+		const p = loadStudyPlan();
+		setPlan(p);
 		setTodaySessions(getTodaySessions());
 		setUpcomingSessions(getUpcomingSessions(7));
 		setUpcomingExams(getUpcomingExams());
@@ -112,6 +117,7 @@ export function useStudyPlanner(): UseStudyPlannerReturn {
 				completed: true,
 				completedAt: Date.now(),
 			});
+			markPlanStale();
 			if (user?.$id)
 				syncStudyPlanToAppwrite(user.$id).catch((e) =>
 					console.warn("Sync markComplete failed:", e),
@@ -179,18 +185,41 @@ export function useStudyPlanner(): UseStudyPlannerReturn {
 					endDate: endDate.toISOString().split("T")[0],
 				};
 
-				const service = getStudyPlannerService();
-				const algorithmPlan = await service.generateStudyPlan(planSettings);
-
+				// Load plan to get exam dates for the algorithm
 				const existingPlan = loadStudyPlan();
+				const examDateInfos: ExamDateInfo[] = existingPlan.examDates.map(
+					(ed) => ({
+						subjectId: ed.subject,
+						date: new Date(ed.date).toISOString().split("T")[0],
+					}),
+				);
+
+				const service = getStudyPlannerService();
+				const algorithmPlan = await service.generateStudyPlan(
+					planSettings,
+					examDateInfos,
+				);
+
+				// Build exam date lookup for type conversion
+				const examSubjectsByDate = new Map<string, Set<string>>();
+				for (const ed of existingPlan.examDates) {
+					const dateStr = new Date(ed.date).toISOString().split("T")[0];
+					if (!examSubjectsByDate.has(dateStr))
+						examSubjectsByDate.set(dateStr, new Set());
+					examSubjectsByDate.get(dateStr)?.add(ed.subject);
+				}
+
 				const newSessions: Omit<StudySession, "id">[] = [];
 				for (const t of algorithmPlan.topics) {
 					const scheduledDate = t.scheduledDate;
 					if (scheduledDate) {
+						const isExamDay = examSubjectsByDate
+							.get(scheduledDate)
+							?.has(t.subjectId);
 						newSessions.push({
 							subject: t.subjectId,
 							topic: t.topicId,
-							type: "quiz" as const,
+							type: isExamDay ? "review" : ("quiz" as const),
 							scheduledAt: new Date(scheduledDate).getTime(),
 							duration: Math.round(t.estimatedMinutes),
 							completed: t.isCompleted,
@@ -209,6 +238,7 @@ export function useStudyPlanner(): UseStudyPlannerReturn {
 					});
 				}
 				existingPlan.generatedAt = Date.now();
+				clearPlanStale();
 				saveStudyPlan(existingPlan);
 				schedulePlanAwareReminder();
 				if (user?.$id)
@@ -231,6 +261,7 @@ export function useStudyPlanner(): UseStudyPlannerReturn {
 		upcomingSessions,
 		upcomingExams,
 		stats,
+		stale: plan.stale,
 		addSession,
 		updateSession,
 		removeSession,
