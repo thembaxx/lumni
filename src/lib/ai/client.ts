@@ -1,8 +1,8 @@
+import { dataSharingConsent } from "@/lib/consent/ai-gate";
 import { trackAILatency } from "./latency-tracker";
 import { createGeminiProvider } from "./providers/gemini";
 import { createGroqProvider } from "./providers/groq";
 import { createNvidiaProvider } from "./providers/nvidia";
-import { dataSharingConsent } from "@/lib/consent/ai-gate";
 import type { AIFailure, AIProvider, AIRequest, AIResult } from "./types";
 
 export interface AIConfig {
