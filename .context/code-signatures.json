@@ -1,6 +1,5 @@
-<!-- LAST_SYNC: 2026-05-29 -->
 {
-  "LAST_SYNC": "2026-05-29",
+  "LAST_SYNC": "2026-05-31",
   "modules": [
     {
       "path": "src/lib/flashcard-engine/engine.ts",
@@ -8,14 +7,13 @@
         {
           "name": "FlashcardEngine",
           "type": "class",
-          "description": "Unified engine for flashcard management, spaced repetition algorithms (SM-2/FSRS), and daily limits.",
+          "description": "Unified engine for flashcard management and spaced repetition (SM-2/FSRS).",
           "methods": [
             "getDueCards(subject?: string): Promise<FlashcardSM2[]>",
             "getNewCards(subject?: string, limit?: number): Promise<FlashcardSM2[]>",
             "create(front: string, back: string, subject: string, topic?: string): Promise<FlashcardSM2>",
             "review(id: string, quality: number): Promise<FlashcardSM2 | null>",
-            "getStats(): Promise<FlashcardStats>",
-            "convertQuizToFlashcards(questions: Question[], subject: string): Promise<FlashcardSM2[]>"
+            "getStats(): Promise<FlashcardStats>"
           ]
         },
         {
@@ -24,7 +22,7 @@
           "description": "Exported singleton instance of FlashcardEngine."
         }
       ],
-      "internalDependencies": ["@/lib/db/schema", "@/lib/orchestrator/fsrs", "@/lib/orchestrator/job-queue", "@/lib/orchestrator/sm2", "@/lib/utils/storage"]
+      "internalDependencies": ["@/lib/db/schema", "@/lib/orchestrator/fsrs", "@/lib/orchestrator/job-queue"]
     },
     {
       "path": "src/lib/question-engine/question-engine.ts",
@@ -42,7 +40,7 @@
           ]
         }
       ],
-      "internalDependencies": ["@/lib/ai", "@/lib/caching-strategy", "./processor-registry", "./prompt-manager"]
+      "internalDependencies": ["@/lib/ai", "@/lib/caching-strategy", "./processor-registry"]
     },
     {
       "path": "src/lib/visual-engine/visual-engine.ts",
@@ -50,7 +48,7 @@
         {
           "name": "VisualEngine",
           "type": "class",
-          "description": "Manages generation and retrieval of educational visuals using Konva (STEM) or Wikimedia search.",
+          "description": "Manages generation of STEM diagrams (Konva) or Wikimedia images.",
           "methods": [
             "static initialize(): void",
             "resolve(params: VisualEngineParams): Promise<VisualContent | null>"
@@ -62,7 +60,7 @@
           "description": "Exported singleton instance of VisualEngine."
         }
       ],
-      "internalDependencies": ["@/lib/ai", "@/lib/caching-strategy", "./image-resolver", "./stem-renderer", "./visual-persistence"]
+      "internalDependencies": ["@/lib/ai", "@/lib/caching-strategy", "./stem-renderer"]
     },
     {
       "path": "src/lib/orchestrator/learning-orchestrator.ts",
@@ -70,7 +68,7 @@
         {
           "name": "LearningOrchestrator",
           "type": "class",
-          "description": "Coordinates QuestionEngine operations with background jobs (sync, visual generation, progress tracking).",
+          "description": "Coordinates engines and background jobs for sync and progress tracking.",
           "methods": [
             "static initialize(): Promise<LearningOrchestrator>",
             "generateQuestionSet(params: GenerationParams): Promise<GenerateResult>",
@@ -78,64 +76,7 @@
           ]
         }
       ],
-      "internalDependencies": ["@/lib/question-engine/question-engine", "./grading", "./job-queue", "@/lib/utils/engine-analytics"]
-    },
-    {
-      "path": "src/lib/quiz-packs/service.ts",
-      "exports": [
-        {
-          "name": "QuizPackService",
-          "type": "class",
-          "description": "Service for managing offline AI quiz packs, their lifecycle, and storage.",
-          "methods": [
-            "generatePack(subject: string, topic: string | null, count: number): Promise<QuizPack>",
-            "markReady(id: string, storageBytes: number): Promise<void>",
-            "getPacks(): Promise<QuizPack[]>",
-            "deletePack(id: string): Promise<void>",
-            "getQuestions(packId: string): Promise<QuizPackQuestion[]>",
-            "storeQuestions(packId: string, questions: Omit<QuizPackQuestion, 'packId'>[]): Promise<void>",
-            "cleanupExpired(): Promise<number>"
-          ]
-        },
-        {
-          "name": "quizPackService",
-          "type": "singleton",
-          "description": "Exported singleton instance of QuizPackService."
-        }
-      ],
-      "internalDependencies": ["@/lib/db/schema", "nanoid"]
-    },
-    {
-      "path": "src/lib/exam-dates/service.ts",
-      "exports": [
-        {
-          "name": "getExamDates",
-          "description": "Fetches exam slots for a session/year from Dexie or Seed data."
-        },
-        {
-          "name": "getNextExams",
-          "description": "Gets upcoming exams (default 2) from current date."
-        },
-        {
-          "name": "syncExamDatesToAppwrite",
-          "description": "Enqueues background job to sync exam dates to Appwrite."
-        },
-        {
-          "name": "syncExamDatesDirect",
-          "description": "Direct server-side sync of exam dates to Appwrite."
-        }
-      ],
-      "internalDependencies": ["@/lib/db/schema", "@/lib/orchestrator/job-queue", "appwrite"]
-    },
-    {
-      "path": "src/lib/services/index.ts",
-      "exports": [
-        { "name": "aiSolver", "description": "Service for AI-powered problem solving." },
-        { "name": "analyticsService", "description": "Unified analytics for user progress and engagement." },
-        { "name": "notificationService", "description": "Handles push notifications and study reminders." },
-        { "name": "searchAll", "description": "Global search service across subjects, topics, and questions." },
-        { "name": "questionRatingService", "description": "Manages user ratings and quality feedback for questions." }
-      ]
+      "internalDependencies": ["@/lib/question-engine/question-engine", "./job-queue"]
     },
     {
       "path": "src/lib/api/create-route-handler.ts",
@@ -143,12 +84,7 @@
         {
           "name": "createRouteHandler",
           "type": "function",
-          "description": "Generic factory for Next.js API route handlers with integrated auth, validation, and budget tracking."
-        },
-        {
-          "name": "HttpError",
-          "type": "class",
-          "description": "Standardized HTTP error for use within createRouteHandler."
+          "description": "Declarative factory for API routes with auth, Zod validation, and error wrapping."
         }
       ]
     },
@@ -158,7 +94,7 @@
         {
           "name": "offlineDB",
           "type": "instance",
-          "description": "Dexie database instance with 30+ tables for offline-first persistence."
+          "description": "Dexie database instance with 23 tables (v23 schema)."
         }
       ]
     }

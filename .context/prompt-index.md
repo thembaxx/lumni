@@ -1,4 +1,4 @@
-<!-- LAST_SYNC: 2026-05-29 -->
+<!-- LAST_SYNC: 2026-05-31 -->
 # Prompt Index — Lumni
 
 | ID | Category | Prompt Name | File Path | Purpose | Key Variables | When to Use | Status |
@@ -14,9 +14,9 @@
 | P009 | Spec | `spec-learning-experience` | `docs/superpowers/specs/2026-05-13-learning-experience-design.md` | Curriculum/Competency Engine design | N/A | Extending competency engine | [active][spec] |
 | P010 | Spec | `spec-orchestrator-job-queue` | `docs/superpowers/specs/2026-05-13-orchestrator-job-queue-design.md` | Orchestrator and JobQueue design | N/A | Modifying orchestrator | [active][spec] |
 | P011 | Spec | `spec-photo-math-scanner` | `docs/superpowers/specs/2026-05-15-photo-math-scanner-design.md` | AI solver for photo math scanning | N/A | Working on photo math | [active][spec] |
-| P012 | Plan | `plan-markdown-renderer` | `.kilo/plans/1778596134481-stellar-sailor.md` | Markdown/KaTeX support implementation | N/A | Implementing study card fix | [active][plan] |
-| P013 | Protocol | `context-aware-prompt-protocol` | `README.md` | Prepend header to ensure agent loads context layer | TOPIC_OF_THIS_PROMPT | Starting any new task/chat | [active][system] |
-| P014 | Spec | `spec-exam-dates` | `SPEC.md` | National Exam Dates Tracker spec | N/A | Modifying exam dates logic | [active][spec] |
+| P012 | Protocol | `context-aware-prompt-protocol` | `README.md` | Prepend header to ensure agent loads context layer | TOPIC_OF_THIS_PROMPT | Starting any new task/chat | [active][system] |
+| P013 | Spec | `spec-exam-dates` | `SPEC.md` | National Exam Dates Tracker spec | N/A | Modifying exam dates logic | [active][spec] |
+| P014 | Protocol | `daily-context-sync` | `README.md` | Protocol for daily maintenance of context layer | N/A | Once per day | [active][system] |
 
 ## Key Variable Descriptions
 - `subject`: The educational subject (e.g., mathematics, physical-sciences).
