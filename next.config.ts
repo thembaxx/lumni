@@ -4,6 +4,52 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = createNextIntlPlugin();
 
+const SENTRY_TUNNEL_ROUTE = "/api/telemetry";
+const CSP_REPORT_GROUP = "csp-endpoint";
+const CSP_REPORT_PATH = "/api/csp-violation";
+
+const SENTRY_HOSTS = ["https://*.sentry.io", "https://*.ingest.us.sentry.io"];
+
+function buildCsp(isDev: boolean): string {
+	const scriptSrc = [
+		"'self'",
+		"'unsafe-inline'",
+		isDev ? "'unsafe-eval'" : "",
+	].filter(Boolean);
+
+	const connectSrc = [
+		"'self'",
+		"https://*.cloud.appwrite.io",
+		"https://*.uploadthing.com",
+		"https://api.iconify.design",
+		"https://api.simplesvg.com",
+		"https://api.unisvg.com",
+		"https://api.dicebear.com",
+		...SENTRY_HOSTS,
+	];
+
+	return [
+		"default-src 'self'",
+		`script-src ${scriptSrc.join(" ")}`,
+		"style-src 'self' 'unsafe-inline' fonts.googleapis.com",
+		"img-src 'self' data: blob: https:",
+		"font-src 'self' data: fonts.gstatic.com",
+		`connect-src ${connectSrc.join(" ")}`,
+		"worker-src 'self' blob:",
+		"frame-ancestors 'none'",
+		"object-src 'none'",
+		"base-uri 'self'",
+		"form-action 'self'",
+		"upgrade-insecure-requests",
+		`report-uri ${CSP_REPORT_PATH}`,
+		`report-to ${CSP_REPORT_GROUP}`,
+	].join("; ");
+}
+
+function buildReportingEndpoints(): string {
+	return `${CSP_REPORT_GROUP}="${CSP_REPORT_PATH}"`;
+}
+
 const nextConfig: NextConfig = {
 	experimental: {
 		viewTransition: true,
@@ -31,6 +77,7 @@ const nextConfig: NextConfig = {
 		];
 	},
 	async headers() {
+		const isDev = process.env.NODE_ENV !== "production";
 		return [
 			{
 				source: "/(.*)",
@@ -54,19 +101,11 @@ const nextConfig: NextConfig = {
 					},
 					{
 						key: "Content-Security-Policy",
-						value: [
-							"default-src 'self'",
-							"script-src 'self' 'unsafe-inline' 'unsafe-eval'",
-							"style-src 'self' 'unsafe-inline' fonts.googleapis.com",
-							"img-src 'self' data: blob: https:",
-							"font-src 'self' data: fonts.gstatic.com",
-							"connect-src 'self' https://*.cloud.appwrite.io https://*.uploadthing.com https://api.iconify.design https://api.simplesvg.com https://api.unisvg.com https://api.dicebear.com",
-							"worker-src 'self'",
-							"frame-ancestors 'none'",
-							"base-uri 'self'",
-							"form-action 'self'",
-							"report-uri /api/csp-violation",
-						].join("; "),
+						value: buildCsp(isDev),
+					},
+					{
+						key: "Reporting-Endpoints",
+						value: buildReportingEndpoints(),
 					},
 					{
 						key: "Strict-Transport-Security",
@@ -108,10 +147,9 @@ export default withNextIntl(
 		widenClientFileUpload: true,
 
 		// Route browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers.
-		// This can increase your server load as well as your hosting bill.
-		// Note: Check that the configured route will not match with your Next.js middleware, otherwise reporting of client-
-		// side errors will fail.
-		tunnelRoute: "/monitoring",
+		// The path is exempt from the i18n + auth proxy via the `/api/` prefix.
+		// See `src/proxy.ts` `isApiRoute` check.
+		tunnelRoute: SENTRY_TUNNEL_ROUTE,
 
 		webpack: {
 			// Enables automatic instrumentation of Vercel Cron Monitors. (Does not yet work with App Router route handlers.)

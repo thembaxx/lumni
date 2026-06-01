@@ -148,93 +148,108 @@ export function TopNav({ title, className }: TopNavProps) {
 					)}
 					{status === "loading" ? (
 						<div className="size-8 animate-pulse rounded-full bg-system-fill" />
-					) : status === "unauthenticated" || isAnonymous ? (
-						<Button
-							variant="ghost"
-							size="sm"
-							onClick={() => {
-								const redirect = encodeURIComponent(pathname);
-								window.location.href = `/auth/sign-in?redirect=${redirect}`;
-							}}
-							className="h-8 rounded-full px-3 font-semibold text-sm text-system-accent hover:bg-system-accent/10"
-						>
-							<HugeiconsIcon icon={Login01Icon} className="mr-1.5 size-4" />
-							Sign In
-						</Button>
-					) : status === "authenticated" && !isAnonymous ? (
-						<DropdownList>
-							<DropdownListTrigger className="rounded-full focus-visible:ring-2 focus-visible:ring-[--system-accent] focus-visible:ring-offset-2">
-								<Avatar className="size-8 cursor-pointer ring-2 ring-transparent transition-shadow hover:ring-system-accent/30">
-									<AvatarImage src={imgSrc} alt={user?.name || "User"} />
-									<AvatarFallback className="bg-system-accent font-bold text-white text-xs">
-										{user?.name?.charAt(0)?.toUpperCase() || "U"}
-									</AvatarFallback>
-								</Avatar>
-							</DropdownListTrigger>
-							<DropdownListContent align="end" sideOffset={8} className="w-56">
-								<div className="border-border/30 border-b px-3 py-2.5">
-									<div className="font-semibold text-foreground text-sm">
-										{user?.name || "Anonymous"}
-									</div>
-									<div className="mt-0.5 text-muted-foreground text-xs">
-										{user?.email || "Email not available"}
-									</div>
-								</div>
-								<div className="p-1">
-									<DropdownListItem
-										className="rounded-md"
-										onClick={() => {
-											window.location.href = "/settings?tab=profile";
-										}}
+					) : (
+						<>
+							{(status === "unauthenticated" || isAnonymous) && (
+								<Button
+									variant="ghost"
+									size="sm"
+									onClick={() => {
+										const redirect = encodeURIComponent(pathname);
+										window.location.href = `/auth/sign-in?redirect=${redirect}`;
+									}}
+									className="h-8 rounded-full px-3 font-semibold text-sm text-system-accent hover:bg-system-accent/10"
+								>
+									<HugeiconsIcon icon={Login01Icon} className="mr-1.5 size-4" />
+									Sign In
+								</Button>
+							)}
+							{status === "authenticated" && (
+								<DropdownList>
+									<DropdownListTrigger className="rounded-full focus-visible:ring-2 focus-visible:ring-[--system-accent] focus-visible:ring-offset-2">
+										<Avatar className="size-8 cursor-pointer ring-2 ring-transparent transition-shadow hover:ring-system-accent/30">
+											<AvatarImage src={imgSrc} alt={user?.name || "User"} />
+											<AvatarFallback className="bg-system-accent font-bold text-white text-xs">
+												{user?.name?.charAt(0)?.toUpperCase() || "U"}
+											</AvatarFallback>
+										</Avatar>
+									</DropdownListTrigger>
+									<DropdownListContent
+										align="end"
+										sideOffset={8}
+										className="w-56"
 									>
-										<HugeiconsIcon icon={UserIcon} className="size-4" />
-										View Profile
-									</DropdownListItem>
-									{isTeacher && (
-										<DropdownListItem
-											className="rounded-md"
-											onClick={() => {
-												window.location.href = "/teacher";
-											}}
-										>
-											<HugeiconsIcon icon={UserGroupIcon} className="size-4" />
-											Teacher Dashboard
-										</DropdownListItem>
-									)}
-									{isParent && (
-										<DropdownListItem
-											className="rounded-md"
-											onClick={() => {
-												window.location.href = "/parent";
-											}}
-										>
-											<HugeiconsIcon icon={UserIcon} className="size-4" />
-											Parent Dashboard
-										</DropdownListItem>
-									)}
-									<DropdownListItem
-										className="rounded-md"
-										onClick={() => {
-											window.location.href = "/settings";
-										}}
-									>
-										<HugeiconsIcon icon={Settings01Icon} className="size-4" />
-										Settings
-									</DropdownListItem>
-								</div>
-								<DropdownListSeparator />
-								<div className="p-1">
-									<DropdownListItem
-										variant="destructive"
-										onClick={handleSignOut}
-									>
-										<HugeiconsIcon icon={Logout01Icon} className="size-4" />
-										Sign Out
-									</DropdownListItem>
-								</div>
-							</DropdownListContent>
-						</DropdownList>
-					) : null}
+										<div className="border-border/30 border-b px-3 py-2.5">
+											<div className="font-semibold text-foreground text-sm">
+												{user?.name || "Anonymous"}
+											</div>
+											<div className="mt-0.5 text-muted-foreground text-xs">
+												{user?.email || "Email not available"}
+											</div>
+										</div>
+										<div className="p-1">
+											<DropdownListItem
+												className="rounded-md"
+												onClick={() => {
+													window.location.href = "/settings?tab=profile";
+												}}
+											>
+												<HugeiconsIcon icon={UserIcon} className="size-4" />
+												View Profile
+											</DropdownListItem>
+											{isTeacher && (
+												<DropdownListItem
+													className="rounded-md"
+													onClick={() => {
+														window.location.href = "/teacher";
+													}}
+												>
+													<HugeiconsIcon
+														icon={UserGroupIcon}
+														className="size-4"
+													/>
+													Teacher Dashboard
+												</DropdownListItem>
+											)}
+											{isParent && (
+												<DropdownListItem
+													className="rounded-md"
+													onClick={() => {
+														window.location.href = "/parent";
+													}}
+												>
+													<HugeiconsIcon icon={UserIcon} className="size-4" />
+													Parent Dashboard
+												</DropdownListItem>
+											)}
+											<DropdownListItem
+												className="rounded-md"
+												onClick={() => {
+													window.location.href = "/settings";
+												}}
+											>
+												<HugeiconsIcon
+													icon={Settings01Icon}
+													className="size-4"
+												/>
+												Settings
+											</DropdownListItem>
+										</div>
+										<DropdownListSeparator />
+										<div className="p-1">
+											<DropdownListItem
+												variant="destructive"
+												onClick={handleSignOut}
+											>
+												<HugeiconsIcon icon={Logout01Icon} className="size-4" />
+												Sign Out
+											</DropdownListItem>
+										</div>
+									</DropdownListContent>
+								</DropdownList>
+							)}
+						</>
+					)}
 				</div>
 			</div>
 		</header>

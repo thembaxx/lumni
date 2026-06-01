@@ -2,8 +2,14 @@ import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { domAnimation, LazyMotion } from "framer-motion";
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
+import { notFound } from "next/navigation";
 import Script from "next/script";
 import { connection } from "next/server";
+import {
+	getMessages,
+	getTranslations,
+	setRequestLocale,
+} from "next-intl/server";
 import { Suspense } from "react";
 import { extractRouterConfig } from "uploadthing/server";
 import ErrorBoundary from "@/components/ErrorBoundary";
@@ -12,7 +18,7 @@ import { Providers } from "@/components/providers";
 import { CardSkeleton } from "@/components/ui/skeletons";
 import { Toaster } from "@/components/ui/toast";
 import { UploadDialogRenderer } from "@/components/upload/upload-dialog-renderer";
-import { locales } from "@/i18n/locales";
+import { isValidLocale, locales } from "@/i18n/locales";
 import { ourFileRouter } from "../api/uploadthing/core";
 
 const DesktopSidebar = dynamic(() =>
@@ -121,11 +127,6 @@ export async function generateMetadata({
 			index: true,
 			follow: true,
 		},
-		manifest: "/manifest.json",
-		icons: {
-			icon: "/favicon.ico",
-			apple: "/apple-touch-icon.png",
-		},
 		alternates: {
 			languages: alternateLanguages,
 			canonical: `https://lumni.ai/${locale}`,
@@ -157,18 +158,31 @@ export async function generateMetadata({
 	};
 }
 
-export default function LocaleLayout({
+export default async function LocaleLayout({
 	children,
+	params,
 }: Readonly<{
 	children: React.ReactNode;
+	params: Promise<{ locale: string }>;
 }>) {
+	const { locale } = await params;
+
+	if (!isValidLocale(locale)) {
+		notFound();
+	}
+
+	setRequestLocale(locale);
+
+	const messages = await getMessages();
+	const t = await getTranslations({ locale, namespace: "common" });
+
 	return (
 		<>
 			<a
 				href="#main-content"
 				className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-skip-link focus:rounded-lg focus:bg-background focus:px-4 focus:py-2 focus:text-foreground focus:shadow-lg focus:outline-2 focus:outline-system-accent focus:outline-offset-2"
 			>
-				Skip to content
+				{t("skipToContent")}
 			</a>
 			<Suspense fallback={<CardSkeleton />}>
 				<Utssr />
@@ -181,7 +195,7 @@ export default function LocaleLayout({
 				// biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD structured data (static, no user input)
 				dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
 			/>
-			<Providers>
+			<Providers locale={locale} messages={messages}>
 				<LazyMotion features={domAnimation}>
 					<UploadDialogRenderer />
 					<Toaster />

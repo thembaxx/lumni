@@ -1,35 +1,22 @@
 "use client";
 
-import { useParams } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
-import { createContext, use, useMemo } from "react";
 import type { Locale } from "@/i18n/locales";
-import { isValidLocale } from "@/i18n/locales";
 
-interface I18nContextValue {
-	setLocale: (locale: Locale) => void;
+interface I18nProviderProps {
+	locale: Locale;
+	messages: Record<string, unknown>;
+	children: React.ReactNode;
 }
 
-const I18nContext = createContext<I18nContextValue | null>(null);
-
-export function I18nProvider({ children }: { children: React.ReactNode }) {
-	const params = useParams<{ locale?: string }>();
-	const localeFromPath =
-		params?.locale && isValidLocale(params.locale) ? params.locale : "en";
-
+export function I18nProvider({
+	locale,
+	messages,
+	children,
+}: I18nProviderProps) {
 	return (
-		<NextIntlClientProvider locale={localeFromPath}>
-			<I18nContext.Provider
-				value={useMemo(() => ({ setLocale: () => {} }), [])}
-			>
-				{children}
-			</I18nContext.Provider>
+		<NextIntlClientProvider locale={locale} messages={messages}>
+			{children}
 		</NextIntlClientProvider>
 	);
-}
-
-export function useI18nContext() {
-	const ctx = use(I18nContext);
-	if (!ctx) throw new Error("useI18nContext must be used within I18nProvider");
-	return ctx;
 }

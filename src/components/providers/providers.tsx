@@ -16,6 +16,7 @@ import { useJobProcessor } from "@/hooks/use-job-processor";
 import { useServiceWorker } from "@/hooks/use-service-worker";
 import { prefetchUploadSubjects } from "@/hooks/use-upload-subjects";
 import { OnlineStatusIndicator } from "@/hooks/useOnlineStatus";
+import type { Locale } from "@/i18n/locales";
 import { AuthProvider } from "@/lib/auth/auth-context";
 import { ConsentProvider } from "@/lib/consent/consent-context";
 import { PremiumProvider } from "@/lib/premium/premium-context";
@@ -32,7 +33,13 @@ function ServiceWorkerWrapper() {
 	return null;
 }
 
-export function Providers({ children }: { children: React.ReactNode }) {
+interface ProvidersProps {
+	locale: Locale;
+	messages: Record<string, unknown>;
+	children: React.ReactNode;
+}
+
+export function Providers({ locale, messages, children }: ProvidersProps) {
 	useEffect(() => {
 		const handlePrefetch = async () => {
 			await prefetchUploadSubjects(queryClient);
@@ -49,7 +56,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
 						<JoyProvider>
 							<ToastProvider>
 								<PremiumProvider>
-									<I18nProvider>
+									<I18nProvider locale={locale} messages={messages}>
 										<OnboardingProvider>
 											<ImmersiveModeProvider>{children}</ImmersiveModeProvider>
 										</OnboardingProvider>

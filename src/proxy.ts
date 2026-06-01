@@ -37,8 +37,7 @@ function stripLocale(pathname: string): string {
 export function proxy(request: NextRequest) {
 	const { pathname } = request.nextUrl;
 
-	const isApiRoute =
-		pathname.startsWith("/api/") || pathname.startsWith("/monitoring");
+	const isApiRoute = pathname.startsWith("/api/");
 	if (isApiRoute) {
 		return;
 	}

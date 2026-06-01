@@ -1,9 +1,17 @@
-import type { Viewport } from "next";
+import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { getLocale } from "next-intl/server";
 import { cn } from "@/lib/shared";
 import "./globals.css";
 import { fontHeading, fontMono, fontSans } from "./fonts";
+
+export const metadata: Metadata = {
+	manifest: "/manifest.json",
+	icons: {
+		icon: "/favicon.ico",
+		apple: "/apple-touch-icon.png",
+	},
+};
 
 export const viewport: Viewport = {
 	width: "device-width",
