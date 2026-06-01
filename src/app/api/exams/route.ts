@@ -3,10 +3,28 @@ import { Query } from "node-appwrite";
 import { apiError } from "@/lib/api-error";
 import { databases } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
+import { getAllExamPapers, getExamPapersBySubject } from "@/lib/db/exams";
 import { getAuthenticatedUserId } from "@/lib/server/auth";
+import { checkAndPopulateExamsDb } from "@/lib/server/exam-paper-actions";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 export const runtime = "nodejs";
+
+function mapLocalPaper(row: Record<string, unknown>): Record<string, unknown> {
+	return {
+		id: row.id,
+		subject: row.subject_name,
+		subjectId: row.subject_code,
+		year: row.year,
+		session: null,
+		type: row.type,
+		paperNumber: row.paper_number,
+		title: row.original_file_name,
+		url: row.file_url,
+		fileKey: row.file_key,
+		uploadedAt: row.uploaded_at,
+	};
+}
 
 async function examsHandler(request: NextRequest) {
 	const userId = await getAuthenticatedUserId();
@@ -71,6 +89,24 @@ async function examsHandler(request: NextRequest) {
 			fileKeys: doc.fileKeys ? JSON.parse(doc.fileKeys as string) : null,
 			uploadedAt: doc.uploadedAt,
 		}));
+
+		if (exams.length === 0) {
+			await checkAndPopulateExamsDb();
+
+			const localPapers = subjectCode
+				? getExamPapersBySubject(
+						subjectCode,
+						year ? Number.parseInt(year, 10) : undefined,
+					)
+				: getAllExamPapers();
+
+			if (localPapers.length > 0) {
+				return NextResponse.json({
+					exams: localPapers.map(mapLocalPaper),
+					total: localPapers.length,
+				});
+			}
+		}
 
 		return NextResponse.json({ exams, total: exams.length });
 	} catch (error) {
