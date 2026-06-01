@@ -64,17 +64,14 @@ export const POST = createRouteHandler({
 					});
 					return { added: true, skipped: false, error: null };
 				} catch (e) {
-					const err = e as Error;
-					if (
-						err.message.includes("already exists") ||
-						err.message.includes("duplicate")
-					) {
+					const msg = e instanceof Error ? e.message : "Unknown error";
+					if (msg.includes("already exists") || msg.includes("duplicate")) {
 						return { added: false, skipped: true, error: null };
 					} else {
 						return {
 							added: false,
 							skipped: false,
-							error: `${sub.code}: ${err.message}`,
+							error: `${sub.code}: ${msg}`,
 						};
 					}
 				}

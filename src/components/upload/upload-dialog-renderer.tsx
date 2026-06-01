@@ -47,10 +47,11 @@ export function UploadDialogRenderer({
 			);
 		},
 		onUploadError: (error: Error) => {
+			const msg = error?.message ?? "Upload failed";
 			setItems((prev) =>
 				prev.map((item) => {
 					if (item.status === "uploading") {
-						return { ...item, status: "error", error: error.message };
+						return { ...item, status: "error", error: msg };
 					}
 					return item;
 				}),

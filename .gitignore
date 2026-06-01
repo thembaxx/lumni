@@ -69,3 +69,6 @@ messages/translations.log
 # test artifacts
 test-results/
 playwright-report/
+
+# generated architecture review HTML
+src/docs/architecture-review-*.html

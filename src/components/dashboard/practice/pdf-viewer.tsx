@@ -170,7 +170,10 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 
 	const onDocumentLoadError = useCallback((err: Error) => {
 		console.error("PDF load error:", err);
-		dispatchPdf({ type: "LOAD_ERROR", message: err.message });
+		dispatchPdf({
+			type: "LOAD_ERROR",
+			message: err?.message ?? "Failed to load PDF",
+		});
 	}, []);
 
 	const canZoomIn = scale < MAX_SCALE;

@@ -14,6 +14,7 @@ import { Suspense } from "react";
 import { extractRouterConfig } from "uploadthing/server";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { PageTransition } from "@/components/layout/page-transition";
+import { ChunkLoadHandler } from "@/components/performance/chunk-load-handler";
 import { Providers } from "@/components/providers";
 import { CardSkeleton } from "@/components/ui/skeletons";
 import { Toaster } from "@/components/ui/toast";
@@ -195,6 +196,7 @@ export default async function LocaleLayout({
 				// biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD structured data (static, no user input)
 				dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
 			/>
+			<ChunkLoadHandler />
 			<Providers locale={locale} messages={messages}>
 				<LazyMotion features={domAnimation}>
 					<UploadDialogRenderer />

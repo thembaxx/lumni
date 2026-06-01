@@ -76,16 +76,16 @@ export class AudioEngine {
 			this.notify();
 			return true;
 		} catch (err) {
-			const error = err as Error;
+			const error = err instanceof Error ? err : undefined;
 			if (
-				error.name === "NotAllowedError" ||
-				error.name === "PermissionDeniedError"
+				error?.name === "NotAllowedError" ||
+				error?.name === "PermissionDeniedError"
 			) {
 				this.permissionStatus = "denied";
 				this._error = "Microphone access denied";
 			} else {
 				this.permissionStatus = "denied";
-				this._error = `Microphone access failed: ${error.message}`;
+				this._error = `Microphone access failed: ${error?.message ?? "Unknown error"}`;
 			}
 			this.notify();
 			return false;
@@ -139,15 +139,15 @@ export class AudioEngine {
 
 			this.notify();
 		} catch (err) {
-			const error = err as Error;
+			const error = err instanceof Error ? err : undefined;
 			if (
-				error.name === "NotAllowedError" ||
-				error.name === "PermissionDeniedError"
+				error?.name === "NotAllowedError" ||
+				error?.name === "PermissionDeniedError"
 			) {
 				this.permissionStatus = "denied";
 				this._error = "Microphone access denied";
 			} else {
-				this._error = `Failed to start recording: ${error.message}`;
+				this._error = `Failed to start recording: ${error?.message ?? "Unknown error"}`;
 			}
 			this.notify();
 		}

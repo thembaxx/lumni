@@ -21,8 +21,9 @@ export const GET = withRateLimit(
 			try {
 				subjects = await listDocuments<Subject>(COLLECTIONS.SUBJECTS);
 			} catch (dbError: unknown) {
-				const err = dbError as Error;
-				console.error("Database error:", err.message);
+				const msg =
+					dbError instanceof Error ? dbError.message : "Unknown database error";
+				console.error("Database error:", msg);
 				throw new HttpError(503, "Database unavailable");
 			}
 

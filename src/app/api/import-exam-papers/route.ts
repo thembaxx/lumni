@@ -82,9 +82,9 @@ export const POST = withRateLimit(
 
 					imported++;
 				} catch (err) {
-					const error = err as Error & { message: string };
-					console.error(`Error processing ${originalFileName}:`, error.message);
-					errors.push(`${originalFileName}: ${error.message}`);
+					const msg = err instanceof Error ? err.message : "Unknown error";
+					console.error(`Error processing ${originalFileName}:`, msg);
+					errors.push(`${originalFileName}: ${msg}`);
 				}
 			}
 

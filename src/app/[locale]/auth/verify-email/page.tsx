@@ -34,7 +34,8 @@ function VerifyEmailContent() {
 			return res.json();
 		},
 		onSuccess: () => queryClient.invalidateQueries(),
-		onError: (err) => setError(err.message),
+		onError: (err) =>
+			setError(err instanceof Error ? err.message : "Verification failed"),
 	});
 
 	// Mount-triggered mutation — safe because the fetch logic lives in react-query

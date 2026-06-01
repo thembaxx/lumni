@@ -34,7 +34,13 @@ export function PasswordSection() {
 					account
 						.updatePassword(newPwd, current)
 						.then(() => toast({ type: "success", message: "Password updated" }))
-						.catch((err) => toast({ type: "error", message: err.message }));
+						.catch((err) =>
+							toast({
+								type: "error",
+								message:
+									err instanceof Error ? err.message : "Password update failed",
+							}),
+						);
 				}}
 			/>
 		</ListSection>

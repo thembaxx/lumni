@@ -34,7 +34,10 @@ export async function cleanupOldQuestions(): Promise<{
 				databases
 					.deleteDocument(APPWRITE_DATABASE_ID, COLLECTIONS.QUESTIONS, doc.$id)
 					.catch((err: Error) =>
-						console.error("[Cleanup] Delete error:", err.message),
+						console.error(
+							"[Cleanup] Delete error:",
+							err instanceof Error ? err.message : "Unknown",
+						),
 					),
 			);
 

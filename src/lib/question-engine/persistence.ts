@@ -42,7 +42,10 @@ export async function saveQuestionsToAppwrite(
 								createdAt: new Date().toISOString(),
 							})
 							.catch((err: Error) =>
-								console.error("[Persistence] Save error:", err.message),
+								console.error(
+									"[Persistence] Save error:",
+									err instanceof Error ? err.message : "Unknown",
+								),
 							),
 					),
 				),
