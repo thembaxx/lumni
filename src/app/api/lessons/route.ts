@@ -3,7 +3,7 @@ import path from "node:path";
 import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 interface Lesson {
 	id: string;

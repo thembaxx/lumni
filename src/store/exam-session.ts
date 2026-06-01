@@ -206,7 +206,6 @@ export const useExamSessionStore = create<ExamSessionState>()(
 			name: "exam-session-storage",
 			version: EXAM_SESSION_VERSION,
 			partialize: (state) => ({
-				paper: state.paper,
 				paperId: state.paperId,
 				sessionId: state.sessionId,
 				answers: state.answers,
@@ -231,7 +230,9 @@ export const useExamSessionStore = create<ExamSessionState>()(
 						isSubmitting: false,
 					};
 				}
-				return persistedState as ExamSessionState;
+				const migrated = persistedState as ExamSessionState;
+				migrated.paper = null;
+				return migrated;
 			},
 			onRehydrateStorage: () => (state) => {
 				if (state && !validateHydratedState(state)) {

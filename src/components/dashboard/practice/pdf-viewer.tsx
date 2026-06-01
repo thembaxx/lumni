@@ -102,7 +102,7 @@ export function PdfViewerImpl({ open, onOpenChange, exam }: PdfViewerProps) {
 	const [pdfState, dispatchPdf] = useReducer(pdfReducer, initialPdfState);
 	const { pdfPage, totalPages, isLoading, error, scale } = pdfState;
 	const [workerReady] = useState(() => {
-		pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
+		pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
 		return true;
 	});
 	const [isFullscreen, setIsFullscreen] = useState(false);

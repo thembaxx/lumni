@@ -6,7 +6,7 @@ export function DashboardHero() {
 	return (
 		<main className="flex flex-1 flex-col items-center justify-center px-4">
 			<Image
-				src="/logo.png"
+				src="/logo.webp"
 				alt=""
 				width={48}
 				height={48}

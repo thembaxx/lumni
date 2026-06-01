@@ -17,7 +17,7 @@ export const fontMono = Geist_Mono({
 });
 
 export const fontHeading = Outfit({
-	weight: ["400", "500", "600", "700", "800"],
+	weight: ["400", "500", "600", "700", "800", "900"],
 	subsets: ["latin"],
 	display: "swap",
 	variable: "--font-heading",
