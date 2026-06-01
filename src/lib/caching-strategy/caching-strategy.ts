@@ -23,11 +23,23 @@ export class CachingStrategy<T, P> {
 	) {}
 
 	async resolve(params: P): Promise<T | null> {
-		const cachedItems = await Promise.all(
+		const results = await Promise.allSettled(
 			this.tiers.map((tier) => tier.read(params)),
 		);
-		for (const cached of cachedItems) {
-			if (cached !== null && cached !== undefined) return cached;
+		for (const [i, result] of results.entries()) {
+			if (
+				result.status === "fulfilled" &&
+				result.value !== null &&
+				result.value !== undefined
+			) {
+				return result.value;
+			}
+			if (result.status === "rejected") {
+				console.warn(
+					`Cache read from tier ${this.tiers[i]?.name ?? i} failed:`,
+					result.reason,
+				);
+			}
 		}
 
 		const generated = await this.generator.generate(params);
