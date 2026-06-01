@@ -2,8 +2,10 @@
 
 import { AnimatePresence, m } from "framer-motion";
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { GamificationCelebration } from "@/components/celebration";
+import type { BoltResult } from "@/components/dashboard/daily-bolt-overlay";
+import { DailyBoltOverlay } from "@/components/dashboard/daily-bolt-overlay";
 import { DashboardContent } from "@/components/dashboard/dashboard-content";
 import { TabNav } from "@/components/dashboard/navigation/tab-nav";
 import { ScrollAmbient } from "@/components/dashboard/scroll-ambient";
@@ -42,8 +44,10 @@ export function DashboardClient({
 	const [quizActive, setQuizActive] = useState(false);
 	const [quizSubject, setQuizSubject] = useState("");
 	const [activeTab, setActiveTab] = useState<TabValue>(initialTab as TabValue);
+	const [sprintMode, setSprintMode] = useState(false);
 	const {
 		isLoaded,
+		gamification,
 		addXp,
 		updateStreak,
 		checkAndUnlockAchievements,
@@ -52,6 +56,11 @@ export function DashboardClient({
 		levelInfo,
 		totalQuestionsAnswered,
 	} = useGamification();
+
+	const todayStr = useMemo(() => new Date().toDateString(), []);
+	const boltDue = gamification.lastPracticeDate !== todayStr;
+	const [showDailyBolt, setShowDailyBolt] = useState(boltDue);
+	const [boltSubject] = useState("mathematics");
 	const { addWrongAnswer } = useWrongAnswerJournal();
 	const { startViewTransition } = useViewTransition();
 
@@ -61,6 +70,66 @@ export function DashboardClient({
 			setQuizActive(true);
 		});
 	};
+
+	const handleBoltComplete = useCallback(
+		(result: BoltResult) => {
+			updateStreak();
+			const accuracy = result.correct ? 100 : 0;
+			addXp(1, accuracy, currentStreak);
+			trackQuestionResult({
+				subjectId: result.question.subject,
+				topicId: result.question.topic,
+				bloomLevel: result.question.bloomTaxonomy,
+				score: result.correct ? 1 : 0,
+				maxScore: 1,
+			});
+			if (!result.correct) {
+				addWrongAnswer({
+					questionId: result.question.id,
+					questionText: result.question.questionText,
+					subject: result.question.subject,
+					topic: result.question.topic,
+					correctAnswer: result.question.explanation,
+					userAnswer: "(see quiz history)",
+					explanation: result.question.explanation,
+				});
+				flashcardEngine.create(
+					result.question.questionText,
+					result.question.explanation,
+					result.question.subject,
+					result.question.topic,
+				);
+			}
+			enqueue("analytics-sync", {
+				events: [
+					{
+						event: "grade",
+						timestamp: Date.now(),
+						subject: result.question.subject,
+						questionType: result.question.type,
+						success: result.correct,
+						duration: 0,
+					},
+				],
+			});
+			setShowDailyBolt(false);
+		},
+		[updateStreak, addXp, currentStreak, addWrongAnswer],
+	);
+
+	const handleBoltSprint = useCallback(
+		(result: BoltResult) => {
+			handleBoltComplete(result);
+			setQuizSubject(result.question.subject);
+			setSprintMode(true);
+			setQuizActive(true);
+		},
+		[handleBoltComplete],
+	);
+
+	const handleBoltSkip = useCallback(() => {
+		setShowDailyBolt(false);
+	}, []);
 
 	const handleFinishQuiz = async (results: QuizResults) => {
 		updateStreak();
@@ -140,11 +209,13 @@ export function DashboardClient({
 			toast({ type: "error", message: "Failed to save session data" });
 		});
 
+		setSprintMode(false);
 		setQuizActive(false);
 		setQuizSubject("");
 	};
 
 	const handleQuitQuiz = () => {
+		setSprintMode(false);
 		setQuizActive(false);
 		setQuizSubject("");
 	};
@@ -157,7 +228,14 @@ export function DashboardClient({
 		<AppErrorBoundary>
 			<ScrollAmbient />
 			<div className="flex h-full flex-col">
-				{!isLoaded ? (
+				{showDailyBolt ? (
+					<DailyBoltOverlay
+						subject={boltSubject}
+						onComplete={handleBoltComplete}
+						onSprint={handleBoltSprint}
+						onSkip={handleBoltSkip}
+					/>
+				) : !isLoaded ? (
 					<m.div
 						key="loading"
 						initial={{ opacity: 0 }}
@@ -195,6 +273,7 @@ export function DashboardClient({
 									>
 										<QuizView
 											initialSubject={quizSubject}
+											questionCount={sprintMode ? 4 : undefined}
 											variant="full"
 											onQuit={handleQuitQuiz}
 											onFinish={handleFinishQuiz}
