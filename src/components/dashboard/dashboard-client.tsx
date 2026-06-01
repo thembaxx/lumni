@@ -60,7 +60,6 @@ export function DashboardClient({
 	const todayStr = useMemo(() => new Date().toDateString(), []);
 	const boltDue = gamification.lastPracticeDate !== todayStr;
 	const [showDailyBolt, setShowDailyBolt] = useState(boltDue);
-	const [boltSubject] = useState("mathematics");
 	const { addWrongAnswer } = useWrongAnswerJournal();
 	const { startViewTransition } = useViewTransition();
 
@@ -230,7 +229,6 @@ export function DashboardClient({
 			<div className="flex h-full flex-col">
 				{showDailyBolt ? (
 					<DailyBoltOverlay
-						subject={boltSubject}
 						onComplete={handleBoltComplete}
 						onSprint={handleBoltSprint}
 						onSkip={handleBoltSkip}

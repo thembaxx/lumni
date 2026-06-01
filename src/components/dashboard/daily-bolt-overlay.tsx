@@ -8,11 +8,18 @@ import { QuestionCard } from "@/components/quiz";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
+import { toast } from "@/hooks/use-toast";
+import { offlineDB } from "@/lib/db/schema";
 import type { Question } from "@/lib/question-engine/types";
 import { cn } from "@/lib/shared";
 import { iOSDecelerate } from "@/lib/utils/animation";
 
-type BoltPhase = "loading" | "answering" | "answered" | "branching";
+type BoltPhase =
+	| "resolving"
+	| "loading"
+	| "answering"
+	| "answered"
+	| "branching";
 
 export interface BoltResult {
 	question: Question;
@@ -20,20 +27,53 @@ export interface BoltResult {
 }
 
 interface DailyBoltOverlayProps {
-	subject: string;
 	onComplete: (result: BoltResult) => void;
 	onSprint: (result: BoltResult) => void;
 	onSkip: () => void;
 }
 
+async function resolveWeakestSubject(): Promise<string> {
+	try {
+		const all = await offlineDB.competencies.toArray();
+		if (all.length === 0) return "mathematics";
+
+		const bySubject = new Map<string, number[]>();
+		for (const record of all) {
+			const scores = bySubject.get(record.subjectId) ?? [];
+			scores.push(record.score);
+			bySubject.set(record.subjectId, scores);
+		}
+
+		let weakest = "mathematics";
+		let lowestAvg = Infinity;
+		for (const [subject, scores] of bySubject) {
+			const avg = scores.reduce((a, b) => a + b, 0) / scores.length;
+			if (avg < lowestAvg) {
+				lowestAvg = avg;
+				weakest = subject;
+			}
+		}
+		return weakest;
+	} catch {
+		return "mathematics";
+	}
+}
+
 export function DailyBoltOverlay({
-	subject,
 	onComplete,
 	onSprint,
 	onSkip,
 }: DailyBoltOverlayProps) {
-	const [phase, setPhase] = useState<BoltPhase>("loading");
+	const [phase, setPhase] = useState<BoltPhase>("resolving");
+	const [subject, setSubject] = useState("mathematics");
 	const [boltResult, setBoltResult] = useState<BoltResult | null>(null);
+
+	useEffect(() => {
+		resolveWeakestSubject().then((s) => {
+			setSubject(s);
+			setPhase("loading");
+		});
+	}, []);
 
 	const engineParams = useMemo(
 		() => ({
@@ -47,7 +87,7 @@ export function DailyBoltOverlay({
 
 	const { questions, isLoading, isError, refetch } = useQuestionEngine(
 		engineParams,
-		{ enabled: true },
+		{ enabled: phase === "loading" },
 	);
 
 	const question = questions[0];
@@ -63,6 +103,14 @@ export function DailyBoltOverlay({
 			if (!question) return;
 			setBoltResult({ question, correct });
 			setPhase("answered");
+			toast({
+				type: "success",
+				message: "⚡ Bolt Complete!",
+				description: correct
+					? "Great start to your study session."
+					: "Keep going — practice makes perfect.",
+				duration: 3000,
+			});
 		},
 		[question],
 	);
@@ -71,7 +119,10 @@ export function DailyBoltOverlay({
 		setPhase("branching");
 	}, []);
 
-	const skipLabel = phase === "loading" ? "Skip" : "Skip to Dashboard";
+	const skipLabel =
+		phase === "resolving" || phase === "loading" ? "Skip" : "Skip to Dashboard";
+
+	const showLoading = phase === "resolving" || phase === "loading";
 
 	return (
 		<div className="fixed inset-0 z-overlay flex flex-col bg-background">
@@ -81,9 +132,11 @@ export function DailyBoltOverlay({
 					<span className="font-bold text-base tracking-tight">
 						Today's Bolt
 					</span>
-					<span className="rounded-full bg-muted px-2.5 py-0.5 font-medium text-muted-foreground text-xs">
-						{subject}
-					</span>
+					{!showLoading && (
+						<span className="rounded-full bg-muted px-2.5 py-0.5 font-medium text-muted-foreground text-xs">
+							{subject}
+						</span>
+					)}
 				</div>
 				<button
 					type="button"
@@ -95,7 +148,7 @@ export function DailyBoltOverlay({
 			</div>
 
 			<div className="flex flex-1 items-center justify-center px-4 pb-8">
-				{phase === "loading" && <BoltLoading />}
+				{showLoading && <BoltLoading />}
 
 				{phase === "answering" && question && (
 					<m.div
@@ -143,7 +196,7 @@ export function DailyBoltOverlay({
 					/>
 				)}
 
-				{isError && (
+				{phase !== "resolving" && isError && (
 					<div className="flex flex-col items-center gap-4">
 						<p className="text-muted-foreground">
 							Couldn't load your question. Try again?

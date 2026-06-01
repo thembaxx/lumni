@@ -1,6 +1,7 @@
 "use client";
 
-import { Login01Icon } from "@hugeicons/core-free-icons";
+import { Lightning, Login01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";
 import { AchievementShowcase } from "@/components/dashboard/achievement-showcase";
@@ -175,6 +176,9 @@ export function DashboardContent({
 		window.location.reload();
 	};
 
+	const todayStr = new Date().toDateString();
+	const boltDone = gamification.lastPracticeDate === todayStr;
+
 	return (
 		<PullToRefresh
 			data-scroll-container
@@ -183,6 +187,14 @@ export function DashboardContent({
 		>
 			<PageContainer className="gap-8 pb-16">
 				{activeTab === "today" && <HeroBanner />}
+				{activeTab === "today" && boltDone && (
+					<div className="flex items-center gap-2 rounded-xl border border-amber-500/20 bg-amber-500/5 px-3 py-2">
+						<HugeiconsIcon icon={Lightning} className="size-4 text-amber-500" />
+						<span className="font-medium text-amber-600 text-xs dark:text-amber-400">
+							Today's Bolt complete
+						</span>
+					</div>
+				)}
 				{isAnonymous && (
 					<LocalDataNotice
 						page="dashboard"

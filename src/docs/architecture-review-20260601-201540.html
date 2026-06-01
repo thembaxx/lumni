@@ -1,0 +1,717 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Architecture review — lumni</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "neutral", securityLevel: "loose" });
+  </script>
+  <style>
+    .seam { stroke-dasharray: 4 4; }
+    .leak { stroke: #dc2626; }
+    .deep { background: linear-gradient(135deg, #0f172a, #1e293b); }
+    .module-box { border: 2px solid #334155; border-radius: 8px; padding: 8px 12px; }
+    .module-box-deep { border: 3px solid #0f172a; border-radius: 8px; padding: 8px 12px; background: #f8fafc; }
+    .module-box-internal { border: 1px dashed #94a3b8; border-radius: 4px; padding: 6px 10px; background: #f1f5f9; }
+    .arrow-line { stroke: #475569; stroke-width: 2; }
+    .arrow-leak { stroke: #dc2626; stroke-width: 2; stroke-dasharray: 6 3; }
+    .arrow-head { fill: #475569; }
+    .callout-amber { background: #fffbeb; border-left: 4px solid #f59e0b; }
+    .badge-strong { background: #10b981; color: white; }
+    .badge-explore { background: #f59e0b; color: white; }
+    .badge-speculative { background: #64748b; color: white; }
+    [x-cloak] { display: none; }
+  </style>
+</head>
+<body class="bg-stone-50 text-slate-900 font-sans antialiased">
+  <main class="max-w-5xl mx-auto px-6 py-12 space-y-12">
+
+    <!-- Header -->
+    <header>
+      <div class="flex items-baseline justify-between">
+        <h1 class="text-3xl font-semibold tracking-tight">Lumni — Architecture Review</h1>
+        <time class="text-sm text-slate-500">2026-06-01</time>
+      </div>
+      <div class="mt-4 flex gap-4 text-xs uppercase tracking-wider text-slate-500">
+        <span><span class="inline-block w-3 h-3 border-2 border-slate-600 rounded align-middle mr-1"></span> Module</span>
+        <span><span class="inline-block w-6 h-0 border-t-2 border-dashed border-slate-400 align-middle mr-1"></span> Seam</span>
+        <span><span class="inline-block w-3 h-3 bg-red-500 rounded align-middle mr-1"></span> Leakage</span>
+        <span><span class="inline-block w-3 h-3 bg-slate-800 rounded align-middle mr-1"></span> Deep module</span>
+      </div>
+    </header>
+
+    <!-- Candidates -->
+    <section id="candidates" class="space-y-10">
+
+      <!-- Candidate 1: Inline flashcard micro-modules -->
+      <article class="bg-white rounded-xl shadow-level-2 p-6 space-y-4">
+        <div class="flex items-start justify-between">
+          <h2 class="text-xl font-semibold">Collapse flashcard engine micro-modules into <code class="text-sm bg-slate-100 px-1.5 py-0.5 rounded">engine.ts</code></h2>
+          <span class="badge-strong text-xs font-semibold px-2.5 py-1 rounded-full">Strong</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm font-mono text-slate-600">
+          <div>
+            <p class="text-xs uppercase tracking-wider text-slate-400 mb-1">Files</p>
+            <ul class="space-y-0.5">
+              <li><code>src/lib/flashcard-engine/ease-hell.ts</code> (18 lines)</li>
+              <li><code>src/lib/flashcard-engine/leech-detection.ts</code> (35 lines)</li>
+              <li><code>src/lib/flashcard-engine/ease-hell.test.ts</code> (55 lines)</li>
+              <li><code>src/lib/flashcard-engine/leech-detection.test.ts</code> (67 lines)</li>
+              <li><code>src/components/flashcard/index.ts</code> (4 lines)</li>
+            </ul>
+          </div>
+          <div>
+            <p class="text-xs uppercase tracking-wider text-slate-400 mb-1">Lines removed</p>
+            <p class="text-lg font-semibold text-emerald-600">179</p>
+            <p class="text-xs text-slate-400">5 files → 0 files. Complexity stays in engine.ts.</p>
+          </div>
+        </div>
+
+        <!-- Before / After diagram -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <p class="text-xs uppercase tracking-wider text-slate-400 mb-2">Before</p>
+            <div class="rounded-lg border border-slate-200 bg-white p-4">
+              <pre class="mermaid">
+                flowchart LR
+                  subgraph Engine[flashcard-engine/]
+                    E[engine.ts 493 lines]
+                    EH[ease-hell.ts 18 lines]
+                    LD[leech-detection.ts 35 lines]
+                    LS[learning-steps.ts 36 lines]
+                    DL[daily-limits.ts 97 lines]
+                  end
+                  E -->|"calls once"| EH
+                  E -->|"calls once"| LD
+                  E -->|"calls at 3 points"| LS
+                  E -->|"exposes 6 pass-throughs"| DL
+                  classDef shallow stroke:#f59e0b,stroke-width:2px;
+                  class EH,LD shallow
+              </pre>
+            </div>
+          </div>
+          <div>
+            <p class="text-xs uppercase tracking-wider text-slate-400 mb-2">After</p>
+            <div class="rounded-lg border border-slate-800 bg-white p-4">
+              <pre class="mermaid">
+                flowchart LR
+                  subgraph Engine["flashcard-engine/"]
+                    E["engine.ts 530 lines<br/>(+ inlined ease-hell + leech)"]
+                  end
+                  classDef deep stroke:#0f172a,stroke-width:3px;
+                  class E deep
+              </pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+          <div>
+            <p class="text-xs uppercase tracking-wider text-slate-400 mb-1">Problem</p>
+            <p class="text-slate-700">Three files exist for single-use pure functions called from exactly one call site in <code>engine.ts</code>. Each adds a file boundary, an import, and a test file — but the module interface is as complex as the implementation (shallow).</p>
+          </div>
+          <div>
+            <p class="text-xs uppercase tracking-wider text-slate-400 mb-1">Solution</p>
+            <p class="text-slate-700">Inline <code>checkEaseHellRecovery</code> and <code>checkLeech</code> into <code>engine.ts</code>. Delete <code>ease-hell.ts</code>, <code>leech-detection.ts</code>, their test files, and the unused barrel <code>components/flashcard/index.ts</code>.</p>
+          </div>
+        </div>
+
+        <div>
+          <p class="text-xs uppercase tracking-wider text-slate-400 mb-1">Wins</p>
+          <ul class="text-sm text-slate-600 space-y-0.5 list-disc list-inside">
+            <li><strong>Locality:</strong> review logic, ease-hell recovery, and leech detection live in one module — bugs concentrate</li>
+            <li><strong>Leverage:</strong> one interface (<code>engine.ts</code>) for flashcard operations, not 5 import paths</li>
+            <li><strong>Deletion test:</strong> 5 files vanish; complexity stays concentrated in <code>engine.ts</code></li>
+            <li><strong>Interface shrinks:</strong> consumers don't need to know about ease-hell or leech detection as separate modules</li>
+          </ul>
+        </div>
+      </article>
+
+
+      <!-- Candidate 2: Dead SM-2 / FSRS in orchestrator -->
+      <article class="bg-white rounded-xl shadow-level-2 p-6 space-y-4">
+        <div class="flex items-start justify-between">
+          <h2 class="text-xl font-semibold">Prune dead SM-2 / FSRS algorithms from orchestrator</h2>
+          <span class="badge-strong text-xs font-semibold px-2.5 py-1 rounded-full">Strong</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm font-mono text-slate-600">
+          <div>
+            <p class="text-xs uppercase tracking-wider text-slate-400 mb-1">Files</p>
+            <ul class="space-y-0.5">
+              <li><code>src/lib/orchestrator/sm2.ts</code> (45 lines)</li>
+              <li><code>src/lib/orchestrator/fsrs.ts</code> (85 lines)</li>
+              <li><code>src/lib/orchestrator/index.ts</code> (exports both)</li>
+            </ul>
+          </div>
+          <div>
+            <p class="text-xs uppercase tracking-wider text-slate-400 mb-1">Lines removed</p>
+            <p class="text-lg font-semibold text-emerald-600">130</p>
+            <p class="text-xs text-slate-400">plus barrel exports — flashcard-engine owns scheduling now</p>
+          </div>
+        </div>
+
+        <div class="rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800 callout-amber">
+          ⚠️ &nbsp;Verification needed: check <code>rg "orchestrator/sm2"</code> and <code>rg "orchestrator/fsrs"</code> across the codebase for any external consumers. The orchestrator's own <code>domain.ts</code> handlers delegate to <code>flashcardEngine.review()</code> and <code>flashcardEngine.create()</code> instead.
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <p class="text-xs uppercase tracking-wider text-slate-400 mb-2">Before</p>
+            <div class="rounded-lg border border-slate-200 bg-white p-4">
+              <pre class="mermaid">
+                flowchart LR
+                  O[LearningOrchestrator]
+                  S[sm2.ts]
+                  F[fsrs.ts]
+                  FE[flashcardEngine]
+
+                  O -->|domain handlers use| FE
+                  O -->|exports but never calls| S
+                  O -->|exports but never calls| F
+
+                  classDef dead stroke:#dc2626,stroke-dasharray:4 4;
+                  class S,F dead
+              </pre>
+            </div>
+          </div>
+          <div>
+            <p class="text-xs uppercase tracking-wider text-slate-400 mb-2">After</p>
+            <div class="rounded-lg border border-slate-800 bg-white p-4">
+              <pre class="mermaid">
+                flowchart LR
+                  O[LearningOrchestrator]
+                  FE[flashcardEngine]
+                  O -->|domain handlers use| FE
+              </pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+          <div>
+            <p class="text-xs uppercase tracking-wider text-slate-400 mb-1">Problem</p>
+            <p class="text-slate-700">When Session 8 consolidated flashcard logic into <code>flashcard-engine/</code>, the old SM-2/FSRS algorithm files in <code>orchestrator/</code> were left behind. Orchestrator handlers now delegate to <code>flashcardEngine</code>, making these files dead code that still ships and is exported from the barrel.</p>
+          </div>
+          <div>
+            <p class="text-xs uppercase tracking-wider text-slate-400 mb-1">Solution</p>
+            <p class="text-slate-700">Verify zero external consumers, then delete both files and remove their barrel exports. Single scheduling seam: <code>flashcardEngine</code>.</p>
+          </div>
+        </div>
+
+        <div>
+          <p class="text-xs uppercase tracking-wider text-slate-400 mb-1">Wins</p>
+          <ul class="text-sm text-slate-600 space-y-0.5 list-disc list-inside">
+            <li><strong>Locality:</strong> scheduling algorithm lives in one module (flashcard-engine), not split across two</li>
+            <li><strong>Leverage:</strong> no dead exports to confuse maintainers</li>
+            <li><strong>Deletion test:</strong> 130 lines vanish, zero callers notice</li>
+          </ul>
+        </div>
+      </article>
+
+
+      <!-- Candidate 3: Route handler migration -->
+      <article class="bg-white rounded-xl shadow-level-2 p-6 space-y-4">
+        <div class="flex items-start justify-between">
+          <h2 class="text-xl font-semibold">Migrate 85 remaining routes to <code>createRouteHandler</code></h2>
+          <span class="badge-strong text-xs font-semibold px-2.5 py-1 rounded-full">Strong</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm font-mono text-slate-600">
+          <div>
+            <p class="text-xs uppercase tracking-wider text-slate-400 mb-1">Files</p>
+            <ul class="space-y-0.5">
+              <li><code>src/lib/api/create-route-handler.ts</code> (138 lines — the factory)</li>
+              <li><code>src/app/api/**/route.ts</code> — 14 migrated, 19 half-migrated (withRateLimit), 66 fully raw</li>
+            </ul>
+          </div>
+          <div>
+            <p class="text-xs uppercase tracking-wider text-slate-400 mb-1">Boilerplate eliminated</p>
+            <p class="text-lg font-semibold text-emerald-600">~1700–2550 lines</p>
+            <p class="text-xs text-slate-400">~20-30 lines per route × 85 routes</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <p class="text-xs uppercase tracking-wider text-slate-400 mb-2">Before — 3 patterns coexist</p>
+            <div class="rounded-lg border border-slate-200 bg-white p-4">
+              <pre class="mermaid">
+                flowchart TB
+                  subgraph Patterns["3 Handler Patterns"]
+                    A["🔷 14 routes<br/>createRouteHandler"]
+                    B["🔶 19 routes<br/>withRateLimit wrapper"]
+                    C["🔴 66 routes<br/>fully raw async functions"]
+                  end
+                  subgraph Boilerplate["Each raw handler duplicates"]
+                    B1["getAuthenticatedUserId() + null check"]
+                    B2["try/catch + console.error"]
+                    B3["NextResponse.json()"]
+                    B4["rate limit wrapping"]
+                  end
+                  C -.-> B1
+                  C -.-> B2
+                  C -.-> B3
+                  B -.-> B4
+              </pre>
+            </div>
+          </div>
+          <div>
+            <p class="text-xs uppercase tracking-wider text-slate-400 mb-2">After — single pattern</p>
+            <div class="rounded-lg border border-slate-800 bg-white p-4">
+              <pre class="mermaid">
+                flowchart TB
+                  subgraph All["100 routes — single factory"]
+                    F["createRouteHandler"]
+                    F --> R1["Route: declarative config<br/>~15-25 lines each"]
+                    F --> R2["Route: declarative config"]
+                    F --> R3["Route: declarative config"]
+                  end
+                  subgraph FactoryProvides["Factory provides"]
+                    S1["Auth guard (4 modes)"]
+                    S2["Budget tracking"]
+                    S3["Body parsing + validation"]
+                    S4["Error wrapping"]
+                    S5["Rate limiting"]
+                  end
+                  classDef deep stroke:#0f172a,stroke-width:3px;
+                  class F deep
+              </pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-sm text-slate-700 border-l-4 border-amber-400 pl-4 py-2 bg-amber-50 rounded-r-md">
+          <strong>Caveat:</strong> Factory doesn't support dynamic route params (<code>[id]</code>), <code>formData</code> parsing, webhooks with signature verification, or streaming responses. These would need factory extensions — 3 of 85 routes are affected (stripe, payfast, tts).
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+          <div>
+            <p class="text-xs uppercase tracking-wider text-slate-400 mb-1">Problem</p>
+            <p class="text-slate-700">Three handler patterns coexist in the same codebase (<code>createRouteHandler</code>, <code>withRateLimit</code>-wrapped raw, and fully raw). 66 routes still duplicate the same 20-30 lines of boilerplate. New routes have no convention to follow.</p>
+          </div>
+          <div>
+            <p class="text-xs uppercase tracking-wider text-slate-400 mb-1">Solution</p>
+            <p class="text-slate-700">Extend factory to support <code>params</code> (dynamic segments) and <code>webhook</code> modes. Migrate 19 half-migrated routes first (mechanical), then tackle the 66 fully raw routes. Target: 100% factory usage.</p>
+          </div>
+        </div>
+
+        <div>
+          <p class="text-xs uppercase tracking-wider text-slate-400 mb-1">Wins</p>
+          <ul class="text-sm text-slate-600 space-y-0.5 list-disc list-inside">
+            <li><strong>Leverage:</strong> one factory eliminates ~2k lines of duplicated boilerplate</li>
+            <li><strong>Locality:</strong> auth, budget, validation, error handling live in one module — fix once, fixed everywhere</li>
+            <li><strong>Interface is the test surface:</strong> test the factory once, all 100 routes get tested auth/budget/validation behaviour</li>
+            <li><strong>Seam:</strong> adding a new auth mode or budget scheme happens in one place</li>
+          </ul>
+        </div>
+      </article>
+
+
+      <!-- Candidate 4: Services layer unification -->
+      <article class="bg-white rounded-xl shadow-level-2 p-6 space-y-4">
+        <div class="flex items-start justify-between">
+          <h2 class="text-xl font-semibold">Unify service layer under a single interface seam</h2>
+          <span class="badge-explore text-xs font-semibold px-2.5 py-1 rounded-full">Worth exploring</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm font-mono text-slate-600">
+          <div>
+            <p class="text-xs uppercase tracking-wider text-slate-400 mb-1">Files</p>
+            <ul class="space-y-0.5">
+              <li><code>src/lib/services/index.ts</code> — barrel exports 10 services</li>
+              <li>3 class+singleton, 4 plain functions, 3 object-literal+execute</li>
+              <li><code>ServiceResult&lt;T&gt;</code> defined but only used by 1 service</li>
+            </ul>
+          </div>
+          <div>
+            <p class="text-xs uppercase tracking-wider text-slate-400 mb-1">Patterns</p>
+            <p class="text-lg font-semibold text-amber-600">3</p>
+            <p class="text-xs text-slate-400">with no shared interface</p>
+          </div>
+        </div>
+
+        <div class="rounded-lg border border-slate-200 bg-white p-4">
+          <pre class="mermaid">
+            flowchart LR
+              subgraph Services["src/lib/services/"]
+                C1["class + singleton (3)"]
+                C2["plain functions (4)"]
+                C3["object.execute() (3)"]
+              end
+              SR["ServiceResult<T>"]
+              SR -.->|"used only by<br/>user-consent-service"| C1
+
+              subgraph Consumers["Callers"]
+                H["API Route Handlers"]
+                C["React Components"]
+              end
+
+              H -->|"import by path"| C1
+              H -->|"import by path"| C2
+              H -->|"import by path"| C3
+
+              classDef leak stroke:#dc2626,stroke-width:1px;
+              class SR leak
+          </pre>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+          <div>
+            <p class="text-xs uppercase tracking-wider text-slate-400 mb-1">Problem</p>
+            <p class="text-slate-700">Three service patterns with different call signatures force callers to learn each module's interface individually. No shared error handling convention — <code>ServiceResult</code> exists but is only used by one service. New services have no template to follow.</p>
+          </div>
+          <div>
+            <p class="text-xs uppercase tracking-wider text-slate-400 mb-1">Solution</p>
+            <p class="text-slate-700">Adopt a single service interface (e.g., <code>Service</code> base class with <code>ServiceResult</code> return convention). Migrate all 10 services to return <code>ServiceResult</code>. This creates a real seam at the service layer.</p>
+          </div>
+        </div>
+
+        <div>
+          <p class="text-xs uppercase tracking-wider text-slate-400 mb-1">Wins</p>
+          <ul class="text-sm text-slate-600 space-y-0.5 list-disc list-inside">
+            <li><strong>Leverage:</strong> one pattern to learn, not three</li>
+            <li><strong>Interface is the test surface:</strong> all services return <code>ServiceResult</code> — callers and tests handle success/failure uniformly</li>
+            <li><strong>Locality:</strong> error handling convention lives in one place (<code>ServiceResult</code> helpers), not scattered across callers</li>
+          </ul>
+        </div>
+      </article>
+
+
+      <!-- Candidate 5: Data layer seam — repositories exist but are bypassed -->
+      <article class="bg-white rounded-xl shadow-level-2 p-6 space-y-4">
+        <div class="flex items-start justify-between">
+          <h2 class="text-xl font-semibold">Weld the data layer seam: services should use repositories, not <code>offlineDB</code></h2>
+          <span class="badge-strong text-xs font-semibold px-2.5 py-1 rounded-full">Strong</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm font-mono text-slate-600">
+          <div>
+            <p class="text-xs uppercase tracking-wider text-slate-400 mb-1">Files</p>
+            <ul class="space-y-0.5">
+              <li><code>src/lib/db/repositories/</code> — 7 repo files (question-cache, visual-cache, exam-session, quiz-session, progress, conflicts, pdf-cache)</li>
+              <li><code>src/lib/services/</code> — 10 services, all import <code>offlineDB</code> from <code>schema.ts</code> directly</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <p class="text-xs uppercase tracking-wider text-slate-400 mb-2">Before — bypass</p>
+            <div class="rounded-lg border border-slate-200 bg-white p-4">
+              <pre class="mermaid">
+                flowchart LR
+                  S[Services]
+                  R[Repositories<br/>7 files]
+                  DB[Dexie offlineDB]
+
+                  S -.->|"direct import"| DB
+                  R -.->|"used by components,<br/>not services"| DB
+
+                  classDef leak stroke:#dc2626,stroke-width:2px,stroke-dasharray:6 3;
+                  class S leak
+              </pre>
+            </div>
+          </div>
+          <div>
+            <p class="text-xs uppercase tracking-wider text-slate-400 mb-2">After — seam</p>
+            <div class="rounded-lg border border-slate-800 bg-white p-4">
+              <pre class="mermaid">
+                flowchart LR
+                  S[Services]
+                  R[Repositories]
+                  DB[Dexie offlineDB]
+
+                  S -->|"via repository interface"| R
+                  R -->|"only repos touch DB"| DB
+
+                  classDef deep stroke:#0f172a,stroke-width:3px;
+                  class R deep
+              </pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+          <div>
+            <p class="text-xs uppercase tracking-writer text-slate-400 mb-1">Problem</p>
+            <p class="text-slate-700">Services import <code>offlineDB</code> directly from <code>schema.ts</code>, bypassing the existing repository layer. This means: (a) testing a service requires an IndexedDB instance, (b) there's no seam to swap Dexie for another backend, and (c) repository abstractions exist but are irrelevant to the service layer.</p>
+          </div>
+          <div>
+            <p class="text-xs uppercase tracking-writer text-slate-400 mb-1">Solution</p>
+            <p class="text-slate-700">Give each service its repository (or repository interface) as a constructor parameter. Services stop importing <code>offlineDB</code> directly. Repositories become the single seam between business logic and persistence.</p>
+          </div>
+        </div>
+
+        <div>
+          <p class="text-xs uppercase tracking-wider text-slate-400 mb-1">Wins</p>
+          <ul class="text-sm text-slate-600 space-y-0.5 list-disc list-inside">
+            <li><strong>Seam becomes real:</strong> two adapters — Dexie in prod, in-memory in tests</li>
+            <li><strong>Interface is the test surface:</strong> test a service without IndexedDB — mock the repository</li>
+            <li><strong>Locality:</strong> Dexie schema changes affect only the repository layer, not all 10 services</li>
+          </ul>
+        </div>
+      </article>
+
+
+      <!-- Candidate 6: Orchestrator boundary leakage — hint route bypasses -->
+      <article class="bg-white rounded-xl shadow-level-2 p-6 space-y-4">
+        <div class="flex items-start justify-between">
+          <h2 class="text-xl font-semibold">Seal the hint route: make all engine API routes use the Orchestrator</h2>
+          <span class="badge-explore text-xs font-semibold px-2.5 py-1 rounded-full">Worth exploring</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm font-mono text-slate-600">
+          <div>
+            <p class="text-xs uppercase tracking-wider text-slate-400 mb-1">Files</p>
+            <ul class="space-y-0.5">
+              <li><code>src/app/api/engine/hint/route.ts</code> (28 lines — uses QuestionEngine directly)</li>
+              <li><code>src/app/api/engine/generate/route.ts</code> (39 lines — uses LearningOrchestrator)</li>
+              <li><code>src/app/api/engine/grade/route.ts</code> (29 lines — uses LearningOrchestrator)</li>
+              <li><code>src/app/api/quiz-packs/generate/route.ts</code> (uses QuestionEngine directly)</li>
+              <li><code>src/lib/orchestrator/grading.ts</code> + <code>track-result.ts</code> (duplicated pass-threshold logic)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="rounded-lg border border-slate-200 bg-white p-4">
+          <pre class="mermaid">
+            flowchart LR
+              subgraph API["API Routes"]
+                G["POST generate"]
+                GR["POST grade"]
+                H["POST hint"]
+                QP["POST quiz-packs/generate"]
+              end
+              subgraph Orchestrator["LearningOrchestrator"]
+                LO["generateQuestionSet()"]
+                LO2["gradeAndTrack()"]
+              end
+              QE["QuestionEngine"]
+              subgraph Duplication["isCorrect threshold"]
+                GT["grading.ts:33<br/>score / maxScore >= 0.5"]
+                TR["track-result.ts:32<br/>score / maxScore >= 0.5"]
+              end
+
+              G --> LO
+              GR --> LO2
+              H -.->|"bypasses"| QE
+              QP -.->|"bypasses"| QE
+              LO --> QE
+              LO2 --> QE
+              LO2 --> GT
+              LO2 --> TR
+
+              classDef leak stroke:#dc2626,stroke-width:2px,stroke-dasharray:6 3;
+              class H,QP,GT,TR leak
+          </pre>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+          <div>
+            <p class="text-xs uppercase tracking-wider text-slate-400 mb-1">Problem</p>
+            <p class="text-slate-700">The hint route and quiz-packs route bypass the Orchestrator, creating two access paths to QuestionEngine. <code>grading.ts</code> and <code>track-result.ts</code> duplicate the same <code>isCorrect</code> passing threshold logic (exact copy). Quiz packs route additionally accesses <code>q.options</code> at the question top level instead of <code>q.body.options</code> — a bug.</p>
+          </div>
+          <div>
+            <p class="text-xs uppercase tracking-writer text-slate-400 mb-1">Solution</p>
+            <p class="text-slate-700">Add <code>generateHint</code> to the Orchestrator. Make the quiz-packs route use the Orchestrator. Extract the shared <code>isCorrect</code> helper into <code>orchestrator/shared.ts</code> (or <code>types.ts</code>).</p>
+          </div>
+        </div>
+
+        <div>
+          <p class="text-xs uppercase tracking-wider text-slate-400 mb-1">Wins</p>
+          <ul class="text-sm text-slate-600 space-y-0.5 list-disc list-inside">
+            <li><strong>Locality:</strong> all engine operations live behind one Orchestrator seam</li>
+            <li><strong>Leverage:</strong> hint route gets side-effect orchestration (analytics, competency tracking) automatically if needed later</li>
+            <li><strong>Bug fix:</strong> <code>q.options</code> → <code>q.body.options</code> discovered during exploration</li>
+          </ul>
+        </div>
+      </article>
+
+
+      <!-- Candidate 7: Consent gate drift -->
+      <article class="bg-white rounded-xl shadow-level-2 p-6 space-y-4">
+        <div class="flex items-start justify-between">
+          <h2 class="text-xl font-semibold">Merge consent gates into the consent service — eliminate drift seam</h2>
+          <span class="badge-speculative text-xs font-semibold px-2.5 py-1 rounded-full">Speculative</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm font-mono text-slate-600">
+          <div>
+            <p class="text-xs uppercase tracking-wider text-slate-400 mb-1">Files</p>
+            <ul class="space-y-0.5">
+              <li><code>src/lib/consent/ai-gate.ts</code> — module-level <code>let dataSharingConsent</code></li>
+              <li><code>src/lib/consent/sentry-gate.ts</code> — module-level <code>let analyticsConsent</code></li>
+              <li><code>src/lib/services/user-consent-service.ts</code> — persists to Dexie + Appwrite, enqueues sync</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <p class="text-xs uppercase tracking-wider text-slate-400 mb-2">Before — two state sources</p>
+            <div class="rounded-lg border border-slate-200 bg-white p-4">
+              <pre class="mermaid">
+                flowchart LR
+                  P[Privacy Tab UI]
+                  S[UserConsentService<br/>Dexie + Appwrite]
+
+                  AG[ai-gate.ts<br/>module-level boolean]
+                  SG[sentry-gate.ts<br/>module-level boolean]
+
+                  P -->|"writes"| S
+                  P -.->|"also sets"| AG
+                  P -.->|"also sets"| SG
+
+                  classDef leak stroke:#dc2626,stroke-width:2px;
+                  class AG,SG leak
+              </pre>
+            </div>
+          </div>
+          <div>
+            <p class="text-xs uppercase tracking-wider text-slate-400 mb-2">After — single seam</p>
+            <div class="rounded-lg border border-slate-800 bg-white p-4">
+              <pre class="mermaid">
+                flowchart LR
+                  P[Privacy Tab UI]
+                  S[UserConsentService<br/>single source of truth]
+
+                  P --> S
+                  S -->|"reads latest"| AG[AI Client<br/>via consent check]
+                  S -->|"reads latest"| SG[Sentry Client<br/>via consent check]
+              </pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+          <div>
+            <p class="text-xs uppercase tracking-wider text-slate-400 mb-1">Problem</p>
+            <p class="text-slate-700">Consent preferences are persisted in Dexie + Appwrite by <code>UserConsentService</code>, but the AI client and Sentry client check separate module-level booleans (<code>ai-gate.ts</code>, <code>sentry-gate.ts</code>). These must be set independently at app startup — they can drift from the persisted state.</p>
+          </div>
+          <div>
+            <p class="text-xs uppercase tracking-writer text-slate-400 mb-1">Solution</p>
+            <p class="text-slate-700">Have the AI and Sentry clients read consent from the <code>UserConsentService</code> directly (via a synchronous cache backed by the Dexie record). Remove the module-level gate files.</p>
+          </div>
+        </div>
+
+        <div>
+          <p class="text-xs uppercase tracking-wider text-slate-400 mb-1">Wins</p>
+          <ul class="text-sm text-slate-600 space-y-0.5 list-disc list-inside">
+            <li><strong>Locality:</strong> consent logic lives in one service module, not three</li>
+            <li><strong>Seam:</strong> changing consent storage strategy affects one module</li>
+            <li><strong>Interface shrinks:</strong> no separate <code>setDataSharingConsent()</code> API to learn</li>
+          </ul>
+        </div>
+
+        <div class="rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800">
+          This contradicts ADR-0009 (consent storage strategy) only in implementation detail, not principle. The ADR mandates dual-write — still respected. The gates being separate was never a documented decision.
+        </div>
+      </article>
+
+
+      <!-- Candidate 8: Type duplication — exam and gamification types -->
+      <article class="bg-white rounded-xl shadow-level-2 p-6 space-y-4">
+        <div class="flex items-start justify-between">
+          <h2 class="text-xl font-semibold">Deduplicate exam and gamification types into single-sourced modules</h2>
+          <span class="badge-explore text-xs font-semibold px-2.5 py-1 rounded-full">Worth exploring</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm font-mono text-slate-600">
+          <div>
+            <p class="text-xs uppercase tracking-wider text-slate-400 mb-1">Files</p>
+            <ul class="space-y-0.5">
+              <li><code>src/types/exam.ts</code> — <code>PaperListing</code>, <code>ExamSession</code></li>
+              <li><code>src/lib/db/client.ts</code> — <code>ExamPaperRecord</code> (different shape)</li>
+              <li><code>src/lib/db/exams/schema.ts</code> — <code>ExamPaperRecord</code> (different shape again)</li>
+              <li><code>src/types/gamification.ts</code> — <code>UserGamification</code> with <code>Achievement[]</code></li>
+              <li><code>src/lib/gamification-engine/types</code> — <code>StoredGamification</code> with <code>string[]</code></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <p class="text-xs uppercase tracking-wider text-slate-400 mb-2">Before — triplicated</p>
+            <div class="rounded-lg border border-slate-200 bg-white p-4">
+              <pre class="mermaid">
+                flowchart LR
+                  subgraph Exam["Exam types"]
+                    T1["types/exam.ts<br/>PaperListing"]
+                    T2["db/client.ts<br/>ExamPaperRecord"]
+                    T3["db/exams/schema.ts<br/>ExamPaperRecord"]
+                  end
+                  subgraph Gamification["Gamification types"]
+                    G1["types/gamification.ts<br/>UserGamification"]
+                    G2["gamification-engine/types<br/>StoredGamification"]
+                  end
+                  classDef leak stroke:#dc2626,stroke-width:2px;
+                  class T1,T2,T3,G1,G2 leak
+              </pre>
+            </div>
+          </div>
+          <div>
+            <p class="text-xs uppercase tracking-wider text-slate-400 mb-2">After — single-sourced</p>
+            <div class="rounded-lg border border-slate-800 bg-white p-4">
+              <pre class="mermaid">
+                flowchart LR
+                  subgraph Exam["Exam module"]
+                    T["types/exam.ts<br/>PaperListing"]
+                    DB["db/exams/ — uses same type"]
+                  end
+                  subgraph Gamification["Gamification module"]
+                    G["gamification-engine/types<br/>UserGamification"]
+                  end
+                  T --> DB
+              </pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+          <div>
+            <p class="text-xs uppercase tracking-wider text-slate-400 mb-1">Problem</p>
+            <p class="text-slate-700">Three modules define exam types with overlapping fields but different shapes. Two modules define gamification types with the same data but different encodings (<code>Achievement[]</code> vs <code>string[]</code>). The <code>Session 1 fix</code> already handles migration for the old format — but the duplicated types remain a source of confusion and mapping overhead.</p>
+          </div>
+          <div>
+            <p class="text-xs uppercase tracking-writer text-slate-400 mb-1">Solution</p>
+            <p class="text-slate-700">Consolidate exam types into <code>src/types/exam.ts</code> as the single source; have <code>db/client.ts</code> and <code>db/exams/schema.ts</code> import from there. Consolidate gamification types into <code>gamification-engine/types</code>; remove <code>types/gamification.ts</code> (the engine already handles backward compat).</p>
+          </div>
+        </div>
+
+        <div>
+          <p class="text-xs uppercase tracking-wider text-slate-400 mb-1">Wins</p>
+          <ul class="text-sm text-slate-600 space-y-0.5 list-disc list-inside">
+            <li><strong>Locality:</strong> changing an exam field touches one type file, not three</li>
+            <li><strong>Leverage:</strong> one import path for exam types, not divergent shapes</li>
+            <li><strong>Interface shrinks:</strong> no <code>Achievement[]</code> → <code>string[]</code> mapping tax across modules</li>
+          </ul>
+        </div>
+      </article>
+
+    </section>
+
+
+    <!-- Top Recommendation -->
+    <section id="top-recommendation" class="bg-slate-900 text-white rounded-xl p-8 space-y-4">
+      <h2 class="text-2xl font-semibold">Top Recommendation</h2>
+      <div class="flex items-start gap-4">
+        <span class="badge-strong text-xs font-semibold px-2.5 py-1 rounded-full shrink-0 mt-1">Strong</span>
+        <div class="space-y-2">
+          <p class="text-lg font-medium"><a href="#candidates" class="underline decoration-emerald-400 decoration-2 hover:text-emerald-300">Migrate all routes to <code>createRouteHandler</code></a></p>
+          <p class="text-slate-300 text-sm leading-relaxed">
+            This is the highest-leverage refactor. 85 of 100 route files don't use the factory, duplicating ~2k lines of boilerplate across three coexisting patterns. The factory already works — it just needs <code>params</code> and <code>webhook</code> support for the remaining 3 edge-case routes. The 19 half-migrated routes (withRateLimit wrapper) are trivial mechanical migrations. Tackle by route-group: sibling routes of already-migrated handlers first (admin/exams/&ast;, exam-sessions/&ast;, engine/&ast;), then auth (4 routes), then the bulk (66 remaining).
+          </p>
+          <p class="text-slate-400 text-sm">
+            <strong>Why this over the others:</strong> Every PR touches a route handler. Every route currently duplicates auth, validation, error handling, and response construction. Fixing the factory eliminates that tax permanently. The data-layer seam (candidate 5) and service unification (candidate 4) are close seconds, but they affect fewer call sites and the existing code works. The route migration affects every frontend-backend interaction.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</body>
+</html>

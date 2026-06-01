@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Architecture Review — Deepening Candidates</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<style>
+  body { font-family: system-ui, -apple-system, sans-serif; }
+  .card { border: 1px solid #e5e7eb; border-radius: 20px; overflow: hidden; }
+  .badge-strong { background: #dcfce7; color: #166534; }
+  .badge-exploring { background: #fef3c7; color: #92400e; }
+  .badge-speculative { background: #f3e8ff; color: #6b21a8; }
+  .diagram-box { background: #f9fafb; border-radius: 12px; padding: 1.5rem; overflow-x: auto; }
+  hr.separator { border: 0; border-top: 2px dashed #d1d5db; margin: 0.75rem 0; }
+  .leverage-meter { height: 8px; border-radius: 4px; background: #e5e7eb; overflow: hidden; }
+  .leverage-fill { height: 100%; border-radius: 4px; transition: width 0.5s; }
+  .warning-callout { background: #fef2f2; border-left: 4px solid #ef4444; border-radius: 8px; padding: 0.75rem 1rem; }
+</style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+<div class="max-w-4xl mx-auto px-6 py-10">
+
+<!-- Header -->
+<div class="mb-10">
+  <h1 class="text-3xl font-bold tracking-tight mb-2">Architecture Review</h1>
+  <p class="text-gray-500">Deepening candidates for Lumni — 2026-05-29</p>
+  <p class="text-sm text-gray-400 mt-1">All vocabulary from <code class="text-gray-600">LANGUAGE.md</code></p>
+</div>
+
+<!-- ============================================================ -->
+<!-- CANDIDATE 1                                                   -->
+<!-- ============================================================ -->
+<div class="card bg-white mb-8">
+  <div class="px-6 py-5 border-b border-gray-100 flex items-center justify-between">
+    <h2 class="text-xl font-semibold">1. Three handler factories where two are shallow</h2>
+    <span class="badge-strong text-sm font-medium px-3 py-0.5 rounded-full">Strong</span>
+  </div>
+
+  <div class="px-6 py-4 space-y-3 text-sm leading-relaxed">
+
+    <div>
+      <span class="font-semibold text-gray-600">Files</span>
+      <ul class="list-disc list-inside text-gray-700 mt-1 space-y-0.5 font-mono text-xs">
+        <li><code>src/lib/api/create-route-handler.ts</code> (134 lines)</li>
+        <li><code>src/lib/api/create-ai-handler.ts</code> (48 lines)</li>
+        <li><code>src/lib/api/engine-handler.ts</code> (43 lines)</li>
+        <li>~20 engine routes + ~10 AI-budget routes that consume these</li>
+      </ul>
+    </div>
+
+    <hr class="separator">
+
+    <div>
+      <span class="font-semibold text-gray-600">Problem</span>
+      <p class="text-gray-700 mt-1"><code>createAIHandler</code> and <code>createEngineHandler</code> are nearly identical wrappers over <code>createRouteHandler</code>. Both set <code>auth: "none"</code>, both pass budget types, both call the base factory. They differ only in whether they pass <code>requestId</code> and how <code>execute(…)</code> receives its arguments. The interface of each wrapper is almost as complex as the implementation — neither is deep. The deletion test: removing either spreads ~3 lines of config across ~10+ callers without concentrating any behaviour. The factories are pass-throughs.</p>
+    </div>
+
+    <hr class="separator">
+
+    <div>
+      <span class="font-semibold text-gray-600">Solution</span>
+      <p class="text-gray-700 mt-1">Merge the two wrapper concerns into <code>createRouteHandler</code>'s config shape directly — add <code>passRequestId</code> and <code>executeHelpers</code> as optional fields so callers pick their flavour from one factory. Remove <code>createAIHandler</code> and <code>createEngineHandler</code> as separate exports. The interface shrinks; callers see one factory with config knobs instead of three factories to choose among.</p>
+    </div>
+
+    <hr class="separator">
+
+    <div>
+      <span class="font-semibold text-gray-600">Benefits</span>
+      <ul class="list-disc list-inside text-gray-700 mt-1 space-y-0.5">
+        <li><strong>Locality</strong>: auth-mode, budget, requestId wiring lives in one place</li>
+        <li><strong>Leverage</strong>: one factory replaces three; new route types just add config</li>
+        <li><strong>Tests</strong>: <code>createRouteHandler</code> tests cover all paths automatically</li>
+        <li><strong>Migration</strong>: each route changes <code>createAIHandler(config)</code> → <code>createRouteHandler({...config, budget: config.budgetType})</code> — trivially mechanical</li>
+      </ul>
+    </div>
+
+    <hr class="separator">
+
+    <!-- Before/After -->
+    <div>
+      <span class="font-semibold text-gray-600 mb-2 block">Before / After</span>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="diagram-box">
+          <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Before — Three factories</h4>
+          <div class="mermaid">
+flowchart LR
+    A["createRouteHandler&lt;br&gt;(134 lines)"]
+    B["createAIHandler&lt;br&gt;(48 lines)"]
+    C["createEngineHandler&lt;br&gt;(43 lines)"]
+    D["engine/generate<br>route.ts"]
+    E["engine/grade<br>route.ts"]
+    F["engine/hint<br>route.ts"]
+    G["budget routes<br>(~10)"]
+    H["engine routes<br>(~20)"]
+    
+    B -- "auth:'none'" --> A
+    C -- "auth:'none'" --> A
+    D --> C
+    E --> C
+    F --> C
+    G --> B
+    H --> C
+
+    style B fill:#fef3c7,stroke:#d97706
+    style C fill:#fef3c7,stroke:#d97706
+    style A fill:#dbeafe,stroke:#2563eb
+          </div>
+          <p class="text-xs text-gray-400 mt-2">Two wrappers add ~0 leverage. Yellow = shallow modules.</p>
+        </div>
+        <div class="diagram-box">
+          <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">After — One factory with config</h4>
+          <div class="mermaid">
+flowchart LR
+    A["createRouteHandler&lt;br&gt;({ auth, budget, &lt;br&gt;passRequestId, ... })"]
+    D["engine/generate"]
+    E["engine/grade"]
+    F["engine/hint"]
+    G["budget routes<br>(~10)"]
+    H["engine routes<br>(~20)"]
+    
+    D --> A
+    E --> A
+    F --> A
+    G --> A
+    H --> A
+
+    style A fill:#dbeafe,stroke:#2563eb
+    style D fill:#d1fae5,stroke:#059669
+    style E fill:#d1fae5,stroke:#059669
+    style F fill:#d1fae5,stroke:#059669
+    style G fill:#d1fae5,stroke:#059669
+    style H fill:#d1fae5,stroke:#059669
+          </div>
+          <p class="text-xs text-gray-400 mt-2">All routes consume the same seam. Green = deepened.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Leverage meter -->
+    <div class="mt-3">
+      <div class="flex justify-between text-xs text-gray-500 mb-1">
+        <span>Interface leverage</span>
+        <span>+34% after merge</span>
+      </div>
+      <div class="leverage-meter">
+        <div class="leverage-fill bg-blue-500" style="width: 72%"></div>
+      </div>
+      <div class="flex justify-between text-xs text-gray-400 mt-0.5">
+        <span>3 factories → 1, config-driven</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- CANDIDATE 2                                                   -->
+<!-- ============================================================ -->
+<div class="card bg-white mb-8">
+  <div class="px-6 py-5 border-b border-gray-100 flex items-center justify-between">
+    <h2 class="text-xl font-semibold">2. Quiz-packs route is hand-rolled outside the factory seam</h2>
+    <span class="badge-strong text-sm font-medium px-3 py-0.5 rounded-full">Strong</span>
+  </div>
+
+  <div class="px-6 py-4 space-y-3 text-sm leading-relaxed">
+
+    <div>
+      <span class="font-semibold text-gray-600">Files</span>
+      <ul class="list-disc list-inside text-gray-700 mt-1 space-y-0.5 font-mono text-xs">
+        <li><code>src/app/api/quiz-packs/generate/route.ts</code> (80 lines)</li>
+        <li>Compared to: <code>src/app/api/engine/generate/route.ts</code> (37 lines)</li>
+      </ul>
+    </div>
+
+    <hr class="separator">
+
+    <div>
+      <span class="font-semibold text-gray-600">Problem</span>
+      <p class="text-gray-700 mt-1">The quiz-packs generate route has its own auth check, its own try/catch, its own <code>NextResponse.json()</code> calls, and manual dynamic imports. Every other engine-like route uses <code>createEngineHandler</code> and gets consistent error handling, budget tracking, body parsing, and validation for free. This route duplicates ~43 lines of boilerplate that the factory already provides. The deletion test: replacing this with the factory doesn't concentrate complexity — the factory already exists. It just removes a duplicate implementation.</p>
+      <p class="text-gray-700 mt-2">More subtly: this route doesn't budget-track its AI calls (<code>engine.generate()</code> consumes budget but the route never calls <code>trackUsage</code> or <code>checkBudget</code>). If budget limits are enforced, quiz-pack generation silently bypasses them.</p>
+    </div>
+
+    <hr class="separator">
+
+    <div>
+      <span class="font-semibold text-gray-600">Solution</span>
+      <p class="text-gray-700 mt-1">Migrate to <code>createAIHandler</code> (or the merged factory from Candidate 1). The route shrinks from 80 lines to ~25. Budget tracking, auth, and error wrapping come for free. The dynamic imports stay but the boilerplate disappears.</p>
+    </div>
+
+    <hr class="separator">
+
+    <div>
+      <span class="font-semibold text-gray-600">Benefits</span>
+      <ul class="list-disc list-inside text-gray-700 mt-1 space-y-0.5">
+        <li><strong>Leverage</strong>: the factory earns its keep the moment a second route uses it</li>
+        <li><strong>Locality</strong>: bug fixes in error handling, budget tracking, or validation apply to quiz-packs without editing the route</li>
+        <li><strong>Seam</strong>: if quiz-packs later needs rate limiting or audit logging, the config toggle exists</li>
+      </ul>
+    </div>
+
+    <hr class="separator">
+
+    <!-- Before/After -->
+    <div>
+      <span class="font-semibold text-gray-600 mb-2 block">Before / After</span>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="diagram-box">
+          <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Before — Hand-rolled, outside seam</h4>
+          <div class="mermaid">
+flowchart LR
+    A["createEngineHandler<br>seam"]
+    B["engine/generate (37L)"]
+    C["engine/grade (27L)"]
+    D["engine/hint (26L)"]
+    E["quiz-packs/generate (80L)"]
+    
+    B --> A
+    C --> A
+    D --> A
+    E -. "manual auth,<br>manual try/catch,<br>manual JSON" .-> E
+
+    style A fill:#dbeafe,stroke:#2563eb
+    style E fill:#fecaca,stroke:#dc2626
+          </div>
+          <p class="text-xs text-gray-400 mt-2">One route outside the seam. Red = inconsistent.</p>
+        </div>
+        <div class="diagram-box">
+          <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">After — Inside the seam</h4>
+          <div class="mermaid">
+flowchart LR
+    A["createEngineHandler<br>seam"]
+    B["engine/generate (37L)"]
+    C["engine/grade (27L)"]
+    D["engine/hint (26L)"]
+    E["quiz-packs/generate (~25L)"]
+    
+    B --> A
+    C --> A
+    D --> A
+    E --> A
+
+    style A fill:#dbeafe,stroke:#2563eb
+    style E fill:#d1fae5,stroke:#059669
+          </div>
+          <p class="text-xs text-gray-400 mt-2">All engine routes use the same seam. Consistent error handling and budget tracking.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="leverage-meter mt-3">
+      <div class="leverage-fill bg-green-500" style="width: 88%"></div>
+    </div>
+    <div class="flex justify-between text-xs text-gray-400 mt-0.5">
+      <span>Adoption completeness across engine-like routes: 1/1 → 1/1 after</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- CANDIDATE 3                                                   -->
+<!-- ============================================================ -->
+<div class="card bg-white mb-8">
+  <div class="px-6 py-5 border-b border-gray-100 flex items-center justify-between">
+    <h2 class="text-xl font-semibold">3. GradeEventBus has dual import paths — the barrel re-export is pure indirection</h2>
+    <span class="badge-exploring text-sm font-medium px-3 py-0.5 rounded-full">Worth exploring</span>
+  </div>
+
+  <div class="px-6 py-4 space-y-3 text-sm leading-relaxed">
+
+    <div>
+      <span class="font-semibold text-gray-600">Files</span>
+      <ul class="list-disc list-inside text-gray-700 mt-1 space-y-0.5 font-mono text-xs">
+        <li><code>src/lib/grade-event-bus/index.ts</code> (37 lines)</li>
+        <li><code>src/lib/services/index.ts</code> (re-exports <code>GradeEvent</code> and <code>GradeEventBus</code>)</li>
+        <li><code>src/lib/orchestrator/grading.ts</code> (direct import from <code>grade-event-bus</code>)</li>
+      </ul>
+    </div>
+
+    <hr class="separator">
+
+    <div>
+      <span class="font-semibold text-gray-600">Problem</span>
+      <p class="text-gray-700 mt-1"><code>src/lib/services/index.ts</code> re-exports <code>GradeEvent</code> and <code>GradeEventBus</code> from <code>grade-event-bus</code>. But <code>src/lib/orchestrator/grading.ts</code> imports from <code>grade-event-bus</code> directly. Two valid import paths exist for the same module. The deletion test: remove the re-export from <code>services/index.ts</code> and zero modules break (the orchestrator uses the direct path). The re-export adds no leverage — it's pure indirection that makes the module graph harder to trace.</p>
+    </div>
+
+    <hr class="separator">
+
+    <div>
+      <span class="font-semibold text-gray-600">Solution</span>
+      <p class="text-gray-700 mt-1">Remove the <code>GradeEvent</code> and <code>GradeEventBus</code> re-exports from the services barrel. All consumers import directly from <code>@/lib/grade-event-bus</code>. If the grade event bus is genuinely a cross-cutting concern, document it as such in CONTEXT.md rather than wiring it through the services barrel.</p>
+    </div>
+
+    <hr class="separator">
+
+    <div>
+      <span class="font-semibold text-gray-600">Benefits</span>
+      <ul class="list-disc list-inside text-gray-700 mt-1 space-y-0.5">
+        <li><strong>Locality</strong>: one canonical import path for the module</li>
+        <li><strong>Seam</strong>: the module's interface is at its own directory, not filtered through a barrel</li>
+        <li><strong>Low effort, high hygiene</strong>: removing one re-export line</li>
+      </ul>
+    </div>
+
+    <hr class="separator">
+
+    <!-- Before/After -->
+    <div>
+      <span class="font-semibold text-gray-600 mb-2 block">Before / After</span>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="diagram-box">
+          <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Before — Dual wiring</h4>
+          <div class="mermaid">
+flowchart LR
+    A["grade-event-bus"]
+    B["services/index<br>(re-exports GradeEventBus)"]
+    C["orchestrator/grading.ts"]
+    D["orchestrator/track-result.ts"]
+    
+    C -- "direct import" --> A
+    D -- "via barrel" --> B
+    B -- "re-exports" --> A
+
+    style B fill:#fef3c7,stroke:#d97706
+    style A fill:#dbeafe,stroke:#2563eb
+          </div>
+          <p class="text-xs text-gray-400 mt-2">Two import graphs; the barrel adds a step with zero benefit.</p>
+        </div>
+        <div class="diagram-box">
+          <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">After — Single seam</h4>
+          <div class="mermaid">
+flowchart LR
+    A["grade-event-bus"]
+    C["orchestrator/grading.ts"]
+    D["orchestrator/track-result.ts"]
+    
+    C -- "direct import" --> A
+    D -- "direct import" --> A
+
+    style A fill:#d1fae5,stroke:#059669
+    style C fill:#d1fae5,stroke:#059669
+    style D fill:#d1fae5,stroke:#059669
+          </div>
+          <p class="text-xs text-gray-400 mt-2">One canonical import path. The module's own directory is the seam.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="leverage-meter mt-3">
+      <div class="leverage-fill bg-amber-500" style="width: 45%"></div>
+    </div>
+    <div class="flex justify-between text-xs text-gray-400 mt-0.5">
+      <span>Hygiene gain only — no behaviour change</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- CANDIDATE 4                                                   -->
+<!-- ============================================================ -->
+<div class="card bg-white mb-8">
+  <div class="px-6 py-5 border-b border-gray-100 flex items-center justify-between">
+    <h2 class="text-xl font-semibold">4. Flashcard consolidation left a stale directory and a legacy renderer</h2>
+    <span class="badge-exploring text-sm font-medium px-3 py-0.5 rounded-full">Worth exploring</span>
+  </div>
+
+  <div class="px-6 py-4 space-y-3 text-sm leading-relaxed">
+
+    <div>
+      <span class="font-semibold text-gray-600">Files</span>
+      <ul class="list-disc list-inside text-gray-700 mt-1 space-y-0.5 font-mono text-xs">
+        <li><code>src/lib/flashcard-repository/migrate.ts</code> (42 lines)</li>
+        <li><code>src/lib/flashcard-repository/__tests__/</code></li>
+        <li><code>src/components/quiz/flashcard.tsx</code> (173 lines)</li>
+        <li><code>src/components/flashcard/</code> (5 files — canonical swipeable deck)</li>
+      </ul>
+    </div>
+
+    <hr class="separator">
+
+    <div>
+      <span class="font-semibold text-gray-600">Problem</span>
+      <p class="text-gray-700 mt-1">Session 8 consolidated the flashcard engine into <code>src/lib/flashcard-engine/</code>. Old barrels re-export from the new engine for backward compatibility. But <code>src/lib/flashcard-repository/</code> still exists as a directory with only a <code>migrate.ts</code> file and its tests. Separately, <code>src/components/quiz/flashcard.tsx</code> (173 lines) is a legacy flip-card component with tap-to-flip and known/review buttons — a completely different paradigm from the swipeable deck that replaced it. The deletion test: delete <code>flashcard-repository/</code> and <code>quiz/flashcard.tsx</code>. Does complexity reappear? The migration logic needs a home (<code>flashcard-engine/migrate.ts</code> is the obvious one). The legacy renderer has no callers after Session 13's swipeable deck migration. Neither passes the deletion test — removing them <em>concentrates</em> the domain in one place.</p>
+    </div>
+
+    <hr class="separator">
+
+    <div>
+      <span class="font-semibold text-gray-600">Solution</span>
+      <ol class="list-decimal list-inside text-gray-700 mt-1 space-y-1 text-sm">
+        <li>Move <code>migrate.ts</code> into <code>src/lib/flashcard-engine/migrate.ts</code></li>
+        <li>Delete <code>src/lib/flashcard-repository/</code></li>
+        <li>Delete <code>src/components/quiz/flashcard.tsx</code> (verify zero internal imports first)</li>
+      </ol>
+    </div>
+
+    <hr class="separator">
+
+    <div>
+      <span class="font-semibold text-gray-600">Benefits</span>
+      <ul class="list-disc list-inside text-gray-700 mt-1 space-y-0.5">
+        <li><strong>Locality</strong>: all flashcard engine code lives in <code>flashcard-engine/</code></li>
+        <li><strong>Leverage</strong>: one canonical renderer (swipeable deck) instead of two competing ones</li>
+        <li><strong>Tests</strong>: migration tests move with the code; no dangling tests for deleted components</li>
+      </ul>
+    </div>
+
+    <hr class="separator">
+
+    <!-- Before/After -->
+    <div>
+      <span class="font-semibold text-gray-600 mb-2 block">Before / After</span>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="diagram-box">
+          <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Before — Scattered flashcard domain</h4>
+          <div class="mermaid">
+flowchart LR
+    subgraph lib
+        FE["flashcard-engine<br>(canonical)"]
+        FR["flashcard-repository<br>(migrate.ts only)"]
+    end
+    subgraph components
+        SD["flashcard/swipeable-card-deck<br>(canonical)"]
+        LF["quiz/flashcard.tsx<br>(legacy, 173L)"]
+        TF["tools/flashcards/<br>flashcard-card.tsx<br>(third renderer)"]
+    end
+    
+    FR -. "leftover" .-> FE
+    LF -. "replaced by" .-> SD
+
+    style FR fill:#fecaca,stroke:#dc2626
+    style LF fill:#fecaca,stroke:#dc2626
+          </div>
+          <p class="text-xs text-gray-400 mt-2">Red = stale code that should be removed.</p>
+        </div>
+        <div class="diagram-box">
+          <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">After — Consolidated</h4>
+          <div class="mermaid">
+flowchart LR
+    FE["flashcard-engine<br>(+ migrate.ts moved in)"]
+    SD["flashcard/swipeable-card-deck<br>(canonical)"]
+    
+    SD --> FE
+
+    style FE fill:#d1fae5,stroke:#059669
+    style SD fill:#d1fae5,stroke:#059669
+          </div>
+          <p class="text-xs text-gray-400 mt-2">One engine module, one renderer. The flashcard domain is a single locality.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="leverage-meter mt-3">
+      <div class="leverage-fill bg-amber-500" style="width: 60%"></div>
+    </div>
+    <div class="flex justify-between text-xs text-gray-400 mt-0.5">
+      <span>Cleanup only — validates that Session 8/13 consolidation was complete</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- CANDIDATE 5                                                   -->
+<!-- ============================================================ -->
+<div class="card bg-white mb-8">
+  <div class="px-6 py-5 border-b border-gray-100 flex items-center justify-between">
+    <h2 class="text-xl font-semibold">5. Dashboard content component pulls 29 imports — an undigested domain</h2>
+    <span class="badge-exploring text-sm font-medium px-3 py-0.5 rounded-full">Worth exploring</span>
+  </div>
+
+  <div class="px-6 py-4 space-y-3 text-sm leading-relaxed">
+
+    <div>
+      <span class="font-semibold text-gray-600">Files</span>
+      <ul class="list-disc list-inside text-gray-700 mt-1 space-y-0.5 font-mono text-xs">
+        <li><code>src/components/dashboard/dashboard-content.tsx</code> (29 imports, 288 lines)</li>
+        <li><code>src/components/dashboard/dashboard-client.tsx</code> (19 imports, 206 lines)</li>
+        <li><code>src/components/dashboard/practice/</code> (12 files, each 14-17 imports)</li>
+      </ul>
+    </div>
+
+    <hr class="separator">
+
+    <div>
+      <span class="font-semibold text-gray-600">Problem</span>
+      <p class="text-gray-700 mt-1"><code>dashboard-content.tsx</code> has more imports than any other component in the codebase (29). It's a monolith — not in line count (288 is manageable) but in dependency breadth. Understanding what the dashboard does means tracing 29 import edges. The component is deep (it renders the entire dashboard) but that depth comes at the cost of <strong>locality</strong>: any change to dashboard data fetching, a sub-section's layout, or a new metric requires editing <code>dashboard-content.tsx</code> and understanding all 29 dependencies.</p>
+      <p class="text-gray-700 mt-2">ADR-0002 (component decomposition) proposes atomic design for this exact problem. The dashboard is the largest violation of that guidance in the codebase. This is not a contradiction of ADR-0002 — it's the primary motivation for it.</p>
+    </div>
+
+    <hr class="separator">
+
+    <div>
+      <span class="font-semibold text-gray-600">Solution</span>
+      <p class="text-gray-700 mt-1">Not a single refactor — a progressive decomposition programme. Each dashboard section (competency overview, study plan, today focus, stats) becomes a module with its own data-fetching interface. <code>dashboard-content.tsx</code> becomes a thin orchestrator that composes these modules. The 29 imports shrink to ~6-7 sub-module imports. Each sub-module is independently testable via its own interface.</p>
+      <p class="text-xs text-gray-500 mt-1">This is a medium-term programme, not a single PR.</p>
+    </div>
+
+    <hr class="separator">
+
+    <div>
+      <span class="font-semibold text-gray-600">Benefits</span>
+      <ul class="list-disc list-inside text-gray-700 mt-1 space-y-0.5">
+        <li><strong>Locality</strong>: dashboard section changes stay in that section's module</li>
+        <li><strong>Leverage</strong>: the orchestrator interface is <code>&lt;DashboardContent /&gt;</code> — unchanged — but internal leverage increases as each sub-module earns its keep</li>
+        <li><strong>Seam</strong>: each dashboard section becomes a place behaviour can be altered without editing <code>dashboard-content.tsx</code></li>
+        <li><strong>Tests</strong>: sub-modules testable via their props/interface instead of requiring the full dashboard render</li>
+      </ul>
+    </div>
+
+    <hr class="separator">
+
+    <!-- Before/After -->
+    <div>
+      <span class="font-semibold text-gray-600 mb-2 block">Before / After</span>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="diagram-box">
+          <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Before — 29 imports, one monolith</h4>
+          <div class="mermaid">
+flowchart TD
+    A["dashboard-content.tsx<br>29 imports"]
+    B["competency<br>hooks"]
+    C["study-plan<br>hooks"]
+    D["analytics<br>hooks"]
+    E["gamification<br>hooks"]
+    F["exam<br>queries"]
+    G["flashcard<br>queries"]
+    H["search<br>hooks"]
+    I["user<br>data"]
+    J["ui<br>components"]
+    K["stores"]
+    
+    A --> B & C & D & E & F & G & H & I & J & K
+
+    style A fill:#fecaca,stroke:#dc2626
+          </div>
+          <p class="text-xs text-gray-400 mt-2">One component knows everything. Any new dashboard feature adds an import.</p>
+        </div>
+        <div class="diagram-box">
+          <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">After — Orchestrator + sections</h4>
+          <div class="mermaid">
+flowchart TD
+    A["dashboard-content.tsx<br>~7 imports"]
+    B["CompetencySection"]
+    C["StudyPlanSection"]
+    D["FocusSection"]
+    E["StatsSection"]
+    F["ExamSection"]
+    G["FlashcardSection"]
+    
+    A --> B & C & D & E & F & G
+
+    style A fill:#d1fae5,stroke:#059669
+    style B fill:#dbeafe,stroke:#2563eb
+    style C fill:#dbeafe,stroke:#2563eb
+    style D fill:#dbeafe,stroke:#2563eb
+    style E fill:#dbeafe,stroke:#2563eb
+    style F fill:#dbeafe,stroke:#2563eb
+    style G fill:#dbeafe,stroke:#2563eb
+          </div>
+          <p class="text-xs text-gray-400 mt-2">Each section is a module with its own interface. The orchestrator is shallow; the sections are deep.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="leverage-meter mt-3">
+      <div class="leverage-fill bg-amber-500" style="width: 55%"></div>
+    </div>
+    <div class="flex justify-between text-xs text-gray-400 mt-0.5">
+      <span>Medium-term programme; improves testability + locality simultaneously</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- TOP RECOMMENDATION                                            -->
+<!-- ============================================================ -->
+<div class="card bg-white border-2 border-blue-400">
+  <div class="px-6 py-5 border-b border-gray-100">
+    <h2 class="text-xl font-semibold flex items-center gap-2">
+      <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+      Top recommendation
+    </h2>
+  </div>
+  <div class="px-6 py-5 text-sm leading-relaxed">
+    <p class="font-semibold text-gray-900 mb-2">Tackle Candidate 1 first: <span class="text-blue-600">merge the three handler factories into one</span>.</p>
+    <p class="text-gray-700">Here's why:</p>
+    <ol class="list-decimal list-inside text-gray-700 mt-2 space-y-1.5">
+      <li><strong>Highest leverage per change</strong>: merging the factories affects ~30 route files. The interface shrinks from three factory functions to one. The deletion test is definitive — both wrappers are pure pass-throughs.</li>
+      <li><strong>Enables Candidate 2</strong>: once the merged factory handles all config shapes, the <code>quiz-packs</code> route can adopt it in one mechanical PR.</li>
+      <li><strong>Pattern completeness</strong>: Session 8 already migrated 5 routes to <code>createRouteHandler</code>. Completing the adoption (including via the merged factory) means zero hand-rolled routes exist in the API surface.</li>
+      <li><strong>Zero behavioural risk</strong>: the wrapper functions are perfectly symmetric — the merge is pure config transformation. No logic changes.</li>
+    </ol>
+    <p class="text-gray-500 mt-3 text-xs">Estimated effort: 1-2 hours for the factory merge + 30 minutes per route group (~15 groups) = a day's work. Can be done incrementally: merge the factories first, then adopt routes one at a time.</p>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="mt-8 text-center text-xs text-gray-400">
+  Generated from <code class="text-gray-500">src/lib/</code> exploration · Vocabulary from <code class="text-gray-500">LANGUAGE.md</code>
+</div>
+
+</div>
+
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+</script>
+</body>
+</html>
