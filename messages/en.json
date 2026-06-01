@@ -71,6 +71,13 @@
     "searchPlaceholder": "Search anything...",
     "skipToContent": "Skip to content"
   },
+  "nav": {
+    "dashboard": "Dashboard",
+    "quiz": "Quiz",
+    "flashcards": "Flashcards",
+    "settings": "Settings",
+    "studyGroups": "Study Groups"
+  },
   "home": {
     "brand": "lumni",
     "navDashboard": "Dashboard",

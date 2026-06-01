@@ -27,5 +27,6 @@ export default getRequestConfig(async ({ requestLocale }) => {
 	return {
 		locale,
 		messages: (await loader()).default,
+		timeZone: "Africa/Johannesburg",
 	};
 });
