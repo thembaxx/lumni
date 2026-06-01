@@ -28,7 +28,7 @@ const steps = [
 
 export function HowItWorksSection() {
 	return (
-		<section className="bg-system-background-secondary py-24">
+		<section className="bg-system-background-secondary py-20 md:py-28">
 			<div className="mx-auto max-w-6xl px-4">
 				<m.div
 					initial={{ opacity: 0, y: 20 }}

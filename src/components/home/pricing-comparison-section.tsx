@@ -43,7 +43,7 @@ const tiers = [
 
 export function PricingComparisonSection() {
 	return (
-		<section className="bg-system-background-secondary py-24">
+		<section className="bg-system-background-secondary py-20 md:py-28">
 			<div className="mx-auto max-w-6xl px-4">
 				<m.div
 					initial={{ opacity: 0, y: 20 }}
@@ -69,15 +69,17 @@ export function PricingComparisonSection() {
 							<Card
 								className={cn(
 									"relative h-full",
-									tier.popular && "border-[--system-accent] shadow-level-2",
+									tier.popular
+										? "border-[--system-accent] bg-linear-to-b from-card to-card/80 shadow-level-2"
+										: "border-border/50",
 								)}
 							>
 								{tier.popular && (
-									<div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[--system-accent] px-4 py-1 font-bold text-background text-xs">
+									<div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-(--system-accent-alpha-20) px-4 py-1 font-bold text-primary text-xs ring-1 ring-primary/30 ring-inset">
 										Most Popular
 									</div>
 								)}
-								<CardHeader>
+								<CardHeader className={cn(tier.popular && "pb-0")}>
 									<CardTitle className="flex items-baseline gap-2">
 										{tier.name}
 										<span className="font-normal text-lg text-muted-foreground">
@@ -91,7 +93,10 @@ export function PricingComparisonSection() {
 											<li key={f} className="flex items-start gap-2 text-sm">
 												<HugeiconsIcon
 													icon={CheckmarkCircle01Icon}
-													className="mt-0.5 size-4 shrink-0 text-success"
+													className={cn(
+														"mt-0.5 size-4 shrink-0",
+														tier.popular ? "text-primary" : "text-success",
+													)}
 												/>
 												{f}
 											</li>

@@ -2,7 +2,9 @@
 
 import {
 	BrainIcon,
+	CancelCircleIcon,
 	ChartUpIcon,
+	CheckmarkCircle01Icon,
 	Mortarboard01Icon,
 	SparklesIcon,
 	Timer01Icon,
@@ -102,33 +104,69 @@ export function HeroSection({ isAuthenticated }: HeroSectionProps) {
 						transition={{ duration: 0.5, delay: 0.15, ease: iOSEase }}
 						className="relative hidden items-center justify-center lg:flex"
 					>
-						<div className="relative aspect-square w-full max-w-md">
+						<div className="relative aspect-[4/5] w-full max-w-sm">
 							<div className="absolute inset-0 rounded-card-lg bg-linear-to-br from-primary/20 via-primary/5 to-transparent blur-3xl" />
-							<div className="relative flex h-full w-full flex-col gap-4 rounded-lg border border-border/50 bg-linear-to-br from-primary/10 to-background p-8 shadow-level-2">
-								<div className="flex items-center gap-3">
-									<div className="flex size-10 items-center justify-center rounded-md bg-(--system-accent-alpha-10)">
-										<HugeiconsIcon
-											icon={BrainIcon}
-											className="size-5 text-primary"
-										/>
+							<div className="relative flex h-full w-full flex-col gap-5 rounded-card-lg border border-border/50 bg-linear-to-br from-primary/5 to-background p-6 shadow-level-2">
+								<div className="flex items-center justify-between">
+									<div className="flex items-center gap-3">
+										<div className="flex size-10 items-center justify-center rounded-md bg-(--system-accent-alpha-10)">
+											<HugeiconsIcon
+												icon={BrainIcon}
+												className="size-5 text-primary"
+											/>
+										</div>
+										<div>
+											<p className="font-semibold text-sm">
+												{t("home.demoQuiz")}
+											</p>
+											<p className="text-[10px] text-muted-foreground">
+												{t("home.demoSubject")}
+											</p>
+										</div>
 									</div>
-									<div>
-										<p className="font-semibold text-sm">
-											{t("home.demoQuiz")}
-										</p>
-										<p className="text-[10px] text-muted-foreground">
-											{t("home.demoSubject")}
-										</p>
-									</div>
+									<span className="rounded-full bg-muted/50 px-2.5 py-0.5 font-medium text-muted-foreground text-xs tabular-nums">
+										{t("home.demoProgress", { current: 4, total: 10 })}
+									</span>
 								</div>
-								<div className="flex flex-1 flex-col gap-3 rounded-lg bg-muted/30 p-4">
-									<div className="h-2 w-3/4 rounded-full bg-muted-foreground/10" />
-									<div className="h-2 w-1/2 rounded-full bg-muted-foreground/10" />
-									<div className="mt-2 flex gap-2">
-										<div className="size-8 rounded-lg bg-success/20" />
-										<div className="size-8 rounded-lg bg-muted-foreground/10" />
-										<div className="size-8 rounded-lg bg-muted-foreground/10" />
-										<div className="size-8 rounded-lg bg-muted-foreground/10" />
+								<div className="flex flex-1 flex-col gap-4 rounded-lg bg-system-background-secondary/80 p-5">
+									<p className="font-medium text-sm leading-relaxed">
+										What is the derivative of{" "}
+										<span className="font-semibold text-foreground">
+											sin(x²)
+										</span>
+										?
+									</p>
+									<div className="flex flex-col gap-2">
+										<div className="flex items-center gap-2.5 rounded-md border border-success/30 bg-success/10 px-3 py-2.5">
+											<HugeiconsIcon
+												icon={CheckmarkCircle01Icon}
+												className="size-4 shrink-0 text-success"
+											/>
+											<span className="font-medium text-success text-xs">
+												2x cos(x²)
+											</span>
+										</div>
+										<div className="flex items-center gap-2.5 rounded-md border border-border/50 px-3 py-2.5">
+											<div className="size-4 shrink-0 rounded-full border-2 border-border/50" />
+											<span className="text-muted-foreground text-xs">
+												cos(x²)
+											</span>
+										</div>
+										<div className="flex items-center gap-2.5 rounded-md border border-border/50 px-3 py-2.5">
+											<div className="size-4 shrink-0 rounded-full border-2 border-border/50" />
+											<span className="text-muted-foreground text-xs">
+												2x sin(x²)
+											</span>
+										</div>
+										<div className="flex items-center gap-2.5 rounded-md border border-destructive/20 px-3 py-2.5">
+											<HugeiconsIcon
+												icon={CancelCircleIcon}
+												className="size-4 shrink-0 text-destructive"
+											/>
+											<span className="text-muted-foreground text-xs line-through">
+												sin(2x)
+											</span>
+										</div>
 									</div>
 								</div>
 								<div className="flex items-center justify-between">
@@ -140,9 +178,13 @@ export function HeroSection({ isAuthenticated }: HeroSectionProps) {
 											{t("home.demoScore")}
 										</span>
 									</div>
-									<span className="text-[10px] text-muted-foreground">
-										{t("home.demoProgress", { current: 4, total: 10 })}
-									</span>
+									<div className="flex gap-1">
+										<div className="size-2 rounded-full bg-success" />
+										<div className="size-2 rounded-full bg-success" />
+										<div className="size-2 rounded-full bg-success" />
+										<div className="size-2 rounded-full bg-muted-foreground/20" />
+										<div className="size-2 rounded-full bg-muted-foreground/20" />
+									</div>
 								</div>
 							</div>
 						</div>

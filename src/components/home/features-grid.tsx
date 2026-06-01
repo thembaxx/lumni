@@ -19,48 +19,48 @@ const features = [
 		title: "AI-Powered Practice",
 		description:
 			"Adaptive questions generated for your subjects and topics. Get instant feedback and explanations.",
-		gradient: "from-[--system-accent]/20 to-transparent",
+		accent: "before:bg-[var(--system-accent-alpha-10)]",
 	},
 	{
 		icon: BookOpen01Icon,
 		title: "Past Exam Papers",
 		description:
 			"Practice with real Matric papers from 2021-2025. Timed exams or free practice mode.",
-		gradient: "from-blue-500/10 to-transparent",
+		accent: "before:bg-chart-4/10",
 	},
 	{
 		icon: ChartBar,
 		title: "Progress Tracking",
 		description:
 			"See how you're doing per subject and topic. Spot your strengths and find what needs work at a glance.",
-		gradient: "from-emerald-500/10 to-transparent",
+		accent: "before:bg-chart-2/10",
 	},
 	{
 		icon: BulbIcon,
 		title: "Smart Flashcards",
 		description:
 			"Flashcards that adapt to your pace. Review what you need, when you need it, and the app remembers what to show you next.",
-		gradient: "from-amber-500/10 to-transparent",
+		accent: "before:bg-chart-3/10",
 	},
 	{
 		icon: Target01Icon,
 		title: "Study Planner",
 		description:
 			"Personalized study schedules based on your goals and exam dates. Stay on track with daily sessions.",
-		gradient: "from-rose-500/10 to-transparent",
+		accent: "before:bg-chart-5/10",
 	},
 	{
 		icon: GlobeIcon,
 		title: "Study Offline",
 		description:
 			"Study anywhere, anytime. Your progress syncs automatically when you're back online.",
-		gradient: "from-violet-500/10 to-transparent",
+		accent: "before:bg-chart-1/10",
 	},
 ];
 
 export function FeaturesGrid() {
 	return (
-		<section className="relative py-24">
+		<section className="relative py-16 md:py-20">
 			<div className="mx-auto max-w-6xl px-4">
 				<m.div
 					initial={{ opacity: 0, y: 20 }}
@@ -86,7 +86,8 @@ export function FeaturesGrid() {
 							viewport={{ once: true }}
 							transition={{ delay: i * 0.05, duration: 0.4, ease: iOSEase }}
 							className={cn(
-								"group relative",
+								"group relative before:pointer-events-none before:absolute before:inset-0 before:rounded-lg before:opacity-0 before:transition-opacity before:duration-500 group-hover:before:opacity-100",
+								feature.accent,
 								i === 0 && "sm:col-span-2 lg:col-span-4 lg:row-span-2",
 								i === 1 && "lg:col-span-2",
 								i === 2 && "lg:col-span-2",
@@ -97,28 +98,41 @@ export function FeaturesGrid() {
 						>
 							<div
 								className={cn(
-									"absolute inset-0 rounded-lg bg-linear-to-br opacity-0 transition-opacity duration-500 group-hover:opacity-100",
-									feature.gradient,
-								)}
-							/>
-							<div
-								className={cn(
 									"relative rounded-lg border border-border/50 bg-system-background-secondary shadow-level-1",
-									i === 0 ? "h-full p-8" : "p-6",
+									i === 0
+										? "flex flex-col gap-5 p-8 lg:flex-row lg:items-center"
+										: "p-6",
 								)}
 							>
-								<div className="mb-4 flex size-10 items-center justify-center rounded-md bg-(--system-accent-alpha-10)">
+								<div
+									className={cn(
+										"flex items-center justify-center rounded-md bg-(--system-accent-alpha-10)",
+										i === 0
+											? "mb-0 size-16 shrink-0 lg:size-20"
+											: "mb-4 size-10",
+									)}
+								>
 									<HugeiconsIcon
 										icon={feature.icon}
-										className="size-5 text-primary"
+										className={cn(
+											"text-primary",
+											i === 0 ? "size-8" : "size-5",
+										)}
 									/>
 								</div>
-								<h3 className="mb-2 font-semibold text-base sm:text-lg">
-									{feature.title}
-								</h3>
-								<p className="text-muted-foreground text-sm leading-relaxed sm:text-base">
-									{feature.description}
-								</p>
+								<div>
+									<h3
+										className={cn(
+											"mb-2 font-semibold",
+											i === 0 ? "text-xl" : "text-base sm:text-lg",
+										)}
+									>
+										{feature.title}
+									</h3>
+									<p className="text-muted-foreground text-sm leading-relaxed sm:text-base">
+										{feature.description}
+									</p>
+								</div>
 							</div>
 						</m.div>
 					))}

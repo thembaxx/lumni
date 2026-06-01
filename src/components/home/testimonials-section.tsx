@@ -1,5 +1,7 @@
 "use client";
 
+import { StarIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -26,7 +28,7 @@ const testimonials = [
 
 export function TestimonialsSection() {
 	return (
-		<section className="py-24">
+		<section className="py-16 md:py-20">
 			<div className="mx-auto max-w-6xl px-4">
 				<m.div
 					initial={{ opacity: 0, y: 20 }}
@@ -53,56 +55,13 @@ export function TestimonialsSection() {
 							<Card className="h-full">
 								<CardContent className="flex flex-col gap-4 p-6">
 									<div className="flex gap-1">
-										<svg
-											width="16"
-											height="16"
-											viewBox="0 0 24 24"
-											fill="oklch(72% 0.16 86)"
-											stroke="none"
-										>
-											<title>Star</title>
-											<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-										</svg>
-										<svg
-											width="16"
-											height="16"
-											viewBox="0 0 24 24"
-											fill="oklch(72% 0.16 86)"
-											stroke="none"
-										>
-											<title>Star</title>
-											<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-										</svg>
-										<svg
-											width="16"
-											height="16"
-											viewBox="0 0 24 24"
-											fill="oklch(72% 0.16 86)"
-											stroke="none"
-										>
-											<title>Star</title>
-											<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-										</svg>
-										<svg
-											width="16"
-											height="16"
-											viewBox="0 0 24 24"
-											fill="oklch(72% 0.16 86)"
-											stroke="none"
-										>
-											<title>Star</title>
-											<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-										</svg>
-										<svg
-											width="16"
-											height="16"
-											viewBox="0 0 24 24"
-											fill="oklch(72% 0.16 86)"
-											stroke="none"
-										>
-											<title>Star</title>
-											<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-										</svg>
+										{[0, 1, 2, 3, 4].map((si) => (
+											<HugeiconsIcon
+												key={`star-${si}`}
+												icon={StarIcon}
+												className="size-4 text-warning"
+											/>
+										))}
 									</div>
 									<p className="text-muted-foreground text-sm leading-relaxed">
 										&ldquo;{t.quote}&rdquo;
