@@ -1,5 +1,5 @@
 import { trackEngineEvent } from "@/lib/utils/engine-analytics";
-import { success, failure, type ServiceResult } from "./index";
+import { failure, type ServiceResult, success } from "./index";
 
 export class AnalyticsService {
 	track(
@@ -14,12 +14,14 @@ export class AnalyticsService {
 		trackEngineEvent({ event, ...data });
 	}
 
-	async getComparativeAnalytics(userId: string): Promise<ServiceResult<{
-		userPercentile: number;
-		subjectRankings: Record<string, number>;
-		globalAverage: number;
-		userAverage: number;
-	}>> {
+	async getComparativeAnalytics(userId: string): Promise<
+		ServiceResult<{
+			userPercentile: number;
+			subjectRankings: Record<string, number>;
+			globalAverage: number;
+			userAverage: number;
+		}>
+	> {
 		try {
 			const attempts = await Promise.allSettled(
 				[1, 2].map(async (attempt) => {
@@ -31,7 +33,9 @@ export class AnalyticsService {
 						return await res.json();
 					} catch (error) {
 						if (attempt < 2) {
-							await new Promise((resolve) => setTimeout(resolve, 1000 * attempt));
+							await new Promise((resolve) =>
+								setTimeout(resolve, 1000 * attempt),
+							);
 						}
 						throw error;
 					}
@@ -50,8 +54,9 @@ export class AnalyticsService {
 			if (fulfilled) return success(fulfilled.value);
 
 			const lastError =
-				(attempts.find((r): r is PromiseRejectedResult => r.status === "rejected")
-					?.reason as Error | undefined) ?? null;
+				(attempts.find(
+					(r): r is PromiseRejectedResult => r.status === "rejected",
+				)?.reason as Error | undefined) ?? null;
 			console.error(
 				"Failed to get comparative analytics after retries:",
 				lastError,
@@ -63,18 +68,22 @@ export class AnalyticsService {
 				userAverage: 0,
 			});
 		} catch (e) {
-			return failure(e instanceof Error ? e.message : "Failed to get comparative analytics");
+			return failure(
+				e instanceof Error ? e.message : "Failed to get comparative analytics",
+			);
 		}
 	}
 
 	async getSubjectTrend(
 		userId: string,
 		subject: string,
-	): Promise<ServiceResult<{
-		dates: string[];
-		accuracies: number[];
-		trend: "improving" | "declining" | "stable";
-	}>> {
+	): Promise<
+		ServiceResult<{
+			dates: string[];
+			accuracies: number[];
+			trend: "improving" | "declining" | "stable";
+		}>
+	> {
 		try {
 			const res = await fetch(
 				`/api/analytics/trends?userId=${encodeURIComponent(userId)}&subject=${encodeURIComponent(subject)}`,

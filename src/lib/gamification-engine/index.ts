@@ -1,3 +1,4 @@
+export type { StreakMilestone } from "@/types/gamification";
 export { GamificationEngine, gamificationEngine } from "./gamification-engine";
 export type {
 	AchievementCheckResult,
@@ -6,4 +7,3 @@ export type {
 	StoredGamification,
 	StoredRewardChest,
 } from "./types";
-export type { StreakMilestone } from "@/types/gamification";

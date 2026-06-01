@@ -26,7 +26,9 @@ export function ComparativeAnalyticsPanel() {
 	const comparativeQuery = useQuery({
 		queryKey: ["comparative-analytics", user?.$id],
 		queryFn: async () => {
-			const result = await analyticsService.getComparativeAnalytics(user?.$id ?? "");
+			const result = await analyticsService.getComparativeAnalytics(
+				user?.$id ?? "",
+			);
 			return result.success ? result.data : null;
 		},
 		enabled: !!user?.$id && !!analytics && !isLoading,

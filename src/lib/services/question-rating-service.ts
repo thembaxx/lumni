@@ -1,9 +1,14 @@
+import {
+	DexieQuestionRatingRepository,
+	type QuestionRatingRepository,
+} from "@/lib/db/repositories/question-rating-repository";
 import { enqueue } from "@/lib/orchestrator/job-queue";
-import { success, failure, type ServiceResult } from "./index";
-import { DexieQuestionRatingRepository, type QuestionRatingRepository } from "@/lib/db/repositories/question-rating-repository";
+import { failure, type ServiceResult, success } from "./index";
 
 export class QuestionRatingService {
-	constructor(private repo: QuestionRatingRepository = new DexieQuestionRatingRepository()) {}
+	constructor(
+		private repo: QuestionRatingRepository = new DexieQuestionRatingRepository(),
+	) {}
 
 	async rate(params: {
 		questionId: string;
@@ -33,11 +38,15 @@ export class QuestionRatingService {
 
 			return success(undefined);
 		} catch (e) {
-			return failure(e instanceof Error ? e.message : "Failed to rate question");
+			return failure(
+				e instanceof Error ? e.message : "Failed to rate question",
+			);
 		}
 	}
 
-	async getRatingsForSubject(subject: string): Promise<ServiceResult<import("@/lib/db/schema").QuestionRating[]>> {
+	async getRatingsForSubject(
+		subject: string,
+	): Promise<ServiceResult<import("@/lib/db/schema").QuestionRating[]>> {
 		try {
 			const ratings = await this.repo.getBySubject(subject);
 			return success(ratings);
@@ -46,7 +55,9 @@ export class QuestionRatingService {
 		}
 	}
 
-	async getAllRatings(): Promise<ServiceResult<import("@/lib/db/schema").QuestionRating[]>> {
+	async getAllRatings(): Promise<
+		ServiceResult<import("@/lib/db/schema").QuestionRating[]>
+	> {
 		try {
 			const ratings = await this.repo.getAll();
 			return success(ratings);
@@ -55,11 +66,13 @@ export class QuestionRatingService {
 		}
 	}
 
-	async getRatingStats(): Promise<ServiceResult<{
-		total: number;
-		average: number;
-		counts: Record<number, number>;
-	}>> {
+	async getRatingStats(): Promise<
+		ServiceResult<{
+			total: number;
+			average: number;
+			counts: Record<number, number>;
+		}>
+	> {
 		try {
 			const all = await this.repo.getAll();
 			const counts: Record<number, number> = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
@@ -76,7 +89,9 @@ export class QuestionRatingService {
 				counts,
 			});
 		} catch (e) {
-			return failure(e instanceof Error ? e.message : "Failed to get rating stats");
+			return failure(
+				e instanceof Error ? e.message : "Failed to get rating stats",
+			);
 		}
 	}
 
@@ -84,12 +99,14 @@ export class QuestionRatingService {
 		threshold = 2,
 		minRatings = 2,
 	): Promise<
-		ServiceResult<Array<{
-			questionId: string;
-			subject: string;
-			avgRating: number;
-			count: number;
-		}>>
+		ServiceResult<
+			Array<{
+				questionId: string;
+				subject: string;
+				avgRating: number;
+				count: number;
+			}>
+		>
 	> {
 		try {
 			const all = await this.repo.getAll();
@@ -128,7 +145,9 @@ export class QuestionRatingService {
 
 			return success(result.sort((a, b) => a.avgRating - b.avgRating));
 		} catch (e) {
-			return failure(e instanceof Error ? e.message : "Failed to get low-rated questions");
+			return failure(
+				e instanceof Error ? e.message : "Failed to get low-rated questions",
+			);
 		}
 	}
 }

@@ -29,7 +29,11 @@ export const POST = createRouteHandler({
 	execute: async ({ userId, params, body }) => {
 		const commentId = params?.commentId as string;
 		const { emoji } = body as { emoji: string };
-		const result = await toggleCommentReaction(userId as string, commentId, emoji);
+		const result = await toggleCommentReaction(
+			userId as string,
+			commentId,
+			emoji,
+		);
 
 		if (!result.success) {
 			throw new HttpError(400, result.error);

@@ -1,12 +1,6 @@
 "use client";
 
-import {
-	createContext,
-	use,
-	useCallback,
-	useEffect,
-	useState,
-} from "react";
+import { createContext, use, useCallback, useEffect, useState } from "react";
 import { useAuth } from "@/lib/auth/auth-context";
 import { updateDataSharingConsent } from "@/lib/consent/ai-gate";
 import { updateAnalyticsConsent } from "@/lib/consent/sentry-gate";

@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, mock, test } from "bun:test";
-import type { QuestionRating } from "@/lib/db/schema";
 import type { QuestionRatingRepository } from "@/lib/db/repositories/question-rating-repository";
+import type { QuestionRating } from "@/lib/db/schema";
 
 const enqueueMock = mock(async () => 1);
 const ratingStore: QuestionRating[] = [];
@@ -21,11 +21,16 @@ function makeRating(overrides: Partial<QuestionRating> = {}): QuestionRating {
 }
 
 class MockQuestionRatingRepository implements QuestionRatingRepository {
-	async findByQuestionId(questionId: string): Promise<QuestionRating | undefined> {
+	async findByQuestionId(
+		questionId: string,
+	): Promise<QuestionRating | undefined> {
 		return ratingStore.find((r) => r.questionId === questionId);
 	}
 
-	async upsert(id: number | undefined, record: Partial<QuestionRating> & { createdAt: number }): Promise<void> {
+	async upsert(
+		id: number | undefined,
+		record: Partial<QuestionRating> & { createdAt: number },
+	): Promise<void> {
 		if (id) {
 			const idx = ratingStore.findIndex((r) => r.id === id);
 			if (idx >= 0) Object.assign(ratingStore[idx], record);
@@ -60,7 +65,11 @@ describe("QuestionRatingService", () => {
 
 	describe("rate", () => {
 		test("adds a new rating", async () => {
-			const result = await service.rate({ questionId: "q1", subject: "math", rating: 4 });
+			const result = await service.rate({
+				questionId: "q1",
+				subject: "math",
+				rating: 4,
+			});
 			expect(result.success).toBe(true);
 			expect(ratingStore).toHaveLength(1);
 			expect(ratingStore[0].rating).toBe(4);
@@ -178,7 +187,9 @@ describe("QuestionRatingService", () => {
 			if (!result.success) return;
 			expect(result.data).toHaveLength(3);
 			for (let i = 1; i < result.data.length; i++) {
-				expect(result.data[i - 1].avgRating).toBeLessThanOrEqual(result.data[i].avgRating);
+				expect(result.data[i - 1].avgRating).toBeLessThanOrEqual(
+					result.data[i].avgRating,
+				);
 			}
 		});
 	});
