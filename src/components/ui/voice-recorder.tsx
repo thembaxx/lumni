@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useAudioRecorder } from "@/hooks/use-audio-recorder";
 import { cn } from "@/lib/shared";
 import { ControlButtons } from "./voice-recorder/control-buttons";
@@ -53,21 +53,33 @@ export function VoiceRecorder({
 		toggleRecording();
 	};
 
+	const sendTimers = useRef<ReturnType<typeof setTimeout>[]>([]);
+
 	const handleSend = useCallback(() => {
 		if (!audioBlob || isRecording) return;
 
 		setIsPaperPlaneing(true);
 
-		setTimeout(() => {
+		const t1 = setTimeout(() => {
 			setIsPaperPlaneing(false);
 			setPaperPlaneSuccess(true);
 
-			setTimeout(() => {
+			const t2 = setTimeout(() => {
 				setPaperPlaneSuccess(false);
 				resetRecording();
 			}, 800);
+			sendTimers.current.push(t2);
 		}, 600);
+		sendTimers.current.push(t1);
 	}, [audioBlob, isRecording, resetRecording]);
+
+	// Cleanup timers on unmount
+	useEffect(() => {
+		return () => {
+			sendTimers.current.forEach(clearTimeout);
+			sendTimers.current = [];
+		};
+	}, []);
 
 	const formatTime = (seconds: number) => {
 		const mins = Math.floor(Math.abs(seconds) / 60);

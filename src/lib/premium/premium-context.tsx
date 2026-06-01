@@ -172,7 +172,8 @@ export function PremiumProvider({ children }: { children: React.ReactNode }) {
 				if (!res.ok) return null;
 				const data = await res.json();
 				return data.url ?? null;
-			} catch {
+			} catch (e) {
+				console.warn("[Premium] Failed to create checkout session", e);
 				return null;
 			}
 		},
@@ -199,7 +200,8 @@ export function PremiumProvider({ children }: { children: React.ReactNode }) {
 				});
 				if (!res.ok) return null;
 				return await res.json();
-			} catch {
+			} catch (e) {
+				console.warn("[Premium] Failed to create PayFast session", e);
 				return null;
 			}
 		},
@@ -224,7 +226,8 @@ export function PremiumProvider({ children }: { children: React.ReactNode }) {
 				body: JSON.stringify({ subscriptionId: state.subscriptionId }),
 			});
 			return res.ok;
-		} catch {
+		} catch (e) {
+			console.warn("[Premium] Failed to cancel subscription", e);
 			return false;
 		}
 	}, [state.subscriptionId]);

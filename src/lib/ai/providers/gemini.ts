@@ -61,14 +61,14 @@ export function createGeminiProvider(apiKey: string): AIProvider {
 			};
 		}
 
-		const response = await fetch(
-			`${GEMINI_URL}/${model}:generateContent?key=${apiKey}`,
-			{
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify(body),
+		const response = await fetch(`${GEMINI_URL}/${model}:generateContent`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				"x-goog-api-key": apiKey,
 			},
-		);
+			body: JSON.stringify(body),
+		});
 
 		if (!response.ok) {
 			const error = await response.text();

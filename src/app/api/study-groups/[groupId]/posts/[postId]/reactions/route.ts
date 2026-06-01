@@ -1,6 +1,9 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { getAuthenticatedUserId } from "@/lib/server/auth";
-import { togglePostReaction } from "@/lib/study-groups/service";
+import {
+	getGroupMembers,
+	togglePostReaction,
+} from "@/lib/study-groups/service";
 
 export async function POST(
 	request: NextRequest,
@@ -11,7 +14,18 @@ export async function POST(
 		return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 	}
 
-	const { postId } = await params;
+	const { groupId, postId } = await params;
+
+	const membersResult = await getGroupMembers(groupId);
+	const isMember =
+		membersResult.success &&
+		membersResult.data.some((m) => m.userId === userId);
+	if (!isMember) {
+		return NextResponse.json(
+			{ error: "Not a member of this group" },
+			{ status: 403 },
+		);
+	}
 
 	try {
 		const body = await request.json();

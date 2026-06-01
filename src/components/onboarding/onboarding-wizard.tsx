@@ -2,7 +2,7 @@
 
 import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 import dynamic from "next/dynamic";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Confetti } from "@/components/celebration/confetti";
 import { PageContainer } from "@/components/layout/page-container";
 import subjectsData from "@/data/subjects.json";
@@ -69,6 +69,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 	const [showConfetti, setShowConfetti] = useState(false);
 	const [isCompleting, setIsCompleting] = useState(false);
 	const shouldReduceMotion = useReducedMotion();
+	const completeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
 	useEffect(() => {
 		updateProgress({
@@ -78,6 +79,12 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 			dailyStudyMinutes: dailyMinutes,
 		});
 	}, [step, selectedSubjects, targetAps, dailyMinutes, updateProgress]);
+
+	useEffect(() => {
+		return () => {
+			if (completeTimerRef.current) clearTimeout(completeTimerRef.current);
+		};
+	}, []);
 
 	const current = STEPS_COPY[step];
 	const { user } = useAuth();
@@ -168,13 +175,15 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({ subjectIds: selectedSubjects }),
 				});
-			} catch {}
+			} catch (e) {
+				console.warn("[Onboarding] Failed to enroll subjects", e);
+			}
 		} else {
 			saveLocalEnrolledSubjects(selectedSubjects);
 		}
 
 		setShowConfetti(true);
-		setTimeout(() => {
+		completeTimerRef.current = setTimeout(() => {
 			onComplete?.();
 		}, 800);
 	}, [

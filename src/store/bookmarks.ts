@@ -48,7 +48,9 @@ async function migrateFromLocalStorage() {
 		);
 
 		localStorage.removeItem("lumni_bookmarks");
-	} catch {}
+	} catch (e) {
+		console.warn("[Bookmarks] Failed to migrate localStorage", e);
+	}
 }
 
 export const useBookmarksStore = create<BookmarksState>()(

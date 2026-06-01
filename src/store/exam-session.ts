@@ -62,7 +62,9 @@ function setupCrossTabSync() {
 				if (parsed?.state) {
 					useExamSessionStore.setState(parsed.state);
 				}
-			} catch {}
+			} catch (e) {
+				console.warn("[ExamSession] Failed to parse cross-tab sync data", e);
+			}
 		}
 	};
 	window.addEventListener("storage", handleStorage);

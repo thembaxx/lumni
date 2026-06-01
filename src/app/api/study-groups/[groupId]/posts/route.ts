@@ -3,7 +3,11 @@ import {
 	getAuthenticatedUserId,
 	getAuthenticatedUserName,
 } from "@/lib/server/auth";
-import { createPost, getGroupPosts } from "@/lib/study-groups/service";
+import {
+	createPost,
+	getGroupMembers,
+	getGroupPosts,
+} from "@/lib/study-groups/service";
 
 export async function GET(
 	_request: NextRequest,
@@ -15,6 +19,18 @@ export async function GET(
 	}
 
 	const { groupId } = await params;
+
+	const membersResult = await getGroupMembers(groupId);
+	const isMember =
+		membersResult.success &&
+		membersResult.data.some((m) => m.userId === userId);
+	if (!isMember) {
+		return NextResponse.json(
+			{ error: "Not a member of this group" },
+			{ status: 403 },
+		);
+	}
+
 	const result = await getGroupPosts(groupId);
 
 	if (!result.success) {
@@ -33,6 +49,17 @@ export async function POST(
 	}
 
 	const { groupId } = await params;
+
+	const membersResult = await getGroupMembers(groupId);
+	const isMember =
+		membersResult.success &&
+		membersResult.data.some((m) => m.userId === userId);
+	if (!isMember) {
+		return NextResponse.json(
+			{ error: "Not a member of this group" },
+			{ status: 403 },
+		);
+	}
 
 	try {
 		const body = await request.json();

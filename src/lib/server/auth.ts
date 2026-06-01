@@ -138,14 +138,27 @@ export async function requireAdmin(): Promise<string> {
 	const userId = await auth();
 
 	const adminIds = process.env.ADMIN_USER_IDS;
-	if (adminIds) {
-		const ids = adminIds.split(",").flatMap((s) => {
-			const trimmed = s.trim();
-			return trimmed ? [trimmed] : [];
-		});
-		if (ids.length > 0 && !ids.includes(userId)) {
-			throw new Error("Admin access required");
-		}
+	if (!adminIds) {
+		console.error(
+			"[requireAdmin] ADMIN_USER_IDS is not set — no admin users configured",
+		);
+		throw new Error("Admin access is not configured");
+	}
+
+	const ids = adminIds.split(",").flatMap((s) => {
+		const trimmed = s.trim();
+		return trimmed ? [trimmed] : [];
+	});
+
+	if (ids.length === 0) {
+		console.error(
+			"[requireAdmin] ADMIN_USER_IDS is empty — no admin users configured",
+		);
+		throw new Error("Admin access is not configured");
+	}
+
+	if (!ids.includes(userId)) {
+		throw new Error("Admin access required");
 	}
 
 	return userId;

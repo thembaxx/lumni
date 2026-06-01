@@ -79,7 +79,7 @@ async function unsubscribeHandler(req: NextRequest) {
 
 		const existing = await listDocuments<Record<string, unknown>>(
 			PUSH_SUBSCRIPTIONS_COLLECTION,
-			[Query.equal("endpoint", endpoint)],
+			[Query.equal("endpoint", endpoint), Query.equal("userId", userId)],
 		);
 
 		if (existing.length > 0) {

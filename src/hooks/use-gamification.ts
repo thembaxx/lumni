@@ -96,7 +96,10 @@ export function useGamification() {
 		syncTimerRef.current = setTimeout(() => {
 			syncToServer(newData);
 			// biome-ignore lint/suspicious/noExplicitAny: Dexie table type mismatch
-			offlineDB.gamification.put({ ...newData, id: 1 } as any).catch(() => {});
+			const x: any = { ...newData, id: 1 };
+			offlineDB.gamification
+				.put(x)
+				.catch((e) => console.warn("[Gamification] Failed to save", e));
 		}, 2000);
 		timersRef.current.push(syncTimerRef.current);
 	}, []);

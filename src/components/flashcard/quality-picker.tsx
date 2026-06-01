@@ -39,7 +39,7 @@ export function QualityPicker({
 		if (selected !== null) return;
 		setSelected(quality);
 		if (timerRef.current) clearTimeout(timerRef.current);
-		setTimeout(() => onSelect(quality), 200);
+		timerRef.current = setTimeout(() => onSelect(quality), 200);
 	}
 
 	return (

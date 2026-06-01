@@ -35,7 +35,7 @@ export async function GET(request: Request) {
 				const questionsRes = await databases.listDocuments(
 					APPWRITE_DATABASE_ID,
 					COLLECTIONS.QUESTIONS,
-					[Query.limit(25)],
+					[Query.equal("userId", userId), Query.limit(25)],
 				);
 				for (const doc of questionsRes.documents) {
 					const text = doc.questionText as string;

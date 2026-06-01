@@ -8,7 +8,7 @@ const SENTRY_TUNNEL_ROUTE = "/api/telemetry";
 const CSP_REPORT_GROUP = "csp-endpoint";
 const CSP_REPORT_PATH = "/api/csp-violation";
 
-const SENTRY_HOSTS = ["https://*.sentry.io", "https://*.ingest.us.sentry.io"];
+const SENTRY_HOSTS = ["https://o4510925914963968.ingest.us.sentry.io"];
 
 function buildCsp(isDev: boolean): string {
 	const scriptSrc = [
@@ -32,7 +32,7 @@ function buildCsp(isDev: boolean): string {
 		"default-src 'self'",
 		`script-src ${scriptSrc.join(" ")}`,
 		"style-src 'self' 'unsafe-inline' fonts.googleapis.com",
-		"img-src 'self' data: blob: https:",
+		"img-src 'self' data: blob: https://*.cloud.appwrite.io https://*.uploadthing.com https://commons.wikimedia.org https://upload.wikimedia.org https://api.dicebear.com https://api.iconify.design https://api.qrserver.com",
 		"font-src 'self' data: fonts.gstatic.com",
 		`connect-src ${connectSrc.join(" ")}`,
 		"worker-src 'self' blob:",

@@ -17,13 +17,20 @@ export async function GET(
 
 	const { groupId } = await params;
 
+	const membersResult = await getGroupMembers(groupId);
+	const members = membersResult.success ? membersResult.data : [];
+	const isMember = members.some((m) => m.userId === userId);
+	if (!isMember) {
+		return NextResponse.json(
+			{ error: "Not a member of this group" },
+			{ status: 403 },
+		);
+	}
+
 	const groupResult = await getGroupById(groupId);
 	if (!groupResult.success) {
 		return NextResponse.json({ error: groupResult.error }, { status: 404 });
 	}
-
-	const membersResult = await getGroupMembers(groupId);
-	const members = membersResult.success ? membersResult.data : [];
 
 	return NextResponse.json({ group: groupResult.data, members });
 }

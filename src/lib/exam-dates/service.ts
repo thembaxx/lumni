@@ -34,7 +34,9 @@ export async function getExamDates(
 			const slots: ExamSlot[] = JSON.parse(cached.slots);
 			return slots;
 		}
-	} catch {}
+	} catch (e) {
+		console.warn("[ExamDates] Failed to read cache", e);
+	}
 
 	const slots = getSeedData(session, year);
 	if (slots.length > 0) {
@@ -46,7 +48,9 @@ export async function getExamDates(
 				slots: JSON.stringify(slots),
 				updatedAt: Date.now(),
 			});
-		} catch {}
+		} catch (e) {
+			console.warn("[ExamDates] Failed to write cache", e);
+		}
 	}
 
 	return slots;

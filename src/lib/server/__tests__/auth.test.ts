@@ -189,16 +189,18 @@ describe("requireAdmin", () => {
 		await expect(requireAdmin()).rejects.toThrow("Admin access required");
 	});
 
-	test("allows any authenticated user when ADMIN_USER_IDS is empty", async () => {
+	test("throws when ADMIN_USER_IDS is empty", async () => {
 		process.env.ADMIN_USER_IDS = "";
-		const id = await requireAdmin();
-		expect(id).toBe("user_abc");
+		await expect(requireAdmin()).rejects.toThrow(
+			"Admin access is not configured",
+		);
 	});
 
-	test("allows any authenticated user when ADMIN_USER_IDS not set", async () => {
+	test("throws when ADMIN_USER_IDS not set", async () => {
 		delete process.env.ADMIN_USER_IDS;
-		const id = await requireAdmin();
-		expect(id).toBe("user_abc");
+		await expect(requireAdmin()).rejects.toThrow(
+			"Admin access is not configured",
+		);
 	});
 });
 

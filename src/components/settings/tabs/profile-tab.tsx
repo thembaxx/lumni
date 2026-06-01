@@ -121,7 +121,9 @@ export function ProfileTab() {
 				queryClient.invalidateQueries({
 					queryKey: ["user-subjects", user.$id],
 				});
-			} catch {}
+			} catch (e) {
+				console.warn("[Profile] Failed to save subjects", e);
+			}
 		},
 		[user, queryClient],
 	);

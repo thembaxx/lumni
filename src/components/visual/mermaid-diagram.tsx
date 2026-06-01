@@ -31,7 +31,12 @@ export function MermaidDiagram({ code, label }: MermaidDiagramProps) {
 				const { svg } = await mermaid.render(id, code);
 
 				if (!cancelled && containerRef.current) {
-					containerRef.current.innerHTML = svg;
+					const sanitized = svg
+						.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "")
+						.replace(/on\w+\s*=\s*"[^"]*"/gi, "")
+						.replace(/on\w+\s*=\s*'[^']*'/gi, "")
+						.replace(/javascript\s*:/gi, "");
+					containerRef.current.innerHTML = sanitized;
 					setStatus("ready");
 				}
 			} catch {

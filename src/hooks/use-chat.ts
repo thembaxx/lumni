@@ -77,7 +77,7 @@ export function useChat() {
 			.then((ctx) => {
 				if (ctx) setChatContext(ctx);
 			})
-			.catch(() => {});
+			.catch((e) => console.warn("[Chat] Failed to build context", e));
 	}, []);
 
 	useEffect(() => {

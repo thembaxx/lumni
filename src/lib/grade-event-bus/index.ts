@@ -30,7 +30,7 @@ export class GradeEventBus {
 	}
 
 	async emit(event: GradeEvent): Promise<void> {
-		await Promise.all([...this.subscribers].map((fn) => fn(event)));
+		await Promise.allSettled([...this.subscribers].map((fn) => fn(event)));
 	}
 }
 

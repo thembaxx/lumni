@@ -72,11 +72,13 @@ export function createRouteHandler<
 				userId = budgetResult.userId;
 			}
 
-			if (auth !== "none" && !budget) {
+			if (auth !== "none") {
 				if (auth === "admin") {
 					await requireAdmin();
 				} else {
-					userId = await getAuthenticatedUserId();
+					if (!budget) {
+						userId = await getAuthenticatedUserId();
+					}
 					if (auth === "required" && !userId) {
 						throw new HttpError(401, "Not authenticated");
 					}
@@ -91,7 +93,9 @@ export function createRouteHandler<
 				} else {
 					try {
 						body = (await req.json()) as TBody;
-					} catch {}
+					} catch {
+						throw new HttpError(400, "Invalid JSON in request body");
+					}
 				}
 			}
 

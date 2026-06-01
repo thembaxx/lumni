@@ -60,7 +60,9 @@ async function migrateLegacyFlashcards(
 			await addCard(card.front, backText, card.subject || "", card.topic || "");
 		}
 		localStorage.removeItem("lumni-flashcards:v1");
-	} catch {}
+	} catch (e) {
+		console.warn("[FlashcardCreator] Failed to migrate legacy flashcards", e);
+	}
 }
 
 export function FlashcardCreator({ className }: FlashcardCreatorProps) {

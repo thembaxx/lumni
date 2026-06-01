@@ -101,7 +101,9 @@ export function useEnrolledSubjects() {
 					body: JSON.stringify({ subjectIds }),
 				});
 				queryClient.invalidateQueries({ queryKey: ["subjects"] });
-			} catch {}
+			} catch (e) {
+				console.warn("[Subjects] Failed to migrate preferences", e);
+			}
 		}
 	}, [user, data, queryClient]);
 
@@ -162,7 +164,9 @@ export function saveLocalEnrolledSubjects(subjectIds: string[]): void {
 		const data = raw ? JSON.parse(raw) : {};
 		data.selectedSubjects = subjectIds;
 		localStorage.setItem("lumni_onboarding:v1", JSON.stringify(data));
-	} catch {}
+	} catch (e) {
+		console.warn("[Subjects] Failed to save local enrollment", e);
+	}
 }
 
 export function useFilteredSubjects(searchQuery: string, enrolledOnly = false) {

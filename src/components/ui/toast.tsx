@@ -1,6 +1,14 @@
 "use client";
 
-import { createContext, use, useCallback, useMemo, useState } from "react";
+import {
+	createContext,
+	use,
+	useCallback,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from "react";
 import { cn } from "@/lib/shared";
 
 export type ToastType = "success" | "error" | "warning" | "info";
@@ -33,13 +41,29 @@ export function useToastContext() {
 export function ToastProvider({ children }: { children: React.ReactNode }) {
 	const [toasts, setToasts] = useState<ToastData[]>([]);
 
+	const timersRef = useRef<Map<string, ReturnType<typeof setTimeout>>>(
+		new Map(),
+	);
+
 	const dismiss = useCallback((id: string) => {
 		setToasts((prev) =>
 			prev.map((t) => (t.id === id ? { ...t, exiting: true } : t)),
 		);
-		setTimeout(() => {
+		const timer = setTimeout(() => {
+			timersRef.current.delete(id);
 			setToasts((prev) => prev.filter((t) => t.id !== id));
 		}, 200);
+		timersRef.current.set(id, timer);
+	}, []);
+
+	// Cleanup all timers on unmount
+	useEffect(() => {
+		return () => {
+			for (const t of timersRef.current.values()) {
+				clearTimeout(t);
+			}
+			timersRef.current.clear();
+		};
 	}, []);
 
 	const toast = useCallback(
@@ -52,9 +76,11 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
 			};
 			setToasts((prev) => [...prev, newToast]);
 
-			setTimeout(() => {
+			const timer = setTimeout(() => {
+				timersRef.current.delete(id);
 				dismiss(id);
 			}, newToast.duration);
+			timersRef.current.set(id, timer);
 		},
 		[dismiss],
 	);
