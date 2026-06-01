@@ -2,10 +2,6 @@ const CACHE_NAME = 'lumni-v1';
 const RUNTIME_CACHE = 'lumni-runtime';
 
 const STATIC_ASSETS = [
-  '/',
-  '/dashboard',
-  '/quiz',
-  '/flashcards',
   '/manifest.json',
   '/web-app-manifest-192x192.png',
   '/web-app-manifest-512x512.png',

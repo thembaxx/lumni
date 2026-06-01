@@ -2,8 +2,6 @@ import { Query } from "node-appwrite";
 import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { databases } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
-import { getAllExamPapers, getExamPapersBySubject } from "@/lib/db/exams";
-import { checkAndPopulateExamsDb } from "@/lib/server/exam-paper-actions";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 export const runtime = "nodejs";
@@ -22,6 +20,26 @@ function mapLocalPaper(row: Record<string, unknown>): Record<string, unknown> {
 		fileKey: row.file_key,
 		uploadedAt: row.uploaded_at,
 	};
+}
+
+type LocalDb = {
+	getAllExamPapers: () => Record<string, unknown>[];
+	getExamPapersBySubject: (
+		subjectCode: string,
+		year?: number,
+	) => Record<string, unknown>[];
+	checkAndPopulateExamsDb: () => Promise<{ populated: boolean; count: number }>;
+};
+
+async function getLocalDb(): Promise<LocalDb> {
+	const [
+		{ getAllExamPapers, getExamPapersBySubject },
+		{ checkAndPopulateExamsDb },
+	] = await Promise.all([
+		import("@/lib/db/exams"),
+		import("@/lib/server/exam-paper-actions"),
+	]);
+	return { getAllExamPapers, getExamPapersBySubject, checkAndPopulateExamsDb };
 }
 
 export const GET = withRateLimit(
@@ -86,14 +104,15 @@ export const GET = withRateLimit(
 			}));
 
 			if (exams.length === 0) {
-				await checkAndPopulateExamsDb();
+				const localDb = await getLocalDb();
+				await localDb.checkAndPopulateExamsDb();
 
 				const localPapers = subjectCode
-					? getExamPapersBySubject(
+					? localDb.getExamPapersBySubject(
 							subjectCode,
 							year ? Number.parseInt(year, 10) : undefined,
 						)
-					: getAllExamPapers();
+					: localDb.getAllExamPapers();
 
 				if (localPapers.length > 0) {
 					return {

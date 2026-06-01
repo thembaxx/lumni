@@ -1,7 +1,9 @@
 "use server";
 
 import { randomUUID } from "node:crypto";
+import { readFile } from "node:fs/promises";
 import { UTApi, UTFile } from "uploadthing/server";
+import examsData from "@/data/exams/index.json";
 import {
 	getAllExamPapers as getAllExamPapersFromDb,
 	getExamPaperCount,
@@ -104,8 +106,7 @@ export async function uploadExamPaper(
 	if (fileContent) {
 		fileBuffer = fileContent;
 	} else {
-		const fs = await import("node:fs/promises");
-		fileBuffer = await fs.readFile(filePath ?? "");
+		fileBuffer = await readFile(filePath ?? "");
 	}
 
 	const bufferObj = Buffer.from(
@@ -314,8 +315,7 @@ export async function checkAndPopulateExamsDb() {
 			return { populated: false, count };
 		}
 
-		const examData = await import("@/data/exams/index.json");
-		const exams = examData.default.exams as {
+		const exams = examsData.exams as {
 			id: string;
 			subject: string;
 			subjectId: string;
