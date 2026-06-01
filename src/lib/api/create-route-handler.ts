@@ -16,6 +16,7 @@ export interface RouteHandlerConfig<TBody, TResult = Record<string, unknown>> {
 		body: TBody;
 		userId: string | null;
 		req: NextRequest;
+		params?: Record<string, string>;
 		requestId?: string;
 	}) => Promise<TResult> | TResult;
 	useRateLimit?: boolean;
@@ -55,7 +56,12 @@ export function createRouteHandler<
 		errorLabel = "Handler",
 	} = config;
 
-	const handler = async (req: NextRequest) => {
+	const handler = async (
+		req: NextRequest,
+		context?: {
+			params?: Promise<Record<string, string>> | Record<string, string>;
+		},
+	) => {
 		const requestId = generateRequestId ? uuidv4() : undefined;
 
 		try {
@@ -106,7 +112,18 @@ export function createRouteHandler<
 				}
 			}
 
-			const result = await execute({ body, userId, req, requestId });
+			const resolvedParams =
+				context?.params instanceof Promise
+					? await context.params
+					: context?.params;
+
+			const result = await execute({
+				body,
+				userId,
+				req,
+				params: resolvedParams,
+				requestId,
+			});
 			const response = NextResponse.json(serializeResponse(result));
 
 			if (budget) {

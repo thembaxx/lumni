@@ -1,25 +1,18 @@
-import { NextResponse } from "next/server";
 import { UTApi } from "uploadthing/server";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { databases } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
-import { getAuthenticatedUserId } from "@/lib/server/auth";
 import type { ExamPaper as ExamPaperData } from "@/types/exam-paper";
 
 export const runtime = "nodejs";
 
 const utapi = new UTApi();
 
-export async function GET(
-	_request: Request,
-	{ params }: { params: Promise<{ id: string }> },
-) {
-	const userId = await getAuthenticatedUserId();
-	if (!userId) {
-		return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
-	}
-
-	try {
-		const { id } = await params;
+export const GET = createRouteHandler({
+	auth: "required",
+	errorLabel: "ExamPaper",
+	execute: async ({ params }) => {
+		const id = params?.id as string;
 
 		const doc = await databases.getDocument(
 			APPWRITE_DATABASE_ID,
@@ -28,10 +21,7 @@ export async function GET(
 		);
 
 		if (!doc) {
-			return NextResponse.json(
-				{ error: "Exam paper not found" },
-				{ status: 404 },
-			);
+			throw new HttpError(404, "Exam paper not found");
 		}
 
 		const fileKeysRaw = doc.fileKeys as string;
@@ -40,32 +30,23 @@ export async function GET(
 			: {};
 
 		if (!fileKeys.json) {
-			return NextResponse.json(
-				{ error: "Parsed exam JSON not available" },
-				{ status: 404 },
-			);
+			throw new HttpError(404, "Parsed exam JSON not available");
 		}
 
 		const urlResult = await utapi.getFileUrls([fileKeys.json]);
 		const urlData = urlResult.data || [];
 		if (!urlData.length || !urlData[0]?.url) {
-			return NextResponse.json(
-				{ error: "Exam JSON file not found on UploadThing" },
-				{ status: 404 },
-			);
+			throw new HttpError(404, "Exam JSON file not found on UploadThing");
 		}
 
 		const response = await fetch(urlData[0].url, { cache: "no-store" });
 		if (!response.ok) {
-			return NextResponse.json(
-				{ error: "Failed to fetch exam JSON" },
-				{ status: 502 },
-			);
+			throw new HttpError(502, "Failed to fetch exam JSON");
 		}
 
 		const examPaper: ExamPaperData = await response.json();
 
-		return NextResponse.json({
+		return {
 			metadata: {
 				id: doc.$id,
 				subject: doc.subject,
@@ -78,15 +59,6 @@ export async function GET(
 				duration: doc.duration,
 			},
 			exam: examPaper,
-		});
-	} catch (error) {
-		console.error("Failed to fetch exam paper:", error);
-		return NextResponse.json(
-			{
-				error:
-					error instanceof Error ? error.message : "Failed to fetch exam paper",
-			},
-			{ status: 500 },
-		);
-	}
-}
+		};
+	},
+});

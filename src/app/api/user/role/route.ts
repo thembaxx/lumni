@@ -1,30 +1,33 @@
-import { NextResponse } from "next/server";
 import { Users } from "node-appwrite";
+import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { serverClient } from "@/lib/appwrite";
-import { auth } from "@/lib/server/auth";
 
 const VALID_ROLES = ["teacher", "parent", "student"] as const;
 
-export async function POST(request: Request) {
-	const userId = await auth();
-	const { role } = (await request.json()) as { role?: string };
-	if (!role || !VALID_ROLES.includes(role as (typeof VALID_ROLES)[number])) {
-		return NextResponse.json({ error: "Invalid role" }, { status: 400 });
-	}
+export const POST = createRouteHandler({
+	auth: "required",
+	errorLabel: "UserRole",
+	validate: (body) => {
+		if (
+			!body.role ||
+			!VALID_ROLES.includes(body.role as (typeof VALID_ROLES)[number])
+		) {
+			return "Invalid role";
+		}
+		return null;
+	},
+	execute: async ({ userId, body }) => {
+		const { role } = body as { role: string };
 
-	try {
 		const usersApi = new Users(serverClient);
-		const user = await usersApi.get(userId);
+		const user = await usersApi.get(userId as string);
 		const existingLabels = user.labels.filter(
 			(l) => !VALID_ROLES.includes(l as (typeof VALID_ROLES)[number]),
 		);
-		const updated = await usersApi.updateLabels(userId, [
+		const updated = await usersApi.updateLabels(userId as string, [
 			...existingLabels,
 			role,
 		]);
-		return NextResponse.json({ labels: updated.labels });
-	} catch (error) {
-		console.error("[role] Failed to set role:", error);
-		return NextResponse.json({ error: "Failed to set role" }, { status: 500 });
-	}
-}
+		return { labels: updated.labels };
+	},
+});

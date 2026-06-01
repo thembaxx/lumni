@@ -20,12 +20,10 @@ export async function GET(request: NextRequest) {
 
 		await serverAccount.updateVerification(userId, secret);
 
-		// Process referral reward if this user was referred
 		const referral = await getReferralByReferee(userId);
 		if (referral && referral.status === "pending") {
 			await updateReferralStatus(userId, "rewarded");
 
-			// Notify client via query param that a reward was granted
 			return NextResponse.redirect(
 				new URL(
 					`/settings?verified=true&reward=${REFERRAL_REWARD_DAYS}&rewarded_by=${referral.referrerId}`,

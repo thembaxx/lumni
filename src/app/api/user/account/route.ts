@@ -1,8 +1,7 @@
-import { NextResponse } from "next/server";
 import { Query, Users } from "node-appwrite";
+import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { serverClient } from "@/lib/appwrite";
 import { COLLECTIONS, deleteDocument, listDocuments } from "@/lib/db/client";
-import { auth } from "@/lib/server/auth";
 import { userConsentService } from "@/lib/services/user-consent-service";
 
 const USER_DATA_COLLECTIONS = [
@@ -29,14 +28,14 @@ const USER_DATA_COLLECTIONS = [
 	COLLECTIONS.USER_CONSENTS,
 ];
 
-export async function DELETE() {
-	try {
-		const userId = await auth();
-
+export const DELETE = createRouteHandler({
+	auth: "required",
+	errorLabel: "Account",
+	execute: async ({ userId }) => {
 		for (const collection of USER_DATA_COLLECTIONS) {
 			try {
 				const docs = await listDocuments<Record<string, unknown>>(collection, [
-					Query.equal("userId", userId),
+					Query.equal("userId", userId as string),
 				]);
 				await Promise.all(
 					docs.map((doc) => deleteDocument(collection, doc.$id as string)),
@@ -46,17 +45,11 @@ export async function DELETE() {
 			}
 		}
 
-		await userConsentService.delete(userId);
+		await userConsentService.delete(userId as string);
 
 		const users = new Users(serverClient);
-		await users.delete(userId);
+		await users.delete(userId as string);
 
-		return NextResponse.json({ success: true });
-	} catch (error) {
-		console.error("[account/delete] Failed:", error);
-		return NextResponse.json(
-			{ error: "Failed to delete account" },
-			{ status: 500 },
-		);
-	}
-}
+		return { success: true };
+	},
+});

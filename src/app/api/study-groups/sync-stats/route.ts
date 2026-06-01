@@ -1,18 +1,15 @@
-import { type NextRequest, NextResponse } from "next/server";
+import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { COLLECTIONS, listDocuments, updateDocument } from "@/lib/db/client";
-import { getAuthenticatedUserId } from "@/lib/server/auth";
 import type { GroupMember } from "@/lib/study-groups/types";
 
-export async function POST(_request: NextRequest) {
-	try {
-		const userId = await getAuthenticatedUserId();
-		if (!userId) {
-			return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-		}
-
-		const body = await _request.json();
-		const questionsAnswered = body.questionsAnswered as number | undefined;
-		const currentStreak = body.currentStreak as number | undefined;
+export const POST = createRouteHandler({
+	auth: "required",
+	errorLabel: "SyncStats",
+	execute: async ({ userId, body }) => {
+		const { questionsAnswered, currentStreak } = body as {
+			questionsAnswered?: number;
+			currentStreak?: number;
+		};
 
 		const memberships = await listDocuments<GroupMember>(
 			COLLECTIONS.GROUP_MEMBERS,
@@ -28,8 +25,6 @@ export async function POST(_request: NextRequest) {
 			),
 		);
 
-		return NextResponse.json({ success: true, synced: memberships.length });
-	} catch {
-		return NextResponse.json({ error: "Failed to sync" }, { status: 500 });
-	}
-}
+		return { success: true, synced: memberships.length };
+	},
+});

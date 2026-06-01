@@ -1,10 +1,14 @@
 import { Client, Databases, Query } from "appwrite";
-import { NextResponse } from "next/server";
+import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { APPWRITE_ENDPOINT, APPWRITE_PROJECT } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 
-export async function GET() {
-	try {
+export const dynamic = "force-dynamic";
+
+export const GET = createRouteHandler({
+	auth: "none",
+	errorLabel: "Leaderboard",
+	execute: async () => {
 		const client = new Client()
 			.setEndpoint(APPWRITE_ENDPOINT)
 			.setProject(APPWRITE_PROJECT);
@@ -26,15 +30,10 @@ export async function GET() {
 				level: (doc.level as number) || 1,
 			}));
 
-			return NextResponse.json({ entries });
+			return { entries };
 		} catch (err) {
 			console.error("Leaderboard fetch error:", err);
-			return NextResponse.json({ entries: [] });
+			return { entries: [] };
 		}
-	} catch (error) {
-		console.error("Leaderboard GET error:", error);
-		return NextResponse.json({ error: "Failed" }, { status: 500 });
-	}
-}
-
-export const dynamic = "force-dynamic";
+	},
+});

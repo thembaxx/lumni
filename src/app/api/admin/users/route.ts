@@ -1,12 +1,11 @@
-import { type NextRequest, NextResponse } from "next/server";
 import { Users } from "node-appwrite";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { serverClient } from "@/lib/appwrite";
-import { requireAdmin } from "@/lib/server/auth";
 
-export async function GET() {
-	try {
-		await requireAdmin();
-
+export const GET = createRouteHandler({
+	auth: "admin",
+	errorLabel: "Users",
+	execute: async () => {
 		const users = new Users(serverClient);
 		const response = await users.list();
 
@@ -19,30 +18,19 @@ export async function GET() {
 			accessedAt: u.accessedAt || null,
 		}));
 
-		return NextResponse.json({ users: userList });
-	} catch (error) {
-		return NextResponse.json(
-			{
-				error: error instanceof Error ? error.message : "Failed to fetch users",
-			},
-			{ status: 500 },
-		);
-	}
-}
+		return { users: userList };
+	},
+});
 
-export async function PATCH(request: NextRequest) {
-	try {
-		await requireAdmin();
-
-		const body = await request.json();
-		const { userId, action } = body;
-
-		if (!userId || !action) {
-			return NextResponse.json(
-				{ error: "userId and action are required" },
-				{ status: 400 },
-			);
-		}
+export const PATCH = createRouteHandler({
+	auth: "admin",
+	errorLabel: "Users",
+	validate: (body) => {
+		if (!body.userId || !body.action) return "userId and action are required";
+		return null;
+	},
+	execute: async ({ body }) => {
+		const { userId, action } = body as { userId: string; action: string };
 
 		const users = new Users(serverClient);
 
@@ -51,19 +39,9 @@ export async function PATCH(request: NextRequest) {
 		} else if (action === "activate") {
 			await users.updateStatus(userId, true);
 		} else {
-			return NextResponse.json(
-				{ error: "action must be 'suspend' or 'activate'" },
-				{ status: 400 },
-			);
+			throw new HttpError(400, "action must be 'suspend' or 'activate'");
 		}
 
-		return NextResponse.json({ success: true });
-	} catch (error) {
-		return NextResponse.json(
-			{
-				error: error instanceof Error ? error.message : "Failed to update user",
-			},
-			{ status: 500 },
-		);
-	}
-}
+		return { success: true };
+	},
+});

@@ -1,33 +1,27 @@
-import { NextResponse } from "next/server";
+import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { searchWeb } from "@/lib/services/web-search-service";
 
 export const dynamic = "force-dynamic";
 
-export async function POST(request: Request) {
-	try {
-		const body = (await request.json()) as {
+export const POST = createRouteHandler({
+	auth: "none",
+	errorLabel: "WebSearch",
+	validate: (body) => {
+		if (
+			!body.query ||
+			typeof body.query !== "string" ||
+			body.query.trim().length < 2
+		) {
+			return "Query must be at least 2 characters";
+		}
+		return null;
+	},
+	execute: async ({ body }) => {
+		const { query, numResults } = body as {
 			query?: string;
 			numResults?: number;
 		};
-		const { query, numResults } = body;
-
-		if (!query || typeof query !== "string" || query.trim().length < 2) {
-			return NextResponse.json(
-				{ error: "Query must be at least 2 characters" },
-				{ status: 400 },
-			);
-		}
-
-		const results = await searchWeb(query, { numResults });
-		return NextResponse.json({ results });
-	} catch (error) {
-		console.error("[Web Search API]", error);
-		return NextResponse.json(
-			{
-				error: error instanceof Error ? error.message : "Web search failed",
-				results: [],
-			},
-			{ status: 500 },
-		);
-	}
-}
+		const results = await searchWeb(query ?? "", { numResults });
+		return { results };
+	},
+});

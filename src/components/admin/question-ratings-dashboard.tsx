@@ -8,7 +8,10 @@ export function QuestionRatingsDashboard() {
 	const [mounted] = useState(true);
 	const { data: lowRated = [] } = useQuery({
 		queryKey: ["question-ratings", "low-rated"],
-		queryFn: () => questionRatingService.getLowRatedQuestions(),
+		queryFn: async () => {
+			const result = await questionRatingService.getLowRatedQuestions();
+			return result.success ? result.data : [];
+		},
 	});
 
 	const {
@@ -19,14 +22,19 @@ export function QuestionRatingsDashboard() {
 		},
 	} = useQuery({
 		queryKey: ["question-ratings", "stats"],
-		queryFn: () => questionRatingService.getRatingStats(),
+		queryFn: async () => {
+			const result = await questionRatingService.getRatingStats();
+			return result.success
+				? result.data
+				: { total: 0, average: 0, counts: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 } };
+		},
 	});
 
 	const { data: allRatings = [] } = useQuery({
 		queryKey: ["question-ratings", "recent"],
 		queryFn: async () => {
-			const ratings = await questionRatingService.getAllRatings();
-			return ratings.slice(-20).reverse();
+			const result = await questionRatingService.getAllRatings();
+			return result.success ? result.data.slice(-20).reverse() : [];
 		},
 	});
 

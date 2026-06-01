@@ -1,7 +1,6 @@
 import { Query } from "appwrite";
-import { NextResponse } from "next/server";
+import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { COLLECTIONS, listDocuments } from "@/lib/db/client";
-import { getAuthenticatedUserId } from "@/lib/server/auth";
 
 export interface StudentAssignment {
 	id: string;
@@ -11,19 +10,16 @@ export interface StudentAssignment {
 	createdAt: string;
 }
 
-export async function GET() {
-	const userId = await getAuthenticatedUserId();
-	if (!userId) {
-		return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
-	}
-
-	try {
+export const GET = createRouteHandler({
+	auth: "required",
+	errorLabel: "StudentAssignments",
+	execute: async ({ userId }) => {
 		const relationships = await listDocuments(COLLECTIONS.TEACHER_STUDENTS, [
-			Query.equal("studentId", userId),
+			Query.equal("studentId", userId as string),
 		]);
 
 		if (relationships.length === 0) {
-			return NextResponse.json({ assignments: [] });
+			return { assignments: [] };
 		}
 
 		const teacherIds = [
@@ -95,12 +91,6 @@ export async function GET() {
 				new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
 		);
 
-		return NextResponse.json({ assignments });
-	} catch (error) {
-		console.error("[student/assignments] Error:", error);
-		return NextResponse.json(
-			{ error: "Failed to fetch assignments" },
-			{ status: 500 },
-		);
-	}
-}
+		return { assignments };
+	},
+});

@@ -1,18 +1,14 @@
 import { Query } from "appwrite";
-import { type NextRequest, NextResponse } from "next/server";
+import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { databases } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 import type { PastPaperQuestion } from "@/lib/exam-paper-ingestion/past-paper-question-types";
-import { getAuthenticatedUserId } from "@/lib/server/auth";
 
-export async function GET(request: NextRequest) {
-	const userId = await getAuthenticatedUserId();
-	if (!userId) {
-		return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
-	}
-
-	try {
-		const { searchParams } = new URL(request.url);
+export const GET = createRouteHandler({
+	auth: "required",
+	errorLabel: "PastPaperQuestions",
+	execute: async ({ req }) => {
+		const { searchParams } = new URL(req.url);
 		const subject = searchParams.get("subject");
 		const topic = searchParams.get("topic");
 		const type = searchParams.get("type");
@@ -51,12 +47,6 @@ export async function GET(request: NextRequest) {
 			);
 		}
 
-		return NextResponse.json({ questions });
-	} catch (error) {
-		console.error("Past paper questions fetch error:", error);
-		return NextResponse.json(
-			{ error: "Failed to fetch questions" },
-			{ status: 500 },
-		);
-	}
-}
+		return { questions };
+	},
+});

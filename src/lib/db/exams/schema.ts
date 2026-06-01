@@ -1,16 +1,9 @@
-export interface ExamPaperRecord {
-	id: string;
-	subjectCode: string;
-	subjectName: string;
-	year: number;
-	paperNumber: number;
-	type: "paper" | "memo";
-	paperId: string | null;
-	fileUrl: string;
-	fileKey: string;
-	originalFileName: string;
-	uploadedAt: string;
-}
+import type { LocalExamPaperRecord } from "@/types/exam";
+
+// Re-exported from types/exam.ts (single source of truth). Shape intentionally differs
+// from AppwriteExamPaperRecord (online) and ServerExamPaperRecord (server actions) because
+// this is the local SQLite schema — different fields for offline file storage.
+export type ExamPaperRecord = LocalExamPaperRecord;
 
 export interface ParsedExamPaperFilename {
 	subjectCode: string;

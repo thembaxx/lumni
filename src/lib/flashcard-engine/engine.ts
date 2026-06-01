@@ -4,7 +4,6 @@ import { enqueue } from "@/lib/orchestrator/job-queue";
 import { calculateNextReview } from "@/lib/orchestrator/sm2";
 import { loadFromStorage, saveToStorage } from "@/lib/utils/storage";
 import { createDailyLimits } from "./daily-limits";
-import { checkEaseHellRecovery } from "./ease-hell";
 import {
 	advanceLearningStep,
 	computeLearningReviewTime,
@@ -13,8 +12,8 @@ import {
 	isInLearning,
 	resetLearningStep,
 } from "./learning-steps";
-import { checkLeech } from "./leech-detection";
 import type {
+	CardStatus,
 	FlashcardReview,
 	FlashcardSM2,
 	FlashcardStats,
@@ -70,6 +69,59 @@ async function countConsecutivePasses(
 		}
 	}
 	return count;
+}
+
+interface EaseHellConfig {
+	consecutivePasses: number;
+	boost: number;
+}
+
+function checkEaseHellRecovery(
+	currentEaseFactor: number,
+	consecutivePasses: number,
+	config: EaseHellConfig,
+): { shouldBoost: boolean; newEaseFactor: number } {
+	const shouldBoost =
+		consecutivePasses >= config.consecutivePasses && currentEaseFactor < 2.5;
+	if (!shouldBoost) {
+		return { shouldBoost: false, newEaseFactor: currentEaseFactor };
+	}
+	const newEaseFactor = Math.min(currentEaseFactor + config.boost, 2.5);
+	return { shouldBoost: true, newEaseFactor };
+}
+
+interface LeechConfig {
+	threshold: number;
+	action: "suspend" | "bury" | "tag-only";
+}
+
+interface LeechResult {
+	isLeech: boolean;
+	newStatus: CardStatus | null;
+	actionTaken: "suspend" | "bury" | "tag-only" | null;
+}
+
+function checkLeech(
+	lapses: number,
+	alreadyLeeched: boolean,
+	config: LeechConfig,
+): LeechResult {
+	if (alreadyLeeched) {
+		return { isLeech: false, newStatus: null, actionTaken: null };
+	}
+
+	if (lapses < config.threshold) {
+		return { isLeech: false, newStatus: null, actionTaken: null };
+	}
+
+	switch (config.action) {
+		case "suspend":
+			return { isLeech: true, newStatus: "suspended", actionTaken: "suspend" };
+		case "bury":
+			return { isLeech: true, newStatus: "buried", actionTaken: "bury" };
+		case "tag-only":
+			return { isLeech: true, newStatus: null, actionTaken: "tag-only" };
+	}
 }
 
 export class FlashcardEngine {

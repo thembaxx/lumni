@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
+import type { Question } from "@/lib/question-engine/types";
 import { getAuthenticatedUserId } from "@/lib/server/auth";
+import { safeJsonStringify } from "@/lib/shared/json";
+import { extractCorrectAnswer } from "@/lib/shared/question-utils";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 async function generateHandler(req: Request): Promise<NextResponse> {
@@ -36,22 +39,12 @@ async function generateHandler(req: Request): Promise<NextResponse> {
 			questionType: "any",
 		});
 
-		const questionData = questions.map(
-			(
-				q: {
-					questionText: string;
-					options?: unknown[];
-					correctAnswer?: string;
-					explanation?: string;
-					difficulty?: string;
-					type: string;
-				},
-				i: number,
-			) => ({
+		const questionData = (questions as Question[]).map(
+			(q: Question, i: number) => ({
 				questionIndex: i,
 				questionText: q.questionText,
-				options: q.options ? JSON.stringify(q.options) : null,
-				correctAnswer: q.correctAnswer ?? "",
+				options: safeJsonStringify("options" in q.body ? q.body.options : []),
+				correctAnswer: extractCorrectAnswer(q) ?? "",
 				explanation: q.explanation ?? null,
 				difficulty: q.difficulty ?? "Medium",
 				type: q.type,

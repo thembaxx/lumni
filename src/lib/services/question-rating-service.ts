@@ -1,119 +1,135 @@
-import { offlineDB, type QuestionRating } from "@/lib/db/schema";
 import { enqueue } from "@/lib/orchestrator/job-queue";
+import { success, failure, type ServiceResult } from "./index";
+import { DexieQuestionRatingRepository, type QuestionRatingRepository } from "@/lib/db/repositories/question-rating-repository";
 
 export class QuestionRatingService {
+	constructor(private repo: QuestionRatingRepository = new DexieQuestionRatingRepository()) {}
+
 	async rate(params: {
 		questionId: string;
 		subject: string;
 		topic?: string;
 		rating: number;
 		feedback?: string;
-	}): Promise<void> {
-		const existing = await offlineDB.questionRatings
-			.where("questionId")
-			.equals(params.questionId)
-			.first();
+	}): Promise<ServiceResult<void>> {
+		try {
+			const existing = await this.repo.findByQuestionId(params.questionId);
 
-		const record = {
-			...params,
-			rating: Math.min(5, Math.max(1, Math.round(params.rating))),
-			createdAt: Date.now(),
-		};
+			const record = {
+				...params,
+				rating: Math.min(5, Math.max(1, Math.round(params.rating))),
+				createdAt: Date.now(),
+			};
 
-		if (existing?.id) {
-			await offlineDB.questionRatings.update(existing.id, record);
-		} else {
-			await offlineDB.questionRatings.add(record as QuestionRating);
+			await this.repo.upsert(existing?.id, record);
+
+			await enqueue("appwrite-rating-sync", {
+				questionId: params.questionId,
+				subject: params.subject,
+				rating: record.rating,
+				feedback: params.feedback,
+				createdAt: record.createdAt,
+			});
+
+			return success(undefined);
+		} catch (e) {
+			return failure(e instanceof Error ? e.message : "Failed to rate question");
 		}
-
-		await enqueue("appwrite-rating-sync", {
-			questionId: params.questionId,
-			subject: params.subject,
-			rating: record.rating,
-			feedback: params.feedback,
-			createdAt: record.createdAt,
-		});
 	}
 
-	async getRatingsForSubject(subject: string): Promise<QuestionRating[]> {
-		return offlineDB.questionRatings
-			.where("subject")
-			.equals(subject)
-			.reverse()
-			.toArray();
+	async getRatingsForSubject(subject: string): Promise<ServiceResult<import("@/lib/db/schema").QuestionRating[]>> {
+		try {
+			const ratings = await this.repo.getBySubject(subject);
+			return success(ratings);
+		} catch (e) {
+			return failure(e instanceof Error ? e.message : "Failed to get ratings");
+		}
 	}
 
-	async getAllRatings(): Promise<QuestionRating[]> {
-		return offlineDB.questionRatings.orderBy("createdAt").reverse().toArray();
+	async getAllRatings(): Promise<ServiceResult<import("@/lib/db/schema").QuestionRating[]>> {
+		try {
+			const ratings = await this.repo.getAll();
+			return success(ratings);
+		} catch (e) {
+			return failure(e instanceof Error ? e.message : "Failed to get ratings");
+		}
 	}
 
-	async getRatingStats(): Promise<{
+	async getRatingStats(): Promise<ServiceResult<{
 		total: number;
 		average: number;
 		counts: Record<number, number>;
-	}> {
-		const all = await offlineDB.questionRatings.toArray();
-		const counts: Record<number, number> = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
-		let sum = 0;
+	}>> {
+		try {
+			const all = await this.repo.getAll();
+			const counts: Record<number, number> = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+			let sum = 0;
 
-		for (const r of all) {
-			counts[r.rating] = (counts[r.rating] ?? 0) + 1;
-			sum += r.rating;
+			for (const r of all) {
+				counts[r.rating] = (counts[r.rating] ?? 0) + 1;
+				sum += r.rating;
+			}
+
+			return success({
+				total: all.length,
+				average: all.length > 0 ? Math.round((sum / all.length) * 10) / 10 : 0,
+				counts,
+			});
+		} catch (e) {
+			return failure(e instanceof Error ? e.message : "Failed to get rating stats");
 		}
-
-		return {
-			total: all.length,
-			average: all.length > 0 ? Math.round((sum / all.length) * 10) / 10 : 0,
-			counts,
-		};
 	}
 
 	async getLowRatedQuestions(
 		threshold = 2,
 		minRatings = 2,
 	): Promise<
-		Array<{
+		ServiceResult<Array<{
 			questionId: string;
 			subject: string;
 			avgRating: number;
 			count: number;
-		}>
+		}>>
 	> {
-		const all = await offlineDB.questionRatings.toArray();
-		const grouped = new Map<string, { ratings: number[]; subject: string }>();
+		try {
+			const all = await this.repo.getAll();
+			const grouped = new Map<string, { ratings: number[]; subject: string }>();
 
-		for (const r of all) {
-			const existing = grouped.get(r.questionId) ?? {
-				ratings: [],
-				subject: r.subject,
-			};
-			existing.ratings.push(r.rating);
-			grouped.set(r.questionId, existing);
-		}
+			for (const r of all) {
+				const existing = grouped.get(r.questionId) ?? {
+					ratings: [],
+					subject: r.subject,
+				};
+				existing.ratings.push(r.rating);
+				grouped.set(r.questionId, existing);
+			}
 
-		const result: Array<{
-			questionId: string;
-			subject: string;
-			avgRating: number;
-			count: number;
-		}> = [];
+			const result: Array<{
+				questionId: string;
+				subject: string;
+				avgRating: number;
+				count: number;
+			}> = [];
 
-		for (const [questionId, data] of grouped) {
-			const ratings = data.ratings;
-			if (ratings.length >= minRatings) {
-				const avg = ratings.reduce((s, r) => s + r, 0) / ratings.length;
-				if (avg <= threshold) {
-					result.push({
-						questionId,
-						subject: data.subject,
-						avgRating: Math.round(avg * 10) / 10,
-						count: data.ratings.length,
-					});
+			for (const [questionId, data] of grouped) {
+				const ratings = data.ratings;
+				if (ratings.length >= minRatings) {
+					const avg = ratings.reduce((s, r) => s + r, 0) / ratings.length;
+					if (avg <= threshold) {
+						result.push({
+							questionId,
+							subject: data.subject,
+							avgRating: Math.round(avg * 10) / 10,
+							count: data.ratings.length,
+						});
+					}
 				}
 			}
-		}
 
-		return result.sort((a, b) => a.avgRating - b.avgRating);
+			return success(result.sort((a, b) => a.avgRating - b.avgRating));
+		} catch (e) {
+			return failure(e instanceof Error ? e.message : "Failed to get low-rated questions");
+		}
 	}
 }
 

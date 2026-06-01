@@ -1,27 +1,21 @@
-import { NextResponse } from "next/server";
+import { createRouteHandler } from "@/lib/api/create-route-handler";
 import {
 	buildReferralLink,
 	generateReferralCode,
 } from "@/lib/referral/constants";
 import { createReferralCode, getReferralCode } from "@/lib/referral/service";
-import {
-	getAuthenticatedUserId,
-	getAuthenticatedUserName,
-} from "@/lib/server/auth";
+import { getAuthenticatedUserName } from "@/lib/server/auth";
 
-export async function POST() {
-	try {
-		const userId = await getAuthenticatedUserId();
-		if (!userId) {
-			return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
-		}
-
-		const codeDoc = await getReferralCode(userId);
+export const POST = createRouteHandler({
+	auth: "required",
+	errorLabel: "ReferralGenerate",
+	execute: async ({ userId }) => {
+		const codeDoc = await getReferralCode(userId as string);
 		if (codeDoc) {
-			return NextResponse.json({
+			return {
 				code: codeDoc.code,
 				link: buildReferralLink(codeDoc.code),
-			});
+			};
 		}
 
 		const userName = await getAuthenticatedUserName();
@@ -30,7 +24,7 @@ export async function POST() {
 		let attempts = 0;
 		while (attempts < 5) {
 			try {
-				await createReferralCode({ userId, code });
+				await createReferralCode({ userId: userId as string, code });
 				break;
 			} catch {
 				attempts++;
@@ -38,15 +32,9 @@ export async function POST() {
 			}
 		}
 
-		return NextResponse.json({
+		return {
 			code,
 			link: buildReferralLink(code),
-		});
-	} catch (error) {
-		console.error("Referral generate error:", error);
-		return NextResponse.json(
-			{ error: "Failed to generate code" },
-			{ status: 500 },
-		);
-	}
-}
+		};
+	},
+});

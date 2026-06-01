@@ -1,5 +1,6 @@
 import type { Databases } from "appwrite";
 import { browserDatabases, databases } from "@/lib/appwrite";
+import type { AppwriteExamPaperRecord } from "@/types/exam";
 
 export const APPWRITE_DATABASE_ID = process.env.APPWRITE_DATABASE_ID ?? "";
 
@@ -120,20 +121,10 @@ export type StudySession = {
 	endedAt?: string;
 };
 
-export type ExamPaperRecord = {
-	$id: string;
-	subject: string;
-	paperCode: string;
-	examPeriod: string;
-	year: number;
-	grade: number;
-	language: string;
-	totalMarks: number;
-	duration: string;
-	fileKeys: string;
-	uploadedAt: string;
-	uploadedBy: string;
-};
+// Re-exported from types/exam.ts (single source of truth). Shape intentionally differs
+// from LocalExamPaperRecord (SQLite) and ServerExamPaperRecord (server actions) because
+// this is the Appwrite collection schema — different fields for online storage.
+export type ExamPaperRecord = AppwriteExamPaperRecord;
 
 export async function listDocuments<T>(
 	collection: string,

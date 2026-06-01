@@ -1,31 +1,26 @@
-import { type NextRequest, NextResponse } from "next/server";
-import { getAuthenticatedUserId } from "@/lib/server/auth";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import {
 	getChallengeEntries,
 	getOrCreateChallenge,
 } from "@/lib/study-groups/challenge-service";
 
-export async function GET(
-	_request: NextRequest,
-	{ params }: { params: Promise<{ groupId: string }> },
-) {
-	const userId = await getAuthenticatedUserId();
-	if (!userId) {
-		return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-	}
+export const GET = createRouteHandler({
+	auth: "required",
+	errorLabel: "GroupChallenge",
+	execute: async ({ params }) => {
+		const groupId = params?.groupId as string;
 
-	const { groupId } = await params;
+		const challengeResult = await getOrCreateChallenge(groupId);
+		if (!challengeResult.success) {
+			throw new HttpError(500, challengeResult.error);
+		}
 
-	const challengeResult = await getOrCreateChallenge(groupId);
-	if (!challengeResult.success) {
-		return NextResponse.json({ error: challengeResult.error }, { status: 500 });
-	}
+		const entriesResult = await getChallengeEntries(challengeResult.data.$id);
+		const entries = entriesResult.success ? entriesResult.data : [];
 
-	const entriesResult = await getChallengeEntries(challengeResult.data.$id);
-	const entries = entriesResult.success ? entriesResult.data : [];
-
-	return NextResponse.json({
-		challenge: challengeResult.data,
-		entries,
-	});
-}
+		return {
+			challenge: challengeResult.data,
+			entries,
+		};
+	},
+});

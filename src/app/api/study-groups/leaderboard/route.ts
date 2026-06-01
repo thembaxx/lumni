@@ -1,18 +1,16 @@
-import { NextResponse } from "next/server";
-import { getAuthenticatedUserId } from "@/lib/server/auth";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { getInterGroupLeaderboard } from "@/lib/study-groups/challenge-service";
 
-export async function GET() {
-	const userId = await getAuthenticatedUserId();
-	if (!userId) {
-		return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-	}
+export const GET = createRouteHandler({
+	auth: "required",
+	errorLabel: "Leaderboard",
+	execute: async () => {
+		const result = await getInterGroupLeaderboard();
 
-	const result = await getInterGroupLeaderboard();
+		if (!result.success) {
+			throw new HttpError(500, result.error);
+		}
 
-	if (!result.success) {
-		return NextResponse.json({ error: result.error }, { status: 500 });
-	}
-
-	return NextResponse.json({ leaderboard: result.data });
-}
+		return { leaderboard: result.data };
+	},
+});

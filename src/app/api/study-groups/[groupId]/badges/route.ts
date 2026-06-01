@@ -1,22 +1,17 @@
-import { type NextRequest, NextResponse } from "next/server";
-import { getAuthenticatedUserId } from "@/lib/server/auth";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { getGroupBadges } from "@/lib/study-groups/challenge-service";
 
-export async function GET(
-	_request: NextRequest,
-	{ params }: { params: Promise<{ groupId: string }> },
-) {
-	const userId = await getAuthenticatedUserId();
-	if (!userId) {
-		return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-	}
+export const GET = createRouteHandler({
+	auth: "required",
+	errorLabel: "GroupBadges",
+	execute: async ({ params }) => {
+		const groupId = params?.groupId as string;
+		const result = await getGroupBadges(groupId);
 
-	const { groupId } = await params;
-	const result = await getGroupBadges(groupId);
+		if (!result.success) {
+			throw new HttpError(500, result.error);
+		}
 
-	if (!result.success) {
-		return NextResponse.json({ error: result.error }, { status: 500 });
-	}
-
-	return NextResponse.json({ badges: result.data });
-}
+		return { badges: result.data };
+	},
+});

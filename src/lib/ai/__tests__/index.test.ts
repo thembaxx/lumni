@@ -1,5 +1,5 @@
 import { afterAll, beforeAll, describe, expect, mock, test } from "bun:test";
-import { setDataSharingConsent } from "@/lib/consent/ai-gate";
+import { updateDataSharingConsent } from "@/lib/consent/ai-gate";
 
 const GEMINI_RESP = {
 	candidates: [{ content: { parts: [{ text: "gemini-answer" }] } }],
@@ -34,11 +34,11 @@ beforeAll(() => {
 		key: () => null,
 		length: 0,
 	};
-	setDataSharingConsent(true);
+	updateDataSharingConsent(true);
 });
 
 afterAll(() => {
-	setDataSharingConsent(false);
+	updateDataSharingConsent(false);
 	(globalThis as Record<string, unknown>).localStorage = originalLocalStorage;
 });
 

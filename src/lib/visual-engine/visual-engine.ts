@@ -3,7 +3,7 @@ import {
 	type CachingStrategy,
 	createCachingStrategy,
 } from "@/lib/caching-strategy";
-import { dataSharingConsent } from "@/lib/consent/ai-gate";
+import { getDataSharingConsent } from "@/lib/consent/ai-gate";
 import {
 	cacheVisual,
 	getCachedVisual,
@@ -79,7 +79,7 @@ export class VisualEngine {
 		const isSTEM = STEM_SUBJECTS.has(params.subject);
 
 		if (isSTEM) {
-			const diagram = dataSharingConsent
+			const diagram = getDataSharingConsent()
 				? await generateDiagram(
 						params.questionText,
 						params.subject,
@@ -117,7 +117,7 @@ export class VisualEngine {
 			};
 		}
 
-		return dataSharingConsent
+		return getDataSharingConsent()
 			? generateDiagram(params.questionText, params.subject, params.topic)
 			: null;
 	}

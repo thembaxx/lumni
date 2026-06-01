@@ -1,29 +1,25 @@
-import { type NextRequest, NextResponse } from "next/server";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { databases } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
-import { getAuthenticatedUserId } from "@/lib/server/auth";
 
-export async function POST(req: NextRequest) {
-	try {
+export const POST = createRouteHandler({
+	auth: "optional",
+	errorLabel: "StudySessions",
+	validate: (body) => {
+		if (!body.subject) return "subject is required";
+		return null;
+	},
+	execute: async ({ userId, body }) => {
 		if (!APPWRITE_DATABASE_ID) {
-			console.error("[StudySessions] APPWRITE_DATABASE_ID is missing");
-			return NextResponse.json(
-				{ success: false, error: "Configuration error: Database ID missing" },
-				{ status: 500 },
-			);
+			throw new HttpError(500, "Configuration error: Database ID missing");
 		}
 
-		const userId = await getAuthenticatedUserId();
-
-		const body = await req.json();
-		const { subject, questionsAnswered, correctCount, duration } = body;
-
-		if (!subject) {
-			return NextResponse.json(
-				{ error: "subject is required" },
-				{ status: 400 },
-			);
-		}
+		const { subject, questionsAnswered, correctCount, duration } = body as {
+			subject: string;
+			questionsAnswered?: number;
+			correctCount?: number;
+			duration?: number;
+		};
 
 		const now = new Date().toISOString();
 
@@ -42,12 +38,6 @@ export async function POST(req: NextRequest) {
 			},
 		);
 
-		return NextResponse.json({ success: true });
-	} catch (error) {
-		console.error("Failed to create study session:", error);
-		return NextResponse.json(
-			{ success: false, error: String(error) },
-			{ status: 500 },
-		);
-	}
-}
+		return { success: true };
+	},
+});

@@ -1,14 +1,13 @@
 import { Query } from "appwrite";
-import { NextResponse } from "next/server";
 import { Users } from "node-appwrite";
+import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { serverClient } from "@/lib/appwrite";
 import { COLLECTIONS, listDocuments } from "@/lib/db/client";
-import { requireAdmin } from "@/lib/server/auth";
 
-export async function GET() {
-	try {
-		await requireAdmin();
-
+export const GET = createRouteHandler({
+	auth: "admin",
+	errorLabel: "Analytics",
+	execute: async () => {
 		const sevenDaysAgo = new Date(
 			Date.now() - 7 * 24 * 60 * 60 * 1000,
 		).toISOString();
@@ -100,7 +99,7 @@ export async function GET() {
 		const overallAccuracy =
 			totalAnswered > 0 ? Math.round((totalCorrect / totalAnswered) * 100) : 0;
 
-		return NextResponse.json({
+		return {
 			totalUsers,
 			activeUsers,
 			totalQuestions,
@@ -112,15 +111,6 @@ export async function GET() {
 			subjectPopularity: subjectSessionCounts.sort(
 				(a, b) => b.sessions - a.sessions,
 			),
-		});
-	} catch (error) {
-		console.error("Analytics error:", error);
-		return NextResponse.json(
-			{
-				error:
-					error instanceof Error ? error.message : "Failed to fetch analytics",
-			},
-			{ status: 500 },
-		);
-	}
-}
+		};
+	},
+});

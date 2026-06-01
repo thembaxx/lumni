@@ -1,34 +1,36 @@
-import { type NextRequest, NextResponse } from "next/server";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { account } from "@/lib/appwrite";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
-async function handler(req: NextRequest) {
-	try {
-		const { userId, secret, password } = await req.json();
+export const POST = withRateLimit(
+	createRouteHandler({
+		auth: "none",
+		validate: (body: Record<string, unknown>) => {
+			if (!body.userId || !body.secret || !body.password)
+				return "Missing required fields";
+			if (typeof body.password === "string" && body.password.length < 8)
+				return "Password must be at least 8 characters";
+			return null;
+		},
+		execute: async ({ body }) => {
+			const { userId, secret, password } = body as {
+				userId: string;
+				secret: string;
+				password: string;
+			};
 
-		if (!userId || !secret || !password) {
-			return NextResponse.json(
-				{ error: "Missing required fields" },
-				{ status: 400 },
-			);
-		}
+			try {
+				await account.updateRecovery(userId, secret, password);
+			} catch (error) {
+				console.error("Reset password error:", error);
+				const message =
+					error instanceof Error ? error.message : "Failed to reset password";
+				throw new HttpError(400, message);
+			}
 
-		if (password.length < 8) {
-			return NextResponse.json(
-				{ error: "Password must be at least 8 characters" },
-				{ status: 400 },
-			);
-		}
-
-		await account.updateRecovery(userId, secret, password);
-
-		return NextResponse.json({ success: true });
-	} catch (error) {
-		console.error("Reset password error:", error);
-		const message =
-			error instanceof Error ? error.message : "Failed to reset password";
-		return NextResponse.json({ error: message }, { status: 400 });
-	}
-}
-
-export const POST = withRateLimit(handler, { max: 3, windowMs: 60000 });
+			return { success: true };
+		},
+		errorLabel: "Reset password",
+	}),
+	{ max: 3, windowMs: 60000 },
+);

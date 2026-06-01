@@ -1,42 +1,41 @@
-import { type NextRequest, NextResponse } from "next/server";
-import { getAuthenticatedUserId } from "@/lib/server/auth";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { createGroup, getGroupsForUser } from "@/lib/study-groups/service";
 
-export async function GET() {
-	const userId = await getAuthenticatedUserId();
-	if (!userId) {
-		return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-	}
+export const GET = createRouteHandler({
+	auth: "required",
+	errorLabel: "StudyGroups",
+	execute: async ({ userId }) => {
+		const result = await getGroupsForUser(userId as string);
+		if (!result.success) {
+			throw new HttpError(500, result.error);
+		}
+		return { groups: result.data };
+	},
+});
 
-	const result = await getGroupsForUser(userId);
-	if (!result.success) {
-		return NextResponse.json({ error: result.error }, { status: 500 });
-	}
-	return NextResponse.json({ groups: result.data });
-}
+export const POST = createRouteHandler({
+	auth: "required",
+	errorLabel: "StudyGroups",
+	validate: (body) => {
+		if (!body.name) return "Name is required";
+		return null;
+	},
+	execute: async ({ userId, body }) => {
+		const { name, description, subjectId } = body as {
+			name: string;
+			description?: string;
+			subjectId?: string;
+		};
 
-export async function POST(request: NextRequest) {
-	const userId = await getAuthenticatedUserId();
-	if (!userId) {
-		return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-	}
-
-	try {
-		const body = await request.json();
-		const result = await createGroup(userId, {
-			name: body.name,
-			description: body.description,
-			subjectId: body.subjectId,
+		const result = await createGroup(userId as string, {
+			name,
+			description,
+			subjectId,
 		});
 
 		if (!result.success) {
-			return NextResponse.json({ error: result.error }, { status: 400 });
+			throw new HttpError(400, result.error);
 		}
-		return NextResponse.json({ group: result.data }, { status: 201 });
-	} catch {
-		return NextResponse.json(
-			{ error: "Invalid request body" },
-			{ status: 400 },
-		);
-	}
-}
+		return { group: result.data };
+	},
+});

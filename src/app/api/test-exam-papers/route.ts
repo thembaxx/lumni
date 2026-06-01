@@ -1,20 +1,14 @@
-import { NextResponse } from "next/server";
+import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { COLLECTIONS, listDocuments } from "@/lib/db/client";
 
-export async function GET() {
-	try {
+export const GET = createRouteHandler({
+	auth: "none",
+	errorLabel: "TestExamPapers",
+	execute: async () => {
 		const papers = await listDocuments(COLLECTIONS.EXAM_PAPERS);
-		return NextResponse.json({
+		return {
 			papers: papers.slice(0, 5),
 			count: papers.length,
-		});
-	} catch (error) {
-		return NextResponse.json(
-			{
-				error:
-					error instanceof Error ? error.message : "Failed to fetch papers",
-			},
-			{ status: 500 },
-		);
-	}
-}
+		};
+	},
+});

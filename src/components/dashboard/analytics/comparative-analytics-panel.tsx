@@ -25,7 +25,10 @@ export function ComparativeAnalyticsPanel() {
 
 	const comparativeQuery = useQuery({
 		queryKey: ["comparative-analytics", user?.$id],
-		queryFn: () => analyticsService.getComparativeAnalytics(user?.$id ?? ""),
+		queryFn: async () => {
+			const result = await analyticsService.getComparativeAnalytics(user?.$id ?? "");
+			return result.success ? result.data : null;
+		},
 		enabled: !!user?.$id && !!analytics && !isLoading,
 		staleTime: 5 * 60 * 1000,
 	});
@@ -46,11 +49,13 @@ export function ComparativeAnalyticsPanel() {
 			const trends: Record<string, SubjectTrendData> = {};
 			await Promise.all(
 				weakSubjects.map(async (subject) => {
-					const data = await analyticsService.getSubjectTrend(
+					const result = await analyticsService.getSubjectTrend(
 						user?.$id ?? "",
 						subject,
 					);
-					trends[subject] = data;
+					trends[subject] = result.success
+						? result.data
+						: { dates: [], accuracies: [], trend: "stable" as const };
 				}),
 			);
 			return trends;

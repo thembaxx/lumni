@@ -1,22 +1,20 @@
-import { NextResponse } from "next/server";
-import { getAuthenticatedUserId } from "@/lib/server/auth";
+import { createRouteHandler } from "@/lib/api/create-route-handler";
 import {
 	getTeacherEngagementStats,
 	getTeacherStudents,
 	getTeacherTopicMastery,
 } from "@/lib/server/teacher-service";
 
-export async function GET() {
-	const userId = await getAuthenticatedUserId();
-	if (!userId) {
-		return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
-	}
+export const GET = createRouteHandler({
+	auth: "required",
+	errorLabel: "TeacherStudents",
+	execute: async ({ userId }) => {
+		const [students, topicMastery, engagement] = await Promise.all([
+			getTeacherStudents(userId as string),
+			getTeacherTopicMastery(userId as string),
+			getTeacherEngagementStats(userId as string),
+		]);
 
-	const [students, topicMastery, engagement] = await Promise.all([
-		getTeacherStudents(userId),
-		getTeacherTopicMastery(userId),
-		getTeacherEngagementStats(userId),
-	]);
-
-	return NextResponse.json({ students, topicMastery, engagement });
-}
+		return { students, topicMastery, engagement };
+	},
+});

@@ -1,21 +1,17 @@
-import { type NextRequest, NextResponse } from "next/server";
-import { getAuthenticatedUserId } from "@/lib/server/auth";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { removeMember } from "@/lib/study-groups/service";
 
-export async function DELETE(
-	_request: NextRequest,
-	{ params }: { params: Promise<{ groupId: string; memberId: string }> },
-) {
-	const userId = await getAuthenticatedUserId();
-	if (!userId) {
-		return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-	}
+export const DELETE = createRouteHandler({
+	auth: "required",
+	errorLabel: "RemoveMember",
+	execute: async ({ userId, params }) => {
+		const groupId = params?.groupId as string;
+		const memberId = params?.memberId as string;
+		const result = await removeMember(userId as string, groupId, memberId);
 
-	const { groupId, memberId } = await params;
-	const result = await removeMember(userId, groupId, memberId);
-
-	if (!result.success) {
-		return NextResponse.json({ error: result.error }, { status: 400 });
-	}
-	return NextResponse.json({ success: true });
-}
+		if (!result.success) {
+			throw new HttpError(400, result.error);
+		}
+		return { success: true };
+	},
+});

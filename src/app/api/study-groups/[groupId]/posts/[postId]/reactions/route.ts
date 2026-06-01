@@ -1,48 +1,35 @@
-import { type NextRequest, NextResponse } from "next/server";
-import { getAuthenticatedUserId } from "@/lib/server/auth";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import {
 	getGroupMembers,
 	togglePostReaction,
 } from "@/lib/study-groups/service";
 
-export async function POST(
-	request: NextRequest,
-	{ params }: { params: Promise<{ groupId: string; postId: string }> },
-) {
-	const userId = await getAuthenticatedUserId();
-	if (!userId) {
-		return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-	}
+export const POST = createRouteHandler({
+	auth: "required",
+	errorLabel: "PostReactions",
+	validate: (body) => {
+		if (!body.emoji || typeof body.emoji !== "string")
+			return "Emoji is required";
+		return null;
+	},
+	execute: async ({ userId, params, body }) => {
+		const groupId = params?.groupId as string;
+		const postId = params?.postId as string;
 
-	const { groupId, postId } = await params;
-
-	const membersResult = await getGroupMembers(groupId);
-	const isMember =
-		membersResult.success &&
-		membersResult.data.some((m) => m.userId === userId);
-	if (!isMember) {
-		return NextResponse.json(
-			{ error: "Not a member of this group" },
-			{ status: 403 },
-		);
-	}
-
-	try {
-		const body = await request.json();
-		if (!body.emoji || typeof body.emoji !== "string") {
-			return NextResponse.json({ error: "Emoji is required" }, { status: 400 });
+		const membersResult = await getGroupMembers(groupId);
+		const isMember =
+			membersResult.success &&
+			membersResult.data.some((m) => m.userId === userId);
+		if (!isMember) {
+			throw new HttpError(403, "Not a member of this group");
 		}
 
-		const result = await togglePostReaction(userId, postId, body.emoji);
+		const { emoji } = body as { emoji: string };
+		const result = await togglePostReaction(userId as string, postId, emoji);
 
 		if (!result.success) {
-			return NextResponse.json({ error: result.error }, { status: 400 });
+			throw new HttpError(400, result.error);
 		}
-		return NextResponse.json({ reaction: result.data });
-	} catch {
-		return NextResponse.json(
-			{ error: "Invalid request body" },
-			{ status: 400 },
-		);
-	}
-}
+		return { reaction: result.data };
+	},
+});

@@ -1,38 +1,42 @@
-import { NextResponse } from "next/server";
-import { examPaperIngestion } from "@/lib/exam-paper-ingestion";
-import { requireAdmin } from "@/lib/server/auth";
+import { createRouteHandler } from "@/lib/api/create-route-handler";
+import { databases } from "@/lib/appwrite";
+import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 
-export const runtime = "nodejs";
-
-export async function POST(request: Request) {
-	try {
-		await requireAdmin();
-
-		const { fileKey } = await request.json();
-		if (!fileKey) {
-			return NextResponse.json({ error: "Missing fileKey" }, { status: 400 });
-		}
-
-		const result = await examPaperIngestion.ingest({
-			type: "upload-thing",
+export const POST = createRouteHandler({
+	auth: "admin",
+	validate: (body: Record<string, unknown>) => {
+		if (!body.fileKey) return "Missing fileKey";
+		return null;
+	},
+	execute: async ({ body }) => {
+		const {
 			fileKey,
-		});
+			subject,
+			year,
+			paperNumber,
+			type,
+			fileUrl,
+			originalFileName,
+		} = body as Record<string, string>;
 
-		return NextResponse.json({
-			success: true,
-			id: result.id,
-			metadata: result.metadata,
-		});
-	} catch (error) {
-		console.error("Exam upload error:", error);
-		return NextResponse.json(
+		await databases.createDocument(
+			APPWRITE_DATABASE_ID,
+			COLLECTIONS.EXAM_PAPERS,
+			"unique()",
 			{
-				error:
-					error instanceof Error
-						? error.message
-						: "Failed to process exam paper",
+				fileKey,
+				subject,
+				year: year ? Number(year) : new Date().getFullYear(),
+				paperNumber: paperNumber ? Number(paperNumber) : 1,
+				type: type || "exam",
+				fileUrl: fileUrl || "",
+				originalFileName:
+					originalFileName || fileKey || "uploaded_exam_paper.pdf",
+				uploadedAt: new Date().toISOString(),
 			},
-			{ status: 500 },
 		);
-	}
-}
+
+		return { success: true };
+	},
+	errorLabel: "Upload exam paper",
+});

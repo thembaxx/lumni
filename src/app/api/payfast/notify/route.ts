@@ -1,5 +1,5 @@
 import { Client, Databases, ID } from "appwrite";
-import { NextResponse } from "next/server";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { APPWRITE_ENDPOINT, APPWRITE_PROJECT } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID } from "@/lib/db/client";
 
@@ -30,16 +30,22 @@ async function generateSignature(
 	return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
 }
 
-export async function POST(req: Request) {
-	try {
+export const POST = createRouteHandler({
+	auth: "none",
+	errorLabel: "PayfastNotify",
+	parseBody: async (req) => {
 		const formData = await req.formData();
 		const pfData: Record<string, string> = {};
 		for (const [key, value] of formData.entries()) {
 			pfData[key] = value.toString();
 		}
+		return pfData;
+	},
+	execute: async ({ body }) => {
+		const pfData = body as Record<string, string>;
 
 		if (!pfData.signature) {
-			return NextResponse.json({ error: "Missing signature" }, { status: 400 });
+			throw new HttpError(400, "Missing signature");
 		}
 
 		const receivedSignature = pfData.signature;
@@ -48,17 +54,17 @@ export async function POST(req: Request) {
 		const expectedSignature = await generateSignature(pfData);
 		if (receivedSignature !== expectedSignature) {
 			console.error("Payfast IPN: invalid signature");
-			return NextResponse.json({ error: "Invalid signature" }, { status: 403 });
+			throw new HttpError(403, "Invalid signature");
 		}
 
-		const body = new URLSearchParams(pfData);
+		const urlParams = new URLSearchParams(pfData);
 
 		let pfValid = false;
 		try {
 			const validateRes = await fetch(PF_VALIDATE_HOST, {
 				method: "POST",
 				headers: { "Content-Type": "application/x-www-form-urlencoded" },
-				body: body.toString(),
+				body: urlParams.toString(),
 				cache: "no-store",
 			});
 			const text = await validateRes.text();
@@ -69,7 +75,7 @@ export async function POST(req: Request) {
 
 		if (!pfValid) {
 			console.error("Payfast IPN: validation failed");
-			return NextResponse.json({ error: "Invalid" }, { status: 403 });
+			throw new HttpError(403, "Invalid");
 		}
 
 		const paymentStatus = pfData.payment_status;
@@ -104,9 +110,6 @@ export async function POST(req: Request) {
 			}
 		}
 
-		return NextResponse.json({ ok: true });
-	} catch (error) {
-		console.error("Payfast IPN error:", error);
-		return NextResponse.json({ error: "IPN failed" }, { status: 500 });
-	}
-}
+		return { ok: true };
+	},
+});

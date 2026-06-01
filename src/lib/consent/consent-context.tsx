@@ -5,12 +5,11 @@ import {
 	use,
 	useCallback,
 	useEffect,
-	useRef,
 	useState,
 } from "react";
 import { useAuth } from "@/lib/auth/auth-context";
-import { setDataSharingConsent } from "@/lib/consent/ai-gate";
-import { setAnalyticsConsent } from "@/lib/consent/sentry-gate";
+import { updateDataSharingConsent } from "@/lib/consent/ai-gate";
+import { updateAnalyticsConsent } from "@/lib/consent/sentry-gate";
 import { userConsentService } from "@/lib/services/user-consent-service";
 import type { UserConsent } from "@/types/user-consent";
 import { appConfig } from "../../../app.config";
@@ -45,18 +44,13 @@ export function ConsentProvider({ children }: { children: React.ReactNode }) {
 		isLoading: true,
 		needsTosAcceptance: false,
 	});
-	const prevAnalytics = useRef<boolean | undefined>(undefined);
-	const prevDataSharing = useRef<boolean | undefined>(undefined);
-
 	const userId: string | undefined = user?.$id;
 
 	useEffect(() => {
 		if (!userId) {
 			setState({ consent: null, isLoading: false, needsTosAcceptance: false });
-			setAnalyticsConsent(false);
-			setDataSharingConsent(false);
-			prevAnalytics.current = undefined;
-			prevDataSharing.current = undefined;
+			updateAnalyticsConsent(false);
+			updateDataSharingConsent(false);
 			return;
 		}
 
@@ -72,17 +66,8 @@ export function ConsentProvider({ children }: { children: React.ReactNode }) {
 			const needsTosAcceptance =
 				!existing?.tosVersion || existing.tosVersion !== currentTos;
 
-			const analytics = existing?.analytics ?? false;
-			if (analytics !== prevAnalytics.current) {
-				setAnalyticsConsent(analytics);
-				prevAnalytics.current = analytics;
-			}
-
-			const dataSharing = existing?.dataSharing ?? false;
-			if (dataSharing !== prevDataSharing.current) {
-				setDataSharingConsent(dataSharing);
-				prevDataSharing.current = dataSharing;
-			}
+			updateAnalyticsConsent(existing?.analytics ?? false);
+			updateDataSharingConsent(existing?.dataSharing ?? false);
 
 			setState({
 				consent: existing,
@@ -120,15 +105,8 @@ export function ConsentProvider({ children }: { children: React.ReactNode }) {
 			const needsTosAcceptance =
 				!updated.tosVersion || updated.tosVersion !== currentTos;
 
-			if (updated.analytics !== prevAnalytics.current) {
-				setAnalyticsConsent(updated.analytics);
-				prevAnalytics.current = updated.analytics;
-			}
-
-			if (updated.dataSharing !== prevDataSharing.current) {
-				setDataSharingConsent(updated.dataSharing);
-				prevDataSharing.current = updated.dataSharing;
-			}
+			updateAnalyticsConsent(updated.analytics);
+			updateDataSharingConsent(updated.dataSharing);
 
 			setState({
 				consent: updated,

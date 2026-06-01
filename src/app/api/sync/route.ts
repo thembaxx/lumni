@@ -1,5 +1,4 @@
-import { type NextRequest, NextResponse } from "next/server";
-import { getAuthenticatedUserId } from "@/lib/server/auth";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import {
 	checkSubjectStatus,
 	refreshSubject,
@@ -8,91 +7,49 @@ import {
 } from "@/lib/server/sync-actions";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
-async function syncPostHandler(req: NextRequest) {
-	const userId = await getAuthenticatedUserId();
-	if (!userId) {
-		return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
-	}
-
-	try {
-		const body = await req.json();
-		const { subject, action } = body;
+const syncPostHandler = createRouteHandler({
+	auth: "required",
+	execute: async ({ body }) => {
+		const { subject, action } = body as { subject?: string; action: string };
 
 		switch (action) {
 			case "sync": {
-				if (!subject) {
-					return NextResponse.json(
-						{ error: "Missing subject" },
-						{ status: 400 },
-					);
-				}
-				const result = await syncSubject(subject);
-				return NextResponse.json(result);
+				if (!subject) throw new HttpError(400, "Missing subject");
+				return await syncSubject(subject);
 			}
-
 			case "refresh": {
-				if (!subject) {
-					return NextResponse.json(
-						{ error: "Missing subject" },
-						{ status: 400 },
-					);
-				}
-				const result = await refreshSubject(subject);
-				return NextResponse.json(result);
+				if (!subject) throw new HttpError(400, "Missing subject");
+				return await refreshSubject(subject);
 			}
-
 			case "check": {
-				if (!subject) {
-					return NextResponse.json(
-						{ error: "Missing subject" },
-						{ status: 400 },
-					);
-				}
-				const result = await checkSubjectStatus(subject);
-				return NextResponse.json(result);
+				if (!subject) throw new HttpError(400, "Missing subject");
+				return await checkSubjectStatus(subject);
 			}
-
-			case "sync-all": {
-				const result = await syncAllSubjects();
-				return NextResponse.json(result);
-			}
-
+			case "sync-all":
+				return await syncAllSubjects();
 			default:
-				return NextResponse.json({ error: "Unknown action" }, { status: 400 });
+				throw new HttpError(400, "Unknown action");
 		}
-	} catch (error) {
-		console.error("Sync API error:", error);
-		return NextResponse.json(
-			{ error: error instanceof Error ? error.message : "Unknown error" },
-			{ status: 500 },
-		);
-	}
-}
-
-async function syncGetHandler(_req: NextRequest) {
-	const userId = await getAuthenticatedUserId();
-	if (!userId) {
-		return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
-	}
-
-	const lastSync =
-		typeof localStorage !== "undefined"
-			? localStorage.getItem(`lumni_last_sync_${userId}`)
-			: null;
-
-	return NextResponse.json({
-		status: "ok",
-		lastSync: lastSync ? Number(lastSync) : null,
-		pendingChanges: 0,
-	});
-}
-
-export const POST = withRateLimit(syncPostHandler, {
-	max: 5,
-	windowMs: 60000,
+	},
+	errorLabel: "Sync",
 });
 
-export const GET = withRateLimit(syncGetHandler, {
-	max: 5,
-	windowMs: 60000,
+const syncGetHandler = createRouteHandler({
+	auth: "required",
+	execute: async ({ userId }) => {
+		const lastSync =
+			typeof localStorage !== "undefined"
+				? localStorage.getItem(`lumni_last_sync_${userId}`)
+				: null;
+
+		return {
+			status: "ok",
+			lastSync: lastSync ? Number(lastSync) : null,
+			pendingChanges: 0,
+		};
+	},
+	errorLabel: "Sync",
 });
+
+export const POST = withRateLimit(syncPostHandler, { max: 5, windowMs: 60000 });
+export const GET = withRateLimit(syncGetHandler, { max: 5, windowMs: 60000 });

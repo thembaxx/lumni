@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { type NextRequest, NextResponse } from "next/server";
+import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
 export const dynamic = "force-dynamic";
@@ -13,53 +13,45 @@ interface Lesson {
 	difficulty: string;
 }
 
-async function lessonsHandler(request: NextRequest) {
-	try {
-		const { searchParams } = new URL(request.url);
-		const subject = searchParams.get("subject");
-		const search = searchParams.get("search");
-		const difficulty = searchParams.get("difficulty");
+export const GET = withRateLimit(
+	createRouteHandler({
+		auth: "none",
+		execute: async ({ req }) => {
+			const { searchParams } = new URL(req.url);
+			const subject = searchParams.get("subject");
+			const search = searchParams.get("search");
+			const difficulty = searchParams.get("difficulty");
 
-		const filePath = path.resolve("lessons-comprehensive.json");
+			const filePath = path.resolve("lessons-comprehensive.json");
 
-		if (!fs.existsSync(filePath)) {
-			return NextResponse.json({ lessons: [] });
-		}
+			if (!fs.existsSync(filePath)) {
+				return { lessons: [] };
+			}
 
-		const lessonsData = JSON.parse(fs.readFileSync(filePath, "utf-8"));
-		let filteredLessons: Lesson[] = lessonsData.lessons;
+			const lessonsData = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+			let filteredLessons: Lesson[] = lessonsData.lessons;
 
-		if (subject && subject !== "") {
-			filteredLessons = filteredLessons.filter(
-				(l: Lesson) => l.subject.toLowerCase() === subject.toLowerCase(),
-			);
-		}
+			if (subject && subject !== "") {
+				filteredLessons = filteredLessons.filter(
+					(l: Lesson) => l.subject.toLowerCase() === subject.toLowerCase(),
+				);
+			}
 
-		if (search && search !== "") {
-			filteredLessons = filteredLessons.filter((l: Lesson) =>
-				l.title.toLowerCase().includes(search.toLowerCase()),
-			);
-		}
+			if (search && search !== "") {
+				filteredLessons = filteredLessons.filter((l: Lesson) =>
+					l.title.toLowerCase().includes(search.toLowerCase()),
+				);
+			}
 
-		if (difficulty && difficulty !== "") {
-			filteredLessons = filteredLessons.filter(
-				(l: Lesson) => l.difficulty === difficulty,
-			);
-		}
+			if (difficulty && difficulty !== "") {
+				filteredLessons = filteredLessons.filter(
+					(l: Lesson) => l.difficulty === difficulty,
+				);
+			}
 
-		return NextResponse.json({ lessons: filteredLessons });
-	} catch (error) {
-		console.error("Lessons API error:", error);
-		return NextResponse.json(
-			{
-				error: error instanceof Error ? error.message : "Failed to get lessons",
-			},
-			{ status: 500 },
-		);
-	}
-}
-
-export const GET = withRateLimit(lessonsHandler, {
-	max: 20,
-	windowMs: 60000,
-});
+			return { lessons: filteredLessons };
+		},
+		errorLabel: "Lessons",
+	}),
+	{ max: 20, windowMs: 60000 },
+);

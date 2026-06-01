@@ -1,38 +1,36 @@
-import { type NextRequest, NextResponse } from "next/server";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { listDocuments } from "@/lib/db/client";
-import { AppError } from "@/lib/errors";
-import { requireAdmin } from "@/lib/server/auth";
 
-export async function POST(request: NextRequest) {
-	try {
-		await requireAdmin();
-
-		const { title, body, url, subject } = await request.json();
-
+export const POST = createRouteHandler({
+	auth: "admin",
+	errorLabel: "NotificationSend",
+	validate: (body) => {
 		if (
-			!title ||
-			!body ||
-			typeof title !== "string" ||
-			typeof body !== "string"
+			!body.title ||
+			!body.body ||
+			typeof body.title !== "string" ||
+			typeof body.body !== "string"
 		) {
-			throw AppError.badRequest(
-				"title and body are required and must be strings",
-			);
+			return "title and body are required and must be strings";
 		}
-		if (title.length > 100 || body.length > 500) {
-			throw AppError.badRequest(
-				"title must be 100 characters or less and body must be 500 characters or less",
-			);
+		if (body.title.length > 100 || body.body.length > 500) {
+			return "title must be 100 characters or less and body must be 500 characters or less";
 		}
+		return null;
+	},
+	execute: async ({ body }) => {
+		const {
+			title,
+			body: bodyText,
+			url,
+			subject,
+		} = body as Record<string, string>;
 
 		const VAPID_PUBLIC_KEY = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
 		const VAPID_PRIVATE_KEY = process.env.VAPID_PRIVATE_KEY;
 
 		if (!VAPID_PUBLIC_KEY || !VAPID_PRIVATE_KEY) {
-			return NextResponse.json(
-				{ error: "VAPID keys not configured" },
-				{ status: 500 },
-			);
+			throw new HttpError(500, "VAPID keys not configured");
 		}
 
 		const webpush = await import("web-push");
@@ -61,7 +59,7 @@ export async function POST(request: NextRequest) {
 					pushSub,
 					JSON.stringify({
 						title,
-						body,
+						body: bodyText,
 						url: url || "/dashboard",
 						subject: subject || "",
 					}),
@@ -71,16 +69,10 @@ export async function POST(request: NextRequest) {
 
 		const sent = results.filter((r) => r.status === "fulfilled").length;
 
-		return NextResponse.json({
+		return {
 			success: true,
 			sent,
 			total: subscriptions.length,
-		});
-	} catch (error) {
-		console.error("Failed to send broadcast:", error);
-		return NextResponse.json(
-			{ success: false, error: String(error) },
-			{ status: 500 },
-		);
-	}
-}
+		};
+	},
+});

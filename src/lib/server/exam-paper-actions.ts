@@ -12,6 +12,7 @@ import {
 } from "@/lib/db/exams";
 import { parseExamPaperFilename as parseExamPaperFilenameFromSchema } from "@/lib/db/exams/schema";
 import { auth } from "@/lib/server/auth";
+import type { ServerExamPaperRecord } from "@/types/exam";
 
 export interface UploadExamPaperOptions {
 	filePath?: string;
@@ -23,20 +24,10 @@ export interface UploadExamPaperOptions {
 	originalFileName?: string;
 }
 
-export interface ExamPaperRecord {
-	id: string;
-	subjectId: string;
-	subjectCode: string;
-	subjectName: string;
-	year: number;
-	paperNumber: number;
-	type: "paper" | "memo";
-	memoId: string | null;
-	fileUrl: string;
-	fileKey: null;
-	originalFileName: string;
-	uploadedAt: string;
-}
+// Re-exported from types/exam.ts (single source of truth). Shape intentionally differs
+// from AppwriteExamPaperRecord (online) and LocalExamPaperRecord (SQLite) because this
+// is the server action return type — adds memoId/subjectId for upload workflows.
+export type ExamPaperRecord = ServerExamPaperRecord;
 
 function toTitleCase(str: string): string {
 	return str.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());

@@ -1,5 +1,5 @@
 import { Query } from "appwrite";
-import { type NextRequest, NextResponse } from "next/server";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { databases } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 
@@ -9,16 +9,18 @@ function normalizeEmail(email: string): string {
 	return email.toLowerCase().trim();
 }
 
-export async function POST(req: NextRequest) {
-	try {
-		const { email: rawEmail, action } = await req.json();
-
-		if (!rawEmail || !action) {
-			return NextResponse.json(
-				{ error: "Missing email or action" },
-				{ status: 400 },
-			);
-		}
+export const POST = createRouteHandler({
+	auth: "none",
+	errorLabel: "AuthRateLimit",
+	validate: (body) => {
+		if (!body.email || !body.action) return "Missing email or action";
+		return null;
+	},
+	execute: async ({ body, req }) => {
+		const { email: rawEmail, action } = body as {
+			email: string;
+			action: string;
+		};
 
 		const email = normalizeEmail(rawEmail);
 		const ip =
@@ -27,7 +29,7 @@ export async function POST(req: NextRequest) {
 			"unknown";
 
 		if (!APPWRITE_DATABASE_ID || !databases) {
-			return NextResponse.json({ allowed: true });
+			return { allowed: true };
 		}
 
 		const now = Date.now();
@@ -46,11 +48,10 @@ export async function POST(req: NextRequest) {
 					timestamp: new Date().toISOString(),
 				},
 			);
-			return NextResponse.json({ allowed: true });
+			return { allowed: true };
 		}
 
 		if (action === "signin") {
-			// Find the latest successful sign-in to determine the reset window start
 			const successDocs = await databases.listDocuments(
 				APPWRITE_DATABASE_ID,
 				COLLECTIONS.ANALYTICS,
@@ -69,7 +70,6 @@ export async function POST(req: NextRequest) {
 					? successDocs.documents[0].timestamp
 					: fiveMinutesAgo;
 
-			// Count failed/attempted sign-ins since the last success
 			const signinDocs = await databases.listDocuments(
 				APPWRITE_DATABASE_ID,
 				COLLECTIONS.ANALYTICS,
@@ -106,14 +106,13 @@ export async function POST(req: NextRequest) {
 				const resetAt = oldestTime + 5 * 60 * 1000;
 				const waitMinutes = Math.ceil((resetAt - now) / 60000);
 
-				return NextResponse.json({
+				return {
 					allowed: false,
 					resetAt,
 					errorMessage: `Too many sign-in attempts. Try again in ${waitMinutes} minute${waitMinutes === 1 ? "" : "s"}.`,
-				});
+				};
 			}
 
-			// Under the limit: log this attempt and return allowed
 			await databases.createDocument(
 				APPWRITE_DATABASE_ID,
 				COLLECTIONS.ANALYTICS,
@@ -127,7 +126,7 @@ export async function POST(req: NextRequest) {
 				},
 			);
 
-			return NextResponse.json({ allowed: true });
+			return { allowed: true };
 		}
 
 		if (action === "magiclink") {
@@ -167,14 +166,13 @@ export async function POST(req: NextRequest) {
 				const resetAt = oldestTime + 5 * 60 * 1000;
 				const waitMinutes = Math.ceil((resetAt - now) / 60000);
 
-				return NextResponse.json({
+				return {
 					allowed: false,
 					resetAt,
 					errorMessage: `A magic link was already sent. Try again in ${waitMinutes} minute${waitMinutes === 1 ? "" : "s"}.`,
-				});
+				};
 			}
 
-			// Under the limit: log this attempt and return allowed
 			await databases.createDocument(
 				APPWRITE_DATABASE_ID,
 				COLLECTIONS.ANALYTICS,
@@ -188,15 +186,9 @@ export async function POST(req: NextRequest) {
 				},
 			);
 
-			return NextResponse.json({ allowed: true });
+			return { allowed: true };
 		}
 
-		return NextResponse.json({ error: "Invalid action" }, { status: 400 });
-	} catch (error) {
-		console.error("[/api/auth/rate-limit] Error:", error);
-		return NextResponse.json(
-			{ error: "Internal server error" },
-			{ status: 500 },
-		);
-	}
-}
+		throw new HttpError(400, "Invalid action");
+	},
+});

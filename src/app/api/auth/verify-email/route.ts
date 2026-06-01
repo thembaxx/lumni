@@ -1,31 +1,26 @@
-import { type NextRequest, NextResponse } from "next/server";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { account } from "@/lib/appwrite";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
-async function verifyEmailHandler(req: NextRequest) {
-	try {
-		const { userId, secret } = await req.json();
+export const POST = withRateLimit(
+	createRouteHandler({
+		auth: "none",
+		validate: (body: Record<string, unknown>) => {
+			if (!body.userId || !body.secret) return "Missing userId or secret";
+			return null;
+		},
+		execute: async ({ body }) => {
+			const { userId, secret } = body as { userId: string; secret: string };
 
-		if (!userId || !secret) {
-			return NextResponse.json(
-				{ error: "Missing userId or secret" },
-				{ status: 400 },
-			);
-		}
+			try {
+				await account.updateVerification(userId, secret);
+			} catch {
+				throw new HttpError(500, "Failed to verify email");
+			}
 
-		await account.updateVerification(userId, secret);
-
-		return NextResponse.json({ verified: true });
-	} catch (error) {
-		console.error("Email verification error:", error);
-		return NextResponse.json(
-			{ error: "Failed to verify email" },
-			{ status: 500 },
-		);
-	}
-}
-
-export const POST = withRateLimit(verifyEmailHandler, {
-	max: 5,
-	windowMs: 60000,
-});
+			return { verified: true };
+		},
+		errorLabel: "Email verification",
+	}),
+	{ max: 5, windowMs: 60000 },
+);

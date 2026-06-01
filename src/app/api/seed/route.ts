@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { seedDatabase } from "@/lib/seed";
 
 const CSRF_TOKEN_KEY = "x-csrf-token";
@@ -25,31 +25,28 @@ function isValidRequest(request: Request): boolean {
 	return true;
 }
 
-export async function POST(request: Request) {
-	if (!isValidRequest(request)) {
-		return NextResponse.json(
-			{ success: false, error: "Unauthorized" },
-			{ status: 403 },
-		);
-	}
+export const POST = createRouteHandler({
+	auth: "none",
+	errorLabel: "Seed",
+	execute: async ({ req }) => {
+		if (!isValidRequest(req)) {
+			throw new HttpError(403, "Unauthorized");
+		}
 
-	try {
 		await seedDatabase();
-		return NextResponse.json({
+		return {
 			success: true,
 			message: "Database seeded successfully",
-		});
-	} catch (error) {
-		console.error("Seed error:", error);
-		return NextResponse.json(
-			{ success: false, error: String(error) },
-			{ status: 500 },
-		);
-	}
-}
+		};
+	},
+});
 
-export async function GET() {
-	return NextResponse.json({
-		message: "Use POST to seed the database",
-	});
-}
+export const GET = createRouteHandler({
+	auth: "none",
+	errorLabel: "Seed",
+	execute: async () => {
+		return {
+			message: "Use POST to seed the database",
+		};
+	},
+});

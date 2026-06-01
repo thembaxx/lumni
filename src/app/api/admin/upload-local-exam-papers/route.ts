@@ -1,11 +1,9 @@
 import { randomUUID } from "node:crypto";
 import { access, readdir } from "node:fs/promises";
 import path from "node:path";
-import type { NextRequest } from "next/server";
-import { NextResponse } from "next/server";
 import { UTApi, UTFile } from "uploadthing/server";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { getExamsDb, insertExamPaper, saveExamsDb } from "@/lib/db/exams";
-import { requireAdmin } from "@/lib/server/auth";
 
 const DEFAULT_FOLDER_PATH = `${(process as { cwd(): string }).cwd()}/downloads/exam-papers-2025`;
 
@@ -112,32 +110,25 @@ function dbExecOne(
 	return obj;
 }
 
-export async function POST(request: NextRequest) {
-	try {
-		await requireAdmin();
-
-		const body = await request.json();
-		const { folderPath } = body;
+export const POST = createRouteHandler({
+	auth: "admin",
+	errorLabel: "UploadLocalExamPapers",
+	execute: async ({ body }) => {
+		const { folderPath } = body as { folderPath?: string };
 
 		const targetFolder = folderPath || DEFAULT_FOLDER_PATH;
 
 		try {
 			await access(targetFolder);
 		} catch {
-			return NextResponse.json(
-				{ error: `Folder not found: ${targetFolder}` },
-				{ status: 400 },
-			);
+			throw new HttpError(400, `Folder not found: ${targetFolder}`);
 		}
 
 		const dirEntries = await readdir(targetFolder);
 		const files = dirEntries.filter((f) => f.endsWith(".pdf"));
 
 		if (files.length === 0) {
-			return NextResponse.json(
-				{ error: "No PDF files found in folder" },
-				{ status: 400 },
-			);
+			throw new HttpError(400, "No PDF files found in folder");
 		}
 
 		const db = await getExamsDb();
@@ -256,18 +247,12 @@ export async function POST(request: NextRequest) {
 			}
 		}
 
-		return NextResponse.json({
+		return {
 			success: true,
 			uploaded,
 			updated,
 			total: uploaded + updated,
 			errors: errors.length > 0 ? errors : undefined,
-		});
-	} catch (error) {
-		console.error("Upload error:", error);
-		return NextResponse.json(
-			{ error: error instanceof Error ? error.message : "Unknown error" },
-			{ status: 500 },
-		);
-	}
-}
+		};
+	},
+});

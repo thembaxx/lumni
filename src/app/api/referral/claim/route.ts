@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import {
 	REFERRAL_MONTHLY_LIMIT,
 	REFERRAL_REWARD_DAYS,
@@ -9,44 +9,34 @@ import {
 	getReferralByReferee,
 	getReferralCountThisMonth,
 } from "@/lib/referral/service";
-import { getAuthenticatedUserId } from "@/lib/server/auth";
 
-export async function POST(request: Request) {
-	try {
-		const userId = await getAuthenticatedUserId();
-		if (!userId) {
-			return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+export const POST = createRouteHandler({
+	auth: "required",
+	errorLabel: "ReferralClaim",
+	execute: async ({ body }) => {
+		const { code, refereeId } = body as { code?: string; refereeId?: string };
+
+		if (!code || !refereeId) {
+			throw new HttpError(400, "code and refereeId are required");
 		}
-
-		const body = await request.json();
-		const { code, refereeId } = body;
 
 		const existing = await getReferralByReferee(refereeId);
 		if (existing) {
-			return NextResponse.json({ ok: true, alreadyClaimed: true });
+			return { ok: true, alreadyClaimed: true };
 		}
 
 		const codeDoc = await getReferralByCode(code);
 		if (!codeDoc) {
-			return NextResponse.json(
-				{ error: "Invalid referral code" },
-				{ status: 404 },
-			);
+			throw new HttpError(404, "Invalid referral code");
 		}
 
 		if (codeDoc.userId === refereeId) {
-			return NextResponse.json(
-				{ error: "Cannot refer yourself" },
-				{ status: 400 },
-			);
+			throw new HttpError(400, "Cannot refer yourself");
 		}
 
 		const monthlyCount = await getReferralCountThisMonth(codeDoc.userId);
 		if (monthlyCount >= REFERRAL_MONTHLY_LIMIT) {
-			return NextResponse.json(
-				{ error: "Referrer has reached monthly limit" },
-				{ status: 429 },
-			);
+			throw new HttpError(429, "Referrer has reached monthly limit");
 		}
 
 		await createReferral({
@@ -56,16 +46,10 @@ export async function POST(request: Request) {
 			status: "pending",
 		});
 
-		return NextResponse.json({
+		return {
 			ok: true,
 			referrerId: codeDoc.userId,
 			rewardDays: REFERRAL_REWARD_DAYS,
-		});
-	} catch (error) {
-		console.error("Referral claim error:", error);
-		return NextResponse.json(
-			{ error: "Failed to claim referral" },
-			{ status: 500 },
-		);
-	}
-}
+		};
+	},
+});

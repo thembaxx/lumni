@@ -1,3 +1,7 @@
+/** UI-facing gamification shape. Uses full Achievement[] (enriched with definition data).
+    Intentionally differs from StoredGamification (gamification-engine/types.ts) which uses
+    StoredAchievement[] (id+earnedAt only) for compact storage. The use-gamification hook
+    bridges the two by merging stored achievements with ACHIEVEMENTS definitions. */
 export interface UserGamification {
 	xp: number;
 	level: number;

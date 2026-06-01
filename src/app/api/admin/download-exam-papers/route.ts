@@ -2,15 +2,14 @@ import { randomUUID } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import { Query } from "appwrite";
-import { type NextRequest, NextResponse } from "next/server";
 import { UTApi, UTFile } from "uploadthing/server";
+import { createRouteHandler } from "@/lib/api/create-route-handler";
 import {
 	COLLECTIONS,
 	createDocument,
 	listDocuments,
 	updateDocument,
 } from "@/lib/db/client";
-import { requireAdmin } from "@/lib/server/auth";
 
 interface DownloadRequest {
 	year: number;
@@ -192,12 +191,18 @@ async function saveToDatabase(
 	}
 }
 
-export async function POST(request: NextRequest) {
-	try {
-		await requireAdmin();
-
-		const body: DownloadRequest = await request.json();
-		const { year, examTypes, includeMemo, subjectIds } = body;
+export const POST = createRouteHandler({
+	auth: "admin",
+	errorLabel: "DownloadExamPapers",
+	validate: (body) => {
+		const { year, examTypes, subjectIds } = body as unknown as DownloadRequest;
+		if (!year || !examTypes || !subjectIds)
+			return "year, examTypes, and subjectIds are required";
+		return null;
+	},
+	execute: async ({ body }) => {
+		const { year, examTypes, includeMemo, subjectIds } =
+			body as unknown as DownloadRequest;
 
 		const subjects = await listDocuments(COLLECTIONS.SUBJECTS, [
 			Query.equal("code", subjectIds.join(",")),
@@ -341,7 +346,7 @@ export async function POST(request: NextRequest) {
 			downloaded += downloadedForSubj;
 		}
 
-		return NextResponse.json({
+		return {
 			success: true,
 			downloaded,
 			message:
@@ -350,14 +355,6 @@ export async function POST(request: NextRequest) {
 					: "Could not download any papers - source may be unavailable",
 			results,
 			errors: errors.length > 0 ? errors : undefined,
-		});
-	} catch (error) {
-		console.error("Download error:", error);
-		return NextResponse.json(
-			{
-				error: error instanceof Error ? error.message : "Download failed",
-			},
-			{ status: 500 },
-		);
-	}
-}
+		};
+	},
+});

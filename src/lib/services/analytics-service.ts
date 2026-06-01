@@ -1,4 +1,5 @@
 import { trackEngineEvent } from "@/lib/utils/engine-analytics";
+import { success, failure, type ServiceResult } from "./index";
 
 export class AnalyticsService {
 	track(
@@ -13,72 +14,76 @@ export class AnalyticsService {
 		trackEngineEvent({ event, ...data });
 	}
 
-	async getComparativeAnalytics(userId: string): Promise<{
+	async getComparativeAnalytics(userId: string): Promise<ServiceResult<{
 		userPercentile: number;
 		subjectRankings: Record<string, number>;
 		globalAverage: number;
 		userAverage: number;
-	}> {
-		const attempts = await Promise.allSettled(
-			[1, 2].map(async (attempt) => {
-				try {
-					const res = await fetch(
-						`/api/analytics/comparative?userId=${encodeURIComponent(userId)}`,
-					);
-					if (!res.ok) throw new Error(`HTTP ${res.status}`);
-					return await res.json();
-				} catch (error) {
-					if (attempt < 2) {
-						await new Promise((resolve) => setTimeout(resolve, 1000 * attempt));
+	}>> {
+		try {
+			const attempts = await Promise.allSettled(
+				[1, 2].map(async (attempt) => {
+					try {
+						const res = await fetch(
+							`/api/analytics/comparative?userId=${encodeURIComponent(userId)}`,
+						);
+						if (!res.ok) throw new Error(`HTTP ${res.status}`);
+						return await res.json();
+					} catch (error) {
+						if (attempt < 2) {
+							await new Promise((resolve) => setTimeout(resolve, 1000 * attempt));
+						}
+						throw error;
 					}
-					throw error;
-				}
-			}),
-		);
-		const fulfilled = attempts.find(
-			(
-				r,
-			): r is PromiseFulfilledResult<{
-				userPercentile: number;
-				subjectRankings: Record<string, number>;
-				globalAverage: number;
-				userAverage: number;
-			}> => r.status === "fulfilled",
-		);
-		if (fulfilled) return fulfilled.value;
+				}),
+			);
+			const fulfilled = attempts.find(
+				(
+					r,
+				): r is PromiseFulfilledResult<{
+					userPercentile: number;
+					subjectRankings: Record<string, number>;
+					globalAverage: number;
+					userAverage: number;
+				}> => r.status === "fulfilled",
+			);
+			if (fulfilled) return success(fulfilled.value);
 
-		const lastError =
-			(attempts.find((r): r is PromiseRejectedResult => r.status === "rejected")
-				?.reason as Error | undefined) ?? null;
-		console.error(
-			"Failed to get comparative analytics after retries:",
-			lastError,
-		);
-		return {
-			userPercentile: 50,
-			subjectRankings: {},
-			globalAverage: 65,
-			userAverage: 0,
-		};
+			const lastError =
+				(attempts.find((r): r is PromiseRejectedResult => r.status === "rejected")
+					?.reason as Error | undefined) ?? null;
+			console.error(
+				"Failed to get comparative analytics after retries:",
+				lastError,
+			);
+			return success({
+				userPercentile: 50,
+				subjectRankings: {},
+				globalAverage: 65,
+				userAverage: 0,
+			});
+		} catch (e) {
+			return failure(e instanceof Error ? e.message : "Failed to get comparative analytics");
+		}
 	}
 
 	async getSubjectTrend(
 		userId: string,
 		subject: string,
-	): Promise<{
+	): Promise<ServiceResult<{
 		dates: string[];
 		accuracies: number[];
 		trend: "improving" | "declining" | "stable";
-	}> {
+	}>> {
 		try {
 			const res = await fetch(
 				`/api/analytics/trends?userId=${encodeURIComponent(userId)}&subject=${encodeURIComponent(subject)}`,
 			);
 			if (!res.ok) throw new Error(`HTTP ${res.status}`);
-			return await res.json();
+			return success(await res.json());
 		} catch (error) {
 			console.error("Failed to get subject trend:", error);
-			return { dates: [], accuracies: [], trend: "stable" };
+			return success({ dates: [], accuracies: [], trend: "stable" });
 		}
 	}
 }

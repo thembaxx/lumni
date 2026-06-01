@@ -1,4 +1,4 @@
-import { type NextRequest, NextResponse } from "next/server";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import type { Subject } from "@/lib/db/client";
 import {
 	COLLECTIONS,
@@ -7,43 +7,35 @@ import {
 	listDocuments,
 	updateDocument,
 } from "@/lib/db/client";
-import { requireAdmin } from "@/lib/server/auth";
 
 function mapSubject(s: Subject) {
 	return { ...s, id: s.code || s.$id };
 }
 
-export async function GET() {
-	try {
-		await requireAdmin();
-
+export const GET = createRouteHandler({
+	auth: "admin",
+	errorLabel: "Subjects",
+	execute: async () => {
 		const subjects = await listDocuments<Subject>(COLLECTIONS.SUBJECTS);
-		return NextResponse.json({ subjects: subjects.map(mapSubject) });
-	} catch (error) {
-		console.error("Server error:", error);
-		return NextResponse.json(
-			{
-				error:
-					error instanceof Error ? error.message : "Failed to fetch subjects",
-			},
-			{ status: 500 },
-		);
-	}
-}
+		return { subjects: subjects.map(mapSubject) };
+	},
+});
 
-export async function POST(request: NextRequest) {
-	try {
-		await requireAdmin();
-
-		const body = await request.json();
-		const { name, code, description, category, color } = body;
-
-		if (!name || !code) {
-			return NextResponse.json(
-				{ error: "Name and code are required" },
-				{ status: 400 },
-			);
-		}
+export const POST = createRouteHandler({
+	auth: "admin",
+	errorLabel: "Subjects",
+	validate: (body) => {
+		if (!body.name || !body.code) return "Name and code are required";
+		return null;
+	},
+	execute: async ({ body }) => {
+		const { name, code, description, category, color } = body as {
+			name: string;
+			code: string;
+			description?: string;
+			category?: string;
+			color?: string;
+		};
 
 		const id = code.toLowerCase().replace(/\s+/g, "-");
 
@@ -55,28 +47,25 @@ export async function POST(request: NextRequest) {
 			color,
 		});
 
-		return NextResponse.json({ success: true, id });
-	} catch (error) {
-		return NextResponse.json(
-			{
-				error:
-					error instanceof Error ? error.message : "Failed to create subject",
-			},
-			{ status: 500 },
-		);
-	}
-}
+		return { success: true, id };
+	},
+});
 
-export async function PATCH(request: NextRequest) {
-	try {
-		await requireAdmin();
-
-		const body = await request.json();
-		const { id, name, code, description, category } = body;
-
-		if (!id) {
-			return NextResponse.json({ error: "ID is required" }, { status: 400 });
-		}
+export const PATCH = createRouteHandler({
+	auth: "admin",
+	errorLabel: "Subjects",
+	validate: (body) => {
+		if (!body.id) return "ID is required";
+		return null;
+	},
+	execute: async ({ body }) => {
+		const { id, name, code, description, category } = body as {
+			id: string;
+			name?: string;
+			code?: string;
+			description?: string;
+			category?: string;
+		};
 
 		const updateData: Record<string, unknown> = {
 			name,
@@ -89,39 +78,23 @@ export async function PATCH(request: NextRequest) {
 
 		await updateDocument(COLLECTIONS.SUBJECTS, id, updateData);
 
-		return NextResponse.json({ success: true });
-	} catch (error) {
-		return NextResponse.json(
-			{
-				error:
-					error instanceof Error ? error.message : "Failed to update subject",
-			},
-			{ status: 500 },
-		);
-	}
-}
+		return { success: true };
+	},
+});
 
-export async function DELETE(request: NextRequest) {
-	try {
-		await requireAdmin();
-
-		const { searchParams } = new URL(request.url);
+export const DELETE = createRouteHandler({
+	auth: "admin",
+	errorLabel: "Subjects",
+	execute: async ({ req }) => {
+		const { searchParams } = new URL(req.url);
 		const id = searchParams.get("id");
 
 		if (!id) {
-			return NextResponse.json({ error: "ID is required" }, { status: 400 });
+			throw new HttpError(400, "ID is required");
 		}
 
 		await deleteDocument(COLLECTIONS.SUBJECTS, id);
 
-		return NextResponse.json({ success: true });
-	} catch (error) {
-		return NextResponse.json(
-			{
-				error:
-					error instanceof Error ? error.message : "Failed to delete subject",
-			},
-			{ status: 500 },
-		);
-	}
-}
+		return { success: true };
+	},
+});

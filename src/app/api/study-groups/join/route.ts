@@ -1,33 +1,21 @@
-import { type NextRequest, NextResponse } from "next/server";
-import { getAuthenticatedUserId } from "@/lib/server/auth";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { joinGroup } from "@/lib/study-groups/service";
 
-export async function POST(request: NextRequest) {
-	const userId = await getAuthenticatedUserId();
-	if (!userId) {
-		return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-	}
+export const POST = createRouteHandler({
+	auth: "required",
+	errorLabel: "JoinGroup",
+	validate: (body) => {
+		if (!body.inviteCode || typeof body.inviteCode !== "string")
+			return "Invite code is required";
+		return null;
+	},
+	execute: async ({ userId, body }) => {
+		const { inviteCode } = body as { inviteCode: string };
 
-	try {
-		const body = await request.json();
-		const { inviteCode } = body;
-
-		if (!inviteCode || typeof inviteCode !== "string") {
-			return NextResponse.json(
-				{ error: "Invite code is required" },
-				{ status: 400 },
-			);
-		}
-
-		const result = await joinGroup(userId, inviteCode.toUpperCase());
+		const result = await joinGroup(userId as string, inviteCode.toUpperCase());
 		if (!result.success) {
-			return NextResponse.json({ error: result.error }, { status: 400 });
+			throw new HttpError(400, result.error);
 		}
-		return NextResponse.json({ group: result.data });
-	} catch {
-		return NextResponse.json(
-			{ error: "Invalid request body" },
-			{ status: 400 },
-		);
-	}
-}
+		return { group: result.data };
+	},
+});

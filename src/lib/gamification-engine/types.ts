@@ -1,16 +1,14 @@
-import type { DailyChallenge } from "@/types/gamification";
+import type { DailyChallenge, StreakMilestone } from "@/types/gamification";
 
 export interface StoredAchievement {
 	id: string;
 	earnedAt: string;
 }
 
-export interface StreakMilestone {
-	streak: number;
-	reward: string;
-	unlocked: boolean;
-}
-
+/** Storage-facing gamification shape. Uses StoredAchievement[] (id+earnedAt only) for
+    compact localStorage serialization. Intentionally differs from UserGamification
+    (types/gamification.ts) which uses full Achievement[] enriched with definition data
+    for the UI layer. The use-gamification hook bridges the two. */
 export interface StoredGamification {
 	xp: number;
 	totalXp: number;
@@ -35,16 +33,6 @@ export interface GamificationResult {
 export interface AchievementCheckResult {
 	unlocked: string[];
 	pending: string[];
-}
-
-export interface RewardChest {
-	id: string;
-	name: string;
-	description: string;
-	xpRequired: number;
-	xpReward: number;
-	icon: string;
-	rarity: "common" | "rare" | "epic" | "legendary";
 }
 
 export interface StoredRewardChest {

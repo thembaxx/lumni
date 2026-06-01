@@ -1,51 +1,42 @@
-import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { serverAccount } from "@/lib/appwrite";
 
 const magicLinkSchema = z.object({
 	email: z.string().email("Please enter a valid email address"),
 });
 
-export async function POST(request: NextRequest) {
-	try {
-		const body = await request.json();
+export const POST = createRouteHandler({
+	auth: "none",
+	errorLabel: "MagicLink",
+	validate: (body) => {
 		const result = magicLinkSchema.safeParse(body);
-
 		if (!result.success) {
-			return NextResponse.json(
-				{
-					success: false,
-					error: result.error.issues[0]?.message || "Invalid email",
-				},
-				{ status: 400 },
+			return result.error.issues[0]?.message || "Invalid email";
+		}
+		return null;
+	},
+	execute: async ({ body }) => {
+		const { email } = body as z.infer<typeof magicLinkSchema>;
+
+		try {
+			await serverAccount.createMagicURLToken(
+				"unique()",
+				email,
+				`${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/api/auth/callback`,
 			);
+		} catch (error) {
+			const appwriteError = error as { message?: string };
+			if (appwriteError.message?.includes("already exists")) {
+				throw new HttpError(400, "Email already registered");
+			}
+			throw new HttpError(500, "Failed to send magic link");
 		}
 
-		const { email } = result.data;
-
-		await serverAccount.createMagicURLToken(
-			"unique()",
-			email,
-			`${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/api/auth/callback`,
-		);
-
-		return NextResponse.json({
+		return {
 			success: true,
 			message: "Magic link sent to your email",
 			email,
-		});
-	} catch (error) {
-		console.error("[Magic Link] Error:", error);
-		const appwriteError = error as { message?: string };
-		if (appwriteError.message?.includes("already exists")) {
-			return NextResponse.json(
-				{ success: false, error: "Email already registered" },
-				{ status: 400 },
-			);
-		}
-		return NextResponse.json(
-			{ success: false, error: "Failed to send magic link" },
-			{ status: 500 },
-		);
-	}
-}
+		};
+	},
+});

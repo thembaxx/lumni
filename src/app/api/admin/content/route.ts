@@ -1,62 +1,38 @@
 import { Query } from "appwrite";
-import { type NextRequest, NextResponse } from "next/server";
+import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { COLLECTIONS, listDocuments, updateDocument } from "@/lib/db/client";
-import { requireAdmin } from "@/lib/server/auth";
 
-export async function GET() {
-	try {
-		await requireAdmin();
-
+export const GET = createRouteHandler({
+	auth: "admin",
+	errorLabel: "Content",
+	execute: async () => {
 		const flags = await listDocuments<Record<string, unknown>>(
 			COLLECTIONS.QUESTION_FLAGS,
 			[Query.orderDesc("createdAt"), Query.limit(100)],
 		);
+		return { flags };
+	},
+});
 
-		return NextResponse.json({ flags });
-	} catch (error) {
-		return NextResponse.json(
-			{
-				error: error instanceof Error ? error.message : "Failed to fetch flags",
-			},
-			{ status: 500 },
-		);
-	}
-}
-
-export async function PATCH(request: NextRequest) {
-	try {
-		await requireAdmin();
-
-		const body = await request.json();
-		const { flagId, status } = body;
-
-		if (!flagId || !status) {
-			return NextResponse.json(
-				{ error: "flagId and status are required" },
-				{ status: 400 },
-			);
-		}
-
+export const PATCH = createRouteHandler({
+	auth: "admin",
+	errorLabel: "Content",
+	validate: (body) => {
+		if (!body.flagId || !body.status) return "flagId and status are required";
 		const validStatuses = ["pending", "resolved", "dismissed"];
-		if (!validStatuses.includes(status)) {
-			return NextResponse.json(
-				{ error: `status must be one of: ${validStatuses.join(", ")}` },
-				{ status: 400 },
-			);
+		if (!validStatuses.includes(body.status as string)) {
+			return `status must be one of: ${validStatuses.join(", ")}`;
 		}
+		return null;
+	},
+	execute: async ({ body }) => {
+		const { flagId, status } = body as { flagId: string; status: string };
 
 		await updateDocument(COLLECTIONS.QUESTION_FLAGS, flagId, {
 			status,
 			updatedAt: new Date().toISOString(),
 		});
 
-		return NextResponse.json({ success: true });
-	} catch (error) {
-		return NextResponse.json(
-			{
-				error: error instanceof Error ? error.message : "Failed to update flag",
-			},
-			{ status: 500 },
-		);
-	}
-}
+		return { success: true };
+	},
+});

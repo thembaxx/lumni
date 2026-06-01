@@ -1,5 +1,4 @@
-import { type NextRequest, NextResponse } from "next/server";
-import { getAuthenticatedUserId } from "@/lib/server/auth";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 
 const PF_HOST =
 	process.env.PAYFAST_SANDBOX === "true"
@@ -28,25 +27,22 @@ async function generateSignature(
 	return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
 }
 
-export async function POST(req: NextRequest) {
-	try {
-		const userId = await getAuthenticatedUserId();
-		if (!userId) {
-			return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
-		}
-
+export const POST = createRouteHandler({
+	auth: "required",
+	errorLabel: "PayfastCheckout",
+	execute: async ({ userId, req, body }) => {
 		const merchantId = process.env.PAYFAST_MERCHANT_ID;
 		const merchantKey = process.env.PAYFAST_MERCHANT_KEY;
 
 		if (!merchantId || !merchantKey) {
-			return NextResponse.json(
-				{ error: "Payfast not configured" },
-				{ status: 503 },
-			);
+			throw new HttpError(503, "Payfast not configured");
 		}
 
 		const origin = new URL(req.url).origin;
-		const { amount, item_name } = await req.json();
+		const { amount, item_name } = body as {
+			amount?: string;
+			item_name?: string;
+		};
 
 		const data: Record<string, string> = {
 			merchant_id: merchantId,
@@ -57,23 +53,17 @@ export async function POST(req: NextRequest) {
 			name_first: "",
 			name_last: "",
 			email_address: "",
-			m_payment_id: userId,
+			m_payment_id: userId as string,
 			amount: amount || "99.00",
 			item_name: item_name || "Lumni Premium Yearly",
-			custom_str1: userId,
+			custom_str1: userId as string,
 		};
 
 		const signature = await generateSignature(data);
 
-		return NextResponse.json({
+		return {
 			url: PF_HOST,
 			data: { ...data, signature },
-		});
-	} catch (error) {
-		console.error("Payfast checkout error:", error);
-		return NextResponse.json(
-			{ error: "Failed to create checkout" },
-			{ status: 500 },
-		);
-	}
-}
+		};
+	},
+});

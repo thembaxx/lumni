@@ -1,65 +1,48 @@
-import { type NextRequest, NextResponse } from "next/server";
-import {
-	getAuthenticatedUserId,
-	getAuthenticatedUserName,
-} from "@/lib/server/auth";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
+import { getAuthenticatedUserName } from "@/lib/server/auth";
 import { createComment, getPostComments } from "@/lib/study-groups/service";
 
-export async function GET(
-	_request: NextRequest,
-	{ params }: { params: Promise<{ groupId: string; postId: string }> },
-) {
-	const userId = await getAuthenticatedUserId();
-	if (!userId) {
-		return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-	}
+export const GET = createRouteHandler({
+	auth: "required",
+	errorLabel: "PostComments",
+	execute: async ({ params }) => {
+		const postId = params?.postId as string;
+		const result = await getPostComments(postId);
 
-	const { postId } = await params;
-	const result = await getPostComments(postId);
-
-	if (!result.success) {
-		return NextResponse.json({ error: result.error }, { status: 500 });
-	}
-	return NextResponse.json({ comments: result.data });
-}
-
-export async function POST(
-	request: NextRequest,
-	{ params }: { params: Promise<{ groupId: string; postId: string }> },
-) {
-	const userId = await getAuthenticatedUserId();
-	if (!userId) {
-		return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-	}
-
-	const { postId } = await params;
-
-	try {
-		const body = await request.json();
-		if (!body.content || typeof body.content !== "string") {
-			return NextResponse.json(
-				{ error: "Content is required" },
-				{ status: 400 },
-			);
+		if (!result.success) {
+			throw new HttpError(500, result.error);
 		}
+		return { comments: result.data };
+	},
+});
+
+export const POST = createRouteHandler({
+	auth: "required",
+	errorLabel: "PostComments",
+	validate: (body) => {
+		if (!body.content || typeof body.content !== "string")
+			return "Content is required";
+		return null;
+	},
+	execute: async ({ userId, params, body }) => {
+		const postId = params?.postId as string;
+		const { content, parentId } = body as {
+			content: string;
+			parentId?: string;
+		};
 
 		const userName = await getAuthenticatedUserName();
 		const result = await createComment(
-			userId,
+			userId as string,
 			userName ?? undefined,
 			postId,
-			body.content,
-			body.parentId,
+			content,
+			parentId,
 		);
 
 		if (!result.success) {
-			return NextResponse.json({ error: result.error }, { status: 400 });
+			throw new HttpError(400, result.error);
 		}
-		return NextResponse.json({ comment: result.data }, { status: 201 });
-	} catch {
-		return NextResponse.json(
-			{ error: "Invalid request body" },
-			{ status: 400 },
-		);
-	}
-}
+		return { comment: result.data };
+	},
+});

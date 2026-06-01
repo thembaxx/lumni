@@ -1,4 +1,4 @@
-import { dataSharingConsent } from "@/lib/consent/ai-gate";
+import { getDataSharingConsent } from "@/lib/consent/ai-gate";
 import { trackAILatency } from "./latency-tracker";
 import { createGeminiProvider } from "./providers/gemini";
 import { createGroqProvider } from "./providers/groq";
@@ -48,7 +48,7 @@ export class AIClient {
 		request: AIRequest,
 		callType: "generate" | "grade" | "hint" | "visual" | "embed" = "generate",
 	): Promise<AIResult> {
-		if (!dataSharingConsent) {
+		if (!getDataSharingConsent()) {
 			return {
 				...FAILURE_RESPONSE,
 				error: "Data sharing consent not granted",

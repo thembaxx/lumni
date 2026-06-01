@@ -1,31 +1,23 @@
-import { NextResponse } from "next/server";
+import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { COLLECTIONS, createDocument } from "@/lib/db/client";
-import { getAuthenticatedUserId } from "@/lib/server/auth";
 
-export async function POST(request: Request) {
-	const userId = await getAuthenticatedUserId();
-	if (!userId) {
-		return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
-	}
+export const POST = createRouteHandler({
+	auth: "required",
+	errorLabel: "TeacherAssign",
+	validate: (body) => {
+		if (!body.topics || !Array.isArray(body.topics) || body.topics.length === 0)
+			return "topics required";
+		return null;
+	},
+	execute: async ({ userId, body }) => {
+		const { topics } = body as { topics: string[] };
 
-	const { topics } = (await request.json()) as { topics?: string[] };
-	if (!topics || topics.length === 0) {
-		return NextResponse.json({ error: "topics required" }, { status: 400 });
-	}
-
-	try {
 		await createDocument(COLLECTIONS.TEACHER_ASSIGNMENTS, {
 			teacherId: userId,
 			topicIds: JSON.stringify(topics),
 			status: "pending",
 			createdAt: new Date().toISOString(),
 		});
-		return NextResponse.json({ success: true, topics });
-	} catch (error) {
-		console.error("[teacher/assign] Failed:", error);
-		return NextResponse.json(
-			{ error: "Failed to create assignment" },
-			{ status: 500 },
-		);
-	}
-}
+		return { success: true, topics };
+	},
+});

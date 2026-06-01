@@ -1,18 +1,14 @@
 import { Client, Databases, ID, Query } from "appwrite";
-import { type NextRequest, NextResponse } from "next/server";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { APPWRITE_ENDPOINT, APPWRITE_PROJECT } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
-import {
-	getAuthenticatedUserId,
-	getAuthenticatedUserName,
-} from "@/lib/server/auth";
+import { getAuthenticatedUserName } from "@/lib/server/auth";
 
-export async function GET() {
-	try {
-		const userId = await getAuthenticatedUserId();
-		if (!userId) {
-			return NextResponse.json({ gamification: null });
-		}
+export const GET = createRouteHandler({
+	auth: "optional",
+	errorLabel: "Gamification",
+	execute: async ({ userId }) => {
+		if (!userId) return { gamification: null };
 
 		const client = new Client()
 			.setEndpoint(APPWRITE_ENDPOINT)
@@ -37,27 +33,20 @@ export async function GET() {
 					$databaseId,
 					...rest
 				} = record;
-				return NextResponse.json({ gamification: rest });
+				return { gamification: rest };
 			}
-			return NextResponse.json({ gamification: null });
+			return { gamification: null };
 		} catch {
-			return NextResponse.json({ gamification: null });
+			return { gamification: null };
 		}
-	} catch (error) {
-		console.error("Gamification GET error:", error);
-		return NextResponse.json({ error: "Failed to fetch" }, { status: 500 });
-	}
-}
+	},
+});
 
-export async function POST(req: NextRequest) {
-	try {
-		const userId = await getAuthenticatedUserId();
-		if (!userId) {
-			return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
-		}
-
+export const POST = createRouteHandler({
+	auth: "required",
+	errorLabel: "Gamification",
+	execute: async ({ userId, body }) => {
 		const userName = await getAuthenticatedUserName();
-		const body = await req.json();
 		const client = new Client()
 			.setEndpoint(APPWRITE_ENDPOINT)
 			.setProject(APPWRITE_PROJECT);
@@ -66,14 +55,14 @@ export async function POST(req: NextRequest) {
 		const payload = {
 			...body,
 			userId,
-			label: userName || body.label || undefined,
+			label: userName || (body as Record<string, unknown>).label || undefined,
 		};
 
 		try {
 			const docs = await db.listDocuments(
 				APPWRITE_DATABASE_ID,
 				COLLECTIONS.USER_GAMIFICATION,
-				[Query.equal("userId", userId), Query.limit(1)],
+				[Query.equal("userId", userId as string), Query.limit(1)],
 			);
 
 			if (docs.documents.length > 0) {
@@ -91,12 +80,9 @@ export async function POST(req: NextRequest) {
 					payload,
 				);
 			}
-			return NextResponse.json({ success: true });
+			return { success: true };
 		} catch {
-			return NextResponse.json({ success: false }, { status: 500 });
+			throw new HttpError(500, "Failed to sync");
 		}
-	} catch (error) {
-		console.error("Gamification POST error:", error);
-		return NextResponse.json({ error: "Failed to sync" }, { status: 500 });
-	}
-}
+	},
+});

@@ -1,8 +1,7 @@
 import { Query } from "appwrite";
-import { NextResponse } from "next/server";
+import { createRouteHandler } from "@/lib/api/create-route-handler";
 import { databases } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
-import { getAuthenticatedUserId } from "@/lib/server/auth";
 import type { SearchResultItem } from "@/lib/services/search-service";
 
 export const dynamic = "force-dynamic";
@@ -12,20 +11,18 @@ function textRelevant(text: string, query: string): boolean {
 	return text.toLowerCase().includes(q);
 }
 
-export async function GET(request: Request) {
-	try {
-		const userId = await getAuthenticatedUserId();
+export const GET = createRouteHandler({
+	auth: "optional",
+	errorLabel: "AppwriteSearch",
+	execute: async ({ userId, req }) => {
 		if (!userId) {
-			return NextResponse.json(
-				{ error: "Authentication required", results: [] },
-				{ status: 401 },
-			);
+			return { results: [] };
 		}
 
-		const { searchParams } = new URL(request.url);
+		const { searchParams } = new URL(req.url);
 		const query = searchParams.get("query");
 		if (!query || query.trim().length < 2) {
-			return NextResponse.json({ results: [] });
+			return { results: [] };
 		}
 
 		const results: SearchResultItem[] = [];
@@ -107,15 +104,6 @@ export async function GET(request: Request) {
 			}
 		}
 
-		return NextResponse.json({ results: results.slice(0, 25) });
-	} catch (error) {
-		console.error("[Appwrite Search API]", error);
-		return NextResponse.json(
-			{
-				error: error instanceof Error ? error.message : "Search failed",
-				results: [],
-			},
-			{ status: 500 },
-		);
-	}
-}
+		return { results: results.slice(0, 25) };
+	},
+});

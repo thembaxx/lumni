@@ -1,10 +1,8 @@
-import { type NextRequest, NextResponse } from "next/server";
 import { Query } from "node-appwrite";
-import { apiError } from "@/lib/api-error";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { databases } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 import { getAllExamPapers, getExamPapersBySubject } from "@/lib/db/exams";
-import { getAuthenticatedUserId } from "@/lib/server/auth";
 import { checkAndPopulateExamsDb } from "@/lib/server/exam-paper-actions";
 import { withRateLimit } from "@/lib/shared/with-rate-limit";
 
@@ -26,28 +24,54 @@ function mapLocalPaper(row: Record<string, unknown>): Record<string, unknown> {
 	};
 }
 
-async function examsHandler(request: NextRequest) {
-	const userId = await getAuthenticatedUserId();
-	if (!userId) {
-		return apiError("Not authenticated", 401);
-	}
+export const GET = withRateLimit(
+	createRouteHandler({
+		auth: "required",
+		execute: async ({ req }) => {
+			const { searchParams } = new URL(req.url);
+			const subjectCode = searchParams.get("subject");
+			const year = searchParams.get("year");
+			const id = searchParams.get("id");
 
-	const { searchParams } = new URL(request.url);
-	const subjectCode = searchParams.get("subject");
-	const year = searchParams.get("year");
-	const id = searchParams.get("id");
+			if (id) {
+				const doc = await databases.getDocument(
+					APPWRITE_DATABASE_ID,
+					COLLECTIONS.EXAM_PAPERS,
+					id,
+				);
+				if (!doc) {
+					throw new HttpError(404, "Exam paper not found");
+				}
+				return {
+					id: doc.$id,
+					subject: doc.subject,
+					paperCode: doc.paperCode,
+					examPeriod: doc.examPeriod,
+					year: doc.year,
+					grade: doc.grade,
+					language: doc.language,
+					totalMarks: doc.totalMarks,
+					duration: doc.duration,
+					fileKeys: doc.fileKeys ? JSON.parse(doc.fileKeys as string) : null,
+					uploadedAt: doc.uploadedAt,
+				};
+			}
 
-	try {
-		if (id) {
-			const doc = await databases.getDocument(
+			const queries: string[] = [];
+			if (subjectCode) {
+				queries.push(Query.equal("subject", subjectCode));
+			}
+			if (year) {
+				queries.push(Query.equal("year", Number.parseInt(year, 10)));
+			}
+
+			const response = await databases.listDocuments(
 				APPWRITE_DATABASE_ID,
 				COLLECTIONS.EXAM_PAPERS,
-				id,
+				queries,
 			);
-			if (!doc) {
-				return apiError("Exam paper not found", 404);
-			}
-			return NextResponse.json({
+
+			const exams = response.documents.map((doc) => ({
 				id: doc.$id,
 				subject: doc.subject,
 				paperCode: doc.paperCode,
@@ -59,63 +83,29 @@ async function examsHandler(request: NextRequest) {
 				duration: doc.duration,
 				fileKeys: doc.fileKeys ? JSON.parse(doc.fileKeys as string) : null,
 				uploadedAt: doc.uploadedAt,
-			});
-		}
+			}));
 
-		const queries: string[] = [];
-		if (subjectCode) {
-			queries.push(Query.equal("subject", subjectCode));
-		}
-		if (year) {
-			queries.push(Query.equal("year", Number.parseInt(year, 10)));
-		}
+			if (exams.length === 0) {
+				await checkAndPopulateExamsDb();
 
-		const response = await databases.listDocuments(
-			APPWRITE_DATABASE_ID,
-			COLLECTIONS.EXAM_PAPERS,
-			queries,
-		);
+				const localPapers = subjectCode
+					? getExamPapersBySubject(
+							subjectCode,
+							year ? Number.parseInt(year, 10) : undefined,
+						)
+					: getAllExamPapers();
 
-		const exams = response.documents.map((doc) => ({
-			id: doc.$id,
-			subject: doc.subject,
-			paperCode: doc.paperCode,
-			examPeriod: doc.examPeriod,
-			year: doc.year,
-			grade: doc.grade,
-			language: doc.language,
-			totalMarks: doc.totalMarks,
-			duration: doc.duration,
-			fileKeys: doc.fileKeys ? JSON.parse(doc.fileKeys as string) : null,
-			uploadedAt: doc.uploadedAt,
-		}));
-
-		if (exams.length === 0) {
-			await checkAndPopulateExamsDb();
-
-			const localPapers = subjectCode
-				? getExamPapersBySubject(
-						subjectCode,
-						year ? Number.parseInt(year, 10) : undefined,
-					)
-				: getAllExamPapers();
-
-			if (localPapers.length > 0) {
-				return NextResponse.json({
-					exams: localPapers.map(mapLocalPaper),
-					total: localPapers.length,
-				});
+				if (localPapers.length > 0) {
+					return {
+						exams: localPapers.map(mapLocalPaper),
+						total: localPapers.length,
+					};
+				}
 			}
-		}
 
-		return NextResponse.json({ exams, total: exams.length });
-	} catch (error) {
-		console.error("Failed to fetch exams:", error);
-		return apiError("Failed to fetch exams", 500);
-	}
-}
-
-export const GET = withRateLimit(examsHandler, {
-	max: 15,
-	windowMs: 60000,
-});
+			return { exams, total: exams.length };
+		},
+		errorLabel: "Exams",
+	}),
+	{ max: 15, windowMs: 60000 },
+);

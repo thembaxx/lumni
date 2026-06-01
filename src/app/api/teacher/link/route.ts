@@ -1,50 +1,37 @@
-import { NextResponse } from "next/server";
-import { getAuthenticatedUserId } from "@/lib/server/auth";
+import { createRouteHandler } from "@/lib/api/create-route-handler";
 import {
 	linkStudentToTeacher,
 	unlinkStudentFromTeacher,
 } from "@/lib/server/teacher-service";
 
-export async function POST(request: Request) {
-	const userId = await getAuthenticatedUserId();
-	if (!userId) {
-		return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
-	}
-	const { studentId, subjectId } = (await request.json()) as {
-		studentId?: string;
-		subjectId?: string;
-	};
-	if (!studentId) {
-		return NextResponse.json({ error: "studentId required" }, { status: 400 });
-	}
-	try {
-		await linkStudentToTeacher(userId, studentId, subjectId);
-		return NextResponse.json({ success: true });
-	} catch (error) {
-		console.error("[teacher/link] Failed:", error);
-		return NextResponse.json(
-			{ error: "Failed to link student" },
-			{ status: 500 },
-		);
-	}
-}
+export const POST = createRouteHandler({
+	auth: "required",
+	errorLabel: "TeacherLink",
+	validate: (body) => {
+		if (!body.studentId) return "studentId required";
+		return null;
+	},
+	execute: async ({ userId, body }) => {
+		const { studentId, subjectId } = body as {
+			studentId: string;
+			subjectId?: string;
+		};
 
-export async function DELETE(request: Request) {
-	const userId = await getAuthenticatedUserId();
-	if (!userId) {
-		return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
-	}
-	const { studentId } = (await request.json()) as { studentId?: string };
-	if (!studentId) {
-		return NextResponse.json({ error: "studentId required" }, { status: 400 });
-	}
-	try {
-		await unlinkStudentFromTeacher(userId, studentId);
-		return NextResponse.json({ success: true });
-	} catch (_error) {
-		return NextResponse.json(
-			{ error: "Failed to unlink student" },
-			{ status: 500 },
-		);
-	}
-}
+		await linkStudentToTeacher(userId as string, studentId, subjectId);
+		return { success: true };
+	},
+});
+
+export const DELETE = createRouteHandler({
+	auth: "required",
+	errorLabel: "TeacherLink",
+	validate: (body) => {
+		if (!body.studentId) return "studentId required";
+		return null;
+	},
+	execute: async ({ userId, body }) => {
+		const { studentId } = body as { studentId: string };
+		await unlinkStudentFromTeacher(userId as string, studentId);
+		return { success: true };
+	},
+});

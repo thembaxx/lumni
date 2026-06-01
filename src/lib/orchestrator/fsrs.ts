@@ -75,11 +75,3 @@ export function calculateNextReviewFSRS(
 		nextReview,
 	};
 }
-
-export function getRetrievability(
-	stability: number,
-	elapsedDays: number,
-): number {
-	if (stability <= 0) return 0;
-	return (1 + elapsedDays / stability) ** -1;
-}

@@ -1,6 +1,6 @@
 import { Client, Databases } from "appwrite";
-import { NextResponse } from "next/server";
 import Stripe from "stripe";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { APPWRITE_ENDPOINT, APPWRITE_PROJECT } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID } from "@/lib/db/client";
 
@@ -12,27 +12,29 @@ function getStripe(): Stripe {
 	});
 }
 
-export async function POST(req: Request) {
-	const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
-	const stripeKey = process.env.STRIPE_SECRET_KEY;
+export const POST = createRouteHandler({
+	auth: "none",
+	errorLabel: "StripeWebhook",
+	parseBody: async (req) => {
+		return { rawBody: await req.text() };
+	},
+	execute: async ({ body, req }) => {
+		const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+		const stripeKey = process.env.STRIPE_SECRET_KEY;
 
-	if (!webhookSecret || !stripeKey) {
-		return NextResponse.json(
-			{ error: "Stripe not configured" },
-			{ status: 503 },
-		);
-	}
+		if (!webhookSecret || !stripeKey) {
+			throw new HttpError(503, "Stripe not configured");
+		}
 
-	try {
-		const body = await req.text();
+		const { rawBody } = body as { rawBody: string };
 		const sig = req.headers.get("stripe-signature");
 
 		if (!sig) {
-			return NextResponse.json({ error: "Missing signature" }, { status: 400 });
+			throw new HttpError(400, "Missing signature");
 		}
 
 		const stripe = getStripe();
-		const event = stripe.webhooks.constructEvent(body, sig, webhookSecret);
+		const event = stripe.webhooks.constructEvent(rawBody, sig, webhookSecret);
 
 		const client = new Client()
 			.setEndpoint(APPWRITE_ENDPOINT)
@@ -91,12 +93,6 @@ export async function POST(req: Request) {
 			}
 		}
 
-		return NextResponse.json({ received: true });
-	} catch (err) {
-		console.error("Stripe webhook error:", err);
-		return NextResponse.json(
-			{ error: "Webhook handler failed" },
-			{ status: 400 },
-		);
-	}
-}
+		return { received: true };
+	},
+});

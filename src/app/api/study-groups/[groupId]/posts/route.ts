@@ -1,71 +1,51 @@
-import { type NextRequest, NextResponse } from "next/server";
-import {
-	getAuthenticatedUserId,
-	getAuthenticatedUserName,
-} from "@/lib/server/auth";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
+import { getAuthenticatedUserName } from "@/lib/server/auth";
 import {
 	createPost,
 	getGroupMembers,
 	getGroupPosts,
 } from "@/lib/study-groups/service";
 
-export async function GET(
-	_request: NextRequest,
-	{ params }: { params: Promise<{ groupId: string }> },
-) {
-	const userId = await getAuthenticatedUserId();
-	if (!userId) {
-		return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-	}
+export const GET = createRouteHandler({
+	auth: "required",
+	errorLabel: "GroupPosts",
+	execute: async ({ userId, params }) => {
+		const groupId = params?.groupId as string;
 
-	const { groupId } = await params;
+		const membersResult = await getGroupMembers(groupId);
+		const isMember =
+			membersResult.success &&
+			membersResult.data.some((m) => m.userId === userId);
+		if (!isMember) {
+			throw new HttpError(403, "Not a member of this group");
+		}
 
-	const membersResult = await getGroupMembers(groupId);
-	const isMember =
-		membersResult.success &&
-		membersResult.data.some((m) => m.userId === userId);
-	if (!isMember) {
-		return NextResponse.json(
-			{ error: "Not a member of this group" },
-			{ status: 403 },
-		);
-	}
+		const result = await getGroupPosts(groupId);
+		if (!result.success) {
+			throw new HttpError(500, result.error);
+		}
+		return { posts: result.data };
+	},
+});
 
-	const result = await getGroupPosts(groupId);
+export const POST = createRouteHandler({
+	auth: "required",
+	errorLabel: "GroupPosts",
+	execute: async ({ userId, params, req }) => {
+		const groupId = params?.groupId as string;
 
-	if (!result.success) {
-		return NextResponse.json({ error: result.error }, { status: 500 });
-	}
-	return NextResponse.json({ posts: result.data });
-}
+		const membersResult = await getGroupMembers(groupId);
+		const isMember =
+			membersResult.success &&
+			membersResult.data.some((m) => m.userId === userId);
+		if (!isMember) {
+			throw new HttpError(403, "Not a member of this group");
+		}
 
-export async function POST(
-	request: NextRequest,
-	{ params }: { params: Promise<{ groupId: string }> },
-) {
-	const userId = await getAuthenticatedUserId();
-	if (!userId) {
-		return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-	}
-
-	const { groupId } = await params;
-
-	const membersResult = await getGroupMembers(groupId);
-	const isMember =
-		membersResult.success &&
-		membersResult.data.some((m) => m.userId === userId);
-	if (!isMember) {
-		return NextResponse.json(
-			{ error: "Not a member of this group" },
-			{ status: 403 },
-		);
-	}
-
-	try {
-		const body = await request.json();
+		const body = await req.json();
 		const userName = await getAuthenticatedUserName();
 
-		const result = await createPost(userId, userName ?? undefined, {
+		const result = await createPost(userId as string, userName ?? undefined, {
 			groupId,
 			content: body.content,
 			questionText: body.questionText,
@@ -74,13 +54,8 @@ export async function POST(
 		});
 
 		if (!result.success) {
-			return NextResponse.json({ error: result.error }, { status: 400 });
+			throw new HttpError(400, result.error);
 		}
-		return NextResponse.json({ post: result.data }, { status: 201 });
-	} catch {
-		return NextResponse.json(
-			{ error: "Invalid request body" },
-			{ status: 400 },
-		);
-	}
-}
+		return { post: result.data };
+	},
+});

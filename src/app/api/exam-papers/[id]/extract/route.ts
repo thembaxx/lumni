@@ -1,9 +1,8 @@
-import { NextResponse } from "next/server";
 import { UTApi } from "uploadthing/server";
+import { createRouteHandler, HttpError } from "@/lib/api/create-route-handler";
 import { databases } from "@/lib/appwrite";
 import { APPWRITE_DATABASE_ID, COLLECTIONS } from "@/lib/db/client";
 import { extractQuestionsFromPaper } from "@/lib/exam-paper-ingestion/question-extractor";
-import { getAuthenticatedUserId } from "@/lib/server/auth";
 import type { ExamPaper } from "@/types/exam-paper";
 
 export const runtime = "nodejs";
@@ -33,17 +32,11 @@ async function fetchParsedPaper(id: string): Promise<ExamPaper | null> {
 	}
 }
 
-export async function POST(
-	_request: Request,
-	{ params }: { params: Promise<{ id: string }> },
-) {
-	const userId = await getAuthenticatedUserId();
-	if (!userId) {
-		return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
-	}
-
-	try {
-		const { id } = await params;
+export const POST = createRouteHandler({
+	auth: "required",
+	errorLabel: "ExtractQuestions",
+	execute: async ({ params }) => {
+		const id = params?.id as string;
 
 		const doc = await databases.getDocument(
 			APPWRITE_DATABASE_ID,
@@ -51,7 +44,7 @@ export async function POST(
 			id,
 		);
 		if (!doc) {
-			return NextResponse.json({ error: "Paper not found" }, { status: 404 });
+			throw new HttpError(404, "Paper not found");
 		}
 
 		const subject = (doc.subject as string) || "";
@@ -61,10 +54,7 @@ export async function POST(
 
 		const paper = await fetchParsedPaper(id);
 		if (!paper) {
-			return NextResponse.json(
-				{ error: "Could not fetch parsed paper JSON" },
-				{ status: 502 },
-			);
+			throw new HttpError(502, "Could not fetch parsed paper JSON");
 		}
 
 		const memoId = (doc.memoId as string) || "";
@@ -89,7 +79,7 @@ export async function POST(
 				dbLib
 					.createDocument(dbLib.COLLECTIONS.PAST_PAPER_QUESTIONS, {
 						...q,
-						userId,
+						userId: null,
 					})
 					.then(() => q.id),
 			),
@@ -105,18 +95,10 @@ export async function POST(
 			// Dexie unavailable server-side
 		}
 
-		return NextResponse.json({
+		return {
 			success: true,
 			extracted: questions.length,
 			stored,
-		});
-	} catch (error) {
-		console.error("Extract error:", error);
-		return NextResponse.json(
-			{
-				error: error instanceof Error ? error.message : "Extraction failed",
-			},
-			{ status: 500 },
-		);
-	}
-}
+		};
+	},
+});
