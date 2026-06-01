@@ -278,11 +278,14 @@ export function StudyPlanOverview() {
 			</CardHeader>
 			<CardContent className="flex flex-col gap-2">
 				{stale && !dismissedStale && !showForm && (
-					<div className="flex items-center justify-between gap-2 rounded-xl bg-amber-50 px-3 py-2 text-amber-800 dark:bg-amber-950/40 dark:text-amber-200">
+					<div className="flex items-center justify-between gap-2 rounded-xl bg-warning/10 px-3 py-2 text-foreground dark:bg-warning/15">
 						<div className="flex items-center gap-2 text-xs">
-							<HugeiconsIcon icon={RefreshIcon} className="size-3.5 shrink-0" />
+							<HugeiconsIcon
+								icon={RefreshIcon}
+								className="size-3.5 shrink-0 text-warning"
+							/>
 							<span>
-								Your scores have changed — consider regenerating your plan.
+								Your scores have changed, consider regenerating your plan.
 							</span>
 						</div>
 						<div className="flex shrink-0 items-center gap-1">
@@ -296,7 +299,7 @@ export function StudyPlanOverview() {
 							</Button>
 							<button
 								type="button"
-								className="text-amber-600 hover:text-amber-800 dark:text-amber-400 dark:hover:text-amber-200"
+								className="text-muted-foreground hover:text-foreground"
 								onClick={() => setDismissedStale(true)}
 								aria-label="Dismiss"
 							>

@@ -85,7 +85,7 @@ export function DailyChallenges() {
 													style={{ width: `${Math.min(progress, 100)}%` }}
 												/>
 											</div>
-											<span className="font-medium text-[10px] text-muted-foreground tabular-nums">
+											<span className="font-medium text-muted-foreground text-xs tabular-nums">
 												{challenge.progress}/{challenge.target}
 											</span>
 										</div>

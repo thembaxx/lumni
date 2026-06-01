@@ -8,10 +8,9 @@ import { iOSEase } from "@/lib/utils/animation";
 
 const rarityColors: Record<string, string> = {
 	common: "bg-muted text-muted-foreground",
-	rare: "bg-blue-500/10 text-blue-500 dark:bg-blue-400/10 dark:text-blue-300",
-	epic: "bg-purple-500/10 text-purple-500 dark:bg-purple-400/10 dark:text-purple-300",
-	legendary:
-		"bg-amber-500/10 text-amber-500 dark:bg-amber-400/10 dark:text-amber-300",
+	rare: "bg-info/10 text-info",
+	epic: "bg-success/10 text-success",
+	legendary: "bg-warning/10 text-warning",
 };
 
 export function AchievementShowcase() {

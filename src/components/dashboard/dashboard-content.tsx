@@ -188,9 +188,9 @@ export function DashboardContent({
 			<PageContainer className="gap-8 pb-16">
 				{activeTab === "today" && <HeroBanner />}
 				{activeTab === "today" && boltDone && (
-					<div className="flex items-center gap-2 rounded-xl border border-amber-500/20 bg-amber-500/5 px-3 py-2">
-						<HugeiconsIcon icon={Lightning} className="size-4 text-amber-500" />
-						<span className="font-medium text-amber-600 text-xs dark:text-amber-400">
+					<div className="flex items-center gap-2 rounded-xl border border-warning/20 bg-warning/5 px-3 py-2">
+						<HugeiconsIcon icon={Lightning} className="size-4 text-warning" />
+						<span className="font-medium text-warning text-xs">
 							Today's Bolt complete
 						</span>
 					</div>
@@ -303,7 +303,9 @@ export function DashboardContent({
 				{showAnalytics && !isAnonymous && (
 					<SectionReveal delay={0.19}>
 						<Card className="flex flex-col gap-4 p-4">
-							<h2 className="font-semibold text-sm">Mastery Heatmap</h2>
+							<h2 className="font-extrabold text-base tracking-tight">
+								Mastery Heatmap
+							</h2>
 							<MasteryHeatmap />
 						</Card>
 					</SectionReveal>

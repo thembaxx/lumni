@@ -361,10 +361,10 @@ export function CountdownHeader() {
 							)}
 							{!_sessionLoading && mounted && (
 								<div>
-									<p className="font-medium text-[12px] text-muted-foreground tabular-nums">
+									<p className="font-medium text-muted-foreground text-xs tabular-nums">
 										{daysLeft === 1 ? "day" : "days"}
 									</p>
-									<p className="font-extrabold text-[12px] text-muted-foreground tabular-nums">
+									<p className="font-extrabold text-muted-foreground text-xs tabular-nums">
 										until finals
 									</p>
 								</div>
@@ -444,7 +444,7 @@ export function CountdownHeader() {
 				style={{ viewTransitionName: "countdown-compact" }}
 			>
 				<div className="mx-auto flex max-w-md items-center gap-3">
-					<span className="font-extrabold text-[13px] text-foreground/70">
+					<span className="font-extrabold text-foreground/70 text-xs">
 						{greeting}
 						{isLoggedIn && name ? `, ${firstName}` : ""}
 					</span>
@@ -452,7 +452,7 @@ export function CountdownHeader() {
 						<span className="font-extrabold text-lg text-system-accent tabular-nums">
 							{daysLeft}
 						</span>
-						<span className="font-medium text-[11px] text-muted-foreground">
+						<span className="font-medium text-muted-foreground text-xs">
 							{daysLeft === 1 ? "day" : "days"}
 						</span>
 					</span>

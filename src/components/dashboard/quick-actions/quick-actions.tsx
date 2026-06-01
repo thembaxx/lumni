@@ -70,13 +70,7 @@ function ActionButton({
 				variant="secondary"
 				className="h-11 justify-start gap-2.5 rounded-card-lg border border-border/80 bg-system-background-secondary px-5 text-foreground hover:border-accent hover:bg-accent"
 			>
-				<m.span
-					whileHover={
-						finalShouldReduceMotion ? {} : { rotate: [0, -10, 10, 0] }
-					}
-					transition={{ duration: 0.4, ease: iOSEase }}
-					className="text-accent"
-				>
+				<span className="text-accent">
 					<PerpetualFloat floatRange={1.5} speed={3}>
 						<HugeiconsIcon
 							icon={icon}
@@ -85,7 +79,7 @@ function ActionButton({
 							aria-hidden="true"
 						/>
 					</PerpetualFloat>
-				</m.span>
+				</span>
 				<span className="font-medium text-sm">{label}</span>
 			</Button>
 		</m.div>

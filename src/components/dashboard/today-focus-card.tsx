@@ -154,10 +154,10 @@ export function TodayFocusCard() {
 							/>
 						</div>
 						<div className="flex flex-col gap-0.5">
-							<span className="block font-extrabold text-[13px] text-foreground tracking-tight">
+							<span className="block font-extrabold text-foreground text-sm tracking-tight">
 								Today&apos;s Focus
 							</span>
-							<span className={`font-medium text-[12px] ${cfg.iconColor}`}>
+							<span className={`font-medium text-xs ${cfg.iconColor}`}>
 								{cfg.tag}
 							</span>
 						</div>
@@ -165,7 +165,7 @@ export function TodayFocusCard() {
 
 					<div className="flex flex-col gap-4">
 						<div className="flex items-center justify-between gap-2">
-							<p className="font-semibold text-[13px] text-primary">
+							<p className="font-semibold text-primary text-sm">
 								{subjectName}
 							</p>
 							<SubjectsDrawer
@@ -174,7 +174,7 @@ export function TodayFocusCard() {
 									if (found) setSelectedSubjectId(found.id);
 								}}
 							>
-								<div className="-m-2 flex cursor-pointer items-center rounded-sm border p-2 py-1 pr-1.5 pl-2 font-medium text-[12px] text-muted-foreground transition-colors hover:text-foreground">
+								<div className="-m-2 flex cursor-pointer items-center rounded-sm border p-2 py-1 pr-1.5 pl-2 font-medium text-muted-foreground text-xs transition-colors hover:text-foreground">
 									Change subject
 									<HugeiconsIcon
 										icon={ArrowDown01Icon}
@@ -195,7 +195,7 @@ export function TodayFocusCard() {
 					<Button
 						size="sm"
 						variant="secondary"
-						className="w-full bg-system-fill font-extrabold text-[13px] hover:opacity-90"
+						className="w-full bg-system-fill font-extrabold text-sm hover:opacity-90"
 						onClick={handleStart}
 						disabled={showSuccess}
 					>

@@ -93,7 +93,7 @@ function StatCard({
 							shouldReduceMotion={shouldReduceMotion}
 						/>
 					</p>
-					<p className="font-extrabold text-[11px] text-muted-foreground uppercase leading-tight tracking-wider">
+					<p className="font-extrabold text-muted-foreground text-xs uppercase leading-tight tracking-wider">
 						{label}
 					</p>
 				</CardContent>
@@ -113,8 +113,8 @@ export function StatsCards({ questionsAnswered, accuracy }: StatsCardsProps) {
 					label: "Questions",
 					value: questionsAnswered,
 					icon: Target01Icon,
-					colorClass: "text-purple-600 dark:text-purple-400",
-					accentClass: "hover:text-purple-400/80",
+					colorClass: "text-info",
+					accentClass: "hover:text-info/80",
 					index: 0,
 				},
 				{
