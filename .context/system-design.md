@@ -1,4 +1,4 @@
-<!-- LAST_SYNC: 2026-06-01 -->
+<!-- LAST_SYNC: 2025-01-24 -->
 # System Design — Lumni
 
 ## Overview & Goals
@@ -41,39 +41,34 @@ graph TD
 2. **Offline Practice**: `QuizPackService` enables bulk generation and storage in `quizPacks`/`packQuestions` Dexie tables for offline-first access.
 3. **Question Processing**: Grading (local/AI) is orchestrated by `LearningOrchestrator`, which enqueues sync and progress jobs via `QueueCore`.
 4. **Competency tracking**: Progress is assessed via `trackQuestionResult()`, updating the local `competency` table and syncing to Appwrite `competencies` collection.
-5. **Monetization**: `PremiumProvider` gates features (offline packs, advanced analytics) based on Appwrite `premium_subscriptions`.
-6. **B2B2C Flows**: Teachers manage assignments via `teacher_assignments`; parents monitor progress via `ParentShell`.
-7. **Observability**: `latency-tracker` monitors AI performance; `events.ts` tracks usage events.
+5. **Monetization**: `PremiumProvider` gates features (offline packs, advanced analytics, visual engine) based on Appwrite `premium_subscriptions`. Stripe and Payfast are integrated for checkout.
+6. **B2B2C Flows**: Teachers manage assignments via `teacher_assignments`; parents monitor progress via `ParentShell`. Student-teacher linking is handled via `teacher_students`.
+7. **Observability**: `latency-tracker` monitors AI performance; `events.ts` tracks usage events. Dashboard available at `/admin/observability`.
 
 ## Tech Stack
-- **Frontend**: Next.js 16.2.6, React 19.2.6, Tailwind CSS 4, Framer Motion 12.
-- **Persistence**: Dexie 4 (IndexedDB, v23 schema), Appwrite Cloud, sql.js (SQLite).
+- **Framework**: Next.js 16.2.6, React 19.2.6, Tailwind CSS 4, Framer Motion 12.
+- **Persistence**: Dexie 4 (IndexedDB, v24 schema), Appwrite Cloud, sql.js (SQLite).
 - **AI/ML**: Gemini 2.0 Flash Lite (Primary), Nvidia NIM (Fallback), Groq Cloud (Last resort).
 - **Visualization**: Konva (STEM diagrams), Mermaid.js, Recharts 3.
 - **Verification**: Playwright (E2E), Storybook (UI), Bun (Tests).
 
 ## Key Abstractions
 - **QuestionEngine**: Single source of truth for generation/grading/validation of 11 question types.
-- **FlashcardEngine**: Unified SM-2/FSRS engine wrapping repository, limits, and recovery logic.
+- **FlashcardEngine**: Unified SM-2/FSRS engine wrapping repository, limits, and recovery logic in `src/lib/flashcard-engine/`.
 - **LearningOrchestrator**: Orchestrates engines and manages side effects (sync, analytics, jobs).
-- **createRouteHandler**: Declarative factory for API routes with auth and Zod validation.
+- **createRouteHandler**: Declarative factory for API routes with auth and Zod validation in `src/lib/api/create-route-handler.ts`.
 - **ImmersiveMode**: Context-driven UI state for focus (auto-hides nav bars).
-- **SwipeableCardDeck**: Tinder-style interaction for spaced-repetition flashcards.
+- **SwipeableCardDeck**: Tinder-style interaction for spaced-repetition flashcards with quality fine-tuning.
 
 ## External Integrations
 - **Appwrite**: Authentication, Database, Storage.
 - **AI Providers**: Google Gemini, Nvidia NIM, Groq Cloud.
 - **Payments**: Stripe, Payfast.
 - **UploadThing**: Document and avatar storage.
+- **Sentry**: Error tracking and observability.
 
 ## Current Limitations & TODOs
 - **Mock exam mode**: Past-paper simulation is still in development.
 - **OCR text extraction**: Official PDF timetables require OCR for automated ingestion.
-- **Comparative analytics**: Scaling depends on cross-user data aggregation in Appwrite.
+- **WhatsApp Nudges**: Externally blocked by Meta Business verification.
 - **Rate limiting**: Current implementation is in-memory; requires Redis for multi-instance.
-
-## Recent Changes Log (Last 7 Days)
-- Initialized Context Layer with 6-file protocol.
-- Deployed Swipeable Card Deck for flashcards.
-- Activated Full-Screen Immersive Mode for active sessions.
-- Consolidated Spaced Repetition logic.

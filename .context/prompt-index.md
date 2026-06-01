@@ -1,4 +1,4 @@
-<!-- LAST_SYNC: 2026-05-31 -->
+<!-- LAST_SYNC: 2025-01-24 -->
 # Prompt Index — Lumni
 
 | ID | Category | Prompt Name | File Path | Purpose | Key Variables | When to Use | Status |
@@ -17,6 +17,10 @@
 | P012 | Protocol | `context-aware-prompt-protocol` | `README.md` | Prepend header to ensure agent loads context layer | TOPIC_OF_THIS_PROMPT | Starting any new task/chat | [active][system] |
 | P013 | Spec | `spec-exam-dates` | `SPEC.md` | National Exam Dates Tracker spec | N/A | Modifying exam dates logic | [active][spec] |
 | P014 | Protocol | `daily-context-sync` | `README.md` | Protocol for daily maintenance of context layer | N/A | Once per day | [active][system] |
+| P015 | Spec | `spec-monetization` | `docs/superpowers/specs/2026-05-27-monetization-end-to-end.md` | Full Stripe/Payfast integration | N/A | Working on payments | [active][spec] |
+| P016 | Spec | `spec-swipeable-cards` | `docs/superpowers/specs/2026-05-27-swipeable-cards-design.md` | Tinder-style flashcards design | N/A | Working on flashcards | [active][spec] |
+| P017 | Spec | `spec-fullscreen-quiz` | `docs/superpowers/specs/2026-05-28-fullscreen-quiz-mode-design.md` | Immersive mode design | N/A | Working on quiz/exam UI | [active][spec] |
+| P018 | Tool | `daily-maintenance` | `.context/prompts/daily-maintenance.md` | Instruction set for context maintenance | N/A | Performing daily sync protocol | [active][tool] |
 
 ## Key Variable Descriptions
 - `subject`: The educational subject (e.g., mathematics, physical-sciences).

@@ -1,4 +1,4 @@
-<!-- LAST_SYNC: 2026-06-01 -->
+<!-- LAST_SYNC: 2025-01-24 -->
 # Repository Index — Lumni
 
 ## Core Directory Structure
@@ -10,59 +10,83 @@
 ├── scripts/              # Build and utility scripts
 ├── src/
 │   ├── app/              # Next.js App Router (pages & API)
-│   │   ├── [locale]/     # L10n-aware routes (dashboard, quiz, exam, flashcards)
-│   │   └── api/          # REST API (engine, auth, sync, jobs)
 │   ├── components/       # React components
-│   │   ├── ui/           # Shadcn-based design system primitives
-│   │   ├── quiz/         # Question cards and STEM diagram renderers
-│   │   ├── flashcard/    # Swipeable deck and SM-2 quality picker
-│   │   └── dashboard/    # Student/Teacher/Parent analytics and focus tools
 │   ├── lib/              # Core business logic and Engines
-│   │   ├── question-engine/ # Question gen, grading (11 types), validation
-│   │   ├── visual-engine/   # Diagram gen (Konva/STEM) or Wiki (Non-STEM)
-│   │   ├── flashcard-engine/# Unified SM-2/FSRS spaced-repetition logic
-│   │   └── orchestrator/    # Orchestration of engines and background jobs
-│   ├── hooks/            # Shared React hooks (useQuestionEngine, useAuth)
-│   └── store/            # Zustand stores for client-side state
+│   ├── hooks/            # Shared React hooks
+│   └── store/            # Zustand stores
 └── e2e/                  # Playwright E2E test suites
 ```
 
-## Key Configuration Files
-- `package.json`: Project dependencies (Next.js 16, React 19) and scripts.
-- `bunfig.toml`: Bun runtime configuration (test setup, happy-dom).
-- `biome.json`: Biome linting and formatting rules.
-- `tsconfig.json`: TypeScript configuration (strict mode, path aliases).
-- `next.config.ts`: Next.js configuration and build-time flags.
-- `playwright.config.ts`: E2E test suite configuration.
+## Recent Churn (Summary from TODO.md)
+- WCAG 2.2 AA Accessibility Audit and fixes (10+ critical items).
+- Test suite hardening (1109 passing tests).
+- B2B2C Dashboard wiring (Teacher/Parent portals).
+- Premium gating for Offline Quiz Packs and Visual Engine.
+- Photo Math integration with Snap-to-Answer event bus.
+- Mega-component decomposition for Profile, OTP, Periodic Table, and AI Solver.
+- Appwrite SA Region migration configuration.
 
-## Module Map
-| Module | Purpose |
-|--------|---------|
-| `src/lib/question-engine/` | Single source of truth for generation and grading of 11 question types. |
-| `src/lib/visual-engine/` | Manages STEM diagrams (Konva) and non-STEM visuals (Wikimedia). |
-| `src/lib/flashcard-engine/` | Unified SM-2/FSRS engine with daily limits and leech detection. |
-| `src/lib/orchestrator/` | Coordinates engines, job queues, and progress tracking. |
-| `src/lib/quiz-packs/` | Offline AI quiz pack generation and Dexie persistence. |
-| `src/lib/db/` | Dexie L1 cache schema (v23) and repository access layers. |
-| `src/lib/api/` | Generic route handler factory (`createRouteHandler`). |
-
-## Dependency Graph
-- **Framework**: `next` (v16.2.6), `react` (v19.2.6)
-- **Styling**: `tailwindcss` (v4), `framer-motion` (v12)
-- **Persistence**: `dexie` (L1), `appwrite` (L2)
-- **AI Providers**: `Gemini` (Primary), `Nvidia NIM` (Fallback), `Groq` (Last resort)
-- **Math**: `katex` via `remark-math` and `rehype-katex`
-- **Diagrams**: `konva` (Canvas), `mermaid` (SVG)
-
-## Entry Points
-- `src/app/[locale]/page.tsx`: Main dashboard / Study feed.
-- `src/app/api/engine/generate/route.ts`: Question generation endpoint.
-- `src/lib/orchestrator/index.ts`: Learning orchestration entry point.
-- `src/instrumentation.ts`: Sentry and observability initialization.
-
-## Recent Changes (Last 7 Days)
-- Implemented Swipeable Flashcard Deck (Tinder-style interaction).
-- Activated Full-Screen Immersive Mode for Quiz and Exams.
-- Unified Spaced Repetition logic into `FlashcardEngine`.
-- Introduced `createRouteHandler` factory for API standardization.
-- Fixed Competency Sync field mismatch (`score` vs `proficiency`).
+## Path-Only Index
+./src/app/[locale]/layout.tsx
+./src/app/[locale]/page.tsx
+./src/app/[locale]/globals.css
+./src/app/[locale]/quiz/page.tsx
+./src/app/[locale]/quiz/layout.tsx
+./src/app/[locale]/quiz/[id]/page.tsx
+./src/app/[locale]/flashcards/page.tsx
+./src/app/[locale]/flashcards/layout.tsx
+./src/app/[locale]/exam/page.tsx
+./src/app/[locale]/exam/[id]/page.tsx
+./src/app/[locale]/exam/layout.tsx
+./src/app/[locale]/dashboard/page.tsx
+./src/app/[locale]/dashboard/layout.tsx
+./src/app/[locale]/dashboard/student/page.tsx
+./src/app/[locale]/dashboard/teacher/page.tsx
+./src/app/[locale]/dashboard/parent/page.tsx
+./src/app/[locale]/settings/page.tsx
+./src/app/[locale]/settings/layout.tsx
+./src/app/api/engine/generate/route.ts
+./src/app/api/engine/grade/route.ts
+./src/app/api/engine/visual/route.ts
+./src/app/api/quiz-packs/generate/route.ts
+./src/app/api/stripe/webhook/route.ts
+./src/app/api/premium/verify/route.ts
+./src/app/api/student/assignments/route.ts
+./src/components/ui/button.tsx
+./src/components/ui/card.tsx
+./src/components/ui/dialog.tsx
+./src/components/quiz/question-card.tsx
+./src/components/quiz/diagrams/geometry.tsx
+./src/components/quiz/diagrams/chart.tsx
+./src/components/quiz/diagrams/chemistry.tsx
+./src/components/quiz/diagrams/graph.tsx
+./src/components/flashcard/swipeable-card-deck.tsx
+./src/components/flashcard/swipeable-card.tsx
+./src/components/flashcard/quality-picker.tsx
+./src/components/dashboard/offline-packs.tsx
+./src/components/shared/immersive-mode.tsx
+./src/lib/question-engine/index.ts
+./src/lib/question-engine/types.ts
+./src/lib/visual-engine/index.ts
+./src/lib/flashcard-engine/index.ts
+./src/lib/orchestrator/index.ts
+./src/lib/quiz-packs/service.ts
+./src/lib/db/index.ts
+./src/lib/api/create-route-handler.ts
+./src/lib/observability/events.ts
+./src/lib/ai/latency-tracker.ts
+./src/hooks/use-question-engine.ts
+./src/hooks/use-visual-engine.ts
+./src/hooks/use-swipe-deck.ts
+./src/hooks/use-snap-answer.ts
+./package.json
+./bunfig.toml
+./biome.json
+./tsconfig.json
+./next.config.ts
+./TODO.md
+./AGENTS.md
+./CONTEXT.md
+./DESIGN.md
+./SPEC.md
+./CLAUDE.md
