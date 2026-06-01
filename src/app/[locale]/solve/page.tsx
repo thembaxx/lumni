@@ -8,8 +8,8 @@ import { AiSolver } from "@/components/tools/communication/ai-solver";
 import { Skeleton } from "@/components/ui/skeleton";
 
 function SolveContent() {
-	const { get } = useSearchParams();
-	const initialQuestion = get("question") ?? undefined;
+	const searchParams = useSearchParams();
+	const initialQuestion = searchParams.get("question") ?? undefined;
 
 	return (
 		<div className="flex flex-col gap-6">

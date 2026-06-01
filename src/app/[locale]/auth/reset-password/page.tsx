@@ -65,9 +65,9 @@ function resetPasswordReducer(
 
 function ResetPasswordForm() {
 	const { push } = useRouter();
-	const { get } = useSearchParams();
-	const userId = get("userId");
-	const secret = get("secret");
+	const searchParams = useSearchParams();
+	const userId = searchParams.get("userId");
+	const secret = searchParams.get("secret");
 
 	const [state, dispatch] = useReducer(resetPasswordReducer, initialState);
 	const { password, confirmPassword, showPassword, error, loading, success } =

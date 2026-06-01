@@ -75,8 +75,8 @@ function signInReducer(state: SignInState, action: SignInAction): SignInState {
 
 function SignInForm() {
 	const { push, refresh } = useRouter();
-	const { get } = useSearchParams();
-	const redirect = safeRedirect(get("redirect"));
+	const searchParams = useSearchParams();
+	const redirect = safeRedirect(searchParams.get("redirect"));
 	const { signIn, signInWithMagicLink, error } = useAuth();
 
 	const [state, dispatch] = useReducer(signInReducer, initialState);
