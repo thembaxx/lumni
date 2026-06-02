@@ -11,7 +11,7 @@ export default function AdminError({
 		<div className="flex min-h-[60vh] flex-col items-center justify-center gap-4 p-8">
 			<h2 className="font-semibold text-xl">Admin error</h2>
 			<p className="max-w-md text-center text-muted-foreground text-sm">
-				{error.message || "Something went wrong in the admin panel."}
+				{error?.message || "Something went wrong in the admin panel."}
 			</p>
 			<button
 				type="button"

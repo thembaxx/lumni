@@ -14,7 +14,7 @@ export default function ExamError({
 		<div className="flex min-h-[60vh] flex-col items-center justify-center gap-4 p-8">
 			<h2 className="font-semibold text-xl">{t("exam.errorTitle")}</h2>
 			<p className="max-w-md text-center text-muted-foreground text-sm">
-				{error.message || t("exam.errorDesc")}
+				{error?.message || t("exam.errorDesc")}
 			</p>
 			<button
 				type="button"

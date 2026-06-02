@@ -1,13 +1,13 @@
-const CACHE_NAME = 'lumni-v1';
-const RUNTIME_CACHE = 'lumni-runtime';
+const CACHE_VERSION = 'v3';
+const CACHE_NAME = `lumni-static-${CACHE_VERSION}`;
+const RUNTIME_CACHE = `lumni-runtime-${CACHE_VERSION}`;
+const HTML_CACHE = `lumni-html-${CACHE_VERSION}`;
 
 const STATIC_ASSETS = [
   '/manifest.json',
   '/web-app-manifest-192x192.png',
   '/web-app-manifest-512x512.png',
 ];
-
-const API_CACHE_DURATION = 5 * 60 * 1000;
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -25,48 +25,88 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('activate', (event) => {
+  const keep = new Set([CACHE_NAME, RUNTIME_CACHE, HTML_CACHE]);
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.flatMap((name) =>
-          name !== CACHE_NAME && name !== RUNTIME_CACHE ? [caches.delete(name)] : [],
-        )
-      );
-    })
+    caches.keys().then((cacheNames) =>
+      Promise.all(
+        cacheNames.flatMap((name) => (keep.has(name) ? [] : [caches.delete(name)])),
+      ),
+    ),
   );
   self.clients.claim();
 });
 
+function isBuildArtifact(url) {
+  return (
+    url.pathname.startsWith('/_next/static/') ||
+    url.pathname.startsWith('/_next/data/') ||
+    url.pathname.startsWith('/_next/image') ||
+    url.pathname === '/sw.js'
+  );
+}
+
+function isHtmlNavigation(request, url) {
+  if (request.mode === 'navigate') return true;
+  const accept = request.headers.get('accept') || '';
+  if (accept.includes('text/html')) return true;
+  return /\.(html)$/i.test(url.pathname);
+}
+
 self.addEventListener('fetch', (event) => {
   const { request } = event;
-  const url = new URL(request.url);
 
   if (request.method !== 'GET') return;
+
+  const url = new URL(request.url);
+
+  if (url.origin !== location.origin) return;
+
+  // Build artifacts (JS/CSS chunks, RSC payloads, optimized images): pass through.
+  // Browser HTTP cache + Vercel's immutable headers handle these correctly and
+  // we must NEVER serve stale hashed chunks across deployments.
+  if (isBuildArtifact(url)) return;
 
   if (url.pathname.startsWith('/api/')) {
     event.respondWith(networkFirst(request, RUNTIME_CACHE));
     return;
   }
 
-  if (url.origin === location.origin) {
-    event.respondWith(cacheFirst(request, CACHE_NAME));
+  if (isHtmlNavigation(request, url)) {
+    event.respondWith(networkFirstHtml(request));
+    return;
   }
+
+  event.respondWith(staleWhileRevalidate(request, CACHE_NAME));
 });
 
-async function cacheFirst(request, cacheName) {
-  const cached = await caches.match(request);
-  if (cached) return cached;
-
+async function networkFirstHtml(request) {
   try {
     const response = await fetch(request);
-    if (response.ok) {
-      const cache = await caches.open(cacheName);
+    if (response && response.ok) {
+      const cache = await caches.open(HTML_CACHE);
       cache.put(request, response.clone());
     }
     return response;
-  } catch (error) {
-    return caches.match('/_offline') || new Response('Offline', { status: 503 });
+  } catch (_error) {
+    const cached = await caches.match(request, { ignoreSearch: true });
+    if (cached) return cached;
+    const offline = await caches.match('/_offline');
+    return offline || new Response('Offline', { status: 503, headers: { 'Content-Type': 'text/plain' } });
   }
+}
+
+async function staleWhileRevalidate(request, cacheName) {
+  const cache = await caches.open(cacheName);
+  const cached = await cache.match(request);
+  const networkPromise = fetch(request)
+    .then((response) => {
+      if (response && response.ok) {
+        cache.put(request, response.clone()).catch(() => {});
+      }
+      return response;
+    })
+    .catch(() => cached);
+  return cached || networkPromise;
 }
 
 async function networkFirst(request, cacheName) {
@@ -77,7 +117,7 @@ async function networkFirst(request, cacheName) {
       cache.put(request, response.clone());
     }
     return response;
-  } catch (error) {
+  } catch (_error) {
     const cached = await caches.match(request);
     if (cached) return cached;
     return new Response(JSON.stringify({ error: 'Offline', cached: false }), {
@@ -150,5 +190,11 @@ self.addEventListener('message', (event) => {
       });
       cache.put(`/api/questions?subject=${subject}`, response);
     });
+  }
+
+  if (event.data?.type === 'CLEAR_ALL_CACHES') {
+    event.waitUntil(
+      caches.keys().then((names) => Promise.all(names.map((n) => caches.delete(n)))),
+    );
   }
 });

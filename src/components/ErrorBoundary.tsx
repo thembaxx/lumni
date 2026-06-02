@@ -57,7 +57,7 @@ const ErrorFallback: ComponentType<{
 		<div className="flex min-h-[20rem] flex-col items-center justify-center p-6">
 			<h2 className="mb-4 text-foreground text-xl">Something went wrong.</h2>
 			<p className="mb-6 max-w-xl text-center text-muted-foreground">
-				{error.message}
+				{error?.message ?? "An unexpected error occurred."}
 			</p>
 			<button type="button" onClick={resetError} className="btn btn-primary">
 				Try again
