@@ -210,7 +210,7 @@ export default function AdminGamificationPage() {
 								</span>
 								<Badge
 									variant="outline"
-									className={cn("font-mono text-[10px]")}
+									className={cn("ios-caption-3 font-mono")}
 								>
 									Lvl {user.level}
 								</Badge>
@@ -250,7 +250,7 @@ export default function AdminGamificationPage() {
 								<Badge
 									variant="outline"
 									className={cn(
-										"font-mono text-[10px]",
+										"ios-caption-3 font-mono",
 										a.rarity === "legendary"
 											? "border-yellow-500 text-yellow-500 dark:border-yellow-400 dark:text-yellow-400"
 											: a.rarity === "epic"

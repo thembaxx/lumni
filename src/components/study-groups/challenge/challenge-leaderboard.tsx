@@ -57,7 +57,7 @@ export function ChallengeLeaderboard({
 						<p className="font-bold text-sm">
 							{Math.round(entry.combinedScore)}
 						</p>
-						<p className="text-[10px] text-muted-foreground">pts</p>
+						<p className="ios-caption-3 text-muted-foreground">pts</p>
 					</div>
 				</div>
 			))}

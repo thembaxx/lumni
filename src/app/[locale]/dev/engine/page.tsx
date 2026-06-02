@@ -303,7 +303,7 @@ export default function DevEnginePage() {
 							<Textarea
 								value={state.rawJson}
 								readOnly
-								className="min-h-[200px] font-mono text-xs"
+								className="min-h-48 font-mono text-xs"
 							/>
 						</div>
 					</div>

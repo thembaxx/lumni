@@ -169,7 +169,9 @@ export default function PremiumPage() {
 								)}
 							>
 								R999 / yr
-								<span className="ml-1 text-[10px] opacity-80">(save 16%)</span>
+								<span className="ios-caption-3 ml-1 opacity-80">
+									(save 16%)
+								</span>
 							</button>
 						</div>
 					)}

@@ -143,12 +143,12 @@ export function SwipeableCard({
 
 						<div className="mb-4 flex items-center gap-2">
 							{topic && (
-								<span className="rounded-md bg-[--system-accent]/10 px-2 py-0.5 font-medium text-[--system-accent] text-[11px]">
+								<span className="ios-caption-2 rounded-md bg-(--system-accent-alpha-10) px-2 py-0.5 font-medium text-[--system-accent]">
 									{topic}
 								</span>
 							)}
 							{difficulty && (
-								<span className="rounded-md bg-muted px-2 py-0.5 font-mono text-[11px] text-muted-foreground">
+								<span className="ios-caption-2 rounded-md bg-muted px-2 py-0.5 font-mono text-muted-foreground">
 									{difficulty}
 								</span>
 							)}
@@ -192,9 +192,7 @@ export function SwipeableCard({
 
 						{hint && (
 							<div className="mt-4 rounded-lg bg-warning/10 p-3 dark:bg-warning/20">
-								<p className="text-amber-700 text-xs dark:text-amber-300">
-									Hint: {hint}
-								</p>
+								<p className="text-warning text-xs">Hint: {hint}</p>
 							</div>
 						)}
 

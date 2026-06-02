@@ -5,6 +5,7 @@ export interface ElementCategoryConfig {
 	rgb: string;
 }
 
+// Deliberate design choice: glow effects for element category visualization
 export const elementCategoryConfig: Record<string, ElementCategoryConfig> = {
 	"alkali-metal": {
 		bg: "bg-destructive/90",

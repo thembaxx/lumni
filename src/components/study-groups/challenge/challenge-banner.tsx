@@ -55,7 +55,7 @@ export function ChallengeBanner({ challenge, entries }: Props) {
 				</div>
 				<div className="text-right">
 					<p className="font-bold text-lg">{memberCount}</p>
-					<p className="text-[10px] text-muted-foreground leading-tight">
+					<p className="ios-caption-3 text-muted-foreground leading-tight">
 						members
 					</p>
 				</div>

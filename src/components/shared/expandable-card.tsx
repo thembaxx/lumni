@@ -77,7 +77,7 @@ function CardOverlay({
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
 					exit={{ opacity: 0 }}
-					className="fixed inset-0 z-modal bg-black/40 backdrop-blur-sm"
+					className="fixed inset-0 z-modal bg-black/60"
 					onClick={onClose}
 					role="presentation"
 				/>
@@ -111,7 +111,7 @@ function ExpandedContent({
 			layoutId={`card-${data.id}`}
 			className="fixed top-1/2 left-1/2 z-modal w-[calc(100%-2rem)] max-w-sm -translate-x-1/2 -translate-y-1/2"
 		>
-			<div className="max-h-[80dvh] overflow-hidden overflow-y-auto rounded-2xl rounded-card-lg border border-border/80 bg-card bg-card p-4 text-card-foreground shadow-2xl shadow-black/20 transition-colors">
+			<div className="max-h-dvh overflow-hidden overflow-y-auto rounded-2xl rounded-card-lg border border-border/80 bg-card bg-card p-4 text-card-foreground shadow-2xl shadow-black/20 transition-colors">
 				<div className="flex flex-col gap-3">
 					<div className="flex items-start justify-between">
 						<Badge

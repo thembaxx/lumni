@@ -63,7 +63,7 @@ export function ResultsSearch() {
 					/>
 					Results Search
 					{isDemoData && (
-						<Badge variant="outline" className="text-[10px]">
+						<Badge variant="outline" className="ios-caption-3">
 							Demo data
 						</Badge>
 					)}

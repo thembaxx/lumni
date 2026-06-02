@@ -66,7 +66,7 @@ export function SuccessBadge({ isAdmin }: { isAdmin: boolean }) {
 				<Badge
 					variant={isAdmin ? "default" : "secondary"}
 					className={cn(
-						"gap-1 px-2 font-medium text-[10px]",
+						"ios-caption-3 gap-1 px-2 font-medium",
 						isAdmin && "bg-success/20 text-success-foreground",
 					)}
 				>

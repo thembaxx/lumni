@@ -2,7 +2,7 @@
 
 import { CloudDownloadIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { FadeIn } from "@/components/shared/fade-in";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -21,20 +21,27 @@ export function ExamCard({ exam }: ExamCardProps) {
 	const { push } = useRouter();
 	const [pdfOpen, setPdfOpen] = useState(false);
 	const [smartViewOpen, setSmartViewOpen] = useState(false);
+	const [viewDropdownOpen, setViewDropdownOpen] = useState(false);
+	const [practiceDropdownOpen, setPracticeDropdownOpen] = useState(false);
+	const viewDropdownRef = useRef<HTMLDivElement>(null);
+	const practiceDropdownRef = useRef<HTMLDivElement>(null);
 	const { cached, downloading, download, remove } = usePdfCache(exam.id);
 
 	const handleTakeExam = (e: React.MouseEvent) => {
 		e.stopPropagation();
+		setPracticeDropdownOpen(false);
 		push(`/exam/${exam.id}`);
 	};
 
 	const handleViewPdf = (e: React.MouseEvent) => {
 		e.stopPropagation();
+		setViewDropdownOpen(false);
 		setPdfOpen(true);
 	};
 
 	const handlePractice = (e: React.MouseEvent) => {
 		e.stopPropagation();
+		setPracticeDropdownOpen(false);
 		push(
 			`/quiz?subject=${encodeURIComponent(exam.subject ?? exam.title)}&count=10`,
 		);
@@ -66,10 +73,10 @@ export function ExamCard({ exam }: ExamCardProps) {
 						<Badge
 							variant="outline"
 							className={cn(
-								"px-1.5 py-0.5 text-[10px]",
+								"ios-caption-3 px-1.5 py-0.5",
 								exam.session === "november"
 									? "bg-success/15 text-success-foreground"
-									: "bg-[--system-accent]/10 text-muted-foreground",
+									: "bg-(--system-accent-alpha-10) text-muted-foreground",
 							)}
 						>
 							{exam.session === "november" ? "Nov" : "May"}
@@ -85,7 +92,7 @@ export function ExamCard({ exam }: ExamCardProps) {
 						{cached || exam.downloadedAt ? (
 							<Badge
 								variant="outline"
-								className="h-5 px-1.5 text-[9px] text-muted-foreground/70"
+								className="ios-caption-3 h-5 px-1.5 text-muted-foreground/70"
 							>
 								Saved
 							</Badge>
@@ -94,22 +101,85 @@ export function ExamCard({ exam }: ExamCardProps) {
 				</div>
 
 				<div className="flex flex-wrap items-center gap-1.5">
-					<Button variant="default" size="sm" onClick={handleViewPdf}>
-						View
-					</Button>
-					<Button
-						variant="outline"
-						size="sm"
-						onClick={() => setSmartViewOpen(true)}
-					>
-						Smart View
-					</Button>
-					<Button variant="secondary" size="sm" onClick={handlePractice}>
-						Practice
-					</Button>
-					<Button variant="default" size="sm" onClick={handleTakeExam}>
-						Take Exam
-					</Button>
+					<div ref={viewDropdownRef} className="relative">
+						<Button variant="default" size="sm" onClick={handleViewPdf}>
+							View
+						</Button>
+						<Button
+							variant="default"
+							size="icon-sm"
+							className="size-8"
+							onClick={(e) => {
+								e.stopPropagation();
+								setViewDropdownOpen((o) => !o);
+							}}
+						>
+							<span className="text-xs">▾</span>
+						</Button>
+						{viewDropdownOpen && (
+							<>
+								{/* biome-ignore lint/a11y/noStaticElementInteractions lint/a11y/useKeyWithClickEvents: backdrop overlay */}
+								<div
+									className="fixed inset-0 z-10"
+									onClick={(e) => {
+										e.stopPropagation();
+										setViewDropdownOpen(false);
+									}}
+								/>
+								<div className="absolute top-full right-0 z-20 mt-1 w-36 rounded-lg border border-border bg-card p-1 shadow-level-2">
+									<button
+										type="button"
+										className="flex w-full items-center rounded-md px-3 py-2 text-left text-sm hover:bg-muted"
+										onClick={() => {
+											setSmartViewOpen(true);
+											setViewDropdownOpen(false);
+										}}
+									>
+										Smart View
+									</button>
+								</div>
+							</>
+						)}
+					</div>
+
+					<div ref={practiceDropdownRef} className="relative">
+						<Button variant="secondary" size="sm" onClick={handlePractice}>
+							Practice
+						</Button>
+						<Button
+							variant="secondary"
+							size="icon-sm"
+							className="size-8"
+							onClick={(e) => {
+								e.stopPropagation();
+								setPracticeDropdownOpen((o) => !o);
+							}}
+						>
+							<span className="text-xs">▾</span>
+						</Button>
+						{practiceDropdownOpen && (
+							<>
+								{/* biome-ignore lint/a11y/noStaticElementInteractions lint/a11y/useKeyWithClickEvents: backdrop overlay */}
+								<div
+									className="fixed inset-0 z-10"
+									onClick={(e) => {
+										e.stopPropagation();
+										setPracticeDropdownOpen(false);
+									}}
+								/>
+								<div className="absolute top-full right-0 z-20 mt-1 w-36 rounded-lg border border-border bg-card p-1 shadow-level-2">
+									<button
+										type="button"
+										className="flex w-full items-center rounded-md px-3 py-2 text-left text-sm hover:bg-muted"
+										onClick={handleTakeExam}
+									>
+										Take Exam
+									</button>
+								</div>
+							</>
+						)}
+					</div>
+
 					<Button
 						variant="ghost"
 						size="icon"

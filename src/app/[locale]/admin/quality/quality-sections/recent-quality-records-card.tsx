@@ -44,7 +44,7 @@ export function RecentQualityRecordsCard({
 							>
 								<Badge
 									variant={r.isValid ? "secondary" : "destructive"}
-									className="px-1 py-0 text-[10px]"
+									className="ios-caption-3 px-1 py-0"
 								>
 									{r.validationScore}
 								</Badge>

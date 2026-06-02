@@ -157,7 +157,7 @@ export function MasteryHeatmap() {
 									return (
 										<tr key={topic} className="border-border/40 border-t">
 											<td
-												className="max-w-[160px] truncate p-2 font-medium text-sm"
+												className="max-w-40 truncate p-2 font-medium text-sm"
 												title={topic}
 											>
 												{topic}

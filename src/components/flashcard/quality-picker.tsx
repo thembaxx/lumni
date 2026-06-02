@@ -68,7 +68,7 @@ export function QualityPicker({
 						)}
 					>
 						<span className="font-medium">{q.label}</span>
-						<span className="text-[10px] opacity-60">{q.description}</span>
+						<span className="ios-caption-3 opacity-60">{q.description}</span>
 					</button>
 				))}
 			</div>

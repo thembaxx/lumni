@@ -228,27 +228,27 @@ export default function FlashcardBrowsePage() {
 												{card.back}
 											</div>
 											<div className="mt-2 flex flex-wrap gap-2">
-												<span className="rounded bg-primary/10 px-1.5 py-0.5 text-[10px] text-primary">
+												<span className="ios-caption-3 rounded bg-primary/10 px-1.5 py-0.5 text-primary">
 													{card.subject}
 												</span>
 												{card.topic && (
-													<span className="rounded bg-secondary/30 px-1.5 py-0.5 text-[10px] text-muted-foreground">
+													<span className="ios-caption-3 rounded bg-secondary/30 px-1.5 py-0.5 text-muted-foreground">
 														{card.topic}
 													</span>
 												)}
-												<span className="rounded bg-muted/30 px-1.5 py-0.5 text-[10px] text-muted-foreground">
+												<span className="ios-caption-3 rounded bg-muted/30 px-1.5 py-0.5 text-muted-foreground">
 													{t("flashcards.ease")}: {card.easeFactor.toFixed(1)}
 												</span>
-												<span className="rounded bg-muted/30 px-1.5 py-0.5 text-[10px] text-muted-foreground">
+												<span className="ios-caption-3 rounded bg-muted/30 px-1.5 py-0.5 text-muted-foreground">
 													{t("flashcards.interval")}: {card.interval}d
 												</span>
 												{card.nextReview > now ? (
-													<span className="rounded bg-green-500/10 px-1.5 py-0.5 text-[10px] text-green-600 dark:bg-green-400/10 dark:text-green-300">
+													<span className="ios-caption-3 rounded bg-green-500/10 px-1.5 py-0.5 text-green-600 dark:bg-green-400/10 dark:text-green-300">
 														{t("flashcards.dueLabel")}{" "}
 														{new Date(card.nextReview).toLocaleDateString()}
 													</span>
 												) : (
-													<span className="rounded bg-amber-500/10 px-1.5 py-0.5 text-[10px] text-amber-600 dark:bg-amber-400/10 dark:text-amber-300">
+													<span className="ios-caption-3 rounded bg-amber-500/10 px-1.5 py-0.5 text-amber-600 dark:bg-amber-400/10 dark:text-amber-300">
 														{t("flashcards.overdue")}
 													</span>
 												)}

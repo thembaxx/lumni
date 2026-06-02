@@ -79,12 +79,12 @@ export function FocusTimerCard() {
 						color="var(--system-accent)"
 						className="shrink-0"
 					>
-						<span className="font-extrabold font-mono text-[11px] tabular-nums tracking-tight">
+						<span className="ios-caption-2 font-extrabold font-mono tabular-nums tracking-tight">
 							{formatTime(timeLeft)}
 						</span>
 					</RadialChart>
 					<div>
-						<h3 className="font-semibold text-[12.8px]">Focus Timer</h3>
+						<h3 className="font-semibold text-xs">Focus Timer</h3>
 						<p className="text-muted-foreground text-xs">
 							{isRunning
 								? "Running…"

@@ -58,8 +58,10 @@ export function CommentCard({
 	return (
 		<div
 			className={cn(
-				"group border-[--system-border] border-l-2 pl-3",
-				depth === 0 && "border-transparent pl-0",
+				"group",
+				depth === 0
+					? "bg-transparent"
+					: "rounded-lg border border-[--system-border] bg-[--system-surface-secondary] p-3",
 			)}
 		>
 			<div className="flex items-start gap-2 py-2">

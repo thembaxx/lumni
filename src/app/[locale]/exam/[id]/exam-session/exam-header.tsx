@@ -43,7 +43,7 @@ export function ExamHeader({
 	const isMock = sessionMode === "mock";
 
 	return (
-		<header className="sticky top-0 z-sticky border-border border-b bg-background/80 backdrop-blur-xl">
+		<header className="sticky top-0 z-sticky border-border border-b bg-system-background/95">
 			<div className="mx-auto flex w-full max-w-5xl items-center justify-between px-4 py-3">
 				<div className="flex items-center gap-3">
 					<button

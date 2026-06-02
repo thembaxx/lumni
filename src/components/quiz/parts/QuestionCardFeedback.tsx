@@ -228,9 +228,9 @@ export function QuestionCardFeedback({
 						<div
 							key={`followup-${msg.content}`}
 							className={cn(
-								"max-w-[90%] rounded-xl px-4 py-3 text-sm",
+								"max-w-[calc(100%-2rem)] rounded-xl px-4 py-3 text-sm",
 								msg.role === "user"
-									? "ml-auto bg-[--system-accent]/10"
+									? "ml-auto bg-(--system-accent-alpha-10)"
 									: "mr-auto border border-border/50 bg-card",
 							)}
 						>
@@ -275,7 +275,7 @@ export function QuestionCardFeedback({
 								}}
 								aria-label="Follow-up question input"
 								placeholder={t("quiz.followUpPlaceholder")}
-								className="h-9 flex-1 rounded-lg border border-border bg-card px-3 text-base outline-none focus:border-[--system-accent]/40"
+								className="h-9 flex-1 rounded-lg border border-border bg-card px-3 text-base outline-none focus:border-(--system-accent-alpha-40)"
 							/>
 							<Button
 								variant="ghost"

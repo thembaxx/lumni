@@ -38,7 +38,7 @@ export function FullscreenDialog({
 			<DialogContent
 				showCloseButton={false}
 				className={cn(
-					"h-dvh max-h-dvh max-w-[100vw] gap-0 overflow-hidden rounded-none p-0",
+					"h-dvh max-h-dvh gap-0 overflow-hidden rounded-none p-0",
 					className,
 				)}
 			>
@@ -50,7 +50,7 @@ export function FullscreenDialog({
 						{badge && (
 							<Badge
 								variant="secondary"
-								className="shrink-0 px-1.5 text-[10px]"
+								className="ios-caption-3 shrink-0 px-1.5"
 							>
 								{badge}
 							</Badge>

@@ -64,7 +64,7 @@ export const ElementCard = memo(
 				whileTap={isActive ? { scale: 0.95 } : {}}
 				className={`relative flex flex-col items-center justify-center ${getBg(el.category)}rounded-2xl aspect-square cursor-pointer border border-white/10 p-2 dark:border-white/20`}
 			>
-				<span className="absolute top-1.5 left-2 font-extrabold text-[10px] tabular-nums opacity-50">
+				<span className="ios-caption-3 absolute top-1.5 left-2 font-extrabold tabular-nums opacity-50">
 					{el.atomicNumber}
 				</span>
 				<m.span
@@ -73,7 +73,7 @@ export const ElementCard = memo(
 				>
 					{el.symbol}
 				</m.span>
-				<span className="mt-0.5 text-center text-[9px] leading-tight opacity-60">
+				<span className="ios-caption-3 mt-0.5 text-center leading-tight opacity-60">
 					{el.name}
 				</span>
 				<div

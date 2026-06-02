@@ -76,7 +76,7 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 
 	if (isRunning && currentQuestion) {
 		return (
-			<div className="grid min-h-[calc(100dvh-var(--spacing-safe-pt))] grid-cols-12 gap-0">
+			<div className="grid min-h-dvh grid-cols-12 gap-0">
 				{/* Main quiz — left column */}
 				<div className="col-span-12 col-start-1 p-4 pb-20 md:col-span-7">
 					<Anim>

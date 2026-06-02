@@ -111,6 +111,7 @@
 	--fs-footnote: 0.8125rem;   /* 13px */
 	--fs-caption-1: 0.75rem;    /* 12px */
 	--fs-caption-2: 0.6875rem;  /* 11px */
+	--fs-caption-3: 0.625rem;   /* 10px */
 
 	/* Apple-Exact Tracking (letter-spacing) per text style */
 	/* Converted from Apple HIG 1/1000em values */
@@ -125,6 +126,7 @@
 	--tracking-footnote: -0.006em;    /* 13pt: -6/1000em */
 	--tracking-caption-1: 0em;        /* 12pt: 0/1000em */
 	--tracking-caption-2: 0.006em;    /* 11pt: +6/1000em */
+	--tracking-caption-3: 0em;        /* 10pt: 0/1000em */
 
 	/* Dynamic Type: scale factor controlled by user preference */
 	/* Set via JS: document.documentElement.style.setProperty('--text-scale', '1.25') */
@@ -463,6 +465,7 @@
 .ios-footnote { font-size: calc(var(--fs-footnote) * var(--text-scale)); font-weight: 400; line-height: 1.4; letter-spacing: var(--tracking-footnote); }
 .ios-caption-1 { font-size: calc(var(--fs-caption-1) * var(--text-scale)); font-weight: 400; line-height: 1.3; letter-spacing: var(--tracking-caption-1); }
 .ios-caption-2 { font-size: calc(var(--fs-caption-2) * var(--text-scale)); font-weight: 400; line-height: 1.2; letter-spacing: var(--tracking-caption-2); }
+.ios-caption-3 { font-size: calc(var(--fs-caption-3) * var(--text-scale)); font-weight: 400; line-height: 1.2; letter-spacing: var(--tracking-caption-3); }
 
 .pb-safe { padding-bottom: var(--spacing-safe-pb); }
 .pt-safe { padding-top: var(--spacing-safe-pt); }

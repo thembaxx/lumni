@@ -126,7 +126,7 @@ export function BloomTaxonomyWidget() {
 								</p>
 								<span
 									className={cn(
-										"rounded-full px-2 py-0.5 font-medium text-[10px]",
+										"ios-caption-3 rounded-full px-2 py-0.5 font-medium",
 										COMPETENCY_COLORS[overall],
 									)}
 								>
@@ -156,14 +156,14 @@ export function BloomTaxonomyWidget() {
 													style={{ height: `${Math.max(8, score)}%` }}
 												/>
 											</div>
-											<span className="text-[9px] text-muted-foreground uppercase">
+											<span className="ios-caption-3 text-muted-foreground uppercase">
 												{BLOOM_LABELS[bl].slice(0, 3)}
 											</span>
 										</div>
 									);
 								})}
 							</div>
-							<p className="text-[10px] text-muted-foreground">
+							<p className="ios-caption-3 text-muted-foreground">
 								Recommended:{" "}
 								<span className="font-medium text-foreground">
 									{LEVEL_RECOMMENDATIONS[overall].format}

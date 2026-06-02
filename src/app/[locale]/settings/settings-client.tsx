@@ -201,7 +201,7 @@ function SettingsContent() {
 		<div className="flex min-h-dvh flex-col bg-system-grouped antialiased">
 			<PageContainer className="flex-1">
 				{/* Refined Header */}
-				<header className="sticky top-0 z-header bg-system-grouped/90 px-6 pt-6 pb-4 backdrop-blur-xl">
+				<header className="sticky top-0 z-header bg-system-grouped/90 px-6 pt-6 pb-4">
 					<div className="flex h-14 items-center justify-between">
 						<div className="flex items-center gap-4">
 							<Link
@@ -232,7 +232,7 @@ function SettingsContent() {
 				</header>
 
 				{/* Tabs Navigation - Elevated Horizontal Scroll */}
-				<nav className="sticky top-[calc(var(--spacing-safe-pt)+56px)] z-sticky border-border/5 border-b bg-system-grouped/90 px-6 py-2 backdrop-blur-xl">
+				<nav className="sticky top-[calc(var(--spacing-safe-pt)+56px)] z-sticky border-border/5 border-b bg-system-grouped/90 px-6 py-2">
 					<div
 						className="scrollbar-hide -mx-2 flex gap-0 overflow-x-auto px-2 py-1"
 						role="tablist"

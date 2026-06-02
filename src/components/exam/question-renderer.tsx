@@ -91,7 +91,7 @@ export function QuestionRenderer({
 			{question.context?.map((block) => (
 				<div
 					key={block.value || block.imagePath || block.type}
-					className="border-muted border-l-2 pl-4"
+					className="rounded-lg border border-border/50 bg-muted/30 p-4"
 				>
 					<ContentBlockRenderer block={block} />
 				</div>
@@ -130,7 +130,7 @@ export function QuestionRenderer({
 								onClick={() => onFlag(fullId)}
 								className={`shrink-0 rounded px-2 py-0.5 text-xs transition-colors ${
 									flags.includes(fullId)
-										? "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300"
+										? "bg-warning/10 text-warning dark:bg-warning/20 dark:text-warning"
 										: "bg-muted text-muted-foreground hover:bg-muted/80"
 								}`}
 							>
@@ -155,7 +155,7 @@ export function QuestionRenderer({
 						</div>
 
 						{part.subParts && part.subParts.length > 0 && (
-							<div className="mt-4 flex flex-col gap-4 border-muted border-l-2 pl-4">
+							<div className="mt-4 flex flex-col gap-4 rounded-lg border border-border/50 bg-muted/20 p-4">
 								{part.subParts.map((subPart) => {
 									const subFullId = `${fullId}(${subPart.id})`;
 									return (

@@ -42,7 +42,7 @@ export function LessonCard({
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0 }}
-						className="fixed inset-0 z-modal bg-black/40 backdrop-blur-sm"
+						className="fixed inset-0 z-modal bg-black/40 bg-system-background/95"
 						onClick={() => setOpenId(null)}
 						role="presentation"
 					/>
@@ -56,7 +56,7 @@ export function LessonCard({
 						layoutId={`lesson-${id}`}
 						className="fixed top-1/2 left-1/2 z-modal w-[calc(100%-2rem)] max-w-sm -translate-x-1/2 -translate-y-1/2"
 					>
-						<Card className="max-h-[80dvh] overflow-y-auto p-4">
+						<Card className="max-h-dvh overflow-y-auto p-4">
 							<div className="flex flex-col gap-3">
 								<div className="flex items-start justify-between">
 									<Badge
@@ -67,7 +67,7 @@ export function LessonCard({
 									</Badge>
 									<Badge
 										className={cn(
-											"rounded-full bg-[--system-accent]/10 px-3 py-0.5 font-medium text-[10px] uppercase",
+											"ios-caption-3 rounded-full bg-[--system-accent]/10 px-3 py-0.5 font-medium uppercase",
 											getDifficultyColor(difficulty),
 										)}
 									>
@@ -128,7 +128,7 @@ export function LessonCard({
 									</Badge>
 									<Badge
 										className={cn(
-											"rounded-full bg-[--system-accent]/10 px-3 py-0.5 font-medium text-[10px] uppercase",
+											"ios-caption-3 rounded-full bg-[--system-accent]/10 px-3 py-0.5 font-medium uppercase",
 											getDifficultyColor(difficulty),
 										)}
 									>

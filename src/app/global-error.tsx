@@ -32,7 +32,7 @@ export default function GlobalError({
 						<main className="flex max-w-md flex-col gap-8 text-left">
 							<div className="relative">
 								<div className="absolute inset-0 animate-pulse rounded-full bg-destructive/10 blur-xl" />
-								<div className="relative flex size-20 items-center justify-center rounded-[--radius-card] border border-destructive/20 bg-destructive/10">
+								<div className="relative flex size-20 items-center justify-center rounded-(--radius-card) border border-destructive/20 bg-destructive/10">
 									<HugeiconsIcon
 										icon={Alert01Icon}
 										className="size-10 text-destructive"

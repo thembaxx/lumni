@@ -16,7 +16,7 @@ const ProgressChart = dynamic(
 		),
 	{
 		ssr: false,
-		loading: () => <Skeleton className="h-[250px] rounded-lg" />,
+		loading: () => <Skeleton className="h-60 rounded-lg" />,
 	},
 );
 

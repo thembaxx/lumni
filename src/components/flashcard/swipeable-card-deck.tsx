@@ -132,7 +132,7 @@ export function SwipeableCardDeck({
 		<div className="flex flex-col gap-4">
 			{/* Header */}
 			<div className="flex items-center justify-between">
-				<Button variant="ghost" size="sm">
+				<Button variant="ghost" size="sm" onClick={onComplete}>
 					Quit
 				</Button>
 				<div className="flex items-center gap-2">
@@ -211,7 +211,7 @@ export function SwipeableCardDeck({
 										onSwipe={handleSwipe}
 									/>
 								) : (
-									<div className="h-full w-full rounded-card-lg border border-border/60 bg-card/80 p-6 shadow-level-1 backdrop-blur-sm">
+									<div className="h-full w-full rounded-card-lg border border-border/60 bg-system-background/95 p-6 shadow-level-1">
 										<div className="flex h-full items-center justify-center">
 											<p className="text-center text-muted-foreground/60">
 												{stackIndex + 1}
@@ -227,7 +227,7 @@ export function SwipeableCardDeck({
 				{/* Quality picker overlay */}
 				{showPicker && (
 					<m.div
-						className="absolute inset-0 z-20 flex items-center justify-center rounded-card-lg bg-card/90 backdrop-blur-sm"
+						className="absolute inset-0 z-20 flex items-center justify-center rounded-card-lg bg-system-background/95"
 						initial={{ opacity: 0, scale: 0.95 }}
 						animate={{ opacity: 1, scale: 1 }}
 						transition={{ duration: 0.2, ease: iOSEase }}

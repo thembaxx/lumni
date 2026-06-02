@@ -296,7 +296,7 @@ export function SnapFab() {
 			/>
 
 			{showCamera && (
-				<div className="fixed inset-0 z-modal flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
+				<div className="fixed inset-0 z-modal flex items-center justify-center bg-black/60 bg-system-background/95 p-4">
 					<div className="w-full max-w-md overflow-hidden rounded-2xl bg-system-background shadow-level-3">
 						<CameraPreview
 							onCapture={handleCameraCapture}
@@ -322,7 +322,7 @@ export function SnapFab() {
 			</button>
 
 			<Dialog open={showDialog} onOpenChange={(o) => !o && handleDismiss()}>
-				<DialogContent className="max-h-[80vh] overflow-y-auto sm:max-w-lg">
+				<DialogContent className="max-h-[80dvh] overflow-y-auto sm:max-w-lg">
 					<DialogTitle className="ios-title-3 text-[--system-text-primary]">
 						{phase === "extracting" && "Reading problem…"}
 						{phase === "confirm" && "Verify extracted problem"}
@@ -377,7 +377,7 @@ export function SnapFab() {
 							<Textarea
 								value={extractedText}
 								onChange={(e) => setExtractedText(e.target.value)}
-								className="min-h-[120px] rounded-xl bg-system-surface px-4 py-3"
+								className="min-h-30 rounded-xl bg-system-surface px-4 py-3"
 								placeholder="Edit the extracted problem if needed…"
 							/>
 						)}

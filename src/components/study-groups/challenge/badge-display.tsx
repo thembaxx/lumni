@@ -46,7 +46,7 @@ export function BadgeDisplay({
 						"inline-flex items-center justify-center rounded-full ring-1",
 						tierConfig[badge.tier].bg,
 						tierConfig[badge.tier].ring,
-						size === "sm" ? "size-5 text-[10px]" : "size-7 text-sm",
+						size === "sm" ? "ios-caption-3 size-5" : "size-7 text-sm",
 					)}
 				>
 					{badge.icon || (
@@ -58,7 +58,7 @@ export function BadgeDisplay({
 				<span
 					className={cn(
 						"text-muted-foreground",
-						size === "sm" ? "text-[10px]" : "text-xs",
+						size === "sm" ? "ios-caption-3" : "text-xs",
 					)}
 				>
 					+{remaining}

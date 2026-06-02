@@ -95,7 +95,7 @@ export default function UploadPage() {
 							/>
 
 							{lastUploadUrl && (
-								<div className="rounded-[--radius-button] bg-[var(--success)]/10 p-[--space-4] text-center">
+								<div className="rounded-(--radius-button) bg-[var(--success)]/10 p-[--space-4] text-center">
 									<m.div
 										initial={{ scale: 0.95, opacity: 0 }}
 										animate={{ scale: 1, opacity: 1 }}
@@ -106,17 +106,17 @@ export default function UploadPage() {
 											className="mx-auto mb-2 size-16 text-success"
 										/>
 									</m.div>
-									<p className="font-medium text-[13px] text-[var(--success)]">
+									<p className="ios-footnote font-medium text-[var(--success)]">
 										Upload successful
 									</p>
-									<p className="mt-1 break-all text-[12px] text-muted-foreground">
+									<p className="ios-caption-1 mt-1 break-all text-muted-foreground">
 										{lastUploadUrl}
 									</p>
 								</div>
 							)}
 							{syncStatus !== "idle" && (
 								<div
-									className={`rounded-[--radius-button] p-[--space-3] text-center text-xs ${
+									className={`rounded-(--radius-button) p-[--space-3] text-center text-xs ${
 										syncStatus === "syncing"
 											? "bg-accent/10 text-accent"
 											: syncStatus === "done"

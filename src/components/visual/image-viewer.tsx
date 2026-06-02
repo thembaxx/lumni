@@ -52,7 +52,7 @@ export function ImageViewer({
 				/>
 			</div>
 			{attribution && (
-				<p className="flex items-center gap-1 text-[10px] text-muted-foreground/60">
+				<p className="ios-caption-3 flex items-center gap-1 text-muted-foreground/60">
 					<span>{attribution}</span>
 					{sourceUrl && (
 						<a

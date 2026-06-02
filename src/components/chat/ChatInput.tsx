@@ -80,7 +80,7 @@ export function ChatInput({
 		};
 
 	return (
-		<div className="border-border/50 border-t bg-background/80 p-4 backdrop-blur-xl">
+		<div className="border-border/50 border-t bg-system-background/95 p-4">
 			<AnimatedDialogContent
 				open={voiceDialogOpen}
 				onOpenChange={setVoiceDialogOpen}

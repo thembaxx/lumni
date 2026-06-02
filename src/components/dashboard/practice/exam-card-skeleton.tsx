@@ -20,8 +20,8 @@ export function ExamCardSkeleton({ className }: ExamCardSkeletonProps) {
 			</div>
 
 			<div className="flex shrink-0 items-center gap-1.5">
-				<Skeleton className="h-8 w-[54px] rounded-md" />
-				<Skeleton className="h-8 w-[70px] rounded-md" />
+				<Skeleton className="h-8 w-14 rounded-md" />
+				<Skeleton className="h-8 w-16 rounded-md" />
 			</div>
 		</div>
 	);

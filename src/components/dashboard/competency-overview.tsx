@@ -109,7 +109,7 @@ export function CompetencyOverview() {
 			return {
 				subjectId: comp.subjectId,
 				subjectName: subject?.name ?? comp.subjectId,
-				color: subject?.color ?? "#888",
+				color: subject?.color ?? "var(--system-text-tertiary)",
 				icon: subject?.icon ?? "book",
 				total: comp.total,
 				novice: comp.novice,
@@ -230,7 +230,7 @@ export function CompetencyOverview() {
 										<p className="font-bold text-xs tabular-nums">
 											{sc.total} topics
 										</p>
-										<p className="text-[10px] text-muted-foreground">
+										<p className="ios-caption-3 text-muted-foreground">
 											assessed
 										</p>
 									</div>
@@ -242,7 +242,7 @@ export function CompetencyOverview() {
 									initial={{ opacity: 0, height: 0 }}
 									animate={{ opacity: 1, height: "auto" }}
 									exit={{ opacity: 0, height: 0 }}
-									className="mt-1 mb-2 ml-4 flex flex-col gap-0.5 border-muted border-l-2 pl-4"
+									className="mt-1 mb-2 ml-4 flex flex-col gap-0.5 rounded-lg border border-system-separator bg-system-surface-secondary/50 p-3"
 								>
 									{sc.topics.map((t) => (
 										<div

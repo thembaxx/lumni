@@ -29,7 +29,7 @@ export function HeroSection({ isAuthenticated }: HeroSectionProps) {
 	return (
 		<m.section
 			style={{ opacity: heroOpacity, scale: heroScale }}
-			className="relative flex min-h-[90dvh] items-center pt-14"
+			className="relative flex min-h-dvh items-center pt-14"
 		>
 			<div className="pointer-events-none absolute inset-0 bg-linear-to-b from-primary/5 via-transparent to-transparent" />
 			<div className="absolute top-1/4 -left-20 size-96 animate-blob-orbit rounded-full bg-primary/10 blur-3xl" />
@@ -119,7 +119,7 @@ export function HeroSection({ isAuthenticated }: HeroSectionProps) {
 											<p className="font-semibold text-sm">
 												{t("home.demoQuiz")}
 											</p>
-											<p className="text-[10px] text-muted-foreground">
+											<p className="ios-caption-3 text-muted-foreground">
 												{t("home.demoSubject")}
 											</p>
 										</div>

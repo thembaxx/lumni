@@ -110,7 +110,7 @@ export function LessonSheet() {
 						</SubjectsDrawer>
 					</div>
 
-					<div className="flex max-h-[95dvh] grow flex-col gap-4 overflow-y-auto px-4 pb-4">
+					<div className="flex max-h-[calc(100dvh-var(--spacing-safe-pt)-var(--spacing-safe-pb))] grow flex-col gap-4 overflow-y-auto px-4 pb-4">
 						{isLoading && (
 							<div className="flex flex-col gap-2">
 								{(() => {

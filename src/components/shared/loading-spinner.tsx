@@ -40,7 +40,7 @@ export function LoadingOverlay({
 	return (
 		<div
 			className={cn(
-				"absolute inset-0 z-elevated flex items-center justify-center bg-background/80 backdrop-blur-sm",
+				"absolute inset-0 z-elevated flex items-center justify-center bg-background/95",
 				className,
 			)}
 		>

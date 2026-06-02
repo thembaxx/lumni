@@ -99,7 +99,7 @@ export function DesktopSidebar() {
 		<>
 			<aside
 				aria-label="Sidebar navigation"
-				className="hidden h-[100dvh] w-64 flex-col border-system-separator/50 border-r bg-system-grouped pt-safe md:flex"
+				className="hidden h-dvh w-64 flex-col border-system-separator/50 border-r bg-system-grouped pt-safe md:flex"
 			>
 				{/* App brand */}
 				<div className="px-5 py-4">

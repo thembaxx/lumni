@@ -47,7 +47,7 @@ export function DailyProgressRing() {
 					>
 						{levelInfo.level}
 					</m.span>
-					<span className="font-extrabold text-[11px] text-muted-foreground uppercase tracking-wider">
+					<span className="ios-caption-2 font-extrabold text-muted-foreground uppercase tracking-wider">
 						{levelInfo.title}
 					</span>
 				</div>
@@ -127,7 +127,7 @@ export function DailyProgressRing() {
 								icon={CheckmarkCircle01Icon}
 								className="size-3.5 text-success"
 							/>
-							<span className="font-extrabold text-[11px] text-success">
+							<span className="ios-caption-2 font-extrabold text-success">
 								Daily goal complete
 							</span>
 						</m.div>
@@ -137,7 +137,7 @@ export function DailyProgressRing() {
 							initial={{ opacity: 0 }}
 							animate={{ opacity: 1 }}
 							exit={{ opacity: 0 }}
-							className="font-medium text-[11px] text-muted-foreground"
+							className="ios-caption-2 font-medium text-muted-foreground"
 						>
 							questions today
 						</m.p>

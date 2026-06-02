@@ -112,7 +112,7 @@ export function ExamDetailDialog({
 					<div className="flex items-center gap-2">
 						<span
 							className={cn(
-								"flex size-6 items-center justify-center rounded-md font-bold text-[10px] text-white",
+								"ios-caption-3 flex size-6 items-center justify-center rounded-md font-bold text-white",
 								getSubjectColor(exam.subjectId),
 							)}
 						>
@@ -137,7 +137,7 @@ export function ExamDetailDialog({
 							className="size-4 shrink-0 text-[--system-accent]"
 						/>
 						<div className="min-w-0">
-							<p className="text-[10px] text-muted-foreground">Date</p>
+							<p className="ios-caption-3 text-muted-foreground">Date</p>
 							<p className="truncate font-medium text-xs">
 								{formatFriendlyDate(exam.date)}
 							</p>
@@ -149,7 +149,7 @@ export function ExamDetailDialog({
 							className="size-4 shrink-0 text-[--system-accent]"
 						/>
 						<div className="min-w-0">
-							<p className="text-[10px] text-muted-foreground">Time</p>
+							<p className="ios-caption-3 text-muted-foreground">Time</p>
 							<p className="truncate font-medium text-xs">
 								{formatTimeRange(exam.startTime, exam.endTime)}
 							</p>
@@ -161,7 +161,7 @@ export function ExamDetailDialog({
 							className="size-4 shrink-0 text-[--system-accent]"
 						/>
 						<div className="min-w-0">
-							<p className="text-[10px] text-muted-foreground">Duration</p>
+							<p className="ios-caption-3 text-muted-foreground">Duration</p>
 							<p className="truncate font-medium text-xs">
 								{formatDuration(exam.durationHours)}
 							</p>
@@ -173,7 +173,7 @@ export function ExamDetailDialog({
 							className="size-4 shrink-0 text-[--system-accent]"
 						/>
 						<div className="min-w-0">
-							<p className="text-[10px] text-muted-foreground">Paper</p>
+							<p className="ios-caption-3 text-muted-foreground">Paper</p>
 							<p className="truncate font-medium text-xs">
 								Paper {exam.paperNumber}
 							</p>
@@ -206,7 +206,7 @@ export function ExamDetailDialog({
 							<HugeiconsIcon icon={Quiz02Icon} className="size-4" />
 							<div>
 								<p className="font-medium text-xs">Practice</p>
-								<p className="text-[10px] text-white/70">
+								<p className="ios-caption-3 text-white/70">
 									AI-generated questions on this subject
 								</p>
 							</div>
@@ -225,7 +225,7 @@ export function ExamDetailDialog({
 							/>
 							<div>
 								<p className="font-medium text-xs">Mock Exam</p>
-								<p className="text-[10px] text-muted-foreground">
+								<p className="ios-caption-3 text-muted-foreground">
 									Timed practice with exam-format questions
 								</p>
 							</div>
@@ -244,7 +244,7 @@ export function ExamDetailDialog({
 							/>
 							<div>
 								<p className="font-medium text-xs">Common Questions</p>
-								<p className="text-[10px] text-muted-foreground">
+								<p className="ios-caption-3 text-muted-foreground">
 									Frequently tested questions in this subject
 								</p>
 							</div>

@@ -145,7 +145,7 @@ export function ExamResults({
 						</CardTitle>
 					</CardHeader>
 					<CardContent>
-						<ScrollArea className="max-h-[400px]">
+						<ScrollArea className="max-h-96">
 							<div className="flex flex-col gap-4">
 								{paper.sections.map((section) => (
 									<div key={section.id}>

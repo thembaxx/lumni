@@ -106,7 +106,7 @@ const NavItemComponent = memo(function NavItemComponent({
 				{item.badge !== undefined && item.badge > 0 && (
 					<Badge
 						variant="destructive"
-						className="absolute -top-1 -right-1.5 h-4 min-w-4 border-0 px-1 text-[10px] leading-none"
+						className="ios-caption-3 absolute -top-1 -right-1.5 h-4 min-w-4 border-0 px-1 leading-none"
 					>
 						{item.badge > 99 ? "99+" : item.badge}
 					</Badge>
@@ -114,7 +114,7 @@ const NavItemComponent = memo(function NavItemComponent({
 			</div>
 			<span
 				className={cn(
-					"relative z-elevated text-center font-medium text-[10px] uppercase leading-none tracking-(--tracking-caption-1) transition-colors duration-200",
+					"ios-caption-3 relative z-elevated text-center font-medium uppercase leading-none tracking-(--tracking-caption-1) transition-colors duration-200",
 					isActive ? "text-system-accent" : "text-system-text-tertiary",
 				)}
 			>
@@ -130,6 +130,7 @@ export function BottomNav() {
 
 	const activeIndex = useMemo(() => {
 		const index = navItems.findIndex((item) => {
+			// Home icon uses exact match to avoid catching "/dashboard" as prefix
 			if (item.href === "/dashboard") {
 				return pathname === "/dashboard" || pathname === "/";
 			}
@@ -150,6 +151,7 @@ export function BottomNav() {
 			aria-label="Main navigation"
 			className="fixed right-0 bottom-0 left-0 z-header flex w-full"
 			style={{
+				// TODO: extract safe-area-inset-bottom to a CSS variable
 				height: "calc(49px + env(safe-area-inset-bottom, 0px))",
 			}}
 		>

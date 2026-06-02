@@ -221,7 +221,7 @@ export default function AdminQuestionsPage() {
 											<p className="mb-1 font-medium text-muted-foreground text-xs">
 												Steps:
 											</p>
-											<ol className="list-inside list-decimal space-y-1">
+											<ol className="flex list-inside list-decimal flex-col gap-1">
 												{q.steps.map((s) => (
 													<li key={s}>{s}</li>
 												))}

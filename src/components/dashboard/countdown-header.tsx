@@ -440,7 +440,7 @@ export function CountdownHeader() {
 					duration: shouldReduceMotion ? 0 : 0.2,
 					ease: iOSEase,
 				}}
-				className="sticky top-0 z-sticky -mx-4 border-border/10 border-b bg-system-grouped-background/80 px-4 pt-2 pb-2 backdrop-blur-xl"
+				className="sticky top-0 z-sticky -mx-4 border-border/10 border-b bg-system-background/90 px-4 pt-2 pb-2"
 				style={{ viewTransitionName: "countdown-compact" }}
 			>
 				<div className="mx-auto flex max-w-md items-center gap-3">

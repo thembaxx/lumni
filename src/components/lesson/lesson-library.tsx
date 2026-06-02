@@ -214,7 +214,7 @@ export function LessonLibrary() {
 												<div className="flex items-center gap-2 text-muted-foreground text-xs">
 													<Badge
 														variant="outline"
-														className={`px-1.5 py-0 text-[10px] capitalize ${levelColors[rec.level] ?? ""}`}
+														className={`ios-caption-3 px-1.5 py-0 capitalize ${levelColors[rec.level] ?? ""}`}
 													>
 														{rec.level}
 													</Badge>

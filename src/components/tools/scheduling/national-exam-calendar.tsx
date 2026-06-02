@@ -156,12 +156,12 @@ export function NationalExamCalendar() {
 							className="overflow-hidden rounded-2xl border border-border/60 bg-card shadow-level-1"
 						>
 							<div className="flex items-center justify-between border-border/40 border-b px-4 py-2.5">
-								<span className="font-semibold text-[10px] text-muted-foreground uppercase tracking-wider">
+								<span className="ios-caption-3 font-semibold text-muted-foreground uppercase tracking-wider">
 									Upcoming Exams
 								</span>
 								<span
 									className={cn(
-										"rounded-full px-2 py-0.5 font-medium text-[10px] tabular-nums",
+										"ios-caption-3 rounded-full px-2 py-0.5 font-medium tabular-nums",
 										countdownText.includes("Starts")
 											? "bg-[--system-accent]/10 text-[--system-accent]"
 											: countdownText === "Ongoing"
@@ -185,7 +185,7 @@ export function NationalExamCalendar() {
 									>
 										<span
 											className={cn(
-												"flex size-8 shrink-0 items-center justify-center rounded-lg font-bold text-[10px] text-white",
+												"ios-caption-3 flex size-8 shrink-0 items-center justify-center rounded-lg font-bold text-white",
 												getSubjectColor(exam.subjectId),
 											)}
 										>
@@ -195,7 +195,7 @@ export function NationalExamCalendar() {
 											<p className="truncate font-medium text-xs">
 												{exam.subject}
 											</p>
-											<p className="text-[10px] text-muted-foreground">
+											<p className="ios-caption-3 text-muted-foreground">
 												Paper {exam.paperNumber}
 											</p>
 										</div>
@@ -210,7 +210,7 @@ export function NationalExamCalendar() {
 													},
 												)}
 											</p>
-											<p className="text-[10px] text-muted-foreground tabular-nums">
+											<p className="ios-caption-3 text-muted-foreground tabular-nums">
 												{exam.startTime}–{exam.endTime}
 											</p>
 										</div>
@@ -232,7 +232,7 @@ export function NationalExamCalendar() {
 						</div>
 					) : (
 						<div className="flex flex-col gap-3">
-							<h3 className="font-semibold text-[10px] text-muted-foreground uppercase tracking-widest">
+							<h3 className="ios-caption-3 font-semibold text-muted-foreground uppercase tracking-widest">
 								Full Timetable
 							</h3>
 							{grouped.map((group, gi) => {
@@ -263,7 +263,7 @@ export function NationalExamCalendar() {
 												{dayName} {dayNum} {monthName}
 											</span>
 											{isToday && (
-												<span className="rounded-full bg-[--system-accent]/10 px-2 py-0.5 font-medium text-[--system-accent] text-[9px]">
+												<span className="ios-caption-3 rounded-full bg-[--system-accent]/10 px-2 py-0.5 font-medium text-[--system-accent]">
 													Today
 												</span>
 											)}
@@ -279,11 +279,11 @@ export function NationalExamCalendar() {
 													className="flex w-full cursor-pointer items-center gap-3 rounded-xl border border-border/50 bg-card px-3 py-2.5 text-left transition-colors hover:bg-muted/30 active:bg-muted/50"
 												>
 													<div className="flex flex-col items-center gap-0.5">
-														<span className="font-semibold text-[11px] tabular-nums">
+														<span className="ios-caption-2 font-semibold tabular-nums">
 															{slot.startTime}
 														</span>
 														<div className="h-6 w-px bg-border/60" />
-														<span className="font-semibold text-[11px] text-muted-foreground tabular-nums">
+														<span className="ios-caption-2 font-semibold text-muted-foreground tabular-nums">
 															{slot.endTime}
 														</span>
 													</div>
@@ -307,7 +307,7 @@ export function NationalExamCalendar() {
 														<p className="truncate font-medium text-xs">
 															{slot.subject}
 														</p>
-														<p className="text-[10px] text-muted-foreground">
+														<p className="ios-caption-3 text-muted-foreground">
 															Paper {slot.paperNumber} &middot;{" "}
 															{formatDuration(slot.durationHours)}
 														</p>

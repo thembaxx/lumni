@@ -55,7 +55,10 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 					initial={{ opacity: 0, y: 10, scale: 0.95 }}
 					animate={{ opacity: 1, y: 0, scale: 1 }}
 					transition={{ type: "spring", stiffness: 300, damping: 25 }}
-					className={cn("ml-auto max-w-[85%]", isUser ? "mr-0" : "mr-auto")}
+					className={cn(
+						"ml-auto max-w-[calc(100%-3rem)]",
+						isUser ? "mr-0" : "mr-auto",
+					)}
 				>
 					<div
 						className={cn(
@@ -100,7 +103,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 						)}
 
 						<div className="flex items-center justify-between gap-3 p-2 px-3">
-							<span className="max-w-30 truncate font-extrabold text-[10px] uppercase tracking-tight opacity-80">
+							<span className="ios-caption-3 max-w-30 truncate font-extrabold uppercase tracking-tight opacity-80">
 								{message.imageFileName || "Image"}
 								{message.imageFileSize &&
 									` (${formatBytes(message.imageFileSize)})`}
@@ -155,7 +158,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 				animate={{ opacity: 1, y: 0, scale: 1 }}
 				transition={{ type: "spring", stiffness: 300, damping: 25 }}
 				className={cn(
-					"flex max-w-[85%] items-center gap-4 rounded-lg p-4 text-sm",
+					"flex max-w-[calc(100%-3rem)] items-center gap-4 rounded-lg p-4 text-sm",
 					isUser
 						? "ml-auto rounded-br-none bg-system-accent text-white shadow-level-2"
 						: "mr-auto rounded-bl-none border border-border/40 bg-system-surface-secondary text-foreground shadow-sm",
@@ -178,7 +181,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 							"absolute inset-0 flex items-center justify-center transition-[opacity,scale,filter] duration-300 ease-[cubic-bezier(0.2,0,0,1)]",
 							isPlaying
 								? "scale-100 opacity-100 blur-0"
-								: "scale-[0.25] opacity-0 blur-[4px]",
+								: "scale-[0.25] opacity-0 blur-sm",
 						)}
 					>
 						<HugeiconsIcon
@@ -190,7 +193,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 						className={cn(
 							"absolute inset-0 flex items-center justify-center transition-[opacity,scale,filter] duration-300 ease-[cubic-bezier(0.2,0,0,1)]",
 							isPlaying
-								? "scale-[0.25] opacity-0 blur-[4px]"
+								? "scale-[0.25] opacity-0 blur-sm"
 								: "scale-100 opacity-100 blur-0",
 						)}
 					>
@@ -201,7 +204,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 					</span>
 				</m.button>
 				<div className="flex min-w-0 flex-col gap-1">
-					<span className="font-extrabold text-[10px] uppercase tracking-widest opacity-80">
+					<span className="ios-caption-3 font-extrabold uppercase tracking-widest opacity-80">
 						{isPlaying ? "Playing…" : "Voice message"}
 					</span>
 					<div className="flex items-center gap-2">
@@ -257,7 +260,7 @@ export function MessageBubble({ message, onRetry }: MessageBubbleProps) {
 			animate={{ opacity: 1, y: 0, scale: 1 }}
 			transition={{ type: "spring", stiffness: 300, damping: 25 }}
 			className={cn(
-				"max-w-[85%] rounded-lg p-4 font-medium text-sm leading-relaxed",
+				"max-w-[calc(100%-3rem)] rounded-lg p-4 font-medium text-sm leading-relaxed",
 				isUser
 					? "ml-auto rounded-br-none bg-system-accent text-white shadow-level-2"
 					: "mr-auto rounded-bl-none border border-border/40 bg-system-surface-secondary text-foreground shadow-sm",

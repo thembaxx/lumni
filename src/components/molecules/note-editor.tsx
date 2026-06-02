@@ -72,7 +72,7 @@ export function NoteEditor({
 				placeholder="Start writing..."
 				value={content}
 				onChange={(e) => setContent(e.target.value)}
-				className="min-h-[200px] resize-y"
+				className="min-h-48 resize-y"
 			/>
 			<Button
 				onClick={() => onSave({ title, content })}

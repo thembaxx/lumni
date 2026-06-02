@@ -102,48 +102,51 @@ export function TopNav({ title, className }: TopNavProps) {
 			)}
 		>
 			<div className="flex h-12 items-center justify-between px-4">
-				<h1 className="ios-headline font-semibold text-foreground tracking-tight">
-					{pageTitle}
-				</h1>
+				<div className="flex items-center gap-4">
+					<h1 className="ios-headline font-semibold text-foreground tracking-tight">
+						{pageTitle}
+					</h1>
 
-				{status === "authenticated" && !user?.labels?.includes("anonymous") && (
-					<m.div
-						initial={{ opacity: 0, x: -8 }}
-						animate={{ opacity: 1, x: 0 }}
-						className="mr-auto ml-4 flex items-center gap-2"
-					>
-						<div className="flex items-center gap-1.5 rounded-lg bg-[--system-accent]/10 px-2 py-1">
-							<HugeiconsIcon
-								icon={ChampionIcon}
-								className="size-3 text-[--system-accent]"
-							/>
-							<span className="font-bold text-[--system-accent] text-[11px] tabular-nums">
-								Lv.{levelInfo.level}
-							</span>
-						</div>
-						<div className="h-1.5 w-16 overflow-hidden rounded-full bg-muted">
+					{status === "authenticated" &&
+						!user?.labels?.includes("anonymous") && (
 							<m.div
-								initial={{ width: 0 }}
-								animate={{ width: `${levelInfo.progress}%` }}
-								transition={{ duration: 1, ease: "easeOut" }}
-								className="h-full rounded-full bg-[--system-accent]"
-							/>
-						</div>
-					</m.div>
-				)}
+								initial={{ opacity: 0, x: -8 }}
+								animate={{ opacity: 1, x: 0 }}
+								className="flex items-center gap-2"
+							>
+								<div className="flex items-center gap-1.5 rounded-lg bg-(--system-accent-alpha-10) px-2 py-1">
+									<HugeiconsIcon
+										icon={ChampionIcon}
+										className="size-3 text-(--system-accent)"
+									/>
+									<span className="ios-caption-2 font-bold text-(--system-accent) tabular-nums">
+										Lv.{levelInfo.level}
+									</span>
+								</div>
+								<div className="h-1.5 w-16 overflow-hidden rounded-full bg-muted">
+									<m.div
+										initial={{ width: 0 }}
+										animate={{ width: `${levelInfo.progress}%` }}
+										transition={{ duration: 1, ease: "easeOut" }}
+										className="h-full rounded-full bg-[--system-accent]"
+									/>
+								</div>
+							</m.div>
+						)}
+				</div>
 
 				<div className="flex items-center gap-2">
 					<LocaleSwitcher />
 					{!isOnline && (
 						<div className="flex items-center gap-1 rounded-full bg-warning/10 px-2 py-0.5 text-warning">
 							<div className="size-1.5 animate-pulse rounded-full bg-warning" />
-							<span className="font-medium text-[10px]">Offline</span>
+							<span className="ios-caption-3 font-medium">Offline</span>
 						</div>
 					)}
 					{pendingCount > 0 && (
-						<div className="flex items-center gap-1 rounded-full bg-[--system-accent]/10 px-2 py-0.5 text-[--system-accent]">
+						<div className="flex items-center gap-1 rounded-full bg-(--system-accent-alpha-10) px-2 py-0.5 text-(--system-accent)">
 							<div className="size-1.5 rounded-full bg-[--system-accent]" />
-							<span className="font-medium text-[10px]">{pendingCount}</span>
+							<span className="ios-caption-3 font-medium">{pendingCount}</span>
 						</div>
 					)}
 					{status === "loading" ? (

@@ -204,7 +204,7 @@ export default function DevVisualPage() {
 							<Textarea
 								value={state.rawJson}
 								readOnly
-								className="min-h-[150px] font-mono text-xs"
+								className="min-h-36 font-mono text-xs"
 							/>
 						</div>
 					</div>

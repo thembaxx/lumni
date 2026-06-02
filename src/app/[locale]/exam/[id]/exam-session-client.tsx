@@ -21,6 +21,7 @@ import {
 } from "@/hooks/use-exam-session-persistence";
 import { useGamification } from "@/hooks/use-gamification";
 import { useWrongAnswerJournal } from "@/hooks/use-wrong-answer-journal";
+import { useRouter } from "@/i18n/navigation";
 import {
 	getAnswerText,
 	getCorrectAnswerText,
@@ -203,6 +204,20 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 	}, [paperLoading, paperData, initSession]);
 
 	useEffect(() => {
+		if (phase === "active" && (sessionMode === "timed" || isMock) && !paused) {
+			timerRef.current = setInterval(() => {
+				tick();
+			}, 1000);
+		}
+		return () => {
+			if (timerRef.current) {
+				clearInterval(timerRef.current);
+				timerRef.current = null;
+			}
+		};
+	}, [phase, sessionMode, isMock, paused, tick]);
+
+	useEffect(() => {
 		if (
 			timeRemaining <= 0 &&
 			phase === "active" &&
@@ -211,23 +226,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 			completeSession();
 			setPhase("submitting");
 		}
-		if (phase === "active" && (sessionMode === "timed" || isMock) && !paused) {
-			timerRef.current = setInterval(() => {
-				tick();
-			}, 1000);
-		}
-		return () => {
-			if (timerRef.current) clearInterval(timerRef.current);
-		};
-	}, [
-		phase,
-		sessionMode,
-		isMock,
-		paused,
-		tick,
-		timeRemaining,
-		completeSession,
-	]);
+	}, [timeRemaining, phase, sessionMode, isMock, completeSession]);
 
 	useEffect(() => {
 		setImmersive(phase === "active");
@@ -383,10 +382,12 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 		addWrongAnswer,
 	]);
 
+	const router = useRouter();
+
 	const handleDashboard = useCallback(() => {
 		resetSession();
-		window.history.back();
-	}, [resetSession]);
+		router.back();
+	}, [resetSession, router]);
 
 	if (paperLoading) {
 		return (

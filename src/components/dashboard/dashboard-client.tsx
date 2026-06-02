@@ -29,7 +29,7 @@ const QuizView = dynamic(
 	{
 		ssr: false,
 		loading: () => (
-			<div className="flex min-h-[60dvh] items-center justify-center">
+			<div className="flex min-h-dvh items-center justify-center">
 				<Skeleton className="size-full max-w-3xl rounded-3xl" />
 			</div>
 		),
@@ -130,7 +130,7 @@ export function DashboardClient({
 		setShowDailyBolt(false);
 	}, []);
 
-	const handleFinishQuiz = async (results: QuizResults) => {
+	async function handleFinishQuizLogic(results: QuizResults) {
 		updateStreak();
 		const accuracy =
 			results.totalQuestions > 0
@@ -207,7 +207,10 @@ export function DashboardClient({
 			console.warn("Analytics event failed:", e);
 			toast({ type: "error", message: "Failed to save session data" });
 		});
+	}
 
+	const handleFinishQuiz = async (results: QuizResults) => {
+		await handleFinishQuizLogic(results);
 		setSprintMode(false);
 		setQuizActive(false);
 		setQuizSubject("");

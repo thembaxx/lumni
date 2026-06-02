@@ -113,10 +113,10 @@ export default function AdminPastPapersPage() {
 							>
 								<div className={cn("min-w-0 flex-1")}>
 									<div className={cn("mb-1 flex items-center gap-2")}>
-										<Badge variant="secondary" className={cn("text-[10px]")}>
+										<Badge variant="secondary" className={cn("ios-caption-3")}>
 											{q.subject}
 										</Badge>
-										<Badge variant="outline" className={cn("text-[10px]")}>
+										<Badge variant="outline" className={cn("ios-caption-3")}>
 											{q.questionType}
 										</Badge>
 										<span className={cn("text-muted-foreground text-xs")}>

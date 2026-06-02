@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 export default function QuizLoading() {
 	const t = useTranslations();
 	return (
-		<div className="flex min-h-[60vh] flex-col items-center justify-center gap-4">
+		<div className="flex min-h-dvh flex-col items-center justify-center gap-4">
 			<HugeiconsIcon
 				icon={RadialIcon}
 				className="size-10 animate-spin text-system-accent"

@@ -35,7 +35,9 @@ export function CommentThread({
 	return (
 		<div
 			className={
-				depth > 0 ? "ml-4 border-[--system-border] border-l-2 pl-3" : ""
+				depth > 0
+					? "ml-4 rounded-lg border border-[--system-border] bg-[--system-surface-secondary] p-3"
+					: ""
 			}
 		>
 			{filtered.map((comment) => (

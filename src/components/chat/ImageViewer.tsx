@@ -22,7 +22,7 @@ export function ImageViewer({ src, alt, open, onClose }: ImageViewerProps) {
 			<DialogPortal>
 				<DialogOverlay className="bg-black/95" />
 				<DialogContent
-					className="inset-0 m-0 h-[100dvh] w-screen max-w-none rounded-none border-0 p-0"
+					className="inset-0 m-0 h-dvh w-screen max-w-none rounded-none border-0 p-0"
 					showCloseButton={false}
 				>
 					<div className="relative flex h-full w-full items-center justify-center">

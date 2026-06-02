@@ -85,13 +85,13 @@ export function StudyTopicCard({
 					>
 						<Badge
 							variant="outline"
-							className="rounded-full border-none bg-[--system-accent]/10 px-3 py-0.5 font-medium text-[10px]"
+							className="ios-caption-3 rounded-full border-none bg-[--system-accent]/10 px-3 py-0.5 font-medium"
 						>
 							{topic.subject}
 						</Badge>
 						<Badge
 							className={cn(
-								"rounded-full px-3 py-0.5 font-medium text-[10px] uppercase",
+								"ios-caption-3 rounded-full px-3 py-0.5 font-medium uppercase",
 								getDifficultyColor(topic.difficulty),
 							)}
 						>

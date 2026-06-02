@@ -14,7 +14,7 @@ import { LocalDataNotice } from "@/components/shared/local-data-notice";
 import { DiscussWrongAnswer } from "@/components/study-groups/discuss-wrong-answer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import {
 	Select,
 	SelectContent,
@@ -39,7 +39,7 @@ function ErrorTypeSelect({
 }) {
 	return (
 		<Select value={value} onValueChange={(v) => v && onChange(v as ErrorType)}>
-			<SelectTrigger className="h-8 w-[180px] text-xs">
+			<SelectTrigger className="h-8 w-44 text-xs">
 				<SelectValue placeholder="Error type" />
 			</SelectTrigger>
 			<SelectContent>
@@ -139,7 +139,7 @@ export default function ReviewPage() {
 							setFilterTopic("");
 						}}
 					>
-						<SelectTrigger className="w-[160px]">
+						<SelectTrigger className="w-40">
 							<SelectValue placeholder="All subjects" />
 						</SelectTrigger>
 						<SelectContent>
@@ -160,7 +160,7 @@ export default function ReviewPage() {
 								setFilterTopic(v === "__all__" ? "" : v);
 							}}
 						>
-							<SelectTrigger className="w-[160px]">
+							<SelectTrigger className="w-40">
 								<SelectValue placeholder="All topics" />
 							</SelectTrigger>
 							<SelectContent>
@@ -208,8 +208,11 @@ export default function ReviewPage() {
 							review
 						</p>
 						{entries.map((entry) => (
-							<Card key={entry.id}>
-								<CardHeader className="pb-2">
+							<div
+								key={entry.id}
+								className="overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors"
+							>
+								<div className="flex flex-col gap-2 p-4 pb-2">
 									<div className="flex flex-wrap items-center gap-2">
 										<Badge variant="outline">{entry.subject}</Badge>
 										<Badge variant="secondary" className="text-xs">
@@ -224,11 +227,11 @@ export default function ReviewPage() {
 											onChange={(v) => handleErrorTypeChange(entry.id ?? 0, v)}
 										/>
 									</div>
-									<CardTitle className="mt-2 font-semibold text-base">
+									<h3 className="mt-2 font-semibold text-base">
 										<MarkdownRenderer content={entry.questionText} />
-									</CardTitle>
-								</CardHeader>
-								<CardContent className="flex flex-col gap-3">
+									</h3>
+								</div>
+								<div className="flex flex-col gap-3 p-4 pt-0">
 									<div className="grid grid-cols-2 gap-3">
 										<div className="rounded-lg bg-destructive/5 p-3">
 											<p className="mb-1 font-medium text-destructive text-xs">
@@ -268,8 +271,8 @@ export default function ReviewPage() {
 											</Button>
 										)}
 									</div>
-								</CardContent>
-							</Card>
+								</div>
+							</div>
 						))}
 					</div>
 				)}

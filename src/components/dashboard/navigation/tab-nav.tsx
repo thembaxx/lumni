@@ -66,7 +66,7 @@ export function TabNav({
 					}}
 				>
 					<TabsList
-						className="relative grid h-12 grid-cols-3 rounded-2xl border border-border/40 bg-secondary/60 p-1 shadow-sm backdrop-blur-md"
+						className="relative grid h-12 grid-cols-3 rounded-2xl border border-border/40 bg-system-background p-1 shadow-sm"
 						role="tablist"
 					>
 						<span
