@@ -199,6 +199,7 @@ export interface GenerateResult {
 	count: number;
 	type: string;
 	jobIds: number[];
+	sources?: { url: string; title: string }[];
 }
 
 export interface GradeResult {

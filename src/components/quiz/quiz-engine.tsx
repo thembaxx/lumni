@@ -62,9 +62,12 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 		[subjectId],
 	);
 
-	const { questions, isLoading, isError } = useQuestionEngine(engineParams, {
-		enabled: true,
-	});
+	const { questions, sources, isLoading, isError } = useQuestionEngine(
+		engineParams,
+		{
+			enabled: true,
+		},
+	);
 
 	const { state, actions } = useQuizSession(questions ?? []);
 	const sessionStarted = useRef(false);
@@ -194,6 +197,7 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 								state.elapsedTime,
 								incorrectAnswers,
 							)}
+							sources={sources}
 							onRestart={() => {
 								setIncorrectAnswers([]);
 								sessionStarted.current = false;

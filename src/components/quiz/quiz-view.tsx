@@ -57,6 +57,7 @@ export function QuizView({
 		competencyData,
 		resolvedTopic,
 		questions,
+		sources,
 		isLoading,
 		isError,
 		state,
@@ -164,6 +165,7 @@ export function QuizView({
 				correctAnswers={state.correctAnswers}
 				elapsedTime={state.elapsedTime}
 				subject={selectedSubject ?? "Quiz"}
+				sources={sources}
 				onRestart={handleRestart}
 				onDashboard={handleStop}
 			/>

@@ -56,11 +56,16 @@ export class LearningOrchestrator {
 			duration: Date.now() - startTime,
 		});
 
+		const ragContext = this.engine.getLastRagContext();
+		const sources =
+			ragContext?.sources.map((s) => ({ url: s.url, title: s.title })) ?? [];
+
 		return {
 			questions: sliced,
 			count: sliced.length,
 			type: serializeQuestionType(questionType),
 			jobIds,
+			sources,
 		};
 	}
 

@@ -5,6 +5,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { m, useSpring, useTransform } from "framer-motion";
 import { useEffect } from "react";
 import { AccuracyBar } from "@/components/shared/accuracy-bar";
+import { VerifiedByPill } from "@/components/tools/communication/verified-by-pill";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { iOSEase, springTransition } from "@/lib/utils/animation";
@@ -21,6 +22,7 @@ interface QuizResultProps {
 			correctAnswer: string;
 		}[];
 	};
+	sources?: { url: string; title: string }[];
 	onRestart: () => void;
 	onClose?: () => void;
 }
@@ -112,7 +114,12 @@ function getMessage(accuracy: number) {
 	};
 }
 
-export function QuizResult({ results, onRestart, onClose }: QuizResultProps) {
+export function QuizResult({
+	results,
+	sources,
+	onRestart,
+	onClose,
+}: QuizResultProps) {
 	const { totalQuestions, correctAnswers, accuracy, incorrectAnswers } =
 		results;
 
@@ -205,6 +212,8 @@ export function QuizResult({ results, onRestart, onClose }: QuizResultProps) {
 						</div>
 					</m.div>
 				)}
+
+				<VerifiedByPill sources={sources ?? []} />
 			</Card>
 
 			<m.div

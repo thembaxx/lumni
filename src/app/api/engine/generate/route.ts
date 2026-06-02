@@ -38,6 +38,7 @@ export const POST = createRouteHandler({
 				delivered < requested
 					? `Only ${delivered} of ${requested} questions could be generated.`
 					: undefined,
+			sources: result.sources ?? [],
 		};
 	},
 });

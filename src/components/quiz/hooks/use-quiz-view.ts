@@ -45,9 +45,12 @@ export function useQuizView({
 		],
 	);
 
-	const { questions, isLoading, isError } = useQuestionEngine(engineParams, {
-		enabled: sessionActive && !!selectedSubject,
-	});
+	const { questions, sources, isLoading, isError } = useQuestionEngine(
+		engineParams,
+		{
+			enabled: sessionActive && !!selectedSubject,
+		},
+	);
 
 	const { state, actions } = useQuizSession(questions ?? [], { maxTime });
 
@@ -258,6 +261,7 @@ export function useQuizView({
 		competencyData,
 		resolvedTopic,
 		questions,
+		sources,
 		isLoading,
 		isError,
 		state,

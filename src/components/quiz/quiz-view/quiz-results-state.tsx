@@ -8,6 +8,7 @@ interface QuizResultsStateProps {
 	correctAnswers: number;
 	elapsedTime: number;
 	subject: string;
+	sources?: { url: string; title: string }[];
 	onRestart: () => void;
 	onDashboard: () => void;
 }
@@ -17,6 +18,7 @@ export function QuizResultsState({
 	correctAnswers,
 	elapsedTime,
 	subject,
+	sources,
 	onRestart,
 	onDashboard,
 }: QuizResultsStateProps) {
@@ -28,6 +30,7 @@ export function QuizResultsState({
 					correctAnswers={correctAnswers}
 					elapsedTime={elapsedTime}
 					subject={subject ?? "Quiz"}
+					sources={sources}
 					onRestart={onRestart}
 					onDashboard={onDashboard}
 				/>

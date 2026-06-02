@@ -14,6 +14,7 @@ interface GenerateResult {
 	questions: Question[];
 	count: number;
 	type: string;
+	sources?: { url: string; title: string }[];
 }
 
 interface HintResult {
@@ -162,6 +163,7 @@ export function useQuestionEngine(
 	return {
 		questions,
 		count: query.data?.count ?? 0,
+		sources: query.data?.sources ?? [],
 		isLoading: query.isLoading,
 		isFetching: query.isFetching,
 		error: query.error,

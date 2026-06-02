@@ -11,6 +11,7 @@ import { useTranslations } from "next-intl";
 import { Confetti } from "@/components/celebration";
 import { ProgressDots } from "@/components/shared/progress-dots";
 import { ShareResultButton } from "@/components/shared/share-button";
+import { VerifiedByPill } from "@/components/tools/communication/verified-by-pill";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -24,6 +25,7 @@ interface QuizResultsCardProps {
 	correctAnswers: number;
 	elapsedTime: number;
 	subject: string;
+	sources?: { url: string; title: string }[];
 	onRestart?: () => void;
 	onDashboard?: () => void;
 	className?: string;
@@ -34,6 +36,7 @@ export function QuizResultsCard({
 	correctAnswers,
 	elapsedTime,
 	subject,
+	sources,
 	onRestart,
 	onDashboard,
 	className,
@@ -231,6 +234,8 @@ export function QuizResultsCard({
 								</m.div>
 							</m.div>
 						</section>
+
+						<VerifiedByPill sources={sources ?? []} />
 
 						{(onRestart || onDashboard) && (
 							<m.div
