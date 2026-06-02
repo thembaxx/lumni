@@ -5,7 +5,6 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 import { useTheme } from "@/components/theme";
 import { Button } from "@/components/ui/button";
-import { iOSEase } from "@/lib/utils/animation";
 
 type Theme = "system" | "dark" | "light";
 
@@ -35,10 +34,11 @@ export function ThemeSwitcher() {
 
 	return (
 		<div className="flex items-center justify-between gap-3">
-			{/* <p className="text-xs font-medium text-foreground">{labels[theme]}</p> */}
 			<Button
+				variant="ghost"
+				size="icon"
 				onClick={() => setTheme(nextTheme())}
-				className="flex items-center justify-center rounded-lg border border-border bg-card p-2 transition-colors hover:bg-accent"
+				className="border border-border"
 				aria-label={`Current theme: ${labels[theme]}. Click to switch to ${labels[nextTheme()]}`}
 			>
 				<div className="relative size-4">
@@ -49,10 +49,8 @@ export function ThemeSwitcher() {
 							animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
 							exit={{ opacity: 0, scale: 0.25, filter: "blur(4px)" }}
 							transition={{
-								type: "spring",
-								duration: 0.3,
-								bounce: 0,
-								ease: iOSEase,
+								duration: 0.2,
+								ease: [0.16, 1, 0.3, 1],
 							}}
 						>
 							<HugeiconsIcon
