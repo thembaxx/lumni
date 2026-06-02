@@ -6,14 +6,14 @@ Lumni is an offline-capable, mobile-first SA Matric exam prep platform using Nex
 
 ## Current Mission
 
-Web-grounded AI phase complete: TinyFish RAG shipped across 3 PRs (`f5313f32` foundation, `6c7c2ff1` solve, `dd3940c4` quiz generation) + Q7 follow-up (`2c16e85e` quiz results page surfaces RAG sources). 1203 tests pass. Active: pick next P1 — open candidates are Q4 per-question source persistence on `Question` type, or new features/bug fixes.
+Web-grounded AI phase complete: TinyFish RAG shipped across 3 PRs (`f5313f32` foundation, `6c7c2ff1` solve, `dd3940c4` quiz generation) + Q7 follow-up (`2c16e85e` quiz results page surfaces RAG sources) + Q4 follow-up (`f769f322` per-question source persistence on `Question.webSources` via hybrid AI-cite + fallback). 1220 tests pass. Active: pick next P1 or new features/bug fixes.
 
 ## System at a Glance
 
 ```
 Browser (React 19 + Next.js 16)
   ├── Dexie IndexedDB   ← L1 cache (questions 24h, visuals 7d, quizPacks 30d, tinyfishCache 14d)
-  │     ├── 33 tables (v25 schema)
+  │     ├── 33 tables (v26 schema — v25+ adds tinyfishCache + tinyfishUsage, v26 lazy-adds Question.webSources)
   │     ├── QuizPacks + packQuestions (offline packs)
   │     ├── Flashcard SM-2 state + SR settings
   │     ├── Exam sessions (auto-save 30s intervals, 4hr stale expiry)
@@ -25,7 +25,7 @@ Browser (React 19 + Next.js 16)
         │
 Next.js API Routes (~41 groups, most via createRouteHandler factory)
   ├── QuestionEngine     → Gemini → Nvidia NIM → Groq (AI chain)
-  │     └── PromptManager injects TinyFish <reference_material> XML into user prompt
+  │     └── PromptManager injects TinyFish <reference_material> XML + sourceRefs appendix into user prompt
   ├── VisualEngine       → Konva (STEM) or Wikimedia (non-STEM)
   ├── QuizPackService    → bulk generate → Dexie storage
   ├── LearningOrchestrator → composes Engine + queued side effects
@@ -35,7 +35,8 @@ Next.js API Routes (~41 groups, most via createRouteHandler factory)
   │     ├── 24-subject allowlist + per-user daily limit
   │     ├── 3s Promise.race timeout + try/catch fail-open
   │     ├── Consent gated via getDataSharingConsent()
-  │     └── Surfaces on 3 UIs: solver-result-view, quiz-result, quiz-results-card
+  │     ├── Per-question: source-mapper validates AI-cited sourceRefs: number[], falls back to all 3 batch sources
+  │     └── Surfaces on 4 UIs: solver-result-view, quiz-result, quiz-results-card, question-card-feedback
   ├── QueueCore          → Dexie-backed job queue (retry + backoff)
   ├── RateLimiter+TokenTracker → auth limits + AI budget caps
   └── createRouteHandler → generic factory (auth guard + body parse + validation + error wrap)
@@ -87,10 +88,10 @@ Appwrite Cloud
 - **Caching tiers**: Dexie L1 (fastest, per-device) → Appwrite L2 (cross-session) → AI/Wikimedia L3 (on-demand fallback). Visual pre-caching fires on question generation automatically.
 - **Diagrams**: STEM subjects (30) → Konva renderers (geometry, chart, chemistry, graph, force-vector, circuit, wave, motion, node-flow, custom-svg). Non-STEM → Wikimedia Commons images. Fallback: Mermaid.js.
 - **Quiz packs**: `src/lib/quiz-packs/` — `QuizPackService`, Dexie v18 (`quizPacks` + `packQuestions` tables), `POST /api/quiz-packs/generate` (rate-limited), `useQuizPacks()` hook, `<OfflinePackManager>` with status badges (generating/ready/expired/failed).
-- **Dexie schema**: v24 — 24 tables including `questions`, `visuals`, `examDates`, `questionRatings`, `wrongAnswers`, `flashcards`, `srsettings`, `quizPacks`, `packQuestions`, `jobs`, `syncQueue`, `competencies`, `userConsents`, etc.
+- **Dexie schema**: v26 — 33 tables. v24→v25 added `tinyfishCache` + `tinyfishUsage`. v26 lazy-adds `Question.webSources?: { url, title }[]` (no schema string change — existing rows load with `webSources: undefined`, no backfill).
 - **E2E testing**: Playwright 1.60.0 configured with smoke tests for homepage, quiz, and exam-dates pages.
 - **Storybook**: 10.4.1 with `@storybook/nextjs`, config in `main.ts` + `preview.ts`, initial stories for ShareButton and Badge.
-- **TinyFish RAG**: `src/lib/tinyfish/` — 7 modules (`client`, `cache`, `in-flight`, `allowlist`, `wrap`, `types`, `index`). Injects live CAPS/DBE sources into both `/api/solve` (single-source, `getSourceForQuestion`) and `/api/engine/generate` (3-source, `searchWithRAG` → `fetchRagContext`). XML-wrapped `<reference_material>` block in user prompt + `buildPromptInstruction()` framing in system prompt. Dexie v25 cache (14d TTL), in-flight dedup, 24-subject allowlist, 20 fetches/day/user, 3s timeout fail-open. Consent gated via `getDataSharingConsent()`. DI pattern (`deps?` arg) used throughout to avoid Bun `mock.module` pollution. `QuestionEngine.lastRagContext` shares the RAG context across all questions in one batch; `engine.getLastRagContext()` surfaces it for the API response. `VerifiedByPill` is rendered by 3 UIs: `solver-result-view`, `quiz-result` (subjectId flow), `quiz-results-card` (full quiz flow). See `docs/adr/0010-tinyfish-rag-integration.md`.
+- **TinyFish RAG**: `src/lib/tinyfish/` — 7 modules (`client`, `cache`, `in-flight`, `allowlist`, `wrap`, `types`, `index`). Injects live CAPS/DBE sources into both `/api/solve` (single-source, `getSourceForQuestion`) and `/api/engine/generate` (3-source, `searchWithRAG` → `fetchRagContext`). XML-wrapped `<reference_material>` block in user prompt + `buildPromptInstruction()` framing in system prompt. Dexie v25 cache (14d TTL), in-flight dedup, 24-subject allowlist, 20 fetches/day/user, 3s timeout fail-open. Consent gated via `getDataSharingConsent()`. DI pattern (`deps?` arg) used throughout to avoid Bun `mock.module` pollution. `QuestionEngine.lastRagContext` shares the RAG context across all questions in one batch; `engine.getLastRagContext()` surfaces it for the API response. `VerifiedByPill` is rendered by 3 UIs: `solver-result-view`, `quiz-result` (subjectId flow), `quiz-results-card` (full quiz flow). Per-question attribution via `Question.webSources?: { url, title }[]` (Q4 follow-up, hybrid AI-cite `sourceRefs: number[]` with all-sources fallback in `src/lib/question-engine/source-mapper.ts`); rendered by 4th UI: `question-card-feedback` via `<SourceAttributionPill>`. See `docs/adr/0010-tinyfish-rag-integration.md`.
 - **Exam_dates sync**: Background job type `"appwrite-exam-dates-sync"` with `upsertDocument` handler; `syncExamDatesToAppwrite()` enqueues job; `syncExamDatesDirect()` for immediate writes.
 - **Design**: "The Emerald Study Room" — Study Green accent (`oklch(52% 0.18 146)`), Warm Paper neutrals, Outfit 800 / Geist 400 fonts, 20px card radius, 44px touch targets, stacked lightness over shadows.
 - **Auth**: Anonymous users auto-created; sign-up upgrades anonymous session. Admin uses separate magic-link + OTP. Rate limits: 3 sign-in/5min, 1 magic link/5min.
@@ -131,7 +132,7 @@ Appwrite Cloud
 | `prompt-catalog.md` | Catalog of all discoverable prompt contexts (agents, specs, plans) | Reference |
 | `memory.md` | All decisions (ADR-lite), patterns, failures, open questions, resources | High |
 | `system-design.md` | Mermaid architecture diagram, data model ERD, component dictionary, API list, NFRs, roadmap | High |
-| `AGENTS.md` | Engine architecture, math conventions, session 1-20 history, AI provider chain | High |
+| `AGENTS.md` | Engine architecture, math conventions, session 1-21 history, AI provider chain | High |
 | `CONTEXT.md` | Domain glossary — prepend to any agent prompt | High |
 | `DESIGN.md` | "The Emerald Study Room" design system (342 lines) | Medium |
 | `TODO.md` | Outstanding tasks: custom domain, test coverage, exam dates items | Medium |

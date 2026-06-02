@@ -385,6 +385,29 @@ const systemPrompt = webContext.xml
 
 **Final test baseline:** 1203 pass / 10 pre-existing Appwrite failures / 5 pre-existing Playwright E2E errors. +6 from Session 19, no regressions.
 
+### Session 21 — TinyFish Q4 follow-up (June 2026)
+
+**Per-question RAG source persistence** — commit `f769f322`. Picks up the "Q4 deferred" follow-up from Session 20. Hybrid AI-cite + fallback pipeline so each generated `Question` carries the web sources it was grounded in.
+
+- **`Question.webSources?: { url, title }[]`** added to engine types. No `content` field — matches the `VerifiedByPill.Source` shape from PR 2, keeps storage small.
+- **Dexie v26** — same schema string as v25 (no new index, plain JSON field on existing tables). Lazy rehydrate: existing rows load with `webSources: undefined`, no backfill needed.
+- **`PromptManager.appendSourceRefsAppendix()`** appended to the user prompt when `ragContext.sources` is non-empty. Instructs the model to return `sourceRefs: number[]` per question referencing the 1-indexed sources in the XML block.
+- **`src/lib/question-engine/source-mapper.ts`** (new): `mapSourceRefs(raw, sources)` validates integers, dedupes, returns `QuestionSource[] | undefined` (undefined = trigger fallback). `attachWebSources(question, ragContext)` maps or falls back to all 3 batch sources, mutates in place, strips the `sourceRefs` field so it never lands in Dexie.
+- **`QuestionProcessor.generate()`** calls `attachWebSources()` on each parsed question before returning.
+- **`<SourceAttributionPill>`** (new): small inline non-collapsible pill rendered on `QuestionCardFeedback`. Truncates to 2 sources with `+N more` suffix. Renders nothing on empty. `role="note"`, `aria-label` from local pluralization. Uses `CheckmarkCircle01Icon`. Visually lighter than the collapsible `VerifiedByPill` on the results page.
+- **`QuestionCardFeedback`** accepts optional `question.webSources?: SourceAttributionPillSource[]` and renders the pill after the feedback block, before the steps block.
+- **Strings are hardcoded** in the new pill (not `useTranslations`) — matches the pattern of other small components (`QuizResult` etc.) and avoids a `next-intl` provider setup in component tests.
+
+**Tests (+17, 1220 pass):**
+- 12 in new `source-mapper.test.ts` — 6 for `mapSourceRefs` (valid, dedup, missing, non-integer, out-of-range, non-array) + 6 for `attachWebSources` (valid mapping, fallback on missing, fallback on invalid, no-op on empty ragContext, no-op on undefined ragContext, strips `sourceRefs` field).
+- 5 in new `source-attribution-pill.test.tsx` — renders nothing on empty/undefined, single source w/ link attrs, multiple sources w/ `+N more` overflow, custom className. Uses `container.getElementsByTagName("a")` to avoid happy-dom's `querySelector` SyntaxError bug.
+
+**Architectural takeaway** (D035): Hybrid matching is the right default for AI-cited attribution. AI cites (cheap, scales with model quality), mapper validates (catches drift), engine falls back (guarantees coverage). Avoids brittle title-matching heuristics while still preferring the model's judgment. Companion pattern: strip the AI-only field before persistence so it never reaches storage.
+
+**Test pollution lesson extended:** `container.querySelector("a")` and `screen.queryByText` both trigger the same happy-dom `new this.window.SyntaxError(...)` failure. Use `container.textContent` regex matching AND `getElementsByTagName` / `getElementsByClassName` (DOM API, no selector parsing) for all test element assertions.
+
+**Final test baseline:** 1220 pass / 10 pre-existing Appwrite failures / 5 pre-existing Playwright E2E errors. +17 from Session 20, no regressions.
+
 ### Known limitations (won't fix)
 
 - `analytics-service.ts` comparative analytics depends on other users' data in Appwrite; falls back to estimates

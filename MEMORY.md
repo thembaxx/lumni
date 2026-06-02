@@ -1,8 +1,8 @@
 # Memory Consolidation — Lumni
 
 **Generated:** 2026-05-29  
-**Last updated:** 2026-06-02 (Sessions 15-20, including TinyFish RAG + Q7 follow-up)
-**Sources:** MEMORY.md, AGENTS.md (Sessions 1-20), implementation-notes.md, CONTEXT.md, docs/adr/
+**Last updated:** 2026-06-02 (Sessions 15-21, including TinyFish RAG + Q4 per-question source persistence)
+**Sources:** MEMORY.md, AGENTS.md (Sessions 1-21), implementation-notes.md, CONTEXT.md, docs/adr/
 
 ---
 
@@ -45,6 +45,7 @@
 | D032 | DI (`deps?: { ... }` arg) over `Bun.mock.module` for RAG-touching code | `mock.module` is process-wide in Bun; same specifier from different test files collides; DI lets each test inject a clean stub | 2026-06-02 |
 | D033 | RAG fetch once per batch (not per question) | `QuestionEngine.lastRagContext` shared across all `QuestionProcessor.generate` calls in a single `generateInternal`; cuts network calls and ensures batch coherence | 2026-06-02 |
 | D034 | Quiz results page surfaces RAG sources via `getLastRagContext()` | `LearningOrchestrator.generateQuestionSet()` calls `engine.getLastRagContext()` after `generate()` and maps `RagContext.sources` (full WebSource with content) → `{ url, title }[]` (lightweight) for the API wire; no engine signature change needed. Two quiz result surfaces (`QuizResult` + `QuizResultsCard`) both consume the field | 2026-06-02 |
+| D035 | Q4 hybrid source matching: AI-cited `sourceRefs: number[]` with all-sources fallback | Model returns `sourceRefs` per question referencing 1-indexed sources in the XML block; `mapSourceRefs()` validates integers in range and dedupes; on missing/invalid/non-array/out-of-range, `attachWebSources()` falls back to attaching all 3 batch sources so attribution is never lost. `sourceRefs` is stripped from the question after mapping (lives only in the AI wire) | 2026-06-02 |
 
 ### Reversals
 
@@ -77,6 +78,8 @@
 - **DI test pattern for cross-test pollution**: Functions that touch network/IO accept a `deps` arg (`deps?: { fetchSources?, buildInstruction? }`). Tests instantiate the function with stub `deps` instead of `Bun.mock.module`. Avoids process-wide specifier collisions across test files.
 - **Fetch-once-per-batch pattern**: Higher-level orchestrator fetches RAG once, threads context to all per-item processors via a property (`this.lastRagContext`) and an explicit function arg. Saves N-1 fetches per batch and ensures all items are grounded in the same sources.
 - **`getLastRagContext()` surface pattern**: Engine exposes in-memory batch context via a read-only getter; orchestrator pulls it AFTER `generate()` returns, maps the full source schema down to the wire shape, and threads it through API → hook → component. Avoids touching the `generate()` signature while still giving UI access to the per-batch RAG metadata. Reusable for any future "sidecar context" data the engine computes.
+- **Hybrid AI-cite + fallback pattern**: Prompt the AI to return `sourceRefs: number[]` per item referencing an indexed source list; validate + map to typed objects; fall back to a sensible default (e.g. all sources) on missing/invalid input. Guarantees attribution is never lost while still preferring the model's judgment. Companion: strip the AI-only field before persistence so it never lands in storage.
+- **DOM API over `querySelector`/`querySelectorAll` in tests**: happy-dom's SelectorParser constructs `new this.window.SyntaxError(...)` to throw invalid-selector errors; that constructor is sometimes undefined in test setups, causing `TypeError: undefined is not a constructor` in `node_modules/happy-dom/.../SelectorParser.js:127`. Use `getElementsByTagName` / `getElementsByClassName` (DOM API, no selector parsing) and `container.textContent` (regex matching) for all test assertions.
 
 ---
 
@@ -89,7 +92,7 @@
 | Duplicate sync hooks | Multiple hooks (`useAutoSync`, `useEnhancedSync`, etc.) that all processed the same queue | Consolidate to single `src/lib/sync-queue.ts` processor |
 | Competency `proficiency` vs `score` field | Job processor wrote to `proficiency` but all readers expected `score` | Fix both write paths + add backward-compat fallback in readers |
 | Duplicated generate/grade in both QuestionEngine and LearningOrchestrator | Two modules with identical logic — bugs had to be fixed in two places | Compose, don't duplicate: Orchestrator calls Engine |
-| happy-dom `querySelectorAll` SyntaxError | `screen.getByText` / `screen.queryByText` throw `TypeError: undefined is not a constructor (evaluating 'new this.window.SyntaxError(...)')` in `node_modules/happy-dom/.../SelectorParser.js:127` | Use `container.textContent` with regex matching for component render assertions in `@testing-library/react` + happy-dom test setups |
+| happy-dom `querySelectorAll` SyntaxError | `screen.getByText` / `screen.queryByText` / `container.querySelector("a")` throw `TypeError: undefined is not a constructor (evaluating 'new this.window.SyntaxError(...)')` in `node_modules/happy-dom/.../SelectorParser.js:127` | Use `container.textContent` with regex matching AND `getElementsByTagName` / `getElementsByClassName` (DOM API, no selector parsing) for all component render assertions in `@testing-library/react` + happy-dom test setups |
 
 ---
 
@@ -109,7 +112,7 @@
 | GDPR/POPIA legal compliance? | ✅ Done — consent management, cookie banner, TOS versioning, account deletion, data export (Session 17) | 2026-05-29 |
 | Accessibility standard? | ✅ WCAG 2.2 AA — 30+ components audited, 19 critical/high fixes (Session 19) | 2026-06-01 |
 | Test suite health? | ✅ 1109 pass, 5 fail (e2e only) — fixed module cache conflicts + missing mocks (Session 18) | 2026-06-01 |
-| Web-grounded AI for solve + quiz? | ✅ TinyFish RAG — 3 PRs (`f5313f32` foundation, `6c7c2ff1` solve, `dd3940c4` quiz) — 1197 pass (Session 19). ✅ Q7 follow-up shipped — quiz results page now surfaces RAG sources via `getLastRagContext()` (`2c16e85e`) — 1203 pass (Session 20) | 2026-06-02 |
+| Web-grounded AI for solve + quiz? | ✅ TinyFish RAG — 3 PRs (`f5313f32` foundation, `6c7c2ff1` solve, `dd3940c4` quiz) — 1197 pass (Session 19). ✅ Q7 follow-up shipped — quiz results page now surfaces RAG sources via `getLastRagContext()` (`2c16e85e`) — 1203 pass (Session 20). ✅ Q4 follow-up shipped — per-question RAG sources persist to `Question.webSources` via hybrid AI-cite + fallback (`f769f322`) — 1220 pass (Session 21) | 2026-06-02 |
 
 ---
 

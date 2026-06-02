@@ -86,3 +86,4 @@ graph TD
 - Consolidated Spaced Repetition logic.
 - **Shipped TinyFish RAG across 3 PRs** (`f5313f32` foundation + Dexie v25, `6c7c2ff1` solve + VerifiedByPill, `dd3940c4` quiz + rag-enricher + 3s timeout). 1197 tests pass.
 - **Q7 follow-up shipped** (`2c16e85e`): Quiz results page now surfaces RAG sources via `engine.getLastRagContext()`; both `QuizResult` and `QuizResultsCard` render `<VerifiedByPill sources={...} />`. 1203 tests pass.
+- **Q4 follow-up shipped** (`f769f322`): Per-question RAG source persistence on `Question.webSources?: { url, title }[]` (Dexie v26, lazy rehydrate). Hybrid AI-cite `sourceRefs: number[]` with all-sources fallback in `src/lib/question-engine/source-mapper.ts`. New `<SourceAttributionPill>` rendered on `QuestionCardFeedback` (4th pill consumer, lighter inline pill). 1220 tests pass.

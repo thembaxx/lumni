@@ -275,7 +275,33 @@ All 21 items across P2 and P3 are implemented. Total changes:
 - [x] Pre-commit hook (biome + tsc) passed at commit
 
 ### Open follow-ups
-- **Q4 — Per-question source persistence** (next-up, ~2-3h): add `webSources?: {url, title}[]` to `Question` type, Dexie v26 migration, `QuestionEngine` writes per-question sources, `QuestionCard` renders per-question "grounded in" pill. Currently sources are batch-scoped only.
+- **Appwrite SA Region console verification**: code already points to `jnb.cloud.appwrite.io`; only remaining step is Appwrite console-side verification.
+
+## ✅ Session 21 — TinyFish Q4 follow-up (June 2026)
+
+### Per-question RAG source persistence <!-- linear-id: LUM-TBD -->
+- [x] **Wire per-question sources end-to-end** (commit `f769f322`): hybrid AI-cited `sourceRefs: number[]` matching with all-sources fallback. When the model returns valid `sourceRefs`, only those are attached; if the field is missing/invalid/non-array/out-of-range, the engine falls back to attaching all 3 batch sources so attribution is never lost.
+- [x] **Schema**: `Question.webSources?: { url, title }[]` (lightweight, no content). Dexie v26 — same schema string as v25 (lazy rehydrate: existing rows load with `webSources: undefined`, no backfill).
+- [x] **Prompt injection**: `PromptManager.appendSourceRefsAppendix()` appended to the user prompt when `ragContext.sources` is non-empty. Instructs the model to return `sourceRefs: number[]` per question referencing the 1-indexed sources in the XML block.
+- [x] **Source mapper** (`src/lib/question-engine/source-mapper.ts`): `mapSourceRefs(raw, sources)` validates integers, dedupes, returns `QuestionSource[] | undefined` (undefined = fall back). `attachWebSources(question, ragContext)` maps or falls back, mutates in place, strips the `sourceRefs` field so it never lands in Dexie.
+- [x] **Processor integration**: `QuestionProcessor.generate()` calls `attachWebSources()` on each parsed question before returning.
+- [x] **UI — `SourceAttributionPill`**: New small inline non-collapsible pill rendered on `QuestionCardFeedback`. Truncates to 2 sources with `+N more` suffix. Renders nothing on empty. `role="note"`, `aria-label` from local pluralization. Uses `CheckmarkCircle01Icon`. Lighter than the collapsible `VerifiedByPill` on the results page.
+- [x] **Tests** (+17, 1220 pass): 12 in `source-mapper.test.ts` (6 `mapSourceRefs` + 6 `attachWebSources`) + 5 in `source-attribution-pill.test.tsx` (renders nothing on empty/undefined, single source w/ link attrs, multiple sources w/ `+N more` overflow, custom className). Used `container.getElementsByTagName("a")` to avoid happy-dom's `querySelector` SyntaxError bug.
+
+### Architecture decisions
+- **Hybrid matching**: AI cites, mapper validates, engine falls back. Avoids brittle title matching while guaranteeing attribution.
+- **`Question.webSources` is plain JSON, not indexed**: per-question search by source URL is out of scope; no new Dexie index needed.
+- **`sourceRefs` field is stripped after mapping**: lives only in the AI wire, never reaches Dexie storage.
+- **Hardcoded strings in `SourceAttributionPill`**: matches the pattern of other small components (`QuizResult`, etc.) and avoids a `next-intl` provider setup in component tests.
+- **Test pollution lesson extended**: `screen.queryByText` triggers the same happy-dom `querySelectorAll` SyntaxError as `screen.getByText`. Use `container.textContent` regex matching AND `getElementsByTagName` (DOM API, no selector parsing) for all element assertions.
+
+### Verification
+- [x] `bun test` — 1220 pass / 10 pre-existing Appwrite failures / 5 pre-existing Playwright E2E errors (+17 from Session 20, no regressions)
+- [x] `npx tsc --noEmit` — zero errors
+- [x] `npx biome check` — zero warnings on 9 changed files
+- [x] Pre-commit hook (biome + tsc) passed at commit
+
+### Open follow-ups
 - **Appwrite SA Region console verification**: code already points to `jnb.cloud.appwrite.io`; only remaining step is Appwrite console-side verification.
 
 ## ✅ Session 18 — Polish & Hardening (June 2026)

@@ -5,7 +5,7 @@
 AI-powered South African Matric (Grade 12) exam preparation platform. Offline-first architecture using Dexie (L1) and Appwrite (L2). Web-grounded AI via TinyFish RAG (solve + quiz). Design system is "Emerald Study Room" (Tailwind 4).
 
 ## CURRENT_FOCUS
-Web-grounded AI phase complete: TinyFish RAG shipped across 3 PRs (`f5313f32` foundation, `6c7c2ff1` solve, `dd3940c4` quiz generation) + Q7 follow-up (`2c16e85e` quiz results page surfaces RAG sources via `getLastRagContext()`). 1203 tests pass. Active: pick next P1 — Q4 per-question source persistence on `Question` type, or new features/bug fixes.
+Web-grounded AI phase complete: TinyFish RAG shipped across 3 PRs (`f5313f32` foundation, `6c7c2ff1` solve, `dd3940c4` quiz generation) + Q7 follow-up (`2c16e85e` quiz results page surfaces RAG sources via `getLastRagContext()`) + Q4 follow-up (`f769f322` per-question RAG source persistence on `Question.webSources` via hybrid AI-cite + fallback). 1220 tests pass. Active: pick next P1 or new features/bug fixes.
 
 ## KEY_CONSTRAINTS
 - **AI Budget**: 2000 global calls/day. Strict per-user caps: 20 gen, 100 grade, 20 hint, 50 visual, 20 RAG fetch.
@@ -20,6 +20,7 @@ Web-grounded AI phase complete: TinyFish RAG shipped across 3 PRs (`f5313f32` fo
 - **FlashcardEngine**: Unified SR logic (SM-2/FSRS) + daily limits + leech detection.
 - **Immersive Mode**: UI state that auto-hides core navigation for focus.
 - **Quiz Pack**: AI-generated question sets for offline study.
+- **SourceAttributionPill**: Inline non-collapsible pill on `QuestionCardFeedback` that surfaces per-question web sources. Lighter than the collapsible `VerifiedByPill` on the results page.
 
 ## DECISION_LOG
 - [D030] **Mega-component breakdown**: Overgrown files split into co-located subdirs.
@@ -32,12 +33,14 @@ Web-grounded AI phase complete: TinyFish RAG shipped across 3 PRs (`f5313f32` fo
 - [D037] **DI over `Bun.mock.module`**: Network/IO-touching functions accept a `deps` arg to avoid process-wide test pollution.
 - [D038] **RAG fetch once per batch**: `QuestionEngine.lastRagContext` shared across processors in a single `generateInternal` call.
 - [D039] **Quiz results page RAG sources** (`2c16e85e`): `LearningOrchestrator.generateQuestionSet()` calls `engine.getLastRagContext()` and maps to `{ url, title }[]` for the API wire; both `QuizResult` and `QuizResultsCard` render `<VerifiedByPill>`. `getLastRagContext()` getter pattern is reusable for any future "sidecar context" surfaced by the engine without touching the `generate()` signature.
+- [D040] **Per-question RAG source persistence** (`f769f322`): `Question.webSources?: { url, title }[]` (Dexie v26, lazy rehydrate). Hybrid AI-cite `sourceRefs: number[]` with all-sources fallback in `src/lib/question-engine/source-mapper.ts`. AI cites (cheap), mapper validates (catches drift), engine falls back (guarantees coverage). Companion pattern: strip the AI-only `sourceRefs` field before persistence so it never reaches storage. New `<SourceAttributionPill>` rendered on `QuestionCardFeedback` (4th pill consumer).
 
 ## KNOWLEDGE_GRAPH
 - `LearningOrchestrator` → `QuestionEngine` → `AI Providers` (Gemini/Nvidia/Groq)
 - `LearningOrchestrator` → `QuestionEngine` → `TinyFish RAG` (3s timeout, 14d cache)
-- `LearningOrchestrator` → `QuestionEngine` → `PromptManager` (injects `<reference_material>` XML)
+- `LearningOrchestrator` → `QuestionEngine` → `PromptManager` (injects `<reference_material>` XML + sourceRefs appendix)
 - `LearningOrchestrator.generateQuestionSet` → `engine.getLastRagContext()` → `QuizResult` + `QuizResultsCard` (Q7)
+- `QuestionEngine.generateInternal` → `source-mapper.attachWebSources()` → `Question.webSources` → `QuestionCardFeedback` (Q4)
 - `aiSolver.execute` → `TinyFish RAG` (1-source, 24h cache) → system+user prompt injection
 - `FlashcardEngine` → `Dexie` → `QueueCore` → `Appwrite`
 - `QuizPackService` → `QuestionEngine` → `Dexie` (v25)
@@ -50,7 +53,9 @@ Web-grounded AI phase complete: TinyFish RAG shipped across 3 PRs (`f5313f32` fo
 - **RAG Fetch (quiz)**: `const ctx = await fetchRagContext(subject, topic, userId);` → `PromptManager.getPrompt(type, params, ctx)`
 - **RAG Fetch (solve)**: `const ctx = await getSourceForQuestion(question, userId);` → inject into prompt
 - **Quiz results pill**: `<VerifiedByPill sources={sources ?? []} />` — wire `sources` from `useQuestionEngine()` (defaults to `[]`)
+- **Question feedback pill**: `<SourceAttributionPill sources={question.webSources} />` — wire from generated `Question` after `source-mapper` attaches (defaults to undefined = renders nothing)
 - **Engine sidecar context**: `const ctx = engine.getLastRagContext()` after `generate()`; map full schema down to wire shape — avoids touching `generate()` signature
+- **Hybrid AI-cite + fallback**: prompt model to return `sourceRefs: number[]` per item; validate + map to typed objects; fall back to all sources on missing/invalid; strip the AI-only field before persistence
 
 ## AVOID_LIST
 - **Space-y**: Avoid `space-y-*`, use `flex-col` + `gap-*`.
@@ -58,6 +63,7 @@ Web-grounded AI phase complete: TinyFish RAG shipped across 3 PRs (`f5313f32` fo
 - **Direct Appwrite Writes**: Use `QueueCore` for sync consistency.
 - **DeepSeek**: Removed from AI chain due to cost.
 - **`Bun.mock.module` for tinyfish**: Use DI (`deps` arg) instead — `mock.module` is process-wide.
+- **`querySelector` / `querySelectorAll` in tests**: happy-dom `SelectorParser` throws `TypeError` on `new this.window.SyntaxError`. Use `getElementsByTagName` / `getElementsByClassName` and `container.textContent` regex matching.
 
 ## PROMPT_LOOKUP_TABLE
 - If working on **Engines**, check `prompt-index.md` > `agent-engine-architecture`.

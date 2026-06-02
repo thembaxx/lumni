@@ -424,7 +424,7 @@ Client -> POST /api/quiz-packs/generate
 | P1 | i18n AF + ZU | Afrikaans 100%, isiZulu ~97% complete | ✅ Done |
 | P1 | WCAG 2.2 AA a11y audit + critical fixes | 30+ components audited, 11 critical + 8 high fixes | ✅ Done |
 | P1 | Web-grounded AI — TinyFish RAG (foundation + solve + quiz) | 3 PRs: `f5313f32` foundation (7 modules + Dexie v25), `6c7c2ff1` solve (DI + VerifiedByPill), `dd3940c4` quiz (PromptManager + rag-enricher + 3s timeout) | ✅ Done |
-| P2 | Per-question source persistence on `Question` type | Currently batch-level only via `lastRagContext`; need `Question.sources?: WebSource[]` for per-question attribution | Planned |
+| P2 | Per-question source persistence on `Question` type | Solved in `f769f322` — `Question.webSources?: { url, title }[]` (Dexie v26, lazy rehydrate); hybrid AI-cite `sourceRefs: number[]` with all-sources fallback via `src/lib/question-engine/source-mapper.ts`; new `<SourceAttributionPill>` renders on `QuestionCardFeedback` | ✅ Done |
 | P2 | VerifiedByPill on quiz results page | Solve-only today; data available via `QuestionEngine.getLastRagContext()` but no UI consumer | Planned |
 | P2 | Redis-backed RateLimiter + TokenTracker | Survives server restarts, shared across instances | Planned |
 | P2 | Keyboard-accessible flashcard deck | Full redesign for keyboard-only operation | Planned |
