@@ -172,6 +172,11 @@ export interface QuestionMetadata {
 	source?: "generated" | "imported" | "edited";
 }
 
+export interface QuestionSource {
+	url: string;
+	title: string;
+}
+
 export type Question<T extends QuestionType = QuestionType> = {
 	id: string;
 	type: T;
@@ -187,6 +192,7 @@ export type Question<T extends QuestionType = QuestionType> = {
 	media?: MediaContent[];
 	body: QuestionBody[T];
 	metadata?: QuestionMetadata;
+	webSources?: QuestionSource[];
 };
 
 export interface UserAnswer {

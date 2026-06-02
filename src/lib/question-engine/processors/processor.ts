@@ -1,6 +1,7 @@
 import { getAI } from "@/lib/ai";
 import { ensureArray, parseAIResponse } from "@/lib/ai/parse-response";
 import type { PromptManager, RagContext } from "../prompt-manager";
+import { attachWebSources } from "../source-mapper";
 import type {
 	GenerationParams,
 	GradingResult,
@@ -36,7 +37,13 @@ export class TypedQuestionProcessor<T extends QuestionType>
 		);
 		const parsed = parseAIResponse<Question<T>[]>(result, []);
 		if (!parsed) throw new Error(`AI generation failed for ${this.type}`);
-		return ensureArray(parsed.data);
+		const questions = ensureArray(parsed.data) as Array<
+			Question<T> & { sourceRefs?: unknown }
+		>;
+		for (const q of questions) {
+			attachWebSources(q, ragContext);
+		}
+		return questions;
 	}
 
 	async generateHint(question: Question<T>): Promise<string> {

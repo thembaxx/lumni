@@ -16,6 +16,10 @@ import { Button } from "@/components/ui/button";
 import type { useSolver } from "@/hooks/use-solver";
 import { cn } from "@/lib/shared";
 import { iOSEase } from "@/lib/utils/animation";
+import {
+	SourceAttributionPill,
+	type SourceAttributionPillSource,
+} from "../source-attribution-pill";
 import { StepByStep } from "../step-by-step";
 
 type Solver = ReturnType<typeof useSolver>;
@@ -48,6 +52,7 @@ interface QuestionCardFeedbackProps {
 		type: string;
 		subject: string;
 		hint?: string;
+		webSources?: SourceAttributionPillSource[];
 	};
 	effectiveSubject: string;
 	options: QuestionCardFeedbackOptions;
@@ -137,6 +142,9 @@ export function QuestionCardFeedback({
 						/>
 					</div>
 				</div>
+			)}
+			{question.webSources && question.webSources.length > 0 && (
+				<SourceAttributionPill sources={question.webSources} />
 			)}
 			{feedback?.feedback && (
 				<div className="flex justify-end">

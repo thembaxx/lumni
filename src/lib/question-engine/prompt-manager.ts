@@ -53,6 +53,33 @@ export class PromptManager {
 		};
 	}
 
+	/**
+	 * Appends the per-question source attribution instruction to a user prompt
+	 * when RAG is active. The model is asked to return `sourceRefs: number[]`
+	 * (0-indexed) on each generated question so we can map back to the URLs
+	 * from `ragContext.sources`. If the model omits or returns invalid refs,
+	 * the processor falls back to attaching ALL sources to the question.
+	 */
+	private appendSourceRefsAppendix(
+		template: PromptTemplate,
+		ragContext?: RagContext,
+	): PromptTemplate {
+		if (!ragContext?.sources?.length) return template;
+		const sourceList = ragContext.sources
+			.map((s, i) => `[${i}] ${s.title} — ${s.url}`)
+			.join("\n");
+		const appendix = `
+
+For EACH question you return, also include a \`sourceRefs\` field: number[] — an array of 0-indexed references to which of the reference materials above the question content draws from. Use [] if the question is not grounded in any of the provided sources.
+
+Reference material index:
+${sourceList}`;
+		return {
+			system: template.system,
+			user: `${template.user}${appendix}`,
+		};
+	}
+
 	getPrompt(
 		type: QuestionType | "any",
 		params: GenerationParams,
@@ -63,7 +90,8 @@ export class PromptManager {
 			params,
 			this.buildCompetencyContext(params),
 		);
-		return this.applyRagContext(base, ragContext);
+		const withRefs = this.appendSourceRefsAppendix(base, ragContext);
+		return this.applyRagContext(withRefs, ragContext);
 	}
 
 	getHintPrompt(questionType: QuestionType): PromptTemplate {
