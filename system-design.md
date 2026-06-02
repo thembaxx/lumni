@@ -1,7 +1,7 @@
 # System Design — Lumni
 
 **Generated:** 2026-05-29  
-**Last synced:** HEAD~0 (sessions 1-19, June 2026)
+**Last synced:** 2026-06-02 (sessions 1-19, June 2026)
 
 ---
 
@@ -18,7 +18,7 @@ graph TB
     subgraph Client [Browser / PWA]
         A[React 19 + Next.js 16]
         B[Zustand Stores]
-        C[Dexie IndexedDB<br/>24 tables, v24 schema]
+        C[Dexie IndexedDB<br/>33 tables, v25 schema]
         D[Zustand Persist<br/>localStorage]
     end
 
@@ -45,6 +45,7 @@ graph TB
         O[Wikimedia Commons]
         P[UploadThing<br/>file uploads]
         Q[Sentry<br/>error tracking]
+        R[TinyFish<br/>RAG Search + Fetch]
     end
 
     A --> E
@@ -59,21 +60,22 @@ graph TB
     E --> M
     E --> N
     E --> O
+    E --> R
     A --> P
     A --> Q
     F --> M
-    
+
     classDef client fill:#e1f5fe
     classDef server fill:#fff3e0
     classDef ai fill:#f3e5f5
     classDef backend fill:#e8f5e9
     classDef external fill:#ffebee
-    
+
     class A,B,C,D client
     class E,F,G,H server
     class I,J,K ai
     class L,M,N backend
-    class O,P,Q external
+    class O,P,Q,R external
 ```
 
 ---
@@ -224,8 +226,9 @@ erDiagram
 
 | Module | Responsibility | Tech | Location |
 |--------|---------------|------|----------|
-| **QuestionEngine** | AI question generation, grading, hinting, validation | 11-type processor pipeline | `src/lib/question-engine/` |
+| **QuestionEngine** | AI question generation, grading, hinting, validation | 11-type processor pipeline; RAG-augmented via PromptManager | `src/lib/question-engine/` |
 | **VisualEngine** | AI diagram generation (Konva) + Wikimedia search | STEM vs non-STEM routing | `src/lib/visual-engine/` |
+| **TinyFish RAG** | Web-grounded reference material for solve + quiz generation | searchWithRAG (3-source, 14d cache) + getSourceForQuestion (1-source, 24h cache); 24-subject allowlist; per-user daily limit; 3s timeout fail-open; XML wrap + prompt framing | `src/lib/tinyfish/` |
 | **FlashcardEngine** | Unified SR: SM-2/FSRS + daily limits + learning steps + ease-hell + leech + settings | Dexie-backed | `src/lib/flashcard-engine/` |
 | **CompetencyEngine** | Bloom's taxonomy scoring, PathEngine routing | Score→Level mapping | `src/lib/competency-engine/` |
 | **LearningOrchestrator** | Orchestrates generate+grade+queue side effects | Composes QuestionEngine | `src/lib/orchestrator/` |
@@ -248,6 +251,7 @@ erDiagram
 | **Groq** | Last-resort AI: Llama 3.3 70B | 30 req/min |
 | **UploadThing** | File upload infrastructure | 2GB free |
 | **Sentry** | Error tracking (DSN configured) | 5k events/month |
+| **TinyFish** | Web search + fetch for RAG injection into solve + quiz | Free tier (no credit card) |
 
 ---
 
@@ -281,11 +285,18 @@ erDiagram
 
 ### Key Event Flows
 
-**Question Generation (orchestrated):**
+**Question Generation (orchestrated, RAG-grounded):**
 ```
 Client -> POST /api/engine/generate
   -> LearningOrchestrator.generateQuestionSet()
-    -> QuestionEngine.generate() [AI call via Gemini->Nvidia->Groq]
+    -> QuestionEngine.generateInternal()
+      -> fetchRagContext(subject, topic, userId)  [TinyFish, 3s timeout, once per batch]
+        -> tinyfishCache hit OR searchWithRAG (24-subject allowlist, per-user daily cap)
+        -> buildRagContext(sources) -> { sources, xml, domainsQueried }
+      -> PromptManager.getPrompt(type, params, ragContext)
+        -> User prompt: prepend <reference_material> XML
+        -> System prompt: append buildPromptInstruction() framing
+    -> QuestionProcessor.generate(params, ragContext) [AI call via Gemini->Nvidia->Groq]
     -> Validator: per-type validation (score 0-100)
     -> Cache: Dexie L1 + Appwrite L2
     -> VisualEngine: background pre-cache for each question
@@ -333,7 +344,7 @@ Client -> POST /api/quiz-packs/generate
 | `premium_subscriptions` | Premium subscription records (Stripe webhook) | Per-user |
 | `study_groups` | Study group metadata + membership (v3) | Per-group |
 
-### Database Tables (Dexie / IndexedDB) — v24 Schema
+### Database Tables (Dexie / IndexedDB) — v25 Schema
 
 | Table | Purpose | Expiry |
 |-------|---------|--------|
@@ -353,7 +364,9 @@ Client -> POST /api/quiz-packs/generate
 | `notes` | User notes | Permanent |
 | `userConsents` | GDPR/POPIA consent preferences (dual-write to Appwrite) | Permanent |
 | `studySessions` | Study planner sessions | Permanent |
-| +7 others | Exam sessions, progress, conflicts, subjects, bookmarks, chat, sync queue | Varies |
+| `tinyfishCache` | TinyFish RAG cache (key, value, expiresAt, fetchedAt) | 14d |
+| `tinyfishUsage` | Per-user TinyFish daily usage count | Permanent |
+| +15 others | Exam sessions, progress, conflicts, subjects, bookmarks, sync queue, etc. | Varies |
 
 ---
 
@@ -410,6 +423,9 @@ Client -> POST /api/quiz-packs/generate
 | P1 | GDPR/POPIA consent suite | Cookie banner, TOS versioning, account deletion, data export | ✅ Done |
 | P1 | i18n AF + ZU | Afrikaans 100%, isiZulu ~97% complete | ✅ Done |
 | P1 | WCAG 2.2 AA a11y audit + critical fixes | 30+ components audited, 11 critical + 8 high fixes | ✅ Done |
+| P1 | Web-grounded AI — TinyFish RAG (foundation + solve + quiz) | 3 PRs: `f5313f32` foundation (7 modules + Dexie v25), `6c7c2ff1` solve (DI + VerifiedByPill), `dd3940c4` quiz (PromptManager + rag-enricher + 3s timeout) | ✅ Done |
+| P2 | Per-question source persistence on `Question` type | Currently batch-level only via `lastRagContext`; need `Question.sources?: WebSource[]` for per-question attribution | Planned |
+| P2 | VerifiedByPill on quiz results page | Solve-only today; data available via `QuestionEngine.getLastRagContext()` but no UI consumer | Planned |
 | P2 | Redis-backed RateLimiter + TokenTracker | Survives server restarts, shared across instances | Planned |
 | P2 | Keyboard-accessible flashcard deck | Full redesign for keyboard-only operation | Planned |
 

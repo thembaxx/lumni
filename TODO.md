@@ -227,11 +227,30 @@ All 21 items across P2 and P3 are implemented. Total changes:
 - [x] `tsc --noEmit` — zero errors
 - [x] `biome check` — passes on all changed files
 
-## Next Up
+## ✅ Session 19 — TinyFish RAG Integration (June 2026)
 
-- **Appwrite SA Region**: Console-side verification (non-code)
-- **Web-Grounded AI — TinyFish RAG injection** <!-- linear-id: LUM-TBD --> — Inject live CAPS/DBE sources into question generation and solve. See `docs/adr/0010-tinyfish-rag-integration.md`. 3-PR build: (1) `src/lib/tinyfish/` foundation + Dexie v25, (2) `/api/solve` web sources, (3) `/api/engine/generate` RAG injection + UI pill.
-- **New features / bug fixes**: Open for prioritization
+### Web-Grounded AI — TinyFish RAG injection <!-- linear-id: LUM-TBD -->
+- [x] **PR 1 — Foundation** (commit `f5313f32`): `src/lib/tinyfish/` module (7 files: `client`, `cache`, `allowlist`, `wrap`, `in-flight`, `types`, `index`); Dexie v25 (`tinyfishCache` + `tinyfishUsage` tables, 33 total); 87 unit tests; ADR-0010 design spec
+- [x] **PR 2 — Solve flow RAG** (commit `6c7c2ff1`): `aiSolver.execute(body, userId?, deps?)` 3-arg signature with DI for `getSourceForQuestion`/`buildPromptInstruction`; `VerifiedByPill` collapsible component; 11 RAG integration tests; `mock.module` pollution resolved via DI pattern
+- [x] **PR 3 — Quiz generation RAG** (commit `dd3940c4`): `fetchRagContext(subject, topic, userId, deps?)` in `src/lib/question-engine/rag-enricher.ts` with 3s `Promise.race` timeout + try/catch fail-open; `PromptManager.getPrompt(type, params, ragContext?)` injects XML into user prompt + `buildPromptInstruction()` into system prompt; `QuestionEngine.generateInternal` fetches RAG once per batch and passes to each processor; `GenerationParams.userId?: string | null` threaded from `/api/engine/generate` route; 12 new tests (8 in `rag-enricher.test.ts`, 4 in `prompt-manager.test.ts`)
+
+### Architecture decisions
+- **Foundation → Solve → Quiz** split shipped as 3 separate PRs (each independently shippable)
+- **DI over `mock.module`** for RAG-touching functions (avoids process-wide test pollution in Bun)
+- **RAG injection format**: XML `<reference_material>` block prepended to user prompt with `\n\n---\n\n` separator; `buildPromptInstruction()` appended to system prompt
+- **Fetch once per batch** — `QuestionEngine.lastRagContext` shared across processors in a single generate call
+- **Fail-open pattern**: 3s `Promise.race` timeout + try/catch + `console.warn` — mirrors across both solve and quiz flows
+- **`buildGenerateKey` fix** (PR 1): lowercases subject + trims leading/trailing dashes via `.replace(/^-+|-+$/g, "")`
+- **Per-user daily limit** (`PER_USER_DAILY_LIMIT`) checked before cache lookup in `getSourceForQuestion`; `getTodayUsageCount` returns SUM of counts
+- **Sources NOT persisted** on `Question` objects; `QuestionEngine.lastRagContext` is the only in-memory handle (Q4 follow-up deferred)
+- **VerifiedByPill is solve-only** — quiz results page UI deferred (Q7 follow-up)
+
+### Verification
+- [x] `bun test` — 1197 pass / 10 pre-existing Appwrite failures / 5 pre-existing Playwright E2E errors
+- [x] `npx tsc --noEmit` — zero errors
+- [x] `npx biome check` — zero warnings
+- [x] `npx next build` — clean (Turbopack)
+- [x] Pre-commit hook (biome + tsc) passed at each commit
 
 ## ✅ Session 18 — Polish & Hardening (June 2026)
 

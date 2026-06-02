@@ -1,7 +1,7 @@
 # ADR-10: Web-Grounded AI — TinyFish RAG Injection for Question Generation and Solve
 
-**Status:** Accepted  
-**Date:** 2026-06-02
+**Status:** Implemented  
+**Date:** 2026-06-02 (Accepted) → 2026-06-02 (Implemented across 3 PRs)
 
 ## Context
 
@@ -110,3 +110,63 @@ TinyFish is a US-based data processor. The data sent is the user's `subject` and
 - `src/lib/db/schema.ts` — Dexie v25 migration
 - `src/lib/consent/ai-gate.ts` — consent gate
 - `src/lib/ai/rate-limiter.ts` — rate limiter to extend
+
+## Outcome
+
+Shipped across three PRs in June 2026. All gates green at each commit (TypeScript 0 errors, Biome 0 warnings, `npx next build` clean, pre-commit hook passing).
+
+| PR | Commit | Scope | Tests added |
+|----|--------|-------|-------------|
+| 1 — Foundation | `f5313f32` | `src/lib/tinyfish/` (7 modules) + Dexie v25 (`tinyfishCache` + `tinyfishUsage` tables) + ADR-0010 | 87 unit tests |
+| 2 — Solve flow | `6c7c2ff1` | `aiSolver.execute(body, userId?, deps?)` with DI; `VerifiedByPill` collapsible component in `solver-result-view.tsx`; 24-subject allowlist gating via `isSubjectAllowed`; `safeFetchSources` try/catch wrapper; `getSourceForQuestion` in `src/lib/tinyfish/index.ts` with 24h TTL, 5000-char per-source cap | 11 RAG integration tests in `ai-solver.test.ts` |
+| 3 — Quiz generation | `dd3940c4` | `src/lib/question-engine/rag-enricher.ts` (`fetchRagContext` with 3s `Promise.race` timeout + try/catch fail-open); `PromptManager.getPrompt(type, params, ragContext?)` injecting XML into user prompt + `buildPromptInstruction()` into system prompt; `QuestionEngine.generateInternal` fetches RAG once per batch and shares via `lastRagContext`; `GenerationParams.userId?: string | null` threaded from `/api/engine/generate` route; DI pattern (`deps?: RagDeps`) used throughout to avoid Bun `mock.module` pollution | 8 in `rag-enricher.test.ts` + 4 in `prompt-manager.test.ts` |
+
+### Implementation notes vs. original design
+
+- **DI over `mock.module`**: All RAG-touching functions take a `deps` argument (`getSourceForQuestion`, `buildPromptInstruction`, `searchWithRAG`). Tests pass a stub `deps` object instead of using `Bun.mock.module`, which is process-wide and polluted cross-test imports of `@/lib/tinyfish`.
+- **Fetch granularity**: One RAG fetch per `QuestionEngine.generateInternal` call, not per question. Shared via `this.lastRagContext` and passed to each `QuestionProcessor.generate(params, ragContext)`. Reduces network calls and ensures all questions in a batch are grounded in the same sources.
+- **Sources not persisted on `Question`**: API response includes `sources` for the *batch* (via `lastRagContext.sources`), but individual generated `Question` objects do not carry sources. The `Question` type would need a `sources?: WebSource[]` field if per-question source attribution is desired (deferred follow-up).
+- **VerifiedByPill is solve-only**: Quiz cards and quiz results page do not yet render the pill. The data is available via `QuestionEngine.getLastRagContext()` but no UI consumes it yet (deferred follow-up).
+- **`buildGenerateKey` fix**: Lowercases subject and trims leading/trailing dashes via `.replace(/^-+|-+$/g, "")` to avoid `tinyfishCache` key collisions on dash-prefixed inputs (caught and fixed during PR 2 integration testing).
+- **Test baseline at ship**: 1197 pass / 10 pre-existing Appwrite failures / 5 pre-existing Playwright E2E errors. No regressions introduced by any of the 3 PRs.
+
+### Module map
+
+```
+src/lib/tinyfish/                    # PR 1
+  client.ts         — thin HTTP client (no SDK)
+  cache.ts          — Dexie v25 `tinyfishCache` (key, value, expiresAt, fetchedAt)
+  in-flight.ts      — in-memory Map<key, Promise> stampede dedup
+  allowlist.ts      — 24-subject list, PER_USER_DAILY_LIMIT, MIN_CONTENT_LENGTH, MAX_SOURCE_CONTENT_CHARS
+  wrap.ts           — escapeXml, buildRagContext, buildPromptInstruction, extractSourceFromFetchResult
+  types.ts          — WebSource, RagContext
+  index.ts          — searchWithRAG, getSourceForQuestion, emptyRagContext, re-exports
+
+src/lib/question-engine/
+  rag-enricher.ts   # PR 3 (new)
+                     — fetchRagContext(subject, topic, userId, deps?) with 3s timeout
+  prompt-manager.ts # PR 3 (modified)
+                     — getPrompt(type, params, ragContext?) injects XML + framing
+  question-engine.ts # PR 3 (modified)
+                     — generateInternal fetches RAG once per batch, shares via lastRagContext
+  types.ts          # PR 3 (modified)
+                     — GenerationParams.userId?: string | null, QuestionProcessor.generate(params, ragContext?)
+  processors/processor.ts # PR 3 (modified)
+                     — TypedQuestionProcessor.generate forwards ragContext
+
+src/lib/services/
+  ai-solver.ts      # PR 2 (modified)
+                     — execute(body, userId?, deps?) with DI; safeFetchSources wrapper
+                     — Injects webContext.xml into user prompt + buildPromptInstruction() into system prompt
+
+src/app/api/
+  solve/route.ts    # PR 2 (modified)
+                     — execute: async ({ body, userId }) => aiSolver.execute(body, userId)
+  engine/generate/route.ts # PR 3 (modified)
+                     — execute: async ({ body, userId }) => orchestrator.generateQuestionSet({...body, userId: userId ?? null})
+
+src/components/tools/communication/
+  ai-solver.tsx           # PR 2 (modified) — SolverResponse includes sources?
+  solver-result-view.tsx # PR 2 (modified) — renders VerifiedByPill between Steps and action buttons
+  verified-by-pill.tsx    # PR 2 (new)      — collapsible pill, CheckmarkCircle01Icon + ArrowDown01Icon + LinkSquare01Icon, hidden when sources empty
+```

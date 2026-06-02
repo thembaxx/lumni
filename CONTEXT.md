@@ -1,32 +1,40 @@
-# Context Manifest — 2026-05-29
+# Context Manifest — 2026-06-02
 
 ## Identity
 
-Lumni is an offline-capable, mobile-first SA Matric exam prep platform using Next.js 16, Appwrite backend, and a Gemini→Nvidia→Groq AI chain for question generation + grading + visual diagram creation. This file is the compressed working memory for AI agents — paste it first to maximize relevance.
+Lumni is an offline-capable, mobile-first SA Matric exam prep platform using Next.js 16, Appwrite backend, and a Gemini→Nvidia→Groq AI chain for question generation + grading + visual diagram creation. The solve and quiz-generation flows are web-grounded via TinyFish (RAG injection of CAPS/DBE sources). This file is the compressed working memory for AI agents — paste it first to maximize relevance.
 
 ## Current Mission
 
-Polish & hardening phase: WCAG 2.2 AA audit and critical fixes complete. Test suite hardened (1109 pass). GDPR/POPIA consent suite fully implemented. Active: continued polish — keyboard accessibility for swipeable deck, prefers-reduced-motion, quiz input labels.
+Web-grounded AI phase complete: TinyFish RAG integration shipped across 3 PRs (`f5313f32` foundation, `6c7c2ff1` solve, `dd3940c4` quiz generation). 1197 tests pass. Active: pick next P1 — open candidates are per-question source persistence on `Question` type, VerifiedByPill on quiz results page, or new features/bug fixes.
 
 ## System at a Glance
 
 ```
 Browser (React 19 + Next.js 16)
-  ├── Dexie IndexedDB   ← L1 cache (questions 24h, visuals 7d, quizPacks 30d)
-  │     ├── 24 tables (v24 schema)
+  ├── Dexie IndexedDB   ← L1 cache (questions 24h, visuals 7d, quizPacks 30d, tinyfishCache 14d)
+  │     ├── 33 tables (v25 schema)
   │     ├── QuizPacks + packQuestions (offline packs)
   │     ├── Flashcard SM-2 state + SR settings
   │     ├── Exam sessions (auto-save 30s intervals, 4hr stale expiry)
   │     ├── UserConsent (Appwrite + Dexie dual-write)
+  │     ├── tinyfishCache + tinyfishUsage (RAG cache + per-user daily counter)
   │     └── Sync queue + job queue (QueueCore)
   ├── Zustand stores     ← client state (quiz, exam, sync, search, bookmarks, voice)
   └── React Query        ← server state cache (retry 3, offlineFirst)
         │
 Next.js API Routes (~41 groups, most via createRouteHandler factory)
   ├── QuestionEngine     → Gemini → Nvidia NIM → Groq (AI chain)
+  │     └── PromptManager injects TinyFish <reference_material> XML into user prompt
   ├── VisualEngine       → Konva (STEM) or Wikimedia (non-STEM)
   ├── QuizPackService    → bulk generate → Dexie storage
   ├── LearningOrchestrator → composes Engine + queued side effects
+  ├── TinyFish RAG       → searchWithRAG (3-source) + getSourceForQuestion (1-source)
+  │     ├── Dexie v25 cache (tinyfishCache, 14d TTL)
+  │     ├── In-flight dedup (in-memory Map<key, Promise>)
+  │     ├── 24-subject allowlist + per-user daily limit
+  │     ├── 3s Promise.race timeout + try/catch fail-open
+  │     └── Consent gated via getDataSharingConsent()
   ├── QueueCore          → Dexie-backed job queue (retry + backoff)
   ├── RateLimiter+TokenTracker → auth limits + AI budget caps
   └── createRouteHandler → generic factory (auth guard + body parse + validation + error wrap)
@@ -81,6 +89,7 @@ Appwrite Cloud
 - **Dexie schema**: v24 — 24 tables including `questions`, `visuals`, `examDates`, `questionRatings`, `wrongAnswers`, `flashcards`, `srsettings`, `quizPacks`, `packQuestions`, `jobs`, `syncQueue`, `competencies`, `userConsents`, etc.
 - **E2E testing**: Playwright 1.60.0 configured with smoke tests for homepage, quiz, and exam-dates pages.
 - **Storybook**: 10.4.1 with `@storybook/nextjs`, config in `main.ts` + `preview.ts`, initial stories for ShareButton and Badge.
+- **TinyFish RAG**: `src/lib/tinyfish/` — 7 modules (`client`, `cache`, `in-flight`, `allowlist`, `wrap`, `types`, `index`). Injects live CAPS/DBE sources into both `/api/solve` (single-source, `getSourceForQuestion`) and `/api/engine/generate` (3-source, `searchWithRAG` → `fetchRagContext`). XML-wrapped `<reference_material>` block in user prompt + `buildPromptInstruction()` framing in system prompt. Dexie v25 cache (14d TTL), in-flight dedup, 24-subject allowlist, 20 fetches/day/user, 3s timeout fail-open. Consent gated via `getDataSharingConsent()`. DI pattern (`deps?` arg) used throughout to avoid Bun `mock.module` pollution. `QuestionEngine.lastRagContext` shares the RAG context across all questions in one batch. See `docs/adr/0010-tinyfish-rag-integration.md`.
 - **Exam_dates sync**: Background job type `"appwrite-exam-dates-sync"` with `upsertDocument` handler; `syncExamDatesToAppwrite()` enqueues job; `syncExamDatesDirect()` for immediate writes.
 - **Design**: "The Emerald Study Room" — Study Green accent (`oklch(52% 0.18 146)`), Warm Paper neutrals, Outfit 800 / Geist 400 fonts, 20px card radius, 44px touch targets, stacked lightness over shadows.
 - **Auth**: Anonymous users auto-created; sign-up upgrades anonymous session. Admin uses separate magic-link + OTP. Rate limits: 3 sign-in/5min, 1 magic link/5min.

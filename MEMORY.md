@@ -1,7 +1,7 @@
 # Memory Consolidation — Lumni
 
 **Generated:** 2026-05-29  
-**Last updated:** June 2026 (Sessions 15-19)
+**Last updated:** 2026-06-02 (Sessions 15-19, including TinyFish RAG)
 **Sources:** MEMORY.md, AGENTS.md (Sessions 1-19), implementation-notes.md, CONTEXT.md, docs/adr/
 
 ---
@@ -40,6 +40,10 @@
 | D027 | Premium gating at component level (hasFeature) | Per-feature gates; Stripe/Payfast checkout; Appwrite subscription sync | 2026-05-29 |
 | D028 | Observability via latency-tracker + usage events | AI provider timing; feature usage; admin dashboard | 2026-05-28 |
 | D029 | WCAG 2.2 AA a11y compliance target | 30+ components audited; 19 critical/high fixes; keyboard + screen reader | 2026-06-01 |
+| D030 | TinyFish RAG foundation: 7-module `src/lib/tinyfish/` | Web-grounded AI for solve + quiz; 24-subject allowlist; Dexie v25 cache (14d TTL); in-flight dedup; 3s timeout fail-open | 2026-06-02 |
+| D031 | TinyFish over Exa for RAG flows | TinyFish Search + Fetch are free forever; Exa kept for low-volume dashboard semantic search; 24-subject allowlist cuts waste | 2026-06-02 |
+| D032 | DI (`deps?: { ... }` arg) over `Bun.mock.module` for RAG-touching code | `mock.module` is process-wide in Bun; same specifier from different test files collides; DI lets each test inject a clean stub | 2026-06-02 |
+| D033 | RAG fetch once per batch (not per question) | `QuestionEngine.lastRagContext` shared across all `QuestionProcessor.generate` calls in a single `generateInternal`; cuts network calls and ensures batch coherence | 2026-06-02 |
 
 ### Reversals
 
@@ -67,6 +71,10 @@
 - **Consent dual-write pattern**: `UserConsentService.save()` writes to Dexie first, then enqueues `appwrite-consent-sync` background job with retry; gates (`ai-gate`, `sentry-gate`) read module-level booleans
 - **i18n pattern**: Locale-based routing via `[locale]` middleware; `i18n-provider.tsx` + `navigation.ts` helpers; translation keys in JSON under `src/i18n/`
 - **Mega-component decomposition**: Co-located sub-components; barrel exports in `index.ts` preserve import sites; target: <200 lines per component
+- **RAG injection pattern**: Prepend `<reference_material>` XML block to user prompt with `\n\n---\n\n` separator; append `buildPromptInstruction()` to system prompt with `\n\n`. Used in both `aiSolver.execute` (solve) and `PromptManager.getPrompt` (quiz). Skip when consent is missing, subject is off-grid, or query is trivial.
+- **TinyFish module pattern**: client (thin HTTP) + cache (Dexie TTL) + in-flight (Map dedup) + allowlist (subject + rate) + wrap (XML/CSV escapers + instruction builder) + types + index barrel. Each module is testable in isolation with no cross-imports.
+- **DI test pattern for cross-test pollution**: Functions that touch network/IO accept a `deps` arg (`deps?: { fetchSources?, buildInstruction? }`). Tests instantiate the function with stub `deps` instead of `Bun.mock.module`. Avoids process-wide specifier collisions across test files.
+- **Fetch-once-per-batch pattern**: Higher-level orchestrator fetches RAG once, threads context to all per-item processors via a property (`this.lastRagContext`) and an explicit function arg. Saves N-1 fetches per batch and ensures all items are grounded in the same sources.
 
 ---
 
@@ -98,6 +106,7 @@
 | GDPR/POPIA legal compliance? | ✅ Done — consent management, cookie banner, TOS versioning, account deletion, data export (Session 17) | 2026-05-29 |
 | Accessibility standard? | ✅ WCAG 2.2 AA — 30+ components audited, 19 critical/high fixes (Session 19) | 2026-06-01 |
 | Test suite health? | ✅ 1109 pass, 5 fail (e2e only) — fixed module cache conflicts + missing mocks (Session 18) | 2026-06-01 |
+| Web-grounded AI for solve + quiz? | ✅ TinyFish RAG — 3 PRs (`f5313f32` foundation, `6c7c2ff1` solve, `dd3940c4` quiz) — 1197 pass (Session 19) | 2026-06-02 |
 
 ---
 
@@ -112,5 +121,6 @@
 | Spec: Exam Dates | `SPEC.md` | National Exam Dates Tracker spec |
 | Roadmap | `docs/roadmap.md` | Phase-based product roadmap |
 | ADR-0001 | `docs/adr/0001-question-engine-composition.md` | QuestionEngine composition decision |
+| ADR-0010 | `docs/adr/0010-tinyfish-rag-integration.md` | TinyFish RAG injection for solve + quiz (status: Implemented across 3 PRs) |
 | Lottie migration | `docs/issues/lottie-web-unpin.md` | Resolved: migrated from lottie-react to @lottiefiles/dotlottie-react |
 | Impeccable skill | `.agents/skills/impeccable/` | UI/UX design audit workflow (34 reference files) |
