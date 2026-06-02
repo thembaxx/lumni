@@ -16,6 +16,7 @@ export const POST = createRouteHandler<GenerateFactBody>({
 	budget: "generate",
 	errorLabel: "ElementFact",
 	useRateLimit: true,
+	aiContext: { consentGranted: true },
 	parseBody: async (req) => {
 		const body: GenerateFactBody = await req.json();
 		return body;

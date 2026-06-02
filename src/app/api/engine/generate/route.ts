@@ -9,6 +9,7 @@ export const POST = createRouteHandler({
 	budget: "generate",
 	errorLabel: "Generate",
 	useRateLimit: true,
+	aiContext: { consentGranted: true },
 	parseBody: async (req) => {
 		const body: GenerationParams = await req.json();
 		return body;

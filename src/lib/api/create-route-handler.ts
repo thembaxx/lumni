@@ -1,5 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { v4 as uuidv4 } from "uuid";
+import type { AICallContext } from "@/lib/ai/call-context";
+import { runWithAICallContext } from "@/lib/ai/call-context";
 import type { AICallType } from "@/lib/ai/daily-call-tracker";
 import { checkBudget, trackUsage } from "@/lib/ai/with-budget";
 import { getAuthenticatedUserId, requireAdmin } from "@/lib/server/auth";
@@ -22,6 +24,7 @@ export interface RouteHandlerConfig<TBody, TResult = Record<string, unknown>> {
 	useRateLimit?: boolean;
 	generateRequestId?: boolean;
 	errorLabel?: string;
+	aiContext?: AICallContext;
 }
 
 export class HttpError extends Error {
@@ -54,6 +57,7 @@ export function createRouteHandler<
 		useRateLimit = false,
 		generateRequestId = false,
 		errorLabel = "Handler",
+		aiContext,
 	} = config;
 
 	const handler = async (
@@ -117,13 +121,17 @@ export function createRouteHandler<
 					? await context.params
 					: context?.params;
 
-			const result = await execute({
-				body,
-				userId,
-				req,
-				params: resolvedParams,
-				requestId,
-			});
+			const invokeExecute = () =>
+				execute({
+					body,
+					userId,
+					req,
+					params: resolvedParams,
+					requestId,
+				});
+			const result = aiContext
+				? await runWithAICallContext(aiContext, invokeExecute)
+				: await invokeExecute();
 			const response = NextResponse.json(serializeResponse(result));
 
 			if (budget) {

@@ -6,6 +6,7 @@ export const dynamic = "force-dynamic";
 export const GET = createRouteHandler({
 	auth: "none",
 	errorLabel: "VisualTest",
+	aiContext: { consentGranted: true },
 	execute: async () => {
 		const results: Record<string, unknown> = {
 			timestamp: new Date().toISOString(),

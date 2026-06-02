@@ -17,6 +17,7 @@ export const POST = createRouteHandler<SolveBody>({
 	budget: "generate",
 	errorLabel: "Solve",
 	useRateLimit: true,
+	aiContext: { consentGranted: true },
 	parseBody: async (req) => {
 		const body: SolveBody = await req.json();
 		return body;

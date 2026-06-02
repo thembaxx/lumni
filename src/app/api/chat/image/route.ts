@@ -11,6 +11,7 @@ export const POST = createRouteHandler<ChatImageBody>({
 	budget: "generate",
 	errorLabel: "ChatImage",
 	useRateLimit: true,
+	aiContext: { consentGranted: true },
 	parseBody: async (req) => {
 		const body: ChatImageBody = await req.json();
 		return body;

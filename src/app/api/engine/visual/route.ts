@@ -8,6 +8,7 @@ export const POST = createRouteHandler({
 	budget: "visual",
 	errorLabel: "Visual",
 	useRateLimit: true,
+	aiContext: { consentGranted: true },
 	parseBody: async (req) => {
 		const body: {
 			questionId: string;
