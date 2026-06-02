@@ -2,10 +2,16 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
+interface SolverSource {
+	url: string;
+	title: string;
+}
+
 interface SolverResult {
 	solution: string;
 	steps: string[];
 	provider: string;
+	sources?: SolverSource[];
 }
 
 interface FollowUpResult {

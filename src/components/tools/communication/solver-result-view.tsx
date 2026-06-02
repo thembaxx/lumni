@@ -9,6 +9,7 @@ import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { StepByStep } from "@/components/quiz/step-by-step";
 import { Button } from "@/components/ui/button";
 import { flashcardEngine } from "@/lib/flashcard-engine";
+import { VerifiedByPill } from "./verified-by-pill";
 
 interface SolverResultViewProps {
 	subject: string;
@@ -16,6 +17,7 @@ interface SolverResultViewProps {
 		solution: string;
 		steps: string[];
 		provider: string;
+		sources?: { url: string; title: string }[];
 	};
 	onReset: () => void;
 }
@@ -80,6 +82,8 @@ export function SolverResultView({
 							<StepByStep steps={result.steps} />
 						</div>
 					)}
+
+					<VerifiedByPill sources={result.sources ?? []} />
 				</div>
 			</div>
 

@@ -17,6 +17,7 @@ interface SolverResponse {
 	solution: string;
 	steps: string[];
 	provider: string;
+	sources?: { url: string; title: string }[];
 }
 
 type SolverPhase = "input" | "extracting" | "confirm" | "solving" | "result";

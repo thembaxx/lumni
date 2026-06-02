@@ -1,6 +1,7 @@
 import { generateWithSystem, initAI, isAIConfigured } from "@/lib/ai";
 import { cleanResponse } from "@/lib/ai/parse-response";
 import type { AIResponse } from "@/lib/ai/types";
+import { buildPromptInstruction, getSourceForQuestion } from "@/lib/tinyfish";
 
 const SUBJECT_PROMPTS: Record<string, string> = {
 	algebra:
@@ -28,8 +29,30 @@ interface SolveBody {
 	followUp?: boolean;
 }
 
+export interface SolverSource {
+	url: string;
+	title: string;
+}
+
+export interface SolverResult {
+	solution: string;
+	steps: string[];
+	provider: string;
+	sources?: SolverSource[];
+}
+
+export interface FollowUpResult {
+	answer: string;
+	provider: string;
+}
+
+export interface AiSolverDeps {
+	getSourceForQuestion?: typeof getSourceForQuestion;
+	buildPromptInstruction?: typeof buildPromptInstruction;
+}
+
 export const aiSolver = {
-	async execute(body: SolveBody) {
+	async execute(body: SolveBody, userId?: string | null, deps?: AiSolverDeps) {
 		const {
 			question,
 			imageUrl,
@@ -38,6 +61,10 @@ export const aiSolver = {
 			context,
 			followUp,
 		} = body;
+
+		const fetchSources = deps?.getSourceForQuestion ?? getSourceForQuestion;
+		const buildInstruction =
+			deps?.buildPromptInstruction ?? buildPromptInstruction;
 
 		if (!isAIConfigured()) {
 			initAI({
@@ -48,7 +75,7 @@ export const aiSolver = {
 
 		const isImageMode = !!imageUrl;
 		const subjectKey = subject && SUBJECT_PROMPTS[subject] ? subject : null;
-		const systemPrompt =
+		const baseSystemPrompt =
 			mode === "extract"
 				? "You are an expert at reading math problems from images. Extract the exact math problem shown in the image. Return the problem text using LaTeX notation for all mathematical expressions (e.g., $x^2 + 2x + 1 = 0$, $\\int_0^1 x^2 \\, dx$, $\\frac{a}{b}$). Do NOT solve the problem. Format your response as a JSON object with 'solution' (the extracted problem text in LaTeX) and 'steps' (an empty array)."
 				: followUp
@@ -72,7 +99,50 @@ export const aiSolver = {
 						].join("\n")
 					: question || "Solve the problem in the attached image.";
 
-		const result = await generateWithSystem(systemPrompt, userPrompt, {
+		const shouldFetchSources =
+			mode !== "extract" && !followUp && !!question?.trim();
+
+		interface WebContext {
+			sources: { url: string; title: string }[];
+			xml: string;
+			domainsQueried: string[];
+		}
+
+		const emptyRagContext = (): WebContext => ({
+			sources: [],
+			xml: "",
+			domainsQueried: [],
+		});
+
+		const safeFetchSources = async (
+			q: string,
+			uid?: string | null,
+		): Promise<WebContext> => {
+			try {
+				return await fetchSources({ question: q, userId: uid ?? undefined });
+			} catch (err) {
+				console.warn(
+					`[ai-solver] web source fetch failed, continuing without grounding: ${
+						err instanceof Error ? err.message : String(err)
+					}`,
+				);
+				return emptyRagContext();
+			}
+		};
+
+		const webContext: WebContext = shouldFetchSources
+			? await safeFetchSources(question as string, userId)
+			: emptyRagContext();
+
+		const systemPrompt = webContext.xml
+			? `${baseSystemPrompt}\n\n${buildInstruction()}`
+			: baseSystemPrompt;
+
+		const finalUserPrompt = webContext.xml
+			? `${webContext.xml}\n\n---\n\n${userPrompt}`
+			: userPrompt;
+
+		const result = await generateWithSystem(systemPrompt, finalUserPrompt, {
 			temperature: isImageMode && mode === "solve" ? 0.3 : 0.7,
 			maxTokens: 4000,
 			imageUrl,
@@ -102,12 +172,20 @@ export const aiSolver = {
 				solution: solved.solution,
 				steps: solved.steps,
 				provider: response.provider,
+				sources: webContext.sources.map((s) => ({
+					url: s.url,
+					title: s.title,
+				})),
 			};
 		} catch {
 			return {
 				solution: response.content,
 				steps: [],
 				provider: response.provider,
+				sources: webContext.sources.map((s) => ({
+					url: s.url,
+					title: s.title,
+				})),
 			};
 		}
 	},
