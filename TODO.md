@@ -233,6 +233,7 @@ All 21 items across P2 and P3 are implemented. Total changes:
 - [x] **PR 1 — Foundation** (commit `f5313f32`): `src/lib/tinyfish/` module (7 files: `client`, `cache`, `allowlist`, `wrap`, `in-flight`, `types`, `index`); Dexie v25 (`tinyfishCache` + `tinyfishUsage` tables, 33 total); 87 unit tests; ADR-0010 design spec
 - [x] **PR 2 — Solve flow RAG** (commit `6c7c2ff1`): `aiSolver.execute(body, userId?, deps?)` 3-arg signature with DI for `getSourceForQuestion`/`buildPromptInstruction`; `VerifiedByPill` collapsible component; 11 RAG integration tests; `mock.module` pollution resolved via DI pattern
 - [x] **PR 3 — Quiz generation RAG** (commit `dd3940c4`): `fetchRagContext(subject, topic, userId, deps?)` in `src/lib/question-engine/rag-enricher.ts` with 3s `Promise.race` timeout + try/catch fail-open; `PromptManager.getPrompt(type, params, ragContext?)` injects XML into user prompt + `buildPromptInstruction()` into system prompt; `QuestionEngine.generateInternal` fetches RAG once per batch and passes to each processor; `GenerationParams.userId?: string | null` threaded from `/api/engine/generate` route; 12 new tests (8 in `rag-enricher.test.ts`, 4 in `prompt-manager.test.ts`)
+- [x] **Doc update** (commit `eb4ba2fc`): 6 docs files + 4 `.context/` mirrors synced to reflect Implemented status
 
 ### Architecture decisions
 - **Foundation → Solve → Quiz** split shipped as 3 separate PRs (each independently shippable)
@@ -251,6 +252,31 @@ All 21 items across P2 and P3 are implemented. Total changes:
 - [x] `npx biome check` — zero warnings
 - [x] `npx next build` — clean (Turbopack)
 - [x] Pre-commit hook (biome + tsc) passed at each commit
+
+## ✅ Session 20 — TinyFish Q7 follow-up (June 2026)
+
+### Quiz results page RAG source pill <!-- linear-id: LUM-TBD -->
+- [x] **Wire `QuestionEngine.lastRagContext` to quiz UI** (commit `2c16e85e`): `LearningOrchestrator.generateQuestionSet()` calls `engine.getLastRagContext()` after `generate()` and maps `RagContext.sources` down to `{ url, title }[]` to keep the API wire small; `POST /api/engine/generate` returns `sources: result.sources ?? []`; `useQuestionEngine()` exposes `sources` on its return type (defaults to `[]`); both quiz result surfaces render `<VerifiedByPill sources={...} />`:
+  - `QuizEngine` + `QuizResult` (simpler `subjectId` flow)
+  - `useQuizView` → `QuizView` → `QuizResultsState` → `QuizResultsCard` (full quiz flow)
+- [x] **Tests** (+6): 2 in `learning-orchestrator.test.ts` (orchestrator surfaces `lastRagContext` as `sources`; returns `[]` when no RAG context) + 4 in new `src/components/quiz/__tests__/quiz-result.test.tsx` (renders pill with sources, singular label, hides pill on empty array / undefined prop). QuizResult test uses `container.textContent` to avoid happy-dom's `querySelector` SyntaxError bug.
+
+### Architecture decisions
+- **Two quiz result surfaces, both updated**: `QuizResult` (subjectId flow) AND `QuizResultsCard` (full quiz flow) — same `sources?` prop, same `VerifiedByPill` consumer
+- **Sources shape on API wire**: `{ url, title }[]` only (no `content`) — matches `VerifiedByPill.Source` interface, keeps payload small
+- **`useQuestionEngine` default**: `sources: query.data?.sources ?? []` — never undefined on consumer side
+- **No schema migration**: `Question.webSources` field still deferred (Q4 follow-up). Sources are session-scoped (in-memory `lastRagContext` only)
+- **Test pollution lesson** (PR 2): `mock.module` is process-wide; `container.textContent` regex matching avoids happy-dom's `new this.window.SyntaxError(...)` failure in `querySelectorAll` (caused by `screen.getByText` / `screen.queryByText`)
+
+### Verification
+- [x] `bun test` — 1203 pass / 10 pre-existing Appwrite failures / 5 pre-existing Playwright E2E errors (+6 from Session 19, no regressions)
+- [x] `npx tsc --noEmit` — zero errors
+- [x] `npx biome check` — zero warnings on 12 changed files
+- [x] Pre-commit hook (biome + tsc) passed at commit
+
+### Open follow-ups
+- **Q4 — Per-question source persistence** (next-up, ~2-3h): add `webSources?: {url, title}[]` to `Question` type, Dexie v26 migration, `QuestionEngine` writes per-question sources, `QuestionCard` renders per-question "grounded in" pill. Currently sources are batch-scoped only.
+- **Appwrite SA Region console verification**: code already points to `jnb.cloud.appwrite.io`; only remaining step is Appwrite console-side verification.
 
 ## ✅ Session 18 — Polish & Hardening (June 2026)
 

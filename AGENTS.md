@@ -363,6 +363,28 @@ const systemPrompt = webContext.xml
 
 **Final test baseline:** 1197 pass / 10 pre-existing Appwrite failures / 5 pre-existing Playwright E2E errors. No regressions from any of the 3 PRs.
 
+### Session 20 — TinyFish Q7 follow-up (June 2026)
+
+**Quiz results page surfaces RAG sources** — commit `2c16e85e`. Picks up the "VerifiedByPill is solve-only" deferred follow-up from Session 19.
+
+- **`LearningOrchestrator.generateQuestionSet()`** now calls `engine.getLastRagContext()` after `generate()` and maps `RagContext.sources` (full `WebSource` with content + snippet) down to `{ url, title }[]` for the API wire. Avoids changing the `generate()` signature.
+- **`POST /api/engine/generate`** returns `sources: result.sources ?? []` in the response body.
+- **`useQuestionEngine()`** hook return now includes `sources: query.data?.sources ?? []` — never undefined on the consumer side.
+- **Both quiz result surfaces updated**:
+  - `QuizEngine` + `QuizResult` (simpler `subjectId` flow)
+  - `useQuizView` → `QuizView` → `QuizResultsState` → `QuizResultsCard` (full quiz flow)
+  - Both render `<VerifiedByPill sources={...} />` (reused from PR 2 — no new component).
+- **Tests (+6)**:
+  - 2 in `learning-orchestrator.test.ts` — orchestrator surfaces `lastRagContext` as `sources`; returns `[]` when no RAG context.
+  - 4 in new `src/components/quiz/__tests__/quiz-result.test.tsx` — renders pill with sources, singular label, hides pill on empty array / undefined prop. Uses `container.textContent` regex matching to avoid happy-dom's `querySelector` SyntaxError bug.
+- **No schema migration**: `Question.webSources` field still deferred (Q4 follow-up). Sources are session-scoped (in-memory `lastRagContext` only).
+
+**Architectural takeaway** (D034): The `getLastRagContext()` getter pattern is a reusable way to surface batch-level sidecar context from the engine without touching the `generate()` signature. The orchestrator pulls, maps, and threads; the wire format is decoupled from the in-memory engine state.
+
+**Sources wire shape:** `{ url, title }[]` only (no `content`) — matches `VerifiedByPill.Source` interface, keeps payload small.
+
+**Final test baseline:** 1203 pass / 10 pre-existing Appwrite failures / 5 pre-existing Playwright E2E errors. +6 from Session 19, no regressions.
+
 ### Known limitations (won't fix)
 
 - `analytics-service.ts` comparative analytics depends on other users' data in Appwrite; falls back to estimates

@@ -1,8 +1,8 @@
 # Memory Consolidation — Lumni
 
 **Generated:** 2026-05-29  
-**Last updated:** 2026-06-02 (Sessions 15-19, including TinyFish RAG)
-**Sources:** MEMORY.md, AGENTS.md (Sessions 1-19), implementation-notes.md, CONTEXT.md, docs/adr/
+**Last updated:** 2026-06-02 (Sessions 15-20, including TinyFish RAG + Q7 follow-up)
+**Sources:** MEMORY.md, AGENTS.md (Sessions 1-20), implementation-notes.md, CONTEXT.md, docs/adr/
 
 ---
 
@@ -44,6 +44,7 @@
 | D031 | TinyFish over Exa for RAG flows | TinyFish Search + Fetch are free forever; Exa kept for low-volume dashboard semantic search; 24-subject allowlist cuts waste | 2026-06-02 |
 | D032 | DI (`deps?: { ... }` arg) over `Bun.mock.module` for RAG-touching code | `mock.module` is process-wide in Bun; same specifier from different test files collides; DI lets each test inject a clean stub | 2026-06-02 |
 | D033 | RAG fetch once per batch (not per question) | `QuestionEngine.lastRagContext` shared across all `QuestionProcessor.generate` calls in a single `generateInternal`; cuts network calls and ensures batch coherence | 2026-06-02 |
+| D034 | Quiz results page surfaces RAG sources via `getLastRagContext()` | `LearningOrchestrator.generateQuestionSet()` calls `engine.getLastRagContext()` after `generate()` and maps `RagContext.sources` (full WebSource with content) → `{ url, title }[]` (lightweight) for the API wire; no engine signature change needed. Two quiz result surfaces (`QuizResult` + `QuizResultsCard`) both consume the field | 2026-06-02 |
 
 ### Reversals
 
@@ -75,6 +76,7 @@
 - **TinyFish module pattern**: client (thin HTTP) + cache (Dexie TTL) + in-flight (Map dedup) + allowlist (subject + rate) + wrap (XML/CSV escapers + instruction builder) + types + index barrel. Each module is testable in isolation with no cross-imports.
 - **DI test pattern for cross-test pollution**: Functions that touch network/IO accept a `deps` arg (`deps?: { fetchSources?, buildInstruction? }`). Tests instantiate the function with stub `deps` instead of `Bun.mock.module`. Avoids process-wide specifier collisions across test files.
 - **Fetch-once-per-batch pattern**: Higher-level orchestrator fetches RAG once, threads context to all per-item processors via a property (`this.lastRagContext`) and an explicit function arg. Saves N-1 fetches per batch and ensures all items are grounded in the same sources.
+- **`getLastRagContext()` surface pattern**: Engine exposes in-memory batch context via a read-only getter; orchestrator pulls it AFTER `generate()` returns, maps the full source schema down to the wire shape, and threads it through API → hook → component. Avoids touching the `generate()` signature while still giving UI access to the per-batch RAG metadata. Reusable for any future "sidecar context" data the engine computes.
 
 ---
 
@@ -87,6 +89,7 @@
 | Duplicate sync hooks | Multiple hooks (`useAutoSync`, `useEnhancedSync`, etc.) that all processed the same queue | Consolidate to single `src/lib/sync-queue.ts` processor |
 | Competency `proficiency` vs `score` field | Job processor wrote to `proficiency` but all readers expected `score` | Fix both write paths + add backward-compat fallback in readers |
 | Duplicated generate/grade in both QuestionEngine and LearningOrchestrator | Two modules with identical logic — bugs had to be fixed in two places | Compose, don't duplicate: Orchestrator calls Engine |
+| happy-dom `querySelectorAll` SyntaxError | `screen.getByText` / `screen.queryByText` throw `TypeError: undefined is not a constructor (evaluating 'new this.window.SyntaxError(...)')` in `node_modules/happy-dom/.../SelectorParser.js:127` | Use `container.textContent` with regex matching for component render assertions in `@testing-library/react` + happy-dom test setups |
 
 ---
 
@@ -106,7 +109,7 @@
 | GDPR/POPIA legal compliance? | ✅ Done — consent management, cookie banner, TOS versioning, account deletion, data export (Session 17) | 2026-05-29 |
 | Accessibility standard? | ✅ WCAG 2.2 AA — 30+ components audited, 19 critical/high fixes (Session 19) | 2026-06-01 |
 | Test suite health? | ✅ 1109 pass, 5 fail (e2e only) — fixed module cache conflicts + missing mocks (Session 18) | 2026-06-01 |
-| Web-grounded AI for solve + quiz? | ✅ TinyFish RAG — 3 PRs (`f5313f32` foundation, `6c7c2ff1` solve, `dd3940c4` quiz) — 1197 pass (Session 19) | 2026-06-02 |
+| Web-grounded AI for solve + quiz? | ✅ TinyFish RAG — 3 PRs (`f5313f32` foundation, `6c7c2ff1` solve, `dd3940c4` quiz) — 1197 pass (Session 19). ✅ Q7 follow-up shipped — quiz results page now surfaces RAG sources via `getLastRagContext()` (`2c16e85e`) — 1203 pass (Session 20) | 2026-06-02 |
 
 ---
 

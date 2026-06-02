@@ -77,8 +77,7 @@ graph TD
 - **OCR text extraction**: Official PDF timetables require OCR for automated ingestion.
 - **Comparative analytics**: Scaling depends on cross-user data aggregation in Appwrite.
 - **Rate limiting**: Current implementation is in-memory; requires Redis for multi-instance.
-- **Per-question source persistence**: RAG sources are batch-level only via `QuestionEngine.lastRagContext`; per-question attribution deferred.
-- **VerifiedByPill on quiz results**: Solve-only today; UI for quiz results page deferred.
+- **Per-question source persistence**: RAG sources are batch-level only via `QuestionEngine.lastRagContext`; per-question attribution deferred (Q4 next-up).
 
 ## Recent Changes Log (Last 7 Days)
 - Initialized Context Layer with 6-file protocol.
@@ -86,3 +85,4 @@ graph TD
 - Activated Full-Screen Immersive Mode for active sessions.
 - Consolidated Spaced Repetition logic.
 - **Shipped TinyFish RAG across 3 PRs** (`f5313f32` foundation + Dexie v25, `6c7c2ff1` solve + VerifiedByPill, `dd3940c4` quiz + rag-enricher + 3s timeout). 1197 tests pass.
+- **Q7 follow-up shipped** (`2c16e85e`): Quiz results page now surfaces RAG sources via `engine.getLastRagContext()`; both `QuizResult` and `QuizResultsCard` render `<VerifiedByPill sources={...} />`. 1203 tests pass.

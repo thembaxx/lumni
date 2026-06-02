@@ -20,6 +20,7 @@
 - [2026-05-28] **Swipeable Cards**: Tinder-style flashcard deck with SM-2 quality picker.
 - [2026-05-28] **Immersive Mode**: Full-screen focus mode for quiz/exams, auto-hiding navigation.
 - [2026-06-02] **TinyFish RAG**: Web-grounded AI for `/api/solve` and `/api/engine/generate` via `src/lib/tinyfish/` (7 modules). XML-wrapped `<reference_material>` block in user prompt + `buildPromptInstruction()` framing in system prompt. Dexie v25 cache (14d TTL), in-flight dedup, 24-subject allowlist, 3s timeout fail-open, consent-gated. RAG fetched once per batch via `QuestionEngine.lastRagContext`.
+- [2026-06-02] **Quiz results page RAG pill** (`2c16e85e`): `LearningOrchestrator.generateQuestionSet()` calls `engine.getLastRagContext()` after `generate()` and maps to `{ url, title }[]` for the API wire; both `QuizResult` and `QuizResultsCard` render `<VerifiedByPill>`. `getLastRagContext()` getter is a reusable pattern for surface batch-level sidecar context from the engine without changing the `generate()` signature.
 
 ## Past Bugs & Failures
 - **Competency Field**: Mismatch between `proficiency` and `score` fields. Standardized on `score`.
@@ -29,6 +30,7 @@
 - **Middleware Proxy**: Collision between `middleware.ts` and `proxy.ts` resolved by merging into `proxy.ts`.
 - **TinyFish `buildGenerateKey`**: Dash-prefixed subjects caused cache key collisions. Fixed by lowercasing + trimming leading/trailing dashes.
 - **Bun `mock.module` pollution (PR 2)**: `Bun.mock.module("@/lib/tinyfish")` polluted cross-test imports. Resolved by switching to DI pattern (deps arg).
+- **happy-dom `querySelectorAll` SyntaxError (Session 20)**: `screen.getByText` / `screen.queryByText` throw `TypeError: undefined is not a constructor (evaluating 'new this.window.SyntaxError(...)')`. Workaround: use `container.textContent` with regex matching for component render assertions.
 
 ## Contacts / Resources
 - **Domain glossary**: `CONTEXT.md`

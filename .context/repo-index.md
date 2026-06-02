@@ -69,6 +69,7 @@
 
 ## Recent Changes (Last 7 Days)
 - **TinyFish RAG shipped across 3 PRs** (`f5313f32` foundation + Dexie v25, `6c7c2ff1` solve + VerifiedByPill, `dd3940c4` quiz + rag-enricher + 3s timeout).
+- **Q7 follow-up** (`2c16e85e`): Quiz results page now surfaces RAG sources via `engine.getLastRagContext()`; both `QuizResult` and `QuizResultsCard` render `<VerifiedByPill sources={...} />`. 1203 tests pass.
 - Implemented Swipeable Flashcard Deck (Tinder-style interaction).
 - Activated Full-Screen Immersive Mode for Quiz and Exams.
 - Unified Spaced Repetition logic into `FlashcardEngine`.
