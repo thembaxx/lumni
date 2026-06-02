@@ -2,7 +2,8 @@ import { initAI, isAIConfigured } from "@/lib/ai";
 import { createCachingStrategy } from "@/lib/caching-strategy";
 import type { PastPaperQuestion } from "@/lib/exam-paper-ingestion/past-paper-question-types";
 import { ProcessorRegistry } from "./processor-registry";
-import { PromptManager } from "./prompt-manager";
+import { PromptManager, type RagContext } from "./prompt-manager";
+import { fetchRagContext, type RagDeps } from "./rag-enricher";
 import type {
 	GenerationParams,
 	GradingResult,
@@ -17,12 +18,15 @@ import type {
 export class QuestionEngine {
 	private registry: ProcessorRegistry;
 	private prompts: PromptManager;
+	private ragDeps?: RagDeps;
 	private cachingStrategy: ReturnType<
 		typeof createCachingStrategy<Question[], GenerationParams>
 	>;
+	private lastRagContext: RagContext | null = null;
 
-	constructor() {
-		this.prompts = new PromptManager();
+	constructor(ragDeps?: RagDeps) {
+		this.ragDeps = ragDeps;
+		this.prompts = new PromptManager(ragDeps);
 		this.registry = new ProcessorRegistry(this.prompts);
 		this.cachingStrategy = createCachingStrategy<Question[], GenerationParams>(
 			[
@@ -76,14 +80,14 @@ export class QuestionEngine {
 		);
 	}
 
-	static async initialize(): Promise<QuestionEngine> {
+	static async initialize(ragDeps?: RagDeps): Promise<QuestionEngine> {
 		if (!isAIConfigured()) {
 			initAI({
 				geminiApiKey: process.env.GEMINI_API_KEY,
 				groqApiKey: process.env.GROQ_API_KEY,
 			});
 		}
-		return new QuestionEngine();
+		return new QuestionEngine(ragDeps);
 	}
 
 	async generate(params: GenerationParams): Promise<Question[]> {
@@ -95,11 +99,19 @@ export class QuestionEngine {
 		params: GenerationParams,
 	): Promise<Question[] | null> {
 		const enriched = await this.enrichParams(params);
+		const ragContext = await fetchRagContext(
+			enriched.subject,
+			enriched.topic,
+			enriched.userId,
+			this.ragDeps,
+		);
+		this.lastRagContext = ragContext;
+
 		const { questionType, count } = enriched;
 		let questions: Question[];
 
 		if (!questionType || questionType === "any") {
-			questions = await this.generateMixed(enriched);
+			questions = await this.generateMixed(enriched, ragContext);
 		} else {
 			const types = Array.isArray(questionType) ? questionType : [questionType];
 			const perTypeCount = Math.ceil(count / types.length);
@@ -114,7 +126,7 @@ export class QuestionEngine {
 							count: perTypeCount,
 							questionType: type,
 						};
-						const result = await processor.generate(typeParams);
+						const result = await processor.generate(typeParams, ragContext);
 						return result;
 					} catch (error) {
 						console.error(
@@ -255,7 +267,10 @@ export class QuestionEngine {
 		}
 	}
 
-	private async generateMixed(params: GenerationParams): Promise<Question[]> {
+	private async generateMixed(
+		params: GenerationParams,
+		ragContext: RagContext,
+	): Promise<Question[]> {
 		const batches: QuestionType[][] = [
 			["multiple-choice", "matching"],
 			["short-answer", "long-answer", "essay"],
@@ -286,11 +301,14 @@ export class QuestionEngine {
 					available.map((_, j) => {
 						const tryType = available[(i + j) % available.length];
 						const processor = this.registry.getProcessor(tryType);
-						return processor.generate({
-							...params,
-							count: needed,
-							questionType: tryType,
-						});
+						return processor.generate(
+							{
+								...params,
+								count: needed,
+								questionType: tryType,
+							},
+							ragContext,
+						);
 					}),
 				);
 				for (const result of candidates) {
@@ -308,5 +326,9 @@ export class QuestionEngine {
 
 	getPromptManager(): PromptManager {
 		return this.prompts;
+	}
+
+	getLastRagContext(): RagContext | null {
+		return this.lastRagContext;
 	}
 }

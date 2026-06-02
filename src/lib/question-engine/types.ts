@@ -235,6 +235,7 @@ export interface GenerationParams {
 		marks: number;
 		year: number;
 	}>;
+	userId?: string | null;
 }
 
 export interface HintParams {
@@ -245,7 +246,10 @@ export interface HintParams {
 
 export type QuestionProcessor<T extends QuestionType = QuestionType> = {
 	type: T;
-	generate(params: GenerationParams): Promise<Question<T>[]>;
+	generate(
+		params: GenerationParams,
+		ragContext?: { sources: unknown[]; xml: string; domainsQueried: string[] },
+	): Promise<Question<T>[]>;
 	generateHint(question: Question<T>): Promise<string>;
 	grade(question: Question<T>, answer: UserAnswer): Promise<GradingResult>;
 	validate(question: Question<T>): ValidationResult;

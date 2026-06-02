@@ -1,3 +1,4 @@
+import { buildPromptInstruction, type emptyRagContext } from "@/lib/tinyfish";
 import {
 	getCompetencyDescription,
 	mapCompetencyToBloomList,
@@ -5,6 +6,7 @@ import {
 import { buildGeneratePrompt } from "./prompts/generate";
 import { buildGradePrompt } from "./prompts/grade";
 import { buildHintPrompt } from "./prompts/hint";
+import type { RagDeps } from "./rag-enricher";
 import type { GenerationParams, QuestionType } from "./types";
 
 export interface PromptTemplate {
@@ -12,7 +14,15 @@ export interface PromptTemplate {
 	user: string;
 }
 
+export type RagContext = ReturnType<typeof emptyRagContext>;
+
 export class PromptManager {
+	private deps?: RagDeps;
+
+	constructor(deps?: RagDeps) {
+		this.deps = deps;
+	}
+
 	private buildCompetencyContext(params: GenerationParams): string {
 		if (!params.topicCompetencyLevel) return "";
 
@@ -30,15 +40,30 @@ export class PromptManager {
 		return `\n\nStudent context: The student has a ${params.topicCompetencyLevel} understanding of this topic${scoreStr} — ${desc}. Focus on the following Bloom's taxonomy levels: ${bloomStr}.${diffNote}`;
 	}
 
+	private applyRagContext(
+		template: PromptTemplate,
+		ragContext?: RagContext,
+	): PromptTemplate {
+		if (!ragContext?.xml) return template;
+		const buildInstruction =
+			this.deps?.buildPromptInstruction ?? buildPromptInstruction;
+		return {
+			system: `${template.system}\n\n${buildInstruction()}`,
+			user: `${ragContext.xml}\n\n---\n\n${template.user}`,
+		};
+	}
+
 	getPrompt(
 		type: QuestionType | "any",
 		params: GenerationParams,
+		ragContext?: RagContext,
 	): PromptTemplate {
-		return buildGeneratePrompt(
+		const base = buildGeneratePrompt(
 			type,
 			params,
 			this.buildCompetencyContext(params),
 		);
+		return this.applyRagContext(base, ragContext);
 	}
 
 	getHintPrompt(questionType: QuestionType): PromptTemplate {

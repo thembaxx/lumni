@@ -19,9 +19,12 @@ export const POST = createRouteHandler({
 		if (!body.count || body.count < 1) return "Count must be at least 1";
 		return null;
 	},
-	execute: async ({ body }) => {
+	execute: async ({ body, userId }) => {
 		const orchestrator = await LearningOrchestrator.initialize();
-		const result = await orchestrator.generateQuestionSet(body);
+		const result = await orchestrator.generateQuestionSet({
+			...body,
+			userId: userId ?? null,
+		});
 		const requested = body.count;
 		const delivered = result.questions.length;
 		return {

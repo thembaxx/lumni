@@ -1,6 +1,6 @@
 import { getAI } from "@/lib/ai";
 import { ensureArray, parseAIResponse } from "@/lib/ai/parse-response";
-import type { PromptManager } from "../prompt-manager";
+import type { PromptManager, RagContext } from "../prompt-manager";
 import type {
 	GenerationParams,
 	GradingResult,
@@ -24,8 +24,11 @@ export class TypedQuestionProcessor<T extends QuestionType>
 		private prompts: PromptManager,
 	) {}
 
-	async generate(params: GenerationParams): Promise<Question<T>[]> {
-		const prompt = this.prompts.getPrompt(this.type, params);
+	async generate(
+		params: GenerationParams,
+		ragContext?: RagContext,
+	): Promise<Question<T>[]> {
+		const prompt = this.prompts.getPrompt(this.type, params, ragContext);
 		const result = await getAI().generateWithSystem(
 			prompt.system,
 			prompt.user,
