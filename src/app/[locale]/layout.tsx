@@ -20,6 +20,7 @@ import { CardSkeleton } from "@/components/ui/skeletons";
 import { Toaster } from "@/components/ui/toast";
 import { UploadDialogRenderer } from "@/components/upload/upload-dialog-renderer";
 import { isValidLocale, locales } from "@/i18n/locales";
+import { timeZone } from "@/i18n/request";
 import { ourFileRouter } from "../api/uploadthing/core";
 
 const DesktopSidebar = dynamic(() =>
@@ -197,7 +198,7 @@ export default async function LocaleLayout({
 				dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
 			/>
 			<ChunkLoadHandler />
-			<Providers locale={locale} messages={messages}>
+			<Providers locale={locale} messages={messages} timeZone={timeZone}>
 				<LazyMotion features={domAnimation}>
 					<UploadDialogRenderer />
 					<Toaster />

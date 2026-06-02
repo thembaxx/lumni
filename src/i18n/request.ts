@@ -19,6 +19,8 @@ const messageLoaders: Record<
 	nd: () => import("../../messages/nd.json"),
 };
 
+export const timeZone = "Africa/Johannesburg";
+
 export default getRequestConfig(async ({ requestLocale }) => {
 	const requested = await requestLocale;
 	const locale = hasLocale(locales, requested) ? requested : defaultLocale;
@@ -27,6 +29,6 @@ export default getRequestConfig(async ({ requestLocale }) => {
 	return {
 		locale,
 		messages: (await loader()).default,
-		timeZone: "Africa/Johannesburg",
+		timeZone,
 	};
 });

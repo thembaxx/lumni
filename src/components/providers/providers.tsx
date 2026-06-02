@@ -36,10 +36,16 @@ function ServiceWorkerWrapper() {
 interface ProvidersProps {
 	locale: Locale;
 	messages: Record<string, unknown>;
+	timeZone: string;
 	children: React.ReactNode;
 }
 
-export function Providers({ locale, messages, children }: ProvidersProps) {
+export function Providers({
+	locale,
+	messages,
+	timeZone,
+	children,
+}: ProvidersProps) {
 	useEffect(() => {
 		const handlePrefetch = async () => {
 			await prefetchUploadSubjects(queryClient);
@@ -56,7 +62,11 @@ export function Providers({ locale, messages, children }: ProvidersProps) {
 						<JoyProvider>
 							<ToastProvider>
 								<PremiumProvider>
-									<I18nProvider locale={locale} messages={messages}>
+									<I18nProvider
+										locale={locale}
+										messages={messages}
+										timeZone={timeZone}
+									>
 										<OnboardingProvider>
 											<ImmersiveModeProvider>{children}</ImmersiveModeProvider>
 										</OnboardingProvider>

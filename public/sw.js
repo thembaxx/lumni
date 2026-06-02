@@ -11,9 +11,15 @@ const API_CACHE_DURATION = 5 * 60 * 1000;
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(STATIC_ASSETS);
-    })
+    caches.open(CACHE_NAME).then((cache) =>
+      Promise.all(
+        STATIC_ASSETS.map((url) =>
+          cache.add(url).catch((err) => {
+            console.warn('[sw] failed to precache', url, err);
+          }),
+        ),
+      ),
+    ),
   );
   self.skipWaiting();
 });
