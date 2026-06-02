@@ -37,7 +37,7 @@ async function getLocalDb(): Promise<LocalDb> {
 		{ checkAndPopulateExamsDb },
 	] = await Promise.all([
 		import("@/lib/db/exams"),
-		import("@/lib/server/exam-paper-actions"),
+		import("@/lib/server/exam-papers-db"),
 	]);
 	return { getAllExamPapers, getExamPapersBySubject, checkAndPopulateExamsDb };
 }

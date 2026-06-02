@@ -8,7 +8,6 @@ export {
 	toggleUserSubject,
 } from "./actions";
 export {
-	checkAndPopulateExamsDb,
 	deleteExamPaper,
 	getExamPapers,
 	getExamPapersWithFallback,

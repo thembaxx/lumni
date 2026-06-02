@@ -81,12 +81,9 @@ mock.module("crypto", () => ({
 	randomUUID: () => `uuid-${++uuidCounter}`,
 }));
 
-const {
-	uploadExamPaper,
-	deleteExamPaper,
-	getExamPapersWithFallback,
-	checkAndPopulateExamsDb,
-} = await import("../exam-paper-actions");
+const { uploadExamPaper, deleteExamPaper, getExamPapersWithFallback } =
+	await import("../exam-paper-actions");
+const { checkAndPopulateExamsDb } = await import("../exam-papers-db");
 
 beforeEach(() => {
 	mockUserId = "user_abc";
