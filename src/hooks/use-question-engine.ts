@@ -163,6 +163,7 @@ export function useQuestionEngine(
 		questions,
 		count: query.data?.count ?? 0,
 		isLoading: query.isLoading,
+		isFetching: query.isFetching,
 		error: query.error,
 		isError: query.isError,
 		generate,

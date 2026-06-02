@@ -1,8 +1,14 @@
 "use client";
 
-import { ArrowRight01Icon, Lightning } from "@hugeicons/core-free-icons";
+import {
+	AlertCircleIcon,
+	ArrowRight01Icon,
+	BookOpenIcon,
+	RefreshIcon,
+	SparklesIcon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { m } from "framer-motion";
+import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { QuestionCard } from "@/components/quiz";
 import { Button } from "@/components/ui/button";
@@ -12,14 +18,16 @@ import { toast } from "@/hooks/use-toast";
 import { offlineDB } from "@/lib/db/schema";
 import type { Question } from "@/lib/question-engine/types";
 import { cn } from "@/lib/shared";
-import { iOSDecelerate } from "@/lib/utils/animation";
+import { iOSDecelerate, iOSEase } from "@/lib/utils/animation";
 
 type BoltPhase =
 	| "resolving"
 	| "loading"
 	| "answering"
 	| "answered"
-	| "branching";
+	| "branching"
+	| "error"
+	| "empty";
 
 export interface BoltResult {
 	question: Question;
@@ -59,6 +67,14 @@ async function resolveWeakestSubject(): Promise<string> {
 	}
 }
 
+function formatSubjectLabel(subject: string): string {
+	return subject
+		.split(/[-_\s]+/)
+		.filter(Boolean)
+		.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+		.join(" ");
+}
+
 export function DailyBoltOverlay({
 	onComplete,
 	onSprint,
@@ -67,6 +83,7 @@ export function DailyBoltOverlay({
 	const [phase, setPhase] = useState<BoltPhase>("resolving");
 	const [subject, setSubject] = useState("mathematics");
 	const [boltResult, setBoltResult] = useState<BoltResult | null>(null);
+	const shouldReduceMotion = useReducedMotion();
 
 	useEffect(() => {
 		resolveWeakestSubject().then((s) => {
@@ -85,18 +102,25 @@ export function DailyBoltOverlay({
 		[subject],
 	);
 
-	const { questions, isLoading, isError, refetch } = useQuestionEngine(
-		engineParams,
-		{ enabled: phase === "loading" },
-	);
+	const { questions, isLoading, isError, refetch, isFetching } =
+		useQuestionEngine(engineParams, { enabled: phase === "loading" });
 
 	const question = questions[0];
+	const subjectLabel = useMemo(() => formatSubjectLabel(subject), [subject]);
 
 	useEffect(() => {
-		if (!isLoading && question && phase === "loading") {
-			setPhase("answering");
+		if (phase !== "loading") return;
+		if (isLoading) return;
+		if (isError) {
+			setPhase("error");
+			return;
 		}
-	}, [isLoading, question, phase]);
+		if (question) {
+			setPhase("answering");
+		} else if (!isFetching) {
+			setPhase("empty");
+		}
+	}, [isLoading, isError, question, isFetching, phase]);
 
 	const handleAnswered = useCallback(
 		(correct: boolean) => {
@@ -119,111 +143,340 @@ export function DailyBoltOverlay({
 		setPhase("branching");
 	}, []);
 
+	const handleRetry = useCallback(() => {
+		setPhase("loading");
+		void refetch();
+	}, [refetch]);
+
 	const skipLabel =
 		phase === "resolving" || phase === "loading" ? "Skip" : "Skip to Dashboard";
 
 	const showLoading = phase === "resolving" || phase === "loading";
+	const showError = phase === "error";
+	const showEmpty = phase === "empty";
 
 	return (
-		<div className="fixed inset-0 z-overlay flex flex-col bg-background">
-			<div className="flex items-center justify-between px-4 pt-4 pb-2">
-				<div className="flex items-center gap-2">
-					<HugeiconsIcon icon={Lightning} className="size-5 text-amber-500" />
-					<span className="font-bold text-base tracking-tight">
-						Today's Bolt
-					</span>
-					{!showLoading && (
-						<span className="rounded-full bg-muted px-2.5 py-0.5 font-medium text-muted-foreground text-xs">
-							{subject}
+		<div className="fixed inset-0 z-overlay flex flex-col overflow-hidden bg-system-background">
+			<BoltAmbientBackground reduceMotion={shouldReduceMotion ?? false} />
+
+			<header className="relative z-10 flex items-center justify-between gap-3 px-5 pt-5 pb-3">
+				<div className="flex min-w-0 items-center gap-2.5">
+					<BoltMark reduceMotion={shouldReduceMotion ?? false} />
+					<div className="flex min-w-0 flex-col">
+						<span className="font-extrabold font-heading text-base text-system-text-primary tracking-tight">
+							Today&rsquo;s Bolt
 						</span>
-					)}
+						{showLoading ? (
+							<span
+								key="loading-subject"
+								className="truncate text-muted-foreground text-xs"
+							>
+								Finding your focus&hellip;
+							</span>
+						) : (
+							<span
+								key="subject-label"
+								className="truncate text-muted-foreground text-xs"
+							>
+								{subjectLabel}
+							</span>
+						)}
+					</div>
 				</div>
 				<button
 					type="button"
 					onClick={onSkip}
-					className="font-medium text-muted-foreground text-sm transition-colors hover:text-foreground"
+					className="rounded-full px-3 py-1.5 font-medium text-muted-foreground text-xs transition-colors hover:bg-system-fill hover:text-foreground"
 				>
 					{skipLabel}
 				</button>
+			</header>
+
+			<main className="relative z-10 flex flex-1 flex-col overflow-y-auto px-5 pb-8">
+				<AnimatePresence mode="wait" initial={false}>
+					{showLoading && (
+						<m.section
+							key="loading"
+							initial={{ opacity: 0, y: 8 }}
+							animate={{ opacity: 1, y: 0 }}
+							exit={{ opacity: 0, y: -8 }}
+							transition={{ duration: 0.35, ease: iOSDecelerate }}
+							className="flex flex-1 items-center justify-center"
+						>
+							<BoltLoading subjectLabel={subjectLabel} />
+						</m.section>
+					)}
+
+					{(phase === "answering" || phase === "answered") && question && (
+						<m.section
+							key="question"
+							initial={{ opacity: 0, y: 12 }}
+							animate={{ opacity: 1, y: 0 }}
+							exit={{ opacity: 0, y: -8 }}
+							transition={{ duration: 0.4, ease: iOSDecelerate }}
+							className="flex flex-1 items-center justify-center pt-2"
+						>
+							<div className="w-full max-w-2xl">
+								<QuestionCard
+									question={question}
+									subject={subject}
+									questionNumber={1}
+									totalQuestions={1}
+									onNext={handleProceed}
+									onAnswered={handleAnswered}
+								/>
+							</div>
+						</m.section>
+					)}
+
+					{phase === "branching" && boltResult && (
+						<m.section
+							key="branching"
+							initial={{ opacity: 0, y: 12 }}
+							animate={{ opacity: 1, y: 0 }}
+							exit={{ opacity: 0, y: -8 }}
+							transition={{ duration: 0.4, ease: iOSDecelerate }}
+							className="flex flex-1 items-center justify-center"
+						>
+							<BoltBranch
+								correct={boltResult.correct}
+								subjectLabel={subjectLabel}
+								onDashboard={() => onComplete(boltResult)}
+								onSprint={() => onSprint(boltResult)}
+							/>
+						</m.section>
+					)}
+
+					{showError && (
+						<m.section
+							key="error"
+							initial={{ opacity: 0, y: 12 }}
+							animate={{ opacity: 1, y: 0 }}
+							exit={{ opacity: 0, y: -8 }}
+							transition={{ duration: 0.4, ease: iOSDecelerate }}
+							className="flex flex-1 items-center justify-center"
+						>
+							<BoltErrorState
+								onRetry={handleRetry}
+								onSkip={onSkip}
+								isRetrying={isFetching}
+							/>
+						</m.section>
+					)}
+
+					{showEmpty && (
+						<m.section
+							key="empty"
+							initial={{ opacity: 0, y: 12 }}
+							animate={{ opacity: 1, y: 0 }}
+							exit={{ opacity: 0, y: -8 }}
+							transition={{ duration: 0.4, ease: iOSDecelerate }}
+							className="flex flex-1 items-center justify-center"
+						>
+							<BoltEmptyState
+								subjectLabel={subjectLabel}
+								onRetry={handleRetry}
+								onSkip={onSkip}
+								isRetrying={isFetching}
+							/>
+						</m.section>
+					)}
+				</AnimatePresence>
+			</main>
+		</div>
+	);
+}
+
+function BoltMark({ reduceMotion }: { reduceMotion: boolean }) {
+	return (
+		<m.div
+			initial={reduceMotion ? false : { scale: 0.6, rotate: -10, opacity: 0 }}
+			animate={{ scale: 1, rotate: 0, opacity: 1 }}
+			transition={{ duration: 0.55, ease: iOSEase }}
+			className="relative flex size-10 shrink-0 items-center justify-center rounded-2xl bg-warning/15 shadow-level-1 ring-1 ring-warning/25"
+			aria-hidden="true"
+		>
+			<m.div
+				animate={
+					reduceMotion
+						? undefined
+						: { scale: [1, 1.06, 1], opacity: [0.55, 0.85, 0.55] }
+				}
+				transition={{
+					duration: 2.4,
+					repeat: Infinity,
+					ease: "easeInOut",
+				}}
+				className="absolute inset-0 rounded-2xl bg-warning/30 blur-md"
+			/>
+			<HugeiconsIcon
+				icon={SparklesIcon}
+				className="relative size-5 text-warning"
+				strokeWidth={2.25}
+			/>
+		</m.div>
+	);
+}
+
+function BoltAmbientBackground({ reduceMotion }: { reduceMotion: boolean }) {
+	return (
+		<div
+			className="pointer-events-none absolute inset-0 overflow-hidden"
+			aria-hidden="true"
+		>
+			<div className="absolute inset-0 bg-linear-to-b from-warning/8 via-transparent to-transparent dark:from-warning/6" />
+			<m.div
+				animate={
+					reduceMotion ? undefined : { x: [0, 24, -8, 0], y: [0, -18, 12, 0] }
+				}
+				transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
+				className="absolute -top-32 -right-24 size-72 rounded-full bg-warning/15 blur-3xl"
+			/>
+			<m.div
+				animate={
+					reduceMotion ? undefined : { x: [0, -20, 14, 0], y: [0, 16, -10, 0] }
+				}
+				transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+				className="absolute -bottom-40 -left-20 size-80 rounded-full bg-system-accent/10 blur-3xl"
+			/>
+		</div>
+	);
+}
+
+function BoltLoading({ subjectLabel }: { subjectLabel: string }) {
+	return (
+		<div className="flex w-full max-w-2xl flex-col gap-5">
+			<div className="flex flex-col items-center gap-3 py-2 text-center">
+				<div className="flex items-center gap-2 rounded-full bg-system-fill px-3 py-1.5">
+					<span className="relative flex size-2">
+						<span className="absolute inline-flex size-full animate-ping rounded-full bg-warning/60" />
+						<span className="relative inline-flex size-2 rounded-full bg-warning" />
+					</span>
+					<span className="font-medium text-muted-foreground text-xs uppercase tracking-wider">
+						Charging your bolt
+					</span>
+				</div>
+				<h2 className="ios-title-3 max-w-md text-balance text-foreground">
+					Preparing a {subjectLabel} question
+				</h2>
+				<p className="max-w-sm text-balance text-muted-foreground text-sm">
+					Sharpening today&rsquo;s target at your weakest spot.
+				</p>
 			</div>
-
-			<div className="flex flex-1 items-center justify-center px-4 pb-8">
-				{showLoading && <BoltLoading />}
-
-				{phase === "answering" && question && (
-					<m.div
-						key="question"
-						initial={{ opacity: 0, y: 12 }}
-						animate={{ opacity: 1, y: 0 }}
-						transition={{ duration: 0.35, ease: iOSDecelerate }}
-						className="w-full max-w-2xl"
-					>
-						<QuestionCard
-							question={question}
-							subject={subject}
-							questionNumber={1}
-							totalQuestions={1}
-							onNext={handleProceed}
-							onAnswered={handleAnswered}
-						/>
-					</m.div>
-				)}
-
-				{phase === "answered" && question && (
-					<m.div
-						key="question-answered"
-						initial={{ opacity: 0, y: 12 }}
-						animate={{ opacity: 1, y: 0 }}
-						transition={{ duration: 0.35, ease: iOSDecelerate }}
-						className="w-full max-w-2xl"
-					>
-						<QuestionCard
-							question={question}
-							subject={subject}
-							questionNumber={1}
-							totalQuestions={1}
-							onNext={handleProceed}
-							onAnswered={handleAnswered}
-						/>
-					</m.div>
-				)}
-
-				{phase === "branching" && boltResult && (
-					<BoltBranch
-						correct={boltResult.correct}
-						onDashboard={() => onComplete(boltResult)}
-						onSprint={() => onSprint(boltResult)}
-					/>
-				)}
-
-				{phase !== "resolving" && isError && (
-					<div className="flex flex-col items-center gap-4">
-						<p className="text-muted-foreground">
-							Couldn't load your question. Try again?
-						</p>
-						<div className="flex gap-3">
-							<Button variant="outline" onClick={onSkip}>
-								Skip to Dashboard
-							</Button>
-							<Button onClick={() => refetch()}>Retry</Button>
-						</div>
-					</div>
-				)}
+			<Skeleton className="h-6 w-48 rounded-full" />
+			<Skeleton className="h-44 w-full rounded-3xl" />
+			<div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+				<Skeleton className="h-14 rounded-2xl" />
+				<Skeleton className="h-14 rounded-2xl" />
+				<Skeleton className="h-14 rounded-2xl" />
+				<Skeleton className="h-14 rounded-2xl" />
 			</div>
 		</div>
 	);
 }
 
-function BoltLoading() {
+function BoltErrorState({
+	onRetry,
+	onSkip,
+	isRetrying,
+}: {
+	onRetry: () => void;
+	onSkip: () => void;
+	isRetrying: boolean;
+}) {
 	return (
-		<div className="flex w-full max-w-2xl flex-col gap-4">
-			<Skeleton className="h-6 w-48 rounded-lg" />
-			<Skeleton className="h-48 w-full rounded-3xl" />
-			<div className="flex gap-3">
-				<Skeleton className="h-12 flex-1 rounded-xl" />
-				<Skeleton className="h-12 flex-1 rounded-xl" />
-				<Skeleton className="h-12 flex-1 rounded-xl" />
-				<Skeleton className="h-12 flex-1 rounded-xl" />
+		<div className="flex w-full max-w-md flex-col items-center gap-6 text-center">
+			<div className="relative flex size-16 items-center justify-center rounded-3xl bg-destructive/10 ring-1 ring-destructive/20">
+				<div className="absolute inset-0 rounded-3xl bg-destructive/20 blur-xl" />
+				<HugeiconsIcon
+					icon={AlertCircleIcon}
+					className="relative size-7 text-destructive"
+					strokeWidth={2}
+				/>
+			</div>
+			<div className="flex flex-col gap-2">
+				<h2 className="ios-title-3 text-balance text-foreground">
+					We couldn&rsquo;t charge your bolt
+				</h2>
+				<p className="max-w-sm text-balance text-muted-foreground text-sm">
+					Something tripped while loading today&rsquo;s question. Give it
+					another try, or head back to the dashboard and pick a different start.
+				</p>
+			</div>
+			<div className="flex w-full flex-col gap-2.5 sm:flex-row sm:justify-center">
+				<Button
+					variant="outline"
+					onClick={onSkip}
+					className="w-full sm:w-auto"
+					disabled={isRetrying}
+				>
+					Back to Dashboard
+				</Button>
+				<Button
+					onClick={onRetry}
+					className="w-full gap-2 sm:w-auto"
+					disabled={isRetrying}
+				>
+					<HugeiconsIcon
+						icon={RefreshIcon}
+						className={cn("size-4", isRetrying && "animate-spin")}
+					/>
+					{isRetrying ? "Retrying…" : "Try Again"}
+				</Button>
+			</div>
+		</div>
+	);
+}
+
+function BoltEmptyState({
+	subjectLabel,
+	onRetry,
+	onSkip,
+	isRetrying,
+}: {
+	subjectLabel: string;
+	onRetry: () => void;
+	onSkip: () => void;
+	isRetrying: boolean;
+}) {
+	return (
+		<div className="flex w-full max-w-md flex-col items-center gap-6 text-center">
+			<div className="relative flex size-16 items-center justify-center rounded-3xl bg-system-fill ring-1 ring-system-separator">
+				<HugeiconsIcon
+					icon={BookOpenIcon}
+					className="relative size-7 text-muted-foreground"
+					strokeWidth={2}
+				/>
+			</div>
+			<div className="flex flex-col gap-2">
+				<h2 className="ios-title-3 text-balance text-foreground">
+					No {subjectLabel} question ready yet
+				</h2>
+				<p className="max-w-sm text-balance text-muted-foreground text-sm">
+					We couldn&rsquo;t pull a fresh question for you right now. Try again
+					in a moment, or jump into the dashboard to browse your topics.
+				</p>
+			</div>
+			<div className="flex w-full flex-col gap-2.5 sm:flex-row sm:justify-center">
+				<Button
+					variant="outline"
+					onClick={onSkip}
+					className="w-full sm:w-auto"
+					disabled={isRetrying}
+				>
+					Back to Dashboard
+				</Button>
+				<Button
+					onClick={onRetry}
+					className="w-full gap-2 sm:w-auto"
+					disabled={isRetrying}
+				>
+					<HugeiconsIcon
+						icon={RefreshIcon}
+						className={cn("size-4", isRetrying && "animate-spin")}
+					/>
+					{isRetrying ? "Refreshing…" : "Refresh Question"}
+				</Button>
 			</div>
 		</div>
 	);
@@ -231,40 +484,65 @@ function BoltLoading() {
 
 function BoltBranch({
 	correct,
+	subjectLabel,
 	onDashboard,
 	onSprint,
 }: {
 	correct: boolean;
+	subjectLabel: string;
 	onDashboard: () => void;
 	onSprint: () => void;
 }) {
 	return (
-		<m.div
-			initial={{ opacity: 0, y: 16 }}
-			animate={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.3, ease: iOSDecelerate }}
-			className="flex w-full max-w-md flex-col items-center gap-6"
-		>
-			<div className="text-center">
-				<p
+		<div className="flex w-full max-w-md flex-col items-center gap-7 text-center">
+			<m.div
+				initial={{ scale: 0.6, opacity: 0 }}
+				animate={{ scale: 1, opacity: 1 }}
+				transition={{ duration: 0.5, ease: iOSDecelerate }}
+				className="relative"
+			>
+				<div
 					className={cn(
-						"font-bold text-xl",
-						correct ? "text-success" : "text-muted-foreground",
+						"absolute inset-0 rounded-full blur-2xl",
+						correct ? "bg-success/35" : "bg-warning/30",
+					)}
+				/>
+				<div
+					className={cn(
+						"relative flex size-20 items-center justify-center rounded-full shadow-level-2 ring-1",
+						correct
+							? "bg-success/15 text-success ring-success/30"
+							: "bg-warning/15 text-warning ring-warning/30",
 					)}
 				>
-					{correct ? "Correct!" : "Not quite"}
-				</p>
-				<p className="mt-1 text-muted-foreground text-sm">
+					<HugeiconsIcon
+						icon={SparklesIcon}
+						className="size-9"
+						strokeWidth={2.25}
+					/>
+				</div>
+			</m.div>
+
+			<div className="flex flex-col gap-2">
+				<h2
+					className={cn(
+						"ios-title-2 text-balance",
+						correct ? "text-success" : "text-foreground",
+					)}
+				>
+					{correct ? "Bolt delivered." : "Solid attempt."}
+				</h2>
+				<p className="max-w-sm text-balance text-muted-foreground text-sm">
 					{correct
-						? "Great start to your study session!"
-						: "Keep going — practice makes perfect."}
+						? `Nice work on that ${subjectLabel} question. Want another one in the same lane?`
+						: `Every bolt sharpens you. Keep the streak going with another ${subjectLabel} round.`}
 				</p>
 			</div>
 
-			<div className="flex w-full flex-col gap-3">
+			<div className="flex w-full flex-col gap-2.5">
 				<Button onClick={onSprint} size="lg" className="w-full gap-2 text-base">
 					Continue Sprint
-					<HugeiconsIcon icon={ArrowRight01Icon} />
+					<HugeiconsIcon icon={ArrowRight01Icon} className="size-4" />
 				</Button>
 				<Button
 					onClick={onDashboard}
@@ -274,6 +552,6 @@ function BoltBranch({
 					Back to Dashboard
 				</Button>
 			</div>
-		</m.div>
+		</div>
 	);
 }
