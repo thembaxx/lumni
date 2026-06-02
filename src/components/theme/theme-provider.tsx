@@ -30,15 +30,27 @@ function getSystemTheme(): Theme {
 export function ThemeProvider({ children }: { children: ReactNode }) {
 	const [theme, setThemeState] = useState<Theme>(() => {
 		if (typeof window !== "undefined") {
-			return (localStorage.getItem("theme") as Theme) || "system";
+			try {
+				return (localStorage.getItem("theme") as Theme) || "system";
+			} catch {
+				return "system";
+			}
 		}
 		return "system";
 	});
 	const mounted = useRef(false);
 
 	useEffect(() => {
+		mounted.current = true;
+	}, []);
+
+	useEffect(() => {
 		if (!mounted.current) return;
-		localStorage.setItem("theme", theme);
+		try {
+			localStorage.setItem("theme", theme);
+		} catch {
+			// Storage unavailable; theme still applies in-memory
+		}
 		const root = document.documentElement;
 		const resolvedTheme = theme === "system" ? getSystemTheme() : theme;
 		root.classList.remove("light", "dark");
