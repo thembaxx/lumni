@@ -7,6 +7,13 @@ import { withRateLimit } from "@/lib/shared/with-rate-limit";
 export const POST = withRateLimit(
 	createRouteHandler({
 		auth: "optional",
+		parseBody: async (req) => {
+			try {
+				return await req.json();
+			} catch {
+				return {};
+			}
+		},
 		execute: async ({ userId }) => {
 			if (!userId) {
 				return { verified: false, isPremium: false };

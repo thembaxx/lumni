@@ -63,15 +63,23 @@ export async function enqueue<T extends JobType>(
 	payload: JobPayloadByType[T],
 	opts?: EnqueueOptions,
 ): Promise<number> {
+	if (typeof indexedDB === "undefined") {
+		return -1;
+	}
 	const now = Date.now();
-	return queueCore.enqueue({
-		type,
-		payload: safeJsonStringify(payload),
-		status: "pending",
-		priority: opts?.priority ?? DEFAULT_PRIORITY[type],
-		attempts: 0,
-		maxRetries: DEFAULT_MAX_RETRIES[type],
-		scheduledAt: opts?.scheduledAt ?? now,
-		createdAt: now,
-	});
+	try {
+		return await queueCore.enqueue({
+			type,
+			payload: safeJsonStringify(payload),
+			status: "pending",
+			priority: opts?.priority ?? DEFAULT_PRIORITY[type],
+			attempts: 0,
+			maxRetries: DEFAULT_MAX_RETRIES[type],
+			scheduledAt: opts?.scheduledAt ?? now,
+			createdAt: now,
+		});
+	} catch (err) {
+		console.warn(`[enqueue] Failed to enqueue ${type}:`, err);
+		return -1;
+	}
 }
