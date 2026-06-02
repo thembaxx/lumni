@@ -1,0 +1,18 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    ignore:
+      - dependency-name: "elliptic"
+        # GHSA-848j-6mx2-7j84: elliptic uses a cryptographic primitive with a risky
+        # ECDSA implementation. No upstream fix exists (advisory: "Fix available: No").
+        # The vulnerable chain is dev-only via Storybook -> node-polyfill-webpack-plugin
+        # -> crypto-browserify -> browserify-sign -> elliptic. The affected crypto
+        # path is never executed by the running app. Tracked in Storybook issue #33522.
+      - dependency-name: "browserify-sign"
+      - dependency-name: "create-ecdh"
+      - dependency-name: "crypto-browserify"
+      - dependency-name: "node-polyfill-webpack-plugin"

@@ -127,7 +127,7 @@
 	],
 	"overrides": {
 		"postcss": "8.5.15",
-		"elliptic": "6.6.1",
+		"tmp": "^0.2.6",
 		"uploadthing": {
 			"effect": "3.21.0"
 		},
