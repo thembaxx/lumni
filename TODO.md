@@ -230,6 +230,7 @@ All 21 items across P2 and P3 are implemented. Total changes:
 ## Next Up
 
 - **Appwrite SA Region**: Console-side verification (non-code)
+- **Web-Grounded AI — TinyFish RAG injection** <!-- linear-id: LUM-TBD --> — Inject live CAPS/DBE sources into question generation and solve. See `docs/adr/0010-tinyfish-rag-integration.md`. 3-PR build: (1) `src/lib/tinyfish/` foundation + Dexie v25, (2) `/api/solve` web sources, (3) `/api/engine/generate` RAG injection + UI pill.
 - **New features / bug fixes**: Open for prioritization
 
 ## ✅ Session 18 — Polish & Hardening (June 2026)

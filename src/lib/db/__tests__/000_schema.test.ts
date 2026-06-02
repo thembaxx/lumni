@@ -32,6 +32,8 @@ const tableNames = [
 	"groupChallengeEntries",
 	"groupBadges",
 	"userConsents",
+	"tinyfishCache",
+	"tinyfishUsage",
 ];
 
 const mockTables = tableNames.map((name) => ({
@@ -42,7 +44,7 @@ const mockTables = tableNames.map((name) => ({
 
 class MockOfflineDB {
 	readonly name = "lumni-offline";
-	readonly verno = 24;
+	readonly verno = 25;
 	readonly tables = mockTables;
 	table(name: string) {
 		return mockTables.find((t) => t.name === name);
@@ -78,12 +80,12 @@ describe("LumniOfflineDB", () => {
 		expect(offlineDB.name).toBe("lumni-offline");
 	});
 
-	test("version is 24", () => {
-		expect(offlineDB.verno).toBe(24);
+	test("version is 25", () => {
+		expect(offlineDB.verno).toBe(25);
 	});
 
 	test("has all expected tables", () => {
-		expect(offlineDB.tables.length).toBe(31);
+		expect(offlineDB.tables.length).toBe(33);
 		for (const name of tableNames) {
 			const table = offlineDB.tables.find(
 				(t: { name: string }) => t.name === name,
