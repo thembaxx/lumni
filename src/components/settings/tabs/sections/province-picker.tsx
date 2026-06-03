@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
 
 const SOUTH_AFRICAN_PROVINCES = [
 	"Eastern Cape",
@@ -24,29 +25,29 @@ export function ProvincePicker({ value, onSelect }: ProvincePickerProps) {
 
 	return (
 		<div className="relative">
-			<button
-				type="button"
+			<Button
+				variant="link"
+				size="sm"
 				onClick={() => setOpen(!open)}
-				className="font-medium text-sm text-system-accent hover:underline"
+				className="font-medium text-sm text-system-accent"
 			>
 				{value || "Select"}
-			</button>
+			</Button>
 			{open && (
 				<div className="absolute top-8 right-0 z-drawer max-h-48 w-48 overflow-y-auto rounded-xl bg-popover p-1 shadow-level-3 ring-1 ring-foreground/10">
 					{SOUTH_AFRICAN_PROVINCES.map((p) => (
-						<button
+						<Button
 							key={p}
-							type="button"
+							variant="ghost"
+							size="sm"
 							onClick={() => {
 								onSelect(p);
 								setOpen(false);
 							}}
-							className={`w-full rounded-lg px-3 py-2 text-left text-sm hover:bg-accent ${
-								value === p ? "bg-accent font-semibold" : ""
-							}`}
+							className={`w-full justify-start rounded-lg font-normal ${value === p ? "bg-accent font-semibold" : ""}`}
 						>
 							{p}
-						</button>
+						</Button>
 					))}
 				</div>
 			)}

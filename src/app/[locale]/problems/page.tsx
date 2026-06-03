@@ -15,6 +15,7 @@ import { StepByStep } from "@/components/quiz/step-by-step";
 import { Anim } from "@/components/shared/anim";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { SubjectSelect } from "@/components/ui/subject-select";
 import {
 	type CuratedProblem,
@@ -263,14 +264,14 @@ function ProblemsClient() {
 								className="flex flex-col gap-4"
 							>
 								{[1, 2, 3].map((i) => (
-									<div
+									<Skeleton
 										key={`skeleton-${i}`}
-										className="flex animate-pulse flex-col gap-3 rounded-2xl border border-border/50 bg-card p-5"
+										className="flex flex-col gap-3 rounded-2xl p-5"
 									>
 										<div className="h-4 w-16 rounded bg-muted/30" />
 										<div className="h-4 w-full rounded bg-muted/30" />
 										<div className="h-4 w-3/4 rounded bg-muted/30" />
-									</div>
+									</Skeleton>
 								))}
 							</m.div>
 						)}

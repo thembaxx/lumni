@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { AccuracyBar } from "@/components/shared/accuracy-bar";
 import { VerifiedByPill } from "@/components/tools/communication/verified-by-pill";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { iOSEase, springTransition } from "@/lib/utils/animation";
 import { AnimatedIcon } from "@/lib/utils/icon-mapping";
 
@@ -132,88 +132,90 @@ export function QuizResult({
 			transition={{ duration: 0.4, ease: iOSEase }}
 			className="flex flex-col gap-6"
 		>
-			<Card className="flex flex-col items-center gap-4 overflow-visible p-8 text-center">
-				{message.celebration && <Confetti />}
-				<m.div
-					initial={{ scale: 0.95, opacity: 0 }}
-					animate={{ scale: 1, opacity: 1 }}
-					transition={{ delay: 0.2, ...springTransition }}
-				>
-					<AnimatedIcon name={message.icon} className="size-20" />
-				</m.div>
-				<m.h2
-					className="font-semibold text-2xl"
-					initial={{ opacity: 0, y: 10 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ delay: 0.3 }}
-				>
-					{message.title}
-				</m.h2>
-
-				<div className="grid w-full max-w-xs grid-cols-1 gap-6 sm:grid-cols-2">
+			<Card className="overflow-visible">
+				<CardContent className="flex flex-col items-center gap-4 p-8 text-center">
+					{message.celebration && <Confetti />}
 					<m.div
-						className="flex flex-col items-center"
-						initial={{ opacity: 0, y: 20 }}
-						animate={{ opacity: 1, y: 0 }}
-						transition={{ delay: 0.4 }}
+						initial={{ scale: 0.95, opacity: 0 }}
+						animate={{ scale: 1, opacity: 1 }}
+						transition={{ delay: 0.2, ...springTransition }}
 					>
-						<p className="font-extrabold text-3xl text-success">
-							<AnimatedCounter value={correctAnswers} delay={500} />
-						</p>
-						<p className="text-muted-foreground text-xs">Correct</p>
+						<AnimatedIcon name={message.icon} className="size-20" />
 					</m.div>
-					<m.div
-						className="flex flex-col items-center"
-						initial={{ opacity: 0, y: 20 }}
+					<m.h2
+						className="font-semibold text-2xl"
+						initial={{ opacity: 0, y: 10 }}
 						animate={{ opacity: 1, y: 0 }}
-						transition={{ delay: 0.5 }}
+						transition={{ delay: 0.3 }}
 					>
-						<p className="font-extrabold text-3xl text-destructive">
-							<AnimatedCounter
-								value={totalQuestions - correctAnswers}
-								delay={600}
-							/>
-						</p>
-						<p className="text-muted-foreground text-xs">Incorrect</p>
-					</m.div>
-				</div>
+						{message.title}
+					</m.h2>
 
-				<m.div
-					className="w-full"
-					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-					transition={{ delay: 0.6 }}
-				>
-					<AccuracyBar
-						accuracy={accuracy}
-						variant="animated"
-						showLabel={true}
-					/>
-				</m.div>
+					<div className="grid w-full max-w-xs grid-cols-1 gap-6 sm:grid-cols-2">
+						<m.div
+							className="flex flex-col items-center"
+							initial={{ opacity: 0, y: 20 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{ delay: 0.4 }}
+						>
+							<p className="font-extrabold text-3xl text-success">
+								<AnimatedCounter value={correctAnswers} delay={500} />
+							</p>
+							<p className="text-muted-foreground text-xs">Correct</p>
+						</m.div>
+						<m.div
+							className="flex flex-col items-center"
+							initial={{ opacity: 0, y: 20 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{ delay: 0.5 }}
+						>
+							<p className="font-extrabold text-3xl text-destructive">
+								<AnimatedCounter
+									value={totalQuestions - correctAnswers}
+									delay={600}
+								/>
+							</p>
+							<p className="text-muted-foreground text-xs">Incorrect</p>
+						</m.div>
+					</div>
 
-				{incorrectAnswers.length > 0 && (
 					<m.div
-						className="w-full border-t pt-4"
+						className="w-full"
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
-						transition={{ delay: 0.8 }}
+						transition={{ delay: 0.6 }}
 					>
-						<p className="mb-2 font-medium text-sm">Review:</p>
-						<div className="flex flex-col gap-1 text-left">
-							{incorrectAnswers.slice(0, 3).map((item, idx) => (
-								<p
-									key={`review-${item.questionId || idx}`}
-									className="text-muted-foreground text-xs"
-								>
-									Q{idx + 1}: You answered {item.selectedAnswer}, correct was{" "}
-									{item.correctAnswer}
-								</p>
-							))}
-						</div>
+						<AccuracyBar
+							accuracy={accuracy}
+							variant="animated"
+							showLabel={true}
+						/>
 					</m.div>
-				)}
 
-				<VerifiedByPill sources={sources ?? []} />
+					{incorrectAnswers.length > 0 && (
+						<m.div
+							className="w-full border-t pt-4"
+							initial={{ opacity: 0 }}
+							animate={{ opacity: 1 }}
+							transition={{ delay: 0.8 }}
+						>
+							<p className="mb-2 font-medium text-sm">Review:</p>
+							<div className="flex flex-col gap-1 text-left">
+								{incorrectAnswers.slice(0, 3).map((item, idx) => (
+									<p
+										key={`review-${item.questionId || idx}`}
+										className="text-muted-foreground text-xs"
+									>
+										Q{idx + 1}: You answered {item.selectedAnswer}, correct was{" "}
+										{item.correctAnswer}
+									</p>
+								))}
+							</div>
+						</m.div>
+					)}
+
+					<VerifiedByPill sources={sources ?? []} />
+				</CardContent>
 			</Card>
 
 			<m.div

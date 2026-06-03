@@ -16,11 +16,14 @@ const XAxis = dynamic(
 	() => import("recharts").then((m) => ({ default: m.XAxis })),
 	{ ssr: false },
 );
+
+import { Skeleton } from "@/components/ui/skeleton";
+
 const ResponsiveContainer = dynamic(
 	() => import("recharts").then((m) => ({ default: m.ResponsiveContainer })),
 	{
 		ssr: false,
-		loading: () => <div className="h-32 animate-pulse rounded-lg bg-muted" />,
+		loading: () => <Skeleton className="h-32 rounded-lg" />,
 	},
 );
 const Tooltip = dynamic(

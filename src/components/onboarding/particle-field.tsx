@@ -118,7 +118,7 @@ interface ParticleFieldProps {
 
 export function ParticleField({ step }: ParticleFieldProps) {
 	return (
-		<div className="pointer-events-none fixed inset-0 z-0">
+		<div className="pointer-events-none fixed inset-0 z-content">
 			<Canvas
 				camera={{ position: [0, 0, 6], fov: 60 }}
 				dpr={[1, 1.5]}

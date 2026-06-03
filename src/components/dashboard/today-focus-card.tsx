@@ -9,7 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useFilteredSubjects } from "@/hooks/use-subjects";
 import { useRouter } from "@/i18n/navigation";
 import { iOSEase } from "@/lib/utils/animation";
@@ -143,7 +143,7 @@ export function TodayFocusCard() {
 			}}
 		>
 			<Card className="border border-border/80 transition-colors hover:border-foreground/15">
-				<div className="flex flex-col gap-4 p-5">
+				<CardHeader>
 					<div className="flex items-center gap-3">
 						<div
 							className={`flex size-10 items-center justify-center rounded-xl border ${cfg.bgAlpha}`}
@@ -154,44 +154,36 @@ export function TodayFocusCard() {
 							/>
 						</div>
 						<div className="flex flex-col gap-0.5">
-							<span className="block font-extrabold text-foreground text-sm tracking-tight">
+							<CardTitle className="font-extrabold text-foreground text-sm tracking-tight">
 								Today&apos;s Focus
-							</span>
+							</CardTitle>
 							<span className={`font-medium text-xs ${cfg.iconColor}`}>
 								{cfg.tag}
 							</span>
 						</div>
 					</div>
-
-					<div className="flex flex-col gap-4">
-						<div className="flex items-center justify-between gap-2">
-							<p className="font-semibold text-primary text-sm">
-								{subjectName}
-							</p>
-							<SubjectsDrawer
-								onSelect={(name) => {
-									const found = subjects?.find((s) => s.name === name);
-									if (found) setSelectedSubjectId(found.id);
-								}}
-							>
-								<div className="flex min-h-9 cursor-pointer items-center gap-1 rounded-lg border px-3 py-1.5 font-medium text-muted-foreground text-xs transition-[background-color,color] hover:bg-system-fill hover:text-foreground">
-									Change subject
-									<HugeiconsIcon
-										icon={ArrowDown01Icon}
-										className="ml-2 size-4"
-									/>
-								</div>
-							</SubjectsDrawer>
-						</div>
-						<h3 className="balance text-wrap font-semibold text-foreground text-lg leading-tight tracking-tight">
-							{topic}
-						</h3>
+				</CardHeader>
+				<CardContent className="flex flex-col gap-4">
+					<div className="flex items-center justify-between gap-2">
+						<p className="font-semibold text-primary text-sm">{subjectName}</p>
+						<SubjectsDrawer
+							onSelect={(name) => {
+								const found = subjects?.find((s) => s.name === name);
+								if (found) setSelectedSubjectId(found.id);
+							}}
+						>
+							<div className="flex min-h-9 cursor-pointer items-center gap-1 rounded-lg border px-3 py-1.5 font-medium text-muted-foreground text-xs transition-[background-color,color] hover:bg-system-fill hover:text-foreground">
+								Change subject
+								<HugeiconsIcon icon={ArrowDown01Icon} className="ml-2 size-4" />
+							</div>
+						</SubjectsDrawer>
 					</div>
-
+					<h3 className="balance text-wrap font-semibold text-foreground text-lg leading-tight tracking-tight">
+						{topic}
+					</h3>
 					<p className="font-medium text-muted-foreground text-xs leading-relaxed">
 						{reason}
 					</p>
-
 					<Button
 						size="sm"
 						variant="secondary"
@@ -231,7 +223,7 @@ export function TodayFocusCard() {
 							)}
 						</AnimatePresence>
 					</Button>
-				</div>
+				</CardContent>
 			</Card>
 		</m.div>
 	);

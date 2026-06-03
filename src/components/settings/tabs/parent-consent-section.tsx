@@ -4,6 +4,7 @@ import { LinkSquare01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
+import { Badge } from "@/components/ui/badge";
 
 import { ListCell, ListSection } from "@/components/ui/list-cell";
 
@@ -27,15 +28,16 @@ export function ParentConsentSection({ userId }: { userId: string }) {
 	const trailing = useMemo(
 		() =>
 			requests ? (
-				<span
-					className={`rounded-full px-2.5 py-0.5 font-semibold text-xs ${
+				<Badge
+					variant={requests.status === "granted" ? "default" : "secondary"}
+					className={
 						requests.status === "granted"
 							? "bg-emerald-500/10 text-emerald-600 dark:bg-emerald-400/10 dark:text-emerald-300"
-							: "bg-muted text-muted-foreground"
-					}`}
+							: ""
+					}
 				>
 					{requests.status}
-				</span>
+				</Badge>
 			) : undefined,
 		[requests],
 	);

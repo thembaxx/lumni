@@ -52,9 +52,9 @@ export function TTSButton({ text, lang, className }: TTSButtonProps) {
 			aria-label={isPlaying ? "Stop speaking" : "Read aloud"}
 		>
 			{isPlaying ? (
-				<HugeiconsIcon icon={VolumeMute01Icon} className="size-4" />
+				<HugeiconsIcon icon={VolumeMute01Icon} />
 			) : (
-				<HugeiconsIcon icon={VolumeUpIcon} className="size-4" />
+				<HugeiconsIcon icon={VolumeUpIcon} />
 			)}
 		</Button>
 	);

@@ -3,6 +3,7 @@
 import { CheckmarkCircle01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
+import { Skeleton } from "@/components/ui/skeleton";
 import { SuccessBadge } from "./success-badge";
 
 export function OtpVerifiedView() {
@@ -44,9 +45,7 @@ export function OtpVerifiedView() {
 				<SuccessBadge isAdmin={true} />
 			</div>
 			<p className="font-medium text-foreground text-lg">You&apos;re in!</p>
-			<p className="animate-pulse text-muted-foreground text-sm">
-				Redirecting…
-			</p>
+			<Skeleton shape="text" />
 		</m.div>
 	);
 }

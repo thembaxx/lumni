@@ -33,7 +33,7 @@ import { LocalDataNotice } from "@/components/shared/local-data-notice";
 import { PullToRefresh } from "@/components/shared/pull-to-refresh";
 import { StaggerList } from "@/components/shared/stagger-list";
 import { LeaderboardCard } from "@/components/social/leaderboard-card";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGamification } from "@/hooks/use-gamification";
 import { useAuth } from "@/lib/auth/auth-context";
@@ -124,8 +124,10 @@ function BentoStatRow({
 			</div>
 			<div className="col-span-12 sm:col-span-4">
 				<SectionReveal delay={0.12}>
-					<Card className="flex h-full items-center justify-center rounded-3xl p-4 shadow-level-1">
-						<DailyProgressRing />
+					<Card className="flex h-full items-center justify-center rounded-3xl shadow-level-1">
+						<CardContent className="p-4">
+							<DailyProgressRing />
+						</CardContent>
 					</Card>
 				</SectionReveal>
 			</div>
@@ -311,11 +313,15 @@ export function DashboardContent({
 				)}
 				{showAnalytics && !isAnonymous && (
 					<SectionReveal delay={0.19}>
-						<Card className="flex flex-col gap-4 p-4">
-							<h2 className="font-extrabold text-base tracking-tight">
-								Mastery Heatmap
-							</h2>
-							<MasteryHeatmap />
+						<Card>
+							<CardHeader>
+								<CardTitle className="font-extrabold text-base tracking-tight">
+									Mastery Heatmap
+								</CardTitle>
+							</CardHeader>
+							<CardContent>
+								<MasteryHeatmap />
+							</CardContent>
 						</Card>
 					</SectionReveal>
 				)}

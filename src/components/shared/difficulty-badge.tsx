@@ -30,6 +30,7 @@ export function DifficultyBadge({
 
 	return (
 		<Badge
+			variant="outline"
 			className={cn(
 				"rounded-full bg-[--system-accent]/10 px-3 py-0.5 font-medium text-[10px] uppercase",
 				colorClass,

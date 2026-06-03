@@ -6,7 +6,7 @@ import { AnimatePresence, m } from "framer-motion";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { Anim } from "@/components/shared/anim";
 import { ProgressDots } from "@/components/shared/progress-dots";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { AssessmentHeader } from "@/components/ui/headers/assessment-header";
 import { useQuestionEngine } from "@/hooks/use-question-engine";
 import { useQuizSession } from "@/lib/quiz-session";
@@ -110,20 +110,22 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 		return (
 			<div className="grid grid-cols-12 gap-0">
 				<div className="col-span-12 col-start-1 flex items-center justify-center p-4 pb-20 md:col-span-7">
-					<Card className="flex w-full max-w-md flex-col items-center gap-4 p-6">
-						<m.div
-							animate={{ rotate: 360 }}
-							transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
-							className="mx-auto size-8"
-						>
-							<HugeiconsIcon
-								icon={RadialIcon}
-								className="size-8 text-muted-foreground"
-							/>
-						</m.div>
-						<p className="text-muted-foreground text-sm">
-							Generating questions…
-						</p>
+					<Card className="w-full max-w-md">
+						<CardContent className="flex flex-col items-center gap-4 p-6">
+							<m.div
+								animate={{ rotate: 360 }}
+								transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
+								className="mx-auto size-8"
+							>
+								<HugeiconsIcon
+									icon={RadialIcon}
+									className="size-8 text-muted-foreground"
+								/>
+							</m.div>
+							<p className="text-muted-foreground text-sm">
+								Generating questions…
+							</p>
+						</CardContent>
 					</Card>
 				</div>
 				<div className="relative col-span-12 col-start-1 overflow-hidden bg-system-surface/30 md:col-span-5 md:col-start-8">
@@ -140,11 +142,13 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 		return (
 			<div className="grid grid-cols-12 gap-0">
 				<div className="col-span-12 col-start-1 flex items-center justify-center p-4 pb-20 md:col-span-7">
-					<Card className="flex w-full max-w-md flex-col items-center gap-4 p-8">
-						<AnimatedIcon name="error-state" className="size-16" />
-						<p className="font-medium text-destructive">
-							Failed to load questions.
-						</p>
+					<Card className="w-full max-w-md">
+						<CardContent className="flex flex-col items-center gap-4 p-8">
+							<AnimatedIcon name="error-state" className="size-16" />
+							<p className="font-medium text-destructive">
+								Failed to load questions.
+							</p>
+						</CardContent>
 					</Card>
 				</div>
 				<div className="relative col-span-12 col-start-1 overflow-hidden bg-system-surface/30 md:col-span-5 md:col-start-8">
@@ -161,12 +165,14 @@ export function QuizEngine({ subjectId, onComplete }: QuizEngineProps) {
 		return (
 			<div className="grid grid-cols-12 gap-0">
 				<div className="col-span-12 col-start-1 flex items-center justify-center p-4 pb-20 md:col-span-7">
-					<Card className="flex w-full max-w-md flex-col items-center gap-4 p-8">
-						<AnimatedIcon name="empty-search" className="size-16" />
-						<p className="text-muted-foreground">
-							No questions available for this subject.
-						</p>
-						<p className="text-sm">Select a subject to start practicing.</p>
+					<Card className="w-full max-w-md">
+						<CardContent className="flex flex-col items-center gap-4 p-8">
+							<AnimatedIcon name="empty-search" className="size-16" />
+							<p className="text-muted-foreground">
+								No questions available for this subject.
+							</p>
+							<p className="text-sm">Select a subject to start practicing.</p>
+						</CardContent>
 					</Card>
 				</div>
 				<div className="relative col-span-12 col-start-1 overflow-hidden bg-system-surface/30 md:col-span-5 md:col-start-8">

@@ -68,7 +68,7 @@ export function ScrollAmbient() {
 
 	return (
 		<div
-			className="pointer-events-none fixed inset-0 -z-10 transition-none"
+			className="pointer-events-none fixed inset-0 transition-none"
 			aria-hidden="true"
 		>
 			<div

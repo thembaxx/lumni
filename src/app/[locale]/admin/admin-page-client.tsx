@@ -26,7 +26,7 @@ function Preloader({ onComplete }: { onComplete: () => void }) {
 			</div>
 			<div className="mt-6 h-1 w-32 overflow-hidden rounded-full bg-secondary">
 				<m.div
-					className="h-full w-1/2 animate-pulse rounded-full bg-foreground"
+					className="h-full w-1/2 rounded-full bg-foreground"
 					initial={{ opacity: 0.4 }}
 					animate={{ opacity: 1 }}
 					transition={{

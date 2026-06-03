@@ -7,7 +7,7 @@ import { SwipeableCard } from "@/components/flashcard/swipeable-card";
 import type { FlashcardCardData } from "@/components/flashcard/types";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { useSwipeDeck } from "@/hooks/use-swipe-deck";
 import { iOSEase } from "@/lib/utils/animation";
 
@@ -102,8 +102,10 @@ export function SwipeableCardDeck({
 
 	if (cards.length === 0) {
 		return (
-			<Card className="mx-auto flex w-full max-w-md flex-col items-center justify-center gap-4 p-8">
-				<p className="text-muted-foreground">No flashcards available.</p>
+			<Card className="mx-auto w-full max-w-md">
+				<CardContent className="flex flex-col items-center justify-center gap-4 p-8">
+					<p className="text-muted-foreground">No flashcards available.</p>
+				</CardContent>
 			</Card>
 		);
 	}
@@ -230,7 +232,7 @@ export function SwipeableCardDeck({
 				{/* Quality picker overlay */}
 				{showPicker && (
 					<m.div
-						className="absolute inset-0 z-20 flex items-center justify-center rounded-card-lg bg-system-background/95"
+						className="absolute inset-0 z-overlay flex items-center justify-center rounded-card-lg bg-system-background/95"
 						initial={{ opacity: 0, scale: 0.95 }}
 						animate={{ opacity: 1, scale: 1 }}
 						transition={{ duration: 0.2, ease: iOSEase }}

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { type ComponentType, type ReactNode } from "react";
+import { Button } from "@/components/ui/button";
 
 interface ErrorBoundaryProps {
 	fallback?: ComponentType<{ error: Error; resetError: () => void }>;
@@ -59,9 +60,7 @@ const ErrorFallback: ComponentType<{
 			<p className="mb-6 max-w-xl text-center text-muted-foreground">
 				{error?.message ?? "An unexpected error occurred."}
 			</p>
-			<button type="button" onClick={resetError} className="btn btn-primary">
-				Try again
-			</button>
+			<Button onClick={resetError}>Try again</Button>
 		</div>
 	);
 };

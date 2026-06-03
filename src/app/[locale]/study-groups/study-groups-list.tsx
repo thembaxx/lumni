@@ -6,6 +6,7 @@ import { CreateGroupDialog } from "@/components/study-groups/create-group-dialog
 import { JoinGroupDialog } from "@/components/study-groups/join-group-dialog";
 import { StudyGroupCard } from "@/components/study-groups/study-group-card";
 import { Card } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useStudyGroups } from "@/hooks/use-study-groups";
 
 export function StudyGroupsList() {
@@ -29,7 +30,7 @@ export function StudyGroupsList() {
 				{isLoading ? (
 					<div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
 						{[1, 2, 3].map((n) => (
-							<Card key={n} className="h-32 animate-pulse" />
+							<Skeleton key={n} className="h-32" />
 						))}
 					</div>
 				) : groups && groups.length > 0 ? (

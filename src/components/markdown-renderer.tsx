@@ -4,6 +4,7 @@ import { memo, useEffect, useMemo, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { KatexCSS } from "@/components/katex-css";
+import { Separator } from "@/components/ui/separator";
 import {
 	Table,
 	TableBody,
@@ -235,7 +236,7 @@ function MarkdownTbody({ children }: { children?: React.ReactNode }) {
 }
 
 function MarkdownHr() {
-	return <hr className="my-4 border-border" />;
+	return <Separator className="my-4" />;
 }
 
 function MarkdownStrong({ children }: { children?: React.ReactNode }) {

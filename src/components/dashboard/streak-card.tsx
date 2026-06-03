@@ -4,7 +4,7 @@ import { FireIcon, PlayFreeIcons } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useGamification } from "@/hooks/use-gamification";
 import { useRouter } from "@/i18n/navigation";
 import { cn } from "@/lib/shared";
@@ -23,6 +23,13 @@ export function StreakCard() {
 			transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
 		>
 			<Card className="overflow-hidden rounded-3xl shadow-level-1">
+				<CardHeader>
+					<CardTitle className="font-extrabold text-lg tabular-nums">
+						{currentStreak > 0
+							? `${currentStreak} day streak`
+							: "No streak yet"}
+					</CardTitle>
+				</CardHeader>
 				<CardContent className="p-5">
 					<div className="flex items-center gap-4">
 						<div
@@ -39,11 +46,6 @@ export function StreakCard() {
 							/>
 						</div>
 						<div className="flex-1">
-							<p className="font-extrabold text-lg tabular-nums">
-								{currentStreak > 0
-									? `${currentStreak} day streak`
-									: "No streak yet"}
-							</p>
 							<p className="mt-0.5 text-muted-foreground text-xs">
 								{practicedToday
 									? "Studied today! Keep it going."

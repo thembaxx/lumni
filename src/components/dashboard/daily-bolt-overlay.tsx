@@ -135,7 +135,7 @@ export function DailyBoltOverlay({
 		<div className="fixed inset-0 z-overlay flex flex-col overflow-hidden bg-system-background">
 			<BoltAmbientBackground reduceMotion={shouldReduceMotion ?? false} />
 
-			<header className="relative z-10 flex items-center justify-between gap-3 px-5 pt-5 pb-3">
+			<header className="relative z-content flex items-center justify-between gap-3 px-5 pt-5 pb-3">
 				<div className="flex min-w-0 items-center gap-2.5">
 					<BoltMark reduceMotion={shouldReduceMotion ?? false} />
 					<div className="flex min-w-0 flex-col">
@@ -166,7 +166,7 @@ export function DailyBoltOverlay({
 				)}
 			</header>
 
-			<main className="relative z-10 flex flex-1 flex-col overflow-y-auto px-5 pb-8">
+			<main className="relative z-content flex flex-1 flex-col overflow-y-auto px-5 pb-8">
 				<AnimatePresence mode="wait" initial={false}>
 					{showLoading && (
 						<m.section
@@ -200,7 +200,7 @@ export function DailyBoltOverlay({
 								/>
 							</div>
 							{boltResult && (
-								<div className="sticky bottom-0 z-10 -mx-5 mt-4 self-stretch border-system-separator border-t bg-system-background/90 px-5 py-4 backdrop-blur-xl">
+								<div className="sticky bottom-0 z-content -mx-5 mt-4 self-stretch border-system-separator border-t bg-system-background/90 px-5 py-4 backdrop-blur-xl">
 									<div className="mx-auto w-full max-w-2xl">
 										<Button
 											onClick={() => onComplete(boltResult)}

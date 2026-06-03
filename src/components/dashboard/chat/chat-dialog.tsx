@@ -9,7 +9,7 @@ import { LoadingIndicator } from "@/components/chat/LoadingIndicator";
 import { MessageBubble } from "@/components/chat/MessageBubble";
 import { WelcomeState } from "@/components/chat/WelcomeState";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { useChat } from "@/hooks/use-chat";
 import { useImageChatWithSend } from "@/hooks/use-image-chat";
 
@@ -49,6 +49,7 @@ export function ChatDialog({ open, onOpenChange }: ChatDialogProps) {
 				showCloseButton={false}
 				className="top-0 left-0 m-0 flex size-full max-w-none translate-x-0 translate-y-0 flex-col gap-0 rounded-none border-0 bg-system-background p-0"
 			>
+				<DialogTitle className="sr-only">Study Assistant</DialogTitle>
 				<div className="flex shrink-0 flex-row items-center justify-between border-border/30 border-b py-4 pr-5 pl-4">
 					<div className="flex items-center gap-1">
 						<div className="flex size-9 grow items-center justify-center rounded-full bg-system-accent/10">

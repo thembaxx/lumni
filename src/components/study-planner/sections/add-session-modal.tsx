@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { useReducer, useRef } from "react";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -67,14 +68,12 @@ export function AddSessionModal({
 	const { subject, topic, type, duration, repeat } = form;
 
 	return (
-		<div className="fixed inset-0 z-modal flex items-center justify-center bg-black/50">
-			<div className="w-full max-w-md overflow-hidden rounded-card-lg border border-border/80 bg-card shadow-level-2 transition-colors">
-				<header>
-					<h2 className="font-heading font-medium text-sm">
-						{t("studyPlanner.addSessionModalTitle")}
-					</h2>
-				</header>
-				<div className="flex flex-col gap-4 px-4 group-data-[size=sm]/card:px-3">
+		<Dialog open onOpenChange={(o) => !o && onClose()}>
+			<DialogContent className="max-w-md sm:max-w-md">
+				<DialogTitle className="font-heading font-medium text-sm">
+					{t("studyPlanner.addSessionModalTitle")}
+				</DialogTitle>
+				<div className="flex flex-col gap-4">
 					<div>
 						<Label>{t("studyPlanner.sessionSubject")}</Label>
 						<Input
@@ -190,7 +189,7 @@ export function AddSessionModal({
 						</Button>
 					</div>
 				</div>
-			</div>
-		</div>
+			</DialogContent>
+		</Dialog>
 	);
 }

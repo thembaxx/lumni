@@ -3,7 +3,7 @@
 import { Cancel01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useCallback, useEffect, useState } from "react";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
 import {
@@ -32,7 +32,7 @@ export function NextBestActionCard() {
 	if (!action || dismissed) return null;
 
 	return (
-		<Card className="relative overflow-hidden border-l-4 border-l-[oklch(52%_0.18_146)] bg-gradient-to-r from-[oklch(52%_0.18_146_/_0.06)] to-transparent p-4">
+		<Card className="relative overflow-hidden border-l-4 border-l-[oklch(52%_0.18_146)] bg-gradient-to-r from-[oklch(52%_0.18_146_/_0.06)] to-transparent">
 			<button
 				type="button"
 				onClick={() => {
@@ -44,8 +44,10 @@ export function NextBestActionCard() {
 			>
 				<HugeiconsIcon icon={Cancel01Icon} size={14} />
 			</button>
-			<div className="flex flex-col gap-1.5 pr-6">
-				<p className="font-semibold text-sm">{action.title}</p>
+			<CardHeader>
+				<CardTitle className="font-semibold text-sm">{action.title}</CardTitle>
+			</CardHeader>
+			<CardContent className="flex flex-col gap-1.5 pr-6">
 				<p className="text-muted-foreground text-xs leading-relaxed">
 					{action.reason}
 				</p>
@@ -55,7 +57,7 @@ export function NextBestActionCard() {
 				>
 					{action.ctaLabel}
 				</Link>
-			</div>
+			</CardContent>
 		</Card>
 	);
 }

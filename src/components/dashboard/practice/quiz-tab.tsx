@@ -16,7 +16,7 @@ import { Anim } from "@/components/shared/anim";
 import { PerpetualFloat } from "@/components/shared/perpetual-float";
 import { Button } from "@/components/ui/button";
 
-import { Tabs, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useQuizSession } from "@/hooks/use-quiz-session";
 import { cn } from "@/lib/shared";
 import { formatTime } from "@/lib/shared/time";
@@ -92,20 +92,22 @@ export function QuizTab({ className, onHeaderChange }: QuizTabProps) {
 								onValueChange={setActiveTab}
 								className="flex w-full flex-wrap"
 							>
-								{tabs.map((tab) => (
-									<TabsTrigger
-										key={tab.value}
-										value={tab.value}
-										className={cn(
-											"tab-trigger-item relative z-elevated h-8 rounded-xl px-4 font-medium text-xs transition-colors duration-200",
-											activeTab === tab.value
-												? "text-foreground"
-												: "text-muted-foreground hover:text-foreground",
-										)}
-									>
-										{tab.label}
-									</TabsTrigger>
-								))}
+								<TabsList>
+									{tabs.map((tab) => (
+										<TabsTrigger
+											key={tab.value}
+											value={tab.value}
+											className={cn(
+												"tab-trigger-item relative z-elevated h-8 rounded-xl px-4 font-medium text-xs transition-colors duration-200",
+												activeTab === tab.value
+													? "text-foreground"
+													: "text-muted-foreground hover:text-foreground",
+											)}
+										>
+											{tab.label}
+										</TabsTrigger>
+									))}
+								</TabsList>
 							</Tabs>
 						</m.div>
 					</Anim>

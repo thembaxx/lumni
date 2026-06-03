@@ -13,6 +13,7 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useExamPaper } from "@/hooks/use-exam-paper";
 import {
 	clearSavedSession,
@@ -87,9 +88,7 @@ export function ExamSessionWithResume({ id, mode }: ExamSessionClientProps) {
 	if (!resumeChecked) {
 		return (
 			<div className="flex min-h-screen items-center justify-center bg-background">
-				<p className="animate-pulse text-muted-foreground">
-					{t("exam.checkingSavedSession")}
-				</p>
+				<Skeleton className="h-4 w-48" />
 			</div>
 		);
 	}
@@ -398,9 +397,7 @@ export function ExamSessionClient({ id, mode }: ExamSessionClientProps) {
 	if (paperLoading) {
 		return (
 			<div className="flex min-h-screen items-center justify-center bg-background">
-				<p className="animate-pulse text-muted-foreground">
-					{t("exam.loadingExam")}
-				</p>
+				<Skeleton className="h-4 w-32" />
 			</div>
 		);
 	}

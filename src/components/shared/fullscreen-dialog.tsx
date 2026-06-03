@@ -4,7 +4,7 @@ import { Cancel01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/shared";
 
 interface FullscreenDialogProps {
@@ -44,9 +44,9 @@ export function FullscreenDialog({
 			>
 				<div className="flex h-full w-full flex-col">
 					<div className="flex shrink-0 items-center gap-2 border-b bg-background px-4 py-3">
-						<h2 className="balance flex-1 truncate text-wrap font-semibold text-sm">
+						<DialogTitle className="balance flex-1 truncate text-wrap font-semibold text-sm">
 							{title}
-						</h2>
+						</DialogTitle>
 						{badge && (
 							<Badge
 								variant="secondary"
@@ -63,7 +63,7 @@ export function FullscreenDialog({
 							onClick={handleClose}
 							aria-label="Close"
 						>
-							<HugeiconsIcon icon={Cancel01Icon} className="size-4" />
+							<HugeiconsIcon icon={Cancel01Icon} />
 						</Button>
 					</div>
 					{children}

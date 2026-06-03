@@ -13,9 +13,11 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import { PageContainer } from "@/components/layout/page-container";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
 import { flashcardEngine } from "@/lib/flashcard-engine";
 import type { FlashcardSM2 } from "@/lib/flashcard-engine/types";
 import { downloadCSV, parseCSV } from "@/lib/utils/flashcard-import-export";
@@ -199,10 +201,10 @@ export default function FlashcardBrowsePage() {
 			{status === "loading" ? (
 				<div className="flex flex-col gap-3">
 					{Array.from({ length: 5 }).map((_, i) => (
-						<div
+						<Skeleton
 							// biome-ignore lint/suspicious/noArrayIndexKey: static skeleton loader
 							key={i}
-							className="h-24 animate-pulse rounded-xl bg-muted/30"
+							className="h-24 rounded-xl"
 						/>
 					))}
 				</div>
@@ -230,29 +232,47 @@ export default function FlashcardBrowsePage() {
 												{card.back}
 											</div>
 											<div className="mt-2 flex flex-wrap gap-2">
-												<span className="ios-caption-3 rounded bg-primary/10 px-1.5 py-0.5 text-primary">
+												<Badge
+													variant="outline"
+													className="ios-caption-3 bg-primary/10 text-primary"
+												>
 													{card.subject}
-												</span>
+												</Badge>
 												{card.topic && (
-													<span className="ios-caption-3 rounded bg-secondary/30 px-1.5 py-0.5 text-muted-foreground">
+													<Badge
+														variant="outline"
+														className="ios-caption-3 bg-secondary/30 text-muted-foreground"
+													>
 														{card.topic}
-													</span>
+													</Badge>
 												)}
-												<span className="ios-caption-3 rounded bg-muted/30 px-1.5 py-0.5 text-muted-foreground">
+												<Badge
+													variant="outline"
+													className="ios-caption-3 bg-muted/30 text-muted-foreground"
+												>
 													{t("flashcards.ease")}: {card.easeFactor.toFixed(1)}
-												</span>
-												<span className="ios-caption-3 rounded bg-muted/30 px-1.5 py-0.5 text-muted-foreground">
+												</Badge>
+												<Badge
+													variant="outline"
+													className="ios-caption-3 bg-muted/30 text-muted-foreground"
+												>
 													{t("flashcards.interval")}: {card.interval}d
-												</span>
+												</Badge>
 												{card.nextReview > now ? (
-													<span className="ios-caption-3 rounded bg-green-500/10 px-1.5 py-0.5 text-green-600 dark:bg-green-400/10 dark:text-green-300">
+													<Badge
+														variant="outline"
+														className="ios-caption-3 bg-green-500/10 text-green-600 dark:bg-green-400/10 dark:text-green-300"
+													>
 														{t("flashcards.dueLabel")}{" "}
 														{new Date(card.nextReview).toLocaleDateString()}
-													</span>
+													</Badge>
 												) : (
-													<span className="ios-caption-3 rounded bg-amber-500/10 px-1.5 py-0.5 text-amber-600 dark:bg-amber-400/10 dark:text-amber-300">
+													<Badge
+														variant="outline"
+														className="ios-caption-3 bg-amber-500/10 text-amber-600 dark:bg-amber-400/10 dark:text-amber-300"
+													>
 														{t("flashcards.overdue")}
-													</span>
+													</Badge>
 												)}
 											</div>
 										</div>

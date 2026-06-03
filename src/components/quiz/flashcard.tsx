@@ -6,7 +6,7 @@ import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Anim } from "@/components/shared/anim";
 import { TTSButton } from "@/components/shared/tts-button";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 
 interface FlashcardData {
 	id: string;
@@ -73,8 +73,10 @@ export function Flashcard({
 
 	if (cards.length === 0) {
 		return (
-			<Card className="mx-auto flex w-full max-w-md flex-col items-center justify-center gap-4 p-8">
-				<p className="text-muted-foreground">No flashcards available.</p>
+			<Card className="mx-auto w-full max-w-md">
+				<CardContent className="flex flex-col items-center justify-center gap-4 p-8">
+					<p className="text-muted-foreground">No flashcards available.</p>
+				</CardContent>
 			</Card>
 		);
 	}

@@ -2,6 +2,7 @@
 
 import { Message02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useGroupPosts } from "@/hooks/use-study-groups";
 import { PostCardWithComments } from "./post-card-with-comments";
 
@@ -16,7 +17,7 @@ export function DiscussionFeed({ groupId }: Props) {
 		return (
 			<div className="flex flex-col gap-3">
 				{[1, 2].map((i) => (
-					<div key={i} className="h-24 animate-pulse rounded-lg bg-muted" />
+					<Skeleton key={i} className="h-24 rounded-lg" />
 				))}
 			</div>
 		);

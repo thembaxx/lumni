@@ -20,6 +20,7 @@ import { DiscussionFeed } from "@/components/study-groups/discussion-feed";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useGroupDetail, useRemoveMember } from "@/hooks/use-study-groups";
 import { Link } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
@@ -63,8 +64,8 @@ export function GroupDetail() {
 		return (
 			<PageContainer>
 				<div className="flex flex-col gap-6 py-6">
-					<div className="h-8 w-48 animate-pulse rounded bg-muted" />
-					<Card className="h-64 animate-pulse" />
+					<Skeleton className="h-8 w-48 rounded" />
+					<Skeleton className="h-64" />
 				</div>
 			</PageContainer>
 		);

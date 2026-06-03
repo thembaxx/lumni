@@ -2,10 +2,11 @@
 
 import { Cancel01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, m } from "framer-motion";
+import { m } from "framer-motion";
 import dynamic from "next/dynamic";
 import { AppErrorBoundary } from "@/components/shared/app-error-boundary";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToolsStore } from "@/store/tools";
@@ -90,14 +91,17 @@ function ToolsDialogInner({ open: _open, onOpenChange }: ToolsDialogProps) {
 	const cameraFocus = useToolsStore((s) => s.cameraFocus);
 
 	return (
-		<m.div
-			initial={{ opacity: 0, y: 10 }}
-			animate={{ opacity: 1, y: 0 }}
-			exit={{ opacity: 0, y: 10 }}
-			transition={{ duration: 0.2 }}
-			className="fixed inset-0 z-80 bg-system-surface"
+		<DialogContent
+			showCloseButton={false}
+			className="inset-0 m-0 h-dvh w-screen max-w-none translate-x-0 translate-y-0 rounded-none border-0 bg-system-surface p-0"
 		>
-			<div className="flex h-full flex-col">
+			<DialogTitle className="sr-only">Tools</DialogTitle>
+			<m.div
+				initial={{ opacity: 0, y: 10 }}
+				animate={{ opacity: 1, y: 0 }}
+				transition={{ duration: 0.2 }}
+				className="flex h-full flex-col"
+			>
 				<m.header
 					initial={{ opacity: 0, y: -10 }}
 					animate={{ opacity: 1, y: 0 }}
@@ -172,17 +176,17 @@ function ToolsDialogInner({ open: _open, onOpenChange }: ToolsDialogProps) {
 						</TabsContent>
 					</div>
 				</Tabs>
-			</div>
-		</m.div>
+			</m.div>
+		</DialogContent>
 	);
 }
 
 export function ToolsDialog({ open, onOpenChange }: ToolsDialogProps) {
 	return (
 		<AppErrorBoundary>
-			<AnimatePresence initial={false}>
-				{open && <ToolsDialogInner open={open} onOpenChange={onOpenChange} />}
-			</AnimatePresence>
+			<Dialog open={open} onOpenChange={onOpenChange}>
+				<ToolsDialogInner open={open} onOpenChange={onOpenChange} />
+			</Dialog>
 		</AppErrorBoundary>
 	);
 }

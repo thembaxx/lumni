@@ -1,8 +1,6 @@
 export {
 	type ToastData,
 	Toaster,
-	ToastItem,
-	ToastProvider,
 	type ToastType,
 	toast,
 	useToast,

@@ -2,7 +2,8 @@
 
 import { Cancel01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AnimatePresence, m } from "framer-motion";
+import { m } from "framer-motion";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import {
 	elementCategoryConfig,
 	elementEaseOutBack,
@@ -27,36 +28,30 @@ export function ElementDetailModal({
 	onClose,
 }: ElementDetailModalProps) {
 	return (
-		<AnimatePresence initial={false}>
-			{selectedElement && (
-				<m.div
-					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-					exit={{ opacity: 0 }}
-					transition={{ duration: 0.25, ease: elementEaseOutQuart }}
-					className="fixed inset-0 z-modal flex items-center justify-center bg-black/80 p-4"
-					style={{
-						backdropFilter: "blur(8px)",
-					}}
-					onClick={onClose}
-				>
+		<Dialog open={!!selectedElement} onOpenChange={(o) => !o && onClose()}>
+			<DialogContent
+				showCloseButton={false}
+				className="max-w-md p-0 sm:max-w-md"
+			>
+				<DialogTitle className="sr-only">
+					{selectedElement?.name ?? "Element detail"}
+				</DialogTitle>
+				{selectedElement && (
 					<m.div
 						initial={{ opacity: 0, scale: 0.85, y: 30 }}
 						animate={{ opacity: 1, scale: 1, y: 0 }}
-						exit={{ opacity: 0, scale: 0.92, y: 15 }}
 						transition={{
 							duration: 0.4,
 							ease: elementEaseOutExpo,
 						}}
-						onClick={(e) => e.stopPropagation()}
-						className={`relative w-full max-w-md overflow-hidden rounded-3xl border bg-[--system-background-secondary]`}
+						className="relative w-full overflow-hidden rounded-3xl border-0 bg-[--system-background-secondary]"
 						style={{
 							borderColor: `oklch(${elementCategoryConfig[selectedElement.category]?.rgb} / 0.25)`,
 							boxShadow: `0 0 80px oklch(${elementCategoryConfig[selectedElement.category]?.rgb} / 0.2), 0 0 160px oklch(${elementCategoryConfig[selectedElement.category]?.rgb} / 0.08)`,
 						}}
 					>
 						<div
-							className={`absolute top-0 right-0 left-0 h-1`}
+							className="absolute top-0 right-0 left-0 h-1"
 							style={{
 								background: `linear-gradient(90deg, oklch(${elementCategoryConfig[selectedElement.category]?.rgb} / 0.6), oklch(${elementCategoryConfig[selectedElement.category]?.rgb} / 1))`,
 							}}
@@ -196,8 +191,8 @@ export function ElementDetailModal({
 							)}
 						</div>
 					</m.div>
-				</m.div>
-			)}
-		</AnimatePresence>
+				)}
+			</DialogContent>
+		</Dialog>
 	);
 }

@@ -83,10 +83,13 @@ export function SM2StudySession({ subject: _subject }: { subject?: string }) {
 					SM-2 Study Session
 				</span>
 				<div className="flex gap-2">
-					<Badge className="bg-muted text-foreground">
+					<Badge variant="secondary" className="bg-muted text-foreground">
 						{dueCards.length} due
 					</Badge>
-					<Badge className="bg-success/10 text-success-foreground">
+					<Badge
+						variant="outline"
+						className="bg-success/10 text-success-foreground"
+					>
 						{newCards.length} new
 					</Badge>
 				</div>

@@ -59,7 +59,7 @@ export function AvatarUploader({
 					onClick={() => inputRef.current?.click()}
 					disabled={isUploading}
 				>
-					<HugeiconsIcon icon={Upload02Icon} size={16} />
+					<HugeiconsIcon icon={Upload02Icon} data-icon="inline-start" />
 					Change Photo
 				</Button>
 				<input

@@ -61,7 +61,7 @@ export function SubjectSelectionStep({
 					delay: 0.15,
 					ease: iOSEase,
 				}}
-				className="max-h-80 space-y-2 overflow-y-auto pr-1"
+				className="flex max-h-80 flex-col gap-2 overflow-y-auto pr-1"
 			>
 				{searchTerm ? (
 					filteredSubjects && filteredSubjects.length === 0 ? (

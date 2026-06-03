@@ -8,6 +8,7 @@ import { DifficultyBadge } from "@/components/shared/difficulty-badge";
 import { PracticeButton } from "@/components/study/practice-button";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useRouter } from "@/i18n/navigation";
 import { cn } from "@/lib/shared";
@@ -63,29 +64,6 @@ function HighlightedText({
 	);
 }
 
-function CardOverlay({
-	isOpen,
-	onClose,
-}: {
-	isOpen: boolean;
-	onClose: () => void;
-}) {
-	return (
-		<AnimatePresence initial={false}>
-			{isOpen && (
-				<m.div
-					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-					exit={{ opacity: 0 }}
-					className="fixed inset-0 z-modal bg-black/60"
-					onClick={onClose}
-					role="presentation"
-				/>
-			)}
-		</AnimatePresence>
-	);
-}
-
 function ExpandedContent({
 	data,
 	isPlaying,
@@ -106,11 +84,7 @@ function ExpandedContent({
 	const { push } = useRouter();
 
 	return (
-		<m.div
-			key={`${data.id}-open`}
-			layoutId={`card-${data.id}`}
-			className="fixed top-1/2 left-1/2 z-modal w-[calc(100%-2rem)] max-w-sm -translate-x-1/2 -translate-y-1/2"
-		>
+		<m.div key={`${data.id}-open`} layoutId={`card-${data.id}`}>
 			<div className="max-h-dvh overflow-hidden overflow-y-auto rounded-2xl rounded-card-lg border border-border/80 bg-card bg-card p-4 text-card-foreground shadow-2xl shadow-black/20 transition-colors">
 				<div className="flex flex-col gap-3">
 					<div className="flex items-start justify-between">
@@ -252,10 +226,9 @@ export function ExpandableCard({
 
 	return (
 		<Anim>
-			<CardOverlay isOpen={isOpen} onClose={() => onOpenChange(false)} />
-
-			<AnimatePresence mode="popLayout" initial={false}>
-				{isOpen ? (
+			<Dialog open={isOpen} onOpenChange={onOpenChange}>
+				<DialogContent className="max-w-sm sm:max-w-sm">
+					<DialogTitle className="sr-only">{data.title}</DialogTitle>
 					<ExpandedContent
 						data={data}
 						isPlaying={isPlaying}
@@ -264,7 +237,11 @@ export function ExpandableCard({
 						onClose={() => onOpenChange(false)}
 						quizUrl={quizUrl}
 					/>
-				) : (
+				</DialogContent>
+			</Dialog>
+
+			<AnimatePresence mode="popLayout" initial={false}>
+				{!isOpen && (
 					<CollapsedContent
 						data={data}
 						isPlaying={isPlaying}

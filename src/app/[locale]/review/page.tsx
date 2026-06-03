@@ -22,6 +22,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useSubjects } from "@/hooks/use-subjects";
 import {
 	ERROR_TYPE_LABELS,
@@ -97,7 +98,7 @@ export default function ReviewPage() {
 	if (loading) {
 		return (
 			<div className="flex min-h-screen items-center justify-center bg-background">
-				<p className="animate-pulse text-muted-foreground">Loading…</p>
+				<Skeleton shape="text" className="w-32" />
 			</div>
 		);
 	}

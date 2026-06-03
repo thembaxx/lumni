@@ -295,18 +295,20 @@ export function SnapFab() {
 				className="hidden"
 			/>
 
-			{showCamera && (
-				<div className="fixed inset-0 z-modal flex items-center justify-center bg-black/60 bg-system-background/95 p-4">
-					<div className="w-full max-w-md overflow-hidden rounded-2xl bg-system-background shadow-level-3">
-						<CameraPreview
-							onCapture={handleCameraCapture}
-							onClose={() => setShowCamera(false)}
-						/>
-					</div>
-				</div>
-			)}
+			<Dialog open={showCamera} onOpenChange={() => setShowCamera(false)}>
+				<DialogContent
+					showCloseButton={false}
+					className="w-full max-w-md sm:max-w-md"
+				>
+					<DialogTitle className="sr-only">Camera</DialogTitle>
+					<CameraPreview
+						onCapture={handleCameraCapture}
+						onClose={() => setShowCamera(false)}
+					/>
+				</DialogContent>
+			</Dialog>
 
-			<button
+			<Button
 				type="button"
 				onClick={handleSnap}
 				aria-label="Snap photo to solve"
@@ -319,7 +321,7 @@ export function SnapFab() {
 				)}
 			>
 				<HugeiconsIcon icon={Camera01Icon} className="size-5" />
-			</button>
+			</Button>
 
 			<Dialog open={showDialog} onOpenChange={(o) => !o && handleDismiss()}>
 				<DialogContent className="max-h-[80dvh] overflow-y-auto sm:max-w-lg">

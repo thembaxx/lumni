@@ -6,6 +6,7 @@ import {
 	DialogContent,
 	DialogOverlay,
 	DialogPortal,
+	DialogTitle,
 } from "@/components/ui/dialog";
 import { SmartImage } from "./SmartImage";
 
@@ -25,6 +26,7 @@ export function ImageViewer({ src, alt, open, onClose }: ImageViewerProps) {
 					className="inset-0 m-0 h-dvh w-screen max-w-none rounded-none border-0 p-0"
 					showCloseButton={false}
 				>
+					<DialogTitle className="sr-only">Image viewer</DialogTitle>
 					<div className="relative flex h-full w-full items-center justify-center">
 						<SmartImage
 							src={src}

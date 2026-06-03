@@ -24,6 +24,7 @@ import {
 	DropdownListSeparator,
 	DropdownListTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useGamification } from "@/hooks/use-gamification";
 import { useSyncStatus } from "@/hooks/use-sync-status";
 import { usePathname } from "@/i18n/navigation";
@@ -138,7 +139,7 @@ export function TopNav({ title, className }: TopNavProps) {
 					<LocaleSwitcher />
 					{!isOnline && (
 						<div className="flex items-center gap-1 rounded-full bg-warning/10 px-2 py-0.5 text-warning">
-							<div className="size-1.5 animate-pulse rounded-full bg-warning" />
+							<Skeleton className="size-1.5 rounded-full" />
 							<span className="ios-caption-3 font-medium">Offline</span>
 						</div>
 					)}
@@ -149,7 +150,7 @@ export function TopNav({ title, className }: TopNavProps) {
 						</div>
 					)}
 					{status === "loading" ? (
-						<div className="size-8 animate-pulse rounded-full bg-system-fill" />
+						<Skeleton className="size-8 rounded-full" />
 					) : (
 						<>
 							{(status === "unauthenticated" || isAnonymous) && (

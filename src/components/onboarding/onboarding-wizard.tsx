@@ -12,6 +12,7 @@ import {
 } from "react";
 import { Confetti } from "@/components/celebration/confetti";
 import { PageContainer } from "@/components/layout/page-container";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import subjectsData from "@/data/subjects.json";
 import { useOnboarding } from "@/hooks/use-onboarding";
 import { saveLocalEnrolledSubjects } from "@/hooks/use-subjects";
@@ -298,98 +299,104 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
 	};
 
 	return (
-		<div className="fixed inset-0 z-modal overflow-y-auto bg-system-grouped">
-			{showConfetti && <Confetti trigger={showConfetti} />}
-			<ParticleField step={step} />
+		<Dialog open={true} onOpenChange={() => {}}>
+			<DialogContent
+				showCloseButton={false}
+				className="inset-0 m-0 h-dvh w-screen max-w-none translate-x-0 translate-y-0 overflow-y-auto rounded-none border-0 bg-system-grouped p-0"
+			>
+				<DialogTitle className="sr-only">Onboarding</DialogTitle>
+				{showConfetti && <Confetti trigger={showConfetti} />}
+				<ParticleField step={step} />
 
-			<PageContainer className="relative z-elevated min-h-full py-4 md:py-8">
-				<StepIndicator step={step} totalSteps={STEPS_COPY.length} />
+				<PageContainer className="relative z-elevated min-h-full py-4 md:py-8">
+					<StepIndicator step={step} totalSteps={STEPS_COPY.length} />
 
-				<AnimatePresence mode="wait" initial={false}>
-					<m.div
-						key={`step-${step}`}
-						initial={shouldReduceMotion ? {} : { opacity: 0, y: 12 }}
-						animate={{ opacity: 1, y: 0 }}
-						exit={shouldReduceMotion ? {} : { opacity: 0, y: -8 }}
-						transition={{ duration: 0.25, ease: iOSEase }}
-						className="flex-1"
-					>
-						{step < 3 ? (
-							<div className="grid grid-cols-12 items-center gap-6">
-								<div className="col-span-12 md:col-span-6">
-									<m.div
-										initial={shouldReduceMotion ? {} : { opacity: 0, y: 12 }}
-										animate={{ opacity: 1, y: 0 }}
-										transition={{ duration: 0.4, ease: iOSEase }}
-									>
-										<h1 className="ios-title-1 mb-3 text-balance font-semibold tracking-tight">
-											{current.title}
-										</h1>
-										<p className="ios-body mb-8 text-pretty text-muted-foreground leading-relaxed">
-											{current.body}
-										</p>
+					<AnimatePresence mode="wait" initial={false}>
+						<m.div
+							key={`step-${step}`}
+							initial={shouldReduceMotion ? {} : { opacity: 0, y: 12 }}
+							animate={{ opacity: 1, y: 0 }}
+							exit={shouldReduceMotion ? {} : { opacity: 0, y: -8 }}
+							transition={{ duration: 0.25, ease: iOSEase }}
+							className="flex-1"
+						>
+							{step < 3 ? (
+								<div className="grid grid-cols-12 items-center gap-6">
+									<div className="col-span-12 md:col-span-6">
+										<m.div
+											initial={shouldReduceMotion ? {} : { opacity: 0, y: 12 }}
+											animate={{ opacity: 1, y: 0 }}
+											transition={{ duration: 0.4, ease: iOSEase }}
+										>
+											<h1 className="ios-title-1 mb-3 text-balance font-semibold tracking-tight">
+												{current.title}
+											</h1>
+											<p className="ios-body mb-8 text-pretty text-muted-foreground leading-relaxed">
+												{current.body}
+											</p>
 
-										{step === 1 && (
-											<SubjectSelectionStep
-												searchTerm={searchTerm}
-												onSearchChange={handleSearchChange}
-												expandedCategories={expandedCategories}
-												onToggleCategory={handleToggleCategory}
-												selectedSubjects={selectedSubjects}
-												onToggleSubject={handleToggleSubject}
-												filteredSubjects={filteredSubjects}
-												subjectsByCategory={subjectsByCategory}
-												categoryOrder={categoryOrder}
-												categoryLabels={categoryLabels}
-											/>
-										)}
+											{step === 1 && (
+												<SubjectSelectionStep
+													searchTerm={searchTerm}
+													onSearchChange={handleSearchChange}
+													expandedCategories={expandedCategories}
+													onToggleCategory={handleToggleCategory}
+													selectedSubjects={selectedSubjects}
+													onToggleSubject={handleToggleSubject}
+													filteredSubjects={filteredSubjects}
+													subjectsByCategory={subjectsByCategory}
+													categoryOrder={categoryOrder}
+													categoryLabels={categoryLabels}
+												/>
+											)}
 
-										{step === 2 && (
-											<GoalsStep
-												targetAps={targetAps}
-												dailyMinutes={dailyMinutes}
-												onTargetApsChange={setTargetAps}
-												onDailyMinutesChange={setDailyMinutes}
-											/>
-										)}
-									</m.div>
+											{step === 2 && (
+												<GoalsStep
+													targetAps={targetAps}
+													dailyMinutes={dailyMinutes}
+													onTargetApsChange={setTargetAps}
+													onDailyMinutesChange={setDailyMinutes}
+												/>
+											)}
+										</m.div>
+									</div>
+
+									<div className="col-span-12 flex items-center justify-center py-8 md:col-span-6">
+										<m.div
+											initial={
+												shouldReduceMotion ? {} : { opacity: 0, scale: 0.96 }
+											}
+											animate={{ opacity: 1, scale: 1 }}
+											transition={{ duration: 0.4, ease: iOSEase, delay: 0.08 }}
+											className="h-56 w-56 md:h-64 md:w-64"
+										>
+											<current.SVG />
+										</m.div>
+									</div>
 								</div>
+							) : (
+								<CompleteStep
+									selectedSubjects={selectedSubjects}
+									subjectsData={subjectsData}
+									title={current.title}
+									body={current.body}
+								/>
+							)}
+						</m.div>
+					</AnimatePresence>
 
-								<div className="col-span-12 flex items-center justify-center py-8 md:col-span-6">
-									<m.div
-										initial={
-											shouldReduceMotion ? {} : { opacity: 0, scale: 0.96 }
-										}
-										animate={{ opacity: 1, scale: 1 }}
-										transition={{ duration: 0.4, ease: iOSEase, delay: 0.08 }}
-										className="h-56 w-56 md:h-64 md:w-64"
-									>
-										<current.SVG />
-									</m.div>
-								</div>
-							</div>
-						) : (
-							<CompleteStep
-								selectedSubjects={selectedSubjects}
-								subjectsData={subjectsData}
-								title={current.title}
-								body={current.body}
-							/>
-						)}
-					</m.div>
-				</AnimatePresence>
-
-				<WizardFooter
-					step={step}
-					totalSteps={STEPS_COPY.length}
-					canProceed={canProceed()}
-					isCompleting={isCompleting}
-					onBack={handleBack}
-					onNext={handleNext}
-					onSkip={complete}
-					ctaLabel={current.cta}
-				/>
-			</PageContainer>
-		</div>
+					<WizardFooter
+						step={step}
+						totalSteps={STEPS_COPY.length}
+						canProceed={canProceed()}
+						isCompleting={isCompleting}
+						onBack={handleBack}
+						onNext={handleNext}
+						onSkip={complete}
+						ctaLabel={current.cta}
+					/>
+				</PageContainer>
+			</DialogContent>
+		</Dialog>
 	);
 }

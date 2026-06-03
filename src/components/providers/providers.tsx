@@ -11,7 +11,6 @@ import {
 } from "@/components/pwa/pwa-update-toast";
 import { ImmersiveModeProvider } from "@/components/shared/immersive-mode";
 import { ThemeProvider } from "@/components/theme";
-import { ToastProvider } from "@/components/ui/toast";
 import { useJobProcessor } from "@/hooks/use-job-processor";
 import { useServiceWorker } from "@/hooks/use-service-worker";
 import { prefetchUploadSubjects } from "@/hooks/use-upload-subjects";
@@ -60,24 +59,22 @@ export function Providers({
 				<AuthProvider>
 					<ConsentProvider>
 						<JoyProvider>
-							<ToastProvider>
-								<PremiumProvider>
-									<I18nProvider
-										locale={locale}
-										messages={messages}
-										timeZone={timeZone}
-									>
-										<OnboardingProvider>
-											<ImmersiveModeProvider>{children}</ImmersiveModeProvider>
-										</OnboardingProvider>
-									</I18nProvider>
-								</PremiumProvider>
-								<OnlineStatusIndicator />
-								<JobProcessorWrapper />
-								<ServiceWorkerWrapper />
-								<PWAUpdateToast />
-								<PWAInstallPrompt />
-							</ToastProvider>
+							<PremiumProvider>
+								<I18nProvider
+									locale={locale}
+									messages={messages}
+									timeZone={timeZone}
+								>
+									<OnboardingProvider>
+										<ImmersiveModeProvider>{children}</ImmersiveModeProvider>
+									</OnboardingProvider>
+								</I18nProvider>
+							</PremiumProvider>
+							<OnlineStatusIndicator />
+							<JobProcessorWrapper />
+							<ServiceWorkerWrapper />
+							<PWAUpdateToast />
+							<PWAInstallPrompt />
 						</JoyProvider>
 					</ConsentProvider>
 				</AuthProvider>
