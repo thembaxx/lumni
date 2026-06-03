@@ -13,7 +13,6 @@ import {
 import { Suspense } from "react";
 import { extractRouterConfig } from "uploadthing/server";
 import ErrorBoundary from "@/components/ErrorBoundary";
-import { PageTransition } from "@/components/layout/page-transition";
 import { ChunkLoadHandler } from "@/components/performance/chunk-load-handler";
 import { Providers } from "@/components/providers";
 import { CardSkeleton } from "@/components/ui/skeletons";
@@ -210,9 +209,7 @@ export default async function LocaleLayout({
 						<DesktopSidebar />
 						<main id="main-content" className="flex min-w-0 flex-1 flex-col">
 							<TopNav />
-							<ErrorBoundary>
-								<PageTransition>{children}</PageTransition>
-							</ErrorBoundary>
+							<ErrorBoundary>{children}</ErrorBoundary>
 						</main>
 					</div>
 					<BottomNav />
