@@ -11,7 +11,7 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
+import { Field, FieldLabel } from "@/components/ui/field";
 import { Switch } from "@/components/ui/switch";
 import { useConsent } from "@/lib/consent/consent-context";
 import { appConfig } from "../../../../app.config";
@@ -66,51 +66,51 @@ export function PrivacyTab() {
 					{t("consent.privacyTab.consentPreferences")}
 				</h3>
 				<div className="flex flex-col gap-4">
-					<div className="flex items-center justify-between">
-						<div>
-							<Label htmlFor="privacy-analytics" className="font-medium">
-								{t("consent.privacyTab.analytics")}
-							</Label>
+					<Field>
+						<FieldLabel htmlFor="privacy-analytics">
+							{t("consent.privacyTab.analytics")}
+						</FieldLabel>
+						<div className="flex items-center justify-between">
 							<p className="text-muted-foreground text-sm">
 								{t("consent.privacyTab.analyticsDesc")}
 							</p>
+							<Switch
+								id="privacy-analytics"
+								checked={consent.analytics}
+								onCheckedChange={(v) => updateConsent({ analytics: v })}
+							/>
 						</div>
-						<Switch
-							id="privacy-analytics"
-							checked={consent.analytics}
-							onCheckedChange={(v) => updateConsent({ analytics: v })}
-						/>
-					</div>
-					<div className="flex items-center justify-between">
-						<div>
-							<Label htmlFor="privacy-marketing" className="font-medium">
-								{t("consent.privacyTab.marketing")}
-							</Label>
+					</Field>
+					<Field>
+						<FieldLabel htmlFor="privacy-marketing">
+							{t("consent.privacyTab.marketing")}
+						</FieldLabel>
+						<div className="flex items-center justify-between">
 							<p className="text-muted-foreground text-sm">
 								{t("consent.privacyTab.marketingDesc")}
 							</p>
+							<Switch
+								id="privacy-marketing"
+								checked={consent.marketing}
+								onCheckedChange={(v) => updateConsent({ marketing: v })}
+							/>
 						</div>
-						<Switch
-							id="privacy-marketing"
-							checked={consent.marketing}
-							onCheckedChange={(v) => updateConsent({ marketing: v })}
-						/>
-					</div>
-					<div className="flex items-center justify-between">
-						<div>
-							<Label htmlFor="privacy-data-sharing" className="font-medium">
-								{t("consent.privacyTab.dataSharing")}
-							</Label>
+					</Field>
+					<Field>
+						<FieldLabel htmlFor="privacy-data-sharing">
+							{t("consent.privacyTab.dataSharing")}
+						</FieldLabel>
+						<div className="flex items-center justify-between">
 							<p className="text-muted-foreground text-sm">
 								{t("consent.privacyTab.dataSharingDesc")}
 							</p>
+							<Switch
+								id="privacy-data-sharing"
+								checked={consent.dataSharing}
+								onCheckedChange={(v) => updateConsent({ dataSharing: v })}
+							/>
 						</div>
-						<Switch
-							id="privacy-data-sharing"
-							checked={consent.dataSharing}
-							onCheckedChange={(v) => updateConsent({ dataSharing: v })}
-						/>
-					</div>
+					</Field>
 				</div>
 			</Card>
 

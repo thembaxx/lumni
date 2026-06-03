@@ -3,8 +3,13 @@
 import { m } from "framer-motion";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import {
+	Field,
+	FieldDescription,
+	FieldGroup,
+	FieldLabel,
+} from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
 	Select,
 	SelectContent,
@@ -69,98 +74,103 @@ export function NoteForm({
 
 	return (
 		<form onSubmit={handleSubmit} className="flex flex-col gap-4">
-			<div className="flex flex-col gap-2">
-				<Label htmlFor="title">Title</Label>
-				<Input
-					id="title"
-					name="title"
-					value={formData.title || ""}
-					onChange={handleInputChange}
-					placeholder="Enter note title"
-					disabled={false}
-				/>
-			</div>
-
-			<div className="flex flex-col gap-2">
-				<Label htmlFor="content">Content</Label>
-				<Textarea
-					id="content"
-					name="content"
-					value={formData.content || ""}
-					onChange={handleInputChange}
-					placeholder="Write your note content here..."
-					className="min-h-50"
-					disabled={false}
-				/>
-			</div>
-
-			<div className="flex flex-col gap-2">
-				<Label htmlFor="hint">Tags (Optional)</Label>
-				<Input
-					id="tags"
-					name="tags"
-					value={Array.isArray(formData.tags) ? formData.tags.join(", ") : ""}
-					onChange={handleInputChange}
-					placeholder="e.g., biology, mitosis, cell-division"
-					disabled={false}
-				/>
-				<p className="mt-1 text-muted-foreground text-xs">
-					Separate tags with commas
-				</p>
-			</div>
-
-			<div className="flex flex-col gap-2">
-				<Label htmlFor="subject">Subject (Optional)</Label>
-				<Select
-					id="subject"
-					name="subject"
-					value={formData.subject || ""}
-					onValueChange={(value) =>
-						setFormData((prev) => ({ ...prev, subject: value || "" }))
-					}
-				>
-					<SelectTrigger>
-						<SelectValue placeholder="Select a subject" />
-					</SelectTrigger>
-					<SelectContent>
-						<SelectItem value="mathematics">Mathematics</SelectItem>
-						<SelectItem value="physical-sciences">Physical Sciences</SelectItem>
-						<SelectItem value="life-sciences">Life Sciences</SelectItem>
-						<SelectItem value="humanities">Humanities</SelectItem>
-						<SelectItem value="languages">Languages</SelectItem>
-					</SelectContent>
-				</Select>
-			</div>
-
-			<div className="flex flex-col gap-2">
-				<Label htmlFor="topic">Topic (Optional)</Label>
-				<Input
-					id="topic"
-					name="topic"
-					value={formData.topic || ""}
-					onChange={handleInputChange}
-					placeholder="e.g., algebra, photosynthesis, world war II"
-					disabled={false}
-				/>
-			</div>
-
-			<div className="flex items-center gap-x-3">
-				<Label
-					htmlFor="favorite"
-					className="flex items-center font-medium text-sm"
-				>
-					<input
-						type="checkbox"
-						id="favorite"
-						checked={formData.isFavorite ?? false}
-						onChange={(e) =>
-							setFormData((prev) => ({ ...prev, isFavorite: e.target.checked }))
-						}
-						className="size-4 rounded border-zinc-300 text-primary"
+			<FieldGroup>
+				<Field>
+					<FieldLabel htmlFor="title">Title</FieldLabel>
+					<Input
+						id="title"
+						name="title"
+						value={formData.title || ""}
+						onChange={handleInputChange}
+						placeholder="Enter note title"
+						disabled={false}
 					/>
-					Mark as favorite
-				</Label>
-			</div>
+				</Field>
+
+				<Field>
+					<FieldLabel htmlFor="content">Content</FieldLabel>
+					<Textarea
+						id="content"
+						name="content"
+						value={formData.content || ""}
+						onChange={handleInputChange}
+						placeholder="Write your note content here..."
+						className="min-h-50"
+						disabled={false}
+					/>
+				</Field>
+
+				<Field>
+					<FieldLabel htmlFor="tags">Tags (Optional)</FieldLabel>
+					<Input
+						id="tags"
+						name="tags"
+						value={Array.isArray(formData.tags) ? formData.tags.join(", ") : ""}
+						onChange={handleInputChange}
+						placeholder="e.g., biology, mitosis, cell-division"
+						disabled={false}
+					/>
+					<FieldDescription>Separate tags with commas</FieldDescription>
+				</Field>
+
+				<Field>
+					<FieldLabel htmlFor="subject">Subject (Optional)</FieldLabel>
+					<Select
+						id="subject"
+						name="subject"
+						value={formData.subject || ""}
+						onValueChange={(value) =>
+							setFormData((prev) => ({ ...prev, subject: value || "" }))
+						}
+					>
+						<SelectTrigger>
+							<SelectValue placeholder="Select a subject" />
+						</SelectTrigger>
+						<SelectContent>
+							<SelectItem value="mathematics">Mathematics</SelectItem>
+							<SelectItem value="physical-sciences">
+								Physical Sciences
+							</SelectItem>
+							<SelectItem value="life-sciences">Life Sciences</SelectItem>
+							<SelectItem value="humanities">Humanities</SelectItem>
+							<SelectItem value="languages">Languages</SelectItem>
+						</SelectContent>
+					</Select>
+				</Field>
+
+				<Field>
+					<FieldLabel htmlFor="topic">Topic (Optional)</FieldLabel>
+					<Input
+						id="topic"
+						name="topic"
+						value={formData.topic || ""}
+						onChange={handleInputChange}
+						placeholder="e.g., algebra, photosynthesis, world war II"
+						disabled={false}
+					/>
+				</Field>
+
+				<div className="flex items-center gap-x-3">
+					<label
+						htmlFor="favorite"
+						className="flex cursor-pointer items-center gap-2 font-medium text-foreground text-xs/relaxed"
+					>
+						<input
+							type="checkbox"
+							id="favorite"
+							checked={formData.isFavorite ?? false}
+							onChange={(e) =>
+								setFormData((prev) => ({
+									...prev,
+									isFavorite: e.target.checked,
+								}))
+							}
+							className="size-4 rounded border-zinc-300 text-primary"
+						/>
+						Mark as favorite
+					</label>
+				</div>
+			</FieldGroup>
 
 			<div className="mt-4 flex justify-end gap-x-3">
 				<Button

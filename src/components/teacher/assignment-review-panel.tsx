@@ -4,6 +4,7 @@ import { ArrowDown01Icon, ArrowUp01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import { AssignmentThread } from "@/components/teacher/assignment-thread";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -197,6 +198,10 @@ export function AssignmentReviewPanel({ className }: { className?: string }) {
 											</div>
 										);
 									})}
+									<div className="rounded-lg border bg-card p-3">
+										<p className="mb-2 font-medium text-xs">Questions</p>
+										<AssignmentThread assignmentId={a.id} />
+									</div>
 								</div>
 							)}
 						</div>

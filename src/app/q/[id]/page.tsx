@@ -5,6 +5,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { useParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { VerifiedByPill } from "@/components/tools/communication/verified-by-pill";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { Question } from "@/lib/question-engine/types";
@@ -16,6 +17,7 @@ interface FetchedData {
 	subject: string;
 	topic: string;
 	sharedAt: number;
+	sources?: { url: string; title: string }[];
 }
 
 const RATING_KEY = "lumni_question_ratings";
@@ -210,6 +212,10 @@ export default function SharedQuestionPage() {
 									))}
 								</ol>
 							</div>
+						)}
+
+						{data.sources && data.sources.length > 0 && (
+							<VerifiedByPill sources={data.sources} />
 						)}
 
 						<div className="flex items-center justify-between gap-4 rounded-xl border bg-muted/20 p-4">

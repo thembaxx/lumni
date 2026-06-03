@@ -266,4 +266,56 @@ export const schemaConfig: Record<string, CollectionSchema> = {
 			},
 		],
 	},
+	teacher_observations: {
+		attributes: {
+			studentId: { type: "string", size: 100, required: true },
+			teacherId: { type: "string", size: 100, required: true },
+			content: { type: "string", size: 10000, required: true },
+			subject: { type: "string", size: 100 },
+			createdAt: { type: "datetime", required: true },
+		},
+		indexes: [
+			{
+				key: "idx_teacher_observations_studentId",
+				type: "key",
+				attributes: ["studentId"],
+			},
+			{
+				key: "idx_teacher_observations_teacherId",
+				type: "key",
+				attributes: ["teacherId"],
+			},
+		],
+	},
+	assignment_messages: {
+		attributes: {
+			assignmentId: { type: "string", size: 100, required: true },
+			senderId: { type: "string", size: 100, required: true },
+			senderRole: { type: "string", size: 20, required: true },
+			content: { type: "string", size: 10000, required: true },
+			createdAt: { type: "datetime", required: true },
+		},
+		indexes: [
+			{
+				key: "idx_assignment_messages_assignmentId",
+				type: "key",
+				attributes: ["assignmentId"],
+			},
+		],
+	},
+	ghost_links: {
+		attributes: {
+			token: { type: "string", size: 255, required: true },
+			teacherId: { type: "string", size: 100, required: true },
+			expiresAt: { type: "datetime", required: true },
+			revoked: { type: "boolean" },
+		},
+		indexes: [
+			{
+				key: "idx_ghost_links_token",
+				type: "key",
+				attributes: ["token"],
+			},
+		],
+	},
 };

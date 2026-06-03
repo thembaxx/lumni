@@ -12,8 +12,8 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
 	Select,
 	SelectContent,
@@ -68,43 +68,51 @@ export function CreateGroupDialog() {
 					<DialogTitle>{t("studyGroups.createGroup")}</DialogTitle>
 				</DialogHeader>
 				<form onSubmit={handleSubmit} className="flex flex-col gap-4">
-					<div className="flex flex-col gap-2">
-						<Label htmlFor="name">{t("studyGroups.groupName")}</Label>
-						<Input
-							id="name"
-							value={name}
-							onChange={(e) => setName(e.target.value)}
-							placeholder={t("studyGroups.groupNamePlaceholder")}
-							required
-						/>
-					</div>
-					<div className="flex flex-col gap-2">
-						<Label htmlFor="description">{t("studyGroups.description")}</Label>
-						<Textarea
-							id="description"
-							value={description}
-							onChange={(e) => setDescription(e.target.value)}
-							placeholder={t("studyGroups.descriptionPlaceholder")}
-						/>
-					</div>
-					<div className="flex flex-col gap-2">
-						<Label htmlFor="subject">{t("studyGroups.subject")}</Label>
-						<Select
-							value={subjectId}
-							onValueChange={(value) => setSubjectId(value ?? "")}
-						>
-							<SelectTrigger>
-								<SelectValue placeholder={t("studyGroups.selectSubject")} />
-							</SelectTrigger>
-							<SelectContent>
-								{subjects?.map((s: Subject) => (
-									<SelectItem key={s.id} value={s.id}>
-										{s.name}
-									</SelectItem>
-								))}
-							</SelectContent>
-						</Select>
-					</div>
+					<FieldGroup>
+						<Field>
+							<FieldLabel htmlFor="name">
+								{t("studyGroups.groupName")}
+							</FieldLabel>
+							<Input
+								id="name"
+								value={name}
+								onChange={(e) => setName(e.target.value)}
+								placeholder={t("studyGroups.groupNamePlaceholder")}
+								required
+							/>
+						</Field>
+						<Field>
+							<FieldLabel htmlFor="description">
+								{t("studyGroups.description")}
+							</FieldLabel>
+							<Textarea
+								id="description"
+								value={description}
+								onChange={(e) => setDescription(e.target.value)}
+								placeholder={t("studyGroups.descriptionPlaceholder")}
+							/>
+						</Field>
+						<Field>
+							<FieldLabel htmlFor="subject">
+								{t("studyGroups.subject")}
+							</FieldLabel>
+							<Select
+								value={subjectId}
+								onValueChange={(value) => setSubjectId(value ?? "")}
+							>
+								<SelectTrigger>
+									<SelectValue placeholder={t("studyGroups.selectSubject")} />
+								</SelectTrigger>
+								<SelectContent>
+									{subjects?.map((s: Subject) => (
+										<SelectItem key={s.id} value={s.id}>
+											{s.name}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
+						</Field>
+					</FieldGroup>
 					<Button type="submit" disabled={!name.trim() || isPending}>
 						{isPending ? t("common.creating") : t("common.create")}
 					</Button>

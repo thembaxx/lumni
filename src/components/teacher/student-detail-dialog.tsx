@@ -1,6 +1,7 @@
 "use client";
 
 import { MasteryBadge } from "@/components/atoms/mastery-badge";
+import { ObservationTimeline } from "@/components/teacher/observation-timeline";
 import { Badge } from "@/components/ui/badge";
 import {
 	Dialog,
@@ -82,6 +83,11 @@ export function StudentDetailDialog({
 							</div>
 						</div>
 					)}
+
+					<div className="rounded-lg border bg-card p-4">
+						<p className="mb-2 font-medium text-sm">Observations</p>
+						<ObservationTimeline studentId={student.id} />
+					</div>
 				</div>
 			</DialogContent>
 		</Dialog>

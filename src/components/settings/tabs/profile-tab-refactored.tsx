@@ -14,8 +14,8 @@ import { ExportActions } from "@/components/molecules/export-actions";
 import { StatsGrid } from "@/components/molecules/stats-grid";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useAuth } from "@/lib/auth/auth-context";
 
 export function ProfileTabRefactored() {
@@ -46,8 +46,8 @@ export function ProfileTabRefactored() {
 						onUpload={async () => setIsUploading(true)}
 						isUploading={isUploading}
 					/>
-					<div className="flex flex-col gap-2">
-						<Label htmlFor="name">Display Name</Label>
+					<Field>
+						<FieldLabel htmlFor="name">Display Name</FieldLabel>
 						<div className="flex gap-2">
 							<Input
 								id="name"
@@ -60,9 +60,11 @@ export function ProfileTabRefactored() {
 								Save
 							</Button>
 						</div>
-					</div>
+					</Field>
 					<div className="flex flex-col gap-2">
-						<Label>Email</Label>
+						<span className="font-medium text-foreground text-xs/relaxed">
+							Email
+						</span>
 						<div className="flex items-center gap-2 text-sm">
 							<HugeiconsIcon
 								icon={Mail01Icon}

@@ -332,5 +332,7 @@ export async function ensureAppwrite(
 		}
 	}
 
+	console.log("[Appwrite] Connected to SA region (jnb.cloud.appwrite.io)");
+
 	return report;
 }

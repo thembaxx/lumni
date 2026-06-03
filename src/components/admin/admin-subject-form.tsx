@@ -4,8 +4,8 @@ import { CloudUploadIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { AdminActionButton } from "./admin-action-button";
 
 interface SubjectFormData {
@@ -58,13 +58,8 @@ export function SubjectForm({
 			</CardHeader>
 			<CardContent className="flex flex-col gap-4">
 				<div className="grid grid-cols-2 gap-4">
-					<div className="flex flex-col gap-2">
-						<Label
-							htmlFor="subject-name"
-							className="font-medium text-foreground text-sm"
-						>
-							Name
-						</Label>
+					<Field>
+						<FieldLabel htmlFor="subject-name">Name</FieldLabel>
 						<m.div
 							whileFocus={{ scale: 1.01 }}
 							className="rounded-md ring-1 ring-transparent transition-shadow focus-within:ring-[--system-accent]/30"
@@ -79,14 +74,9 @@ export function SubjectForm({
 								className="rounded-md"
 							/>
 						</m.div>
-					</div>
-					<div className="flex flex-col gap-2">
-						<Label
-							htmlFor="subject-code"
-							className="font-medium text-foreground text-sm"
-						>
-							Code
-						</Label>
+					</Field>
+					<Field>
+						<FieldLabel htmlFor="subject-code">Code</FieldLabel>
 						<m.div
 							whileFocus={{ scale: 1.01 }}
 							className="rounded-md ring-1 ring-transparent transition-shadow focus-within:ring-[--system-accent]/30"
@@ -101,15 +91,10 @@ export function SubjectForm({
 								className="rounded-md"
 							/>
 						</m.div>
-					</div>
+					</Field>
 				</div>
-				<div className="flex flex-col gap-2">
-					<Label
-						htmlFor="subject-description"
-						className="font-medium text-foreground text-sm"
-					>
-						Description
-					</Label>
+				<Field>
+					<FieldLabel htmlFor="subject-description">Description</FieldLabel>
 					<m.div
 						whileFocus={{ scale: 1.01 }}
 						className="rounded-md ring-1 ring-transparent transition-shadow focus-within:ring-[--system-accent]/30"
@@ -124,7 +109,7 @@ export function SubjectForm({
 							className="rounded-md"
 						/>
 					</m.div>
-				</div>
+				</Field>
 				<div className="flex gap-2 pt-2">
 					<AdminActionButton onClick={onSave} loading={isSaving}>
 						{editSubject ? "Update" : "Add"}

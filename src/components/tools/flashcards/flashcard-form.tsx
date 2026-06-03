@@ -1,8 +1,8 @@
 import { m } from "framer-motion";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
 	Select,
 	SelectContent,
@@ -53,75 +53,79 @@ export function FlashcardForm({
 
 	return (
 		<form onSubmit={handleSubmit} className="flex flex-col gap-4">
-			<div className="flex flex-col gap-2">
-				<Label htmlFor="front">Front</Label>
-				<Textarea
-					id="front"
-					name="front"
-					value={formData.front}
-					onChange={handleInputChange}
-					placeholder="What is the question or prompt?"
-					className="min-h-20"
-				/>
-			</div>
+			<FieldGroup>
+				<Field>
+					<FieldLabel htmlFor="front">Front</FieldLabel>
+					<Textarea
+						id="front"
+						name="front"
+						value={formData.front}
+						onChange={handleInputChange}
+						placeholder="What is the question or prompt?"
+						className="min-h-20"
+					/>
+				</Field>
 
-			<div className="flex flex-col gap-2">
-				<Label htmlFor="back">Back</Label>
-				<Textarea
-					id="back"
-					name="back"
-					value={formData.back}
-					onChange={handleInputChange}
-					placeholder="What is the answer or explanation?"
-					className="min-h-20"
-				/>
-			</div>
+				<Field>
+					<FieldLabel htmlFor="back">Back</FieldLabel>
+					<Textarea
+						id="back"
+						name="back"
+						value={formData.back}
+						onChange={handleInputChange}
+						placeholder="What is the answer or explanation?"
+						className="min-h-20"
+					/>
+				</Field>
 
-			<div className="flex flex-col gap-2">
-				<Label htmlFor="hint">Hint (Optional)</Label>
-				<Input
-					id="hint"
-					name="hint"
-					value={formData.hint}
-					onChange={handleInputChange}
-					placeholder="Enter a hint to help recall the answer"
-				/>
-			</div>
+				<Field>
+					<FieldLabel htmlFor="hint">Hint (Optional)</FieldLabel>
+					<Input
+						id="hint"
+						name="hint"
+						value={formData.hint}
+						onChange={handleInputChange}
+						placeholder="Enter a hint to help recall the answer"
+					/>
+				</Field>
 
-			<div className="flex flex-col gap-2">
-				<Label htmlFor="subject">Subject (Optional)</Label>
-				<Select
-					value={formData.subject}
-					onValueChange={(value) =>
-						setFormData((prev) => ({
-							...prev,
-							subject: value ?? "",
-						}))
-					}
-				>
-					<SelectTrigger>
-						<SelectValue placeholder="Select a subject" />
-					</SelectTrigger>
-					<SelectContent>
-						<SelectItem value="mathematics">Mathematics</SelectItem>
-						<SelectItem value="physical-sciences">Physical Sciences</SelectItem>
-						<SelectItem value="life-sciences">Life Sciences</SelectItem>
-						<SelectItem value="humanities">Humanities</SelectItem>
-						<SelectItem value="languages">Languages</SelectItem>
-					</SelectContent>
-				</Select>
-			</div>
+				<Field>
+					<FieldLabel htmlFor="subject">Subject (Optional)</FieldLabel>
+					<Select
+						value={formData.subject}
+						onValueChange={(value) =>
+							setFormData((prev) => ({
+								...prev,
+								subject: value ?? "",
+							}))
+						}
+					>
+						<SelectTrigger>
+							<SelectValue placeholder="Select a subject" />
+						</SelectTrigger>
+						<SelectContent>
+							<SelectItem value="mathematics">Mathematics</SelectItem>
+							<SelectItem value="physical-sciences">
+								Physical Sciences
+							</SelectItem>
+							<SelectItem value="life-sciences">Life Sciences</SelectItem>
+							<SelectItem value="humanities">Humanities</SelectItem>
+							<SelectItem value="languages">Languages</SelectItem>
+						</SelectContent>
+					</Select>
+				</Field>
 
-			<div className="flex flex-col gap-2">
-				<Label htmlFor="topic">Topic (Optional)</Label>
-				<Input
-					id="topic"
-					name="topic"
-					value={formData.topic}
-					onChange={handleInputChange}
-					placeholder="e.g., algebra, photosynthesis, world war II"
-				/>
-			</div>
+				<Field>
+					<FieldLabel htmlFor="topic">Topic (Optional)</FieldLabel>
+					<Input
+						id="topic"
+						name="topic"
+						value={formData.topic}
+						onChange={handleInputChange}
+						placeholder="e.g., algebra, photosynthesis, world war II"
+					/>
+				</Field>
+			</FieldGroup>
 
 			<div className="flex justify-end gap-x-3">
 				<Button

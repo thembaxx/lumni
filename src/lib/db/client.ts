@@ -51,6 +51,9 @@ export const COLLECTIONS = {
 	USER_CONSENTS: "user_consents",
 	ASSIGNMENT_SUBMISSIONS: "assignment_submissions",
 	SHARED_QUESTIONS: "shared_questions",
+	TEACHER_OBSERVATIONS: "teacher_observations",
+	ASSIGNMENT_MESSAGES: "assignment_messages",
+	GHOST_LINKS: "ghost_links",
 } as const;
 
 export type Subject = {

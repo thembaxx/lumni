@@ -28,6 +28,7 @@ export const GET = createRouteHandler({
 			subject: record.subject,
 			topic: record.topic,
 			sharedAt: record.sharedAt,
+			sources: record.sources ?? [],
 		};
 	},
 });

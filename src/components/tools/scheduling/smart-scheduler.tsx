@@ -10,8 +10,8 @@ import { m } from "framer-motion";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ContentLock } from "@/components/ui/content-lock";
+import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/shared";
 
 interface StudySession {
@@ -274,8 +274,8 @@ export function SmartScheduler() {
 				{schedule.length === 0 ? (
 					<div className="px-5 pb-10">
 						<div className="flex flex-col gap-5 rounded-2xl bg-system-background-secondary p-5">
-							<div>
-								<Label className="mb-3 block text-sm">Select Subjects</Label>
+							<Field>
+								<FieldLabel>Select Subjects</FieldLabel>
 								<div className="grid grid-cols-2 gap-2">
 									{subjectOptions.map((subject) => (
 										<div key={subject.id}>
@@ -311,10 +311,10 @@ export function SmartScheduler() {
 										</div>
 									))}
 								</div>
-							</div>
+							</Field>
 
-							<div>
-								<Label className="text-sm">Study Hours Per Day</Label>
+							<Field>
+								<FieldLabel>Study Hours Per Day</FieldLabel>
 								<div className="mt-2 flex gap-2">
 									{[1, 2, 3, 4, 5].map((h) => (
 										<Button
@@ -326,17 +326,17 @@ export function SmartScheduler() {
 										</Button>
 									))}
 								</div>
-							</div>
+							</Field>
 
-							<div>
-								<Label className="text-sm">First Exam Date</Label>
+							<Field>
+								<FieldLabel>First Exam Date</FieldLabel>
 								<Input
 									type="date"
 									value={examDate}
 									onChange={(e) => setExamDate(e.target.value)}
 									className="mt-2 rounded-xl"
 								/>
-							</div>
+							</Field>
 
 							<Button
 								className="w-full rounded-xl"

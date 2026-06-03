@@ -4,8 +4,8 @@ import { useTranslations } from "next-intl";
 import { useReducer, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
 	Select,
 	SelectContent,
@@ -73,9 +73,9 @@ export function AddSessionModal({
 				<DialogTitle className="font-heading font-medium text-sm">
 					{t("studyPlanner.addSessionModalTitle")}
 				</DialogTitle>
-				<div className="flex flex-col gap-4">
-					<div>
-						<Label>{t("studyPlanner.sessionSubject")}</Label>
+				<FieldGroup>
+					<Field>
+						<FieldLabel>{t("studyPlanner.sessionSubject")}</FieldLabel>
 						<Input
 							value={subject}
 							onChange={(e) =>
@@ -83,9 +83,9 @@ export function AddSessionModal({
 							}
 							placeholder={t("studyPlanner.subjectPlaceholder")}
 						/>
-					</div>
-					<div>
-						<Label>{t("studyPlanner.sessionTopic")}</Label>
+					</Field>
+					<Field>
+						<FieldLabel>{t("studyPlanner.sessionTopic")}</FieldLabel>
 						<Input
 							value={topic}
 							onChange={(e) =>
@@ -93,9 +93,9 @@ export function AddSessionModal({
 							}
 							placeholder={t("studyPlanner.topicPlaceholder")}
 						/>
-					</div>
-					<div>
-						<Label>{t("studyPlanner.sessionType")}</Label>
+					</Field>
+					<Field>
+						<FieldLabel>{t("studyPlanner.sessionType")}</FieldLabel>
 						<Select
 							value={type}
 							onValueChange={(v) =>
@@ -123,9 +123,9 @@ export function AddSessionModal({
 								</SelectItem>
 							</SelectContent>
 						</Select>
-					</div>
-					<div>
-						<Label>{t("studyPlanner.sessionDuration")}</Label>
+					</Field>
+					<Field>
+						<FieldLabel>{t("studyPlanner.sessionDuration")}</FieldLabel>
 						<Input
 							type="number"
 							value={duration}
@@ -138,9 +138,9 @@ export function AddSessionModal({
 							min={5}
 							max={120}
 						/>
-					</div>
-					<div>
-						<Label>{t("studyPlanner.sessionRepeat")}</Label>
+					</Field>
+					<Field>
+						<FieldLabel>{t("studyPlanner.sessionRepeat")}</FieldLabel>
 						<Select
 							value={repeat}
 							onValueChange={(v) =>
@@ -165,7 +165,7 @@ export function AddSessionModal({
 								</SelectItem>
 							</SelectContent>
 						</Select>
-					</div>
+					</Field>
 					<div className="flex gap-2 pt-4">
 						<Button variant="outline" onClick={onClose} className="flex-1">
 							{t("studyPlanner.cancel")}
@@ -188,7 +188,7 @@ export function AddSessionModal({
 							{t("studyPlanner.add")}
 						</Button>
 					</div>
-				</div>
+				</FieldGroup>
 			</DialogContent>
 		</Dialog>
 	);

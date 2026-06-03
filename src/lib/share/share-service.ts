@@ -27,9 +27,10 @@ export async function shareQuestion(
 	subject: string,
 	topic: string,
 	userId: string,
+	sources?: { url: string; title: string }[],
 ): Promise<string> {
 	const id = generateShareId();
-	const record = {
+	const record: Record<string, unknown> = {
 		id,
 		question: JSON.parse(JSON.stringify(question)) as Record<string, unknown>,
 		subject,
@@ -38,6 +39,9 @@ export async function shareQuestion(
 		sharedAt: Date.now(),
 		viewCount: 0,
 	};
+	if (sources && sources.length > 0) {
+		record.sources = sources;
+	}
 
 	try {
 		await offlineDB.sharedQuestions.add(record as never);
@@ -45,7 +49,7 @@ export async function shareQuestion(
 		/* Dexie may not be ready */
 	}
 
-	createDocument(COLLECTIONS.SHARED_QUESTIONS, {
+	const appwritePayload: Record<string, unknown> = {
 		id,
 		question: JSON.stringify(question),
 		subject,
@@ -53,7 +57,11 @@ export async function shareQuestion(
 		sharedById: userId,
 		sharedAt: new Date().toISOString(),
 		viewCount: 0,
-	}).catch(() => {
+	};
+	if (sources && sources.length > 0) {
+		appwritePayload.sources = JSON.stringify(sources);
+	}
+	createDocument(COLLECTIONS.SHARED_QUESTIONS, appwritePayload).catch(() => {
 		/* Appwrite may be unavailable */
 	});
 
@@ -87,6 +95,11 @@ export async function getSharedQuestion(
 				sharedById: doc.sharedById as string,
 				sharedAt: new Date(doc.sharedAt as string).getTime(),
 				viewCount: (doc.viewCount as number) ?? 0,
+				sources: doc.sources
+					? typeof doc.sources === "string"
+						? JSON.parse(doc.sources as string)
+						: (doc.sources as { url: string; title: string }[])
+					: undefined,
 			};
 			return parsed;
 		}
@@ -121,5 +134,53 @@ export async function incrementViewCount(id: string): Promise<void> {
 		}
 	} catch {
 		/* silent */
+	}
+}
+
+export async function shareAssignment(
+	assignmentId: string,
+	topic: string,
+	questionCount: number,
+	dueDate?: string,
+): Promise<{ shareId: string; url: string }> {
+	const shareId = crypto.randomUUID();
+	const shareData = {
+		type: "assignment",
+		assignmentId,
+		topic,
+		questionCount,
+		dueDate: dueDate || null,
+		createdAt: Date.now(),
+		expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000,
+	};
+	localStorage.setItem(
+		`lumni_shared_assignment_${shareId}`,
+		JSON.stringify(shareData),
+	);
+	return {
+		shareId,
+		url: `/shared/assignment/${shareId}`,
+	};
+}
+
+export function getSharedAssignment(shareId: string): {
+	type: string;
+	assignmentId: string;
+	topic: string;
+	questionCount: number;
+	dueDate: string | null;
+} | null {
+	try {
+		const raw = localStorage.getItem(`lumni_shared_assignment_${shareId}`);
+		if (!raw) return null;
+		return JSON.parse(raw) as {
+			type: string;
+			assignmentId: string;
+			topic: string;
+			questionCount: number;
+			dueDate: string | null;
+		};
+	} catch {
+		return null;
 	}
 }

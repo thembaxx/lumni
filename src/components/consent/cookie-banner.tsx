@@ -11,7 +11,7 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
+import { Field, FieldLabel } from "@/components/ui/field";
 import { Switch } from "@/components/ui/switch";
 import { useConsent } from "@/lib/consent/consent-context";
 
@@ -100,67 +100,67 @@ function CookieSettingsContent({
 
 	return (
 		<div className="flex flex-col gap-4">
-			<div className="flex items-center justify-between">
-				<div>
-					<Label htmlFor="cookie-essential" className="font-medium">
-						{t("consent.cookieSettings.essential")}
-					</Label>
+			<Field>
+				<FieldLabel htmlFor="cookie-essential">
+					{t("consent.cookieSettings.essential")}
+				</FieldLabel>
+				<div className="flex items-center justify-between">
 					<p className="text-muted-foreground text-sm">
 						{t("consent.cookieSettings.essentialDesc")}
 					</p>
-				</div>
-				<div className="flex items-center gap-2">
-					<div className="size-4 rounded-full bg-muted-foreground/30">
-						<div className="ml-auto size-4 rounded-full bg-success" />
+					<div className="flex items-center gap-2">
+						<div className="size-4 rounded-full bg-muted-foreground/30">
+							<div className="ml-auto size-4 rounded-full bg-success" />
+						</div>
+						<span className="sr-only">Essential cookies always enabled</span>
 					</div>
-					<span className="sr-only">Essential cookies always enabled</span>
 				</div>
-			</div>
-			<div className="flex items-center justify-between">
-				<div>
-					<Label htmlFor="cookie-analytics" className="font-medium">
-						{t("consent.cookieSettings.analytics")}
-					</Label>
+			</Field>
+			<Field>
+				<FieldLabel htmlFor="cookie-analytics">
+					{t("consent.cookieSettings.analytics")}
+				</FieldLabel>
+				<div className="flex items-center justify-between">
 					<p className="text-muted-foreground text-sm">
 						{t("consent.cookieSettings.analyticsDesc")}
 					</p>
+					<Switch
+						id="cookie-analytics"
+						checked={analytics}
+						onCheckedChange={setAnalytics}
+					/>
 				</div>
-				<Switch
-					id="cookie-analytics"
-					checked={analytics}
-					onCheckedChange={setAnalytics}
-				/>
-			</div>
-			<div className="flex items-center justify-between">
-				<div>
-					<Label htmlFor="cookie-marketing" className="font-medium">
-						{t("consent.cookieSettings.marketing")}
-					</Label>
+			</Field>
+			<Field>
+				<FieldLabel htmlFor="cookie-marketing">
+					{t("consent.cookieSettings.marketing")}
+				</FieldLabel>
+				<div className="flex items-center justify-between">
 					<p className="text-muted-foreground text-sm">
 						{t("consent.cookieSettings.marketingDesc")}
 					</p>
+					<Switch
+						id="cookie-marketing"
+						checked={marketing}
+						onCheckedChange={setMarketing}
+					/>
 				</div>
-				<Switch
-					id="cookie-marketing"
-					checked={marketing}
-					onCheckedChange={setMarketing}
-				/>
-			</div>
-			<div className="flex items-center justify-between">
-				<div>
-					<Label htmlFor="cookie-data-sharing" className="font-medium">
-						{t("consent.cookieSettings.dataSharing")}
-					</Label>
+			</Field>
+			<Field>
+				<FieldLabel htmlFor="cookie-data-sharing">
+					{t("consent.cookieSettings.dataSharing")}
+				</FieldLabel>
+				<div className="flex items-center justify-between">
 					<p className="text-muted-foreground text-sm">
 						{t("consent.cookieSettings.dataSharingDesc")}
 					</p>
+					<Switch
+						id="cookie-data-sharing"
+						checked={dataSharing}
+						onCheckedChange={setDataSharing}
+					/>
 				</div>
-				<Switch
-					id="cookie-data-sharing"
-					checked={dataSharing}
-					onCheckedChange={setDataSharing}
-				/>
-			</div>
+			</Field>
 			<Button
 				onClick={() => onSave(analytics, marketing, dataSharing)}
 				className="mt-2"

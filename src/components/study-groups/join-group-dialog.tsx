@@ -12,8 +12,8 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
+import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useJoinGroup } from "@/hooks/use-study-groups";
 
 export function JoinGroupDialog() {
@@ -46,8 +46,10 @@ export function JoinGroupDialog() {
 					<DialogTitle>{t("studyGroups.joinGroup")}</DialogTitle>
 				</DialogHeader>
 				<form onSubmit={handleSubmit} className="flex flex-col gap-4">
-					<div className="flex flex-col gap-2">
-						<Label htmlFor="code">{t("studyGroups.inviteCode")}</Label>
+					<Field>
+						<FieldLabel htmlFor="code">
+							{t("studyGroups.inviteCode")}
+						</FieldLabel>
 						<Input
 							id="code"
 							value={code}
@@ -57,7 +59,7 @@ export function JoinGroupDialog() {
 							className="text-center font-mono text-lg tracking-widest"
 							required
 						/>
-					</div>
+					</Field>
 					{error && <p className="text-destructive text-sm">{error.message}</p>}
 					<Button type="submit" disabled={code.length < 8 || isPending}>
 						{isPending ? t("common.joining") : t("common.join")}

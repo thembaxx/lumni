@@ -14,8 +14,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ContentLock } from "@/components/ui/content-lock";
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useStudyPlanner } from "@/hooks/use-study-planner";
 import { Link } from "@/i18n/navigation";
 import { getSubjectAbbr } from "@/lib/subjects";
@@ -119,11 +119,9 @@ export function StudyPlanOverview() {
 								: ` for ${horizonDays} days`}
 							.
 						</p>
-						<div className="grid grid-cols-2 gap-4">
-							<div className="flex flex-col gap-1.5">
-								<Label htmlFor="target-aps" className="text-xs">
-									Target APS
-								</Label>
+						<FieldGroup>
+							<Field>
+								<FieldLabel htmlFor="target-aps">Target APS</FieldLabel>
 								<Input
 									id="target-aps"
 									type="number"
@@ -132,11 +130,9 @@ export function StudyPlanOverview() {
 									value={targetAps}
 									onChange={(e) => setTargetAps(e.target.value)}
 								/>
-							</div>
-							<div className="flex flex-col gap-1.5">
-								<Label htmlFor="daily-minutes" className="text-xs">
-									Daily minutes
-								</Label>
+							</Field>
+							<Field>
+								<FieldLabel htmlFor="daily-minutes">Daily minutes</FieldLabel>
 								<Input
 									id="daily-minutes"
 									type="number"
@@ -145,9 +141,9 @@ export function StudyPlanOverview() {
 									value={dailyMinutes}
 									onChange={(e) => setDailyMinutes(e.target.value)}
 								/>
-							</div>
-						</div>
-						<Label
+							</Field>
+						</FieldGroup>
+						<label
 							htmlFor="include-weekends"
 							className="flex cursor-pointer items-center gap-2 text-xs"
 						>
@@ -159,7 +155,7 @@ export function StudyPlanOverview() {
 								}
 							/>
 							Include weekends
-						</Label>
+						</label>
 						<div className="flex flex-col gap-1.5">
 							<span className="text-muted-foreground text-xs">
 								Plan horizon

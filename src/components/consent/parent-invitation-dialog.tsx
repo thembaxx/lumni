@@ -13,8 +13,8 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
+import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 
 interface ParentInvitationDialogProps {
 	open: boolean;
@@ -63,8 +63,10 @@ export function ParentInvitationDialog({
 					</DialogDescription>
 				</DialogHeader>
 				<div className="flex flex-col gap-4 py-4">
-					<div className="flex flex-col gap-2">
-						<Label htmlFor="parent-email">Parent/Guardian Email</Label>
+					<Field>
+						<FieldLabel htmlFor="parent-email">
+							Parent/Guardian Email
+						</FieldLabel>
 						<Input
 							id="parent-email"
 							type="email"
@@ -72,9 +74,11 @@ export function ParentInvitationDialog({
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
 						/>
-					</div>
+					</Field>
 					<div className="flex flex-col gap-2">
-						<p className="font-medium text-sm">Permissions</p>
+						<span className="font-medium text-foreground text-xs/relaxed">
+							Permissions
+						</span>
 						<div className="flex items-center gap-2">
 							<Checkbox
 								id="view-progress"
@@ -83,9 +87,12 @@ export function ParentInvitationDialog({
 									setCanViewProgress(checked === true)
 								}
 							/>
-							<Label htmlFor="view-progress" className="font-normal text-sm">
+							<label
+								htmlFor="view-progress"
+								className="font-normal text-foreground text-xs/relaxed"
+							>
 								Can view study progress and streaks
-							</Label>
+							</label>
 						</div>
 						<div className="flex items-center gap-2">
 							<Checkbox
@@ -95,9 +102,12 @@ export function ParentInvitationDialog({
 									setCanViewScores(checked === true)
 								}
 							/>
-							<Label htmlFor="view-scores" className="font-normal text-sm">
+							<label
+								htmlFor="view-scores"
+								className="font-normal text-foreground text-xs/relaxed"
+							>
 								Can view quiz scores and weak areas
-							</Label>
+							</label>
 						</div>
 					</div>
 				</div>
