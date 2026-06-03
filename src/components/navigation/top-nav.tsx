@@ -11,7 +11,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { m } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { LocaleSwitcher } from "@/components/i18n/locale-switcher";
 import { useImmersiveMode } from "@/components/shared/immersive-mode";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -73,6 +73,13 @@ export function TopNav({ title, className }: TopNavProps) {
 		if (slug) return slug.charAt(0).toUpperCase() + slug.slice(1);
 		return "Lumni";
 	}, [pathname, title, t]);
+
+	const [menuOpen, setMenuOpen] = useState(false);
+
+	useEffect(() => {
+		setMenuOpen(false);
+		void pathname;
+	}, [pathname]);
 
 	const { isImmersive } = useImmersiveMode();
 	const isAuthPage = pathname.startsWith("/auth");
@@ -168,7 +175,7 @@ export function TopNav({ title, className }: TopNavProps) {
 								</Button>
 							)}
 							{status === "authenticated" && (
-								<DropdownList>
+								<DropdownList open={menuOpen} onOpenChange={setMenuOpen}>
 									<DropdownListTrigger className="rounded-full focus-visible:ring-2 focus-visible:ring-[--system-accent] focus-visible:ring-offset-2">
 										<Avatar className="size-8 cursor-pointer ring-2 ring-transparent transition-shadow hover:ring-system-accent/30">
 											<AvatarImage src={imgSrc} alt={user?.name || "User"} />
