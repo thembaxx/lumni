@@ -70,6 +70,13 @@
     "selectAll": "Selecteer alles",
     "deselectAll": "Deselekteer alles"
   },
+  "nav": {
+    "dashboard": "Paneelbord",
+    "quiz": "Kwiz",
+    "flashcards": "Flitskaarte",
+    "settings": "Instellings",
+    "studyGroups": "Studiegroepe"
+  },
   "home": {
     "brand": "lumni",
     "navDashboard": "Paneelbord",
@@ -721,6 +728,64 @@
     "signInAction": "Teken In",
     "createAccount": "Skep Rekening",
     "localDataDescription": "Jou vordering, XP en reekse word op hierdie toestel gestoor. Teken in om dit oor al jou toestelle te hou."
+  },
+  "consent": {
+    "cookieBanner": {
+      "title": "Ons respekteer jou privaatheid",
+      "description": "Ons gebruik noodsaaklike koekies vir die app om te funksioneer. Analitiese koekies help ons om te verbeter. Jy kan kies wat jy toelaat.",
+      "essentialOnly": "Slegs noodsaaklik",
+      "acceptAnalytics": "Aanvaar analities",
+      "acceptAll": "Aanvaar alles",
+      "cookieSettings": "Koekie-instellings"
+    },
+    "cookieSettings": {
+      "title": "Koekie-instellings",
+      "description": "Kies watter koekies jy wil toelaat.",
+      "essential": "Noodsaaklik",
+      "essentialDesc": "Vereis vir die app om te funksioneer (sessie, locale).",
+      "analytics": "Analities",
+      "analyticsDesc": "Help ons om te verbeter met gebruiksdata (Sentry, bladsybesoeke).",
+      "marketing": "Bemarking",
+      "marketingDesc": "Promosiekommunikasie oor funksies en opdaterings.",
+      "dataSharing": "Data Deling",
+      "dataSharingDesc": "Deel data met derdeparty KI-verskaffers vir personalisering.",
+      "savePreferences": "Stoor voorkeure"
+    },
+    "tosBanner": {
+      "title": "Ons bepalings is opgedateer",
+      "description": "Hersien asseblief en aanvaar die opgedateerde Diensbepalings om voort te gaan om Lumni te gebruik.",
+      "accept": "Aanvaar",
+      "viewChanges": "Bekyk veranderinge"
+    },
+    "privacyTab": {
+      "noConsent": "Stel jou koekie-voorkeure om privaatheidsinstellings te bestuur.",
+      "consentPreferences": "Toestemmingsvoorkeure",
+      "analytics": "Analities",
+      "analyticsDesc": "Gebruiksdata en foutverslagdoening (Sentry)",
+      "marketing": "Bemarking",
+      "marketingDesc": "Promosiekommunikasie",
+      "dataSharing": "Data Deling",
+      "dataSharingDesc": "Deel data met KI-verskaffers vir personalisering",
+      "policyVersions": "Beleidsweergawes",
+      "termsOfService": "Diensbepalings",
+      "privacyPolicy": "Privaatheidsbeleid",
+      "notAccepted": "Nie aanvaar nie",
+      "notAcknowledged": "Nie erken nie",
+      "currentLabel": "Huidig",
+      "yourData": "Jou Data",
+      "exportData": "Eksporteer my data",
+      "deleteAccount": "Verwyder rekening",
+      "deleteTitle": "Verwyder jou rekening?",
+      "deleteDescription": "Dit sal permanent al jou data verwyder, insluitend quizgeskiedenis, flitskaarte, studieplanne en vordering. Hierdie aksie kan nie ongedaan gemaak word nie.",
+      "cancel": "Kanselleer",
+      "deletePermanently": "Verwyder permanent",
+      "deleting": "Besig om te verwyder..."
+    },
+    "cookiePolicy": {
+      "title": "Koekiebeleid - Lumni",
+      "heading": "Koekiebeleid",
+      "lastUpdated": "Laas opgedateer: Mei 2026"
+    }
   },
   "errors": {
     "general": "Iets het verkeerd gegaan",

@@ -70,6 +70,13 @@
     "searchPlaceholder": "Sesha into eyodwa...",
     "skipToContent": "Gijima kutheni"
   },
+  "nav": {
+    "dashboard": "Idashbodi",
+    "quiz": "Iquizi",
+    "flashcards": "Iflashikadi",
+    "settings": "Izilungiselelo",
+    "studyGroups": "Izigaba zokufunda"
+  },
   "home": {
     "brand": "lumni",
     "navDashboard": "Idashbodi",
@@ -732,6 +739,64 @@
     "signInAction": "Ngena",
     "createAccount": "Dala Ikhwenti",
     "localDataDescription": "Ukukhanya kwakho, i-Xp, na izistriki zikhiwe ngendlela yakho. Ngena ukuze zibeke zibe ngendlela zonke zakho."
+  },
+  "consent": {
+    "cookieBanner": {
+      "title": "Siyahlonipha ubumfihlo bakho",
+      "description": "Sisebenzisa amakhukhi adingekayo ukuze uhlelo lusebenze. Amakhukhi okuhlaziya asisiza ukuthi sithuthukise. Ungakhetha lokho ovumela ukuba kwenzeke.",
+      "essentialOnly": "Adingekayo kuphela",
+      "acceptAnalytics": "Yamukela amakhukhi okuhlaziya",
+      "acceptAll": "Yamukela wonke",
+      "cookieSettings": "Izilungiselelo zamakhukhi"
+    },
+    "cookieSettings": {
+      "title": "Izilungiselelo zamakhukhi",
+      "description": "Khetha amakhukhi ofuna ukuwavumela.",
+      "essential": "Adingekayo",
+      "essentialDesc": "Ayadingeka ukuze uhlelo lusebenze (iseshini, ulimi).",
+      "analytics": "Okuhlaziya",
+      "analyticsDesc": "Asisize sithuthukise ngemininingwane yokusetshenziswa (i-Sentry, ukubukwa kwamakhasi).",
+      "marketing": "Ezokumaketha",
+      "marketingDesc": "Ukuxhumana mayelana nezici nezibuyekezo.",
+      "dataSharing": "Ukwabelana ngedatha",
+      "dataSharingDesc": "Yabelana ngedatha nabahlinzeki be-AI ukuze kwenziwe okuthandwa nguwe.",
+      "savePreferences": "Londoloza okuthandwayo"
+    },
+    "tosBanner": {
+      "title": "Imithetho yethu ibuyekeziwe",
+      "description": "Sicela ubuyekeze futhi wamukele Imithetho Yesevisi ebuyekeziwe ukuze uqhubeke nokusebenzisa i-Lumni.",
+      "accept": "Yamukela",
+      "viewChanges": "Buka izinguquko"
+    },
+    "privacyTab": {
+      "noConsent": "Setha okuthandayo mayelana namakhukhi ukuze ulawule izilungiselelo zobumfihlo.",
+      "consentPreferences": "Izintandokazi zemvume",
+      "analytics": "Okuhlaziya",
+      "analyticsDesc": "Imininingwane yokusetshenziswa nokubika amaphutha (Sentry)",
+      "marketing": "Ezokumaketha",
+      "marketingDesc": "Ukuxhumana mayelana nezikhangiso",
+      "dataSharing": "Ukwabelana ngedatha",
+      "dataSharingDesc": "Yabelana ngedatha nabahlinzeki be-AI ukuze kwenziwe okuthandwa nguwe",
+      "policyVersions": "Izinhlobo zenqubomgomo",
+      "termsOfService": "Imithetho Yesevisi",
+      "privacyPolicy": "Inqubomgomo Yobumfihlo",
+      "notAccepted": "Ayamukelwanga",
+      "notAcknowledged": "Akuvunyelwanga",
+      "currentLabel": "Yamanje",
+      "yourData": "Idatha Yakho",
+      "exportData": "Khipha idatha yami",
+      "deleteAccount": "Susa i-akhawunti",
+      "deleteTitle": "Susa i-akhawunti yakho?",
+      "deleteDescription": "Lokhu kuzosusa yonke idatha yakho unomphela kuhlanganise nomlando we-quiz, amafleshikadi, izinhlelo zokufunda, nokuqhubeka. Lesi senzo asikwazi ukuhlehliswa.",
+      "cancel": "Kansela",
+      "deletePermanently": "Susa unomphela",
+      "deleting": "Iyacishwa..."
+    },
+    "cookiePolicy": {
+      "title": "Inqubomgomo Yamakhukhi - Lumni",
+      "heading": "Inqubomgomo Yamakhukhi",
+      "lastUpdated": "Ubagcine ukubuyekeza: NgoMeyi 2026"
+    }
   },
   "errors": {
     "general": "Kunzima okwenzeka",

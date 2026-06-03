@@ -2,8 +2,8 @@ import { beforeEach, describe, expect, mock, test } from "bun:test";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { act, renderHook } from "@testing-library/react";
 import type { ReactNode } from "react";
-import { PremiumProvider, usePremium } from "@/lib/premium/premium-context";
 import type { PremiumFeature } from "@/lib/premium/premium-context";
+import { PremiumProvider, usePremium } from "@/lib/premium/premium-context";
 
 const mockStorage = new Map<string, unknown>();
 const mockFetch =
@@ -108,14 +108,20 @@ describe("usePremium", () => {
 		});
 
 		expect(result.current.hasFeature("ai-tutor" as PremiumFeature)).toBe(true);
-		expect(result.current.hasFeature("exam-simulator" as PremiumFeature)).toBe(false);
+		expect(result.current.hasFeature("exam-simulator" as PremiumFeature)).toBe(
+			false,
+		);
 
 		await act(async () => {
 			await result.current.upgrade();
 		});
 
-		expect(result.current.hasFeature("exam-simulator" as PremiumFeature)).toBe(true);
-		expect(result.current.hasFeature("priority-support" as PremiumFeature)).toBe(true);
+		expect(result.current.hasFeature("exam-simulator" as PremiumFeature)).toBe(
+			true,
+		);
+		expect(
+			result.current.hasFeature("priority-support" as PremiumFeature),
+		).toBe(true);
 	});
 
 	test("createCheckoutSession calls /api/premium/checkout and returns url", async () => {

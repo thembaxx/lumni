@@ -43,7 +43,7 @@ export function OTPDialog({ open, onOpenChange, onSuccess }: AuthDialogProps) {
 		const result = otpSendSchema.safeParse({ email });
 		if (!result.success) {
 			const msg =
-				result.error.errors[0]?.message || "Enter a valid email address";
+				result.error.issues[0]?.message || "Enter a valid email address";
 			dispatch({ type: "SET_ERROR", error: msg });
 			toast({ type: "error", message: msg });
 			return;

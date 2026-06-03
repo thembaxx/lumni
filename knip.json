@@ -1,0 +1,24 @@
+{
+	"$schema": "https://unpkg.com/knip@6/schema.json",
+	"entry": [
+		"src/app/**/page.tsx",
+		"src/app/**/layout.tsx",
+		"src/app/**/route.ts",
+		"src/proxy.ts",
+		"sentry.server.config.ts",
+		"instrumentation.ts"
+	],
+	"project": ["src/**/*.{ts,tsx}", "scripts/**/*.ts"],
+	"ignoreDependencies": ["@sentry/nextjs", "patch-package", "husky"],
+	"ignoreBinaries": ["husky", "patch-package"],
+	"rules": {
+		"files": "warn",
+		"dependencies": "warn",
+		"unlisted": "warn",
+		"devDependencies": "warn",
+		"nsExports": "off",
+		"nsTypes": "off",
+		"duplicates": "off",
+		"enumMembers": "off"
+	}
+}
