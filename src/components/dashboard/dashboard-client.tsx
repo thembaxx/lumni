@@ -44,7 +44,6 @@ export function DashboardClient({
 	const [quizActive, setQuizActive] = useState(false);
 	const [quizSubject, setQuizSubject] = useState("");
 	const [activeTab, setActiveTab] = useState<TabValue>(initialTab as TabValue);
-	const [sprintMode, setSprintMode] = useState(false);
 	const {
 		isLoaded,
 		gamification,
@@ -114,16 +113,6 @@ export function DashboardClient({
 			setShowDailyBolt(false);
 		},
 		[updateStreak, addXp, currentStreak, addWrongAnswer],
-	);
-
-	const handleBoltSprint = useCallback(
-		(result: BoltResult) => {
-			handleBoltComplete(result);
-			setQuizSubject(result.question.subject);
-			setSprintMode(true);
-			setQuizActive(true);
-		},
-		[handleBoltComplete],
 	);
 
 	const handleBoltSkip = useCallback(() => {
@@ -211,13 +200,11 @@ export function DashboardClient({
 
 	const handleFinishQuiz = async (results: QuizResults) => {
 		await handleFinishQuizLogic(results);
-		setSprintMode(false);
 		setQuizActive(false);
 		setQuizSubject("");
 	};
 
 	const handleQuitQuiz = () => {
-		setSprintMode(false);
 		setQuizActive(false);
 		setQuizSubject("");
 	};
@@ -233,7 +220,6 @@ export function DashboardClient({
 				{showDailyBolt ? (
 					<DailyBoltOverlay
 						onComplete={handleBoltComplete}
-						onSprint={handleBoltSprint}
 						onSkip={handleBoltSkip}
 					/>
 				) : !isLoaded ? (
@@ -274,7 +260,6 @@ export function DashboardClient({
 									>
 										<QuizView
 											initialSubject={quizSubject}
-											questionCount={sprintMode ? 4 : undefined}
 											variant="full"
 											onQuit={handleQuitQuiz}
 											onFinish={handleFinishQuiz}

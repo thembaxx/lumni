@@ -2,10 +2,8 @@
 
 import {
 	AlertCircleIcon,
-	ArrowRight01Icon,
 	BookOpenIcon,
 	RefreshIcon,
-	Rocket01Icon,
 	SparklesIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -20,13 +18,7 @@ import type { Question } from "@/lib/question-engine/types";
 import { cn } from "@/lib/shared";
 import { iOSDecelerate, iOSEase } from "@/lib/utils/animation";
 
-type BoltPhase =
-	| "resolving"
-	| "loading"
-	| "answering"
-	| "celebrating"
-	| "error"
-	| "empty";
+type BoltPhase = "resolving" | "loading" | "answering" | "error" | "empty";
 
 export interface BoltResult {
 	question: Question;
@@ -35,7 +27,6 @@ export interface BoltResult {
 
 interface DailyBoltOverlayProps {
 	onComplete: (result: BoltResult) => void;
-	onSprint: (result: BoltResult) => void;
 	onSkip: () => void;
 }
 
@@ -76,7 +67,6 @@ function formatSubjectLabel(subject: string): string {
 
 export function DailyBoltOverlay({
 	onComplete,
-	onSprint,
 	onSkip,
 }: DailyBoltOverlayProps) {
 	const [phase, setPhase] = useState<BoltPhase>("resolving");
@@ -129,16 +119,6 @@ export function DailyBoltOverlay({
 		[question],
 	);
 
-	const handleProceed = useCallback(() => {
-		if (!boltResult) return;
-		setPhase("celebrating");
-	}, [boltResult]);
-
-	const handleSprintFromCelebration = useCallback(() => {
-		if (!boltResult) return;
-		onSprint(boltResult);
-	}, [boltResult, onSprint]);
-
 	const handleRetry = useCallback(() => {
 		setPhase("loading");
 		void refetch();
@@ -179,9 +159,11 @@ export function DailyBoltOverlay({
 						)}
 					</div>
 				</div>
-				<Button variant="outline" size="sm" onClick={onSkip}>
-					{skipLabel}
-				</Button>
+				{phase !== "answering" && (
+					<Button variant="outline" size="sm" onClick={onSkip}>
+						{skipLabel}
+					</Button>
+				)}
 			</header>
 
 			<main className="relative z-10 flex flex-1 flex-col overflow-y-auto px-5 pb-8">
@@ -206,7 +188,7 @@ export function DailyBoltOverlay({
 							animate={{ opacity: 1, y: 0 }}
 							exit={{ opacity: 0, y: -8 }}
 							transition={{ duration: 0.4, ease: iOSDecelerate }}
-							className="flex flex-1 items-center justify-center pt-2"
+							className="flex flex-1 flex-col items-center justify-center pt-2"
 						>
 							<div className="w-full max-w-2xl">
 								<QuestionCard
@@ -214,29 +196,22 @@ export function DailyBoltOverlay({
 									subject={subject}
 									questionNumber={1}
 									totalQuestions={1}
-									onNext={handleProceed}
 									onAnswered={handleAnswered}
 								/>
 							</div>
-						</m.section>
-					)}
-
-					{phase === "celebrating" && boltResult && (
-						<m.section
-							key="celebrating"
-							initial={{ opacity: 0, scale: 0.92 }}
-							animate={{ opacity: 1, scale: 1 }}
-							exit={{ opacity: 0, scale: 0.92 }}
-							transition={{ duration: 0.45, ease: iOSDecelerate }}
-							className="flex flex-1 items-center justify-center"
-						>
-							<BoltCelebration
-								correct={boltResult.correct}
-								subjectLabel={subjectLabel}
-								xpReward={boltResult.correct ? 35 : 15}
-								onDashboard={() => onComplete(boltResult)}
-								onSprint={handleSprintFromCelebration}
-							/>
+							{boltResult && (
+								<div className="sticky bottom-0 z-10 -mx-5 mt-4 self-stretch border-system-separator border-t bg-system-background/90 px-5 py-4 backdrop-blur-xl">
+									<div className="mx-auto w-full max-w-2xl">
+										<Button
+											onClick={() => onComplete(boltResult)}
+											size="lg"
+											className="w-full gap-2 text-base"
+										>
+											Finish
+										</Button>
+									</div>
+								</div>
+							)}
 						</m.section>
 					)}
 
@@ -471,107 +446,6 @@ function BoltEmptyState({
 					{isRetrying ? "Refreshing…" : "Refresh Question"}
 				</Button>
 			</div>
-		</div>
-	);
-}
-
-function BoltCelebration({
-	correct,
-	subjectLabel,
-	xpReward,
-	onDashboard,
-	onSprint,
-}: {
-	correct: boolean;
-	subjectLabel: string;
-	xpReward: number;
-	onDashboard: () => void;
-	onSprint: () => void;
-}) {
-	return (
-		<div className="flex w-full max-w-sm flex-col items-center gap-8 text-center">
-			<m.div
-				initial={{ scale: 0.95, opacity: 0, rotate: -15 }}
-				animate={{ scale: 1, opacity: 1, rotate: 0 }}
-				transition={{ duration: 0.6, ease: iOSDecelerate, delay: 0.1 }}
-				className="relative"
-			>
-				<m.div
-					animate={{ scale: [1, 1.08, 1] }}
-					transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-					className={cn(
-						"absolute inset-0 rounded-full blur-3xl",
-						correct ? "bg-success/25" : "bg-warning/20",
-					)}
-				/>
-				<div
-					className={cn(
-						"relative flex size-24 items-center justify-center rounded-full shadow-level-2 ring-1",
-						correct
-							? "bg-success/15 text-success ring-success/25"
-							: "bg-warning/15 text-warning ring-warning/25",
-					)}
-				>
-					<m.div
-						animate={correct ? { rotate: [0, -6, 6, -6, 0] } : undefined}
-						transition={{ duration: 0.6, delay: 0.4 }}
-					>
-						<HugeiconsIcon
-							icon={correct ? Rocket01Icon : SparklesIcon}
-							className="size-10"
-							strokeWidth={2}
-						/>
-					</m.div>
-				</div>
-			</m.div>
-
-			<m.div
-				initial={{ opacity: 0, y: 8 }}
-				animate={{ opacity: 1, y: 0 }}
-				transition={{ duration: 0.4, ease: iOSDecelerate, delay: 0.3 }}
-				className="flex flex-col gap-2"
-			>
-				<h2
-					className={cn(
-						"text-balance font-extrabold font-heading text-2xl tracking-tight",
-						correct ? "text-success" : "text-foreground",
-					)}
-				>
-					{correct ? "Bolt delivered" : "Solid attempt"}
-				</h2>
-				<p className="max-w-xs text-balance text-muted-foreground text-sm leading-relaxed">
-					{correct
-						? `Nice work on that ${subjectLabel} question.`
-						: `Every bolt sharpens you. Keep at it.`}
-				</p>
-				<p className="font-semibold text-foreground text-xs tabular-nums">
-					+{xpReward} XP
-				</p>
-			</m.div>
-
-			<m.div
-				initial={{ opacity: 0, y: 12 }}
-				animate={{ opacity: 1, y: 0 }}
-				transition={{ duration: 0.4, ease: iOSDecelerate, delay: 0.5 }}
-				className="flex w-full flex-col gap-3"
-			>
-				<Button
-					onClick={onDashboard}
-					size="lg"
-					className="w-full gap-2 text-base"
-				>
-					Go to Dashboard
-				</Button>
-				<Button
-					onClick={onSprint}
-					variant="outline"
-					size="lg"
-					className="w-full gap-2"
-				>
-					Continue Sprint
-					<HugeiconsIcon icon={ArrowRight01Icon} className="size-4" />
-				</Button>
-			</m.div>
 		</div>
 	);
 }
