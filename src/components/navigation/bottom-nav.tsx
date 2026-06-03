@@ -1,66 +1,37 @@
 "use client";
 
-import {
-	BookOpen01Icon,
-	Chat01Icon,
-	Home01Icon,
-	Quiz01Icon,
-	Settings01Icon,
-	UserGroupIcon,
-} from "@hugeicons/core-free-icons";
+import { Home01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AnimatePresence, m } from "framer-motion";
 import { memo, useCallback, useMemo } from "react";
 import { Badge } from "@/components/ui/badge";
 import { useNavigationDirection } from "@/hooks/use-navigation-direction";
 import { usePathname } from "@/i18n/navigation";
+import type { NavItem as ConfigNavItem } from "@/lib/navigation/config";
+import { getPrimaryItems } from "@/lib/navigation/config";
 import { cn } from "@/lib/shared";
 
-interface NavItem {
+interface BottomNavItem {
 	id: string;
 	label: string;
-	icon: typeof Home01Icon;
+	icon: ConfigNavItem["icon"];
 	href: string;
 	badge?: number;
 }
 
-const navItems: NavItem[] = [
+const navItems: BottomNavItem[] = [
 	{
 		id: "home",
 		label: "Home",
 		icon: Home01Icon,
 		href: "/dashboard",
 	},
-	{
-		id: "syllabus",
-		label: "Syllabus",
-		icon: Quiz01Icon,
-		href: "/quiz",
-	},
-	{
-		id: "chat",
-		label: "Chat",
-		icon: Chat01Icon,
-		href: "/chat",
-	},
-	{
-		id: "problems",
-		label: "Problems",
-		icon: BookOpen01Icon,
-		href: "/problems",
-	},
-	{
-		id: "groups",
-		label: "Groups",
-		icon: UserGroupIcon,
-		href: "/study-groups",
-	},
-	{
-		id: "settings",
-		label: "Settings",
-		icon: Settings01Icon,
-		href: "/settings",
-	},
+	...getPrimaryItems().map((item) => ({
+		id: item.id,
+		label: item.label,
+		icon: item.icon,
+		href: item.route,
+	})),
 ];
 
 const NavItemComponent = memo(function NavItemComponent({
@@ -68,7 +39,7 @@ const NavItemComponent = memo(function NavItemComponent({
 	isActive,
 	onClick,
 }: {
-	item: NavItem;
+	item: BottomNavItem;
 	isActive: boolean;
 	onClick: () => void;
 }) {
@@ -130,7 +101,6 @@ export function BottomNav() {
 
 	const activeIndex = useMemo(() => {
 		const index = navItems.findIndex((item) => {
-			// Home icon uses exact match to avoid catching "/dashboard" as prefix
 			if (item.href === "/dashboard") {
 				return pathname === "/dashboard" || pathname === "/";
 			}
@@ -140,7 +110,7 @@ export function BottomNav() {
 	}, [pathname]);
 
 	const handleItemClick = useCallback(
-		(item: NavItem) => {
+		(item: BottomNavItem) => {
 			push(item.href);
 		},
 		[push],

@@ -13,6 +13,7 @@ import {
 import { Suspense } from "react";
 import { extractRouterConfig } from "uploadthing/server";
 import ErrorBoundary from "@/components/ErrorBoundary";
+import { SidebarStateProvider } from "@/components/navigation/sidebar-nav";
 import { ChunkLoadHandler } from "@/components/performance/chunk-load-handler";
 import { Providers } from "@/components/providers";
 import { CardSkeleton } from "@/components/ui/skeletons";
@@ -22,9 +23,9 @@ import { isValidLocale, locales } from "@/i18n/locales";
 import { timeZone } from "@/i18n/request";
 import { ourFileRouter } from "../api/uploadthing/core";
 
-const DesktopSidebar = dynamic(() =>
-	import("@/components/navigation/desktop-sidebar").then((m) => ({
-		default: m.DesktopSidebar,
+const SidebarNav = dynamic(() =>
+	import("@/components/navigation/sidebar-nav").then((m) => ({
+		default: m.SidebarNav,
 	})),
 );
 const TopNav = dynamic(() =>
@@ -205,17 +206,19 @@ export default async function LocaleLayout({
 					<SnapFab />
 					<CookieBanner />
 					<TosBanner />
-					<div className="flex flex-1">
-						<DesktopSidebar />
-						<main
-							id="main-content"
-							className="flex min-w-0 flex-1 flex-col pb-[calc(49px+env(safe-area-inset-bottom,0px))]"
-						>
-							<TopNav />
-							<ErrorBoundary>{children}</ErrorBoundary>
-						</main>
-					</div>
-					<BottomNav />
+					<SidebarStateProvider>
+						<div className="flex flex-1">
+							<SidebarNav />
+							<main
+								id="main-content"
+								className="flex min-w-0 flex-1 flex-col pb-[calc(49px+env(safe-area-inset-bottom,0px))]"
+							>
+								<TopNav />
+								<ErrorBoundary>{children}</ErrorBoundary>
+							</main>
+						</div>
+						<BottomNav />
+					</SidebarStateProvider>
 				</LazyMotion>
 			</Providers>
 		</>

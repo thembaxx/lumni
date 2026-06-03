@@ -2,14 +2,10 @@
 
 import { useCallback } from "react";
 import { useRouter } from "@/i18n/navigation";
+import { getNavHierarchy } from "@/lib/navigation/config";
 import { startViewTransition as svt } from "@/lib/utils/view-transition";
 
-const navHierarchy: Record<string, number> = {
-	"/dashboard": 0,
-	"/quiz": 1,
-	"/flashcards": 1,
-	"/admin": 1,
-};
+const navHierarchy = getNavHierarchy();
 
 export function useNavigationDirection() {
 	const router = useRouter();

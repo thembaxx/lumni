@@ -13,6 +13,7 @@ import { m } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { LocaleSwitcher } from "@/components/i18n/locale-switcher";
+import { SidebarHamburger } from "@/components/navigation/sidebar-nav";
 import { useImmersiveMode } from "@/components/shared/immersive-mode";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -27,6 +28,7 @@ import { useGamification } from "@/hooks/use-gamification";
 import { useSyncStatus } from "@/hooks/use-sync-status";
 import { usePathname } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/auth-context";
+import { getRouteLabel } from "@/lib/navigation/config";
 import { cn } from "@/lib/shared";
 import { getRandomName } from "@/lib/utils/random-name";
 
@@ -35,18 +37,9 @@ interface TopNavProps {
 	className?: string;
 }
 
-const routeTitleKeys: Record<string, string> = {
-	"/dashboard": "nav.dashboard",
-	"/quiz": "nav.quiz",
-	"/flashcards": "nav.flashcards",
-	"/settings": "nav.settings",
-	"/upload": "common.upload",
-	"/study-groups": "nav.studyGroups",
-};
-
 export function TopNav({ title, className }: TopNavProps) {
 	const pathname = usePathname();
-	const t = useTranslations();
+	const _t = useTranslations();
 	const { user, status, isAnonymous, signOut } = useAuth();
 	const { levelInfo } = useGamification();
 	const { isOnline, pendingCount } = useSyncStatus();
@@ -64,15 +57,13 @@ export function TopNav({ title, className }: TopNavProps) {
 	const pageTitle = useMemo(() => {
 		if (title) return title;
 
-		const matched = Object.entries(routeTitleKeys).find(([route]) =>
-			pathname.startsWith(route),
-		);
-		if (matched) return t(matched[1]);
+		const label = getRouteLabel(pathname);
+		if (label) return label;
 
 		const slug = pathname.split("/").filter(Boolean)[0];
 		if (slug) return slug.charAt(0).toUpperCase() + slug.slice(1);
 		return "Lumni";
-	}, [pathname, title, t]);
+	}, [pathname, title]);
 
 	const [menuOpen, setMenuOpen] = useState(false);
 
@@ -110,6 +101,7 @@ export function TopNav({ title, className }: TopNavProps) {
 		>
 			<div className="flex h-12 items-center justify-between px-4">
 				<div className="flex items-center gap-4">
+					<SidebarHamburger />
 					<h1 className="ios-headline font-semibold text-foreground tracking-tight">
 						{pageTitle}
 					</h1>
